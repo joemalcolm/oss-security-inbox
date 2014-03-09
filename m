@@ -1,71 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/02/2
-Message-ID: <20141202112204.GB7532@suse.de>
-Date: Tue, 2 Dec 2014 12:22:04 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: blkid command injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/09/1
+Message-Id: <201403090316.s293G8gL026877@linus.mitre.org>
+Date: Sat, 8 Mar 2014 22:16:08 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 740670@...s.debian.org
+Subject: Re: possible CVE requests: perltidy insecure temporary file usage
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Fri, Nov 28, 2014 at 12:17:24AM +1100, Murray McAllister wrote:
-> On 11/27/2014 02:25 AM, Sebastian Krahmer wrote:
->> Hi
->>
->> There is a command injection inside blkid. It uses caching
->> files (/dev/.blkid.tab or /run/blkid/blkid.tab) to store info about the
->> UUID, LABEL etc it finds on certain devices.
->>
->> However, it does not strip " character, so it can be confused to
->> build variable names containing embedded shell metas, which it would usually
->> encode inside the value.
->>
->> Given an USB stick with /dev/sdb1 you can:
->>
->> # mkfs.ext4 -L 'X"`/tmp/foo` "' /dev/sdb1
->> # blkid -o udev /dev/sdb1
->> ID_FS_LABEL=X__/tmp/foo___
->> [...]
->>
->> Seems to be OK, but invoking blkid a second time, taking the cache in effect:
->>
->> # blkid -o udev /dev/sdb1
->> ID_FS_LABEL=X
->> ID_FS_LABEL_ENC=X
->> ID_FS_`/tmp/foo` "" UUID=...
->> [...]
->>
->>
->> "blkid -o udev" is often used in root context via udev or in automounters
->> (uam-pmount) to construct key=value environment variables inside shell scripts
->> which are then evaluated.
->> Might be possible to construct an embedded LD_PRELOAD= as well for the binary
->> case.
->>
->> By injecting > character one can probably construct whole fake cache entries.
->>
->> Sebastian
->>
->>
->>
->>
->
-> Karel Zak has committed a patch:
->
-> https://github.com/karelzak/util-linux/commit/89e90ae7b2826110ea28c1c0eb8e7c56c3907bdc
->
+Use CVE-2014-2277 for the issue in which, on all platforms, the
+filename string returned by make_temporary_filename might be used for
+an attacker's symlink before that filename is used by the perltidy
+code to write lines into a file.
 
-Thanks. Patch looks good to me. I contacted upstream about additional
-fixes which you might want to include as well, so we can release it alltogether. The
-severity of command injection is probably not that high that we need
-updates immediately.
+> $^O =~ /win32|dos/i || $^O eq 'VMS' || $^O eq 'MacOs'
+> Would this be a separate issue on those platforms
 
-Sebastian
+We typically don't assign separate CVE IDs in cases where, for the
+same version of the software, the vulnerability details are similar
+but non-identical on different operating systems.
 
 
--- 
+> Regarding the use of tmpnam, is it safe/not an issue if you open the 
+> resulting filename with O_CREAT and O_EXCL (as perltidy does)?
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+Possibly it depends on the version of Perl or the operating system's
+libraries. Maybe someone else knows the precise details. The
+http://archives.neohapsis.com/archives/bugtraq/2000-02/0018.html post
+claims 'because a symlink can point to nowhere, the O_EXCL|O_CREAT
+test does not suffice: you might still end up making a "new" file,
+even one that you own, that's somewhere else than you think it is.' On
+at least some recent Linux platforms, that behavior apparently does
+not occur. Specifically, if the first argument to IO::File->new is a
+symlink, and the target of the symlink is a nonexistent file like
+/home/victim/.forward, and O_EXCL|O_CREAT is used, then
+/home/victim/.forward is not created.
 
+This question might be relatively unimportant because O_EXCL|O_CREAT
+was only used in the IO::File->new call for choosing a filename.
+O_EXCL|O_CREAT wasn't used in IO::File->new call that came immediately
+after the make_temporary_filename call. This, for example, doesn't
+cover the case of a mode 0777 current working directory.
+
+> 1) perltidy creating a temporary file with default permissions instead of 0600
+
+We're not sure that this should be a vulnerability with a CVE
+assignment, even though it is a violation of development standards in
+some parts of the community. For example:
+
+  http://cwe.mitre.org/data/definitions/378.html
+
+says "Potential Mitigations ... Temporary files should be writable and
+readable only by the process which own the file."
+
+(Obviously, "own" is a typo of "owns" there. MITRE will probably fix
+that later.)
+
+It looks like the most common use case is for perltidy to read a .pl
+file in the current working directory, and then create a
+corresponding .pl.tdy output file in the current working directory,
+with the default permissions. In this specific scenario, using default
+permissions for the temporary file in the current working directory
+might not be considered a security problem. Apparently there are other
+use cases in which an attacker might have read access to the temporary
+file but lack read access to the .tdy file. It's not clear whether
+addressing that had been a perltidy design goal.
+
+(The general counterargument to the "always mode 600" principle is
+that it had been historically common to have a multi-person
+development effort with a strict policy that all files must always be
+group-readable. If something goes wrong when one developer is working,
+and it's the responsibility of a second developer to clean up at a
+time when the first developer isn't available, then one might really
+want all relevant information -- including any possible left-over
+temporary files -- to be accessible to the second developer.)
+
+> Is the POSIX module a core part of Perl, as in, the "return $name" part 
+> will never be called?
+
+It's conceivable that that depends on the version of Perl, but in any
+case the answer doesn't affect how many CVE IDs are needed.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTG9yVAAoJEKllVAevmvms884IALYMJ4O0dcep0uIKRR84BIRZ
+153u8FdoqUOSYQqQyowraXdpHYgSqkXjv2Rr/ATCIx//EehZU4nTRyBJ9Y5VtwCF
+pncZZBz4cOzoKv2Q+7BjsIuU8PDz8wRR+1kXr1/lnyvtMRqUO49y2pzGbdSDGZs6
++TZ5/KjBiDMHGFUOV+wd9sWE1S4dV9h3CiipyL8WxAaaeAl95zZbEfSSDcXoWqI8
+2CkXB03o4lUSvjvDkt07+zZn4R9a0BuFIM626spRlMO9H132KhCpF2Hc73px4sWl
+xGjYfN1IE53JnhrMgKrzwcSzQXBXiCEPk+gMdTjqR+frcF4+RC29fwnjp1g7Afo=
+=EM42
+-----END PGP SIGNATURE-----
