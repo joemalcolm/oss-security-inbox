@@ -1,46 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/11
-Message-ID: <530F643F.9040707@redhat.com>
-Date: Thu, 27 Feb 2014 17:13:51 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/09/2
+Message-Id: <201403090317.s293Hne0026909@linus.mitre.org>
+Date: Sat, 8 Mar 2014 22:17:49 -0500 (EST)
+From: cve-assign@...re.org
+To: seth.arnold@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ntu.com
+Subject: Re: CVE Request: thermald
 Content-Type: text/plain; charset=utf-8
 
-On 02/11/2014 07:54 AM, P J P wrote:
->     Hi,
->
-> +-- On Mon, 10 Feb 2014, P J P wrote --+
-> | I'll check with the upstream author for more clarification.
->
-> Upstream author's reply:
->
->   > On Tuesday, 11 February 2014 4:28 AM, Frank Denis wrote:
->   >
->   > The shorter the TTL of a record is, the easier a cache can be poisoned.
->   > It is when a record is NOT cached that spoofed authoritative replies
->   > can be sent and get a chance to reach the resolver before the
->   > legitimate one.
->   >
->   > As soon as a valid response is received, dnscache invalidates the state,
->   > discarding further responses, even if these are valid.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hannes Sowa pointed out to me that djbdns deliberately does not prevent 
-cache eviction by crafted queries/responses:
+> I discovered that the thermald temperature management daemon opens a file
+> with predictable filename in /tmp unsafely. Please assign a CVE number for
+> this issue:
+> 
+> https://github.com/01org/thermal_daemon/blob/master/src/android_main.cpp#L117
 
-"dnscache doesn't discriminate against additional records. Valid records 
-are accepted whether they're additional records in one packet or answer 
-records in the next; timing doesn't affect the semantics."
+> can be used to write the process's pid to a file of the attacker's
+> choosing.
 
-<http://cr.yp.to/djbdns/notes.html>
+Use CVE-2014-2312.
 
-The issue raised in this thread only allows to carry out "attacks" that 
-are also possible by relying on a documented design decision, so it's 
-doubtful this qualifies as a security bug.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-(Note that most resolver implementations also lack protection against 
-cache eviction.  Several vendors reviewed this topic in 2008 and deemed 
-it too difficult to implement as a general security feature.)
-
--- 
-Florian Weimer / Red Hat Product Security Team
+iQEcBAEBAgAGBQJTG9rOAAoJEKllVAevmvmspGEIAI+W32s9bbR1inTAjNLYepza
++1Kv1d1ZslV2Xlu0uFTF9dXCLJyRG9l8NPNmen1eLrMQfVROfn3mtPFotpXWFxnR
+0kAwNnxd33x1UVOjb9qFkn6aYHn6eE4gWCQw3MAcfJCyEtRFkFHEqeze7uCmeVml
+QIBfESKvigTTvZ/IcZIYuNIB3t0Vs1FNN8FdvOwPChTMJEg8jBrAoorFuznZWyLh
+rZPrAeEqe0h8db0do66+shTXEvWIA6UgRM/ehbC2HWUVs9pWKmXIdtmcVn940gbg
+FFT3zsFsWCoxJGhNkDjJyj3uobHnG3AaQ1+d9suWbwb6Pb6Y9MjkWTSKQaMyxXg=
+=f1jy
+-----END PGP SIGNATURE-----
