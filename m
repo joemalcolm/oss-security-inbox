@@ -1,33 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/10
-Message-ID: <1400615297.9030.2.camel@scapa>
-Date: Tue, 20 May 2014 21:48:17 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: dovecot denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/09/3
+Message-Id: <201403090320.s293Jq8u026917@linus.mitre.org>
+Date: Sat, 8 Mar 2014 22:19:52 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: SQL injection in MODX Revolution before 2.2.13
 Content-Type: text/plain; charset=utf-8
 
-On mar., 2014-05-20 at 21:32 +0200, Yves-Alexis Perez wrote:
-> Hi,
-> 
-> we were made aware of a recently fixed DoS vulnerability in Dovecot,
-> which doesn't seem to have a CVE id assigned:
-> 
-> http://dovecot.org/list/dovecot-news/2014-May/000273.html
-> 
-> states:
-> 
-> * Fixed a DoS attack against imap/pop3-login processes. If SSL/TLS
->   handshake was started but wasn't finished, the login process
->   attempted to eventually forcibly disconnect the client, but failed
->   to do it correctly. This could have left the connections hanging
->   arond for a long time. (Affected Dovecot v1.1+)
-> 
-> Could a CVE be assigned for this vulnerability?
-> 
-It looks like this is the CVE-2014-3430 assigned in
-<201405092055.s49KtC6i025402@...us.mitre.org> not long ago.
--- 
-Yves-Alexis
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+> I'd like to have a CVE for the following issue:
+> http://forums.modx.com/thread/89486/modx-revolution-2-x-sql-injection#dis-post-492046
+> 
+> Release notes for fixed version:
+> http://modx.com/blog/2014/03/07/revolution-2.2.13/
+> 
+> I tried to find the corresponding git commit, but I was not successful.
+> It may be this one:
+> https://github.com/modxcms/revolution/commit/11a913feda16c99703dbf4d27328af888e698c5c
+> but I'm not sure.
+
+Use CVE-2014-2311.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTG9psAAoJEKllVAevmvmsip8IAIjjHx9tQpXp6E2GO74G3Y72
+OVr9s8rmQw6kL5ybsnQhpz0FJ+J70UrvkKrPBuWpR9WFnizLqjPD2mclRTWZq4Sh
+0KaaZeGOWS3/xxtgNKnettHnnwgZ4FYmgmgEio4kqP0ARGjm93JNT1DhjtJmHJi7
+s0FNrFfOJI8a8PCM4/dEAYEMD/l1bT/OV9D1pzvWOfeSbeZ9TIRId7Nw6c9jnF+I
+S6JfZJg38O/RaKlCdVwZEE6IncsYi8EIUHBWmIHkgcZizRywLCfs7PIrBLXgU/5l
+/xofamwjQrX5oW2i9rPc9Ibg8p3Iz6v2VMXXfslV6MUB+fXzFEdGi55BbqqxukI=
+=1GJK
+-----END PGP SIGNATURE-----
