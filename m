@@ -1,39 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/26/1
-Message-Id: <20141026175041.2836C8BC004@smtpvmsrv1.mitre.org>
-Date: Sun, 26 Oct 2014 13:50:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: pierre@...ctos.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, baspape@...il.com
-Subject: Re: Vulnerability fixed in Quassel?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/8
+Message-id: <6C1F1FB3-1345-48F9-AFA6-860AC3010464@me.com>
+Date: Mon, 10 Mar 2014 16:33:12 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Remote Command Injection in Arabic Prawn 0.0.1 Ruby Gem
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Title: Remote Command Injection in Arabic Prawn 0.0.1 Ruby Gem
 
-> https://projects.kde.org/projects/extragear/network/konversation/repository/revisions/1f55cee8b3d0956adc98834f7b5832e48e077ed7
-> https://bugs.kde.org/show_bug.cgi?id=210792
+Author: Larry W. Cashdollar, @_larry0
 
-> https://github.com/quassel/quassel/commit/8b5ecd226f9208af3074b33d3b7cf5e14f55b138
-> http://bugs.quassel-irc.org/issues/1314
+Download Site: http://rubygems.org/gems/Arabic-Prawn
 
-Use CVE-2014-8483 for this out-of-bounds read issue, which can have an
-impact of either denial of service or disclosure of information from
-process memory.
+Date: 12/17/2013
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+CVE: Please assign.
 
-iQEcBAEBAgAGBQJUTTP0AAoJEKllVAevmvmsSzIH+QHR+7d5VT2alOdllmuUk2Wq
-wDCZKhMM74Moyg4JcWsYbnJtk+rlqMS4FEBNVMJdyk2wX8D4/Pm9Y7V1IikejOAk
-/Dj2uF+V8iAvOha+SU9GDteUJtIujYMqZ/sOFHXNuXGCw/X+8k5WcMRVOGOIEmDU
-Q/b9GEdg0ai8YLAwoQEJlcXk1hg3k9YIq5y6ckJHhSBDdxTKC2Q29LMXJzpzCNg+
-w4EivSLUYuoUNRKa5jaPT2D60X293nAw683bCjb4VQc+eiSeSo4zZwCZvUEqatWp
-20t7WRmb8l9uEgkYpP70tSI3Hgro+kTDmmlsDGd1DHIzz9pHw8pzBccbirqt/7E=
-=AAg1
------END PGP SIGNATURE-----
+Vendor Notified: 3/3/2014
+
+In Arabic-Prawn-0.0.1/lib/string_utf_support.rb, the following lines pass unsanitized input to the shell.
+
+426 var = %x{ /usr/bin/curl -I -L --fail --silent --connect-timeout #{seconds} --max-time #{seconds+10} # {url}; /bin/echo -n $? }.to_i 427
+
+428             #return false unless var == 0
+429             raise "Failed to create connection to web site: #{url}  --  curl error code: #{var}  --  " unless var     == 0
+430 
+431             str = %x{ /usr/bin/curl -L --fail --silent --connect-timeout #{seconds} --max-time #{seconds+10} #{ur    l} | \
+432                       /usr/bin/grep -Eo -m 1 \"(charset|encoding)=[\\"']?[^\\"'>]+\" | /usr/bin/grep -Eo \"[^=\\"    '>]+$\" }
+
+443             %x{ /usr/bin/touch #{downloaded_file} 2>/dev/null }
+444             raise "No valid HTML download file (path) specified!" unless File.file?(downloaded_file)
+445             %x{ /usr/bin/curl -L --fail --silent --connect-timeout #{seconds} --max-time #{seconds+10} -o #{downl    oaded_file} #{url} }
+446 
+447             simple_test = %x{ /usr/bin/file -ik #{downloaded_file} }    #  cf. man file
+
+If the downloaded file name #{downloaded_file} or #{url} contains any shell meta characters like ';' a malicious user can inject shell commands.
+
+PoC
+myfile;id;.txt
+
+id would be passed to the command line and executed.
+
+Advisory: http://www.vapid.dhs.org/advisories/arabic-ruby-gem.html
