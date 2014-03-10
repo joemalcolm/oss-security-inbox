@@ -1,31 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/1
-Message-ID: <CALx_OUCv6bfPd_r3fNAJC=gjvNp0kt0H9RBp3o9tN0ZShBNh4Q@mail.gmail.com>
-Date: Tue, 30 Sep 2014 16:59:56 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/4
+Message-ID: <20140310164036.GJ18088@dhcp-25-225.brq.redhat.com>
+Date: Mon, 10 Mar 2014 17:40:36 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-0131 -- kernel: net: use-after-free during segmentation with zerocopy
 Content-Type: text/plain; charset=utf-8
 
-> Finally: *PLEASE* let me know if you have any good ideas on how to find vulnerabilities like this ahead-of-time. My article "How to Prevent the Next Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a number of ways that Heartbleed-like vulnerabilities could have been detected ahead-of-time, in ways that are general enough to be useful.  I'd like to do the same with Shellshock, so we can quickly eliminate a whole class of problems.
+A flaw was found in the way segmentation was performed on skbs
+originated from vhost-net when zerocopy feature was enabled.
 
-Well, hindsight is always 20/20. Manual audits and fuzzing would have
-had a good likelihood of spotting the bash flaw. In fact, I used a
-fairly generic fuzzer to quickly hit three of the four previously
-disclosed issues and identify two more. The syntax is terse and the
-parser is laid back, which helps. The fault conditions are generic and
-intuitive, too - creation of a file, execution of a child process, or
-a crash.
+This flaw could be potentially used to leak kernel memory.
 
-But really - all it would have taken is just somebody with un*x
-security background reading a book on bash that mentions function
-exports (I'm sure there are some); it wouldn't be hard to connect the
-dots.
+Upstream patch submission:
+http://marc.info/?l=linux-netdev&m=139446896921968&w=2
 
-The main problem is that for a very long time, we apparently had no
-overlap between these groups. At the face of it, it seemed like
-there's absolutely no reason for bash to try to parse generic env
-variables. With no convincing reason to study or test the code, nobody
-did.
-
-/mz
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
