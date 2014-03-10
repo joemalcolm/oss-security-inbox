@@ -1,42 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/10
-Message-ID: <52CC5A80.5050205@fifthhorseman.net>
-Date: Tue, 07 Jan 2014 14:50:24 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com, 683338@...s.debian.org
-Subject: Re: CVE request: lightdm-gtk-greeter - local DOS due to NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/11
+Message-ID: <20140310224809.452703fe@hboeck.de>
+Date: Mon, 10 Mar 2014 22:48:09 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: When is broken crypto a vulnerability?
 Content-Type: text/plain; charset=utf-8
 
-[replying to http://www.openwall.com/lists/oss-security/2014/01/07/5]
+On Mon, 10 Mar 2014 17:37:50 -0400 (EDT)
+cve-assign@...re.org wrote:
 
-On 01/07/2014 05:47 AM, Guido Berhoerster wrote:
-> an openSUSE user discovered that it is trivial to crash
-> lightdm-gtk-greeter by entering an empty username due to a NULL
-> pointer dereference. When a greeter crashes the lightdm daemon
-> exits.
-> This constitutes a local denial of service which can be triggered
-> by any unprivileged attacker requiring the intervention of an
-> administrator to restart lightdm. It affects all versions of
-> lightdm-gtk-greeter.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> > Now there are all kinds of applications doing one of the following
+> > things:
+> 
+> > b) Provide an option to use AES, but they don't use it and still
+> > create legacy "encryption".
+> 
+> > I think it should be noncontroversial that b) is a vulnerability and
+> > thus should get a CVE. Any disagreement here?
+> 
+> It's not completely clear what you mean. If it were a logic error in
+> the code, e.g., menu choice 2 of "AES encryption" is selected but the
+> code calls the function intended for menu choice 1 of "standard
+> encryption," then a CVE could be assigned to the specific codebase
+> that has that logic error.
 
-Hm, if this warrants a CVE for lightdm, then gdm3 needs one also:
-
- https://bugzilla.gnome.org/show_bug.cgi?id=704284
- http://bugs.debian.org/683338
-
-Basically, when gdm3 is configured to not show a list of users (but
-instead shows a blank box for the login prompt), if the user clicks
-"cancel" or hits the escape key, then the greeter gets put into a mode
-without any way to log in (no prompts available).
-
-I've tried to debug it but it appears to be due to some sort of
-timing-dependent case.  When i step through the code with gdb, i haven't
-been able to reproduce the issue.
-
-It is definitely a bad situation for machines in public locations with
-this configuration.
-
-	--dkg
+Yes, that's exactly what I meant.
+One product, it's already disclosed to the vendor and I will publish
+details shortly. So we agree this one gets a CVE.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+> > I could accept it if applications provide this as a compatibility
+> > option when there's a clear sign to the user that it's not secure
+> 
+> There's also the question of whether the security properties are well
+> known, and the product does not contain any direct misrepresentation
+> (e.g., stating that standard ZIP encryption is "equivalent to PGP" or
+> "uses 2048-bit keys").
+
+I have seen such misrepresentations, however I don't know exactly which
+product it was. But I'd probably find it again.
+
+> > c) Default to legacy "encryption"
+> 
+> Sometimes there are CVE assignments based on a general concept of "an
+> insecure option should not be the default" but here there's the
+> complication that only the insecure option has widespread cross-vendor
+> compatibility. One needs to consider the support costs of changing the
+> default. It's a usability decision for each vendor, based in part on
+> what they know about whether their customers use encryption for
+> confidentiality or for a different reason.
+
+Well, winzip-type aes-encryption has pretty wide support. I think
+roughly 80%, the main exception being the linux commandline zip
+(info-zip).
+
+
+> > calling it "ZipCrypto(insecure)" or "insecure crypto" or something
+> > alike
+> 
+> It doesn't seem appropriate to make CVE assignments on the basis that
+> a UI omits information that is arguably well known, and is not
+> specific to that one product. As an extreme example, every occurrence
+> of an http URL in a web browser could have a tooltip stating
+> "http(insecure)" or "insecure http," and a subset of web users would
+> then be safer.
+
+I think this is a different issue, because nobody says "encryption"
+anywhere here.
+It ultimately comes down to this: Do we consider "encryption" to be a
+term that means "secure encryption" (something like AES) or would we
+also consider a vigenere cipher "encryption"?
+I'd vote that calling a well-known broken cipher "encryption" is a
+misrepresentation and a possible risk.
+
+
+But I get it you tend to disagree on that.
+
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
