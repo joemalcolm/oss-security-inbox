@@ -1,27 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/6
-Message-ID: <5463541F.1030304@redhat.com>
-Date: Wed, 12 Nov 2014 13:35:43 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/2
+Message-ID: <CAA7hUgGcqQ30xJ_u5LadTO-Z=3nh1dbyDRUq5xS5fo3R7naoVQ@mail.gmail.com>
+Date: Mon, 10 Mar 2014 16:31:33 +0100
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-request: systemd-resolved DNS cache poisoning
+Subject: Two stack-based issues in freetype [NOT a request]
 Content-Type: text/plain; charset=utf-8
 
-On 11/12/2014 12:15 PM, Sebastian Krahmer wrote:
-> At its simplest, an attacker triggers a query to a domain he controls
-> via SMTP or SSH-login. Upon receipt of the question, he can just add
-> any answer he wants to have cached to the legit answer he provides
-> for the query, e.g. providing two anser RR's: One for the question asked
-> and one for a question that has never been asked - even if the DNS server
-> is not authoritative for this domain.
+Hi,
 
-BIND 9 is supposed to filter such garbage from upstream answers, but 
-there are other resolvers out there which will pass through such answers 
-unchanged, so this is very much CVE-worthy.
+Just a heads up as I've not seen this issue anywhere. There is an
+"Out-of-bounds stack-based read/write in cf2_hintmap_build" in freetype
 
-(This systemd component is optional, I strongly recommend not to ship 
-it.  It's not even possible right now to dump the cache contents to 
-debug such issues.)
+If I understood things correctly, CVE-2014-2240 is:
+https://savannah.nongnu.org/bugs/?41697#comment0
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=0eae6eb0645264c98812f0095e0f5df4541830e6
 
+While CVE-2014-2241is:
+https://savannah.nongnu.org/bugs/?41697#comment2
+http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=135c3faebb96f8f550bd4f318716f2e1e095a969
+
+Release notes:
+http://sourceforge.net/projects/freetype/files/freetype2/2.5.3/
+
+Cheers,
 -- 
-Florian Weimer / Red Hat Product Security
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
