@@ -1,61 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/6
-Message-ID: <alpine.LFD.2.10.1402111731310.4307@javelin.pnq.redhat.com>
-Date: Tue, 11 Feb 2014 18:35:58 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/3
+Message-ID: <20140310161740.GG21728@suse.de>
+Date: Mon, 10 Mar 2014 17:17:40 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request for Quick Blind TCP Connection Spoofing with SYN Cookies
 Content-Type: text/plain; charset=utf-8
 
-   Hello Michael,
+Hi,
 
-+-- On Tue, 11 Feb 2014, Michael Samuel wrote --+
-| This response doesn't address the original claim.
-|
-| The author of the original link made the (probably true) claim that requests 
-| could be made to authoritative sources (records under the control of the 
-| attacker) which would deliberately collide with results for some other 
-| domain such as .com.
+Did this issue:
+http://www.jakoblell.com/blog/2013/08/13/quick-blind-tcp-connection-spoofing-with-syn-cookies/
+ever get a CVE or should it get one?
 
-  'Frank Denis' is an author of the original link/post.
- 
-| Since each bucket has a limit of 100 records, this would make it easier to 
-| push a record from the cache, giving the attacker another chance at spoofing 
-| a reply a little bit sooner.  Each time this happened, the attacker would 
-| have just under 1 in 2^32 chance of succeeding.
-| 
-| The simplest strategy for this would be to constantly send replies to a 
-| specific port with a specific ID, and waiting for the server to randomly use 
-| this combination, in which case the attacker would surely beat the server.
+At least some hardening measures have been implemented now:
+http://thread.gmane.org/gmane.comp.security.oss.general/10875
 
-  That's correct.
- 
-| The security flaw is in the DNS protocol, and (apart from protocol upgrade 
-| fantasies) the only practical way to mitigate this is to have a pool of IP 
-| addresses to initiate recursive requests from.
+Made "4 times" harder in 3.13 by these two patches:
 
-  That is accept requests from predefined networks? djbdns/ndjbdns already does 
-that. Still, that network could be very large. There are also open resolvers.
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8c27bd75f04fb9cb70c69c3cfe24f4e6d8e15906
+commit 8c27bd75f04fb9cb70c69c3cfe24f4e6d8e15906
+Author: Florian Westphal <fw@...len.de>
+Date:   Fri Sep 20 22:32:55 2013 +0200
 
-| Using siphash would make this attack slightly harder, but a large number of 
-| random names would presumably have a similar effect for only slightly more 
-| traffic (how many buckets are there?).
+    tcp: syncookies: reduce cookie lifetime to 128 seconds
+    
+    We currently accept cookies that were created less than 4 minutes ago
+    (ie, cookies with counter delta 0-3).  Combined with the 8 mss table
+    values, this yields 32 possible values (out of 2**32) that will be valid.
+    
+    Reducing the lifetime to < 2 minutes halves the guessing chance while
+    still providing a large enough period.
+    
+    While at it, get rid of jiffies value -- they overflow too quickly on
+    32 bit platforms.
+    
+    getnstimeofday is used to create a counter that increments every 64s.
+    perf shows getnstimeofday cost is negible compared to sha_transform;
+    normal tcp initial sequence number generation uses getnstimeofday, too.
 
-  No of buckets depend on the cache size. For default cache size of 5MB, it 
-would have about 262144 buckets.
- 
-| In short, the hashtable is not a DNS cache poisoning protection mechanism, 
-| DNS cache is supposed to expire or be pushed out by "hotter" records, so I'd 
-| say it's not a vulnerability.
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=086293542b991fb88a2e41ae7b4f82ac65a20e1a
+commit 086293542b991fb88a2e41ae7b4f82ac65a20e1a
+Author: Florian Westphal <fw@...len.de>
+Date:   Fri Sep 20 22:32:56 2013 +0200
 
-  Hmmn..true; DNS is suppose to recycle cached records. But does that mean all 
-DNS implementations are vulnerable to cache poisoning? (given enough efforts)
+    tcp: syncookies: reduce mss table to four values
 
-| I'd still recommend switching hash algorithms.
+    Halve mss table size to make blind cookie guessing more difficult.
+    This is sad since the tables were already small, but there
+    is little alternative except perhaps adding more precise mss information
+    in the tcp timestamp.  Timestamps are unfortunately not ubiquitous.
 
-  That's done.
+    Guessing all possible cookie values still has 8-in 2**32 chance.
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+Ciao, Marcus
