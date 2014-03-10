@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/13
-Message-ID: <542C0F62.3040208@redhat.com>
-Date: Wed, 01 Oct 2014 16:27:46 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/1
+Message-ID: <531D90E4.7040200@redhat.com>
+Date: Mon, 10 Mar 2014 15:46:04 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Subject: udisks and udisks2: stack-based buffer overflow when handling long path names
 Content-Type: text/plain; charset=utf-8
 
-On 10/01/2014 03:32 PM, Tomas Hoger wrote:
-> On Tue, 30 Sep 2014 19:19:55 -0400 (EDT) David A. Wheeler wrote:
->
->> * Approach 1: Florian Weimer's approach.  Bash functions to be
->> exported have a prefix ("BASH_FUNC_") and suffix added.  Then, ONLY
->> environment variables with that prefix and suffix are interpreted
->> specially.  This approach is used by Red Hat, CentOS, Debian, Ubuntu,
->> and Cygwin (at least), and was later accepted into bash upstream.
->> The original approach used "()" as the suffix; bash upstream took
->> this but switched to the "%%" suffix instead, which is a nice
->> improvement (since "%" is not a shell metacharacter this is less
->> likely to trigger OTHER problems).  I know Cygwin is using the bash
->> upstream '%%' suffix.
->
-> The following indicates there is other prefix and suffix used, that
-> makes these incompatibility issues worse:
->
->    http://support.apple.com/kb/HT6495
->
->    The names of all environment variables that introduce function
->    definitions are required to have a prefix "__BASH_FUNC<" and suffix
->    ">()" to prevent unintended function passing via HTTP headers.
+Hi All,
 
-I initially dismissed this as a presentation artifact in the web page, 
-but it's true, there are additional <> characters in the mangled name. 
-I wonder what breaks as a result.  At least () and %% are somewhat 
-benign in their effect if they are used unquoted in the relevant places 
-(error, not accidental file creation).
+Florian Weimer of the Red Hat Product Security Team, found a flaw in
+the way udisks and udisks2 handled long path names. A malicious, local
+user could use this flaw to create a specially-crafted directory
+structure that could lead to arbitrary code execution with the
+privileges of the udisks daemon (root).
 
-(To be absolute clear, I do not see any security issues with Apple's 
-choice of mangling.)
+This issue has been assigned CVE-2014-0004.
+
+References:
+http://lists.freedesktop.org/archives/devkit-devel/2014-March/001568.html
+
+Patches:
+http://cgit.freedesktop.org/udisks/commit/?h=udisks1&id=ebf61ed8471
+http://cgit.freedesktop.org/udisks/commit/?id=244967
+
+Red Hat bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1049703
+
+
 
 -- 
-Florian Weimer / Red Hat Product Security
+Huzaifa Sidhpurwala / Red Hat Security Response Team
