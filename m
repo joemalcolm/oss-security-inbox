@@ -1,71 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/12
-Message-ID: <20140721171543.GA30351@chaz.gmail.com>
-Date: Mon, 21 Jul 2014 18:15:43 +0100
-From: Stephane Chazelas <stephane.chazelas@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/6
+Message-ID: <CAFRnB2Xt6CP2s8XCe6XjdVj3z7kBOb5c=KyAwa=JUAd-O5MuOQ@mail.gmail.com>
+Date: Mon, 10 Mar 2014 13:19:46 -0700
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+Cc: cve-assign@...re.org
+Subject: Re: When is broken crypto a vulnerability?
 Content-Type: text/plain; charset=utf-8
 
-2014-07-10 16:42:39 -0700, Tavis Ormandy:
-> Rich Felker <dalias@...c.org> wrote:
-> 
-> > On Thu, Jul 10, 2014 at 08:52:24PM +0200, Florian Weimer wrote:
-> > > Stephane Chazelas discovered that directory traversal issue in locale
-> > > handling in glibc.  glibc accepts relative paths with ".." components in
-> > > the LC_* and LANG variables.  Together with typical OpenSSH
-> > > configurations (with suitable AcceptEnv settings in sshd_config), this
-> > > could conceivably be used to bypass ForceCommand restrictions (or
-> > > restricted shells), assuming the attacker has sufficient level of access
-> > > to a file system location on the host to create crafted locale
-> > > definitions there.
-[...]
-> I knew about this behaviour (I imagine lots of people were), but hadn't
-> considered it a vulnerability - it's more restricted across setuid, so had
-> assumed it was intentionally permitted. Locale files are not executable
-> code, so even if you imagine a ForceCommand+AcceptEnv configuration *and*
-> have the ability to create a message catalog, don't you still need another
-> bug to exploit this?
-[...]
+When thinking about this issue, I like to refer to:
+https://glyph.twistedmatrix.com/2005/11/ethics-for-programmers-primum-non.htmlany
+time the behavior of the program violates the users intent in a way
+which compromises their security, that's a security issue. To that end, any
+of a-d, IMO, ought to quality for a CVE, the only acceptable way to expose
+functionality like this is LegacyObviouslyBrokenZipEncryption.
 
-LC_*, LANG, LANGUAGE are about setting all the aspect of
-localisation, not only message catalogs:
-- character set
-- character classes (see my other post about bash honouring the
-  [:blank:] characters as token separators, and [:alpha:] as
-  valid variable names.
-- transliteration (toupper/tolower) you can make "foo" match
-  "bar" case insensitively by making them all map to XXX in
-  uppercase.
-- sort orders (so that one can make [A-Z] include / or B sort
-  before A)
-- decimal point (so one can have 123 be understood as 1.3 (2
-  being the decimal point)
-- month/day names (newline in a month name for the output of ls
-  -l or date) (as in January is "Jan\n-rw----- 1...")
-- ...
-- not to mention the fact that the whole localisation code is
-  quite complex and I wouldn't be surprised if it crashed
-  miserabily on unexpected/incorrect locale data
-
-Note that it's not about the ability to create message catalogs
-but about the ability to upload files with arbitrary names.
-
-Most git hosting deployment fulfill all the criteria I'd say.
+Alex
 
 
-> However, admittedly there was that zonefile parsing vulnerability and IIRC
-> TZ also permits directory traversal when not setuid. TZ is just as plausibly
-> part of AcceptEnv as LC_ALL, so maybe if it wasn't intentional there's at
-> least a weak argument there for calling it a glibc vulnerability.
-[...]
+On Mon, Mar 10, 2014 at 11:58 AM, Hanno Böck <hanno@...eck.de> wrote:
 
-the main problem here I'd say is that those variables are
-honoured *by default* by most of a Unix tool chest, and the
-shell to start with (see my other email in this thread about
-bash), so even "ForceCommand LC_ALL=C some/command" won't fix
-everything.
+> Hi,
+>
+> I'm currently looking into the issue of ZIP encryption and I'm asking
+> myself what should be considered a vulnerability.
+>
+> Quick summary: The situation is rather horrible. There is a "legacy"
+> ZIP encryption that has been broken since 1994. There are two competing
+> standards for AES encryption on ZIP files, one by PKWARE, the other by
+> WinZip (although the WinZip one is used by pretty much everybody and
+> the PKWARE one only by PKZIP).
+>
+> The 1994 attack is a known plaintext attack. There's an improved
+> attack since 2001 that works in many cases without a known plaintext,
+> however there's no public source implementing that. Some commercial
+> tools implement this attack.
+>
+> Now there are all kinds of applications doing one of the following
+> things:
+>
+> a) Just support the legacy "encryption" without any indication that
+> it's broken.
+>
+> b) Provide an option to use AES, but they don't use it and still
+> create legacy "encryption".
+>
+> c) Default to legacy "encryption" without any indication that
+> it's broken, provide an option for AES encryption.
+>
+> d) Default to AES encryption, provide legacy "encryption" under various
+> names like ZipEncrypt, ZIP 2.0 or similar that give no indication that
+> it's broken.
+>
+>
+> I think it should be noncontroversial that b) is a vulnerability and
+> thus should get a CVE. Any disagreement here?
+>
+> What do you think about the others? IMHO it's always inacceptable to
+> provide an "encryption" option that doesn't really encrypt. I could
+> accept it if applications provide this as a compatibility option when
+> there's a clear sign to the user that it's not secure (like calling it
+> "ZipCrypto(insecure)" or "insecure crypto" or something alike).
+> Although I'd prefer if at least enduser oriented apps wouldn't support
+> insecure encryption at all.
+> However, are these vulnerabilities? Should they get CVEs? I'm not sure,
+> but I'd tend to give at least the a) and c) case also CVEs. We have to
+> keep in mind that we're not talking about "theoretically broken/weak"
+> crypto, we're talking about "you can buy software that will give you
+> the password"-broken.
+>
+>
+> Opinions wanted.
+>
+> (I'm sending this to oss-security, it affects all kinds of opensource
+> applications, but it obviously also affects non-opensource applications)
+>
+> cu,
+> --
+> Hanno Böck
+> http://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
+>
+
+
 
 -- 
-Stephane
+"I disapprove of what you say, but I will defend to the death your right to
+say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+"The people's good is the highest law." -- Cicero
+GPG Key fingerprint: 125F 5C67 DFE9 4084
 
