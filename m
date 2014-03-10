@@ -1,69 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/24
-Message-ID: <CAFkuX4v-7fST6zneC9jdXSOV+4QKr+Ho8mtMuih3d0WeOcrieA@mail.gmail.com>
-Date: Thu, 26 Jun 2014 12:57:25 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
-To: oss-security@...ts.openwall.com
-Subject: LMS-2014-06-16-5: Linux Kernel LZ4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/7
+Message-ID: <DCFA8BF0-E157-4577-A7A6-1CAE72D30344@redhat.com>
+Date: Mon, 10 Mar 2014 14:31:34 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: CVE request: claws-mail vcalendar plugin stores user/password in cleartext
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+Subject pretty much says it all.  It's not a very exciting flaw but was brought to our attention.
 
-A vulnerability has been identified in the Linux kernel LZ4 implementation.
-Please find the bug report attached inline.
+References:
 
-Best,
-Don A. Bailey
-Founder / CEO
-Lab Mouse Security
-https://www.securitymouse.com/
+http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3099
+https://bugzilla.redhat.com/show_bug.cgi?id=1074683
 
-#############################################################################
-#
-# Lab Mouse Security Report
-# LMS-2014-06-16-5
-#
-
-Report ID: LMS-2014-06-16-5
-
-CVE ID: CVE-2014-4611
-
-Researcher Name: Don A. Bailey
-Researcher Organization: Lab Mouse Security
-Researcher Email: donb at securitymouse.com
-Researcher Website: www.securitymouse.com
-
-Vulnerability Status: Patched
-Vulnerability Embargo: Broken
-
-Vulnerability Class: Integer Overflow
-Vulnerability Effect: Memory Corruption
-Vulnerability Impact: DoS, RCE
-Vulnerability DoS Practicality: Practical
-Vulnerability RCE Practicality: Practical
-Vulnerability Criticality: High
-
-Vulnerability Scope:
-All versions of the Linux kernel (3x/2x) with LZ4 support (lib/lz4).
-
-Functions Affected:
-	lib/lz4/lz4_decompress.c:lz4_uncompress
-
-Criticality Reasoning
----------------------
-Due to the design of the algorithm, an attacker can specify any desired
-offset to a write pointer. The attacker can instrument the write in such
-a way as to only write four bytes at a specified offset. Subsequent code
-will allow the attacker to escape from the decompression algorithm without
-further memory corruption. This may allow the attacker to overwrite
-critical structures in memory that affect flow of execution.
-
-Vulnerability Description
--------------------------
-An integer overflow can occur when processing any variant of a "literal run"
-in the lz4_uncompress function.
-
-Vulnerability Resolution
-------------------------
-The Linux kernel team has resolved this vulnerability.
-
+-- 
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
