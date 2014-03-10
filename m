@@ -1,78 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/3
-Message-ID: <CALx_OUAW0kFGi5ZcX6K_5tjcTHCpQWfh+RK2kqXEzmhuUhwDMQ@mail.gmail.com>
-Date: Mon, 6 Oct 2014 20:33:44 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Who named shellshock?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/10
+Message-Id: <201403102137.s2ALboaZ015057@linus.mitre.org>
+Date: Mon, 10 Mar 2014 17:37:50 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: When is broken crypto a vulnerability?
 Content-Type: text/plain; charset=utf-8
 
-This is the bit from Stephane:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://www.openwall.com/lists/oss-security/2014/10/03/14
+> Now there are all kinds of applications doing one of the following
+> things:
 
--- snip! --
-A release schedule with public disclosure on the 24th at
-14:00 UTC and early notification to other unix and linux
-vendors on the 22nd and select infrastructure provider
-notification (such as CDNs including Microsoft) on the 23rd
-proposed on the 16th by Florian.
+> b) Provide an option to use AES, but they don't use it and still
+> create legacy "encryption".
 
-[...]
+> I think it should be noncontroversial that b) is a vulnerability and
+> thus should get a CVE. Any disagreement here?
 
-bashdoor.com was registered (not by me) with a creation date of
-2014-09-24 13:59 UTC sometime before 2014-09-24 06:59:10Z
-according to whois. Florian also said here that someone brought
-the early notification sent to vendors/infrastructure to the
-press, so someone obviously intended to take it to the press. I
-don't know whom.
--- snip! --
+It's not completely clear what you mean. If it were a logic error in
+the code, e.g., menu choice 2 of "AES encryption" is selected but the
+code calls the function intended for menu choice 1 of "standard
+encryption," then a CVE could be assigned to the specific codebase
+that has that logic error.
 
-The bashdoor.com thing sounds a bit damning (doesn't sound like
-something that would be in the notifications to CDNs & co?).
+There may be some types of UI issues that would not have CVE
+assignments. For example: "AES encryption" is grayed out because the
+product actually doesn't yet contain an implementation of AES, but the
+grayed-out status is not as prominent as it could be.
 
-/mz
+> I could accept it if applications provide this as a compatibility
+> option when there's a clear sign to the user that it's not secure
 
-On Mon, Oct 6, 2014 at 7:28 PM, Solar Designer <solar@...nwall.com> wrote:
-> Florian,
->
-> On Mon, Oct 06, 2014 at 02:04:42PM -0700, Michal Zalewski wrote:
->> I don't think it happened on Twitter - using advanced search with date
->> ranges, I don't see any mentions that would predate this article,
->> which already seems to be using the term:
->>
->> http://www.csoonline.com/article/2687265/application-security/remote-exploit-in-bash-cve-2014-6271.html
->>
->> It's odd that an article posted at 8 AM on Sept 24 would have any idea
->> of how the bug is already being called by the security community,
->> especially ahead of any Twitter buzz. But both Stephane and Florian
->> implied that some of the pre-notified parties apparently started
->> leaking details to the press and were getting ready to make a splash
->> the moment it goes public, so maybe that's the explanation.
->
-> I don't know who coined the Shellshock name, but I'd like us to know
-> whether there was in fact a leak, and when.  (Luckily, I know it
-> couldn't have been from the distros list, because no detail was posted
-> to the distros list, thanks!)  I had raised this concern here:
->
-> http://www.openwall.com/lists/oss-security/2014/09/24/36
->
-> It is insufficient that "it was an honest mistake" and that "apologies
-> were made and accepted."
->
-> I have no intent to place blame, but at least the general public needs
-> to know whether the information got to the press before or after the
-> scheduled coordinated public disclosure date/time ("Wednesday,
-> 2014-09-24 14:00 UTC").  If it's before, then this qualifies as a leak.
-> If it's after, then it does not.
->
-> The article has "Sep 24, 2014 8:35 AM PT" on it, which is 15:35 UTC.
-> Did the article's author receive the information before or after 14:00,
-> and when exactly?
->
-> NB: Please do not provide any information on this to me in private.
-> If you're able to address my question, please do so on the list.
->
-> Thanks,
->
-> Alexander
+There's also the question of whether the security properties are well
+known, and the product does not contain any direct misrepresentation
+(e.g., stating that standard ZIP encryption is "equivalent to PGP" or
+"uses 2048-bit keys").
+
+http://en.wikipedia.org/w/index.php?title=Zip_%28file_format%29&diff=15369348&oldid=15369279
+suggests that the security properties have been known outside the
+research community since 2005, and probably the security properties
+have been widely known for much longer than that. Anyone making a
+reasonable effort to determine whether standard ZIP encryption was
+suitable for their use case could find applicable information.
+
+As a side issue, one common use case for ZIP encryption is exchanging
+files (such as virus samples) that would otherwise trigger unwanted
+content detection by a mail system's scanner. In other words, a use
+case does not necessarily have anything to do with confidentiality.
+
+> c) Default to legacy "encryption"
+
+Sometimes there are CVE assignments based on a general concept of "an
+insecure option should not be the default" but here there's the
+complication that only the insecure option has widespread cross-vendor
+compatibility. One needs to consider the support costs of changing the
+default. It's a usability decision for each vendor, based in part on
+what they know about whether their customers use encryption for
+confidentiality or for a different reason.
+
+"It would be better for everyone if every vendor changed to a good
+algorithm" isn't equivalent to "there should be a CVE for every vendor
+who hasn't changed."
+
+> calling it "ZipCrypto(insecure)" or "insecure crypto" or something alike
+
+It doesn't seem appropriate to make CVE assignments on the basis that
+a UI omits information that is arguably well known, and is not
+specific to that one product. As an extreme example, every occurrence
+of an http URL in a web browser could have a tooltip stating
+"http(insecure)" or "insecure http," and a subset of web users would
+then be safer. There is some subset of ZIP users who have dangerously
+incorrect expectations about what encryption means, and one may want
+to start an outreach effort toward ZIP product vendors who could
+attempt to address that within their UIs. This does not necessarily
+mean that the CVE project has a role in that outreach effort.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTHi9BAAoJEKllVAevmvmsLbIIALyptMlS+u9bXLtNnnoPbUW8
+ADWmZ2+q642oOA8ZOnHkOqOubxS1FBTIvNLou11TENJa25i4JkAtKU5nwi8PPX1E
+pUCnXVGubH7FgDnsdaDiZzN4Jk00llgGrRzZDPXR0daIj9dJ3kIOK5oNPdmO+Vdi
+cnCQahF7eG2XtyC8oyIDZibIMVGugDR6dYGcLZq7NYwTvUQ7Qn6sIiAlpu6aadOC
+xo41BVUCaqsc3MlCXPefhmgwY24VWhtA5Ef4lgLUCLLw9GQwyB8bn/kNAZUuZC2r
+KOvS7tuRyJnAnB3MfzEYxRnF7cR/gLnUwrvcernx0DFBNlbXrv/J75chVxGEZsE=
+=g1LU
+-----END PGP SIGNATURE-----
