@@ -1,21 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/31
-Message-ID: <609F45F8-68FE-4388-8D92-B57AA4F56508@akamai.com>
-Date: Mon, 29 Sep 2014 12:39:03 -0500
-From: "Kobrin, Eric" <ekobrin@...mai.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Florian Weimer <fweimer@...hat.com>, Tavis Ormandy <taviso@...xchg8b.com>, "chet.ramey@...e.edu" <chet.ramey@...e.edu>, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/5
+Message-ID: <20140310195801.1f0cd122@hboeck.de>
+Date: Mon, 10 Mar 2014 19:58:01 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: When is broken crypto a vulnerability?
 Content-Type: text/plain; charset=utf-8
 
-On Sep 29, 2014, at 11:59 AM, Eric Blake <eblake@...hat.com> wrote:
+Hi,
 
-> But I see no reason to move away from %% suffixing.
+I'm currently looking into the issue of ZIP encryption and I'm asking
+myself what should be considered a vulnerability.
 
-The suffix fixes the obvious CGI hole, but it leaves exposed programs in which the adversary gets to choose the variable name as well.
+Quick summary: The situation is rather horrible. There is a "legacy"
+ZIP encryption that has been broken since 1994. There are two competing
+standards for AES encryption on ZIP files, one by PKWARE, the other by
+WinZip (although the WinZip one is used by pretty much everybody and
+the PKWARE one only by PKZIP).
 
-env $'BASH_FUNC_foo%%=() { echo 123\n }' bash -c "foo"
+The 1994 attack is a known plaintext attack. There's an improved
+attack since 2001 that works in many cases without a known plaintext,
+however there's no public source implementing that. Some commercial
+tools implement this attack.
 
-I think that a more robust solution, such using a separate store for functions, is needed if function import is to survive as a feature.
+Now there are all kinds of applications doing one of the following
+things:
 
--- Eric Kobrin
+a) Just support the legacy "encryption" without any indication that
+it's broken.
+
+b) Provide an option to use AES, but they don't use it and still
+create legacy "encryption".
+
+c) Default to legacy "encryption" without any indication that
+it's broken, provide an option for AES encryption.
+
+d) Default to AES encryption, provide legacy "encryption" under various
+names like ZipEncrypt, ZIP 2.0 or similar that give no indication that
+it's broken.
+
+
+I think it should be noncontroversial that b) is a vulnerability and
+thus should get a CVE. Any disagreement here?
+
+What do you think about the others? IMHO it's always inacceptable to
+provide an "encryption" option that doesn't really encrypt. I could
+accept it if applications provide this as a compatibility option when
+there's a clear sign to the user that it's not secure (like calling it
+"ZipCrypto(insecure)" or "insecure crypto" or something alike).
+Although I'd prefer if at least enduser oriented apps wouldn't support
+insecure encryption at all.
+However, are these vulnerabilities? Should they get CVEs? I'm not sure,
+but I'd tend to give at least the a) and c) case also CVEs. We have to
+keep in mind that we're not talking about "theoretically broken/weak"
+crypto, we're talking about "you can buy software that will give you
+the password"-broken.
+
+
+Opinions wanted.
+
+(I'm sending this to oss-security, it affects all kinds of opensource
+applications, but it obviously also affects non-opensource applications)
+
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
