@@ -1,16 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/6
-Message-ID: <CACXSKC9=iK2RRQ3_Xz55bO7vVW3+LvjHdvTV_S9fvCYHGLOi_A@mail.gmail.com>
-Date: Thu, 14 Aug 2014 12:48:42 +0700
-From: Vitaly Nikolenko <vnik5287@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: ro bind mount bypass using user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/11/4
+Message-Id: <201403111142.s2BBfxv1004802@linus.mitre.org>
+Date: Tue, 11 Mar 2014 07:41:59 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: When is broken crypto a vulnerability?
 Content-Type: text/plain; charset=utf-8
 
-just wanted to mention that the test script was also submitted in this
-commit
-https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=db181ce011e3c033328608299cd6fac06ea50130
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Ubuntu 14.04.1, mounting with MS_REMOUNT | MS_BIND (within a user
-namespace) resets nosuid, nodev, noexec flags.
+>> It's not completely clear what you mean. If it were a logic error in
+>> the code, e.g., menu choice 2 of "AES encryption" is selected but the
+>> code calls the function intended for menu choice 1 of "standard
+>> encryption," then a CVE could be assigned to the specific codebase
+>> that has that logic error.
 
+> Yes, that's exactly what I meant.
+> One product, it's already disclosed to the vendor and I will publish
+> details shortly. So we agree this one gets a CVE.
+
+This logic error issue was assigned CVE-2014-2319.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTHvSnAAoJEKllVAevmvmsXL8IALjFY7yhR0nyZDyqv7Wpi0DQ
+F9ie5JCp4JINw8WDVZys78L7Ssquakc6I1jEOhOkbCSlmFM3DJ4bCRbZgr8Fl+hV
+Llu0zDKGK4u5s6Dgx4kBgwQkN/5VKfjTLtNuCNHr1FWPVPYbRnskTQTnbWljYpfC
+ovGAx+7ZaSyomyZ701TOSEVocsSPVo/Oppfb6P7InsurGQx+V8ZQI0xO89fuffZ/
+NdnaBnGicj/i7XAh9ibGE++JDN2wvXmwHraK2z1plKx+eEfFt6174yu4DkcsYcHR
+4tztg+5lNsVr7d9BK5y8fCYI777M+ajShDZnkqMAxoPgaOgoExZS/YQVOusfReg=
+=SgGd
+-----END PGP SIGNATURE-----
