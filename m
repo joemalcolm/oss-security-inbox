@@ -1,47 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/1
-Message-ID: <53F5923F.5000402@redhat.com>
-Date: Thu, 21 Aug 2014 16:31:27 +1000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/11/1
+Message-ID: <531E5A9E.7050806@redhat.com>
+Date: Tue, 11 Mar 2014 11:36:46 +1100
 From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: possible overflow in vararg functions
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: Re: Re: possible CVE requests: perltidy insecure temporary file usage
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+> This question might be relatively unimportant because O_EXCL|O_CREAT
+> was only used in the IO::File->new call for choosing a filename.
+> O_EXCL|O_CREAT wasn't used in IO::File->new call that came immediately
+> after the make_temporary_filename call. This, for example, doesn't
+> cover the case of a mode 0777 current working directory.
 
-An overflow was reported to have been fixed in Lua 5.2.2. A reproducer 
-and patch are available from:
-
-http://www.lua.org/bugs.html#5.2.2-1
-
-The reproducer affects older versions too (such as 5.1.4). One way an 
-attacker could trigger this issue is if they can control parameters to a 
-loadstring call (an eval in Lua, http://en.wikipedia.org/wiki/Eval#Lua).
-
-Could a CVE please be assigned if one has not been already?
-
-Some notes:
-
-valgrind shows this crashes with invalid writes, but I am not sure if 
-this is really a stack or heap overflow but something else. In 
-luaD_precall():
-
-330       for (; n < p->numparams; n++)
-331         setnilvalue(L->top++);  /* complete missing arguments */
-
-This goes through 49 times with the reproducer (?possibly lifting what 
-Lua thinks is the stack into the heap area?).
-
-After that finishes:
-
-333       ci = next_ci(L);
-
-Results in a call to luaE_extendCI(), where the issue is triggered while 
-attempting to call luaM_new() (I did not get further than this yet).
-
-Thanks,
+Thanks for explaining this, I had misunderstood that part.
 
 --
-Murray McAllister / Red Hat Product Security
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1132304
+Murray McAllister / Red Hat Security Response Team
