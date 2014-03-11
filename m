@@ -1,40 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/4
-Message-ID: <20141009005417.GF12633@sentinelchicken.org>
-Date: Wed, 8 Oct 2014 17:54:17 -0700
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/11/6
+Message-ID: <20140311170931.GM18088@dhcp-25-225.brq.redhat.com>
+Date: Tue, 11 Mar 2014 18:09:32 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: Chris Palmer <snackypants@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0131 -- kernel: net: use-after-free during segmentation with zerocopy
 Content-Type: text/plain; charset=utf-8
 
-> > Well, I think we can all think of a few options, some more portable
-> > than others.  The current namespace change is one option, obviously,
+On Tue, Mar 11, 2014 at 09:50:45AM -0700, Chris Palmer wrote:
+> It would be nice to clarify this bug description. It's a kernel memory
+> disclosure bug (not a memory leak in the sense of failing to collect
+> garbage).
+
+Correct.
+
+> Although UAF is often worse than that, it's not in this case,
+> because there's 0 chance the after-free-user of the fragment will think the
+> fragment is bigger than it is and subsequently write too much data into it.
+> Is that right?
+
+The after-free-user is a reader, not a writer.
+
+> On Mar 10, 2014 9:41 AM, "Petr Matousek" <pmatouse@...hat.com> wrote:
 > 
-> But that's not really separating code and data, right? It doesn't feel
-> like it follows the spirit of this phrasing:
-> 
-> "When an existing construct in a system is widely expected to be used
-> for storing data, avoid overloading it for use of storing code."
-> 
-> ...because it very much overloads the syntax to store code alongside
-> with the data, in a way that theoretically shouldn't but in practice
-> may collide. It's not a whole lot better than the "separation" of CSS
-> and JS in HTML, in the sense that both of them are sort of guarded by
-> delineated by specific syntax structures.
+> > A flaw was found in the way segmentation was performed on skbs
+> > originated from vhost-net when zerocopy feature was enabled.
+> >
+> > This flaw could be potentially used to leak kernel memory.
+> >
+> > Upstream patch submission:
+> > http://marc.info/?l=linux-netdev&m=139446896921968&w=2
+> >
+> > --
+> > Petr Matousek / Red Hat Security Response Team
+> > PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+> >
 
-I think you're taking on a too rigid mindset here.  Taking the
-phrasing too literally.
-
-
-All code *is* data.  Machine code is bytes in memory, which is data.
-Therefore code is a subset of data.  No matter where you put it, it's
-mixed in that highly abstract sense.  In hardware architectures we
-designate certain pieces of memory to store code and others to store
-things that aren't instructions.  This is fine.  It is mostly well
-defined and people have reasonable expectations about this
-designation.  Same thing with environment variables that have
-designated purposes/namespaces/whatever.  The problem comes about when
-you have no designation and no expectation of which is which.
-
-
-tim
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
