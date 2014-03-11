@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/16
-Message-Id: <201402121625.s1CGPoPj013740@linus.mitre.org>
-Date: Wed, 12 Feb 2014 11:25:50 -0500 (EST)
-From: cve-assign@...re.org
-To: geissert@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request? buffer overflow in socket.recvfrom_into
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/11/2
+Message-ID: <CALi+ztG62mH0A0=wgUCzxjpkAcDSvEQBiBscHLCDzNtFf-LfnA@mail.gmail.com>
+Date: Mon, 10 Mar 2014 21:05:47 -0700
+From: Chris Palmer <snackypants@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: When is broken crypto a vulnerability?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Mar 10, 2014 at 2:48 PM, Hanno Böck <hanno@...eck.de> wrote:
 
-> A bug has been reported in python, where socket.recvfrom_into "fails to
-> check that the supplied buffer object is big enough for the requested read
-> and so will happily write off the end". Ryan Smith-Roberts goes on to say
-> "while very highly unlikely it's technically remotely exploitable".
+> It ultimately comes down to this: Do we consider "encryption" to be a
+> term that means "secure encryption" (something like AES) or would we
+> also consider a vigenere cipher "encryption"?
+> I'd vote that calling a well-known broken cipher "encryption" is a
+> misrepresentation and a possible risk.
 
-> http://bugs.python.org/issue20246
+We know that people want (at least) data confidentiality when they opt
+to use an "encryption" feature. Why play word games? A failure to help
+people understand what is available and what is not available leads to
+vulnerabilities. We can no longer pretend that UX is unrelated to
+technical security concerns.
 
-Use CVE-2014-1912.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS+6AqAAoJEKllVAevmvmsiYAIAId5xbsDyWv0ePAFbmlhaWRn
-sswPyMCmN1hDNi+LOL0RoArS2PvgLRYr89ye9oYLAmAvwObcfq2hko2k1mgKsMwM
-BcZs/xjEKQMQy57PdSoAf3NSYvY7QLwxRobtY0UqTUMHERVtgSsxNGp7XqBpZLHu
-wbY2e5sJf0vIPKuIvUkgONhouE8fzVeaolHCkKGKvAvlseuohn08NLNjNx9r5gWD
-SN0tmqckRgLhV5PO6RLjv+6Jm5aaTxM7v6fhvix8oYGuMA8kY8pj9j6v2KTOGrKZ
-AKlQE16EdUCthDV87cM9Kyynqf4jwlc1thoJfv6rcKXv9/V2LNLGy8RL86YtjWU=
-=8tWP
------END PGP SIGNATURE-----
+-- 
+http://noncombatant.org/
