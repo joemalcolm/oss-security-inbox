@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/43
-Message-ID: <20141120204709.GA20963@kludge.henri.nerv.fi>
-Date: Thu, 20 Nov 2014 22:47:09 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/11/5
+Message-ID: <CALi+ztG4iHXeUefaW7b3JWwBEUco+emA-qC3sW+WLc_cqRyFTA@mail.gmail.com>
+Date: Tue, 11 Mar 2014 09:50:45 -0700
+From: Chris Palmer <snackypants@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: WordPress 4.0.1 Security Release
+Subject: Re: CVE-2014-0131 -- kernel: net: use-after-free during segmentation with zerocopy
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+It would be nice to clarify this bug description. It's a kernel memory
+disclosure bug (not a memory leak in the sense of failing to collect
+garbage). Although UAF is often worse than that, it's not in this case,
+because there's 0 chance the after-free-user of the fragment will think the
+fragment is bigger than it is and subsequently write too much data into it.
 
-https://wordpress.org/news/2014/11/wordpress-4-0-1/
+Is that right?
+On Mar 10, 2014 9:41 AM, "Petr Matousek" <pmatouse@...hat.com> wrote:
 
-WordPress 4.0.1 is now available. This is a critical security release for all
-previous versions and we strongly encourage you to update your sites
-immediately.
+> A flaw was found in the way segmentation was performed on skbs
+> originated from vhost-net when zerocopy feature was enabled.
+>
+> This flaw could be potentially used to leak kernel memory.
+>
+> Upstream patch submission:
+> http://marc.info/?l=linux-netdev&m=139446896921968&w=2
+>
+> --
+> Petr Matousek / Red Hat Security Response Team
+> PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+>
 
-Can I get CVEs for vulnerabilities fixed in this release, thank you. I am not
-sure if some or any of these has been requested already.
-
-- ---
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlRuU00ACgkQXf6hBi6kbk9MSQCeJRvE3tM2WimZQRnieLE9sghw
-+/sAn05t1pIstiyak4tGZBDrySEMqnt8
-=LQyo
------END PGP SIGNATURE-----
