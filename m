@@ -1,39 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/10
-Message-ID: <20140319150403.GJ2551@sivokote.iziade.m$>
-Date: Wed, 19 Mar 2014 17:04:03 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/11
+Message-Id: <201403121503.s2CF3fuZ015701@linus.mitre.org>
+Date: Wed, 12 Mar 2014 11:03:41 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request for Quick Blind TCP Connection Spoofing with SYN Cookies
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 19, 2014 at 06:18:41PM +0400, Solar Designer wrote:
-> of CVE.  So you could consider treating or ignoring your CVE allergy
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+> Did this issue:
+> http://www.jakoblell.com/blog/2013/08/13/quick-blind-tcp-connection-spoofing-with-syn-cookies/
+> ever get a CVE or should it get one?
 
-I am pretty sure someone@...re was coauthor of the
-"responsibility RFC" which shows whose servants
-mitre are.
+There are no CVE assignments specific to that report, but
+CVE-1999-0077 is related.
 
+> Made "4 times" harder in 3.13 by these two patches:
 
-> Regarding new FD:
-> 
-> > If you ask me there should be no moderation/kickbans.
-> > IMHO this isn't effective against alleged trolls.
-> > Back in the time I was against banning n3td3v.
-> > 
-> > Maybe some sound daily quota is reasonable though.
-> 
-> Makes sense to me.  I hope whoever chooses to setup the new FD will
-> consider this idea.
-> 
-> Alexander
+This may be best interpreted as a security-hardening step that was
+made as a tradeoff against other possible functionality goals. Those
+types of issues typically don't have CVE assignments. It's not, for
+example, a case of the Linux kernel security team announcing this as a
+vulnerability fix. (We're not suggesting that the Linux kernel
+security team needs to change anything about announcement approaches.)
 
-Is it reasonable to use a public service for the list --
-outsourcing legal stuff?
+One of the side issues is:
 
-Running a mirror/torrent is much easier than running
-a mailing list, so even if stuff gets deleted it will
-be in the mirrors.
+  http://article.gmane.org/gmane.linux.network/279779
 
+says:
+
+  This patch slows down the timer used in syncookies from 1/60 Hz to 1/60/4 Hz
+  so that at any moment only two differrent timer values can be accepted.
+
+  This changes the maximum cookie age limit from 4 - 5 minutes to 4 - 8 minutes.
+
+but the actual accepted patch was:
+
+  https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8c27bd75f04fb9cb70c69c3cfe24f4e6d8e15906
+
+  tcp: syncookies: reduce cookie lifetime to 128 seconds
+
+If we understand this correctly, this is a direct tradeoff against
+usability on slow network connections, possibly including connections
+to the moon or Mars. Admittedly a different protocol or other tuning
+might be needed for successful network sessions to Mars; the point is
+that the patch is a behavior change that may often make spoofing more
+costly, but is not really a "fix for a vulnerability." The blog post
+suggests that even the patched code could realistically allow a
+successful spoof within much less than an hour.
+
+Similarly, http://article.gmane.org/gmane.linux.network/281265
+suggests other tradeoffs in other parts of the 3.13 changes, e.g.,
+
+  Some services are secure enough at application level and don't
+  care at all about TCP connection spoofing. These can use the
+  sysctl to revert back to the MSS table we have now (or anyting
+  that better serves their traffic).
+
+  Other services are not so secure and some MSS values can be
+  sacrified to mitigate the risk. With a smaller MSS table, tuning
+  the values for specific traffic may make even more sense.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTIHXqAAoJEKllVAevmvms7XkH/0B+ITSUUffLjFGOv4ubHhsY
+L2Ksq/H8riFL78surEY7LD3sU6a/k7JNJecqEAvRsB1f7mI63hsKqiHOFx1VxULD
+K7xKUGpUEYrhXfWu/HBAEXzzTXy+RmPrfdofeiTOMI7Tk6FXWtBXAOYvf24tgTH9
+7/pj6dixuUdZwfX+O78gf/pUWrCgS2dPyVZhxdXvBErUtZq81zEX9XY55r2cixVL
+XBmVU3CEzXYkpGVKG+Deja0BUm8jnzKQJW85Pq/mE3G7ZOjo0huNJXfVb+PiipjH
+dKUvs2rbDnJV7xexQSP/Lv0LXxuBvMY1fIsDMXOHmf/AbAztW/AdJrhPsmUuglg=
+=/J2Y
+-----END PGP SIGNATURE-----
