@@ -1,24 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/6
-Message-ID: <20140808140013.GA5441@kroah.com>
-Date: Fri, 8 Aug 2014 07:00:13 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/2
+Message-ID: <20140312095628.GC22894@suse.de>
+Date: Wed, 12 Mar 2014 10:56:28 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: Re: Re: CVE request: claws-mail vcalendar plugin stores user/password in cleartext
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 08, 2014 at 09:56:34AM -0400, Daniel Kahn Gillmor wrote:
+On Wed, Mar 12, 2014 at 08:33:45AM +0000, Paul wrote:
+> On Mon, 10 Mar 2014 14:31:34 -0600
+> "Vincent Danen" <vdanen@...hat.com> wrote: 
 > 
-> For example, you could register keyboards by serial number with the
-> system,
+> > Subject pretty much says it all.  It's not a very exciting flaw but
+> > was brought to our attention.
+> > 
+> > References:
+> > 
+> > http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3099
+> > https://bugzilla.redhat.com/show_bug.cgi?id=1074683
+> 
+> I believe that a CVE request for this is probably overkill.
+> 
+> The vCalendar plugin does not support login credentials when
+> subscribing to a WebCal.
+> 
+> The user can work around this missing feature by adding their username
+> and password to the URI, e.g.
+> https://USERNAME:MYPASSWORD@...lserver/home/USERNAME/Calendar
+> 
+> The URI is stored in clear text, hence if the user chooses to work
+> around the missing feature their un/pw will be stored in clear text.
+> 
+> Similar behaviour can be witnessed in a number of other apps. For
+> example, if I bookmark
+> https://USERNAME:MYPASSWORD@...lserver/home/USERNAME/Calendar in
+> firefox, it will save the credentials in clear text.
+> 
+> There are some apps that will store what the user enters in a
+> password field as clear text, however Claws Mail is not one of them.
+> 
+> Therefore, on the Claws Mail bug tracker, this is marked as a feature
+> request and not as a security issue.
+> 
+> with regards
 
-Most USB keyboards in the system do not have a unique serial number.
-Heck, most USB devices in the system do not have a unique serial number,
-the only USB device that is required to do so is a USB printer,
-everything else is free to not have one at all, or have the same serial
-number for all devices made of that type.
+FWIW, the calendar plugin does not do SSL safely anyway, which I would
+worry more about:
+http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3105
 
-Never treat a USB serial number as "unique", except for a USB printer,
-sorry.
+Also the rssly plugin has the same issue
+www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3106
 
-greg k-h
+Note comment by author(?):
+"However, while I agree that CURLOPT_SSL_VERIFYHOST should probably be
+enabled, I do not see any usefulness in enabling CURLOPT_SSL_VERIFYPEER. I
+do not really buy into the extortion racket that certificate authority
+companies run."
+
+(The main claws-mail has different and very extensive ssl / certificate
+ handling, a bit large to review quickly for me right now.)
+
+Ciao, Marcus
