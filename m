@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/1
-Message-ID: <CANDc0NLf5N6tTgsWaKQyaivUSDaBm5076t1VHBZQgsLR5100bQ@mail.gmail.com>
-Date: Fri, 18 Apr 2014 10:14:16 +0800
-From: Eduardo Tongson <propolice@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/8
+Message-ID: <20140312115010.GA21476@openwall.com>
+Date: Wed, 12 Mar 2014 15:50:10 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Nagios Remote Plugin Executor <= 2.15 Remote Command Execution
+Subject: Re: Fw: Re: IMAP STARTTLS sniff tool
 Content-Type: text/plain; charset=utf-8
 
-Details: http://seclists.org/fulldisclosure/2014/Apr/240
-This is similar to CVE-2013-1362
+Hi Bob,
 
-Is there a CVE already assigned for this issue?
+On Wed, Mar 12, 2014 at 12:05:19PM +0100, Bob Ezrin wrote:
+> we solved the problem with https://github.com/ipopov/starttls-mitm.
 
-Fix:
+Thanks for letting the list know.  As far as I can see, you tried
+posting to the Penetration Testing list, but got no replies:
 
---- nrpe/src/nrpe.c
-+++ nrpe/src/nrpe.c
-@@ -42,7 +42,7 @@ int use_ssl=FALSE;
+http://seclists.org/pen-test/2014/Mar/index.html
+http://www.securityfocus.com/archive/101
 
- #define DEFAULT_COMMAND_TIMEOUT    60            /* default timeout
-for execution of plugins */
- #define MAXFD                   64
--#define NASTY_METACHARS         "|`&><'\"\\[]{};"
-+#define NASTY_METACHARS         "|`&><'\"\\[]{};\n"
+I'm not sure what this means: too little demand for a list with such
+focus, or specifically the Penetration Testing list being non-working.
 
- char    *command_name=NULL;
- char    *macro_argv[MAX_COMMAND_ARGUMENTS];
+Either way, I'm also not sure if we want to expand the scope on
+oss-security to cover topics like this.  Probably not.
+
+Bob, it's not great that you posted this follow-up as a forward rather
+than as a reply to the same thread and with proper quoting.  This makes
+the follow-up appear as a new thread in the archives of oss-security,
+whereas the thread that you started before does not contain this
+additional follow-up.  Please be more careful with _how_ you post to
+mailing lists.
+
+http://www.complang.tuwien.ac.at/anton/mail-news-errors.html
+http://www.netmeister.org/news/learn2quote.html
+
+Alexander
