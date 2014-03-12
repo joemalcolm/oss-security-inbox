@@ -1,23 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/04/9
-Message-ID: <CAFhaWrW=Y5ZsbpCQCErw=Jh4GqLK=h1JDypS37=wRXrDokdyXQ@mail.gmail.com>
-Date: Sat, 4 Oct 2014 21:31:00 +0100
-From: Lance Davis <lancex3@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/4
+Message-Id: <201403121049.s2CAnE7Z008983@linus.mitre.org>
+Date: Wed, 12 Mar 2014 06:49:14 -0400 (EDT)
+From: cve-assign@...re.org
+To: geissert@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Two stack-based issues in freetype [NOT a request]
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 4, 2014 at 12:19 AM, Riot <rain.backnet@...il.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->
-> If anyone has a way of contacting Brian Fox, he might just have an old
-> archive of ancient versions of bash banging around which could put the
-> question to rest once and for all - at which point exactly was shellshock
-> introduced.
+> If I understood things correctly, CVE-2014-2240 is:
+> https://savannah.nongnu.org/bugs/?41697#comment0
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=0eae6eb0645264c98812f0095e0f5df4541830e6
+> 
+> While CVE-2014-2241 is:
+> https://savannah.nongnu.org/bugs/?41697#comment2
+> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=135c3faebb96f8f550bd4f318716f2e1e095a969
 
+Yes, those are the correct references for those two CVEs. We are not
+sure why "Two stack-based issues" was in the Subject line.
+CVE-2014-2241 is a reachable assertion (CWE-617) not a stack-based
+buffer overflow (CWE-121).
 
-https://www.linkedin.com/pub/brian-fox/0/74/480
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Regards
-Lance
-
+iQEcBAEBAgAGBQJTIDslAAoJEKllVAevmvmsdH0H+wW12MbIFFNVA8zeHiz4cHQ7
+nxzuHdNkKiPPhqiber0TuBVttHzg0pCLqjYPi561QplkgKevznb+cuIyU/0gBLfg
+dDIkFwj0IZALuayjFlgzXa9NLjVXt3u1YB3NZvoonTXM1UGvYhkZiLVbQQA5ecwC
+YTEPkk6A8+2iSTtKQBbYgy8iHNmWpxjZk5+ytDDOTJpt1xKjYr7+HsHGXsyUKs+7
+GRXzQiGf4L9MlVa/C1R1YXnFtujQFdNlUqDL4W7q0lF//D5+fpTrKYyPfSPrI7ZT
+4UdDohNd2nvNgu1d/4twqo3ceYtO89+nAKaAlnVk9mSHlqndqz0ShI5ylyh12T0=
+=Fovt
+-----END PGP SIGNATURE-----
