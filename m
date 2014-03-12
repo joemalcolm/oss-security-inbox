@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/11
-Message-Id: <201406271526.s5RFQUU7010376@linus.mitre.org>
-Date: Fri, 27 Jun 2014 11:26:30 -0400 (EDT)
-From: cve-assign@...re.org
-To: pmatouse@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request -- Linux kernel: sctp: sk_ack_backlog wrap-around problem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/3
+Message-ID: <CACYkhxihUc1V_CXH48FtfdKtk1FsDHOOwTDCL-ZmLodwz9Ly+w@mail.gmail.com>
+Date: Wed, 12 Mar 2014 21:36:10 +1100
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE request: claws-mail vcalendar plugin stores user/password in cleartext
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12 March 2014 20:56, Marcus Meissner <meissner@...e.de> wrote:
 
-> sk_ack_backlog value is decremented for this socket, since the initial
-> value for sk_ack_backlog is 0, after the decrement, it will be 65535,
-> a wrap-around problem happens, and if we want to establish new
-> associations afterward in the same socket, ABORT would be triggered
+> Note comment by author(?):
+> "However, while I agree that CURLOPT_SSL_VERIFYHOST should probably be
+> enabled, I do not see any usefulness in enabling CURLOPT_SSL_VERIFYPEER. I
+> do not really buy into the extortion racket that certificate authority
+> companies run."
+>
 
-> A remote attacker can block further connection to the particular sctp
-> server socket by sending a specially crafted sctp packet.
+For people that take this (somewhat valid) stance WRT CAs, the answer is to
+retrieve
+the self-signed certificate and either add it to the system's ca-trust
+store, or specify
+CURLOPT_CAINFO with a file containing the self-signed certificate.
 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=d3217b15a19a4779c39b212358a5c71d725822ee
-> https://bugzilla.redhat.com/show_bug.cgi?id=1113967
+Note that CURLOPT_CAINFO doesn't do proper pinning - this won't work with a
+CA-issued certificate unless the CA certificate was in the file too, as the
+host
+certificate would contain the CA:false basicConstraint.  That CA could
+issue another
+certificate for the host and it would be accepted.
 
-Use CVE-2014-4667.
+Disabling SSL_VERIFYPEER is as obviously broken as an inetd service calling
+gets().
+An author's claim that this is fine runs counter to users' expectation that
+enabling TLS
+provides security.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Regards,
+  Michael
 
-iQEcBAEBAgAGBQJTrYyvAAoJEKllVAevmvmspboH+wTd8u74TVDKGExKiL/GLx1n
-uJoLaVZ0CmxnO5wEYcPZR1lcACTt9+01CxD8gwe+AFp+/4lcINvexZaGgG5lBHlY
-C/D7YHxrHGPmMEwBj7Cb3E4Vo83MwDovCfK83lNprAG2QKVg54DbupzD+a5fWdH+
-8blx0/2dJB8F1YgQd1osYghi+rZyHRwQZjR2VhyQYRTNEJHMjHAY8En+gfvgFMw+
-3l+p0XfOvJHTqBk4QBFa7kslX8VWmY2gvWXv67iTjfOVlqrpVCkfFkpm2ofW/+CF
-8sq1LFu3PT8EBvW4HSKS7+BYl5k/2oC7EWpstQBN34QBOK+2k9e1h3kj+QZ9KWA=
-=U2mC
------END PGP SIGNATURE-----
