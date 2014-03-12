@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/15
-Message-ID: <20141024223832.GA29046@zoho.com>
-Date: Fri, 24 Oct 2014 22:38:32 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/13
+Message-Id: <assp.014874dd79.828D4D77-DE9E-4ED1-93EB-865FC09A65B7@trwilliams.me.uk>
+Date: Wed, 12 Mar 2014 20:46:14 +0000
+From: Thomas Williams <thomas@...illiams.me.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: strings / libbfd crasher
+Subject: Cookie Reuse
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 24, 2014 at 12:10:31PM -0700, Michal Zalewski wrote:
-> I do have a bunch more that seem exploitable, though - for example:
-> 
-> http://lcamtuf.coredump.cx/strings-bfd-badfree - does this repro for
-> people (I tried with binutils 2.24)?
+Hey guys
 
-Yes.
+Would you consider the following scenario a security flaw:
 
-> I think that given the expectations people have around what strings
-> does and whether it's safe to run on untrusted binaries, I'd seriously
-> question the wisdom of making it use libbfd, at least by default;
-> perhaps distros want to consider non-upstream patches that default to
-> the -a mode, instead?
+- User can login to an authenticated system
+- User copies the cookies that are set after they are authenticated
+- User logs out and the cookies are therefore deleted from their system
+- User can paste the previously copied cookies allowing them to re-auth without re-entering credentials
 
-Unfortunately, the buggy code can be arrived at via multiple entry
-points (e.g. objdump -p or nm on stringme, stringmetoo, and
-strings-bfd-badfree). Those are also commonly used on untrusted binaries
-(e.g. forensics). Fixing the core issues seems the way to go.
+Personally, I would feel that given the user has logged out, their expectation is that not only should the cookies be removed from their end, but essentially those cookies should no longer be accepted by the server at a later stage to re-authenticate.
 
---mancha
+If you would feel this is a vulnerability, can anyone recommend the best way to disclose this to the developer?
 
-Content of type "application/pgp-signature" skipped
+Kind regards,
+Thomas
+
+Email scanned and verified safe. 
+
+
+Content of type "text/html" skipped
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (2294 bytes)
