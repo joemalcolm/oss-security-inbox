@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/31/3
-Message-Id: <20141031061424.7ACF642E031@smtpvbsrv1.mitre.org>
-Date: Fri, 31 Oct 2014 02:14:24 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/6
+Message-Id: <201403121110.s2CBAkvY009628@linus.mitre.org>
+Date: Wed, 12 Mar 2014 07:10:46 -0400 (EDT)
 From: cve-assign@...re.org
-To: roucaries.bastien@...il.com, hanno@...eck.de
+To: larry0@...com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Request cve for imagemagick security problem
+Subject: Re: Remote Command Injection in Arabic Prawn 0.0.1 Ruby Gem
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Removing profile from jpg image create infinite loop with at least
-> 6.8.9.6 version.
-> More information https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764872
-> and fix is
-> http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26399#p116146
+> http://www.vapid.dhs.org/advisories/arabic-ruby-gem.html
 
-Use CVE-2014-8561.
+> In Arabic-Prawn-0.0.1/lib/string_utf_support.rb
 
+> If the downloaded file name #{downloaded_file} or #{url} contains any
+> shell meta characters like ';' a malicious user can inject shell
+> commands.
 
-> Out-of-bound memory error in DCM decode has no CVE yet (if CVE
-> assigners read this they may assign one).
-
-Use CVE-2014-8562.
+Use CVE-2014-2322.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -33,11 +29,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUUygXAAoJEKllVAevmvmsQAgIALg2fB1M8QuGDrhzs0NRcc/v
-5EqEX0SGyXi6TFyd/bAG8O4c6sp0SIPgd7RWZ00XKpS26NzubmFwGUgL2TQPNxvn
-7BEIKzg8ZcMOQdXXddXFvCua+52YbysQteIqAsDTCESmZXshBPpDpdxfbMozpd9m
-LGCIDv1ATF/8LE9R/zBSjmpnLk+Trp8RQwQTTsh0YRumGUCmW03MnCBFe9J+2gnj
-8UecMPoj/IkBFL2GbUeM51d/Lk8cR4WeCGLtxCPZ//gIGOZHnQIF6L+oKg+5SgwD
-Pnr9oIaA/vEM0BEtQrISrektYqXHyc+DjuqsCoUiSU8HmAM07eLcgGqQnucC3hc=
-=xQpo
+iQEcBAEBAgAGBQJTID8nAAoJEKllVAevmvmsqx0IAJT0oDoDBciWG/V8tcBBv471
+Pbn3SCXaT0Hxh6/hGgHDAJT9qxYjLloP18Go8/j5w38QGkyQHtDSj+IvMNRWwIU0
+z8byXV7Ar1GoqcdZGugerGEFWRdrqdRGyoSsYbjD3NJpziP+YY/lUE5iQZd5jF0S
+iCENnwLZuJe1q9nz5T+N1clq7Lt+j5T271/A91HrpPWl8KO4brEdC3nP2mqaagkE
+p7a5VyJUUdIm2/bQKZeVbGqe2S+PsJhBV+6da7+56u8NOAA0GMUYYM/b3431SZDq
+ZGPdcvUu55WHZwXSuulzM+n5S5Y0MkMDuN7FGD9WZpvbAczyxwMEeEMaK3iKNT4=
+=/MsD
 -----END PGP SIGNATURE-----
