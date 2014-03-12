@@ -1,66 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/11/3
-Message-Id: <20141011215942.638773AE013@smtpvbsrv1.mitre.org>
-Date: Sat, 11 Oct 2014 17:59:42 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/12
+Message-Id: <201403121505.s2CF5kth015778@linus.mitre.org>
+Date: Wed, 12 Mar 2014 11:05:46 -0400 (EDT)
 From: cve-assign@...re.org
-To: siddharth@...hat.com
+To: stbuehler@...httpd.net
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Request for CVE assignment for tigervnc affected by similar flaws as in CVE-2014-6051 and CVE-2014-6052 of libvncserver
+Subject: Re: lighttpd 1.4.34 SQL injection and path traversal CVE request
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> I would want to get different CVE's assigned for tigervnc as it is
-> affected by similar flaws of libvncserver ( CVE-2014-6051 and
-> CVE-2014-6052 ).
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1151307
-> https://bugzilla.redhat.com/show_bug.cgi?id=1151312
+> I requested a CVE on distros, but Kurt wasn't sure whether one or
+> multiple CVE ids should be assigned
 
-First, in general, when asking for a CVE assignment for an issue
-"similar" to an existing CVE, it is very useful to provide an
-additional statement or reference indicating why the issue should not
-be mapped to the existing CVE. A difference in the product name does
-not always require a separate CVE.
+The number of CVEs doesn't necessarily depend on the number of changes
+that were required to address the reported attacks; instead, the
+number of CVEs can depend on whether issues could have been fixed
+independently. For example, the HTTP protocol specification doesn't
+require that a server validate that the Host header has the expected
+"host" or "host:port" syntax and otherwise send an error status code.
+If that were required, then there would only be one CVE.
 
-In this case, 1151307 is noted as similar to CVE-2014-6051.
-CVE-2014-6051 is a frequently seen type of mistake (width * height
-leads to integer overflow) and it's entirely plausible that this
-mistake would occur independently in different codebases that have
-related purposes.
+Here, the issues could have been fixed independently, e.g., SQL
+injection fixed in mod_mysql_vhost.c, and then directory traversal
+fixed in the mod_simple_vhost_docroot function in mod_simple_vhost.c
+and the mod_evhost_parse_host function in mod_evhost.c. This could
+conceivably have been chosen if someone wanted
+mod_simple_vhost.c/mod_evhost.c to have access to the original string
+(maybe anticipating that "Host: host/pathname" could become meaningful
+for vhosts in a future HTTP protocol revision, or whatever).
 
-Use CVE-2014-8240 for 1151307.
+So, there are two CVE assignments:
 
-
-Also, 1151312 is noted as similar to CVE-2014-6052. CVE-2014-6052 is a
-frequently seen type of mistake: essentially, there's a number that
-can be sent in a manner compatible with a protocol specification, and
-the number might even be sensible in an environment with huge
-resources, but the number is used for a malloc argument without
-checking whether malloc succeeds. (In other words, it's not
-necessarily worthwhile to validate the number before calling malloc.)
-It's entirely plausible that this mistake would occur independently in
-different codebases that have related purposes.
-
-Use CVE-2014-8241 for 1151312.
-
-
-MITRE didn't try to find the specific vulnerable TigerVNC code in an
-attempt to prove that that code wasn't a derivative of LibVNCServer.
-We happened to notice a piece of code that may or may not be related
-to CVE-2014-8241, and decided that it didn't look like a derivative.
-Specifically:
-
-  https://github.com/TigerVNC/tigervnc/blob/d1a853bca7a70467915b3759aa9de5e63a5e8edb/vncviewer/X11PixelBuffer.cxx#L109
-
-    xim->data = (char*)malloc(xim->bytes_per_line * xim->height);
-    if (!xim->data)
-      throw rfb::Exception(_("Not enough memory for framebuffer"));
-
-looks different from:
-
-  https://github.com/newsoft/libvncserver/commit/85a778c0e45e87e35ee7199f1f25020648e8b812
+SQL injection - use CVE-2014-2323.
+path traversal - use CVE-2014-2324.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -70,11 +44,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUOaflAAoJEKllVAevmvmsOGkIAJ9vhzofyFb6Sw8taa8+4j7X
-chPwQrbtDDXzGCd+VDW6Khf2juw8PZgSCKSpoXU8foQLRiWTTxyoEX092g8Cne9m
-69/f4EuT203AAsUo7IoBviJtRDi+lG9LqTr5VPgXhGShux/4QtTsET/Ad6a7veXX
-MibDxzS9mkyNs9rxu6gwYYVsSvsRRbIxA4pSIj/Jl3GMdeyyI8AcF9tA5NNGn7og
-uzRhtllCnaybov4as3gm2m8xz7S3CcawJmW63J8Wl3Knj8zZcL7S1G2lPT7dUmlm
-7hmunL9l74txt+Ik0M/r8VyGHDMHjkM6hLmnbnbOS0gYzRNH4JTNb/afBYWhiEM=
-=5TIi
+iQEcBAEBAgAGBQJTIHajAAoJEKllVAevmvmstNoH/1Dd2ejZGVReh2d9HVAM9Vun
+jYHPRbLdIaZLPewt4OiMJkMWPR0XqMc3FZqucw3NUlnaGJ4iY+BxJoKn6e7Xelws
+JBggVjdX+RMqPeRWNHNAyamPd80FZrOai5dil4QUG7Zv1L5nNV+jl8bUpQBw5nAj
+zRM+insdgJVKtr7nR0mBKRLr84kZ1pU2A9uW2qWABl5/oScuC/pkdcOJYzTYEtUX
+eSC3UPF2TIfhchrfmHKEeqi/wwQ3m3R2DyaWVAV5u9F/I5GzAVR7catxGCSN5Qd8
+mml6VhYvIkpp03Y3Q3ZX18N3DELIOX/vfN5OYXxVf6Ab54rrj3I7G0xCTQ6JURM=
+=TjxJ
 -----END PGP SIGNATURE-----
