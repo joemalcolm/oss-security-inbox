@@ -1,49 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/3
-Message-ID: <20140617113259.GA26999@openwall.com>
-Date: Tue, 17 Jun 2014 15:32:59 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/9
+Message-ID: <20140312132336.45b7c3b6@chromobil.localdomain>
+Date: Wed, 12 Mar 2014 13:23:36 +0100
+From: Stefan Bühler <stbuehler@...httpd.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: transparency on message moderation
+Subject: lighttpd 1.4.34 SQL injection and path traversal CVE request
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jun 08, 2014 at 03:16:31PM -0400, Josh Bressers wrote:
-> > general.  I also like to take this opportunity to thank Kurt Seifried,
-> > Josh Bressers, and Vincent Danen for their help approving obviously
-> > on-topic oss-security postings sometimes quicker than I do.
+Hi,
+
+Jann Horn reported a MySQL injection vulnerability in lighttpd [1] (a
+lightweight webserver) version 1.4.34 (and earlier) through a
+combination of two bugs:
+
+* request_check_hostname is too lax: it allows any host names starting
+  with [ipv6-address] followed by anything but a colon, for example:
+
+  GET /etc/passwd HTTP/1.1
+  Host: [::1]' UNION SELECT '/
+
+* mod_mysql_vhost doesn't perform any quoting; it just replaces ? in
+  the query string with the hostname.
+
+
+mod_evhost and mod_simple_vhost are vulnerable in a limited way too; a 
+pattern: evhost.path-pattern = "/var/www/%0/" with a host
+"[]/../../../" leads to document root of "/var/www/[]/../../../", but
+as "/var/www/[]" usually doesn't exists this fails (this might depend
+on the operating system in use).
+If there exist directories like "/var/www/[...]" for IPv6 addresses as 
+host names (or a user can create them) mod_evhost and mod_simple_vhost 
+are vulnerable too.
+
+mod_status, mod_webdav and a global redirect handler use the host name 
+without escaping too; in this case the client just gets the broken data 
+back - the attacker doesn't gain anything here.
+
+See our advisory for more details:
+http://download.lighttpd.net/lighttpd/security/lighttpd_sa_2014_01.txt
+
+I requested a CVE on distros, but Kurt wasn't sure whether one or 
+multiple CVE ids should be assigned, and had some questions:
+
+---
+On Tue, 11 Mar 2014 14:58:53 -0600
+Kurt Seifried <kseifried@...hat.com> wrote:
+> [...] This appears
+> to be a messy CVE in the sense of intersecting vulnerabilities, but it
+> looks like we also have multiple vulns:
 > 
-> I can't take credit for this. I'm probably the worst list moderator ever.
-> It would certainly make sense to have someone replace me as a moderator,
-> probably not from Red Hat to help avoid any possible conspiracies.
+> 1) request_check_hostname filtering  
 
-Josh, I do recall you wanted to resign as a co-moderator a while ago,
-and it makes sense for us to have a new co-moderator from neither
-Openwall nor Red Hat, and preferably not from a for-profit Linux
-company.  For example, someone from Debian or a *BSD could be OK, or
-some active oss-security contributor who is not with any distro.
+Yes.
 
-IIRC, a long while ago Henri Salo expressed an interest (in private
-e-mail to me) in contributing to this sort of activities.  Henri, would
-you like to help co-moderate oss-security - which currently means only
-approving obviously-desirable messages, and leaving everything else to
-me?  What are your current affiliations (e.g., any Linux distro)?
+> 2) mod_mysql_vhost doesn't perform any quoting - is there any way to
+> get data to it beyond the request_check_hostname? (I'm guessing no
+> known ways, but maybe in future one is found?)  
 
-On Sun, Jun 08, 2014 at 07:27:11PM -0400, rea wrote:
-> I have no stake in the game. If you need a hand just let me know.
+It only uses the hostname as "input", and I can think of only 3 sources:
+* Host: header
+* request line: METHOD scheme://hostname/... HTTP/1.1
+* config file
 
-Thanks rea, but as far as I can tell this is the very first time you
-posted to oss-security.  While the task of approving obviously-desirable
-messages quickly is simple enough that I think you'd manage well, I
-think it's better for us to choose a co-moderator who has been actively
-contributing to discussions on oss-security.
+I think the first two get validated with request_check_hostname.
 
-I've also received an offer off-list from someone who is with a
-for-profit Linux-related company.  While I appreciate the offer greatly,
-I think it's preferable for our new co-moderator to have no such
-affiliation.  I'm confident this doesn't actually matter for how the
-messages are processed (as long as I'm involved and I see the lack of
-abusive delays), but I guess it might matter for the confidence of
-others who don't have this sort of direct visibility into how message
-moderation is done.
+> 3) mod_evhost and mod_simple_vhost are potentially vuln as well - this
+> one seems less likely as you need the specific config pattern for the
+> directory, so request_check_hostname should be the only concern
+> right?  
 
-Alexander
+Actually if you have "vhost" directories (or a user can create them)
+like "[::]" (or real IPv6 addresses) they both are vulnerable to path
+traversal.
+
+> 4) mod_status, mod_webdav and a global redirect handler use the host
+> name  without escaping too; in this case the client just gets the
+> broken data  back - the attacker doesn't gain anything here.
+> 
+> can #4 be used for anything like HTTP response splitting? XSS?  
+
+In this case the HTTP request would already be splitted afaics.
+---
+
+Imho the main bug is in request_check_hostname; it doesn't seem wrong 
+for a module to rely on valid hostnames. They don't read it from the 
+HTTP header list but use a special variable "uri.authority".
+
+While we added hardening (quoting) in the mysql module, we did not 
+harden mod_evhost and mod_simple_vhost - they'll be relying on
+request_check_hostname.
+
+Could you please assign one or multiple CVE ids?
+
+Regards,
+Stefan
