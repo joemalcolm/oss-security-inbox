@@ -1,53 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/4
-Message-ID: <20140216142844.GC8901@symphytum.spacehopper.org>
-Date: Sun, 16 Feb 2014 14:28:44 +0000
-From: Stuart Henderson <stu@...cehopper.org>
-To: oss-security@...ts.openwall.com
-Cc: "CERT(R) Coordination Center" <cert@...t.org>
-Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/1
+Message-ID: <20140312083345.7abb8419@thewildbeast>
+Date: Wed, 12 Mar 2014 08:33:45 +0000
+From: Paul <paul@...ws-mail.org>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: claws-mail vcalendar plugin stores user/password in cleartext
 Content-Type: text/plain; charset=utf-8
 
-On 2014/02/16 01:03, Solar Designer wrote:
-> Hi Will and all,
+On Mon, 10 Mar 2014 14:31:34 -0600
+"Vincent Danen" <vdanen@...hat.com> wrote: 
+
+> Subject pretty much says it all.  It's not a very exciting flaw but
+> was brought to our attention.
 > 
-> On Tue, Feb 11, 2014 at 04:37:21PM -0500, CERT(R) Coordination Center wrote:
-> > Thoughts?  What is stopping you from enabling PIE for everything, at
-> > least on the x86_64 platform?
+> References:
 > 
-> Laziness, other priorities.  We should do it.
-> 
-> There might be examples of runtime generated (JIT) code or
-> bytecode-alike caching across program invocations, where the generated
-> code would reference functions/callbacks in the main program and would
-> thus depend on the program staying where it was during code generation -
-> but I am unaware of specific examples of that.  Anyhow, this is going to
-> be very rare and it's not a reason not to build a distro's packages as
-> PIE by default (exceptions may then be made).
+> http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3099
+> https://bugzilla.redhat.com/show_bug.cgi?id=1074683
 
-By the way, OpenBSD has switched compilers to generating PIE code by
-default on the majority of architectures, various arch's over the last
-couple of releases, but as of a couple of months ago we've also done
-this for i386 (x86) too, so I can give some specific examples of
-where you can expect to run into problems.
+I believe that a CVE request for this is probably overkill.
 
-On amd64 (x86_64) fallout has been mostly limited to compilers and a
-couple of other programs, e.g. emacs, qemu, clisp, erlang, ghc, sbcl,
-which we are building with PIE disabled.
+The vCalendar plugin does not support login credentials when
+subscribing to a WebCal.
 
-Additionally for i386 there have been problems with register pressure
-on programs with their own asm code (mostly games), in particular
-code doing cpuid checks often doesn't save/restore %ebx, but there
-have been some others. In one case there was code for x86 OSX which
-avoids scribbling on %ebx which we've been able to borrow, and I think
-there were one or two where we've switched from asm to a generic C
-implementation. Of course, shared libraries already have to take
-this into account so not too much trouble there.
+The user can work around this missing feature by adding their username
+and password to the URI, e.g.
+https://USERNAME:MYPASSWORD@...lserver/home/USERNAME/Calendar
 
-Everything else, base system and ports, is built with PIE.
-On the whole, experiences have been pretty good. Obviously there is
-some performance impact but we haven't yet had any reports of this
-causing major problems (though we will probably know more about this
-after 5.5 is released when the average user will first see i386
-packages built with PIE by default).
+The URI is stored in clear text, hence if the user chooses to work
+around the missing feature their un/pw will be stored in clear text.
 
+Similar behaviour can be witnessed in a number of other apps. For
+example, if I bookmark
+https://USERNAME:MYPASSWORD@...lserver/home/USERNAME/Calendar in
+firefox, it will save the credentials in clear text.
+
+There are some apps that will store what the user enters in a
+password field as clear text, however Claws Mail is not one of them.
+
+Therefore, on the Claws Mail bug tracker, this is marked as a feature
+request and not as a security issue.
+
+with regards
+
+Paul
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
