@@ -1,18 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/1
-Message-ID: <21216.58480.835476.961700@gargle.gargle.HOWL>
-Date: Thu, 23 Jan 2014 10:44:16 +0100
-From: rf@...eap.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/7
+Message-ID: <20140312110519.131780@gmx.com>
+Date: Wed, 12 Mar 2014 12:05:19 +0100
+From: "Bob Ezrin" <bezrin@....com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership
+Subject: Fw: Re: IMAP STARTTLS sniff tool
 Content-Type: text/plain; charset=utf-8
 
->>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+Hi all,
+we solved the problem with https://github.com/ipopov/starttls-mitm.
 
-    SD> Meanwhile, please add Qlustar info to:
+B.
+----- Original Message -----
+From: Bob Ezrin
+Sent: 03/07/14 10:07 AM
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] IMAP STARTTLS sniff tool
 
-    SD> http://oss-security.openwall.org/wiki/vendors
+Many thanks, I will try it!!!
 
-Done.
+B.
+----- Original Message -----
+From: Solar Designer
+Sent: 03/07/14 09:56 AM
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] IMAP STARTTLS sniff tool
 
-Roland
+Hi, On Fri, Mar 07, 2014 at 09:37:01AM +0100, Bob Ezrin wrote: > Hi all. We managed succesfully to sniff inside POP3S, SMTPS, IMAPS & HTTPS tunnels using arpspoof, iptables & sslsplit to make MITM. Now we want to sniff inside STARTTLS tunnels (specifically IMAP) but unfortunately sslsplit doesn't supports STARTTLS. Is there/do you know another SSL/TLS tool supporting IMAP over STARTTLS to make MITM? Many thanks B. Sorry for not addressing your (mostly off-topic) question directly (I don't know the answer), but it got me wondering what the most appropriate mailing list would be for this sort of topics. We mostly haven't been using the oss-security list for such topics so far, and it is unclear whether such broader scope is desirable or not. In part, this might depend on whether there exists a more suitable list or not. I'd think that maybe the Penetration Testing list could be it: http://www.securityfocus.com/archive/101/description http://seclists.org/pen-test/ but it appears rather inactive lately. Yet I think it's worth posting the question in there, at least to see if the list is currently usable (would anyone reply?) Bob, can you try that? Opinions? Alexander
+
