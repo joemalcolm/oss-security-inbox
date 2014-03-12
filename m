@@ -1,67 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/3
-Message-ID: <54705A39.6020000@debian.org>
-Date: Sat, 22 Nov 2014 09:41:13 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/15
+Message-ID: <87eh272k5l.fsf@windlord.stanford.edu>
+Date: Wed, 12 Mar 2014 14:15:34 -0700
+From: Russ Allbery <eagle@...ie.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Off-by-one question
+Subject: Re: Cookie Reuse
 Content-Type: text/plain; charset=utf-8
 
-On 22/11/14 06:28, Joshua Roers wrote:
-> I'm just wondering, is it possible to use strncpy to overwrite memory
-> addresses?
+Thomas Williams <thomas@...illiams.me.uk> writes:
 
-It is possible to use anything that writes through a pointer to
-overwrite memory addresses, if you use it incorrectly.
+> Would you consider the following scenario a security flaw:
 
->> char buf[4];
->> strncpy(buf, "Four", sizeof(buf));
+> - User can login to an authenticated system
+> - User copies the cookies that are set after they are authenticated
+> - User logs out and the cookies are therefore deleted from their system
+> - User can paste the previously copied cookies allowing them to re-auth
+>   without re-entering credentials
 
-buf = { 'F', 'o', 'u', 'r' }
+> Personally, I would feel that given the user has logged out, their
+> expectation is that not only should the cookies be removed from their
+> end, but essentially those cookies should no longer be accepted by the
+> server at a later stage to re-authenticate.
 
-There is no write overflow into the next thing on the stack after buf,
-unless I'm missing something important, because "The strncpy() function
-shall copy not more than n bytes" (strncpy(3posix), derived from
-POSIX.1-2001).
+Many bearer token systems have this security property, which is also
+shared with (e.g.) Kerberos tickets.  I think it's a security property to
+be aware of, but I don't think it's a vulnerability unless the software
+advertises otherwise.
 
-However, buf is not 0-terminated yet, so printf("%s\n", buf) at this
-point would output arbitrary memory contents from buf until the next 0
-byte - a read overflow.
+Invalidating issued tokens prior to their expiration time requires storing
+central session state or some revocation list equivalent, which may be an
+undesireable or burdensome requirement for the security system as a whole.
+Bearer tokens with expirations but without central session state
+(Kerberos, for example) have some useful properties that cannot be easily
+replicated by state-tracking systems, at the cost of making logout prior
+to token expiration require destruction of all session keys.
 
->> buf[sizeof(buf)-1] = '\0';
-
-buf = { 'F', 'o', 'u', '\0' }
-
->> printf("%s\n", buf);
-
-outputs "Fou" with no read or write overflow
-
-> will strncpy write beyond the memory of 'buf', and set it to NUL?
-
-"If there is no null byte in the first n bytes of the array pointed to
-by s2, the result is not null-terminated." -strncpy(3posix) again
-
-> From my understanding from
-> http://cwe.mitre.org/data/definitions/193.html, it would.
-
-I think the statement "the strncpy will add a null terminator to each
-character array" in Example 2 is incorrect, unless there is an
-implementation of strncpy() on some platform with behaviour other than
-what POSIX says (I haven't checked the original specification of
-strncpy(), which is ISO C).
-
-However, "if the character arrays are output to the user through the
-printf method the memory addresses at the overflow location may be
-output to the user" is correct.
-
-In Example 3, unlike Example 2, I think there is really a memory write
-vulnerability: "The code does not account for the null character that is
-added by the second strncat function call". strncat() is not like
-strncpy(): it can write at most n+1 bytes.
-
-The devil is in the details with this stuff. Prefer to use your
-favourite runtime library's automatically-sized-string-buffer class
-instead of ISO C string manipulation where possible.
-
-    S
-
+-- 
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
