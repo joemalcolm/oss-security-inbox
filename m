@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/15/4
-Message-ID: <alpine.LFD.2.10.1404152311020.3927@javelin.pnq.redhat.com>
-Date: Tue, 15 Apr 2014 23:20:49 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request Qemu: out of bounds buffer access, guest triggerable via IDE SMART
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/5
+Message-ID: <CAA7hUgFVptaAH5bSPu0JRrD9V2NV5TSmfJ8guioFoEQFYOWvdw@mail.gmail.com>
+Date: Wed, 12 Mar 2014 11:59:14 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Two stack-based issues in freetype [NOT a request]
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+Hi,
 
-An out of bounds memory access flaw was found in Qemu's IDE device model. It 
-leads to Qemu's memory corruption via buffer overwrite(4 bytes). It occurs 
-while executing IDE SMART commands.
+On 12 March 2014 11:49,  <cve-assign@...re.org> wrote:
+>> If I understood things correctly, CVE-2014-2240 is:
+>> https://savannah.nongnu.org/bugs/?41697#comment0
+>> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=0eae6eb0645264c98812f0095e0f5df4541830e6
+>>
+>> While CVE-2014-2241 is:
+>> https://savannah.nongnu.org/bugs/?41697#comment2
+>> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=135c3faebb96f8f550bd4f318716f2e1e095a969
+>
+> Yes, those are the correct references for those two CVEs. We are not
+> sure why "Two stack-based issues" was in the Subject line.
+> CVE-2014-2241 is a reachable assertion (CWE-617) not a stack-based
+> buffer overflow (CWE-121).
 
-A guest's user could use this flaw to corrupt Qemu process's memory on the 
-host.
+Mistake from my side, I later corrected it when filing the Debian bug report:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=741299
 
-Upstream fix:
--------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2014-04/msg02016.html
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
