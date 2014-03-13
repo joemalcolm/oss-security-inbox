@@ -1,36 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/15
-Message-Id: <201401291914.s0TJEAlk006201@linus.mitre.org>
-Date: Wed, 29 Jan 2014 14:14:10 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, pmatthaei@...ian.org
-Subject: Re: CVE Request: otrs: CSRF issue in customer web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/13/7
+Message-ID: <15524688.y9mmZntoOB@devil>
+Date: Thu, 13 Mar 2014 23:16:07 +0100
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, meissner@...e.de
+Subject: Re: Re: CVE request for icinga 1 byte \0 overflows
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thursday 13 March 2014 15:30:31 cve-assign@...re.org wrote:
+> > The icinga team silently fixed some single byte \0 overflows.
+> > 
+> > https://git.icinga.org/?p=icinga-core.git;a=commitdiff;h=73285093b71a5551a
+> > bdaab0a042d3d6bae093b0d
+> > 
+> > (also the non public
+> > https://dev.icinga.org/issues/5663
+> > is referenced by commit above)
+> 
+> Use CVE-2014-2386.
 
-We coordinated this separately with the upstream vendor, and the
-outcome was:
+We tracked a lot of similar issues:
+https://bugs.gentoo.org/show_bug.cgi?id=fortify-source
 
-CVE-2014-1471 = https://www.otrs.com/security-advisory-2014-02-sql-injection-issue/
-
-CVE-2014-1694 = https://www.otrs.com/security-advisory-2014-01-csrf-issue-customer-web-interface/
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS6VKOAAoJEKllVAevmvmsCPIIALtbtthzewyLGa4sQp/CRC29
-8oMYwQa+AjdUSfBXZnrxZ8BqL4rQZ1y/WTHAVwUNWTInOxUXUlhGh+kIi0SXtKT6
-aDvi8rl3NYfU56j1wMe2VQVWe4QlzPJMlBhqhymZG0cEy0wY8tcDmXC7LkkKOUkF
-G0iQXeNkLBg+A8Z3EyxfSTBoLvh2AOViC3gdyNRpUXSMK2p1rwvmphygbxiIeoGZ
-xfpvpBKDDUqlsnt27irLuQzKWyFhKSfV9hpwX5bRymb30JfMxA31zeTxfuybos/9
-ZSnRc+E5KsJTPq+viT0kGKoyRyeopVl1z68CqhlOub3R+D+r5mHW4RL8Jeldj1U=
-=m2SP
------END PGP SIGNATURE-----
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
