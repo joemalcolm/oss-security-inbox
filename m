@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/1
-Message-ID: <54879BCE.9030107@gmail.com>
-Date: Tue, 09 Dec 2014 20:03:10 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/13/3
+Message-ID: <20140313131919.GB32130@suse.de>
+Date: Thu, 13 Mar 2014 14:19:19 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE request for icinga 1 byte \0 overflows
 Content-Type: text/plain; charset=utf-8
 
-On 09/12/14 11:18 AM, Steve Grubb wrote:
-> 
-> 4) Then I started wondering about the heap when you use other memory manager 
-> libraries such as jemalloc. This turned out to be interesting. You get about 
-> 19 bits of randomness using it. Its not as bad as non-PIE glibc but not as 
-> good as PIE glibc. You also got the same amount of randomness whether the app 
-> was PIE or not. This is an area ripe for more experimenting, exploiting, and 
-> patching. Supposedly some of these heap managers use mmap as the underlying 
-> allocator. So, why aren't they getting 29 bits, too? :-)
+Hi,
 
-Your measurement of the difference is quite accurate.
+I am not sure whether this needs a CVE...
 
-The page multiple constraint zaps 12 potential bits of entropy, but
-jemalloc's 4M chunk alignment increases that to 22 bits. I'm not sure
-what can be done about it because there's a very strong performance case
-for the design.
+The icinga team silently fixed some single byte \0 overflows.
 
-I sent in a fix for the MALLOC_CONF part of this at least, so an
-attacker won't be able to reduce it further:
+https://git.icinga.org/?p=icinga-core.git;a=commitdiff;h=73285093b71a5551abdaab0a042d3d6bae093b0d
 
-https://github.com/jemalloc/jemalloc/pull/174
+(also the non public
+https://dev.icinga.org/issues/5663
+is referenced by commit above)
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+I think they all go via strcpy() into known sized stack buffers, so should
+be caught by FORTIFY_SOURCE.
+
+Probably still needs a CVE.
+
+Ciao, Marcus
