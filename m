@@ -1,21 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/12
-Message-Id: <201401081801.s08I0rXT014429@linus.mitre.org>
-Date: Wed, 8 Jan 2014 13:00:53 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/13/5
+Message-Id: <201403131940.s2DJe24I028295@linus.mitre.org>
+Date: Thu, 13 Mar 2014 15:40:02 -0400 (EDT)
 From: cve-assign@...re.org
-To: larry0@...com
+To: steve@...ve.org.uk
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Paratrooper-newrelic 1.0.1 Ruby Gem exposes API key
+Subject: Re: CVE-Request - pen issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> curl ... -H "X-Api-Key: #{api_key}"
-> 
-> a malicious user can monitor the process tree and steal the API key.
+> webfile = "/tmp/webfile.html";
 
-Use CVE-2014-1234.
+> 2> /tmp/penctl.cgi
+
+Use CVE-2014-2387 for both issues involving files in the /tmp directory.
+
+
+>     3.  When a control-socket is configured (via "-C ip:port" added
+>        to the pen command line) a user who can connect to that port
+>        can
+
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=741370
+> 
+> there is no documentation implying that using a control-socket is
+> dangerous.
+
+> pen.1
+> 
+> -C \fIport\fR
+> Specifies a control port where the load balancer listens for commands.
+
+This seems to be an opportunity for security improvement, not a
+vulnerability. It appears that the design goal was to listen for
+commands in a way that could be acceptable on a server with
+sufficiently restricted access, and not acceptable in arbitrary
+environments. "port where the load balancer listens for commands" seems
+sufficiently descriptive for a reasonable person to immediately wonder
+who can send commands. Furthermore, the example in question:
+
+  sudo pen 4444 localhost:9000 -C 127.0.0.1:5043
+
+suggests that the person is aware that "a control port" means a TCP
+port, not some other type of port with obvious permission-based
+restrictions. A CVE assignment could be made if there were an
+implementation error (e.g., the user specifies listening on 127.0.0.1
+but the code actually listens on all interfaces). A CVE assignment
+might also be possible for some types of design problems, but they'd
+need to be considerably more surprising and the documentation would
+need to be considerably more misleading.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -25,11 +59,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJSzZHhAAoJEKllVAevmvmsAw0H/196zSQmOtll/0ES/trWM3tv
-FNIFbvE4aPj2u+aieytxYz6FMsCR5O1N9X7KVg5JNeWArd+yGA+iYGLKq/VxZ7FB
-lozoW703pGtslNC/VGujGThgOQYbIG/sXwCx/K3iFZehg+6DRTVc5iLml5ffXWVJ
-8eUnfRn2FuUD+4wkHbEgOgxc6436DTGSLaXV61AAAufUXelmQEwE7GeICDEL51+5
-6oBsvilMWChPpQLcDntgj9MFiC9mqExt7vkmnzxyp2VQU1atcE1eYHdf//eqNVl7
-h0kKEMrgVzW/tzdFxaj1SGA4h6WTrRsi/78OMTmFmbwms5d/PyUqTtVBHNDsvEw=
-=hAhi
+iQEcBAEBAgAGBQJTIgjhAAoJEKllVAevmvmsvz4H/1zljdDh/JUE42uOb29uw1Mx
+/gCsx2tnLs5g/U8OHBC0YYHM4CdUHLmyWiKbG1aN7Hn1FpXb4js3VlncbyQEdkpt
+MSl13vQeDVdLdAUvXhg37sn+yhniT7x0/sSvy5dMB00fBNNUYDPFj4VZF16S/cv+
+v06593VmtYw3EGwBJFtlgXv/cvqGZcSlu/f/Iv+m3tWQtcr8g/XjC5pwhUXMBtSa
+R2FSJRxpTMQHzRK/5TOZ6mEg/Nr2JCPgRhWHeg69BIaUFjX+/6J2WUTm/Jgmxolb
+auxQSiskVVuGifmUzkV2ZhD5y+4M1aZ0IO5HdjG8FdRT/cBnXbtYEImOuadA3ec=
+=nmY2
 -----END PGP SIGNATURE-----
