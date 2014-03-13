@@ -1,67 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/9
-Message-ID: <Pine.GSO.4.64.1401021436310.10677@faron.mitre.org>
-Date: Thu, 2 Jan 2014 14:55:09 -0500 (EST)
-From: "Steven M. Christey" <coley@...re.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Duplicated CVE assignment for bip
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/13/4
+Message-Id: <201403131930.s2DJUVI0020124@linus.mitre.org>
+Date: Thu, 13 Mar 2014 15:30:31 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for icinga 1 byte \0 overflows
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Moritz,
+> The icinga team silently fixed some single byte \0 overflows.
+> 
+> https://git.icinga.org/?p=icinga-core.git;a=commitdiff;h=73285093b71a5551abdaab0a042d3d6bae093b0d
+> 
+> (also the non public
+> https://dev.icinga.org/issues/5663
+> is referenced by commit above)
 
-These are two slightly different issues, although a casual reading of the 
-descriptions does not make that sufficiently clear.
+Use CVE-2014-2386.
 
-The original CNA assignment of CVE-2013-4550 did not consider that there 
-appear to be two different types of issues, which means a SPLIT of the CVE 
-ID.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-The issues are disclosed in Bug 261 here:
-
-https://projects.duckcorp.org/issues/261
-
-The first issue is that Bip will write to arbitrary sockets when run in 
-daemon mode because stderr is closed: "when using SSL (client_side_ssl = 
-true), bip will write an error to stderr when the SSL handshake fails. 
-However, if it is running as a daemon, stderr will have been closed."
-
-We narrowed the scope of CVE-2013-4550 to this first issue.  Note that 
-while the bug was apparently filed and public in 2011, it was given a 
-CVE-2013-xxxx ID, but we don't usually reject an ID simply because it is 
-out of sync with the disclosure date.  We also didn't see a need to REJECT 
-this CVE because of the scope change either, since it's in reasonably wide 
-use.
-
-The second issue covers connections that are never closed: "Also, when an 
-SSL handshake error occurs, a socket is never closed, but remains in 
-CLOSE_WAIT state forever. This happens because a socket that is set to 
-have an error will never be closed."
-
-A fix for the first issue would not necessarily guarantee a fix of the 
-second issue, and the bugs are of different types.  Therefore the second 
-issue is SPLIT from the first.  We assigned CVE-2011-5268 accordingly, 
-since at the time of assignment, we knew that 2011 was the disclosure 
-date.
-
-When we published these CVEs, we probably should have notified 
-oss-security, or at least modified CVE-2011-5268 and CVE-2013-4550's 
-descriptions to reflect the close relationships.  I apologize for that.
-
-- Steve
-
-
-On Thu, 2 Jan 2014, Moritz Muehlenhoff wrote:
-
-> Hi,
-> Seems there's a duplicated CVE ID for bip:
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4550 and
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-5268 refer
-> to the same bugreport.
->
-> Since CVE-2013-4550 was used for much longer, CVE-2011-5268 should
-> be rejected?
->
-> Cheers,
->        Moritz
->
+iQEcBAEBAgAGBQJTIga3AAoJEKllVAevmvms9xkH/idZYMX13l5zMSYZ5TbqTAtS
+IXxLqf7wUb1Y/GDophOF4SXYRpy0LiCEpsDi9W3fcGmpQMHno1+s2RJzF2fjYgv5
+pzCnMgqFvFj3p/2PvwC1i/tuhsKFKR6VzGI0LA9mvtHbNBl5ECibu4kqQ3+Mj/tX
+plWcekwnhVQLzLYF5q84QWHFOmvBL6JdMlzB5WsUhHusxyKyoQhrJ5KYpjhQ+EmS
+tEVOMr3wionOT/pvNxxl+VGTqpS+oRQzpjDB7BDeIxWbGXiiFrYLOFF6S6VxvVXt
+AYnyfdBU1EVivxiH/IG82lsyRM0AlOXHu20uYpUeciwu04uW9w010IpWIXFA7CA=
+=VAd6
+-----END PGP SIGNATURE-----
