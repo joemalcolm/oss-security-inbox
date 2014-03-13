@@ -1,45 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/23
-Message-ID: <CAFRnB2Xr5ki5ujnsX0mvXKL4ObPhOMreCrpJOeK8-wg0N2B9uQ@mail.gmail.com>
-Date: Thu, 18 Dec 2014 23:41:31 +0000
-From: Alex Gaynor <alex.gaynor@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: request for CVEs for git clients
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/13/2
+Message-ID: <20140313112433.GO10305@symphytum.spacehopper.org>
+Date: Thu, 13 Mar 2014 11:24:33 +0000
+From: Stuart Henderson <stu@...cehopper.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: file: crashes when checking softmagic for some corrupt PE executables
 Content-Type: text/plain; charset=utf-8
 
-It looks like hg might also be using the same CVE, based on a tweet I saw.
+On 2014/03/05 12:07, cve-assign@...re.org wrote:
+> Use CVE-2014-2270.
+> 
+> A CVE ID seems worthwhile because of possible libmagic use cases.
+> 
+> "file can be made to crash" is typically not security-relevant on its
+> own (a user can recover from this by not continuing to run file on the
+> same crafted file). We're not sure whether any distribution has
+> packages that rely on server-side use of libmagic, or whether it's
+> common to have long-running processes that use libmagic with untrusted
+> input.
 
-Alex
-
-On Thu Dec 18 2014 at 3:39:20 PM Kurt Seifried <kseifried@...hat.com> wrote:
-
-> Can we please get CVEs for
-> https://github.com/blog/1938-vulnerability-announced-
-> update-your-git-clients
->
-> In addition, the following updated versions of Git address this
-> vulnerability:
->
-> The Git core team has announced maintenance releases for all current
-> versions of Git (v1.8.5.6, v1.9.5, v2.0.5, v2.1.4, and v2.2.1).
->
-> Git for Windows (also known as MSysGit) has released maintenance version
-> 1.9.5.
->
-> The two major Git libraries, libgit2 and JGit, have released maintenance
-> versions with the fix. Third party software using these libraries is
-> strongly encouraged to update.
->
-> ====
->
-> looks like most Linux users are ok though "The vulnerability concerns
-> Git and Git-compatible clients that access Git repositories in a
-> case-insensitive or case-normalizing filesystem."
->
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
->
+file(1)/libmagic certainly have a security impact, for example they
+are used by various mail anti-virus checkers like MailScanner and
+amavisd-new, also some IDS/honeypot software (Bro, Nepenthes), all
+of which are expected to handle at best untrustworthy, at worst
+downright malicious input.
 
