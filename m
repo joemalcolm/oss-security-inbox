@@ -1,18 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/18/4
-Message-ID: <20140318170840.GA3981@pisco.westfalen.local>
-Date: Tue, 18 Mar 2014 18:08:40 +0100
-From: jmm@...ian.org
-To: oss-security@...ts.openwall.com
-Subject: CVE request for python/zipfile
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/14/6
+Message-Id: <201403141814.s2EIEVan011394@linus.mitre.org>
+Date: Fri, 14 Mar 2014 14:14:31 -0400 (EDT)
+From: cve-assign@...re.org
+To: pierre.php@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request, libgd and php's gd
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-this seems to need a CVE-2013-foo ID:
-http://bugs.python.org/issue20078
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Upstream fix:
-http://hg.python.org/cpython/rev/79ea4ce431b1
+> https://bugs.php.net/bug.php?id=66901
+>
+> Affect all versions of libgd and php with XPM support
 
-Cheers,
-        Moritz
+Use CVE-2014-2497.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTI0aPAAoJEKllVAevmvms8WoIAL/rH0zW5SV0BTvVwA+QZSWM
+njwz5AmIGI6xseqyd8MFSp49fC2JPUw70WnkAsTffWlXk40B6SEuWe5DM6u3tla1
+sRcjBunnzMjFz7v4/X8IhM6Uh/KeUhp1arzsxRdBqSAsFKxF20RFeqzPUhQCE87+
+TQ43+uy0m4KZU0O4lPBJOR5WMKv8UmCPZhr7O8pv23DVpMsgnggsYYZIcaDQimZX
+UgyHWrqj6ZRh5fTDMsYfG7E9mWyLvezsIX1HyVwHx8VdvWPxbmNK6Hh2ZeyBbNpC
+YqKh/a8kONz/En572LUa0c5S8cAMR432awGxNFwWIKDnrQT6Hq1fTsFNFBA60L4=
+=kb4w
+-----END PGP SIGNATURE-----
