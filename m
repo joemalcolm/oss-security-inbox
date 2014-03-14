@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/21/3
-Message-ID: <537D051B.2020504@enovance.com>
-Date: Wed, 21 May 2014 15:57:15 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/14/2
+Message-ID: <1394778274.21841.0@ssh>
+Date: Fri, 14 Mar 2014 06:24:34 +0000
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-015] Keystone user and group id mismatch (CVE-2014-0204)
+Cc: 
+Subject: Re: Re: CVE-Request - pen issues
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-015
-CVE: CVE-2014-0204
-Date: May 21, 2014
-Title: Keystone user and group id mismatch
-Reporter: Michael Stancampiano (IBM)
-Products: Keystone
-Versions: 2014.1
+> > webfile = "/tmp/webfile.html";
+> > 2> /tmp/penctl.cgi
+> Use CVE-2014-2387 for both issues involving files in the /tmp directory.
 
-Description:
-Michael Stancampiano from IBM reported a vulnerability in Keystone.
-Someone with write access to the user and group repository (such as the
-LDAP directory server) may willingly or unwillingly grant additional
-rights by picking the same IDs for users and groups, resulting in roles
-assigned to a group being assigned to the affected user even if he is
-not a member of this group. Only Keystone setups using LDAP for the
-Identity driver are affected.
+  Thanks.
 
-Juno (development branch) fixes:
-https://review.openstack.org/94396
-https://review.openstack.org/94470
+> Furthermore, the example in question:
+> 
+>   sudo pen 4444 localhost:9000 -C 127.0.0.1:5043
+> 
+> suggests that the person is aware that "a control port" means a TCP
+> port, not some other type of port with obvious permission-based
+> restrictions. 
 
-Icehouse fix:
-https://review.openstack.org/94397
+  Noted, thanks.  It seems the author is going to migrate to a 
+ unix domain socket in the future, to ease restrictions in the future.
 
-Notes:
-This fix will be included in the juno-1 development milestone and in
-a future 2014.1.1 release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0204
-https://launchpad.net/bugs/1309228
-
+Steve
 -- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+http://www.steve.org.uk/
 
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
