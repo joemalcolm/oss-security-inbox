@@ -1,60 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/30/4
-Message-ID: <20140130095839.GA9613@chough.tokkee.org>
-Date: Thu, 30 Jan 2014 10:58:39 +0100
-From: Sebastian Harl <sh@...kee.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/14/7
+Message-ID: <20140314191724.GB19956@suse.de>
+Date: Fri, 14 Mar 2014 20:17:24 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Florian octo Forster <octo@...plant.org>
-Subject: Re: collectd security contact
+Subject: Re: CVE request for a bug in gnu coreutils 8.22
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-> On 01/29/2014 02:28 PM, Michael Samuel wrote:
-> > Hi,
-> > 
-> > Does anyone here know who the security contact for collectd is?
-> > 
-> > Thanks, Michael
-> > 
+Can this be used in any form where people will put in untrusted data?
+
+In my feeling ... not really.
+
+Ciao, Marcus
+On Fri, Mar 14, 2014 at 11:35:40PM +0800, Qixue Xiao wrote:
+> I am not sure whether this needs a CVE.
 > 
-> - From AUTHORS file:
 > 
-> Permanent project members
-> =========================
+> this bug will result an illegal memory access, which may be leak
+> information without authority.
 > 
-> Florian "octo" Forster <octo at verplant.org>
->  - Initial author.
+> and the author had fixed it after my report.
 > 
-> Sebastian "tokkee" Harl <sh at tokkee.org>
->  - Bugfixes and enhancments in many places all around the project.
->  - perl plugin.
->  - users plugin.
->  - vserver plugin.
->  - Debian package.
+> please see:
+> http://debbugs.gnu.org/cgi/bugreport.cgi?bug=16855
 > 
-> so one of them would be my guess.
-
-Yup, we're good candidates for that :-)
-
-> If you figure it out can you send an
-> update to:
 > 
-> http://osvdb.org/vendor/89051-collectd/1
-
-This seems to be fixed long ago. Is there anything else that should be
-done?
-
-Cheers,
-Sebastian
-
-PS: Please Cc me on replies, I'm not on this list.
-
--- 
-Sebastian "tokkee" Harl +++ GnuPG-ID: 0x8501C7FC +++ http://tokkee.org/
-
-Those who would give up Essential Liberty to purchase a little Temporary
-Safety, deserve neither Liberty nor Safety.         -- Benjamin Franklin
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+> ### Bug overview
+> 
+>     shuf -er or shuf -eer [ segment fault]
+>     impact [coreutils 8.22 ]
+> 
+> ```
+> [15:03:59]xqx <at> server:~/data/xqx/projects/coreutils-8.22$
+> ./obj-gcov/src/shuf -er
+> Segmentation fault (core dumped)
+> 
+> ```
+> 
+> thanks
+> .
