@@ -1,30 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/3
-Message-ID: <5344D03D.1040801@oracle.com>
-Date: Tue, 08 Apr 2014 21:44:45 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/14/5
+Message-ID: <20140314180531.GA6692@steve.org.uk>
+Date: Fri, 14 Mar 2014 18:05:31 +0000
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-CC: Kurt Seifried <kseifried@...hat.com>
-Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
+Subject: Insecure usage of temporary files in GNU Readline
 Content-Type: text/plain; charset=utf-8
 
-On 04/ 8/14 08:59 PM, Kurt Seifried wrote:
-> So it appears there are projects that statically compile OpenSSL into
-> their software, one example:
->
-> https://code.google.com/p/mod-spdy/
 
-https://www.stunnel.org/sdf_ChangeLog.html lists:
+  Whilst auditing some code for insecure uses of temporary
+ files I spotted a potential area of concern in GNU readline.
+ (via an embedded copy of the same inside the Debian source
+ of GDB.)
 
-   Version 5.01, 2014.04.08, urgency: HIGH:
-     Security bugfixes
-         OpenSSL DLLs updated to version 1.0.1g. This version mitigates
-         TLS heartbeat read overrun (CVE-2014-0160).
+  The code in question comes from readline 6.x and is contained
+ in util.c:
 
-but that appears be only for the precompiled Windows binaries they offer for
-download, as it doesn't contain a copy of OpenSSL in the source tarballs for
-Linux/UNIX distros, but instead searches for one in configure.ac.
 
+int
+_rl_tropen ()
+{
+  char fnbuf[128];
+
+  if (_rl_tracefp)
+    fclose (_rl_tracefp);
+  sprintf (fnbuf, "/var/tmp/rltrace.%ld", getpid());
+  unlink(fnbuf);
+  _rl_tracefp = fopen (fnbuf, "w+");
+  return _rl_tracefp != 0;
+}
+
+
+  _rl_tropen is invoked from _rl_trace, which is a debugging aid,
+ and it is implied that the function is private, because it is defined
+ in rlprivate.h:
+
+/* rlprivate.h -- functions and variables global to the readline library,
+          but not intended for use by applications. */
+
+  That said the function _is_ available for using/linking, as
+ a trivial test program would demonstrate:
+
+       http://pastebin.com/T0XimKED
+
+   Given how widely used this library is potentially many applications are
+ unknowingly vulnerable to a classic race-condition.
+
+  I'm throwing this out there for two reasons:
+
+    * In theory this is exploitable, and should be fixed.
+
+    * In practice I cannot find an application which invokes _rl_trace,
+      although there are tantalising clues such as this page of commits
+      which refers to a snapshot of GNU Bash:
+
+            https://gitlab.com/bminor/bash/commit/b0c16657b4514191b4f6c328615d162726758247
+
+   Feel free to allocate an identifier, or even scan some of your
+ projects that have readline dependencies ;)
+
+   This is the first announcement of this issue I've made, I can
+ imagine some more paranoid distributions might wish to update, but
+ equally this seems so low-risk that I didn't consider it worthy
+ of vendor-sec.
+
+Steve
 -- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+http://tweaked.io/
