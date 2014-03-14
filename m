@@ -1,38 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/45
-Message-ID: <54247005.40803@case.edu>
-Date: Thu, 25 Sep 2014 15:41:57 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Tavis Ormandy <taviso@...gle.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu, Solar Designer <solar@...nwall.com>
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/14/1
+Message-Id: <201403140043.s2E0hQw0014464@linus.mitre.org>
+Date: Thu, 13 Mar 2014 20:43:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: dkg@...thhorseman.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
 Content-Type: text/plain; charset=utf-8
 
-On 9/25/14, 3:39 PM, Tavis Ormandy wrote:
-> On Thu, Sep 25, 2014 at 12:18 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
->> On 9/25/14, 12:15 PM, Solar Designer wrote:
->>
->>> What do you think of distros' going with Florian's prefix-suffix patch
->>> right now?  I think it breaks function imports/exports between
->>> pre-patch and post-patch bash versions, but keeps them intact for
->>> patched versions.  Right?  If so, this sounds acceptable for immediate
->>> use by distros.  Do you agree?
->>
->> I haven't looked at that particular patch in detail yet, but I am wondering
->> why adding both a prefix and a suffix is better than just adding a prefix.
->>
-> 
-> I think it's just paranoia, it demonstrates significant enough control
-> over the environment that it's unlikely someone could construct it via
-> a naive cgi environment or similar. If someone can create variables
-> with an arbitrary suffix and prefix, then there are likely bigger
-> problems to worry about than what bash is doing. FWIW, I like
-> Florian's approach.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yeah, that general approach is probably the best.  I was just wondering.
-I don't really see the need to use a prefix and a suffix, though.
+> It sounds to me like you're saying you're OK with placing at least
+> some of these cases into group 2 or 3.
 
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+No, our previous message wasn't trying to comment on that, one way or
+the other. We were simply arguing against
+error-message-and-refusal-to-connect as the universally optimal UI
+behavior upon having an SSL handshake arrive at a 40-bit cipher suite.
+If the browser is capable of showing either a closed lock or an open
+lock, and still allow use of SSL in both of those cases, we're not
+suggesting that the closed lock is optimal.
+
+> If a browser receives a cookie marked "secure" under a strong https
+> connection, and then replays that cookie to the same server on a new
+> HTTPS connection that is markedly weaker, the browser has potentially
+> compromised the user's entire session.  Does this seem like a vulnerability?
+
+It still seems to be an opportunity for security improvement. Consider
+these two cases:
+
+  A. I use Konqueror to connect to a shopping web site from a network
+     that likely has sniffers. The shopping web site has a bug that
+     occasionally causes it to agree to only 40-bit cipher suites. In
+     this case, I would prefer that Konqueror not use 40 bits.
+
+  B. I own some EOL'd networked outdoor video cameras that can't be
+     patched or replaced. They have a bug that occasionally causes
+     them to agree to only 40-bit cipher suites. In this case, I would
+     prefer that Konqueror use 40 bits.
+
+There's no uniform answer about what Konqueror should do, so it's
+difficult to consider A a vulnerability. The opportunity for security
+improvement is that Konqueror could track the observed bit counts, and
+ask the user "This site is normally 128 bits. Today it's 40 bits. Do
+you really want to proceed? Just this one time, or every time this
+happens for this specific site?" (This assumes that a wording exists
+that users would understand.)
+
+This security improvement might be unrealistic because there are no
+known bugs that cause an intermittent maximum of 40 bits.
+
+A better example is certificate pinning:
+
+  A. This site is normally verified by Google Internet Authority G2.
+     Today it is verified by OppressiveNationState Root CA. Do you
+     really want to proceed?
+
+  B. This site is normally verified by Google Internet Authority G2.
+     Today it is verified by YourCompanyITDepartmentMandatoryHTTPSProxy
+     Root CA. Do you really want to proceed?
+
+In other words, we feel that this needs to be modified slightly:
+
+> The basic training we give to users is "if you see the lock icon, your
+> session is secure", which i think is the right message
+
+The Konqueror user experience is "if the UI says https, it is https,
+but that may or may not be especially meaningful." Because certificate
+pinning isn't widely deployed, the experience of most web users
+nowadays is "if the UI says https, it is https, but that may or may
+not be especially meaningful." Addressing either case is best
+interpreted as a security improvement, not a vulnerability fix.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTIk9+AAoJEKllVAevmvms8cwIAMAbM0u4PpFxiH/tlqWhNfUx
+fukAZpTats9wdhjKFkXON6w7mchU1StCLwbRIQsaIHHtLmIUb3ytmrXPnFRtxveY
+ygMqo7qx9ypZrhAfXSj11WlSa2d9/I1Fp+S76hPMIjubYAwOaortNu7ds5QUt/kk
+qVrv/iKFvr7xaJdzoZbTQL7GjR5vEvieeSVK6zPeJ5ugd22XHovwz6jqnsZy318Q
+n71ORL6ZCC+qyl9sS0hbcJ2Uw7PTEyBlwjSvkrk9hCUis7A7+axWmNgz5jEjjQnY
+PNuOuNfXMa5DOkxK7F64G5SKcmSKQCuBcmRYp8P9A8DRUEIbYrwyKlkNvLZwGmY=
+=rl1y
+-----END PGP SIGNATURE-----
