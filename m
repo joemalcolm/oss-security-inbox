@@ -1,65 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/11
-Message-ID: <20140619134025.GE7873@ubuntumail>
-Date: Thu, 19 Jun 2014 13:40:25 +0000
-From: Serge Hallyn <serge.hallyn@...ntu.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: docker VMM breakout
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/14/3
+Message-ID: <CAEZPtU4T79he47uJRFzAZ7MDQcxTvxgULkrj+KZqg=d_cdkSPg@mail.gmail.com>
+Date: Fri, 14 Mar 2014 15:03:25 +0100
+From: Pierre Joye <pierre.php@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request, libgd and php's gd
 Content-Type: text/plain; charset=utf-8
 
-Quoting gremlin@...mlin.ru (gremlin@...mlin.ru):
-> On 18-Jun-2014 10:05:35 -0400, Daniel J Walsh wrote:
-> 
->  > CONTAINERS DO NOT CONTAIN. Root inside the container == Root
->  > outside the container.
-> 
-> Really? :-)
-> 
->  > This is true in both libvirt-sandbox/libvirt-lxc and docker.
-> 
-> Have you checked that for anything else?
-> 
->  > We have a long way to go before we can run anything within a
->  > container without this rule. User Namespace, SELinux or other
->  > MAC are all required to get us near the point where Container
->  > Contain.
-> 
-> Have you ever seen OpenVZ?
-> 
->  > People who run services within a container should continue to
->  > drop privs in the services and run them as UID!=0
-> 
-> Look at this trivial code example...
-> 
-> Classic kernel:
-> 
-> if (!uid)
-> {
-> 	// perform privileged operation here
-> }
-> 
-> Containers-enabled kernel:
-> 
-> if ( !uid && !container_id )	// container_id: 0 for host
-> {
-> 	// perform privileged operation here
-> }
-> 
-> How would you bypass this check to get privileged access to anything
-> outside the container?
+hi,
 
-This isn't a privileged operation.  It's simply reading a file
-owned by your same userid.
+Can someone request a CVE for
 
-What's happening is: mounts namespaces and pivot_root are used to
-prevent tasks in the container from finding a name for the host's
-/etc/shadow;  but open_by_handle_at() is bypassing the mounts
-namespaces and looking at the filesystem data itself.  So there are
-many ways to mitigate this - use seccomp to prevent open_by_handle_at(),
-drop CAP_DAC_READ_SEARCH, make sure (haha) that not a single file
-accessible in the container comes from the host's rootfs, use
-user namespaces, use selinux to prevent the container from reading
-any of the host-only labeled files.  But your example above in fact
-is not one.
+https://bugs.php.net/bug.php?id=66901
 
--serge
+please?
+
+Affect all versions of libgd and php with XPM support enabled. This
+issue is already public.
+
+Cheers,
+-- 
+Pierre
+
+@pierrejoye | http://www.libgd.org
