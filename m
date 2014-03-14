@@ -1,34 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/02/3
-Message-id: <C06FBF89-4FD8-44B3-8CC8-345E21F4920C@me.com>
-Date: Sun, 02 Feb 2014 13:36:25 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/14/4
+Message-ID: <CAL2OCeUAf=NzMSo-1RvapKdzbmL0PfhfaaRRUnL3qYddPJoHag@mail.gmail.com>
+Date: Fri, 14 Mar 2014 23:35:40 +0800
+From: Qixue Xiao <s2exqx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Persistent XSS in Wordpress 3.3.1+dfsg-1 (Packaged with Ubuntu 12.04.4)
+Subject: CVE request for a bug in gnu coreutils 8.22
 Content-Type: text/plain; charset=utf-8
 
-Nevermind,  This is invalid.  The WP admin can use javascript while a regular user can not.
+I am not sure whether this needs a CVE.
 
 
-On Feb 2, 2014, at 9:56 AM, Larry W. Cashdollar <larry0@...com> wrote:
+this bug will result an illegal memory access, which may be leak
+information without authority.
 
-> Title: Persistent XSS in Wordpress 3.3.1+dfsg-1 (Packaged with Ubuntu 12.04.4)
-> 
-> Author: Larry W. Cashdollar, @_larry0
-> 
-> Date: 2/1/2014
-> 
-> Vendor: Not notified yet.
-> 
-> Download: http://wordpress.org/download 
-> 
-> Versions Impacted: 3.3.1 -> 3.8.1 tested 2/2/2014.
-> 
-> CVE: Please assign.
-> 
-> Persistent XSS injection description field in Media Library.
-> 
-> Description: A persistent cross site scripting vulnerability exists in the latest version of WordPress in the Media Library.  It appears the Description field is not properly sanitized when viewed.  The malicious code is stored when the description field is saved.
-> 
-> Full Advisory: http://vapid.dhs.org/advisories/wordpress/XSS/xss_wordpress.html
+and the author had fixed it after my report.
+
+please see:
+http://debbugs.gnu.org/cgi/bugreport.cgi?bug=16855
+
+
+### Bug overview
+
+    shuf -er or shuf -eer [ segment fault]
+    impact [coreutils 8.22 ]
+
+```
+[15:03:59]xqx <at> server:~/data/xqx/projects/coreutils-8.22$
+./obj-gcov/src/shuf -er
+Segmentation fault (core dumped)
+
+```
+
+thanks
+.
 
