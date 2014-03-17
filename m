@@ -1,48 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/09/2
-Message-ID: <20140808143514.GD20054@haproxy.com>
-Date: Fri, 8 Aug 2014 16:35:14 +0200
-From: Willy Tarreau <willy@...roxy.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/17/5
+Message-Id: <201403171523.s2HFMpFm006702@linus.mitre.org>
+Date: Mon, 17 Mar 2014 11:22:51 -0400 (EDT)
+From: cve-assign@...re.org
+To: daniel@...x.se
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: flaw in curl's Windows SSL backend
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 08, 2014 at 06:36:12AM -0700, Greg KH wrote:
-> On Fri, Aug 08, 2014 at 02:20:21PM +0300, Dan Carpenter wrote:
-> > I'm surprised we haven't had any discussion about the recent BadUSB
-> > articles.
-> > 
-> > http://arstechnica.com/security/2014/07/this-thumbdrive-hacks-computers-badusb-exploit-makes-devices-turn-evil/
-> > http://security.stackexchange.com/questions/64524/how-to-prevent-badusb-attacks-on-linux-desktop
-> > 
-> > We could put a popup if there is a second keyboard attached to check
-> > that the person controlling the existing keyboard is aware of the second
-> > one.
-> 
-> "popup" where?  Multi-seat machines wouldn't like that very much, as
-> would yubikeys (as was pointed out), or a raft of other USB devices that
-> export a keyboard device for the buttons they control (video cameras,
-> external speakers, barcode scanners, etc.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Also, keyboards are one aspect of the problem. The biggest aspect is not new and
-has been abused for years, which is the main reason why so many large companies
-physically remove (stick or desolder) USB ports : you're connecting a *device*
-to your system and there's no way to make that 100% safe using software only.
-With a bogus driver and a DMA-capable device, you can end up accessing kernel
-locations and causing a lot more discrete harm such as unlocking displays,
-changing UIDs of running processes, etc. And that's much harder to detect,
-especially in closed drivers or with closed systems.
+> a newly discovered problem in curl's functionality that verifies
+> server certificates. The problem is present in code only runnning on
+> Windows when using the schannel SSL backend. It is very similar to the
+> Mac-specific curl problem Apple registered CVE-2014-1263 for, but for
+> another backend and platform.
 
-So I'd rather not clobber keyboard drivers for 100% of the users in order to
-improve safety by a few percent for a few percent of users.
+Use CVE-2014-2522.
 
-One more efficient solution could be to have a sysctl to disable hotplugging
-of USB devices, all of them. Software would then detect the new devices, and
-decide to load the drivers among a whitelist associated to a given port. The
-administrator could add new rules, and it could be the user for personal
-desktop PCs. But even then you still have the risk of the user not understanding
-what's happening and bindly clicking "OK".
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Just my 2 cents,
-Willy
-
+iQEcBAEBAgAGBQJTJxJ+AAoJEKllVAevmvmsNzcIALV0S04tu4VASIySHAdGUoWb
+hmHcwe1w/hFboGv9G01PGJUbnI5M/rHbT+yD+MN0mL0OYEqFJ6n1iaCVC9VkgEYL
+qvhzSjkTWYtN7Zdhbvilf1inoR3koz3eIqF7HfZbUQhhTZAL8XOsv4P3xbZdpQsT
+p3u9XmIILiQQKYEH/mSOpIzKCUPySDuXTCO1Rr7ZCr94CcepOTGgEBgCXYBsOFER
+rODxwPn+0BecrmVBrWv26f2FsJo/3Pcd1/4O8q9ld5wccPGqaxGCA7GodWTgaVok
+OSMysos4QRtE9wFsNXUan2qFfO22OwtSA1Hj4v1GnsB9KCoOvLBniqtw46lDPOA=
+=OznQ
+-----END PGP SIGNATURE-----
