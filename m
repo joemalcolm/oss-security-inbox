@@ -1,34 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/19
-Message-ID: <CALCETrXd5jQTTc_Q1mEM+euZcEYj1ABtq-Ki0-sxbS5C3Ouagw@mail.gmail.com>
-Date: Mon, 17 Nov 2014 10:43:39 -0800
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: Linux user namespaces can bypass group-based restrictions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/17/3
+Message-ID: <20140317102041.GB9207@suse.de>
+Date: Mon, 17 Mar 2014 11:20:41 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: netfilter: remote memory corruption in nf_conntrack_proto_dccp.c
 Content-Type: text/plain; charset=utf-8
 
-This is a heads-up, as there is no fix right now.
+Hi,
 
-On Linux, if you can unshare your user namespace (which is the case on
-many distributions), then you can map your fsuid and fsgid into the
-new namespace and, inside that namespace, drop all of your other
-groups.
+via twitter/grsecurity, needs a CVE I guess.
 
-This may allow you to access files protected by POSIX ACLs as "other",
-even if the ACL should have prohibited it based on one of your
-supplementary group IDs.
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/netfilter/nf_conntrack_proto_dccp.c?id=b22f5126a24b3b2f15448c3f2a254fc10cbc2b92
 
-This does not appear to allow you to violate negative sudoers
-group entries and the like, since sudo(8) would be confined to the
-user namespace as well and will therefore not gain privilege.
+commit b22f5126a24b3b2f15448c3f2a254fc10cbc2b92
+Author: Daniel Borkmann <dborkman@...hat.com>
+Date:   Mon Jan 6 00:57:54 2014 +0100
 
-To those who care about credit: this was discovered by some
-combination of me, Theodore Ts'o, Eric Biederman, Alan Cox, and Casey
-Schaufler.
+    netfilter: nf_conntrack_dccp: fix skb_header_pointer API usages
+    
+    Some occurences in the netfilter tree use skb_header_pointer() in
+    the following way ...
+    
+      struct dccp_hdr _dh, *dh;
+      ...
+      skb_header_pointer(skb, dataoff, sizeof(_dh), &dh);
+    
+    ... where dh itself is a pointer that is being passed as the copy
+    buffer. Instead, we need to use &_dh as the forth argument so that
+    we're copying the data into an actual buffer that sits on the stack.
+    
+    Currently, we probably could overwrite memory on the stack (e.g.
+    with a possibly mal-formed DCCP packet), but unintentionally, as
+    we only want the buffer to be placed into _dh variable.
 
-See here for some more discussion:
-http://thread.gmane.org/gmane.linux.man/7385/
+is already in original commit on March 20, 2008, in 2.6.25.
 
-Disabling CONFIG_USER_NS works around this issue.
-
---Andy
+Ciao, Marcus
