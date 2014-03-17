@@ -1,33 +1,197 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/1
-Message-ID: <531D90E4.7040200@redhat.com>
-Date: Mon, 10 Mar 2014 15:46:04 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/17/1
+Message-ID: <53268163.2090005@moodle.com>
+Date: Mon, 17 Mar 2014 13:00:19 +0800
+From: Michael de Raadt <michaeld@...dle.com>
 To: oss-security@...ts.openwall.com
-Subject: udisks and udisks2: stack-based buffer overflow when handling long path names
+Subject: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Florian Weimer of the Red Hat Product Security Team, found a flaw in
-the way udisks and udisks2 handled long path names. A malicious, local
-user could use this flaw to create a specially-crafted directory
-structure that could lead to arbitrary code execution with the
-privileges of the udisks daemon (root).
+The following security notifications are now public after release.
 
-This issue has been assigned CVE-2014-0004.
+Thanks to OSS members for their continued cooperation.
 
-References:
-http://lists.freedesktop.org/archives/devkit-devel/2014-March/001568.html
+=======================================================================
+MSA-14-0004: Incorrect filtering in Quiz
 
-Patches:
-http://cgit.freedesktop.org/udisks/commit/?h=udisks1&id=ebf61ed8471
-http://cgit.freedesktop.org/udisks/commit/?id=244967
+Description:       Question strings were not being filtered correctly
+                   possibly allowing cross site scripting.
+Issue summary:     quiz_question_tostring can cause invalid HTML
+Severity/Risk:     Minor
+Versions affected: 2.6 to 2.6.1, 2.5 to 2.5.4, 2.4 to 2.4.8 and
+                   earlier unsupported versions
+Versions fixed:    2.6.2, 2.5.5 and 2.4.9
+Reported by:       Tim Hunt
+Issue no.:         MDL-43690, MDL-43846
+CVE identifier:    Pending
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-43690
 
-Red Hat bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1049703
+=======================================================================
+MSA-14-0005: Access issue in Feedback activity
+
+Description:       It was possible to start a Feedback activity while
+                   it was supposed to be closed.
+Issue summary:     Feedback Availability dates not honored in
+                   complete.php
+Severity/Risk:     Minor
+Versions affected: 2.6 to 2.6.1, 2.5 to 2.5.4, 2.4 to 2.4.8 and
+                   earlier unsupported versions
+Versions fixed:    2.6.2, 2.5.5 and 2.4.9
+Reported by:       Tomasz Muras
+Issue no.:         MDL-43656
+CVE identifier:    CVE-2014-0127
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-43656
+
+=======================================================================
+MSA-14-0006: Capability issue in Chat
+
+Description:       Capabilities to chat were being checked at the start
+                   of a chat, but not during, so changes were not
+                   effective immediately.
+Issue summary:     Broken access control vulnerability with
+                   /mod/chat/chat_ajax.php
+Severity/Risk:     Minor
+Versions affected: 2.6 to 2.6.1, 2.5 to 2.5.4, 2.4 to 2.4.8 and
+                   earlier unsupported versions
+Versions fixed:    2.6.2, 2.5.5 and 2.4.9
+Reported by:       Jun Zhu
+Issue no.:         MDL-44082
+CVE identifier:    CVE-2014-0122
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-44082
+
+=======================================================================
+MSA-14-0007: Access issue in Wiki
+
+Description:       There were missing access checks on Wiki pages
+                   allowing students to see pages of other students'
+                   individual wikis.
+Issue summary:     Students able to see others' Individual wiki through
+                   the Recent activity block
+Severity/Risk:     Serious
+Versions affected: 2.6 to 2.6.1, 2.5 to 2.5.4, 2.4 to 2.4.8 and
+                   earlier unsupported versions
+Versions fixed:    2.6.2, 2.5.5 and 2.4.9
+Reported by:       Monash University VLE team
+Issue no.:         MDL-39990
+CVE identifier:    CVE-2014-0123
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-39990
+
+=======================================================================
+MSA-14-0008: Cross site scripting potential in Flowplayer
+
+Description:       Cross site scripting was possible with Flowplayer
+Issue summary:     Upgrade flowplayer
+Severity/Risk:     Minor
+Versions affected: 2.6 to 2.6.1, 2.5 to 2.5.4, 2.4 to 2.4.8 and
+                   earlier unsupported versions
+Versions fixed:    2.6.2, 2.5.5 and 2.4.9
+Reported by:       Andrew Nicols, Simon Coggins
+Issue no.:         MDL-43344
+CVE identifier:    Pending
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-43344
+
+=======================================================================
+MSA-14-0009: Identity information leak in Forum and Quiz
+
+Description:       Forum and Quiz were showing users' email addresses
+                   when settings were supposed to be preventing this.
+Issue summary:     User email addresses shown when setting and
+                   capabilities do not allow it
+Severity/Risk:     Minor
+Versions affected: 2.6 to 2.6.1, 2.5 to 2.5.4, 2.4 to 2.4.8 and
+                   earlier unsupported versions
+Versions fixed:    2.6.2, 2.5.5 and 2.4.9
+Reported by:       Maria Torres
+Issue no.:         MDL-43916
+CVE identifier:    CVE-2014-0124
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-43916
+
+=======================================================================
+MSA-14-0010: Identity information leak in Alfresco Repository
+
+Description:       Alias links to items in an Alfresco repository were
+                   provided with information that would allow someone
+                   to impersonate the file owner in Alfresco.
+Issue summary:     Alfresco Repository - external links make Alfresco
+                   vulnerable to impersonation attack
+Severity/Risk:     Serious
+Versions affected: 2.6 to 2.6.1, 2.5 to 2.5.4, 2.4 to 2.4.8 and
+                   earlier unsupported versions
+Versions fixed:    2.6.2, 2.5.5 and 2.4.9
+Reported by:       Ryan Herring
+Issue no.:         MDL-29409
+CVE identifier:    CVE-2014-0125
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-29409
+
+=======================================================================
+MSA-14-0011: Cross site request forgery potential in IMS enrolments
+
+Description:       There was inadequate session checking when
+                   triggering the import of IMS Enterprise identities.
+Issue summary:     Cross Site Request Forgery in
+                   enrol/imsenterprise/importnow.php
+Severity/Risk:     Serious
+Versions affected: 2.6 to 2.6.1, 2.5 to 2.5.4, 2.4 to 2.4.8 and
+                   earlier unsupported versions
+Versions fixed:    2.6.2, 2.5.5 and 2.4.9
+Reported by:       Tyler William Thomas
+Issue no.:         MDL-43146
+CVE identifier:    CVE-2014-0126
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-43146
+
+=======================================================================
+MSA-14-0012: Access issue in Badges
+
+Description:       It was possible for authenticated users to toggle
+                   the visibility of other users' badges.
+Issue summary:     logged user can change badge status (visible field)
+Severity/Risk:     Minor
+Versions affected: 2.6 to 2.6.1 and 2.5 to 2.5.4
+Versions fixed:    2.6.2 and 2.5.5
+Reported by:       Adrian Lorenc
+Issue no.:         MDL-44140
+CVE identifier:    CVE-2014-0129
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-44140
+
+=======================================================================
+MSA-14-0013: Unfiltered data used in Assignment web services
+
+Description:       Assignment web service functions were not correctly
+                   cleaning function parameters allowing alteration
+                   of assignment grade related information.
+Issue summary:     Review mod/assign external functions
+Severity/Risk:     Minor
+Versions affected: 2.6 to 2.6.1
+Versions fixed:    2.6.2
+Reported by:       Eloy Lafuente
+Issue no.:         MDL-43468
+CVE identifier:    Pending
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-43468
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJTJoFjAAoJECGmGwK/mszP1k4H/32I70/wA3HukA7qmpmWvcRF
+teQ1/uAYXTMiFsG29DI/pCQLW6xNcEceaIy6vYIFAiH/6nUcIgT7bwxzi51e+WQQ
+LYDmG4sGWiNaRxxFUTb3z9RqYWlxeNg9aqm+04D0OHhCIcKDwRkx422ATsQ5T/Zv
+taG/p/WdS12ljcE5SGM+oIIPbwpG9eSV4LNiUY4OVO7NECgjZucvSXj4lwxLZ6DW
+6yd8wdt90IMqOKptKJ2fPxeDevemLnMPcr8A4EhOROjm7pQvr1GXEs0YWHAnMhK8
+SVMrsAv7YYnH9ljJXfV9DPQKMLn2CJW7DKjM0y1s3PL2r0UXXoSLYOfQusHGhpQ=
+=cf4P
+-----END PGP SIGNATURE-----
 
 
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (3748 bytes)
