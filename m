@@ -1,52 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/5
-Message-ID: <52D8FD67.1080000@openstack.org>
-Date: Fri, 17 Jan 2014 10:52:39 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: [OSSA 2014-002] Swift TempURL timing attack (CVE-2014-0006)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/17/7
+Message-Id: <201403171527.s2HFRWfF006785@linus.mitre.org>
+Date: Mon, 17 Mar 2014 11:27:32 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: netfilter: remote memory corruption in nf_conntrack_proto_dccp.c
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-002
-CVE: CVE-2014-0006
-Date: January 16, 2013
-Title: Swift TempURL timing attack
-Reporter: Samuel Merritt (SwiftStack)
-Products: Swift
-Affects: All supported versions
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
-Samuel Merritt from SwiftStack reported a timing attack vulnerability in
-Swift TempURL middleware. By analyzing response times to arbitrary
-TempURL requests, an attacker may be able to guess valid secret URLs and
-get access to objects that were only intended to be publicly shared with
-specific recipients. In order to use this attack, the attacker needs to
-know the targeted object name, and the object account needs to have a
-TempURL key set. Only Swift setups enabling the TempURL middleware are
-affected.
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b22f5126a24b3b2f15448c3f2a254fc10cbc2b92
 
-Icehouse (development branch) fix:
-https://review.openstack.org/#/c/67185/
+Use CVE-2014-2523.
 
-Havana (1.10.0) fix:
-https://review.openstack.org/#/c/67186/
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Grizzly (1.8.0) fix:
-https://review.openstack.org/#/c/67187/
-
-Note: the Icehouse fix will be included in upcoming 1.12.0 release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0006
-https://bugs.launchpad.net/swift/+bug/1265665
-
-Regards,
-
--- 
-Thierry Carrez
-OpenStack Vulnerability Management Team
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
+iQEcBAEBAgAGBQJTJxJwAAoJEKllVAevmvms7/gIAL6Gn8WT/i3RzLfzELifxRAw
+m1eR8SPyDdZvr0UrmeJTiBmB3BW+qxsu/9gqIBmoy8QIPYUOcA2fT6i8l9SE85Yp
+OXQuDlYHLqEZd4oZW3klPU3/6ylFZtvfA/7SKPVm4Cziy4xuJywvzF3erDL9sCiK
+oySntvZdoRdOSaGv6VT58xws08XHW8FeOYgnDb48WS/L+QB4vBXUV5vfFD9ECJ4B
+y8rYaoMZIYQZRpxvWZFLueSWM71FUnr9hrLK2qeOy+XW8MCs0hkVchKc3VhiNCMr
+oFEsn0dgH/nyzPIKK9QPn6au5rhRcCa77uuvK633kS0nXafxr22+MoFH1+rs2Po=
+=UwdF
+-----END PGP SIGNATURE-----
