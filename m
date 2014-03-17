@@ -1,26 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/6
-Message-ID: <alpine.LFD.2.10.1404082010380.31553@javelin.pnq.redhat.com>
-Date: Tue, 8 Apr 2014 20:12:52 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request Linux kernel: IB/core: crash while resolving passive side RoCE L2 address in cma_req_handler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/17/6
+Message-Id: <201403171525.s2HFOvfQ006743@linus.mitre.org>
+Date: Mon, 17 Mar 2014 11:24:57 -0400 (EDT)
+From: cve-assign@...re.org
+To: steve@...ve.org.uk
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Insecure usage of temporary files in GNU Readline
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Linux kernel built with the InfiniBand communication link(CONFIG_INFINIBAND)
-along with the support for Remote Direct Memory Access(RDMA) over Convered
-Ethernet(RoCE), is vulnerable to a crash caused by invalid memory access.
-It occurs while trying to resolve RoCE L2 address on the server side.
+>   sprintf (fnbuf, "/var/tmp/rltrace.%ld", getpid());
+>   unlink(fnbuf);
+>   _rl_tracefp = fopen (fnbuf, "w+");
 
-A remote unprivileged user/program could use this flaw to crash the kernel,
-resulting in DoS.
+Use CVE-2014-2524.
 
-Upstream fix:
--------------
-   -> https://patchwork.kernel.org/patch/3896781/
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+iQEcBAEBAgAGBQJTJxJmAAoJEKllVAevmvmstlAIAIi0AcMJbpsK49FJhP6m9qob
+ej4X6ASQtA+naA9HyFZBlvZboJYS1WMoMyts69F1yMOMLzxwXCxazZbX/0+gMKj/
+sVjmIQeAB6QQJkFESlzdD4j1kG81qfcC4E5rPVse9lzpstP9j9IkpefpfzcGAwg2
+wrDO11+9kyzJKD5DVfZWoX+fGhwp0ebzZrRf4jeQ6nHMN5pvYPk36g0Uqo8nDof7
+vwu2lNTF9PHNrzt3U+xF2CR4sJsmcrkzuh9XwEtIpEi/za4bL8Too6ITfRcdnbAz
+IEn/lORGcUuAQyWdPoTxcMb5Ge/4iCWx0zAlB7j6VGB1NZ4VgkK2tnDd2vh8jBM=
+=Cd3q
+-----END PGP SIGNATURE-----
