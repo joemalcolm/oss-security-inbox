@@ -1,42 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/14
-Message-Id: <20140912183635.177896C0058@smtpvmsrv1.mitre.org>
-Date: Fri, 12 Sep 2014 14:36:35 -0400 (EDT)
-From: cve-assign@...re.org
-To: dregad@...tisbt.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: MantisBT Null byte poisoning in LDAP authentication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/18/1
+Message-ID: <20140318103904.GJ18088@dhcp-25-225.brq.redhat.com>
+Date: Tue, 18 Mar 2014 11:39:08 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: libvirt-security@...hat.com, Eric Blake <eblake@...hat.com>, Daniel Berrange <berrange@...hat.com>
+Subject: CVE request -- libvirt: unprivileged user can crash libvirtd during spice migration
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+(this issue was reported to libvirt-security mailing list in the year
+2k13 so might need 2k13 CVE)
 
-> https://github.com/mantisbt/mantisbt/commit/fc02c46eea9d9e7cc472a7fc1801ea65d467db76
-> http://www.mantisbt.org/bugs/view.php?id=17640
-> 
-> a Null byte poisoning issue with LDAP authentication affecting
-> MantisBT <= 1.2.17.
-> 
-> A malicious user can exploit this vulnerability to login as any
-> registered user and without knowing their password, to systems relying
-> on LDAP for user authentication (e.g. Active Directory or OpenLDAP
-> with "allow bind_anon_cred").
+Description of the problem:
 
-Use CVE-2014-6387.
+Domblkstat is possible even with read-only connection, so whenever
+migration with spice is done and domblkstat gets called at the same time
+as qemuMonitorGetSpiceMigrationStatus(), there is certain possibility
+that the daemon crashes (null pointer dereference).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+An unprivileged user able to issue commands to running libvirtd could
+use this flaw to crash libvirtd and prevent more privileged clients
+from working correctly.
 
-iQEcBAEBAgAGBQJUEzyiAAoJEKllVAevmvmsq80H/3AsQrTt9Tdjz2aJGA/zfzxG
-oDelDHm1OOVJcDMVmvxcYC7uRbS/Gk+MpsDD7p5rQ0ACgYU7n0Z5F3I6xXYFc3rl
-utYQmBKqKAiOvSf5qNMSVnqxH5E4gXuhMbMiho5AvD9XgTyKc1Wuulq/gSjdrMZ8
-b4uYIhNzmTAcrpofbEovCUm/t+16vQIRR7U/bdUAOrt8n8+7OH1JxEPUzih2CSZL
-qyL9yi9qD+0IviDD/QwqDOBkv/sP8BIGdZeHo50hlZENZpBbC5ZAoEHW0ZYJRUfW
-ZucqYEwcj5uYoue7PGoM8LrPj8cpa9KUAUNYakf2snq/WUAGoU54+9ExwT5ww2s=
-=P710
------END PGP SIGNATURE-----
+Upstream fix:
+http://libvirt.org/git/?p=libvirt.git;a=commit;h=484cc321
+
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
