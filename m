@@ -1,20 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/14
-Message-ID: <CACqxkW+jjDsR2+rxuWRmcLz2i3oh0_r7x65WMGtdk=Ewp2ezbw@mail.gmail.com>
-Date: Thu, 21 Aug 2014 19:39:27 +0100
-From: Nick Boyce <nick.boyce@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/18/4
+Message-ID: <20140318170840.GA3981@pisco.westfalen.local>
+Date: Tue, 18 Mar 2014 18:08:40 +0100
+From: jmm@...ian.org
 To: oss-security@...ts.openwall.com
-Subject: Re: SaltStack 2014.1.10 released
+Subject: CVE request for python/zipfile
 Content-Type: text/plain; charset=utf-8
 
-On 21 August 2014 17:37, Kurt Seifried <kseifried@...hat.com> wrote:
+Hi,
+this seems to need a CVE-2013-foo ID:
+http://bugs.python.org/issue20078
 
-> Did anyone else have this message fail to render in their email client
-> (I get a blank panel with the .sig attachment at the bottom using
-> Thunderbird/Enigmail/Fedora).
+Upstream fix:
+http://hg.python.org/cpython/rev/79ea4ce431b1
 
-Gmail (Firefox/win32) also fails to render the C.R.Oldham email
-properly, in more or less the same way you describe (a blank space,
-followed by what looks like a detached PGP sig).
-
-Nick
+Cheers,
+        Moritz
