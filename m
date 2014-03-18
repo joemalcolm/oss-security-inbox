@@ -1,40 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/9
-Message-ID: <CA+zp4VPyFaqcO8Mt2EViPe8zc8HJNxX_Q4_HJ61Lby+Ca=sBWQ@mail.gmail.com>
-Date: Thu, 30 Oct 2014 21:54:52 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: SQL injection vulnerability in MantisBT SOAP API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/18/2
+Message-Id: <201403181408.s2IE8n5e025035@linus.mitre.org>
+Date: Tue, 18 Mar 2014 10:08:49 -0400 (EDT)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 741659@...s.debian.org
+Subject: Re: CVE request: kdirstat, insufficient quote escaping leading to arbitrary command execution
 Content-Type: text/plain; charset=utf-8
 
-Description:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Several SQL injection vulnerabilities were identified in
-CVE-2014-1609, and subsequently fixed in MantisBT release 1.2.16 [1].
+> The Debian report is about single quotes. On Fedora
+> (https://bugzilla.redhat.com/show_bug.cgi?id=1077059) double quotes were
+> needed.
 
-However, it was recently discovered that the patch did not fully
-address the original problem in the SOAP API. Research demonstrates
-that using a specially crafted 'project id' parameter when calling
-mc_project_get_attachments(), an attacker could still perform an SQL
-injection.
+The recent upstream patch:
 
-Affected versions:
-MantisBT >= 1.1.0a4, <= 1.2.17
+  https://bitbucket.org/jeromerobert/k4dirstat/commits/1ad2e96d73fa06cd9be0f3749b337c03575016aa#chg-src/kcleanup.cpp
 
-Fixed in versions:
-1.2.18 (not yet released)
+addressed the ' issue using the '\\'' approach.
 
-Credit:
-Issue was discovered by
-- Edwin Gozeling and Wim Visser from ITsec Security Services BV
-(http://www.itsec.nl)
-- Paul Richards (former MantisBT developer)
+http://dl.fedoraproject.org/pub/fedora/linux/releases/19/Everything/source/SRPMS/k/k4dirstat-2.7.0-0.9.20101010git6c0a9e6.fc19.src.rpm
+has:
 
-References:
-- further details, including patch available in our issue tracker [2] (
+    expanded.replace( QRegExp( "%p" ),
+                      "\"" + QString::fromLocal8Bit( item->url() )  + "\"" );
+    expanded.replace( QRegExp( "%n" ),
+                      "\"" + QString::fromLocal8Bit( item->name() ) + "\"" );
 
-Please assign a CVE ID for this issue, which is a follow-up on
-CVE-2014-1609 (the released fix of which was incomplete).
+As mentioned in the
+http://openwall.com/lists/oss-security/2014/02/09/1 post, attempted
+use of " for this type of quoting is a conceptually different problem
+than attempted use of ' for this type of quoting, even if both
+attempts are ultimately incorrect.
 
-[1] http://www.mantisbt.org/bugs/view.php?id=16880
-[2] http://www.mantisbt.org/bugs/view.php?id=17812
+(We did not try to check whether the upstream version made a change
+from incorrect use of " to incorrect use of ' at some point. This
+could be considered an incomplete fix.)
+
+Use CVE-2014-2527 for the vulnerability involving use of " (as shown
+in the above calls to expanded.replace). This CVE assignment applies
+to any upstream code or any Fedora-specific code that has this
+specific issue.
+
+Use CVE-2014-2528 for the vulnerability involving use of ' (as shown
+in the above https://bitbucket.org commit).
+
+If anyone happens to identify a version of the code that does not
+attempt any type of quoting, a third CVE assignment may be possible.
+
+> (And maybe it should be escaping ';' too if not already?)
+
+This would typically not be addressed as a separate fix.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTKFLiAAoJEKllVAevmvmsiPkH/30d7kfSQPL2v7AZ0NppcPKx
+6TRaR8bren7sEI0t38XJ5CmVwyW9KwqSBf+psnM6ubA9VDafl+izOefRw7GoJNIX
+w8sz67mBWDkBxyYazfLZJhgItGzjUwj8q222lhQ8maLKLS/iGpqnY5rPBnwVTIq6
+5T9I0NWH5LrXRHFatS4JLargtU/jiMAIW+/dim7ymj0MFWk9XSnLI4XboIWROdZq
+gGQU/NXyRhz1ZGenzpHwNHc9ddVC86TKR/xF1DTg8N1RmuAe6HNXEJSWuYooG9BK
+2k99nuBpDsL6TD2L4dSN20prKkIGgCTumRJWO/IvCG3jdZYBrscrjWpFMAIqEGk=
+=lGmu
+-----END PGP SIGNATURE-----
