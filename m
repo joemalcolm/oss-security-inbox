@@ -1,37 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/10
-Message-Id: <201402121558.s1CFwExm012909@linus.mitre.org>
-Date: Wed, 12 Feb 2014 10:58:14 -0500 (EST)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 88 - use-after-free in xc_cpupool_getinfo() under memory pressure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/17
+Message-ID: <20140319180829.GN2551@sivokote.iziade.m$>
+Date: Wed, 19 Mar 2014 20:08:29 +0200
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> If xc_cpumap_alloc() fails then xc_cpupool_getinfo() will free and incorrectly
-> return the then-free pointer to the result structure.
+On Wed, Mar 19, 2014 at 09:31:36PM +0400, Solar Designer wrote:
+> On Wed, Mar 19, 2014 at 05:04:03PM +0200, Georgi Guninski wrote:
+> > On Wed, Mar 19, 2014 at 06:18:41PM +0400, Solar Designer wrote:
+> > > of CVE.  So you could consider treating or ignoring your CVE allergy
+> > 
+> > I am pretty sure someone@...re was coauthor of the
+> > "responsibility RFC" which shows whose servants
+> > mitre are.
 > 
-> An attacker may be able to cause a multi-threaded toolstack using this
-> function to race against itself
+> Whether that is true or not, this has absolutely nothing to do with
 
-Use CVE-2014-1950.
+I claim it is true, if you don't believe it consider
+consulting something better than the emacs doctor:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+http://tools.ietf.org/html/draft-christey-wysopal-vuln-disclosure-00
 
-iQEcBAEBAgAGBQJS+5jAAAoJEKllVAevmvmsbXIIALonk+ClfcttLGQ7UI8kv4tu
-sTWSC9f/XEpL5/73sufoYnl3UIZQeVeHaJQjccgTbZpkvhoREPdrTrjR/CHpfC0K
-jIJm5r69eAaCrasqpCP89yYjk3MUj6wKyKGh62NGv+G28ccW1JtcEp63FVKHSVgC
-nTOq5UMxYDu8MXmjmPUIqC/vSNdBiLm/01tiyuc6OBHTYp+GKIAnFhDt5iarvCO6
-eD1z8uNew62u5Gi6WlPl6WWZhylLyWqmnv9Yu78jGye6/FnRrg33fs3U1Vtfhwt8
-8crA6xwqEUoxNr8mmUjxyk57WPRigWL7etr8ZlDi9XbXY03JvFT/Iwxnixno2Lc=
-=8vt+
------END PGP SIGNATURE-----
+Internet Engineering Task Force                           Steve Christey
+INTERNET-DRAFT
+
+**MITRE**
+
+Valid for six months                                       Chris Wysopal
+Category: Best Current Practice                             @stake, Inc.
+                                                           February 2002
+
+Responsible
+Vulnerability
+Disclosure
+Process
+draft-christey-wysopal-vuln-disclosure-00.txt
+
+to reproduce it  search for something like
+responsible disclosure RFC
+
+
+>From the link:
+
+Authors' Addresses
+
+   Steve Christey
+      The MITRE Corporation
+         202 Burlington Road
+	    Bedford, MA 01730
+	       USA
+
+	          E-Mail: coley@...re.org
+
+		     Chris Wysopal
+		        @stake, Inc.
+			   196 Broadway
+			      Cambridge, MA 02139-1902
+			         USA
+
+				    E-Mail: cwysopal@...take.com
+
