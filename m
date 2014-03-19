@@ -1,53 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/8
-Message-Id: <201403062027.s26KRKqp023921@linus.mitre.org>
-Date: Thu, 6 Mar 2014 15:27:20 -0500 (EST)
-From: cve-assign@...re.org
-To: speiro@....upv.es
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/2
+Message-ID: <20140319130519.GH21050@suse.de>
+Date: Wed, 19 Mar 2014 14:05:19 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: rack-ssl rubygem: XSS in error page
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-The scope of CVE doesn't exclude issues that exist only in software
-that's at a beta level or similar level. See for example "Attendees
-agreed that CVE should include problems in beta software, provided
-that the beta code was intended for public dissemination" in the
-http://cve.mitre.org/data/board/archives/2000-03/msg00007.html post.
+The latest version of rack-ssl rubygem (1.4.0) contains a commit that fixes a
+XSS vulnerability in the error page.
 
-The CVEs of interest to the community tend to be ones that are
-"common" -- in other words, they are present at multiple sites, and a
-CVE ID would actually be used (typically in multiple contexts) as the
-mechanism for naming and tracking the vulnerability.
+https://github.com/josh/rack-ssl/commit/9d7d7300b907e496db68d89d07fbc2e0df0b487b
 
-For the specific case of staging drivers, a relevant example is "this
-driver is enabled in the Debian 6.0 kernel" for:
+"Some adapters (i.e. jruby-rack) will pass through bad URIs, then display
+the resulting exception. This creates an attack vector for XSS attacks.
+"
 
-  http://www.openwall.com/lists/oss-security/2011/08/09/7
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2909
+Needs a CVE I think.
 
-So, any background about the discovery would be helpful, e.g., is the
-driver enabled in a distribution, or is someone shipping a Linux-based
-appliance or device that relies on the driver. The full list is
-substantial -- http://cateee.net/lkddb/web-lkddb/STAGING.html seems
-relevant although that's a third-party presentation and not directly
-the primary source.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTGNlEAAoJEKllVAevmvmsaAYIAMlV3r9YhS0rD2kb3PCenoT6
-PVcAYWuyIu+IDWp74V2r6Bg6mKZzyyVMiqpw8CgNsK2zfHtcEDsrIcttIWK6VbJj
-Pxkc0jQUdfqNhg/Z6gtqhUZ4Wnee9vBQo4cFfKBhlqQuPz/wV/kHqMic57n4RcCS
-/n2KufYn2mB5bZMUkxM0Ky7DJslrUtyIsG7APpgPT0adcv/XhFYVAo54bvfyZIqo
-RczpMPQRq9ke/xbM5x0e6UMSU43337GcRZs8w8Cb5Tr1/7vNX+7G/PqFxo5RjRz7
-vVjVF/5pgna+dWzcREARCMrqTp6QrBTFVeuiNPC2Re8fczxNByZCwx2q9Xn3Ji4=
-=wMyp
------END PGP SIGNATURE-----
+Ciao, Marcus
