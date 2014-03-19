@@ -1,25 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/02/2
-Message-ID: <20141102180640.GA8210@jwilk.net>
-Date: Sun, 2 Nov 2014 19:06:40 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/10
+Message-ID: <20140319150403.GJ2551@sivokote.iziade.m$>
+Date: Wed, 19 Mar 2014 17:04:03 +0200
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Subject: unzip -t crasher
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-Latest American fuzzy lop[0] tarball[1] contains a zip file that crashes 
-unzip -t:
+On Wed, Mar 19, 2014 at 06:18:41PM +0400, Solar Designer wrote:
+> of CVE.  So you could consider treating or ignoring your CVE allergy
+> 
 
-$ unzip -qt afl-0.43b/docs/samples/unzip_t_malloc.zip
-foo/:  mismatching "local" filename (/UT),
-         continuing with "central" filename version
-*** Error in `unzip': free(): corrupted unsorted chunks: 0x00000000015d0170 ***
 
-I'm not sure if inclusion of said zip file was intentional, but since 
-the cat is already out of the bag, I thought I'll let you know.
+I am pretty sure someone@...re was coauthor of the
+"responsibility RFC" which shows whose servants
+mitre are.
 
-[0] https://code.google.com/p/american-fuzzy-lop/
-[1] http://lcamtuf.coredump.cx/afl.tgz
 
--- 
-Jakub Wilk
+> Regarding new FD:
+> 
+> > If you ask me there should be no moderation/kickbans.
+> > IMHO this isn't effective against alleged trolls.
+> > Back in the time I was against banning n3td3v.
+> > 
+> > Maybe some sound daily quota is reasonable though.
+> 
+> Makes sense to me.  I hope whoever chooses to setup the new FD will
+> consider this idea.
+> 
+> Alexander
+
+Is it reasonable to use a public service for the list --
+outsourcing legal stuff?
+
+Running a mirror/torrent is much easier than running
+a mailing list, so even if stuff gets deleted it will
+be in the mirrors.
+
