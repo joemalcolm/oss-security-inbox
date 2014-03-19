@@ -1,28 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/29/5
-Message-ID: <20140729170338.6502a3cc@mschwide>
-Date: Tue, 29 Jul 2014 17:03:38 +0200
-From: Martin Schwidefsky <schwidefsky@...ibm.com>
-To: oss-security@...ts.openwall.com
-Subject: Subscribtion request to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/20
+Message-Id: <201403191933.s2JJXFr8001893@linus.mitre.org>
+Date: Wed, 19 Mar 2014 15:33:15 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: rack-ssl rubygem: XSS in error page
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-our friends from SuSE suggested that it might make sense that
-I in my role as maintainer for Linux on System z (alias s390)
-get added to the linux-distros mailing list.
-If you agree that this indeed makes sense could you subscribe
-me please?
+> https://github.com/josh/rack-ssl/commit/9d7d7300b907e496db68d89d07fbc2e0df0b487b
 
-pub   4096R/26AE5DD2 2011-10-10
-      Key fingerprint = C456 0B84 4A79 2653 C825  0D4D BBE9 76BF 26AE 5DD2
-uid                  Martin Schwidefsky <schwidefsky@...ibm.com>
-sub   4096R/1F2A4B67 2011-10-10
+> Handle bad URIs gracefully.
+> 
+> Some adapters (i.e. jruby-rack) will pass through bad URIs, then display
+> the resulting exception. This creates an attack vector for XSS attacks.
 
--- 
-blue skies,
-   Martin.
+Use CVE-2014-2538.
 
-"Reality continues to ruin my life." - Calvin.
+The basis of this CVE assignment is that the rack-ssl product is
+apparently accepting some level of responsibility for the behavior of
+adapters. The commit message in 2013 wasn't really worded in the form
+of a vulnerability-fix announcement. There's another interpretation in
+which it would be categorized as security hardening to work around XSS
+vulnerabilities in adapters. The commit message mentions jruby-rack.
+https://github.com/jruby/jruby-rack/blob/master/History.txt includes
+"1.1.12 (28/11/12) ... refactored / updated error handling ... unify
+exception handling across decorating app factories with support for
+configuring exception handling with the *jruby.rack.error* option."
+Perhaps this means that jruby-rack is less likely to have a patch that
+makes XSS impossible because the jruby-rack developers want exception
+handling to be fully configurable? In any case, an additional CVE
+assignment for jruby-rack could be made if the jruby-rack developers
+want one. That might, for example, cover the case of using jruby-rack
+with an unpatched version of rack-ssl.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTKe8oAAoJEKllVAevmvmsZpYH/2n3KxkRpatJvwxlAyB6I0O5
+JfWFemsXOZHddGA1KcLAhW3o5op0CrH2HBpOsJssScO+2qT0GQVI1kOmoYY3wyxh
+9qDXWz16KPtEg6+CyoxWiTFEV/cXxakToXUWMU9483KXQMiH021cntTStWcBEo/A
+4nRHwjY53hbq77ENHlHsHP065LWedaZQJuzdxZkEdlxHOraLkxohYJQjjVlpGj7B
+PUHyhnIBtGqHK312SXwBm8TNgTO7db31tlmYYiQ3Ftg0S6Mn3zAgwTG5U2iczf60
+yl/prDTpm0KVMhJVKkttbvWUliFchmt8lF+whZU/HVwC7FoUtcO8b3hyq354CvI=
+=wXBE
+-----END PGP SIGNATURE-----
