@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/9
-Message-ID: <20140319141841.GA8602@openwall.com>
-Date: Wed, 19 Mar 2014 18:18:41 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/16
+Message-ID: <CAKcmtDzgKqeaB4xNbigJstxU1iLwEgg1DUBJzDkNUTtTyfvF=Q@mail.gmail.com>
+Date: Wed, 19 Mar 2014 10:44:09 -0700
+From: Chris Steipp <csteipp@...imedia.org>
 To: oss-security@...ts.openwall.com
 Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 19, 2014 at 03:48:13PM +0200, Georgi Guninski wrote:
-> On Wed, Mar 19, 2014 at 05:31:30PM +0400, Solar Designer wrote:
-> > On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
-> > > Apologies for posting on list mainly dedicated to CVE's.
-> > 
-> > I guess you're (partially) kidding.  This list is not meant to be
-> > "mainly dedicated to CVE's", it just happened to be that way.  Other
-> > on-topic postings are very welcome, and I find postings about other
-> > related mailing lists (dis)appearing to be on topic, in part because it
-> > affects what topics we choose to discuss in here (and what topics to
-> > discuss in other places).
-> 
-> lol. I was partially kidding and in addition have low opinion of CVE.
+It would be great to know something about what it took to host the old
+list, if anyone knows. There are certainly existing organizations who run
+large mailing lists, have lawyers to deal with takedowns, and believe in
+free access to knowledge.
 
-Sure.  Even though most threads in here mention CVE, they also contain
-plenty of technical info that is desirable regardless of one's opinion
-of CVE.  So you could consider treating or ignoring your CVE allergy
-(just skip the mentions of CVE, look at the rest of what the same
-messages say), and then you might find the content in here useful and/or
-worth commenting on (just except for the CVE aspects, which are
-obviously not your type). ;-)
+Or if anyone has seen another place where this is being discussed by the FD
+community, I'd welcome a pointer.
 
-Regarding new FD:
 
-> If you ask me there should be no moderation/kickbans.
-> IMHO this isn't effective against alleged trolls.
-> Back in the time I was against banning n3td3v.
-> 
-> Maybe some sound daily quota is reasonable though.
+On Wed, Mar 19, 2014 at 9:14 AM, Georgi Guninski <guninski@...inski.com>wrote:
 
-Makes sense to me.  I hope whoever chooses to setup the new FD will
-consider this idea.
+> What is the number of email addresses who
+> posted on FD?
+>
+> (to roughly estimate cost of hosting)
+>
+> On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
+> > Apologies for posting on list mainly dedicated
+> > to CVE's.
+> >
+> > The Full Disclosure mailing list died today:
+> > http://lists.grok.org.uk/
+> > http://seclists.org/fulldisclosure/2014/Mar/332
+> >
+> > I suppose it is time for a new list.
+> >
+> > Any ideas?
+> >
+> > --
+> > guninski
+>
 
-Alexander
