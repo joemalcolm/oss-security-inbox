@@ -1,42 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/7
-Message-ID: <alpine.LFD.2.10.1409222359400.8285@javelin.pnq.redhat.com>
-Date: Tue, 23 Sep 2014 00:02:21 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Steve French <sfrench@...ba.org>
-Subject: Re: CVE request: [CIFS] Possible null ptr deref in SMB2_tcon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/18
+Message-ID: <20140319182230.GO2551@sivokote.iziade.m$>
+Date: Wed, 19 Mar 2014 20:22:30 +0200
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Mar 19, 2014 at 09:42:15AM -0700, Dean Pierce wrote:
+> Also, just for kicks I created
+> https://groups.google.com/group/responsible-disclosure :-)
+> 
 
-   Hello Moritz,
+you MUST ask m$ for money or at least for a free game...
 
-+-- On Mon, 22 Sep 2014, Moritz Muehlenhoff wrote --+
-| True, but on Debian and derivatives like Ubuntu mount.cifs is usually setuid root.
 
-  I see. Thank you so much for the confirmation, I appreciate it. 
-
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJUIGs1AAoJEN0TPTL+WwQfH9wP/iFuNPdKoYc79NFygRgIvlfj
-nVlFYkgVBejdAwv3mPfOC8rgejPOxNwN9p1dNO/mTBwapx8rrc4TlhpZc8UWv+V7
-ethoTgqU675NXu5c7rD9R2Qnm2iBYNlqJ2+eqO5D/0FjttVz8W5gcGdI5okKz9jS
-NTfRHum6//WvnMHJo417tZi1jH90bfobD8TvaMs91E/hNoqIvsHaAIKQPogIDvkP
-Qf3btryzqohcD5Jz3dpgK4bixMmUemxSQ6F4UcImsiECk+dVzTSIQf2NH4qjvGCq
-12aC1tcNxCCfiS6cY33Zvyrnl+RsOB8eC280m7HjhD0bEGoS5vCx0JX7Zp3iQcSS
-8AZljGoZDOSM8FdSCmHpXXcMoc4w0DZ342832nxdkeaRW6OfaQEI1pDjeic9TcKl
-9TPYi3xFsDc3QUyIRp1vhEzocILBHYq0ER+HWrxmKdAZiGlhD/EOPzeUZ4JHY6Fm
-ylUt2P8sFkF6NgsE6/shngdiS0B6LX2ajczgwOBHpgP8RuKapPH2Fj8VVlRkrchd
-Xcr/S0lc5h1ypn9zrZ+BT3ryeBEa46KziDpbMctuIQIqReFJfzt+wriIHNvb+YPb
-Bxqg5oUiqP3nMZHXpOf69MwgO5VSZlK+HvFsXKm7p2gZibOx+W/t85kl8MAbIUxL
-XuHf1zWjO9ecY5JmOE1p
-=Dqba
------END PGP SIGNATURE-----
+> Will hand over mod privileges to any reasonably responsible group of
+> people with time to moderate such things.
+> 
+>    - DEAN
+> 
+> On Wed, Mar 19, 2014 at 9:33 AM, Dean Pierce <pierce403@...il.com> wrote:
+> > Hosting?  That's what the cloud is for.
+> >
+> > I have no idea who runs https://groups.google.com/group/FullDisclosure
+> >
+> > but they seem modeled after original fd charter.  I trust Google as a
+> > neutral third party more than I would trust most security researchers.
+> >  They already host all the old newsgroup archives.  It's also free,
+> > easily consumable, and most importantly, babysat for security issues
+> > in a way that even a team of skilled volunteers would have a hard time
+> > pulling off.
+> >
+> >   - DEAN
+> >
+> > On Wed, Mar 19, 2014 at 9:14 AM, Georgi Guninski <guninski@...inski.com> wrote:
+> >> What is the number of email addresses who
+> >> posted on FD?
+> >>
+> >> (to roughly estimate cost of hosting)
+> >>
+> >> On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
+> >>> Apologies for posting on list mainly dedicated
+> >>> to CVE's.
+> >>>
+> >>> The Full Disclosure mailing list died today:
+> >>> http://lists.grok.org.uk/
+> >>> http://seclists.org/fulldisclosure/2014/Mar/332
+> >>>
+> >>> I suppose it is time for a new list.
+> >>>
+> >>> Any ideas?
+> >>>
+> >>> --
+> >>> guninski
