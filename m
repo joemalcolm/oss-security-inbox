@@ -1,77 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/26
-Message-ID: <CALx_OUCF4cCU0fPaf-sZ2OW0SWb_9VV=+c=oQnPvjUYOaocWNg@mail.gmail.com>
-Date: Tue, 7 Oct 2014 08:32:24 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/13
+Message-ID: <CAFOKM3rUXhBKzcyKd3133OEPSJog7qWbnXqnrPsa-iUuqwGnhg@mail.gmail.com>
+Date: Wed, 19 Mar 2014 09:42:15 -0700
+From: Dean Pierce <pierce403@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-In my view, "Heartbleed and Shellshock" is a weird way to frame the discussion.
+Also, just for kicks I created
+https://groups.google.com/group/responsible-disclosure :-)
 
-The OpenSSL heartbeat issue was, in many regards, a bug like many
-others; it is arguably eclipsed by hundreds of RCE / info leak bugs
-that crop up in browsers and in web app frameworks every year. It has
-gained prominence for a couple of reasons:
+Will hand over mod privileges to any reasonably responsible group of
+people with time to moderate such things.
 
-- It came out with a sleek logo and a press package,
+   - DEAN
 
-- It affected a security-related library, making it sound a lot more
-worrying / bad than a bug "just" affecting IIS or Firefox,
-
-- It came on the heels of Snowden leaks and some vague concerns about
-Dual_EC_DRBG, so a lot of pundits started to arbitrarily imply that
-the NSA must have known (or must have planted the bug).
-
-Now, I give you that the bash bug was fairly unique and almost
-hilariously bad - but also a bit intractable. It dates back to the
-80s, cropped up in a place where I certainly wouldn't think to look,
-and if there's one thing it proves is that... um, I guess, security
-people don't read books, since I bet that the feature must have been
-mentioned in at least some shell programming manuals?
-
-Before this finding, it genuinely wouldn't have occurred to most
-people that auditing bash is a good use of their time and money, not
-any more than it's a good use of your time to audit /bin/uname.
-
-...
-
-The latter part of your article pivots to a more general question of
-"why bugs happen and how we fix it", and I think that's a good thing
-to ponder, although certainly one where it's difficult to come up with
-fresh ideas :-( The article pinpoints several factors, the first of
-which is lack of funding.
-
-This is actually probably a lot more significant for libraries that
-don't perform security tasks, but may be exposed in even more profound
-ways (e.g., how much money goes to libpng, ffmpeg, imagemagick?). But
-the argument for non-targeted funding is somewhat undermined by the
-fact that well-funded software seems to be about as likely to have
-bugs; if anything, funding speeds up the introduction of new features,
-and that's closely linked to the likelihood of vulns. All mainstream
-browsers have piles of cash thrown at them. Most of closed-source
-software is well-funded, too.
-
-( More targeted funding may be more viable - say, rewarding specific
-security improvements or security audits. Say, we're doing
-https://www.google.com/about/appsecurity/patch-rewards/. But it's a
-tricky thing. )
-
-Later in the article, you ask, "why doesn't every large IT company
-have a Project Zero?"; I think that the answer to that is usually
-pretty simple. Some of them may have not thought about it or didn't
-think it's cost-efficient, but most simply lack the in-house expertise
-to pull it off. There is a great shortage of skilled infosec talent -
-and in many companies, there is a strong emphasis on compliance and
-policy work, with technical stuff being an afterthought or something
-you outsource to a pentesting consultancy.
-
-It's also fair to ask if discrete security bugs are the most
-significant exposure we have to worry about. Both targeted and
-non-targeted attacks rely on simple phishing or non-0day bugs to
-compromise people; the bash bug is flashy, but most of the large
-breaches in 2015 will be probably attributable not to that, but to Bob
-in accounting clicking on dancing_hamsters.exe. How much money should
-we be throwing at fixing these problems? And how do we pull it off?
-
-/mz
+On Wed, Mar 19, 2014 at 9:33 AM, Dean Pierce <pierce403@...il.com> wrote:
+> Hosting?  That's what the cloud is for.
+>
+> I have no idea who runs https://groups.google.com/group/FullDisclosure
+>
+> but they seem modeled after original fd charter.  I trust Google as a
+> neutral third party more than I would trust most security researchers.
+>  They already host all the old newsgroup archives.  It's also free,
+> easily consumable, and most importantly, babysat for security issues
+> in a way that even a team of skilled volunteers would have a hard time
+> pulling off.
+>
+>   - DEAN
+>
+> On Wed, Mar 19, 2014 at 9:14 AM, Georgi Guninski <guninski@...inski.com> wrote:
+>> What is the number of email addresses who
+>> posted on FD?
+>>
+>> (to roughly estimate cost of hosting)
+>>
+>> On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
+>>> Apologies for posting on list mainly dedicated
+>>> to CVE's.
+>>>
+>>> The Full Disclosure mailing list died today:
+>>> http://lists.grok.org.uk/
+>>> http://seclists.org/fulldisclosure/2014/Mar/332
+>>>
+>>> I suppose it is time for a new list.
+>>>
+>>> Any ideas?
+>>>
+>>> --
+>>> guninski
