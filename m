@@ -1,51 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/9
-Message-ID: <53F3B0FD.9080909@enovance.com>
-Date: Tue, 19 Aug 2014 16:18:05 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-027] Persistent XSS in Horizon Host Aggregates interface (CVE-2014-3594)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/21
+Message-ID: <8f661e38-7221-4b6a-839f-e94e2a093b4d@flaska.net>
+Date: Wed, 19 Mar 2014 19:52:04 +0100
+From: Jan Kundrát <jkt@...ska.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Requesting a CVE id for Trojitá, an e-mail client: SSL stripping
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-027
-CVE: CVE-2014-3594
-Date: August 19, 2014
-Title: Persistent XSS in Horizon Host Aggregates interface
-Reporters: Dennis Felsch and Mario Heiderich (Ruhr-University Bochum)
-Products: Horizon
-Versions: up to 2013.2.3, and 2014.1 versions up to 2014.1.2
+Hi folks, I would appreciate a Cc on responses as I'm not subscribed to 
+this list. I would like to request a CVE for the following vulnerability:
 
-Description:
-Dennis Felsch and Mario Heiderich from the Horst Görtz Institute for
-IT-Security, Ruhr-University Bochum reported a persistent XSS in
-Horizon. A malicious administrator may conduct a persistent XSS attack
-by registering a malicious host aggregate in Horizon Host Aggregate
-interface. Once executed in a legitimate context this attack may reveal
-another admin token, potentially resulting in a lateral privilege
-escalation. All Horizon setups are affected.
+Summary
+-------
 
-Juno (development branch) fix:
-https://review.openstack.org/115310
+An SSL stripping vulnerability was discovered in Trojitá [1], a fast Qt 
+IMAP e-mail client. *User's credentials are never leaked*, but if a user 
+tries to send an e-mail, the automatic saving into the "sent" or "draft" 
+folders could happen over a plaintext connection even if the user's 
+preferences specify STARTTLS as a requirement.
 
-Icehouse fix:
-https://review.openstack.org/115311
+Background
+----------
 
-Havana fix:
-https://review.openstack.org/115313
+The IMAP protocol defines the STARTTLS command which is used to 
+transparently upgrade a plaintext connection to an encrypted one using 
+SSL/TLS. The STARTTLS command can only be issued in an unauthenticated 
+state as per the IMAP's state machine.
 
-Notes:
-This fix will be included in the Juno-3 development milestone and in
-future 2013.2.4 and 2014.1.3 releases.
+RFC 3501 also allows for a possibility of the connection jumping 
+immediately into an authenticated state via the PREAUTH initial response. 
+However, as the STARTTLS command cannot be issued once in the authenticated 
+state, an attacker able to intercept and modify the network communication 
+might trick the client into a state where the connection cannot be 
+encrypted anymore.
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3594
-https://launchpad.net/bugs/1349491
+Affected versions
+-----------------
+
+All versions of Trojitá up to 0.4 are vulnerable.
+
+The fix will be included in version 0.4.1 (to be released after the CVE 
+gets assigned).
+
+Remedies
+--------
+
+Configurations which use the SSL/TLS form the very beginning (e.g. the 
+connections using port 993) are secure and not vulnerable.
+
+Possible impact
+---------------
+
+The user's credentials will *never* be transmitted over a plaintext 
+connection even in presence of this attack.
+
+Because Trojitá proceeded to use the connection without STARTTLS in face of 
+PREAUTH, certain data might be leaked to the attacker. The only example 
+which we were able to identify is the full content of a message which the 
+user attempts to save to their "Sent" folder while trying to send a mail.
+
+We don't believe that any other data could be leaked. Again, user's 
+credentials will *not* be leaked as they are never transmitted under this 
+scenario.
+
+Acknowledgement
+---------------
+
+Thanks to Arnt Gulbrandsen on the imap-protocol ML for asking what happens 
+when we're configured to request STARTTLS and a PREAUTH is received, and to 
+Michael M Slusarz for starting that discussion.
+
+[1] http://trojita.flaska.net/
+
+With kind regards,
+Jan
 
 -- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Trojitá, a fast Qt IMAP e-mail client -- http://trojita.flaska.net/
