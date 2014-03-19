@@ -1,62 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/7
-Message-Id: <201407081641.s68GfDNw028028@linus.mitre.org>
-Date: Tue, 8 Jul 2014 12:41:13 -0400 (EDT)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: WordPress plugin wysija-newsletters remote file upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/11
+Message-ID: <20140319161422.GL2551@sivokote.iziade.m$>
+Date: Wed, 19 Mar 2014 18:14:22 +0200
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+What is the number of email addresses who
+posted on FD?
 
-> https://wordpress.org/plugins/wysija-newsletters/changelog/
-> 2.6.7 - 2014-07-01
-> Fixed security issue reported by Sucuri
-> http://blog.sucuri.net/2014/07/remote-file-upload-vulnerability-on-mailpoet-wysija-newsletters.html
+(to roughly estimate cost of hosting)
 
-> the developers assumed that WordPress's "admin_init" hooks were only
-> called when an administrator user visited a page inside /wp-admin/.
-
-> It is a easy mistake to make and they used that hook (admin_init) to
-> verify if a specific user was allowed to upload files.
-
-Use CVE-2014-4725.
-
-
-> https://wordpress.org/plugins/wysija-newsletters/changelog/
-> 2.6.8 - 2014-07-04
-> Fixed security issue reported by Dominic
-
-This seems to be an unspecified vulnerability with a different
-discoverer. Use CVE-2014-4726.
-
-
-> http://blog.sucuri.net/2014/07/remote-file-upload-vulnerability-on-mailpoet-wysija-newsletters.html
-
-> WordPress's "admin_init" hooks
-
-> any call to /wp-admin/admin-post.php also executes this hook without
-> requiring the user to be authenticated
-
-As far as we can tell, this is intentional behavior in WordPress, and
-is not a WordPress implementation error or vulnerability. There is no
-CVE ID for this WordPress behavior.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTvB7EAAoJEKllVAevmvmsXpAH/2HeRED+w5BlsPaGIkGFXaqT
-FGdOCgYyjfwCISZQqaIvUds81sKJMewfcv/2naoY+MU2/IWDAPME8vAFuJiZpwPq
-SL8BsUlIB4D0uizC/vhJHuf4G7Fw0+qlTy2O2nMdcZ+5TZlu626M7WvRUE4pJj37
-q86dmqqnF9CjiQWLBx2UKb0xLfrCGBQyqXMjZlvvyTI7wbZLjwFoxSJ4UqNM1My1
-5LkY4L3DGyGaNrrNZOdM3OGKhNtTrJl630TIqhwu+hnKIvrY5N2WPFHHoZ2V7K8P
-QFktGYlW5zej5jGi11ZGX5bWa8sWtBYQNXge9AUjQSaiaSSuDNkoey3dgx5Mk5E=
-=dY+t
------END PGP SIGNATURE-----
+On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
+> Apologies for posting on list mainly dedicated
+> to CVE's.
+> 
+> The Full Disclosure mailing list died today:
+> http://lists.grok.org.uk/
+> http://seclists.org/fulldisclosure/2014/Mar/332
+> 
+> I suppose it is time for a new list.
+> 
+> Any ideas?
+> 
+> -- 
+> guninski
