@@ -1,78 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/24/3
-Message-ID: <5472E0A9.30708@mittwald.de>
-Date: Mon, 24 Nov 2014 08:39:21 +0100
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: The Fuzzing Project
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/1
+Message-ID: <20140319125823.GE2551@sivokote.iziade.m$>
+Date: Wed, 19 Mar 2014 14:58:23 +0200
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Subject: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Apologies for posting on list mainly dedicated
+to CVE's.
 
+The Full Disclosure mailing list died today:
+http://lists.grok.org.uk/
+http://seclists.org/fulldisclosure/2014/Mar/332
 
+I suppose it is time for a new list.
 
-On 23/11/14 21:49, Hanno Böck wrote:
-> Hi,
-> 
-> As already mentioned in various threads I hereby announce the
-> Fuzzing Project: https://fuzzing-project.org/
-> 
-> This is still a lot of work in progress. I welcome all feedback, 
-> contributions and especially links to your reports of the bugs you 
-> fuzzed.
-> 
-> cu,
-> 
+Any ideas?
 
-Hi, cool to see this kicking off :)
+-- 
+guninski
 
-Maybe you want to add keepassx to the site, as it's a program
-for security sensitive data, but it's also full of segfaults, e.g.:
-https://bugzilla.redhat.com/show_bug.cgi?id=1036214
-
-The worst part: they don't get fixed. I don't know if the project is
-dead?
-On this[1] site it claims:
-"KeePassX 0.4.3 is no longer maintained."
-However version 2.0 is still alpha, so maybe the safest way for a local
-open source password manager is to use the original keepass
-from https://www.keepass.info/
-
-I'll report some private fuzzing results, hopefully later this week.
-
-[1]https://www.keepassx.org/bug-reports/
-
-- -- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad
-Oeynhausen
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJUcuCpAAoJEC5d3lL7/I9z16wQALDD6pA+C/J7xCE1RJKT5pLQ
-vIeBe+bbilm4k2GTE356gnB5ZSwbzyRPhxEQ92nx2ps+OB5nOeR82yV/AtIxPr0A
-D70B/wdFJInBBdfEqe9Z5HDOiGZ7ctgd8olr025rDQeEKmH32APpLfPYn8QErE0o
-ek0IKuoz/ixJqoaxUcHwmDEzzdxmOn/d8L8DbgSoVEjVLk1cFkeyp+FdOwtPbgZW
-/pZl3+Uomi3ljUyevbbeF24dhT/HzkCJa7sI1NQ5LPxtba3+hnFnPt7fzy+yBA7a
-wuhAUXuHOWGrsZy33gtHH/VCWmKLPDatqO96zyXCxD0QtVIYDQujMV+RGsGAgAAd
-HzRpxInZRikbUId8+fLDjolcC00u5pk2bOBvd17os6d1+SRzr+3A0pDOvravpVw4
-CQBMB/d+QvOGsbys5TrhyF/BYaMza8802EeNTC4+uu26OfOVrhXrBBBM3APcUiUX
-Ne0DacyVrT2bbIg8VBUh36dYF0NcHnZPdo2cv5AekQurwct+iyU6GRAE/NT3zGlO
-ohLlATHH35WUTpr8nb/6oaqJFw9qpQ9Sqohowp00DUI8zMGe96fVdb/mRn26qyOE
-MQdsgCJEQe19UlOxUxlIVrGcgl1pVnb/C6aA2jtzUoWO382JF+LMOV02EwJLe70o
-1AKskz3Px7RBBl2+jTe0
-=OfY0
------END PGP SIGNATURE-----
