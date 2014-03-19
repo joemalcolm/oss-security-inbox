@@ -1,37 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/19
-Message-Id: <20140909142451.EA2B6332004@smtpvbsrv1.mitre.org>
-Date: Tue,  9 Sep 2014 10:24:51 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, tjay@...hat.com
-Subject: Re: headintheclouds tmp vulns - also request for referees decision on tmp vulns in deployment tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/19
+Message-ID: <20140319192911.GA7691@gremlin.ru>
+Date: Wed, 19 Mar 2014 23:29:11 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 19-Mar-2014 09:33:58 -0700, Dean Pierce wrote:
 
-> there shouldn't be any users on the docker image while it's being
-> deployed (or indeed any software pretty much at all)
+ > Hosting? That's what the cloud is for.
 
-> it is a pretty blatant tmp vuln
+Not for any sensitive data. And vulnerability descriptions are very
+sensitive...
 
-It's missing one of the essential characteristics of a vulnerability:
-an attack that crosses privilege boundaries.
+ > I have no idea who runs
+ > https://groups.google.com/group/FullDisclosure
+ > but they seem modeled after original fd charter.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Modelling a charter is easy... But I bet they'll fail on gathering
+all previous FD members.
 
-iQEcBAEBAgAGBQJUDw0YAAoJEKllVAevmvmslxIH/0WJOQfMGT0U9aBjL+xD9p10
-Ym7mFPXVEpP4joqhj+t5rqZrw8TXtl8hIAeprwVyRG4Lk2ZgcMfRbje3JRWc0wj6
-qHcZAFzIwDiKBWel9ttlQDAL4ZXQbUoNxMiRMdTYS8Ohmvx6aWpxARw8QJuahPpz
-80gkSInRkdcJJigUGkNnrCxhIL2UgNRGIJ8X5zxqZDiXEI+dSJ0tCL+Z8g254NAk
-AxyONOJvq/QQcbb4sqlgUUsm+DzmqsqpriBjpwvXsMqPg29ihEWw1mJ1ZqxOZVWv
-XtC3FfoJrtVO3/VcChMgaDVfUNEN8w2qTo6iiMpoHW7enWBU3+6LI2P0lv5rGgo=
-=+c+S
------END PGP SIGNATURE-----
+ > I trust Google as a neutral third party more than I would trust
+ > most security researchers.
+
+Bwa-ha-ha-ha-ha...
+
+Behind that party which you possibly may trust, there's a B.B.,
+which is even worse than a Big Brother - as it's a Big Business.
+
+When a Big Business faces something, it asks itself two questions:
+0. Could it cause any loss?
+1. Could it bring any profit?
+
+Suppose someone posts a zero-day vulnerability on the list which
+affects the BB; do you really think it wouldn't be censored out?
+
+No doubt, it will - otherwise that will Cause a Loss, and that's
+inacceptable for BB.
+
+Also, several days before FD shutdown there was a long thread
+related to some vulnerabilities in Google services... Although
+John Cartwright didn't name anyone, I can't be sure these two
+events are unrelated.
+
+ > They already host all the old newsgroup archives. It's also
+ > free, easily consumable, and most importantly, babysat for
+ > security issues in a way that even a team of skilled volunteers
+ > would have a hard time pulling off.
+
+I'd prefer participating on the list hosted by some party which
+isn't directly affected by list postings - say, some ISP.
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
