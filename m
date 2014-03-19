@@ -1,39 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/07/1
-Message-ID: <20140907074739.GA29387@alf.mars>
-Date: Sun, 7 Sep 2014 09:47:39 +0200
-From: Helmut Grohne <helmut@...divi.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/22
+Message-ID: <20140319220641.GA5303@debjann.fritz.box>
+Date: Wed, 19 Mar 2014 23:06:41 +0100
+From: Jann Horn <jann@...jh.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: /tmp file vulnerability in ace
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-Please assign a CVE number for the ace build process using predictable
-filenames in a world-writeable directory (DAC violation).
+On Wed, Mar 19, 2014 at 11:29:11PM +0400, gremlin@...mlin.ru wrote:
+> On 19-Mar-2014 09:33:58 -0700, Dean Pierce wrote:
+> 
+>  > Hosting? That's what the cloud is for.
+> 
+> Not for any sensitive data. And vulnerability descriptions are very
+> sensitive...
 
-Upstream: http://www.dre.vanderbilt.edu/~schmidt/ACE.html
+After they've been made public intentionally?
 
-In bin/generate_doxygen.pl line 177 it says:
-> my $output = "/tmp/".$i.".".$$.".doxygen";
 
-This path is later opened for writing. For context, see:
-http://sources.debian.net/src/ace/6.2.7%2Bdfsg-1/bin/generate_doxygen.pl/#L177
+>  > I trust Google as a neutral third party more than I would trust
+>  > most security researchers.
+> 
+> Bwa-ha-ha-ha-ha...
+> 
+> Behind that party which you possibly may trust, there's a B.B.,
+> which is even worse than a Big Brother - as it's a Big Business.
+> 
+> When a Big Business faces something, it asks itself two questions:
+> 0. Could it cause any loss?
+> 1. Could it bring any profit?
+> 
+> Suppose someone posts a zero-day vulnerability on the list which
+> affects the BB; do you really think it wouldn't be censored out?
+> 
+> No doubt, it will - otherwise that will Cause a Loss, and that's
+> inacceptable for BB.
 
-Initial disclosure: http://bugs.debian.org/760709
+Have a look at the big picture. If Google censors a vuln in a google-related
+service on such a list, they will get massive criticism, and for a business,
+that's even worse.
 
-(end of CVE request)
+A vuln in a Google service? That's a mistake. Intentional censoring by Google
+in a place where they're supposed to be a neutral third party? That's evil.
+And "Google made a stupid mistake" in the headlines is much better for them
+than "Google did something evil". They won't do it, not just for ethical
+reasons, but also because censoring is bad for their money.
 
-A quick "grep -r /tmp $ace_source" indicates more occasions that may be
-worth researching. Most of the results reside within examples or
-documentation though.
 
-An interesting find is bin/g++-dep line 63:
-> TMP=/tmp/g++dep$$
-This path is also used for writing. The context can be found at:
-http://sources.debian.net/src/ace/6.2.7%2Bdfsg-1/bin/g%2B%2Bdep/#L63
-I am not sure whether instance is actually executed during the build,
-but the Debian package installs it to the development package available
-for user consumption.
+>  > They already host all the old newsgroup archives. It's also
+>  > free, easily consumable, and most importantly, babysat for
+>  > security issues in a way that even a team of skilled volunteers
+>  > would have a hard time pulling off.
+> 
+> I'd prefer participating on the list hosted by some party which
+> isn't directly affected by list postings - say, some ISP.
 
-Thanks
+<sarcasm>Yeah, because we've never seen an ISP with totally crappy
+reactions to vuln reports.</sarcasm>
 
-Helmut
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
