@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/22
-Message-id: <CA104541-38FE-4230-A6E3-552F9C7832CC@me.com>
-Date: Thu, 25 Sep 2014 11:53:41 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/8
+Message-ID: <20140319140313.GA8498@openwall.com>
+Date: Wed, 19 Mar 2014 18:03:13 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Cc: Qixue Xiao <s2exqx@...il.com>
+Subject: Re: CVE request for a bug in gnu coreutils 8.22
 Content-Type: text/plain; charset=utf-8
 
-Hello List,
-
-A colleague of mine added an ifdef for FUNCTION_EXPORT, his modifications can be found here: 
-
-https://github.com/akamai/bash/commit/7caac6ee41f645fc21b6e5eddc820151f6e6c43c
-
-Thank you.
-— Larry C$
-
-On Sep 24, 2014, at 9:30 PM, Solar Designer <solar@...nwall.com> wrote:
-
-> On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
->> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
->>> On 9/24/14, 5:32 PM, Solar Designer wrote:
->>>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
->>>>> Tavis Ormandy just tweetet this:
->>>>> https://twitter.com/taviso/status/514887394294652929
->>>>> 
->>>>> The bash patch seems incomplete to me, function parsing is still
->>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
->>>> 
->>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
->>>> Tavis on this "reply".
->>> 
->>> I have a fix for this.
->> 
->> Can you provide a pointer to the patch?  I put together a patch that
->> changed the report_error() to fatal_error() as I wasn't able to see
->> how to reset the parser state.  Was just about to send it out...
+On Wed, Mar 19, 2014 at 09:56:07PM +0800, Qixue Xiao wrote:
+> I am not sure whether this needs a CVE.
 > 
-> I think Chet is not on oss-security - we should be CC'ing him where
-> appropriate.  (I've added the CC on this reply.)
 > 
-> Alexander
+> this bug will result an illegal memory access, which may be leak
+> information without authority.
 
+I think you posted the same message a few days ago and got a reply
+requesting more info:
+
+http://www.openwall.com/lists/oss-security/2014/03/14/7
+
+I guess maybe you're posting without being subscribed and this is why
+you didn't see the reply?  If so, please note for next time that you
+should either be subscribed or clearly state that you are not.
+
+Alexander
