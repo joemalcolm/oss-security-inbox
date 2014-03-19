@@ -1,56 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/13
-Message-ID: <5486B508.6070107@gmail.com>
-Date: Tue, 09 Dec 2014 03:38:32 -0500
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/14
+Message-ID: <20140319182402.2bba7883@redhat.com>
+Date: Wed, 19 Mar 2014 18:24:02 +0100
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PIE bypass using VDSO ASLR weakness
+Subject: TigerVNC 1.3.1 fixes ZRLE decoding bounds checking issue
 Content-Type: text/plain; charset=utf-8
 
-On 09/12/14 03:05 AM, Reno Robert wrote:
-> Even in 64 bit addressing, randomization of VDSO seems to be low and the
-> base address could be bruteforced, thus allowing to use gadgets from VDSO
-> if not from executable. Though VDSO is not rich in gadgets, it has few good
-> ones to make interesting syscalls including execve(). The below blog post
-> describes the availability of gadgets and feasibility of bruteforce, which
-> could be combined for an effective payload.
-> 
-> http://v0ids3curity.blogspot.in/2014/12/return-to-vdso-using-elf-auxiliary.html
-> 
-> 
-> renorobert@...ntu:~$ readelf -h ./pie
-> ELF Header:
->   Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
->   Class:                             ELF64
->   Data:                              2's complement, little endian
->   Version:                          1 (current)
->   OS/ABI:                          UNIX - System V
->   ABI Version:                    0
->   Type:                              DYN (Shared object file)
->   Machine:                         Advanced Micro Devices X86-64
->   Version:                          0x1
->   Entry point address:         0x620
-> 
-> renorobert@...ntu:~$ while true; do ldd ./pie; done | grep
-> 0x00007fff969fe000
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
->         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> 
-> Do we need better ASLR for VDSO to make PIE more effective?
+Hi!
 
-You must have COMPAT_VDSO enabled. It's randomized fine with a sane
-kernel configuration.
+New release of TigerVNC fixes an issue with boundary checks in the ZRLE
+decoding.  Boundary checks existed in the code in form of assert()s,
+which were removed in builds with NDEBUG defined.  That is default for
+release builds done by cmake, which is used by TigerVNC.  This could
+possibly allow malicious server to compromise vncviewer.
 
+The same problem may affect related *VNC implementations if built with
+NDEBUG.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+CVE-2014-0011 was assigned to the issue.
+
+References:
+http://sourceforge.net/p/tigervnc/mailman/message/32120476/
+http://sourceforge.net/p/tigervnc/code/5163
+http://sourceforge.net/p/tigervnc/code/5164
+https://bugzilla.redhat.com/show_bug.cgi?id=1050928
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
