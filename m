@@ -1,57 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/1
-Message-Id: <6B65411F-C351-4618-B76C-C73674C8EE3D@docker.com>
-Date: Thu, 11 Dec 2014 21:10:17 -0500
-From: Eric Windisch <eric.windisch@...ker.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/12
+Message-ID: <CAFOKM3p2kcWkvEhxRwj2AwUtpTNv4x=uwknmpxDmRgoECk4cwQ@mail.gmail.com>
+Date: Wed, 19 Mar 2014 09:33:58 -0700
+From: Dean Pierce <pierce403@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Docker 1.3.3 - Security Advisory [11 Dec 2014]
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-Docker 1.3.3 has been released to address several vulnerabilities and is immediately available for all supported platforms: https://docs.docker.com/installation/ <https://docs.docker.com/installation/>
+Hosting?  That's what the cloud is for.
 
-This release addresses vulnerabilities which could be exploited by a malicious Dockerfile, image, or registry to compromise a Docker host, modify images, or spoof official repository images. Note that today we also saw the release of Docker 1.4.0, also containing these fixes. While version 1.3.3 is a security-focused update, Docker 1.4.0 includes over 180 new commits, primarily bug fixes.
+I have no idea who runs https://groups.google.com/group/FullDisclosure
 
-It is highly recommended that users upgrade to Docker Engine 1.3.3 or higher.
+but they seem modeled after original fd charter.  I trust Google as a
+neutral third party more than I would trust most security researchers.
+ They already host all the old newsgroup archives.  It's also free,
+easily consumable, and most importantly, babysat for security issues
+in a way that even a team of skilled volunteers would have a hard time
+pulling off.
 
-Please send any questions to security@...ker.com <mailto:security@...ker.com>.
+  - DEAN
 
-
-
-Docker Security Advisory [141211]
-----------------------------------------------------------------------------------------------------------
-
-=============================================================
-[CVE-2014-9356] Path traversal during processing of absolute symlinks
-=============================================================
-
-Path traversal attacks are possible in the processing of absolute symlinks. In checking symlinks for traversals, only relative links were considered. This allowed path traversals to exist where they should have otherwise been prevented. This was exploitable via both archive extraction and through volume mounts.
-
-This vulnerability allowed malicious images or builds from malicious Dockerfiles to write files to the host system and escape containerization, leading to privilege escalation.
-
-We are releasing Docker 1.3.3 to address this vulnerability. Users are highly encouraged to upgrade.
-
-Discovered by Tõnis Tiigi.
-
-===================================================================
-[CVE-2014-9357] Escalation of privileges during decompression of LZMA (.xz) archives
-===================================================================
-
-It has been discovered that the introduction of chroot for archive extraction in Docker 1.3.2 had introduced a privilege escalation vulnerability.  Malicious images or builds from malicious Dockerfiles could escalate privileges and execute arbitrary code as a privileged root user on the Docker host by providing a malicious ‘xz’ binary.
-
-We are releasing Docker 1.3.3 to address this vulnerability. Only Docker 1.3.2 is vulnerable. Users are highly encouraged to upgrade.
-
-Discovered by Tõnis Tiigi.
-
-=========================================================================
-[CVE-2014-9358] Path traversal and spoofing opportunities presented through image identifiers
-=========================================================================
-
-It has been discovered that Docker does not sufficiently validate Image IDs as provided either via 'docker load' or through registry communications.  This allows for path traversal attacks, causing graph corruption and manipulation by malicious images, as well as repository spoofing attacks.
-
-We are releasing Docker 1.3.3 to address this vulnerability. Users are highly encouraged to upgrade.
-
-Discovered by Eric Windisch of Docker, Inc.
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+On Wed, Mar 19, 2014 at 9:14 AM, Georgi Guninski <guninski@...inski.com> wrote:
+> What is the number of email addresses who
+> posted on FD?
+>
+> (to roughly estimate cost of hosting)
+>
+> On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
+>> Apologies for posting on list mainly dedicated
+>> to CVE's.
+>>
+>> The Full Disclosure mailing list died today:
+>> http://lists.grok.org.uk/
+>> http://seclists.org/fulldisclosure/2014/Mar/332
+>>
+>> I suppose it is time for a new list.
+>>
+>> Any ideas?
+>>
+>> --
+>> guninski
