@@ -1,40 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/07/1
-Message-ID: <CA+eU_aZ6jicr1rCberqc1kGefnepJV_U1gPSdG6cD21v6h48xg@mail.gmail.com>
-Date: Sun, 6 Apr 2014 20:32:35 -0700
-From: Tim Heckman <tim+sec@...erduty.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/4
+Message-ID: <20140319133130.GA8267@openwall.com>
+Date: Wed, 19 Mar 2014 17:31:30 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: Icecast world readable log/logdir
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Apr 6, 2014 at 10:32 AM, Agostino Sarubbo <ago@...too.org> wrote:
+On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
+> Apologies for posting on list mainly dedicated to CVE's.
 
-> I just noticed that (at least on gentoo), the following package produces a
-> world readable log:
->
-> Icecast (http://www.icecast.org):
-> # ls -la /var/log/icecast
-> total 18648
-> drwxrw-r--  2 icecast nogroup     4096 Apr  6 12:23 .
-> drwxr-xr-x 15 root    root        4096 Apr  5 04:20 ..
-> -rw-r--r--  1 icecast nogroup  5646894 Apr  6 19:27 access.log
-> -rw-r--r--  1 icecast nogroup  3181987 Apr  6 19:27 error.log
-> --
-> Agostino Sarubbo
-> Gentoo Linux Developer
->
+I guess you're (partially) kidding.  This list is not meant to be
+"mainly dedicated to CVE's", it just happened to be that way.  Other
+on-topic postings are very welcome, and I find postings about other
+related mailing lists (dis)appearing to be on topic, in part because it
+affects what topics we choose to discuss in here (and what topics to
+discuss in other places).
 
-Hello Agostino,
+> The Full Disclosure mailing list died today:
+> http://lists.grok.org.uk/
+> http://seclists.org/fulldisclosure/2014/Mar/332
+> 
+> I suppose it is time for a new list.
+> 
+> Any ideas?
 
-I agree that world-readable log files is a problem and should be fixed.
-However, should this be given a CVE?
+Arrigo Triulzi and I just had this conversation on Twitter:
 
-Do those log files contain any information that would be considered a
-security risk? It's been quite a few years, admittedly, since I've worked
-with Icecast so I don't remember if those files contain any information
-that could be considered a problem.
+<solardiz> Hosting unofficial Full-Disclosure archive http://lists.openwall.net/full-disclosure/ we received few message removal requests and no threats that I recall
+<@cynicalsecurity> @solardiz shall we reboot FD?
+<@solardiz> @cynicalsecurity Maybe, but I don't intend to be involved. I wasn't even subscribed except hosting this archive and sometimes looking at it.
+<@cynicalsecurity> @solardiz perhaps we need a different FD, without the automated security bulletins and the trolls. FD with kickbans?
+<@solardiz> @cynicalsecurity With "unmoderated" "full disclosure" list, it's tricky to draw the trolling vs. free speech line. I'll let others do it.
+<@cynicalsecurity> @solardiz yes, agreed.
 
-Cheers!
--Tim
+So I think someone else should setup the new FD, somewhere.  Openwall
+might host an unofficial archive of it again (with no promises of it
+staying up), and that's it.
 
+I just recalled another way in which I found FD useful: as a moderator
+for oss-security, I sometimes rejected off-topic yet not totally crappy
+postings with a comment suggesting that the person posts to FD instead.
+We won't be able to continue doing that.  In some cases (mostly for bugs
+in proprietary software) we'll be able to continue to redirect people to
+Bugtraq, but there are in fact not totally crappy postings that I think
+aren't appropriate for either oss-security or Bugtraq - e.g., someone
+wanted to conduct a research survey in the security community recently,
+and I redirected them to FD (I don't know if they posted, nor if their
+posting to FD was approved).  I felt that a posting like that would be
+"too crappy" for Bugtraq (although that sentiment is in part based on
+"the old Bugtraq" of 1990s), but OK given the overall low SNR on FD.
+
+Alexander
