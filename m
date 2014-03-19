@@ -1,70 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/20/3
-Message-ID: <5C0A7A6534D5DD42941DA362655467C109B3374B@loota.laru.local>
-Date: Wed, 20 Aug 2014 06:21:24 +0000
-From: securitylists <securitylists@...ora.fi>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Enigmail warning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/7
+Message-ID: <20140319135953.GH2551@sivokote.iziade.m$>
+Date: Wed, 19 Mar 2014 15:59:53 +0200
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I suggested this about year ago:
 
-We were able to reproduce the bug by trying to send an encrypted message to a bcc recipient. The message was promptly sent without encryption or confirmation. It is usually not very relevant to use bcc when sending messages encrypted with public keys but it can be chosen by accident and it shouldn't break the encryption like that.
+http://seclists.org/fulldisclosure/2013/Mar/11
 
-Please let me know if you are able to reproduce this.
-
-The client was Thunderbird 31.0 running on Ubuntu with Enigmail 1.7.
-
-Antti Kurittu
-Information Security Specialist
-National Cyber Security Center NCSC-FI 
-Finnish Communications Regulatory Authority FICORA
-Itämerenkatu 3 A PL 313, 00181 Helsinki, Finland
-+358 29 539 0100 
-http://www.cert.fi/en/ 
-PGP-fingerprint: 00CC B1BF 86B9 C3D8 3B4B  6A16 C496 0441 42CF CA51
-
------Original Message-----
-From: Nick Boyce [mailto:nick.boyce@...il.com] 
-Sent: 18. elokuuta 2014 20:00
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] Enigmail warning
-
-On 18 August 2014 07:22, Henri Salo <henri@...v.fi> wrote:
-
-> http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/
-> Quote from thread below:
-> Enigmail 1.7 is completely broken for my purposes.
-> Steps to reproduce the problem:
->
-> 1) Write an email in TB.
-> 2) Ensure "Force encryption" in Enigmail.
-> 3) Ensure "Force signing" in Enigmail.
-> 4) Recheck encryption and signing settings... OK.
-> 5) Send the email.
-> 6) Look at the received email. OOPS. It is NOT signed
->     and NOT encrypted.
-
-Um ... I see from the Enigmail "Announcements" forum [1] that some major changes have been made to the package over the last 24 months:
-specifically a decision was made to replace older C++ code (with maintainability issues) by new pure Javascript code, thus hopefully achieving platform, GPG and TB version independence
-
-You can see how that sort of upheaval in the codebase might result in horrible problems like this.
-
-[ I switched away from TB to Claws/Kmail some time ago, so this is all news to me, but up till that point the behaviour of TB V3 - 10 and Enigmail 1.0/1 in encrypting my mail was never less than excellent for me. ]
-
-More relevantly, the (primary ?) author specifically asked [2] for testers to step up and test the new Javascript version thoroughly
-
-  "In order to reduce the risk of severe errors in
-   the release versions, I will regularly ask for help
-   in testing after I completed such changes."
-
-which leaves me wondering how many stepped up to perform that task. It would be interesting - and maybe alarming - to know.
-
-[1] http://sourceforge.net/p/enigmail/forum/announce/
-[2] https://www.enigmail.net/list_archive/2012-January/014667.html
-
-Nick
---
-"Bob has a problem requiring secure communication.
- He decides to use certificates.
- Now Bob has two problems."
+On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
+> Apologies for posting on list mainly dedicated
+> to CVE's.
+> 
+> The Full Disclosure mailing list died today:
+> http://lists.grok.org.uk/
+> http://seclists.org/fulldisclosure/2014/Mar/332
+> 
+> I suppose it is time for a new list.
+> 
+> Any ideas?
+> 
+> -- 
+> guninski
