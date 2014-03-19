@@ -1,38 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/26
-Message-ID: <20140924191221.GA7626@zoho.com>
-Date: Wed, 24 Sep 2014 19:12:21 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/5
+Message-ID: <20140319134813.GG2551@sivokote.iziade.m$>
+Date: Wed, 19 Mar 2014 15:48:13 +0200
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 24, 2014 at 12:08:46PM -0400, Chet Ramey wrote:
-> On 9/24/14, 11:16 AM, Solar Designer wrote:
+On Wed, Mar 19, 2014 at 05:31:30PM +0400, Solar Designer wrote:
+> On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
+> > Apologies for posting on list mainly dedicated to CVE's.
 > 
-> > I see no good workaround. 
+> I guess you're (partially) kidding.  This list is not meant to be
+> "mainly dedicated to CVE's", it just happened to be that way.  Other
+> on-topic postings are very welcome, and I find postings about other
+> related mailing lists (dis)appearing to be on topic, in part because it
+> affects what topics we choose to discuss in here (and what topics to
+> discuss in other places).
 > 
-> You're correct; there is not a good workaround.  Since there are
-> publicly available patches for all bash versions back 15 years or so,
-> though, the best path forward is to apply those as quickly as
-> possible.
+
+lol. I was partially kidding and in addition have low
+opinion of CVE.
+
+> > The Full Disclosure mailing list died today:
+> > http://lists.grok.org.uk/
+> > http://seclists.org/fulldisclosure/2014/Mar/332
+> > 
+> > I suppose it is time for a new list.
+> > 
+> > Any ideas?
 > 
-> Chet
+> Arrigo Triulzi and I just had this conversation on Twitter:
+> 
+> <solardiz> Hosting unofficial Full-Disclosure archive http://lists.openwall.net/full-disclosure/ we received few message removal requests and no threats that I recall
+> <@cynicalsecurity> @solardiz shall we reboot FD?
+> <@solardiz> @cynicalsecurity Maybe, but I don't intend to be involved. I wasn't even subscribed except hosting this archive and sometimes looking at it.
+> <@cynicalsecurity> @solardiz perhaps we need a different FD, without the automated security bulletins and the trolls. FD with kickbans?
+> <@solardiz> @cynicalsecurity With "unmoderated" "full disclosure" list, it's tricky to draw the trolling vs. free speech line. I'll let others do it.
+> <@cynicalsecurity> @solardiz yes, agreed.
+> 
+> So I think someone else should setup the new FD, somewhere.  Openwall
+> might host an unofficial archive of it again (with no promises of it
+> staying up), and that's it.
+> 
+> I just recalled another way in which I found FD useful: as a moderator
+> for oss-security, I sometimes rejected off-topic yet not totally crappy
+> postings with a comment suggesting that the person posts to FD instead.
+> We won't be able to continue doing that.  In some cases (mostly for bugs
+> in proprietary software) we'll be able to continue to redirect people to
+> Bugtraq, but there are in fact not totally crappy postings that I think
+> aren't appropriate for either oss-security or Bugtraq - e.g., someone
+> wanted to conduct a research survey in the security community recently,
+> and I redirected them to FD (I don't know if they posted, nor if their
+> posting to FD was approved).  I felt that a posting like that would be
+> "too crappy" for Bugtraq (although that sentiment is in part based on
+> "the old Bugtraq" of 1990s), but OK given the overall low SNR on FD.
+> 
+> Alexander
 
-Hello Chet et al.
 
-While taking a closer look at this issue on Bash 4.2, I noticed a
-potential NULL deref. i.e.
+If you ask me there should be no moderation/kickbans.
+IMHO this isn't effective against alleged trolls.
+Back in the time I was against banning n3td3v.
 
-  $ FOO='() { :;}; blah4242' bash -c "echo bleh"
+Maybe some sound daily quota is reasonable though.
 
-This occurs in bgp_prune() where, because bgpids.npid=0 and
-js_c_childmax=-1, the code in the loop executes but bgpids.list=NULL.
-
-I didn't look closely enough to know if this situation is only reachable
-via the recently-fixed vulnerable code-path or not.
-
---mancha
-
-Content of type "application/pgp-signature" skipped
