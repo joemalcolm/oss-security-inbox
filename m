@@ -1,70 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/17
-Message-ID: <CAH4rwTLAG5Mg1ZsDkStGs+_MitJ_4Z5FgVp=AdcDBN6Jkk44kw@mail.gmail.com>
-Date: Tue, 9 Dec 2014 21:03:51 +0530
-From: Reno Robert <renorobert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/15
+Message-ID: <20140319173136.GB9023@openwall.com>
+Date: Wed, 19 Mar 2014 21:31:36 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PIE bypass using VDSO ASLR weakness
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-Hi Daniel, COMPAT_VDSO is not enabled. Just that randomization is 20 bits
-and same values are generated on repeated execution.
+On Wed, Mar 19, 2014 at 05:04:03PM +0200, Georgi Guninski wrote:
+> On Wed, Mar 19, 2014 at 06:18:41PM +0400, Solar Designer wrote:
+> > of CVE.  So you could consider treating or ignoring your CVE allergy
+> 
+> I am pretty sure someone@...re was coauthor of the
+> "responsibility RFC" which shows whose servants
+> mitre are.
 
-On Tue, Dec 9, 2014 at 2:08 PM, Daniel Micay <danielmicay@...il.com> wrote:
+Whether that is true or not, this has absolutely nothing to do with
+whether the technical content of the "CVE request" messages and
+follow-ups to them is valuable or not.  I think it is valuable.
 
-> On 09/12/14 03:05 AM, Reno Robert wrote:
-> > Even in 64 bit addressing, randomization of VDSO seems to be low and the
-> > base address could be bruteforced, thus allowing to use gadgets from VDSO
-> > if not from executable. Though VDSO is not rich in gadgets, it has few
-> good
-> > ones to make interesting syscalls including execve(). The below blog post
-> > describes the availability of gadgets and feasibility of bruteforce,
-> which
-> > could be combined for an effective payload.
-> >
-> >
-> http://v0ids3curity.blogspot.in/2014/12/return-to-vdso-using-elf-auxiliary.html
-> >
-> >
-> > renorobert@...ntu:~$ readelf -h ./pie
-> > ELF Header:
-> >   Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
-> >   Class:                             ELF64
-> >   Data:                              2's complement, little endian
-> >   Version:                          1 (current)
-> >   OS/ABI:                          UNIX - System V
-> >   ABI Version:                    0
-> >   Type:                              DYN (Shared object file)
-> >   Machine:                         Advanced Micro Devices X86-64
-> >   Version:                          0x1
-> >   Entry point address:         0x620
-> >
-> > renorobert@...ntu:~$ while true; do ldd ./pie; done | grep
-> > 0x00007fff969fe000
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
-> >
-> > Do we need better ASLR for VDSO to make PIE more effective?
->
-> You must have COMPAT_VDSO enabled. It's randomized fine with a sane
-> kernel configuration.
->
->
+Also, if you're concerned of MITRE possibly providing non-public
+vulnerability feeds to somewhere, that concern obviously does not apply
+to the public CVE requests made on this list.
 
+Regarding new FD:
 
--- 
-Regards,
-Reno Robert
-http://v0ids3curity.blogspot.in/
+> Is it reasonable to use a public service for the list --
+> outsourcing legal stuff?
 
+I think it's reasonable to try, but with an external service you
+probably won't be able to impose the daily quota per sender that you
+suggested.
+
+> Running a mirror/torrent is much easier than running
+> a mailing list, so even if stuff gets deleted it will
+> be in the mirrors.
+
+OK.
+
+You mentioned hosting costs.  I think a $20/month VPS will do.  Perhaps
+AWS "free tier" will do as well (IIRC, it's free for the first year).
+It's not related to how many people or e-mail addresses have posted (the
+statistic you asked for), but rather to the number of subscribers, to
+the amount of spam coming to the posting address (and to other related
+addresses, such as list admin's and even list robot's, as you must
+minimize backscatter) that you'd have to filter out, and to the
+acceptable mail delivery delays (a bigger server will let you do more
+concurrent deliveries, so the delays will be less - if you do configure
+the number of concurrent deliveries according to server capacity).
+
+Alexander
