@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/42
-Message-ID: <54332455.5040809@redhat.com>
-Date: Mon, 06 Oct 2014 17:23:01 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Security advisory in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/3
+Message-Id: <201403191311.s2JDBIFX007974@linus.mitre.org>
+Date: Wed, 19 Mar 2014 09:11:18 -0400 (EDT)
+From: cve-assign@...re.org
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for python/zipfile
 Content-Type: text/plain; charset=utf-8
 
-I updated the wikipedia page:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures#Description
+> http://bugs.python.org/issue20078
 
-Description
-This is a standardized text description of the issue(s). One common
-entry is:
+> http://hg.python.org/cpython/rev/79ea4ce431b1
 
-** RESERVED ** This candidate has been reserved by an organization
-or individual that will use it when announcing a new security problem.
-When the candidate has been publicized, the details for this
-candidate will be provided.
+> ZipExtFile.read goes into 100% CPU infinite loop on maliciously binary edited zips
 
-This means that the entry number has been reserved by Mitre for an issue
-or a CNA has reserved the number. So in the case where a CNA requests a
-block of CVE numbers in advance (e.g. Red Hat currently requests CVEs in
-blocks of 500), the CVE number will be marked as reserved even though
-the CVE itself may not be assigned by the CNA for some time. Until the
-CVE is assigned AND Mitre is made aware of it (e.g. the embargo passes
-and the issue is made public), AND Mitre has researched the issue and
-written a description of it entries will show up as "** RESERVED **".
+Use CVE-2013-7338.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJTKZXkAAoJEKllVAevmvmsm7EH/1zQjNZMlRVV0ixiDnTwQiNe
+ih1Bwbo+rogCr28RdTuJQm4EsX4yGlnqwjv4SaQCvOWEE3m+bmTPvnrFlWcYZzr3
+Xqns2eyZPAygcqf0fPujC2QslesIeTSOUDOU0QCnNi7njh5g+daORhPVBQLka4Ac
+jrbfwfypx0EmVImJua5oAyg9hYmky0w28vIJFF3Xb39kRaxUUKv9qd/dagRWthJr
+XpRrD82pTHT0fiil4eKO0f4Sz2RXxNIyKhndyNXc2vT1NTVvJJip6H9FhlXDOqvd
+hB+TDTMQtuM72Vvsy5CQWLw45fBhwdzHVQAGxN0l5rxjRg8/PpDJXKs+EkJbKzU=
+=grR3
+-----END PGP SIGNATURE-----
