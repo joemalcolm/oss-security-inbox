@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/14
-Message-ID: <20140617184352.GA17206@hunt>
-Date: Tue, 17 Jun 2014 11:43:52 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Graham Dumpleton <graham.dumpleton@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Security release for mod_wsgi (version 3.5)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/14
+Message-Id: <201403201937.s2KJav3P008456@linus.mitre.org>
+Date: Thu, 20 Mar 2014 15:36:57 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2013-7339 Linux kernel - rds: prevent dereference of a NULL device
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 17, 2014 at 10:39:49PM +1000, Graham Dumpleton wrote:
-> On MacOS X at least, it [setgid] really doesn't care what you give it.
-> You can give it negative numbers or even really large numbers and it
-> will happily set it to the value. I can't find any good information on
-> what Linux would do and can't test it right now.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Linux, since 2.4 times, all representable values in gid_t are legal
-group ids:
+CVE-2013-7339 has been assigned to this "prevent dereference of a NULL
+device" issue in the Linux kernel:
 
-http://manpages.ubuntu.com/manpages/trusty/en/man2/setgid.2.html
+  https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c2349758acf1874e4c2b93fe41d072336f1a31d0
 
-Thanks
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQEcBAEBAgAGBQJTK0J4AAoJEKllVAevmvmsyxMH/jhzfJQvnoKV7L1dEcFzgAJz
+WD+9CSfq6OzKGuki1w62cELfgntpdgOiIUOk2wFaO6+ogjUxUqPVD4U/6hcSpFPD
+9YBzCb/ODFRNwashXpOA2z4YXVImYt7lIN11MiTsVuQuG9bnPCMooHwV7QA1qPPT
+o1BM6YaGTqnH2DSSM5AofkVkVuIesstqrsty2gcLDAVB2nfDvRLE12bggb/R8//2
+UF2dQnrhZEHM0ktG1QQjMP+GnlKFNt1x0GGhI0zDmTxIfn2cD5smnN9AzEOguEp2
+K9FfwmH06gJDelUbLDngz2cug0EHjVbNqCpnnyGgDvBlXXC8qCPxA23iTrHsNLg=
+=zJB9
+-----END PGP SIGNATURE-----
