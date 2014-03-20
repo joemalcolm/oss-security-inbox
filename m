@@ -1,43 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/18/3
-Message-ID: <20140718195122.GA20292@eldamar.local>
-Date: Fri, 18 Jul 2014 21:51:22 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: bozohttpd: basic http authentication bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/3
+Message-ID: <20140320090256.GE2503@sivokote.iziade.m$>
+Date: Thu, 20 Mar 2014 11:02:56 +0200
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-Hi
-
-Can a CVE be assigned for the following bozohttpd basic http
-authetication bypass vulnerability? It was fixed in bozohttpd version
-20140708. Quoting NetBSD advisory:
-
-> Abstract
-> ========
+On Wed, Mar 19, 2014 at 09:33:58AM -0700, Dean Pierce wrote:
+> Hosting?  That's what the cloud is for.
 > 
-> When checking for restricted access via .htpasswd files, bozohttpd
-> fails to properly check for truncation, allowing specially crafted
-> requests to bypass access control without a password.  Files of
-> length 10 or more are not affected.
+> I have no idea who runs https://groups.google.com/group/FullDisclosure
 > 
+
+I don't care much who runs it.
+It might even be a good idea they to be
+anonymous.
+
+Though using exactly the same name "Full Disclosure"
+doesn't seem right to me -- there must be visible
+difference between the old and the new lists
+(at least for newcommers).
+
+I suggest people to watch for delays when
+posting interesting info (first post might
+require approval sometimes).
+
+Are there other alternatives?
+
+
+> but they seem modeled after original fd charter.  I trust Google as a
+> neutral third party more than I would trust most security researchers.
+>  They already host all the old newsgroup archives.  It's also free,
+> easily consumable, and most importantly, babysat for security issues
+> in a way that even a team of skilled volunteers would have a hard time
+> pulling off.
 > 
-> Technical Details
-> =================
+>   - DEAN
 > 
-> A call to snprintf() was not properly checking for truncation of
-> a provided user path, allowing a later concatenation of the
-> ".htpasswd" file name to exceed the maximum pathname length.  This
-> stops the check for .htpasswd file from working correctly, bypassing
-> the basic HTTP authentication scheme.  Files with names longer than
-> ".htpasswd" are not visible as they require at least enough for a
-> valid path to be available.
-
- [1] http://mail-index.netbsd.org/current-users/2014/07/17/msg025287.html
- [2] https://bugs.debian.org/755197
-
-Thanks in advance,
-
-Regards,
-Salvatore
+> On Wed, Mar 19, 2014 at 9:14 AM, Georgi Guninski <guninski@...inski.com> wrote:
+> > What is the number of email addresses who
+> > posted on FD?
+> >
+> > (to roughly estimate cost of hosting)
+> >
+> > On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
+> >> Apologies for posting on list mainly dedicated
+> >> to CVE's.
+> >>
+> >> The Full Disclosure mailing list died today:
+> >> http://lists.grok.org.uk/
+> >> http://seclists.org/fulldisclosure/2014/Mar/332
+> >>
+> >> I suppose it is time for a new list.
+> >>
+> >> Any ideas?
+> >>
+> >> --
+> >> guninski
