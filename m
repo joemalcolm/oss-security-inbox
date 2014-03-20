@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/14/2
-Message-ID: <m6kutf$fb2$1@ger.gmane.org>
-Date: Sun, 14 Dec 2014 22:19:43 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/4
+Message-ID: <20140320093108.GF2503@sivokote.iziade.m$>
+Date: Thu, 20 Mar 2014 11:31:08 +0200
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: MantisBT 1.2.18 Released
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-On 2014-12-08 16:13, Vasyl Kaigorodov wrote:
-> Since this is public now - can we please have more information about
-> #17243/CVE-2014-8553? I can't find this CVE assignment on oss-sec, and
-> also the corresponding bug is marked private.
+On Wed, Mar 19, 2014 at 06:14:22PM +0200, Georgi Guninski wrote:
+> What is the number of email addresses who
+> posted on FD?
+> 
 
-Apologies, I forgot to set it (and a few other issues too) to public 
-after release. It's done now:
+The list was large, some might run this on the full archives
 
-https://www.mantisbt.org/bugs/view.php?id=17243
+Since May 2003:
 
-D
+$ egrep '^From:.*<.*' fd | egrep -o '<.*>'|uniq | wc -l
+59751
 
+$ egrep '^From:' fd | grep -v '<' | uniq | wc -l
+8552
 
+(the intersection might not be empty).
