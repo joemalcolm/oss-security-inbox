@@ -1,41 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/5
-Message-Id: <201402241405.s1OE5fMp016152@linus.mitre.org>
-Date: Mon, 24 Feb 2014 09:05:41 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 739536@...s.debian.org
-Subject: Re: xfe: directory masks ignored when creating new files on Samba and NFS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/8
+Message-ID: <9d86537e-0595-42fa-a760-82fec368d3af@email.android.com>
+Date: Thu, 20 Mar 2014 13:25:10 +0000
+From: Simon Ward <simon+oss-sec@...ah.co.uk>
+To: oss-security@...ts.openwall.com,Georgi Guninski <guninski@...inski.com>
+Subject: Re: Re: FD mailing list died. Time for new one (or something better!)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Georgi Guninski <guninski@...inski.com> wrote:
+>So far several alternatives are:
+>
+>1. Public service mailing list (easy)
+>2. Standard mailing list (legal issues)
+>3. coderman's solution
+>4. forum or Question&Answers site (might support email)
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739536
+Every so often on full-disclosure someone would bring up the topic of moving to Usenet. I'm surprised no one has! (Or I just haven't seen it.)
 
-> From brief testing on Fedora with Samba and the "create mask" smb.conf 
-> option, this issue only presented when running xfe as the root user. The 
-> intended mask was used when running xfe as an unprivileged user.
-
-This seems to be an implementation error. It seems extremely unlikely
-that this type of product would want to provide "weaker than normal"
-file restrictions only in the special case of files created by root.
-
-Use CVE-2014-2079.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTC0/qAAoJEKllVAevmvms3wUIAMcSqFbqmazX+KGiKmLFovm6
-sRzXXyn49eBJ59fabqQx6eE1As5GeUolx35N+oe7O+U+XwRHdxGLcp5KoL4cxigq
-TVvsLqtJGMyVEXKPLlqWlXyCAMhdGL4VzYTvdqbR+e8aRyZGNPn0Mt5sQ3hf+xck
-mMK0AGFdRp89pVraZALMXfY4r5z331TOOfWThPnMKbWa1NzNrfoBaqbamO8BiRNF
-oy94rzrPNUfgu5mYvvZtQCKyFRQKr0eB3jkb0Bq8p+spSZvWKSV1sxZbxTU55izh
-0FtWgEH3yYJGq2DBrSJl/O5Q2uqbO9vrU3TwNdWTTkChYvUAYMHVXtUbjP1cw5A=
-=LIWq
------END PGP SIGNATURE-----
+Simon
