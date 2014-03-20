@@ -1,45 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/13/2
-Message-ID: <52D3EDD3.9080006@openstack.org>
-Date: Mon, 13 Jan 2014 14:44:51 +0100
-From: Thierry Carrez <thierry@...nstack.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: [OSSA 2014-001] Nova live snapshots use an insecure local directory (CVE-2013-7048)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/7
+Message-ID: <20140320114957.GH2503@sivokote.iziade.m$>
+Date: Thu, 20 Mar 2014 13:49:57 +0200
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: FD mailing list died. Time for new one (or something better!)
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-001
-CVE: CVE-2013-7048
-Date: January 13, 2013
-Title: Nova live snapshots use an insecure local directory
-Reporter: Daniel Berrange (Red Hat)
-Products: Nova
-Affects: Grizzly and later
+Interesting idea :)
 
-Description:
-Daniel Berrange from Red Hat reported that the directories used to
-temporarily store live snapshots on Nova compute nodes were writable to
-all local users. A local attacker with shell access on compute nodes
-could therefore read and modify the contents of live snapshots before
-those are uploaded to the image service.
+How hard is to implement?
 
-Icehouse (development branch) fix:
-https://review.openstack.org/#/c/58852/
+Some human will be in technical charge.
+How resistant is this against dishonest
+operator?
 
-Havana fix:
-https://review.openstack.org/#/c/60548/
+Suggestion:  make the project easy to
+install and import the DB in case it
+dies too for whatever reasons.
 
-Grizzly fix:
-https://review.openstack.org/#/c/60550/
+Why not implement all alternatives?
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-7048
-https://bugs.launchpad.net/nova/+bug/1227027
+This might cause duplicate traffic.
 
-Regards,
+So far several alternatives are:
 
--- 
-Thierry Carrez
-OpenStack Vulnerability Management Team
+1. Public service mailing list (easy)
+2. Standard mailing list (legal issues)
+3. coderman's solution
+4. forum or Question&Answers site (might support email)
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (902 bytes)
+
+On Thu, Mar 20, 2014 at 03:18:23AM -0700, coderman wrote:
+> a modest and proportionate proposal,
+> 
+> fuller-disclosure:
+>  - a hidden list (local accts only, no clearnet linkage)
+>  - a hidden daily digest (per mod prefs, see below)
+>  - a hidden xmpp (otr required - plaintext abused)
+>  - a hidden web archive (of the list traffic, read-only)
+>  - a hidden public chat (group xmpp+/|ircd, no clearnet linkage)
+>  - a hidden pastebin with or without simple nonce auth
+>  - a advogato reputation sys to stack rank and put below the fold
+>    (for list digest content, public chat, web archive, and public pastes)
+> 
+> use case A: "JerkVendor is Jerk"
+>  - more accomodating disclosure fails,
+>     good faith and gratis effort returned with bile.
+>  - bugtraq drama ensues, takedowns.
+>  - "Hey, the advisory is still up here! ->  fullerd.onion/..."
+> 
+> use case B: "The Hot Drop"
+>  - *whispers* 'remember the Athens Affair? i'd rather not Opt-Out to report'
+>  - BREAKING NEWS: "Anonymous russian hackers drop dox on spyhack to
+> darknet fullerd.onion..."
+> 
+> use case C: "It's my party and I'll..."
+>  - 'so how it happened was,
+>     , i coaxed pre-auth SSL cert parsefail remote exec with escalate to system'
+>  - "Hey DEF CON! fuck that full-disclosure closure drama,
+>     let's get this party started!"
+>  - DEF CON XX official start and group xmpp/ircd distributes nonce for
+> 0day to thousands of hidden participants simultaneously.
+>     [ remainder of distribution happens over sneakernet at con
+>       due to unexplained outage across entire Tor network for all users... ]
+> 
+> 
+> not a concern at all, ever:
+>  - "HOLY SHIT TAKE THAT DOWN NOW!!!" legal motions
+>  - "HOLY SHIT TAKE THAT DOWN NOW!!!" supporter/peer pressure
+>  - "HOLY SHIT TAKE THAT DOWN NOW!!!" matters of national security
+>  - "HOLY SHIT TAKE THAT DOWN NOW!!!" hint in datagram at 100Gbps
+> [ the inverse is use case D: "99.44% Peace of Mind" ]
+> 
+> 
+> 
+> i don't see the point in anything less; other technologies filling
+> existing roles fine, while the truly necessary drops have zero outlet.
+> 
+> .
+> .
+> .
+> finding someone with strong reputation and good judgement to publicly
+> validate and speak to the efforts of the equally reputable but
+> absolutely anonymous service operator?
+> ... now that's a hard sell ...  *grin*
