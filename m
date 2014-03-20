@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/11
-Message-ID: <CACYkhxgwi6MQkzr85mwa0MmzKdxRr-N=Fif3YSteVk2VZU7RcA@mail.gmail.com>
-Date: Fri, 3 Jan 2014 10:32:09 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/5
+Message-ID: <20140320094346.GG2503@sivokote.iziade.m$>
+Date: Thu, 20 Mar 2014 11:43:46 +0200
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Cc: fweimer@...hat.com, cve-assign@...re.org
-Subject: Re: Re: kwallet crypto misuse
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
->
-> > KWallet uses QDataStream, which encodes QString objects (used in
-> > KWallet maps) as UTF-16. So, the string "abcd" will be stored as
-> > "\0a\0b\0c\0d", which gives four bytes of information per block.
->
-> Does anyone know whether the KWallet user interface could make it
-> possible to enter passwords containing 16-bit characters (i.e.,
-> characters that cannot be represented using 8 bits)? If that would not
-> be possible, then this issue could potentially qualify for an
-> additional CVE assignment.
->
+On Thu, Mar 20, 2014 at 11:31:08AM +0200, Georgi Guninski wrote:
+> On Wed, Mar 19, 2014 at 06:14:22PM +0200, Georgi Guninski wrote:
+> > What is the number of email addresses who
+> > posted on FD?
+> > 
+> 
+> The list was large, some might run this on the full archives
+> 
+> Since May 2003:
+> 
+> $ egrep '^From:.*<.*' fd | egrep -o '<.*>'|uniq | wc -l
+> 59751
+> 
+> $ egrep '^From:' fd | grep -v '<' | uniq | wc -l
+> 8552
+> 
+> (the intersection might not be empty).
 
-I don't think another CVE is warranted - this just amplifies the original
-vulnerability.
-
-Implementing a cryptographic store (eg. a cryptographic file protocol) is
-non-trivial and the KDE developers might wish to seek help with this -
-perhaps a wiki page?
-
-Regards,
-  Michael
-
+I take the above back:
+$ egrep '^From:.*<.*' fd | egrep -o '<.*>'| sort |uniq | wc -l
+9318
+$ egrep '^From:' fd | grep -v '<' | sort | uniq | wc -l
+2101
