@@ -1,12 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/9
-Message-ID: <52CC2FA1.70208@oracle.com>
-Date: Tue, 07 Jan 2014 08:47:29 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/6
+Message-ID: <CAJVRA1R4-PzLay0e54Pd2WjuNoAg-WH4YqZf9eafrrdYsvxhMA@mail.gmail.com>
+Date: Thu, 20 Mar 2014 03:18:23 -0700
+From: coderman <coderman@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: X.Org Security Advisory: CVE-2013-6462: Stack buffer overflow in parsing of BDF font files in libXfont
+Subject: Re: FD mailing list died. Time for new one (or something better!)
 Content-Type: text/plain; charset=utf-8
 
+a modest and proportionate proposal,
 
-Download attachment "X_Org Security Advisory: CVE-2013-6462: Stack buffer overflow in parsing of
- BDF font files in libXfont.eml" of type "message/rfc822" (9329 bytes)
+fuller-disclosure:
+ - a hidden list (local accts only, no clearnet linkage)
+ - a hidden daily digest (per mod prefs, see below)
+ - a hidden xmpp (otr required - plaintext abused)
+ - a hidden web archive (of the list traffic, read-only)
+ - a hidden public chat (group xmpp+/|ircd, no clearnet linkage)
+ - a hidden pastebin with or without simple nonce auth
+ - a advogato reputation sys to stack rank and put below the fold
+   (for list digest content, public chat, web archive, and public pastes)
+
+use case A: "JerkVendor is Jerk"
+ - more accomodating disclosure fails,
+    good faith and gratis effort returned with bile.
+ - bugtraq drama ensues, takedowns.
+ - "Hey, the advisory is still up here! ->  fullerd.onion/..."
+
+use case B: "The Hot Drop"
+ - *whispers* 'remember the Athens Affair? i'd rather not Opt-Out to report'
+ - BREAKING NEWS: "Anonymous russian hackers drop dox on spyhack to
+darknet fullerd.onion..."
+
+use case C: "It's my party and I'll..."
+ - 'so how it happened was,
+    , i coaxed pre-auth SSL cert parsefail remote exec with escalate to system'
+ - "Hey DEF CON! fuck that full-disclosure closure drama,
+    let's get this party started!"
+ - DEF CON XX official start and group xmpp/ircd distributes nonce for
+0day to thousands of hidden participants simultaneously.
+    [ remainder of distribution happens over sneakernet at con
+      due to unexplained outage across entire Tor network for all users... ]
+
+
+not a concern at all, ever:
+ - "HOLY SHIT TAKE THAT DOWN NOW!!!" legal motions
+ - "HOLY SHIT TAKE THAT DOWN NOW!!!" supporter/peer pressure
+ - "HOLY SHIT TAKE THAT DOWN NOW!!!" matters of national security
+ - "HOLY SHIT TAKE THAT DOWN NOW!!!" hint in datagram at 100Gbps
+[ the inverse is use case D: "99.44% Peace of Mind" ]
+
+
+
+i don't see the point in anything less; other technologies filling
+existing roles fine, while the truly necessary drops have zero outlet.
+
+.
+.
+.
+finding someone with strong reputation and good judgement to publicly
+validate and speak to the efforts of the equally reputable but
+absolutely anonymous service operator?
+... now that's a hard sell ...  *grin*
