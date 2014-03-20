@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/28
-Message-ID: <542445CC.3010404@redhat.com>
-Date: Thu, 25 Sep 2014 22:11:48 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/15
+Message-Id: <201403201942.s2KJg9lN016124@linus.mitre.org>
+Date: Thu, 20 Mar 2014 15:42:09 -0400 (EDT)
+From: cve-assign@...re.org
+To: jkt@...ska.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Requesting a CVE id for Trojita, an e-mail client: SSL stripping
 Content-Type: text/plain; charset=utf-8
 
-On 09/25/2014 09:49 PM, Solar Designer wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> I agree.  I only suggested it as an interim measure if you felt that a
-> more invasive change was not acceptable yet.
->
-> I think Florian's prefix-suffix patch is actually a better way to go
-> (right now, unless there's some drawback I am not yet aware of), and at
-> a later time function imports should require to be enabled with a
-> non-default option.
->
+> the automatic saving into the "sent" or "draft" folders could happen
+> over a plaintext connection even if the user's preferences specify
+> STARTTLS as a requirement.
 
-I agree with Alexander here, and strongly suggest that we should be 
-using Florain's prefix-suffix patch.
+Use CVE-2014-2567.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+iQEcBAEBAgAGBQJTK0KBAAoJEKllVAevmvmsIX8H/0o4Jw4VigZRdckL7CCRG5Or
+1Y573jSNBl6z3e37f1tAAb6fWcyNI0KCzfwmYMJ+7ji4retIRW/fpcV9BtExBYwF
+pMcLUGXAAebuzpbYwNoS/+S4uLKb5AH8aE1N5hOMBrqWDWMnIowpSvalGodv002Z
+6OEHwCdG9iH+2z3OfQoxzGLZpysnIqihvS+4/vStQZoyFVA1Ow7sqfqQFBhGGOzk
+YTWRyhMERJpL0Dmau9Z3KyuZkYT8U6DUzhm/C86eQZWv3EvVDkMxiME6vOmj4LDC
+6GEOr5vlMtEjAItyHHmWKHCP9fpTlcb0kPqi+Rlg7F503vKT4I5tqQ5HYT5QGFM=
+=Qh8t
+-----END PGP SIGNATURE-----
