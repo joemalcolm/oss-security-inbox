@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/11
-Message-ID: <loom.20140912T160102-206@post.gmane.org>
-Date: Fri, 12 Sep 2014 14:03:37 +0000 (UTC)
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/11
+Message-ID: <20140320162237.GI2503@sivokote.iziade.m$>
+Date: Thu, 20 Mar 2014 18:22:37 +0200
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MantisBT Null byte poisoning in LDAP authentication
+Subject: Re: Re: FD mailing list died. Time for new one (or something better!)
 Content-Type: text/plain; charset=utf-8
 
-Greetings
+On Thu, Mar 20, 2014 at 01:25:10PM +0000, Simon Ward wrote:
+> Georgi Guninski <guninski@...inski.com> wrote:
+> >So far several alternatives are:
+> >
+> >1. Public service mailing list (easy)
+> >2. Standard mailing list (legal issues)
+> >3. coderman's solution
+> >4. forum or Question&Answers site (might support email)
+> 
+> Every so often on full-disclosure someone would bring up the topic of moving to Usenet. I'm surprised no one has! (Or I just haven't seen it.)
+> 
+> Simon
 
-Matthew Daley reported a Null byte poisoning issue with LDAP 
-authentication affecting MantisBT <= 1.2.17.
+usenet is certainly an option :)
 
-A malicious user can exploit this vulnerability to login as any 
-registered user and without knowing their password, to systems relying 
-on LDAP for user authentication (e.g. Active Directory or OpenLDAP with 
-"allow bind_anon_cred"). 
-
-Patches are available in [1]; full details on the original issue report 
-can be found at [2]. Can you please assign a CVE ID to this issue ? 
-
-Thank you
-
-D. Regad
-MantisBT Developer
-http://mantisbt.org/
-
-[1] http://github.com/mantisbt/mantisbt/commit/fc02c46ee (master branch)
-    http://github.com/mantisbt/mantisbt/commit/215968fa8 (1.2.x branch)
-[2] http://www.mantisbt.org/bugs/view.php?id=17640
-
-
+isn't there a problem with deleting commercial spam
+vs moderation?
 
