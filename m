@@ -1,110 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/3
-Message-ID: <20140131005155.GA17396@openwall.com>
-Date: Fri, 31 Jan 2014 04:51:55 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: fs: fix get_dumpable() incorrect tests (CVE-2013-2929)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/17
+Message-ID: <831f0d69-549b-4b25-aebf-149bfa6f7a0a@flaska.net>
+Date: Thu, 20 Mar 2014 21:34:05 +0100
+From: Jan Kundrát <jkt@...ska.net>
+To: <cve-assign@...re.org>
+Cc: <oss-security@...ts.openwall.com>
+Subject: Re: Requesting a CVE id for Trojita, an e-mail client: SSL stripping
 Content-Type: text/plain; charset=utf-8
 
-I'm afraid the issue below was never brought to oss-security (as it must
-have been).  The fix was committed on November 13:
+On Thursday, 20 March 2014 20:42:09 CEST, cve-assign@...re.org wrote:
+> Use CVE-2014-2567.
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=d049f74f2dbe71354d43d393ac3a188947811348
+Thanks, Trojita 0.4.1 is now released [1] and includes a fix for this 
+vulnerability.
 
-including detailed description and the CVE-2013-2929 reference.  So it
-was clearly disclosed as a security issue, yet bringing it to
-oss-security specifically seems to have falled through the cracks. :-(
+With kind regards,
+Jan
 
-Kees' posting to linux-distros:
-
------ Forwarded message from Kees Cook <kees@...flux.net> -----
-
-From: Kees Cook <kees@...flux.net>
-Subject: [PATCH] fs: fix get_dumpable() incorrect tests
-Date: Tue, 22 Oct 2013 16:25:30 -0700
-
-The get_dumpable() return value is not boolean. Most users of the
-function actually want to be testing for SUID_DUMP_USER rather than
-non-zero.
-
-Without this patch, if the system had set the sysctl fs/suid_dumpable=2,
-a user was able to ptrace attach to processes that had dropped privileges
-to that user. (This may have been partially mitigated if Yama was enabled.)
-
-CVE-2013-2929
-
-Reported-by: Vasily Kulikov <segoon@...nwall.com>
-Signed-off-by: Kees Cook <keescook@...omium.org>
-Cc: stable@...r.kernel.org
----
-I plan to send this to security@...nel.org on Monday, unless anyone
-would like to push that a bit. Also note, I do not have ia64 cross
-compilers available, so I used the "1" literal instead of adding
-binfmts.h to the ia64 code.
----
- arch/ia64/include/asm/processor.h |    2 +-
- fs/exec.c                         |    6 ++++++
- kernel/ptrace.c                   |    4 +++-
- 3 files changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/arch/ia64/include/asm/processor.h b/arch/ia64/include/asm/processor.h
-index e0a899a..d036a33 100644
---- a/arch/ia64/include/asm/processor.h
-+++ b/arch/ia64/include/asm/processor.h
-@@ -319,7 +319,7 @@ struct thread_struct {
- 	regs->loadrs = 0;									\
- 	regs->r8 = get_dumpable(current->mm);	/* set "don't zap registers" flag */		\
- 	regs->r12 = new_sp - 16;	/* allocate 16 byte scratch area */			\
--	if (unlikely(!get_dumpable(current->mm))) {							\
-+	if (unlikely(get_dumpable(current->mm) != 1)) {	\
- 		/*										\
- 		 * Zap scratch regs to avoid leaking bits between processes with different	\
- 		 * uid/privileges.								\
-diff --git a/fs/exec.c b/fs/exec.c
-index 8875dd1..bb8afc1 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1668,6 +1668,12 @@ int __get_dumpable(unsigned long mm_flags)
- 	return (ret > SUID_DUMP_USER) ? SUID_DUMP_ROOT : ret;
- }
- 
-+/*
-+ * This returns the actual value of the suid_dumpable flag. For things
-+ * that are using this for checking for privilege transitions, it must
-+ * test against SUID_DUMP_USER rather than treating it as a boolean
-+ * value.
-+ */
- int get_dumpable(struct mm_struct *mm)
- {
- 	return __get_dumpable(mm->flags);
-diff --git a/kernel/ptrace.c b/kernel/ptrace.c
-index dd562e9..a75ad41 100644
---- a/kernel/ptrace.c
-+++ b/kernel/ptrace.c
-@@ -26,6 +26,7 @@
- #include <linux/hw_breakpoint.h>
- #include <linux/cn_proc.h>
- #include <linux/compat.h>
-+#include <linux/binfmts.h>
- 
- 
- static int ptrace_trapping_sleep_fn(void *flags)
-@@ -257,7 +258,8 @@ ok:
- 	if (task->mm)
- 		dumpable = get_dumpable(task->mm);
- 	rcu_read_lock();
--	if (!dumpable && !ptrace_has_cap(__task_cred(task)->user_ns, mode)) {
-+	if (dumpable != SUID_DUMP_USER &&
-+	    !ptrace_has_cap(__task_cred(task)->user_ns, mode)) {
- 		rcu_read_unlock();
- 		return -EPERM;
- 	}
--- 
-1.7.9.5
-
+[1] 
+http://jkt.flaska.net/blog/Trojita_0_4_1__a_security_update_for_CVE_2014_2567.html
 
 -- 
-Kees Cook                                            @outflux.net
-
------ End forwarded message -----
+Trojitá, a fast Qt IMAP e-mail client -- http://trojita.flaska.net/
