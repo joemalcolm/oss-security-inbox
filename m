@@ -1,74 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/14
-Message-Id: <zarafa.52eb8411.0a4f.69b9c913004bc018@zarafaserver>
-Date: Fri, 31 Jan 2014 12:08:01 +0100
-From: Michael Kromer <m.kromer@...afa.com>
-To: oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>
-Cc: Robert Scheck <robert@...oraproject.org>,  Robert Scheck <robert.scheck@...s.de>,  secalert@...hat.com <secalert@...hat.com>
-Subject: Security Flaw CVE-2014-0037
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/10
+Message-ID: <CAJVRA1SJXFLYhqDn+2qqa2OWT=CrghgH7MnG7bzU5ufMhngi9A@mail.gmail.com>
+Date: Thu, 20 Mar 2014 08:38:43 -0700
+From: coderman <coderman@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: FD mailing list died. Time for new one (or something better!)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2014-0037
-
-Affected product: Zarafa Collaboration Platform <= 7.1.7
-
-Access Vector: Network
-Access Complexity: Low
-Authentication: None
-Confidentiality Impact: None
-Integrity Impact: None
-Availability Impact: Complete
-
-A flaw in Zarafa has been discovered that allows a remote unauthenticated attacker to crash the zarafa-server daemon with a segmentation fault, preventing access to any other legitimate Zarafa users. This flaw has been fixed beginning with the release of Zarafa 7.1.8 beta2 ( http://download.zarafa.com/community/beta/7.1/7.1.8beta2-43059/ ). We encourage any users of Zarafa to update to this new version or apply the patch supplied below.
-
-Zarafa would like to thank Robert Scheck from ETES (http://www.etes.de) for discovering and reporting this issue.
-
-Index: provider/libserver/ECSession.cpp
-===================================================================
-diff -u -N -r41872 -r42919
---- provider/libserver/ECSession.cpp	(.../ECSession.cpp)	(revision 41872)
-+++ provider/libserver/ECSession.cpp	(.../ECSession.cpp)	(revision 42919)
-@@ -846,6 +846,13 @@
- {
- 	ECRESULT er = erSuccess;
- 	
-+	if (!lpszName)
-+	{
-+		// Commandment 2: Thou shalt not follow the NULL pointer, for chaos and madness await thee at its end.
-+		m_lpSessionManager->GetLogger()->Log(EC_LOGLEVEL_FATAL, "Invalid argument lpszName in call to ECAuthSession::ValidateUserLogon()");
-+		er = ZARAFA_E_INVALID_PARAMETER;
-+		goto exit;
-+	}
- 	// SYSTEM can't login with user/pass
- 	if(stricmp(lpszName, ZARAFA_ACCOUNT_SYSTEM) == 0) {
- 		er = ZARAFA_E_NO_ACCESS;
-@@ -888,6 +895,12 @@
- 	char			*localAdminUsers = NULL;
- #endif
- 
-+	if (!lpszName)
-+	{
-+		m_lpSessionManager->GetLogger()->Log(EC_LOGLEVEL_FATAL, "Invalid argument lpszName in call to ECAuthSession::ValidateUserSocket()");
-+		er = ZARAFA_E_INVALID_PARAMETER;
-+		goto exit;
-+	}
- 	p = m_lpSessionManager->GetConfig()->GetSetting("allow_local_users");
- 	if (p && !stricmp(p, "yes")) {
- 		allowLocalUsers = true;
+specifically you are building hardened, reproducible pkgs/isos from snapshots of
+ - live Qubes OS for baremetal layer
+ - tails, whonix, kali, arch, ramfsonly variants, exotics per all reqs
+ - ENTROPY DONE RIGHT, END TO END, FROM DEVELOPER COMMITS TO RUNTIME GUESTS
+   ^this is capitalized because after decades of seeding crypto laughbly wrong,
+     we're still routinely making laughably wrong seeds, everywhere...
+    i am getting desperate!
+      ,see also:
+http://blog.cryptographyengineering.com/2014/03/how-do-you-know-if-rng-is-working.html
+ - the bootstrap client is built for native platforms to retrieve over
+various means for linux32, linux64, osx32, osx64, win32, win64,
+android, iOS, windows mobile which deploys the hardened bare metal
+systems with scrutinized builds above
 
 
---
-Mit freundlichen Grüßen,
-Best regards,
-Met vriendelijke groet,
-Sincèrement,
-Cordiali saluti,
-Atentamente,
 
-Michael Kromer
-VP Products & Architecture
+OH: "duuuuude, don't do it. no. don't. no no no."
+    'cmon, :) how long have you wanted to see a nice weaponized
+pre-auth ssl+escalate drop? :) :) :)'
+    "not funny! these are operations nightmares you fucker!"
 
-[T] +49 179 9300840
-[E] m.kromer@...afa.com
-------------------------------------------------- 
-Zarafa: Open - Compatible - Enterprise
+
+
+Q: "I heard infosec is dead. the citation was infosuck as definitive.
+#oldtimers and stuff"
+
+ A: i don't know shit, but one thing i do know is:
+      if your hacker peer group is this bad and/or one of the 1:4
+malicious entrapping snitches and/or ALL got v8nd doing stupid shit
+while high on stupid shit making stupid judgement calls and/or
+otherwise failed to be decent humans
+         - then you're doing it wrong!
+
+   good news it is not too late to make good friends and get over your
+bullshit ;)
+   [in all seriousness, it's an amazing time to be alive! the
+unappreciated work that is being done is everywhere if you make an
+effort to seek it out.]
+
+
+
+Q: "How big could such a bounty/bet get?"
+
+ A: if i was the CIA i would take the snowden docs that are eventually
+after 42 years or so disseminated in full and dump them to the hidden
+fuller disclosure. drop a few TAO 0day expected to lose utility on the
+list as false flag.  use it to grind some axes through
+SUBQUANTUMSQUIRRELMESH cover and use pilfered bounty to bet against
+the opers driving "perceived risk of running hidden site" to level
+'wutsohigh'. then i'd use black funds stoking social media fire storm,
+the righteous furor pre-disposing the public to zero sympathy for what
+follows. nulling the meatbags simple as identities strategically
+leaked for hidden disclosure service operators to "lower american
+clandestine chemical cleaners" for prompt chemical dissolution. the
+subsequent narco pulp tie up bolsters pre-seeded notions that said
+"criminal hacker terrorists working for foreign intelligence services
+conspiring to kill americans with logic bombs thrown from darknet
+intertubes" deserved righteous death by sword clearly, if not for this
+narco deal then surely for <insert 3-5 favorite fad horsewomen here
+for straw beating>.
+   finally, having driven the bounty on the hidden disclosure service
+to an absurd level twice the GDP of china, i would dump and mix the
+coins to a hidden wallet and disappear into history, never to be seen
+or heard from again.
+
+     TL;DR: the pot could be twice the GDP of china
+       if the CIA is playing the game with us and feeling extra dirty.
+
+ [ 35 yrs later: the fact this was an exceptionally compartmentalized
+black op is quietly noted along with a few hundred thousand other
+arcane dumps no once cares about anymore...  also un-noted: this
+operation was 100% sucessful in scaring all the fear cowed whitehats,
+grayhats, blackhats and inbetween from ever thinking about operating a
+truly fully disclosing forum for communication in the modern world.
+times have changed you hacker punks! ]
+
+
+
+Q: "When I asked if this could get any further off-topic, I was
+lamenting - not challenging!"
+
+ A: hey, i'm not the one who is slacking on the disclosure of the
+hidden disclosure service!
+     i just expand the anonymity set here...
+
+   FIN: really done on this subject.  if you're actually curious and
+willing to volunteer time and testing, go off-list and on-crypto :)
+
+  https://peertech.org/files/0x65A847E7C2B9380C-pub.txt
+current OTR 157B7040 4339EFCA D83EF33D 7064F401 843A7E98
+  https://peertech.org/files/otr.txt
+
+View attachment "0x65A847E7C2B9380C-pub.txt" of type "text/plain" (3264 bytes)
