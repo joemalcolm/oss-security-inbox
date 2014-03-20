@@ -1,21 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/11
-Message-ID: <loom.20141119T155807-599@post.gmane.org>
-Date: Wed, 19 Nov 2014 14:58:36 +0000 (UTC)
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/13
+Message-ID: <20140320182032.GC20297@dhcp-25-225.brq.redhat.com>
+Date: Thu, 20 Mar 2014 19:20:32 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
+Cc: zoltan.kiss@...rix.com, Michael Tsirkin <mtsirkin@...hat.com>
+Subject: CVE request -- kernel: net: potential information leak when ubuf backed skbs are skb_zerocopy()ied
 Content-Type: text/plain; charset=utf-8
 
-Damien Regad <dregad@...> writes:
+An information flaw was found in the way skb_zerocopy() copied skbs that
+are backed by userspace buffers (for example vhost-net and recent xen
+netback). Once the source skb is consumed, ubuf destructor is called and
+potentially releases the corresponding userspace buffers, which can then
+for example be repurposed, while the destination skb is still pointing
+to the them.
 
->  <at> CVE assign authority - please let me know the ID for this issue, and 
-> update the data from my initial request accordingly.
+This issue is similar to CVE-2014-0131.
 
-Do you require any additional information to assign a CVE ?
+Upstream patch:
+https://lkml.org/lkml/2014/3/20/421
 
-TIA
-Damien
-
-
-
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
