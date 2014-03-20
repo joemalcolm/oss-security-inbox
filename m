@@ -1,73 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/5
-Message-ID: <20140310195801.1f0cd122@hboeck.de>
-Date: Mon, 10 Mar 2014 19:58:01 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: When is broken crypto a vulnerability?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/9
+Message-ID: <CAJVRA1RyW1NTzRqtRupYHFo9E9cfcN1YcnNVAfsJJ70ZB=aVXA@mail.gmail.com>
+Date: Thu, 20 Mar 2014 07:22:04 -0700
+From: coderman <coderman@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: FD mailing list died. Time for new one (or something better!)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Q: "Onions are fragile and sporadically un-available."
 
-I'm currently looking into the issue of ZIP encryption and I'm asking
-myself what should be considered a vulnerability.
-
-Quick summary: The situation is rather horrible. There is a "legacy"
-ZIP encryption that has been broken since 1994. There are two competing
-standards for AES encryption on ZIP files, one by PKWARE, the other by
-WinZip (although the WinZip one is used by pretty much everybody and
-the PKWARE one only by PKZIP).
-
-The 1994 attack is a known plaintext attack. There's an improved
-attack since 2001 that works in many cases without a known plaintext,
-however there's no public source implementing that. Some commercial
-tools implement this attack.
-
-Now there are all kinds of applications doing one of the following
-things:
-
-a) Just support the legacy "encryption" without any indication that
-it's broken.
-
-b) Provide an option to use AES, but they don't use it and still
-create legacy "encryption".
-
-c) Default to legacy "encryption" without any indication that
-it's broken, provide an option for AES encryption.
-
-d) Default to AES encryption, provide legacy "encryption" under various
-names like ZipEncrypt, ZIP 2.0 or similar that give no indication that
-it's broken.
+ A: that's not a question ;)  see also <lots of Tor trac numbers here>
 
 
-I think it should be noncontroversial that b) is a vulnerability and
-thus should get a CVE. Any disagreement here?
 
-What do you think about the others? IMHO it's always inacceptable to
-provide an "encryption" option that doesn't really encrypt. I could
-accept it if applications provide this as a compatibility option when
-there's a clear sign to the user that it's not secure (like calling it
-"ZipCrypto(insecure)" or "insecure crypto" or something alike).
-Although I'd prefer if at least enduser oriented apps wouldn't support
-insecure encryption at all.
-However, are these vulnerabilities? Should they get CVEs? I'm not sure,
-but I'd tend to give at least the a) and c) case also CVEs. We have to
-keep in mind that we're not talking about "theoretically broken/weak"
-crypto, we're talking about "you can buy software that will give you
-the password"-broken.
+Q: ".. How do faster soliderer onions?"
+
+ A: glad you asked, earth human!
+    for a limited time only!!
+        [ ... shipping and handling not included, ... ]
+   + with consensus, namecoin to a set of consistent or rotating onion URIs
+   + concurrent hidden service endpoints to map addresses aggressively
+   + concurrent ipv4 or ipv6 addrspaces to hidden web services on TCP/DNS
+   + including those discussed built on multi-homed stream transports
+to the mapped endpoints
 
 
-Opinions wanted.
 
-(I'm sending this to oss-security, it affects all kinds of opensource
-applications, but it obviously also affects non-opensource applications)
+Q: "How do you trust shady ipv4, ipv6, openssl, zlib, libevent, http,
+smtp, wtfp web attack surface?"
 
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
+ A: clearly you should not.
+    a legit op accrues pwn pot as show of good faith...
+     [swelling pool of shadydogecoins for great justice!]
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+Q: "Where is it?"
+
+ A: ,, hah! almost got me!  .. i know nothing.
+   [ i hear the gruqq awaits to check your opsec at the subscreen? i
+was hallucinating.
+      there were squirrels... ]
+
+
+
+Q: "Can this veer any further off-topic?"
+
+ A: you're no exile from zeroed list, are you  :P
+
+  PS: the sooner someone leaks the bootstrap to hidden fuller
+disclosure the sooner i can take this tangent back apropos *grin*
+
+
+
+Q: "If I show you my digests will you show me yours teehee?"
+
+ A: sure; builds ~200-500min - afford your patience accordingly.
+(builders shamelessly solicited)
+
+
+
+---
+
+
+> a modest and proportionate proposal,
+>
+> fuller-disclosure:...
