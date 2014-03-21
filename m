@@ -1,56 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/6
-Message-ID: <CALx_OUD8-NzvT4bQXkHJcaxCGd8h3WjmLEkQ=sngciyosmNA9A@mail.gmail.com>
-Date: Wed, 29 Oct 2014 14:56:57 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/22/5
+Message-Id: <20140321215324.11BFCA0158@smtp.hushmail.com>
+Date: Sat, 22 Mar 2014 08:53:23 +1100
+From: dawgystyle@...hmail.com
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE Request - Uhuru Mobile Davfi Multiple Vulnerabilites
 Content-Type: text/plain; charset=utf-8
 
-Or just require an accompanying explanation. But FD is as much of a
-watering hole and has a long history of fake exploits being posted...
-I think we could survive.
-
-(BUGTRAQ, too, although that list seems to be in a pretty bad shape
-these days and perhaps its days are numbered).
-
-On Tue, Oct 28, 2014 at 6:26 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 28/10/14 06:48 PM, Alexander Cherepanov wrote:
->> On 2014-10-29 02:47, Kurt Seifried wrote:
->>> On 28/10/14 07:47 AM, Alexander Cherepanov wrote:
->>>> On 2014-10-15 12:30, Solar Designer wrote:
->>>>> - Please don't send fully working exploits (but testcases that exercise
->>>>> the flaw are welcome)
->>>>>
->>>>> FWIW, I've always been tempted to remove the latter guideline,
->>>>
->>>> Then perhaps just remove it? It always seemed to me a strange
->>>> restriction. Other guidelines are either technical in nature or they are
->>>> intended to reduce the amount of noise. This restriction seems to be
->>>> neither.
->>>>
->>>> Of you can replace it with something like this:
->>>> - Please only send fully working exploits which themselves are
->>>> open-source.
->>>>
->>> Will someone/people vet the exploits to make sure they are not trojan
->>> horses/self harming (e.g. the rm -rf * embedded in it somewhere?).
->>> Strikes me as a heck of a watering hole attack potentially (and yes,
->>> list members should know better, but ... yeah).
->>
->> This is an interesting question but how "fully working exploits" differ
->> from "testcases that exercise the flaw" in this regard?
->
-> For example using something like metasploit the code would (in theory)
-> be more radable and anything hidden/obfuscated would stick out. My vote
-> would be to require well written nmap scripts or metasploit modules that
-> don't contain obfuscated code/etc. This would also make getting them to
-> work simpler (no use of weird one off CPAN modules or specific versions
-> of some obscure python thing, etc.).
->
->
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
+Title: Uhuru Mobile Davfi Multiple VulnerabilitiesProduct: Uhuru
+MobileEnterprise: Nov'IT
+Hello,
+Multiple vulnerabilities were found in the Uhuru Mobile ROM. These
+vulnerabilities were detailed in a blogpost [1].
+Vulnerability #1 - Whitelist of executable applications
+bypass:----------------------------The Android kernel was modified and
+"hardened". A feature was implemented to only allow a whitelist of
+binaries to be executed. This can be bypassed by using, for example,
+the LD_PRELOAD environment variable.
+Vulnerability #2 - Embedded kernel vulnerable to CVE-2013-6282 (local
+root)----------------------------The embedded Android kernel version
+is 3.4.0, which is vulnerable to CVE-2013-6282. This can be exploited
+to obtain root rights.
+Vulnerability #3 - Embedded kernel vulnerable to CVE-2013-4787 (master
+key)----------------------------The embedded Android kernel is
+vulnerable to CVE-2013-4787. This can be exploited to bypass the APK
+signature system of Android.
+Vulnerability #4 - Local escape shell
+vulnerability----------------------------When the phone is encrypted,
+it uses the passcode entered by the user to decrypt/encrypt files. The
+passcode entered by the user is executed as root inside a shell
+command without being filtered. An attacker just have to reboot the
+phone, and once the phone asks for the passcode, enter the payload aka
+s/Please enter your passcode/Please enter your payload/ . This can be
+exploited to gain local code execution as root.
+Eric Filiol, the main creator of the project, responded [2] (in
+french) to the reported vulnerabilities.
+Refs:[1]
+http://esec-lab.sogeti.com/post/A-quick-security-review-of-the-Uhuru-Mobile-demo-ROM[2]
+https://www.davfi.fr/news/News_2014_03_21.pdf?b=ull&sh=it&over=flow
+Can a CVE be assigned for these vulnerabilities ?Thanks.
+Antoine de Gaulle,Securely sent using SMS Perseus
