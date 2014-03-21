@@ -1,60 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/16
-Message-ID: <53AC43A1.2010000@redhat.com>
-Date: Thu, 26 Jun 2014 10:00:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/21/2
+Message-Id: <201403210539.s2L5dVdR027393@linus.mitre.org>
+Date: Fri, 21 Mar 2014 01:39:31 -0400 (EDT)
+From: cve-assign@...re.org
+To: gmurphy@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Nova
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 26/06/14 05:45 AM, Jamie Strandboge wrote:
-> Based on this email and the one this is in response to, I find this
-> comment unclear. Is MITRE saying that:
+> A vulnerability was discovered in OpenStack
 > 
-> a) lack of implementing SELinux, AppArmor, virus scanner, firewall,
-> <insert hardening software here> does not justify a CVE because of
-> the complexity? b) lack of implementing SELinux, AppArmor, virus
-> scanner, firewall, <insert hardening software here> does not
-> justify a CVE and also cannot be considered an implementation error
-> because of the complexity? c) implementing SELinux, AppArmor, virus
-> scanner, firewall, and/or <insert hardening software here> is not
-> worth it because the added complexity intrinsically makes the
-> system less secure? d) something else?
+> Title: Nova VMWare driver leaks rescued images
+> Products: Nova
+> Versions: 2013.2 to 2013.2.2
 > 
-> Thanks
+> By requesting Nova place an image into rescue, then deleting the
+> image, an authenticated user my exceed their quota. This can result in
+> a denial of service via excessive resource consumption. Only setups
+> using the Nova VMWare driver are affected.
+> 
+> https://bugs.launchpad.net/nova/+bug/1269418
 
-So one comment on this, replace the above with "DAC"
-(http://en.wikipedia.org/wiki/Discretionary_access_control) and I bet
-we'd hand it a CVE =).
-
-Security lines move, I would expect most modern system of any type
-(Windows, Linux, router, maybe not my bathroom scale that talks
-wifi... yet) to have some sort of firewall enabled by default and not
-simply leave everything exposed to the world. So in that case not
-having a fire enabled by default would definitely violate the
-principle of least surprise and maybe even qualify for a CVE.
+Use CVE-2014-2573.
 
 - -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJTrEOhAAoJEBYNRVNeJnmTqYoP/jcw48aEYnV1G974RVAg/FcJ
-DQ8RCTvm7zUEXAI4pS+is/2iQ+TdAZnuPQzLSA9fVme3cRIgu5Au2kBT//UTCcd2
-v6TCwtjBWr7qnt1MeFwa2+6c8QOoX3Vx/bH7b0mfN2M4g3t273dnvrdWLioeLt3J
-LrxgtqYnL+ohXitVZRwKOqG9WFaKRyuT0ukhEgUgzVsCKI0wFX2t1W2fvWc2e0iL
-PPpItcO5zMVGe3JVYM91hGc/d5pwr5qd9ip6tB+6X30XdVArFp0Lp3uzP2qRX53z
-SA4uNdkUTdMKnLG3QMU42GpC2Wp2PK4a8r40libWgJbaIlR1zseiUbjcg9gz1/b+
-w/RkNWE3YQ3fyKLiQh1iXU3VnIoqNrOaXP6iHLYTot7rKJKx9p8PQu8wyDETaRcs
-5+Xy8ouOgVTvLaR6sPGgMaP59QOeX2NyX2HDok2R6I0Gq+jg3Avyp9OowkxnM8AZ
-byzyf8KrUqeW4nY5tHT4b6tUJbrEuQ2Z4AL2ApI/N3sagMkQLvnyD3AB/gkVcwxI
-UroTxEnhmHaSiMYa1+Eeqh7/+vNsQddFMH1j/MavPtvMOwz6/itLOZs7A/i4YMWt
-surAlpJP5llL3gdSZQ4j5oSmWS/1CmkqKAEeObbhwqJ6FG+vRRIRGKRL6h9LNLHG
-2KHAU//lPwePVp/+qvsU
-=yV4Z
+iQEcBAEBAgAGBQJTK8/gAAoJEKllVAevmvmsiu4H/AhIpSex25e5aIFfRXAeYlAa
+R0KMYye5byjbegThQCx0bzMPCrBS7tj9olEyqrr6BwjsDpVZBPG6LhsCXZzfWqed
+ps/gcbGDLuQwUzD+XsmYYKgDi2kmKDmRCgWjlPLel6kUDAIFW1cy9gTYKinJ94e1
+SA0zcFTEUh8lCMp9PqeFaqW7qJ7PhvhPi6fGd3Fpxzdd1GPchOnNwBB5XmTQqLW0
+MGptSnR6cnJtwfYJfdI73VGCglfr0yW26IoIP9n55FLXTu6meFm8WuCIVXa84Xeh
+rSHLdO0ptX9YkJX+2pHepdx/kLH1w/8Yz1++EZZ7bViYXvh2E6Fgb5f44lhXajM=
+=CeDI
 -----END PGP SIGNATURE-----
