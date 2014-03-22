@@ -1,52 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/8
-Message-ID: <CAO-2N4+pKL5XC3uVZPjUf82uZuSUgonj6A-fjWL5XcYGSVMV-A@mail.gmail.com>
-Date: Thu, 20 Nov 2014 08:49:23 +0000
-From: Vitor Ventura <ventura.vitor@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/22/4
+Message-ID: <CACYkhxj=X2ruNshELiTHS_paRfn2q40cBZkBUybscWhZbQDGvQ@mail.gmail.com>
+Date: Sat, 22 Mar 2014 21:28:11 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Linux user namespaces can bypass group-based restrictions
+Subject: Re: Re: CVE request: claws-mail vcalendar plugin stores user/password in cleartext
 Content-Type: text/plain; charset=utf-8
 
-I was wondering if this might pose a problem to android's application file
-sandboxing. If an application can run a native lib that could exploits this
-it might have access to other aplication files.
+Ok, I'm going to disagree with each of your points individually:
 
-A 0h24 qui, 20 de Nov de 2014, Andy Lutomirski <luto@...capital.net>
-escreveu:
+On 22 March 2014 15:46, <cve-assign@...re.org> wrote:
 
-> On 11/17/2014 10:43 AM, Andy Lutomirski wrote:
-> > This is a heads-up, as there is no fix right now.
-> >
-> > On Linux, if you can unshare your user namespace (which is the case on
-> > many distributions), then you can map your fsuid and fsgid into the
-> > new namespace and, inside that namespace, drop all of your other
-> > groups.
-> >
-> > This may allow you to access files protected by POSIX ACLs as "other",
-> > even if the ACL should have prohibited it based on one of your
-> > supplementary group IDs.
-> >
-> > This does not appear to allow you to violate negative sudoers
-> > group entries and the like, since sudo(8) would be confined to the
-> > user namespace as well and will therefore not gain privilege.
-> >
-> > To those who care about credit: this was discovered by some
-> > combination of me, Theodore Ts'o, Eric Biederman, Alan Cox, and Casey
-> > Schaufler.
-> >
-> > See here for some more discussion:
-> > http://thread.gmane.org/gmane.linux.man/7385/
-> >
-> > Disabling CONFIG_USER_NS works around this issue.
+> Enabling CURLOPT_SSL_VERIFYHOST but not CURLOPT_SSL_VERIFYPEER has
+> valid but perhaps very unusual use cases. It might be appropriate for
+> a product that has these expectations for a user:
 >
-> Does this need a CVE?  Fedora and Ubuntu are likely to be affected in
-> their default configurations.  I don't know about the other distributions.
+>   -- An SSL connection is not used for anything important.
 >
-> --Andy
+
+  -- The user needs SSL anyway (e.g., the other endpoint can only
+>      communicate over SSL, or the user has a requirement that
+>      cleartext cannot be sent directly).
+
+
+If I enable SSL/TLS support in software, I expect a secure connection.
+Doing this by
+default (or worse - without an option to enable proper SSL/TLS) is a
+vulnerability. If it's
+deliberately that way it's a backdoor.
+
+  -- The user is typically in network environments in which an HTTPS
+>      proxy exists that is arguably legitimate but outside of the
+>      user's control. For example, these may be typical enterprise
+>      environments in which the HTTPS proxy has a certificate resigner.
+>      From an intranet user's perspective, arbitrary external web sites
+>      seem to have certificates that are issued to one host, and are
+>      signed by the enterprise CA.
 >
-> >
-> > --Andy
-> >
+>   -- The user is freely allowed access to these intranets but has no
+>      way to bypass their HTTPS proxies.
 >
+>   -- The user travels to many such network environments and does not
+>      have the time to configure his laptop to recognize all of these
+>      enterprise CAs as each one is encountered.
 >
+
+So you don't want to trust the enterprise CA, so instead you just trust
+anything at
+all?
+
+(For example, a salesman visits many companies to do online demos, and
+> uses the product to transmit a photo of each company's reception desk
+> for his blog about reception desks.)
+>
+
+The salesperson will have to either use mobile internet or wait until they
+have a
+safe connection.
+
+
+> What is typically less productive
+> is to assign a CVE name for what a vendor has established as
+> intentional behavior, and hope that this somehow fixes a problem. We
+> realize that some CVE consumers could look at those types of CVEs as
+> part of their decision about whether to start or stop using the
+> product. In practice, this is not a CVE use case that we regularly
+> encounter.
+>
+
+The vulnerability is still there.  Distributions might choose to ignore
+upstream and
+apply their own patch (in which case coordination via a third-party is
+useful).  In any
+case (as you mentioned) it's useful information when researching software. I
+regularly search for "product CVE" before even bothering to download/test
+software.
+
+Regards,
+  Michael
 
