@@ -1,69 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/25
-Message-ID: <20141007152351.GS3267@sentinelchicken.org>
-Date: Tue, 7 Oct 2014 08:23:51 -0700
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/22/2
+Message-Id: <201403220446.s2M4kMrm004908@linus.mitre.org>
+Date: Sat, 22 Mar 2014 00:46:22 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: claws-mail vcalendar plugin stores user/password in cleartext
 Content-Type: text/plain; charset=utf-8
 
-> > What class of bug is Shellshock? "Weird feature invented in
->   pre-Internet era"? How do you conquer this class of bugs?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3106
+
+> Description:
 > 
-> I am still struggling with this one.  I am trying to create that list here:
-> http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
+> src/plugins/rssyl/feed.c has this code:
 > 
-> But to be honest, that list is pretty pathetic. This is a challenging class of vulnerability to detect or prevent ahead of time. Ideas would be very welcome.
+> #if LIBCURL_VERSION_NUM >= 0x070a00
+>         curl_easy_setopt(eh, CURLOPT_SSL_VERIFYPEER, 0);
+>         curl_easy_setopt(eh, CURLOPT_SSL_VERIFYHOST, 0);
+> #endif
+> 
+> Meaning you are not checking ssl remote host validity at all.
 
+> Comment 1:
+> 
+> I think this is a remnant from early development, when I did not need
+> to be bothered by extra errors from libcurl.
+> 
+> However, while I agree that CURLOPT_SSL_VERIFYHOST should probably be
+> enabled, 
 
-I wouldn't go so far as to say shellshock has a well-defined "class"
-of vulnerability or bucket that we can stick it in, but it does
-violate one of my own personal (and I think, the most important)
-_principles_ of secure software design:  don't mix code and data.
+We can provide a CVE assignment for this one specific issue (i.e., the
+vendor's comment that CURLOPT_SSL_VERIFYHOST=0 is a "remnant" and is
+not an intentional choice). Use CVE-2014-2576. At the moment, we do
+not want to proceed with CVE assignments for the choices that are
+actively disputed by the vendor (or plugin vendors).
 
-What do I mean by that?  Concrete examples of failures: 
-  * word docs with macros
-  * document markup with embedded script (yes: HTML/JS)
-  * OGNL expressions in Struts URL parameters
+Enabling CURLOPT_SSL_VERIFYHOST but not CURLOPT_SSL_VERIFYPEER has
+valid but perhaps very unusual use cases. It might be appropriate for
+a product that has these expectations for a user:
 
-Any time you design a system to accept executable code as well as data
-in the same format/context/whatever, you invite a huge number of
-possible attacks.  These attacks may not manifest themselves
-immediately or obviously.  It may require a change in the way the
-software is used, or implementation bugs to expose the risk, but it
-is a highly risky design approach.
+  -- An SSL connection is not used for anything important.
 
+  -- The user needs SSL anyway (e.g., the other endpoint can only
+     communicate over SSL, or the user has a requirement that
+     cleartext cannot be sent directly).
 
-People expect office documents to be data, but in fact they can
-include a limited form of code as well.  In the case of word docs and
-macros, the risk was exposed by implementation bugs and the difficulty
-of keeping the language sandboxed. 
+  -- The user is typically in network environments in which an HTTPS
+     proxy exists that is arguably legitimate but outside of the
+     user's control. For example, these may be typical enterprise
+     environments in which the HTTPS proxy has a certificate resigner.
+     From an intranet user's perspective, arbitrary external web sites
+     seem to have certificates that are issued to one host, and are
+     signed by the enterprise CA.
 
-In the case of HTML/JS, the risk came from the way JS is embedded
-inline in so many locations people can't safely allow HTML (a data
-markup format) without allowing JS as well.  (If JS were only allowed
-as external resources and not as, say, events embedded in attributes,
-it would be less mixed and easier to make safe).
+  -- The user is freely allowed access to these intranets but has no
+     way to bypass their HTTPS proxies.
 
-In Apache Struts, OGNL is used are used to parse the entire POST body,
-variable names and values.  However, OGNL expressions are executable 
-code, which breaks the whole assumption that POST variables are data.
-So the Struts team is now playing whack-a-mole with blacklist blocking
-of specific attack vectors.
+  -- The user travels to many such network environments and does not
+     have the time to configure his laptop to recognize all of these
+     enterprise CAs as each one is encountered.
 
-In the case of shellshock, the "mixing" of code and data came about
-because environment variables, normally used to carry data, were
-overloaded and used to carry code.  This is very similar to the Struts
-case.
+  -- Thus, CURLOPT_SSL_VERIFYPEER would mean that the user cannot use
+     the product at all.
 
+(For example, a salesman visits many companies to do online demos, and
+uses the product to transmit a photo of each company's reception desk
+for his blog about reception desks.)
 
-David: your item "Create namespaces where practicable" is effectively
-an implementation of what I'm talking about here.  By creating
-namespaces, you're creating a partition between code and data.  But
-the underlying principle is just to keep these two things separate and
-*well defined* as separate via whatever mechanism makes the most sense.
+In this specific case, one may be able to argue that the product in
+question almost certainly doesn't have those expectations. One also
+may be able to argue that the vendor's decision about
+CURLOPT_SSL_VERIFYPEER is almost certainly based on a misunderstanding
+of what CURLOPT_SSL_VERIFYPEER means, lack of experience with
+man-in-the-middle threat models, or incorrect assumptions about the
+relationship between CURLOPT_SSL_VERIFYPEER and the existence of
+for-profit Certification Authorities. In such cases, what is typically
+most productive is to convince the vendor to change the product's
+behavior and make an announcement that there's a recommended security
+update to remove the old behavior. (Redistributing the product with a
+third-party patch is a workaround.) What is typically less productive
+is to assign a CVE name for what a vendor has established as
+intentional behavior, and hope that this somehow fixes a problem. We
+realize that some CVE consumers could look at those types of CVEs as
+part of their decision about whether to start or stop using the
+product. In practice, this is not a CVE use case that we regularly
+encounter.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Cheers,
-tim
+iQEcBAEBAgAGBQJTLROEAAoJEKllVAevmvmsZ3kH/2egm7+4z1lguaBdhNLJcpEF
+LQG7a21T6JgbYeQW8OfGXdGKK45Yg1fLk1tL8BXyojTBCzwmz+w4tpsfr0JXOkvD
+tqhAp2zOc7WmCtfI7+homhix3Ljz0pM4J6fwbs4ddmjKM0PWz9OntVjijuRJcN61
+vw4alZaXRP/KppRDIuTaobInHrV1nJ4YZjdyF2MbcjsNYcadHFv3//fOkVfxgGnl
+p6aS9cUWaDZ/6mRYXMbdNp8l7FP8M5szFBRIyhxrURkcLFEOQdEoKvY3Ck4iLk51
+UrdYaFhMRmAQFUngBxgpC0EWYEEjIrkIUA4YJUdmgjAerI+XiDdK3zCULH4yf4s=
+=jwQ3
+-----END PGP SIGNATURE-----
