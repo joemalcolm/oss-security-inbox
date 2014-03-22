@@ -1,57 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/11
-Message-ID: <5315CE61.2060702@fifthhorseman.net>
-Date: Tue, 04 Mar 2014 13:00:17 +0000
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/22/3
+Message-ID: <20140322084114.GC2742@sivokote.iziade.m$>
+Date: Sat, 22 Mar 2014 10:41:14 +0200
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-On 03/04/2014 12:28 PM, John Haxby wrote:
+On Fri, Mar 21, 2014 at 11:23:52AM +0200, Georgi Guninski wrote:
+> For a start I suggest a group of people start
+> a public mailing list on some public service.
+> 
+> I can volunteer time.
+> 
+> Off the top of my head options are:
+> A. googlegroups
 
-> openssl s_client doesn’t report problems, but I wouldn’t expect it to.
+google want my mobile phone, so i can't start
+group there, sorry.
 
-it should; its peers do:
-
-  gnutls-cli demo.cmrg.net
-
-fails safely closed with:
-
- GnuTLS error: The Diffie-Hellman prime sent by the server is not
-acceptable (not long enough).
-
-and (from libnss3-tools):
-
-  tstclnt -h demo.cmrg.net
-
-fails safely closed with:
-
-tstclnt: read from socket failed:
-SSL_ERROR_WEAK_SERVER_EPHEMERAL_DH_KEY: SSL received a weak ephemeral
-Diffie-Hellman key in Server Key Exchange handshake message.
-
-> wget just downloads index.html without any issue.
-
-i also consider this a flaw in wget.  i suspect you've got wget compiled
-against openssl, because for me (debian testing), wget fails safely
-closed with:
-
-GnuTLS: The Diffie-Hellman prime sent by the server is not acceptable
-(not long enough).
-Unable to establish SSL connection.
-
-while curl (built against OpenSSL) accepts the insecure connection and
-proceeds (even leaking cookie information across the weak connection if
-i ask it to send cookies).
-
-fwiw, i reported this problem on the openssl-dev mailing list back in
-november, following private discussion with openssl upstream.:
-
-http://marc.info/?l=openssl-dev&m=138386738312983&w=2
-
-Regards,
-
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (1011 bytes)
+> B. sourceforge:  http://sourceforge.net/apps/trac/sourceforge/wiki/Mailing%20lists
+> 
+> google are BB, have no experience with sourceforge ML.
+> (not sure sourceforge is applicable because of need of project).
+> 
+> This approach has disadvantages, but an advantage is
+> not dealing with DDOS/legal stuff.
