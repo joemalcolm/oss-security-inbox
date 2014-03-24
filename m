@@ -1,49 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/18
-Message-ID: <20140409103634.GD5507@scapa.corsac.net>
-Date: Wed, 9 Apr 2014 12:36:35 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/24/1
+Message-ID: <532FC077.60108@redhat.com>
+Date: Mon, 24 Mar 2014 16:19:51 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Heartbleed, clients and Android
+Subject: possible CVE request: smb4k credentials cache leak
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 09, 2014 at 12:21:29PM +0200, Hanno Böck wrote:
-> On Wed, 9 Apr 2014 11:54:58 +0200
-> Yves-Alexis Perez <corsac@...ian.org> wrote:
-> 
-> > On Wed, Apr 09, 2014 at 11:30:29AM +0200, Hanno Böck wrote:
-> > > I was asking myself some questions and I think others with more
-> > > insight into what heartbleed means may be able to answer quickly:
-> > > How does this affect client software? The PoCs we see send some
-> > > malicous payload to servers and get some memory dumps. That doesn't
-> > > affect clients?
-> > 
-> > Yes, it does affect clients.
-> 
-> Can anyone explain how an attack scenario would work?
-> Is it like:
-> * we have a Man-in-the-Middle.
-> * Client/Server establish connection.
-> * MitM inserts a malicious package with the heartbeat-payload and sends
->   it to the client, client parses package, verifying MAC fails, but it
->   still will output memory
+Hi,
 
-Heartbeat can be sent before the ChangeCipherSpec message is sent, so
-you don't have any TLS protection for that MITM.
+https://bugs.gentoo.org/show_bug.cgi?id=505376 notes that smb4k (an 
+SMB/CIFS share browser for KDE) version 1.1.1 fixes a potential security 
+issue:
 
-So yeah, you can sit at a nearby wireless hotspot, wait for any client
-to do some TLS trafic and heartbleed them (providing the client uses
-OpenSSL).
-> 
-> Or is it ONLY an issue if we contact a malicious server that may
-> extract random information from the application's memory? (which would
-> reduce the impact somewhat, e.g. operating system update systems or
-> wget etc. wouldn't have to worry)
+"Fixed potential security issue reported by Heiner Markert. Do not allow 
+the cruid option to be entered via the "Additional options" line edit. 
+Also, implement a check in Smb4KMountJob::createMountAction() that 
+removes the cruid option from the custom options returned by 
+Smb4KSettings::customCIFSOptions()."
 
-It's not hard to make people contact malicious servers, I think.
+http://sourceforge.net/projects/smb4k/files/Smb4K%20%28stable%20releases%29/1.1.1/
 
-Regards,
--- 
-Yves-Alexis Perez
+Does it need a CVE? I do not have further details, sorry.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+--
+Murray McAllister / Red Hat Security Response Team
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1079819
