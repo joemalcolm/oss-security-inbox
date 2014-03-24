@@ -1,36 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/13
-Message-ID: <20140924155450.GG31318@kludge.henri.nerv.fi>
-Date: Wed, 24 Sep 2014 18:54:50 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/24/2
+Message-ID: <20140324092723.GA13408@suse.de>
+Date: Mon, 24 Mar 2014 10:27:23 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: KAuth security issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On Wed, Sep 24, 2014 at 07:16:20PM +0400, Solar Designer wrote:
-> Florian posted a Debian security advisory on this ([DSA 3032-1] bash
-> security update) to the debian-security-announce list, but somehow it is
-> not yet seen at:
-> 
-> https://www.debian.org/security/
-> https://lists.debian.org/debian-security-announce/2014/
-> 
-> (I guess it will be very soon.)
+I sent this to security@....org last week and to some KDE
+developers one more week ago. No response so far, so here we go.
 
-It will take some time that /security/ URL gets updated. Latest information
-about CVEs can be seen here:
+regards,
+Sebastian
 
-https://security-tracker.debian.org/tracker/CVE-2014-6271
+--------8<--------------------
 
-- ---
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Hi
 
-iEYEARECAAYFAlQi6UoACgkQXf6hBi6kbk/L9wCggJR1kzvxv787MrjwSAK8o/Nz
-aA4AnjtrbddPB1fp+CvwB9JPWXHX+lS+
-=PX64
------END PGP SIGNATURE-----
+I sent this mail to the KAuth author a week ago. So far no reply, so
+I am trying it here again.
+
+When I looked at the KAuth framework it seems like it is using
+
+PolkitQt1::UnixProcessSubject subject(pid)
+
+(i.e. unix process subjects) for the polkit auth, which is always racy.
+Please refer to:
+
+CVE-2013-4288 polkit: unix-process subject for authorization is racy
+CVE-2013-4311 libvirt: insecure calling of polkit via libgobject API
+CVE-2013-4324 spice-gtk: use of insecure polkit libgobject-1 API
+CVE-2013-4325 hplip: use of insecure polkit DBUS API
+CVE-2013-4326 rtkit: use of insecure polkit DBUS API
+CVE-2013-4327 systemd: use of insecure polkit DBUS API
+
+which were using exactly this vulnerable way auf authenticating
+via polkit.
+
+The bug is semi-public:
+
+https://bugzilla.novell.com/show_bug.cgi?id=864716
+
+A non-racy way would be to use system-bus subject for authentication.
+(Yet I dont know how this fits in the KAuth API).
+Nevertheless, there needs to be done something, as basically
+the KAuth authentication is non-existing if using process subjects.
+
+regards,
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
+----- End forwarded message -----
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
