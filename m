@@ -1,41 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/2
-Message-Id: <201405150222.s4F2MZWj023777@linus.mitre.org>
-Date: Wed, 14 May 2014 22:22:35 -0400 (EDT)
-From: cve-assign@...re.org
-To: pabs3@...edaddy.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: various NodeJS module vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/24/4
+Message-ID: <20140324120218.GA2561@sivokote.iziade.m$>
+Date: Mon, 24 Mar 2014 14:02:18 +0200
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Over-embargoing
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+If you ask me some large commercial distros suck much.
 
-These happen to end up with one CVE ID per advisory:
+They pissed me off on several occasions,
+broke the social contract and possibly
+alienated other people.
 
-https://nodesecurity.io/advisories/printer_potential_command_injection CVE-2014-3741
-https://nodesecurity.io/advisories/hapi_File_descriptor_leak_DoS_vulnerability CVE-2014-3742
-https://nodesecurity.io/advisories/marked_multiple_content_injection_vulnerabilities CVE-2014-3743
-https://nodesecurity.io/advisories/st_directory_traversal CVE-2014-3744
-https://nodesecurity.io/advisories/codem-transcode_command_injection CVE-2013-7377
-https://nodesecurity.io/advisories/Hubot_Potential_command_injection_in_email.coffee CVE-2013-7378
-https://nodesecurity.io/advisories/Tomato_API_Admin_Auth_Weakness CVE-2013-7379
-https://nodesecurity.io/advisories/ep_imageconvert_command_injection CVE-2013-7380
-https://nodesecurity.io/advisories/libnotify_potential_command_injection_in_libnotify.notify CVE-2013-7381
+FYI yesterday you lost a CMS bug because
+of the lousy CVEs. I was playing with
+CMS and noticed an ``anomaly'' which
+I don't feel disclosing unless I am
+sure it won't get _any_ CVE.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTdCSZAAoJEKllVAevmvmsAIoH/ia/49VXn5UOiZV8T29iH2GD
-mLz4pfz+v+BRckNkNW7IhzLScoe5bRjbZRc82HxS3zA+h94USLeNCNhwSWizsrKz
-UZj8Jov9wDcYF9L4BbmKwNlrkv9erTvp4MaJbXpDbNCRi/tK1J8H5LecwMQogGrZ
-A0fZll0ykPOI/uNIeGEAXO6SRepDRjOci6CDY6rcJ5UfxQzgTKrogHcEizmqxxyw
-J2EvflJTk/MqAIO9jvLo00KvoHCGOsguDsT6wqYfuY0U1vU6KNATeGzQ8ypxW2K5
-E4fRAPjIWjr4UJdPRM6Kk8a9Dygc+ktROTPSpnCp7zZo3P6kTGSlP2etGg5+2Hk=
-=pMRL
------END PGP SIGNATURE-----
+On Mon, Mar 24, 2014 at 10:49:03AM +0100, Florian Weimer wrote:
+> At the Debian Security Team meeting <https://lists.debian.org/debian-devel-announce/2014/03/msg00004.html>,
+> the topic over-embargoing at Red Hat was touched briefly.
+> 
+> During the past year or two, we initiated quite a few embargoes for
+> mostly uninteresting bugs (denial of service, huge inputs required,
+> obscure software or configuration).  We did this mainly out of
+> courtesy for others, but we recognize the overhead an embargo
+> causes.  In retrospect, I'm not sure if we always made the right
+> choice.  What do you think?
+> 
+> -- 
+> Florian Weimer / Red Hat Product Security Team
