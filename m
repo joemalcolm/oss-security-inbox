@@ -1,123 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/9
-Message-Id: <E1XqhpC-0003RN-5U@xenbits.xen.org>
-Date: Tue, 18 Nov 2014 12:24:02 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 109 (CVE-2014-8594) - Insufficient restrictions on certain MMU update hypercalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/24/9
+Message-ID: <20140324212056.GP21794@core.inversepath.com>
+Date: Mon, 24 Mar 2014 22:20:56 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2014-002] Xalan-Java insufficient secure processing
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-             Xen Security Advisory CVE-2014-8594 / XSA-109
-                               version 3
+#2014-002 Xalan-Java insufficient secure processing
 
-        Insufficient restrictions on certain MMU update hypercalls
+Description:
 
-UPDATES IN VERSION 3
-====================
+The Xalan-Java library is a popular XSLT processor from the Apache Software
+Foundation.
 
-Public release.
+The library implements the Java API for XML Processing (JAXP) which supports a
+secure processing feature for interpretive and XSLCT processors. The intent of
+this feature is to limit XSLT/XML processing behaviours to "make the XSLT
+processor behave in a secure fashion".
 
-ISSUE DESCRIPTION
-=================
+It has been discovered that the secure processing features suffers from several
+limitations that undermine its purpose. The enabling of the secure processing
+feature in fact still allows the following processing to take place:
 
-MMU update operations targeting page tables are intended to be used on
-PV guests only. The lack of a respective check made it possible for
-such operations to access certain function pointers which remain NULL
-when the target guest is using Hardware Assisted Paging (HAP).
+  * Java properties, bound to XSLT 1.0 system-property(), are accessible.
+  * output properties that allow to load arbitrary classes or resources
+    are allowed (XALANJ-2435).
+  * arbitrary code can be executed if the Bean Scripting Framework (BSF)
+    is in the classpath, as it allows to spawn available JARs with secure
+    processing disabled, effectively bypassing the intended protection.
 
-IMPACT
-======
+Affected version:
 
-Malicious or buggy stub domain kernels or tool stacks otherwise living
-outside of Domain0 can mount a denial of service attack which, if
-successful, can affect the whole system.
+Xalan-Java >= 2.7.0
 
-Only PV domains with privilege over other guests can exploit this
-vulnerability; and only when those other guests are HVM using HAP, or
-PVH.  The vulnerability is therefore exposed to PV domains providing
-hardware emulation services to HVM guests.
+Fixed version:
 
-VULNERABLE SYSTEMS
-==================
+Xalan-Java >= r1581058 (see references)
 
-Xen 4.0 and onward are vulnerable.
+Credit: vulnerability report received from Nicolas Gregoire
+        <nicolas.gregoire AT agarri.fr>.
 
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+CVE: CVE-2014-0107
 
-The vulnerability is only exposed to PV service domains for HVM or
-PVH guests which have privilege over the guest.  In a usual
-configuration that means only device model emulators (qemu-dm).
+Timeline:
+2014-02-05: vulnerability report received
+2014-02-05: reporter provides disclosure date set to 2014-03-21
+2014-02-06: contacted Apache Security Team
+2014-03-17: maintainer provides patch for review
+2014-03-17: reporter confirms patch
+2014-03-21: assigned CVE
+2014-03-24: maintainer commits patch
+2014-03-24: advisory release
 
-In the case of HVM guests whose device model is running in an
-unrestricted dom0 process, qemu-dm already has the ability to cause
-problems for the whole system.  So in that case the vulnerability is
-not applicable.
+References:
+http://xml.apache.org/xalan-j
+https://issues.apache.org/jira/browse/XALANJ-2435
+http://svn.apache.org/viewvc?view=revision&revision=1581058
 
-The situation is more subtle for an HVM guest with a stub qemu-dm.
-That is, where the device model runs in a separate domain (in the case
-of xl, as requested by "device_model_stubdomain_override=1" in the xl
-domain configuration file).  The same applies with a qemu-dm in a dom0
-process subjected to some kind kernel-based process privilege
-limitation (eg the chroot technique as found in some versions of
-XCP/XenServer).
+Permalink:
+http://www.ocert.org/advisories/ocert-2014-002.html
 
-In those latter situations this issue means that the extra isolation
-does not provide as good a defence (against denial of service) as
-intended.  That is the essence of this vulnerability.
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
 
-However, the security is still better than with a qemu-dm running as
-an unrestricted dom0 process.  Therefore users with these
-configurations should not switch to an unrestricted dom0 qemu-dm.
-
-Finally, in a radically disaggregated system: where the HVM or PVH
-service domain software (probably, the device model domain image in the
-HVM case) is not always supplied by the host administrator, a malicious
-service domain administrator can exercise this vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests or HVM guests with shadow paging enabled will
-avoid this issue.
-
-In a radically disaggregated system, restricting HVM service domains
-to software images approved by the host administrator will avoid the
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Roger Pau Monné of Citrix and Jan Beulich
-of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa109.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x
-xsa109-4.2.patch    Xen 4.2.x
-
-$ sha256sum xsa109*.patch
-759d1b8cb8c17e53d17ad045ab89c5aaf52cb85fd93eef07e7acbe230365c56d  xsa109-4.2.patch
-729b87c2b9979fbda47c96e934db6fcfaeb10e07b4cfd66bb1e9f746a908576b  xsa109.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJUazogAAoJEIP+FMlX6CvZ5NQH/25lTqtBGu5Xt0JwHnLenfv0
-z0gVJ5o8YB6aqzV+GHWei0QV/PtCLteykm/K8LJK4my9OtDqI/WPzusyrGB6aNhD
-xCQUhRF5/j2c++u4UCBitibttSwKK/CCrswBMWZYqEI/1fJazVw3huyyFv56Wt+K
-32geEcIUnWs6lJD+z97W8LPPNLoaF/m6uSh4I2LrT3uBnvEFq5oGgzdWNtEKkSGC
-fAuga2m1NhfbCsMD6JSv9/EDSKHTiByZ5Z/zicWrButHfRp4fmGO/pPMwPFkERs1
-T/FX/UAfnvisS1SjgMwqufWlzIka5JDzi/Nc5Utgcvo9+9EsI1PCJDzYTJpOSa8=
-=yb1z
------END PGP SIGNATURE-----
-
-Download attachment "xsa109-4.2.patch" of type "application/octet-stream" (786 bytes)
-
-Download attachment "xsa109.patch" of type "application/octet-stream" (790 bytes)
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
