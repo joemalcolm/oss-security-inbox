@@ -1,49 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/16
-Message-ID: <53F621C2.8050902@rylee.me>
-Date: Thu, 21 Aug 2014 11:43:46 -0500
-From: Rylee Fowler <rylee@...ee.me>
-To: oss-security@...ts.openwall.com
-Subject: Re: SaltStack 2014.1.10 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/24/8
+Message-Id: <201403241947.s2OJl710014366@linus.mitre.org>
+Date: Mon, 24 Mar 2014 15:47:07 -0400 (EDT)
+From: cve-assign@...re.org
+To: security@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 90 - Linux netback crash trying to disable due to malformed packet
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-It failed for me, too. Thunderbird/Enigmail/W8.1.
+> XSA-90
 
-On 8/21/2014 11:37 AM, Kurt Seifried wrote:
-> Did anyone else have this message fail to render in their email 
-> client (I get a blank panel with the .sig attachment at the bottom 
-> using Thunderbird/Enigmail/Fedora). The original content:
-> 
-> ================ 
-> http://docs.saltstack.com/en/latest/topics/releases/2014.1.10.html 
-> =20
-> 
-> The sources are available on pypi: =20
-> 
-> https://pypi.python.org/pypi/salt/2014.1.10 =20
-> 
-> Salt 2014.1.10 fixes security issues documented by CVE-2014-3563: 
-> =22Inse= cure tmp-file creation in seed.py, salt-ssh, and 
-> salt-cloud.=22 Upgrading= is recommended. =20 ================
-> 
-> Something got mangled along the line.
-> 
+> it tries to disable the interface ... This involves taking a mutex ...
+> sleeping is not allowed ... The end result is that the backend domain
+> (often, Dom0) crashes with "scheduling while atomic". Malicious guest
+> administrators can cause denial of service.
+
+Use CVE-2014-2580.
+
+> This bug was publicly reported on xen-devel, before it was appreciated
+> that there was a security problem. The public mailing list thread
+> nevertheless contains information strongly suggestive of a security
+> bug, and a different security bug (with CVE) is suggested as seeming
+> "similar".
+
+We didn't happen to notice a CVE ID of a similar bug within xen-devel.
+In some cases, we would use that bug's CVE ID (if available) within a
+"NOTE:" sentence at the end of a new vulnerability's CVE description.
+
+http://lists.xen.org/archives/html/xen-devel/2014-03/msg02707.html
+says "by removing these checks we are introducing a way for a
+malicious or buggy guest to trigger misbehaviour in the backend,
+leading to e.g. a DoS" but we haven't tried to track down whether that
+is directly applicable.
 
 - -- 
-Rylee Fowler
-PGP: 41EA 1D94 F261 8602 6CD4 B2B5 05A6 3421 F637 E333
-https://keybase.io/rylee
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBCgAGBQJT9iHCAAoJEAWmNCH2N+MzHaAIALs3foLZZfdX9pr98TRv/cTU
-jJIPwac7drpS1J9XbSYXcwEKn6ly5QZfI50HJ9+4drJlxRg9oA6ubse15jF+CGo/
-zLCDQ2/nCNscx4hwwtAWR3UFsfWKcSAXWD6yC0P847UI9LLeyVWamopph4n45vlm
-7x0VBSrQB5zpHIPkCe+5fxSbTMaG5AT0sAIY38DlEkp/FyeZrJEPQjXdFFr12JQq
-RfZdoDzNSzkSpH77AwuAT+mr4o85EOEudsfylDFPSxiGg1uNBEFP3XuVj4OvkmEz
-XFWF9Du+zWKQ8L/ei8ucbofB/E7CnPz8FrA/enFI5Q0pM2n0PMebwAWlfFFc98w=
-=kwIi
+iQEcBAEBAgAGBQJTMIp6AAoJEKllVAevmvms3GwH/0Vkny8mbIwqAjuiyhWXYsCd
+Ys5QRiKv3XmJ8ebt4Mk5FbKOH1tnBupoIJY84iPJmS3lFcwhI7Sm9IkgzWcVw73i
+cO2D8mjfCBS53rpMi27k8dFgU0lE4zpWcuQsv3BtpijUSxLMLvNRpkyFTUdgmuYd
+FqtaX7N6Us616RjrGnsOmCMLSoOR4/8OCY6ePVkAF9yOhDh7i5JnFhZ75bdDi6lL
+6eT3B9rZ//yz4ht/sP2V0gizASNpPO5kd54lkePyrfYr23GwfXGFlPt4RAthrp5Z
+a3soa6Iqo4QTmG5f0ko5buZOb9M5WF0amzPSeNN6jKn6CBBe8yu0Kbrd7LY6Rs0=
+=WFEq
 -----END PGP SIGNATURE-----
