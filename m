@@ -1,21 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/12
-Message-ID: <53450A22.6030401@redhat.com>
-Date: Wed, 09 Apr 2014 10:51:46 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/24/5
+Message-ID: <20140324124643.GC22876@suse.de>
+Date: Mon, 24 Mar 2014 13:46:43 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Heap-based buffer overflow in libdw/elfutils (CVE-2014-0172)
+Subject: pam_timestamp internals
 Content-Type: text/plain; charset=utf-8
 
-The compressed debug information support in libdw does not handle 
-malformed compressed debug sections properly.  When computing the size 
-of a memory region, integer wraparound is not taken into account, 
-resulting in a heap allocation that is smaller than expected and which 
-is subsequently filled with arbitrary decompressed data:
+Hi
 
-   <https://bugzilla.redhat.com/show_bug.cgi?id=1085663>
+When playing with some PAM modules for my own projects, I came
+across some implications of pam_timestamp (which is part of
+upstream linux-pam) that should probably be addressed.
 
-We have assigned CVE-2014-0172 to this issue.
+Most importantly, there seems to be a path traversal issue:
+
+static int
+format_timestamp_name(char *path, size_t len,
+                      const char *timestamp_dir,
+                      const char *tty,                
+                      const char *ruser,
+                      const char *user)               
+{
+        if (strcmp(ruser, user) == 0) {
+                return snprintf(path, len, "%s/%s/%s", timestamp_dir, 
+                                ruser, tty);                    
+        } else {
+                return snprintf(path, len, "%s/%s/%s:%s", timestamp_dir,
+                                ruser, tty, user);
+        }
+}
+
+If attacker can control PAM_RUSER or PAM_TTY item and pam_timestamp is "sufficient",
+(it makes sense to have it sufficient, as it aims to mimic sudo timestamp tickets
+and is suggested so in the man page)
+they can bypass authentication. PAM_RUSER is set in vsftpd or sssd for example.
+PAM_TTY can be set via dbus in gdm's x11-display variable.
+
+That has the following impact:
+
+1. For authentication, this can allow to bypass the auth process, depending on
+interal app logic and the existance of certain root owned files (the file
+size is checked to match certain value, but chances are that such files
+exist somewhere under /). For openssh, if accidently included via auth-common,
+this can be dangerous, as the PAM_TTY is always set to "ssh". However due to
+PAM_TTY_KLUDGE #ifdef and internal sshd logic this probably is no issue as of today.
+
+2. When a vector is also handling pam sessions (sssd), this bug also allows to create arbitrary
+files when the timestamp file is created and I guess content can be crafted with so much love
+to create fake shadow-file entries is possible.
+
+One should probably take care to not accidently include pam_timestamp in a config file
+for a remote service, as chance is high that the RUSER/TTY is used incorrectly, even
+when the user string is checked via getpwnam(). It should probably be documented in
+pam_timestamp's manpage.
+
+We are not using pam_timestamp in any of our configs, but might be that someone else is.
+Even if not, I think a lot of admins do.
+
+regards,
+Sebastian
+
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
