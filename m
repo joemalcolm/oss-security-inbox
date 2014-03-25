@@ -1,29 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/6
-Message-ID: <20140724181124.GA30484@kludge.henri.nerv.fi>
-Date: Thu, 24 Jul 2014 21:11:24 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: WordPress plugin vitamin traversal arbitrary file access 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/25/3
+Message-ID: <1395743744.6294.40.camel@kazak.uk.xensource.com>
+Date: Tue, 25 Mar 2014 10:35:44 +0000
+From: Ian Campbell <Ian.Campbell@...rix.com>
+To: <cve-assign@...re.org>
+CC: <security@....org>, <oss-security@...ts.openwall.com>
+Subject: Re: Xen Security Advisory 90 - Linux netback crash trying to disable due to malformed packet
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2012 CVE for WordPress plugin vitamin path parameter traversal
-arbitrary file access vulnerability, thanks. Files: add_headers.php, minify.php
+On Mon, 2014-03-24 at 15:47 -0400, cve-assign@...re.org wrote:
+> > XSA-90
+> 
+> > it tries to disable the interface ... This involves taking a mutex ...
+> > sleeping is not allowed ... The end result is that the backend domain
+> > (often, Dom0) crashes with "scheduling while atomic". Malicious guest
+> > administrators can cause denial of service.
+> 
+> Use CVE-2014-2580.
 
-Affected: 1.0
-Fixed in: 1.1
+Thanks.
 
-Short description of plugin:
+> > This bug was publicly reported on xen-devel, before it was appreciated
+> > that there was a security problem. The public mailing list thread
+> > nevertheless contains information strongly suggestive of a security
+> > bug, and a different security bug (with CVE) is suggested as seeming
+> > "similar".
+> 
+> We didn't happen to notice a CVE ID of a similar bug within xen-devel.
 
- Vitamin is about SEO, speed and security. It includes sitemaps for SEO, cache
- for speed, antispam and hacker blocks for security. 
+The first mail in the thread (<5324B182.70905@...rok.net>) had a link to
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=701744#88 which was a
+bug relating to CVE-2013-0216.
 
-Plugin page: http://wordpress.org/plugins/vitamin/
-Changelog: http://wordpress.org/plugins/vitamin/changelog/
-OSVDB: http://osvdb.org/84463 http://osvdb.org/84464
-SCM: https://plugins.trac.wordpress.org/changeset/582232/vitamin
+> In some cases, we would use that bug's CVE ID (if available) within a
+> "NOTE:" sentence at the end of a new vulnerability's CVE description.
+> 
+> http://lists.xen.org/archives/html/xen-devel/2014-03/msg02707.html
+> says "by removing these checks we are introducing a way for a
+> malicious or buggy guest to trigger misbehaviour in the backend,
+> leading to e.g. a DoS" but we haven't tried to track down whether that
+> is directly applicable.
 
----
-Henri Salo
+This was review of a separate patch unrelated to the bug in question.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+HTH,
+
+Ian.
+
