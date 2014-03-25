@@ -1,28 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/27
-Message-Id: <E1Xtkoj-0006C0-49@rmm6prod02.runbox.com>
-Date: Wed, 26 Nov 2014 17:12:09 -0500 (EST)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Apple goto fail - lessons that should be learned
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/25/2
+Message-Id: <201403251601.s2PG1APi016867@linus.mitre.org>
+Date: Tue, 25 Mar 2014 12:01:10 -0400 (EDT)
+From: cve-assign@...re.org
+To: security@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 89 - HVMOP_set_mem_access is not preemptible
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 26 Nov 2014 21:01:09 +0100, Hanno Böck <hanno@...eck.de> wrote:
-> I've written something similar on POODLE (and BERserk), not sure if I
-> posted this here before:
-> https://blog.hboeck.de/archives/858-Dancing-protocols,-POODLEs-and-other-tales-from-TLS.html
-> 
-> Not surprisingly I come to somewhat similar conclusions (protocol
-> downgrade protection, encrypt-then-mac etc.)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Excellent!  I've added a citation from my POODLE paper to your post.
+> Processing of the HVMOP_set_mem_access HVM control operations does not
+> check the size of its input and can tie up a physical CPU for extended
+> periods of time.
 
-> But the most important conclusion from POODLE is imho: Be very careful
-> with implementing workarounds for broken hard/software - and don't do
-> them if they compromise security.
+Use CVE-2014-2599.
 
-Agreed.  It's going to be hard to do that in practice, I fear.
-Thankfully, it looks like SSLv3 will disappear, reducing the pressure to do that
-for TLS.  That will help.
+> In 4.2 only 64-bit versions of the hypervisor are vulnerable
+> (HVMOP_set_mem_access is not available in 32-bit hypervisors).
 
---- David A. Wheeler
+Typically we would not assign separate CVE IDs on the basis that
+64-bit environments have different affected versions than 32-bit
+environments (unless there were a separate product such as "Xen64" for
+the former case).
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTMadRAAoJEKllVAevmvmsMPAH/jv5L/0rB8xH8GTjtTlYmLqU
+0YLmogJRjgWWC4PIvyJKdps/ulAvnML2GLlx1SifCtDPBvaYDfWTpSboZ00RDMBK
+zkbiZId6nAoB+1UGMBlSvsLFLn4dq6zlH7GetC3pSzgkaFUxIChUdxmgAuF8q2gi
+cZugePte51ydXVksbBl6dEoNeunFi4oYXTWyo6EVsV+I5n5jUlTYus2CyFGkOD6n
+9TrEoIwNvoEsVGLL2JkPKxzgOnrF1jvci1qPpgbeKFBOc4fNqPbvOYm0NcWj1B0I
+bPFKrsJ5zvq07d8UMQpMCQMxYnbjRx9C64kbo1snnAqGkr4VCQeOXk5Tpdrl5Oc=
+=BfxD
+-----END PGP SIGNATURE-----
