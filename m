@@ -1,77 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/14/1
-Message-Id: <201403140043.s2E0hQw0014464@linus.mitre.org>
-Date: Thu, 13 Mar 2014 20:43:26 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/25/5
+Message-Id: <201403251744.s2PHi6ia004479@linus.mitre.org>
+Date: Tue, 25 Mar 2014 13:44:06 -0400 (EDT)
 From: cve-assign@...re.org
-To: dkg@...thhorseman.net
+To: mmcallis@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+Subject: Re: possible CVE request: smb4k credentials cache leak
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> It sounds to me like you're saying you're OK with placing at least
-> some of these cases into group 2 or 3.
+> https://bugs.gentoo.org/show_bug.cgi?id=505376 notes that smb4k (an
+> SMB/CIFS share browser for KDE) version 1.1.1 fixes a potential security
+> issue:
+> 
+> "Fixed potential security issue reported by Heiner Markert. Do not allow
+> the cruid option to be entered via the "Additional options" line edit.
+> 
+> http://sourceforge.net/projects/smb4k/files/Smb4K%20%28stable%20releases%29/1.1.1/
 
-No, our previous message wasn't trying to comment on that, one way or
-the other. We were simply arguing against
-error-message-and-refusal-to-connect as the universally optimal UI
-behavior upon having an SSL handshake arrive at a 40-bit cipher suite.
-If the browser is capable of showing either a closed lock or an open
-lock, and still allow use of SSL in both of those cases, we're not
-suggesting that the closed lock is optimal.
+> https://bugs.gentoo.org/show_bug.cgi?id=505376#c4
+> Apparently cruid is used to set the uid of the owner of the credentials cache.
 
-> If a browser receives a cookie marked "secure" under a strong https
-> connection, and then replays that cookie to the same server on a new
-> HTTPS connection that is markedly weaker, the browser has potentially
-> compromised the user's entire session.  Does this seem like a vulnerability?
-
-It still seems to be an opportunity for security improvement. Consider
-these two cases:
-
-  A. I use Konqueror to connect to a shopping web site from a network
-     that likely has sniffers. The shopping web site has a bug that
-     occasionally causes it to agree to only 40-bit cipher suites. In
-     this case, I would prefer that Konqueror not use 40 bits.
-
-  B. I own some EOL'd networked outdoor video cameras that can't be
-     patched or replaced. They have a bug that occasionally causes
-     them to agree to only 40-bit cipher suites. In this case, I would
-     prefer that Konqueror use 40 bits.
-
-There's no uniform answer about what Konqueror should do, so it's
-difficult to consider A a vulnerability. The opportunity for security
-improvement is that Konqueror could track the observed bit counts, and
-ask the user "This site is normally 128 bits. Today it's 40 bits. Do
-you really want to proceed? Just this one time, or every time this
-happens for this specific site?" (This assumes that a wording exists
-that users would understand.)
-
-This security improvement might be unrealistic because there are no
-known bugs that cause an intermittent maximum of 40 bits.
-
-A better example is certificate pinning:
-
-  A. This site is normally verified by Google Internet Authority G2.
-     Today it is verified by OppressiveNationState Root CA. Do you
-     really want to proceed?
-
-  B. This site is normally verified by Google Internet Authority G2.
-     Today it is verified by YourCompanyITDepartmentMandatoryHTTPSProxy
-     Root CA. Do you really want to proceed?
-
-In other words, we feel that this needs to be modified slightly:
-
-> The basic training we give to users is "if you see the lock icon, your
-> session is secure", which i think is the right message
-
-The Konqueror user experience is "if the UI says https, it is https,
-but that may or may not be especially meaningful." Because certificate
-pinning isn't widely deployed, the experience of most web users
-nowadays is "if the UI says https, it is https, but that may or may
-not be especially meaningful." Addressing either case is best
-interpreted as a security improvement, not a vulnerability fix.
+Use CVE-2014-2581.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -81,11 +33,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTIk9+AAoJEKllVAevmvms8cwIAMAbM0u4PpFxiH/tlqWhNfUx
-fukAZpTats9wdhjKFkXON6w7mchU1StCLwbRIQsaIHHtLmIUb3ytmrXPnFRtxveY
-ygMqo7qx9ypZrhAfXSj11WlSa2d9/I1Fp+S76hPMIjubYAwOaortNu7ds5QUt/kk
-qVrv/iKFvr7xaJdzoZbTQL7GjR5vEvieeSVK6zPeJ5ugd22XHovwz6jqnsZy318Q
-n71ORL6ZCC+qyl9sS0hbcJ2Uw7PTEyBlwjSvkrk9hCUis7A7+axWmNgz5jEjjQnY
-PNuOuNfXMa5DOkxK7F64G5SKcmSKQCuBcmRYp8P9A8DRUEIbYrwyKlkNvLZwGmY=
-=rl1y
+iQEcBAEBAgAGBQJTMb+XAAoJEKllVAevmvms7asH/iPuxfHYpHI86Z/75L+n0Qa9
+fLr2TAWAdOz9WDsJuNcRNlc7jDuzXNLz8tEqYUBGD0+g1nuzqfhjCksNWEJmmNYL
+tCJat/DSuijiS4MdNxEqgFIceZco4Uv8mjDkgNgM5EqbeJhq3IWRraTppFfdbiAG
+agup67AsZSkf3VuV3NlwcTQfaxilsZY7TQocsFT1SU65Z//9bnGNxgm1G9sWLq4M
+bWYBqyiJur7rUGY6uCMJaLw4PcDDblewZo9R1VTfn405z8iw5LZvc4g+v2arUj9l
+LclDHQvIoVENBLOUgBKdNjla2GL6sEplEokFNWTgU0Tm9xDMuxU24ZeBqgwzxU8=
+=ktDl
 -----END PGP SIGNATURE-----
