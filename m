@@ -1,35 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/3
-Message-Id: <201407070351.s673pnd5019301@linus.mitre.org>
-Date: Sun, 6 Jul 2014 23:51:49 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request for commons-beanutils: 'class' property is exposed, potentially leading to RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/12
+Message-ID: <20140326230731.GZ21794@core.inversepath.com>
+Date: Thu, 27 Mar 2014 00:07:31 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2014-003] LibYAML input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> From: David Jorm <djorm@...hat.com>
-> I have now assigned CVE-2014-3540
+#2014-003 LibYAML input sanitization errors
 
-MITRE has not yet recognized this as a CVE assignment. A further
-explanation will follow.
+Description:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+The LibYAML project is an open source YAML 1.1 parser and emitter written in
+C.
 
-iQEcBAEBAgAGBQJTuhfgAAoJEKllVAevmvmsD8EH/i0FFJz1dl0KEvulIkmRd6bY
-Ezq681Wmq3IgQsZjWlc+2JriBGxIThylyD+qMZopB537x+yXIvpGA4b/bzuY1P68
-0BjLz646duYEN5mqhR8VqZC5kp8lREt6srNpazQoZEYxhb30Fy7TXHgQwO3qKlOo
-73N1/yL0nwZlCb0yUo/paphBxnYOR7AQh9KhammIjmDfpEc9TsITjp9xzAdNZjfU
-AvEjmoGzdyI9er/CyxWIYy0dTVn5lD782Xc/eScd3+SCMLCM0YyTriXXZyQyxXqI
-o2EMp+P0gMtlQDiu0hvK68efHyHMbR28GhYvdaMNxouB0X9mgbQWpglpGV4VnTM=
-=Vizk
------END PGP SIGNATURE-----
+The library is affected by a heap-based buffer overflow which can lead to
+arbitrary code execution. The vulnerability is caused by lack of proper
+expansion for the string passed to the yaml_parser_scan_uri_escapes()
+function.
+
+A specially crafted YAML file, with a long sequence of percent-encoded
+characters in a URL, can be used to trigger the overflow.
+
+Affected version:
+
+LibYAML <= 0.1.5
+
+Fixed version:
+
+LibYAML >= 0.1.6
+
+Credit: vulnerability report received from Ivan Fratric of the
+        Google Security Team.
+
+CVE: CVE-2014-2525
+
+Timeline:
+
+2014-03-11: vulnerability report received
+2014-03-14: maintainer provides patch for review
+2014-03-17: reporter confirms patch
+2014-03-17: disclosure coordinated on 2014-03-26
+2014-03-18: contacted affected vendors
+2014-03-18: assigned CVE
+2014-03-26: LibYAML 0.1.6 released
+2014-03-26: advisory release
+
+References:
+http://pyyaml.org/wiki/LibYAML
+https://bitbucket.org/xi/libyaml/commits/bce8b60f0b9af69fa9fab3093d0a41ba243de048
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2014-003.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
