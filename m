@@ -1,62 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/5
-Message-ID: <CACYkhxjeyLYjSUzvMLAkTKQVKg9r5-aL+yv38jALZJTa=UGsfA@mail.gmail.com>
-Date: Tue, 11 Feb 2014 22:28:35 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/8
+Message-ID: <20140326123717.GA21851@stefanha-thinkpad.muc.redhat.com>
+Date: Wed, 26 Mar 2014 13:37:17 +0100
+From: Stefan Hajnoczi <stefanha@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+Cc: pmatouse@...hat.com, Kevin Wolf <kwolf@...hat.com>, Michael Roth <mdroth@...ux.vnet.ibm.com>
+Subject: QEMU image format input validation fixes (multiple CVEs)
 Content-Type: text/plain; charset=utf-8
 
-On 11 February 2014 17:54, P J P <ppandit@...hat.com> wrote:
+Hi,
+Several missing input validation bugs in QEMU's disk image format code
+have been fixed.
 
-> Upstream author's reply:
->
->  > On Tuesday, 11 February 2014 4:28 AM, Frank Denis wrote:
->  >
->  > The shorter the TTL of a record is, the easier a cache can be poisoned.
->  > It is when a record is NOT cached that spoofed authoritative replies
->  > can be sent and get a chance to reach the resolver before the
->  > legitimate one.
->  >
->  > As soon as a valid response is received, dnscache invalidates the state,
->  > discarding further responses, even if these are valid.
->
+CVEs are as follows:
+parallels: Sanity check for s->tracks (CVE-2014-0142)
+parallels: Fix catalog size integer overflow (CVE-2014-0143)
+qcow2: Check maximum L1 size in qcow2_snapshot_load_tmp() (CVE-2014-0143)
+qcow2: Fix L1 allocation size in qcow2_snapshot_load_tmp() (CVE-2014-0145)
+qcow2: Fix NULL dereference in qcow2_open() error path (CVE-2014-0146)
+block: Limit request size (CVE-2014-0143)
+dmg: prevent chunk buffer overflow (CVE-2014-0145)
+dmg: sanitize chunk length and sectorcount (CVE-2014-0145)
+qcow2: Fix new L1 table size check (CVE-2014-0143)
+qcow2: Avoid integer overflow in get_refcount (CVE-2014-0143)
+qcow2: Don't rely on free_cluster_index in alloc_refcount_block() (CVE-2014-0147)
+qcow2: Validate active L1 table offset and size (CVE-2014-0144)
+qcow2: Validate snapshot table offset/size (CVE-2014-0144)
+qcow2: Check refcount table size (CVE-2014-0144)
+qcow2: Check backing_file_offset (CVE-2014-0144)
+qcow2: Check header_length (CVE-2014-0144)
+curl: check data size before memcpy to local buffer.  (CVE-2014-0144)
+vhdx: Bounds checking for block_size and logical_sector_size (CVE-2014-0148)
+vdi: add bounds checks for blocks_in_image and disk_size header fields (CVE-2014-0144)
+vpc: Validate block size (CVE-2014-0142)
+vpc/vhd: add bounds check for max_table_entries and block_size (CVE-2014-0144)
+bochs: Check extent_size header field (CVE-2014-0142)
+bochs: Check catalog_size header field (CVE-2014-0143)
+bochs: Use unsigned variables for offsets and sizes (CVE-2014-0147)
+block/cloop: refuse images with bogus offsets (CVE-2014-0144)
+block/cloop: refuse images with huge offsets arrays (CVE-2014-0144)
+block/cloop: prevent offsets_size integer overflow (CVE-2014-0143)
+block/cloop: validate block_size header field (CVE-2014-0144)
 
-This response doesn't address the original claim.
+Patches are available here:
+https://lists.gnu.org/archive/html/qemu-devel/2014-03/msg04994.html
 
-The author of the original link made the (probably true) claim that
-requests could
-be made to authoritative sources (records under the control of the attacker)
-which would deliberately collide with results for some other domain such as
-.com.
+Patches will be in the upcoming QEMU 2.0 release and a QEMU 1.7.2
+stable release is also planned.  You are welcome to join #qemu on
+irc.oftc.net or the qemu-devel@...gnu.org mailing list if you need more
+information.
 
-Since each bucket has a limit of 100 records, this would make it easier to
-push
-a record from the cache, giving the attacker another chance at spoofing a
-reply
-a little bit sooner.  Each time this happened, the attacker would have just
-under
-1 in 2^32 chance of succeeding.
-
-The simplest strategy for this would be to constantly send replies to a
-specific
-port with a specific ID, and waiting for the server to randomly use this
-combination, in which case the attacker would surely beat the server.
-
-The security flaw is in the DNS protocol, and (apart from protocol upgrade
-fantasies) the only practical way to mitigate this is to have a pool of IP
-addresses to initiate recursive requests from.  Using siphash would make
-this
-attack slightly harder, but a large number of random names would presumably
-have a similar effect for only slightly more traffic (how many buckets are
-there?).
-
-In short, the hashtable is not a DNS cache poisoning protection mechanism,
-DNS
-cache is supposed to expire or be pushed out by "hotter" records, so I'd
-say it's not
-a vulnerability.  I'd still recommend switching hash algorithms.
-
-Regards,
-  Michael
-
+Stefan
