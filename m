@@ -1,199 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/17/5
-Message-Id: <201407172231.s6HMVeS9019777@linus.mitre.org>
-Date: Thu, 17 Jul 2014 18:31:40 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/10
+Message-Id: <201403262005.s2QK5oG2001105@linus.mitre.org>
+Date: Wed, 26 Mar 2014 16:05:50 -0400 (EDT)
 From: cve-assign@...re.org
-To: larry0@...com
+To: krahmer@...e.de
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1 (etc.)
+Subject: Re: pam_timestamp internals
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-(we understand that there is some preference for product names in
-Subject lines but we are not sending 17 separate replies in this case)
-
-
->   Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
-> codders-dataset-1.3.2.1/lib/dataset/database/mysql.rb
-> Lines 18 and 24 expose the password to the process table
-> 
-> codders-dataset-1.3.2.1/lib/dataset/database/postgresql.rb
-> Lines 18 and 24 expose the password to the process table
-
-Use CVE-2014-4991 for both the mysql.rb issue and the postgresql.rb issue.
-
-
-
->   Vulnerability Report for Ruby Gem cap-strap-0.1.5
-
-> the password is exposed to the process table listing
-
-Use CVE-2014-4992.
-
-
-> The password crypt hash is also going to have the same 'sa' salt every time.
-
-There is no CVE ID for this. It is not known why the code "print
-crypt(#{password}, salt)" was used. This Gem has a very small amount
-of code and it is unclear whether commonly favored security features
-such as multiple possible salts were even within the scope of the
-development effort. In general, one interpretation of
-"crypt(#{password}, salt)" is intentionally unfinished code. Another
-interpretation (which probably could have a CVE ID) is accidentally
-unfinished code.
-
-
-
->   Vulnerability Report for Ruby Gem backup-agoddard-3.0.28
->   Vulnerability Report for Ruby Gem backup_checksum-3.0.23
-> Lines 178 exposes the password to the process table
-
-The vulnerable parts of these two Gems seem to be direct copies of
-code from something called "The Backup Ruby Gem" and thus the
-codebases are not independent.
-
-Use CVE-2014-4993 for the report about both backup-agoddard and
-backup_checksum.
-
-
-
->   Vulnerability Report for Ruby Gem gyazo-1.0.0
-> file names are time based and predictable
-> /tmp/gyazo_upload_#{Time.now.to_i}_#{Time.now.usec}.png
-
-Use CVE-2014-4994.
-
-
-
->   Vulnerability Report for Ruby Gem VladTheEnterprising-0.2
- 
-> The mysql root password can be read out of /tmp/my.cnf.#{target_host}
-> if a local user waits to read that after it is written and before it
-> is removed
-
-Use CVE-2014-4995.
-
-
-> It is also possible to clobber files owned by the VladTheEnterprising
-> user process via symlink attack
-
-Use CVE-2014-4996.
-
-
-
->   Vulnerability Report for Ruby Gem gnms-2.1.1
-> 
-> can lead to remote command injection if a malicious user specifies an
-> IP address with shell meta characters
-
-There is currently no CVE ID for this. Initial inspection of the
-source code doesn't suggest an opportunity for a malicious user to
-cross privilege boundaries.
-
-
-
->  Vulnerability Report for Ruby Gem point-cli-0.0.1
-> Line 19 exposes the username and password combination to the process table.
-
-Use CVE-2014-4997.
-
-
-
->   Vulnerability Report for Ruby Gem kompanee-recipes-0.1.4
-
-There is currently no CVE ID for this, for the two independent reasons
-mentioned in the http://openwall.com/lists/oss-security/2014/07/11/9
-post.
-
-
-
->   Vulnerability Report for Ruby Gem lean-ruport-0.3.8
-> Line 21 exposes the mysql password to the process table
-
-Use CVE-2014-4998.
-
-
-
->   Vulnerability Report for Ruby Gem kajam-1.0.3.rc2
-> Lines 18 and 24 expose the mysql user password to the process table
-
-Use CVE-2014-4999.
-
-
-
->   Vulnerability Report for Ruby Gem lawn-login-0.0.7
-> Line 24 exposes the password to the process table
-
-Use CVE-2014-5000.
-
-
-
->   Vulnerability Report for Ruby Gem kcapifony-2.1.6
-> Lines 482, 484, 522 and 524 expose the password to the process table
-
-Use CVE-2014-5001.
-
-
-
->   Vulnerability Report for Ruby Gem karo-2.3.8
-
-The documentation says "Karo is released as a Ruby Gem. The gem is to
-be installed within a Ruby on Rails application." However, the attack
-in question apparently doesn't cross privilege boundaries. One of the
-examples is:
-
-  karo vim app/models/user.rb # Will open the user.rb file on the server using vim
-
-It appears that there is no motivation for a user to rely on "passes
-unsanitized user supplied input to the command line". The user can use
-a :! within vim instead.
-
-
-
->   Vulnerability Report for Ruby Gem lynx-0.2.0
-
-> Ruby command line wrapper for MySQL.
-
-> Exposes password to the process table
-
-Use CVE-2014-5002.
-
-
-> Doesn't properly sanitize user input before sending to command line:
->       def perform(command)
->         system(command.to_s)
-
-We weren't able to establish that this attack crosses privilege boundaries.
-Given that the input is intentionally being used for a "system" call,
-we aren't sure what restrictions would be imposed by the "sanitize
-user input" recommendation.
-
-
-
->   Vulnerability Report for Ruby Gem ciborg-3.0.0
-> There is a /tmp file race condition when creating /tmp/perlbrew-installer
-
-Use CVE-2014-5003.
-
-
-
->   Vulnerabilities in Ruby Gem brbackup-0.1.1
-
-> The following code exposes the database password to the command line
-
-Use CVE-2014-5004.
-
-
-> line 313 is vulnerable to SQL injection via the '#{name}' variable.
-
->   opts.banner = "Usage: brbackup [-flag] [argument]"
->   opts.define_head "brbackup: clone db backups across environments"
-
-We didn't immediately see a scenario in which #{name} comes from
-untrusted user input. Thus, there is currently no CVE ID for a
-SQL injection issue.
+> I came across some implications of pam_timestamp ... it aims to mimic
+> sudo timestamp tickets
+
+> there seems to be a path traversal issue
+
+Use CVE-2014-2583. As usual, there are not separate CVE IDs for the
+different impacts.
+
+> One should probably take care to not accidently include pam_timestamp in a config file
+> for a remote service, as chance is high that the RUSER/TTY is used incorrectly, even
+> when the user string is checked via getpwnam(). It should probably be documented in
+> pam_timestamp's manpage.
+
+There is no CVE ID for the issue in which the documentation might
+not be sufficient to prevent all problematic uses of pam_timestamp in
+conjunction with remote services. The documentation at
+http://www.linux-pam.org/Linux-PAM-html/sag-pam_timestamp.html and
+elsewhere specifically mentions "This is similar mechanism which is
+used in sudo" and "FILES /var/run/sudo/..." in fairly prominent ways.
+The documentation is not directly misleading, i.e., there doesn't seem
+to be any implication that a remote service is a recommended use case.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -203,11 +41,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTyE1gAAoJEKllVAevmvms2eMIAKo2s3gUVyOdfivB1G8kZcnG
-Nej7VXuFnUVtIZjkQh9SRyKk8jAp7yjsuH2v6gTflVw16l7qcBZfgx5C6lJvEQRL
-pATIE0GU5ywe48LTjHPeFi1/Z24IyCIjWTo84uzBcchVThaKyaOXIH9Xb+US7snq
-SLJckc2Xe0LHT6gNekAnKsgDx/eWTHxosFo4XZqD9UDS+6bZCdBX9k/HpY/GKFAH
-xtKuOuvQqInmDv4g7j24wTkpRnWTgNvAVtOwZfWTG3Ten9GPnrGgpPm8t0yhd5Y4
-y+yhYTzJqiK71eH8YWrpDYYaDlSUN5bgafrXkTNz5gzpKOF1nBdKM1+DnEogEGU=
-=kMW5
+iQEcBAEBAgAGBQJTMy96AAoJEKllVAevmvms7JkH/0GC/rQ0JAYaYMEX88iZM4Fk
+eUU33cqGX2UZkHwZ0HCMoyi521ptE31rllfBNqcuhdOc/X06pY/zq16Cbfc9yPGr
+PYGzMou5KjoKscEov4ma3J/FVgrDMGHKp6uU/RGsEllr3qrEOx92sOKP4dw5nteC
+6b8B7b8KQXBRGWdAg0ydFU1KSFdQxpNU7ii9FUMYHswohubgGyYbkbWMltyICHWd
+CRYNiZtIyou2hX80otdXi2p/ezVZuovtfgQbwjtYhehUDn46MV09lhWRVJZmDH+L
+IaEwd2wjGNyV07NcBIt+NLghRNCW7U2oct1wdxg4R6wbVW0NBYJAgynVqTAEDLo=
+=dQxv
 -----END PGP SIGNATURE-----
