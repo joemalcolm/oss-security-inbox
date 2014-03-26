@@ -1,72 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/9
-Message-ID: <CAGeFrHDQZsrxnECxFkuJ0Q5t4X5c0dQrq-YfV-9wt07g+fRLww@mail.gmail.com>
-Date: Tue, 4 Nov 2014 15:12:25 +0100
-From: David Edmundson <davidedmundson@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/1
+Message-ID: <CAJjO9M=wm1vHR+vEyn_V9qdwQg-jTa3cwGXSRC9U0qCPG7wk6Q@mail.gmail.com>
+Date: Tue, 25 Mar 2014 18:47:59 -0700
+From: Fyodor <fyodor@...p.org>
 To: oss-security@...ts.openwall.com
-Subject: Privilege Escalation via KDE Clock KCM polkit helper
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-Hello, I found a security issue in KDE which under Ubuntu and some other
-distros allows a program to run arbitrary processes as root from an admin
-user without any prompts.
+On Wed, Mar 19, 2014 at 6:31 AM, Solar Designer <solar@...nwall.com> wrote:
 
-I need a CVE number.  I understand you are an authority that can provide
-this.
-
-Let me know if I can help provide anything else.
+>
+> So I think someone else should setup the new FD, somewhere.
 
 
-KDE Project Security Advisory
-=============================
+I agree, and I've been missing the list more and more myself.  Since I
+already deal with FD legal threats (from running Seclists.org), and since I
+already have mail servers and Mailman set up (from running my other lists),
+it isn't too much trouble for me.  I've rebooted the list!  But folks need
+to resubscribe as detailed here:
 
-Title:          kde-workspace:
-Risk Rating:    Medium (??)
-CVE: ???
-Platforms:      All
-Versions:       kde-workspace < 4.14.3
-Author:         David Edmundson <davidedmundson@....org>
-Date:           4 November 2014
+http://insecure.org/news/fulldisclosure/
 
-Overview
-========
+But this needs to be a community project, so I'll try to recruit a team of
+moderators from active listmembers.  And any help you guys can give in
+spreading the world helps!  We'll need a decent number of subscriptions to
+get back the momentum which was so abruptly lost.
 
-KDE workspace configuration module for setting the date and time has a
-helper program
-which runs as root for performing actions. This is secured with polkit.
-
-This helper takes the name of the ntp utility to run as an argument. This
-allows a hacker
-to run any arbitrary command as root under the guise of updating the time.
-
-Impact
-======
-
-An application can gain root priveledges from an admin user with either
-misleading information
-or no interaction.
-
-On some systems the user will be shown a prompt to change the time.
-However, if the system has
-policykit-desktop-privileges installed, the datetime helper will be invoked
-by an admin user
-without any prompts.
-
-
-Workaround
-==========
-
-Add a polkit rule to disable the org.kde.kcontrol.kcmclock.save action
-
-Solution
-========
-
-Upgrade kde-desktop to 4.14.3 once released or apply the following patch:
-https://git.reviewboard.kde.org/r/120977/
-
-
-Credits
-=======
-
-Thanks to David Edmundson for finding and fixing the issue
+Cheers,
+Fyodor
 
