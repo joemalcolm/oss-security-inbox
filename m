@@ -1,47 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/10
-Message-ID: <CAKcmtDyuaT4HMke1joaVH+Ydx2Eh=0qvKjLMixX+ZaaSkf-CVQ@mail.gmail.com>
-Date: Thu, 31 Jul 2014 13:17:33 -0700
-From: Chris Steipp <csteipp@...imedia.org>
-To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: Possible CVE Request: MediaWiki Security and Maintenance Releases: 1.19.18, 1.22.9 and 1.23.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/11
+Message-Id: <201403262009.s2QK9gnE001156@linus.mitre.org>
+Date: Wed, 26 Mar 2014 16:09:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: thijs@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: postfixadmin SQL injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 31, 2014 at 12:35 PM, Salvatore Bonaccorso
-<carnil@...ian.org> wrote:
-> Hi
->
-> New Security and maintenance releases for mediawiki (1.19.18, 1.22.9
-> and 1.23.2) were released:
->
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-July/000157.html
->
-> From the announcement, three SECURITY tagged bugs were fixed.
->
-> Are CVE assignments for those already been requested, or if not, could
-> you assign CVEs for these?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-None have been requested or assigned.
+> http://sourceforge.net/p/postfixadmin/code/1650
 
-* (bug 68187) SECURITY: Prepend jsonp callback with comment.
-** This was hardening against CVE-2014-4671, I don't think CVEs are
-being assigned for these?
+Use CVE-2014-2655.
 
-* (bug 66608) SECURITY: Fix for XSS issue in bug 66608: Generate the
-URL used for loading a new page in Javascript,instead of relying on
-the URL in the link that has been clicked.
-** Standard Dom XSS. Credit goes to Michael M.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-* (bug 65778) SECURITY: Copy prevent-clickjacking between OutputPage
-and ParserOutput.
-** This probably should get a CVE, since downstreams will all want to
-patch this. We prevent iframing certain pages to prevent clickjacking
-/ redressing attacks, but when those pages were transcluded into
-non-protected pages, the resulting page could be iframed. Credit goes
-to Kevin Israel.
-
-
->
-> Regards,
-> Salvatore
+iQEcBAEBAgAGBQJTMy9kAAoJEKllVAevmvmssAcH/jOxYy8kBU65+5CH0vVaAFfj
+hhXV47y3s6ZByE0yQ8iBLEYQlbyrwB4zaq3n31QGhjOlOqqRDHbE0+RgMjkdyfRk
+O+O55XI3/2uroSc+i0lB/OioAV+//LPg0Px/pYni6eKQPBFRTZIlz7MQkQuc0IKS
+GOlu3xbvo/SAoLR2KIgN5yalTC4wcfhUSHeYTREzbePJXul0ewJKEKhKl0s2+Fu0
+mpzOEXtW9B9VC2r6ZiSz19WLaulnGdTtMSUV73xIE6c3H8J7GE2EjZyF6uA2+P/S
+/p+gSFr3Njd/3drhwkBNCgpK8Lhj73yiQ08pbzn81mS83n4ivW3MIDJp5ioXBE0=
+=j5np
+-----END PGP SIGNATURE-----
