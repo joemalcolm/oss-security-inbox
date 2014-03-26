@@ -1,60 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/02/6
-Message-ID: <5363E155.7020906@redhat.com>
-Date: Fri, 02 May 2014 12:17:57 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, theo@....openbsd.org
-Subject: Re: CVE Request: OpenSSL NULL pointer dereference in do_ssl3_write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/9
+Message-Id: <201403261957.s2QJvT4C000535@linus.mitre.org>
+Date: Wed, 26 Mar 2014 15:57:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: thijs@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: openssh client does not check SSHFP if server offers certificate
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/02/2014 09:30 AM, Marc Deslauriers wrote:
-> Hello,
-> 
-> A null pointer dereference bug was discovered in so_ssl3_write().
-> An attacker could possibly use this to cause OpenSSL to crash,
-> resulting in a denial of service.
-> 
-> http://rt.openssl.org/Ticket/Display.html?user=guest&pass=guest&id=3321
->
->  
-> http://anoncvs.estpak.ee/cgi-bin/cgit/openbsd-src/commit/lib/libssl?id=e76e308f1fab2253ab5b4ef52a1865c5ffecdf21
->
->  
-> http://ftp.openbsd.org/pub/OpenBSD/patches/5.5/common/005_openssl.patch.sig
->
->  Could a CVE please be assigned to this issue?
-> 
-> Thanks,
-> 
-> Marc.
-> 
+> a malicious server can disable SSHFP-checking by presenting a certificate
+> https://bugs.debian.org/742513
 
-I think getting this one a CVE is time critical. Mitre: sorry if this
-causes a duplicate, but I'm assigning a CVE now. Please use
-CVE-2014-0198 for this issue. Also cc'ing Theo so OpenBSD gets
-notified for sure. Speaking of which Theo: should we get you or an
-OpenBSD deputy (Bob Beck?) onto distros@?
+Use CVE-2014-2653.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJTY+FVAAoJEBYNRVNeJnmThQcP/jNvrL/2u5TMKRZjWMnLbHy3
-4jjvpK62mS23fv0qa8XngyywejggN2/UieaU+f1htUfK4M5iFw0et5K1nhh30uGa
-65efRf68z1IKFayibpEAwAq9yzNQOF2p3MaV4FTmz6yzuJSRAnc6WHm7jkM1vQgj
-LJz4z4eAcWcxzDnmEBVhYtLPw8DVw4JktN2rUOpflNLYCQsdOmSgCh3pZ1zpGDM7
-LKRqxwNtRMm9fN+kqz/dZg2PsCWX92Y5x8VBGb6r7usSAOywZwtFzw/gWSwWyVwb
-aknz8z9He44TItotQaU43XoDGpRFkQXJ4SFtOS4h+63TzoSDxO0aLcT6m3WjWnEI
-y5rOrrFmtChlXl6wSPqxIshSLSwYPabfPr1HqsY2ZKmlob4y85dSx8bc3Dz+Q9H7
-4gN8IInZmQLpPgtXOIbtTw7R9ZvxusaQJz4aQzRrY/367n3G9c4WG2Bjc8q4vWVb
-ELJd8qKqZTPOi7XsoVlWMMa9SmOFGbdJas1bLP0tCPPzZ64Y3ep2t/R5TmSFNscG
-m9+KJZoYtxEYVCsmxvJNKA31z36fyBYhVPJrgU6cNGcjw4rOh7eYwDI6ZFXucxgN
-1qNs/ERhqxO+IL8EVw0tIpxSo3UE3ZCaNEK6fr+jA27y1ylzq/fN43tJZtWLLBRw
-1RcW6jerNvSwr1Nq1BJe
-=+cMX
+iQEcBAEBAgAGBQJTMy9xAAoJEKllVAevmvmsV34IAJ4eu2WLLkrN7ANZZEmsZh7P
+l+fOlbx7irfAvifz2iiKDtKCJIFr3JwmeOmea1QbDxFuJIx7A16OdjZNB4EU1aLf
+0XcPxd3jJSLq99UN5Osi8xJs7GTwqwlrX08dUgpopG86+7EPhaKkVkbTZsNz+F/o
+Z4N1oHBmp5quvO2/yfDsbr9+lSB67KIgtfRvGZhhgelpnFDHR00je4BRV5kpE7lF
+4R+VT77+iw/zdYve95XkO69fwp7hPFzDNBzDPWw3iWEBaBOFcnO3Py3kFhsCNXdI
+nDt8rXoQ1WjhSYT9/hwpQaXNvkb8NvDwdjRK05yMJ/Y2WiKx0kKOAoWlpzYBN5s=
+=I0pr
 -----END PGP SIGNATURE-----
