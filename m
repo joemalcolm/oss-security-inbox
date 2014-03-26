@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/1
-Message-ID: <CAM12Q5QqWcdj6qRhpH1XcEHYMigHjZ27ZAFPjzVaHW5JUeUr=g@mail.gmail.com>
-Date: Sat, 4 Oct 2014 23:22:29 -0700
-From: Jose R R <Jose.r.r@...ztli-it.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/7
+Message-Id: <201403261424.04565.thijs@debian.org>
+Date: Wed, 26 Mar 2014 14:24:04 +0100
+From: Thijs Kinkhorst <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+Subject: CVE request: openssh client does not check SSHFP if server offers certificate
 Content-Type: text/plain; charset=utf-8
 
-Niltze!
+Hi,
 
-Of possible interest:
+A vulnerability in OpenSSH's ssh client has been reported in Debian's BTS:
+https://bugs.debian.org/742513
 
-< https://github.com/mubix/shellshocker-pocs >
+If the ssh server offers a HostCertificate that the ssh client doesn't accept, 
+then the client doesn't then check the DNS for SSHFP records. This is a 
+security problem because it means that a malicious server can disable SSHFP-
+checking by presenting a certificate. Note that users are still presented the 
+well-known "host verification prompt".
 
-I was surprised a (vulnerable) bash has been ported to IBM z/OS
+Given the prompt will and the still rather peripheral reliance on SSHFP, we 
+consider this an issue of low severity.
 
-< http://mainframed767.tumblr.com/post/98446455927/bad-news-is-it-totally-works-in-bash-on-z-os-and
->
+Please assign a CVE name for this issue.
 
 
-Best Professional Regards.
+Thanks,
 
--- 
-Jose R R
-http://www.metztli-it.com
----------------------------------------------------------------------------------------------
-NEW Apache OpenOffice 4.1.1! Download for GNU/Linux, Mac OS, Windows.
----------------------------------------------------------------------------------------------
-Daylight Saving Time in USA & Canada ends: Sunday, November 02, 2014
----------------------------------------------------------------------------------------------
+Thijs Kinkhorst
+Debian Security Team
+
+Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
