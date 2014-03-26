@@ -1,43 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/19
-Message-ID: <534533F7.3050700@canonical.com>
-Date: Wed, 09 Apr 2014 07:50:15 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/6
+Message-Id: <201403261419.52893.thijs@debian.org>
+Date: Wed, 26 Mar 2014 14:19:52 +0100
+From: Thijs Kinkhorst <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+Subject: CVE request: postfixadmin SQL injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 14-04-09 03:32 AM, Yves-Alexis Perez wrote:
-> On Wed, Apr 09, 2014 at 12:02:09PM +0530, Huzaifa Sidhpurwala wrote:
->> On 04/09/2014 01:07 AM, Yves-Alexis Perez wrote:
->>
->>> Mon, 07 Apr 2014 06:10 : Huzaifa Sidhpurwala sends a mail to distros
->>>                          list with no details but an offer to request
->>>                          them privately
->>
->>
->> After i sent a mail to distros, i was contacted by security engineers
->> from most major distributions. I answered most of the them as soon as i
->> could with complete details including the upstream patch.
-> 
-> I'm not sure who are “most major distributions”. We failed to reply in a
-> timely fashion to that mail (but that's on us), but apparently so did
-> Ubuntu, Suse sent a mail but got apparently no reply.
+Hi,
 
-For the record, we did see the mail around 11:30 UTC, asked for details, but did
-not get a reply before the issue went public.
+Postfixadmin has an SQL injection vulnerability. This vulnerability is only 
+exploitable by authenticated users able to create new aliases. If the alias 
+contains SQL code, the list-virtual.php overview triggers the vulnerability.
 
-It's quite unfortunate distros weren't able to prepare packages before this went
-public, but this is the way it is sometimes.
+The vulnerability was fixed upstream in this commit:
+http://sourceforge.net/p/postfixadmin/code/1650
 
-I'd like to thank Huzaifa and Red Hat for attempting to coordinate updates by
-notifying other distros before the original CRD.
-
-Marc.
+Please assign a CVE name for this issue.
 
 
+Thanks,
 
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+Thijs Kinkhorst
+Debian Security Team
+
+Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
