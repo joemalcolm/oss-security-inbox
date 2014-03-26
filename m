@@ -1,50 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/34
-Message-ID: <20140926210907.GA31108@openwall.com>
-Date: Sat, 27 Sep 2014 01:09:07 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/4
+Message-ID: <53328843.7030101@redhat.com>
+Date: Wed, 26 Mar 2014 08:56:51 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: Re: KAuth security issues
 Content-Type: text/plain; charset=utf-8
 
-Chet,
+On 03/26/2014 08:10 AM, Sebastian Krahmer wrote:
+> I love to talk to myself, in particular via mailing lists.
+> This issue seems to be addressed meanwhile via
+>
+> https://git.reviewboard.kde.org/r/117056/
+>
+> by fixing the underlying polkit qt binding.
 
-On Thu, Sep 25, 2014 at 09:07:07PM -0400, Chet Ramey wrote:
-> On 9/24/14, 9:30 PM, Solar Designer wrote:
-> > On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
-> >> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
-> >>> On 9/24/14, 5:32 PM, Solar Designer wrote:
-> >>>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
-> >>>>> Tavis Ormandy just tweetet this:
-> >>>>> https://twitter.com/taviso/status/514887394294652929
-> >>>>>
-> >>>>> The bash patch seems incomplete to me, function parsing is still
-> >>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
-> >>>>
-> >>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
-> >>>> Tavis on this "reply".
-> >>>
-> >>> I have a fix for this.
-> >>
-> >> Can you provide a pointer to the patch?  I put together a patch that
-> >> changed the report_error() to fatal_error() as I wasn't able to see
-> >> how to reset the parser state.  Was just about to send it out...
-> 
-> I have positive confirmation that this patch works, so here are patches for
-> bash versions bash-2.05b to bash-4.3.
-> 
-> I will probably push these out tomorrow.
+Is the proposed change really correct?  It uses getuid() as the subject, 
+which looks wrong if you want to use this wrapper to check the 
+capabilities of a D-Bus peer.
 
-Since these patches look final and are updating the bash patchlevel
-number, is it OK for distros to use them as-is, with the patchlevel
-number update already?
-
-They are not yet on ftp.gnu.org.  BTW, I notice that your earlier
-bash 2.05b patch isn't there, either.
-
-And while I am at it - thank you for providing detached signatures for
-bash patches!  This is something the VIM project fails at, whereas you
-do it right.  Appreciated!
-
-Alexander
+-- 
+Florian Weimer / Red Hat Product Security Team
