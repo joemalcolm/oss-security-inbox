@@ -1,45 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/02/1
-Message-ID: <20140602023945.GA29224@zoho.com>
-Date: Mon, 2 Jun 2014 02:39:45 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/3
+Message-ID: <20140326071053.GA6866@suse.de>
+Date: Wed, 26 Mar 2014 08:10:53 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: nmav@...tls.org
-Subject: Re: GnuTLS and libtasn1 security fixes
+Subject: Re: KAuth security issues
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jun 01, 2014 at 09:40:18PM +0200, Kristian Fiskerstrand wrote:
-> On 05/30/2014 10:31 AM, Tomas Hoger wrote:
-> > Hi!
-> > 
-> > New GnuTLS and libtasn1 versions fix few issues you might be
-> > interested to look at:
+I love to talk to myself, in particular via mailing lists.
+This issue seems to be addressed meanwhile via
+
+https://git.reviewboard.kde.org/r/117056/
+
+by fixing the underlying polkit qt binding. I think that will also
+affect recently seen smb4k issue, as it is using KAuth too.
+
+Sebastian
+
+On Mon, Mar 24, 2014 at 10:27:23AM +0100, Sebastian Krahmer wrote:
 > 
-> Thanks Thomas.
+> I sent this to security@....org last week and to some KDE
+> developers one more week ago. No response so far, so here we go.
 > 
-> Based on your research of this issue can you comment anything on
-> whether CVE-2014-3466 affects the 2.x series as well? It seems like at
-> least CVE-2014-3465 is 3.x series only.
+> regards,
+> Sebastian
+> 
+> --------8<--------------------
+> 
+> Hi
+> 
+> I sent this mail to the KAuth author a week ago. So far no reply, so
+> I am trying it here again.
+> 
+> When I looked at the KAuth framework it seems like it is using
+> 
+> PolkitQt1::UnixProcessSubject subject(pid)
+> 
+> (i.e. unix process subjects) for the polkit auth, which is always racy.
+> Please refer to:
+> 
+> CVE-2013-4288 polkit: unix-process subject for authorization is racy
+> CVE-2013-4311 libvirt: insecure calling of polkit via libgobject API
+> CVE-2013-4324 spice-gtk: use of insecure polkit libgobject-1 API
+> CVE-2013-4325 hplip: use of insecure polkit DBUS API
+> CVE-2013-4326 rtkit: use of insecure polkit DBUS API
+> CVE-2013-4327 systemd: use of insecure polkit DBUS API
+> 
+> which were using exactly this vulnerable way auf authenticating
+> via polkit.
+> 
+> The bug is semi-public:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=864716
+> 
+> A non-racy way would be to use system-bus subject for authentication.
+> (Yet I dont know how this fits in the KAuth API).
+> Nevertheless, there needs to be done something, as basically
+> the KAuth authentication is non-existing if using process subjects.
+> 
+> regards,
+> Sebastian
+> 
+> -- 
+> 
+> ~ perl self.pl
+> ~ $_='print"\$_=\47$_\47;eval"';eval
+> ~ krahmer@...e.de - SuSE Security Team
+> 
+> ----- End forwarded message -----
+> 
+> -- 
+> 
+> ~ perl self.pl
+> ~ $_='print"\$_=\47$_\47;eval"';eval
+> ~ krahmer@...e.de - SuSE Security Team
 
-Hello.
+-- 
 
-I believe you're right about CVE-2014-3465 not being applicable in
-GnuTLS 2.x because in that branch the result of
-gnutls_x509_oid2ldap_string is checked for NULL returns.
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-As for the rest, I've backported the fixes to GnuTLS 2.12.23 (the
-CVE-2014-3467,3468,3469 fixes apply to the embedded libtasn1).
-
-You're welcome to them:
-
-http://sf.net/projects/mancha/files/sec/gnutls-2.12.23_CVE-2014-3466.diff
-http://sf.net/projects/mancha/files/sec/gnutls-2.12.23_CVE-2014-3467.diff
-http://sf.net/projects/mancha/files/sec/gnutls-2.12.23_CVE-2014-3468.diff
-http://sf.net/projects/mancha/files/sec/gnutls-2.12.23_CVE-2014-3469.diff
-
-Note: Add ".sig" to above URLs for the PGP signatures.
-
---mancha
-
-
-Content of type "application/pgp-signature" skipped
