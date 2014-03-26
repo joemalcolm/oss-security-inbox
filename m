@@ -1,44 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/22
-Message-ID: <20140605144545.GA23223@openwall.com>
-Date: Thu, 5 Jun 2014 18:45:45 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/5
+Message-ID: <20140326080856.GB6866@suse.de>
+Date: Wed, 26 Mar 2014 09:08:56 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel futex local privilege escalation (CVE-2014-3153)
+Subject: Re: KAuth security issues
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Mar 26, 2014 at 08:56:51AM +0100, Florian Weimer wrote:
+> On 03/26/2014 08:10 AM, Sebastian Krahmer wrote:
+>> I love to talk to myself, in particular via mailing lists.
+>> This issue seems to be addressed meanwhile via
+>>
+>> https://git.reviewboard.kde.org/r/117056/
+>>
+>> by fixing the underlying polkit qt binding.
+>
+> Is the proposed change really correct?  It uses getuid() as the subject, 
+> which looks wrong if you want to use this wrapper to check the capabilities 
+> of a D-Bus peer.
 
-This was handled via linux-distros, hence the mandatory oss-security
-posting.  The issue was made public earlier today, and is included in
-this Debian advisory:
+Indeed, please see here:
 
-https://lists.debian.org/debian-security-announce/2014/msg00130.html
+https://bugzilla.novell.com/show_bug.cgi?id=864716
 
----
-CVE-2014-3153
+I'd avoid anything with PolkitProcessSubject entirely.
 
-    Pinkie Pie discovered an issue in the futex subsystem that allows a
-    local user to gain ring 0 control via the futex syscall. An
-    unprivileged user could use this flaw to crash the kernel (resulting
-    in denial of service) or for privilege escalation.
----
+Sebastian
 
-I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
-as well as back-ports of those by John Johansen of Canonical, who wrote:
+-- 
 
----
-For anyone who is interested I've attached back ports of the patches to
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-  3.13 - minor conflicts in patch 4. It has applied cleanly back to 3.2
-and
-  2.6.32 - conflict is in patches 3, and 4
----
-
-Alexander
-
-Download attachment "futex.mbox" of type "application/mbox" (17348 bytes)
-
-Download attachment "patches-2.6.32.tgz" of type "application/octet-stream" (5098 bytes)
-
-Download attachment "patches-3.13.tgz" of type "application/octet-stream" (5120 bytes)
