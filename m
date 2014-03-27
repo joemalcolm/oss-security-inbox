@@ -1,49 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/1
-Message-ID: <20140903092857.76a69dc9@mschwide>
-Date: Wed, 3 Sep 2014 09:28:57 +0200
-From: Martin Schwidefsky <schwidefsky@...ibm.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Subscribtion request to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/27/4
+Message-ID: <53343D02.7080904@enovance.com>
+Date: Thu, 27 Mar 2014 16:00:18 +0100
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2014-007] Potential context confusion in Keystone middleware (CVE-2014-0105)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 02 Sep 2014 13:00:36 -0600
-Kurt Seifried <kseifried@...hat.com> wrote:
+OpenStack Security Advisory: 2014-007
+CVE: CVE-2014-0105
+Date: March 27, 2014
+Title: Potential context confusion in Keystone middleware
+Reporter: Kieran Spear (University of Melbourne)
+Products: python-keystoneclient
+Versions: All versions up to 0.6.0
 
-That is mostly for the kernel, for the user space components other
-maintainers are responsible. But I could serve as a gateway for
-the user space aspects as well.
+Description:
+Kieran Spear from the University of Melbourne reported a vulnerability
+in Keystone auth_token middleware (shipped in python-keystoneclient). By
+doing repeated requests, with sufficient load on the target system, an
+authenticated user may in certain situations assume another
+authenticated user's complete identity and multi-tenant authorizations,
+potentially resulting in a privilege escalation. Note that it is related
+to a bad interaction between eventlet and python-memcached that should
+be avoided if the calling process already monkey-patches "thread" to use
+eventlet. Only keystone middleware setups using auth_token with memcache
+are vulnerable.
 
-> Thread bump =) One question, when you say "my role as maintainer for
-> Linux on System z" is that mostly kernel, user space as well, or?
-> 
-> On 29/07/14 05:26 PM, Solar Designer wrote:
-> > On Tue, Jul 29, 2014 at 05:03:38PM +0200, Martin Schwidefsky wrote:
-> >> our friends from SuSE suggested that it might make sense that
-> >> I in my role as maintainer for Linux on System z (alias s390)
-> >> get added to the linux-distros mailing list.
-> >> If you agree that this indeed makes sense could you subscribe
-> >> me please?
-> > 
-> > I've been meaning to post a follow-up on the other request by IBM to
-> > join (linux-)distros.  Unfortunately, I am in too bad a lack of time
-> > right now.  So no changes in subscriber lists in August.  I intend to
-> > revisit this topic in September.
-> > 
-> > I do feel that IBM joining one of these lists makes sense, but this and
-> > the details need to be discussed.
-> > 
-> > Alexander
-> > 
-> 
+python-keystoneclient fix (included in 0.7.0 release):
+https://review.openstack.org/81078
 
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0105
+https://bugs.launchpad.net/bugs/1282865
 
 -- 
-blue skies,
-   Martin.
-
-"Reality continues to ruin my life." - Calvin.
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
