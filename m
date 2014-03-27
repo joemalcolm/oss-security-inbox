@@ -1,55 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/17/5
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF4C54D0C5@IMCMBX01.MITRE.ORG>
-Date: Wed, 17 Sep 2014 19:31:49 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE ID Syntax Change - Deadline Approaching
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/27/2
+Message-ID: <20140327030810.GA8971@pi3.com.pl>
+Date: Thu, 27 Mar 2014 04:08:10 +0100
+From: Adam Zabrocki <pi3@....com.pl>
+To: oss-security@...ts.openwall.com
+Subject: Adventure with Stack Smashing Protector (SSP)
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-As we approach the end of 2014, CVE identifiers are getting closer and
-closer to the magic CVE-2014-9999 mark, which means that MITRE will be
-issuing a 5-digit CVE ID within a matter of months, in accordance with
-the new syntax that was selected in 2013 (basically using 5, 6, or
-even more digits as needed).  Some people are still unaware that this
-change has happened or have been slow to implement it.
-
-Once a CVE identifier is issued using the new syntax, some security
-products and processes could break or report incorrect vulnerability
-identifiers, making vulnerability management more difficult.  Consider
-a product that stops processing an XML document because its validation
-step assumes that CVE IDs have only 4 digits.  Perhaps worse, consider
-a critical vulnerability in a popular product that is given a 5-digit
-CVE ID, which is inadvertently and silently truncated to a 4-digit ID
-for a low-priority issue in a rarely-used product.  We know of at
-least 5 different products or services that have had problems.
-Custom, in-house software is not necessarily immune, either.
-
-MITRE has been assigning CVE IDs faster than ever; we're up to
-CVE-2014-6446 even though it's only September, which puts us on pace
-to exceed 9000 for 2014 by the end of the year - and the rate of
-assignment could increase in the coming months.  Even if we don't
-reach 10,000 CVE-2014-xxxx identifiers by the end of 2014, MITRE will
-be issuing at least one 5-digit identifier no later than January 13,
-2015, to ensure that all software is tested for support of the new
-syntax.
-
-To help people address this problem, we have created a web page about
-the ID syntax change, including the product features most likely to be
-affected, along with some test data.
-
-  http://cve.mitre.org/cve/identifiers/syntaxchange.html
-
-For a list of the 19 early adopters who have stated that they are
-compliant with the new syntax, see:
-
-  http://cve.mitre.org/cve/identifiers/compliant_organizations.html
-
-The clock is ticking!  You can reach us at cve-id-change@...re.org if
-you have any questions.
+One weekend I decided to analyze Stack Smashing Protector (SSP) code. I believe some of the observations I've made might also be interesting to others. Because of that I've created a not so small write-up...
+... which can be summarized (without necessary details) as:
 
 
-Thank you,
-The MITRE CVE Team
+Not security related…
+ 
+1. We can change program’s name (from SSP perspective) via overwriting memory region where
+   pointer to "argv[0]" points to. 
+2. We can crash Stack Smashing Protector code in many ways:
+     a. Via corrupting memory region pointed by "__environ" variable. 
+     b. Via setting "LIBC_FATAL_STDERR_" to the edge of valid addresses. 
+     c. Via forcing "alloca()" to fail – e.g. stack exhaustion. 
+     d. There is one more bug which I’m analyzing more comprehensively at point 4. It may 
+        indirectly force SSP to crash. It exists in the DWARF stack (state) machine which is responsible 
+        for gathering information about the stack trace ("__backtrace()") and prints it. 
+3. We can slightly control SSP’s execution flow. (Un)Fortunately it doesn’t have any influence for the 
+   main execution (what about security?). Following scenarios are possible: 
+     a. Force SSP to open "/dev/tty" 
+     b. Force SSP not to open "/dev/tty" and assign to the "fd" descriptor "STDERR_FILENO" value: 
+ 
+#define STDERR_FILENO 2 /* Standard error output. */ 
+ 
+    c. Crash SSP via 2b. scenario 
+ 
+4. We can indirectly crash SSP via the unwinding algorithm (read-AV or we can be killed by 
+   "gcc_unreachable" or "gcc_assert" function) – DWARF stack (state) machine: 
+     a. Simulate FDE object was not found 
+     b. Simulate FDE object was found. 
+ 
 
+Somehow security related…
+ 
+1. We can force SSP to allocate a lot of memory and cause Denial of Service via Resource Exhaustion
+   attack. 
+2. Theoretical Information leak: 
+     a. Stack cookie information leak. 
+     b. Any kind of information leak 
+     c. File corruption.
+
+
+
+The full paper can be found here:
+http://site.pi3.com.pl/papers/ASSP.pdf
+
+Or through the blog-post:
+http://blog.pi3.com.pl/?p=485
+
+I understand this paper is long (maybe too long) but ~70% of this paper is just gdb output which shows the described behavior. The rest of the paper (32 pages) mostly has source code listings so the real write-up is very short (comparing to the whole paper).
+
+
+
+Best regards,
+Adam
+
+
+-- 
+pi3 (pi3ki31ny) - pi3 (at) itsec pl
+http://pi3.com.pl
