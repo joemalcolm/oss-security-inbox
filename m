@@ -1,45 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/16
-Message-Id: <20140707181421.69FDE1A41139@me.com>
-Date: Mon,  7 Jul 2014 14:14:21 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem point-cli-0.0.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/27/1
+Message-ID: <53338A12.6040903@redhat.com>
+Date: Thu, 27 Mar 2014 13:16:50 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests: Zend Framework issues fixed in ZF2014-01 and ZF2014-02
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem point-cli-0.0.1
+Good morning,
 
-Author: Larry W. Cashdollar, @_larry0
+http://framework.zend.com/security/advisory/ZF2014-01 fixes XML eXternal 
+Entity (XXE) and XML Entity Expansion (XEE) flaws in the Zend Framework.
 
-Date: 06/01/2014
+http://framework.zend.com/security/advisory/ZF2014-02 fixes an issue 
+where an OpenID identity provider could be used to spoof other identity 
+providers.
 
-OSVDB: 108577
+Could CVEs please be assigned if they have not been already?
 
-CVE:Please Assign
+References:
+https://bugs.gentoo.org/show_bug.cgi?id=505276
+https://secunia.com/advisories/57276/
+https://bugzilla.redhat.com/show_bug.cgi?id=1081287
+https://bugzilla.redhat.com/show_bug.cgi?id=1081288
 
-Download: http://rubygems.org/gems/point-cli
+Cheers,
 
-Gem Author:  adam@...chmedia.com
-
-From: ./point-cli-0.0.1/lib/commands/setup.rb
-
-Line 19 exposes the username and password combination to the process table.  If this Gem is used in the context of a rails application it is possible to remotely inject commands if the #{username} and #{password} are supplied by the user.
-
-016-  
-18-  
-19:  command = "curl -q -s -u \"#{username}:#{password}\" #{Point.site}/api_key"
-20-  if `#{command}` =~ /(\w{40})/
-21:    api_key = $1
-22-  else
-23-    puts "\e[31mAccess was denied or the server was unavailable. Please check your username & password is correct.\e[0m"
-24-    Process.exit(1)
-25-  end
-26-  
-27:  config_json = {:username => username, :apitoken => api_key}.to_json
-28-  File.open($point_config_file, w) { |f| f.write(config_json)}
-29-  puts "\e[32mConfiguration was successfully saved to #{$point_config_file}\e[0m"
-30-end
-
-
-Advisory: http://www.vapid.dhs.org/advisories/point-cli-0.0.1.html
-
+--
+Murray McAllister / Red Hat Security Response Team
