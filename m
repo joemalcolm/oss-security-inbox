@@ -1,38 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/17
-Message-ID: <20141103215630.4b2f1389@pc>
-Date: Mon, 3 Nov 2014 21:56:30 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/27/5
+Message-ID: <1395935336.3723.23.camel@lappy>
+Date: Fri, 28 Mar 2014 01:48:56 +1000
+From: Grant Murphy <gmurphy@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: RE: strings /libbfd crash
+Subject: [OSSA 2014-008]  Routers can be cross plugged by other tenants (CVE-2014-0056)
 Content-Type: text/plain; charset=utf-8
 
-Am Tue, 04 Nov 2014 05:21:42 +1100
-schrieb Joshua Rogers <oss@...ernot.info>:
+OpenStack Security Advisory: 2014-008
+CVE: CVE-2014-0056
+Date: March 27, 2014
+Title: Routers can be cross plugged by other tenants
+Reporter: Aaron Rosen (VMWare)
+Products: Neutron
+Affects: 2012.2 versions up to 2013.2.2
 
-> I'd like to expand on this:
-> http://openwall.com/lists/oss-security/2014/10/27/4
-> and mention that 'ihex.c' is also vulnerable to the same thing, as
-> they share the same code.
-> 
-> > :10010000214601360121470136007EFE09D2190140
-> > :100110002146017E17C0001FF5F16002148011928
-> > :10012000194E79234623965778239EDA3F01B2CAA7
-> > :100130003F0156702B5E712B722B732146013421C7
-> > :00000001Ff
-> 
-> is an example of code that will crash it.
+Description:
+Aaron Rosen from VMWare reported a vulnerability where Neutron fails to
+perform proper authorization checks when creating ports. By choosing a
+device id of a router from a different tenant when creating a port, an
+authenticated user can access the network of other tenants. This affects
+deployments of Neutron using plugins relying on the l3-agent.
 
-I can't reproduce that, I just get
-BFD: test1.ihex:2: unexpected character `s' in Intel Hex file
+Icehouse (development branch) fix: 
+https://review.openstack.org/83391
 
-Can you upload the raw file somewhereß
+
+Havana fix: 
+https://review.openstack.org/83393
+
+
+Notes: 
+One should perform and audit of the ports that are already attached to
+routers after applying this patch and remove ports that a tenant may
+have cross plugged.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0056
+https://bugs.launchpad.net/bugs/1243327
+
 
 -- 
-Hanno Böck
-http://hboeck.de/
+Grant Murphy
+OpenStack Vulnerability Management Team
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
