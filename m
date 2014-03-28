@@ -1,41 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/20
-Message-Id: <20140929154431.86A9C72E0E6@smtpvbsrv1.mitre.org>
-Date: Mon, 29 Sep 2014 11:44:31 -0400 (EDT)
-From: cve-assign@...re.org
-To: jwilk@...lk.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, chet.ramey@...e.edu
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/6
+Message-ID: <CAKcmtDyrSpxv6MongipHWOtj8i6-ZGTgxW=cxSsmNgfXGjQ8Hw@mail.gmail.com>
+Date: Fri, 28 Mar 2014 08:33:38 -0700
+From: Chris Steipp <csteipp@...imedia.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mar 28, 2014 7:54 AM, "Florent Daigniere" <
+florent.daigniere@...stmatta.com> wrote:
+>
+> Sorry to be thick here but it still doesn't make any sense to me...
+>
+> The session-id should be renewed upon login AND any credential/privilege
+> change (that includes password changes). This protects against session
+> fixation attacks (where the attacker coerce a user into using a session
+> he controls).
+>
+> On these pages, there's usually no need for anti-CSRF protection as they
+> tend to require credentials (something the attacker, by definition,
+> doesn't have).
 
-> the parser is not locale-agnostic. Here's an example how it can be
-> exploited:
-> http://bugs.python.org/issue22187
+Slightly different attack. The attacker (who knows their own password and
+chooses the reset-to password) was able to cause a logged out user (victim)
+to login with the attacker's account via the change password form.
 
-The discussion in Issue22187 is about changing code in Python 2.x to
-work around this. However, is it useful to assign one new
-CVE-2014-#### ID for Bash, on the expectation that Bash was intended
-to recognize valid characters in zh_CN.GBK, but instead is identifying
-part of a two-byte character as a \ character, and this has security
-implications for products that attempt to do otherwise-correct quoting
-of untrusted strings for use in sh commands?
+This attack is somewhat specific to mediawiki since we allow users to
+define JavaScript that will be loaded on pages they visit while logged
+in... So the victim in this case would run the attacker's personal
+JavaScript.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+>
+> Are you saying that Mediawiki has a logic bug (some form of
+> authorization bypass) allowing any authenticated user to change someone
+> else's credentials without knowing them? If so, it's a different
+> category of bug and there again, the control is unlikely to be "adding
+> an anti-CSRF token".
+>
+> Florent
+> PS: While we're at it: yes you should be comparing anti-CSRF tokens in
+> constant-time, unlike what
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=62497#c13 is suggesting.
+>
+>
+> On Fri, 2014-03-28 at 07:19 -0700, Chris Steipp wrote:
+> > The session-id is renewed when the user successfully logs in with a
+> > password reset. The issue that we patched was that the anti-CSRF token
+for
+> > non-authenticated users on the password change form was guessable, and
+> > would remain that way even if we regenerated the user's session-id each
+> > time they accessed the password rest / login form.
+> >
+> >
+> >
+> >
+> > On Fri, Mar 28, 2014 at 2:23 AM, Florent Daigniere <
+> > florent.daigniere@...stmatta.com> wrote:
+> >
+> > > On Thu, 2014-03-27 at 18:37 -0700, Chris Steipp wrote:
+> > > > Hi, we just patched a login CSRF in MediaWiki today. An attacker
+could
+> > > > login a victim as the attacker. Can we get a cve assigned for this?
+> > > >
+> > > > Patch:
+> > > >
+> > >
+https://gerrit.wikimedia.org/r/#/c/121517/1/includes/specials/SpecialChangePassword.php
+> > > >
+> > > > Release announcement:
+> > > >
+> > >
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-March/000145.html
+> > > >
+> > > > Wikimedia bug:
+> > > > https://bugzilla.wikimedia.org/show_bug.cgi?id=62497
+> > >
+> > >
+> > > That looks like a session-fixation bug to me; not a CSRF... and
+> > > therefore it's the wrong control: the session-id should be "renewed",
+> > > that's all.
+> > >
+> > > Florent
+> > >
+>
 
-iQEcBAEBAgAGBQJUKX02AAoJEKllVAevmvms7lgH/2dhMdR3o/zLU2015e3AZOrh
-K2QOtr+BqH2vOsE/x98LZMtBYra+E3JysBJkqSxZcsSnr0FqBzGu08aB8ETMgrx5
-DtaIeCTP7GM3T0zGCuX8dabCnAoQct0VuDSGOYCRCgf7lF1MUxC7RDT/8DbB/woO
-4V1IbBBAfYVQicgvEmnkZUkhbhziC/9s1HeEFBwNldTDknV5HTVrHdlv0Y4y0/Bd
-00LbClq+LPdqJ5/nspegWQ50d6e2ZksUBM4ahag3qxeWcT28om4yJ7Zm0eJ0D5BZ
-Xy3sc5j5ks/WDkna12JH+cFqd1snVuLE8POSHh0aOWf53Tla/zFCj9E3gwwUlVw=
-=j7/e
------END PGP SIGNATURE-----
