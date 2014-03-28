@@ -1,54 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/11
-Message-ID: <5411987D.7090805@redhat.com>
-Date: Thu, 11 Sep 2014 14:41:33 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/5
+Message-ID: <1396018424.18257.11.camel@neutron.trustmatta.com>
+Date: Fri, 28 Mar 2014 14:53:44 +0000
+From: Florent Daigniere <florent.daigniere@...stmatta.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: static IV used in Percona XtraBackup
+Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
 Content-Type: text/plain; charset=utf-8
 
-On 11/26/2013 07:17 PM, Florian Weimer wrote:
-> On 11/26/2013 11:52 AM, Marcus Meissner wrote:
->> Hi,
->>
->> This came to our desk:
->> https://bugzilla.novell.com/show_bug.cgi?id=852224
->> https://bugs.launchpad.net/percona-xtrabackup/+bug/1185343
->>
->> constant IV used in CTR Mode, allowing plaintext retrieval
->> attacks.
->
-> Is suppose this is part of the fix.
->
-> +void
-> +xb_crypt_init_iv()
-> +{
-> +    uint seed = time(NULL);
-> +    srandom(seed);
-> +}
-> +
-> +void
-> +xb_crypt_create_iv(void* ivbuf, size_t ivlen)
-> +{
-> +    size_t i;
-> +    ulong rndval;
-> +
-> +    for (i = 0; i < ivlen; i++) {
-> +        if (i % 4 == 0) {
-> +            rndval = (ulong) random();
-> +        }
-> +        ((uchar*)ivbuf)[i] = ((uchar*)&rndval)[i % 4];
-> +    }
-> +}
->
-> This still risks keystream reuse because time() is fairly coarse.
->
-> What's worse, on 64-bit big-endian architectures, it results in a
-> constant zero IV because RAND_MAX is not large enough to reach the upper
-> 32 bits in the first four bytes of the rndval variable.
+Sorry to be thick here but it still doesn't make any sense to me...
 
-It appears that both issues have been addressed by the switch to 
-libgcrypt for the encryption.
+The session-id should be renewed upon login AND any credential/privilege
+change (that includes password changes). This protects against session
+fixation attacks (where the attacker coerce a user into using a session
+he controls).
 
--- 
-Florian Weimer / Red Hat Product Security
+On these pages, there's usually no need for anti-CSRF protection as they
+tend to require credentials (something the attacker, by definition,
+doesn't have).
+
+Are you saying that Mediawiki has a logic bug (some form of
+authorization bypass) allowing any authenticated user to change someone
+else's credentials without knowing them? If so, it's a different
+category of bug and there again, the control is unlikely to be "adding
+an anti-CSRF token".
+
+Florent
+PS: While we're at it: yes you should be comparing anti-CSRF tokens in
+constant-time, unlike what
+https://bugzilla.wikimedia.org/show_bug.cgi?id=62497#c13 is suggesting.
+
+
+On Fri, 2014-03-28 at 07:19 -0700, Chris Steipp wrote:
+> The session-id is renewed when the user successfully logs in with a
+> password reset. The issue that we patched was that the anti-CSRF token for
+> non-authenticated users on the password change form was guessable, and
+> would remain that way even if we regenerated the user's session-id each
+> time they accessed the password rest / login form.
+> 
+> 
+> 
+> 
+> On Fri, Mar 28, 2014 at 2:23 AM, Florent Daigniere <
+> florent.daigniere@...stmatta.com> wrote:
+> 
+> > On Thu, 2014-03-27 at 18:37 -0700, Chris Steipp wrote:
+> > > Hi, we just patched a login CSRF in MediaWiki today. An attacker could
+> > > login a victim as the attacker. Can we get a cve assigned for this?
+> > >
+> > > Patch:
+> > >
+> > https://gerrit.wikimedia.org/r/#/c/121517/1/includes/specials/SpecialChangePassword.php
+> > >
+> > > Release announcement:
+> > >
+> > http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-March/000145.html
+> > >
+> > > Wikimedia bug:
+> > > https://bugzilla.wikimedia.org/show_bug.cgi?id=62497
+> >
+> >
+> > That looks like a session-fixation bug to me; not a CSRF... and
+> > therefore it's the wrong control: the session-id should be "renewed",
+> > that's all.
+> >
+> > Florent
+> >
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
