@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/36
-Message-ID: <513800080.2059602.1416501500596.JavaMail.zimbra@redhat.com>
-Date: Thu, 20 Nov 2014 11:38:20 -0500 (EST)
-From: Francisco Alonso <falonsoe@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/16
+Message-ID: <20140328232137.GB10345@debjann.fritz.box>
+Date: Sat, 29 Mar 2014 00:21:37 +0100
+From: Jann Horn <jann@...jh.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-7817 glibc: command execution in wordexp() with WRDE_NOCMD specified
+Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, Mar 28, 2014 at 06:13:49PM +0000, Florent Daigniere wrote:
+> > > > This attack is somewhat specific to mediawiki since we allow users to
+> > > > define JavaScript that will be loaded on pages they visit while logged
+> > > > in... So the victim in this case would run the attacker's personal
+> > > > JavaScript.
+> > > >
+> > >
+> > > It still doesn't make sense. Anti-CSRF tokens are only useful if the
+> > > "malicious script" is not running with the same origin!
+> > >
+> > 
+> > I think I threw you off here-- this is just one reason why an attacker
+> > might want to do this. It's tangential to the actual flaw we fixed.
+> 
+> If mediawiki really allows users to define javascript that will be
+> loaded on pages they visit, that's a vulnerability... There's no way to
+> do that securely if the "content" and "application" data are served from
+> the same FQDN.
 
-It was discovered that the wordexp() function could ignore the WRDE_NOCMD flag under certain input conditions resulting in the execution 
-of a shell for command substitution when the applicaiton did not request it. 
+MediaWiki allows users to define Javascript that will be loaded on pages they
+visit, *but only for themselves*. If I can inject JS into the pages I view,
+that is not a vuln, just like it isn't a vuln that a user can execute JS in
+the context of any website by pasting it into a debug console in his browser.
 
-Bug report:
-https://sourceware.org/bugzilla/show_bug.cgi?id=CVE-2014-7817
+However, this means that Login CSRF becomes a big security issue because it
+would allow me to add evil JS to my account and then force the browser of
+someone else to execute it in the context of the MediaWiki server's domain.
 
-Git commit:
-https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=a39208bd7fb76c1b01c127b4c61f9bfd915bfe7c
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1157689
-https://sourceware.org/ml/libc-alpha/2014-11/msg00519.html
-
-Francisco Alonso / Red Hat Product Security
-PGP: 0xA026440E 0825 020C 7A5A 4F86 9038  B1C8 5562 688F A026 440E
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
