@@ -1,60 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/14
-Message-ID: <20141210192328.GL386@kludge.henri.nerv.fi>
-Date: Wed, 10 Dec 2014 21:23:28 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/4
+Message-ID: <CAKcmtDxqiE23X49EzxO3MUhNnTi0+Wnp62y3JyRqUxUe-5DmAw@mail.gmail.com>
+Date: Fri, 28 Mar 2014 07:19:13 -0700
+From: Chris Steipp <csteipp@...imedia.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MyBB 1.8.3 & 1.6.16 security releases
+Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The session-id is renewed when the user successfully logs in with a
+password reset. The issue that we patched was that the anti-CSRF token for
+non-authenticated users on the password change form was guessable, and
+would remain that way even if we regenerated the user's session-id each
+time they accessed the password rest / login form.
 
-Can I get multiple CVEs for issues fixed in MyBB 1.8.3 & 1.6.16, thank you.
 
-http://blog.mybb.com/2014/11/20/mybb-1-8-3-1-6-16-released-security-releases/
 
-1.8.3
 
-"""
-The vulnerabilities are:
-    High Risk: A SQL injection vulnerability in theme selection (reported by StefanT)
-    Medium Risk: A XSS vulnerability in calender.php (reported by -Acid)
-    Medium Risk: A XSS vulnerability in MyCode editor (reported by My-BB.Ir)
-    Low Risk: A XSS vulnerability related to post icons (reported by Destroy666)
-    Low Risk: unserialize may call PHP magic methods (reported by chtg)
-    Low Risk: PHP setting request_order can break register globals handling (reported by chtg)
+On Fri, Mar 28, 2014 at 2:23 AM, Florent Daigniere <
+florent.daigniere@...stmatta.com> wrote:
 
-Additionally we’ve fixed an issue with the video MyCode introduced with MyBB
-1.8.2 (#1625) and revised the handling of data fetched from our website as a
-direct consequence of the compromised GitHub account (#1617). In addition to
-that, we’ve set the adminsid cookie as httpOnly (#1622). We also plan to add
-enhanced options to protect the Admin CP like two factor authentication with one
-of the next maintenance releases.
-"""
+> On Thu, 2014-03-27 at 18:37 -0700, Chris Steipp wrote:
+> > Hi, we just patched a login CSRF in MediaWiki today. An attacker could
+> > login a victim as the attacker. Can we get a cve assigned for this?
+> >
+> > Patch:
+> >
+> https://gerrit.wikimedia.org/r/#/c/121517/1/includes/specials/SpecialChangePassword.php
+> >
+> > Release announcement:
+> >
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-March/000145.html
+> >
+> > Wikimedia bug:
+> > https://bugzilla.wikimedia.org/show_bug.cgi?id=62497
+>
+>
+> That looks like a session-fixation bug to me; not a CSRF... and
+> therefore it's the wrong control: the session-id should be "renewed",
+> that's all.
+>
+> Florent
+>
 
-1.6.16
-
-"""
-The vulnerabilities are:
-
-    Low Risk: A XSS vulnerability related to post icons (reported by Destroy666)
-    Low Risk: A XSS vulnerability in admin/modules/style/templates.php
-    Low Risk: A XSS vulnerability in admin/modules/config/languages.php
-    Low Risk: unserialize may call magic methods (reported by chtg)
-    Low Risk: request_order can break register globals handling (reported by chtg)
-
-Additionally we’ve revised the handling of data fetched from our website as a
-direct consequence of the compromised GitHub account (#1617). In addition to
-that, we’ve set the adminsid cookie as httpOnly (#1622).
-"""
-
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlSInbAACgkQXf6hBi6kbk+HHwCgxg2yCr90kZnJRyuuEEagOJYS
-P64AnjRISYE3GfVkpHNkLpYCtwkoqB6O
-=HciC
------END PGP SIGNATURE-----
