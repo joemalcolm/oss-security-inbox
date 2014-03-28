@@ -1,40 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/31
-Message-ID: <542D6758.5020304@case.edu>
-Date: Thu, 02 Oct 2014 10:55:20 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Shawn <citypw@...il.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/14
+Message-Id: <201403281918.s2SJIGe9011855@linus.mitre.org>
+Date: Fri, 28 Mar 2014 15:18:16 -0400 (EDT)
+From: cve-assign@...re.org
+To: abn@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Split: CVE-2014-0050 Apache Commons FileUpload and Apache Tomcat DoS
 Content-Type: text/plain; charset=utf-8
 
-On 10/1/14, 10:57 PM, Shawn wrote:
-> On Thu, Oct 2, 2014 at 5:45 AM, Ed Prevost <me@...ardprevost.info> wrote:
->> On 10/1/2014 2:11 PM, Shawn wrote:
->>> On Thu, Oct 2, 2014 at 5:08 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
->>>> On 10/1/14, 5:04 PM, Shawn wrote:
->>>>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
->>>> Nope, this one fixes 7168/7169.  It's the equivalent of the
->>>> `parser-oob' patch.
->>>>
->>>> I have patches that fix 6277/6278 that are in the pipeline.
->>>>
->>> oh, s0rry for the mistake...that'd be great if we can get the patch as
->>> quickly as possible. Thanks.
->>>
->>>
->> Really!? Honestly!? "as quickly as possible"
->>
-> What else could I say? A POC already released and a bunch of
-> customer's machines are waiting...even the only mitigation is in
-> GCC-lvl, which compile bash with ASLR/NX/PIE/CANARY.....too bad this
-> time.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The real mitigation is to install bash43-027 or vendor or previous
-version equivalent.
+> Although Commons FileUpload and Tomcat are affected by this flaw and
+> the vulnerable classes share the same ancestry, the code bases for
+> them have been maintained in separate source trees for a long while
+> now.
+> 
+> Can this CVE be split?
 
-Chet
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+The existence of separate source trees does not affect the number of
+CVE IDs.
+
+> http://seclists.org/fulldisclosure/2014/Feb/41
+
+"Apache Tomcat 7 and Apache Tomcat 8 use a packaged renamed copy of
+Apache Commons FileUpload" in that reference is sufficient for us to
+use only one CVE ID. We do not rely on factors such as whether the
+code has become non-identical or whether different persons are
+maintaining the two copies of the code.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTNcoqAAoJEKllVAevmvmsSDMH/3G6KpgE8KkqoeA0G90Dussz
+EEwfBy1qxm7s6DMZNn+gmHi2v0cvH6WzbHAcMc01X8noQsFYMkK93ir7Gp1PMFSN
+5AdepR+RedtZKKYKOmjCvkOYG0LFH+lUDn+jcsPuqcFZ4zi8jVAP4Q2RHXTpg9VI
+xm+gDGkKi3LegOygKkjVnXsr6PHxz7Z7Pzd27KhrK+Qk3wQmTkvAqotXTRJzXFj4
+eC6tfwUHoTCO0QZ24RYk+oJaOmk1WlWtLZnsIlzB7rba8Vsb18f0LlT3Eqozz+ha
+t5q2veIYA/CDawuPzcvAfSXbqfVtws9HgXs+pJti7CNi4+LQnxCvhbu2mKqhsNQ=
+=mlQ2
+-----END PGP SIGNATURE-----
