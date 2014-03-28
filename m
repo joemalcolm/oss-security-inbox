@@ -1,44 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/15
-Message-Id: <201405011900.s41J0PwA020159@linus.mitre.org>
-Date: Thu, 1 May 2014 15:00:25 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 746322@...s.debian.org
-Subject: Re: CVE request: Python Bottle JSON content-type not restrictive enough
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/15
+Message-ID: <844D1C99-78EA-4C9D-A4D5-86B2535CCFED@redhat.com>
+Date: Fri, 28 Mar 2014 16:23:01 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Cc: security@...hon.org
+Subject: CVE request: os.makedirs(exist_ok=True) is not thread-safe in Python
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Cc'ing security@...hon.org so that they are aware of the CVE assignment (so please keep them in the cc).  Just copying and pasting from the Red Hat bug:
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746322 and
-> https://github.com/defnull/bottle/issues/616 report an issue where
-> Bottle treated "text/plain;application/json" as JSON, allowing security
-> mechanisms to be bypassed.
 
-Use CVE-2014-3137.
+It was reported [1] that a patch added to Python 3.2 [2] caused a race condition where a file created could be created with world read/write permissions instead of the permissions dictated by the original umask of the process.  This could allow a local attacker that could win the race to view and edit files created by a program using this call.
 
-The scope of this CVE does not include any behavior of Chrome that
-could be interpreted as a Chrome vulnerability, e.g., "can make a
-request with the content-type of text/plain;application/json (IMO this
-is a bug in Chrome)" in 616. A later comment in 616 says "The original
-reporter mentioned filing Chrome bugs." As suggested by the
-http://www.google.com/about/appsecurity/ page, Chrome bugs are the
-mechanism for getting CVE assignments from the Google CNA.
+Note that prior versions of Python, including 2.x, do not include the vulnerable _get_masked_mode() function that is used by os.makedirs() when exist_ok is set to True.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTYpkXAAoJEKllVAevmvmsfl8IAI6ITpAf9TshVu0Y9+fC73zr
-jCEwMs3qy53bs7ongjU0qQluH68sX4ckkobldhZL/2OM0oLPhz8ZSXNxNsHx9pX5
-V7rhUgpHsM0BLyJSr2Zpr/aN/SbPKlqZWJjmLRlfslc0+BJdpqp0v7vvqjZS6iXa
-BWsDcxLCQ3yMk4cYqXssfodjBKcForeOzCPlRnUrEEwE5zYMib+qkXD2vSNxDfdO
-on0gFbun5+ldTm+DiN5nnkH7s6pYuPZRcmL2/BqHWfun1s9kPzCI9Vsfvf9kHJD8
-LCN1e7N6S3h3Zulg+jmJSqTWJsu3aaNu+Bc4FgTBmzuYIsc0FXaPxRDE3bkmp08=
-=iVci
------END PGP SIGNATURE-----
+[1] http://bugs.python.org/issue21082
+[2] http://bugs.python.org/issue9299
+
+
+Our bug is here: https://bugzilla.redhat.com/show_bug.cgi?id=1082177
+
+Could a CVE be assigned to this issue please?  Thank you.
+
+-- 
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
