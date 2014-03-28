@@ -1,39 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/16/2
-Message-ID: <539F44A6.2000405@enovance.com>
-Date: Mon, 16 Jun 2014 15:25:26 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/11
+Message-ID: <CAJjO9Mk19ReZ0RE4PgMV+OG_4oZHqR54p3BHmSEJbO5N0r6wTA@mail.gmail.com>
+Date: Fri, 28 Mar 2014 11:09:38 -0700
+From: Fyodor <fyodor@...p.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Neutron
+Subject: Re: OT What are the delays in delivery of Fyodor's Full Disclosure list?
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+On Fri, Mar 28, 2014 at 8:56 AM, Georgi Guninski <guninski@...inski.com>wrote:
 
-Title: Neutron L3-agent DoS through IPv6 subnet
-Reporter: Thiago Martins (HP)
-Products: Neutron
-Versions: up to 2013.2.3, and 2014.1
+> Sorry for offtopic.
+>
+> What are the delays in the delivery in
+> Fyodor's Full Disclosure list?
+>
 
-Description:
-Thiago Martins from Hewlett Packard reported a vulnerability in Neutron
-L3-agent. By creating an IPv6 private subnet attached to a L3 router, an
-authenticated user may break the L3-agent, preventing further floating
-IPv4 addresses from being attached for the entire cloud. Note: removal
-of the faulty network can not be done using the API and must be cleaned
-at the database level. Only Neutron setups using IPv6 and L3-agent are
-affected.
+It is because the list is not even three days old yet and already has more
+than 6,000 members and I'm still trying to set things up, including a team
+of list members to help moderate.  But as of now, I'm still the only
+moderator and I need to sleep sometimes.  I also have other projects to
+work on than just moderating fulldisclosure.
 
-References:
-https://launchpad.net/bugs/1309195
+Today at  17:06:09 +0200 I tried to post
+> to fulldisclosure@...lists.org,
+> now is 17:53:51 EET 2014 and neither I
+> received the message nor it is on the mirror.
+>
 
-Thanks in advance,
+I'm sorry I wasn't able to get to your message in the first 47 minutes.
+ But it did eventually post:
 
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+http://seclists.org/fulldisclosure/2014/Mar/397
 
+"lightly moderated" is not far away from
+> "lightly pregnant" IMHO.
+>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+John tried to run the old fulldisclosure list unmoderated at first and it
+lead to a disastrous crapflood of furry porn and other non-security junk as
+soon as the list got big enough that trolls deemed it worthy to disrupt.
+ He switched to moderation many years ago.  I think he may have set
+auto-moderation for people who always post good stuff, and I hope we'll be
+able to do that too.
+
+If you want to try creating a fully unmoderated fulldisclosure list,
+nothing is stopping you, and I sincerely wish you the best.
+
+Cheers,
+Fyodor
+
