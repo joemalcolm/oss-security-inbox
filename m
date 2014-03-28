@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/12
-Message-ID: <20141127120335.GA1189@kludge.henri.nerv.fi>
-Date: Thu, 27 Nov 2014 14:03:35 +0200
-From: Henri Salo <henri@...v.fi>
-To: Damien Cauquil <d.cauquil@...dream.com>
-Cc: n.chatelain@...dream.com, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Multiple vulnerabilities in Centreon <= 2.5.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/2
+Message-ID: <1395998626.7188.3.camel@neutron.trustmatta.com>
+Date: Fri, 28 Mar 2014 09:23:46 +0000
+From: Florent Daigniere <florent.daigniere@...stmatta.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, 2014-03-27 at 18:37 -0700, Chris Steipp wrote:
+> Hi, we just patched a login CSRF in MediaWiki today. An attacker could
+> login a victim as the attacker. Can we get a cve assigned for this?
+> 
+> Patch:
+> https://gerrit.wikimedia.org/r/#/c/121517/1/includes/specials/SpecialChangePassword.php
+> 
+> Release announcement:
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-March/000145.html
+> 
+> Wikimedia bug:
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=62497
 
-On Thu, Nov 27, 2014 at 12:53:46PM +0100, Damien Cauquil wrote:
-> We found two vulnerabilities in Centreon <= 2.5.3:
 
-For public CVE request you need to include at least one of:
-- - Link to vulnerable source code or fix
-- - Link to source code change log
-- - Link to security advisory
-- - Link to bug entry
+That looks like a session-fixation bug to me; not a CSRF... and
+therefore it's the wrong control: the session-id should be "renewed",
+that's all.
 
-If you are unwilling or unable to share this information then please contact
-MITRE at cve-assign@...re.org for CVE-ID, thank you.
+Florent
 
-For detailed information please see:
-https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
-
-- ---
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlR3ExcACgkQXf6hBi6kbk+OBQCfeSB1HSwH/vuYaoOShpM7534F
-4cQAnjVUaD0+y+Wc7UnozGBS1+HPB36H
-=QYvy
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
