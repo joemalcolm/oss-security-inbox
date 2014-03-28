@@ -1,27 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/9
-Message-ID: <87vbr5uiez.fsf@mid.deneb.enyo.de>
-Date: Thu, 10 Jul 2014 21:23:48 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/3
+Message-ID: <Pine.GSO.4.64.1403280959070.24827@faron.mitre.org>
+Date: Fri, 28 Mar 2014 10:02:29 -0400 (EDT)
+From: "Steven M. Christey" <coley@...re.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+Subject: JBoss EJBInvokerServlet/JMXInvokerServlet confusion
 Content-Type: text/plain; charset=utf-8
 
-* Rich Felker:
 
-> Am I correct in assuming this affects most typical git setups (e.g.
-> gitolite) using ssh authorized_keys files with forced commands, where
-> the malicious file could simply be created as part of the git
-> repository?
+There are several CVEs related to the lack of authentication for JBoss
+invoker servlets, but there's a bit of confusion and a likely
+duplicate.
 
-Probably, especially if there is a checkout of the repository in the
-file system under a predictable path.  (I expect that most hosted
-repositories use the bare format.)  I don't know how common this is
-with the existing Git hosting frameworks.  Some of them don't use
-OpenSSH and may not implement environment variable processing at all.
+CVE-2012-0874 is associated with various Red Hat advisories that
+mention JMXInvokerHAServlet and EJBInvokerHAServlet - with "HA" in the
+name - in JBoss.
 
-> Or are these usually setup to filter the environment?
+The description for CVE-2013-4810 is currently focused on HP products,
+but it mentions EJBInvokerServlet and JMXInvokerServlet (different
+servlets without "HA" in the name).  Through the associated ZDI
+advisory, this issue is associated with some exploit(s) authored by
+Andrea Micalizzi (rgod), who reported the issue in various products
+that utilize JBoss.  In addition,
+https://access.redhat.com/site/articles/545183 - "Does CVE-2013-4810
+affect Red Hat JBoss products?" - clarifies that these servlets are
+"exposed without authentication on older, unsupported community
+releases of JBoss AS (WildFly) 4.x and 5.x."
 
-It seems fairly likely because unexpected, but benign locale settings
-would interfere with the hook script processing (which likely assume
-U.S. date formats and UTF-8).
+CVE-2013-4810 is used heavily with references to ZDI-13-229.
+
+The openness of JMXInvokerServlet is covered in a 2011-era disclosure
+in http://www.matasano.com/research/OWASP3011_Luca.pdf, although
+EJBInvokerServlet is not mentioned then.
+
+The key question is whether CVE-2013-4810 is a duplicate of an
+existing CVE that covers EJBInvokerServlet and JMXInvokerServlet, and
+if so, which CVE is it a duplicate of.
+
+It is not a duplicate of CVE-2012-0874, since that deals with the
+exposure of different servlets - the "HA" servlets - so is effectively
+a variant of the original issue.
+
+CVE-2007-1036 is heavily used.  Although it does not mention 
+EJBInvokerServlet or JMXInvokerServlet, it is related to insecure JBoss 
+configuration.  None of the commonly-associated references mention 
+EJBInvokerServlet and JMXInvokerServlet, either.  If we can clearly link 
+CVE-2007-1036 with those servlets, then it becomes possible to reject 
+CVE-2013-4810 as a duplicate.
+
+Original links such as
+http://wiki.jboss.org/wiki/Wiki.jsp?page=SecureJBoss are now gone,
+which is unfortunate because this is a "bridge reference" that is
+included in both CVE-2007-1036 and Red Hat's "Does CVE-2013-4810
+affect Red Hat JBoss products?" article.
+https://community.jboss.org/wiki/securethejmxconsole doesn't name the
+servlets.
+
+There is, at least, a Metasploit module that maps to CVE-2007-1036 and
+calls JMXInvokerServlet:
+
+https://www.rapid7.com/db/modules/exploit/multi/http/jboss_invoke_deploy
+
+There's still a question of EJBInvokerServlet - I haven't seen it
+mentioned in conjunction with CVE-2007-1036 yet.
+
+Also, it appears that there are mentions of other vectors besides
+servlets, e.g.
+http://archives.neohapsis.com/archives/bugtraq/2007-02/0356.html
+
+Red Hat, can you confirm that the scope of CVE-2007-1036 is the lack
+of authentication for both JMXInvokerServlet and EJBInvokerServlet?
+
+
+- Steve
