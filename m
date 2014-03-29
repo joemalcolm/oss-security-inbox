@@ -1,33 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/4
-Message-ID: <53EC68D8.2000702@redhat.com>
-Date: Thu, 14 Aug 2014 17:44:24 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/3
+Message-ID: <20140329135725.GC10345@debjann.fritz.box>
+Date: Sat, 29 Mar 2014 14:57:25 +0100
+From: Jann Horn <jann@...jh.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE id request: cacti remote code execution and SQL injection
+Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
 Content-Type: text/plain; charset=utf-8
 
-On 08/13/2014 07:07 AM, Nico Golde wrote:
-> Hi,
-> Mischa Sallé and Wilco Baan Hofman reported a security issue in cacti to
-> Debian when processing arguments passed to the graph settings script:
-> http://svn.cacti.net/viewvc?view=rev&revision=7454
->
-> We consider this issue to be public given the public fix.
-> Can someone assign a CVE id? We do have some indication that this was reported
-> in parallel Fedora, in case anyone from RedHat already assigned a CVE id to
-> this.
->
-> Thanks!
-> Nico
->
+On Sat, Mar 29, 2014 at 10:58:38AM +0000, Florent Daigniere wrote:
+> On Sat, 2014-03-29 at 00:21 +0100, Jann Horn wrote:
+> > However, this means that Login CSRF becomes a big security issue because it
+> > would allow me to add evil JS to my account and then force the browser of
+> > someone else to execute it in the context of the MediaWiki server's domain.
+> 
+> I had a look at how mediawiki generates its CSRF token... a smiley is
+> worth a thousand words. :XD
+> 
+> -> includes/User.php:getEditToken
+> 
+> "Anon" users (whatever that is) share a token (EDIT_TOKEN_SUFFIX).
+> Others have their pseudo-random "secret" hashed and stored in their
+> session... and it's spit out using "return md5( $token . $salt ) .
+> EDIT_TOKEN_SUFFIX;"
+> 
+> Few lines below is the function called matchEditToken(), *lazily*
+> evaluating the above against what it receives on the wire.
+> 
+> I won't bore you with the details, but the above is very unlikely to be
+> okay. In no particular order:
+> -) according to the above, "Anon" users share the same CSRF tokens
 
-Hi all,
+Ah, that would probably allow an attacker to misuse his website's visitors
+for spamming wikipedia, right? Not with any kind of elevated access though,
+just coming from lots of different IPs and therefore hard to ban.
 
-Red Hat did not assign a CVE for this (the original report was 
-https://bugzilla.redhat.com/show_bug.cgi?id=1127165).
 
-Cheers,
+> -) the attacker can force a session (and its secret) onto a user: ever
+> heard of http://www.php.net/manual/en/session.idpassing.php ? (grep
+> tells me that neither session.use_only_cookies nor session.use_trans_sid
+> are set)
 
---
-Murray McAllister / Red Hat Product Security
+Hmm, that sounds plausible, but I was unable to do that. Well, I'm not very
+familiar with PHP, so I probably missed something.
+
+
+> -) the way the tokens are generated and compared is not okay (lazy
+> comparison in PHP, no constant time comparison, hash-length-extension
+> attacks, ...)
+
+Hm, yes, lazy comparison sounds bad, and non-constant-time also. But how
+would you do a hash length extension against this? Wouldn't that only work
+if the salt was in front of the token in the hash, not behind it?
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
