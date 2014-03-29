@@ -1,37 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/7
-Message-Id: <20141121054023.B080B6C0046@smtpvmsrv1.mitre.org>
-Date: Fri, 21 Nov 2014 00:40:23 -0500 (EST)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 113 - Guest effectable page reference leak in MMU_MACHPHYS_UPDATE handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/6
+Message-ID: <20140329141016.GY17725@betterave.cristau.org>
+Date: Sat, 29 Mar 2014 16:10:16 +0200
+From: Julien Cristau <jcristau@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Adventure with Stack Smashing Protector (SSP)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sat, Mar 29, 2014 at 16:04:07 +0200, Georgi Guninski wrote:
 
-> XSA-113
+> Not that I care.
 > 
-> An error handling path in the processing of MMU_MACHPHYS_UPDATE failed
-> to drop a page reference which was acquired in an earlier processing
-> step.
+Then can you stop making so much noise already?
 
-Use CVE-2014-9030.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUbs+jAAoJEKllVAevmvmsUO4H/RXLBvibHcX1015JXXmDDbrY
-VzS2/OpFz5eS/L9DBOqan2NNCXJ3yNH0gvWtZgSj6jWL499ixh3Tn9LgoBesqJu5
-KvKgky/RiY50WPN8EgQJ+BRXsyjXr37YbefnOgipx2ep9mqivwZirru/hygMRY1j
-ImaNwAUdNHV0W01um4Mvev7OQ4dRuI3Rk2HotBuRUkUS/K0bUR6a5dKkP1W8K3at
-X1Z26NIFF2B50lFFMYFdLQ7+l0Wl4GLe3fmMf6lqIYO35OHdMCtnvmO2c8quWysl
-VRKXwjI6OY80JM+BYIA/XY/qkTPn1QriXkIMq410gqZqODmxYQ2UUo4lxkSTv1Q=
-=Ff2Q
------END PGP SIGNATURE-----
+Thanks,
+Julien
