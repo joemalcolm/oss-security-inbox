@@ -1,25 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/10
-Message-Id: <E1XanDO-0007o1-1k@rmm6prod02.runbox.com>
-Date: Sun, 05 Oct 2014 10:55:14 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-CC: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/4
+Message-ID: <20140329140407.GC2473@sivokote.iziade.m$>
+Date: Sat, 29 Mar 2014 16:04:07 +0200
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Adventure with Stack Smashing Protector (SSP)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 5 Oct 2014 17:44:15 +0400, Solar Designer <solar@...nwall.com> wrote:
-> .... Most non-expert people only need to know that they need either the
-> prefix/suffix patch included or function imports disabled, preferably in
-> a security update from their distro vendor.  This makes the individual
-> parser bugs, which got CVEs assigned, irrelevant.
+On Fri, Mar 28, 2014 at 11:04:08PM +0400, Solar Designer wrote:
+> Oh, and yes I've updated the archive at Openwall to receive/archive
+> mail from the rebooted list, just like Fyodor did for his archive.
 > 
-> Here's the relevant test:
-> testfunc='() { echo bad; }' bash -c testfunc
+> Alexander
 
-This is a MUCH better test for most people.  Hanno's test script is great for detail, but most people don't need the detail.
-
-I'm putting that email in my timeline at http://www.dwheeler.com/essays/shellshock.html#timeline - this is an EASY test people can directly use.
-
----  David A. Wheeler
-
+If you ask me merging two entirely different lists
+into one archive is a mistake. It distorts history.
+For an unexperienced observer it might appear
+Fydor ran the old FD too.
+For first time subscribers too.
+Not that I care.
