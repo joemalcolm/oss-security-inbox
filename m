@@ -1,25 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/28/2
-Message-ID: <544F9E56.3070102@mccme.ru>
-Date: Tue, 28 Oct 2014 16:47:02 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/5
+Message-ID: <CAMpsgwbnPx0C2eUuOdrN3-186KpJ3wsogDC2TF2-ZKbjJ6UG7w@mail.gmail.com>
+Date: Sat, 29 Mar 2014 09:19:32 +0100
+From: Victor Stinner <victor.stinner@...il.com>
+To: Vincent Danen <vdanen@...hat.com>
+Cc: OSS Security List <oss-security@...ts.openwall.com>,  "security@...hon.org" <security@...hon.org>
+Subject: Re: [PSRT] CVE request: os.makedirs(exist_ok=True) is not thread-safe in Python
 Content-Type: text/plain; charset=utf-8
 
-On 2014-10-15 12:30, Solar Designer wrote:
-> - Please don't send fully working exploits (but testcases that exercise
-> the flaw are welcome)
+Hi,
+
+I changed the title of the issue to "os.makedirs(exist_ok=True) is not
+thread-safe: umask is set temporary to 0, serious security problem". So the
+vulnerability requires an application using exist_ok=True, a
+second vulnerability to inject arbitrary code, and at least another thread.
+Since umask() is restored the line after umask(0) and CPython has a GIL,
+the window to exploit the vulnerability is very short (leess than a second,
+closer to 5 ms). This vulnerability looks theorical to me, so I'm not ok to
+call it "serious", but it would be nice to fix it.
+
+Hum, I didn't check if umask() releases the GIL.
+
+Victor
+
+Le vendredi 28 mars 2014, Vincent Danen <vdanen@...hat.com> a écrit :
+
+> Cc'ing security@...hon.org <javascript:;> so that they are aware of the
+> CVE assignment (so please keep them in the cc).  Just copying and pasting
+> from the Red Hat bug:
 >
-> FWIW, I've always been tempted to remove the latter guideline,
+>
+> It was reported [1] that a patch added to Python 3.2 [2] caused a race
+> condition where a file created could be created with world read/write
+> permissions instead of the permissions dictated by the original umask of
+> the process.  This could allow a local attacker that could win the race to
+> view and edit files created by a program using this call.
+>
+> Note that prior versions of Python, including 2.x, do not include the
+> vulnerable _get_masked_mode() function that is used by os.makedirs() when
+> exist_ok is set to True.
+>
+>
+> [1] http://bugs.python.org/issue21082
+> [2] http://bugs.python.org/issue9299
+>
+>
+> Our bug is here: https://bugzilla.redhat.com/show_bug.cgi?id=1082177
+>
+> Could a CVE be assigned to this issue please?  Thank you.
+>
+> --
+> Vincent Danen / Red Hat Security Response Team
 
-Then perhaps just remove it? It always seemed to me a strange 
-restriction. Other guidelines are either technical in nature or they are 
-intended to reduce the amount of noise. This restriction seems to be 
-neither.
-
-Of you can replace it with something like this:
-- Please only send fully working exploits which themselves are open-source.
-
--- 
-Alexander Cherepanov
