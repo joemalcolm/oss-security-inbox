@@ -1,37 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/8
-Message-Id: <20140915172330.1BCE1C505D4@smtptsrv1.mitre.org>
-Date: Mon, 15 Sep 2014 13:23:30 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Linux kernel: net: guard tcp_set_keepalive against crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/1
+Message-ID: <20140329090823.GB2473@sivokote.iziade.m$>
+Date: Sat, 29 Mar 2014 11:08:23 +0200
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Cc: fulldisclosure@...lists.org
+Subject: Re: OT What are the delays in delivery of Fyodor's Full Disclosure list?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Mar 28, 2014 at 11:09:38AM -0700, Fyodor wrote:
+> On Fri, Mar 28, 2014 at 8:56 AM, Georgi Guninski <guninski@...inski.com>wrote:
+> 
+> > Sorry for offtopic.
+> >
+> > What are the delays in the delivery in
+> > Fyodor's Full Disclosure list?
+> >
+> 
+> It is because the list is not even three days old yet and already has more
+> than 6,000 members and I'm still trying to set things up, including a team
+> of list members to help moderate.  But as of now, I'm still the only
+> moderator and I need to sleep sometimes.  I also have other projects to
+> work on than just moderating fulldisclosure.
+> 
+> Today at  17:06:09 +0200 I tried to post
+> > to fulldisclosure@...lists.org,
+> > now is 17:53:51 EET 2014 and neither I
+> > received the message nor it is on the mirror.
+> >
+> 
+> I'm sorry I wasn't able to get to your message in the first 47 minutes.
+>  But it did eventually post:
+> 
+> http://seclists.org/fulldisclosure/2014/Mar/397
+> 
 
-> https://git.kernel.org/linus/3e10986d1d698140747fcfc2761ec9cb64c1d582
-> https://bugzilla.redhat.com/show_bug.cgi?id=1141742
+According to the headers it is more like
+2 hours and 10 minutes.
 
-> A privileged user/process able to create RAW socket could use this flaw to
-> crash the system kernel resulting in DoS.
+> "lightly moderated" is not far away from
+> > "lightly pregnant" IMHO.
+> >
+> 
+> John tried to run the old fulldisclosure list unmoderated at first and it
+> lead to a disastrous crapflood of furry porn and other non-security junk as
+> soon as the list got big enough that trolls deemed it worthy to disrupt.
+>  He switched to moderation many years ago.  I think he may have set
+> auto-moderation for people who always post good stuff, and I hope we'll be
+> able to do that too.
+> 
+> If you want to try creating a fully unmoderated fulldisclosure list,
+> nothing is stopping you, and I sincerely wish you the best.
+> 
 
-Use CVE-2012-6657.
+I don't see this thread on F-FD,
+appears it is censored by moderation
+just because the moderator didn't like
+it. I see little difference with Bugtraq.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Let me remind that alpeh1 sold Bugtraq.
 
-iQEcBAEBAgAGBQJUFyAGAAoJEKllVAevmvmsVrAH/2MCxNBia7m4Ly7aZPe1ixq4
-mZXMDl4M2xLGrYiVMTCC9YUXP8uECdkSQwiJu2Owhzf8CYuMbZXLRLQ29/272fxh
-PXGM1Gw7Xz1bxj0zbmrqePqRcWJu/xFYG69USJklljdoIr3SdP7lF9tin/suCnli
-IfAfTk6GOIydVXqosjI7oxwr8Bqic74KON2EgrYYQ53ZApguK7rzdlZ9xoqm2p04
-RVfeahLK70Zlny5vCpDBePJ78vohPXyXYXDms3hpsIozwTGWDVfSqINtw/8W1TFx
-J2PKLA8vhcB9ryOi2jW6Ks+OMvtlr4mmhey6w6Pv1wuejYO6IueGIlJm156nIf4=
-=QOzi
------END PGP SIGNATURE-----
+-- 
+blog: https://j.ludost.net/blog/
+forum: https://j.ludost.net/ss/index.php 
+
