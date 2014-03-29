@@ -1,58 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/24/1
-Message-ID: <CAE2SPAayq=owNBYB+pbLLKebd9zy_tj=K1sssgB=HuGS_3Pgjg@mail.gmail.com>
-Date: Wed, 24 Dec 2014 12:22:22 +0100
-From: Bastien ROUCARIES <roucaries.bastien@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/2
+Message-ID: <1396090718.19429.30.camel@neutron.trustmatta.com>
+Date: Sat, 29 Mar 2014 10:58:38 +0000
+From: Florent Daigniere <florent.daigniere@...stmatta.com>
 To: oss-security@...ts.openwall.com
-Cc: jodie.cunningham+osssecurity@...il.com
-Subject: Imagemagick fuzzing bug
+Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sat, 2014-03-29 at 00:21 +0100, Jann Horn wrote:
+> On Fri, Mar 28, 2014 at 06:13:49PM +0000, Florent Daigniere wrote:
+> > > > > This attack is somewhat specific to mediawiki since we allow users to
+> > > > > define JavaScript that will be loaded on pages they visit while logged
+> > > > > in... So the victim in this case would run the attacker's personal
+> > > > > JavaScript.
+> > > > >
+> > > >
+> > > > It still doesn't make sense. Anti-CSRF tokens are only useful if the
+> > > > "malicious script" is not running with the same origin!
+> > > >
+> > > 
+> > > I think I threw you off here-- this is just one reason why an attacker
+> > > might want to do this. It's tangential to the actual flaw we fixed.
+> > 
+> > If mediawiki really allows users to define javascript that will be
+> > loaded on pages they visit, that's a vulnerability... There's no way to
+> > do that securely if the "content" and "application" data are served from
+> > the same FQDN.
+> 
+> MediaWiki allows users to define Javascript that will be loaded on pages they
+> visit, *but only for themselves*. If I can inject JS into the pages I view,
+> that is not a vuln, just like it isn't a vuln that a user can execute JS in
+> the context of any website by pasting it into a debug console in his browser.
+> 
 
-during the previous month google and Jodie Cunningham.
-have done a security audit of imagemagick and found a lot of security bug:
-  * Avoid a DOS in vision.c due to an infinite loop.
-  * Avoid a SEGV due to a corrupted pnm file.
-  * Do not leak fd due to corrupted file.
-  * Fix a double free in pdb coder.
-  * Fix a SEGV due to corrupted dpc and xwd images.
-  * Fix a SEGV in dpx file handler.
-  * Fix a SEGV in malformed xwd file handler.
-  * Avoid a NULL pointer dereference in ps file handling.
-  * Fix a crash with corrupted viff file.
-  * Fix a NULL pointer dereference in wpg file handling.
-  * Do not continue on corrupted wpg file.
-  * Avoid an out of bound access in viff image.
-  * Avoid a heap buffer overflow in pdb file handling.
-  * Avoid an out of bound acess on malformed sun file.
-  * Avoid heap overflow in palm, pnm and xpm files.
-  * Fix heap overflow in quantum, palm and psd file.
-  * Fix handling of corrupted of psd, sun and xpm file.
-  * Fix corrupted (too many colors) psd file.
-  * Fix an out of bound acess in sun file.
-  * Fix handling of corrupted sun and wpg file.
-  * Fix heap overflow in pcx file, psd, pict and wpf files
-    and DOS in xpm files.
-  * Add additional PNM sanity checks.
-  * Avoid a crash to out of memory in magick/cache.c
-  * Fix a theorical out of bound access in magick/colormap-private.h
-  * Fix an out of bound access in palm file.
-  * Fixed throwing of exceptions in psd handling and fix a memory leak.
-  * Fixed boundary checks in DecodePSDPixels.
-  * Fix another out of bound problem in rle file.
-  * Fix crash due to corrupted dib file.
-  * Added checks to prevent overflow in rle file.
-  * Impose a limit of 10 million columns or rows in an input PNG
-  * Don't try to handle a "previous" image in the JNG decoder.
-  * Avoid a memory leak in quantum management.
-  * Avoid a crash in png coder.
-  * Thread limit should be at least 1 in order to be efficient.
-  * In psd file handling fixed parsing resource block and
-    avoid a crash.
-  * In cache fix usage of object after it has been destroyed.
-  * Avoid a memory leak in rle file handling.
-  * During identification of image do not fill memory
+No, there's a fundamental difference in between one scenario and the
+other; in one case the action is undertaken locally, in the other it's
+not.
 
-Patch queue is here:
-http://anonscm.debian.org/cgit/collab-maint/imagemagick.git/log/?h=debian-patches/6.8.9.9-4-for-upstream
+Injection attacks (whether that's XSS, SQLi, ...) happen when there's a
+misunderstanding (for one of the parties) in between what's data and
+what's meta-data.
+
+Regarding XSS, in my books, if it's a browser-plugin (greasemonkey)
+doing the injection, that's fine. If it's the user (your example) that's
+fine too (but some people disagree : see
+https://www.facebook.com/selfxss ).
+
+If it's the server doing it, it's a vulnerability as there's just no way
+of doing it "securely".
+
+> However, this means that Login CSRF becomes a big security issue because it
+> would allow me to add evil JS to my account and then force the browser of
+> someone else to execute it in the context of the MediaWiki server's domain.
+
+I had a look at how mediawiki generates its CSRF token... a smiley is
+worth a thousand words. :XD
+
+-> includes/User.php:getEditToken
+
+"Anon" users (whatever that is) share a token (EDIT_TOKEN_SUFFIX).
+Others have their pseudo-random "secret" hashed and stored in their
+session... and it's spit out using "return md5( $token . $salt ) .
+EDIT_TOKEN_SUFFIX;"
+
+Few lines below is the function called matchEditToken(), *lazily*
+evaluating the above against what it receives on the wire.
+
+I won't bore you with the details, but the above is very unlikely to be
+okay. In no particular order:
+-) according to the above, "Anon" users share the same CSRF tokens
+-) the attacker can force a session (and its secret) onto a user: ever
+heard of http://www.php.net/manual/en/session.idpassing.php ? (grep
+tells me that neither session.use_only_cookies nor session.use_trans_sid
+are set)
+-) the way the tokens are generated and compared is not okay (lazy
+comparison in PHP, no constant time comparison, hash-length-extension
+attacks, ...)
+
+There's definitely a bunch of CVEs that could be assigned, but
+fundamentally the security model of mediawiki can't work as long as that
+"feature" exists.
+
+I'll let someone else in the community pick it up from there. Ultimately
+I'm not the one assigning CVEs... and probably won't be bothered enough
+to put a PoC together. So I'll just GTFO ;)
+
+Florent
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
