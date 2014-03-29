@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/23/4
-Message-Id: <201404231419.s3NEJ2rS022825@linus.mitre.org>
-Date: Wed, 23 Apr 2014 10:19:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 94 - ARM hypervisor crash on guest interrupt controller access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/7
+Message-ID: <20140329171809.GD2473@sivokote.iziade.m$>
+Date: Sat, 29 Mar 2014 19:18:09 +0200
+From: Georgi Guninski <guninski@...inski.com>
+To: Julien Cristau <jcristau@...ian.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Adventure with Stack Smashing Protector (SSP)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sat, Mar 29, 2014 at 04:10:16PM +0200, Julien Cristau wrote:
+> On Sat, Mar 29, 2014 at 16:04:07 +0200, Georgi Guninski wrote:
+> 
+> > Not that I care.
+> > 
+> Then can you stop making so much noise already?
+> 
+> Thanks,
+> Julien
 
-> XSA-94
 
-> When handling a guest access to the virtual GIC distributor (interrupt
-> controller) Xen could dereference a pointer before checking it for
-> validity leading to a hypervisor crash and host Denial of Service.
 
-> A buggy or malicious guest can crash the host.
+Dear jcristau@...ian.org,
 
-Use CVE-2014-2986.
+If you consider this "so much noise"
+I suggest you consult something 
+better than the emacs doctor.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Not that I care about you.
 
-iQEcBAEBAgAGBQJTV8t1AAoJEKllVAevmvmst/cH/js+frpyUAFXSnPvoauD+DJg
-4yKPcDeiTAEFe9p8b8SIshWHkWPug1jZ+aTwB5gMfKiHHsLA/g9yGaAYNLTWNt/j
-WC24BDRg9JPRd0wIEmf18cSWcYV8YljoI3WbYY4Y+SVTNDmOrDAhbyMnmBEFCm9X
-es+elg4ysVza7gL0WZbB3Zm8grLhXSb8rMgU/cPGs1IEwTr+j0BStslJQ9YzJlaZ
-TSEI583C2uvJfS4wC9fpwXrHgT8SON9NxLWwvvexVFJ7rcj5P+4w8oawKqHwrWI8
-nJP8y/LL/hwFqMvaWHZI4oFl2AgLhIkYt4+EDcdiFzVuOxOpLIhklMRhIJGReAE=
-=cp7f
------END PGP SIGNATURE-----
+-- 
+guninski
