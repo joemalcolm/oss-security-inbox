@@ -1,41 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/10
-Message-ID: <20140206160409.GA12336@eldamar.local>
-Date: Thu, 6 Feb 2014 17:04:09 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Jakub Wilk <jwilk@...ian.org>, 737835@...s.debian.org
-Subject: CVE Request: Capture::Tiny: insecure use of /tmp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/30/5
+Message-Id: <201403302143.s2ULgqpe017721@linus.mitre.org>
+Date: Sun, 30 Mar 2014 17:42:52 -0400 (EDT)
+From: cve-assign@...re.org
+To: ago@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux Kernel, two security issues
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Jakub Wilk reported the following insecure use of /tmp on the Debian
-BTS at [1].
-
- [1] http://bugs.debian.org/737835
- 
-On Thu, Feb 06, 2014 at 12:52:21PM +0100, Jakub Wilk wrote:
-> $ strace -f -o '| grep -E open.*/tmp' perl test.pl
-> 11181 open("/tmp/8NDe_c4S_N", O_RDWR|O_CREAT|O_EXCL|O_LARGEFILE|O_NOFOLLOW, 0600) = 5
-> 11183 open("/tmp/5KKGPDNyy0", O_WRONLY|O_CREAT|O_TRUNC|O_LARGEFILE, 0666) = 3
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=21f8aaee0c62708654988ce092838aa7df4d25d8
 > 
-> The first temporary file is created securely, but the second open(2)
-> call lacks the O_EXCL flag. The vulnerable code appears to be:
+> The vulnerability is caused due to a race condition error in the 
+> "ath_tx_aggr_sleep()" function (drivers/net/wireless/ath/ath9k/xmit.c), which 
+> can be exploited to cause a crash.
+> https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.12.15
+> https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.13.7
+> https://bugzilla.kernel.org/show_bug.cgi?id=70551
+
+Use CVE-2014-2672.
+
+
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=621b5060e823301d0cba4cb52a7ee3491922d291
 > 
->   # flag file is used to signal the child is ready
->   $stash->{flag_files}{$which} = scalar tmpnam();
-> 
-> The File::temp::tmpnam documentation reads: “When called in scalar
-> context, returns the full name (including path) of a temporary file
-> (uses mktemp()). The only check is that the file does not already
-> exist, but there is no guarantee that that condition will continue
-> to apply.”
+> The vulnerability is caused due to an error in the "arch_dup_task_struct()" 
+> function (arch/powerpc/kernel/process.c) and can be exploited to cause a crash 
+> via a specially crafted instruction sequence.
+> https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.12.15
+> https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.13.7
 
-There is no upstream commit to fix this issue yet.
+Use CVE-2014-2673.
 
-Could a CVE be assigned for this insecure use of /tmp for the
-Capture::Tiny module?
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Regards,
-Salvatore
+iQEcBAEBAgAGBQJTOI7zAAoJEKllVAevmvms9PUH/RULhJe3bklgTpY8XhcpOd6E
+uZ6tD+Co1iBb0VvR/OrNLMUgbLcBg92E0sF9HAgfGBKpgnT8WFYbv5tLNtWVQGw8
+TX4rIJRMdNoMRrDY84YhUaLHl3EUjxlZXuvNEbUMvleNjkP5VyxZlbUSozagxea8
+untvzcFZFNg12dpDprvZvZSK/Y1vLBNmXEYdrl6GlsBIjwVbMA/JjyjyNdIssgtb
+074q0NYXs+heIrflCPekX+FE4O14Qe20AxFJaw9P8pn80hdczj6smPSbVvUXic4i
+9///osAZuMWccxbZFBp3Ha6MRscF6vtIn41xgDB3flW5iBiyFxlqgoYuyZLWtXk=
+=al+h
+-----END PGP SIGNATURE-----
