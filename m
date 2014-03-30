@@ -1,48 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/19
-Message-Id: <20140927233330.55A2817FDA3@rebar.astron.com>
-Date: Sat, 27 Sep 2014 19:33:30 -0400
-From: christos@...las.com (Christos Zoulas)
-To: chet.ramey@...e.edu, John Haxby <john.haxby@...cle.com>,  oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/30/3
+Message-ID: <20140330183211.GB8534@openwall.com>
+Date: Sun, 30 Mar 2014 22:32:11 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Georgi Guninski <guninski@...inski.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-On Sep 27,  6:46pm, chet.ramey@...e.edu (Chet Ramey) wrote:
--- Subject: Re: [oss-security] Re: CVE-2014-6271: remote code execution throu
+Georgi,
 
-| I think function exports are used more widely than you think, and I am not
-| willing to break backwards compatibility that much by disabling function
-| exports by default.
+I reluctantly approved your posting for distribution to oss-security (so
+far, 100% of your postings made it to the list), although I find it of
+very little value for the reasons given below.  If you post another one
+that is about as useless, we will likely reject it.  However, if you
+finally do explain things clearly, this might be worth another message.
+Maybe make a blog post and announce that.  Try to write it really well.
 
-Let's think this through for a minute:
+On Sun, Mar 30, 2014 at 07:41:22PM +0300, Georgi Guninski wrote:
+> Just for the record of the old FD,
+> i posted there anonymously and
+> even killed at least one bug in 
+> widely used open source warez in
+> un-orthodoxal way.
+> 
+> The CVE servants got the bug
+> significantly later after the
+> announcement :)
 
-- subshells are just the results of fork() so they just work (functions
-  are still loaded in memory).
-- sourced scripts again are in the process image and just work.
+What's the purpose of posting this?
 
-So we are talking about functions that are inherited during exec,
-either directly (by executing another bash script from the shell,
-or running bash again.) or indirectly (some other command runs a bash
-shell or script) or remotely (if you are passing function definitions
-in your ssh environment).
+Like with much other stuff you posted, you're failing to make it clear
+just what message you're trying to get across.  Do you want someone to
+be doing something differently?  If so, who, and what exactly?  I think
+you do have a message, but it's all obfuscated by the hints, sarcasm,
+you pretending to be humble ("OT", "don't care" - then why post, as
+someone told you).  Maybe try to write _one_ essay where you'd explain
+your point of view and the rationale behind it in a way that would be
+clear to most readers.  Right now, your anti-CVE stance looks plain
+ridiculous to most people, and it'd stay that way unless you explain it
+very clearly, with rationale given.  "Oh, those guys support responsible
+disclosure, so I'll boycott CVEs even for vulns to be disclosed publicly
+right away" does not sound reasonable to most readers, regardless of
+whether they'd possibly agree with your opinion (if you did give the
+rationale) or not.  If you do have a good rationale for what you're
+doing or advocating that others to do(*), then do explain it clearly!
 
-Lets assume that we want to import for interactive shells, because
-we want the user to have his familiar working setup; we can easily
-do that because we know when the shell is interactive.
+(*) It is unclear what you're advocating people to do, even.  One thing
+you did mention is you want a fully unmoderated full-disclosure list -
+and you were told (by Fyodor, I think) that you're welcome to set one
+up if you like.  I don't think anything else may be done in that respect.
 
-For non-interactive shell scripts, I'd say that the default behavior
-should be off. If you want it on, turn it on explicitly. It is a
-dangerous feature (being able to override commands in a way the
-script does not expect). This was recognized before, this is why
-it is off when you are setuid. Let's correct it.  You don't want
-to be affecting the shell in such an intrusive way before the user
-is given control and a choice. Let the people who want to use the
-feature to have to turn it on explicitly.
+For CVEs, it is _totally_ unclear what you'd like people to be doing or
+not doing.  Did you ever explain that?
 
-I think some stuff might break, but it will be easily fixable and
-worth the extra work because:
+> maybe solardiz is using the
+> mainstream patch i suspect.
 
-	- we would not be exposing the parser anymore
-	- we would be starting up scripts in a more controlled environment
+I have no idea what you're referring to.  Chances are most folks on
+oss-security don't know either.
 
-christos
+I'd appreciate it if you tried to make your postings actually useful to
+at least someone.
+
+No brief/partial responses to the above, please.  Let's not continue
+this thread one tiny bit at a time.  If you feel like responding, and I
+hope so, please respond in the form of an essay, covering all of the
+issues you find important - without sarcasm, without hints (but with
+clear references instead), without pretending to be humble.
+
+And in case you are in fact that humble and you actually "don't care" (I
+doubt it), then please don't waste your and anyone else's time.
+
+Thanks,
+
+Alexander
