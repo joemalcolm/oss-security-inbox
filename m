@@ -1,63 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/16
-Message-ID: <20140603152747.GT23760@sentinelchicken.org>
-Date: Tue, 3 Jun 2014 08:27:47 -0700
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/30/1
+Message-ID: <1630076.ngDAalSBKu@devil>
+Date: Sun, 30 Mar 2014 14:03:36 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
+Cc: cve-assign@...re.org
+Subject: CVE request: Linux Kernel, two security issues
 Content-Type: text/plain; charset=utf-8
 
+I don't see a cve assigned for the following:
 
-Hi Tomas,
+1) https://secunia.com/advisories/57468/ :
 
-Thanks for looking into this.  Sorry for the slow reply. 
+A vulnerability has been reported in Linux Kernel, which can be exploited by 
+malicious people to cause a DoS (Denial of Service).
 
+The vulnerability is caused due to a race condition error in the 
+"ath_tx_aggr_sleep()" function (drivers/net/wireless/ath/ath9k/xmit.c), which 
+can be exploited to cause a crash.
 
-> As far as I can see setExpandEntityReferences() controls what value is
-> set for the create-entity-ref-nodes DOM parser feature:
-> 
-> http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/jaxp/DocumentBuilderImpl.java#l158
-> http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/jaxp/DocumentBuilderImpl.java#l74
-> http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/impl/Constants.java#l427
-> 
-> The description in Java API docs is rather brief, xerces docs have more
-> details:
-> 
-> http://xerces.apache.org/xerces-j/features.html#create-entity-ref-nodes
-> http://xerces.apache.org/xerces2-j/features.html#dom.create-entity-ref-nodes
-> 
-> AFAICS, the feature does not aim to control if entity references are
-> expanded, but only how exactly they appear in the resulting DOM tree.
-
-Ok, that makes sense.  Of course it is pointless for security if it
-doesn't affect parameter entities.  I also find it odd that one of the
-only standard methods available to directly tweak entity behavior can
-only be implemented by setting a feature in Xerces that is
-non-standard.
+The vulnerability is reported in versions prior to 3.12.15 and prior to 
+3.13.7.
 
 
-> Maybe your paper should rather mention parser features as
-> external-general-entities and external-parameter-entities:
-> 
-> http://docs.oracle.com/javase/7/docs/api/org/xml/sax/package-summary.html#package_description
+Solution:
+Update to version 3.12.15 or 3.13.7.
 
-I do mention the specific features that one needs to disable in order
-to make parsing safe.  However, I didn't realize that that some of
-these features were standardized.  Still, it would be quite confusing
-to any developer that doesn't spend extensive amounts of time
-researching each XML feature and understanding what needs to be turned
-off.
+Provided and/or discovered by:
+Max Sydorenko within a bug report.
 
+Original Advisory:
+Kernel:
+https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.12.15
+https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.13.7
 
-> OWASP XXE document covers some of this, but actually mentions only one
-> of the two features...
-> 
-> https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing#Java
-
-I did end up releasing my paper recently, which I believe has
-up-to-date recommendations for Xerces:
-  http://vsecurity.com/download/papers/XMLDTDEntityAttacks.pdf
+Max Sydorenko:
+https://bugzilla.kernel.org/show_bug.cgi?id=70551
 
 
-Best,
-tim
+
+
+2) https://secunia.com/advisories/57436/ :
+
+Description
+
+A vulnerability has been reported in Linux Kernel, which can be exploited by 
+malicious, local users to cause a DoS (Denial of Service).
+
+The vulnerability is caused due to an error in the "arch_dup_task_struct()" 
+function (arch/powerpc/kernel/process.c) and can be exploited to cause a crash 
+via a specially crafted instruction sequence.
+
+Note: This only affects systems running on PowerPC.
+
+The vulnerability is reported in versions prior to 3.12.15 and 3.13.7.
+
+
+Solution:
+Update to version 3.12.15 or 3.13.7.
+
+Provided and/or discovered by:
+The vendor credits Adhemerval Zanella Neto.
+
+Original Advisory:
+https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.12.15
+https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.13.7
+
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
