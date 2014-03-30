@@ -1,68 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/09/4
-Message-ID: <1407588686.28424.7.camel@scapa>
-Date: Sat, 09 Aug 2014 14:51:26 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/30/2
+Message-ID: <20140330164122.GG2570@sivokote.iziade.m$>
+Date: Sun, 30 Mar 2014 19:41:22 +0300
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Cc: solar@...nwall.com
+Subject: Re: [OT] FD mailing list died. Time for new one
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2014-08-08 at 16:35 +0200, Willy Tarreau wrote:
-> On Fri, Aug 08, 2014 at 06:36:12AM -0700, Greg KH wrote:
-> > On Fri, Aug 08, 2014 at 02:20:21PM +0300, Dan Carpenter wrote:
-> > > I'm surprised we haven't had any discussion about the recent BadUSB
-> > > articles.
-> > > 
-> > > http://arstechnica.com/security/2014/07/this-thumbdrive-hacks-computers-badusb-exploit-makes-devices-turn-evil/
-> > > http://security.stackexchange.com/questions/64524/how-to-prevent-badusb-attacks-on-linux-desktop
-> > > 
-> > > We could put a popup if there is a second keyboard attached to check
-> > > that the person controlling the existing keyboard is aware of the second
-> > > one.
-> > 
-> > "popup" where?  Multi-seat machines wouldn't like that very much, as
-> > would yubikeys (as was pointed out), or a raft of other USB devices that
-> > export a keyboard device for the buttons they control (video cameras,
-> > external speakers, barcode scanners, etc.)
-> 
-> Also, keyboards are one aspect of the problem. The biggest aspect is not new and
-> has been abused for years, which is the main reason why so many large companies
-> physically remove (stick or desolder) USB ports : you're connecting a *device*
-> to your system and there's no way to make that 100% safe using software only.
-> With a bogus driver and a DMA-capable device, you can end up accessing kernel
-> locations and causing a lot more discrete harm such as unlocking displays,
-> changing UIDs of running processes, etc. And that's much harder to detect,
-> especially in closed drivers or with closed systems.
+Not subscribed to oss-security.
 
-What do you mean by DMA-capable device. Afaict USB devices can't do bus
-mastering on the PCI Express bus, they can only request the USB
-controller to do that for them. Did someone already managed to
-sucessfully control DMA transfers from an USB device?
+Just for the record of the old FD,
+i posted there anonymously and
+even killed at least one bug in 
+widely used open source warez in
+un-orthodoxal way.
 
-(it's still safer to have a configured I/OMMU, imho, but I'm pretty
-unsure they could be switched on by default…)
-> 
+The CVE servants got the bug
+significantly later after the
+announcement :)
 
-> One more efficient solution could be to have a sysctl to disable hotplugging
-> of USB devices, all of them.
+maybe solardiz is using the
+mainstream patch i suspect.
 
-Grsecurity supports that (see GRKERNSEC_DENYUSB, Brad basically checks a
-sysctl during hub_port_connect_change()). Or you could use the
-authorized_default Greg mentioned.
 
-It also helps to disable module autoloading.
-
->  Software would then detect the new devices, and
-> decide to load the drivers among a whitelist associated to a given port. The
-> administrator could add new rules, and it could be the user for personal
-> desktop PCs. But even then you still have the risk of the user not understanding
-> what's happening and bindly clicking "OK".
-
-As always, what's usually hard is the policy and the default behavior,
-since a lot of people have different needs…
-
-Regards,
 -- 
-Yves-Alexis
+guninski
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+On Sat, Mar 29, 2014 at 10:08:02PM +0400, Solar Designer wrote:
+> On Mon, Mar 24, 2014 at 04:17:45PM +0200, Georgi Guninski wrote:
+> > it is likely I get banned from here,
+> 
+> Georgi surely worked hard towards achieving this goal, in other threads
+> in here as well.  While I have no intent to ban anyone, especially not
+> someone like Georgi who has made valuable contributions to this
+> community (I am referring e.g. to the qmail integer overflow bug, which
+> I personally think Georgi deserved the bounty for), I will be revoking
+> moderation bypass "privilege" from people abusing such "privilege".
+> 
+> In general, when a new member joins oss-security they do not have
+> moderation bypass "privilege", regardless of who they are.  As soon as
+> they've made one or a few approved posting(s) with no postings rejected
+> (like Georgi did when bringing up the FD list topic initially), they're
+> typically granted such "privilege", in good faith, because this helps
+> reduce delays in discussions and reduces load on the moderators.
+> However, as easily as this is granted, it may be revoked - again,
+> regardless of who the person is and how valuable a community member
+> they are in other aspects (as well as e.g. whether they're a friend of
+> mine or not).  Neither action should be taken personal.  Moderation
+> bypass "privilege" is not endorsement, and revoking it is not banning.
+> This is merely a tool I use to help run this list smoothly and with less
+> effort.  This is why I put this word in quotes.
+> 
+> So, Georgi, you're still not banned, and I have no such plans, but
+> please do not be surprised that further messages from you will incur
+> delays and some might be rejected.  I and other moderators are going to
+> judge on which messages to approve based on the content of those
+> messages, as usual.  If you (or anyone) post something reasonably
+> valuable to be worth distributing to list members, it will be approved
+> (and please don't mind the delays).  A few of your recent messages were
+> below this threshold, in my opinion.
+> 
+> I hope that Fyodor will be approving all of your messages on FD.  If I
+> were running FD, I'd setup/keep the moderation bypass for you on that
+> list.  After all, FD is all about noise, right? ;-)  And what can be
+> better than noise from a(n otherwise) respected community member? ;-)
+> 
+> oss-security is not FD.  We don't tolerate noise as much.  Noise goes to
+> FD, please.
+> 
+> Now, surely any mention of CVE is worse than noise to you, but that's
+> another (non-)issue.  I think most people care about the actual vuln
+> descriptions and such regardless of whether CVEs are being assigned.
+> That said, this is yet another reason why FD is a better fit for you.
+> 
+> Thanks,
+> 
+> Alexander
