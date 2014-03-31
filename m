@@ -1,77 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/6
-Message-Id: <201402161601.s1GG1KfQ021151@eton.blue.cert.org>
-Date: Sun, 16 Feb 2014 10:43:00 -0500
-From: "CERT(R) Coordination Center" <cert@...t.org>
-To: Solar Designer <solar@...nwall.com>
-CC: oss-security@...ts.openwall.com, "CERT(R) Coordination Center" <cert@...t.org>
-Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/8
+Message-ID: <20140331113702.GA15459@altlinux.org>
+Date: Mon, 31 Mar 2014 15:37:02 +0400
+From: "Dmitry V. Levin" <ldv@...linux.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: pam_timestamp internals
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Mar 31, 2014 at 12:57:11PM +0200, Sebastian Krahmer wrote:
+> On Mon, Mar 31, 2014 at 02:32:09PM +0400, Dmitry V. Levin wrote:
+> > On Mon, Mar 24, 2014 at 01:46:43PM +0100, Sebastian Krahmer wrote:
+> > > When playing with some PAM modules for my own projects, I came
+> > > across some implications of pam_timestamp (which is part of
+> > > upstream linux-pam) that should probably be addressed.
+> > > 
+> > > Most importantly, there seems to be a path traversal issue:
+> > 
+> > Thanks, Sebastian!  The issue has been fixed in upstream linux-pam by commit
+> > https://git.fedorahosted.org/cgit/linux-pam.git/commit/?id=Linux-PAM-1_1_8-32-g9dcead8
+> 
+> Thanks for taking care. I was about to write a patch on my own, but seems
+> not necessary anymore.
+> 
+> However, I think that
+> 
+> +	if (!strlen(tty) || !strcmp(tty, ".") || !strcmp(tty, "..")) {
+> 
+> could be insufficient.
+
+There is a code in check_tty() that handles '/':
+	if (strchr(tty, '/') != NULL) {
+		...
+		tty = strrchr(tty, '/') + 1;
+	}
+
+> Any occurence of "." inside tty name should be evil.
+
+Strange - yes, but why evil?
+
+> Above strcmp() matches exactly "." or "..",
+> but you also want "../../" etc which should pass above check.
+
+After commit 9dcead8, check_tty() handles all such cases.
+
+> For the ruser check, the strchr(ruser, '/') safes this, but
+> ".." occurence may also be treatened appropriately.
+
+Commit 9dcead8 also makes get_ruser() reject "." and ".." as invalid
+ruser values.
 
 
-Hi Alexander,
+-- 
+ldv
 
-
-Solar Designer <solar@...nwall.com> writes:
->
->With bzip2, the irony is that most(?) distros incur this performance
->impact anyway, because most processing occurs in libbz2, which is
->typically linked to bzip2 dynamically, and the dynamic library is built
->as PIC (should be same performance impact as PIE).
-
-Yeah, this is something that I was thinking about early on in my
-research here.  There seems to be reluctance to adopt PIE in a more
-widespread manner, yet it seems that real-world applications (as
-opposed to synthetic benchmarks) are doing plenty of work in DSOs, so
-therefore are *already* feeling the PIC performance hit.
-
-e.g. the Ogg Vorbis example from Wikipedia:
-<http://en.wikipedia.org/wiki/File:Ogg_vorbis_libs_and_application_dia.svg>
-At least for this particular case, it looks like libs are where the
-work happens, and the program is just a frontend.
-
->I'd expect nearly zero performance impact for x86_64.  The paper says
->there's "average overhead of 3.61% and a geometric mean of 2.34%", but
->given this arch's PC-relative addressing it is unclear to me where the
->impact is coming from.  Having manually changed some x86_64 assembly
->code in JtR -jumbo from absolute to PC-relative addressing, I saw no
->performance impact at all (although I tested only on a handful of CPU
->types) - and this is for 100% CPU-bound code.  Is gcc doing something
->dumb, or are there CPUs where PC-relative addressing has performance
->impact, or is it indirect effect via code size increase (did it
->increase? why? IIRC, it didn't for me), or was the test flawed?
-
-
-Based on some responses I've received so far, I'm getting the
-impression that the current gcc toolchain perhaps isn't set up in a
-way to to PIE in an optimal manner.  But I don't have enough low-level
-understanding of this stuff to confirm or deny that.  See in
-particular:
-<https://lists.fedoraproject.org/pipermail/devel/2013-April/181062.html>
-
-
-Thank you,
-   Will Dormann
-
-=============================
-Vulnerability Analyst
-CERT Coordination Center
-4500 Fifth Ave.
-Pittsburgh, PA 15213
-1-412-268-7090
-=============================
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
-
-iQEVAwUBUwDgtkFiFe3xVPtiAQL77QgAss/HXNL9yfzNszbPbx7SJvBcLSwKNyLW
-yjQOngLEN97gVINfEVjhVKsM7oEsTgtKj7BiE4AITbYhAoftYudTE0EDI7+e2XUC
-GiAELYcQgKn1hPq7R5zo/Dgaoz3Zg0groK/GIv/jf9AnnoTRKeVwDnYVkzn/EU8B
-gad859Ow7TSK4Py9eADH18mksLPKZpDGwjNSG04YiJqAOYokiyUvLUpn6HPTKVtF
-dznEWmPMlIxeR68xEei6XlpoDVQkc7k/pqqU4GU7AImhA3D5AZdWwQRsee/+bYRN
-P/zTDViyiQX0l13Gb9vuyzjNgbrIAoAUTCbXwC9AhgPiekliCzLhrA==
-=FfdX
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
