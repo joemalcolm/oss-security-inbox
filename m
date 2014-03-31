@@ -1,65 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/10/2
-Message-ID: <5460E62D.6030801@collabora.co.uk>
-Date: Mon, 10 Nov 2014 16:22:05 +0000
-From: Simon McVittie <simon.mcvittie@...labora.co.uk>
-To: "dbus@...ts.freedesktop.org" <dbus@...ts.freedesktop.org>,  oss-security@...ts.openwall.com
-Subject: CVE-2014-7824: D-Bus denial of service via incomplete fix for CVE-2014-3636
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/11
+Message-ID: <20140331161019.GG2642@sentinelchicken.org>
+Date: Mon, 31 Mar 2014 09:10:20 -0700
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVEs, Crypto and "vulnerabilities"
 Content-Type: text/plain; charset=utf-8
 
-CVE: CVE-2014-7824
-Tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=85105
-Impact: local denial of service
-Access required: local
-Versions believed to be vulnerable: dbus >= 1.3.0
-Fixed in: dbus 1.6.x >= 1.6.26, 1.8.x >= 1.8.10, all versions >= 1.9.2
-Credit: discovered by Simon McVittie at Collabora Ltd.
-
-D-Bus <http://www.freedesktop.org/wiki/Software/dbus/> is an
-asynchronous inter-process communication system, commonly used
-for system services or within a desktop session on Linux and other
-operating systems.
-
-The patch issued by the D-Bus maintainers for CVE-2014-3636 was based on
-incorrect reasoning, and does not fully prevent the attack described as
-"CVE-2014-3636 part A", which is repeated below. Preventing that attack
-requires raising the system dbus-daemon's RLIMIT_NOFILE (ulimit -n) to a
-higher value. CVE-2014-7824 has been allocated for this vulnerability.
-
-To avoid propagating that higher limit to activatable system services,
-it is desirable to start the system dbus-daemon as root so it can store
-its previous limit, raise its limit, drop root privileges (which its
-default configuration will do automatically), and restore the previous
-limit before launching activatable services. Some operating system
-distributions, such as anything using the upstream-supplied systemd
-units, start the system dbus-daemon as root already; others, such as
-Debian 7, currently start the system dbus-daemon under its less
-privileged uid and will need minor modifications to their init scripts.
-
-This is fixed in dbus 1.6.26, 1.8.10 and 1.9.2, released today. The
-patch used in 1.8.x and 1.9.x is attached; it applies to 1.6.x with
-trivial adjustments. Older versions are no longer security-supported by
-the D-Bus maintainers, but any distributions needing those versions are
-invited to share backported security fixes in the appropriate upstream
-branches (dbus-1.4, etc.).
-
-Attack details (repeating CVE-2014-3636 part A):
-
-By queuing up the maximum allowed number of fds, a malicious sender
-could reach the system dbus-daemon's RLIMIT_NOFILE (ulimit -n, typically
-1024 on Linux). This would act as a denial of service in two ways:
-
-* new clients would be unable to connect to the dbus-daemon
-* when receiving a subsequent message from a non-malicious client that
-  contained a fd, dbus-daemon would receive the MSG_CTRUNC flag,
-  indicating that the list of fds was truncated; kernel fd-passing APIs
-  do not provide any way to recover from that, so dbus-daemon responds
-  to MSG_CTRUNC by disconnecting the sender, causing denial of service
-  to that sender
-
--- 
-Simon McVittie, Collabora Ltd.
-for the D-Bus maintainers
+> I understand CVE guidance as "security issue in CVE sense, when
+> assumptions for code are not met by the implementation"
+> 
+> It is not clear what the assumption is here, what should be the result of the encryption
+> and where should it be stored?
+> 
+> Is it mostly obfuscation? Or secure storage of content?
 
 
-View attachment "0001-CVE-2014-7824-set-fd-rlimit-to-64k-for-the-system-db.patch" of type "text/x-patch" (13021 bytes)
+This is a good way to frame the question.
+
+It isn't clear to me, in this specific instance, how the tokens are
+used or how an attacker could mess with the ciphertext.  This is
+simply because I'm too busy to read up on the issue.
+
+However, in general, here's the typical assumptions developers make
+about encryption (with ECB mode) and how the implementation fails to
+meet those:
+
+1. ECB mode encryption provides secrecy
+
+   - Partially fails this assumption since repeated plaintext blocks
+     result in repeated ciphertext blocks
+
+
+2. ECB mode encryption provides integrity
+
+   - Badly fails this assumption since ciphertext blocks can be
+     duplicated/swapped, rearranged at will.  If due to the context of
+     the encryption, if an attacker can conduct a partial
+     chosen-plaintext attack, typically whole ciphertexts can be
+     forged.
+
+
+So depending on the context, it is clear that this could qualify for a
+CVE in a well-defined way.
+
+tim
