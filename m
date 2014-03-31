@@ -1,41 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/3
-Message-ID: <5456F860.5030909@redhat.com>
-Date: Mon, 03 Nov 2014 14:37:04 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/5
+Message-ID: <20140331094212.GD6862@suse.de>
+Date: Mon, 31 Mar 2014 11:42:12 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: unzip -t crasher
+Subject: Re: CVEs, Crypto and "vulnerabilities"
 Content-Type: text/plain; charset=utf-8
 
-On 11/03/2014 05:06 AM, Jakub Wilk wrote:
-> Latest American fuzzy lop[0] tarball[1] contains a zip file that crashes
-> unzip -t:
->
-> $ unzip -qt afl-0.43b/docs/samples/unzip_t_malloc.zip
-> foo/:  mismatching "local" filename (™/UT),
->          continuing with "central" filename version
-> *** Error in `unzip': free(): corrupted unsorted chunks:
-> 0x00000000015d0170 ***
->
-> I'm not sure if inclusion of said zip file was intentional, but since
-> the cat is already out of the bag, I thought I'll let you know.
->
-> [0] https://code.google.com/p/american-fuzzy-lop/
-> [1] http://lcamtuf.coredump.cx/afl.tgz
->
+On Mon, Mar 31, 2014 at 08:31:18PM +1100, Michael Samuel wrote:
+> On 31 March 2014 17:26, Kurt Seifried <kseifried@...hat.com> wrote:
+> > So the line in the sand is moving currently, I think this issue is
+> > another good example of something that may qualify for a CVE, or maybe
+> > not, depends where we draw the line.
+> >
+> > https://github.com/opencart/opencart/issues/1279
+> >
+> > So if someone has strong opinions either way please speak up.
+> 
+> This looks like an easily exploitable bug.  What possible reason could there
+> be for it not qualifying?
+> 
+> If somebody wrote an exploit would it be disqualified just because the author
+> doesn't understand?
 
-Hi,
+I understand CVE guidance as "security issue in CVE sense, when
+assumptions for code are not met by the implementation"
 
-I had a quick look at unzip-6.0-12.fc20. It did not crash there for me 
-but there are invalid reads and an invalid write.
+It is not clear what the assumption is here, what should be the result of the encryption
+and where should it be stored?
 
-For the invalid write, the problem may manifest here in memextract():
+Is it mostly obfuscation? Or secure storage of content?
 
-2282             memcpy((char *)tgt, (char *)G.inptr, (extent)G.incnt);
 
-On my system, G.incnt was 52729.
-
-Cheers,
-
---
-Murray McAllister / Red Hat Product Security
+Ciao, Marcus
