@@ -1,56 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/14
-Message-ID: <CAEZyo3DAOuTJcYv0jzGE5bT4HX0dHiDmk5mJqEDQXk0tsX2_Jw@mail.gmail.com>
-Date: Tue, 9 Sep 2014 11:57:11 +0300
-From: Mikko Korpela <mikko.korpela@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: pinocchio tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/7
+Message-ID: <20140331105711.GB8904@suse.de>
+Date: Mon, 31 Mar 2014 12:57:11 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: pam_timestamp internals
 Content-Type: text/plain; charset=utf-8
 
-I would say that the major impact for test automation tool for using a
-fixed location for some file is that there can't be more then one
-instance of that tool running on the same machine. Which is an issue
-when you try to scale your testing.
+Hi
 
-Test automation on the other hand IMHO requires that we are working in
-a secure sand box. If there is a malicious user on the same machine
-then I bet things have already gone very wrong somewhere else.
 
-Ystävällisin terveisin ;) ,
-Mikko
+On Mon, Mar 31, 2014 at 02:32:09PM +0400, Dmitry V. Levin wrote:
+> Hi,
+> 
+> On Mon, Mar 24, 2014 at 01:46:43PM +0100, Sebastian Krahmer wrote:
+> > When playing with some PAM modules for my own projects, I came
+> > across some implications of pam_timestamp (which is part of
+> > upstream linux-pam) that should probably be addressed.
+> > 
+> > Most importantly, there seems to be a path traversal issue:
+> 
+> Thanks, Sebastian!  The issue has been fixed in upstream linux-pam by commit
+> https://git.fedorahosted.org/cgit/linux-pam.git/commit/?id=Linux-PAM-1_1_8-32-g9dcead8
 
-2014-09-09 11:34 GMT+03:00 Steve Kemp <steve@...ve.org.uk>:
->> I have to say I don't understand at all why someone would be going
->> through random packages from PyPi (especially test automation related)
->> and searching for possible security issues.
->
->   Because although the chances of them being exploited are low they
->  are genuine issues which have security implications.
->
->   There is copious documentation online about how file races are
->  bad, including this quick reference:
->
->     https://www.securecoding.cert.org/confluence/display/seccode/FIO21-C.+Do+not+create+temporary+files+in+shared+directories
->
->   PyPi?  've no idea why that was chosen, but I expect because it
->  is a large mass of code that has had little similar attention paid
->  to it in the past.  node.js will probably be next, I'm sure lots of
->  modules exist created by inexperienced developers who haven't
->  considered the implications of posting new code libraries.
->
->   I did something similar looking for /tmp abuses in Debian
->  packages, via a very very automated scan:
->
->     http://blog.steve.org.uk/luonnos_viesti___31_hein_kuu_2014.html
->
->   Finding these issues was distressingly easy, and although in the
->  real world the chances of significant impact are minimal they were
->  genuine issues that should be reported and fixed.
->
-> Steve
-> --
+Thanks for taking care. I was about to write a patch on my own, but seems
+not necessary anymore.
+
+However, I think that
+
++	if (!strlen(tty) || !strcmp(tty, ".") || !strcmp(tty, "..")) {
+
+could be insufficient. Any occurence of "." inside tty name
+should be evil. Above strcmp() matches exactly "." or "..",
+but you also want "../../" etc which should pass above check.
+
+For the ruser check, the strchr(ruser, '/') safes this, but
+".." occurence may also be treatened appropriately.
+
+Sebastian
 
 
 
 -- 
-Mikko Korpela
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
