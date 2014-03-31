@@ -1,77 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/16/5
-Message-ID: <CAP145pj5Ja38Pc_Ph26XWDu9745F4sttX_WziFRZVgMra3jAbw@mail.gmail.com>
-Date: Sun, 16 Nov 2014 23:58:25 +0100
-From: Robert Święcki <robert@...ecki.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/2
+Message-ID: <53390AA5.2080600@redhat.com>
+Date: Mon, 31 Mar 2014 00:26:45 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: CVEs, Crypto and "vulnerabilities"
 Content-Type: text/plain; charset=utf-8
 
-2014-11-16 21:59 GMT+01:00 Joshua Rogers <oss@...ernot.info>:
-> On 17/11/14 07:43, Michal Zalewski wrote:
->>> However, even if tools like file/ndisasm/gimp/readelf can be used by
->>> > many (w/o strong system isolation boundaries) to analyze untrusted
->>> > inputs (for reverse engineering, malware analysis and similar
->>> > purposes) - I'd simply put a blame on those users
->> Well, it's always the easy option, but keep in mind that there are
->> countless tutorials that tell people to use 'file' or 'strings' to
->> examine sketchy file, or use tools such as objdump to do hobby
->> forensics.
-> I agree with Michal on this.
-> It's like saying Ritchie's fault for the fact that C does not have
-> inbuilt bound checking, allowing for buffer overflows...
-> I won't really expand on this, but my opinion is that _any_ program that
-> is 'trusted', such as `file' and `strings', that contains a flaw in it
-> that could pwn the running user, is a security risk.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Depends on the definition of trusted I guess.
+So the line in the sand is moving currently, I think this issue is
+another good example of something that may qualify for a CVE, or maybe
+not, depends where we draw the line.
 
-Trust (or, to be more precise, certain level of trust) must be
-acquired - either by seeing and evaluating the code ourselves, or by
-trusting somebody's else expertise (auditors that we might hire or
-people whose knowledge and skills we believe in), or by trusting the
-community's continuous review processes in case of projects that have
-sufficient attention of security-minded engineers.
+https://github.com/opencart/opencart/issues/1279
 
-Not to play saint here - it happened to me as well that I used
-'strings' on files that I did not completely trusted, but I can only
-say that it was my fault, no matter how strings' counter-intuitive
-behavior was.
+So if someone has strong opinions either way please speak up.
 
-> I'll also add, from the `file' manpage:
->>   There has been a file command in every UNIX since at least Research
->> Version 4 (man page dated November, 1973).  The System V version intro‐
->>      duced one significant major change: the external list of magic
->> types.  This slowed the program down slightly but made it a lot more
->> flexible.
-> `file' is also used by internals of most programs that handle any input
-> too. Or some variant of it(probably libmagic).
->
->
-> And one last point.. `vlc' is used with untrusted input(i.e .mp4s, avis,
-> mp3s, etc.). If somebody gets pwned because they try to watch a video
-> they download, is it their fault?..
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-It's something else than 'blame the victim'..
-
-The criminal liability would be on the attacker's side, but if
-"somebody's" objective (esp. in a professional context) is not to get
-pwnd (or let others be pwnd) then the lack of understanding (to the
-technically best possible degree) of technologies used would be their
-fault.
-
-Having said that - I'm completely for continuous improvement of tools
-available to users who don't have technical expertise to perform this
-kind of  security analysis themselves. And there are many efforts
-related to his goal (various types of client sandboxes bundled with
-client projects, as well as code review and testing/fuzzing performed
-by various companies and individuals), so maybe in time we'll be able
-to run strings/file on untrusted inputs. Just, I don't think it'll
-happen by the virtue of fuzzing, more by changing execution paradigms
-- and those tools will run in local sandboxes/VMs/fault isolation
-containers, or on the cloud (where the problem of isolation would be
-somebody else's problem), and all we'll see will be just input/output
-in a terminal (e.g. in a web browser).
-
--- 
-Robert Święcki
+iQIcBAEBAgAGBQJTOQqkAAoJEBYNRVNeJnmTrNAP/3SI4itDSx80AewQ9TlgDqEG
+r9K8Zt+XfXrez3nyGmopiQ1vHfwqCB3fU5gjzzUyVgc18i0Wq7E0bBGhz+zdtpx5
+5JsvC0zf4sWNr3yd12ZX+bU1uOHp2zjM+b3ZKqrrLV5pAk3c3Ut8DGwS4lg+nGzZ
+fyTsRACcZ6xoBfZVlCQgRuG88bdd2hRyQRlYQcXDrxrO7IjM3QMLA2TKrbyWMbd3
+KAtMcsPtYfG17X8L4nC8oykOuuNhYF+7M4aG8HOpHq9rTjK/M8Vobtsr/q2omlB6
+kfQ4d4yeP7wQWI8Y0vw5IqQOv6KLhFQUTXN88c/7/ZwqmAjDc4kpUeBuq/LBt6gV
+3FsQQeVhWaVJt19XWhmtJkipqjARRB+JgBcaeat2FWXtyKrXD8OifesvzxT76f68
+/lGYJg3hBuYhdPTHTfK/X9s/5GfQudd13tgW1L3gCFrH6a2ihj7KAzRaefoGEZ1D
+lkjHXTxas4KFQplBuougpfhpa0lgUaTazvlWFfXFjcG0wWZOVcv5W4Ab1qBsJiNk
+OC5vX/dXQ0KYChaaOFfub+dTyHstHgkYr3hGqeAfOnUv8nozC1PMUeOc8FeSU97v
+Tu9p4NivDuIririkyFR9P5KFIeus6+WHwMxJdZ65wu9lyNfG/dLc5qBqLEAtjo9F
+WbaS0jWRgMKBrBEBjYyf
+=csSm
+-----END PGP SIGNATURE-----
