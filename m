@@ -1,38 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/8
-Message-ID: <540EA23E.5050104@redhat.com>
-Date: Tue, 09 Sep 2014 00:46:22 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, Trevor Jay <tjay@...hat.com>
-Subject: headintheclouds tmp vulns - also request for referees decision on tmp vulns in deployment tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/9
+Message-ID: <20140331115307.GC8904@suse.de>
+Date: Mon, 31 Mar 2014 13:53:07 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: pam_timestamp internals
 Content-Type: text/plain; charset=utf-8
 
-So in theory this is software is used for docker provisioning thing, so
-there shouldn't be any users on the docker image while it's being
-deployed (or indeed any software pretty much at all), so part of me
-wants to say this shouldn't qualify for a CVE if used normally, however
-it is a pretty blatant tmp vuln. So for the sake of starting a
-conversation about tmp vulns on systems that shouldn't have any users or
-ways to exploit the tmp vuln I'm posting this one. Basically if a tree
-falls in the forest but no beavers were present does anyone care that a
-lumber jack might get squashed?
+Hi
 
-https://pypi.python.org/pypi/headintheclouds
-headintheclouds-0.5.2/headintheclouds/tasks.py
+On Mon, Mar 31, 2014 at 03:37:02PM +0400, Dmitry V. Levin wrote:
+> On Mon, Mar 31, 2014 at 12:57:11PM +0200, Sebastian Krahmer wrote:
+> > On Mon, Mar 31, 2014 at 02:32:09PM +0400, Dmitry V. Levin wrote:
+> > > On Mon, Mar 24, 2014 at 01:46:43PM +0100, Sebastian Krahmer wrote:
+> > > > When playing with some PAM modules for my own projects, I came
+> > > > across some implications of pam_timestamp (which is part of
+> > > > upstream linux-pam) that should probably be addressed.
+> > > > 
+> > > > Most importantly, there seems to be a path traversal issue:
+> > > 
+> > > Thanks, Sebastian!  The issue has been fixed in upstream linux-pam by commit
+> > > https://git.fedorahosted.org/cgit/linux-pam.git/commit/?id=Linux-PAM-1_1_8-32-g9dcead8
+> > 
+> > Thanks for taking care. I was about to write a patch on my own, but seems
+> > not necessary anymore.
+> > 
+> > However, I think that
+> > 
+> > +	if (!strlen(tty) || !strcmp(tty, ".") || !strcmp(tty, "..")) {
+> > 
+> > could be insufficient.
+> 
+> There is a code in check_tty() that handles '/':
+> 	if (strchr(tty, '/') != NULL) {
+> 		...
+> 		tty = strrchr(tty, '/') + 1;
+> 	}
 
-    remote_scripts_directory = '/tmp/bootstrap_scripts'
-    sudo('mkdir -p %s' % remote_scripts_directory)
-    for path in sorted(scripts):
-        filename = os.path.basename(path)
-        remote_script = '%s/%s' % (remote_scripts_directory, filename)
-        put('bootstrap/%s' % filename, remote_script, use_sudo=True)
-        run('source %s' % remote_script)
+Ok, I was missing this; so it makes sense to just use strcmp().
 
+> 
+> > Any occurence of "." inside tty name should be evil.
+> 
+> Strange - yes, but why evil?
+
+Any strange input in authentication code considered evil. :)
+
+thx,
+Sebastian
 
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
