@@ -1,48 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/10
-Message-ID: <20140216212314.GF8901@symphytum.spacehopper.org>
-Date: Sun, 16 Feb 2014 21:23:14 +0000
-From: Stuart Henderson <stu@...cehopper.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/3
+Message-Id: <789CC1B7-3B4F-456D-B90D-39AB11B012EB@stufft.io>
+Date: Mon, 31 Mar 2014 03:07:45 -0400
+From: Donald Stufft <donald@...fft.io>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: CVEs, Crypto and "vulnerabilities"
 Content-Type: text/plain; charset=utf-8
 
-On 2014/02/16 11:01, Christos Zoulas wrote:
-> On Feb 16,  2:28pm, stu@...cehopper.org (Stuart Henderson) wrote:
-> -- Subject: Re: [oss-security] Vendor adoption of PIE INFO#934476 oss-securit
-> 
-> | By the way, OpenBSD has switched compilers to generating PIE code by
-> | default on the majority of architectures, various arch's over the last
-> | couple of releases, but as of a couple of months ago we've also done
-> | this for i386 (x86) too, so I can give some specific examples of
-> | where you can expect to run into problems.
-> | 
-> | On amd64 (x86_64) fallout has been mostly limited to compilers and a
-> | couple of other programs, e.g. emacs, qemu, clisp, erlang, ghc, sbcl,
-> | which we are building with PIE disabled.
-> | 
-> | Additionally for i386 there have been problems with register pressure
-> | on programs with their own asm code (mostly games), in particular
-> | code doing cpuid checks often doesn't save/restore %ebx, but there
-> | have been some others. In one case there was code for x86 OSX which
-> | avoids scribbling on %ebx which we've been able to borrow, and I think
-> | there were one or two where we've switched from asm to a generic C
-> | implementation. Of course, shared libraries already have to take
-> | this into account so not too much trouble there.
-> | 
-> | Everything else, base system and ports, is built with PIE.
-> | On the whole, experiences have been pretty good. Obviously there is
-> | some performance impact but we haven't yet had any reports of this
-> | causing major problems (though we will probably know more about this
-> | after 5.5 is released when the average user will first see i386
-> | packages built with PIE by default).
-> 
-> Are you doing any RELRO work?
-> 
-> christos
+I definitely think bad choices of algorithms, modes, and constructions should qualify. 
 
-AIUI this was added in binutils 2.16, so I don't believe we have
-support for it in our toolchain yet (we're currently using 2.15 on
-most architectures, the last attempt at updating had to be backed
-out due to a number of problems experienced in ports).
-
+> On Mar 31, 2014, at 2:26 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> So the line in the sand is moving currently, I think this issue is
+> another good example of something that may qualify for a CVE, or maybe
+> not, depends where we draw the line.
+> 
+> https://github.com/opencart/opencart/issues/1279
+> 
+> So if someone has strong opinions either way please speak up.
+> 
+> - -- 
+> Kurt Seifried Red Hat Security Response Team (SRT)
+> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+> 
+> iQIcBAEBAgAGBQJTOQqkAAoJEBYNRVNeJnmTrNAP/3SI4itDSx80AewQ9TlgDqEG
+> r9K8Zt+XfXrez3nyGmopiQ1vHfwqCB3fU5gjzzUyVgc18i0Wq7E0bBGhz+zdtpx5
+> 5JsvC0zf4sWNr3yd12ZX+bU1uOHp2zjM+b3ZKqrrLV5pAk3c3Ut8DGwS4lg+nGzZ
+> fyTsRACcZ6xoBfZVlCQgRuG88bdd2hRyQRlYQcXDrxrO7IjM3QMLA2TKrbyWMbd3
+> KAtMcsPtYfG17X8L4nC8oykOuuNhYF+7M4aG8HOpHq9rTjK/M8Vobtsr/q2omlB6
+> kfQ4d4yeP7wQWI8Y0vw5IqQOv6KLhFQUTXN88c/7/ZwqmAjDc4kpUeBuq/LBt6gV
+> 3FsQQeVhWaVJt19XWhmtJkipqjARRB+JgBcaeat2FWXtyKrXD8OifesvzxT76f68
+> /lGYJg3hBuYhdPTHTfK/X9s/5GfQudd13tgW1L3gCFrH6a2ihj7KAzRaefoGEZ1D
+> lkjHXTxas4KFQplBuougpfhpa0lgUaTazvlWFfXFjcG0wWZOVcv5W4Ab1qBsJiNk
+> OC5vX/dXQ0KYChaaOFfub+dTyHstHgkYr3hGqeAfOnUv8nozC1PMUeOc8FeSU97v
+> Tu9p4NivDuIririkyFR9P5KFIeus6+WHwMxJdZ65wu9lyNfG/dLc5qBqLEAtjo9F
+> WbaS0jWRgMKBrBEBjYyf
+> =csSm
+> -----END PGP SIGNATURE-----
