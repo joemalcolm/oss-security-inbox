@@ -1,19 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/11
-Message-ID: <CALCETrWJhUYX_rLYUe29SWSVWPJfV13VzZzN4cF_m8dJJJy-+A@mail.gmail.com>
-Date: Tue, 22 Apr 2014 14:37:51 -0700
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/4
+Message-ID: <CACYkhxj6Lzg2izRTP4P3bbjLVKtpJRJZiU1vD+ffVN8gzJZUsw@mail.gmail.com>
+Date: Mon, 31 Mar 2014 20:31:18 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0181: Linux network reconfiguration due to incorrect netlink checks
+Subject: Re: CVEs, Crypto and "vulnerabilities"
 Content-Type: text/plain; charset=utf-8
 
-It is possible to reconfigure the network on Linux by calling write(2)
-on an appropriately connected network socket.  By passing such a
-socket as stdout or stderr to a setuid program, anyone can reconfigure
-the network.
+On 31 March 2014 17:26, Kurt Seifried <kseifried@...hat.com> wrote:
+> So the line in the sand is moving currently, I think this issue is
+> another good example of something that may qualify for a CVE, or maybe
+> not, depends where we draw the line.
+>
+> https://github.com/opencart/opencart/issues/1279
+>
+> So if someone has strong opinions either way please speak up.
 
-Eric Biederman sent patches to netdev containing a possible fix.
+This looks like an easily exploitable bug.  What possible reason could there
+be for it not qualifying?
 
--- 
-Andy Lutomirski
-AMA Capital Management, LLC
+If somebody wrote an exploit would it be disqualified just because the author
+doesn't understand?
+
+Regards,
+  Michael
