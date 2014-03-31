@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/5
-Message-Id: <201405150356.s4F3uQCO025457@linus.mitre.org>
-Date: Wed, 14 May 2014 23:56:26 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/10
+Message-Id: <201403311602.s2VG2SpK004419@linus.mitre.org>
+Date: Mon, 31 Mar 2014 12:02:28 -0400 (EDT)
 From: cve-assign@...re.org
-To: dolevf87@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Zenoss Open Source monitoring System - Open Redirect & Stored XSS Vulnerabilities
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2013-7348 CVE-2014-2678 Linux kernel aio and rds issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> A persistent XSS vulnerability was found in Zenoss core, by creating a
-> malicious host with [[XSS] in the title]
+Here are two CVE assignments for Linux kernel issues:
 
-As far as we call tell, this crosses privilege boundaries. Chapter 11
-of the Zenoss Core Administration documentation suggests that there
-can be multiple accounts with different privileges. The wtmdsz24evo
-video shows the attack taking place in the context of the "dolev" user
-account.
+CVE-2013-7348 is for the
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=d558023207e008a4476a3b7bb8706b2a2bf5d84f
+"aio: prevent double free in ioctx_alloc" commit.
 
-Use CVE-2014-3738.
-
-
-> Open Redirect vulnerability.
-> zport/acl_users/cookieAuthHelper/login_form?came_from=
-
-Use CVE-2014-3739.
+CVE-2014-2678 is for "[PATCH v2] rds: prevent dereference of a NULL
+device in rds_iw_laddr_check" in the
+https://lkml.org/lkml/2014/3/29/188 post (not yet available at
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/net/rds/iw.c).
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -36,11 +30,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTdDqFAAoJEKllVAevmvmsdMMIAIoHp40s8G9FdEfvp4EkFzoG
-FUcOhPnX96jwKJQb8N7zQtUjzUfZfQJjaNTZjXhCH4xqpADfCSxO8QFVBnJWsbov
-icI2H72yYas14kIjIBHEZOCtIW/Mq9xuBWFi9h5PVAWzgTCw2/bWwAYrU7MuNz5W
-HNLq4OPSRMLQYjpHmDWvhW/VQIUpA+uzL46g9yb0qNFcqNQHgRNIASx+G4cwFGBN
-Ay5M69NEUY8t9r+ybhCGJWGK9Td5XxGrPvFApouta8yMvaujmoX32tUAvwOREerT
-9J5WCE6YI/TU5GJMVbt+zE6e1u2qEDUvK2K1vyuWYAtQfp/frfxmVYpYOLfJoU0=
-=Peud
+iQEcBAEBAgAGBQJTOZDWAAoJEKllVAevmvmscEkH/1nCMgzKU6Ce9GfIn8eFdKl8
+l6swoOC7OwWupOSA2YdL8IwiIoPTzAIW8M955EY+tXEQV2A3AE4XlClsnO/mIHOi
+wfkk/8DedeKcmDyeEaWvVvcrA+HdGwjhP6tifibgEcvl4mMMP5laQc44C6OLuSo1
+85Xt1ujjOKbNfJs09ddRzlEP0nsLngVOd/b17YurjTs/79pO7Opq47FRY29pNs7x
+clPFdWV711cwFVRHbHqp9ScUp3ZU+YYZBnCdm05gpdCQeDl4GhIafZgGc/+F+E7d
+gUUPzEHZmKUtTiF5+sfdE0za51rKEehHhUrOGkbIBR27ouI58fiK3TU6DuWTPPs=
+=neLd
 -----END PGP SIGNATURE-----
