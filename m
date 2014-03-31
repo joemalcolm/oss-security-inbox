@@ -1,77 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/19
-Message-Id: <201404101912.s3AJCmws017794@linus.mitre.org>
-Date: Thu, 10 Apr 2014 15:12:48 -0400 (EDT)
-From: cve-assign@...re.org
-To: felix@...but.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Session IP check bypass in Roundcube 1.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/12
+Message-ID: <20140331204204.GA27032@gremlin.ru>
+Date: Tue, 1 Apr 2014 00:42:04 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: GOST 28147-89 gets 512 bit and 1 kbit keys
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello list!
 
-> Roundcube 1.0-beta added support for the the X-Forwarded-For and
-> X-Real-IP HTTP headers when the check_ip configuration option is set.
-> This effectively allows the attacker to bypass the session IP check
-> completely by setting one of these headers to the victim's IP address.
-> 
-> The problem is still present in the latest version (1.0).
-> 
-> http://trac.roundcube.net/ticket/1489729
-> http://trac.roundcube.net/ticket/1486776
+The GOST 28147-89 block cipher celebrates its' 25-years jubilee this
+year. First published in 1989, it's one of the oldest (if not the most)
+of all symmetric block ciphers which are currently in use.
 
-This can potentially have a CVE ID, but we are not sure about the
-threat models in which this is or isn't a vulnerability. Obviously a
-header such as X-Forwarded-For often can be easily spoofed, and the
-actual source IP address visible to the server usually cannot be
-easily spoofed. In either case, apparently the entire goal of checking
-an address value is to provide an additional defense in a case where
-the attacker has already exploited another problem and knows the
-session secret. A product is, more or less, entitled to have that
-goal, even though the goal may seem unimportant.
+Original publishing describes possible key sizes of 32, 64, 128 and 256
+bits. However, the internal representation of key data consists of 32
+subkeys of 32 bits each - for example, when the 256 bits key is split
+into 8 subkeys k0...k7 of 32 bits each, the internal keys are:
 
-Checking only the source IP address is useful in this threat model:
-the attacker knows (or can guess) the IP address of the victim's
-machine, and the attacker has no easy way to establish a TCP session
-from the victim's external IP address. (For example: the victim and
-attacker aren't located on the same intranet.) Also, for functionality
-reasons, the expectation is that the external IP address of a
-legitimate user does not change during a session.
+int: 00 01 02 03 04 05 06 07  08 09 10 11 12 13 14 15
+sub: k0 k1 k2 k3 k4 k5 k6 k7  k0 k1 k2 k3 k4 k5 k6 k7
 
-Checking X-Forwarded-For is useful in this threat model: the attacker
-doesn't know (and can't guess) the IP address of the victim's machine,
-but the attacker does have an easy way to establish a TCP session from
-the same external IP address as the victim, and an X-Forwarded-For
-header is inserted by a legitimate proxy server.
+int: 16 17 18 19 20 21 22 23  24 25 26 27 28 29 30 31
+sub: k0 k1 k2 k3 k4 k5 k6 k7  k7 k6 k5 k4 k3 k2 k1 k0
 
-For other products, there's sometimes a solution strategy in which
-X-Forwarded-For is checked only in cases where an external IP address
-is known to correspond to a proxy server that supplies correct
-X-Forwarded-For headers. However, the question here is not whether the
-product should have adopted that strategy or any other code change.
-The only immediate question is whether the
-http://trac.roundcube.net/changeset/4d480b36/github patch, by itself,
-is unambiguously introducing a vulnerability.
+(see http://en.wikipedia.org/wiki/GOST_28147-89)
 
-Our initial thought is that that patch is not unambiguously
-introducing a vulnerability, and thus no CVE ID should be assigned.
-The patch seems to be a design tradeoff that is worse in many cases
-but better in other cases.
+But now, the 512 bits and 1 kbit keys come to scene... For 512 bits key
+split into 16 subkeys k0...kF, the internal keys are:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+int: 00 01 02 03 04 05 06 07  08 09 10 11 12 13 14 15
+sub: k0 k1 k2 k3 k4 k5 k6 k7  k8 k9 kA kB kC kD kE kF
 
-iQEcBAEBAgAGBQJTRuy8AAoJEKllVAevmvmsA7oH/j17js5nN60bjLeuK5r/hN+y
-o/tlWbTEGKNSS2ny0VJTEuXItRMVcUBr9sNXg7zhPo2pn2tg/90qFnd8C1NG8bVY
-CaLimS/tzfU559I4Xm500RPtYyaUskEr26gUoxBVfBnhG0V+7n82TOaJrojmF3ej
-/PAZVus6lV4qmyrsAYTJkLsB0RgMNa2znM847ncqEPpwhH9T1qP/PorFLCZ7orJ0
-w8uj6chkLO083mwlSnlSK6OwZ9G1iLO/xjMwdS2SBdYpE8wEaihWXjdRqVpMSv/L
-rNYs2c52CKl0VF/rO97B4dgwz9ZtJIrqSFQePofRJzzdT1pblnW8Y9EDs1kSIFs=
-=U8Uc
------END PGP SIGNATURE-----
+int: 16 17 18 19 20 21 22 23  24 25 26 27 28 29 30 31
+sub: k7 k6 k5 k4 k3 k2 k1 k0  kF kE kD kC kB kA k9 k8
+
+and for 1 kbit key the internal keys are, obviously, just k00...k1F.
+
+Also, the number of rounds for 512 bits and 1 kbit keys encryption
+will be increased up to 48 and 64 respectively.
+
+This makes GOST 28147-89 the second (after Threefish) block cipher
+capable of using 512 bit and 1 kbit keys. Together with its' resistance
+against superpipelined bruteforcing (rumoured to be effectively used
+somewhere in South-Eastern Asia to break Rijndael), that means the "old
+horse" is still running.
+
+The updated standard will get the new GOST registry number from the
+GOST-R 34.xxx series and is expected to be published till the end of
+2014.
+
+So... Let's wait for its' appearance in OpenSSL :-)
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+
+Content of type "application/pgp-signature" skipped
