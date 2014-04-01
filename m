@@ -1,34 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/16
-Message-Id: <20140912184305.DFB14C50734@smtptsrv1.mitre.org>
-Date: Fri, 12 Sep 2014 14:43:05 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/5
+Message-Id: <201404011751.s31Hot6p003959@linus.mitre.org>
+Date: Tue, 1 Apr 2014 13:50:55 -0400 (EDT)
 From: cve-assign@...re.org
-To: alan.coopersmith@...cle.com
+To: carnil@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Confusion around gksu & CVE-2014-2943
+Subject: Re: CVE Request: Shaarli: Several XSS in index.php
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Several sites identify CVE-2014-2943 as being a vulnerability in gksu:
+> Multiple cross-site scripting vulnerabilities were reported in
+> Shaarli
 > 
-> https://community.rapid7.com/community/metasploit/blog/2014/07/07/virtualbox-filename-command-execution-via-gksu
-> http://www.securityfocus.com/bid/68427
-> 
-> But the Mitre & NVD databases use that CVE id for a different issue:
-> 
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-2943
-> https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-2943
+> https://github.com/sebsauvage/Shaarli/issues/134
+> https://github.com/sebsauvage/Shaarli/commit/53da201749f8f362323ef278bf338f1d9f7a925a
 
-> Anyone know what the right CVE is for the gksu bug?
-
-MITRE has been working on this for a few days but unfortunately hasn't
-received a definitive reply about the gksu CVE ID. For now, all we can
-say is that CVE-2014-2943 is currently a correct CVE ID for a Cobham
-Aviator satellite terminal issue. The correct CVE ID for the gksu
-issue is not CVE-2014-2943. We hope to resolve this by early next
-week.
+Use CVE-2013-7351.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -38,11 +27,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUEz5FAAoJEKllVAevmvmsB60IAKFE/iYOcjmhuE42YPEsC+1E
-Dq+ws8Epwurvn/v34WjpvxjZbdX5HApN8JBTaaM8u3n3cZXQFrAiWVc+NNCGVcFt
-uvQb/jx2SbsVrpaxvMebCws1CXm+LzNMRmPzhKWBl2NRWARb1OU0nwYc9NEIrFN5
-4Juj0MiQ8tFSqZ0FREjJZ+k34lNkDW0+MtEAWD2qpAeLWYmcbemBLol5SnIb7B3k
-9vAD56hcWBIATqh0KoihRLOg4phmnAyCrlB3mmRaUUzhpuz9XdSQVCgnrsHSCZgm
-qROKGv2UzrEZXfCF+KFnmji6dfNyBe12b/3GINftVopNlPl/Wiiypccr/jTZHLk=
-=9w8L
+iQEcBAEBAgAGBQJTOvwDAAoJEKllVAevmvmsKxMH/i/Uabd6Xi/o6C5RvRb7x3Kl
+ewJogaUG1cLFv3PjYpeYqSnoe1lyzMBcipGLVIZQp6EZS25p+CnMft3u9Te/CVMf
+wwGLQYsSO0Kz/uQZSNnshkUykqNvWF089/GCDwIQZtFfk8480Uh6sAP54Fv3DLo3
+4U2nSvCewE5ExFjMYDRI1KvxvY8P+3bbuPU5kKV1+RaWiq8Z0SZCxRIxz2+PL3G/
+BaBI9MWW9+Q11EzcFY/6khIPnPggevhoGgWKmEpkD+JBxEdKz125nPFO1d90Sygc
+mQLTHPUjVQ/b61CJJqULutA8UfWrG8r96PEC14220U0g/lB0o7ymazE07Dq29IQ=
+=Zu78
 -----END PGP SIGNATURE-----
