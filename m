@@ -1,63 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/10
-Message-ID: <CAE497qUwPV2Qa65fod-AzdLGEw4C_zkJLm4q18MSpUOOsDEX2Q@mail.gmail.com>
-Date: Wed, 4 Jun 2014 11:13:51 +0200
-From: Jose Carlos Luna Duran <jose.carlos.luna@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/3
+Message-ID: <533A6771.60407@redhat.com>
+Date: Tue, 01 Apr 2014 18:14:57 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com,  advisories <advisories@...xperts.de>, bugs@...uritytracker.com
-Subject: Re: Bug in bash <= 4.3 [security feature bypassed]
+Subject: CVE request: cacti "bug#0002405: SQL injection in graph_xport.php"
 Content-Type: text/plain; charset=utf-8
 
-In my opinion the drop of privs in bash was mostly a "help" measure
-for poorly written setuid programs executing system() calls. I don't
-think is the role of bash to do this as the problem that could be
-exploited by that would really be in the original program that does
-not drop privs before invoking the shell. This has been known for some
-time in some circles at least, but as I said the problem would really
-be in the non-priv-dropping privileged program, that's why most people
-did not really care that much. Last year there was a vuln that is very
-much related to this subject:
-http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
+Hi all,
 
-Correct me if I'm wrong, but even in that case there is another "help"
-measure that has been implemented at least in linux kernels > 3.1:
-http://lxr.free-electrons.com/source/kernel/sys.c?v=3.1#L628
+After seeing https://bugs.gentoo.org/show_bug.cgi?id=506356#c1 and 
+trying (unsuccessfully) to find a CVE-2014-2327 fix, I came across this 
+commit:
 
-Therefore setuid calls do not fail anymore even in the case of
-existing resource limits for processes (in linux).
+bug#0002405: SQL injection in graph_xport.php
 
-But in any case, for the sake of correctness I agree that the
-drop_priv code should be fixed (or just completely removed...).
+  - Fixed form input validation problems
+  - Fixed rrd export and graph shell escape issues
 
-2014-06-03 16:16 GMT+02:00 Hector Marco <hecmargi@....es>:
-> Hi everyone,
->
-> Recently we discovered a bug in bash. After some time after reporting
-> it to bash developers, it has not been fixed.
->
-> We think that this is a security issue because in some circumstances
-> the bash security feature could be bypassed allowing the bash to be a
-> valid target shell in an attack.
->
-> We strongly recommend to patch your bash code.
->
-> Why don't fix this bug by simple adding mandatory "if" clause ?
-> Any comments about this issue are welcomed.
->
->
-> Details at:
-> http://hmarco.org/bugs/bash_4.3-setuid-bug.html
->
->
->
-> Thanks you,
->
-> Hector Marco
-> http://hmarco.org
+http://svn.cacti.net/viewvc/cacti/branches/0.8.8/lib/rrd.php?r1=7437&r2=7439
 
+Can a CVE please be assigned? (I thought it may have been 
+"http://svn.cacti.net/viewvc?view=rev&revision=7393 -> 
+fix_quoting_in_rrd_command_CVE-2013-1435.patch -> CVE-2013-1435" from 
+"[oss-security] CVE request: SQL injection and shell escaping issues in 
+Cacti < 0.8.8b", but it seems like a different/new issue.)
 
+(Have not filed a Red Hat bug)
 
--- 
-Jose Carlos Luna Duran
-Network Software Engineering.
-Jose.Carlos.Luna@...il.com
+Cheers,
+
+--
+Murray McAllister / Red Hat Security Response Team
