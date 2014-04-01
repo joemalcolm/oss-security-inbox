@@ -1,45 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/16
-Message-ID: <CALx_OUBPhMpba+TA_7qpQt+s=NY99z5iGx091je-R4WEX+TYUQ@mail.gmail.com>
-Date: Thu, 16 Oct 2014 13:45:16 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: attacking hsts through ntp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/2
+Message-ID: <20140401045208.GA2420@lorien.valinor.li>
+Date: Tue, 1 Apr 2014 06:52:08 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Shaarli: Several XSS in index.php
 Content-Type: text/plain; charset=utf-8
 
-> The reason: HSTS preloaded sites are handled exactly the same way as
-> normal HSTS sites - they can expire.
+Hi
 
-I haven't looked at the actual code, but Adam Langley said this on
-another mailing list:
+Multiple cross-site scripting vulnerabilities were reported in
+Shaarli, which can be found in upstream issue[1].
 
----------- Forwarded message ----------
-From: Adam Langley <agl@...gle.com>
-Date: Thu, Oct 16, 2014 at 9:01 AM
-Subject: Re: NTP vs. HSTS
-To: Anne van Kesteren <annevk@...evk.nl>
-Cc: John Kemp <john@...mp.net>, "public-webappsec@...org"
-<public-webappsec@...org>
+ [1] https://github.com/sebsauvage/Shaarli/issues/134
 
+The issues were fixed upstream by commit
+53da201749f8f362323ef278bf338f1d9f7a925a [2].
 
-On Thu, Oct 16, 2014 at 8:11 AM, Anne van Kesteren <annevk@...evk.nl> wrote:
-> On Thu, Oct 16, 2014 at 5:01 PM, John Kemp <john@...mp.net> wrote:
->> https://www.blackhat.com/docs/eu-14/materials/eu-14-Selvi-Bypassing-HTTP-Strict-Transport-Security-wp.pdf
->
-> So the problem is that time synchronization does not happen over TLS.
-> That seems like a pretty big flaw in OSs. Hopefully someone audits any
-> other unauthenticated channels they may have.
+ [2] https://github.com/sebsauvage/Shaarli/commit/53da201749f8f362323ef278bf338f1d9f7a925a
 
-This is the motivation for things like tlsdate
-(https://github.com/ioerror/tlsdate) as used in parts of ChromeOS.
+Could a CVE be assigned for this flaw? (One is sufficient, as it is one
+reporter and one affected file?).
 
-However, in section seven, where the author claims that preloaded
-entries are added for 1000 days, that's only via the net-internals
-debugging interface. (The code screenshot shown is also of code for
-that debugging interface.) I believe that preloaded entries in Chrome
-will always be enforced, no matter what the system time is.
-
-
-Cheers
-
-AGL
+Regards,
+Salvatore
