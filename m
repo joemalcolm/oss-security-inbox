@@ -1,17 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/10
-Message-ID: <874mvgfhva.fsf@mid.deneb.enyo.de>
-Date: Tue, 07 Oct 2014 09:39:53 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Who named shellshock?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/7
+Message-Id: <201404012014.s31KEAsG023252@linus.mitre.org>
+Date: Tue, 1 Apr 2014 16:14:10 -0400 (EDT)
+From: cve-assign@...re.org
+To: csteipp@...imedia.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
 Content-Type: text/plain; charset=utf-8
 
-* Michal Zalewski:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> It's odd that an article posted at 8 AM on Sept 24 would have any idea
-> of how the bug is already being called by the security community,
-> especially ahead of any Twitter buzz.
+The CVE project currently accepts vulnerability reports that are
+associated with the "Login CSRF" concept, e.g.,
 
-The posting date of the article was not adjusted after edits were
-made.  I don't think the name was part of the initial version.
+  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-1491
+
+Inclusion of these issues is not specific to MediaWiki, nor is it
+specific to situations in which arbitrary attacker-authored code
+executes immediately upon login.
+
+It is understood that "Login CSRF" attacks are not a subcategory of
+CSRF attacks under standard definitions of what "CSRF" means. In other
+words, the terminology is perhaps anomalous.
+
+For the original MediaWiki vulnerability report, i.e.,
+
+  https://bugzilla.wikimedia.org/show_bug.cgi?id=62497
+  "user can be logged into the attackers account, without knowledge of
+  user. So attacker can track the user activity."
+
+use CVE-2014-2665.
+
+
+A separate topic is responding to:
+
+  http://openwall.com/lists/oss-security/2014/03/28/10
+  
+  Why do you call that a vulnerability again?
+  
+  The attacker forfeits his credentials; the target ends up logged in as
+  the attacker with a session the attacker has no control over... and the
+  user is made aware (through the UI) that he's logged in as someone else.
+  
+  No trust boundary breached -> no vulnerability.
+  
+  After "forced logouts" welcome "forced logins" ;)
+
+MITRE happens to have internal documentation of the Login CSRF concept
+because it was needed last year in completely unrelated circumstances.
+We'll include it here because it might be generally useful to someone
+(... except that it's much too long). The documentation mentions a
+YouTube issue that was fixed years ago. We are just sending it as-is:
+
+
+In the most common definition, "login CSRF" is never about the
+attacker forcing the victim to login to the victim's account. "login
+CSRF" is always about the attacker forcing the victim to login to the
+attacker's account. The original attack was against YouTube, so I'll
+try to explain it in the YouTube context. Obviously, for CVE
+inclusion, the issue would have to exist in a distributable product
+that has the same functionality and behavior as YouTube.
+
+The goal of the attacker is to determine what videos the victim
+watches on YouTube. This information is not public, and the victim
+would often be unwilling to share it. The threat model is that the
+attacker can entice the victim into visiting a web page, but the
+attacker has no way to monitor the victim's network traffic or
+workstation, and the attacker has no way to obtain the password for
+the victim's YouTube account. The threat model also requires that the
+victim logs into YouTube intermittently (i.e., does not remain
+continuously logged in).
+
+One key aspect of YouTube is that much of the functionality is almost
+exactly the same regardless of whether a user is logged in, or not
+logged in. Videos requiring authentication for viewing are uncommon.
+Also, at least in many YouTube codebases in the past, the existence of
+a login was not obvious. A user could see his YouTube username in
+small print in the upper right, but would not normally look there
+carefully.
+
+Suppose the victim's YouTube username is VICTIM. The attacker creates
+a similar-looking account such as V1CTIM. The attacker obviously knows
+the password for this new V1CTIM account. Then, the attacker launches
+a login CSRF attack to force the victim's web browser to send a
+request to something like http://www.youtube.com/login with the
+parameters username=V1CTIM and password=PASSWORD. Note that this does
+not mean that the attacker knows the password for the VICTIM account.
+
+Whenever the victim next chooses to watch YouTube videos, he will be
+doing so in the context of an authenticated session under the username
+V1CTIM. This session does not last forever. After the session ends,
+the attacker can login to the V1CTIM account and use a feature such as
+"History > Watched Videos" to see exactly what the victim had watched.
+
+Thus:
+
+  -- there is a security impact (a leak of private information)
+
+  -- the impact does cross privilege boundaries with respect
+     to people even though it does not cross privilege boundaries with
+     respect to accounts. As a person, the attacker now has access to
+     private information, and the attacker would not have had that
+     access without the login CSRF flaw in place.
+
+  -- the security issue is one that can be fixed (within web
+     applications, the available approaches for eliminating a login
+     CSRF vulnerability are quite similar to the available approaches
+     for eliminating other CSRF vulnerabilities)
+
+  -- there is no way to simplify the attack by using a direct-request
+     approach instead of a CSRF approach. The attacker cannot obtain
+     the private information by establishing his own login session to
+     a YouTube account that he controls.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTOx0bAAoJEKllVAevmvms7xcIALUV3/0TSvj2E/f6zXZPy0LL
+j7lZdVKTBfYw3G8HVeJtf3zjXmA7ejEXFf1CYGmGKaj6QEZIkHubtfzNqoW+H8IN
+a35S3xACz3p0F+ogQ094eJAGzRWoeP2FjPj9fhHPp97s/ORz8Fm9Au6L26ZXIyjb
+2my+ehLPpWpsJdQCXaoqE4hwhmkxXIU+JTs8iTAVEEMSql/AQQIloR6/Ac/KC/m3
+yPkYQiIwSUBEdoQnrQjpz6XFSC1Q48a0Wo1YPNQDDbMhPo/jVB1/tUasHuvXjO2b
+PfOaWVnQsNLcMoZCf7VoheeXJVtN6rjP4L4tuP3wl5HfM6vjC5bKg9+8JftJw9E=
+=jKat
+-----END PGP SIGNATURE-----
