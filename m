@@ -1,44 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/8
-Message-Id: <20140707181341.5CA2F1A41139@me.com>
-Date: Mon,  7 Jul 2014 14:13:41 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/8
+Message-Id: <201404012016.s31KFuCh023297@linus.mitre.org>
+Date: Tue, 1 Apr 2014 16:15:56 -0400 (EDT)
+From: cve-assign@...re.org
+To: pmatouse@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux Kernel, two security issues
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Author: Larry W. Cashdollar, @_larry0
+> second commit mentioned in the bugzilla,
 
-Date: 06/01/2014
+> that also fixes a crash.
 
-OSVDB: 108583
+> https://bugzilla.kernel.org/show_bug.cgi?id=70551#c18
 
-CVE:Please Assign
+This apparently has the:
 
-Download: http://rubygems.org/gems/codders-dataset
+  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1d147bfa64293b2723c4fec50922168658e613ba
 
-Gem Author:  codders@...omonkey.org.uk
+change in 3.13.7.
 
-From: ./codders-dataset-1.3.2.1/lib/dataset/database/mysql.rb
+Use CVE-2014-2706.
 
-Lines 18 and 24 expose the password to the process table, and are vulnerable to command injection if used in the context of a rails application.  The #{@...rname} and #{@...sword} variables aren't properly sanitized before being passed to the command line.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-015-      
-16-      def capture(datasets)
-17-        return if datasets.nil? || datasets.empty?
-18:        `mysqldump -u #{@...rname} --password=#{@...sword} --compact --extended-insert --no-create-db --add-drop-table --quick --quote-names #{@...abase} > #{storage_path(datasets)}`
-19-      end
-20-      
-21-      def restore(datasets)
-22-        store = storage_path(datasets)
-23-        if File.file?(store)
-24:          `mysql -u #{@...rname} --password=#{@...sword} --database=#{@...abase} < #{store}`
-25-          true
-26-        end
-27-      end
-
-
-Advisory: http://www.vapid.dhs.org/advisories/codders-dataset-1.3.2.1.html
-
+iQEcBAEBAgAGBQJTOx0mAAoJEKllVAevmvmsaXsH/ip5f2S87KPG8BAK2KYZ86vz
+MwKtI7IicLJToltRdwoUeqrf4Qh747/nYHh16cNkvsRN7XYDUbAJWWIKzFAOi3S1
+CnWehZVwPyKksWCpXjNMrhFcqehXS0FuM9jokvAWGcHP3K4AikR55T60zTTvgtuJ
+7DpGGG6GPLoFI5NT4hGCA9PZ0KH1SQpF/p4Y+aRJ/urvedj4EyiIBqgnF2KFQbwc
+CjZWkaz33OUE6t6kd1+Yzxlv2EaY+v0siA+S6XxLLfcrMjTfX0B+d/bt0Pv7ks0H
+EcRdw653spFEjiBxIuYhivyvuR1Go9TBL7w8X/LL45p6QiEpS2UnaiuroaLc77c=
+=vY9U
+-----END PGP SIGNATURE-----
