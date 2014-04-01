@@ -1,29 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/8
-Message-Id: <201402282002.s1SK2kAG001735@linus.mitre.org>
-Date: Fri, 28 Feb 2014 15:02:46 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/1
+Message-Id: <201404010333.s313XNTY021908@linus.mitre.org>
+Date: Mon, 31 Mar 2014 23:33:23 -0400 (EDT)
 From: cve-assign@...re.org
-To: thoger@...hat.com
+To: mmcallis@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: askbot xss
+Subject: Re: CVE requests: Zend Framework issues fixed in ZF2014-01 and ZF2014-02
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1070852
-
-> askbot: multiple XSS issues fixed in 0.7.49
-
-> The question search XSS was reported by Kamil Sevi (@kamilsevi) for
-> askbot running on https://ask.fedoraproject.org/
-
-Use CVE-2014-2235 for this specific discovery.
+This is somewhat complex in the sense that all of the issues are
+within the scope of CVE but the disclosures only marginally have
+enough information to determine the correct number of CVE IDs. We did
+not want to combine independent discoveries into the same CVE ID.
 
 
-> Additional issues were noticed when investigating the report.
+http://framework.zend.com/security/advisory/ZF2014-01
 
-Use CVE-2014-2236 for all of the other XSS issues.
+CVE-2014-2681 - This CVE is for the lack of protection against XML
+External Entity injection attacks in some functions, because of the
+incomplete fix in CVE-2012-5657. It appears that this only affects
+Zend Framework 1.x, although that isn't critical to determining the
+number of CVE IDs.
+
+CVE-2014-2682 - This CVE is for the failure to consider that the
+libxml_disable_entity_loader setting is shared among threads in the
+PHP-FPM case. Again, the existence of this CVE means that the
+CVE-2012-5657 fix was incomplete. It appears that this affects more
+than just Zend Framework 1.x, although that isn't critical to
+determining the number of CVE IDs.
+
+CVE-2014-2683 - This CVE is for the lack of protection against XML
+Entity Expansion attacks in some functions, because of the incomplete
+fix in CVE-2012-6532. It appears that this also affects more than just
+Zend Framework 1.x, although that isn't critical to determining the
+number of CVE IDs.
+
+
+http://framework.zend.com/security/advisory/ZF2014-02
+
+CVE-2014-2684 - This CVE is for the error in the consumer's verify
+method that leads to acceptance of wrongly sourced tokens. The same
+CVE is used for Zend Framework 1.x and ZendOpenId 2.x, even though the
+code is not identical.
+
+CVE-2014-2685 - This CVE is for the specification violation in which
+signing of a single parameter is incorrectly considered sufficient.
+Again, this CVE is for both Zend Framework 1.x and ZendOpenId 2.x.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -33,11 +58,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTEOr9AAoJEKllVAevmvmsdp8IAMVkIgguv6Qbv7M9/ZqVcutq
-aLy1sPvONJ0UnmZ9+02k0yHCRHO4vZjQBX3ocMg03s1D25zXeRIYO6BeQPpXxUUd
-BPJkkulO5DjJ23DrL8mlFeQbS66DgtZnJwf9NhAUXjKjfJnjRpBz1FamfeTBYWiQ
-ZmqM7/og5Bat30cgA7y1oHiR0OVkWIdMYbnLzs/y6k6RmS+bmC7iE5N3TjUob3co
-qn/jvwxA3sTs0sF0Mc0dqUIWly762g7Otss+wrNp/+V+8YPJRYACRJxKfrS776Nn
-GnLrj3q4E+4ImgxEcJjg+fj9E/Hksgr8hOVuPymLHb5DwKUhVJNbR+fQ29p0t6Y=
-=rFHx
+iQEcBAEBAgAGBQJTOjKAAAoJEKllVAevmvmsQTwH/jHloIXxpsbVGuNkGo7PyECc
+jGOQJH24syG+P7camYEpTrLM2mz8OHALjaWlR1ySUI+pDhDWCqVy1JaxEFTjan+E
+bFMPASXQIEqptEe25fERTaELcmyN7mhhCFKYejuInORd2fawL0OO4HuDiP8vjxyb
+oKSCx4o/Le2A6L3q05VWVYvHFsZHSPTBQ1RwLmhiPPBk69b0BC0VP8rchgqU3IlK
+g67b0x6v1x9WnNFa3Nr5eFtdYsuRS/8XYS6hbE5wX9cdZ04InO+fqX3EsXmygamI
+X+tvKlm4u+CvJtNtTFOVPc7jJ4yLYD/x2ZZ7X+3a0dG+oJ+Z/C32wuOnxrKA0KQ=
+=LGQc
 -----END PGP SIGNATURE-----
