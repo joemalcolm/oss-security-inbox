@@ -1,117 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/20
-Message-ID: <2370963.25OlGXuRlr@x2>
-Date: Tue, 09 Dec 2014 11:18:53 -0500
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/6
+Message-ID: <20140401183003.GT24029@dhcp-25-225.brq.redhat.com>
+Date: Tue, 1 Apr 2014 20:30:04 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Hanno Böck <hanno@...eck.de>
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+Cc: ago@...too.org, cve-assign@...re.org
+Subject: Re: Re: CVE request: Linux Kernel, two security issues
 Content-Type: text/plain; charset=utf-8
 
-On Friday, December 05, 2014 01:54:35 PM Hanno Böck wrote:
-> On Thu, 04 Dec 2014 21:19:04 +0100
+On Sun, Mar 30, 2014 at 05:42:52PM -0400, cve-assign@...re.org wrote:
+> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=21f8aaee0c62708654988ce092838aa7df4d25d8
+> > 
+> > The vulnerability is caused due to a race condition error in the 
+> > "ath_tx_aggr_sleep()" function (drivers/net/wireless/ath/ath9k/xmit.c), which 
+> > can be exploited to cause a crash.
+> > https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.12.15
+> > https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.13.7
+> > https://bugzilla.kernel.org/show_bug.cgi?id=70551
 > 
-> Hector Marco <hecmargi@....es> wrote:
-> > This is a disclosure of a weakness of the ASLR Linux implementation.
-> > The problem appears when the executable is PIE compiled and it has an
-> > address leak belonging to the executable. We named this weakness:
-> > offset2lib.
-> 
-> Thanks for that.
-> 
-> Two things on that:
-> 
-> Cynics might say "most linux distros aren't vulnerable to ASLR bypass
-> because they don't use ASLR at all".
-> 
-> Can we please take this as an opportunity to discuss the state of ASLR
-> on Linux in general?
+> Use CVE-2014-2672.
 
-I studied this area 2 years ago for a gray hat talk and in preparation to help 
-set the policy going forward for Fedora and RHEL. The general reason I've 
-heard mentioned about why its not used as fully as possible is that it adds 
-memory pages that can't be coalesced or consolidated because they are not the 
-same.
+FWIW, there's also second commit mentioned in the bugzilla,
+http://git.kernel.org/cgit/linux/kernel/git/jberg/mac80211.git/commit/?id=1d147bfa64293b2723c4fec50922168658e613ba
+that also fixes a crash.
 
-For Fedora and RHEL 7, the intended policy is PIE for all daemons, privileged 
-apps, network facing, and parsers of untrusted media. Enforcement is not so 
-easy. How do you identify in an automated way parsers of untrusted media? I 
-have a script that can grade an installed system that uses rpms:
+It is questionable how the attacker can trigger these bugs differently
+than normal (high load) usage on a smp box.
 
-http://people.redhat.com/sgrubb/files/rpm-chksec
-
-It has options to grade the system or an individual rpm for compliance with 
-the intended policy.
-
-During my research, I found a couple interesting things. These ASLR related 
-tidbits below are pulled from the speech I gave about when open source 
-security mechanisms don't work as intended (all measured on a 64 bit system):
-
-1) On non-PIE applications, the heap doesn't get much randomization. Just 14 
-bits.
-
-2)  Also non-PIE applications seems to be some bias in the numbers chosen. 
-This could be an effect of 14 bits of randomization. It did follow a bell curve 
-such that guessing some addresses was much luckier than others. (I did not get 
-a sample size large enough on PIE apps to see if the same bias could be 
-measured.)
-
-3) When using PIE, you pretty much got 29 bits of randomness everywhere. That 
-lead to the question of why the heap on non-PIE is so limited in address 
-scope. As I remember, there was some coupling with sbrk() that caused 
-this....which might need revisiting.
-
-4) Then I started wondering about the heap when you use other memory manager 
-libraries such as jemalloc. This turned out to be interesting. You get about 
-19 bits of randomness using it. Its not as bad as non-PIE glibc but not as 
-good as PIE glibc. You also got the same amount of randomness whether the app 
-was PIE or not. This is an area ripe for more experimenting, exploiting, and 
-patching. Supposedly some of these heap managers use mmap as the underlying 
-allocator. So, why aren't they getting 29 bits, too? :-)
-
-Here's the current numbers from 3.17.4 kernel + glibc-2.18:
-
-$ ./all-bits 
-heap       14 bits
-exec       No randomization
-mmap       29 bits
-so         No randomization
-stack      28 bits
-pie-exec   29 bits
-pie-heap   29 bits
-pie-so     29 bits
-
-$ ./all-mask 
-heap       0x0000000003FFF000
-exec       0x0000000000000000
-mmap       0x000001FFFFFFF000
-so         0x0000000000000000
-stack      0x00000000FFFFFFF0
-pie-exec   0x000001FFFFFFF000
-pie-heap   0x000001FFFFFFF000
-pie-so     0x000001FFFFFFF000
-
-
--Steve
-
-
-> It's pretty sad, afaik Linux was one of the first
-> to have ASLR (in the form of pax) back in 2001. Today everyone uses
-> ASLR by default except Linux.
-> 
-> Most distros don't ship pic/pie executables by default. Why? I haven't
-> done benchmarks, the saying is that this has a notable performance hit
-> on 32 bit but almost none on 64 bit. If this is true then could we at
-> least have all major distros enable it on 64 bit?
-> 
-> 
-> Second:
-> I wrote a small test .c to print out offset diffs. As expected
-> printf-main offset is static on normal Linux with pic/pie and random
-> on a pax-enabled system.
-> 
-> What i found notable: diff-ing two function offsets from different
-> libraries (I use printf-sin) is alway static, even on Pax. Is this by
-> design? Can't different libraries be loaded at different offsets in ram?
-
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
