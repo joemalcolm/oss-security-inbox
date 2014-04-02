@@ -1,59 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/16
-Message-Id: <B48B5501-0DDF-4547-B946-E08B73F9282C@iq.pl>
-Date: Tue, 24 Jun 2014 17:45:41 +0200
-From: Michał Grzędzicki <lazy@...pl>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: OpenVZ simfs container filesystem breakout
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/02/4
+Message-Id: <E1WVJeh-00063L-MQ@xenbits.xen.org>
+Date: Wed, 02 Apr 2014 11:48:31 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 89 (CVE-2014-2599) - HVMOP_set_mem_access is not preemptible
 Content-Type: text/plain; charset=utf-8
 
-An attacker is able to access files outside of his container.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Function open_by_handle_at() enables process to access files on a mounted filesystem
-using file_handle structure. This structure is using inode numbers to differentiate files.
-Calling this function requires CAP_DAC_READ_SEARCH capability and superuser inside
-a container by default has this capability.
+             Xen Security Advisory CVE-2014-2599 / XSA-89
+                              version 3
 
-This enables an attacker to bypass simfs restrictions and access all files on an underlying
-filesystem including other VE’s residing on the same filesystem.
+              HVMOP_set_mem_access is not preemptible
 
-This is the same issue as the one affecting docker which was discovered recently by by Sebastian Krahmer.
-He wrote about it on this list http://www.openwall.com/lists/oss-security/2014/06/18/4 .
+UPDATES IN VERSION 3
+====================
 
-This vulnerability is identified by CVE-2014-3519 .
+This issue has been assigned CVE-2014-2599.
 
-For further technical information please refer to Sebastian Krahmers post and POC
-(http://stealth.openwall.net/xSports/shocker.c).
+ISSUE DESCRIPTION
+=================
 
-His POC code works with openvz with cosmetic modifications so we have to consider that public exploit is readily available.
+Processing of the HVMOP_set_mem_access HVM control operations does not
+check the size of its input and can tie up a physical CPU for extended
+periods of time.
 
-Affected versions:
-all RHEL6 based openvz kernels older then 042stab090.5 released today and using simfs (VE_LAYOUT=simfs).
+IMPACT
+======
 
-Unaffected versions:
-RHEL5 based openvz lack open_by_handle_at(2) function
-RHEL6 based openvz using exclusivelly ploop or parallels commercial vzfs
+In a configuration where device models run with limited privilege (for
+example, stubdom device models), a guest attacker who successfully
+finds and exploits an unfixed security flaw in qemu-dm could leverage
+the other flaw into a Denial of Service affecting the whole host.
 
-Newest vzctl packages defaults to unaffected ploop layout. Parallels comercial vzfs is also unaffected.
+In the more general case, in more abstract terms: a malicious
+administrator of a domain privileged with regard to an HVM guest can
+cause Xen to become unresponsive leading to a Denial of Service.
 
-Disabling CAP_DAC_READ_SEARCH inside the containers can be used as an mitigation technique
-if kernel upgrade is not possible.
+VULNERABLE SYSTEMS
+==================
 
-# vzctl vied --save --capability DAC_READ_SEARCH:off --setmode restart
-(It will immediately restart the VE)
+All Xen versions from 4.1 onwards are vulnerable. In 4.2 only 64-bit
+versions of the hypervisor are vulnerable (HVMOP_set_mem_access is not
+available in 32-bit hypervisors).
 
-I think it won’t break any typical software running inside the CT but Your milage may vary.
+The vulnerability is only exposed to service domains for HVM guests
+which have privilege over the guest.  In a usual configuration that
+means only device model emulators (qemu-dm).
 
+In the case of HVM guests whose device model is running in an
+unrestricted dom0 process, qemu-dm already has the ability to cause
+problems for the whole system.  So in that case the vulnerability is
+not applicable.
 
-References:
-http://kb.parallels.com/en/122142
-https://openvz.org/Download/kernel/rhel6/042stab090.5
-http://www.openwall.com/lists/oss-security/2014/06/18/4
+The situation is more subtle for an HVM guest with a stub qemu-dm.
+That is, where the device model runs in a separate domain (in the case
+of xl, as requested by "device_model_stubdomain_override=1" in the xl
+domain configuration file).  The same applies with a qemu-dm in a dom0
+process subjected to some kind kernel-based process privilege
+limitation (eg the chroot technique as found in some versions of
+XCP/XenServer).
 
--- 
-Michał Grzędzicki
-e-mail: mg@...pl
-IQ PL Sp. z o.o.
+In those latter situations this issue means that the extra isolation
+does not provide as good a defence (against denial of service) as
+intended.  That is the essence of this vulnerability.
 
+However, the security is still better than with a qemu-dm running as
+an unrestricted dom0 process.  Therefore users with these
+configurations should not switch to an unrestricted dom0 qemu-dm.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+Finally, in a radically disaggregated system: where the HVM service
+domain software (probably, the device model domain image) is not
+always supplied by the host administrator, a malicious service domain
+administrator can excercise this vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+In a radically disaggregated system, restricting HVM service domains
+to software images approved by the host administrator will avoid the
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa89.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+xsa89-4.1.patch    Xen 4.1.x
+
+$ sha256sum xsa89*.patch
+741c8fbbfa8e425d8debba17135d4c2e1e962d15717769bc93d68a65b5dc5ea6  xsa89.patch
+7d965e9bf1894b7d909bfaddbc6b7bdcee0ba91b86942ce85e0ae80464f2463e  xsa89-4.1.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTO+8wAAoJEIP+FMlX6CvZ5esH/3T+ajm7vltauel3SR3+wQAw
+nmxJR+CIaIRhIdjER/EPJ8HRqCl8DvY1yY8MM9qo70RIGu9eHSxkKbPQzNa1ye8/
+sdqLT+TIVXElukse1CxSPnHkw0NYOjysdTxDs9XGFzTA2qzYj9cLu6qKbh8wKOqa
+4UhqMzU5zXnRi+53Ljn3dBximU2Fch7ibN5Ea5C2e4uPJHR8aNn31lCESnsUfwbK
+/ZrxoP89VRiSZq0GiGrSouF6FjU6fWyP3pTfvrFtQ0/K7a+HuA3ZgT35iGVdVW2C
+dV35iNqIn+yC8vUrcEZkdfp/KapRP3WqCetoW63MT1tACToCf8ObT3RMTuAgfa0=
+=vHm/
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa89.patch" of type "application/octet-stream" (3011 bytes)
+
+Download attachment "xsa89-4.1.patch" of type "application/octet-stream" (1247 bytes)
