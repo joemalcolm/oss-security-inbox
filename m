@@ -1,57 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/1
-Message-Id: <PKMFV5UQ-3HCS-ARTL-VEHX-CI0WP8YJNQ7@hackinthebox.org>
-Date: Tue, 7 Jan 2014 10:37:01 +0800
-From: Hafez Kamal <aphesz@...kinthebox.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: [HITB-Announce] HITB Magazine Issue 10 Out Now
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/02/5
+Message-Id: <E1WVJg9-0006Ma-A2@xenbits.xen.org>
+Date: Wed, 02 Apr 2014 11:50:01 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 90 (CVE-2014-2580) - Linux netback crash trying to disable due to malformed packet
 Content-Type: text/plain; charset=utf-8
 
-Issue #10 is now available!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hello readers and welcome to the somewhat overdue Issue 010 of HITB
-Magazine. As they say, better late than never!
+             Xen Security Advisory CVE-2014-2580 / XSA-90
+                              version 2
 
-Since the last issue, we've also changed the HITB Security Conference
-Call for Papers submission guidelines to now require speakers to submit
-a research 'white paper' to accompany their talk. The first round of
-papers came to us via #HITB2013KUL in October and thankfully we now have
-loads of AWESOME CONTENT! We've got so much good stuff we could have
-probably put together two issues even!
+      Linux netback crash trying to disable due to malformed packet
 
-With the new change to the CFP submissions, we've decided to also change
-our publication schedule for 2014 to a 'per HITB SecConf' release cycle.
-This means you can expect a new magazine approximately every 6 months
-which we'll release alongside a HITB Security event.
+UPDATES IN VERSION 2
+====================
 
-What else do we have planned for 2014? Well next year also marks the 5th
-year anniversary of the HITB Security Conference in Amsterdam and we're
-celebrating it in traditional HITB fashion - by adding something special
-to our line up - our first ever HITB hacker expo! A 3-day IT security
-and technology exhibition unlike anything that's been done before. Think
-RSA or Mobile World Congress meets Makerfaire with a generous touch of
-HITBSecConf thrown in for good measure. What exactly does that mean?
-Imagine an area dedicated to hackerspaces; makers with 3D printers,
-laser cutters and other fabrication goodies coupled with TOOOL's Lock
-Picking Village, HITB and Mozilla's HackWEEKDAY developer hackathon, our
-Capture the Flag 'live hacking' competition and more all wrapped around
-a 3-day exhibition with Microsoft and Google as the main anchors. The
-cost to attend? ABSOLUTELY NOTHING! Yup, entrance to HITB Haxpo will be
-F-R-E-E! Head over to http://haxpo.nl for further details and to
-register (we've got a new registration system too!)
+This issue has been assigned CVE-2014-2580.
 
-On behalf of The HITB Editorial Team, I hope you enjoy this special end
-of year issue we've put together and we wish you all a very Happy New
-Year, and have a great time ahead!
+A fix has been accepted into the Linux network subsystem maintainer's
+tree.  The final fix differs substantially from the initial patch,
+which calls xenvif_carrier_off from an invalid context resulting in a
+kernel panic in the backend.  The updated patch defers this work to
+kthread context and ensures that no traffic is processed in the
+meantime.
 
-Download Issue #10 - http://magazine.hackinthebox.org/hitb-magazine.html
+The attached patches have been updated accordingly.  Since the patch
+in v1 of the advisory does not eliminate the vulnerability, users are
+strongly encouraged to update to the latest patch.
 
-Regards,
-Hafez Kamal
-Hack in The Box (M) Sdn. Bhd
-36th Floor, Menara Maxis
-Kuala Lumpur City Centre
-50088 Kuala Lumpur, Malaysia
-Tel: +603-26157299
-Fax: +603-26150088
+ISSUE DESCRIPTION
+=================
 
+When Linux's netback sees a malformed packet, it tries to disable the
+interface which serves the misbehaving frontend.
+
+This involves taking a mutex, which might sleep.  But in recent
+versions of Linux the guest transmit path is handled by NAPI in
+softirq context, where sleeping is not allowed.  The end result is
+that the backend domain (often, Dom0) crashes with "scheduling while
+atomic".
+
+IMPACT
+======
+
+Malicious guest administrators can cause denial of service.  If driver
+domains are not in use, the impact is a host crash.
+
+VULNERABLE SYSTEMS
+==================
+
+This bug affects systems using Linux as the driver domain, including
+non-disaggregated systems using Linux as dom0.
+
+Only versions of Linux whose netback uses NAPI are affected.  In Linux
+mainline this is all versions of Linux containing git changeset
+b3f980bd82, which was introduced between Linux 3.11 and 3.12-rc1.
+
+Systems using a different OS as dom0 (eg, NetBSD, Solaris) are not
+vulnerable.
+
+Both x86 and ARM systems are affected.
+
+MITIGATION
+==========
+
+Using driver domains may limit the scope of the denial of service, and
+may make it possible to resume service without restarting guests (by
+restarting the driver domain).  Advice on reconfiguring a system to
+use driver domains is beyond the reasonable scope of this advisory.
+
+In the case of an x86 HVM guest, the exploit can be prevented by
+disabling the PV IO paths; normally this would come with a substantial
+performance cost, and it may involve reconfiguring the guest as well
+as the host.  This is not recommended.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This bug was publicly reported on xen-devel, before it was appreciated
+that there was a security problem.  The public mailing list thread
+nevertheless contains information strongly suggestive of a security
+bug, and a different security bug (with CVE) is suggested as seeming
+"similar".
+
+For these reasons we (the Xen Project Security Team) have concluded
+that the presence of this bug, as a security problem, is not (any
+longer) a secret.
+
+CREDITS
+=======
+
+This issue was discovered as a bug by Török Edwin and analysed by
+Wei Liu of Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+$ sha256sum xsa90*.patch
+364d94db6dc2b151eb1bb359dc90c71cbb8c5e3dc99b73fc01d981c018777ff4  xsa90.patch
+$
+
+This patch has also been applied to the network subsystem maintainer's git tree:
+https://git.kernel.org/cgit/linux/kernel/git/davem/net-next.git/commit/?id=e9d8b2c2968499c1f96563e6522c56958d5a1d0d
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTO/lVAAoJEIP+FMlX6CvZkYAH/1DY0nKcCsG718IFOdtuu1LA
+tWhoEACOkqCrqfg/L/6/Tljd0okBlOa15v9amBAJvy7amxAIzlGHDgD3BgQ1w5Te
+Rc+GDVIoHhYq/LdqSj2Jr4TFXCuekOxTER3idvg+E1RrCOoEqNEFbIKey16vo/ll
+tn7qKs+qZ7LlQHhjLmwFuDfSromYzOoSiS43nqy4vFHgFXC1Zmk/K8p8DLHxz92y
+gt6EvMdoDIdgk9hZdLkRIPlqvprV6wQ69pX3MVB6WKIWwW6OYDxbMLfICbubESST
+7af33QABFimadkalnN+4+xGblS1WRC5wz2XpSfNNe1bbaKkbPhXe7o9j0+mLX8g=
+=FL5w
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa90.patch" of type "application/octet-stream" (4624 bytes)
