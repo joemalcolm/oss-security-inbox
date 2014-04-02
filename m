@@ -1,53 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/16/6
-Message-ID: <20140116210837.GC24962@scapa.corsac.net>
-Date: Thu, 16 Jan 2014 22:08:37 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/02/2
+Message-ID: <533BD229.4000602@redhat.com>
+Date: Wed, 02 Apr 2014 14:32:33 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: linux-distros membership
+CC: "Steven M. Christey" <coley@...us.mitre.org>
+Subject: Re: Information on CVE-2014-0158, openjpeg
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
-
-On Thu, Jan 16, 2014 at 01:54:08PM +0100, rf@...eap.de wrote:
-> Hi Yves,
+On 04/02/2014 02:01 PM, Raphael Geissert wrote:
+> Hi,
 > 
->  >> I hope this is the right place to ask for inclusion of a Qlustar contact
->  >> in the linux-distros list.
->  >> 
->  >> Qlustar is a Ubuntu/Debian based distro targeted at HPC/Storage/Cloud
->  >> clusters. We use our own kernels (typically based on vanilla) since many
->  >> years, but have the need to supply timely security fixes to our users. So
->  >> far we have to wait for other distros to come out with their
->  >> announcements and then start analyzing the fixes they have done. This
->  >> leaves us/our users with a vulnerability window that is way too large,
+> I just became aware of CVE-2014-0158[1], which was recently assigned
+> to openjpeg.
+> Looking at the proposed patch (as the description is rather brief), it
+> seems to me that it is a dup of one of the bugs covered by
+> CVE-2013-1447.
 > 
-> > I can't speak for Ubuntu, but you're welcome to participate in the
-> > Debian security effort.
+You are correct, i just realised that this issue is already patched when
+i looked at those issues.
+
+> Quoting from my post to oss-security:
+>> 5. null pointer dereferences, division by zero, and anything that
+> would just fit as DoS (CVE-2013-1447)
 > 
-> thanks a lot for your offer. Could you explain a little more what
-> participation in the Debian security effort would mean? Note that the issue I
-> currently have is mostly about kernel fixes and we don't use Debian nor
-> Ubuntu kernels.
+>> [listing the group of issues and attachments]
+>> 5.
+>> [...]
+>> segfault6.patch
+> 
+> Which is exactly what is being commented about in [2], a copy of which
+> is also available at [3].
+> 
+> IIRC without that patch some of the structures were not initialized
+> and applications (like the ones shipped by openjpeg itself) would try
+> to dereference NULL pointers, and just crash - no memory write was
+> involved.
+> 
+> Or is there more into CVE-2014-0158 that I might be missing?
+> 
 
-Most of the documentation can be found in the secure-testing repository
-[1] and on the Debian wiki [2].
+I dont agree with this being only a crash. I put some details at:
+https://bugzilla.redhat.com/show_bug.cgi?id=1082925#c1
 
-[1]: http://anonscm.debian.org/viewvc/secure-testing/doc/narrative_introduction?view=markup
-[2]: https://wiki.debian.org/Teams/Security
+Anyway, this CVE is a dupe, MITRE could you please reject this CVE?
 
-Regards,
-- -- 
-Yves-Alexis Perez
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQEcBAEBCgAGBQJS2EpOAAoJEG3bU/KmdcCli/IH/3sLTXrwi2qCX9+obZSqF0kt
-8YWJSfMCTDSb0tibzOPlbjqVdEmb7PM22beG3j3+lBfPmcBNUOpzqtYTfhaiVF1X
-K4B/E1ob9YBkTu1B9oBskm/D2zvyDanU/NeXSCaKFBntI/nkimNDpqtrmWskm/rN
-zVHD/nNrZebKfiNEKdoOqPsxuSCHBKhNEh72uqkv3i34IWF3K2vQS1GZvwbka+Bd
-L74ZNIBzZGAdZryQ/eaN8APJK0I+khs3h+YuOXRxvJGQrVmA3POSQHBHKMqAp+hu
-UD9t3h7hIgpxhEIeMHfj/yWzcUcrjD45taSmW1lIkudvPqvMiQhyKksIPnTlMDI=
-=ARH7
------END PGP SIGNATURE-----
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
