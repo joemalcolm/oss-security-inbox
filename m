@@ -1,48 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/1
-Message-ID: <20140312083345.7abb8419@thewildbeast>
-Date: Wed, 12 Mar 2014 08:33:45 +0000
-From: Paul <paul@...ws-mail.org>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: claws-mail vcalendar plugin stores user/password in cleartext
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/02/1
+Message-ID: <CAA7hUgFXavT_aOBHHin63=Dnq+7VCZ1torfycCVZhKnHvck+WQ@mail.gmail.com>
+Date: Wed, 2 Apr 2014 10:31:52 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Information on CVE-2014-0158, openjpeg
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 10 Mar 2014 14:31:34 -0600
-"Vincent Danen" <vdanen@...hat.com> wrote: 
+Hi,
 
-> Subject pretty much says it all.  It's not a very exciting flaw but
-> was brought to our attention.
-> 
-> References:
-> 
-> http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3099
-> https://bugzilla.redhat.com/show_bug.cgi?id=1074683
+I just became aware of CVE-2014-0158[1], which was recently assigned
+to openjpeg.
+Looking at the proposed patch (as the description is rather brief), it
+seems to me that it is a dup of one of the bugs covered by
+CVE-2013-1447.
 
-I believe that a CVE request for this is probably overkill.
+Quoting from my post to oss-security:
+> 5. null pointer dereferences, division by zero, and anything that
+would just fit as DoS (CVE-2013-1447)
 
-The vCalendar plugin does not support login credentials when
-subscribing to a WebCal.
+> [listing the group of issues and attachments]
+> 5.
+> [...]
+> segfault6.patch
 
-The user can work around this missing feature by adding their username
-and password to the URI, e.g.
-https://USERNAME:MYPASSWORD@...lserver/home/USERNAME/Calendar
+Which is exactly what is being commented about in [2], a copy of which
+is also available at [3].
 
-The URI is stored in clear text, hence if the user chooses to work
-around the missing feature their un/pw will be stored in clear text.
+IIRC without that patch some of the structures were not initialized
+and applications (like the ones shipped by openjpeg itself) would try
+to dereference NULL pointers, and just crash - no memory write was
+involved.
 
-Similar behaviour can be witnessed in a number of other apps. For
-example, if I bookmark
-https://USERNAME:MYPASSWORD@...lserver/home/USERNAME/Calendar in
-firefox, it will save the credentials in clear text.
+Or is there more into CVE-2014-0158 that I might be missing?
 
-There are some apps that will store what the user enters in a
-password field as clear text, however Claws Mail is not one of them.
+P.S. testing the encoding functions would probably be like opening
+another can of worms, if anyone is interested in that.
 
-Therefore, on the Claws Mail bug tracker, this is marked as a feature
-request and not as a security issue.
+[1]https://bugzilla.redhat.com/CVE-2014-0158
+[2]https://bugzilla.redhat.com/show_bug.cgi?id=1082925#c8
+[3]https://bugzilla.redhat.com/show_bug.cgi?id=1037945#c11
 
-with regards
-
-Paul
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
