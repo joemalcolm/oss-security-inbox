@@ -1,33 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/6
-Message-ID: <20140912095556.GA1850@alf.mars>
-Date: Fri, 12 Sep 2014 11:55:56 +0200
-From: Helmut Grohne <helmut@...divi.de>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: /tmp file vulnerability in ace
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/02/6
+Message-Id: <201404022018.s32KIBDv006160@linus.mitre.org>
+Date: Wed, 2 Apr 2014 16:18:11 -0400 (EDT)
+From: cve-assign@...re.org
+To: krahmer@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: cups-browsed remote exploit
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 11, 2014 at 03:33:17AM -0400, cve-assign@...re.org wrote:
-> Use CVE-2014-6311.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks.
-
-> > An interesting find is bin/g++-dep line 63:
-> > > TMP=/tmp/g++dep$$
-> > This path is also used for writing.
+> For this it creates a filter-script
 > 
-> As far as we can tell, there is no bin/g++-dep in the
-> download.dre.vanderbilt.edu upstream distribution. The bin/g++-dep
-> issue, if confirmed, would not be within the scope of CVE-2014-6311.
+> snprintf
+> 
+> "%s/filter/pdftoippprinter \"$1\" \"$2\" \"$3\" \"$4\" \"$5 $extra_options\"\n",
+> p->name, pdl, make_model, cups_serverbin);
+> 
+> its easy to inject code to the script e.g. via model name or pdl key
+> which is taken from the LAN packets.
 
-I point out that said bin/g++-dep file can be found within
-http://download.dre.vanderbilt.edu/previous_versions/ACE-6.2.7.tar.bz2.
+Use CVE-2014-2707.
 
-Nevertheless, this is not a CVE request, because it is not clear to me
-in what ways this file is intended for user consumption (if at all). The
-issue covered by CVE-2014-6311, on the other hand, can be reproduced by
-executing Debian's dpkg-buildpackage or following upstream's
-documentation.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Helmut
+iQEcBAEBAgAGBQJTPG+wAAoJEKllVAevmvmsURkIAKl8pUwj4b/v8yc/DeRw+Hp+
+lc+eaJ6SN2qsZXK3thqK1Ail6oMIQTzlR/sfzhDnTYXHAK6d1p/HZXz6ZcqsJ8Fa
+RvsXTlMhGj+VeKWkYMUeVGi4I1O2I33+i/mnwysYaX0XlC09axg+jou3AM4bZWzM
+vr6OxhZwhJpjI0EXJVjTZDQP+7sO6fUe20ZVuL+IUTcUzKrpqyJ2cNaz6ZgX7JpG
++Kj7OFTOSYu1mNJfq2oKVTRqtA9oXB+7kF3KZjfDGtSzuaMwyjvs6I2hJZw+FbUQ
+FJKR+Qlo3dCQRfjz/KTe8sEhouZtukN/HsZv/cSmiTNbukw5PNzcJGDkwp+2IgU=
+=znhE
+-----END PGP SIGNATURE-----
