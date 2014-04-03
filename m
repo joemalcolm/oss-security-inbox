@@ -1,55 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/15
-Message-ID: <1416957493.1286.14.camel@16bits.net>
-Date: Wed, 26 Nov 2014 00:18:13 +0100
-From: Ángel González <angel@...its.net>
-To: oss-security@...ts.openwall.com
-Cc: mmcallis@...hat.com, cve-assign@...re.org, 767227@...s.debian.org,  sven.schwedas@....at, axkibe@...il.com
-Subject: Re: Re: CVE request: lsyncd command injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/03/1
+Message-Id: <201404030424.s334OGBP017273@linus.mitre.org>
+Date: Thu, 3 Apr 2014 00:24:16 -0400 (EDT)
+From: cve-assign@...re.org
+To: krahmer@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: KAuth security issues
 Content-Type: text/plain; charset=utf-8
 
-On 20-11-2014 Mitre wrote:
-> > There is a command injection flaw in lsyncd, a file change monitoring
-> > and synchronization daemon:
-> > 
-> > https://github.com/axkibe/lsyncd/issues/220
-> > 
-> > https://github.com/creshal/lsyncd/commit/18f02ad013b41a72753912155ae2ba72f2a53e52
-> > 
-> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=767227
-> 
-> Use CVE-2014-8990. The scope of this CVE ID includes both:
-> 
->   1. code execution with ` characters or other characters that are
->      special to a shell
->   2. denial of service scenarios in which a user with write access
->      to a local directory uses special characters to make
->      synchronization fail (might have security relevance in some
->      scenarios)
-> 
-> The MITRE CVE team does not have a Lua expert. The code change adds:
-> 
->   local path1 = event.path:gsub ('"', '\\"'):gsub ('`', '\\`'):gsub ('%$','\\%$')
->   local path2 = event2.path:gsub ('"', '\\"'):gsub ('`', '\\`'):gsub ('%$','\\%$')
-> 
-> This does not seem to be the typical fix approach for unsafe input to
-> a shell. Has anyone concluded that this is an incomplete fix that ought
-> to be modified before the 2.1.6 release?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+It seems that, from the current
+https://bugzilla.novell.com/show_bug.cgi?id=864716 progress, this
+issue is not yet fixed, but possibly the primary affected "product"
+has been established.
 
-It is indeed an incomplete fix:
+Two different products have been discussed:
 
-* The gsub ('%$','\\%$') works in lua5.1, but under lua5.2 the second %
-character makes lsyncd fail with the error "stdin:1: invalid use of '%'
-in replacement string". Thus allowing a complete denial of service
+1. KAuth
+2. PolicyKit Library Qt Bindings (aka polkit-qt-1)
 
+The discussion seems to suggest that the issue can't be properly fixed
+by changing only polkit-qt-1, and letting KAuth continue to use
+polkit-qt-1 in exactly the current way. Thus, the issue apparently
+should be considered a KAuth vulnerability, not a polkit-qt-1
+vulnerability.
 
-* Not all metacharacters are filtered, so command execution is still
-present. In particular, the escaped characters can be prefixed with a
-backslash to bypass the filter.
+Also, based on the information provided in the
+http://www.openwall.com/lists/oss-security/2013/09/18/6 post, a
+separate CVE ID is needed, not CVE-2013-4288.
 
+Finally, there is apparently only one underlying problem in KAuth. The
+problem is restated in
+https://bugzilla.novell.com/show_bug.cgi?id=864716#c14 with an
+example, i.e.,
 
-The attached patch should hopefully solve these issues.
+  Consider org.kde.fontinst.service DBUS service, that is activated on
+  behalf of users request as a root service. It will therefore run with
+  uid 0, even if triggered by user. For now it is just using the pid of
+  user requesting the service. Thats racy and the thing we want to fix.
 
+but this seems equivalent to the original problem statement in the
+http://www.openwall.com/lists/oss-security/2014/03/24/2 post.
 
-View attachment "0001-Properly-sanitize-mv-parameters-CVE-2014-8990.patch" of type "text/x-patch" (1694 bytes)
+So, would it be best to assign one CVE ID now, even though the final
+approach to fixing the vulnerability is unknown?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTPOH3AAoJEKllVAevmvmsoc4H/iAjcWjMCeRNAAcgMu9uCOyC
+rY7Se/TLWr3IswLAhB0W9ypyPkkO/vlO0lBocnoK5dzHCXhQK+SyqTUwcIBIeEsf
+mhNH+NTY6ezYDjBq/l++HZtx4ATbGhgSQq/RRzduAFBDJ/fX72Yk8zkKLqVUBjUi
+oUdEq0LyGzzs17094vgFUy4f5JpCXX4/5CjXJgMpQmTWz3DiA3heE1HS/CmJOWiq
+3lxpX5zgdvsHOeK94KFFnnMdNs74h9KNYu89CWZn1/KOl8Ty5rvBterPOrlEHzb1
+D4cnhxtMBBDFjmQpSpEIDJMv3rHTVg6oD8wb0SjpVCI/K8Ntyoc1FsjCN3cinzc=
+=WB0D
+-----END PGP SIGNATURE-----
