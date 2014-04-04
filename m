@@ -1,43 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/13/1
-Message-ID: <alpine.LFD.2.10.1412131724120.15060@javelin.pnq.redhat.com>
-Date: Sat, 13 Dec 2014 17:25:19 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: cve-assign@...re.org
-Subject: Re: CVE-2014-8559 - Linux kernel fs/dcache.c incorrect use of rename_lock
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/04/1
+Message-ID: <20140404100758.19f40b20@hboeck.de>
+Date: Fri, 4 Apr 2014 10:07:58 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Lots of CVEs ahead in TLS implementations
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-+-- On Thu, 30 Oct 2014, cve-assign@...re.org wrote --+
-| CVE-2014-8559 has been assigned to this fs/dcache.c issue that
-| leads to a deadlock:
+There is a pretty interesting new research paper that tries to find all
+kinds of vulnerabilities in TLS implementations regarding certificate
+validation:
+https://www.cs.utexas.edu/~shmat/shmat_oak14.pdf
 
-Upstream fix:
-- -------------
-  -> https://git.kernel.org/linus/ca5358ef75fc69fee5322a38a340f5739d997c10
-  -> https://git.kernel.org/linus/946e51f2bf37f1656916eb75bd0742ba33983c28
+They found a whole bunch of issues in various open source ssl
+implementations
 
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Maybe we can start some collaborative effort to dig through them and
+assign CVEs. Some seem to have already been handled, e.g. one of the
+most sever issues found is CVE-2014-1959 in gnutls (already fixed
+upstream). However, others seem unhandled.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Beside: It's well worth reading the paper if you're into that stuff.
 
-iQIcBAEBAgAGBQJUjCkoAAoJEN0TPTL+WwQfUlYP/17btzXQB+AlvyeCP02uoNdo
-flDorz+myNYB6X0g70k/TcxNLbI9pJfUIsbVnF3z0Z4sPwVmKqulSa6VBbXx74mb
-7+KWfMUNxfOnwxZV9S8xOrqPh7G/J0o2/xVveQf6+HjgqyJXfwrRdPlQVc4fbM+T
-oxJtS/Z4eSv1qUfc1UI6febAIDd8maZhgSrSA1HhBx2Z7fiQ5qNnkQt2u7jwDX/2
-xdBpLG5O++2ZUP68+NbLy5QYbsZ4KiYu7AjLnDp48620cm5vGkDTGDt35AM8U0tz
-oftutfyGtf97/lBkLkiSOBhcAuht8UnYcwSfmyieD1LjfHum25V0W8IKHK2g9zOz
-Z0873Us6i56HB6AFFLk43tIPJjk5fx8wP65Vqapr8jm9kwqs52s6mTo6mMASNGL8
-vJxE0Ks2FdpL/oN22qjNS7EKCee/e+tl1a3/h7YIH7kOMjQcX97qgykZkCvFfUUs
-Wecn+dpLkAdwA2LQMSEMNkz6GbU/Mk4e3guewkCD21Bw7/QI/1AdmUF2VwwPqoe5
-478TE5HpGFxBfEC2S7Hm1X0KADT3P+VX/6D8eFbW2oWzb2VSX7+jEoAiUhejCXpo
-3Ft8diTGRNjwzGVLR3HN5a4QPZYkOUljcvh67wPMO47lYQzUxDlA51VjePRqhwCT
-cNXDXNrBTEl5no9UR908
-=cUZG
------END PGP SIGNATURE-----
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
