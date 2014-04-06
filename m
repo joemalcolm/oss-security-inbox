@@ -1,52 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/9
-Message-ID: <20141023220441.GA485@hurricane.linuxnetz.de>
-Date: Fri, 24 Oct 2014 00:04:41 +0200
-From: Robert Scheck <robert@...oraproject.org>
-To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
-Subject: Zarafa WebAccess >= 6.40.4 affected by CVE-2013-2205, CVE-2013-2205 and CVE-2012-3414
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/06/1
+Message-ID: <87d2guriu6.fsf@mid.deneb.enyo.de>
+Date: Sun, 06 Apr 2014 09:57:21 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: redmine open redirector
 Content-Type: text/plain; charset=utf-8
 
-Good evening,
+Redmine versions 2.4.5 and 2.5.1 fixed an open redirector issue.  The
+code verifying the redirection URIs accepted scheme-relative URIs
+which can lead to different hosts:
 
-I discovered that Zarafa WebAccess >= 6.40.4 is affected by CVE-2013-2205,
-CVE-2013-2205 and CVE-2012-3414 as it bundles the vulnerable SWFUpload from
-http://code.google.com/p/swfupload/. Zarafa has been already notified.
-
-[root@tux ~]# rpm -q zarafa-webaccess
-zarafa-webaccess-7.1.11-46050
-[root@tux ~]# 
-
-[root@tux ~]# rpm -ql zarafa-webaccess | grep swfupload.swf | xargs md5sum
-3a1c6cc728dddc258091a601f28a9c12 /usr/share/zarafa-webaccess/client/widgets/swfupload/swfupload.swf
-[root@tux ~]# 
-
-Given that some distributions/downstreams are shipping that vulnerable .swf
-file this is just meant as a simple "heads up". There are two solutions:
-
-a) Replace the bundled swfupload.swf by the fork maintained by WordPress
-   from https://github.com/wordpress/secure-swfupload (upstream will likely
-   do the same for a future release of Zarafa) or
-b) Remove the vulnerable SWFUpload e.g. at packaging time (this is what I
-   did for Fedora because I never managed it to build the .swf file from
-   source code to satisfy our Fedora Packaging Guidelines). Copy & paste
-   example from .spec file for removal:
-
---- snipp ---
-%if 0%{?no_multiupload}
-sed '148,155d' $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/webaccess/config.php > \
-    $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/webaccess/config.php.new
-touch -c -r $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/webaccess/config.php{,.new}
-mv -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/webaccess/config.php{.new,}
-rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}-webaccess/client/widgets/swfupload/
-%endif
---- snapp ---
-
-
-With kind regards
-
-Robert Scheck
--- 
-Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
-
-Content of type "application/pgp-signature" skipped
+http://www.redmine.org/projects/redmine/wiki/Security_Advisories
+http://www.redmine.org/projects/redmine/wiki/Changelog
+https://github.com/redmine/redmine/commit/7567c3d8b21fe67e5f04e6839c1fce061600f2f3
