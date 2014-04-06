@@ -1,43 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/4
-Message-ID: <53BCD464.5030609@redhat.com>
-Date: Wed, 09 Jul 2014 15:34:28 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/06/2
+Message-ID: <2687145.rPMDp5lcoA@devil>
+Date: Sun, 06 Apr 2014 19:32:41 +0200
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Zend Framework CVEs
+Cc: cve-assign@...re.org
+Subject: CVE request: Icecast world readable log/logdir
 Content-Type: text/plain; charset=utf-8
 
-On 07/09/2014 03:33 PM, Murray McAllister wrote:
-> On 07/09/2014 08:52 AM, Kurt Seifried wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA1
->>
->> As I understand Zend it's a BSD style license, so Open Source, so
->> posting here, CC'ing upstream and Mitre. Can we please get CVE's for:
->>
->> http://framework.zend.com/security/advisory/ZF2014-04
->> ZF2014-04: Potential SQL injection in the ORDER implementation of
->> Zend_Db_Select
->>
->> http://framework.zend.com/security/advisory/ZF2014-03
->> ZF2014-03: Potential XSS vector in multiple view helpers
->>
->> http://framework.zend.com/security/advisory/ZF2014-02
->> ZF2014-02: Potential security issue in login mechanism of ZendOpenId
->> and Zend_OpenId consumer
->>
->> http://framework.zend.com/security/advisory/ZF2014-01
->> ZF2014-01: Potential XXE/XEE attacks using PHP functions:
->> simplexml_load_*, DOMDocument::loadXML, and xml_parse
->
-> Good morning,
->
-> For the ZF2014-01 and ZF2014-02 assignments, refer to
-> http://www.openwall.com/lists/oss-security/2014/04/01/1
->
-> Cheers,
->
-> --
-> Murray McAllister / Red Hat Product Security
+I just noticed that (at least on gentoo), the following package produces a 
+world readable log:
 
-Sorry for the spam - I did not see Moritz's reply before I sent this.
+Icecast (http://www.icecast.org):
+# ls -la /var/log/icecast 
+total 18648
+drwxrw-r--  2 icecast nogroup     4096 Apr  6 12:23 .
+drwxr-xr-x 15 root    root        4096 Apr  5 04:20 ..
+-rw-r--r--  1 icecast nogroup  5646894 Apr  6 19:27 access.log
+-rw-r--r--  1 icecast nogroup  3181987 Apr  6 19:27 error.log
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
