@@ -1,36 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/10
-Message-Id: <201401311414.s0VEEWRg006348@linus.mitre.org>
-Date: Fri, 31 Jan 2014 09:14:32 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/07/7
+Message-Id: <201404072132.s37LWF5J021244@linus.mitre.org>
+Date: Mon, 7 Apr 2014 17:32:15 -0400 (EDT)
 From: cve-assign@...re.org
-To: larry0@...com
+To: carnil@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: echor 0.1.6 Ruby Gem exposes login credentials
+Subject: Re: Possible CVE Request: Uncontrolled Resource Consumption with XMPP-Layer Compression
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://www.vapid.dhs.org/advisories/echor-expose-login-creds.html
+> Is this something which should get one CVE, or is a CVE for each
+> implementation needed?
 
-> lib/echor/backplane.rb
-> 
-> `curl -u {Echo.backplane_user}:{Echo.backplane_password}
+A single CVE for this cross-vendor situation seems wrong because the
+specification apparently does not require implementations to have an
+unrestricted decompression capability.
 
-> if this gem is used in a rails application a user could get remote
-> command injection simply by putting a semi-colon
+There could conceivably be two CVEs for a single implementation,
+although we haven't yet found a reference that is reporting an
+implementation's problems at that level of detail. Most likely there
+would be one CVE per implementation.
 
-Use CVE-2014-1834.
+> http://xmpp.org/resources/security-notices/uncontrolled-resource-consumption-with-highly-compressed-xmpp-stanzas/
 
+The two types of CVEs would be:
 
-> a local user can steal the login credentials just by watching the
-> process table
+(1)
+> XEP-0170 on "Recommended Order of Stream Feature Negotiation" suggests
+> to negotiate stream compression after the authentication of the
+> principals. This suggests that xmppbombs can be used only after the
+> user authentication. When decompressing XMPP stanzas, an XMPP server
+> must limit the resources allocated to this task. If the server fails
+> to do that, it can monopolize the CPU usage and allocate all the
+> available memory.
 
-Use CVE-2014-1835.
+Here, the root cause is that the behavior in the authenticated case
+does not properly address resource consumption. Apparently multiple
+vendors are characterizing this as a vulnerability.
 
+(2)
+> it has been reported that some implementations allow the use of
+> compression before the authentication phase therefore opening up this
+> vulnerability to unknown attackers.
 
-(This has separate CVEs because the user and password characters could
-be restricted but still provided on the curl command line.)
+Here, the root cause is a violation of a specification, resulting in a
+security impact.
+
+A hypothetical example is that a server is willing to decompress
+relatively short strings in unauthenticated sessions (e.g., decompress
+32 kilobytes to 32 megabytes). That same server has no restrictions on
+authenticated sessions, and can produce gigabytes of uncompressed
+data. In this scenario, two CVE IDs would be assigned because the two
+resource-consumption issues occur for different reasons.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -40,11 +63,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJS663HAAoJEKllVAevmvmsXHkIAINwPIzgJ5MkRgveTKA1mH94
-nm4W4JqX4wVao7zmrTw/DEDk2CVyasJsZc9MBIIPKvhb8//Cp8zEShEdkqZHKT3b
-GKWn5rCi0uO7DDpSfhB+vC2pwSSWxCz817wEhuDJeUb2naZFgTOJtkg/bAgdBtdd
-f5j1KTQY8VBdI0c+NM0V+Fgdc2BgZGAR56r7KVxFwSQRpCm4jczmXao4JeNQYe32
-4gfOaG1M9iK9KHU+1g3yQVV8YH3lKIFZAj4gUeRi14tzntRxq4ar/BOMbTHMU+27
-ZHJ9fzcD2Rc8SDPpeDhD+sVW/0QN92apIaqANC9nIBpdoHjDYuu/d0Cf6eXBR0E=
-=Smf4
+iQEcBAEBAgAGBQJTQxkWAAoJEKllVAevmvmsBs4H/RbrYMIZK+/VDh//wVFXySou
+dIeEeguVFWqs5YMAp6GCsXbQoZYhCpGmENTuu5hXst8KhxLvnCmQ4XuRVWedaGdQ
+qVwI1ip5EOgi3Ij1V7ML6KiPlcx8FhPLxWOE5O/xH6e4vX3qQHiEynWNVOgEP/zq
+nIjrgivTQygJwHZQp6FevGiD/S5lSeyaKlP82E0mCaRHPo1ZDnlPqoVux8O0TlND
+oysVbHsCcdXBGAusoUPANvtmQrSN6UHC3H9Zy/vV2Vc029ew5Zr/AgGwiR4Je5d5
++0XnH/6sJoVzGWTah5e5vQhFV24h9w5kXBu/Sr8zWzwjsYOby1Y7dh2evLdN1qk=
+=58gv
 -----END PGP SIGNATURE-----
