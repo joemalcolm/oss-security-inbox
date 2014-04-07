@@ -1,58 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/9
-Message-Id: <201401181116.s0IBGAdH010853@linus.mitre.org>
-Date: Sat, 18 Jan 2014 06:16:10 -0500 (EST)
-From: cve-assign@...re.org
-To: mattd@...fuzz.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE requests / advisory: cxxtools <= 2.2, Tntnet <= 2.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/07/5
+Message-ID: <20140407135627.22a457a7.reed@reedloden.com>
+Date: Mon, 7 Apr 2014 13:56:27 -0700
+From: Reed Loden <reed@...dloden.com>
+To: oss-security@...ts.openwall.com
+Cc: thoger@...hat.com
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I just asked around on IRC, and one of the Ubuntu guys said they didn't
+get any prior notification of this, so fixed packages won't be out
+until tomorrow at the earliest (for Ubuntu).
 
-> Affected software: cxxtools
-> Description: By sending a crafted HTTP query parameter containing two
-> percent signs in a row, URL parsing would enter an infinite recursive
-> loop, leading to a crash. This allows a remote attacker to DOS the
-> server.
-> Affected versions: current releases (<= 2.2)
-> Fixed in version: 2.2.1
-> Fix: https://github.com/maekitalo/cxxtools/commit/142bb2589dc184709857c08c1e10570947c444e3
-> Release notes: http://www.tntnet.org/download/cxxtools-2.2.1/Releasenotes-2.2.1.markdown
+Was this not coordinated with the distros at all? If not, that seems
+like major fail on the reporters and NCSC-FI's part. :/
 
-Use CVE-2013-7298.
+2c,
+~reed
 
+On Mon, 7 Apr 2014 21:43:46 +0200
+Tomas Hoger <thoger@...hat.com> wrote:
 
-> Affected software: Tntnet
-> Description: By sending a crafted HTTP request that uses "\n" to end
-> its headers instead of the expected "\r\n", it is possible that
-> headers from a previous unrelated request will seemingly be appended
-> to the crafted request (due to a missing null termination). This
-> allows a remote attacker to use sensitive headers from other users'
-> requests in their own requests, such as cookies or HTTP authentication
-> credentials.
-> Affected versions: current releases  (<= 2.2)
-> Fixed in version: 2.2.1
-> Fix: https://github.com/maekitalo/tntnet/commit/9bd3b14042e12d84f39ea9f55731705ba516f525
-> and https://github.com/maekitalo/tntnet/commit/9d1a859e28b78bfbf769689454b529ac7709dee4
-> Release notes: http://www.tntnet.org/download/tntnet-2.2.1/Releasenotes-2.2.1.markdown
-
-Use CVE-2013-7299.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS2mEZAAoJEKllVAevmvmsAuAH/j2glwHNt4bzFqxhBOYOdxtM
-+qY/LOuyX24aHDi9JASGeedm+kmVnRMqQXept4M+tNGdJo+vwgnQkV2HtQhdrZWB
-cWwowS2+7FEbdJ/HXPfrmHDLS8vfWdMeQ1SzkXctnQeti+/jYnBMVC61Lr2boNBn
-478zDHV6h9FV8xnZZFRS5+j3/UGtJOqWzKhZgvDZBLaAHLbut9+vFuCKImvaq0iZ
-S6j/x1u/ZoBZ0vpkub2UGzhhiEylmSEGe/+WAORqzdiS4ey8rbbrCaaZcgY3QePg
-v2MUn/VFpPlhM3CZRokNq96h+BqQGQ/c4yr5phtfH0weZtGicxUmP6zMUcbH87M=
-=KsAd
------END PGP SIGNATURE-----
+> Hi!
+> 
+> There's a new OpenSSL release 1.0.1g that fixes information leak issue:
+> 
+> http://www.openssl.org/news/secadv_20140407.txt
+> http://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=96db902
+> http://heartbleed.com/
+> 
+> -- 
+> Tomas Hoger / Red Hat Security Response Team
