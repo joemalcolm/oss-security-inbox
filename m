@@ -1,60 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/3
-Message-Id: <201407110711.s6B7BMu6015135@linus.mitre.org>
-Date: Fri, 11 Jul 2014 03:11:22 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com, vkaigoro@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS in PNP4Nagios
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/07/4
+Message-ID: <10596047.0VGe0Aa3mR@arcadia>
+Date: Mon, 07 Apr 2014 22:00:10 +0200
+From: Agostino Sarubbo <ago@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Tim Heckman <tim+sec@...erduty.com>, cve-assign@...re.org
+Subject: Re: CVE request: Icecast world readable log/logdir
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sunday 06 April 2014 20:32:35 Tim Heckman wrote:
+> Hello Agostino,
+> 
+> I agree that world-readable log files is a problem and should be fixed.
+> However, should this be given a CVE?
+> 
+> Do those log files contain any information that would be considered a
+> security risk? It's been quite a few years, admittedly, since I've worked
+> with Icecast so I don't remember if those files contain any information
+> that could be considered a problem.
 
-> Jun 04, 2014 This issue was detected by Peter Osterberg
-> https://github.com/lingej/pnp4nagios/commits/master/share/pnp/application/views/kohana_error_page.php
-> https://github.com/lingej/pnp4nagios/commit/f846a6c9d007ca2bee05359af747619151195fc9
-> http://sourceforge.net/p/pnp4nagios/code/ci/f846a6c9d007ca2bee05359af747619151195fc9
-
-> - <p><?php echo $message ?></p>
-> + <p><?php echo html::specialchars($message) ?></p>
-
-Use CVE-2014-4907.
-
-
-
-> Jun 13, 2014  pnp/views/kohana_error_page: plug another XSS hole
-> https://github.com/lingej/pnp4nagios/commits/master/share/pnp/application/views/kohana_error_page.php
-> https://github.com/lingej/pnp4nagios/commit/e4a19768a5c5e5b1276caf3dd5bb721a540ec014
-
-> Jun 13, 2014  Plug potential XSS hole in views/template.php
-> https://github.com/lingej/pnp4nagios/commits/master/share/pnp/application/views/template.php
-> https://github.com/lingej/pnp4nagios/commit/cb925073edeeb97eb4ce61a86cdafccc9b87f9bb
-
-Use CVE-2014-4908 for both e4a19768a5c5e5b1276caf3dd5bb721a540ec014
-and cb925073edeeb97eb4ce61a86cdafccc9b87f9bb. These are both
-
-  <meta http-equiv="refresh" content="[INSERT_NUMBER_HERE]; url=<?php echo $_SERVER['REQUEST_URI'] ?>">
-
-issues. We realize that it is possible that
-e4a19768a5c5e5b1276caf3dd5bb721a540ec014 was reported by an external
-researcher, and cb925073edeeb97eb4ce61a86cdafccc9b87f9bb was
-discovered internally by the vendor, but there is apparently no
-available information confirming that.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTv41fAAoJEKllVAevmvms0VQH/iq8EixcjtpNl7VYMISM8NBj
-9bBx5ECqlgGYgjB2hLqo2ZjoHZ4BwSLsDfMA3WYdj/ikdO/JsAnULog2My3/3HR3
-uNjT7RolRcWXAZH1hiL9xIbLthewmaSeoxaV0Maa6NiV4UVBYJknsAAA4coVFMFe
-+fCt1QjnkKNzNriGEMIen/k3fkYg8AUCbNvZIs6MznORjPq57MMu6MTbU/Pz0q8I
-AMfpkOH55PdGjKUhtOzquV1z3qrp97I29sKYAP04iFZgBQyn/u0CcPO2LWTqiigC
-+scaKEROyGq/XzvsbcFtTUedhfx+isnlh2OixUDv6SI3oGBWhVQmmFLbuWC/b4Q=
-=TZ2O
------END PGP SIGNATURE-----
+The access log looks to be very similar to a webserver access log which 
+deserved a cve in the past.
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
