@@ -1,35 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/3
-Message-ID: <1155856394.45069423.1414045220348.JavaMail.zimbra@redhat.com>
-Date: Thu, 23 Oct 2014 02:20:20 -0400 (EDT)
-From: Arun Babu Neelicattu <abn@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/07/2
+Message-ID: <20140407153814.GC19083@dhcp-25-225.brq.redhat.com>
+Date: Mon, 7 Apr 2014 17:38:15 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Duplicate Request: CVE-2013-4444 as a duplicate of CVE-2013-2185
+Subject: CVE-2014-0155 -- kernel: kvm: BUG caused by invalid entry in guest ioapic redirection table
 Content-Type: text/plain; charset=utf-8
 
-Pinging this thread, since there has been no response since September 17.
+It was found that invalid entries in guest ioapic redirection table
+could lead to BUG_ON in ioapic_deliver() function.
 
------ Original Message -----
-> From: "Arun Babu Neelicattu" <abn@...hat.com>
-> To: oss-security@...ts.openwall.com
-> Sent: Wednesday, September 17, 2014 2:10:16 PM
-> Subject: [oss-security] Duplicate Request: CVE-2013-4444 as a duplicate of CVE-2013-2185
-> 
-> Recently Apache Tomcat issued an advisory [1] for CVE-2013-4444 [2]. However,
-> this flaw was reported to the Apache Tomcat Security team last year. We were
-> instructed that Apache Tomcat team did not consider this a vulnerability.
-> Red Hat Product Security handled this issue as CVE-2013-2185 [3] in our
-> affected products.
-> 
-> We request that CVE-2013-4444 be marked as a duplicate of CVE-2013-2185.
-> 
-> -arun
-> 
-> [1] http://tomcat.apache.org/security-7.html#Fixed_in_Apache_Tomcat_7.0.40
-> [2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4444
-> [3] https://bugzilla.redhat.com/CVE-2013-2185
-> 
-> --
-> Arun Neelicattu / Red Hat Product Security
-> PGP: 0xC244393B 5229 F596 474F 00A1 E416  CF8B 36F5 5054 C244 393B
-> 
+A privileged user in the guest could use this flaw to crash the host.
+
+Upstream fix:
+https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=5678de3f15010b9022ee45673f33bcfc71d47b60
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1081589
+
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
