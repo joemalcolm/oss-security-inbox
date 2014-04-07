@@ -1,23 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/16
-Message-ID: <5457C7B6.7050205@internot.info>
-Date: Tue, 04 Nov 2014 05:21:42 +1100
-From: Joshua Rogers <oss@...ernot.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/07/3
+Message-ID: <20140407214346.61e73dde@redhat.com>
+Date: Mon, 7 Apr 2014 21:43:46 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: RE: strings /libbfd crash
+Subject: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-I'd like to expand on this:
-http://openwall.com/lists/oss-security/2014/10/27/4
-and mention that 'ihex.c' is also vulnerable to the same thing, as they
-share the same code.
+Hi!
 
-> :10010000214601360121470136007EFE09D2190140
-> :100110002146017E17C0001FF5F16002148011928
-> :10012000194E79234623965778239EDA3F01B2CAA7
-> :100130003F0156702B5E712B722B732146013421C7
-> :00000001Ff
+There's a new OpenSSL release 1.0.1g that fixes information leak issue:
 
-is an example of code that will crash it.
+http://www.openssl.org/news/secadv_20140407.txt
+http://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=96db902
+http://heartbleed.com/
 
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
