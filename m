@@ -1,42 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/21/1
-Message-ID: <1403356583.1710.8.camel@scapa>
-Date: Sat, 21 Jun 2014 15:16:23 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-sec <oss-security@...ts.openwall.com>
-Cc: team@...urity.debian.org, Eduard Bloch <edi@....de>
-Subject: Re: XSS vulnerability in apt-cacher-ng
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/07/6
+Message-ID: <CAFRnB2V0XiYBZoyA+NEVjhirwUr+C8ctfYoyhsAPKzhQSU8Lfg@mail.gmail.com>
+Date: Mon, 7 Apr 2014 14:00:53 -0700
+From: Alex Gaynor <alex.gaynor@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2014-06-20 at 12:06 +0200, Eduard Bloch wrote:
-> Hello Security Team,
-> 
-> I am sorry to report that one of my packages (with upstream hat on) has
-> an XSS attack vulnerability. The way for the attacker to exploit this is
-> to redirect the user's browser in a LAN to apt-cacher-ng server (which
-> address the attacker has to know) with a manipulated URL. Since the
-> location and TCP port of the cacher server are configurable, it's IMHO
-> not totally easy to find but is still a good attack vector with insider
-> knowledge.
+To my knowledge, the OpenSSL team does not maintain a pre-notification list
+of any sort (I maintain a library which critically depends on OpenSSL and
+we investigated getting on to such a list).
 
-> 
-> Here is the proposed fix:
-> 
-> http://anonscm.debian.org/gitweb/?p=apt-cacher-ng/apt-cacher-ng.git;a=commitdiff;h=6f08e6a3995d1bed4e837889a3945b6dc650f6ad
-> 
-> It simply doesn't show the path in the browser output, because it has no
-> value there. It only needs to be in the http status line in order to be
-> displayed in apt-get's messages, there is no need for users to visit
-> such an URL and see that message.
-> 
-Hi,
+Alex
 
-it seems there is an XSS vulnerability present in apt-cacher-ng.
-According to above text the issue looks minime, but I guess it still can
-do with a CVE, could one be allocated?
 
-Regards,
+On Mon, Apr 7, 2014 at 1:56 PM, Reed Loden <reed@...dloden.com> wrote:
+
+> I just asked around on IRC, and one of the Ubuntu guys said they didn't
+> get any prior notification of this, so fixed packages won't be out
+> until tomorrow at the earliest (for Ubuntu).
+>
+> Was this not coordinated with the distros at all? If not, that seems
+> like major fail on the reporters and NCSC-FI's part. :/
+>
+> 2c,
+> ~reed
+>
+> On Mon, 7 Apr 2014 21:43:46 +0200
+> Tomas Hoger <thoger@...hat.com> wrote:
+>
+> > Hi!
+> >
+> > There's a new OpenSSL release 1.0.1g that fixes information leak issue:
+> >
+> > http://www.openssl.org/news/secadv_20140407.txt
+> > http://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=96db902
+> > http://heartbleed.com/
+> >
+> > --
+> > Tomas Hoger / Red Hat Security Response Team
+>
+
+
+
 -- 
-Yves-Alexis
+"I disapprove of what you say, but I will defend to the death your right to
+say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+"The people's good is the highest law." -- Cicero
+GPG Key fingerprint: 125F 5C67 DFE9 4084
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
