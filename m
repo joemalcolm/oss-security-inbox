@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/13/6
-Message-Id: <20140213193030.88C72C047F@smtp.hushmail.com>
-Date: Thu, 13 Feb 2014 19:30:30 +0000
-From: "mancha" <mancha1@...h.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/11
+Message-Id: <BC6E4871-BEC2-445B-9771-D4345D4597DC@stufft.io>
+Date: Tue, 8 Apr 2014 16:27:27 -0400
+From: Donald Stufft <donald@...fft.io>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request - GnuTLS corrects flaw in certificate verification (3.1.x/3.2.x)
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-GnuTLS has just released versions 3.1.21 and 3.2.11 to address
-an issue with the handling of v1 CA certificates. According to
-the developer in GnuTLS advisory GNUTLS-SA-2014-1: "This issue
-can be exploited if there are trusted CAs that issue X.509
-version 1 certificates." [1]
 
-[1] http://gnutls.org/security.html
+On Apr 8, 2014, at 3:37 PM, Yves-Alexis Perez <corsac@...ian.org> wrote:
 
-Upstream fix:
-https://www.gitorious.org/gnutls/gnutls/commit/b1abfe3d18
+>  (for example, I'm still unsure how easy
+> it really is to find some valuable data in those 64kB of process heap
+> memory).
 
-Unless already assigned, would you please allocate a CVE for
-this issue?
+Real easy, here’s a Python script which looks for cookies https://gist.github.com/mitsuhiko/10130454
 
-Thank you.
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
---mancha
 
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
