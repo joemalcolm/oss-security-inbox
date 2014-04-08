@@ -1,94 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/19
-Message-ID: <20140703221738.1d65d21c@chromobil.localdomain>
-Date: Thu, 3 Jul 2014 22:17:38 +0200
-From: Stefan Bühler <stbuehler@...httpd.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/3
+Message-ID: <20140408092512.GB11169@sivokote.iziade.m$>
+Date: Tue, 8 Apr 2014 12:25:12 +0300
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Varnish - no CVE == bug regression
+Subject: Should openssl accept weak DSA/DH keys with g = +/- 1 ?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 03 Jul 2014 13:41:58 -0600
-Kurt Seifried <kseifried@...hat.com> wrote:
+Not on list.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> 
-> 
-> On 03/07/14 11:12 AM, Stefan Bühler wrote:
-> > On Thu, 3 Jul 2014 08:15:06 +0000 Sven Kieske
-> > <S.Kieske@...twald.de> wrote:
-> > 
-> >> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
-> >> 
-> >> I'd agree with this. And I don't get the argument from
-> >> poul-henning kamp, what I understand is: "hey, we trust our
-> >> backend server" well, but your backend server can make you crash,
-> >> so you probably shouldn't trust it in the first place?
-> >> 
-> >> you _never_ can trust input, so you have to validate it, either
-> >> way, at least enough to not crash or perform malicious actions.
-> >> 
-> >> Am 03.07.2014 09:48, schrieb Kurt Seifried:
-> >>> So as I understand this: Varnish front end for web servers, the
-> >>> web servers can trigger varnish to restart. Are the back end
-> >>> servers supposed to be able to cause varnish to restart?
-> >>> 
-> >>> I'm guessing not. Scenario: hosting env, or a website with a
-> >>> vuln, whatever, you can now cause the varnish front ends to
-> >>> restart constantly, effectively causing a permanent denial of
-> >>> service.
-> >>> 
-> >>> That sounds CVE worthy. Or am I missing something?
-> > 
-> > you should never trust *untrusted* input. your root shell usually 
-> > trusts the input it gets...
-> > 
-> > so the valgrind developers decided that they consider the backend 
-> > webservers trusted, at least regarding the capability to cause a
-> > DoS.
-> > 
-> > for the record - so does lighttpd (a backend can trigger OOM as
-> > lighty reads (nearly) as fast as possible from a backend, as
-> > backends often only handle one request at a time); we usually tell
-> > people to use X-sendfile instead of sending ISOs through php.
-> 
-> That also sounds like it needs a CVE then. You should not be able to
-> trivially DoS stuff, especially OOM, things should protect themselves
-> from OOM'ing especially if they accept user controlled input from the
-> network.
+I am a noob at crypto.
 
-And again "user controlled input"... a root shell also uses "user
-controlled input".
+IIRC similar attack was used against Tor
+several years ago.
 
-> > just because you disagree with such decisions doesn't make it CVE 
-> > worthy (missing or wrong documentation could).
-> 
-> So to be clear your argument is that the http backends serviced by
-> Varnish are supposed to be able to shut down Varnish, not by using an
-> administrative channel/command but by executing a denial of service
-> against Varnish? And that this is intended behaviour and thus not a
-> security vulnerability?
+In DSA it is possible to force g=1 or g \equiv -1 \mod p.
+The first is unit and the second is of multiplicative
+order 2.
 
-If you can get it for free to prevent it, it is of course desirable to
-prevent it; and this is what valgrind did in this case: they could fix
-it, so they did. But I guess if it would have meant changing a lot of
-core code they might have refused to fix it.
+This are clearly weak and insane choices,
+but this might have implications to MITM
+(might be wrong on this).
 
-So the question is whether it is a priority for you; the original
-author of lighty decided performance was more important, and even if we
-now may have changed our mind about it, we don't want to break
-everything just trying to fix it now. (Our new development version
-includes a design to protect against such problems.)
+For DH could generate key with g=1, though
+couldn't test it.
 
-> > in case you actually want to assign a CVE here, maybe we can get
-> > one for the bad openssl default cipherstring too? because for that
-> > it is really obvious that it is f*** wrong, but i think that none
-> > was assigned because upstream didn't agree with it.
+Tested both 1 and -1 cases in DSA,
+the probability of successful connection
+was about 1/4 (or maybe 1/2), errors in the
+other cases. (for $1$ I would expect probability
+$1$).
 
-So you really want to tell me that it is intended to use openssl with
-the crappy default cipher? - just to keep the analogy here, as you
-somehow seem to have missed it.
+Attached are cacert.pem and cacert2.pem,
+the magic word is 1234.
 
-regards,
-Stefan
+To test:
+$ openssl s_server -accept 8888 -www -cert cacert.pem
+$ openssl s_client -connect localhost:8888 -showcerts
+
+To examine
+$openssl x509 -text -in cacert2.pem
+$openssl dhparam -text -in dHParam.pem
+
+(not sure if dHParam.pem this is usable, forged generation).
+
+Firefox refuses connections, Konqueror works
+with same probability.
+
+Suspect this might be related to EC refusing
+the point at infinity.
+
+Might have MITM implications, don't have
+working exploit (If a MITM can forge $g=1$ in DH,
+the private keys are useless).
+
+
+
+
+View attachment "cacert.pem" of type "text/plain" (1968 bytes)
+
+View attachment "cacert2.pem" of type "text/plain" (1563 bytes)
+
+View attachment "dHParam.pem" of type "text/plain" (246 bytes)
