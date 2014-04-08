@@ -1,47 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/3
-Message-Id: <201401180121.s0I1LDdN001981@linus.mitre.org>
-Date: Fri, 17 Jan 2014 20:21:13 -0500 (EST)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0021: chrony traffic amplification in cmdmon protocol
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/5
+Message-ID: <5343F496.7040507@redhat.com>
+Date: Tue, 08 Apr 2014 18:37:34 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: jbigkit security flaw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi All,
 
-> Is this not a same/similar case?
+Florian Weimer of Red Hat Product Security Team found a stack-based
+buffer overflow flaw in the libjbig library (part of jbigkit).  A
+specially-crafted image file read by libjbig could be used to cause a
+program linked to libjbig to crash or, potentially, to execute
+arbitrary code.
 
-There are many UDP protocols in which the reply traffic is larger than
-the request traffic. A vendor can handle this in several possible
-ways, including (for example) a statement that the protocol
-implementation details were intentional, and that adverse effects are
-a network-operations problem, not a software problem. CVE is about
-software mistakes. So, at least at the moment, we are looking for
-vendors who characterize the issue as a software mistake, and fix it.
+This issue has been assigned CVE-2013-6369.
 
-In the chronyd case, this seems likely, so we don't expect any
-long-term issue with including CVE-2014-0021 in CVE.
+References:
 
-There may well be other reasonable approaches. An example approach
-might be making CVE assignments for any protocol implementation that's
-similar to one that already has a CVE (e.g., similar to ntpd). We're
-not currently using that approach.
+https://bugzilla.redhat.com/show_bug.cgi?id=1032273
+https://www.cl.cam.ac.uk/~mgk25/jbigkit/CHANGES
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJS2dYfAAoJEKllVAevmvmsCpcH/AlwpzADNsdZtfJsvLBontoq
-Btpl9yry86vVt9HKks3/C4C8l2agPkFKj466TxRFAnRtqgaG5zbxex4CRk09EEmB
-yMOlzRTWSYSC4UHH3nsVvNJsikuMR0N3vcdlVqoIfnfTOWyD9DwPgo/OSABm+dMa
-vcQmw6JHugTL4ZXju1fKnqbu44QePKc96LXlrcqE4z4AWbzyr3Fc6A2kRWb5g7qt
-40ltpwG2vntUzXqSyIN2IvY1OA3wHy8OOh9Hh/a8LXqjqyasWvxSUHNvSF4H/Ezo
-a/Rmsq5+x+41Ai3GdYlsH6TSf2B7HMRYMgPKr0FQ/jn6k340NdCzi6WlJpPdPmc=
-=Qby5
------END PGP SIGNATURE-----
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
