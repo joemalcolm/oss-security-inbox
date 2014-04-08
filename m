@@ -1,38 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/11
-Message-ID: <54827F81.9020708@gmail.com>
-Date: Fri, 05 Dec 2014 23:01:05 -0500
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/14
+Message-ID: <5344609E.9000805@redhat.com>
+Date: Tue, 08 Apr 2014 14:48:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+CC: Tim Heckman <tim+sec@...erduty.com>, cve-assign@...re.org
+Subject: Re: CVE request: Icecast world readable log/logdir
 Content-Type: text/plain; charset=utf-8
 
-On 05/12/14 10:41 PM, Seth Arnold wrote:
-> On Sat, Dec 06, 2014 at 01:44:31AM +0100, Hanno Böck wrote:
->
-> A far better mechanism in Nautilus would be to use execve(2) on the
-> pathname and see if it executes. Nautilus will never be good at guessing
-> which files are actually executable on a given system and it is ridiculous
-> for it to try to guess. It should just execute the selected file and if
-> that fails, report the failure to the user.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/07/2014 02:00 PM, Agostino Sarubbo wrote:
+> On Sunday 06 April 2014 20:32:35 Tim Heckman wrote:
+>> Hello Agostino,
+>> 
+>> I agree that world-readable log files is a problem and should be
+>> fixed. However, should this be given a CVE?
+>> 
+>> Do those log files contain any information that would be
+>> considered a security risk? It's been quite a few years,
+>> admittedly, since I've worked with Icecast so I don't remember if
+>> those files contain any information that could be considered a
+>> problem.
 > 
-> One goofy filemanager doing something silly ought not stop Mozilla from
-> shipping a safer Firefox.
+> The access log looks to be very similar to a webserver access log
+> which deserved a cve in the past.
 > 
-> Thanks
 
-Desktop files already work fine, so why fix what's not broken? I don't
-think it should fall back to executing stuff at all. TBH, inspecting
-file content rather than the Windows / OS X method of relying on the
-file extension is quite surprising for a GUI file manager.
+Basically from my understanding of CVE:
 
-Everything is executable (by default) on FAT32/NTFS and you'll run into
-fun surprises when there aren't proper shebangs. For example, a Python
-module beginning with "import math" attempts to run the imagemagick
-import command and grabs onto your mouse cursor. I don't even want to
-begin thinking about the security implications of passing everything
-through libmagic (ugh) and then opening it in an application *based on
-the file content*, which is essentially opaque to the user.
+world readable log file with sensitive information in it? Gets a CVE.
 
+world readable log file, nothing sensitive in it? Hardening, no CVE.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Now what defines "Sensitive"? Some services MUST log sensitive
+information to be useful, e.g. WWW logs with the GET request which can
+contain form data passed via GET. Some will almost never log sensitive
+information unless placed into debug mode for example. So there is a
+huge grey are in the middle. This is offset by the occasional bug like
+"Service X log password under weird condition Y" which then makes that
+world readable log file a problem.
+
+This also applies to configuration files, some are fine to be readable
+(/etc/passwd) and some are not fine to be readable (/etc/shadow).
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJTRGCdAAoJEBYNRVNeJnmTlFkP/jAuknMtFwTALMrqDQjzsS6b
+KzLGT96pz7JATP40gRosCbkMh/NLfLybozgnAzAn5Ls/R3mZxGzD8iHqp7ytTkPI
+L1zl3ftTzk7s1wDhCbxIuqnMb1+3Z+SuJ0zJXFY5qjhX+Uo1wX8xO1bSrrltwIrB
+NA9PBXZIuHynNt/osSyKrzADpUyW189dpYdvLgWYEGzF05Q6J0UFeyXhDPP5CZ/m
+BaN4ZnSzLF+xTfV6FlszU2omHHhpL41qlof+VSw4ykgYCg879fAlWxOp0gsqkffU
+XJChxemQp8ImojWpfsnGt1r1Ioe0GU0r2uF6vAxC3Vq7HQnyLlRzyajTscPLh4U1
+3AC8RAv+PHQFkZQFeVnhvr2i0J/Zwp92Cq0r1GxDK/G0u8rzqEuUeUghAm/wdHE9
+ukVMKIaBgr7TfcetnDC146q2HOKlR73GdxFVSAf2TsthceGdMT+GE0GtBUVQjRnc
+qhR7A/P3IJZuIrfn+91qo37oSPNnQw3MOfsHU47WoTev12AEXC10DOPbw3Jkiexy
+k0qXuPUJTDHJRLhn9XdYst4xFixTBVZx6AlcHrwgnAm/q0bAvZWmxiU7g5AU2Yws
+DDtGsbgbTbCcwhvclM2/SrIl5aBEoZCngOUVH+pmNqM1nPqYNNw9oQdBjsFkX9Q7
+MT3LVpASQLfUW4fK24qO
+=FFzl
+-----END PGP SIGNATURE-----
