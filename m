@@ -1,39 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/5
-Message-Id: <201405201711.s4KHB6ba020001@linus.mitre.org>
-Date: Tue, 20 May 2014 13:11:06 -0400 (EDT)
-From: cve-assign@...re.org
-To: jmm@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: xbmc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/5
+Message-ID: <j3kr95yppl491ta52iabvjpa.1396989798173@email.android.com>
+Date: Tue, 8 Apr 2014 16:44:00 -0400
+From: Bobby Broughton <bobby@...ehosting.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Once you gain a session id, you can hijack the person's session allowing for unauthorized access.
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=747428
-> http://trac.xbmc.org/ticket/15198
+Here's a good article:
 
-Use CVE-2014-3800 for the issue in which mode 0644 can be used for a
-file containing a password. There is no CVE ID for "users should be
-informed that the password will be stored in a unsafe manner."
-Otherwise we would probably need CVE IDs for ftp clients that obtain
-passwords from mode-0600 .netrc files without warning the user
-that .netrc has cleartext data.
+https://www.mattslifebytes.com/?p=533
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTe4wuAAoJEKllVAevmvmsoHIH/Rv3aMK8X7EGqaalf+R368Ng
-+MHGi7pDxOV7iimlrRYLl3bRLPvHy/Zb/Bg2LDGRo6XrcdpkYlaN9HtCJK1UH/mu
-WuBIpi+qIvqtIZ3V4T3yrqWngQBC1PdsZEpgDzTybKoaFYpzMJQFrm4KkQMzspsx
-dBRH0URZHo4OM2Pgnl6GXCpjN5sg6hjVJF8bFfkElJLoNuZkBNtIN5GkmJsn8ONx
-A9CpChXEihFhsfINrfkgSyjbgnRwfDZh1ZgqnAK3Kod42wAYNl09kcQwKjOFJoQq
-nwsXMpnDyUfhlj9ZpiLNLWzAYLNfOS5psEp58Q3OnV7F74uY2GGyIwxL1YCEW18=
-=QK1V
------END PGP SIGNATURE-----
+Sent from my Verizon Wireless 4G LTE smartphone
+
+
+-------- Original message --------
+From: Donald Stufft
+Date:04/08/2014 4:28 PM (GMT-05:00)
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+
+
+On Apr 8, 2014, at 3:37 PM, Yves-Alexis Perez <corsac@...ian.org> wrote:
+
+>  (for example, I'm still unsure how easy
+> it really is to find some valuable data in those 64kB of process heap
+> memory).
+
+Real easy, here’s a Python script which looks for cookies https://gist.github.com/mitsuhiko/10130454
+
+-----------------
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+
+
