@@ -1,34 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/20/3
-Message-ID: <20141220144232.GQ15831@symphytum.spacehopper.org>
-Date: Sat, 20 Dec 2014 14:42:32 +0000
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/12
+Message-ID: <20140408202823.GA26464@scapa.corsac.net>
+Date: Tue, 8 Apr 2014 22:28:24 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+Cc: Jussi Eronen <juhani.eronen@...ora.fi>
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-On 2014/12/20 12:27, Hanno Böck wrote:
-> Is there any reason not to tell everyone to use tlsdate?
-> What's the distro's take on this? afaik many ship ntp-based solutions
-> by default.
+On Tue, Apr 08, 2014 at 02:03:46PM -0600, Kurt Seifried wrote:
+> So to respond/clear up some points:
+> 
+> It appears Codenomicon and Google found the vulnerability
+> independently. Google reported it to OpenSSL. Codenomicon reported it
+> to NCSC-FI, I'm not sure who (Codenomicon or NCSC-FI) drove the
+> notification of CloudFlare/etc. and they also reported it to OpenSSL
+> (I don't know if that was before or after notifying OpenSSL).
 
-That won't work well for OpenBSD; libressl uses a random value instead
-of the timestamp. Using tlsdate against such a server:
+Well, as I put in my tentative timeline, and according to Jussi Eronen
+(from NCSC-FI, afaict) mail in that thread, NCSC-FI only reported to
+OpenSSL “a couple of hours before the advisory”, so my understand is
+that NCSC-FI was not aware of the vulnerability last week.  Maybe
+Codenomicon was, though. Jussi, could you confirm that?
+> 
+> 1) Mark J. Cox did not give Red Hat any advanced warning, he strongly
+> separates what he does with OpenSSL with what he does with Red Hat
+> (this is quite common at Red Hat, for example we have a guy on the
+> Debian security team, the Samba group, etc.). I for example sometimes
+> issue private CVE's in advance, but they don't get bugs filed/etc
+> until they hit a "public" source like distros@ or oss-security@.
+> 
+> 2) Mark informed Red Hat and as you can see from the public time line
+> Huzaifa entered a bug into BZ and then notified distros@ about 14
+> minutes later, basically at the same time. Red Hat SRT is globally
+> situated so anyone from distros@ emailing us for details would have
+> gotten a very prompt response.
 
-V: In TLS response, T=978796414
-V: In TLS response, T=3901855112
-V: In TLS response, T=602561497
-V: In TLS response, T=4259017273
-V: In TLS response, T=1129774656
-V: In TLS response, T=2844925558
+Ok the “Mark notifies^Winforms Red Hat” line and the “Huzaifa
+Sidhpurwala opens a bug” could actually be merged, they were more or
+less at the same time.
+>  
+> 3) At this point the plan was to embargo this until April 9th (I
+> forget what time), giving everyone 2+ days to deal with it. So OpenSSL
+> in conjunction with Red Hat attempted to do a coordinated response
+> with the community.
 
-There are certainly reasons you might not want to expose exact server
-time of a general purpose server, e.g. passing time(NULL) to srand
-is very common, but that's another can of worms (we also had some
-changes in that area recently)..
+I'm also unsure why that could not have been done earlier, when OpenSSL was
+first notified (by Google, supposedly).
+> 
+> 4) Things blew up. My understanding is that OpenSSL made this public
+> due to additional reports, I suspect it boiled down to "Group A found
+> this flaw, reported it, and has a reproducer, and now Group B found
+> the same thing independently and also has a reproducer. chances are
+> the bad guys do as well so better to let everyone know the barn door
+> is open now rather than wait 2 more days" but there may be other
+> factors I'm not aware.
 
-As far as NTP goes, OpenNTP does at least send cookies in some fields
-and check returned valuess, mitigating against blind spoofing. For sure
-it's not perfect, but requires no configuration and is better than not
-doing it.
+Yeah, maybe the report by NCSC-FI to OpenSSL scared them. I don't know
+who to contact at OpenSSL and I'm not sure if they read the list.
+> 
+> 5) Monday morning: everyone is scrambling to get patches out and
+> update systems.
 
+Actually, all times are UTC. I don't know about others, but Debian
+security team is mostly in western Europe, so it was monday
+evening/night.
+> 
+> 6) At least one vendor (CloudFlare) posts a blog entry stating they
+> were notified a week ago by Codenomicon/NCSC-FI , and claiming that it
+> was via "responsible disclosure". Other major vendors were not
+> informed (e.g. Amazon:
+> http://aws.amazon.com/security/security-bulletins/heartbleed-bug-concern/).
+
+I don't think they said they were notified by Codenomicon/NCSC-FI (and
+that doesn't fit the timeline).
+> 
+> 
+> 7) At least one vendor (Google) found this independently and, as I
+> understand it, patched their own systems (which is completely
+> understandable).
+
+Indeed.
+> 
+> > I don't want to point finger, but I sincerely hope the next time 
+> > something like that happens, coordination will be done early in
+> > the processus, and relevant vendors will have a chance to prepare
+> > themselves
+> 
+> As you can see above, it was attempted, but Murphy's law took over.
+
+Sure, thank you for starting that coordination as soon as you were made
+aware of the vulnerability (and sorry we weren't there monday morning
+UTC to help you on that).
+
+I was more ranting about what happened and did not happened “last week”.
+
+Regards,
+-- 
+Yves-Alexis Perez
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
