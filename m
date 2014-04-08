@@ -1,25 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/23
-Message-ID: <2814430.VOhzPXr1aH@eee>
-Date: Wed, 04 Jun 2014 22:41:59 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com, Monty Ijzerman <mijzerman@...are.com>
-Cc: Ramon de C Valle <rdecvalle@...are.com>
-Subject: Re: Re: Request for linux-distros subscription
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/7
+Message-ID: <53441325.9080208@ficora.fi>
+Date: Tue, 08 Apr 2014 18:17:57 +0300
+From: Jussi Eronen <juhani.eronen@...ora.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 04 June 2014 12:33:13 Ramon de C Valle wrote:
-> I'd also appreciate comments by others active in this community and would
-> be happy  to answer any questions anyone might have.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Other than earlier product re-qualification I don't see how you could justify 
-joining the list, am I missing something?
-If that's the only reason, I guess a question that should be asked is: is  
-exposing the details to more people actually worth the extra time?
+Hello,
 
-(speaking for myself here)
+On 04/08/2014 01:05 AM, Yves-Alexis Perez wrote:
+> On Mon, Apr 07, 2014 at 01:56:27PM -0700, Reed Loden wrote:
+>> Was this not coordinated with the distros at all? If not, that
+>> seems like major fail on the reporters and NCSC-FI's part. :/
+> 
+> There was a mail from Red Hat on monday morning (CEST) with no
+> detail and a CRD to april 9th. It seems OpenSSL advisory came a
+> bit uncoordinated, actually, which (it seems) triggered the release
+> of the heartbeat and cloudfare posts, as well as the Red Hat one
+> here.
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+We reported the issue to OpenSSL a couple of hours before the advisory
+was published. Our plan was to start notifications to distros and
+other vendors after discussing with OpenSSL. Codenomicon did mention
+us as the coordinator in the original text of heartbleed.com, but the
+current text reflects the situation quite well:
+
+"""
+Who coordinates response to this vulnerability?
+
+NCSC-FI took up the task of reaching out to the authors of OpenSSL,
+software, operating system and appliance vendors, which were
+potentially affected. However, this vulnerability was found and
+details released independently by others before this work was
+completed. Vendors should be notifying their users and service
+providers. Internet service providers should be notifying their end
+users where and when potential action is required.
+"""
+
+- -Jussi / NCSC-FI (formerly known as CERT-FI)
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+
+iQIcBAEBAgAGBQJTRBMSAAoJELribKLoD5cx9RUP/0P0RSoXel4HvfWxUhGZfnsy
+q8yNYzOPMO8fIXxKg5W7CfSr4zy05gZSBIKDdETOtEcDFIDN4+4fZPvxMguF74Qe
+EKfUoyaXvK3JbQ/E1aw1CvYxLSPGRw3AcwkeTYtMZLzNqLwN6zBYvVjkr4GvGWG4
+30m1CmDWsR0MYrMrO04j6aSc1ykDg33avw+/Fs5TXOkoJCbzbjKgZ/QFU0C9KLU0
+VklrToFsupU722bQ11i8RlGXcA+0BNMFBabEVRW8jqym0cYVSsoIr6GrCMLeqOkq
+WmnxsSnNkZg4mjwwYLZS+Bl70veSvyBrIcyke2V74wgnDR9j0on/v6mK3p4Cu9bF
+3EH+2GI43o0sOsmHl7uMhvL4JbJOAcxsfYLsULoHCWTx0qzYtqquanjOyk72bxWk
+lZG0hfYQIonPX505riLGDN0DUHkoEq8JyQU4hFwDrI6Fxk6i783GVA4eqJdXHTM3
+qisH4T7elh8xQAqJYT7gIe3oRsZo2Kj4SProuGT3usqJgwl0wEch4JjZyx70Ren9
+E3DSPRvZKB7zHqbL0f0UbvpGtcsNrGBhayMcoZXmjCEODsJTwJZ0OFyMae+Z7gxP
++QugddtuM2S898DFrgrFKVtnTLDABe/UQ3z0wzczN4ZHlz6g/9rzHV4NW6BHe1f2
+M+QZTIHz+8FfV7mnAHsa
+=Ukts
+-----END PGP SIGNATURE-----
