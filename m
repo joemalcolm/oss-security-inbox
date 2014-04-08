@@ -1,37 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/14
-Message-Id: <201402031504.s13F4ovE023405@linus.mitre.org>
-Date: Mon, 3 Feb 2014 10:04:50 -0500 (EST)
-From: cve-assign@...re.org
-To: pedrib@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: PHP object insertion in Contao CMS <= 3.2.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/4
+Message-ID: <20140408105113.GD11169@sivokote.iziade.m$>
+Date: Tue, 8 Apr 2014 13:51:13 +0300
+From: Georgi Guninski <guninski@...inski.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Should openssl accept weak DSA/DH keys with g = +/- 1 ?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Apr 08, 2014 at 12:25:12PM +0300, Georgi Guninski wrote:
+> other cases. (for $1$ I would expect probability
+> $1$).
 
-> passed directly into PHP's unserialize
 
-> https://github.com/contao/core/commit/8c9cb044bdc887a8202bb65a64545c025664f957
-> https://github.com/contao/core/commit/1717336598fdcf1ed3f4ad488e140147cb31516d
-> https://github.com/pedrib/PoC/blob/master/contao-3.2.4.txt
+This was mistake, both certs had g= -1.
+With g=1 probability is $1$ in
+openssl and Konqueror.
 
-Use CVE-2014-1860.
+cacert3.pem is with g=1.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJS76+sAAoJEKllVAevmvmsVkAH/jWjzo9XfaTN3YR7XQO1xdZH
-6vTlzWlSMfSICA2wIjLBvWC7rexXbAfXDr28yic7Ah/ECD4wGvoS2b5dzQJ7c4Ev
-8h5tRYt4XhEi4QgeNg+izqw5R5pxxyq+vjYA7QAudSSc6hCcqDiNFnEPlTJiUDXK
-LChGrJUz0K+lWnPYYZqU5phBaI2yiQ5eGsCCgVGxBcS8e8qNFfPhpIt5xASLA8RD
-cPDPN/QK642DjlJ3PBriozi/ECUn6QDvRDrs9K6gOKQHP3WCUET/os2ZyCbSHIcN
-JBuDCsWguy4BPOJX1cLU1gn5yoECRtIk87OwOsF0kuKpqdoN2Os4yTxiB5pXYaU=
-=pl0i
------END PGP SIGNATURE-----
+> 
+
+View attachment "cacert3.pem" of type "text/plain" (1210 bytes)
