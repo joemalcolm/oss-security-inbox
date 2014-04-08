@@ -1,25 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/18
-Message-ID: <20141010194348.GQ6890@pc.thejh.net>
-Date: Fri, 10 Oct 2014 21:43:48 +0200
-From: Jann Horn <jann@...jh.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/8
+Message-ID: <534423BB.30307@enovance.com>
+Date: Tue, 08 Apr 2014 18:28:43 +0200
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: What does this PHP exploit do?
+Subject: [OSSA 2014-010] XSS in Horizon orchestration dashboard (CVE-2014-0157)
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 11, 2014 at 06:28:04AM +1100, Dave Horsfall wrote:
-> I'm trying to figure out what this exploit does; it started around the 
-> time that Shellshock did, but I don't think that they're related.
+OpenStack Security Advisory: 2014-010
+CVE: CVE-2014-0157
+Date: April 08, 2014
+Title: XSS in Horizon orchestration dashboard
+Reporter: Cristian Fiorentino (Intel)
+Products: Horizon
+Versions: 2013.2 version up to 2013.2.3
+
+Description:
+Cristian Fiorentino from Intel reported a vulnerability in Horizon
+Orchestration dashboard. By tricking a Horizon user into using a
+malicious template in the Orchestration/Stack section of Horizon, a
+remote attacker may trigger a cross-site-scripting vulnerability. It may
+result in potential assets theft (Horizon user/admin access credentials,
+tenants confidential information, etc.). Only setups exposing the
+orchestration dashboard in Horizon are affected.
+
+Juno (development branch) fix:
+https://review.openstack.org/86059
+
+Icehouse (milestone-proposed branch) fix:
+https://review.openstack.org/86054
+
+Havana fix:
+https://review.openstack.org/86056
+
+Notes:
+This fix will be included in the icehouse-rc2 development milestone and
+in a future 2013.2.4 release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0157
+https://launchpad.net/bugs/1289033
+
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
-> The hex-encoded stuff in the script below decodes to 
-> 
->     "-d+allow_url_include=on+-d+safe_mode=off+-d+suhosin.simulation=on+-d+disable_functions=""+-d+open_basedir=none+-d+auto_prepend_file=php://input+-d+cgi.force_redirect=0+-d+cgi.redirect_status_env=0+-n" 
-> 
-> but my PHP-fu doesn't quite extend that far (and that "safe_mode=off" 
-> looks a bit suss).
 
-Looks like CVE-2012-1823 to me:
-http://eindbazen.net/2012/05/php-cgi-advisory-cve-2012-1823/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
