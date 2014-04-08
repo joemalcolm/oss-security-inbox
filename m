@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/2
-Message-Id: <201402080137.s181b0BG004602@linus.mitre.org>
-Date: Fri, 7 Feb 2014 20:37:00 -0500 (EST)
-From: cve-assign@...re.org
-To: deviant.beta@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Dokeos 2.1.1 Multiple Stored XSS Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/2
+Message-Id: <818FF3C1-7291-4AEB-B5F6-13D73B3C8E15@corman.io>
+Date: Mon, 7 Apr 2014 23:05:42 -0400
+From: Ben Corman <ben@...man.io>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Icecast world readable log/logdir
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+This seems to be the behavior on Ubuntu 12.04 as well.
 
-> I have discovered several Stored XSS vulnerabilities in Dokeos ...
-> Version 2.1.1.
-> 
-> *Path:* /dokeos-2.1.1/main/auth/profile.php
-> 
-> *Issue detail:*
-> The problem is script does not sanitise the following parameters, "Phone"
-> "Street" "Address line" "Zip code" "City"
-> 
-> 
-> *Path:* /dokeos-2.1.1/main/social/groups.php?id=1
-> 
-> *Issue detail:*
-> The problem is that if attacker were to enter the following XSS vector as
-> the "Subject Topic".
-> 
-> 
-> *Path:* /dokeos-2.1.1/main/messages/view_message.php?id=6&f=social
-> 
-> The problem is similar to issue #2 if attacker were to enter the following
-> XSS vector in the Message itself.
-> 
-> 2014-01-15 - Third Vendor Notification (no reply).
-> Please see the full report at http://www.xchg.info/?p=381
+$ ls -al /var/log/icecast2/
+total 1044
+drwxr-xr-x  2 icecast2 icecast   4096 Apr  6 06:53 .
+drwxr-xr-x 12 root     root      4096 Apr  7 06:30 ..
+-rw-r--r--  1 icecast2 icecast 135830 Apr  7 22:59 access.log
+-rw-r--r--  1 icecast2 icecast 339901 Apr  7 22:59 error.log
 
-Use CVE-2014-1877.
+On Apr 6, 2014, at 1:32 PM, Agostino Sarubbo <ago@...too.org> wrote:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+> I just noticed that (at least on gentoo), the following package produces a 
+> world readable log:
+> 
+> Icecast (http://www.icecast.org):
+> # ls -la /var/log/icecast 
+> total 18648
+> drwxrw-r--  2 icecast nogroup     4096 Apr  6 12:23 .
+> drwxr-xr-x 15 root    root        4096 Apr  5 04:20 ..
+> -rw-r--r--  1 icecast nogroup  5646894 Apr  6 19:27 access.log
+> -rw-r--r--  1 icecast nogroup  3181987 Apr  6 19:27 error.log
+> -- 
+> Agostino Sarubbo
+> Gentoo Linux Developer
 
-iQEcBAEBAgAGBQJS9YlaAAoJEKllVAevmvms7vAIAMFBjcin6+PpSaEPEtCPZ9Pg
-YzJaLhwkLs8p84agFepywNokm1zbQXxAgQcI5vrljXBb6SOMlatCINxCLWg1M7ml
-ndMKgiLoZF3m4a/S54VxGLIdnG3+JBu6kAfJKhTWU6eHYAtDCHKIKLFpkx8ESvl2
-ksJaBN2kaTI5iT0FnmThc23GarhNuL5GTSf0kk+9HQw87eDarJzEfO9n4/4t7gLO
-QouDv+JzBeohq1VaHa97d0nLgq1y/4SResQsltlUkE0zj6K0ILflKCKl5/OF5MUl
-x9nj1ocHe9uc2XD/kcSr+PjcWXKmJUhx3FloUoPdZA8q7WhxP+aibLSLUkczD5o=
-=6Mg2
------END PGP SIGNATURE-----
