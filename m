@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/6
-Message-ID: <20141218094545.GA5632@jwilk.net>
-Date: Thu, 18 Dec 2014 10:45:45 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/1
+Message-ID: <20140408063511.GD5106@suse.de>
+Date: Tue, 8 Apr 2014 08:35:11 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Running Java across a privilege boundry
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-* Tim Brown <tmb@...35.com>, 2014-12-18, 09:18:
->The issue for anyone that was interested was as follows:
->
->>$ objdump -x /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java | grep RPATH
->>
->>  RPATH                $ORIGIN/../lib/amd64/jli:bootstrap/jre/lib/amd64/jli:
->>$ORIGIN/../lib/amd64:bootstrap/lib/amd64:
->>$ORIGIN/../jre/lib/amd64:bootstrap/jre/lib/amd64
+On Tue, Apr 08, 2014 at 12:05:25AM +0200, Yves-Alexis Perez wrote:
+> On Mon, Apr 07, 2014 at 01:56:27PM -0700, Reed Loden wrote:
+> > I just asked around on IRC, and one of the Ubuntu guys said they didn't
+> > get any prior notification of this, so fixed packages won't be out
+> > until tomorrow at the earliest (for Ubuntu).
+> 
+> Nor Debian neither Suse were aware either.
 
-https://bugs.debian.org/754278
+Just for correctness, SUSE (and the other distros members) received
+Redhats heads up yesterday morning.
 
--- 
-Jakub Wilk
+> > Was this not coordinated with the distros at all? If not, that seems
+> > like major fail on the reporters and NCSC-FI's part. :/
+> 
+> There was a mail from Red Hat on monday morning (CEST) with no detail
+> and a CRD to april 9th. It seems OpenSSL advisory came a bit
+> uncoordinated, actually, which (it seems) triggered the release of the
+> heartbeat and cloudfare posts, as well as the Red Hat one here.
+
+Giving the impact an immediate release on any indications that this was
+public is better.
+
+Ciao, Marcus
