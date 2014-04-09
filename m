@@ -1,39 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/3
-Message-ID: <be8944dc58f20fb6a038aeac7ca87a93@mail.gmail.com>
-Date: Wed, 3 Dec 2014 11:11:24 +0100
-From: Nicolas Gaudin <nicolas.gaudin@...yconseil.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/19
+Message-ID: <534533F7.3050700@canonical.com>
+Date: Wed, 09 Apr 2014 07:50:15 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: RE: CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Is this vulnerability really 'critical' if we consider that a malicious user
-needs to be authenticated to crash the gateway?
-I understand that the vulnerability is exploitable if a client is
-compromised (certificate stolen).
-In such a case (client compromised), the risk is greater as confidentiality
-is breached.
+On 14-04-09 03:32 AM, Yves-Alexis Perez wrote:
+> On Wed, Apr 09, 2014 at 12:02:09PM +0530, Huzaifa Sidhpurwala wrote:
+>> On 04/09/2014 01:07 AM, Yves-Alexis Perez wrote:
+>>
+>>> Mon, 07 Apr 2014 06:10 : Huzaifa Sidhpurwala sends a mail to distros
+>>>                          list with no details but an offer to request
+>>>                          them privately
+>>
+>>
+>> After i sent a mail to distros, i was contacted by security engineers
+>> from most major distributions. I answered most of the them as soon as i
+>> could with complete details including the upstream patch.
+> 
+> I'm not sure who are “most major distributions”. We failed to reply in a
+> timely fashion to that mail (but that's on us), but apparently so did
+> Ubuntu, Suse sent a mail but got apparently no reply.
 
-Nicolas
+For the record, we did see the mail around 11:30 UTC, asked for details, but did
+not get a reply before the issue went public.
 
------Message d'origine-----
-De : David White [mailto:dmwhite823@...il.com]
-Envoyé : mercredi 3 décembre 2014 10:24
-À : oss-security@...ts.openwall.com
-Objet : [oss-security] CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
+It's quite unfortunate distros weren't able to prepare packages before this went
+public, but this is the way it is sometimes.
 
-I saw an email come through the pfSense list yesterday, but haven't seen
-anything about it discussed here. So I'm bringing it to this list's
-attention.
+I'd like to thank Huzaifa and Red Hat for attempting to coordinate updates by
+notifying other distros before the original CRD.
 
-https://community.openvpn.net/openvpn/wiki/SecurityAnnouncement-97597e732b
-
-[ As a side note, I mistakenly thought the OP on the pfSense list mistakenly
-posted his link to a forum post on OpenVPN that was written in 2010, when in
-fact, that user had joined in 2010 but posted to the pfSense forum
-recently - https://forums.openvpn.net/topic17625.html ]
+Marc.
 
 
---
-David
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
