@@ -1,50 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/3
-Message-Id: <20141029014732.5F6EEABC080@smtpvmsrv1.mitre.org>
-Date: Tue, 28 Oct 2014 21:47:32 -0400 (EDT)
-From: cve-assign@...re.org
-To: agc@...bsd.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security-officer@...bsd.org
-Subject: Re: ftp(1) can be made execute arbitrary commands by malicious webserver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/18
+Message-ID: <20140409103634.GD5507@scapa.corsac.net>
+Date: Wed, 9 Apr 2014 12:36:35 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Heartbleed, clients and Android
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Apr 09, 2014 at 12:21:29PM +0200, Hanno Böck wrote:
+> On Wed, 9 Apr 2014 11:54:58 +0200
+> Yves-Alexis Perez <corsac@...ian.org> wrote:
+> 
+> > On Wed, Apr 09, 2014 at 11:30:29AM +0200, Hanno Böck wrote:
+> > > I was asking myself some questions and I think others with more
+> > > insight into what heartbleed means may be able to answer quickly:
+> > > How does this affect client software? The PoCs we see send some
+> > > malicous payload to servers and get some memory dumps. That doesn't
+> > > affect clients?
+> > 
+> > Yes, it does affect clients.
+> 
+> Can anyone explain how an attack scenario would work?
+> Is it like:
+> * we have a Man-in-the-Middle.
+> * Client/Server establish connection.
+> * MitM inserts a malicious package with the heartbeat-payload and sends
+>   it to the client, client parses package, verifying MAC fails, but it
+>   still will output memory
 
-> tnftp(1) is quite widely used
+Heartbeat can be sent before the ChangeCipherSpec message is sent, so
+you don't have any TLS protection for that MITM.
 
-> fixes were committed to the NetBSD repo
+So yeah, you can sit at a nearby wireless hotspot, wait for any client
+to do some TLS trafic and heartbleed them (providing the client uses
+OpenSSL).
+> 
+> Or is it ONLY an issue if we contact a malicious server that may
+> extract random information from the application's memory? (which would
+> reduce the impact somewhat, e.g. operating system update systems or
+> wget etc. wouldn't have to worry)
 
-> src/usr.bin/ftp: fetch.c
+It's not hard to make people contact malicious servers, I think.
 
-> don't pay attention to special characters if they don't come from the
-> command line
+Regards,
+-- 
+Yves-Alexis Perez
 
-> FreeBSD and Dragonfly have been informed, as has Apple, and I have
-> received a boilerplate reply from Apple. The issue is present in
-> 10.10 (Yosemite).
-
-> the ftp program can be tricked into executing arbitrary commands
-
-> The FTP client will follow HTTP redirects
-
-> Location: http://192.168.2.19/cgi-bin/|uname%20-a
-
-Use CVE-2014-8517.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUUEZbAAoJEKllVAevmvmsFqkH/0l318cymZYupoZxrqFIuODh
-GTbK/XCDv5ZSyUHseRVh2iGQb9dXnBO+tgS//3MnAxFSd2+GpD5Fltd8oPf1WNw2
-0vcmjo8onqMtX9CU5ssh6qftOhR+VAYnf4fIybl9x1WZIV2aEJL1xnhbfeoXnbSr
-VMG+6MGDKvUA+2GTnBfuW/jvsuMuX0drAzY7YExDXnxNA9Ef/ovD0mf4jJUjikL1
-9fLgDgAgFXd4oQpRSuEGrsBMwLsKwwkUfWidnrI9nyEMOVI/U6ElU+Sl185uiAYl
-WW/eHNkCiYhJXwbZDz9Tv4QmN2S1/w/ZZreplNzS3w+eHBh/asHx5+7MAni2Q8Q=
-=Ef6C
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
