@@ -1,41 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/08/2
-Message-Id: <201403080139.s281dYgI020004@linus.mitre.org>
-Date: Fri, 7 Mar 2014 20:39:34 -0500 (EST)
-From: cve-assign@...re.org
-To: geissert@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: net-snmp agentx incorrect handling of multi-object requests DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/12
+Message-ID: <53450A22.6030401@redhat.com>
+Date: Wed, 09 Apr 2014 10:51:46 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Heap-based buffer overflow in libdw/elfutils (CVE-2014-0172)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The compressed debug information support in libdw does not handle 
+malformed compressed debug sections properly.  When computing the size 
+of a memory region, integer wraparound is not taken into account, 
+resulting in a heap allocation that is smaller than expected and which 
+is subsequently filled with arbitrary decompressed data:
 
-> It was found that the AgentX subagent of net-snmp can be stalled when
-> a manager sends a multi-object request with a different number of
-> subids.
-> 
-> http://sourceforge.net/p/net-snmp/patches/1113/
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=684388
+   <https://bugzilla.redhat.com/show_bug.cgi?id=1085663>
 
-> it's not the 2411 bug upstream, it's a different bug.
+We have assigned CVE-2014-0172 to this issue.
 
-Use CVE-2014-2310.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTGnHWAAoJEKllVAevmvmsQggIAIzJogDVt6+QWRItKFP7XrwN
-C2lR6kW0dfzYS0Ya/1UkdMFaBf452O7eSbpzUqDQFcM1HPocIFrQ5NVPdnVukYdZ
-9CgbWieyUUby+HJ2FIqtcDLvOGs7paH9JTc49Z07AWj739XMNh34m+rST9hOn59+
-YlW2ZloHB7eXoSBxjjJB5uPMvezTVJKuurUkthkLsct1HkMSCaWrLeKF9upXqQV+
-SpEnWsc7kmtIORBN+dgxFzDPxcuMFBAjkZcFnHanVaY0IF6QXtVvbH+tLjfm8oux
-Kq/rj9Ca+dW1xpft3INfJojL1wk9xLIf4ShTZP840d46lcHJPZ7kTeHw3C7qhYI=
-=sMhG
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
