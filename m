@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/21/3
-Message-ID: <5497084F.8030504@gmail.com>
-Date: Sun, 21 Dec 2014 12:50:07 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/2
+Message-ID: <5344C5A5.6090402@redhat.com>
+Date: Tue, 08 Apr 2014 21:59:33 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Other instances of CVE-2014-0160 - mod_spdy from Google
 Content-Type: text/plain; charset=utf-8
 
-On 21/12/14 06:31 AM, Florian Weimer wrote:
->
-> In contrast, servers with long-running connections and I/O polling
-> loops often do not react gracefully to jumps in time.  (I once
-> disconnected a few hundreds, if not thousands of users from an IRC
-> server just by setting its time correctly.)  Sure, you can avoid that
-> by using the appropriate kernel clock for timeout handling, but I have
-> the impression that the correct clock changes every couple of years.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I don't think it has ever changed. CLOCK_MONOTONIC won't *ever* jump
-either forwards or backwards, but is impacted by clock skew. I don't
-think most use cases actually want CLOCK_MONOTONIC_RAW, especially
-considering that there's no vdso implementation so it's slow.
+So it appears there are projects that statically compile OpenSSL into
+their software, one example:
 
-Of course, there's lots of buggy software which is why we have stuff
-like ASLR / SSP in the first place. :)
+https://code.google.com/p/mod-spdy/
+
+SECURITY UPDATE (8 Apr 2014): All mod_spdy users should upgrade to
+mod_spdy 0.9.4.2 immediately to fix the heartbleed bug in mod_spdy's
+linked version of OpenSSL. See
+https://code.google.com/p/mod-spdy/issues/detail?id=85  for details.
+
+./src/build_modssl_with_npn.sh:OPENSSL_SRC_TGZ_URL="https://www.openssl.org/source/openssl-1.0.1g.tar.gz"
+
+I have to assume there are more. So if you know of any please post
+them to OSS-Security (and Full-Disclosure) so people can find out (and
+hopefully all the security scanners/etc. add them to their checks).
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJTRMWkAAoJEBYNRVNeJnmTHeYP/2YybedrcK44gVPbufMylfX5
+Z7pFPssxxTOC7yhiYC3u5GrTT3HOPXSt6AGKBPLPF/ZE+XZZVHXU9L2Xjhj/2f+y
+5UICiVDQRmeSwV3E0bA87nw/TB9ofA5yVy5xmJLwBpHi9sH5BNC0Kh/8rDNGBv0b
+j9+MkPYHDMgHr+GoXKS9UbGP+GXcbOy3zY+/HJwKgZe1TGK4u3nm2Vb6gNAkebjy
+W8AWGhAsH5AV2RxZGLYV8UZPKWEi4qSbABNR75slMhEucr3dwyJswPdOkppbi9Sh
+VBEOHM69VWANKFKYB0bxrEcOqch5V1LYJZY/tlkJdZj43YyJAB6Jmz4xDQ3UvZyU
+/lVpkU/k3OHksSKa0Xx85YJIyhGMs2NTKJBg6hN0TJrXn84/MgQlVRQp1GfiW9sy
+g83IMzkmCznP1uIEv5vHrIP9Nq2IcefoCS1PTNNm36g2hJXEECcI+EaCt214fHcd
+XyUdqQM9q60BSSfPSwxrcz4HtL9CceOqGaBSPEuST7BRh4TqpxvULDFKPL4friEM
+GvsoNvj33bc1aBBQcFi7R9SfUFSIHcMAo293oMTXctuDi1HPQ8+vIuD5InWEQ4u7
+/ZY0ukrlvKJiIW6wTrsRdkANAPl8j1fhQz8cFjeKA/m2Yq/yUKmqQKs4xy9CEFsy
+PBrE3ZVLzBOiIS9idhXn
+=hQHV
+-----END PGP SIGNATURE-----
