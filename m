@@ -1,25 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/19
-Message-ID: <20140924163242.GF16787@gremlin.ru>
-Date: Wed, 24 Sep 2014 20:32:42 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/3
+Message-ID: <5344D03D.1040801@oracle.com>
+Date: Tue, 08 Apr 2014 21:44:45 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+CC: Kurt Seifried <kseifried@...hat.com>
+Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
 Content-Type: text/plain; charset=utf-8
 
-On 24-Sep-2014 22:01:50 +0600, Alexander E. Patrakov wrote:
+On 04/ 8/14 08:59 PM, Kurt Seifried wrote:
+> So it appears there are projects that statically compile OpenSSL into
+> their software, one example:
+>
+> https://code.google.com/p/mod-spdy/
 
- >> I see no good workaround. Starting the forced command with
- >> "unset >SSH_ORIGINAL_COMMAND &&" does not help - we'd need
- >> to unset the variable before starting bash, not from bash.
+https://www.stunnel.org/sdf_ChangeLog.html lists:
 
- > Won't installing dash and setting the shell of users who have
- > forced commands to dash mitigate this somehow?
+   Version 5.01, 2014.04.08, urgency: HIGH:
+     Security bugfixes
+         OpenSSL DLLs updated to version 1.0.1g. This version mitigates
+         TLS heartbeat read overrun (CVE-2014-0160).
 
-Possibly, that will require making /bin/sh symlink to point at
-dash (or zsh, or whatever) as well...
-
+but that appears be only for the precompiled Windows binaries they offer for
+download, as it doesn't contain a copy of OpenSSL in the source tarballs for
+Linux/UNIX distros, but instead searches for one in configure.ac.
 
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
