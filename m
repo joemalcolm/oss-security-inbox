@@ -1,126 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/10
-Message-ID: <CAHJtQJ6oNBDUusGNqW+wr3gz2JkeoRwfXWE+O_KRfczdCJXvuw@mail.gmail.com>
-Date: Fri, 28 Nov 2014 13:01:59 -0800
-From: Ingy dot Net <ingy@...y.net>
-To: Ian Cordasco <graffatcolmingov@...il.com>
-Cc: oss-security@...ts.openwall.com, John Haxby <john.haxby@...cle.com>,  Kirill Simonov <xi@...olvent.net>, Ingy döt Net <ingy@...n.org>,  Aaron Patterson <aaron.patterson@...il.com>, "Clark C. Evans" <cce@...rkevans.com>,  Oren Ben-Kiki <oren@...-kiki.org>
-Subject: Re: libyaml / YAML-LibYAML DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/9
+Message-ID: <5344EAB8.6080107@redhat.com>
+Date: Wed, 09 Apr 2014 12:07:44 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Two security flaws with json-c
 Content-Type: text/plain; charset=utf-8
 
-Hi Ian,
+Hi All,
 
-I was not aware that Aaron (cc'd) had taken on maintaining libyaml. I would
-be excited if that were the case. Aaron and I are neighbors, friends and
-have worked on libyaml together in the past.
+Florian Weimer of the Red Hat Product Security Team discovered two flaws
+in json-c, details as follows:
 
-Last I checked, Kirill is maintaining libyaml. The canonical repo is
-https://bitbucket.org/xi/libyaml and all the commits there are from Kirill.
-I've been under the impression for some years that Kirill does not actively
-work on libyaml, but he has always applied security patches as needed.
+1.  CVE-2013-6371 json-c: hash collision DoS
 
-I started the GitHub 'yaml' organization a few years ago, and among other
-things it contains a git based 'mirror' of the canonical mercurial repo.
+The hash function in the json-c library was weak, and that parsing
+smallish JSON strings showed quadratic timing behaviour.  This could
+cause an application linked to the json-c library, and that processes
+some specially-crafted JSON data, to use excessive amounts of CPU.
 
-I'm the author/maintainer of the Perl binding to libyaml. In this case, I
-verified the issue, patched/released the Perl binding, and pushed the patch
-to the GitHub copy.
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=1032311
 
-Going forward, I think it would be best if Aaron and I comaintained
-libyaml, but only if Kirill and Aaron want that.
+2. CVE-2013-6370 json-c: buffer overflow if size_t is larger than int
 
-I am interested in getting libyaml up to YAML 1.2 ad continuing towards a
-YAML 2.0. I trust Aaron's skills, and am willing to work with him on (YAML)
-language guidance.
+The printbuf APIs used in the json-c library used ints for counting
+buffer lengths, which is inappropriate for 32bit architectures.  These
+functions need to be changed to using size_t if possible for sizes, or
+to be hardened against negative values if not.  This could be used to
+cause a denial of service in an application linked to the json-c library.
 
-cc'ing Oren and Clark.
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=1032322
 
-Cheers, Ingy
 
-On Fri, Nov 28, 2014 at 9:42 AM, Ian Cordasco <graffatcolmingov@...il.com>
-wrote:
+Both these issues are fixed via the following upstream commit:
+https://github.com/json-c/json-c/commit/64e36901a0614bf64a19bc3396469c66dcd0b015
 
-> On Fri, Nov 28, 2014 at 11:36 AM, Ingy dot Net <ingy@...y.net> wrote:
-> > I have fixed this by commenting out the assert. This makes the parser
-> fail
-> > as it should.
-> >
-> > I've pushed the patch to the git-hub mirror of libyaml:
-> > https://github.com/yaml/libyaml
-> >
-> > I've added a test to https://metacpan.org/release/YAML-LibYAML and
-> released
-> > version 0.53.
-> >
-> > Ingy
-> >
-> > PS Here is the Perl minimum test case, with the patched behavior:
-> >
-> >  $ perl -MYAML::XS -e 'Load qq! x: "\n"x!'
-> > YAML::XS::Load Error: The problem:
-> >
-> >     did not find expected key
-> >
-> > was found at document: 1, line: 2, column: 2
-> > while parsing a block mapping at line: 1, column: 2
-> >
-> >
-> > On Fri, Nov 28, 2014 at 7:45 AM, Ingy dot Net <ingy@...y.net> wrote:
-> >
-> >> Taking a look at this now. Please let me know if you've already found a
-> >> patch.
-> >>
-> >> Ingy
-> >>
-> >> On Fri, Nov 28, 2014 at 2:20 AM, John Haxby <john.haxby@...cle.com>
-> wrote:
-> >>
-> >>> On 28/11/14 05:57, Jonathan Gray wrote:
-> >>> > libyaml and the perl YAML-LibYAML (aka YAML-XS) module based
-> >>> > on the same code have an "impossible" assert that can be
-> >>> > triggered with the following yaml.  This is a reduced testcase
-> >>> > of a crash found with the afl fuzzer.
-> >>> >
-> >>> >       a: "
-> >>> > "     b: true
-> >>> >
-> >>> > In other words a crash/denial of service with untrusted yaml input.
-> >>> > The libyaml author was contacted on the 21st and 27th of November.
-> >>> > No response has been received but the issue has independently been
-> >>> > reported publically since:
-> >>> >
-> >>>
-> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
-> >>> >
-> >>> > [1] Parsing 'test.yaml': assertion "parser->simple_key_allowed ||
-> >>> !required" failed: file "scanner.c", line 1113, function
-> >>> "yaml_parser_save_simple_key"
-> >>> >
-> >>> > assert(parser->simple_key_allowed || !required);    /* Impossible. */
-> >>>
-> >>> For what it's worth PyYAML 3.10 and 3.11 have exactly the same
-> assertion:
-> >>>
-> >>> >>> import yaml
-> >>> >>> yaml.load("""
-> >>> ... abc:
-> >>> ...     def: 'xxx
-> >>> ... '   ghi: 'yyy'
-> >>> ... """)
-> >>> Traceback (most recent call last):
-> >>>
-> >>> [...]
-> >>>
-> >>>     assert self.allow_simple_key or not required
-> >>> AssertionError
-> >>>
-> >>> jch
-> >>>
-> >>
-> >>
->
-> I could be mistaken but I thought Aaron Patterson had taken
-> responsibility for maintaining libyaml. Did you attempt contacting
-> anyone involved in the YAML organization on GitHub?
->
 
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
