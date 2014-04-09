@@ -1,53 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/4
-Message-ID: <5427705B.8070402@redhat.com>
-Date: Sat, 27 Sep 2014 20:20:11 -0600
-From: Eric Blake <eblake@...hat.com>
-To: chet.ramey@...e.edu, Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>
-CC: Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/24
+Message-ID: <20140409131230.GA18549@suse.de>
+Date: Wed, 9 Apr 2014 15:12:30 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: pam_cifscreds stack overflow
 Content-Type: text/plain; charset=utf-8
 
-On 09/27/2014 08:05 PM, Eric Blake wrote:
+Hi
 
-> With your patch as-is:
-> 
-> $ bash -c 'function a=b(){ echo oops;};export -f a=b;export
-> BASH_FUNC_a=hi; bash
-> -c "echo \$BASH_FUNC_a"'
-> b%%=() { echo oops
-> }
-> 
-> Your attempt to export an invalid function name ended up clobbering a
-> regular variable.  So I highly recommend that you further tighten things
-> up to reject '=' in function names.  Here's your existing tightening line:
-> 
-> 
->   	  /* Don't import function names that are invalid identifiers from the
->   	     environment. */
-> ! 	  if (absolute_program (tname) == 0 && (posixly_correct == 0 ||
-> legal_identifier (tname)))
-> ! 	    parse_and_execute (temp_string, tname,
-> 
-> where absolute_program() filters anything with '/', and the use of
-> posixly_correct decides whether to further restrict to variable names.
+We are tracking a patch at:
 
-Thinking a bit further, the _import_ direction (this code) is just fine,
-as is.  Anyone manually munging their environment will NOT get a
-function named a=b, but a variable named BASH_FUNC_a (and it's their own
-fault if they stick duplicates in environ).  But on the _export_
-direction (or more properly, when handling the 'function' keyword
-elsewhere in the source code), _that_ spot needs to be tightened to
-reject = in the attempted function name creation.
+https://bugzilla.novell.com/show_bug.cgi?id=870168
 
-I could live with it being a separate patch, as the import direction is
-what is protecting us from Shell Shock, and the output direction is now
-just a matter of clobbering regular variable names, but still think it
-should be fixed.
+which fixes a overflow in the cifskey.c (taken from
+Linux CIFS VFS) as used in pam_cifscreds. I did not
+check upstream length checking during their packet processing
+but I doubt the same fixed max length's also apply ad-hoc to
+pam processing of user and password.
+
+Sebastian
+
 
 -- 
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
 
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
