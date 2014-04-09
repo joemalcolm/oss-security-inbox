@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/17
-Message-ID: <20141007122119.5cb900d0@hboeck.de>
-Date: Tue, 7 Oct 2014 12:21:19 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/30
+Message-Id: <20140409224753.37B42601E7@smtp.hushmail.com>
+Date: Wed, 09 Apr 2014 22:47:48 +0000
+From: "mancha" <mancha1@...h.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+Subject: Cauterizing OpenSSL's heartbleed (the aftermath)
 Content-Type: text/plain; charset=utf-8
 
-Am Tue, 7 Oct 2014 18:11:10 +0800
-schrieb Pavel Labushev <pavel.labushev@...box.no>:
+There's an important distinction between systems "never vulnerable to
+heartbleed" (for appropriate definitions of never) and those fixed in
+response to security announcements. The latter category should
+definitely be prioritizing revocation/reissuance of certificates and
+other potentially compromised credentials.
 
-> What works is recognising and eliminating whole bug _classes_, or
-> deploying exploitation mitigation measures against them.
+Mustafa Al-Bassam's work assists a great deal with this taxonomy. He
+ran PoC code against Alexa top 100, 1000, and 10000 sites beginning
+about 18 hours after OpenSSL's first public announcement [1].
 
-I am fully with you on that. I advocate CSP and prepared statements
-where I can and Softbound+CETS (trying to kill all C-memory-errors)
-looks really interesting.
+Specifically, his scans began circa: 1396956600 (top 100); 1396958400
+(top 1000); and 1396972800 (top 10000). Did any major vendors deploy
+upgrades prior to this?
 
-However I won't go as far as claiming that fixing bugs is pointless.
-Two thoughts on that:
-* We have to live with what we have now. We can talk that it'd be
-  better to re-write all our operating systems in better languages, but
-  even considering that happens it won't happen any time soon. We have
-  to fix the bugs in the software we use today.
-* Heartbleed is an out of bounds memory read. Well understood and yes,
-  it should be possible to implement mitigations against these kinds of
-  things. What class of bug is Shellshock? "Weird feature invented in
-  pre-Internet era"? How do you conquer this class of bugs?
+If others have done similar work (hopefully closer to time zero), please
+share to complement Mustafa's good work.
 
-My point is: Even if we eliminate classes of bugs there will still be
-security issues that don't fit in your bug class cateogries.
+--mancha
 
--- 
-Hanno Böck
-http://hboeck.de/
+====
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+[1] https://github.com/musalbas/heartbleed-masstest
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+-----------------
+PGP: 0x25168EB24F0B22AC
+[56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC]
+
