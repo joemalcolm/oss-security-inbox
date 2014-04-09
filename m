@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/17/7
-Message-ID: <53022238.6020504@enovance.com>
-Date: Mon, 17 Feb 2014 15:52:40 +0100
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/15
+Message-ID: <20140409113029.04f68d73@hboeck.de>
+Date: Wed, 9 Apr 2014 11:30:29 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-005] Missing SSL certificate check in Python Swift client (CVE-2013-6396)
+Subject: Heartbleed, clients and Android
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-005
-CVE: CVE-2013-6396
-Date: February 17, 2014
-Title: Missing SSL certificate check in Python Swift client
-Reporter: Thomas Leaman (HP)
-Products: python-swiftclient
-Versions: 1.0 version up to 1.9.0
+Hi,
 
-Description:
-Thomas Leaman from HP reported that the Python Swift client was failing
-to properly check certificates during the establishment of HTTPS
-connections. A remote attacker with access over segments of the network
-between client and server could potentially set up a man-in-the-middle
-attack and access the contents of the Swift client's communication with
-the server, including any used credentials.
+I was asking myself some questions and I think others with more insight
+into what heartbleed means may be able to answer quickly:
+How does this affect client software? The PoCs we see send some
+malicous payload to servers and get some memory dumps. That doesn't
+affect clients?
 
-python-swiftclient fix (included in 2.0 release):
-https://review.openstack.org/#/c/69187
+Is this vulnerability exploitable by a Man-in-the-Middle in any way?
+Can someone send a package with a wrong authentication block inside an
+existing connection and therefore dump any memory from a client?
 
-References:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6396
-https://bugs.launchpad.net/bugs/1199783
+I think it's a very obvious question to be asked if we need to push all
+server users of openssl or ALL users of openssl. Because the latter
+would include Android. We are all pretty aware that android updates are
+in large parts nonexistent.
 
+cu,
 -- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Hanno Böck
+http://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
