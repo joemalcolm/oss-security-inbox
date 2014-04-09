@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/10
-Message-ID: <542956C5.5010505@coochey.net>
-Date: Mon, 29 Sep 2014 13:55:33 +0100
-From: Giles Coochey <giles@...chey.net>
-To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/11
+Message-ID: <5344F9FD.1000104@redhat.com>
+Date: Wed, 09 Apr 2014 13:12:53 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-On 29/09/2014 12:17, Loganaden Velvindron wrote:
-> HI Chet, As you are aware, a sixth security issue has been discovered.
-> Due to the nature of the vulnerability, I believe that it's best to
-> break backward compatibility as done by FreeBSD and NetBSD until a
-> proper patch is developed. We are lucky to have security researchers
-> reporting their findings publicly. What about others that don't ? I
-> strongly believe that it's much safer to have it disabled, and have a
-> complete and comprehensive audit of the source code, and then
-> re-enable it.
+On 04/09/2014 01:02 PM, Yves-Alexis Perez wrote:
+> On Wed, Apr 09, 2014 at 12:02:09PM +0530, Huzaifa Sidhpurwala wrote:
+>> On 04/09/2014 01:07 AM, Yves-Alexis Perez wrote:
+>>
+>>> Mon, 07 Apr 2014 06:10 : Huzaifa Sidhpurwala sends a mail to distros
+>>>                          list with no details but an offer to request
+>>>                          them privately
+>>
+>>
+>> After i sent a mail to distros, i was contacted by security engineers
+>> from most major distributions. I answered most of the them as soon as i
+>> could with complete details including the upstream patch.
+> 
+> I'm not sure who are “most major distributions”. We failed to reply in a
+> timely fashion to that mail (but that's on us), but apparently so did
+> Ubuntu, Suse sent a mail but got apparently no reply.
+> 
 
-Am I the only one who is wondering: Who is paying Chet to do this?
+I have a list of people who asked and whom i answered, but i want to
+restraint going into it now.
+
+Suse was replied to via security@...e.de :)
 
 -- 
-Regards,
-
-Giles Coochey, CCNP, CCNA, CCNAS
-NetSecSpec Ltd
-+44 (0) 8444 780677
-+44 (0) 7584 634135
-http://www.netsecspec.co.uk
-giles.coochey@...secspec.co.uk
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6454 bytes)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
