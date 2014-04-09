@@ -1,35 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/24/4
-Message-ID: <20140324120218.GA2561@sivokote.iziade.m$>
-Date: Mon, 24 Mar 2014 14:02:18 +0200
-From: Georgi Guninski <guninski@...inski.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/13
+Message-ID: <5abe3d0eae67015fea3d3674277b45e7@tribut.de>
+Date: Wed, 09 Apr 2014 10:57:16 +0200
+From: Felix Eckhofer <felix@...but.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Over-embargoing
+Subject: Session IP check bypass in Roundcube 1.0
 Content-Type: text/plain; charset=utf-8
 
-If you ask me some large commercial distros suck much.
+Hi.
 
-They pissed me off on several occasions,
-broke the social contract and possibly
-alienated other people.
+Roundcube 1.0-beta added support for the the X-Forwarded-For and 
+X-Real-IP HTTP headers when the check_ip configuration option is set. 
+This effectively allows the attacker to bypass the session IP check 
+completely by setting one of these headers to the victim's IP address.
 
-FYI yesterday you lost a CMS bug because
-of the lousy CVEs. I was playing with
-CMS and noticed an ``anomaly'' which
-I don't feel disclosing unless I am
-sure it won't get _any_ CVE.
+The problem is still present in the latest version (1.0).
+Bug is being tracked here: http://trac.roundcube.net/ticket/1489729
 
 
-On Mon, Mar 24, 2014 at 10:49:03AM +0100, Florian Weimer wrote:
-> At the Debian Security Team meeting <https://lists.debian.org/debian-devel-announce/2014/03/msg00004.html>,
-> the topic over-embargoing at Red Hat was touched briefly.
-> 
-> During the past year or two, we initiated quite a few embargoes for
-> mostly uninteresting bugs (denial of service, huge inputs required,
-> obscure software or configuration).  We did this mainly out of
-> courtesy for others, but we recognize the overhead an embargo
-> causes.  In retrospect, I'm not sure if we always made the right
-> choice.  What do you think?
-> 
-> -- 
-> Florian Weimer / Red Hat Product Security Team
+Regards
+felix
