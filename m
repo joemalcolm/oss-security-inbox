@@ -1,31 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/17
-Message-ID: <CAA7hUgFY6NCT5mZTp7MUD8fWnxpWqVgjfpd40z3odSOxOAug4Q@mail.gmail.com>
-Date: Mon, 17 Nov 2014 17:49:42 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/20
+Message-ID: <CALx_OUBSE1NYimVDhToGgxdx6hwaRZJ3DwEYFZ62GXLzfU4nXw@mail.gmail.com>
+Date: Tue, 8 Apr 2014 22:51:41 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security@...ts.openwall.com
+Cc: Jussi Eronen <juhani.eronen@...ora.fi>
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-On 17 November 2014 16:17, Robert Święcki <robert@...ecki.net> wrote:
-[...]
-> I know that this sounds awfully impractical (at least for the time
-> being, because the landscape here is changing pretty rapidly), but
-> some would say that the best advice they can give to "average users"
-> now is to watch "untrusted" movies with web browsers which are
-> employing well-reviewed and tested sandboxing technologies and their
-> media decoders are well tested (also: fuzzed). I guess "regular" media
-> players will follow with this approach in some time.
+I find it somewhat perplexing that Codenomicon apparently had time to
+register the vanity domain two days before pinging the vendor (or
+rather unnecessarily, having CERT do it on their behalf).
 
-It all comes down to code, whether out of the browser, in it, written
-in javascript, or a pure C implementation. So I disagree.
+> Domain Name: HEARTBLEED.COM
+> Creation Date: 2014-04-05 15:13:33
+> [...]
+> Mon, 07 Apr 2014 ~15:30: NCSC-FI reports issue to OpenSSL
 
-Just to give an example of an in-browser crash, the other day I opened
-a 4-years old pdf of a random company and it made chromium's pdf
-plugin crash.
-No problem opening it with pdf.js under firefox or poppler.
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+/mz
