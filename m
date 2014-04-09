@@ -1,55 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/19
-Message-ID: <20141103215227.GA6000@zoho.com>
-Date: Mon, 3 Nov 2014 21:52:27 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/7
+Message-ID: <20140409052840.GA6223@openwall.com>
+Date: Wed, 9 Apr 2014 09:28:40 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: strings / libbfd crasher
+Cc: Jussi Eronen <juhani.eronen@...ora.fi>
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 03, 2014 at 01:43:54AM +0300, Alexander Cherepanov wrote:
-> On 2014-10-31 08:57, cve-assign@...re.org wrote:
-> 
-> Thanks for assigning CVEs for these issues but I have a couple of
-> questions regarding CVE-worthiness of various things. And some
-> questions for the community.
-> 
-> >Use CVE-2014-8502 for the objdump-pe-crasher2 issue.
-> 
-> Here, AddressSanitizer said "heap-buffer-overflow" and then "READ of
-> size 1".
-> 
-> Why this crasher is judged as CVE worthy? Is it oversight or are
-> invalid reads assumed to be exploitable by default?
-> 
-> Another possibility is to treat all crashes in all libraries as CVE
-> worthy.  We don't know how these libraries are used ITW and any crash
-> in any of them could potentially lead to data loss in some
-> application. But...
-> 
-> ...it seems libbfd is not treated as a library any crash in which is
-> CVE worthy.
-> 
-> >Use CVE-2014-8503 for this ihex parser issue.
-> 
-> Again "READ of size 1".
+On Tue, Apr 08, 2014 at 10:28:24PM +0200, Yves-Alexis Perez wrote:
+> Well, as I put in my tentative timeline, and according to Jussi Eronen
+> (from NCSC-FI, afaict) mail in that thread, NCSC-FI only reported to
+> OpenSSL ???a couple of hours before the advisory???, so my understand is
+> that NCSC-FI was not aware of the vulnerability last week.  Maybe
+> Codenomicon was, though. Jussi, could you confirm that?
 
-Thanks for your post. I would also find it instructive if MITRE shed
-light on its CVE assignation heuristics for libbsd. Response to libbfd
-issues can be particularly enlightening because the issues vary largely
-in scope & type.
+Codenomicon definitely was:
 
-In the past, I've noticed a liberal approach to CVE allocation when
-dealing with libraries due to what you said: it is often difficult to
-assess the security impact of flaws because they ultimately depend on
-the context of applications using the library. As case in point, the
-NULL pointer dereference crasher (zero-size S-record) DoS'es manchabfd
-0.42a1 (small network daemon I just wrote). That flaw didn't receive a
-CVE.
+Domain Name: HEARTBLEED.COM
+Creation Date: 2014-04-05 15:13:33
+Registrant Name: Marko Laakso
+Registrant Organization: Codenomicon Oy
 
---mancha
+Jarkko Lamsa (@lampska), "Fuzzing and threat intel @codenomicon, martial
+arts", made some comments on Twitter:
 
-unedited post: http://www.openwall.com/lists/oss-security/2014/11/02/4
+<@lampska> @cynicalsecurity It was independent co-discovery. Plan was for responsible disclosure but it leaked (dunno where) forcing openssl go public
 
-Content of type "application/pgp-signature" skipped
+<_snagg> Wait, CloudFare fixed the OpenSSL bug 1week ago?somebody is getting the hang of this 'responsible disclosure' thing http://blog.cloudflare.com/staying-ahead-of-openssl-vulnerabilities
+<@lampska> @_snagg Independent co-discovery. Plan was a responsible disclosure, but it went public too soon http://www.heartbeat.com
+<@ysaw> @lampska @_snagg why did some get notified last week, but other didn't get notified until it went public?
+<@lampska> @ysaw @_snagg I do not have visibility to what happened there. I do know we had just started conversations with CERTs when this went public
+
+Alexander
