@@ -1,15 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/9
-Message-ID: <20140705202014.GA8430@openwall.com>
-Date: Sun, 6 Jul 2014 00:20:14 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/25
+Message-ID: <CA+aC4ktYwKhM1yAeoaCaqWY9FuPjppWsmEH9=9VE85L8xATnrg@mail.gmail.com>
+Date: Wed, 9 Apr 2014 08:23:27 -0700
+From: Anthony Liguori <anthony@...emonkey.ws>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+Cc: Anthony Liguori <aliguori@...zon.com>, Matt Wilson <msw@...zon.com>,  Max Spevack <spevack@...zon.com>
+Subject: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 05, 2014 at 09:58:15PM +0200, Yves-Alexis Perez wrote:
-> And the system is usable after that.
+Hi,
 
-Yet both are vulnerable, with privilege escalation likely possible.
+I would like to request membership to the closed linux-distros mailing
+list on behalf of the Amazon Linux AMI distribution.  We do not
+currently have anyone on this list from Amazon but we would like to
+change that.  The Amazon Linux AMI distribution is RPM based,
+optimized for EC2, and tracks a number of packages (including the
+kernel) directly from upstream.
 
-Alexander
+Here is my GPG fingerprint:
+
+pub   2048R/5682E5FF 2013-07-30
+      Key fingerprint = EF0F 60F4 390F A270 BC30  4A93 1AAD C710 5682 E5FF
+uid                  Anthony Liguori <anthony@...emonkey.ws>
+sub   2048R/44FFA77F 2013-07-30
+
+I'm sending this from my personal account since this is the uid
+associated with my GPG key but I would prefer to be subscribed to my
+@amazon.com (CC'd here).
+
+If anyone has any questions, please don't hestitate to ask.  Thanks
+for your consideration!
+
+Regards,
+
+Anthony Liguori
