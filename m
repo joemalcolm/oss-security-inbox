@@ -1,55 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/4
-Message-Id: <20140916065630.3E149C50084@smtptsrv1.mitre.org>
-Date: Tue, 16 Sep 2014 02:56:30 -0400 (EDT)
-From: cve-assign@...re.org
-To: krahmer@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: squid pinger remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/21
+Message-Id: <DC67BBE7-5989-4F4D-9C84-79A197F36ADF@alchemistowl.org>
+Date: Wed, 9 Apr 2014 08:00:44 +0200
+From: Arrigo Triulzi <arrigo@...hemistowl.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Apr 9, 2014, at 05:59, Kurt Seifried <kseifried@...hat.com> wrote:
+> So it appears there are projects that statically compile OpenSSL into
+> their software, one example:
 
-> I made a fix for squid 3.4.6 and request a CVE
+Note that OpenVPN has also advertised on Twitter that they too have released a new version with a patch for Heartbleed. Most architectures ship with OpenVPN dynamically linked but they do distribute with their own private copy.
 
-> https://bugzilla.novell.com/show_bug.cgi?id=891268
+Arrigo
 
-Regardless of the "what happens to squid itself" answer, is it known
-that the crash has a security impact? This message seemed to conclude
-with an implied request for more information, e.g., "it looks like you
-can," etc. An example of a security impact would be: the administrator
-wanted pinger to be running, and a crash means that pinger
-processes/threads are no longer available, and pinger is not
-automatically restarted.
 
-If there is a security impact, then the patch in Novell Bug 891268
-would probably correspond to at least three CVE IDs, e.g.,
-
-1. "used to index into a string array" possibly corresponds to
-http://cwe.mitre.org/data/definitions/129.html for the modified
-default case after case 136, and approximately two other places in the
-patch
-
-2. added "if (n <= 0)" code possibly corresponds to
-http://cwe.mitre.org/data/definitions/389.html
-
-3. added "if (preply.psize) < 0" code apparently corresponds to a more
-general issue with missing data validation
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUF95xAAoJEKllVAevmvmsMiMIAIM7LbYrQTVH8bgbKj34D0WI
-fHruTwHwpIXfs2YvmuSJLnvmMdtRyIe0Y5Nx6CLC9oL5mlaKCtiyGN3Y5tom37LS
-/ro/Q5nv10VzWf2B67s1gaOKHhVr36bzCUaRWjj2ispiANxIdYGoEhmdABN2atE+
-0IzkAXTsoPtfYBc3VHeLdLVnsrI0yV3c2btoaG0ABN39+5QGTCAct2m9rq19/HJ5
-LMXjfIkjpwlzhhy0MCBevn6dFIn9iDFBsmeKXEnib284Re9TQ7kpM8lv1p0zvcFI
-c+AYJn4WEV2FE7i4rNY/08ykxSZ+jrNV/mZnTLNLqFfRsVIPIc3RbdN6LYTFofs=
-=mktA
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
