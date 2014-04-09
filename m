@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/8
-Message-ID: <53CD04EB.1040003@redhat.com>
-Date: Mon, 21 Jul 2014 14:17:47 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/22
+Message-ID: <20140409082651.GA30552@zoho.com>
+Date: Wed, 9 Apr 2014 08:26:51 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: glibc locale issues
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-On 07/14/2014 04:15 AM, Tavis Ormandy wrote:
-> Tavis Ormandy <taviso@...xchg8b.com> wrote:
->
->> I just remembered another charset issues I had looked into but abandoned.
->>
->> First of all, I think the need_so logic in gconv_trans is broken, but even
->> if it worked there is an off by one error in __gconv_translit_find() (it
->> does + 3 instead of + 3 + 1 in the allocation.
->
-> To be clear, I suspect this is exploitable. It would be nice if you could
-> modify the buffer such that gconv will open a path with a string you've
-> appended it (e.g. CHARSET=//. pkexec ./../../../../tmp/foo.so),
+On Mon, Apr 07, 2014 at 09:43:46PM +0200, Tomas Hoger wrote:
+> Hi!
+> 
+> There's a new OpenSSL release 1.0.1g that fixes information leak issue:
+> 
+> http://www.openssl.org/news/secadv_20140407.txt
+> http://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=96db902
+> http://heartbleed.com/
 
-This is about the glib part and the alias processing, right?
+The good folks at Nmap (specifically Patrik Karlsson) have written a
+"heartbleed" detection script based on Jared Stafford's reproducer.
 
-iconv/gconv_charset.h:strip() normalizes the transliteration argument to 
-iconv_open, so the resulting file names follow a particular pattern, and 
-there cannot be enough slashes to ascend to a writable directory.
+I've made minor tweaks and placed it here:
 
-> if not maybe the one byte overflow is still exploitable.
+http://sf.net/projects/mancha/files/sec/ssl-heartbleed.nse
 
-Hmm.  How likely is that?  It overflows in to malloc metadata, and the 
-glibc malloc hardening should catch that these days.
+It works quite well - thanks Nmap.
 
--- 
-Florian Weimer / Red Hat Product Security
+--mancha
+
+Content of type "application/pgp-signature" skipped
