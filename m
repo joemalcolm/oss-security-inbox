@@ -1,36 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/27/1
-Message-id: <79D12F70-C8F5-427F-A65E-479440A3AA08@me.com>
-Date: Sun, 27 Apr 2014 08:56:00 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: XSS in NextCellent Gallery 1.9.13 WordPress plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/1
+Message-Id: <201404090108.s39181ns004077@linus.mitre.org>
+Date: Tue, 8 Apr 2014 21:08:01 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: (Openfire M-Link Metronome Prosody Tigase) Possible CVE Request: Uncontrolled Resource Consumption with XMPP-Layer Compression
 Content-Type: text/plain; charset=utf-8
 
-Title: XSS in NextCellent Gallery 1.9.13 WordPress plugin
-Author: Larry W. Cashdollar, @_larry0
-Download: http://wpgetready.com/nextcellent-gallery/
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Vendor Notified: 3/20/2014
+> http://xmpp.org/resources/security-notices/uncontrolled-resource-consumption-with-highly-compressed-xmpp-stanzas/
 
-CVE: Please assign one at your leisure. 
+igniterealtime.org   Openfire   Fixed in 3.9.2
 
-Vulnerability Fixed: 4/24/2014 in Nextcellent Gallery v1.19.18.
+We did not find any commits for this under the
+http://fisheye.igniterealtime.org/changelog/ URL. Accordingly, only
+one CVE is possible at present. Use CVE-2014-2741.
 
 
-The user supplied data for the Alt & Title Text field isn't escaped before being printed out in the value field:
 
-Vulnerability:
->From nextcellent-gallery-nextgen-legacy/admin/manage-images.php lines:
-503 <td <?php echo $attributes ? >> 
-504 <input placeholder=" <?php _e("Alt & title text",'nggallery'); ?>" name="alttext[<?php echo $pid ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->alttext) ?>" 
-505 <textarea placeholder="<?php _e("Description",'nggallery'); ?>" name="description[<?php echo $pid ?>]" style="width:95%; margin: 1px;" rows="2" ><?php echo stripslashes($picture->description) ?></textarea>
-506 </td>
-The HTML code produced is:
+Isode Ltd.           M-Link     Fixed in 16.0v7
 
-<td class='alt_title_desc column-alt_title_desc'> <input placeholder="Alt & title text!" name="alttext[1]" type="text" style="width:95%; margin-bottom: 2px;" value=""><script>alert('hi')</script>"<" /><br/> <textarea placeholder="Description" name="description[1]" style="width:95%; margin: 1px;" rows="2" >"</a><script>alert('hi')</script><a>"</textarea> </td>
-<td class='tags column-tags'><textarea placeholder="Separated by commas"name="tags[1]" style="width:95%;" rows="2"></textarea></td> <td class='exclude column-exclude'><input name="exclude[1]" type="checkbox" value="1" /></td>
+We did not find any details about the change under the
+http://www.isode.com/products/m-link.html URL. (Also, the
+http://www.isode.com/evaluate/instant-messaging-xmpp.html page seems
+to imply that this is not open source.) Accordingly, only one CVE is
+possible at present. Use CVE-2014-2742.
 
-A screen shot is shown with the full advisory by following the link below.
 
-Advisory: http://www.vapid.dhs.org/advisories/wordpress/plugins/nextCellent-gallery-1.9.13/
+
+lightwitch.org       Metronome  Fix in progress
+http://code.lightwitch.org/metronome/rev/49f47277a411
+
+Use CVE-2014-2743 for "Don't process deflated data if it exceedes the
+max allowed limit."
+
+Use CVE-2014-2744 for "Don't allow to compress a stream if it's not
+authenticated."
+
+
+
+Prosody              Prosody    Fixed in 0.9.4
+http://blog.prosody.im/prosody-0-9-4-released/
+
+Use CVE-2014-2745 for these changes that address resource consumption
+in general:
+  http://hg.prosody.im/0.9/rev/a97591d2e1ad
+  http://hg.prosody.im/0.9/rev/1107d66d2ab2
+
+Use CVE-2014-2744 for this change that addresses decompression of
+unauthenticated data:
+  http://hg.prosody.im/0.9/rev/b3b1c9da38fb
+
+(This is exactly the same plugins/mod_compression.lua fix as in
+Metronome, and thus has the same CVE ID. Metronome was originally
+based on the Prosody codebase.)
+
+
+
+Tigase               Tigase     Fixed in 5.2.1
+http://www.tigase.org/content/uncontrolled-resource-consumption-highly-compressed-xmpp-messages
+https://projects.tigase.org/projects/tigase-server/repository/revisions/7f5af2f8c5b97bbf9def66fbb9dd47746a7ac292
+https://projects.tigase.org/issues/1780 (not a public bug)
+
+We did not determine that more than one issue was fixed. Accordingly,
+only one CVE is possible at present. Use CVE-2014-2746.
+
+
+
+Erlang Solutions     MongooseIM Under Investigation
+
+We did not find anything under the
+https://github.com/esl/MongooseIM/commits/master URL. There is
+apparently no publicly known vulnerability and thus no CVE assignment.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTRJxDAAoJEKllVAevmvmsUdcH/0W6GGzE1yTEOnxFqtZ8ghvE
+gavs13esHOeB/FLHdliJx54y/xzKoXbWPwItKVju/lqbRJwCMpy1G7+to4PoZ3ZO
+O1hanQGjCwmH48D4pY0z203d3whXuMGoZI+DLhyDqvVvwYAwboTCu2E36j0q8Zj2
+kwpxfzShE6v13PKriEwMgVLZMj1xUZSD6yXMg24v48vjcRnDqReZ5wdrnXRYIwPP
+Kkzlj9P6D+gR98ZQp5pLX5Db574vcAP+7v5jn2EvfGJRsofUhX/K2oPrQ/xGfCpH
+rJpvIvBglugtW3/iVKtrKK9QBF5bcFxBrFGWAfrTois5du4FA9iQoi0jC6J0AHo=
+=U9OB
+-----END PGP SIGNATURE-----
