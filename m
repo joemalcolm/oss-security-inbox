@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/2
-Message-Id: <20141018031328.A66DC7BC002@smtpvmsrv1.mitre.org>
-Date: Fri, 17 Oct 2014 23:13:28 -0400 (EDT)
-From: cve-assign@...re.org
-To: luto@...capital.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-7970: Linux VFS denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/31
+Message-ID: <20140409232014.GB22420@hunt>
+Date: Wed, 9 Apr 2014 16:20:14 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Cauterizing OpenSSL's heartbleed (the aftermath)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Apr 09, 2014 at 10:47:48PM +0000, mancha wrote:
+> Mustafa Al-Bassam's work assists a great deal with this taxonomy. He
+> ran PoC code against Alexa top 100, 1000, and 10000 sites beginning
+> about 18 hours after OpenSSL's first public announcement [1].
+> 
+> Specifically, his scans began circa: 1396956600 (top 100); 1396958400
+> (top 1000); and 1396972800 (top 10000). Did any major vendors deploy
+> upgrades prior to this?
 
-> if either argument to pivot_root referred to a directory outside of
-> the calling processes's chroot, then pivot_root would malfunction,
-> corrupting the mount tree.
+Ubuntu's updates were released around 1396907296 [2], roughly 13 hours
+before Mustafa's awesome scans.
 
-> The mitre.org description is:
-[...]
+Thanks
 
-We will update this based on today's disclosure of yours. The existing
-text was intended to correlate with
-http://www.openwall.com/lists/oss-security/2014/10/08/21 and not
-necessarily specify the attack in the most general way.
+> [1] https://github.com/musalbas/heartbleed-masstest
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+[2] https://launchpad.net/ubuntu/+source/openssl/+publishinghistory
 
-iQEcBAEBAgAGBQJUQdoMAAoJEKllVAevmvmsjYEH/iv8nuYfAzVNLVYew3BwmzNQ
-3QvS/u5U7+1hIHYBjotQ6lPOIGDu6+WgM3AYsIvvoHoC20sbkgeQfKFa1Ki8XdRg
-qbTC9f4wT/1XrkrBs9N/Hj6EHJoQaqBKsA7G+EFAzkOFtRg+c3pWzW76uZzKVHhy
-vIaUxL9Rof6zqORhVslK2FahfY662Sbx00K+JNRgmlnPRrJHny8zHMjnxKYkxD0l
-FJUnDmm58logvlvqxs4Chx1FJJVxgCOg2TSgDMR5nd3tLp+YYmwe+BHCXHoBED51
-+QVlJXHGKI5QaaNTh4nC4pJotsY7ZedLxoJlnc35oenjHw+0tXzax0Ser39iErA=
-=211E
------END PGP SIGNATURE-----
+The 'security' column of the publishing history is when packages were
+made available on security.ubuntu.com. (To take load off our security
+servers, the security updates are copied into 'updates', and from there
+propogated to our mirror network.)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
