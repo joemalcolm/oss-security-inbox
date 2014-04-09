@@ -1,20 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/10
-Message-ID: <CAATyssdhHLSdkb160q+6j_WOPzP=0yDkYs4qFgA3TJZXQHJUzg@mail.gmail.com>
-Date: Fri, 3 Jan 2014 00:02:53 +0100
-From: "Simon ." <bofh666ftw@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/27
+Message-ID: <CAFJ0LnEmzwJeKJgKbJsV9Fx_t8N4U-ep+tHWJQWcX=BqVFvw1A@mail.gmail.com>
+Date: Wed, 9 Apr 2014 13:01:54 -0700
+From: Nick Kralevich <nnk@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: radare2 endless loop
+Cc: Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: Heartbleed, clients and Android
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Apr 9, 2014 at 3:21 AM, Hanno Böck <hanno@...eck.de> wrote:
 
-just got mailed this simple poc by gitclown!
+> > > Because the latter
+> > > would include Android. We are all pretty aware that android updates
+> > > are in large parts nonexistent.
+> >
+> > I don't have much clue about Android, but I think I heard heartbeat
+> > was disabled in Android, but I don't have a link right now. Also, I'm
+> > unsure what actually use libssl in Android and what uses NSS.
+>
+> Seems Android disabled Heartbeat in 2012:
+>
+> https://android.googlesource.com/platform/external/openssl.git/+/android-4.1.2_r1
+>
+> Still leaves some android versions as potentially vulnerable.
+>
 
-http://sprunge.us/IhNT
+All versions of Android are immune to CVE-2014-0160, with the limited
+exception of Android 4.1.1. See also:
+http://googleonlinesecurity.blogspot.com/2014/04/google-services-updated-to-address.html
 
-isse #485 fixed in teh git by pancake
-
-
-Greetings
-Simon .
