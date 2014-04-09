@@ -1,62 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/1
-Message-ID: <003201d00073$35566d80$a0034880$@mantisforge.org>
-Date: Sat, 15 Nov 2014 01:26:39 -0000
-From: "P Richards" <paul@...tisforge.org>
-To: <oss-security@...ts.openwall.com>, "'Damien Regad'" <dregad@...tisbt.org>
-Cc: <cve-assign@...re.org>
-Subject: RE: CVE Request: XSS vulnerability in MantisBT 1.2.13
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/16
+Message-ID: <20140409095458.GB5507@scapa.corsac.net>
+Date: Wed, 9 Apr 2014 11:54:58 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: Hanno Böck <hanno@...eck.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Heartbleed, clients and Android
 Content-Type: text/plain; charset=utf-8
 
-Hi Damien,
+On Wed, Apr 09, 2014 at 11:30:29AM +0200, Hanno Böck wrote:
+> Hi,
+> 
+> I was asking myself some questions and I think others with more insight
+> into what heartbleed means may be able to answer quickly:
+> How does this affect client software? The PoCs we see send some
+> malicous payload to servers and get some memory dumps. That doesn't
+> affect clients?
 
-Please can you ensure that you appropriate proper credit for security issues - we identified this issue in Master back in May and this was due to be backported to be 1.2.18 release:
+Yes, it does affect clients.
+> 
+> Is this vulnerability exploitable by a Man-in-the-Middle in any way?
+> Can someone send a package with a wrong authentication block inside an
+> existing connection and therefore dump any memory from a client?
 
-The adm_config_report.php displays a dropdown list of configuration values, but does not check that the config value is valid - therefore someone could change the post/get request to modify the value to pass XSS onto the page. 
+Yeah, anyone connecting to any TLS server using a libssl client is
+affected. Most web browsers actually don't use OpenSSL but rather nss,
+but other clients (like, for example, svn/git/etc., wget/curl etc.) are
+affected if they are linked against OpenSSL.
 
-We fixed this issue in Master with the following commit https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40, and I believe I requested this to be back-ported at the time. You modified the code not to trigger an error with the commit https://github.com/mantisbt/mantisbt/commit/3d0625d84d5d08a998673713df1711e1d46b0b86 and to fall back to the default of no value selected.
+> I think it's a very obvious question to be asked if we need to push all
+> server users of openssl or ALL users of openssl.
 
-I don't believe it is correct to state that an issue was discovered in November that we had already discovered, fixed and were planning on backporting to the 1.2.18 release in May, and not credit the people who discovered and fixed the original issue.
+All users, obviously.
 
-Paul
+People insist on server because that's the urgent problem. If NSS was
+vulnerable, it'd be really bad because it's pretty easy to trick any
+browser to open a connection to a random TLS website which would try to
+steal stuff from the browser memory (although sandboxing might help).
+For libssl clients though, I'm not sure it's that easy, but it's still
+possible.
 
------Original Message-----
-From: Damien Regad [mailto:dregad@...tisbt.org] 
-Sent: 14 November 2014 22:30
-To: oss-security@...ts.openwall.com
-Subject: [oss-security] CVE Request: XSS vulnerability in MantisBT 1.2.13
+> Because the latter
+> would include Android. We are all pretty aware that android updates are
+> in large parts nonexistent.
 
-Please assign a CVE ID for the following issue.
+I don't have much clue about Android, but I think I heard heartbeat was
+disabled in Android, but I don't have a link right now. Also, I'm unsure
+what actually use libssl in Android and what uses NSS.
 
-Description:
+Regards,
+-- 
+Yves-Alexis Perez
 
-The MantisBT Configuration Report page (adm_config_report.php) did not escape a parameter before displaying it on the page, allowing an attacker to execute arbitrary JavaScript code.
-
-The severity of this issue is mitigated by the need to have a high-privileged account (by default, administrator) to access the configuration report page.
-
-Affected versions:
- >= 1.2.13, <= 1.2.17
-
-Fixed in versions:
-1.2.18 (not yet released)
-
-Patch:
-See Github [1]
-
-Credit:
-Issue was discovered by Alejo Popovici and fixed by Damien Regad (MantisBT Developer)
-
-References:
-Further details available in our issue tracker [2]
-
-
-D. Regad
-MantisBT Developer
-http://www.mantisbt.org
-
-
-[1] http://github.com/mantisbt/mantisbt/commit/ee8100d6
-[2] http://www.mantisbt.org/bugs/view.php?id=17870
-
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
