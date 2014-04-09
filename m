@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/4
-Message-ID: <1398147647.27506.158.camel@juliet.mcarpenter.org>
-Date: Tue, 22 Apr 2014 08:20:47 +0200
-From: Martin Carpenter <mcarpenter@...e.fr>
-To: oss-security@...ts.openwall.com
-Cc: security@...ios.com
-Subject: Re: CVE Request: Nagios Remote Plugin Executor <= 2.15 Remote Command Execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/4
+Message-ID: <5344D48A.9040505@redhat.com>
+Date: Tue, 08 Apr 2014 23:03:06 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Alan Coopersmith <alan.coopersmith@...cle.com>, oss-security@...ts.openwall.com
+Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2014-04-18 at 10:14 +0800, Eduardo Tongson wrote:
-> Details: http://seclists.org/fulldisclosure/2014/Apr/240
-> This is similar to CVE-2013-1362
-..
-> -#define NASTY_METACHARS         "|`&><'\"\\[]{};"
-> +#define NASTY_METACHARS         "|`&><'\"\\[]{};\n"
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I had this discussion with the Nagios security team (CC'ed) in
-February/March (this was also my suggested fix). Paraphrasing their
-response:
-1. Admitting \n is "expected behavior... not a bug"(!). Motivation:
-permits use of \n to separate arguments coming from the client. Mmm.
-2. Better: the problem can be mitigated by quoting macro arguments in
-the server side configuration nrpe.cfg:
+Also nodejs, fixed in github head, but older installs are vulnerable:
 
-command[check_ssh]=/usr/local/nagios/libexec/check_ssh "$ARG1$"
-                                                       ^      ^
+https://github.com/joyent/node/tree/master/deps/openssl/openssl
 
-They agreed (March 21) to fix documentation and default/example
-configuration to contain "a better description" to this effect. That has
-not yet happened.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-There's a lot I don't like here but I think quoting macro arguments in
-nrpe.cfg solves the immediate problem.
-
-Martin.
-
-
+iQIcBAEBAgAGBQJTRNSKAAoJEBYNRVNeJnmTzZIP/0wd8ypeHdQ2fFEhTuUsTMSS
+R/kziSJ5dDyFmUh17I7Uzh3aIicZcTrdMuGFi5qYS7Cn/ix+u1MxsQM2VLlrLbc+
+2RB9DT0zsB+OfEzIz7DzFbTT+1/2PuR+zeYfw0kPk05ZaRToMaVmjj+qO5gzU6Ix
+P3UIp3CorodMj/Bk6ZuLgwgEXKkEcWHMoEzo0tI1oWjIXM7CXKwKWkLSlKz9E4ZS
+yXQ+PW4RsGAFOCNxXETNWFRnFvlxTxeQIxGdHW3hJVgqXq1xADucv3z1ia3ReWtx
+zWyK8GmFyNmXDWF1SGxWpTBOYplqFcCXZ+ZoaA0kVnDJxmIQZjRoZGKl5jaj5TZl
+RGW3vw2/vW/44gFJAZ9W5x7qkKUiKskF9oSOMIUBX6ASgsJMt3S1+Epkwuc+iVBR
+Dzugw2qdlEF8F8c+jeaUF6bR84LiEehAK7QOUwsmxI4gJbOx1HdCYiXGAy2y1QY/
+5fTCHvYUCqrm+BVuCo2w8giG9I9nE6msm/0epmi60GYu/PPYcgMU2aN2Qm3kbR5v
+GhSS4popNECvxhdpoQALzVShfD4wGAHaySrmbXsWTTaTxDFGeI9Nh89IxW0zi7XI
+gNEKJlYpdGg/aYeJrDaYIsArcpHS29MPy+eRYpE1XrQVXhMclwZ95zbKlGdZrySw
+4/NRih28579EGqZqEuGU
+=Qtzg
+-----END PGP SIGNATURE-----
