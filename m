@@ -1,34 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/13
-Message-ID: <5491FA9B.8050508@gmail.com>
-Date: Wed, 17 Dec 2014 16:50:19 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: What is the "Grinch" polkit/wheel group issue?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/17
+Message-ID: <20140409122129.43fbe8a6@hboeck.de>
+Date: Wed, 9 Apr 2014 12:21:29 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: Yves-Alexis Perez <corsac@...ian.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Heartbleed, clients and Android
 Content-Type: text/plain; charset=utf-8
 
-If the compromised user is an administator, an unsandboxed process
-running as that user can trivially obtain root access.
+On Wed, 9 Apr 2014 11:54:58 +0200
+Yves-Alexis Perez <corsac@...ian.org> wrote:
 
-A small shell script or function wrapping su / sudo is all it takes to
-escalate privileges. There's no need to exploit a privesc vulnerability
-by obtaining a package with a vulnerable setuid/setgid/setcap binary or
-enabled-by-default service.
+> On Wed, Apr 09, 2014 at 11:30:29AM +0200, Hanno Böck wrote:
+> > I was asking myself some questions and I think others with more
+> > insight into what heartbleed means may be able to answer quickly:
+> > How does this affect client software? The PoCs we see send some
+> > malicous payload to servers and get some memory dumps. That doesn't
+> > affect clients?
+> 
+> Yes, it does affect clients.
 
-Any process running as that user can obtain an X11 handle and sniff the
-input events. Wayland will change that, but it's only truly valuable in
-combination with some form of process isolation.
+Can anyone explain how an attack scenario would work?
+Is it like:
+* we have a Man-in-the-Middle.
+* Client/Server establish connection.
+* MitM inserts a malicious package with the heartbeat-payload and sends
+  it to the client, client parses package, verifying MAC fails, but it
+  still will output memory
 
-There's only a strong distinction between root and the administrator's
-regular user account if they aren't a sudoer and never switch to root
-via su within their session. If root logins are only done from virtual
-consoles, then the attacker may actually need to resort to hacks like
-this - but I doubt that user would be in the wheel group...
-
-Since the typical usage of wheel is access to sudo, I don't see any
-problem with this polkit rule. It's acknowledging that the distinction
-between root and an admin user's account (in wheel) has very little
-relevance to security, and is more about preventing accidents.
+Or is it ONLY an issue if we contact a malicious server that may
+extract random information from the application's memory? (which would
+reduce the impact somewhat, e.g. operating system update systems or
+wget etc. wouldn't have to worry)
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+> > Because the latter
+> > would include Android. We are all pretty aware that android updates
+> > are in large parts nonexistent.
+> 
+> I don't have much clue about Android, but I think I heard heartbeat
+> was disabled in Android, but I don't have a link right now. Also, I'm
+> unsure what actually use libssl in Android and what uses NSS.
+
+Seems Android disabled Heartbeat in 2012:
+https://android.googlesource.com/platform/external/openssl.git/+/android-4.1.2_r1
+
+Still leaves some android versions as potentially vulnerable.
+
+
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
