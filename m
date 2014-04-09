@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/11
-Message-ID: <5367FB21.1020908@markelee.com>
-Date: Mon, 05 May 2014 16:57:05 -0400
-From: Mark Lee <mark@...kelee.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/6
+Message-ID: <20140409051527.GA19802@zoho.com>
+Date: Wed, 9 Apr 2014 05:15:27 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: *Possible* ssh vulnerability
+Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-On 05/05/2014 01:40 PM, RbN wrote:
-> Looks like a fake, but I prefer to post it here anyway:
-> http://pastebin.com/gjkivAf3
+On Tue, Apr 08, 2014 at 09:59:33PM -0600, Kurt Seifried wrote:
+> So it appears there are projects that statically compile OpenSSL into
+> their software, one example:
 > 
-> If anybody gets more info about it, please share ;)
+> https://code.google.com/p/mod-spdy/
 > 
-> 
-> --
-> RbN
-> Archlinux CVE monitoring team
-> 
+> I have to assume there are more. So if you know of any please post
+> them to OSS-Security (and Full-Disclosure) so people can find out (and
+> hopefully all the security scanners/etc. add them to their checks).
 
-To RbN,
+Good point Kurt.
 
-Try posting it on the ssh list and see what the response is. I've been
-monitoring that list for a while and haven't heard of this exploit.
+I would also add suites that don't statically link OpenSSL libs but
+bundle their own copies (e.g. Tor Browser Bundle).
 
-From,
-Mark
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+--mancha
 
-iF4EAREIAAYFAlNn+yEACgkQZ/Z80n6+J/Z1PAEAjphhX1+SW5OdTkR3A2o7hq0G
-npOXoYEeI66fW69eD/UA+wdge6V+ANrZMI5w9C3M+5W1ZmGhjSVU+apR9w5eUbsh
-=njle
------END PGP SIGNATURE-----
+[1] https://blog.torproject.org/blog/tor-browser-354-released
+
+Content of type "application/pgp-signature" skipped
