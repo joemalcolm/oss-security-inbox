@@ -1,55 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/3
-Message-ID: <9B221D9A-9D10-4F3D-9F1A-077A7EBFB31F@redhat.com>
-Date: Wed, 07 May 2014 09:47:20 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Postfix bounces arbitrary content
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/8
+Message-ID: <5344E969.4070809@redhat.com>
+Date: Wed, 09 Apr 2014 12:02:09 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-On 05/06/2014, at 19:57 PM, cve-assign@...re.org wrote:
+On 04/09/2014 01:07 AM, Yves-Alexis Perez wrote:
 
->> take 5,000 randomly selected articles from my local news spool, and
->> cause b.com to bounce all of them from bob@...om to postmaster@...om.
->> This will likely cause a.com to block incoming mail from bob@...om,
->> or from all of b.com
->
-> It seems more likely that the default configuration would produce
-> bounce messages with a header From: address starting with
-> "MAILER-DAEMON@" and an empty envelope-sender address. In that case,
-> blocking mail from bob@...om wouldn't accomplish anything. But it's
-> conceivable that the a.com administrator would start blocking the IP
-> address of the b.com SMTP server.
->
-> That's a detail that doesn't have much effect on the CVE inclusion
-> question.
->
-> Originating a new message to report non-delivery is valid according to
-> RFC 2821 section 6.1. It's not really the case that there's inherently
-> an integrity impact.
->
-> There could be a Postfix developer announcement that, according to
-> their security policy, this is unintended behavior with an integrity
-> impact. A CVE assignment would be possible in that case.
->
-> (To summarize: just because the RFC 2821 section 6.1 behavior is
-> allowed doesn't mean that it's a good idea. An SMTP server should
-> minimize the situations in which outsiders can trigger an arbitrary
-> volume of outbound SMTP traffic to arbitrary destination IP addresses.
-> Non-deliverability should be detected within the original SMTP dialog,
-> and this case of the Delivered-To: header doesn't seem impossible to
-> detect. However, there might be some type of architectural motivation
-> for not checking the Delivered-To: header within the original SMTP
-> dialog. Even if it was originally intentional, the developer might
-> accept a feature request to change it.)
+> Mon, 07 Apr 2014 06:10 : Huzaifa Sidhpurwala sends a mail to distros
+>                          list with no details but an offer to request
+>                          them privately
 
-This is perfect.  Thank you.  It also confirmed what I expected (and upstream should have its say here).  I think that, given it was initially reported a decade ago, that that gives some hint as to how they may feel about it.
 
-At any rate, thank you for your feedback.
+After i sent a mail to distros, i was contacted by security engineers
+from most major distributions. I answered most of the them as soon as i
+could with complete details including the upstream patch.
+
+Some of them mailed during my night time. I saw these emails the next
+day, and it was pointless to answer them at that time, since the issue
+was already public.
+
 
 
 -- 
-Vincent Danen / Red Hat Security Response Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Huzaifa Sidhpurwala / Red Hat Security Response Team
