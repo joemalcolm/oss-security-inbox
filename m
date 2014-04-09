@@ -1,60 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/2
-Message-Id: <201407190139.s6J1d8MO011563@linus.mitre.org>
-Date: Fri, 18 Jul 2014 21:39:08 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE's for intersection vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/10
+Message-ID: <20140409073235.GB26700@scapa.corsac.net>
+Date: Wed, 9 Apr 2014 09:32:36 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Apr 09, 2014 at 12:02:09PM +0530, Huzaifa Sidhpurwala wrote:
+> On 04/09/2014 01:07 AM, Yves-Alexis Perez wrote:
+> 
+> > Mon, 07 Apr 2014 06:10 : Huzaifa Sidhpurwala sends a mail to distros
+> >                          list with no details but an offer to request
+> >                          them privately
+> 
+> 
+> After i sent a mail to distros, i was contacted by security engineers
+> from most major distributions. I answered most of the them as soon as i
+> could with complete details including the upstream patch.
 
-> But then we have #4:
+I'm not sure who are “most major distributions”. We failed to reply in a
+timely fashion to that mail (but that's on us), but apparently so did
+Ubuntu, Suse sent a mail but got apparently no reply.
 
-Yes, see CVE-2014-4039 in
+In any case, two days notice is a bit out of our comfort zone for
+preparing updates, but I think we would have managed to handle it
+properly if the embargo didn't break.
 
-   http://openwall.com/lists/oss-security/2014/06/17/1
+So again thanks Red Hat for notification/coordination job, but I'm still
+puzzled at what happened earlier, before Red Hat was informed.
 
-   and
+Regards,
+-- 
+Yves-Alexis Perez
 
-   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4039
-
-Here, a technical-support tool (very similar in purpose to sosreport)
-makes a copy of a mode 0600 /var/log/messages file within a
-(potentially) mode 0644 /tmp/diagSEsnap/snapH.tar.gz archive file.
-There can realistically be usernames and passwords in
-/var/log/messages, at least when that log file is used by poorly
-written site-specific software. Thus, a CVE can be assigned.
-
-A CVE could also be assigned if there wasn't a mode 0644 local file,
-but the archive containing /var/log/messages was transmitted
-externally in a "technical-support data stream" (as in CVE-2014-4040).
-
-Incidentally, some vendors assign a CVE ID if one of their products
-logs a password to a file that has default permissions of 0600, even
-if the vendor's documentation says that the customer must not change
-the permissions. Their rationale is that the password logging was a
-security-relevant implementation error. At some point, it comes down
-to the vendor understanding its own customers. If they know that
-customers ignore the documentation and use 0644 instead, this would be
-a reasonable motivation for declaring the coding error to be
-security-relevant.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTycv7AAoJEKllVAevmvms/lgIAKS6Vp9JEI+3JhXeoaAAIF2n
-CvwnK1wha7RF25+T5xBG3S+5BBVe0fl6OL5w9HQxtVk9XMF8Wo3qsGbUHWtMwrlY
-PncO/hc6UA5ZeMS5Hhv4xD/GYbVgpW4Y485daCdP6aUdmbUeDr0iuUlYJN/VjvEd
-+zTvc+8i4Fa43VhGXLXGr9uUxgmlKcewzvOYkVwrxttPjyLM1T5o225/u4zMPeo+
-9UTPbRYx0vwB0OFsN/8+CvklcyYXGIR9joXr8uFp01IRzpb5uiywuv1aMDppIF3w
-5BqCYjLRBXpBorvRhKX6jiui2iX+t+7Yv4jpO3iEhTDXqsYenqqCfG9Qwt/K9RE=
-=9uMS
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
