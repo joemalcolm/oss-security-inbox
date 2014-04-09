@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/10
-Message-ID: <5463F3A3-379B-46F1-AF85-5C7668D8013A@redhat.com>
-Date: Tue, 04 Feb 2014 09:09:28 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request and heads-up on insecure temp file handling in unpack200 (OpenJDK, Oracle Java)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/29
+Message-ID: <5800418.s4JBXro4kX@hoth>
+Date: Wed, 09 Apr 2014 23:45:44 +0200
+From: Eric Lacombe <goretux@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Hanno Böck <hanno@...eck.de>, Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: Heartbleed, clients and Android
 Content-Type: text/plain; charset=utf-8
 
-On 02/04/2014, at 7:48 AM, cve-assign@...re.org wrote:
+Hi,
 
->> I'm not sure if MITRE will be handling the assignment or if Oracle
->> will,
->
-> We don't want to rule out the possibility that someone from Oracle
-> will reply to the list and mention that this issue was the topic
-> of an earlier private report to Oracle, and already has a CVE ID
-> assigned. In general, MITRE will coordinate with Oracle to avoid a
-> duplicate assignment.
+Le mercredi 9 avril 2014 12:21:29, Hanno Böck a écrit :
+[...]
+> > > Because the latter
+> > > would include Android. We are all pretty aware that android updates
+> > > are in large parts nonexistent.
+> > 
+> > I don't have much clue about Android, but I think I heard heartbeat
+> > was disabled in Android, but I don't have a link right now. Also, I'm
+> > unsure what actually use libssl in Android and what uses NSS.
+> 
+> Seems Android disabled Heartbeat in 2012:
+> https://android.googlesource.com/platform/external/openssl.git/+/android-4.1
+> .2_r1
+> 
+> Still leaves some android versions as potentially vulnerable.
 
-Fair enough.  That's why I had included Oracle on the cc list, just in case.
+A recent post from Google security blog
 
-Thanks.
+http://googleonlinesecurity.blogspot.fr/2014/04/google-services-updated-to-address.html?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed:
++GoogleOnlineSecurityBlog+(Google+Online+Security+Blog)
 
--- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Regards,
+
+	Eric
