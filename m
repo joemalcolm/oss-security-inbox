@@ -1,57 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/14
-Message-ID: <20140703191226.629ee8bf@chromobil.localdomain>
-Date: Thu, 3 Jul 2014 19:12:26 +0200
-From: Stefan Bühler <stbuehler@...httpd.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/23
+Message-ID: <53454175.5050202@enovance.com>
+Date: Wed, 09 Apr 2014 14:47:49 +0200
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Varnish - no CVE == bug regression
+Subject: CVE request for vulnerability in OpenStack Keystone
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 3 Jul 2014 08:15:06 +0000
-Sven Kieske <S.Kieske@...twald.de> wrote:
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> I'd agree with this.
-> And I don't get the argument from poul-henning kamp, what I understand
-> is:
-> "hey, we trust our backend server"
-> well, but your backend server can make you crash, so you probably
-> shouldn't trust it in the first place?
-> 
-> you _never_ can trust input, so you have to validate it, either way,
-> at least enough to not crash or perform malicious actions.
-> 
-> Am 03.07.2014 09:48, schrieb Kurt Seifried:
-> > So as I understand this: Varnish front end for web servers, the web
-> > servers can trigger varnish to restart. Are the back end servers
-> > supposed to be able to cause varnish to restart?
-> > 
-> > I'm guessing not. Scenario: hosting env, or a website with a vuln,
-> >  whatever, you can now cause the varnish front ends to restart 
-> > constantly, effectively causing a permanent denial of service.
-> > 
-> > That sounds CVE worthy. Or am I missing something?
+Title: Keystone DoS through V3 API authentication chaining
+Reporter: Abu Shohel Ahmed (Ericsson)
+Products: Keystone
+Versions: from 2013.1 to 2013.2.3
 
-you should never trust *untrusted* input. your root shell usually
-trusts the input it gets...
+Description:
+Abu Shohel Ahmed from Ericsson reported a vulnerability in Keystone V3
+API authentication. By sending a single request with the same
+authentication method multiple times, a remote attacker may generate
+unwanted load on the Keystone host, potentially resulting in a Denial of
+Service against a Keystone service. Only Keystone setups enabling V3 API
+are affected.
 
-so the valgrind developers decided that they consider the backend
-webservers trusted, at least regarding the capability to cause a DoS.
+References:
+https://launchpad.net/bugs/1300274
 
-for the record - so does lighttpd (a backend can trigger OOM as lighty
-reads (nearly) as fast as possible from a backend, as backends often
-only handle one request at a time); we usually tell people to use
-X-sendfile instead of sending ISOs through php.
+Thanks in advance,
 
-just because you disagree with such decisions doesn't make it CVE
-worthy (missing or wrong documentation could).
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-in case you actually want to assign a CVE here, maybe we can get one
-for the bad openssl default cipherstring too? because for that it is
-really obvious that it is f*** wrong, but i think that none was
-assigned because upstream didn't agree with it.
 
-regards,
-Stefan
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
