@@ -1,25 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/8
-Message-ID: <54724BC4.50206@internot.info>
-Date: Mon, 24 Nov 2014 08:04:04 +1100
-From: Joshua Rogers <oss@...ernot.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/14
+Message-ID: <20140409092751.GE5410@suse.de>
+Date: Wed, 9 Apr 2014 11:27:51 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: The Fuzzing Project
+Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
 Content-Type: text/plain; charset=utf-8
 
-On 24/11/14 07:49, Hanno Böck wrote:
-> Hi,
->
-> As already mentioned in various threads I hereby announce the Fuzzing
-> Project:
-> https://fuzzing-project.org/
->
-> This is still a lot of work in progress. I welcome all feedback,
-> contributions and especially links to your reports of the bugs you
-> fuzzed.
->
-> cu,
-I recommend adding "AddType text/plain .patch" to mime.conf in
-Apache(assuming)
--- 
--- Joshua Rogers <https://internot.info/>
+On Wed, Apr 09, 2014 at 01:12:53PM +0530, Huzaifa Sidhpurwala wrote:
+> On 04/09/2014 01:02 PM, Yves-Alexis Perez wrote:
+> > On Wed, Apr 09, 2014 at 12:02:09PM +0530, Huzaifa Sidhpurwala wrote:
+> >> On 04/09/2014 01:07 AM, Yves-Alexis Perez wrote:
+> >>
+> >>> Mon, 07 Apr 2014 06:10 : Huzaifa Sidhpurwala sends a mail to distros
+> >>>                          list with no details but an offer to request
+> >>>                          them privately
+> >>
+> >>
+> >> After i sent a mail to distros, i was contacted by security engineers
+> >> from most major distributions. I answered most of the them as soon as i
+> >> could with complete details including the upstream patch.
+> > 
+> > I'm not sure who are “most major distributions”. We failed to reply in a
+> > timely fashion to that mail (but that's on us), but apparently so did
+> > Ubuntu, Suse sent a mail but got apparently no reply.
+> > 
+> 
+> I have a list of people who asked and whom i answered, but i want to
+> restraint going into it now.
+> 
+> Suse was replied to via security@...e.de :)
+
+We did receive a reply, yes.
+
+Ciao, Marcus
