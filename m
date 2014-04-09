@@ -1,27 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/3
-Message-ID: <52D51E59.7000909@ai2.upv.es>
-Date: Tue, 14 Jan 2014 12:24:09 +0100
-From: Salva Peiró <speiro@....upv.es>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/28
+Message-ID: <20140409222946.27486db2@hboeck.de>
+Date: Wed, 9 Apr 2014 22:29:46 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: assorted kernel infoleak security fixes
+Subject: Re: Heartbleed, clients and Android
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-I've found some kernel security issues.
-Can someone assign CVE IDs for them?
+Info regarding clients: There's now some PoC-Code on Github to test
+client software.
 
-- [PATCH] farsync: fix info leak in ioctl
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=96b340406724d87e4621284ebac5e059d67b2194
+https://github.com/Lekensteyn/pacemaker
 
-- [PATCH] wanxl: fix info leak in ioctl
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2b13d06c9584b4eb773f1e80bbaedab9a1c344e1
+-- 
+Hanno Böck
+http://hboeck.de/
 
-- [PATCH] hamradio/yam: fix info leak in ioctl
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8e3fbf870481eb53b2d3a322d1fc395ad8b367ed
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Thanks!
---
-Salva Peiró
-http://speirof.appspot.com
-
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
