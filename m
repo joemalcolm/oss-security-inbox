@@ -1,138 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/22/1
-Message-ID: <20140122002913.GA2180@openwall.com>
-Date: Wed, 22 Jan 2014 04:29:13 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: rf@...eap.de
-Subject: Re: linux-distros membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/7
+Message-ID: <20140410061333.GA6831@u109add4315675089e695.ant.amazon.com>
+Date: Wed, 9 Apr 2014 23:13:33 -0700
+From: Matt Wilson <msw@...zon.com>
+To: Kurt Seifried <kseifried@...hat.com>
+CC: <oss-security@...ts.openwall.com>, Max Spevack <spevack@...zon.com>, Anthony Liguori <aliguori@...zon.com>, "Mark J. Cox" <mjc@...hat.com>, Cristian Gafton <gafton@...zon.com>
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-Hi Roland,
-
-On Mon, Jan 20, 2014 at 05:36:27PM +0100, rf@...eap.de wrote:
-> >>>>> "Yves" == Yves-Alexis Perez <corsac@...ian.org> writes:
+On Wed, Apr 09, 2014 at 11:57:33PM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> Thanks again Yves. Unfortunately this doesn't help me with getting the timely
-> reports about kernel security bugs from the linux-distros list. Can
-> somebody, who knows the details of the process, please answer what we need
-> to do, to get on the list?
-
-Given that you seem to be interested only in Linux kernel vulnerabilities,
-I think you're overestimating the value that being on linux-distros
-will provide to you.  There are more Linux kernel vulnerabilities being
-disclosed on oss-security right away (yes, in public) than those that
-pass through linux-distros first.  Yet you were not on oss-security
-until after you've posted the request to join linux-distros a week ago.
-Did you not actually care?  Or was someone else from Qlustar subscribed?
-
-Asking to join linux-distros before you've been on oss-security for a
-while (and preferably, having contributed to the discussions in here) is
-putting the cart before the horse.
-
-I did not count them carefully, but I think there are relatively more
-non-kernel vulnerabilities passing through linux-distros (than kernel
-ones).  Actually, it might be the same ratio as on oss-security, with
-the difference being that on oss-security you're not unnecessarily
-exposed to additional sensitive info.
-
-Unfortunately, we don't currently have a sub-list for just Linux kernel,
-and if we set one up it might not work all that well (we already saw
-some confusion with having distros and linux-distros; adding a third
-list might make it worse).
-
-I found Qlustar security advisories here:
-
-https://www.qlustar.com/security-advisories
-
-This is great, although I guess in "a Ubuntu/Debian based distro" there
-are many more vulnerabilities being discovered.  How do you choose which
-packages to issue advisories for?  Are they possibly the packages that
-differ from Ubuntu/Debian (that is, that have your customizations)?
-At first glance, it appears that about one half of your advisories are
-about the kernel.
-
-Would having about 7 days of advance notice (and at most 19 on some
-occasions, per list policy) on a small subset of Linux kernel
-vulnerabilities be of much help in preparing update packages?  Would it
-significantly reduce the window of exposure for your users?  e.g.,
-reducing it from 8 days to 1 day is significant, but from 30 days to 23
-days is much less so.
-
-As to "the details of the process", we don't currently have it fully
-formalized.  We did have a simple process for accepting a subset of
-old vendor-sec members into the distros and linux-distros lists, but
-after that point I'm afraid we never arrived at a decision on whether we
-should introduce a voting/vouching process like vendor-sec had.
-Instead, we had a few discussions in here, like the one we're having now
-due to your request.  There were several membership requests that I
-think fell in the grey area, and I think yours does too: it's not
-unreasonable, but it fails to convince me that Qlustar being on
-linux-distros would likely significantly benefit the users of your
-distro.  Is anyone else in here convinced?  (Genuine question.)
-
-Among the criteria we do have is the distro issuing timely security
-updates and advisories.  Qlustar appears to do that, although only for a
-subset of packages, and I'm unsure how timely the updates are (e.g., if
-they're late by 30 days, then reducing that by ~7 days doesn't help all
-that much, as in the example above).
-
-Of the distros currently on the list, I find it most difficult to
-justify (to myself) the membership of MontaVista and Wind River.  (This
-was discussed before.)  Qlustar appears similar in some aspects, but
-without a track record (known to me) of having participated in the
-security community (which both MontaVista and Wind River have).
-In fact, I don't recall hearing about Qlustar before (and Google web
-search finds very little, too).
-
-Are Qlustar's security updates (not just security advisories) publicly
-available?
-
-Let's discuss.  Roland, your own opinion counts too - it's not just you
-trying to justify this to the rest of us, but it's us all (including
-you) trying to arrive at what's deemed the best decision.  We have a
-community here on oss-security, and you're welcome to join us and
-participate in discussions regardless of whether Qlustar gets on
-linux-distros or not.
-
-Meanwhile, please add Qlustar info to:
-
-http://oss-security.openwall.org/wiki/vendors
-
->     >> >> I hope this is the right place to ask for inclusion of a
->     >> >> Qlustar contact in the linux-distros list.
-
-Yes, it is the right place.
-
->     >> >> Qlustar is a Ubuntu/Debian based distro targeted at
->     >> >> HPC/Storage/Cloud clusters. We use our own kernels (typically
->     >> >> based on vanilla) since many years, but have the need to
->     >> >> supply timely security fixes to our users. So far we have to
->     >> >> wait for other distros to come out with their announcements
->     >> >> and then start analyzing the fixes they have done. This leaves
->     >> >> us/our users with a vulnerability window that is way too
->     >> >> large,
->     >>
->     >> > I can't speak for Ubuntu, but you're welcome to participate in
->     >> > the Debian security effort.
->     >>
->     >> thanks a lot for your offer. Could you explain a little more what
->     >> participation in the Debian security effort would mean? Note that
->     >> the issue I currently have is mostly about kernel fixes and we
->     >> don't use Debian nor Ubuntu kernels.
+> On 04/09/2014 09:13 PM, Anthony Liguori wrote:
+> > On 04/09/14 19:04, Kurt Seifried wrote:
+> >> On 04/09/2014 09:23 AM, Anthony Liguori wrote:
+> >>> Hi,
+> > 
+> >>> I would like to request membership to the closed linux-distros 
+> >>> mailing list on behalf of the Amazon Linux AMI distribution.
+> >>> We do not currently have anyone on this list from Amazon but
+> >>> we would like to change that.  The Amazon Linux AMI
+> >>> distribution is RPM based, optimized for EC2, and tracks a
+> >>> number of packages (including the kernel) directly from
+> >>> upstream.
+> > 
+> >>> Here is my GPG fingerprint:
+> > 
+> >>> pub   2048R/5682E5FF 2013-07-30 Key fingerprint = EF0F 60F4
+> >>> 390F A270 BC30  4A93 1AAD C710 5682 E5FF uid
+> >>> Anthony Liguori <anthony@...emonkey.ws> sub   2048R/44FFA77F
+> >>> 2013-07-30
+> > 
+> >>> I'm sending this from my personal account since this is the uid
+> >>>  associated with my GPG key but I would prefer to be subscribed
+> >>> to my @amazon.com (CC'd here).
+> > 
+> >>> If anyone has any questions, please don't hestitate to ask. 
+> >>> Thanks for your consideration!
+> > 
+> >>> Regards,
+> > 
+> >>> Anthony Liguori
+> > 
+> >> I find it a bit odd you can't send this from your work email 
+> >> address. Would it be possible to add that email address to your
+> >> key and then use your work email address?
+> > 
+> > We use DKIM which doesn't work very well with all mailing lists.
+> > You should receive this okay since you are on CC but I'm not sure
+> > everyone will get this through the mailing list.  If it doesn't
+> > make it, I'll send this same (signed) message via the
+> > @codemonkey.ws address.
+> > 
+> > I also added this address as a uid to my key.  Here it is again:
+> > 
+> > pub   2048R/5682E5FF 2013-07-30 Key fingerprint = EF0F 60F4 390F
+> > A270 BC30  4A93 1AAD C710 5682 E5FF uid                  Anthony
+> > Liguori <aliguori@...zon.com> uid                  Anthony Liguori
+> > <anthony@...emonkey.ws> sub   2048R/44FFA77F 2013-07-30
+> > 
+> >> I guess I'm wondering is this an official request on behalf of 
+> >> Amazon or some random Amazon (employee? contractor?) asking for 
+> >> access to distros@.
+> > 
+> > Yes, this is an official request on behalf of Amazon.  I am
+> > requesting access on behalf of the Amazon Linux AMI team[1].
+> > 
+> > [1] http://aws.amazon.com/amazon-linux-ami/
+> > 
+> > Regards,
+> > 
+> > Anthony Liguori
 > 
->     Yves> Most of the documentation can be found in the secure-testing
->     Yves> repository [1] and on the Debian wiki [2].
+> So first off I'm inclined to have Amazon on the distros list (same
+> reasons as Oracle basically).
 > 
->     Yves> [1]:
->     Yves> http://anonscm.debian.org/viewvc/secure-testing/doc/narrative_introduction?view=markup
->     Yves> [2]: https://wiki.debian.org/Teams/Security
+> My only concern is are you the correct person, I have no clue who is
+> on the Amazon security team for their Linux distribution, I've never
+> seen you post anything anywhere.
 
-Alexander
+Perhaps Google "Anthony Liguori site:qemu.org"
 
-P.S. Somehow your replies arrive as entirely new messages, not as
-replies to whatever message you're replying to.  They lack proper
-In-Reply-To header.  It'd be helpful if you correct that (for further
-replies), as it is needed for proper threading in the list archives.
-Normally, In-Reply-To is set if you simply use your mail program's
-"reply" feature.  I don't know why this was not happening for you.
+> Your search - site:aws.amazon.com Anthony Liguori - did not match any
+> documents.
+> 
+> Your search - site:aws.amazon.com aliguori@...zon.com - did not match
+> any documents.
+> 
+> Can we somehow get confirmation from Amazon that this is the right
+> person to have on distros? Thanks.
+
+Apologies for not having PGP set up for my work email.
+
+I can confirm that Anthony is one of several correct people for
+dealing with security issues relating to Amazon Linux AMI. Cristian
+Gafton and I also deal with security issues, as we did in the Olden
+vendor-sec Days at Red Hat and rPath. I've added Mark Cox to CC: in
+case he'd like to weigh in on our backgrounds.
+
+Max Spevack, previous Fedora Project leader and the manager in charge
+of Amazon Linux AMI, is also on Cc:.
+
+Today we're just looking to get Anthony added to linux-distros as the
+primary contact.
+
+--msw
