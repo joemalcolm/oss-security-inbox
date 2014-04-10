@@ -1,50 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/3
-Message-ID: <1412122980416.20468@cari.net>
-Date: Wed, 1 Oct 2014 00:18:48 +0000
-From: Zach Wikholm <zwikholm@...i.net>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/14
+Message-ID: <alpine.LRH.2.03.1404101009030.28311@amazon.com>
+Date: Thu, 10 Apr 2014 10:18:29 -0700 (PDT)
+From: Max Spevack <spevack@...zon.com>
+To: Anthony Liguori <aliguori@...zon.com>
+cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, Matt Wilson <msw@...zon.com>
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
->The main problem is that for a very long time, we apparently had no
-overlap between these groups. At the face of it, it seemed like
-there's absolutely no reason for bash to try to parse generic env
-variables. With no convincing reason to study or test the code, nobody
-did.
+>>> Can we somehow get confirmation from Amazon that this is the right 
+>>> person to have on distros? Thanks.
+>>
+>> Yes, we need this sort of confirmation.  My other concerns are:
+>
+> Matt commented earlier.  Max will also confirm.  Is that sufficient?
+>
+> Between the three of us, there should be enough public evidence and 
+> enough people already on the list who have worked with one of us in 
+> the past.
 
-There really isn't any overlap anymore. Another issue I think (though I do not believe that this is the case here) is that vulnerabilities announcements are becoming more and more about marketing. Heartbleed brought in a new era in vulnerability releases. But that's another topic for another day...
+(Similar to msw, I also apologize for unsigned email coming from my 
+@amazon.com address.)
 
-This feels like time for a new mailing list. I'm sure that there are many other things just like this, and now everybody will be looking for the next "shellshock" in places where nobody has looked before. It's very difficult sometimes to know who to reach to. As far as I can tell oss-security is really more focused on how to get found vulnerabilities to the world in some sort of organized fashion, which is it does well (please correct me if I'm wrong here) but it seems very easy to stray off topic. 
+I can also confirm that Anthony is the right person for this ask, from 
+Amazon's perspective.
 
-Thoughts?
+If you're looking for internet confirmation of my role as the manager of 
+the team that produces the Amazon Linux AMI, please see:
 
-Zach W. 
-________________________________________
-From: Michal Zalewski <lcamtuf@...edump.cx>
-Sent: Tuesday, September 30, 2014 4:59 PM
-To: oss-security
-Subject: Re: [oss-security] Healing the bash fork
+http://aws.typepad.com/aws/2013/03/amazon-linux-ami-201303-now-available.html
 
-> Finally: *PLEASE* let me know if you have any good ideas on how to find vulnerabilities like this ahead-of-time. My article "How to Prevent the Next Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a number of ways that Heartbleed-like vulnerabilities could have been detected ahead-of-time, in ways that are general enough to be useful.  I'd like to do the same with Shellshock, so we can quickly eliminate a whole class of problems.
+http://aws.typepad.com/aws/2013/09/amazon-linux-ami-201309-now-available.html
 
-Well, hindsight is always 20/20. Manual audits and fuzzing would have
-had a good likelihood of spotting the bash flaw. In fact, I used a
-fairly generic fuzzer to quickly hit three of the four previously
-disclosed issues and identify two more. The syntax is terse and the
-parser is laid back, which helps. The fault conditions are generic and
-intuitive, too - creation of a file, execution of a child process, or
-a crash.
+And if you're looking for confirmation of my history working with Linux 
+before Amazon, I expect that Bill Nottingham, Mark Cox, Josh Bressers, 
+and other current or former Red Hatters could provide that.
 
-But really - all it would have taken is just somebody with un*x
-security background reading a book on bash that mentions function
-exports (I'm sure there are some); it wouldn't be hard to connect the
-dots.
-
-The main problem is that for a very long time, we apparently had no
-overlap between these groups. At the face of it, it seemed like
-there's absolutely no reason for bash to try to parse generic env
-variables. With no convincing reason to study or test the code, nobody
-did.
-
-/mz
+Thanks,
+Max
