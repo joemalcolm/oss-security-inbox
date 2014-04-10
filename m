@@ -1,89 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/12
-Message-Id: <201402072111.s17LBWm7028357@linus.mitre.org>
-Date: Fri, 7 Feb 2014 16:11:32 -0500 (EST)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 84 - integer overflow in several XSM/Flask hypercalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/5
+Message-ID: <534632CD.7040403@redhat.com>
+Date: Wed, 09 Apr 2014 23:57:33 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: Matt Wilson <msw@...zon.com>, Max Spevack <spevack@...zon.com>, Anthony Liguori <aliguori@...zon.com>
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Here are the four CVE assignments for XSA-84 (as well as the
-one CVE assignment for XSA-85 and the one CVE assignment for XSA-86).
+On 04/09/2014 09:13 PM, Anthony Liguori wrote:
+> On 04/09/14 19:04, Kurt Seifried wrote:
+>> On 04/09/2014 09:23 AM, Anthony Liguori wrote:
+>>> Hi,
+> 
+>>> I would like to request membership to the closed linux-distros 
+>>> mailing list on behalf of the Amazon Linux AMI distribution.
+>>> We do not currently have anyone on this list from Amazon but
+>>> we would like to change that.  The Amazon Linux AMI
+>>> distribution is RPM based, optimized for EC2, and tracks a
+>>> number of packages (including the kernel) directly from
+>>> upstream.
+> 
+>>> Here is my GPG fingerprint:
+> 
+>>> pub   2048R/5682E5FF 2013-07-30 Key fingerprint = EF0F 60F4
+>>> 390F A270 BC30  4A93 1AAD C710 5682 E5FF uid
+>>> Anthony Liguori <anthony@...emonkey.ws> sub   2048R/44FFA77F
+>>> 2013-07-30
+> 
+>>> I'm sending this from my personal account since this is the uid
+>>>  associated with my GPG key but I would prefer to be subscribed
+>>> to my @amazon.com (CC'd here).
+> 
+>>> If anyone has any questions, please don't hestitate to ask. 
+>>> Thanks for your consideration!
+> 
+>>> Regards,
+> 
+>>> Anthony Liguori
+> 
+>> I find it a bit odd you can't send this from your work email 
+>> address. Would it be possible to add that email address to your
+>> key and then use your work email address?
+> 
+> We use DKIM which doesn't work very well with all mailing lists.
+> You should receive this okay since you are on CC but I'm not sure
+> everyone will get this through the mailing list.  If it doesn't
+> make it, I'll send this same (signed) message via the
+> @codemonkey.ws address.
+> 
+> I also added this address as a uid to my key.  Here it is again:
+> 
+> pub   2048R/5682E5FF 2013-07-30 Key fingerprint = EF0F 60F4 390F
+> A270 BC30  4A93 1AAD C710 5682 E5FF uid                  Anthony
+> Liguori <aliguori@...zon.com> uid                  Anthony Liguori
+> <anthony@...emonkey.ws> sub   2048R/44FFA77F 2013-07-30
+> 
+>> I guess I'm wondering is this an official request on behalf of 
+>> Amazon or some random Amazon (employee? contractor?) asking for 
+>> access to distros@.
+> 
+> Yes, this is an official request on behalf of Amazon.  I am
+> requesting access on behalf of the Amazon Linux AMI team[1].
+> 
+> [1] http://aws.amazon.com/amazon-linux-ami/
+> 
+> Regards,
+> 
+> Anthony Liguori
 
-> http://xenbits.xen.org/xsa/advisory-84.html
-> XSA-84
+So first off I'm inclined to have Amazon on the distros list (same
+reasons as Oracle basically).
 
-> The FLASK_{GET,SET}BOOL, FLASK_USER and FLASK_CONTEXT_TO_SID
-> suboperations of the flask hypercall are vulnerable to an integer
-> overflow on the input size. The hypercalls attempt to allocate a
-> buffer which is 1 larger than this size and is therefore vulnerable to
-> integer overflow and an attempt to allocate then access a zero byte
-> buffer.
+My only concern is are you the correct person, I have no clue who is
+on the Amazon security team for their Linux distribution, I've never
+seen you post anything anywhere.
 
-Use CVE-2014-1891.
+Your search - site:aws.amazon.com Anthony Liguori - did not match any
+documents.
 
+Your search - site:aws.amazon.com aliguori@...zon.com - did not match
+any documents.
 
-> Xen 3.3 through 4.1 ... expose unreasonably large memory allocation
-> to arbitrary guests.
-
-Use CVE-2014-1892.
-
-
-> Xen 3.3 through 4.1, while not affected by the above overflow, have a
-> different overflow issue on FLASK_{GET,SET}BOOL
-
-Use CVE-2014-1893.
-
-
-> Xen 3.2 (and presumably earlier) exhibit both problems, with the
-> overflow issue being present for more than just the suboperations
-> listed above.
-
-the part of the 3.2 problems associated with the first overflow, for
-FLASK_{GET,SET}BOOL, FLASK_USER and FLASK_CONTEXT_TO_SID, is within
-the scope of CVE-2014-1891
-
-the part of the 3.2 problems associated with unreasonably large memory
-allocation is within the scope of CVE-2014-1892
-
-the part of the 3.2 problems associated with the second overflow, for
-FLASK_{GET,SET}BOOL, is within the scope of CVE-2014-1893
-
-all other vectors (e.g., other suboperations) that can lead to integer
-overflows in 3.2, even if they are related to the first overflow or
-related to the second overflow, have CVE-2014-1894 assigned now
-
-
-> http://xenbits.xen.org/xsa/advisory-85.html
-> XSA-85
-> Off-by-one error in FLASK_AVC_CACHESTAT hypercall
-
-Use CVE-2014-1895.
-
-
-> http://xenbits.xen.org/xsa/advisory-86.html
-> XSA-86
-> libvchan failure handling malicious ring indexes
-
-Use CVE-2014-1896.
+Can we somehow get confirmation from Amazon that this is the right
+person to have on distros? Thanks.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJS9UueAAoJEKllVAevmvms9ssIALQ0vssHk8Uuf85hjGAYF7O5
-UsetuaIyFYwy7U1xRxpwW9YEWoMELtylpOHViZUBpjMAPjmO4rXNs4J/avcfnh/J
-PPD3vl9aoUfA0hFqaR0jAIPld89SbOZA6Fvs23KcU3F9KOVvaD//3RBe3ticeSNQ
-N4QlRw1Cu9pQSveu3B9a6yt4OmQkuuWPSRu7KBUACohRF73JCZCN3TeUe7RqGp/L
-r9uN5hbsPCqnW2W4FPmQVGaD5BmrlETYcJM1YkdUoLVCeR+Fi0iyPZtrKMTUZ4h8
-XzAEovLRX7un3BbzxTifyls4Z/oQrD0cQ1QE1cGAA6kqYphK8h1VMUFGwXMpZDE=
-=yP8u
+iQIcBAEBAgAGBQJTRjLNAAoJEBYNRVNeJnmTWdMQAMyhe8Y5+8mgOMNkFCAhe7ee
+u5dAkDGzCeywxNh7W10/9pgcB2raHCNahzEdNWTuc2SvE4Wjc7GLIlTdJ7MWPSYc
+xag1ZStqiO0LrxY1CZWe69MAMYDpNo0a5rodxoWRZtrAnQLh7gX3KLcPKdtBHOvI
+7GXK9QX0kf6elCmSHumMTvz8nr+mHgD6t1y0YNuj/hzx+9Z5fZoeuCVQdDMp3tdR
+8O/gIz7c4HPGGy7CtbF8CYc8cI6tz/OfrxLBbkBY7Xy1+QIqL5Av3dZkX81Oiy6D
+X2o8ne96NJ846TUgRavqDFJhJpTodA2i2jOuDp0n+cOCkhUI8L9cqkHyKBCBR5sU
+cqzTfl7o39y/CE+fmRI6EvORgoW3mRisUPhoyoz398vcSBzMJGhpUcnIvthCAYs1
+LX7yebnRVjTvPwJ3FOYRL+eiutQcN2rMdVsTVoi6EfpIVq1RvU4aNPBM0xmNqIVl
+iZj1jQVEkI+7WOK0grjyNks7+uTW0ERD98B25ojehPxkoNyl+tdgsl1Dp1ddX59E
+p8YDB1B1/FKGlcP4tKQ0jRxFocgP3N1BY5a1xepVwGwJrYoOubQeg3XX+frzzE4i
+rLBtEjgBr6lgLdBt9uG5bAH1vH9WeS/yCDKYwSR0moZxI2TFF1i4J9/oDcqlIOnn
+ew+c5LXc8fx2zWChjJsY
+=KMGp
 -----END PGP SIGNATURE-----
