@@ -1,59 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/1
-Message-ID: <20140224035256.GA11529@mhcomputing.net>
-Date: Sun, 23 Feb 2014 19:52:56 -0800
-From: Matthew Hall <mhall@...omputing.net>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fwd: temporary file creation vulnerability in Redis
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/18
+Message-ID: <20140410184107.GA25259@hunt>
+Date: Thu, 10 Apr 2014 11:41:07 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 23, 2014 at 12:02:38PM -0500, cve-assign@...re.org wrote:
-> The vendor considers this intended behavior because of the "trusted
-> clients inside trusted environments" statement in the security model.
-> Because of this, it seems most likely that the trusted-environment
-> constraint also means that direct filesystem write access to the
-> product's data directory is also outside the scope of the security
-> model. So, we are not planning to assign a CVE ID unless the vendor
-> decides to announce the temp-%d.rdb issue as a vulnerability.
+On Thu, Apr 10, 2014 at 10:25:54AM +0400, Solar Designer wrote:
+> The distros and linux-distros lists exist as an addition to
+> oss-security.  It is pointless for a distro to be on
+> distros/linux-distros while not also being on oss-security.  Granted,
+> Anthony has just joined oss-security (welcome!), yet the sudden interest
+> in advance notification while apparently not caring about timely
+> notification (on just-made-public issues) just a week ago is suspicious.
 
-Hello,
+Amazon's interest here isn't sudden; when I intereviewed with Amazon
+roughly two years ago, it was for more or less this role, security work
+for the Amazon Linux AMI. At the time I recommended building a history of
+security bulletins and publicly contributing to fixes and discussions. At
+least the security bulletins has happened.. :)
 
-As I'm sure you'd expect, I partly agree and disagree with this. I believe 
-this security model is not very realistic because it disagrees with some of 
-the product's own configuration file directives and popular usage.
+Sadly I can't speak to any of the specific team members; I don't recall
+any of the names currently under discussion.
 
-Throughout the example configuration file are various directives and their 
-default socket listen parameters whose descriptions and defaults appear to 
-contradict their own security model's theories, and these are a default part 
-of the product, while the security model is separate, and not part of the 
-product.
+Thanks
 
-1. The "requirepass" directive is intended to, "be useful in environments in 
-which you do not trust others with access to the host running redis-server."
-
-2. The "command renaming" feature is intended to, "[rename commands] into 
-something hard to guess so that it will still be available for internal-use 
-tools but not available for general clients."
-
-3. They also note that, "[b]y default Redis listens for connections from all 
-the network interfaces available on the server," i.e. with 0.0.0.0 (and ::/0 
-in newer versions), which contravenes the trusted client trusted server model. 
-If they are really expecting a high level of trust against the network, much 
-less malicious users, this should be 127.0.0.1 (and perhaps ::1/128).
-
-To me, in open source, things which are part of the code normally take 
-supremacy over external documentation which often doesn't keep up with the 
-rapid evolution of usage and featuresets which can happen in emerging open 
-source products.
-
-However, if you feel the security model still takes precedence over these 
-other configuration directives and default communication parameters, I can 
-understand and accept this view even though I might see it a differently.
-
-But in that instance, it's important to clearly point out that many popular 
-uses of the product, for any data than more sensitive than general public 
-domain knowledge, could easily be unsafe and against the product's intent.
-
-Regards,
-Matthew Hall
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
