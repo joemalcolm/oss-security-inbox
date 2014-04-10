@@ -1,24 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/30/1
-Message-ID: <547AE470.204@internot.info>
-Date: Sun, 30 Nov 2014 20:33:36 +1100
-From: Joshua Rogers <honey@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Graphviz format string vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/15
+Message-Id: <201404101806.s3AI6nMr008075@linus.mitre.org>
+Date: Thu, 10 Apr 2014 14:06:49 -0400 (EDT)
+From: cve-assign@...re.org
+To: tristan.cacqueray@...vance.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Keystone
 Content-Type: text/plain; charset=utf-8
 
-Bump. :)
-On 25/11/14 16:40, Joshua Rogers wrote:
-> Hi,
->
-> A format string vulnerability has been found in `graphviz'.
-> The fix commit is here:
-> https://github.com/ellson/graphviz/commit/99eda421f7ddc27b14e4ac1d2126e5fe41719081
->
-> Could I get a CVE-ID for this?
->
->
-> Thanks,
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> https://launchpad.net/bugs/1300274
+> 
+> Keystone DoS through V3 API authentication chaining
+> 
+> a vulnerability in Keystone V3 API authentication. By sending a single
+> request with the same authentication method multiple times, a remote
+> attacker may generate unwanted load on the Keystone host, potentially
+> resulting in a Denial of Service against a Keystone service. Only
+> Keystone setups enabling V3 API are affected.
+> 
+> Sanitizes authentication methods received in requests.
+> 
+> When a user authenticates against Identity V3 API, he can specify
+> multiple authentication methods. This patch removes duplicates, which
+> could have been used to achieve DoS attacks.
+> 
+> the difference that I see between many authentication requests versus
+> one request with many authentication methods, is that in the first
+> case an operator may limit the rate at which requests are processed,
+> but it's more difficult to protect Keystone against few requests
+> triggering many authentication trials.
+
+Use CVE-2014-2828.
+
+For reference: this was apparently disputed internally by the vendor
+before a conclusion was reached that this is a vulnerability in the
+context of the vendor's security policy. Obviously an attacker who
+sends more authentication requests generates more system load.
+Apparently the decision is that it was a mistake for
+auth/controllers.py, when handling one request, to process superfluous
+data that had no real purpose other than increasing resource
+consumption.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTRt1TAAoJEKllVAevmvms3aEIAL3ri80WKGeYIT+99PIHROOw
+GbBvXRIsLL5xLwTIgCdUe6ozNR4z9WOSVSMLIPT4rHZEaXEqe7jV9yqAeVW5c7IX
+RQ6YFtTC/wGPxMHjoQyjx1TQp1Ymubcie1golNJC6rSAFnEM211HM8VEQxh/NiCe
+FH0vfawOxioFIp0KxiTTKHNUbY39AI+6ENylEQwfOzfjEP7Vvbp+k8MrwctIZxEB
+x5aJH/5kENJQSd5JzQbIzA4qt6THTEg8SiXTRJTd5RdHyKh/oBelZhkuf/Q16ERe
+/CwfUpwKB1Z0rKN+tefdBu0fW/Rr428MJ7dIONskJhdPQNHJyvCsLt411l66Nf0=
+=Ck8/
+-----END PGP SIGNATURE-----
