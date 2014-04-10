@@ -1,40 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/2
-Message-ID: <20140507084844.GA32076@steve.org.uk>
-Date: Wed, 7 May 2014 09:48:44 +0100
-From: Steve Kemp <steve@...ve.org.uk>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request - Predictable temporary filenames in GNU Emacs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/9
+Message-Id: <201404101126.s3ABQ7pe003427@linus.mitre.org>
+Date: Thu, 10 Apr 2014 07:26:07 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request Linux kernel: IB/core: crash while resolving passive side RoCE L2 address in cma_req_handler
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  I reported these bugs on the Debian tracker on Monday:
+> Linux kernel built with the InfiniBand communication link(CONFIG_INFINIBAND)
+> along with the support for Remote Direct Memory Access(RDMA) over Convered
+> Ethernet(RoCE), is vulnerable to a crash caused by invalid memory access.
+> It occurs while trying to resolve RoCE L2 address on the server side.
+> 
+> A remote unprivileged user/program could use this flaw to crash the kernel,
+> resulting in DoS.
+> 
+> https://patchwork.kernel.org/patch/3896781/
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b2853fd6c2d0f383dbdf7427e263eb576a633867
 
-       https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=747100
+Use CVE-2014-2739.
 
-  In brief some of the bundled Emacs Lisp uses predictable
- /tmpfile names insecurely:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
- lisp/gnus/gnus-fun.el:
-   In the function `gnus-grab-cam-face` the file "/tmp/gnus.face.ppm" is
-  used, blindly allowing the existing file to be truncated, and symlinks
-  followed.
-
- lisp/emacs-lisp/find-gc.el:
-   In the function `trace-call-tree` there are some horrific invocations
-  of the csh, which manipulate the directory and symlinks beneath "/tmp/esrc".
-
- lisp/net/tramp.el
-   The function `tramp-uudecode`, a fallback if a real uudecoding binary
-  is not present, blindly uses "/tmp/tramp.$PID", truncating and removing
-  the file.
-
-   All these have been fixed now, and the GNU bug report contains
- links to the commits that are appropriate:
-
-       http://debbugs.gnu.org/cgi/bugreport.cgi?bug=17428
-
-Steve
--- 
-http://www.steve.org.uk/
+iQEcBAEBAgAGBQJTRn7rAAoJEKllVAevmvmsfTcIALjPNjHagE/k+E+Uh8x8gf4O
+HmW834RHsyV+nHiwwa0TBMiE3phh9spgsLKzADsuc6Uj2v5NfW3clz8j/FJLv4vq
+uAb4wCAff/YE6+al9aJOiLtDmXk4ZS5w54o9baYU+KXqAPk26lyMRVDDKJWD5h3G
+QwbUhNFnWuSdXo46Q/sWC3FHgCkF6EhtgOOcGsiiPv39jdtd1HZEcuYl8tqnjVT+
+fBP0bEaPQs5E7CVRQ9nnPkYRNeZSHGnibN1n1ZPykIAGxDHAjZX1sGjYfEQ6dCq9
+bQce4CcFQW5wG4dnLsaMzcEmU84rjzilFYYKsh3oJFTn+575RIiOI71ZXs2ulFU=
+=b+5a
+-----END PGP SIGNATURE-----
