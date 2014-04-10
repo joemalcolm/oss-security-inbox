@@ -1,39 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/1
-Message-ID: <5372F9AE.90509@redhat.com>
-Date: Wed, 14 May 2014 15:05:50 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/21
+Message-ID: <20140410212616.GA13262@boyd>
+Date: Thu, 10 Apr 2014 16:26:16 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: 736066@...s.debian.org
-Subject: A number of EncFS issues
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2014-04-10 06:50:59, Anthony Liguori wrote:
+> On 04/09/14 23:25, Solar Designer wrote:
+> > On Wed, Apr 09, 2014 at 11:57:33PM -0600, Kurt Seifried wrote:
+> >> So first off I'm inclined to have Amazon on the distros list
+> >> (same reasons as Oracle basically).
+> >> 
+> >> My only concern is are you the correct person, I have no clue who
+> >> is on the Amazon security team for their Linux distribution, I've
+> >> never seen you post anything anywhere.
+> >> 
+> >> Your search - site:aws.amazon.com Anthony Liguori - did not match
+> >> any documents.
+> >> 
+> >> Your search - site:aws.amazon.com aliguori@...zon.com - did not
+> >> match any documents.
+> >> 
+> >> Can we somehow get confirmation from Amazon that this is the
+> >> right person to have on distros? Thanks.
+> > 
+> > Yes, we need this sort of confirmation.  My other concerns are:
+> 
+> Matt commented earlier.  Max will also confirm.  Is that sufficient?
+> 
+> Between the three of us, there should be enough public evidence and
+> enough people already on the list who have worked with one of us in
+> the past.
 
-https://defuse.ca/audits/encfs.htm discusses a number of issues in EncFS:
+I worked closely with Anthony when we were both employed by IBM. I know
+him very well in a work setting and also quite well outside of work.
 
-"Same Key Used for Encryption and Authentication"
+I've spoken with him, face-to-face over dinner at LinuxCon/Plumbers
+2013 [1], about his decision to leave IBM [2] and take a position at
+Amazon. I knew it involved EC2 but he could not divulge details at the
+time. I have absolutely no concerns about Anthony's request being
+devious in nature, especially considering that two other Amazon
+employees are saying that he's the right contact for the company.
 
-"Stream Cipher Used to Encrypt Last File Block"
+I also think his knowledge of the Linux virtualization stack would be
+a great addition to the list.
 
-"Generating Block IV by XORing Block Number"
+I'll leave the discussion about if/when Amazon should gain access to the
+distros lists to others, but I do vouch for Anthony.
 
-"File Holes are Not Authenticated"
+Tyler
 
-"MACs Not Compared in Constant Time"
+[1] http://linuxconcloudopenna2013.sched.org/speaker/aliguori#.U0cImKZSiI8
+[2] http://lists.gnu.org/archive/html/qemu-devel/2013-08/msg02614.html
 
-"64-bit MACs"
-
-"Editing Configuration File Disables MACs"
-
-There are currently no patches.
-
-I am not familiar enough with cryptography to know if they need CVEs, or 
-are considered hardening (the last one sounds CVE worthy though)
-
-Cheers,
-
---
-Murray McAllister / Red Hat Security Response Team
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1097537
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
