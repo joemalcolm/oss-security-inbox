@@ -1,27 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/18/1
-Message-ID: <5378163D.5050800@gentoo.org>
-Date: Sat, 17 May 2014 22:09:01 -0400
-From: Chris Reffett <creffett@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/1
+Message-ID: <5345FC16.4020704@redhat.com>
+Date: Wed, 09 Apr 2014 20:04:06 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: X2Go Server privilege escalation
+CC: Anthony Liguori <aliguori@...zon.com>, Matt Wilson <msw@...zon.com>, Max Spevack <spevack@...zon.com>
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-I don't see a CVE assigned for the vulnerability announced here:
-http://permalink.gmane.org/gmane.linux.terminal-server.x2go.announce/83
-It appears that this is a privilege escalation through injecting
-backticks, but I'm not absolutely sure. It is fixed as of versions
-4.0.1.10/4.0.0.8 in the following commits:
-http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=5a2aa0c36ef7a57d87e3bb6f7c6b2558ed5430f7
-http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=5a2aa0c36ef7a57d87e3bb6f7c6b2558ed5430f7
-http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=8347d3fef0e5cbabe4aa48f503612fa7b9d078f8
-http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=bf44925ecccda436caa1cfc34f89eced9c1bd104
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Could a CVE be assigned?
+On 04/09/2014 09:23 AM, Anthony Liguori wrote:
+> Hi,
+> 
+> I would like to request membership to the closed linux-distros mailing
+> list on behalf of the Amazon Linux AMI distribution.  We do not
+> currently have anyone on this list from Amazon but we would like to
+> change that.  The Amazon Linux AMI distribution is RPM based,
+> optimized for EC2, and tracks a number of packages (including the
+> kernel) directly from upstream.
+> 
+> Here is my GPG fingerprint:
+> 
+> pub   2048R/5682E5FF 2013-07-30
+>       Key fingerprint = EF0F 60F4 390F A270 BC30  4A93 1AAD C710 5682 E5FF
+> uid                  Anthony Liguori <anthony@...emonkey.ws>
+> sub   2048R/44FFA77F 2013-07-30
+> 
+> I'm sending this from my personal account since this is the uid
+> associated with my GPG key but I would prefer to be subscribed to my
+> @amazon.com (CC'd here).
+> 
+> If anyone has any questions, please don't hestitate to ask.  Thanks
+> for your consideration!
+> 
+> Regards,
+> 
+> Anthony Liguori
 
-Thanks,
-Chris Reffett
+I find it a bit odd you can't send this from your work email address.
+Would it be possible to add that email address to your key and then use
+your work email address? I guess I'm wondering is this an official
+request on behalf of Amazon or some random Amazon (employee?
+contractor?) asking for access to distros@.
 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1032 bytes)
+iQIcBAEBAgAGBQJTRfwWAAoJEBYNRVNeJnmTlWQQANHPWJPeDuWxWZWcUd9/Eu+w
+VXV4l6zNy5LjdBrpxBSxzGihgOAnMRfmEZ3tj6HM0U1aeUSeFvxK7eUevJGnN7RN
+6OSXd7cwLEftfhPHBA1G3pFYmr+MyZsYPSYKCLtBB6CGmblLY2+5/1bVBdxGd7Pl
+m2mXTHH15youPSCSZ7JnrBv/H8Dnh2hfP6V+VuSbYWAa1S+6zbMk1rRRvpdgZHDP
++cWS0ioBGpEoqF6p5PrecetQVeym8E2wdorsJ8djaeCx8gMP+Xpg4RXb6d/3OOIg
+GrSKkMIzNtmT8gP8BbB/LLSLa4/QgFl8/cSvcSqW+3PRxf0qoimRVyrZAS1dPH9y
+elie9OGE26N0+pgixdk+zx3yqsguhwjHSk9Oo6NJ5LscXeTX143lP1redyz57hVd
+0U28esfQvo2LKwmLnBR57PO+lovh6eoWPfHt+ebE1jJ2jtMX9PIbK+8kjIc/ODDa
+vwBBzRSCUbxpI4EjXiArkrT+XSZNCJwnwFtLFjKgZ58t/VeBlChbyqnEJpeC54YS
+g7PYYBqF4iwviP+WR+SMNhss4+d+Wv6pNRnMWQef8lcZMZi28OnuIX5j7f8h8lIA
+ODKcXKxTS3Bi4TQhfBcGRqPwUX4LQnzXKbg1QuCsdAYGWjnAKutkEVH8o9G46R0U
+F17qaMYrpMdICV2JnKPM
+=SNPU
+-----END PGP SIGNATURE-----
