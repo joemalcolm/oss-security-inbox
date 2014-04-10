@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/20
-Message-ID: <1605488435.60443819.1412796743037.JavaMail.zimbra@redhat.com>
-Date: Wed, 8 Oct 2014 15:32:23 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/8
+Message-ID: <20140410090239.GB2496@sivokote.iziade.m$>
+Date: Thu, 10 Apr 2014 12:02:39 +0300
+From: Georgi Guninski <guninski@...inski.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: openssh on linux rce in sftp-only mode
+Subject: Re: Should openssl accept weak DSA/DH keys with g = +/- 1 ?
 Content-Type: text/plain; charset=utf-8
 
-> 
-> I reported this to the OpenSSH developers, and although they included my
-> patch as a mitigation, they did not treat it as a vuln in OpenSSH.
-> 
-> I believe that treating this as a hardening patch makes sense. The SFTP
-> server behaves exactly as documented, it allows access to the whole
-> filesystem. And on Linux, that happens to equal write access to the
-> process RAM, so you should never give that access to someone who
-> shouldn't be able to run arbitrary code.
-> 
+Someone suggested not using self signed certs.
+Created RSA CA and DSA cert with g=1
 
-I think one has to assume if a user has unrestricted sftp access, they can
-figure out how to do most anything. Even with the upstream hardening patch,
-it really only protects the sftpd process. Any other processes the user may
-own could be modified.
+$ openssl x509 -text -in certg=1.pem
+G:    1 (0x1)
 
-I would hesitate to call this a security issue, if we do I think we open a
-can of worms.
+#server
+$openssl s_server -accept 8888 -cert ./certg=1.pem -key certg=1.key -CAfile ./cacert.pem -www
 
--- 
-    JB
+#client
+$ openssl s_client -connect localhost:8888 -showcerts -CAfile cacert.pem
+Verify return code: 0 (ok)
+
+Works in konqueror but not on firefox/nss for me.
+
+
+View attachment "cacert.pem" of type "text/plain" (3073 bytes)
+
+View attachment "certg=1.pem" of type "text/plain" (3147 bytes)
+
+Download attachment "certg=1.key" of type "application/pgp-keys" (323 bytes)
