@@ -1,36 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/9
-Message-ID: <54082301.6030506@reactos.org>
-Date: Thu, 04 Sep 2014 10:29:53 +0200
-From: Pierre Schweitzer <pierre@...ctos.org>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: RFC: Denial of Service in XCache?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/3
+Message-ID: <53460C5F.5050508@amazon.com>
+Date: Wed, 9 Apr 2014 20:13:35 -0700
+From: Anthony Liguori <aliguori@...zon.com>
+To: <kseifried@...hat.com>, <oss-security@...ts.openwall.com>
+CC: Matt Wilson <msw@...zon.com>, Max Spevack <spevack@...zon.com>
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-Dear all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm looking for comments about a XCache bug which is visible in Ubuntu
-12.04LTS (and left unfixed so far). It is #LP1189436
-(https://bugs.launchpad.net/ubuntu/+source/xcache/+bug/1189436).
-It basically happens when you try to query XCache state, then it SIGSEV
-(and thus makes php5 crash). This can be easily reproduced with the
-Munin plugin at: http://www.ohardt.net/dev/munin/ (munin_xcache.php
-file). It triggers the crash on every query on our infrastructure.
+On 04/09/14 19:04, Kurt Seifried wrote:
+> On 04/09/2014 09:23 AM, Anthony Liguori wrote:
+>> Hi,
+> 
+>> I would like to request membership to the closed linux-distros
+>> mailing list on behalf of the Amazon Linux AMI distribution.  We
+>> do not currently have anyone on this list from Amazon but we
+>> would like to change that.  The Amazon Linux AMI distribution is
+>> RPM based, optimized for EC2, and tracks a number of packages
+>> (including the kernel) directly from upstream.
+> 
+>> Here is my GPG fingerprint:
+> 
+>> pub   2048R/5682E5FF 2013-07-30 Key fingerprint = EF0F 60F4 390F
+>> A270 BC30  4A93 1AAD C710 5682 E5FF uid                  Anthony
+>> Liguori <anthony@...emonkey.ws> sub   2048R/44FFA77F 2013-07-30
+> 
+>> I'm sending this from my personal account since this is the uid 
+>> associated with my GPG key but I would prefer to be subscribed to
+>> my @amazon.com (CC'd here).
+> 
+>> If anyone has any questions, please don't hestitate to ask.
+>> Thanks for your consideration!
+> 
+>> Regards,
+> 
+>> Anthony Liguori
+> 
+> I find it a bit odd you can't send this from your work email
+> address. Would it be possible to add that email address to your key
+> and then use your work email address?
 
-I'm not sure it's a security issue as you may protect this using admin
-password. But what about shared web hosting where you wouldn't have set
-any password?
+We use DKIM which doesn't work very well with all mailing lists.  You
+should receive this okay since you are on CC but I'm not sure everyone
+will get this through the mailing list.  If it doesn't make it, I'll
+send this same (signed) message via the @codemonkey.ws address.
 
-Was it spotted/reported on other distributions?
+I also added this address as a uid to my key.  Here it is again:
 
-Cheers,
+pub   2048R/5682E5FF 2013-07-30
+      Key fingerprint = EF0F 60F4 390F A270 BC30  4A93 1AAD C710 5682 E5FF
+uid                  Anthony Liguori <aliguori@...zon.com>
+uid                  Anthony Liguori <anthony@...emonkey.ws>
+sub   2048R/44FFA77F 2013-07-30
 
--- 
-Pierre Schweitzer <pierre@...ctos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
+> I guess I'm wondering is this an official request on behalf of
+> Amazon or some random Amazon (employee? contractor?) asking for
+> access to distros@.
 
+Yes, this is an official request on behalf of Amazon.  I am requesting
+access on behalf of the Amazon Linux AMI team[1].
 
+[1] http://aws.amazon.com/amazon-linux-ami/
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4305 bytes)
+Regards,
+
+Anthony Liguori
+
+> 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJTRgxfAAoJEBqtxxBWguX/+5MIAJ5+qaFE8Um36q8qZsAcIRAh
+QtGzxQvmcea8EPqVEdLfqUJ1WikqhmCMIX7Qrcw5aa9uWqS1p9BrWoXsGjV8tb2o
+02SlXHsJPkKPGDgw8xD2yBao8ZEaWGUtcKRPIBZdKtiehEdxcW4fAkWWUKFTKkDa
+iqIJBWptrp341jtSlLifrXizcQPBUFIm2C1pKffJ3rLnEQRRTUJ5Lg/UqxF2H6Y+
+fea8AQZaAwGbHHOmf5DZhxO53Cl3+egLhWnql7tOTVSNiK1eZK6IFNqb9TeCwJh0
+F0BHv/wBCxaFUVGAG5q+ZlfWdodtqtHwT6az3712zywLebXEYneC42u+aFy9PTk=
+=lgBn
+-----END PGP SIGNATURE-----
