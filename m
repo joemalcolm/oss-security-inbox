@@ -1,48 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/11/4
-Message-ID: <20141111180200.GB27805@kludge.henri.nerv.fi>
-Date: Tue, 11 Nov 2014 20:02:00 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/20
+Message-ID: <5346FF9C.8030101@enovance.com>
+Date: Thu, 10 Apr 2014 22:31:24 +0200
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Joomla component com_sexycontactform and WordPress plugin sexy-contact-form unrestricted file upload
+Subject: [OSSA 2014-013] Keystone DoS through V3 API authentication chaining (CVE-2014-2828)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+OpenStack Security Advisory: 2014-013
+CVE: CVE-2014-2828
+Date: April 10, 2014
+Title: Keystone DoS through V3 API authentication chaining
+Reporter: Abu Shohel Ahmed (Ericsson)
+Products: Keystone
+Versions: from 2013.1 to 2013.2.3
 
-Can I get 2014 CVE ID for unrestricted file upload vulnerability in Sexy Contact
-Form, thanks. This is currently exploited in the wild.
+Description:
+Abu Shohel Ahmed from Ericsson reported a vulnerability in Keystone V3
+API authentication. By sending a single request with the same
+authentication method multiple times, a remote attacker may generate
+unwanted load on the Keystone host, potentially resulting in a Denial of
+Service against a Keystone service. Only Keystone setups enabling V3 API
+are affected.
 
-Plugin has later changed name to Creative Contact Form:
-http://extensions.joomla.org/extensions/contacts-and-feedback/contact-forms/23646
-https://wordpress.org/plugins/sexy-contact-form/
+Juno (development branch) fix:
+https://review.openstack.org/84425
 
-Affected:
-- - Joomla component com_sexycontactform 2.0.0 and below in
-  "components/com_sexycontactform/fileupload/UploadHandler.php". Version 2.0.1
-  contains fix.
-- - WordPress plugin "includes/fileupload/UploadHandler.php" r780722 / 0.9.7
-  and below. Changelog says that version 1.0.0 27/10/2014 contains the fix.
+Icehouse (milestone-proposed branch) fix:
+https://review.openstack.org/84735
 
-Fix is empty file so possibly removing the feature completely. There is also a
-proprietary version of this plugin available, but the codebase is nearly the
-same as far as I can tell.
+Havana fix:
+https://review.openstack.org/86024
 
-UploadHandler.php is "jQuery File Upload Plugin PHP Class 6.4.4" in both
-plugins. I have submitted all malicious uploaded files to several AV vendors.
-- From log files I'm able to tell that these are automated attacks. Attacker tried
-to exploit several Linux local exploit, sent emails and executed DoS attacks. I
-have also reported affected installations via email to abuse@ addresses and
-CERT.
+Notes:
+This fix is included in the icehouse-rc2 development milestone and will
+be included in a future 2013.2.4 release.
 
-I can investigate more if you have questions.
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-2828
+https://launchpad.net/bugs/1300274
 
-- ---
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-iEYEARECAAYFAlRiTxgACgkQXf6hBi6kbk/v+ACgxc/fCjN8mAGhTFWsnVKbHggo
-4GoAn1jWlJmXxHP/J47sSTsmB7uPK526
-=sUX3
------END PGP SIGNATURE-----
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
