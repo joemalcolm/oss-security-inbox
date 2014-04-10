@@ -1,34 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/5
-Message-ID: <20140916071635.GB24192@suse.de>
-Date: Tue, 16 Sep 2014 09:16:35 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: squid pinger remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/17
+Message-ID: <5346E29B.70103@redhat.com>
+Date: Thu, 10 Apr 2014 12:27:39 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, krahmer@...e.de
+CC: cve-assign@...re.org
+Subject: Re: Re: pam_cifscreds stack overflow
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 16, 2014 at 02:56:30AM -0400, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/10/2014 12:16 PM, cve-assign@...re.org wrote:
+>> We are tracking a patch at:
 > 
-> > I made a fix for squid 3.4.6 and request a CVE
+>> https://bugzilla.novell.com/show_bug.cgi?id=870168
 > 
-> > https://bugzilla.novell.com/show_bug.cgi?id=891268
+>> Fixing buffer overflow in cifskey, maybe also used in samba
+>> itself?
 > 
-> Regardless of the "what happens to squid itself" answer, is it known
-> that the crash has a security impact? This message seemed to conclude
+> This seems potentially applicable:
+> 
+> https://git.samba.org/?p=cifs-utils.git;a=blob;f=cifskey.c
+> 
+> Does anyone from Samba or Red Hat want to comment on whether this 
+> issue already has a CVE ID? CVE IDs for Samba vulnerabilities 
+> typically originate from the Red Hat CNA, but the specific process
+> -- and how far in advance a CVE ID might be allocated for Samba --
+> is not something visible to MITRE.
 
-Well, in any case whether its restarted or not, it should be fixed.
-For me its a remote DoS, its your decision if it qualifies for a CVE.
-The indexing bug is the "real issue" whereas the others IMHO qualify
-as hardening and only produce junk-packets or fake logs if exploited.
+Nothing on Red Hat's end regarding this.
 
-Sebastian
 
--- 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+iQIcBAEBAgAGBQJTRuKbAAoJEBYNRVNeJnmTVIYQAKtF1uptqFoRkPQ+fmMYu07e
+xD/8k5BWrlDVhL1JexLjgE99rAXzcxdarCjvl1Ouayiw2OxvwMdK2ZLJ3WGSqGHF
+1wPhYN/yHSVCOBTqnwkJfULc4032ogdk5+ujGxDE7jlUyyvMIYO8iVlsrMyd1CnG
+nE8iBpjhAebSG7meDlj93ZhqkDGHiRbCs/fJtERUpIRsgznRqPgZXIqObalEGbDt
+m9ynoau8jZoRa0+d+JmCgsNrNs5YowoDv/db6xEUcJmLWDZ7M16BDBDyWA4vJd4g
+6vrr+Wt6VcqK4VViYv8Ll5cgIVy0uDjIOvdWu/5/HU/FnushGmpaXhwDocID+ApW
+u31e+ynTkXyrZELb5HQh9BpF9QuiZjcyEO7urZ3j4UgskldX2fHSD0wflQ2WX23g
+pruckllz6Ma9tJeE/ctbC9D5eN3pubUDn6g2uoeOvusPV/Tq/1xt3ImyMrBmU5Nm
+gKeB2n0r9/76cPfZvVOvT4vuBB83AKO0OoB2gidCtm+DAcp2JofSUM8iOLjDwJ/8
+Ia3XrOBxdf/3u2moUqZWUGtg4Vi9Q6v+3LRHTxTTEHkgtGPmul+k3auciu9/6WoD
+DPUFkwB3FGsKUGPLrHYy0lxhWL8NutDo7s+5ZLBdt7ipoNaa7BRlhqghrW/7KEAr
+8hLy64sQg6RS5sjbSyeN
+=zE/b
+-----END PGP SIGNATURE-----
