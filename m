@@ -1,25 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/7
-Message-ID: <538EC978.7000303@oracle.com>
-Date: Wed, 04 Jun 2014 00:23:36 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/6
+Message-ID: <20140410062554.GA10788@openwall.com>
+Date: Thu, 10 Apr 2014 10:25:54 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Greg KH <greg@...ah.com>, Ramon de C Valle <rdecvalle@...are.com>, VMware Security Response Center <security@...are.com>, Monty Ijzerman <mijzerman@...are.com>
-Subject: Re: Request for linux-distros subscription
+Cc: Matt Wilson <msw@...zon.com>, Max Spevack <spevack@...zon.com>, Anthony Liguori <aliguori@...zon.com>
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-On 06/ 3/14 11:25 PM, Greg KH wrote:
-> I don't know of any specific OSS software of their own
+On Wed, Apr 09, 2014 at 11:57:33PM -0600, Kurt Seifried wrote:
+> So first off I'm inclined to have Amazon on the distros list (same
+> reasons as Oracle basically).
+> 
+> My only concern is are you the correct person, I have no clue who is
+> on the Amazon security team for their Linux distribution, I've never
+> seen you post anything anywhere.
+> 
+> Your search - site:aws.amazon.com Anthony Liguori - did not match any
+> documents.
+> 
+> Your search - site:aws.amazon.com aliguori@...zon.com - did not match
+> any documents.
+> 
+> Can we somehow get confirmation from Amazon that this is the right
+> person to have on distros? Thanks.
 
-Speaking as an X.Org developer, I can attest that VMWare maintains the
-xf86-video-vmware and xf86-input-vmmouse drivers in X.Org for use in
-VMWare guests, and contributes very heavily to the development of Mesa3D
-through a number of VMWare employees, including the primary maintainer.
+Yes, we need this sort of confirmation.  My other concerns are:
 
-Though that speaks to being a member of the OSS community in general,
-and in producing software for which announcements might go to distros,
-not necessarily for being on the receiving end.
+I think Amazon has never participated in discussions on oss-security.
+Searching:
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+site:openwall.com "amazon.com"
+
+finds only Anthony's request for distros list membership and some
+irrelevant pages outside of the oss-security archive.  It doesn't find
+any oss-security postings from any Amazon person (although checking the
+subscriber list I see that some were subscribed, at various times).
+
+As I said in:
+
+http://www.openwall.com/lists/oss-security/2014/01/22/1
+
+"Asking to join linux-distros before you've been on oss-security for a
+while (and preferably, having contributed to the discussions in here) is
+putting the cart before the horse."
+
+The distros and linux-distros lists exist as an addition to
+oss-security.  It is pointless for a distro to be on
+distros/linux-distros while not also being on oss-security.  Granted,
+Anthony has just joined oss-security (welcome!), yet the sudden interest
+in advance notification while apparently not caring about timely
+notification (on just-made-public issues) just a week ago is suspicious.
+
+Where's the info on Amazon Linux AMI security updates?  How timely were
+they, historically?  (In other words, does a few days of advance notice
+really make a difference?)  How are users being notified of them?  How
+are users supposed to install them?
+
+I notice that Amazon was added to
+http://oss-security.openwall.org/wiki/vendors in 2012.  That's good,
+indicating some past interest in security notifications.
+
+https://aws.amazon.com/amazon-linux-ami/security-bulletins/ lists
+security bulletins, including already on Heartbleed.
+
+This addresses some of my questions above, yet I'd appreciate direct
+answers from Anthony as well.
+
+We were not convinced about Qlustar being on linux-distros being worth
+the risk, so we never satisfied Roland's request.  If we're to satisfy
+Anthony's request and add Amazon to linux-distros, we need to clearly
+show how it meets a higher threshold.
+
+Thanks,
+
+Alexander
