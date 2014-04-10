@@ -1,45 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/15
-Message-Id: <201402201800.s1KI0gOI016314@linus.mitre.org>
-Date: Thu, 20 Feb 2014 13:00:42 -0500 (EST)
-From: cve-assign@...re.org
-To: larry0@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Persistent XSS in Media File Renamer V1.7.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/2
+Message-ID: <CA+aC4kvW+Gwup=epFFJsrMjzg669rZU_nr1m7_U=r9C1HNPxNg@mail.gmail.com>
+Date: Wed, 9 Apr 2014 20:26:07 -0700
+From: Anthony Liguori <anthony@...emonkey.ws>
+To: oss-security@...ts.openwall.com
+Cc: Anthony Liguori <aliguori@...zon.com>, Matt Wilson <msw@...zon.com>,  Max Spevack <spevack@...zon.com>
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://www.vapid.dhs.org/advisories/wordpress/plugins/MediaFileRenamer-1.7.0/
-> Download: http://www.meow.fr/media-file-renamer/
+On 04/09/14 19:04, Kurt Seifried wrote:
+> On 04/09/2014 09:23 AM, Anthony Liguori wrote:
+>> Hi,
+>
+>> I would like to request membership to the closed linux-distros
+>> mailing list on behalf of the Amazon Linux AMI distribution.  We
+>> do not currently have anyone on this list from Amazon but we
+>> would like to change that.  The Amazon Linux AMI distribution is
+>> RPM based, optimized for EC2, and tracks a number of packages
+>> (including the kernel) directly from upstream.
+>
+>> Here is my GPG fingerprint:
+>
+>> pub   2048R/5682E5FF 2013-07-30 Key fingerprint = EF0F 60F4 390F
+>> A270 BC30  4A93 1AAD C710 5682 E5FF uid                  Anthony
+>> Liguori <anthony@...emonkey.ws> sub   2048R/44FFA77F 2013-07-30
+>
+>> I'm sending this from my personal account since this is the uid
+>> associated with my GPG key but I would prefer to be subscribed to
+>> my @amazon.com (CC'd here).
+>
+>> If anyone has any questions, please don't hestitate to ask.
+>> Thanks for your consideration!
+>
+>> Regards,
+>
+>> Anthony Liguori
+>
+> I find it a bit odd you can't send this from your work email
+> address. Would it be possible to add that email address to your key
+> and then use your work email address?
 
-> mfrh_class.settings-api.php
-> function callback_multicheck
-> function callback_radio
-> function callback_wysiwyg
+We use DKIM which doesn't work very well with all mailing lists.  You
+should receive this okay since you are on CC but I'm not sure everyone
+will get this through the mailing list.  If it doesn't make it, I'll
+send this same (signed) message via the @codemonkey.ws address.
 
-> If a user with permission to add media or edit media uploads a file
+I also added this address as a uid to my key.  Here it is again:
 
-> the title
+pub   2048R/5682E5FF 2013-07-30
+      Key fingerprint = EF0F 60F4 390F A270 BC30  4A93 1AAD C710 5682 E5FF
+uid                  Anthony Liguori <aliguori@...zon.com>
+uid                  Anthony Liguori <anthony@...emonkey.ws>
+sub   2048R/44FFA77F 2013-07-30
 
-> can XSS the site admin
+> I guess I'm wondering is this an official request on behalf of
+> Amazon or some random Amazon (employee? contractor?) asking for
+> access to distros@.
 
-Use CVE-2014-2040.
+Yes, this is an official request on behalf of Amazon.  I am requesting
+access on behalf of the Amazon Linux AMI team[1].
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+[1] http://aws.amazon.com/amazon-linux-ami/
+
+Regards,
+
+Anthony Liguori
+
+>
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.11 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQEcBAEBAgAGBQJTBkJtAAoJEKllVAevmvms3jAIALKsp0q1fkWAPIkGYwnFzMzS
-mpitvFIGpXCb/7MflVzCfo2AkVHT7/7F4sWiPMVDduTnjHGuWRDQhJu6B6t3csS4
-D9CmYtY3IIYpLZ5CwtU2QWN2B4ThIiRzQDSLIDl9zmjzvuZJ88fB/p0g2RUOF4vw
-26hNokJflz3rO7EavufeDbjXffIOsbCX4Xmjy1dQEwq35IMwrlRogSFnvuFu7fcA
-2IReU1oRPmGs7Ly8btzGIRZ1IEzP0sxFYBYmP3wnuUgMKlmQGH9ISAS3tNWaXamg
-CwWPP5DnlyJ/5kEWoyABWZaOXDMu/Z9fQraIw3VjlvKj6iIjT2wMPoZc8YV/AdQ=
-=xBmt
+iQEcBAEBAgAGBQJTRgxfAAoJEBqtxxBWguX/+5MIAJ5+qaFE8Um36q8qZsAcIRAh
+QtGzxQvmcea8EPqVEdLfqUJ1WikqhmCMIX7Qrcw5aa9uWqS1p9BrWoXsGjV8tb2o
+02SlXHsJPkKPGDgw8xD2yBao8ZEaWGUtcKRPIBZdKtiehEdxcW4fAkWWUKFTKkDa
+iqIJBWptrp341jtSlLifrXizcQPBUFIm2C1pKffJ3rLnEQRRTUJ5Lg/UqxF2H6Y+
+fea8AQZaAwGbHHOmf5DZhxO53Cl3+egLhWnql7tOTVSNiK1eZK6IFNqb9TeCwJh0
+F0BHv/wBCxaFUVGAG5q+ZlfWdodtqtHwT6az3712zywLebXEYneC42u+aFy9PTk=
+=lgBn
 -----END PGP SIGNATURE-----
