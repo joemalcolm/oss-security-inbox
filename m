@@ -1,33 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/4
-Message-ID: <802517388.4086538.1417050942849.JavaMail.zimbra@redhat.com>
-Date: Wed, 26 Nov 2014 20:15:42 -0500 (EST)
-From: Arun Babu Neelicattu <abn@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-7816 Undertow (on Windows): Information disclosure via directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/19
+Message-Id: <201404101912.s3AJCmws017794@linus.mitre.org>
+Date: Thu, 10 Apr 2014 15:12:48 -0400 (EDT)
+From: cve-assign@...re.org
+To: felix@...but.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Session IP check bypass in Roundcube 1.0
 Content-Type: text/plain; charset=utf-8
 
-CVE-2014-7816 was assigned to a vulnerability in JBoss Undertow [1]. This flaw was reported by Roberto Soares of Conviso Application Security.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Issue Description:
+> Roundcube 1.0-beta added support for the the X-Forwarded-For and
+> X-Real-IP HTTP headers when the check_ip configuration option is set.
+> This effectively allows the attacker to bypass the session IP check
+> completely by setting one of these headers to the victim's IP address.
+> 
+> The problem is still present in the latest version (1.0).
+> 
+> http://trac.roundcube.net/ticket/1489729
+> http://trac.roundcube.net/ticket/1486776
 
-It was discovered that Undertow, when running on Microsoft Windows, is vulnerable to a directory traversal flaw. A remote attacker could use this flaw to read arbitrary files that are accessible to the user running the Java process.
+This can potentially have a CVE ID, but we are not sure about the
+threat models in which this is or isn't a vulnerability. Obviously a
+header such as X-Forwarded-For often can be easily spoofed, and the
+actual source IP address visible to the server usually cannot be
+easily spoofed. In either case, apparently the entire goal of checking
+an address value is to provide an additional defense in a case where
+the attacker has already exploited another problem and knows the
+session secret. A product is, more or less, entitled to have that
+goal, even though the goal may seem unimportant.
 
-Fixed Version(s):
+Checking only the source IP address is useful in this threat model:
+the attacker knows (or can guess) the IP address of the victim's
+machine, and the attacker has no easy way to establish a TCP session
+from the victim's external IP address. (For example: the victim and
+attacker aren't located on the same intranet.) Also, for functionality
+reasons, the expectation is that the external IP address of a
+legitimate user does not change during a session.
 
-undertow 1.0.17.Final, undertow 1.2.0.Beta3, undertow 1.1.0.CR5
+Checking X-Forwarded-For is useful in this threat model: the attacker
+doesn't know (and can't guess) the IP address of the victim's machine,
+but the attacker does have an easy way to establish a TCP session from
+the same external IP address as the victim, and an X-Forwarded-For
+header is inserted by a legitimate proxy server.
 
-Victims Record:
+For other products, there's sometimes a solution strategy in which
+X-Forwarded-For is checked only in cases where an external IP address
+is known to correspond to a proxy server that supplies correct
+X-Forwarded-For headers. However, the question here is not whether the
+product should have adopted that strategy or any other code change.
+The only immediate question is whether the
+http://trac.roundcube.net/changeset/4d480b36/github patch, by itself,
+is unambiguously introducing a vulnerability.
 
-https://github.com/victims/victims-cve-db/blob/master/database/java/2014/7816.yaml
+Our initial thought is that that patch is not unambiguously
+introducing a vulnerability, and thus no CVE ID should be assigned.
+The patch seems to be a design tradeoff that is worse in many cases
+but better in other cases.
 
-References:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-https://issues.jboss.org/browse/UNDERTOW-338
-https://issues.jboss.org/browse/WFLY-4020
-https://bugzilla.redhat.com/CVE-2014-7816
-https://access.redhat.com/security/cve/CVE-2014-7816
-
--- 
-Arun Neelicattu / Red Hat Product Security
-PGP: 0xC244393B 5229 F596 474F 00A1 E416  CF8B 36F5 5054 C244 393B
+iQEcBAEBAgAGBQJTRuy8AAoJEKllVAevmvmsA7oH/j17js5nN60bjLeuK5r/hN+y
+o/tlWbTEGKNSS2ny0VJTEuXItRMVcUBr9sNXg7zhPo2pn2tg/90qFnd8C1NG8bVY
+CaLimS/tzfU559I4Xm500RPtYyaUskEr26gUoxBVfBnhG0V+7n82TOaJrojmF3ej
+/PAZVus6lV4qmyrsAYTJkLsB0RgMNa2znM847ncqEPpwhH9T1qP/PorFLCZ7orJ0
+w8uj6chkLO083mwlSnlSK6OwZ9G1iLO/xjMwdS2SBdYpE8wEaihWXjdRqVpMSv/L
+rNYs2c52CKl0VF/rO97B4dgwz9ZtJIrqSFQePofRJzzdT1pblnW8Y9EDs1kSIFs=
+=U8Uc
+-----END PGP SIGNATURE-----
