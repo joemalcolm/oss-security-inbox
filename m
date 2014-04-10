@@ -1,50 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/1
-Message-ID: <20141127001227.GB29773@kludge.henri.nerv.fi>
-Date: Thu, 27 Nov 2014 02:12:27 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: ryan@...hurstsecurity.com, hugo.s@...uxmail.org
-Subject: Please reject CVE-2014-8585
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/11
+Message-Id: <201404101205.s3AC5X20011936@linus.mitre.org>
+Date: Thu, 10 Apr 2014 08:05:33 -0400 (EDT)
+From: cve-assign@...re.org
+To: fw@...eb.enyo.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: redmine open redirector
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hi Mitre,
+> Redmine versions 2.4.5 and 2.5.1 fixed an open redirector issue. The
+> code verifying the redirection URIs accepted scheme-relative URIs
+> which can lead to different hosts:
+> 
+> http://www.redmine.org/projects/redmine/wiki/Security_Advisories
+> http://www.redmine.org/projects/redmine/wiki/Changelog
+> https://github.com/redmine/redmine/commit/7567c3d8b21fe67e5f04e6839c1fce061600f2f3
 
-Please REJECT CVE-2014-8585, thanks.
+On the Redmine Security Advisories page, "(referenced as
+JVN#93004610)" would typically imply that these URLs may exist later:
 
-Directory traversal vulnerability in the WordPress Download Manager plugin for
-WordPress allows remote attackers to read arbitrary files via a .. (dot dot) in
-the fname parameter to (1) views/file_download.php or (2) file_download.php.
+  http://jvn.jp/jp/JVN93004610/index.html
+  http://jvn.jp/en/jp/JVN93004610/index.html
 
-File file_download.php is not available in any version of WordPress plugin
-"download-manager" checked SVN and latest 2.7.4 version from
-https://wordpress.org/plugins/download-manager/
+Use CVE-2014-1985.
 
-PoC refers to random WordPress installation with plugin named
-"document_manager", which is indeed vulnerable. I sent abuse emails to few
-affected targets. Plugin "document_manager" is custom and not available in WP
-plugin repository.
-
-This was noticed during http://www.wpscan.org/ development.
-
-If I am correct OSVDB item refers to issue listed in vexatioustendencies.com,
-which has different attack scenario and payloads. 
-
-References:
-- - http://osvdb.org/111215
-- - http://secunia.com/advisories/59925/
-- - http://packetstormsecurity.com/files/128852/WordPress-Download-Manager-Arbitrary-File-Download.html
-- - https://vexatioustendencies.com/wordpress-plugin-vulnerability-dump-part-2/
-
-- ---
-Henri Salo
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iEYEARECAAYFAlR2bGsACgkQXf6hBi6kbk/6tgCeL3A5Wuw10z9lth01PfcZ73XX
-MBUAn2RBTmkJAJuwPS/hvaZxg2ycxcVA
-=upSJ
+iQEcBAEBAgAGBQJTRoieAAoJEKllVAevmvmsziwIAJ3vaw7fWg8eOQqCTDycCLtO
+mHZsUF2YJxNPIo1L916ZAzIL2e7Xd7s6DlK1hoOJIpaNcgSu26YFK307Zv3NNAQ0
+nmWCl+s6VIgsi6YMzFmmSjllMMMwWzF41PoaFwjGbl9HEkN6Ted3TCIjG0PMWlSk
+tbV2uW6AVT15QZw08FIphSrLrsj0HHeLtSn/yHuo1bh1yc4a6pQyn6zmdIiG+W4E
+YypkH16jDoRXqJPDZeWABd/7fbfiZTOozgBUkgBbeV0/vKAsft7+6hnSKZGGhe1q
+J2a22CKuF2dH6HbcNhnIQ46lP2/ZVY+9pkOHNu4w51OHGynB8vDiRw3JtWgkC2o=
+=BSF/
 -----END PGP SIGNATURE-----
