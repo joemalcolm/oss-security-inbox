@@ -1,37 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/3
-Message-Id: <201403191311.s2JDBIFX007974@linus.mitre.org>
-Date: Wed, 19 Mar 2014 09:11:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: jmm@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for python/zipfile
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/4
+Message-ID: <20140410055044.GA18588@scapa.corsac.net>
+Date: Thu, 10 Apr 2014 07:50:45 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Cauterizing OpenSSL's heartbleed (the aftermath)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Apr 09, 2014 at 04:20:14PM -0700, Seth Arnold wrote:
+> On Wed, Apr 09, 2014 at 10:47:48PM +0000, mancha wrote:
+> > Mustafa Al-Bassam's work assists a great deal with this taxonomy. He
+> > ran PoC code against Alexa top 100, 1000, and 10000 sites beginning
+> > about 18 hours after OpenSSL's first public announcement [1].
+> > 
+> > Specifically, his scans began circa: 1396956600 (top 100); 1396958400
+> > (top 1000); and 1396972800 (top 10000). Did any major vendors deploy
+> > upgrades prior to this?
+> 
+> Ubuntu's updates were released around 1396907296 [2], roughly 13 hours
+> before Mustafa's awesome scans.
 
-> http://bugs.python.org/issue20078
+For Debian Wheezy, the DSA was sent circa 1396906606 [1]. The package were
+already on the initial security.debian.org (and started propagating to
+the mirrors) since circa 1396899374
 
-> http://hg.python.org/cpython/rev/79ea4ce431b1
+[1]: https://lists.debian.org/debian-security-announce/2014/msg00071.html
+[2]: http://snapshot.debian.org/package/openssl/1.0.1e-2%2Bdeb7u5/
 
-> ZipExtFile.read goes into 100% CPU infinite loop on maliciously binary edited zips
+Regards,
+-- 
+Yves-Alexis Perez
 
-Use CVE-2013-7338.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTKZXkAAoJEKllVAevmvmsm7EH/1zQjNZMlRVV0ixiDnTwQiNe
-ih1Bwbo+rogCr28RdTuJQm4EsX4yGlnqwjv4SaQCvOWEE3m+bmTPvnrFlWcYZzr3
-Xqns2eyZPAygcqf0fPujC2QslesIeTSOUDOU0QCnNi7njh5g+daORhPVBQLka4Ac
-jrbfwfypx0EmVImJua5oAyg9hYmky0w28vIJFF3Xb39kRaxUUKv9qd/dagRWthJr
-XpRrD82pTHT0fiil4eKO0f4Sz2RXxNIyKhndyNXc2vT1NTVvJJip6H9FhlXDOqvd
-hB+TDTMQtuM72Vvsy5CQWLw45fBhwdzHVQAGxN0l5rxjRg8/PpDJXKs+EkJbKzU=
-=grR3
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
