@@ -1,52 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/13
-Message-Id: <201406271610.s5RGAgWs020234@linus.mitre.org>
-Date: Fri, 27 Jun 2014 12:10:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: timthumb remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/11/3
+Message-ID: <20140411115633.GA325@dhcp-25-225.brq.redhat.com>
+Date: Fri, 11 Apr 2014 13:56:34 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Mateusz Guzik <mguzik@...hat.com>
+Subject: CVE request -- Linux kernel: net: ping: refcount issue in ping_init_sock() function
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A flaw was found in the way ping_init_sock() function handled group_info
+struct reference counter. Since group_info refcounter is only
+incremented but never decremented in this codepath, it could lead to
+refcounter overflow and possibly to use-after-free issue later.
 
-> http://seclists.org/fulldisclosure/2014/Jun/117
-> https://code.google.com/p/timthumb/issues/detail?id=485
+An unprivileged local user could use this flaw to crash the system or,
+potentially, escalate their privileges on the system.
 
-> The command line built on lines 967 and 969 is the problem area.
-> https://code.google.com/p/timthumb/source/browse/trunk/timthumb.php#967
+Upstream patch proposal:
+https://lkml.org/lkml/2014/4/10/736
 
-> The original project WordThumb 1.07 also vulnerable ... using the
-> older WordThumb.php script
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1086730
 
-> Developed for use in the WordPress theme Mimbo Pro
-
-> several projects that shipped with "timthumb.php", such as,
-
-> Wordpress Gallery Plugin
-> https://wordpress.org/plugins/wordpress-gallery-plugin/
-> IGIT Posts Slider Widget
-> http://wordpress.org/plugins/igit-posts-slider-widget/
-
-> only vulnerable if the WebShot (aka WebShots) feature is enabled
-> (default is disabled).
-
-Use CVE-2014-4663.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTrZb/AAoJEKllVAevmvmsjDAIAKvNZhHNrmquxcY9SmBuu4mE
-PqYb23RBbjqXSBbzA8guw28WStkxG7atW7fsPA185LyaIn4PH92n4ZHyHphxlGnT
-iaZpcQFVbOtnmPdnf3JB64PJ9jviOmtfUyC9GnxlfLlbaPxTqgVnW9JZ2BybGKno
-YK3orCfmrjm5ma5BWsYjfWkf5YFYiWvNuz5xHgVqjGwisTREJ44SjVyoefWhHCRX
-zDBu2IoKBYJliZfwopM24aUyxE+C+sgLuxX6BRBPLRKd/kwh09Wsg/YJt+Jsc7Ah
-GHxm/tkmQZGLXpX3EEJNP5GJc/i7ePATnLAkwoadzP/nox5xSAQWhdTe/atC0aE=
-=afLD
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
