@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/1
-Message-ID: <540E5986.90905@oracle.com>
-Date: Mon, 08 Sep 2014 18:36:06 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/11/1
+Message-Id: <201404110124.s3B1NrmN005605@linus.mitre.org>
+Date: Thu, 10 Apr 2014 21:23:53 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Confusion around gksu & CVE-2014-2943
+Cc: cve-assign@...re.org
+Subject: REJECT of CVE-2014-2750 (an extra CVE ID for Prosody)
 Content-Type: text/plain; charset=utf-8
 
-Several sites identify CVE-2014-2943 as being a vulnerability in gksu:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://community.rapid7.com/community/metasploit/blog/2014/07/07/virtualbox-filename-command-execution-via-gksu
-http://www.securityfocus.com/bid/68427
+CVE-2014-2750 will soon show up on the cve.mitre.org web site with a
+"REJECT" message. The correct CVE IDs for the "Uncontrolled Resource
+Consumption with XMPP-Layer Compression" report about Prosody are
+CVE-2014-2744 and CVE-2014-2745:
 
-But the Mitre & NVD databases use that CVE id for a different issue:
+  http://openwall.com/lists/oss-security/2014/04/09/1
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-2943
-https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-2943
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Anyone know what the right CVE is for the gksu bug?
-
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+iQEcBAEBAgAGBQJTR0OlAAoJEKllVAevmvms/PAIAIwvKs9yDC0JmkpFKkgzyqf3
+zsGsl9ed1FkBYB0W6RQu/b4CyFfHfDHDkwAioTMaXDqu9cbLqNr7xxaem5wbF5hc
+kr3SLrIg4+7OxGct0RDDBWkLDrFwghpOE2YZ6wjvhiDZctn5ChpUv2mqQIiF/aqD
+c/PscqMpjXz5DAccPzcqWMkca5PL15bRwFhXfPioM36tRDctZZWkLOxSQWIeuJ9h
+8jYXCr0fXUjxBQi3Cs5xCutstMBBUvjd+u6lHMM2kHqKz7OwR3A5HhvnlyztspDO
+HjzBJ+raAy3w7L1fbEd42nJH3d9Vrut7vrH6cNddMrcXtmgBYUtpaOITBq9+BGA=
+=CLLO
+-----END PGP SIGNATURE-----
