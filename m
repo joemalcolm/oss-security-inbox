@@ -1,46 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/8
-Message-ID: <CALx_OUAZMCov46vSeksuMz7skN3+rC2SQaHraWfWFOyjakp16w@mail.gmail.com>
-Date: Thu, 6 Nov 2014 19:30:09 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Stack smashing in libjpeg-turbo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/11/6
+Message-ID: <53485FB5.4080809@igalia.com>
+Date: Fri, 11 Apr 2014 23:33:41 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
 Content-Type: text/plain; charset=utf-8
 
-A-ha, I was able to repro with ImageMagick + libjpeg-turbo 1.2.1.
+On 09/04/14 05:59, Kurt Seifried wrote:
+> So it appears there are projects that statically compile OpenSSL into
+> their software, one example:
 
-Versions of libjpeg-turbo prior to 1.3.1 accept the file, while 1.3.1
-rejects it outright due to duplicate SOI markers. This is probably
-attributable to this change:
+Another one is bitcoin. The distributed binaries are statically linked.
 
-[4] Fixed a couple of issues whereby malformed JPEG images would cause
-libjpeg-turbo to use uninitialized memory during decompression.
+http://article.gmane.org/gmane.comp.bitcoin.devel/4749
 
-...which I think is related to CVE-2013-6629 and CVE-2013-6630. But I
-haven't spent much time on it, so I'm not sure if that actually fixed
-the underlying issue, or just made the file invalid for some unrelated
-reason.
 
-The fault is in:
-
-...
-#6  0x0066e504 in __stack_chk_fail_local () from /usr/lib/libjpeg.so.62
-#7  0x0063f9c7 in encode_mcu_huff (cinfo=0xbfffbbf0,
-MCU_data=0xb49043f8) at jchuff.c:642 <- boop
-#8  0x0063323f in compress_output (cinfo=0xbfffbbf0, input_buf=0x0) at
-jccoefct.c:381
-#9  0x00632b37 in jpeg_finish_compress (cinfo=0xbfffbbf0) at jcapimin.c:183
-#10 0x08319773 in WriteJPEGImage ()
-#11 0x0839c8aa in WriteImage ()
-#12 0x0839d5f3 in WriteImages ()
-
-FWIW, Debian bug is here:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=768369
-
-Which points to:
-http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26482&sid=81658bc2f51a8d9893279cd01e83783f
-
-The test case is at:
-http://tapani.tarvainen.info/linux/convertbug/r270/003632r270.jpg
-
-/mz
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
