@@ -1,50 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/21
-Message-Id: <20140707181441.943C41A41139@me.com>
-Date: Mon,  7 Jul 2014 14:14:41 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem kcapifony-2.1.6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/11/4
+Message-Id: <201404111508.s3BF8JHC026493@linus.mitre.org>
+Date: Fri, 11 Apr 2014 11:08:19 -0400 (EDT)
+From: cve-assign@...re.org
+To: pmatouse@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -- Linux kernel: net: ping: refcount issue in ping_init_sock() function
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem kcapifony-2.1.6
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Author: Larry W. Cashdollar, @_larry0
+> A flaw was found in the way ping_init_sock() function handled
+> group_info struct reference counter. Since group_info refcounter is
+> only incremented but never decremented in this codepath, it could lead
+> to refcounter overflow and possibly to use-after-free issue later.
+> 
+> An unprivileged local user could use this flaw to crash the system or,
+> potentially, escalate their privileges on the system.
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1086730
+> 
+> https://lkml.org/lkml/2014/4/10/736 (not yet available at
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/net/ipv4/ping.c)
 
-Date: 06/01/2014
+Use CVE-2014-2851.
 
-OSVDB: 108572
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-CVE:Please Assign
-
-Download: http://rubygems.org/gems/kcapifony
-
-Gem Author:  roderik.van.der.veer@...stmaan.be
-
-From: ./kcapifony-2.1.6/lib/ksymfony1.rb
-
-Lines 482, 484, 522 and 524 expose the password to the process table via the #{config['pass']} variable.  If this Gem is used in the context of a rails application it maybe possible to inject commands remotely by supplying special shell meta characters like ; and & via #{config['user']} and #{config['pass']}.
-
-
-0479-      FileUtils::mkdir_p("backups")
-480-      case config[type]
-481-      when mysql
-482:        `mysqldump -u#{config[user]} --password=\"#{config[pass]}\" #{config[db]} > #{tmpfile}`
-483-      when pgsql
-484:        `pg_dump -U #{config[user]} --password=\"#{config[pass]}\" #{config[db]} > #{tmpfile}`
-485-      end
-486-      File.open(tmpfile, "r+") do |f|
---
-519-      
-520-      case config[type]
-521-      when mysql
-522:        `mysql -u#{config[user]} --password=\"#{config[pass]}\" #{config[db]} < backups/#{sqlfile}`
-523-      when pgsql
-524:        `psql -U #{config[user]} --password=\"#{config[pass]}\" #{config[db]} < backups/#{sqlfile}`
-525-      end
-526-      FileUtils.rm("backups/#{sqlfile}")
-527-    end
-
-
-Advisory: http://www.vapid.dhs.org/advisories/kcapifony-2.1.6.html
-
+iQEcBAEBAgAGBQJTSATmAAoJEKllVAevmvmsTB4H+wRZGJdbJ9LUbFivCT1FQyze
+Qj3SMrvu8R9K3dX1RU5iBQk1JDo9tdI8lFVm17JA7HXxVMi/wnivyxLHeNHN8oS1
+HfMKc+nL+4mbizPyw+qAhpntgjmy5MuMHAv6C7/cQPHPX25gI1bc/SKhoAaUiHCT
+iRk5IxwC3VjXD3RhCAjZ2giVvjCVXqkbLmuEFz8SEVx2oMnI+X1mR7tRETjD5lxK
+G/kR5/nrobA0p5Kg0q/VAa37aoruxkUsSwTz5LWyHgqxfQALKO2UfPZZYD5/TMxn
+ZkFXv9qLyzuMeWqnX/QDfv30AyBMcpP11h0+TJ4n5ZTnwaNRDu0AYaZTVRWu61Q=
+=N7gK
+-----END PGP SIGNATURE-----
