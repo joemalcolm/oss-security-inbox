@@ -1,56 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/28/1
-Message-ID: <CALCETrX_NswMdO1KBu9s0udf3Z9XLpF6xTgy6=orvLJLPGK7aQ@mail.gmail.com>
-Date: Sun, 28 Dec 2014 07:40:51 -0800
-From: Andy Lutomirski <luto@...capital.net>
-To: P J P <ppandit@...hat.com>
-Cc: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Linux x86_64 userspace address leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/11/2
+Message-Id: <201404110613.s3B6Dgxd010964@linus.mitre.org>
+Date: Fri, 11 Apr 2014 02:13:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: krahmer@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: pam_cifscreds stack overflow
 Content-Type: text/plain; charset=utf-8
 
-On Dec 26, 2014 5:49 AM, "P J P" <ppandit@...hat.com> wrote:
->
-> +-- On Thu, 18 Dec 2014, Andy Lutomirski wrote --+
-> | On all* Linux x86_64 kernels, malicious user programs can learn the
-> | TLS base addresses of threads** that they preempt.
-> |
-> | In principle, this bug will allow programs to partially bypass ASLR
-> | when attacking other user programs.  Figuring out how to adapt the
-> | test code to do that is left as an exercise to the reader.
-> |
-> |
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86?id=f647d7c155f069c1a068030255c300663516420e
-> |
-> | ** The attack won't work against 64-bit threads with TLS bases > 4GB,
-> | but AFAIK that's unusual.
->
->   It seems to require 32bit interfaces(CONFIG_X86_32). On x86_64
-Fedora/RHEL
-> kernels, it says:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Try building with -m32 but running on a 64-bit kernel.
+> We are tracking a patch at:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=870168
+> 
+> Fixing buffer overflow in cifskey, maybe also used in samba itself?
 
---Andy
+Use CVE-2014-2830 for any product that is exploitable because of
+the use of sprintf as shown in:
 
->
-> ===
-> $ cat /etc/redhat-release
-> Fedora release 21 (Twenty One)
-> $
-> $ cc -xc -o estest estest.c
-> $ cc -xc -o gsbasetest gsbasetest.c
-> $
-> $ ./estest
-> estest: set_thread_area: Function not implemented
-> $
-> $ ./gsbasetest
-> [OK]    ARCH_SET_GS worked
-> [OK]    Writing 0 to gs worked
-> [FAIL]  gsbase was corrupted
-> $
-> ===
->
-> --
-> Prasad J Pandit / Red Hat Product Security Team
-> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+  http://bugzillafiles.novell.org/attachment.cgi?id=585460
 
+Apparently one exploitable case is the pam_cifscreds product. We do not
+know whether there is an exploitable case in the cifs-utils package
+because of the:
+
+  https://git.samba.org/?p=cifs-utils.git;a=blob;f=cifskey.c
+
+code. There might be other products using an essentially identical
+cifskey.c file.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTR4e+AAoJEKllVAevmvmsXnkIAK1AI1cXGWICxk/efLoDVCTH
+hkyy/hFYpPa5/qsGoH9sbnHTCtFcHA/rwm2NLLuDCVNzw9C50e/w9mDWI21M4uN3
+ogRjeghZjz1ut1TpH6JFD9dnpcUI/JSdFl7vgWlWwmyNcYQowWlUMX/dR5lLnj14
+GMUZrHJXuutLUxnsGxX6MOStWRcC3QkOJZREJAdTsru9blhKYZHDsCtdaGQJpnIh
+ivAEOeYpKY5f+9lfEBbfelNh/G6p6gKjZtPMO0HXdfLXB5iUxLpx8gKNiRrRmzZw
+EM+s/XfzTnS+3OOy7iQyE1kLN44jPh0S85UuDZ9xxdkEQdEeUszr7TrLgF9s0cA=
+=5G8d
+-----END PGP SIGNATURE-----
