@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/27
-Message-ID: <54296195.9050405@edwardprevost.info>
-Date: Mon, 29 Sep 2014 06:41:41 -0700
-From: Ed Prevost <me@...ardprevost.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/11/5
+Message-ID: <2A018E28-5B6A-48FD-A45F-9514AFD3E284@redhat.com>
+Date: Fri, 11 Apr 2014 12:01:47 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
 Content-Type: text/plain; charset=utf-8
 
-On 9/29/2014 6:07 AM, Chet Ramey wrote:
-> On 9/29/14, 8:55 AM, Giles Coochey wrote:
->> On 29/09/2014 12:17, Loganaden Velvindron wrote:
->>> HI Chet, As you are aware, a sixth security issue has been discovered.
->>> Due to the nature of the vulnerability, I believe that it's best to break
->>> backward compatibility as done by FreeBSD and NetBSD until a proper patch
->>> is developed. We are lucky to have security researchers reporting their
->>> findings publicly. What about others that don't ? I strongly believe that
->>> it's much safer to have it disabled, and have a complete and
->>> comprehensive audit of the source code, and then re-enable it.
->> Am I the only one who is wondering: Who is paying Chet to do this?
-> Nobody is paying me to do this.
+On 04/09/2014, at 0:00 AM, Arrigo Triulzi wrote:
+
+> On Apr 9, 2014, at 05:59, Kurt Seifried <kseifried@...hat.com> wrote:
+>> So it appears there are projects that statically compile OpenSSL into
+>> their software, one example:
 >
-I have been praying for you since Wed, watching this list has made me
-empathize for you greatly. Any chance you have a bitcoin or other
-donations link somewhere?
+> Note that OpenVPN has also advertised on Twitter that they too have released a new version with a patch for Heartbleed. Most architectures ship with OpenVPN dynamically linked but they do distribute with their own private copy.
+
+LibreOffice as well, but only if you get their binaries apparently:
+
+http://www.libreoffice.org/about-us/security/advisories/cve-2014-0160/
+
+-- 
+Vincent Danen / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
