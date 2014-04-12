@@ -1,33 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/7
-Message-ID: <20140705193537.GA8255@openwall.com>
-Date: Sat, 5 Jul 2014 23:35:37 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/12/1
+Message-ID: <20140412063313.GA8352@zoho.com>
+Date: Sat, 12 Apr 2014 06:33:13 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+Subject: Re: Cauterizing OpenSSL's heartbleed (the aftermath)
 Content-Type: text/plain; charset=utf-8
 
-Andy, all -
+On Wed, Apr 09, 2014 at 04:20:14PM -0700, Seth Arnold wrote:
+> On Wed, Apr 09, 2014 at 10:47:48PM +0000, mancha wrote:
+> > Mustafa Al-Bassam's work assists a great deal with this taxonomy. He
+> > ran PoC code against Alexa top 100, 1000, and 10000 sites beginning
+> > about 18 hours after OpenSSL's first public announcement [1].
+> > 
+> > Specifically, his scans began circa: 1396956600 (top 100); 1396958400
+> > (top 1000); and 1396972800 (top 10000). Did any major vendors deploy
+> > upgrades prior to this?
+> 
+> Ubuntu's updates were released around 1396907296 [2], roughly 13 hours
+> before Mustafa's awesome scans.
+> 
+> Thanks
+> 
+> > [1] https://github.com/musalbas/heartbleed-masstest
+> 
+> [2] https://launchpad.net/ubuntu/+source/openssl/+publishinghistory
 
-On Sat, Jul 05, 2014 at 10:25:47PM +0400, Solar Designer wrote:
-> "x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
-[...]
-> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
+Thanks Seth (and Yves-Alexis) and kudos on the very fast reaction times.
 
-BTW, I'm not convinced it's such a good idea to allow setting RIP to
-exactly TASK_SIZE_MAX just because user code could run to that address
-(this was Andy's rationale).  Imagine that TASK_SIZE_MAX is ever set
-such that it's the very first non-canonical address.  If user code
-simply runs to that address, it gets a user mode fault.  However, if the
-kernel tries to set user RIP to that address via SYSRET, it'll get #GP
-while still in kernel mode - exactly the problem we're trying to fix.
+Unfortunately for this exercise, your efficiency waters down the meaning
+of "not vulnerable" in Mustafa's scans. His "vulnerable" category is
+still of value, though. Maybe scans closer to time-zero will pop up.
 
-So when fixing the problem in this way, or when including this as a
-hardening measure along with forcing the IRET path as well, I'd prefer
-to allow only "< TASK_SIZE_MAX", not "<= TASK_SIZE_MAX".
+FYI, there is confirmation of private key compromise (aside from
+Codenomicon's):
 
-I think currently TASK_SIZE_MAX is below the first non-canonical
-address, so we're fine, but there's little reason to take the risk of
-possible (valid) future changes to TASK_SIZE_MAX.
+https://www.cloudflarechallenge.com/heartbleed
 
-Alexander
+--mancha
+
+
+Content of type "application/pgp-signature" skipped
