@@ -1,46 +1,11 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/2
-Message-ID: <CABniQZNobRLq9_q3YCNSi7-4LcsGhRTBOz35Z1qyxq3FkQWo1Q@mail.gmail.com>
-Date: Tue, 6 May 2014 14:10:32 +0800
-From: Shawn <citypw@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/13/1
+Message-ID: <534A08E5.1070901@eng.utah.edu>
+Date: Sat, 12 Apr 2014 21:47:49 -0600
+From: Scotty Bauer <sbauer@....utah.edu>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0196: Linux kernel pty layer race condition memory corruption
+Subject: Use-after-free race condition,in OpenSSL's read buffer
 Content-Type: text/plain; charset=utf-8
 
-Workable PoC:
-http://pastebin.com/yTSFUBgZ
-
-On Mon, May 5, 2014 at 6:08 PM, Marcus Meissner <meissner@...e.de> wrote:
-> Hi,
->
-> SUSE customer Ericsson reported a kernel crash to us which turned out
-> to be a race condition in the PTY write buffer handling.
->
-> When two processes/threads write to the same pty, the buffer end could
-> be overwritten and so memory corruption into adjacent buffers could lead
-> to crashes / code execution.
->
-> Jiri Slaby and Peter Hurley localized and fixed this problem.
->
-> CVE-2014-0196 has been assigned to this issue.
->
-> Jiri thinks this was introduced during 2.6.31 development by
-> d945cb9cce20ac7143c2de8d88b187f62db99bdc (pty: Rework the pty
-> layer to use the normal buffering logic) in 2.6.31-rc3. Until then, pty
-> was writing directly to a line discipline without using buffers.
->
-> https://bugzilla.novell.com/show_bug.cgi?id=875690
->
-> Patch is also attached.
->
-> Ciao, Marcus
-
-
-
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
-
-regards
-Shawn
+Patch is available at:
+http://ftp.openbsd.org/pub/OpenBSD/patches/5.4/common/008_openssl.patch
