@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/7
-Message-ID: <CANJC7MHKvu=JmvERrbh7tb7gv-sQpKFDrNzgj1hWnAr0MMziKQ@mail.gmail.com>
-Date: Wed, 10 Dec 2014 14:56:29 +0100
-From: Mateusz Jurczyk <j00ru.vx@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/13/2
+Message-ID: <20140413064454.GA21481@openwall.com>
+Date: Sun, 13 Apr 2014 10:44:54 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Possible CVE request: freetype: out-of-bounds stack-based read/write in cf2_hintmap_build() (incomplete fix for CVE-2014-2240)
+Subject: Re: Use-after-free race condition,in OpenSSL's read buffer
 Content-Type: text/plain; charset=utf-8
 
-Hey, original finder of both vulnerabilities here. I've sent a CVE request
-to MITRE today for this and multiple other vulnerabilities fixed in 2.5.4,
-I'll update this thread once they are assigned.
+On Sat, Apr 12, 2014 at 09:47:49PM -0600, Scotty Bauer wrote:
+> Patch is available at:
+> http://ftp.openbsd.org/pub/OpenBSD/patches/5.4/common/008_openssl.patch
 
-Cheers,
-Mateusz
+Some context to this:
 
-2014-12-10 14:45 GMT+01:00 Vasyl Kaigorodov <vkaigoro@...hat.com>:
+http://www.tedunangst.com/flak/post/analysis-of-openssl-freelist-reuse
 
-> Hello,
->
-> Freetype version 2.5.4 fixes another out-of-bounds stack-based
-> read/write which is similar to CVE-2014-2240.
-> Does it deserve a separate CVE? If so - please assign one.
->
-> Upstream bug: http://savannah.nongnu.org/bugs/?43661
->
-> References:
-> http://sourceforge.net/projects/freetype/files/freetype2/2.5.4/
-> https://bugs.mageia.org/show_bug.cgi?id=14771
-> https://bugzilla.redhat.com/show_bug.cgi?id=1172633
->
-> Thanks.
-> --
-> Vasyl Kaigorodov | Red Hat Product Security
-> PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
->
+This specific patch is found in Benson Kwok's bug report:
 
+https://rt.openssl.org/Ticket/Display.html?id=2167&user=guest&pass=guest
+
+Benson writes:
+
+"The issue is when the buffer is released by ssl3_release_read_buffer(),
+there may still be data left in the buffer (s->s3->rbuf.left != 0). With
+single threading, when another read occurs, the same buffer is reused
+during a call to ssl3_setup_read_buffer() so the data is still there and
+can be read and processed so it works fine. When running with multiple
+threads, the buffer is shared in a pool and another thread may have gotten
+that buffer already. If the call to ssl3_setup_read_buffer() returns a new
+buffer, it assume the data is still there but will run into parsing error
+with the record."
+
+(Of course, "parsing error" isn't necessarily the worst outcome.)
+
+Alexander
