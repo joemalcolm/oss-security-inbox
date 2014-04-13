@@ -1,46 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/2
-Message-ID: <5505250.3yQZm9nuEg@x2>
-Date: Thu, 19 Jun 2014 23:37:39 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/13/4
+Message-ID: <20140413081714.GB21839@zoho.com>
+Date: Sun, 13 Apr 2014 08:17:14 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Cc: Andy Lutomirski <luto@...capital.net>, Linux Audit <linux-audit@...hat.com>
-Subject: Re: CVE request: Another Linux syscall auditing bug
+Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Apr 08, 2014 at 09:59:33PM -0600, Kurt Seifried wrote:
+> So it appears there are projects that statically compile OpenSSL into
+> their software, one example:
+> 
+> I have to assume there are more. So if you know of any please post
+> them to OSS-Security (and Full-Disclosure) so people can find out (and
+> hopefully all the security scanners/etc. add them to their checks).
 
-Reminder again...please report bugs to linux-audit mail list.
+Three more for the list:
 
-On Thursday, June 19, 2014 06:26:38 PM Andy Lutomirski wrote:
-> On a 32-bit x86 kernel with syscall auditing enabled, syscall(1000)
-> will cause an OOPS.  This problem goes at least as far back as Linux
-> 3.11 and appears to be present in Linux 3.15 as well.  I suspect that
-> this bug is very old.
-> 
-> In order to see this bug, you'll need syscall auditing on (auditctl -e
-> 1 will do that) and you'll need 'sep' in flags in /proc/cpuinfo.  That
-> means that qemu -cpu qemu64 will not be exposed to this bug, but qemu
-> -cpu host will on any recent CPU.
-> 
-> Mitigations include:
->  - Running under ptrace or strace.
->  - Using any seccomp filter at all (phew!)
->  - Turning off SEP (which is a big slowdown on all syscalls)
->  - auditctl -a task,never
-> 
-> I'd be rather surprised if this can be used for anything other than
-> DoS, although the same underlying bug could potentially have more
-> serious consequences.
-> 
-> This bug was found (inadvertently, I presume) by Toralf Förster.  The
-> patch here:
-> 
-> http://lkml.kernel.org/g/CALCETrW7U4AHG-a9oPbOt31z3wgzhjSu8b+yGpdM4+vNinKgsA
-> @mail.gmail.com
-> 
-> is reported to fix the bug, but it should not be considered to be
-> well-tested.
-> 
-> --Andy
+NoMachine
+https://www.nomachine.com/forums/forums/topic/openssl-security-vulnerability
 
+VMware
+http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&docType=kc&externalId=2076225
+
+FileMaker
+http://help.filemaker.com/app/answers/detail/a_id/13384
+
+--mancha
+
+Content of type "application/pgp-signature" skipped
