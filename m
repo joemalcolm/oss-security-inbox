@@ -1,46 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/47
-Message-Id: <20140925202801.0ED5572E070@smtpvbsrv1.mitre.org>
-Date: Thu, 25 Sep 2014 16:28:01 -0400 (EDT)
-From: cve-assign@...re.org
-To: mancha1@...o.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Python 2.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/13/3
+Message-ID: <20140413074031.GA21839@zoho.com>
+Date: Sun, 13 Apr 2014 07:40:31 +0000
+From: mancha <mancha1@...o.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Use-after-free race condition,in OpenSSL's read buffer
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, Apr 13, 2014 at 10:44:54AM +0400, Solar Designer wrote:
+> On Sat, Apr 12, 2014 at 09:47:49PM -0600, Scotty Bauer wrote:
+> > Patch is available at:
+> > http://ftp.openbsd.org/pub/OpenBSD/patches/5.4/common/008_openssl.patch
+> 
+> Some context to this:
+> 
+> http://www.tedunangst.com/flak/post/analysis-of-openssl-freelist-reuse
+> 
+> This specific patch is found in Benson Kwok's bug report:
+> 
+> https://rt.openssl.org/Ticket/Display.html?id=2167&user=guest&pass=guest
 
-> http://bugs.python.org/issue21831
-> https://hg.python.org/cpython/diff/8d963c7db507/Objects/bufferobject.c
-> avoid overflow with large buffer sizes and/or offsets (closes #21831)
+A little more context:
 
-> import sys
-> a = bytearray('CVE request')
-> b = buffer(a, sys.maxsize, sys.maxsize)
-> print b[:8192]
+This is effectively a NOP unless OpenSSL is compiled with
+-DOPENSSL_NO_BUF_FREELIST. Here's another ticket with a
+similar solution:
 
-Our understanding is that this request is entirely about the integer
-overflow. The request is, as far as we know, not about whether static
-analysis could have detected that read access to "b" is attempted at a
-time when the size of "a" is smaller than the offset argument used in
-the "b =" line.
+https://rt.openssl.org/Ticket/Display.html?id=3265&user=guest&pass=guest
 
-Use CVE-2014-7185.
+--mancha
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUJHo6AAoJEKllVAevmvmsYHkIALazOVosrd1c8CRuzLTp6zt4
-/lCyEPo+YlQSn6QLfe4EMZPPZMK6CnbMmCXlpiCr8Ha4oay9ZO3XgXWkiDRz/T7N
-c2JdHYen60d9iZDjVWQtCvMOBaQEU9jby0cwHetnq4fRK5WMhC869NjquTgoWqA6
-tWTbr9NrF+QNgUaJug2DFVd3fW7ev2Uq4aueVh2+or9pMc1yFCATrbVqKiUz8LE7
-/UrX1G/xzjxyvDI+N9CYgZrjqVh2PGwbUyzd12ncPOE7guHhcf7X7L/uY9PGGi1R
-2c60Jj4bb5JsBn1tfNAYkdC7VL0qxSdrWV6H0cMQgw2ZZk8N7HkKmUaSXnNSznQ=
-=BwJB
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
