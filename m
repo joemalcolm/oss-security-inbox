@@ -1,40 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/29/1
-Message-Id: <20140829090601.5C2C71F03CA@smtpksrv1.mitre.org>
-Date: Fri, 29 Aug 2014 05:06:01 -0400 (EDT)
-From: cve-assign@...re.org
-To: bch@...h.ai
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: XRMS SQLi to RCE 0day
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/14/7
+Message-ID: <534C215E.2000801@redhat.com>
+Date: Mon, 14 Apr 2014 11:56:46 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, info@...cpartners.com
+Subject: TrueCrypt audit report
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> We get SQL injection via $_SESSION poisoning
+https://opencryptoaudit.org/reports/iSec_Final_Open_Crypto_Audit_Project_TrueCrypt_Security_Assessment.pdf
 
-Use CVE-2014-5520.
-
-
-> exploit a trivial command injection
-> cmd = urllib.urlencode([("; echo '0x41';" + command + ";echo '14x0';",None)])
-> url = 'http://'+domain+'/plugins/useradmin/fingeruser.php?username=' + cmd
-
-Use CVE-2014-5521.
+Have the issues (see page 13) received CVEs? I can't find any.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJUAEH4AAoJEKllVAevmvmsyX0H/3MDCARe+SyjOC1IGHrZC+sM
-66Q3DelGzUBB2kU+lXVaEhibITT19oyKl/k//PbippCJv6sdu2gjcxeKWzatbPK9
-6zTxfjdrcidxhp3a5VPJQA9Bk/v0sTwFyjz+RN/p1c/GMQV4oHOp5TNv0GUV10A2
-PB3cx0/fCKpRa5EbrsFdxAL3lEAw25KiC1SCSZcrssXGuVJKDcfZJNfmiGs1vDpX
-TSaULBoe8lLOWr+Xw2az8WOtsh0FX3xhi7Z8ohxnw5AykuJ6Z7CgM875Gj3xM8Tb
-e76rwNIvPXMI3z7IcdB8ymt0Z8g0oM4v6IdX8z157Ce5c2tG6U/gwsfPmCSQPpo=
-=Zzco
+iQIcBAEBAgAGBQJTTCFeAAoJEBYNRVNeJnmTbk4P/3/jckvmLXyLnA6NqCqet39v
+pfknNl+c8sc8/VichPfYGZA4jen3lqRdMWpEswkTJLy8wvYIzbnwmSX3e3emQtbu
+Xee/+R31B9B8o5sGcu8DWXdFGh3Cr8ouhv9IvVGAFJrmfhP/vyHGNiUeuXMiYIcz
+rci9/qQXtP6ECwAZ+qiByCBPELjGSOVp25kD3UXRD3B+Egm3k+Js3MkTX+c5oAhj
+GR6m2E9DVIkpup+zOLpktq465RpjlMHPsMAVDw255ik2p6kq7IyDCRGHPMAxHdWF
+IrcEw7B2NPPUMmIeoKXi9R+t2n3GZr++UYD78Hm1kxhpuXJc0RkfYjD+VPUC/605
+K3ln055hcR6GQ1rDHCVgFLczCFO57XGKQ4FtG19+1jYcoKeRA2rrczWrdSLXeatZ
+h8YrPJLmoPyt/wluXuh2opfQvXMlfo/QD+RzY3iq4JK/pEAxz9W1mxk/grjAXXyf
+GdCIziaw6k7JxFRXqU4qMjiCBHveFuafsiPAqdB1Fdrg6PmCwyXLrDvyp8WOZLrb
+KGzy3ILgp5QfK5etJ773wjseeKS2ebj2p3GcNLQoiDFMplncelftLrJIpbUhEtGY
+N1BpmcrV6K0gASUAJhGiUK46bfIC/9wWe1zGa2s4AGivWNnEhii8SYdM45+709CL
+2l3iqLknzmxF+yO7magI
+=AvQV
 -----END PGP SIGNATURE-----
