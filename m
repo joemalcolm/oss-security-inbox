@@ -1,69 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/13/5
-Message-Id: <201403131940.s2DJe24I028295@linus.mitre.org>
-Date: Thu, 13 Mar 2014 15:40:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: steve@...ve.org.uk
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request - pen issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/14/1
+Message-ID: <534B424A.7000900@redhat.com>
+Date: Sun, 13 Apr 2014 20:04:58 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: two more interesting notes on heartbleed
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> webfile = "/tmp/webfile.html";
-
-> 2> /tmp/penctl.cgi
-
-Use CVE-2014-2387 for both issues involving files in the /tmp directory.
+http://www.nytimes.com/2014/04/13/us/politics/obama-lets-nsa-exploit-some-internet-flaws-officials-say.html
 
 
->     3.  When a control-socket is configured (via "-C ip:port" added
->        to the pen command line) a user who can connect to that port
->        can
-
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=741370
-> 
-> there is no documentation implying that using a control-socket is
-> dangerous.
-
-> pen.1
-> 
-> -C \fIport\fR
-> Specifies a control port where the load balancer listens for commands.
-
-This seems to be an opportunity for security improvement, not a
-vulnerability. It appears that the design goal was to listen for
-commands in a way that could be acceptable on a server with
-sufficiently restricted access, and not acceptable in arbitrary
-environments. "port where the load balancer listens for commands" seems
-sufficiently descriptive for a reasonable person to immediately wonder
-who can send commands. Furthermore, the example in question:
-
-  sudo pen 4444 localhost:9000 -C 127.0.0.1:5043
-
-suggests that the person is aware that "a control port" means a TCP
-port, not some other type of port with obvious permission-based
-restrictions. A CVE assignment could be made if there were an
-implementation error (e.g., the user specifies listening on 127.0.0.1
-but the code actually listens on all interfaces). A CVE assignment
-might also be possible for some types of design problems, but they'd
-need to be considerably more surprising and the documentation would
-need to be considerably more misleading.
+http://www.cbc.ca/news/business/government-agencies-expect-online-services-to-resume-soon-1.2608215
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJTIgjhAAoJEKllVAevmvmsvz4H/1zljdDh/JUE42uOb29uw1Mx
-/gCsx2tnLs5g/U8OHBC0YYHM4CdUHLmyWiKbG1aN7Hn1FpXb4js3VlncbyQEdkpt
-MSl13vQeDVdLdAUvXhg37sn+yhniT7x0/sSvy5dMB00fBNNUYDPFj4VZF16S/cv+
-v06593VmtYw3EGwBJFtlgXv/cvqGZcSlu/f/Iv+m3tWQtcr8g/XjC5pwhUXMBtSa
-R2FSJRxpTMQHzRK/5TOZ6mEg/Nr2JCPgRhWHeg69BIaUFjX+/6J2WUTm/Jgmxolb
-auxQSiskVVuGifmUzkV2ZhD5y+4M1aZ0IO5HdjG8FdRT/cBnXbtYEImOuadA3ec=
-=nmY2
+iQIcBAEBAgAGBQJTS0JKAAoJEBYNRVNeJnmTRXkP/2zrs3HxGbPRILQXuPa0CqtC
+aSCP0mVk1LrI6UsChnN9XEaVxZgK0QOM4PtP8UBh7nOg8uGs/CGuDE6w3EULeHye
+18Fu02VTp9UAubDtG09UO5FgzHVcKNkycjocsSQyG3v9Nqy4mUgKkv0B5JthHCp8
+Gx6kzAz6PIsfim89z+hgujVSdEap+4DyVFtYG8epkL8IId/euxzWjVN1PZu+/Tjl
+KPhypexyjQwmAYCDYoAmyxEBckJLAaHuzXGSIH9BM6PTqU3fEbIeUc6sVG0lNl2p
+OZKzI4n7KZhCPtopt3Luud0iHGlHGv0GoUWZiUtTOQ2cdoFHIwZTe7ztmRk++EQY
+hqTJeeE3oM3h1+VhMSf9yE/UzU13adAu4Tdt4OHt4PpUTcryyxpH3TU6ZQwBbwKR
+FB0MBfuHlMEGeRRQRvJ3BZVBzw2ueag+C1n6Rir8U/9V9rJsZo3cYAyvkWkzv8Fs
+IUaylyDmkKePM1w8Bt1VT1nIQTCYD8vd7X7LVVyGgMnGfAgu90/cA2BRlFAby2VA
+sN3kh72lStcrmGv9gtFKuD0Z/O7cBJWigfXoB66sajlsPT4uHNBDqV+Sxo/WxRh6
+w4eOpmV74l48L9uPw/9TDqPV+RGdyP9rUqhnHR2qdBUM43IJ4rv7cFu7JEGi2RUn
+w61K90Hy07VonIg4UK14
+=ins+
 -----END PGP SIGNATURE-----
