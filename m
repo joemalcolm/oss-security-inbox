@@ -1,45 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/5
-Message-ID: <53BE86D8.7020706@redhat.com>
-Date: Thu, 10 Jul 2014 14:28:08 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: GnuPG computation error checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/14/6
+Message-Id: <201404141527.s3EFRLaN018736@linus.mitre.org>
+Date: Mon, 14 Apr 2014 11:27:21 -0400 (EDT)
+From: cve-assign@...re.org
+To: sbauer@....utah.edu
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Use-after-free race condition,in OpenSSL's read buffer
 Content-Type: text/plain; charset=utf-8
 
-On 07/10/2014 01:26 PM, Solar Designer wrote:
-> There was a discussion in 2001 and patches by Florian Weimer to add
-> extra checks into GnuPG's cipher/rsa.c: check_secret_key() and rsa_sign():
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Wow, that was a long time ago.
+> http://www.openbsd.org/errata55.html#004_openssl
+> http://ftp.openbsd.org/pub/OpenBSD/patches/5.5/common/004_openssl.patch.sig
+> http://svnweb.freebsd.org/ports/head/security/openssl/files/patch-ssl-s3_pkt.c?revision=351191&view=markup
+> http://www.tedunangst.com/flak/post/analysis-of-openssl-freelist-reuse
+> https://rt.openssl.org/Ticket/Display.html?id=2167&user=guest&pass=guest
+> https://rt.openssl.org/Ticket/Display.html?id=3265&user=guest&pass=guest
+> 
+> (not yet available at
+> http://git.openssl.org/gitweb/?p=openssl.git;a=blob;f=ssl/s3_pkt.c;hb=701134320a94908d8c0ac513741cab41e215a7b5
+> line 1337)
 
-> Given the improved RSA side-channel attack understanding and the
-> countermeasures added to deal with CVE-2013-4242 and CVE-2013-4576
-> (cache timing and acoustic side-channels) in GnuPG, are Florian's added
-> checks still safe to have, or are they possibly vulnerable to
-> side-channel leaks on their own?  check_secret_key() does perform a very
-> basic sanity check on the secret key even without Florian's patch, and
-> this might be a side-channel leak concern too, but Florian's checks are
-> (purposefully) much more extended
+Use CVE-2010-5298.
 
-The check_secret_key() could be problematic from a side-channel 
-perspective, yes, particularly since mpi_gcd is unlikely to be hardened 
-against such attacks.  It might be possible to come up with equivalent 
-checks that are safer, but I'm not sure if that's worth the effort.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-> and include a check in rsa_sign() as
-> well (more susceptible since it involves dealing with changing and
-> possibly attacker-chosen data rather than only with the secret key?)
-
-rsa_sign only uses the public exponent (sk.e) and the signature 
-(resarr[0]).  It does leak those bits, but I'm not sure if we consider 
-side-channel attacks on RSA *verification* (recovering signatures, 
-document hashes, or public keys—not private key material) as 
-vulnerabilities.
-
-I believe OpenSSL has a similar safety check, see RSA_eay_mod_exp() in 
-crypto/rsa/rsa_eay.c.  There was some paper about it, but I think it 
-involved deliberately faulty hardware, so it doesn't really count, IMHO.
-
--- 
-Florian Weimer / Red Hat Product Security
+iQEcBAEBAgAGBQJTS/3RAAoJEKllVAevmvmsSDcH/0yHd90E4aJfKbtlsIBfOi8p
++XIdUtbWsYhFu97QjjubRkRO4KnRRmZJrygLcFN1XGJW80px8JZBqT1OW/vHSAwh
+rHaBLqEjl8z5MU41rlqSwnzjA17kG3pPvltOu8kYqiBEKn32YSMwU4ZCIYpa6+Sb
+LCiOM8iu5DX3VZrIjk4U/iStgOlxNs4i8Jv2xHy3oPSTspaO46LeeygTz6k9hlGr
+qk1Aek9gxr+FNk7MJ1kHsct3IUFq67TIBSgc3H7k/ucwOxh1VxfxVxsHgrgj0+N5
+4/8b3ZoLsNN1UY91KW/qcRJfCsC9XEI7NqDF/uTJKJX74DRBqMeOYG4YtAXECLs=
+=mxUa
+-----END PGP SIGNATURE-----
