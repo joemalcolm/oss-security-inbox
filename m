@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/14
-Message-ID: <alpine.BSF.2.00.1411040505080.1220@aneurin.horsfall.org>
-Date: Tue, 4 Nov 2014 05:11:05 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Re: unzip -l crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/14/4
+Message-ID: <CAEDdjHfAkToGRQT0b3iZU8RnUXt=mSKbWRaiVx+3LXLDdgFnBQ@mail.gmail.com>
+Date: Mon, 14 Apr 2014 10:16:43 +0100
+From: Pedro Ribeiro <pedrib@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Bernhard Rusch <Bernhard.Rusch@...ments.at>
+Subject: Remote code execution in Pimcore CMS
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 3 Nov 2014, Martin Carpenter wrote:
+Hi,
 
-> > If you were posting from free.fr then be aware that freemail ISPs have 
-> > a poor reputation...
-> 
-> I also tried gmail.com, same result, so who knows.
+I have discovered a PHP object injection in Pimcore CMS.
 
-Err, I know... Gmail has an equally poor reputation.  I don't block them 
-specifically, but many of their servers are listed on a lot of lists in 
-common use, precisely for hosting spammers and not taking any action over 
-them.
+Depending on the PHP version under which Pimcore is running, it is possible
+to achieve remote code execution in the worst case, and arbitrary file
+deletion at best.
 
-Ditto Hotmail, Yahoo, etc.  You might want to check the URL below.
+Please find attached the report, which is also available at
 
--- 
-Dave Horsfall (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
-http://www.horsfall.org/spam.html (and check the home page whilst you're there)
+https://github.com/pedrib/PoC/blob/master/pimcore-2.1.0.txt
+
+Can you please provide a CVE number for this?
+
+Thanks in advance.
+
+Regards
+Pedro
+
+Content of type "text/html" skipped
+
+View attachment "pimcore-2.1.0.txt" of type "text/plain" (7191 bytes)
