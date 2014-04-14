@@ -1,62 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/04/6
-Message-ID: <53B732BF.2090409@redhat.com>
-Date: Fri, 04 Jul 2014 17:03:27 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Possible CVE request: php5: phpinfo() Type Confusion Information Leak Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/14/3
+Message-ID: <20140414055944.GA5226@suse.de>
+Date: Mon, 14 Apr 2014 07:59:44 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: pam_cifscreds stack overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 03/07/14 11:36 AM, Salvatore Bonaccorso wrote:
-> Hi
+About the patch: I was asked by upstream for a re-spin,
+as they dont want the strlen() but have the snprintf()
+return value checked. Previous patch is correct in my eyes,
+but to let you know that there might be a different patch
+upstream soon.
+
+Sebastian
+
+On Fri, Apr 11, 2014 at 02:13:42AM -0400, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> Recent PHP updates mention bug #67498 in their changes[1,2]: Fixed
-> bug #67498 (phpinfo() Type Confusion Information Leak
-> Vulnerability).
+> > We are tracking a patch at:
+> > 
+> > https://bugzilla.novell.com/show_bug.cgi?id=870168
+> > 
+> > Fixing buffer overflow in cifskey, maybe also used in samba itself?
 > 
-> Upstream bug is at [3], which does not seem to have a CVE
-> assigned. (If so, could one be assigned?).
+> Use CVE-2014-2830 for any product that is exploitable because of
+> the use of sprintf as shown in:
 > 
-> [1] http://www.php.net/ChangeLog-5.php#5.4.30 [2]
-> http://www.php.net/ChangeLog-5.php#5.5.14 [3]
-> https://bugs.php.net/bug.php?id=67498
+>   http://bugzillafiles.novell.org/attachment.cgi?id=585460
 > 
-> Thanks in advance,
+> Apparently one exploitable case is the pam_cifscreds product. We do not
+> know whether there is an exploitable case in the cifs-utils package
+> because of the:
 > 
-> Regards, Salvatore
+>   https://git.samba.org/?p=cifs-utils.git;a=blob;f=cifskey.c
+> 
+> code. There might be other products using an essentially identical
+> cifskey.c file.
+> 
+> - -- 
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+> 
+> iQEcBAEBAgAGBQJTR4e+AAoJEKllVAevmvmsXnkIAK1AI1cXGWICxk/efLoDVCTH
+> hkyy/hFYpPa5/qsGoH9sbnHTCtFcHA/rwm2NLLuDCVNzw9C50e/w9mDWI21M4uN3
+> ogRjeghZjz1ut1TpH6JFD9dnpcUI/JSdFl7vgWlWwmyNcYQowWlUMX/dR5lLnj14
+> GMUZrHJXuutLUxnsGxX6MOStWRcC3QkOJZREJAdTsru9blhKYZHDsCtdaGQJpnIh
+> ivAEOeYpKY5f+9lfEBbfelNh/G6p6gKjZtPMO0HXdfLXB5iUxLpx8gKNiRrRmzZw
+> EM+s/XfzTnS+3OOy7iQyE1kLN44jPh0S85UuDZ9xxdkEQdEeUszr7TrLgF9s0cA=
+> =5G8d
+> -----END PGP SIGNATURE-----
 
-There seems to be some confusion about this, e.g. "so what, if you can
-run PHP you can read the key file anyways right?" So one question I
-have, on a common setup of RHEL6/CentOS6 with Apache/PHP with:
+-- 
 
-SSLCertificateKeyFile /etc/pki/tls/certs/server.key
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-- -rw-------. 1 root root 1704 Aug  6  2013 /etc/pki/tls/certs/server.key
-
-is this still exploitable?
-
-
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJTtzK/AAoJEBYNRVNeJnmTGS8QANuLvRsHdDW/vpl3xXYyQ0uj
-490Bt9MrH92TME9wwLCrMgk7Z0MLHq+0Ll0J0YhZZtbXhmK4FRY7xwQVercHpP2m
-0Al8cjpAq0lw21TVgGQmCyLVFIgCrjbESRGGs+updfKOfpn+cBM75SlCWXJfACP2
-fMq7wz0OoGFYTH4ZCQIPHcNHm0+mR54LsqAmP+f1bnrCTDdBhi8TorX9YhbHgRQH
-vcEtT9Cnec87MMjB/x2QRWWvmOcrfSK63ZH3zBc1Bcn6CJQcPfKIen6tKFcIqjIj
-pgA4zE/5u5n0Y0HF1SmkaoJif7zwyOWyCgHdxXt7+vwjJMEjEKPwmIlWbVI9LJPP
-dqmzQ5rWaV/hSvvqK2H7s9ipuRwOzQzLsqAz7gmvz7tIHzmeD/g/yQl0BGOsy4LL
-eiBTN7gD7y/n58Kb+MKkCUYdZkMzcgFTqoXBFaTVlOYAd6Y4P72/hh+2xi1Ckaet
-LOKbCFgvFUzClCGD990iX3UhhOdoWf4g1XUpOD1YwKRYnkb5vwzCfQuxSP8rvND9
-+hZPdQGKxmDkWfkiNTHdFUzjQVncMV/1ELx7N0RijHODPkHK0aiklKvqrt//gMjL
-iOr7T6jyV+DmOW+oBeY2704HZI5eWmbGMO1udLbPwmyu2eX/8Y4IGdZxPD88tgv8
-qfDY+PNVvZK7x2gAM0MY
-=po+/
------END PGP SIGNATURE-----
