@@ -1,44 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/17
-Message-ID: <21227.58185.522043.16044@gargle.gargle.HOWL>
-Date: Fri, 31 Jan 2014 18:54:17 +0100
-From: rf@...eap.de
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/15/3
+Message-Id: <201404151636.s3FGa4IS008880@linus.mitre.org>
+Date: Tue, 15 Apr 2014 12:36:04 -0400 (EDT)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: cross-site scripting issue fixed in CUPS 1.7.2
 Content-Type: text/plain; charset=utf-8
 
->>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-    SD> On Fri, Jan 31, 2014 at 05:34:05PM +0100, rf@...eap.de wrote:
-    >> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
-    SD> This is CVE-2014-0038 (assigned shortly after Kees sent the
-    SD> message below).
+> CUPS 1.7.2 ... fixes a cross-site scripting issue
 
-    >> Are you sure this is the correct CVE?
+> http://www.cups.org/str.php?L4356
+> http://www.cups.org/strfiles.php/3268/str4356.patch
+> http://www.cups.org/blog.php?L717
+> https://bugs.mageia.org/show_bug.cgi?id=13196
 
-    SD> Pretty sure, yes.  I am not aware of a reason to think
-    SD> otherwise.
+> the patch may not be sufficient to cover all different encodings,
+> other special characters of interest etc.
 
-    SD> It was kindly assigned by Petr Matousek (of Red Hat, even though
-    SD> their products are not affected) on Wed, 29 Jan 2014 10:01:59
-    SD> +0100.
+> The attached patch updates is_absolute_path() to check for < and quotes
 
-OK, thanks for the fast explanation.
+> if (strchr(path, '<') != NULL || strchr(path, '\"') != NULL || strchr(path, '\'') != NULL)
 
-    >> It was assigned already beginning of Dec. last year.
+A CVE can be assigned because the patch above does block some XSS
+attack vectors. Use CVE-2014-2856 for what is addressed by this patch.
+There weren't any immediate followups here or in L4356 demonstrating
+how to exploit the patched scheduler/client.c code in a specific test
+environment. It is quite possible that other CVE assignments will be
+made later.
 
-    SD> The "assigned" date seen on CVE IDs often indicates when a pool
-    SD> of CVE IDs was created and then assigned to a CNA (Red Hat in
-    SD> this case), not when individual CVE IDs are assigned to actual
-    SD> issues.  It is perfectly normal (albeit confusing) for the
-    SD> "assigned" date to be earlier than the vulnerability discovery
-    SD> date.  This was discussed in here before:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-    SD> http://www.openwall.com/lists/oss-security/2012/01/23/4
-
-    SD> CNAs:
-
-    SD> http://cve.mitre.org/cve/cna.html
-
-Sorry for the repetition, but I wasn't subscribed yet at the time or is
-this a FAQ?
+iQEcBAEBAgAGBQJTTV86AAoJEKllVAevmvmsoW0H/ijg+KOyofQ2y8V2/AY5amFQ
+4+bVg9KcPtyeC6oEMjgx0NAl0UUM3CMQf5q9cWTxA1mkWiFxrfmfavKDwoymxcfl
+AlMMOibPCBh+moV4jliWY47eiSolTDF4Bv8spOzbFqkcORUnpcNQwwrD6Q+VUOKn
+DuxZUjvStHJhXa2nStIIqThT24B5KQIcRAxUBLKPPuunmhylUi8/UxRxjX6NdPlN
+2EL62B3j4VjusYBxOTeq6glNZaeBCoVc3KG7Mvkm5JC0AVH9vcHejQpG35HGnDvX
+rD5Q3sbdfhrhJhOEsuYiEAV8e3rHBDxwVYagopf/amaWGOl6/AiwiUIq5mxvIyk=
+=bcw3
+-----END PGP SIGNATURE-----
