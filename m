@@ -1,38 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/8
-Message-ID: <20141008110759.68af90b7@pc>
-Date: Wed, 8 Oct 2014 11:07:59 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: openssh on linux rce in sftp-only mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/15/1
+Message-Id: <201404151405.s3FE5mVW020157@linus.mitre.org>
+Date: Tue, 15 Apr 2014 10:05:48 -0400 (EDT)
+From: cve-assign@...re.org
+To: marc.deslauriers@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: rsync denial of service
 Content-Type: text/plain; charset=utf-8
 
-This seems CVE-worthy:
-http://seclists.org/fulldisclosure/2014/Oct/35
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Quote:
-"OpenSSH lets you grant SFTP access to users without allowing full
-command execution using "ForceCommand internal-sftp". However, if you
-misconfigure the server and don't use ChrootDirectory, the user will be
-able to access all parts of the filesystem that he has access to -
-including procfs. On modern Linux kernels (>=2.6.39, I
-think), /proc/self/maps reveals the memory layout and /proc/self/mem
-lets you write to arbitrary memory positions. Combine those and you get
-easy RCE."
+> rsync 3.1.0 contains a denial of service issue
 
-It involves a number of issues coming together, however in the end it
-is an RCE with a legit configuration.
+> a remote client can send an invalid username and cause an infinite CPU
+> loop on the server child process.
+> 
+> The server master process is unaffected, allowing the remote client to
+> do this multiple times toward system-wide denial of service.
 
-Changelog:
-http://www.openssh.com/txt/release-6.7
- * sftp-server(8): On platforms that support it, use prctl() to
-   prevent sftp-server from accessing /proc/self/{mem,maps}
+> Wayne Davison 2014-04-13 21:14:04 UTC
+> 
+> I've committed a fix for this into git for release in 3.1.1.
 
--- 
-Hanno Böck
-http://hboeck.de/
+https://bugzilla.samba.org/show_bug.cgi?id=10551
+https://bugs.launchpad.net/ubuntu/+source/rsync/+bug/1307230
+https://git.samba.org/?p=rsync.git;a=commit;h=0dedfbce2c1b851684ba658861fe9d620636c56a
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+Use CVE-2014-2855.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTTTxZAAoJEKllVAevmvms0osIAISAV1FFI1QsgpIaAzizTP7I
+JvnQ60EWLWlgHSAmTEEByU9GIzNIpgkccUt5MuTU55kbs/Twybxk1jBJwLbRv+57
+lugTYi8gmKV26W1dnYY6gIEo3QyJNAXMK9I+4/fW8MSsPdkP3R7LumHagwoEryI5
+vH1YVqwfFz49s9tQ3G2QY9i6B2gKEgPjmFo2n/K+UJAgD9rtqA8QCAGKd1XfdPPL
+aG2Q2q31WfFw9w4fwDTEhY7s9Tn1Y+0f7HraJY9g6hqptSztxqH90wo9vzPthzs6
+Io4MvYtwvQR725imLaSS51PiVYhqEBU22uV9fH8j/8NJvImmMNoFpelX4J1NBKY=
+=U7Ut
+-----END PGP SIGNATURE-----
