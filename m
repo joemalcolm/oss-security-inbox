@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/17/7
-Message-Id: <201403171527.s2HFRWfF006785@linus.mitre.org>
-Date: Mon, 17 Mar 2014 11:27:32 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: netfilter: remote memory corruption in nf_conntrack_proto_dccp.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/15/5
+Message-ID: <alpine.LFD.2.10.1404152345080.4513@javelin.pnq.redhat.com>
+Date: Tue, 15 Apr 2014 23:59:36 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request Linux kernel: arch: x86: net: bpf_jit: an off-by-one bug in x86_64 cond jump target
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+   Hello,
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b22f5126a24b3b2f15448c3f2a254fc10cbc2b92
+An off-by-one bug is found in the x86_64 cond jump target of the BPF JIT 
+filter code. In case a conditional jump is followed by a long jump, 
+conditional jump target is one byte past the start of target instruction.
 
-Use CVE-2014-2523.
+A user/program could use this flaw to crash the kernel resulting in DoS, or 
+potentially escalate user privileges on a system to gain root access.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Upstream fix:
+-------------
+   -> https://git.kernel.org/linus/a03ffcf873fe0f2565386ca8ef832144c42e67fa
 
-iQEcBAEBAgAGBQJTJxJwAAoJEKllVAevmvms7/gIAL6Gn8WT/i3RzLfzELifxRAw
-m1eR8SPyDdZvr0UrmeJTiBmB3BW+qxsu/9gqIBmoy8QIPYUOcA2fT6i8l9SE85Yp
-OXQuDlYHLqEZd4oZW3klPU3/6ylFZtvfA/7SKPVm4Cziy4xuJywvzF3erDL9sCiK
-oySntvZdoRdOSaGv6VT58xws08XHW8FeOYgnDb48WS/L+QB4vBXUV5vfFD9ECJ4B
-y8rYaoMZIYQZRpxvWZFLueSWM71FUnr9hrLK2qeOy+XW8MCs0hkVchKc3VhiNCMr
-oFEsn0dgH/nyzPIKK9QPn6au5rhRcCa77uuvK633kS0nXafxr22+MoFH1+rs2Po=
-=UwdF
------END PGP SIGNATURE-----
+Introduced by:
+--------------
+   -> https://git.kernel.org/linus/0a14842f5a3c0e88a1e59fac5c3025db39721f74
+
+
+Note: BPF JIT is disabled by default, must be enabled by the admin.
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
