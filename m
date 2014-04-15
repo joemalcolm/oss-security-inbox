@@ -1,65 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/7
-Message-Id: <201405131805.s4DI59lb006269@linus.mitre.org>
-Date: Tue, 13 May 2014 14:05:09 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Qemu: usb: fix up post load checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/15/2
+Message-ID: <534D440B.2040802@redhat.com>
+Date: Tue, 15 Apr 2014 08:36:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request - node-connect: methodOverride middleware reflected cross-site scripting
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://article.gmane.org/gmane.comp.emulators.qemu/272322
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744374
 
-Here, it appears that the only security fix to
-http://git.qemu.org/?p=qemu.git;a=blob;f=hw/usb/bus.c;h=e48b19fc29bd9f831cc05990be73ddf49936d6a9;hb=HEAD
-is the insertion of the "dev->setup_index > dev->setup_len" test. In
-other words, although the patch corresponds to two bug discoverers,
-only one discoverer found a security problem.
+Package: node-connect
+Severity: serious
+Tags: security fixed-upstream
 
-To clarify: we are currently interpreting "dev->setup_len ==
-sizeof(dev->data_buf) seems fine, no need to fail migration" to mean
-that "dev->setup_len >= sizeof(dev->data_buf)" is too strict a test,
-and "dev->setup_len > sizeof(dev->data_buf)" is sufficient. It does
-not imply that an attacker can cross privilege boundaries and cause a
-denial of service (i.e., a failed migration) by triggering the
-"dev->setup_len == sizeof(dev->data_buf)" condition.
+The Node Security Project discovered an XSS vulnerability in the node
+connect module, please fix this bug by upgrading node-connect.
 
-The "dev->setup_index >= sizeof(dev->data_buf)" test was also removed.
-Similarly, we are interpreting this to mean that that test is
-superfluous. We are not interpreting this to mean that that test had
-allowed a denial of service attack.
+Vulnerable: <=2.8.0
+Patched: >=2.8.1
+Report:
+https://nodesecurity.io/advisories/methodOverride_Middleware_Reflected_Cross-Site_Scripting
+Upstream bug report: https://github.com/senchalabs/connect/issues/831
+First fix:
+https://github.com/senchalabs/connect/commit/277e5aad6a95d00f55571a9a0e11f2fa190d8135
+Second fix:
+https://github.com/senchalabs/connect/commit/126187c4e12162e231b87350740045e5bb06e93a
 
-Use CVE-2014-3461 for the "When state is DATA, passing index > len
-will cause memcpy with negative length, resulting in heap overflow"
-issue.
-
-Note that a related recent commit:
-
-  http://git.qemu.org/?p=qemu.git;a=commit;h=9f8e9895c504149d7048e9fc5eb5cbb34b16e49a
-
-has a CVE-2013-4541 assignment from Red Hat. See
-
-  https://bugzilla.redhat.com/show_bug.cgi?id=1066384
-
-The http://article.gmane.org/gmane.comp.emulators.qemu/272322 patch
-represents additional changes needed after that CVE-2013-4541 fix.
+Not sure if it needs one or two CVE's (did they do a release in
+between the fixes?
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJTcl5nAAoJEKllVAevmvmsgNMH/j/HABgwfnPX0rv8zn12h4w4
-7Dybeu2XO7tUy3JrMZdz+DyUY5hu/4dk3/egKSTrRHsS0azm72+OmbI7m0Rxanke
-VvPcq7BJQuEZwNRUx8WplUUIVrBP4qz3kodSny/Rv5fsMdp8nWGl9GoR8HCZ/6m2
-ffIb42sI3dGvmo8fyZPt0seSbZ0gp4H5YUlNlI5GMxJgl6CEOyiv5qp+GqvGnfyB
-MUcwRL05C1pTVdW19gwAnaJsJr8OF5GqKIAXoGbcee4GV5dMAyxex5nw4J5liL7V
-L1sJq71MsnjG5+wlyyeHd/1iTpeU9bVpkYQCs1+2XI/CF/eEIV0wZguawgSbeZg=
-=TKjZ
+iQIcBAEBAgAGBQJTTUQLAAoJEBYNRVNeJnmTwBwP/2qZhjIslHZSwN4tiNHR+SHM
+8GU+fWdDO0+4d6/AZoNpZkFva+E51SnfZJFOiE6f7DZ/aUNxm74H0osvJrl1FeLy
+ZsknGBMCS4bYE25xj8rftPy6hq47uzxaKKHdXzeI4Sh0Jgqt3DPDpjYBG4Tfos9P
+exk8fUmN93Mx/WzyUAyOQ9ujYVU0rIf9xATAX4PymIGJXoZzin46/6IML+2M9IQ6
+iL8yhI8QOw/OiI+KRKAMZ8imsdpzxpa24RtihcrX6bi3IBM8fdYcHK3R+z3U6RhH
+2nYjMhEVmGkEQ/q1ucei01Q1EMJHWlcbLJRzJTR5GbhX3gFEkQJP3k4EDRxEqVJq
+ptrxl+0AFdLFlhA8pHcMIZJn5Xx3MFOA7bLnq4nWwEzCCohXpsMUign0/wN8XDI2
+3fFLP9BzfRmOqR+UAWHa5Fz31vviZxXFdcz7PUsPwpXltLQSJtxgrBECztckmJ2j
+QKMOrv2Rfpg9I4TB0dH/eIWaY+BA+t/FhmJWiYhf+cJMZX1tiYESJboHARbOdcdO
+AGAAQGpbuGrnjE2qXTSD/TZFwCPmndyiSiklnOw+qi6jn5ZA41jROV0PoQ5iAX/s
+PkNbbRohxK5FMNYxpdMRAYRSylqsBjQl9NyYxk+G8GaO5EiiBQHKxX+QU+J1cowH
+z/dPU58DCebeL6EO8IPZ
+=BDer
 -----END PGP SIGNATURE-----
