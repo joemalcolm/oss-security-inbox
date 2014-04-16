@@ -1,38 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/3
-Message-ID: <20140203034520.GA31457@openwall.com>
-Date: Mon, 3 Feb 2014 07:45:20 +0400
-From: Solar Designer <solar@...nwall.com>
-To: mancha <mancha1@...h.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/16/3
+Message-ID: <CAH72vigsw+FgsAN8dds25=RaXmOp2hzTPGDG8g9+XS8bNJdNJw@mail.gmail.com>
+Date: Wed, 16 Apr 2014 13:36:35 +0200
+From: Źmicier Januszkiewicz <gauri@....by>
+To: oss-security@...ts.openwall.com
+Subject: libmms heap-based buffer overflow fix
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 03, 2014 at 03:16:13AM +0000, mancha wrote:
-> Attached find a kernel module I've authored that protects from the attack.
+Hello list,
 
-Unfortunately, your two attached files - nox32recvmmsg.c and Makefile -
-arrived each in a separate message, with the content yEnc encoded:
+It seems libmms has fixed a buffer overflow in a recent 0.6.4 version
+with the following commit.
 
-http://en.wikipedia.org/wiki/YEnc
+http://sourceforge.net/p/libmms/code/ci/03bcfccc22919c72742b7338d02859962861e0e8
 
-Moreover, at least nox32recvmmsg.c definitely looks wrong - only 5 bytes
-of the encoding are present:
+This may be triggered via an overly long line of a MMSH (MMS over
+HTTP) server response, effectively overflowing the buffer which has a
+static size (defined as BUF_SIZE, didn't check the actual numeric
+value).
 
-=ybegin part=1 line=128 size=2287 name=nox32recvmmsg.c
-=ypart begin=0 end=5
-M<8E><8F><90><93>
-=yend size=5 part=1 pcrc32=bdd2de8b
+Please assign a CVE name for this, if there is none.
 
-(where the <8E><8F><90><93> portion is literal 8-bit characters).  The
-rest of nox32recvmmsg.c is nowhere to be seen.  The Makefile could be
-OK, but without the .c file it's useless.  As a moderator, I'll reject
-those other two messages since they're of little use.
-
-Rather than post via Gmane's NNTP gateway, can you please reply to this
-message with the files MIME-attached, or include the files in message
-body with some sort of delimiters (e.g. Phrack-style)?
-
-Thanks,
-
-Alexander
+Kind regards,
+Z.
