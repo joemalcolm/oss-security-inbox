@@ -1,41 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/4
-Message-Id: <201407110720.s6B7KQ3w015257@linus.mitre.org>
-Date: Fri, 11 Jul 2014 03:20:26 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Zend Framework CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/16/4
+Message-Id: <201404162210.37730.geissert@debian.org>
+Date: Wed, 16 Apr 2014 22:10:35 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request: openssl: missing critical flag for extended key usage not always detected in time-stamp verification
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> http://framework.zend.com/security/advisory/ZF2014-03
-> ZF2014-03: Potential XSS vector in multiple view helpers
+Quoting from [0]:
+> "check_purpose_timestamp_sign()" in source file v3_purp.c [...] fails to
+> detect a missing critical flag if the extensions of the TSA certificate
+> are arranged in a specific order.
 
-Use CVE-2014-4913.
+Could a CVE id be assigned for this?
 
+The referenced commit fixes it "and to two other cases in the same file."
 
-> http://framework.zend.com/security/advisory/ZF2014-04
-> ZF2014-04: Potential SQL injection in the ORDER implementation of
-> Zend_Db_Select
+References:
+[0]http://rt.openssl.org/Ticket/Display.html?id=3309&user=guest&pass=guest
+[1]http://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=300b9f0b704048f60776881f1d378c74d9c32fbd
 
-Use CVE-2014-4914.
+Digging through history, the bug on TSA was introduced in 
+[2]http://git.openssl.org/gitweb/?p=openssl.git;a=commit;h=c7235be6e36c4bef84594aa3b2f0561db84b63d8
+(Strangely tagged for 0.9.8l and 0.9.8k but none of the other versions of 
+the 0.9.8 branch)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+And the two others in:
+[3]http://git.openssl.org/gitweb/?p=openssl.git;a=commit;h=d9bfe4f97cd4244beb0598cc348d68b04dac7068
+(going all the way back to 0.9.7)
 
-iQEcBAEBAgAGBQJTv4/eAAoJEKllVAevmvmsrlEIAKTeNhFouPxxjXrFCpbo3iKT
-3XI0N90/qNLWOrasMxCzu57fSf1p+z70WiF277mRMVfPrAAKNwaeqUi9reHXvZmK
-ot80tstqfFWbVCNh0rJJZPAtee1KR0e90TPPKAk7mHpzVlJpAiL/ZeTTCUsS8kPU
-ZyTlAfh9iL4kL0QDIc2/howgYdS7a3h0RYqBAd6mKp2ghwjlWAf55j1sA45vqSdw
-bLCDZpjyikwe9LhnBkDi+LilNwEl9WGcsutLuRwAyo/tCuIa8vA3Ev+TcpmJh8Qx
-kfpsZNBM/tsct8YsdNW339g8d4Qgnt5+BkynOyWhy9PjrIsVvtSgOuy1fCit2hY=
-=CAcB
------END PGP SIGNATURE-----
+Haven't checked if the meaning of the X509_get_ext_by_NID parameter changed 
+at some point.
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
