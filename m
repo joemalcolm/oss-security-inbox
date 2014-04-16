@@ -1,26 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/15
-Message-ID: <5422EC08.7000905@case.edu>
-Date: Wed, 24 Sep 2014 12:06:32 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: "Alexander E. Patrakov" <patrakov@...il.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/16/1
+Message-id: <16C7FA0D-D5C1-4691-8B33-8B3AE558B8A3@me.com>
+Date: Tue, 15 Apr 2014 20:02:54 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Remote Command Injection in Ruby Gem sfpagent 0.4.14
 Content-Type: text/plain; charset=utf-8
 
-On 9/24/14, 12:01 PM, Alexander E. Patrakov wrote:
+Title: Remote Command Injection in Ruby Gem sfpagent 0.4.14
 
->> I see no good workaround.  Starting the forced command with "unset
->> SSH_ORIGINAL_COMMAND &&" does not help - we'd need to unset the variable
->> before starting bash, not from bash.
-> 
-> Won't installing dash and setting the shell of users who have forced
-> commands to dash mitigate this somehow?
+Date: 4/15/2014
 
-Why not install the publicly-available bash patches and rebuild bash?
-That's the real solution.
+Author: Larry W. Cashdollar, @_larry0
 
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+CVE: Please assign one at your leisure. 
+
+Download: http://rubygems.org/gems/sfpagent
+
+Vulnerability
+The list variable generated from the user supplied JSON[body] input is passed directly to the system() shell on line 649. If a user supplies a module name with shell metacharacters like ; they might be able to execute shell commands on the remote system as the sfpagent running user id.
+I think to fix this youâ€TMd need to sanitize all input from the user with shellwords.escape.
+
+637                         code, body = get_data(address, port, '/modules')
+638                         raise Exception, "Unable to get modules list from {name}" if code.to_i != 200
+639 
+640                         modules = JSON[body]
+641                         list = ''
+642                         schemata.each { |m|
+643                                 list += "{m} " if File.exist?("{modules_dir}/{m}") and
+644                                                    (not modules.has_key?(m) or modules[m] != get_local_module_hash(m, modules_dir).to_s)
+645                         }
+646 
+647                         return true if list == ''
+648 
+649                         if system("cd #{modules_dir}; #{install_module} #{address} #{port} #{list} 1>/dev/null 2>/tmp/install_module.error")
+650                                 Sfp::Agent.logger.info "Push modules #{list}to #{name} [OK]"
+651                         else
+652                                 Sfp::Agent.logger.warn "Push modules #{list}to #{name} [Failed]"
+653                         end
+654 
+655                         return true
+
+Vendor: Notified 4/15/14. Version 0.4.15 fixes this issue.
+
+Advisory: http://www.vapid.dhs.org/advisories/spfagent-remotecmd.html
