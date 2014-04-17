@@ -1,38 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/11
-Message-Id: <201406181145.s5IBjiIp021248@linus.mitre.org>
-Date: Wed, 18 Jun 2014 07:45:44 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2014-4171 - Linux kernel mm/shmem.c denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/6
+Message-Id: <037768D3-D8B8-4809-913B-CCE9C2EB96E2@wolfssl.com>
+Date: Thu, 17 Apr 2014 09:51:19 -0700
+From: Todd A Ouska <todd@...fssl.com>
+To: Raphael Geissert <geissert@...ian.org>
+Cc: Open Source Security <oss-security@...ts.openwall.com>, cve-assign@...re.org, ifsecure@...il.com, info@...fssl.com
+Subject: Re: CVE ids for CyaSSL 2.9.4?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Raphael,
 
-CVE-2014-4171 has been assigned to the
+We've requested CVE ids for these issues.  To my knowledge they have not been assigned ids yet.  We will certainly update our advisory when they are.  Thanks for checking.
 
-  http://ozlabs.org/~akpm/mmots/broken-out/shmem-fix-faulting-into-a-hole-while-its-punched.patch
+Regards,
+Todd
 
-issue in the Linux kernel.
+Todd Ouska
+www.wolfssl.com
+todd@...fssl.com
+Skype: toddouska
 
-(See yesterday's http://www.spinics.net/lists/mm-commits/msg104782.html
-message.)
+On Apr 17, 2014, at 5:13 AM, Raphael Geissert <geissert@...ian.org> wrote:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+> Hi,
+> 
+> [CC'ing Ivan Fratric and one of the many @wolfssl addresses I found]
+> 
+> CyaSSL 2.9.4 fixes a number of security issues.
+> 
+> From [3]:
+>> Issue #1 (Memory  Corruption)
+>> Issue #2 (Out of bounds read)
+>> Issue #3 (Dangerous Default Behavior, out of bounds read)
+>> Issue #4 (NULL pointer dereference)
+>> Issue #5 (Unknown Critical Certificate Extension Allowed)
+> 
+> Have CVE ids been assigned already? if not, could they be assigned?
+> 
+> Thanks in advance.
+> 
+> References:
+> [0]http://www.wolfssl.com/yaSSL/Docs-cyassl-changelog.html
+> [1]http://www.yassl.com/forums/topic539-cyassl-294-released.html
+> [2]http://www.yassl.com/yaSSL/Blog/Entries/2014/4/9_CyaSSL_2.9.4_Released.html
+> [3]http://www.yassl.com/yaSSL/Blog/Entries/2014/4/11_wolfSSL_Security_Advisory__April_9%2C_2014.html
+> 
+> Cheers,
+> -- 
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
+> 
 
-iQEcBAEBAgAGBQJToXqVAAoJEKllVAevmvmsi6EIAIXs1JhVikHCjgzXwM02lFTR
-1+AZWdKnnyDO83neQcy2Uzv/hmuEt3lczwlctGxLXIShdVvsUWVsZXuT5OOKVNrx
-lsSNzbdb3ROLlA69jWINMD3OUSK4MGtUK5HdyZ33eTUG9PCizWTDl3dRsLvwh4i6
-gvMottLwgskx5h5++Mow4cM6SsCxpyoN2G23TKnsPQ2yh+GbdDCX0vrxTcsi1v9+
-O0Al7/JEdJsfi/H852lzGHsK4FjDctALEvjl1hVcyxjH68CrzIl1qulbl/biwyDw
-9WrLDKF2F76oLKlWepNjobdP3dZXnNQj95IrOAkdwRF+lP+q3koToQZ6WG+IcBw=
-=oeNg
------END PGP SIGNATURE-----
