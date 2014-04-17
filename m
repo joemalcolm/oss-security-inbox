@@ -1,60 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/14
-Message-ID: <545CB690.6000209@mccme.ru>
-Date: Fri, 07 Nov 2014 15:09:52 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-CC: binutils@...rceware.org
-Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/1
+Message-Id: <67991BCF-9449-4116-B6C9-585B483CC9E0@adamcaudill.com>
+Date: Thu, 17 Apr 2014 01:25:03 -0400
+From: Adam Caudill <adam@...mcaudill.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request - XXS in phpMyID (openid_error)
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-07 14:43, Yury Gribov wrote:
-> On 11/07/2014 01:59 PM, Hanno Böck wrote:
->> Am Fri, 07 Nov 2014 13:08:09 +0300
->> schrieb Yury Gribov <y.gribov@...sung.com>:
->>
->>> This looks rather impressive.  Have you considered automatically
->>> detecting duplicates by e.g. analyzing stacktraces?
 
-I do it based on the output of valgrind.
+There is a XXS vulnerability in phpMyID v0.9, in the openid_error parameter. The value passed into openid_error is passed through to the output without modification when openid.mode is “error”.
 
->> american-fuzzy-lop kind of does that. It creates a hash among the code
->> path and groups fuzzing samples by that. That's quite convenient.
->
-> [Cc-ing Binutils ML back again]
->
-> Yeah, I think there was even an article in one of recent PLDIs which
-> discussed different approaches to filtering duplicates arising in
-> compiler fuzz testing (they did various combinations of stacktraces,
-> Valgrind output, program coverage, etc.).  I was just curious how well
-> this works for real world tasks like objdump crashes.
+Example:
 
-You can see for yourself. My recent (since 2014-11-03 21:17:35 UTC) 
-attachments in the mentioned PRs are tarballs containing a file list.txt 
-which lists various errors from valgrind (with distinct backtraces) and 
-one sample hitting it for every error.
+https://example.com/MyID.config.php?openid.mode=error&openid_error=%3Cscript%3Ealert(1)%3C/script%3E
 
-Later I started to include short statistics in a comment. My last 
-attachment to PR 17512 lists the following errors for `objdump -x`:
+Here is the code at fault:
 
-Files: 11
-Errors:
-       1 Argument 'size' of function malloc has a fishy (possibly 
-negative) value: ...
-      63 Conditional jump or move depends on uninitialised value(s)
-      16 Invalid read of size ...
-       2 Invalid write of size ...
-       1 Syscall param write(buf) contains uninitialised byte(s)
-      17 Use of uninitialised value of size ...
+MyID.php Line 569:
+  function error_mode () {
+  	isset($_REQUEST['openid_error']) 
+  		? wrap_html($_REQUEST['openid_error'])
+  		: error_500();
+  }
 
-oss-security, please note invalid writes and fishy arguments for malloc.
+MyID.php Line 1559:
+  function wrap_html ( $message ) {
+  	global $charset, $profile;
 
-Back to real world deduping. IMHO it's not ideal but works quite well, 
-e.g. you can get 10 files out of thousands. If you have hundreds of 
-thousands or millions of crashers (which was trivial with objdump in the 
-beginning) valgrind is too slow. Replacing it with gdb improve the 
-situation (we loose full analysis but get the stacktrace for the crash 
-faster).
+  	header('Content-Type: text/html; charset=' . $charset);
+  	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  <html>
+  <head>
+  <title>phpMyID</title>
+  <link rel="openid.server" href="' . $profile['req_url'] . '" />
+  <link rel="openid.delegate" href="' . $profile['idp_url'] . '" />
+  ' . implode("\n", $profile['opt_headers']) . '
+  <meta name="charset" content="' . $charset . '" />
+  <meta name="robots" content="noindex,nofollow" />
+  </head>
+  <body>
+  <p>' . $message . '</p>
+  </body>
+  </html>
+  ';
+
+  	exit(0);
+  }
+
+
+Project Page: http://siege.org/phpmyid
+Code: https://www.siege.org/oss/phpMyID/trunk/MyID.php
+
+The author has stated that the project is no longer maintained, so hasn’t been notified, and thus there is no fixed version. This is being submitted to raise awareness among those that use this application, and in hopes that a new maintainer will take the project over and address the outstanding issues.
 
 -- 
-Alexander Cherepanov
+Adam Caudill
+adam@...mcaudill.com
+http://adamcaudill.com/
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
