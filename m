@@ -1,77 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/11
-Message-ID: <52C7026E.4080906@fifthhorseman.net>
-Date: Fri, 03 Jan 2014 13:33:18 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: kwallet crypto misuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/5
+Message-ID: <CAA7hUgHJPN1Yk=-CQ3uqdhhzKcZXC-v33PNTMkGHzudUvxJGGw@mail.gmail.com>
+Date: Thu, 17 Apr 2014 14:13:11 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Cc: ifsecure@...il.com, info@...fssl.com
+Subject: CVE ids for CyaSSL 2.9.4?
 Content-Type: text/plain; charset=utf-8
 
-On 01/03/2014 01:13 PM, Simon McVittie wrote:
-> My understanding was that kwallet is like gnome-keyring or the Firefox
-> password store: it contains a large number of stored passwords, all
-> encrypted with a (key derived from a) master password. (Terminology in
-> this email is borrowed from Firefox, and might not match KWallet.)
-> It's important to distinguish between the stored passwords and the
-> master password.
+Hi,
 
-yes, agreed.  thanks for proposing some clear terminology for the
-conversation :)
+[CC'ing Ivan Fratric and one of the many @wolfssl addresses I found]
 
-so we have:
+CyaSSL 2.9.4 fixes a number of security issues.
 
- * master password
- * master key (derived from master password)
- * stored passwords (and other data)
+>From [3]:
+> Issue #1 (Memory  Corruption)
+> Issue #2 (Out of bounds read)
+> Issue #3 (Dangerous Default Behavior, out of bounds read)
+> Issue #4 (NULL pointer dereference)
+> Issue #5 (Unknown Critical Certificate Extension Allowed)
 
-> Issue 1[1] described in that blog post: the *master* password is
-> passed through a key derivation function (which does not need to be
-> reversible) in order to turn it into an encryption key, but that KDF
-> is not very good (hashing, but no salt), making it vulnerable to
-> dictionary or brute-force attacks assisted by precomputation (rainbow
-> tables), particularly if the password used is relatively weak. As far
-> as I can see, MITRE has not allocated a CVE ID for this. (Or is it
-> considered to be part of CVE-2013-7252?)
+Have CVE ids been assigned already? if not, could they be assigned?
 
-The dictionary or brute-force attacks you're talking about are often
-used for people attempting to discover the master password from the
-master key -- but that's not the threat we're talking about here,
-because the master key isn't stored anywhere that an attacker can get to
-it.  Furthermore, if an attacker *could* get the master key, then they
-wouldn't care about the master password at all, because the master key
-is sufficient to access the stored passwords.
+Thanks in advance.
 
-So the threat you're describing is something subtly different: in this
-case, the threat is that a pre-computed dictionary could be applied
-against a kwallet data store to recover the stored passwords.  right?
+References:
+[0]http://www.wolfssl.com/yaSSL/Docs-cyassl-changelog.html
+[1]http://www.yassl.com/forums/topic539-cyassl-294-released.html
+[2]http://www.yassl.com/yaSSL/Blog/Entries/2014/4/9_CyaSSL_2.9.4_Released.html
+[3]http://www.yassl.com/yaSSL/Blog/Entries/2014/4/11_wolfSSL_Security_Advisory__April_9%2C_2014.html
 
-This seems like a distinct flaw from the use of ECB, and i agree that i
-don't see a particular CVE assigned for it.
-
-> Issue 2 described in that blog post: when the stored passwords are
-> encrypted using the key derived from the master password, KWallet uses
-> ECB, which is bad at hiding patterns in data. For instance, if a
-> password is stored more than once, an attacker can determine that this
-> is likely to have been done, by noticing the corresponding pattern in
-> the output. As far as I can see, this is now CVE-2013-7252.
-
-yep, agreed.
-
-> Issue 3 (which exacerbates issue 2 rather than being something
-> separate, AIUI?) is that the encoding of the stored passwords is
-> relatively low-entropy: if the stored password happens to be entirely
-> Latin-1 (which is quite likely in practice), then it has a pattern,
-> namely "odd-numbered bytes are zero".
-
-if the password is in US-ASCII (also quite likely in practice for many
-many people) then it also has a pattern, namely "every 8th bit is zero",
-regardless of which character encoding scheme is used (there are
-probably other patterns that we could come up with too).  I don't see
-this as a vulnerability, though -- you should be able to feed structured
-cleartext into a reasonable encryption mechanism without pre-whitening
-it.  The problem is that ECB is not a reasonable mechanism.
-
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
