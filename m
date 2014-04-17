@@ -1,106 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/28
-Message-ID: <CAFkuX4s0So76HOb2wqBL1uJfxjyK=GKbX_CM_0s=ajZ37dvziw@mail.gmail.com>
-Date: Thu, 26 Jun 2014 14:37:47 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/3
+Message-ID: <534FBD7B.3050704@canonical.com>
+Date: Thu, 17 Apr 2014 07:39:39 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: LMS-2014-06-16-1: Oberhumer LZO
+Subject: CVE Request: systemd stack-based buffer overflow in systemd-ask-password
 Content-Type: text/plain; charset=utf-8
 
-I will clarify my actions here, and this will be my only comment on this
-matter:
+Hello,
 
-First and foremost I would like to thank the Linux kernel community, the
-oss distros community, and select members of this oss-security mailing list
-community, for helping move this issue forward.
+>From the Red Hat bug:
+A stack-based buffer overflow was found in systemd-ask-password, a utility used
+to query a system password or passphrase from the user, using a question message
+specified on the command line. A local user could this flaw to crash the binary
+or even execute arbitrary code with the permissions of the user running the program.
 
-I would also like to thank Alexander (Solar) for his advice and direction,
-even if I didn't take all of it.
+Bug report:
+https://bugzilla.redhat.com/show_bug.cgi?id=1084286
 
-I chose not to release the bug reports to the public within the timeframe
-suggested by Solar for several reasons:
- 1) I have deep visibility into the vulnerable code and understand the
-constraints of exploitation and the breadth
- 2) The public exposure was non-obvious, and was not advertised by the
-vendor
- 3) The most widely effected vendors (Linux and Oberhumer) had yet to
-release a patch publicly
- 4) The time between exposure and public release was short enough to
-negative exposure
+Fix:
+http://cgit.freedesktop.org/systemd/systemd/commit/?id=036eeac5a1799fa2c0ae11a14d8c667b5d303189
 
-This effort took coordination with a large number of entities world wide.
-It was not an easy effort, and we all did our best to push this as quickly
-and effectively as possible. But, I made a promise to the affected vendors
-that I would do my best to give them adequate time to coordinate and
-release. Oberhumer would not have been given sufficient time with an early
-release, and he was the most affected by this issue.
+Could a CVE please be assigned to this issue?
 
-Had the lack of communication from Oberhumer persisted, a release would
-have occurred today regardless. I am glad he was able to release a patch.
+Thanks,
 
-My job, as I saw it, was to responsibly coordinate word between all
-parties. I did that as best as I could given the teams, their time zones,
-their understanding of the bug, and their speed.
+Marc.
 
-All in all, I think it worked out OK, and I am satisfied with the result
-thus far. There are things that could have gone better, but over all each
-team worked hard to produce solid patches in a reasonable time frame. We
-hit that goal.
-
-Thank you,
-Don A. Bailey
-Founder / CEO
-Lab Mouse Security
-https://www.securitymouse.com/
-
-
-
-On Thu, Jun 26, 2014 at 2:28 PM, Solar Designer <solar@...nwall.com> wrote:
-
-> On Thu, Jun 26, 2014 at 12:51:32PM -0600, Don A. Bailey wrote:
-> > This is to inform you of a security flaw in the Oberhumer LZO algorithm,
-> > typically packaged as liblzo2 or lzo-2. Please read the bug report
-> inline.
->
-> Thank you for posting this and the other 5 bug reports.  I think it's
-> also helpful to link to your blog post:
->
-> "Raising Lazarus - The 20 Year Old Bug that Went to Mars"
->
-> http://blog.securitymouse.com/2014/06/raising-lazarus-20-year-old-bug-that.html
->
-> Don brought these issues to the distros list at "Mon Jun 23 16:57 UTC",
-> and they were already being patched by some of the affected projects at
-> the time - thus, (semi?)-public.  We argued for a while whether it's
-> appropriate to wait for more of the projects to have patches ready, or
-> to post to oss-security and other high-visibility places right away.
-> Initially, I asked that the issues be posted at least to oss-security,
-> as per distros list policy for public disclosure, within 24 hours.
-> However, as we know there ended up being a 4 day delay.  While this time
-> wasn't "wasted" - more patches were being produced, and Yves-Alexis
-> Perez of Debian came up with a lengthy list of projects that have the
-> affected code embedded - I do acknowledge that it's a violation of the
-> distros list policy, and I apologize for it.
->
-> I'd appreciate guidance from the oss-security community on how to deal
-> with such cases going forward: the person reporting a vulnerability
-> willing to wait for more projects to have it patched vs. the already
-> (semi?)-public nature of the vulnerability via commits, etc. by some of
-> the projects.  Is letting the vulnerability stay in the limbo for 4 days
-> acceptable, or is it too much?  My initial gut feeling was "24 hours
-> max", which I communicated to Don and to distros list, but as we can see
-> actual disclosure occurred 4 days later.  (I did send a ping earlier
-> today, but I think the disclosure would have been today anyway.)  Should
-> I have pushed harder?  Should I have posted to oss-security myself (as a
-> BOFH list admin enforcing a policy), overriding others' preferences and
-> reasoning?
->
-> Yves-Alexis, can you please post that lengthy list in here?  Having it
-> available right away would be partial justification/excuse for the
-> delay in disclosing these issues appropriately. ;-)
->
-> Thanks,
->
-> Alexander
->
-
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
