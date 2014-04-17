@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/28/7
-Message-ID: <CALCETrW-UY_UAywWx+8FAA20ZxgN90jX6kx9kG2gGFbG6L4Aug@mail.gmail.com>
-Date: Wed, 28 May 2014 14:51:16 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: Greg KH <greg@...ah.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel DoS with syscall auditing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/4
+Message-ID: <534FC2AA.2070403@canonical.com>
+Date: Thu, 17 Apr 2014 08:01:46 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: systemd stack-based buffer overflow in systemd-ask-password
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 28, 2014 at 2:53 PM, Greg KH <greg@...ah.com> wrote:
-> On Wed, May 28, 2014 at 02:45:59PM -0700, Andy Lutomirski wrote:
->> Issuing a system call with a random large number will OOPS, depending
->> on configuration.  A configuration that will enable this bug is:
->>
->> # auditctl -a exit,always -S open
->>
->> No privilege whatsoever is required to trigger the OOPS.
->>
->> It's possible that this can be extended to more than just a DoS --
->> with some care and willingness to exploit timing attacks, this is a
->> read of arbitrary single bits in kernel memory.
->
-> Is there a kernel fix for this anywhere?
+On 14-04-17 07:39 AM, Marc Deslauriers wrote:
+> Hello,
+> 
+> From the Red Hat bug:
+> A stack-based buffer overflow was found in systemd-ask-password, a utility used
+> to query a system password or passphrase from the user, using a question message
+> specified on the command line. A local user could this flaw to crash the binary
+> or even execute arbitrary code with the permissions of the user running the program.
+> 
+> Bug report:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1084286
+> 
+> Fix:
+> http://cgit.freedesktop.org/systemd/systemd/commit/?id=036eeac5a1799fa2c0ae11a14d8c667b5d303189
+> 
+> Could a CVE please be assigned to this issue?
 
-No, but there will be soon.
+Actually, never mind that request...crashing your own prompt isn't a security issue.
 
-The correct fix is, IMO, CONFIG_AUDITSYSCALL=n.  That code is garbage.
+Marc.
 
---Andy
+
