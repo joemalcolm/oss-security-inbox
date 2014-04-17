@@ -1,46 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/11
-Message-ID: <20140107200954.GB6284@scapa.corsac.net>
-Date: Tue, 7 Jan 2014 21:09:54 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: LightDM Mailing List <lightdm@...ts.freedesktop.org>, Robert Ancell <robert.ancell@...il.com>
-Subject: Re: CVE request: lightdm-gtk-greeter - local DOS due to NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/7
+Message-Id: <201404171859.s3HIxi2p000049@linus.mitre.org>
+Date: Thu, 17 Apr 2014 14:59:44 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: TrueCrypt audit report
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-On Tue, Jan 07, 2014 at 11:47:31AM +0100, Guido Berhoerster wrote:
-> Hi,
+This report points out a number of issues that are certainly
+worthwhile to fix (or, in some cases, "improve" rather than "fix")
+within a product of this type. Not all of these issues would be
+considered vulnerabilities in the classic sense. As far as we can tell,
+the scope of the threat model or models was not explicitly defined
+within the report document, and the report instead is described as
+covering "issues that could lead to information disclosure, elevation
+of privilege, or similar concerns." It's unclear why findings such as
+the ability of an administrator to cause a BSOD are considered
+"similar." Also, the report identifies some issues that are apparently
+outside the intended security properties as described at:
+
+  http://www.truecrypt.org/docs/security-model
+  http://www.truecrypt.org/docs/physical-security
+  http://www.truecrypt.org/docs/non-admin-users
+  
+In other cases, the report identifies behavior that is wrong, but does
+not clarify whether there is a security impact or only a usability
+impact. In addition, we are unaware of whether a vendor response
+exists or is anticipated.
+
+These are the three issues that, based on the information directly
+contained in the report, would fall within the scope of CVE regardless
+of the vendor response:
+
+> TC_IOCTL_OPEN_TEST and TC_IOCTL_GET_SYSTEM_DRIVE_CONFIG: an attacker
+> can
 > 
-> an openSUSE user discovered that it is trivial to crash
-> lightdm-gtk-greeter by entering an empty username due to a NULL
-> pointer dereference. When a greeter crashes the lightdm daemon
-> exits.
-> This constitutes a local denial of service which can be triggered
-> by any unprivileged attacker requiring the intervention of an
-> administrator to restart lightdm. It affects all versions of
-> lightdm-gtk-greeter.
+>   -- Deduce the presence of files they do not have access to
+>   -- Deduce if said files are smaller than TC_MAX_VOLUME_SECTOR_SIZE
+>   -- Deduce if said files start with the string "TrueCrypt" or one of four magic markers
 
-I've just checked in Debian Wheezy (lightdm 1.2.2, lightdm-gtk-greeter
-1.1.6), and a crashed greeter (because of that NULL username) doesn't
-lead to a lightdm exit.
+Use CVE-2014-2884.
 
-I'm not sure what was the reason for changing that (if there's a
-reason), but it might be a problem in itself.
 
-Regards,
+> integer overflow in the MainThreadProc function in
+> EncryptedIoQueue.c ... could result in information disclosure.
+> 
+> integer overflow in the ProcessVolumeDeviceControlIrp function in
+> Ntdriver.c ... can result in Denial of Service (starve the kernel of
+> memory)
+
+Use CVE-2014-2885.
+
+
+(i.e., three distinct issues but two CVE IDs)
+
 - -- 
-Yves-Alexis Perez
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBCgAGBQJSzF8PAAoJEG3bU/KmdcClVR8H/jRLkzUzniSxOifUSslX7a8U
-+fw3efTrj5OZUlVlrwskj1Lvt0v9Pd+639p41FVCFTTfWCcARw0kPo9M13+hXM5V
-nooy91SMDoOqZ+Ok9lpqIfpRSnQRWMt4c9H6eTSCr2TfNhw/3smMy6zpJqjMUnWU
-o5R3vqxsdySgYIdVG90RPQ81+jlYTThthZWN9zRE9tnnOSQK++A9/YxKnfWCr77A
-bS0CE9a0CAvfosMxaeHdLtNLUN0c0EDHZENX89XUd6xCy9m2UYYR0BSxEq30dAJG
-UrlHVy0F65jt9G8H+8EuCMQXbdWjJNOI2s+fP04n/HodZUvsO3P/0w9BtjHTAEs=
-=JlIY
+iQEcBAEBAgAGBQJTUCRUAAoJEKllVAevmvmssIgIALDlarnSEWz7t+TCc/sqj6bB
+v13XUmfCEP2s++SI7WjsJQEq+NDMXFNbNrydSiCtiIA3qnx+iJImwsYXM2MwWFX6
+1B7/JOcJW8ncU8/X3ikJ5vETtSViQO6FLjh+yjYMgCK/okQ4AXDero2K/VAfqD3M
+/Ns1ZDW3Jt60wzM3tjIxJcckMVLjd7VibYT/otH5tupRM8ytFzgvKtYQ3E/6X/IR
+el0bEaSFysOY7s5QzZfQ68Vbwr+4Vx2WpcrclsAviyGiQs+klotRYRQRdYQfLOSW
+9WO6T1DLtVG/8VaaHcLzV5EWXfCH88LotLximAtKONTwHjX94OUe4b/S4p9npaE=
+=INWV
 -----END PGP SIGNATURE-----
