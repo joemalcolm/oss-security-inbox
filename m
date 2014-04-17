@@ -1,95 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/12
-Message-Id: <E1WfocM-0003zX-FP@xenbits.xen.org>
-Date: Thu, 01 May 2014 10:53:30 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 91 (CVE-2014-3125) - Hardware timer context is not properly context switched on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/2
+Message-ID: <534FB184.4090103@redhat.com>
+Date: Thu, 17 Apr 2014 12:48:36 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: openssl: missing critical flag for extended key usage not always detected in time-stamp verification
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 04/16/2014 10:10 PM, Raphael Geissert wrote:
+> Hi,
+>
+> Quoting from [0]:
+>> "check_purpose_timestamp_sign()" in source file v3_purp.c [...] fails to
+>> detect a missing critical flag if the extensions of the TSA certificate
+>> are arranged in a specific order.
+>
+> Could a CVE id be assigned for this?
 
-              Xen Security Advisory CVE-2014-3125 / XSA-91
-                               version 3
+As described, this isn't a security issue, but the actual commit
 
-    Hardware timer context is not properly context switched on ARM
+<http://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=300b9f0b704048f60776881f1d378c74d9c32fbd>
 
-UPDATES IN VERSION 3
-====================
+might constitute a security fix if this applies not just to extensions 
+on TSA certificates.
 
-This issue has been assigned CVE-2014-3125.
-
-ISSUE DESCRIPTION
-=================
-
-When running on an ARM platform Xen was not context switching the
-CNTKCTL_EL1 register, which is used by the guest kernel to control
-access by userspace processes to the hardware timers. This meant that
-any guest can reconfigure these settings for the entire system.
-
-IMPACT
-======
-
-A malicious guest kernel can reconfigure CNTKCTL_EL1 to block
-userspace access to the timer hardware for all domains, including
-control domains. Depending on the other guest kernels in use this may
-cause an unexpected exception in those guests which may lead to a
-kernel crash and therefore a denial of service.
-
-64-bit ARM Linux is known to be susceptible to crashing in this way.
-
-A malicious guest kernel can also enable userspace access to the timer
-control registers, which may not be expected by kernels running in
-other domains. This can allow user processes to reprogram timer
-interrupts and therefore lead to unexpected behaviour, potentially up
-to and including crashing the guest. Userspace processes will also be
-able to read the current timestamp value for the domain perhaps
-leaking information to those processes.
-
-VULNERABLE SYSTEMS
-==================
-
-Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onwards.
-
-x86 systems are not vulnerable.
-
-MITIGATION
-==========
-
-None.
-
-CREDITS
-=======
-
-Chen Baozi discovered this issue as a bug which was then diagnosed by
-Julien Grall.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa91-unstable.patch                  xen-unstable
-xsa91-4.4.patch                       Xen 4.4.x
-
-$ sha256sum xsa91*.patch
-8a3dc1f001274550acfe929a0a443b09f8164001f6eea76821bd87292b8732e0  xsa91-4.4.patch
-327ccd88f2d9bc21daf51f3e5c81cbae2e779a6f997715d9d0d95285c509ecbd  xsa91-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTYidcAAoJEIP+FMlX6CvZKnIH/03L/vIaj+x9AIn0FjKw/ZgH
-lPP5tVQT4gvBrufxwKX7elH+XPu7bU6j8rQgAkno2VRVM6Emv5/Q41DJEMItG7sm
-Nfqd833Jdov/2aAGj1kiLsLTv3s72G3XV1hQRviy9Uu9c2JA0Ch2BhurKvwW5K3h
-6bRwPljTTaa0GmONHBso9EKHztmf2dViQar9M8WYuVDFmQ8c6fhqUX2uHkkTtdol
-p2YVQgyej/cnKD1ZGVX9lLmHaw2+QbToY4SyUmRs/DmmK/T13Q+YUXuS3Nt0yY+m
-12kkmMNRLvI/y9YHHxNMI9zDev2GpsdhKO3ScJ0iW9y7cC1/zPejWaPF+pU1nC0=
-=6vG1
------END PGP SIGNATURE-----
-
-Download attachment "xsa91-4.4.patch" of type "application/octet-stream" (2714 bytes)
-
-Download attachment "xsa91-unstable.patch" of type "application/octet-stream" (2715 bytes)
+-- 
+Florian Weimer / Red Hat Product Security Team
