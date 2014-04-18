@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/4
-Message-ID: <54A157E5.3050901@internot.info>
-Date: Tue, 30 Dec 2014 00:32:21 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE Request: Double Free in PHP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/1
+Message-ID: <CANDc0NLf5N6tTgsWaKQyaivUSDaBm5076t1VHBZQgsLR5100bQ@mail.gmail.com>
+Date: Fri, 18 Apr 2014 10:14:16 +0800
+From: Eduardo Tongson <propolice@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Nagios Remote Plugin Executor <= 2.15 Remote Command Execution
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Details: http://seclists.org/fulldisclosure/2014/Apr/240
+This is similar to CVE-2013-1362
 
-I found a double-free in PHP: https://bugs.php.net/bug.php?id=68676
+Is there a CVE already assigned for this issue?
 
-And it has been patched in the following commits:
+Fix:
 
-http://git.php.net/?p=php-src.git;a=commit;h=2bcf69d073190e4f032d883f3416dea1b027a39e
-http://git.php.net/?p=php-src.git;a=commit;h=24125f0f26f3787c006e4a51611ba33ee3b841cb
-http://git.php.net/?p=php-src.git;a=commit;h=fbf3a6bc1abcc8a5b5226b0ad9464c37f11ddbd6
+--- nrpe/src/nrpe.c
++++ nrpe/src/nrpe.c
+@@ -42,7 +42,7 @@ int use_ssl=FALSE;
 
-It has existed since 2002.
+ #define DEFAULT_COMMAND_TIMEOUT    60            /* default timeout
+for execution of plugins */
+ #define MAXFD                   64
+-#define NASTY_METACHARS         "|`&><'\"\\[]{};"
++#define NASTY_METACHARS         "|`&><'\"\\[]{};\n"
 
-
-Could I get a CVE-ID for this?
-
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+ char    *command_name=NULL;
+ char    *macro_argv[MAX_COMMAND_ARGUMENTS];
