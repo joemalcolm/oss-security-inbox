@@ -1,62 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/8
-Message-ID: <20141222140949.GC32428@core.inversepath.com>
-Date: Mon, 22 Dec 2014 15:09:49 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2014-011] UnZip input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/7
+Message-Id: <7FC5B8AD-8915-4337-BF28-8A9CA19E6F65@oracle.com>
+Date: Fri, 18 Apr 2014 09:03:17 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Nagios Remote Plugin Executor <= 2.15 Remote Command Execution
 Content-Type: text/plain; charset=utf-8
 
 
-#2014-011 UnZip input sanitization errors
+On 18 Apr 2014, at 07:16, gremlin@...mlin.ru wrote:
 
-Description:
+> On 18-Apr-2014 10:14:16 +0800, Eduardo Tongson wrote:
+> 
+>> Details: http://seclists.org/fulldisclosure/2014/Apr/240
+>> Fix:
+> 
+>> --- nrpe/src/nrpe.c
+>> +++ nrpe/src/nrpe.c
+>> -#define NASTY_METACHARS         "|`&><'\"\\[]{};"
+>> +#define NASTY_METACHARS         "|`&><'\"\\[]{};\n"
+> 
+> Adding \r here may be a good idea as well...
 
-The UnZip tool is an open source extraction utility for archives compressed in
-the zip format.
 
-The unzip command line tool is affected by heap-based buffer overflows within
-the CRC32 verification, the test_compr_eb() and the getZip64Data() functions.
-The input errors may result in in arbitrary code execution.
+And ‘$’   you have ` but you don’t guard against $(do something unpleasant).
 
-A specially crafted zip file, passed to unzip -t, can be used to trigger the
-vulnerability.
+jch
 
-Affected version:
-
-UnZip <= 6.0
-
-Fixed version:
-
-UnZip, N/A
-
-Credit: vulnerability report received from the Google Security Team.
-
-CVE: CVE-2014-8139 (CRC32 heap overflow), CVE-2014-8140 (test_compr_eb),
-     CVE-2014-8141 (getZip64Data)
-
-Timeline:
-
-2014-12-03: vulnerability report received
-2014-12-03: contacted maintainer
-2014-12-03: first patch provided by maintainer
-2014-12-04: report provides additional reproducers
-2014-12-03: second patch provided by maintainer
-2014-12-04: reporter confirms patch
-2014-12-10: contacted affected vendors
-2014-12-12: assigned CVEs
-2014-12-22: advisory release
-
-References:
-http://www.info-zip.org/UnZip.html
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2014-011.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+Download attachment "signature.asc" of type "application/pgp-signature" (237 bytes)
