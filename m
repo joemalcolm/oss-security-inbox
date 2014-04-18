@@ -1,55 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/15
-Message-ID: <5411CE6C.2000105@redhat.com>
-Date: Thu, 11 Sep 2014 10:31:40 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/12
+Message-ID: <53516A56.2070203@redhat.com>
+Date: Fri, 18 Apr 2014 12:09:26 -0600
 From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: pinocchio tmp vuln
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-On 11/09/14 04:12 AM, John Haxby wrote:
-> Imagine an internet-connected TV that has the potential to overheat and
-> catch fire due to some bug.   Some script-kiddie thinks that it would be
-> fun to use one of the other vulns to break in and cause the TV to catch
-> fire.  At night.  When the owners are asleep ...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 04/18/2014 09:32 AM, rf@...eap.de wrote:
+>>>>>> "Anthony" == Anthony Liguori <aliguori@...zon.com>
+>>>>>> writes:
 > 
-> Security education is important.
+> Anthony> On 04/09/14 23:25, Solar Designer wrote:
+>>> On Wed, Apr 09, 2014 at 11:57:33PM -0600, Kurt Seifried wrote:
+>>>> So first off I'm inclined to have Amazon on the distros list 
+>>>> (same reasons as Oracle basically).
+>>>> 
+>>>> My only concern is are you the correct person, I have no
+>>>> clue who is on the Amazon security team for their Linux
+>>>> distribution, I've never seen you post anything anywhere.
+>>>> 
+>>>> Your search - site:aws.amazon.com Anthony Liguori - did not 
+>>>> match any documents.
+>>>> 
+>>>> Your search - site:aws.amazon.com aliguori@...zon.com - did
+>>>> not match any documents.
+>>>> 
+>>>> Can we somehow get confirmation from Amazon that this is the 
+>>>> right person to have on distros? Thanks.
+>>> 
+>>> Yes, we need this sort of confirmation.  My other concerns
+>>> are:
 > 
-> jch
+> Anthony> Ping.  Apologies if this is being discussed in private
+> but Anthony> I just wanted to make sure it wasn't forgotten.  I
+> believe Anthony> we have provided all of the information
+> requested.
+> 
+> Just a remark from somebody who's request for linux-distros
+> membership was turned down: I think in case the AMI membership will
+> be granted, you need to provide a clear explanation why Qlustar's
+> wasn't. Better: Setup some clear criteria for when membership is
+> possible and when not.
+> 
+> Roland ------- http://www.q-leap.com / http://qlustar.com
+> 
 
-There are much worse things:
+Well one comment/question on your advisories:
 
-1) imagine internet connected ovens all with a virus that puts them into
-self cleaning mode (e.g. get as hot as you can) on Xmas day, thus
-literally millions of dinners/etc getting burnt and stinking up the house
+https://qlustar.com/news/qsa-0131142-security-bundle
 
-2) Imagine a network connected kettle that has a software safety to
-prevent overheat... the attacker tells it to get as hot as possible
-until it melts/catches fire. My boss has such a kettle, luckily the
-overhead is "in hardware" apparently...
+Package(s)       : see upstream description of individual package
+Affected versions: All versions prior to this update
+Vulnerability    : see upstream description of individual package
+Problem type     : see upstream description of individual package
+Qlustar-specific : no
+CVE Id(s)        : see upstream description of individual package
 
-3) Imagine your dishwasher full of heated steam under pressure telling
-you it's ok to be opened... you get a face full of steam and burned
-
-4) your Internet connected smoke alarm, which can receive software
-updates automatically (e.g. the NEST protect now owned by Google) is
-programmed to not alert on fires between say midnight and 8am while
-you're sleeping.. and your kettle is catching fire.
-
-5) self driving cars - existing car software is terrible (like all
-software): http://www.wired.com/2014/08/car-hacking-chart/
-
-6) all the internet connected medical devices, from Dave Dittrich's
-slides in 2003 (can't find an older copy):
-http://www.slidefinder.net/l/looking_vulnerabilities_dave_dittrich_university/vulnerabilities/29749404/p2
-
-We've already crossed the bridge of software flaws being able to kill
-people, luckily there's not much economic incentive for the bad guys to
-exploit them ... yet. Would you pay 2 bitcoins to unbrick your car?
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Except you don't give any version #'s, nor do you give any CVE id's,
+how is anyone supposed to figure out what got fixed?
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJTUWpWAAoJEBYNRVNeJnmTpS0P/jsy342SyO9Kdfe88PQphn2S
+c0hPUbbIh1OrPn913DtLaRncUDufA9ONHpyzhi43oGuzI+ADV08eAjr9KU+23Z5X
+DCaN3UVZGPkG/nXk/RvUW4mebpN1ZpXOX03Mb9TM0WeONWeZiChZkxhFUAhwJtBH
+bexJSqjsUHpgSZUzzfi5bB/67SRHkxH8H05nhBiqu2w6w9fkFDBxj9wc33n7dapf
+iz1vK6Ne4R/mQ+r+qloWYiUsZ0VqWtjqnkereDGYs0ER0j/ufwvrc4eJ7bJa+hH/
+tV4CjPlr8lWmqJinnvpCpFDzphpwF7ltkzlsDJwi1WiYIMSFuzC+99uRJocQu7Zc
+o6ga/nMuaBYhRL9P+9mOYDN5DDx85MvvGD7kMSz7xUmC8wIKQY2aDzCU/eJq0um0
+DDmxrBGmDVWyiVZSrdFwWmZ4Sp8zzabZcDmgHu2BkJElfebX+wmNyGeHGLMXlvRR
+cXcEV1nL0E5hspkMmTNywBpij+HLTv7bi/FMecUAXGkNn4slgHANx3lViNcRyIo8
+A6KvOAfiXBrkEXaVp2bNOS999KgdyoRcR03hm0iINyHj8WP4Uc5RUljjhx8gT65h
+85qhbIFCowz5psylbwXVGhWksQo+5HgFVYEDbOhAVHMk8GMSVnbOTaobRvLDLqJ2
+8BUb6Ak0QWpW0zXVQa4I
+=O+fO
+-----END PGP SIGNATURE-----
