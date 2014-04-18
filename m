@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/6
-Message-id: <bbd87774-5049-49a4-a9ce-b59d329bb1a6@me.com>
-Date: Thu, 10 Jul 2014 18:50:09 +0000 (GMT)
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Vulnerabilities in Ruby Gem brbackup-0.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/4
+Message-Id: <201404180656.s3I6ttj0024460@linus.mitre.org>
+Date: Fri, 18 Apr 2014 02:55:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Remote Command Injection in Ruby Gem sfpagent 0.4.14
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerabilities in Ruby Gem brbackup-0.1.1
-Date: 7/1/2014
-Advisory Author: Larry W. Cashdollar, @_larry0
-Gem Author: Tung Nguyen tongueroo[at]gmail.com
-OSVDB: 108899,108900,108901
-CVEID: N/A
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Download: http://rubygems.org/gems/brbackup
-Vulnerability: The following code exposes the database password to the command line, if this gem is used in the context of a rails application command injection can be achived by placing shell metacharacters like ; in the user supplied input for variable dbuser. I suspect the other variables are injectable by playing with " and '.
-Also line 313 is vulnerable to SQL injection via the '#{name}' variable.
-From: brbackup-0.1.1/lib/brbackup.rb
+> http://www.vapid.dhs.org/advisories/spfagent-remotecmd.html
+> 
+> Version 0.4.15 fixes this issue.
+> 
+> The list variable generated from the user supplied JSON[body] input is
+> passed directly to the system() shell on line 649. If a user supplies a
+> module name with shell metacharacters like ; they might be able to
+> execute shell commands
 
-311-
-312-    def db_has_myisam?(name)
-313-      query = "SELECT 1 FROM information_schema.tables WHERE table_schema='#{name}' AND engine='MyISAM' LIMIT 1;"
-314:      %x{mysql -u #{dbuser} {password_option} -N -e"{query}"}.strip == '1'
-315-    end
-316-
-317-    def restore_database(name, io)
-Where password_option will expose the password to the process table if the password is not nil or empty.
-338-  def password_option
-339     dbpass.nil? || dbpass.empty? ? "" : "-p'#{dbpass}'"
-Gem Author Contacted: 7/8/2014, WONTFIX.
+Use CVE-2014-2888.
 
-Advisory: http://www.vapid.dhs.org/advisories/brbackup-0.1.1.html
-Content of type "text/html" skipped
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTUMrDAAoJEKllVAevmvmsMA4H/0WXlMYwKrXkdr2124LOXXMg
+F4iC48iX0Nz+AxOtjM4jqgmPYhbq5Dvlw7MMZn0chCaB1o419Q1rb8kQ4OOBLXhC
+ief+wCLEgjARpfEGxp+m9RQFR9YRyDIYrVNGqB4VfiPiG3HpkVX6WIKDXst56/fq
+a0haXFLV5nm7sIHjc0Q+/LIJYEgiaQDWIKgBo3S/X1S0+uAY+M0Tt84XcPT4cyU7
+qXoDWxPDqhlNangZyz/k8bka5BcFfM50pTVsd/xVTDjP7zWcot+6rhrwu5DNzGOv
+f1BRsTBjH1+QeFOGiHabxe3O18QGt0FWFCaR0MEseEScNRIYbxImxfn9Ki4rcec=
+=Y1KO
+-----END PGP SIGNATURE-----
