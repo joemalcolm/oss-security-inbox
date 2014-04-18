@@ -1,55 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/19
-Message-ID: <52E99414.2080704@gmail.com>
-Date: Thu, 30 Jan 2014 10:51:48 +1100
-From: dawg <mlyodawg@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Juju phpmyadmin charm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/9
+Message-ID: <53513001.7010407@amazon.com>
+Date: Fri, 18 Apr 2014 07:00:33 -0700
+From: Anthony Liguori <aliguori@...zon.com>
+To: Solar Designer <solar@...nwall.com>, <oss-security@...ts.openwall.com>
+CC: Matt Wilson <msw@...zon.com>, Max Spevack <spevack@...zon.com>
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 04/09/14 23:25, Solar Designer wrote:
+> On Wed, Apr 09, 2014 at 11:57:33PM -0600, Kurt Seifried wrote:
+>> So first off I'm inclined to have Amazon on the distros list (same
+>> reasons as Oracle basically).
+>>
+>> My only concern is are you the correct person, I have no clue who is
+>> on the Amazon security team for their Linux distribution, I've never
+>> seen you post anything anywhere.
+>>
+>> Your search - site:aws.amazon.com Anthony Liguori - did not match any
+>> documents.
+>>
+>> Your search - site:aws.amazon.com aliguori@...zon.com - did not match
+>> any documents.
+>>
+>> Can we somehow get confirmation from Amazon that this is the right
+>> person to have on distros? Thanks.
+> 
+> Yes, we need this sort of confirmation.  My other concerns are:
 
-The second (replacement) argument passed to preg_replace is empty : it
-doesn't use matched input. This can't be exploited.
+Ping.  Apologies if this is being discussed in private but I just wanted
+to make sure it wasn't forgotten.  I believe we have provided all of the
+information requested.
 
-Examples:
+Regards,
 
-$ php -r 'print(preg_replace("/(.*)/e","","phpinfo();"));'
-=> Nothing
+Anthony Liguori
 
-$ php -r 'print(preg_replace("/(.*)/e","$1","phpinfo();"));'
-=> phpinfo() get executed
-
-Bye
-
-Le 30/01/2014 10:16, Seth Arnold a écrit :
-> Hello Kurt, vendors, MITRE,
-> 
-> Please assign a CVE for the following issue:
-> 
-> I discovered a potentially unsafe use of PHP's preg_replace() /e option in
-> the Juju charm phpmyadmin:
-> 
-> $xml = simplexml_load_string(preg_replace("/(<\/?)media\:content([^>]*>)/e",
->     '', str_replace('media:hash',
->         'hash',
-> 	file_get_contents('https://sourceforge.net/api/file/index/project-id/23067/mtime/desc/limit/40/rss'))));
-> 
-> An attacker able to spoof ARP, DNS, or BGP, or control any of the routers
-> between the client and sourceforge.net, or control over the sourceforge
-> project or sourceforge servers, would be in a position to insert likely
-> aribtrary code into the PHP interpreter.
-> 
-> The full source of this file can be found at:
-> 
-> http://bazaar.launchpad.net/~charmers/charms/precise/phpmyadmin/trunk/view/head:/bin/parse_upstream
-> 
-> I have reported the bug to:
-> 
-> https://bugs.launchpad.net/charms/+source/phpmyadmin/+bug/1274264
-> 
-> The problem appears to have been introduced in revision 18. No fix is
-> currently available.
-> 
-> Thanks
-> 
