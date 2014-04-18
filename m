@@ -1,46 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/9
-Message-ID: <21393.34254.878396.478030@gargle.gargle.HOWL>
-Date: Fri, 6 Jun 2014 11:11:42 +0200
-From: rf@...eap.de
-To: Thomas Gleixner <tglx@...utronix.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/6
+Message-Id: <201404180658.s3I6wd2E024497@linus.mitre.org>
+Date: Fri, 18 Apr 2014 02:58:39 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request Linux kernel: arch: x86: net: bpf_jit: an off-by-one bug in x86_64 cond jump target
 Content-Type: text/plain; charset=utf-8
 
->>>>> "Thomas" == Thomas Gleixner <tglx@...utronix.de> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi Thomas,
+> An off-by-one bug is found in the x86_64 cond jump target of the BPF JIT
+> filter code. In case a conditional jump is followed by a long jump,
+> conditional jump target is one byte past the start of target instruction.
+> 
+> A user/program could use this flaw to crash the kernel resulting in DoS, or
+> potentially escalate user privileges on a system to gain root access.
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a03ffcf873fe0f2565386ca8ef832144c42e67fa
 
-    >> On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
-    >> > On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
-    >> > > I've attached patches by Thomas Gleixner (four e-mails, in
-    >> > > mbox format), as well as back-ports of those by John Johansen
-    >> > > of Canonical, who wrote:
-    >> >
-    >> > Maybe I'm missing something, but I can't find any statement of
-    >> > what version these patches are intended to apply cleanly
-    >> > to. They don't apply to latest stable.
-    >>
-    >> Thomas - can you answer Rich's question?  This is about patches
-    >> you sent on June 3 to linux-distros, which Kees then saved into
-    >> an mbox file.
+Use CVE-2014-2889.
 
-    Thomas> They should apply cleanly, if all stable tagged futex
-    Thomas> patches before that are applied.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-could you please clarify whether
-
-f0d71b3dcb8332f7971b5f2363632573e6d9486a futex: Prevent attaching to kernel threads
-866293ee54227584ffcb4a42f69c1f365974ba7f futex: Add another early deadlock detection check
-
-absolutely have to be applied as well for the CVE's to be fixed and
-functionality being OK otherwise? I need to backport to 3.12.x. The patches
-for 3.13 sent by Alexander applied cleanly to latest 3.12.
-
-Thanks,
-
-Roland
-
--------
-http://www.q-leap.com / http://qlustar.com
+iQEcBAEBAgAGBQJTUMwvAAoJEKllVAevmvmsz+IIAKwl69aIi5WPttTAnTfCWsCP
+8t+Q1ncbwc0fe1U2NdO3Wz2LwsCHs3LiP/skTNREa3r8vZO3UIpl17iE22K7fREL
+O3kRqacWzRRr5M/y8b0AJbRJ7WiTu1O3363gYFAwWeUN8KUA8YDcT5K1Yp98EIdA
+eSyabe3sHxupDcGrJgeuCWG2QOY3BLb4qm0nO5se+VpEXym3zMefFv3e/Sl0Mhw/
+QifRpIGfaggI3dDGblMjhVyeKCAm0ak3w72nNfEj/8F3JgaUQA5elINDBUYAnQWh
+P8diXwR4EK3gtib0G0PEbNrp8LPmugDrfXBr2L4yOoxh+gzlAYsLEutLjhR0op0=
+=yduS
+-----END PGP SIGNATURE-----
