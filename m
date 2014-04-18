@@ -1,57 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/10
-Message-ID: <87d2enc3wq.fsf@windlord.stanford.edu>
-Date: Wed, 04 Jun 2014 22:37:57 -0700
-From: Russ Allbery <eagle@...ie.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/8
+Message-ID: <20140418011605.5524ce40.reed@reedloden.com>
+Date: Fri, 18 Apr 2014 01:16:05 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: kseifried@...hat.com,  Monty Ijzerman <mijzerman@...are.com>
-Subject: Re: Request for linux-distros subscription
+Subject: Re: CVE Request: Nagios Remote Plugin Executor <= 2.15 Remote Command Execution
 Content-Type: text/plain; charset=utf-8
 
-Ramon de C Valle <rdecvalle@...are.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> By fixing in advance, I mean to have the fixes/updates ready by the time
-> the vulnerability is publicly disclosed. (However, in the case of cloud
-> services, we may not have how to know if the fix was, in fact,
-> applied/made in advance.)
+On Fri, 18 Apr 2014 09:03:17 +0100
+John Haxby <john.haxby@...cle.com> wrote:
 
-This is obviously of huge business value to VMware as a company.  I'm
-missing how your ability to do this for your product is of value to the
-open source community, however.  What is VMware bringing to the table here
-in terms of value provided to the other members of linux-distros due to
-having VMware as a member?
+> And ‘$’   you have ` but you don’t guard against $(do something unpleasant).
 
-This is an honest question.  There may well be substantial value that I'm
-not seeing.
+See the original advisory
+(http://seclists.org/fulldisclosure/2014/Apr/240), which calls bash
+command substitutions out as being handled already.
 
-Alternately, I could also understand if your argument is that this is not
-the calculus that was used to judge other, current members, or that the
-criteria for membership should be the simple question of whether the
-organization uses Linux and related software and would benefit from
-advance notification of security vulnerabilities.  (By that argument,
-other organizations, such as Apple, should also be eligible for
-membership.)
+Specifically:
 
-An aside: I personally, speaking as someone who is not a member but who
-has reported embargoed security vulerabilities to linux-distros in the
-past and doubtless will in the future, would prefer to restrict
-linux-distros membership to the organizations that are actively
-contributing to the security of open source software in ways beyond simply
-redistributing it.  In other words, I would prefer if linux-distros were
-restricted to only organizations with active security teams and a track
-record of finding vulnerabilities, developing fixes, coordinating security
-fixes among open source distributions, or contributing substantially to
-those groups that are doing so.
+""""
+The code is also making sure that arguments do not contain bash command
+substitution i.e. $(ps aux)
 
-I view advance notification as a valuable courtesy to help Linux
-distributions make their products more secure, and would prefer to only
-extend that courtesy to those organizations who have contributed something
-back to the community of which I'm part.  Organizations that choose not to
-contribute substantially can receive notification at the same time as the
-general public.
+if(strstr(macro_argv[x],"$(")) {
+        syslog(LOG_ERR,"Error: Request contained a bash command
+substitution!"); return ERROR;
+""""
 
-This is a possibly idiosyncratic opinion, and I know it is not the current
-criteria for membership.
+~reed
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
--- 
-Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
+iKYEARECAGYFAlNQ30xfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3Bl
+bnBncC5maWZ0aGhvcnNlbWFuLm5ldDZCNTZGOUFDMDdCNjg1RDdEQzQ1NjBEQTZC
+QTIyMjI2RjNDMzNENUEACgkQa6IiJvPDPVojoQCfanlDh9kJQi2iZB4JX55fGoL6
+hqsAoNhC4WFK/R3CqUdu6XfZObfnyWFY
+=KpWS
+-----END PGP SIGNATURE-----
