@@ -1,32 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/5
-Message-ID: <alpine.LFD.2.10.1402201501580.22280@javelin.pnq.redhat.com>
-Date: Thu, 20 Feb 2014 15:04:11 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request: Linux kernel: nfs: information leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/14
+Message-Id: <201404181917.s3IJHh2n015880@linus.mitre.org>
+Date: Fri, 18 Apr 2014 15:17:43 -0400 (EDT)
+From: cve-assign@...re.org
+To: gauri@....by
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: libmms heap-based buffer overflow fix
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Linux kernel build with the NFS file system(CONFIG_NFS_FS) along with the 
-support for NFSv4 protocol(CONFIG_NFS_V4) is vulnerable to an information 
-leakage flaw. It could occur while writing to a file wherein NFS server has 
-offered write delegation to the client. Such delegation allows NFS client to 
-perform the said operation locally without instant interaction with the 
-server.
+> It seems libmms has fixed a buffer overflow in a recent 0.6.4 version
+> with the following commit.
+> 
+> http://sourceforge.net/p/libmms/code/ci/03bcfccc22919c72742b7338d02859962861e0e8
+> 
+> This may be triggered via an overly long line of a MMSH (MMS over
+> HTTP) server response, effectively overflowing the buffer which has a
+> static size (defined as BUF_SIZE
 
-A user/program could use this flaw to leak kernel memory bytes.
+> src/mmsh.c
+> Fix a possible heap memory overrun in get_answer().
 
-Upstream fix:
--------------
-   -> https://git.kernel.org/linus/263b4509ec4d47e0da3e753f85a39ea12d1eff24
+Use CVE-2014-2892.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1067341
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+iQEcBAEBAgAGBQJTUXoSAAoJEKllVAevmvmss0gH/0vYli0OTHfn5+VRZ1jCCrTB
+gHiUolfzOBtGGahIBycVR5Su4CTnoyy7/UgzU4xADoqD7cnVFyXN81oCvVg/ZVga
+BkuUG3mDFfzVqWvqapBqWvG2U5dQyr4+mObhUexu0L+qUgYbdBXbbTtYFBgmHZKT
+mlnRzxcQUzvK3lwtF5oPNgtBIhCsXIfSxmuFyQXVRLDUAJpnggTigE1khT7MAE54
+IxJvx5/t+FfxJ5d3Fe6UZPj1+TtOKRTj2KFZ09E90svsoFzFYg97qODvYEvhx3l4
+n/a3CkE0YDl70Ap+D+jd2bX8bbIKn+SOoWcBVNVrqrsYMFnv+ExN6SQRDlcXlDE=
+=ImP2
+-----END PGP SIGNATURE-----
