@@ -1,42 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/18
-Message-Id: <201406172224.s5HMO4i9001000@linus.mitre.org>
-Date: Tue, 17 Jun 2014 18:24:04 -0400 (EDT)
-From: cve-assign@...re.org
-To: tristan.cacqueray@...vance.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Neutron
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/19/1
+Message-ID: <CAD3CandanRzZBUWFXdyrZZEahKXRvarDmqpXhDKjWQMM7+RD4Q@mail.gmail.com>
+Date: Sat, 19 Apr 2014 12:51:04 +1200
+From: Matthew Daley <mattd@...fuzz.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request / advisory: gdomap (GNUstep core package <= 1.24.6)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> Neutron L3-agent DoS through IPv6 subnet
+I'd like to request a CVE ID for this issue. It was found in software
+from GNUstep (www.gnustep.org), which develop an open-source
+development framework and runtime for client and server applications.
 
-> By creating an IPv6 private subnet attached to a L3 router, an
-> authenticated user may break the L3-agent, preventing further floating
-> IPv4 addresses from being attached for the entire cloud.
+This is the first such request and the issue is (now) public; this
+message serves as an advisory as well.
 
-> IPv6 prefix shouldn't be added in the NAT table
+Affected software: gdomap (GNUstep Distributed Objects nameserver)
+Description: After receiving a crafted invalid request, gdomap will
+attempt to log an error message to the system logger. However, due to
+incorrect setup of the logger during server initialization, the logger
+and gdomap itself will mess up program state enough that program
+execution will be aborted. gdomap listens to all interfaces, allowing
+a remote unauthenticated attacker to DOS the nameserver. (Please see
+the bug tracker entry for more detailed information.)
+Bug tracker: https://savannah.gnu.org/bugs/?41751
+Affected versions: current releases (GNUstep core package <= 1.24.6)
+Fix: http://svn.gna.org/viewcvs/gnustep/libs/base/trunk/Tools/gdomap.c?r1=37756&r2=37755&pathrev=37756
+Release notes: http://svn.gna.org/viewcvs/gnustep/libs/base/trunk/ChangeLog?r1=37756&r2=37755&pathrev=37756
+Reported by: Matthew Daley
 
-> SNAT rules with IPv6 prefixes are added into the NAT table, which
-> causes failure
+Please let me know if you need any further information.
 
-Use CVE-2014-4167.
+Thanks,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJToL9xAAoJEKllVAevmvmstr8H/3Ef+n04wmBmJ3y1zYu3BVPV
-sToabL9LosdESbIrW8AQi22gAjvJZtMeN99oGbXuaJ+pQTqU5AjT3cV1s1g0ut6r
-wmE2Rxfo96+l1sCNQiqTb0VZfTpr28W4/MT2JDxx8qQ2k/JxuWYz7OLYOjHIwa1/
-RJhD8L00YWSsGTgYOTQUfBlyQq0O/q/sQBFp4xvrQmMX4fx7T//Qg/t+D//yEwjs
-GheVqnDLAFOLacq3JaAK9bssPKK6NMrhOnarfw4YNMnBNOFgVNvzdEPGKaHpK4y/
-pQGnvPkOmADGC2pYWpHHYZp6/+E13wH7SQ+QkidMa67FyRt9hTzEoiWJ5iT559k=
-=0lA1
------END PGP SIGNATURE-----
+- Matthew Daley
