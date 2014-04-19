@@ -1,42 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/7
-Message-Id: <20141231173202.7FA7142E21E@smtpvbsrv1.mitre.org>
-Date: Wed, 31 Dec 2014 12:32:02 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux: Remote crash via batman-adv module - Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/19/4
+Message-ID: <CAEDdjHdeHV9raEiyFt47=f9y+uePcpH7BqkmBOB+NY8ZOSxdzw@mail.gmail.com>
+Date: Sat, 19 Apr 2014 11:54:19 +0100
+From: Pedro Ribeiro <pedrib@...il.com>
+To: oss-security@...ts.openwall.com, Cve-assign@...re.org
+Cc: Bernhard Rusch <Bernhard.Rusch@...ments.at>
+Subject: CVE request: Fwd: Remote code execution in Pimcore CMS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Resending this as it hasn't been picked up most likely because of the lack
+of "CVE request" in the subject line.
 
-> linux could crash when using the batman-adv module
-> 
-> http://thread.gmane.org/gmane.linux.network/343494
-> https://bugs.debian.org/774155
-> https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2014-November/012561.html
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5b6698b0e4a37053de35cc24ee695b98a7eb712b
+Regards
+Pedro
+---------- Forwarded message ----------
+From: "Pedro Ribeiro" <pedrib@...il.com>
+Date: 14 Apr 2014 10:16
+Subject: Remote code execution in Pimcore CMS
+To: <oss-security@...ts.openwall.com>
+Cc: "Bernhard Rusch" <Bernhard.Rusch@...ments.at>
 
-Use CVE-2014-9428. The scope of this CVE ID is the problem as
-described in 5b6698b0e4a37053de35cc24ee695b98a7eb712b. The scope does
-not include other issues referenced in 343494, such as the
-"-Wlogical-not-parentheses" issue in the
-https://bugzilla.kernel.org/show_bug.cgi?id=84061 bug.
+Hi,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+I have discovered a PHP object injection in Pimcore CMS.
 
-iQEcBAEBAgAGBQJUpDIAAAoJEKllVAevmvmsr3gH/2Zb6ldpFr002kIs5vtIUkaj
-vEAtgEutH6TLh6wSqxsgg7X2/6u+l+RMbLuHiBmEQPJF34ytvkbdVwkfZoDOoHT+
-yaiLoY2hgzr+NR7/cST4YP4OKmlrU7I6pI8IWrjVnOeWN9Ovc4uDbXC7lygeldpO
-lt43skEZG+PHClFcmsPfC5KyocOwNyq+v4kZnpG8x6weAiRkDR+6epxlCy7Rs/Ic
-Y7oRqDd17YlJbnmWnTRsKEqTWWy9vGnaYKpouOUh81SpHHbVc4aLdX8p891BXp84
-9dpSEd7NPmzJEx86TmWzTy3l/+hV8LCDG9FmcIBiJ/dIq5XPFP/qpdSS6XYPqWo=
-=tR0g
------END PGP SIGNATURE-----
+Depending on the PHP version under which Pimcore is running, it is possible
+to achieve remote code execution in the worst case, and arbitrary file
+deletion at best.
+
+Please find attached the report, which is also available at
+
+https://github.com/pedrib/PoC/blob/master/pimcore-2.1.0.txt
+
+Can you please provide a CVE number for this?
+
+Thanks in advance.
+
+Regards
+Pedro
+
+Content of type "text/html" skipped
+
+View attachment "pimcore-2.1.0.txt" of type "text/plain" (7191 bytes)
