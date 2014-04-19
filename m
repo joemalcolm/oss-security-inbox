@@ -1,32 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/9
-Message-ID: <20141126091333.GA26566@localhost>
-Date: Wed, 26 Nov 2014 10:13:33 +0100
-From: Tobias Stoeckmann <tobias@...eckmann.org>
-To: Alan Coopersmith <alan.coopersmith@...cle.com>
-Cc: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
-Subject: Re: OpenBSD patch issue also affects GNU patch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/19/5
+Message-Id: <201404191739.s3JHdkMb016652@linus.mitre.org>
+Date: Sat, 19 Apr 2014 13:39:46 -0400 (EDT)
+From: cve-assign@...re.org
+To: pedrib@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Remote code execution in Pimcore CMS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 25, 2014 at 03:37:59PM -0800, Alan Coopersmith wrote:
-> On 11/25/14 03:28 PM, Hanno Böck wrote:
-> >I don't know if this is a random coincidence or if gnu patch and
-> >openbsd patch share some common ancestor code (haven't checked details).
-> 
-> I believe both descended from Larry Wall's original patch program.
-> https://en.wikipedia.org/wiki/Patch_%28Unix%29
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Correct, the BSD patch programs (which mostly derived from OpenBSD
-these days) are siblings to GNU patch, therefore the basic fundamentals
-are equal, yet they differ among their functionality.  In this regard,
-GNU patch is definitely leading.
+> I have discovered a PHP object injection in Pimcore CMS.
+> https://github.com/pedrib/PoC/blob/master/pimcore-2.1.0.txt
 
-After creating a patch for OpenBSD, I have also created a bug report
-through bug-patch@, here:
-https://lists.gnu.org/archive/html/bug-patch/2014-11/msg00007.html
+MITRE currently doesn't look for "CVE request" in the Subject line.
+For some posts, the right number of CVE IDs can be determined more
+quickly than for others. So, in this case, we'll just ask for
+additional information.
 
-So by now, there are two reports.  Good to see that this was discovered
-on an OpenBSD mailing list and reported to other software projects, too!
+pimcore-2.1.0.txt says:
 
+  Payload [1] abuses several Zend classes to achieve remote code
+  execution
 
-Tobias
+and then says:
+
+  payload [3] does not work on Pimcore versions between 2.0.1 and
+  2.1.0
+
+Is it also true that:
+
+  payload [1] does not work on Pimcore versions between 2.0.1 and
+  2.1.0
+
+?
+
+The payload [1] code is obviously a close derivative of the payload
+[3] code, but they are not identical. We're not sure whether there was
+an important reason for mentioning [3] specifically.
+
+For this statement:
+
+  Version 2.0.0 might be vulnerable if anyone is running it
+  on PHP versions <= 5.3.3... which according to the developers is
+  not possible, but the requirement was only enforced in 2.0.1.
+
+First, we think that "Version 2.0.0 might be vulnerable" means
+"Version 2.0.0 might be vulnerable to exactly the same remote code
+execution problem that existed in 1.4.9 to 1.4.10 (inclusive)."
+
+Also, we think you mean that the correct set of affected versions has
+two possibilities. The set is possibly disputed by the developers, but
+it is either:
+
+   1.4.9 to 1.4.10 (inclusive): Remote code execution (when server is running PHP <= 5.3.3).
+
+or
+
+   1.4.9 to 1.4.10 (inclusive) and 2.0.0: Remote code execution (when server is running PHP <= 5.3.3).
+
+Also, based on
+http://sourceforge.net/projects/pimcorebuilds/files/archive/ it seems
+that version 1.4.10 was the last 1.x version. In other words, it's not
+a situation in which the problem was fixed within a later 1.x version,
+but then reappeared in 2.0.0 because of a regression.
+
+Is all of this correct?
+
+It seems very likely that the right number of CVE IDs is two, but the
+questions above can clarify that. (Separate CVE IDs are needed when
+the usable attack methodology differs across versions.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTUrQLAAoJEKllVAevmvmskG0H/Ri4cooLcXXm54PAtXLu6aX7
+WdlXx2KQuypsyada/3rXXOSNRqowJoBJiB3KGeyt6Y3SUiLG/2hsmoOqMotEXyMB
+TRTkbKn0PZOGZMCzaAQN2iwJnAPfcU5I6YEP2s7D6DjiT0KXSGh5kRsuolVeWqMD
+FPxxxp3blLDj+7rVX59PLJREYN8y2go7qIKVdAzv+aZ4nrKeIt+c0msbBfyqNvxe
++vEW6ByZw8sFxFIFMUXhS2v6GN5kssFMWNA46594BzQcwaXIZ4knqTAENgbarXp7
+eAojDQ7MVTDnWy5oqmO3Ma3Ys5uURpWMNaQtyOhOU+JK1wTmuyj0JjessLEFwXA=
+=kCC0
+-----END PGP SIGNATURE-----
