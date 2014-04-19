@@ -1,108 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/2
-Message-Id: <201403040538.s245cLPd010927@linus.mitre.org>
-Date: Tue, 4 Mar 2014 00:38:21 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/19/2
+Message-Id: <201404190329.s3J3T70d004570@linus.mitre.org>
+Date: Fri, 18 Apr 2014 23:29:07 -0400 (EDT)
 From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, 744817@...s.debian.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: insecure temporary file handling in clang's scan-build utility
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->> We received this bugreport for the KDE default webbrowser
->> Konqueror: https://bugzilla.novell.com/show_bug.cgi?id=865241
+> Jakub Wilk discovered that clang's scan-build utility insecurely handled
+> temporary files.
+> 
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744817
 
-> So the question becomes where do we draw the line?
+> The GetHTMLRunDir subroutine ...
+> 
+> 3) The function doesn't fail if the directory already exists, even if 
+> it's owned by another user.
 
-An example in which a CVE ID could be assigned is a product that sends
-a Client Hello message with an unintended omission of one strong
-cipher suite. For example, the product's documentation says that it
-supports all of the widely accepted 256-bit cipher suites, but an
-off-by-one error causes it to omit the very strongest one. This
-behavior is still a vulnerability, even though the product cannot use
-anything other than 256 bits. There's no "draw the line" number.
+Use CVE-2014-2893.
 
-In this Konqueror case, the question of whether it's a vulnerability
-or an opportunity for security hardening depends on the author's
-intention in writing the code that way, and on the threat model.
 
-The information sent to this list so far doesn't really clarify the
-root cause of the problem. One message perhaps suggested that, because
-of lack of developer time, the product doesn't use any non-default
-features of OpenSSL even if they would be security improvements.
-Another message mentioned "failed to find a module to configure the
-ciphers in the KDE configuration module jungle." So, there might be
-various possibilities, including:
+[ other notes:
 
-  - the source code doesn't call SSL_CTX_set_cipher_list anywhere
+> 1) The directory name is easily predictable
 
-  - the source code does call SSL_CTX_set_cipher_list if a cipher suite
-    list is available, but the product doesn't actually look for that
-    list in any part of the configuration
+This doesn't seem to be independently exploitable.
 
-  - the product looks for a cipher suite list, but it is not parsed
-    correctly, and therefore valid data is effectively ignored
+> 2) The directory is created with default permissions (instead of 0700).
 
-> 40/56 can be broken in single digit seconds
-
-We think this means your threat model is that there's an established
-session using 40-bit or 56-bit encryption, and then someone sniffs the
-network and does a successful brute-force search of the complete key
-space. Certainly this isn't a desirable outcome, but it doesn't seem
-to imply a vulnerability in Konqueror. If, for example, 40-bit
-encryption is in use, this means the server selected a 40-bit cipher
-suite. Four of the possible scenarios are:
-
-  - It's an https server that's simply not capable of using anything
-    other than 40 bits. Suppose that the server also supports http,
-    which is very realistic. The Konqueror user needs to use this
-    server for some reason, and would prefer not to have data
-    intercepted. Here, it seems better for Konqueror to include 40-bit
-    cipher suites in its Client Hello message, because the alternative
-    is that the handshake will fail and the user will visit the
-    analogous http:// URL instead. Use of 40-bit cipher suites is the
-    right choice. It is not a vulnerability in Konqueror.
-
-  - The server can support strong cipher suites, but is misconfigured
-    to select only 40-bit cipher suites. This is a similar situation.
-    If the user must use the server immediately (i.e., he doesn't have
-    time to contact the server operator and ask for a
-    reconfiguration), a 40-bit cipher suite is the right choice.
-
-  - It's a rogue server that wants to launch an "attack" against
-    Konqueror by making Konqueror use a 40-bit cipher suite.
-    Ultimately, this attack has no real value. The server has access
-    to the plaintext and can redistribute the plaintext to anyone. (We
-    can probably ignore the possibility that a 40-bit session makes
-    plaintext data available to an attacker on the client-side local
-    network, and it might be expensive or risky for the server
-    operator to transport the data there.) Similarly, it's not
-    especially relevant that this has made it easy for another client
-    to hijack a session and send different data. The server could
-    simply pretend to receive the different data.
-
-  - The server didn't intentionally select a 40-bit cipher suite, but
-    (because a different security issue was exploited during the
-    handshake) the communication channel ends up using 40-bit
-    encryption. This is not ultimately the fault of Konqueror's use of
-    40-bit cipher suites.
-
-At the level of a policy decision designed to improve the entire https
-ecosystem, it may be preferable for 40-bit cipher suites to be dropped
-from all clients. This would, for example, encourage any remaining
-40-bit-only server operator to upgrade. However, from the perspective
-of an individual user wishing to use Konqueror once to connect to one
-web server, it's not necessarily preferable. Because of this, the
-prospect of easily attackable 40-bit sessions doesn't, by itself, make
-this a Konqueror vulnerability.
-
-(Certainly it could be a security improvement if Konqueror clearly
-indicated to the user that the current https session is a 40-bit
-session. This would mainly be applicable in a case where KDE decided
-to intentionally support 40-bit sessions forever, ignoring the
-"improve the entire ecosystem" principle.)
+Using default permissions is not necessarily wrong, from a CVE
+perspective, in all development environments. See the
+http://openwall.com/lists/oss-security/2014/03/09/1 post. In any case,
+we're not currently making a separate CVE assignment for the
+permissions issue. ]
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -112,11 +46,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTFWUmAAoJEKllVAevmvmsnVcIAKrEtePZmgjJIYQiIWtU3MIZ
-JVHsEAJ+k//eRGt4Q9fspeZt2aRs4SBazvC7Rv9/mK/ZYBZy/ys0GtRJiClTPaHG
-Z/zZzttXhbZt+/25oCXHeNX+M944qZW1pwXS9I0QNttyu2NVt1pZqvYKvn7UYJeB
-lOWs53cM8C1+M50LE56puV+szUG/ovFsftEcNztbVnDJy8SUVud/Aio5POOX6Oyy
-QjrpfjFabwuDODBNawxpxL3hsL7/eI2+nI1L7udAzGhhQan6hV48/TSeeg26oWyN
-Nqg/GY5+KKAlVXljdevkTSf8QdjV2FlskBzkXJuh2gY7vJ4PhgOfkVX4CzeqJ9k=
-=g/ib
+iQEcBAEBAgAGBQJTUezyAAoJEKllVAevmvms3VoH/AiIbJnqY+jfvDtCpQN7YRiw
+I/2aoWY5uBPgD7V2F7JVnejX64QIN5jG8PB78JJRRRLNo9W71kJGpWpdZYVsVIFI
+3rymLYd32AnAWdwx4b3NeRCncMWon5tN6WYhUvClzNl1v1A1XzP167PSPAczYhSf
+pOUcJ8KiibI/UN3MuHVs35PKOTyQv9CXV9ITy6yE/TloCWXmd6zBJT4Ozd0hr39Z
+XEAUcz9XhcKETC2SZuIbEKf5yk6oEhOacN3VN3JcT1lXe5Fq7YaYeMY95PRxBRPT
+XHb0pEzJIO2eEpfrJkm/gdLUaXzgDyw4CSKJ35zhmveOxz6zLnstHKg9+OXPoC0=
+=l1R7
 -----END PGP SIGNATURE-----
