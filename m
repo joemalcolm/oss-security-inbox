@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/20
-Message-ID: <20141204212316.0eb1a6bd@pc>
-Date: Thu, 4 Dec 2014 21:23:16 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/20/1
+Message-ID: <535390B7.5000703@debian.org>
+Date: Sun, 20 Apr 2014 11:17:43 +0200
+From: Sylvestre Ledru <sylvestre@...ian.org>
+To: cve-assign@...re.org, 744817@...s.debian.org, mmcallis@...hat.com
+CC: oss-security@...ts.openwall.com
+Subject: Re: Bug#744817: CVE request: insecure temporary file handling in clang's scan-build utility
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 4 Dec 2014 20:32:25 +0100
-Fabian Keil <freebsd-listen@...iankeil.de> wrote:
+On 19/04/2014 05:29, cve-assign@...re.org wrote:
+> > Jakub Wilk discovered that clang's scan-build utility insecurely handled
+> > temporary files.
+>
+> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744817
+>
+> > The GetHTMLRunDir subroutine ...
+>
+> > 3) The function doesn't fail if the directory already exists, even if
+> > it's owned by another user.
+>
+> Use CVE-2014-2893.
+I am going to have a look next week. It should be trivial to fix.
 
-> Potential fixes:
-> http://www.fabiankeil.de/sourcecode/unrtf-0.21.5-various-fixes.diff
+Sylvestre
 
-Thanks, it's just that it doesn't help much (see attachment, all
-crashes with your patch applied).
 
--- 
-Hanno Böck
-http://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "unrtf-crashes-new.tar.xz" of type "application/x-xz" (1164 bytes)
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (881 bytes)
