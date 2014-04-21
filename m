@@ -1,23 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/7
-Message-Id: <201403061751.s26Hp0e0004955@linus.mitre.org>
-Date: Thu, 6 Mar 2014 12:51:00 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/21/2
+Message-Id: <201404212316.s3LNGC2V019537@linus.mitre.org>
+Date: Mon, 21 Apr 2014 19:16:12 -0400 (EDT)
 From: cve-assign@...re.org
-To: fweimer@...hat.com
+To: kseifried@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: cloud-init DNS resolution fix
+Subject: Re: CVE request - node-connect: methodOverride middleware reflected cross-site scripting
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://bugs.launchpad.net/cloud-init/+bug/1040200
-> http://bazaar.launchpad.net/~cloud-init-dev/cloud-init/trunk/revision/635
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744374
 > 
-> This could allow someone who has control over a suitable domain name to 
-> obtain root rights on an affected system.
+> Package: node-connect
+> 
+> The Node Security Project discovered an XSS vulnerability in the node
+> connect module, please fix this bug by upgrading node-connect.
+> 
+> https://nodesecurity.io/advisories/methodOverride_Middleware_Reflected_Cross-Site_Scripting
+> https://github.com/senchalabs/connect/issues/831
+> 
+> First fix:
+> https://github.com/senchalabs/connect/commit/277e5aad6a95d00f55571a9a0e11f2fa190d8135
+> 
+> Second fix:
+> https://github.com/senchalabs/connect/commit/126187c4e12162e231b87350740045e5bb06e93a
+> 
+> Not sure if it needs one or two CVE's (did they do a release in
+> between the fixes?
 
-Use CVE-2012-6639.
+https://github.com/senchalabs/connect/blob/2.x/History.md
+
+2.8.2 / 2013-07-03
+add whitelisting of supported methods to methodOverride()
+
+2.8.1 / 2013-06-27
+fix: escape req.method in 404 response
+
+https://github.com/senchalabs/connect/blob/2.x/lib/utils.js has:
+    .replace(/&(?!\w+;)/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+
+
+CVE-2013-7370: XSS in the Sencha Labs Connect middleware before 2.8.1
+               for Node.js
+
+               -- allows attacks via an HTTP request with a crafted method
+                  name containing JavaScript code
+
+
+CVE-2013-7371: XSS in the Sencha Labs Connect middleware before 2.8.2
+               for Node.js
+
+               -- allows attacks via an HTTP request with a crafted method
+                  name containing JavaScript code that doesn't rely on
+                  the < character, the > character, or the " character
+
+               -- vulnerability exists because of an incomplete fix for
+                  CVE-2013-7370
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -27,11 +70,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTGLStAAoJEKllVAevmvmspV0H/AwYqpWcjDY7UV+SvzqzrdwX
-eWbpTWvNLgko1EU72yiDNkZGgvhmElScC7SROJr/cWQRqewMsWAulUgGApWrBq+o
-EoNV5zX/OFNCXNXyHawDCKnrIawVPv1CI2Vr+YmmMFZ+K3QRjU54E0miR2dOjXMX
-Bbh+ebx/Zrwj8+7rE7t6B7XAxVSF0VByyoOEJaFySgFkhRpo7oerTbhFfwX3E6wp
-BbcesgthBDie7fPSDRxMrbPS98N+dfrrHDCicoRc4tEwZpSrCVCb5z/9Fdoa3vBK
-irXTAN8c6H0QuS2V3pAHMFTypWn7VqC/3LDJ+G9ZXu1pTR1jL6DHtEz7sQXNnx8=
-=IK/X
+iQEcBAEBAgAGBQJTVaYyAAoJEKllVAevmvmsqcEH/iDu42BeFf7KXcNWNQx777sK
+2ag52t32MigGmY/PASjQhDidHkgzIzLPd3QNYkV4RGxYtn4MQjZP3q/Kex/EFHTv
+uwQB8LFtc5Ku3y3uxt1jZHWBoy8By3flCFQ+OABQAytbHie5HdY3GUBjHa6bVbqi
+GRkrlNaTsuFgUCFeCifF2w01RaCmLPpUMkQ2ZHkbyX6J3T1HnLIoQ/W1WnRiFTg3
+/7jvpcn880llnsou+8NWEcTXnWj4Di+4fd3Q2r42kDlGj7oHbzcIUVz3Awzd1kSU
+sbYI1b82Zzw4sjnTewQWRJ8zLBFuP0BO4PtPsR8JgOvO9dKiD5e3Vwpj1PShm/Y=
+=aLBt
 -----END PGP SIGNATURE-----
