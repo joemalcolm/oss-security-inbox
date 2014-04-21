@@ -1,31 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/10
-Message-ID: <53ABCF86.7030607@redhat.com>
-Date: Thu, 26 Jun 2014 17:45:10 +1000
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/21/1
+Message-Id: <201404210537.s3L5aq9L020133@linus.mitre.org>
+Date: Mon, 21 Apr 2014 01:36:52 -0400 (EDT)
+From: cve-assign@...re.org
+To: pedrib@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Remote code execution in Pimcore CMS
 Content-Type: text/plain; charset=utf-8
 
-On 06/26/2014 05:38 PM, Henri Salo wrote:
-> On Thu, Jun 26, 2014 at 05:30:46PM +1000, Murray McAllister wrote:
->> But websites set lots of cookies, which if stolen, have no relevance
->> to being able to access the user's session, or do much of anything
->> useful with anyway. I believe a lot of the "this cookie does not
->> have HTTPOnly" issues are non-issues.
->
-> Those CVEs should be REJECTED. Can you provide list of non-issues with CVE?
->
-> ---
-> Henri Salo
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I was not clear, sorry. I had not looked at the original CVEs, and was 
-just talking in general: Red Hat has 
-https://access.redhat.com/site/articles/66234 and we get a lot of 
-httponly related reports (assuming others get them too).
+> It's all the same flaw and the same attack methodology
 
-Cheers,
+Probably "attack methodology" wasn't the best phrase to use in the
+http://openwall.com/lists/oss-security/2014/04/19/5 post because there
+might be multiple common definitions.
 
---
-Murray McAllister / Red Hat Product Security
+The currently available exploit information is that an attack against
+versions 1.4.9 to 2.0.0 (inclusive) can use
+Zend_Pdf_ElementFactory_Proxy.
+
+Also, an attack against versions 1.4.9 to 2.1.0 (inclusive) can use
+Zend_Http_Response_Stream.
+
+The details of a successful attack are not identical for these two
+sets of versions. CVE's practice here is to assign two different IDs:
+
+  1.4.9 to 2.0.0: Zend_Pdf_ElementFactory_Proxy = CVE-2014-2921
+  1.4.9 to 2.1.0: Zend_Http_Response_Stream =     CVE-2014-2922
+
+The impacts are also different but a difference in impact does not, by
+itself, affect the number of CVE IDs. The detailed reason for why
+there are different sets of affected versions (e.g., a code change in
+2.0.1 to enforce use of certain PHP versions, with some PHP versions
+not allowing a malicious.php\0 filename) also does not affect the
+number of CVE IDs in this case.
+
+Each CVE depends on the unserialize problem in the context of whether
+the version-enforcement code is present or absent.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTVK2rAAoJEKllVAevmvmsmqEIALm75zXacwRz6P+tdvvHrrUw
+DjeKcGx6ursnX2N3skFLDE0TBA9zZ3lnAzl26pOuRR6rDsAyHb3blWxb1Wd1GTQk
+vzKTU4cBNUzhKjBn0v+l/fepvV1JH7uPVJoI+dUU4wV0Y0z79g1hNKrEOshfetSr
+SDLCfh7Qxk9bCIWkJ2jJ+e1iiiF75fd132/skMaZWth/aO8/sh6M9H9T5Re51ikE
+UymvKFElYjHRnH5MMBCDxDu9JOR/E82BBxREy3pz7b4iQXwuuBc+gL5KXXe+ZLwf
+NsaJ25LjvP5Fe+OYoGcPVKN9d8GehAD8Yj0vwZ69Kn6f0yqijBwDwhnDkBLPl54=
+=+ro7
+-----END PGP SIGNATURE-----
