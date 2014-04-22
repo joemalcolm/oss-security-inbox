@@ -1,51 +1,147 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/2
-Message-ID: <20141007022828.GA2200@openwall.com>
-Date: Tue, 7 Oct 2014 06:28:28 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Who named shellshock?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/9
+Message-Id: <E1WccGv-0002Uj-Kr@xenbits.xen.org>
+Date: Tue, 22 Apr 2014 15:06:09 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 93 - Hardware features unintentionally exposed to guests on ARM
 Content-Type: text/plain; charset=utf-8
 
-Florian,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Mon, Oct 06, 2014 at 02:04:42PM -0700, Michal Zalewski wrote:
-> I don't think it happened on Twitter - using advanced search with date
-> ranges, I don't see any mentions that would predate this article,
-> which already seems to be using the term:
-> 
-> http://www.csoonline.com/article/2687265/application-security/remote-exploit-in-bash-cve-2014-6271.html
-> 
-> It's odd that an article posted at 8 AM on Sept 24 would have any idea
-> of how the bug is already being called by the security community,
-> especially ahead of any Twitter buzz. But both Stephane and Florian
-> implied that some of the pre-notified parties apparently started
-> leaking details to the press and were getting ready to make a splash
-> the moment it goes public, so maybe that's the explanation.
+                    Xen Security Advisory XSA-93
 
-I don't know who coined the Shellshock name, but I'd like us to know
-whether there was in fact a leak, and when.  (Luckily, I know it
-couldn't have been from the distros list, because no detail was posted
-to the distros list, thanks!)  I had raised this concern here:
+      Hardware features unintentionally exposed to guests on ARM
 
-http://www.openwall.com/lists/oss-security/2014/09/24/36
+ISSUE DESCRIPTION
+=================
 
-It is insufficient that "it was an honest mistake" and that "apologies
-were made and accepted."
+When running on an ARM platform Xen was not correctly configuring the
+hardware virtualisation platform and therefore did not prevent guests
+from accessing various hardware features including cache control,
+coprocessors, debug registers and various processor specific
+registers.
 
-I have no intent to place blame, but at least the general public needs
-to know whether the information got to the press before or after the
-scheduled coordinated public disclosure date/time ("Wednesday,
-2014-09-24 14:00 UTC").  If it's before, then this qualifies as a leak.
-If it's after, then it does not.
+IMPACT
+======
 
-The article has "Sep 24, 2014 8:35 AM PT" on it, which is 15:35 UTC.
-Did the article's author receive the information before or after 14:00,
-and when exactly?
+By accessing these hardware facilities a malicious or buggy guest may
+be able to cause various issues, including crashing the host, crashing
+other guests (including control domains) and data corruption.
 
-NB: Please do not provide any information on this to me in private.
-If you're able to address my question, please do so on the list.
+Privilege escalation is not thought to be possible but has not been
+ruled out.
 
-Thanks,
+VULNERABLE SYSTEMS
+==================
 
-Alexander
+Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onwards.
+
+x86 systems are not vulnerable.
+
+MITIGATION
+==========
+
+None.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This bug was publicly reported on xen-devel, before it was appreciated
+that there was a security problem.  The public mailing list thread
+contains information strongly suggestive of a security bug and
+included example code which can crash the host.
+
+CREDITS
+=======
+
+The initial bug was discovered by Thomas Leonard and further followup
+issues were discovered by Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the attached patches resolves this issue.
+
+xsa93-unstable-{01..06}.patch        xen-unstable
+xsa93-4.4-{01..06}.patch             Xen 4.4.x
+
+$ sha256sum xsa93*.patch
+9a01ed1c7d33d2381594af3b0985df50f3aa7f13f5a9989595427407c5a5eb06  xsa93-4.4-01.patch
+68ec2bdb48dd232dbabefbe7c971546b52d7001a128471226a41f36e27a806f2  xsa93-4.4-02.patch
+541d2d57ee85a9603ae4bf00bb321f6f491354df9e15eb09ddb5ccba68333ecc  xsa93-4.4-03.patch
+6a3736e5dea1d45df6b979f02e06e058d8dffdbcf128d2d0984db404a87ebb62  xsa93-4.4-04.patch
+282e2cf82ad4345573d21351c242684cd09f384bcd76c262740f9e33f8b04c9c  xsa93-4.4-05.patch
+e212ad288eaeccf6a33cab27ecc6515a889365b0c56b5010e91a603ce239a38b  xsa93-4.4-06.patch
+9a01ed1c7d33d2381594af3b0985df50f3aa7f13f5a9989595427407c5a5eb06  xsa93-unstable-01.patch
+9b472975087dee1d22db8e5f3e55b1589910d84de86b2cad218bfd540fbbd92e  xsa93-unstable-02.patch
+f921ba7c1b216dd425035f94ac9eef9374ae5eba4af4cb5a3b7aa3f958a0a767  xsa93-unstable-03.patch
+45b7e6b226a4449370c4dbe21aa71c398955e4ed2bc7cf9e4426f29583af14be  xsa93-unstable-04.patch
+282e2cf82ad4345573d21351c242684cd09f384bcd76c262740f9e33f8b04c9c  xsa93-unstable-05.patch
+e2668f0ecf1e79aa30928791b92a15c15821c8bce7958a5c3fee7563cf81960b  xsa93-unstable-06.patch
+$
+
+NOTE: These patches unconditionally deny access by all guests
+(including control domains) to various hardware features in order to
+close the vulnerability. Specifically guests are prevented from
+accessing:
+
+  * coprocessors 0..9, 12 and 13;
+  * coprocessor 14 (trace registers);
+  * coprocessor 15 encodings:
+      CRn==c9, opc1=={0-7}, CRm=={c0-c2, c5-c8}, opc2=={0-7},
+      CRn==c10, opc1=={0-7}, CRm=={c0, c1, c4, c8}, opc2=={0-7}
+      CRn==c11, opc1=={0-7}, CRm=={c0-c8, c15}, opc2=={0-7}
+    (IMPLEMENTATION DEFINED cache, TCM, branch predictor, memory
+     remapping, and TLB control registers);
+  * cp15 c15 (IMPLEMENTATION DEFINED);
+  * Debug and Performance monitor registers.
+
+We have checked common Operating Systems which are known to run on Xen
+on ARM and not found any default uses of these registers. However it
+is expected that tools such as the Linux perf tool which make use of
+debug and performance registers will no longer function correctly in
+guest context. In addition if your use case requires access to
+specific coprocessors by one or more guest domains then additional
+local patches may be required to enable this.
+
+Where feasible we hope to reenable these use cases in the future. If
+this affects you then please contact the xen-devel mailing list
+http://lists.xen.org/mailman/listinfo/xen-devel.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTVoUqAAoJEIP+FMlX6CvZCDYH/i7QijGjgd4TtHPoJKkwKZhk
+P2Kztlo+EDm90UeAPy6BtsPIhHH8bI5yBCdbV/T8p32uRHv9GMyGCsIN+Qt0q7wO
+VgRvBGvr3Gpc/UvpsMQTNCFcy2BG6glI27icz9Ck8Uolan+Lc8cMDYTzy02XzTgV
+MN4hoBw51Mc/EVAyy0QSTF8nOpBMnzva7peDVOcVv90y3H0UNPQT+JKkw7r53jyJ
+SNXxiVnNN/mYhi7aD2UhX8zx01I/WsIhXt2tcW2q5pjTS+xoqW3Q2BB2nw7BOWPq
+3I3AaZZ7jxt1AwL2T1LJBu6fVL6Qa1Bsr+q6QkCOfmP71v6ERq/Zuf0QavJTiL8=
+=qtaJ
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa93-4.4-01.patch" of type "application/octet-stream" (4348 bytes)
+
+Download attachment "xsa93-4.4-02.patch" of type "application/octet-stream" (4318 bytes)
+
+Download attachment "xsa93-4.4-03.patch" of type "application/octet-stream" (1136 bytes)
+
+Download attachment "xsa93-4.4-04.patch" of type "application/octet-stream" (1001 bytes)
+
+Download attachment "xsa93-4.4-05.patch" of type "application/octet-stream" (2746 bytes)
+
+Download attachment "xsa93-4.4-06.patch" of type "application/octet-stream" (9767 bytes)
+
+Download attachment "xsa93-unstable-01.patch" of type "application/octet-stream" (4348 bytes)
+
+Download attachment "xsa93-unstable-02.patch" of type "application/octet-stream" (4319 bytes)
+
+Download attachment "xsa93-unstable-03.patch" of type "application/octet-stream" (1136 bytes)
+
+Download attachment "xsa93-unstable-04.patch" of type "application/octet-stream" (1001 bytes)
+
+Download attachment "xsa93-unstable-05.patch" of type "application/octet-stream" (2746 bytes)
+
+Download attachment "xsa93-unstable-06.patch" of type "application/octet-stream" (9769 bytes)
