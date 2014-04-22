@@ -1,48 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/27/2
-Message-Id: <20140827052039.1C49D1F050D@smtpksrv1.mitre.org>
-Date: Wed, 27 Aug 2014 01:20:39 -0400 (EDT)
-From: cve-assign@...re.org
-To: fweimer@...hat.com, mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Lua CVE request [was Re: CVE request: possible overflow in vararg functions]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/7
+Message-ID: <53565112.6030004@redhat.com>
+Date: Tue, 22 Apr 2014 13:22:58 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Ludwig Nussel <ludwig.nussel@...e.de>
+CC: oss-security@...ts.openwall.com
+Subject: Re: X.509 name constraints and potential interpretation conflict
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 08/20/2013 06:40 PM, Ludwig Nussel wrote:
+> Florian Weimer wrote:
+>> NSS CA roots are widely reused, but the implementation deviates from
+>> RFC 5280 in such a way that NSS can safely accept additional root
+>> certificates as long as they have name constraints.  I think this is a
+>> bug in RFC 5280, and the fix in NSS is sound, but it could still
+>> result in surprising behavior if the root store is used unfiltered
+>> with TLS implementations that lack this bug fix.
+>>
+>> For reference, here is the RFC 5280 errata I submitted:
+>>
+>> --------------------------------------
+>> Type: Technical
+>> Reported by: Florian Weimer <fweimer@...hat.com>
+>>
+>> Section: 4.2.1.10
+>>
+>> Original Text
+>> -------------
+>>     DNS name restrictions are expressed as host.example.com.  Any DNS
+>>     name that can be constructed by simply adding zero or more labels to
+>>     the left-hand side of the name satisfies the name constraint.  For
+>>     example, www.host.example.com would satisfy the constraint but
+>>     host1.example.com would not.
+>>
+>>
+>> Corrected Text
+>> --------------
+>> [Add this to the paragraph]
+>>
+>>     If an implementation extracts DNS names from the subject
+>>     distinguished name, DNS name restrictions MUST be applied
+>>     to these names as well.
+>
+> Do you have an idea in mind how to do that in practice? E.g with
+> openssl?
 
-> http://www.lua.org/bugs.html#5.2.2-1
-> Stack overflow in vararg functions with many fixed parameters called with few arguments.
+OpenSSL does not really care about host names, so you have to look at 
+the chain more or less manually.  I suspect it's okay to look at subject 
+alternative names of the end entity certificate exclusively if one 
+certificate in the chain has a name constraint.  The PKIX validation 
+code in OpenSSL should enforce the name constraints, and ignoring the 
+subject distinguished name should be sufficient to give these checks teeth.
 
-Use CVE-2014-5461.
+It is, however, against the RFC.  The PKIX WG says that we should just 
+assume that CAs issue compliant certificates, which completely misses 
+the point of name constraints (at least what they mean to me, I expected 
+them to contain the impact of non-compliant CAs).
 
-
-> Lua has some sandboxing functionality, but it can be bypassed by
-> supplying precompiled bytecode.  There have been extensive discussions
-> about this on the lua-users mailing list, e.g.:
-> 
-> <http://lua-users.org/lists/lua-l/2011-10/msg01215.html>
-
-We did not immediately find information to decide on the number of CVE
-IDs. Picking a few random frames from
-http://www.youtube.com/watch?v=OSMOTDLrBCQ suggested that
-approximately three CVE-2011-#### IDs could be assigned. If anyone has
-better information, or even the same information in a text format,
-that could be useful (if the CVE-2011-#### IDs are needed).
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT/WotAAoJEKllVAevmvmsIakH/00bWTQa336V/umZwZBZdlf1
-hRxiiKg+ra2kDTHaZTqF/bz4j6LPrsYXD2antj9V2VoI3iMgxOemdajYC9Um3QDq
-x9ocSRDnxoxsMhvapO+2Y0DsnaHzWwj008mTB1Sl5OuEPTnNK3V4gRlMErZU4Mi/
-meJqBDfh4XemDnQ+3TtAbf6FeY/eDTOIujf118uSDYdw77r7vig217X7rbH2BFAt
-9QPjWylkGyXiX2P+C6k4TbSBLfMpyzHNBE9CTtrm7FV0wsjzll7F6ylpOaeS3VwH
-G5TRK4lZQqoRMauiERyaCZ2rJZGQKUyV2LPbtn7F5B7pjun1Hei8rv2fKoGPej4=
-=DZHj
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security Team
