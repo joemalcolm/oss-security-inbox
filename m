@@ -1,40 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/35
-Message-ID: <542459D0.9000901@redhat.com>
-Date: Thu, 25 Sep 2014 23:37:12 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/8
+Message-ID: <53566B57.6050005@enovance.com>
+Date: Tue, 22 Apr 2014 15:15:03 +0200
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2014-014] Neutron security groups bypass through invalid CIDR (CVE-2014-0187)
 Content-Type: text/plain; charset=utf-8
 
-On 09/25/2014 11:26 PM, Solar Designer wrote:
-> On Thu, Sep 25, 2014 at 11:19:24PM +0530, Huzaifa Sidhpurwala wrote:
->> Based on the current situation and the fact that there is confusion
->> about what patch to use for the bash issue. I wanted to post this here.
->
-> Thanks!
->
->> From: Florian Weimer <fweimer@...hat.com>
-> [...]
->> Internal analysis revealed two out-of-bounds array accesses in the bash
->> parser.  This was also independently and privately reported by Todd
->> Sabin <tsabin@...online.net>.
->
-> Have these been reported upstream?
->
-Nope, but i just cced Chet on it now :)
+OpenStack Security Advisory: 2014-014
+CVE: CVE-2014-0187
+Date: April 22, 2014
+Title: Neutron security groups bypass through invalid CIDR
+Reporters: Stephen Ma (HP) and Christoph Thiel (Deutsche Telekom)
+Products: Neutron
+Versions: 2013.1 to 2013.2.3, and 2014.1
 
-> What's the oldest version of bash affected by them?
->
-> Your reproducers didn't trigger any obvious misbehavior here with 3.1.8
-> with lots of unrelated patches.  Of course, this does not mean much, but
-> maybe these issues are in fact 3.2+?
->
-Yes 3.2+, i have not checked older versions though.
+Description:
+Stephen Ma from Hewlett Packard and Christoph Thiel from Deutsche
+Telekom reported a vulnerability in Neutron security groups. By creating
+a security group rule with an invalid CIDR, an authenticated user may
+break openvswitch-agent process, preventing further rules from being
+applied on the host. Note: removal of the faulty rule is not enough, the
+openvswitch-agent must be restarted. All Neutron setups using Open
+vSwitch are affected.
 
-> Alexander
->
+Juno (development branch) fix:
+https://review.openstack.org/59212
 
+Icehouse fix:
+https://review.openstack.org/88674
+
+Havana fix:
+https://review.openstack.org/88057
+
+Notes:
+This fix will be included in the juno-1 development milestone and in
+future 2013.2.4 and 2014.1.1 releases.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0187
+https://launchpad.net/bugs/1300785
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
