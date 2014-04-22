@@ -1,47 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/30/5
-Message-ID: <227684E7-8E72-49D2-B490-C64BA259BE35@redhat.com>
-Date: Fri, 30 May 2014 11:58:38 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: sos: /etc/fstab collected by sosreport, possibly containing passwords
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/10
+Message-Id: <201404221946.s3MJjtRw005458@linus.mitre.org>
+Date: Tue, 22 Apr 2014 15:45:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: security@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 93 - Hardware features unintentionally exposed to guests on ARM
 Content-Type: text/plain; charset=utf-8
 
-On 05/29/2014, at 13:20 PM, Kurt Seifried wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On 05/29/2014 12:57 PM, Dolev Farhi wrote:
->> I tend to agree with most of this actually, but since sosreport is
->> there to collect information for troubleshooting issues only, then
->> there is no actual reason not to remove the pw field of a mount in
->> fstab, even though the file is world readable in the first place. I
->> do agree that this widens the scope from Red Hats side especially
->> while most of the time it would be close to impossible to prevent
->> password disclosures in configuration files, especially when it
->> depends on the random way a sysadmin alters config files. Best
->> practice is to use the credentials option and point fstab to read
->> the mount username and password from a file but there are multiple
->> ways to achieve the same goal. I am not sure regarding the
->> necessity of a CVE here, though I dont see much of a difference
->> between this to any other password disclosures (such as grub.conf)
->> discovered in sosreport in the past, except that fstab is world
->> readable. On both cases the problem is that this file is handled by
->> 3rd parties.
->>
->> Thanks
->>
->> -- Dolev Farhi
->
-> So /etc/fstab is world readable, within that system. The file is then
-> being exported to Red Hat, we don't really need or want the password,
-> we also make an effort to sanitize the data sent, so if nothing else
-> this falls into the "intended/advertised security feature that failed"
-> and would qualify for a CVE as such as I understand things.
+> XSA-93
 
-I very much disagree with this.  We don't advertise that we scrub all data and neuter your report of all potentially sensitive things.  In fact, we pretty much say the opposite when you run sosreport.  It was never intended or advertised that we removed anything (we just happen to remove stuff that we very obviously don't want, like keytabs and obvious places for password storage).
+> did not prevent guests from accessing various hardware features
+> including cache control, coprocessors, debug registers and various
+> processor specific registers.
 
-I did see MITRE's response and they did assign a CVE to RHEL5's implementation precisely because it does not have this warning (like RHEL6 and Fedora do).  I can't disagree with their rationale for the assignment for RHEL5's version of sosreport.
+Use CVE-2014-2915.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-Vincent Danen / Red Hat Product Security
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+iQEcBAEBAgAGBQJTVsZnAAoJEKllVAevmvmsGckH/isRQ50J5iqC+aiqA8FfePkz
+UEI0wkssyAHj5ONn2tHQJj3nPTK/B6tLO2zBEfg+te9vGFKApI3FJUQfyeIXsEvh
+yTLknDonhnmUTa1V/+WuayxxHzpq/IF5rZzcDPGAAs6synX3HrGNeS5S1UfeHaFd
+xLTy4Ikh6TlsRZHavBFYgLkHNocLihq/igfEc81vQnXCyGLQ9Uncwgy+KKpU6RB4
+QyiTvPnAgmMlIXMzT5lgloHE8daKsAlW6ngGEx3QACiuyYK0FU8tHteCQLJfS0wa
+17gaqIgSBa/U7X6xET7JfF3W0N+xguvQkLejUnx/ucAQyO0dAvVDsc4Mf0Z6Fjw=
+=NFw4
+-----END PGP SIGNATURE-----
