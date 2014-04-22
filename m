@@ -1,33 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/31
-Message-ID: <54232567.1000704@case.edu>
-Date: Wed, 24 Sep 2014 16:11:19 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Pierre Schweitzer <pierre@...ctos.org>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/3
+Message-Id: <201404220412.s3M4Btns002191@linus.mitre.org>
+Date: Tue, 22 Apr 2014 00:11:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: propolice@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Nagios Remote Plugin Executor <= 2.15 Remote Command Execution
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 9/24/14, 3:39 PM, Pierre Schweitzer wrote:
-> 
-> Hi,
-> 
-> Naive question regarding statement below. Does that mean that exec*()
-> system calls are concerned as well (like for instance called from a fork())?
+> http://seclists.org/fulldisclosure/2014/Apr/240
 
-No; they do not invoke a shell.
+> src/nrpe.c
+
+> Despite these checks the code is vulnerable to command injection as bash shell allows
+> for multiple command execution if commands are separated by a new line.
+
+Use CVE-2014-2913.
+
+
+> From: gremlin@...mlin.ru
+> Date: Fri, 18 Apr 2014 10:16:14 +0400
+> Message-ID: <20140418061614.GA16766@...mlin.ru>
+
+> Adding \r here may be a good idea as well...
+
+We have not seen additional comments about whether \r would prevent an
+alternate attack approach. If it does, a separate CVE ID would be
+assigned. We do not know of a version of Bash in which \r separates
+commands in the same way that \n does. For example:
+
+  % /bin/bash -c "`echo -e "echo a\x0aecho b"`" | cat -v
+  a
+  b
+  % /bin/bash -c "`echo -e "echo a\x0decho b"`" | cat -v
+  a^Mecho b
 
 - -- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (Darwin)
+Version: GnuPG v1.4.14 (SunOS)
 
-iEYEARECAAYFAlQjJWcACgkQu1hp8GTqdKthrQCdF7b800vGLs/mfMZakRtDp/c1
-vwEAmwQjo0qfqQTNE0CHKu+kXkQ+BTXx
-=zEjf
+iQEcBAEBAgAGBQJTVetTAAoJEKllVAevmvms/44H/3ZWzK46mWsp/xuIWS7yhsP/
+wcCPcekjZfp3azr+gY9cMHMiW685CSxptfB/rFLZDB2lb2OJrF9yqGgix5XKDR5e
+cNJXiZZwQMh2vFs8ZlWQcX7ndHFs5DR8RSpqGW35u+LmVNHjFSPj2+ZwrIWhKvwA
+T6rr825ge9DQKsuqrD7gTbH0t2ld3Z6/Q8r709pqYXDrTSjDMwUkbpe95i9N1NSl
+mSdIghtLG/0yOnn6GcRQYGRRCsU6F1CZjPsRb87jxGpGsAFP8nkYgMlWZPIjEud1
+lt/Oe5Si/QPymqkawelm6PBAcbdVmmkbhcCr7cDPdLKJeG5PTC6ywQDoRFr8Yb0=
+=Sg8i
 -----END PGP SIGNATURE-----
