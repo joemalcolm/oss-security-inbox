@@ -1,51 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/2
-Message-ID: <20140904033953.GA18643@oevtugenva.nrevsny.pk>
-Date: Wed, 3 Sep 2014 23:39:53 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: heap overflow in procmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/1
+Message-Id: <201404220114.s3M1E2I2029202@linus.mitre.org>
+Date: Mon, 21 Apr 2014 21:14:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: mattd@...fuzz.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request / advisory: gdomap (GNUstep core package <= 1.24.6)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 03, 2014 at 11:52:11AM -0700, Tavis Ormandy wrote:
-> I noticed a heap overflow in procmail when parsing addresses with
-> unbalanced quotes. I encountered this by accident when trying to
-> organize a large usenet archive, this post to rec.arts.poems causes
-> formail to crash.
-> 
-> https://groups.google.com/forum/message/raw?msg=alt.arts.poetry.comments/DCuLO3qzovI/CZk15MlfqNkJ
-> 
-> I've attached an mbox for reference.
-> 
-> $ formail -s < mbox > /dev/null
-> *** Error in `formail': free(): invalid next size (fast): 0x00007f103784a080 ***
-> Segmentation fault (core dumped)
-> $ rpm -q procmail
-> procmail-3.22-33.fc20.x86_64
-> 
-> 
-> It looks like the fix is
-> 
-> --- formisc.c 2013-08-04 00:13:33.000000000 -0700
-> +++ formisc.c 2014-09-03 11:42:25.986002396 -0700
-> @@ -84,12 +84,11 @@
->   case '"':*target++=delim='"';start++;
->        }
->       ;{ int i;
-> - do
-> + while(*start)
->     if((i= *target++= *start++)==delim) /* corresponding delimiter? */
->        break;
->     else if(i=='\\'&&*start)    /* skip quoted character */
->        *target++= *start++;
-> - while(*start); /* anything? */
->        }
->       hitspc=2;
->     }
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Unless I'm misunderstanding your report, the problem is in the formail
-utility which comes with procmail, not procmail itself. This should be
-clarified in the title of the vuln, perhaps as "heap overflow in
-procmail's formail utility" rather than "heap overflow in procmail".
+> gdomap (GNUstep Distributed Objects nameserver)
 
-Rich
+> After receiving a crafted invalid request, gdomap will attempt to log
+> an error message to the system logger. However, due to incorrect setup
+> of the logger during server initialization, the logger and gdomap
+> itself will mess up program state enough that program execution will
+> be aborted. gdomap listens to all interfaces, allowing a remote
+> unauthenticated attacker to DOS the nameserver.
+
+> https://savannah.gnu.org/bugs/?41751
+> http://svn.gna.org/viewcvs/gnustep/libs/base/trunk/Tools/gdomap.c?r1=37756&r2=37755&pathrev=37756
+> http://svn.gna.org/viewcvs/gnustep/libs/base/trunk/ChangeLog?r1=37756&r2=37755&pathrev=37756
+
+> closes the fd that openlog() just made ... this closed fd's number is
+> re-used for gdomap's UDP listening socket ... then closes what it
+> thinks is still its fd (but is actually now the UDP listening socket
+> mentioned above)
+
+> Tools/gdomap.c: Don't open syslog connection until after we have
+> forked and closed old descriptors .. fix for bug #41751
+
+Use CVE-2014-2980.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTVcIOAAoJEKllVAevmvmsBEkH/jdrTeZ3gB0ESGkNFChbtmXx
+6BC5CzThnaeLhtDWx67GHE1TSpxyCJQLJtnocZwn9Z4E97UbLUR/EuD2bBlnsavE
+/BsVUOxZ+TAxThvwTqTRGKi/LFsJBzlfe2zZuwsXC1BNCuUAvguwBmbrDGMTFbdB
++kzVDsdLOPlTAZVB7xFirokNQFu+i367plde3MvLPeMwIB80aWJyMNjwtwPW7x91
+t3jgpZ7V+3Y4eJ09JHo08mxJYqdw03c10sWRkmWqLn51IH6u7BC/gh/s6wCBsZQu
+wgFQ1Mnwes+pNCgGnc8HJgH8qGphPPvS8HyI+HoVw49A++rgU1USIe6ADck12Uo=
+=siER
+-----END PGP SIGNATURE-----
