@@ -1,77 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/14
-Message-ID: <53623CA0.3080402@redhat.com>
-Date: Thu, 01 May 2014 08:22:56 -0400
-From: Daniel J Walsh <dwalsh@...hat.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-CC: Steve Grubb <sgrubb@...hat.com>
-Subject: Re: local privilege escalation due to capng_lock as used in seunshare
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/2
+Message-Id: <201404220118.s3M1IDQL029245@linus.mitre.org>
+Date: Mon, 21 Apr 2014 21:18:13 -0400 (EDT)
+From: cve-assign@...re.org
+To: forest.monsen@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request for Drupal Core
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 05/01/2014 12:23 AM, Andy Lutomirski wrote:
-> On Wed, Apr 30, 2014 at 8:06 PM, Solar Designer <solar@...nwall.com> wrote:
->> On Thu, May 01, 2014 at 06:43:10AM +0400, Solar Designer wrote:
->>> On Wed, Apr 30, 2014 at 09:27:10PM -0400, Steve Grubb wrote:
->>>> And switching to NO_NEW_PRIVS broke the sandbox:
->>>> https://bugzilla.redhat.com/show_bug.cgi?id=1091761
->>>>
->>>> So, perhaps fixing SECURE_NOROOT is the safest bet? Are there any other
->>>> opinions on this?
->>> If SECURE_NOROOT is meant to be usable to run entire Linux distros
->>> (whether "on host" or/and "in containers"),
->> Actually, I think it won't work well for that unless the distro in
->> question doesn't use any SUID root programs that need capabilities,
->> because SECURE_NOROOT breaks the raising of capabilities for SUID root
->> exec (on purpose).  So generic implementations of containers capable of
->> running arbitrary Linux distro userlands are probably not making use of
->> SECURE_NOROOT.
->>
->>> then it must not have an
->>> effect of excluding UID 0 from "appropriate privileges" for setuid(2).
->>>
->>> Do we know reliably that in this case excluding UID 0 from "appropriate
->>> privileges" for setuid(2) was an effect specifically of SECURE_NOROOT?
->> Per my quick greps, this does not appear to be the case.  The only
->> checks for SECURE_NOROOT that I could find are in cap_bprm_set_creds(),
->> so SECURE_NOROOT should affect execve(2), but not setuid(2).
->>
->> Why are we talking about it in this context, then?
-> I think that SECURE_NO_SETUID_FIXUP is actually at fault here.  And I
-> don't see how changing its semantics would help -- it's not safe to
-> run setuid programs without granting them capabilities, and it's not
-> really safe to grant them capabilities without setting euid == 0, and
-> it seems like it's unsafe to grant capabilities and euid == 0.
->
-> This leaves granting no extra privileges at all to setuid programs,
-> which is exactly what no_new_privs does.  seunshare sets up a weird
-> mount namespace, and anyone can use it and *configure* things about
-> that namespace.  no_new_privs blocks anything that causes execve to
-> grant new privileges, so the whole point is that it's safe to do
-> non-posixy things that are inherited by children as long as
-> no_new_privs is set.
->
-> I think I correctly analyzed exactly how no_new_privs broke sandbox in
-> the rhbz bug:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1091761
->
-> The short answer is that selinux doesn't currently distinguish whether
-> labels on executables are granting or removing privilege, and selinux
-> also fails to distinguish between the right to change labels on
-> request and the right to change labels because the policy said so [1],
-> so no_new_privs takes the conservative approach and blocks the whole
-> transition-on-exec mechanism.  And sandbox fails.  I suspect that
-> sandbox is already broken in the case where the program being
-> sandboxed is on a nosuid mount, because selinux's nosuid behavior is
-> weird.
->
-> In any event, I think that seunshare can be fixed by using dyntransition. Ugh.
->
-> A better fix might be to rewrite seunshare to use user namespaces
-> instead of requiring permissions.  This won't fly on RHEL5/6, though.
->
-> --Andy
-I don't have a problem allowing the dyntransition, since  the only thing
-the code does after the transition is exec the app, As long as the
-cleanup process stays in the previous label it should work.
+> SA-CORE-2014-002 - Drupal core - Information Disclosure
+> https://drupal.org/SA-CORE-2014-002
+
+> Drupal's form API ... When pages are cached ... there is a chance that
+> interim form input recorded for one anonymous user (which may include
+> sensitive or private information, depending on the nature of the form)
+> will be disclosed to other users interacting with the same form at the
+> same time
+
+Use CVE-2014-2983.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTVcMIAAoJEKllVAevmvmsOhMH/jxUssmaa2sl7LFx/mA3jg46
+mSI/dHm9v5ONYa14zoXi2DAEi8birAKjbIgtz/b2kd9Q5RVCzD5qVQiTIjYgQCFD
+w5VkFkxZp33sG5HsgBGbpQPbHX+M0inHqvH3j4XE36w0QZ8rtNwehWIb/alZoqw2
+M4U6OyC6fEUgsJuoeIxg+zvJFYniWOQFI1y5t/XZ6NaTEHyXK85wabaNEuzt4t2O
+V+zXgdO1gAudEbvYe9kAJ81tcxv9rYXUhpmxePlF5mkQxIDU9RevgRAaCjpvUO/J
+SThzZT7mBZbUSd7xubU7B2EGGx9JWqKOTKG0KRG4EKkZ+aHpH7UcjOFKUjrxGBY=
+=vHDf
+-----END PGP SIGNATURE-----
