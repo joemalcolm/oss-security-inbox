@@ -1,37 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/6
-Message-ID: <20140103072712.GB16139@gremlin.ru>
-Date: Fri, 3 Jan 2014 11:27:12 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/11
+Message-ID: <CALCETrWJhUYX_rLYUe29SWSVWPJfV13VzZzN4cF_m8dJJJy-+A@mail.gmail.com>
+Date: Tue, 22 Apr 2014 14:37:51 -0700
+From: Andy Lutomirski <luto@...capital.net>
 To: oss-security@...ts.openwall.com
-Cc: gremlin@...mlin.ru
-Subject: Re: kwallet crypto misuse
+Subject: CVE-2014-0181: Linux network reconfiguration due to incorrect netlink checks
 Content-Type: text/plain; charset=utf-8
 
-On 02-Jan-2014 09:15:15 +0100, Florian Weimer wrote:
+It is possible to reconfigure the network on Linux by calling write(2)
+on an appropriately connected network socket.  By passing such a
+socket as stdout or stderr to a setuid program, anyone can reconfigure
+the network.
 
- > I just noticed this is now public:
- > http://gaganpreet.in/blog/2013/07/24/kwallet-security-analysis/
- > Short summary: kwallet uses Blowfish to encrypt its password
- > store, and despite an attempt at implementing CBC mode (in a
- > file called cbc.cc no less), it's actually ECB mode.
-
-That's unpleasant, but not really a fatal issue...
-
- > UTF-16 encoding combined with Blowfish's 64 bit block size means
- > there are just four password characters per block.
-
-But this is: any and all passwords, being used for encryption key
-generation, must be hashed, then salted, then hashed again. SHA-256
-may be a good choice for generating Blowfish 256-bit key this way.
-
- > Encryption is convergent as well. This may enable recovery of
- > passwords through codebook attacks. Should we treat this as a
- > minor vulnerability?
-
-Is it really minor?
-
+Eric Biederman sent patches to netdev containing a possible fix.
 
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Andy Lutomirski
+AMA Capital Management, LLC
