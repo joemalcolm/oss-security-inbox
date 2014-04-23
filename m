@@ -1,19 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/10
-Message-ID: <20140312132247.GB25026@kludge.henri.nerv.fi>
-Date: Wed, 12 Mar 2014 15:22:47 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: IMAP STARTTLS sniff tool
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/23/3
+Message-Id: <E1Wcws9-0005ae-0x@xenbits.xen.org>
+Date: Wed, 23 Apr 2014 13:05:57 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 94 - ARM hypervisor crash on guest interrupt controller access
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 12, 2014 at 03:50:10PM +0400, Solar Designer wrote:
-> Either way, I'm also not sure if we want to expand the scope on
-> oss-security to cover topics like this.  Probably not.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-In my opinion this is useful information.
+                    Xen Security Advisory XSA-94
 
----
-Henri Salo
+      ARM hypervisor crash on guest interrupt controller access
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+ISSUE DESCRIPTION
+=================
+
+When handling a guest access to the virtual GIC distributor (interrupt
+controller) Xen could dereference a pointer before checking it for
+validity leading to a hypervisor crash and host Denial of Service.
+
+IMPACT
+======
+
+A buggy or malicious guest can crash the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
+
+x86 systems are not vulnerable.
+
+MITIGATION
+==========
+
+None.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This bug was publicly reported on xen-devel, before it was appreciated
+that there was a security problem.
+
+CREDITS
+=======
+
+The initial bug was discovered by Thomas Leonard and the security
+aspect was diagnosed by Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa94.patch        xen-unstable, Xen 4.4.x
+
+$ sha256sum xsa94*.patch
+ad0f20577400756a1786daeafef86fa870727ec35b48f71f565e4a30dcbda58d  xsa94.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTV7qTAAoJEIP+FMlX6CvZ08EH/3pIhD1lCXex3pbvo0BFIc2y
++XqJmLQ8QVeuk1Q9etEVbJxC8YvbmunefyCyfXIYQpL5jWqJdOAGzSktLOuaGrrM
+ENG6kFyiC6pxLouJb+BAm3qOfe3vVCdkWh9ouWQGC/3FqbSM+2QGI0vUyxtfmmga
+IDeQ+CjyWVVhmR7Tb76Gc/pMLnrfD1HTZSgTe8NacqbnZuXzPMrxkKw8BleK/boH
+L5r/0Y/GqqOe5LRqCOZt8U7jlcfwAs+rqUI0UDz70YvokcBH7RwaRiolZxicLdjP
+4lFJH8q9d45EA9JI+Xifv2QZ9tJMRNhRtTQpqIS8swAROOM/SblpPUPlOiPvyaE=
+=RGUg
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa94.patch" of type "application/octet-stream" (1164 bytes)
