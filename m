@@ -1,37 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/3
-Message-Id: <201407210549.s6L5n7Ld012182@linus.mitre.org>
-Date: Mon, 21 Jul 2014 01:49:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: michaeld@...dle.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Moodle security notifications public
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/23/7
+Message-ID: <CALCETrXUp=FaVEUJA7ExRX5SchNEETREGFGbbEpJiHsuMeNp5w@mail.gmail.com>
+Date: Wed, 23 Apr 2014 10:12:44 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com,  "Eric W. Biederman" <ebiederm@...ssion.com>
+Subject: Re: CVE-2014-0181: Linux network reconfiguration due to incorrect netlink checks
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+[I think something went wrong with the quoting in here.]
 
-> MSA-14-0029: Cross-site scripting vulnerability in exception dialogues
+On Wed, Apr 23, 2014 at 9:27 AM,  <cve-assign@...re.org> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> It is possible to reconfigure the network on Linux by calling write(2)
+>> on an appropriately connected netlink socket. By passing such a
+>> socket as stdout or stderr to a setuid program, anyone can reconfigure
+>> the network.
+>
+>
+>> http://marc.info/?l=linux-netdev&m=139820127225921&w=2
+>
+>> Andy Lutomirski when looking at the networking stack noticed that it is
+>> possible to trick privileged processes into calling write on a netlink
+>> socket and send netlink messages they did not intend.
+>>
+>> In particular from time to time there are suid applications that will
+>> write to stdout or stderr without checking exactly what kind of file
+>> descriptors those are and can be tricked into acting as a limited form
+>> of suid cat. In other conversations the magic string CVE-2014-0818 has
+>> been used to talk about this issue.
+>
+> First, CVE-2014-0818 is not the correct CVE ID. CVE-2014-0818 is
+> associated only with a vulnerability in AutoCAD. A CVE ID of
+> CVE-2014-0181 was in the Subject line.
+>
+> Also, there are two messages that discuss apparently distinct types of
+> security issues, suggesting that two or more CVE IDs may be needed:
+>
+> http://marc.info/?l=linux-netdev&m=139820138225967&w=2
+>   "The caller needs capabilities on the namespace being queried, not
+>   on their own namespace. This is a security bug, although it likely
+>   has only a minor impact." (The patch is in the packet_diag_dump
+>   function in net/packet/diag.c, but the issue originally was in the
+>   sock_diag_put_filterinfo function in net/core/sock_diag.c.)
 
-> CVE identifier:    CVE-2014-354
+This may need a new CVE.  I'm not really clear on what the impact of
+this is, if any.  It's an information disclosure issue, but I'm not
+entirely sure that valuable information is being disclosed.
 
-What is the correct CVE ID for the
-https://moodle.org/mod/forum/discuss.php?d=264270 page? CVE-2014-354
-is malformed.
+>
+> http://marc.info/?l=linux-netdev&m=139820147526004&w=2
+>   "verify that the opener of the socket had the desired permissions as
+>   well"
+>
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+This is the proposed method of fixing CVE-2014-0181
 
-iQEcBAEBAgAGBQJTzKjzAAoJEKllVAevmvmscLQIAIBmnNZFolaxvu3bUT40U4FI
-pXOsZPmMP/3Po64IhtUrcXOT0V86kVgopMZ1jYWs/wf1wIUJ6AL+L4Jz/Nfxno0J
-X7H7LindxcNrtK8aVvA38iPfvH4M45biWY9suvlraubO6Mw5L5KrxZqoGX1qHyuj
-zKFbQqQeJtfIlZMoSdp2KhPeOr1J6HJaHBdWf/kDjTpwz1UiXZXowOnrlJX2N2BR
-r9muYIA8r1VBvcJYYkJmYVvGBg1Q/TfW4vMtleN1LQA7nVIBCnyMlsWNRg8tBWeQ
-pNVHfcRuP5Q8glsH+0QnnhaDNiPiMIQps7UWPIP9Vrrf2q/6aspujqqXwgNPEbQ=
-=xa+l
------END PGP SIGNATURE-----
+--Andy
