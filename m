@@ -1,29 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/22
-Message-ID: <54872E3F.1090905@redhat.com>
-Date: Tue, 09 Dec 2014 18:15:43 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Two rpm flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/23/8
+Message-ID: <87tx9jbudr.fsf@x220.int.ebiederm.org>
+Date: Wed, 23 Apr 2014 14:36:48 -0700
+From: ebiederm@...ssion.com (Eric W. Biederman)
+To: Andy Lutomirski <luto@...capital.net>
+Cc: cve-assign@...re.org,  oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0181: Linux network reconfiguration due to incorrect netlink checks
 Content-Type: text/plain; charset=utf-8
 
-On 12/09/2014 03:04 PM, Yves-Alexis Perez wrote:
-> On mar., 2014-12-09 at 18:32 +0530, Huzaifa Sidhpurwala wrote:
->> CVE-2014-8118:
->> It was found that RPM could encounter an integer overflow, leading to a
->> stack-based overflow, while parsing a crafted CPIO header in the payload
->> section of an RPM file.  This could allow an attacker to modify signed
->> RPM files in such a way that they would execute code chosen by the
->> attacker during package installation.
->>
->> Reference:
->> https://bugzilla.redhat.com/show_bug.cgi?id=1168715
+Andy Lutomirski <luto@...capital.net> writes:
+
+> [I think something went wrong with the quoting in here.]
 >
-> Do you know if the other CPIO implementations/parsers are affected by this?
+> On Wed, Apr 23, 2014 at 9:27 AM,  <cve-assign@...re.org> wrote:
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>>
+>>> It is possible to reconfigure the network on Linux by calling write(2)
+>>> on an appropriately connected netlink socket. By passing such a
+>>> socket as stdout or stderr to a setuid program, anyone can reconfigure
+>>> the network.
+>>
+>>
+>>> http://marc.info/?l=linux-netdev&m=139820127225921&w=2
+>>
+>>> Andy Lutomirski when looking at the networking stack noticed that it is
+>>> possible to trick privileged processes into calling write on a netlink
+>>> socket and send netlink messages they did not intend.
+>>>
+>>> In particular from time to time there are suid applications that will
+>>> write to stdout or stderr without checking exactly what kind of file
+>>> descriptors those are and can be tricked into acting as a limited form
+>>> of suid cat. In other conversations the magic string CVE-2014-0818 has
+>>> been used to talk about this issue.
+>>
+>> First, CVE-2014-0818 is not the correct CVE ID. CVE-2014-0818 is
+>> associated only with a vulnerability in AutoCAD. A CVE ID of
+>> CVE-2014-0181 was in the Subject line.
 
-It's in the name length handling code.  The bug is rather similar to 
-CVE-2014-9112 in GNU cpio (which prompted me to look at RPM for a 
-similar issue).
+Apparently I was disgraphic when I copied that line.  My apologies.
 
--- 
-Florian Weimer / Red Hat Product Security
+>> Also, there are two messages that discuss apparently distinct types of
+>> security issues, suggesting that two or more CVE IDs may be needed:
+>>
+>> http://marc.info/?l=linux-netdev&m=139820138225967&w=2
+>>   "The caller needs capabilities on the namespace being queried, not
+>>   on their own namespace. This is a security bug, although it likely
+>>   has only a minor impact." (The patch is in the packet_diag_dump
+>>   function in net/packet/diag.c, but the issue originally was in the
+>>   sock_diag_put_filterinfo function in net/core/sock_diag.c.)
+>
+> This may need a new CVE.  I'm not really clear on what the impact of
+> this is, if any.  It's an information disclosure issue, but I'm not
+> entirely sure that valuable information is being disclosed.
+
+When rebasing ontop of net this patch goes away.  I only addressed this
+issue at all because that was one of the capable calls that needed to be
+fixed for the second issue, and the permission check really did need to
+be moved to be correct from the dump context.  As the skb available in
+that function was the skb to write data into, not the skb of the netlink
+request we were authenticating.
+
+>> http://marc.info/?l=linux-netdev&m=139820147526004&w=2
+>>   "verify that the opener of the socket had the desired permissions as
+>>   well"
+>>
+>
+> This is the proposed method of fixing CVE-2014-0181
+
+Yes.  The rest of the patches are just cleanups and infrastructure to
+allow that change to happen.
+
+Eric
+
