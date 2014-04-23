@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/23
-Message-Id: <1412197254.2525278.174089561.7978AE3E@webmail.messagingengine.com>
-Date: Wed, 01 Oct 2014 23:00:54 +0200
-From: Hannes Frederic Sowa <hannes@...essinduktion.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: linux kernel net_get_random_once bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/23/4
+Message-Id: <201404231419.s3NEJ2rS022825@linus.mitre.org>
+Date: Wed, 23 Apr 2014 10:19:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: security@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 94 - ARM hypervisor crash on guest interrupt controller access
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, Oct 1, 2014, at 20:04, Andrew Tappert wrote:
-> My colleague Tom O'Connor and I have identified a security bug in the
-> Linux kernel that results in drastically degraded randomness of IP IDs,
-> TCP sequence numbers, and ephemeral port numbers on affected systems.
-> The bug existed in kernel versions 3.13 and 3.14.  We are posting here
-> rather than to the private "distros" list because the bug has already
-> been fixed.  However, we don't think that the security implications of
-> the bug have been acknowledged anywhere, and we think it needs a CVE.  A
-> full write-up on the bug is posted at
-> http://secondlookforensics.com/ngro-linux-kernel-bug/.
+> XSA-94
 
-I totally agree that this needs a CVE and I thought it was already taken
-care of by the people on security@...nel.org. I am sorry to not have
-checked for a CVE request afterwards.
+> When handling a guest access to the virtual GIC distributor (interrupt
+> controller) Xen could dereference a pointer before checking it for
+> validity leading to a hypervisor crash and host Denial of Service.
 
-The corresponding fix is here:
-<https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3d4405226d27b3a215e4d03cfa51f536244e5de7>
+> A buggy or malicious guest can crash the host.
 
-Thanks a lot,
-Hannes
+Use CVE-2014-2986.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTV8t1AAoJEKllVAevmvmst/cH/js+frpyUAFXSnPvoauD+DJg
+4yKPcDeiTAEFe9p8b8SIshWHkWPug1jZ+aTwB5gMfKiHHsLA/g9yGaAYNLTWNt/j
+WC24BDRg9JPRd0wIEmf18cSWcYV8YljoI3WbYY4Y+SVTNDmOrDAhbyMnmBEFCm9X
+es+elg4ysVza7gL0WZbB3Zm8grLhXSb8rMgU/cPGs1IEwTr+j0BStslJQ9YzJlaZ
+TSEI583C2uvJfS4wC9fpwXrHgT8SON9NxLWwvvexVFJ7rcj5P+4w8oawKqHwrWI8
+nJP8y/LL/hwFqMvaWHZI4oFl2AgLhIkYt4+EDcdiFzVuOxOpLIhklMRhIJGReAE=
+=cp7f
+-----END PGP SIGNATURE-----
