@@ -1,51 +1,153 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/17
-Message-ID: <538F3FBE.8070001@gmail.com>
-Date: Wed, 04 Jun 2014 21:48:14 +0600
-From: "Alexander E. Patrakov" <patrakov@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: PulseAudio crash due to empty UDP packet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/23/2
+Message-Id: <E1WcuIA-00083c-CY@xenbits.xen.org>
+Date: Wed, 23 Apr 2014 10:20:38 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 93 (CVE-2014-2915) - Hardware features unintentionally exposed to guests on ARM
 Content-Type: text/plain; charset=utf-8
 
-04.06.2014 21:30, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> If one has module-rtp-recv loaded into PulseAudio, then a remote
->> attacker can crash this instance of PulseAudio by sending an empty UDP
->> packet
->
->> memblock.c: Assertion 'b' failed
->
-> Use CVE-2014-3970.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks!
+             Xen Security Advisory CVE-2014-2915 / XSA-93
+                              version 2
 
->> PulseAudio usually gets respawned anyway.
->
-> Apparently there are realistic circumstances in which respawning
-> doesn't happen (possibly a zero value of conf->daemonize or the
-> "User-configured server at %s, refusing to start/autospawn." case in
-> http://cgit.freedesktop.org/pulseaudio/pulseaudio/tree/src/daemon/main.c).
+      Hardware features unintentionally exposed to guests on ARM
 
-Yes, there is a parameter in the daemon.conf configuration file that 
-allows the user to turn the autospawn off.
+UPDATES IN VERSION 2
+====================
 
->> http://lists.freedesktop.org/archives/pulseaudio-discuss/2014-May/020740.html
->
->> expecting to find an infinite loop (as it would be common for such
->> FIONREAD misuse), but found an assertion failure instead. So there may
->> be two bugs.
->
-> The scope of CVE-2014-3970 does not include any infinite loop that
-> might be discovered later.
+This issue has been assigned CVE-2014-2915.
 
-I have tested the patch, and it survives the empty packet without the 
-infinite loop. Besides, after the patch, there is no code path in which 
-recvmsg() is not called after a successful FIONREAD ioctl (even if it 
-returns a zero size). So, any FIONREAD-related infinite loop that 
-possibly remains on the RTP reception path after the patch is to be 
-found on the path where the ioctl itself fails.
+ISSUE DESCRIPTION
+=================
 
--- 
-Alexander E. Patrakov
+When running on an ARM platform Xen was not correctly configuring the
+hardware virtualisation platform and therefore did not prevent guests
+from accessing various hardware features including cache control,
+coprocessors, debug registers and various processor specific
+registers.
+
+IMPACT
+======
+
+By accessing these hardware facilities a malicious or buggy guest may
+be able to cause various issues, including crashing the host, crashing
+other guests (including control domains) and data corruption.
+
+Privilege escalation is not thought to be possible but has not been
+ruled out.
+
+VULNERABLE SYSTEMS
+==================
+
+Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onwards.
+
+x86 systems are not vulnerable.
+
+MITIGATION
+==========
+
+None.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This bug was publicly reported on xen-devel, before it was appreciated
+that there was a security problem.  The public mailing list thread
+contains information strongly suggestive of a security bug and
+included example code which can crash the host.
+
+CREDITS
+=======
+
+The initial bug was discovered by Thomas Leonard and further followup
+issues were discovered by Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the attached patches resolves this issue.
+
+xsa93-unstable-{01..06}.patch        xen-unstable
+xsa93-4.4-{01..06}.patch             Xen 4.4.x
+
+$ sha256sum xsa93*.patch
+9a01ed1c7d33d2381594af3b0985df50f3aa7f13f5a9989595427407c5a5eb06  xsa93-4.4-01.patch
+68ec2bdb48dd232dbabefbe7c971546b52d7001a128471226a41f36e27a806f2  xsa93-4.4-02.patch
+541d2d57ee85a9603ae4bf00bb321f6f491354df9e15eb09ddb5ccba68333ecc  xsa93-4.4-03.patch
+6a3736e5dea1d45df6b979f02e06e058d8dffdbcf128d2d0984db404a87ebb62  xsa93-4.4-04.patch
+282e2cf82ad4345573d21351c242684cd09f384bcd76c262740f9e33f8b04c9c  xsa93-4.4-05.patch
+e212ad288eaeccf6a33cab27ecc6515a889365b0c56b5010e91a603ce239a38b  xsa93-4.4-06.patch
+9a01ed1c7d33d2381594af3b0985df50f3aa7f13f5a9989595427407c5a5eb06  xsa93-unstable-01.patch
+9b472975087dee1d22db8e5f3e55b1589910d84de86b2cad218bfd540fbbd92e  xsa93-unstable-02.patch
+f921ba7c1b216dd425035f94ac9eef9374ae5eba4af4cb5a3b7aa3f958a0a767  xsa93-unstable-03.patch
+45b7e6b226a4449370c4dbe21aa71c398955e4ed2bc7cf9e4426f29583af14be  xsa93-unstable-04.patch
+282e2cf82ad4345573d21351c242684cd09f384bcd76c262740f9e33f8b04c9c  xsa93-unstable-05.patch
+e2668f0ecf1e79aa30928791b92a15c15821c8bce7958a5c3fee7563cf81960b  xsa93-unstable-06.patch
+$
+
+NOTE: These patches unconditionally deny access by all guests
+(including control domains) to various hardware features in order to
+close the vulnerability. Specifically guests are prevented from
+accessing:
+
+  * coprocessors 0..9, 12 and 13;
+  * coprocessor 14 (trace registers);
+  * coprocessor 15 encodings:
+      CRn==c9, opc1=={0-7}, CRm=={c0-c2, c5-c8}, opc2=={0-7},
+      CRn==c10, opc1=={0-7}, CRm=={c0, c1, c4, c8}, opc2=={0-7}
+      CRn==c11, opc1=={0-7}, CRm=={c0-c8, c15}, opc2=={0-7}
+    (IMPLEMENTATION DEFINED cache, TCM, branch predictor, memory
+     remapping, and TLB control registers);
+  * cp15 c15 (IMPLEMENTATION DEFINED);
+  * Debug and Performance monitor registers.
+
+We have checked common Operating Systems which are known to run on Xen
+on ARM and not found any default uses of these registers. However it
+is expected that tools such as the Linux perf tool which make use of
+debug and performance registers will no longer function correctly in
+guest context. In addition if your use case requires access to
+specific coprocessors by one or more guest domains then additional
+local patches may be required to enable this.
+
+Where feasible we hope to reenable these use cases in the future. If
+this affects you then please contact the xen-devel mailing list
+http://lists.xen.org/mailman/listinfo/xen-devel.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTV5O6AAoJEIP+FMlX6CvZt7MH+wYxthL+nxagERvLrXQdXlF6
+XYctN9gb5iEGwKLI4MLuVYdMqXIa2NfTvTEHfwNyWEp6sS/+nc2V0h8qAqDdhdtO
+cNuxV2zK7Ab328SkNVy17y6j0Jgyen0QrOGBwTaNb5CXUHkg3J+YppObvGlTqjDi
+HoXeX7Whv4CSqOjgua189e9uNzKtBNsZZepqerli1/tIazWSuOT8KIHp92NKAbLv
+hwm9HUS7gN2JmR8wU3DD3DxJp+bfTDXBCKOvGmYILxN+X0pzAtfDgK+RMOBwSD05
+iJ3rcs83VR6ITRqdI+hRifesSiS6Yi7OFi3xB2vAdSm6IjsA06pARYPCIPGCQh0=
+=Nnq0
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa93-4.4-01.patch" of type "application/octet-stream" (4348 bytes)
+
+Download attachment "xsa93-4.4-02.patch" of type "application/octet-stream" (4318 bytes)
+
+Download attachment "xsa93-4.4-03.patch" of type "application/octet-stream" (1136 bytes)
+
+Download attachment "xsa93-4.4-04.patch" of type "application/octet-stream" (1001 bytes)
+
+Download attachment "xsa93-4.4-05.patch" of type "application/octet-stream" (2746 bytes)
+
+Download attachment "xsa93-4.4-06.patch" of type "application/octet-stream" (9767 bytes)
+
+Download attachment "xsa93-unstable-01.patch" of type "application/octet-stream" (4348 bytes)
+
+Download attachment "xsa93-unstable-02.patch" of type "application/octet-stream" (4319 bytes)
+
+Download attachment "xsa93-unstable-03.patch" of type "application/octet-stream" (1136 bytes)
+
+Download attachment "xsa93-unstable-04.patch" of type "application/octet-stream" (1001 bytes)
+
+Download attachment "xsa93-unstable-05.patch" of type "application/octet-stream" (2746 bytes)
+
+Download attachment "xsa93-unstable-06.patch" of type "application/octet-stream" (9769 bytes)
