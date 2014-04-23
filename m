@@ -1,49 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/27/3
-Message-ID: <5384C0FA.7080606@redhat.com>
-Date: Tue, 27 May 2014 10:44:42 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE-2014-0234 Installer: OpenShift Enterprise: openshift.sh default password creation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/23/5
+Message-Id: <E1Wcyr8-0001eE-Nk@xenbits.xen.org>
+Date: Wed, 23 Apr 2014 15:13:02 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 94 (CVE-2014-2986) - ARM hypervisor crash on guest interrupt controller access
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-This is to notify the community that Red Hat has fixed  CVE-2014-0234
-Installer: OpenShift Enterprise: openshift.sh default password creation.
+              Xen Security Advisory CVE-2014-2986 / XSA-94
+                             version 2
 
-Summary: the openshift.sh installer script created default passwords
-for various services during install, this has been fixed. A current
-copy of the script is available at
-https://github.com/openshift/openshift-extras/blob/enterprise-2.1/enterprise/install-scripts/generic/openshift.sh
+      ARM hypervisor crash on guest interrupt controller access
 
-I also wanted to open up a discussion as well, what counts as shipped
-software, e.g. more and more projects have a bash script linked off
-the front page/install page, my take on this is if it's "officially"
-endorsed by the project and prominent it should probably count as
-"shipped" software and get a CVE (assuming it has a security flaw),
-but we shouldn't assign CVE's to every instance of install scripts
-found online (e.g. lots of them squirrelled away inside of GitHub).
+UPDATES IN VERSION 2
+====================
 
+This issue has been assigned CVE-2014-2986.
 
-- -- 
-Kurt Seifried Red Hat
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+ISSUE DESCRIPTION
+=================
+
+When handling a guest access to the virtual GIC distributor (interrupt
+controller) Xen could dereference a pointer before checking it for
+validity leading to a hypervisor crash and host Denial of Service.
+
+IMPACT
+======
+
+A buggy or malicious guest can crash the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
+
+x86 systems are not vulnerable.
+
+MITIGATION
+==========
+
+None.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This bug was publicly reported on xen-devel, before it was appreciated
+that there was a security problem.
+
+CREDITS
+=======
+
+The initial bug was discovered by Thomas Leonard and the security
+aspect was diagnosed by Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa94.patch        xen-unstable, Xen 4.4.x
+
+$ sha256sum xsa94*.patch
+ad0f20577400756a1786daeafef86fa870727ec35b48f71f565e4a30dcbda58d  xsa94.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJThMD6AAoJEBYNRVNeJnmTtOQP/j3JAUs08pNPXVUYoaxHRqfF
-+tnbcOUkCy7JOqfnyExTjouzg3YVfPDkK2J3K+Gy1fYiFp0tFgiQfFbEwVCdn/hv
-y76yULg+JaQuFdrV6hwq6If8JgP9ZraL2xmi54k5Ja1bg2ZlKBo3y0nGqe+/ocmv
-4Q0DlJ+rItOL3x63UIV0evlsOcDZtxfzH3cBFV+KgSqHaO63ekkHQkC24fdAq2wA
-HA5OHkIERYtoITXDLzKesJD/WJ+I+eoxxF1HQMzqAXjutGQQ8bKjS5uID0Op4X8P
-lVVAHcDnAug6d+rUts7GsGKRPxmOIKVRjON3DPKHugMj4nbO5yal+tlzk3emg4vS
-ILIlRm4E0jRfwQq+8u4JEDnhYyFs2ZTwS/0b+RFe5F9tMAPOanltkm9vK39b8eu9
-kRKffCWAAlsx8RatJ4KOFEl6eNnwTcBMlYmpEf4sS7UPaa9/RBByU+mNMth7ApY7
-NAyeXCa4jZSRvCA5he1qOr1OtSzxcgmqINiop1ntt5xT/LejpZE18HvYSJFDQtRr
-JPlfXR0XOfeXxB5+Qo0t0f61o3FAUMExT2TBODzkKg/oVnDf7ZJGjcVmQ1QAgeOT
-D4pXoipYKl3BpQZcoraOgnIfp0FgxmtHdv4CXIHx8lsDTrs4O4AIb9krgI3TvoDO
-oFusqBwU3/mMIxdKQwE3
-=pyOp
+iQEcBAEBAgAGBQJTV9hdAAoJEIP+FMlX6CvZmDwH/2sBH/w9kPhOu+hdOAMX3dlb
+bmj1sLTehOKqEy8sZpDsCuJw8cRAIQn+xWPMDPj2lUggz5iVWHUgfs4Zk8o9l3qQ
+9/RcnQQHFSw1Bu8lDLlH0FpE6R98ZcdX//PAviJewj10FiMOpIoBSzNpKLxst1IZ
+5YPmBVCn6DfgsCjWYPPaGQMLtBWU/LbAPmpYUiIDywOd58OScekNL2hfKM0ZWzgo
+HPuB2DwpPsj7P43kuEJyXIHYLu00see+uEXXKd591mmznVtSXSrzVVaKPjeTfh9D
+WEGqCxOof5slzwofbMFflBL1SW6d6f0Llui/7cMEDITSXeCaP2wqMb34p/g68+w=
+=BNcq
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa94.patch" of type "application/octet-stream" (1164 bytes)
