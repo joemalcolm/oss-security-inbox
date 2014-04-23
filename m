@@ -1,38 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/23
-Message-ID: <53454175.5050202@enovance.com>
-Date: Wed, 09 Apr 2014 14:47:49 +0200
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/23/1
+Message-ID: <CALCETrWAHQsaiJtAF3LhqcrHwgq8N+q8e4tCBH6HiBL=Ffmu3g@mail.gmail.com>
+Date: Tue, 22 Apr 2014 20:01:53 -0700
+From: Andy Lutomirski <luto@...capital.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Keystone
+Subject: Re: CVE-2014-0181: Linux network reconfiguration due to incorrect netlink checks
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+On Apr 22, 2014 2:37 PM, "Andy Lutomirski" <luto@...capital.net> wrote:
+>
+> It is possible to reconfigure the network on Linux by calling write(2)
+> on an appropriately connected network socket.  By passing such a
+> socket as stdout or stderr to a setuid program, anyone can reconfigure
+> the network.
 
-Title: Keystone DoS through V3 API authentication chaining
-Reporter: Abu Shohel Ahmed (Ericsson)
-Products: Keystone
-Versions: from 2013.1 to 2013.2.3
+s/network socket/netlink socket
 
-Description:
-Abu Shohel Ahmed from Ericsson reported a vulnerability in Keystone V3
-API authentication. By sending a single request with the same
-authentication method multiple times, a remote attacker may generate
-unwanted load on the Keystone host, potentially resulting in a Denial of
-Service against a Keystone service. Only Keystone setups enabling V3 API
-are affected.
+>
+> Eric Biederman sent patches to netdev containing a possible fix.
+>
+> --
+> Andy Lutomirski
+> AMA Capital Management, LLC
 
-References:
-https://launchpad.net/bugs/1300274
-
-Thanks in advance,
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
