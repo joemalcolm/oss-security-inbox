@@ -1,36 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/26/1
-Message-ID: <535BCB80.7050700@redhat.com>
-Date: Sat, 26 Apr 2014 09:06:40 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Ubuntu 14.04: security problem in the lock screen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/25/7
+Message-ID: <535AC46F.3060502@canonical.com>
+Date: Fri, 25 Apr 2014 15:24:15 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: cups-browsed remote exploit
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 04/02/2014 03:18 PM, cve-assign@...re.org wrote:
+>> For this it creates a filter-script
+> 
+>> snprintf
+> 
+>> "%s/filter/pdftoippprinter \"$1\" \"$2\" \"$3\" \"$4\" \"$5 $extra_options\"\n",
+>> p->name, pdl, make_model, cups_serverbin);
+> 
+>> its easy to inject code to the script e.g. via model name or pdl key
+>> which is taken from the LAN packets.
+> 
+> Use CVE-2014-2707.
+> 
 
-https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1308572
+This issue was reported as fixed in 1.0.51:
+http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7188
 
-Probably needs a CVE.
+but it was found that the fix was incomplete with the full fix in 1.0.53:
+http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7194
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Should this get a second CVE or should we continue to use CVE-2014-2707?
 
-iQIcBAEBAgAGBQJTW8t/AAoJEBYNRVNeJnmTnf4QANalhaDg1swx0ot9PDWut0sd
-zzfqfmvfM1Zn24GSzh++vjrYEYO7NqDnCHK3zMrtDDxhPDzwkGjDZsE+RiJajiDo
-fRHBCcOtPZlaFO84m2KGupJ0qxoNofD854bnZ9Yo9TSydd6eW5bXSqRNrxB95rII
-IUypQAPIuT5L7G3KplQ0b1cTl5BdAHawZNsK1BF0L1+sPkrhhipvlp/tfd8A7mVa
-DJjdn5a4fQ4zhAsSfzAeOkcTlI40nEKYcqe8K6xRsl1INLm5kQaFsYiWJ/Erf4bV
-5ejdOt89PhZcAxO3Io5VXRmtMANx84VIkFNKXHkhOXe9d1yvSmytN6wqzRJf0gGr
-/CtImvvaSKeATZFDOAhXLZDloDGTAU2EE5YD40f4q8MsK2UwIGIVcNVsVTxc0ATq
-cALbhPsJDfid/Y+hj/ZjqpgjPEdZru37Ozkr8AWw94Mc31IWjJJAD6DybhC37w6e
-DGLD0SeGND8yyE+z/RCt5Q7+h5xneST3PZaHUNBpYv68cxJCuDe06bNmHrqffSgf
-TbiBxlumIHQzVmrLqvuK2C1i6Ds0QZWRGnTcUHIpVoT0eNjQ+6hbfxT8cEIJ8O32
-j1yFqKyHzid2CWgJrhdvNuR/UsrpURhVgxA8kL2xySAgd/5VaP1kAg2fLZUwbRx8
-hBsp13T8LVvk0pMGOsN2
-=waoV
------END PGP SIGNATURE-----
+Furthermore, another security issue was also fixed in 1.0.53:
+http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7195
+
+"
+- cups-browsed: SECURITY FIX: Fix on usage of the
+  "BrowseAllow" directive in cups-browsed.conf. Before, if the
+  argument of a "BrowseAllow" directive is not understood it
+  is treated as the directive not having been there, allowing
+  any host if this was the only "BrowseAllow" directive. Now
+  we treat this as a directive which no host can fulfill, not
+  allowing any host if it was the only one. No "BrowseAllow"
+  directive means access for all, as before (Bug #1204).
+"
+
+I believe this should receive a CVE.
+
+Thanks
+
+References:
+https://bugzilla.novell.com/show_bug.cgi?id=871327
+https://bugs.linuxfoundation.org/show_bug.cgi?id=1204
+
+-- 
+Jamie Strandboge                 http://www.ubuntu.com/
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (885 bytes)
