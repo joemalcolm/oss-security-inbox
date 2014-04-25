@@ -1,37 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/18
-Message-ID: <20141103210515.GB5775@zoho.com>
-Date: Mon, 3 Nov 2014 21:05:15 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/25/2
+Message-ID: <20140425003439.GA12735@openwall.com>
+Date: Fri, 25 Apr 2014 04:34:39 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: RE: strings /libbfd crash
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 03, 2014 at 09:56:30PM +0100, Hanno Böck wrote:
-> Am Tue, 04 Nov 2014 05:21:42 +1100 schrieb Joshua Rogers
-> <oss@...ernot.info>:
-> 
-> > I'd like to expand on this:
-> > http://openwall.com/lists/oss-security/2014/10/27/4 and mention that
-> > 'ihex.c' is also vulnerable to the same thing, as they share the
-> > same code.
-> > 
-> > > :10010000214601360121470136007EFE09D2190140
-> > > :100110002146017E17C0001FF5F16002148011928
-> > > :10012000194E79234623965778239EDA3F01B2CAA7
-> > > :100130003F0156702B5E712B722B732146013421C7 :00000001Ff
-> > 
-> > is an example of code that will crash it.
-> 
-> I can't reproduce that, I just get BFD: test1.ihex:2: unexpected
-> character `s' in Intel Hex file
-> 
-> Can you upload the raw file somewhereß
+On Fri, Apr 25, 2014 at 04:11:51AM +0400, Solar Designer wrote:
+> - Amazon Linux AMI having a significant userbase, which is unclear for
+> Qlustar yet.  When the first request to subscribe Qlustar was made, IIRC
+> my Google web search for it found surprisingly few results (like 20),
+> and even fewer not on Qlustar's own sites.  This has improved since: a
+> Google web search for "Qlustar" (in quotes) gives "About 2,060 results"
+> results now, although there's relatively little vendor-independent
+> content (postings other than by or forwarded from Roland, etc.)  Hitting
+> "Next" exhausts the actual distinct search results on page 6, saying "In
+> order to show you the most relevant results, we have omitted some
+> entries very similar to the 57 already displayed."
 
-The printable chars are all that's needed. There appears to be a stack
-overflow in ihex_scan() but you might need an intrumented binary to see
-it.
+For comparison and for the record, Google web search for "Amazon Linux
+AMI" (in quotes) gives "About 515,000 results", and the distinct results
+it displays are exhausted on page 16 with "In order to show you the most
+relevant results, we have omitted some entries very similar to the 170
+already displayed."  With the duplicates detection disabled, I am getting
+to "Page 52 of about 458,000 results" until Google refuses to display
+more results.  It is unclear at first glance whether there are actually
+many duplicates within those 52 pages (vs. 16 pages) or not.  So perhaps
+that was not a very good check for either distro.
 
---mancha
+More important than these (unreliable) numbers of search results are the
+findings on actually relevant pages that I checked manually (I did check
+a handful for either distro).  Like I said, I couldn't find any users'
+discussions of Qlustar.  There are clear users' postings about Amazon
+Linux AMI among those web search results I saw.
 
-Content of type "application/pgp-signature" skipped
+Also, the three-word search query may have worse luck than the one-word
+"Qlustar", because many users would not bother to type all the three
+words (and consistently do it in the canonical way).  So I'd expect
+significant bias towards more "Qlustar" results if these distros had
+similar userbases.  For obvious reasons, a comparison against just
+"Amazon" would be differently unfair (and mostly irrelevant).
+
+Alexander
