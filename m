@@ -1,253 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/02/2
-Message-ID: <20140502010956.GA30898@openwall.com>
-Date: Fri, 2 May 2014 05:09:56 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Andreas Krennmair <ak@...flood.at>, Jim Hull <imaginos@...ginos.net>
-Subject: akpop3d review
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/25/5
+Message-ID: <535A7C5F.9040209@amazon.com>
+Date: Fri, 25 Apr 2014 08:16:47 -0700
+From: Anthony Liguori <aliguori@...zon.com>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Request for linux-distros list membership
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 04/24/14 17:34, Solar Designer wrote:
+> So, can someone already on linux-distros and distros
+> please volunteer to keep track of all issues being
+> brought to these lists (yes, all issues - including those
+> that don't affect your distro) and ensure that each one
+> of them promptly gets assigned at least a tentative
+> public disclosure date, that such date is within list
+> policy, that the issue is in fact publicly disclosed on
+> that date, and that the disclosure includes a mandatory
+> posting specifically to oss-security (as well as to
+> anywhere else the disclosing person likes to post)?  If
+> any of these requirements are violated (or are about to
+> be violated), please yell on the (private) list (CC'ing
+> the external reporter of the issue, if applicable) until
+> the violation ceases.  Any volunteer(s)?
 
-As some of you might have guessed my review of akpop3d is prompted by
-OpenBSD 5.5 dropping popa3d from base (a reasonable thing to do given
-the mass surveillance, and given that it was high time I added builtin
-SSL support, which I still have not), and not (yet) offering it in
-packages.  akpop3d is suggested as the primary alternative:
+This sounds like a terrible job for a human but a simple job for a
+script.  I think all it really requires is having an agreed upon way to
+take disclosure dates.  It is then simple to have a script that (1)
+complains when (disclosure date - thread creation date) > max embargo
+period (2) complains when a disclosure date has been exceeded without an
+indication that there has been a public statement.
 
-http://www.openbsd.org/faq/upgrade55.html#popa3d
+The nice thing about using on-list tagging is that it keeps all of the
+state on list such that anyone can run the bot on their own.
 
-"popa3d removed
-The POP3 daemon has been removed. Alternatives are available in
-packages, such as: akpop3d, courier-pop3 and others."
+I would propose we use a system like:
 
-http://www.synflood.at/akpop3d.html
+X-Disclosure-Date: 2014-06-01
 
-Is akpop3d a good choice, security-wise?  In terms of offering builtin
-SSL and in terms of code size, yes.  In other ways, I think not so much,
-although I didn't spot anything easily exploitable beyond DoS (so
-there's no reason for end-users to panic, and my posting isn't aimed at
-end-users).
+To set/update the disclosure date for a given thread.  To indicate that
+something has been disclosed:
 
-Here are some quick observations, based on akpop3d 0.7.7 released in
-2004 (yes, 10 years ago), which I think is still the latest (that's
-possibly fine for a small program, it could show code maturity).
-Obviously, I might be biased, but I had considered many of the same
-issues and tradeoffs while writing popa3d, so I think I am a right
-person to comment on akpop3d's design and code.
+X-Disclosed-On: 2014-06-02T05:00:00Z
 
-Design:
+I can watch threads for now and make sure metadata is getting tagged but
+hopefully over time all list members will participate making it not
+depend on one person.  If no one objects, I'll put something together
+and send out a pointer to the code.
 
-akpop3d tries to be secure by means of being simple, to the extent of
-lacking privsep.  This is a fine choice with its pros and cons, although
-I think adequate simplicity can be achieved while also including privsep
-(like I did in popa3d).  (I would especially not rely on the SSL library
-code being somehow "safe" to run outside of a privsep child.  I was
-planning to create a separate privsep child for the SSL in popa3d. but I
-never got around to implementing that.)
+Regards,
 
-akpop3d chooses to support dot-locking and copying of mbox contents (to
-temporary per-message files, which I guess makes akpop3d rather slow,
-perhaps even slower than the old qpopper).  Because of this, along with
-lacking privsep, it retains group "mail" in its child process.  While
-this is not as bad as continuing to run as root, it is pretty bad in
-that group "mail" commonly allows to read/write/delete any other users'
-mail, as well as to introduce trapdoors into the mail spool (thereby
-potentially exploiting other mail programs' peculiar behavior and
-vulnerabilities).  This is what's directly at stake on every line of
-code of akpop3d.  (In contrast, in popa3d many lines of code run as the
-target user only, with no group privileges.  Security aside, I admit
-that there are pros and cons to either approach in terms of backwards
-compatibility and reliability over system crashes vs. performance.)
-
-A couple of other things akpop3d's design.txt mentions are "Secure
-Creation Of Files" (true, but with popa3d's approach no files need to be
-created in the first place) and "Parsing Emails" with the "Don't parse"
-advice/approach (great, but the way UIDLs are calculated I guess they
-are too often non-unique and unstable over other MUA runs - that's two
-non-security problems, which I'd be happy to discuss separately).
-
-Code, integer overflows:
-
-It appears that integer overflows were not considered at all.  Luckily,
-it is possible to audit the code and introduce the due checks (or
-otherwise make the overflows and C unspecified behavior impossible to
-trigger), but as it is it looks pretty bad.  Most notably:
-
-static int number_mails;
-[...]
-      number_mails++;
-      mails = realloc(mails,number_mails*sizeof(struct mail));
-
-That's two potential integer overflows, which might be triggerable by
-untrusted input (depending on mbox size limits with the MTA/LDA and
-filesystem) on two adjacent lines of code.  sizeof(struct mail) is at
-least 268 on a 32-bit system (and usually slightly more on 64-bit):
-
-struct mail {
-  unsigned long size;
-  unsigned long adjsize;
-  int deleted;
-  char filename[256];
-};
-
-Luckily, sizeof(struct mail) is unsigned, and is of a type no smaller
-than int.  Yet if the expression remains 32-bit, the multiplication
-wraps around at "only" 16 million messages in the mbox.  When this
-happens, "mails" is allocated with a smaller size than it needs to be,
-and we have out of bounds writes somewhere on the heap.
-
-In practice, this might be mitigated by a previous realloc() failing to
-allocate the nearly 4 GiB of memory on a 32-bit platform, in which case
-the function would have returned before the overflow could happen:
-
-      if (mails==NULL) {
-        return 0;
-      }
-
-Are there platforms where size_t is 32-bit, yet an almost 4 GiB
-allocation succeeds (meaning the process has more than 4 GiB of address
-space, since more than 268 bytes would surely be already in use by the
-program itself, its stack, etc.)?
-
-Maybe we got lucky here, but we shouldn't continue to depend on subtle
-things like that for security.
-
-Code, async-signal-unsafe functions are used with signals:
-
-akpop3d calls async-signal-unsafe functions from a signal handler:
-
-static void sig_handler(int signo) {
-  remove_lock(mdl);
-  syslog(LOG_INFO,"%s: %u", "caught signal",signo);
-  exit(EXIT_FAILURE);
-}
-
-It also has the signal handler setup while the main program uses
-async-signal-unsafe functions, meaning that the signal handler can be
-entered with e.g. syslog or stdio already in inconsistent state, and
-would proceed to use that state as if it were consistent.  IIRC,
-syslog() in particular is made async-signal-safe on OpenBSD, but not on
-other systems.
-
-syslog() from a signal handler in portable code is not considered
-acceptable (see e.g. CVE-2008-4109).  exit() is not acceptable either
-(flushes stdio buffers, which may already be in inconsistent state, and
-invokes atexit() handlers, which may contain async-signal-unsafe
-functions).  remove_lock() looks OK, though:
-
-void remove_lock(char * maildrop) {
-  size_t lf_len = (size_t)strlen(maildrop)+strlen(".lock")+1;
-  char * lf = alloca(lf_len);
-  if (lf!=NULL) {
-    snprintf(lf,lf_len,"%s.lock",maildrop);
-    unlink(lf);
-  }
-}
-
-Code, risky use of MySQL:
-
-  { /* prevent SQL injections */
-    int i, max = strlen(username);
-    for (i=0;i<max;i++) {
-    if (username[i]=='\'') {
-      username[i] = '_';
-    }
-  }
-
-        // send the query
-        asprintf( &pszQuery, "SELECT username, uid, gid, password, homedir, shell, comment FROM %s where username = '%s'", TABLE, username );
-
-If questionable functionality like this is included at all, it'd be
-better to use prepared statements or/and whitelisting.  The code above
-uses a blacklist (of only one char), and fails to blacklist '\', which
-is a special character too.  I don't see how this can be exploited
-(hopefully, it can't be) into anything more than incorrect syntax
-(which can be achieved by making '\' the very last character in
-attempted username, so the closing single quote is not treated as such).
-
-Code, unsafe uses of asprintf():
-
-The code snippet above also serves as an example of this issue. :-)
-glibc's asprintf() leaves the pointer unchanged on error (unlike *BSD's),
-indicating the error only via the return value.  Ulrich rejected a patch
-to introduce the safer *BSD's behavior:
-
-http://www.sourceware.org/ml/libc-alpha/2001-12/msg00021.html
-
-The patch has since been included in a few Linux distros, but most
-distros retain upstream's unsafe behavior.
-
-The code then proceeds to do:
-
-        free( pszQuery );
-
-where pszQuery might have been never initialized (it is not explicitly
-initialized in the code above), so we get a free() call on some stack
-contents in place of the pointer.  With some luck for and/or effort by
-the attacker, this might be exploitable.
-
-Luckily, this issue only occurs twice, and only in mysql.c (which per
-README.MySQL is contributed code, but the author(s) should have reviewed
-it more thoroughly before integration, I think).
-
-README.MySQL also says:
-
-"I originally added a patch like this to gnu-pop3d and then to gnu
-mailutilities."
-
-So these two projects might be affected as well.
-
-Code, lacks child count and frequency limits:
-
-It appears that akpop3d's main daemon loop will happily overload the
-system as long as connections keep coming.  It can also be used to flood
-the logs (use up disk space or/and exhaust syslog bandwidth, which is
-often pretty low, thereby affecting other services that do logging).
-(popa3d has total and per-source connection count limits, and an extra
-parameter and extra logic to mitigate log flooding while nevertheless
-logging anything important about connections that were accepted.)
-
-Code, MD5 may be miscompiled with wrong endianness:
-
-There's no security impact from this, but the included GNU MD5 routines
-are notorious of easy miscompiles, and akpop3d appears to suffer from
-this problem.  md5.c contains:
-
-#ifdef _LIBC
-# include <endian.h>
-# if __BYTE_ORDER == __BIG_ENDIAN
-#  define WORDS_BIGENDIAN 1
-# endif
-#endif
-
-and _LIBC is not defined anywhere in akpop3d.  Thus, I expect that on
-big-endian systems akpop3d uses a non-MD5 where it wanted to use MD5.
-
-(This is a reason why I wrote my own MD5 implementation for popa3d,
-which doesn't depend on compile-time configuration.  Other suitably
-licensed C implementations of MD5 that I could find suffered from this
-potential problem.  Of course, writing one's own crypto code is a risk,
-too, and is generally rightly frowned upon, so it was a tradeoff.)
-
-Andreas, I hope you don't mind me posting this in public, and the
-comparisons against popa3d.  I briefly considered notifying you in
-private first (and I definitely would if I found anything requiring an
-urgent patch), but I felt it's more optimal to make the info public
-right away.  I actually wanted to avoid comparisons against popa3d at
-first, but while writing this message I felt that the comparisons I did
-include anyway are important to show which issues are inherent and which
-could be avoided.  (I think it's obvious that integer overflows and
-unsafe signal handling can be avoided, so I felt no need to include
-explicit comparisons there.)
-
-Finally, I need to add a disclaimer: this is an overall review of
-akpop3d, not a security audit of akpop3d.  I had no goal to check every
-line of code for potential vulnerabilities (e.g., verifying the length
-calculations for possible off-by-ones, which is something I didn't do),
-but rather I wanted to get the overall picture.
-
-I hope someone finds this helpful.
-
-Alexander
+Anthony Liguori
