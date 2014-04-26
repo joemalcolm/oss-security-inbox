@@ -1,40 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/5
-Message-ID: <20141001130809.1d1401a0@hboeck.de>
-Date: Wed, 1 Oct 2014 13:08:09 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/26/2
+Message-ID: <CACyjiAjhemrsz-ULTEA_Zf863iGij04Z6Qi+f58MHkEYQ3PP+g@mail.gmail.com>
+Date: Sat, 26 Apr 2014 17:09:47 +0100
+From: Dave Walker <davewalker@...ntu.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: Ubuntu 14.04: security problem in the lock screen
 Content-Type: text/plain; charset=utf-8
 
-Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
-schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
+On 26 Apr 2014 16:07, "Kurt Seifried" <kseifried@...hat.com> wrote:
+>
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1308572
+>
+> Probably needs a CVE.
+>
+> - --
+> Kurt Seifried Red Hat Security Response Team (SRT)
 
-> Finally: *PLEASE* let me know if you have any good ideas on how to
-> find vulnerabilities like this ahead-of-time. My article "How to
-> Prevent the Next
-> Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a
-> number of ways that Heartbleed-like vulnerabilities could have been
-> detected ahead-of-time, in ways that are general enough to be
-> useful.  I'd like to do the same with Shellshock, so we can quickly
-> eliminate a whole class of problems.
+Hi,
 
-The "class of problems" here is imho that we have a bunch of tools that
-get rare attention from anyone, are run by few volunteers, but they're
-an essential part in running the Internet.
+This was discovered (and resolved) in pre-release Ubuntu 14.04. Whilst it
+was only this status by 1 day, the exposure risk is to brave early adopters
+and developers.
 
-Just think about busybox, curl, wget, coreutils, gettext, gzip, ... - a
-vuln in any of these could have severe consequences.
+Whilst technically it was present in a Unity release, I cannot think of any
+other consumer of Unity than Ubuntu. As the exposed version of Ubuntu
+wasn't released, it would seem fair to consider the two together.
 
-Maybe the topic here should be: "How can we get the (whitehat) IT
-seucrity community to have a deeper look at neglected but important
-opensource projects."
+I am aware that on occasion CVE's have been issued for development
+snapshots, but I haven't seen clear policy on this.
 
--- 
-Hanno Böck
-http://hboeck.de/
+I am not sure if this should be considered widely distributed or not. It
+would seem redundant to raise a CVE for inflight development snapshot.
+Unless, you believe the exposure to warrant it?
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+I'm sure someone from Ubuntu Security will chime in, but thought it wise to
+respond to avoid an ID being raised in potential error.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Thanks
+
+--
+Kind Regards,
+Dave Walker
+
