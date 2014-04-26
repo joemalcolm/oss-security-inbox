@@ -1,65 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/6
-Message-ID: <20140208134950.GI10484@core.inversepath.com>
-Date: Sat, 8 Feb 2014 14:49:50 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2014-001] MantisBT input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/26/1
+Message-ID: <535BCB80.7050700@redhat.com>
+Date: Sat, 26 Apr 2014 09:06:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Ubuntu 14.04: security problem in the lock screen
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-#2014-001 MantisBT input sanitization errors
+https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1308572
 
-Description:
+Probably needs a CVE.
 
-The MantisBT web-based bugtracking system suffers from SQL injection
-vulnerabilities caused by insufficient input sanitization.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-The MantisBT SOAP API uses the unsafe db_query() function allowing a
-specially crafted tag within the envelope of a mc_issue_attachment_get SOAP
-request to inject arbitrary SQL queries.
-
-The reporting of this specific issue was followed by an investigation that
-lead to additional cases of unsafe db_query() function use, being found by
-MantisBT maintainers, throughout MantisBT code.
-
-Affected version:
-
-MantisBT >= 1.1.0a4, <= 1.2.15
-
-Fixed version:
-
-MantisBT >= 1.2.16
-
-Credit: vulnerability report received from Martin Herfurt <martin.herfurt AT
-nruns.com>.
-
-CVE: CVE-2014-1608 (SOAP), CVE-2014-1609 (additional SQL injections)
-
-Timeline:
-
-2014-01-17: vulnerability report received
-2014-01-17: contacted MantisBT maintainer
-2014-01-17: maintainer provides patch for review
-2014-01-18: contacted affected vendors
-2014-01-19: assigned CVEs
-2014-02-08: MantisBT 1.2.16 released
-2014-02-08: advisory release
-
-References:
-http://www.mantisbt.org
-http://www.mantisbt.org/bugs/view.php?id=16879
-http://www.mantisbt.org/bugs/view.php?id=16880
-http://github.com/mantisbt/mantisbt/commit/00b4c17088fa56594d85fe46b6c6057bb3421102
-http://github.com/mantisbt/mantisbt/commit/7efe0175f0853e18ebfacedfd2374c4179028b3f
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2014-001.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+iQIcBAEBAgAGBQJTW8t/AAoJEBYNRVNeJnmTnf4QANalhaDg1swx0ot9PDWut0sd
+zzfqfmvfM1Zn24GSzh++vjrYEYO7NqDnCHK3zMrtDDxhPDzwkGjDZsE+RiJajiDo
+fRHBCcOtPZlaFO84m2KGupJ0qxoNofD854bnZ9Yo9TSydd6eW5bXSqRNrxB95rII
+IUypQAPIuT5L7G3KplQ0b1cTl5BdAHawZNsK1BF0L1+sPkrhhipvlp/tfd8A7mVa
+DJjdn5a4fQ4zhAsSfzAeOkcTlI40nEKYcqe8K6xRsl1INLm5kQaFsYiWJ/Erf4bV
+5ejdOt89PhZcAxO3Io5VXRmtMANx84VIkFNKXHkhOXe9d1yvSmytN6wqzRJf0gGr
+/CtImvvaSKeATZFDOAhXLZDloDGTAU2EE5YD40f4q8MsK2UwIGIVcNVsVTxc0ATq
+cALbhPsJDfid/Y+hj/ZjqpgjPEdZru37Ozkr8AWw94Mc31IWjJJAD6DybhC37w6e
+DGLD0SeGND8yyE+z/RCt5Q7+h5xneST3PZaHUNBpYv68cxJCuDe06bNmHrqffSgf
+TbiBxlumIHQzVmrLqvuK2C1i6Ds0QZWRGnTcUHIpVoT0eNjQ+6hbfxT8cEIJ8O32
+j1yFqKyHzid2CWgJrhdvNuR/UsrpURhVgxA8kL2xySAgd/5VaP1kAg2fLZUwbRx8
+hBsp13T8LVvk0pMGOsN2
+=waoV
+-----END PGP SIGNATURE-----
