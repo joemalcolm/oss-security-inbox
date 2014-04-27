@@ -1,57 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/14
-Message-Id: <20140707181415.A68911A41139@me.com>
-Date: Mon,  7 Jul 2014 14:14:15 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem VladTheEnterprising-0.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/27/1
+Message-id: <79D12F70-C8F5-427F-A65E-479440A3AA08@me.com>
+Date: Sun, 27 Apr 2014 08:56:00 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: XSS in NextCellent Gallery 1.9.13 WordPress plugin
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem VladTheEnterprising-0.2
-
+Title: XSS in NextCellent Gallery 1.9.13 WordPress plugin
 Author: Larry W. Cashdollar, @_larry0
+Download: http://wpgetready.com/nextcellent-gallery/
 
-Date: 06/01/2014
+Vendor Notified: 3/20/2014
 
-OSVDB: 108728
+CVE: Please assign one at your leisure. 
 
-CVE:Please Assign
-
-Download: http://rubygems.org/gems/VladTheEnterprising
-
-Gem Author:  mlwelles@...il.com
-
-From: ./VladTheEnterprising-0.2/lib/vlad/dba/mysql.rb
-
-The mysql root password can be read out of /tmp/my.cnf.#{target_host} if a local user waits to read that after it is written and before it is removed in line 394.
-
-It is also possible to clobber files owned by the  VladTheEnterprising user process via symlink attack because the my.cnf.#{target_host} doesn't have a randomly created filename.
-
-If this Gem is used in the context of a rails application and the user is allowed to specify the target host command injection can occur at line 394 if special shell meta characters are injected like ; and &.
-
-0384-      cnf << "host     = localhost\n"
-385-      cnf << "user     = root\n"
-386-      cnf << "password = #{mysql_root_password}\n"
-387:      File.open("/tmp/my.cnf.#{target_host}", "w") do |file|
-388-        file.write(cnf)
-389-      end
-390:      scp "/tmp/my.cnf.#{target_host}", ".my.cnf"
-391-    end
-392-
-393-    remote_task :remove_dot_my_cnf, :roles => :new_slave do
-394:      `rm /tmp/my.cnf.#{target_host}; exit 0`
-395-      run "rm -f .my.cnf; exit 0"
-396-    end
-397-
---
-599-           :mysql_err => "/var/log/mysql.err",
-600-           :my_cnf => lambda { "/etc/mysql/conf.d/#{shortname}.cnf" },
-601-           :my_src_cnf => lambda { "files/mysql/configs/#{shortname}.cnf" },
-602:           :my_tmp_cnf => lambda { "/tmp/my.cnf-#{version}"},
-603-           :my_dest_cnf => lambda { my_cnf },
-604-           :mysql_config_nfs_copy => lambda { true },
-605-           :mysql_config_copy => lambda {
+Vulnerability Fixed: 4/24/2014 in Nextcellent Gallery v1.19.18.
 
 
-Advisory: http://www.vapid.dhs.org/advisories/VladTheEnterprising-0.2.html
+The user supplied data for the Alt & Title Text field isn't escaped before being printed out in the value field:
 
+Vulnerability:
+>From nextcellent-gallery-nextgen-legacy/admin/manage-images.php lines:
+503 <td <?php echo $attributes ? >> 
+504 <input placeholder=" <?php _e("Alt & title text",'nggallery'); ?>" name="alttext[<?php echo $pid ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->alttext) ?>" 
+505 <textarea placeholder="<?php _e("Description",'nggallery'); ?>" name="description[<?php echo $pid ?>]" style="width:95%; margin: 1px;" rows="2" ><?php echo stripslashes($picture->description) ?></textarea>
+506 </td>
+The HTML code produced is:
+
+<td class='alt_title_desc column-alt_title_desc'> <input placeholder="Alt & title text!" name="alttext[1]" type="text" style="width:95%; margin-bottom: 2px;" value=""><script>alert('hi')</script>"<" /><br/> <textarea placeholder="Description" name="description[1]" style="width:95%; margin: 1px;" rows="2" >"</a><script>alert('hi')</script><a>"</textarea> </td>
+<td class='tags column-tags'><textarea placeholder="Separated by commas"name="tags[1]" style="width:95%;" rows="2"></textarea></td> <td class='exclude column-exclude'><input name="exclude[1]" type="checkbox" value="1" /></td>
+
+A screen shot is shown with the full advisory by following the link below.
+
+Advisory: http://www.vapid.dhs.org/advisories/wordpress/plugins/nextCellent-gallery-1.9.13/
