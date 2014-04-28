@@ -1,54 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/13
-Message-ID: <20141126152525.GB20045@suse.de>
-Date: Wed, 26 Nov 2014 16:25:25 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/28/1
+Message-ID: <535DB698.9090502@redhat.com>
+Date: Mon, 28 Apr 2014 12:02:00 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: blkid command injection
+Subject: CVE-2014-0190: NULL pointer dereference in GIF image handler in QtGui
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Good morning,
 
-There is a command injection inside blkid. It uses caching
-files (/dev/.blkid.tab or /run/blkid/blkid.tab) to store info about the
-UUID, LABEL etc it finds on certain devices.
+CVE-2014-0190 describes a NULL pointer dereference flaw in the GIF image 
+handler in QtGui. This could cause applications using that library to crash.
 
-However, it does not strip " character, so it can be confused to
-build variable names containing embedded shell metas, which it would usually
-encode inside the value.
+Upstream announcement and patches:
 
-Given an USB stick with /dev/sdb1 you can:
+http://lists.qt-project.org/pipermail/announce/2014-April/000045.html
 
-# mkfs.ext4 -L 'X"`/tmp/foo` "' /dev/sdb1
-# blkid -o udev /dev/sdb1
-ID_FS_LABEL=X__/tmp/foo___
-[...]
+(CVE assigned by Red Hat.)
 
-Seems to be OK, but invoking blkid a second time, taking the cache in effect:
+Cheers,
 
-# blkid -o udev /dev/sdb1
-ID_FS_LABEL=X
-ID_FS_LABEL_ENC=X
-ID_FS_`/tmp/foo` "" UUID=...
-[...]
-
-
-"blkid -o udev" is often used in root context via udev or in automounters
-(uam-pmount) to construct key=value environment variables inside shell scripts
-which are then evaluated.
-Might be possible to construct an embedded LD_PRELOAD= as well for the binary
-case.
-
-By injecting > character one can probably construct whole fake cache entries.
-
-Sebastian
-
-
-
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+--
+Murray McAllister / Red Hat Security Response Team
