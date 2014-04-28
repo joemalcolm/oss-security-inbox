@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/27/1
-Message-ID: <544D96D6.2050006@mccme.ru>
-Date: Mon, 27 Oct 2014 03:50:30 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/28/3
+Message-ID: <20140428083111.GB22438@scapa.corsac.net>
+Date: Mon, 28 Apr 2014 10:31:12 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: strings / libbfd crasher
+Subject: CVE-2014-0469: xbuffy stack-based buffer overflow in subject processing
 Content-Type: text/plain; charset=utf-8
 
-On 2014-10-27 01:05, cve-assign@...re.org wrote:
-> There is currently no CVE ID for the
-> psa-dont-run-strings-on-untrusted-files.html "0xdeadbabe October 25,
-> 2014 7:20 PM" comment about "another one related with PE file headers
-> parsing." In general, a separate discovery that's potentially
-> exploitable for code execution could have its own CVE ID. Does anyone
-> want a CVE ID for that?
+Hi,
 
-I don't know whether it's the same crash or not but I've dug results of 
-my older experiments with zzuf. Attached are two crasher for `objdump 
--x` -- one pe and one elf. elf also crashes `strings`. Sorry, not 
-researched.
+just to let the list know that a Debian (and derivatives, like Ubuntu)
+specific vulnerability was found and fixed in xbuffy (a program to
+monitor mailboxes and newsgroups and show a mail count).
 
+The vulnerability was a stack-based buffer overflow, which could be
+triggered by a remote attacker sending a carefully crafted mail.
+
+It was introduced by a Debian-specific patch, and the software looks
+dead upstream, so we issued CVE-2014-0469 from our pool.
+
+The fix is only available in unstable [1] now, but stable and oldstable
+should follow soon.
+
+[1]: http://packages.qa.debian.org/x/xbuffy/news/20140427T181904Z.html
+
+Regards,
 -- 
-Alexander Cherepanov
+Yves-Alexis Perez
 
-Download attachment "objdump-pe-crasher.xz" of type "application/x-xz" (336 bytes)
-
-Download attachment "objdump-elf-crasher.xz" of type "application/x-xz" (1552 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
