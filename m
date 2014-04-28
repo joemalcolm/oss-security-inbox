@@ -1,28 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/18
-Message-ID: <54366135.50301@oracle.com>
-Date: Thu, 09 Oct 2014 11:19:33 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/28/6
+Message-ID: <87oazlnxtv.fsf@mid.deneb.enyo.de>
+Date: Mon, 28 Apr 2014 19:55:08 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+Subject: super unchecked setuid (CVE-2014-0470)
 Content-Type: text/plain; charset=utf-8
 
-On 09/10/14 00:53, Tim wrote:
-> Well, I think we can all think of a few options, some more portable
-> than others.  The current namespace change is one option, obviously,
-> but one might go a different route with more time to design it
-> initially.  Other ideas:
-> 
-> 1) A single dedicated environment variable for all function exports.
-> e.g.:
-> 
-> BASH_FUNCTIONS='f() { ... }
-> g() { ... }
-> ...
-> '
+Robert's patch, reproduced below, has all the details.
 
-You don't need export -f for that either and you don't need anything
-special in the child:  just do «eval "$BASH_FUNCTIONS"» which also has
-the benefit of making it quite plain that you're living dangerously.
+From: Robert Luberda <robert@...ian.org>
+Date: Wed, 23 Apr 2014 00:28:19 +0200
+Subject: 14 Fix unchecked setuid call
 
-jch
+Fix the following issue noticed by John Lightsey:
+  super.c does an unchecked setuid(getuid()) when the -F flag
+  is supplied pointing to a configuration file to test. This opens
+  super up to the RLIM_NPROC style exploits on 2.6 kernels.
+
+The issue was assigned number CVE-2014-0470.
+---
+ super.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/super.c b/super.c
+index abea061..1c21886 100644
+--- a/super.c
++++ b/super.c
+@@ -849,7 +849,9 @@ by `-o %s' is overridden by file `%s'", *o_file, superfile);
+ 		     * to the real uid.
+ 		     */
+ 		    if (getuid() != 0) {
+-			setuid(getuid());
++		        if (setuid(getuid()) == -1)
++		            Error(1, 1, "Can't set uid to %d: ", getuid());
++
+ 			fprintf(stderr,
+     "\t** Since you have supplied a super.tab file that isn't the default,\n");
+ 			fprintf(stderr,
