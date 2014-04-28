@@ -1,92 +1,158 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/22/1
-Message-ID: <20140222203535.GA32311@mhcomputing.net>
-Date: Sat, 22 Feb 2014 12:35:35 -0800
-From: Matthew Hall <mhall@...omputing.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/28/5
+Message-ID: <alpine.DEB.2.02.1404282304110.7807@motsugo.ucc.gu.uwa.edu.au>
+Date: Mon, 28 Apr 2014 23:15:19 +0800 (WST)
+From: David Adam <zanchey@....gu.uwa.edu.au>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: temporary file creation vulnerability in Redis
+cc: Bartlomiej Piotrowski <b@...otrowski.pl>, kov@...ian.org, luto@....edu,  nemysis@...eBSD.org, ridiculous_fish <corydoras@...iculousfish.com>
+Subject: Re: Upcoming security release of fish 2.1.1
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Could someone please assign me a CVE for the below Redis vulnerability?
+Whoops - missed a spot.
 
-Thanks,
-Matthew Hall
+There is also a symlink attack that doesn't depend on a race condition, so we'll
+include a patch for that as well.
 
------ Forwarded message from Matthew Hall <mhall@...omputing.net> -----
-
-Date: Fri, 21 Feb 2014 17:33:27 -0800
-From: Matthew Hall <mhall@...omputing.net>
-To: full-disclosure@...ts.grok.org.uk
-Subject: temporary file creation vulnerability in Redis
-User-Agent: Mutt/1.5.21 (2010-09-15)
-
-See also: https://github.com/antirez/redis/issues/1560 .
-
-I have been trying to reach the Redis maintainers since 2013-09-13 regarding 
-this report, but I could not find a good security contact for Redis, and the 
-lead maintainer, Salvatore Sanfilippo <antirez@...il.com> is not replying to 
-my private report to him about the issue and his opinion of it. I also 
-contacted US-CERT for help and they could not reach anyone by 2014-01-24.
-
-Therefore I would like to encourage the Redis team to be more 
-security-friendly and establish some contact procedures on their website. 
-Given how many places this software is now being used these days, I think it 
-is very critical to make these changes before someone finds something more 
-serious than the one I could spot.
-
-I think I might have discovered a security vulnerability in Redis 2.6.16. This 
-code is from the function int rdbSave(char *filename) in rdb.c:
-
-   630  int rdbSave(char *filename) {
-   631      dictIterator *di =3D NULL;
-   632      dictEntry *de;
-   633      char tmpfile[256];
-   634      char magic[10];
-   635      int j;
-   636      long long now =3D mstime();
-   637      FILE *fp;
-   638      rio rdb;
-   639      uint64_t cksum;
-   640
-   641      snprintf(tmpfile,256,"temp-%d.rdb", (int) getpid());
-   642      fp =3D fopen(tmpfile,"w");
-   643      if (!fp) {
-   644          redisLog(REDIS_WARNING, "Failed opening .rdb for saving: %s",
-   645              strerror(errno));
-   646          return REDIS_ERR;
-   647      }
-...
-   692      /* Make sure data will not remain on the OS's output buffers */
-   693      fflush(fp);
-   694      fsync(fileno(fp));
-   695      fclose(fp);
-   696
-   697      /* Use RENAME to make sure the DB file is changed atomically only
-   698       * if the generate DB file is ok. */
-   699      if (rename(tmpfile,filename) =3D=3D -1) {
-   700          redisLog(REDIS_WARNING,"Error moving temp DB file on the final destination: %s", strerror(errno));
-   701          unlink(tmpfile);
-   702          return REDIS_ERR;
-   703      }
-
-In line 641, the function does not use a security temporary file creation 
-routine such as mkstemp. This is vulnerable to a wide range of attacks which 
-could result in overwriting (in line 693-695) and unlinking (in line 701) any 
-file / hard link / symlink placed in temp-PID.rdb by an attacker.
-
-https://www.owasp.org/index.php/Improper_temp_file_opening
-https://www.owasp.org/index.php/Insecure_Temporary_File
-
-The code should be creating the temporary file using some kind of safe 
-function like mkstemp, O_EXCL open, etc. instead of just using a PID value 
-which does not have enough entropy and protection from race conditions. It 
-should also be sure it has set the CWD of itself to a known-safe location that 
-should have permissions which are only open to the redis daemon / redis user 
-and not to other users or processes.
+Could we have an additional CVE-ID assigned, please?
 
 Thanks,
-Matthew Hall
 
------ End forwarded message -----
+David Adam
+fish committer
+zanchey@....gu.uwa.edu.au
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJTXnBVAAoJEMC5abKXToiOVksP/Au4UvHIzZX9N9w6L/PTpKyG
++YJ0ddS1LmrRLY1LL2p8JoAj2iZ5gHWZFvm4Anhevl4Hg+CLj5Pet3hhDaebU/Zs
+aZC5/TPqUTmKJ2xca/pJhYdArfJBCdYMP8hfgeDUqBiEe3raUCnenzEUXWhNLHhX
+WgjTjVQPIKzRf/Ic70mhjM++vurpG+8WbsApvsnEhBLm5o78VulBc5Vgoj7v5M7y
+sjKLzyL37YRrHa7D3dRHQodFriBldSSZomyqQwSI07wkofjDIHyusyOzx7DtFg6T
+g/7gZsQXoo7QT6w+QtyVPSFzsKixhDsZCUODankYGJu+rPxej/XT497HbYxZHRVk
+Sv3st9D6liZ9dHrCuFkSx5pkDIVS6nHMjyqJFPId1koqpL0+ZZWuf4XgZ1uz5Od8
+0r8u4ygGD6Yn12uJ6UtmXtO8zasIBvLozL4bvw6I1DvV/WL+Ozi6+enNHI6LZZfh
+TgBnSpCYOLUmtUnQ8/+krRdzkfEnkYT++LUK2Han1eDeg2jCOMQfZ10CnJAYcqop
+ZlRurABSeNc4DVRIifuq9v+W05EHzuYNTbLrDt/AfUE1y2dx3WCpcZ/iCSV90ikq
+iWhxjrl/LeMTGkbKQoNiBzYn5Rg6Q7VVGiGvCBlD1xxBff6Z+dq6QmuUEZrAZyAv
+oVq1wmfzihfGuFSHjWOO
+=Kblr
+-----END PGP SIGNATURE-----
+
+On Mon, 28 Apr 2014, David Adam wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> fish (the friendly interactive shell) is a smart and user-friendly command
+> line shell for OS X, Linux, and the rest of the family.
+> 
+> fish 2.1.1 will be released shortly, correcting two security vulnerabilities
+> and reducing the scope of a further security vulnerability.
+> 
+> fish 2.1.1 will be made available as source and binary packages at
+> http://fishshell.com/.
+> 
+> The following security vulnerabilities have been identified in the fish shell:
+> 
+> CVE-2014-2905: fish universal variable socket vulnerable to permission bypass
+> leading to privilege escalation
+> 
+>   fish, from at least version 1.16.0 to version 2.1.0 (inclusive), does not
+>   check the credentials of processes communicating over the fishd universal
+>   variable server UNIX domain socket. This allows a local attacker to elevate
+>   their privileges to those of a target user running fish, including root.
+> 
+>   fish version 2.1.1 is not vulnerable.
+> 
+>   No workaround is currently available for earlier versions of fish.
+> 
+>   https://github.com/fish-shell/fish-shell/issues/1436
+> 
+> CVE-2014-2906: fish temporary file creation vulnerable to race condition
+> leading to privilege escalation
+> 
+>   fish, from at least version 1.16.0 to version 2.1.0 (inclusive), creates
+>   temporary files in an insecure manner.
+> 
+>   Versions 1.23.0 to 2.1.0 (inclusive) execute code from these temporary files,
+>   allowing privilege escalation to those of any user running fish, including
+>   root.
+> 
+>   Additionally, from at least version 1.16.0 to version 2.1.0 (inclusive),
+>   fish will read data using the psub function from these temporary files,
+>   meaning that the input of commands used with the psub function is under the
+>   control of the attacker.
+> 
+>   fish version 2.1.1 is not vulnerable.
+> 
+>   No workaround is currently available for earlier versions of fish.
+> 
+>   https://github.com/fish-shell/fish-shell/issues/1437
+> 
+> CVE-2014-2914: fish web interface does not restrict access leading to remote
+> code execution
+> 
+>   fish, from version 2.0.0 to version 2.1.0 (inclusive), fails to restrict
+>   connections to the Web-based configuration service (fish_config). This
+>   allows remote attackers to execute arbitrary code in the context of the user
+>   running fish_config.
+> 
+>   The service is generally only running for short periods of time.
+> 
+>   fish version 2.1.1 restricts incoming connections to localhost only. At this
+>   stage, users should avoid running fish_config on systems where there are
+>   untrusted local users, as they are still able to connect to the fish_config
+>   service and elevate their privileges to those of the user running
+>   fish_config.
+> 
+>   No workaround is currently available for earlier versions of fish, although
+>   the use of the fish_config tool is optional as other interfaces to fish
+>   configuration are available.
+> 
+>   https://github.com/fish-shell/fish-shell/issues/1438
+> 
+> The patches going into 2.1.1 can be retrieved from the Integration_2.1.1 branch
+> on Github if you would like to patch your own source or packages without
+> updating to 2.1.1:
+> https://github.com/fish-shell/fish-shell/tree/Integration_2.1.1
+>   10642a34f17ae45bd93be3ae6021ee920d3da0c2
+>   8412c867a501e3a68e55fef6215e86d3ac9f617b
+>   c0989dce2d882c94eb3183e7b94402ba53534abb
+> 
+> Although at this stage we won't be issuing a 2.0.1 release, the patches have
+> been backported to the 2.0.0 branch for distributions that would prefer not to
+> upgrade to the 2.1 series:
+> https://github.com/fish-shell/fish-shell/tree/Integration_2.0.1
+>   216d32055d99fbae563ad048436830187a8bfceb
+>   aea9ad4965d24ef9c4e346f906194820bac70cc9
+>   55986120aa2cc8ab0809db8ca1f8116491c1fb14
+> 
+> David Adam
+> fish committer
+> zanchey@....gu.uwa.edu.au
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> 
+> iQIcBAEBAgAGBQJTXc/pAAoJEMC5abKXToiOzscP/1o3Vwr7J+WceV9jX7Juzgl8
+> aBluWvbtQwNbe6yCjt3X7VqZkSGCq9wkmh0dVgze/owb+nQ/NN1hU3Zt3mxGo8oZ
+> QSYudKu9dX4wEI8Nl3fz5xWOWmTf1Z5JJ6y2MrK2JvhTVkNOvGJHHfLlrw/u3yCX
+> 63wOMfhg4S8vpZK/XNklsQuhBVTCcuTf27SmTqFGw5p9tQ/VLefBCmZEpEEDMmR6
+> tZ9BoEQxcpUBaDooTlzGkLxRGu5oMmSBERXT/qukZOJftIX0NF6RPu40jzZXajlR
+> sxmPnq9tRrg8Apx0rZimGjonIrOvVMj23QCz4dDe9p7ut1x83EkPXsUAqJ3f17CM
+> +00c6xb6muhWtjbIVkWTB28JwpDitvc9XvRnwWOAsJiC7MHmy0LQo2Uoy97Ld2SF
+> bUVsJjv+G/Z+adRV7dAk1jtPex9cY6RBfEkZ1ny8m7Wr4PMWXdaoC1URbAx/Q5vW
+> ffF53VREZcW5MeKbLFTb0K06WnX6augm/O2zf5e4Le0dIaSAZLR+hiW/x33i1Jir
+> /sfK3A7tz99ZRPDy+UkCILmrRImS91SsLvR4WUXcUMUWzjfYfobjuQxi3TSPYslP
+> W0rp7fwHJR+1H4hD3d5X5IU9UefpsNig14QyGtZ+PTZ5gki54HU3DaOecEU3+QIg
+> SjrPIoSCLU9p7/+qucse
+> =Xi0T
+> -----END PGP SIGNATURE-----
+> 
+
+Cheers,
+
+David Adam
+zanchey@....gu.uwa.edu.au
+Ask Me About Our SLA!
