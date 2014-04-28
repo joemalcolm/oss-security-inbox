@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/8
-Message-ID: <CABBygYrKpXWwRHHryM1HLqtxHFTx14SRg7dqcDkJVkP_W35Uzg@mail.gmail.com>
-Date: Thu, 6 Nov 2014 17:22:34 +0100
-From: Javier Nieto <jnietotn@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/28/7
+Message-ID: <CALCETrWFMvAqePk62dCTCxJFgRL43EM-ZWsQP4-9Fzy-K5oNdA@mail.gmail.com>
+Date: Mon, 28 Apr 2014 11:38:12 -0700
+From: Andy Lutomirski <luto@...capital.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for Apache Traffic Server
+Subject: Re: CVE-2014-0181: Linux network reconfiguration due to incorrect netlink checks
 Content-Type: text/plain; charset=utf-8
 
- Versions Affected:  v4.0.2 to 4.1.2
-Not affected: >= 4.2.0
+On Tue, Apr 22, 2014 at 8:01 PM, Andy Lutomirski <luto@...capital.net> wrote:
+> On Apr 22, 2014 2:37 PM, "Andy Lutomirski" <luto@...capital.net> wrote:
+>>
+>> It is possible to reconfigure the network on Linux by calling write(2)
+>> on an appropriately connected network socket.  By passing such a
+>> socket as stdout or stderr to a setuid program, anyone can reconfigure
+>> the network.
+>
+> s/network socket/netlink socket
 
-The vulnerability is due to unescaped hostnames. If we change the hostname
-in the HTTP header by HTML code, Apache Traffic Server does not properly
-filter HTML code from user-supplied input before displaying the input. A
-remote user can cause arbitrary scripting code to be executed by the target
-user's browser. The code will originate from the site running the Apache
-software and will run in the security context of that site. As a result,
-the code will be able to access the target user's cookies (including
-authentication cookies), if any, associated with the site, access data
-recently submitted by the target user via web form to the site, or take
-actions on the site acting as the target user. I
+The fix is here:
 
-I believe it is similar to CVE-2012-3499.
+https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=90f62cf30a78721641e08737bda787552428061e
 
-I did several tests and I was able to get the user cookies by changing the
-hostname (in the HTTP header) to this code <img src=x
-onerror=alert(document.cookie)>
-https://issues.apache.org/jira/browse/TS-3095S
+It depends on a few commits immediately preceding it as well as
+https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=78541c1dc60b65ecfce5a6a096fc260219d6784e.
 
-Should this issue have a CVE assigned?
+So far the fix has not made it to Linus' tree or to -stable.
 
-Regards
---
-Javier Nieto
-
+--Andy
