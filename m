@@ -1,59 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/10
-Message-ID: <53BCFA71.1060300@mittwald.de>
-Date: Wed, 9 Jul 2014 08:14:40 +0000
-From: Sven Kieske <S.Kieske@...twald.de>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: FreeBSD Security Advisory FreeBSD-SA-14:13.pam
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/2
+Message-ID: <535F9A59.3060107@canonical.com>
+Date: Tue, 29 Apr 2014 08:26:01 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Ubuntu 14.04: security problem in the lock screen
 Content-Type: text/plain; charset=utf-8
 
-Am 04.06.2014 07:42, schrieb Solar Designer:
-> I mention this so that people are not confused why this one advisory is
-> posted in here, even though we had decided that vendor-specific
-> advisories are normally not to be posted to oss-security.
+Hi,
 
-I'm sorry, but I'm still relatively new to this list, so forgive
-me my questioning:
+On 14-04-26 11:06 AM, Kurt Seifried wrote:
+> https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1308572
+> 
+> Probably needs a CVE.
+> 
 
-I see lots of "vendor specific" advisories here. So my guess
-is that "vendor" means "a vendor who bundles software into
-a linux/bsd/whatever distribution"?
+While that particular bug was fixed before 14.04 was released, it's probably
+worth assigning a CVE to it anyway for tracking purposes, since I have now
+published a security update that corrects two more lock screen bugs.
 
-Because I would consider vulnerabilities in php, curl
-pnp4nagios (just picked as fresh examples) also as
-"vendor specific", as they are maintained by one
-vendor/project and those vulnerabilities don't occur
-in different tools or language implementations.
+Here's a summary:
 
-What I would not consider "vendor specific"
-are issues inside algorithms or reference implementations
-of algorithms which are incorporated
-into different software projects (vendors) like
-the recent LZ4 and LZO vulns.
+Issue #1 (Before 14.04 came out):
 
-Could you clarify this policy maybe a bit?
+Marco Agnese discovered that Unity 7.2.0 incorrectly handled entry activation on
+the lock screen, resulting in the lock screen crashing and the session becoming
+unlocked.
 
-I find it quite useful to have a dedicated list
-collecting these reports, and also freebsd ones
-even if just freebsd is affected.
+Reference:
+https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1308572
+http://bazaar.launchpad.net/~unity-team/unity/trunk/revision/3787
 
-Lists like full disclosure create way more noise
-and are thus less useful.
+Issue #2:
 
-Thanks in advance.
+Giovanni Mellini discovered that Unity 7.2.0 could display the Dash in certain
+conditions when the screen was locked. A local attacker could possibly use
+this issue to run commands, and unlock the current session.
+
+Reference:
+https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1308850
+http://bazaar.launchpad.net/~unity-team/unity/trunk/revision/3789
+http://www.ubuntu.com/usn/usn-2184-1/
+
+Issue #3:
+
+Frédéric Bardy discovered that Unity 7.2.0 incorrectly filtered keyboard
+shortcuts when the screen was locked. A local attacker could possibly use
+this issue to run commands, and unlock the current session.
+
+Reference:
+https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1313885
+https://code.launchpad.net/~3v1n0/unity/lockscreen-keys-disable/+merge/217528
+http://www.ubuntu.com/usn/usn-2184-1/
+
+
+Could CVEs please be assigned to these three issues?
+
+Thanks!
+
+Marc.
 
 -- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
