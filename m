@@ -1,122 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/03/1
-Message-Id: <201405030710.s437AZ3n010816@linus.mitre.org>
-Date: Sat, 3 May 2014 03:10:35 -0400 (EDT)
-From: cve-assign@...re.org
-To: marc.deslauriers@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Ubuntu 14.04: security problem in the lock screen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/11
+Message-ID: <20140429223552.GA16882@openwall.com>
+Date: Wed, 30 Apr 2014 02:35:52 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: local privilege escalation due to capng_lock as used in seunshare
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-Issues #1, #2, and #3 are clearly within the scope of CVE, and have
-their CVE IDs below. The common theme is "the user intended to lock
-the screen, the UI indicates that the screen is successfully locked,
-the user physically leaves, but this locking can then be bypassed by a
-physically present attacker."
-
-Two of the other bugs referenced within pages for #1, #2, and #3 are
-
-  https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1308572/comments/6
-
-and
-
-  https://bugs.launchpad.net/ubuntu/+source/gnome-screensaver/+bug/49579
-
-Quite possibly, these should also have CVE IDs, but there are
-potentially valid counterarguments. First, at a high level, neither of
-these matches the "common theme" described above.
-
-For 1308572/comments/6, one counterargument is that a user isn't
-entitled to expect that screen locking will continue to work
-flawlessly if he decides to kill arbitrary processes that are, more or
-less, related to screen/display functionality. Also, the risk is very
-low in the sense that, before a user physically left, it would usually
-be obvious that the screen was not successfully locked. However, there
-is conceivably a scenario in which killing compiz is a supported (or,
-at least, reasonable) user activity, and the user must leave
-immediately after a screen-locking attempt without waiting even a few
-seconds.
-
-For 49579, there are many ways to summarize the long discussion: here
-is one of them. A typical end user may expect that automatic screen
-locking succeeds regardless of what the user had been doing (e.g., if
-the user was in the middle of a menu operation). A developer may
-expect that automatic screen locking succeeds in cases where the
-implementation is achievable in a reasonable amount of time. There are
-(at least) three possible conclusions:
-
-  1. The end user wins. This is a vulnerability regardless of what
-     documentation exists, because it is unreasonable to expect an end
-     user to learn about the failure conditions.
-
-  2. This is a vulnerability if the documentation is not "good
-     enough." For example, if the only documentation is bug 49579
-     itself, maybe that's not enough.
-
-  3. The developer wins. This is never a vulnerability. Yes, it would
-     be nice for automatic screen locking to succeed in more cases,
-     but this is not a high-value security feature for all users, and
-     it's OK for development to use a "reasonable effort" approach
-     rather than a "must cover every possible case at all costs"
-     approach.
-
-
-> Issue #1 (Before 14.04 came out):
+On Tue, Apr 29, 2014 at 06:18:58PM -0400, Steve Grubb wrote:
+> On Wednesday, April 30, 2014 02:12:22 AM Solar Designer wrote:
+> > On Tue, Apr 29, 2014 at 05:49:04PM -0400, Steve Grubb wrote:
+> > > On Tuesday, April 29, 2014 02:20:47 PM Andy Lutomirski wrote:
+> > > >   if (setuid(getuid()) != 0)
+> > > >     err(1, "setuid(getuid())");
+> > > 
+> > > If you do not want the saved uid to be available, you need to use
+> > > setresuid. That removes it. I would classify this as a bug in the test
+> > > program.
+> >
+> > Not quite.
 > 
-> Marco Agnese discovered that Unity 7.2.0 incorrectly handled entry activation on
-> the lock screen, resulting in the lock screen crashing and the session becoming
-> unlocked.
-> 
-> Reference:
-> https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1308572
-> http://bazaar.launchpad.net/~unity-team/unity/trunk/revision/3787
+> If the program was amended to use setresuid(), does the bug still exist?
 
-Use CVE-2014-3202.
+Yes, because it affects other similar correct programs that haven't yet
+been amended to work safely on your non-Unix system. ;-)  Alternatively,
+you may declare that your system is deliberately incapable of running
+programs written for traditional Unix safely, and will stay that way.
+That will be a reason for people to prefer other Linux distros over Red
+Hat's, but at least it'd be fair. ;-(
 
+To paraphrase your question, since sendmail got a workaround for the old
+capabilities bug in the Linux kernel, does the bug in those old kernel
+versions still exist?  The answer is also yes, it does, potentially
+affecting other programs running on those vulnerable kernels.(*)  The
+bug needed to be fixed in the kernel, and it was (for later versions).
 
-> Issue #2:
-> 
-> Giovanni Mellini discovered that Unity 7.2.0 could display the Dash in certain
-> conditions when the screen was locked. A local attacker could possibly use
-> this issue to run commands, and unlock the current session.
-> 
-> Reference:
-> https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1308850
-> http://bazaar.launchpad.net/~unity-team/unity/trunk/revision/3789
-> http://www.ubuntu.com/usn/usn-2184-1/
+(*) Of course, most people should not actually run those old kernels
+because of other vulnerabilities that have been found and fixed since,
+but that's a separate matter.
 
-Use CVE-2014-3203.
+I hope you don't mind the rhetoric.  I mean it to be friendly.  I hope
+it serves to deliver the message well.
 
-
-> Issue #3:
-> 
-> Frederic Bardy discovered that Unity 7.2.0 incorrectly filtered keyboard
-> shortcuts when the screen was locked. A local attacker could possibly use
-> this issue to run commands, and unlock the current session.
-> 
-> Reference:
-> https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1313885
-> https://code.launchpad.net/~3v1n0/unity/lockscreen-keys-disable/+merge/217528
-> http://www.ubuntu.com/usn/usn-2184-1/
-
-Use CVE-2014-3204.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTZJVNAAoJEKllVAevmvms96YH/iwHSHG581FZ0v2fAjEEqXlP
-aAi1Fy65ejwxP1mEnpgw15p9mu8OTD1vYNn4+ibdvQ/MuGKuS/uSsTeH6vixhB/f
-U4SmcOqTGc0ejEiRIG9Pf1CoLZnP8fYuwPRYKuF4ah8AZKNbfnwmL3AO8/SaUtN2
-7E/f+KuajcUOvbKBTcANPffILUufyNSzXWc+DxsRcNYjaDs9K4B5VDLZbT8NbquB
-rUFWPPhiAWFlKq+XAz6uLLcKug8L775xhbB60iPzhYa6tqatuJSuHm9CGb/5HwJT
-NXK8VyfaPfg+/iTzyjNHNO8wKq6QdlM9C3Qn6hyBIhUTa37WjnSqVBpPtQMwCzg=
-=kdSf
------END PGP SIGNATURE-----
+Alexander
