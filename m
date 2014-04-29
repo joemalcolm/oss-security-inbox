@@ -1,25 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/6
-Message-ID: <79520.1404373357@critter.freebsd.dk>
-Date: Thu, 03 Jul 2014 07:42:37 +0000
-From: "Poul-Henning Kamp" <phk@....freebsd.dk>
-To: Marek Kroemeke <kroemeke@...il.com>
-cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, varnish-misc@...nish-cache.org
-Subject: Re: Varnish - no CVE == bug regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/6
+Message-ID: <BFB17C16CEB8834FBCE8DCF6B3CFC7B601604CD5@SEAEMBX02.olympus.F5Net.com>
+Date: Tue, 29 Apr 2014 08:06:27 +0000
+From: Dolev Farhi <D.Farhi@...com>
+To: "cve-assign@...re.org" <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request - XSS in FOG open imaging system
 Content-Type: text/plain; charset=utf-8
 
-In message <CAOurorZCjmrrw0MPhca=8+qjLKofrhdHsJuee5_=rCBv87SPbg@...l.gmail.com>, Marek Kroemeke writes:
+Hi
 
->I'm not entirely convinced that there is a trust relationship between the
->cache and the backend in every single use case. 
+As reported in http://fogproject.org/forum/threads/stored-xss-vulnerability-in-fog-project-version-0-27-through-0-32.10394/
 
-It may not be total trust, but trust there is:  On party delivers
-the other partys web-property.
+a persistent XSS was found in versions 0.27 through 0.32.
 
-But as I said:  We will fix bugs, but we don't consider them DoS vulns.
+Can a CVE please be assigned to this?
 
--- 
-Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
-phk@...eBSD.ORG         | TCP/IP since RFC 956
-FreeBSD committer       | BSD since 4.3-tahoe    
-Never attribute to malice what can adequately be explained by incompetence.
