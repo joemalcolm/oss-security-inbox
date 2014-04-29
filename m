@@ -1,70 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/5
-Message-ID: <548AF731-EA0A-40C6-9F1D-A3DE86880AAC@redhat.com>
-Date: Fri, 28 Feb 2014 11:55:02 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/5
+Message-ID: <535FC224.3000800@hoffie.info>
+Date: Tue, 29 Apr 2014 17:15:48 +0200
+From: Christian Hoffmann <christian@...fie.info>
 To: oss-security@...ts.openwall.com
-Cc: mmcallis@...hat.com, cve-assign@...re.org, "Markus Glaser" <glaser@...lowelt.biz>
-Subject: Re: CVE requests: MediaWiki 1.22.3, 1.21.6 and 1.19.12 release
+Subject: Fwd: [vs] php-fpm: privilege escalation due to insecure default config (CVE-2014-0185)
 Content-Type: text/plain; charset=utf-8
 
-Seems odd to be asking these questions without asking someone from the MediaWiki team involved (I doubt they are subscribed to oss-sec).  Given that Murray just posting what was written by upstream and even asked "if CVE worthy" I doubt he has the answers you're looking for.  =)
-
-I've cc'd Markus Glaser to this as he sent out the notification to the mediawiki-announce list so he may have the insight you're looking for.
-
-
-On 02/28/2014, at 11:26 AM, cve-assign@...re.org wrote:
-
-> Some of this seems straightforward and we will send CVE assignments a
-> little later. Our first question is about the UploadBase.php diff in:
->
-> https://gerrit.wikimedia.org/r/#/q/7d923a6b53f7fbcb0cbc3a19797d741bf6f440eb,n,z
->
-> Our first thought is that it might be best to have separate CVEs for
-> "Disallow uploading non-whitelisted namespaces" and "disallow iframe
-> elements" because they are distinct types of problems. The first one
-> seems similar to what is discussed in:
->
-> http://en.wikipedia.org/wiki/User:Aarchiba/SVG_sanitizer
->
-> The first CVE would, roughly, have a root cause of "does not recognize
-> that a trust relationship with a specific external site is reasonably
-> required for use of a namespace." The second CVE would, roughly, have
-> a root cause of "does not block IFRAME elements."
->
-> Does anyone have an opposing view: for example, that adding the
-> hardcoded $validNamespaces list can't be interpreted as a "normal"
-> vulnerability fix? Across all products, adding a list of off-site URLs
-> maintained by various third parties is rarely the essence of a
-> security patch.
->
-> (As a side issue, SVG_sanitizer allows
-> http://www.w3.org/XML/1998/namespace but the patched UploadBase.php
-> does not.)
->
->
-> Our second question is about
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=61346 Comment 9. Do all
-> valid tokens have the same length, and thus an attacker (if he looked
-> at the source code) would already know that the wrong-length attempts
-> would always fail?
->
-> If not, a separate CVE would be needed on the basis of different
-> affected versions.
->
-> (This question is only about MediaWiki as shipped. If a system
-> administrator would need to modify the source code to use a different
-> length, and an attacker could detect that more easily because of
-> 'strlen( $answer ) !== strlen( $test )' tests, that doesn't qualify
-> for a CVE.)
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+This is now public.
+CVE-2014-0185 has has been assigned to this issue meanwhile.
 
 
--- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+-------- Original message --------
+Betreff: [vs] php-fpm: privilege escalation due to insecure default config
+Datum: Tue, 15 Apr 2014 21:49:57 +0200
+Von: Christian Hoffmann <mail@...fmann-christian.info>
+An: distros@...openwall.org
+
+Hi,
+
+PHP FPM is the FastCGI Process Manager for PHP which can manage several
+pools of PHP FastCGI processors, often running with different user
+permissions for privilege separation. Web servers connect to these pools
+through one socket per configured process pool.
+
+When using UNIX sockets, the socket's permissions default to 0666 if not
+overriden explicitly ("listen.mode"). This is true even if the owner of
+the socket is changed explicitly ("listen.user", "listen.group").
+
+Depending on the concrete scenario, this may result in privilege escalation.
+Any local user with the ability to connect to UNIX sockets can run
+arbitrary (PHP) code with the target process pool's permissions [1].
+
+Ubuntu 14.04 Beta's default config seems to be vulnerable, any local
+user can run code as the 'www-data' user [2]. Other versions or
+distributions have not been tested, but may well be vulnerable, too.
+
+This issue is both about the example config [3] and the actual code [4].
+
+No CVE has been requested by me or the PHP team (AFAIK) so far.
+
+Stanislav Malyshev from the PHP team has prepared a patch [5], which
+will be part of php-5.4.28.
+
+This issue is not public yet. Suggested embargo date: 2014-04-29
+
+References (some still marked private at the time of writing):
+
+[1] https://bugs.php.net/bug.php?id=67060
+[2] https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1307027
+[3]
+https://github.com/php/php-src/blob/php-5.5.11/sapi/fpm/php-fpm.conf.in#L172
+[4]
+https://github.com/php/php-src/blob/php-5.5.11/sapi/fpm/fpm/fpm_unix.c#L31
+[5]
+https://hoffmann-christian.info/files/php-fpm/0001-Fix-bug-67060-use-default-mode-of-660.patch
+
+Kind regards,
+
+Christian Hoffmann
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (885 bytes)
