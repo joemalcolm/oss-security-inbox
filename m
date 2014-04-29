@@ -1,68 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/23/1
-Message-Id: <201402231702.s1NH2c7P029650@linus.mitre.org>
-Date: Sun, 23 Feb 2014 12:02:38 -0500 (EST)
-From: cve-assign@...re.org
-To: mhall@...omputing.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Fwd: temporary file creation vulnerability in Redis
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/9
+Message-ID: <20140429221221.GA16708@openwall.com>
+Date: Wed, 30 Apr 2014 02:12:22 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: local privilege escalation due to capng_lock as used in seunshare
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Apr 29, 2014 at 05:49:04PM -0400, Steve Grubb wrote:
+> On Tuesday, April 29, 2014 02:20:47 PM Andy Lutomirski wrote:
+> >   if (setuid(getuid()) != 0)
+> >     err(1, "setuid(getuid())");
+> 
+> If you do not want the saved uid to be available, you need to use setresuid. 
+> That removes it. I would classify this as a bug in the test program.
 
-> Could someone please assign me a CVE for the below Redis vulnerability?
+Not quite.
 
-> https://github.com/antirez/redis/issues/1560
+Per POSIX.1-2001, setuid() "shall set the real user ID, effective user
+ID, and the saved set-user-ID of the calling process to uid" if the
+process has "appropriate privileges".  On traditional Unix systems,
+without capabilities, running as root historically does constitute
+"appropriate privileges".  If we want current systems to support safely
+running programs written for traditional Unix (including SUID root
+programs), which I think is taken for granted by many of us, we must not
+deviate from those semantics in dangerous ways.  Any such deviation is a
+vulnerability in our current kernel code or configuration.
 
-Our understanding so far is that this doesn't cross privilege
-boundaries within the context of the product's documented security
-model, so no CVE assignment is pending.
+Distributions must not ship with settings or programs that allow anyone
+other than an administrator to alter the definition of "appropriate
+privileges" in a way that, while compliant with this vague wording in
+POSIX, introduces a vulnerability for correct programs written for
+traditional Unix systems.
 
-Admittedly, the documentation doesn't specifically address the "Is it
-always completely safe to put 'dir /tmp/' in redis.conf?" question.
+What we have here is a reincarnation of:
 
-Note that the value is "dir ./" in the default redis.conf file.
+"Sendmail Workaround for Linux Capabilities Bug"
+https://www.sendmail.com/sm/open_source/security/security_docs/sendmail.8.10.1.LINUX-SECURITY.txt
 
-http://redis.io/topics/security says "Redis is designed to be accessed
-by trusted clients inside trusted environments ... in general,
-untrusted access to Redis should always be mediated by a layer
-implementing ACLs." It also says "the ability to control the server
-configuration using the CONFIG command makes the client able to change
-the working dir of the program and the name of the dump file. This
-allows clients to write RDB Redis files at random paths, that is a
-security issue that may easily lead to the ability to run untrusted
-code as the same user as Redis is running."
+albeit in slightly different shape (not entirely in the kernel, but with
+a userland "helper").
 
-Yes, the documentation is primarily talking about access over the
-network, not access within a multi-user system that has potentially
-untrusted local user accounts. However, apparently in the default
-configuration, a local user can simply connect to 127.0.0.1, send
-"CONFIG SET dir" and "CONFIG SET dbfilename" commands, and then send a
-BGSAVE command to overwrite an arbitrary file with the privileges of
-the Redis process.
+I think that sendmail-exposed vulnerability was in the kernel (not in
+sendmail), and I think the vulnerability Andy is reporting is in some
+distros (apparently, Red Hat's).
 
-The vendor considers this intended behavior because of the "trusted
-clients inside trusted environments" statement in the security model.
-Because of this, it seems most likely that the trusted-environment
-constraint also means that direct filesystem write access to the
-product's data directory is also outside the scope of the security
-model. So, we are not planning to assign a CVE ID unless the vendor
-decides to announce the temp-%d.rdb issue as a vulnerability.
+Of course, it is possible that I have missed something important as I
+did not look into this issue closely, but the above is my current
+understanding based on Andy's message.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTCijJAAoJEKllVAevmvmsNrAH+gPNX5rY89Z0nsC3N9JlZFQC
-4O0xvDcgaOQY5r6Pk25NfkabRn8A1q/37JOvqoED+iqA5mvQCqGNPTqlnlQAjJdO
-YUWqRBL6s8FIcj5nWvLB1FvTCIvrXPjaGBnKlgTGLBKJUsp4b+Ammer1yWEqIU0+
-ocy9K2ewlkOjc7YfnlDHuw+7aB3ZOH8XrfF6OKnENsAibW53jqYwxicc+A0inkK9
-ui45DQ4HNycRPP5oIplObFL1imPC1SEoTDw04vfxLrEoCDw/st5DyApUuYHfG6cJ
-hjf8FDxg2jZtv29YuZAb2fgEEkxH9dQ08c2GfJiMY0+nDdWzJgP8YMLnCzsZFXw=
-=jzUP
------END PGP SIGNATURE-----
+Alexander
