@@ -1,78 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/30/6
-Message-Id: <201406301454.s5UEsBjg019256@linus.mitre.org>
-Date: Mon, 30 Jun 2014 10:54:11 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE requests: nagios check_dhcp plug-in: read parts of INI config files belonging to root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/4
+Message-ID: <CAA7hUgG74XTz6M6Vh2uMPDqPnLCHmZ+M1MQTXyLvUQoU7z3JRg@mail.gmail.com>
+Date: Tue, 29 Apr 2014 16:59:38 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request: directory traversal in DSA-2915-1-patched dpkg in Debian squeeze
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-This is a somewhat unusual situation for CVE because there are two
-cases in which a researcher reported a subset of the problem, and then
-a vendor fix was announced that apparently addressed the problem
-without modifying the component mentioned by the researcher.
+The recent update[1] of dpkg for CVE-2014-0471 in Debian squeeze (and
+possibly Ubuntu lucid[2]) actually introduces a vulnerability in that
+release[3], while it was not affected by the original vulnerability.
+The newly introduced vulnerability is dependent on the version of
+patch(1) that is installed on the system, so that:
 
-> http://seclists.org/fulldisclosure/2014/May/74
-> 
-> This was fixed in version 2.0.2:
-> 
-> <http://nagios-plugins.org/nagios-plugins-2-0-2-released/>
+updated dpkg in squeeze + patch(1) from squeeze = vulnerable
+updated dpkg in squeeze + patch(1) from wheezy = not vulnerable
+updated dpkg in wheezy + patch(1) from squeeze = vulnerable (but not confirmed)
+updated dpkg in wheezy + patch(1) from wheezy = not vulnerable
 
-Use CVE-2014-4701 for the report in
-http://seclists.org/fulldisclosure/2014/May/74 stating that check_dhcp
-is affected. (http://nagios-plugins.org/nagios-plugins-2-0-2-released/
-is also an applicable reference for this CVE.)
+In other words, if the updated dpkg package is not installed in a
+squeeze system, this new vulnerability would only be exposed if a
+system is partially upgraded to wheezy.
 
-Use CVE-2014-4702 for the report in
-http://nagios-plugins.org/nagios-plugins-2-0-2-released/ stating that
-check_icmp is affected. This is new vector information announced at a
-different time by a different party.
+Given that at least one PoC demonstrates that squeeze's updated
+package is vulnerable, while the previous dpkg in wheezy isn't (it
+refuses to unpack the package), I think this is a new vulnerability
+and should therefore receive its own CVE.
 
-(From a practical perspective, someone might have been tracking Nagios
-Plugins security on the basis of fulldisclosure posts, and decided to
-"fix" http://seclists.org/fulldisclosure/2014/May/74 by simply
-deleting the check_dhcp plugin. In this case, CVE-2014-4702 is useful
-because that installation was still vulnerable after that
-CVE-2014-4701 remediation action.)
+If you agree, could you please assign one?
 
+Thanks in advance.
 
-> http://seclists.org/fulldisclosure/2014/Jun/141
-> 
-> This was fixed in version 2.0.3:
-> 
-> <http://nagios-plugins.org/nagios-plugins-2-0-3-released/>
+[1]https://www.debian.org/security/2014/dsa-2915
+[2]http://www.ubuntu.com/usn/usn-2183-1/
+[3]https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746306
 
-Use CVE-2014-4703 for the report in
-http://seclists.org/fulldisclosure/2014/Jun/141 stating that
-check_dhcp is affected.
-(http://nagios-plugins.org/nagios-plugins-2-0-3-released/ is also an
-applicable reference for this CVE.)
-
-Here, the vendor did not announce any additional vector information
-(and only referred to "the SUID vulnerability discovered by David
-Golunski") so we can't assign a fourth CVE ID for the
-http://nagios-plugins.org/nagios-plugins-2-0-3-released/ post. It's
-possible that this is actually a parallel situation, so if anyone
-wants to announce an issue in 2.0.2 that's not specifically about
-check_dhcp, an additional CVE ID could be assigned.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTsXlEAAoJEKllVAevmvmsIs8H/0nIgPWQJWEXPckNuYNPwAof
-Cxedes/xZ4Btuw+90PfGPPIrPaN6JJkg9+kFBEMLMQWy/AwTLjHkU7CMmVB7kTtx
-DPPkQX7wPvRxM1ZcWA4zonsa5h/eGqiXBlrkl/C8qzsuPxGhRC+SVLDu8tIarQuw
-CPHS4haMnMSPMAnY3Iqaproh0Bm3f/5q+3wDpsVKJS/YZX/iS+EgPpJ/T+1BJwOu
-NLEfIuMAHiV99nA0OzZpLy9rClfE7Mhurfg+u3s2TKVTtjoEWddyWXnP4iHdhtU1
-YvOLW3uMrVj7qQHR8ZHtpPD3smpHS6wU7ZPsN6qQkkKwYV3NU1/Yid+Ygv3Bitc=
-=N17g
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
