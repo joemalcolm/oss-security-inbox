@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/6
-Message-ID: <CAD6CYKOctTeL+c2zz0yi__A5MMfiGyPDNXHEJArfDNKwC-0Siw@mail.gmail.com>
-Date: Fri, 7 Feb 2014 15:42:10 +0100
-From: Alexandre Dulaunoy <a@....be>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/3
+Message-ID: <535F9E39.8090406@canonical.com>
+Date: Tue, 29 Apr 2014 08:42:33 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: contao vulnerability - CVE assigned?
+Subject: CVE Request: indicator-datetime issue
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Hello,
 
-Following this "full disclosure" paste:
+It was discovered that indicator-datetime 13.10.0+13.10.x would incorrectly
+allow Evolution to be opened while at the greeter screen. A local attacker could
+possibly use this issue to obtain unconfined local access.
 
-http://pastebin.com/DFh1FVdb
+Bug reports:
+https://bugs.launchpad.net/ubuntu/+source/indicator-datetime/+bug/1246812
 
-Do you know if cantao already requested a CVE?
+Fix:
+http://bazaar.launchpad.net/~indicator-applet-developers/indicator-datetime/trunk.13.10/revision/282
 
-Cheers.
+Could a CVE please be assigned to this issue?
 
+Thanks,
+
+Marc.
 
 -- 
---                   Alexandre Dulaunoy (adulau) -- http://www.foo.be/
---                             http://www.foo.be/cgi-bin/wiki.pl/Diary
---         "Knowledge can create problems, it is not through ignorance
---                                that we can solve them" Isaac Asimov
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
