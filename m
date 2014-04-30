@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/4
-Message-ID: <alpine.LFD.2.10.1405131612090.7354@javelin.pnq.redhat.com>
-Date: Tue, 13 May 2014 16:16:25 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2014-0222 Qemu: qcow1: Validate L2 table size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/11
+Message-Id: <201404302023.s3UKMrEx008342@linus.mitre.org>
+Date: Wed, 30 Apr 2014 16:22:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: security@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 91 - Hardware timer context is not properly context switched on ARM
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-'CVE-2014-0222' has been assigned to this issue.
+> XSA-91
 
-Too large L2 table sizes cause unbounded allocations. Images actually
-created by qemu-img only have 512 byte or 4k L2 tables.
+> Xen was not context switching the CNTKCTL_EL1 register ... This meant
+> that any guest can reconfigure these settings for the entire system
+> ... may lead to a kernel crash ... also be able to read the current
+> timestamp value for the domain perhaps leaking information
 
-To keep things consistent with cluster sizes, allow ranges between 512
-bytes and 64k (in fact, down to 1 entry = 8 bytes is technically
-working, but L2 table sizes smaller than a cluster don't make a lot of
-sense).
+Use CVE-2014-3125.
 
-This also means that the number of bytes on the virtual disk that are
-described by the same L2 table is limited to at most 8k * 64k or 2^29,
-preventively avoiding any integer overflows.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Upstream fix:
--------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2014-05/msg02155.html
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+iQEcBAEBAgAGBQJTYVs9AAoJEKllVAevmvmsoN4IAImkrYCRsGux5OqDa7FzzBP3
+1EfhhgbtpzLIFT1I7wKUFc+PDuUGGp7cO88sJkNuaMpRTYtRRyZBIIs7hNxlAi/p
+yumEmhPE6lWy879xCB9zDqXNaJneIm/iGZwm2H583xuZNhx/iuNxHOuxVCOaZo8x
+mehNxUVAu0U3aKogN+Z3/AMyx6ffh0o7ASK21tO5JYOEGzv9iUW1tBLOiKI3bGJE
+Yv62vJ+iu60tIoLw+80o08fjT7cGQ+Dl8XOh2r5bwMscNWYE90xrJ2tKYkGDpfrS
+GXsEm5BKNuscE9OyLqjl/bEjf0/RxWeuILHfit9Qr8KXwypS4WXbPhbWXJWceeU=
+=JCXD
+-----END PGP SIGNATURE-----
