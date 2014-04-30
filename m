@@ -1,102 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/6
-Message-Id: <E1WGAQe-0003PS-Bl@xenbits.xen.org>
-Date: Wed, 19 Feb 2014 16:55:24 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 82 (CVE-2013-6885) - Guest triggerable AMD CPU erratum may cause host hang
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/9
+Message-ID: <5983384.fqBtkCuopK@x2>
+Date: Wed, 30 Apr 2014 11:55:31 -0400
+From: Steve Grubb <sgrubb@...hat.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: local privilege escalation due to capng_lock as used in seunshare
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wednesday, April 30, 2014 02:35:52 AM Solar Designer wrote:
+> On Tue, Apr 29, 2014 at 06:18:58PM -0400, Steve Grubb wrote:
+> > On Wednesday, April 30, 2014 02:12:22 AM Solar Designer wrote:
+> > > On Tue, Apr 29, 2014 at 05:49:04PM -0400, Steve Grubb wrote:
+> > > > On Tuesday, April 29, 2014 02:20:47 PM Andy Lutomirski wrote:
+> > > > >   if (setuid(getuid()) != 0)
+> > > > >   
+> > > > >     err(1, "setuid(getuid())");
+> > > > 
+> > > > If you do not want the saved uid to be available, you need to use
+> > > > setresuid. That removes it. I would classify this as a bug in the test
+> > > > program.
+> > > 
+> > > Not quite.
+> > 
+> > If the program was amended to use setresuid(), does the bug still exist?
+> 
+> Yes, because it affects other similar correct programs that haven't yet
+> been amended to work safely on your non-Unix system. ;-)  Alternatively,
+> you may declare that your system is deliberately incapable of running
+> programs written for traditional Unix safely, and will stay that way.
+> That will be a reason for people to prefer other Linux distros over Red
+> Hat's, but at least it'd be fair. ;-(
+> 
+> To paraphrase your question, since sendmail got a workaround for the old
+> capabilities bug in the Linux kernel, does the bug in those old kernel
+> versions still exist?  The answer is also yes, it does, potentially
+> affecting other programs running on those vulnerable kernels.(*)  The
+> bug needed to be fixed in the kernel, and it was (for later versions).
+> 
+> (*) Of course, most people should not actually run those old kernels
+> because of other vulnerabilities that have been found and fixed since,
+> but that's a separate matter.
+> 
+> I hope you don't mind the rhetoric.  I mean it to be friendly.  I hope
+> it serves to deliver the message well.
 
-             Xen Security Advisory CVE-2013-6885 / XSA-82
-                              version 4
+No problem. I chatted with Petr Matousek about this and I think we understand 
+the issue now.
 
-          Guest triggerable AMD CPU erratum may cause host hang
+In my opinion, the issue is that I think SECURE_NOROOT doesn't get its 
+semantics right as is. I'm thinking if noroot is set and cap_setuid is set, 
+suid should be as normal but with no capabilities. If noroot is set and 
+cap_setuid is unset, no transition of any uid should occur. If noroot is 
+unset, then works as normal.
 
-UPDATES IN VERSION 4
-====================
+If this was not the intention, then SECURE_NOSUID should have been created at 
+the same time the other SECUREBITS options were created so that each part of 
+credential change could be completely controlled. Not designing the ability to 
+control all parts is what creates this hole...for years I might add.
 
-The original fix for 4.2.x and 4.1.x was found to deal with 64-bit
-hypervisors only. Incremental patches to also address 32-bit ones are
-now being provided in addition.
+So, I wonder if SECURE_NOROOT should be fixed or if ancient kernels need to 
+suddenly backport PR_SET_NO_NEW_PRIVS?
 
-ISSUE DESCRIPTION
-=================
-
-AMD CPU erratum 793 "Specific Combination of Writes to Write Combined
-Memory Types and Locked Instructions May Cause Core Hang" describes a
-situation under which a CPU core may hang.
-
-IMPACT
-======
-
-A malicious guest administrator can mount a denial of service attack
-affecting the whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-The vulnerability is applicable only to family 16h model 00h-0fh AMD
-CPUs.
-
-Such CPUs running Xen versions 3.3 onwards are vulnerable.  We have
-not checked earlier versions of Xen.
-
-HVM guests can always exploit the vulnerability if it is present.
-PV guests can exploit the vulnerability only if they have been granted
-access to physical device(s).
-
-Non-AMD CPUs are not vulnerable.
-
-CREDITS
-=======
-
-This issue's security impact was discovered by Jan Beulich.
-
-MITIGATION
-==========
-
-This issue can be avoided by neither running HVM guests, nor assigning
-PCI devices to PV guests.
-
-RESOLUTION
-==========
-
-The attached xsa82.patch contains a software workaround which resolves
-this issue for 64-bit hypervisors. To also resolve the issue on 32-bit
-hypervisors (Xen 4.2.x and 4.1.x only), the respective attached
-xsa82-4.?-32bit.patch needs to be applied on top.
-
-Alternatively, the recommended workaround can be implemented in
-firmware, so a suitable firmware update will resolve the issue.
-If you require a firmware update please consult your vendor.
-
-xsa82.patch             Xen 4.1.x, Xen 4.2.x, Xen 4.3.x, xen-unstable
-xsa82-4.1-32bit.patch   Xen 4.1.x
-xsa82-4.2-32bit.patch   Xen 4.2.x
-
-$ sha256sum xsa82*.patch
-b0fb0289e1da965bc038993e07af4ba78cb746ed8f1a1865f5fec9de7299faa7  xsa82-4.1-32bit.patch
-18f2ba14131975b45688e3c5f4c0a85bd78cf089c3d83ae81f86e149b8c538d6  xsa82-4.2-32bit.patch
-0a58f3564ca91fd2668c202446c607fdb1ec8643e558a3921046d43675f58c08  xsa82.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTBOHNAAoJEIP+FMlX6CvZ6TIIAMS1oTljW2yAB9daiY5P0UBf
-u4X+NTUUUO6DiKLakBFjmS01oB7pApSCHmnqUqgFXlbo8KJsz3qtCLWe+IHH0Kex
-8ofL/pDedcHm7bSkXCcncz8xVCqPbPrgVV+bwDXHru65/jxf0XDvPRT9af4N2eGY
-wlngDFDaWLuozjOqp2mtaOSiqbUc2r43BOalMl6om2BFbF8BEBpPBkcLRxUvsQX0
-noZMbknQ36mb0/+dC+pHCUfcUuLquaGNx+I+UF4HXSUdxhVniCD8hzmDxRR9i5Dn
-S/g9z72LDF0cISL2K4B/iwRiCjOozHqbNimSAWuWTgj3dAWu8dClI3SQyFpOgxY=
-=ie9o
------END PGP SIGNATURE-----
-
-Download attachment "xsa82-4.1-32bit.patch" of type "application/octet-stream" (1341 bytes)
-
-Download attachment "xsa82-4.2-32bit.patch" of type "application/octet-stream" (1352 bytes)
-
-Download attachment "xsa82.patch" of type "application/octet-stream" (1390 bytes)
+-Steve
