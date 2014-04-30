@@ -1,39 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/03/2
-Message-ID: <5365277F.1060706@redhat.com>
-Date: Sat, 03 May 2014 11:29:35 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: ldns-keygen creates private key world readable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/4
+Message-ID: <5360B80C.50805@oracle.com>
+Date: Wed, 30 Apr 2014 09:45:00 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: local privilege escalation due to capng_lock as used in seunshare
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-ldns-keygen creates private key world readable
+On 29/04/14 23:12, Solar Designer wrote:
+> On Tue, Apr 29, 2014 at 05:49:04PM -0400, Steve Grubb wrote:
+>> On Tuesday, April 29, 2014 02:20:47 PM Andy Lutomirski wrote:
+>>> if (setuid(getuid()) != 0) err(1, "setuid(getuid())");
+>> 
+>> If you do not want the saved uid to be available, you need to use
+>> setresuid. That removes it. I would classify this as a bug in the
+>> test program.
+> 
+> Not quite.
+> 
+> Per POSIX.1-2001, setuid() "shall set the real user ID, effective
+> user ID, and the saved set-user-ID of the calling process to uid"
+> if the process has "appropriate privileges".  On traditional Unix
+> systems, without capabilities, running as root historically does
+> constitute "appropriate privileges".  If we want current systems to
+> support safely running programs written for traditional Unix
+> (including SUID root programs), which I think is taken for granted
+> by many of us, we must not deviate from those semantics in
+> dangerous ways.  Any such deviation is a vulnerability in our
+> current kernel code or configuration.
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746758
+Linux's own man page (even going back as far as man-pages-1.67; 3.53
+seems to be about current) says:
 
-Same argument as GPG I suppose, so probably deserves a CVE.
+  setuid  sets  the  effective  user  ID of the current process.  If the
+  effective userid of the caller is root, the real and saved  user  ID’s
+  are also set.
+
+  Under  Linux,  setuid  is  implemented like the POSIX version with the
+  _POSIX_SAVED_IDS feature.  This allows a setuid (other than root) pro-
+  gram  to  drop all of its user privileges, do some un-privileged work,
+  and then re-engage the original effective user ID in a secure  manner.
+
+  If  the  user is root or the program is setuid root, special care must
+  be taken. The setuid function checks the effective uid of  the  caller
+  and  if  it is the superuser, all process related user ID’s are set to
+  uid.  After this has occurred, it is impossible  for  the  program  to
+  regain root privileges.
+
+  Thus,  a  setuid-root  program wishing to temporarily drop root privi-
+  leges, assume the identity of a non-root user, and  then  regain  root
+  privileges afterwards cannot use setuid.  You can accomplish this with
+  the (non-POSIX, BSD) call seteuid.
+
+If the setuid program were using any uid other than zero, then the
+effect that sesploit.c demonstrates is exactly what you would expect.
+
+Going back to Steve's comment about setresuid and using getresuid()
+instead of getuid/geteuid neatly demonstrates the problem as well:
+
+  $ ./sesploit
+  Initial privs: ruid=1000 euid=0 suid=0
+  Dropped privs: ruid=1000 euid=1000 suid=1000
+  sesploit: seteuid: Operation not permitted
+  Phew, safe.
+
+  $ seunshare -t . $PWD/sesploit
+  Initial privs: ruid=1000 euid=0 suid=0
+  Dropped privs: ruid=1000 euid=1000 suid=0
+  It's baaaack!
+
+When I replace setuid(getuid()) with setresuid(ruid, ruid, ruid) then
+sesploit behaves the same in both cases, but that's not what Posix
+mandates and what the linux man page says.  It's not a bug in the test
+program.
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
+> Distributions must not ship with settings or programs that allow
+> anyone other than an administrator to alter the definition of
+> "appropriate privileges" in a way that, while compliant with this
+> vague wording in POSIX, introduces a vulnerability for correct
+> programs written for traditional Unix systems.
+> 
+> What we have here is a reincarnation of:
+> 
+> "Sendmail Workaround for Linux Capabilities Bug" 
+> https://www.sendmail.com/sm/open_source/security/security_docs/sendmail.8.10.1.LINUX-SECURITY.txt
+>
+>  albeit in slightly different shape (not entirely in the kernel,
+> but with a userland "helper").
+> 
+> I think that sendmail-exposed vulnerability was in the kernel (not
+> in sendmail), and I think the vulnerability Andy is reporting is in
+> some distros (apparently, Red Hat's).
+> 
+> Of course, it is possible that I have missed something important as
+> I did not look into this issue closely, but the above is my
+> current understanding based on Andy's message.
+> 
+> Alexander
+> 
+
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJTZSd/AAoJEBYNRVNeJnmTmugP/jNYcpGML64bLcSGrD+D4and
-KasTcWoYXmM8wLakBsbpQ498p2j2fTzHh3MnI68eESgvSoxUTV31FirBpAejJe85
-c6XmIcKb+qZ0MSpfT26nPtW6ypptn2d2kDtu4cgZxjbTgBH1z+KuEwkF+XClB9VO
-lbPAitmOM6aCCX0ccnK9UDVYLBDurorK5MNeC5QiCVp3wdrgiEo3pvJAp8bEAMdl
-9RQR/EHxXnJqmEQgW1E2A740abpNELU4NSlYM3HQ+3v2hHFErSv2iH5ypuuqaXMc
-53NHbBfbQBaEmckapIzQUhJoG1CZFgl1VEiqH4nchvzpkG18pTM8feY9n2CrqTXQ
-d3c4kOZv9UPWWipyabqCWrW+qcdqXPYJNi0x1g+a6JjCKkutPrJd14EX5J/Hr9of
-bABuyh8cuk8UUIxTL/+jX08zSXyUbB9P3tLF1SOlpnshhuWqk4u58gHuG4q44ceS
-BD/G0yZvFQfyApuVzUC7oXuUahGrgSnROljnJgLRo7+VCIXBSgn+i+FtWqjy4oeB
-sJme5MfJrwl9lVPutDYivNN5WmDj6plwSeS4xCIQS8K8yXG/dg7UN05B/JGbVbgV
-JPSGLbwVLQV7n8Z/J6OMG9iZEO/WDlSTd94DQXA9PaijL5aXdoovjr+8pKpsct9p
-LmYIkD0zvbgYOjkJ/U9Z
-=knsT
+iF4EAREIAAYFAlNguAYACgkQRQu7fpQvo8gW4wD9GLfxHcud/jrHrzqwOiPYj+GC
+2FMzVuS5gkoy49y2TUcA/RMAfZF8+/Fp0Lq7gamc40sZeySvo7XedvnbBmMciHSY
+=g3kz
 -----END PGP SIGNATURE-----
