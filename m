@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/11
-Message-ID: <538DCF47.6010802@upv.es>
-Date: Tue, 03 Jun 2014 15:36:07 +0200
-From: Hector Marco <hecmargi@....es>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2013-6876 s3dvt Root shell
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/7
+Message-ID: <alpine.LFD.2.10.1404302011540.24075@javelin.pnq.redhat.com>
+Date: Wed, 30 Apr 2014 20:14:04 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request Linux kernel: mm: try_to_unmap_cluster() should lock_page() before mlocking
 Content-Type: text/plain; charset=utf-8
 
-CVE-2013-6876 s3dvt Root shell
+    Hello,
 
-About s3dvt:
+Linux kernel kernel's Memory Management Unit(MMU) is vulnerable to a crash
+caused by unlocked memory pages. It could occur during the memory page
+migration or while cleaning the swap cache pages.
 
-s3dvt is part of the 3d network display server which can be used as
-3d desktop environment.
+An unprivileged user/program could use this flaw to crash the system kernel,
+resulting in DoS.
 
+Upstream fix:
+-------------
+   -> https://git.kernel.org/linus/57e68e9cd65b4b8eb4045a1e0d0746458502554c
 
-
-Vulnerability:
-
-A vulnerability in s3dvt for versions prior to 0.2.2 allows to obtain
-a root shell.
-
-
-Details, patches, discussion and strategy to exploit at:
-http://hmarco.org/bugs/s3dvt_0.2.2-root-shell.html
-
-
-Because we found a bug in bash <= 4.3 this vulnerability can be
-successfully exploited. Bash bug details at:
-http://hmarco.org/bugs/bash_4.3-setuid-bug.html
+Introduced in:
+--------------
+   -> https://git.kernel.org/linus/b291f000393f5a0b679012b39d79fbc85c018233
 
 
-
-Hector Marco
-http://hmarco.org
-
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
