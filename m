@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/17/4
-Message-Id: <emc4b99b3e-161e-4362-bf82-7d65052aa02a@tlv-l-farhi>
-Date: Sun, 17 Aug 2014 13:42:57 +0000
-From: "Dolev Farhi" <dolevf@...oo.com>
-To: oss-security@...ts.openwall.com
-Subject: Re[2]: FreeNAS default blank password
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/1
+Message-Id: <201404300641.s3U6f7wR011084@linus.mitre.org>
+Date: Wed, 30 Apr 2014 02:41:07 -0400 (EDT)
+From: cve-assign@...re.org
+To: marc.deslauriers@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: indicator-datetime issue
 Content-Type: text/plain; charset=utf-8
 
-They do not seem to have a security related mailbox but they have the 
-devel mailing list.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-freenas-devel at lists.freenas.org
+> It was discovered that indicator-datetime 13.10.0+13.10.x would incorrectly
+> allow Evolution to be opened while at the greeter screen. A local attacker could
+> possibly use this issue to obtain unconfined local access.
+> 
+> https://bugs.launchpad.net/ubuntu/+source/indicator-datetime/+bug/1246812
+> http://bazaar.launchpad.net/~indicator-applet-developers/indicator-datetime/trunk.13.10/revision/282
 
------- Original Message ------
-From: "Kurt Seifried" <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Sent: 17/08/2014 05:14:30
-Subject: Re: [oss-security] FreeNAS default blank password
+Use CVE-2013-7374.
 
->Also does anyone have a security contact for FreeNAS? I searched and
->struck out, was hoping security@ would work.
->
->--
->Kurt Seifried -- Red Hat -- Product Security -- Cloud
->PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
+iQEcBAEBAgAGBQJTYJqjAAoJEKllVAevmvmskUsH/0q0hq5NYBrlPB1KMzNChYjt
+42TN4f0KbfKNDGUH9m4rufFqoS9T+/lkQBbSRGEyCk4X29cvmS3AKlQLyH74WM9z
+H62Yxp80EuNcyQG8FKXdRK11dQuHBibU+pOb5+oMmh1y0cFqp99ud7lNVo+nJGJO
+stnwLRO0lDXj5B4+UMGPgCjY6Ds/QdGCVzQUR3QK4phWrX2LtAq+TomHDgPZ1ZfF
+wYaI+d+6G50yGzVVFRD4h9FydkNC+7ApqzKhf6Gx5WoKKKhqzd90yAExmDR7PF6/
+Qjd822dXXRUzAHiQag7i2kWKndaT3PIccFQXZKBATzlZlGVTj3/LZUaydV9H8zc=
+=ZJwt
+-----END PGP SIGNATURE-----
