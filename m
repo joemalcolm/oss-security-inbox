@@ -1,31 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/16
-Message-ID: <5425637A.8040404@canonical.com>
-Date: Fri, 26 Sep 2014 09:00:42 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Go crypto/tls vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/2
+Message-Id: <201404300645.s3U6itMu011132@linus.mitre.org>
+Date: Wed, 30 Apr 2014 02:44:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: D.Farhi@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request - XSS in FOG open imaging system
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->From the Go 1.3.2 release announcement:
+> As reported in
+> http://fogproject.org/forum/threads/stored-xss-vulnerability-in-fog-project-version-0-27-through-0-32.10394/
+> 
+> a persistent XSS was found in versions 0.27 through 0.32.
 
-"The crpyto/tls fix addresses a security bug that affects programs that use
-crypto/tls to implement a TLS server from Go 1.1 onwards. If the server enables
-TLS client authentication using certificates (this is rare) and explicitly sets
-SessionTicketsDisabled to true in the tls.Config, then a malicious client can
-falsely assert ownership of any client certificate it wishes."
+Use CVE-2014-3111.
 
-https://groups.google.com/forum/#!msg/golang-nuts/eeOHNw_shwU/OHALUmroA5kJ
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Could a CVE please be assigned to this issue?
-
-Thanks,
-
-Marc.
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+iQEcBAEBAgAGBQJTYJuLAAoJEKllVAevmvmsPWAH/3sAs599QQ/WgZghiKQwNhwx
+KSMIDrwoIKO5DXNROC3MhhWedidn2gFhkW5QN8G2iIw0QqXaN403RClYa1lPIxUp
+dyE0qSpC2aviCNZ0UvvsrvOR3DwqYt7LaQW6E7DDhPmkwLsXGb4fEODnBi2Qz3dR
+J17wb5yYxuK6ABNu24YpodoSTTSplRfVX30JookHFkYLhToCRKQqR5o6DSnmq2SI
+xiYhsWLnNJpMFX1Wy7QW09GLZkktrqyqZV6BKjnDfpVhJqqgHU5dBNeqaX2tWGq8
+E1Xg9+Iu+7cflYYO1O2ytNvL3tezNFcNEKxF3S58wEe78PKHgEzfIzreFn5pPjs=
+=5M97
+-----END PGP SIGNATURE-----
