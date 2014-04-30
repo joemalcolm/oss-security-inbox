@@ -1,32 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/7
-Message-ID: <53F62036.1030707@redhat.com>
-Date: Thu, 21 Aug 2014 10:37:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, "C. R. Oldham" <cr@...tstack.com>
-Subject: Re: SaltStack 2014.1.10 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/3
+Message-ID: <53609C06.8010809@redhat.com>
+Date: Wed, 30 Apr 2014 16:45:26 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: possible miniupnpc buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Did anyone else have this message fail to render in their email client
-(I get a blank panel with the .sig attachment at the bottom using
-Thunderbird/Enigmail/Fedora). The original content:
+Good morning,
 
-================
-http://docs.saltstack.com/en/latest/topics/releases/2014.1.10.html =20
+It was pointed out in
+https://bugzilla.redhat.com/show_bug.cgi?id=1085618 that miniupnpc
+version 1.9 fixes a possible buffer overflow:
 
-The sources are available on pypi: =20
+https://github.com/miniupnp/miniupnp/commit/3a87aa2f10bd7f1408e1849bdb59c41dd63a9fe9
 
-https://pypi.python.org/pypi/salt/2014.1.10 =20
+I am not familiar with the code but it may be just a crash, with an
+invalid read here (on line 131):
 
-Salt 2014.1.10 fixes security issues documented by CVE-2014-3563: =22Inse=
-cure tmp-file creation in seed.py, salt-ssh, and salt-cloud.=22 Upgrading=
- is recommended. =20
-================
+129                         /* parse header lines */
+130                         for(i = 0; i < endofheaders - 1; i++) {
+131                                 if(colon <= linestart &&
+header_buf[i]==':')
 
-Something got mangled along the line.
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Can a CVE be assigned if one has not been already?
 
+On a related note, I'm not sure if there are other issues close by. For
+example, in version 1.9, miniwget.c:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+172                         /* copy the remaining of the received data
+back to buf */
+173                         n = header_buf_used - endofheaders;
+174                         memcpy(buf, header_buf + endofheaders, n);
+
+n and endofheaders are signed ints, and header_buf_used is unsigned.
+Mixing the types together (and the signed int in the memcpy) may warrant
+further investigation.
+
+Cheers,
+
+--
+Murray McAllister / Red Hat Security Response Team
