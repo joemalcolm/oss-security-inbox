@@ -1,27 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/21
-Message-ID: <20140924164253.GL3267@sentinelchicken.org>
-Date: Wed, 24 Sep 2014 09:42:53 -0700
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/6
+Message-ID: <CANmXKc4quVKOdVY26Mid-MRQHRwc2yPbd+hUWonhKrj-1pBhOg@mail.gmail.com>
+Date: Wed, 30 Apr 2014 11:33:30 +0100
+From: Conor McCarthy <mr.spuratic@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Cc: rxvt@...morp.de
+Subject: CVE request: rxvt-unicode user-assisted arbitrary commands execution
 Content-Type: text/plain; charset=utf-8
 
+All,
+ I would like to request a CVE for the following issue.
 
->  >> I see no good workaround. Starting the forced command with
->  >> "unset >SSH_ORIGINAL_COMMAND &&" does not help - we'd need
->  >> to unset the variable before starting bash, not from bash.
-> 
->  > Won't installing dash and setting the shell of users who have
->  > forced commands to dash mitigate this somehow?
-> 
-> Possibly, that will require making /bin/sh symlink to point at
-> dash (or zsh, or whatever) as well...
+rxvt-unicode-9.20 (aka urxvt) includes a security update [1] to address a
+user-assisted arbitrary commands execution issue. This can be exploited
+by the unprocessed display of certain escape sequences in a crafted text
+file or program output.
 
-Right, and it makes sense to do this.  Bash doesn't belong as /bin/sh
-to begin with.  It's slow to load, uses 5 times as much memory as dash
-and doesn't exactly encourage you to write posix-compliant shell
-scripts.  Bash's redeeming qualities lie in it's UI, not in it's
-non-interactive scripting.
+Vendor/author Marc Lehmann was notified last week, the updated version was
+released on 2014-04-26. My thanks to Marc for his prompt responses and
+valuable assistance.
 
-tim
+This is a similar attack vector to CVE-2003-0063, CVE-2008-2383,
+and CVE-2010-2713.
+
+rxvt-unicode supports the xterm OSC escape sequences[2] to read, write and
+delete the X properties of the terminal window. This function is in the
+group of OSC escapes which allow read/write access to the icon name and
+window title, however read access to those is allowed only with the
+"-insecure" command line option. The update in 9.20 makes "-insecure"
+a requirement for read access to the window properties also.
+
+This OSC feature was added to rxvt-unicode-2.7, so I believe it affects all
+versions from 2.7 to 9.19 inclusive. (I have confirmed it present in version
+3.0, prior to that parts of the code are not supported by a contemporary
+g++ .)
+
+Arbitrary window properties can be written, and arbitrary properties can
+be read, placing the contents in the terminal input buffer, as is the
+convention. From a bash prompt in urxvt (9.19):
+
+    $ echo $'\e]3;?WM_CLASS\x07'; read -d $'\a' x; printf "\n%q\n" "$x";
+    ^[]3;urxvt^G
+    $'\E]3;urxvt'
+
+It follows that arbitrary command sequences can be constructed using this,
+and unintentionally executed if used in conjunction with various other
+escape sequences.
+
+Regards,
+ Conor.
+
+[1] http://dist.schmorp.de/rxvt-unicode/Changes
+[2] http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
