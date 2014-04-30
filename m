@@ -1,28 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/35
-Message-id: <AD0BF880-4721-4893-9B30-AB2D98E0E1F6@me.com>
-Date: Mon, 06 Oct 2014 18:12:04 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/8
+Message-id: <0B442A5E-3A81-4448-B67F-9CE4E99D713D@me.com>
+Date: Wed, 30 Apr 2014 11:42:28 -0400
 From: "Larry W. Cashdollar" <larry0@...com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Who named shellshock?
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: XSS in NextCellent Gallery 1.9.13 WordPress plugin
 Content-Type: text/plain; charset=utf-8
 
-I thought it was https://twitter.com/ErrataRob
+Hi All,
 
-On Oct 6, 2014, at 5:04 PM, Michal Zalewski <lcamtuf@...edump.cx> wrote:
+Sorry I should have been more clear,  May I have a CVE assigned to this issue?
 
-> I don't think it happened on Twitter - using advanced search with date
-> ranges, I don't see any mentions that would predate this article,
-> which already seems to be using the term:
+Thanks!
+
+Larry C$
+On Apr 27, 2014, at 8:56 AM, Larry W. Cashdollar <larry0@...com> wrote:
+
+> Title: XSS in NextCellent Gallery 1.9.13 WordPress plugin
+> Author: Larry W. Cashdollar, @_larry0
+> Download: http://wpgetready.com/nextcellent-gallery/
 > 
-> http://www.csoonline.com/article/2687265/application-security/remote-exploit-in-bash-cve-2014-6271.html
+> Vendor Notified: 3/20/2014
 > 
-> It's odd that an article posted at 8 AM on Sept 24 would have any idea
-> of how the bug is already being called by the security community,
-> especially ahead of any Twitter buzz. But both Stephane and Florian
-> implied that some of the pre-notified parties apparently started
-> leaking details to the press and were getting ready to make a splash
-> the moment it goes public, so maybe that's the explanation.
+> CVE: Please assign one at your leisure. 
 > 
-> /mz
+> Vulnerability Fixed: 4/24/2014 in Nextcellent Gallery v1.19.18.
+> 
+> 
+> The user supplied data for the Alt & Title Text field isn't escaped before being printed out in the value field:
+> 
+> Vulnerability:
+> From nextcellent-gallery-nextgen-legacy/admin/manage-images.php lines:
+> 503 <td <?php echo $attributes ? >> 
+> 504 <input placeholder=" <?php _e("Alt & title text",'nggallery'); ?>" name="alttext[<?php echo $pid ?>]" type="text" style="width:95%; margin-bottom: 2px;" value="<?php echo stripslashes($picture->alttext) ?>" 
+> 505 <textarea placeholder="<?php _e("Description",'nggallery'); ?>" name="description[<?php echo $pid ?>]" style="width:95%; margin: 1px;" rows="2" ><?php echo stripslashes($picture->description) ?></textarea>
+> 506 </td>
+> The HTML code produced is:
+> 
+> <td class='alt_title_desc column-alt_title_desc'> <input placeholder="Alt & title text!" name="alttext[1]" type="text" style="width:95%; margin-bottom: 2px;" value=""><script>alert('hi')</script>"<" /><br/> <textarea placeholder="Description" name="description[1]" style="width:95%; margin: 1px;" rows="2" >"</a><script>alert('hi')</script><a>"</textarea> </td>
+> <td class='tags column-tags'><textarea placeholder="Separated by commas"name="tags[1]" style="width:95%;" rows="2"></textarea></td> <td class='exclude column-exclude'><input name="exclude[1]" type="checkbox" value="1" /></td>
+> 
+> A screen shot is shown with the full advisory by following the link below.
+> 
+> Advisory: http://www.vapid.dhs.org/advisories/wordpress/plugins/nextCellent-gallery-1.9.13/
 
