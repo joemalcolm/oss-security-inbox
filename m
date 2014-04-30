@@ -1,30 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/12
-Message-ID: <20141218144630.GA4939@jwilk.net>
-Date: Thu, 18 Dec 2014 15:46:30 +0100
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Running Java across a privilege boundry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/5
+Message-Id: <E1WfTQw-0003kR-8R@xenbits.xen.org>
+Date: Wed, 30 Apr 2014 12:16:18 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 91 - Hardware timer context is not properly context switched on ARM
 Content-Type: text/plain; charset=utf-8
 
-* Martin Carpenter <mcarpenter@...e.fr>, 2014-12-18, 14:53:
->>https://bugs.debian.org/754278
->Could this have been caught in package QA with an automated check on 
->R(UN)PATH?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Absolutely. Lintian has a check for RPATH (but not for RUNPATH, AFAICT); 
-alas, it doesn't distinguish between security and non-security problems:
-https://lintian.debian.org/tags/binary-or-shlib-defines-rpath.html
-(NB, this is where I spotted the bug.)
+                     Xen Security Advisory XSA-91
+                               version 2
 
-I requested a separate tag for relative RPATH a while ago:
-https://bugs.debian.org/732682
-Now we "only" need someone to write the code. :-)
+    Hardware timer context is not properly context switched on ARM
 
->(If that exists, how did it get missed? If not, could it be added?
->Where? https://wiki.debian.org/qa.debian.org).
+UPDATES IN VERSION 2
+====================
 
-The wiki page has a link to lintian.debian.org.
+Public release.
 
--- 
-Jakub Wilk
+ISSUE DESCRIPTION
+=================
+
+When running on an ARM platform Xen was not context switching the
+CNTKCTL_EL1 register, which is used by the guest kernel to control
+access by userspace processes to the hardware timers. This meant that
+any guest can reconfigure these settings for the entire system.
+
+IMPACT
+======
+
+A malicious guest kernel can reconfigure CNTKCTL_EL1 to block
+userspace access to the timer hardware for all domains, including
+control domains. Depending on the other guest kernels in use this may
+cause an unexpected exception in those guests which may lead to a
+kernel crash and therefore a denial of service.
+
+64-bit ARM Linux is known to be susceptible to crashing in this way.
+
+A malicious guest kernel can also enable userspace access to the timer
+control registers, which may not be expected by kernels running in
+other domains. This can allow user processes to reprogram timer
+interrupts and therefore lead to unexpected behaviour, potentially up
+to and including crashing the guest. Userspace processes will also be
+able to read the current timestamp value for the domain perhaps
+leaking information to those processes.
+
+VULNERABLE SYSTEMS
+==================
+
+Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onwards.
+
+x86 systems are not vulnerable.
+
+MITIGATION
+==========
+
+None.
+
+CREDITS
+=======
+
+Chen Baozi discovered this issue as a bug which was then diagnosed by
+Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa91-unstable.patch                  xen-unstable
+xsa91-4.4.patch                       Xen 4.4.x
+
+$ sha256sum xsa91*.patch
+8a3dc1f001274550acfe929a0a443b09f8164001f6eea76821bd87292b8732e0  xsa91-4.4.patch
+327ccd88f2d9bc21daf51f3e5c81cbae2e779a6f997715d9d0d95285c509ecbd  xsa91-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTYMejAAoJEIP+FMlX6CvZ3oMH/j+7Ln89gf0rvyvwUAwK7EUj
+AD2fR/OSXQJVs4g0fZDSft4wgsIpbnbvcCl06tK98XAZH8Cyr0burQV4rXgQbM9e
+rWYRpfy4mWt7RNvwdgeBYecuEYvFIULmMC1hI+eJRtJTrB8UnpCvXLPbFktp2zXP
+Z+pPjck/dAjS8HKJZckL5ciy9ctTr1R50NmpqvW9FfeZAVhahmbmMiz3A5izQEQ0
+BppXWdRad2J5vcR2u8k3uxweUfWM1Yg/eQAmMVvWPS45ceH+UHgqaGngBzWlM9oV
+SwqCDl0/8DjcQziFnKx5cdYcXfFbTzqV7SP5OzcV2BRoSvGZOVDowaXsqvt1jME=
+=LkmE
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa91-4.4.patch" of type "application/octet-stream" (2714 bytes)
+
+Download attachment "xsa91-unstable.patch" of type "application/octet-stream" (2715 bytes)
