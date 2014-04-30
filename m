@@ -1,76 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/30/4
-Message-Id: <201403302114.s2ULEK9S009900@linus.mitre.org>
-Date: Sun, 30 Mar 2014 17:14:20 -0400 (EDT)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...hon.org
-Subject: Re: CVE request: os.makedirs(exist_ok=True) is not thread-safe in Python
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/12
+Message-ID: <53618227.4070805@amacapital.net>
+Date: Wed, 30 Apr 2014 16:07:19 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com, solar@...nwall.com
+Subject: Re: local privilege escalation due to capng_lock as used in seunshare
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 04/30/2014 08:55 AM, Steve Grubb wrote:
+> On Wednesday, April 30, 2014 02:35:52 AM Solar Designer wrote:
+>> On Tue, Apr 29, 2014 at 06:18:58PM -0400, Steve Grubb wrote:
+>>> On Wednesday, April 30, 2014 02:12:22 AM Solar Designer wrote:
+>>>> On Tue, Apr 29, 2014 at 05:49:04PM -0400, Steve Grubb wrote:
+>>>>> On Tuesday, April 29, 2014 02:20:47 PM Andy Lutomirski wrote:
+>>>>>>   if (setuid(getuid()) != 0)
+>>>>>>   
+>>>>>>     err(1, "setuid(getuid())");
+>>>>>
+>>>>> If you do not want the saved uid to be available, you need to use
+>>>>> setresuid. That removes it. I would classify this as a bug in the test
+>>>>> program.
+>>>>
+>>>> Not quite.
+>>>
+>>> If the program was amended to use setresuid(), does the bug still exist?
+>>
+>> Yes, because it affects other similar correct programs that haven't yet
+>> been amended to work safely on your non-Unix system. ;-)  Alternatively,
+>> you may declare that your system is deliberately incapable of running
+>> programs written for traditional Unix safely, and will stay that way.
+>> That will be a reason for people to prefer other Linux distros over Red
+>> Hat's, but at least it'd be fair. ;-(
+>>
+>> To paraphrase your question, since sendmail got a workaround for the old
+>> capabilities bug in the Linux kernel, does the bug in those old kernel
+>> versions still exist?  The answer is also yes, it does, potentially
+>> affecting other programs running on those vulnerable kernels.(*)  The
+>> bug needed to be fixed in the kernel, and it was (for later versions).
+>>
+>> (*) Of course, most people should not actually run those old kernels
+>> because of other vulnerabilities that have been found and fixed since,
+>> but that's a separate matter.
+>>
+>> I hope you don't mind the rhetoric.  I mean it to be friendly.  I hope
+>> it serves to deliver the message well.
+> 
+> No problem. I chatted with Petr Matousek about this and I think we understand 
+> the issue now.
+> 
+> In my opinion, the issue is that I think SECURE_NOROOT doesn't get its 
+> semantics right as is. I'm thinking if noroot is set and cap_setuid is set, 
+> suid should be as normal but with no capabilities. If noroot is set and 
+> cap_setuid is unset, no transition of any uid should occur. If noroot is 
+> unset, then works as normal.
+> 
+> If this was not the intention, then SECURE_NOSUID should have been created at 
+> the same time the other SECUREBITS options were created so that each part of 
+> credential change could be completely controlled. Not designing the ability to 
+> control all parts is what creates this hole...for years I might add.
+> 
+> So, I wonder if SECURE_NOROOT should be fixed or if ancient kernels need to 
+> suddenly backport PR_SET_NO_NEW_PRIVS?
 
-> def _get_masked_mode(mode):
->     mask = umask(0)
->     umask(mask)
+I suspect that fixing SECURE_NOROOT will be basically impossible.  I'm
+not sure that anyone knows what it's supposed to do, and there is an
+amazing amount of inertia preventing any changes to Linux's capability
+system.
 
-Use CVE-2014-2667 for this vulnerability in Python.
+I'd support an effort to kill securebits, but that might also be impossible.
 
+Backporting PR_SET_NO_NEW_PRIVS would be easy, but I don't know how many
+people are still supporting kernels that don't have it.  IIRC it was
+added in Linux 3.5.  I guess RHEL5 and RHEL6 could be candidates.  TBH
+it might actually be safer to turn off securebits entirely in capng_lock
+-- I suspect that the class of attacks enabled by setting securebits is
+larger than the class that is mitigated.
 
-> http://bugs.python.org/issue21082#msg215028
-> http://bugs.python.org/file34649/get_masked_mode.patch
+For distros that are affected (SUSE/OpenSUSE?), the latest upstream
+cap-ng is now patched to use PR_SET_NO_NEW_PRIVS.
 
-> (note that Victor's patch is of course not an actual fix, only a
-> mitigation; if someone is relying on a stricter umask they will still
-> be vulnerable to this)
-
-There is no CVE assignment yet for any distribution's Python package
-that applied this patch, and therefore has a different (but less
-severe) vulnerability. It is conceivable that nothing has yet been
-shipped with that patch.
-
-
-> http://bugs.python.org/issue21082#msg215026
-
-> The shell command "umask" calls umask(022) to get the current umask,
-> and then call umask() with result of the first call.
-
-There is no CVE assignment yet for any shell, or other program, that
-uses the umask(022) approach in a multithreaded environment. There is
-perhaps an open question of how (or if) the current umask should be
-determined. For example, calling umask(022) is arguably a
-vulnerability in some cases, calling umask(0777) could possibly cause
-other undesirable behavior during races, simply not checking the umask
-and providing false data to the user is problematic as well, etc.
-
-
-> http://bugs.python.org/issue21082#msg215034
-
-> We can probably document that makedirs(exists_ok=True) leaves the
-> directory permission unchanged if the directory already exist,
-
-There is no CVE assignment for the issue of whether the permissions of
-an existing directory after makedirs(exists_ok=True) are consistent
-with the previous permissions, consistent with the current umask, or
-randomly selected (?) from between those two options. Also, there is
-no CVE assignment for whether a permission mismatch should be an error
-condition. Unless there were documentation that was directly
-misleading, this seems to be mainly a usability question.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTOIfRAAoJEKllVAevmvms+4kIAJLmRN07eDk816DJSoAWrpqy
-1czVEMGsaVaeWJBKAelsuLSWR/m/lDZnzbpOnfqwdYujefiiYY2+idPdx7WAYM59
-AmAYdri7f5YojYlLAYrdtGfJgInaAhG+9isvEZWqzRp2//iBzx1mhWduV/47U+JQ
-YBeW1k5tpc8iK1vxRPlIGXc0fwiD5/zE1gm8LUmAkjIjBV4sXOBoJaREyzl5gbvF
-Nnuv3bxfVvjwjHHzSZmQPr0En01EygAr71aM6mf0gN61pwg1O13P2ucj1aCsK8GP
-G9eWGcmK7aaNp0ZGOGfqlQv2pMkt4Wf5QXVmG2ICKrkh4gww76thL0b3Ult9+3Y=
-=zUkt
------END PGP SIGNATURE-----
+--Andy
