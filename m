@@ -1,31 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/3
-Message-ID: <535F9E39.8090406@canonical.com>
-Date: Tue, 29 Apr 2014 08:42:33 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: indicator-datetime issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/10
+Message-Id: <201404302018.s3UKIjhW008266@linus.mitre.org>
+Date: Wed, 30 Apr 2014 16:18:45 -0400 (EDT)
+From: cve-assign@...re.org
+To: security@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 92 - HVMOP_set_mem_type allows invalid P2M entries to be created
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It was discovered that indicator-datetime 13.10.0+13.10.x would incorrectly
-allow Evolution to be opened while at the greeter screen. A local attacker could
-possibly use this issue to obtain unconfined local access.
+> XSA-92
 
-Bug reports:
-https://bugs.launchpad.net/ubuntu/+source/indicator-datetime/+bug/1246812
+> attempts to exclude transitioning a page from an inappropriate memory
+> type. However, only an inadequate subset of memory types is excluded.
+> ... page table translation can be inappropriately changed ... If this
+> occurs, an invalid translation will be established.
+> 
+> In the more general case, in more abstract terms: a malicious
+> administrator of a domain privileged with regard to an HVM guest can
+> cause Xen to crash
+> 
+> the extra isolation does not provide as good a defence (against denial
+> of service) as intended. That is the essence of this vulnerability.
 
-Fix:
-http://bazaar.launchpad.net/~indicator-applet-developers/indicator-datetime/trunk.13.10/revision/282
+Use CVE-2014-3124.
 
-Could a CVE please be assigned to this issue?
+> the chroot technique as found in some versions of XCP/XenServer
 
-Thanks,
+Our expectation is that the specific version set for these XCP and
+XenServer versions does not mean that there are different attacks
+possible (e.g., with different "inappropriate memory types") against
+different affected versions.
 
-Marc.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+iQEcBAEBAgAGBQJTYVosAAoJEKllVAevmvmsDOcIAMcUfaX0Uo31VFN5VlLrlhLl
+eonm4ci4VGIW4PSvxiaAmqJvZn7Ab7nvhRRGhoFkKOsSYVepbA28gZ7wVkBn04cZ
+Jx5zN3Zaia6zuMy/UFO3HjzR25k8yWm9KlzBrY4P5ynP6TnYbzoM8IpQd3FMyjxb
+2TlB4WTI28ilcLK0jTSpxsOUyIsRNeKQicUFMKJNVv+l/sRKLVStYbMlWJ+h6i5x
+5jpjIcCrd03oyEfzH1E81aHx1zsGkRTl4WXqUjyWYKkV02c5j/j+Dvn/Axody7Ri
+QjE1cNQfG/gkwKSq/b7I4H/0wFnVMM7BBuvcXYJkYU2i6IhZ1R3iZVYrNZzKcKY=
+=CjnC
+-----END PGP SIGNATURE-----
