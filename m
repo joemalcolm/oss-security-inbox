@@ -1,102 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/6
-Message-Id: <E1WwsJr-00081P-1v@xenbits.xen.org>
-Date: Tue, 17 Jun 2014 12:16:55 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 100 (CVE-2014-4021) - Hypervisor heap contents leaked to guests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/9
+Message-ID: <CALCETrWqYzZJ5EB4enoQPP6GR-iKqJRwUPQQiZN+G2TQ+VkkYw@mail.gmail.com>
+Date: Wed, 30 Apr 2014 21:23:11 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: Solar Designer <solar@...nwall.com>
+Cc: Steve Grubb <sgrubb@...hat.com>, oss-security@...ts.openwall.com
+Subject: Re: local privilege escalation due to capng_lock as used in seunshare
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Apr 30, 2014 at 8:06 PM, Solar Designer <solar@...nwall.com> wrote:
+> On Thu, May 01, 2014 at 06:43:10AM +0400, Solar Designer wrote:
+>> On Wed, Apr 30, 2014 at 09:27:10PM -0400, Steve Grubb wrote:
+>> > And switching to NO_NEW_PRIVS broke the sandbox:
+>> > https://bugzilla.redhat.com/show_bug.cgi?id=1091761
+>> >
+>> > So, perhaps fixing SECURE_NOROOT is the safest bet? Are there any other
+>> > opinions on this?
+>>
+>> If SECURE_NOROOT is meant to be usable to run entire Linux distros
+>> (whether "on host" or/and "in containers"),
+>
+> Actually, I think it won't work well for that unless the distro in
+> question doesn't use any SUID root programs that need capabilities,
+> because SECURE_NOROOT breaks the raising of capabilities for SUID root
+> exec (on purpose).  So generic implementations of containers capable of
+> running arbitrary Linux distro userlands are probably not making use of
+> SECURE_NOROOT.
+>
+>> then it must not have an
+>> effect of excluding UID 0 from "appropriate privileges" for setuid(2).
+>>
+>> Do we know reliably that in this case excluding UID 0 from "appropriate
+>> privileges" for setuid(2) was an effect specifically of SECURE_NOROOT?
+>
+> Per my quick greps, this does not appear to be the case.  The only
+> checks for SECURE_NOROOT that I could find are in cap_bprm_set_creds(),
+> so SECURE_NOROOT should affect execve(2), but not setuid(2).
+>
+> Why are we talking about it in this context, then?
 
-              Xen Security Advisory CVE-2014-4021 / XSA-100
-                             version 3
+I think that SECURE_NO_SETUID_FIXUP is actually at fault here.  And I
+don't see how changing its semantics would help -- it's not safe to
+run setuid programs without granting them capabilities, and it's not
+really safe to grant them capabilities without setting euid == 0, and
+it seems like it's unsafe to grant capabilities and euid == 0.
 
-              Hypervisor heap contents leaked to guests
+This leaves granting no extra privileges at all to setuid programs,
+which is exactly what no_new_privs does.  seunshare sets up a weird
+mount namespace, and anyone can use it and *configure* things about
+that namespace.  no_new_privs blocks anything that causes execve to
+grant new privileges, so the whole point is that it's safe to do
+non-posixy things that are inherited by children as long as
+no_new_privs is set.
 
-UPDATES IN VERSION 3
-====================
+I think I correctly analyzed exactly how no_new_privs broke sandbox in
+the rhbz bug:
 
-Public Release.  CVE assigned.
+https://bugzilla.redhat.com/show_bug.cgi?id=1091761
 
-ISSUE DESCRIPTION
-=================
+The short answer is that selinux doesn't currently distinguish whether
+labels on executables are granting or removing privilege, and selinux
+also fails to distinguish between the right to change labels on
+request and the right to change labels because the policy said so [1],
+so no_new_privs takes the conservative approach and blocks the whole
+transition-on-exec mechanism.  And sandbox fails.  I suspect that
+sandbox is already broken in the case where the program being
+sandboxed is on a nosuid mount, because selinux's nosuid behavior is
+weird.
 
-While memory pages recovered from dying guests are being cleaned to avoid
-leaking sensitive information to other guests, memory pages that were in
-use by the hypervisor and are eligible to be allocated to guests weren't
-being properly cleaned.  Such exposure of information would happen through
-memory pages freshly allocated to or by the guest.
+In any event, I think that seunshare can be fixed by using dyntransition. Ugh.
 
-Normally the leaked data is administrative information of limited
-value to an attacker.  However, scenarios exist where guest CPU
-register state and hypercall arguments might be leaked.
+A better fix might be to rewrite seunshare to use user namespaces
+instead of requiring permissions.  This won't fly on RHEL5/6, though.
 
-IMPACT
-======
-
-A malicious guest might be able to read data relating to other guests
-or the hypervisor itself.
-
-Data at rest in guest memory or storage (filesystems) is not affected.
-However, it is possible for an attacker to obtain modest amounts of
-in-flight and in-use data, which might contain passwords or
-cryptographic keys.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 3.2.x and later are vulnerable.
-Xen 3.1.x and earlier have not been inspected.
-
-MITIGATION
-==========
-
-No comprehensive mitigation is available.
-
-An attacker will find it easier obtain sensitive data from a victim
-guest if the attacker is able to initiate domain management operations
-and lifecycle events for that guest.  This includes a situation where
-the attacker can cause the victim guest to crash.
-
-Therefore the risk from this vulnerability can be somewhat reduced by
-restricting management (such as migration or resource adjustment) to
-fully trusted guest or host administrators, and by eliminating any
-Denial of Service vulnerabilities against potential victim guests.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa100.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x, Xen 4.1.x
-
-Note that to avoid a regression on systems with AMD IOMMU, on 4.2.x and later
-additionally commit 6b4d71d0 ("AMD IOMMU: don't free page table prematurely")
-found at
-http://xenbits.xen.org/gitweb/?p=xen.git;a=commitdiff;h=6b4d71d028f445cba7426a144751fddc8bfdd67b
-will be required if not already in place in the respective tree.
-
-$ sha256sum xsa100*.patch
-2cbd3a52bb8d32d00a19e2ce48e3157034b484b4a7b7282cae0d108ffb4ddca0  xsa100.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJToCoFAAoJEIP+FMlX6CvZ8p0H/1RPfzKOIQVvjJrAPiOH8cDr
-/QR8hAhKqIs97+fxSFO5LCsfBwKga/rLz6sjveQYlvJOq9qSc2vTWxpQLNrh7M1q
-NagTSVJoxcxVn+LHgHAczfRfNwK5BWFHz5/R3k1SLSjLy15aBDr5rW42H/WjKXI3
-0UnLfpLkaDfocpQOYAz1a4cTAxbK07omhSlnCdcvPmWLDPvWy03BF7jZvTDYdiO1
-OjU/3HUwMv7Ii6By3QvjO3Z4h9qkest/iIeaeCTwNwSJa9rW+8KLZjzdJCMJOUeu
-J608R94x4vyj7wc+JVPwD59K0XkXzmsASC8q0ivohXGDTloKcdN7vdmR37g4fJ0=
-=WnYZ
------END PGP SIGNATURE-----
-
-Download attachment "xsa100.patch" of type "application/octet-stream" (927 bytes)
+--Andy
