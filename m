@@ -1,37 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/6
-Message-ID: <20141207172641.GA1728@gremlin.ru>
-Date: Sun, 7 Dec 2014 20:26:41 +0300
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/11
+Message-ID: <20140501090904.GA29115@kludge.henri.nerv.fi>
+Date: Thu, 1 May 2014 12:09:04 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: postgresql: pg_dump creates world-readable dump
+Subject: CVE-2014-3114 WordPress plugin ezpz-one-click-backup cmd parameter os command injection
 Content-Type: text/plain; charset=utf-8
 
-On 2014-12-07 16:49:47 +0100, Agostino Sarubbo wrote:
+Product: WordPress plugin EZPZ One Click Backup
+Vulnerability type: CWE-78 OS Command Injection
+Vulnerable versions: 12.03.10 and some earlier versions
+Fixed version: N/A
+Solution: Remove plugin
+Vendor notification: Contact details N/A
+WordPress plugins team notification: 2014-04-30
+Risk: High
+CVE: CVE-2014-3114
 
- > I just discovered that pg_dump creates the database dump with
- > world readable permission (644 to be exactly).
+Vulnerability Details:
 
-The keyword is "creates".
+Contains a flaw that is triggered as input passed via the 'cmd' parameter in
+ezpz-archive-cmd.php is not properly sanitized. With a specially crafted
+request, an unauthenticated remote attacker can execute arbitrary commands
+directly on the operating system.
 
- > I provided to inform upstream about, and this was the response:
- > On Sunday 07 December 2014 10:34:19 Noah Misch wrote:
- >> You presumably have umask 0022. Like most programs, pg_dump
- >> does not constrain modes of files it creates; adjust your umask
- >> for that.
+http://plugins.svn.wordpress.org/ezpz-one-click-backup/tags/12.03.10/functions/ezpz-archive-cmd.php
 
-Have you followed the advise? Did it helped?
+  1 <?php
+  2 if (isset($_GET['cmd'])){
+  3     exec(urldecode($_GET['cmd']));
+  4     tmp_write("<h2>Running zip page...<h2>");
+  5 }
+  6  
+  7 ?>
 
- > A local user is able to copy it and discover sensitive data.
+Steps to reproduce:
 
-Only if that user is allowed to enter the directory where the dump
-is stored, etc.
+http://example.com/wp-content/plugins/ezpz-one-click-backup/functions/ezpz-archive-cmd.php?cmd=uptime
 
- > In my opinion it deserves a cve.
+Notes:
 
-Misconfiguration != vulnerability.
+Plugin can't be downloaded anymore by using WordPress admin panel or from links
+below, but still used by many as per:
+inurl:"/wp-content/plugins/ezpz-one-click-backup/"
 
+https://wordpress.org/plugins/ezpz-one-click-backup/
+http://downloads.wordpress.org/plugin/ezpz-one-click-backup.latest-stable.zip
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+From the developer's website 2012-04-27:
+"""
+Do to recent changes in the Dropbox API, EZPZ One Click Backup can no longer
+save files to Dropbox.
+
+I apologize but due to various reasons there will be no new versions released or
+further support for EZPZ OCB in the foreseeable future.
+
+For a reliable, inexpensive alternative I recommend trying MyRepono and the
+MyRepono Plugin. This service, while not entirely free (the fees are as low as
+2¢ a day for a small site), works great on WordPress sites as large as 5GB,
+maybe even larger. MyRepono gives a $5.00 credit when signing up for the service
+so there is no cost to try it out.
+
+Again, I apologize to all EZPZ One Click Backup users and wish you all the best.
+"""
+
+Might be related:
+http://wordpress.org/support/topic/plugin-ezpz-one-click-backup-possible-security-flaw
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
