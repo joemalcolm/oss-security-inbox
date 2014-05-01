@@ -1,33 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/25
-Message-ID: <20140925161546.GB869@openwall.com>
-Date: Thu, 25 Sep 2014 20:15:46 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/2
+Message-ID: <1490736.DoQLuBMoN2@x2>
+Date: Wed, 30 Apr 2014 21:27:10 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Cc: Andy Lutomirski <luto@...capital.net>, solar@...nwall.com
+Subject: Re: Re: local privilege escalation due to capng_lock as used in seunshare
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 25, 2014 at 11:37:45AM -0400, Chet Ramey wrote:
-> On 9/24/14, 10:47 PM, Solar Designer wrote:
-> > While we're at it, I think it's preferable not to output error messages
-> > triggerable by untrusted input, e.g.:
-[...]
+On Wednesday, April 30, 2014 04:07:19 PM Andy Lutomirski wrote:
+> On 04/30/2014 08:55 AM, Steve Grubb wrote:
+> > On Wednesday, April 30, 2014 02:35:52 AM Solar Designer wrote:
+> >> On Tue, Apr 29, 2014 at 06:18:58PM -0400, Steve Grubb wrote:
+> >>> On Wednesday, April 30, 2014 02:12:22 AM Solar Designer wrote:
+> >>>> On Tue, Apr 29, 2014 at 05:49:04PM -0400, Steve Grubb wrote:
+> >>>>> On Tuesday, April 29, 2014 02:20:47 PM Andy Lutomirski wrote:
+> >>>>>>   if (setuid(getuid()) != 0)
+> >>>>>>   
+> >>>>>>     err(1, "setuid(getuid())");
+> >>>>> 
+> >>>>> If you do not want the saved uid to be available, you need to use
+> >>>>> setresuid. That removes it. I would classify this as a bug in the test
+> >>>>> program.
+> >>>> 
+> >>>> Not quite.
+> >>> 
+> >>> If the program was amended to use setresuid(), does the bug still exist?
+> >> 
+> >> Yes, because it affects other similar correct programs that haven't yet
+> >> been amended to work safely on your non-Unix system. ;-)  Alternatively,
+> >> you may declare that your system is deliberately incapable of running
+> >> programs written for traditional Unix safely, and will stay that way.
+> >> That will be a reason for people to prefer other Linux distros over Red
+> >> Hat's, but at least it'd be fair. ;-(
+> >> 
+> >> To paraphrase your question, since sendmail got a workaround for the old
+> >> capabilities bug in the Linux kernel, does the bug in those old kernel
+> >> versions still exist?  The answer is also yes, it does, potentially
+> >> affecting other programs running on those vulnerable kernels.(*)  The
+> >> bug needed to be fixed in the kernel, and it was (for later versions).
+> >> 
+> >> (*) Of course, most people should not actually run those old kernels
+> >> because of other vulnerabilities that have been found and fixed since,
+> >> but that's a separate matter.
+> >> 
+> >> I hope you don't mind the rhetoric.  I mean it to be friendly.  I hope
+> >> it serves to deliver the message well.
+> > 
+> > No problem. I chatted with Petr Matousek about this and I think we
+> > understand the issue now.
+> > 
+> > In my opinion, the issue is that I think SECURE_NOROOT doesn't get its
+> > semantics right as is. I'm thinking if noroot is set and cap_setuid is
+> > set,  suid should be as normal but with no capabilities. If noroot is set
+> > and cap_setuid is unset, no transition of any uid should occur. If noroot
+> > is unset, then works as normal.
+> > 
+> > If this was not the intention, then SECURE_NOSUID should have been created
+> > at the same time the other SECUREBITS options were created so that each
+> > part of credential change could be completely controlled. Not designing
+> > the ability to control all parts is what creates this hole...for years I
+> > might add.
+> > 
+> > So, I wonder if SECURE_NOROOT should be fixed or if ancient kernels need
+> > to suddenly backport PR_SET_NO_NEW_PRIVS?
+> 
+> I suspect that fixing SECURE_NOROOT will be basically impossible.  I'm
+> not sure that anyone knows what it's supposed to do, and there is an
+> amazing amount of inertia preventing any changes to Linux's capability
+> system.
+> 
+> I'd support an effort to kill securebits, but that might also be impossible.
+> 
+> Backporting PR_SET_NO_NEW_PRIVS would be easy, but I don't know how many
+> people are still supporting kernels that don't have it.  IIRC it was
+> added in Linux 3.5.  I guess RHEL5 and RHEL6 could be candidates.  TBH
+> it might actually be safer to turn off securebits entirely in capng_lock
+> -- I suspect that the class of attacks enabled by setting securebits is
+> larger than the class that is mitigated.
+> 
+> For distros that are affected (SUSE/OpenSUSE?), the latest upstream
+> cap-ng is now patched to use PR_SET_NO_NEW_PRIVS.
 
-> I disagree.  It's important for a program -- not just the shell -- to tell
-> the user when it attempts to do something on his behalf and is unable to
-> do it.
+And switching to NO_NEW_PRIVS broke the sandbox:
+https://bugzilla.redhat.com/show_bug.cgi?id=1091761
 
-There's obviously a trade-off here.  I agree that keeping the error
-messages is the right thing if we can keep them contained to local usage
-(and local attack) scenarios under typical setups.  I think applying
-Florian's prefix-suffix patch will achieve that (besides its main goal
-of actually mitigating most attacks).
+So, perhaps fixing SECURE_NOROOT is the safest bet? Are there any other 
+opinions on this?
 
-What do you think of distros' going with Florian's prefix-suffix patch
-right now?  I think it breaks function imports/exports between
-pre-patch and post-patch bash versions, but keeps them intact for
-patched versions.  Right?  If so, this sounds acceptable for immediate
-use by distros.  Do you agree?
-
-Alexander
+-Steve
