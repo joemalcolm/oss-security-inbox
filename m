@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/2
-Message-ID: <pan$a3b9e$193e86d8$76828b48$3d526062$1@hush.com>
-Date: Mon, 3 Feb 2014 03:16:13 +0000 (UTC)
-From: mancha <mancha1@...h.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/6
+Message-ID: <20140501033032.GA24878@openwall.com>
+Date: Thu, 1 May 2014 07:30:32 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: local privilege escalation due to capng_lock as used in seunshare
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 02 Feb 2014 08:14:44 +0400, Solar Designer wrote:
+On Wed, Apr 30, 2014 at 11:55:31AM -0400, Steve Grubb wrote:
+> In my opinion, the issue is that I think SECURE_NOROOT doesn't get its 
+> semantics right as is. I'm thinking if noroot is set and cap_setuid is set, 
+> suid should be as normal but with no capabilities. If noroot is set and 
+> cap_setuid is unset, no transition of any uid should occur. If noroot is 
+> unset, then works as normal.
 
-> On Fri, Jan 31, 2014 at 04:11:16AM +0400, Solar Designer wrote:
->> <grsecurity> I would not be surprised to see an exploit for this within the next few days
-> 
-> Just off Twitter:
-> 
-> <noptrix> recvmmsg.c - linux 3.4+ local root (CONFIG_X86_X32=y) expl0it - http://pastebin.com/DH3Lbg54
-> 
-> SHA-256(recvmmsg.c.txt) = 4603acf96e845cecd2c5877a68fa5b5c591ba00c52859ded2a31a9daf48a457d
-> 
-> for the version I just downloaded (but did not review, although it looks
-> sane at first glance).  The exploit includes offsets for 3 Ubuntu kernels.
-> 
-> Alexander
+Of the three cases above, only the "noroot is set and cap_setuid is
+unset" case currently has semantics different from what you propose,
+and the rest are already as you described, correct?
 
-The exploit by Rebel works as advertised. I've confirmed on a non-Ubuntu box 
-after making some changes.
+Is my understanding correct that setuid(2)'s "appropriate privileges"
+end up being altered via lacking CAP_SETUID, even though we do gain UID 0
+during the SUID root exec?  This appears consistent with the code.
 
-Attached find a kernel module I've authored that protects from the attack.
+If so, we may either prevent this combination of settings from occurring
+(in the way you describe or otherwise) or maybe we should fix setuid(2)
+(and a few others?) to treat the lack of CAP_SETUID differently.
 
-I'm sharing it for folks currently on vulnerable systems still waiting on
-patches from their upstream.
+IIRC, the "sendmail bug" was fixed in the kernel by requiring privileges
+to drop capabilities, so an attacker wouldn't simply drop CAP_SETUID.
+Your proposed change is in line with that, but the behavior feels
+hackish and unexpected.  That said, Linux 2.4+ already set the precedent
+of ignoring SUID/SGID in some cases, yet proceeding with exec, so it
+won't be a new bad thing (rather, more of the moderately old bad thing).
 
- # make
- # insmod nox32recvmmsg.ko
+Sorry for so many messages.  It's been years since I looked at this code
+closely, so it takes a while to recall what it's about.
 
-note: rmmod'ing restores original (vulnerable) state.
-
---mancha
-
+Alexander
