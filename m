@@ -1,86 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/6
-Message-ID: <20141117133357.05947fa0@pc>
-Date: Mon, 17 Nov 2014 13:33:57 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/8
+Message-Id: <201405010341.s413fNEL021638@linus.mitre.org>
+Date: Wed, 30 Apr 2014 23:41:23 -0400 (EDT)
+From: cve-assign@...re.org
+To: mr.spuratic@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: rxvt-unicode user-assisted arbitrary commands execution
 Content-Type: text/plain; charset=utf-8
 
-Am Sun, 16 Nov 2014 18:15:57 +0100
-schrieb Robert Święcki <robert@...ecki.net>:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> However, even if tools like file/ndisasm/gimp/readelf can be used by
-> many (w/o strong system isolation boundaries) to analyze untrusted
-> inputs (for reverse engineering, malware analysis and similar
-> purposes) - I'd simply put a blame on those users when if they get
-> pwnd - as they're depending on tools, which hadn't been properly
-> evaluated for the purpose (by efforts of those users, or by their
-> contractors or by the community at large) and the likelihood that
-> we'll start accepting those tools as good enough for said purposes in
-> the coming years is seriously low.
+> rxvt-unicode-9.20 (aka urxvt) includes a security update to address a
+> user-assisted arbitrary commands execution issue. This can be
+> exploited by the unprocessed display of certain escape sequences in a
+> crafted text file or program output.
+> 
+> arbitrary command sequences can be constructed using this, and
+> unintentionally executed if used in conjunction with various other
+> escape sequences.
 
-I feel you're trying to define security issues away, I can't follow.
+> http://dist.schmorp.de/rxvt-unicode/Changes
 
-Let's for a quick moment not talk about the security aware researcher
-that does malware analysis. Let's talk about the "average user". And
-let's take GIMP as an example: Isn't it a completely legit use of GIMP
-to download an image from the internet (maybe one with a
-creative commons license that allows changing it) and edit it?
+Use CVE-2014-3121.
 
-Michal already made the important point with strings: The tool is not
-doing what most people expect it to do. And basically almost nobody
-knew that (me included) before he pointed it out.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Or let's take "less": A pretty basic tool to "view files".
-Most linux distributions have something called "lesspipe" which is a
-script that tries to determine the content of a less'ed file and pipe
-it through an appropriate tool. readelf is amongst them (this is
-distribution specific, but at least on my system). catdoc, antiword,
-lha, ...
-I didn't know that until solar designer and kenn white discussed it on
-twitter.
-
-What should we do with that?
-a) is it an unappropriate use of less to view untrusted files and we
-should teach users so? (I seriously never would've thought of that - and
-which average "just learned how to use the shell" user would've?)
-b) tell linux distros that lesspipe is insecure and shouldn't be
-enabled?
-c) fuzz all the tools in there and report at least the
-low-hanging-fruit-bugs? (and then maybe try to replace the
-"they-don't-fix-bugs-or-don't-have-a-dev-any-more"-tools with more
-secure ones)
-
-I feel a) is certainly neither working nor appropriate, I'm unsure
-about b), I feel c) is something we can at least try.
-
-One more thing I find worth mentioning in this whole effort: I find the
-tools that expose their bugs pretty easily, but I also find the tools
-that seem quite solid where I hadn't expected it. I wasn't able to fuzz
-a crash out of 7z, arj, msgunfmt (gettext), the common linux archiving
-tools (tar/gzip/bzip2/xz), ...
-
-That doesn't mean they're safe and fuzzing them with afl for two days
-wouldn't expose bugs. And of course there may be all the subtle bugs
-that cannot be found via fuzzing but only via cautious reading of the
-source code. But the point is: They're obvisouly at least much safer
-than objdump or imagemagick. (and for the record: We're not done with
-libbfd yet, but Nick did a marvellous job in fixing issues and 
-the next binutils release will be much safer for sure)
-
-My message here is: This can be done. I am aware that C code is
-usually an awfull mess of insecurities and we won't be able to fix that
-thoroughly (and if anyone wants to rewrite any of these tools: don't do
-it in C). But we should at least try to get the low-hanging-fruits
-fixed.
-
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJTYcHgAAoJEKllVAevmvmsKpoIAKMpm+B8q61J3eNZNVrdQ6Hy
+IZlBiJAu0qWTb9xDZFz1BLtz7WrljVem+/aBM+L2e14sXncNLFlYk+Zg0azyhnXW
+rEV+2cArAu+GLMB4C0Q4g0GdhNcDe41Q3smcCUbpRQQFpkU6e/R2NxH2nQjNAX9E
+acRDB7DiNgXJ6iZ02F+N++6+AQhc3VuV09jSeizimcbjNuzQVopCxdq3hOEkDO2W
+9eyy8Krx2nUHABdRRRUkl8NmWXsP8fbjD+ZuASYIfPRNM/HZLmEvQeZIA4BO5Dvl
+Z4ybucja+bKcjb8D3jHijTrubG3Yyskwkc8J5WwYuIebAWNAag1EB676SHW95zA=
+=1utq
+-----END PGP SIGNATURE-----
