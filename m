@@ -1,27 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/12
-Message-ID: <546F721194C2784A97981FD35526BB191F500E88@SRVEXCH>
-Date: Fri, 21 Nov 2014 11:04:10 +0000
-From: Damien Millescamps <Damien.Millescamps@...ida.fr>
-To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
-Subject: CVE request: heap buffer overflow in ClamAV
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/5
+Message-ID: <20140501030637.GA24836@openwall.com>
+Date: Thu, 1 May 2014 07:06:37 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com, Andy Lutomirski <luto@...capital.net>
+Subject: Re: local privilege escalation due to capng_lock as used in seunshare
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, May 01, 2014 at 06:43:10AM +0400, Solar Designer wrote:
+> On Wed, Apr 30, 2014 at 09:27:10PM -0400, Steve Grubb wrote:
+> > And switching to NO_NEW_PRIVS broke the sandbox:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=1091761
+> > 
+> > So, perhaps fixing SECURE_NOROOT is the safest bet? Are there any other 
+> > opinions on this?
+> 
+> If SECURE_NOROOT is meant to be usable to run entire Linux distros
+> (whether "on host" or/and "in containers"),
 
-A heap buffer overflow was reported in [1] in ClamAV when scanning a specially crafted y0da Crypter obfuscated PE file.
-Note that this is remotely exploitable when ClamAV is used as a mail gateway scanner.
+Actually, I think it won't work well for that unless the distro in
+question doesn't use any SUID root programs that need capabilities,
+because SECURE_NOROOT breaks the raising of capabilities for SUID root
+exec (on purpose).  So generic implementations of containers capable of
+running arbitrary Linux distro userlands are probably not making use of
+SECURE_NOROOT.
 
-Upstream fix is available here: [2].
-ClamAV 0.98.5 contains the above fix.
+> then it must not have an
+> effect of excluding UID 0 from "appropriate privileges" for setuid(2).
+> 
+> Do we know reliably that in this case excluding UID 0 from "appropriate
+> privileges" for setuid(2) was an effect specifically of SECURE_NOROOT?
 
-Additional references:
-[1] https://bugzilla.clamav.net/show_bug.cgi?id=11155
-[2] https://github.com/vrtadmin/clamav-devel/commit/fc3794a54d2affe5770c1f876484a871c783e91e
+Per my quick greps, this does not appear to be the case.  The only
+checks for SECURE_NOROOT that I could find are in cap_bprm_set_creds(),
+so SECURE_NOROOT should affect execve(2), but not setuid(2).
 
-Can a CVE be assigned to this, please ?
+Why are we talking about it in this context, then?
 
-Thanks,
---
-Damien Millescamps | Oppida
-
+Alexander
