@@ -1,27 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/7
-Message-ID: <20140319135953.GH2551@sivokote.iziade.m$>
-Date: Wed, 19 Mar 2014 15:59:53 +0200
-From: Georgi Guninski <guninski@...inski.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/16
+Message-ID: <5362B55C.3030305@sumptuouscapital.com>
+Date: Thu, 01 May 2014 22:58:04 +0200
+From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+Subject: CVE request: SKS non-persistent XSS
 Content-Type: text/plain; charset=utf-8
 
-I suggested this about year ago:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-http://seclists.org/fulldisclosure/2013/Mar/11
+Hi,
 
-On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
-> Apologies for posting on list mainly dedicated
-> to CVE's.
-> 
-> The Full Disclosure mailing list died today:
-> http://lists.grok.org.uk/
-> http://seclists.org/fulldisclosure/2014/Mar/332
-> 
-> I suppose it is time for a new list.
-> 
-> Any ideas?
-> 
-> -- 
-> guninski
+A non-persistent client-side cross-site scripting attack was reported
+against SKS[0] resulting from improper input sanitation before writing
+to a client. The issue has been fixed in the development trunk[1] for
+inclusion in an upcoming 1.1.5 release.
+
+Initial report and findings:
+https://bugzilla.mozilla.org/show_bug.cgi?id=952077 by Haris
+(whitehat@...mail.rs)
+
+References:
+[0]
+https://bitbucket.org/skskeyserver/sks-keyserver/issue/26/unfiltered-xss
+[1]
+https://bitbucket.org/skskeyserver/sks-keyserver/pull-request/30/issue26-fix-a-non-persistent-cross-site
+
+- -- 
+- ----------------------------
+Kristian Fiskerstrand
+Blog: http://blog.sumptuouscapital.com
+Twitter: @krifisk
+- ----------------------------
+Public PGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+- ----------------------------
+Nomina stultorum scribuntur ubique locorum
+Fools have the habit of writing their names everywhere
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJTYrVZAAoJEPw7F94F4TagadMQAIYeE8WpsEY2pb7+BpHj8WtT
+kg8OoNR+Cr43z6qvD8+zLBaKRWSuFR5Soj6Pk61/lfIYyojmGUlhY1F401ylDDfn
+ciEH0CIg16L3NCmMTzlslFGeqTOltUlnGlaeV02QkgSWzW4wAIxfEP3G+gu5PkSk
+lkynKRvAix9Dmqruv2EiABiiOjQuJxjirJbZlng4HFiYkAggDyIEj9vGvYfS3tA6
+DU5ui3EEExopFdlL0e9yBKIDZ+dZzeowsWLIOcuBSjaG7a0+PE1rMUFcW0xrvJ2B
+tbW3l9Xp9wwNMh0Sea4cCVxkCpUMNuthBo1+Hd4fp8NSeO4KbePN5ee3AomZHk3R
+tv5idY1aNrakYGO0QEAOMYctIjdzysFNti1YHUTIKpD035CJ5+DVSRI5AoQ2ansU
+zXfglUlVfKaSlq+ZMBOJHUWTKBtS6nPYQlZuU21S0V8WLbstfTE8UI6SFKoQBwMA
+V7PR8TXmUnA/b0k0DByeI0n08oS4fZuTOHo0bakm+Hg2Ua3m+uK7W1XKrobM6uM/
+q4J2sQTraPa0mMQLRpu4n+mSZTHHSqygX3yO4n47p58q+SnkEYBFNAFPwUOUdZVA
+qbl4odZiUitQu1/GsMJujNEzv2gusAW5bxmnsyBglCI61OQIgSsbGcD/LJdwmgWA
+X3WAKZe1u2xFgoRijGM5
+=qi2f
+-----END PGP SIGNATURE-----
