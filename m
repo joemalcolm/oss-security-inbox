@@ -1,62 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/15
-Message-ID: <alpine.LFD.2.10.1408220034530.14756@javelin.pnq.redhat.com>
-Date: Fri, 22 Aug 2014 01:04:26 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-cc: security@...nel.org, Greg Kroah-Hartman <gregkh@...uxfoundation.org>, Yann Collet <yann.collet.73@...il.com>
-Subject: Re: incomplete fix for CVE-2014-4611: kernel: integer overflow in lz4_uncompress 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/12
+Message-Id: <E1WfocM-0003zX-FP@xenbits.xen.org>
+Date: Thu, 01 May 2014 10:53:30 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 91 (CVE-2014-3125) - Hardware timer context is not properly context switched on ARM
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-   Hello Marcus,
+              Xen Security Advisory CVE-2014-3125 / XSA-91
+                               version 3
 
-+-- On Tue, 19 Aug 2014, Marcus Meissner wrote --+
-| Jan Beulich writes in our bug for CVE-2014-4611:
-| 
-| https://bugzilla.novell.com/show_bug.cgi?id=883949#c12
-| 
-| --- Comment #12 from Jan Beulich <jbeulich@...e.com> 2014-08-15 21:42:33 UTC ---
-| Except that it has been determined quite some time ago that all three fixes
-| having gone in upstream so far don't really fix anything. I posted a patch that
-| I think actually addresses the issue (https://lkml.org/lkml/2014/7/4/288), but
-| till now no-one cared to comment on it, apply it, or point out what's still
-| wrong, despite the ping 3 weeks later (https://lkml.org/lkml/2014/7/25/23).
+    Hardware timer context is not properly context switched on ARM
 
-  Jan's patch above does not seem right. It patches a non-existent function 
-'lz4_uncompress_unknownoutputs', and does not apply.
+UPDATES IN VERSION 3
+====================
 
-$ git apply --check lz4-add-overrun-checks-to-lz4_uncompress_unknownoutputsize.patch
-error: patch failed: lib/lz4/lz4_decompress.c:89
-error: lib/lz4/lz4_decompress.c: patch does not apply
- 
-| Perhaps the kernel folks want to look at it again if they missed it so far.
+This issue has been assigned CVE-2014-3125.
 
-  I've referred Jan's comment to Yann Collet(CC'd here). He is the creator of 
-LZ4 and has agreed to create a saner patch for the said issue. We'll fix it 
-soon.
+ISSUE DESCRIPTION
+=================
 
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+When running on an ARM platform Xen was not context switching the
+CNTKCTL_EL1 register, which is used by the guest kernel to control
+access by userspace processes to the hardware timers. This meant that
+any guest can reconfigure these settings for the entire system.
 
+IMPACT
+======
+
+A malicious guest kernel can reconfigure CNTKCTL_EL1 to block
+userspace access to the timer hardware for all domains, including
+control domains. Depending on the other guest kernels in use this may
+cause an unexpected exception in those guests which may lead to a
+kernel crash and therefore a denial of service.
+
+64-bit ARM Linux is known to be susceptible to crashing in this way.
+
+A malicious guest kernel can also enable userspace access to the timer
+control registers, which may not be expected by kernels running in
+other domains. This can allow user processes to reprogram timer
+interrupts and therefore lead to unexpected behaviour, potentially up
+to and including crashing the guest. Userspace processes will also be
+able to read the current timestamp value for the domain perhaps
+leaking information to those processes.
+
+VULNERABLE SYSTEMS
+==================
+
+Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onwards.
+
+x86 systems are not vulnerable.
+
+MITIGATION
+==========
+
+None.
+
+CREDITS
+=======
+
+Chen Baozi discovered this issue as a bug which was then diagnosed by
+Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa91-unstable.patch                  xen-unstable
+xsa91-4.4.patch                       Xen 4.4.x
+
+$ sha256sum xsa91*.patch
+8a3dc1f001274550acfe929a0a443b09f8164001f6eea76821bd87292b8732e0  xsa91-4.4.patch
+327ccd88f2d9bc21daf51f3e5c81cbae2e779a6f997715d9d0d95285c509ecbd  xsa91-unstable.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJT9knCAAoJEN0TPTL+WwQfHtMQALaHo4eTLxKIiDon/wDoJ3y6
-OP3FPoLV8QkqdNOgejHp48lrPKxWLzlikCdtenKKWHTl8mTngTgrrCoMlS7IZZx2
-TdhR40GCoQeHG/BEmGiuBSbxilgvxNcmvaYxpwHF6CHQhtR0TxROhVUrkYoigNp0
-7BDEKt3wCypy/K5GP3mAdMrbGVSmGXqfviRxEBr3K9eBgYkjoxrhw9UcfUWUzIY4
-kzqXwKYICJVW1+z4Zyk89KSx/BI1tA4l/A+94SUJB4GnP/nqz+APr2mzutZGB/BE
-79F4YwfiP5E5+cRe+HUzQC1H1+LYdjMiTJov6tlNBhAigMErTWvR5pw5odQuts0S
-ivDeWPELOVUQyLjj6rDnBydHnMjOYJtImmLze5Nt+HgL+Buffg/ZaiDHC/TkPstQ
-oHO05AAPW8iyoOHwBEVmc2sJPRbndMSwBjq8uNLCv8aPrb+yXxQus8zfHRUVzBMD
-aM7oAyryY3f5DjGYxqm4GC9FZGUen4u/TC8dzGpPr7VZ8jViWwmFz0tSf0ivL4p5
-tx6cgYGd6pvgBiZTXST0ZOLvyk1OyUYVt/bqb1nj/nxNDdrSE7vYB3l/5pePLgJe
-EpXOU13CZbNq7sGL+YcxzOZEJQsMQpgKDcweHxD6NJJYr4ut9GFGD5T42G3+K1IM
-kN0wJcUuEyQz5OD/6Hcl
-=c+qv
+iQEcBAEBAgAGBQJTYidcAAoJEIP+FMlX6CvZKnIH/03L/vIaj+x9AIn0FjKw/ZgH
+lPP5tVQT4gvBrufxwKX7elH+XPu7bU6j8rQgAkno2VRVM6Emv5/Q41DJEMItG7sm
+Nfqd833Jdov/2aAGj1kiLsLTv3s72G3XV1hQRviy9Uu9c2JA0Ch2BhurKvwW5K3h
+6bRwPljTTaa0GmONHBso9EKHztmf2dViQar9M8WYuVDFmQ8c6fhqUX2uHkkTtdol
+p2YVQgyej/cnKD1ZGVX9lLmHaw2+QbToY4SyUmRs/DmmK/T13Q+YUXuS3Nt0yY+m
+12kkmMNRLvI/y9YHHxNMI9zDev2GpsdhKO3ScJ0iW9y7cC1/zPejWaPF+pU1nC0=
+=6vG1
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa91-4.4.patch" of type "application/octet-stream" (2714 bytes)
+
+Download attachment "xsa91-unstable.patch" of type "application/octet-stream" (2715 bytes)
