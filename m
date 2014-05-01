@@ -1,94 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/10
-Message-Id: <201405062023.s46KN5RE020277@linus.mitre.org>
-Date: Tue, 6 May 2014 16:23:05 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: OpenSSL NULL pointer dereference in do_ssl3_write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/14
+Message-ID: <53623CA0.3080402@redhat.com>
+Date: Thu, 01 May 2014 08:22:56 -0400
+From: Daniel J Walsh <dwalsh@...hat.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+CC: Steve Grubb <sgrubb@...hat.com>
+Subject: Re: local privilege escalation due to capng_lock as used in seunshare
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-First and most importantly, we would like to confirm that MITRE will
-continue to use CVE-2014-0198 for the vulnerability in question, as
-listed at:
-
-  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-0198
-
-> I think getting this one a CVE is time critical. Mitre: sorry if this
-> causes a duplicate, but I'm assigning a CVE now. Please use
-> CVE-2014-0198 for this issue.
-
-MITRE is currently responsible for assigning CVE IDs for publicly
-known vulnerabilities, i.e., cases where a public web site or
-mailing-list message mentions the existence of a vulnerability that
-didn't have a CVE ID assigned in advance.
-
-For a long time in the past, Red Hat had been assigning CVE IDs for
-publicly known vulnerabilities in open source software, especially if
-the vulnerability was mentioned on this list. This had been very
-useful to many people, but ended as of December 2013. Essentially the
-change was originally planned to be temporary as discussed in the
-http://www.openwall.com/lists/oss-security/2013/12/07/3 post but now
-persists. In other words, the change already happened months ago;
-there's no new change in May 2014, nor is any change being planned.
-
-If a vendor is on the http://cve.mitre.org/cve/cna.html list and has a
-vulnerability reported privately to them for software that they ship,
-then that vendor can assign a CVE ID. Also, CVE assignment for
-http://oss-security.openwall.org/wiki/mailing-lists/distros has a
-similar process that doesn't involve communication to or from MITRE.
-
-If an issue has a CVE request on the oss-security list, and the CVE
-assignment subsequently comes from outside MITRE, what this means (or,
-at least, SHOULD mean) is that the issue already had a privately
-assigned CVE ID before the public request occurred. People sending out
-these CVE assignments may want to mention the date of the private CVE
-assignment, but making the date public isn't something that MITRE
-requires. If there wasn't an earlier private CVE assignment, there is
-no option to proceed anyway because of a perception of time
-criticality or an expectation that an issue was "publicly known" to a
-smaller than usual subset of the public.
-
-There are several scenarios in which duplicate CVEs could occur if
-multiple parties were assigning IDs to publicly known vulnerabilities.
-Here are three that can be described somewhat quickly:
-
-  1. MITRE has a mostly separate team of people who populate the
-     cve.mitre.org web site with entries about disclosures that didn't
-     have any CVE IDs assigned in advance. While work on one of them
-     is in progress, oss-security may get a CVE request for the same
-     disclosure or an overlapping disclosure. Sometimes we need to let
-     the in-progress work finish because it determines the number of
-     CVE IDs (e.g., zero, one, or more than one).
-
-  2. Not everyone is aware of whether they publicly disclosed a
-     vulnerability discovery. For example, if a product isn't well
-     known and suggests that all bug reports be sent to a developers'
-     mailing list, a researcher isn't necessarily going to know
-     whether that list is publicly archived.
-     
-  3. A public disclosure often doesn't mention all of the names under
-     which the software has been distributed. For example,
-     https://packages.debian.org/unstable/main/cluster-agents overlaps
-     https://github.com/ClusterLabs/resource-agents even though the
-     names don't have a close match.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTaUG4AAoJEKllVAevmvms3bMH/iCooibiCdjSpIqtwIW2JBx+
-wHhZiGScmIs7Nop8c1X6zCzg1cT8NxNWS054hvsKygkNx3DTWtQL8RlRLUHUpLAX
-ID0/Bl10/CmjF3FS3DmxBUzJ6J67/M+RjAGzAu82AUzPj46cx2zmV5sEP5IfsMmW
-l7xA2Fzg9aGDd1701CyenJkAEDbRM2jCpV+0uFppFbofCGxbpB9JLBki+ulH40ZG
-6enO0VFaX1gbg5qEboCf9UJhKkSuRxBCkaOoxelJaS466IJeQ+vUSta3HvrDzomv
-WGpN34cybn2aUUPZr23tx3GAqoGwmHIgNNmyQu4ESUfMo/k0EzSG4Yfj82WondQ=
-=mrpS
------END PGP SIGNATURE-----
+On 05/01/2014 12:23 AM, Andy Lutomirski wrote:
+> On Wed, Apr 30, 2014 at 8:06 PM, Solar Designer <solar@...nwall.com> wrote:
+>> On Thu, May 01, 2014 at 06:43:10AM +0400, Solar Designer wrote:
+>>> On Wed, Apr 30, 2014 at 09:27:10PM -0400, Steve Grubb wrote:
+>>>> And switching to NO_NEW_PRIVS broke the sandbox:
+>>>> https://bugzilla.redhat.com/show_bug.cgi?id=1091761
+>>>>
+>>>> So, perhaps fixing SECURE_NOROOT is the safest bet? Are there any other
+>>>> opinions on this?
+>>> If SECURE_NOROOT is meant to be usable to run entire Linux distros
+>>> (whether "on host" or/and "in containers"),
+>> Actually, I think it won't work well for that unless the distro in
+>> question doesn't use any SUID root programs that need capabilities,
+>> because SECURE_NOROOT breaks the raising of capabilities for SUID root
+>> exec (on purpose).  So generic implementations of containers capable of
+>> running arbitrary Linux distro userlands are probably not making use of
+>> SECURE_NOROOT.
+>>
+>>> then it must not have an
+>>> effect of excluding UID 0 from "appropriate privileges" for setuid(2).
+>>>
+>>> Do we know reliably that in this case excluding UID 0 from "appropriate
+>>> privileges" for setuid(2) was an effect specifically of SECURE_NOROOT?
+>> Per my quick greps, this does not appear to be the case.  The only
+>> checks for SECURE_NOROOT that I could find are in cap_bprm_set_creds(),
+>> so SECURE_NOROOT should affect execve(2), but not setuid(2).
+>>
+>> Why are we talking about it in this context, then?
+> I think that SECURE_NO_SETUID_FIXUP is actually at fault here.  And I
+> don't see how changing its semantics would help -- it's not safe to
+> run setuid programs without granting them capabilities, and it's not
+> really safe to grant them capabilities without setting euid == 0, and
+> it seems like it's unsafe to grant capabilities and euid == 0.
+>
+> This leaves granting no extra privileges at all to setuid programs,
+> which is exactly what no_new_privs does.  seunshare sets up a weird
+> mount namespace, and anyone can use it and *configure* things about
+> that namespace.  no_new_privs blocks anything that causes execve to
+> grant new privileges, so the whole point is that it's safe to do
+> non-posixy things that are inherited by children as long as
+> no_new_privs is set.
+>
+> I think I correctly analyzed exactly how no_new_privs broke sandbox in
+> the rhbz bug:
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=1091761
+>
+> The short answer is that selinux doesn't currently distinguish whether
+> labels on executables are granting or removing privilege, and selinux
+> also fails to distinguish between the right to change labels on
+> request and the right to change labels because the policy said so [1],
+> so no_new_privs takes the conservative approach and blocks the whole
+> transition-on-exec mechanism.  And sandbox fails.  I suspect that
+> sandbox is already broken in the case where the program being
+> sandboxed is on a nosuid mount, because selinux's nosuid behavior is
+> weird.
+>
+> In any event, I think that seunshare can be fixed by using dyntransition. Ugh.
+>
+> A better fix might be to rewrite seunshare to use user namespaces
+> instead of requiring permissions.  This won't fly on RHEL5/6, though.
+>
+> --Andy
+I don't have a problem allowing the dyntransition, since  the only thing
+the code does after the transition is exec the app, As long as the
+cleanup process stays in the previous label it should work.
