@@ -1,47 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/3
-Message-Id: <201407160604.s6G64b2L027305@linus.mitre.org>
-Date: Wed, 16 Jul 2014 02:04:37 -0400 (EDT)
-From: cve-assign@...re.org
-To: rdecvalle@...are.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, thoger@...hat.com, mmcallis@...hat.com
-Subject: Re: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/3
+Message-ID: <20140501024310.GB24590@openwall.com>
+Date: Thu, 1 May 2014 06:43:10 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com, Andy Lutomirski <luto@...capital.net>
+Subject: Re: local privilege escalation due to capng_lock as used in seunshare
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Apr 30, 2014 at 09:27:10PM -0400, Steve Grubb wrote:
+> And switching to NO_NEW_PRIVS broke the sandbox:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1091761
+> 
+> So, perhaps fixing SECURE_NOROOT is the safest bet? Are there any other 
+> opinions on this?
 
-> Ruby 1.9.3, 2.0, and 2.1 are affected by the off-by-one. We're still
-> not sure about the presence of a different issue affecting Ruby 2.0 and
-> 2.1. I left a comment on the report pointing out that 1.9.3 is also
-> affected by the off-by-one
+If SECURE_NOROOT is meant to be usable to run entire Linux distros
+(whether "on host" or/and "in containers"), then it must not have an
+effect of excluding UID 0 from "appropriate privileges" for setuid(2).
 
-Yesterday,
+Do we know reliably that in this case excluding UID 0 from "appropriate
+privileges" for setuid(2) was an effect specifically of SECURE_NOROOT?
+If so, yes, it sounds like it needs to be fixed, and this detail needs
+to be documented.
 
-https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/46778
+Do any implementations of containers, such as LXC, rely on
+SECURE_NOROOT?  If so, it sounds like they might have extra local root
+vulnerabilities (for in-container user to in-container root) as a result
+of this issue.
 
-and
+I also suggest that distros don't make things like seunshare available
+to non-administrator users by default, because these expand the attack
+surface even if an attempt is made to make them safe.  Only a subset of
+systems will benefit from having this functionality exposed by default,
+whereas all systems will suffer from the expanded attack surface.
 
-https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/46778/diff/pack.c
-
-were publicly readable, but today both of them result in a "Ruby Issue
-Tracking System" login screen. We're not sure how to interpret this,
-e.g., maybe all of 46778 has become private because the "different
-issue affecting Ruby 2.0 and 2.1" is now embargoed?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTxhUcAAoJEKllVAevmvmsuxsIAMh4WJncuqucnYqEkrTheEd4
-qlW9Zl7aliCm1ZA0K9Vs5Vg1MVN/Bi194vBuOp/S3Bh+MDYNjmpU4BcbzePAk0W4
-kg1iuVaKfyqzyfO+wv+0oJqQ8oDNQWv0EtK4+3XjAieJX7Ozgv11rXe9mZpmft0m
-8+YSSIBOAZ5+lRsndyXBL9EUOq703aUHNw3KbA4qzkXu6FRs5LjxOPgt/BUm6hTE
-9Oa5f/XWF64vcqk3H9rJDfOboc6N/h2qQe/2PHDBOrwW4yzFlvr/IwNirhB+BPTJ
-9gpa6d3fuLXvzE735PbvBt63tII12kiEZkpvPGFwTtMXhAyoMVDFLOT3ryFm++U=
-=B1ha
------END PGP SIGNATURE-----
+Alexander
