@@ -1,46 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/8
-Message-Id: <201401031730.s03HUoZm024633@linus.mitre.org>
-Date: Fri, 3 Jan 2014 12:30:50 -0500 (EST)
-From: cve-assign@...re.org
-To: abn@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Neo4J CSRF: Potential CVE candidate
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/4
+Message-ID: <5361B859.1010905@redhat.com>
+Date: Wed, 30 Apr 2014 20:58:33 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: *REJECT* CVE-2013-4121
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Last August, Dinis Cruz wrote a blog entry detailing a CSRF attack
-
-> http://blog.diniscruz.com/2013/08/neo4j-csrf-payload-to-start-processes.html
-
-> on a Neo4J Server resulting in an RCE. The server's documentation
-> mentions the following.
-> 
->   "By default, the Neo4j Server comes with some places where arbitrary
->   code code execution can happen. These are the Section 19.15,
-
-> This could mean that the RCE itself is not CVE worthy as it is a
-> documented/expected behavior. However, should the CSRF flaw be
-> considered a vulnerability and assigned a CVE?
-
-Use CVE-2013-7259 for the CSRF. There is no CVE assignment for the
-documented Section 19.15 behavior.
+CVE-2013-4121 was incorrectly assigned to a software issue that was
+only present in OpenShift Online (our service), it was not present in
+OpenShift Enterprise or OpenShift Origin (upstream), I initially
+assumed (yeah bad idea, I know) that it was, but it wasn't, so please
+REJECT this CVE due to the fact it only affected an online service,
+and not any released code.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJSxvNhAAoJEKllVAevmvmscdkH/2ujYyUGrDQwoSXdENDgUCAS
-fpyQfXnbL6dATF41P8y4cz7e7lCUMb/RxFJ6WBsLd/smCS/K9Q4yF0l4VAwp+2bg
-Ztxcqzz4mQafgXGwAcKMtQ6ZXSk4I9r67PlBcFdO/mddhaLUDQT3MTxYBGJVfJSP
-NlIuCp49QGJGpypRssK0bFkmLymHY9bMrz7n2EzgzPbk4GilVRhBrjEo3R2oJtKW
-DZfRT8JO3op/3515wGXu0jeOtlKQg+YcKJbkpD3jwzmOANQsSFtfKgzNEUU9GCMt
-XO7FYhLg4RyPs9/Lgy1AuFO/crqAck2SLyNTl7rd0KEKLgeANm1j8km4itnvZ+0=
-=/rAS
+iQIcBAEBAgAGBQJTYbhZAAoJEBYNRVNeJnmTveYP/2uz6LffW1G/f1b/5XE+wLSH
+KB+dOw1RS+rSz7B+vQLOgxYS/6KTMz/SrPVc2s8rWtvo7HqKqC8mKDxSCh8bySaF
+aufIhKQ6qAm/TH4QDjZs5XvjCs8SBXo6zJW39rCujeOAfir/tVSfLa2QIQvdz3jo
++CFfEd5BUJnWtE+xE+p2iZb8qDxKGDqdDyt0yogqMN0wTZS91zEV8KKD7H/AKpU9
+zHZRpmRRRF0jt05daXJbbmkUB5LALJZbmCuw8sEIwVmJRWhCWbf2x6CGGWja1KZS
+cECfqACXWU6TBcIRZCfbfjzWB+3ReL9xDXPbvN7wvroeNrULGEuphMAXSuJTTVx2
+TPFMZeVL4EozhcFhB9g82RQMLQC9eW/Xvf4qCbvWzUURXb5dKcJagSheg1NTXWTQ
+Ax20dwSDDW2VVg44yQl1xjmSLvzqTRrmcG5Rjmh/OD+nQR3qr7zWvjigOBi8VmkY
+Xvu1u1tH8jvwE+JAiICsCjKIm3HtbeAOOfxdei/WRP+CFPRcenTTAb31HzkzOSW/
+w+FDlBJNOv2QjXOTmueSyCqesMIuSNRhqjovN8aG7eKaWBcgUE3yfT4uu/s0ajsF
+W3u9orhGZ4KFaVpka2XoXTMi0R0O4/lyjbXAWD9nN6L6hWsKJA5ivYgQ2lLoEXdi
+NNSZR7uwEu+7cUVQsnvu
+=X7a2
 -----END PGP SIGNATURE-----
