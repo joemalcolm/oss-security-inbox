@@ -1,42 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/01/1
-Message-ID: <20141101021336.GT18340@mewburn.net>
-Date: Sat, 1 Nov 2014 13:13:36 +1100
-From: Luke Mewburn <lukem@...BSD.org>
-To: oss-security@...ts.openwall.com
-Cc: Luke Mewburn <lukem@...BSD.org>
-Subject: tnftp 20141031 released to resolve CVE-2014-8517.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/7
+Message-Id: <201405010337.s413arU9021604@linus.mitre.org>
+Date: Wed, 30 Apr 2014 23:36:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request Linux kernel: mm: try_to_unmap_cluster() should lock_page() before mlocking
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Alistair Crooks (NetBSD Security Office) suggested that I notify this list.
+> Linux kernel kernel's Memory Management Unit(MMU) is vulnerable to a crash
+> caused by unlocked memory pages. It could occur during the memory page
+> migration or while cleaning the swap cache pages.
+> 
+> An unprivileged user/program could use this flaw to crash the system kernel,
+> resulting in DoS.
+> 
+> Upstream fix:
+> -------------
+>    -> https://git.kernel.org/linus/57e68e9cd65b4b8eb4045a1e0d0746458502554c
+> 
+> Introduced in:
+> --------------
+>    -> https://git.kernel.org/linus/b291f000393f5a0b679012b39d79fbc85c018233
 
-I've released an update of tnftp which contains NetBSD's fix
-to the recent CVS-2014-8517.
+Use CVE-2014-3122.
 
-tnftp is the portable version of NetBSD's ftp, and various
-distros use it.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-The release may be found at:
-	ftp://ftp.netbsd.org/pub/NetBSD/misc/tnftp/tnftp-20141031.tar.gz
-and detached signature.
-	ftp://ftp.netbsd.org/pub/NetBSD/misc/tnftp/tnftp-20141031.tar.gz.asc
-
-The relevant entries from the NEWS file are:
-
-===
-Changes in tnftp from 20130505 to 20141031:
-
-        Ignore special character behaviour in filenames not provided
-	by the user.
-	Fixes CVE-2014-8517.
-
-	Fix timeout on HTTP fetches.
-===
-
-
-regards,
-Luke.
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJTYcCXAAoJEKllVAevmvms6ZYIAI0DwhXZnaqj8OfEYNQfakn8
+ec1O0G3PeswsowxwK9RQsb/lu0qI+FbnxyiQHyfucCINHAElAW+agGEFsfvDIppc
+JuOZTeAjxHGb9cpuvS5Y/i7+pSKsKAWYGWeHwioIyDUBkVvb0KfKqmgooPtny0o3
+jN7Hanvjxer6tghjtxkIPoCvPiOZyvnqkxO6/Ksnb0+cYQXV0iGfnpn86invUh22
+CpDlLZtEv922TmcJCF+7mjr9qo8RwLkem1/OHWqxyotI4zGrE2KAeI6XWgbPAoMe
+tciH1ac+Lg7yU1QxFgmcF3y9wN20sK/UB7DRSNTmPl9/0te3b2ZtcPU8GMRRPPU=
+=DNdv
+-----END PGP SIGNATURE-----
