@@ -1,52 +1,134 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/9
-Message-ID: <20140429221221.GA16708@openwall.com>
-Date: Wed, 30 Apr 2014 02:12:22 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: local privilege escalation due to capng_lock as used in seunshare
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/13
+Message-Id: <E1WfodH-0004Jw-FC@xenbits.xen.org>
+Date: Thu, 01 May 2014 10:54:27 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 92 (CVE-2014-3124) - HVMOP_set_mem_type allows invalid P2M entries to be created
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 29, 2014 at 05:49:04PM -0400, Steve Grubb wrote:
-> On Tuesday, April 29, 2014 02:20:47 PM Andy Lutomirski wrote:
-> >   if (setuid(getuid()) != 0)
-> >     err(1, "setuid(getuid())");
-> 
-> If you do not want the saved uid to be available, you need to use setresuid. 
-> That removes it. I would classify this as a bug in the test program.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Not quite.
+             Xen Security Advisory CVE-2014-3124 / XSA-92
+                              version 3
 
-Per POSIX.1-2001, setuid() "shall set the real user ID, effective user
-ID, and the saved set-user-ID of the calling process to uid" if the
-process has "appropriate privileges".  On traditional Unix systems,
-without capabilities, running as root historically does constitute
-"appropriate privileges".  If we want current systems to support safely
-running programs written for traditional Unix (including SUID root
-programs), which I think is taken for granted by many of us, we must not
-deviate from those semantics in dangerous ways.  Any such deviation is a
-vulnerability in our current kernel code or configuration.
+      HVMOP_set_mem_type allows invalid P2M entries to be created
 
-Distributions must not ship with settings or programs that allow anyone
-other than an administrator to alter the definition of "appropriate
-privileges" in a way that, while compliant with this vague wording in
-POSIX, introduces a vulnerability for correct programs written for
-traditional Unix systems.
+UPDATES IN VERSION 3
+====================
 
-What we have here is a reincarnation of:
+This issue has been assigned CVE-2014-3124.
 
-"Sendmail Workaround for Linux Capabilities Bug"
-https://www.sendmail.com/sm/open_source/security/security_docs/sendmail.8.10.1.LINUX-SECURITY.txt
+ISSUE DESCRIPTION
+=================
 
-albeit in slightly different shape (not entirely in the kernel, but with
-a userland "helper").
+The implementation in Xen of the HVMOP_set_mem_type HVM control
+operations attempts to exclude transitioning a page from an
+inappropriate memory type.  However, only an inadequate subset of
+memory types is excluded.
 
-I think that sendmail-exposed vulnerability was in the kernel (not in
-sendmail), and I think the vulnerability Andy is reporting is in some
-distros (apparently, Red Hat's).
+There are certain other types that don't correspond to a particular
+valid page, whose page table translation can be inappropriately
+changed (by HVMOP_set_mem_type) from not-present (due to the lack of
+valid memory page) to present.  If this occurs, an invalid translation
+will be established.
 
-Of course, it is possible that I have missed something important as I
-did not look into this issue closely, but the above is my current
-understanding based on Andy's message.
+IMPACT
+======
 
-Alexander
+In a configuration where device models run with limited privilege (for
+example, stubdom device models), a guest attacker who successfully
+finds and exploits an unfixed security flaw in qemu-dm could leverage
+the other flaw into a Denial of Service affecting the whole host.
+
+In the more general case, in more abstract terms: a malicious
+administrator of a domain privileged with regard to an HVM guest can
+cause Xen to crash leading to a Denial of Service.
+
+Arbitrary code execution, and therefore privilege escalation, cannot
+be entirely excluded: On a system with a RAM page present immediately
+below the 52-bit address boundary, this would be possible.  However,
+we are not aware of any systems with such a memory layout.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from 4.1 onwards are vulnerable.
+
+The vulnerability is only exposed to service domains for HVM guests
+which have privilege over the guest.  In a usual configuration that
+means only device model emulators (qemu-dm).
+
+In the case of HVM guests whose device model is running in an
+unrestricted dom0 process, qemu-dm already has the ability to cause
+problems for the whole system.  So in that case the vulnerability is
+not applicable.
+
+The situation is more subtle for an HVM guest with a stub qemu-dm.
+That is, where the device model runs in a separate domain (in the case
+of xl, as requested by "device_model_stubdomain_override=1" in the xl
+domain configuration file).  The same applies with a qemu-dm in a dom0
+process subjected to some kind kernel-based process privilege
+limitation (eg the chroot technique as found in some versions of
+XCP/XenServer).
+
+In those latter situations this issue means that the extra isolation
+does not provide as good a defence (against denial of service) as
+intended.  That is the essence of this vulnerability.
+
+However, the security is still better than with a qemu-dm running as
+an unrestricted dom0 process.  Therefore users with these
+configurations should not switch to an unrestricted dom0 qemu-dm.
+
+Finally, in a radically disaggregated system: where the HVM service
+domain software (probably, the device model domain image) is not
+always supplied by the host administrator, a malicious service domain
+administrator can exercise this vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+In a radically disaggregated system, restricting HVM service domains
+to software images approved by the host administrator will avoid the
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa92.patch                 xen-unstable, Xen 4.4.x, Xen 4.3.x
+xsa92-4.2.patch             Xen 4.2.x
+xsa92-4.1.patch             Xen 4.1.x
+
+$ sha256sum xsa92*.patch
+184dcb88dfb4540fca33016ffcfe0f4f557449ab5b4ec6a4bf486c75926d23f3  xsa92.patch
+76905398958dfcec98fb5bde2a68c0e86a3ccc9f442a8a658e972937fd75534a  xsa92-4.1.patch
+bca98827834f807c787fceb6c719d9d4fe3c40786cb087156829e5e6fb5700d6  xsa92-4.2.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTYidfAAoJEIP+FMlX6CvZ6m0H/0khx5ZZ0MiEf52szuhdBoCe
+zmNRuD8FrjS16CQx6KIUvvlLujWHg3hE+PFAoV3tM5U9++WrvXVO8o1ckKysle26
+udRignUc1Y+Am5nB1p1KRwpVb4v8votb+/GJfFlYd01V4wyaMttQLJkI9jcLRMN7
+f0bcttCZTTToQGpl6DuYh1NCOc1mLEtlC66SAHvvA8jC6K395M/MsSs+lkB63AHW
+SS2kdatHpt3BH4zSPRZQiwStMTCYMPN3+oc9BX1N1DphbqKo5yC1WaamF//24Ew9
+ZDjtBgjQhJfZ9IKPbRctsxKOrObEfkcLLO3ETaZ74MHl94I000L+lfki7D8Gk+k=
+=xTcW
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa92.patch" of type "application/octet-stream" (1312 bytes)
+
+Download attachment "xsa92-4.1.patch" of type "application/octet-stream" (2459 bytes)
+
+Download attachment "xsa92-4.2.patch" of type "application/octet-stream" (1313 bytes)
