@@ -1,45 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/14
-Message-ID: <alpine.LFD.2.10.1401292034410.25782@javelin.pnq.redhat.com>
-Date: Wed, 29 Jan 2014 20:51:00 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE REJECT request: CVE-2013-4588
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/02/8
+Message-ID: <53640609.10003@redhat.com>
+Date: Fri, 02 May 2014 14:54:33 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Debian Bug#746579: libwww-perl: HTTPS_CA_DIR or HTTPS_CA_FILE disables peer certificate verification for IO::Socket::SSL
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-CVE-2013-4588 was assigned to a stack overflow flaw in the Linux kernel.
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746579
 
-  -> http://seclists.org/fulldisclosure/2013/Nov/77
+Package: libwww-perl
+Version: 6.06-1
+Tags: security
+Usertags: serious
 
-===
-Kernel: net: ipvs: stack buffer overflow
+If LWP uses IO::Socket::SSL as SSL socket class (this is the default),
+setting HTTPS_CA_DIR or HTTPS_CA_FILE environment variable disables(!)
+server cerificate verification:
 
-Linux kernel built with the IP Virtual Server(CONFIG_IP_VS) support is
-vulnerable to a buffer overflow flaw. It could occur while setting or
-retrieving socket options via setsockopt(2) or getsockopt(2) calls.
-Though a user needs to have CAP_NET_ADMIN privileges to perform these IP_VS
-operations.
+...
 
-Upstream fix:
--------------
-   -> https://git.kernel.org/linus/04bcef2a83f40c6db24222b27a52892cba39dffb
-===
+So the intention was to disable only hostname verification, for
+compatibility with Crypt::SSLeay (why?!), but the effect is that the
+SSL_verify_mode is set to 0.
 
-The bounds check added by the above patch are found to be redundant, as the 
-same is done in routine 'nf_sockopt_find'. [1]
+So this probably needs a CVE. My thought being that you meant to
+disable hostname checks, and ended up disabling all verification, so I
+guess it's a fine line since disabling host name checks means an
+attacker can use any C you trust to get a cert for a hostname they
+control and mitm you, but if you are using an internal CA this would
+allow a mitm that was not possible without this flaw, so there can be
+a violation in a relatively not completely insane setup.
 
-   + if (cmd < IP_VS_BASE_CTL || cmd > IP_VS_SO_SET_MAX)
-   +     return -EINVAL;
-   + if (len < 0 || len > MAX_ARG_LEN)
-   +     return -EINVAL;
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-[1] https://lkml.org/lkml/2009/9/30/265
-
-
-That makes it a security non-issue. Please kindly reject this CVE.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+iQIcBAEBAgAGBQJTZAYJAAoJEBYNRVNeJnmT9JsP/0qjZzubb5c4f05KTwEIlail
+Oay7Z2eYXSipi3rg1M4JNHUXeE3M9bXp0IyUsmvfmS59EcHyC8tZN3IERLymSpvT
+gfNoLKFYipUv/Dgu0bdt5HM3tKhl/pCHsJPvfoCnZR7bh8pa17XbckpmxwIajwqh
+vZ6K6gI9SrlNycNUdo920/kstIkdc/FdpEpkRvRMOsMTD65l+3VMGKEGb55ekqqd
+2yUZnw+Qza1frhFg6cSeeP/liyDijRVH4lbCSkjXdWy8gedHLpGreNsC7jgsckRQ
+qlzKWiJbfRXSySx0OuczKFFVRWELaSmOThTEFsY1bDoM8GvPcJjbdZDVY7Yg62BX
+HtlzshpOT7es1egJP5g88XvyJdxIu9j6UgTYlhvF017ZSVb5v6YhxaPN5EUVNTOk
+EK3UobAdSokiJtLgZ4BSIQ41EdPco9BbSpd31/iPyTU733jkITSqRmMrYoCZyMnk
+eO1yNrX4QdyaIhAnbLhvCyGVOIi/ytjCIBGwjw/Prx1G2gTy67yH2eYFyIOGpTbb
+EvdVDm2tzw4l5lC4SUwKNvVWawtbtoeCp8nAI9KzTG7uL97GrLmku3WnoCe7zsKz
+BzlXHWUshR3PcaDS7PeyfWlke+pt1KeSdj97pBvLnyWbAQZE7sLHCDnuUyCtFg6K
+jPcqe01NT37NR3QOMZtY
+=APK7
+-----END PGP SIGNATURE-----
