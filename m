@@ -1,77 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/1
-Message-ID: <531039E2.6010502@redhat.com>
-Date: Fri, 28 Feb 2014 18:25:22 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE requests: MediaWiki 1.22.3, 1.21.6 and 1.19.12 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/02/1
+Message-Id: <201405020052.s420qbH8009487@linus.mitre.org>
+Date: Thu, 1 May 2014 20:52:37 -0400 (EDT)
+From: cve-assign@...re.org
+To: geissert@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: directory traversal in DSA-2915-1-patched dpkg in Debian squeeze
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-As noted in https://bugs.gentoo.org/show_bug.cgi?id=503012 a few 
-security bugs are fixed in the 1.22.3, 1.21.6 and 1.19.12 MediaWiki release:
+> The recent update of dpkg for CVE-2014-0471 in Debian squeeze actually
+> introduces a vulnerability in that release
 
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-February/000141.html
+This is a somewhat unusual situation from the perspective of CVE
+assignment. The outcome of 746306 is that C-style filenames aren't
+accepted. However, we probably can't assign a CVE ID for a root cause
+of "attempts to support C-style filenames," because supporting those
+filenames isn't inherently unsafe if an OS vendor is programmatically,
+or by policy, ensuring that the patch program is one that interacts
+safely with that support.
 
-Can CVEs be assigned to the following (if they are all CVE worthy)?
+The
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1071135
-The MediaWiki 1.22.3, 1.21.6 and 1.19.12 release announcement notes:
+  updated dpkg in squeeze + patch(1) from squeeze = vulnerable
 
-* (bug 60771) SECURITY: Disallow uploading SVG files using non-whitelisted
-   namespaces. Also disallow iframe elements. User will get an error
-   including the namespace name if they use a non- whitelisted namespace.
+behavior is something that seems to be best categorized as a release
+engineering problem. Although there are very few cases in which CVE
+IDs have been assigned for release engineering problems, these
+problems can be within the scope of CVE, and the current one is. Use
+CVE-2014-3127 for this issue. In other words, because squeeze's new
+dpkg program is incompatible, in a security-relevant way, with
+squeeze's patch program, the two should not have been allowed to exist
+together within any correctly maintained/supported squeeze
+environment.
 
-An attacker could perform cross-site scripting attacks by uploading 
-crafted SVG images.
+However, there is another question that could possibly result in a
+second CVE ID. On wheezy, there's apparently a security problem in, at
+least, these two cases:
 
-The versions of MediaWiki in Fedora and EPEL 6 are affected. I have not 
-tested EPEL 5.
+  1. the installed patch program is an older version of patch that's
+     identical to squeeze's supported version of patch. Possibly, this
+     can happen on a correctly maintained/supported Debian system
+     because sometimes a system is in a partially upgraded state. In
+     particular, the vulnerability affects root's use of dpkg, which
+     may be a completely expected activity because the administrator
+     might want to unpack a source package even though an upgrade is
+     unfinished.
 
-References:
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-February/000141.html
-https://bugzilla.wikimedia.org/show_bug.cgi?id=60771
-https://gerrit.wikimedia.org/r/#/q/7d923a6b53f7fbcb0cbc3a19797d741bf6f440eb,n,z
+  2. the patch program in root's path is not something obtained from
+     Debian, e.g., the administrator intentionally decided to install
+     a non-GNU patch program
 
+We're not sure what can be done about case 1. The general issue is
+that, when doing an upgrade of an arbitrary OS, the system might
+intermittently be in a state in which incompatibility of
+old-OS-version programs and new-OS-version programs has a major
+security risk. Maybe the right answer is a policy that nobody is
+allowed to do anything while an upgrade is in progress. In other
+words, regular users may not be logged in, and root should only be
+running the upgrade program and nothing else. ("nothing else" is
+impractical; realistically, risk is reduced by running as little else
+as possible.)
 
+Case 2 possibly violates the expectations of the concept of a Linux
+distribution OS or other OS. In other words, the dpkg program requires
+the patch program, and therefore the administrator must ensure that
+the patch program (at least, in root's path) is the one provided by
+the OS vendor. If the administrator decided to install any other patch
+program, the resulting security problem would typically be considered
+a site-specific problem and thus outside the scope of CVE. However, a
+CVE ID could be assigned of any of these is true:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1071136
-The MediaWiki 1.22.3, 1.21.6 and 1.19.12 release announcement notes:
+  - on wheezy, dpkg doesn't have any explicit requirements about the
+    patch program
 
-* (bug 61346) SECURITY: Make token comparison use constant time. It 
-seems like
-   our token comparison would be vulnerable to timing attacks. This will 
-take
-   constant time.
+  - the dpkg documentation states that a non-GNU patch program can be
+    used if desired
 
-The versions of MediaWiki in Fedora and EPEL 6 are affected. I have not 
-tested EPEL 5.
+  - Debian has a general policy that a supported program (such as
+    dpkg) must be robust in the face of non-standard but reasonable
+    site-specific software changes. In other words, if Debian program
+    1 allows arbitrary code execution in situations where the
+    administrator replaces Debian program 2 with an
+    often-considered-equivalent non-Debian program, this is supposed
+    to be treated as a vulnerability in Debian program 1.
 
-References:
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-February/000141.html
-https://bugzilla.wikimedia.org/show_bug.cgi?id=61346
-https://gerrit.wikimedia.org/r/#/q/I2a9e89120f7092015495e638c6fa9f67adc9b84f,n,z
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1071139
-The MediaWiki 1.22.3, 1.21.6 and 1.19.12 release announcement notes:
-
-* (bug 61362) SECURITY: API: Don't find links in the middle of api.php 
-links.
-
-An attacker could perform cross-site scripting attacks.
-
-The versions of MediaWiki in Fedora and EPEL 6 are affected. I have not 
-tested EPEL 5.
-
-References:
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-February/000141.html
-https://bugzilla.wikimedia.org/show_bug.cgi?id=61362
-https://gerrit.wikimedia.org/r/#/q/Idf985e4e69c2f11778a8a90503914678441cb3fb,n,z
-
-Thanks,
-
---
-Murray McAllister / Red Hat Security Response Team
+iQEcBAEBAgAGBQJTYustAAoJEKllVAevmvmswDgIAIhRUCoIuvrHcrVlhEH2aicu
+4eacUenhaY1BfLg167t+csxZooZClRzsykhoun36VlrTT9jzLTBHjrSwupwIaNia
+LvdmEEMgRcig0nPIl0233Jew3vIWXD+BJcQXOyyGPmjOmWWUew6JO+hkuDGg2JTr
+r3nyNPQafsbdfBWGZ0rnmOqp+gUc+3bgqReVtsogcXvd0yVbKMFdWm1kuOIHeevf
+ZWdmBdF2cwWyCGk9SAvRVGj15HxFlmmyuQ4u0PN2oxzbLd8cooJGmZnWz/q8X+h7
+A4srxRFTqyHceZgWB0cqsXyjY9oiFEqweC+pA1WHozu+2f2D6isBoH1WYjLOA8c=
+=PQIS
+-----END PGP SIGNATURE-----
