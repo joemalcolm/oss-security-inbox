@@ -1,82 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/12
-Message-id: <BA324111-7EC6-4BD4-81F2-1BF86864CC5B@me.com>
-Date: Thu, 20 Feb 2014 12:27:51 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: oss-security@...ts.openwall.com
-Subject: Persistent XSS in Media File Renamer V1.7.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/02/7
+Message-Id: <201405022033.s42KXCN8017238@cvs.openbsd.org>
+Date: Fri, 02 May 2014 14:33:12 -0600
+From: Theo de Raadt <deraadt@....openbsd.org>
+To: kseifried@...hat.com
+cc: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, theo@....openbsd.org
+Subject: Re: CVE Request: OpenSSL NULL pointer dereference in do_ssl3_write
 Content-Type: text/plain; charset=utf-8
 
-Title: Persistent XSS in Media File Renamer V1.7.0
-Date: 1/31/2014
-Author: Larry W. Cashdollar, @_larry0
-CVE: Please Assign
-Vendor: Notified 2/4/2014, no response.
-Download: http://www.meow.fr/media-file-renamer/
+> On 05/02/2014 09:30 AM, Marc Deslauriers wrote:
+> > Hello,
+> > 
+> > A null pointer dereference bug was discovered in so_ssl3_write().
+> > An attacker could possibly use this to cause OpenSSL to crash,
+> > resulting in a denial of service.
+> > 
+> > http://rt.openssl.org/Ticket/Display.html?user=guest&pass=guest&id=3321
+> >
+> >  
+> > http://anoncvs.estpak.ee/cgi-bin/cgit/openbsd-src/commit/lib/libssl?id=e76e308f1fab2253ab5b4ef52a1865c5ffecdf21
+> >
+> >  
+> > http://ftp.openbsd.org/pub/OpenBSD/patches/5.5/common/005_openssl.patch.sig
+> >
+> >  Could a CVE please be assigned to this issue?
+> > 
+> > Thanks,
+> > 
+> > Marc.
+> > 
+> 
+> I think getting this one a CVE is time critical. Mitre: sorry if this
+> causes a duplicate, but I'm assigning a CVE now. Please use
+> CVE-2014-0198 for this issue. Also cc'ing Theo so OpenBSD gets
+> notified for sure. Speaking of which Theo: should we get you or an
+> OpenBSD deputy (Bob Beck?) onto distros@?
 
-Vulnerability:
-The following functions do not sanitize input before being echoed out: 
-In file mfrh_class.settings-api.php:
-166     function callback_multicheck( $args ) {
-167         $value = $this->get_option( $args['id'], $args['section'], $args['std'] );
-168         
-169         $html = '';
-170         foreach ( $args['options'] as $key => $label ) {
-171             $checked = isset( $value[$key] ) ? $value[$key] : '0';
-172             $html .= sprintf( '
-', $args['section'], $a    rgs['id'], $key, checked( $checked, $key, false ) );
-173             $html .= sprintf( '
- %3$s
-', $args['section'], $args['id'], $label, $key );
-174         }   
-175         $html .= sprintf( '
- %s', $args['desc'] );
-176         
-177         echo $html;
-178     }   
+"So OpenBSD gets notified for sure"... That is kind of weird.  Read
+the commit message.  It is originally from the OpenSSL lists.  Do none
+of you read the lists?  It's obvious the OpenSSL developers don't.
 
+The errata would have gone out same day Ted commited the fix, except I
+was in the Atlas mountains... and then it was forgotten until I got
+back home.
 
-    function callback_radio( $args ) {
-186 
-187         $value = $this->get_option( $args['id'], $args['section'], $args['std'] );
-188         
-189         $html = '';
-190         foreach ( $args['options'] as $key => $label ) {
-191             $html .= sprintf( '
-', $args['section'], $args['id'], $    key, checked( $value, $key, false ) );
-192             $html .= sprintf( '
- %3$s
-', $args['section'], $args['id'], $label, $key );
-193         }   
-194         $html .= sprintf( '
- %s', $args['desc'] );
-195         
-196         echo $html;
-197     }
+I'm sure you've all got your "processes" for handling these things.
+But then you get paid for handling these things in some way, don't
+you?
 
-
- function callback_wysiwyg( $args ) {
-250 
-251         $value = wpautop( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-252         $size = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : '500px';
-253 
-254         echo '
-
-';
-255 
-256         wp_editor( $value, $args['section'] . '[' . $args['id'] . ']', array( 'teeny' => true, 'textarea_rows' => 10 ) );
-257 
-258         echo '
-
-';
-259 
-260         echo sprintf( '
-
- %s
-', $args['desc'] );
-261     }
-
-
-PoC: If a user with permission to add media or edit media uploads a file with "<script>alert(1)</script>" as the title they can XSS the site admin user. 
-
-Full Advisory: http://www.vapid.dhs.org/advisories/wordpress/plugins/MediaFileRenamer-1.7.0/
+We don't get paid.  And therefore, I don't know where I should find
+the time to be on another mailing list.  It is not like I would have
+sent a mail to anyone.  In general our processes are simply commit &
+publish.  So I'll decline.
