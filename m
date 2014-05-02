@@ -1,25 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/3
-Message-ID: <CABbbngB+GY32=HM_i39x-VjuBE1JR1xuuPCBGurPiwV9HiZhgg@mail.gmail.com>
-Date: Mon, 20 Jan 2014 03:30:34 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/02/6
+Message-ID: <5363E155.7020906@redhat.com>
+Date: Fri, 02 May 2014 12:17:57 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, theo@....openbsd.org
+Subject: Re: CVE Request: OpenSSL NULL pointer dereference in do_ssl3_write
 Content-Type: text/plain; charset=utf-8
 
-Hi there, I'd like to request CVE identifiers for:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-SA-CONTRIB-2013-098 - Ubercart - Session Fixation Vulnerability
-https://drupal.org/node/2158651
+On 05/02/2014 09:30 AM, Marc Deslauriers wrote:
+> Hello,
+> 
+> A null pointer dereference bug was discovered in so_ssl3_write().
+> An attacker could possibly use this to cause OpenSSL to crash,
+> resulting in a denial of service.
+> 
+> http://rt.openssl.org/Ticket/Display.html?user=guest&pass=guest&id=3321
+>
+>  
+> http://anoncvs.estpak.ee/cgi-bin/cgit/openbsd-src/commit/lib/libssl?id=e76e308f1fab2253ab5b4ef52a1865c5ffecdf21
+>
+>  
+> http://ftp.openbsd.org/pub/OpenBSD/patches/5.5/common/005_openssl.patch.sig
+>
+>  Could a CVE please be assigned to this issue?
+> 
+> Thanks,
+> 
+> Marc.
+> 
 
-SA-CONTRIB-2014-001 - Entity API - Access Bypass
-https://drupal.org/node/2169595
+I think getting this one a CVE is time critical. Mitre: sorry if this
+causes a duplicate, but I'm assigning a CVE now. Please use
+CVE-2014-0198 for this issue. Also cc'ing Theo so OpenBSD gets
+notified for sure. Speaking of which Theo: should we get you or an
+OpenBSD deputy (Bob Beck?) onto distros@?
 
-SA-CONTRIB-2014-002 - Anonymous Posting - Cross Site Scripting (XSS)
-https://drupal.org/node/2173321
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Thanks!
-
-Best,
-Forest
-
+iQIcBAEBAgAGBQJTY+FVAAoJEBYNRVNeJnmThQcP/jNvrL/2u5TMKRZjWMnLbHy3
+4jjvpK62mS23fv0qa8XngyywejggN2/UieaU+f1htUfK4M5iFw0et5K1nhh30uGa
+65efRf68z1IKFayibpEAwAq9yzNQOF2p3MaV4FTmz6yzuJSRAnc6WHm7jkM1vQgj
+LJz4z4eAcWcxzDnmEBVhYtLPw8DVw4JktN2rUOpflNLYCQsdOmSgCh3pZ1zpGDM7
+LKRqxwNtRMm9fN+kqz/dZg2PsCWX92Y5x8VBGb6r7usSAOywZwtFzw/gWSwWyVwb
+aknz8z9He44TItotQaU43XoDGpRFkQXJ4SFtOS4h+63TzoSDxO0aLcT6m3WjWnEI
+y5rOrrFmtChlXl6wSPqxIshSLSwYPabfPr1HqsY2ZKmlob4y85dSx8bc3Dz+Q9H7
+4gN8IInZmQLpPgtXOIbtTw7R9ZvxusaQJz4aQzRrY/367n3G9c4WG2Bjc8q4vWVb
+ELJd8qKqZTPOi7XsoVlWMMa9SmOFGbdJas1bLP0tCPPzZ64Y3ep2t/R5TmSFNscG
+m9+KJZoYtxEYVCsmxvJNKA31z36fyBYhVPJrgU6cNGcjw4rOh7eYwDI6ZFXucxgN
+1qNs/ERhqxO+IL8EVw0tIpxSo3UE3ZCaNEK6fr+jA27y1ylzq/fN43tJZtWLLBRw
+1RcW6jerNvSwr1Nq1BJe
+=+cMX
+-----END PGP SIGNATURE-----
