@@ -1,56 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/7
-Message-ID: <CAB9Gt0-msb4s13t-UJmH7WKb_ekUVjx8xdvB+c6Zf2tfT0SXiQ@mail.gmail.com>
-Date: Wed, 3 Dec 2014 20:47:01 +0800
-From: Matt U <matt.u@...ressvpn.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/02/5
+Message-ID: <5363BA29.4000005@canonical.com>
+Date: Fri, 02 May 2014 11:30:49 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: OpenSSL NULL pointer dereference in do_ssl3_write
 Content-Type: text/plain; charset=utf-8
 
-Hacking forums have been discussing exploiting this against consumer VPN
-services - In this case I would agree it's pretty critical since it'll
-likely be in Metasploit soon (if it isn't already) and from there everyone
-will want to have a shot...
+Hello,
 
-In any case, "critical" does seem a little subjective in any vulnerability
-less than RCE or info disclosure. I guess in this case it depends on how
-the software is being used.
+A null pointer dereference bug was discovered in so_ssl3_write(). An attacker
+could possibly use this to cause OpenSSL to crash, resulting in a denial of service.
 
-On Wednesday, December 3, 2014, Nicolas Gaudin <
-nicolas.gaudin@...yconseil.fr> wrote:
+http://rt.openssl.org/Ticket/Display.html?user=guest&pass=guest&id=3321
 
-> Hi,
-> Is this vulnerability really 'critical' if we consider that a malicious
-> user
-> needs to be authenticated to crash the gateway?
-> I understand that the vulnerability is exploitable if a client is
-> compromised (certificate stolen).
-> In such a case (client compromised), the risk is greater as confidentiality
-> is breached.
->
-> Nicolas
->
-> -----Message d'origine-----
-> De : David White [mailto:dmwhite823@...il.com <javascript:;>]
-> Envoyé : mercredi 3 décembre 2014 10:24
-> À : oss-security@...ts.openwall.com <javascript:;>
-> Objet : [oss-security] CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
->
-> I saw an email come through the pfSense list yesterday, but haven't seen
-> anything about it discussed here. So I'm bringing it to this list's
-> attention.
->
-> https://community.openvpn.net/openvpn/wiki/SecurityAnnouncement-97597e732b
->
-> [ As a side note, I mistakenly thought the OP on the pfSense list
-> mistakenly
-> posted his link to a forum post on OpenVPN that was written in 2010, when
-> in
-> fact, that user had joined in 2010 but posted to the pfSense forum
-> recently - https://forums.openvpn.net/topic17625.html ]
->
->
-> --
-> David
->
+http://anoncvs.estpak.ee/cgi-bin/cgit/openbsd-src/commit/lib/libssl?id=e76e308f1fab2253ab5b4ef52a1865c5ffecdf21
 
+http://ftp.openbsd.org/pub/OpenBSD/patches/5.5/common/005_openssl.patch.sig
+
+Could a CVE please be assigned to this issue?
+
+Thanks,
+
+Marc.
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
