@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/1
-Message-ID: <20140925001402.GA2702@openwall.com>
-Date: Thu, 25 Sep 2014 04:14:02 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Chet Ramey <chet.ramey@...e.edu>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/03/2
+Message-ID: <5365277F.1060706@redhat.com>
+Date: Sat, 03 May 2014 11:29:35 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: ldns-keygen creates private key world readable
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 24, 2014 at 03:12:08PM -0400, Chet Ramey wrote:
-> There are several options for making shell functions inherited via the
-> environment more robust, none of them backwards compatible.  I will
-> choose one and implement it for a future bash version.
-> 
-> The leading candidates both raise the bar by requiring a potential
-> attacker to be able to create arbitrarily-named environment variables as
-> well as environment variables with specific values.
-> 
-> I considered (and implemented) a blacklist approach that would have
-> protected against a set of commonly-named variables (HTTP_*, CGI_*,
-> SSH_*, LC_*, and so on), but the consensus was that that was too easily
-> circumvented.  I removed it from the distributed patches.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-What about no longer inheriting functions with names that don't contain
-any lowercase letters?  I guess typical function names use some lowercase
-letters (are all-lowercase, or also contain non-letters, or use
-CamelCaps), whereas typical names of environment variables set by
-network services do not contain any lowercase letters (usually consist
-of uppercase letters and underscore only).  This is not pretty, but it
-isn't as limited as a blacklist of specific prefixes would be, so maybe
-it'd work reasonably well for an interim period until you're able to
-break backwards compatibility to a greater degree?
+ldns-keygen creates private key world readable
 
-Alexander
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746758
+
+Same argument as GPG I suppose, so probably deserves a CVE.
+
+
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJTZSd/AAoJEBYNRVNeJnmTmugP/jNYcpGML64bLcSGrD+D4and
+KasTcWoYXmM8wLakBsbpQ498p2j2fTzHh3MnI68eESgvSoxUTV31FirBpAejJe85
+c6XmIcKb+qZ0MSpfT26nPtW6ypptn2d2kDtu4cgZxjbTgBH1z+KuEwkF+XClB9VO
+lbPAitmOM6aCCX0ccnK9UDVYLBDurorK5MNeC5QiCVp3wdrgiEo3pvJAp8bEAMdl
+9RQR/EHxXnJqmEQgW1E2A740abpNELU4NSlYM3HQ+3v2hHFErSv2iH5ypuuqaXMc
+53NHbBfbQBaEmckapIzQUhJoG1CZFgl1VEiqH4nchvzpkG18pTM8feY9n2CrqTXQ
+d3c4kOZv9UPWWipyabqCWrW+qcdqXPYJNi0x1g+a6JjCKkutPrJd14EX5J/Hr9of
+bABuyh8cuk8UUIxTL/+jX08zSXyUbB9P3tLF1SOlpnshhuWqk4u58gHuG4q44ceS
+BD/G0yZvFQfyApuVzUC7oXuUahGrgSnROljnJgLRo7+VCIXBSgn+i+FtWqjy4oeB
+sJme5MfJrwl9lVPutDYivNN5WmDj6plwSeS4xCIQS8K8yXG/dg7UN05B/JGbVbgV
+JPSGLbwVLQV7n8Z/J6OMG9iZEO/WDlSTd94DQXA9PaijL5aXdoovjr+8pKpsct9p
+LmYIkD0zvbgYOjkJ/U9Z
+=knsT
+-----END PGP SIGNATURE-----
