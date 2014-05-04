@@ -1,21 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/9
-Message-ID: <183574BC-AA15-473C-85F5-0E218D665F5F@redhat.com>
-Date: Fri, 17 Jan 2014 15:54:33 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: CVE-2014-0021: chrony traffic amplification in cmdmon protocol
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/04/1
+Message-ID: <20140504062625.GA26153@eldamar.local>
+Date: Sun, 4 May 2014 08:26:25 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Assign a CVE Identifier <cve-assign@...re.org>, Steffen Ullrich <coyote.frank@....net>
+Subject: Re: Debian Bug#746579: libwww-perl: HTTPS_CA_DIR or HTTPS_CA_FILE disables peer certificate verification for IO::Socket::SSL
 Content-Type: text/plain; charset=utf-8
 
-With the news about the traffic amplification issue in ntpd, one of our developers looked at chronyd and it suffers from the same flaw.
+Hi,
 
-We've filed a bug [1] and it's also been brought up upstream [2].  There is currently no fix, but as the ntpd issue has been gaining some interest, I'm bringing this up here now for other who may ship chrony.  We assigned it CVE-2014-0021.
+On Fri, May 02, 2014 at 02:54:33PM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746579
+> 
+> Package: libwww-perl
+> Version: 6.06-1
+> Tags: security
+> Usertags: serious
+> 
+> If LWP uses IO::Socket::SSL as SSL socket class (this is the default),
+> setting HTTPS_CA_DIR or HTTPS_CA_FILE environment variable disables(!)
+> server cerificate verification:
 
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=1054790
-[2] http://listengine.tuxfamily.org/chrony.tuxfamily.org/chrony-dev/2014/01/msg00001.html
+An update on this issue for the affected versions:
 
-Thanks.
+Steffen Ullrich proposed a fix for this in [1]. The issue seem to be
+introduced in LWP::Protocol::https in commit[2], which is version
+6.04.
 
--- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+ [1] https://github.com/libwww-perl/lwp-protocol-https/pull/14
+ [2] https://github.com/dagolden/lwp-protocol-https/commit/bcc46ce2dab53d2e2baa583f2243d6fc7d36dcc8
+
+Regards,
+Salvatore
