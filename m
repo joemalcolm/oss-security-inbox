@@ -1,134 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/12
-Message-ID: <20140624120347.GA25432@suse.de>
-Date: Tue, 24 Jun 2014 14:03:47 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: lars@...afoo.de
-Subject: Re: CVE Request: Linux kernel ALSA core control API vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/5
+Message-Id: <201405050344.s453ibX1000717@linus.mitre.org>
+Date: Sun, 4 May 2014 23:44:37 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com, argos83@...il.com
+Cc: cve-assign@...re.org
+Subject: Re: Erlang OTP's httpc module Denial of Service
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The mail that was send by Lars-Peter to the ALSA developers.
-Takashi Tiwai gave approval to forward it here.
+>   I've reported this issue to erlang-bugs mailing list:
+> http://erlang.org/pipermail/erlang-bugs/2014-May/004369.html
 
-Ciao, Marcus
+> Using httpc to connect to a malicious server can cause the system to run
+> out of memory and crash.
 
--------------------------------------------------------------------
+There doesn't seem to be a vendor response yet. Also, it seems that
+this might be described as a process crash, not a "system" crash.
 
-Subject: [PATCH 0/5] Use-after-free and out-of-bounds acccess vulnerabilities
-in the ALSA control code
-From: Lars-Peter Clausen <lars@...afoo.de>
+Failure of client code to consider resource consumption, including
+resources consumed only when facing a malicious server, does not
+always result in a CVE assignment. For example, client application
+code isn't always responsible for deciding when a server seems to be
+sending it an infinitely large file. One case in which a CVE can be
+assigned is a client that expresses specific goals for abandoning
+server communication based on elapsed time, data rate, amount of data,
+etc., but has an implementation error in achieving those goals.
 
-Hi,
+The main question at this point is whether an exception has to be made
+for Erlang. In other words, because of a "reliability model" or
+something similar in Erlang, is it always a vulnerability if an Erlang
+module lacks reasonable restrictions on resource consumption?
 
-A couple of use-after-free and out-of-bounds memory accesses which can be
-triggered by race conditions have been discovered in the ALSA control handling
-code. These vulnerabilities allow users that have access to a ALSA control
-character device (/dev/snd/controlCX) to disclose memory and potentially allow
-for arbitrary code execution. On a typical Linux system these are the users
-that are in the audio group.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-This patch series fixes the issues and the patches are ordered by severity of
-the issue.
-
-The first issue is a race conditions in the user-control put/get and tlv
-handlers, which can cause the write callback to race against the read callback.
-For put/get this is pretty harmless as the only effect is that the reader will
-see a inconsistent state. The tlv callback is pretty bad though as it allows
-disclosure of kernel memory that is adjacent to the memory region where the tlv
-data is stored. The issue is essentially a race between
-
-        ue->tlv_data = new_data;
-        ue->tlv_data_size = size;
-
-and 
-
-    copy_to_user(tlv, ue->tlv_data, ue->tlv_data_size)
-
-If tlv_data has already been updated to the new data, but size has not and the
-new data is smaller than the older data, copy_to_user() will read beyond the
-boundaries of the buffer. This allows to dump almost 128k bytes per race. The
-race seems to be fairly easy to trigger, the more cores the system has the
-easier. The data that has been dumped this way can contain all kind of
-sensitive data. Inital tests show that it is possible to disclose multiple
-hundreds of MB of memory within a few minutes.
-
-There are a couple of places where a kcontrol is de-referenced after
-controls_rwsem has been released. This can cause a use-after-free access as a
-control can be freed at any time. To avoid this the patch makes a on-stack copy
-of the relevant data before releasing the lock and then works with the copy.
-This race condition is very hard to hit though, since the data is only accessed
-for a very short amount of time after the lock has been released and to exploit
-the issue the control needs to be freed in that time and the memory needs to be
-re-allocated and assigned some other unrelated data. But it is possible to make
-it much easier to exploit by subscribing to the control events, but never read
-a event. This will create a rather long list which takes snd_ctl_notify() a
-while to process before it access the already freed data. This vulnerability
-allows to disclose a few bytes of kernel memory per triggered race condition
-
-The next issue is that SNDRV_CTL_IOCTL_ELEM_REPLACE does no permission
-checking on the control that is to be replaced. This allows a application to
-remove controls that were created by the kernel driver and also controls that
-are locked by other applications. The first can cause use-after-free access if
-the kernel driver keeps a pointer to the control and does not expect it to be
-freed (e.g. the ctrljack code). The later is just a bit of an inconvenience.
-
-SNDRV_CTL_IOCTL_ELEM_REPLACE also gets the user_ctl_count handling wrong. The
-MAX_USER_CONTROLS limit is not enforced when replacing a control, but
-user_ctl_count is still increment even though the number of controls stays the
-same. This means calling SNDRV_CTL_IOCTL_ELEM_REPLACE often enough will
-eventually overflow user_ctl_count, effectively bypassing the MAX_USER_CONTROLS
-limit.
-
-The last two issues are overflows of id.index and id.numid. The control code
-assumes that kctl->id.index + kctl->count and kctl->id.numid + kctl->count
-never overflow. If it happens this creates a controls that becomes inaccessible
-since snd_ctl_find_id() will not be able to find them. It will still show up in
-SNDRV_CTL_IOCTL_ELEM_LIST though. The index overflow is easy to create since
-the index can be freely chosen by the creator of the control. The numid
-overflow is a bit harder to trigger since the numid is automatically assigned.
-But by creating and removing enough controls it is also possible to overflow
-numid.
-
-I've created small prove of concept applications that show the issues. [1]
-* alsa-memory-dump.c will exploit the memory disclosure issue and write all
-  data it is able to access to stdout. It is best to redirect stdout to a file
-  to test this. For successful triggering of the race you may have to adjust
-the
-  number of reader threads that are created to the number of CPUs you have in
-  your system.
-* alsa-owner-bypass.c will create a control for one fd and try to delete it
-  from another fd. It does not show how to delete kernel driver controls as
-that
-  might crash the system, but the method for doing so is the same
-* alsa-index-overflow.c tries to create controls that overflow the index field
-* alsa-numid-overflow.c will create controls until numid overflows. If you
-  want to test this and not want to wait forever it is best to patch the kernel
-  to the initial value for last_numid to something like UINT_MAX - 10000.
-
-There is no example for the second issue as it is, as I said, very hard to
-trigger and only discloses a few bytes of memory per triggered race condition.
-
-The TLV issue was added in commit 8aa9b586e420("[ALSA] Control API - more
-robust TLV implementation") for which the first affected release is v2.6.18.
-Everything else seems to predate the git history, so v2.6.12 or earlier.
-
-- Lars
-
-[1] http://metafoo.de/alsa-vuln-poc.tar.bz2
-
-Lars-Peter Clausen (5):
-  ALSA: control: Protect user controls against concurrent access
-  ALSA: control: Fix replacing user controls
-  ALSA: control: Don't access controls outside of protected regions
-  ALSA: control: Handle numid overflow
-  ALSA: control: Make sure that id->index does not overflow
-
- include/sound/core.h |  2 ++
- sound/core/control.c | 78 ++++++++++++++++++++++++++++++++++------------------
- sound/core/init.c    |  1 +
- 3 files changed, 54 insertions(+), 27 deletions(-)
-
-Ciao, Marcus
+iQEcBAEBAgAGBQJTZwjYAAoJEKllVAevmvmse6AIAMIk/SEd3QPfkELk9W6cTIU/
+XLHOw+1/cPW3V8RMozO5gyWCOfSIUEPr/L9VnvzSswiE5iwvuOyE6IGihvp1S18U
+N4TomxN9HGy18YAhZKmhv/zgZsJJkEMqOBIRroL/qjAmBNwY/M7YnikBhXJiu/9n
+oIAxPRBUNEjU1Hfx8SjDgssZyCNrLM/n7M7WUEoHfTlXZQFylzJ699RCMRyRDCG7
+vxD8c9zkMm1yJI+sa3CJZfS3k64Zn40L5rFzvTIMu8K1ZOldFuFm+MVP+rqzqj+p
+ql2ZX8IcV5Im+CWMXzhUnT2aeV5baq0ECKh2FJPYNH7a9VKjBm9wZbQpowj6jGA=
+=Wlpm
+-----END PGP SIGNATURE-----
