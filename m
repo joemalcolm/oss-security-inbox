@@ -1,90 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/2
-Message-ID: <1396090718.19429.30.camel@neutron.trustmatta.com>
-Date: Sat, 29 Mar 2014 10:58:38 +0000
-From: Florent Daigniere <florent.daigniere@...stmatta.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/4
+Message-Id: <201405050340.s453elQ8000683@linus.mitre.org>
+Date: Sun, 4 May 2014 23:40:47 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: ldns-keygen creates private key world readable
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 2014-03-29 at 00:21 +0100, Jann Horn wrote:
-> On Fri, Mar 28, 2014 at 06:13:49PM +0000, Florent Daigniere wrote:
-> > > > > This attack is somewhat specific to mediawiki since we allow users to
-> > > > > define JavaScript that will be loaded on pages they visit while logged
-> > > > > in... So the victim in this case would run the attacker's personal
-> > > > > JavaScript.
-> > > > >
-> > > >
-> > > > It still doesn't make sense. Anti-CSRF tokens are only useful if the
-> > > > "malicious script" is not running with the same origin!
-> > > >
-> > > 
-> > > I think I threw you off here-- this is just one reason why an attacker
-> > > might want to do this. It's tangential to the actual flaw we fixed.
-> > 
-> > If mediawiki really allows users to define javascript that will be
-> > loaded on pages they visit, that's a vulnerability... There's no way to
-> > do that securely if the "content" and "application" data are served from
-> > the same FQDN.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> ldns-keygen creates private key world readable
 > 
-> MediaWiki allows users to define Javascript that will be loaded on pages they
-> visit, *but only for themselves*. If I can inject JS into the pages I view,
-> that is not a vuln, just like it isn't a vuln that a user can execute JS in
-> the context of any website by pasting it into a debug console in his browser.
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746758
 > 
+> https://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=573
 
-No, there's a fundamental difference in between one scenario and the
-other; in one case the action is undertaken locally, in the other it's
-not.
+Comment 1 in 573 says "Willem Toorop ... Good catch! ... a patch would
+be apprectiated." Willem Toorop would be considered the "vendor"
+according to the http://git.nlnetlabs.nl/ldns/tree/README and
+http://www.oscon.com/oscon2014/public/schedule/speaker/173326 pages.
 
-Injection attacks (whether that's XSS, SQLi, ...) happen when there's a
-misunderstanding (for one of the parties) in between what's data and
-what's meta-data.
+Use CVE-2014-3209.
 
-Regarding XSS, in my books, if it's a browser-plugin (greasemonkey)
-doing the injection, that's fine. If it's the user (your example) that's
-fine too (but some people disagree : see
-https://www.facebook.com/selfxss ).
+> Same argument as GPG I suppose, so probably deserves a CVE.
 
-If it's the server doing it, it's a vulnerability as there's just no way
-of doing it "securely".
+A user may have no choice other than to run GPG on a multi-user system
+that always has untrusted users logged in. The documentation might
+imply that ldns-keygen is typically run on a DNS server. The vendor
+could have decided to assert that the permissions were intentional.
 
-> However, this means that Login CSRF becomes a big security issue because it
-> would allow me to add evil JS to my account and then force the browser of
-> someone else to execute it in the context of the MediaWiki server's domain.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-I had a look at how mediawiki generates its CSRF token... a smiley is
-worth a thousand words. :XD
-
--> includes/User.php:getEditToken
-
-"Anon" users (whatever that is) share a token (EDIT_TOKEN_SUFFIX).
-Others have their pseudo-random "secret" hashed and stored in their
-session... and it's spit out using "return md5( $token . $salt ) .
-EDIT_TOKEN_SUFFIX;"
-
-Few lines below is the function called matchEditToken(), *lazily*
-evaluating the above against what it receives on the wire.
-
-I won't bore you with the details, but the above is very unlikely to be
-okay. In no particular order:
--) according to the above, "Anon" users share the same CSRF tokens
--) the attacker can force a session (and its secret) onto a user: ever
-heard of http://www.php.net/manual/en/session.idpassing.php ? (grep
-tells me that neither session.use_only_cookies nor session.use_trans_sid
-are set)
--) the way the tokens are generated and compared is not okay (lazy
-comparison in PHP, no constant time comparison, hash-length-extension
-attacks, ...)
-
-There's definitely a bunch of CVEs that could be assigned, but
-fundamentally the security model of mediawiki can't work as long as that
-"feature" exists.
-
-I'll let someone else in the community pick it up from there. Ultimately
-I'm not the one assigning CVEs... and probably won't be bothered enough
-to put a PoC together. So I'll just GTFO ;)
-
-Florent
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQEcBAEBAgAGBQJTZwgHAAoJEKllVAevmvmsIEcIALy9LDQ3PWHSWgtXqljeLAFA
+EOm+nv2e5Payp2YNVRRsQEMyoQyNNIv2ao95n9Ya28FXI3LL+YEpWv8caDWOZe2B
+zkgtMIyxn0YZYSrHLuuv/73kVlWSecn1UlqACJmAVKbNpFAmnJoKwBHTNhIOI07Y
+6TKdEKk0j8jCAZarBedDZHjJ9f1CHwNMOgFRq9oRL54MY1SWnQWoMZcdpg8WmbIN
+aco6ZHvyOOoECxnBhIBmazYg/fV+fA1slveOgpPLS1h635DgExRd8DR+6sfwiHe6
+P++/8u8NHGfFMUfvrqfa0z4Y7FQE5tcb7jPZD3Zdl+InkqxBi46piGL7+rw5sEM=
+=0FSX
+-----END PGP SIGNATURE-----
