@@ -1,56 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/7
-Message-ID: <5491BD02.8030904@fifthhorseman.net>
-Date: Wed, 17 Dec 2014 12:27:30 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/3
+Message-Id: <201405050337.s453bjdZ000654@linus.mitre.org>
+Date: Sun, 4 May 2014 23:37:45 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: What is the "Grinch" polkit/wheel group issue?
+Cc: cve-assign@...re.org
+Subject: Re: akpop3d review
 Content-Type: text/plain; charset=utf-8
 
-On 12/17/2014 12:00 PM, Marcus Meissner wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> This probably needs a CVE too, or does it have one?
-> 
-> https://www.alertlogic.com/blog/dont-let-grinch-steal-christmas/
-> http://www.pcworld.com/article/2860032/this-linux-grinch-could-put-a-hole-in-your-security-stocking.html
-> 
-> Although it seems that the user is in the "wheel" group for this to be exploitable
-> and is hard to specify what actions should be safed by another query or which should not.
+http://openwall.com/lists/oss-security/2014/05/02/2 does not state or
+imply that it is a CVE request. We want to assign one CVE ID now
+anyway.
 
-from your first link:
+> pszQuery might have been never initialized (it is not explicitly
+> initialized in the code above), so we get a free() call on some stack
+> contents in place of the pointer.
 
->> Wheel is a special user group that controls access to the su command, 
->> which allows a user to masquerade as another user.  When a Linux system 
->> is built, the default user is assigned to the wheel group that allows 
->> for administrative task execution within the system. For example, if 
->> the file is owned by user XYZ and group wheel, it will run as 
->> XYZ:wheel, no matter who executes the file.
+Use CVE-2014-3208 for this "free( pszQuery )" issue. (This does not
+mean that MITRE has exploitability analysis. The combination of the
+http://openwall.com/lists/oss-security/2014/05/02/2 comments and the
+http://openwall.com/lists/oss-security/2014/05/02/4 comments leads us
+to suspect that some akpop3d users will want to track this free issue
+as a vulnerability, even if they choose not to track any of the other
+issues raised in the review.)
 
-This paragraph suggests so many things which are simply wrong, confused,
-or irrelevant that i don't know what to make of the rest of the article.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
- * modern debian GNU/Linux systems do not have a wheel group at all.  No
-particular versions or flavors of "Linux system"
-
- * on systems where members of group wheel really do have unrestricted
-access to the su command, having wheel in the first place *is* the
-vulnerability -- it is a misconfiguration to expect an account to be
-non-privileged if it is a member of wheel.
-
- * the last sentence appears to be about setuid/setgid binaries, but
-makes no mention that the overwhelming majority of binaries are not
-setuid/setgid.
-
-Later on, the post suggests that wheel group membership is related to
-sudo privileges.
-
-It also seems to assume that polkit always permits access for members of
-group wheel.  I can find no such configuration on a modern debian system.
-
-I don't think there's anything significant in this ambiguous,
-underspecified, and confused report.
-
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+iQEcBAEBAgAGBQJTZwdjAAoJEKllVAevmvmse1cH/2KrEO9n2G+iqPtB+oq8frWH
+htsomIAJYLWpVsx8RNGvx0gf5xyTitCG46yqQlgrED4ep41SYjRvfRJil9u0ifVt
+qpM1xGp3ErCidcow7e18xpvwCmEjDhDK3fRJI/qKt8PLgsnpO35pjnoWYmdUa6VQ
+CVRiKemQdFb7yTqst46eXAefWi8jcoNZGfz0AIluJs/OH65FSbXf6PdERPNDDgjh
+iVsQEuKQ6uKxIvxXa9gp6xXOajfhI3Fz+ZaQOqlALFfOEVEB/Pa5QyHIH/WmnFn+
+N+El65SQmkz9ssuEyTjp3Dp3bDrn1rjiEid041J3NgGrPNFZU2bTzd7XXsSblRw=
+=emdY
+-----END PGP SIGNATURE-----
