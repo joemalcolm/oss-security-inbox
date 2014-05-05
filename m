@@ -1,46 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/10
-Message-ID: <CAPLnt652c74kxUXVA6MNf=gb7vVDUm8LFH7KK=vEJ-b06_MO2g@mail.gmail.com>
-Date: Fri, 7 Feb 2014 10:39:41 -0800
-From: Galen Charlton <gmc@...library.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/11
+Message-ID: <5367FB21.1020908@markelee.com>
+Date: Mon, 05 May 2014 16:57:05 -0400
+From: Mark Lee <mark@...kelee.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: multiple issues in Koha
+Subject: Re: *Possible* ssh vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-As current release manager for Koha, I'd like to request CVE number(s)
-for the following issues that were addressed in a security release
-yesterday.
+On 05/05/2014 01:40 PM, RbN wrote:
+> Looks like a fake, but I prefer to post it here anyway:
+> http://pastebin.com/gjkivAf3
+> 
+> If anybody gets more info about it, please share ;)
+> 
+> 
+> --
+> RbN
+> Archlinux CVE monitoring team
+> 
 
-Release announcement:
+To RbN,
 
-http://koha-community.org/security-release-february-2014/
+Try posting it on the ssh list and see what the response is. I've been
+monitoring that list for a while and haven't heard of this exploit.
 
-Issues fixed with the release:
+From,
+Mark
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-[1] tools/pdfViewer.pl could be used to read arbitrary files on the server
-(http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11660)
-[2] the staff interface help editor could be used to modify or create
-arbitrary files on the server
-(http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11661)
-[3] member-picupload.pl could be used to write to arbitrary files on the server
-(http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11662)
-[4] the MARC framework import/export function did not require
-authentication, and could be used to perform unexpected SQL commands
-(http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11666)
-
-Regards,
-
-Galen
--- 
-Galen Charlton
-Manager of Implementation
-Equinox Software, Inc. / The Open Source Experts
-email:  gmc@...library.com
-direct: +1 770-709-5581
-cell:   +1 404-984-4366
-skype:  gmcharlt
-web:    http://www.esilibrary.com/
-Supporting Koha and Evergreen: http://koha-community.org &
-http://evergreen-ils.org
+iF4EAREIAAYFAlNn+yEACgkQZ/Z80n6+J/Z1PAEAjphhX1+SW5OdTkR3A2o7hq0G
+npOXoYEeI66fW69eD/UA+wdge6V+ANrZMI5w9C3M+5W1ZmGhjSVU+apR9w5eUbsh
+=njle
+-----END PGP SIGNATURE-----
