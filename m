@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/9
-Message-Id: <20140915173109.E22EAC506A8@smtptsrv1.mitre.org>
-Date: Mon, 15 Sep 2014 13:31:09 -0400 (EDT)
-From: cve-assign@...re.org
-To: loganaden@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for Linux kernel: udf: Avoid infinite loop when processing indirect ICBs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/7
+Message-id: <2B88B3EC-969D-4447-99E9-C95222D43DBA@me.com>
+Date: Mon, 05 May 2014 07:45:23 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: cve-assign@...re.org
+Cc: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: XSS in NextCellent Gallery 1.9.13 WordPress plugin
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c03aa9f6e1f938618e6db2e23afef0574efeeb6
+On May 4, 2014, at 11:31 PM, cve-assign@...re.org wrote:
 
-Use CVE-2014-6410.
+> 
+> The latter does not describe how the attack crosses privilege
+> boundaries.
+> 
+> 
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+My apologies, I’ll update the advisory with the missing information.
 
-iQEcBAEBAgAGBQJUFyE5AAoJEKllVAevmvms5+EH/1CXV5Hc24YCgq/w0cymjUTC
-VziE51daC8t8GWfGsdjbHhPQx6HmGyZ1hqPaG92Xo+dHFmYLmleiGfenXn4uOAo4
-5H1igxGjlP8uVYIGIbG27ZpmmLjqqOridKoiW3Ym52FNWqt67PpCNFNsZlOXFzt5
-9L4xwmpN5kQMdw+MPDs6QdcRViPjODNlUTLaKqk7eRBri7FRYmsp7xwrAsfPT3h6
-XlNLOTdKIU3HO+BiaSBIgsvgGAmIn6ab4Xh6uKr/6fxi4NTg0veMw+tGn3JighI9
-zDrOkKsHLnw4kgd1Hu/nXqtwvprTSnoGCEBY7ZmZAJioRkuO526hZJz1IJZrNaw=
-=4jN2
------END PGP SIGNATURE-----
+> Use CVE-2014-3123.
+> 
+> --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> 
+
