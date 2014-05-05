@@ -1,65 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/22
-Message-ID: <543EB79F.8080703@enovance.com>
-Date: Wed, 15 Oct 2014 14:06:23 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/10
+Message-ID: <CABYiri9LeOtZY+F6UJrYDWqWVNHFeN5Cxdci3eMbuqFT7jcezg@mail.gmail.com>
+Date: Tue, 6 May 2014 01:08:49 +0400
+From: Andrey Korolyov <andrey@...l.ru>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-036] Potential leak of passwords into log files (CVE-2014-7230, CVE-2014-7231)
+Subject: Re: *Possible* ssh vulnerability
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-036
-CVE: CVE-2014-7230, CVE-2014-7231
-Date: October 15, 2014
-Title: Potential leak of passwords into log files
-Reporter: Amrith Kumar (Tesora)
-Products: Cinder and Nova (versions up to 2014.1.3)
-                    Trove (versions up to 2014.1.2)
+They could dive in money like Scrooge McDuck if it real. Pure scam,
+and reappearing for third(?) time.
 
-Description:
-Amrith Kumar from Tesora reported two vulnerabilities in the
-processutils.execute() and strutils.mask_password() functions available
-from oslo-incubator that are copied into each project's code. An
-attacker with read access to the services' logs may obtain passwords
-used as a parameter of a command that has failed (CVE-2014-7230) or when
-mask_password did not mask passwords properly (CVE-2014-7231). All
-Cinder, Nova and Trove setups are affected.
+236kb of exploit source, must be written for enterprise.
 
-Kilo (development branch) fixes:
-https://review.openstack.org/116927 (Cinder)
-https://review.openstack.org/126052 (Cinder ssh_execute)
-https://review.openstack.org/116982 (Nova)
-https://review.openstack.org/126047 (Nova   ssh_execute)
-https://review.openstack.org/121417 (Trove)
-
-Juno (proposed branch) fixes:
-https://review.openstack.org/126594 (Nova   ssh_execute)
-https://review.openstack.org/126592 (Cinder ssh_execute)
-
-Icehouse fixes:
-https://review.openstack.org/121382 (Cinder)
-https://review.openstack.org/126665 (Cinder ssh_execute)
-https://review.openstack.org/121096 (Nova)
-https://review.openstack.org/126699 (Nova   ssh_execute)
-https://review.openstack.org/121416 (Trove)
-
-Notes:
-The former patch did not cover the ssh_execute method used in Nova and
-Cinder, thus two more patches are required for these projects.
-Nova and Cinder fixes are included in the 2014.2rc2 release candidate
-and will appear in a future 2014.1.4 release.
-Trove fix was included in the 2014.2rc1 release candidate and 2014.1.3
-release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7230
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7231
-https://launchpad.net/bugs/1377981
-https://launchpad.net/bugs/1343604
-https://launchpad.net/bugs/1345233
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+On Mon, May 5, 2014 at 9:40 PM, RbN <r.b.n@...eup.net> wrote:
+> Looks like a fake, but I prefer to post it here anyway:
+> http://pastebin.com/gjkivAf3
+>
+> If anybody gets more info about it, please share ;)
+>
+>
+> --
+> RbN
+> Archlinux CVE monitoring team
