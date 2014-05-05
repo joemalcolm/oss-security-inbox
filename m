@@ -1,59 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/22/3
-Message-ID: <20140122185144.GA12136@alf.mars>
-Date: Wed, 22 Jan 2014 19:51:45 +0100
-From: Helmut Grohne <helmut@...divi.de>
-To: oss-security@...ts.openwall.com
-Subject: Getting tempfile/mktemp wrong
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/2
+Message-Id: <201405050334.s453Yphl000602@linus.mitre.org>
+Date: Sun, 4 May 2014 23:34:51 -0400 (EDT)
+From: cve-assign@...re.org
+To: kristian.fiskerstrand@...ptuouscapital.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: SKS non-persistent XSS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I (re?)discovered an entertaining way to introduce tmpfile
-vulnerabilities while using the right tools (tempfile/mktemp). The
-general pattern is:
+> A non-persistent client-side cross-site scripting attack was reported
+> against SKS resulting from improper input sanitation before writing
+> to a client. The issue has been fixed in the development trunk
+> 
+> https://bugzilla.mozilla.org/show_bug.cgi?id=952077
+> https://bitbucket.org/skskeyserver/sks-keyserver/issue/26/unfiltered-xss
+> https://bitbucket.org/skskeyserver/sks-keyserver/pull-request/30/issue26-fix-a-non-persistent-cross-site
 
-TEMPFILE=`tempfile`.suffix
+Use CVE-2014-3207.
 
-as opposed to
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-TEMPFILE=`tempfile --suffix .suffix`
-
-An attacker can monitor /tmp using inotify, wait for the relevant file
-to be created and can the quickly create the corresponding
-tmpfile.suffix symbolic link to escalate privileges.
-
-This can be found in:
-
-1) localepurge
-http://bugs.debian.org/736359
-$ grep tempfile -r .
-./debian/postrm:    DEBREINSTALL="$(tempfile).$$"
-./debian/localepurge.config:TEMPFILE=$(tempfile).$$
-./debian/localepurge.config:LOCALEGEN=$(tempfile).locale.gen
-$
-The localepurge package is Debian-specific. The relevant runs at
-installation time as root.
-
-2) syncevolution
-http://bugs.debian.org/736357
-$ grep 'mktemp`\.' -r .
-./src/syncevo/installcheck-local.sh:TMPFILE_CXX=`mktemp`.cxx
-./src/syncevo/installcheck-local.sh:TMPFILE_O=`mktemp`.o
-$
-The relevant code is part of the upstream package and is executed at
-build time.
-
-3) axiom (packaging)
-http://bugs.debian.org/736358
-$ grep 'tempfile).' -r .
-./debian/axiom-test.sh:k=$(tempfile).input
-$
-The relevant code is part of the Debian packaging (upstream axiom is not
-affected). It can be used on Debian systems to run the test suite when
-the relevant package is installed.
-
-The Debian bug reports are the initial public mentioning of these
-particular issues. Please assign CVE identifiers as needed.
-
-Helmut
+iQEcBAEBAgAGBQJTZwaKAAoJEKllVAevmvms4fwH/jLakVp6T5bvRw390evMk9l4
+0ScGy99+bMaJFa38gH9ezAmvthJQTJnKyeDr/0IQCFds1+gulKx90P1+xIwVBxdl
+H07s+B/4/+2rDGVZuytzCerm4qkkh/pq/nZJ+OM53bZL1FMHxuHtyrU1Yhrg8ueS
+Wx+pFmSRjFkI+dNuElaqcMMgL8mBx5CiWM2cvw0vKSYcWYfhLxHS7880aDGdRpXi
+upqyBEGkkW6FZAaSDMlNOfMn12Xfd7NzUt1eVLxc2SorQwyi37Bl5ARqfZjuDRfS
+5OFuJbA55EWCl8fU275ag8WDB2CXJliCabrmLiwAyCdALNbRd6z9yUfTevNb+TM=
+=bTUM
+-----END PGP SIGNATURE-----
