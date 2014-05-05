@@ -1,58 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/19
-Message-ID: <21227.59641.784184.419064@gargle.gargle.HOWL>
-Date: Fri, 31 Jan 2014 19:18:33 +0100
-From: rf@...eap.de
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/1
+Message-Id: <201405050331.s453VdXt000574@linus.mitre.org>
+Date: Sun, 4 May 2014 23:31:39 -0400 (EDT)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: XSS in NextCellent Gallery 1.9.13 WordPress plugin
 Content-Type: text/plain; charset=utf-8
 
->>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-    SD> On Fri, Jan 31, 2014 at 04:11:16AM +0400, Solar Designer wrote:
-    >> [...] I guess the newer patch (from the second forwarded message
-    >> above) is preferable (the one I expect to see committed soon).
+> XSS in NextCellent Gallery 1.9.13 WordPress plugin
+> 
+> Vulnerability Fixed: 4/24/2014 in Nextcellent Gallery v1.19.18.
+> 
+> http://wordpress.org/plugins/nextcellent-gallery-nextgen-legacy/changelog/
+> 
+> http://www.vapid.dhs.org/advisories/wordpress/plugins/nextCellent-gallery-1.9.13/
 
-    SD> Here's the commit:
+Comparing the http://openwall.com/lists/oss-security/2014/02/20/12
+post to the http://openwall.com/lists/oss-security/2014/04/27/1 post,
+the former says "If a user with permission to add media or edit media
+uploads a file with "<script>alert(1)</script>" as the title they can
+XSS the site admin user."
 
-    SD> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/compat.c?id=2def2ef2ae5f3990aabdbe8a755911902707d268
+The latter does not describe how the attack crosses privilege
+boundaries.
 
-    >> It appears, from the linux-distros discussion, that a couple of
-    >> distros are going to release emergency security updates for this.
-    >> If they did not express interest in an extra day of embargo, the
-    >> issue would likely be made public on the first day (not on the
-    >> second).
+add_image seems to be protected by:
 
-    SD> Ubuntu advisories and updates:
+  // Check if you have the correct capability for upload
+  if ( !current_user_can('NextGEN Upload images') ) {
+          logIO('O', '(NGG) User does not have upload_files capability');
+          $this->error = new IXR_Error(401, __('You are not allowed to upload files to this site.'));
+          return $this->error;
 
-    SD> http://www.ubuntu.com/usn/usn-2096-1/
-    SD> http://www.ubuntu.com/usn/usn-2095-1/
-    SD> http://www.ubuntu.com/usn/usn-2094-1/
 
-    SD> Even though the issue was easy to patch, I nevertheless find
-    SD> this impressively quick for a major distro like Ubuntu, and this
-    SD> probably justifies the extra day of embargo.
+update_image seems to be protected by:
 
-Yup, was good for us too, so we could double-check that the proposed fix
-from your mail is working OK for others as well, since it hasn't arrived in
-the kernel.org stable-queue git yet. By the way, Ubuntu used the longer
-original patch, which we used [1] in the end as well (saw too late that Linus
-already committed the shorter one).
+  if ( !current_user_can( 'NextGEN Manage gallery' ) && !nggAdmin::can_manage_this_gallery($image->author) )
+      return new IXR_Error( 401, __( 'Sorry, you must be able to edit this image' ) );
 
-Coming back to our earlier discussion about linux-distros membership [2]:
-It definitely helped being on the list. Since the patch was trivial,
-we didn't suffer a significant time delay compared to other distros. In
-case of more complicated patches, this could have gotten tough though
-given the fact that the new builds need a significant amount of testing as
-well.
 
-It would be nice, if we (and others in a similar boat) could get a
-head-start of at least a couple of days (that's how I understood your
-question in [2]). Maybe a "second-class citizen" list could complement
-the linux-distros list with notifications slightly earlier than on
-oss-security.
+These functions make use of the $alttext and $description values.
 
-[1] https://qlustar.com/news/qsa-0131141-linux-kernel-vulnerabilities
-[2] http://www.openwall.com/lists/oss-security/2014/01/22/1
+So, apparently any user with the "NextGEN Upload images" or "NextGEN
+Manage gallery" or "NextGEN Manage others gallery" capability can
+conduct an XSS attack against a user with the Administrator role, in
+order to gain privileges.
 
-Roland
+Use CVE-2014-3123.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTZwWdAAoJEKllVAevmvmsDmcIALAj+V+s46tOKj8pR3orAs2U
+jRHQjdnwSZPI5imSYlr4XregLTwCTVXVW8Yig1Mv7H7R47ks1V7Sywc6k6va6iSd
+kcq4mEqDE/3ozMR3vfOzSR8FYEHCjHqj862zPT3LhcaiBw/fb3AMcghhhnT8XY5z
+0ahsXph9W3fWg8YeRwy2DXsGRKuuSGAoQG2jZ8wmOvJhG/ldcU8cVFLy/hhVDyIX
+wfR/dLj+ZANP39P7YEYtXgaQZAwt8nLeSvYffEBvckzW5hSAkHVj9iQhB4mv6uTo
+HnL2WuNE+pXHzWnz7NkW9dlw0MH3COfC+jvdfPALa3ELh9vIZoJvkJiFRae8VUM=
+=Fspe
+-----END PGP SIGNATURE-----
