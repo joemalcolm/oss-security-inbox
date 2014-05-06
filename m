@@ -1,100 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/25/1
-Message-Id: <20140825170929.6085E6C0056@smtpvmsrv1.mitre.org>
-Date: Mon, 25 Aug 2014 13:09:29 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/10
+Message-Id: <201405062023.s46KN5RE020277@linus.mitre.org>
+Date: Tue, 6 May 2014 16:23:05 -0400 (EDT)
 From: cve-assign@...re.org
-To: robert@...oraproject.org
+To: kseifried@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Multiple incorrect default permissions in Zarafa
+Subject: Re: CVE Request: OpenSSL NULL pointer dereference in do_ssl3_write
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> I discovered that the Zarafa Collaboration Platform has multiple incorrect
-> default permissions (CWE-276):
+First and most importantly, we would like to confirm that MITRE will
+continue to use CVE-2014-0198 for the vulnerability in question, as
+listed at:
 
-This needs separate CVE IDs because the product/version information
-isn't identical in any of the cases.
+  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-0198
 
-> 1. In order to fix CVE-2014-0103, Zarafa introduced constants PASSWORD_KEY
-> and PASSWORD_IV in /etc/zarafa/webaccess-ajax/config.php (Zarafa WebAccess)
-> and /etc/zarafa/webapp/config.php (Zarafa WebApp), both are the upstream
-> path names of a default installation, downstream names might be different.
-> Both files have default permissions of root:root and 644, thus decryption
-> of the symmetric encrypted passwords in the on-disk PHP session files is
-> possible again (similar like initially described in CVE-2014-0103). Affects
-> Zarafa WebAccess >= 7.1.10, Zarafa WebApp >= 1.6 beta.
+> I think getting this one a CVE is time critical. Mitre: sorry if this
+> causes a duplicate, but I'm assigning a CVE now. Please use
+> CVE-2014-0198 for this issue.
 
-Use CVE-2014-5447. The scope of this CVE ID is only the 0644 permission issue,
-not anything about the encryption algorithm. There is only one CVE ID because
-it appears that the design was chosen once and then directly copied into
-two products that have their own pathname conventions.
+MITRE is currently responsible for assigning CVE IDs for publicly
+known vulnerabilities, i.e., cases where a public web site or
+mailing-list message mentions the existence of a vulnerability that
+didn't have a CVE ID assigned in advance.
 
+For a long time in the past, Red Hat had been assigning CVE IDs for
+publicly known vulnerabilities in open source software, especially if
+the vulnerability was mentioned on this list. This had been very
+useful to many people, but ended as of December 2013. Essentially the
+change was originally planned to be temporary as discussed in the
+http://www.openwall.com/lists/oss-security/2013/12/07/3 post but now
+persists. In other words, the change already happened months ago;
+there's no new change in May 2014, nor is any change being planned.
 
-> 2. The log directory /var/log/zarafa/ is shipped by default with root:root
-> and 755 and all created log files by the Zarafa daemons have by default
-> root:root and 644. This is leaking (depending on the log level of the given
-> service) only e.g. subject, sender/recipient, message-id, SMTP queue id of
-> in- and outbound e-mails but might be even a cleartext protocol dump of
-> IMAP, POP3, CalDAV and iCal as well (including possible credentials) to any
-> local system user. Affects Zarafa >= 5.00.
+If a vendor is on the http://cve.mitre.org/cve/cna.html list and has a
+vulnerability reported privately to them for software that they ship,
+then that vendor can assign a CVE ID. Also, CVE assignment for
+http://oss-security.openwall.org/wiki/mailing-lists/distros has a
+similar process that doesn't involve communication to or from MITRE.
 
-Use CVE-2014-5448. The scope of this CVE ID is only the permission issue.
-In some cases of other products, there have been reported vulnerabilities
-related to the existence of a protocol dump (e.g., the administrator may be
-configuring protocol dumps without realizing this, or the dumping code
-tried to remove especially sensitive information but failed, etc.). Any
-such issue, if one exists, would have a separate CVE ID.
+If an issue has a CVE request on the oss-security list, and the CVE
+assignment subsequently comes from outside MITRE, what this means (or,
+at least, SHOULD mean) is that the issue already had a privately
+assigned CVE ID before the public request occurred. People sending out
+these CVE assignments may want to mention the date of the private CVE
+assignment, but making the date public isn't something that MITRE
+requires. If there wasn't an earlier private CVE assignment, there is
+no option to proceed anyway because of a perception of time
+criticality or an expectation that an issue was "publicly known" to a
+smaller than usual subset of the public.
 
+There are several scenarios in which duplicate CVEs could occur if
+multiple parties were assigning IDs to publicly known vulnerabilities.
+Here are three that can be described somewhat quickly:
 
-> 3. The directories /var/lib/zarafa-webaccess/tmp/ (Zarafa WebAccess) and
-> /var/lib/zarafa-webapp/tmp/ (Zarafa WebApp) are read- and writable by the
-> Apache system user by default - but also world readable for local system
-> users (e.g. apache:apache and 755 on RHEL). Thus all the temporary session
-> data such as uploaded e-mail attachments can be read-only accessed because
-> all created files below previously mentioned directories have permissions
-> 644, too. Upstream path names changed over the time and releases. Affects
-> Zarafa WebAccess >= 4.1, Zarafa WebApp (any version).
+  1. MITRE has a mostly separate team of people who populate the
+     cve.mitre.org web site with entries about disclosures that didn't
+     have any CVE IDs assigned in advance. While work on one of them
+     is in progress, oss-security may get a CVE request for the same
+     disclosure or an overlapping disclosure. Sometimes we need to let
+     the in-progress work finish because it determines the number of
+     CVE IDs (e.g., zero, one, or more than one).
 
-Use CVE-2014-5449. The scope of this CVE ID is only the permission
-issue. There is only one CVE ID because it appears that the design was
-chosen once and then directly copied into two products that have their
-own pathname conventions.
-
-
-> 4. The optional (but proprietary) license daemon /usr/bin/zarafa-licensed
-> runs by default with root permissions, the subscription/license key is put
-> into '/etc/zarafa/license/*'. The license files are recommended (according
-> upstream documentation) to be created using echo(1) which usually leads to
-> root:root and 644. But the parent directory /etc/zarafa/license/ is shipped
-> by default with root:root and 755. As result the key files can be accessed
-> and copied by any local system user. Affects Zarafa >= 4.1.
-
-Use CVE-2014-5450. The scope of this CVE ID is only the permission
-issue. In some cases of other products, there have been reported
-vulnerabilities related to the presence of sensitive data on the
-command line, which is exposed to local users who run the ps program
-or a similar program. Here,
-
-  http://doc.zarafa.com/6.40/Administrator_Manual/en-US/html/_configure_the_license_manager.html
-
-does not specify that only root may be logged in during execution of
-the echo command. If this is a vulnerability in Zarafa, then a
-separate CVE ID is needed.
-
-This might be an open question. Stealing a license key might have an
-adverse effect on the vendor's revenue, but perhaps doesn't have an
-adverse effect on confidentiality, integrity, or availability of data
-within the specific Zarafa instance. There are many possible vendor
-strategies for detecting and thwarting stolen license keys. Some of
-these do have an availability impact.
-
-If the original vulnerability report was coordinated with upstream,
-then maybe upstream has agreed that weak permissions for license files
-were unintended. However, maybe upstream intentionally chose "echo" as
-a security/complexity tradeoff (i.e., the attack is relatively
-unlikely, and "echo" was an easy way to write the documentation).
+  2. Not everyone is aware of whether they publicly disclosed a
+     vulnerability discovery. For example, if a product isn't well
+     known and suggests that all bug reports be sent to a developers'
+     mailing list, a researcher isn't necessarily going to know
+     whether that list is publicly archived.
+     
+  3. A public disclosure often doesn't mention all of the names under
+     which the software has been distributed. For example,
+     https://packages.debian.org/unstable/main/cluster-agents overlaps
+     https://github.com/ClusterLabs/resource-agents even though the
+     names don't have a close match.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -104,11 +84,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJT+20eAAoJEKllVAevmvmsbKYH/2Qz1J3Ig/VAIc8EfWmrzUoP
-MGipVqXOUyI6layARuZN7NnEqVuW/tafvWwCDXMcFX21KE74w7b3RhAh574i2/wU
-hwLIKrM9IrMhMblnaQH+urBoddB5Qw4FST0XgcevwQxWyak19j2CdnWrSn+yPTKo
-r5vcqsy39xobYfaGLB3L5zd+j24Aqi8ZpvK56miwFtfujX1eUQsyMKCVMYDRYaPU
-bSDrF7pDVYMq8oolBGVbCMwdLWGfoqYxT92Be+q7aruIfg+/7AetTSTTckO/Iid/
-pbkyTF8K2Wt2OKO2GJaab0tiU5vZ1vvEfRrqVfexM+t4Eg9RlF9jyJTkG2HatN0=
-=lLHM
+iQEcBAEBAgAGBQJTaUG4AAoJEKllVAevmvms3bMH/iCooibiCdjSpIqtwIW2JBx+
+wHhZiGScmIs7Nop8c1X6zCzg1cT8NxNWS054hvsKygkNx3DTWtQL8RlRLUHUpLAX
+ID0/Bl10/CmjF3FS3DmxBUzJ6J67/M+RjAGzAu82AUzPj46cx2zmV5sEP5IfsMmW
+l7xA2Fzg9aGDd1701CyenJkAEDbRM2jCpV+0uFppFbofCGxbpB9JLBki+ulH40ZG
+6enO0VFaX1gbg5qEboCf9UJhKkSuRxBCkaOoxelJaS466IJeQ+vUSta3HvrDzomv
+WGpN34cybn2aUUPZr23tx3GAqoGwmHIgNNmyQu4ESUfMo/k0EzSG4Yfj82WondQ=
+=mrpS
 -----END PGP SIGNATURE-----
