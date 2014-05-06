@@ -1,38 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/9
-Message-Id: <201401201701.s0KH1F7O023821@linus.mitre.org>
-Date: Mon, 20 Jan 2014 12:01:15 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, taffit@...ian.org
-Subject: Re: CVE request: spip: cross-site scripting vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/11
+Message-ID: <EFFFF206-8C51-4A20-9E6D-6E173B0D218D@redhat.com>
+Date: Tue, 06 May 2014 14:39:38 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: Postfix bounces arbitrary content
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I noticed this bug in the Debian BTS and didn't see it mentioned anywhere:
 
-> I would like to request a CVE for the following cross-site scripting
-> vulnerability in spip: authors could inject code via their name, which
-> is displayed in the signature of their articles and author page.
-> 
-> http://core.spip.org/projects/spip/repository/revisions/20902
-> http://core.spip.org/projects/spip/repository/revisions/20972
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=741888
 
-Use CVE-2013-7303.
+I'm going to copy-n-paste a bit of the bug below for context:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+"""
+An unmodified Postfix install can be made to bounce arbitrary
+content from an arbitrary internal address to an arbitrary external
+address, by an external sender who has no affiliation with the
+organization that's running Postfix.
 
-iQEcBAEBAgAGBQJS3VXGAAoJEKllVAevmvmslTsH/0yvyNjPNeUZPRcXSi90qY9I
-GlJrGi6+j/H1qxryhdZqQMLBhghIwdh54kJWHBSQauZ/rVZ1NwZXaF+Vq8otzTAP
-SAtfOHoVxXhVCKkiu6yXkq+NvZzYa86wc7sUiZTS8tFg3/0UbmDqEyFpqPUF3LH3
-ZdkUOscGI8zuc9IzVk5TvBjyeEU2lHRvFYlvwTA1CDQ1xA63F9eFrPdTJdrHgqrz
-FtactymuoBuuZlOK9WU4SzbTuYoLjC0yNU+6JmWfqoABEQb56DVOCsw/G475Cx4h
-+0sZm9rwxR8KX4PrZPgVq6MxNasBfBCY+Il4Qr+1dbq2Ih200aFs+JG3kSfVQPw=
-=gkGc
------END PGP SIGNATURE-----
+The possibilities for offensive use of this exploit are interesting.
+Suppose I want to prevent alice@...om from receiving an important
+message that I think bob@...om may be about to send to her.  I can
+take 5,000 randomly selected articles from my local news spool, and
+cause b.com to bounce all of them from bob@...om to postmaster@...om.
+This will likely cause a.com to block incoming mail from bob@...om,
+or from all of b.com... thus blocking Bob's message to Alice.
+"""
+
+The reporter also references an almost-10-year-old email message to the postfix-user mailing list (to which there were no replies):
+
+http://article.gmane.org/gmane.mail.postfix.user/96511
+
+I don't believe this was reported to upstream at all, but I can't be 100% sure of that.
+
+I'm not so much looking for a CVE assignment (unless one is warranted) as much as some determination as to whether or not this is a flaw because the way I see it, it's no different the spoofing the origin of an email (someone else's email address) to cause bounces to go to that address and with the same end result (from what it sounds to me).  It's quite possible that I'm missing something, but given there was no response to a similar message from 10 years ago, I'm not sure if it got missed or no one cares (or think it security-relevant or otherwise exciting).
+
+Anyways, I see this bug in the Debian BTS and I see no response from Debian maintainers or any indication it was reported upstream, so I was curious what others might think or if I'm missing something (because I don't see anything too terribly exciting here).
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Security Response Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
