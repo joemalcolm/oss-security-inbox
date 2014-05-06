@@ -1,68 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/13
-Message-ID: <542A7CEB.103@mittwald.de>
-Date: Tue, 30 Sep 2014 11:50:35 +0200
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/9
+Message-Id: <201405062021.s46KKrfg020243@linus.mitre.org>
+Date: Tue, 6 May 2014 16:20:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: pnigos70@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request ---- SOAPpy 0.12.5 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> http://www.pnigos.com/?p=260
+
+> <!ENTITY xxe SYSTEM "file:///etc/passwd">
+
+Use CVE-2014-3242.
 
 
-On 30/09/14 11:12, Mark R Bannister wrote:
-> In fact, it only guarantees isolation from the Apache web server attack
-> vector, but provides no guarantees from anything else we have not yet
-> discovered that accepts arbitrarily named environment vairiables
-> (I wonder what CVE-2014-6278 is all about, no technical details made
-public yet ...).
+> <!ENTITY lol2
+>  "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">
 
-Well Mr. Wheeler wrote:
+Use CVE-2014-3243.
 
-On 29/09/14 20:50, David A. Wheeler wrote:
-> I agree. If an adversary can arbitrary control the environment, it
-> is definitely game over.
-> What's more, this has been true for decades and this is *clearly*
-> documented all over the place.
-> If some program allows an untrusted user to control the content in
-> arbitrary environment variables,
-> that would be a security vulnerability in that other program, not in
-> bash.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-While I somehow agree with the above (this sure is a vuln in 3rd party
-programs) I also still think bash should fix this by making it harder
-to pass malicious content (e.g. switch an option like "yes-I-know-this
-is-totally-insecure" to "on" ), even if it breaks
-"backward-compatibility" and "workflows".
-
-This reminds me of this:
-
-https://xkcd.com/1172/
-
-bottom line: "Every change breaks someones workflow" - so this is no
-excuse at all.
-
-After all we're in the 21st century and programs need to become more
-secure by orders of magnitude, compared to bad practices in the past.
-
-This is a simple tradeoff:
-making people fix their programs by a backward incompatible change
-(in a new release) or allowing insecure stuff (just big projects
-with security in mind will change their program)
-
-as always: not to upgrade/ not to change things is no option at all
-
--- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+iQEcBAEBAgAGBQJTaUDDAAoJEKllVAevmvmsFrsH/jWsJ/LyyMnOb2oVR3KoFlhZ
+qBUpqc0X9dUTlHHKkx0ztrNd9FoWwjqbSzwiLgIaYumEYHMJYluPQ9quqrUZai38
+VAFMyTosVuaOHI9ml9JUvXcpr3RfxdG1Pxe/CAUuUl9iFtk+sAD1eVC57R1LUx4w
+r/Eg028CCUX/wzqgALAsu/FZMtL9waT1TS8/LgpXskaV7+sRAjd8Sb/aOmANR3JZ
+0E53iVMaNSiogT7BVfJgr3zVGmH3XIpGSopGb8WqUdJD2ufLzGBcQtdkEQHXMUA/
+V7Df/hPG/6dBrPW9VoSEwVxlMTKPoc0P3VYdNmMv06OEtkWLEoo3bBfu8PoO3Ds=
+=syp0
+-----END PGP SIGNATURE-----
