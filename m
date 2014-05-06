@@ -1,27 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/12/5
-Message-ID: <20140812210721.GA17599@ngolde.de>
-Date: Tue, 12 Aug 2014 23:07:21 +0200
-From: Nico Golde <oss-security+ml@...lde.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/2
+Message-ID: <CABniQZNobRLq9_q3YCNSi7-4LcsGhRTBOz35Z1qyxq3FkQWo1Q@mail.gmail.com>
+Date: Tue, 6 May 2014 14:10:32 +0800
+From: Shawn <citypw@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: msalle@...hef.nl, wilcobh@...hef.nl, elbrus@...ian.org
-Subject: CVE id request: cacti remote code execution and SQL injection
+Subject: Re: CVE-2014-0196: Linux kernel pty layer race condition memory corruption
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Mischa Sallé and Wilco Baan Hofman reported a security issue in cacti to 
-Debian when processing arguments passed to the graph settings script:
-http://svn.cacti.net/viewvc?view=rev&revision=7454
+Workable PoC:
+http://pastebin.com/yTSFUBgZ
 
-We consider this issue to be public given the public fix.
-Can someone assign a CVE id? We do have some indication that this was reported 
-in parallel Fedora, in case anyone from RedHat already assigned a CVE id to 
-this.
+On Mon, May 5, 2014 at 6:08 PM, Marcus Meissner <meissner@...e.de> wrote:
+> Hi,
+>
+> SUSE customer Ericsson reported a kernel crash to us which turned out
+> to be a race condition in the PTY write buffer handling.
+>
+> When two processes/threads write to the same pty, the buffer end could
+> be overwritten and so memory corruption into adjacent buffers could lead
+> to crashes / code execution.
+>
+> Jiri Slaby and Peter Hurley localized and fixed this problem.
+>
+> CVE-2014-0196 has been assigned to this issue.
+>
+> Jiri thinks this was introduced during 2.6.31 development by
+> d945cb9cce20ac7143c2de8d88b187f62db99bdc (pty: Rework the pty
+> layer to use the normal buffering logic) in 2.6.31-rc3. Until then, pty
+> was writing directly to a line discipline without using buffers.
+>
+> https://bugzilla.novell.com/show_bug.cgi?id=875690
+>
+> Patch is also attached.
+>
+> Ciao, Marcus
 
-Thanks!
-Nico
+
 
 -- 
-Nico Golde - XMPP: nion@...ber.ccc.de - GPG: 0xA0A0AAAA
+GNU powered it...
+GPL protect it...
+God blessing it...
 
-Content of type "application/pgp-signature" skipped
+regards
+Shawn
