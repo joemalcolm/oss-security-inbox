@@ -1,54 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/6
-Message-ID: <542496A2.1050600@windriver.com>
-Date: Thu, 25 Sep 2014 17:26:42 -0500
-From: Mark Hatle <mark.hatle@...driver.com>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: [security-vendor] Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/8
+Message-Id: <201405062019.s46KJEvg020214@linus.mitre.org>
+Date: Tue, 6 May 2014 16:19:14 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Debian Bug#746579: libwww-perl: HTTPS_CA_DIR or HTTPS_CA_FILE disables peer certificate verification for IO::Socket::SSL
 Content-Type: text/plain; charset=utf-8
 
-On 9/25/14, 5:13 PM, Marc Deslauriers wrote:
-> On 14-09-25 01:49 PM, Huzaifa Sidhpurwala wrote:
->> Hi All,
->>
->> Based on the current situation and the fact that there is confusion about what
->> patch to use for the bash issue. I wanted to post this here.
->>
->> We have found a few more issues (OOB memory access). Also I am posting Florain's
->> patch here which should fix the issue in a more deeper way rather than just
->> apply duct-tape.
->>
->
-> Could we please get two CVE numbers assigned for the two OOB memory issues?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Using the two patches, CVE-2014-6271 and the one line eol-pushback.patch, I am 
-not able to reproduce what I expect should be happing with bash 4.2.
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746579
+> Package: libwww-perl
+> setting HTTPS_CA_DIR or HTTPS_CA_FILE environment variable
 
-Should I be seeing a problem with the reproducers that were mentioned in an 
-earlier piece of this thread, either:
+This is apparently still being investigated upstream, with
+https://github.com/libwww-perl/lwp-protocol-https/pull/14 updated as
+recently as this afternoon. The set of issues is unusual and may
+ultimately require more than one CVE ID.
 
-bash -c 'true <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF
-<<EOF <<EOF <<EOF <<EOF <<EOF'
+At the moment, it seems that the most straightforward CVE assignment
+is for the following statement in
+https://github.com/libwww-perl/lwp-protocol-https/pull/14#issuecomment-42328818
 
-or
+  "If you google for HTTPS_CA_FILE you will probably only find
+   references to LWP/Crypt::SSLeay. So, in a way, it makes sense to
+   special case this because these are mostly users of the older LWP
+   versions."
 
-(for x in {1..200} ; do echo "for x$x in ; do :"; done; for x in {1..200} ; do 
-echo done ; done) > test-script.sh $ bash test-script.sh
+This seems to be, more or less, equivalent to "the behavior of the
+product is determined by using somewhat arbitrary environment
+variables that, in practice, are correlated with whether the user may
+desire a 'compatibility mode' with different security properties, even
+though this correlation isn't especially strong."
 
+Off hand, we don't know of any other product that does something like
+that. So, we're assigning CVE-2014-3230 for the Least Surprise
+violation.
 
-The first one gives me a series of:
+There's a separate question of whether the "compatibility mode"
+behavior has an implementation that matches its design. A second CVE
+ID seems reasonably likely, but the issue itself is perhaps still
+being analyzed.
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746579#44 says
+"contrary to what the name of the option suggests, verify_hostname is
+supposed to enable/disable both certificate verification and that the
+certificate matches hostname. But after this patch applied, it will
+affect only the latter."
 
-bash: line 1: warning: here-document at line 1 delimited by end-of-file (wanted 
-`EO')
+At this point, it seems unlikely that there would be a third CVE for
+whether the "compatibility mode" behavior actually should not exist.
 
-But does not result in a segfault.. (perhaps my memory layout/allocations just 
-happen to be avoiding that)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-And the test-script.sh runs w/o segfault or other error being present.. again 
-maybe I'm lucky?
-
-
-(Or am I simply missing something in the reproducer steps?)
-
-Mark Hatle
-Wind River Systems
+iQEcBAEBAgAGBQJTaUA9AAoJEKllVAevmvmsIToH/i48lQZKdtiRRKzz8rWeUcYF
+HFw8ZmocshaCG2/ZyHiQv4j0w7jjBAuhOv4VDwZWR56WtRpGlcZYz7te7sglG6yM
+h7LQACHsr/cv9EcDyolAsmigv7/zjRSmhhE/uGhf/up30tKO4ZoaVFFNQClihfAc
+J3K23L8PhtxIVlp5eyHar6vndC53L1XwJn8lnvYXczSA9Y7q+3PAG4LF/oo4sWxz
+ZxfwgbNTyaKhpppPUcudHSOz8fpZVaGdqrYEWkXj0DY8+TQTHPYfZuGw6shyHuUL
+MTz/zRRdyBWjrMR9szq7XnJ3RzF63xjwyJGRhsQ1EquWwGcgR3GfCbYn4x43BNg=
+=HQLw
+-----END PGP SIGNATURE-----
