@@ -1,70 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/13
-Message-ID: <Pine.LNX.4.64.1412041319340.1687@beijing.mitre.org>
-Date: Thu, 4 Dec 2014 13:20:15 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/6
+Message-ID: <20140506205558.37a107d1@redhat.com>
+Date: Tue, 6 May 2014 20:55:58 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: cve-assign@...re.org
-Subject: Re: CVE Request: Multiple XSS vulnerabilities in MantisBT
+Cc: nicolas.gregoire@...rri.fr
+Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
 Content-Type: text/plain; charset=utf-8
 
+On Tue, 06 May 2014 20:21:28 +0200 Nicolas Grégoire wrote:
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> > libxml2 [...] incorrectly performs entity substituton in the doctype
+> > prolog, even if the application using libxml2 disabled any entity
+> > substitution. 
+> 
+> I'm not sure that I understand this bug. Do you have a PoC?
 
+The new issue is very similar to the one fixed by:
 
->1. XSS in extended project browser
->
->[1] http://github.com/mantisbt/mantisbt/commit/511564cc
->[2] http://www.mantisbt.org/bugs/view.php?id=17890
+https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
 
-Use CVE-2014-9269.
+which is linked to the infamous CVE-2013-0339.  4629ee0 fixed the issue
+for general entities, while the 9cd1c3c fixes the same type of problem
+for parameter entities.  Even when parsing without NOENT, external
+parameter entities are fetched.
 
->2. XSS in projax_api.php
->
->[3] http://github.com/mantisbt/mantisbt/commit/0bff06ec
->[4] http://www.mantisbt.org/bugs/view.php?id=17583
-
-Use CVE-2014-9270.
-
->3. XSS in admin panel / copy_field.php
->
->[5] http://github.com/mantisbt/mantisbt/commit/e5fc835a
->[6] http://www.mantisbt.org/bugs/view.php?id=17876
-
-Use CVE-2014-9271.
-
-Issues 3 and 5 are MERGED into the same CVE ID because they are the
-same type of issue, affecting the same versions, disclosed at the same
-time, and found by the same person.
-
->4. XSS in string_insert_hrefs()
->
->[8] http://github.com/mantisbt/mantisbt/commit/05378e00
->[9] http://www.mantisbt.org/bugs/view.php?id=17297
-
-Use CVE-2014-9272.
-
-
->5. XSS in file uploads
->
->[10] http://github.com/mantisbt/mantisbt/commit/9fb8cf36f
->[11] http://www.mantisbt.org/bugs/view.php?id=17874
-
-Use CVE-2014-9271.
-
-Issues 3 and 5 are MERGED into the same CVE ID because they are the
-same type of issue, affecting the same versions, disclosed at the same
-time, and found by the same person.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEVAwUBVICkqKllVAevmvmsAQKuBQgAxVb3LZJ82oRHEpIKAGioXOw6bm1umxAh
-CRzFnVZUrUpZFB3vIAjAcatJXXLjZmk0NSHqWeguZ08q95lS9ockXcyYaoS5UKWG
-dyqPpZVCbhsmbSc8jf88IdT3EUAScdpof8dpCnYLSzRKdmq15GIYmYlnapms3+sK
-6EhVvxwrv85Giu2b2KLAB/6cjV75ATDtBu6IFC7GJed+2kc7ef8eTmJoiGQ+mdtB
-73ZGoykBlyBN5a6PVcfqPMtn58x6I8jUn4Oug382aKttVB5udp9ciRQSD0Yqdhv6
-F9bUrVPMStuTdnk64F/JDYI9x001jjCah2DiW2IMBOodjvtUr+qgPw==
-=wjH5
------END PGP SIGNATURE-----
+-- 
+Tomas Hoger / Red Hat Security Response Team
