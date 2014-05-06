@@ -1,82 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/20
-Message-ID: <540F1EF5.9050904@redhat.com>
-Date: Tue, 09 Sep 2014 09:38:29 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: pinocchio tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/3
+Message-Id: <201405060807.s4687Whq022296@linus.mitre.org>
+Date: Tue, 6 May 2014 04:07:32 -0400 (EDT)
+From: cve-assign@...re.org
+To: zanchey@....gu.uwa.edu.au
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Upcoming security release of fish 2.1.1
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-
-On 09/09/14 02:34 AM, Steve Kemp wrote:
->> I have to say I don't understand at all why someone would be going
->> through random packages from PyPi (especially test automation related)
->> and searching for possible security issues.
+> There is also a symlink attack that doesn't depend on a race condition, so we'll
+> include a patch for that as well.
 > 
->   Because although the chances of them being exploited are low they
->  are genuine issues which have security implications.
-> 
->   There is copious documentation online about how file races are
->  bad, including this quick reference:
-> 
->     https://www.securecoding.cert.org/confluence/display/seccode/FIO21-C.+Do+not+create+temporary+files+in+shared+directories
-> 
->   PyPi?  've no idea why that was chosen, but I expect because it
->  is a large mass of code that has had little similar attention paid
->  to it in the past.  node.js will probably be next, I'm sure lots of
->  modules exist created by inexperienced developers who haven't
->  considered the implications of posting new code libraries.
+> Could we have an additional CVE-ID assigned, please?
 
-Actually one reason I picked PyPI is simply because it has
-popularity/usage info, each package web page says how many times it was
-downloaded in the last day/week/month, so I picked a quick an easy audit
-of packages downloaded more than 5000 times in the last month.
+First, we should mention that a single CVE ID cannot be used for a set
+of related issues that have different affected versions. For the
+earlier message that mentioned CVE-2014-2906 and CVE-2014-2914,
+approximately two more CVE IDs will be needed. We will send those
+later.
 
-Also this is to maybe help raise awareness of security a bit, things
-like tmp issues
+For "a symlink attack that doesn't depend on a race condition,"
+ultimately the answer is yes, you can have a separate CVE ID - use
+CVE-2014-3219. Probably at least a few oss-security readers would want
+us to explain why, so here's the explanation for them.
 
-1) shouldn't exist, especially in Python, mkstemp! mkdtemp! no need to
-reinvent attempts to create files securely, or to do it totally insecurely.
+When there are discoveries of two instances of essentially the same
+composite, and there's any difference in the set of weaknesses for
+those two instances, we might want to have a general rule that two
+separate CVE IDs are always assigned. In practice, the Symlink
+Following composite is treated as somewhat of a special case in CVE.
+If we have one Symlink Following instance associated with two
+weaknesses, and a different Symlink Following instance associated with
+three weaknesses, we sometimes assign only one CVE ID. Possibly we
+will reevaluate that. (There's also often a complication that the
+available information is only that distinct Symlink Following
+instances exist; the information about the weaknesses is missing.)
 
-2) vendors should fix tmp, luckily this is happening, our PaaS OpenShift
-Enterprise, and the service OpenShift Online both use poly instantiated
-/tmp for each user cartridge (a cartridge is essentially on or more
-services/applications like PHP, MySQL, etc. being used to run something
-like say Wordpress). So the exploitation of tmp vulns on OpenShift would
-generally require additional vulnerabilities in order to get file system
-access (at which point a tmp vuln is likely not that interesting to an
-attacker, especially in the case of OpenShift and the way cartridges are
-restricted).
+For the code fixed in the
+https://github.com/fish-shell/fish-shell/commit/c0989dce2d882c94eb3183e7b94402ba53534abb
+commit, an additional factor is that the Symlink Following composite
+exists and is relevant, but there's a more important attack that does
+not rely on Symlink Following. In between when the temporary filename
+is chosen and when the temporary filename is used, the attacker can
+place something at the temporary pathname. One option is a symlink,
+and fish will follow that symlink and perhaps overwrite an important
+file. Another option is a plain world writable file. In that case,
+fish writes to the file, but the attacker can change the contents of
+the file immediately before fish proceeds to execute the file. Thus,
+even if we did the abstraction based on "same commonly used composite
+name," we would still end up with a different CVE ID than for the new
+"symlink attack that doesn't depend on a race condition" report,
+because the pre-c0989dce2d882c94eb3183e7b94402ba53534abb code isn't
+solely characterized by a Symlink Following composite. Finally, we
+probably don't want to have two CVE IDs for a single case where mktemp
+is introduced - even when both Symlink Following and (roughly
+speaking) code injection are possible from the same set of weaknesses.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
->   I did something similar looking for /tmp abuses in Debian
->  packages, via a very very automated scan:
-> 
->     http://blog.steve.org.uk/luonnos_viesti___31_hein_kuu_2014.html
-> 
->   Finding these issues was distressingly easy, and although in the
->  real world the chances of significant impact are minimal they were
->  genuine issues that should be reported and fixed.
-
-Yup. Also this is a way to unwind, I know a lot of people that play
-computer card games like solitaire to wind down, looking at tmp vulns is
-essentially the same pleasantly monotonous experience, at least for me =).
-
-Also a reminder:
-
-https://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
-
-has a specific list of the correct ways to do it, if I'm missing a
-language let me know and I'll add it.
-
-> Steve
-> --
-> 
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJTaJe2AAoJEKllVAevmvmsY9sH/16M8V8sd3hQcGuTUQOqm1Zs
+jXH8T1xsy+Jof6NWJLzS+hcRS6LQOd02KMEyKow5Zr0kKICuJhU/eUTPiU+Uc9Da
+tkVz7sRv+GqJ1rect5JrwaygWLvjMG7ohZ0qtRhuqHJL3oVjwTyQlbfrITBRVfzy
+JtG3C0Pgx5q0w7kgcTLt99DZNrCnqY6xH765XBdL5Xr9J644qRRXX/u5hBgCoN9L
+xhgSkvMghvwzL1lpZjMWMIys4RuQqk73xfQ+OxEoo8Fz2czhvwH/poU51hvdpbRs
+1c9Hl/M8OWOVfCNKmVi9ejFYK1QME74LlkPI6kjjepDRagkuFYHpPEZZuWoenD4=
+=FOxU
+-----END PGP SIGNATURE-----
