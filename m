@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/22
-Message-ID: <5432CA24.4060005@redhat.com>
-Date: Mon, 06 Oct 2014 18:58:12 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/1
+Message-ID: <CAKSZ2QtSxfzpBY3kd4m-XXUVCg9PO9ovEHxFd30GMYwzSY3O7Q@mail.gmail.com>
+Date: Tue, 6 May 2014 10:36:45 +0800
+From: feer james <pnigos70@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
+Subject: CVE Request ---- SOAPpy 0.12.5 Multiple Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 09/30/2014 05:02 PM, Mark R Bannister wrote:
-> Glad my over-simplified example has raised a few smirks.  Now for a slightly less simplified version:
->
-> putenv("PATH=/bin:/usr/bin");
-> setreuid(0, 0);
-> system("date");
->
-> But the point is I've tried to boil down a relatively complex program by studying endless strace outputs to attempt to demonstrate a real world exploit.  It wasn't actually "date" that was being called, but you get the point.
->
-> In the past, i.e. pre-Shellshock, the above code may have raised eyebrows, but as PATH was sanitised it would have passed numerous security audits.
+Hello mitre,
 
-I doubt that (or more realistically, I hope it's not true).  Even the 
-1996 edition of “Practical UNIX and Internet Security” mentions that you 
-have to reset IFS as well (a significant omission if “at” does something 
-even if it hasn't received any parameters).  The authors also point out 
-that putenv and setenv may only replace the first occurrence of an 
-environment variable in the environ array, while the system shell could 
-well pick up the last occurrence.
+*Background*
+SOAPpy provides tools for building SOAP clients and servers.The goal of the
+SOAPpy team is to provide a full featured SOAP library for Python that is
+very simple to use and that fully supports dynamic interaction between
+clients and servers.
+SOAPpy use sax.xml as SOAP parser to parse the xml request.Sax.xml also
+support of setting a handler for resolving entity.By tricking this
+feature,it'll lead to xxe attack or dtd dos attack.
+*Vulnerability details*
+Affect version:0.12.5(currently the lastest version)
+Type:XXE Attack & Billion laughs attack
+*More details*http://www.pnigos.com/?p=260
 
--- 
-Florian Weimer / Red Hat Product Security
+===========================================This bug was found by
+pnig0s@...ebuf.com.
+Could you allocate a CVE id for this?
+Thanks & Best regards,pnig0s
+
