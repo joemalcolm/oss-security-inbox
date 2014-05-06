@@ -1,74 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/10
-Message-ID: <33006C99F5A5194A9B7A7715DFA3E383B5E0E3B0@ALA-MBB.corp.ad.wrs.com>
-Date: Wed, 12 Nov 2014 20:56:35 +0000
-From: "Radzykewycz, T (Radzy)" <radzy@...driver.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: [security-vendor] Additional authority files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/14
+Message-ID: <CAC9YFzdizSKH=8+Nu-BZ72d9boyRtOi+FbRBRjtz2ab7w9gR0g@mail.gmail.com>
+Date: Tue, 6 May 2014 19:50:00 -0300
+From: Rafael Mendonça França <rafaelmfranca@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [AMENDED] [CVE-2014-0130] Ruby on Rails: Directory Traversal Vulnerability With Certain Route Configurations
 Content-Type: text/plain; charset=utf-8
 
-> (In the POODLE case, we also saw that putting the year into
-> the name can be quite misleading—the vulnerability which was
-> considered CVE-worthy was disclosed around 2002, discussed in an
-> OpenSSL advisory in 2003, and should have been associated with
-> that timeframe, and not the year 2014.)
+An earlier version of this advisory incorrectly assumed that the only way
+to trigger this vulnerability was with routes containing '*action'.  There
+are additional attack vectors and as a result *all* users are advised to
+upgrade to a fixed version as soon as possible.
 
-In my opinion, the year should be the year that the CVE number 
-is assigned.  This won't change and is not subject to revision
-after new information comes to light.
+There is a vulnerability in the 'implicit render' functionality in Ruby on
+Rails. This vulnerability has been assigned the CVE identifier
+CVE-2014-0130.
 
-The time that the issue was first noticed and/or discussed seems
-less likely to be stable.  If someone reports a bug in 2015,
-knowing that it was discussed in 2014 but not knowing that it 
-was discussed in 2009, then a 2014 year might be assigned to it.
-But later on, people would assume that it was first discussed 
-in 2014 and not known until then.  So the net result would be
-some desire to re-name some vulnerabilities as well as overall
-confusion.
+Versions Affected:  All Supported
+Not affected:       None
+Fixed Versions:     4.1.1, 4.0.5, 3.2.18
 
-________________________________________
-From: Florian Weimer [fw@...eb.enyo.de]
-Sent: Wednesday, November 12, 2014 12:33 PM
-To: oss-security@...ts.openwall.com
-Subject: [security-vendor] [oss-security] Additional authority files
+Impact
+------
+The implicit render functionality allows controllers to render a template,
+even if there is no explicit action with the corresponding name.  This
+module does not perform adequate input sanitization which could allow an
+attacker to use a specially crafted request to retrieve arbitrary files
+from the rails application server.
 
-I noticed that for two high-profile bugs this year, we hit a
-limitation with the CVE authority file:
+Releases
+--------
+The 4.1.1, 4.0.5 & 3.2.18 releases are available at the normal locations.
 
-We had no proper way to refer to the prefix/suffix patch for bash
-because it does not address a specific vulnerability. All the
-individual vulnerabilities received separate CVE entries, and none was
-left we could associate with the prefix/suffix patch.
+Workarounds
+-----------
 
-For POODLE, we did not have CVE identifiers associated for the
-fallback behavior because it was not considered a vulnerability.  We
-do not have ways to refer to specific client behavioral changes (even
-where this is appropriate, such as sending TLS_FALLBACK_SCSV during
-fallback).  We did not have a way to refer to TLS_FALLBACK_SCSV
-support in server code, either.
+There are no feasible work arounds for this issue.
 
-(In the POODLE case, we also saw that putting the year into the name
-can be quite misleading—the vulnerability which was considered
-CVE-worthy was disclosed around 2002, discussed in an OpenSSL advisory
-in 2003, and should have been associated with that timeframe, and not
-the year 2014.)
+If your application depends on this functionality, you will need to rename
+the route parameter and add an explicit action:
 
-Recent discussions about issues brought to this list suggest to me
-that the reluctance to label things as a vulnerability continues.  (I
-won't speculate about the reasons.)  Unfortunately, it happens too
-often that people operate systems well outside their documented
-security margins—which allows vendors disclaim any security
-vulnerability, but these misguided practices still can cause
-operational issues which cannot be ignored, require mitigations, and
-discussions would benefit from the clarity only an authority file can
-bring.
+  get 'my_url/*template_path', controller: 'asdf', action: 'display'
 
-Consequently, I wonder if we need separate authority files for
-Potentially Unwanted Behaviors (comparable to Potentually Unwanted
-Applications, avoiding the vulnerability stigma just as PUAs avoid the
-“malware” label) and Recommended Behavioral Changes (same thing, but
-on the fixes side).  This would help us to make sure we talk about the
-same things, just as CVE does now for vulnerabilities.
+Then add an action which renders explicitly:
 
-Thoughts?
+  def display
+    if !params[:template_path].index('.')
+      render file: params[:template_path]
+    end
+  end
+
+Note: The path check in this example may not be suitable for your
+application, take care.
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided
+patches for the two supported release series.  They are in git-am format
+and consist of a single changeset.
+
+* 4-1-directory_traversal.patch - Patch for 4.1 series
+* 4-0-directory_traversal.patch - Patch for 4.0 series
+* 3-2-directory_traversal.patch - Patch for 3.2 series
+
+Please note that only the 4.1.x, 4.0.x and 3.2.x series are supported at
+present.  Users of earlier unsupported releases are advised to upgrade as
+soon as possible as we cannot guarantee the continued availability of
+security fixes for unsupported releases.
+
+Credits
+-------
+Thanks to Ville Lautanala of Flowdock for reporting the vulnerability to
+us, and working with us on a fix. Additional thanks to Tobias Kraze and
+Thomas Eisenbarth of makandra for correcting our earlier error.
 
