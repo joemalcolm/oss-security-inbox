@@ -1,58 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/8
-Message-ID: <20140329180802.GA2732@openwall.com>
-Date: Sat, 29 Mar 2014 22:08:02 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/4
+Message-ID: <20140506175538.1b62a08f@redhat.com>
+Date: Tue, 6 May 2014 17:55:38 +0200
+From: Stefan Cornelius <scorneli@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+Subject: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 24, 2014 at 04:17:45PM +0200, Georgi Guninski wrote:
-> it is likely I get banned from here,
+Hi,
 
-Georgi surely worked hard towards achieving this goal, in other threads
-in here as well.  While I have no intent to ban anyone, especially not
-someone like Georgi who has made valuable contributions to this
-community (I am referring e.g. to the qmail integer overflow bug, which
-I personally think Georgi deserved the bounty for), I will be revoking
-moderation bypass "privilege" from people abusing such "privilege".
+It was discovered that libxml2, a library providing support to read,
+modify and write XML files, incorrectly performs entity substituton in
+the doctype prolog, even if the application using libxml2 disabled any
+entity substitution. A remote attacker could provide a
+specially-crafted XML file that, when processed, would lead to the
+exhaustion of CPU and memory resources or file descriptors.
 
-In general, when a new member joins oss-security they do not have
-moderation bypass "privilege", regardless of who they are.  As soon as
-they've made one or a few approved posting(s) with no postings rejected
-(like Georgi did when bringing up the FD list topic initially), they're
-typically granted such "privilege", in good faith, because this helps
-reduce delays in discussions and reduces load on the moderators.
-However, as easily as this is granted, it may be revoked - again,
-regardless of who the person is and how valuable a community member
-they are in other aspects (as well as e.g. whether they're a friend of
-mine or not).  Neither action should be taken personal.  Moderation
-bypass "privilege" is not endorsement, and revoking it is not banning.
-This is merely a tool I use to help run this list smoothly and with less
-effort.  This is why I put this word in quotes.
+This issue was discovered by Daniel Berrange of Red Hat.
 
-So, Georgi, you're still not banned, and I have no such plans, but
-please do not be surprised that further messages from you will incur
-delays and some might be rejected.  I and other moderators are going to
-judge on which messages to approve based on the content of those
-messages, as usual.  If you (or anyone) post something reasonably
-valuable to be worth distributing to list members, it will be approved
-(and please don't mind the delays).  A few of your recent messages were
-below this threshold, in my opinion.
+Upstream patch:
+https://git.gnome.org/browse/libxml2/commit/?id=9cd1c3cfbd32655d60572c0a413e017260c854df
 
-I hope that Fyodor will be approving all of your messages on FD.  If I
-were running FD, I'd setup/keep the moderation bypass for you on that
-list.  After all, FD is all about noise, right? ;-)  And what can be
-better than noise from a(n otherwise) respected community member? ;-)
+Red Hat bug:
+https://bugzilla.redhat.com/show_bug.cgi?id=1090976
 
-oss-security is not FD.  We don't tolerate noise as much.  Noise goes to
-FD, please.
-
-Now, surely any mention of CVE is worse than noise to you, but that's
-another (non-)issue.  I think most people care about the actual vuln
-descriptions and such regardless of whether CVEs are being assigned.
-That said, this is yet another reason why FD is a better fit for you.
-
-Thanks,
-
-Alexander
+-- 
+Stefan Cornelius / Red Hat Security Response Team
