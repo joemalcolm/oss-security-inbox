@@ -1,43 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/12
-Message-ID: <CAP-=ew0CMq-eo9uXEWP8whquXwiePruzpKhjj640PyWh8t8CuQ@mail.gmail.com>
-Date: Sun, 5 Oct 2014 11:25:37 -0400
-From: Rob Fuller <jd.mubix@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/5
+Message-ID: <1399400488.23373.11.camel@banzai>
+Date: Tue, 06 May 2014 20:21:28 +0200
+From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
 Content-Type: text/plain; charset=utf-8
 
-Ladies and Gents, I'm the owner of the repo in question and would love
-to fix any misgivings you have with the list. But as you are the
-experts it would be awesome if you could help me understand which
-parts exactly are incorrect, or what you think should be added to help
-people better understand. I'll try to consolidate the statements in
-this thread, but would greatly appreciate any pull requests or issues
-posted to https://github.com/mubix/shellshocker-pocs/issues that could
-help me with that process.
+Hello,
 
+> libxml2 [...] incorrectly performs entity substituton in the doctype
+> prolog, even if the application using libxml2 disabled any entity
+> substitution. 
 
-Thanks,
+I'm not sure that I understand this bug. Do you have a PoC?
 
---
-Rob Fuller | Mubix
-Certified Checkbox Unchecker
-Room362.com | Hak5.org
+Regards,
+Nicolas Grégoire
 
-
-On Sun, Oct 5, 2014 at 10:55 AM, David A. Wheeler <dwheeler@...eeler.com> wrote:
-> On Sun, 5 Oct 2014 17:44:15 +0400, Solar Designer <solar@...nwall.com> wrote:
->> .... Most non-expert people only need to know that they need either the
->> prefix/suffix patch included or function imports disabled, preferably in
->> a security update from their distro vendor.  This makes the individual
->> parser bugs, which got CVEs assigned, irrelevant.
->>
->> Here's the relevant test:
->> testfunc='() { echo bad; }' bash -c testfunc
->
-> This is a MUCH better test for most people.  Hanno's test script is great for detail, but most people don't need the detail.
->
-> I'm putting that email in my timeline at http://www.dwheeler.com/essays/shellshock.html#timeline - this is an EASY test people can directly use.
->
-> ---  David A. Wheeler
->
