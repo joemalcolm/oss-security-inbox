@@ -1,51 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/1
-Message-ID: <5390FC64.3040400@oracle.com>
-Date: Thu, 05 Jun 2014 19:25:24 -0400
-From: Phil Turnbull <phil.turnbull@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/9
+Message-ID: <536A9FBC.5060402@redhat.com>
+Date: Wed, 07 May 2014 15:03:56 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
+Subject: Re: [AMENDED] [CVE-2014-0130] Ruby on Rails: Directory Traversal Vulnerability With Certain Route Configurations
 Content-Type: text/plain; charset=utf-8
 
-On 05/06/14 10:45, Solar Designer wrote:
-> I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
-> as well as back-ports of those by John Johansen of Canonical, who wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 05/07/2014 10:53 AM, Jacob Kaplan-Moss wrote:
+> Hey Rafael -
 > 
-> ---
-> For anyone who is interested I've attached back ports of the patches to
+> On Tue, May 6, 2014 at 5:50 PM, Rafael Mendonça França < 
+> rafaelmfranca@...il.com> wrote:
 > 
->   3.13 - minor conflicts in patch 4. It has applied cleanly back to 3.2
-> and
->   2.6.32 - conflict is in patches 3, and 4
-> ---
+>> An earlier version of this advisory incorrectly assumed that the
+>> only way to trigger this vulnerability was with routes containing
+>> '*action'.  There are additional attack vectors and as a result
+>> *all* users are advised to upgrade to a fixed version as soon as
+>> possible.
+>> 
+> 
+> Can you clarify what these "additional attack vectors" are? We've
+> been looking at this closely here at Heroku, and as far as we can
+> tell it's only the original vector (*action/:action). What are we
+> missing here?
+> 
+> We'd like to be better able to evaluate if we're vulnerable -- and,
+> more importantly, we'd like to understand if this is a big enough
+> deal for us to notify our customers and directly encourage them to
+> upgrade (a step we've taken in the past). However, without more
+> details about these "additional vectors" we're kinda shooting in
+> the dark. Can you share more details?
+> 
+> Thanks!
+> 
+> Jacob Kaplan-Moss Director of Security, Heroku
 
-Hi,
+I'm also looking at our code and other people's code. The pattern of
+*action doesn't seem to popular, in fact searching github shows _0_
+occurrence of "*action" in ruby code (lots of occurrences in non ruby
+code). So either this pattern is never used or GitHub is blocking that
+specific search term for Ruby, which doesn't seem to be the case, or
+it's incredibly rare.
 
-We are currently preparing Ksplice updates for our supported kernels and spotted
-something odd in the 2.6.32 backport.
+So yeah knowing the other vectors would be good! Thanks.
 
-In patches-2.6.32.tgz:patches/0003-futex-Always-cleanup-owner-tid-in-unlock_pi.patch
-there is this change (ignoring whitespace changes):
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-        curval = cmpxchg_futex_value_locked(uaddr, uval, newval);
--
--               if (curval == -EFAULT)
-+       if (curval)
-                ret = -EFAULT;
-
-which seems to change the behaviour of the function.
-
-The purpose of the return value of cmpxchg_futex_value_locked changed in
-
-37a9d912b24f96a0591 "futex: Sanitize cmpxchg_futex_value_locked API"
-
-which is not included in 2.6.32. This patch changes the return value to a
-status code, but in 2.6.32 the return value is the value of the futex or
--EFAULT. With this backported patch, any futex with a non-zero value will
-return -EFAULT.
-
-Can you please clarify whether this change was intentional or is an error
-introduced in the backport?
-
-Thanks,
-Phil
+iQIcBAEBAgAGBQJTap+7AAoJEBYNRVNeJnmTLtsP/1AQ6FF0G49ptkxLa6JkXGkH
+IKABgxgQHi3e/BeKi6I+eEb3aXuOCMQzReUrbsdxiFJxcfa+Md7Em3kZmig4Idaf
+fCyZ0Hhi5yyiMsOeRuERHUIxwMqXfCu9oZMDCWd7uO7WyblxD0KhcUoCMj5ZM8po
+Y+JluKR95Mu3Guu71V5yJUzrQN8fBtqnLEFd6e/CGcADRG0z6+q+2D9nRRkhYarD
+s6uyt5XezE73ULoYO7FAQkMVFy7JS5O7bkdgc+Md9niGS7DU1rqQ5CdpRTsaL2FU
+XcwvTK+ZzlktV9B+50G8e13ML3VwXCxGHxoYVxeBCUe+8Qy8CV9Eg0qnC7oGuqbV
+VcbMHYZdpHbZ/PzkQazEeYq3EShgtrMD6FK0lbYyimREAYMxU5CJLOZpcfA8U7Wm
+NUGj5g2YfMJxXK1+O3mme9YhE+QM5bBIPkTGeigcTGztHaZ+D7EyRHu6uxvfWS9y
+rwf3vUtqIBqe7Di3aPN6Wx10gL0cnh5t1KiL95zv8gnr6GmYoxsGiozAMQSngC5C
+qYMvWCaHJ8COvTNKGbCenslHzJHhpVsW1TdsC8yZlaWY/k28sv5oouNGJOJECgpb
+q2GhVqrdsgEamRnds0h7Lt3QG+3FVUxlktGgJzC2pSVIyBlus/WNbhN8QuZEzwx2
+oZ2yFFrB2ERdug9AVajd
+=vuiW
+-----END PGP SIGNATURE-----
