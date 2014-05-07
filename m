@@ -1,52 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/25/5
-Message-ID: <535A7C5F.9040209@amazon.com>
-Date: Fri, 25 Apr 2014 08:16:47 -0700
-From: Anthony Liguori <aliguori@...zon.com>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Request for linux-distros list membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/5
+Message-ID: <536A7BD1.5040506@redhat.com>
+Date: Wed, 07 May 2014 12:30:41 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: A note on DBus and the Hash DOS
 Content-Type: text/plain; charset=utf-8
 
-On 04/24/14 17:34, Solar Designer wrote:
-> So, can someone already on linux-distros and distros
-> please volunteer to keep track of all issues being
-> brought to these lists (yes, all issues - including those
-> that don't affect your distro) and ensure that each one
-> of them promptly gets assigned at least a tentative
-> public disclosure date, that such date is within list
-> policy, that the issue is in fact publicly disclosed on
-> that date, and that the disclosure includes a mandatory
-> posting specifically to oss-security (as well as to
-> anywhere else the disclosing person likes to post)?  If
-> any of these requirements are violated (or are about to
-> be violated), please yell on the (private) list (CC'ing
-> the external reporter of the issue, if applicable) until
-> the violation ceases.  Any volunteer(s)?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This sounds like a terrible job for a human but a simple job for a
-script.  I think all it really requires is having an agreed upon way to
-take disclosure dates.  It is then simple to have a script that (1)
-complains when (disclosure date - thread creation date) > max embargo
-period (2) complains when a disclosure date has been exceeded without an
-indication that there has been a public statement.
+So many years ago some hash dos stuff happened. I checked into a
+variety of programs using embedded copies of various things like
+XML/etc. Also other programs that use hashing for stuff, one of which
+is DBus.
 
-The nice thing about using on-list tagging is that it keeps all of the
-state on list such that anyone can run the bot on their own.
+The bad news: DBus has a vulnerable hash implementation
 
-I would propose we use a system like:
+The good news: there doesn't appear to be many (any?) ways to inject
+data easily to trigger this vulnerability.
 
-X-Disclosure-Date: 2014-06-01
+So I don't think this needs a CVE since it isn't really trigger-able,
+but posted this more as a reminder that hash DoS vulns are probably
+still lurking in various places.
 
-To set/update the disclosure date for a given thread.  To indicate that
-something has been disclosed:
+With thanks to Florian Weimer of the Red Hat Product Security Team who
+did the actual code audit bits.
 
-X-Disclosed-On: 2014-06-02T05:00:00Z
 
-I can watch threads for now and make sure metadata is getting tagged but
-hopefully over time all list members will participate making it not
-depend on one person.  If no one objects, I'll put something together
-and send out a pointer to the code.
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Regards,
-
-Anthony Liguori
+iQIcBAEBAgAGBQJTanvQAAoJEBYNRVNeJnmTLz0P/2cxxh5dWawa5zBBDR0WFjrd
+AK3QCgf+YRjbzyuUcL+mo7Vu1THbdR+EmyLih8SBmhm4hjwf6Q/ZZThKnFA6+9MO
+3eYIxkJAHuHNG0RILOmxW7LVrWMW3VLoldaFlC1W2dBEgJMXacTUE31HL2PUFQ5R
+44LYYtmGhSyHZOUjCasHmvxbqm37ktzXVxLUi2TVyKZVMYgJ8BPDxmaZTiqGI7/y
+03908LSI6sasxLYMU8SFj7AY9CcvL/cCpednnoOevul3AdjNeUGo89rAiNCwys4K
+svoh4updd+QFw6frxpGkY6W8BINIz+Pd2OeXyoeq9Dl+7SWsmyJmvij2ZUahjEQo
+cGwJ6DvY1UvxUMj2hrRGwDuAaFvldgi7vLoOXSQa6Kp36ittCdj2aB4vpi71dxa6
+pmpeSUvvLcSxLiDiYPMYgUUjF9M14qA3PcAzp9rU4e7CgqpqTxfEGqN41CSG/BpF
+F3mVPhhzoHL4bH4EwLgW0a04kFxQnU8cvsLXxuHlQKjSrbISadqFKLk4HLNyy+cu
+ixEvVYqqBRBwgCc+ZL+TvGmzefgngxaXsXXw1O8Z3h5WQer1+mMx9A3cEvS7MQ6n
+gd92IjiJg5rE4SdCCdnmQsmD34GUWJN2OlUJ9+uGNy4lLgu23LWgFRZcgeMAVaEy
+7LHGWbwB0IUvQmRC/S6z
+=9i7N
+-----END PGP SIGNATURE-----
