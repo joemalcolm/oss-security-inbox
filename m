@@ -1,40 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/38
-Message-ID: <20140924222414.GA903@openwall.com>
-Date: Thu, 25 Sep 2014 02:24:14 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/3
+Message-ID: <9B221D9A-9D10-4F3D-9F1A-077A7EBFB31F@redhat.com>
+Date: Wed, 07 May 2014 09:47:20 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Postfix bounces arbitrary content
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 24, 2014 at 06:08:21PM -0400, Jason Cooper wrote:
-> I wrote some code a while ago to automate git push via single-purpose
-> ssh keys. [1]  By design, it wipes the environment, sets vars found in
-> the config, and accepts only configured commands for
-> SSH_ORIGINAL_COMMAND.  I've tested the latest HEAD against this attack,
-> and it appears to mitigate it:
-> 
-> [jason@...alhost] $ ssh -i .ssh/test_key -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
-> uid=1000(jason) gid=1000(jason) groups=1000(jason)
-> [jason@...alhost] $ # add 'command=/path/to/secsh -f /path/to/test.rc' in .ssh/authorized_keys on server
-> [jason@...alhost] $ ssh -i .ssh/test_key -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
-> secsh v0.8-rc1-2-ga86f09832fa2: access denied.
+On 05/06/2014, at 19:57 PM, cve-assign@...re.org wrote:
 
-This is puzzling.  I tried:
+>> take 5,000 randomly selected articles from my local news spool, and
+>> cause b.com to bounce all of them from bob@...om to postmaster@...om.
+>> This will likely cause a.com to block incoming mail from bob@...om,
+>> or from all of b.com
+>
+> It seems more likely that the default configuration would produce
+> bounce messages with a header From: address starting with
+> "MAILER-DAEMON@" and an empty envelope-sender address. In that case,
+> blocking mail from bob@...om wouldn't accomplish anything. But it's
+> conceivable that the a.com administrator would start blocking the IP
+> address of the b.com SMTP server.
+>
+> That's a detail that doesn't have much effect on the CVE inclusion
+> question.
+>
+> Originating a new message to report non-delivery is valid according to
+> RFC 2821 section 6.1. It's not really the case that there's inherently
+> an integrity impact.
+>
+> There could be a Postfix developer announcement that, according to
+> their security policy, this is unintended behavior with an integrity
+> impact. A CVE assignment would be possible in that case.
+>
+> (To summarize: just because the RFC 2821 section 6.1 behavior is
+> allowed doesn't mean that it's a good idea. An SMTP server should
+> minimize the situations in which outsiders can trigger an arbitrary
+> volume of outbound SMTP traffic to arbitrary destination IP addresses.
+> Non-deliverability should be detected within the original SMTP dialog,
+> and this case of the Delivered-To: header doesn't seem impossible to
+> detect. However, there might be some type of architectural motivation
+> for not checking the Delivered-To: header within the original SMTP
+> dialog. Even if it was originally intentional, the developer might
+> accept a feature request to change it.)
 
-command="/bin/env - date"
+This is perfect.  Thank you.  It also confirmed what I expected (and upstream should have its say here).  I think that, given it was initially reported a decade ago, that that gives some hint as to how they may feel about it.
 
-and:
+At any rate, thank you for your feedback.
 
-command="exec /bin/env - date"
 
-and neither prevents exploitation of the issue as above (I get the
-output of "id", not of "date"), which is not surprising given that the
-command is run via the shell before it reaches "env".
+-- 
+Vincent Danen / Red Hat Security Response Team
 
-Maybe your target user account's login shell is not bash?  That would
-explain it, but it's also the easier case where the issue had been
-exposed via a subshell only (does your test.rc explicitly use bash?)
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
