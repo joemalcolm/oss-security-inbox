@@ -1,22 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/4
-Message-ID: <20140818065755.GD4602@kludge.henri.nerv.fi>
-Date: Mon, 18 Aug 2014 09:57:55 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: Noel Kuntze <noel@...ilie-kuntze.de>
-Subject: Re: Enigmail warning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/1
+Message-Id: <201405070157.s471vU79002935@linus.mitre.org>
+Date: Tue, 6 May 2014 21:57:30 -0400 (EDT)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Postfix bounces arbitrary content
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 18, 2014 at 08:28:33AM +0200, Noel Kuntze wrote:
-> I'm using Thunderbird 31.0 with Enigmail 1.7 and can't reproduce that issue.
-> I'm on Arch Linux, what OS are you using? Also, please state any specialties.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I haven't done any research on this issue yet and I hope that project developer
-responds to that thread with facts and plans. You might want to share your
-information there.
+> take 5,000 randomly selected articles from my local news spool, and
+> cause b.com to bounce all of them from bob@...om to postmaster@...om.
+> This will likely cause a.com to block incoming mail from bob@...om,
+> or from all of b.com
 
----
-Henri Salo
+It seems more likely that the default configuration would produce
+bounce messages with a header From: address starting with
+"MAILER-DAEMON@" and an empty envelope-sender address. In that case,
+blocking mail from bob@...om wouldn't accomplish anything. But it's
+conceivable that the a.com administrator would start blocking the IP
+address of the b.com SMTP server.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+That's a detail that doesn't have much effect on the CVE inclusion
+question.
+
+Originating a new message to report non-delivery is valid according to
+RFC 2821 section 6.1. It's not really the case that there's inherently
+an integrity impact.
+
+There could be a Postfix developer announcement that, according to
+their security policy, this is unintended behavior with an integrity
+impact. A CVE assignment would be possible in that case.
+
+(To summarize: just because the RFC 2821 section 6.1 behavior is
+allowed doesn't mean that it's a good idea. An SMTP server should
+minimize the situations in which outsiders can trigger an arbitrary
+volume of outbound SMTP traffic to arbitrary destination IP addresses.
+Non-deliverability should be detected within the original SMTP dialog,
+and this case of the Delivered-To: header doesn't seem impossible to
+detect. However, there might be some type of architectural motivation
+for not checking the Delivered-To: header within the original SMTP
+dialog. Even if it was originally intentional, the developer might
+accept a feature request to change it.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTaZKXAAoJEKllVAevmvmsDSwIAJt0tN40mtYm59I08DK9H+jM
+fUBcnVC625smh52Wg/CTHuq41wTT4kBpuUvWGzneKy6HXbSarnV95M1CVHF/lehO
+7O5Jwtf9+3e5OVKWXFDwhmGlgpUwh4ZogcF7Ii6rc3msO74RbSk9XrZpNPZh5Bqr
+/oUX88b61rY3/GsDMo58hbUpol/aqlm5JfZtlrO6ByZk33tYgX/ptNLmaTO+4C0a
+m9C10EzXkG6Yk+XWtsAMqI5F/joF31ViDJyWPJkp/MN1O0hVd4VyfWSW2glnQFPl
+hAki3JD0e/2vB+ZucYZbUKT+4pceMwlyyoz0ehXUYeYLXSrCKgwBXcXcsU9zXXw=
+=Xmjk
+-----END PGP SIGNATURE-----
