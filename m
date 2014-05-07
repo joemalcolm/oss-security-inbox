@@ -1,45 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/21/5
-Message-ID: <CAPLnt67+7s+=DRaK2j+W+eduFFZ5U8tSPGuC7kfGQFpUqxw-RQ@mail.gmail.com>
-Date: Tue, 21 Jan 2014 10:59:53 -0800
-From: Galen Charlton <gmc@...library.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Perl module MARC::File::XML
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/4
+Message-ID: <CAMPmzRsSsA95R_xUeRSristeC3KwFR_qyBMhWy2Rss=kHy9ZsQ@mail.gmail.com>
+Date: Wed, 7 May 2014 11:53:12 -0500
+From: Jacob Kaplan-Moss <jacob@...oku.com>
+To: oss-security@...ts.openwall.com,  Rafael Mendonça França <rafaelmfranca@...il.com>
+Cc: "security@...oku.com" <security@...oku.com>
+Subject: Re: [AMENDED] [CVE-2014-0130] Ruby on Rails: Directory Traversal Vulnerability With Certain Route Configurations
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hey Rafael -
 
-I am the maintainer of the Perl module MARC::File::XML, which is used
-by various applications to manipulate a metadata format used by
-libraries, and would like to request the allocation of a CVE
-identifier for an XXE vulnerability that is fixed in version 1.0.2 of
-the module.  I have evidence that the vulnerability can be used in at
-least one F/LOSS integrated library system, Koha, to perform an
-application-level privilege escalation, and another one, Evergreen, is
-likely vulnerable to disclosure of the contents of arbitrary files on
-the server.  I am a committer to both of those projects.
+On Tue, May 6, 2014 at 5:50 PM, Rafael Mendonça França <
+rafaelmfranca@...il.com> wrote:
 
-Fix: http://sourceforge.net/p/marcpm/code/ci/cf2d36597a56eeeffd53b38182b8557c7bf569ac/
+> An earlier version of this advisory incorrectly assumed that the only way
+> to trigger this vulnerability was with routes containing '*action'.  There
+> are additional attack vectors and as a result *all* users are advised to
+> upgrade to a fixed version as soon as possible.
+>
 
-ChangeLog: https://metacpan.org/changes/distribution/MARC-XML
+Can you clarify what these "additional attack vectors" are? We've been
+looking at this closely here at Heroku, and as far as we can tell it's only
+the original vector (*action/:action). What are we missing here?
 
-Announcements:
+We'd like to be better able to evaluate if we're vulnerable -- and, more
+importantly, we'd like to understand if this is a big enough deal for us to
+notify our customers and directly encourage them to upgrade (a step we've
+taken in the past). However, without more details about these "additional
+vectors" we're kinda shooting in the dark. Can you share more details?
 
-http://www.nntp.perl.org/group/perl.perl4lib/2014/01/msg3073.html
-http://lists.katipo.co.nz/pipermail/koha/2014-January/038430.html
-http://libmail.georgialibraries.org/pipermail/open-ils-general/2014-January/009442.html
+Thanks!
 
-Thanks,
+Jacob Kaplan-Moss
+Director of Security, Heroku
 
-Galen
--- 
-Galen Charlton
-Manager of Implementation
-Equinox Software, Inc. / The Open Source Experts
-email:  gmc@...library.com
-direct: +1 770-709-5581
-cell:   +1 404-984-4366
-skype:  gmcharlt
-web:    http://www.esilibrary.com/
-Supporting Koha and Evergreen: http://koha-community.org &
-http://evergreen-ils.org
