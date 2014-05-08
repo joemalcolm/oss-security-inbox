@@ -1,39 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/1
-Message-id: <C8480EAF-453C-4417-8099-D73E11016A46@me.com>
-Date: Tue, 07 Jan 2014 19:57:03 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: paratrooper-pingdom-1.0.0 ruby gem exposes API login credentials
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/08/4
+Message-ID: <536BE5D8.7070907@redhat.com>
+Date: Thu, 08 May 2014 14:15:20 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org
+Subject: Re: Re: CVE Request: OpenSSL NULL pointer dereference in do_ssl3_write
 Content-Type: text/plain; charset=utf-8
 
-Title: paratrooper-pingdom-1.0.0 ruby gem exposes API login credentials
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Author: Larry W. Cashdollar, @_larry0
+Just to confirm what Mitre said, also in general the only time I will
+be assigning CVE's on oss-security in the future is for anything time
+sensitive, the main reason I did CVE-2014-0198 was also due to the
+potential for a blow up (since you know, the week before we'd had a
+full on OpenSSL fire drill). One thing  I will ensure in future is to
+CC cve-assign@ to minimize the chanc of a duplicate.
 
-Date: 12/26/2013
+Also as usual if you want to make a private request information on how
+to do so is available here:
 
-CVE: Please assign.
+http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
 
-Download: http://rubygems.org/gems/paratrooper-pingdom 
+- -- 
+Kurt Seifried Red Hat Security Response Team (SRT)
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Description: "Send deploy notifications to Pingdom service when deploying with Paratrooper"
-Vulnerable Code:
-
-From: paratrooper-pingdom-1.0.0/lib/paratrooper-pingdom.rb
-
- 24       def setup(options = {})
- 25         %x[curl 
-https://api.pingdom.com/api/2.0/checks -X PUT -d "paused=tru    e" -H "App-Key: {app_key}" -u "
-{username}:#{password}"]
- 26       end
- 27 
- 28       def teardown(options = {})
- 29         %x[curl 
-https://api.pingdom.com/api/2.0/checks -X PUT -d "paused=fal    se" -H "App-Key: {app_key}" -u "
-{username}:#{password}"]
- 30       end
-
-A malicious user could monitor the process tree to steal the API key, username and password for the API login.
-
-http://www.vapid.dhs.org/advisories/paratrooper-api-key-pingdom.html
+iQIcBAEBAgAGBQJTa+XYAAoJEBYNRVNeJnmTH+wQAL3BStUXwH7NJK3VZJ8oD1Dn
+vHOLjYE94iz+5EfqDDddkVQDIKIJIc4wipr0qRStYExcLWIknZaPDFGHMTeJ8Uhi
+WnsP/EFPbtmvgejz6ShNI61TdGAoKLzqirG1dvETgW4pIh16y+5wLcqY9YvA8LEj
+5AODKOrDaHcRzrHIkLzlw1h+UBbHeoZn4FflL9HpAPpj+VUuKBrS939ZkAKN9pP2
+KkPPWoAlwjhNp5cv18++Uuon+Tq6NGCHUFmBeldSKOkzmngY6Ye9ZWzRwNPfNo4x
+fC3FL80X+foM4BEhAzzFh/jagSQRRNZRkAnFZpFrQpnihMaMISFkhBLl8jwyeOHB
+XAnL+gvaI77D00MVspeE62ePz9kbLfWlKstsBl250Um7qivTcOMhjTiT+3F33kMV
+qRp5vK2yfx8goakVEgJIAjgh0mGhZYC2k1Mvj/MFF5kxC7nk4mtaxagqMD1GG+Vh
+1Ztd+ERZJ09jJ40gkhuW3uutvimy2TDvXmOBp9goYK3j+cOR9eMQeXs6KtN+Es1m
+mrbcwBtgcqRd0ZAsGMTHBhBTZQs5wiguQBBF5aIqobl2zL3nSos3iCKs0U+4uQ1q
+VbOzuORuZUTYuU8Sp0/+7Hr3ZdyoT3ljZSbbtWzx0dRxfGTuMtc4uQyKOM17QZ4N
+6XPFH79m5O5eFmebl4el
+=OJo4
+-----END PGP SIGNATURE-----
