@@ -1,37 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/44
-Message-ID: <CANtRZwKtLcj3g579bxQ1akWH9bi3MfFELZBpXntA7dLkzpYDRg@mail.gmail.com>
-Date: Thu, 2 Oct 2014 15:26:21 -0600
-From: Chad Vizino <cvizino@...ptivecomputing.com>
-To: oss-security@...ts.openwall.com
-Subject: tm_adopt() vulnerability in TORQUE Resource Manager
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/08/3
+Message-Id: <201405081414.s48EDuDi001504@linus.mitre.org>
+Date: Thu, 8 May 2014 10:13:56 -0400 (EDT)
+From: cve-assign@...re.org
+To: D.Farhi@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request - Local File inclusion in Cobbler
 Content-Type: text/plain; charset=utf-8
 
-Within a TORQUE Resource Manager job, the tm_adopt() TORQUE library call
-enables a user-built executable calling tm_adopt() to adopt any session id
-(and its child processes) regardless of the session id owner on any node
-within a job. When a job that includes the executable calling tm_adopt()
-exits, the adopted processes are killed along with the job processes during
-normal job cleanup. This can enable a non-root user to kill processes
-he/she doesn't own including root-owned ones on any node in a job.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The issue has been fixed in the following commit numbers for the listed
-TORQUE Resource Manager versions:
+> as reported in https://github.com/cobbler/cobbler/issues/939
+> 
+> A local file inclusion is possible by specifying full path to any
+> desired file in the Kickstart value in Cobbler's WebUI in all
+> versions.
+> 
+> by specifiying 'Kickstart' value to /etc/passwd or any other crucial
+> system file, local files are exposed by the cobbler web_ui
 
-4.2-dev
-967cdc80150690459a47a35a658abeee0ca6e5cb
-f2f4c950f3d461a249111c8826da3beaafccace9
+Use CVE-2014-3225.
 
-4.5-dev
-6c4a57b2d7a56b5bda1c57e2af425ff517ffe331
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-5.0-dev
-e2b6253b62fe7e59c5852e2b914b71a095328558
-
-develop
-dd7f729eedead89c9253707f85572706077ff1d3
-
---
-Chad Vizino
-Adaptive Computing
-
+iQEcBAEBAgAGBQJTa5CKAAoJEKllVAevmvmsc0AH/iRGXp6uC+loqXis7PcgsGFH
+UIFPfrqW7zS5bZ3JWJ41zPTDVJmv5sFCPie9NADsrAEQj0YcrNCRdRNgPy4MTi8t
+z/+UYftRRoiM8P4jMRVk8Ko2aLwG05m2kJ/j0XQpI45dYoGF0x++gbwORLEhMgtr
+ePZv7NTjyRwnJygIDLXPGUpnBglkZI/KDPV5qBNDfgHBNMk/FUtZF5zWgVdFvTvx
+FbeT3lwGKyjNMwd6rBMGQwU52YV1cV3NT7tq+fL5mvvV7QYR1POFfDsJbOBpS/jj
+EwW0UleNZ2fWXGI1cQiIIakBOrtWyauyR/IQ6OM98vZ8fqkMw6bT1K7Qjbl9ld8=
+=erju
+-----END PGP SIGNATURE-----
