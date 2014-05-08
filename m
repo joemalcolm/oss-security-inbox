@@ -1,86 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/04/1
-Message-ID: <CAFThDPGGtcAQHxy84Vg5JrF7KoTtcaMG8mE4DZbcq-cDcydXAQ@mail.gmail.com>
-Date: Fri, 3 Oct 2014 15:21:36 -0700
-From: Luca Carettoni <luca.carettoni@...isoft.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/08/5
+Message-ID: <20140508215536.GH2733@sentinelchicken.org>
+Date: Thu, 8 May 2014 14:55:36 -0700
+From: "Timoth D. Morgan" <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: Security advisory in Jenkins
+Cc: nicolas.gregoire@...rri.fr
+Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
 Content-Type: text/plain; charset=utf-8
 
-Ironically, you could use OWASP Dependency-Check Jenkins plugin
-https://wiki.jenkins-ci.org/display/JENKINS/OWASP+Dependency-Check+Plugin
 
-As it uses NVD, CVE-2013-2186 is tracked.
+In my testing, this same issue is true for Java.
 
-Cheers,
-Luca
+That is, if you use DocumentBuilderFactory's setExpandEntityReferences
+method and supply "false", then it has a very similar behavior.  I'm
+about to release a comprehensive XXE paper, and here's a preview of
+what I have written about it:
 
-On Fri, Oct 3, 2014 at 2:44 PM, Kohsuke Kawaguchi <kk@...suke.org> wrote:
+"Java developers who use the default parser (or a newer version of
+Xerces-J) need to change one or more settings to make Xerces
+reasonably safe when processing untrusted XML.  One behavior to be
+aware of is the fact that the DocumentBuilderFactory's
+setExpandEntityReferences method does not provide protection as one
+might expect.  Calling this method with a "false" argument causes the
+parser to omit external entity data in the document when referenced,
+but it does not prevent definitions of external entities.  This means
+the parser will still fetch external URLs, which could obviously be
+used for blind SSRF attacks (even if the content isn't used later in
+the document).   Worse still, this setting does not prevent full use
+of external parameter entities, which would likely allow an attacker
+to conduct all of the same attacks that are possible with regular
+external entities."
 
-> We are still learning how we should handle vulnerabilities, so I'm sure
-> there's room for improvements.
->
-> We have multiple release lines to which the fixes have to be released
-> simultaneously, and overall this overhead is significant. That's why we did
-> one massive release that contains all the fixes.
->
-> Wrt CVE-2013-2186, a week ago we got a report from somebody that he did a
-> security scan and found that we are still using a vulnerable version of the
-> library to which CVE-2013-2186 is assigned. In this release we use a newer
-> version of the library that addresses the problem, and I thought it'd be
-> appropriate to raise a flag to the users that if they continue to use older
-> versions, they'd remain vulnerable to CVE-2013-2186. That's why it's in the
-> advisory. It is not because we sat on a report for more than a year.
->
-> When you say the timeframe is especially concerning, perhaps you mean you
-> are concerned that we fail to notice this vulnerability in our library for
-> more than a year, and if so, you are of course right. Jenkins project has
-> gotten a long list of library dependencies, and I haven't found any
-> practical means to get notified when vulnerabilities are found in any one
-> of them.
->
-> 2014-10-01 19:11 GMT-07:00 Solar Designer <solar@...nwall.com>:
->
-> > Bryan - I think Kohsuke is not subscribed.  I've added CC.
-> >
-> > On Wed, Oct 01, 2014 at 08:36:59PM -0500, Bryan Drewery wrote:
-> > > On 10/1/2014 6:25 PM, Kohsuke Kawaguchi wrote:
-> > > > I just wanted to share that the Jenkins project issued a security
-> > advisory
-> > > > today. These issues are independently found and we've aggregated
-> into a
-> > > > single release.
-> > > >
-> > > > The relevant CVE IDs, our bug tracking IDs are available here
-> > > > <
-> >
-> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01
-> > >
-> > > > .
-> > > >
-> > > > The new versions can be downloaded from here
-> > > > <http://mirrors.jenkins-ci.org/>.
-> > > >
-> > > > (This is the first time I do this, so my apologies in advance for
-> > probably
-> > > > failing to follow the expected format.)
-> > >
-> > > Kudos to all for finding and fixing these issues. It was quite a
-> > > surprising list though. Were these fixes kept from release for an
-> > > extended time? The timeframe for CVE-2013-2186 is especially
-> concerning.
-> >
-> > Many of these issues were brought to the distros list on Fri Sep 26
-> > 17:10:16 2014 UTC, and got their CVE IDs assigned there.  However,
-> > CVE-2013-2186 was not among those.  I don't know why the old CVE ID,
-> > nor how that issue was handled.
-> >
-> > Alexander
-> >
->
->
->
-> --
-> Kohsuke Kawaguchi
+Should we assign a CVE for this as well?  I believe I tested versions
+1.6.0_18 and 1.7.0_51, though I'd want someone to verify this, since
+it has been some time since I observed the behavior.
 
+tim
+
+
+
+
+On Tue, May 06, 2014 at 08:55:58PM +0200, Tomas Hoger wrote:
+> On Tue, 06 May 2014 20:21:28 +0200 Nicolas Grégoire wrote:
+> 
+> > > libxml2 [...] incorrectly performs entity substituton in the doctype
+> > > prolog, even if the application using libxml2 disabled any entity
+> > > substitution. 
+> > 
+> > I'm not sure that I understand this bug. Do you have a PoC?
+> 
+> The new issue is very similar to the one fixed by:
+> 
+> https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
+> 
+> which is linked to the infamous CVE-2013-0339.  4629ee0 fixed the issue
+> for general entities, while the 9cd1c3c fixes the same type of problem
+> for parameter entities.  Even when parsing without NOENT, external
+> parameter entities are fetched.
+> 
+> -- 
+> Tomas Hoger / Red Hat Security Response Team
