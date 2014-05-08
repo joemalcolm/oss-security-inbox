@@ -1,57 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/2
-Message-ID: <20140107040816.GA13251@openwall.com>
-Date: Tue, 7 Jan 2014 08:08:17 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: MongoDB memory over-read via incorrect BSON object length (was: [HITB-Announce] HITB Magazine Issue 10 Out Now)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/08/2
+Message-ID: <BFB17C16CEB8834FBCE8DCF6B3CFC7B601606FA5@SEAEMBX02.olympus.F5Net.com>
+Date: Thu, 8 May 2014 06:43:38 +0000
+From: Dolev Farhi <D.Farhi@...com>
+To: "cve-assign@...re.org" <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE Request - Local File inclusion in Cobbler
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+hi,
 
-While CFPs are not allowed in here, conference proceedings and
-e-magazine issue announcements may be if they are relevant to Open
-Source security.  Even though Hafez's posting reads a bit too much like
-an ad (yet does not include e.g. a table of contents for the magazine
-issue, which could have been helpful), the magazine does have some
-relevant content:
+as reported in https://github.com/cobbler/cobbler/issues/939
 
-On Tue, Jan 07, 2014 at 10:37:01AM +0800, Hafez Kamal wrote:
-> Download Issue #10 - http://magazine.hackinthebox.org/hitb-magazine.html
+A local file inclusion is possible by specifying full path to any desired file in the Kickstart value in Cobbler's WebUI in all versions.
 
-The MongoDB article is based on Mikhail Firstov's materials first
-presented at ZeroNights 2012.  On page 26 of:
+Cobbler ease setup of network installation environments.
 
-http://magazine.hackinthebox.org/issues/HITB-Ezine-Issue-010.pdf
+After informing cobbler team, a patch will be released in the next version of Cobbler to address this issue
 
-there is what was a minor zero-day back then (almost 14 months ago), and
-which I'm afraid was never handled as such.  This is in part my fault,
-as I dropped the ball on the e-mail exchange with Mikhail, trying to
-turn this into a CVE request on oss-security.  I guess better late than
-never, so:
+Can a CVE please be assign to this?
 
-There is a memory over-read bug that can be used by an authenticated
-user (if applicable) to obtain raw MongoDB server process memory
-contents via incorrect BSON object length.  I guess that under most
-deployments this does not cross a security boundary, but for some it
-could (differently-privileged MongoDB users, data already deleted from
-the DB yet staying in process memory, or/and metadata that is not
-normally retrievable).
+tx
 
-I don't know if the bug has since been fixed or not, nor if it possibly
-already has a CVE ID by now.
 
-Here are some relevant URLs from November 2012:
 
-http://blog.ptsecurity.com/2012/11/attacking-mongodb.html
-http://www.slideshare.net/cyber-punk/mongo-db-eng
-https://github.com/cyberpunkych/attacking_mongodb
 
-In Russian:
 
-http://blog.ptsecurity.ru/2012/11/mongo-db.html
-http://www.slideshare.net/cyber-punk/attacking-mongodb
 
-I am Bcc'ing this to Mikhail.
-
-Alexander
