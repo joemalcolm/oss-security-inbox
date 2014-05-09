@@ -1,46 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/1
-Message-Id: <201407240208.s6O28XNR004364@linus.mitre.org>
-Date: Wed, 23 Jul 2014 22:08:33 -0400 (EDT)
-From: cve-assign@...re.org
-To: fweimer@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: [CVE request] Array allocation fixes in libgfortran
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/5
+Message-ID: <alpine.LFD.2.10.1405091851300.16696@javelin.pnq.redhat.com>
+Date: Fri, 9 May 2014 19:03:44 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request Linux kernel: filter: prevent nla extensions to peek beyond the end of the message
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+    Hello,
 
-> several CVE-2002-0391-style integer overflows in array allocation in
-> libgfortran
-> 
-> https://gcc.gnu.org/viewcvs/gcc?limit_changes=0&view=revision&revision=211721
+Linux kenrel built with the BPF interpreter support in the networking core is 
+vulnerable to an out of bounds buffer access flaw. It occurs when accessing a 
+netlink attribute from the skb->data buffer.
 
-Use CVE-2014-5044.
+An unprivileged user/program could use this flaw to crash the system kernel 
+resulting in DoS.
 
-It seems fairly clear that there is only one CVE ID needed. However,
-can you clarify what definition of "CVE-2002-0391-style integer
-overflows" you were using? We think you might mean:
+Upstream fix:
+-------------
+   -> https://git.kernel.org/linus/05ab8f2647e4221cbdb3856dd7d32bd5407316b3
 
-  - any integer overflow caused by multiplying the number of elements
-    in an array by the size of a single element
+Introduced by:
+--------------
+   -> https://git.kernel.org/linus/4738c1db1593687713869fa69e733eebc7b0d6d8
+   -> https://git.kernel.org/linus/d214c7537bbf2f247991fb65b3420b0b3d712c67
 
-  - this includes, but isn't limited to, cases where the array
-    elements represent arguments
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT0GoDAAoJEKllVAevmvmsFnAH/0NvbICQOkjYCUuhVPkptG1H
-EHsDkC8Ll+H8vAB9uBBFY5bFPLKNLiVZv7E8Y51X4MqiugwVRgJ4mHxd88LgnI+A
-1gsQbW3GR2uphO7MxHFGDNiwAsht0KONUTI+dGvi8gOBiQeLDWWxM5uxoqjc4EwP
-5kCa/Vo+d+l6UvSbk2KNqqcWapfVIgDpPGqkFADDQ+UfUfFAOaRj6xV1siBjxgDE
-ONJbFQIlrXBPWXDnDC5uKycrpdTQGojHuhK+7mLejOHMIc7oT/Fvt3IOMrNn4EVE
-/frwqAit/n2WkeU52poljl/w6d56Bx2+i33pJy98zYKaOi+eve3AmnisVGhFgoI=
-=1dP4
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
