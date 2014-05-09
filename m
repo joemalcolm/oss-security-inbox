@@ -1,50 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/34
-Message-ID: <20140930221959.GH23797@oevtugenva.nrevsny.pk>
-Date: Tue, 30 Sep 2014 18:19:59 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/2
+Message-ID: <20140509071330.GA5688@suse.de>
+Date: Fri, 9 May 2014 09:13:30 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: mattd@...fuzz.com
+Subject: Linux kernel floppy ioctl kernel code execution
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 30, 2014 at 08:41:24AM -0500, Kobrin, Eric wrote:
-> > "innocuous looking setuid program" made my day ;)
-> 
-> > We should take care not to blame all and everything to bash.
-> 
-> I don't find that blame is a useful tool for fixing security
-> problems. What's more interesting to me is: what system components
-> are in a position to help. If a change in bash can make a bunch of
-> "innocuous looking setuid programs" not be vectors for the import of
-> malicious functions, let's do it.
+Hi,
 
-While it sounds nice in theory, I don't think this approach really
-works, at least not in general. There's a whole school of security
-dedicated to removing documented functionality that's deemed "risky"
-that completely ignores the security implications of breaking the
-previously documented interface contract. The best-known might be
-dummying out printf/scanf %n support; if a program is expecting %n to
-work as documented, and needs the correct offset to be stored in the
-target object, very bad things could happen (buffer overflows, random
-memory writes, etc.) if the offset is never written and the target
-variable remains uninitialized or still holds an outdated value.
+As this was posted to linux-distros, and was supposed to be made public
+earlier this week, but so far wasn't published on oss-sec ...
 
-I'm going to play the devil's advocate here: what if somebody has a
-script that relies on redefining certain commands via bash function
-export/import in order to suppress functionality that could be
-dangerous when the child script is invoked to process untrusted input?
-(Perhaps the author of the exporting script wants to avoid making
-changes to the script that runs in the child process.)
+Reported by Matthew Daley to security@...nel.org.
 
-In the case of function importing, I do think the feature should just
-be removed, despite the risk of changing the documented functionality.
-It's basically impossible to use correctly (unlike my above example,
-%n, which is trivial to use safely), and it's "wrong" not just on a
-security basis, but also on a language-semantics basis (a really
-really ugly kind of dynamic scope that's inherited from outside the
-program). But I don't think "component X is in a position to help" is
-inherently a valid argument that component X should attempt to help.
-"Blame", or more specifically interface contracts, are a useful
-concept that should not be thrown out.
+There apparently exists a proof of concept root exploit, that allows
+local users with access to a floppy device to execute code in the linux
+kernel.
 
-Rich
+(I think this needs a floppy driver to actually allow access to a floppy
+ device. My machine only says "floppy0: no floppy controllers found" today.)
+
+Linux Kernel Mainline commits:
+
+2145e15e0557a01b9195d1c7199a1b92cb9be81f
+Author: Matthew Daley <mattd@...fuzz.com>
+Date:   Mon Apr 28 19:05:21 2014 +1200
+
+    floppy: don't write kernel-only members to FDRAWCMD ioctl output
+
+    Do not leak kernel-only floppy_raw_cmd structure members to userspace.
+    This includes the linked-list pointer and the pointer to the allocated
+    DMA space.
+
+    Signed-off-by: Matthew Daley <mattd@...fuzz.com>
+    References: CVE-2014-1738
+    Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
+
+commit ef87dbe7614341c2e7bfe8d32fcb7028cc97442c
+Author: Matthew Daley <mattd@...fuzz.com>
+Date:   Mon Apr 28 19:05:20 2014 +1200
+
+    floppy: ignore kernel-only members in FDRAWCMD ioctl input
+
+    Always clear out these floppy_raw_cmd struct members after copying the
+    entire structure from userspace so that the in-kernel version is always
+    valid and never left in an interdeterminate state.
+
+    Signed-off-by: Matthew Daley <mattd@...fuzz.com>
+    References: CVE-2014-1737
+    Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
+
+Ciao, Marcus
