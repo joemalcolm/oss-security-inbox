@@ -1,47 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/9
-Message-ID: <m45vp2$5a9$1@ger.gmane.org>
-Date: Fri, 14 Nov 2014 23:29:53 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: XSS vulnerability in MantisBT 1.2.13
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/7
+Message-Id: <201405092048.s49KmIGT025295@linus.mitre.org>
+Date: Fri, 9 May 2014 16:48:18 -0400 (EDT)
+From: cve-assign@...re.org
+To: mprpic@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: python-lxml clean_html() input sanitization flaw
 Content-Type: text/plain; charset=utf-8
 
-Please assign a CVE ID for the following issue.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
+> did not properly clean HTML input if it included non-printed characters (\x01-\x08)
+> 
+> http://seclists.org/fulldisclosure/2014/Apr/210
+> https://mailman-mail5.webfaction.com/pipermail/lxml/2014-April/007128.html
+> https://github.com/lxml/lxml/commit/e86b294f1f81b899a59925123560ff924a72f1cc
 
-The MantisBT Configuration Report page (adm_config_report.php) did not 
-escape a parameter before displaying it on the page, allowing an 
-attacker to execute arbitrary JavaScript code.
+Use CVE-2014-3146.
 
-The severity of this issue is mitigated by the need to have a 
-high-privileged account (by default, administrator) to access the 
-configuration report page.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Affected versions:
- >= 1.2.13, <= 1.2.17
-
-Fixed in versions:
-1.2.18 (not yet released)
-
-Patch:
-See Github [1]
-
-Credit:
-Issue was discovered by Alejo Popovici and fixed by Damien Regad 
-(MantisBT Developer)
-
-References:
-Further details available in our issue tracker [2]
-
-
-D. Regad
-MantisBT Developer
-http://www.mantisbt.org
-
-
-[1] http://github.com/mantisbt/mantisbt/commit/ee8100d6
-[2] http://www.mantisbt.org/bugs/view.php?id=17870
-
-
+iQEcBAEBAgAGBQJTbT7BAAoJEKllVAevmvmszKAH/RoFAduih1OOXRMF3KVMWmzw
+r/OhlVkZ94b+Ow04L/lPZqoPzWoTNSjw2zLJhmGtRYK+yy/DZ+ikzW/xdDuPhCPX
+IVx294mDUC9BGolU6l0UGGHu8NhZYTqBP06BOewITM7j/qJgr4STdNhe9G2IiI6b
+kINaC+Ol1wHPUZWK5HnOXb3M3Z6XIlVyMfYy+V3KYMId7ozGZtj2TMqs2Zv42Vv+
+ao8dnBY7vI8T+VUIqUvI67zqERQZO228+uuoLv/OQ4lC8zcFtltqMvAqx2XQ7CqG
+vBB28Fisn6DeIiZMrDra4Vh/skRH/h8crIYEWQPh2LWhOpbeyLmNWP6JusIoXlE=
+=uk15
+-----END PGP SIGNATURE-----
