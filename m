@@ -1,52 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/9
-Message-ID: <5491CA58.5070907@redhat.com>
-Date: Wed, 17 Dec 2014 11:24:24 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: What is the "Grinch" polkit/wheel group issue?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/8
+Message-Id: <201405092055.s49KtC6i025402@linus.mitre.org>
+Date: Fri, 9 May 2014 16:55:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Denial of Service attacks against Dovecot v1.1+
 Content-Type: text/plain; charset=utf-8
 
-On 17/12/14 10:00 AM, Marcus Meissner wrote:
-> Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> This "destroy oldest connection" however hasn't been working in v1.1+
+> releases for connections that have started SSL/TLS handshake
 > 
-> This probably needs a CVE too, or does it have one?
-> 
-> https://www.alertlogic.com/blog/dont-let-grinch-steal-christmas/
-> http://www.pcworld.com/article/2860032/this-linux-grinch-could-put-a-hole-in-your-security-stocking.html
-> 
-> Although it seems that the user is in the "wheel" group for this to be exploitable
-> and is hard to specify what actions should be safed by another query or which should not.
-> 
-> Ciao, Marcus
+> http://permalink.gmane.org/gmane.mail.imap.dovecot/77499
+> http://hg.dovecot.org/dovecot-2.2/rev/41622541a7a3
+> http://hg.dovecot.org/dovecot-2.1/rev/b7ac23b4d339
+> http://hg.dovecot.org/dovecot-2.0/rev/48f90e7e92dc
+> http://hg.dovecot.org/dovecot-1.2/rev/8ba4253adc9b
+> http://hg.dovecot.org/dovecot-1.1/rev/fe0e6550585c
 
-Yeah I looked into this (the article/etc was completely confusing and
-took some time to parse):
+Use CVE-2014-3430.
 
-1) the article states they contacted red hat, we were unable to find
-any inbound email or bugzilla entry pertaining to this issue, as always
-if you have an issue you wish to report please contact secalert@...hat.com
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-2) this is expected behaviour, admin users can install software (do I
-have to say this? really? yes. I was told I should say this).
-
-3) don't run web apps as admin users (do I have to say this? really?
-yes. I was told I should say this).
-
-4) if you feel the need to run a web app as an admin user restrict what
-they can do via SELinux, and  don't let them install software (do I have
-to say this? really? yes. I was told I should say this).
-
-So TL;DR: it's not a security vulnerability, and it will NOT be getting
-a CVE.
-
-I can only assume this article/vuln is perhaps referring to something
-like Cpanel and other control panels that people sometimes install
-insecurely/improperly and then never update. Or something. Who knows.
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJTbUBwAAoJEKllVAevmvmsIgAH+wQ9ncZEPXDAjJq3w+6r1zxG
+P2Sb1emKfynjlYwhYd1fIH/RAV3nOqneQRwAfeUmJ3PjKTmswkmkt7H++kfcx1Kk
+JI3ZHf6Ao+1vgcm1hGzmkhwpi/FHZqzTCfu/AWOTt0R2xk0WGx2z+2C8ai/z+3xy
+qW3llZ0QY61am9leFdbq70c9RtJkOkV2sZBMGjh1hgacVilCw9MuqNEMXhmE4qvu
+y2i0x1WHbxosedC3iZ45K/PeypnA11Z587KVrRClfe/8aUAnixiSKnvZKhO/gk34
+q3RNUX2lEWaQqTu8qk95iu6rpajG/1/HhUyRLR93hE7J3AvExe2PTcY/l+yJDa0=
+=2pQZ
+-----END PGP SIGNATURE-----
