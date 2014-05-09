@@ -1,38 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/13/2
-Message-ID: <52FC49E8.4060105@redhat.com>
-Date: Thu, 13 Feb 2014 15:28:24 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/4
+Message-ID: <20140509131133.GA17772@kludge.henri.nerv.fi>
+Date: Fri, 9 May 2014 16:11:33 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
+Subject: CVE request: Denial of Service attacks against Dovecot v1.1+
 Content-Type: text/plain; charset=utf-8
 
-On 02/13/2014 03:11 AM, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> that's still 4 bytes too many
->
-> Use CVE-2014-1947.
+Hello,
 
-Thanks to everyone who explained this to me off-list.
+Can I get CVE identifier for DoS attacks against Dovecot v1.1+, thank you.
 
-Peter Hutterer of Red Hat has added some information about all of this 
-to https://bugzilla.redhat.com/show_bug.cgi?id=1064098#c4
+http://permalink.gmane.org/gmane.mail.imap.dovecot/77499
 
-To summarize, what I posted here originally is 
-http://trac.imagemagick.org/changeset/13736 and has been assigned 
-CVE-2014-1947
+"""
+There's an upper limit to how many IMAP/POP3 connections can exist that haven't logged in (and separate
+limits for post-login). Normally when this limit is reached, the oldest connection gets disconnected.
+There is of course some potential to try to DoS Dovecot by doing a lot of IMAP/POP3 connections, but because
+the oldest connection always gets destroyed this requires quite a lot of activity from the attacker.
 
-The Secunia advisory (http://secunia.com/advisories/56844/) is referring 
-to this commit:
+This "destroy oldest connection" however hasn't been working in v1.1+ releases for connections that have
+started SSL/TLS handshake, but haven't finished it. So an attacker could just do a bunch of TCP
+connections to port 993 and leave them hanging around and Dovecot would pretty quickly reach the upper
+limit without being able to disconnect any of the oldest connections.
 
-http://trac.imagemagick.org/changeset/14801
+Here are patches to fix this:
 
-Which as far as I know does not have a CVE yet.
+http://hg.dovecot.org/dovecot-2.2/rev/41622541a7a3
+http://hg.dovecot.org/dovecot-2.1/rev/b7ac23b4d339
+http://hg.dovecot.org/dovecot-2.0/rev/48f90e7e92dc
+http://hg.dovecot.org/dovecot-1.2/rev/8ba4253adc9b
+http://hg.dovecot.org/dovecot-1.1/rev/fe0e6550585c
 
-Cheers,
+The fix will be in v2.2.13. Maybe also in v2.1.18 if I decide to release it. For older releases you need to
+patch it yourself.
 
---
-Murray McAllister / Red Hat Security Response Team
+For people who are using dovecot-ee releases the fix is also in v2.2.12.12 and v2.1.7.7 releases.
+"""
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
