@@ -1,44 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/5
-Message-ID: <30E5315B8A67497AAD215797DDC3F4EB@getsentry.com>
-Date: Mon, 8 Dec 2014 18:11:03 -0800
-From: David Cramer <david@...sentry.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/6
+Message-Id: <201405092044.s49KiMNN025205@linus.mitre.org>
+Date: Fri, 9 May 2014 16:44:22 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request Linux kernel: filter: prevent nla extensions to peek beyond the end of the message
 Content-Type: text/plain; charset=utf-8
 
-Thanks Alexander 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I was curious about that.
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=05ab8f2647e4221cbdb3856dd7d32bd5407316b3
 
-It might be worthwhile to update this page (which is where I came from) with more details:
+> The BPF_S_ANC_NLATTR and BPF_S_ANC_NLATTR_NEST extensions fail to
+> check for a minimal message length
 
-http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html 
+Use CVE-2014-3144.
 
-On Monday, December 8, 2014 at 6:02 PM, Solar Designer wrote: 
-> On Mon, Dec 08, 2014 at 03:28:12PM -0800, David Cramer wrote:
-> > (Pardon my complete lack of any clue how this process works) 
-> > 
-> > Now seems like a good time to formalize our internal policy of how we do security releases, and while we might have already butchered this one, it was suggested we attempt to get a CVE assigned.
-> > 
-> > Software name and optionally vendor name
-> > raven-ruby (part of Sentry)
-> > 
-> > Type of vulnerability
-> > DoS
-> > 
-> 
-> 
-> I expect someone else will get back to you regarding the CVE request,
-> but I'd like to ask that we please always include the affected software
-> name and usually also the vulnerability type in the Subject line of
-> messages posted in here. Many of us don't care about CVEs much, but
-> would like to notice information about vulnerabilities possibly relevant
-> to us. Also, having two or more mere "CVE Request" threads on the list
-> almost at once is confusing. A better Subject line would have been e.g.
-> "CVE Request - raven-ruby (part of Sentry) DoS". Thanks!
-> 
-> Alexander 
+(The _NEST variant was introduced at a later time, but the affected
+code is somewhat analogous, and the lack of an skb->len check for the
+_NEST variant probably can't be considered an independent mistake
+relative to the lack of an skb->len check in the earlier code.)
 
 
+> The remainder calculation for the BPF_S_ANC_NLATTR_NEST extension is
+> also wrong. It has the minuend and subtrahend mixed up
+
+Use CVE-2014-3145.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTbT2+AAoJEKllVAevmvmsr2AH/ihcjVIL8rg9t7OIyI/+4Ht2
+qR9sEO7tkHP4GUMKI1FodU94HMhtdAO4PNzAx4jKyPiaFBNvKK4QP5/1Mhy0dFf4
+ytuARfTkCMmWnkK/Z5OC4XQHfQWeZkjrdp14B81t0E2RrPv+FrScTTP68A6Ytd5h
+l9x2cf0U1ahOHqzX9r/ZyhEn0RPWSdc0RGZfcuLJP/QhcktCTmaJehFjq+K2UvAi
+AkVgeXhQZTXtF7lPBDAL4sHiFVwbtHmOnRuk9CuXClV1/D0fbFSV34tyaR8cQ5Sv
+XAEI96yT+QZ3jMQW1FNhkYpNSoikTOb/vatOrCYqxJgP8wtF2KWc9Y1A98XoO5I=
+=0cjW
+-----END PGP SIGNATURE-----
