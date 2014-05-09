@@ -1,30 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/17/4
-Message-ID: <alpine.DEB.2.00.1403171504460.28147@tvnag.unkk.fr>
-Date: Mon, 17 Mar 2014 15:16:12 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/1
+Message-ID: <20140509040453.GA27044@openwall.com>
+Date: Fri, 9 May 2014 08:04:53 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: flaw in curl's Windows SSL backend
+Subject: Defeating memory comparison timing oracles
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
 
-I'd like to ask for a CVE for a newly discovered problem in curl's 
-functionality that verifies server certificates. The problem is present in 
-code only runnning on Windows when using the schannel SSL backend. It is very 
-similar to the Mac-specific curl problem Apple registered CVE-2014-1263 for, 
-but for another backend and platform.
+Florian made this nice Red Hat security blog post a couple of days ago:
 
-I don't think it is a good idea to "pile up" another bug on an existing CVE so 
-a new one is probably needed.
+https://securityblog.redhat.com/2014/05/07/defeating-memory-comparison-timing-oracles/
 
-For this reason, I do not request this on distros@ or linux-distros@ since 
-this problem does not affect any opensource distro. This is for an open source 
-product executing on Windows.
+The idea is to harden glibc's memcmp(3) to be partially timing-safe,
+maybe only in the -D_FORTIFY_SOURCE=2 mode.
 
-We intend to announce the full details in sync the pending curl release on 
-March 26.
+While I don't mind having memcmp(3) sometimes hardened, I think we
+primarily need to have an explicit timing-safe memory comparison
+function in glibc and elsewhere, and I think it'd be natural to adopt
+OpenBSD's timingsafe_bcmp() prototype and semantics:
 
--- 
+http://www.openbsd.org/cgi-bin/man.cgi?query=timingsafe_bcmp
 
-  / daniel.haxx.se
+People will need this very function e.g. when making LibReSSL portable:
+
+http://insanecoding.blogspot.com/2014/04/common-libressl-porting-mistakes.html
+
+Some good reading on the problem and possible solutions:
+
+http://rdist.root.org/2010/07/19/exploiting-remote-timing-attacks/
+http://rdist.root.org/2010/08/05/optimized-memcmp-leaks-useful-timing-differences/
+http://rdist.root.org/2010/11/09/blackhat-2010-video-on-remote-timing-attacks/
+
+https://www.isecpartners.com/blog/2011/february/double-hmac-verification.aspx
+
+Alexander
