@@ -1,31 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/3
-Message-ID: <CAMoU6ub=LxvthwhbL-xW-GT5UWWqJC7nZgMV7JQznghnwqQpLQ@mail.gmail.com>
-Date: Fri, 24 Oct 2014 12:39:10 +0200
-From: Bas Pape <baspape@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/4
+Message-ID: <CAD3CanfdH8xjHR0qYaoEHQ7k0VwUqG4nRMNogeM3Yz-SD_yVDQ@mail.gmail.com>
+Date: Mon, 12 May 2014 21:23:57 +1200
+From: Matthew Daley <mattd@...fuzz.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vulnerability fixed in Quassel?
+Cc: fulldisclosure@...lists.org
+Subject: Re: CVE-2014-0196: Linux kernel pty layer race condition memory corruption
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Sorry, forgot to mention that this targets 64-bit kernels.
 
-> It appears to me that this is a vulnerability in the Quassel-core
-> which allows clients to remotely crash the core and thus cause a
-> denial of service using ill-formed messages.
+On Mon, May 12, 2014 at 9:15 PM, Matthew Daley <mattd@...fuzz.com> wrote:
+> Hi,
 >
-> Would it deserve a CVE and/or fixes in distributions which ship it?
-> I'm not affiliated in any kind with that project, so I might not have
->  enough information regarding this fix, nor legitimity to request a
-> CVE for this.
-
-I think it does deserve a CVE, because it's an instance of CWE-125.
-The problem is a max 11-byte out-of-bounds read on a heap-allocated
-array. For debug builds this trips an assert in Qt (resulting in
-denial of service), otherwise it's an information leak to the user of
-Quassel (who may or may not be trusted).
-
-Should a CVE be assigned, note that Quassel took the code (cipher.cpp)
-from Konversation, and the same issue has been reported there [1].
-
--- 
-Bas Pape (Tucos)
+> I've written a "slightly-less-than-POC" privilege escalation exploit for
+> this vulnerability that works on newer kernels:
+> http://bugfuzz.com/stuff/cve-2014-0196-md.c (SHA1:
+> 6b1c5c651231b33a5e11b5c8c6ed07cd15f658f5)
+>
+> Note the warning mentioned in the header; run it at your own risk ;)
+>
+> - Matthew Daley
+>
+>
+> On Mon, May 5, 2014 at 10:08 PM, Marcus Meissner <meissner@...e.de> wrote:
+>>
+>> Hi,
+>>
+>> SUSE customer Ericsson reported a kernel crash to us which turned out
+>> to be a race condition in the PTY write buffer handling.
+>>
+>> When two processes/threads write to the same pty, the buffer end could
+>> be overwritten and so memory corruption into adjacent buffers could lead
+>> to crashes / code execution.
+>>
+>> Jiri Slaby and Peter Hurley localized and fixed this problem.
+>>
+>> CVE-2014-0196 has been assigned to this issue.
+>>
+>> Jiri thinks this was introduced during 2.6.31 development by
+>> d945cb9cce20ac7143c2de8d88b187f62db99bdc (pty: Rework the pty
+>> layer to use the normal buffering logic) in 2.6.31-rc3. Until then, pty
+>> was writing directly to a line discipline without using buffers.
+>>
+>> https://bugzilla.novell.com/show_bug.cgi?id=875690
+>>
+>> Patch is also attached.
+>>
+>> Ciao, Marcus
+>
+>
