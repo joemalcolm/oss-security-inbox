@@ -1,36 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/4
-Message-ID: <54698A5F.4030207@internot.info>
-Date: Mon, 17 Nov 2014 16:40:47 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: Re: Location of OS security audit reports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/9
+Message-ID: <20140512191650.GA14852@openwall.com>
+Date: Mon, 12 May 2014 23:16:50 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Andy Lutomirski <luto@...capital.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: seunshare and setexeccon issues
 Content-Type: text/plain; charset=utf-8
 
-Not an OS, but TrueCrypt is here:
-https://opencryptoaudit.org/reports/iSec_Final_Open_Crypto_Audit_Project_TrueCrypt_Security_Assessment.pdf
-On 17/11/14 14:17, M.T. Roebuck wrote:
-> Hello,
->
-> I haven't had any success yet in finding security audit reports for
-> any *nix OS (I haven't looked for them for MS/Apple products).
->
-> Can you tell me where to find them? I thought that I'm not
-> using the right word or word combination. This list seemed to be
-> a good target as most here are in the security milieu.
->
-> I'm looking for complete and comprehensive reports from an
-> extensive and exhaustive security audit of the entire OS.
->
-> But if my goal of extensive and exhaustive is too lofty then
-> something less so might at least help.
->
-> Also I am interested in OSs that are not *nix or MS/Apple.
-> I know of Haiku OS but are there any others? Does China
-> or Japan or any other country have their own OSs?
->
-> Is the world really limited to just a few?
->
+On Mon, May 12, 2014 at 10:34:00AM -0700, Andy Lutomirski wrote:
+> I'm not sure how many CVE numbers should be assigned here.  As far as
+> I know, none have been assigned so far.
 
--- 
--- Joshua Rogers <https://internot.info/>
+I think you missed this:
+
+http://www.openwall.com/lists/oss-security/2014/05/08/1
+
+in which CVE-2014-3215 was assigned.
+
+Alexander
