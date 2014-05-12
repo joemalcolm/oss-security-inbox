@@ -1,15 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/6
-Message-ID: <CADNa6_2dXMqh_WbQwEtLBKG2cWEYJp3ic3CYWemm_iTUxR1LSQ@mail.gmail.com>
-Date: Thu, 23 Oct 2014 12:23:14 -0400
-From: Dave Rutherford <dave@...lpettingzoo.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/12
+Message-ID: <CALCETrUnDQ1Nh6r9G0C-w6_txEcnqOEUt-8ew5bSR=xSUqtDDQ@mail.gmail.com>
+Date: Mon, 12 May 2014 13:34:12 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: seunshare and setexeccon issues
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 23, 2014 at 11:24 AM, Michal Zalewski <lcamtuf@...edump.cx> wrote:
->> http://lcamtuf.coredump.cx/stringme
+On Mon, May 12, 2014 at 12:26 PM, Solar Designer <solar@...nwall.com> wrote:
+> On Mon, May 12, 2014 at 12:21:49PM -0700, Andy Lutomirski wrote:
+>> On Mon, May 12, 2014 at 12:16 PM, Solar Designer <solar@...nwall.com> wrote:
+>> > On Mon, May 12, 2014 at 10:34:00AM -0700, Andy Lutomirski wrote:
+>> >> I'm not sure how many CVE numbers should be assigned here.  As far as
+>> >> I know, none have been assigned so far.
+>> >
+>> > I think you missed this:
+>> >
+>> > http://www.openwall.com/lists/oss-security/2014/05/08/1
+>> >
+>> > in which CVE-2014-3215 was assigned.
+>>
+>> I did.  Thanks.
+>
+> Does your CVE request still stand, or are you satisfied with this one
+> CVE id for the interaction (not for a particular component)?
 
-Clicking 'Save Link As...' in Chromium 37.0.2062.120 Ubuntu 14.04 (281580)
-crashes the browser, though chromium does not seem to link against libbfd.
-Firefox does not appear to be vulnerable.
+I think that one CVE is for the interaction is fine.
+
+>
+>> FWIW, it appears that common exim configurations are vulnerable, so
+>> this might be worse than just an exposure.
+>
+> Please try to demo this.  Thanks!
+
+I can give it a shot, but there's no ETA, since I have no clue how to
+use exim.  I just looked at the source, and it appears to use setuid
+(as opposed to setresuid) to drop privileges, and it will dlopen
+user-requested libraries.
+
+I think that the other issues in the original post may be CVE-worthy
+despite their low impact -- they can, at best, cause sandbox
+protection to be less effective than intended.
+
+--Andy
