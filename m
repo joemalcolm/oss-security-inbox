@@ -1,66 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/25/4
-Message-ID: <535A433C.2050105@ficora.fi>
-Date: Fri, 25 Apr 2014 14:13:00 +0300
-From: Jussi Eronen <juhani.eronen@...ora.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/1
+Message-ID: <53706EE4.60307@redhat.com>
+Date: Mon, 12 May 2014 16:49:08 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+Subject: CVE request: Drupal Flag 7.x-3.5 Module Vulnerability report: Arbitrary code execution due to improper input handling in flag importer
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Good morning,
 
-Hello all,
+Could a CVE please be assigned to 
+http://seclists.org/fulldisclosure/2014/May/44 if one has not been already?
 
-These issues have been discussed in depth on many fora by now, but
-replying just for the record:
+Apart from version 7, drupal6-flag-2.1-1.fc20 looks affected - patch 
+applies, but I did not test it. For an older version, 
+drupal6-flag-1.3-3.fc19 appears unaffected.
 
-On 04/08/2014 11:03 PM, Kurt Seifried wrote:
-> So to respond/clear up some points:
-> 
-> It appears Codenomicon and Google found the vulnerability 
-> independently. Google reported it to OpenSSL. Codenomicon reported
-> it to NCSC-FI, I'm not sure who (Codenomicon or NCSC-FI) drove the 
-> notification of CloudFlare/etc. and they also reported it to
-> OpenSSL (I don't know if that was before or after notifying
-> OpenSSL).
+Cheers,
 
-Codenomicon did find the bug independently. Codenomicon did not notify
-anyone else than us. We did not notify anyone else but OpenSSL. We did
-request a CVE for "a critical issue in OpenSSL" from CERT/CC but did
-not provide them any details at that time.
+--
+Murray McAllister / Red Hat Security Response Team
 
-On 04/08/2014 11:28 PM, Yves-Alexis Perez wrote:
-> Well, as I put in my tentative timeline, and according to Jussi
-> Eronen (from NCSC-FI, afaict) mail in that thread, NCSC-FI only
-> reported to OpenSSL “a couple of hours before the advisory”, so my
-> understand is that NCSC-FI was not aware of the vulnerability last
-> week.  Maybe Codenomicon was, though. Jussi, could you confirm
-> that?
-
-We received the vulnerability report from Codenomicon on Thursday the
-3rd of April, at around 14.30 EEST. AFAIK Codenomicon had found the
-vulnerability at around 09.30 EEST on the same day, while developing
-new features to their test tools. We spent a few hours reproducing the
-issue, followed by a couple of days of work on the technical report
-and other preparatory material for the coordination effort, impact
-assessment, etc.
-
-- -Jussi
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-
-iQIcBAEBAgAGBQJTWkMxAAoJELribKLoD5cxVmMP+QGoCowD1dL395mYmfzotskh
-skri70rIVjUKMBvDk/zPzwzseeUg5JXSfU9wi5xxJIAQw5W96ZM3g1QFXigzdkhv
-Rc1OJ3nEQV90t4xwR1W9VMA/KNGAGJ8K+xOIApyjFJhxoMlt2B+LTv6TGQIXghzK
-l3Vgmd6BYVOML8GJjU/muLGcXLifYRAMcGO7kQ2TbySA3t2cy6boGXAi/D7hY+xJ
-ep4cAAz5/J5fHLInDd6X3/sBnlSqkEFtCt38FEusOXjqP7AZI0LyWsxt7RNndCqM
-KN1DkGSgnaVUON8WfYa5Gueh9p5/09doI81GWVfoKXsbARxqzp47iQ0zawvsyI1X
-i51X+WJxV9JRryJx+mh6jHlZ+s3JKwVNufOcbE+S1DpzJPHU5OsPHzAsbkYcBJzb
-om/CNx1HEfeK1kR8uPMdHVV5fwqpptMF23zzVBmsUQcvrvFhsOtL8FeSxK2n8DyD
-9SXn3yvg/4TyqOzvTaE87qB8CuZp2lEC1WrWoCqC5U4oSei9k783wMePEyeFhaOt
-l4o8BX6AME3ku3cygdNvqdcMR9xZbqvru3X/U22fuZrAihBpicO5lJx1me94VQpn
-DPFyJOcP/3pswOzRycrHrg09fttKjq2DrGcoo+LaE+CH2cMjshAtQNo1Y6gOkITw
-hEzLxYuiTAnyVzzeU1Jx
-=y4kT
------END PGP SIGNATURE-----
+https://bugzilla.redhat.com/show_bug.cgi?id=1096604
