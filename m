@@ -1,19 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/24
-Message-ID: <20141006171239.GC17130@blisses.org>
-Date: Mon, 6 Oct 2014 13:12:39 -0400
-From: Mason Loring Bliss <mason@...sses.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/8
+Message-ID: <CALCETrWPa_9iVVYtFmD6Ght76MB3CaCdKMJ8Rm48HA1MS6BftQ@mail.gmail.com>
+Date: Mon, 12 May 2014 10:34:00 -0700
+From: Andy Lutomirski <luto@...capital.net>
 To: oss-security@...ts.openwall.com
-Subject: automated phishing email
+Subject: CVE Request: seunshare and setexeccon issues
 Content-Type: text/plain; charset=utf-8
 
-A co-worker suggested that this might have been aimed at procmail.
+I think that the fallout for the seunshare stuff is now
+well-understood enough for CVE requests.
 
-    https://bpaste.net/show/41323f7d9b35
+As previously discussed, some combinations of seunshare and libcap-ng
+can allow sendmail capabilities bug-style privilege escalation.  This
+was cased by capng_lock enabling securebits without using
+PR_SET_NO_NEW_PRIVS.  This seems to be fixed in the latest cap-ng.*
+That fixes causes a regression in policycoreutils' sandbox program;
+the fix for that regression is making its way upstream.
 
-I'm curious if anyone has thoughts about what the target might have been for
-this attempt.
+The related issue is that Linux will silently ignore setexeccon if the
+subsequent execve call runs something from a nosuid mount.  This can
+cause unexpected failures to enforce SELinux policy.  This is probably
+a low-impact issue.  Changes to fix this issue have been discussed,
+but no patch has been sent yet.
 
--- 
-Mason Loring Bliss             mason@...sses.org            Ewige Blumenkraft!
-(if awake 'sleep (aref #(sleep dream) (random 2))) -- Hamlet, Act III, Scene I
+The latter issue causes using policycoreutils' sandbox tool on a
+binary that is on a nosuid mount to fail open; no error will be
+reported, but the sandbox policy will not be enforced.  This is worked
+around in Fedora and related distros as a side effect of the
+regression fix for the capng_lock issue.
+
+I'm not sure how many CVE numbers should be assigned here.  As far as
+I know, none have been assigned so far.
+
+
+* Combinations of new cap-ng and very old kernels may still be unsafe.
+
+--Andy
