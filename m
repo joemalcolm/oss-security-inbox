@@ -1,24 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/11
-Message-ID: <20141207195503.GP2055@betterave.cristau.org>
-Date: Sun, 7 Dec 2014 20:55:03 +0100
-From: Julien Cristau <jcristau@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: postgresql: pg_dump creates world-readable dump
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/11
+Message-ID: <20140512192629.GA15034@openwall.com>
+Date: Mon, 12 May 2014 23:26:29 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Andy Lutomirski <luto@...capital.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: seunshare and setexeccon issues
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Dec  7, 2014 at 20:31:27 +0100, Robert Scheck wrote:
-
-> $ pg_dump postgres > postgres1.sql
-> $ pg_dump postgres > postgres2.sql
-> $ pg_dump postgres > postgres3.sql
-[...]
+On Mon, May 12, 2014 at 12:21:49PM -0700, Andy Lutomirski wrote:
+> On Mon, May 12, 2014 at 12:16 PM, Solar Designer <solar@...nwall.com> wrote:
+> > On Mon, May 12, 2014 at 10:34:00AM -0700, Andy Lutomirski wrote:
+> >> I'm not sure how many CVE numbers should be assigned here.  As far as
+> >> I know, none have been assigned so far.
+> >
+> > I think you missed this:
+> >
+> > http://www.openwall.com/lists/oss-security/2014/05/08/1
+> >
+> > in which CVE-2014-3215 was assigned.
 > 
-> I do not know which behaviour you are exactly seeing (and for which
-> version of PostgreSQL) but above seems absolutely fine to me.
-> 
-You're not showing anything about pg_dump if you're having the shell
-open the file.
+> I did.  Thanks.
 
-Cheers,
-Julien
+Does your CVE request still stand, or are you satisfied with this one
+CVE id for the interaction (not for a particular component)?
+
+> FWIW, it appears that common exim configurations are vulnerable, so
+> this might be worse than just an exposure.
+
+Please try to demo this.  Thanks!
+
+Alexander
