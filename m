@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/15
-Message-Id: <201406261559.s5QFxBJg012931@linus.mitre.org>
-Date: Thu, 26 Jun 2014 11:59:11 -0400 (EDT)
-From: cve-assign@...re.org
-To: jamie@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/10
+Message-ID: <CALCETrVPEaK_=yh2FvQcKS3cow6Wk00cKeAxC5eW3GvX6DjO=A@mail.gmail.com>
+Date: Mon, 12 May 2014 12:21:49 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: seunshare and setexeccon issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, May 12, 2014 at 12:16 PM, Solar Designer <solar@...nwall.com> wrote:
+> On Mon, May 12, 2014 at 10:34:00AM -0700, Andy Lutomirski wrote:
+>> I'm not sure how many CVE numbers should be assigned here.  As far as
+>> I know, none have been assigned so far.
+>
+> I think you missed this:
+>
+> http://www.openwall.com/lists/oss-security/2014/05/08/1
+>
+> in which CVE-2014-3215 was assigned.
 
-It is closest to b. It would be very rare to assign a CVE for a design
-choice by a system integrator. Suppose a new operating-system
-distribution ships tomorrow without a virus scanner. Often the best
-model for this would be a set of tasks that hasn't happened. For
-example, the vendor hasn't yet investigated customer requirements for
-what a virus scanner should do. The vendor hasn't performed the
-release-engineering work of packaging a virus scanner. There are other
-tasks as well. We don't think that CVE consumers are looking for us to
-tag cases where a product lacks complete subsystem parity with all
-possible competitors.
+I did.  Thanks.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+FWIW, it appears that common exim configurations are vulnerable, so
+this might be worse than just an exposure.
 
-iQEcBAEBAgAGBQJTrEKzAAoJEKllVAevmvmsQTUH/0cPHrYZstLGCetls924I5Hm
-BWJHtpAKV9ryan8S7o4kxcxjYHs0z/dUM1GypO3+Gn69T4PIlW+t3Cfo/IE4IFn9
-sidJS6w7+8vbF2yrs9RjHZ2ap+ieHNeRJdpeuyKHKeDOIpAnm6fH120dGRf6euvf
-Zhlw7ZBO4UkjyhHh1Lb9zo4KGo3498sYW9wHm106P71/YVNGLudiHLJLGWPm9M7w
-dWJIFYRctAuNKTZk7AeE2UFQCfficcS3cWH3dlrJD5hUXtmJjWMRzlu1EWVa6StI
-4HFsXfgJMEspXzqlRzoLaja8I6a8tsTMTGG7ea7xcwsi8912BnjHpMSLZf4ct1U=
-=30i7
------END PGP SIGNATURE-----
+--Andy
