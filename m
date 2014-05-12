@@ -1,32 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/15
-Message-Id: <20140605080301.B31568005A@notatla.org.uk>
-Date: Thu, 05 Jun 2014 09:03:01 +0100
-From: lists@...atla.org.uk
-To: oss-security@...ts.openwall.com, jose.carlos.luna@...il.com
-Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com, bugs@...uritytracker.com
-Subject: Re: [FD] Bug in bash <= 4.3 [security feature bypassed]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/3
+Message-ID: <CAD3CanfQNXvv3jVN9Cu6ySusTKbmNXhxnpj2oXCoJF5-3JYv1w@mail.gmail.com>
+Date: Mon, 12 May 2014 21:15:10 +1200
+From: Matthew Daley <mattd@...fuzz.com>
+To: oss-security@...ts.openwall.com
+Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com
+Subject: Re: CVE-2014-0196: Linux kernel pty layer race condition memory corruption
 Content-Type: text/plain; charset=utf-8
 
-Jose Carlos Luna Duran writes:
+Hi,
 
-> In my opinion the drop of privs in bash was mostly a "help" measure
-> for poorly written setuid programs executing system() calls. I don't
-> think is the role of bash to do this ...
+I've written a "slightly-less-than-POC" privilege escalation exploit for
+this vulnerability that works on newer kernels:
+http://bugfuzz.com/stuff/cve-2014-0196-md.c (SHA1:
+6b1c5c651231b33a5e11b5c8c6ed07cd15f658f5)
 
-True, but it is a slight help and I'm in favour of keeping it.
+Note the warning mentioned in the header; run it at your own risk ;)
 
-> Correct me if I'm wrong, but even in that case there is another "help"
-> measure that has been implemented at least in linux kernels > 3.1:
-> http://lxr.free-electrons.com/source/kernel/sys.c?v=3.1#L628
+- Matthew Daley
 
-For permanent dropping of privilege I suggest calling setgid() and
-setuid() to the desired values *twice* (and ignore the return code).
-Then try to reset to the original values (should fail; ignore return code).
 
-Then test that the real and effective values are the same and are the
-ones you want - that's the result that indicates success in this case.
-And exit() if failed.
+On Mon, May 5, 2014 at 10:08 PM, Marcus Meissner <meissner@...e.de> wrote:
 
-That's the simple usage guide - David Wagner has written at length on
-the technicalities.
+> Hi,
+>
+> SUSE customer Ericsson reported a kernel crash to us which turned out
+> to be a race condition in the PTY write buffer handling.
+>
+> When two processes/threads write to the same pty, the buffer end could
+> be overwritten and so memory corruption into adjacent buffers could lead
+> to crashes / code execution.
+>
+> Jiri Slaby and Peter Hurley localized and fixed this problem.
+>
+> CVE-2014-0196 has been assigned to this issue.
+>
+> Jiri thinks this was introduced during 2.6.31 development by
+> d945cb9cce20ac7143c2de8d88b187f62db99bdc (pty: Rework the pty
+> layer to use the normal buffering logic) in 2.6.31-rc3. Until then, pty
+> was writing directly to a line discipline without using buffers.
+>
+> https://bugzilla.novell.com/show_bug.cgi?id=875690
+>
+> Patch is also attached.
+>
+> Ciao, Marcus
+>
+
