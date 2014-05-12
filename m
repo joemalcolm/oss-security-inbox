@@ -1,53 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/5
-Message-ID: <CAH72vijwgZ9hb7DNnVNYMwjV0a7qiD6Fwh7iUEWRUSxXX=FFcg@mail.gmail.com>
-Date: Fri, 7 Feb 2014 10:13:15 +0100
-From: Źmicier Januszkiewicz <gauri@....by>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Xen Security Advisory 84 - integer overflow in several XSM/Flask hypercalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/6
+Message-ID: <20140512113228.GA11121@openwall.com>
+Date: Mon, 12 May 2014 15:32:28 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Savio Bot <54v330@...il.com>
+Cc: Matthew Daley <mattd@...fuzz.com>, fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: Re: [FD] CVE-2014-0196: Linux kernel pty layer race condition memory corruption
 Content-Type: text/plain; charset=utf-8
 
-The 4.1 patch also notes:
+On Mon, May 12, 2014 at 04:03:10PM +0530, Savio Bot wrote:
+> So is this bug also present in 2.6?
 
-> The index of boolean variables in FLASK_{GET,SET}BOOL was not always checked against the bounds of the array.
-> Reported-by: John McDermott <john.mcdermott@....navy.mil>
+Yes, 2.6.31-rc3 and newer:
 
-I wonder, is this something exploitable we should care about (e.g., a
-crash triggered by out-of-bounds reads), or it is only some sort of
-preventive measure?
+http://www.openwall.com/lists/oss-security/2014/05/05/6
 
+Luckily, apparently the bug was not backported to RHEL5:
 
-2014/2/7 Jan Beulich <JBeulich@...e.com>:
->>>> On 06.02.14 at 18:23, <cve-assign@...re.org> wrote:
->> -----BEGIN PGP SIGNED MESSAGE-----
->> Hash: SHA1
->>
->> We can provide the three CVE assignments for XSA-84 (as well as the
->> one CVE assignment for XSA-85 and the one CVE assignment for XSA-86).
->> However, could you please clarify:
->>
->>> http://xenbits.xen.org/xsa/advisory-84.html
->>
->>> UPDATES IN VERSION 2
->>> ====================
->>>
->>> Public release.
->>>
->>> The patch for 4.1 was extended to cover a few further similar issues.
->>
->> Here, was the original scope of "The patch for 4.1" (before it was
->> extended) exclusively:
->>
->>   "a different overflow issue on FLASK_{GET,SET}BOOL and expose
->>    unreasonably large memory allocation to arbitrary guests"
->>
->> ? Or do you mean that, originally, the "patch for 4.1" addressed
->> another vulnerability, and this "different overflow issue" was one of
->> the version-2 extensions to the scope of XSA-84?
->
-> The original patch was dealing with just the unbounded memory
-> allocation. The missing bounds checking was what the incremental
-> addition dealt with.
->
-> Jan
->
+https://access.redhat.com/security/cve/CVE-2014-0196
+
+"This issue does not affect the versions of the kernel package as
+shipped with Red Hat Enterprise Linux 5.
+
+Future kernel updates for Red Hat Enterprise Linux 6 and Red Hat
+Enterprise MRG 2 may address this issue."
+
+Alexander
