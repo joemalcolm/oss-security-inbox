@@ -1,43 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/9
-Message-ID: <20140617133220.GA27620@openwall.com>
-Date: Tue, 17 Jun 2014 17:32:20 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/7
+Message-ID: <20140512185858.6d642bb5@redhat.com>
+Date: Mon, 12 May 2014 18:58:58 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: transparency on message moderation
+Cc: tim-security@...tinelchicken.org, nicolas.gregoire@...rri.fr
+Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
 Content-Type: text/plain; charset=utf-8
 
-Henri,
+Hi!
 
-On Tue, Jun 17, 2014 at 03:05:39PM +0300, Henri Salo wrote:
-> On Tue, Jun 17, 2014 at 03:32:59PM +0400, Solar Designer wrote:
-> > IIRC, a long while ago Henri Salo expressed an interest (in private
-> > e-mail to me) in contributing to this sort of activities.  Henri, would
-> > you like to help co-moderate oss-security - which currently means only
-> > approving obviously-desirable messages, and leaving everything else to
-> > me?  What are your current affiliations (e.g., any Linux distro)?
-> 
-> Sure. Send me instructions and I'm happy to help.
+I can hardly call myself familiar with Java XML parsers, but here's my
+2c form a quick search around this that may be wrong.  Please correct
+my mistakes.
 
-Thanks!  I've just added you as a co-moderator, and removed Josh.
-(Thanks again for your help, Josh!)
+On Thu, 8 May 2014 14:55:36 -0700 Timoth D. Morgan wrote:
 
-The instructions are simple: you will be receiving moderation request
-e-mails from ezmlm-idx (that runs this list) whenever a message is held
-for moderation.  If the message should obviously be accepted, you reply
-to the default address (it starts with "oss-security-accept-").
-Otherwise you do nothing.  Please do not ever reject any message.
-I'll take care of the rejects (and will ignore the automated spam).
-I'll also take care of whitelisting most senders of desirable messages
-(after we've accepted some of their messages with nothing to reject).
+> That is, if you use DocumentBuilderFactory's setExpandEntityReferences
+> method and supply "false", then it has a very similar behavior.  I'm
+> about to release a comprehensive XXE paper, and here's a preview of
+> what I have written about it:
 
-I've also added you to the oss-security admin address, which I am going
-to CC when I communicate with message senders (usually when someone has
-sent us something that shouldn't obviously be accepted, nor rejected,
-until they clarify).  You are not expected to reply to any messages sent
-to that address.  This is only for you to be better informed of how I am
-handling the less obvious cases.
+As far as I can see setExpandEntityReferences() controls what value is
+set for the create-entity-ref-nodes DOM parser feature:
 
-Thanks again,
+http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/jaxp/DocumentBuilderImpl.java#l158
+http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/jaxp/DocumentBuilderImpl.java#l74
+http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/impl/Constants.java#l427
 
-Alexander
+The description in Java API docs is rather brief, xerces docs have more
+details:
+
+http://xerces.apache.org/xerces-j/features.html#create-entity-ref-nodes
+http://xerces.apache.org/xerces2-j/features.html#dom.create-entity-ref-nodes
+
+AFAICS, the feature does not aim to control if entity references are
+expanded, but only how exactly they appear in the resulting DOM tree.
+
+> "Java developers who use the default parser (or a newer version of
+> Xerces-J) need to change one or more settings to make Xerces
+> reasonably safe when processing untrusted XML.  One behavior to be
+> aware of is the fact that the DocumentBuilderFactory's
+> setExpandEntityReferences method does not provide protection as one
+> might expect.  Calling this method with a "false" argument causes the
+> parser to omit external entity data in the document when referenced,
+> but it does not prevent definitions of external entities.  This means
+> the parser will still fetch external URLs, which could obviously be
+> used for blind SSRF attacks (even if the content isn't used later in
+> the document).   Worse still, this setting does not prevent full use
+> of external parameter entities, which would likely allow an attacker
+> to conduct all of the same attacks that are possible with regular
+> external entities."
+
+Maybe your paper should rather mention parser features as
+external-general-entities and external-parameter-entities:
+
+http://docs.oracle.com/javase/7/docs/api/org/xml/sax/package-summary.html#package_description
+
+OWASP XXE document covers some of this, but actually mentions only one
+of the two features...
+
+https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing#Java
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
