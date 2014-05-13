@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/36
-Message-ID: <5425DD70.50804@case.edu>
-Date: Fri, 26 Sep 2014 17:41:04 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/5
+Message-ID: <alpine.LFD.2.10.1405131616430.7354@javelin.pnq.redhat.com>
+Date: Tue, 13 May 2014 16:18:26 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2014-0223 Qemu: qcow1: Validate image size
 Content-Type: text/plain; charset=utf-8
 
-On 9/26/14, 5:09 PM, Solar Designer wrote:
+    Hello,
 
->> I have positive confirmation that this patch works, so here are patches for
->> bash versions bash-2.05b to bash-4.3.
->>
->> I will probably push these out tomorrow.
-> 
-> Since these patches look final and are updating the bash patchlevel
-> number, is it OK for distros to use them as-is, with the patchlevel
-> number update already?
-> 
-> They are not yet on ftp.gnu.org.  BTW, I notice that your earlier
-> bash 2.05b patch isn't there, either.
+'CVE-2014-0223' has been assigned to this issue.
 
-I pushed them out; patches for bash-2.05b to bash-4.3 are in all the usual
-places.  The distros can either use the ones I sent yesterday or the ones
-from the FTP sites.
+A huge image size could cause s->l1_size to overflow. Make sure that
+images never require a L1 table larger than what fits in s->l1_size.
 
-Chet
+This cannot only cause unbounded allocations, but also the allocation of
+a too small L1 table, resulting in out-of-bounds array accesses (both
+reads and writes).
 
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+Upstream fix:
+-------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2014-05/msg02156.html
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
