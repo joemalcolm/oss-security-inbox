@@ -1,36 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/13/7
-Message-Id: <201402132031.s1DKUrXs026209@linus.mitre.org>
-Date: Thu, 13 Feb 2014 15:30:53 -0500 (EST)
-From: cve-assign@...re.org
-To: mancha1@...h.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - GnuTLS corrects flaw in certificate verification (3.1.x/3.2.x)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/3
+Message-ID: <alpine.LFD.2.10.1405131552300.7354@javelin.pnq.redhat.com>
+Date: Tue, 13 May 2014 15:56:14 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request: Qemu: usb: fix up post load checks
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+    Hello,
 
-> http://gnutls.org/security.html
-> GNUTLS-SA-2014-1
+Correct post load checks:
+1. dev->setup_len == sizeof(dev->data_buf)
+     seems fine, no need to fail migration
+2. When state is DATA, passing index > len
+    will cause memcpy with negative length,
+    resulting in heap overflow
 
-> https://www.gitorious.org/gnutls/gnutls/commit/b1abfe3d18
+An user able to alter the saved VM data(either on the disk or over the wire 
+during migration) could use this flaw to to corrupt QEMU process memory on the 
+(destination) host, which could potentially result in arbitrary code execution 
+on the host with the privileges of the QEMU process.
 
-Use CVE-2014-1959.
+Upstream fix:
+-------------
+   -> http://article.gmane.org/gmane.comp.emulators.qemu/272322
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS/StWAAoJEKllVAevmvmscoYH+gMmjfDYdO8hsJNTgggYXd4X
-r5YVb+6Pylo7bnp7PWVuWguh/tHpWi+yfGKG6/XgZtgWiflDHkb4BGQBVUjWamS8
-b3UQyOvU3O1nCtSIMQPFCrxWrkoT0Escrv128usmNZkVEi80Mqo9oD7bZtdYU6md
-Pp8zS47NLpyRl1hDRctTi6ct13djmZJjFR5lSNydFKpjni9+IyPNsH73anXO94b3
-pAUkcNvDqFzWs+kPPlkSVyKWgXtyVwDXK0yz3nHgN6L1gytri6tVxbPs3eXwaIT1
-mvNanl8IEbMlvYwBQbjvDx7E7tOl873k1RnAHrSuHMaAGjY2DC0rCSwpFMNXHlM=
-=HHow
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
