@@ -1,26 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/5
-Message-ID: <alpine.LFD.2.10.1405131616430.7354@javelin.pnq.redhat.com>
-Date: Tue, 13 May 2014 16:18:26 +0530 (IST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/4
+Message-ID: <alpine.LFD.2.10.1405131612090.7354@javelin.pnq.redhat.com>
+Date: Tue, 13 May 2014 16:16:25 +0530 (IST)
 From: P J P <ppandit@...hat.com>
 To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2014-0223 Qemu: qcow1: Validate image size
+Subject: CVE-2014-0222 Qemu: qcow1: Validate L2 table size
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+   Hello,
 
-'CVE-2014-0223' has been assigned to this issue.
+'CVE-2014-0222' has been assigned to this issue.
 
-A huge image size could cause s->l1_size to overflow. Make sure that
-images never require a L1 table larger than what fits in s->l1_size.
+Too large L2 table sizes cause unbounded allocations. Images actually
+created by qemu-img only have 512 byte or 4k L2 tables.
 
-This cannot only cause unbounded allocations, but also the allocation of
-a too small L1 table, resulting in out-of-bounds array accesses (both
-reads and writes).
+To keep things consistent with cluster sizes, allow ranges between 512
+bytes and 64k (in fact, down to 1 entry = 8 bytes is technically
+working, but L2 table sizes smaller than a cluster don't make a lot of
+sense).
+
+This also means that the number of bytes on the virtual disk that are
+described by the same L2 table is limited to at most 8k * 64k or 2^29,
+preventively avoiding any integer overflows.
 
 Upstream fix:
 -------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2014-05/msg02156.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2014-05/msg02155.html
 
 Thank you.
 --
