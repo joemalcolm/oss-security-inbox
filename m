@@ -1,65 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/7
-Message-Id: <201405131805.s4DI59lb006269@linus.mitre.org>
-Date: Tue, 13 May 2014 14:05:09 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Qemu: usb: fix up post load checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/5
+Message-ID: <alpine.LFD.2.10.1405131616430.7354@javelin.pnq.redhat.com>
+Date: Tue, 13 May 2014 16:18:26 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2014-0223 Qemu: qcow1: Validate image size
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+    Hello,
 
-> http://article.gmane.org/gmane.comp.emulators.qemu/272322
+'CVE-2014-0223' has been assigned to this issue.
 
-Here, it appears that the only security fix to
-http://git.qemu.org/?p=qemu.git;a=blob;f=hw/usb/bus.c;h=e48b19fc29bd9f831cc05990be73ddf49936d6a9;hb=HEAD
-is the insertion of the "dev->setup_index > dev->setup_len" test. In
-other words, although the patch corresponds to two bug discoverers,
-only one discoverer found a security problem.
+A huge image size could cause s->l1_size to overflow. Make sure that
+images never require a L1 table larger than what fits in s->l1_size.
 
-To clarify: we are currently interpreting "dev->setup_len ==
-sizeof(dev->data_buf) seems fine, no need to fail migration" to mean
-that "dev->setup_len >= sizeof(dev->data_buf)" is too strict a test,
-and "dev->setup_len > sizeof(dev->data_buf)" is sufficient. It does
-not imply that an attacker can cross privilege boundaries and cause a
-denial of service (i.e., a failed migration) by triggering the
-"dev->setup_len == sizeof(dev->data_buf)" condition.
+This cannot only cause unbounded allocations, but also the allocation of
+a too small L1 table, resulting in out-of-bounds array accesses (both
+reads and writes).
 
-The "dev->setup_index >= sizeof(dev->data_buf)" test was also removed.
-Similarly, we are interpreting this to mean that that test is
-superfluous. We are not interpreting this to mean that that test had
-allowed a denial of service attack.
+Upstream fix:
+-------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2014-05/msg02156.html
 
-Use CVE-2014-3461 for the "When state is DATA, passing index > len
-will cause memcpy with negative length, resulting in heap overflow"
-issue.
-
-Note that a related recent commit:
-
-  http://git.qemu.org/?p=qemu.git;a=commit;h=9f8e9895c504149d7048e9fc5eb5cbb34b16e49a
-
-has a CVE-2013-4541 assignment from Red Hat. See
-
-  https://bugzilla.redhat.com/show_bug.cgi?id=1066384
-
-The http://article.gmane.org/gmane.comp.emulators.qemu/272322 patch
-represents additional changes needed after that CVE-2013-4541 fix.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTcl5nAAoJEKllVAevmvmsgNMH/j/HABgwfnPX0rv8zn12h4w4
-7Dybeu2XO7tUy3JrMZdz+DyUY5hu/4dk3/egKSTrRHsS0azm72+OmbI7m0Rxanke
-VvPcq7BJQuEZwNRUx8WplUUIVrBP4qz3kodSny/Rv5fsMdp8nWGl9GoR8HCZ/6m2
-ffIb42sI3dGvmo8fyZPt0seSbZ0gp4H5YUlNlI5GMxJgl6CEOyiv5qp+GqvGnfyB
-MUcwRL05C1pTVdW19gwAnaJsJr8OF5GqKIAXoGbcee4GV5dMAyxex5nw4J5liL7V
-L1sJq71MsnjG5+wlyyeHd/1iTpeU9bVpkYQCs1+2XI/CF/eEIV0wZguawgSbeZg=
-=TKjZ
------END PGP SIGNATURE-----
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
