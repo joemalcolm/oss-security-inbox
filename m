@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/3
-Message-ID: <3230301C09DEF9499B442BBE162C5E48257575E2@SESTOEX04.enea.se>
-Date: Fri, 3 Oct 2014 10:28:24 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/4
+Message-ID: <alpine.LFD.2.10.1405131612090.7354@javelin.pnq.redhat.com>
+Date: Tue, 13 May 2014 16:16:25 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2014-0222 Qemu: qcow1: Validate L2 table size
 Content-Type: text/plain; charset=utf-8
 
+   Hello,
 
- 
-> So there isn't still any specific patch for CVE-2014-6277 and CVE-2014-6278
-> according to your post   (http://www.openwall.com/lists/oss-
-> security/2014/10/02/28)?
-> 
-> > * CVE-2014-6277 - uninitialized memory issue, almost certainly RCE
-> > found by me. No specific patch yet.
-> 
-> > * CVE-2014-6278 - command injection RCE found by me. No specific patch
-> yet.
-> 
-> But Florian's unofficial patch or its upstream version (bash43-027 & co)
-> mitigates *ALL* these six so far known CVE, right?
+'CVE-2014-0222' has been assigned to this issue.
 
-I found some good answer here, thanks Michal :)
-http://lcamtuf.blogspot.se/2014/10/bash-bug-how-we-finally-cracked.html
+Too large L2 table sizes cause unbounded allocations. Images actually
+created by qemu-img only have 512 byte or 4k L2 tables.
+
+To keep things consistent with cluster sizes, allow ranges between 512
+bytes and 64k (in fact, down to 1 entry = 8 bytes is technically
+working, but L2 table sizes smaller than a cluster don't make a lot of
+sense).
+
+This also means that the number of bytes on the virtual disk that are
+described by the same L2 table is limited to at most 8k * 64k or 2^29,
+preventively avoiding any integer overflows.
+
+Upstream fix:
+-------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2014-05/msg02155.html
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
