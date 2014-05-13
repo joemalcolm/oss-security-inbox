@@ -1,51 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/1
-Message-ID: <1399944995.3095.25.camel@chianamo>
-Date: Tue, 13 May 2014 09:36:35 +0800
-From: Paul Wise <pabs3@...edaddy.net>
-To: oss-security@...ts.openwall.com, contact@...tsecurity.io
-Subject: CVE request: various NodeJS module vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/7
+Message-Id: <201405131805.s4DI59lb006269@linus.mitre.org>
+Date: Tue, 13 May 2014 14:05:09 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Qemu: usb: fix up post load checks
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This is a request for CVEs for the following vulnerabilities discovered
-by the Node Security Project. I left out their advisories where I could
-find an assigned CVE;
+> http://article.gmane.org/gmane.comp.emulators.qemu/272322
 
-CVE-2013-7370 CVE-2013-7371 CVE-2013-6393 CVE-2013-4660
+Here, it appears that the only security fix to
+http://git.qemu.org/?p=qemu.git;a=blob;f=hw/usb/bus.c;h=e48b19fc29bd9f831cc05990be73ddf49936d6a9;hb=HEAD
+is the insertion of the "dev->setup_index > dev->setup_len" test. In
+other words, although the patch corresponds to two bug discoverers,
+only one discoverer found a security problem.
 
-https://nodesecurity.io/advisories
+To clarify: we are currently interpreting "dev->setup_len ==
+sizeof(dev->data_buf) seems fine, no need to fail migration" to mean
+that "dev->setup_len >= sizeof(dev->data_buf)" is too strict a test,
+and "dev->setup_len > sizeof(dev->data_buf)" is sufficient. It does
+not imply that an attacker can cross privilege boundaries and cause a
+denial of service (i.e., a failed migration) by triggering the
+"dev->setup_len == sizeof(dev->data_buf)" condition.
 
-printer potential command injection on untrusted input
-https://nodesecurity.io/advisories/printer_potential_command_injection
-hapi file descriptor leak can cause DoS vulnerability
-https://nodesecurity.io/advisories/hapi_File_descriptor_leak_DoS_vulnerability
+The "dev->setup_index >= sizeof(dev->data_buf)" test was also removed.
+Similarly, we are interpreting this to mean that that test is
+superfluous. We are not interpreting this to mean that that test had
+allowed a denial of service attack.
 
-marked multiple content injection vulnerabilities
-https://nodesecurity.io/advisories/marked_multiple_content_injection_vulnerabilities
+Use CVE-2014-3461 for the "When state is DATA, passing index > len
+will cause memcpy with negative length, resulting in heap overflow"
+issue.
 
-st directory traversal
-https://nodesecurity.io/advisories/st_directory_traversal
+Note that a related recent commit:
 
-codem-transcode potential command injection in ffprobe functionality
-https://nodesecurity.io/advisories/codem-transcode_command_injection
-Hubot Scripts Potential command injection in email.coffee
-https://nodesecurity.io/advisories/Hubot_Potential_command_injection_in_email.coffee
+  http://git.qemu.org/?p=qemu.git;a=commit;h=9f8e9895c504149d7048e9fc5eb5cbb34b16e49a
 
-Tomato API Admin Auth Weakness
-https://nodesecurity.io/advisories/Tomato_API_Admin_Auth_Weakness
+has a CVE-2013-4541 assignment from Red Hat. See
 
-ep_imageconvert unauthenticated remote command injection
-https://nodesecurity.io/advisories/ep_imageconvert_command_injection
+  https://bugzilla.redhat.com/show_bug.cgi?id=1066384
 
-potential command injection in libnotify.notify
-https://nodesecurity.io/advisories/libnotify_potential_command_injection_in_libnotify.notify
+The http://article.gmane.org/gmane.comp.emulators.qemu/272322 patch
+represents additional changes needed after that CVE-2013-4541 fix.
 
--- 
-bye,
-pabs
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-http://bonedaddy.net/pabs3/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQEcBAEBAgAGBQJTcl5nAAoJEKllVAevmvmsgNMH/j/HABgwfnPX0rv8zn12h4w4
+7Dybeu2XO7tUy3JrMZdz+DyUY5hu/4dk3/egKSTrRHsS0azm72+OmbI7m0Rxanke
+VvPcq7BJQuEZwNRUx8WplUUIVrBP4qz3kodSny/Rv5fsMdp8nWGl9GoR8HCZ/6m2
+ffIb42sI3dGvmo8fyZPt0seSbZ0gp4H5YUlNlI5GMxJgl6CEOyiv5qp+GqvGnfyB
+MUcwRL05C1pTVdW19gwAnaJsJr8OF5GqKIAXoGbcee4GV5dMAyxex5nw4J5liL7V
+L1sJq71MsnjG5+wlyyeHd/1iTpeU9bVpkYQCs1+2XI/CF/eEIV0wZguawgSbeZg=
+=TKjZ
+-----END PGP SIGNATURE-----
