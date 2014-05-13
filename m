@@ -1,48 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/04/1
-Message-ID: <20140704003143.GA13150@hunt>
-Date: Thu, 3 Jul 2014 17:31:43 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Varnish - no CVE == bug regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/7
+Message-Id: <201405131805.s4DI59lb006269@linus.mitre.org>
+Date: Tue, 13 May 2014 14:05:09 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Qemu: usb: fix up post load checks
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 03, 2014 at 05:21:59PM -0600, Kurt Seifried wrote:
-> In this case it's pretty simple: the back end web servers are NOT
-> supposed to be able to shut down the varnish cache server (if this was
-> supposed to happen you'd have built a proper channel to do so). That
-> they can do so means it is a denial of service, and therefore a trust
-> boundary violation. Ergo it needs a CVE.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I disagree; I don't think a CVE is warranted.
+> http://article.gmane.org/gmane.comp.emulators.qemu/272322
 
-The developers have given us a clear and concise threat model that they
-use for Varnish. It is simple, it is self-consistent, and best of all
-it tells system administrators how they can safely use Varnish.
+Here, it appears that the only security fix to
+http://git.qemu.org/?p=qemu.git;a=blob;f=hw/usb/bus.c;h=e48b19fc29bd9f831cc05990be73ddf49936d6a9;hb=HEAD
+is the insertion of the "dev->setup_index > dev->setup_len" test. In
+other words, although the patch corresponds to two bug discoverers,
+only one discoverer found a security problem.
 
-I think the OpenSSL ciphers is a poor analogy. A better analogy is PHP.
-(My apologies to the Varnish developers, this is in no way meant to
-equate Varnish with PHP. But stick with me...) The PHP interpreter is
-not safe against malicious scripts. The mod_php implementation is not
-safe for use if the PHP script authors are not as trusted as the Apache
-authors. mod_php is not safe to use with multiple script authors. The
-"safe_open" and similar functions are not security boundaries because
-the scripts are completely trusted by design.
+To clarify: we are currently interpreting "dev->setup_len ==
+sizeof(dev->data_buf) seems fine, no need to fail migration" to mean
+that "dev->setup_len >= sizeof(dev->data_buf)" is too strict a test,
+and "dev->setup_len > sizeof(dev->data_buf)" is sufficient. It does
+not imply that an attacker can cross privilege boundaries and cause a
+denial of service (i.e., a failed migration) by triggering the
+"dev->setup_len == sizeof(dev->data_buf)" condition.
 
-The HTTP backends behind Varnish are similar. If you have backend servers
-in different trust domains, you get to run multiple Varnish front ends. If
-you don't trust your HTTP servers, putting Varnish in front doesn't make
-them suddenly safe.
+The "dev->setup_index >= sizeof(dev->data_buf)" test was also removed.
+Similarly, we are interpreting this to mean that that test is
+superfluous. We are not interpreting this to mean that that test had
+allowed a denial of service attack.
 
-If we start assigning CVEs for unexpected behaviour regardless of a
-threat model we'll drive ourselves to insanity.
+Use CVE-2014-3461 for the "When state is DATA, passing index > len
+will cause memcpy with negative length, resulting in heap overflow"
+issue.
 
-The Varnish team gave us a clear and concise vision of what they consider
-trusted and untrusted. I am thankful they've thought it through and came
-up with something reasonable. It might not be the threat model you would
-have chosen -- which means it may not be the right tool for you.
+Note that a related recent commit:
 
-Thanks
+  http://git.qemu.org/?p=qemu.git;a=commit;h=9f8e9895c504149d7048e9fc5eb5cbb34b16e49a
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+has a CVE-2013-4541 assignment from Red Hat. See
+
+  https://bugzilla.redhat.com/show_bug.cgi?id=1066384
+
+The http://article.gmane.org/gmane.comp.emulators.qemu/272322 patch
+represents additional changes needed after that CVE-2013-4541 fix.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTcl5nAAoJEKllVAevmvmsgNMH/j/HABgwfnPX0rv8zn12h4w4
+7Dybeu2XO7tUy3JrMZdz+DyUY5hu/4dk3/egKSTrRHsS0azm72+OmbI7m0Rxanke
+VvPcq7BJQuEZwNRUx8WplUUIVrBP4qz3kodSny/Rv5fsMdp8nWGl9GoR8HCZ/6m2
+ffIb42sI3dGvmo8fyZPt0seSbZ0gp4H5YUlNlI5GMxJgl6CEOyiv5qp+GqvGnfyB
+MUcwRL05C1pTVdW19gwAnaJsJr8OF5GqKIAXoGbcee4GV5dMAyxex5nw4J5liL7V
+L1sJq71MsnjG5+wlyyeHd/1iTpeU9bVpkYQCs1+2XI/CF/eEIV0wZguawgSbeZg=
+=TKjZ
+-----END PGP SIGNATURE-----
