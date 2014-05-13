@@ -1,27 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/5
-Message-ID: <20140131012033.GS11215@outflux.net>
-Date: Thu, 30 Jan 2014 17:20:33 -0800
-From: Kees Cook <kees@...ntu.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/1
+Message-ID: <1399944995.3095.25.camel@chianamo>
+Date: Tue, 13 May 2014 09:36:35 +0800
+From: Paul Wise <pabs3@...edaddy.net>
+To: oss-security@...ts.openwall.com, contact@...tsecurity.io
+Subject: CVE request: various NodeJS module vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 31, 2014 at 04:11:16AM +0400, Solar Designer wrote:
-> This issue was brought to linux-distros and security@k.o 2 days ago via
-> the message quoted below, and it was just made public at 22:00 UTC today
-> (two hours ago) via grsecurity and PaX (who were the ones to find the
-> issue).  Normally, the person who brought this to linux-distros would be
-> the one responsible to bring the issue to oss-security as soon as the
-> issue is public, but Kees does not appear to be around at the moment and
-> the issue is critical enough that I find it inappropriate to delay this
-> posting by a few hours more, hence I am doing Kees' job by posting this
-> in here.
+Hi all,
 
-Thanks for covering for me, Alexander! I am travelling, so high precision
-timing on email hasn't been great today. :)
+This is a request for CVEs for the following vulnerabilities discovered
+by the Node Security Project. I left out their advisories where I could
+find an assigned CVE;
 
--Kees
+CVE-2013-7370 CVE-2013-7371 CVE-2013-6393 CVE-2013-4660
+
+https://nodesecurity.io/advisories
+
+printer potential command injection on untrusted input
+https://nodesecurity.io/advisories/printer_potential_command_injection
+hapi file descriptor leak can cause DoS vulnerability
+https://nodesecurity.io/advisories/hapi_File_descriptor_leak_DoS_vulnerability
+
+marked multiple content injection vulnerabilities
+https://nodesecurity.io/advisories/marked_multiple_content_injection_vulnerabilities
+
+st directory traversal
+https://nodesecurity.io/advisories/st_directory_traversal
+
+codem-transcode potential command injection in ffprobe functionality
+https://nodesecurity.io/advisories/codem-transcode_command_injection
+Hubot Scripts Potential command injection in email.coffee
+https://nodesecurity.io/advisories/Hubot_Potential_command_injection_in_email.coffee
+
+Tomato API Admin Auth Weakness
+https://nodesecurity.io/advisories/Tomato_API_Admin_Auth_Weakness
+
+ep_imageconvert unauthenticated remote command injection
+https://nodesecurity.io/advisories/ep_imageconvert_command_injection
+
+potential command injection in libnotify.notify
+https://nodesecurity.io/advisories/libnotify_potential_command_injection_in_libnotify.notify
 
 -- 
-Kees Cook
+bye,
+pabs
+
+http://bonedaddy.net/pabs3/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
