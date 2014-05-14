@@ -1,28 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/28
-Message-ID: <CALx_OUCgckddKKtrz1L+rMH18xQjmbz0q1hyyUaiLL7XLr8ybQ@mail.gmail.com>
-Date: Tue, 7 Oct 2014 08:39:26 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: langsec-discuss@...l.langsec.org
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/5
+Message-ID: <CAHgqqbRry6jysnJB2MsM4rcL5YKA0jQ6ys3yALg+9GMNRaoomQ@mail.gmail.com>
+Date: Wed, 14 May 2014 15:03:09 +0300
+From: Dolev Farhi <dolevf87@...il.com>
+To: oss-security <oss-security@...ts.openwall.com>, cve-assign <cve-assign@...re.org>
+Subject: Zenoss Open Source monitoring System - Open Redirect & Stored XSS Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-> So in short: you need to design and implement interfaces
-> for every program which enforce explicit security boundaries.
-> [...]
-> I know this means re-implementing almost all code out there.
+hi,
 
-Well, that's the thing: ideas that sound good on paper are dime a
-dozen. Most of them have been tried, too: people have designed systems
-that fit Bell-LaPadula, created languages like Ada, reinvented the web
-to strictly isolate code & data and each site from each other, etc.
+Several security issues were found in Zenoss monitoring system.
 
-Sometimes, efforts like this fail simply due to bad timing or bad
-luck; but most of the time, they just produce solutions that are
-unusable, unappealing, or otherwise difficult to work with.
 
-Usable and practical security is hard, and we don't really have all
-the answers there - we can barely scratch the surface today.
+1.  Stored XSS.
+A persistent XSS vulnerability was found in Zenoss core, by creating a
+malicious host with the Title <script>alert("Xss")</script> any user
+browsing
+to the relevant manufacturers page will get a client-side script executed
+immediately.
 
-/mz
+Proof of concept:
+1. Create a device with with the Title <script>alert("XSS")</script>
+ 2. Navigate to the  Infrastructure -> Manufacturers page.
+ 3. pick the name of the manufacturer of the device, e.g. Intel
+ 4. select the type of the hardware the device is assigned to, e.g.
+GenuineIntel_ Intel(R) Core(TM) i7-2640M CPU _ 2.80GHz
+ 5. the XSS Executes.
+    <tr class="even">
+      <td class="tablevalues"><a
+href='/zport/dmd/Devices/Server/Linux/devices/localhost/devicedetail'><script>alert("xss")</script></a></td>
+      <td class="tablevalues">GenuineIntel_        Intel(R) Core(TM)
+i7-2640M CPU _ 2.80GHz</td>
+    </tr>
+
+
+
+2. Open Redirect vulnerability.
+an open redirect is possible via http://zenoss
+-url.com/:8080/zport/acl_users/cookieAuthHelper/login_form?came_from=[
+http://malicious-website.com ]  allowing an
+attacker to redirect a user to a malicious website.
+
+
+
+Can CVE numbers please be assigned to these?
+
+Tx.
+
+
+
+-- 
+additional proof of concept vid.
+https://www.youtube.com/watch?v=wtmdsz24evo&feature=youtu.be
+
