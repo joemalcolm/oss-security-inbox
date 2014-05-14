@@ -1,53 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/23
-Message-Id: <20140707181454.F372F1A41139@me.com>
-Date: Mon,  7 Jul 2014 14:14:54 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem lynx-0.2.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/9
+Message-Id: <201405141616.s4EGGG73004673@linus.mitre.org>
+Date: Wed, 14 May 2014 12:16:16 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request Linux kernel: forbid uaddr == uaddr2 in futex_wait_requeue_pi() to avoid null dereference
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem lynx-0.2.0
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Author: Larry W. Cashdollar, @_larry0
+> Linux kernel built with the fast userspace mutexes(CONFIG_FUTEX) support is
+> vulnerable to a NULL pointer dereference flaw. It could occur when a waiting
+> task requests wait to be re-queued from non-PI futex to a PI-aware futex via
+> FUTEX_WAIT_REQUEUE_PI operation.
+> 
+> An unprivileged user/program could use this flaw to crash the system kernel
+> resulting in DoS.
+> 
+> https://git.kernel.org/linus/6f7b0a2a5c0fb03be7c25bd1745baa50582348ef
 
-Date: 06/01/2014
+Use CVE-2012-6647.
 
-OSVDB: 108579
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-CVE:Please Assign
-
-Download: http://rubygems.org/gems/lynx
-
-Gem Author:  pan.thomakos@...il.com
-
-From: ./lynx-0.2.0/lib/lynx/pipe/get.rb
-
-Doesn't properly sanitize user input before sending to command line: 
-
-From: lynx/blob/master/lib/lynx/pipe/run.rb
-module Lynx
-  module Pipe
-    class Run < Basic
-      def perform(command)
-        system(command.to_s)
-      end
-    end
-  end
-end
-
-Exposes password to the process table
-From:lynx/blob/master/lib/lynx/command/basic.rb
-
-@command << "--password=#{config.password}" if config.password
-
-04-  module Pipe
-6-      def perform(command)
-7:        `#{command}`.strip
-8-      end
-9-    end
-10-  end
-
-
-Advisory: http://www.vapid.dhs.org/advisories/lynx-0.2.0.html
-
+iQEcBAEBAgAGBQJTc5Z5AAoJEKllVAevmvmsmSkH/0eNY313nX9uZpL0ODQFolgq
+mNjz1UE8XJd9ZeQYamteDtZu7K4xJfiuqtlImbkBEZ8gCnXuDIwKNisgCnkbpolE
+/X8OzQVR3HL/ZVOJhuKtjztMxZenyEIpVNwHFnPWMs2fbsTHYCBP53KdaA1kW1tY
+EPZ19X0AroIpMBBh1suzTLcxkIJEOCghQ/2lledEvx05ok+dgTstwe2FJ16tyKX1
+M+6WQLhts42Rlhf/07bAMTRf03UsMmeDr9gWLtVsX6JXvzXqYHEEUUIzyDLZQjA+
+ezfp/vL6sp67fPj8uz0DKWaJl2dMBk7W6p7fZYed4a66SCsNCgptWxpDsi5IvxI=
+=T8n3
+-----END PGP SIGNATURE-----
