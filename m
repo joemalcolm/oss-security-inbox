@@ -1,36 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/30/2
-Message-Id: <20140830031619.13313332007@smtpvbsrv1.mitre.org>
-Date: Fri, 29 Aug 2014 23:16:19 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, rking@...optic.com
-Subject: Re: CVE Request: Clipboard Perl module: clipedit: insecure use of temporary files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/10
+Message-ID: <20140514193755.GA21035@eldamar.local>
+Date: Wed, 14 May 2014 21:37:55 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, security@...ngoproject.com
+Subject: CVE Reuest: Django: Malformed URLs from user input incorrectly validated
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-> 7 my $tmpfilename = "/tmp/clipedit$$";
-> 8 open my $tmpfile, ">$tmpfilename" or die "Failure to open $tmpfilename: $!";
+The Django project announced a new security release today:
 
-> 49 unlink($tmpfilename) or die "Couldn't remove $tmpfilename: $!";
+https://www.djangoproject.com/weblog/2014/may/14/security-releases-issued/
 
-Use CVE-2014-5509.
+It fixes two issues, for which one has already a CVE (CVE-2014-1418).
+It also fixes a second issue, for which a CVE is missing, quoting from
+the announcement:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+> Issue: Malformed URLs from user input incorrectly validated
+> The validation for redirects did not correctly validate some malformed
+> URLs, which are accepted by some browsers. This allows a user to be
+> redirected to an unsafe URL unexpectedly.
+> 
+> Django relies on user input in some cases (e.g.
+> django.contrib.auth.views.login, django.contrib.comments, and i18n) to
+> redirect the user to an "on success" URL. The security checks for
+> these redirects (namely django.util.http.is_safe_url()) did not
+> correctly validate some malformed URLs, such as
+> http:\\\djangoproject.com, which are accepted by some browsers with
+> more liberal URL parsing.
+> 
+> To remedy this, the validation in is_safe_url() has been tightened to
+> be able to handle and correctly validate these malformed URLs.
+> 
+> Thanks to Peter Kuma and Gavin Wahl for reporting this issue to us.
 
-iQEcBAEBAgAGBQJUAUFCAAoJEKllVAevmvmsqBoIAKnRgIc/kTM9YJDgvodoP040
-uaufQFYwSY0V88QF8jtiIEhnTUy7G+T2gCJ0B1UdadaqbQj+5Nlfq8kQsVvuimXJ
-hYhjqC+gmqXHbi+WdoR6T3S68kl0W5OA1kEAAJ0udM2B+75/rO0P+qND+rzAEk+Y
-JVqp1YbW3RvZMKj/Yun+PB/7l88mcQbpR8D8wBGmis9DTH+vStOL5/iGY+8XoPV1
-GzO8Ulc4i4sSyhqj2vq7vW/zxdgmXd9UxbKHg9P2yb7vT63AYaftJsw7KI2JWt86
-XG0y+2RpRS8DTAixekkSA9ZWTMU5KsjUsZEKwZ+mqAvQATBMOIWSqdDJ04y0/p0=
-=wp08
------END PGP SIGNATURE-----
+Fixes for the various branches are also referenced. Could a CVE also
+be assigned for this second issue?
+
+Thanks in advance.
+
+Regards,
+Salvatore
