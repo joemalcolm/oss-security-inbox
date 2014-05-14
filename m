@@ -1,45 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/22
-Message-ID: <EED4C03C-C488-47B6-BDFC-FB054FC80585@akamai.com>
-Date: Mon, 29 Sep 2014 10:47:32 -0500
-From: "Kobrin, Eric" <ekobrin@...mai.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "chet.ramey@...e.edu" <chet.ramey@...e.edu>, Florian Weimer <fweimer@...hat.com>
-Subject: Re: Array importing in bash 4.3 (was: Re: Fwd: Non-upstream patches for bash)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/6
+Message-ID: <alpine.LFD.2.10.1405141836180.17630@javelin.pnq.redhat.com>
+Date: Wed, 14 May 2014 18:41:14 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request Linux kernel: forbid uaddr == uaddr2 in futex_wait_requeue_pi() to avoid null dereference
 Content-Type: text/plain; charset=utf-8
 
-On Sep 29, 2014, at 10:42 AM, Florian Weimer <fweimer@...hat.com> wrote:
+    Hello,
 
->> From: Florian Weimer <fweimer@...hat.com>
->> 
->> Note that if you ship 4.3, you might want to reevaluate a decision to
->> enable array variable import from the environment.
-> 
-> I changed the subject because I'm sure this parenthetical comment got lost.
-> 
-> Fortunately, in bash 4.3 (patchlevel 25), you cannot just -DARRAY_EXPORT 
-> and get array variable import/export.  The code doesn't compile, and if 
-> you fix that, it does not link, and if you fix that, well, you end up 
-> with the following issue.  But I doubt anybody has done this, so it's 
-> not a vulnerability (yet) and does not need CVE assignment etc.
-> 
-> The array import/export feature allows one to export and import 
-> variables while preserving their array status.  Unfortunately, it 
-> enables this:
-> 
-> $ env -i 'FOO=([$(echo broken > /dev/tty)]=a)' ./bash -c true
-> broken
-> ./bash: []=a: bad array subscript
-> 
-> As I said, it is currently not an issue, but it's probably best not to 
-> enable this in the future at all, or use it with another form of mangling.
-> 
-> -- 
-> Florian Weimer / Red Hat Product Security
+Linux kernel built with the fast userspace mutexes(CONFIG_FUTEX) support is 
+vulnerable to a NULL pointer dereference flaw. It could occur when a waiting 
+task requests wait to be re-queued from non-PI futex to a PI-aware futex via 
+FUTEX_WAIT_REQUEUE_PI operation.
 
-This code also reveals a difference from the function export code.
+An unprivileged user/program could use this flaw to crash the system kernel 
+resulting in DoS.
 
-The ARRAY_EXPORT code frees temp_string after using it. The function export code mallocs, but never frees it. That behavior predates the recent patches.
+Upstream fix:
+-------------
+   -> https://git.kernel.org/linus/6f7b0a2a5c0fb03be7c25bd1745baa50582348ef
 
--- Eric Kobrin
+Introduced in:
+--------------
+   -> https://git.kernel.org/linus/52400ba946759af28442dee6265c5c0180ac7122
 
+
+Thank you.
+--
+Prasad J Pandit / Red Hat Security Response Team
