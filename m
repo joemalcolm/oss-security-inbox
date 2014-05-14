@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/2
-Message-ID: <20140722045904.GB25519@lorien.valinor.li>
-Date: Tue, 22 Jul 2014 06:59:04 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Michael Sweet <msweet@...le.com>, odyx@...ian.org, CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: cups: Incomplete fix for CVE-2014-3537
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/1
+Message-ID: <5372F9AE.90509@redhat.com>
+Date: Wed, 14 May 2014 15:05:50 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: 736066@...s.debian.org
+Subject: A number of EncFS issues
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi,
 
-CVE-2014-3537 was allocated for http://www.cups.org/str.php?L4450
-(Insufficient checking leads to privilege escalation). The intention
-in the fix was to dissalow symlinks.
+https://defuse.ca/audits/encfs.htm discusses a number of issues in EncFS:
 
-With the fix applied fo CVE-2014-3537 this is still possible in some
-cases (where language[0] is null), see https://cups.org/str.php?L4455
+"Same Key Used for Encryption and Authentication"
 
-Additionally Michael Sweet wrote: 
+"Stream Cipher Used to Encrypt Last File Block"
 
-> Yes, it looks like this needs to be an lstat as well, and we should
-> probably add similar protections to the directory index files (which
-> are also using stat).
+"Generating Block IV by XORing Block Number"
 
-Could a CVE be assigned to identify this? (Question: one CVE should be
-enough for the additional fix for all the missing remaining lstat?).
+"File Holes are Not Authenticated"
 
-Regards,
-Salvatore
+"MACs Not Compared in Constant Time"
+
+"64-bit MACs"
+
+"Editing Configuration File Disables MACs"
+
+There are currently no patches.
+
+I am not familiar enough with cryptography to know if they need CVEs, or 
+are considered hardening (the last one sounds CVE worthy though)
+
+Cheers,
+
+--
+Murray McAllister / Red Hat Security Response Team
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1097537
