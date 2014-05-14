@@ -1,46 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/08/4
-Message-ID: <20140308030017.GA31505@hunt>
-Date: Fri, 7 Mar 2014 19:00:17 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com
-Subject: CVE Request: thermald
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/4
+Message-Id: <E1WkXv0-0000iX-OI@xenbits.xen.org>
+Date: Wed, 14 May 2014 12:04:18 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 95 - input handling vulnerabilities loading guest kernel on ARM
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I discovered that the thermald temperature management daemon opens a file
-with predictable filename in /tmp unsafely. Please assign a CVE number for
-this issue:
+                    Xen Security Advisory XSA-95
+                             version 2
 
-https://github.com/01org/thermal_daemon/blob/master/src/android_main.cpp#L117
+      input handling vulnerabilities loading guest kernel on ARM
 
+UPDATES IN VERSION 2
+====================
 
-In short:
+Public release.
 
-int main(int argc, char *argv[]) {
-	/* ... */
-	if (!no_daemon) {
-		daemonize((char *) "/tmp/", (char *) "/tmp/thermald.pid");
-	} else
+ISSUE DESCRIPTION
+=================
 
-/* ... */
+When loading a 32-bit ARM guest kernel the Xen tools did not correctly
+validate the length of the kernel against the actual image size.  This
+would then lead to an overrun on the input buffer when loading the
+kernel into guest RAM.
 
-static void daemonize(char *rundir, char *pidfile) {
-	/* ... */
+Furthermore when checking a 32-bit guest kernel for an appended DTB,
+the Xen tools were prone to additional overruns also leading to an
+overrun on the input buffer when loading the kernel into guest RAM.
+Also, the tools would access a field in the putative DTB header
+without checking for its alignment.
 
-	pid_file_handle = open(pidfile, O_RDWR | O_CREAT, 0600);
+When loading a 64-bit ARM guest kernel the tools similarly did not
+fully validate the requested load addresses, possibly leading to an
+overrun on the input buffer when loading the kernel into guest RAM.
 
+IMPACT
+======
 
-thermald runs as root; on systems that lack the Openwall-inspired symlink
-and hardlink protections in world-writable directories this can be used to
-write the process's pid to a file of the attacker's choosing.
+An attacker who can control the kernel used to boot a guest can
+exploit these issues.
 
-Note that this affects only the main() function provided in the
-android_main.cpp file; the main() routine in main.cpp does not have this
-issue.
+Exploiting the overflow issues allows information which follows the
+guest kernel in the toolstack address space to be copied into the
+guest's memory, constituting an information leak.
 
-Thanks
+Alternatively either the overflow or alignment issues could be used to
+crash the toolstack process, leading to a denial of service.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+VULNERABLE SYSTEMS
+==================
+
+ARM systems are vulnerable from Xen 4.4 onwards.
+
+MITIGATION
+==========
+
+Ensuring that guests use only trustworthy kernels will avoid this
+problem.
+
+CREDITS
+=======
+
+This issue was discovered by Thomas Leonard.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa95.patch        xen-unstable, Xen 4.4.x
+
+$ sha256sum xsa95*.patch
+1ab63ff126b92e752e88b240838dd66b66415604eaa3e49e373cb50ad3cdd0af  xsa95.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTc0j+AAoJEIP+FMlX6CvZAYIH/29FLbtbM/jnSuMksWvf1G6g
+OgM3BhKGWAiNpebvPhhzqsKODchxpbrtGbLEIS9YDD8Qz5pQlnrLMsSBaSnrZvAs
+5tQR5EKWpvDZry6THnxVP9OGxzR23+JEPtd1FQuNKiG68MeKmmFiAIGR1HfowSTs
+VOoAWZ1h8ep85iI4qz1U4+wbTBAhNwFpM1JH/IUmSTlWbSxXpQomX/lQqrPpiHEs
+8zVBMni8HNYlWBEeWTktpc45JXBhbbNSGaqduEO3s8WJBpJd1D+YJ8u+nz2AJVVu
+JF6AkC1EL+cR6P7FSQZ+FrA9Spj+kND/SXlPNO/KLMn8QSlItMTUO2qH6UwcPKI=
+=2MET
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa95.patch" of type "application/octet-stream" (3213 bytes)
