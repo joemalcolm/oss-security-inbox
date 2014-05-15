@@ -1,19 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/5
-Message-ID: <20140204103449.GB27676@kludge.henri.nerv.fi>
-Date: Tue, 4 Feb 2014 12:34:49 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/7
+Message-ID: <CAHgqqbRXpcutr4b2d3nrYk9Md0Wa539dzKO2gJwRzHgmdDBF3g@mail.gmail.com>
+Date: Thu, 15 May 2014 18:56:02 +0300
+From: Dolev Farhi <dolevf87@...il.com>
+To: cve-assign <cve-assign@...re.org>, oss-security <oss-security@...ts.openwall.com>
+Subject: OpenFiler - Arbitrary Code Execution & Stored XSS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 04, 2014 at 11:19:25AM +0100, Florian Weimer wrote:
-> Is anyone in touch with the python-gpg folks and can rely this
-> information?  Thanks.
+hi,
 
-I'll create new issue to upstream tracker about this.
+Multiple vulnerabilities were discovered in the latest version of OpenFiler
+appliance, 2.99.1 as reported
+here<https://forums.openfiler.com/index.php?/topic/6720-arbitrary-code-execution-stored-xss-vulnerability-in-openfiler-latest-version-2991/>,
+here <http://www.exploit-db.com/exploits/33247> and
+here<http://www.exploit-db.com/exploits/33248>
+OpenFiler is a FreeNAS appliance equivalent.
 
----
-Henri Salo
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+- Vulnerability 1
+OpenFiler is vulnerable to an arbitrary code execution attack by not
+validating the hostname input, this vulnerability allows an attacker to
+execute any system shell command with the root user privileges.
+
+- Proof of concept:
+i.  Login with any available user
+ii. Change the hostname value to `cat /etc/passwd`
+iii. Submit
+
+* Refreshing the screen / Reloading the page results with passwd content in
+the OpenFiler system hostname value.
+
+- Vulnerability 2
+Multiple Stored XSS were found in OpenFiler, by creating a volume group or
+a network access configuration with malicious code e.g.
+<script>alert("css")</script> any user attempt to create, view or modify
+volume shares executes the attack.
+
+Proof of concept vids
+1. Link 1 <http://research.openflare.org/poc/openfiler/codexec.mp4>
+2. Link 2 <http://research.openflare.org/poc/openfiler/xss.mp4>
+
+
+Can CVEs please be assigned to these issues?
+
+Tx
+
