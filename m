@@ -1,37 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/1
-Message-ID: <20140916051720.GB4828@suse.de>
-Date: Tue, 16 Sep 2014 07:17:20 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/10
+Message-ID: <5375490B.8020007@gmail.com>
+Date: Fri, 16 May 2014 01:08:59 +0200
+From: Frédéric Basse <basse.frederic@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE-Request: squid pinger remote DoS
+Subject: [CVE-2014-2978] DirectFB remote out-of-bounds write vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 09, 2014 at 10:53:51AM +0200, Sebastian Krahmer wrote:
-> Hi
-> 
-> I made a fix for squid 3.4.6 and request a CVE for
-> this issue:
-> 
-> The pinger code that checks for nodes being alive doesnt
-> properly validate ICMP and ICMPv6 replies, in particular
-> icmp6 types which are used to index into a string array.
-> This could cause crashes when the index is OOB.
-> 
-> A patch is available here:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=891268
-> 
-> I also made some cleanups and error checking on the
-> receive socket.
-> 
-> I am not deep into the overall squid architecture so
-> I dont know what happens to squid itself when the
-> pinger sub-process crashes (think SIGPIPE etc). But to me
-> it looks like you can only DoS the pinger sub-system,
-> not the whole squid.
+[CVE-2014-2978] DirectFB remote out-of-bounds write vulnerability
+________________________________________________________________________
+Summary:
+DirectFB is prone to an out-of-bound write vulnerability since version
+1.4.4.
 
-Mitre?Ping?
+The vulnerability can be triggered remotely without authentication
+through Voodoo interface (network layer of DirectFB).
+________________________________________________________________________
+Details:
+An attacker can choose to overflow in the heap or the stack.
+________________________________________________________________________
+CVSS Version 2 Metrics:
+Access Vector: Network exploitable
+Access Complexity: Low
+Authentication: None
+Confidentiality Impact: Complete
+Integrity Impact: Complete
+Availability Impact: Complete
+________________________________________________________________________
+Disclosure Timeline:
+2014-03-27 Developer notified
+2014-04-21 CVE-2014-2978 assigned
+2014-05-16 Public advisory
+________________________________________________________________________
+References:
+http://www.directfb.org/
+http://mail.directfb.org/pipermail/directfb-dev/2014-March/006805.html
+________________________________________________________________________
 
-Ciao, Marcus
+
+Download attachment "signature.asc" of type "application/pgp-signature" (535 bytes)
