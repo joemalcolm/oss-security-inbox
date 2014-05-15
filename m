@@ -1,22 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/12
-Message-ID: <54889620.5060801@gmail.com>
-Date: Wed, 10 Dec 2014 13:51:12 -0500
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/9
+Message-ID: <5375482C.7020501@gmail.com>
+Date: Fri, 16 May 2014 01:05:16 +0200
+From: Frédéric Basse <basse.frederic@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+Subject: [CVE-2014-2977] DirectFB integer signedness vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 10/12/14 01:20 PM, Daniel Micay wrote:
->
-> I expect that the same thing can be caused by making aligned
-> allocations. If you make a 4M naturally aligned allocation via an API
-> like posix_memalign, the allocator will probably mmap 4M + the maximum
-> excess. If it unmaps the excess memory at the head/tail, then it will
-> have wiped out 10 bits of entropy for future mmap allocations because
-> the tail will always be at a 4M boundary.
+[CVE-2014-2977] DirectFB integer signedness vulnerability
+________________________________________________________________________
+Summary:
+DirectFB is prone to an integer signedness vulnerability since
+version 1.4.13.
 
-(ofc this isn't limited to mmap, but it's a simple example)
+The vulnerability can be triggered remotely without authentication
+through Voodoo interface (network layer of DirectFB).
+________________________________________________________________________
+Details:
+ This integer coercion error may lead to a stack overflow.
+________________________________________________________________________
+CVSS Version 2 Metrics:
+Access Vector: Network exploitable
+Access Complexity: Low
+Authentication: None
+Confidentiality Impact: Complete
+Integrity Impact: Complete
+Availability Impact: Complete
+________________________________________________________________________
+Disclosure Timeline:
+2014-03-27 Developer notified
+2014-04-21 CVE-2014-2977 assigned
+2014-05-16 Public advisory
+________________________________________________________________________
+References:
+http://www.directfb.org/
+http://mail.directfb.org/pipermail/directfb-dev/2014-March/006805.html
+________________________________________________________________________
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (535 bytes)
