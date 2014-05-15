@@ -1,31 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/2
-Message-ID: <53BB9A66.6080201@redhat.com>
-Date: Tue, 08 Jul 2014 17:14:46 +1000
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: moses@...petlabs.com, security@...y-lang.org
-Subject: possible CVE-2010 request: Ruby older than 1.9.2 appending current directory to the load path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/2
+Message-Id: <201405150222.s4F2MZWj023777@linus.mitre.org>
+Date: Wed, 14 May 2014 22:22:35 -0400 (EDT)
+From: cve-assign@...re.org
+To: pabs3@...edaddy.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: various NodeJS module vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-CVE-2014-3248 (http://puppetlabs.com/security/cve/cve-2014-3248)
-describes the following:
+These happen to end up with one CVE ID per advisory:
 
-"On platforms with Ruby 1.9.1 or earlier, an attacker could have Puppet
-execute malicious code by convincing a privileged user to change
-directories to one containing the malicious code and then run Puppet."
+https://nodesecurity.io/advisories/printer_potential_command_injection CVE-2014-3741
+https://nodesecurity.io/advisories/hapi_File_descriptor_leak_DoS_vulnerability CVE-2014-3742
+https://nodesecurity.io/advisories/marked_multiple_content_injection_vulnerabilities CVE-2014-3743
+https://nodesecurity.io/advisories/st_directory_traversal CVE-2014-3744
+https://nodesecurity.io/advisories/codem-transcode_command_injection CVE-2013-7377
+https://nodesecurity.io/advisories/Hubot_Potential_command_injection_in_email.coffee CVE-2013-7378
+https://nodesecurity.io/advisories/Tomato_API_Admin_Auth_Weakness CVE-2013-7379
+https://nodesecurity.io/advisories/ep_imageconvert_command_injection CVE-2013-7380
+https://nodesecurity.io/advisories/libnotify_potential_command_injection_in_libnotify.notify CVE-2013-7381
 
-The issue in Ruby was fixed here:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-https://www.ruby-lang.org/en/news/2010/08/18/ruby-1-9.2-released/
-
-The "$: doesn't include the current direcotry." entry, I guess.
-
-Is a 2010 CVE ID needed for this, or should it only be treated as hardening?
-
-Thanks,
-
---
-Murray McAllister / Red Hat Product Security
+iQEcBAEBAgAGBQJTdCSZAAoJEKllVAevmvmsAIoH/ia/49VXn5UOiZV8T29iH2GD
+mLz4pfz+v+BRckNkNW7IhzLScoe5bRjbZRc82HxS3zA+h94USLeNCNhwSWizsrKz
+UZj8Jov9wDcYF9L4BbmKwNlrkv9erTvp4MaJbXpDbNCRi/tK1J8H5LecwMQogGrZ
+A0fZll0ykPOI/uNIeGEAXO6SRepDRjOci6CDY6rcJ5UfxQzgTKrogHcEizmqxxyw
+J2EvflJTk/MqAIO9jvLo00KvoHCGOsguDsT6wqYfuY0U1vU6KNATeGzQ8ypxW2K5
+E4fRAPjIWjr4UJdPRM6Kk8a9Dygc+ktROTPSpnCp7zZo3P6kTGSlP2etGg5+2Hk=
+=pMRL
+-----END PGP SIGNATURE-----
