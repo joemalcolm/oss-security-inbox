@@ -1,90 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/27
-Message-Id: <E1XrUZC-0008CI-Rd@xenbits.xen.org>
-Date: Thu, 20 Nov 2014 16:26:46 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 113 - Guest effectable page reference leak in MMU_MACHPHYS_UPDATE handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/4
+Message-Id: <201405150317.s4F3HMtH025047@linus.mitre.org>
+Date: Wed, 14 May 2014 23:17:22 -0400 (EDT)
+From: cve-assign@...re.org
+To: mikkel@...utz.dk
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Mumble 1.2.6: Mumble-SA-2014-005 and Mumble-SA-2014-006
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-                    Xen Security Advisory XSA-113
+>   Mumble-SA-2014-005  [http://mumble.info/security/Mumble-SA-2014-005.txt]
+>     - SVG images with local file references could trigger client DoS
 
-  Guest effectable page reference leak in MMU_MACHPHYS_UPDATE handling
+>     Qt's QSvg module's SVG renderer will follow file references
+>     found in SVG's image tag and XML stylesheet references.
+> 
+>     For image tags, Qt tries to load the referenced file using
+>     QImage's constructor that takes a file path. Further processing
+>     is then delegated to an image format plugin.
+> 
+>     For XML stylsheets, Qt will attempt to open the referenced
+>     file using QFile followed by a call to the readAll(), which
+>     will read the file until EOF.
+> 
+>     These two possibilities makes it easy to cause a Mumble client
+>     to hang
 
-ISSUE DESCRIPTION
-=================
+Use CVE-2014-3755.
 
-An error handling path in the processing of MMU_MACHPHYS_UPDATE failed
-to drop a page reference which was acquired in an earlier processing
-step.
 
-IMPACT
-======
+>   Mumble-SA-2014-006  [http://mumble.info/security/Mumble-SA-2014-006.txt]
+>     - The Mumble client did not properly HTML-escape some external strings
+>        before using them in a rich-text (HTML) context.
 
-Malicious or buggy stub domain kernels or tool stacks otherwise living
-outside of Domain0 can mount a denial of service attack which, if
-successful, can affect the whole system.
+>        By default, many Qt widgets sniff their text content to
+>        determine whether or not to use to render the text as HTML.
+>        However, in some places, the Mumble client neglected to
+>        properly escape external strings when used rich-text enabled
+>        Qt widgets.
 
-Only domains controlling HVM guests can exploit this vulnerability.
-(This includes domains providing hardware emulation services to HVM
-guests.)
+Use CVE-2014-3756.
 
-VULNERABLE SYSTEMS
-==================
-
-Xen versions from at least 3.2.x onwards are vulnerable on x86 systems.
-Older versions have not been inspected.  ARM systems are not vulnerable.
-
-This vulnerability is only applicable to Xen systems using stub domains
-or other forms of disaggregation of control domains for HVM guests.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-(The security of a Xen system using stub domains is still better than
-with a qemu-dm running as an unrestricted dom0 process.  Therefore
-users with these configurations should not switch to an unrestricted
-dom0 qemu-dm.)
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-A draft of this advisory was mistakenly sent to xen-devel.  The Xen
-Project Security Team apologises for this error.  We are working to
-share best working practices amongst the team to reduce the risks of
-recurrance.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa113.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa113*.patch
-a0f2b792a6b4648151f85fe13961b0bf309a568ed03e1b1d4ea01e4eabf1b18e  xsa113.patch
-$
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUbhNoAAoJEIP+FMlX6CvZ5v8H/0cwnDOmSUZQ5Wm6ULUQH0w+
-Jbsf6JPBRyDch1nCv/d8X27vSfmB8JH0m+LclEH0F1XSUiu5p4y46ZKk7Zfm4+gD
-xq6/eKyXKwCXinAwEcLtvfONrajQQvzk2y4XZpE+g9U00AwvsBXM3AdqPup8cyQl
-OLQO9Oq+xiqusCXIQeCb/KnoVUGS9PqlG/RT3rKKorYzuQjG7VURU3uKA1Vju7oD
-ITzbNCjTjnA7cFVSk6g9ZG6k40nGkVKIv+pPFfZAE6/UqiCF91oNzVAYVnA0X0oL
-YoAFxvVFOHp78192jW/7S8uacG+bskJNAr+NYIuaBlykka6Vbef6esWOW3UZEhA=
-=LDjw
+iQEcBAEBAgAGBQJTdDFtAAoJEKllVAevmvmsEJkIAIU2hoalUJixp8Wmpyqg0SvI
+t12IioHB0evU+BbyuOVDFdIUDD4KMo8OuKtMZGlvX1SWdgTUbhQo0wZ/3potGmjs
+c7Df8+RZD3Zp8Ajn550vv/3mG1kQc+TPDOoBiiaDDpIErH39SPL1rHzUTIMm7GXD
+BH3iOdsmS8PgO76pM3RLwAo07hlvvkPdXl4C0BqL7Ng6vJ2bCgdYLcYRQaVrPsbb
+ZrZR4SUxAQ0U+/9zOz7LMMZB3oAwfTaqviqONMWZuxdENlNgzlESr3Y5lFtgkwVT
+l3dHzZvcODnZcgbj7aCGAAh7gbaE4NmqiZkQA7q9xeVopl+8zg5eTZq6bNF+4zk=
+=8lvm
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa113.patch" of type "application/octet-stream" (1281 bytes)
