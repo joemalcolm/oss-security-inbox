@@ -1,28 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/5
-Message-ID: <5343F496.7040507@redhat.com>
-Date: Tue, 08 Apr 2014 18:37:34 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: jbigkit security flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/5
+Message-Id: <201405150356.s4F3uQCO025457@linus.mitre.org>
+Date: Wed, 14 May 2014 23:56:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: dolevf87@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Zenoss Open Source monitoring System - Open Redirect & Stored XSS Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Florian Weimer of Red Hat Product Security Team found a stack-based
-buffer overflow flaw in the libjbig library (part of jbigkit).  A
-specially-crafted image file read by libjbig could be used to cause a
-program linked to libjbig to crash or, potentially, to execute
-arbitrary code.
+> A persistent XSS vulnerability was found in Zenoss core, by creating a
+> malicious host with [[XSS] in the title]
 
-This issue has been assigned CVE-2013-6369.
+As far as we call tell, this crosses privilege boundaries. Chapter 11
+of the Zenoss Core Administration documentation suggests that there
+can be multiple accounts with different privileges. The wtmdsz24evo
+video shows the attack taking place in the context of the "dolev" user
+account.
 
-References:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1032273
-https://www.cl.cam.ac.uk/~mgk25/jbigkit/CHANGES
-
+Use CVE-2014-3738.
 
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+> Open Redirect vulnerability.
+> zport/acl_users/cookieAuthHelper/login_form?came_from=
+
+Use CVE-2014-3739.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTdDqFAAoJEKllVAevmvmsdMMIAIoHp40s8G9FdEfvp4EkFzoG
+FUcOhPnX96jwKJQb8N7zQtUjzUfZfQJjaNTZjXhCH4xqpADfCSxO8QFVBnJWsbov
+icI2H72yYas14kIjIBHEZOCtIW/Mq9xuBWFi9h5PVAWzgTCw2/bWwAYrU7MuNz5W
+HNLq4OPSRMLQYjpHmDWvhW/VQIUpA+uzL46g9yb0qNFcqNQHgRNIASx+G4cwFGBN
+Ay5M69NEUY8t9r+ybhCGJWGK9Td5XxGrPvFApouta8yMvaujmoX32tUAvwOREerT
+9J5WCE6YI/TU5GJMVbt+zE6e1u2qEDUvK2K1vyuWYAtQfp/frfxmVYpYOLfJoU0=
+=Peud
+-----END PGP SIGNATURE-----
