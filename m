@@ -1,26 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/6
-Message-ID: <546C3AA0.4040301@redhat.com>
-Date: Tue, 18 Nov 2014 23:37:20 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/3
+Message-Id: <201405150308.s4F382QO024922@linus.mitre.org>
+Date: Wed, 14 May 2014 23:08:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ngoproject.com
+Subject: Re: CVE Reuest: Django: Malformed URLs from user input incorrectly validated
 Content-Type: text/plain; charset=utf-8
 
-Speaking of fuzzing so that clamav issue, was triggered by a file that
-existed in public since 2010 or so (at least that's what virustotal had
-for the first submission date). So you'd think based on what people use
-clamav for it would have been heavily fuzzed by now (scanning all sorts
-of random/malicious input) but I guess people don't report stuff upstream.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Perhaps if we could get people to report crashes in stuff like this more
-reliably that would be a good start "your program crashed when I
-processed this file, here's a copy of the file, thanks" (assuming the
-file doesn't contain sensitive info of course).
+> https://www.djangoproject.com/weblog/2014/may/14/security-releases-issued/
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> It also fixes a second issue, for which a CVE is missing, quoting from
+> the announcement:
 
+>> Issue: Malformed URLs from user input incorrectly validated
+>> The validation for redirects did not correctly validate some malformed
+>> URLs, which are accepted by some browsers. This allows a user to be
+>> redirected to an unsafe URL unexpectedly.
+>>
+>> Django relies on user input in some cases (e.g.
+>> django.contrib.auth.views.login, django.contrib.comments, and i18n) to
+>> redirect the user to an "on success" URL. The security checks for
+>> these redirects (namely django.util.http.is_safe_url()) did not
+>> correctly validate some malformed URLs, such as
+>> http:\\\djangoproject.com, which are accepted by some browsers with
+>> more liberal URL parsing.
+>>
+>> To remedy this, the validation in is_safe_url() has been tightened to
+>> be able to handle and correctly validate these malformed URLs.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+> https://github.com/django/django/commit/255449c1ee61c14778658caae8c430fa4d76afd6
+
+> url = url.replace('\\', '/')
+> 
+> if url.startswith('///'):
+>     return False
+> 
+> Forbid URLs like http:///example.com - with a scheme, but without a hostname.
+
+Use CVE-2014-3730.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTdC8jAAoJEKllVAevmvmsX9kIAKlhUlg8UwBHt/xmmPAwiXjs
+WrMV5kbkEvEDjfz2IWYY3We8NkGeuSLFzD27j8LaBSzeS6c6ARX57B5xfXZMLnV6
+2wmXl75mz/vZFc9+7IYtMZ53nbOE7I5occLi69zH0gX208uuW3F+hFqf6735sYgt
+FGoXIZfkfDYA+j8fyXlxkfDPMVKolsiFGfidgbmK7J3D3YPBshneI77wYq//nwlO
+ihSs55P+T9tZctlOUfdBvSWzIzbOfi3w3WcXcFPE+n61XpHpVq7bDeCB/GlpBkcA
+GiyVT9mkM9dC1CykY4WGbQUoXP9JZ4fg/eoowXnKNn8q20/e5pHCHhM2vBkYVxw=
+=LjKL
+-----END PGP SIGNATURE-----
