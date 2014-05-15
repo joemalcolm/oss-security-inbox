@@ -1,43 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/11
-Message-ID: <CADk+mPAVSiiK7EPMPUFPS_pbkRs1DpzK5dtAfgny1N8dyJQBTg@mail.gmail.com>
-Date: Sun, 5 Oct 2014 17:01:48 +0200
-From: Rainer Gerhards <rgerhards@...adiscon.com>
-To: mancha <mancha1@...o.com>
-Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: sysklogd vulnerability (CVE-2014-3634)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/6
+Message-Id: <201405151716.s4FHGMKs002116@linus.mitre.org>
+Date: Thu, 15 May 2014 13:16:22 -0400 (EDT)
+From: cve-assign@...re.org
+To: security@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 95 - input handling vulnerabilities loading guest kernel on ARM
 Content-Type: text/plain; charset=utf-8
 
-2014-10-03 17:39 GMT+02:00 mancha <mancha1@...o.com>:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On Fri, Oct 03, 2014 at 05:16:31PM +0200, Rainer Gerhards wrote:
-> > Today is Germany's national holiday.  IIRC it was with 3500000000 or
-> > 350000001. I probably can't check today. I think it was on ubuntu
-> 12.04lts
-> > fully patched.
-> >
-> > Sorry i have no better answer at the moment.
->
-> In that case, Schönen Feiertag.
->
->
-Danke!
+> Xen Security Advisory XSA-95
+
+We would like to model this one as having four distinct primary issues.
+In other words, although the concepts of missing validation are
+similar, and the impacts may be the same, the types of validation can
+be categorized separately. Thus, there are four CVE IDs.
+
+> When loading a 32-bit ARM guest kernel the Xen tools did not correctly
+> validate the length of the kernel against the actual image size. This
+> would then lead to an overrun on the input buffer when loading the
+> kernel into guest RAM.
+
+Use CVE-2014-3714.
 
 
-> Maybe when you have some time you can provide a bit more particulars. On
-> sysklogd, I'm not seeing it. But, the flaw does exist and there is OOB
-> access so there's no reason not to apply the fix.
->
->
+> Furthermore when checking a 32-bit guest kernel for an appended DTB,
+> the Xen tools were prone to additional overruns also leading to an
+> overrun on the input buffer when loading the kernel into guest RAM.
 
-I have had a pretty deep look at it. Bottom line is that I couldn't
-reproduce it manually either. So I checked the test environment. As it
-turns out, the root cause for my ability to crash was that the test scripts
-did not setup things properly for v3 ... some v5 binary modules kept be
-used. Digging deeper in the old code, a crash seems as unlikely as said in
-the initial report. The reason is that some masking happens, which in turn
-prevents most problems with the negative PRIs. I'll update the advisory
-soon. Sorry for the noise and thanks for keeping this straight.
+Use CVE-2014-3715.
 
-Rainer
 
+> Also, the tools would access a field in the putative DTB header
+> without checking for its alignment.
+
+Use CVE-2014-3716.
+
+
+> When loading a 64-bit ARM guest kernel the tools similarly did not
+> fully validate the requested load addresses, possibly leading to an
+> overrun on the input buffer when loading the kernel into guest RAM.
+
+Use CVE-2014-3717.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTdPXqAAoJEKllVAevmvmsHAQH/RZMLQmt/JDGo6O0ZnMkzyMH
+tTXkjVjZI6Y2+DV5pFza5McAg3GXjlIxJztmsoWxic0Q7YEaNlH4bgt4lscQyzhR
+xkBFkU7aRUP3k7FOpY55Sf9jER6NycgrnD3+hyQdeBrg5lkIpiw0eaOrIMzep1uE
+xlmRA1ZTrvDA3nMEBAJ1dxCmuAj2GpIqTO5vCKKAOnFfjuTVjoPHNBfdRb9biRZW
+vR3jJmmpnc6OdwuAdMKGrhGuKh0qQb7AH0JaGhB0i0C1R2ahxHl5X/xnnxkXCgIw
+Yz3MvGOGiS8r9dPwl6XPmuBK5Q/wAAWVQVA6uTZSZZX/fVdR6FkY71syIYk/NC4=
+=sfjR
+-----END PGP SIGNATURE-----
