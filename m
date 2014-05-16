@@ -1,89 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/7
-Message-Id: <20141020174847.719FB6CC00C@smtpvmsrv1.mitre.org>
-Date: Mon, 20 Oct 2014 13:48:47 -0400 (EDT)
-From: cve-assign@...re.org
-To: larry0@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Vulnerabilities in WordPress Database Manager v2.7.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/16/1
+Message-Id: <E1WlFUK-00079S-Oi@xenbits.xen.org>
+Date: Fri, 16 May 2014 10:35:40 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 95 (CVE-2014-3714,CVE-2014-3715,CVE-2014-3716,CVE-2014-3717) - input handling vulnerabilities loading guest kernel on ARM
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Download: https://wordpress.org/plugins/wp-dbmanager/
-> Contacted: 10/13/2014, Vulnerabilities addressed in v2.7.2.
-> Full Advisory: http://www.vapid.dhs.org/advisories/wordpress/plugins/wp-dbmanager-2.7.1/index.html
+ Xen Security Advisory CVE-2014-3714,CVE-2014-3715,CVE-2014-3716,CVE-2014-3717 / XSA-95
+                             version 3
 
-> In the following lines commands can be injected into the variables
-> being used to build the command by using ;command;
-> 
-> $backup['filepath'] 
-> $backup['mysqldumppath']
+      input handling vulnerabilities loading guest kernel on ARM
 
-Use CVE-2014-8334 for this issue involving shell metacharacters.
+UPDATES IN VERSION 3
+====================
 
+Several CVE numbers, CVE-2014-{3714,3715,3716,3717} have been assigned
+to the issues described here. References have been added to the issue
+description.
 
-> --password="passwordhere"
-> 
-> while (true); do  echo -n `ps ax | grep m[y]sqldump`; done
+ISSUE DESCRIPTION
+=================
 
-Use CVE-2014-8335 for this issue in which local users can see a
-password by listing process arguments.
+When loading a 32-bit ARM guest kernel the Xen tools did not correctly
+validate the length of the kernel against the actual image size.  This
+would then lead to an overrun on the input buffer when loading the
+kernel into guest RAM (CVE-2014-3714).
 
+Furthermore when checking a 32-bit guest kernel for an appended DTB,
+the Xen tools were prone to additional overruns also leading to an
+overrun on the input buffer when loading the kernel into guest RAM
+(CVE-2014-3715).  Also, the tools would access a field in the putative
+DTB header without checking for its alignment (CVE-2014-3716).
 
-> only a few queries are allowed (Use Only INSERT, UPDATE, REPLACE,
-> DELETE, CREATE and ALTER statements.) but these are sufficient to
-> download sensitive system files:
+When loading a 64-bit ARM guest kernel the tools similarly did not
+fully validate the requested load addresses, possibly leading to an
+overrun on the input buffer when loading the kernel into guest RAM
+(CVE-2014-3717).
 
-> INSERT into password (passwords) VALUES(LOAD_FILE("/etc/passwd"));
+IMPACT
+======
 
-This report seems related to:
+An attacker who can control the kernel used to boot a guest can
+exploit these issues.
 
-  if ( preg_match( "/LOAD_FILE/i", $sql_query ) ) {
+Exploiting the overflow issues allows information which follows the
+guest kernel in the toolstack address space to be copied into the
+guest's memory, constituting an information leak.
 
-in the
+Alternatively either the overflow or alignment issues could be used to
+crash the toolstack process, leading to a denial of service.
 
-  https://github.com/lesterchan/wp-dbmanager/commit/7037fa8f61644098044379190d1d4bf1883b8e4a
+VULNERABLE SYSTEMS
+==================
 
-commit. Our question here is whether this is best categorized as a
-WP-DBManager vulnerability fix, or a workaround for a MySQL
-misconfiguration. It seems that, ideally, if WP-DBManager is not
-supposed to be able to use MySQL to read arbitrary files, then this
-would have been addressed with the configuration of the FILE privilege
-or the secure_file_priv variable.
+ARM systems are vulnerable from Xen 4.4 onwards.
 
-Presumably there are other products in which users are intended to be
-able to use INSERT, but are not intended to be able to use LOAD_FILE.
-It's not clear that, for every such product, doing preg_match for
-/LOAD_FILE/i is the recommended approach, and absence of this approach
-means that a CVE ID is assigned.
+MITIGATION
+==========
 
-Also, in the WP-DBManager case, CREATE is allowed, and this could
-conceivably mean that CREATE FUNCTION is available (again, depending
-on the MySQL privilege configuration), possibly resulting in the user
-gaining unintended access to the server machine and its local
-filesystem.
+Ensuring that guests use only trustworthy kernels will avoid this
+problem.
 
-Should there be one CVE ID now for "attempts to offer a subset of
-MySQL statements without considering the possible MySQL privilege
-configurations" as applied to the LOAD_FILE attack, and then other
-"incomplete fix" CVE IDs later if a new attack against 2.7.2/2.7.3 is
-disclosed?
+CREDITS
+=======
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+This issue was discovered by Thomas Leonard.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa95.patch        xen-unstable, Xen 4.4.x
+
+$ sha256sum xsa95*.patch
+1ab63ff126b92e752e88b240838dd66b66415604eaa3e49e373cb50ad3cdd0af  xsa95.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJURUpKAAoJEKllVAevmvmsxC8H/RbAUETRxb72HufQQIx3+7Qf
-ksf3B8IRz+4mnd/b97Fa4kFw+B04eOhXwUtp1Dl/BoGXGWn3kqcDvaqVxDRzLTL7
-zNDt4b1riq4YFxWLStFv0gh8rIRcyMLMqP6iwY0WHT0ycliO4CaoAj240UF32OBo
-e4PSqFZSm4o7915cg0nBhGYhI41TUBfETqruZnZ7oum/8SMvCjNJAqgn1xR+XDIE
-mZggSYW2gvdFGxrjXcxyGhDDwAMBRArZhIZwczDzVIQJpx427GYFNKYrApB2mlze
-4+R7Rq36RIylrqXvkvdGYSD4TvbcEhritEnV1qgc2PJ3pxI8XKpJr9oxSf065ZI=
-=jsGy
+iQEcBAEBAgAGBQJTdenGAAoJEIP+FMlX6CvZHbAIAI581kr07vf1KNlGVIyfOoJN
+y8iqAS4n4D8JM7HJgoC+4Yf8HXA+KljR2Pg31ciY1eryWFibvZiBt1aykZVS7y+c
+nVMHNoOVv0HmA/RycMT06iNy8BRThat4QY5/Eov8voRESU0yCPXTgoNg1iBLt5Eb
+ZG31pI2Nk+xOmC4+wtJ8BLv+k2dV6vLNNaZB60OrXL7VOFlQlyCRrUSy3wy86y+h
+FkhelkAWnRBpYOBn0ZSJayVlMH1fRtZWSYQOhDQHt14laJE/UJVQ5gNnSJDCQevS
+io2i30xT38SfdoBPfiTj6yfgmmT3YmJRZvJ7QnSqBDWL1r4xcTCtHB7Uyy94X4w=
+=ivP8
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa95.patch" of type "application/octet-stream" (3213 bytes)
