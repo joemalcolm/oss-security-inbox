@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/7
-Message-ID: <20141001112452.GB5304@suse.de>
-Date: Wed, 1 Oct 2014 13:24:52 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/18/1
+Message-ID: <5378163D.5050800@gentoo.org>
+Date: Sat, 17 May 2014 22:09:01 -0400
+From: Chris Reffett <creffett@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: mbriza@...hat.com
-Subject: various sddm vulnerabilities
+Subject: CVE request: X2Go Server privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hello,
+I don't see a CVE assigned for the vulnerability announced here:
+http://permalink.gmane.org/gmane.linux.terminal-server.x2go.announce/83
+It appears that this is a privilege escalation through injecting
+backticks, but I'm not absolutely sure. It is fixed as of versions
+4.0.1.10/4.0.0.8 in the following commits:
+http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=5a2aa0c36ef7a57d87e3bb6f7c6b2558ed5430f7
+http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=5a2aa0c36ef7a57d87e3bb6f7c6b2558ed5430f7
+http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=8347d3fef0e5cbabe4aa48f503612fa7b9d078f8
+http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=bf44925ecccda436caa1cfc34f89eced9c1bd104
 
-During review we found several issues in the sddm
-display manager which allow local users to obtain
-root privileges. More on this is here:
+Could a CVE be assigned?
 
-https://bugzilla.suse.com/show_bug.cgi?id=897788
+Thanks,
+Chris Reffett
 
-Sebastian
 
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+Download attachment "signature.asc" of type "application/pgp-signature" (1032 bytes)
