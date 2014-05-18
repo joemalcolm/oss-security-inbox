@@ -1,58 +1,177 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/20
-Message-ID: <DF86991A-119D-4768-8829-506BB30FC9A7@redhat.com>
-Date: Fri, 31 Jan 2014 11:28:42 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: CVE request: temp file issues in python's logilab-common module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/18/2
+Message-ID: <CAD3Canf5xcRtcV=SJHhSxuchxmHatyQG+b+k7UeK6w45fMpyRw@mail.gmail.com>
+Date: Sun, 18 May 2014 15:12:35 +1200
+From: Matthew Daley <mattd@...fuzz.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests / advisory: TeamPass <= 2.1.19
 Content-Type: text/plain; charset=utf-8
 
-Some temporary file issues were reported by Jakub Wilk (quoting from our bug report):
+Hi,
 
-In logilab/common/pdf_ext.py it uses fully predictable names:
+I'd like to request CVE IDs for these issues. They were found in
+TeamPass (www.teampass.net), an open-source collaborative password
+manager.
 
-def extract_keys_from_pdf(filename):
-    # what about using 'pdftk filename dump_data_fields' and parsing the output ?
-    os.system('pdftk %s generate_fdf output /tmp/toto.fdf' % filename)
-    lines = file('/tmp/toto.fdf').readlines()
-    return extract_keys(lines)
+This is the first such request and the issues are now public; this
+message serves as an advisory as well.
 
-
-def fill_pdf(infile, outfile, fields):
-    write_fields(file('/tmp/toto.fdf', 'w'), fields)
-    os.system('pdftk %s fill_form /tmp/toto.fdf output %s flatten' % (infile, outfile))
-
-
-And in logilab/common/shellutils.py:
-
-class Execute:
-    """This is a deadlock safe version of popen2 (no stdin), that returns
-    an object with errorlevel, out and err.
-    """
-
-    def __init__(self, command):
-        outfile = tempfile.mktemp()
-        errfile = tempfile.mktemp()
-        self.status = os.system("( %s ) >%s 2>%s" %
-                                (command, outfile, errfile)) >> 8
-        self.out = open(outfile, "r").read()
-        self.err = open(errfile, "r").read()
-        os.remove(outfile)
-        os.remove(errfile)
+All the issues are found in TeamPass versions <= 2.1.19, and all were
+reported by myself. The fixes are in the project's 2.1.20 git branch
+and not master (which is where users are directed to download the
+project from on the project's homepage.)
 
 
-tempfile.mktemp() should be replaced with tempfile.mkstemp() as it is documented as insecure.
+Issue #1: File execution protection bypass via language path injection
+
+Numerous TeamPass PHP files check for the existence and the setting of
+a $_SESSION value, "CPM", in order to prevent them from being
+requested by users and executed directly without going through
+index.php as actually intended.
+
+However, index.php (and sources/main.queries.php with the
+"change_user_language" request) allows users to set their language by
+passing it in via a POST variable. It is not checked for validity;
+FILTER_SANITIZE_STRING is not sufficient. A user can set their
+language so that the attempt by index.php to require_once a language
+file actually leads to loading one of the aforementioned
+execution-protected files. At this point, index.php has already set
+the CPM session variable and hence the protection is bypassed.
+
+For example, using this vulnerability, an unauthenticated user can
+cause the administrator settings page to be rendered. They can then
+change any admin settings as if they were logged in as the
+administrator. Interesting settings to change include: the ldap
+settings, so as to point to an attacker-controlled LDAP server to
+allow login to the TeamPass instance; the custom login text, which is
+shown unescaped at the login prompt, for a stored-XSS attack to
+retrieve users' credentials; or the filesystem path settings, to
+divert execution to other locations.
+
+This issue is exploitable by remote unauthenticated users with a wide
+impact depending on the pages/settings accessed (login bypass, remote
+code execution (see example in next issue), ...).
+
+Fix: https://github.com/nilsteampassnet/TeamPass/commit/fd549b245c0f639a8d47bf4f74f92c37c053706f
 
 
-I don't believe a CVE has been requested for this already.  Can one be assigned please?
+Issue #2: File execution protection bypass via incorrect use of
+session variables
+
+This relates to the same $_SESSION-based "CPM" checks that certain
+files make in order to prevent their direct execution by users.
+
+There is another bypass; it is simpler but allows the execution of
+slightly fewer execution-protected files.
+
+index.php sets the session CPM variable to 1 at the start of its
+execution. Hence, by simply requesting index.php, a user is able to
+then directly execute some of the other execution-protected files. The
+files affected are limited to the ones that call session_start before
+checking the CPM protection key. If they do not, then the CPM key is
+obviously unset and hence the protection still works correctly.
+
+For example:
+$ curl -b /tmp/cookies -c /tmp/cookies
+'http://192.168.1.73/TeamPass/sources/upload/upload.files.php?PHPSESSID=';
+echo
+Hacking attempt...
+$ curl -b /tmp/cookies -c /tmp/cookies
+'http://192.168.1.73/TeamPass/index.php' &> /dev/null
+$ curl -b /tmp/cookies -c /tmp/cookies
+'http://192.168.1.73/TeamPass/sources/upload/upload.files.php?PHPSESSID=';
+echo
+{"jsonrpc" : "2.0", "result" : null, "id" : "id"}
+
+Observe that after requesting index.php, we have access to TeamPass's
+file upload facility, obviously a sensitive component. I have tested
+that file upload is indeed possible this way.
+
+This issue is exploitable by remote unauthenticated users and
+similarly has a wide impact depending on the pages/settings accessed
+(login bypass, remote code execution...).
+
+Fix: https://github.com/nilsteampassnet/TeamPass/commit/7715512f2bd5659cc69e063a1c513c19e384340f
 
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1060304
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737051
-https://bugs.gentoo.org/show_bug.cgi?id=499872
-http://secunia.com/advisories/56720/
+Issue #3: Multiple SQL injection vectors in sources/main.queries.php
 
--- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+There are two SQL injection vectors in this file.
+
+The first is in the handling of the "send_pw_by_email" request, namely
+in the "login" POST variable. This is interpolated, unescaped, in the
+SQL query that checks whether there is already a password reset
+request key in the database.
+
+The second is in the handling of the "generate_new_password" request,
+namely in the "login" POST variable again. This is interpolated,
+unescaped, in the SQL query that retrieves the password reset request
+key from the database.
+
+These vectors are accessible by remote unauthenticated users by
+exploiting the first two issues, or to authenticated users directly. I
+have tested each unique type of injection with sqlmap and have
+confirmed that they allow the complete dump of the database,
+modification of its data, remote SQL/OS shell execution, etc.
+
+Fix: https://github.com/nilsteampassnet/TeamPass/commit/7715512f2bd5659cc69e063a1c513c19e384340f
+
+
+Issue #4: Multiple SQL injection vectors in sources/datatable/*; and
+datatable.logs.php (in the root directory, *not* in sources/datatable
+directory)
+
+There are numerous copy-pasted SQL injections in each of these files.
+I'll describe the common element of each instead of splitting them
+across each of the five files.
+
+The first and second are in the "iDisplayStart" and "iDisplayLength"
+GET variables. These are used to build a SQL query LIMIT fragment.
+They are interpolated, unescaped, into this fragment.
+
+These are repeated per-action in each of the five files, giving rise
+to a total of 2 * (1 + 6 + 1 + 1 + 5) = 28 SQL injection vectors.
+
+The third is in the "sSortDir_..." GET variable(s). This *is*
+mysql_real_escape_string'd before interpolation into a SQL query ORDER
+BY fragment, but it is not surrounded by apostrophes in the fragment.
+It is therefore still open to exploitation by using injections that do
+not involve any characters that are escaped.
+
+These are repeated per-action in each of the five files, giving rise
+to a total of 1 * (1 + 6 + 1 + 1 + 5) = 14 SQL injection vectors.
+
+These vectors are accessible by remote unauthenticated users by
+exploiting the first two issues, or to authenticated users directly. I
+have tested each unique type of injection with sqlmap and have
+confirmed that they allow the complete dump of the database,
+modification of its data, remote SQL/OS shell execution, etc.
+
+Fix: https://github.com/nilsteampassnet/TeamPass/commit/7715512f2bd5659cc69e063a1c513c19e384340f
+and https://github.com/nilsteampassnet/TeamPass/commit/8820c8934d9ba0508ac345e73ad0be29049ec6de
+
+
+Issue #5: Multiple XSS vectors in items.php
+
+There are four locations where user-provided input is echoed back into
+the generated page without escaping in this file:
+
+- Three locations with the "group" GET parameter when outputting the
+"hid_cat" and "open_folder" form input HTML elements
+- One location with the "id" GET parameter when outputting the
+"open_id" form input HTML element.
+
+A remote unauthenticated attacker can, with limited victim input,
+navigate a logged-in TeamPass user with a crafted URL and perform an
+XSS attack, allowing ie. the exfiltration of the user's cookies so as
+to allow the attacker to authenticate as the victim.
+
+Fix: https://github.com/nilsteampassnet/TeamPass/commit/fd549b245c0f639a8d47bf4f74f92c37c053706f
+and https://github.com/nilsteampassnet/TeamPass/commit/8820c8934d9ba0508ac345e73ad0be29049ec6de
+
+
+Please let me know if you need any further information.
+
+Thanks,
+
+- Matthew Daley
