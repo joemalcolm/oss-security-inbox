@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/10
-Message-ID: <5438081D.1080606@fifthhorseman.net>
-Date: Fri, 10 Oct 2014 12:23:57 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: David Leon Gil <coruus@...il.com>, kristian.fiskerstrand@...ptuouscapital.com
-CC: oss-security@...ts.openwall.com, "gnupg-devel@...pg.org" <gnupg-devel@...pg.org>, Werner Koch <wk@...pg.org>, thijs@...ian.org
-Subject: Re: 0xdeadbeef comes of age: making keysteak with GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/18/3
+Message-ID: <20140518114318.GC1028@frohike.xs4all.nl>
+Date: Sun, 18 May 2014 13:43:18 +0200
+From: Peter Bex <Peter.Bex@...all.nl>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: CVE request for buffer overrun in CHICKEN Scheme
 Content-Type: text/plain; charset=utf-8
 
-On 10/10/2014 12:01 PM, David Leon Gil wrote:
-> (While I know that if a root CA were caught intentionally issuing an
-> MitM cert for keybase.io or pgp.mit.edu would face likely
-> delisting/bankruptcy.)
+Hi all,
 
-I'd like to believe that also, but i think that some of the members of
-the CA cartel might be "too big to fail" in the current infrastructure.
- There's no chance that the CA will go bankrupt if they aren't delisted
-(since the CA market is a lemon market), and every web site certified by
-the bigger CAs has an incentive to argue against that CAs' delisting
-(because it will break their web site).
+I would like to request a CVE for a buffer overrun bug in CHICKEN Scheme
+which is very similar to CVE-2013-4385.  It affects a very particular,
+not very common use of the read-u8vector! procedure.  If given a buffer
+and #f (the Scheme value for "false") as the buffer's size (which should
+trigger automatic size detection but doesn't), it will read beyond the
+buffer, until the input port (file, socket, etc) is exhausted.  This may
+result in the typical potential remote code execution or denial of
+service; in CHICKEN, these buffers are initially allocated on the stack
+and moved to the heap upon GC.
 
-And you're still relying on the targeted keyserver operators themselves
-to resist malicious intrusions on their keyservers (whether via legal or
-financial or technical coercion).
+In normal usage, users would usually pass in the buffer's size.  This
+is also the workaround for this bug.
 
-Furthermore, pointing everyone at one or two servers which may not have
-the capacity to withstand heavy load (or reliable uptime) runs the risk
-of DoS of all those users, and increases the likelihood that OpenPGP
-certificates simply won't get updated when those heavily-targeted
-machines go down.
+For the official announcement, see
+http://lists.gnu.org/archive/html/chicken-announce/2014-05/msg00001.html
 
-For years, a lot of people suggested pgp.mit.edu because it was
-well-known, short, and easy to transmit.  in practice, pgp.mit.edu was
-often bogged down, and wasn't even brought up to a recent version of the
-modern keyserver implementation (sks) until sometime last year, i think.
- (many thanks to the current pgp.mit.edu admins, btw, who appear to be
-currently doing a great job and providing an often-unappreciated public
-service!)
+The patch on the discussion list is
+http://lists.gnu.org/archive/html/chicken-hackers/2014-05/msg00032.html
+and it got applied as
+http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=1d06ce7e21c7e903ca5dca11fda6fcf2cc52de5e
 
-	--dkg
+All versions of CHICKEN prior to 4.9.0 (soon to be released) and 4.8.0.7
+(not yet(?) released) are affected.
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+Cheers,
+Peter Bex
+-- 
+http://www.more-magic.net
