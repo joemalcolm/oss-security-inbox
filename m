@@ -1,95 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/8
-Message-ID: <CAEZyo3AivqiiTQAb+H9+8zJAoYTHw7D6_x_ugr4pfMpFR-RfHg@mail.gmail.com>
-Date: Mon, 8 Sep 2014 22:25:56 +0300
-From: Mikko Korpela <mikko.korpela@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Re: Python robotframework - tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/5
+Message-Id: <201405190705.s4J74tuP026290@linus.mitre.org>
+Date: Mon, 19 May 2014 03:04:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: mattd@...fuzz.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE requests / advisory: TeamPass <= 2.1.19
 Content-Type: text/plain; charset=utf-8
 
-Hi guys,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I didn't get what was the security issue.
-Anyway I removed my little debug/test-program from the submodule so
-you can relax now.
-https://github.com/mkorpela/pabot/commit/e8e423dc99094d761ea6944e71bb75eb5c418c8c
+> All the issues are found in TeamPass versions <= 2.1.19, and all were
+> reported by myself.
 
-Please in the future if there are some concerns post them to the issue tracker.
+Here are the CVE IDs for your discoveries. The commits mentioned in
+your original message have many other changes that are unrelated to
+your discoveries. Those other changes are not within the scope of any
+of these CVE IDs. If any of those changes should be interpreted as
+vulnerability fixes, one or more additional CVE IDs may be assigned.
 
-Best Regards,
-Mikko Korpela
+> Issue #1: File execution protection bypass via language path injection
 
-2014-09-08 19:21 GMT+03:00 Kurt Seifried <kseifried@...hat.com>:
-> On 08/09/14 09:22 AM, cve-assign@...re.org wrote:
->>> This is the first of many
->>
->> The MITRE CVE team obviously has no objection to your use of the
->> oss-security list for raising new discussion topics such as the
->> likelihood that a '../tmp/ substring represents a security problem.
->> The comments below are only about obtaining CVE assignments from
->> MITRE.
->>
->>> the reason I'm not assigning CVE's for these is this is a side project
->>
->> A CVE isn't going to be possible without further analysis explaining
->> why a vulnerability exists in the specific case. There can't be an
->> expectation that someone at MITRE is already familiar with the
->> product, or will read and understand the complete source code as part
->> of processing an oss-security message.
->>
->> Items that seem to be missing from the original message include:
->>
->> 1, Is the "merge('../tmp/passing.xml', '../tmp/failing.xml')"
->>    debugging code, or is this code realistically used because a
->>    different piece of software has created passing.xml and failing.xml
->>    files?
->
-> It's part of __main__ so it gets executed.
->
->> 2. If there is a realistic situation in which the
->>    "merge('../tmp/passing.xml', '../tmp/failing.xml')" executes, would
->>    the cwd realistically be a first-level directory such as the /root
->>    or /tmp directory?
->
-> yes if you run from within /root or /tmp, the "run from /root" would be
-> the obvious worry as it would indicate the root user is being used.
->
->> 3. For purposes of risk analysis, is unconstrained use of a ../tmp/
->>    pathname always equivalent to unconstrained use of a /tmp/ pathname?
->
-> If it ends up using /tmp/ then I would say that's a problem. is it
-> always a problem? I can't say.
->
->> A possible CVE assignment decision might be:
->>
->> A. If a different product came with a test suite containing:
->>
->>    test_program > /tmp/merged.xml
->>
->> then it could have a CVE because /tmp/merged.xml might be a symlink to
->> an important file.
->>
->> B. If the test suite were changed to:
->>
->>    test_program > ../tmp/merged.xml
->>
->> with no constraints, then it could still have a CVE, because some
->> people run test suites as root with a cwd of the /root directory.
->>
->> C. If ../tmp/ is used in "debugging code" that is intended to be run
->> by a developer who understands the appropriate cwd, and this
->> "debugging code" is not a "test suite" for users, then there is no CVE
->> assignment. Admittedly, there might be cases where the distinction
->> between "debugging code" and "test suite" is completely ambiguous.
->>
->>
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
+Use CVE-2014-3771.
 
 
+> Issue #2: File execution protection bypass via incorrect use of
+>           session variables
 
--- 
-Mikko Korpela
+Use CVE-2014-3772.
+
+
+> Issue #3: Multiple SQL injection vectors in sources/main.queries.php
+> Issue #4: Multiple SQL injection vectors in sources/datatable/*; and
+>           datatable.logs.php (in the root directory, *not* in
+>           sources/datatable directory)
+
+Use CVE-2014-3773 for issues 3 and 4.
+
+
+> Issue #5: Multiple XSS vectors in items.php
+
+Use CVE-2014-3774.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTeazMAAoJEKllVAevmvms4h0H/RbumrESu6O9eS2pUJIvgkow
+1oPUsqVY7WmXa/Uam5Irq27bM3f3Nt1WVgc3Fn5U7v5hXVjI7PPD9guIIN8tFado
+eTpjbyuVgHXeKfukESvIgbFQHrGvvlcYDGtS3MRBIPpXSEutqtlsFIHZHRzmqhWO
+roHNH2/u4dmLfPs14VV5/2iLBExBRQ1m3ZptWXGR3CL0RCAimYlYbdTTj6U6c0Ks
+CGumIGZDUFDSfMkjV+R3AHSP0QdMquq0sMWTVAKOUk5N9l8rAF3SDuHFJtBGJ0jR
+jz/5JzEsUPb8cAAi36tR6pwE+QtW2+hvrA4I+7W2YKG03HySlwQmWI9qLJ24D78=
+=jjpO
+-----END PGP SIGNATURE-----
