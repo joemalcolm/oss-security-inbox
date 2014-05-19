@@ -1,16 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/4
-Message-ID: <CALx_OUCUryCh+OkwH5gZ2hGVOGOsfgZzYnbALOX-X3m=a=g7bA@mail.gmail.com>
-Date: Mon, 6 Oct 2014 20:39:49 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Who named shellshock?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/9
+Message-ID: <537A5550.809@gentoo.org>
+Date: Mon, 19 May 2014 15:02:40 -0400
+From: Chris Reffett <creffett@...too.org>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org
+Subject: Re: Re: CVE request: X2Go Server privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-> The bashdoor.com thing sounds a bit damning (doesn't sound like
-> something that would be in the notifications to CDNs & co?).
+On 5/19/2014 3:01 AM, cve-assign@...re.org wrote:
+>> I don't see a CVE assigned for the vulnerability announced here:
+>> http://permalink.gmane.org/gmane.linux.terminal-server.x2go.announce/83
+>> It appears that this is a privilege escalation through injecting
+>> backticks, but I'm not absolutely sure. It is fixed as of versions
+>> 4.0.1.10/4.0.0.8 in the following commits:
+>> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=5a2aa0c36ef7a57d87e3bb6f7c6b2558ed5430f7
+>> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=5a2aa0c36ef7a57d87e3bb6f7c6b2558ed5430f7
+>> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=8347d3fef0e5cbabe4aa48f503612fa7b9d078f8
+>> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=bf44925ecccda436caa1cfc34f89eced9c1bd104
+> 
+> Use CVE-2013-7383.
+> 
+> Please clarify whether there is a fourth required commit. (The
+> first commit was listed twice in your original message.)
+> 
+> 
+Sorry about that, my mistake. The second commit should have been:
+http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=b03665513ab1969b069c1351fe17cbb8b5fca256
+So yes, there are four commits. Thanks for the catch!
 
-(And it's not a pun that immediately comes to mind when thinking about an
-RCE in bash, I think, given that it's not a backdoor.)
-
-/mz
+Chris Reffett
