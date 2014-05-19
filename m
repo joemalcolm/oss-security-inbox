@@ -1,81 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/3
-Message-ID: <20141215141342.GB5363@suse.de>
-Date: Mon, 15 Dec 2014 15:13:42 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/6
+Message-Id: <201405190709.s4J78uY5026465@linus.mitre.org>
+Date: Mon, 19 May 2014 03:08:56 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: blkid command injection
+Cc: cve-assign@...re.org
+Subject: Re: CVE request for buffer overrun in CHICKEN Scheme
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 02, 2014 at 12:22:04PM +0100, Sebastian Krahmer wrote:
-> 
-> On Fri, Nov 28, 2014 at 12:17:24AM +1100, Murray McAllister wrote:
-> > On 11/27/2014 02:25 AM, Sebastian Krahmer wrote:
-> >> Hi
-> >>
-> >> There is a command injection inside blkid. It uses caching
-> >> files (/dev/.blkid.tab or /run/blkid/blkid.tab) to store info about the
-> >> UUID, LABEL etc it finds on certain devices.
-> >>
-> >> However, it does not strip " character, so it can be confused to
-> >> build variable names containing embedded shell metas, which it would usually
-> >> encode inside the value.
-> >>
-> >> Given an USB stick with /dev/sdb1 you can:
-> >>
-> >> # mkfs.ext4 -L 'X"`/tmp/foo` "' /dev/sdb1
-> >> # blkid -o udev /dev/sdb1
-> >> ID_FS_LABEL=X__/tmp/foo___
-> >> [...]
-> >>
-> >> Seems to be OK, but invoking blkid a second time, taking the cache in effect:
-> >>
-> >> # blkid -o udev /dev/sdb1
-> >> ID_FS_LABEL=X
-> >> ID_FS_LABEL_ENC=X
-> >> ID_FS_`/tmp/foo` "" UUID=...
-> >> [...]
-> >>
-> >>
-> >> "blkid -o udev" is often used in root context via udev or in automounters
-> >> (uam-pmount) to construct key=value environment variables inside shell scripts
-> >> which are then evaluated.
-> >> Might be possible to construct an embedded LD_PRELOAD= as well for the binary
-> >> case.
-> >>
-> >> By injecting > character one can probably construct whole fake cache entries.
-> >>
-> >> Sebastian
-> >>
-> >>
-> >>
-> >>
-> >
-> > Karel Zak has committed a patch:
-> >
-> > https://github.com/karelzak/util-linux/commit/89e90ae7b2826110ea28c1c0eb8e7c56c3907bdc
-> >
-> 
-> Thanks. Patch looks good to me. I contacted upstream about additional
-> fixes which you might want to include as well, so we can release it alltogether. The
-> severity of command injection is probably not that high that we need
-> updates immediately.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-FWIW, the issue in question can be found here:
+> I would like to request a CVE for a buffer overrun bug in CHICKEN Scheme
+> which is very similar to CVE-2013-4385.  It affects a very particular,
+> not very common use of the read-u8vector! procedure.  If given a buffer
+> and #f (the Scheme value for "false") as the buffer's size (which should
+> trigger automatic size detection but doesn't), it will read beyond the
+> buffer, until the input port (file, socket, etc) is exhausted.  This may
+> result in the typical potential remote code execution or denial of
+> service
 
-https://bugzilla.suse.com/show_bug.cgi?id=907434
+Use CVE-2014-3776 for this "should trigger automatic size detection
+but doesn't" issue that has a resultant buffer overflow.
 
-Interesting for 32 bit systems where size_t has 32bit and so a mult of two
-32bit words does not fit into the result. This would allow poor-man's badUSB attacks
-with lovely crafted GPT's because its probed via systemd/udev upon plugin.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Thanks to Karel Zak for fixing a wrong > in the initial patch.
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+iQEcBAEBAgAGBQJTea2nAAoJEKllVAevmvmsDLcIAJdrjm3SKzzVZNSil/uS5O8R
+L4AisRKJlVBvsCG3QcYeabzo8EbmLLDFqOlmISAi/MPhU0mX1ShXJ4luENfHxCBp
+FrHjXnnpS3oppIbSdcl5o3at1PnVGJevSNVHnMBK4Ou3qgnMlwWJWD8n5GC3/YaH
+YaHyFUvaObvuEMaFBIZw6wBMk5+dIerW6ElMh8GvBkWecqovKdDC+YsrH0tnYDUN
+K3ICeWx8LY7M1eeIdfvhbCHhOYamogJ4ws/V4rbG+5kzeHwSFhRSxAUNIUU1WbZV
+1k45rmStE35kIFFxzmTH/dAuLk7Fn3B3+vbSDvCsyhFwhSYOLb01wuG+UYnSlAs=
+=sBKu
+-----END PGP SIGNATURE-----
