@@ -1,53 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/21
-Message-Id: <20141006154527.030F73AE06A@smtpvbsrv1.mitre.org>
-Date: Mon,  6 Oct 2014 11:45:27 -0400 (EDT)
-From: cve-assign@...re.org
-To: mancha1@...o.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request(s): Getmail 4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/7
+Message-ID: <CAHgqqbTrd+Kc1YwwmR5iG2koU5brf0H+=EWjKJ1TbJ+L6LFPVQ@mail.gmail.com>
+Date: Mon, 19 May 2014 10:48:17 +0300
+From: Dolev Farhi <dolevf87@...il.com>
+To: cve-assign <cve-assign@...re.org>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: OpenFiler - Arbitrary Code Execution & Stored XSS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Yes,
 
-> http://pyropus.ca/software/getmail/CHANGELOG
+OpenFiler uses the 'openfiler' user account for its' web user interface,
+and port 446 is open for the UI administration.
 
-> Getmail 4.45.0 added IMAP4-over-SSL certificate hostname validation.
-> POP3-over-SSL remained vulnerable to MITM attacks.
+in general, logged on user doesn't have direct shell access and the
+OpenFiler appliance does not provide with an interface
 
-The CHANGELOG says:
+to interact directly with the shell. this makes the command execution
+problematic in terms of security as it allows an attacker to run
 
-  Version 4.46.0
+system commands and read arbitrary system files via the host name change
+box.
 
-      -add missing support for SSL certificate checking in POP3 which broke
-      POP retrieval in v4.45.0.  Requires Python 2.6 or newer.  Thanks: "mancha".
+Regarding the XSS vulnerability; OpenFiler allows LDAP authentication and
+not just local user accounts, this may cause privilege escalations once a
+regular user adds a malicious shared device..
 
-This depends on the interpretation of "broke POP retrieval."
 
-Do you mean that, in version 4.45.0, the client sent credentials over
-a POP3-over-SSL connection, and actual POP3 mail retrieval failed
-after credentials had already been sent? That behavior could have a
-CVE ID.
 
-Or do you mean that, in version 4.45.0, the POP3-over-SSL connection
-was never fully established, and the client would not have sent
-credentials? In other words, a MITM attack could succeed but there
-would be no security impact? That behavior would not have a CVE ID.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUMrhZAAoJEKllVAevmvmstp0IAID4JjHJCsog98/a4SFblxRN
-0pC7f/DpX/5izj2i1kBdRU1u+wgrmoikbXeyck50coamD5e+xD94/P2I+aEhO90R
-9Xp3GWaLvghmdAjAXpA9KqHgrKU9F2PVHZW6j1eAalc4qCM6b6Dgi1bERLcJRPAI
-oKZ4U/nb72HnS2y3U3GeVOvH6DnXaahvlGT06cSrTFQwoN6r5Azr037xygxMvDKk
-ch4viXJ7S4Rm/vKntjb0XHdBO6oRP5qFDIHY73TBpcuAesmkrYmL1rFgDkWa3lXq
-fyktjdFfuQlDkzZL9hQo4HHvZey2kgSQPK1ZninGO/Yj1KvAHG/1VrIJzxhbPmY=
-=8/LZ
------END PGP SIGNATURE-----
+
+
+
+On Mon, May 19, 2014 at 6:46 AM, <cve-assign@...re.org> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> Can you provide more information about how these issues cross
+> privilege boundaries?
+>
+> As far as the GUI is concerned, the 'root' account is just a normal
+
+
+
+> user. You need to log in as 'openfiler' to administer the system.
+>
+> Maybe there's an argument that one only needs network connectivity to
+> TCP port 446 for the administrative web interface, but one needs
+> connectivity to TCP port 22 (maybe?) to login as root.
+>
+> Also, http://www.exploit-db.com/exploits/33248/ seems to be about XSS
+> attacks conducted by the openfiler account against the openfiler
+> account.
+>
+> The issues can have CVE IDs only if there's privilege escalation in a
+> realistic way.
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJTeX3gAAoJEKllVAevmvms9lsIALryes3uY6dITdbP/1R4ee/0
+> FGFDq0WH8VvEwSiNzqGyavupGeq0O0X0PEkOnb3mwAcBV38X4MU3K7zsSGaoWEEt
+> 4X7o7VU7XhewwSO6t+LabaVZcu0Vk3Y5sSDuOUH2GxmvGQcJAFstQF5bVp4Jan8q
+> O4oz3T0ny9AX1rJhxcoII0ReatWsl5h7HrkskvS8DGwiqBlFAeUwQMr63gDYqCYK
+> nHLl1dmrl9EGwKTOVeZcjUdmV5ElZtw6oTSsXrMYZKU5aeBb16mD+LpmHUFzyT3j
+> oqoRdqUeZbxB8gxj2mVyp1n+7Pnt2vDvH5VE5+OADceaZV1pNDpoukVveWq34n4=
+> =3gFo
+> -----END PGP SIGNATURE-----
+>
+
