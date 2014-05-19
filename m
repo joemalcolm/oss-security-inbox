@@ -1,83 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/4
-Message-ID: <20140705182547.GA6704@openwall.com>
-Date: Sat, 5 Jul 2014 22:25:47 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/1
+Message-ID: <537961D3.5010907@moodle.com>
+Date: Mon, 19 May 2014 09:43:47 +0800
+From: Michael de Raadt <michaeld@...dle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+Subject: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 04, 2014 at 02:05:08PM -0700, Andy Lutomirski wrote:
-> Upstream commit b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a fixes a
-> ptrace bug.  The exact scope of the bug is somewhat unclear right now.
-> I see no reason why the bug should not be present as far back as Linux
-> 2.6.17, but it seems to be difficult to reproduce on old kernels.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Here are some distro vendor status pages on this bug:
+The following security notifications are now public after release.
 
-"x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
-https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1337339
+Thanks to OSS members for their continued cooperation.
 
-Ubuntu has just sent out 7 update announcements (for different of their
-supported distros/kernels), USN-2266-1 through USN-2272-1.
+=======================================================================
+MSA-14-0014: Cross-site request forgery possible in Assignment
 
-"ptrace,x86: force IRET path after a ptrace_stop()"
-http://kernel.opensuse.org/cgit/kernel/commit/?h=openSUSE-13.1&id=d1f26676dad578a65c94782f0c2bd00b7aa68f1b
+Description:       Session checking was not being performed correctly
+                   in Assignment's quick-grading, allowing forged
+                   requests to be made unknowingly by authenticated
+                   users.
+Issue summary:     Cross-Site Request Forgery
+Severity/Risk:     Serious
+Versions affected: 2.6 to 2.6.2, 2.5 to 2.5.5, 2.4 to 2.4.9 and
+                   earlier unsupported versions
+Versions fixed:    2.7, 2.6.3, 2.5.6 and 2.4.10
+Reported by:       Gerry Hall
+Issue no.:         MDL-44606
+CVE identifier:    CVE-2014-0213
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-44606
 
-"CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
-https://bugzilla.redhat.com/show_bug.cgi?id=1115927
+=======================================================================
+MSA-14-0015: Web service token expiry issue for MoodleMobile
 
-Red Hat's statement is:
+Description:       MoodleMobile web service tokens were not expiring.
+Issue summary:     Tokens created automatically in login/token.php are
+                   valid forever
+Severity/Risk:     Minor
+Versions affected: 2.6 to 2.6.2, 2.5 to 2.5.5, 2.4 to 2.4.9 and
+                   earlier unsupported versions
+Versions fixed:    2.7, 2.6.3, 2.5.6 and 2.4.10
+Reported by:       Juan Leyva
+Issue no.:         MDL-43119
+CVE identifier:    CVE-2014-0214
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-43119
 
-"This issue affects the versions of the Linux kernel as shipped with
-Red Hat Enterprise Linux 5, 6, 7 and Red Hat Enterprise MRG 2. Future kernel
-updates for Red Hat Enterprise Linux 5, 6, 7 and Red Hat Enterprise MRG 2 may
-address this issue."
+=======================================================================
+MSA-14-0016: Anonymous student identity revealed in assignment
 
-but it appears to have been posted before my unsuccessful attempts to
-trigger the error condition on RHEL5'ish and RHEL6'ish kernels yesterday.
-I fully agree that we need to treat these kernels as likely vulnerable
-unless we can show otherwise, though - obviously, simply not being able
-to trigger the problem with a particular PoC doesn't mean much.
+Description:       Some student details were included in assignment
+                   marking pages and would have been revealed to
+                   screen readers or through code inspection.
+Issue summary:     Blind marking reveals identities to screen readers
+Severity/Risk:     Minor
+Versions affected: 2.6 to 2.6.2, 2.5 to 2.5.5, 2.4 to 2.4.9 and
+                   earlier unsupported versions
+Versions fixed:    2.7, 2.6.3, 2.5.6 and 2.4.10
+Reported by:       Damyon Wiese
+Issue no.:         MDL-44750
+CVE identifier:    CVE-2014-0215
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-44750
 
-So far, we're aware that the problem is definitely triggerable on recent
-kernels (at least mainline and recent Ubuntu) running on Intel CPUs
-(including in guest kernels in some VMs that run on Intel CPU hosts).
+=======================================================================
+MSA-14-0017: File access issue in HTML block
 
-Other closely related issues are CVE-2006-0744 (Linux kernel SYSRET
-vulnerability) and CVE-2012-0217 (Xen/FreeBSD/NetBSD/Windows SYSRET
-vulnerability).  What we have here may be viewed as an incomplete fix
-for or a regression of CVE-2006-0744, depending on whether all kernels
-since 2.6.16.5 (the first version to have a fix for CVE-2006-0744) are
-vulnerable or some are not vulnerable (this is currently unclear).
+Description:       Access to files linked on HTML blocks on the My home
+                   page was not being checked in the correct context
+                   allowing access to unauthenticated users.
+Issue summary:     Files linked in HTML blocks on My home are available
+                   to non authenticated users
+Severity/Risk:     Minor
+Versions affected: 2.6 to 2.6.2, 2.5 to 2.5.5, 2.4 to 2.4.9 and
+                   earlier unsupported versions
+Versions fixed:    2.7, 2.6.3, 2.5.6 and 2.4.10
+Reported by:       Mike Wilson
+Issue no.:         MDL-43877
+CVE identifier:    CVE-2014-0216
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-43877
 
-Due to the similarity with CVE-2012-0217, we probably could also state
-that the issue does not affect systems running on AMD CPUs, as that was
-the conclusion for CVE-2012-0217 when it was discussed two years ago.
-However, the fix for CVE-2006-0744 (fixed in 2006) added this comment:
+=======================================================================
+MSA-14-0018: Information leak in courses
 
- * When user can change the frames always force IRET. That is because
- * it deals with uncanonical addresses better. SYSRET has trouble
- * with them due to bugs in both AMD and Intel CPUs.
+Description:       Details of hidden courses were being revealed to
+                   unauthenticated users on enrolment pages by URL
+                   manipulation.
+Issue summary:     Hidden course name and summary visible to guests
+Severity/Risk:     Minor
+Versions affected: 2.6 to 2.6.2
+Versions fixed:    2.7 and 2.6.3
+Reported by:       Marina Glancy
+Issue no.:         MDL-45126
+CVE identifier:    CVE-2014-0217
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45126
 
-so maybe there were in fact relevant bugs in early AMD CPUs (and this
-aspect was overlooked when CVE-2012-0217 was discovered and discussed?)
+=======================================================================
+MSA-14-0019: Reflected XSS in URL downloader repository
 
-http://blog.xen.org/index.php/2012/06/13/the-intel-sysret-privilege-escalation/
+Description:       There was a lack of filtering in the URL downloader
+                   repository that could have been exploited for XSS.
+Issue summary:     Reflected Cross site scripting in URL downloader
+                   repository
+Severity/Risk:     Serious
+Versions affected: 2.6 to 2.6.2, 2.5 to 2.5.5, 2.4 to 2.4.9 and
+                   earlier unsupported versions
+Versions fixed:    2.7, 2.6.3, 2.5.6 and 2.4.10
+Reported by:       Yogendra Sharma
+Issue no.:         MDL-45332
+CVE identifier:    CVE-2014-0218
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45332
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.13 (MingW32)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-As far as I understand, for CPUs behaving as documented, the relevant
-difference between AMD and Intel is in whether SYSRET triggers #GP
-before (Intel) or after (AMD) switching to user mode.  Here's its
-description from Intel, including pseudocode showing the problematic
-behavior:
+iQEcBAEBAgAGBQJTeWHTAAoJECGmGwK/mszP2NUH/RyVZBVQC5GO+3ZBGOiuBrtq
+AvHnBfiKXpk+p5RXnDicHaqtIEdYpFDK7cVdlb3k1xiGZYraNP8b9pefHBk/GZMy
+QmcKkT78pZj9b7cvs0SiGiksiIpYS3MwmZsWtOCjjH6VawQQL4kpZDoGi8ezyXpJ
+MiAQ5C069IcoEkrKuBxCsNla+ezFN9+C+PaWPzpCjjf6aHxURFVD2Mv27VNF+Tcv
+GjlslZ7s8VYmczyt0rM3ZSRQDprhzIlsXXUsEybEAxiakmmBEic0QjNw/Y6aPMHO
+JjEWDc/QAVP+5eL9HdbNWmbzqtBR9ViTUQqg4idYQK8m2Vuh9O2Yd9GrgBU7ZQM=
+=dm4s
+-----END PGP SIGNATURE-----
 
-http://www.felixcloutier.com/x86/SYSRET.html
 
-"IF (CPL != 0) OR (RCX is not canonical) THEN #GP(0); FI;" is found
-close to the beginning of the SYSRET pseudocode.
-
-In my testing yesterday, I was in fact able to trigger the problem
-using Andy's PoC on Ubuntu 12.04.2 on Intel i7-4770K, but not on another
-Ubuntu 12.04.2 install on AMD FX-8120.  This is as expected.
-
-Alexander
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (3748 bytes)
