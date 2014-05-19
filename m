@@ -1,70 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/1
-Message-ID: <52E846DE.2070904@redhat.com>
-Date: Wed, 29 Jan 2014 11:10:06 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Pedro Ribeiro <pedrib@...il.com>, Jan Schneider <jan@...de.org>, Salvatore Bonaccorso <carnil@...ian.org>, Seth Arnold <seth.arnold@...onical.com>, security@...ian.org, security@...ntu.com, security@...de.org
-Subject: Re: Remote code execution in horde < 5.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/3
+Message-Id: <201405190656.s4J6uUhV025771@linus.mitre.org>
+Date: Mon, 19 May 2014 02:56:30 -0400 (EDT)
+From: cve-assign@...re.org
+To: porridge@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: libgadu vulnerability: possible memory corruption
 Content-Type: text/plain; charset=utf-8
 
-On 01/28/2014 09:10 PM, Pedro Ribeiro wrote:
-> Hi,
->
-> There is a remote code execution bug in horde affecting all versions from
-> at least horde 3.1.x to 5.1.1.
-> This has been fixed in commit
-> https://github.com/horde/horde/commit/da6afc7e9f4e290f782eca9dbca794f772caccb3
-> Also check changelog
-> https://github.com/horde/horde/blob/82c400788537cfc0106b68447789ff53793ac086/bundles/groupware/docs/CHANGES#L215
->
-> Can you please assign a CVE for this issue?
->
-> Thanks in advance.
->
-> PS: while I discovered this bug independently reviewing horde3 code, the
-> full credit should go to the horde maintainers as they discovered and fixed
-> it first on horde5.
->
-> Regards
-> Pedro
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Morning,
+> A crafted message from the file relay server may cause memory to
+> beoverwritten. The memory is not overwritten with data sent directly by the
+> server, but security implications cannot be ruled out.
+> 
+> The bug is public:
+> http://lists.ziew.org/pipermail/libgadu-devel/2014-May/001171.html
+> http://lists.ziew.org/pipermail/libgadu-devel/2014-May/001180.html
 
-In Fedora there is horde and php-horde-Horde-Util:
+Use CVE-2014-3775 for the issue as described in the 001180.html
+message. It is possible that the 001171.html and 001180.html messages
+are referring to exactly the same issue: in that case, there will be
+only one CVE ID in total. (The messages are somewhat different -- for
+example, 001180.html doesn't directly mention that exploitability is
+unproven -- but this may be a wording difference and not anything
+inherent about the code in 1.11.x versus 1.12 prereleases.)
 
-http://koji.fedoraproject.org/koji/buildinfo?buildID=446660
-http://koji.fedoraproject.org/koji/buildinfo?buildID=449705
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-I am not familiar with Horde or know the difference between those 
-packages, whether one is an older version and the other providing 
-equivalent functionality to version 5. The github commit in the original 
-message is in php-horde-Horde-Util for us.
-
-The same vulnerability is in our horde package too, but I could not find 
-this (horde-3.3.13/lib/Horde/Variables.php) in github:
-
-21 class Variables {
-22
-23     var $_vars;
-24     var $_expectedVariables = array();
-25
-26     function Variables($vars = array())
-27     {
-28         if (is_null($vars)) {
-29             $vars = Util::dispelMagicQuotes($_REQUEST);
-30         }
-31         if (isset($vars['_formvars'])) {
-32             $this->_expectedVariables = @unserialize($vars['_formvars']);
-33             unset($vars['_formvars']);
-34         }
-35         $this->_vars = $vars;
-
-Mailing here in case anyone else is shipping in a similar way (or if 
-another CVE is needed?).
-
-Cheers,
-
---
-Murray McAllister / Red Hat Security Response Team
+iQEcBAEBAgAGBQJTearAAAoJEKllVAevmvmsWukH/Ra+3gLP6QfYcqRSqeXf49hR
+YHklWJjvWVn1Hy51TEnpaM/pz0SngIVW3Vr+RSHnWBNpeaSOUyIlj5FabBBOEpTu
+Jls2oSwP5c5gHWJnCGCKSZUIYYHIaV+m1frefh/WJ8/rnq4QQon54nHv7iAVYSDp
+Vq9AA7aSpnuw4diIC5J44e+Kk64GFdcBZUDKRT4w6OxE0+qRuVBj6yploCPFo78f
+MQcttoVsyau/J6crgzn6KmKKCEiAdDub2kXYtWPw9NWRZiocDbwaY3TpPfoVjUi3
+0mQy5CchaodVlx48YgXqwyqVk23pIH8A6OckRDTJiGbpfHdwRsPcIgoex03G4S0=
+=ysDB
+-----END PGP SIGNATURE-----
