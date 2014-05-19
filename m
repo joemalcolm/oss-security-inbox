@@ -1,72 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/1
-Message-ID: <20140320075000.GB2503@sivokote.iziade.m$>
-Date: Thu, 20 Mar 2014 09:50:00 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/4
+Message-Id: <201405190701.s4J71A9T026244@linus.mitre.org>
+Date: Mon, 19 May 2014 03:01:10 -0400 (EDT)
+From: cve-assign@...re.org
+To: creffett@...too.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: X2Go Server privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-I agree about BB.
-To generalize your concerns: trust no one.
-Even a honest person running mailing list
-can be compromised say via blackmail/torture.
-If you run a mailing list stuff like spam,
-DDOS, legal threats will eat from your time.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The death of the Full Disclosure list is mystery
-to me too. I don't think the last FD mail explains
-it fully. Suspect deeper conspiracy than just the
-google thread.
+> I don't see a CVE assigned for the vulnerability announced here:
+> http://permalink.gmane.org/gmane.linux.terminal-server.x2go.announce/83
+> It appears that this is a privilege escalation through injecting
+> backticks, but I'm not absolutely sure. It is fixed as of versions
+> 4.0.1.10/4.0.0.8 in the following commits:
+> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=5a2aa0c36ef7a57d87e3bb6f7c6b2558ed5430f7
+> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=5a2aa0c36ef7a57d87e3bb6f7c6b2558ed5430f7
+> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=8347d3fef0e5cbabe4aa48f503612fa7b9d078f8
+> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=bf44925ecccda436caa1cfc34f89eced9c1bd104
 
+Use CVE-2013-7383.
 
-On Wed, Mar 19, 2014 at 11:29:11PM +0400, gremlin@...mlin.ru wrote:
-> On 19-Mar-2014 09:33:58 -0700, Dean Pierce wrote:
-> 
->  > Hosting? That's what the cloud is for.
-> 
-> Not for any sensitive data. And vulnerability descriptions are very
-> sensitive...
-> 
->  > I have no idea who runs
->  > https://groups.google.com/group/FullDisclosure
->  > but they seem modeled after original fd charter.
-> 
-> Modelling a charter is easy... But I bet they'll fail on gathering
-> all previous FD members.
-> 
->  > I trust Google as a neutral third party more than I would trust
->  > most security researchers.
-> 
-> Bwa-ha-ha-ha-ha...
-> 
-> Behind that party which you possibly may trust, there's a B.B.,
-> which is even worse than a Big Brother - as it's a Big Business.
-> 
-> When a Big Business faces something, it asks itself two questions:
-> 0. Could it cause any loss?
-> 1. Could it bring any profit?
-> 
-> Suppose someone posts a zero-day vulnerability on the list which
-> affects the BB; do you really think it wouldn't be censored out?
-> 
-> No doubt, it will - otherwise that will Cause a Loss, and that's
-> inacceptable for BB.
-> 
-> Also, several days before FD shutdown there was a long thread
-> related to some vulnerabilities in Google services... Although
-> John Cartwright didn't name anyone, I can't be sure these two
-> events are unrelated.
-> 
->  > They already host all the old newsgroup archives. It's also
->  > free, easily consumable, and most importantly, babysat for
->  > security issues in a way that even a team of skilled volunteers
->  > would have a hard time pulling off.
-> 
-> I'd prefer participating on the list hosted by some party which
-> isn't directly affected by list postings - say, some ISP.
-> 
-> 
-> -- 
-> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-> GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Please clarify whether there is a fourth required commit. (The
+first commit was listed twice in your original message.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTeaveAAoJEKllVAevmvms3f0H/2vioN2ivFWUf99AA22so7h3
+JbDuMMthrw6Kb/pwFzQjrCYhgZ6alTLt2GN1xG8e5A6jUHpO5asRlicqYGHhVe3s
+B+R+yEHyF1xoA/e1ocWaub25zKHd8vcVENRvy1l2F4UC+b+645NJI/ftjU8za3Xa
+0HTyiROryqhX/8pMfprX/yS0WtJK59m8d9GSsCm5jbseg8rkQJPR2F8yFSUiL49c
+C6v5mMw0qbqaxOuMWlZY9mKaBfcUwgRMIdeeZ0nz/y8vi5TX6liDdblLrzMVjbBz
+brYy7Fw50nhqytZQVDFnnkcNw/jlIMCXjsH5hS1is2dcXlPa6VlSIo/cOo35Umc=
+=rVsD
+-----END PGP SIGNATURE-----
