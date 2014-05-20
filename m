@@ -1,41 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/10
-Message-ID: <5435050C.1050008@mittwald.de>
-Date: Wed, 8 Oct 2014 11:34:04 +0200
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-CC: <wmealing@...hat.com>, <kseifried@...hat.com>
-Subject: Re: CVE request  for VDSM denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/1
+Message-ID: <537B4398.6050302@enovance.com>
+Date: Tue, 20 May 2014 07:59:20 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request for vulnerability in OpenStack Heat
 Content-Type: text/plain; charset=utf-8
 
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
 
+Title: Heat template URL information leakage
+Reporter: Jason Dunsmore (Rackspace)
+Products: Heat
+Versions: 2013.2 to 2013.2.3, and 2014.1
 
-On 08/10/14 09:34, Wade Mealing wrote:
-> Gday,
-> 
-> The issue (outlined here https://bugzilla.redhat.com/show_bug.cgi?id=1148688 ) allows
-> an attacker to hold open an ssl connection effectively denying new connections the
-> ability to complete any new ssl connections.
-> 
-> I would like a CVE number to assign to this issue.  Please assign me one.
+Description:
+Jason Dunsmore from Rackspace reported a vulnerability in Heat. An
+authenticated user may temporarily see the URL of a provider template
+used in another tenant by listing heat resources types. This may result
+in disclosure of additional information if the template itself can be
+accessed. The URL disappears from the listing after a certain point in
+the stack creation. All Heat setups are affected.
 
-Doesn't RH assign it's own CVEs anymore?
+References:
+https://launchpad.net/bugs/1311223
 
-I also wonder why this bug wasn't reported to upstream
-(wrong BZ "Product" at least it should get cloned to ovirt).
+Thanks in advance,
 
 -- 
-Mit freundlichen Grüßen / Regards
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-Sven Kieske
 
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
