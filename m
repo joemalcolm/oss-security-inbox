@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/26
-Message-ID: <3230301C09DEF9499B442BBE162C5E48257556A4@SESTOEX04.enea.se>
-Date: Thu, 2 Oct 2014 06:48:54 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: Shawn <citypw@...il.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/8
+Message-ID: <20140520194816.GA25294@hunt>
+Date: Tue, 20 May 2014 12:48:16 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Yves-Alexis Perez <corsac@...ian.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: dovecot denial of service
 Content-Type: text/plain; charset=utf-8
 
-
-> On 10/1/14, 5:04 PM, Shawn wrote:
-> > http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+On Tue, May 20, 2014 at 09:32:54PM +0200, Yves-Alexis Perez wrote:
+> Hi,
 > 
-> Nope, this one fixes 7168/7169.  It's the equivalent of the `parser-oob' patch.
+> we were made aware of a recently fixed DoS vulnerability in Dovecot,
+> which doesn't seem to have a CVE id assigned:
+> 
+> http://dovecot.org/list/dovecot-news/2014-May/000273.html
+> 
+> states:
+> 
+> * Fixed a DoS attack against imap/pop3-login processes. If SSL/TLS
+>   handshake was started but wasn't finished, the login process
+>   attempted to eventually forcibly disconnect the client, but failed
+>   to do it correctly. This could have left the connections hanging
+>   arond for a long time. (Affected Dovecot v1.1+)
+> 
+> Could a CVE be assigned for this vulnerability?
 
-Chet is 7168 new vulnerability or is a typo and should be CVE-2014-7186?
-Doesn't bash43-026  fix CVE-2014-7169?
+CVE-2014-3430 was assigned for this issue:
 
-Is this summary correct?
-1) CVE-2014-6271 (Initial vulnerability, Bash Code Injection Vulnerability via Specially Crafted Environment Variables): GNU fix bash43-025  & bash32-052 
+http://www.openwall.com/lists/oss-security/2014/05/09/8
 
-2) CVE-2014-7169 (Further parser error,  this was assigned to cover incomplete fix for CVE-2014-6271): GNU fix bash43-026  & bash32-053
+Thanks
 
-3) CVE-2014-6277 (this is the hardening patch which adds function name mangling, it makes exploitation over the network impossible): Florian's patch /GNU fix bash43-027 & bash32-054
-
-4) CVE-2014-6278 (bash: code execution via specially crafted environment): Florian's patch /GNU fix bash43-027 & bash32-054
-
-5) CVE-2014-7186 (Out of bound memory read error in redir_stack): GNU fix bash43-028 ??
-
-6) CVE-2014-7187 (Off-by-one error in nested loops): No upstream patch available yet ?
-
-Thanks 
--- Sona
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
