@@ -1,30 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/24
-Message-ID: <20140409131230.GA18549@suse.de>
-Date: Wed, 9 Apr 2014 15:12:30 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: pam_cifscreds stack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/2
+Message-ID: <20140520140702.GI1028@frohike.xs4all.nl>
+Date: Tue, 20 May 2014 16:07:02 +0200
+From: Peter Bex <Peter.Bex@...all.nl>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Incorrect SQL identifier quotation rampant among popular web frameworks
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hello all,
 
-We are tracking a patch at:
+Recently I've discovered that many popular web frameworks perform
+incorrect quotation of identifiers in their query builders, leading
+to potential SQL injection bugs.  This includes Laravel, FuelPHP,
+Lithium, CodeIgniter and CakePHP and probably many others.
 
-https://bugzilla.novell.com/show_bug.cgi?id=870168
+In most cases, this is only exploitable if the programmer (framework
+user) makes the (debatable) "mistake" of querying attacker-controlled
+column names, but in Laravel's case even simple mass assignment exposes
+this vulnerability, *even* if some fields are $guarded against being
+mass-assigned.
 
-which fixes a overflow in the cifskey.c (taken from
-Linux CIFS VFS) as used in pam_cifscreds. I did not
-check upstream length checking during their packet processing
-but I doubt the same fixed max length's also apply ad-hoc to
-pam processing of user and password.
+Unfortunately, most framework authors seem to dismiss this issue as
+purely a user problem and might not even bother fixing the issue or
+adding extra safeguards to the framework to achieve defense in depth.
+This attitude only contributes to the security crisis, IMHO.
 
-Sebastian
+For more information, see my blog post at my employer's research blog:
+http://www.codeyellow.nl/identifier-sqli.html
 
+I don't know whether any of these deserve CVE IDs, especially
+considering the aforementioned attitude; authors believe this is not
+a bug (even in the case of Laravel).
 
+I don't have the time, knowledge and energy to investigate every single
+framework in every single language, but I think it's a good idea if the
+community at large took a closer look at this particular class of bugs.
+So far, the only framework which seems to do it 100% correctly is Ruby
+on Rails.  But I must confess I didn't look beyond PHP, Python and Ruby.
+
+In Python, the situation is a little more complicated: Django uses bad
+identifier quotation but I have been unable to create a PoC, as it
+seems to perform whitelisting everywhere on field names.  This warrants
+further investigation, IMHO.
+
+Cheers,
+Peter Bex
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+http://www.more-magic.net
