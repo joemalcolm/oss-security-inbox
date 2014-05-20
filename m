@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/7
-Message-Id: <201403261424.04565.thijs@debian.org>
-Date: Wed, 26 Mar 2014 14:24:04 +0100
-From: Thijs Kinkhorst <thijs@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/3
+Message-ID: <CAAA_pzd1uCfBXgsEFmz2uLCqwBfw2GCrdQSNp3KiO0r8giSOmA@mail.gmail.com>
+Date: Tue, 20 May 2014 09:42:19 -0500
+From: Kent Baxley <kent.baxley@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: openssh client does not check SSHFP if server offers certificate
+Subject: CVE Request one more openwsman issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-A vulnerability in OpenSSH's ssh client has been reported in Debian's BTS:
-https://bugs.debian.org/742513
+A new vulnerability was patched last night for openwsman.  This has
+been fixed in upstream version 2.4.6:
 
-If the ssh server offers a HostCertificate that the ssh client doesn't accept, 
-then the client doesn't then check the DNS for SSHFP records. This is a 
-security problem because it means that a malicious server can disable SSHFP-
-checking by presenting a certificate. Note that users are still presented the 
-well-known "host verification prompt".
+Here is the specific upstream patch:
 
-Given the prompt will and the still rather peripheral reliance on SSHFP, we 
-consider this an issue of low severity.
+https://github.com/Openwsman/openwsman/commit/b1c2192f4b4fa04286dc1bb7e467b34926099720
 
-Please assign a CVE name for this issue.
-
-
-Thanks,
-
-Thijs Kinkhorst
-Debian Security Team
-
-Download attachment "signature.asc " of type "application/pgp-signature" (491 bytes)
+-- 
+Kent Baxley
+Field Engineer, Canonical
+kent.baxley@...onical.com
