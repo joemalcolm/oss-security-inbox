@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/22/4
-Message-ID: <8045295.6nhngL7M2C@asterix>
-Date: Sun, 22 Jun 2014 23:58:45 +0200
-From: David Faure <faure@....org>
-To: Richard Moore <rich@....org>
-Cc: Nick Boyce <nick.boyce@...il.com>, oss-security@...ts.openwall.com
-Subject: Re: KMail/KIO POP3 SSL MITM Flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/7
+Message-ID: <1400614374.9030.1.camel@scapa>
+Date: Tue, 20 May 2014 21:32:54 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: dovecot denial of service
 Content-Type: text/plain; charset=utf-8
 
-On Sunday 22 June 2014 21:47:50 Richard Moore wrote:
-> > I'm not sure whether to interpret the 'Versions' line in the advisory
-> > as "bug was introduced at kdelibs 4.10.95"
+Hi,
 
-Yes, this is what
-"Versions:       kdelibs 4.10.95 to 4.13.2"
-means.
+we were made aware of a recently fixed DoS vulnerability in Dovecot,
+which doesn't seem to have a CVE id assigned:
 
-The file usernotificationhandler.cpp was introduced in 4.10.95
-(for the fix for bug 154100 and 265228)
+http://dovecot.org/list/dovecot-news/2014-May/000273.html
 
-Before that, SlaveInterface handled the messagebox request itself, with no 
-need for a job pointer.
+states:
 
-> There is an IBM ISS report [3] which implies the bug affects at least
-> kdelibs 4.6.x ....
+* Fixed a DoS attack against imap/pop3-login processes. If SSL/TLS
+  handshake was started but wasn't finished, the login process
+  attempted to eventually forcibly disconnect the client, but failed
+  to do it correctly. This could have left the connections hanging
+  arond for a long time. (Affected Dovecot v1.1+)
 
-No idea where they got that from.... I cannot confirm this.
+Could a CVE be assigned for this vulnerability?
 
+Thanks,
 -- 
-David Faure, faure@....org, http://www.davidfaure.fr
-Working on KDE Frameworks 5
+Yves-Alexis Perez - Debian Security
 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
