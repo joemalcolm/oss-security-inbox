@@ -1,50 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/27
-Message-ID: <87ppekbz97.fsf@mid.deneb.enyo.de>
-Date: Wed, 24 Sep 2014 21:21:40 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/10
+Message-ID: <1400615297.9030.2.camel@scapa>
+Date: Tue, 20 May 2014 21:48:17 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: Re: CVE request: dovecot denial of service
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer:
+On mar., 2014-05-20 at 21:32 +0200, Yves-Alexis Perez wrote:
+> Hi,
+> 
+> we were made aware of a recently fixed DoS vulnerability in Dovecot,
+> which doesn't seem to have a CVE id assigned:
+> 
+> http://dovecot.org/list/dovecot-news/2014-May/000273.html
+> 
+> states:
+> 
+> * Fixed a DoS attack against imap/pop3-login processes. If SSL/TLS
+>   handshake was started but wasn't finished, the login process
+>   attempted to eventually forcibly disconnect the client, but failed
+>   to do it correctly. This could have left the connections hanging
+>   arond for a long time. (Affected Dovecot v1.1+)
+> 
+> Could a CVE be assigned for this vulnerability?
+> 
+It looks like this is the CVE-2014-3430 assigned in
+<201405092055.s49KtC6i025402@...us.mitre.org> not long ago.
+-- 
+Yves-Alexis
 
-> Someone has posted large parts of the prenotification as a news
-> article, so in the interest of full disclosure, here is what we wrote
-> to the non-vendors (vendors also received patches):
-
-Oh dear.  It's now been implied that something leaked before the
-embargo was over, or that more information was disclosed than planned.
-
-This is not the case, on neither count.  I was just annoyed that parts
-of a private message I wrote ended up on a news site without my prior
-consent.  The disclosure as such wasn't a problem, except for a single
-technical inaccuracy that has since been corrected.  It was an honest
-mistake, apologies were made and accepted.  It did not impact the
-disclosure schedule at all (it happened after the disclosure), nor the
-amount of information being disclosed in any material way (the Red Hat
-blog post contained essentially the same information).  Once I saw
-what happened, I decided to publish the full message here.
-
-So to repeat: The embargo was scheduled for 14:00 UTC today, and my
-initial brief posting was not prompted by a desire to withhold
-information.  I just wanted to limit the amount of possibly
-conflicting technical information, and I had other duties to attend
-to.  (In retrospect, I should probably have included the message from
-the prenotification from the start, which would have avoided any
-confusion.)
-
-We'll also want to discuss additional hardening measures (see my
-message about BASH_FUNCDEFS), and we previously agreed to do this
-publicly, after disclosure.  Obviously, the technical details are
-necessarily public once we do that.
-
-It's often tricky to decide how much information to include in a
-public vulnerability disclosure.  In this particular case, I think we
-had to publish technical details so that those who cannot patch
-immediately can at least try to mitigate this vulnerability using
-filters on devices in front of web servers, or tools like
-mod_security.  And without the technical details, I doubt this
-vulnerability would have received the attention it deserves until
-someone figures things out.  We could easily have obfuscated the patch
-to delay this, but what's the point?
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
