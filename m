@@ -1,75 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/09/4
-Message-ID: <20140609122858.76241291@redhat.com>
-Date: Mon, 9 Jun 2014 12:28:58 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: tim-security@...tinelchicken.org
-Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/6
+Message-Id: <201405201716.s4KHFsV6020104@linus.mitre.org>
+Date: Tue, 20 May 2014 13:15:54 -0400 (EDT)
+From: cve-assign@...re.org
+To: tristan.cacqueray@...vance.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Heat
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 3 Jun 2014 08:27:47 -0700 Tim wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> > The description in Java API docs is rather brief, xerces docs have
-> > more details:
-> > 
-> > http://xerces.apache.org/xerces-j/features.html#create-entity-ref-nodes
-> > http://xerces.apache.org/xerces2-j/features.html#dom.create-entity-ref-nodes
-> > 
-> > AFAICS, the feature does not aim to control if entity references are
-> > expanded, but only how exactly they appear in the resulting DOM
-> > tree.
+> An authenticated user may temporarily see the URL of a provider
+> template used in another tenant by listing heat resources types.
+
+> https://launchpad.net/bugs/1311223
 > 
-> Ok, that makes sense.  Of course it is pointless for security if it
-> doesn't affect parameter entities.
+> an attacker could have access to that user's provider template which
+> *could* include lots of information (ssh keys, password, "secret
+> sauce" server configuration, etc)
 
-Sorry, how is this really relevant?  setExpandEntityReferences(false)
-does not prevent expansion of general entities, so I'm not sure why
-expansion of parameter entities is the problem.
+Use CVE-2014-3801.
 
-> I did end up releasing my paper recently, which I believe has
-> up-to-date recommendations for Xerces:
->   http://vsecurity.com/download/papers/XMLDTDEntityAttacks.pdf
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-It continues to mention setExpandEntityReferences, hinting that should
-be expected to provide security protections (text seems to imply
-external entities are not expanded in documents, but they are still
-defined and remote URLs fetched).  As previously mentioned, the setting
-only changes DOM tree layout, and does not disable entity expansion.
-
-E.g. parsing the following two inputs (one using internal other
-external general entity):
-
-$ cat test1.xml 
-<?xml version="1.0"?>
-<!DOCTYPE bleh [
-<!ENTITY bar "BAR">
-]>
-<root>foo &bar; baz</root>
-
-$ cat test2.xml 
-<?xml version="1.0"?>
-<!DOCTYPE bleh [
-<!ENTITY bar SYSTEM "test2-bar.txt">
-]>
-<root>foo &bar; baz</root>
-
-$ cat test2-bar.txt 
-BAR
-
-Setting setExpandEntityReferences to false changes the tree from:
-
-- (Element) <root>
-  - (Text) foo BAR baz
-
-to:
-
-- (Element) <root>
-  - (Text) foo 
-  - (Entity Reference) &bar;
-  - (Text) BAR baz
-
-&bar; is expanded to BAR either way.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+iQEcBAEBAgAGBQJTe42SAAoJEKllVAevmvmsCXUH+gKxYSb8Me1pP/WtHufb8gIP
+pzM+NAgmRayjDGxYM3UcWG5MyuxoTMdluJovG0aVlOExVaDe6qL167r6HiafZPA8
+4k18j6WweAci+r6wPa4uh3Kp3dU4INgTKrrq/RTDYKgigNspi/12r0W6R8cEXRDN
+hVQRKYgoCzT5aXencZwkV5KZM+HKAOViDdqNQEc8QaNoP4cDDxC6HNeyuP8VI6Sx
+H98jj0feMpfXyGt82l5tUNi/ZZCQcpkKwhJF6fYJA1or0sZ9Ok/rZilSl+WJApmE
+5wqaLDLu4AQBnWIY1zzFgdruKLBnJdA5IgdX17XbW8c0jjtnjGNrvtYkYam6XnY=
+=7oIs
+-----END PGP SIGNATURE-----
