@@ -1,59 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/41
-Message-ID: <CAJKgmrXxbAsoDYi+WCRKXKzav-T63sMRjKiaxjMLVZGkz2JzkA@mail.gmail.com>
-Date: Wed, 24 Sep 2014 17:59:21 -0500
-From: Nick Semenkovich <nick@...enkovich.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/9
+Message-ID: <537BB187.1040606@canonical.com>
+Date: Tue, 20 May 2014 15:48:23 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: nss RSA forgery (CVE-2014-1568)
+Subject: Re: CVE request: dovecot denial of service
 Content-Type: text/plain; charset=utf-8
 
-The commits are available in the mercurial repo:
+On 14-05-20 03:32 PM, Yves-Alexis Perez wrote:
+> Hi,
+> 
+> we were made aware of a recently fixed DoS vulnerability in Dovecot,
+> which doesn't seem to have a CVE id assigned:
+> 
+> http://dovecot.org/list/dovecot-news/2014-May/000273.html
+> 
+> states:
+> 
+> * Fixed a DoS attack against imap/pop3-login processes. If SSL/TLS
+>   handshake was started but wasn't finished, the login process
+>   attempted to eventually forcibly disconnect the client, but failed
+>   to do it correctly. This could have left the connections hanging
+>   arond for a long time. (Affected Dovecot v1.1+)
+> 
+> Could a CVE be assigned for this vulnerability?
+> 
 
-https://hg.mozilla.org/projects/nss/rev/fb7208e91ae8
-https://hg.mozilla.org/projects/nss/rev/ad411fb64046
-https://hg.mozilla.org/projects/nss/rev/4e90910ad2f9
+Isn't that CVE-2014-3430?
 
-Offhand, it looks like an issue with the encoding of DigestInfo.
-
-
-
-On Wed, Sep 24, 2014 at 5:03 PM, Hanno Böck <hanno@...eck.de> wrote:
->
-> One serious vuln per day isn't enough, so nss decided to bring us
-> another one.
->
-> Mozilla reports this:
-> https://www.mozilla.org/security/announce/2014/mfsa2014-73.html
-> Bugtracker entry still private, so hard to judge about details.
-> Interesting: Two independent discoveries (we had the same with
-> heartbleed and I couldn't believe this was coincidence).
->
-> This is what mcaffee has to say:
-> http://blogs.mcafee.com/executive-perspectives/need-know-berserk-mozilla
->
-> They say its related to BER/ASN1-parsing, but adam langley disagrees:
-> https://twitter.com/agl__/status/514881918110683136
->
->
-> And it seems cyassl had something similar, also found by intel:
-> http://www.yassl.com/yaSSL/Blog/Entries/2014/9/12_CyaSSL_3.2.0_Released.html
->
-> No real details yet and information seems confusing.
->
-> --
-> Hanno Böck
-> http://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
+Marc.
 
 
-
-
--- 
-Nick Semenkovich
-Laboratory of Dr. Jeffrey I. Gordon
-Medical Scientist Training Program
-School of Medicine
-Washington University in St. Louis
-https://nick.semenkovich.com/
