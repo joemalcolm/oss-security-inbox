@@ -1,35 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/16
-Message-ID: <20140131173610.GA19423@openwall.com>
-Date: Fri, 31 Jan 2014 21:36:10 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/4
+Message-ID: <20140520145643.GA17982@inutil.org>
+Date: Tue, 20 May 2014 16:56:43 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: PaX Team <pageexec@...email.hu>
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+Cc: balint@...intreczey.hu
+Subject: CVE request: xbmc
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 31, 2014 at 04:11:16AM +0400, Solar Designer wrote:
-> [...] I guess the newer patch (from the
-> second forwarded message above) is preferable (the one I expect to see
-> committed soon).
+Hi,
+please assign a CVE ID for this information leak in XBMC:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=747428
 
-Here's the commit:
+Upstream bug report:
+http://trac.xbmc.org/ticket/15198
 
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/compat.c?id=2def2ef2ae5f3990aabdbe8a755911902707d268
-
-> It appears, from the linux-distros discussion, that a couple of distros
-> are going to release emergency security updates for this.  If they did
-> not express interest in an extra day of embargo, the issue would likely
-> be made public on the first day (not on the second).
-
-Ubuntu advisories and updates:
-
-http://www.ubuntu.com/usn/usn-2096-1/
-http://www.ubuntu.com/usn/usn-2095-1/
-http://www.ubuntu.com/usn/usn-2094-1/
-
-Even though the issue was easy to patch, I nevertheless find this
-impressively quick for a major distro like Ubuntu, and this probably
-justifies the extra day of embargo.
-
-Alexander
+Cheers,
+        Moritz
