@@ -1,69 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/27/2
-Message-ID: <20140327030810.GA8971@pi3.com.pl>
-Date: Thu, 27 Mar 2014 04:08:10 +0100
-From: Adam Zabrocki <pi3@....com.pl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/21/3
+Message-ID: <537D051B.2020504@enovance.com>
+Date: Wed, 21 May 2014 15:57:15 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: Adventure with Stack Smashing Protector (SSP)
+Subject: [OSSA 2014-015] Keystone user and group id mismatch (CVE-2014-0204)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+OpenStack Security Advisory: 2014-015
+CVE: CVE-2014-0204
+Date: May 21, 2014
+Title: Keystone user and group id mismatch
+Reporter: Michael Stancampiano (IBM)
+Products: Keystone
+Versions: 2014.1
 
-One weekend I decided to analyze Stack Smashing Protector (SSP) code. I believe some of the observations I've made might also be interesting to others. Because of that I've created a not so small write-up...
-... which can be summarized (without necessary details) as:
+Description:
+Michael Stancampiano from IBM reported a vulnerability in Keystone.
+Someone with write access to the user and group repository (such as the
+LDAP directory server) may willingly or unwillingly grant additional
+rights by picking the same IDs for users and groups, resulting in roles
+assigned to a group being assigned to the affected user even if he is
+not a member of this group. Only Keystone setups using LDAP for the
+Identity driver are affected.
 
+Juno (development branch) fixes:
+https://review.openstack.org/94396
+https://review.openstack.org/94470
 
-Not security related…
- 
-1. We can change program’s name (from SSP perspective) via overwriting memory region where
-   pointer to "argv[0]" points to. 
-2. We can crash Stack Smashing Protector code in many ways:
-     a. Via corrupting memory region pointed by "__environ" variable. 
-     b. Via setting "LIBC_FATAL_STDERR_" to the edge of valid addresses. 
-     c. Via forcing "alloca()" to fail – e.g. stack exhaustion. 
-     d. There is one more bug which I’m analyzing more comprehensively at point 4. It may 
-        indirectly force SSP to crash. It exists in the DWARF stack (state) machine which is responsible 
-        for gathering information about the stack trace ("__backtrace()") and prints it. 
-3. We can slightly control SSP’s execution flow. (Un)Fortunately it doesn’t have any influence for the 
-   main execution (what about security?). Following scenarios are possible: 
-     a. Force SSP to open "/dev/tty" 
-     b. Force SSP not to open "/dev/tty" and assign to the "fd" descriptor "STDERR_FILENO" value: 
- 
-#define STDERR_FILENO 2 /* Standard error output. */ 
- 
-    c. Crash SSP via 2b. scenario 
- 
-4. We can indirectly crash SSP via the unwinding algorithm (read-AV or we can be killed by 
-   "gcc_unreachable" or "gcc_assert" function) – DWARF stack (state) machine: 
-     a. Simulate FDE object was not found 
-     b. Simulate FDE object was found. 
- 
+Icehouse fix:
+https://review.openstack.org/94397
 
-Somehow security related…
- 
-1. We can force SSP to allocate a lot of memory and cause Denial of Service via Resource Exhaustion
-   attack. 
-2. Theoretical Information leak: 
-     a. Stack cookie information leak. 
-     b. Any kind of information leak 
-     c. File corruption.
+Notes:
+This fix will be included in the juno-1 development milestone and in
+a future 2014.1.1 release.
 
-
-
-The full paper can be found here:
-http://site.pi3.com.pl/papers/ASSP.pdf
-
-Or through the blog-post:
-http://blog.pi3.com.pl/?p=485
-
-I understand this paper is long (maybe too long) but ~70% of this paper is just gdb output which shows the described behavior. The rest of the paper (32 pages) mostly has source code listings so the real write-up is very short (comparing to the whole paper).
-
-
-
-Best regards,
-Adam
-
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0204
+https://launchpad.net/bugs/1309228
 
 -- 
-pi3 (pi3ki31ny) - pi3 (at) itsec pl
-http://pi3.com.pl
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
