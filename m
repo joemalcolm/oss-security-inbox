@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/19
-Message-ID: <5411FAB7.5010001@oracle.com>
-Date: Thu, 11 Sep 2014 12:40:39 -0700
-From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/21/2
+Message-ID: <537CCA5D.4020900@openflare.org>
+Date: Wed, 21 May 2014 18:46:37 +0300
+From: Dolev Farhi <dolev@...nflare.org>
+To: cve-assign <cve-assign@...re.org>, oss-security@...ts.openwall.com
+Subject: Persistent XSS in Mayan EDMS - document management system
 Content-Type: text/plain; charset=utf-8
 
-On 9/11/2014 3:14 AM, John Haxby wrote:
-> On 11/09/14 09:22, Sven Kieske wrote:
->>
->> On 10/09/14 18:00, Salvatore Bonaccorso wrote:
->>>> MyISAM temporary files could be used to mount a code-execution attack.
->>>> (Bug #18045646).
->> Funny enough, when you search for this bug on bugs.mysql.com you get:
->>
->> http://bugs.mysql.com/bug.php?id=18045646
->>
->> "No such bug #18045646 or bug is referenced in the Oracle bug system."
->>
->> Is this marked as private or something like that? Even if it's public
->> now?
-> 
-> It's probably marked as a security bug so only those people with a need
-> to know can see it, even though it's public.
-> 
+Title:  Multiple Stored XSS in Mayan EDMS - an open source document 
+management system based on Python.
 
-Yes, information about security bug is private. Also 18045646 is an
-internal tracking ID.
 
-Thanks,
--Ritwik
+Vendor: Mayan EDMS - notified.
+
+
+Homepage: www.mayan-edms.com
+
+
+Date: 21.5.14
+
+
+multiple persistent cross-site scripting vulnerabilities were found in 
+the latest version of Mayan EDMS. it appears that new tags, folders and 
+links that are created by any system user are not sanitized when viewed, 
+allowing malicious code to be stored and executed.
+
+
+advisory: 
+http://research.openflare.org/advisories/mayan-edms/multiple_stored_xss.txt
+
+
+Can CVE please be assigned to this?
+
+
+
+
+Tx
+
