@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/07/4
-Message-Id: <201406070304.s57340dv020615@linus.mitre.org>
-Date: Fri, 6 Jun 2014 23:04:00 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/22/2
+Message-Id: <201405220517.s4M5HO4G004617@linus.mitre.org>
+Date: Thu, 22 May 2014 01:17:24 -0400 (EDT)
 From: cve-assign@...re.org
-To: sgallagh@...hat.com
+To: dolev@...nflare.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Requesting CVEs issued for two XSS vulnerabilities in Djblets (a set of Django helpers)
+Subject: Re: Persistent XSS in Mayan EDMS - document management system
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Djblets json_dumps ... User can change their display name to [an XSS
->                        sequence]
-> https://code.google.com/p/reviewboard/issues/detail?id=3406
-> (the discoverer name begins with "uchida")
+> multiple persistent cross-site scripting vulnerabilities were found in
+> the latest version of Mayan EDMS. it appears that new tags, folders
+> and links that are created by any system user are not sanitized when
+> viewed, allowing malicious code to be stored and executed.
 
-Use CVE-2014-3994.
+> An attacker is able to create documents and tags with malicious code,
+> potentially stealing admin cookies browsing or editing the documents.
 
+> http://research.openflare.org/advisories/mayan-edms/multiple_stored_xss.txt
 
-> Djblets gravatar templates ... User can change their display name to
->                                [an XSS sequence]
-> discoverer = Christian Hammond of Bean Bag, Inc. (author of Review Board)
-
-Use CVE-2014-3995.
-
-
-(There are two CVE IDs because of the two discoverers.)
+Use CVE-2014-3840.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -36,11 +31,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTkoDdAAoJEKllVAevmvmsFqIH/3KB48igwDOtf2uW8MvNVlIb
-uJloJ+rV1z6+aoAcdPSPkTfHta+EAzkkdrFAnSM2YDP1ClafQOiTkBO5HpXrbWew
-BH+AER+rPNBU1K1vgjVGX8Fu6+H+2u75s2ynQ9ejxLp358Xll6WlHvHlHyk5N4hc
-1KzG0gj6+ISb/HRRyF2ZI3nVHPYO9CQk1Ir06TAT5oVjbMGPXrFrC4BBNQ1z57sc
-cNmELtMkwBFbvOg4LTIDFikNY0yT019B+NCJ5MW5TI4WG1F/7VJGNaXbcR67597h
-z3Fo8VCfJu/syvWDnFwf9fX/+8AYeVm24BP+oMWhBxVC/PUBiM2QdRhChU5RFVQ=
-=uoZF
+iQEcBAEBAgAGBQJTfYgZAAoJEKllVAevmvmstEEH/1FLyD6dcbgaJTYYuFRoMyvy
+S84Wm1rDiQX2HSKbG8YJfQopwkFJlNys3gUdh6e3zjNq6UR7wHw4cCDuWZL+JpV0
+Pa6G6XNFdoajAVRHX2DF+RSpKxj1763tLlr72UkbQjGtLg0J4f7luHyosSqf0eS3
+Os5jZxNDoCGXz2md95pZB95V9lYPSJGp5e7TbDcc1QE0DjWcaQtjOXeSuUxpdU1j
+bQ8fSENGdug0Fuqy8n2C/HsXac/phJGG7gZ1IBCGRM8cwqg5/mO8c41vkcW0mml/
+zqXMzLAWUq5ycU3bty8mDfBv01yunFBMKIYg9AsOHjnEY58Bf+hcs92F6yRfSJs=
+=9zbA
 -----END PGP SIGNATURE-----
