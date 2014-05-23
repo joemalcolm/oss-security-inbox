@@ -1,24 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/8
-Message-ID: <52D54023.2080203@fifthhorseman.net>
-Date: Tue, 14 Jan 2014 08:48:19 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: [Python-modules-team] Bug#735263: python-rply: insecure use of /tmp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/23/2
+Message-Id: <201405231821.s4NILJY7005612@linus.mitre.org>
+Date: Fri, 23 May 2014 14:21:19 -0400 (EDT)
+From: cve-assign@...re.org
+To: zanchey@....gu.uwa.edu.au
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Upcoming security release of fish 2.1.1
 Content-Type: text/plain; charset=utf-8
 
-in http://bugs.debian.org/735263, Jakub Wilk reports an insecure
-tempfile usage in rply.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-upstream homepage:
- https://github.com/alex/rply
+> http://openwall.com/lists/oss-security/2014/05/06/3
 
-original bug report is attached below.
+> First, we should mention that a single CVE ID cannot be used for a set
+> of related issues that have different affected versions. For the
+> earlier message that mentioned CVE-2014-2906 and CVE-2014-2914,
+> approximately two more CVE IDs will be needed. We will send those
+> later.
 
-Regards,
+>> CVE-2014-2906: fish temporary file creation vulnerable to race condition
+>> leading to privilege escalation
+>> 
+>>   Versions 1.23.0 to 2.1.0 (inclusive) execute code from these temporary files,
+>>   allowing privilege escalation to those of any user running fish, including
+>>   root.
+>> 
+>>   Additionally, from at least version 1.16.0 to version 2.1.0 (inclusive),
+>>   fish will read data using the psub function from these temporary files,
+>>   meaning that the input of commands used with the psub function is under the
+>>   control of the attacker.
 
-	--dkg
+This actually needs two CVE IDs because there are two affected
+functions, with different sets of affected versions. (For example,
+there is a psub vulnerability in version 1.22.0, but there is no
+funced vulnerability in 1.22.0 because funced didn't yet exist.)
 
-Download attachment "[Python-modules-team] Bug#735263: python-rply: insecure use of /tmp.eml" of type "message/rfc822" (8105 bytes)
+For the psub vulnerability, please continue to use CVE-2014-2906.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1011 bytes)
+For the funced vulnerability, please use CVE-2014-3856.
+
+
+>>   fish version 2.1.1 restricts incoming connections to localhost only. At this
+>>   stage, users should avoid running fish_config on systems where there are
+>>   untrusted local users, as they are still able to connect to the fish_config
+>>   service and elevate their privileges to those of the user running
+>>   fish_config.
+
+At present, we're not assigning an additional CVE ID for this "local
+users ... elevate their privileges" issue. Our interpretation is that
+you're not trying to make an announcement that 2.1.1 is a vulnerable
+version. Instead, you're trying to document the machine environment on
+which fish_config in 2.1.1 can be safely used (i.e., machines with
+untrusted local users are not fully supported for fish_config at the
+moment). If you actually wanted a CVE ID for versions 2.1.1 and
+earlier, referring to the fish_config attack by local users, please
+let us know.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTf5E1AAoJEKllVAevmvmsNNgH/RtEQqNw/fO8nSASDKJpOUpM
+WAcq4mfHZ6nYfg2RkTSM++LSRQ0WRozU4/qzgXDwPDkE3mW7Dg2Y3Vjjse2eQUkg
+rqGkJ7L6RoIpciixXqRMtYx8M9GWBKJWjkye7jcmrqoDGhXOP4rxfeHQanlzGsr4
+UyefbVhX7AtwTYvm+5yzuCsNDzC/Enc2VtZmbIaq1/V6dlJD0dy4VaxPERL+4juP
+jXSMajJ8+v4IOTrbcvWSYkGUSrH0D2jCAba7nLF+jT55vfpQRPI0lmi67/BVbfBD
+hN3Tu8cviJv1XSNzGZc71XlwZm3qe10tO0oFmh4KgFxe/Tu+tnQIGnADPqEW4n0=
+=hj0E
+-----END PGP SIGNATURE-----
