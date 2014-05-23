@@ -1,34 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/9
-Message-ID: <CAMp7mVvLktg7XZbJp3a=3BTO12RWJ_2U09v9VsSUbCsP4UVUkw@mail.gmail.com>
-Date: Sun, 15 Jun 2014 21:32:54 +0100
-From: Richard Moore <rich@....org>
-To: Yves-Alexis Perez <corsac@...ian.org>
-Cc: cve-assign@...re.org, henri@...v.fi, oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request for KIO/kmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/23/3
+Message-ID: <537F9320.4070606@enovance.com>
+Date: Fri, 23 May 2014 14:27:44 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2014-016] Heat template URL information leakage (CVE-2014-3801)
 Content-Type: text/plain; charset=utf-8
 
-On 15 June 2014 19:29, Yves-Alexis Perez <corsac@...ian.org> wrote:
+OpenStack Security Advisory: 2014-016
+CVE: CVE-2014-3801
+Date: May 23, 2014
+Title: Heat template URL information leakage
+Reporter: Jason Dunsmore (Rackspace)
+Products: Heat
+Versions: 2013.2 to 2013.2.3, and 2014.1
 
-> On dim., 2014-06-15 at 16:55 +0100, Richard Moore wrote:
-> > In the past when I've tried to use the cve-assign address it has
-> basically
-> > been a black hole. Since then I've either asked redhat or one of the
-> other
-> > OSS vendors for a CVE. I've used the distros@...openwall.org now as a
-> > fallback.
-> >
-> > I'd also note as part of the meta discussion that I'm not going to
-> release
-> > details of vulnerabilities to a public list  before the fix, and just
-> > because someone asks for more details doesn't mean I will provide them.
->
-> May I ask why you're writing to the public oss-sec list instead of the
-> private distros one, then?
->
+Description:
+Jason Dunsmore from Rackspace reported a vulnerability in Heat. An
+authenticated user may temporarily see the URL of a provider template
+used in another tenant by listing heat resources types. This may result
+in disclosure of additional information if the template itself can be
+accessed. The URL disappears from the listing after a certain point in
+the stack creation. All Heat setups are affected.
 
-Yep, that's obviously a mistake on my part. It's the address I had noted
-for CVE requests.
+Juno (development branch) fix:
+https://review.openstack.org/89695
 
-Rich.
+Icehouse fix:
+https://review.openstack.org/94625
 
+Havana fix:
+https://review.openstack.org/94644
+
+Notes:
+This fix will be included in the juno-1 development milestone and in
+future 2013.2.4 and 2014.1.1 releases.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3801
+https://launchpad.net/bugs/1311223
+
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
