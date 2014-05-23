@@ -1,25 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/7
-Message-Id: <201401081717.s08HH5Pc005818@linus.mitre.org>
-Date: Wed, 8 Jan 2014 12:17:05 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/23/1
+Message-Id: <201405231650.s4NGoP81025239@linus.mitre.org>
+Date: Fri, 23 May 2014 12:50:25 -0400 (EDT)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
+To: henri@...v.fi
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE split and a missed file
+Subject: Re: CVE request: Pyplate multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->    -> net/ieee802154/dgram.c.
+> http://openwall.com/lists/oss-security/2014/05/14/3
 
-Use CVE-2013-7281. (The ordering of the unpatched code wasn't
-precisely the same as in the other files, but "Only update *addr_len
-when we actually fill in sockaddr" in
-bceaa90240b6019ed73b49965eac7d167610be69 still applies.)
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6405 will be
-updated in the coming days to reference CVE-2013-7281.
+> Installation instruction tells user to execute following commands without
+> checking any checksums or similar:
+> 
+>> wget http://pyplate.com/pyplate_install.sh
+>> chmod +x ./pyplate_install.sh
+>> sudo ./pyplate_install.sh
+
+This type of issue is probably outside the scope of CVE. A set of
+installation commands only implies that an installation can be done
+that way, not that an installation should be done that way. There's no
+commonly recognized requirement for a vendor to try to document the
+types of pre-installation audits that might be important at customer
+sites. Of course, the issue is worth pointing out because the vendor
+may want to add functionality for download verification, etc.
+
+
+> File /usr/lib/cgi-bin/create_passwd_file.py creates passwd.db for admin user
+> password with world readable permissions.
+> -rw-r--r-- 1 www-data www-data 99 May 13 20:45 /usr/share/pyplate/passwd.db
+
+Use CVE-2014-3851.
+
+
+> Application is not using HttpOnly ... flag in cookie "id".
+
+Use CVE-2014-3852.
+
+
+> Application is not using ... Secure ... flag in cookie "id".
+
+Use CVE-2014-3853.
+
+
+> CSRF + XSS with cookie stealing PoC:
+> action="http://example.com/admin/addScript.py" method="POST"
+> name="title" value="[XSS]"
+
+Use CVE-2014-3854 for this CSRF vulnerability. The XSS could be
+independently relevant (with a separate CVE ID) if it can be used for
+privilege escalation by someone posting JavaScript intentionally using
+admin/addScript.py. We didn't immediately notice anything at
+http://www.pyplate.com/how-to/ suggesting that there would be multiple
+user accounts, with different privilege levels, who have legitimate
+access to admin/addScript.py.
+
+
+> payload = {'filename': '../../../../etc/passwd'}
+> r = requests.post('http://example.org/cgi-bin/download.py',
+> data=payload)
+
+Use CVE-2014-3855.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -29,11 +74,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJSzYbcAAoJEKllVAevmvmsgJAH/1bf3t4VeSFwY1PXX3RImGd0
-ya2X3TA6/mmcy9EUF9WYKq3L4d7GPZ+oQv4iP3NGHfBlFqd6ZU1L9JzB61aWfGkR
-zKvr4zTQn6Em+wZyAoVkcXTDN/40UOmJrLoAwPtUCWnxkTJmT/b2w/s1Kkr76jwu
-/Kt9ivPilhM5jATIOUY5PpPVwwW5carl0AHm5q/Koqz3j3PMKdtnh/UyJt/6RWUk
-DPELVbYgJqH9jg3uCLoZIuuXsroZdZcaTqZNJNY/9342KDM6wgFnFWGMMUzAvIH7
-UoTc+MMJFLIlQQ9bYlO1Kij9Z44BMAFbcW1v5mJTg3eV5sm2hMBqBM1HTSXzFbA=
-=XrSU
+iQEcBAEBAgAGBQJTf3vXAAoJEKllVAevmvmsfNoH/iI0z8SsyhS+B7MVJe/RcWfX
+ekl0O8ZGMjvM597PkI+j2sPfvyx9wpGkX3m6aZmPzSnobIaz+Wcq4QmeJ4sRT89i
+/mjhFa/xChz3N89NO9RVoGXKYgy9eJdiAi+7XF+eNm3W0EcOeovxjSemvugDqHVo
+d85JqKrWmFMqii/ZR+93DhGZCrKq8V/nqKf9Sd+4tSWXyNjVMV5Yp+wksP1E2f/d
+Mo+q2MuYeQVPu7RFWdhHVRLZV8Exj4mFA7+llz6gl6cDpHlj3wYDXrFtxLIFSeWf
+fH9Vi8P02HwkLFGcjEV22v3zXXSl7ZmsNLh2rhwztRhfnSYiEjHTgr9qeVtgQS0=
+=eX44
 -----END PGP SIGNATURE-----
