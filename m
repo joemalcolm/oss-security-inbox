@@ -1,52 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/3
-Message-Id: <20141107010531.005FB52E01B@smtpvbsrv1.mitre.org>
-Date: Thu,  6 Nov 2014 20:05:31 -0500 (EST)
-From: cve-assign@...re.org
-To: davidedmundson@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Privilege Escalation via KDE Clock KCM polkit helper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/25/1
+Message-ID: <2192724.2zUfYGIebn@eee>
+Date: Sun, 25 May 2014 11:17:52 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, Guillem Jover <guillem@...ian.org>
+Subject: Re: Re: CVE request: directory traversal in DSA-2915-1-patched dpkg in Debian squeeze
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> a security issue in KDE which under Ubuntu and some other distros
-> allows a program to run arbitrary processes as root from an admin user
-> without any prompts.
+Apologies for the late response.
+
+On Thursday 01 May 2014 20:52:37 cve-assign@...re.org wrote:
+[...]
+> However, there is another question that could possibly result in a
+> second CVE ID. On wheezy, there's apparently a security problem in, at
+> least, these two cases:
 > 
-> kde-workspace < 4.14.3
+>   1. the installed patch program is an older version of patch that's
+>      identical to squeeze's supported version of patch. Possibly, this
+>      can happen on a correctly maintained/supported Debian system
+>      because sometimes a system is in a partially upgraded state. In
+>      particular, the vulnerability affects root's use of dpkg, which
+>      may be a completely expected activity because the administrator
+>      might want to unpack a source package even though an upgrade is
+>      unfinished.
 > 
-> KDE workspace configuration module for setting the date and time has a
-> helper program which runs as root for performing actions. This is
-> secured with polkit.
+>   2. the patch program in root's path is not something obtained from
+>      Debian, e.g., the administrator intentionally decided to install
+>      a non-GNU patch program
 > 
-> This helper takes the name of the ntp utility to run as an argument.
-> This allows a hacker to run any arbitrary command as root under the
-> guise of updating the time.
+> We're not sure what can be done about case 1. The general issue is
+> that, when doing an upgrade of an arbitrary OS, the system might
+> intermittently be in a state in which incompatibility of
+> old-OS-version programs and new-OS-version programs has a major
+> security risk. Maybe the right answer is a policy that nobody is
+> allowed to do anything while an upgrade is in progress. In other
+> words, regular users may not be logged in, and root should only be
+> running the upgrade program and nothing else. ("nothing else" is
+> impractical; realistically, risk is reduced by running as little else
+> as possible.)
 > 
-> https://git.reviewboard.kde.org/r/120977/
+> Case 2 possibly violates the expectations of the concept of a Linux
+> distribution OS or other OS. In other words, the dpkg program requires
+> the patch program, and therefore the administrator must ensure that
+> the patch program (at least, in root's path) is the one provided by
+> the OS vendor. If the administrator decided to install any other patch
+> program, the resulting security problem would typically be considered
+> a site-specific problem and thus outside the scope of CVE. However, a
+> CVE ID could be assigned of any of these is true:
+> 
+>   - on wheezy, dpkg doesn't have any explicit requirements about the
+>     patch program
+> 
+>   - the dpkg documentation states that a non-GNU patch program can be
+>     used if desired
+> 
+>   - Debian has a general policy that a supported program (such as
+>     dpkg) must be robust in the face of non-standard but reasonable
+>     site-specific software changes. In other words, if Debian program
+>     1 allows arbitrary code execution in situations where the
+>     administrator replaces Debian program 2 with an
+>     often-considered-equivalent non-Debian program, this is supposed
+>     to be treated as a vulnerability in Debian program 1.
 
-> Do not pass ntpUtility as an argument to datetime helper
->  
-> Passing the name of a binary to run to a polkit helper is a security
-> risk as it allows any arbitrary process to be executed.
+Debian doesn't have a policy such as the one in the third point. I'm CC'ing 
+the dpkg maintainer to allow him to answer from his POV.
 
-Use CVE-2014-8651.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUXBpEAAoJEKllVAevmvms8tkH/24xRCKqs7+chaachMPh198W
-5kPxM6u/LnF8kT+9iSxO5BcotC9EtpcqR7INhP8+aE3UC/6sTyMqY0UQ0+Dq1sSF
-0qcD9MV/70cxi/ty01hqWKLTn8rzdRmm88g+tgbDKCbjH48BpQRmMdNLJhL9InhJ
-FR7KHqEr7KYMTq0l9eNcLNNbkq8yt8QeaSz2O4dqsnnn9yjFAUR0n+jAN9toDyTr
-gi4pMYQUIuViQMamtwZuo8WXZf/badIEkC1QESDbkjKqPttC4/qJL2F4HY6usdZa
-PiL7PmS8zrI5wpGg+UQhgf6Svkgbu5PDPwwvLADx1/CYXe1neOnxjhjj9vwkZQ8=
-=edpr
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
