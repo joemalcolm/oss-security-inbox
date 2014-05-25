@@ -1,58 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/3
-Message-Id: <20140815062446.A3D2E1F051D@smtpksrv1.mitre.org>
-Date: Fri, 15 Aug 2014 02:24:46 -0400 (EDT)
-From: cve-assign@...re.org
-To: tristan.cacqueray@...vance.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Keystone
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/25/2
+Message-ID: <1804246.Yr4AJFuk5I@eee>
+Date: Sun, 25 May 2014 11:31:51 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: guillem@...ian.org
+Subject: CVE request: another path traversal in dpkg-source during unpack
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> Multiple vulnerabilities in Keystone revocation events
+Another path traversal was discovered[1] in dpkg-source, related to the 
+unpacking of source packages with specially-crafted patches.
+While waiting for the original reporter's PoC/more information, Guillem 
+Jover (dpkg maintainer) independently re-discovered the issue, and a second 
+one.
+This second issue has now been publicly reported as [2] to ease the 
+assignment of CVE id(s) given the combination of private and not-very-
+specific public information.
 
+Both issues are independent of the version of the patch tool.
 
-> https://launchpad.net/bugs/1347961
+While figuring out whether one or two ids should be requested (at least from 
+our POV), it appears that we can say that [2] is a superset of [1] - this is 
+based on the minimal fixes needed to fix either vulnerability: the fix for [1] 
+does not fix [2], but the fix for [2] does fix [1].
 
-> When MySQL is used to store revocation events, events are returned
-> from the database with the timestamps truncated to the second. This
-> causes a revocation event for a token (which has the issued_at
-> timestamp to the microsecond) to not match
+Could a CVE id be assigned please?
 
-Use CVE-2014-5251.
+CC'ing Guillem for any complimentary information.
 
+Thanks in advance.
 
-> https://launchpad.net/bugs/1348820
+[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746498
+[2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=749183
 
-> When the server converted a V2 token to a V3 token it regenerated the
-> issued_at time ... This was causing the server to fail to revoke a V2
-> token
-
-Use CVE-2014-5252.
-
-
-> https://launchpad.net/bugs/1349597
-
-> A token scoped to a domain wouldn't be revoked for a domain-wide
-> revocation event.
-
-Use CVE-2014-5253.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT7ac2AAoJEKllVAevmvmsKIoH/id1hfj2XZ/6vUAbSgb4Yrar
-y6Ozz2ma5KfeSXxC5BQs9TEh9w4sG2Bz6HTmGHjwt4XAhR6X/56d/xmHDtwJXyiu
-NLEitTX6By23ehPVO26D4/h0wRFYzWve5ey/WLzeJVfM1P0HgBRxjeMFZF+rFcVm
-OusIkEardviGTZDX+gz8YNu6Bmd+OMSVrAi0ow/Oyw2YVZPmRnFLi/xp66jHxHer
-Hnq7c7lZ4Pna1N1L/3Bn3Cf/aW1V6u6FmIT6CP5697myylYEDTcvU9sX9suCxuzs
-GrSXYHHXbK0BVJxYgUGeNbVVB1paxuQkuk2LnQNS6aOeOM8BIeAFZAySyWKKEs0=
-=me1L
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
