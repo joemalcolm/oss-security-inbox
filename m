@@ -1,35 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/12
-Message-Id: <201401291513.s0TFDX1S000258@linus.mitre.org>
-Date: Wed, 29 Jan 2014 10:13:33 -0500 (EST)
-From: cve-assign@...re.org
-To: argos83@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Erlang OTP - ftp module - FTP Command Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/25/3
+Message-ID: <20140525145608.00005303@openflare.org>
+Date: Sun, 25 May 2014 14:56:08 +0300
+From: Dolev Farhi <dolev@...nflare.org>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: CVE Request: userCake <= 2.0.2 CSRF vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+hi,
 
-> http://erlang.org/pipermail/erlang-bugs/2014-January/003998.html
+I would like to request a CVE for the following issue:
 
-> There is an FTP Command Injection vulnerability in the "ftp" module.
+Date: 21.5.2014
 
-Use CVE-2014-1693.
+Title: Cross-Site Request Forgery vulnerability in userCake
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Vendor: userCake.com - notified & confirmed
 
-iQEcBAEBAgAGBQJS6RoLAAoJEKllVAevmvmsTbMH/1WIf22nkXfqAI8iBeBpQSwi
-I459t/EhfrgiNYKQZPnzc8SgxgQgY3q8tXr4Kcgz+CqMxVyb7gAP8t3wh+Ltqtfc
-B1vZjrepQviiWd1vjJ/pOUbQFtu+wBz/vkOQ2o4ptDZP3Di3jtpPRhpNdviUh8we
-YUsyCwi0D1sfk+e1A7BW02qjjvJ4HjYcMWZgfMDXngMHvHM8pVYJNzKKOMwZ6pes
-d8GLZN8hg1dYQFubD1KrYjMUuIQ4CPA0FUtPAzmBmXnSlu+JmzA+WkUeWFtzYcn7
-s2SomoIVhl9bUYTZrGqXZMw02QIkheoHwkRQ8s9lrdvv+FoulHhoAxf1RUfcAPw=
-=Yt6e
------END PGP SIGNATURE-----
+homepage https://usercake.com
+
+Brief:
+
+A cross-site request forgery issue was found in the latest
+version of userCake 2.0.2, which most probably affects versions prior to
+the latest as well. 
+userCake is an open source user management system.
+
+
+The vulnerability allows resetting a logged on admin account password
+via the passwordc and passwordcheck parameters in user_settings.php
+
+
+
+Full advisory and proof of concept can be found in this link:
+http://research.openflare.org/advisories/OF-2014-11/usercake_csrf.txt
+
+
+Can a CVE please be assigned? 
+
+
+Tx
+
