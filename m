@@ -1,75 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/5
-Message-Id: <201402181403.s1IE39Rt022285@linus.mitre.org>
-Date: Tue, 18 Feb 2014 09:03:09 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/26/1
+Message-Id: <201405261829.s4QITAm1011521@linus.mitre.org>
+Date: Mon, 26 May 2014 14:29:10 -0400 (EDT)
 From: cve-assign@...re.org
-To: mmcallis@...hat.com
+To: dolev@...nflare.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: "imapsync ignores the --tls switch and sends my authentication plaintext."
+Subject: Re: CVE Request: userCake <= 2.0.2 CSRF vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://github.com/imapsync/imapsync/issues/15
+> http://usercake.com/thread.php?id=757
+> http://research.openflare.org/advisories/OF-2014-11/usercake_csrf.txt
 
-There seems to be a possibility of at least two separate issues.
-First, the product ends up trying a cleartext login even though
-the --tls option is provided on the command line. This is assigned
-CVE-2014-2014. (Moving to a cleartext session in reaction to a
-certificate-verification failure would typically always be wrong for
-any product.)
-
-Second, the product is trying a cleartext login even though the server
-sent LOGINDISABLED. RFC 3501 section 6.2.3 says "A client
-implementation MUST NOT send a LOGIN command if the LOGINDISABLED
-capability is advertised."
-
-(The discussion also reported a third problem: "The user is never
-notified of the certificate issue." That one is most likely, by
-itself, outside the scope of CVE. If a product refused to operate in
-an unsafe certificate situation, and did not tell the user why it was
-refusing, that would potentially be a usability problem. That would
-not be an independent vulnerability that could have a CVE ID.)
-
-The patch in:
-
-  https://github.com/imapsync/imapsync/commit/7d2043f95f42122c2ae3340053f893095efe1550
-
-seems to change:
-
-   $imap->starttls(  ) if ( $imap->Tls(  ) ) ;
-
-to:
-
-   if ( $imap->Tls(  ) ) {
-          $imap->starttls(  )
-          or die_clean("Can not go to tls encryption on [$host]:", $imap->LastError, "\n" ) ;
-   }
-
-in two places.
-
-The second issue (proceeding when LOGINDISABLED is advertised) would
-also be relevant if it occurred when the client did not include --tls
-on the command line. If anyone has observed that, a second CVE ID
-could be assigned. This is a protocol violation with security
-implications. Compliant client software is supposed to look for
-LOGINDISABLED in all cases, presumably including cases in which the
-end user is not explicitly requesting a TLS session.
-
-Finally, https://github.com/imapsync/imapsync/issues/15 ends with
-
-   there's still something weird, since I found that:
-   
-   --ssl1 --tls2 fails on host2 login with "Unable to start TLS: Cannot determine peer hostname for verification"
-   --tls1 --tls2 succeeds
-   --tls2 succeeds
-   --tls1 --ssl2 succeeds
-
-We couldn't immediately determine if that's simply a functionality
-problem, or whether another vulnerability exists (e.g., if the correct
-behavior were "fails" in all four cases, but with some combinations of
-command-line options, there's no attempt to check a server hostname).
+Use CVE-2014-3866.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -79,11 +24,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTA2caAAoJEKllVAevmvmsjh0IAIfLB/+evn3Cb3/MXfe3h+W2
-K2IUwXZACCqEx2jXOKzc3bG2ns3YlVzkvtxtmzZ0Vg6KAPb/SKEki4szcwu+hPbI
-KCKRBGJR6Q/+42VGyks+56WtRoG7YhaAA7lhldULpzsXBaSvqe3pcuC1MGx2J1LL
-Zia+++79c7JySlgXtMGc90/X2lKKYGdTgfKgWH3cmKTw0duNkA96i3QIeLm9ArUL
-yYSEBsz5PFxeDBozFijIQUkf9cyjbHF9X5TIJkzL9UJ6U76qwMAUZelrAgFfHqVe
-zoXMKCZKHzf5R1bhEjJU2V2cofp58JKX3rsKlVgupkBLIvaRU4beIAf1eGlESFw=
-=aR5P
+iQEcBAEBAgAGBQJTg4etAAoJEKllVAevmvmswFkH/0BTQ79W2WPwfNnwZiZVfS+6
+kWLGsjhU3sniidwFuP3aiuQZ3lqnULfH2D4pa/WK768/7HwCnh79UTReSNhjYyGh
+mXo0wEH+4pBPCDhEoQdpqrAdog/PDUojdgwipnt9wRw1FZmrXr6ZXCC36QmmH0eX
+egeg6dhBqhX+SLICjj5eBVqxLYP3VeXhV8MCiIvlRjat1WWXf+ykom313P+BH9jC
+SRYumLHhaUDllVHDpJcSDH2yVl88/1wDvWpcynQr+9aFYstmXGrDEl/f3V3yzx2g
+iFJusMj/1H51VPBYy69rriiWSb4HeoccGnhQkmVYanceOXIK9V1Ubu2rdupO0ZQ=
+=zi82
 -----END PGP SIGNATURE-----
