@@ -1,41 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/12
-Message-Id: <201406271537.s5RFbQRf010546@linus.mitre.org>
-Date: Fri, 27 Jun 2014 11:37:26 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/27/1
+Message-ID: <53843EB3.3060200@redhat.com>
+Date: Tue, 27 May 2014 17:28:51 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Xen Security Advisory 101 - information leak via gnttab_setup_table on ARM
+Subject: CVE-2014-0246 sos: md5 hash of GRUB password collected when running sosreport
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
-> XSA-101
+When using a GRUB bootloader password, the md5 hash of said password was 
+collected and stored in the resulting archive of debugging information 
+when running sosreport. An attacker able to access the archive could use 
+this flaw to obtain the GRUB bootloader password. (CVE-2014-0246)
 
-> When initialising an internal data structure on ARM platform Xen was
-> not correctly initialising the memory containing the list of a
-> domain's grant table pages.
+Red Hat would like to thank Dolev Farhi of F5 Networks for reporting 
+this issue.
 
-> Malicious guest administrators can obtain some of the memory contents
-> of other domains
+Reference: https://bugzilla.redhat.com/show_bug.cgi?id=1101393
 
-This was previously assigned CVE-2014-4022. We're not sure why a version
-of XSA-101 without that CVE ID was sent here on 25 June.
+Cheers,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTrY8RAAoJEKllVAevmvmsdPYH+QF1sI1FYtaD8/+H0k9BKbSE
-CX9NlDT/GHkAO7tVnF6109pxdt5BFsTSC2kM+wDLVvzr3QIiw1295ckuiXKkzsQf
-f8pyB2uUzoKiKiaInPjWhWJpNfJQkMnxqyEyGnlqplsTAwrrzmGjgbCE0hJKOwoy
-lrP0T2pk7d5JCgVTQwB6bTlF/yHltWYB8yaZYvaLSTxZF3ZZpi1wmy1GFRWKF+8c
-bKiAUQpexO6aVFyrgQd67mnm5GAGai7+6Fnv0XfKcH/QviPYaB9px3yQyaslRHOY
-Dt9kNjY+dhD1ZF7/imWhGmEdDOU5WXAneHmy2V10f/Y96JKbHNWMA8ynMh26pUU=
-=rNka
------END PGP SIGNATURE-----
+--
+Murray McAllister / Red Hat Security Response Team
