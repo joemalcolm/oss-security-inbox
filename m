@@ -1,40 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/6
-Message-ID: <CAA7hUgEXUvo0NyZWUcpOncvOATdtrnPLxzpn=kKmeDn6=-MAgA@mail.gmail.com>
-Date: Wed, 29 Jan 2014 09:57:27 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: "support@...sion.nl" <support@...sion.nl>, Jakub Wilk <jwilk@...ian.org>
-Subject: Re: CVE request: temporary file issue in Passenger rubygem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/28/9
+Message-ID: <CALCETrVS_MS7jGFv1hGmus6VKnju58gz6stwrj3gcYX3kSv3WQ@mail.gmail.com>
+Date: Wed, 28 May 2014 15:30:04 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: Greg KH <greg@...ah.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux kernel DoS with syscall auditing
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, May 28, 2014 at 3:03 PM, Greg KH <greg@...ah.com> wrote:
+> On Wed, May 28, 2014 at 02:51:16PM -0700, Andy Lutomirski wrote:
+>> On Wed, May 28, 2014 at 2:53 PM, Greg KH <greg@...ah.com> wrote:
+>> > On Wed, May 28, 2014 at 02:45:59PM -0700, Andy Lutomirski wrote:
+>> >> Issuing a system call with a random large number will OOPS, depending
+>> >> on configuration.  A configuration that will enable this bug is:
+>> >>
+>> >> # auditctl -a exit,always -S open
+>> >>
+>> >> No privilege whatsoever is required to trigger the OOPS.
+>> >>
+>> >> It's possible that this can be extended to more than just a DoS --
+>> >> with some care and willingness to exploit timing attacks, this is a
+>> >> read of arbitrary single bits in kernel memory.
+>> >
+>> > Is there a kernel fix for this anywhere?
+>>
+>> No, but there will be soon.
+>
+> Great, I see the thread on lkml now, thanks for the heads up.
+>
+>> The correct fix is, IMO, CONFIG_AUDITSYSCALL=n.  That code is garbage.
+>
+> No argument from me there...
 
-On 29 January 2014 00:23, Vincent Danen <vdanen@...hat.com> wrote:
-> Phusion Passenger creates a "server instance directory" in /tmp during startup,
-> which is a temporary directory that Phusion Passenger uses to store working files.
-> This directory is deleted after Phusion Passenger exits. For various technical
-> reasons, this directory must have a semi-predictable filename. If a local attacker
-> can predict this filename, and precreates a symlink with the same filename that
-> points to an arbitrary directory with mode 755, owner root and group root, then
-> the attacker will succeed in making Phusion Passenger write files and create
-> subdirectories inside that target directory.
+Patch here:
 
-Ah, nice catch Jakub. Needless to say, this is related to but
-different from CVE-2013-4136.
+https://lkml.kernel.org/g/<833bd6cb411ad1d4e293629c6c34c4abca27a840.1401315521.git.luto@...capital.net>
 
-One thing to notice, however, is that there's a race condition between
-the stat check introduced in 34b1087870c2.
-The following sequence still triggers the bogus behaviour:
+it's not the best-tested thing in the world.
 
-<user> mkdir $dir
-<phusion> lstat() (getFileTypeNoFollowSymlinks)
-<user> rmdir $dir
-<user> ln -s /target $dir
-<phusion> stat() (from verifyDirectoryPermissions)
-...
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+--Andy
