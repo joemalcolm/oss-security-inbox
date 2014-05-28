@@ -1,38 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/8
-Message-Id: <20140814161024.4A85B1F04E5@smtpksrv1.mitre.org>
-Date: Thu, 14 Aug 2014 12:10:24 -0400 (EDT)
-From: cve-assign@...re.org
-To: lcars@...rt.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: [oCERT-2014-006] Ganeti insecure archive permission
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/28/7
+Message-ID: <CALCETrW-UY_UAywWx+8FAA20ZxgN90jX6kx9kG2gGFbG6L4Aug@mail.gmail.com>
+Date: Wed, 28 May 2014 14:51:16 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: Greg KH <greg@...ah.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux kernel DoS with syscall auditing
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, May 28, 2014 at 2:53 PM, Greg KH <greg@...ah.com> wrote:
+> On Wed, May 28, 2014 at 02:45:59PM -0700, Andy Lutomirski wrote:
+>> Issuing a system call with a random large number will OOPS, depending
+>> on configuration.  A configuration that will enable this bug is:
+>>
+>> # auditctl -a exit,always -S open
+>>
+>> No privilege whatsoever is required to trigger the OOPS.
+>>
+>> It's possible that this can be extended to more than just a DoS --
+>> with some care and willingness to exploit timing attacks, this is a
+>> read of arbitrary single bits in kernel memory.
+>
+> Is there a kernel fix for this anywhere?
 
-> Such archives are written with too lax permissions that make it
-> possible to access them as unprivileged user.
+No, but there will be soon.
 
-> The configuration archive contains sensitive information, including
-> SSL keys for the inter-node RPC communication as well as the
-> credentials for the remote API (RAPI).
+The correct fix is, IMO, CONFIG_AUDITSYSCALL=n.  That code is garbage.
 
-Use CVE-2014-5247.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT7N2eAAoJEKllVAevmvmsrioH/33ive+8TrDkuY7hfT+4UsHK
-GO6NH8c3omBnlNGXsdQ27xSBXzhol/kfW03/NcqBMK9SKPtcGMUk3GugMWAtv2yt
-oDyvOP54QUtCS8ei7faqQLUjjW5zOxfrVJg14eaPPVYOdfatfoHOvVqcz7chqzUg
-/RgoIvaslpRRK74s7CQdMOqQNOcfmD2KBxAUGNUUX/REx3QE2ojTUXTEL0dcTfyx
-nn7HfoyikBE1VpHA+GS8Ew0Nqh5wTP+W0YGnL7AU+btY/BQR4aZJma567BnL63CC
-Hb9pVneqCJq8HUjygmwgPDaDO6ivCnUuhZypg4kVg8ja37OysWfokzicK7kl03o=
-=pveN
------END PGP SIGNATURE-----
+--Andy
