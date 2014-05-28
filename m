@@ -1,37 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/10
-Message-ID: <alpine.LFD.2.10.1407031337290.27589@javelin.pnq.redhat.com>
-Date: Thu, 3 Jul 2014 13:38:06 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: LMS-2014-06-16-5: Linux Kernel LZ4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/28/2
+Message-ID: <5385A1F3.5060901@redhat.com>
+Date: Wed, 28 May 2014 14:14:35 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: freerdp: integer overflows in memory allocations in client/X11/xf_graphics.c
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Florian Weimer found a possible integer overflow in memory allocation in
+freerdp. More details available here:
 
-+-- On Thu, 3 Jul 2014, P J P wrote --+
-|   -> http://blog.securitymouse.com/2014/07/i-was-wrong-proving-lz4-exploitable.html
+https://bugzilla.redhat.com/show_bug.cgi?id=998934
+https://github.com/FreeRDP/FreeRDP/issues/1871
 
-- -> http://fastcompression.blogspot.fr/2014/07/software-vulnerabilities-how-it-works.html
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+This issue has been assigned CVE-2014-0250
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBAgAGBQJTtQ9mAAoJEN0TPTL+WwQf9loP/jAjYIlFrIFTfE8PkVhyGMit
-j2IHqF3v8JqHVLVWt42+4ioRpFYgVFlk/yo47ibKq4w7SiJY9hL5IfRon2SIWYz2
-+9RQhm0fjJ9EwKZ3xpZPG/5cvSH7quDhRCLu8StkrfndGU6ebLRqlDnE4NHK0YZz
-KyT+ieQINTWKLaFIQX2iPiht3xN2w28o9+DggG7dY9AtMsT1XpgmsAHxyRSyZUdf
-2elFWs5SvwbNQYaZl4NvVYLkR79q6pJaybGc8fUvtcAigu5X5aqscTnu8wgrtVqW
-wlKIgKkTJwNfAjFCXvrOuPe49byN1cE/7XlxCBC6llrVgavpYl3u5F34lGpG7gJw
-VB4wgZGVK3WSlMSA+f3+WHfvN+tMS2gTTljcNZxUD7lbJIZ3pU5P/eo5TUI+8V8+
-GFWbafvQUxhAmlV/fpmL8dqU39VIr/EMYXyYYIgwR9qy7rz8t5DbtNZEV7egJRbE
-mFDFFdzFByuHRTis3iNylgB/xkoJS/KGeU1NS12J41x3+Yf52qxaiqKbR3D3Cudb
-c5wf7e3M7YLFrzsKE8QizTSHJoyeZuAmVejzzjqQ1h40AugzHxPF01JKzpP/VH8G
-ZirhEZjzezi8fML5sq+mMEKDfk6Zw4ZdsXS+AabiuFDm66T+vaDdFeiXIywpYXT7
-m+PAia5HTg4kcwjl1wlk
-=zYoz
------END PGP SIGNATURE-----
+-- 
+Huzaifa Sidhpurwala / Red Hat Security Response Team
