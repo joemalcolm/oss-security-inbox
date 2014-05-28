@@ -1,64 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/16/2
-Message-ID: <52D7B4FC.9000807@redhat.com>
-Date: Thu, 16 Jan 2014 16:01:24 +0530
-From: Ratul Gupta <ratulg@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: drupal: multiple vulnerabilities corrected in 6.30 and 7.26 (SA-CORE-2014-001)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/28/4
+Message-ID: <20140528151733.GA67102@redoubt.spodhuis.org>
+Date: Wed, 28 May 2014 11:17:33 -0400
+From: Phil Pennock <oss-security-phil@...dhuis.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: Fwd: [exim-announce] Exim 4.82.1 Security Release
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Multiple vulnerabilities were fixed in the supported Drupal core 
-versions 6 and 7.
+On 2014-05-28 at 10:57 -0400, Phil Pennock wrote:
+> Heads-up went to packagers who've worked closely with us in the past
+> and, I believe, belatedly to linux-distros@.
 
-1) Impersonation (OpenID module - Drupal 6 and 7 - Highly critical)
+I believed in error, it seems.  Sorry, hectic; it had been raised as
+possibly a good idea, but not acted upon.  Process improvement
+forthcoming, we'll try to include linux-distros@ in future.
 
-A vulnerability was found in the OpenID module that allows a malicious 
-user to log in as other users on the site, including administrators, and 
-hijack their accounts.
-This vulnerability is mitigated by the fact that the malicious user must 
-have an account on the site (or be able to create one), and the victim 
-must have an account with one or more associated OpenID identities.
+Todd's investigation has not discovered any Linux distribution other
+than Gentoo which even made EXPERIMENTAL_DMARC an available build
+option, and for Gentoo it was a use-flag.
 
-2) Access bypass (Taxonomy module - Drupal 7 - Moderately critical)
+Nor do FreeBSD, OpenBSD or DragonFlyBSD (DPorts checked), although
+PkgSrc in NetBSD also exposed DMARC as a build option.
 
-The Taxonomy module provides various listing pages which display content 
-tagged with a particular taxonomy term. Custom or contributed modules 
-may also provide similar lists. Under certain circumstances, unpublished 
-content can appear on these pages and will be visible to users who 
-should not have permission to see it.
-This vulnerability is mitigated by the fact that it only occurs on 
-Drupal 7 sites which upgraded from Drupal 6 or earlier.
+- -Phil, pdp@...m.org
+-----BEGIN PGP SIGNATURE-----
 
-3) Security hardening (Form API - Drupal 7 - Not critical)
-
-The form API provides a method for developers to submit forms 
-programmatically using the function drupal_form_submit(). During 
-programmatic form submissions, all access checks are deliberately 
-bypassed, and any form element may be submitted regardless of the 
-current user's access level.
-This is normal and expected behavior for most uses of programmatic form 
-submissions; however, there are cases where custom or contributed code 
-may need to send data provided by the current (untrusted) user to 
-drupal_form_submit() and therefore need to respect access control on the 
-form.
-To facilitate this, a new, optional 
-$form_state['programmed_bypass_access_check'] element has been added to 
-the Drupal 7 form API. If this is provided and set to FALSE, 
-drupal_form_submit() will perform the normal form access checks against 
-the current user while submitting the form, rather than bypassing them.
-This change does not fix a security issue in Drupal core itself, but 
-rather provides a method for custom or contributed code to fix security 
-issues that would be difficult or impossible to fix otherwise.
-
-Upstream advisory:
-https://drupal.org/SA-CORE-2014-001
-
-Could CVE's please be assigned to these issues?
-
--- 
-Regards,
-
-Ratul Gupta / Red Hat Security Response Team
-
+iQEcBAEBCAAGBQJThf4EAAoJEKBsj+IM0duFEywH/A2+rOGrLDaTrmGuFGFUu5Iv
+5/cQgD3V9kLjgBvATTPvZHY4SCoGqHJHo/fRw5IS7jnbzL+kD2yYElZuzrxavyb5
+BIIXHLwjLTarSB7EQ58+Rj2LXic3ucQ466zeKOV+Lko05+DfF//0X5j5osvMtMxJ
+reh4ZNy2dRdCAZj6nIlJAp46lbs0E6UMeh9TfMWvC0NCQ1ybT5LC8081sZ+AfwCo
+FPTYtWiPypWWDAhSGVYr2rjF0XFCCN3SATQwqPpl1bMKLvWhcauxQkBVQosLooM0
+rIvuyvBm0CkRk/GInBhZPXHxl/oc7lBbm8qEzM7p6405lHF6tSWSQphZYmSqrvY=
+=bBJS
+-----END PGP SIGNATURE-----
