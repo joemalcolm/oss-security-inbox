@@ -1,15 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/23
-Message-ID: <CALx_OUAnZoME3gb8KD_XmiM9m+NssgV7wjcV8Oc9orNfoxsPng@mail.gmail.com>
-Date: Fri, 7 Nov 2014 13:11:59 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: random number generators - rand(), random(), etc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/28/8
+Message-ID: <20140528220355.GA7588@kroah.com>
+Date: Wed, 28 May 2014 15:03:55 -0700
+From: Greg KH <greg@...ah.com>
+To: Andy Lutomirski <luto@...capital.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux kernel DoS with syscall auditing
 Content-Type: text/plain; charset=utf-8
 
-> https://sourceware.org/ml/libc-alpha/2014-11/msg00143.html
+On Wed, May 28, 2014 at 02:51:16PM -0700, Andy Lutomirski wrote:
+> On Wed, May 28, 2014 at 2:53 PM, Greg KH <greg@...ah.com> wrote:
+> > On Wed, May 28, 2014 at 02:45:59PM -0700, Andy Lutomirski wrote:
+> >> Issuing a system call with a random large number will OOPS, depending
+> >> on configuration.  A configuration that will enable this bug is:
+> >>
+> >> # auditctl -a exit,always -S open
+> >>
+> >> No privilege whatsoever is required to trigger the OOPS.
+> >>
+> >> It's possible that this can be extended to more than just a DoS --
+> >> with some care and willingness to exploit timing attacks, this is a
+> >> read of arbitrary single bits in kernel memory.
+> >
+> > Is there a kernel fix for this anywhere?
+> 
+> No, but there will be soon.
 
-In general, rand() and random() are not backed by cryptosafe PRNGs and
-should not be used for security purposes.
+Great, I see the thread on lkml now, thanks for the heads up.
 
-/mz
+> The correct fix is, IMO, CONFIG_AUDITSYSCALL=n.  That code is garbage.
+
+No argument from me there...
+
+greg k-h
