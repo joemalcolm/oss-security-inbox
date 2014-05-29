@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/11
-Message-Id: <201402201622.s1KGLv5T028016@linus.mitre.org>
-Date: Thu, 20 Feb 2014 11:21:57 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/3
+Message-Id: <201405290653.s4T6rO7A021269@linus.mitre.org>
+Date: Thu, 29 May 2014 02:53:24 -0400 (EDT)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
+To: rdecvalle@...are.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+Subject: Re: Fwd: [ruby-core:62800] [ruby-trunk - Bug #9709] Large string causes SEGV with x64-mingw32
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> So, if original author says it's a flaw then it's a flaw, otherwise not?
+> https://bugs.ruby-lang.org/issues/9709
+> https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/45534
 
-Otherwise MITRE attempts to use the best available information in
-deciding whether "security improvement" is a better categorization.
-Across all types of products and problems, the original author is
-generally allowed to admit that they made a mistake when writing the
-code in a certain way.
+> * string.c (str_buf_cat): should round up the capacity by 4KiB,
+>   but not number of rooms.   [Bug #9709]
 
-> So now SipHash is 'the only' way to avoid hash collision ever?
+> -     capa = (total + 4095) / 4096;
+> +     capa = (total + 4095) / 4096 * 4096;
 
-At present, introducing SipHash is a type of patch that's very likely
-to be considered when a software maintainer is responding to
-hash-collision problems. Certainly other patch approaches are
-possible. Not all code originated with an implicit functional
-specification that the code would do a good job at resisting all types
-of intentional hash-collision attacks. So, in general, when a
-description of a new attack is published, any resulting patches can be
-considered security improvements.
+Use CVE-2014-3916.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -38,11 +30,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTBiraAAoJEKllVAevmvmskowH/i6JQKtvJttMqHORSRz78Q0b
-cDs+ho9ha3IfW72JDESqpnuZN5MmD5RANj95h/kVuuwxRZQoaZuBz7TrcXqkJB5a
-Jj4t/41o2/9MDtR+13w2EF4K2OHOVehiv+cH2uWOgTcxl0iY3frCpUXsl5uhMOX7
-ComvccRVrKgG0U6kdQxQClKKrjvQ+9jXNM1lP1cQbyMtsk6wSbvw9AuC8KNAHoL/
-IAWor0yu3GQ9fW/i5bnHJixQx9Yj32XcoiLkrYIxL7M8lB6TZ9SBw1PyWqWSEorc
-2xPONazJ0TE5QEOpMwgaJrhSQyznQFQQfn4aWbyrgfjC05K0VE/5bsfssnRCm8A=
-=Ycsb
+iQEcBAEBAgAGBQJThtdWAAoJEKllVAevmvmscQ4H/RsUSP/RBota103N7qNmMXOs
+Lvt843wccI7jGQxtGXRgtqh8cIZqVPsbbZ/qkvEhbQDHkWdnE37qeHpPudhsJ/tG
+SLpiYAlr7oOjX1g3jXP1eViuuUWlv6rISO0uT3FDBbPmWO//yqWA0Wg3bCsYSGIp
+n4uDiMwJLO4nmx9LcJSZpT2Wsz+aqMuZKU0SN1HAcg/Br4odhhlos+6P98NHs8hk
+JTyWe3kWimvKm55lRF/TI7YqPNAWayc/UOypT8WLnCZ6l5y9K2kizO6xRymfPZCI
+YjWgdu/pcpRz2Oa5r7sR76jHqxuTTMJP2t6W+BSa+Ob4m63q9qRUx73rv2JU8HM=
+=pWl2
 -----END PGP SIGNATURE-----
