@@ -1,33 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/31
-Message-ID: <20140409232014.GB22420@hunt>
-Date: Wed, 9 Apr 2014 16:20:14 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/8
+Message-ID: <1549525.2B9iKiHOEe@x2>
+Date: Thu, 29 May 2014 09:10:15 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Cauterizing OpenSSL's heartbleed (the aftermath)
+Cc: cve-assign@...re.org, luto@...capital.net
+Subject: Re: Re: CVE request: Linux kernel DoS with syscall auditing
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 09, 2014 at 10:47:48PM +0000, mancha wrote:
-> Mustafa Al-Bassam's work assists a great deal with this taxonomy. He
-> ran PoC code against Alexa top 100, 1000, and 10000 sites beginning
-> about 18 hours after OpenSSL's first public announcement [1].
-> 
-> Specifically, his scans began circa: 1396956600 (top 100); 1396958400
-> (top 1000); and 1396972800 (top 10000). Did any major vendors deploy
-> upgrades prior to this?
+On Thursday, May 29, 2014 02:59:33 AM cve-assign@...re.org wrote:
+> At least at the moment, there are no CVE IDs for
+> other issues listed in the
+> http://article.gmane.org/gmane.linux.kernel/1713180 post. Similarly,
+> there is no CVE ID for the higher-level concept that "config
+> AUDITSYSCALL" existed but was not marked BROKEN.
 
-Ubuntu's updates were released around 1396907296 [2], roughly 13 hours
-before Mustafa's awesome scans.
+I would suggest that those issues are a misunderstanding of the audit system.
 
-Thanks
-
-> [1] https://github.com/musalbas/heartbleed-masstest
-
-[2] https://launchpad.net/ubuntu/+source/openssl/+publishinghistory
-
-The 'security' column of the publishing history is when packages were
-made available on security.ubuntu.com. (To take load off our security
-servers, the security updates are copied into 'updates', and from there
-propogated to our mirror network.)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+-Steve
