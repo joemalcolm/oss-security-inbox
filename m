@@ -1,36 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/8
-Message-Id: <20141127041225.35689ABC008@smtpvmsrv1.mitre.org>
-Date: Wed, 26 Nov 2014 23:12:25 -0500 (EST)
-From: cve-assign@...re.org
-To: dregad@...tisbt.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: CAPTCHA bypass in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/6
+Message-ID: <53871407.8070306@redhat.com>
+Date: Thu, 29 May 2014 21:03:35 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: sos: /etc/fstab collected by sosreport, possibly containing passwords
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Good morning,
 
-> http://github.com/mantisbt/mantisbt/commit/7bb78e4581ff1092c811ea96582fe602624cdcdd
-> https://www.mantisbt.org/bugs/view.php?id=17811
+ From <https://bugzilla.redhat.com/show_bug.cgi?id=1102633>:
 
-> Use session rather than form key for captcha
+It was reported that sosreport collected and stored "/etc/fstab" in the 
+resulting archive of debugging information. This may contain plain text 
+passwords (or a link to the file containing them), for example, 
+credentials for Samba mounts. This could leak passwords to an attacker 
+who is able to access the archive. Sensitive information in "/etc/fstab" 
+should be sanitized before being stored by sosreport.
 
-Use CVE-2014-9117.
+Note that "/etc/fstab" is world-readable, so local attackers should not 
+be a concern (they can read the file anyway). This could be an issue 
+when the sosreport is sent to other parties.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Acknowledgements:
 
-iQEcBAEBAgAGBQJUdqMOAAoJEKllVAevmvmszB4IAJoBUTi5IJUsPH65tiLEjH4k
-6YR4uZ7FJNy6lhDa5r0IwD6CfWcksgyvj3oPdI1SBp8308H8WpT+QaXzaSQxVlEy
-QOOf8AztSjIR+PHNJZmzEFxp5J3WVsKq53UbIa0u83WwhencGohGNwABujR28A/X
-2ARnctHzt8+YEUyhLTcAsYqAzgusvozVuN4sGiIdBwXRMzO6y+bbtqhe+nplBSbs
-LY0r8pfz1Zvlz2sRaq73ySBSGhWKtF2FRoirvbuEPkwg+VlUaFT//nnWm06IfOF9
-3u5F2jpRsb95OX9U6+OlPYxqZyTsI7P4840ZAarDBMgwHc1BVGTfbfprjxDKSco=
-=Tmxs
------END PGP SIGNATURE-----
+Red Hat would like to thank Dolev Farhi of F5 Networks for reporting 
+this issue.
+
+I think it should have a CVE, but I am less sure due to "/etc/fstab" 
+being world-readable, so I have not assigned one.
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Security Response Team
