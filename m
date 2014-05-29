@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/3
-Message-ID: <542A1084.3030506@case.edu>
-Date: Mon, 29 Sep 2014 22:08:04 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: cve-assign@...re.org, jwilk@...lk.net
-CC: chet.ramey@...e.edu, oss-security@...ts.openwall.com
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/10
+Message-ID: <538766BF.8030500@redhat.com>
+Date: Thu, 29 May 2014 10:56:31 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Please REJECT CVE-2014-3463
 Content-Type: text/plain; charset=utf-8
 
-On 9/29/14, 11:44 AM, cve-assign@...re.org wrote:
->> the parser is not locale-agnostic. Here's an example how it can be
->> exploited:
->> http://bugs.python.org/issue22187
-> 
-> The discussion in Issue22187 is about changing code in Python 2.x to
-> work around this. However, is it useful to assign one new
-> CVE-2014-#### ID for Bash, on the expectation that Bash was intended
-> to recognize valid characters in zh_CN.GBK, but instead is identifying
-> part of a two-byte character as a \ character, and this has security
-> implications for products that attempt to do otherwise-correct quoting
-> of untrusted strings for use in sh commands?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Can someone send me a test case to look at?
+Please REJECT CVE-2014-3463 (it went out on distros@ so I think it's
+best to reject in case anyone accidentally uses it), Debian already
+had assigned a CVE I wasn't aware of, distros@ was informed.
 
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+- -- 
+Kurt Seifried - Red Hat - Product Security - Cloud stuff and such
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJTh2a/AAoJEBYNRVNeJnmT/UUP/3XAieAE7HKTJybBO69OFaI8
+sXPe+EqCvDnnrtU64RuKjYglNzGvBIKixIfNd1DCEDbcwfW/yHEs8UKmMcP6P+te
+fCl0A0xdyH5UNfXL3Lfd9qFeFrBRvSZ/Sjrr11EJRtRF8qNLmvL2QdwRk3VVdwoD
+k78hWeWEs68oJ8Plgn14+0bcccquD1pIXd+mt0p+BILiFIAIfWQf7kuNGY8Ft67T
+iuFd/wrcFy7aPyK6IOHNHOURkoVFk/W41g9hfPgwwpJSrlenXL1R2OiIM39JnX0P
+zh3H+y6c1PeYYoxx085P14AkZjHt4Fv2MLxU9HgxNe3QcIx8ngAubnQDkcv3Nnvl
+t60O6rE8Yj5ZYmqqZqeiIWXA0z0gzfXVLZGjGp6UI+r2Af8T200nVPzuIRPOiY0L
+fiYLDdtArq4EkQBoLZLe4pZ0KVlswLb3fF0Ic8DpjUoqfsqAeZpIsXfujJdYGvVh
+y60gt9GqQipNIIR/PQyIeYVv4aam17I8uyM2IA7CSkjkS1N7Hlf0zVQfNPdD9ocz
+oPJ0LoPosvgzuzNj6wWqqKlIjKI1rYwPT25xJpJ8iW8e31T7P/sTg5PKjy3YHVgJ
+26QjPVS3l0HcFdS6YSQRLernSRn3zoGLV3gH5342G87n/NmpJhqlTOJ+DMq1ZnE7
+97k2AXxMLag6lTD3yMQp
+=erSH
+-----END PGP SIGNATURE-----
