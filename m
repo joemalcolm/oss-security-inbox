@@ -1,49 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/8
-Message-Id: <201407110840.s6B8egJF018309@linus.mitre.org>
-Date: Fri, 11 Jul 2014 04:40:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org, mmcallis@...hat.com, vkaigoro@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS in PNP4Nagios
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/2
+Message-ID: <CALCETrUcG6+FHcSVMr+wCRQxiJAaF+zCapLwPStBsbunnTbqZw@mail.gmail.com>
+Date: Wed, 28 May 2014 18:31:56 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: Steve Grubb <sgrubb@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux kernel DoS with syscall auditing
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, May 28, 2014 at 6:06 PM, Steve Grubb <sgrubb@...hat.com> wrote:
+> On Wednesday, May 28, 2014 02:45:59 PM Andy Lutomirski wrote:
+>> Issuing a system call with a random large number will OOPS, depending
+>> on configuration.  A configuration that will enable this bug is:
+>>
+>> # auditctl -a exit,always -S open
+>>
+>> No privilege whatsoever is required to trigger the OOPS.
+>
+> Do you have more information about this? I don't get an oops and I run with
+> the audit system on all the time.
 
-> I noticed that on Red Hat's Bugzilla these two are aliased to
-> CVE-2014-4740. Should thus CVE-2014-4740 be rejected, or is
-> CVE-204-4740 used for something different?
+It's on lkml -- see:
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-4740 i.e.
-> https://bugzilla.redhat.com/show_bug.cgi?id=1115983 .
+http://thread.gmane.org/gmane.linux.kernel/1713178/focus=1713179
 
-We need to REJECT CVE-2014-4740 because of the multiple conflicting
-uses.
+http://thread.gmane.org/gmane.linux.kernel/1712799/focus=1713161
 
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-4740 says
-that CVE-2014-4740 is only about
-f846a6c9d007ca2bee05359af747619151195fc9. The correct CVE ID for
-f846a6c9d007ca2bee05359af747619151195fc9 is CVE-2014-4907.
+You need to pass a fairly large bogus syscall number.  The auditsc
+code is completely missing any bounds checking on the syscall numbers.
 
-However, https://bugzilla.redhat.com/show_bug.cgi?id=1115983 says that
-CVE-2014-4740 is only about e4a19768a5c5e5b1276caf3dd5bb721a540ec014
-and cb925073edeeb97eb4ce61a86cdafccc9b87f9bb. The correct CVE ID for
-those two is CVE-2014-4908.
+>
+>
+>> It's possible that this can be extended to more than just a DoS --
+>> with some care and willingness to exploit timing attacks, this is a
+>> read of arbitrary single bits in kernel memory.
+>
+> What platform? Where do the arbitrary bits go? What syscall are we talking
+> about?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+The audit system decides whether to log a syscall depending on a bit
+in the audit_krule mask.  Since the mask read isn't bounds-checked,
+the caller can force it to read any bit, relative to the audit_krule.
+Anything that can tell the attacker the outcome of the filter decision
+will reveal the value of that bit.
 
-iQEcBAEBAgAGBQJTv6KzAAoJEKllVAevmvmsQhsIAJbbGeIR6ym+m7CaNTJT0J4T
-1pYnvPXkTXn6C7g7Dn1vCZqWISry6XAamP3OTIk8iXEkY+hJkQUKf6FiAsBP3uST
-RjKy9Gs96hXxKtC4Ym5O+DcXyhWQYrOBqmfsidYGY8dH3L4aHFUAlGAAGNsJrIQp
-bwc7VEfCqnRLhC4tyQ0YYBQKWOPO7BKKBBn0gQD/gJ2h98efknGYeEhNoVaAzzA/
-jqBuh7ob2b4MwkOJlcpo5zHMd+b10L5R7hSu6VHvr81WY5JcQ4gXFKoXIZcjp6ZH
-uda6OZrKE5DScie8e1yQkT+EhDSGcDSqAXpLJdklC0aoH8GDIPe4sdmCwhoRvTU=
-=74N8
------END PGP SIGNATURE-----
+>
+> There is a linux-audit mail list which seems to not have any emails about this
+> problem. That is really the best place to discuss any issues with this
+> subsystem and get it fixed.
+
+There's already a patch on lkml.
+
+I'll cc linux-audit for the v2 patches.
+
+--Andy
