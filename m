@@ -1,31 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/4
-Message-ID: <534FC2AA.2070403@canonical.com>
-Date: Thu, 17 Apr 2014 08:01:46 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/9
+Message-ID: <0CB14B04-89AB-4BCA-8DC6-59FBAE8D0103@redhat.com>
+Date: Thu, 29 May 2014 10:40:32 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: systemd stack-based buffer overflow in systemd-ask-password
+Subject: Re: CVE request: sos: /etc/fstab collected by sosreport, possibly containing passwords
 Content-Type: text/plain; charset=utf-8
 
-On 14-04-17 07:39 AM, Marc Deslauriers wrote:
-> Hello,
-> 
-> From the Red Hat bug:
-> A stack-based buffer overflow was found in systemd-ask-password, a utility used
-> to query a system password or passphrase from the user, using a question message
-> specified on the command line. A local user could this flaw to crash the binary
-> or even execute arbitrary code with the permissions of the user running the program.
-> 
-> Bug report:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1084286
-> 
-> Fix:
-> http://cgit.freedesktop.org/systemd/systemd/commit/?id=036eeac5a1799fa2c0ae11a14d8c667b5d303189
-> 
-> Could a CVE please be assigned to this issue?
+On 05/29/2014, at 5:03 AM, Murray McAllister wrote:
 
-Actually, never mind that request...crashing your own prompt isn't a security issue.
+> Good morning,
+>
+> From <https://bugzilla.redhat.com/show_bug.cgi?id=1102633>:
+>
+> It was reported that sosreport collected and stored "/etc/fstab" in the resulting archive of debugging information. This may contain plain text passwords (or a link to the file containing them), for example, credentials for Samba mounts. This could leak passwords to an attacker who is able to access the archive. Sensitive information in "/etc/fstab" should be sanitized before being stored by sosreport.
+>
+> Note that "/etc/fstab" is world-readable, so local attackers should not be a concern (they can read the file anyway). This could be an issue when the sosreport is sent to other parties.
+>
+> Acknowledgements:
+>
+> Red Hat would like to thank Dolev Farhi of F5 Networks for reporting this issue.
+>
+> I think it should have a CVE, but I am less sure due to "/etc/fstab" being world-readable, so I have not assigned one.
 
-Marc.
+Just going to note here what I put as a comment in the bug in case anyone feels differently.  I'm of the frame of mind that this shouldn't get a CVE for the reasons noted below:
 
 
+I don't think it's ever been advised to store password in /etc/fstab, so if you trust local users enough to view that file, then whatever sosreport stores in /tmp is probably just as "safe".
+
+sosreport is run manually by an administrator, and the resultant archive is stored in /tmp (/var/tmp in Fedora), but the administrator actually has to send this archive to someone.  sosreport also has this warning before it even runs (except on Red Hat Enterprise Linux 5):
+
+"The generated archive may contain data considered sensitive and its
+content should be reviewed by the originating organization before being
+passed to any third party."
+
+Because sosreport makes no claims to not collecting private data (and explicitly indicates that it might), and the point of it is to collect pertinent system data (excluding some obvious things like kerberos keys or files with known sensitive information that does not aid in diagnostic process), I don't know if this can actually be considered a flaw.  After all, random sysadmin might decide to put anything in any file that sosreport collects that we could never "teach" sosreport to ignore or scrub (you could try to do pattern-based matching on contents of files but you'll never catch everything).
+
+
+
+-- 
+Vincent Danen / Red Hat Product Security
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
