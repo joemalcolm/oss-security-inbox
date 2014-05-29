@@ -1,41 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/8
-Message-ID: <CAFJ0LnFwEZL4st7yX50Aeu79oHhvanDyUDhuFp=0=gCx+fyB9A@mail.gmail.com>
-Date: Sun, 16 Feb 2014 11:54:59 -0800
-From: Nick Kralevich <nnk@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/1
+Message-ID: <1843140.sMbTx3NoQB@x2>
+Date: Wed, 28 May 2014 21:06:40 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: "CERT(R) Coordination Center" <cert@...t.org>
-Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
+Cc: Andy Lutomirski <luto@...capital.net>
+Subject: Re: CVE request: Linux kernel DoS with syscall auditing
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 16, 2014 at 6:28 AM, Stuart Henderson <stu@...cehopper.org> wrote:
->
-> Everything else, base system and ports, is built with PIE.
-> On the whole, experiences have been pretty good. Obviously there is
-> some performance impact but we haven't yet had any reports of this
-> causing major problems (though we will probably know more about this
-> after 5.5 is released when the average user will first see i386
-> packages built with PIE by default).
->
+On Wednesday, May 28, 2014 02:45:59 PM Andy Lutomirski wrote:
+> Issuing a system call with a random large number will OOPS, depending
+> on configuration.  A configuration that will enable this bug is:
+> 
+> # auditctl -a exit,always -S open
+> 
+> No privilege whatsoever is required to trigger the OOPS.
 
-On Android, third party applications have always been compiled with
--fPIC, ever since the initial release of Android. As mentioned earlier
-in this thread, the performance impacts of PIC and PIE are similar.
-
-Starting in Android 4.1, all dynamically linked ARM [1] and x86 [2]
-executables are compiled with PIE. Compiling with PIE on MIPS was
-added in Android 4.3 [3]. Statically linked executables with PIE are
-not supported today [4], although I'd love to see it in the future.
-
-I have yet to hear any complaint, on x86 or ARM, about any real world
-performance impact of PIE on Android, even though the code has been
-live and in user's hands for almost 2 years.
-
-[1] https://android.googlesource.com/platform/build/+/026a85b129e4540a4d8d40aace47aa0c69f609da
-[2] https://android.googlesource.com/platform/build/+/d9d2e7a42c18a997ae47e4174713b5e2942044b5
-[3] https://android.googlesource.com/platform/build/+/f1e4df72651f38208f209f8c60ee18213a38d21d
-[4] http://comments.gmane.org/gmane.comp.gnu.binutils/56324
+Do you have more information about this? I don't get an oops and I run with 
+the audit system on all the time.
 
 
--- 
-Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
+> It's possible that this can be extended to more than just a DoS --
+> with some care and willingness to exploit timing attacks, this is a
+> read of arbitrary single bits in kernel memory.
+
+What platform? Where do the arbitrary bits go? What syscall are we talking 
+about?
+
+There is a linux-audit mail list which seems to not have any emails about this 
+problem. That is really the best place to discuss any issues with this 
+subsystem and get it fixed.
+
+Thanks,
+-Steve
