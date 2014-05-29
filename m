@@ -1,44 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/12
-Message-ID: <20140926132018.1447804d@pc>
-Date: Fri, 26 Sep 2014 13:20:18 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Mediawiki before 1.19.19, 1.22.11 and 1.23.4 insufficient CSS filtering of SVGs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/5
+Message-Id: <201405290659.s4T6xX2n021329@linus.mitre.org>
+Date: Thu, 29 May 2014 02:59:33 -0400 (EDT)
+From: cve-assign@...re.org
+To: luto@...capital.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux kernel DoS with syscall auditing
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I know, I know, this is not a "the internet is on fire"-style vuln :-)
+Use CVE-2014-3917 for the specific issue that would be fixed by the
+http://article.gmane.org/gmane.linux.kernel/1713179 patch. We realize
+that the eventual code changes might not include something exactly
+equivalent to this. At least at the moment, there are no CVE IDs for
+other issues listed in the
+http://article.gmane.org/gmane.linux.kernel/1713180 post. Similarly,
+there is no CVE ID for the higher-level concept that "config
+AUDITSYSCALL" existed but was not marked BROKEN.
 
-However, can we please get a CVE for this:
-https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-September/000161.html
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-* (bug 69008) SECURITY: Enhance CSS filtering in SVG files. Filter
-  <style> elements; normalize style elements and attributes before
-  filtering; add checks for attributes that contain css; add unit tests
-  for html5sec and reported bugs.
-
-If anyone wants to discuss if this is a real vulnerability, I think it
-is: Including malicious CSS by less-privileged users could lead to UI
-manipulation which could cause a more-privileged user to do actions
-like giving the less-prived user more privs.
-
-
-Upstream Bug:
-https://bugzilla.wikimedia.org/show_bug.cgi?id=69008
-
-Code commit:
-https://gerrit.wikimedia.org/r/#/c/162777/
-
-Please assign a CVE.
-
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJThtj0AAoJEKllVAevmvmstBkIAKgjg+yIdWyduj6vqZfTs77L
+PgviyMmvZN/SWLmcJa3qXrNhsQVC8sk1jSYX5BLeXuu1YjJM7kkUJHpfmTn4HcfK
+YINrXyqEAC5O7jLAnsuPfKOWFPUZRFTqs1t/X8NfqfEvawCMw8kgr8O1Vs7ynkyu
+dEOnIMuPGSW/b6CIHlD10mLpdoJNy6mmBLQU6XOZajfYhXScdGKJNpMyIrjW1J34
+GUt8qFHwyCgpTQbX1YeVgevSJvjQVjdsrUNWqmmalbAUyU5lS85Uq4kL3IdtsMFO
+zDMsgfo+YJFsxwrHtu9EYCXQBiLcpJPS3ZxgcGgureSM8/CrnF02dJ3C7XBtD6A=
+=ewfF
+-----END PGP SIGNATURE-----
