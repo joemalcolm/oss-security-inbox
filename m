@@ -1,38 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/8
-Message-ID: <CALCETrWPa_9iVVYtFmD6Ght76MB3CaCdKMJ8Rm48HA1MS6BftQ@mail.gmail.com>
-Date: Mon, 12 May 2014 10:34:00 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: seunshare and setexeccon issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/15
+Message-ID: <20140529132746.37d7f6e9.reed@reedloden.com>
+Date: Thu, 29 May 2014 13:27:46 -0700
+From: Reed Loden <reed@...dloden.com>
+To: Jacob Kaplan-Moss <jacob@...oku.com>
+Cc: oss-security@...ts.openwall.com, Rafael Mendonça França <rafaelmfranca@...il.com>, "security@...oku.com" <security@...oku.com>
+Subject: Re: [AMENDED] [CVE-2014-0130] Ruby on Rails: Directory Traversal Vulnerability With Certain Route Configurations
 Content-Type: text/plain; charset=utf-8
 
-I think that the fallout for the seunshare stuff is now
-well-understood enough for CVE requests.
+On Wed, 7 May 2014 11:53:12 -0500
+Jacob Kaplan-Moss <jacob@...oku.com> wrote:
 
-As previously discussed, some combinations of seunshare and libcap-ng
-can allow sendmail capabilities bug-style privilege escalation.  This
-was cased by capng_lock enabling securebits without using
-PR_SET_NO_NEW_PRIVS.  This seems to be fixed in the latest cap-ng.*
-That fixes causes a regression in policycoreutils' sandbox program;
-the fix for that regression is making its way upstream.
+> Can you clarify what these "additional attack vectors" are? We've been
+> looking at this closely here at Heroku, and as far as we can tell it's only
+> the original vector (*action/:action). What are we missing here?
 
-The related issue is that Linux will silently ignore setexeccon if the
-subsequent execve call runs something from a nosuid mount.  This can
-cause unexpected failures to enforce SELinux policy.  This is probably
-a low-impact issue.  Changes to fix this issue have been discussed,
-but no patch has been sent yet.
+...
 
-The latter issue causes using policycoreutils' sandbox tool on a
-binary that is on a nosuid mount to fail open; no error will be
-reported, but the sandbox policy will not be enforced.  This is worked
-around in Fedora and related distros as a side effect of the
-regression fix for the capng_lock issue.
+> We'd like to be better able to evaluate if we're vulnerable -- and, more
+> importantly, we'd like to understand if this is a big enough deal for us to
+> notify our customers and directly encourage them to upgrade (a step we've
+> taken in the past). However, without more details about these "additional
+> vectors" we're kinda shooting in the dark. Can you share more details?
 
-I'm not sure how many CVE numbers should be assigned here.  As far as
-I know, none have been assigned so far.
+Matasano just released a paper on this particular vulnerability that
+you might want to check out.
 
+"Jeff Jarmoc explains why the recent Ruby on Rails
+'implicit render' vulnerability (CVE-2014-0130) is more serious than
+many have been lead to believe. In this paper he shows how to go from
+an arbitrary file read under highly unusual configurations to RCE in
+more common setups."
 
-* Combinations of new cap-ng and very old kernels may still be unsafe.
+http://matasano.com/research/AnatomyOfRailsVuln-CVE-2014-0130.pdf
 
---Andy
+~reed
