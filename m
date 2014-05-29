@@ -1,72 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/02/4
-Message-ID: <20140602171404.GA30366@zoho.com>
-Date: Mon, 2 Jun 2014 17:14:04 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Cc: info@...uxfoundation.org, admin@...ncryptoaudit.org, mgreen@...jhu.edu
-Subject: Re: Linux Foundation OpenSSL audit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/16
+Message-Id: <201405292136.s4TLaJfo000730@linus.mitre.org>
+Date: Thu, 29 May 2014 17:36:19 -0400 (EDT)
+From: cve-assign@...re.org
+To: geissert@...ian.org, guillem@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: another path traversal in dpkg-source during unpack
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 30, 2014 at 03:20:29AM +0000, mancha wrote:
-> The Linux Foundation's Core Infratructure Initiative (CII), born
-> during the aftermath of Heartbleed, has announced five new corporate
-> sponsors as well as its immediate plans to support the NTP, OpenSSH,
-> and OpenSSL projects. [1]
-> 
-> I applaud both the Linux Foundation and all its corporate sponsors for
-> their inspiring leadership and vision.
-> 
-> In the case of OpenSSL, some of the funding will be channeled through
-> the Open Crypto Audit Project (OCAP) which is being charged with its
-> security audit.
-> 
-> OCAP can benefit greatly from reviewing OpenBSD's ongoing OpenSSL
-> audit/review process which was the genesis for LibreSSL. I am cc'ing
-> OCAP so they might comment on how the LibreSSL effort will factor into
-> their workplan.
-> 
-> Further, I am aware the OpenBSD Foundation has reached out to CII to
-> request LibreSSL funding support. Given OpenBSD's solid track record
-> and the leadership and initiative they've demonstrated through
-> LibreSSL, I would appreciate if CII (also cc'd) would comment on that
-> outstanding request.
-> 
-> Many thanks.
-> 
-> --mancha
-> 
-> [1]
-> http://www.linuxfoundation.org/news-media/announcements/2014/05/core-infrastructure-initiative-announces-new-backers
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-To clarify my last post, I have no affiliation to OpenBSD or OpenSSL.
-However, having contributed to both OpenSSL and LibreSSL (albeit
-modestly) and having been actively tracking both projects, I've seen
-many synergies in action.
+> Another path traversal was discovered
 
-For example, LibreSSL has taken issues/fixes directly from OpenSSL's RT
-tracker while OpenSSL has adopted/modified fixes from LibreSSL. As the
-security community is aware of, moreso than most regular end-users, this
-positive feedback mechanism benefits both projects and ultimately
-everyone within the ecosystem.
-
-In that sense, supporting OpenSSL and LibreSSL sequentially rather than
-concurrently limits the role CII can play in catalyzing synergies
-between the projects.
-
-Moreover, if CII support helps OpenBSD realize/accelerate a portable
-LibreSSL version, users on many platforms will benefit from the
-increased choice - competition breeds success.
-
-Matt, I have added you to the CC list because as co-founder of OCAP you
-can share with us how the progress OpenBSD has already made with
-auditing OpenSSL will factor into OCAP's own OpenSSL audit. And, because
-you also sit on CII's advisory board, you might be able to help us by
-forwarding this thread to the appropriate person(s) at CII so they can
-elaborate on how OpenBSD's LibreSSL support request is progressing.
-
-Many thanks.
+The short answer is that bug 746498 is CVE-2014-3864, and bug 749183
+is CVE-2014-3865. We can also, first, review the status of the CVEs
+related to our 1 May 2014 message. The proposed CVE mappings for all
+four of these CVEs are indicated below; these would potentially start
+to be processed for the cve.mitre.org web site as early as today.
 
 
-Content of type "application/pgp-signature" skipped
+CVE-2014-3127 (revised CVE description to be published at
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3127 soon):
+
+dpkg 1.15.9 on Debian squeeze introduces support for the "C-style
+encoded filenames" feature without recognizing that the squeeze patch
+program lacks this feature, which triggers an interaction error that
+allows remote attackers to conduct directory traversal attacks and
+modify files outside of the intended directories via a crafted source
+package. NOTE: this can be considered a release engineering problem in
+the effort to fix CVE-2014-0471.
+
+
+
+CVE-2014-3227 (new CVE to be published at
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-3227 and
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3227 soon):
+
+dpkg 1.15.9, 1.16.x before 1.16.14, and 1.17.x before 1.17.9 expect
+the patch program to be compliant with a need for the "C-style encoded
+filenames" feature, but is supported in environments with noncompliant
+patch programs, which triggers an interaction error that allows remote
+attackers to conduct directory traversal attacks and modify files
+outside of the intended directories via a crafted source package.
+NOTE: this vulnerability exists because of reliance on unrealistic
+constraints on the behavior of an external program.
+
+
+
+CVE-2014-3864 (new CVE to be published at
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-3864 and
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3864 soon):
+
+(reference is
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746498)
+
+Directory traversal vulnerability in dpkg-source 1.3.0 allows remote
+attackers to modify files outside of the intended directories via a
+crafted source package that lacks a --- header line.
+
+
+
+CVE-2014-3865 (new CVE to be published at
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-3865 and
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3865 soon):
+
+(reference is
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=749183)
+
+Multiple directory traversal vulnerabilities in dpkg-source 1.3.0
+allow remote attackers to modify files outside of the intended
+directories via a source package with a crafted Index: pseudo-header
+in conjunction with (1) missing --- and +++ header lines or (2) a +++
+header line with a blank pathname.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTh6enAAoJEKllVAevmvms6i8IAIahGPbHIJ3n35oJt0XiADnD
+6UByicAe4TTLVlT/HMDYAAEqLcYz12IttOLzaO38F8SV4mb2OlQolCpRB7wM/5pb
+B3KPjpMV8BWB5MhWi22bVE8Thna+cMlM565adnw1bUhoBcEh9d3Bsy8l8c8bhtDm
+JMdcmFA5pubpJtbsjfBppq8rLTLg8+LKy9eS9KOG8SGgT7gl0rSehK1ueg04gPIo
+h9f0dbYfkUPsylTFpClKumrNmUnQVhd6tpDCNj0Q4W/D1c2QxfQbPCM7KRYfL/KV
+8Uutyf17KKGVh4aJ7XAJiaYhIIYm9CrJjPevP/DOWqIRoWQzb1FEeN2+8zzw1js=
+=jt0J
+-----END PGP SIGNATURE-----
