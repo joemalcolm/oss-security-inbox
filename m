@@ -1,32 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/4
-Message-ID: <20140617120539.GK24581@kludge.henri.nerv.fi>
-Date: Tue, 17 Jun 2014 15:05:39 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/14
+Message-ID: <20140529194754.GZ11155@openstack.org>
+Date: Thu, 29 May 2014 19:47:54 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: transparency on message moderation
+Subject: [OSSA 2014-017] Nova VMWare driver leaks rescued images (CVE-2014-2573)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 17, 2014 at 03:32:59PM +0400, Solar Designer wrote:
-> IIRC, a long while ago Henri Salo expressed an interest (in private
-> e-mail to me) in contributing to this sort of activities.  Henri, would
-> you like to help co-moderate oss-security - which currently means only
-> approving obviously-desirable messages, and leaving everything else to
-> me?  What are your current affiliations (e.g., any Linux distro)?
+OpenStack Security Advisory: 2014-017
+CVE: CVE-2014-2573
+Date: May 29, 2014
+Title: Nova VMWare driver leaks rescued images
+Reporter: Jaroslav Henner (Red Hat)
+Products: Nova
+Versions: from 2013.2 to 2013.2.3, and 2014.1
 
-Sure. Send me instructions and I'm happy to help. I'm helping in Debian teams as
-non Debian Developer status (I do not see embargoed issues) mainly committing to
-security tracker[1][2] and in forensics team[3]. My current employer has nothing
-to do with distro maintanance or similar activities (we only submit and patch
-issues publicly in case it affects our projects). I usually follow oss-security
-closely in my spare time so that I can submit bugs to Debian issue tracker[4].
+Description:
+Jaroslav Henner from Red Hat reported a vulnerability in Nova. By
+requesting Nova place an image into rescue, then deleting the image,
+an authenticated user my exceed their quota. This can result in a
+denial of service via excessive resource consumption. Only setups
+using the Nova VMWare driver are affected.
 
-1: https://security-tracker.debian.org/tracker/
-2: https://alioth.debian.org/scm/?group_id=30437
-3: http://forensics.alioth.debian.org/
-4: https://bugs.debian.org/cgi-bin/pkgreport.cgi?archive=both;submitter=henri%40nerv.fi
+Juno (development branch) fix:
+https://review.openstack.org/75788
+https://review.openstack.org/80284
 
----
-Henri Salo
+Icehouse fix:
+https://review.openstack.org/88514
+https://review.openstack.org/89217
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Havana fix:
+https://review.openstack.org/89762
+https://review.openstack.org/89768
+
+Notes:
+This fix will be included in the juno-1 development milestone and in
+future 2013.2.4 and 2014.1.1 releases.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-2573
+https://launchpad.net/bugs/1269418
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
