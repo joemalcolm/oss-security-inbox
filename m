@@ -1,45 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/2
-Message-Id: <20141023043436.A353BC50B89@smtptsrv1.mitre.org>
-Date: Thu, 23 Oct 2014 00:34:36 -0400 (EDT)
-From: cve-assign@...re.org
-To: marc.deslauriers@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: systemd-shim DoS issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/13
+Message-ID: <5387886B.9000403@redhat.com>
+Date: Thu, 29 May 2014 13:20:11 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: sos: /etc/fstab collected by sosreport, possibly containing passwords
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> systemd-shim version 8 shipped with a debugging clause enabled that may result
-> in a denial of service attack by local users.
+On 05/29/2014 12:57 PM, Dolev Farhi wrote:
+> I tend to agree with most of this actually, but since sosreport is
+> there to collect information for troubleshooting issues only, then
+> there is no actual reason not to remove the pw field of a mount in
+> fstab, even though the file is world readable in the first place. I
+> do agree that this widens the scope from Red Hats side especially
+> while most of the time it would be close to impossible to prevent
+> password disclosures in configuration files, especially when it
+> depends on the random way a sysadmin alters config files. Best
+> practice is to use the credentials option and point fstab to read
+> the mount username and password from a file but there are multiple
+> ways to achieve the same goal. I am not sure regarding the
+> necessity of a CVE here, though I dont see much of a difference
+> between this to any other password disclosures (such as grub.conf)
+> discovered in sosreport in the past, except that fstab is world 
+> readable. On both cases the problem is that this file is handled by
+> 3rd parties.
 > 
-> Fixed by:
-> https://github.com/desrt/systemd-shim/commit/d2e91c118f6128875274a638007702d1cc665893
+> Thanks
+> 
+> -- Dolev Farhi
 
-> security policy: remove clause for Abandon call
-> 
-> data/org.freedesktop.systemd1.conf
-> 
-> -   <allow send_destination="org.freedesktop.systemd1"
-> -          send_interface="org.freedesktop.systemd1.Scope"
-> -          send_member="Abandon"/>
+So /etc/fstab is world readable, within that system. The file is then
+being exported to Red Hat, we don't really need or want the password,
+we also make an effort to sanitize the data sent, so if nothing else
+this falls into the "intended/advertised security feature that failed"
+and would qualify for a CVE as such as I understand things.
 
-Use CVE-2014-8399.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried - Red Hat - Product Security - Cloud stuff and such
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJUSITjAAoJEKllVAevmvmsp28H/1jazEFzftrgXgNHADRlLnjj
-Ww6cuRaSwdF+1OGLnZiMFc/FOdmtVLOQMCRYuwqXYFpiPNQ7idAN4BYwgkRtAdRI
-dpzy82ZZNHaR7B5nv59oQv8KdnuZsZXLKy1VOF6sCC8PXjIxsr4LVMAAdv8NioU3
-KopfLgxK/T/rRsDQH5ra3zRHgOHKhiGuvtTW5HujoGuXchFECOAQesEHdU9NXxRK
-YTMMhZJcutu3Cz+CP8KRDRqfyz9uipQIgyC4OmS+SQYsW3CrdY5RkQ+Ad5rCexNU
-jfTe+gXsojXHB1AkBB0TiwR8anl/L1GPcIwa0gDqBKLyQve/ITwlX3Mam9sqWHA=
-=TQVz
+iQIcBAEBAgAGBQJTh4hrAAoJEBYNRVNeJnmTjYEP/2bPTxCVZW/3XZFu4cMeR47+
+pPdOWOO2/InF0W2oVm8nCp5vlgh5qb+brBO32o74gaq27x6BQh0hnzhCsEcF0+rx
+Eeg6vDIorvQ5iBNRHqYdCmzgAicTx7RRTGjAyXgQqdLh90mFrNEgA2WgFa0BOkHL
+QfrCRWhZ1+KeCkPMURTGAulKBeEMAJxMMIGc3GC408R8jcBNDoFOVmGDC+tPI+Or
+KvY4zBu8cf3VFNTGqhdvlJ4Hwu2X14BvaiisQqDLkb6IJX2OVT5vFue9TEZfQQjr
+G7TQ1eZsuqh2rOngwJrlDDxSoyiClKclA5NraJUUL1kCJfSzAS4NxBjIpNWp94Hi
+Bx7tXyoCuhk2RZHBusLnFH6j/TJUYgrkOvw8YujzIE6FtX2V66SiyrDKOH620IWZ
+J105kcIUMop/x5LBQ3dxx+slTHxHQcmRMpu6aECPt28SgP335nXgbHhwLo12jN8a
+NnUKPXbZKBXN1rRcb50DUJPw/5d2DI/j9GCqtNIqxRV/6JIq1/czJyGryyYVmBdL
+EYF2HYzaeSBklTJha86JMxNRlyPoS1tSF437SvRwODLtH1lpGXVQNnkCAS2JdLZ9
+O6rF2uFCsvbZMklDW/94NgiSlLSVPLfafrlKCBegQClYcOLm0mM81U2PLXcVwN/z
+pp6kR35+xGtGkveF6gIg
+=s9TQ
 -----END PGP SIGNATURE-----
