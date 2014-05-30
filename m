@@ -1,37 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/20
-Message-Id: <20140707181452.0AE3C1A41139@me.com>
-Date: Mon,  7 Jul 2014 14:14:52 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem lawn-login-0.0.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/30/2
+Message-ID: <20140530103110.66d5b8db@redhat.com>
+Date: Fri, 30 May 2014 10:31:10 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: GnuTLS and libtasn1 security fixes
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem lawn-login-0.0.7
+Hi!
 
-Author: Larry W. Cashdollar, @_larry0
+New GnuTLS and libtasn1 versions fix few issues you might be interested
+to look at:
 
-Date: 06/01/2014
+http://www.gnutls.org/security.html#GNUTLS-SA-2014-3
 
-OSVDB: 108576
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-3465
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-3466
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-3467
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-3468
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-3469
 
-CVE:Please Assign
-
-Download: http://rubygems.org/gems/lawn-login
-
-Gem Author:  mike.skalnik@...il.com
-
-From: ./lawn-login-0.0.7/lib/lawn.rb
-
-Line 24 exposes the password to the process table via the #{password} variable.   If this Gem is used in the context of a rails application it maybe possible to inject commands remotely into the shell as these variables are not sanitized.
-
-021-  end
-22-  
-23-  def login(username, password)
-24:    `curl -s -f -F username=\#{username}\ -F password=\#{password}\ -F iss=\false\ -F output=\binary\ https://auth.lawn.gatech.edu/index.php`
-25-  end
-26-end
-
-
-Advisory: http://www.vapid.dhs.org/advisories/lawn-login-0.0.7.html
-
+-- 
+Tomas Hoger / Red Hat Security Response Team
