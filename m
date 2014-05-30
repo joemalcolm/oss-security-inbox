@@ -1,35 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/21/6
-Message-Id: <201401212318.s0LNI7rP025272@linus.mitre.org>
-Date: Tue, 21 Jan 2014 18:18:07 -0500 (EST)
-From: cve-assign@...re.org
-To: gmc@...library.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Perl module MARC::File::XML
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/30/1
+Message-ID: <20140530032029.GA8738@zoho.com>
+Date: Fri, 30 May 2014 03:20:29 +0000
+From: mancha <mancha1@...o.com>
+To: oss-security@...ts.openwall.com
+Cc: info@...uxfoundation.org, admin@...ncryptoaudit.org
+Subject: Linux Foundation OpenSSL audit
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The Linux Foundation's Core Infratructure Initiative (CII), born during
+the aftermath of Heartbleed, has announced five new corporate sponsors
+as well as its immediate plans to support the NTP, OpenSSH, and OpenSSL
+projects. [1]
 
-> the Perl module MARC::File::XML
+I applaud both the Linux Foundation and all its corporate sponsors for
+their inspiring leadership and vision.
 
-> an XXE vulnerability that is fixed in version 1.0.2
+In the case of OpenSSL, some of the funding will be channeled through
+the Open Crypto Audit Project (OCAP) which is being charged with its
+security audit.
 
-Use CVE-2014-1626.
+OCAP can benefit greatly from reviewing OpenBSD's ongoing OpenSSL
+audit/review process which was the genesis for LibreSSL. I am cc'ing
+OCAP so they might comment on how the LibreSSL effort will factor into
+their workplan.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Further, I am aware the OpenBSD Foundation has reached out to CII to
+request LibreSSL funding support. Given OpenBSD's solid track record and
+the leadership and initiative they've demonstrated through LibreSSL, I
+would appreciate if CII (also cc'd) would comment on that outstanding
+request.
 
-iQEcBAEBAgAGBQJS3vuoAAoJEKllVAevmvmsYWUH/iezhYWAQ2PRaRt6jRkMbAo1
-GIKgRs4nPK34bWOsIiyyLAOzl5vjRg6S4WIEGgTS7JsZhTrhyli036ussHMEvhU4
-aTyXesJsaKPuqMq0WMoEeyT9VYB3hwV8XzMMFaQ+X6ETYe/ryj+aGhu3N6F6wHXd
-nWZKNjhDJPMgerm94hQ1mBHWMbZc185OtQmTXDBbTDx72iVrCXk2RVR4ZgONjSth
-FPsfhC9cjzvV4Cyuix5OKgpuSmV0prxrywPnH0ldmS8OxGY5rPW/VqJa6LQDoCaG
-h+v+avEGmHp++S/ttMDDM05qJXCa8q6tdEOSULLgRlVyuLhwWCCLsLMtFuWms88=
-=oo+Y
------END PGP SIGNATURE-----
+Many thanks.
+
+--mancha
+
+[1] http://www.linuxfoundation.org/news-media/announcements/2014/05/core-infrastructure-initiative-announces-new-backers
+
+
+Content of type "application/pgp-signature" skipped
