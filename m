@@ -1,62 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/10
-Message-Id: <201407081836.s68IaX7O002273@linus.mitre.org>
-Date: Tue, 8 Jul 2014 14:36:33 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/30/3
+Message-Id: <201405301638.s4UGc1Vj002391@linus.mitre.org>
+Date: Fri, 30 May 2014 12:38:01 -0400 (EDT)
 From: cve-assign@...re.org
-To: phk@....freebsd.dk
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Varnish - no CVE == bug regression
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, mmcallis@...hat.com, kseifried@...hat.com, vdanen@...hat.com
+Subject: Re: CVE request: sos: /etc/fstab collected by sosreport, possibly containing passwords
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://www.varnish-cache.org/docs/trunk/reference/varnishd.html
-> auto_restart
->   Units: bool
->   Default: on
-> Restart child process automatically if it dies.
+> From: Kurt Seifried <kseifried@...hat.com>
+> Date: Thu, 29 May 2014 13:20:11 -0600
+> 
+> /etc/fstab is world readable, within that system. The file is then
+> being exported to Red Hat, we don't really need or want the password,
+> we also make an effort to sanitize the data sent, so if nothing else
+> this falls into the "intended/advertised security feature that failed"
 
 
-> https://www.varnish-cache.org/docs/trunk/reference/vcl.html
-> Backend definition
-> host (mandatory)
->   The host to be used. IP address or a hostname that resolves to a
->   single IP address.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1102633#c3
+> 
+> sosreport also has this warning before it even runs (except on Red Hat
+> Enterprise Linux 5):
+> 
+> "The generated archive may contain data considered sensitive and its
+> content should be reviewed by the originating organization before being
+> passed to any third party."
 
-Is it a supported configuration if auto_restart is off, and this
-hostname is specified using a DNS domain name?
 
-It seems that, if an attacker is occasionally successful at DNS
-spoofing (or spoofing at another level) and can thus trigger even one
-use of a rogue backend server, there's a long-lived denial of service.
-This is a denial of service caused by a well-defined attack against an
-issue in the Varnish code (an issue with no CVE ID at present).
+> https://access.redhat.com/site/solutions/3592
+> 
+> collect system log files, configuration details and system information
+> 
+> If sosreport fails due to "No space left on device" for the device
 
-(It's not an interesting case if the attacker controls the domain name
-or is regularly successful in spoofing. The attacker could then
-trigger long-term use of nonexistent backend servers: from the end
-user's perspective, this isn't much different from a disruption of
-Varnish itself. And, presumably, it's even worse because the attacker
-could instead decide to provide wrong content instead of no content.)
 
-> By definition Varnish must explicitly and implicitly trust the
-> backend HTTP server
+> https://bugzilla.redhat.com/show_bug.cgi?id=1102633#c4
+> 
+> these types of problems (although we consider them bugs) really don't
+> seem to meet the requirements for a 'vulnerability' in the CVE sense
+> of the term.
+> 
+> An 'attacker' can only benefit from the information if an authorized
+> user makes it available to them ...
+> 
+> They are a privacy concern for users who do not adequately review the
+> data collected from their own systems and ignore the disclaimer text ...
+> 
+> I'd much rather we kept CVEs and the full security process for
+> problems ... where a local user can actually cause real harm.
 
-With many realistic network designs, there isn't 100% assurance that
-this trusted server is always the actual origin of network traffic
-that appears to be from this server, and has a malicious HTTP header.
-Thus, it seems that you are trusting data for which it's essentially
-impossible to know whether this data originated inside of your
-security boundary.
+Use CVE-2014-3925 for this vulnerability in (only) Red Hat Enterprise
+Linux 5. The points we considered from our perspective (not
+necessarily in order of importance) are:
 
-Still, this may be the security policy that you want to have. In other
-words, maybe what you are offering is sustained operation only in the
-case of a network infrastructure that's 100% impervious to a spoofing
-attack that succeeds for an instant of time. If there shouldn't be CVE
-assignments, would it be possible to update your documentation so that
-"auto_restart off" is labeled as a known risk for long-lived DoS
-conditions?
+ - deciding whether an issue is within, or outside, the scope of CVE
+   can depend on practices of other vendors, not the change process
+   that is used by a specific vendor
+
+   Related to this, Red Hat could decide to not recognize the CVD ID
+   within its change process, A few years ago, Red Hat had been doing
+   this through the NVD Vendor Comments mechanism, for example: see
+   "Official Statement from Red Hat" under
+   http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2010-1130 and
+   https://bugzilla.redhat.com/show_bug.cgi?id=577578
+
+
+ - from the perspective of an arbitrary end user, the
+   https://access.redhat.com/site/solutions/3592 document doesn't
+   really seem to imply that the sosreport data would commonly need to
+   be reviewed, because there is no discussion of potentially
+   sensitive information
+
+ - the "No space left on device" discussion seems to imply that
+   there's a big file in some cases, and people might reasonably
+   decline to review a big file unless told to do so
+
+ - on Red Hat Enterprise Linux 5 (only), nobody is telling them to do
+   so
+
+ - although it's completely true that "An 'attacker' can only benefit
+   from the information if an authorized user makes it available to
+   them," making it available is the common and intended purpose of
+   using the sosreport feature
+
+ - it's reasonable for an organization to have an internal security
+   policy that no password may be sent to the Technical Support
+   branch of any vendor
+
+ - in a typical large enterprise, there may be dozens of software
+   products that have "prepare/send debugging information to Technical
+   Support" features, and often (because of the nature of other
+   software products), there is no possibility of sending a password
+
+ - thus, for Red Hat Enterprise Linux 5 (only), the potential presence
+   of a password, coupled with the lack of warning, seems to sometimes
+   violate reasonable expectations, and some end users would probably
+   make use of a CVE ID to track this
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -66,11 +108,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTvDmrAAoJEKllVAevmvmsG2gH/jFi8ju4yGdwqEh6paEWUdWY
-Mu1VPqBOxVJFsAGovRiQsXOdUaKAn1kyEw5uMUbCJo4/Zo+N8MAcGfm+wNNNRit2
-BeJCgE85O+OeluD67iyHazNRCkYgmtUboLdDpefs0BHGG0v+3cm3RU5WajLETL1B
-ChwQ6Kvxym3+/Cd+m92Ii6od5sAQDzh/5Cc0ypr4zaTU6hCR+qdaE7Wr2vG/yZe0
-hGdRkS6AU1Wcg3p15JVLCoLvqwQefhPccvgISvX/Y7Wz0piOlN5ZzhgrmzJut1bX
-Davr3Sy60Yf70iiR1db5MMWxx0EiK1jdioeD07uOkTb3z3OTH7PM0IHGkc23m5o=
-=6UYy
+iQEcBAEBAgAGBQJTiLMtAAoJEKllVAevmvmsXFAH/jvylFABW8T9eh774Ae7Yeil
+GPqI/C9P+K0G9S0+VR9dLoAzI5Dcw7qshNUOGdI4Q1PdkcXMfjJYc9/BThsFr1N+
+yGD2FM5VwlyfxDPJaG6lXQNXFMVooaCYEKbIOjEZwXe3vhDplG0LswpHdixvPoil
+e1J8gYR99ljfmbXgitByAgx4e2xSxbXjIW6ARX3iCbTlqm5Qa/S290nS4as/SYPb
+MkSfgedn4MdVsmXyzaUI/o2RSGQ3tFk8df3ZQDWBhsYF6ukFnGaNgkCOQ4h7U7S+
+iqAtPHkp1jvdZbd4ibqPXIN+oQcDyukmfDoSHtiBijwY64BCqD7ctSvQlPFYrA4=
+=tDOk
 -----END PGP SIGNATURE-----
