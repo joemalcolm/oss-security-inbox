@@ -1,40 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/5
-Message-ID: <52CEABC5.3020803@redhat.com>
-Date: Fri, 10 Jan 2014 01:01:41 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/02/2
+Message-ID: <20140602060252.GA18602@inutil.org>
+Date: Mon, 2 Jun 2014 08:02:52 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: temporary file issue in flite
+Subject: CVE ID request: typo3
 Content-Type: text/plain; charset=utf-8
 
-As reported to the linux-distros mailing list:
+Hi,
+please assign CVE IDs for
+http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2014-001/
 
-Florian Weimer of the Red Hat Product Security Team discovered a
-temporary file handling flaw in flite, a speech synthesis engine
-(text-to-speech). A local attacker could use this flaw to perform a
-symbolic link attack to modify an arbitrary file accessible to the user
-running flite, or possibly obtain sensitive information as the temporary
-file may contain text-to-speech output (screen contents). (CVE-2014-0027)
-
-The issue is here:
-
-src/audio/auserver.c contains:
-
-static int play_wave_from_socket(snd_header *header,int audiostream)
-{
-…
-fff = cst_fopen("/tmp/awb.wav",CST_OPEN_WRITE|CST_OPEN_BINARY);
-…
-n = audio_write(audio_device,shorts,q);
-cst_fwrite(fff,shorts,2,q);
-
-As this is debugging functionality and never read by flite, the fix is 
-just to ifdef the lines out...
-
-A patch is available from 
-https://bugzilla.redhat.com/show_bug.cgi?id=1048678
+(Released for Debian as  https://lists.debian.org/debian-security-announce/2014/msg00122.html)
 
 Cheers,
-
---
-Murray McAllister / Red Hat Security Response Team
+        Moritz
