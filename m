@@ -1,60 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/37
-Message-ID: <20140926215649.GA31262@openwall.com>
-Date: Sat, 27 Sep 2014 01:56:49 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/02/5
+Message-Id: <201406022323.s52NNJLx024941@linus.mitre.org>
+Date: Mon, 2 Jun 2014 19:23:19 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Non-upstream patches for bash
+Cc: cve-assign@...re.org
+Subject: CVE-2014-3940 - Linux kernel - missing check during hugepage migration
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 25, 2014 at 11:37:12PM +0530, Huzaifa Sidhpurwala wrote:
-> On 09/25/2014 11:26 PM, Solar Designer wrote:
-> >What's the oldest version of bash affected by them?
-> >
-> >Your reproducers didn't trigger any obvious misbehavior here with 3.1.8
-> >with lots of unrelated patches.  Of course, this does not mean much, but
-> >maybe these issues are in fact 3.2+?
-> 
-> Yes 3.2+, i have not checked older versions though.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I took a look at the code in 3.1, and it looked just as vulnerable.  So
-I tried harder, and was able to trigger both issues that you're patching
-with parser-oob-3.2.patch on 3.1.
+The scope of CVE-2014-3940 is the https://lkml.org/lkml/2014/3/18/784
+post, i.e., "[PATCH RESEND -mm 1/2] mm: add !pte_present() check on
+existing hugetlb_entry callbacks" on 18 March.
 
-For the redir_stack issue, I had to use many more <<EOF's, and I
-actually closed those EOF's.  In fact, I used 1000 of them (both opening
-and closing).  This gave me a segfault.
+Two notes about this:
 
-For the nested blocks (for loops in this case), I also used as many as
-1000 of them, and got this:
+  - Applying the https://lkml.org/lkml/2014/3/18/784 patch to, for
+    example, the 3.14.5 release would involve changing the
+    queue_pages_hugetlb_pmd_range function instead of the
+    queue_pages_hugetlb function.
 
-$ bash test-script.sh 
-test-script.sh: line 909: syntax error near unexpected token `newline'
-test-script.sh: line 909: `for x909 in ; do :'
+  - The scope of CVE-2014-3940 does not include the related "2/2"
+    message in the https://lkml.org/lkml/2014/3/18/769 post. The issue
+    there is not fully investigated, and may be a bug that doesn't
+    affect any stable kernel release.
 
-And this remains exactly line 909 when I try 909, 1000, or 2000 nested
-loops.  With "only" 908 nested loops, this symptom goes away - but I
-guess those 908 loops are not actually processed correctly, see below.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-So I guess it's just my (un)lucky memory layout within the bash process
-that requires more of these things to trigger visible misbehavior.
-
-Regarding the nested blocks patch:
-
-     case CASE:
-     case SELECT:
-     case FOR:
--      if (word_top < MAX_CASE_NEST)
-+      if (word_top + 1 < MAX_CASE_NEST)
-        word_top++;
-       word_lineno[word_top] = line_number;
-       break;
-
-I think it's sweeping the remaining problem under the rug.  It will not
-result in correct handling of arbitrarily many nested blocks, nor in a
-proper error message.  It merely prevents the out-of-bounds access here.
-
-Luckily, these shouldn't be security issues anymore once we prevent the
-parsers from being exposed to untrusted input.
-
-Alexander
+iQEcBAEBAgAGBQJTjQX5AAoJEKllVAevmvmsf/IH/R/0yPoIowUFpeCJ1kQiPojD
+KexPi5c8hne6z2jfmHARzjmBQS7IvHn/FcrBONF7WIcDnFZq4CgVHhIcGuJjiOI2
+uQKXx6JUX6bHahGMdNs2ow2SQzCLy1xj0FcHQBAg/RZVk4jBAQIWkvbkeE52tWaK
+IpICuE3Sderg7rtucHqpbMjlD76rr/PqiANYT2xgip7ZnpKvoicrXBy2SV3WhD3G
+qOK6Qrb+aPC+qsU3OIjp7JsRf7IuHaQ10yfn+oZJeEoayf+ka7rzsVy6QpKVkiuK
+FLw31hMlS7ZPxHrpZX6xaQ1rr7mQY1qk/KY+zUv2uod9GPx7foljWNQNAMdeDKU=
+=D5Cw
+-----END PGP SIGNATURE-----
