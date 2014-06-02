@@ -1,44 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/8
-Message-ID: <21213.20619.553482.760759@gargle.gargle.HOWL>
-Date: Mon, 20 Jan 2014 17:36:27 +0100
-From: rf@...eap.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/02/1
+Message-ID: <20140602023945.GA29224@zoho.com>
+Date: Mon, 2 Jun 2014 02:39:45 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership
+Cc: nmav@...tls.org
+Subject: Re: GnuTLS and libtasn1 security fixes
 Content-Type: text/plain; charset=utf-8
 
->>>>> "Yves" == Yves-Alexis Perez <corsac@...ian.org> writes:
+On Sun, Jun 01, 2014 at 09:40:18PM +0200, Kristian Fiskerstrand wrote:
+> On 05/30/2014 10:31 AM, Tomas Hoger wrote:
+> > Hi!
+> > 
+> > New GnuTLS and libtasn1 versions fix few issues you might be
+> > interested to look at:
+> 
+> Thanks Thomas.
+> 
+> Based on your research of this issue can you comment anything on
+> whether CVE-2014-3466 affects the 2.x series as well? It seems like at
+> least CVE-2014-3465 is 3.x series only.
 
-Thanks again Yves. Unfortunately this doesn't help me with getting the timely
-reports about kernel security bugs from the linux-distros list. Can
-somebody, who knows the details of the process, please answer what we need
-to do, to get on the list?
+Hello.
 
-Roland
+I believe you're right about CVE-2014-3465 not being applicable in
+GnuTLS 2.x because in that branch the result of
+gnutls_x509_oid2ldap_string is checked for NULL returns.
 
-    >> >> I hope this is the right place to ask for inclusion of a
-    >> >> Qlustar contact in the linux-distros list.
-    >> >>
-    >> >> Qlustar is a Ubuntu/Debian based distro targeted at
-    >> >> HPC/Storage/Cloud clusters. We use our own kernels (typically
-    >> >> based on vanilla) since many years, but have the need to
-    >> >> supply timely security fixes to our users. So far we have to
-    >> >> wait for other distros to come out with their announcements
-    >> >> and then start analyzing the fixes they have done. This leaves
-    >> >> us/our users with a vulnerability window that is way too
-    >> >> large,
-    >>
-    >> > I can't speak for Ubuntu, but you're welcome to participate in
-    >> > the Debian security effort.
-    >>
-    >> thanks a lot for your offer. Could you explain a little more what
-    >> participation in the Debian security effort would mean? Note that
-    >> the issue I currently have is mostly about kernel fixes and we
-    >> don't use Debian nor Ubuntu kernels.
+As for the rest, I've backported the fixes to GnuTLS 2.12.23 (the
+CVE-2014-3467,3468,3469 fixes apply to the embedded libtasn1).
 
-    Yves> Most of the documentation can be found in the secure-testing
-    Yves> repository [1] and on the Debian wiki [2].
+You're welcome to them:
 
-    Yves> [1]:
-    Yves> http://anonscm.debian.org/viewvc/secure-testing/doc/narrative_introduction?view=markup
-    Yves> [2]: https://wiki.debian.org/Teams/Security
+http://sf.net/projects/mancha/files/sec/gnutls-2.12.23_CVE-2014-3466.diff
+http://sf.net/projects/mancha/files/sec/gnutls-2.12.23_CVE-2014-3467.diff
+http://sf.net/projects/mancha/files/sec/gnutls-2.12.23_CVE-2014-3468.diff
+http://sf.net/projects/mancha/files/sec/gnutls-2.12.23_CVE-2014-3469.diff
+
+Note: Add ".sig" to above URLs for the PGP signatures.
+
+--mancha
+
+
+Content of type "application/pgp-signature" skipped
