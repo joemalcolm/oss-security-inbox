@@ -1,45 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/23
-Message-ID: <CALx_OUAAO5sOs2iZ1cXbvZiKkz8ektkNDcaYenGD=hr-=-AMtQ@mail.gmail.com>
-Date: Wed, 8 Oct 2014 13:50:17 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/02/3
+Message-ID: <20140602062520.GA19667@kludge.henri.nerv.fi>
+Date: Mon, 2 Jun 2014 09:25:20 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE ID request: typo3
 Content-Type: text/plain; charset=utf-8
 
-I don't really want to get in the super-existential debate about code
-vs data; I fully recognize that I'm gonna be in the minority on the
-list, and maybe even in the wrong, but I just can't get too passionate
-about this "best practice", having seen how few systems are (or can
-be) designed with it in mind; and how little of a difference it makes
-to them in the end.
+On Mon, Jun 02, 2014 at 08:02:52AM +0200, Moritz Muehlenhoff wrote:
+> please assign CVE IDs for
+> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2014-001/
 
-In a pragmatic sense, it's just that almost *everything* violates it.
-The CPUs we use, the memory allocators we have running on them, all
-the popular progamming languages and web frameworks. We still need to
-secure these systems, rather than saying "oh well, you should have
-done it differently from the start" =)
+These two security advisories also need CVEs:
 
-> It was certainly hard for the original developer to anticipate how
-> this would become a problem, given the time and place.  But I think we
-> can try to learn from this and similar issues and hopefully make fewer
-> of these mistakes in the future.
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-007/
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-008/
 
-Sure. I'm not entirely convinced what the lessons are, though. I mean,
-you expect the next big issue in OpenSSL or Apache. You can probably
-even guess what it may be. You can maybe even make an intelligent
-guess about the language features or coding patterns that will
-contribute to it, or to learn from past bugs. With the bash bug... hm.
+TYPO3 team is aware of these CVE requests.
 
-> So yes, documentation is important for setting expectations.  But no
-> one reads the manual, either.
+---
+Henri Salo
 
-It's not necessarily about every user reading the doc; just about
-making sure that at least the infosec community understands the
-exposure, which would mean that problems could be audited for,
-workarounds could be implemented, or semantics changed. I have no
-doubt that if the () { thing was mentioned in README.security, it
-would not have taken 20+ years to spot the bug.
-
-Cheers,
-/mz
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
