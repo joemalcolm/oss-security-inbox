@@ -1,43 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/02/2
-Message-ID: <20140802054756.GB25642@eldamar.local>
-Date: Sat, 2 Aug 2014 07:47:56 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Chris Steipp <csteipp@...imedia.org>
-Cc: oss-security@...ts.openwall.com, CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: Possible CVE Request: MediaWiki Security and Maintenance Releases: 1.19.18, 1.22.9 and 1.23.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/02/4
+Message-ID: <20140602171404.GA30366@zoho.com>
+Date: Mon, 2 Jun 2014 17:14:04 +0000
+From: mancha <mancha1@...o.com>
+To: oss-security@...ts.openwall.com
+Cc: info@...uxfoundation.org, admin@...ncryptoaudit.org, mgreen@...jhu.edu
+Subject: Re: Linux Foundation OpenSSL audit
 Content-Type: text/plain; charset=utf-8
 
-Hi Chris,
-
-On Thu, Jul 31, 2014 at 01:17:33PM -0700, Chris Steipp wrote:
-> On Thu, Jul 31, 2014 at 12:35 PM, Salvatore Bonaccorso
-> <carnil@...ian.org> wrote:
-> > Hi
-> >
-> > New Security and maintenance releases for mediawiki (1.19.18, 1.22.9
-> > and 1.23.2) were released:
-> >
-> > http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-July/000157.html
-> >
-> > From the announcement, three SECURITY tagged bugs were fixed.
-> >
-> > Are CVE assignments for those already been requested, or if not, could
-> > you assign CVEs for these?
+On Fri, May 30, 2014 at 03:20:29AM +0000, mancha wrote:
+> The Linux Foundation's Core Infratructure Initiative (CII), born
+> during the aftermath of Heartbleed, has announced five new corporate
+> sponsors as well as its immediate plans to support the NTP, OpenSSH,
+> and OpenSSL projects. [1]
 > 
-> None have been requested or assigned.
+> I applaud both the Linux Foundation and all its corporate sponsors for
+> their inspiring leadership and vision.
+> 
+> In the case of OpenSSL, some of the funding will be channeled through
+> the Open Crypto Audit Project (OCAP) which is being charged with its
+> security audit.
+> 
+> OCAP can benefit greatly from reviewing OpenBSD's ongoing OpenSSL
+> audit/review process which was the genesis for LibreSSL. I am cc'ing
+> OCAP so they might comment on how the LibreSSL effort will factor into
+> their workplan.
+> 
+> Further, I am aware the OpenBSD Foundation has reached out to CII to
+> request LibreSSL funding support. Given OpenBSD's solid track record
+> and the leadership and initiative they've demonstrated through
+> LibreSSL, I would appreciate if CII (also cc'd) would comment on that
+> outstanding request.
+> 
+> Many thanks.
+> 
+> --mancha
+> 
+> [1]
+> http://www.linuxfoundation.org/news-media/announcements/2014/05/core-infrastructure-initiative-announces-new-backers
+> 
 
-Thanks for feedback (btw. should have Cc'ed you in advance on
-this request).
+To clarify my last post, I have no affiliation to OpenBSD or OpenSSL.
+However, having contributed to both OpenSSL and LibreSSL (albeit
+modestly) and having been actively tracking both projects, I've seen
+many synergies in action.
 
-> * (bug 68187) SECURITY: Prepend jsonp callback with comment.
-> ** This was hardening against CVE-2014-4671, I don't think CVEs are
-> being assigned for these?
+For example, LibreSSL has taken issues/fixes directly from OpenSSL's RT
+tracker while OpenSSL has adopted/modified fixes from LibreSSL. As the
+security community is aware of, moreso than most regular end-users, this
+positive feedback mechanism benefits both projects and ultimately
+everyone within the ecosystem.
 
-No strong opinion here. There was at last CVE-2014-1546 assigned in
-bugzilla for this
-(https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-1546). So a CVE
-might also be assigned for this.
+In that sense, supporting OpenSSL and LibreSSL sequentially rather than
+concurrently limits the role CII can play in catalyzing synergies
+between the projects.
 
-Regards,
-Salvatore
+Moreover, if CII support helps OpenBSD realize/accelerate a portable
+LibreSSL version, users on many platforms will benefit from the
+increased choice - competition breeds success.
+
+Matt, I have added you to the CC list because as co-founder of OCAP you
+can share with us how the progress OpenBSD has already made with
+auditing OpenSSL will factor into OCAP's own OpenSSL audit. And, because
+you also sit on CII's advisory board, you might be able to help us by
+forwarding this thread to the appropriate person(s) at CII so they can
+elaborate on how OpenBSD's LibreSSL support request is progressing.
+
+Many thanks.
+
+
+Content of type "application/pgp-signature" skipped
