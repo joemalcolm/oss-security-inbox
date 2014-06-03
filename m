@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/9
-Message-ID: <CAEDdjHemNu_tYxqPN02jEN_yymF-XYV6=qq3A20uAsL92dSY3A@mail.gmail.com>
-Date: Fri, 31 Jan 2014 13:25:41 +0000
-From: Pedro Ribeiro <pedrib@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Steve Kenow <skenow@...resscms.org>, ImpressCMS Security <security@...resscms.org>
-Subject: CVE request: impressCMS 1.3.5 arbitrary file deletion and XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/3
+Message-Id: <201406030448.s534mmOb008987@linus.mitre.org>
+Date: Tue, 3 Jun 2014 00:48:48 -0400 (EDT)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE ID request: typo3
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I have discovered two vulnerabilities in ImpressCMS. These have been fixed
-in the new 1.3.6 version, which you can get at
-https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Official%20Releases/ImpressCMS%201.3%20Branch/ImpressCMS%201.3.6/
-.
+> http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-007/
 
-One is an arbitrary file deletion and the other is two cross site scripting
-issues.
-Note that I was unable to exploit the XSS issues due to the inbuilt
-protection module, so I'm not sure if it qualifies for a CVE.
+Use CVE-2014-3947 for "upload files with specially crafted file
+extensions, which could be executed as PHP files."
 
-The tickets containing the information are available here
-https://www.assembla.com/spaces/dW4voyNP0r4ldbeJe5cbLr/tickets?report%5Bestimate_show%5D=true&report%5Bid%5D=0&report%5Bmilestone_id_cond%5D=1&report%5Bmilestone_id_val%5D=4129593&report%5Btitle%5D=All+Tickets+for+%27ImpressCMS+1.3.6%27&report%5Btotal_estimate_show%5D=true&report%5Btotal_invested_hours_show%5D=true&report%5Bworking_hours_show%5D=true.
+Use CVE-2014-3948 for XSS.
 
 
-Unfortunately I can't paste the full report in this email as the Android
-Gmail client will mangle it. Please see the text file at
-https://github.com/pedrib/PoC/blob/master/ImpressCMS/impresscms-1.3.5.txtfor
-more details.
+> http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-008/
 
-Thanks in advance,  and thanks to the ImpressCMS team for being so
-responsive.
+Use CVE-2014-3949.
 
-Regards,
-Pedro Ribeiro
-Agile Information Security
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
+iQEcBAEBAgAGBQJTjVLoAAoJEKllVAevmvms2kkH/1ZS6qcBODDxbxu7qvNX9TI6
+01WrL/lDfDSJB2MKXbWH6+rcHAvU3ZG8R/w78zjVztJlvKbMY45lZnyOtsX9Jsd1
+LS55DEgOCArk17XrLe2trGa/gcXhUS/NpLJ6hI747rZ1YiDGcRCIG9akpebodDaU
+VjM0VgC2nli1Il7POr1gqriV04LDABZRcm9n+qM0PA+RR7Qvlb3Fs0AsNdUJH0PK
+yhKg4e/aEn2OVtFvAVAaYjvt8lxb/FK/Z16wF/Vi9jeOjg2ZOTN3Qf33r7u3eAwi
+5JKp4EpRrt/GuosJq9ALkfZa4RnUH/ybpjiSScni4Z5R9Ud1SrWnfSOlmLzBOhw=
+=go2c
+-----END PGP SIGNATURE-----
