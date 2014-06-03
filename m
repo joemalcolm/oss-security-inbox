@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/17/1
-Message-ID: <53F00F7F.4090200@redhat.com>
-Date: Sat, 16 Aug 2014 20:12:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org, security@...enas.org
-Subject: FreeNAS default blank password
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/13
+Message-ID: <538DCF76.50002@upv.es>
+Date: Tue, 03 Jun 2014 15:36:54 +0200
+From: Hector Marco <hecmargi@....es>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-1226 s3dvt Root shell (still)
 Content-Type: text/plain; charset=utf-8
 
-So I installed the latest FreeNAS (9.2.1.7), install is simple, no
-options, it just drops it onto the disk you specify, you reboot, it works.
-
-By default you get a text based menu with some options (setup
-network/DNS/etc.), and one option is "Reset WebGUI Login Credentials".
-
-The problem is at first boot (and if you ever pick "Reset WebGUI Login
-Credentials") the web admin has a blank password, anyone that can access
-it can set the admin password and then use the web GUI to fire up a root
-shell (there's a nice little web shell command line).
-
-So an attacker can easily race the admin to the WebGUI, set a new
-password, login as root, setup a backdoor, then reset the WebGUI
-password so it's blank again and the admin would be none the wiser (log
-files won't help because the attacker has root can can easily sanitize
-them).
-
-There is no way from the text GUI to set the Web GUI admin password. I
-don't think there is even a CLI tool to set the web GUI password (I
-can't find it easily).
-
-Either way, does this deserve a CVE? Forcing a user to set the admin Web
-GUI password through the Web GUI, meaning it must be exposed to some
-degree prior to securing it. My understanding is default/blank admin
-credentials now == CVE. Thanks.
+CVE-2014-1226 s3dvt Root shell (still)
 
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+About s3dvt:
+
+s3dvt is part of the 3d network display server which can be used as
+3d desktop environment.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+
+Vulnerability:
+
+The s3dvt developers forgot to review all the code. There is still a
+vulnerable function as in the previous CVE-2013-6825. At the date of
+Jun 1, 2014 the last commit of the s3dvt is still vulnerable and
+exploitable. Commit: 1e9c9c53fa192cbf4f79d724b5e6c76374516968
+
+
+Details, patches, discussion and strategy to exploit at:
+http://hmarco.org/bugs/CVE-2014-1226-s3dvt_0.2.2-root-shell.html
+
+
+Because we found a bug in bash <= 4.3 this vulnerability can be
+successfully exploited. Bash bug details at:
+http://hmarco.org/bugs/bash_4.3-setuid-bug.html
+
+
+
+Hector Marco
+http://hmarco.org
+
