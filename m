@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/7
-Message-ID: <20140731095907.GL27690@symphytum.spacehopper.org>
-Date: Thu, 31 Jul 2014 10:59:07 +0100
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/15
+Message-ID: <4583871.CFr9RnDb4t@x2>
+Date: Tue, 03 Jun 2014 11:08:12 -0400
+From: Steve Grubb <sgrubb@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, hanno@...eck.de
-Subject: Re: Re: CVE request: libressl before 2.0.2 under linux PRNG failure
+Subject: Re: Bug in bash <= 4.3 [security feature bypassed]
 Content-Type: text/plain; charset=utf-8
 
-On 2014/07/30 20:08, cve-assign@...re.org wrote:
-> >> I see a number of web pages relating to this issue are mentioning that
-> >> it has already been assigned CVE-2014-2970, can anyone throw light on this?
+On Tuesday, June 03, 2014 04:16:31 PM Hector Marco wrote:
+> Recently we discovered a bug in bash. After some time after reporting
+> it to bash developers, it has not been fixed.
 > 
-> > At MITRE, we (obviously) know where CVE-2014-2970 came from, and we'll
-> > send information here about the resolution as soon as it happens.
+> We think that this is a security issue because in some circumstances
+> the bash security feature could be bypassed allowing the bash to be a
+> valid target shell in an attack.
 > 
-> We've since learned that nobody ever assigned CVE-2014-2970 to that
-> LibreSSL issue, and apparently every appearance of CVE-2014-2970 in "a
-> number of web pages" was ultimately the result of a miscommunication
-> outside of MITRE.
+> We strongly recommend to patch your bash code.
 > 
-> A complication is that CVE-2014-2970 had been assigned to a different
-> issue, and that issue isn't yet public. What you should do is:
+> Why don't fix this bug by simple adding mandatory "if" clause ?
+> Any comments about this issue are welcomed.
 > 
->   - if you're part of the embargo audience that has been using
->     CVE-2014-2970 for a private vulnerability, use CVE-2014-5139
->     instead
 > 
->   - if you're not part of that embargo audience, all we can suggest is
->     that it's very likely that you'll see a public disclosure of
->     CVE-2014-5139 in the future
+> Details at:
+> http://hmarco.org/bugs/bash_4.3-setuid-bug.html
 
-Interesting, thanks. So how does a reporter get hold of an embargoed CVE
-number and mistakenly apply it to libressl? It seems strange to have
-pulled this number out of thin air. And how long do these embargoes
-last, this seems a relatively long time to be sitting on a bug which is
-important enough to have been embargoed.
+Aren't the calls to setuid and setgid backwards too? As in "POS36-C. Observe 
+correct revocation order while relinquishing privileges"
 
-I await the announcement of CVE-2014-5139 with interest!
+-Steve
