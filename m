@@ -1,60 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/29
-Message-ID: <20140925165922.GX23926@titan.lakedaemon.net>
-Date: Thu, 25 Sep 2014 12:59:22 -0400
-From: Jason Cooper <osssecurity@...edaemon.net>
-To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/9
+Message-Id: <E1WrnlZ-0000ry-NR@xenbits.xen.org>
+Date: Tue, 03 Jun 2014 12:24:33 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 96 - Vulnerabilities in HVM MSI injection
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 25, 2014 at 02:24:14AM +0400, Solar Designer wrote:
-> On Wed, Sep 24, 2014 at 06:08:21PM -0400, Jason Cooper wrote:
-> > I wrote some code a while ago to automate git push via single-purpose
-> > ssh keys. [1]  By design, it wipes the environment, sets vars found in
-> > the config, and accepts only configured commands for
-> > SSH_ORIGINAL_COMMAND.  I've tested the latest HEAD against this attack,
-> > and it appears to mitigate it:
-> > 
-> > [jason@...alhost] $ ssh -i .ssh/test_key -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
-> > uid=1000(jason) gid=1000(jason) groups=1000(jason)
-> > [jason@...alhost] $ # add 'command=/path/to/secsh -f /path/to/test.rc' in .ssh/authorized_keys on server
-> > [jason@...alhost] $ ssh -i .ssh/test_key -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
-> > secsh v0.8-rc1-2-ga86f09832fa2: access denied.
-> 
-> This is puzzling.  I tried:
-> 
-> command="/bin/env - date"
-> 
-> and:
-> 
-> command="exec /bin/env - date"
-> 
-> and neither prevents exploitation of the issue as above (I get the
-> output of "id", not of "date"), which is not surprising given that the
-> command is run via the shell before it reaches "env".
-> 
-> Maybe your target user account's login shell is not bash?  That would
-> explain it, but it's also the easier case where the issue had been
-> exposed via a subshell only (does your test.rc explicitly use bash?)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Nope, login shell is /bin/bash.  Please look at the code in
+                    Xen Security Advisory XSA-96
+                            version 2
 
-  http://git.infradead.org/users/jcooper/secsh.git/blob/HEAD:/match.c
+                Vulnerabilities in HVM MSI injection
 
-line 70.  match_cmd() compares the contents of $SSH_ORIGINAL_COMMAND to
-the configured list of acceptable commands.  It returns the array index
-only if there is an exact match.  Then, in secsh.c, we execute the
-command from the array of allowed commands.  The buffer holding
-$SSH_ORIGINAL_COMMAND is never trusted, nor executed.
+UPDATES IN VERSION 2
+====================
 
-There is no shell, bash or otherwise, called ever.
+Public release.
 
-While tinkering with this, I discovered that if you force ssh to provide
-a pty (ssh -t ...), even with secsh locked down, the hack works.  You
-*must* set 'no-pty' after 'command=' in your authorized_keys file to
-prevent ssh from launching a shell. :-/
+ISSUE DESCRIPTION
+=================
 
-thx,
+The implementation of the HVM control operation HVMOP_inject_msi, while
+checking whether a particular IRQ was already set up in the necessary
+way, fails to properly check all respective conditions. In particular
+it doesn't check the returned pointer for being non-NULL before de-
+referencing it.
 
-Jason.
+Furthermore that same code also handles certain errors by logging
+messages, without (under default settings) at least making these
+messages subject to rate limiting.
+
+IMPACT
+======
+
+The NULL pointer de-reference would lead to a host crash, and hence a
+denial of service would result. Since host and guest page tables are
+fully separated for HVM guests, the guest would not be able to leverage
+the vulnerability for other kinds of attacks (privilege escalation or
+information leak).
+
+The spamming of the hypervisor log could similarly lead to a denial of
+service.
+
+In a configuration where device models run with limited privilege (for
+example, stubdom device models), a guest attacker who successfully
+finds and exploits an unfixed security flaw in qemu-dm could leverage
+the other flaw into a Denial of Service affecting the whole host.
+
+In the more general case, in more abstract terms: a malicious
+administrator of a domain privileged with regard to an HVM guest can
+cause Xen to become unresponsive leading to a Denial of Service.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from 4.2 onwards are vulnerable.
+
+The vulnerability is only exposed to service domains for HVM guests
+which have privilege over the guest.  In a usual configuration that
+means only device model emulators (qemu-dm).
+
+In the case of HVM guests whose device model is running in an
+unrestricted dom0 process, qemu-dm already has the ability to cause
+problems for the whole system.  So in that case the vulnerability is
+not applicable.
+
+The situation is more subtle for an HVM guest with a stub qemu-dm.
+That is, where the device model runs in a separate domain (in the case
+of xl, as requested by "device_model_stubdomain_override=1" in the xl
+domain configuration file).  The same applies with a qemu-dm in a dom0
+process subjected to some kind kernel-based process privilege
+limitation (eg the chroot technique as found in some versions of
+XCP/XenServer).
+
+In those latter situations this issue means that the extra isolation
+does not provide as good a defence (against denial of service) as
+intended.  That is the essence of this vulnerability.
+
+However, the security is still better than with a qemu-dm running as
+an unrestricted dom0 process.  Therefore users with these
+configurations should not switch to an unrestricted dom0 qemu-dm.
+
+Finally, in a radically disaggregated system: where the HVM service
+domain software (probably, the device model domain image) is not
+always supplied by the host administrator, a malicious service domain
+administrator can exercise this vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+In a radically disaggregated system, restricting HVM service domains
+to software images approved by the host administrator will avoid the
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa96.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa96*.patch
+1b64beddf8f6e9c08af24676551c18fd778a8db65a6c24fec07cc7e95531e2af  xsa96.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTjb4eAAoJEIP+FMlX6CvZQkQIALjKap2DRMbpr8GPUp91zMoL
+DdDqVnmgQo1GD8zF/CE0PBDXlIhU28tJ2XZmeePcwA4cRnacxxJTQhb3bp2ZJd6F
+hJ82UxDGUZy1uZV7IA+ji2pdECBg30r2i7Ukj4kX3FZHM+PZjcxHowVxEXVMxF//
+8HGWwvB3b56HqbCZ7donLvU+uaG1voPF6zV9Dutu4UwC5tTkqdJ8qNqz/kfn69Ug
+Abn5uNOJQXRjY7kcegTO4uFB9iL5+LUDfWdUTghVYxITlfGSRF18IbhUk8P61u+H
+v75OEk/tO5kMORpMRgnhqTMyPaWEaCHUeZU+5lBxZvHYGbabAuvuW06zr9vXG3s=
+=ZSzI
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa96.patch" of type "application/octet-stream" (1416 bytes)
