@@ -1,55 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/7
-Message-ID: <20141207193127.GA2095@hurricane.linuxnetz.de>
-Date: Sun, 7 Dec 2014 20:31:27 +0100
-From: Robert Scheck <robert@...oraproject.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/7
+Message-ID: <6809f7a14d6c979bb28436d2ff59cd20.squirrel@aphrodite.kinkhorst.nl>
+Date: Tue, 3 Jun 2014 11:39:27 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: postgresql: pg_dump creates world-readable dump
+Subject: CVE request: mediawiki invalid usernames on Special:PasswordReset were parsed as wikitext
 Content-Type: text/plain; charset=utf-8
 
-Hello Agostino,
+Hi,
 
-On Sun, 07 Dec 2014, Agostino Sarubbo wrote:
-> I just discovered that pg_dump creates the database dump with world readable 
-> permission (644 to be exactly).
+Can you please assign a CVE id for the issue "invalid usernames on
+Special:PasswordReset were parsed as wikitext" in Mediawiki?
 
-I think you got tricked by either umask or an existing file that was
-already created with other permissions before, because here it looks
-like this:
+>From the bug:
+https://bugzilla.wikimedia.org/show_bug.cgi?id=65501
 
-$ pg_dump --version
-pg_dump (PostgreSQL) 9.3.5
-$
+> Omer Iqbal noticed that invalid usernames on Special:PasswordReset were
+> parsed as wikitext.
+>
+> Although this can't be abused on a typical wiki, in the very special
+case > that a wiki has wgRawHtml enabled, and rely on limiting who can
+edit to
+> prevent attackers from adding javascript, the username on
+> Special:PasswordReset can be supplied by anyone and will be parsed with
+> wgRawHtml enabled.
+>
+> Since Special:PasswordReset is whitelisted by default on private wikis,
+> this could potentially lead to an xss crossing a privilege boundary.
+>
+> The attack is additionally mitigated by default XFO rules preventing that
+> special page from being used in an iframe, so the threat from this is
+> very low.
 
-$ umask 
-0022
-$ pg_dump postgres > postgres1.sql
-$ ls -l postgres1.sql
--rw-r--r--. 1 postgres postgres 902 Dec  7 20:17 postgres1.sql
-$ 
+It was fixed in 1.22.7, 1.21.10 and 1.19.16:
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-May/000151.html
 
-$ umask 0077
-$ umask 
-0077
-$ pg_dump postgres > postgres2.sql
-$ ls -l postgres2.sql
--rw-------. 1 postgres postgres 902 Dec  7 20:17 postgres2.sql
-$ 
 
-But: 
-
-$ touch postgres3.sql
-$ chmod 644 postgres3.sql
-$ pg_dump postgres > postgres3.sql
-$ ls -l postgres3.sql
--rw-r--r--. 1 postgres postgres 902 Dec  7 20:17 postgres3.sql
-$
-
-> In my opinion it deserves a cve.
-
-I do not know which behaviour you are exactly seeing (and for which
-version of PostgreSQL) but above seems absolutely fine to me.
-
-Robert
-
-Content of type "application/pgp-signature" skipped
+Thanks,
+Thijs
