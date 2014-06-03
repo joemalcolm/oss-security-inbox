@@ -1,94 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/1
-Message-Id: <201404090108.s39181ns004077@linus.mitre.org>
-Date: Tue, 8 Apr 2014 21:08:01 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: (Openfire M-Link Metronome Prosody Tigase) Possible CVE Request: Uncontrolled Resource Consumption with XMPP-Layer Compression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/18
+Message-ID: <538DF637.1020909@redhat.com>
+Date: Tue, 03 Jun 2014 10:22:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: VMware Security Response Center <security@...are.com>
+Subject: Re: Request for linux-distros subscription
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://xmpp.org/resources/security-notices/uncontrolled-resource-consumption-with-highly-compressed-xmpp-stanzas/
+On 06/02/2014 10:59 PM, "VMware Security Response Center" wrote:
+> 
+> Hi, I would like to request to be subscribed to the
+> linux-distros@...openwall.org list for VMware Security Response
+> Center (VSRC).
+> 
+> My PGP fingerprint:
+> 
+> pub  2048R/C61F6A1D 2014-06-03 Key fingerprint = DD30 8A5F 937B
+> B437 EDDB  051D 7F84 295B C61F 6A1D uid Monty Ijzerman
+> <mijzerman@...vmware.com> sig  sig   C61F6A1D 2014-06-03 __________
+> __________ [selfsig] Notation data:
+> preferred-email-encoding@....com pgpmime
+> 
+> sub  2048R/FCED34F0 2014-06-03 sig sbind  C61F6A1D 2014-06-03
+> __________ __________ []
+> 
+> 
+> Thank you for your consideration.
+> 
+> Monty Ijzerman
+> 
+> VMware Security Response Center security@...are.com
+> 
 
-igniterealtime.org   Openfire   Fixed in 3.9.2
-
-We did not find any commits for this under the
-http://fisheye.igniterealtime.org/changelog/ URL. Accordingly, only
-one CVE is possible at present. Use CVE-2014-2741.
-
-
-
-Isode Ltd.           M-Link     Fixed in 16.0v7
-
-We did not find any details about the change under the
-http://www.isode.com/products/m-link.html URL. (Also, the
-http://www.isode.com/evaluate/instant-messaging-xmpp.html page seems
-to imply that this is not open source.) Accordingly, only one CVE is
-possible at present. Use CVE-2014-2742.
-
-
-
-lightwitch.org       Metronome  Fix in progress
-http://code.lightwitch.org/metronome/rev/49f47277a411
-
-Use CVE-2014-2743 for "Don't process deflated data if it exceedes the
-max allowed limit."
-
-Use CVE-2014-2744 for "Don't allow to compress a stream if it's not
-authenticated."
-
-
-
-Prosody              Prosody    Fixed in 0.9.4
-http://blog.prosody.im/prosody-0-9-4-released/
-
-Use CVE-2014-2745 for these changes that address resource consumption
-in general:
-  http://hg.prosody.im/0.9/rev/a97591d2e1ad
-  http://hg.prosody.im/0.9/rev/1107d66d2ab2
-
-Use CVE-2014-2744 for this change that addresses decompression of
-unauthenticated data:
-  http://hg.prosody.im/0.9/rev/b3b1c9da38fb
-
-(This is exactly the same plugins/mod_compression.lua fix as in
-Metronome, and thus has the same CVE ID. Metronome was originally
-based on the Prosody codebase.)
-
-
-
-Tigase               Tigase     Fixed in 5.2.1
-http://www.tigase.org/content/uncontrolled-resource-consumption-highly-compressed-xmpp-messages
-https://projects.tigase.org/projects/tigase-server/repository/revisions/7f5af2f8c5b97bbf9def66fbb9dd47746a7ac292
-https://projects.tigase.org/issues/1780 (not a public bug)
-
-We did not determine that more than one issue was fixed. Accordingly,
-only one CVE is possible at present. Use CVE-2014-2746.
-
-
-
-Erlang Solutions     MongooseIM Under Investigation
-
-We did not find anything under the
-https://github.com/esl/MongooseIM/commits/master URL. There is
-apparently no publicly known vulnerability and thus no CVE assignment.
+So to put it bluntly: who are you, and why should we give you access
+to distros? A quick google search shows you do appear to work for
+vmware, but I can't find any contributions or participation in any
+public forum like oss-security and so on.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Kurt Seifried - Red Hat - Product Security - Cloud stuff and such
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-iQEcBAEBAgAGBQJTRJxDAAoJEKllVAevmvmsUdcH/0W6GGzE1yTEOnxFqtZ8ghvE
-gavs13esHOeB/FLHdliJx54y/xzKoXbWPwItKVju/lqbRJwCMpy1G7+to4PoZ3ZO
-O1hanQGjCwmH48D4pY0z203d3whXuMGoZI+DLhyDqvVvwYAwboTCu2E36j0q8Zj2
-kwpxfzShE6v13PKriEwMgVLZMj1xUZSD6yXMg24v48vjcRnDqReZ5wdrnXRYIwPP
-Kkzlj9P6D+gR98ZQp5pLX5Db574vcAP+7v5jn2EvfGJRsofUhX/K2oPrQ/xGfCpH
-rJpvIvBglugtW3/iVKtrKK9QBF5bcFxBrFGWAfrTois5du4FA9iQoi0jC6J0AHo=
-=U9OB
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJTjfY3AAoJEBYNRVNeJnmTkO8QAKWQmh0UcbELTmGL9kOOKizN
+hkJYpO/vVd/W6IzL2Q/cv30ynH8fVZYxMk7l0uV/tpOAbMdEKNxP7kiZEgQXmr1s
+StK9ARJlFUMqFn1vJuECz2yYQ9Ad0NlPzrIGPllxbpMfAOZuIhr6qP+raxkikpYo
+KnPYf1Y15CJDXoFlq1W1YPRMgNGmSDayVNZpDHRRaAZeXUeOebovM5kawwRUDAP5
+kkXoDn5sbJgILWxMK8Whdgq44v3Pjltk9GXLFxH5zOh9pFcWyo4TxlGBtYNl3QRZ
+BIcc+3L0JY5lOw+kRMRmLwBPDM6QuJO3SeW7MPy+egTWtv5egfn98nW0u5M/oFxs
+qSAAO67jb0T6oVN6CMTLTX5WMuaF+B9PItRFvi01S3nPmbbOJm8rtxXYZ6rvR3yn
+ZYlkesossJlSD1UHuUfVpbgq4hKAT+KbxxIlE5H6KB9as3GnswMtWRpd7bYMx9rn
+f4h61Tk6rZT5a7kQe2/NkQaKhvXS7VnFN10l76mPJfUrUCPNbf36agHOtilHGtgz
+WTDM7W1jxE701wRpXsleRQZgCtZODBybc+vkvAK1Z5pJbmXJKRUm9+jd5P+o+Let
+rWlBEkB9rG7Zc7XOuap09jbNKpSN20QcUNAkAC+DX2E2Gibj5b3cTgoGftWGumCi
+gQq5YRJt0/FYag3cHtZb
+=LyoD
 -----END PGP SIGNATURE-----
