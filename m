@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/07/8
-Message-ID: <20140407220525.GD28106@scapa.corsac.net>
-Date: Tue, 8 Apr 2014 00:05:25 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/8
+Message-ID: <20140603132121.29c93531@redhat.com>
+Date: Tue, 3 Jun 2014 13:21:21 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+Subject: Re: GnuTLS and libtasn1 security fixes
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 07, 2014 at 01:56:27PM -0700, Reed Loden wrote:
-> I just asked around on IRC, and one of the Ubuntu guys said they didn't
-> get any prior notification of this, so fixed packages won't be out
-> until tomorrow at the earliest (for Ubuntu).
+On Sun, 01 Jun 2014 21:40:18 +0200 Kristian Fiskerstrand wrote:
 
-Nor Debian neither Suse were aware either.
-> 
-> Was this not coordinated with the distros at all? If not, that seems
-> like major fail on the reporters and NCSC-FI's part. :/
-> 
+> Based on your research of this issue can you comment anything on
+> whether CVE-2014-3466 affects the 2.x series as well?
 
-There was a mail from Red Hat on monday morning (CEST) with no detail
-and a CRD to april 9th. It seems OpenSSL advisory came a bit
-uncoordinated, actually, which (it seems) triggered the release of the
-heartbeat and cloudfare posts, as well as the Red Hat one here.
+AFAICS, the issue was introduced in 2000.  GnuTLS 1.0.0 seems to be
+from 2003.
 
-Regards,
 -- 
-Yves-Alexis Perez
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Tomas Hoger / Red Hat Security Response Team
