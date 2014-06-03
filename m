@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/39
-Message-ID: <140925183500.AA18269.SM@caleb.ins.cwru.edu>
-Date: Thu, 25 Sep 2014 14:35:00 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: huzaifas@...hat.com
-Cc: chet.ramey@...e.edu, chet@...cwru.edu, lcamtuf@...edump.cx, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/19
+Message-ID: <OF8244F721.E59AF2BF-ON87257CEC.005264E6-85257CEC.0053A72F@us.ibm.com>
+Date: Tue, 3 Jun 2014 09:13:41 -0600
+From: Lisa Bradley <lbradley@...ibm.com>
+To: oss-security@...ts.openwall.com
+Subject: Operating system distribution security contact lists
 Content-Type: text/plain; charset=utf-8
 
-> On 09/25/2014 08:31 AM, Chet Ramey wrote:
 
-> Wondering if you saw
-> http://www.openwall.com/lists/oss-security/2014/09/24/40 ?
 
-The (one-line) patch I sent last night appears to fix this.  Please verify.
+Hi
 
-Chet
+I would like to request membership to the closed "Operating system
+distribution security contact lists" mailing list on behalf of the IBM
+Product Security Incident Response Team (PSIRT). I am part of the PSIRT
+team where I help manage the receipt, investigation and internal
+coordination of security vulnerability information related to IBM
+offerings. You can read more about PSIRT here:
+http://www-03.ibm.com/security/secure-engineering/process.html.  I am the
+main coordinator of Open Source vulnerabilities that affect IBM products.
+We have products that utilize Open Source software, so being part of this
+list will be beneficial. I do not plan on posting any IBM product specific
+issues as we do that through Security Bulletins (see
+http://www-03.ibm.com/security/secure-engineering/bulletins.html).
 
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+You can verify that I am part of the PSIRT team by emailing PSIRT directly
+at IBM PSIRT<slash>Somers<slash>IBM or psirt<at>us<dot>ibm<dot>com.
+
+Here is my Personal PGP key: (See attached file: Lisa
+Bradley_PublicKey.asc)
+
+Thanks for your consideration,
+Lisa
+
+Lisa Marie Wood Bradley, PhD
+Product Security Incident Response Team (PSIRT), SWG Master Inventor
+lbradley<at>us<dot>ibm<dot>com
+Content of type "text/html" skipped
+
+Download attachment "Lisa Bradley_PublicKey.asc" of type "application/octet-stream" (4514 bytes)
