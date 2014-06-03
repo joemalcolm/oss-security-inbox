@@ -1,41 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/4
-Message-ID: <54129CD2.3000306@mittwald.de>
-Date: Fri, 12 Sep 2014 09:12:18 +0200
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/17
+Message-ID: <20140603153726.GU23760@sentinelchicken.org>
+Date: Tue, 3 Jun 2014 08:37:26 -0700
+From: Tim <tim-security@...tinelchicken.org>
+To: David Jorm <djorm@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
 Content-Type: text/plain; charset=utf-8
 
 
+Hi David,
 
-On 11/09/14 21:36, Ritwik Ghoshal wrote:
-> A complete list of all affected-supported MySQL releases will be
-> published via Oracle's quarterly Critical Patch Update(CPU) advisory.
-> More information about our CPU program is available at -
-> http://www.oracle.com/technetwork/topics/security/alerts-086861.html
+> Sorry for the absurdly late reply to this thread. I finally found time to do
+> some testing on OpenJDK 1.7.0_45. I can confirm Tomas' assessment that
+> setExpandEntityReferences() and
+> setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true) have no bearing on
+> whether or not entity references are expanded, nor do they purport
+> to.
+
+Yeah, you gotta love FEATURE_SECURE_PROCESSING.  It's just like
+calling a website "secure" because it uses SSL.
+
+I agree that these features don't purport to turn off certain
+dangerous features, but to a developer who doesn't know what parameter
+entities are, they could very easily assume they are safe with
+setExpandEntityReferences(false).
+
+
+> Applications that process attacker-supplied XML using Xerces are vulnerable
+> to SSRF attacks unless they use both
+> setFeature("http://xml.org/sax/features/external-parameter-entities", false)
+> and setFeature("http://xml.org/sax/features/external-general-entities",
+> false).
 > 
-> 
-> Thanks,
+> The OWASP XXE document should be updated to mention
+> external-parameter-entities. I will do this as soon as my OWASP wiki account
+> is approved.
 
-Well I hope than that I can soon migrate to mariadb or postgresql.
-In other words, to a db which takes security serious and handles
-it professional, as this is clearly not professional behaviour.
+Feel free to use this as a reference for other thoughts on what
+developers should be wary of:
+  http://vsecurity.com/download/papers/XMLDTDEntityAttacks.pdf
 
-Thanks for your information anyway.
+I would also be interested to hear if you think anything I mention in
+there is inaccurate.
 
--- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+Cheers,
+tim
