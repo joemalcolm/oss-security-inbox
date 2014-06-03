@@ -1,99 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/17
-Message-ID: <20140808161722.GB11290@kroah.com>
-Date: Fri, 8 Aug 2014 09:17:22 -0700
-From: Greg KH <greg@...ah.com>
-To: Eddie Chapman <eddie@...k.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/10
+Message-Id: <E1WrnlP-0000qv-HL@xenbits.xen.org>
+Date: Tue, 03 Jun 2014 12:24:23 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 54 (CVE-2013-2078) - Hypervisor crash due to missing exception recovery on XSETBV
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 08, 2014 at 04:47:45PM +0100, Eddie Chapman wrote:
-> >Firmware can't be sent to a device unless it is enumerated by the kernel
-> >USB subsystem, and that is usually visable to the kernel by default.
-> >
-> >Sending firmware to a device is the least of your worries, see above for
-> >the real problems that you can try to exploit.
-> 
-> That's good to know. Not sure about the least of worries, the overwriting of
-> firmware seems to be the crux of what people are worried about, isn't it?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I don't know, is that something that people really care about?  And if
-so, why?  What can you do with a device that you can rewrite the
-firmware to that you can't do with any other USB device that you are
-intentionally making "malicious"?  (i.e. USB Rubber Ducky and friends)
+	     Xen Security Advisory CVE-2013-2078 / XSA-54
+                            version 4
 
-> But I see your point, we don't need to worry since you're saying firmware
-> cannot be written unless it's initiated by the kernel.
+       Hypervisor crash due to missing exception recovery on XSETBV
 
-Or userspace, but the kernel is involved here in sending the data to the
-device, it has to.
+UPDATES IN VERSION 4
+====================
 
-> But a lot of the discussion I've read on this issue seems to assume
-> that a "clean" USB device can have it's firmware replaced by the bad
-> guys with malware almost without the OS having a say in the matter.
+Reduce vulnerable range of versions to 4.1 and onwards.
 
-Not true, the OS has to be involved in order to rewrite the firmware.
-It is the thing that is sending the "bad" packets to the USB device on
-behalf of the userspace program that is asking to rewrite the firmware
-on the device.
+ISSUE DESCRIPTION
+=================
 
-> e.g. USB stick with evil firmware infects USB controller,
+Processors do certain validity checks on the register values passed to
+XSETBV.  For the PV emulation path for that instruction the hypervisor
+code didn't check for certain invalid bit combinations, thus exposing
+itself to a fault occurring when invoking that instruction on behalf
+of the guest.
 
-The USB host controller, no, that's not possible that I have ever heard
-of, or seen before.  But pointers to the details would be appreciated if
-somehow you think this is the case.
+IMPACT
+======
 
-> which in turn infects other USB sticks subsequently plugged in.
+Malicious or buggy unprivileged user space can cause the entire host
+to crash.
 
-Unless the program to rewrite other USB devices was downloaded and run
-from the "evil" device, no, the OS knows all about this.
+VULNERABLE SYSTEMS
+==================
 
-Now if the OS can actually do anything about it or not is a different
-story, again, if you allow user space programs the ability to write to
-random USB devices, well, you get what you deserve here...
+Xen 4.1 and onwards are vulnerable when run on systems with processors
+supporting XSAVE.  Only PV guests can exploit the vulnerability.
 
-> Although I've seen people involved in USB hardware manufacture argue
-> this is nowhere near as easy as some of the hysteria surrounding this
-> suggests.
+In Xen 4.1 XSAVE support is disabled by default; therefore systems
+running these versions are not vulnerable unless support is explicitly
+enabled using the "xsave" hypervisor command line option.
 
-There is a USB firmware download spec, which is quite easy to use, if
-manufacturers actually followed it (side note, I was one of the authors
-of that spec...)  And if USB device manufacturers actually required
-signed firmware to run in their devices, that would solve this issue
-instantly as long as the signing keys don't leak.
+Systems using processors not supporting XSAVE are not vulnerable.
 
-> But, theoretically, isn't it is possible for device and controller to do
-> their own thing between each other without the OS knowing anything?
+Xen 3.x and earlier are not vulnerable. In particular, Xen 4.0.x is not
+vulnerable because XSAVE support there covers only HVM guests.
 
-There are some "basic" housekeeping functions that the USB host
-controller and device do in their handshaking and keep-alive and the
-like that the OS doesn't "know" about, because if the OS did know about
-it, the whole thing would just take too long and waste too much CPU
-time.  But sending random data?  No that's not possible.
+MITIGATION
+==========
 
-> After all, the OS controls the USB controller, but the controller is
-> in control of the device? Or does the kernel's control extend to the
-> device?
+Turning off XSAVE support via the "no-xsave" hypervisor command line
+option will avoid the vulnerability.
 
-Think of a USB host controller as a "dumb" ethernet controller.  It has
-a big ring-buffer of data that it sends to a device when asked to.  It
-also listens for data from a device, when asked, and puts that in a
-buffer for the kernel to do something with.  There is no "mixing" of the
-data, and a USB device can not talk to any other USB device on the
-system, without the kernel giving the data to the other device.
+RESOLUTION
+==========
 
-So the kernel "controls" a device only by sending it data, receiving
-data from it, and by virtue of some of that data being "special",
-telling the device to do some things (send configuration information, go
-toggle a serial port pin, etc.)  That data can only come from the
-kernel, to the USB host controller, and then to the device.
+Applying the attached patch resolves this issue.
 
-Again, over simplification, as there are some commands that the host
-controller handles on its own by virtue of "housekeeping" and
-enumeration, and other basic things, none of which should ever be an
-attack vector to the device, unless you have a really broken device.
+xsa54.patch                 Xen 4.1.x, Xen 4.2.x, xen-unstable
 
-Does that help?
+$ sha256sum xsa54-*.patch
+5d94946b3c9cba52aae2bffd4b0ebb11d09181650b5322a3c85170674a05f6b7  xsa54.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-greg "usb-101 is now over" k-h
+iQEcBAEBAgAGBQJTjb4yAAoJEIP+FMlX6CvZTvcIAJW1kkoJDpYy3m2CUFux5FeN
+rft9S+iPrh45/B67VuHOnaEfpcBQ/71+jKEjJQ8kJdJnWmP6i+kAuoVKma/PkY9x
+VkeNM//9gM1UKp581p0yQp61Yw46hiREWDkue+VsnMIl88w/EV2Yv5R2LQaPMinZ
+TM08EdK/lgERYQ2LSdkc55kE/jHoenBMBYjnCJPBYJY1jPdgJo488ZTpol/opqaM
+o99/ziUPfa30KXHFtgq1iQs7qu+boMEv/QfRSC3xQS1tTSaXqnuPVDlz6tXBkrW9
+AI5Mx1cJMSrd02KBMsaZvjQVaDjVO3L1svfEXvjeUmbGuE+hx0jvglblS6+i2Z4=
+=SnXC
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa54.patch" of type "application/octet-stream" (972 bytes)
