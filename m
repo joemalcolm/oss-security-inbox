@@ -1,55 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/3
-Message-ID: <20140710112641.GA25004@openwall.com>
-Date: Thu, 10 Jul 2014 15:26:41 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/11
+Message-ID: <538DCF47.6010802@upv.es>
+Date: Tue, 03 Jun 2014 15:36:07 +0200
+From: Hector Marco <hecmargi@....es>
 To: oss-security@...ts.openwall.com
-Subject: GnuPG computation error checks
+Subject: CVE-2013-6876 s3dvt Root shell
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2013-6876 s3dvt Root shell
 
-There was a discussion in 2001 and patches by Florian Weimer to add
-extra checks into GnuPG's cipher/rsa.c: check_secret_key() and rsa_sign():
+About s3dvt:
 
-http://lists.gnupg.org/pipermail/gnupg-devel/2001-March/017110.html
-http://lists.gnupg.org/pipermail/gnupg-devel/2001-March/017114.html
-http://lists.gnupg.org/pipermail/gnupg-devel/2001-March/017123.html
+s3dvt is part of the 3d network display server which can be used as
+3d desktop environment.
 
-IIUC, part of the rationale was to protect against "occasional bit
-flipping" compromising the secret key.
 
-Unfortunately, the link to Florian's patch in those postings is broken,
-but it's still in the GnuPG package in Owl and ALT Linux (for 1.4.18).
 
-Here's a revision of the patch (for older GnuPG), while we still had it
-as a separate patch file:
+Vulnerability:
 
-http://cvsweb.openwall.com/cgi/cvsweb.cgi/~checkout~/Owl/packages/gnupg/Attic/gnupg-1.4.2-fw-secret-key-checks.diff?rev=1.1;content-type=text%2Fplain
+A vulnerability in s3dvt for versions prior to 0.2.2 allows to obtain
+a root shell.
 
-Here's a question:
 
-Given the improved RSA side-channel attack understanding and the
-countermeasures added to deal with CVE-2013-4242 and CVE-2013-4576
-(cache timing and acoustic side-channels) in GnuPG, are Florian's added
-checks still safe to have, or are they possibly vulnerable to
-side-channel leaks on their own?  check_secret_key() does perform a very
-basic sanity check on the secret key even without Florian's patch, and
-this might be a side-channel leak concern too, but Florian's checks are
-(purposefully) much more extended and include a check in rsa_sign() as
-well (more susceptible since it involves dealing with changing and
-possibly attacker-chosen data rather than only with the secret key?)
+Details, patches, discussion and strategy to exploit at:
+http://hmarco.org/bugs/s3dvt_0.2.2-root-shell.html
 
-I haven't looked into RSA side-channel issues before, only reading about
-them passively (albeit with curiosity), so I'd appreciate comments by
-someone more knowledgeable in this area.
 
-Oh, and maybe we (still) want to get the computation error checks
-upstream'ed, if they can be made side-channel safe (or somehow are
-side-channel safe as-is)?
+Because we found a bug in bash <= 4.3 this vulnerability can be
+successfully exploited. Bash bug details at:
+http://hmarco.org/bugs/bash_4.3-setuid-bug.html
 
-Florian?
 
-Thanks,
 
-Alexander
+Hector Marco
+http://hmarco.org
+
