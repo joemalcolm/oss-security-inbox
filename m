@@ -1,32 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/18/1
-Message-ID: <CACYkhxjxuCUj0b5VzicAzKgq42xFU2Rdk736yETPY1d11h5xcw@mail.gmail.com>
-Date: Thu, 18 Sep 2014 12:30:22 +1000
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: [CVE Requests] rsync and librsync collisions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/20
+Message-Id: <201406031835.s53IZmNF024373@linus.mitre.org>
+Date: Tue, 3 Jun 2014 14:35:48 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE-2014-0234 Installer: OpenShift Enterprise: openshift.sh default password creation
 Content-Type: text/plain; charset=utf-8
 
-Ok, for rsync you can download colliding blocks (and a brief description) here:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://github.com/therealmik/rsync-collision
+Are there any additional thoughts about CVE-2014-0234 before we cover
+it on the cve.mitre.org web site? See:
 
-I don't get the feeling that this will be fixed upstream, but a simple
-fix would be
-to incorporate libdetectcoll from Marc Stevens into rsync, and when a collision
-attempt is detected to simply send a data block.
+  http://openwall.com/lists/oss-security/2014/05/29/4
 
-A longer-term would be to just replace MD5 with a collision-resistant hash
-function - blake2 is a good fit.  The 128-bit output is right on the
-edge of being
-strong enough.
+We had planned to proceed with this viewpoint:
 
-I submitted a very rough patch which does both, but I haven't had the
-time to clean
-the rough edges - the libdetectcoll codebase needs a fair amount of cleaning
-(printfs etc), and the rsync codebase needs a fair bit of refactor to
-handle hash
-output lengths > 16 bytes.
+  1. If Red Hat shipped Red Hat OpenShift Enterprise 2 with a publicly
+     known password in broker.conf, Red Hat is allowed to categorize
+     that as a vulnerability and assign a CVE ID.
 
-Regards,
-  Michael
+  2. There was also an issue in an example script. The script in
+     question had comments of "not comprehensive nor robust enough ...
+     require significant adaptations ... Please adapt it."
+     Nonetheless, this is a script authored by Red Hat, and Red Hat
+     might have been treating it as a supported part of a software
+     product. If so, then Red Hat is allowed to categorize a script
+     issue as a vulnerability and assign a CVE ID. Unless Red Hat
+     chooses to take that position, the default decision for that type
+     of disclaimed example code is that a CVE ID assignment isn't made.
+
+  3. The CVE IDs in 1 and 2 can't be the same.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTjhTwAAoJEKllVAevmvmsIG4H/itFt85cWqZpQFrJ0XWI3t/w
+J3E7YQgh16vSIL2kifooOblAjrtGnUt+HqeoELhdVd5QJfj9h9bfzxr/rvs+czC/
+nbaZrphHdwt/qk1LECTh4mvSaqcDvSXRkc/bhjMcFRNwU8Jrq09jlrkyN3+SUYrp
+VeFG6PCdgJfEl23aP/mhiTNseNrwIooHW5HrrzdOP/BYae3TirmpYJuaGIVze1mN
+/tmvFxb1n/7y00PQ2jMWjxw2Y29BrIb771iY/pBufp+DRDC/Od2Mykxsj4Sjizni
+hAzoWUh8iEbwiuZANgxnOmqUxHtHGEO5ZgXpeyanQMg/uAhQkZrFTpSHWBAa9P0=
+=2HvF
+-----END PGP SIGNATURE-----
