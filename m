@@ -1,34 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/3
-Message-ID: <533A6771.60407@redhat.com>
-Date: Tue, 01 Apr 2014 18:14:57 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/12
+Message-ID: <538DCF60.7070104@upv.es>
+Date: Tue, 03 Jun 2014 15:36:32 +0200
+From: Hector Marco <hecmargi@....es>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: cacti "bug#0002405: SQL injection in graph_xport.php"
+Subject: CVE-2013-6825 DCMTK Root Privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+CVE-2013-6825 DCMTK Root Privilege escalation
 
-After seeing https://bugs.gentoo.org/show_bug.cgi?id=506356#c1 and 
-trying (unsuccessfully) to find a CVE-2014-2327 fix, I came across this 
-commit:
+About DCMTK:
 
-bug#0002405: SQL injection in graph_xport.php
+DCMTK is a collection of libraries and applications implementing large parts
+the DICOM standard. It includes software for examining, constructing and
+converting DICOM image files, handling offline media, sending and receiving
+images over a network connection, as well as demonstrative image storage and
+worklist servers
 
-  - Fixed form input validation problems
-  - Fixed rrd export and graph shell escape issues
 
-http://svn.cacti.net/viewvc/cacti/branches/0.8.8/lib/rrd.php?r1=7437&r2=7439
 
-Can a CVE please be assigned? (I thought it may have been 
-"http://svn.cacti.net/viewvc?view=rev&revision=7393 -> 
-fix_quoting_in_rrd_command_CVE-2013-1435.patch -> CVE-2013-1435" from 
-"[oss-security] CVE request: SQL injection and shell escaping issues in 
-Cacti < 0.8.8b", but it seems like a different/new issue.)
+Vulnerability:
 
-(Have not filed a Red Hat bug)
+A bug in DCMTK for versions prior to 3.6.1 allows to do a privilege 
+escalation.
+All DCMTK versions since 1993 to the current 3.6.1 (released 
+February-2014) are
+affected. The vulnerable packages are:
 
-Cheers,
+- dcmpsrcv
+- dcmprscp
+- movescu
+- storescp
+- dcmqrscp
+- wlmscpfs
+- dcmrecv
 
---
-Murray McAllister / Red Hat Security Response Team
+
+Details, patches, discussion and strategy to exploit at:
+http://hmarco.org/bugs/dcmtk-3.6.1-privilege-escalation.html
+
+
+
+Hector Marco
+http://hmarco.org
+
