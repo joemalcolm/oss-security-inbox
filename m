@@ -1,40 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/31/2
-Message-Id: <20141031060940.33B4542E031@smtpvbsrv1.mitre.org>
-Date: Fri, 31 Oct 2014 02:09:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: valery@...lab.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for GitLab groups API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/16
+Message-ID: <20140603152747.GT23760@sentinelchicken.org>
+Date: Tue, 3 Jun 2014 08:27:47 -0700
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> The groups API vulnerability affects GitLab 6.0 and up.
+Hi Tomas,
+
+Thanks for looking into this.  Sorry for the slow reply. 
+
+
+> As far as I can see setExpandEntityReferences() controls what value is
+> set for the create-entity-ref-nodes DOM parser feature:
 > 
-> The vulnerability patched by this release allows a guest user to delete the
-> owner of a group and to assign any other member as owner through the groups
-> API.
+> http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/jaxp/DocumentBuilderImpl.java#l158
+> http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/jaxp/DocumentBuilderImpl.java#l74
+> http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/impl/Constants.java#l427
 > 
-> You can read more details here
-> https://about.gitlab.com/2014/10/30/gitlab-7-4-3-released/
+> The description in Java API docs is rather brief, xerces docs have more
+> details:
+> 
+> http://xerces.apache.org/xerces-j/features.html#create-entity-ref-nodes
+> http://xerces.apache.org/xerces2-j/features.html#dom.create-entity-ref-nodes
+> 
+> AFAICS, the feature does not aim to control if entity references are
+> expanded, but only how exactly they appear in the resulting DOM tree.
 
-Use CVE-2014-8540.
+Ok, that makes sense.  Of course it is pointless for security if it
+doesn't affect parameter entities.  I also find it odd that one of the
+only standard methods available to directly tweak entity behavior can
+only be implemented by setting a feature in Xerces that is
+non-standard.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUUybcAAoJEKllVAevmvmsuhEIAKKDP7Kmi/4quOx8ZVRTinSP
-WJDNozG2D8ivcPhb5N7tWn/uqXZKa3KJp84JYRbKsF0DXeghfJc8/ODoZcAxpb06
-5k1POZQ0Id4/3lvcYPZjM6rZXEod2PrcNsNU1KzU1IdubkxONieVKZUSgsWTEGrQ
-qRuUZ6nCxTy810x72IJb/z6dRemIykMyEY3qu5sOrn19DHozFnuJCZ79h9K9+d2K
-inqsOLS40toauo+/KpmqBsU+n2fKXC86QCYR7znczLn8iqPuZjXfULiXlboWWhaS
-c9AzX7gQysIFrJeLvt3j5AKiycGK15GLEK7tuDG65756ef8oW7/auuC8hkUxZ/4=
-=Ghwv
------END PGP SIGNATURE-----
+> Maybe your paper should rather mention parser features as
+> external-general-entities and external-parameter-entities:
+> 
+> http://docs.oracle.com/javase/7/docs/api/org/xml/sax/package-summary.html#package_description
+
+I do mention the specific features that one needs to disable in order
+to make parsing safe.  However, I didn't realize that that some of
+these features were standardized.  Still, it would be quite confusing
+to any developer that doesn't spend extensive amounts of time
+researching each XML feature and understanding what needs to be turned
+off.
+
+
+> OWASP XXE document covers some of this, but actually mentions only one
+> of the two features...
+> 
+> https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing#Java
+
+I did end up releasing my paper recently, which I believe has
+up-to-date recommendations for Xerces:
+  http://vsecurity.com/download/papers/XMLDTDEntityAttacks.pdf
+
+
+Best,
+tim
