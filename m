@@ -1,16 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/06/1
-Message-ID: <87d2guriu6.fsf@mid.deneb.enyo.de>
-Date: Sun, 06 Apr 2014 09:57:21 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/4
+Message-ID: <1036394040.39580983.1401771578643.JavaMail.root@vmware.com>
+Date: Mon, 2 Jun 2014 21:59:38 -0700 (PDT)
+From: "\"VMware Security Response Center\"" <security@...are.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: redmine open redirector
+Cc: VMware Security Response Center <security@...are.com>
+Subject: Request for linux-distros subscription
 Content-Type: text/plain; charset=utf-8
 
-Redmine versions 2.4.5 and 2.5.1 fixed an open redirector issue.  The
-code verifying the redirection URIs accepted scheme-relative URIs
-which can lead to different hosts:
 
-http://www.redmine.org/projects/redmine/wiki/Security_Advisories
-http://www.redmine.org/projects/redmine/wiki/Changelog
-https://github.com/redmine/redmine/commit/7567c3d8b21fe67e5f04e6839c1fce061600f2f3
+Hi,
+I would like to request to be subscribed to the linux-distros@...openwall.org
+list for VMware Security Response Center (VSRC).
+
+My PGP fingerprint:
+
+pub  2048R/C61F6A1D 2014-06-03            
+     Key fingerprint = DD30 8A5F 937B B437 EDDB  051D 7F84 295B C61F 6A1D
+uid Monty Ijzerman <mijzerman@...vmware.com>
+sig  sig   C61F6A1D 2014-06-03 __________ __________ [selfsig]
+    Notation data: preferred-email-encoding@....com pgpmime
+
+sub  2048R/FCED34F0 2014-06-03            
+sig sbind  C61F6A1D 2014-06-03 __________ __________ []
+
+
+Thank you for your consideration.
+
+Monty Ijzerman
+
+VMware Security Response Center
+security@...are.com
