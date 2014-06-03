@@ -1,38 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/10/3
-Message-Id: <201401101221.s0ACLW13011021@linus.mitre.org>
-Date: Fri, 10 Jan 2014 07:21:32 -0500 (EST)
-From: cve-assign@...re.org
-To: ratulg@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: python-jinja2: arbitrary code execution vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/14
+Message-ID: <538DD8BF.7060708@upv.es>
+Date: Tue, 03 Jun 2014 16:16:31 +0200
+From: Hector Marco <hecmargi@....es>
+To: fulldisclosure@...lists.org
+CC: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, advisories <advisories@...xperts.de>, bugs@...uritytracker.com
+Subject: Bug in bash <= 4.3 [security feature bypassed]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi everyone,
 
-> Jinja2, a template engine written in pure python, was found to use /tmp
-> as a default directory for jinja2.bccache.FileSystemBytecodeCache, which
-> is insecure because the /tmp directory is world-writable and the
-> filenames used like 'FileSystemBytecodeCache' are often predictable. A
-> malicious user could exploit this bug to execute arbitrary code as
-> another user.
+Recently we discovered a bug in bash. After some time after reporting
+it to bash developers, it has not been fixed.
 
-Use CVE-2014-1402.
+We think that this is a security issue because in some circumstances
+the bash security feature could be bypassed allowing the bash to be a
+valid target shell in an attack.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+We strongly recommend to patch your bash code.
 
-iQEcBAEBAgAGBQJSz+UnAAoJEKllVAevmvms9n4IAJCBezPErKYaadymt5zqE7WN
-LjJ7UBfg6424Rgyg2rIuk/8oYxkWglYQnhlnByoLSm9u4Jk9Z4m0Bvgc2tNtyyrk
-dg1eI8XYQcHU/TwsJEwZxq5bL581FjH3YlKN3a8GMg0jFGiIZfXoZ4Ucn7PllrNi
-WaA8oXIHp6zqkZTLvdC3wd6WQiCyhtIccOYGR8j91N6IF94iy5YssvYctKX6OhfY
-/1NT9TCxv6y4qQObYqxPCszd39HkxoM7MlZMqNOgjQeH+dlh1Wxyo2MQhVzOGNic
-G7m+LMIRLw9yZKwwy2F1W7wOgh3q5aLsQ7FwwbqLOH83ZLODOuia37SzgoO+eIQ=
-=vTFW
------END PGP SIGNATURE-----
+Why don't fix this bug by simple adding mandatory "if" clause ?
+Any comments about this issue are welcomed.
+
+
+Details at:
+http://hmarco.org/bugs/bash_4.3-setuid-bug.html
+
+
+
+Thanks you,
+
+Hector Marco
+http://hmarco.org
