@@ -1,28 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/16
-Message-ID: <53905712.7000902@redhat.com>
-Date: Thu, 05 Jun 2014 13:40:02 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/10
+Message-ID: <CAE497qUwPV2Qa65fod-AzdLGEw4C_zkJLm4q18MSpUOOsDEX2Q@mail.gmail.com>
+Date: Wed, 4 Jun 2014 11:13:51 +0200
+From: Jose Carlos Luna Duran <jose.carlos.luna@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Daiki Ueno <dueno@...hat.com>
-Subject: [CVE request] Local privilege escalation in libfep
+Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com,  advisories <advisories@...xperts.de>, bugs@...uritytracker.com
+Subject: Re: Bug in bash <= 4.3 [security feature bypassed]
 Content-Type: text/plain; charset=utf-8
 
-It was discovered that libfep uses UNIX domain sockets in the abstract 
-namespace in an insecure way.  As a result, unprivileged local users 
-were able to inject commands into running fep sessions of other users.
+In my opinion the drop of privs in bash was mostly a "help" measure
+for poorly written setuid programs executing system() calls. I don't
+think is the role of bash to do this as the problem that could be
+exploited by that would really be in the original program that does
+not drop privs before invoking the shell. This has been known for some
+time in some circles at least, but as I said the problem would really
+be in the non-priv-dropping privileged program, that's why most people
+did not really care that much. Last year there was a vuln that is very
+much related to this subject:
+http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
 
-The upstream fix simply removes abstract namespace support, using a 
-restricted directory to host the UNIX domain socket instead:
+Correct me if I'm wrong, but even in that case there is another "help"
+measure that has been implemented at least in linux kernels > 3.1:
+http://lxr.free-electrons.com/source/kernel/sys.c?v=3.1#L628
 
-https://github.com/ueno/libfep/commit/293d9d3f
+Therefore setuid calls do not fail anymore even in the case of
+existing resource limits for processes (in linux).
 
-Abstract namespace support was introduced in this commit:
+But in any case, for the sake of correctness I agree that the
+drop_priv code should be fixed (or just completely removed...).
 
-https://github.com/ueno/libfep/commit/5a170323
+2014-06-03 16:16 GMT+02:00 Hector Marco <hecmargi@....es>:
+> Hi everyone,
+>
+> Recently we discovered a bug in bash. After some time after reporting
+> it to bash developers, it has not been fixed.
+>
+> We think that this is a security issue because in some circumstances
+> the bash security feature could be bypassed allowing the bash to be a
+> valid target shell in an attack.
+>
+> We strongly recommend to patch your bash code.
+>
+> Why don't fix this bug by simple adding mandatory "if" clause ?
+> Any comments about this issue are welcomed.
+>
+>
+> Details at:
+> http://hmarco.org/bugs/bash_4.3-setuid-bug.html
+>
+>
+>
+> Thanks you,
+>
+> Hector Marco
+> http://hmarco.org
 
-This means that versions from 0.0.5 to 0.0.9 (inclusive) are vulnerable, 
-and 0.1.0 has the fix.
+
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+Jose Carlos Luna Duran
+Network Software Engineering.
+Jose.Carlos.Luna@...il.com
