@@ -1,58 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/19
-Message-ID: <20140319192911.GA7691@gremlin.ru>
-Date: Wed, 19 Mar 2014 23:29:11 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/2
+Message-ID: <20140604054231.GA12571@openwall.com>
+Date: Wed, 4 Jun 2014 09:42:31 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+Subject: Re: FreeBSD Security Advisory FreeBSD-SA-14:13.pam
 Content-Type: text/plain; charset=utf-8
 
-On 19-Mar-2014 09:33:58 -0700, Dean Pierce wrote:
+On Wed, Jun 04, 2014 at 04:51:56AM +0000, FreeBSD Security Advisories wrote:
+> FreeBSD-SA-14:13.pam                                        Security Advisory
 
- > Hosting? That's what the cloud is for.
+FreeBSD had reported this OpenPAM issue to the distros list because of
+more likely than average relevance to other distros, and the FreeBSD
+advisory is posted to oss-security for the same reason as well as to
+meet distros list policy.
 
-Not for any sensitive data. And vulnerability descriptions are very
-sensitive...
+I mention this so that people are not confused why this one advisory is
+posted in here, even though we had decided that vendor-specific
+advisories are normally not to be posted to oss-security.  There's no
+change in that preference, but there may be exceptions to it like this
+time (for good reasons).
 
- > I have no idea who runs
- > https://groups.google.com/group/FullDisclosure
- > but they seem modeled after original fd charter.
-
-Modelling a charter is easy... But I bet they'll fail on gathering
-all previous FD members.
-
- > I trust Google as a neutral third party more than I would trust
- > most security researchers.
-
-Bwa-ha-ha-ha-ha...
-
-Behind that party which you possibly may trust, there's a B.B.,
-which is even worse than a Big Brother - as it's a Big Business.
-
-When a Big Business faces something, it asks itself two questions:
-0. Could it cause any loss?
-1. Could it bring any profit?
-
-Suppose someone posts a zero-day vulnerability on the list which
-affects the BB; do you really think it wouldn't be censored out?
-
-No doubt, it will - otherwise that will Cause a Loss, and that's
-inacceptable for BB.
-
-Also, several days before FD shutdown there was a long thread
-related to some vulnerabilities in Google services... Although
-John Cartwright didn't name anyone, I can't be sure these two
-events are unrelated.
-
- > They already host all the old newsgroup archives. It's also
- > free, easily consumable, and most importantly, babysat for
- > security issues in a way that even a team of skilled volunteers
- > would have a hard time pulling off.
-
-I'd prefer participating on the list hosted by some party which
-isn't directly affected by list postings - say, some ISP.
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Alexander
