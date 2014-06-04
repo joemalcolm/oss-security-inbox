@@ -1,52 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/11
-Message-ID: <53BC4A3C.4060601@redhat.com>
-Date: Tue, 08 Jul 2014 13:45:00 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Summer bug cleaning - some Hash DoS stuff
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/24
+Message-ID: <538FAE1B.4040402@upv.es>
+Date: Thu, 05 Jun 2014 01:39:07 +0200
+From: Hector Marco <hecmargi@....es>
+To: Jose Carlos Luna Duran <jose.carlos.luna@...il.com>, oss-security@...ts.openwall.com
+CC: fulldisclosure@...lists.org, bugs@...uritytracker.com, bugtraq@...urityfocus.com
+Subject: Re: [FD] Bug in bash <= 4.3 [security feature bypassed]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-So in the spirit of cleaning out the fridge of mystery condiments I'm
-going through a bunch of old/lower severity bugs that have been
-lurking in our BZ. To start with some Hash DoS related stuff from 2012:
+On 04/06/14 11:13, Jose Carlos Luna Duran wrote:
+> In my opinion the drop of privs in bash was mostly a "help" measure
+> for poorly written setuid programs executing system() calls. I don't
+> think is the role of bash to do this as the problem that could be
+> exploited by that would really be in the original program that does
+> not drop privs before invoking the shell. This has been known for some
+> time in some circles at least, but as I said the problem would really
+> be in the non-priv-dropping privileged program, that's why most people
+> did not really care that much. Last year there was a vuln that is very
+> much related to this subject:
+> http://blog.cmpxchg8b.com/2013/08/security-debianisms.html
 
-https://bugzilla.redhat.com/show_bug.cgi?id=787103
-CVE-2012-0880 xml: xerces-c hash table collisions CPU usage DoS
-(oCERT-2011-003
+We already knew that this bug was known by the Bash developers.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=787104
- CVE-2012-0881 xml: xerces-j2 hash table collisions CPU usage DoS
-(oCERT-2011-003)
+>
+> Correct me if I'm wrong, but even in that case there is another "help"
+> measure that has been implemented at least in linux kernels > 3.1:
+> http://lxr.free-electrons.com/source/kernel/sys.c?v=3.1#L628
+>
+> Therefore setuid calls do not fail anymore even in the case of
+> existing resource limits for processes (in linux).
 
-https://bugzilla.redhat.com/show_bug.cgi?id=787109
-CVE-2012-0877 PyXML: hash table collisions CPU usage DoS (oCERT-2011-003)
+You can still exploit this in the 2.6.x Linux kernel. The 2.6.x versions
+are still in widespread use. (Red Hat Enterprise Linux version 6.5, released
+a few time ago, is based on version 2.6.32. Possibly Red Hat changed the
+RLIMIT_NPROC behavior, but there are other 2.6.x-based Linux distributions also.)
 
-Basically different code bases/etc, but all using poor hash
-implementations.
+>
+> But in any case, for the sake of correctness I agree that the
+> drop_priv code should be fixed (or just completely removed...).
 
+I agree but If finally they decide to remove the code it would seems
+as a consequence of the disclosure. Right now it has more sense to fix
+the bug. This is because this vulnerability (thanks to "help" measure in
+the kernel) is more difficult to exploit. So, the drop privilege code
+has more sense nowadays than when was initially coded.
 
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+>
+> 2014-06-03 16:16 GMT+02:00 Hector Marco <hecmargi@....es>:
+>> Hi everyone,
+>>
+>> Recently we discovered a bug in bash. After some time after reporting
+>> it to bash developers, it has not been fixed.
+>>
+>> We think that this is a security issue because in some circumstances
+>> the bash security feature could be bypassed allowing the bash to be a
+>> valid target shell in an attack.
+>>
+>> We strongly recommend to patch your bash code.
+>>
+>> Why don't fix this bug by simple adding mandatory "if" clause ?
+>> Any comments about this issue are welcomed.
+>>
+>>
+>> Details at:
+>> http://hmarco.org/bugs/bash_4.3-setuid-bug.html
+>>
+>>
+>>
+>> Thanks you,
+>>
+>> Hector Marco
+>> http://hmarco.org
+>
+>
 
-iQIcBAEBAgAGBQJTvEo8AAoJEBYNRVNeJnmTDjYQANb8QbW9aaAVNe0xSrlfkFfO
-e1l5lloqDednTs1UOki75DYKmFDxT/TJjeOKCPptNojPcj0FpqWBDJkYd6fU5LNt
-J19SU3KDIPPwAK+AH7TGsl1+7mH3EcP0Ls9lGoVh1nS8ufeMhnGk9mhvZ+KTVscL
-9eA7kbX+Ln33obDNohl4DBH6aQdr8e3n/8Fh4JBA1eZm2eHq5xi78mMJIRjTqmGe
-atzpedncu16zgS0GpJ0/Ty76dc0WshkSUR+k4eNeltqhafOPLdlw/G/wNsH+d3Uk
-gKw/W69pHSe15jN+rEBPoS/0koNlASWQuV0ufRWf+MsCPV/7PWE0kZpkHTQndtSv
-/b4DfD+fybD/xHp7lTPa59+5M4+FASl/ARz92EK2TUN9Q1ULTXZSaGPylKZ0kIUN
-iQHuButa43804YdXxUVR+zQTYKuuRqMIISizrf7cZ+9Cov35B1R3UDjt0+75rJ9e
-YAfcwvOfEbIOLUP4No3f77m5I/SWeazuuuytKzfAPg65+I/vASc8eqQPQ8UoVWOL
-kH5ryMvSE7hRTJRBY+XazZuWud13/UgvrySFKob2dSQkIrdwEDF5BenPEwin9VVC
-zslcGxvNBDDmbH7x+aVXCcFttDt9J1RXSs+qAKn081kwK/HNvIrI2nor26SVuq69
-KvAPbnUoYmaLmMhwhGiK
-=GuDI
------END PGP SIGNATURE-----
