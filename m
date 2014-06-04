@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/9
-Message-ID: <0CB14B04-89AB-4BCA-8DC6-59FBAE8D0103@redhat.com>
-Date: Thu, 29 May 2014 10:40:32 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: sos: /etc/fstab collected by sosreport, possibly containing passwords
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/20
+Message-ID: <21391.17325.593589.765688@mariner.uk.xensource.com>
+Date: Wed, 4 Jun 2014 17:05:01 +0100
+From: Ian Jackson <Ian.Jackson@...citrix.com>
+To: <cve-assign@...re.org>
+CC: <security@....org>, <oss-security@...ts.openwall.com>
+Subject: Re: Xen Security Advisory 98 - insufficient permissions checks accessing guest memory on ARM
 Content-Type: text/plain; charset=utf-8
 
-On 05/29/2014, at 5:03 AM, Murray McAllister wrote:
+cve-assign@...re.org writes ("Re: Xen Security Advisory 98 - insufficient permissions checks accessing guest memory on ARM"):
+...
+> > When accessing guest memory Xen does not correctly perform permissions
+> > checks on the (possibly guest provided) virtual address ... This
+> > allows a guest to write to memory which it should only be able to
+> > read.
+> 
+> > In the event that a guest executes code from a page which has been
+> > shared read-only with another guest it would be possible to mount a
+> > take over attack on that guest.
+> 
+> Use CVE-2014-3969.
 
-> Good morning,
->
-> From <https://bugzilla.redhat.com/show_bug.cgi?id=1102633>:
->
-> It was reported that sosreport collected and stored "/etc/fstab" in the resulting archive of debugging information. This may contain plain text passwords (or a link to the file containing them), for example, credentials for Samba mounts. This could leak passwords to an attacker who is able to access the archive. Sensitive information in "/etc/fstab" should be sanitized before being stored by sosreport.
->
-> Note that "/etc/fstab" is world-readable, so local attackers should not be a concern (they can read the file anyway). This could be an issue when the sosreport is sent to other parties.
->
-> Acknowledgements:
->
-> Red Hat would like to thank Dolev Farhi of F5 Networks for reporting this issue.
->
-> I think it should have a CVE, but I am less sure due to "/etc/fstab" being world-readable, so I have not assigned one.
+Thanks.  I have sent out updated versions of XSA-96 and -98.
 
-Just going to note here what I put as a comment in the bug in case anyone feels differently.  I'm of the frame of mind that this shouldn't get a CVE for the reasons noted below:
+> Our understanding is that "executes code from a page which has been
+> shared read-only" depends on the permissions issue (lack of a check
+> for execute permission), and is not an independent problem.
 
+That is correct.
 
-I don't think it's ever been advised to store password in /etc/fstab, so if you trust local users enough to view that file, then whatever sosreport stores in /tmp is probably just as "safe".
-
-sosreport is run manually by an administrator, and the resultant archive is stored in /tmp (/var/tmp in Fedora), but the administrator actually has to send this archive to someone.  sosreport also has this warning before it even runs (except on Red Hat Enterprise Linux 5):
-
-"The generated archive may contain data considered sensitive and its
-content should be reviewed by the originating organization before being
-passed to any third party."
-
-Because sosreport makes no claims to not collecting private data (and explicitly indicates that it might), and the point of it is to collect pertinent system data (excluding some obvious things like kerberos keys or files with known sensitive information that does not aid in diagnostic process), I don't know if this can actually be considered a flaw.  After all, random sysadmin might decide to put anything in any file that sosreport collects that we could never "teach" sosreport to ignore or scrub (you could try to do pattern-based matching on contents of files but you'll never catch everything).
-
-
-
--- 
-Vincent Danen / Red Hat Product Security
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Thanks,
+Ian.
