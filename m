@@ -1,40 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/16/4
-Message-Id: <201404162210.37730.geissert@debian.org>
-Date: Wed, 16 Apr 2014 22:10:35 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request: openssl: missing critical flag for extended key usage not always detected in time-stamp verification
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/5
+Message-Id: <201406040625.s546OuBx028744@linus.mitre.org>
+Date: Wed, 4 Jun 2014 02:24:56 -0400 (EDT)
+From: cve-assign@...re.org
+To: delphij@...phij.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: sendmail close-on-exec issue -- CVE assigned?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Quoting from [0]:
-> "check_purpose_timestamp_sign()" in source file v3_purp.c [...] fails to
-> detect a missing critical flag if the extensions of the TSA certificate
-> are arranged in a specific order.
+> (Quote from ftp://ftp.sendmail.org/pub/sendmail/RELEASE_NOTES )
+> 
+> 8.14.9/8.14.9   2014/05/21
+>         SECURITY: Properly set the close-on-exec flag for file
+>                 descriptors (except stdin, stdout, and stderr) before
+>                 executing mailers.
 
-Could a CVE id be assigned for this?
+> http://www.sendmail.com/sm/open_source/download/8.14.9/
 
-The referenced commit fixes it "and to two other cases in the same file."
+Use CVE-2014-3956.
 
-References:
-[0]http://rt.openssl.org/Ticket/Display.html?id=3309&user=guest&pass=guest
-[1]http://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=300b9f0b704048f60776881f1d378c74d9c32fbd
+Note that the unpatched code (in, for example, 8.14.8) has this in
+conf.c:
 
-Digging through history, the bug on TSA was introduced in 
-[2]http://git.openssl.org/gitweb/?p=openssl.git;a=commit;h=c7235be6e36c4bef84594aa3b2f0561db84b63d8
-(Strangely tagged for 0.9.8l and 0.9.8k but none of the other versions of 
-the 0.9.8 branch)
+  **      Parameters:
+  **              lowest -- first fd to arrange to be closed
+  **              highest -- last fd + 1 to arrange to be closed
 
-And the two others in:
-[3]http://git.openssl.org/gitweb/?p=openssl.git;a=commit;h=d9bfe4f97cd4244beb0598cc348d68b04dac7068
-(going all the way back to 0.9.7)
+  void sm_close_on_exec(highest, lowest)
 
-Haven't checked if the meaning of the X509_get_ext_by_NID parameter changed 
-at some point.
+but callers use arguments of highest=STDERR_FILENO+1 and
+lowest=DtableSize, apparently a CWE-683 issue.
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+8.14.9 has "void sm_close_on_exec(lowest, highest)" instead.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTjrthAAoJEKllVAevmvmsm2gIAL6fzTGr2K76MASMo2sqE+97
+F8eJOcdo1pbaBmENvrBYp1VEdy44xA3su6L7jYpQDeuh8J1dOfn9JmtItCuwQHco
+HTf87fdJoUiHWSPt7VpuISRoCu/BdOJulyhivJuN5aaNK8elpBTZC62Fn2xN4zdp
+W1E6AEeePK83jMJuf+pK8WR5WJLnoBQPs33FrFXiJGskoa54FOSgUvpMa6b0cGIe
+UDT3tWhNb6UFQ82zQHNAsx6cmtJuG83wNfTkFdUm6HFs4EbsBSz+AvN8ILJoRJhU
+rShAOQeXwbWkOwhbQqehq+MBZFdvB6k3zRcjr4LZziVg9swdlr96WcbhLOJj7Ek=
+=EjVD
+-----END PGP SIGNATURE-----
