@@ -1,72 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/28/1
-Message-ID: <CACYkhxh_MQAzXnFgRV4pOyx-xDVbAJhg2EQ2qNzxicRt1ahrsw@mail.gmail.com>
-Date: Mon, 28 Jul 2014 11:18:50 +1000
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: rsync vulnerable to collisions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/3
+Message-ID: <20140604055843.GB12734@openwall.com>
+Date: Wed, 4 Jun 2014 09:58:43 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Ramon de C Valle <rdecvalle@...are.com>
+Cc: oss-security@...ts.openwall.com, VMware Security Response Center <security@...are.com>, Monty Ijzerman <mijzerman@...are.com>
+Subject: Re: Request for linux-distros subscription
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Jun 03, 2014 at 01:16:47PM -0700, Ramon de C Valle wrote:
+> I can attest that Monty is my colleague and the Manager of VMware Security Response Center. As a former colleague of you (Kurt) and also former linux-distros subscriber, I would like to ask for your consideration for subscribing Monty (or myself) to linux-distros on behalf of VMware. Although ESXi isn't a Linux distribution, it implements Linux-compatible system calls and provides a GNU/Linux -like ecosystem that allows many applications that are compiled on/for Linux operating systems to run seamlessly. This ecosystem includes OSS that should be supported in timely fashion pretty much like like any other Linux distribution on the list. It also implements a Linux kernel module interface and uses many Linux device drivers and kernel modules that also should be supported. In addition, ESXi is the base layer that many of the Linux distributions on the list rely upon and run atop of in many datacenters around the world.
 
-After some semi-public discussion on Twitter I have come up with a method
-of creating blocks that collide under the rsync algorithm.
+Thank you, Ramon.  This is pretty good rationale, but I feel that
+getting VMware onto linux-distros for the reasons given above would be a
+(possibly desirable) change in who the list is for.  So far, it's been
+for Linux distros, and I deliberately chose the linux-distros name for
+it.  Now a non-Linux-distro wants to be specifically on linux-distros
+(not just on distros), and be exposed to Linux-specific vulnerability
+details (albeit for good reasons).  I'd appreciate comments by others
+active in this community.
 
-The rsync algorithm consists of two checksums - a rolling sum based off
-Addler32 (notable difference - it doesn't use a prime modulus in
-rsync), and MD5.
-MD4 was used before rsync 3 (protocol version < 30), so presumably the change
-was introduced do to security concerns about MD4.
+Does VMware have OSS products?  Would it be reasonable to include VMware
+security advisory/contact details on our wiki?
 
-Fast MD5 collisions have existed for quote some time - the attack I used as a
-basis is from 2006, and the much more serious chosen-prefix collision is from
-2009.  Generating a collision on my desktop PC takes less than a minute.  I have
-not yet created a chosen-prefix collision, but I believe a similar
-technique is possible.
+http://oss-security.openwall.org/wiki/vendors
 
-Note that rsyncing a file over itself with two colliding blocks will
-not break rsync as it
-prefers copying data from it's original location.  The minimum
-requirement is that an
-attacker can write to synced file twice - the process would need to be:
-- introduce collision 1
-- rsync
-- introduce collision 2
-- rsync
+If there are specific OSS products with their own advisory/contact
+details (different from VMware's catch-all), they may be added to:
 
-Also note that a full file md5sum is calculated, so introducing these
-collisions would
-cause rsync to fail for that file (DoS attack)... unless it's the
-first block you're switching.
+http://oss-security.openwall.org/wiki/software
 
-If you use --inplace, the change is introduced despite the error
-message - this may be
-common when moving around virtual machine images or databases.
+This sort of info could help us evaluate your request.
 
-Note that changing the block size is not a very effective mitigation
-(the collision can be
-aligned to both block sizes), and the checksum seed doesn't help - it
-should've been
-fed into md5 before the data, not after.
-
-I provided colliding blocks to both Wayne Davison and the Internet Bug Bounty a
-week ago.  The IBB ticket is still sitting in New, and my last
-response from Wayne was
-effectively denying that this is a vulnerability.  Since this
-information is known to the
-few that follow me on Twitter, I have decided it best to inform oss-security.
-
-I provided Wayne with some rather awful patches that bring in libdetectcoll and
-blake2b.  He has not provided feedback, so I have not done further work on this.
-
-I won't provide full details yet, but if any distributions would like
-some collisions to
-perform specific tests (perhaps on Openstack Swift), please get in
-contact privately.
-
-For more information of MD5 colliisons and libdetectcoll, please see
-Marc Stevens'
-excellent work: https://marc-stevens.nl/research/
-
-Regards,
-  Michael
+Alexander
