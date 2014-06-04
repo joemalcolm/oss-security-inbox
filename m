@@ -1,54 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/42
-Message-ID: <542DB3E0.2060504@oracle.com>
-Date: Thu, 02 Oct 2014 13:21:52 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/17
+Message-ID: <538F3FBE.8070001@gmail.com>
+Date: Wed, 04 Jun 2014 21:48:14 +0600
+From: "Alexander E. Patrakov" <patrakov@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Daniel Kahn Gillmor <dkg@...thhorseman.net>, cve-assign@...re.org, "X.Org Security Team" <xorg-security@...ts.x.org>
-Subject: Re: Re: gnome-shell lockscreen bypass with printscreen key
+Subject: Re: CVE request: PulseAudio crash due to empty UDP packet
 Content-Type: text/plain; charset=utf-8
 
-On 10/ 2/14 10:34 AM, Daniel Kahn Gillmor wrote:
-> However, this still leaves gnome-shell users vulnerable to the next
-> gnome-shell crash while locked.  it's fixing one crashing problem, but
-> not fixing the larger problem that a screenlocking program effectively
-> fails open when it fails.
+04.06.2014 21:30, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
-> Is there a way to make a screenlocking program that is designed to fail
-> closed instead?
-
-Not easily in the current X11 architecture - as far as the X server knows
-the screen lock is just another program who happened to grab all input and
-open a full screen window - very much like some games do.  When the
-connection from it closes (program exit or crash) then the X server just
-goes on about its business, handling the remaining clients as normal.
-
-There's been occasional discussion of some extension to do better here, but
-it's never been fleshed out.   Fortunately, I believe this is one of the
-mistakes in X that the Wayland developers learned from and did better at.
-
-The best I know of a current X screenlock can do is to use separate processes
-and do as little as possible in the process that has grabbed the input devices,
-leaving all operations likely to cause crashes isolated in a process that won't
-open holes if it does crash.
-
-> fwiw, https://bugzilla.gnome.org/show_bug.cgi?id=737456#c5 raises an
-> interesting alternate approach to resolving the underlying problem:
+>> If one has module-rtp-recv loaded into PulseAudio, then a remote
+>> attacker can crash this instance of PulseAudio by sending an empty UDP
+>> packet
 >
->      Not sure what crazy side effects that might have if any but ...
->      Jasper can we simply unmap all windows when we lock and map them on
->      unlock?
+>> memblock.c: Assertion 'b' failed
 >
-> I don't know enough about X11 to know if this proposal is sufficient to
-> protect the user from command execution after a gnome-shell crash, or
-> what the side effects would be.
+> Use CVE-2014-3970.
 
-Generally I think you'd just have the window manager or compositor sitting
-on screen waiting for you to tell it to uniconify a window before you could
-execute commands in it, but I've never tried it to see how that works (and
-am not sure at all what happens if the process that crashed is also your
-window manager or compositor).
+Thanks!
+
+>> PulseAudio usually gets respawned anyway.
+>
+> Apparently there are realistic circumstances in which respawning
+> doesn't happen (possibly a zero value of conf->daemonize or the
+> "User-configured server at %s, refusing to start/autospawn." case in
+> http://cgit.freedesktop.org/pulseaudio/pulseaudio/tree/src/daemon/main.c).
+
+Yes, there is a parameter in the daemon.conf configuration file that 
+allows the user to turn the autospawn off.
+
+>> http://lists.freedesktop.org/archives/pulseaudio-discuss/2014-May/020740.html
+>
+>> expecting to find an infinite loop (as it would be common for such
+>> FIONREAD misuse), but found an assertion failure instead. So there may
+>> be two bugs.
+>
+> The scope of CVE-2014-3970 does not include any infinite loop that
+> might be discovered later.
+
+I have tested the patch, and it survives the empty packet without the 
+infinite loop. Besides, after the patch, there is no code path in which 
+recvmsg() is not called after a successful FIONREAD ioctl (even if it 
+returns a zero size). So, any FIONREAD-related infinite loop that 
+possibly remains on the RTP reception path after the patch is to be 
+found on the path where the ioctl itself fails.
 
 -- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	  X.Org Security Response Team - xorg-security@...ts.x.org
+Alexander E. Patrakov
