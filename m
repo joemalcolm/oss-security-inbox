@@ -1,48 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/23
-Message-ID: <5436B024.3020309@amacapital.net>
-Date: Thu, 09 Oct 2014 08:56:20 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-7975: 0-day umount denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/16
+Message-Id: <201406041530.s54FUhnr013481@linus.mitre.org>
+Date: Wed, 4 Jun 2014 11:30:43 -0400 (EDT)
+From: cve-assign@...re.org
+To: patrakov@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: PulseAudio crash due to empty UDP packet
 Content-Type: text/plain; charset=utf-8
 
-On 10/09/2014 04:06 AM, rf-PKu+Ek1N2UGzQB+pC5nmwQ@...lic.gmane.org wrote:
->>>>>> "Andy" == Andy Lutomirski <luto-kltTT9wpgjJwATOyAt5JVQ@...lic.gmane.org> writes:
-> 
->     Andy> I just screwed up and typoed my git send-email command, so
->     Andy> there's now a publicly available exploit for a new umount bug.
-> 
->     Andy> Fortunately this one isn't terribly serious, but it might be
->     Andy> usable for more than just DoS if some daemon reacts poorly to
->     Andy> being unable to write to the filesystem.
-> 
->     Andy> http://thread.gmane.org/gmane.linux.kernel.stable/109312
-> 
-> Hmm, what damage is this supposed to do? I get (3.12.29):
-> 
-> ql-front-t:/dev/pts# /root/remount-exploit /dev
-> remount_ro, a DoS by Andy Lutomirski
-> remount-exploit: umount: Device or resource busy
-> 
-> Maybe you should specify what versions are supposed to be vulnerable
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The PoC does pretty much the same thing as
+> If one has module-rtp-recv loaded into PulseAudio, then a remote
+> attacker can crash this instance of PulseAudio by sending an empty UDP
+> packet
 
-# mount -o remount,ro TARGET
+> memblock.c: Assertion 'b' failed
 
-but it doesn't require privilege to run.
+Use CVE-2014-3970.
 
-Due to the way that Linux handles filesystem business, it is unlikely to
-work on filesystems that have anything open for writing.  (It works on
-my Fedora system targetting /dev.)  The upshot is that it may be
-difficult to exploit in any meaningful way on some systems.
 
-It may also work more reliably against network filesystems.  I'm not
-really sure.
+> PulseAudio usually gets respawned anyway.
 
-That output means that you're vulnerable.  You would have gotten
-something like "Permission denied" if you weren't vulnerable.
+Apparently there are realistic circumstances in which respawning
+doesn't happen (possibly a zero value of conf->daemonize or the
+"User-configured server at %s, refusing to start/autospawn." case in
+http://cgit.freedesktop.org/pulseaudio/pulseaudio/tree/src/daemon/main.c).
 
---Andy
+
+> http://lists.freedesktop.org/archives/pulseaudio-discuss/2014-May/020740.html
+
+> expecting to find an infinite loop (as it would be common for such
+> FIONREAD misuse), but found an assertion failure instead. So there may
+> be two bugs.
+
+The scope of CVE-2014-3970 does not include any infinite loop that
+might be discovered later.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTjztGAAoJEKllVAevmvmspWYIAMDODhaMo0EfkzPHhhmadz1H
+B1wYGv+h7cvW3/acKVpvdE+oIcHS9I2rbzSuPlgAtAghAc+HNQFS4/QSNtvFfBo9
+9AgbvUgsCYiF5uNcylnmK80P5f4QpxZ+n7lBqu75uveZV3EsitqKiS5W3qQ3Ef3i
+GaIAYwpvtXLPq/GSdEv/UznmnOVqaTK4hwvqfyePgSfIEMdcED0GgeDGo8D/NLEL
+XSYfDJbVgi5ry8YQcS4Q5nJtpTfBQS6knlcKPMqYB7KtvUesOECLC9hrv9jYYJga
+XORzNGRP9tWJspn05rc9NlmAegurGeOUStaE/2q3PDA53gEWKhH4JwhzISfMmOQ=
+=3Sw2
+-----END PGP SIGNATURE-----
