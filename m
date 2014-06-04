@@ -1,89 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/28/5
-Message-ID: <53AE5D6C.5050804@redhat.com>
-Date: Sat, 28 Jun 2014 00:15:08 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-CC: jamie@...onical.com
-Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/6
+Message-ID: <20140604065432.GB12796@openwall.com>
+Date: Wed, 4 Jun 2014 10:54:32 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Operating system distribution security contact lists
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Lisa,
 
-On 27/06/14 07:09 PM, Vincent Danen wrote:
-> On 06/27/2014, at 14:03 PM, cve-assign@...re.org wrote:
+On Tue, Jun 03, 2014 at 09:13:41AM -0600, Lisa Bradley wrote:
+> I would like to request membership to the closed "Operating system
+> distribution security contact lists" mailing list on behalf of the IBM
+> Product Security Incident Response Team (PSIRT). I am part of the PSIRT
+> team where I help manage the receipt, investigation and internal
+> coordination of security vulnerability information related to IBM
+> offerings. You can read more about PSIRT here:
+> http://www-03.ibm.com/security/secure-engineering/process.html.  I am the
+> main coordinator of Open Source vulnerabilities that affect IBM products.
+> We have products that utilize Open Source software, so being part of this
+> list will be beneficial. I do not plan on posting any IBM product specific
+> issues as we do that through Security Bulletins (see
+> http://www-03.ibm.com/security/secure-engineering/bulletins.html).
 > 
->>> I suppose maybe there is a CWE for not having a virus scanner,
->>> which makes sense as that could be considered an overall system
->>> weakness.
->> 
->> Neither CVE nor CWE attempts to cover the general topic of
->> system integration, i.e., questions such as "given the
->> composition and role of this entire system, is it unreasonable to
->> omit a virus scanner?" In practice, both CVE and CWE often tend
->> to be about questions that may come up when considering somewhere
->> around one line of code or one file of code. (This is just an
->> observational statement, not an attempt to redefine why CVE and
->> CWE exist.) Typical audiences may include (among others)
->> developers who need to write a line of code safely or system 
->> administrators who need to patch a faulty line of code.
->> 
->> This doesn't mean that there's any objection to someone taking
->> the position that lack of a virus scanner is the most serious
->> security concern that they see in an entire system. This is a
->> valid perspective but is outside of the problem spaces in which
->> CVE and CWE have been operating. Even if everyone were looking at
->> "whether or not a flaw is a flaw" decisions in precisely the same
->> way, a conclusion of "yes, this system would really benefit from
->> a virus scanner" leaves open the question of the best place to
->> capture that information.
-> 
-> Then shouldn't be the same be true of the HttpOnly flag?  That line
-> of thought is pretty much what I think in regards to that flag.
-> 
-> I don't know if you missed my comment in an earlier message, so
-> I'll note it below because I think this is the real point:
-> 
-> "Kurt's argument about everything having an XSS makes it sound
-> like, and the reasoning provided here as well, that we should no
-> longer consider XSS a security flaw, but the absence of HttpOnly
-> the security flaw.  I mean, if setting this flag "fixes" all XSS
-> issues, then we should no longer be assigning CVEs to XSS issues,
-> only to web servers/services that do not set HttpOnly or browsers
-> that do not respect/handle it properly.  They can't _both_ get CVEs
-> or be considered flaws, can they?"
+> You can verify that I am part of the PSIRT team by emailing PSIRT directly
+> at IBM PSIRT<slash>Somers<slash>IBM or psirt<at>us<dot>ibm<dot>com.
 
-Actually my point was more that back in the day cookie theft was
-relatively rare, now it is pretty common thanks largely to XSS:
+Thank you for bringing this to oss-security.  Besides the above, if this
+community says that IBM should be on the distros list, we'll need
+someone already active on oss-security to vouch for you - or I think it
+could be Troy Bollinger, who was active on Bugtraq.  Per LinkedIn, he
+left IBM when you were already at IBM (for some years), so possibly he
+could vouch for you?  Your LinkedIn profile, if I found the right one,
+does not mention security, though, so I don't know if you were in
+contact with Troy back then or not.
 
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=xss
+Would it be reasonable to include IBM security advisory/contact details
+on our wiki?
 
-so in my opinion we should assume most web based apps have XSS vulns
-(I think that's a safe assumption =), as such then the use of HTTPOnly
-on cookies becomes a virtual necessity to protect cookies as opposed
-to a "nice to have hardening feature". In other words the security bar
-should be moved (at least that's my opinion).
+http://oss-security.openwall.org/wiki/vendors
 
+If there are specific OSS products with their own advisory/contact
+details (different from IBM PSIRT's catch-all), they may be added to:
 
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+http://oss-security.openwall.org/wiki/software
 
-iQIcBAEBAgAGBQJTrl1rAAoJEBYNRVNeJnmT2GQP/RrJIhKthth3jqAx+BAY8qLj
-Q3SMl9Mze1jldiGH3pEC/kLDhoVXlP6hG7Md5PUae7bEUgowA/cAHRzyO+g7pQSq
-PX7RQwbDD8ynCyQ71os9pIGMWW54fU8nxCMQwVKDksKKRor4HO59k9xuDtoCdJKs
-B/gVPf3l3gDmtBdytyqXTgLpWL6xdzh8qM/I/81FNF9Zx21b1odhkCVR5FaeUkJc
-qeFc0ye2SId3xbCluJBFsccTCxDzLednp7RNGIm+g5gwR2siKOrYH7CPrSlPmj2S
-vIUSsqGyal6upK7JLnzLzlnd6BixxydISYuvOBCCsYMpJftjcjpjhLssFkHGe9Z/
-g8yHRWQiy7sI/BK8KhweRtiURV6Y2ac6+C+AtqM4idbJkLo/fNMjHGYz0Mdz4CWy
-czpeZWqecpe5qPVkFVw7Z84gbGbq6s1wCBExGoWg1o5Ov4hXl1w8t/llb+gS3mzd
-CnYXkXXYc9UEoSGpxjfEbqhOulyLz6ix6DN4qxe1v7ew671Eg3AWjT4lY3tNXYco
-EOtO+KZI+MsThF+1OCTG/2AqxZ/kQS22F4MOloU76KJrl8Jg2/wjbMPRkpiM+HO5
-lNhaieukYaCD14ELEW/HpxgcSbua8dnOP6vgJWKcpCcXg6G0QrzNpEfCBgD9gzKv
-o4hwlcpJ+eWGdp6vr3gv
-=qNmV
------END PGP SIGNATURE-----
+(Yes, this is the same suggestion I just made to VMware.)
+
+Anyone can register for an account and edit the wiki, so please do if
+you find this desirable.
+
+What do others in this community think?  To remind, on vendor-sec we had
+representatives from Apple and SGI.  We "lost" them when, after
+vendor-sec ceased to exist, I setup only a linux-distros list initially.
+At a later time, we also got the distros list, to which Apple and SGI
+would probably be welcome again - but that issue was not brought up
+again at that time.
+
+Both the Apple folks and the vendor-sec member from SGI were helpful to
+the rest of the community on vendor-sec, so it was not one-way
+communication.  IIRC, Red Hat folks actually said that I was wrong in
+limiting the initial membership to Linux distros only, leaving Apple out
+despite of their valuable contributions to vendor-sec and them having
+some Open Source products (they're upstream for CUPS, etc.)  Perhaps we
+should have explicitly invited Apple and SGI folks to join distros when
+that list was finally setup.  Perhaps it's not too late to do that now.
+
+I'd appreciate comments from the community.  I have no strong feelings
+for, nor against, expanding the distros list membership to include
+(mostly/partially) closed-source vendors.
+
+As yet another option, if the community wants that, I may setup an
+open-distros list that would include Linux and Open Source *BSDs
+(initially just the current members of distros), but not the
+(mostly/partially) closed-source vendors (who would be on distros only).
+That way, any folks who are possibly uncomfortable about notifying
+closed-source vendors would have the option to still use our PGP
+re-encrypting setup to notify just the Open Source distro vendors.
+Or maybe I am imagining that a significant number of people reporting
+vulnerabilities would be uncomfortable providing advance notification to
+closed-source vendors?
+
+Alexander
