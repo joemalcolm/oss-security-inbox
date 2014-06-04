@@ -1,53 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/33
-Message-Id: <20141007174525.EABCF6FC005@smtpvmsrv1.mitre.org>
-Date: Tue,  7 Oct 2014 13:45:25 -0400 (EDT)
-From: cve-assign@...re.org
-To: mancha1@...o.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request(s): Getmail 4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/7
+Message-ID: <538EC978.7000303@oracle.com>
+Date: Wed, 04 Jun 2014 00:23:36 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+CC: Greg KH <greg@...ah.com>, Ramon de C Valle <rdecvalle@...are.com>, VMware Security Response Center <security@...are.com>, Monty Ijzerman <mijzerman@...are.com>
+Subject: Re: Request for linux-distros subscription
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 06/ 3/14 11:25 PM, Greg KH wrote:
+> I don't know of any specific OSS software of their own
 
-> http://pyropus.ca/software/getmail/CHANGELOG
+Speaking as an X.Org developer, I can attest that VMWare maintains the
+xf86-video-vmware and xf86-input-vmmouse drivers in X.Org for use in
+VMWare guests, and contributes very heavily to the development of Mesa3D
+through a number of VMWare employees, including the primary maintainer.
 
-> Getmail 4.0.0 through 4.43.0 allows IMAP MITM with an arbitrary
-> certificate
+Though that speaks to being a member of the OSS community in general,
+and in producing software for which announcements might go to distros,
+not necessarily for being on the receiving end.
 
-Use CVE-2014-7273.
-
-
-> Getmail 4.44.0 allows IMAP MITM with a valid/recognized certificate
-> for an arbitrary hostname
-
-Use CVE-2014-7274.
-
-
-> Getmail 4.0.0 through 4.44.0 allows POP MITM with an arbitrary
-> certificate
-
-Use CVE-2014-7275.
-
-
-4.45.0: not vulnerable, although for multiple reasons
-
-4.46.0: not vulnerable; all issues fixed
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUNCZjAAoJEKllVAevmvmsaDoH/A6P+zvtqi/6ZUudBSYLYCju
-K1N9DmsfwjdPYbcnPqJfuZSfUpAlCTKa70NnsxSrP7Ud8nsEZgPRPsgJZ5Lg5fZC
-nU1A+GKKQzU1SGnhksdpwSEywz6qOEhLkDBIWw3Wzqg8oeTp2IziM0BN4WJQMfuQ
-hxZlQt20GucAzjBEyoAsuKdOL7s24XpitxJEUfex0rWUFxZrv347285O2aPSmJui
-k2P5koio6d4ty4e37aBD0a1EWS12bPrEs8k6XQQBlRWJTrVIupRlNpxDPxsNxtFk
-7PPkxEJJfVC2XkA5PqBtzwaNeBB7HXT5Fzp5ngQdjntXKmMRqtpb/rRApxL1Y9Y=
-=wSw8
------END PGP SIGNATURE-----
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
