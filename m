@@ -1,45 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/14
-Message-Id: <201401092201.s09M1GcH015434@linus.mitre.org>
-Date: Thu, 9 Jan 2014 17:01:16 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/14
+Message-Id: <201406041500.s54F0G7P012354@linus.mitre.org>
+Date: Wed, 4 Jun 2014 11:00:16 -0400 (EDT)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
+To: security@....org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE split and a missed file
+Subject: Re: Xen Security Advisory 98 - insufficient permissions checks accessing guest memory on ARM
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->  -> net/ax25/af_ax25.c
+> XSA-98
 
-The unpatched code does not have the fundamental problem of updating
-msg_namelen in a situation where "sax" is uninitialized.
+> When accessing guest memory Xen does not correctly perform permissions
+> checks on the (possibly guest provided) virtual address ... This
+> allows a guest to write to memory which it should only be able to
+> read.
 
->  -> net/rose/af_rose.c
+> In the event that a guest executes code from a page which has been
+> shared read-only with another guest it would be possible to mount a
+> take over attack on that guest.
 
-The unpatched code does not have the fundamental problem of updating
-msg_namelen in a situation where "srose" is uninitialized.
+Use CVE-2014-3969.
 
->  -> net/compat.c
-
-This is for the case of a nonzero msg_namelen accompanied by a NULL
-msg_name, as mentioned in the comment in the commit. The same choice
-was made in net/core/iovec.c (a file that you didn't ask about).
-
->  -> net/socket.c
-
-Lack of "msg_namelen = 0" statements is not something that would
-really be considered a vulnerability in the previous net/socket.c
-implementation. From the perspective of net/socket.c itself, the
-"msg_namelen = 0" additions are a design improvement that can
-contribute to the security of other code.
-
->  -> net/rxrpc/ar-recvmsg.c
-
-The complete absence of a "msg_namelen =" statement in the unpatched
-code seems to be a bug, but it's not the same as updating msg_namelen
-in an uninitialized-data situation.
+Our understanding is that "executes code from a page which has been
+shared read-only" depends on the permissions issue (lack of a check
+for execute permission), and is not an independent problem.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -49,11 +36,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJSzxprAAoJEKllVAevmvmsUzMH/3VKhBHQipalZA4G+8mkscZK
-fanNLNwhBXK61rhbQwewXbKAJu2/zuJlCYGiPJcMQ9zIUgRIl4cyDQMK0Wh9JtXc
-0ThbrKFWx6Iwan6q/ygs7uX3jMJK2bhnjob8zt1ZN1etrsyTP4cIityk2n/nJf3e
-HTeys00RVSUwo6P33EvVjYep8qvsf4ZzZq5Bh+WhxapgU0eCHisZ4+aKfOcvaIB4
-qEJjVmr783/jSq0SlKEk9pKeeu6gLhcU0mrdQQ9fOEo3Bvp574W7jjel1IKPFpfO
-OE+mP0ULvsE+cH1H/5WTLsxEAyK0GowfCiBH+5M/xdu/AXPx1hsZg4V9p40JnZ4=
-=mqWd
+iQEcBAEBAgAGBQJTjzQrAAoJEKllVAevmvmsAYQH/1c5OC4rp6+bZvWaV6eM0INm
+PP2t2rOZhNjbc25Swzm7E0lnV7ZMk1Tsz8rnhd+jnf72abro9t0B87QIUGEjRIo+
+mTz7CJJohynIT785wXFDTZaUJuJefi6me7KaIVKQPV37St26g0xY8O1uXLmBxxqh
+av0oF+ImYNZbFaTZEeGLF2gN4V54W2CZe2T3de5dn1oWemdKceJI6DWEX4NHoV/l
+zzAG/6/6+t/lnwSMQhfYYOgacs4u8kkrXzPCzzEZWf3ScJilawToIDU0wAO5ya5e
+//kLQs+PD8ENUPS41L1GjC172szfmMUmDqsDfuaJTkddmBnsXZzd50cSf24yiVc=
+=eSfY
 -----END PGP SIGNATURE-----
