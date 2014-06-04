@@ -1,84 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/2
-Message-ID: <CA+aC4kvW+Gwup=epFFJsrMjzg669rZU_nr1m7_U=r9C1HNPxNg@mail.gmail.com>
-Date: Wed, 9 Apr 2014 20:26:07 -0700
-From: Anthony Liguori <anthony@...emonkey.ws>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/8
+Message-ID: <538EDB62.5090509@gmail.com>
+Date: Wed, 04 Jun 2014 14:40:02 +0600
+From: "Alexander E. Patrakov" <patrakov@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Anthony Liguori <aliguori@...zon.com>, Matt Wilson <msw@...zon.com>,  Max Spevack <spevack@...zon.com>
-Subject: Re: Request for linux-distros list membership
+Subject: CVE request: PulseAudio crash due to empty UDP packet
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello.
 
-On 04/09/14 19:04, Kurt Seifried wrote:
-> On 04/09/2014 09:23 AM, Anthony Liguori wrote:
->> Hi,
->
->> I would like to request membership to the closed linux-distros
->> mailing list on behalf of the Amazon Linux AMI distribution.  We
->> do not currently have anyone on this list from Amazon but we
->> would like to change that.  The Amazon Linux AMI distribution is
->> RPM based, optimized for EC2, and tracks a number of packages
->> (including the kernel) directly from upstream.
->
->> Here is my GPG fingerprint:
->
->> pub   2048R/5682E5FF 2013-07-30 Key fingerprint = EF0F 60F4 390F
->> A270 BC30  4A93 1AAD C710 5682 E5FF uid                  Anthony
->> Liguori <anthony@...emonkey.ws> sub   2048R/44FFA77F 2013-07-30
->
->> I'm sending this from my personal account since this is the uid
->> associated with my GPG key but I would prefer to be subscribed to
->> my @amazon.com (CC'd here).
->
->> If anyone has any questions, please don't hestitate to ask.
->> Thanks for your consideration!
->
->> Regards,
->
->> Anthony Liguori
->
-> I find it a bit odd you can't send this from your work email
-> address. Would it be possible to add that email address to your key
-> and then use your work email address?
+If one has module-rtp-recv loaded into PulseAudio, then a remote 
+attacker can crash this instance of PulseAudio by sending an empty UDP 
+packet to the multicast address where module-rtp-recv has decided to 
+receive the stream due to a previous SAP/SDP announcement.
 
-We use DKIM which doesn't work very well with all mailing lists.  You
-should receive this okay since you are on CC but I'm not sure everyone
-will get this through the mailing list.  If it doesn't make it, I'll
-send this same (signed) message via the @codemonkey.ws address.
+When PulseAudio crashes, it says to the log:
 
-I also added this address as a uid to my key.  Here it is again:
+E: [alsa-sink-ALC275 Analog] memblock.c: Assertion 'b' failed at 
+.../pulseaudio-5.0/src/pulsecore/memblock.c:596, function 
+pa_memblock_unref(). Aborting.
 
-pub   2048R/5682E5FF 2013-07-30
-      Key fingerprint = EF0F 60F4 390F A270 BC30  4A93 1AAD C710 5682 E5FF
-uid                  Anthony Liguori <aliguori@...zon.com>
-uid                  Anthony Liguori <anthony@...emonkey.ws>
-sub   2048R/44FFA77F 2013-07-30
+So this doesn't look exploitable - just a DoS attack, and PulseAudio 
+usually gets respawned anyway.
 
-> I guess I'm wondering is this an official request on behalf of
-> Amazon or some random Amazon (employee? contractor?) asking for
-> access to distros@.
+The problem has been reported upstream, but got no response yet:
 
-Yes, this is an official request on behalf of Amazon.  I am requesting
-access on behalf of the Amazon Linux AMI team[1].
+http://lists.freedesktop.org/archives/pulseaudio-discuss/2014-May/020740.html
 
-[1] http://aws.amazon.com/amazon-linux-ami/
+The problematic code is in the pa_rtp_recv() function, in the handling 
+of the result of the FIONREAD ioctl. It existed since the introduction 
+of the module, i.e. since 2006-04-16 (git commit f1ddf0523), which is 
+before version 1.0.
 
-Regards,
+The problem I found is that the function just returns immediately, 
+without even attempting to read the zero-sized packet. I don't know how 
+this later leads to the failed assertion.
 
-Anthony Liguori
+http://cgit.freedesktop.org/pulseaudio/pulseaudio/tree/src/modules/rtp/rtp.c#n185
 
->
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+A patch has been sent, but not reviewed and thus not accepted, and thus 
+the problem still exists in git master:
 
-iQEcBAEBAgAGBQJTRgxfAAoJEBqtxxBWguX/+5MIAJ5+qaFE8Um36q8qZsAcIRAh
-QtGzxQvmcea8EPqVEdLfqUJ1WikqhmCMIX7Qrcw5aa9uWqS1p9BrWoXsGjV8tb2o
-02SlXHsJPkKPGDgw8xD2yBao8ZEaWGUtcKRPIBZdKtiehEdxcW4fAkWWUKFTKkDa
-iqIJBWptrp341jtSlLifrXizcQPBUFIm2C1pKffJ3rLnEQRRTUJ5Lg/UqxF2H6Y+
-fea8AQZaAwGbHHOmf5DZhxO53Cl3+egLhWnql7tOTVSNiK1eZK6IFNqb9TeCwJh0
-F0BHv/wBCxaFUVGAG5q+ZlfWdodtqtHwT6az3712zywLebXEYneC42u+aFy9PTk=
-=lgBn
------END PGP SIGNATURE-----
+http://lists.freedesktop.org/archives/pulseaudio-discuss/2014-May/020741.html
+
+I have also tested SAP/SDP handling for the same type of vulnerability, 
+but PulseAudio survived an empty UDP packet there just fine.
+
+-- 
+Alexander E. Patrakov
