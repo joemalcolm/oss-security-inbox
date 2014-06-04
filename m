@@ -1,42 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/12/5
-Message-ID: <543AAA1C.5030800@redhat.com>
-Date: Sun, 12 Oct 2014 10:19:40 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: perl-Razor-Agent logs to /razor-agent.log by default
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/15
+Message-Id: <201406041505.s54F53MN012908@linus.mitre.org>
+Date: Wed, 4 Jun 2014 11:05:03 -0400 (EDT)
+From: cve-assign@...re.org
+To: thijs@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: mediawiki invalid usernames on Special:PasswordReset were parsed as wikitext
 Content-Type: text/plain; charset=utf-8
 
-So today I was logged into some mail servers and ls -la / and had a
-minor panic:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
--rw-r--r--.  1 root root  2275 Oct 12 04:15 razor-agent.log
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=65501
 
-Generally speaking I'm not expecting log files in / unless it's some
-sort of malware. A brief investigation and no panic, it's the
-perl-Razor-Agent, which on RHEL/Fedora is supposed to log to
-/var/log/razor-agent.log but doesn't due to some HOME shenanigans:
+> invalid usernames on Special:PasswordReset were parsed as wikitext ...
+> could potentially lead to an xss crossing a privilege boundary
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1058772
+Use CVE-2014-3966.
 
-This log file grows slowly, basically one entry per day/reboot:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Oct 12 16:13:17.347744 check[835]: [ 2] [bootup] Logging initiated
-LogDebugLevel=3 to file:razor-agent.log
-
-but it won't ever get logrotated, and on a system with a very tight /,
-e.g. a cloud system maybe using immutable images that only have a few
-spare k on / (and /var/log/ on another partition or whatever) this could
-be an issue.
-
-I'm inclined to not call this a DoS as even over a year it'll only be a
-few tens of kb, and it doesn't appear that the attacker can trigger
-faster growth, but I can see situations where this could be a problem.
-
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJTjzUKAAoJEKllVAevmvms3m0H/30lQ070bNB7iCT0dq78dqK7
+68dv98nM/DFos1TnyvBrYPQp+opf1fGv2jjquenpnAfI/rG0/jp9sxDhAC6tn/NT
+EHkCwiGMfgaG0T52NaxCQC2TitKh9eqTIrhP2DznmXfq64mqtAKM7HVNkgm8K7ES
+JGMeih9pxoURZPmLG+3NRFs4AtZQuPKQYEhBQxTocuCfxcjQarfdvA02i+R0niv8
+GJHLGnSrxlVaWOwOy2eF6557ASyUzIY4T4txh3jHvmht/0xtVTRuB2MRUHaJ6cjw
+hOn8/EnVO9OgsGku7+KuwkOXLpkIJEBJTjke/CoE10dCY52dtCykJv8OA9HRNwE=
+=e6Ww
+-----END PGP SIGNATURE-----
