@@ -1,42 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/22
-Message-Id: <20140707181436.B67C71A41139@me.com>
-Date: Mon,  7 Jul 2014 14:14:36 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem karo-2.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/9
+Message-ID: <538EDDF1.4080302@debian.org>
+Date: Wed, 04 Jun 2014 10:50:57 +0200
+From: Giuseppe Iuculano <iuculano@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-0476 chkrootkit vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem karo-2.3.8
 
-Author: Larry W. Cashdollar, @_larry0
+Hi,
 
-Date: 06/01/2014
+Thomas Stangner reported the following chkrootkit vulnerability.
 
-OSVDB: 108573
+We assigned CVE-2014-0476
 
-CVE:Please Assign
+Cheers,
+Giuseppe
 
-Download: http://rubygems.org/gems/karo
+-------- Original Message --------
+Subject: Serious chkrootkit vulnerability
+Date: Sun, 25 May 2014 00:53:00 +0200
+From: Thomas Stangner <thomas.stangner@...zner.de>
+Organization: Hetzner Online AG
+To: team@...urity.debian.org
 
-Gem Author:  rahul.trikha@...il.com
+Hi,
 
-From: ./karo-2.3.8/lib/karo/db.rb
+we just found a serious vulnerability in the chkrootkit package, which
+may allow local attackers to gain root access to a box in certain
+configurations (/tmp not mounted noexec).
 
-Line 76 and 95 passes unsanitized user supplied input to the command line.  If this gem is used in the context of a rails application malicious input could lead to remote command injection.
+The vulnerability is located in the function slapper() in the
+shellscript chkrootkit:
 
-073-      host = "#{@...figuration["user"]}@#{@...figuration["host"]}"
-74-      cmd  = "ssh #{host} cat #{server_db_config_file}"
-75-
-76:      server_db_config_output = `#{cmd}`
-79-
---
-89-    def drop_and_create_local_database(local_db_config)
-90-      command = case local_db_config["adapter"]
-91-      when "mysql2"
-93-      when "postgresql"
-95-          dropdb -h #{local_db_config["host"]} -U #{local_db_config["username"]} --if-exists #{local_db_config["database"]}
+#
+# SLAPPER.{A,B,C,D} and the multi-platform variant
+#
+slapper (){
+   SLAPPER_FILES="${ROOTDIR}tmp/.bugtraq ${ROOTDIR}tmp/.bugtraq.c"
+   SLAPPER_FILES="$SLAPPER_FILES ${ROOTDIR}tmp/.unlock ${ROOTDIR}tmp/httpd \
+   ${ROOTDIR}tmp/update ${ROOTDIR}tmp/.cinik ${ROOTDIR}tmp/.b"a
+   SLAPPER_PORT="0.0:2002 |0.0:4156 |0.0:1978 |0.0:1812 |0.0:2015 "
+   OPT=-an
+   STATUS=0
+   file_port=
+
+   if ${netstat} "${OPT}"|${egrep} "^tcp"|${egrep} "${SLAPPER_PORT}">
+/dev/null 2>&1
+      then
+      STATUS=1
+      [ "$SYSTEM" = "Linux" ] && file_port=`netstat -p ${OPT} | \
+         $egrep ^tcp|$egrep "${SLAPPER_PORT}" | ${awk} '{ print  $7 }' |
+tr -d :`
+   fi
+   for i in ${SLAPPER_FILES}; do
+      if [ -f ${i} ]; then
+         file_port=$file_port $i
+         STATUS=1
+      fi
+   done
+   if [ ${STATUS} -eq 1 ] ;then
+      echo "Warning: Possible Slapper Worm installed ($file_port)"
+   else
+      if [ "${QUIET}" != "t" ]; then echo "not infected"; fi
+         return ${NOT_INFECTED}
+   fi
+}
 
 
-Advisory: http://www.vapid.dhs.org/advisories/karo-2.3.8.html
+The line 'file_port=$file_port $i' will execute all files specified in
+$SLAPPER_FILES as the user chkrootkit is running (usually root), if
+$file_port is empty, because of missing quotation marks around the
+variable assignment.
 
+Steps to reproduce:
+
+- Put an executable file named 'update' with non-root owner in /tmp (not
+mounted noexec, obviously)
+- Run chkrootkit (as uid 0)
+
+Result: The file /tmp/update will be executed as root, thus effectively
+rooting your box, if malicious content is placed inside the file.
+
+If an attacker knows you are periodically running chkrootkit (like in
+cron.daily) and has write access to /tmp (not mounted noexec), he may
+easily take advantage of this.
+
+
+Suggested fix: Put quotation marks around the assignment.
+
+file_port="$file_port $i"
+
+
+I will also try to contact upstream, although the latest version of
+chkrootkit dates back to 2009 - will have to see, if I reach a dev there.
+
+
+Keep up the good work,
+
+Cheers,
+Thomas
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (243 bytes)
