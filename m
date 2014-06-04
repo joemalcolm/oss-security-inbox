@@ -1,47 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/11
-Message-ID: <d0540d670e407d290a72510b122bde36@shatow.net>
-Date: Sun, 28 Sep 2014 11:52:10 -0500
-From: Bryan Drewery <bdrewery@...eBSD.org>
-To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu, Christos Zoulas <christos@...las.com>
-Subject: Re: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/23
+Message-ID: <2814430.VOhzPXr1aH@eee>
+Date: Wed, 04 Jun 2014 22:41:59 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: oss-security@...ts.openwall.com, Monty Ijzerman <mijzerman@...are.com>
+Cc: Ramon de C Valle <rdecvalle@...are.com>
+Subject: Re: Re: Request for linux-distros subscription
 Content-Type: text/plain; charset=utf-8
 
-On 2014-09-26 15:52, Bryan Drewery wrote:
-> On 9/26/2014 9:13 AM, Christos Zoulas wrote:
->> On Sep 26,  1:47pm, john.haxby@...cle.com (John Haxby) wrote:
->> -- Subject: Re: [oss-security] Re: CVE-2014-6271: remote code 
->> execution throu
->> 
->> | It's not so much the known attacks -- redefining ls, unset, command,
->> | typeset, declare, etc -- it's the future parser bugs that we don't 
->> yet
->> | know about.
->> |
->> | A friend of mine said this could be a vulnerability gift that keeps 
->> on
->> | giving.
->> 
->> I think that at this point the conservative approach is best, so
->> until the bash author figures what the best solution is, the feature
->> is disabled by default for NetBSD. It is not wise to expose bash's
->> parser to the internet and then debug it live while being attacked.
->> 
->> christos
->> 
-> 
-> FreeBSD has taken a similar approach. We have used Christos' patch and
-> disabled the feature by default.
-> 
-> https://svnweb.freebsd.org/changeset/ports/369341
+On Wednesday 04 June 2014 12:33:13 Ramon de C Valle wrote:
+> I'd also appreciate comments by others active in this community and would
+> be happy  to answer any questions anyone might have.
 
-FYI I have updated the FreeBSD bash to 27 and modified the 
---import-functions script to be implicit for interactive shells and to 
-also give a warning when functions are ignored.
+Other than earlier product re-qualification I don't see how you could justify 
+joining the list, am I missing something?
+If that's the only reason, I guess a question that should be asked is: is  
+exposing the details to more people actually worth the extra time?
 
-https://svnweb.freebsd.org/ports/head/shells/bash/files/extrapatch-import-functions?revision=369467&view=co&pathrev=369467
+(speaking for myself here)
 
+Cheers,
 -- 
-Regards,
-Bryan Drewery
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
