@@ -1,32 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/6
-Message-ID: <20140401183003.GT24029@dhcp-25-225.brq.redhat.com>
-Date: Tue, 1 Apr 2014 20:30:04 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: ago@...too.org, cve-assign@...re.org
-Subject: Re: Re: CVE request: Linux Kernel, two security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/22
+Message-ID: <20140604195157.GA24469@eldamar.local>
+Date: Wed, 4 Jun 2014 21:51:57 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE Request: Horde_Ldap: Stricter parameter check in bind() to detect empty passwords
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 30, 2014 at 05:42:52PM -0400, cve-assign@...re.org wrote:
-> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=21f8aaee0c62708654988ce092838aa7df4d25d8
-> > 
-> > The vulnerability is caused due to a race condition error in the 
-> > "ath_tx_aggr_sleep()" function (drivers/net/wireless/ath/ath9k/xmit.c), which 
-> > can be exploited to cause a crash.
-> > https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.12.15
-> > https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.13.7
-> > https://bugzilla.kernel.org/show_bug.cgi?id=70551
-> 
-> Use CVE-2014-2672.
+Hi,
 
-FWIW, there's also second commit mentioned in the bugzilla,
-http://git.kernel.org/cgit/linux/kernel/git/jberg/mac80211.git/commit/?id=1d147bfa64293b2723c4fec50922168658e613ba
-that also fixes a crash.
+Horde_Ldap released an update fixing a security issue mentioned in the
+changes:
 
-It is questionable how the attacker can trigger these bugs differently
-than normal (high load) usage on a smp box.
+> [jan] SECURITY: Stricter parameter check in bind() to detect empty
+> passwords.
 
--- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+https://github.com/horde/horde/commit/8f719b53b0ee2d4b8a40a770430683c98fb5f2fd
+
+fixed in 2.0.6 with commit:
+
+https://github.com/horde/horde/commit/4c3e18f1724ab39bfef10c189a5b52036a744d55
+
+Could a CVE be assigned for this issue?
+
+Regards,
+Salvatore
