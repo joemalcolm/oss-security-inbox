@@ -1,66 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/20
-Message-Id: <201403041735.s24HZ6EH004806@linus.mitre.org>
-Date: Tue, 4 Mar 2014 12:35:06 -0500 (EST)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-2013-6800 is a dup of CVE-2013-1418
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/19
+Message-Id: <E1WsDfm-0004kR-Qv@xenbits.xen.org>
+Date: Wed, 04 Jun 2014 16:04:18 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 98 (CVE-2014-3969) - insufficient permissions checks accessing guest memory on ARM
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6800
-> is the same issue as 
-> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1418
-> 
-> (basically the same code fix for the same issue,
+            Xen Security Advisory CVE-2014-3969 / XSA-98
+                            version 3
 
-The scope of CVE-2013-1418 is this part of
-c2ccf4197f697c4ff143b8a786acdd875e70a89d:
+       insufficient permissions checks accessing guest memory on ARM
 
-  Multi-realm KDC null deref [CVE-2013-1418] ... If a KDC serves
-  multiple realms, certain requests can cause setup_server_realm() to
-  dereference a null pointer, crashing the KDC.
+UPDATES IN VERSION 3
+====================
 
-  CVSSv2: AV:N/AC:M/Au:N/C:N/I:N/A:P/E:POC/RL:OF/RC:C
+CVE assigned.
 
+ISSUE DESCRIPTION
+=================
 
-The scope of CVE-2013-6800 is this part of
-c2ccf4197f697c4ff143b8a786acdd875e70a89d:
+When accessing guest memory Xen does not correctly perform permissions
+checks on the (possibly guest provided) virtual address: it only
+checks that the mapping is readable by the guest, even when writing on
+behalf of the guest.  This allows a guest to write to memory which
+it should only be able to read.
 
-  A related but more minor vulnerability requires authentication to
-  exploit, and is only present if a third-party KDC database module can
-  dereference a null pointer under certain conditions.
+A guest running on a vulnerable system is able to write to memory
+which should be read-only.  This includes supposedly read only foreign
+mappings established using the grant table mechanism.  Such read-only
+mappings are commonly used as part of the paravirtualised I/O drivers
+(such as guest disk write and network transmit).
 
+In order to exploit this vulnerability the guest must have a mapping
+of the memory; it does not allow access to arbitrary addresses.
 
-The practical relevance of the second CVE is that, based on the
-available information, a KDC apparently can be vulnerable to
-CVE-2013-6800 even if the CVE-2013-1418 exploitation conditions are
-not met. The vendor's disclosure binds the CVE-2013-1418 ID only to a
-subset of the c2ccf4197f697c4ff143b8a786acdd875e70a89d comment. This
-was accompanied by a similar binding within third-party references
-such as 1026942 in the Red Hat Bugzilla. It is conceivable that
-someone would want to track CVE-2013-6800 even if they determined that
-CVE-2013-1418 was not relevant to their installation.
+In the event that a guest executes code from a page which has been
+shared read-only with another guest it would be possible to mount a
+take over attack on that guest.
 
-In general, even if a single patch could address two distinct types of
-attacks, that does not necessarily mean that two CVEs are duplicates.
+IMPACT
+======
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+A domain which is deliberately exchanging data with another,
+malicious, domain, may be vulnerable to privilege escalation.  The
+vulnerability depends on the precise behaviour of the victim domain.
+
+In a typical configuration this means that, depending on the behaviour
+of the toolstack or device driver domain, a malicious guest
+administrator might be able to escalate their privilege to that of the
+whole host.
+
+VULNERABLE SYSTEMS
+==================
+
+Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
+
+MITIGATION
+==========
+
+None.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the appropriate pair of attached patches resolves this issue.
+
+xsa98-unstable-{01,02}.patch        xen-unstable
+xsa98-4.4-{01,02}.patch             Xen 4.4.x
+
+$ sha256sum xsa98*.patch
+6f63bc2e0a0a39bbd9137513a5d130ae2c78d1fd2ebf9172bf49456f73f0a67b  xsa98-4.4-01.patch
+b338472ecce3c31a55d1a936eebbd4e46cb3ad989b91a64d4b8c5d3ca80d875d  xsa98-4.4-02.patch
+b8535aad5ae969675d59781a81ce0b24491f1abc01aaf36c3620fd7fb6cc84eb  xsa98-unstable-01.patch
+f5e8a93525a8905653da6377097f77681ff8121b973063ff6081e27547ceaa67  xsa98-unstable-02.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJTFgz+AAoJEKllVAevmvmsg2AIAK3YEISuzaCFszqZIUMc7xTu
-c19WulvIAzWTzCplCiYsq/y9y146PKCNSKeYZM9pLx/Nk5kz0m9627YmqCOxbzMx
-7xQw0fn5F07/wOn2HFGdh6MxC1J7qGK+2EyBeL6yYdTEY4aNdLNGTZZP5YzQAP7O
-yHL7Bh2ko3WWZKZ2f4qTGzRvbN7G5ZDQzTsTYDJUhqQUuvMCnP8NpnTb7qC/RGNH
-k+u7lkohA/1gst476tb/uVSAYfwH/8zPkhygC6WlSRwrs3DoP+T6Ycle+6+1hH4z
-7dlr1GXmAx989KG6TsjY+gmM9DHAnAOTM9wMA1ext8OWX7a40qVFlhZbQMr+M8Q=
-=oIex
+iQEcBAEBAgAGBQJTj0N1AAoJEIP+FMlX6CvZYRsH/3PPF+SBphp/IOcJmcoUBI0Y
+SZumMMtaH3jU49/0V/azYOpKET2VtCHBilBajUAB7kNx+EGHv5NZf6Vn7FMBDCVl
+gk7Hq39tR0axBTpp4FhK8MJQIEsMUvsohokRFiMsDmhKtWOEKPfmNrgLz6cEvo5H
+ci46UH0JzPhMVY4tXhd7jo9Vuyae8df+b0yYFZ2QyVdWN3AShlrp62JAXb1lJT8E
+LO/67uDud7bhuODA+CWmL0jHq7xsJoRitp5gJph9QmSNbkXGJfPy6Sow4qzatnsR
+Vb9lgJq5MHRodkaie9z4UeANysAJ1J+USvARyMx+xnQ64ETzFIm6pUotzySZWEU=
+=vyB+
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa98-4.4-01.patch" of type "application/octet-stream" (5699 bytes)
+
+Download attachment "xsa98-4.4-02.patch" of type "application/octet-stream" (7800 bytes)
+
+Download attachment "xsa98-unstable-01.patch" of type "application/octet-stream" (5701 bytes)
+
+Download attachment "xsa98-unstable-02.patch" of type "application/octet-stream" (7913 bytes)
