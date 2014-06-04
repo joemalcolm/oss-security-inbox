@@ -1,43 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/10
-Message-ID: <53E0F2A5.801@enovance.com>
-Date: Tue, 05 Aug 2014 11:05:09 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Keystone
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/12
+Message-Id: <E1WsBVA-0008GF-7u@xenbits.xen.org>
+Date: Wed, 04 Jun 2014 13:45:12 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 98 - insufficient permissions checks accessing guest memory on ARM
 Content-Type: text/plain; charset=utf-8
 
-Three vulnerabilities was discovered in OpenStack (see below). In order
-to ensure full traceability, we need CVE number(s) assigned that we can
-attach to further notifications. These issues are already public,
-although an advisory was not sent yet.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Title: Multiple vulnerabilities in Keystone revocation events
-Reporter: Lance Bragstad (Rackspace) and Brant Knudson (IBM)
-Products: Keystone
-Versions: 2014.1 versions up to 2014.1.1
+                    Xen Security Advisory XSA-98
+                            version 2
 
-Description:
-Lance Bragstad from Rackspace and Brant Knudson from IBM reported 3
-vulnerabilities in Keystone revocation events. Lance Bragstad discovered
-that UUID v2 tokens processed by the V3 API are incorrectly updated and
-get their "issued_at" time regenerated. Brant Knudson discovered that
-the MySQL token driver stores expiration dates incorrectly which
-prevents manual revocation and that domain-scoped tokens don't get
-revoked when the domain is disabled. Tokens impacted by one of these
-bugs may allow a user to evade token revocation. Only Keystone setups
-configured to use revocation events are affected.
+       insufficient permissions checks accessing guest memory on ARM
 
-References:
-https://launchpad.net/bugs/1347961
-https://launchpad.net/bugs/1348820
-https://launchpad.net/bugs/1349597
+UPDATES IN VERSION 2
+====================
 
-Thanks in advance,
+Public release.
 
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+ISSUE DESCRIPTION
+=================
 
+When accessing guest memory Xen does not correctly perform permissions
+checks on the (possibly guest provided) virtual address: it only
+checks that the mapping is readable by the guest, even when writing on
+behalf of the guest.  This allows a guest to write to memory which
+it should only be able to read.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+A guest running on a vulnerable system is able to write to memory
+which should be read-only.  This includes supposedly read only foreign
+mappings established using the grant table mechanism.  Such read-only
+mappings are commonly used as part of the paravirtualised I/O drivers
+(such as guest disk write and network transmit).
+
+In order to exploit this vulnerability the guest must have a mapping
+of the memory; it does not allow access to arbitrary addresses.
+
+In the event that a guest executes code from a page which has been
+shared read-only with another guest it would be possible to mount a
+take over attack on that guest.
+
+IMPACT
+======
+
+A domain which is deliberately exchanging data with another,
+malicious, domain, may be vulnerable to privilege escalation.  The
+vulnerability depends on the precise behaviour of the victim domain.
+
+In a typical configuration this means that, depending on the behaviour
+of the toolstack or device driver domain, a malicious guest
+administrator might be able to escalate their privilege to that of the
+whole host.
+
+VULNERABLE SYSTEMS
+==================
+
+Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
+
+MITIGATION
+==========
+
+None.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the appropriate pair of attached patches resolves this issue.
+
+xsa98-unstable-{01,02}.patch        xen-unstable
+xsa98-4.4-{01,02}.patch             Xen 4.4.x
+
+$ sha256sum xsa98*.patch
+6f63bc2e0a0a39bbd9137513a5d130ae2c78d1fd2ebf9172bf49456f73f0a67b  xsa98-4.4-01.patch
+b338472ecce3c31a55d1a936eebbd4e46cb3ad989b91a64d4b8c5d3ca80d875d  xsa98-4.4-02.patch
+b8535aad5ae969675d59781a81ce0b24491f1abc01aaf36c3620fd7fb6cc84eb  xsa98-unstable-01.patch
+f5e8a93525a8905653da6377097f77681ff8121b973063ff6081e27547ceaa67  xsa98-unstable-02.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTjyK/AAoJEIP+FMlX6CvZfcAIALcaI5AdccPTHVJjTFqAly6A
+ZJ787YT7utUjaHTuqo+rFn7UkQLfXtqGXoLmxX4I6kTWSasiN89MCUiMMEhAKz/p
+WAyHPxOgbU/67hE6K6G9Xfon+Oi0NmQyaT8yiq2tgNMA5BT0TLRa1hVP70ixvXGd
+bC1MTMKLHynrMByK2S7NKt3YZLg0t8yTtCAYQ/BbjiS+2WYA552HEI7xrFPNhZ7Y
+WMykHUp+G6xBj3E1xxHnuvmixr/8mAgZmfkqLdzb66wUxuxev6ZhACS5JkjFGI8S
+lFMGZ52W/JiinqxtXs9WPGPiaBmW0+AmfCr6OjMfPsOzeZavrmFMAsz9AUehDag=
+=96+i
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa98-4.4-01.patch" of type "application/octet-stream" (5699 bytes)
+
+Download attachment "xsa98-4.4-02.patch" of type "application/octet-stream" (7800 bytes)
+
+Download attachment "xsa98-unstable-01.patch" of type "application/octet-stream" (5701 bytes)
+
+Download attachment "xsa98-unstable-02.patch" of type "application/octet-stream" (7913 bytes)
