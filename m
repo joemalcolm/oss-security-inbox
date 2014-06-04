@@ -1,39 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/5
-Message-ID: <20140731104706.523aff9a@redhat.com>
-Date: Thu, 31 Jul 2014 10:47:06 +0200
-From: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/4
+Message-ID: <20140604062501.GB18329@kroah.com>
+Date: Tue, 3 Jun 2014 23:25:01 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-3564 gpgme: heap-based buffer overflow in gpgsm status handler
+Cc: Ramon de C Valle <rdecvalle@...are.com>, VMware Security Response Center <security@...are.com>, Monty Ijzerman <mijzerman@...are.com>
+Subject: Re: Request for linux-distros subscription
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Jun 04, 2014 at 09:58:43AM +0400, Solar Designer wrote:
+> On Tue, Jun 03, 2014 at 01:16:47PM -0700, Ramon de C Valle wrote:
+> > I can attest that Monty is my colleague and the Manager of VMware Security Response Center. As a former colleague of you (Kurt) and also former linux-distros subscriber, I would like to ask for your consideration for subscribing Monty (or myself) to linux-distros on behalf of VMware. Although ESXi isn't a Linux distribution, it implements Linux-compatible system calls and provides a GNU/Linux -like ecosystem that allows many applications that are compiled on/for Linux operating systems to run seamlessly. This ecosystem includes OSS that should be supported in timely fashion pretty much like like any other Linux distribution on the list. It also implements a Linux kernel module interface and uses many Linux device drivers and kernel modules that also should be supported. In addition, ESXi is the base layer that many of the Linux distributions on the list rely upon and run atop of in many datacenters around the world.
+> 
+> Thank you, Ramon.  This is pretty good rationale, but I feel that
+> getting VMware onto linux-distros for the reasons given above would be a
+> (possibly desirable) change in who the list is for.  So far, it's been
+> for Linux distros, and I deliberately chose the linux-distros name for
+> it.  Now a non-Linux-distro wants to be specifically on linux-distros
+> (not just on distros), and be exposed to Linux-specific vulnerability
+> details (albeit for good reasons).  I'd appreciate comments by others
+> active in this community.
+> 
+> Does VMware have OSS products?  Would it be reasonable to include VMware
+> security advisory/contact details on our wiki?
+> 
+> http://oss-security.openwall.org/wiki/vendors
 
-Hi,
+It is alleged that VMware violates the license of some OSS products,
+like the Linux kernel for example[1], so I don't know if that counts as
+a good enough reason to accept them for the list or not.  I don't know
+of any specific OSS software of their own, except for some Linux kernel
+module code in the kernel source tree[2], which really doesn't justify
+the need to be part of linux-distros in my opinion.
 
-Tomáš Trnka discovered a heap-based buffer overflow in gpgme. He has
-provided a very good bug report in [1], so I'll refrain from copy
-and pasting it here.
+thanks,
 
-This is now fixed in version 1.5.1, the commit fixing this is linked in
-[2].
+greg k-h
 
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=1113267
-[2]
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gpgme.git;a=commit;h=2cbd76f7911fc215845e89b50d6af5ff4a83dd77
-
-Thanks,
-- -- 
-Stefan Cornelius / Red Hat Product Security
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBAgAGBQJT2gKUAAoJEETwiYCjVSmPvvkIAIrxlBpsXTV51esgDCt5j4PE
-fBdjTLxAU9YJ7yZOUcZSsS3I8VHMvkHTZ8zeoPWAsLGU9Us/N7JboIXZhtgUJBLd
-qypxeVwiA08WfOLD30STDUwwbQSgScHsf/7vrljzaXJmvlRsph4AcR/x9lWhuRJv
-/3d9XrbIC9i0BOhcUcJKcwByLk7076mFTaJAWAqbLwHdqbAszKzLhBZMvUmXk3zN
-5HJtFR4+7qWVdot70T41ssYxn8bYfPYsuoCuYcFdwcJ3LkR0c7n9uf1zn6g1rdvU
-WbzsMYml2lVan+w1l9o7BFo/9j5zhk3q5t8Nf6q0ghuk51DL6pxBNYtPiWByUUo=
-=LafS
------END PGP SIGNATURE-----
+[1] My opinion only, not my employers.  I am not a lawyer, please
+    consult with your own before making a decision about this if you
+    should be using vmware products yourself.  Details about why I think
+    this are available on demand on an individual basis.
+[2] Nothing to do with [1], a totally different thing.
