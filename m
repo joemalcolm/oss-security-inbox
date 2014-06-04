@@ -1,33 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/3
-Message-ID: <20140615121159.GF24581@kludge.henri.nerv.fi>
-Date: Sun, 15 Jun 2014 15:11:59 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: Richard Moore <rich@....org>
-Subject: Re: CVE Request for KIO/kmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/13
+Message-Id: <201406041456.s54EujjG012256@linus.mitre.org>
+Date: Wed, 4 Jun 2014 10:56:45 -0400 (EDT)
+From: cve-assign@...re.org
+To: security@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 96 - Vulnerabilities in HVM MSI injection
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jun 15, 2014 at 11:18:16AM +0100, Richard Moore wrote:
-> Hi,
-> 
-> I'd like to request a CVE for a vulnerability in KIO that causes a security
-> issue in kmail.
-> 
-> Regards 
-> Rich.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hello Rich,
+> XSA-96
 
-More details are needed for public CVE request. Please see documentation in
-Kurt's site[1]. Examples of good requests[2][3]. You can also make private
-request if you have embargoed issue.
+> HVMOP_inject_msi ... doesn't check the returned pointer for being
+> non-NULL before dereferencing
 
-1: https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html#How%20to%20write%20a%20CVE%20request:
-2: http://seclists.org/oss-sec/2011/q4/3
-3: http://seclists.org/oss-sec/2011/q4/107
+Use CVE-2014-3967.
 
----
-Henri Salo
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+> handles certain errors by logging messages, without ... rate limiting
+> ... spamming of the hypervisor
+
+Use CVE-2014-3968.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTjzMLAAoJEKllVAevmvmsrgcIAJOjpx9mtG4xU0datjs649TC
+IjObNZjgQxd9JGW637asaamyBD2qpt/h692FuXz/Iuc9mKQ1l2dgI3PbMqXkBhyF
+5MyggeUFWqthefcQXHOrU88I/6roBLmfmJ/QPhSPoDdX7LJpXk6LhnFxt7oG5Ex0
+8hE33fJZ/MQ7p6NaLYtlBZSoOTGD8eud2eSYK8Xg6gYrxFHfX8z0CczxFQVEsUKq
+UXNooExJSErEVqna9awzfTpqlKy3tuxONJ2iuB93gWVDNBgrptI25dQzjRPGRxy/
+e+NifrIXp1KoEuo7/MpzmESChFeWjopfN1jjLxU4e53ivi59u86vYBEYnt9I86I=
+=dTrg
+-----END PGP SIGNATURE-----
