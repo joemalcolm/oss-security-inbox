@@ -1,41 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/28
-Message-Id: <20140926180555.9B2AAC505CA@smtptsrv1.mitre.org>
-Date: Fri, 26 Sep 2014 14:05:55 -0400 (EDT)
-From: cve-assign@...re.org
-To: marc.deslauriers@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Go crypto/tls vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/13
+Message-ID: <48968550.2256124.1401949522063.JavaMail.root@vmware.com>
+Date: Wed, 4 Jun 2014 23:25:22 -0700 (PDT)
+From: Ramon de C Valle <rdecvalle@...are.com>
+To: oss-security@...ts.openwall.com
+Cc: kseifried@...hat.com, Monty Ijzerman <mijzerman@...are.com>
+Subject: Re: Request for linux-distros subscription
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-> https://groups.google.com/forum/#!msg/golang-nuts/eeOHNw_shwU/OHALUmroA5kJ
+Hi Russ,
+
+- ----- Original Message -----
+> From: "Russ Allbery" <eagle@...ie.org>
+> To: oss-security@...ts.openwall.com
+> Cc: kseifried@...hat.com, "Monty Ijzerman" <mijzerman@...are.com>
+> Sent: Thursday, June 5, 2014 2:37:57 AM
+> Subject: Re: [oss-security] Request for linux-distros subscription
 > 
-> Go 1.3.2 release announcement:
+> Ramon de C Valle <rdecvalle@...are.com> writes:
 > 
-> The crpyto/tls fix addresses a security bug that affects programs that use
-> crypto/tls to implement a TLS server from Go 1.1 onwards. If the server enables
-> TLS client authentication using certificates (this is rare) and explicitly sets
-> SessionTicketsDisabled to true in the tls.Config, then a malicious client can
-> falsely assert ownership of any client certificate it wishes.
+> > By fixing in advance, I mean to have the fixes/updates ready by the time
+> > the vulnerability is publicly disclosed. (However, in the case of cloud
+> > services, we may not have how to know if the fix was, in fact,
+> > applied/made in advance.)
+> 
+> This is obviously of huge business value to VMware as a company.  I'm
+> missing how your ability to do this for your product is of value to the
+> open source community, however.  What is VMware bringing to the table here
+> in terms of value provided to the other members of linux-distros due to
+> having VMware as a member?
+I don't see why we also couldn't help in coordinating, discussing, fixing, and reporting issues like any other company on the list (and also fixing and reporting issues in the, albeit fewer than some, OSS we contribute and/or maintain).
 
-Use CVE-2014-7189.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> 
+> This is an honest question.  There may well be substantial value that I'm
+> not seeing.
+> 
+> Alternately, I could also understand if your argument is that this is not
+> the calculus that was used to judge other, current members, or that the
+> criteria for membership should be the simple question of whether the
+> organization uses Linux and related software and would benefit from
+> advance notification of security vulnerabilities.  (By that argument,
+> other organizations, such as Apple, should also be eligible for
+> membership.)
+> 
+> An aside: I personally, speaking as someone who is not a member but who
+> has reported embargoed security vulerabilities to linux-distros in the
+> past and doubtless will in the future, would prefer to restrict
+> linux-distros membership to the organizations that are actively
+> contributing to the security of open source software in ways beyond simply
+> redistributing it.  In other words, I would prefer if linux-distros were
+> restricted to only organizations with active security teams and a track
+> record of finding vulnerabilities, developing fixes, coordinating security
+> fixes among open source distributions, or contributing substantially to
+> those groups that are doing so.
+> 
+> I view advance notification as a valuable courtesy to help Linux
+> distributions make their products more secure, and would prefer to only
+> extend that courtesy to those organizations who have contributed something
+> back to the community of which I'm part.  Organizations that choose not to
+> contribute substantially can receive notification at the same time as the
+> general public.
+> 
+> This is a possibly idiosyncratic opinion, and I know it is not the current
+> criteria for membership.
+> 
+> --
+> Russ Allbery (eagle@...ie.org)
+> <https://urldefense.proofpoint.com/v1/url?u=http://www.eyrie.org/~eagle/&k=oIvRg1%2BdGAgOoM1BIlLLqw%3D%3D%0A&r=bZpuVimtRQUx3xHFIlu%2BaciWn3GMzM%2FBnwDoBm5jP8U%3D%0A&m=V2wmorukYIBYtiXkAXEmSrqwlyoex1NNLXyt0N07vjQ%3D%0A&s=e2d7c4b82f165ccb53d49dd859898e0609f499f23cb2e0fda92f9edb12714a59>
+> 
+- --
+Ramon de C Valle
+VMware Product Security Engineering
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Comment: GPGTools - https://gpgtools.org
 
-iQEcBAEBAgAGBQJUJap3AAoJEKllVAevmvmsgrMH/j/1XloOl9HhN2u3Wr2s/3Lk
-xhgj82xPuHcb2Pp2hqhbYDwIMQxcA9V1t7DEDTkZi+M5lH4tVOEspWcHDExCveK8
-IAeiALqGyG1Jt5akec27aHA1l8SRbXzq4lqEo/+M9bRCgTYh0ctZZn4+l3M+6pCx
-m4WDJSndOMuIlSa58aW7nOxyaFAnYo3kS2nUvdKxuHnctmQjOrDaRnuK89p7FXa3
-tFDPMe0ZhsZoNB+nCDvpHW/2WSp67pASSufQQ0lKx7YIEpS+Jx4YdnwmYeXLOj58
-JkYbS0dg4QSF0yW2AKNtOnFuQdhXGVl6vmTKpWhfUczDgJfgE7yEKBCV1OAfLgc=
-=00Zi
+iQIcBAEBCgAGBQJTkA0vAAoJEMHrzpMNBOIM2vUP/34gs7SAVNl3UC36kplWqLo5
+6nIVb331/ZbIiAREqtCFSGOXJLsyMDaTza7Mc1CeAIECsTyL5OYQur7dFvNKihjc
+m08qMp9VY/2CFOWaOy+9DIgFBNZszHDR2ubZILuiAfkBglfXorV97MC7lw04+nOc
++aipYhAk90+yp6KNB1Wp7R05LOyfChF2INPXBqEqCynv+RVJGm/Ql2njhEAY2jNb
+D6YbaA6PIYPhwpAZ924tOi915NYFU1Iu+/HBUdZL0uHFzVKU5j1MU00fqKtEmlGf
+7B2osKWJf6l3iDm0POlKKiBfYlEYeTkcdUpXgm2i0GrobQRY0DMMwmUJzSWT3Azk
+lYfPzI0CLbunn3JVMySpwzD8PKAGYxBVekQbGBS7U1wxic2Kmpb/7Lo1V2/By8Hv
+Aq2S53abDeS8QbFsY9nmPvFIT4HQ8SLVbgZdxQ8/lVYVuRTBDEZaw4yk6auLHOei
+rfhNMa3yu+nPybMQPTIcTGhqIQGaQdqddurJSUEihvSo4NRxiA/39WcRrp5He+b8
+Uk9z7ZTVkRlZWMIpjNBmu3r7g1e+59lXbLXX5m5Wly4D3D6useKjIFj0QO59+ZhS
+y0veiB9wsOIWSCXmbL+IuZYRNkl+v2NADWCqowE6d9YQHnzzA0P+e83GFUb16dz1
+T6I97jlSkczdNvI5GGZN
+=esNG
 -----END PGP SIGNATURE-----
