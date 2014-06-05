@@ -1,74 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/4
-Message-ID: <20140208064704.GA17711@dq>
-Date: Sat, 8 Feb 2014 00:47:05 -0600
-From: "Joshua J. Drake" <oss-sec-addjsif@...p.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/6
+Message-ID: <20140605050021.GA17035@kroah.com>
+Date: Wed, 4 Jun 2014 22:00:21 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: djorm@...hat.com, cve-assign@...re.org
-Subject: Re: CVEs for Android addJavascriptInterface issues (was: multiple issues in Apache Cordova/PhoneGap)
+Cc: kseifried@...hat.com, Monty Ijzerman <mijzerman@...are.com>
+Subject: Re: Request for linux-distros subscription
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-I apologize for hijacking the thread, but it seemed prudent to reply
-inline with the relevant facts close by. 
-
-On Fri, Feb 07, 2014 at 12:49:00PM -0500, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+On Wed, Jun 04, 2014 at 09:43:05PM -0700, Ramon de C Valle wrote:
+> > [1] if they are added then by that logic we need to add every product
+> > which has virtualization support or a ported environment that can run
+> > Linux (busybox anyone?) which is basically crazy.
+> This statement just enforces what I said above. There are so many
+> problems in this statement that I don't even know where to start. It
+> is my understanding that you're comparing ESXi with BusyBox, although
+> they're different things and ESXi uses BusyBox (which you probably
+> didn't know).
 > 
-> > Multiple issues have been reported in Apache Cordova:
-> > 
-> > http://packetstormsecurity.com/files/124954/apachecordovaphonegap-bypass.txt
-> 
-> We have been looking at this report, and have this initial response.
+> If we enter in the merit of virtualization products (and cloud
+> services), you may or may not have noticed but the majority of them
+> are already subscribed (albeit indirectly) but VMware. Amazon,
+> Canonical, Oracle, Red Hat, are all present. Let's assume, for
+> example, that a critical vulnerability in a critical OSS that affects
+> not only the Linux distributions but also the virtualization products
+> (and cloud services) of any of the companies mentioned above is
+> disclosed on the list. We both know that this information will be used
+> not only to fix the vulnerability in the Linux distributions but also
+> in all the other products and services of these companies in advance.
+> Don't you think it's a bit unfair? I could easily assume that you are
+> biased towards VMware not being subscribed to the list. But we aren't
+> going to enter in that merit, are we?
 
-[..snip..]
+Wait, companies aren't on these lists to "fix things in advance", they
+are on them to help resolve the issues with the community members of the
+OSS projects, and to help prepare for the announcement in an organized
+manner.  The fact that they work _with_ the community projects is a
+major thing here.  It is not a one-way street at all.
 
-> Page 5 of the NDSS paper says:
-> 
-> > On Android prior to API level 17, these interfaces are generically
-> > insecure. Malicious JavaScript executing inside WebView can use the
-> > Java reflection API to invoke any method of any Java object exposed
-> > via 'addJavascriptInterface' and take control over the local side of
-> > the application
-> 
-> This Android vulnerability is CVE-2012-6636. The available information
-> about the point of original disclosure is
-> http://50.56.33.56/blog/?p=314 and we don't happen to know if the
-> researcher has a personal domain name for 50.56.33.56 that should be
-> used instead.
->
-> In this p=314 post, the researcher says "Prior to Android 4.2, if an
-> application uses the addJavascriptInterface and allows an attacker to
-> control the content rendered in a WebView, then an attacker can take
-> control over the parent application regardless of the type of
-> interface exposed." This seems to be a different finding than in the
-> referenced
-> http://www.cis.syr.edu/~wedu/Research/paper/webview_acsac2011.pdf
-> paper. (Yes, webview_acsac2011.pdf can have CVE-2011-#### ID
-> assignments but we are not working on that at the moment.)
+I'm sure if anyone is found to be "fixing things in products ahead of
+time", that will be addressed properly, but that is _not_ the reason
+this group is here for at all from what I can tell (note, I'm not on the
+list, but was on vendor-sec for years, and never saw any "fixes ahead of
+time" there that were not just honest mistakes.)
 
-Is the intent here to assign CVE-2012-6636 to all issues rooted in
-reliance on an incorrectly exposed Javascript bridge?
+> So far I have explained many reasons why we should be subscribed to
+> the list, yet you haven't explained any why we shouldn't (despite the
+> "you're not a Linux distribution" above, which I have said myself in
+> my very first post).
 
-If so, please keep in mind that this issue is not as simple as
-pointing at Android itself. If a vulnerable app is compiled against a
-vulnerable API level of the SDK (even today) it would be vulnerable.
-At least that is my current understanding. As such, additional
-assignments on a per-app or per-ad-network-SDK may be necessary due to
-these exposure lifetime complications.
+What specific OSS products are you relying on that you wish to have
+advance notice of vulnerabilities in?  As you aren't a public Linux
+distro, it's hard to find a list anywhere about what exact code bases
+you are concerned about tracking here.
 
-You may have seen recently released Metasploit module that allows a
-remote compromise of the Google Glass browser using an incorrectly
-exposed Javascript bridge via the "searchBoxJavaBridge_" object. This
-exposes an instance of android.webkit.SearchBoxImpl in older versions
-of the Android browser.
+Well, except for the previously mentioned huge Linux driver code base
+(i.e. the thing that runs your flagship product) but I've already stated
+my objection there for why you should not be allowed access to any
+"special" knowledge there.
 
-If this issue should have the same CVE assignment, please ack.
-Otherwise, please assign a new CVE.
+thanks,
 
-Joshua J. Drake
-http://www.droidsec.org/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (829 bytes)
+greg k-h
