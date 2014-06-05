@@ -1,143 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/2
-Message-ID: <CAFkuX4u3uphnNK4H8Oh6Xp5mmVhf56tUCii-2L+fmjz9fEG9gA@mail.gmail.com>
-Date: Thu, 26 Jun 2014 20:54:31 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: LMS-2014-06-16-6: LZ4 Core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/19
+Message-Id: <201406051315.s55DF2e4012644@linus.mitre.org>
+Date: Thu, 5 Jun 2014 09:15:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0234 Installer: OpenShift Enterprise: openshift.sh default password creation
 Content-Type: text/plain; charset=utf-8
 
-Ahhh, so that's who this is. I only read Yann's blog post which was largely
-an emotional response, and so I ignored most (read: all) of it. Now that I
-understand who he is, this makes a *lot* more sense. Thanks for sending the
-email.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I also never saw his responses on the lz4 code site. I posted a note there,
-but never received updates or saw that he responded to my messages. I
-checked several times throughout this process. Unfortunately, this just
-breaks down to a communication error.
+>> 3. The CVE IDs in 1 and 2 can't be the same.
 
-I think the larger issue is that this was noted as a security problem some
-time ago on the lz4 site. I've never tried to hide that. What was
-interesting is the issue was dismissed by the lz4 developer, who I now know
-is Yann. It was never fixed and it was given a low priority. So, from this
-perspective, I think it is unfortunate that he is so angry. If he thought
-it was a serious issue back then he should have raised the priority. The
-original researcher never even pursued the issue after it was deemed a
-non-issue, nor did they attempt to seek out alternative implementations.
-The maintainers of LZ4 variants used in ZFS, for example, were never
-notified. I contacted those individuals myself.
+> ?
 
-Yann is technically wrong about a lot here, however.
- - 64bit systems are still vulnerable, but impractical to exploit due to
-memory constraints
- - I mentioned that the security flaw is unlikely to be exploited due to
-memory constraints
- - I mentioned the ZFS 128k limit in my blog post as an example of why
-things *aren't* vulnerable
- - There is no constraint or ceiling in the LZ4 decompression routine on
-the size of the input/output buffer
+There are different default-password problems that seem to have been
+fixed at substantially different times, and this would often require
+separate CVEs.
 
-First issue - 64bit systems. It is still possible to generate an integer
-overflow on 64bit systems. The amount of memory (terabytes upon terabytes)
-would be necessary to succeed. This is indeed infeasible. But, this is also
-potentially the same logic that kept this bug hidden for 20 years. I am not
-here to speculate on whether something might be vulnerable or not. It is
-vulnerable code. Period.
+The issue reported in
+http://openwall.com/lists/oss-security/2014/05/29/4 apparently
+included a default password of mooo. Use of mooo apparently stopped
+after
+https://github.com/openshift/openshift-extras/commit/e7e53d296787e674859c1a06db93fcf9d98173b4
+(September 2013).
 
-The security flaw is indeed unlikely to be exploited in most environments.
-I have never disputed this. I think the LZ4 bug is interesting because it
-is more easily instrumented than the LZO exploit. You can actually get a
-more precise overwrite with LZ4 than you can with LZO. As a result, it is
-extremely practical to write exploits for it, including RCE. Is it
-practical outside of the core library? Probably not, but that doesn't mean
-it shouldn't be secured.
+Commits such as
+https://github.com/openshift/openshift-extras/commit/4339020c62e43fa16f2145d46636f7dc0e26327f
+suggest that other default-password issues were fixed in 2014,
+apparently including password, marionette, mongopass, OSEnterprise,
+and changeme.
 
-I noted in my blog that ZFS is constrained to 128k. For some reason Yann
-didn't read this far. I think he misunderstands context. The LZ4 code as is
-in the library is vulnerable. Period. It can be instrumented for precise
-overwrites. Period. But, as I address in the blog, context - and thus the
-threat model - changes drastically with use of the library. This is why -
-and again, I called for this in my blog post - auditing of each
-implementation is imperative. Since these algorithms are widely used, and
-there is no enforced constraint on a call to LZ4's algorithm, there is no
-way to determine who is using this "correctly" or not. As an example, I
-have RCE examples for MPlayer2 on 8 or so different target platforms from
-x86, x86_64, and ARM on BSDs and Linux. This is because libav's
-implementation is slightly different enough to be easily instrumented by an
-attacker. Is LZ4 used similarly in another product? I don't know. That's
-why I'm calling for audits to find out. Let's find out!
+To have one CVE for everything, you'd need a situation similar to:
 
-Finally, Yann is right that there are block sizes, etc. But the
-decompression routine itself does not care or enforce a size constraint.
-Just like LZO's decompression routine, this means that it can be passed any
-amount of data the caller wants, and like LZO, users will implement this
-incorrectly.
+   1. one version released by Red Hat was based on code such as
+      https://github.com/openshift/openshift-extras/blob/e4c285f52fa93ed4626837d0436943717f85843a/enterprise/install-scripts/generic/openshift.sh
+      which has both the mooo issue and other default-password issues
 
-It's unfortunate that Yann's feelings were hurt, and I feel bad that he was
-upset enough to react so caustically. I had no intention to make him look
-bad, or hurt his project. But, when I saw the bug reports during the Linux
-kernel audit from years ago with no reaction or patch, I suppose I presumed
-the worst. That's my fault, and I apologize for that.
+   2. the next version released by Red Hat fixed the mooo issue and
+      the other default-password issues
 
-Hope this helps illuminate my perspective.
+Is that what you mean, i.e., no release had a partial fix?
 
-Best,
-Don A. Bailey
-Founder / CEO
-Lab Mouse Security
-@InfoSecMouse
-https://www.securitymouse.com/
+(The reason this question originally came up is that the wording in
+https://bugzilla.redhat.com/show_bug.cgi?id=1097008 is "the optional
+installer also did this." You've now clarified that the reason for
+those MONGO_PASSWORD= lines in broker.conf is that the product was
+installed by this optional installer. However, a need for multiple
+CVEs is still possible, as reflected in the question above.)
 
+Finally, are any of the CVEs duplicates of CVE-2013-4253 or
+CVE-2013-4281? Those two CVE IDs are mentioned at
+https://github.com/openshift/openshift-extras/blob/master/README.md
+but the only attempted documentation seems to be links to nonexistent
+access.redhat.com URLs, and the two CVE IDs don't seem to be in
+Aliases fields in Red Hat Bugzilla.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-On Thu, Jun 26, 2014 at 8:37 PM, Solar Designer <solar@...nwall.com> wrote:
-
-> On Thu, Jun 26, 2014 at 12:58:37PM -0600, Don A. Bailey wrote:
-> > A vulnerability has been identified in the LZ4 core implementation.
-> Please
-> > review the bug report attached inline.
-> [...]
-> > Report ID: LMS-2014-06-16-6
-> >
-> > CVE ID: CVE-2014-4611
-> [...]
-> > Vulnerability Status: Reported / No response
->
-> Yann Collet, the author of LZ4 and maintainer of the LZ4 reference
-> implementation, has now posted a different point of view:
->
->
-> http://fastcompression.blogspot.fr/2014/06/debunking-lz4-20-years-old-bug-myth.html
->
-> Aside from the bitterness (which I think is excessive, albeit
-> understandable), there's technical detail on why the vulnerability is
-> less severe, and a mention of it having been reported via "a brief note
-> on the LZ4 issue board".  I've just found this note here:
->
-> https://code.google.com/p/lz4/issues/detail?id=52&can=1
->
-> I guess there was some miscommunication, because there _was_ response
-> via comments on this issue.  Don's comment was posted on June 19, and
-> Yann replied via multiple comments on June 20, 22, 26.  The latest one
-> of these says "Fixed into r118", which is:
->
-> https://code.google.com/p/lz4/source/detail?r=118
->
-> and the commit message includes:
->
-> "fix :  Issue 52  (malicious address space overflow in 32-bits mode when
-> using custom format)"
->
-> Per Yann's blog post, and per comments on issue 52, we should credit
-> Ludvig Strigeus for earlier discovery of this issue specifically in LZ4,
-> although it was not treated as a security issue until Don's rediscovery
-> (per Yann's good reasons, it shouldn't have been, but that's arguable).
->
-> Given the above, I think all of Ludvig, Don, and indeed Yann deserve
-> credit for getting this issue fixed, and I find it unfortunate that
-> feelings were hurt.
->
-> Alexander
->
-
+iQEcBAEBAgAGBQJTkGz+AAoJEKllVAevmvmszuAH/j7ejpzpMred2iS3F0tmZr91
+PY8QprPfBkB8FR7IN0JezZu8hDuuSfnhu7TSWEvyED2y4J276M1DtCWH7n2G9sNG
+qEEM2A4jJl2hMGnPSVg23gGxS+X4DwpKV2JjK9DfXXkCqHyUeoPNLPTzZE2o08hq
+de/RA/7HwVoIhznqIG0HWgdkLJ1jLJKWb95vZvKlQeP8DqSyq4pvkR/tqOKMVDDS
+2eP1oqDM6wqgd3Y36WY6pe34m31CXo0wjg6Tkepeh9lfo03B8OGIJ+HKMSQb/ZfQ
+YBYLY1TQ/C8mBmfkqe+GVLVywNZLWDYO6SnQh9VXSEMn87gO3O63aEnJtkrQVyE=
+=u262
+-----END PGP SIGNATURE-----
