@@ -1,67 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/10/3
-Message-Id: <20141110181405.98BC46C004F@smtpvmsrv1.mitre.org>
-Date: Mon, 10 Nov 2014 13:14:05 -0500 (EST)
-From: cve-assign@...re.org
-To: Jason@...c4.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Qt Creator fails to verify SSH host key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/21
+Message-ID: <20140605135453.GA22783@openwall.com>
+Date: Thu, 5 Jun 2014 17:54:53 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL seven security fixes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Jun 05, 2014 at 04:43:25PM +0400, Solar Designer wrote:
+> The distros list was informed of the upcoming OpenSSL release a few days
+> in advance, but detail on the vulnerabilities was being provided
+> separately, on request from each specific distro individually (PGP
+> encrypted).  Overall, I'd say the advance notification to distros was
+> just right - not too much (only a few days), not too little (just
+> enough), and without unnecessarily exposing the detail to distros who
+> wouldn't need it.
+> 
+> A bit worrying is the statement that the "issue was reported to OpenSSL
+> on 1st May 2014", though, but I appreciate the OpenSSL team making that
+> statement (it's in the advisory).
 
-> they don't check host keys when connecting, which makes a
-> man-in-the-middle attack trivial.
+Mark Cox, who was providing vulnerability detail to individual distros,
+has just posted the timeline:
 
-> // TODO: Mechanism for checking the host key. First connection to host: save, later: compare
+https://plus.google.com/+MarkJCox/posts/L8i6PSsKJKs
 
-> has received a bit more of a hesitant reaction. The most recent
-> vendor feedback seems to indicate they're not super interested in
-> implementing this.
+---
+Here is the timeline from my (OpenSSL) perspective for the recent CCS
+Inject MITM vulnerability as well as the other flaws being fixed today.
 
-We don't feel that this is a fair characterization of the (public)
-vendor response. There is a vendor response of:
+** SSL/TLS MITM vulnerability (CVE-2014-0224)
 
-   This was never considered much of an issue due to the scope
-   of our SSH support. The main use case is developers
-   communicating with their embedded devices that are locally
-   connected, typically via USB. Host key checking is of
-   limited value there, also because the same IP address is
-   often used for different devices. So the anticipated first
-   reaction from users would be "How do I turn it off?".
+2014-04-22 (Date we were told the reporters shared the issue with
+                        JPCERT/CC)
+2014-05-01 JPCERT/CC make first contact with OpenSSL security
+2014-05-02 JPCERT/CC send detailed report and reproducer to        
+                        OpenSSL security
+2014-05-09 CERT/CC make first contact with OpenSSL security      
+                         and send an updated report
+2014-05-09 OpenSSL verify the issue and assign CVE-2014-0224
+2014-05-12 JPCERT/CC contact OpenSSL with updated reproducer
+2014-05-13 OpenSSL start communication directly to reporters to  
+                       share updated patch and other technical details
+2014-05-21 JPCERT/CC notify OpenSSL they have notified
+                       "vendors who have implemented  OpenSSL in their          
+                        products" under their framework agreement
+2014-05-21 CERT/CC request permission to prenotify vendors of
+                       the issue
+2014-05-21 OpenSSL work with two major infrastructure providers
+                       to test the fix and  ensure the fix is sufficient
+2014-06-02 CERT/CC notify their distribution list about the security
+                        update but with no details
+2014-06-02 "OS distros" private vendor list is given headsup and
+                        ability to request the patches and draft advisory
+                        (0710).  Told Red Hat (0710) Debian (0750) FreeBSD
+                        (0850),  AltLinux (1050), Gentoo (1150), Canonical
+                        (1150), IBM (1700), Oracle (1700), 
+                        SUSE (2014-06-03:0820), Amazon AMI
+                        (2014-06-03:1330), NetBSD/pkgsrc (2014-06-04:0710),
+                        Openwall (2014-06-04:0710)
+2014-06-02 Red Hat find issue with patch (1400), updated patch
+                        sent to vendors
+2014-06-02 Canonical find regression with patch (1700), Stephen
+                         produces updated patch, sent to vendors (1820)
+2014-06-03 "ops-trust" (1015) and selected OpenSSL Foundation
+                         contracts (0820) are told a security  update will be
+                         released on 2014-06-05 but with no details
+2014-06-05 Security updates and advisory is released
 
-This indicates that the current behavior is intentional behavior. The
-vendor has made a tradeoff between what they perceive as a security
-benefit and what they perceive as a support cost. We do not assign CVE
-IDs based on third-party reports that a vendor should have made a
-different tradeoff. Admittedly, the vendor might decide to change
-their tradeoff later (e.g., if they obtain data indicating that USB
-is actually not a prevalent use case).
+** DTLS recursion flaw (CVE-2014-0221)
 
-We agree that it would be nice to have a central place to track
-findings such as "the SSH security expectations for this product are
-different from the SSH security expectations for essentially every
-other product." CVE is not that place.
+2014-05-09 Reporter contacts OpenSSL security
+2014-05-09 OpenSSL contacts reporter with possible patch for
+                       verification
+2014-05-16 Reporter confirmes patch
+2014-05-18 OpenSSL tells reporter CVE name
+2014-06-02 "OS distros" notification as above
+2014-06-03 OpenSSL lets reporter know the release date
+2014-06-05 Security updates and advisory is released
 
-Similarly, there is an opportunity for security improvement if the
-vendor were to implement key checking, even if the vendor insisted
-that this would not be enabled by default. This type of opportunity
-for security improvement cannot have a CVE assignment.
+** DTLS invalid fragment vulnerability (CVE-2014-0195)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+2014-04-23 HP ZDI contact OpenSSL security and pass on security
+                        report
+2014-05-29 OpenSSL let ZDI know the release date
+2014-06-02 "OS distros" notification as above
+2014-06-05 Security updates and advisory is released
 
-iQEcBAEBAgAGBQJUYP/lAAoJEKllVAevmvmsZIgH/1AjdVpx/gIRO5y0xTo76NQs
-Kb+hC7AAXlBT/ySTfmsWOmTxBE9L77sze2vdt1mOZOLeFCkOmxIQDkBmkP3tlx4o
-TawvLaebWa7e+RG15xLRhXcbUdXa9Fi4oBAMWNL7p+WN1VClh/wTl92EcyELrhp/
-iC22Wg9MaJKY7OGm4FuOghkwsM0L13tfoYvGNNsVOty2aWDopoMSzGU9mbvda/OB
-FwW5KGzBRSD38HTBmwG8eaHWWTWmnHAiT/n4zL7jO7YG6L+ZoYhpUS3Mh/qStlWr
-bgoXn7P6rlU+u+wPA/ZvSk3wWuLSh7623T+3dADJzeS4Ls1CG3bwi6u5kL8HyBA=
-=lZ3n
------END PGP SIGNATURE-----
+** Anonymous ECDH denial of service (CVE-2014-3470)
+
+2014-05-28 Felix Grbert and Ivan Fratri at Google report to
+                       OpenSSL
+2014-05-29 OpenSSL tell reporters CVE name and release date
+2014-06-02 "OS distros" notification as above
+2014-06-05 Security updates and advisory is released
+
+(All times UTC)
+---
+
+On Twitter, Mark (@iamamoose) pointed out that "by telling OS vendors in
+advance we actually caught two problems with the patches!", I guess
+referring to these two timeline entries:
+
+2014-06-02 Red Hat find issue with patch (1400), updated patch
+                        sent to vendors
+2014-06-02 Canonical find regression with patch (1700), Stephen
+                         produces updated patch, sent to vendors (1820)
+
+Alexander
