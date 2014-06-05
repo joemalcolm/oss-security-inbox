@@ -1,29 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/9
-Message-ID: <54A1B7CE.7040706@internot.info>
-Date: Tue, 30 Dec 2014 07:21:34 +1100
-From: Joshua Rogers <honey@...ernot.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/1
+Message-ID: <5390FC64.3040400@oracle.com>
+Date: Thu, 05 Jun 2014 19:25:24 -0400
+From: Phil Turnbull <phil.turnbull@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request(s): libgcrypt
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
+
+On 05/06/14 10:45, Solar Designer wrote:
+> I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
+> as well as back-ports of those by John Johansen of Canonical, who wrote:
+> 
+> ---
+> For anyone who is interested I've attached back ports of the patches to
+> 
+>   3.13 - minor conflicts in patch 4. It has applied cleanly back to 3.2
+> and
+>   2.6.32 - conflict is in patches 3, and 4
+> ---
 
 Hi,
 
-I found multiple vulnerabilities in libgcrypt. Could I get some CVE-ID's
-for them?
+We are currently preparing Ksplice updates for our supported kernels and spotted
+something odd in the 2.6.32 backport.
 
---
-Double free of 'hd':
-http://lists.gnupg.org/pipermail/gcrypt-devel/2014-December/003300.html
+In patches-2.6.32.tgz:patches/0003-futex-Always-cleanup-owner-tid-in-unlock_pi.patch
+there is this change (ignoring whitespace changes):
 
-off-by-one out-of-bounds read:
-http://lists.gnupg.org/pipermail/gcrypt-devel/2014-December/003299.html
---
+        curval = cmpxchg_futex_value_locked(uaddr, uval, newval);
+-
+-               if (curval == -EFAULT)
++       if (curval)
+                ret = -EFAULT;
 
+which seems to change the behaviour of the function.
+
+The purpose of the return value of cmpxchg_futex_value_locked changed in
+
+37a9d912b24f96a0591 "futex: Sanitize cmpxchg_futex_value_locked API"
+
+which is not included in 2.6.32. This patch changes the return value to a
+status code, but in 2.6.32 the return value is the value of the futex or
+-EFAULT. With this backported patch, any futex with a non-zero value will
+return -EFAULT.
+
+Can you please clarify whether this change was intentional or is an error
+introduced in the backport?
 
 Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Phil
