@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/28/6
-Message-ID: <87oazlnxtv.fsf@mid.deneb.enyo.de>
-Date: Mon, 28 Apr 2014 19:55:08 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/14
+Message-ID: <53902152.2030506@redhat.com>
+Date: Thu, 05 Jun 2014 17:50:42 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: super unchecked setuid (CVE-2014-0470)
+Subject: CVE request: PHP configure script and Lynis tool /tmp/ issues reported on full disclosure
 Content-Type: text/plain; charset=utf-8
 
-Robert's patch, reproduced below, has all the details.
+Good morning,
 
-From: Robert Luberda <robert@...ian.org>
-Date: Wed, 23 Apr 2014 00:28:19 +0200
-Subject: 14 Fix unchecked setuid call
+http://seclists.org/fulldisclosure/2014/Jun/21 reports two temporary 
+file issues.
 
-Fix the following issue noticed by John Lightsey:
-  super.c does an unchecked setuid(getuid()) when the -F flag
-  is supplied pointing to a configuration file to test. This opens
-  super up to the RLIM_NPROC style exploits on 2.6 kernels.
+The first is in PHP's configure script:
 
-The issue was assigned number CVE-2014-0470.
----
- super.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+char *filename = "/tmp/phpglibccheck";
 
-diff --git a/super.c b/super.c
-index abea061..1c21886 100644
---- a/super.c
-+++ b/super.c
-@@ -849,7 +849,9 @@ by `-o %s' is overridden by file `%s'", *o_file, superfile);
- 		     * to the real uid.
- 		     */
- 		    if (getuid() != 0) {
--			setuid(getuid());
-+		        if (setuid(getuid()) == -1)
-+		            Error(1, 1, "Can't set uid to %d: ", getuid());
-+
- 			fprintf(stderr,
-     "\t** Since you have supplied a super.tab file that isn't the default,\n");
- 			fprintf(stderr,
+(Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=1104978)
+
+The second issue is Lynis writing a predictable file to /tmp/. Looking 
+at the source I cannot tell which file that is, but 2 runs on Fedora 20 
+revealed the following file being used each time:
+
+/tmp/ffiYFc1nZ
+
+I cannot find that in the source. I do not know if lynsis exec()'s any 
+other scripts or programs. The full disclosure report might be referring 
+to the following in include/tests_webservers:
+
+  39     if [ "${OS}" = "AIX" ]; then
+  40         TMPFILE=/tmp/lynis.$$
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Security Response Team
