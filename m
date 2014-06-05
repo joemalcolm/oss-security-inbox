@@ -1,36 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/12
-Message-ID: <1404595356.1720.16.camel@scapa>
-Date: Sat, 05 Jul 2014 23:22:36 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/10
+Message-ID: <87d2enc3wq.fsf@windlord.stanford.edu>
+Date: Wed, 04 Jun 2014 22:37:57 -0700
+From: Russ Allbery <eagle@...ie.org>
 To: oss-security@...ts.openwall.com
-Cc: team@...urity.debian.org, Ben Hutchings <benh@...ian.org>
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+Cc: kseifried@...hat.com,  Monty Ijzerman <mijzerman@...are.com>
+Subject: Re: Request for linux-distros subscription
 Content-Type: text/plain; charset=utf-8
 
-On sam., 2014-07-05 at 22:25 +0400, Solar Designer wrote:
-> Here are some distro vendor status pages on this bug:
-> 
-> "x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
-> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1337339
-> 
-> Ubuntu has just sent out 7 update announcements (for different of
-> their
-> supported distros/kernels), USN-2266-1 through USN-2272-1.
-> 
-> "ptrace,x86: force IRET path after a ptrace_stop()"
-> http://kernel.opensuse.org/cgit/kernel/commit/?h=openSUSE-13.1&id=d1f26676dad578a65c94782f0c2bd00b7aa68f1b
-> 
-> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
-> https://bugzilla.redhat.com/show_bug.cgi?id=1115927
+Ramon de C Valle <rdecvalle@...are.com> writes:
 
-Hmhm, what are the reasons why the mainline (and opensuse) fix
-(b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a) is to force using IRET
-instead of SYSRET, while distros like Ubuntu and Redhat seem to “only”
-make sure RIP is canonical?
+> By fixing in advance, I mean to have the fixes/updates ready by the time
+> the vulnerability is publicly disclosed. (However, in the case of cloud
+> services, we may not have how to know if the fix was, in fact,
+> applied/made in advance.)
 
-Regards,
+This is obviously of huge business value to VMware as a company.  I'm
+missing how your ability to do this for your product is of value to the
+open source community, however.  What is VMware bringing to the table here
+in terms of value provided to the other members of linux-distros due to
+having VMware as a member?
+
+This is an honest question.  There may well be substantial value that I'm
+not seeing.
+
+Alternately, I could also understand if your argument is that this is not
+the calculus that was used to judge other, current members, or that the
+criteria for membership should be the simple question of whether the
+organization uses Linux and related software and would benefit from
+advance notification of security vulnerabilities.  (By that argument,
+other organizations, such as Apple, should also be eligible for
+membership.)
+
+An aside: I personally, speaking as someone who is not a member but who
+has reported embargoed security vulerabilities to linux-distros in the
+past and doubtless will in the future, would prefer to restrict
+linux-distros membership to the organizations that are actively
+contributing to the security of open source software in ways beyond simply
+redistributing it.  In other words, I would prefer if linux-distros were
+restricted to only organizations with active security teams and a track
+record of finding vulnerabilities, developing fixes, coordinating security
+fixes among open source distributions, or contributing substantially to
+those groups that are doing so.
+
+I view advance notification as a valuable courtesy to help Linux
+distributions make their products more secure, and would prefer to only
+extend that courtesy to those organizations who have contributed something
+back to the community of which I'm part.  Organizations that choose not to
+contribute substantially can receive notification at the same time as the
+general public.
+
+This is a possibly idiosyncratic opinion, and I know it is not the current
+criteria for membership.
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
