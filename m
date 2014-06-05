@@ -1,39 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/18/5
-Message-Id: <201407182148.s6ILm1a0001754@linus.mitre.org>
-Date: Fri, 18 Jul 2014 17:48:01 -0400 (EDT)
-From: cve-assign@...re.org
-To: stu@...cehopper.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, hanno@...eck.de
-Subject: Re: CVE request: libressl before 2.0.2 under linux PRNG failure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/15
+Message-Id: <20140605080301.B31568005A@notatla.org.uk>
+Date: Thu, 05 Jun 2014 09:03:01 +0100
+From: lists@...atla.org.uk
+To: oss-security@...ts.openwall.com, jose.carlos.luna@...il.com
+Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com, bugs@...uritytracker.com
+Subject: Re: [FD] Bug in bash <= 4.3 [security feature bypassed]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Jose Carlos Luna Duran writes:
 
-> I see a number of web pages relating to this issue are mentioning that
-> it has already been assigned CVE-2014-2970, can anyone throw light on this?
+> In my opinion the drop of privs in bash was mostly a "help" measure
+> for poorly written setuid programs executing system() calls. I don't
+> think is the role of bash to do this ...
 
-There are a few different groups who are potentially able to assign
-CVE IDs for issues in, say, LibreSSL. On rare occasions, the
-different groups don't have the same expectations about coordinating.
+True, but it is a slight help and I'm in favour of keeping it.
 
-At MITRE, we (obviously) know where CVE-2014-2970 came from, and we'll
-send information here about the resolution as soon as it happens.
+> Correct me if I'm wrong, but even in that case there is another "help"
+> measure that has been implemented at least in linux kernels > 3.1:
+> http://lxr.free-electrons.com/source/kernel/sys.c?v=3.1#L628
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+For permanent dropping of privilege I suggest calling setgid() and
+setuid() to the desired values *twice* (and ignore the return code).
+Then try to reset to the original values (should fail; ignore return code).
 
-iQEcBAEBAgAGBQJTyZRzAAoJEKllVAevmvms7jgH/iuLmBzNvmYSlGO2Ph1quhFy
-ATZnpPnHR7Ot2ufwhGpGgBDurjWNThWoRylwjHqtHUjqEMb2cTqlVVypXOoc5tZm
-9//gn26kUNuXGSZyVjThjl16op4748b9VvBVuXN/4PQqUVYeB904E5lHeO83jHEN
-MbN2AkCntmtTcilWgqopOPBIsrksZDXE7I21rlNtyCaqRxSSxoIBKlBZup1Siec0
-5G02nqEp6mXZWKKA0YK1r3DoPD1OwP46hNG038DLHSrGBRR2Ppdpl8h4kp3rtfxB
-9zIYnKo7lxvPZACgvXL9662E96knwxNBxOlBvzxihqIpd0yMbpO7NPilGdewAhA=
-=ECnJ
------END PGP SIGNATURE-----
+Then test that the real and effective values are the same and are the
+ones you want - that's the result that indicates success in this case.
+And exit() if failed.
+
+That's the simple usage guide - David Wagner has written at length on
+the technicalities.
