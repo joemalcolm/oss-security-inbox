@@ -1,56 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/18
-Message-ID: <20140319182230.GO2551@sivokote.iziade.m$>
-Date: Wed, 19 Mar 2014 20:22:30 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/25
+Message-ID: <20140605155454.GD23993@kroah.com>
+Date: Thu, 5 Jun 2014 08:54:54 -0700
+From: Greg KH <greg@...ah.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: Thomas Gleixner <tglx@...utronix.de>, oss-security@...ts.openwall.com
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 19, 2014 at 09:42:15AM -0700, Dean Pierce wrote:
-> Also, just for kicks I created
-> https://groups.google.com/group/responsible-disclosure :-)
+On Thu, Jun 05, 2014 at 07:24:30PM +0400, Solar Designer wrote:
+> Greg, Thomas -
 > 
-
-you MUST ask m$ for money or at least for a free game...
-
-
-> Will hand over mod privileges to any reasonably responsible group of
-> people with time to moderate such things.
+> On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
+> > This was handled via linux-distros, hence the mandatory oss-security
+> > posting.  The issue was made public earlier today, and is included in
+> > this Debian advisory:
+> > 
+> > https://lists.debian.org/debian-security-announce/2014/msg00130.html
+> > 
+> > ---
+> > CVE-2014-3153
+> > 
+> >     Pinkie Pie discovered an issue in the futex subsystem that allows a
+> >     local user to gain ring 0 control via the futex syscall. An
+> >     unprivileged user could use this flaw to crash the kernel (resulting
+> >     in denial of service) or for privilege escalation.
+> > ---
+> > 
+> > I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
 > 
->    - DEAN
+> Can you comment on how the four patches:
 > 
-> On Wed, Mar 19, 2014 at 9:33 AM, Dean Pierce <pierce403@...il.com> wrote:
-> > Hosting?  That's what the cloud is for.
-> >
-> > I have no idea who runs https://groups.google.com/group/FullDisclosure
-> >
-> > but they seem modeled after original fd charter.  I trust Google as a
-> > neutral third party more than I would trust most security researchers.
-> >  They already host all the old newsgroup archives.  It's also free,
-> > easily consumable, and most importantly, babysat for security issues
-> > in a way that even a team of skilled volunteers would have a hard time
-> > pulling off.
-> >
-> >   - DEAN
-> >
-> > On Wed, Mar 19, 2014 at 9:14 AM, Georgi Guninski <guninski@...inski.com> wrote:
-> >> What is the number of email addresses who
-> >> posted on FD?
-> >>
-> >> (to roughly estimate cost of hosting)
-> >>
-> >> On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
-> >>> Apologies for posting on list mainly dedicated
-> >>> to CVE's.
-> >>>
-> >>> The Full Disclosure mailing list died today:
-> >>> http://lists.grok.org.uk/
-> >>> http://seclists.org/fulldisclosure/2014/Mar/332
-> >>>
-> >>> I suppose it is time for a new list.
-> >>>
-> >>> Any ideas?
-> >>>
-> >>> --
-> >>> guninski
+> Subject: [patch 1/4] futex-prevent-requeue-pi-on-same-futex.patch
+> Subject: [patch 2/4] futex: Validate atomic acquisition in
+> Subject: [patch 3/4] futex: Always cleanup owner tid in unlock_pi
+> Subject: [patch 4/4] futex: Make lookup_pi_state more robust
+
+Those have to go on top of:
+
+> relate to these two on LKML:
+> 
+> Subject: [PATCH 3.14 001/228] futex: Add another early deadlock detection check
+> Subject: [PATCH 3.14 002/228] futex: Prevent attaching to kernel threads
+
+These, as these two patches are already in Linus's tree.
+
+Now if these two are needed for the first 4 to work properly, that I do
+not know, Thomas might.  I see no reason why a distro would not want
+these two patches anyway, as they made the stable kernel criteria.
+
+thanks,
+
+greg k-h
