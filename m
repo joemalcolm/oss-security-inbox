@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/7
-Message-ID: <54080F42.1030805@redhat.com>
-Date: Thu, 04 Sep 2014 01:05:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/16
+Message-ID: <53905712.7000902@redhat.com>
+Date: Thu, 05 Jun 2014 13:40:02 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Assign a CVE Identifier <cve-assign@...re.org>, taviso@...gle.com
-Subject: Re: heap overflow in procmail
+CC: Daiki Ueno <dueno@...hat.com>
+Subject: [CVE request] Local privilege escalation in libfep
 Content-Type: text/plain; charset=utf-8
 
-Please for the love of whatever... well whatever you love, use the
-"Security" sensitive tag in our BZ or the "security" keyword so the
-Product Security Team sees it (otherwise we may not, I mean have you
-seen how many bugs get filed daily in our BZ?).
+It was discovered that libfep uses UNIX domain sockets in the abstract 
+namespace in an insecure way.  As a result, unprivileged local users 
+were able to inject commands into running fep sessions of other users.
 
-On 04/09/14 12:01 AM, Michal Zalewski wrote:
-> It's been "widely public" for two months, right?
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1121299
-> 
+The upstream fix simply removes abstract namespace support, using a 
+restricted directory to host the UNIX domain socket instead:
+
+https://github.com/ueno/libfep/commit/293d9d3f
+
+Abstract namespace support was introduced in this commit:
+
+https://github.com/ueno/libfep/commit/5a170323
+
+This means that versions from 0.0.5 to 0.0.9 (inclusive) are vulnerable, 
+and 0.1.0 has the fix.
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Florian Weimer / Red Hat Product Security Team
