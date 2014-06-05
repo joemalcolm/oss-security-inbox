@@ -1,54 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/10
-Message-ID: <5459547E.1090408@mccme.ru>
-Date: Wed, 05 Nov 2014 01:34:38 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/3
+Message-ID: <538FE794.6040103@redhat.com>
+Date: Wed, 04 Jun 2014 21:44:20 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: binutils -- directory traversal
+CC: cve-assign@...re.org
+Subject: Re: Re: CVE-2014-0234 Installer: OpenShift Enterprise: openshift.sh default password creation
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-it seems binutils don't check paths when extracting files from archives.
+On 06/03/2014 12:35 PM, cve-assign@...re.org wrote:
 
-----------------------------------------------------------------------
- From https://sourceware.org/bugzilla/show_bug.cgi?id=17533#c4 :
 
-directory traversal [in ar]:
+This would depend on how you installed it, e.g. as an upgrade?a new
+install? If new then manually? from the script? In this case it was
+that specific install script which was also documented as a possible
+install method, thus I felt it deserved a CVE.
 
-$ printf '!<arch>\n%-48s%-10d`\n../file\n%-48s%-10s`\n' '//' 8 '/0' 0 > 
-test.a
-$ ar xv test.a
-x - ../file
 
- From https://sourceware.org/bugzilla/show_bug.cgi?id=17533#c7 :
 
-Both absolute and relative paths could be used for the attack.
+Correct, however in this case we document it as an install method, so
+I felt it deserved a CVE, had it not been documented/mentioned I would
+have not assigned a CVE at all since it would have been "example code"
+for lack of a better term.
 
-----------------------------------------------------------------------
- From https://sourceware.org/bugzilla/show_bug.cgi?id=17552 :
 
-strip and objcopy don't filter out .. components from paths inside archive.
 
-Consider an archive created with the following command:
+?
 
-$ printf '!<arch>\n%-48s%-10d`\n../file\n%-48s%-10s`\n' '//' 8 '/0' 0 > 
-test.a
+- -- 
+Kurt Seifried - Red Hat - Product Security - Cloud stuff and such
+PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-then runnig strip/objcopy on it will unlink ./file (e.g. 
-unlink("stq0g2tL/../st4Mtgu4/../file") ).
 
-Consider this:
 
-$ printf '!<arch>\n%-48s%-10d`\n../../file\n\n%-48s%-10s`\n' '//' 12 
-'/0' 0 > test.a
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-then runnig strip/objcopy on it will unlink ../../file (e.g. 
-unlink("staOxyFW/../../st4KIqLm/../../file") ).
-
-----------------------------------------------------------------------
-
-Could CVEs please be assigned to these issues?
-
--- 
-Alexander Cherepanov
+iQIcBAEBAgAGBQJTj+eTAAoJEBYNRVNeJnmTE70P/366TGsMWoMtRFsptB+MM9qf
+LHaqFzqt2TOd5yM8G5MfIzPtpTcA2XnvOo5fZMOsBhLEx2Sa2t8fV8c346QIGSlC
+ZTZecDGEN6DSYXEatnAT3V5RMo7K5RYbUUxhMhUL5/CtZ3t+960cCSVymfoCR2Ng
+G0w9WrOadVM0PNbJfz2LCatt+FU3kVoVBToqItOQ8Kn9WPGmG+y9P//BPv/cv9JO
+vwG3TXS1DQ8Xs7ioV7llE3dc5yG/7Tn9TJxRW0RJSh078gOrap/8kgfXTVsjigVR
+aWbe6jQAhc+gn7sa06lsKYHT53znql8qbk6BSlPxSceuXz1W042/w+elPKkKqQcJ
+zZc9UGi0hQe8iuswLasEwQJbdhdf14EtTVeovLxjdaKwpOoiwMZ+WT9RNDMNrVar
+utgu8kYgIYi33cd3ygRUJijwxpWn8415SNfAkq021eeUUJD1YHHMIrAgyT97wl+m
+MOxIVNpxWk4kKPru+1ROZglTS8QYLmWQeW7Qq9dzUHlWFtXZ497kAvPWMuArhns1
+ovmqHKQvIrWoN53qztksfejzXLUfF8FqZFAQIYUSx8snfAOn7avK+H4DWTogqD//
+bsCmbuukSr3sG6ZCXRcAK0EAL02FyPoWYbFV+0NesSdn4H0Zl02DvjH6N94SHWzN
+uNPQ43oTqoJaXC8uwLz5
+=Kr7J
+-----END PGP SIGNATURE-----
