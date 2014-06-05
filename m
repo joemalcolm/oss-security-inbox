@@ -1,17 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/6
-Message-ID: <1415010300.3552.43.camel@juliet.mcarpenter.org>
-Date: Mon, 03 Nov 2014 11:25:00 +0100
-From: Martin Carpenter <mcarpenter@...e.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: unzip -l crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/23
+Message-ID: <20140605152430.GA24637@openwall.com>
+Date: Thu, 5 Jun 2014 19:24:30 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Greg KH <greg@...ah.com>, Thomas Gleixner <tglx@...utronix.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2014-11-03 at 11:03 +0100, Martin Carpenter wrote:
-> I'll drop a line to the InfoZip guys via their web interface so that
-> they see these two conversations.
+Greg, Thomas -
 
-"ERROR: Spammer stay away!"
+On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
+> This was handled via linux-distros, hence the mandatory oss-security
+> posting.  The issue was made public earlier today, and is included in
+> this Debian advisory:
+> 
+> https://lists.debian.org/debian-security-announce/2014/msg00130.html
+> 
+> ---
+> CVE-2014-3153
+> 
+>     Pinkie Pie discovered an issue in the futex subsystem that allows a
+>     local user to gain ring 0 control via the futex syscall. An
+>     unprivileged user could use this flaw to crash the kernel (resulting
+>     in denial of service) or for privilege escalation.
+> ---
+> 
+> I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
 
-Does anyone have an upstream contact?
+Can you comment on how the four patches:
 
+Subject: [patch 1/4] futex-prevent-requeue-pi-on-same-futex.patch
+Subject: [patch 2/4] futex: Validate atomic acquisition in
+Subject: [patch 3/4] futex: Always cleanup owner tid in unlock_pi
+Subject: [patch 4/4] futex: Make lookup_pi_state more robust
+
+relate to these two on LKML:
+
+Subject: [PATCH 3.14 001/228] futex: Add another early deadlock detection check
+Subject: [PATCH 3.14 002/228] futex: Prevent attaching to kernel threads
+
+http://lists.openwall.net/linux-kernel/2014/06/05/179
+http://lists.openwall.net/linux-kernel/2014/06/05/176
+
+3.10:
+http://lists.openwall.net/linux-kernel/2014/06/04/894
+http://lists.openwall.net/linux-kernel/2014/06/04/893
+
+3.4:
+http://lists.openwall.net/linux-kernel/2014/06/05/437
+http://lists.openwall.net/linux-kernel/2014/06/05/436
+
+It appears that "futex: Add another early deadlock detection check" is
+assumed to have been applied, and is being revised further by "futex:
+Make lookup_pi_state more robust", but "futex: Prevent attaching to
+kernel threads" is a patch on its own, not touched by the four patches.
+Correct?  Should distros be applying "futex: Prevent attaching to kernel
+threads" as well (back-porting it as necessary)?  Does it have security
+impact (it appears so)?
+
+Thanks, and sorry for my confusion.
+
+Alexander
