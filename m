@@ -1,49 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/1
-Message-ID: <CAAJZzgb-59N7fEaQ27-c8g1ri0dUjDQsf45SAv+GcRwK5MyWwQ@mail.gmail.com>
-Date: Thu, 15 May 2014 02:35:53 +0200
-From: Mikkel Krautz <mikkel@...utz.dk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/12
+Message-ID: <5390079C.1050702@redhat.com>
+Date: Thu, 05 Jun 2014 16:01:00 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Mumble 1.2.6: Mumble-SA-2014-005 and Mumble-SA-2014-006
+CC: cve-assign@...re.org, carnil@...ian.org
+Subject: Re: CVE Request: Horde_Ldap: Stricter parameter check in bind() to detect empty passwords
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On 06/05/2014 05:51 AM, Salvatore Bonaccorso wrote:
+> Hi,
+>
+> Horde_Ldap released an update fixing a security issue mentioned in the
+> changes:
+>
+>> [jan] SECURITY: Stricter parameter check in bind() to detect empty
+>> passwords.
+>
+> https://github.com/horde/horde/commit/8f719b53b0ee2d4b8a40a770430683c98fb5f2fd
+>
+> fixed in 2.0.6 with commit:
+>
+> https://github.com/horde/horde/commit/4c3e18f1724ab39bfef10c189a5b52036a744d55
+>
+> Could a CVE be assigned for this issue?
+>
+> Regards,
+> Salvatore
+>
 
-Hi oss-security,
+Thanks for pointing this one out. FWIW, I discussed this issue with Kurt 
+Seifried and we believe it would be hardening fix, not a CVE-named issue.
 
-The Mumble team has just released Mumble 1.2.6, which contains fixes
-for the two following vulnerabilities:
+It seems this flaw could let you accidentally connect to an LDAP server 
+without a password, but the flaw in this scenario is in the LDAP server, 
+and this fix helps prevent you from doing that.
 
-  Mumble-SA-2014-005  [http://mumble.info/security/Mumble-SA-2014-005.txt]
-    - SVG images with local file references could trigger client DoS
+Some further explanations about this are available in 
+http://securitysynapse.blogspot.ca/2013/09/dangers-of-ldap-null-base-and-bind.html
 
-  Mumble-SA-2014-006  [http://mumble.info/security/Mumble-SA-2014-006.txt]
-    - The Mumble client did not properly HTML-escape some external strings
-       before using them in a rich-text (HTML) context.
+Cheers,
 
-Prepend '.sig' to the advisory URLs for detached PGP signatures
-(signed with my key).
-
-We would also kindly request that CVEs be assigned for the above issues.
-
-Thanks,
-Mikkel Krautz on behalf of the Mumble Team
-PGP: 4096R/41BCDD10
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
-
-iQIcBAEBCgAGBQJTdAu8AAoJEIxe9eJBvN0Qw6EQAL7+tgY3fHEigHfSw7L0d4Gf
-+f6r4uRuic/B8uoKho+7rI6hI4L/Ofr2zvGVnPRbZsrTeov3gK8fZ2rq65j1UtOx
-qtRyj3gwSKlEZV4w4ak9naEN9nNx4uZRR5RKs5GNSVw/zArKGQ6WxzRznJWVU1MB
-LWQk0thaQ2q0KOi39tivZVr5y0zQoDZU8Pq4XxeBtROpZJeLjgjEzUgMZZ89h/Hm
-WwX8N/QygTJzTOs1f3z/8U0AUeM3YP1qB62DA3UUWz9PlHBrIdro5skaBrQWO2k2
-kqjK6WnM1I0XTABiWVkjaUd9Q5HS60EDCW5Hg4i16IEFRI3UIH8v/9VSOth2GXG7
-Ku1Db/ZXqffxb+0PcJyZGjtZ1yx2TtDBJBxpiRln8XZ2MeHM03COJMN6CSbp/VFy
-oPtm4cypyqvmWBqwq8mTZFYPOyE+gSf8QluovYeC3/GUvnDkrcmRW11S4ManGL7k
-2slzvfFaNlV/kHtgisA2MvK+a1DuedCmq/zvN5g1AY3LsyGw6/8clEUPdweYSzlN
-lfhnkCpkLOTNUT4L493SoFZYxDUZqvU2BEcnd0CHnsIycQLXZx/iIgbIuPmwHatZ
-R7iUJB0VXoERnrk9eU0Nx2az4iG4PURQvwOnbYk99FH5HVzFAwtN3vOZfTeSWWOM
-Zxx8Mj6f70+UJHFGknvR
-=FRzo
------END PGP SIGNATURE-----
+--
+Murray McAllister / Red Hat Security Response Team
