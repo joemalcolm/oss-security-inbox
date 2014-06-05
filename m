@@ -1,84 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/07/3
-Message-ID: <CABRvpqDyXoeTWQMSN25u-xXTidYCmp=aFXyASSZq2E8ymOSCgA@mail.gmail.com>
-Date: Thu, 7 Aug 2014 00:00:06 -0400
-From: Andrew Nacin <nacin@...dpress.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: WordPress 3.9.2 release - needs CVE's
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/24
+Message-ID: <20140605154950.GS5422@outflux.net>
+Date: Thu, 5 Jun 2014 08:49:50 -0700
+From: Kees Cook <kees@...ntu.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-Thanks Kurt, this was next on my to-do list.
+On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
+> This was handled via linux-distros, hence the mandatory oss-security
+> posting.  The issue was made public earlier today, and is included in
+> this Debian advisory:
+> 
+> https://lists.debian.org/debian-security-announce/2014/msg00130.html
+> 
+> ---
+> CVE-2014-3153
+> 
+>     Pinkie Pie discovered an issue in the futex subsystem that allows a
+>     local user to gain ring 0 control via the futex syscall. An
+>     unprivileged user could use this flaw to crash the kernel (resulting
+>     in denial of service) or for privilege escalation.
 
-On Wed, Aug 6, 2014 at 11:42 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->
-> This release fixes a possible denial of service issue in PHP's XML
-> processing, reported by Nir Goldshlager of the Salesforce.com Product
-> Security Team. It was fixed by Michael Adams and Andrew Nacin of the
-> WordPress security team and David Rothstein of the Drupal security
-> team. This is the first time our two projects have coordinated on
-> joint security releases.
+Specifically, the futex syscall can leave a queued kernel waiter hanging
+on the stack. By manipulating the stack with further syscalls, the waiter
+structure can be altered. When later woken up, the altered waiter can
+result in arbitrary code execution in ring 0.
 
+This flaw is especially urgent to fix because futex tends to be
+available within most Linux sandboxes (because it is used as a glibc
+pthread primitive).
 
-Sigh. XML sucks and I somehow doubt many others are doing this right,
-either. PHP + libxml makes it pretty much impossible to parse an XML file
-safely. The issue was internal entity expansion (quadratic, not
-exponential). Not XXE and potentially not all that bad depending on server
-configuration.
+-Kees
 
-Per their security advisory, Drupal submitted a CVE request for this as
-well. This is actually a vulnerability in an external library (
-http://scripts.incutio.com/xmlrpc/). We use the library as-is, while they
-forked it. (Well, they took the class and broke it into individual
-functions — the code was the same and our patches differed only in coding
-standards.) Not sure how this should be handled.
-
-For WordPress, this affected versions 1.5 - 3.9.1 (except 3.7.4 / 3.8.4 --
-these were branch releases today in addition to 3.9.2).
-
-https://core.trac.wordpress.org/changeset/29405/branches/3.9
-
-- -Fixes a possible but unlikely code execution when processing widgets
-> (WordPress is not affected by default), discovered by Alex Concha of
-> the WordPress security team.
->
-
-This is an unsafe serialization vulnerability. Affected versions 3.9 and
-3.9.1.
-
-https://core.trac.wordpress.org/changeset/29389
-
-
-> - -Prevents information disclosure via XML entity attacks in the
-> external GetID3 library, reported by Ivan Novikov of ONSec.
->
-
-This is an XXE in GetID3, http://getid3.sourceforge.net/. Upstream
-CVE-2014-2053.
-Affected WordPress versions 3.6 - 3.9.1 (except 3.7.4 / 3.8.4)
-
-https://core.trac.wordpress.org/changeset/29390
-
-
-> - -Adds protections against brute attacks against CSRF tokens, reported
-> by David Tomaschik of the Google Security Team.
-
-
-Same reporter, same same line of code, but two separate issues here. One,
-when building CSRF tokens, the individual pieces were not separated by
-delimiter, so $action + $user_id could have been post_1 + user 23 or post
-12 + user 3. Second issue: Nonces were not being compared in a
-time-constant manner. Neither are easy to exploit.
-
-Affected WordPress versions 2.0.3 - 3.9.1 (except 3.7.4 / 3.8.4)
-
-https://core.trac.wordpress.org/changeset/29384
-https://core.trac.wordpress.org/changeset/29408
-
-- -Contains some additional security hardening, like preventing
-> cross-site scripting that could be triggered only by administrators.
->
-
-XSS: https://core.trac.wordpress.org/changeset/29398
-
-Affected WordPress versions 2.5 - 3.9.1 (except 3.7.4 / 3.8.4)
-
+-- 
+Kees Cook
