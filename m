@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/3
-Message-ID: <52F308A4.3060408@redhat.com>
-Date: Thu, 06 Feb 2014 14:59:32 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/26
+Message-ID: <20140605221854.GC3683@dirac.q-ix.net>
+Date: Fri, 6 Jun 2014 00:18:54 +0200
+From: Leon Weber <leon@...nweber.de>
 To: oss-security@...ts.openwall.com
-CC: 737778@...s.debian.org
-Subject: CVE request: f2py insecure temporary file use
+Subject: Re: CVE Request: OpenSSL NULL pointer dereference in do_ssl3_write
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 02.05.2014 14:33:12, Theo de Raadt wrote:
+> On 02.05.2014 12:17:57, Kurt Seifried wrote:
+> > Also cc'ing Theo so OpenBSD gets notified for sure. Speaking of
+> > which Theo: should we get you or an OpenBSD deputy (Bob Beck?) onto
+> > distros@?
+>
+> […]
+> 
+> We don't get paid.  And therefore, I don't know where I should find
+> the time to be on another mailing list.  It is not like I would have
+> sent a mail to anyone.  In general our processes are simply commit &
+> publish.  So I'll decline.
 
-Jakub Wilk reported insecure temporary file use in f2py. From 
-<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737778>:
+This seems noteworthy, regarding 
+<http://marc.info/?l=openbsd-misc&m=140199376121636&w=2>.
 
-""
-numpy/f2py/__init__.py contains this code:
+    -- Leon.
 
-      from numpy.distutils.exec_command import exec_command
-      import tempfile
-      if source_fn is None:
-          fname = os.path.join(tempfile.mktemp()+'.f')
-      else:
-          fname = source_fn
 
-      f = open(fname,'w')
-""
-
-Can a CVE please be assigned if one hasn't been already?
-
-References:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737778
-https://bugzilla.redhat.com/show_bug.cgi?id=1062009
-
-Thanks,
-
---
-Murray McAllister / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
