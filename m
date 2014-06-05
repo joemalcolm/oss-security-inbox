@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/11
-Message-ID: <53BCFF24.2010903@redhat.com>
-Date: Wed, 09 Jul 2014 18:36:52 +1000
-From: Garth Mollett <gmollett@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/18
+Message-ID: <20140605124325.GA21351@openwall.com>
+Date: Thu, 5 Jun 2014 16:43:25 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request - Snoopy incomplete fix for CVE-2008-4796
+Subject: Re: OpenSSL seven security fixes
 Content-Type: text/plain; charset=utf-8
 
-Please see: http://seclists.org/fulldisclosure/2014/Jul/16
+On Thu, Jun 05, 2014 at 04:31:33PM +0400, Solar Designer wrote:
+> This OpenSSL Security Advisory was just made public, along with new
+> OpenSSL releases 0.9.8za, 1.0.0m, 1.0.1h:
+> 
+> http://www.openssl.org/news/secadv_20140605.txt
+> 
+> More info on CVE-2014-0224 (one of the vulns fixed):
+> 
+> http://ccsinjection.lepidum.co.jp
 
-Note, the new fix [1] referenced in the above FD posts does not look to
-be a complete fix either and may still allow command injection.
+Even more:
 
-Snoopy upstream has been notified and a more complete fix that removes
-curl and instead uses native php code should be available shortly [2].
+https://www.imperialviolet.org/2014/06/05/earlyccs.html
 
-Thanks.
+Adam must have prepared (but not published) this blog post in advance,
+which is fine. :-)
 
-[1].
-https://raw.githubusercontent.com/cogdog/feed2js/master/magpie/extlib/Snoopy.class.inc
-[2].
-http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log
+The distros list was informed of the upcoming OpenSSL release a few days
+in advance, but detail on the vulnerabilities was being provided
+separately, on request from each specific distro individually (PGP
+encrypted).  Overall, I'd say the advance notification to distros was
+just right - not too much (only a few days), not too little (just
+enough), and without unnecessarily exposing the detail to distros who
+wouldn't need it.
 
--- 
-Garth Mollett / Red Hat Product Security
+A bit worrying is the statement that the "issue was reported to OpenSSL
+on 1st May 2014", though, but I appreciate the OpenSSL team making that
+statement (it's in the advisory).
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Alexander
