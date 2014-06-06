@@ -1,38 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/1
-Message-ID: <54114A31.4030406@redhat.com>
-Date: Thu, 11 Sep 2014 01:07:29 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: photini tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/12
+Message-Id: <201406061153.s56Brh0q021937@linus.mitre.org>
+Date: Fri, 6 Jun 2014 07:53:43 -0400 (EDT)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: PHP configure script and Lynis tool /tmp/ issues reported on full disclosure
 Content-Type: text/plain; charset=utf-8
 
-https://pypi.python.org/pypi/Photini
-Photini-14.09.0/setup.py:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> http://seclists.org/fulldisclosure/2014/Jun/21
+> https://bugzilla.redhat.com/show_bug.cgi?id=1104978
+
+Use CVE-2014-3981 for this issue in PHP.
 
 
-# extend install command to add menu shortcut
-class install(_install):
-    def run(self):
-        _install.run(self)
-        if self.dry_run:
-            return
-        if sys.platform.startswith('linux'):
-            icon_path = os.path.join(
-                self.install_purelib, 'photini/data/icon_48.png')
-            temp_file = '/tmp/photini.desktop'
-            with open(temp_file, 'w') as of:
-                for line in open('src/linux/photini.desktop').readlines():
-                    of.write(line)
-                of.write('Icon=%s' % icon_path)
-            self.spawn(['desktop-file-install', '--delete-original',
-temp_file])
-		
+> The second issue is Lynis ...
+> 2 runs on Fedora 20 revealed the following file being used each time:
+> 
+> /tmp/ffiYFc1nZ
+> 
+> I cannot find that in the source. I do not know if lynsis exec()'s any
+> other scripts or programs.
 
+We probably can't make a CVE assignment for this because the primary
+affected product is unknown, and this /tmp/ffiYFc1nZ observation might
+already be covered by a previous CVE. Lynis apparently runs many other
+scripts and programs; for example, there are hundreds of
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+  FIND=`
 
+lines.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+> The full disclosure report might be referring to the following in
+> include/tests_webservers:
+> 
+>   39     if [ "${OS}" = "AIX" ]; then
+>   40         TMPFILE=/tmp/lynis.$$
+
+We can make a CVE assignment corresponding to your disclosure of this
+lynis.$$ issue on oss-security. Use CVE-2014-3982. A CVE for this most
+likely won't (or shouldn't) have a
+http://seclists.org/fulldisclosure/2014/Jun/21 reference unless the
+original fulldisclosure author confirms the association.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTkat2AAoJEKllVAevmvmsYoYIAISk5kSEkjIDI0d1Ky3udkJm
+/gzIpiKm4gWudGac9z4D0rhxJmCy6JaGIN87n46CxgWUDCJoTCdgNx4HOs4czC7b
+CsLagZfSdcFH4rkKxfWMsoB4Kyc3kMNK2sVc+TgKY8Vbk2oY7S54to/mAcmMxN9I
+pT4KtMTK6w+XKIcMszD3reIgoxG35tRhvpqh8C/fZMY2H7XQgzn1Us2GqNV8emDG
+ckkZJgLvlgLIGn+NArogzd2noBhpR4MqhDfLNL7y5LV0mXbV7b0MSwYLB5Da8qU1
+tkODpivVlr49oDU50jznAVV/1Eg/KWqswY2ldTOy9k3jN4hw/1mp7wTBE4nTvCA=
+=Ltzt
+-----END PGP SIGNATURE-----
