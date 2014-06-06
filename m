@@ -1,88 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/08/5
-Message-Id: <201403080453.s284rBkK022811@linus.mitre.org>
-Date: Fri, 7 Mar 2014 23:53:11 -0500 (EST)
-From: cve-assign@...re.org
-To: solar@...nwall.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Linux-PAM pam_unix/unix_chkpwd is fail-open
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/19
+Message-ID: <21393.57760.955960.599403@gargle.gargle.HOWL>
+Date: Fri, 6 Jun 2014 17:43:28 +0200
+From: rf@...eap.de
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>>>>> "Greg" == Greg KH <greg@...ah.com> writes:
 
-This seems to be slightly different from the usual "fail-open"
-concept. There would be a traditional "fail-open" if a nonexistent
-helper program meant that all passwords were considered valid.
+    >> Thanks for the reply. I did read your earlier message. To answer
+    >> your question: I only apply patches that are absolutely necessary
+    >> to fix a known problem.
 
-In any case, if we understand the threat model correctly, there is no
-CVE assignment for this. The situation seems to be:
+    Greg> "known problem" to whom?  :)
 
-  (1) part of the PAM software needs to run a helper program by using
-      execve
+To the people on oss-security e.g? Published CVEs and obviously problems we
+experience on our installations.
 
-  (2) the purpose of the helper program is to check whether a password
-      is correct
+    Greg> With that kind of attitude, you are going to miss a lot of
+    Greg> valuable kernel fixes for issues.  I'd recommend using a
+    Greg> stable kernel release instead, but hey, it's your systems...
 
-  (3) the helper program is inherently a trusted program (it is under
-      the same administrative control as the PAM software)
+Probably something to tell Red Hat as well. They are still on 2.6.32 :)
+But they have their reasons just as we have ours ...
 
-  (4) the helper program could use a simple programming model in which
-      a zero exit status confirms that the password is correct, and no
-      other exit status confirms that
+    >> Want to make sure the changed stuff doesn't lead to a regression
+    >> somewhere else.
 
-  (5) if the helper program is correctly written, and the operating
-      system is behaving normally, this programming model is
-      sufficient
+    Greg> Nothing is ever "sure" in software.
 
-  (6) however, some people feel that this is not good enough.
-      Specifically, they feel that the PAM software must have a
-      defense against the possibility that the helper program has a
-      minor logic error in which it sometimes has an unintended zero
-      exit status.
+That's not totally new to me :) So let's say "as sure as possible". 
 
-  (7) there are two examples of ways to have this defense: (A) the
-      exit status of the helper program is not used, and instead the
-      helper program must print "authorized" or (B) the helper program
-      must exit with the status 0x0a00ff7f, which is less likely to
-      occur with a logic error
+    >> Futex stuff is a central component in the kernel ... I can't
+    >> judge about any possible side effects from reading the code ...
+    >> and this kernel is going on a number of production clusters.
 
-Is (5) above inaccurate? In other words, is the threat model that the
-PAM software is realistically sometimes used on systems in which
-waitpid determines that WIFEXITED was true and WEXITSTATUS was zero,
-even though the actual code path of the helper program provided a
-nonzero exit status? Are we, for example, anticipating kernel bugs or
-hardware bugs that cause this?
+    Greg> Test it out first, like you should any update.  There are
+    Greg> futex test suites out there, run them yourself to verify that
+    Greg> nothing is broken.  As for if it fixes potentially future
+    Greg> problems that others might not know about, well, that's a
+    Greg> gamble on everyone's part, right?
 
-If not, then why is 0x0a00ff7f implemented only for this
-interprocess-communication case, and not for in-process function
-calls? In other words, any time that a C program calls a
-security-critical function and tests for a return value of zero,
-shouldn't this be changed to a return value of, for example,
-0x0a00ff7f? Any function might have a minor logic error in which it
-calls "return;" or reaches the end, even though "return -1" was
-intended.
+Right. Thanks for the hint with the test suites. Will try them out.
 
-Going back to the execve case, one downside of the Owl change is that
-a custom helper program designed for another distribution apparently
-has to be modified before it is used on Owl. In other words,
-maintainability is reduced a little, apparently in favor of a
-defense-in-depth security improvement. This is not the type of
-scenario that would typically have a CVE ID.
+    >> Anyway, I've applied all the (2+4) patches to our 3.12.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+    Greg> Why are you "stuck" at 3.12?
 
-iQEcBAEBAgAGBQJTGp7xAAoJEKllVAevmvms+aIH/1ThcAu0CzkYUe6uxZ62lc7Z
-hNTCveHhOx6t4LG1RIY9IlWWAO7vfLYzsqLn0Xdw7q4JCzcmGk0T5zIFRejAF52r
-vEbGhTwdZD5dbZAQzECrbw2fB4MUdpIx8tmFSJmfNBBRAfEe6wJAFRJSxWpElz5/
-TUk2gVrlPyVZtwGDAbRwG7iOgOlIZOxmfbx/LfgoJ7v1F29BthzNGOpcYmCHbUoK
-3NBUuJBqgOsFthesEAvanMQAnB8MWxCecBiG0vyUhmdSn0gSx4JFcvqAsuDilGku
-bCKfhFIXddzucQCVmHKzf0R5B9QSQtANRzUCbo8hHVqENh2eBmEXvxe0VjHihrA=
-=ndsk
------END PGP SIGNATURE-----
+We need quite a bit of out-of-kernel.org stuff. Without staying on a
+fixed release for some time, this is non-maintainable.
+
+    Greg> There is someone still maintaining 3.12-stable, why not rely
+    Greg> on those releases if you want that kernel version, instead of
+    Greg> rolling your own?
+
+We thankfully do rely on that as our base. In this case though, the
+patches haven't been ported until this moment. And I can't wait for them
+to appear since there is no time-line when that will happen ...
+
+Thanks for your comments,
+
+Roland
+
+-------
+http://www.q-leap.com / http://qlustar.com
+          --- HPC / Storage / Cloud Linux Cluster OS ---
