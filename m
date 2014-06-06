@@ -1,57 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/4
-Message-ID: <548AE95E.1070109@reactos.org>
-Date: Fri, 12 Dec 2014 14:10:54 +0100
-From: Pierre Schweitzer <pierre@...ctos.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/4
+Message-ID: <20140606033827.GO507@oevtugenva.nrevsny.pk>
+Date: Thu, 5 Jun 2014 23:38:27 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: denial of service in suricata
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-So, here to have an attack possible, it would require to send gzipped
-traffic (as expressed in the bug report) and to "hope" that zlib somehow
-fails in the process (due to low memory situation or to old zlib) with
-Z_STREAM_ERROR, so that we have cascade with a NULL pointer being
-propagated so that there's a segfault?
-
-Or am I wrong with my scenario?
-
-On 12/12/2014 02:02 PM, Victor Julien wrote:
-> On 12/12/2014 01:56 PM, Pierre Schweitzer wrote:
->> It appears, looking at bug #1272 [1] in Suricata, that it was
->> possible to crash Suricata with specific packets due to a bug in
->> the libhtp (which got fixed with libhtp 0.5.16).
->>
->> It got fixed with the release 2.0.5 from Suricata.
->>
->> Was a CVE already assigned to this issue? Otherwise can a CVE be
->> assigned?
->>
->> With my best regards,
->>
->> [1]: https://redmine.openinfosecfoundation.org/issues/1272
->>
->>
+On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
+> Hi,
 > 
-> To our knowledge this couldn't be triggered by specific traffic
-> conditions. Rather it seemed to be an issue when:
+> This was handled via linux-distros, hence the mandatory oss-security
+> posting.  The issue was made public earlier today, and is included in
+> this Debian advisory:
 > 
-> - older zlib versions were used that didn't always setup properly for
-> a reason unknown to us
+> https://lists.debian.org/debian-security-announce/2014/msg00130.html
 > 
-> OR
+> ---
+> CVE-2014-3153
 > 
-> - extreme memory pressure (malloc's failing)
+>     Pinkie Pie discovered an issue in the futex subsystem that allows a
+>     local user to gain ring 0 control via the futex syscall. An
+>     unprivileged user could use this flaw to crash the kernel (resulting
+>     in denial of service) or for privilege escalation.
+> ---
 > 
-> Cheers,
-> Victor
-> 
+> I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
+> as well as back-ports of those by John Johansen of Canonical, who wrote:
 
+Maybe I'm missing something, but I can't find any statement of what
+version these patches are intended to apply cleanly to. They don't
+apply to latest stable.
 
--- 
-Pierre Schweitzer <pierre@...ctos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4277 bytes)
+Rich
