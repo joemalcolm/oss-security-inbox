@@ -1,63 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/2
-Message-Id: <20140819084601.077F0C502AB@smtptsrv1.mitre.org>
-Date: Tue, 19 Aug 2014 04:46:01 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: FreeNAS default blank password
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/20
+Message-ID: <20140606155846.GA179@oevtugenva.nrevsny.pk>
+Date: Fri, 6 Jun 2014 11:58:46 -0400
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Jun 06, 2014 at 05:43:28PM +0200, rf@...eap.de wrote:
+>     Greg> There is someone still maintaining 3.12-stable, why not rely
+>     Greg> on those releases if you want that kernel version, instead of
+>     Greg> rolling your own?
+> 
+> We thankfully do rely on that as our base. In this case though, the
+> patches haven't been ported until this moment. And I can't wait for them
+> to appear since there is no time-line when that will happen ...
 
-> My understanding is default/blank admin credentials now == CVE
+Indeed. This is probably the biggest security flaw in Linux in the
+past 5 years (if not the biggest ever) since it allows a full kernel
+compromise even from extremely tight sandboxes. In my opinion, the way
+the announcement was handled was really unprofessional. There should
+have been fixes prepared for, and/or committed into the git repos for,
+all currently maintained releases/branches at the time of the
+announcement. Anything else leaves everybody but users of the big
+mainstream distros scrambling to figure out how to get a
+non-vulnerable kernel that's compatible with their current setups.
 
-There isn't a precise rule of this type. For example, there may be
-situations in which the blank credentials can only be entered over a
-trusted interface (for some definition of "trusted" that is consistent
-with the vendor's security policy and otherwise reasonable for the
-product's context).
-
-> So an attacker can easily race the admin to the WebGUI, set a new
-> password
-
-Similarly, "race the admin to the WebGUI" situations don't always
-qualify for CVE IDs. There are many products in which the full
-functionality of install.php is available to the first client who
-visits install.php. A product can have a design constraint that
-installation must not require the person to have any ability to use a
-command line (or other non-browser method) for any part of the initial
-product setup. This design constraint was historically reasonable for
-some types of shared web hosting, for example.
-
-For this FreeNAS case, the blank password seems unreasonable because
-
-  -- the requirement for a reboot implies that the product is not
-     intended for use in constrained scenarios such as shared web
-     hosting
-
-  -- the web interface exposes a root shell. This is quite different
-     from a case where use of install.php has a consequence limited to
-     "the machine ends up with a web application that wasn't supposed
-     to be there, and maybe some disk consumption or other minor
-     resource consumption."
-
-Use CVE-2014-5334.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT8w43AAoJEKllVAevmvms7TMH/3OLAq98z/Vd1WH9/RLD2iPe
-WmHVg1RVCL45cVnbnZ8VGyHxbnJmGv1FsTVSBuKs58/y5NZEUdZvpcGMS6lf3JGm
-8u03oK6eJ9WCPF6v/b++ezr373pJjZhYcpH0IgL37dvItIAx5dZKqmyYgwTbivWG
-1R0sy+4vj+kqZ8c1udDtUEMfEsVuWq1iR//J8CDyLTWjf93WAThZUa2PXJE8RDNK
-vQjGIaruqa89eEap8SPJkdtRSo3mQoykFa6A7fqStsd/76kEA1M45f1Q9g2zavuo
-V2Q7xjJIUPrlWv4J+n6b4rEEJWLeAPconuOSnPHfJpijkfdo1Nyi3dQxWtyu7a4=
-=e9C0
------END PGP SIGNATURE-----
+Rich
