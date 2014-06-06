@@ -1,86 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/1
-Message-ID: <CAKWKj9MKQXUUAbPRa6F0xj+T_bnHzyRd33adH1+1QkhdMkoX0Q@mail.gmail.com>
-Date: Thu, 2 Jan 2014 10:16:05 +0800
-From: Steve Kenworthy <steveyken@...il.com>
-To: cve-assign@...re.org
-Cc: Stephen Kenworthy <stephen.kenworthy@...le.oxon.org>, oss-security@...ts.openwall.com,  Henri Salo <henri@...v.fi>, joernchen@...noelit.de
-Subject: Re: CVE request: Fat Free CRM multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/9
+Message-ID: <21393.34254.878396.478030@gargle.gargle.HOWL>
+Date: Fri, 6 Jun 2014 11:11:42 +0200
+From: rf@...eap.de
+To: Thomas Gleixner <tglx@...utronix.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-Thanks for CVE-2013-7249.
+>>>>> "Thomas" == Thomas Gleixner <tglx@...utronix.de> writes:
 
-Re: "destroy", ordinarily, this would be true as that commit fragment just
-removes the destroy route. However, in this case there has not been any
-actual code to delete the user in this controller (user deletion is handled
-elsewhere in a separate admin section). The effect of the "  , :except =>
-[:index, :destroy]" commit was simply to tighten up the routes, rather than
-leaving exposed a route that didn't actually perform a delete function.
+Hi Thomas,
 
-Hope that makes sense. Let me know if you have any other outstanding
-questions.
+    >> On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
+    >> > On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
+    >> > > I've attached patches by Thomas Gleixner (four e-mails, in
+    >> > > mbox format), as well as back-ports of those by John Johansen
+    >> > > of Canonical, who wrote:
+    >> >
+    >> > Maybe I'm missing something, but I can't find any statement of
+    >> > what version these patches are intended to apply cleanly
+    >> > to. They don't apply to latest stable.
+    >>
+    >> Thomas - can you answer Rich's question?  This is about patches
+    >> you sent on June 3 to linux-distros, which Kees then saved into
+    >> an mbox file.
 
+    Thomas> They should apply cleanly, if all stable tagged futex
+    Thomas> patches before that are applied.
 
+could you please clarify whether
 
-On Tue, Dec 31, 2013 at 10:57 PM, <cve-assign@...re.org> wrote:
+f0d71b3dcb8332f7971b5f2363632573e6d9486a futex: Prevent attaching to kernel threads
+866293ee54227584ffcb4a42f69c1f365974ba7f futex: Add another early deadlock detection check
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> > I can confirm for issue 3 that the disclosure also involves to_xml.
-> > Please assign the additional CVE ID.
->
-> Use CVE-2013-7249.
->
->
-> > Re: denial of service, I don't believe this is an issue as the exploit
-> > only relates to read operations.
->
-> OK, there is no CVE assignment for this. Just for clarification, the
-> "denial of service" theory was related to:
->
->
-> https://github.com/fatfreecrm/fat_free_crm/commit/cf26a04b356ad2161c4c6160260eb870a3de5328
->
-> specifically:
->
->    -  resources :users, :id => /\d+/ do
->    +  resources :users, :id => /\d+/, :except => [:index, :destroy] do
->
-> and:
->
->    -   it "recognizes and generates #destroy" do
->    -      { :delete => "/users/1" }.should route_to(:controller =>
-> "users", :action => "destroy", :id => "1")
->    +    it "doesn't recognize #destroy" do
->    +      { :delete => "/users/1" }.should_not be_routable
->
-> in which a reader might infer that a "destroy" of some data associated
-> with a user account would be a denial of service.
->
-> Our understanding now is that the presence of ":destroy" in the added
-> code string:
->
->    , :except => [:index, :destroy]
->
-> does not prevent any type of attack, and therefore it is not a
-> vulnerability fix.
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
->
-> iQEcBAEBAgAGBQJSwtq0AAoJEKllVAevmvmsd7IH/1zw1OPyRZMnweFANOFheRMg
-> QfJxobXUXBHa30uZeRaOBujRNzx/ptTl0CrfyCSDpktcXQ803TW8MmfOCwEfzvym
-> 8QtH41XTxkXDzVNujl5jtVCMCEw9+/zPYvvsRT9vrQPNp1F2cIkUxcggn3PGJ4Et
-> Exuo83rI5ciyWgPOdB/s748PhPNRPIw8rx5zahxw9fepsxNnlXngdpGmxa6dD4YU
-> NZ7pNjc2RpUq22gVcSks17/JnqetCrvkwmUgTHT0VbYhu/c+Zf7DUd/vL6uvkmxh
-> GUUJsmsP/oUwmWrw8a4m2/cKFYMjORsOYK1KU2IjhtezddiiysOtg6E/eEs1SZQ=
-> =RNUF
-> -----END PGP SIGNATURE-----
->
+absolutely have to be applied as well for the CVE's to be fixed and
+functionality being OK otherwise? I need to backport to 3.12.x. The patches
+for 3.13 sent by Alexander applied cleanly to latest 3.12.
 
+Thanks,
+
+Roland
+
+-------
+http://www.q-leap.com / http://qlustar.com
