@@ -1,24 +1,163 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/13/5
-Message-ID: <20141013150930.74c3fb31@pc>
-Date: Mon, 13 Oct 2014 15:09:30 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/2
+Message-ID: <5391193C.3030005@canonical.com>
+Date: Thu, 05 Jun 2014 18:28:28 -0700
+From: John Johansen <john.johansen@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: ejabberd compression allows cirucumvention of encryption despite starttls_required
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-I think this deserves a CVE:
-http://mail.jabber.org/pipermail/operators/2014-October/002438.html
+On 06/05/2014 04:25 PM, Phil Turnbull wrote:
+> On 05/06/14 10:45, Solar Designer wrote:
+>> I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
+>> as well as back-ports of those by John Johansen of Canonical, who wrote:
+>>
+>> ---
+>> For anyone who is interested I've attached back ports of the patches to
+>>
+>>   3.13 - minor conflicts in patch 4. It has applied cleanly back to 3.2
+>> and
+>>   2.6.32 - conflict is in patches 3, and 4
+>> ---
+> 
+> Hi,
+> 
+> We are currently preparing Ksplice updates for our supported kernels and spotted
+> something odd in the 2.6.32 backport.
+> 
+> In patches-2.6.32.tgz:patches/0003-futex-Always-cleanup-owner-tid-in-unlock_pi.patch
+> there is this change (ignoring whitespace changes):
+> 
+>         curval = cmpxchg_futex_value_locked(uaddr, uval, newval);
+> -
+> -               if (curval == -EFAULT)
+> +       if (curval)
+>                 ret = -EFAULT;
+> 
+> which seems to change the behaviour of the function.
+> 
+> The purpose of the return value of cmpxchg_futex_value_locked changed in
+> 
+> 37a9d912b24f96a0591 "futex: Sanitize cmpxchg_futex_value_locked API"
+> 
+> which is not included in 2.6.32. This patch changes the return value to a
+> status code, but in 2.6.32 the return value is the value of the futex or
+> -EFAULT. With this backported patch, any futex with a non-zero value will
+> return -EFAULT.
+> 
+> Can you please clarify whether this change was intentional or is an error
+> introduced in the backport?
+> 
+gah, that is indeed an error in the patch, but I could swear I remember
+fixing this.
 
+The corrected patch is below
 
-Patch/Fix:
-https://github.com/processone/ejabberd/commit/7bdc1151b
+---
 
+>From d6b2a11dab074c1a28b497525a61dc448d7073d2 Mon Sep 17 00:00:00 2001
+From: Thomas Gleixner <tglx@...utronix.de>
+Date: Tue, 3 Jun 2014 12:27:07 +0000
+Subject: [PATCH 3/4] futex: Always cleanup owner tid in unlock_pi
+
+If the owner died bit is set at futex_unlock_pi, we currently do not
+cleanup the user space futex. So the owner TID of the current owner
+(the unlocker) persists. That's observable inconsistant state,
+especially when the ownership of the pi state got transferred.
+
+Clean it up unconditionally.
+
+Backport to 2.6.32:
+  conflicts: kernel/futex.c
+
+Signed-off-by: Thomas Gleixner <tglx@...utronix.de>
+Signed-off-by: John Johansen <john.johansen@...onical.com>
+Cc: Kees Cook <keescook@...omium.org>
+Cc: Will Drewry <wad@...omium.org>
+Cc: Darren Hart <dvhart@...ux.intel.com>
+Cc: stable@...r.kernel.org
+---
+ kernel/futex.c | 43 +++++++++++++++++++------------------------
+ 1 file changed, 19 insertions(+), 24 deletions(-)
+
+diff --git a/kernel/futex.c b/kernel/futex.c
+index 179f08f..7be53af 100644
+--- a/kernel/futex.c
++++ b/kernel/futex.c
+@@ -811,6 +811,7 @@ static int wake_futex_pi(u32 __user *uaddr, u32 uval, struct futex_q *this)
+ 	struct task_struct *new_owner;
+ 	struct futex_pi_state *pi_state = this->pi_state;
+ 	u32 curval, newval;
++	int ret = 0;
+ 
+ 	if (!pi_state)
+ 		return -EINVAL;
+@@ -835,25 +836,20 @@ static int wake_futex_pi(u32 __user *uaddr, u32 uval, struct futex_q *this)
+ 		new_owner = this->task;
+ 
+ 	/*
+-	 * We pass it to the next owner. (The WAITERS bit is always
+-	 * kept enabled while there is PI state around. We must also
+-	 * preserve the owner died bit.)
++	 * We pass it to the next owner. The WAITERS bit is always
++	 * kept enabled while there is PI state around. We cleanup the
++	 * owner died bit, because we are the owner.
+ 	 */
+-	if (!(uval & FUTEX_OWNER_DIED)) {
+-		int ret = 0;
+-
+-		newval = FUTEX_WAITERS | task_pid_vnr(new_owner);
+-
+-		curval = cmpxchg_futex_value_locked(uaddr, uval, newval);
++	newval = FUTEX_WAITERS | task_pid_vnr(new_owner);
+ 
+-		if (curval == -EFAULT)
+-			ret = -EFAULT;
+-		else if (curval != uval)
+-			ret = -EINVAL;
+-		if (ret) {
+-			spin_unlock(&pi_state->pi_mutex.wait_lock);
+-			return ret;
+-		}
++	curval = cmpxchg_futex_value_locked(uaddr, uval, newval);
++	if (curval == -EFAULT)
++		ret = -EFAULT;
++	else if (curval != uval)
++		ret = -EINVAL;
++	if (ret) {
++		spin_unlock(&pi_state->pi_mutex.wait_lock);
++		return ret;
+ 	}
+ 
+ 	spin_lock_irq(&pi_state->owner->pi_lock);
+@@ -2107,9 +2103,10 @@ retry:
+ 	/*
+ 	 * To avoid races, try to do the TID -> 0 atomic transition
+ 	 * again. If it succeeds then we can return without waking
+-	 * anyone else up:
++	 * anyone else up. We only try this if neither the waiters nor
++	 * the owner died bit are set.
+ 	 */
+-	if (!(uval & FUTEX_OWNER_DIED))
++	if (!(uval & ~FUTEX_TID_MASK))
+ 		uval = cmpxchg_futex_value_locked(uaddr, task_pid_vnr(current), 0);
+ 
+ 
+@@ -2144,11 +2141,9 @@ retry:
+ 	/*
+ 	 * No waiters - kernel unlocks the futex:
+ 	 */
+-	if (!(uval & FUTEX_OWNER_DIED)) {
+-		ret = unlock_futex_pi(uaddr, uval);
+-		if (ret == -EFAULT)
+-			goto pi_faulted;
+-	}
++	ret = unlock_futex_pi(uaddr, uval);
++	if (ret == -EFAULT)
++		goto pi_faulted;
+ 
+ out_unlock:
+ 	spin_unlock(&hb->lock);
 -- 
-Hanno Böck
-http://hboeck.de/
+2.0.0
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
