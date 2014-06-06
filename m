@@ -1,24 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/5
-Message-Id: <201411221706.19838.tmb@65535.com>
-Date: Sat, 22 Nov 2014 17:06:02 +0000
-From: Tim Brown <tmb@...35.com>
-To: oss-security@...ts.openwall.com
-Subject: Running Java across a privilege boundry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/11
+Message-Id: <201406061146.s56BkcQD021859@linus.mitre.org>
+Date: Fri, 6 Jun 2014 07:46:38 -0400 (EDT)
+From: cve-assign@...re.org
+To: fweimer@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dueno@...hat.com
+Subject: Re: [CVE request] Local privilege escalation in libfep
 Content-Type: text/plain; charset=utf-8
 
-All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Does anyone know of any obvious cases where Java is executed across a 
-privilege boundary? I'm specifically thinking of cases where it might be 
-executed via sudo, via another set[ug]id binary or where it gets called from 
-an untrusted working directory i.e. one not owned by the calling user? FWIW, 
-I'm looking at openjdk as it is distributed by various F/OSS distros which is 
-why I'm emailing this list in particular.
+> It was discovered that libfep uses UNIX domain sockets in the abstract
+> namespace in an insecure way.
 
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
+> https://github.com/ueno/libfep/commit/293d9d3f7565f01a9dc40b53259886832eaa2ace
 
-Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
+> Don't use abstract Unix domain sockets 
+
+> fep/control.c
+> -  sun.sun_path[0] = '\0';
+> -  memcpy (sun.sun_path + 1, path, strlen (path));
+
+> libfep/client.c
+> -  sun.sun_path[0] = '\0';
+> -  memcpy (sun.sun_path + 1, address, strlen (address));
+
+Use CVE-2014-3980.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTkanIAAoJEKllVAevmvms2zIH/2NbfRXcICXMYGBTIxDiPODL
+IVu+y28bpIy5Rt0hHn/oXTeL6Kd++B57LKu6Kh0P+QRDG0eD5vN+vlMjjkM3uf7r
+1U745tsLfjQy0moldprkzO9y1S8dIJzQu2LzkrpNMtb7kC3YiGmyARo5l8fntf+1
+ZCd42S85RdcOPFinLNOaLvNelz7dXFLzpCHfNJa2MhquBLUvrbX0mCtq9GbeQ5eC
+aKTP83qU3GNks/qmqYxwNhOktLVI5P9beKJe7oaU2clJEzWEAtcxIdt8iFoTvgdx
+31rvPSMoZCEZgHZNn3o9goUir6x/mGLjVVR7mZ+ra8TrKSBS3MmGl+gGJLHjin8=
+=xubs
+-----END PGP SIGNATURE-----
