@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/11/1
-Message-Id: <201404110124.s3B1NrmN005605@linus.mitre.org>
-Date: Thu, 10 Apr 2014 21:23:53 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/17
+Message-ID: <20140606142703.GA9610@inutil.org>
+Date: Fri, 6 Jun 2014 16:27:03 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: REJECT of CVE-2014-2750 (an extra CVE ID for Prosody)
+Subject: Re: CVE request: possible miniupnpc buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Apr 30, 2014 at 04:45:26PM +1000, Murray McAllister wrote:
+> Good morning,
+> 
+> It was pointed out in
+> https://bugzilla.redhat.com/show_bug.cgi?id=1085618 that miniupnpc
+> version 1.9 fixes a possible buffer overflow:
+> 
+> https://github.com/miniupnp/miniupnp/commit/3a87aa2f10bd7f1408e1849bdb59c41dd63a9fe9
+> 
+> I am not familiar with the code but it may be just a crash, with an
+> invalid read here (on line 131):
+> 
+> 129                         /* parse header lines */
+> 130                         for(i = 0; i < endofheaders - 1; i++) {
+> 131                                 if(colon <= linestart &&
+> header_buf[i]==':')
+> 
+> Can a CVE be assigned if one has not been already?
 
-CVE-2014-2750 will soon show up on the cve.mitre.org web site with a
-"REJECT" message. The correct CVE IDs for the "Uncontrolled Resource
-Consumption with XMPP-Layer Compression" report about Prosody are
-CVE-2014-2744 and CVE-2014-2745:
+This seems to have fallen through the cracks.
 
-  http://openwall.com/lists/oss-security/2014/04/09/1
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTR0OlAAoJEKllVAevmvms/PAIAIwvKs9yDC0JmkpFKkgzyqf3
-zsGsl9ed1FkBYB0W6RQu/b4CyFfHfDHDkwAioTMaXDqu9cbLqNr7xxaem5wbF5hc
-kr3SLrIg4+7OxGct0RDDBWkLDrFwghpOE2YZ6wjvhiDZctn5ChpUv2mqQIiF/aqD
-c/PscqMpjXz5DAccPzcqWMkca5PL15bRwFhXfPioM36tRDctZZWkLOxSQWIeuJ9h
-8jYXCr0fXUjxBQi3Cs5xCutstMBBUvjd+u6lHMM2kHqKz7OwR3A5HhvnlyztspDO
-HjzBJ+raAy3w7L1fbEd42nJH3d9Vrut7vrH6cNddMrcXtmgBYUtpaOITBq9+BGA=
-=CLLO
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
