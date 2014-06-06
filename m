@@ -1,57 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/9
-Message-ID: <20141207194236.GA27260@kroah.com>
-Date: Sun, 7 Dec 2014 11:42:36 -0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/7
+Message-ID: <alpine.DEB.2.10.1406060736080.23174@nanos>
+Date: Fri, 6 Jun 2014 07:37:03 +0200 (CEST)
+From: Thomas Gleixner <tglx@...utronix.de>
+To: Solar Designer <solar@...nwall.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Dec 07, 2014 at 01:08:00PM +0100, Lionel Debroux wrote:
-> > On Sat, Dec 6, 2014 at 7:35 PM, Greg KH <greg@...ah.com> wrote:
-> > > On Sat, Dec 06, 2014 at 03:22:58PM +0800, Shawn wrote:
-> > > >
-> > > > 2, ASLRv3? Hector Marco( the dude who disclosured offset2lib
-> > > > attack) sent a patch to the upstream:
-> > > > https://lkml.org/lkml/2014/12/4/839
-> > > >
-> > > > Even the upstream don't accept the patch, is this possible to
-> > > > backport it & maintain it for distro community?
-> > >
-> > > Upstream asked for some basic fixes to the patch (i.e. it wasn't
-> > > submitted in the needed format) before it could accept it, so I
-> > > doubt it's rejected yet.
-> > >
-> > > And of course a distro could backport and maintain it, it's a very
-> > > tiny patch, much smaller than what they normall backport.  Take it
-> > > up with the distros if you want this.
-> Tiny indeed. I'm surprised how few hunks it contains, given that
-> PAX_ASLR involves
-> $ grep CONFIG_PAX_ASLR pax-linux-3.17.4-test7.patch | wc -l
-> 25
-> hunks.
+On Fri, 6 Jun 2014, Solar Designer wrote:
 
-That's not a good comparison, as who knows what those config options do.
+> I've added CC to Thomas.
+> 
+> On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
+> > On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
+> > > I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
+> > > as well as back-ports of those by John Johansen of Canonical, who wrote:
+> > 
+> > Maybe I'm missing something, but I can't find any statement of what
+> > version these patches are intended to apply cleanly to. They don't
+> > apply to latest stable.
+> 
+> Thomas - can you answer Rich's question?  This is about patches you sent
+> on June 3 to linux-distros, which Kees then saved into an mbox file.
 
-And a "well written" option will never have a CONFIG_* option within the
-.c files, as that's not the normal way to implement features in the
-Linux kernel.
+They should apply cleanly, if all stable tagged futex patches before
+that are applied.
 
-> Is Hector Marco's ASLRv3 submission a much simpler reinvention of PaX's
-> ASLR wheel, or is it rather a smaller wheel which does less than PaX's
-> improved, field-tested ASLR does ?
+Thanks,
 
-I don't know, never looked at the PaX code, sorry.  Why not look at it
-yourself and compare it?
-
-> If the latter, I think it wouldn't be good to see another half-measure
-> integrated to mainline, until the next mainline ASLR defeat against
-> which PaX has protected for over a decade. Just my 2 cents.
-
-The reason PaX isn't in the main kernel tree is that no one has spent
-the time and effort to actually submit it in a mergable form.  So
-please, do so if you think this is something that is needed.
-
-thanks,
-
-greg k-h
+	Thomas
