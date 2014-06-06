@@ -1,27 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/7
-Message-ID: <20141113152209.GT5570@dhcp-25-225.brq.redhat.com>
-Date: Thu, 13 Nov 2014 16:22:09 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-7842 Linux kernel: kvm: reporting emulation failures to userspace
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/3
+Message-ID: <CAH8yC8=1DU=jiA=LRT2y3uUJ+nxuJbOQ9f2DWzqgsjOB6FCD1A@mail.gmail.com>
+Date: Thu, 5 Jun 2014 22:51:39 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: Hector Marco <hecmargi@....es>
+Cc: oss-security@...ts.openwall.com,  Full Disclosure List <fulldisclosure@...lists.org>, bugs@...uritytracker.com,  BugTraq <bugtraq@...urityfocus.com>
+Subject: Re: [FD] Bug in bash <= 4.3 [security feature bypassed]
 Content-Type: text/plain; charset=utf-8
 
-It was found that reporting emulation failures to user space can lead to
-either local or L2->L1 DoS.
+> 2014-06-03 16:16 GMT+02:00 Hector Marco <hecmargi@....es>:
+>
+> Hi everyone,
+>
+> Recently we discovered a bug in bash. After some time after reporting
+> it to bash developers, it has not been fixed.
+>
+> We think that this is a security issue because in some circumstances
+> the bash security feature could be bypassed allowing the bash to be a
+> valid target shell in an attack.
+>
+> We strongly recommend to patch your bash code.
+>
+> Why don't fix this bug by simple adding mandatory "if" clause ?
+> Any comments about this issue are welcomed.
+>
+>
+> Details at:
+> http://hmarco.org/bugs/bash_4.3-setuid-bug.html
+It looks like Rage Against The Cage has been rediscovered. Also known
+as Android ADB Setuid bug.
 
-In the case of local DoS attacker needs access to MMIO area or be able
-to generate port access. Note that on certain systems HPET is mapped
-to userspace as part of vdso (vvar) and thus an unprivileged user may
-generate MMIO transactions (and enter the emulator) this way.
-
-Upstream patches:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=fc3a9157d314
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a2b9e6c1a35a
-
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1163762
-
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Jeff
