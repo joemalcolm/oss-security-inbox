@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/01/2
-Message-ID: <20140801101259.GA18750@suse.de>
-Date: Fri, 1 Aug 2014 12:12:59 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: ben@...er.org
-Subject: Possible CVE request: subversion MD5 collision authentication leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/21
+Message-ID: <20140606160449.GA15751@kroah.com>
+Date: Fri, 6 Jun 2014 09:04:49 -0700
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Jun 06, 2014 at 11:58:46AM -0400, Rich Felker wrote:
+> On Fri, Jun 06, 2014 at 05:43:28PM +0200, rf@...eap.de wrote:
+> >     Greg> There is someone still maintaining 3.12-stable, why not rely
+> >     Greg> on those releases if you want that kernel version, instead of
+> >     Greg> rolling your own?
+> > 
+> > We thankfully do rely on that as our base. In this case though, the
+> > patches haven't been ported until this moment. And I can't wait for them
+> > to appear since there is no time-line when that will happen ...
+> 
+> Indeed. This is probably the biggest security flaw in Linux in the
+> past 5 years (if not the biggest ever) since it allows a full kernel
+> compromise even from extremely tight sandboxes. In my opinion, the way
+> the announcement was handled was really unprofessional. There should
+> have been fixes prepared for, and/or committed into the git repos for,
+> all currently maintained releases/branches at the time of the
+> announcement. Anything else leaves everybody but users of the big
+> mainstream distros scrambling to figure out how to get a
+> non-vulnerable kernel that's compatible with their current setups.
 
-The subversion list has fixed a md5 collision attack possibility.
+That was planned, but something happened which caused the issue to
+"leak" much too early.  It was not intentional at all, but rather a
+human error.  The parties involved are very sorry about it, there was no
+malicious intention at all involved.
 
-http://mail-archives.apache.org/mod_mbox/subversion-dev/201407.mbox/%3C53DAB4A7.8030004%40reser.org%3E
+Stuff happens, sorry.
 
-http://svn.apache.org/r1550691
-http://svn.apache.org/r1550772
-
-The referenced E-Mail speaks about CVE request, so not sure who will assign
-one.
-
-Ciao, Marcus
+greg k-h
