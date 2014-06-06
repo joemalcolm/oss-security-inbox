@@ -1,18 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/13
-Message-ID: <20140227214455.7b00220e@redhat.com>
-Date: Thu, 27 Feb 2014 21:44:55 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request: askbot xss
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/14
+Message-ID: <20140606140513.GA12114@kroah.com>
+Date: Fri, 6 Jun 2014 07:05:13 -0700
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: Thomas Gleixner <tglx@...utronix.de>
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Fri, Jun 06, 2014 at 11:11:42AM +0200, rf@...eap.de wrote:
+> >>>>> "Thomas" == Thomas Gleixner <tglx@...utronix.de> writes:
+> 
+> Hi Thomas,
+> 
+>     >> On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
+>     >> > On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
+>     >> > > I've attached patches by Thomas Gleixner (four e-mails, in
+>     >> > > mbox format), as well as back-ports of those by John Johansen
+>     >> > > of Canonical, who wrote:
+>     >> >
+>     >> > Maybe I'm missing something, but I can't find any statement of
+>     >> > what version these patches are intended to apply cleanly
+>     >> > to. They don't apply to latest stable.
+>     >>
+>     >> Thomas - can you answer Rich's question?  This is about patches
+>     >> you sent on June 3 to linux-distros, which Kees then saved into
+>     >> an mbox file.
+> 
+>     Thomas> They should apply cleanly, if all stable tagged futex
+>     Thomas> patches before that are applied.
+> 
+> could you please clarify whether
+> 
+> f0d71b3dcb8332f7971b5f2363632573e6d9486a futex: Prevent attaching to kernel threads
+> 866293ee54227584ffcb4a42f69c1f365974ba7f futex: Add another early deadlock detection check
 
-askbot version 0.7.49 fixes reflected XSS in question, tag and user
-search forms.  Further links in our bugzilla:
+As people keep asking me this, I'll respond with, "why wouldn't you
+apply them"?
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1070852
+They are going to be in the next kernel stable releases, along with the
+other 4 patches, so I recommend them for your custom kernels as well.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+greg k-h
