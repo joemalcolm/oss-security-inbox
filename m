@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/3
-Message-Id: <201405290653.s4T6rO7A021269@linus.mitre.org>
-Date: Thu, 29 May 2014 02:53:24 -0400 (EDT)
-From: cve-assign@...re.org
-To: rdecvalle@...are.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Fwd: [ruby-core:62800] [ruby-trunk - Bug #9709] Large string causes SEGV with x64-mingw32
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/22
+Message-ID: <20140606161525.GB179@oevtugenva.nrevsny.pk>
+Date: Fri, 6 Jun 2014 12:15:25 -0400
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Jun 06, 2014 at 09:04:49AM -0700, Greg KH wrote:
+> On Fri, Jun 06, 2014 at 11:58:46AM -0400, Rich Felker wrote:
+> > On Fri, Jun 06, 2014 at 05:43:28PM +0200, rf@...eap.de wrote:
+> > >     Greg> There is someone still maintaining 3.12-stable, why not rely
+> > >     Greg> on those releases if you want that kernel version, instead of
+> > >     Greg> rolling your own?
+> > > 
+> > > We thankfully do rely on that as our base. In this case though, the
+> > > patches haven't been ported until this moment. And I can't wait for them
+> > > to appear since there is no time-line when that will happen ...
+> > 
+> > Indeed. This is probably the biggest security flaw in Linux in the
+> > past 5 years (if not the biggest ever) since it allows a full kernel
+> > compromise even from extremely tight sandboxes. In my opinion, the way
+> > the announcement was handled was really unprofessional. There should
+> > have been fixes prepared for, and/or committed into the git repos for,
+> > all currently maintained releases/branches at the time of the
+> > announcement. Anything else leaves everybody but users of the big
+> > mainstream distros scrambling to figure out how to get a
+> > non-vulnerable kernel that's compatible with their current setups.
+> 
+> That was planned, but something happened which caused the issue to
+> "leak" much too early.  It was not intentional at all, but rather a
+> human error.  The parties involved are very sorry about it, there was no
+> malicious intention at all involved.
+> 
+> Stuff happens, sorry.
 
-> https://bugs.ruby-lang.org/issues/9709
-> https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/45534
+Thanks for the clarification!
 
-> * string.c (str_buf_cat): should round up the capacity by 4KiB,
->   but not number of rooms.   [Bug #9709]
-
-> -     capa = (total + 4095) / 4096;
-> +     capa = (total + 4095) / 4096 * 4096;
-
-Use CVE-2014-3916.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJThtdWAAoJEKllVAevmvmscQ4H/RsUSP/RBota103N7qNmMXOs
-Lvt843wccI7jGQxtGXRgtqh8cIZqVPsbbZ/qkvEhbQDHkWdnE37qeHpPudhsJ/tG
-SLpiYAlr7oOjX1g3jXP1eViuuUWlv6rISO0uT3FDBbPmWO//yqWA0Wg3bCsYSGIp
-n4uDiMwJLO4nmx9LcJSZpT2Wsz+aqMuZKU0SN1HAcg/Br4odhhlos+6P98NHs8hk
-JTyWe3kWimvKm55lRF/TI7YqPNAWayc/UOypT8WLnCZ6l5y9K2kizO6xRymfPZCI
-YjWgdu/pcpRz2Oa5r7sR76jHqxuTTMJP2t6W+BSa+Ob4m63q9qRUx73rv2JU8HM=
-=pWl2
------END PGP SIGNATURE-----
+Rich
