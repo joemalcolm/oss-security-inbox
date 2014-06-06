@@ -1,46 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/29/3
-Message-ID: <53D7F13E.7070103@redhat.com>
-Date: Tue, 29 Jul 2014 21:08:46 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/18
+Message-ID: <20140606152120.GA13400@kroah.com>
+Date: Fri, 6 Jun 2014 08:21:20 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE Request] glibc iconv_open buffer overflow (was: Re:  Re: glibc locale issues)
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-On 07/21/2014 02:17 PM, Florian Weimer wrote:
-> On 07/14/2014 04:15 AM, Tavis Ormandy wrote:
->> Tavis Ormandy <taviso@...xchg8b.com> wrote:
->>
->>> I just remembered another charset issues I had looked into but
->>> abandoned.
->>>
->>> First of all, I think the need_so logic in gconv_trans is broken, but
->>> even
->>> if it worked there is an off by one error in __gconv_translit_find() (it
->>> does + 3 instead of + 3 + 1 in the allocation.
->>
->> To be clear, I suspect this is exploitable. It would be nice if you could
->> modify the buffer such that gconv will open a path with a string you've
->> appended it (e.g. CHARSET=//. pkexec ./../../../../tmp/foo.so),
->
-> This is about the glib part and the alias processing, right?
->
-> iconv/gconv_charset.h:strip() normalizes the transliteration argument to
-> iconv_open, so the resulting file names follow a particular pattern, and
-> there cannot be enough slashes to ascend to a writable directory.
->
->> if not maybe the one byte overflow is still exploitable.
->
-> Hmm.  How likely is that?  It overflows in to malloc metadata, and the
-> glibc malloc hardening should catch that these days.
+On Fri, Jun 06, 2014 at 04:24:23PM +0200, rf@...eap.de wrote:
+> >>>>> "Greg" == Greg KH <greg@...ah.com> writes:
+> 
+>     Greg> On Fri, Jun 06, 2014 at 11:11:42AM +0200, rf@...eap.de wrote:
+>     >> >>>>> "Thomas" == Thomas Gleixner <tglx@...utronix.de> writes:
+>     >>
+>     >> Hi Thomas,
+>     >>
+>     >> >> On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
+>     >> >> > On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer
+>     >> >> > wrote:
+>     >> >> > > I've attached patches by Thomas Gleixner (four e-mails, in
+>     >> >> > > mbox format), as well as back-ports of those by John
+>     >> >> > > Johansen of Canonical, who wrote:
+>     >> >> >
+>     >> >> > Maybe I'm missing something, but I can't find any statement
+>     >> >> > of what version these patches are intended to apply cleanly
+>     >> >> > to. They don't apply to latest stable.
+>     >> >>
+>     >> >> Thomas - can you answer Rich's question?  This is about
+>     >> >> patches you sent on June 3 to linux-distros, which Kees then
+>     >> >> saved into an mbox file.
+>     >>
+>     Thomas> They should apply cleanly, if all stable tagged futex
+>     Thomas> patches before that are applied.
+>     >>
+>     >> could you please clarify whether
+>     >>
+>     >> f0d71b3dcb8332f7971b5f2363632573e6d9486a futex: Prevent attaching
+>     >> to kernel threads 866293ee54227584ffcb4a42f69c1f365974ba7f futex:
+>     >> Add another early deadlock detection check
+> 
+>     Greg> As people keep asking me this, I'll respond with, "why
+>     Greg> wouldn't you apply them"?
+> 
+>     Greg> They are going to be in the next kernel stable releases, along
+>     Greg> with the other 4 patches, so I recommend them for your custom
+>     Greg> kernels as well.
+> 
+> Thanks for the reply. I did read your earlier message. To answer your
+> question: I only apply patches that are absolutely necessary to fix a
+> known problem. 
 
-Not necessarily on 32-bit architectures, so I agree with Tavis now, and 
-we need a CVE.  The upstream bug is:
+"known problem" to whom?  :)
 
-   <https://sourceware.org/bugzilla/show_bug.cgi?id=17187>
+With that kind of attitude, you are going to miss a lot of valuable
+kernel fixes for issues.  I'd recommend using a stable kernel release
+instead, but hey, it's your systems...
 
-The discussion on the libc-alpha mailing list about the fix is still 
-ongoing, and nothing has been committed yet.
+> Want to make sure the changed stuff doesn't lead to a regression
+> somewhere else.
 
--- 
-Florian Weimer / Red Hat Product Security
+Nothing is ever "sure" in software.
+
+> Futex stuff is a central component in the kernel ... I can't judge
+> about any possible side effects from reading the code ...  and this
+> kernel is going on a number of production clusters.
+
+Test it out first, like you should any update.  There are futex test
+suites out there, run them yourself to verify that nothing is broken.
+As for if it fixes potentially future problems that others might not
+know about, well, that's a gamble on everyone's part, right?
+
+> Anyway, I've applied all the (2+4) patches to our 3.12. 
+
+Why are you "stuck" at 3.12?  There is someone still maintaining
+3.12-stable, why not rely on those releases if you want that kernel
+version, instead of rolling your own?
+
+thanks,
+
+greg k-h
