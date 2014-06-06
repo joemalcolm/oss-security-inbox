@@ -1,106 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/3
-Message-ID: <52D8CD2C.4050600@redhat.com>
-Date: Thu, 16 Jan 2014 23:26:52 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: imapsync default version check with,http://imapsync.lamiral.info information leakage (CVE-2013-4279)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/8
+Message-ID: <53916CE6.9090308@redhat.com>
+Date: Fri, 06 Jun 2014 17:25:26 +1000
+From: David Jorm <djorm@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 06/04/2014 01:37 AM, Tim wrote:
+> Hi David,
+>
+>> Sorry for the absurdly late reply to this thread. I finally found time to do
+>> some testing on OpenJDK 1.7.0_45. I can confirm Tomas' assessment that
+>> setExpandEntityReferences() and
+>> setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true) have no bearing on
+>> whether or not entity references are expanded, nor do they purport
+>> to.
+> Yeah, you gotta love FEATURE_SECURE_PROCESSING.  It's just like
+> calling a website "secure" because it uses SSL.
+>
+> I agree that these features don't purport to turn off certain
+> dangerous features, but to a developer who doesn't know what parameter
+> entities are, they could very easily assume they are safe with
+> setExpandEntityReferences(false).
+>
+>
+>> Applications that process attacker-supplied XML using Xerces are vulnerable
+>> to SSRF attacks unless they use both
+>> setFeature("http://xml.org/sax/features/external-parameter-entities", false)
+>> and setFeature("http://xml.org/sax/features/external-general-entities",
+>> false).
+>>
+>> The OWASP XXE document should be updated to mention
+>> external-parameter-entities. I will do this as soon as my OWASP wiki account
+>> is approved.
+> Feel free to use this as a reference for other thoughts on what
+> developers should be wary of:
+>    http://vsecurity.com/download/papers/XMLDTDEntityAttacks.pdf
 
-imapsync http://imapsync.lamiral.info/
+This is a fantastic paper, I have no edits to propose. I read through it 
+today, and I have already found one rather interesting flaw related to 
+the attack detailed on page 11. I'll be sure to reference this paper in 
+the relevant advisory.
 
-Title: imapsync default version check with
-http://imapsync.lamiral.info information leakage (CVE-2013-4279)
-
-Threat: Availability: no timeout so an attacker simply sends a slow
-response
-Threat: Confidentiality: connects to http://imapsync.lamiral.info and
-sends version # and operating system name and person version
-
-Impact: Moderate (Medium)
-CVSS2: 6.4/AV:N/AC:L/Au:N/C:P/I:P/A:P
-
-Affected: imapsync version 1.580 and earlier
-
-Description: By default imapsync runs a "release check" when executed,
-this causes imapsync to connect to http://imapsync.lamiral.info and
-send information about the version of imapsync, the operating system
-and perl.
-
-This feature is not well documented. It is enabled by default. The
-only hint it exists is the "--noreleasecheck" which is not documented
-anywhere other then running the program with the help option.
-
-Affected code:
-
-sub imapsync_version_public {
-    my $local_version = imapsync_version();
-	my $imapsync_basename = imapsync_basename();
-    my $agent_info = "$OSNAME system, perl "
-		. sprintf("%vd", $PERL_VERSION)
-        . ", Mail::IMAPClient $Mail::IMAPClient::VERSION"
-        . " $imapsync_basename";
-    my $sock = IO::Socket::INET->new(
-        PeerAddr => 'imapsync.lamiral.info',
-        PeerPort => '80',
-		Proto => 'tcp'
-        ) ;
-	return( 'unknown' ) if not $sock ;
-    print $sock
-        "GET /prj/imapsync/VERSION HTTP/1.0\n",
-        "User-Agent: imapsync/$local_version ($agent_info)\n",
-        "Host: ks.lamiral.info\n\n";
-    my @line = <$sock>;
-    close($sock);
-	my $last_release = $line[-1];
-    chomp($last_release);
-    return($last_release);
-}
-
-Suggested solution:
-
-1) $releasecheck should be changed to default to 0 (False) and convert
-- --noreleasecheck to --releasecheck
-2) this feature should use HTTPS to prevent information leakage to
-attackers
-3) or disable this feature entirely
-
-Workaround:
-
-Make sure you also use --noreleasecheck when running imapsync (maybe
-alias the full command?).
-
-Timeline:
-
-2013-Aug-22: notified upstream vendor at gilles.lamiral@...oste.net
-2014-Jan-16: public release (what can I say, I got busy).
-
-External links:
-Red Hat: https://bugzilla.redhat.com/show_bug.cgi?id=1000215
-
-I can also handle notifying all the other vendors no problem via
-distros@ list.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJS2M0sAAoJEBYNRVNeJnmT7rAP/jk813TQ7pJJ/zNQu01ZQpCq
-S7GXDAz6YsbprkoPDmaPGduCS7czsBXXJQKQWQfn25nJGGVdNeMOtD2PPfe22CT8
-A4ZfwG9J8Rnc7THrkSqBD1Bn/IRmcaLqA/D+5RyFm3AhvDpq4MXCBti9f8Jq4m98
-YTISjfjEIX1dctVWXZe/6uh+d3T1/pO1R0WlIawcnzVfzPZVtTlSXjddshHPUijM
-C/xZkA79s3nFS3Ec9Sg4Nei3Jttmm4K4tBZmNA5zUh6cMQKRDMJe9HBxaJ6hGoW7
-Mm1A2fjRswFP+bVtgmZ7yvp6IniBEFky10TmRvqOWvD30azSlXFOcgGXyCBAhGDz
-Zs/R54LoAQY+22veBcdEK9CPKhv6GPrIEVLEsRdi2y1d9BEhTkVu39lfHGX4tjIG
-zPoye1L2TCBbjgEdNhf2c/NejBeW4HyxbsEo2zlZyBeDzzT6p5OqFrmTdSuBlszP
-wA9euuoKmt/2FnL17b9E/pco9ph1iIRZjRP88L8wvBGg96danuLJT6NfOIFi+h7R
-euW2P7lHQ9aPiE+vOMkahh6SSD4y7s4jmnxi5ng9NHODecl3/K/rlFg92AeV52L9
-xlgPvTqUlVdZtRkO6okbw1Vv33OBUMqXhxJS/FLvp5+walpiNMwFGLDWPLJjUju2
-erqpozG+5DNAnSSagpPy
-=qhx7
------END PGP SIGNATURE-----
+David
