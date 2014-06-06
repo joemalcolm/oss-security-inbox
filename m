@@ -1,46 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/36
-Message-Id: <20141002170513.E6BBD7BC01A@smtpvmsrv1.mitre.org>
-Date: Thu,  2 Oct 2014 13:05:13 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Mediawiki before 1.19.20, 1.22.12, 1.23.5 XSS through CSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/6
+Message-ID: <20140606051614.GP507@oevtugenva.nrevsny.pk>
+Date: Fri, 6 Jun 2014 01:16:14 -0400
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Cc: Thomas Gleixner <tglx@...utronix.de>
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Jun 06, 2014 at 07:51:17AM +0400, Solar Designer wrote:
+> I've added CC to Thomas.
+> 
+> On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
+> > On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
+> > > I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
+> > > as well as back-ports of those by John Johansen of Canonical, who wrote:
+> > 
+> > Maybe I'm missing something, but I can't find any statement of what
+> > version these patches are intended to apply cleanly to. They don't
+> > apply to latest stable.
+> 
+> Thomas - can you answer Rich's question?  This is about patches you sent
+> on June 3 to linux-distros, which Kees then saved into an mbox file.
 
-> https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-October/000163.html
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=70672
-> (bug 70672) SECURITY: OutputPage: Remove separation of css and js module allowance.
-> https://gerrit.wikimedia.org/r/#/c/164271/
+It does apply cleanly against 3.15-rc8 (with a few offsets). After
+applying, the resulting futex.c differs from the current version in
+the mainline repo by a single-byte typo in a comment.
 
-> No longer segment module origin allowance
-
-It seems best to assign only one CVE ID for the availability of CSS
-in an apparently unintended context, with resultant impacts of both
-XSS and UI redressing. Use CVE-2014-7295.
-
-
-> While at it, also remove the ability to set the module allowance directly.
-
-This change seems to be about eliminating unused and possibly
-confusing functionality, not a separate vulnerability fix.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJULYVrAAoJEKllVAevmvms9wMH/0z2JxQOGiKWh6m7opKgeBEK
-Z/9hLV0dmmLdXGnBo2o3HK/J0h1bYklT6+TEdQ1ESJ4EIHlejB7WsUnQY4XlSlzA
-LtqFxRIBhbwVOdv+UGgdZXfNGaPoMflZqa1KSYa6vb9rIxoc3CPglM/59qSc6XCN
-3Xr3mu8E9fbNT7YsZeatVhzxUh6QYHJ5JpOx7z/xiwGNqZfDqqb/eh4p70FcVPY6
-bsykRXmmOwLIujsn47gSCW+g383F4vTFj7AyhIDahZXOWbm4hwJJWG6mi/MWsd3L
-/nIfzN6UQfSu6EFuMLDg1+/qfJPWi9kzal/XtTG3zu54DKRqedn5UZ/EdxzrbGE=
-=iYhQ
------END PGP SIGNATURE-----
+Rich
