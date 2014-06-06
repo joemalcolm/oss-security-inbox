@@ -1,20 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/3
-Message-ID: <CABoG-=WFe8UUEBsC6cOXwMmWGWoi3ZpyyVifn1afRgdPKo9YZw@mail.gmail.com>
-Date: Mon, 20 Oct 2014 09:17:20 +0000
-From: Stephen Röttger <stephen.roettger@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/13
+Message-ID: <5391B03D.4030601@debian.org>
+Date: Fri, 06 Jun 2014 13:12:45 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+Subject: Re: Re: [FD] Bug in bash <= 4.3 [security feature bypassed]
 Content-Type: text/plain; charset=utf-8
 
->What about RFC 5906 and the current authentication schemes
-> (http://www.eecis.udel.edu/~mills/ntp/html/authentic.html) ?
+On 06/06/14 03:51, Jeffrey Walton wrote:
+> It looks like Rage Against The Cage has been rediscovered. Also known
+> as Android ADB Setuid bug.
 
-The protocol from RFC 5906 is completely broken:
-  http://www.eecis.udel.edu/~mills/security.html
-  http://zero-entropy.de/autokey_analysis.pdf
+It appears to be the same class of implementation error (calling
+setuid() without checking whether it succeeded) in a different codebase
+- analogous to the way lots of codebases have an off-by-one buffer
+overflow, without off-by-one buffer overflows all being rediscoveries of
+the same bug.
 
-The symmetric schemes are probably fine but hard to set up. But it looks
-like the NIST provides authenticated NTP:
-http://www.nist.gov/pml/div688/grp40/auth-ntp.cfm
+If something invokes bash (e.g. via system()) with untrusted input while
+setuid, I would argue that that's a vulnerability in the invoking
+process; the fact that bash tries to drop privileges is a hardening
+measure (attempting to mitigate other projects' vulnerabilities). So I'd
+characterize this as "bash had a hardening measure that doesn't work as
+well as it was meant to". It's still a bug, and it would still be good
+if the maintainers of bash fixed it so it could mitigate future
+vulnerabilities.
+
+In my view, setuid[1] processes are the ones doing something unusual and
+risky, so the onus should be on the authors of setuid code to:
+
+* consider whether it actually needs to be setuid
+* if it does, implement it securely
+* drop privileges as soon as feasible
+* avoid using libraries that are not designed and documented to be
+  setuid-safe, at least until after privileges have been irrevocably
+  dropped
+
+(that last point is not relevant here but is relevant in general)
+
+    S
+
+[1] or setgid, or setcap +ep
 
