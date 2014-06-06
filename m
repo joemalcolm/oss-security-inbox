@@ -1,77 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/2
-Message-ID: <79047.1404367766@critter.freebsd.dk>
-Date: Thu, 03 Jul 2014 06:09:26 +0000
-From: "Poul-Henning Kamp" <phk@....freebsd.dk>
-To: Solar Designer <solar@...nwall.com>
-cc: Marek Kroemeke <kroemeke@...il.com>, oss-security@...ts.openwall.com, varnish-misc@...nish-cache.org
-Subject: Re: Varnish - no CVE == bug regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/10
+Message-ID: <1402050135.3596.16.camel@dynamo>
+Date: Fri, 06 Jun 2014 11:22:15 +0100
+From: Patrick J Cherry <patrick@...emark.co.uk>
+To: oss-security@...ts.openwall.com
+Subject: Request for CVE: Bytemark Symbiosis
 Content-Type: text/plain; charset=utf-8
 
->> Latest version of Varnish cache (4.0.1 https://www.varnish-cache.org/ ) has 
->> the same DoS vulnerability that 3.x had (which was subsequently fixed in
->> that branch). 
+Symbiosis is an easy to use collection of tools, utilities, and
+configuration files for mass hosting virtual domains using Apache, Exim,
+Dovecot, PureFTPD, and several other daemons.
 
-Official response of the Varnish Project:
------------------------------------------
+The code behind the system is freely available, and it is widely used by
+at least one hosting company.  The code itself is available, along with
+documentation, here:
 
-It is of course a mistake to have such a regressions and we'll fix
-that (and any other relevant bugs we become aware of).
+    http://symbiosis.bytemark.co.uk/
 
-But this is not a DoS vulnerability, and a CVE is not warranted.
+Unfortunately releases between these two mercurial identifiers contained
+a significant flaw:
 
-Explanation:
-------------
+changeset:   cbb56af035bb
+date:        Thu Jun 05 18:54:22 2014 +0100
 
-Varnish is a server side cache, which speeds up delivery of HTTP
-objects coming from one or more backend HTTP servers (typically
-apache, ngnix etc.)
+changeset:   99e920baf1f7
+date:        Tue Jul 07 15:27:26 2009 +0100
 
-By definition Varnish must explicitly and implicitly trust the
-backend HTTP server -- it is the only source of authority it has over
-the HTTP content.
+Attackers could arbitrarily blacklist individual IP addresses in the
+firewall using specially crafted usernames, providing a vector for
+denial of service attacks.
 
-Therefore, if your backend is compromised, your Varnish will
-faithfully serve whatever bogus contents the attackers put on your
-homepage, so I really don't think that the attackers being able to
-force an automatic restart of the varnish in front of it, is what
-you should be worried about.
+This flaw was fixed with the following commit:
 
-Once you fix your backend, Varnish will work the same as always.
+https://projects.bytemark.co.uk/projects/symbiosis/repository/diff?rev_to=733b0e33f60b&rev=cbb56af035bb
 
+Please could a CVE identifier be allocated such that we may use it in
+our documentation.
 
-Even deeper explanation:
-------------------------
-
-Notice that all the reported issues causes assert failures ?
-
-About 10% of Varnish source code are asserts in one form or another,
-to make sure that Varnish does not operate on bogus data or violate
-invariants.
-
-There are many error situations so pathlogical that an assert is
-the only relevant error handling.  Adding a lot of code to handle
-an obscure error condition gracefully, means that you have a lot
-of code which never gets run and therefore may contain *real* bugs
-or vulnerabilities.
-
-Our goal is that you should never be able to cause an assert from
-the client side -- that we would consider a DoS attack -- and
-eventually we may set the same goal for the backend side.
-
-But given that we trust the backend ultimately, and that varnish
-and the backend are both controlled by the same HTTP content
-owner, that is not a particular high priority for us:  If your
-backend is that screwed, it doesn't really matter what Varnish does
-anyway.
-
-Also notice, that Varnish is designed to automatically restart after
-an assert, so very little, if any service disruption takes place
-as a result of these asserts.  These automatic restarts can be
-disabled if you prefer.
+Thanks
 
 -- 
-Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
-phk@...eBSD.ORG         | TCP/IP since RFC 956
-FreeBSD committer       | BSD since 4.3-tahoe    
-Never attribute to malice what can adequately be explained by incompetence.
+Patrick J Cherry
+Director of operations                        http://www.bytemark.co.uk/
+Bytemark Hosting                               tel: +44 (0) 1904 890 890
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
