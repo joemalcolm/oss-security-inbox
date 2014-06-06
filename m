@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/7
-Message-ID: <CAA7hUgGRshZPyRuAcTbVg5cE6_m7h1CUFDa8jOpEpRRqt+aRJA@mail.gmail.com>
-Date: Mon, 17 Nov 2014 13:48:39 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/5
+Message-ID: <20140606035116.GA26803@openwall.com>
+Date: Fri, 6 Jun 2014 07:51:17 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Thomas Gleixner <tglx@...utronix.de>
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-On 17 November 2014 13:33, Hanno Böck <hanno@...eck.de> wrote:
-[...]
-> What should we do with that?
-> a) is it an unappropriate use of less to view untrusted files and we
-> should teach users so? (I seriously never would've thought of that - and
-> which average "just learned how to use the shell" user would've?)
-> b) tell linux distros that lesspipe is insecure and shouldn't be
-> enabled?
-> c) fuzz all the tools in there and report at least the
-> low-hanging-fruit-bugs? (and then maybe try to replace the
-> "they-don't-fix-bugs-or-don't-have-a-dev-any-more"-tools with more
-> secure ones)
+I've added CC to Thomas.
 
-d) acknowledge the fact that most tools were not "designed for
-security" and that we should talk about mitigation. It's about risk
-analysis.
+On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
+> On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
+> > I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
+> > as well as back-ports of those by John Johansen of Canonical, who wrote:
+> 
+> Maybe I'm missing something, but I can't find any statement of what
+> version these patches are intended to apply cleanly to. They don't
+> apply to latest stable.
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Thomas - can you answer Rich's question?  This is about patches you sent
+on June 3 to linux-distros, which Kees then saved into an mbox file.
+
+Thanks!
+
+Alexander
