@@ -1,41 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/5
-Message-ID: <54A24291.1010809@internot.info>
-Date: Tue, 30 Dec 2014 17:13:37 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: Double Free in PHP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/07/2
+Message-Id: <201406070251.s572p7r6019892@linus.mitre.org>
+Date: Fri, 6 Jun 2014 22:51:07 -0400 (EDT)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: possible miniupnpc buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On 30/12/14 17:02, cve-assign@...re.org wrote:
-> No, CVE-2014-9425 is only for the Zend/zend_ts_hash.c issue with:
->
->   142        tsrm_mutex_free(ht->mx_reader);
->   143        tsrm_mutex_free(ht->mx_reader);
->
-> We generally can't change the scope of a CVE ID to include additional
-> bugs after that CVE ID has been sent to oss-security. Otherwise,
-> anyone developing a remediation for a CVE would typically see their
-> remediation suddenly become incomplete because the meaning of the CVE
-> changed.
-Yes, that's my bad, sorry.
-For some reason I saw CVE-2014-9425 as the
-/ext/fileinfo/libmagic/apprentice.c CVE-ID, too, that you provided in a
-private email.(For reference on the mailing list, this bug:
-https://bugs.php.net/bug.php?id=68665)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Also, for example, information showing a double-free issue (aka
-> CWE-415) would not be combined with information showing a
-> use-after-free issue (aka CWE-416). That situation would have two CVE
-> IDs even if the reports were sent together and were, say, specifically
-> about PHP 5.6.4.
-OK, great.
+> It was pointed out in
+> https://bugzilla.redhat.com/show_bug.cgi?id=1085618 that miniupnpc
+> version 1.9 fixes a possible buffer overflow:
+> 
+> https://github.com/miniupnp/miniupnp/commit/3a87aa2f10bd7f1408e1849bdb59c41dd63a9fe9
+
+> On a related note ... in version 1.9, miniwget.c:
+> 
+> 173                         n = header_buf_used - endofheaders;
+> 174                         memcpy(buf, header_buf + endofheaders, n);
+> 
+> Mixing the types together (and the signed int in the memcpy) may warrant
+> further investigation.
 
 
+> From: Murray McAllister <mmcallis@...hat.com>
+> Date: Thu, 01 May 2014 10:35:27 +1000
+> Subject: Re: [oss-security] CVE request: possible miniupnpc buffer overflow
 
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
+>> Mixing the types together (and the signed int in the memcpy) may warrant
+>> further investigation.
+
+> Upstream investigated this and found it to be safe.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Use CVE-2014-3985 for the buffer overflow.
+
+In the "investigated this and found it to be safe" sentence, "this"
+means only the second part of the original message, not the part about
+the buffer overflow. The while loop in the unpatched code before
+3a87aa2f10bd7f1408e1849bdb59c41dd63a9fe9 was not found to be safe.
+(For many people reading the second message, this may have been
+obvious because the "safe" sentence came after quoted text from only
+the second part of the original message.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTkn2vAAoJEKllVAevmvmsqxoIALD6sDb3SvERks8sXZBRxTs2
+CqC4ruw8M6zUXqaeO8U7wCr+2xQn+M+DDFmX9MmxoGVtQd0QPD+gZejXnwSIBj7v
+yCrBUAwvlU2u2hjPmOxSsXzgSSy+xdsXxiRMK4rqdN1RI5dgzTwHE5t+txwAKR0c
+Sq3Z0v63rCzb122M/diVfXYos8nCTG+2AwtIOFd1zkbCoHRFdfHdeHjXl1jbYhRU
++WKGHudUeNjqAyxg00PDpbz5KRo8zWpEMhQF9o8q5yY1lZyeo0A7iWXweGRb4g0M
+WANluLwi+12nc24zeViNUN/9rdjO3BCXQ7hYwTQLjQKUEmpfDSInlG1giZac0Tc=
+=D1eB
+-----END PGP SIGNATURE-----
