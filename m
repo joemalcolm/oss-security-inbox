@@ -1,59 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/1
-Message-ID: <5407DD63.80803@redhat.com>
-Date: Wed, 03 Sep 2014 21:32:51 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: heap overflow in procmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/07/5
+Message-ID: <20140607194056.GA2871@zoho.com>
+Date: Sat, 7 Jun 2014 19:40:56 +0000
+From: mancha <mancha1@...o.com>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-So this is potentially a very bad issue, so I'm assigning a CVE, sorry
-Mitre (safe assumption: they're all tucked away in bed like normal sane
-people =). Please use CVE-2014-3618 for this issue.
+On Fri, Jun 06, 2014 at 07:37:03AM +0200, Thomas Gleixner wrote:
+> 
+> They should apply cleanly, if all stable tagged futex patches before
+> that are applied.
 
-On 03/09/14 12:52 PM, Tavis Ormandy wrote:
-> I noticed a heap overflow in procmail when parsing addresses with
-> unbalanced quotes. I encountered this by accident when trying to
-> organize a large usenet archive, this post to rec.arts.poems causes
-> formail to crash.
-> 
-> https://groups.google.com/forum/message/raw?msg=alt.arts.poetry.comments/DCuLO3qzovI/CZk15MlfqNkJ
-> 
-> I've attached an mbox for reference.
-> 
-> $ formail -s < mbox > /dev/null
-> *** Error in `formail': free(): invalid next size (fast): 0x00007f103784a080 ***
-> Segmentation fault (core dumped)
-> $ rpm -q procmail
-> procmail-3.22-33.fc20.x86_64
-> 
-> 
-> It looks like the fix is
-> 
-> --- formisc.c 2013-08-04 00:13:33.000000000 -0700
-> +++ formisc.c 2014-09-03 11:42:25.986002396 -0700
-> @@ -84,12 +84,11 @@
->   case '"':*target++=delim='"';start++;
->        }
->       ;{ int i;
-> - do
-> + while(*start)
->     if((i= *target++= *start++)==delim) /* corresponding delimiter? */
->        break;
->     else if(i=='\\'&&*start)    /* skip quoted character */
->        *target++= *start++;
-> - while(*start); /* anything? */
->        }
->       hitspc=2;
->     }
-> 
-> 
-> Tavis.
-> 
+I've placed a consolidated CVE-2014-3153 patch for 3.10.x at:
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+http://sf.net/projects/mancha/files/sec/linux-3.10.41_CVE-2014-3153.diff
+
+Note: applies with trivial offsets to <3.10.37 due to f26c70a4.
+
+--mancha
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Content of type "application/pgp-signature" skipped
