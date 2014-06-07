@@ -1,27 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/14
-Message-ID: <5492F983.9020802@mccme.ru>
-Date: Thu, 18 Dec 2014 18:57:55 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-Subject: Re: Running Java across a privilege boundry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/07/6
+Message-ID: <alpine.DEB.2.10.1406080014220.3830@nanos>
+Date: Sun, 8 Jun 2014 00:16:17 +0200 (CEST)
+From: Thomas Gleixner <tglx@...utronix.de>
+To: rf@...eap.de
+cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
 Content-Type: text/plain; charset=utf-8
 
-On 2014-12-18 12:45, Jakub Wilk wrote:
-> * Tim Brown <tmb@...35.com>, 2014-12-18, 09:18:
->> The issue for anyone that was interested was as follows:
->>
->>> $ objdump -x /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java | grep RPATH
->>>
->>>  RPATH
->>> $ORIGIN/../lib/amd64/jli:bootstrap/jre/lib/amd64/jli:
->>> $ORIGIN/../lib/amd64:bootstrap/lib/amd64:
->>> $ORIGIN/../jre/lib/amd64:bootstrap/jre/lib/amd64
->
-> https://bugs.debian.org/754278
+On Fri, 6 Jun 2014, rf@...eap.de wrote:
+> >>>>> "Thomas" == Thomas Gleixner <tglx@...utronix.de> writes:
+> 
+> Hi Thomas,
+> 
+>     >> On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
+>     >> > On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
+>     >> > > I've attached patches by Thomas Gleixner (four e-mails, in
+>     >> > > mbox format), as well as back-ports of those by John Johansen
+>     >> > > of Canonical, who wrote:
+>     >> >
+>     >> > Maybe I'm missing something, but I can't find any statement of
+>     >> > what version these patches are intended to apply cleanly
+>     >> > to. They don't apply to latest stable.
+>     >>
+>     >> Thomas - can you answer Rich's question?  This is about patches
+>     >> you sent on June 3 to linux-distros, which Kees then saved into
+>     >> an mbox file.
+> 
+>     Thomas> They should apply cleanly, if all stable tagged futex
+>     Thomas> patches before that are applied.
+> 
+> could you please clarify whether
+> 
+> f0d71b3dcb8332f7971b5f2363632573e6d9486a futex: Prevent attaching to kernel threads
+> 866293ee54227584ffcb4a42f69c1f365974ba7f futex: Add another early deadlock detection check
+> 
+> absolutely have to be applied as well for the CVE's to be fixed and
+> functionality being OK otherwise? I need to backport to 3.12.x. The patches
+> for 3.13 sent by Alexander applied cleanly to latest 3.12.
 
-Shouldn't this be tracked as a security issue? I don't see it in Debian 
-security tracker. Why didn't you request CVE for it? Just curious.
+I really recommend f0d71b3dcb8332f7971b5f2363632573e6d9486a.
 
--- 
-Alexander Cherepanov
+866293ee54227584ffcb4a42f69c1f365974ba7f is made obsolete by the 4
+real fixes, but applying it first gets rid of the rejects.
+
+Thanks,
+
+	tglx
