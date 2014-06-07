@@ -1,36 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/35
-Message-Id: <E1XZ6i3-0007Rc-1M@rmm6prod02.runbox.com>
-Date: Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/07/3
+Message-Id: <201406070301.s57312XT020241@linus.mitre.org>
+Date: Fri, 6 Jun 2014 23:01:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: PHP configure script and Lynis tool /tmp/ issues reported on full disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 30 Sep 2014 17:35:21 +0000, Zach Wikholm <zwikholm@...i.net> wrote:
-> I don't think I've ever actually written to the list, but we also haven't ever encountered a bug like this. 
-> 
-> Personally, I think a bullet point list (or whatever people use these days) is needed of what all is actually wrong, what is broken and how we as a community can assist is desperately needed. Last time I checked there are a total of 6 CVEs currently assigned to bash related vulnerabilities and I'm sure there are more to come.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Here's my attempt to summarize the "situation so far".  As always, this is just my opinion.
+>>   39     if [ "${OS}" = "AIX" ]; then
+>>   40         TMPFILE=/tmp/lynis.$$
 
-1. What was actually wrong with Shellshock?
-The bash shell, until recently, specially interpreted ANY environment variable beginning with '() {' as a function definition to be imported. Unfortunately, there are many cases where environment variables contain data from attackers, e.g., web applications invoked using CGI, ssh in some cases, and dhcp clients in some cases.  Bash originally ran code after a closing "}", and that was quickly fixed.  But that solution was not enough; after the first bash patch any error in the bash parser suddenly became a security vulnerability (and bash's parser was NOT designed to be security-relevant).  That's why there are so many publicly-available vulnerabilities; there are lots of ways to break the parser.
+> We can make a CVE assignment corresponding to your disclosure of this
+> lynis.$$ issue on oss-security. Use CVE-2014-3982. A CVE for this most
+> likely won't (or shouldn't) have a
+> http://seclists.org/fulldisclosure/2014/Jun/21 reference unless the
+> original fulldisclosure author confirms the association.
 
-2. What's the solution/what is broken?
-Two approaches that resolve the problem have been created:
-* Approach 1: Florian Weimer's approach.  Bash functions to be exported have a prefix ("BASH_FUNC_") and suffix added.  Then, ONLY environment variables with that prefix and suffix are interpreted specially.  This approach is used by Red Hat, CentOS, Debian, Ubuntu, and Cygwin (at least), and was later accepted into bash upstream.  The original approach used "()" as the suffix; bash upstream took this but switched to the "%%" suffix instead, which is a nice improvement (since "%" is not a shell metacharacter this is less likely to trigger OTHER problems).  I know Cygwin is using the bash upstream '%%' suffix.   This breaks programs that directly set environment variables and expected bash to interpret them as imported functions, but these are rare (I've only heard about them in test harnesses).  The funny characters interfere with a few other programs (e.g., "at"), but programs are *supposed* to be able to handle such cases, so this is arguably revealing defects in *other* programs.
-* Approach 2: Christos Zoulas's approach.  This disables automatic import entirely, and requires an explicit request for function import.  This has been applied in FreeBSD and NetBSD.  This breaks any bash script that was expecting automatic import, and there are such things.  Since bash is *documented* to support this functionality, this is a more obvious functionality break.
+We have heard from the original fulldisclosure author, and have
+permission to continue with the public CVE assignments here. The new
+status is that CVE-2014-3982 refers only to the above unsafe use of
+/tmp/lynis.$$ on AIX. It's quite possible that Linux distributions
+won't produce any security updates mapping to CVE-2014-3982.
 
-Either of these approaches completely solves the shellshock problem as currently revealed publicly.  (Some of the CVE information is still not public, so it's *possible* there is another big reveal, but I have no indication of one.)  Approach #1 is a little more backwards-compatible; approach #2 is arguably stronger.  It's my preference that both be applied eventually, as a layered defense, but applying approach #2 *does* reduce functionality, which is why so many organizations are currently just applying approach #1 (Florian Weimer's).
+A second CVE ID, CVE-2014-3986, refers to this separate vulnerability
+on non-AIX platforms (i.e., any uname except for AIX):
 
-3. How can I help?
-Here are a few thoughts.
-First, of course, update your systems, make sure it uses at least approach 1 or 2.  (Unless someone has another full solution!)
-Second, if you manage a distro, make sure it includes the patch and fix problems like "at" which may now have problems.  I would suggest switching to upstream's '%%' suffix if you use Florian Weimer's approach.
-Third, help see if there are other variations of this attack, or ways to more strongly defend against them with limited problems.
-Fourth, consider tipping poor Chet Ramey (and the other bash developers).  He's been doing this for over 20 years, unpaid to my knowledge.
+  TMPFILE=`mktemp /tmp/lynis.XXXXXX`
+  ...
+  find ${I} -name "*.conf" -print >> ${TMPFILE}.unsorted
 
-Finally: *PLEASE* let me know if you have any good ideas on how to find vulnerabilities like this ahead-of-time. My article "How to Prevent the Next Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a number of ways that Heartbleed-like vulnerabilities could have been detected ahead-of-time, in ways that are general enough to be useful.  I'd like to do the same with Shellshock, so we can quickly eliminate a whole class of problems.
+This apparently allows a straightforward symlink attack against the
+${TMPFILE}.unsorted file. Credit for this discovery belongs to the
+same author as in the http://seclists.org/fulldisclosure/2014/Jun/21
+post.
 
---- David A. Wheeler
+(There are two CVE IDs because the provenance of the first full public
+disclosure is not the same, and because the scope of CVE-2014-3982 had
+already been defined.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTkn8OAAoJEKllVAevmvms5koH/RE9JjUTvar94cdrUd1XjlhJ
+B+lJS7H4oBrceS1aKg1kNtl8vHwlg7WsUzHKs4Ou7KIWHWTem3aMlz5p2C33mdM5
+4fyf0Cci6zg8vgkW1sTeKJaXtuZg/JddZwPv71ElcgR0WYxale+Esqy+EpAO1jNM
+i9Tsx9+1cY7IUu2BMd3X8mDxugNNufUeIeOCls7QMAkWdiW38+Gbx11Wj7EUMK8m
+PAuNuBVEVSsiA5GDSxaJr6ENTixip3O5PvCjB28txfJq0Si0xiBl2DgglxQ+eGRm
+OpHhK3cFY2XPRAZeu303Lhdm6vPWKMUL2ZM4aotf6hxf4ss4RKrczA/QauagIas=
+=7RvE
+-----END PGP SIGNATURE-----
