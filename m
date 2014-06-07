@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/11
-Message-ID: <5489F143.7030302@mccme.ru>
-Date: Thu, 11 Dec 2014 22:32:19 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/07/4
+Message-Id: <201406070304.s57340dv020615@linus.mitre.org>
+Date: Fri, 6 Jun 2014 23:04:00 -0400 (EDT)
+From: cve-assign@...re.org
+To: sgallagh@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Requesting CVEs issued for two XSS vulnerabilities in Djblets (a set of Django helpers)
 Content-Type: text/plain; charset=utf-8
 
-On 2014-12-08 18:36, Hanno Böck wrote:
-> Just to keep people updated on this:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks for this.
+> Djblets json_dumps ... User can change their display name to [an XSS
+>                        sequence]
+> https://code.google.com/p/reviewboard/issues/detail?id=3406
+> (the discoverer name begins with "uchida")
 
-> Jean-Francois Dockes replied to my bug reports, he's one of the last
-> people who did work on unrtf and he's in contact with the maintainer.
-> They'll work on fixing all the issues reported. I also pointed them to
-> Fabian's patch.
->
-> This sounds good, hopefully we'll get a new unrtf release with fixes
-> for all the known issues soon
+Use CVE-2014-3994.
 
-0.21.6 is out and seems to incorporate the fixes from Jean-Francois 
-Dockes (with reformatting). Expecting to find security mentioned in 
-ChangeLog or other docs is too much, I guess.
 
-I've fuzzed unrtf with the patch from Fabian Keil a bit and I've found 8 
-crashes (with different RIP). All of them are fixed in the version by 
-Jean-Francois Dockes (and hence in the release). If someone wants to 
-take a look at them I can upload them somewhere.
+> Djblets gravatar templates ... User can change their display name to
+>                                [an XSS sequence]
+> discoverer = Christian Hammond of Bean Bag, Inc. (author of Review Board)
 
-OTOH unrtf seems to be a recursive program:
+Use CVE-2014-3995.
 
-$ perl -e 'print "{" x 100000' > test.rtf
-$ unrtf-0.21.6/src/unrtf -P unrtf-0.21.6/outputs test.rtf
-Segmentation fault
 
--- 
-Alexander Cherepanov
+(There are two CVE IDs because of the two discoverers.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTkoDdAAoJEKllVAevmvmsFqIH/3KB48igwDOtf2uW8MvNVlIb
+uJloJ+rV1z6+aoAcdPSPkTfHta+EAzkkdrFAnSM2YDP1ClafQOiTkBO5HpXrbWew
+BH+AER+rPNBU1K1vgjVGX8Fu6+H+2u75s2ynQ9ejxLp358Xll6WlHvHlHyk5N4hc
+1KzG0gj6+ISb/HRRyF2ZI3nVHPYO9CQk1Ir06TAT5oVjbMGPXrFrC4BBNQ1z57sc
+cNmELtMkwBFbvOg4LTIDFikNY0yT019B+NCJ5MW5TI4WG1F/7VJGNaXbcR67597h
+z3Fo8VCfJu/syvWDnFwf9fX/+8AYeVm24BP+oMWhBxVC/PUBiM2QdRhChU5RFVQ=
+=uoZF
+-----END PGP SIGNATURE-----
