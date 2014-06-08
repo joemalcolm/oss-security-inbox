@@ -1,41 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/17
-Message-ID: <20140129231617.GA32154@hunt>
-Date: Wed, 29 Jan 2014 15:16:17 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/08/2
+Message-ID: <579691434.18985652.1402254991804.JavaMail.zimbra@redhat.com>
+Date: Sun, 8 Jun 2014 15:16:31 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ntu.com
-Subject: CVE Request: Juju phpmyadmin charm
+Subject: Re: transparency on message moderation
 Content-Type: text/plain; charset=utf-8
 
-Hello Kurt, vendors, MITRE,
+> general.  I also like to take this opportunity to thank Kurt Seifried,
+> Josh Bressers, and Vincent Danen for their help approving obviously
+> on-topic oss-security postings sometimes quicker than I do.
 
-Please assign a CVE for the following issue:
 
-I discovered a potentially unsafe use of PHP's preg_replace() /e option in
-the Juju charm phpmyadmin:
+I can't take credit for this. I'm probably the worst list moderator ever.
+It would certainly make sense to have someone replace me as a moderator,
+probably not from Red Hat to help avoid any possible conspiracies.
 
-$xml = simplexml_load_string(preg_replace("/(<\/?)media\:content([^>]*>)/e",
-    '', str_replace('media:hash',
-        'hash',
-	file_get_contents('https://sourceforge.net/api/file/index/project-id/23067/mtime/desc/limit/40/rss'))));
+Thanks.
 
-An attacker able to spoof ARP, DNS, or BGP, or control any of the routers
-between the client and sourceforge.net, or control over the sourceforge
-project or sourceforge servers, would be in a position to insert likely
-aribtrary code into the PHP interpreter.
-
-The full source of this file can be found at:
-
-http://bazaar.launchpad.net/~charmers/charms/precise/phpmyadmin/trunk/view/head:/bin/parse_upstream
-
-I have reported the bug to:
-
-https://bugs.launchpad.net/charms/+source/phpmyadmin/+bug/1274264
-
-The problem appears to have been introduced in revision 18. No fix is
-currently available.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+-- 
+    JB
