@@ -1,53 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/7
-Message-ID: <5310EAE5.6000104@debian.org>
-Date: Fri, 28 Feb 2014 20:00:37 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/09/1
+Message-ID: <CAPWnmWC-xSp-fa570sKE_DBfTd8dW8=jOSGK_NJHWA=eLngEBA@mail.gmail.com>
+Date: Sun, 8 Jun 2014 19:27:11 -0400
+From: rea <rea@....org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE requests: MediaWiki 1.22.3, 1.21.6 and 1.19.12 release
+Subject: Re: transparency on message moderation
 Content-Type: text/plain; charset=utf-8
 
-On 28/02/14 18:26, cve-assign@...re.org wrote:
-> The first CVE would, roughly, have a root cause of "does not
-> recognize that a trust relationship with a specific external site
-> is reasonably required for use of a namespace."
+On Jun 8, 2014 3:17 PM, "Josh Bressers" <bressers@...hat.com> wrote:
+>
+> > general.  I also like to take this opportunity to thank Kurt Seifried,
+> > Josh Bressers, and Vincent Danen for their help approving obviously
+> > on-topic oss-security postings sometimes quicker than I do.
+>
+>
+> I can't take credit for this. I'm probably the worst list moderator ever.
+> It would certainly make sense to have someone replace me as a moderator,
+> probably not from Red Hat to help avoid any possible conspiracies.
+>
+> Thanks.
+>
+> --
+>     JB
 
-Please note that (unless XML is being used very weirdly here) these
-URLs are not going to be dereferenced: "XML elements in namespace
-'http://ns.adobe.com/Flows/1.0/'" merely describes a set of elements,
-in the same way that "XML elements whose name starts with 'abc'"
-describes a set of elements. The trust relationship that seems to have
-been applied here goes something like this:
+I have no stake in the game. If you need a hand just let me know.
 
-    I trust that none of my users' SVG viewers will ever execute
-    JavaScript (etc.) as a result of seeing arbitrary
-    XML elements in the namespace <http://ns.adobe.com/Flows/1.0/>,
-    excluding any that I have specifically filtered out
-
-which doesn't seem like a great approach.
-
-(Analogously, you could say "my HTML sanitizer is going to allow all
-HTML elements that start with abc, because I'm pretty sure nobody will
-implement an element containing JavaScript that starts with abc"; that
-also seems an undesirable way to go about it, because as soon as some
-browser vendor decides that an <abcScript> element is their next great
-new feature, you have cross-site scripting.)
-
-If element is defined in the current SVG standard not to cause code
-execution, it's reasonable to think that all non-faulty SVG viewers
-will not execute arbitrary code for them; but extensibility means that
-it is not reasonable to believe that no SVG viewer will ever execute
-arbitrary code as a result of encountering elements that are *not* in
-the current SVG standard. Counter-example; imagine that SVG 2.0 is
-published tomorrow and adds a <javascript> element and an
-onGyroscopeMotion attribute to the SVG namespace, and browser vendors
-implement them. A blacklist-based sanitizer will not protect you from
-that instance of XSS.
-
-As with any extensible format that can contain scripting and will be
-interpreted by browsers, if untrusted SVG needs to be made safe, then
-sanitizing via a whitelist of known-good elements and attributes is
-the only safe way to deal with it. In the case of SVG, that whitelist
-is likely to be inconveniently long.
-
-    S
