@@ -1,70 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/1
-Message-Id: <201405050331.s453VdXt000574@linus.mitre.org>
-Date: Sun, 4 May 2014 23:31:39 -0400 (EDT)
-From: cve-assign@...re.org
-To: larry0@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: XSS in NextCellent Gallery 1.9.13 WordPress plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/09/4
+Message-ID: <20140609122858.76241291@redhat.com>
+Date: Mon, 9 Jun 2014 12:28:58 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: tim-security@...tinelchicken.org
+Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, 3 Jun 2014 08:27:47 -0700 Tim wrote:
 
-> XSS in NextCellent Gallery 1.9.13 WordPress plugin
+> > The description in Java API docs is rather brief, xerces docs have
+> > more details:
+> > 
+> > http://xerces.apache.org/xerces-j/features.html#create-entity-ref-nodes
+> > http://xerces.apache.org/xerces2-j/features.html#dom.create-entity-ref-nodes
+> > 
+> > AFAICS, the feature does not aim to control if entity references are
+> > expanded, but only how exactly they appear in the resulting DOM
+> > tree.
 > 
-> Vulnerability Fixed: 4/24/2014 in Nextcellent Gallery v1.19.18.
-> 
-> http://wordpress.org/plugins/nextcellent-gallery-nextgen-legacy/changelog/
-> 
-> http://www.vapid.dhs.org/advisories/wordpress/plugins/nextCellent-gallery-1.9.13/
+> Ok, that makes sense.  Of course it is pointless for security if it
+> doesn't affect parameter entities.
 
-Comparing the http://openwall.com/lists/oss-security/2014/02/20/12
-post to the http://openwall.com/lists/oss-security/2014/04/27/1 post,
-the former says "If a user with permission to add media or edit media
-uploads a file with "<script>alert(1)</script>" as the title they can
-XSS the site admin user."
+Sorry, how is this really relevant?  setExpandEntityReferences(false)
+does not prevent expansion of general entities, so I'm not sure why
+expansion of parameter entities is the problem.
 
-The latter does not describe how the attack crosses privilege
-boundaries.
+> I did end up releasing my paper recently, which I believe has
+> up-to-date recommendations for Xerces:
+>   http://vsecurity.com/download/papers/XMLDTDEntityAttacks.pdf
 
-add_image seems to be protected by:
+It continues to mention setExpandEntityReferences, hinting that should
+be expected to provide security protections (text seems to imply
+external entities are not expanded in documents, but they are still
+defined and remote URLs fetched).  As previously mentioned, the setting
+only changes DOM tree layout, and does not disable entity expansion.
 
-  // Check if you have the correct capability for upload
-  if ( !current_user_can('NextGEN Upload images') ) {
-          logIO('O', '(NGG) User does not have upload_files capability');
-          $this->error = new IXR_Error(401, __('You are not allowed to upload files to this site.'));
-          return $this->error;
+E.g. parsing the following two inputs (one using internal other
+external general entity):
 
+$ cat test1.xml 
+<?xml version="1.0"?>
+<!DOCTYPE bleh [
+<!ENTITY bar "BAR">
+]>
+<root>foo &bar; baz</root>
 
-update_image seems to be protected by:
+$ cat test2.xml 
+<?xml version="1.0"?>
+<!DOCTYPE bleh [
+<!ENTITY bar SYSTEM "test2-bar.txt">
+]>
+<root>foo &bar; baz</root>
 
-  if ( !current_user_can( 'NextGEN Manage gallery' ) && !nggAdmin::can_manage_this_gallery($image->author) )
-      return new IXR_Error( 401, __( 'Sorry, you must be able to edit this image' ) );
+$ cat test2-bar.txt 
+BAR
 
+Setting setExpandEntityReferences to false changes the tree from:
 
-These functions make use of the $alttext and $description values.
+- (Element) <root>
+  - (Text) foo BAR baz
 
-So, apparently any user with the "NextGEN Upload images" or "NextGEN
-Manage gallery" or "NextGEN Manage others gallery" capability can
-conduct an XSS attack against a user with the Administrator role, in
-order to gain privileges.
+to:
 
-Use CVE-2014-3123.
+- (Element) <root>
+  - (Text) foo 
+  - (Entity Reference) &bar;
+  - (Text) BAR baz
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+&bar; is expanded to BAR either way.
 
-iQEcBAEBAgAGBQJTZwWdAAoJEKllVAevmvmsDmcIALAj+V+s46tOKj8pR3orAs2U
-jRHQjdnwSZPI5imSYlr4XregLTwCTVXVW8Yig1Mv7H7R47ks1V7Sywc6k6va6iSd
-kcq4mEqDE/3ozMR3vfOzSR8FYEHCjHqj862zPT3LhcaiBw/fb3AMcghhhnT8XY5z
-0ahsXph9W3fWg8YeRwy2DXsGRKuuSGAoQG2jZ8wmOvJhG/ldcU8cVFLy/hhVDyIX
-wfR/dLj+ZANP39P7YEYtXgaQZAwt8nLeSvYffEBvckzW5hSAkHVj9iQhB4mv6uTo
-HnL2WuNE+pXHzWnz7NkW9dlw0MH3COfC+jvdfPALa3ELh9vIZoJvkJiFRae8VUM=
-=Fspe
------END PGP SIGNATURE-----
+-- 
+Tomas Hoger / Red Hat Security Response Team
