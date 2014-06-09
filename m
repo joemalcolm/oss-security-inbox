@@ -1,96 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/45
-Message-ID: <CALx_OUA0B_jkcj8_d_Dgic1iN7BSOJocUOFW45oNbXZ9hWm8gQ@mail.gmail.com>
-Date: Thu, 20 Nov 2014 13:26:11 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Fuzzing project brainstorming
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/09/2
+Message-ID: <CAD3Canc44M6cvjVvyJDzPGwRCbbzHkdht_x3sKJuLsiDjLmp6w@mail.gmail.com>
+Date: Mon, 9 Jun 2014 21:03:15 +1200
+From: Matthew Daley <mattd@...fuzz.com>
+To: Murray McAllister <mmcallis@...hat.com>
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, carnil@...ian.org
+Subject: Re: CVE Request: Horde_Ldap: Stricter parameter check in bind() to detect empty passwords
 Content-Type: text/plain; charset=utf-8
 
-There are many complexities around the general idea - as Kurt
-mentions, sometimes, fixing is a lot harder than bumping into a SEGV;
-other times, the software may not even have a proper maintainer
-anymore. It's doubly tricky if the discoverer doesn't put effort into
-evaluating the security impact and prioritizing the bug. Yet another
-problem is that it's hard to figure out how fuzzing efforts compare to
-each other - if I set up my job poorly, it doesn't matter that I
-fuzzed something for 10 cumulative CPU years, and if you mark the
-package as clean, you may end up misleading potential users.
-
-But I don't think that these are arguments against trying :-)
-
-I think that the world would benefit in several ways from having a
-good, published list of security-critical software that holds up
-during intensive fuzz testing; today, this is a bit of "arcane
-knowledge" that the select few security experts will have, but others
-will have no idea how one parsing library compares to another, etc.
-Few days ago, there was a front-page thread on HN steering people
-toward a new PNG parsing library, lodepng. Plug it into any fuzzer or
-look at the source code and see it yourself...
-
-It would be equally good to maintain a list of high-risk /
-high-exposure software that probably hasn't gotten enough fuzzing
-cycles - say, Open Office / Libre Office, various document converters,
-things like tcpdump, etc. Perhaps a prioritized list of high-risk
-software is a good starting point.
-
-Network services have gotten a bit less relevant, but I wouldn't put
-them completely out of scope. Fuzzing DHCP, NTP, SMTP, TCP/IP network
-stacks, and browser & server HTTP / SSL implementations, SSH, etc,
-seems like a good thing, and doesn't require a lot of work.
-
-The somewhat harder things to fuzz are physical link protocols (USB,
-eth, etc), firmware, and kernel drivers, so that's probably a topic
-for another time.
-
-/mz
-
-
-On Thu, Nov 20, 2014 at 4:34 AM, Hanno Böck <hanno@...eck.de> wrote:
-> Hi,
+On Thu, Jun 5, 2014 at 6:01 PM, Murray McAllister <mmcallis@...hat.com> wrote:
+> On 06/05/2014 05:51 AM, Salvatore Bonaccorso wrote:
+>>
+>> Hi,
+>>
+>> Horde_Ldap released an update fixing a security issue mentioned in the
+>> changes:
+>>
+>>> [jan] SECURITY: Stricter parameter check in bind() to detect empty
+>>> passwords.
+>>
+>>
+>>
+>> https://github.com/horde/horde/commit/8f719b53b0ee2d4b8a40a770430683c98fb5f2fd
+>>
+>> fixed in 2.0.6 with commit:
+>>
+>>
+>> https://github.com/horde/horde/commit/4c3e18f1724ab39bfef10c189a5b52036a744d55
+>>
+>> Could a CVE be assigned for this issue?
+>>
+>> Regards,
+>> Salvatore
+>>
 >
-> Following the discussions here I feel this whole fuzzing thing could
-> need a project to coordinate efforts and I will probably start
-> something within the following days.
+> Thanks for pointing this one out. FWIW, I discussed this issue with Kurt
+> Seifried and we believe it would be hardening fix, not a CVE-named issue.
 >
-> I wanted to lay out my rough plans / brainstorming and welcome any
-> feedback and especially if people have worries about such a project.
+> It seems this flaw could let you accidentally connect to an LDAP server
+> without a password, but the flaw in this scenario is in the LDAP server, and
+> this fix helps prevent you from doing that.
 >
-> * The core of the project will be a list of free software projects that
->   in one way or another parse fileformats (I'll leave fuzzing network
->   and other input out for now). It should have rough categories (ok =
->   fuzzed and no unfixed issues in latest release, wip: fuzzed and issues
->   are being worked on or already fixed in source repo, stale: fuzzed and
->   issues don't seem to be worked on, unavalable = project with no
->   developers to contact, wontfix = developers don't feel memory access
->   issues and crashes need to be fixed / declare their product
->   unsuitable for untrusted input, unknown = no known fuzzing efforts)
->   I feel that it's important to make the limitation of this info
->   transparent (e.g. about to change rapidly, always further /different
->   fuzzing strategies that might turn up more issues, fuzzing is not a
->   good indicator for overall security etc.).
-> * A sharing place for stuff that might be useful for fuzzing, I think
->   especially about patches that disable sanity checks (CRCs etc.) that
->   make fuzzing harder. And maybe file collections with small example
->   files for various file formats.
-> * Some introduction tutorials that should give people with no fuzzing
->   experience a starter. Preferrably so easy that everyone with some
->   basic linux/unix knowledge can follow them. Explain zzuf, asan, afl.
-> * All kinds of pointers/links to further information.
->
-> Data and things like file archive should preferrably be public domain
-> / cc0 to make data sharing as easy as possible.
->
-> I welcome your feedback. I also welcome all reports (preferrably with
-> links to public sources where this is documented - bugtrackers, mailing
-> list archives etc.) of fuzzing. The good ("I fuzzed this for so long
-> and it seems just nothing turned up") and the bad ("I found 10.000
-> unique crashers and reported them all upstream, nobody cares").
->
-> cu,
-> --
-> Hanno Böck
-> http://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
+> Some further explanations about this are available in
+> http://securitysynapse.blogspot.ca/2013/09/dangers-of-ldap-null-base-and-bind.html
+
+Hi Murray et al.,
+
+I originally reported this bug to Horde and - as you may guess - I
+respectfully disagree with this assessment :)
+
+The issue *sounds* like the usual unauthenticated bind issue, but
+isn't; indeed the vulnerability still manifests when Horde is using
+OpenLDAP (which explicitly denies such binds by default).
+
+Horde has a simple function wrapper, Horde_Ldap::bind, around PHP's
+ldap_bind function. This function takes a DN and password as
+arguments, both with default values of null. If either of these
+arguments is empty() (as in, the PHP standard library function
+empty()), the LDAP bind user DN or password from Horde configuration
+is passed to ldap_bind instead.
+
+I'm guessing the intent is that the function can be used to easily
+(re-)bind as the bind user by calling it with no arguments (making
+them default to null and therefore passing the empty check).
+
+The issue is that empty() returns true not just for null values but
+also - amongst other things - for empty strings. Hence, a user can
+simply provide an empty password when logging in and the function will
+default it to the bind user's password. All the user then needs to
+guess is the same bind user's DN (ie. username, so probably something
+like 'horde' or 'admin') and they can log in.
+
+(Note that IIRC you can't provide an empty username to get that to
+default as well; Horde checks for a non-empty username but not an
+non-empty password.)
+
+So, this issue was actually Horde-specific and not a generic LDAP
+server configuration issue, which I think qualifies for a CVE, FWIW.
+
+Cheers,
+
+- Matthew Daley
