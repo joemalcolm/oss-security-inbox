@@ -1,44 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/11/4
-Message-Id: <201404111508.s3BF8JHC026493@linus.mitre.org>
-Date: Fri, 11 Apr 2014 11:08:19 -0400 (EDT)
-From: cve-assign@...re.org
-To: pmatouse@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request -- Linux kernel: net: ping: refcount issue in ping_init_sock() function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/09/3
+Message-ID: <20140609111726.3c1ec2e4@redhat.com>
+Date: Mon, 9 Jun 2014 11:17:26 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: OpenJDK CVE duplicates
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi!
 
-> A flaw was found in the way ping_init_sock() function handled
-> group_info struct reference counter. Since group_info refcounter is
-> only incremented but never decremented in this codepath, it could lead
-> to refcounter overflow and possibly to use-after-free issue later.
-> 
-> An unprivileged local user could use this flaw to crash the system or,
-> potentially, escalate their privileges on the system.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1086730
-> 
-> https://lkml.org/lkml/2014/4/10/736 (not yet available at
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/net/ipv4/ping.c)
+CVE-2014-0462 and CVE-2014-2405 should be rejected as duplicates of
+libjpeg CVE-2013-6629 and libpng CVE-2013-6954 respectively.  Those
+were incorrectly used for known issues in the bundled library versions,
+but replaced by previously assigned ids before updates announcements.
+They were used briefly in the NEWS file though:
 
-Use CVE-2014-2851.
+http://icedtea.classpath.org/hg/release/icedtea6-1.13/rev/72245beb1811
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTSATmAAoJEKllVAevmvmsTB4H+wRZGJdbJ9LUbFivCT1FQyze
-Qj3SMrvu8R9K3dX1RU5iBQk1JDo9tdI8lFVm17JA7HXxVMi/wnivyxLHeNHN8oS1
-HfMKc+nL+4mbizPyw+qAhpntgjmy5MuMHAv6C7/cQPHPX25gI1bc/SKhoAaUiHCT
-iRk5IxwC3VjXD3RhCAjZ2giVvjCVXqkbLmuEFz8SEVx2oMnI+X1mR7tRETjD5lxK
-G/kR5/nrobA0p5Kg0q/VAa37aoruxkUsSwTz5LWyHgqxfQALKO2UfPZZYD5/TMxn
-ZkFXv9qLyzuMeWqnX/QDfv30AyBMcpP11h0+TJ4n5ZTnwaNRDu0AYaZTVRWu61Q=
-=N7gK
------END PGP SIGNATURE-----
+-- 
+Tomas Hoger / Red Hat Security Response Team
