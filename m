@@ -1,78 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/5
-Message-ID: <20141125091218.GF5485@core.inversepath.com>
-Date: Tue, 25 Nov 2014 10:12:18 +0100
-From: Daniele Bianco <danbia@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT 2014-008] libFLAC multiple issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/09/5
+Message-ID: <20140609161537.GN23760@sentinelchicken.org>
+Date: Mon, 9 Jun 2014 09:15:38 -0700
+From: Tim <tim-security@...tinelchicken.org>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
 Content-Type: text/plain; charset=utf-8
 
 
-Description:
 
-FLAC is an open source lossless audio codec supported by several software
-and music players.
+> > I did end up releasing my paper recently, which I believe has
+> > up-to-date recommendations for Xerces:
+> >   http://vsecurity.com/download/papers/XMLDTDEntityAttacks.pdf
+> 
+> It continues to mention setExpandEntityReferences, hinting that should
+> be expected to provide security protections (text seems to imply
+> external entities are not expanded in documents, but they are still
+> defined and remote URLs fetched).  As previously mentioned, the setting
+> only changes DOM tree layout, and does not disable entity expansion.
+> 
+> E.g. parsing the following two inputs (one using internal other
+> external general entity):
+> 
+> $ cat test1.xml 
+> <?xml version="1.0"?>
+> <!DOCTYPE bleh [
+> <!ENTITY bar "BAR">
+> ]>
+> <root>foo &bar; baz</root>
+> 
+> $ cat test2.xml 
+> <?xml version="1.0"?>
+> <!DOCTYPE bleh [
+> <!ENTITY bar SYSTEM "test2-bar.txt">
+> ]>
+> <root>foo &bar; baz</root>
+> 
+> $ cat test2-bar.txt 
+> BAR
+> 
+> Setting setExpandEntityReferences to false changes the tree from:
+> 
+> - (Element) <root>
+>   - (Text) foo BAR baz
+> 
+> to:
+> 
+> - (Element) <root>
+>   - (Text) foo 
+>   - (Entity Reference) &bar;
+>   - (Text) BAR baz
+> 
+> &bar; is expanded to BAR either way.
 
-The libFLAC project, an open source library implementing reference
-encoders and decoders for native FLAC and Ogg FLAC audio content,
-suffers from multiple implementation issues.
 
-In particular, a stack overflow and a heap overflow condition, which may
-result in arbitrary code execution, can be triggered by passing a maliciously
-crafted .flac file to the libFLAC decoder.
+Hmm, that's not the behavior I observed.  I'll try to find some time
+to rerun my tests and compare notes with you off list.
 
-Affected version:
-
-libFLAC <= 1.3.0
-
-The following packages were identified as affected as they statically
-include libFLAC in their own packages.
-
-Max <= 0.9.1
-Cog <= 0.07
-cinelerra <= 4.6
-JUCE <= 3.1.0 (juce_audio_formats module)
-
-Fixed version:
-
-libFLAC >= 1.3.1
-
-Max N/A
-Cog N/A
-cinelerra N/A
-JUCE N/A
-
-Credit: vulnerability report from Michele Spagnuolo of Google Security Team <mikispag AT google.com>
-
-CVE:
-
-CVE-2014-8962 (stack overflow)
-CVE-2014-9028 (heap overflow)
-
-Timeline:
-
-2014-11-12: heap overflow report received
-2014-11-12: contacted maintainer
-2014-11-14: patch provided by maintainer
-2014-11-17: reporter confirms patch
-2014-11-20: stack overflow vulnerability reported
-2014-11-21: assigned CVE (heap overflow)
-2014-11-22: contacted affected vendors
-2014-11-23: contacted additional affected vendors
-2014-11-25: advisory release
-
-References:
-
-https://git.xiph.org/?p=flac.git;a=commit;h=5b3033a2b355068c11fe637e14ac742d273f076e
-https://git.xiph.org/?p=flac.git;a=commit;h=fcf0ba06ae12ccd7c67cee3c8d948df15f946b85
-
-Permalink:
-
-http://www.ocert.org/advisories/ocert-2014-008.html
-
---
-  Daniele Bianco      Open Source Computer Security Incident Response Team
-  <danbia@...rt.org>                                  http://www.ocert.org
-
-  GPG Key 0x9544A497
-  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
+tim
