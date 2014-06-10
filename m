@@ -1,52 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/7
-Message-ID: <20141205135435.7a5d5163@pc>
-Date: Fri, 5 Dec 2014 13:54:35 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/10/2
+Message-ID: <53974054.1070205@collabora.co.uk>
+Date: Tue, 10 Jun 2014 18:28:52 +0100
+From: Simon McVittie <simon.mcvittie@...labora.co.uk>
+To: oss-security@...ts.openwall.com,  "dbus@...ts.freedesktop.org" <dbus@...ts.freedesktop.org>
+CC: Alban Créquy <alban.crequy@...labora.co.uk>
+Subject: CVE-2014-3477 (fd.o#78979): local DoS in dbus-daemon
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 04 Dec 2014 21:19:04 +0100
-Hector Marco <hecmargi@....es> wrote:
+D-Bus <http://www.freedesktop.org/wiki/Software/dbus/> is an
+asynchronous inter-process communication system, commonly used
+for system services or within a desktop session on Linux and other
+operating systems.
 
-> This is a disclosure of a weakness of the ASLR Linux implementation.
-> The problem appears when the executable is PIE compiled and it has an
-> address leak belonging to the executable. We named this weakness:
-> offset2lib.
+Alban Crequy at Collabora Ltd. discovered and fixed a denial-of-service
+flaw in dbus-daemon, part of the reference implementation of D-Bus.
+Additionally, in highly unusual environments the same flaw could lead to
+a side channel between processes that should not be able to communicate.
 
-Thanks for that.
+On the stable branch, this is fixed in version 1.8.4:
+http://dbus.freedesktop.org/releases/dbus/dbus-1.8.4.tar.gz
+http://dbus.freedesktop.org/releases/dbus/dbus-1.8.4.tar.gz.asc
 
-Two things on that:
+On the previous stable branch, this is fixed in version 1.6.20:
+http://dbus.freedesktop.org/releases/dbus/dbus-1.6.20.tar.gz
+http://dbus.freedesktop.org/releases/dbus/dbus-1.6.20.tar.gz.asc
 
-Cynics might say "most linux distros aren't vulnerable to ASLR bypass
-because they don't use ASLR at all".
+Distributions supporting other versions should base their changes on
+this commit:
+http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.8&id=24c590703ca47eb71ddef453de43126b90954567
 
-Can we please take this as an opportunity to discuss the state of ASLR
-on Linux in general? It's pretty sad, afaik Linux was one of the first
-to have ASLR (in the form of pax) back in 2001. Today everyone uses
-ASLR by default except Linux.
+Summary:
 
-Most distros don't ship pic/pie executables by default. Why? I haven't
-done benchmarks, the saying is that this has a notable performance hit
-on 32 bit but almost none on 64 bit. If this is true then could we at
-least have all major distros enable it on 64 bit?
+If a client C1 is prohibited from sending a message to a service S1, and
+S1 is not currently running, then C1 can attempt to send a message to
+S1's well-known bus name, causing dbus-daemon to start S1 [1]. When S1
+has started and obtained its well-known bus name, the dbus-daemon
+evaluates its security policy, decides that it will not deliver the
+message to S1, and constructs an AccessDenied error. However, instead of
+sending that AccessDenied error reply to C1 as a reply to the denied
+message, dbus-daemon incorrectly sends it to S1 as a reply to the
+request to obtain its well-known bus name.
 
+Impact A: denial of service. S1 will fail to initialize, and exit,
+denying service to legitimate clients of S1.
 
-Second:
-I wrote a small test .c to print out offset diffs. As expected
-printf-main offset is static on normal Linux with pic/pie and random
-on a pax-enabled system.
+Impact B: side channel. In environments where C1 and S1 are untrusted
+and are administratively prohibited from communicating, S1 could also
+use these incorrectly-directed error messages as a side channel to
+receive information from C1.
 
-What i found notable: diff-ing two function offsets from different
-libraries (I use printf-sin) is alway static, even on Pax. Is this by
-design? Can't different libraries be loaded at different offsets in ram?
+Mitigations:
 
--- 
-Hanno Böck
-http://hboeck.de/
+Impact A: if a legitimate client was actively using S1, S1 would already
+have been started, so C1 can only deny service to a legitimate client
+that only recently became active.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+Impact B: in practice processes sharing a system bus can typically
+communicate in other ways (non-D-Bus IPC mechanisms, files in /tmp,
+etc.), so impact B is not relevant on normal systems. It might be
+relevant on systems when an LSM such as SELinux is used in a highly
+restrictive configuration.
 
-Content of type "application/pgp-signature" skipped
+Footnotes:
+
+[1] This is perhaps unexpected, but the dbus-daemon is behaving as
+designed: it cannot necessarily evaluate which security policies it
+should apply to S1 until S1 has actually connected back to dbus-daemon,
+because S1 might change its uid, SELinux context, etc. during startup.
+The conceptual model is that activatable services are always running,
+and that the dbus-daemon delaying their startup until they are actually
+needed is a form of lazy evaluation. As such, the D-Bus maintainers do
+not consider this to be a bug or vulnerability.
