@@ -1,41 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/5
-Message-ID: <20140905072950.GB17330@kludge.henri.nerv.fi>
-Date: Fri, 5 Sep 2014 10:29:50 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/10/3
+Message-ID: <20140610194548.GB6566@pisco.westfalen.local>
+Date: Tue, 10 Jun 2014 21:45:50 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: TYPO3 Security Team <security@...o3.org>
-Subject: CVE request: TYPO3-EXT-SA-2014-003
+Cc: nab@...ux-iscsi.org, jdsm@...nico.ulisboa.pt
+Subject: CVE request: Linux kernel / target information leak
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+Please assign a CVE ID:
 
-Can I get 2014 CVE for TYPO3-EXT-SA-2014-003, thanks.
+Jorge Daniel Sequeira Matias discovered an information leak in the rd_mcp backend
+of the iSCSI target subsystem in the Linux kernel (originally reported to the
+Debian Security Team and investigated by Nicholas A. Bellinger):
 
-http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-003
-http://osvdb.org/103258
+Introduced in 2.6.38 and fixed in 3.14 with
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=4442dc8a92b8f9ad8ee9e7f8438f4c04c03a22dc
 
-Release Date: February 12, 2014
-Affected Versions: Version 3.5.1 and below
-Vulnerability Type: Insecure Unserialize
-Severity: High
-Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:P/I:P/A:C/E:P/RL:O/RC:C
-Problem Description: Failing to sanitize user input properly, tt_news is
-vulnerable to insecure unserialize.
+Cheers,
+        Moritz
 
-Solution: An updated version 3.5.2 is available from the TYPO3 extension manager
-and at http://typo3.org/extensions/repository/download/tt_news/3.5.2/t3x/. Users
-of the extension are advised to update the extension as soon as possible.
-
-Credits: Credits go to Pascal Jungblut who discovered and reported this issue.
-
-- ---
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlQJZm4ACgkQXf6hBi6kbk96fQCfa6PcsVH0CUH+k4xSwrElxPK9
-v+kAoKxoNWuztBqkCUbVutnKyXDwMQJE
-=iHog
------END PGP SIGNATURE-----
