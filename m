@@ -1,49 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/10
-Message-ID: <53A17A59.4020907@enovance.com>
-Date: Wed, 18 Jun 2014 07:39:05 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/10/1
+Message-ID: <94979513.31532111.1402373162097.JavaMail.zimbra@redhat.com>
+Date: Tue, 10 Jun 2014 00:06:02 -0400 (EDT)
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-019] Neutron L3-agent DoS through IPv6 subnet (CVE-2014-4167)
+Subject: Re: CVE-2014-0085 / Zookeeper
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-019
-CVE: CVE-2014-4167
-Date: June 18, 2014
-Title: Neutron L3-agent DoS through IPv6 subnet
-Reporter: Thiago Martins (HP)
-Products: Neutron
-Versions: up to 2013.2.3, and 2014.1
+> Hi,
+> could some from Red Hat please clarify on
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-0085 ?
+> 
+> Does this affect stock releases from http://zookeeper.apache.org/ or is this
+> CVE for a combination
+> of Zookeeper and Red Hat JBoss A-MQ ?
+> 
+> Cheers,
+>         Moritz
+> 
 
-Description:
-Thiago Martins from Hewlett Packard reported a vulnerability in Neutron
-L3-agent. By creating an IPv6 private subnet attached to a L3 router, an
-authenticated user may break the L3-agent, preventing further floating
-IPv4 addresses from being attached for the entire cloud. Note: removal
-of the faulty network can not be done using the API and must be cleaned
-at the database level. Only Neutron setups using IPv6 and L3-agent are
-affected.
+Hi Moritz. My apologies for the delayed reply. This flaw only affects Apache Zookeeper used in conjunction with Fuse Fabric. I have added more details here:
 
-Juno (development branch) fix:
-https://review.openstack.org/88584
+https://bugzilla.redhat.com/show_bug.cgi?id=1067265#c7
 
-Icehouse fix:
-https://review.openstack.org/95938
+Zookeeper seems to log all keys, which may lead to other similar flaws.
 
-Havana fix:
-https://review.openstack.org/95939
-
-Notes:
-This fix will be included in the Juno-2 development milestone and in
-future 2013.2.4 and 2014.1.2 releases.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4167
-https://launchpad.net/bugs/1309195
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+Thanks
+-- 
+David Jorm / Red Hat Product Security
