@@ -1,55 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/1
-Message-Id: <20140922060857.8EECD34E008@smtpvbsrv1.mitre.org>
-Date: Mon, 22 Sep 2014 02:08:57 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/11/1
+Message-Id: <201406111916.s5BJFwAf012916@linus.mitre.org>
+Date: Wed, 11 Jun 2014 15:15:58 -0400 (EDT)
 From: cve-assign@...re.org
-To: krahmer@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, squid3@...enet.co.nz
-Subject: Re: CVE-Request: squid pinger remote DoS
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Linux kernel / target information leak
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> I made a fix for squid 3.4.6 and request a CVE for
-> this issue:
-> 
-> The pinger code that checks for nodes being alive doesnt
-> properly validate ICMP and ICMPv6 replies, in particular
-> icmp6 types which are used to index into a string array.
-> This could cause crashes when the index is OOB.
-> 
-> A patch is available here:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=891268
-> 
-> I also made some cleanups and error checking on the
-> receive socket.
+> an information leak in the rd_mcp backend of the iSCSI target
+> subsystem in the Linux kernel
 
+> Introduced in 2.6.38 and fixed in 3.14 with
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=4442dc8a92b8f9ad8ee9e7f8438f4c04c03a22dc
 
-> From: Amos Jeffries <squid3@...enet.co.nz>
+> add explicit memset of pages within rd_allocate_sgl_table() based upon
+> passed 'init_payload' value.
 
-> What could happen worst-case (#1 or #3 ... flooding the parent
-> processes log, slowing the entire service down and/or exhausting log
-> disk space, which in turn can crash the parent process. ... The
-> best-case being that some HTTP servers are assigned incorrect RTT
-> values. Which adversely affects latency based routing logics ...
-
-
-As far as we can tell, CVE IDs are required for cases #1 and #3:
-
-> 1. "used to index into a string array" possibly corresponds to
-> http://cwe.mitre.org/data/definitions/129.html for the modified
-> default case after case 136, and approximately two other places in the
-> patch
-
-Use CVE-2014-7141.
-
-
-> 3. added "if (preply.psize) < 0" code apparently corresponds to a more
-> general issue with missing data validation
-
-Use CVE-2014-7142.
+Use CVE-2014-4027.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -59,11 +30,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUH7xuAAoJEKllVAevmvmsBbIH/2N7bDbuvxY/iGH6Jtj65rNK
-fIZqVWUiAGvr/ZxtmxM++sikol+7mtspqjyxuu0L5r4Uzz230aCiiKsVGFqNmOOB
-4WvW9kL7X7KXBh0Knn/i3eJP930BtdJUY5lOV+pRfkKfAV4ZqoJR2kF3Jfw0UMHi
-sabnXcG4Kex+nnQhA7aJliZhAwJI0Ou51H7PCwYi9HOugO3E8sA8xb8cwBSihdzm
-XI4qKFVTzx4fm/YUE8XizHah099FBNMJAPXrIQKVuawL7L7zDEeA45x0IDulgZ+w
-Rysl8bSDtxkONsGgxcwE5HbOjoOF/8eWttQyyj473ts4Lr5tLduAfJqOqYxZ0gc=
-=60QN
+iQEcBAEBAgAGBQJTmKpOAAoJEKllVAevmvmsdVsH/RjQUYnVK0zKr7JoC1lSm4MD
+fQTujx/hCWPFO4LCl1U9N81qAcX/oFUdsoEE0FC0IFnvZ7HEcczatOdX/ciYLX/y
+onVmwxNYtINWDe5EZtDjS5JvJNdd/e5PEGTLFBhRX3AQSei7VzAhyYlvJIe9SqdC
+madRM9T5VEhr0mXT9Jr+cS1IppLPrzjnouMr+oHQ1Fztq6EngjWHNpoTqX5nv3QJ
+U5qILrscWU6VtnJILoj+EycvqnoXoS24ajNIEuD2PeIpQ5jJcABdBrR6b9ZpCYU7
+B61ihNP0xa2yzQC+DGX5q/+i5jy9mX3/lJZQzlqB7IZyQaTO9nLFf9CSchNvIok=
+=9yK1
 -----END PGP SIGNATURE-----
