@@ -1,46 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/02/5
-Message-ID: <20141103002034.1ef5a1c7@pc>
-Date: Mon, 3 Nov 2014 00:20:34 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/11/3
+Message-ID: <CAFRnB2WzGgM0WD6iwW53oZnzw8AsWf0pft6ZapJL2jjme4vU1A@mail.gmail.com>
+Date: Wed, 11 Jun 2014 14:06:55 -0700
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: strings / libbfd crasher
+Subject: CVE for library bug that requires application participation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-Thanks for bringing this up, I wanted to ask the basically
-the same questions. I think your list gives some indication what we're
-talking about.
+David Reid, Glyph Lefkowitz, and myself discovered a bug in glibc (
+https://sourceware.org/bugzilla/show_bug.cgi?id=17048) which can, in
+conjunction with many common memory management techniques from an
+application (read: we hit this issue repeatedly developing our Python
+application), lead to a use after free, or other vulnerabilities.
 
-I did quite a lot of fuzzing tests recently and have a bunch of issues
-pending. Basically "all bugs should be fixed" so I'm reporting them to
-the upstreams no matter what, but it's certainly worth a discussion if
-every out of bounds read (or write) should be considered a sec issue
-and have its own CVE.
+Is it within policy to issue a CVE for glibc in a case like this?
 
-In the past my stance on this was that every potential sec
-vuln deserves a CVE. However given that sometimes CVEs were rejected
-because they were not shown to be exploitable I feel this is currently
-not shared by mitre.
+Thanks to the Red Hat security team for assisting in triaging this and
+working with the Glibc maintainers.
 
-I'd apprechiate if we had some clear guidelines that we could stick to
-when requesting CVEs for these kinds of issues.
+Thanks,
+Alex
 
-For the binutils case we could probably have some grouping CVEs or
-just one for all the remaining ones (e.g. "multiple memory corruption
-issues in binary parsers of libbfd" or something alike).
-But this is also a generic question. E.g. I have two issues in
-different gimp plugins pending - should they receive their own cve
-because they affect different fileformats or just one? (or none because
-both are only oob read)
-
-cu,
 -- 
-Hanno Böck
-http://hboeck.de/
+"I disapprove of what you say, but I will defend to the death your right to
+say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+"The people's good is the highest law." -- Cicero
+GPG Key fingerprint: 125F 5C67 DFE9 4084
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
