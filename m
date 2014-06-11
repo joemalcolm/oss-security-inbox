@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/9
-Message-Id: <20141127041417.288006C0062@smtpvmsrv1.mitre.org>
-Date: Wed, 26 Nov 2014 23:14:17 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/11/2
+Message-Id: <201406111921.s5BJLoUs013014@linus.mitre.org>
+Date: Wed, 11 Jun 2014 15:21:50 -0400 (EDT)
 From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 771125@...s.debian.org
-Subject: Re: CVE request: mutt: heap-based buffer overflow in mutt_substrdup()
+To: patrick@...emark.co.uk
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Request for CVE: Bytemark Symbiosis
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=771125
+> Attackers could arbitrarily blacklist individual IP addresses in the
+> firewall using specially crafted usernames, providing a vector for
+> denial of service attacks.
+>
+> This flaw was fixed with the following commit:
+> 
+> https://projects.bytemark.co.uk/projects/symbiosis/repository/diff?rev_to=733b0e33f60b&rev=cbb56af035bb
 
-> mutt segfaults when trying to show the attached message. (You might need
-> to disable header weeding to trigger the crash.)
-
-Use CVE-2014-9116.
+This has been assigned CVE-2014-3979.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -26,11 +29,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUdqNtAAoJEKllVAevmvmscpAH/jk/zrAJ6CLbMJFLajS5yni6
-f71G0MEEcxN8cz0uf/POKU/h/Qc9C9icE72y6yJigqdsPiCuR2+FLb3Y1xnXXVRX
-2OwWidx1wU7ZKXOr0pB3qVipJHKd2iWVAfFtFu0Bh045GMqikGXUOEaAYeMVrxTk
-hPOXUnPhHcWmERU+5t+hMhvrBCJFj22vKFX4pTGJhhAvRVFy89hVsG18Nq8EckzC
-at5yxo5s0o/iGZtEv5kIdXGq6aOIdfxBfgV4lFjIYrSgJmiBUxlQdQ7usTJrgV7x
-KzYGepBbJ6VuUuninBlhBbllryFlccXyytAtN20r3XKOjm7H7H2BsS8FfPY+c2Q=
-=u27J
+iQEcBAEBAgAGBQJTmKwJAAoJEKllVAevmvmsV5wH/igqc57Bz6/bf0RpZMm8v5u+
+pEjB5CjMWAFOzuERa6fJKm/plAwrvR6o3MyAifq2XBuBZnAHa5kVAYMp3/i/1z2l
+iE+TnHhbAfgH3/+/5QlUuXoe/4SI1A+pISdhH44MUexLmmSqZOJpRhF3DxKgzBkC
+/4vK+eCGLHb+6zfxpWvrdwOfplc5511STk+Te3YndG5eVcNhxbxKu1KpdBKEtjYt
+vk+gur2nL4STFbkjx7mb12g8xvXITiYAnkVN5tUjsDpU05L7WHeGUFV4aVrVMQzI
+fyV1vKyRPxn96jPD8oINv9VnruEbwJeAehIDeIv8pw9UVcVnGnOQX6CxgV74H00=
+=RgZa
 -----END PGP SIGNATURE-----
