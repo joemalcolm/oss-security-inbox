@@ -1,49 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/10
-Message-ID: <1402050135.3596.16.camel@dynamo>
-Date: Fri, 06 Jun 2014 11:22:15 +0100
-From: Patrick J Cherry <patrick@...emark.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/12/1
+Message-ID: <87d2eeyili.fsf@windlord.stanford.edu>
+Date: Wed, 11 Jun 2014 19:20:09 -0700
+From: Russ Allbery <eagle@...ie.org>
 To: oss-security@...ts.openwall.com
-Subject: Request for CVE: Bytemark Symbiosis
+Cc: openafs-gatekeepers@...nafs.org
+Subject: CVE request: OpenAFS 1.6.8 TMAY fileserver crashes
 Content-Type: text/plain; charset=utf-8
 
-Symbiosis is an easy to use collection of tools, utilities, and
-configuration files for mass hosting virtual domains using Apache, Exim,
-Dovecot, PureFTPD, and several other daemons.
+New code introduced in OpenAFS 1.6.8 does not properly zero fields in the
+host structure in the OpenAFS fileserver, leading to some variables in the
+host structure being left initialized from recycled heap memory.  While no
+mechanism for exploitation is currently known, the affected file server
+provides a network service and this sort of problem tends to be
+exploitable with sufficient effort.
 
-The code behind the system is freely available, and it is widely used by
-at least one hosting company.  The code itself is available, along with
-documentation, here:
+Below is the public disclosure of this issue to one of the OpenAFS mailing
+lists.  OpenAFS 1.6.7 is not affected.  I don't believe any stable
+distribution is affected, but Debian unstable, testing, and
+wheezy-backports are affected.
 
-    http://symbiosis.bytemark.co.uk/
+The upstream stable fix is at:
 
-Unfortunately releases between these two mercurial identifiers contained
-a significant flaw:
+    http://gerrit.openafs.org/#change,11283
 
-changeset:   cbb56af035bb
-date:        Thu Jun 05 18:54:22 2014 +0100
+which reverts the newly-added code in its entirety.  (A more thorough fix
+that eliminates a fragile way of initializing structures is being worked
+on for the master branch.)  An OpenAFS 1.6.9 release with this fix is
+expected in the near future.
 
-changeset:   99e920baf1f7
-date:        Tue Jul 07 15:27:26 2009 +0100
+Could we get a CVE assigned to this problem, please?
 
-Attackers could arbitrarily blacklist individual IP addresses in the
-firewall using specially crafted usernames, providing a vector for
-denial of service attacks.
+Here is the original report:
 
-This flaw was fixed with the following commit:
-
-https://projects.bytemark.co.uk/projects/symbiosis/repository/diff?rev_to=733b0e33f60b&rev=cbb56af035bb
-
-Please could a CVE identifier be allocated such that we may use it in
-our documentation.
-
-Thanks
+| From: Andrew Deason <adeason@...enomine.net>
+| To: release-team@...nafs.org
+| Subject: [OpenAFS release-team] 1.6.8 TMAY fileserver crashes
+| Date: Wed, 11 Jun 2014 16:05:14 -0500
+| 
+| This change is broken: <http://gerrit.openafs.org/10759>
+| 
+| Briefly, 'host' structures are allocated without clearing all of the
+| contents to '0'. Only part of the structure is cleared, according to the
+| HOST_TO_ZERO macro. Unfortunately I put the new tmay_ fields right below
+| the 'index' field for some reason, so this means they aren't zeroed and
+| can contain garbage. This means we can easily segfault in the fileserver
+| when we try to access the pointers in there.
+| 
+| This makes it very easy to crash the fileserver, so it seems like we
+| may want to issue a new release quickly, or at least alert the community
+| that this issue exists and warn against using 1.6.8 fileservers. Options
+| are:
+| 
+|  (1) Fix the bug. This is easy to fix in a few ways; Mark Vitale is
+|  writing a fix right now (while I notify you guys) and should be
+|  submitting it shortly.
+| 
+|  (2) Rip out the TMAY caching stuff. It's not urgently pressing.
+| 
+| I don't know if people favor one or the other, or if this is urgent
+| enough to warrant a single-issue 1.6.9 release.
+| 
+| And lastly, of course, this was purely a mistake (my mistake) and I am
+| sorry. This didn't need to go into 1.6 so soon, or at all. (And it still
+| doesn't, if the release team feels it is better to just rip this out
+| completely.)
+| 
+| -- 
+| Andrew Deason
+| adeason@...enomine.net
 
 -- 
-Patrick J Cherry
-Director of operations                        http://www.bytemark.co.uk/
-Bytemark Hosting                               tel: +44 (0) 1904 890 890
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
