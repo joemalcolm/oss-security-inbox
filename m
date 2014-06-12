@@ -1,96 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/16/1
-Message-Id: <E1WlFUK-00079S-Oi@xenbits.xen.org>
-Date: Fri, 16 May 2014 10:35:40 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 95 (CVE-2014-3714,CVE-2014-3715,CVE-2014-3716,CVE-2014-3717) - input handling vulnerabilities loading guest kernel on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/12/3
+Message-ID: <5399FA3D.1050507@enovance.com>
+Date: Thu, 12 Jun 2014 15:06:37 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2014-018] Keystone privilege escalation through trust chained delegation (CVE-2014-3476)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+OpenStack Security Advisory: 2014-018
+CVE: CVE-2014-3476
+Date: June 12, 2014
+Title: Keystone privilege escalation through trust chained delegation
+Reporter: Steven Hardy (Red Hat)
+Products: Keystone
+Versions: up to 2013.2.3, and 2014.1 to 2014.1.1
 
- Xen Security Advisory CVE-2014-3714,CVE-2014-3715,CVE-2014-3716,CVE-2014-3717 / XSA-95
-                             version 3
+Description:
+Steven Hardy from Red Hat reported a vulnerability in Keystone chained
+delegation. By creating a delegation from a trust or OAuth token, a
+trustee may abuse the identity impersonation against keystone and
+circumvent the enforced scope, resulting in potential elevated
+privileges to any of the trustor's projects and or roles. All Keystone
+deployments configured to enable trusts are affected, which has been the
+default since Grizzly.
 
-      input handling vulnerabilities loading guest kernel on ARM
+Juno (development branch) fix:
+https://review.openstack.org/99687
 
-UPDATES IN VERSION 3
-====================
+Icehouse fix:
+https://review.openstack.org/99700
 
-Several CVE numbers, CVE-2014-{3714,3715,3716,3717} have been assigned
-to the issues described here. References have been added to the issue
-description.
+Havana fix:
+https://review.openstack.org/99703
 
-ISSUE DESCRIPTION
-=================
+Notes:
+This fix will be included in the Juno-2 development milestone and in
+future 2013.2.4 and 2014.1.2 releases.
 
-When loading a 32-bit ARM guest kernel the Xen tools did not correctly
-validate the length of the kernel against the actual image size.  This
-would then lead to an overrun on the input buffer when loading the
-kernel into guest RAM (CVE-2014-3714).
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3476
+https://launchpad.net/bugs/1324592
 
-Furthermore when checking a 32-bit guest kernel for an appended DTB,
-the Xen tools were prone to additional overruns also leading to an
-overrun on the input buffer when loading the kernel into guest RAM
-(CVE-2014-3715).  Also, the tools would access a field in the putative
-DTB header without checking for its alignment (CVE-2014-3716).
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-When loading a 64-bit ARM guest kernel the tools similarly did not
-fully validate the requested load addresses, possibly leading to an
-overrun on the input buffer when loading the kernel into guest RAM
-(CVE-2014-3717).
 
-IMPACT
-======
 
-An attacker who can control the kernel used to boot a guest can
-exploit these issues.
 
-Exploiting the overflow issues allows information which follows the
-guest kernel in the toolstack address space to be copied into the
-guest's memory, constituting an information leak.
-
-Alternatively either the overflow or alignment issues could be used to
-crash the toolstack process, leading to a denial of service.
-
-VULNERABLE SYSTEMS
-==================
-
-ARM systems are vulnerable from Xen 4.4 onwards.
-
-MITIGATION
-==========
-
-Ensuring that guests use only trustworthy kernels will avoid this
-problem.
-
-CREDITS
-=======
-
-This issue was discovered by Thomas Leonard.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa95.patch        xen-unstable, Xen 4.4.x
-
-$ sha256sum xsa95*.patch
-1ab63ff126b92e752e88b240838dd66b66415604eaa3e49e373cb50ad3cdd0af  xsa95.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTdenGAAoJEIP+FMlX6CvZHbAIAI581kr07vf1KNlGVIyfOoJN
-y8iqAS4n4D8JM7HJgoC+4Yf8HXA+KljR2Pg31ciY1eryWFibvZiBt1aykZVS7y+c
-nVMHNoOVv0HmA/RycMT06iNy8BRThat4QY5/Eov8voRESU0yCPXTgoNg1iBLt5Eb
-ZG31pI2Nk+xOmC4+wtJ8BLv+k2dV6vLNNaZB60OrXL7VOFlQlyCRrUSy3wy86y+h
-FkhelkAWnRBpYOBn0ZSJayVlMH1fRtZWSYQOhDQHt14laJE/UJVQ5gNnSJDCQevS
-io2i30xT38SfdoBPfiTj6yfgmmT3YmJRZvJ7QnSqBDWL1r4xcTCtHB7Uyy94X4w=
-=ivP8
------END PGP SIGNATURE-----
-
-Download attachment "xsa95.patch" of type "application/octet-stream" (3213 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
