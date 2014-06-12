@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/4
-Message-ID: <20141107012728.GB3872@hunt>
-Date: Thu, 6 Nov 2014 17:27:28 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/12/2
+Message-ID: <53993350.3030309@redhat.com>
+Date: Thu, 12 Jun 2014 14:57:52 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-Request: dpkg handling of 'control' and warnings format string vulnerability
+Subject: CVE request: PHP heap-based buffer overflow in DNS TXT record parsing
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 06, 2014 at 08:00:33PM -0500, cve-assign@...re.org wrote:
-> > A format string vulnerability vuln has been found in the latest version
-> > of dpkg.
-> > https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135
+Good morning,
 
-> Use CVE-2014-8625. We're aware of "does not show evidence of allowing
-> attackers to cross privilege boundaries" in
-> https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135/comments/2 --
-> we'll certainly look for any discussion on this list that disputes the
-> CVE.
+Stefan Esser pointed out that the following commit fixes a heap-based 
+buffer overflow in DNS TXT record parsing:
 
-The build recipes in Debian packaging are all-powerful; they run
-arbitrary commands and executables with full privileges of the user
-building the package.
+https://github.com/php/php-src/commit/b34d7849ed90ced9345f8ea1c59bc8d101c18468
 
-The maintainer scripts in Debian binary packages are all-powerful;
-they run arbitrary commands and executables with root privileges when
-packages are installed.
+A malicious server or man-in-the-middle attacker could possibly use this 
+flaw to execute arbitrary code as the PHP interpreter if a PHP 
+application uses dns_get_record() to perform a DNS query.
 
-There is no need to resort to format string vulnerabilities in control
-files to execute malicious code in an untrusted package. It would be
-easier and more reliable to simply put malicious code directly in the
-debian/rules file or postinst scripts.
+Can a CVE please be assigned if one has not been already?
 
-It is not safe to build packages from untrusted sources.
-It is not safe to install packages from untrusted sources.
+(Red Hat bug with no further details: 
+https://bugzilla.redhat.com/show_bug.cgi?id=1108447)
 
-This is why we did not assign a CVE from Ubuntu's CVE pool.
+Cheers,
 
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+--
+Murray McAllister / Red Hat Product Security
