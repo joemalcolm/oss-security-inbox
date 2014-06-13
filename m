@@ -1,27 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/22/2
-Message-Id: <201405220517.s4M5HO4G004617@linus.mitre.org>
-Date: Thu, 22 May 2014 01:17:24 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/9
+Message-Id: <201406131705.s5DH4wkn027926@linus.mitre.org>
+Date: Fri, 13 Jun 2014 13:04:58 -0400 (EDT)
 From: cve-assign@...re.org
-To: dolev@...nflare.org
+To: d.cauquil@...dream.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Persistent XSS in Mayan EDMS - document management system
+Subject: Re: CVE request: Proxmox VE < 3.2 user enumeration vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> multiple persistent cross-site scripting vulnerabilities were found in
-> the latest version of Mayan EDMS. it appears that new tags, folders
-> and links that are created by any system user are not sanitized when
-> viewed, allowing malicious code to be stored and executed.
+> We would like to request 1 CVE for this vulnerability.
 
-> An attacker is able to create documents and tags with malicious code,
-> potentially stealing admin cookies browsing or editing the documents.
+In general, there might be arguments in favor of either 0, 1, or
+2 CVEs for this.
 
-> http://research.openflare.org/advisories/mayan-edms/multiple_stored_xss.txt
+> https://git.proxmox.com/?p=pve-access-control.git;a=commit;h=6126ab75a0837298427491ea64b9b2e1139c6ba6
 
-Use CVE-2014-3840.
+The PVE/API2/AccessControl.pm change mentions both:
+
+  to prevent user enumeration attacks
+
+  to prevent timing attacks
+
+but these don't seem to be independently relevant. The issue is that
+an attacker could determine that they have discovered a valid username
+because either:
+
+  the error message changes (i.e., CWE-204)
+
+  or
+
+  the response occurs more slowly (i.e., CWE-208)
+
+It seems that there would be hardly any point in fixing the CWE-208
+issue unless the CWE-204 issue were also fixed. That may be an
+argument for combining the two into a single CVE.
+
+The more controversial question is whether this type of a CWE-204
+instance should continue to have a CVE ID in all future cases.
+http://cwe.mitre.org/data/definitions/204.html mentions "Avoid
+inconsistent messaging that might accidentally tip off an attacker
+about internal state, such as whether a username is valid or not."
+However, some authors outside MITRE have recently made an apparently
+opposite assertion, e.g., "It is time to accept that account existence
+is something an attacker can easily learn, and gain the usability
+benefits of telling real people that they've misspelled their account
+identifier." ("Threat Modeling: Designing for Security," ISBN
+978-1-118-80999-0, page 262)
+
+In this case, the commit message of "prevent user enumeration attacks"
+might be considered close enough to a vendor statement that "the
+Proxmox security policy is that authentication components must have
+CWE-204 countermeasures, and lack of these countermeasures was an
+implementation error."
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -31,11 +64,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTfYgZAAoJEKllVAevmvmstEEH/1FLyD6dcbgaJTYYuFRoMyvy
-S84Wm1rDiQX2HSKbG8YJfQopwkFJlNys3gUdh6e3zjNq6UR7wHw4cCDuWZL+JpV0
-Pa6G6XNFdoajAVRHX2DF+RSpKxj1763tLlr72UkbQjGtLg0J4f7luHyosSqf0eS3
-Os5jZxNDoCGXz2md95pZB95V9lYPSJGp5e7TbDcc1QE0DjWcaQtjOXeSuUxpdU1j
-bQ8fSENGdug0Fuqy8n2C/HsXac/phJGG7gZ1IBCGRM8cwqg5/mO8c41vkcW0mml/
-zqXMzLAWUq5ycU3bty8mDfBv01yunFBMKIYg9AsOHjnEY58Bf+hcs92F6yRfSJs=
-=9zbA
+iQEcBAEBAgAGBQJTmy6PAAoJEKllVAevmvmsFKMH/3jwDJilv21+F5GWYlj9+Jz0
+kaQ/4OuW/woZuz719rwaXld/k6cITRsN6f72CJCP/Zeq55cS8Gc8i3Twq5uUVLcA
++wUk6r6/Ci2EglShbknLad0DzzqDDSZCWBI1UHxjANFhC8m7cp+qfD16/nnp4Nxk
+yKJK3BnVsKG3vr/x5iVNQSUf/0mkP56UrVHgNMgwUg77hKFBIYX9gvL9xnAhuZaW
+Q+Z+9uEEbCOXsItPmnDJdaHYXOsTGt0Fo3JHtthxRpS8gZSkA/lKnjSSQ6+V4jxP
+JXu+lIiPzj69YJupmMGM4kFibRISX95wO2xe4otOHcwiTD1xwiGWpw6Ex635SMQ=
+=WyiO
 -----END PGP SIGNATURE-----
