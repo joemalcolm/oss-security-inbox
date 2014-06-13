@@ -1,17 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/13
-Message-ID: <CAPf5k+4LqGu1WVWODOOD2uW_yOcT031OB2_yOkJtdV7oNGkhcA@mail.gmail.com>
-Date: Wed, 15 Oct 2014 01:57:38 -0400
-From: Brandon Whaley <redkrieg@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/8
+Message-ID: <20140613134252.GA20799@mail.corp.redhat.com>
+Date: Fri, 13 Jun 2014 15:42:52 +0200
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
+Subject: CVE request: PowerDNS in default configuration is vulnerable to DoS attack
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 15, 2014 at 1:48 AM, Walter Parker <walterp@...il.com> wrote:
-> Why do people on lists like this seem to think that censoring themselves
-> and others will actually do any good.
+It was found [1] that in default configuration PowerDNS is allowed to
+consume more file descriptors than is available for a default installation
+of many Linux distributions.
+Default configuration is: 2 threads / 2048 max-mthreads, which leads
+to a theoretical FD consumption of 4096. Default FD limit on many
+distributions is 1024.
+This can potentially lead to the DoS attack.
 
-Once a vulnerability is "public", it's in the interest of everyone
-that it become common knowledge among the affected parties as quickly
-as possible.  Any kind of self-censorship after the first
-publicization is detrimental in the long term.
+Workaround (from [1]):
+
+- Reduce max-mthreads to 512 (or threads to 1 and max-mthreads to
+1024) (max-mthreads was introduced in Recursor 3.2; but if you are
+running a version that old, please upgrade it!)
+- Run ‘ulimit -n 32768′ before starting (perhaps put this in
+/etc/init.d/ script). There’s little reason to skip on this number.
+- Investigate defaults in /etc/security/limits.conf
+
+Patch is available at [2]
+
+[1]: http://blog.powerdns.com/2014/02/06/related-to-recent-dos-attacks-recursor-configuration-file-guidance/
+[2]: https://github.com/Habbie/pdns/commit/e24b124a4c7b49f38ff8bcf6926cd69077d16ad8
+
+References:
+
+https://bugs.mageia.org/show_bug.cgi?id=13521
+https://bugzilla.redhat.com/show_bug.cgi?id=1109231
+
+Can a CVE please be assigned if one has not been already?
+
+Thanks.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security Team
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+
+Content of type "application/pgp-signature" skipped
