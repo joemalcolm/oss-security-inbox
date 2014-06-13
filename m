@@ -1,52 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/17
-Message-ID: <54243561.5020905@debian.org>
-Date: Thu, 25 Sep 2014 16:31:45 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/3
+Message-Id: <201406130550.s5D5o0QF015903@linus.mitre.org>
+Date: Fri, 13 Jun 2014 01:50:00 -0400 (EDT)
+From: cve-assign@...re.org
+To: eagle@...ie.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, openafs-gatekeepers@...nafs.org
+Subject: Re: CVE request: OpenAFS 1.6.8 TMAY fileserver crashes
 Content-Type: text/plain; charset=utf-8
 
-On 25/09/14 16:17, John Haxby wrote:
-> At some stage scripts are going to break, especially if they're relying
-> on command, but this whole exercise leaves me feeling uneasy.   ssh and
-> sudo both restrict environment variables, but I just tried this:
-> 
->   $ xxx='() { echo hello; }' su
->   Password:
->   # xxx
->   hello
-> 
-> Of course, su isn't affected, but if I drop one of these in for an
-> overly-trusting admin who runs su on my terminal ...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-An overly-trusting admin who runs su on your terminal is already doomed,
-because the su in your $PATH could be something that prompts for a
-password, captures it, stuffs it into the real su's stdin while
-suppressing the password prompt, then pipes su's stdout and stdin
-to/from the terminal.
+> some variables in the host structure being left initialized from
+> recycled heap memory ... This makes it very easy to crash the
+> fileserver
 
-But, more generally, as I said while dealing with a D-Bus- and
-environment-variable-related vulnerability, I think anything that starts
-in a potentially attacker-controlled environment, and escalates its
-privileges, should filter the environment through a (small!) whitelist
-of known-good variables before it does anything non-trivial. pkexec is
-an example of a setuid executable that is on the "good list" here: if
-you don't try to execute one of its few "good" variables (e.g. LANG,
-TERM) as the name of a command, then you won't execute an exported
-function of this type.
+Use CVE-2014-4044.
 
-Unfortunately, this is not consistently done, and in particular su(8)
-has not traditionally sanitized the environment in this way before
-invoking PAM modules (which are a plugin architecture, hence an
-unbounded attack surface).
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-The particularly nasty thing about CVE-2014-6271 is that the name of the
-variable is not relevant when exploiting that vulnerability, only the
-value, which means it will bypass many whitelists of safe variable
-names. I don't think that reduces the value of filtering
-attacker-supplied environments through a whitelist when not using a
-version of bash that is vulnerable.
-
-    S
-
+iQEcBAEBAgAGBQJTmpBkAAoJEKllVAevmvmsZs8H/3BRujI/jJcI6GzmZOocgwP+
+Nw7jwq5gAwp7lpgyGQQViHF6qmlPuM/x2SnDeQ7HhGn3kNYW1jADu0+Pu+mo8NrH
+cNK3yU87DaMP4W9Fmw6Vcd7FST15g5khstB0McRHFmMLFdmrFCmmXgY+CGoa1pja
+wZrbQyyqVHNdXfN5ahukX2mP+/JQ8dx8MlIbRn2pAmevZM7Q+v++sDDMO9p2szD6
+5GrOo8IvnLTmxLymSEM/F7xZ9bwwwzecoobP3DA2vXVnO4+Ka9LJqULrW5970HJr
+vEZr5goV0Njo+lpw+uzuxC/QojohHr5yBMkqjKD3nh9AUWxtZ4fALhaTOdJc3co=
+=TDcb
+-----END PGP SIGNATURE-----
