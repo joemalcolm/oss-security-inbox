@@ -1,117 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/9
-Message-Id: <E1WBPmy-0004Ab-3K@xenbits.xen.org>
-Date: Thu, 06 Feb 2014 14:18:48 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 84 - integer overflow in several XSM/Flask hypercalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/10
+Message-ID: <9CDF96C7-7D85-4757-9CA4-B322AFAA71A1@redhat.com>
+Date: Fri, 13 Jun 2014 12:44:34 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: CVE request: multiple /tmp races in ppc64-diag
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Just quoting from our bug report:
 
-                     Xen Security Advisory XSA-84
-                              version 2
+As noted in the SUSE bug report, numerous /tmp race conditions exist in ppc64-diag, in particular:
 
-           integer overflow in several XSM/Flask hypercalls
+rtas_errd/diag_support.c:233:   char command[]="/usr/bin/find /proc/device-tree -name status -print > /tmp/get_dt_files";
+rtas_errd/diag_support.c:241:   fp1 = fopen("/tmp/get_dt_files", "r");
+rtas_errd/prrn_hotplug:8:TMPFILE=`mktemp -p /tmp`
+scripts/ppc64_diag_mkrsrc:126:mkdir "/tmp/diagSEsnap", 0775;
+scripts/ppc64_diag_mkrsrc:127:$general_eed_file = "/tmp/diagSEsnap/snapH.tar.gz";
 
-UPDATES IN VERSION 2
-====================
+In the case of rtas_errd/prrn_hotplug, mktemp is used but is assumed to have succeeded; there is no check for the return value.
 
-Public release.
+mktemp should probably be used properly in all of these.  I don't know if the data in /tmp/diagSEsnap is sensitive or not, but if it is, the permissions on that directory should probably be tightened up.
 
-The patch for 4.1 was extended to cover a few further similar issues.
+I think a single CVE should suffice for this.  The above is from ppc64-diag-2.6.1.
 
-ISSUE DESCRIPTION
-=================
+Thanks.
 
-The FLASK_{GET,SET}BOOL, FLASK_USER and FLASK_CONTEXT_TO_SID
-suboperations of the flask hypercall are vulnerable to an integer
-overflow on the input size. The hypercalls attempt to allocate a
-buffer which is 1 larger than this size and is therefore vulnerable to
-integer overflow and an attempt to allocate then access a zero byte
-buffer.
+References:
 
-Xen 3.3 through 4.1, while not affected by the above overflow, have a
-different overflow issue on FLASK_{GET,SET}BOOL and expose unreasonably
-large memory allocation to aribitrary guests.
-
-Xen 3.2 (and presumably earlier) exhibit both problems, with the
-overflow issue being present for more than just the suboperations
-listed above.
-
-The FLASK_GETBOOL op is available to all domains.
-
-The FLASK_SETBOOL op is only available to domains which are granted
-access via the Flask policy.  However the permissions check is
-performed only after running the vulnerable code and the vulnerability
-via this subop is exposed to all domains.
-
-The FLASK_USER and FLASK_CONTEXT_TO_SID ops are only available to
-domains which are granted access via the Flask policy.
-
-IMPACT
-======
-
-Attempting to access the result of a zero byte allocation results in
-a processor fault leading to a denial of service.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions back to at least 3.2 are vulnerable to this issue when
-built with XSM/Flask support. XSM support is disabled by default and is
-enabled by building with XSM_ENABLE=y.
-
-We have not checked earlier versions of Xen, but it is likely that
-they are vulnerable to this or related vulnerabilities.
-
-All Xen versions built with XSM_ENABLE=y are vulnerable.
-
-MITIGATION
-==========
-
-There is no useful mitigation available in installations where XSM
-support is actually in use.
-
-In other systems, compiling it out (with XSM_ENABLE=n) will avoid the
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Matthew Daley.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa84-unstable-4.3.patch        xen-unstable,Xen 4.3.x
-xsa84-4.2.patch                 Xen 4.2.x
-xsa84-4.1.patch                 Xen 4.1.x
+https://bugzilla.novell.com/show_bug.cgi?id=882667
+https://bugzilla.redhat.com/show_bug.cgi?id=1109371
 
 
-$ sha256sum xsa84*.patch
-e33dd94499959363ad01bebefda9733683c49fd42a9641cf2d7edcd87f853d55  xsa84-4.1.patch
-433f3c8a202482c51a48dc0e9e47ac8751d1c0d0759b7bcd22804e1856279a89  xsa84-4.2.patch
-64ae433eb606c5446184c08e6fceb9f660ed9a9c28ec112c8cc529251b3b49fb  xsa84-unstable-4.3.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJS85mEAAoJEIP+FMlX6CvZpLkH/1+K6cyCORgAmm1z4zzq4lwg
-2XNHen88xZ/NAzZN/ETiGrvtafpGe2yBUAQlJWrYoKGNimBKVh4wlVUmymm/GLRp
-Fcg+eck6q5BGF1L4ojMrWkZy1XqEOHrdzBk7nYxsJ/LN6lKKupvtPG67x65qBMkP
-z/jEq5vP37J9mWtaZjBCn9wpfGrrUnoOi+MKw/5Wmr44eDm/V5+tJmZiAqxxvB9H
-fFs2CI7alIvX4j848dG17juYGemlnVqOMHS65+IchDShAcde9ho6EoQMpDISFK+Q
-HSCY5HfSPn4XmpqWHKlONL3sQAMj6WqZvok3WxlU0lIq9PPVrvdQDrbP4GdJKz4=
-=dK4H
------END PGP SIGNATURE-----
-
-Download attachment "xsa84-4.1.patch" of type "application/octet-stream" (2943 bytes)
-
-Download attachment "xsa84-4.2.patch" of type "application/octet-stream" (4943 bytes)
-
-Download attachment "xsa84-unstable-4.3.patch" of type "application/octet-stream" (4955 bytes)
+-- 
+Vincent Danen / Red Hat Product Security
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
