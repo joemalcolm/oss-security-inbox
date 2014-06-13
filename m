@@ -1,34 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/4
-Message-Id: <20141120065323.C06716DC006@smtpvmsrv1.mitre.org>
-Date: Thu, 20 Nov 2014 01:53:23 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/4
+Message-Id: <201406130556.s5D5uIOD015983@linus.mitre.org>
+Date: Fri, 13 Jun 2014 01:56:18 -0400 (EDT)
 From: cve-assign@...re.org
-To: luto@...capital.net
+To: mmcallis@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Linux user namespaces can bypass group-based restrictions - Linux kernel
+Subject: Re: CVE request: PHP heap-based buffer overflow in DNS TXT record parsing
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> On Linux, if you can unshare your user namespace (which is the case on
-> many distributions), then you can map your fsuid and fsgid into the
-> new namespace and, inside that namespace, drop all of your other
-> groups.
-> 
-> This may allow you to access files protected by POSIX ACLs as "other",
-> even if the ACL should have prohibited it based on one of your
-> supplementary group IDs.
+> A malicious server or man-in-the-middle attacker could possibly use this
+> flaw to execute arbitrary code
+> https://github.com/php/php-src/commit/b34d7849ed90ced9345f8ea1c59bc8d101c18468
+> https://bugzilla.redhat.com/show_bug.cgi?id=1108447
 
-> http://thread.gmane.org/gmane.linux.man/7385/
-
-> defeats POSIX ACLs with a group entry that is more restrictive than
-> the other entry
-
-> Fedora and Ubuntu are likely to be affected in their default
-> configurations.
-
-Use CVE-2014-8989.
+Use CVE-2014-4049.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -38,11 +26,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUbY4WAAoJEKllVAevmvmsxoQH/2Kvrfax13v8YJR4subYdAgS
-bpVEB+DDGIWrM5UQbGPXNW8yNi1QlodQ7SKWIn0hiJjD81D3+Wepfr7Vsz4Ar3sQ
-505IUjDs5DtsRHozSRDmuGvqHKL45XTxO+NDGbi9wTCU5U7soNi6DO4G2+Wd8xJv
-/c9OYIdBZC149dE3flAdJa0NrFMdiG5aq1qKznk7SG1JhlNWeoXWjP1J95TTUmW7
-vKTbuV6YkkUnBawunazPfWHMVXi9i41xCVVjsqnvt2U6SFFAgfgnlgQ3RPJkwJPt
-lpR66qhe6zqfehmdYk//iB8p1EqcSSvC00npG0zHT3jcFLv93ajdEj2T0MWFT0c=
-=uITp
+iQEcBAEBAgAGBQJTmpHfAAoJEKllVAevmvmsoesIAKZMmR5ccj6QakqSVrPY/ZtZ
+qpx5zL9c25w5B4MzyShU6l0pJhmhlN704fg33D8yfb5sgyNabtk0MgIsdd0voIKE
+sQVWag0Wu8ARcGkwqHcotSz+UnmkbnyGYs31RJpfd3XPAJEMJkFh8Wyh2ZbRy5C7
+zFyC3HAjkO0MRKmSM7UNTXerPYx0GUo3EsPf9KwMSY7vr04KXEqph5OmPkWhztVa
+4DqQAmIbnLuoB8ldndSeQXKn90FBsSAe4CjFRrMVlNVrDWOsZizcgSLlWT4s19nV
+NolSWwNTbqxGMioXMSyisHMxwuIDPx7ZyFe4Jp9xv8UCm9wyI2BXBpp18fEnL2k=
+=ecsW
 -----END PGP SIGNATURE-----
