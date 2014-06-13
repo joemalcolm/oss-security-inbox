@@ -1,44 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/14
-Message-ID: <m532eu$ruj$1@ger.gmane.org>
-Date: Wed, 26 Nov 2014 00:13:34 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: MantisBT SQL injection in view_all_set.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/2
+Message-Id: <201406130544.s5D5ijqx015839@linus.mitre.org>
+Date: Fri, 13 Jun 2014 01:44:45 -0400 (EDT)
+From: cve-assign@...re.org
+To: alex.gaynor@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: glibc - CVE for library bug that requires application participation
 Content-Type: text/plain; charset=utf-8
 
-Description:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Both the 'sort' and 'dir' parameters to view_all_set.php are 
-insufficiently validated before they are used in queries by 
-view_all_bug_page.php.
+In this type of situation, the requirement for "application
+participation" does not affect whether a CVE ID can be assigned.
 
-Both parameters are split into chunks on ','. After splitting, only the 
-first two values are validated. By supplying a third value, SQL 
-injection can be performed.
+> https://sourceware.org/bugzilla/show_bug.cgi?id=17048
+> posix_spawn_file_actions_addopen fails to copy the path argument ...
+> Per the specification ... it is supposed to.
 
-Affected versions:
-<= 1.2.17
+> http://pubs.opengroup.org/onlinepubs/000095399/functions/posix_spawn_file_actions_addclose.html
+> http://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_spawn_file_actions_addopen.html
 
-Fixed in versions:
-1.2.18 (not yet released)
+> IEEE PASC Interpretation 1003.1 #105 is applied, adding a note to the
+> DESCRIPTION that the string pointed to by path is copied by the
+> posix_spawn_file_actions_addopen() function.
 
-Patch:
-See Github [1]
+> http://standards.ieee.org/findstds/interps/1003-1-90_int/pasc-1003.1d-105.html
+> Finalized interpretation: 29 August 2000
 
-Credit:
-Issue was discovered by Edwin Gozeling from ITsec Security Services 
-(http://www.itsec.nl/), and fixed by Victor Boctor (MantisBT Developer)
+> http://www.gnu.org/software/libc/libc.html
+> The GNU C Library ... follows all relevant standards including
+> POSIX.1-2008
 
-References:
-Further details available in our issue tracker [2]
+Without researching the POSIX standards process in detail, it seems
+likely that a 29 August 2000 interpretation can reasonably be
+considered required behavior for a library claiming to follow
+POSIX.1-2008.
 
+Use CVE-2014-4043.
 
-D. Regad
-MantisBT Developer
-http://www.mantisbt.org
+(If it were the case that the relevant POSIX interpretation happened
+last month, and a new glibc release implementing that interpretation
+simply wasn't ready yet, then probably a CVE ID couldn't be assigned.
+But this seems like almost 14 years.)
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-[1] http://github.com/mantisbt/mantisbt/commit/b0021673
-[2] https://www.mantisbt.org/bugs/view.php?id=17841
-
+iQEcBAEBAgAGBQJTmo73AAoJEKllVAevmvmsKL0H/2U08DxCZqL22H6nZaAyDlhF
+wYIokK8r1ucQGaDzXA5j32w+S4RoT8ALsxbwqjCFYEg6cFsjE+ojPWS0V0uIvdsI
+TAUjAY7+HEci8V/u0Ii2G9BDs5AWdIWlTtjLOG+o+PqRvGQKatlGyzr2LY+9jbXl
+Ys9VnQQL+1U5uTfke2Sj3rfhFdgsTGGtwHf/NZP6nU3mYgUpe99g7GteOxiYO5+f
+i81mnE2rvgjwiAShpOtooOHElBRsK82icowO6tVW1TjRM3yqaFBWF588Blhkress
+vmrmT/K2+XY5h2FlTPaezUmmVcOEPwxiIwJ21L8T4RWXEv7i8LAwShS6SFwIB5o=
+=tUte
+-----END PGP SIGNATURE-----
