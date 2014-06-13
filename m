@@ -1,39 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/41
-Message-ID: <54347DE5.9040008@redhat.com>
-Date: Tue, 07 Oct 2014 17:57:25 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: Re: Discussion: information leakage from server and client software - CVE/hardening/other?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/5
+Message-Id: <201406130609.s5D69CZL017332@linus.mitre.org>
+Date: Fri, 13 Jun 2014 02:09:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: scheme48: insecure use of temporary files in cmuscheme48.el
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+> the function scheme48-send-definition in cmuscheme48.el of scheme48
 
-On 07/10/14 03:56 PM, cve-assign@...re.org wrote:
->> So for example the
->> http://boingboing.net/2014/10/07/adobe-ebook-drm-secretly-build.html
->> article would indicate to me that this is CVE worthy under #4
-> 
-> Currently not; Adobe has a statement quoted at:
-> 
->   http://arstechnica.com/security/2014/10/adobes-e-book-reader-sends-your-reading-logs-back-to-adobe-in-plain-text/
-> 
-> indicating that the information disclosure is intentional, and is
-> (from their point of view) useful to them. This is just an example of
-> a behavior that might also occur in an open-source product. The Adobe
-> issue itself is off-topic for this list.
+> - (let ((loser "/tmp/s48lose.tmp"))
+> + (let ((loser (make-temp-file "s48lose")))
 
-Then by that measure we could for example have challenged CVE-2011-4083
-for example saying that it is useful to us. The same would go for any
-"unsanitized" log file submissions. I fear this is a slippery slope
-where vendors can effectively game their CVE numbers with "oh we meant
-to do that" which makes CVE much less useful =(
+Use CVE-2014-4150.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJTmpUUAAoJEKllVAevmvmsER8H/0rPq540dytUAvI0leAqO9ko
+udJF6/hAosUiJYiRS7AbAgNc12z5ZiTknOucMMs30IarTMNdOayS8n+dwP6D3yQn
+LISuAmUt4qYoFj47ZnARUbavHtA6YCtnTBxxV9eM98k4+6TebkjuW/seHArnaM/P
+WW7X332aN0hNNPlO3XnEf+KBLIQluySTxzFb3uv+oBHinDmT0ZTVMsWQ6IobQUti
+WtEf5r3O0OhPJfHEg6mg2i8TfWWDCNXP5YaIlwNz3kSrH9Fz4BCTrzHcEf4kwSF6
+9ddvQWu8DHOTmdOrDgKVsaYzvWyK9fQW3q7WLQox21vIRj8WADNxvuZwwsFhkTU=
+=on1k
+-----END PGP SIGNATURE-----
