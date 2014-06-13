@@ -1,73 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/13
-Message-ID: <20141005154321.GA22955@openwall.com>
-Date: Sun, 5 Oct 2014 19:43:21 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/7
+Message-ID: <539AC49C.40406@sysdream.com>
+Date: Fri, 13 Jun 2014 11:30:04 +0200
+From: Damien Cauquil <d.cauquil@...dream.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+Subject: CVE request: Proxmox VE < 3.2 user enumeration vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 05, 2014 at 10:55:14AM -0400, David A. Wheeler wrote:
-> On Sun, 5 Oct 2014 17:44:15 +0400, Solar Designer <solar@...nwall.com> wrote:
-> > Here's the relevant test:
-> > testfunc='() { echo bad; }' bash -c testfunc
-> 
-> This is a MUCH better test for most people.  Hanno's test script is great for detail, but most people don't need the detail.
-> 
-> I'm putting that email in my timeline at http://www.dwheeler.com/essays/shellshock.html#timeline - this is an EASY test people can directly use.
+Hi list,
 
-I think you're exaggerating my contribution when crediting me for this
-simple test, and it's not that new either - I previously included it in:
 
-http://www.openwall.com/lists/oss-security/2014/09/29/1
+We recently found a vulnerability affecting Proxmox VE < 3.2 that allows
+an unauthenticated user to perform user enumeration. Vendor was
+contacted and  the vulnerability fixed in Proxmox VE 3.2, released on
+2014-03-10.
 
-and Michal included it in:
 
-http://lists.openwall.net/full-disclosure/2014/10/01/11
+References:
 
-(I linked to Paul Vixie's reply here because it specifically focuses on
-this test rather than on the rest of Michal's lengthy posting.)
+* Proxmox related commits:
+https://git.proxmox.com/?p=pve-access-control.git;a=commit;h=6126ab75a0837298427491ea64b9b2e1139c6ba6
 
-As to your timeline, you may add:
 
-Mon, 22 Sep 2014 07:16:35 +0200 - notification by Florian Weimer to the
-(private, PGP-re-encrypting) distros list, with no detail and an offer
-to request detail from the Debian security team.  Specifically, the
-message had "CVE-2014-6271 in bash" as the Subject and it said only:
+We would like to request 1 CVE for this vulnerability.
 
-"At 2014-09-24 14:00 UTC, we are going to disclose a significant
-security vulnerability in bash.
 
-Please contact the Debian security team at <team@...urity.debian.org>
-to receive details and upstream patches.  Today, this alias will be
-staffed at least until 21:00 UTC (13:00 PDT)."
+-- 
+Damien Cauquil
+R&D Director
+CHFI | CEH | ECSA | CEI
 
-(Personally, I chose to wait 2 days until public disclosure, so I did
-not request the detail on behalf of Openwall.)
-
-September 25, 2014 5:41 PM (unclear timezone) - Antti Louko suggests in
-a comment on Bruce Schneier's blog how bash could be binary-patched, but
-provides no analysis as to why this works (so it was likely unclear and
-not convincing to readers), nor a specific way to apply the patch.
-
-September 27, 2014 7:06 AM (unclear timezone) - Antti Louko posts "a
-simple Python script to make the patch", still without analysis.
-
-I mentioned the above two comments in:
-
-http://www.openwall.com/lists/oss-security/2014/09/29/6
-
-And if you really want to credit me for anything, then:
-
-4:36 PM - 28 Sep 2014 (unclear timezone) - @solardiz [hey, that's me]
-tweeted a one-liner bash binary patch, which turned out to be patching
-bash in the same way as Antti Louko had suggested:
-
-https://twitter.com/solardiz/status/516370924426514433
-
-Mon, 29 Sep 2014 04:44:05 +0400 - oss-security posting on the above,
-including analysis of why it works and what risks are involved.
-
-http://www.openwall.com/lists/oss-security/2014/09/29/1
-
-Alexander
+Sysdream
+108 avenue Gabriel Péri
+93400 Saint Ouen
+Tel: +33 (0) 1 78 76 58 21
+www.sysdream.com
