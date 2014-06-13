@@ -1,30 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/23
-Message-Id: <D0ED30DA-5D01-4D58-B4A9-9C2828A6F2DA@oracle.com>
-Date: Tue, 30 Sep 2014 15:50:06 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/6
+Message-ID: <539A9611.6070507@secure-endpoints.com>
+Date: Fri, 13 Jun 2014 02:11:29 -0400
+From: Jeffrey Altman <jaltman@...ure-endpoints.com>
+To: cve-assign@...re.org, eagle@...ie.org
+CC: oss-security@...ts.openwall.com, openafs-gatekeepers@...nafs.org
+Subject: Re: [OpenAFS-GK] Re: CVE request: OpenAFS 1.6.8 TMAY fileserver crashes
 Content-Type: text/plain; charset=utf-8
 
-
-On 30 Sep 2014, at 15:07, Sebastian Krahmer <krahmer@...e.de> wrote:
-
-> In no shell-universe
+On 6/13/2014 1:50 AM, cve-assign@...re.org wrote:
+>> some variables in the host structure being left initialized from
+>> recycled heap memory ... This makes it very easy to crash the
+>> fileserver
 > 
-> setreuid(0, 0); system("date");
-> 
-> is an "innocuous looking setuid program". It fails in so many ways
-> that I cant enumerate it here, despite missing sanity checks for readability
-> and in that suids must not use system() or popen() in the first place.
-> 
-> If one finds a construct in code that looks similar to this, fix it. Really.
-> No bash update (and no other shell) will ever make this secure. If we start
-> fixing the underlying system so that above code is innocuous indeed, rather
-> than fixing the programmers producing such code, our road ends at php.
+> Use CVE-2014-4044.
 
-It’s not about making that secure. Suppose, for example, that your program here is one of those many that have helper shell scripts.   Find one that has a vector where you can insert things into an ancestor’s environment.   Find an interesting vulnerability in a deeply embedded shell script and …. profit.
+Thank you.
 
-You can argue  that those programs and shell scripts shouldn’t be vulnerable, but you have locks on your car doors even though you have an intruder alarm and an immobiliser.
 
-jch
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (835 bytes)
