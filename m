@@ -1,56 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/10
-Message-ID: <20140808150000.GA9141@gremlin.ru>
-Date: Fri, 8 Aug 2014 19:00:00 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/14/1
+Message-Id: <201406140231.s5E2VJok014648@linus.mitre.org>
+Date: Fri, 13 Jun 2014 22:31:19 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Horde_Ldap: Stricter parameter check in bind() to detect empty passwords
 Content-Type: text/plain; charset=utf-8
 
-On 08-Aug-2014 14:20:21 +0300, Dan Carpenter wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- > I'm surprised we haven't had any discussion about the recent
- > BadUSB articles.
+> From: Matthew Daley <mattd@...fuzz.com>
+> Date: Mon, 9 Jun 2014 21:03:15 +1200
 
-No real reason - everything is trivial. Making custom USB device
-is cheap (<= 2 USD for ATtiny85, several discrete elements and
-PCB) and fast (2 hours in home environment).
-
-PoC: http://pics.rsh.ru/img/usb_device_ne6amlw7.jpg [800x320 53.3k]
-
-That's real device (hardware RNG for my Linux servers that heavily
-depend on it while performing some of their functions); the green
-blob covers its' analog part which isn't related to this discussion.
-
- > We could put a popup
-
-Where?
-
- > if there is a second keyboard attached
-
-How would you distinguish between two devices at the boot time
-when each claims it is a keyboard?
-
- > to check that the person controlling the existing keyboard is
- > aware of the second one.
-
-Laptop has trouble with its' internal keyboard. You plug the
-external one and... yes, stay unable to use it.
-
- > The attack looks like someone who says, "Can you copy some
- > files from my USB flash drive which?" (not knowing it is
- > infected) and then there is a popup, "This newly inserted
- > USB device is trying to type commands, is that ok? y/N?".
-
-I can promote this idea further: kill the plug-and-play support.
-
-That means, every device after being detected by the system must
-be explicitly activated by some human activity. Yes, users may
-and, most likely, will be fooled to do that (as they are fooled
-to connect the attacker's device), but this activation will at
-least make the use of untrusted devices more difficult.
+> If either of these arguments is empty() (as in, the PHP standard
+> library function empty()), the LDAP bind user DN or password from
+> Horde configuration is passed to ldap_bind instead. ... The issue is
+> that empty() returns true not just for null values but also - amongst
+> other things - for empty strings. Hence, a user can simply provide an
+> empty password
 
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+> https://github.com/horde/horde/commit/8f719b53b0ee2d4b8a40a770430683c98fb5f2fd
+> https://github.com/horde/horde/commit/4c3e18f1724ab39bfef10c189a5b52036a744d55
+
+Use CVE-2014-3999.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTm7OgAAoJEKllVAevmvmssNYIAJt3DBazJ1nrIA5IcnknAUB/
+YFQnObBFxB4TNYklhign83+PbedbY6zZ3NxiHa0+mHwDmfKVhQkLjr+5iKcBbEUv
+rqe96qE5uih4HnXgVMCQdEDlP3kqqkHh4oMOFsPOVRaVcHVmlLZ4LYy3CP6BLWnM
+9o/Fr3wildChCoLlvSeX33dZOie/bmCjLJHLept++qBsoeZfIVII7DsJI1O1EOcL
+hJr2XKMH1qQvj8PhRi2p58D2XDzokqLUPhw/9Iyyng6I0fAwLKaPGh6pziXQ9Cn9
+7GnjM07trieN+om3mlgQq+qNHNPhVYNsJmbI+eOqLHavp0SHnG2BVu8zbT4itkY=
+=DhHf
+-----END PGP SIGNATURE-----
