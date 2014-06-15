@@ -1,25 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/07/5
-Message-ID: <20140607194056.GA2871@zoho.com>
-Date: Sat, 7 Jun 2014 19:40:56 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/5
+Message-ID: <CAMp7mVsOfUnN=r3GERbJYri+9uKz_07eC-VXv-2_CC7sNWscjw@mail.gmail.com>
+Date: Sun, 15 Jun 2014 16:55:31 +0100
+From: Richard Moore <rich@....org>
+To: cve-assign@...re.org
+Cc: henri@...v.fi, oss-security@...ts.openwall.com
+Subject: Re: CVE Request for KIO/kmail
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 06, 2014 at 07:37:03AM +0200, Thomas Gleixner wrote:
-> 
-> They should apply cleanly, if all stable tagged futex patches before
-> that are applied.
+On 15 June 2014 16:17, <cve-assign@...re.org> wrote:
 
-I've placed a consolidated CVE-2014-3153 patch for 3.10.x at:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> [ actual security content, for people who don't want to read the
+> meta-discussion:
+>
+>   Is this related to an https://bugs.kde.org/show_bug.cgi?id=330795
+>   vulnerability?
+> ]
+>
+>
+That is unrelated.
 
-http://sf.net/projects/mancha/files/sec/linux-3.10.41_CVE-2014-3153.diff
 
-Note: applies with trivial offsets to <3.10.37 due to f26c70a4.
+> > From: Henri Salo <henri@...v.fi>
+> > More details are needed for public CVE request.
+>
+> It might be worthwhile to clarify what problems we're solving, in the
+> specific case of a request by a product's upstream vendor, by
+> requiring that more vulnerability details be sent here at the time of
+> the CVE request.
+>
+> MITRE is almost certainly willing to accept this as a valid reason, if
+> there's general agreement:
+>
+>   - people here don't want to see announcements of vulnerabilities
+>     that are both vague AND unfixed, and would just unsubscribe if there
+>     were many of these
+>
+>     (vague vulnerability details for fixed issues typically haven't
+>      had objections in the past, e.g., the
+>      http://openwall.com/lists/oss-security/2013/11/28/5 post)
+>
+> (In 2013 and earlier, vulnerability details here had a de-duplication
+> purpose for MITRE, but they often don't now. If we were to assign a
+> CVE ID for this, we'd already know whether any kio CVE requests had
+> been sent directly to us. The CVE-OpenSource-Request-HOWTO.html page
+> and examples aren't directly applicable to us, and we're generally
+> more concerned with knowing whether something is a unique issue that
+> everyone will want to fix, than with knowing every possible detail.
+> But we realize the list charter may imply a minimum level of details.)
+>
+> Going back to the security content, KDE Bug 330795 mentioned above says:
+>
+>   Product  kio
+>
+>   KDE's KIO completely ignores the first part, "must not automatically
+>   redirect without prompting the user"
+>
+> and possibly this is (or was) a violation of RFC 7231 section 6.4,
+> with security implications:
+>
+>   "Automatic redirection needs to done with care for methods not
+>    known to be safe, as defined in Section 4.2.1, since the user
+>    might not wish to redirect an unsafe request."
+>
+> Does anyone want a CVE ID for that?
+>
+> Finally, for the original "a vulnerability in KIO that causes a security
+> issue in kmail" request: to get a CVE ID for this more quickly, please send
+> to cve-assign@...re.org mentioning whether it is or isn't Bug 330795.
+> We don't want to send a CVE ID here immediately because MITRE doesn't
+> determine the list charter and it might be an off-topic request.
+>
+>
+In the past when I've tried to use the cve-assign address it has basically
+been a black hole. Since then I've either asked redhat or one of the other
+OSS vendors for a CVE. I've used the distros@...openwall.org now as a
+fallback.
 
---mancha
+I'd also note as part of the meta discussion that I'm not going to release
+details of vulnerabilities to a public list  before the fix, and just
+because someone asks for more details doesn't mean I will provide them. - I
+have no way to know who the person asking is. If getting a CVE assigned
+becomes a problem then the solution from my side will be to release the
+advisory then let someone else sort out assigning CVEs afterwards.
 
+Cheers
 
-Content of type "application/pgp-signature" skipped
+Rich.
+
