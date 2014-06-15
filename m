@@ -1,26 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/12/7
-Message-ID: <53EAA926.5070809@amacapital.net>
-Date: Tue, 12 Aug 2014 16:54:14 -0700
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/2
+Message-ID: <CAMp7mVvCh2_Zx_7N0sxVnyB_2m1k9HpWR4cdT4GPtjfXz6QrSQ@mail.gmail.com>
+Date: Sun, 15 Jun 2014 11:18:16 +0100
+From: Richard Moore <rich@....org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: ro bind mount bypass using user namespaces
+Cc: "security@...project.org" <security@...project.org>
+Subject: CVE Request for KIO/kmail
 Content-Type: text/plain; charset=utf-8
 
-On 08/12/2014 02:48 PM, Kenton Varda wrote:
-> Due to a bug in the Linux kernel's implementation of remount, on systems
-> with unprivileged user namespaces enabled, it is possible for an
-> unprivileged user to gain write access to any visible read-only bind mount.
-> It is also possible to bypass flags like nodev, nosuid, and noexec.
-> 
-> This problem affects sandboxing / containerization systems that do not
-> expose the regular filesystem to the sandboxed process, but do expose a
-> bind-mounted view of that filesystem using these flags to enforce security.
-> This bug may enable a sandbox break-out. Sandboxes which have used
-> seccomp-bpf to disable the "mount" system call or to disable user
-> namespaces are likely safe.
+Hi,
 
-nosuid/nodev failures are probably exploitable for full root in many
-common configurations.
+I'd like to request a CVE for a vulnerability in KIO that causes a security
+issue in kmail.
 
---Andy
+Regards
+
+Rich.
+
