@@ -1,85 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/9
-Message-ID: <CAM12Q5TLgvvGkzF-EMOsDD=wn742s-rQSmx-eeRMuuv+m4dWAw@mail.gmail.com>
-Date: Mon, 6 Oct 2014 01:06:23 -0700
-From: Jose R R <jose.r.r@...ztli.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/3
+Message-ID: <20140615121159.GF24581@kludge.henri.nerv.fi>
+Date: Sun, 15 Jun 2014 15:11:59 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+Cc: Richard Moore <rich@....org>
+Subject: Re: CVE Request for KIO/kmail
 Content-Type: text/plain; charset=utf-8
 
-> This shows that your two systems are not vulnerable.
+On Sun, Jun 15, 2014 at 11:18:16AM +0100, Richard Moore wrote:
+> Hi,
+> 
+> I'd like to request a CVE for a vulnerability in KIO that causes a security
+> issue in kmail.
+> 
+> Regards 
+> Rich.
 
-> A "vulnerable but non-exploitable" condition doesn't actually exist.
-> It only means there's a non-security bug that would have been a security
-> bug under different circumstances (which is why it got a CVE ID).
+Hello Rich,
 
-Indeed, Solar, input appreciated.
+More details are needed for public CVE request. Please see documentation in
+Kurt's site[1]. Examples of good requests[2][3]. You can also make private
+request if you have embargoed issue.
 
-*all* the bash patches, including the latest ones (bash43-030 released
-on Oct. 05, 2014, in this particular instance <
-http://ftp.gnu.org/gnu/bash/bash-4.3-patches/ >) are included in a:
+1: https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html#How%20to%20write%20a%20CVE%20request:
+2: http://seclists.org/oss-sec/2011/q4/3
+3: http://seclists.org/oss-sec/2011/q4/107
 
-git clone git://git.savannah.gnu.org/bash.git
+---
+Henri Salo
 
-And then proceeding to build bash locally...
-
->> Thus agreeing with Sona:
-
-> This shows the widespread confusion.
-
-There is no more confusion. Snapshot below shows local build of bash
-with your one-liner test at the end:
-
-https://pbs.twimg.com/media/BzP42tHCcAEEvHP.png:large
-
-On Sun, Oct 5, 2014 at 7:02 AM, Solar Designer <solar@...nwall.com> wrote:
-> On Sun, Oct 05, 2014 at 04:38:15AM -0700, Jose R R wrote:
->> Hanno,
->>
->> < https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck >
->>
->> I've downloaded your bash test script and executed it against a Debian
->> 7 (Wheezy) -patched system (upper image)
->>
->> as well as a local Debian Sid (unstable) build of bash where I applied
->> the October 02, 2014, bash43-029 (Bottom image)
->>
->> < https://pbs.twimg.com/media/BzLfeIICQAA30vb.png:large >
->
-> This shows that your two systems are not vulnerable.
->
-> A "vulnerable but non-exploitable" condition doesn't actually exist.
-> It only means there's a non-security bug that would have been a security
-> bug under different circumstances (which is why it got a CVE ID).
->
->> Thus agreeing with Sona:
->
-> This shows the widespread confusion.
->
->> "but I think what most (non-expert) people
->> need is an explanation for each CVE, a set of test case from some
->> reliable source (preferably a script that runs all test cases and
->> shows vulnerable/not-vulnerable status) and a set of patches. So that
->> they can apply the patches, run the tests and assert that their
->> systems are not vulnerable to shellshock anymore."
->
-> You only need the one-liner test from my reply to Sona:
->
-> http://www.openwall.com/lists/oss-security/2014/10/05/7
->
-> testfunc='() { echo bad; }' bash -c testfunc
->
-> (Besides, tests for some of those CVEs can't be made reliable anyway.)
->
-> Alexander
-
-Best Professional Regards
-
--- 
-Jose R R
-http://www.metztli-it.com
----------------------------------------------------------------------------------------------
-NEW Apache OpenOffice 4.1.1! Download for GNU/Linux, Mac OS, Windows.
----------------------------------------------------------------------------------------------
-Daylight Saving Time in USA & Canada ends: Sunday, November 02, 2014
----------------------------------------------------------------------------------------------
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
