@@ -1,60 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/12
-Message-ID: <20140924151620.GA29080@openwall.com>
-Date: Wed, 24 Sep 2014 19:16:20 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/8
+Message-ID: <1402856961.30096.1.camel@scapa>
+Date: Sun, 15 Jun 2014 20:29:21 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: rich@....org
+Cc: cve-assign@...re.org, henri@...v.fi, oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request for KIO/kmail
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 24, 2014 at 04:05:51PM +0200, Florian Weimer wrote:
-> Stephane Chazelas discovered a vulnerability in bash, related to how
-> environment variables are processed: trailing code in function
-> definitions was executed, independent of the variable name.
+On dim., 2014-06-15 at 16:55 +0100, Richard Moore wrote:
+> In the past when I've tried to use the cve-assign address it has basically
+> been a black hole. Since then I've either asked redhat or one of the other
+> OSS vendors for a CVE. I've used the distros@...openwall.org now as a
+> fallback.
 > 
-> In many common configurations, this vulnerability is exploitable over
-> the network.
-> 
-> Chet Ramey, the GNU bash upstream maintainer, will soon release
-> official upstream patches.
+> I'd also note as part of the meta discussion that I'm not going to release
+> details of vulnerabilities to a public list  before the fix, and just
+> because someone asks for more details doesn't mean I will provide them.
 
-More detail is already out:
+May I ask why you're writing to the public oss-sec list instead of the
+private distros one, then?
+-- 
+Yves-Alexis
 
-https://securityblog.redhat.com/2014/09/24/bash-specially-crafted-environment-variables-code-injection-attack/
-http://www.csoonline.com/article/2687265/application-security/remote-exploit-in-bash-cve-2014-6271.html
-
-Florian posted a Debian security advisory on this ([DSA 3032-1] bash
-security update) to the debian-security-announce list, but somehow it is
-not yet seen at:
-
-https://www.debian.org/security/
-https://lists.debian.org/debian-security-announce/2014/
-
-(I guess it will be very soon.)
-
-I've just confirmed that the issue can be exploited via OpenSSH setting
-SSH_ORIGINAL_COMMAND:
-
-$ ssh -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id' 
-uid=500(sandbox) gid=500(sandbox) groups=500(sandbox)
-Received disconnect from 127.0.0.1: Command terminated on signal 11.
-
-This is with command="set" in .ssh/authorized_keys for the key being
-used.  (Without the "; /usr/bin/id" portion, the command prints the
-environment variables, including SSH_ORIGINAL_COMMAND being the function
-with just "ignored" in its body.)  As we can see, the command runs, and
-moreover in this case bash happened to segfault after having run "id".
-
-I see no good workaround.  Starting the forced command with "unset
-SSH_ORIGINAL_COMMAND &&" does not help - we'd need to unset the variable
-before starting bash, not from bash.
-
-TERM is another attack vector, but IIRC sshd does not set TERM when
-no-pty is used.  So, speaking of SSH forced commands, it appears to be
-only SSH_ORIGINAL_COMMAND that we have no good workaround for.
-
-Indeed, there are many other setups where the problem is exploitable,
-not just SSH forced commands.
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
