@@ -1,28 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/7
-Message-ID: <20140207154958.3b79ad0c@hboeck.de>
-Date: Fri, 7 Feb 2014 15:49:58 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: contao vulnerability - CVE assigned?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/1
+Message-ID: <539D343E.5040105@ai2.upv.es>
+Date: Sun, 15 Jun 2014 07:50:54 +0200
+From: Salva Peiró <speiro@....upv.es>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE-2014-1739: Kernel Infoleak vulnerability in,media_enum_entities()
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 7 Feb 2014 15:42:10 +0100
-Alexandre Dulaunoy <a@....be> wrote:
+Hi,
 
-> Following this "full disclosure" paste:
-> 
-> http://pastebin.com/DFh1FVdb
-> 
-> Do you know if cantao already requested a CVE?
+We found an infoleak vulnerability in the ioctl media_enum_entities()
+that allows to disclose 200 bytes the kernel process' stack.
+The vulnerability is exploitable on versions up to linux-3.15-rc3 by
+local users with read access to `/dev/media0`.
+Linux distributions ship with `chmod 600 /dev/media0` preventing
+unprivileged local users from exploiting the vulnerability.
+However, some Android devices are known to be shipped with both read
+and/or write permissions for all: chmod 666 /dev/media0.
 
-Should be CVE-2014-1860
+A detailed analysis, proof of concept and fixes are at:
+http://speirofr.appspot.com/cve-2014-1739-kernel-infoleak-vulnerability-in-media_enum_entities.html
 
--- 
-Hanno Böck
-http://hboeck.de/
+This has been fixed in Linux Kernel commit:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=e6a623460e5fc960ac3ee9f946d3106233fd28d8
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+e6a623460e5fc960ac3ee9f946d3106233fd28d8
+Author	Salva Peiró <speiro@....upv.es>
+Date    Thu, 1 May 2014 12:53:28 +0000
+Commit [media] media-device: fix infoleak in ioctl media_enum_entities()
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+    This fixes CVE-2014-1739.
+
+    Signed-off-by: Salva Peiró <speiro@....upv.es>
+    Acked-by: Laurent Pinchart <laurent.pinchart@...asonboard.com>
+    Cc: stable@...r.kernel.org
+    Signed-off-by: Mauro Carvalho Chehab <m.chehab@...sung.com>
+
+Salva Peiró
