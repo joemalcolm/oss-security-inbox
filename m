@@ -1,45 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/2
-Message-ID: <20140617132751.79d4c7c3@redhat.com>
-Date: Tue, 17 Jun 2014 13:27:51 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, Graham Dumpleton <graham.dumpleton@...il.com>
-Subject: Re: Security release for mod_wsgi (version 3.5)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/9
+Message-ID: <CAMp7mVvLktg7XZbJp3a=3BTO12RWJ_2U09v9VsSUbCsP4UVUkw@mail.gmail.com>
+Date: Sun, 15 Jun 2014 21:32:54 +0100
+From: Richard Moore <rich@....org>
+To: Yves-Alexis Perez <corsac@...ian.org>
+Cc: cve-assign@...re.org, henri@...v.fi, oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request for KIO/kmail
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 21 May 2014 11:46:32 +0200 Kurt Seifried wrote:
+On 15 June 2014 19:29, Yves-Alexis Perez <corsac@...ian.org> wrote:
 
-> So CVEs were assigned, this is now public, very well written an
-> detailed write up is at:
-> 
-> http://blog.dscpl.com.au/2014/05/security-release-for-modwsgi-version-35.html
+> On dim., 2014-06-15 at 16:55 +0100, Richard Moore wrote:
+> > In the past when I've tried to use the cve-assign address it has
+> basically
+> > been a black hole. Since then I've either asked redhat or one of the
+> other
+> > OSS vendors for a CVE. I've used the distros@...openwall.org now as a
+> > fallback.
+> >
+> > I'd also note as part of the meta discussion that I'm not going to
+> release
+> > details of vulnerabilities to a public list  before the fix, and just
+> > because someone asks for more details doesn't mean I will provide them.
+>
+> May I ask why you're writing to the public oss-sec list instead of the
+> private distros one, then?
+>
 
-...
+Yep, that's obviously a mistake on my part. It's the address I had noted
+for CVE requests.
 
-> Issue: Possibility of local privilege escalation when using daemon
-> mode. (CVE-2014-0240)
-> 
-> The issue is believed to affect Linux systems running kernel versions
-> > = 2.6.0 and < 3.1.0.
-> 
-> The issue affects all versions of mod_wsgi up to and including version
-> 3.4.
-> 
-> The source of the issue derives from mod_wsgi not correctly handling
-> Linux specific error codes from setuid(), which differ to what would
-> be expected to be returned by UNIX systems conforming to the Open
-> Group UNIX specification for setuid().
+Rich.
 
-Looking at the patch, mod_wsgi was previously expecting that setuid may
-return error, it only failed to respond to the failure correctly.  It
-only logged information about the failure, and continued to run with
-unexpected privileges.
-
-Few lines above the patched code, the same pattern is used for setgid
-and setgroups / initgroups calls.  Is there a reason to not patch those
-in the same way?  While there may be no such easy way to trigger failure
-for those, their failure would also lead to user code running with
-unexpected privileges.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
