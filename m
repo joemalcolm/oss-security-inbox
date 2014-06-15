@@ -1,35 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/14
-Message-ID: <20141119182257.GE23193@tracyreed.org>
-Date: Wed, 19 Nov 2014 10:22:57 -0800
-From: Tracy Reed <treed@...raviolet.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/10
+Message-ID: <539E20A0.3030708@redhat.com>
+Date: Mon, 16 Jun 2014 08:39:28 +1000
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Location of OS security audit reports
+Subject: CVE request for commons-beanutils: 'class' property is exposed, potentially leading to RCE
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 19, 2014 at 09:54:09AM PST, M.T. Roebuck spake thusly:
-> I see you're in Vietnam is there anything at all like a non-western
-> OS in use there? Or anywhere in that part of the world? I must be
+Hi All
 
-I am not Vietnamese but I have spent a lot of time in Vietnam and occasionally
-do business there.
+I have raised this twice with security@...che.org, on 30 April and June 
+3. I have received no response either time, therefore I am raising it on 
+oss-security.
 
-No, there are no non-western OS in use there. It is pretty much all pirated
-Windows. The hacker culture there is very small, nearly non-existent, although
-the Saigon Linux User Group are very bright and capable albeit only maybe 4
-regulars:
+CVE-2014-0114 describes a well-known issue in Apache Struts 1:
 
-https://saigonlug.org/
+"It was found that the Struts 1 ActionForm object allowed access to the 
+'class' parameter, which is directly mapped to the getClass() method. A 
+remote attacker could use this flaw to manipulate the ClassLoader used 
+by an application server running Struts 1. This could lead to remote 
+code execution under certain conditions."
 
-I am not aware of any non-western operating systems in use anywhere in the
-world. Even China cribbed Linux for their "Red Flag" (now defunct,
-surprisingly) OS:
+The root cause of this flaw is that commons-beanutils exposes the class 
+property by default, with no mechanism to disable access to it. Struts 1 
+is considered EOL upstream, and upstream has not yet shipped a patch for 
+this flaw. Red Hat has shipped a patch, which was submitted upstream as 
+a pull request:
 
-http://www.redflag-linux.com/en/
+https://github.com/apache/struts1/pull/1
 
-https://en.wikipedia.org/wiki/Red_Flag_Linux
+This patch disables access to the class property in struts itself, 
+rather than in commons-beanutils. Other frameworks built on 
+commons-beanutils, such as Apache Stripes, are likely to expose similar 
+issues. I think it would be a good idea to also assign a separate CVE ID 
+to commons-beanutils, and ship a patch for commons-beanutils itself. The 
+commons-beanutils patch could be inherited by other frameworks that may 
+not have the resources to produce their own patch.
 
--- 
-Tracy Reed
+commons-beanutils 1.9.2 has now shipped:
 
-Content of type "application/pgp-signature" skipped
+http://commons.apache.org/proper/commons-beanutils/javadocs/v1.9.2/RELEASE-NOTES.txt
+
+Incorporating a patch for this issue:
+
+https://issues.apache.org/jira/browse/BEANUTILS-463
+
+"A specialized BeanIntrospector implementation has been added which 
+allows suppressing properties. There is also a pre-configured instance 
+removing the class property from beans. Some notes have been added to 
+the user's guide."
+
+I think it would be appropriate to assign a CVE ID to this issue in 
+commons-beanutils, and publish an advisory. This would provide framework 
+developers with the necessary information and impetus to upgrade to 
+commons-beanutils 1.9.2 and make use of SuppressPropertiesBeanIntrospector.
+
+Thanks
+--
+David Jorm / Red Hat Product Security
