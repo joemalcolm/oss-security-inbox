@@ -1,76 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/25/3
-Message-ID: <BB0C119B-2DD4-426D-9073-0F96909CAB69@redhat.com>
-Date: Tue, 25 Feb 2014 09:10:53 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request for catfish program
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/6
+Message-Id: <201406151708.s5FH8lGR001717@linus.mitre.org>
+Date: Sun, 15 Jun 2014 13:08:47 -0400 (EDT)
+From: cve-assign@...re.org
+To: rich@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, henri@...v.fi
+Subject: Re: CVE Request for KIO/kmail
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2014, at 7:56 AM, cve-assign@...re.org wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739958
->> https://bugzilla.redhat.com/show_bug.cgi?id=1069396
->
->> This script intentionally looks to load catfish.py in the current
->> working directory.
->
-> "intentionally" tends to be a complicating factor for a CVE
-> assignment; one could possibly instead express this as: the author
-> didn't consider that catfish would sometimes be executed with cwd
-> outside of the user's home directory. The nature of the program
-> suggests that it could be started interactively by any user at any
-> time, and there's no documentation indicating that the cwd could or
-> should be constrained.
+We have no objection at all to your using distros@...openwall.org
+for this kio report.
 
-Well, given that they wrote what they did, I think "intentionally" is a correct observation (I mean, someone wrote this).  Whether or not they knew this would lead to any kind of security consequence is the question.
+> In the past when I've tried to use the cve-assign address it has basically
+> been a black hole.
 
-> We couldn't immediately figure out where your quoted source code came
-> from.
+Thanks for noting this, but we haven't been able to find why that
+happened. We did a complete search and there's never been any e-mail
+received at the cve-assign@...re.org address from any kde.org sender
+or the name Richard Moore or Rich Moore. Before October 2011, we
+advertised a different address, cve@...re.org, reaching different
+people at MITRE, but unfortunately do not have the full archive of
+that online. We sent one reply in December 2011 from
+cve-assign@...re.org to a kde.org address in response to e-mail sent
+to cve@...re.org (it was related to the
+http://openwall.com/lists/oss-security/2011/12/07/3 post).
 
-I was looking at the installed script on a Fedora 19 box, so that is catfish 0.4.0.2.  Sorry, I should have been a bit clearer.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-> http://ftp.de.debian.org/debian/pool/main/c/catfish/catfish_0.3.2.orig.tar.gz
-> has a catfish.in that looks for $APPNAME.pyc before $APPNAME.py. The
-> quoted code has duplicate checks for $APPNAME.py. This affects the
-> number of CVEs. Apparently, "a crafted catfish.py file in the current
-> working directory" is an attack vector with a certain set of affected
-> versions, and "a crafted catfish.pyc file in the current working
-> directory" is an attack vector with a different set of affected
-> versions. Also, the Debian bug report specifically names a much later
-> package (1.0.0-2) that might be considered an independent codebase,
-> and at least has different attack vectors. The ChangeLog says "v0.6.0
-> Complete rewrite from the ground-up." The problematic 1.0.0 code is
-> distributed in bin/catfish.in.in and has attack vectors of "a crafted
-> bin/catfish.pyc or bin/catfish.py file under the current working
-> directory."
->
-> The primary Red Hat bug report refers to
-> https://bugzilla.redhat.com/show_bug.cgi?id=1069398 which is for
-> "Product: Fedora ... Component: catfish ... Version: 20" but
-> http://dl.fedoraproject.org/pub/fedora/linux/releases/20/Everything/source/SRPMS/c/catfish-0.8.2-1.fc20.src.rpm
-> is essentially the same as 1.0.0: the code is found in
-> bin/catfish.in.in in the distribution, and bin/catfish.pyc and
-> bin/catfish.py are the attack vectors. So, apparently your quoted code
-> isn't the Fedora 20 code.
-
-No.  But, to be honest, I didn't think this would receive two separate CVEs for "./script" vs "./bin/script" so there was one tracking bug to fix this in all versions of Fedora versus one per version of Fedora.  This isn't an exceptional thing and we do it pretty much all the time unless there are differing CVEs or other special reasons.
-
-> Finally, we didn't find any evidence of a case where only
-> bin/catfish.py is checked within the post-complete-rewrite codebase.
->
-> catfish.py in the current working directory - Use CVE-2014-2093.
->
-> catfish.pyc in the current working directory - Use CVE-2014-2094.
->
-> bin/catfish.pyc and bin/catfish.py file under the current working
-> directory - Use CVE-2014-2095.
-
-So many...
-
-Thanks for this.
-
--- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+iQEcBAEBAgAGBQJTndKBAAoJEKllVAevmvmsuuwH/1ueA7GZW8SCOmTltx5hvQXT
+0QFg8kaTk+I1whCLJosOHweIej8MMNOWbC/kx5jENsFmhNCh57m/klFVwVQ4PBYO
+kj/cEHp7exRWyzvNJLU2KQlWLl6Yrg/qpGwYDAOR/ggcRfFySP6lXYbQ6MgDMjn0
+ExU9VryQsCrj/DbuNl1yIPZKUxq4JXCp/C3ZZ7v7jJPlIl1sgDlXRU1zBAdRz5/L
+aN9OYz6PaA98ENDrCg1MPQR0hoUpGo9s1xeGFENFiImoqjtWEQbt7G7LlviloIov
+tZ34FmJ4v/ckVJXiD39L+/icZ/7OyYE/Gt1Zh3E9BYf7tkeLr/+qGDGVuESXylc=
+=7E3L
+-----END PGP SIGNATURE-----
