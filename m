@@ -1,21 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/3
-Message-Id: <201406130550.s5D5o0QF015903@linus.mitre.org>
-Date: Fri, 13 Jun 2014 01:50:00 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/16/3
+Message-Id: <201406162018.s5GKIHIF001353@linus.mitre.org>
+Date: Mon, 16 Jun 2014 16:18:17 -0400 (EDT)
 From: cve-assign@...re.org
-To: eagle@...ie.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, openafs-gatekeepers@...nafs.org
-Subject: Re: CVE request: OpenAFS 1.6.8 TMAY fileserver crashes
+To: jordi@...ranet.cat
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: monitorix: HTTP server 'handle_request()' session fixation & XSS vulnerabilities (clearing up confusion)
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> some variables in the host structure being left initialized from
-> recycled heap memory ... This makes it very easy to crash the
-> fileserver
+(In MITRE internal discussions, we noted that CVE mappings for the
+December 2013 oss-security Monitorix thread unfortunately were not
+resolved. We acknowledge that this is not a timely response.)
 
-Use CVE-2014-4044.
+> Following the suggestion from Brian Martin (Open Security Foundation), I 
+> write here to try to clear up things related to the latest security 
+> vulnerabilities that affected the Monitorix built-in HTTP server.
+
+http://openwall.com/lists/oss-security/2013/12/27/7 refers to
+https://github.com/mikaku/Monitorix/issues/30 and the first comment in
+issue #30 has this quoted text:
+
+  The remote host is running a web server that fails to adequately
+  sanitize request strings of malicious JavaScript. By leveraging this
+  issue, an attacker may be able to inject arbitrary cookies. Depending
+  on the structure of the web application, it may be possible to launch
+  a 'session fixation' attack using this mechanism.
+
+Apparently related to this, http://osvdb.org/100425 says:
+
+  Monitorix contains a flaw in the HTTP server's handle_request()
+  function that allows a remote, user-assisted attacker to conduct
+  a session fixation attack. This flaw exists because the application,
+  when establishing a new session, does not invalidate an existing
+  session identifier and assign a new one. With a specially crafted
+  request fixating the session identifier, a context-dependent
+  attacker can ensure a user authenticates with the known session
+  identifier, allowing the session to be subsequently hijacked.
+
+Looking at
+https://github.com/mikaku/Monitorix/blob/master/lib/HTTPServer.pm
+suggests a stateless web application that relies on HTTP Basic
+Authentication. There are no session identifiers of the type mentioned
+in http://cwe.mitre.org/data/definitions/384.html and we don't see a
+rationale for mapping any observed Monitorix behavior to the "CWE-384:
+Session Fixation" concept.
+
+
+http://openwall.com/lists/oss-security/2013/12/27/7 also says:
+
+  These two security vulnerabilities fixed in 3.4.0 were described as "Web 
+  Server Generic Cookie Injection" and "Web Server Generic XSS"
+
+"Cookie Injection" isn't terminology used in MITRE's CVE or CWE
+project. Also,
+https://github.com/mikaku/Monitorix/blob/master/lib/HTTPServer.pm
+doesn't show any use of cookies. We think that Cookie Injection means
+that, if an attacker requests a URI beginning with
+
+  /<SCRIPT>document.cookie=
+
+then the unpatched Monitorix code would have produced an HTML document
+containing that SCRIPT element. In CVE's terminology and practices,
+this is considered a behavior that is resultant from XSS.
+
+
+http://openwall.com/lists/oss-security/2013/12/12/8 says:
+
+  For the XSS issue for the PATH_INFO (aka the $url variable), fixed in
+  3.4.0, use CVE-2013-7071.
+
+The reason that we used the PATH_INFO terminology is the line "my $url
+= $cgi->path_info();" in the
+https://github.com/mikaku/Monitorix/blob/master/lib/HTTPServer.pm
+code. We feel that that terminology choice is not critical because
+we are not going to have multiple CVEs for issues fixed in 3.4.0.
+
+
+http://openwall.com/lists/oss-security/2013/12/12/8 also says:
+
+  For the other issue (the unspecified issue of the "two security
+  issues") fixed in 3.4.0, use CVE-2013-7072.
+
+We will be moving CVE-2013-7072 to the "REJECT" state because that CVE
+assignment came only from an interpretation of the "3.4.0 version
+released" section of http://www.monitorix.org/news.html before that
+section was rewritten. From the perspective of CVE content decisions,
+there can be only one CVE assignment for what was fixed in 3.4.0. The
+primary vulnerability type is XSS, and the CVE ID for that is
+CVE-2013-7071.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -25,11 +100,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTmpBkAAoJEKllVAevmvmsZs8H/3BRujI/jJcI6GzmZOocgwP+
-Nw7jwq5gAwp7lpgyGQQViHF6qmlPuM/x2SnDeQ7HhGn3kNYW1jADu0+Pu+mo8NrH
-cNK3yU87DaMP4W9Fmw6Vcd7FST15g5khstB0McRHFmMLFdmrFCmmXgY+CGoa1pja
-wZrbQyyqVHNdXfN5ahukX2mP+/JQ8dx8MlIbRn2pAmevZM7Q+v++sDDMO9p2szD6
-5GrOo8IvnLTmxLymSEM/F7xZ9bwwwzecoobP3DA2vXVnO4+Ka9LJqULrW5970HJr
-vEZr5goV0Njo+lpw+uzuxC/QojohHr5yBMkqjKD3nh9AUWxtZ4fALhaTOdJc3co=
-=TDcb
+iQEcBAEBAgAGBQJTn073AAoJEKllVAevmvmser0H/ize4lzXSh89Af+fqPp6s6oJ
+UFXbzv61MHbhXUWQgS1lYxEDmzwMsxTKZbnnn3/r2/N3KeXE2ikM6ZREgRJxKhpb
+9U3PRLy0G6rRKT/wzhQsLSl0q/sh6+J7ZuUOQXSLEsEej6iWU4zvtgnNsy7CoQRS
+oBjP75EJ71Vd+/KaWYHkmy+T910okiqFqBzIIN/+MKK4ojjaqbSG4DaMsspB2ndR
+/CRa2DRVjVDCifJVNnJZmaFBf6H12W+08oGmizR5ETvH+dnmTufc2jYv6/Z2UTUQ
+seJU2FFIx7Dmwhjeyaoh+MdOCl67+H+BkzsBsiOExbo9+uQQmp0keo1Disi+Wbc=
+=9+3S
 -----END PGP SIGNATURE-----
