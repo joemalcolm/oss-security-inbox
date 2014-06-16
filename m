@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/6
-Message-ID: <20140930031109.GA14626@gremlin.ru>
-Date: Tue, 30 Sep 2014 07:11:09 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/16/5
+Message-ID: <CAGgu=sCpei2-3P0mhj9qxQucD-D1QGAG61GdmKWcwfxBOiFo8Q@mail.gmail.com>
+Date: Mon, 16 Jun 2014 23:52:44 +0200
+From: Erik Ekman <yarrick@...o.se>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Cc: Oscar Reparaz <oscar@...araz.net>
+Subject: CVE Request: iodine: authentication bypass by client
 Content-Type: text/plain; charset=utf-8
 
-On 29-Sep-2014 22:34:20 -0400, Chet Ramey wrote:
+Hi oss-security,
 
- >> What is the motivation to not store executable code (functions)
- >> differently from standard variables?
+iodine 0.7.0 has just been released, which fixes an authentication bypass
+issue
+discovered by Oscar Reparaz. The fix is here:
 
- > What would you use for such a store, considering the environment
- > is the only portable way to pass this information from one process
- > to another in the general case, and support the current set of
- > use cases?
+https://github.com/yarrick/iodine/commit/b715be5cf3978fbe589b03b09c9398d0d791f850
 
-C.O. to the rescue: temporary file.
+and the new release is available at the homepage:
+http://code.kryo.se/iodine/
 
-If one shell instance needs to pass some functions to another, it
-could dump those functions to a temporary file and pass the --load
-(or, better, --load-functions) options with a filename parameter.
+Please assign a CVE id for this issue.
 
-The functions file name may also be passed through environment, but
-that could open another set of security holes (like reading files).
+/Erik Ekman
+iodine main developer
 
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
