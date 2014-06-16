@@ -1,67 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/25/6
-Message-ID: <79D410D6-6EF4-4308-818C-3EAE8D9B5D19@redhat.com>
-Date: Tue, 25 Feb 2014 16:28:47 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request for catfish program
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/16/1
+Message-ID: <1402904535.30096.12.camel@scapa>
+Date: Mon, 16 Jun 2014 09:42:15 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: Ben Hutchings <ben@...adent.org.uk>, oss-sec <oss-security@...ts.openwall.com>
+Cc: team@...urity.debian.org, 751417@...s.debian.org
+Subject: Re: Bug#751417: linux-image-3.2.0-4-5kc-malta: no SIGKILL after prctl(PR_SET_SECCOMP, 1, ...) on MIPS
 Content-Type: text/plain; charset=utf-8
 
-On 02/25/2014, at 11:18 AM, cve-assign@...re.org wrote:
+On dim., 2014-06-15 at 19:31 +0100, Ben Hutchings wrote:
+> Please can you assign a CVE ID to this bug?
 
->> I was looking at the installed script on a Fedora 19 box
->
-> Apparently the situation is that the Fedora catfish.spec file
-> generates the duplicate checks for $APPNAME.py. It's uncommon to have
-> different CVE mappings for Fedora-shipped versions versus upstream
-> versions, but in this case we'll proceed to do that because the CVE
-> abstraction was already stated that way, and the attack vectors are
-> actually different.
->
-> catfish.py in the current working directory - Use CVE-2014-2093.
->
-> catfish.pyc in the current working directory - Use CVE-2014-2094.
->
-> bin/catfish.pyc under the current working directory - Use
-> CVE-2014-2095.
->
-> bin/catfish.py under the current working directory - Use
-> CVE-2014-2096.
->
-> If someone installs the upstream version of either catfish 0.4.0.2 or
-> catfish 0.8.2, they get a script that unsafely looks for both
-> catfish.pyc and catfish.py.
->
-> If someone installs either the Fedora 19 catfish-0.4.0.2-2 package or
-> the Fedora 20 catfish-0.8.2-1 package, they get a script that unsafely
-> looks for only catfish.py (twice).
->
-> This apparently occurs because of:
->
-> [Fedora 19 catfish.spec]
-> %{__sed} -i.byte \
->       -e 's|pyc|py|' \
->       %{name}.in
->
-> [Fedora 20 catfish.spec]
-> %{__sed} -i.byte \
->       -e 's|pyc|py|' \
->       bin/%{name}.in.in
->
-> We don't know why that was done. (Maybe Fedora has a policy against
-> certain uses of .pyc files, and this policy is implemented in
-> the .spec files of various packages?)
->
-> This specific case isn't very interesting because every one of the
-> mentioned versions of catfish on every platform is actually
-> vulnerable. However, probably no Fedora advisory should map to either
-> CVE-2014-2094 or CVE-2014-2095.
+Hi Ben,
 
-AFAIK there is no policy.  This may be something the maintainer chose to do for some unknown reason.
+we usually don't assign CVE from our pool for public issues, and I'm
+especially reluctant here as I don't know if someone else aware of this
+issue could have assign one.
 
-Thanks for all this extra analysis.  I've updated our bug with the new and proper CVEs for this issue.
+So I'm asking on oss-sec to assign one so it gets some publicity for
+security people and someone has a chance to yell if a CVE has already
+been assigned.
 
+oss-sec / MITRE: it seems that SECCOMP on MIPS doesn't behave properly
+(see [1] for all the details). I'm unsure when it started (I guess when
+seccomp was first added to MIPS, it seems at least 3.2 is affected), and
+it's fixed in 3.15 (with 137f7df8cead00688524c82360930845396b8a21).
+
+Can someone assign a CVE is this is indeed a new issue?
+
+Regards,
+
+[1]: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=751417
 -- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
