@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/9
-Message-ID: <878ul64v34.fsf@wylie.me.uk>
-Date: Fri, 26 Sep 2014 09:58:07 +0100
-From: alan@...ie.me.uk (Alan J. Wylie)
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/16/4
+Message-ID: <539F5AE5.30001@debian.org>
+Date: Mon, 16 Jun 2014 23:00:21 +0200
+From: Sylvestre Ledru <sylvestre@...ian.org>
+To: cve-assign@...re.org, 744817@...s.debian.org, mmcallis@...hat.com
+CC: oss-security@...ts.openwall.com
+Subject: Re: Bug#744817: CVE request: insecure temporary file handling in clang's scan-build utility
 Content-Type: text/plain; charset=utf-8
 
-Chet Ramey <chet.ramey-oNH6vCZdlc4@...lic.gmane.org> writes:
+On 16/06/2014 22:51, Sylvestre Ledru wrote:
+> On 19/04/2014 05:29, cve-assign@...re.org wrote:
+>>> Jakub Wilk discovered that clang's scan-build utility insecurely handled
+>>> temporary files.
+>>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744817
+>>> The GetHTMLRunDir subroutine ...
+>>> 3) The function doesn't fail if the directory already exists, even if
+>>> it's owned by another user.
+>> Use CVE-2014-2893.
+>>
+> I think I fixed it upstream:
+> http://llvm.org/viewvc/llvm-project?view=revision&revision=211051
+> http://llvm.org/viewvc/llvm-project/cfe/trunk/tools/scan-build/scan-build?r1=210971&r2=211051&pathrev=211051
+>
+Actual patch fixed:
+http://llvm.org/viewvc/llvm-project/cfe/trunk/tools/scan-build/scan-build?r1=210971&r2=211053&pathrev=211053
+Sorry about the noise
 
-> Thanks for the kind words.  In this spirit, I've attached a patch for
-> bash-2.05b, since I've been told that there are still systems running it
-> out there.
+Sylvestre
 
-In this case, would it also be appropriate to back-port the patch for
-the bug I reported 10 years ago?
 
-https://lists.gnu.org/archive/html/bug-bash/2004-09/msg00193.html 
 
--- 
-Alan J. Wylie                                          http://www.wylie.me.uk/
+Download attachment "signature.asc" of type "application/pgp-signature" (881 bytes)
