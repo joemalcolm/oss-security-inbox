@@ -1,67 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/14
-Message-ID: <20141003211600.GA4115@chaz.gmail.com>
-Date: Fri, 3 Oct 2014 22:16:00 +0100
-From: Stephane Chazelas <stephane.chazelas@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/9
+Message-ID: <20140617133220.GA27620@openwall.com>
+Date: Tue, 17 Jun 2014 17:32:20 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshock timeline
+Subject: Re: transparency on message moderation
 Content-Type: text/plain; charset=utf-8
 
-2014-10-03 15:28:31 -0400, David A. Wheeler:
-> FYI, I've created a timeline of major Shellshock events here:
+Henri,
+
+On Tue, Jun 17, 2014 at 03:05:39PM +0300, Henri Salo wrote:
+> On Tue, Jun 17, 2014 at 03:32:59PM +0400, Solar Designer wrote:
+> > IIRC, a long while ago Henri Salo expressed an interest (in private
+> > e-mail to me) in contributing to this sort of activities.  Henri, would
+> > you like to help co-moderate oss-security - which currently means only
+> > approving obviously-desirable messages, and leaving everything else to
+> > me?  What are your current affiliations (e.g., any Linux distro)?
 > 
->   http://www.dwheeler.com/essays/shellshock.html#timeline
-> 
-> If anyone has corrections or key additions, let me know.
-[...]
+> Sure. Send me instructions and I'm happy to help.
 
-About the discovery.
+Thanks!  I've just added you as a co-moderator, and removed Josh.
+(Thanks again for your help, Josh!)
 
-I discovered it in the morning (UK) of 2014-09-12 and reported
-it at Fri, 12 Sep 2014 16:10:35 +0100 to Chet, and the security
-contacts of Debian, Red Hat, Ubuntu and Mandriva (SUSE added
-later) including details of the bug and the SSH and HTTP (Apache
-header) vectors and mitigation and a bit fat warning that it was
-very serious and not to be disclosed.
+The instructions are simple: you will be receiving moderation request
+e-mails from ezmlm-idx (that runs this list) whenever a message is held
+for moderation.  If the message should obviously be accepted, you reply
+to the default address (it starts with "oss-security-accept-").
+Otherwise you do nothing.  Please do not ever reject any message.
+I'll take care of the rejects (and will ignore the automated spam).
+I'll also take care of whitelisting most senders of desirable messages
+(after we've accepted some of their messages with nothing to reject).
 
-First patch by Chet at 2014-09-12 16:32:17 -0400, but was easily
-bypassed. Ensued a discussion on that original list, several
-patch iterations, whether or not to harden at this point and how,
-whether or not to output error messages on parsing error,
-additional vectors, scope, detection methods (IDS...), other
-affected shells, local privilege escalation?, whether
-localisation can bypass the fix, the impact of two env vars with
-the same name, backward compatibility, who to contact early...
-Of course, I have no visibility of what was discussed internally
-at Red Hat/Ubuntu/Mandriva...
+I've also added you to the oss-security admin address, which I am going
+to CC when I communicate with message senders (usually when someone has
+sent us something that shouldn't obviously be accepted, nor rejected,
+until they clarify).  You are not expected to reply to any messages sent
+to that address.  This is only for you to be better informed of how I am
+handling the less obvious cases.
 
-I suggested the name "bashdoor" on that list on Sun, 14 Sep 2014
-14:29:48 +0100.
+Thanks again,
 
-A release schedule with public disclosure on the 24th at
-14:00 UTC and early notification to other unix and linux
-vendors on the 22nd and select infrastructure provider
-notification (such as CDNs including Microsoft) on the 23rd
-proposed on the 16th by Florian.
-
-Chet had patches for the final (before disclosure) fix for the
-current and all past versions of bash up to 3.0 by 2014-09-16
-22:00:02 -0400  (from diff dates)
-
-I was out of the loop after the 19th
-
-bashdoor.com was registered (not by me) with a creation date of
-2014-09-24 13:59 UTC sometime before 2014-09-24 06:59:10Z
-according to whois. Florian also said here that someone brought
-the early notification sent to vendors/infrastructure to the
-press, so someone obviously intended to take it to the press. I
-don't know whom.
-
-To answer the other post. The feature was definitely not in 1.05
-nor 1.12 (the source of which can be found on the web), but was
-in 1.13.5. Chet confirmed (to me and news outlets) that it was
-added in 1.13.
-
-Cheers,
-Stephane
-
+Alexander
