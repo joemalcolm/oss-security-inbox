@@ -1,83 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/6
-Message-ID: <53A27FF3.1000203@redhat.com>
-Date: Thu, 19 Jun 2014 00:15:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/15
+Message-ID: <CALCETrXQ5RhSjnsqDX1KXO0aeMe-bDh84JZfAkLD5ug+XZEd4w@mail.gmail.com>
+Date: Tue, 17 Jun 2014 14:47:46 -0700
+From: Andy Lutomirski <luto@...capital.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: TMP flaw in rackspace jclouds?
+Subject: Re: CVE-2014-4014: Linux kernel user namespace bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 18/06/14 10:35 PM, Andrew Gaul wrote:
-> Kurt, thank you for bringing this flaw to my attention and I will 
-> address it tomorrow.  I do not have a security background; can you 
-> estimate the severity and whether we can continue discussion on
-> the public bug tracker?
-
-Well you're extracting a tar gz file into a directory that an attacker
-can hijack, and then moving it and using the data, an attacker can
-modify all that data and cause all sorts of shenanigans.
-
-> For now I have bcc the Apache jclouds private mailing list.  Also
-> note that jclouds is an Apache project not a Rackspace project and
-> the canonical URLs are:
-> 
-> https://github.com/jclouds/jclouds 
-> https://issues.apache.org/jira/browse/JCLOUDS
-
-Ahh, derp!
-
-> On Wed, Jun 18, 2014 at 08:52:59PM -0600, Kurt Seifried wrote: 
-> https://github.com/rackspace/jclouds/
-> 
-> So CC'ing Andrew, he's a consistent contributor, I can't file an
-> issue in Github (no link to it) so posting here and CC'ing him.
-> 
-> https://github.com/rackspace/jclouds/blob/master/scriptbuilder/src/main/java/org/jclouds/scriptbuilder/domain/Statements.java
+On Tue, Jun 10, 2014 at 2:49 PM, Andy Lutomirski <luto@...capital.net> wrote:
+> The internal function inode_capable was used inappropriately.
+> Depending on configuration, this may be usable to escalate privileges.
+> A cursory inspection of my Fedora box suggests that it is not
+> vulnerable to the obvious way to exploit this bug.
 >
->  public static Statement extractTargzAndFlattenIntoDirectory(URI
-> tgz, String dest) { return new
-> StatementList(ImmutableSet.<Statement> builder() .add(exec("mkdir
-> /tmp/$$")) .add(extractTargzIntoDirectory(tgz, "/tmp/$$")) 
-> .add(exec("mkdir -p " + dest)) .add(exec("mv /tmp/$$/*/* " +
-> dest)) .add(exec("rm -rf /tmp/$$")).build()); }
-> 
-> 
-> This is insecure, $$ == PID == predictable
-> 
-> http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
+> The fix should appear in Linus' -master shortly, and it's tagged for
+> stable.  In the mean time, I've attached it here.
 >
->  use java.io.File.createTempFile() ? some interesting info at 
-> http://www.veracode.com/blog/2009/01/how-boring-flaws-become-interesting/
->
->  for directories there is a helpful posting at 
-> http://stackoverflow.com/questions/617414/create-a-temporary-directory-in-java
->
->  Thanks.
-> 
-> 
-> 
 
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+The commit that fixes this is:
 
-iQIcBAEBAgAGBQJTon/yAAoJEBYNRVNeJnmTR+sQALdiAEP6ho65Sv7oTbrpYdAd
-1yrMTvHV3XLrc+TZEl29GztxaO+PNfMyNHwpLfM44ZBoKvM5GUXpeyC8SwDnMDL6
-DfOyiQp3ZxadpkMcsMCpF997EO/f1NMWjKjC1Gy/4THVb2NDHqQGeNTMzGDkjJ1v
-Nt+lF5YIhD343xtQtvevdVUIEkHmyuFbekXedXH14ZlEOWDZsjqfcMWV7zbGahq7
-9O6Sc/Vm1rDCWBQoeRJiOn/sKcKVDIZe2HtHptdESXXNLUJrMvTfssQhZKtug2oI
-h5/LGQ6nEVyOkMjo/hhaYAJENalimWf1M9ti73CRzJcWtZGvB3Fh23LbuyhVnWI4
-OLX6okCehQWML9aicjgDgE4r2QEF5BRm8JOnjx3/okI7vPI+GuG6CNwbKaBcEicR
-kvqekiKzYRoGvargLojLgF2dn+eJnanD3jkEmXHTQOgAv65SWfir7tNmofuCwoCI
-tJ+QW2+32U9uRIZ+5e0Qw4CBz0fefBKxAZKSFfkm/PsEoG/b2ZLbOe+3wtlFon4k
-GUKLX+LJr3KDqMbSKxYmK6o2eKrcDA3YVWqLDa1Su7sbvRPHC/Yh2lbgX0QePojG
-K1SrQFe87r1Q987XoIPOpe3YHJQgc1iKaImXcrSBZmbVBxeqY6YXRKBA1W5Pr7fq
-aDjD9IWTOxc6YVFCzIto
-=6rma
------END PGP SIGNATURE-----
+23adbe12ef7d3d4195e80800ab36b37bee28cd03
+
+The bug is that, if you created a user namespace and retained
+capabilities in that namespace, then you could use chmod to set the
+setgid bit on any file you owned, including files with, say, group 0.
+
+The impact depends on what files are available that have gids that
+shouldn't be available to the users who own the file.  For example,
+the existence of a uid != 0, gid == 0 file would allow that uid to
+escalate privileges to gid 0, which is likely good enough for full
+root.
+
+--Andy
