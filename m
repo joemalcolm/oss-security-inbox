@@ -1,53 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/5
-Message-ID: <CAD3CanfgZfupyV1TJcESXYrGn7yJ3hcVDhTLjM1G3D83cOD9wg@mail.gmail.com>
-Date: Wed, 18 Jun 2014 20:08:10 +1200
-From: Matthew Daley <mattd@...fuzz.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Security release for mod_wsgi (version 3.5)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/6
+Message-Id: <E1WwsJr-00081P-1v@xenbits.xen.org>
+Date: Tue, 17 Jun 2014 12:16:55 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 100 (CVE-2014-4021) - Hypervisor heap contents leaked to guests
 Content-Type: text/plain; charset=utf-8
 
-I may be wrong as I haven't been following this discussion entirely, but...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, Jun 18, 2014 at 12:39 AM, Graham Dumpleton
-<graham.dumpleton@...il.com> wrote:
-> This feature was added for one specific user and wouldn't be a well known feature unless people were reading change notes diligently as don't believe it is even covered in the documentation.
->
-> Given that this code also only executes as root, the only error which could technically arise in this code for setgroups() is if the number of groups exceeded NGROUPS_MAX.
->
-> This should not occur though as the number of groups was previously validated when the configuration was read:
->
->     if (groups_list) {
->         const char *group_name = NULL;
->         long groups_maximum = NGROUPS_MAX;
->         const char *items = NULL;
->
-> #ifdef _SC_NGROUPS_MAX
->         groups_maximum = sysconf(_SC_NGROUPS_MAX);
->         if (groups_maximum < 0)
->             groups_maximum = NGROUPS_MAX;
-> #endif
->         groups = (gid_t *)apr_pcalloc(cmd->pool,
->                                       groups_maximum*sizeof(groups[0]));
->
->         groups[groups_count++] = gid;
->
->         items = groups_list;
->         group_name = ap_getword(cmd->pool, &items, ',');
->
->         while (group_name && *group_name) {
->             if (groups_count > groups_maximum)
+              Xen Security Advisory CVE-2014-4021 / XSA-100
+                             version 3
 
-This is an off-by-one error, isn't it? As in, it should be testing for
-groups_count >= groups_maximum and not the current test.
+              Hypervisor heap contents leaked to guests
 
->                 return "Too many supplementary groups WSGI daemon process";
->
->             groups[groups_count++] = ap_gname2id(group_name);
->             group_name = ap_getword(cmd->pool, &items, ',');
->         }
->     }
->
-> Thus was pre-validated input.
+UPDATES IN VERSION 3
+====================
 
-- Matthew Daley
+Public Release.  CVE assigned.
+
+ISSUE DESCRIPTION
+=================
+
+While memory pages recovered from dying guests are being cleaned to avoid
+leaking sensitive information to other guests, memory pages that were in
+use by the hypervisor and are eligible to be allocated to guests weren't
+being properly cleaned.  Such exposure of information would happen through
+memory pages freshly allocated to or by the guest.
+
+Normally the leaked data is administrative information of limited
+value to an attacker.  However, scenarios exist where guest CPU
+register state and hypercall arguments might be leaked.
+
+IMPACT
+======
+
+A malicious guest might be able to read data relating to other guests
+or the hypervisor itself.
+
+Data at rest in guest memory or storage (filesystems) is not affected.
+However, it is possible for an attacker to obtain modest amounts of
+in-flight and in-use data, which might contain passwords or
+cryptographic keys.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 3.2.x and later are vulnerable.
+Xen 3.1.x and earlier have not been inspected.
+
+MITIGATION
+==========
+
+No comprehensive mitigation is available.
+
+An attacker will find it easier obtain sensitive data from a victim
+guest if the attacker is able to initiate domain management operations
+and lifecycle events for that guest.  This includes a situation where
+the attacker can cause the victim guest to crash.
+
+Therefore the risk from this vulnerability can be somewhat reduced by
+restricting management (such as migration or resource adjustment) to
+fully trusted guest or host administrators, and by eliminating any
+Denial of Service vulnerabilities against potential victim guests.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa100.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x, Xen 4.1.x
+
+Note that to avoid a regression on systems with AMD IOMMU, on 4.2.x and later
+additionally commit 6b4d71d0 ("AMD IOMMU: don't free page table prematurely")
+found at
+http://xenbits.xen.org/gitweb/?p=xen.git;a=commitdiff;h=6b4d71d028f445cba7426a144751fddc8bfdd67b
+will be required if not already in place in the respective tree.
+
+$ sha256sum xsa100*.patch
+2cbd3a52bb8d32d00a19e2ce48e3157034b484b4a7b7282cae0d108ffb4ddca0  xsa100.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJToCoFAAoJEIP+FMlX6CvZ8p0H/1RPfzKOIQVvjJrAPiOH8cDr
+/QR8hAhKqIs97+fxSFO5LCsfBwKga/rLz6sjveQYlvJOq9qSc2vTWxpQLNrh7M1q
+NagTSVJoxcxVn+LHgHAczfRfNwK5BWFHz5/R3k1SLSjLy15aBDr5rW42H/WjKXI3
+0UnLfpLkaDfocpQOYAz1a4cTAxbK07omhSlnCdcvPmWLDPvWy03BF7jZvTDYdiO1
+OjU/3HUwMv7Ii6By3QvjO3Z4h9qkest/iIeaeCTwNwSJa9rW+8KLZjzdJCMJOUeu
+J608R94x4vyj7wc+JVPwD59K0XkXzmsASC8q0ivohXGDTloKcdN7vdmR37g4fJ0=
+=WnYZ
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa100.patch" of type "application/octet-stream" (927 bytes)
