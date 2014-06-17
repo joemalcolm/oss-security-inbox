@@ -1,107 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/24/1
-Message-ID: <CALCETrU6z+vE=+xr20B+WefrvshpRJLzra+tEdxOFw-gKad==g@mail.gmail.com>
-Date: Sun, 23 Nov 2014 16:18:16 -0800
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Linux kernel LDT handling bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/11
+Message-ID: <53A041A4.6050603@crc.id.au>
+Date: Tue, 17 Jun 2014 23:24:52 +1000
+From: Steven Haigh <netwiz@....id.au>
+To: Andres Lagar Cavilla <andres@...arcavilla.org>,  xen-devel@...ts.xen.org, security@....org, xen-announce@...ts.xen.org,  oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 99 - unexpected pitfall in xenaccess API
 Content-Type: text/plain; charset=utf-8
 
-Unsurprisingly, x86_64 Linux has some bugs in the way it handles
-failures to return from the kernel into userspace when the userspace
-state has segmentation problems.
+On 17/06/14 23:13, Andres Lagar Cavilla wrote:
+>                     Xen Security Advisory XSA-99
+>                              version 2
+> 
+>                  unexpected pitfall in xenaccess API
+> 
+> UPDATES IN VERSION 2
+> ====================
+> 
+> Public Release.
+> 
+> Added note regarding CVE.
+> 
+> ISSUE DESCRIPTION
+> =================
+> 
+> A test/example program, for exercising the Xen memaccess API, does not
+> take all necessary precautions against hostile guest behaviour.
+> 
+> As a result, software developers using it as an example or template
+> might have written and deployed vulnerable code.
+> 
+>> How?
+> 
+>> I've looked at the patch. It's the refactor proposed in a separate
+>> thread by Dushyant Behl, lifted up a level. Obviously useful, +2.
+> 
+>> But fundamentally, how is this a vulnerability? Since the dawn of time
+>> guests can poke at the qemu and PV frontend rings. So self DoS, check.
+>> But, privilege escalation?
+> 
+>> Is this predicated on the potential (lack of) software quality of the
+>> xenaccess backends? That's a fair argument, but a different story.
+> 
+>> I am puzzled how this is an XSA that addresses "privilege escalation".
 
-tl;dr: Recent kernels can be paniced by modify_ldt and have a couple
-of other bugs that look like they'll be very difficult to usefully
-exploit.
+Also note:
+[netwiz@dev xen-4.2.4]$ patch -p1 < ../xsa-99.patch
+patching file tools/libxc/xc_mem_access.c
+Hunk #1 succeeded at 24 with fuzz 2.
+patching file tools/libxc/xc_mem_event.c
+patching file tools/libxc/xenctrl.h
+Hunk #1 succeeded at 1907 (offset -116 lines).
+Hunk #2 succeeded at 1933 with fuzz 2 (offset -116 lines).
+patching file tools/tests/xen-access/xen-access.c
+Hunk #1 succeeded at 233 (offset 10 lines).
+Hunk #2 succeeded at 254 (offset 10 lines).
+Hunk #3 succeeded at 269 (offset 10 lines).
+Hunk #4 FAILED at 293.
+1 out of 4 hunks FAILED -- saving rejects to file
+tools/tests/xen-access/xen-access.c.rej
 
-Two bugs only exist on kernels that support espfix64 (IIRC 3.16 and
-newer, but I think that espfix64 was backported to a bunch of stable
-kernels):
+In a nutshell, it doesn't apply cleanly either...
 
-1. espfix64 is designed to double-fault and recover on failures.  This
-worked great for #GP and #NP, but it didn't work for #SS.  The result
-is an unrecovered double-fault and panic.  You can test by building
-this:
+-- 
+Steven Haigh
 
-https://gitorious.org/linux-test-utils/linux-clock-tests/source/92ab0e82faa75814f28f2a184a8fa6f3b6f5158a:
-
-and running sigreturn_32.  (Don't use sigreturn_64 -- there are
-non-security-related kernel bugs that prevent the 64-bit build of the
-test from working.)
-
-There should be four possible outcomes from sigreturn_32.  It can pass
-all tests (on a fully patched kernel), it can refuse to run at all
-(kernels with 16-bit support disabled), it can fail lots of tests
-(non-espfix64 kernels), or it can panic (buggy espfix64 kernels).  If
-you see behavior that isn't those categories, please let me know.
-
-This is an easy DoS (just run the test case).  I think that it's
-unlikely that this can be used for anything other than DoS.
-
-The fix is:
-
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6f442be2fb22be02cafa606f1769fa1e6f894441
-
-2. When trying and failing to return directly to userspace from IST
-context (NMI, MCE, int3, breakpoints, or #SS) when the userspace SS
-references the LDT, the kernel would end up accidentally switching to
-an uninitialized stack.  Importantly, this does *not* happen during
-scheduling or signal delivery, which substantially reduces the ease of
-exploiting it.
-
-Triggering this at all isn't so easy, and getting the uninitialized
-part of the stack to contain anything other than a stale but
-nontheless valid user context is even harder.  Nonetheless, I *think*
-that this could be exploited as a kASLR bypass or even privilege
-escalation by a sufficiently determined (and sufficiently patient, and
-sufficiently willing to endure accidental crashes) attacker.
-
-Fixed by:
-
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=af726f21ed8af2cdaa4e93098dc211521218ae65
-
-I'm not sure that this one is even worthy of a CVE.  I can trigger it
-harmlessly in a debugger, but that's as far as I got.  But maybe
-someone here will take this as a challenge.
-
-There's also a fix to a really old bug in this series:
-
-3. When the kernel tried and failed to return directly to userspace
-from IST context and espfix64 was *not* involved, it would handle the
-failure by faking a general protection fault.  Unfortunately, that
-fake general protection fault executed on the IST stack as well, but
-the GPF handler is not designed to run on an IST stack.  This exposed
-the handler to being overwritten if it inadvertently recursed onto the
-same stack, and it could also lead to scheduling or signal delivery on
-the IST stack.
-
-Successful exploitation will result in confused signal delivery or
-kernel stack corruption.
-
-All kernels are affected, I think.
-
-Like #2, triggering this bug is tricky, because it cannot be triggered
-by ptrace or during signal delivery.  It's also harmless unless an
-attacker can persuade the kernel to corrupt its stack, and that is
-unlikely to happen by itself.
-
-This one is unusual, though, in that it requires no system calls at
-all to trigger, which may make it interesting as a seccomp bypass.
-Again, consider this a challenge -- I do not even have a proof of
-concept.
-
-Fixed in:
-
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b645af2d5905c4e32399005b867987919cbfc3ae
+Email: netwiz@....id.au
+Web: http://www.crc.id.au
+Phone: (03) 9001 6090 - 0412 935 897
+Fax: (03) 8338 0299
 
 
-This whole series of fixes was merged in this branch:
-
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=00c89b2f1111b61e924f49fc79b7d9851fce249d
-
-
-Finally, there are more bugs, I think, although the remaining ones are
-probably even more difficult to trigger.
-
---Andy
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
