@@ -1,56 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/16
-Message-ID: <5362B55C.3030305@sumptuouscapital.com>
-Date: Thu, 01 May 2014 22:58:04 +0200
-From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/3
+Message-ID: <20140617113259.GA26999@openwall.com>
+Date: Tue, 17 Jun 2014 15:32:59 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: SKS non-persistent XSS
+Subject: Re: transparency on message moderation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On Sun, Jun 08, 2014 at 03:16:31PM -0400, Josh Bressers wrote:
+> > general.  I also like to take this opportunity to thank Kurt Seifried,
+> > Josh Bressers, and Vincent Danen for their help approving obviously
+> > on-topic oss-security postings sometimes quicker than I do.
+> 
+> I can't take credit for this. I'm probably the worst list moderator ever.
+> It would certainly make sense to have someone replace me as a moderator,
+> probably not from Red Hat to help avoid any possible conspiracies.
 
-Hi,
+Josh, I do recall you wanted to resign as a co-moderator a while ago,
+and it makes sense for us to have a new co-moderator from neither
+Openwall nor Red Hat, and preferably not from a for-profit Linux
+company.  For example, someone from Debian or a *BSD could be OK, or
+some active oss-security contributor who is not with any distro.
 
-A non-persistent client-side cross-site scripting attack was reported
-against SKS[0] resulting from improper input sanitation before writing
-to a client. The issue has been fixed in the development trunk[1] for
-inclusion in an upcoming 1.1.5 release.
+IIRC, a long while ago Henri Salo expressed an interest (in private
+e-mail to me) in contributing to this sort of activities.  Henri, would
+you like to help co-moderate oss-security - which currently means only
+approving obviously-desirable messages, and leaving everything else to
+me?  What are your current affiliations (e.g., any Linux distro)?
 
-Initial report and findings:
-https://bugzilla.mozilla.org/show_bug.cgi?id=952077 by Haris
-(whitehat@...mail.rs)
+On Sun, Jun 08, 2014 at 07:27:11PM -0400, rea wrote:
+> I have no stake in the game. If you need a hand just let me know.
 
-References:
-[0]
-https://bitbucket.org/skskeyserver/sks-keyserver/issue/26/unfiltered-xss
-[1]
-https://bitbucket.org/skskeyserver/sks-keyserver/pull-request/30/issue26-fix-a-non-persistent-cross-site
+Thanks rea, but as far as I can tell this is the very first time you
+posted to oss-security.  While the task of approving obviously-desirable
+messages quickly is simple enough that I think you'd manage well, I
+think it's better for us to choose a co-moderator who has been actively
+contributing to discussions on oss-security.
 
-- -- 
-- ----------------------------
-Kristian Fiskerstrand
-Blog: http://blog.sumptuouscapital.com
-Twitter: @krifisk
-- ----------------------------
-Public PGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-- ----------------------------
-Nomina stultorum scribuntur ubique locorum
-Fools have the habit of writing their names everywhere
------BEGIN PGP SIGNATURE-----
+I've also received an offer off-list from someone who is with a
+for-profit Linux-related company.  While I appreciate the offer greatly,
+I think it's preferable for our new co-moderator to have no such
+affiliation.  I'm confident this doesn't actually matter for how the
+messages are processed (as long as I'm involved and I see the lack of
+abusive delays), but I guess it might matter for the confidence of
+others who don't have this sort of direct visibility into how message
+moderation is done.
 
-iQIcBAEBCgAGBQJTYrVZAAoJEPw7F94F4TagadMQAIYeE8WpsEY2pb7+BpHj8WtT
-kg8OoNR+Cr43z6qvD8+zLBaKRWSuFR5Soj6Pk61/lfIYyojmGUlhY1F401ylDDfn
-ciEH0CIg16L3NCmMTzlslFGeqTOltUlnGlaeV02QkgSWzW4wAIxfEP3G+gu5PkSk
-lkynKRvAix9Dmqruv2EiABiiOjQuJxjirJbZlng4HFiYkAggDyIEj9vGvYfS3tA6
-DU5ui3EEExopFdlL0e9yBKIDZ+dZzeowsWLIOcuBSjaG7a0+PE1rMUFcW0xrvJ2B
-tbW3l9Xp9wwNMh0Sea4cCVxkCpUMNuthBo1+Hd4fp8NSeO4KbePN5ee3AomZHk3R
-tv5idY1aNrakYGO0QEAOMYctIjdzysFNti1YHUTIKpD035CJ5+DVSRI5AoQ2ansU
-zXfglUlVfKaSlq+ZMBOJHUWTKBtS6nPYQlZuU21S0V8WLbstfTE8UI6SFKoQBwMA
-V7PR8TXmUnA/b0k0DByeI0n08oS4fZuTOHo0bakm+Hg2Ua3m+uK7W1XKrobM6uM/
-q4J2sQTraPa0mMQLRpu4n+mSZTHHSqygX3yO4n47p58q+SnkEYBFNAFPwUOUdZVA
-qbl4odZiUitQu1/GsMJujNEzv2gusAW5bxmnsyBglCI61OQIgSsbGcD/LJdwmgWA
-X3WAKZe1u2xFgoRijGM5
-=qi2f
------END PGP SIGNATURE-----
+Alexander
