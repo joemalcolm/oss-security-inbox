@@ -1,27 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/8
-Message-ID: <20141113164023.GW5570@dhcp-25-225.brq.redhat.com>
-Date: Thu, 13 Nov 2014 17:40:24 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: SCTP issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/1
+Message-Id: <201406170518.s5H5HvBx024608@linus.mitre.org>
+Date: Tue, 17 Jun 2014 01:17:57 -0400 (EDT)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: multiple /tmp races in ppc64-diag
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-CVE-2014-3673
-  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9de7922bc709eee2f609cd01d98aaedc4cf5ea74
+> https://bugzilla.novell.com/show_bug.cgi?id=882667
+> https://bugzilla.redhat.com/show_bug.cgi?id=1109371
 
-CVE-2014-3687
-  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b69040d8e39f20d5215a03502a8e8b4c6ab78395
 
-CVE-2014-3688
-  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=26b87c7881006311828bb0ab271a551a62dcceb4
+> In the case of rtas_errd/prrn_hotplug, mktemp is used but is assumed
+> to have succeeded; there is no check for the return value.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=<CVE>
+Are you reporting this as a prrn_hotplug vulnerability? If it were a
+vulnerability, it would have a separate CVE ID. We didn't test the
+code, but it looks more like an opportunity for a non-security
+enhancement or maybe a bug fix. Our guess is:
 
-Thanks,
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+  1. If the return value is nonzero, stdout is an empty string.
+
+  2. All of the ">> $TMPFILE" will fail, and won't write anything into
+     any file.
+
+  3. The outcome is that /var/log/prrn_log doesn't have log
+     information about what happened. We don't know of any direct
+     security implications.
+
+  4. Possibly the code should check the return value and print
+     something like "mktemp failed - maybe you're out of /tmp disk
+     space?" but it might be better to let the rest of the script run
+     anyway (i.e., not abort after that error condition).
+
+At least for now, there is no CVE ID for prrn_hotplug.
+
+
+> I don't know if the data in /tmp/diagSEsnap is sensitive or not
+
+  mkdir "/tmp/diagSEsnap", 0775;
+  $general_eed_file = "/tmp/diagSEsnap/snapH.tar.gz";
+  system("/usr/sbin/snap -o $general_eed_file 2>/dev/null 1>&2");
+
+This seems to be similar to the CVE-2014-3925 sosreport issue.
+snapH.tar.gz apparently will include /etc/fstab and therefore might
+include a password.
+http://www.ibm.com/support/entry/portal/docdisplay?lndocid=MIGR-54819
+says "When you report a problem to IBM Technical Support, run the snap
+utility and send the ... file to them." In addition, snapH.tar.gz
+apparently will include /var/log/messages, which traditionally is not
+supposed to be a world-readable file.
+
+(snap and sosreport aren't derivatives of the same code.)
+
+Also, the question of whether "/usr/sbin/snap -o $general_eed_file" is
+exploitable may depend on the behavior of snap. Apparently, snap does
+check whether the -o output file exists but doesn't avoid TOCTOU
+problems. Arguably, snap isn't responsible for avoiding TOCTOU
+problems because it's not inherently designed for use with untrusted
+output filenames.
+
+So, three CVEs seems to be the right number here.
+
+The ppc64-diag unsafe uses of temporary directories in these three
+scenarios:
+
+  "> /tmp/get_dt_files" [ in rtas_errd/diag_support.c ]
+  
+  mkdir "/tmp/diagSEsnap", 0775;
+  $general_eed_file = "/tmp/diagSEsnap/snapH.tar.gz";
+  system("/usr/sbin/snap -o $general_eed_file 2>/dev/null 1>&2");
+  [ in scripts/ppc64_diag_mkrsrc ]
+
+  TMP_DIR="/var/tmp/ras"
+  mkdir -p $TMP_DIR
+  MESSAGE_FILE="$TMP_DIR/messages"
+  [ in lpd/test/lpd_ela_test.sh - see Novell bug 882667 ]
+
+are primarily of interest because of symlink following, and are all
+assigned CVE-2014-4038.
+
+A second CVE for the ppc64-diag product is for the choice of weak
+directory/file permissions for the snapH.tar.gz archive including data
+that is not locally world-readable (e.g., /var/log/messages). This is
+CVE-2014-4039.
+
+A third CVE, CVE-2014-4040, is assigned for snap itself. snap can be
+found at http://sourceforge.net/projects/powerpc-utils (i.e., it's not
+part of the ppc64-diag product). This CVE is the one analogous to
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3925 (i.e., it
+includes the "cleartext passwords ... lacks a warning" rationale).
+
+CVE-2014-4039 and CVE-2014-4040 are vulnerabilities in different
+products and can be addressed independently. For example, snapH.tar.gz
+could have restrictive local permissions and still be sent to a remote
+destination without review. Alternatively, snapH.tar.gz could continue
+to have weak local permissions but snap could require the user to
+acknowledge a warning about off-site distribution of an fstab
+password, etc.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTn86OAAoJEKllVAevmvmsfkwIAKlbcEZenTWaedEVBs+NtrwN
+VwvDgbTjl3fjXFVT+uSctiVwYbA4ZWQLD99SuaO+p7dGfh8/tTFap0Oo8vZ7nNgU
+8uQ9/VH3zLm3MUwrpW9GWucGN0hfY6zKZ2hDU9UTYrQGTzIiQWlUVbjsWO99HLcM
+vsk7/7nr9e/Jn4ke6/jNiTDLjnr8vENJx7oLui0kBrOZ+/PIrhtuO3A3aH/gN6cC
+EQOxSppTeHR0v+DnikTj3i87x7VNGLDAGanATXw+qomrIenzP0TiadgLhBW/0J6/
+9Y5YGlJRUs3IC2nZqb6OiOzK1T2I+wzVFo8QQGmIsNZV1LLhi78HHlrfYa36R+Y=
+=Ygvd
+-----END PGP SIGNATURE-----
