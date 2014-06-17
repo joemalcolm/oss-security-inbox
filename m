@@ -1,66 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/7
-Message-ID: <20140512185858.6d642bb5@redhat.com>
-Date: Mon, 12 May 2014 18:58:58 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: tim-security@...tinelchicken.org, nicolas.gregoire@...rri.fr
-Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/18
+Message-Id: <201406172224.s5HMO4i9001000@linus.mitre.org>
+Date: Tue, 17 Jun 2014 18:24:04 -0400 (EDT)
+From: cve-assign@...re.org
+To: tristan.cacqueray@...vance.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Neutron
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I can hardly call myself familiar with Java XML parsers, but here's my
-2c form a quick search around this that may be wrong.  Please correct
-my mistakes.
+> Neutron L3-agent DoS through IPv6 subnet
 
-On Thu, 8 May 2014 14:55:36 -0700 Timoth D. Morgan wrote:
+> By creating an IPv6 private subnet attached to a L3 router, an
+> authenticated user may break the L3-agent, preventing further floating
+> IPv4 addresses from being attached for the entire cloud.
 
-> That is, if you use DocumentBuilderFactory's setExpandEntityReferences
-> method and supply "false", then it has a very similar behavior.  I'm
-> about to release a comprehensive XXE paper, and here's a preview of
-> what I have written about it:
+> IPv6 prefix shouldn't be added in the NAT table
 
-As far as I can see setExpandEntityReferences() controls what value is
-set for the create-entity-ref-nodes DOM parser feature:
+> SNAT rules with IPv6 prefixes are added into the NAT table, which
+> causes failure
 
-http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/jaxp/DocumentBuilderImpl.java#l158
-http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/jaxp/DocumentBuilderImpl.java#l74
-http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/impl/Constants.java#l427
+Use CVE-2014-4167.
 
-The description in Java API docs is rather brief, xerces docs have more
-details:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-http://xerces.apache.org/xerces-j/features.html#create-entity-ref-nodes
-http://xerces.apache.org/xerces2-j/features.html#dom.create-entity-ref-nodes
-
-AFAICS, the feature does not aim to control if entity references are
-expanded, but only how exactly they appear in the resulting DOM tree.
-
-> "Java developers who use the default parser (or a newer version of
-> Xerces-J) need to change one or more settings to make Xerces
-> reasonably safe when processing untrusted XML.  One behavior to be
-> aware of is the fact that the DocumentBuilderFactory's
-> setExpandEntityReferences method does not provide protection as one
-> might expect.  Calling this method with a "false" argument causes the
-> parser to omit external entity data in the document when referenced,
-> but it does not prevent definitions of external entities.  This means
-> the parser will still fetch external URLs, which could obviously be
-> used for blind SSRF attacks (even if the content isn't used later in
-> the document).   Worse still, this setting does not prevent full use
-> of external parameter entities, which would likely allow an attacker
-> to conduct all of the same attacks that are possible with regular
-> external entities."
-
-Maybe your paper should rather mention parser features as
-external-general-entities and external-parameter-entities:
-
-http://docs.oracle.com/javase/7/docs/api/org/xml/sax/package-summary.html#package_description
-
-OWASP XXE document covers some of this, but actually mentions only one
-of the two features...
-
-https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing#Java
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+iQEcBAEBAgAGBQJToL9xAAoJEKllVAevmvmstr8H/3Ef+n04wmBmJ3y1zYu3BVPV
+sToabL9LosdESbIrW8AQi22gAjvJZtMeN99oGbXuaJ+pQTqU5AjT3cV1s1g0ut6r
+wmE2Rxfo96+l1sCNQiqTb0VZfTpr28W4/MT2JDxx8qQ2k/JxuWYz7OLYOjHIwa1/
+RJhD8L00YWSsGTgYOTQUfBlyQq0O/q/sQBFp4xvrQmMX4fx7T//Qg/t+D//yEwjs
+GheVqnDLAFOLacq3JaAK9bssPKK6NMrhOnarfw4YNMnBNOFgVNvzdEPGKaHpK4y/
+pQGnvPkOmADGC2pYWpHHYZp6/+E13wH7SQ+QkidMa67FyRt9hTzEoiWJ5iT559k=
+=0lA1
+-----END PGP SIGNATURE-----
