@@ -1,43 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/6
-Message-Id: <201406240557.s5O5vb3V026149@linus.mitre.org>
-Date: Tue, 24 Jun 2014 01:57:37 -0400 (EDT)
-From: cve-assign@...re.org
-To: tristan.cacqueray@...vance.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Neutron, Ceilometer and pyCADF library
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/2
+Message-ID: <20140617132751.79d4c7c3@redhat.com>
+Date: Tue, 17 Jun 2014 13:27:51 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com, Graham Dumpleton <graham.dumpleton@...il.com>
+Subject: Re: Security release for mod_wsgi (version 3.5)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 21 May 2014 11:46:32 +0200 Kurt Seifried wrote:
 
-> Title: User token leak to message queue in pyCADF notifier middleware
+> So CVEs were assigned, this is now public, very well written an
+> detailed write up is at:
+> 
+> http://blog.dscpl.com.au/2014/05/security-release-for-modwsgi-version-35.html
 
-> a vulnerability in the notifier middleware available in the PyCADF
-> library and formerly copied into Neutron and Ceilometer code. An
-> attacker with read access to the message queue may obtain
-> authentication tokens
+...
 
-> auth token is exposed in meter http.request
+> Issue: Possibility of local privilege escalation when using daemon
+> mode. (CVE-2014-0240)
+> 
+> The issue is believed to affect Linux systems running kernel versions
+> > = 2.6.0 and < 3.1.0.
+> 
+> The issue affects all versions of mod_wsgi up to and including version
+> 3.4.
+> 
+> The source of the issue derives from mod_wsgi not correctly handling
+> Linux specific error codes from setuid(), which differ to what would
+> be expected to be returned by UNIX systems conforming to the Open
+> Group UNIX specification for setuid().
 
-> notifier.py grabs all environment variables. it should probably filter
-> out HTTP_X_AUTH_TOKEN
+Looking at the patch, mod_wsgi was previously expecting that setuid may
+return error, it only failed to respond to the failure correctly.  It
+only logged information about the failure, and continued to run with
+unexpected privileges.
 
-Use CVE-2014-4615.
+Few lines above the patched code, the same pattern is used for setgid
+and setgroups / initgroups calls.  Is there a reason to not patch those
+in the same way?  While there may be no such easy way to trigger failure
+for those, their failure would also lead to user code running with
+unexpected privileges.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTqRMTAAoJEKllVAevmvmswCgH/RsIZ4ZOHVcfDiZ09THuS4LC
-G/3KSY7PiZMfmpzHO0gR2R7A7NTo9crH0r2YV4SpPjXN7LiFa8viChQgZygNly+I
-HOUIEikNZk63JUJoyEjyorXmZpkBC539hvMtxK4gkTkchsHhyiV4CqxroNhlC4Pl
-QUn1pHfT2GfYuHDYX78Rp9gnfDo+eGnr0BgIN/v12k06k61e/4bIUykgTXWnkefc
-VnTKIs2ESE5WMNNfdpaKVrmBolLADnZweT+hGhOCki2fsVYoNmzpi+CJZadhDzI9
-jtlqYfnkSdV+6ChEzsPcoVRqroZ9C3bddtDViXHKiPj8je9uF3zhXlOun0+XmMM=
-=iisx
------END PGP SIGNATURE-----
+-- 
+Tomas Hoger / Red Hat Security Response Team
