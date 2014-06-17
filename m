@@ -1,50 +1,134 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/42
-Message-ID: <546E41A7.1070402@fifthhorseman.net>
-Date: Thu, 20 Nov 2014 14:31:51 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Fuzzing project brainstorming
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/7
+Message-Id: <20F9B38C-2355-4BF5-AA6E-6AAD4B13925D@gmail.com>
+Date: Tue, 17 Jun 2014 22:39:49 +1000
+From: Graham Dumpleton <graham.dumpleton@...il.com>
+To: Tomas Hoger <thoger@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Security release for mod_wsgi (version 3.5)
 Content-Type: text/plain; charset=utf-8
 
-On 11/20/2014 02:23 PM, Hanno Böck wrote:
-> On Thu, 20 Nov 2014 08:52:15 -0800
-> "M.T. Roebuck" <marvint.roebuck@...ox.lv> wrote:
+
+On 17/06/2014, at 9:27 PM, Tomas Hoger <thoger@...hat.com> wrote:
+
+> On Wed, 21 May 2014 11:46:32 +0200 Kurt Seifried wrote:
 > 
->> Maybe my problem is that your proposal seems herculean to me but
->> can't help to think it's a reminder or sign that we need to think
->> past the current state of things.
+>> So CVEs were assigned, this is now public, very well written an
+>> detailed write up is at:
+>> 
+>> http://blog.dscpl.com.au/2014/05/security-release-for-modwsgi-version-35.html
 > 
-> Compared to "starting from scratch" starting such a fuzzing project is
-> not herculean, it's more like grabbing the low hanging fruit.
+> ...
 > 
-> But arguments alike come up every now and then. Basically you'll hear
-> two things: "We have to mitigate / sandbox" and "please rewrite
-> everything in [insert favorite non-C programming language]".
+>> Issue: Possibility of local privilege escalation when using daemon
+>> mode. (CVE-2014-0240)
+>> 
+>> The issue is believed to affect Linux systems running kernel versions
+>>> = 2.6.0 and < 3.1.0.
+>> 
+>> The issue affects all versions of mod_wsgi up to and including version
+>> 3.4.
+>> 
+>> The source of the issue derives from mod_wsgi not correctly handling
+>> Linux specific error codes from setuid(), which differ to what would
+>> be expected to be returned by UNIX systems conforming to the Open
+>> Group UNIX specification for setuid().
 > 
-> I don't want to downplay either of these approaches. It's just that you
-> have to be realistic. Nobody will rewrite everything from scratch in
-> rust/go/haskell/whatever any time soon. There are a few interesting
-> projects that try to rewrite key sofware in safer languages (mitls and
-> servo come to mind), but they are few and none of them is in a
-> production state.
+> Looking at the patch, mod_wsgi was previously expecting that setuid may
+> return error, it only failed to respond to the failure correctly.  It
+> only logged information about the failure, and continued to run with
+> unexpected privileges.
 > 
-> Our systems we have today - the ones we use to have this discussion,
-> manage our bank accounts and surf the web - have imperfect software
-> written mostly in unsafe languages. I feel fuzzing can improve the
-> state of things a lot.
+> Few lines above the patched code, the same pattern is used for setgid
+> and setgroups / initgroups calls.  Is there a reason to not patch those
+> in the same way?  While there may be no such easy way to trigger failure
+> for those, their failure would also lead to user code running with
+> unexpected privileges.
 
-I agree with this sentiment.  I also think this is likely to be a
-herculean effort, and hopefully not quite a sisyphean one (the boulder
-should be able to move up the hill a little bit each time).
+Looking first at the setgid() case, guess it depends on what circumstances EINVAL would actually be returned, something which the manual pages for setgid() don't really clearly lay out.
 
-I'm really happy that you're pushing on this, Hanno.
+On MacOS X at least, it really doesn't care what you give it. You can give it negative numbers or even really large numbers and it will happily set it to the value. I can't find any good information on what Linux would do and can't test it right now.
 
-even if the only thing that comes out of it is a classification of which
-projects/libraries insist on "trusted input" that would be a very useful
-outcome.
+As it is, the gid value used as input to that is derived from the 'group' option to the mod_wsgi WSGIDaemonProcess directive.
 
-	--dkg
+This option can be a group name in which case it has to survive the call getgrnam() to determine the actual gid for the group.
+
+If that call fails, Apache rather nastily exits the process, which would occur when the configuration is being processed in the Apache parent process.
+
+AP_DECLARE(gid_t) ap_gname2id(const char *name)
+{
+    struct group *ent;
+
+    if (name[0] == '#')
+        return (atoi(&name[1]));
+
+    if (!(ent = getgrnam(name))) {
+        ap_log_error(APLOG_MARK, APLOG_STARTUP, 0, NULL, APLOGNO(00544)
+                     "%s: bad group name %s", ap_server_argv0, name);
+        exit(1);
+    }
+
+    return (ent->gr_gid);
+}
+
+If that succeeds and returns a gid, then presumably it is valid and should always subsequently work, unless the kernel can change its mind at the point of the setgid() call based on whether it can find a group name that maps to it, which I don't believe it would check. So one would have to take it that the gid at that point should work.
+
+So via that path whereby a group name is provided the possibility of that yielding EINVAL at the call for setgid() is probably not going to occur.
+
+The path to worry about more is the ability to use #nnn and set an arbitrary integer number.
+
+At this point it is bordering on if you provide it garbage values, then expect the unexpected.
+
+So I agree that it is probably better to exit, but in practice unless someone is going out to deliberately feed it really strange values for the group as #nnn, they should not encounter it.
+
+I will improve the handling of that one, but I don't see it as significant enough to warrant making any big noise about it.
+
+As for initgroups() it can supposedly only fail if you aren't root. That code will only ever be executed as root, so shouldn't expect to see it fail. The logging of a message was more just in case something strange happened.
+
+Finally for setgroups(). This is for supplementary group lists and is used by 'supplementary-groups' option to WSGIDaemonProcess directive.
+
+This feature was added for one specific user and wouldn't be a well known feature unless people were reading change notes diligently as don't believe it is even covered in the documentation.
+
+Given that this code also only executes as root, the only error which could technically arise in this code for setgroups() is if the number of groups exceeded NGROUPS_MAX.
+
+This should not occur though as the number of groups was previously validated when the configuration was read:
+
+    if (groups_list) {
+        const char *group_name = NULL;
+        long groups_maximum = NGROUPS_MAX;
+        const char *items = NULL;
+
+#ifdef _SC_NGROUPS_MAX
+        groups_maximum = sysconf(_SC_NGROUPS_MAX);
+        if (groups_maximum < 0)
+            groups_maximum = NGROUPS_MAX;
+#endif
+        groups = (gid_t *)apr_pcalloc(cmd->pool,
+                                      groups_maximum*sizeof(groups[0]));
+
+        groups[groups_count++] = gid;
+
+        items = groups_list;
+        group_name = ap_getword(cmd->pool, &items, ',');
+
+        while (group_name && *group_name) {
+            if (groups_count > groups_maximum)
+                return "Too many supplementary groups WSGI daemon process";
+
+            groups[groups_count++] = ap_gname2id(group_name);
+            group_name = ap_getword(cmd->pool, &items, ',');
+        }
+    }
+
+Thus was pre-validated input.
+
+The later error message was again more just in case something strange happened.
+
+So just to be safe one could in all cases exit anyway, but I believe the possibility that these could cause an issue is extremely limited, with the only case being where the user provides a bad gid for #nnn to the 'group' option which did actually exceed some integer range which was actually enforced by the operating system being used. If they used an actual group name, which would be the typical case, they shouldn't be able to trigger a problem.
+
+Graham
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+
+
+
