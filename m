@@ -1,47 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/23
-Message-ID: <20140926152825.GA5414@kludge.henri.nerv.fi>
-Date: Fri, 26 Sep 2014 18:28:25 +0300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/4
+Message-ID: <20140617120539.GK24581@kludge.henri.nerv.fi>
+Date: Tue, 17 Jun 2014 15:05:39 +0300
 From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: TYPO3-EXT-SA-2014-012
+Subject: Re: transparency on message moderation
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Jun 17, 2014 at 03:32:59PM +0400, Solar Designer wrote:
+> IIRC, a long while ago Henri Salo expressed an interest (in private
+> e-mail to me) in contributing to this sort of activities.  Henri, would
+> you like to help co-moderate oss-security - which currently means only
+> approving obviously-desirable messages, and leaving everything else to
+> me?  What are your current affiliations (e.g., any Linux distro)?
 
-Can I get two 2014 CVEs for following vulnerabilities, thanks.
+Sure. Send me instructions and I'm happy to help. I'm helping in Debian teams as
+non Debian Developer status (I do not see embargoed issues) mainly committing to
+security tracker[1][2] and in forensics team[3]. My current employer has nothing
+to do with distro maintanance or similar activities (we only submit and patch
+issues publicly in case it affects our projects). I usually follow oss-security
+closely in my spare time so that I can submit bugs to Debian issue tracker[4].
 
-http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-012/
+1: https://security-tracker.debian.org/tracker/
+2: https://alioth.debian.org/scm/?group_id=30437
+3: http://forensics.alioth.debian.org/
+4: https://bugs.debian.org/cgi-bin/pkgreport.cgi?archive=both;submitter=henri%40nerv.fi
 
-It has been discovered that the extension "JobControl" (dmmjobcontrol) is
-susceptible to Cross-Site Scripting and SQL Injection.
-
-Release Date: September 25, 2014
-Component Type: Third party extension. This extension is not a part of the TYPO3
-default installation.
-
-Affected Versions: version 2.14.0 and below
-Vulnerability Type: Cross-Site Scripting, SQL Injection
-Severity: High
-Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:A/I:P/A:N/E:H/RL:U/RC:C
-
-Problem Description: The extension fails to properly escape user input in SQL
-and HTML context.
-
-Solution: Versions of this extension that are known to be vulnerable will no
-longer be available for download from the TYPO3 Extension Repository. The
-extension author is longer maintaining this extension. Please uninstall and
-delete the extension folder from your installation.
-
-Credits: Credits go to Hans-Martin Münch who discovered and reported the issues.
-
-- ---
+---
 Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
 
-iEYEARECAAYFAlQlhhkACgkQXf6hBi6kbk8KGgCeNHD9OCRRuD4NSceJcs/7F5bB
-TugAn3E3Tw1NaD82hrIzDHEgApJ7e4pl
-=uzcS
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
