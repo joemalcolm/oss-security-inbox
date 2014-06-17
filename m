@@ -1,66 +1,127 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/5
-Message-ID: <548AEA2C.7070909@inliniac.net>
-Date: Fri, 12 Dec 2014 14:14:20 +0100
-From: Victor Julien <lists@...iniac.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: denial of service in suricata
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/5
+Message-Id: <E1WwsJm-00080M-3v@xenbits.xen.org>
+Date: Tue, 17 Jun 2014 12:16:50 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 99 - unexpected pitfall in xenaccess API
 Content-Type: text/plain; charset=utf-8
 
-On 12/12/2014 02:10 PM, Pierre Schweitzer wrote:
-> So, here to have an attack possible, it would require to send gzipped
-> traffic (as expressed in the bug report) and to "hope" that zlib somehow
-> fails in the process (due to low memory situation or to old zlib) with
-> Z_STREAM_ERROR, so that we have cascade with a NULL pointer being
-> propagated so that there's a segfault?
-> 
-> Or am I wrong with my scenario?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-No, I think this could be an attack vector indeed. Technically I think
-this was an issue in libhtp and not suricata btw. Not sure if that
-matters much, suri is the main user to libhtp as far as I know.
+                    Xen Security Advisory XSA-99
+                             version 2
 
-Cheers,
-Victor
+                 unexpected pitfall in xenaccess API
 
-> On 12/12/2014 02:02 PM, Victor Julien wrote:
->> On 12/12/2014 01:56 PM, Pierre Schweitzer wrote:
->>> It appears, looking at bug #1272 [1] in Suricata, that it was
->>> possible to crash Suricata with specific packets due to a bug in
->>> the libhtp (which got fixed with libhtp 0.5.16).
->>>
->>> It got fixed with the release 2.0.5 from Suricata.
->>>
->>> Was a CVE already assigned to this issue? Otherwise can a CVE be
->>> assigned?
->>>
->>> With my best regards,
->>>
->>> [1]: https://redmine.openinfosecfoundation.org/issues/1272
->>>
->>>
->>
->> To our knowledge this couldn't be triggered by specific traffic
->> conditions. Rather it seemed to be an issue when:
->>
->> - older zlib versions were used that didn't always setup properly for
->> a reason unknown to us
->>
->> OR
->>
->> - extreme memory pressure (malloc's failing)
->>
->> Cheers,
->> Victor
->>
-> 
-> 
+UPDATES IN VERSION 2
+====================
 
+Public Release.
 
--- 
----------------------------------------------
-Victor Julien
-http://www.inliniac.net/
-PGP: http://www.inliniac.net/victorjulien.asc
----------------------------------------------
+Added note regarding CVE.
 
+ISSUE DESCRIPTION
+=================
+
+A test/example program, for exercising the Xen memaccess API, does not
+take all necessary precautions against hostile guest behaviour.
+
+As a result, software developers using it as an example or template
+might have written and deployed vulnerable code.
+
+See the patch for technical details of the problem.
+
+IMPACT
+======
+
+Deployments of software inspired by, or derived from,
+xen.git/tools/tests/xen-access/xen-access.c, may be vulnerable to
+privilege escalation by a malicious guest administrator.
+
+xen-access is a test/example program and is not, without modification,
+useful in production.  It is not built or installed by default.
+
+VULNERABLE SYSTEMS
+==================
+
+Unmodified Xen installations (including installations as provided by
+typical Free Software distributions) are not vulnerable.
+
+The following toolstacks/libraries do not use memaccess, so systems
+using Xen only via the following are not vulnerable:
+    libxl; xl; xend; xm; libvirt
+
+In general, Xen installations which make no use of the Xen memory
+access API (xc_mem_access_..., "XENMEM_access_...",
+XEN_DOMCTL_MEM_EVENT_OP_ACCESS_ENABLE) are not vulnerable.
+
+Systems using the Xen hypervisor 4.1 or earlier are not vulnerable.
+ARM systems are not vulnerable.  AMD systems are not vulnerable.
+Intel x86 systems without EPT are not vulnerable.
+
+Software developers who have based their efforts on xen-access.c may
+have constructed vulnerable systems.  Such developers should examine
+their software, and communicate with their own downstreams, as
+applicable.
+
+Users of Xen-derived systems, whose vulnerability is not excluded
+above, should consult their vendor for information about the
+applicability of this vulnerability.
+
+MITIGATION
+==========
+
+Disabling whatever functionality uses the memaccess API will avoid the
+vulnerability.
+
+NOTE REGARDING CVE
+==================
+
+The CVE assignment team at the MITRE CVE Numbering Authority have told
+us that type of issue is typically considered site-specific and is not
+eligible for a CVE ID:
+
+ The scope of CVE does not include issues where a vulnerable program
+ can be present after a customer modifies shipped source code or
+ modifies the build process. The primary purpose of this guideline is
+ to avoid CVE assignments where, for example, the vulnerability exists
+ only when a customer enables experimental code and then recompiles. A
+ secondary purpose of this guideline is to avoid CVE assignments for
+ example code that wasn't intended to be used as-is.
+
+Software developers who have based production code on xen-access.c
+should obtain their own CVE number(s).
+
+CREDITS
+=======
+
+This vulnerability was discovered by Ian Campbell of Citrix.
+
+RESOLUTION
+==========
+
+The attached patch repairs the test/example utility provided in the
+Xen Project source tree.
+
+To resolve the issue in production software, appropriate changes
+will have to be be made by its developers.
+
+$ sha256sum xsa99*.patch
+d6496699d9952bbfe1cd86e0ba84182e455a5dc4626654d387f92390d9680cd4  xsa99.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJToCn/AAoJEIP+FMlX6CvZBp8H/Az39oLQiAIyrZRD+IktvGuB
+mCLRcoyTJxxfE+9bAFltypelGNwq5NT/JUwub82whapbPW/e/rtGbln43FkdkoLu
+oFlddcteOzJMTLsLXxe50zrgb4QaUEt4lxQ2zEyFpL6PYz32pO24NLK8QzG480Ol
+4u1UlBJeYM61Z4JPuCy0h5vMy0eU6G3yry6B09s4Dmdfvd6AU7BprFT4/aW+noQ0
+84w11iL8Y53ddnidTgaXNkyvcq+5m57RL9uHvrRz7mViqhazkVkxGZHVKsUYuRPb
+wkBpSaa+cJkeF8AnDue/QuW0pWYpfrPoniD86SwgzsYYj5bN0EnQ4CTzVIAx284=
+=9myT
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa99.patch" of type "application/octet-stream" (9897 bytes)
