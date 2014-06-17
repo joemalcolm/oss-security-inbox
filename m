@@ -1,27 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/14
-Message-ID: <CAOy4VzeHz9k8OMqNhpojZKb2_76mNw2j1P9_2qaaqJs2j5YyKg@mail.gmail.com>
-Date: Wed, 18 Jun 2014 06:45:37 -0700
-From: David Tomaschik <david@...temoverlord.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Parameter Injection in jCryption 3.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/17
+Message-Id: <201406172218.s5HMI3HP000860@linus.mitre.org>
+Date: Tue, 17 Jun 2014 18:18:03 -0400 (EDT)
+From: cve-assign@...re.org
+To: corsac@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, ben@...adent.org.uk, team@...urity.debian.org, 751417@...s.debian.org
+Subject: Re: (Linux kernel) Bug#751417: linux-image-3.2.0-4-5kc-malta: no SIGKILL after prctl(PR_SET_SECCOMP, 1, ...) on MIPS
 Content-Type: text/plain; charset=utf-8
 
-jCryption 3.0 suffers from a parameter injection vulnerability due to
-passing an attacker-controlled string to PHP's proc_open function.  Though
-the PHP code is not distributed as a library, it is presented as a
-copy-and-paste server side implementation to match the jQuery module, and
-sites that have done so, or have left the jcryption.php file on their
-server, are vulnerable.  This vulnerability (at least) allows an attacker
-to read arbitrary files, including the RSA private key used by jCryption.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-jCryption 3.0.1 fixes the issue and is available at
-http://www.jcryption.org/.  Details are in the advisory on my blog:
-https://systemoverlord.com/blog/2014/06/18/parameter-injection-in-jcryption/
+> According to the manual page, after calling it with 1 as a second
+> argument, any consecutive system calls other than read(), write(),
+> _exit() and sigreturn() should result in the delivery of SIGKILL.
+> However, under MIPS any consecutive system call behaves as if
+> prctl(PR_SET_SECCOMP, 1, ...) was never called.
 
--- 
-David Tomaschik
-OpenPGP: 0x5DEA789B
-http://systemoverlord.com
-david@...temoverlord.com
+> I see no check for seccomp on the MIPS syscall 'fast path'. The
+> seccomp check appears to be done on the 'slow path' which is used only
+> if tracing or audit is also enabled for the task. If I run the above
+> program under strace, it is killed as expected.
 
+Use CVE-2014-4157.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJToL2jAAoJEKllVAevmvmswgUIAJbfESCClCJ35JPb7mukT3nC
+VFCIPzdiVqXNB/3OvC3hRUqY2J5TffMwYNnTiUJ3MtRcbbJXHf24lK3IM3H8/b7A
+7ZpxBh7cZSeEX+d2+uOZqVW1DDJQ0BmmYHV0tlRI0jry2GAPvGdrBpVAKmxe+fvg
+6qnceILeat1/1M4fbIabw683gjwZktF0S11LvSvn0OCSPM/sPK0cKMO5m0NEQzwI
+2NZWljHvNpQ851Lpe7ICvDVr1v9PmgnsA+oHvqzZ46gXocrBcwMvlyP1xIFm/Ajk
+UZoE5jpP/dpXMS4/aTO+ucivLNKNjav741lKRg8MIBK274iKaWcUPv15aDdoYBw=
+=ycHE
+-----END PGP SIGNATURE-----
