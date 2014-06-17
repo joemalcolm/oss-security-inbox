@@ -1,18 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/9
-Message-ID: <5315B83F.2040601@fifthhorseman.net>
-Date: Tue, 04 Mar 2014 11:25:51 +0000
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/16
+Message-Id: <201406172201.s5HM1GUp028462@linus.mitre.org>
+Date: Tue, 17 Jun 2014 18:01:16 -0400 (EDT)
+From: cve-assign@...re.org
+To: d.cauquil@...dream.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Proxmox VE < 3.2 user enumeration vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 03/04/2014 11:24 AM, Daniel Kahn Gillmor wrote:
-> Perhaps this needs more than one RFC, then?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-bah.  s/RFC/CVE/ in the above, please.
+>> https://git.proxmox.com/?p=pve-access-control.git;a=commit;h=6126ab75a0837298427491ea64b9b2e1139c6ba6
 
-	--dkg
+> an attacker could determine that they have discovered a valid username
+> because ...
+> 
+>   the error message changes (i.e., CWE-204)
+
+Use CVE-2014-4156.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1011 bytes)
+> the response occurs more slowly (i.e., CWE-208)
+
+There is no CVE ID for the CWE-208 issue. Our understanding is that
+this issue is, in effect, not reachable in any version of the product.
+There is no motivation for an attacker to make timing calculations.
+
+
+> gain the usability benefits of telling real people that they've
+> misspelled their account identifier
+
+> the commit message of "prevent user enumeration attacks"
+
+In other words, CVE-2014-4156 exists because of a conclusion that the
+vendor apparently does not want to offer this type of "misspelled
+their account identifier" information.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJToLpNAAoJEKllVAevmvmsceYIAKd0Mmx9KOVwc/lHmm8I6rxp
+8P2q+o5RyoSVPW+TeZpuEh17bPWYDaE2If0CjuvJQs0THCcB8boFzYav2k62zAbn
+TRZig/4DIaiMvZKjpz5W8rbrjgAmUoNiymVfHGE7fd1OhE6t12Z8gk1kje6ypssW
+G7Lf6our5XBQr0kCeajFgvqno2gMH3tE+Spd/9bNGnf1mhHLwaKs1QOIwVrlDY8o
+HEg9ar1Gqmogwjq3DSGvBD7s8MaXuMHazeyWAiKWrlZf3Jq2EcWK9jZeKhlyVRUr
+K96VruygTh0lzr0bdebUXls6UlPdJDW8pti6GkBPYY32ZlcLtWcxeLlTbgUiEK8=
+=kHhp
+-----END PGP SIGNATURE-----
