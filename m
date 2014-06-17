@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/1
-Message-ID: <53B4E642.7010506@redhat.com>
-Date: Thu, 03 Jul 2014 15:12:34 +1000
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS in PNP4Nagios
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/14
+Message-ID: <20140617184352.GA17206@hunt>
+Date: Tue, 17 Jun 2014 11:43:52 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Graham Dumpleton <graham.dumpleton@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Security release for mod_wsgi (version 3.5)
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+On Tue, Jun 17, 2014 at 10:39:49PM +1000, Graham Dumpleton wrote:
+> On MacOS X at least, it [setgid] really doesn't care what you give it.
+> You can give it negative numbers or even really large numbers and it
+> will happily set it to the value. I can't find any good information on
+> what Linux would do and can't test it right now.
 
-As reported at <https://bugs.gentoo.org/show_bug.cgi?id=516078> and 
-<http://docs.pnp4nagios.org/pnp-0.6/dwnld>, PNP4Nagios pnp-0.6.22 fixes 
-a cross-site scripting issue.
+On Linux, since 2.4 times, all representable values in gid_t are legal
+group ids:
 
-This may be the fix:
+http://manpages.ubuntu.com/manpages/trusty/en/man2/setgid.2.html
 
-http://sourceforge.net/p/pnp4nagios/code/ci/f846a6c9d007ca2bee05359af747619151195fc9/
+Thanks
 
-Can a CVE please be assigned?
-
-Thanks,
-
---
-Murray McAllister / Red Hat Product Security
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
