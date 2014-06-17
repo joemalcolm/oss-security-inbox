@@ -1,46 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/14/3
-Message-ID: <53C3A970.7070007@redhat.com>
-Date: Mon, 14 Jul 2014 11:57:04 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/10
+Message-ID: <1403012214.16844.111.camel@kazak.uk.xensource.com>
+Date: Tue, 17 Jun 2014 14:36:54 +0100
+From: Ian Campbell <Ian.Campbell@...rix.com>
+To: Andres Lagar Cavilla <andres@...arcavilla.org>
+CC: <xen-devel@...ts.xen.org>, <security@....org>, <xen-announce@...ts.xen.org>, <oss-security@...ts.openwall.com>
+Subject: Re: Xen Security Advisory 99 - unexpected pitfall in xenaccess API
 Content-Type: text/plain; charset=utf-8
 
-On 07/12/2014 05:54 PM, Rich Felker wrote:
->> Bug report: https://sourceware.org/bugzilla/show_bug.cgi?id=17137
->
-> On further review, I question whether this is actually a valid
-> vulnerability. The ability to use absolute pathnames as locale strings
-> is a documented feature in both POSIX and glibc, and even after the
-> patch, absolute pathnames are still accepted for locales in
-> non-suid[-like] programs, meaning that bypass of ForceCommand is still
-> possible as long as AcceptEnv is accepting LC_*.
+On Tue, 2014-06-17 at 06:13 -0700, Andres Lagar Cavilla wrote:
 
-This is not correct, glibc never accepted absolute pathnames in the 
-sense that they were resolved as absolute path names.  They were always 
-resolved relative to LOCPATH, with or without a leading slash.
+> But fundamentally, how is this a vulnerability? Since the dawn of time
+> guests can poke at the qemu and PV frontend rings. So self DoS, check.
+> But, privilege escalation?
 
-When the lack of conformance was reported as a glibc bug a couple of 
-years ago, the bug report was labeled as invalid:
+PV frontend rings have an endpoint in the guest, but by contrast the
+xenaccess ring is supposed to have its endpoint in Xen, having a guest
+able to poke at it therefore requires additional consideration and
+thought.
 
-   https://sourceware.org/bugzilla/show_bug.cgi?id=11635
+> Is this predicated on the potential (lack of) software quality of the
+> xenaccess backends? That's a fair argument, but a different story.
 
-We didn't want to break backwards compatibility here, so we documented 
-the existing behavior and just prohibited ".." pathname components. 
-This allowed us to treat this as a glibc vulnerability, with a fairly 
-simple and isolated fix (although the gettext part is still pending).
+An attacker who can poke at this particular ring can cause the xenaccess
+backend's view of the world to become different from the actual state of
+things within Xen, by virtue of injecting events for which Xen has not
+made the appropriate state change.
 
-> The scope of the actual issue seems to be limited to situations where
-> an application was assuming LC_* was safe due to being non-absolute
-> (e.g. checking that the initial character is not '/') then getting hit
-> by directory traversal due to embedded ".." in the string. This seems
-> like a bug, but unless there are applications which were performing
-> such naive checks then accepting untrusted LC_* vars, I question
-> whether this was really CVE-worthy.
+For instance imagine a xenaccess who was trying to enforce W^X but was
+being fed false information by the guest about writing/executing pages
+which did not correspond to actual changes being made in the p2m.
 
-Your analysis is correct for POSIX-compliant systems, but not for glibc. 
-  Unfortunately, POSIX compliance makes it quite difficult to fix this.
+For qemu there is no Xen side state, so all a guest can do with ring
+access here is to perform emulated I/O which it could otherwise have
+achieved by doing the I/O.
 
--- 
-Florian Weimer / Red Hat Product Security
+Ian.
+
+
