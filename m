@@ -1,80 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/7
-Message-ID: <540DD776.4040003@redhat.com>
-Date: Mon, 08 Sep 2014 10:21:10 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: Re: Python robotframework - tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/11
+Message-Id: <201406181145.s5IBjiIp021248@linus.mitre.org>
+Date: Wed, 18 Jun 2014 07:45:44 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2014-4171 - Linux kernel mm/shmem.c denial of service
 Content-Type: text/plain; charset=utf-8
 
-On 08/09/14 09:22 AM, cve-assign@...re.org wrote:
->> This is the first of many
-> 
-> The MITRE CVE team obviously has no objection to your use of the
-> oss-security list for raising new discussion topics such as the
-> likelihood that a '../tmp/ substring represents a security problem.
-> The comments below are only about obtaining CVE assignments from
-> MITRE.
-> 
->> the reason I'm not assigning CVE's for these is this is a side project
-> 
-> A CVE isn't going to be possible without further analysis explaining
-> why a vulnerability exists in the specific case. There can't be an
-> expectation that someone at MITRE is already familiar with the
-> product, or will read and understand the complete source code as part
-> of processing an oss-security message.
-> 
-> Items that seem to be missing from the original message include:
-> 
-> 1, Is the "merge('../tmp/passing.xml', '../tmp/failing.xml')"
->    debugging code, or is this code realistically used because a
->    different piece of software has created passing.xml and failing.xml
->    files?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It's part of __main__ so it gets executed.
+CVE-2014-4171 has been assigned to the
 
-> 2. If there is a realistic situation in which the
->    "merge('../tmp/passing.xml', '../tmp/failing.xml')" executes, would
->    the cwd realistically be a first-level directory such as the /root
->    or /tmp directory?
+  http://ozlabs.org/~akpm/mmots/broken-out/shmem-fix-faulting-into-a-hole-while-its-punched.patch
 
-yes if you run from within /root or /tmp, the "run from /root" would be
-the obvious worry as it would indicate the root user is being used.
+issue in the Linux kernel.
 
-> 3. For purposes of risk analysis, is unconstrained use of a ../tmp/
->    pathname always equivalent to unconstrained use of a /tmp/ pathname?
+(See yesterday's http://www.spinics.net/lists/mm-commits/msg104782.html
+message.)
 
-If it ends up using /tmp/ then I would say that's a problem. is it
-always a problem? I can't say.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-> A possible CVE assignment decision might be:
-> 
-> A. If a different product came with a test suite containing:
-> 
->    test_program > /tmp/merged.xml
-> 
-> then it could have a CVE because /tmp/merged.xml might be a symlink to
-> an important file.
-> 
-> B. If the test suite were changed to:
-> 
->    test_program > ../tmp/merged.xml
-> 
-> with no constraints, then it could still have a CVE, because some
-> people run test suites as root with a cwd of the /root directory.
-> 
-> C. If ../tmp/ is used in "debugging code" that is intended to be run
-> by a developer who understands the appropriate cwd, and this
-> "debugging code" is not a "test suite" for users, then there is no CVE
-> assignment. Admittedly, there might be cases where the distinction
-> between "debugging code" and "test suite" is completely ambiguous.
-> 
-> 
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJToXqVAAoJEKllVAevmvmsi6EIAIXs1JhVikHCjgzXwM02lFTR
+1+AZWdKnnyDO83neQcy2Uzv/hmuEt3lczwlctGxLXIShdVvsUWVsZXuT5OOKVNrx
+lsSNzbdb3ROLlA69jWINMD3OUSK4MGtUK5HdyZ33eTUG9PCizWTDl3dRsLvwh4i6
+gvMottLwgskx5h5++Mow4cM6SsCxpyoN2G23TKnsPQ2yh+GbdDCX0vrxTcsi1v9+
+O0Al7/JEdJsfi/H852lzGHsK4FjDctALEvjl1hVcyxjH68CrzIl1qulbl/biwyDw
+9WrLDKF2F76oLKlWepNjobdP3dZXnNQj95IrOAkdwRF+lP+q3koToQZ6WG+IcBw=
+=oeNg
+-----END PGP SIGNATURE-----
