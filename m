@@ -1,70 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/8
-Message-Id: <201405062019.s46KJEvg020214@linus.mitre.org>
-Date: Tue, 6 May 2014 16:19:14 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Debian Bug#746579: libwww-perl: HTTPS_CA_DIR or HTTPS_CA_FILE disables peer certificate verification for IO::Socket::SSL
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/7
+Message-ID: <53A166AE.2030600@redhat.com>
+Date: Wed, 18 Jun 2014 20:15:10 +1000
+From: David Jorm <djorm@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: docker VMM breakout
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Thanks for reporting this issue, Sebastian. Could a CVE ID please be 
+assigned to this issue, given it affects Docker 0.11?
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746579
-> Package: libwww-perl
-> setting HTTPS_CA_DIR or HTTPS_CA_FILE environment variable
+Trevor Jay from Red Hat did some analysis, I am replying on his behalf 
+as he is not currently subscribed to oss-security:
 
-This is apparently still being investigated upstream, with
-https://github.com/libwww-perl/lwp-protocol-https/pull/14 updated as
-recently as this afternoon. The set of issues is unusual and may
-ultimately require more than one CVE ID.
+Starting on the 23rd of May and continuing through around the 28th, 
+docker transitioned from a model where container "types" (i.e. 
+libcontainer or LXC) had associated with them a list of capabilities to 
+drop to the opposite: all capabilities are dropped and each container 
+type has a list of capabilities to add back. Additionally, some checks 
+were added so that docker would only try to drop/keep capabilities that 
+actually exist on the kernel under which it's running (what a great 
+idea!). To my reading of the linux kernel, there are some capabilities 
+that you can't ever get back once you renounce, so these will not be 
+added back after being dropped. Funnily enough, CAP_DAC_OVERRIDE, seems 
+to be such a capability. This is---I suspect---why the post mid-may 0.11 
+tests I ran never show a process having this capability. This, *despite* 
+the fact that CAP_DAC_OVERRIDE is actually included on the "add back" 
+list for libcontainer. The current docker codebase tries to reactivate 
+CAP_DAC_OVERRIDE after dropping it, which I don't think should ever 
+work. I'd love to get someone with more kernel experience than me to 
+confirm this though.
 
-At the moment, it seems that the most straightforward CVE assignment
-is for the following statement in
-https://github.com/libwww-perl/lwp-protocol-https/pull/14#issuecomment-42328818
+I tested libvirt via virsh and by default both CAP_DAC_READ_SEARCH and 
+CAP_DAC_OVERRIDE are available (and thus the PoC does run). However, 
+this default is well documented as is the general insecurity of libvirt 
+in regards to DAC, so I don't think a CVE ID is required for libvirt.
 
-  "If you google for HTTPS_CA_FILE you will probably only find
-   references to LWP/Crypt::SSLeay. So, in a way, it makes sense to
-   special case this because these are mostly users of the older LWP
-   versions."
+Thanks
+David
 
-This seems to be, more or less, equivalent to "the behavior of the
-product is determined by using somewhat arbitrary environment
-variables that, in practice, are correlated with whether the user may
-desire a 'compatibility mode' with different security properties, even
-though this correlation isn't especially strong."
+On 06/18/2014 05:36 PM, Sebastian Krahmer wrote:
+> Hi
+>
+> As per list policy, here is the public forward.
+> The link has been redacted to reflect public location.
+> Its fixed in docker 1.0 since CAP_DAC_READ_SEARCH is no
+> longer available.
+>
+> Other FS-related threats to container based VMM's
+> that have been discussed:
+>
+> - subvolume related FS operations (snapshots etc)
+> - FS ioctl's that accept FS-handles as well (XFS)
+> - CAP_DAC_READ_SEARCH also defeats chroot and other
+>    bind-mount containers (privileged LXC)
+> - CAP_MKNOD might be a problem too (still available in docker 1.0)
+>    depending on the drivers available in the kernel
+>
+>
+> ----- Forwarded message from Sebastian Krahmer -----
+>
+> Subject: [vs] docker VMM breakout
+> Date: Mon, 16 Jun 2014 10:56:16 +0200
+>
+> Hi
+>
+> I dont know if this really belongs here, but better safe
+> than sorry. There seem to be distributors that actually ship
+> docker as a 'solution' (to whatever problem :).
+>
+> I already contacted upstream, they say its not working
+> anymore for them in version 1.0. I cannot test this, as I only
+> have docker 0.11 running (on a 3.11 kernel). I am not really
+> sure they really fixed the problem, they just told me that
+> they changed "something" in the capability handling.
+>
+> In 0.11 the problem is that the apps that run in the container
+> have CAP_DAC_READ_SEARCH and CAP_DAC_OVERRIDE which allows the
+> containered app to access files not just by pathname (which would be
+> impossible due to the bind mount of the rootfs) but also by handles via
+> open_by_handle_at(). Handles are mostly 64bit values and can be kind
+> of pre-computed as they are inode-based and the inode of / is 2.
+> So you can go ahead and walk / by passing a handle of 2 and
+> search the FS until you find the inode# of the file you want
+> to access. Even though you are containered somewhere in /var/lib.
+>
+> A PoC is available here:
+>
+> http://stealth.openwall.net/xSports/shocker.c
+>
+> Note that some FS (namely XFS) have their own fhandle ioctls,
+> so if you share the XFS fs structs with the container, there
+> might be different attack vectors despite of capability handling.
+> Since docker is heavily LXC based, any other LXC based container
+> solution might be at risk too. (I think file handles are a generic problem
+> for container based VMMs).
+>
+> I request a CRD of June 30th. If within the next 2 days no other distributor
+> objects, I will already disclose this on June 18th, because the overall
+> issue is not really a critical thing.
+>
+> Sebastian
+>
 
-Off hand, we don't know of any other product that does something like
-that. So, we're assigning CVE-2014-3230 for the Least Surprise
-violation.
-
-There's a separate question of whether the "compatibility mode"
-behavior has an implementation that matches its design. A second CVE
-ID seems reasonably likely, but the issue itself is perhaps still
-being analyzed.
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746579#44 says
-"contrary to what the name of the option suggests, verify_hostname is
-supposed to enable/disable both certificate verification and that the
-certificate matches hostname. But after this patch applied, it will
-affect only the latter."
-
-At this point, it seems unlikely that there would be a third CVE for
-whether the "compatibility mode" behavior actually should not exist.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTaUA9AAoJEKllVAevmvmsIToH/i48lQZKdtiRRKzz8rWeUcYF
-HFw8ZmocshaCG2/ZyHiQv4j0w7jjBAuhOv4VDwZWR56WtRpGlcZYz7te7sglG6yM
-h7LQACHsr/cv9EcDyolAsmigv7/zjRSmhhE/uGhf/up30tKO4ZoaVFFNQClihfAc
-J3K23L8PhtxIVlp5eyHar6vndC53L1XwJn8lnvYXczSA9Y7q+3PAG4LF/oo4sWxz
-ZxfwgbNTyaKhpppPUcudHSOz8fpZVaGdqrYEWkXj0DY8+TQTHPYfZuGw6shyHuUL
-MTz/zRRdyBWjrMR9szq7XnJ3RzF63xjwyJGRhsQ1EquWwGcgR3GfCbYn4x43BNg=
-=HQLw
------END PGP SIGNATURE-----
