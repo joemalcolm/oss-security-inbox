@@ -1,41 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/7
-Message-Id: <20140216160141.2A56117FDA0@rebar.astron.com>
-Date: Sun, 16 Feb 2014 11:01:41 -0500
-From: christos@...las.com (Christos Zoulas)
-To: oss-security@...ts.openwall.com
-Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/3
+Message-ID: <53A13D4A.6040008@mittwald.de>
+Date: Wed, 18 Jun 2014 07:16:34 +0000
+From: Sven Kieske <S.Kieske@...twald.de>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Re: CVE-2014-4014: Linux kernel user namespace bug
 Content-Type: text/plain; charset=utf-8
 
-On Feb 16,  2:28pm, stu@...cehopper.org (Stuart Henderson) wrote:
--- Subject: Re: [oss-security] Vendor adoption of PIE INFO#934476 oss-securit
+Am 17.06.2014 23:47, schrieb Andy Lutomirski:
+> On Tue, Jun 10, 2014 at 2:49 PM, Andy Lutomirski <luto@...capital.net> wrote:
+>> The internal function inode_capable was used inappropriately.
+>> Depending on configuration, this may be usable to escalate privileges.
+>> A cursory inspection of my Fedora box suggests that it is not
+>> vulnerable to the obvious way to exploit this bug.
+>>
+>> The fix should appear in Linus' -master shortly, and it's tagged for
+>> stable.  In the mean time, I've attached it here.
+>>
+> 
+> The commit that fixes this is:
+> 
+> 23adbe12ef7d3d4195e80800ab36b37bee28cd03
 
-| By the way, OpenBSD has switched compilers to generating PIE code by
-| default on the majority of architectures, various arch's over the last
-| couple of releases, but as of a couple of months ago we've also done
-| this for i386 (x86) too, so I can give some specific examples of
-| where you can expect to run into problems.
-| 
-| On amd64 (x86_64) fallout has been mostly limited to compilers and a
-| couple of other programs, e.g. emacs, qemu, clisp, erlang, ghc, sbcl,
-| which we are building with PIE disabled.
-| 
-| Additionally for i386 there have been problems with register pressure
-| on programs with their own asm code (mostly games), in particular
-| code doing cpuid checks often doesn't save/restore %ebx, but there
-| have been some others. In one case there was code for x86 OSX which
-| avoids scribbling on %ebx which we've been able to borrow, and I think
-| there were one or two where we've switched from asm to a generic C
-| implementation. Of course, shared libraries already have to take
-| this into account so not too much trouble there.
-| 
-| Everything else, base system and ports, is built with PIE.
-| On the whole, experiences have been pretty good. Obviously there is
-| some performance impact but we haven't yet had any reports of this
-| causing major problems (though we will probably know more about this
-| after 5.5 is released when the average user will first see i386
-| packages built with PIE by default).
+Do you happen to know in which kernel version
+this bug got introduced?
 
-Are you doing any RELRO work?
+Thanks in advance!
 
-christos
+-- 
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
