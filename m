@@ -1,77 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/24/2
-Message-ID: <20140824045114.GQ12888@oevtugenva.nrevsny.pk>
-Date: Sun, 24 Aug 2014 00:51:14 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: FYI, change to Secunia vuln db EULA
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/16
+Message-ID: <CAMp7mVsrRFx1mbpmgCTvSU7RFBA752DGwruQnX387q=dxFJtDA@mail.gmail.com>
+Date: Wed, 18 Jun 2014 21:07:09 +0100
+From: Richard Moore <rich@....org>
+To: kde-announce@....org, oss-security@...ts.openwall.com
+Subject: KMail/KIO POP3 SSL MITM Flaw
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Aug 23, 2014 at 09:49:03PM -0500, ken wrote:
-> 
-> I feel a need to clarify my previous email ...
-> 
-> Secunia obviously has an extremely useful and comprehensive
-> vulnerability database.  All of their vulnerability mgmt, patch mgmt,
-> and scanning products are excellent too.  The IT industry needs high
-> quality vuln and patch mgmt solutions like this, and Secunia needs
-> revenue so they can maintain and improve their products/solutions,
-> conduct research, build new products, make a profit, etc.
-> 
-> There are some potentially adverse consequences to their decision to
-> close their vulnerability database:
-> 
-> 1) All direct links to Secunia vuln db entries are effectively dead
-> ends now ... unless the link clicker is a student, press, private
-> person, hobby/non-commercial security researcher and gets "community"
-> (free) access, OR is a non-profit organization, private company, or
-> public authority/entity who has paid the annual fee[1] for the VIM
-> product.  I imagine most people reading this email fall into the
-> latter group, do not have access, and will need to pay for access.
+KDE Project Security Advisory
+=============================
 
-Are you saying that the links go to a paywall now? Or simply that the
-person who follows the link has some "obligation not to look" unless
-they fall in one of the categories in the first group above? If what
-you mean is the latter, then I think the issue only matters to parties
-who are conducting large scale, programmatic access to their database.
-Anyone is a "private person", and can certainly justify access to any
-one record (or any reasonable amount of records) as a private person.
-Only in the case of bulk automated access where it's clear that the
-access is being performed on someone else's behalf or to scrape the
-data, etc. is there any question.
+Title:          KMail/KIO POP3 SSL MITM Flaw
+Risk Rating:    Medium
+CVE:            CVE-2014-3494
+Platforms:      All
+Versions:       kdelibs 4.10.95 to 4.13.2
+Author:         Richard J. Moore <rich@....org>
+Date:           17 June 2014
 
-> 2) Vendors can apparently no longer review the Secunia vuln db so they
-> can submit updates and corrections (unless the vendor has purchased
-> the VIM product?).  Will this result in Secunia vuln db info becoming
-> less accurate and up-to-date?
+Overview
+========
 
-Directly, probably not. If they decide to be jerks about it though,
-people might just get fed up with dealing with them and not bother to
-contribute.
+The POP3 kioslave used by kmail will accept invalid certificates without
+presenting a dialog to the user due a bug that leads to an inability to
+display the dialog combined with an error in the way the result is checked.
 
-> 3) If you maintain a public or private vulnerability database, or
-> vulnerability website, you will no longer be able to effectively
-> reference or cross-reference the Secunia vuln db, unless you pay for
-> access.  How will this impact OSVDB, NVD, CVE, IAVM, PacketStorm, etc?
+Impact
+======
 
-At least in the US and most jurisdictions I'm aware of, copyright has
-no bearing on your right to link, so I don't see this having any
-effect.
+This flaw allows an active attacker to perform MITM attacks against the
+ioslave which could result in the leakage of sensitive data such as the
+authentication details and the contents of emails.
 
-> Depending on your interests in vulnerabilities and role(s) in the
-> security industry, you may see other consequences.
-> 
-> 
-> Bottom line for me is that I had been using the public, freely
-> available Secunia vuln info every day for over 10 years, and I had
-> been regularly submitting vuln info/updates/corrections.  I'm
-> currently not using it at all (in compliance with their EULA).  If
-> the VIM cost fits into my budget, then I'll definitely purchase it.
+Workaround
+==========
 
-In my opinion, there's something wrong with feeling obligated to pay
-to access something you contributed to building with the understanding
-that you were building a community resource, and even more wrong with
-taking data built for you by a community and trying to restrict that
-community's access to it.
+None
 
-Rich
+Solution
+========
+
+Upgrade to version 4.13.3 or apply the patch at
+http://quickgit.kde.org/?p=kdelibs.git&a=commitdiff&h=bbae87dc1be3ae063796a582774bd5642cacdd5d&hp=1ccdb43ed3b32a7798eec6d39bb3c83a6e40228f
+
+Credits
+=======
+
+Thanks to Jim Scadden for reporting this issue and writing the initial fix,
+and to David Faure for reviewing and improving the fix.
+
