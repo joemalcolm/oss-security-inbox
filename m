@@ -1,24 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/17
-Message-ID: <543E42D5.5030908@redhat.com>
-Date: Wed, 15 Oct 2014 11:48:05 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/5
+Message-ID: <CAD3CanfgZfupyV1TJcESXYrGn7yJ3hcVDhTLjM1G3D83cOD9wg@mail.gmail.com>
+Date: Wed, 18 Jun 2014 20:08:10 +1200
+From: Matthew Daley <mattd@...fuzz.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE assignment for POODLE
+Subject: Re: Security release for mod_wsgi (version 3.5)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2014-3566 is currently assigned to an SSL 3.0 protocol vulnerability:
+I may be wrong as I haven't been following this discussion entirely, but...
 
-“The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other 
-products, uses nondeterministic CBC padding, which makes it easier for 
-man-in-the-middle attackers to obtain cleartext data via a 
-padding-oracle attack, aka the "POODLE" issue.”
+On Wed, Jun 18, 2014 at 12:39 AM, Graham Dumpleton
+<graham.dumpleton@...il.com> wrote:
+> This feature was added for one specific user and wouldn't be a well known feature unless people were reading change notes diligently as don't believe it is even covered in the documentation.
+>
+> Given that this code also only executes as root, the only error which could technically arise in this code for setgroups() is if the number of groups exceeded NGROUPS_MAX.
+>
+> This should not occur though as the number of groups was previously validated when the configuration was read:
+>
+>     if (groups_list) {
+>         const char *group_name = NULL;
+>         long groups_maximum = NGROUPS_MAX;
+>         const char *items = NULL;
+>
+> #ifdef _SC_NGROUPS_MAX
+>         groups_maximum = sysconf(_SC_NGROUPS_MAX);
+>         if (groups_maximum < 0)
+>             groups_maximum = NGROUPS_MAX;
+> #endif
+>         groups = (gid_t *)apr_pcalloc(cmd->pool,
+>                                       groups_maximum*sizeof(groups[0]));
+>
+>         groups[groups_count++] = gid;
+>
+>         items = groups_list;
+>         group_name = ap_getword(cmd->pool, &items, ',');
+>
+>         while (group_name && *group_name) {
+>             if (groups_count > groups_maximum)
 
-What we seem to be lacking is a CVE assignment for the protocol 
-downgrade “dance” implemented by some browsers, explicitly designed to 
-negate the effect of the downgrade protection in the TLS protocol (the 
-protocol upgrade to TLS 1.0 and beyond is arguably the “fix” for 
-CVE-2014-3566 as it is described above).
+This is an off-by-one error, isn't it? As in, it should be testing for
+groups_count >= groups_maximum and not the current test.
 
--- 
-Florian Weimer / Red Hat Product Security
+>                 return "Too many supplementary groups WSGI daemon process";
+>
+>             groups[groups_count++] = ap_gname2id(group_name);
+>             group_name = ap_getword(cmd->pool, &items, ',');
+>         }
+>     }
+>
+> Thus was pre-validated input.
+
+- Matthew Daley
