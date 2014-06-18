@@ -1,48 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/17
-Message-ID: <Pine.LNX.4.64.1412041337460.1687@beijing.mitre.org>
-Date: Thu, 4 Dec 2014 13:38:42 -0500 (EST)
-From: cve-assign@...re.org
-To: Florian Weimer <fweimer@...hat.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: OpenSSH ~/.k5users patch (Fedora and downstreams)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/15
+Message-ID: <53A19CAF.8040408@redhat.com>
+Date: Wed, 18 Jun 2014 10:05:35 -0400
+From: Daniel J Walsh <dwalsh@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: docker VMM breakout
 Content-Type: text/plain; charset=utf-8
 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
->In a Kerberos environment, the Fedora and Red Hat Enterprise Linux 7 version
->of the OpenSSH server allows remote, authenticated users to log in as
->another user if they are listed in a ~/.k5users file of that other user.
->This unexpectedly alters the system security policy, as expressed through
->the ~/.k5users file, because previously, users would have to log in locally,
->potentially requiring different forms of authentication, before they could
->use the ksu command to switch users.
+On 06/18/2014 09:39 AM, Sven Kieske wrote:
+> Am 18.06.2014 12:15, schrieb David Jorm:
+>> I tested libvirt via virsh and by default both CAP_DAC_READ_SEARCH and
+>> CAP_DAC_OVERRIDE are available (and thus the PoC does run). However,
+>> this default is well documented as is the general insecurity of libvirt
+>> in regards to DAC, so I don't think a CVE ID is required for libvirt.
+> I fail to see why this should be true.
+> On most distributions libvirt spawned vms do not run as root but as user
+> qemu or similar.
+> according to the documentation at:
+> http://libvirt.org/drvqemu.html#securitycap
 >
->Red Hat Bugzilla:
+> this should imply that libvirt drops these capabilities.
 >
->   <https://bugzilla.redhat.com/show_bug.cgi?id=1169843>
-> 
-> Patch in upstream bug tracker:
+> Please correct me if I'm wrong.
 >
->   <https://bugzilla.mindrot.org/show_bug.cgi?id=1867>
+>
+Why is this assumed a problem. 
 
-Use CVE-2014-9278.
+CONTAINERS DO NOT CONTAIN.  Root inside the container == Root outside
+the container.
 
-- ---
+This is true in both libvirt-sandbox/libvirt-lxc and docker.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+We have a long way to go before we can run anything within a container
+without this rule.
 
-iQEVAwUBVICpvallVAevmvmsAQIxAAf/YmV0+A7+ebKjM1pyyDxCp9Ml2dPUATWe
-FMkw903aPqewYOlLahG4BTUw9wSak6MdNN7d6aQYuOq3IV040FOFuPmKnecHbP55
-/hfyvqFaKncAIpUNE1Us+Au4HjiJnHERTEvHP9yt54W/2dwr8QavJhyQLEphcB54
-SMknmBPpQdDfXNWMvZqwdcO4Hh9zfFg+nXnuUhNQdbCfCgP9OQaT23oomlFKZGKw
-yJnHIutgf/1wHqqd2ppDjpzdtD9aLM/rV5N66jDmSCi9ZGDF9IbqqbuDJqMEkeoF
-vQaHMF2cJG95YqRLLVRUeLl4vwtMDAoKLC4nC/x47+6l0FPfq1JBlQ==
-=cBRw
------END PGP SIGNATURE-----
+User Namespace, SELinux or other MAC are all required to get us near the
+point where Container Contain. 
+
+People who run services within a container should continue to drop privs
+in the services and run them as UID!=0
+
+
+
