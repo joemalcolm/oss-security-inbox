@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/24/2
-Message-ID: <20141224123049.5e047286@pc>
-Date: Wed, 24 Dec 2014 12:30:49 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: Bastien ROUCARIES <roucaries.bastien@...il.com>
-Cc: oss-security@...ts.openwall.com, jodie.cunningham+osssecurity@...il.com
-Subject: Re: Imagemagick fuzzing bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/13
+Message-ID: <53A1971F.6010302@mittwald.de>
+Date: Wed, 18 Jun 2014 13:39:49 +0000
+From: Sven Kieske <S.Kieske@...twald.de>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: docker VMM breakout
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 24 Dec 2014 12:22:22 +0100
-Bastien ROUCARIES <roucaries.bastien@...il.com> wrote:
 
-> during the previous month google and Jodie Cunningham.
-> have done a security audit of imagemagick and found a lot of security
-> bug:
+Am 18.06.2014 12:15, schrieb David Jorm:
+> I tested libvirt via virsh and by default both CAP_DAC_READ_SEARCH and
+> CAP_DAC_OVERRIDE are available (and thus the PoC does run). However,
+> this default is well documented as is the general insecurity of libvirt
+> in regards to DAC, so I don't think a CVE ID is required for libvirt.
 
-Oh...
+I fail to see why this should be true.
+On most distributions libvirt spawned vms do not run as root but as user
+qemu or similar.
+according to the documentation at:
+http://libvirt.org/drvqemu.html#securitycap
 
-You are aware that there is graphicsmagick which shares lots of code
-with im (it's an early fork)? It'd be nice to also report these issues
-to them if they apply. (I also reported a couple of issues in both
-im/gm lately and devs were always quick to fix things)
+this should imply that libvirt drops these capabilities.
+
+Please correct me if I'm wrong.
+
 
 -- 
-Hanno Böck
-http://hboeck.de/
+Mit freundlichen Grüßen / Regards
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+Sven Kieske
 
-Content of type "application/pgp-signature" skipped
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
