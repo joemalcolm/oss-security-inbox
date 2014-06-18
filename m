@@ -1,123 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/1
-Message-ID: <20141020022730.GA4593@localhost.localdomain>
-Date: Sun, 19 Oct 2014 19:27:30 -0700
-From: Grond <grond66@...il.com>
-To: Nick Kralevich <nnk@...gle.com>
-Cc: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: Re: [FD] CVE request: remote code execution in Android CTS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/1
+Message-Id: <201406180257.s5I2vgnq026214@linus.mitre.org>
+Date: Tue, 17 Jun 2014 22:57:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: yarrick@...o.se
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, oscar@...araz.net
+Subject: Re: CVE Request: iodine: authentication bypass by client
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 19, 2014 at 05:20:50AM -0700, Nick Kralevich wrote:
-> Nick from the Android Security team here.
-> 
-> In the future, please feel free to send these kinds of reports to
-> security@...roid.com. Please see
-> http://developer.android.com/guide/faq/security.html#issue for contact
-> information.
-> 
-> Android's Compatibility Test Suite (CTS) is an executable software
-> package intended to be downloaded and run from your computer. Please
-> see https://source.android.com/compatibility/cts-intro.html for more
-> information.
-> 
-> The files within the software package are not intended to be modified.
-> 
-> If I'm reading your report correctly, you're claiming that an attacker
-> who has the ability to locally modify a software package has the
-> ability to get code execution. This isn't a security bug. What you're
-> describing is another example of
-> http://blogs.msdn.com/b/oldnewthing/archive/2007/10/31/5788080.aspx .
-> You're on the wrong side of the airtight hatch.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Before trying to sweep this thing under the carpet, you might want to
-ask yourself two simple questions:
-Is this kind of file ever *intended* to be used as an executable script?
-If the answer is "no"; then you should apply fixes.
-And:
-Which is more expensive? Spending a couple of hours to fix this now,
-or having someone chain this together with another (unforeseeable)
-bug enabling easy exploitation a few years down the road, allowing 
-them to do some real damage?
+> iodine 0.7.0 has just been released, which fixes an authentication bypass
+> issue
 
-Oh, and:
-There really is no such thing as an "airtight hatch".
+> https://github.com/yarrick/iodine/commit/b715be5cf3978fbe589b03b09c9398d0d791f850
 
+> The client could bypass the password check by continuing after getting error
+> from the server and guessing the network parameters. The server would still
+> accept the rest of the setup and also network traffic.
 > 
-> If you are aware of ways to exploit this functionality that doesn't
-> involve tricking the user into replacing a file, please feel free to
-> contact us at security@...roid.com.
-> 
-> -- Nick
-> 
-> On Sun, Oct 19, 2014 at 2:28 AM, Lord Tuskington <l.tuskington@...il.com> wrote:
-> > CTS parses api-coverage.xsl without providing the FEATURE_SECURE_PROCESSING
-> > option. See lines 60-67 of
-> > cts/tools/cts-api-coverage/src/com/android/cts/apicoverage/HtmlReport.java:
-> >
-> > InputStream xsl =
-> > CtsApiCoverage.class.getResourceAsStream("/api-coverage.xsl");
-> > StreamSource xslSource = new StreamSource(xsl);
-> > TransformerFactory factory = TransformerFactory.newInstance();
-> > Transformer transformer = factory.newTransformer(xslSource);
-> >
-> > StreamSource xmlSource = new StreamSource(xmlIn);
-> > StreamResult result = new StreamResult(out);
-> > transformer.transform(xmlSource, result);
-> >
-> > An attacker who is able to control api-coverage.xsl could inject arbitrary
-> > code into it, which would be executed. For example:
-> >
-> > <xsl:stylesheet version="1.0"
-> > xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-> > xmlns:rt="http://xml.apache.org/xalan/java/java.lang.Runtime"
-> > xmlns:str="http://xml.apache.org/xalan/java/java.lang.String"
-> >>
-> > <xsl:output method="text"/>
-> >     <xsl:template match="/">
-> >        <xsl:variable name="Command"><![CDATA[calc.exe]]></xsl:variable>
-> >        <xsl:variable name="RT" select="rt:getRuntime()"/>
-> >        <xsl:variable name="proc" select="rt:exec($RT, $Command)"/>
-> >        <xsl:text>Process: </xsl:text><xsl:value-of select="$proc"/>
-> >     </xsl:template>
-> > </xsl:stylesheet>
-> >
-> > Would pop a calc. This crosses a trust boundary because an attacker could
-> > provide an XSL stylesheet that, for example, has enhanced visual layout. A
-> > person consuming that stylesheet would assume it could not possibly contain
-> > arbitrary code that would be executed, as it's just a stylesheet. The XSL
-> > extensions to execute code should be disabled by passing
-> > FEATURE_SECURE_PROCESSING.
-> >
-> > Regards
-> >
-> > Lord Tuskington
-> >
-> > Chief Financial Pinniped
-> >
-> > TuskCorp
-> 
-> 
-> 
-> -- 
-> Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
-> 
-> _______________________________________________
-> Sent through the Full Disclosure mailing list
-> http://nmap.org/mailman/listinfo/fulldisclosure
-> Web Archives & RSS: http://seclists.org/fulldisclosure/
+> Add checks for normal and raw mode that user has authenticated before allowing
+> any other communication.
 
--- 
+Use CVE-2014-4168.
 
-Attached is my PGP public key.
-Primary key fingerprint: B7C7 AD66 D9AF 4348 0238  168E 2C53 D8FA 55D8 9FD9
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-If you have a PGP key (and a minute to spare)
-please send it in reply to this email.
-
-If you have no idea what PGP is, feel free
-to ignore all this gobbledegook.
-
-Content of type "application/pgp-keys" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQEcBAEBAgAGBQJToMEDAAoJEKllVAevmvmsNwgIAKFLSxMA6JXBvw5J+JiMJOVx
+W61HnD6zhcfD2/5C4mQsfZx0hnqxVQHUcbPiydWVW6oRYn/GQRrpC7JkTkEP6wSt
+bQdj+5krJAjiGG6ilQbHGEypdh5bZPs1rIaB0ZthnxGvEOmhJq2jO8vg+7DDoJf/
+hm5rqx/BVToMCXqBjAniCJpRvnibTfBRd4n9r2wkYks4PB3wV43bI2k/UbkS3ya4
+7FXWs1pFuVilJFlVRyEV4IzYb/32SU7Xl02G/8fNshczKZ0MrNqCh2OCqplUBqpN
+wxjsgejqOY+PGu2md035LQWDMpxP4YlgwwtWFPyD+EsPJ8384C53TXcyQ9N1fZM=
+=1/SN
+-----END PGP SIGNATURE-----
