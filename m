@@ -1,94 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/10
-Message-ID: <5467D237.1090604@mccme.ru>
-Date: Sun, 16 Nov 2014 01:22:47 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/10
+Message-ID: <53A17A59.4020907@enovance.com>
+Date: Wed, 18 Jun 2014 07:39:05 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: strings / libbfd crasher
+Subject: [OSSA 2014-019] Neutron L3-agent DoS through IPv6 subnet (CVE-2014-4167)
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-15 23:17, Michal Zalewski wrote:
->> OTOH the "most" part in "most compression utilities" is somewhat
->> questionable. There are quite a number of them. E.g. File Roller supports
->> arj, lha, zoo...
->
-> Sure, I mean, the stuff people normally download and click on without
-> hesitation (tar, gz, zip, xz, 7z). There are hundreds of less common
-> tools and libraries that are probably awful.
+OpenStack Security Advisory: 2014-019
+CVE: CVE-2014-4167
+Date: June 18, 2014
+Title: Neutron L3-agent DoS through IPv6 subnet
+Reporter: Thiago Martins (HP)
+Products: Neutron
+Versions: up to 2013.2.3, and 2014.1
 
-I think many people have arj installed and click .arj files without 
-hesitation too. According to Debian popcon ( 
-http://popcon.debian.org/by_vote ) arj is at the 2266th place, only 4 
-places behind wireshark and 6 places ahead of acroread.
+Description:
+Thiago Martins from Hewlett Packard reported a vulnerability in Neutron
+L3-agent. By creating an IPv6 private subnet attached to a L3 router, an
+authenticated user may break the L3-agent, preventing further floating
+IPv4 addresses from being attached for the entire cloud. Note: removal
+of the faulty network can not be done using the API and must be cleaned
+at the database level. Only Neutron setups using IPv6 and L3-agent are
+affected.
 
->>> The default operation of
->>> /usr/bin/strings and the way many people ended up using it arguably
->>> violates that assumption in a particularly pronounced way. Tools such
->>> as objdump are a bit of a grey area, too.
->>
->> Why is that? I think using objdump to analyze malware is quite common.
->
-> Oh, I meant that it's still a bit sketchy (maybe less than 'strings'
-> because the untrusted input use case is a lot more specialized and
-> fewer people are at risk).
+Juno (development branch) fix:
+https://review.openstack.org/88584
 
-Sorry, I still don't understand what you mean (perhaps my English is 
-just lacking). Both `strings` and `objdump` are using libbfd (unlike 
-readelf), both are used against untrusted input.
+Icehouse fix:
+https://review.openstack.org/95938
 
->>> [...tcpdump...]
->>
->> Not good. Haven't you looked into it -- are these crashes due to malformed
->> pcap format or due to malformed traffic?
->
-> Both, IIRC. There are some test cases that come with afl-fuzz.
+Havana fix:
+https://review.openstack.org/95939
 
-Oh...
+Notes:
+This fix will be included in the Juno-2 development milestone and in
+future 2013.2.4 and 2014.1.2 releases.
 
->> BTW any crash in imagemagick during image processing is regarded as a
->> security issue? Probably a grateful target for fuzzing.
->
-> Well... probably? For example, some sites use ImageMagick to convert /
-> resize user-uploaded images. One would hope that they check file
-> headers and only accept JPEG / GIF / PNG or so, but that's probably
-> not universally true.
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4167
+https://launchpad.net/bugs/1309195
 
-Or they can look at the extension and use something like `convert 
-png:input.png ...`
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
->>> Now, the quality of the *average* OSS project is probably comparable
->>> to libbfd, but the average OSS project is probably less likely to be
->>> exposed to untrusted inputs under normal operating conditions.
->>
->> Sorry, I don't understand your stance. There is a whole world of desktop
->> tools and applications -- from `file` and `strings` to LibreOffice and
->> Blender. And most of them process files received from untrusted sources.
->
-> I wouldn't describe LibreOffice as a typical example. It's obviously
-> security-critical.
 
-Nevertheless taking one simple .doc and zzuf I get an infinite loop(?) 
-at seed 58 (IIUC it's classified as DoS in LO) and SIGSEGV at seed 91. 
-Hm, abiword also crashes on this case.
-
-Well, crashing at seed 91 is not that bad -- catdoc crashes right at 
-seed 0 :-(
-
-> What I mean is that, across all the packages
-> installed on your system, most bugs are fairly irrelevant from the
-> security perspective - i.e., it probably doesn't matter if you can
-> crash uname or ps by passing AAAAAAA... in the command line.
-
-Sure but there are enough apps which process various files -- at opening 
-downloads from browsers, clicking attachments from emails or just 
-clicking files in a file manager. And there are many command line tools 
-which should be safe to use against untrusted files (like `strings`).
-
-And most such programs are easy to crash. And when I say 'easy to crash' 
-it means from instantly to a couple of minutes under zzuf, not a couple 
-of days under afl.
-
-Too much low hanging fruits, too little time...
-
--- 
-Alexander Cherepanov
+Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
