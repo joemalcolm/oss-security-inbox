@@ -1,30 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/15
-Message-ID: <20141119182633.GF23193@tracyreed.org>
-Date: Wed, 19 Nov 2014 10:26:33 -0800
-From: Tracy Reed <treed@...raviolet.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Location of OS security audit reports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/8
+Message-Id: <C6D755E6-CC0D-4EEA-868D-CFF4185FA89A@gmail.com>
+Date: Wed, 18 Jun 2014 20:43:31 +1000
+From: Graham Dumpleton <graham.dumpleton@...il.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Security release for mod_wsgi (version 3.5)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 16, 2014 at 07:17:12PM PST, M.T. Roebuck spake thusly:
-> I haven't had any success yet in finding security audit reports for
-> any *nix OS (I haven't looked for them for MS/Apple products).
+I saw the email as it popped up in my twitter feed of all places.
 
-Security audits depend greatly on the configuration and use of the machine.
-Having a generic security audit is practically useless.
+Am about to make a release which improves the error handling and the one off error.
 
-A company would usually pay to have a security audit produced (either via
-internal or external auditors) and contains very specific details about their
-particular installation. These audits are regarded as sensitive and proprietary
-information and not publically distributed.
+Graham
 
-Nobody has an incentive to produce generic security audits of out of the box OS
-distributions and then make them publically available.
+On 18/06/2014, at 8:03 PM, Solar Designer <solar@...nwall.com> wrote:
 
-What is the problem you are trying to solve?
+> On Wed, Jun 18, 2014 at 08:08:10PM +1200, Matthew Daley wrote:
+>> I may be wrong as I haven't been following this discussion entirely, but...
+> 
+> I think Graham is not on oss-security.  CC added.
+> 
+> Graham, please comment on the potential off-by-one bug reported by
+> Matthew below:
+> 
+>> On Wed, Jun 18, 2014 at 12:39 AM, Graham Dumpleton
+>> <graham.dumpleton@...il.com> wrote:
+>>> This feature was added for one specific user and wouldn't be a well known feature unless people were reading change notes diligently as don't believe it is even covered in the documentation.
+>>> 
+>>> Given that this code also only executes as root, the only error which could technically arise in this code for setgroups() is if the number of groups exceeded NGROUPS_MAX.
+>>> 
+>>> This should not occur though as the number of groups was previously validated when the configuration was read:
+>>> 
+>>>    if (groups_list) {
+>>>        const char *group_name = NULL;
+>>>        long groups_maximum = NGROUPS_MAX;
+>>>        const char *items = NULL;
+>>> 
+>>> #ifdef _SC_NGROUPS_MAX
+>>>        groups_maximum = sysconf(_SC_NGROUPS_MAX);
+>>>        if (groups_maximum < 0)
+>>>            groups_maximum = NGROUPS_MAX;
+>>> #endif
+>>>        groups = (gid_t *)apr_pcalloc(cmd->pool,
+>>>                                      groups_maximum*sizeof(groups[0]));
+>>> 
+>>>        groups[groups_count++] = gid;
+>>> 
+>>>        items = groups_list;
+>>>        group_name = ap_getword(cmd->pool, &items, ',');
+>>> 
+>>>        while (group_name && *group_name) {
+>>>            if (groups_count > groups_maximum)
+>> 
+>> This is an off-by-one error, isn't it? As in, it should be testing for
+>> groups_count >= groups_maximum and not the current test.
+>> 
+>>>                return "Too many supplementary groups WSGI daemon process";
+>>> 
+>>>            groups[groups_count++] = ap_gname2id(group_name);
+>>>            group_name = ap_getword(cmd->pool, &items, ',');
+>>>        }
+>>>    }
+>>> 
+>>> Thus was pre-validated input.
+>> 
+>> - Matthew Daley
 
--- 
-Tracy Reed
-
-Content of type "application/pgp-signature" skipped
