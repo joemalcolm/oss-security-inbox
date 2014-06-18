@@ -1,19 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/27/2
-Message-ID: <549E36C1.5020309@internot.info>
-Date: Sat, 27 Dec 2014 15:34:09 +1100
-From: Joshua Rogers <oss@...ernot.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/12
+Message-ID: <1403097928.19383.40.camel@scapa>
+Date: Wed, 18 Jun 2014 15:25:28 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: libbfd / bfd
+Subject: Re: docker VMM breakout
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On mer., 2014-06-18 at 20:15 +1000, David Jorm wrote:
+> Thanks for reporting this issue, Sebastian. Could a CVE ID please be 
+> assigned to this issue, given it affects Docker 0.11?
 
-So, was it worked out where exactly bfd bugs/vulns should be reported to?
-I've got some new ones to report.
+It also applies to LXC, where dropping CAP_DAC_OVERRIDE and
+CAP_DAC_SEARCH might not be completely possible if you're running a full
+system in a container (I'm not completely sure of that so any clue is
+welcome here).
 
-
-Thanks,
+Regards,
 -- 
--- Joshua Rogers <https://internot.info/>
+Yves-Alexis
 
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
