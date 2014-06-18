@@ -1,39 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/4
-Message-ID: <20141103074206.GA26935@zoho.com>
-Date: Mon, 3 Nov 2014 07:42:06 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/6
+Message-ID: <20140618100359.GA422@openwall.com>
+Date: Wed, 18 Jun 2014 14:03:59 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Zip-Bugs@...ts.wku.edu, Christian.Spieler@...nline.de
-Subject: Re: unzip -t crasher
+Cc: Graham Dumpleton <graham.dumpleton@...il.com>
+Subject: Re: Security release for mod_wsgi (version 3.5)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 02, 2014 at 07:06:40PM +0100, Jakub Wilk wrote:
-> Latest American fuzzy lop[0] tarball[1] contains a zip file that
-> crashes unzip -t:
+On Wed, Jun 18, 2014 at 08:08:10PM +1200, Matthew Daley wrote:
+> I may be wrong as I haven't been following this discussion entirely, but...
+
+I think Graham is not on oss-security.  CC added.
+
+Graham, please comment on the potential off-by-one bug reported by
+Matthew below:
+
+> On Wed, Jun 18, 2014 at 12:39 AM, Graham Dumpleton
+> <graham.dumpleton@...il.com> wrote:
+> > This feature was added for one specific user and wouldn't be a well known feature unless people were reading change notes diligently as don't believe it is even covered in the documentation.
+> >
+> > Given that this code also only executes as root, the only error which could technically arise in this code for setgroups() is if the number of groups exceeded NGROUPS_MAX.
+> >
+> > This should not occur though as the number of groups was previously validated when the configuration was read:
+> >
+> >     if (groups_list) {
+> >         const char *group_name = NULL;
+> >         long groups_maximum = NGROUPS_MAX;
+> >         const char *items = NULL;
+> >
+> > #ifdef _SC_NGROUPS_MAX
+> >         groups_maximum = sysconf(_SC_NGROUPS_MAX);
+> >         if (groups_maximum < 0)
+> >             groups_maximum = NGROUPS_MAX;
+> > #endif
+> >         groups = (gid_t *)apr_pcalloc(cmd->pool,
+> >                                       groups_maximum*sizeof(groups[0]));
+> >
+> >         groups[groups_count++] = gid;
+> >
+> >         items = groups_list;
+> >         group_name = ap_getword(cmd->pool, &items, ',');
+> >
+> >         while (group_name && *group_name) {
+> >             if (groups_count > groups_maximum)
 > 
-> $ unzip -qt afl-0.43b/docs/samples/unzip_t_malloc.zip foo/:
-> mismatching "local" filename (/UT), continuing with "central"
-> filename version *** Error in `unzip': free(): corrupted unsorted
-> chunks: 0x00000000015d0170 ***
+> This is an off-by-one error, isn't it? As in, it should be testing for
+> groups_count >= groups_maximum and not the current test.
 > 
-> I'm not sure if inclusion of said zip file was intentional, but since
-> the cat is already out of the bag, I thought I'll let you know.
-
-Cats shouldn't be in bags, anyways.
-
-The crasher has an OS/2 extra field that claims to have a compressed
-block size of 52735 bytes and an uncompressed block size of 127 bytes.
-
-The attached patch against UnZip 6.0 ensures, within extra fields, 
-size(compressed) <= size(uncompressed) and should fix this issue.
-
---mancha
-
-PS If the attachment gets mangled, it's also at:
-http://sf.net/projects/mancha/files/sec/unzip-6.0_overflow.diff
-
-
-View attachment "unzip-6.0_overflow.diff" of type "text/plain" (1048 bytes)
-
-Content of type "application/pgp-signature" skipped
+> >                 return "Too many supplementary groups WSGI daemon process";
+> >
+> >             groups[groups_count++] = ap_gname2id(group_name);
+> >             group_name = ap_getword(cmd->pool, &items, ',');
+> >         }
+> >     }
+> >
+> > Thus was pre-validated input.
+> 
+> - Matthew Daley
