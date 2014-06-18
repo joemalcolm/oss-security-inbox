@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/11
-Message-ID: <CAA7hUgHDZ2pCTe=hs4M8jmzh4uQwi-tW6tf0BZH=Mw+TtNWX9g@mail.gmail.com>
-Date: Wed, 29 Jan 2014 15:02:07 +0100
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/2
+Message-ID: <20140618051915.GA15532@elende.valinor.li>
+Date: Wed, 18 Jun 2014 07:19:15 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Jakub Wilk <jwilk@...ian.org>, 736958@...s.debian.org
-Subject: Re: CVE request: temporary file issue in Passenger rubygem
+Cc: cve-assign@...re.org, rjbs@...n.org, bastian.blank@...dativ.de, team@...urity.debian.org, gregoa@...ian.org
+Subject: CVE-2014-0477: Email::Address: Denial-of-Service in Email::Address::parse
 Content-Type: text/plain; charset=utf-8
 
-On 29 January 2014 09:57, Raphael Geissert <geissert@...ian.org> wrote:
-[...]
-> One thing to notice, however, is that there's a race condition between
-> the stat check introduced in 34b1087870c2.
-> The following sequence still triggers the bogus behaviour:
->
-> <user> mkdir $dir
-> <phusion> lstat() (getFileTypeNoFollowSymlinks)
-> <user> rmdir $dir
-> <user> ln -s /target $dir
-> <phusion> stat() (from verifyDirectoryPermissions)
-> ...
+Hi
 
-Upstream has now fixed this with the following commit (basically using
-the structure from lstat() for the two checks):
-https://github.com/phusion/passenger/commit/94428057c602da3d6d34ef75c78091066ecac5c0
+Bastian Blank reported a denial of service vulnerability in
+Email::Address, a Perl module for RFC 2822 address parsing and
+creation[1]. Email::Address::parse uses significant time on parsing
+empty quoted string, as allowed by RFC 2822.
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+CVE-2014-0477 was assigned to reference this issue.
+
+Bastian Blank suggested a fix which was applied upstream as [2]
+contained in a new upstream version 1.905[3] which contain additional
+commits to avoid slowdowns.
+
+ [1] https://metacpan.org/release/Email-Address
+ [2] https://github.com/rjbs/Email-Address/commit/83f8306117115729ac9346523762c0c396251eb5
+ [3] https://github.com/rjbs/Email-Address/blob/master/Changes
+
+Regards,
+Salvatore
