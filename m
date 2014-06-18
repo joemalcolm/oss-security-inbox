@@ -1,153 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/22
-Message-ID: <CAFkuX4uAqnr2fwTdCVPdUwOMBmsX-yvXDD6JhvukTaMctrChYA@mail.gmail.com>
-Date: Thu, 26 Jun 2014 12:54:34 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/4
+Message-ID: <20140618073628.GB27915@suse.de>
+Date: Wed, 18 Jun 2014 09:36:28 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: LMS-2014-06-16-3: Libav LZO
+Subject: docker VMM breakout
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+Hi
 
-A vulnerability has been identified in the Libav LZO implementation. Please
-find the bug report attached inline.
+As per list policy, here is the public forward.
+The link has been redacted to reflect public location.
+Its fixed in docker 1.0 since CAP_DAC_READ_SEARCH is no
+longer available.
 
-Best,
-Don A. Bailey
-Founder / CEO
-Lab Mouse Security
-https://www.securitymouse.com/
+Other FS-related threats to container based VMM's
+that have been discussed:
 
-#############################################################################
-#
-# Lab Mouse Security Report
-# LMS-2014-06-16-3
-#
+- subvolume related FS operations (snapshots etc)
+- FS ioctl's that accept FS-handles as well (XFS)
+- CAP_DAC_READ_SEARCH also defeats chroot and other
+  bind-mount containers (privileged LXC)
+- CAP_MKNOD might be a problem too (still available in docker 1.0)
+  depending on the drivers available in the kernel
 
-Report ID: LMS-2014-06-16-3
 
-CVE ID: CVE-2014-4609
+----- Forwarded message from Sebastian Krahmer -----
 
-Researcher Name: Don A. Bailey
-Researcher Organization: Lab Mouse Security
-Researcher Email: donb at securitymouse.com
-Researcher Website: www.securitymouse.com
+Subject: [vs] docker VMM breakout
+Date: Mon, 16 Jun 2014 10:56:16 +0200
 
-Vulnerability Status: Patched
-Vulnerability Embargo: Broken
+Hi
 
-Vulnerability Class: Integer Overflow
-Vulnerability Effect: Memory Corruption
-Vulnerability Impact: DoS, OOW, RCE
-Vulnerability DoS Practicality: Practical
-Vulnerability OOW Practicality: Practical
-Vulnerability RCE Practicality: Practical
-Vulnerability Criticality: Critical
+I dont know if this really belongs here, but better safe
+than sorry. There seem to be distributors that actually ship
+docker as a 'solution' (to whatever problem :).
 
-Vulnerability Scope:
-All versions of libav are affected.
-All architectures supported by libav are affected.
+I already contacted upstream, they say its not working
+anymore for them in version 1.0. I cannot test this, as I only
+have docker 0.11 running (on a 3.11 kernel). I am not really
+sure they really fixed the problem, they just told me that
+they changed "something" in the capability handling.
 
-Vulnerability Tested:
-Yes. RCE proven on 10 separate platforms including but not limited to:
- - Ubuntu and Mint x86, x86_64
- - Debian x86_64, x86
- - FreeBSD x86_64, x86
+In 0.11 the problem is that the apps that run in the container
+have CAP_DAC_READ_SEARCH and CAP_DAC_OVERRIDE which allows the
+containered app to access files not just by pathname (which would be
+impossible due to the bind mount of the rootfs) but also by handles via
+open_by_handle_at(). Handles are mostly 64bit values and can be kind
+of pre-computed as they are inode-based and the inode of / is 2.
+So you can go ahead and walk / by passing a handle of 2 and
+search the FS until you find the inode# of the file you want
+to access. Even though you are containered somewhere in /var/lib.
 
-Functions Affected:
-	libavutil/lzo.c:av_lzo1x_decode
+A PoC is available here:
 
-Criticality Reasoning
----------------------
-This vulnerability can be triggered through a compression payload embedded
-in a video file. Due to the nature of this memory corruption vulnerability,
-exploitation of the bug can be seamless and work in the background during
-normal video playback. A user will never notice that playback has been
-compromised.
+http://stealth.openwall.net/xSports/shocker.c
 
-Testing was successfully performed on all variants of mplayer2, including
-gecko-mplayer2 embedded in Firefox, Iceweasel, Opera, Chromium, and Konqueror
-on Linux.
+Note that some FS (namely XFS) have their own fhandle ioctls,
+so if you share the XFS fs structs with the container, there
+might be different attack vectors despite of capability handling.
+Since docker is heavily LXC based, any other LXC based container
+solution might be at risk too. (I think file handles are a generic problem
+for container based VMMs).
 
-Ease of compromise is partly due to libav's use of tmalloc, which places
-a header containing function pointers at the beginning of allocated heap
-regions. Exploitation of the compression vulnerability overwrites these
-function pointers, which then point to ROP payloads that allow for the
-bypassing of ASLR and NX security enhancements.
+I request a CRD of June 30th. If within the next 2 days no other distributor
+objects, I will already disclose this on June 18th, because the overall
+issue is not really a critical thing.
 
-Vulnerability Description
--------------------------
-An integer overflow can occur when processing any variant of a "literal run"
-in the av_lzo1x_decode function. Each of these three locations is
-subject to an integer overflow when processing zero bytes. The following code
-depicts how the size of the literal array is generated:
-static inline int get_len(LZOContext *c, int x, int mask)
-{
-    int cnt = x & mask;
-    if (!cnt) {
-        while (!(x = get_byte(c)))
-            cnt += 255;
-        cnt += mask + x;
-    }
-    return cnt;
-}
+Sebastian
 
-As long as a zero byte (0x00) is encountered, the variable 'cnt' will be
-incremented by 255. Using approximately sixteen megabytes of zeros, 'cnt' will
-accumulate to a maximum unsigned integer value in the 32bit variable.
+-- 
 
-Therefore, get_len() will return a negative 'cnt' value to its caller. The
-checks in copy_backptr() will fail to properly test for negative 'cnt' values
-resulting in the following test never catching an error:
-    if (cnt > c->out_end - dst) {
-        cnt       = FFMAX(c->out_end - dst, 0);
-        c->error |= AV_LZO_OUTPUT_FULL;
-    }
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-av_memcpy_backptr does not check for negative 'cnt' values, which results in
-a copy of one byte from 'src' to 'dst', evading a crash do to excessive
-copying.
 
-Finally, the copy function will never crash by calling memcpy with a negative
-value because it only calls memcpy when the signed 'cnt' variable is greater
-than zero. However, the pointers 'c->in' and 'c->out' will still be adjusted
-by a negative value, causing 'c->out' to point to an area of memory prior to
-the actual output buffer. This is how Lab Mouse Security was able to
-instrument this vulnerability to overwrite tmalloc function pointers with
-ROP payloads.
 
-It is notable that since the count value 'cnt' is passed around as an 'int',
-it will always be interpreted as a signed 32bit integer regardless of the
-underlying architecture. This means that this vulnerability affects all
-platforms and architectures regardless of whether they are 32bit or 64bit
-in nature.
+----- End forwarded message -----
 
-Vulnerability Resolution
-------------------------
-Resolving this issue requires several separate fixes.
+-- 
 
-1) lzo.c:get_len()
-The return value of get_len must be evaluated for negative count values.
-A negative value should never be allowed in this context. Always error
-when a negative or zero value is returned.
-
-2) lzo.c:copy()
-A negative value should not be allowed as a parameter to copy(). In
-addition, the pointers 'c->in' and 'c->out' should be tested after they
-are changed by the count value. Verify that the new offset does not land
-outside of the bounds of the 'out' buffer.
-
-3) lzo:copy_backptr()
-Do not allow a negative 'cnt' value to be passed to copy_backptr. Augment
-the test cases to ensure that a negative value cannot be used to adjust
-the 'c->out' pointer.
-
-4) libavutil/mem.c:av_memcpy_backptr
-Return an error value.
-Do not allow a negative 'cnt' or 'back' value to be used.
-
-5) Always use a size_t for any size variable.
-Size variables should always represent the underlying architecture's largest
-natural unsigned integer. Use size_t, or a variant, to automatically scale
-the value to the underlying architecture.
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
