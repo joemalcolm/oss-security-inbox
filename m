@@ -1,23 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/7
-Message-Id: <ECBBB455-9EFD-4EFE-A055-2D799E8B2CE6@oracle.com>
-Date: Tue, 4 Mar 2014 11:12:57 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/17
+Message-ID: <97957A64-A04D-4384-ABBA-17DC89709DFF@redhat.com>
+Date: Wed, 18 Jun 2014 14:42:33 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: multiple /tmp races in ppc64-diag
 Content-Type: text/plain; charset=utf-8
 
+On 06/16/2014, at 23:17 PM, cve-assign@...re.org wrote:
 
-On 4 Mar 2014, at 11:01, Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
+>> https://bugzilla.novell.com/show_bug.cgi?id=882667
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1109371
+>
+>
+>> In the case of rtas_errd/prrn_hotplug, mktemp is used but is assumed
+>> to have succeeded; there is no check for the return value.
+>
+> Are you reporting this as a prrn_hotplug vulnerability? If it were a
+> vulnerability, it would have a separate CVE ID. We didn't test the
+> code, but it looks more like an opportunity for a non-security
+> enhancement or maybe a bug fix. Our guess is:
+>
+> 1. If the return value is nonzero, stdout is an empty string.
+>
+> 2. All of the ">> $TMPFILE" will fail, and won't write anything into
+>    any file.
+>
+> 3. The outcome is that /var/log/prrn_log doesn't have log
+>    information about what happened. We don't know of any direct
+>    security implications.
+>
+> 4. Possibly the code should check the return value and print
+>    something like "mktemp failed - maybe you're out of /tmp disk
+>    space?" but it might be better to let the rest of the script run
+>    anyway (i.e., not abort after that error condition).
+>
+> At least for now, there is no CVE ID for prrn_hotplug.
 
-> Here is another situation where konqueror successfully indicates a
-> "secure" connection to a server that has a known-insecure configuration:
-> point konqueror at: https://demo.cmrg.net/ -- you'll see a successful
-> connection, though that server only offers DHE over a
-> trivially-crackable 16-bit group.
+That sounds fine to me.
 
-I suspect that this problem is fairly wide-ranging.   Apple’s Safari also permits the link.   Google Chrome doesn’t permit the link though, it just crashes :)
+>> I don't know if the data in /tmp/diagSEsnap is sensitive or not
+>
+> mkdir "/tmp/diagSEsnap", 0775;
+> $general_eed_file = "/tmp/diagSEsnap/snapH.tar.gz";
+> system("/usr/sbin/snap -o $general_eed_file 2>/dev/null 1>&2");
+>
+> This seems to be similar to the CVE-2014-3925 sosreport issue.
+> snapH.tar.gz apparently will include /etc/fstab and therefore might
+> include a password.
+> http://www.ibm.com/support/entry/portal/docdisplay?lndocid=MIGR-54819
+> says "When you report a problem to IBM Technical Support, run the snap
+> utility and send the ... file to them." In addition, snapH.tar.gz
+> apparently will include /var/log/messages, which traditionally is not
+> supposed to be a world-readable file.
+>
+> (snap and sosreport aren't derivatives of the same code.)
+>
+> Also, the question of whether "/usr/sbin/snap -o $general_eed_file" is
+> exploitable may depend on the behavior of snap. Apparently, snap does
+> check whether the -o output file exists but doesn't avoid TOCTOU
+> problems. Arguably, snap isn't responsible for avoiding TOCTOU
+> problems because it's not inherently designed for use with untrusted
+> output filenames.
+>
+> So, three CVEs seems to be the right number here.
+>
+> The ppc64-diag unsafe uses of temporary directories in these three
+> scenarios:
+>
+> "> /tmp/get_dt_files" [ in rtas_errd/diag_support.c ]
+>
+> mkdir "/tmp/diagSEsnap", 0775;
+> $general_eed_file = "/tmp/diagSEsnap/snapH.tar.gz";
+> system("/usr/sbin/snap -o $general_eed_file 2>/dev/null 1>&2");
+> [ in scripts/ppc64_diag_mkrsrc ]
+>
+> TMP_DIR="/var/tmp/ras"
+> mkdir -p $TMP_DIR
+> MESSAGE_FILE="$TMP_DIR/messages"
+> [ in lpd/test/lpd_ela_test.sh - see Novell bug 882667 ]
+>
+> are primarily of interest because of symlink following, and are all
+> assigned CVE-2014-4038.
+>
+> A second CVE for the ppc64-diag product is for the choice of weak
+> directory/file permissions for the snapH.tar.gz archive including data
+> that is not locally world-readable (e.g., /var/log/messages). This is
+> CVE-2014-4039.
+>
+> A third CVE, CVE-2014-4040, is assigned for snap itself. snap can be
+> found at http://sourceforge.net/projects/powerpc-utils (i.e., it's not
+> part of the ppc64-diag product). This CVE is the one analogous to
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3925 (i.e., it
+> includes the "cleartext passwords ... lacks a warning" rationale).
+>
+> CVE-2014-4039 and CVE-2014-4040 are vulnerabilities in different
+> products and can be addressed independently. For example, snapH.tar.gz
+> could have restrictive local permissions and still be sent to a remote
+> destination without review. Alternatively, snapH.tar.gz could continue
+> to have weak local permissions but snap could require the user to
+> acknowledge a warning about off-site distribution of an fstab
+> password, etc.
 
-jch
+Great, thanks for this.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (236 bytes)
+
+-- 
+Vincent Danen / Red Hat Product Security
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
