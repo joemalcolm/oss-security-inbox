@@ -1,27 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/22/3
-Message-ID: <20141022195357.GA7071@eldamar.local>
-Date: Wed, 22 Oct 2014 21:53:57 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: smarty: secure mode bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/5
+Message-ID: <20140619053841.GA4689@gremlin.ru>
+Date: Thu, 19 Jun 2014 09:38:41 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: docker VMM breakout
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 18-Jun-2014 10:05:35 -0400, Daniel J Walsh wrote:
 
-Can a CVE be assigned for the following smarty issue: upstream
-released new version 3.1.21:
+ > CONTAINERS DO NOT CONTAIN. Root inside the container == Root
+ > outside the container.
 
-> Smarty 3.1.21 Released Oct 18, 2014
-> Smarty 3.1.21 minor bug fixes and improvements. Also following up a
-> security bug fix where <script language="php"> tags still worked in
-> secure mode. To note, this only affects users using Smarty in secure
-> mode and exposing templates to untrusted third parties.
+Really? :-)
 
-Changelog: https://code.google.com/p/smarty-php/source/browse/trunk/distribution/change_log.txt?r=4902
+ > This is true in both libvirt-sandbox/libvirt-lxc and docker.
 
-Debian Bugreport: https://bugs.debian.org/765920
+Have you checked that for anything else?
 
-Regards,
-Salvatore
+ > We have a long way to go before we can run anything within a
+ > container without this rule. User Namespace, SELinux or other
+ > MAC are all required to get us near the point where Container
+ > Contain.
+
+Have you ever seen OpenVZ?
+
+ > People who run services within a container should continue to
+ > drop privs in the services and run them as UID!=0
+
+Look at this trivial code example...
+
+Classic kernel:
+
+if (!uid)
+{
+	// perform privileged operation here
+}
+
+Containers-enabled kernel:
+
+if ( !uid && !container_id )	// container_id: 0 for host
+{
+	// perform privileged operation here
+}
+
+How would you bypass this check to get privileged access to anything
+outside the container?
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
