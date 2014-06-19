@@ -1,34 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/21
-Message-ID: <CAP7Re_CDRr-eoVrzJToePNU6aGiwmcQ7aG9QLxw4cvOHTf9=Dg@mail.gmail.com>
-Date: Thu, 11 Sep 2014 13:32:27 -0700
-From: Ben Hawkes <hawkes@...rtiawar.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/11
+Message-ID: <20140619134025.GE7873@ubuntumail>
+Date: Thu, 19 Jun 2014 13:40:25 +0000
+From: Serge Hallyn <serge.hallyn@...ntu.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple Linux USB driver CVE assignment
+Subject: Re: docker VMM breakout
 Content-Type: text/plain; charset=utf-8
 
-We've assigned the following CVEs:
+Quoting gremlin@...mlin.ru (gremlin@...mlin.ru):
+> On 18-Jun-2014 10:05:35 -0400, Daniel J Walsh wrote:
+> 
+>  > CONTAINERS DO NOT CONTAIN. Root inside the container == Root
+>  > outside the container.
+> 
+> Really? :-)
+> 
+>  > This is true in both libvirt-sandbox/libvirt-lxc and docker.
+> 
+> Have you checked that for anything else?
+> 
+>  > We have a long way to go before we can run anything within a
+>  > container without this rule. User Namespace, SELinux or other
+>  > MAC are all required to get us near the point where Container
+>  > Contain.
+> 
+> Have you ever seen OpenVZ?
+> 
+>  > People who run services within a container should continue to
+>  > drop privs in the services and run them as UID!=0
+> 
+> Look at this trivial code example...
+> 
+> Classic kernel:
+> 
+> if (!uid)
+> {
+> 	// perform privileged operation here
+> }
+> 
+> Containers-enabled kernel:
+> 
+> if ( !uid && !container_id )	// container_id: 0 for host
+> {
+> 	// perform privileged operation here
+> }
+> 
+> How would you bypass this check to get privileged access to anything
+> outside the container?
 
-CVE-2014-3182 :
-https://code.google.com/p/google-security-research/issues/detail?id=89
-- "Linux kernel hid-logitech-dj.c device_index arbitrary kfree"
+This isn't a privileged operation.  It's simply reading a file
+owned by your same userid.
 
-CVE-2014-3183 :
-https://code.google.com/p/google-security-research/issues/detail?id=90
-- "Linux kernel hid-logitech-dj.c logi_dj_ll_raw_request heap
-overflow"
+What's happening is: mounts namespaces and pivot_root are used to
+prevent tasks in the container from finding a name for the host's
+/etc/shadow;  but open_by_handle_at() is bypassing the mounts
+namespaces and looking at the filesystem data itself.  So there are
+many ways to mitigate this - use seccomp to prevent open_by_handle_at(),
+drop CAP_DAC_READ_SEARCH, make sure (haha) that not a single file
+accessible in the container comes from the host's rootfs, use
+user namespaces, use selinux to prevent the container from reading
+any of the host-only labeled files.  But your example above in fact
+is not one.
 
-CVE-2014-3184  :
-https://code.google.com/p/google-security-research/issues/detail?id=91
-- "Linux kernel HID report fixup multiple off-by-one issues"
-
-CVE-2014-3185  :
-https://code.google.com/p/google-security-research/issues/detail?id=98
-- "Linux Kernel Buffer Overflow in Whiteheat USB Serial Driver"
-
-CVE-2014-3181 :
-https://code.google.com/p/google-security-research/issues/detail?id=100
-- "Magic Mouse HID device driver overflow"
-
-Thanks,
-Ben
+-serge
