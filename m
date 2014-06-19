@@ -1,46 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/11
-Message-Id: <201406061146.s56BkcQD021859@linus.mitre.org>
-Date: Fri, 6 Jun 2014 07:46:38 -0400 (EDT)
-From: cve-assign@...re.org
-To: fweimer@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dueno@...hat.com
-Subject: Re: [CVE request] Local privilege escalation in libfep
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/9
+Message-ID: <20140619140853.45fd2de1@redhat.com>
+Date: Thu, 19 Jun 2014 14:08:53 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: jamie@...onical.com, cve-assign@...re.org
+Subject: Re: Re: cups-browsed remote exploit
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi!
 
-> It was discovered that libfep uses UNIX domain sockets in the abstract
-> namespace in an insecure way.
+It seems this CVE request slipped through the cracks.
 
-> https://github.com/ueno/libfep/commit/293d9d3f7565f01a9dc40b53259886832eaa2ace
 
-> Don't use abstract Unix domain sockets 
+On Fri, 25 Apr 2014 15:24:15 -0500 Jamie Strandboge wrote:
 
-> fep/control.c
-> -  sun.sun_path[0] = '\0';
-> -  memcpy (sun.sun_path + 1, path, strlen (path));
+> On 04/02/2014 03:18 PM, cve-assign@...re.org wrote:
+> >> For this it creates a filter-script
+> > 
+> >> snprintf
+> > 
+> >> "%s/filter/pdftoippprinter \"$1\" \"$2\" \"$3\" \"$4\" \"$5
+> >> $extra_options\"\n", p->name, pdl, make_model, cups_serverbin);
+> > 
+> >> its easy to inject code to the script e.g. via model name or pdl
+> >> key which is taken from the LAN packets.
+> > 
+> > Use CVE-2014-2707.
+> 
+> This issue was reported as fixed in 1.0.51:
+> http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7188
+> 
+> but it was found that the fix was incomplete with the full fix in
+> 1.0.53:
+> http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7194
+> 
+> Should this get a second CVE or should we continue to use
+> CVE-2014-2707?
 
-> libfep/client.c
-> -  sun.sun_path[0] = '\0';
-> -  memcpy (sun.sun_path + 1, address, strlen (address));
+Note that there is another CVE needed for that commit, more specifically
+for the "In addition, some fixes against OOB access are done." part.
+That issue affects versions before 1.0.41 (which is the first version
+affected by CVE-2014-2707) and can be used to crash cups-browsed
+remotely.
 
-Use CVE-2014-3980.
+> Furthermore, another security issue was also fixed in 1.0.53:
+> http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7195
+> 
+> "
+> - cups-browsed: SECURITY FIX: Fix on usage of the
+>   "BrowseAllow" directive in cups-browsed.conf. Before, if the
+>   argument of a "BrowseAllow" directive is not understood it
+>   is treated as the directive not having been there, allowing
+>   any host if this was the only "BrowseAllow" directive. Now
+>   we treat this as a directive which no host can fulfill, not
+>   allowing any host if it was the only one. No "BrowseAllow"
+>   directive means access for all, as before (Bug #1204).
+> "
+> 
+> I believe this should receive a CVE.
+> 
+> Thanks
+> 
+> References:
+> https://bugzilla.novell.com/show_bug.cgi?id=871327
+> https://bugs.linuxfoundation.org/show_bug.cgi?id=1204
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTkanIAAoJEKllVAevmvms2zIH/2NbfRXcICXMYGBTIxDiPODL
-IVu+y28bpIy5Rt0hHn/oXTeL6Kd++B57LKu6Kh0P+QRDG0eD5vN+vlMjjkM3uf7r
-1U745tsLfjQy0moldprkzO9y1S8dIJzQu2LzkrpNMtb7kC3YiGmyARo5l8fntf+1
-ZCd42S85RdcOPFinLNOaLvNelz7dXFLzpCHfNJa2MhquBLUvrbX0mCtq9GbeQ5eC
-aKTP83qU3GNks/qmqYxwNhOktLVI5P9beKJe7oaU2clJEzWEAtcxIdt8iFoTvgdx
-31rvPSMoZCEZgHZNn3o9goUir6x/mGLjVVR7mZ+ra8TrKSBS3MmGl+gGJLHjin8=
-=xubs
------END PGP SIGNATURE-----
+-- 
+Tomas Hoger / Red Hat Security Response Team
