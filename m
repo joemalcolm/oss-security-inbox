@@ -1,63 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/6
-Message-ID: <CADk+mPC1BwyYo-_r=SfjcBWZXnnuhwN_vNsZrW-Z6YmYoXG74w@mail.gmail.com>
-Date: Fri, 3 Oct 2014 13:53:02 +0200
-From: Rainer Gerhards <rgerhards@...adiscon.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: Martin Schulze <joey@...odrom.org>, oss-security@...ts.openwall.com
-Subject: Re: sysklogd vulnerability (CVE-2014-3634)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/1
+Message-ID: <53A2508B.4020208@redhat.com>
+Date: Wed, 18 Jun 2014 20:52:59 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, andrew@...l.org
+Subject: TMP flaw in rackspace jclouds?
 Content-Type: text/plain; charset=utf-8
 
-Sent from phone, thus brief.
-Am 03.10.2014 13:26 schrieb "Solar Designer" <solar@...nwall.com>:
->
-> On Fri, Oct 03, 2014 at 11:24:43AM +0000, mancha wrote:
-> > On Fri, Oct 03, 2014 at 09:12:28AM +0000, mancha wrote:
-> > > In sysklogd's syslogd, invalid priority values between 192 and 1023
-> > > (directly or arrived at via overflow wraparound) can propagate through
-> > > code causing out-of-bounds access to the f_pmask array within the
-> > > 'filed' structure by up to 104 bytes past its end. Though most likely
-> > > insufficient to reach unallocated memory because there are around 544
-> > > bytes past f_pmask in 'filed' (mod packing and other differences),
-> > > incorrect access of fields at higher positions of the 'filed'
-> > > structure definition can cause unexpected behavior including message
-> > > mis-classification, forwarding issues, message loss, or other.
-> >
-> > To expand on the above, because the out-of-bounds access is limited to
-> > the filed structure, the effect on message handling, etc. appears
-> > limited to the would-be attacker's own message. Unlike the more serious
-> > impact seen in rsyslog, my limited testing and code review suggests the
-> > flaw, while there, has no real security impact. Nevertheless, my patch
-> > fixes the handling of malformed PRI parts.
->
-> What about the DoS impact claimed here, though? -
->
-> http://www.rsyslog.com/remote-syslog-pri-vulnerability-cve-2014-3683/
->
->  sysklogd
->  ~~~~~~~~
->  A segfault seems possible in sysklogd if a negative facility value (due
-to
->  integer overrun in facility parsing) is used. This could be used to
->  carry out a remote DoS.
->
-> If this can be used to crash syslogd, it's "real security impact", even
-> if rather limited.
->
-> Have you tried triggering this condition (getting syslogd to crash)?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I didn't try out sysklogd as I was busy enough with rsyslog BUT I can crash
-unpatched rsyslog v3 and the code path in question is extremely similar in
-those two.
+https://github.com/rackspace/jclouds/
 
-Note that a carefully crafted overflow pri may lead to a 2gb misadressing
-below f_pmask,  which most probably is outside of the address space. I
-haven't checked, though, if i can craft such a pri. But you have around
-1000 digits for trying, so I think its possible.
+So CC'ing Andrew, he's a consistent contributor, I can't file an issue
+in Github (no link to it) so posting here and CC'ing him.
 
-Mancha may have more concrete information.
+https://github.com/rackspace/jclouds/blob/master/scriptbuilder/src/main/java/org/jclouds/scriptbuilder/domain/Statements.java
 
-Rainer
->
-> Alexander
+  public static Statement extractTargzAndFlattenIntoDirectory(URI tgz,
+String dest) {
+      return new StatementList(ImmutableSet.<Statement> builder()
+            .add(exec("mkdir /tmp/$$"))
+            .add(extractTargzIntoDirectory(tgz, "/tmp/$$"))
+            .add(exec("mkdir -p " + dest))
+            .add(exec("mv /tmp/$$/*/* " + dest))
+            .add(exec("rm -rf /tmp/$$")).build());
+   }
 
+
+This is insecure, $$ == PID == predictable
+
+http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
+
+use java.io.File.createTempFile() ? some interesting info at
+http://www.veracode.com/blog/2009/01/how-boring-flaws-become-interesting/
+
+for directories there is a helpful posting at
+http://stackoverflow.com/questions/617414/create-a-temporary-directory-in-java
+
+Thanks.
+
+
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJTolCLAAoJEBYNRVNeJnmTrVYQAJ5glkD/0Ha5+F99Qj9ioNmm
+ZnO4G6TqKctfiqW/X02wMocKLMRV8q5WI/nvs71hCoK5HaVmbtNrV71wE0omHLjB
+smzFz6d8qZaTcOHdvgbSlWEGPjcVnESo0F3K0vgK2L/LtB5mgny6pHDn+c/cqrgt
+Er4n+U3oXlkon/ksW+drWpKOpmGOhn7c4fbE45ci6KnzDbbGpGHF0fZL3lSEfJR0
+0D/HQzKIAJpI7VvZU8+/d/MHasndgJoAHmUCkTBYU55Vf5eYsm+xWZ1Mt46IyAap
+crMTCHHE1GVUAexYbMxy+lohHbpl+pB/d////LzesJjByRSv87r+1oLhdwank3P9
+Fz1h3sq57JyLFQIcpm4TS7xh3TaByFGCiA5G/mR+CkuS6sZEapSkviu/x7ygmOdG
+cJKM+5CogeE1P1PWsoQ41JcSwfuWAfc5IODvkjLb3MfyoXJRaKcBVdVcdHBUK4BA
+7xcD9SbDsujxHOJLknFaO22uTtlrDS4yXJaNal6L9P7DCsSSrxG1PmmE+t5qrtYw
+HQoz+RuOMhY/2FWJqOxa7ru99rIQmxxpWgoknUlT+yYJRfoub0kpibyJLBLy2SEx
+xmdqe/i9nHCsGAworK4bEL2vLvsNBiJgdSHlzg7E5POI1tbveE12fIUmSgrgV+zO
+WjPZ/O4oOj0FVWoeyQUN
+=SUf5
+-----END PGP SIGNATURE-----
