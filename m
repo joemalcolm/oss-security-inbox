@@ -1,37 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/4
-Message-Id: <201401180207.s0I2719f002735@linus.mitre.org>
-Date: Fri, 17 Jan 2014 21:07:01 -0500 (EST)
-From: cve-assign@...re.org
-To: dkg@...thhorseman.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Fwd: [Python-modules-team] Bug#735263: python-rply: insecure use of /tmp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/7
+Message-ID: <53A281FB.4020905@redhat.com>
+Date: Thu, 19 Jun 2014 16:23:55 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: mod_wsgi group privilege dropping [was Re:  Security release for mod_wsgi (version 3.5)]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-> an insecure tempfile usage in rply
-> 
-> http://bugs.debian.org/735263
-> 
-> https://github.com/alex/rply/commit/fc9bbcd25b0b4f09bbd6339f710ad24c129d5d7c
+Could a CVE be assigned to the way mod_wsgi handles group privilege 
+dropping (logs error but continues running if group privilege dropping 
+fails):
 
-Use CVE-2014-1604.
+http://seclists.org/oss-sec/2014/q2/545
+http://seclists.org/oss-sec/2014/q2/555
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+For the off-by-one error reported by Matthew Daley:
 
-iQEcBAEBAgAGBQJS2eFKAAoJEKllVAevmvmslHkIAMQsuOlcHjs2LY/fv3KhtSII
-3Nj/uIT2Ha9h+lzIgA4fgpBEhTctrSolyJ8i4+sE2xTrXjhThZpffoeMB2Fewozw
-KBsBooOBocqSPy6gihC7MKzyU+xctJ7UYJ7zEbgUEPmCGtT+lgOWRMpO/7V5NhJ9
-2BH3LGamK1cp13k4aR6Y7sK4SwjVbnJiraNo5a2zkTDjmRRPkKzTdJuxQeT2y3xF
-G6VCqctF2e/FpC7lchPXsoF0VGnDwVWCjkiydpYVWHFqQTVFsrVa9Rz2T8inbJuC
-qaUrje7sYphml0RmB1wGISH3OZKsfSo+XhzfaQSSYvb2dUT8nflPRoDNtIK70MU=
-=ScxP
------END PGP SIGNATURE-----
+http://seclists.org/oss-sec/2014/q2/566
+
+I am not familiar enough to know whether any privilege boundaries are 
+crossed here, or if a user can influence anything.
+
+Both of these issues have been fixed in the 4.2.4 release:
+
+http://modwsgi.readthedocs.org/en/latest/release-notes/version-4.2.4.html
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Product Security
+
+On 06/18/2014 09:27 PM, Graham Dumpleton wrote:
+> Fixed and released in mod_wsgi 4.2.4. Available through the normal download locations for mod_wsgi.
+>
+> https://github.com/GrahamDumpleton/mod_wsgi/releases
+> https://pypi.python.org/pypi/mod_wsgi
+>
+> Thanks for highlighting the issues.
+>
+> Graham
+>
+> On 18/06/2014, at 8:43 PM, Graham Dumpleton <graham.dumpleton@...il.com> wrote:
+>
+>> I saw the email as it popped up in my twitter feed of all places.
+>>
+>> Am about to make a release which improves the error handling and the one off error.
+>>
+>> Graham
+>>
+>> On 18/06/2014, at 8:03 PM, Solar Designer <solar@...nwall.com> wrote:
+>>
+>>> On Wed, Jun 18, 2014 at 08:08:10PM +1200, Matthew Daley wrote:
+>>>> I may be wrong as I haven't been following this discussion entirely, but...
+>>>
+>>> I think Graham is not on oss-security.  CC added.
+>>>
+>>> Graham, please comment on the potential off-by-one bug reported by
+>>> Matthew below:
+>>>
+>>>> On Wed, Jun 18, 2014 at 12:39 AM, Graham Dumpleton
+>>>> <graham.dumpleton@...il.com> wrote:
+>>>>> This feature was added for one specific user and wouldn't be a well known feature unless people were reading change notes diligently as don't believe it is even covered in the documentation.
+>>>>>
+>>>>> Given that this code also only executes as root, the only error which could technically arise in this code for setgroups() is if the number of groups exceeded NGROUPS_MAX.
+>>>>>
+>>>>> This should not occur though as the number of groups was previously validated when the configuration was read:
+>>>>>
+>>>>>    if (groups_list) {
+>>>>>        const char *group_name = NULL;
+>>>>>        long groups_maximum = NGROUPS_MAX;
+>>>>>        const char *items = NULL;
+>>>>>
+>>>>> #ifdef _SC_NGROUPS_MAX
+>>>>>        groups_maximum = sysconf(_SC_NGROUPS_MAX);
+>>>>>        if (groups_maximum < 0)
+>>>>>            groups_maximum = NGROUPS_MAX;
+>>>>> #endif
+>>>>>        groups = (gid_t *)apr_pcalloc(cmd->pool,
+>>>>>                                      groups_maximum*sizeof(groups[0]));
+>>>>>
+>>>>>        groups[groups_count++] = gid;
+>>>>>
+>>>>>        items = groups_list;
+>>>>>        group_name = ap_getword(cmd->pool, &items, ',');
+>>>>>
+>>>>>        while (group_name && *group_name) {
+>>>>>            if (groups_count > groups_maximum)
+>>>>
+>>>> This is an off-by-one error, isn't it? As in, it should be testing for
+>>>> groups_count >= groups_maximum and not the current test.
+>>>>
+>>>>>                return "Too many supplementary groups WSGI daemon process";
+>>>>>
+>>>>>            groups[groups_count++] = ap_gname2id(group_name);
+>>>>>            group_name = ap_getword(cmd->pool, &items, ',');
+>>>>>        }
+>>>>>    }
+>>>>>
+>>>>> Thus was pre-validated input.
+>>>>
+>>>> - Matthew Daley
+>>
+>
+
