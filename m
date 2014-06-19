@@ -1,69 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/8
-Message-ID: <CAD3CanehJRwbSa16OxyBwrc3zD3BEwbfjpCH5tofnc3swYdbXg@mail.gmail.com>
-Date: Sat, 18 Jan 2014 22:52:08 +1300
-From: Matthew Daley <mattd@...fuzz.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/2
+Message-ID: <CAFRnB2VfPuRtWxy6VKbhi=VO8Trb=yqq-CR=wg+YZCe+SgYt3w@mail.gmail.com>
+Date: Wed, 18 Jun 2014 19:56:43 -0700
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE requests / advisory: cxxtools <= 2.2, Tntnet <= 2.2
+Cc: andrew@...l.org
+Subject: Re: TMP flaw in rackspace jclouds?
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jan 18, 2014 at 10:46 PM, Henri Salo <henri@...v.fi> wrote:
-> On Sat, Jan 18, 2014 at 02:43:23PM +1300, Matthew Daley wrote:
->> Hi,
->>
->> I'd like to request CVE IDs for these 2 issues. They were found in
->> software from the Tntnet Project (www.tntnet.org), which develop
->> Tntnet, an open-source web server for C++ web applications.
->>
->> This is the first such request and the issues are (now) public; this
->> message serves as an advisory as well.
->>
->>
->> * Issue #1
->>
->> Affected software: cxxtools
->> Description: By sending a crafted HTTP query parameter containing two
->> percent signs in a row, URL parsing would enter an infinite recursive
->> loop, leading to a crash. This allows a remote attacker to DOS the
->> server.
->> Affected versions: current releases (<= 2.2)
->> Fixed in version: 2.2.1
->> Fix: https://github.com/maekitalo/cxxtools/commit/142bb2589dc184709857c08c1e10570947c444e3
->> Release notes: http://www.tntnet.org/download/cxxtools-2.2.1/Releasenotes-2.2.1.markdown
->> Reported by: Julian Wiesener
->>
->>
->> * Issue #2
->>
->> Affected software: Tntnet
->> Description: By sending a crafted HTTP request that uses "\n" to end
->> its headers instead of the expected "\r\n", it is possible that
->> headers from a previous unrelated request will seemingly be appended
->> to the crafted request (due to a missing null termination). This
->> allows a remote attacker to use sensitive headers from other users'
->> requests in their own requests, such as cookies or HTTP authentication
->> credentials.
->> Affected versions: current releases  (<= 2.2)
->> Fixed in version: 2.2.1
->> Fix: https://github.com/maekitalo/tntnet/commit/9bd3b14042e12d84f39ea9f55731705ba516f525
->> and https://github.com/maekitalo/tntnet/commit/9d1a859e28b78bfbf769689454b529ac7709dee4
->> Release notes: http://www.tntnet.org/download/tntnet-2.2.1/Releasenotes-2.2.1.markdown
->> Reported by: Matthew Daley
->>
->> Please let me know if you need any further information.
->>
->> Thanks,
->>
->> - Matthew Daley
+I'm a Rackspace employee and I've reached out several co-workers who work
+on JClouds for us.
+
+Alex
+
+
+On Wed, Jun 18, 2014 at 7:52 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
-> Just a small note for assigner. These were fixed last year so should get 2013
-> CVE IDs if I'm correct.
-
-Sorry, I forgot to mention that. Yes, they were both reported and
-fixed (in master, at least) in 2013.
-
-- Matthew
-
+> https://github.com/rackspace/jclouds/
 >
-> ---
-> Henri Salo
+> So CC'ing Andrew, he's a consistent contributor, I can't file an issue
+> in Github (no link to it) so posting here and CC'ing him.
+>
+>
+> https://github.com/rackspace/jclouds/blob/master/scriptbuilder/src/main/java/org/jclouds/scriptbuilder/domain/Statements.java
+>
+>   public static Statement extractTargzAndFlattenIntoDirectory(URI tgz,
+> String dest) {
+>       return new StatementList(ImmutableSet.<Statement> builder()
+>             .add(exec("mkdir /tmp/$$"))
+>             .add(extractTargzIntoDirectory(tgz, "/tmp/$$"))
+>             .add(exec("mkdir -p " + dest))
+>             .add(exec("mv /tmp/$$/*/* " + dest))
+>             .add(exec("rm -rf /tmp/$$")).build());
+>    }
+>
+>
+> This is insecure, $$ == PID == predictable
+>
+> http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
+>
+> use java.io.File.createTempFile() ? some interesting info at
+> http://www.veracode.com/blog/2009/01/how-boring-flaws-become-interesting/
+>
+> for directories there is a helpful posting at
+>
+> http://stackoverflow.com/questions/617414/create-a-temporary-directory-in-java
+>
+> Thanks.
+>
+>
+> - --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+> Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+>
+> iQIcBAEBAgAGBQJTolCLAAoJEBYNRVNeJnmTrVYQAJ5glkD/0Ha5+F99Qj9ioNmm
+> ZnO4G6TqKctfiqW/X02wMocKLMRV8q5WI/nvs71hCoK5HaVmbtNrV71wE0omHLjB
+> smzFz6d8qZaTcOHdvgbSlWEGPjcVnESo0F3K0vgK2L/LtB5mgny6pHDn+c/cqrgt
+> Er4n+U3oXlkon/ksW+drWpKOpmGOhn7c4fbE45ci6KnzDbbGpGHF0fZL3lSEfJR0
+> 0D/HQzKIAJpI7VvZU8+/d/MHasndgJoAHmUCkTBYU55Vf5eYsm+xWZ1Mt46IyAap
+> crMTCHHE1GVUAexYbMxy+lohHbpl+pB/d////LzesJjByRSv87r+1oLhdwank3P9
+> Fz1h3sq57JyLFQIcpm4TS7xh3TaByFGCiA5G/mR+CkuS6sZEapSkviu/x7ygmOdG
+> cJKM+5CogeE1P1PWsoQ41JcSwfuWAfc5IODvkjLb3MfyoXJRaKcBVdVcdHBUK4BA
+> 7xcD9SbDsujxHOJLknFaO22uTtlrDS4yXJaNal6L9P7DCsSSrxG1PmmE+t5qrtYw
+> HQoz+RuOMhY/2FWJqOxa7ru99rIQmxxpWgoknUlT+yYJRfoub0kpibyJLBLy2SEx
+> xmdqe/i9nHCsGAworK4bEL2vLvsNBiJgdSHlzg7E5POI1tbveE12fIUmSgrgV+zO
+> WjPZ/O4oOj0FVWoeyQUN
+> =SUf5
+> -----END PGP SIGNATURE-----
+>
+
+
+
+-- 
+"I disapprove of what you say, but I will defend to the death your right to
+say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+"The people's good is the highest law." -- Cicero
+GPG Key fingerprint: 125F 5C67 DFE9 4084
+
