@@ -1,32 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/17
-Message-ID: <20140606142703.GA9610@inutil.org>
-Date: Fri, 6 Jun 2014 16:27:03 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: possible miniupnpc buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/12
+Message-Id: <201406191709.s5JH8qMh018449@linus.mitre.org>
+Date: Thu, 19 Jun 2014 13:08:52 -0400 (EDT)
+From: cve-assign@...re.org
+To: jamie@...onical.com, thoger@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: cups-browsed remote exploit
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 30, 2014 at 04:45:26PM +1000, Murray McAllister wrote:
-> Good morning,
-> 
-> It was pointed out in
-> https://bugzilla.redhat.com/show_bug.cgi?id=1085618 that miniupnpc
-> version 1.9 fixes a possible buffer overflow:
-> 
-> https://github.com/miniupnp/miniupnp/commit/3a87aa2f10bd7f1408e1849bdb59c41dd63a9fe9
-> 
-> I am not familiar with the code but it may be just a crash, with an
-> invalid read here (on line 131):
-> 
-> 129                         /* parse header lines */
-> 130                         for(i = 0; i < endofheaders - 1; i++) {
-> 131                                 if(colon <= linestart &&
-> header_buf[i]==':')
-> 
-> Can a CVE be assigned if one has not been already?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-This seems to have fallen through the cracks.
+The vulnerability that remains in cups-filters 1.0.51 (in the
+generate_local_queue function, the input sanitization also needs to be
+used for the host variable, but wasn't used for that) is assigned
+CVE-2014-4336. This is fixed in cups-filters 1.0.53. This is the
+vulnerability that exists because of an incomplete fix for
+CVE-2014-2707.
 
-Cheers,
-        Moritz
+The second vulnerability addressed in cups-filters 1.0.53 (OOB
+accesses in the process_browse_data function when reading the packet
+variable, leading to a crash after a remote attack) is assigned
+CVE-2014-4337.
+
+For the third vulnerability addressed in cups-filters 1.0.53:
+
+> - cups-browsed: SECURITY FIX: Fix on usage of the
+>   "BrowseAllow" directive in cups-browsed.conf. Before, if the
+>   argument of a "BrowseAllow" directive is not understood it
+>   is treated as the directive not having been there, allowing
+>   any host if this was the only "BrowseAllow" directive. Now
+>   we treat this as a directive which no host can fulfill, not
+>   allowing any host if it was the only one.
+
+the vendor is announcing it as a security fix, so it is assigned
+CVE-2014-4338. It also seems likely that the previous behavior was
+actually an implementation error. (Apparently, this only allows
+attacks against systems for which the administrator created a
+malformed configuration file. A vendor could instead choose to have an
+explicit security policy that the product's behavior is undefined in
+the case of a malformed configuration file.)
+
+Two additional notes:
+
+> This issue was reported as fixed in 1.0.51:
+> http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7188
+
+The code fix itself seems to be
+
+  http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7189
+
+instead. Also, https://bugzilla.novell.com/show_bug.cgi?id=871327
+mentions CVE-2014-2707, but the attachment in 871327 is apparently
+only the CVE-2014-4336 and CVE-2014-4337 patch, not the CVE-2014-2707
+patch. However, 871327 isn't directly trying to define what
+CVE-2014-2707 means, so this can be considered a minor anomaly.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJToxitAAoJEKllVAevmvmsR4IH/0XLDQd6TouMqkwHjj86tv8D
+mn3CVcZovqZRQIWBRYj4OlH5sgPyzTGrHR1KVw7FLfe81T3Qwj6eMptZD7qXXbRP
+ABkTEf+N2HP/7BAh46kCZhpgSvS7QSa9UX41thh1WmBSBSd2cdL2wvdcmkaeapVZ
+Ip2nT21w/ou1B3yS8NYlVwiAXWj84GclNTbLY31bKVSTd3KSKDKsHa4kCkfEGAlG
+4VKGioh4Y1aiBOxnYjerAxBg+nL3Vhq+mH21hTTfPifpg6vKBmtqVMuXuOVQ60Kb
+uE7MT8HA+SPGSE+84s7fjUVvx95M0j+MQHUEr/Y+QLM2j6qj96/xy1BED6ZxkwA=
+=1ezq
+-----END PGP SIGNATURE-----
