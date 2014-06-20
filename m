@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/11/2
-Message-ID: <CALi+ztG62mH0A0=wgUCzxjpkAcDSvEQBiBscHLCDzNtFf-LfnA@mail.gmail.com>
-Date: Mon, 10 Mar 2014 21:05:47 -0700
-From: Chris Palmer <snackypants@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/1
+Message-ID: <CALCETrVuwhQ1CST8dbaUYTDFtOn36Nts-SzPV+Uwz=qiXoiTtg@mail.gmail.com>
+Date: Thu, 19 Jun 2014 18:26:38 -0700
+From: Andy Lutomirski <luto@...capital.net>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: When is broken crypto a vulnerability?
+Subject: CVE request: Another Linux syscall auditing bug
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 10, 2014 at 2:48 PM, Hanno Böck <hanno@...eck.de> wrote:
+On a 32-bit x86 kernel with syscall auditing enabled, syscall(1000)
+will cause an OOPS.  This problem goes at least as far back as Linux
+3.11 and appears to be present in Linux 3.15 as well.  I suspect that
+this bug is very old.
 
-> It ultimately comes down to this: Do we consider "encryption" to be a
-> term that means "secure encryption" (something like AES) or would we
-> also consider a vigenere cipher "encryption"?
-> I'd vote that calling a well-known broken cipher "encryption" is a
-> misrepresentation and a possible risk.
+In order to see this bug, you'll need syscall auditing on (auditctl -e
+1 will do that) and you'll need 'sep' in flags in /proc/cpuinfo.  That
+means that qemu -cpu qemu64 will not be exposed to this bug, but qemu
+-cpu host will on any recent CPU.
 
-We know that people want (at least) data confidentiality when they opt
-to use an "encryption" feature. Why play word games? A failure to help
-people understand what is available and what is not available leads to
-vulnerabilities. We can no longer pretend that UX is unrelated to
-technical security concerns.
+Mitigations include:
+ - Running under ptrace or strace.
+ - Using any seccomp filter at all (phew!)
+ - Turning off SEP (which is a big slowdown on all syscalls)
+ - auditctl -a task,never
 
+I'd be rather surprised if this can be used for anything other than
+DoS, although the same underlying bug could potentially have more
+serious consequences.
 
--- 
-http://noncombatant.org/
+This bug was found (inadvertently, I presume) by Toralf Förster.  The
+patch here:
+
+http://lkml.kernel.org/g/CALCETrW7U4AHG-a9oPbOt31z3wgzhjSu8b+yGpdM4+vNinKgsA@mail.gmail.com
+
+is reported to fix the bug, but it should not be considered to be well-tested.
+
+--Andy
