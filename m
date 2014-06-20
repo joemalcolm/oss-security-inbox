@@ -1,31 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/2
-Message-ID: <3230301C09DEF9499B442BBE162C5E48257574C5@SESTOEX04.enea.se>
-Date: Fri, 3 Oct 2014 09:20:11 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "Maxin John" <Maxin.John@...a.com>, Catalin Popeanga <Catalin.Popeanga@...a.com>
-CC: Shawn <citypw@...il.com>
-Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/8
+Message-ID: <53A40646.5000204@redhat.com>
+Date: Fri, 20 Jun 2014 06:00:38 -0400
+From: Daniel J Walsh <dwalsh@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: docker VMM breakout
 Content-Type: text/plain; charset=utf-8
 
 
-> That script is a weird mixture of tests that implicitly pay no attention to
-> Florian's patch, and therefore do not really demonstrate any security risk:
+On 06/19/2014 01:38 AM, gremlin@...mlin.ru wrote:
+> On 18-Jun-2014 10:05:35 -0400, Daniel J Walsh wrote:
+>
+>  > CONTAINERS DO NOT CONTAIN. Root inside the container == Root
+>  > outside the container.
+>
+> Really? :-)
+>
+>  > This is true in both libvirt-sandbox/libvirt-lxc and docker.
+>
+> Have you checked that for anything else?
+>
+>  > We have a long way to go before we can run anything within a
+>  > container without this rule. User Namespace, SELinux or other
+>  > MAC are all required to get us near the point where Container
+>  > Contain.
+>
+> Have you ever seen OpenVZ?
+I am talking about standard Linux Kernel.  I have not played with OpenVZ
+so I can not comment on its security.
+>
+>  > People who run services within a container should continue to
+>  > drop privs in the services and run them as UID!=0
+>
+> Look at this trivial code example...
+>
+> Classic kernel:
+>
+> if (!uid)
+> {
+> 	// perform privileged operation here
+> }
+>
+> Containers-enabled kernel:
+>
+> if ( !uid && !container_id )	// container_id: 0 for host
+> {
+> 	// perform privileged operation here
+> }
+>
+> How would you bypass this check to get privileged access to anything
+> outside the container?
+>
+>
+My point being that any process on a Linux System that has lots of linux
+capabilities (DAC*, SYS_ADMIN, and many others) can not be contained. 
 
-Thanks Michal, good to know :)
-
-You have a new patch (http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-029), I am sure many wonders what CVE is this for? 
-This looks to be related to CVE-2014-7186 ("here document" http://tldp.org/LDP/abs/html/here-docs.html) but the correction is in make_cmd.c
-Is this a new vulnerability?
-
-So there isn't still any specific patch for CVE-2014-6277 and CVE-2014-6278  according to your post   (http://www.openwall.com/lists/oss-security/2014/10/02/28)?
-
-> * CVE-2014-6277 - uninitialized memory issue, almost certainly RCE
-> found by me. No specific patch yet.
-
-> * CVE-2014-6278 - command injection RCE found by me. No specific patch yet.
-
-But Florian's unofficial patch or its upstream version (bash43-027 & co)  mitigates *ALL* these six so far known CVE, right?
-
-Thanks 
-/Sona
+I think it is premature to treat breakouts against Docker Containers
+with CVE's because of this.  If people stop making claims about the
+security of a docker process with privs being isolated from the host
+system, we can prevent the flood of CVE's, that are likely to come.
