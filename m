@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/32
-Message-ID: <20141120090010.18d6c6b2@127>
-Date: Thu, 20 Nov 2014 09:00:10 -0800
-From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/4
+Message-ID: <53A3CAB6.2080107@redhat.com>
+Date: Fri, 20 Jun 2014 15:46:30 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Location of OS security audit reports
+CC: 752092@...s.debian.org
+Subject: CVE request: softhsm, softhsm-keyconv tool creates world-readable files
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 20 Nov 2014 15:17:55 +0300
-Alexander Cherepanov <cherepan@...me.ru> wrote:
+Good morning,
 
-> On 2014-11-17 06:17, M.T. Roebuck wrote:
-> > I haven't had any success yet in finding security audit reports for
-> > any *nix OS
-> 
-> It seems such info was supposed to be linked from here:
-> 
-> http://oss-security.openwall.org/wiki/code-reviews
-> 
-> But there is not much data there.
+As reported in
 
-Writing code is more fun than documenting code?
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752092
 
+and
+
+https://issues.opendnssec.org/browse/SUPPORT-136
+
+softhsm-keyconv tool creates world-readable files. Based on the 
+description of the tool at [1], my uneducated guess is it would allow an 
+unprivileged user to control (if the output file is created in a 
+directory they can access) a DNS server via rndc.
+
+Could a CVE be assigned if one has not been already?
+
+The Debian bug also notes a similar issue was fixed in ldns - I've asked 
+for more details about that in the bug).
+
+[1] http://manpages.ubuntu.com/manpages/precise/man1/softhsm-keyconv.1.html
+
+Cheers,
+
+--
+Murray McAllister / Red Hat Product Security
