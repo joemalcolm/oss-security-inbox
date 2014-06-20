@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/09/2
-Message-Id: <201403090317.s293Hne0026909@linus.mitre.org>
-Date: Sat, 8 Mar 2014 22:17:49 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/10
+Message-Id: <201406201517.s5KFHQOY005907@linus.mitre.org>
+Date: Fri, 20 Jun 2014 11:17:26 -0400 (EDT)
 From: cve-assign@...re.org
-To: seth.arnold@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ntu.com
-Subject: Re: CVE Request: thermald
+To: luto@...capital.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Another Linux syscall auditing bug
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> I discovered that the thermald temperature management daemon opens a file
-> with predictable filename in /tmp unsafely. Please assign a CVE number for
-> this issue:
-> 
-> https://github.com/01org/thermal_daemon/blob/master/src/android_main.cpp#L117
+> On a 32-bit x86 kernel with syscall auditing enabled, syscall(1000)
+> will cause an OOPS.
 
-> can be used to write the process's pid to a file of the attacker's
-> choosing.
+> http://article.gmane.org/gmane.linux.kernel/1726110
 
-Use CVE-2014-2312.
+> It appears that entry_32.S is missing any call to the audit exit hook
+> on the badsys path.
+
+Use CVE-2014-4508.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -30,11 +29,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTG9rOAAoJEKllVAevmvmspGEIAI+W32s9bbR1inTAjNLYepza
-+1Kv1d1ZslV2Xlu0uFTF9dXCLJyRG9l8NPNmen1eLrMQfVROfn3mtPFotpXWFxnR
-0kAwNnxd33x1UVOjb9qFkn6aYHn6eE4gWCQw3MAcfJCyEtRFkFHEqeze7uCmeVml
-QIBfESKvigTTvZ/IcZIYuNIB3t0Vs1FNN8FdvOwPChTMJEg8jBrAoorFuznZWyLh
-rZPrAeEqe0h8db0do66+shTXEvWIA6UgRM/ehbC2HWUVs9pWKmXIdtmcVn940gbg
-FFT3zsFsWCoxJGhNkDjJyj3uobHnG3AaQ1+d9suWbwb6Pb6Y9MjkWTSKQaMyxXg=
-=f1jy
+iQEcBAEBAgAGBQJTpFAnAAoJEKllVAevmvmscoMH/jDdyfavkCGKGQG5PVlzlQwa
+GkWdq8b4gHOVWSTonKZ9LqRA/NJmDwC7whOsPUX+aALF0jgmcvLAex2YTsscuXOX
+6oE9XbFQ7spvV3mYcxammKu8NnxBc0n4JHpjR7Plhmus9dODnHHCWOMg4G+kwIo9
+/GSzyuj9h/P/p37/01QmFqharNEPbzPyJ3JSoI8xgcRBe7Jwv8oaYn4XS8tmF8P/
+xNGy5t6MXzGGL3ASfNFIzj3ZfcRz8BF7Vp/vJ76lWo0PrIz5jE0GnntgZiJ4mndA
+JV0aqkpfKhfb5xbfVCdkfIzMBkY4bcVWwy33Qx8b74D4w3sOp9e6jNA3F5xYEZg=
+=yLEq
 -----END PGP SIGNATURE-----
