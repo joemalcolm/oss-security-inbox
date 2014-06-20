@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/2
-Message-ID: <Pine.LNX.4.64.1412171944070.31164@beijing.mitre.org>
-Date: Wed, 17 Dec 2014 19:45:08 -0500 (EST)
-From: cve-assign@...re.org
-To: Sean Amoss <ackle@...too.org>
-cc: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org, security@...too.org
-Subject: Re: CVE Request: ZNC NULL Pointer Dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/3
+Message-ID: <53A3C917.10002@redhat.com>
+Date: Fri, 20 Jun 2014 15:39:35 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: possible CVE request: opendnssec and softhsm permission issue
 Content-Type: text/plain; charset=utf-8
 
+Good morning,
 
-On Sat, 13 Dec 2014, Sean Amoss wrote:
+Not sure if this requires a CVE. 
+https://bugzilla.redhat.com/show_bug.cgi?id=1098188 notes some 
+permission errors for files in /var/softhsm/ and /var/opendnssec/
 
-> Hello,
->
-> It looks like the following issue has not received a CVE identifier as
-> of yet:
->
-> A NULL pointer dereference has been found in the
-> "CWebAdminMod::ChanPage()" function in modules/webadmin.cpp.
->
-> This was reported to Gentoo [1] by means of a Secunia advisory [2],
-> which in turn referenced the upstream bug request [3].
->
->
-> [1] https://bugs.gentoo.org/show_bug.cgi?id=507794
-> [2] https://secunia.com/advisories/57795/
-> [3] https://github.com/znc/znc/issues/528
+Two notes:
 
-Yse CVE-2014-9403.
+1) after installing those packages on Fedora 20, the directory 
+permissions for those directories is mode 770 root:ods, so an 
+unprivileged user cannot go in there.
 
----
+2) the proposed fix in the Red Hat bug is about making certain files 
+owned by "ods" instead of "root". It does not mention removing read 
+permissions for other users.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+I do not see a leak here, but am not familiar with opendnssec and softhsm.
+
+It may have been filed as a security issue here due to 
+https://issues.opendnssec.org/browse/SUPPORT-136 (as noted in the bug). 
+I'll mail about that one shortly.
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Product Security
