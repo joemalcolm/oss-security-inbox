@@ -1,45 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/11
-Message-Id: <20141017191053.42C5FC50084@smtptsrv1.mitre.org>
-Date: Fri, 17 Oct 2014 15:10:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: TYPO3-EXT-SA-2014-013
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/2
+Message-ID: <5505250.3yQZm9nuEg@x2>
+Date: Thu, 19 Jun 2014 23:37:39 -0400
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Andy Lutomirski <luto@...capital.net>, Linux Audit <linux-audit@...hat.com>
+Subject: Re: CVE request: Another Linux syscall auditing bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> Can I get one 2014 CVE for following TYPO3 extension issue
-> 
-> It has been discovered that the extension "Calendar Base" (cal) is
-> susceptible to Denial of Service.
-> 
-> Affected Versions: all versions of 0.x.x, 1.0.x, 1.1.x, 1.2.x, 1.3.x, 1.4.x;
-> 1.5.8 and below of 1.5.x; 1.6.0
-> 
-> Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:N/I:N/A:C/E:POC/RL:OF/RC:C
-> 
-> User input is passed to PHP's PCRE library without validating it
-> beforehand. Depending on user input this may consume a tremendous
-> amount of system resources.
+Reminder again...please report bugs to linux-audit mail list.
 
-Use CVE-2014-8325.
+On Thursday, June 19, 2014 06:26:38 PM Andy Lutomirski wrote:
+> On a 32-bit x86 kernel with syscall auditing enabled, syscall(1000)
+> will cause an OOPS.  This problem goes at least as far back as Linux
+> 3.11 and appears to be present in Linux 3.15 as well.  I suspect that
+> this bug is very old.
+> 
+> In order to see this bug, you'll need syscall auditing on (auditctl -e
+> 1 will do that) and you'll need 'sep' in flags in /proc/cpuinfo.  That
+> means that qemu -cpu qemu64 will not be exposed to this bug, but qemu
+> -cpu host will on any recent CPU.
+> 
+> Mitigations include:
+>  - Running under ptrace or strace.
+>  - Using any seccomp filter at all (phew!)
+>  - Turning off SEP (which is a big slowdown on all syscalls)
+>  - auditctl -a task,never
+> 
+> I'd be rather surprised if this can be used for anything other than
+> DoS, although the same underlying bug could potentially have more
+> serious consequences.
+> 
+> This bug was found (inadvertently, I presume) by Toralf Förster.  The
+> patch here:
+> 
+> http://lkml.kernel.org/g/CALCETrW7U4AHG-a9oPbOt31z3wgzhjSu8b+yGpdM4+vNinKgsA
+> @mail.gmail.com
+> 
+> is reported to fix the bug, but it should not be considered to be
+> well-tested.
+> 
+> --Andy
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUQWlKAAoJEKllVAevmvmsrtcH/Rs3NVD3MTD/Ze4pOYtV//TR
-VdmlhkerVpCCXeUslctYqZJGrbawXjFXsBSx8V/WC4pipZjBG3fcLCZK0w33AdVo
-oM7voFeCoC4FXAz37+WxqPxan0nqL8qeD7vQuAfPxhZye2iKoF2Gvis1AmQl/i7C
-Nsrun0Q0obhEir4r7X0Tapzo6wNBHvw3GSllOHA38Z6rRqV4oDU4b0Tb0FMR15do
-JEqwvvd6/HRLPsEt/UxpRJm8gissMCk1v6EGQItFSMAWF749/heLaqBHYTiJCwDm
-CH7kb6fqNibex3fmhZNOdbV/7WAsYqpDiBlIyWwjVOdD4k44/hqpi27shIkkWHA=
-=yE62
------END PGP SIGNATURE-----
