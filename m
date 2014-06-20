@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/11
-Message-ID: <CACYkhxjwW_gRbh-DP+CayrH8RynVxqE_rJouynAzAVfkdcQ6PQ@mail.gmail.com>
-Date: Wed, 5 Nov 2014 16:03:44 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/5
+Message-ID: <20140620060232.GA19214@lorien.valinor.li>
+Date: Fri, 20 Jun 2014 08:02:32 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: is MD5 finally dead?
+Cc: 752092@...s.debian.org
+Subject: Re: CVE request: softhsm, softhsm-keyconv tool creates world-readable files
 Content-Type: text/plain; charset=utf-8
 
-On 5 November 2014 15:45, Alex Gaynor <alex.gaynor@...il.com> wrote:
-> As far as I can tell, HMAC doesn't actually require pre-image resistance,
-> it requires that the compression function used by the has be a PRF -- or at
-> least that's what the HMAC paper says. Are these two formulations
-> equivalent?
+Hello Murray,
 
-HMAC fits in the unknown-prefix category when used correctly.
+(keeping the Cc on the bureport to answer this also there):
 
-Not sure about general proofs, but the current collision attacks on MD5 won't
-work without knowing the IHV ahead of time, and if you know the HMAC key
-you don't need collisions.
+On Fri, Jun 20, 2014 at 03:46:30PM +1000, Murray McAllister wrote:
+[...]
+> The Debian bug also notes a similar issue was fixed in ldns - I've
+> asked for more details about that in the bug).
 
->> In the case of an unknown-prefix, HMAC[1] or anything requiring a
->> preimage, it's
->> just hardening to use swap out MD5 (and SHA-1).
->>
->> [1] Unless you accidentally swap the key and data fields!
+This should be CVE-2014-3209 (dns-keygen generates keys with world
+readable permissions ).
 
-And to elaborate - if you swap the key and data fields, you can use a normal
-md5 collision, then XOR against opad.
+Regards,
+Salvatore
