@@ -1,25 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/27
-Message-ID: <20140626223521.4e90802a@hboeck.de>
-Date: Thu, 26 Jun 2014 22:35:21 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, "Don A. Bailey" <donb@...uritymouse.com>
-Subject: Re: LMS-2014-06-16-6: LZ4 Core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/6
+Message-ID: <53A3D172.3040707@redhat.com>
+Date: Fri, 20 Jun 2014 16:15:14 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: 752092@...s.debian.org, carnil@...ian.org
+Subject: Re: CVE request: softhsm, softhsm-keyconv tool creates world-readable files
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 26 Jun 2014 12:58:37 -0600
-"Don A. Bailey" <donb@...uritymouse.com> wrote:
+On 06/20/2014 04:02 PM, Salvatore Bonaccorso wrote:
+> Hello Murray,
+> 
+> (keeping the Cc on the bureport to answer this also there):
+> 
+> On Fri, Jun 20, 2014 at 03:46:30PM +1000, Murray McAllister wrote:
+> [...]
+>> The Debian bug also notes a similar issue was fixed in ldns - I've
+>> asked for more details about that in the bug).
+> 
+> This should be CVE-2014-3209 (dns-keygen generates keys with world
+> readable permissions ).
+> 
+> Regards,
+> Salvatore
+> 
 
-> CVE ID: CVE-2014-4611
+Thanks!
 
-Is it intended that the lz4 upstream code and the linux kernel lz4
-issue got the same CVE?? Or is this a mistake?
+Regarding the rndc impact I noted, it seems the softhsm-keyconv is
+dnssec related, not the type of keys you would use in a rndc.key file...
 
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+--
+Murray McAllister / Red Hat Product Security
