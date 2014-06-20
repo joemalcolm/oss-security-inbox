@@ -1,51 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/13
-Message-ID: <Pine.LNX.4.64.1412051055540.25424@beijing.mitre.org>
-Date: Fri, 5 Dec 2014 10:56:38 -0500 (EST)
-From: cve-assign@...re.org
-To: Paul Richards <paul@...tisforge.org>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request: Multiple XSS vulnerabilities in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/9
+Message-ID: <CANyjYNbtJ4feGxVMWXBL6o48jqWqc7ap+irANpa_5wV40JXmWw@mail.gmail.com>
+Date: Fri, 20 Jun 2014 12:05:25 +0200
+From: Ignasi Barrera <nacx@...che.org>
+To: Ignasi Barrera <nacx@...che.org>
+Cc: private@...ouds.apache.org, Kurt Seifried <kseifried@...hat.com>,  oss-security@...ts.openwall.com
+Subject: Re: TMP flaw in rackspace jclouds?
 Content-Type: text/plain; charset=utf-8
 
+How did you generate the patch, BTW? Did you use git format-patch?
+I'm getting this error when applying it with a "git am": Patch format
+detection failed
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Anyway, I've been able to apply it with:
+git apply --whitespace=fix
 
+
+On 20 June 2014 09:03, Ignasi Barrera <nacx@...che.org> wrote:
+> Thanks Andrew! I'll test your patch in a while and give feedback.
 >
->Issue 17816 regarding copy fields -
-
-We assume that you meant to say "Issue 17876" here.
-
->"Credit: Issue was reported by Mathias Karlsson
->(http://mathiaskarlsson.me) as part of Offensive Security's bug bounty
->program [7].  It was fixed by Paul Richards."
+> El 20/06/2014 00:56, "Andrew Gaul" <gaul@...che.org> escribió:
 >
->is in correct as the issue was identified by myself initially, then
->subsequently identified (incorrectly) in the initial bug report.
-
-In this case, it is acceptable to assign a different ID to reflect the
-different research organizations, since there is not a new release
-yet.
-
-Use CVE-2014-9281 [sic] for the copy_field.php issue, originally
-incorrectly reported for test_langs.php (bug 17876).
-
-Continue to use CVE-2014-9271 for the file uploads issue (bug 17874).
-
-- ---
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEVAwUBVIHVWallVAevmvmsAQJ01Qf+M0C3nKgL1KoDG4+qU6MGXVKmTkS3pNX9
-aNfUp2M0gGGjfw3O+SnDMPxVtxQuIVe10HTu48i5TZXL4vKvjNyGIGeuvea3nhPN
-BPLX8AYDAEc6W6I7IcpxJzb92Ht4AzucTTPIqFQDl4570wiAUtiYsjHYXGwNUmys
-9NIYvAbRkhBd+I6geEx9kNk1zWgoGA970MDxa7IGVopS/K/eOAMOajic7ZiwXDM5
-c0JZvakbGK7lntLA6v6i3K/AF2Dc4rTIp6tinJ20WzCVESnnqQRbApICAgVOduu1
-wSfwdouDBqxYtTa/O0U0JrjLPqAnFX2HFx9y45aEMOAF6kmK58fXxw==
-=VxUZ
------END PGP SIGNATURE-----
+>> [bcc: jclouds private list]
+>>
+>> I attached a patch which changes ScriptBuilder to use the "mktemp -d"
+>> approach that Ignasi suggested.  I verified this against the ec2 live
+>> tests, specifically testCreateAndRunAService, as well as the
+>> scriptbuilder unit tests.  I encourage someone more familiar with
+>> compute to test this since I have limited experience with those
+>> services.
+>>
+>> The code runs on the target node as Ignasi describes and thus it poses
+>> no risk to the master jclouds application.  However, users could run
+>> untrusted software on their target nodes and we should address this in
+>> the next minor release.  I estimate a low severity to this issue and
+>> prefer to continue discussion on the public bug tracker.  Does anyone
+>> have a different understanding of this flaw?
+>>
+>> On Thu, Jun 19, 2014 at 09:32:25AM +0200, Ignasi Barrera wrote:
+>> > Take into account that the "statement" list will be rendered to a
+>> > String,
+>> > composed with other script fragments into a final bash script, uploaded
+>> > to
+>> > a node, and executed there locally as a bash script.
+>> >
+>> > That code won't be executed in the machine running jclouds, but as a
+>> > bash
+>> > script in the provisioned node, so the name of the temporal directory
+>> > should better be generated in the script itself. A good approach would
+>> > be
+>> > to directly use the "mktemp"command.
+>> > El 19/06/2014 06:36, "Andrew Gaul" <gaul@...che.org> escribió:
+>> >
+>> > > Kurt, thank you for bringing this flaw to my attention and I will
+>> > > address it tomorrow.  I do not have a security background; can you
+>> > > estimate the severity and whether we can continue discussion on the
+>> > > public bug tracker?  For now I have bcc the Apache jclouds private
+>> > > mailing list.  Also note that jclouds is an Apache project not a
+>> > > Rackspace project and the canonical URLs are:
+>> > >
+>> > > https://github.com/jclouds/jclouds
+>> > > https://issues.apache.org/jira/browse/JCLOUDS
+>> > >
+>> > > On Wed, Jun 18, 2014 at 08:52:59PM -0600, Kurt Seifried wrote:
+>> > > > -----BEGIN PGP SIGNED MESSAGE-----
+>> > > > Hash: SHA1
+>> > > >
+>> > > > https://github.com/rackspace/jclouds/
+>> > > >
+>> > > > So CC'ing Andrew, he's a consistent contributor, I can't file an
+>> > > > issue
+>> > > > in Github (no link to it) so posting here and CC'ing him.
+>> > > >
+>> > > >
+>> > >
+>> > > https://github.com/rackspace/jclouds/blob/master/scriptbuilder/src/main/java/org/jclouds/scriptbuilder/domain/Statements.java
+>> > > >
+>> > > >   public static Statement extractTargzAndFlattenIntoDirectory(URI
+>> > > > tgz,
+>> > > > String dest) {
+>> > > >       return new StatementList(ImmutableSet.<Statement> builder()
+>> > > >             .add(exec("mkdir /tmp/$$"))
+>> > > >             .add(extractTargzIntoDirectory(tgz, "/tmp/$$"))
+>> > > >             .add(exec("mkdir -p " + dest))
+>> > > >             .add(exec("mv /tmp/$$/*/* " + dest))
+>> > > >             .add(exec("rm -rf /tmp/$$")).build());
+>> > > >    }
+>> > > >
+>> > > >
+>> > > > This is insecure, $$ == PID == predictable
+>> > > >
+>> > > >
+>> > > > http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
+>> > > >
+>> > > > use java.io.File.createTempFile() ? some interesting info at
+>> > > >
+>> > >
+>> > > http://www.veracode.com/blog/2009/01/how-boring-flaws-become-interesting/
+>> > > >
+>> > > > for directories there is a helpful posting at
+>> > > >
+>> > >
+>> > > http://stackoverflow.com/questions/617414/create-a-temporary-directory-in-java
+>> > > >
+>> > > > Thanks.
+>> > > >
+>> > > >
+>> > > > - --
+>> > > > Kurt Seifried -- Red Hat -- Product Security -- Cloud
+>> > > > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>> > > > -----BEGIN PGP SIGNATURE-----
+>> > > > Version: GnuPG v1
+>> > > > Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+>> > > >
+>> > > > iQIcBAEBAgAGBQJTolCLAAoJEBYNRVNeJnmTrVYQAJ5glkD/0Ha5+F99Qj9ioNmm
+>> > > > ZnO4G6TqKctfiqW/X02wMocKLMRV8q5WI/nvs71hCoK5HaVmbtNrV71wE0omHLjB
+>> > > > smzFz6d8qZaTcOHdvgbSlWEGPjcVnESo0F3K0vgK2L/LtB5mgny6pHDn+c/cqrgt
+>> > > > Er4n+U3oXlkon/ksW+drWpKOpmGOhn7c4fbE45ci6KnzDbbGpGHF0fZL3lSEfJR0
+>> > > > 0D/HQzKIAJpI7VvZU8+/d/MHasndgJoAHmUCkTBYU55Vf5eYsm+xWZ1Mt46IyAap
+>> > > > crMTCHHE1GVUAexYbMxy+lohHbpl+pB/d////LzesJjByRSv87r+1oLhdwank3P9
+>> > > > Fz1h3sq57JyLFQIcpm4TS7xh3TaByFGCiA5G/mR+CkuS6sZEapSkviu/x7ygmOdG
+>> > > > cJKM+5CogeE1P1PWsoQ41JcSwfuWAfc5IODvkjLb3MfyoXJRaKcBVdVcdHBUK4BA
+>> > > > 7xcD9SbDsujxHOJLknFaO22uTtlrDS4yXJaNal6L9P7DCsSSrxG1PmmE+t5qrtYw
+>> > > > HQoz+RuOMhY/2FWJqOxa7ru99rIQmxxpWgoknUlT+yYJRfoub0kpibyJLBLy2SEx
+>> > > > xmdqe/i9nHCsGAworK4bEL2vLvsNBiJgdSHlzg7E5POI1tbveE12fIUmSgrgV+zO
+>> > > > WjPZ/O4oOj0FVWoeyQUN
+>> > > > =SUf5
+>> > > > -----END PGP SIGNATURE-----
+>> > >
+>> > > --
+>> > > Andrew Gaul
+>> > > http://gaul.org/
+>> > >
+>>
+>> --
+>> Andrew Gaul
+>> http://gaul.org/
