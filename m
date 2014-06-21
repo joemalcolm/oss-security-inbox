@@ -1,58 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/16/3
-Message-Id: <20140816061241.DF7C91F05FA@smtpksrv1.mitre.org>
-Date: Sat, 16 Aug 2014 02:12:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Plack::App::File does not prune trailing slashes: possible code exposure / information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/21/1
+Message-ID: <1403356583.1710.8.camel@scapa>
+Date: Sat, 21 Jun 2014 15:16:23 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-sec <oss-security@...ts.openwall.com>
+Cc: team@...urity.debian.org, Eduard Bloch <edi@....de>
+Subject: Re: XSS vulnerability in apt-cacher-ng
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
->    - Plack::App::File would previously strip trailing slashes off
->      provided paths. This in combination with the common pattern
->      of serving files with Plack::Middleware::Static could allow
->      an attacker to bypass a whitelist of generated files
+On ven., 2014-06-20 at 12:06 +0200, Eduard Bloch wrote:
+> Hello Security Team,
 > 
-> http://api.metacpan.org/source/MIYAGAWA/Plack-1.0031/Changes
-> https://github.com/plack/Plack/issues/405
+> I am sorry to report that one of my packages (with upstream hat on) has
+> an XSS attack vulnerability. The way for the attacker to exploit this is
+> to redirect the user's browser in a LAN to apt-cacher-ng server (which
+> address the attacker has to know) with a manipulated URL. Since the
+> location and TCP port of the cacher server are configurable, it's IMHO
+> not totally easy to find but is still a good attack vector with insider
+> knowledge.
 
-The underlying issue is that Plack::App::File allowed a trailing slash
-in a pathname referring to a plain file. There is at least one
-specification suggesting that this is wrong:
+> 
+> Here is the proposed fix:
+> 
+> http://anonscm.debian.org/gitweb/?p=apt-cacher-ng/apt-cacher-ng.git;a=commitdiff;h=6f08e6a3995d1bed4e837889a3945b6dc650f6ad
+> 
+> It simply doesn't show the path in the browser output, because it has no
+> value there. It only needs to be in the http status line in order to be
+> displayed in apt-get's messages, there is no need for users to visit
+> such an URL and see that message.
+> 
+Hi,
 
-  http://pubs.opengroup.org/onlinepubs/9699919799/xrat/V4_xbd_chap04.html#tag_21_04_12
+it seems there is an XSS vulnerability present in apt-cacher-ng.
+According to above text the issue looks minime, but I guess it still can
+do with a CVE, could one be allocated?
 
-  Pathnames that end with one or more trailing <slash> characters must
-  refer to directory paths. Earlier versions of this standard were not
-  specific about the distinction between trailing <slash> characters
-  on files and directories, and both were permitted.
+Regards,
+-- 
+Yves-Alexis
 
-Without going into the question of whether Plack is responsible for
-following that specification, it seems that the vendor identified
-arguably wrong behavior that had a security impact, and fixed it. Use
-CVE-2014-5269.
-
-(In some related but non-identical situations -- for example, if a
-product decided to reject a valid pathname such as /etc//// as a
-possibly misguided attempt at security hardening -- there wouldn't be
-a CVE ID.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT7vXRAAoJEKllVAevmvmsybAIAISVSn6yyAhD842i4/pVgJ5t
-86heLybkqoFgCYlmWXDacwX6stqK8/ndhD1+mhUCMXNs1iqsPJ43xBT+RF1gOVOw
-5AoYOIiqyWF0rLYdkgAaOYxNxDIHhb+iZswEyLi3RNKAAZESunDO5RzIhxn492d/
-NoCZEzT/FWLju0skoV8+YTN5UrAxPZspVD7tRJ99tFQTsmDj72qMRUqfrey59W0e
-O4jtU+7laffKTPFVlHzO7X2BuAm9739mObaicvgH3CjCdOV3Zg9jp2zzpvfdMxfH
-SDzwJctY+Q4mlIGK0vv2h3ouKUKQudeVGevQzh8Epa7G/Jrp6bq7f8mVaTRLyCo=
-=e2Sd
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
