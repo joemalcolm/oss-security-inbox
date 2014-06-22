@@ -1,43 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/16/1
-Message-ID: <20140116092401.GF15194@scapa.corsac.net>
-Date: Thu, 16 Jan 2014 10:24:01 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/22/1
+Message-Id: <201406221721.s5MHLlgt003958@linus.mitre.org>
+Date: Sun, 22 Jun 2014 13:21:47 -0400 (EDT)
+From: cve-assign@...re.org
+To: corsac@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, team@...urity.debian.org, edi@....de
+Subject: Re: XSS vulnerability in apt-cacher-ng
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-On Tue, Jan 14, 2014 at 03:40:19PM +0100, rf@...eap.de wrote:
-> Hi,
+> The way for the attacker to exploit this is to redirect the user's
+> browser in a LAN to apt-cacher-ng server (which address the attacker
+> has to know) with a manipulated URL.
 > 
-> I hope this is the right place to ask for inclusion of a Qlustar contact
-> in the linux-distros list.
-> 
-> Qlustar is a Ubuntu/Debian based distro targeted at HPC/Storage/Cloud
-> clusters. We use our own kernels (typically based on vanilla) since many
-> years, but have the need to supply timely security fixes to our users. So
-> far we have to wait for other distros to come out with their
-> announcements and then start analyzing the fixes they have done. This
-> leaves us/our users with a vulnerability window that is way too large,
+> http://anonscm.debian.org/gitweb/?p=apt-cacher-ng/apt-cacher-ng.git;a=commit;h=6f08e6a3995d1bed4e837889a3945b6dc650f6ad
 
-I can't speak for Ubuntu, but you're welcome to participate in the
-Debian security effort.
+Use CVE-2014-4510.
 
-Regards,
 - -- 
-Yves-Alexis Perez
- Debian Security
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBCgAGBQJS16UuAAoJEG3bU/KmdcCljU8H/iu1m3wgUKAFyCg57qf0eDfa
-i2GhaewaC8S2wPqyZkTcFPlTMzqIqEcrpuJjCMHUnElx75389Ov/wt//PUKx/qhx
-4ydBpVnfMGMHvrDRkfit2YP72z014ib1MPxOdN5+ni25XMe/EVTGigCyAUxtFG/T
-GCWpCP3Ro5DrTYIE1dMGF/vBVnV6GtoNSJrm08a9//4Koi6iIym2wp/jdPH7xGeM
-8EmSVEJneXJ8oh7G1EuNrADTB92DwYa2CokgUuZVBJVj8j7wTVdluDjyVzS4rTYp
-VELAJsSWYcBOqn4nnDNYOfuvDalRcWOFJRZj9lQYlt2QpuistJHkUSu3oEye4mQ=
-=Wztl
+iQEcBAEBAgAGBQJTpw+eAAoJEKllVAevmvmsjOkH/3W6Xz5VCheMUY3wbJ42/aMj
+UNNNvjJc6UnFCs9svZgBQJjWeqH4YM3T0jhayFunJOm46nasrBGKkANl8Jk4RJl2
+hM5UMl4nyKXJGR5IbNsSdzZ5lCa463juGzezU04N+qlthMnXFw1RJny0ezucYSPX
+JIdx+vCdMAfSCaejLDiE/Gk8nv3QTYbfgOjUPtyOlnppZlRlGJX7jRao49T+zx1V
+somdQ93TNr8N3yLmsD4ivNSeYoiaRrKQ0JnKGvM+hjIlFY2pP4fsA2cYyhj7F25/
+UpABIlHveN8go0RlaIa7dzFXQjUrUZlVeuBVjPlpQl0A4OQxIqHLuyRNMYYHdhk=
+=2TqM
 -----END PGP SIGNATURE-----
