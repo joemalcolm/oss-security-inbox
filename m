@@ -1,14 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/4
-Message-ID: <CAMoU6uaDgHzwY=uc+eGC7OA6FOHqB7jHHaee4+rq22-Mz1j+uw@mail.gmail.com>
-Date: Fri, 24 Oct 2014 12:41:42 +0200
-From: Bas Pape <baspape@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/22/2
+Message-ID: <CACqxkWK2=4-S1PgGC+8rX6oyQ=WosTpmnRVTtGqm6072kTdQgQ@mail.gmail.com>
+Date: Sun, 22 Jun 2014 18:54:21 +0100
+From: Nick Boyce <nick.boyce@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vulnerability fixed in Quassel?
+Cc: rich@....org
+Subject: Re: KMail/KIO POP3 SSL MITM Flaw
 Content-Type: text/plain; charset=utf-8
 
-> Should a CVE be assigned, note that Quassel took the code (cipher.cpp)
-> from Konversation, and the same issue has been reported there [1].
+On 18 June 2014 21:07, Richard Moore <rich@....org> wrote:
 
-Sorry, forgot to actually paste the link. The konversation bug can be found at
-https://bugs.kde.org/show_bug.cgi?id=210792
+> Title:          KMail/KIO POP3 SSL MITM Flaw
+> CVE:            CVE-2014-3494
+> Versions:       kdelibs 4.10.95 to 4.13.2
+[...]
+> The POP3 kioslave used by kmail will accept invalid
+> certificates without presenting a dialog to the user due
+> a bug that leads to an inability to display the dialog
+> combined with an error in the way the result is checked.
+[...]
+> This flaw allows an active attacker to perform MITM
+> attacks against the ioslave which could result in the
+> leakage of sensitive data such as the authentication
+> details and the contents of emails.
+
+Is there anything you can add as to how long this bug has been in the
+codebase ?  In particular, is the Kmail in Debian 'oldstable' systems
+affected (squeeze/kdelibs 4.4.5), or that in Debian 'stable' systems
+(wheezy/kdelibs 4.8.4) ?
+
+I'm not sure whether to interpret the 'Versions' line in the advisory
+as "bug was introduced at kdelibs 4.10.95" - and there is no further
+information on the CVE at Mitre [1], or in the Debian bug [2]; there
+appears to be no relevant bug at bugs.kde.org (a search for the CVE,
+or any of the keywords "kdelibs pop3 ssl kioslave" returns nothing
+relevant).
+
+There is an IBM ISS report [3] which implies the bug affects at least
+kdelibs 4.6.x ....
+
+[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3494
+[2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752052
+[3] http://xforce.iss.net/xforce/xfdb/93875
+
+Thanks,
+
+Nick
