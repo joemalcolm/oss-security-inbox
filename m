@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/28
-Message-ID: <20140409222946.27486db2@hboeck.de>
-Date: Wed, 9 Apr 2014 22:29:46 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/22/5
+Message-ID: <CACqxkWK_LNFNqmm_9Ya5__rQZGNhFW79bCSFxyEroBeRDFApZw@mail.gmail.com>
+Date: Mon, 23 Jun 2014 00:03:07 +0100
+From: Nick Boyce <nick.boyce@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Heartbleed, clients and Android
+Cc: Richard Moore <rich@....org>, David Faure <faure@....org>
+Subject: Re: KMail/KIO POP3 SSL MITM Flaw
 Content-Type: text/plain; charset=utf-8
 
-Info regarding clients: There's now some PoC-Code on Github to test
-client software.
+On 22 June 2014 22:58, David Faure <faure@....org> wrote:
 
-https://github.com/Lekensteyn/pacemaker
+>> > I'm not sure whether to interpret the 'Versions' line in the advisory
+>> > as "bug was introduced at kdelibs 4.10.95"
+>
+> Yes, this is what
+> "Versions:       kdelibs 4.10.95 to 4.13.2"
+> means.
 
--- 
-Hanno Böck
-http://hboeck.de/
+Thanks - it might possibly have been "these are the versions we are
+supporting with a fix" instead.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+>> There is an IBM ISS report [3] which implies the bug affects at least
+>> kdelibs 4.6.x ....
+>
+> No idea where they got that from.... I cannot confirm this.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Your clarification and that correction are much appreciated.  Thanks
+for taking the time.
+
+Cheers
+Nick
