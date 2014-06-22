@@ -1,22 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/10
-Message-ID: <loom.20141119T155536-525@post.gmane.org>
-Date: Wed, 19 Nov 2014 14:57:48 +0000 (UTC)
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: information disclosure in MantisBT attachments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/22/4
+Message-ID: <8045295.6nhngL7M2C@asterix>
+Date: Sun, 22 Jun 2014 23:58:45 +0200
+From: David Faure <faure@....org>
+To: Richard Moore <rich@....org>
+Cc: Nick Boyce <nick.boyce@...il.com>, oss-security@...ts.openwall.com
+Subject: Re: KMail/KIO POP3 SSL MITM Flaw
 Content-Type: text/plain; charset=utf-8
 
-Damien Regad <dregad@...> writes:
-> Please assign a CVE ID for the following issue.
-> 
-> Description:
-> 
-> MantisBT issue attachments can be downloaded without permission.
+On Sunday 22 June 2014 21:47:50 Richard Moore wrote:
+> > I'm not sure whether to interpret the 'Versions' line in the advisory
+> > as "bug was introduced at kdelibs 4.10.95"
 
-Do you require any additional information to assign a CVE ?
+Yes, this is what
+"Versions:       kdelibs 4.10.95 to 4.13.2"
+means.
 
-TIA
-Damien
+The file usernotificationhandler.cpp was introduced in 4.10.95
+(for the fix for bug 154100 and 265228)
 
+Before that, SlaveInterface handled the messagebox request itself, with no 
+need for a job pointer.
+
+> There is an IBM ISS report [3] which implies the bug affects at least
+> kdelibs 4.6.x ....
+
+No idea where they got that from.... I cannot confirm this.
+
+-- 
+David Faure, faure@....org, http://www.davidfaure.fr
+Working on KDE Frameworks 5
 
