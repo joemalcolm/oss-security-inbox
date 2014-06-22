@@ -1,41 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/2
-Message-Id: <20141113074657.8E3E11BE1B2@smtpvbsrv1.mitre.org>
-Date: Thu, 13 Nov 2014 02:46:57 -0500 (EST)
-From: cve-assign@...re.org
-To: cherepan@...me.ru
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/22/3
+Message-ID: <CAMp7mVussXgzDsiWun-qgwrf=QGM1R7LNNg2WbF3zCyFL0i3xQ@mail.gmail.com>
+Date: Sun, 22 Jun 2014 21:47:50 +0100
+From: Richard Moore <rich@....org>
+To: Nick Boyce <nick.boyce@...il.com>, David Faure <faure@....org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: KMail/KIO POP3 SSL MITM Flaw
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I believe it was introduced in kdelibs 4.10.95, but David will know for
+sure.
 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17533#c0
-> https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=bb0d867169d7e9743d229804106a8fbcab7f3b3f
-> 
-> printf '!<arch>\n//%48d%8s`\n' -2 '' > test.a
-> objdump -x test.a
-> 
-> ==14181== Invalid write of size 8
+Cheers
+
+Rich.
+
+
+
+On 22 June 2014 18:54, Nick Boyce <nick.boyce@...il.com> wrote:
+
+> On 18 June 2014 21:07, Richard Moore <rich@....org> wrote:
 >
-> archive.c (_bfd_slurp_extended_name_table): Handle archives with corrupt extended name tables.
+> > Title:          KMail/KIO POP3 SSL MITM Flaw
+> > CVE:            CVE-2014-3494
+> > Versions:       kdelibs 4.10.95 to 4.13.2
+> [...]
+> > The POP3 kioslave used by kmail will accept invalid
+> > certificates without presenting a dialog to the user due
+> > a bug that leads to an inability to display the dialog
+> > combined with an error in the way the result is checked.
+> [...]
+> > This flaw allows an active attacker to perform MITM
+> > attacks against the ioslave which could result in the
+> > leakage of sensitive data such as the authentication
+> > details and the contents of emails.
+>
+> Is there anything you can add as to how long this bug has been in the
+> codebase ?  In particular, is the Kmail in Debian 'oldstable' systems
+> affected (squeeze/kdelibs 4.4.5), or that in Debian 'stable' systems
+> (wheezy/kdelibs 4.8.4) ?
+>
+> I'm not sure whether to interpret the 'Versions' line in the advisory
+> as "bug was introduced at kdelibs 4.10.95" - and there is no further
+> information on the CVE at Mitre [1], or in the Debian bug [2]; there
+> appears to be no relevant bug at bugs.kde.org (a search for the CVE,
+> or any of the keywords "kdelibs pop3 ssl kioslave" returns nothing
+> relevant).
+>
+> There is an IBM ISS report [3] which implies the bug affects at least
+> kdelibs 4.6.x ....
+>
+> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3494
+> [2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752052
+> [3] http://xforce.iss.net/xforce/xfdb/93875
+>
+> Thanks,
+>
+> Nick
+>
 
-Use CVE-2014-8738.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUZGDUAAoJEKllVAevmvmsXAQH/2QrS1TXDfKsTTi05CibQ/++
-8O2JRClUGSHKFskId1JMHvogl2kTJ801tcbtU59R/DDlQ6ps3wQHnwvNDn+iPgoM
-ovoX5poC3ZdUajI0frxe9Z5CY3I++57YSaCfic0NT9HaUYKXduj/aYBfv+ytESql
-3iEifgn360acVgsUi1bx5kXiIQBQ58EWX/N4uHsATU6XPfQxXsXtfbJMif4punL5
-Ck5FB2u2OymUg/qJruq4Tes6v0srlNDvM5Zn8Iy+gxGNUQ3wpVa3RHv/czxl7oHN
-ArnFqna6Uu9EZx9cFFX4G9tSFuWMvOkMucoWG3dsvoaROCuMnPwjVb8PI+0/yxw=
-=459F
------END PGP SIGNATURE-----
