@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/2
-Message-ID: <CAK=zUS19TkgSMoRv_ucqmHmwyWeiE0AUetmbMRxQNeejPahCFg@mail.gmail.com>
-Date: Thu, 30 Oct 2014 17:41:02 +0200
-From: Valery Sizov <valery@...lab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/5
+Message-Id: <1Wz42z-0002JP-AJ@redteam-pentesting.de>
+Date: Mon, 23 Jun 2014 15:05:37 +0200
+From: Till Maas <till.maas@...team-pentesting.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for GitLab groups API
+Subject: CVE ID Request for Python CGIHTTPServer File Disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-I would like to request a CVE identifier for a vulnerability in the groups
-API of GitLab.
+Hi,
 
-Affected versions:
-The groups API vulnerability affects GitLab 6.0 and up.
+I would like to request a CVE ID for a file disclosure vulnerability in
+the Python CGIHTTPServer class. Current details are available in the
+Python bug tracker:
+http://bugs.python.org/issue21766
 
-Impact:
-The vulnerability patched by this release allows a guest user to delete the
-owner of a group and to assign any other member as owner through the groups
-API.
+Kind Regards
+Till
 
-You can read more details here
-https://about.gitlab.com/2014/10/30/gitlab-7-4-3-released/
+-- 
+RedTeam Pentesting GmbH                   Tel.: +49 241 510081-0
+Dennewartstr. 25-27                       Fax : +49 241 510081-99
+52068 Aachen                    https://www.redteam-pentesting.de
+Germany                         Registergericht: Aachen HRB 14004
+Geschäftsführer:                       Patrick Hof, Jens Liebchen
 
+Content of type "application/pgp-signature" skipped
