@@ -1,70 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/9
-Message-ID: <alpine.LFD.2.10.1406271454200.17407@javelin.pnq.redhat.com>
-Date: Fri, 27 Jun 2014 15:02:02 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: LMS-2014-06-16-5: Linux Kernel LZ4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/1
+Message-ID: <20140623134406.47e01332@hboeck.de>
+Date: Mon, 23 Jun 2014 13:44:06 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request: XSS in coppermine gallery before 1.5.28
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Coppermine Gallery before 1.5.28 contains a Cross Site Scripting
+vulnerability in the file keywordmgr.php.
 
-   Hi,
+Release notes:
+http://forum.coppermine-gallery.net/index.php/topic,77376.0.html
 
-+-- On Fri, 27 Jun 2014, Eddie Chapman wrote --+
-| I think it's worth pointing out that the Linux kernel only introduced LZ4 
-| support in 3.11. This is why from the new kernel.org stable releases 
-| yesterday, only 3.14.9 and 3.15.2 contain the LZ4 patch. 3.10.45 and 3.4.95 
-| don't.
+Subversion commit:
+http://sourceforge.net/p/coppermine/code/8674/
 
-  It's been discussed in the other thread, yet just for the record, a reply 
-from the upstream author:
+Please assign CVE.
 
-+-- On Fri, 27 Jun 2014 Yann Collet wrote --+
-|Hi Prasad
-|
-|Nope, latest lz4 release is not affected.
-|
-|
-|Moreover, even the linux kernel implementation is safe, for now. To trigger 
-|the risk, the program calling the lz4 linux kernel implementation must feed 
-|the decoder with blocks of more than 8 MB. None of them is doing that right 
-|now, so it's not exploitable.
-|
-|However, it's true that, in the future, maybe one program may wander into  
-|this area. So it's a good thing to update the LZ4 implementation today, 
-|before the risk get potentially exposed by a yet unknown future program.
-|
-|
-|I feel this version of the story should be more widely answered. The current  
-|risk has been overblown. If you have some way to answer to the sec-list 
-|article you linked to, could you please make it known ? In the meantime, I'm 
-|in contact with Greg k-h, to make sure the linux kernel implementation will 
-|get fixed for the next Linux release.
-|
-|Best regards
-|
+-- 
+Hanno Böck
+http://hboeck.de/
 
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJTrToSAAoJEN0TPTL+WwQfJ84P/1NW/X6voek0O8LAEsu5Jkiv
-DE/nV6ByNV5kFNe9K+CG4QOeojRe9mYftwc/6F7eWKVZh7Q+qn3Slh2FhQMRY4R3
-AbsvDAKLTpJWVxkqjtJR91tV2/yOA2avkg413qRD6agszJqydG2z9Zapt1jmVmTc
-UbvNlLUrEgVNBL1yd9dMNoQ0iLtYyja1EYw7IPejKhzIyry8MxUbnCXWQOysCXTT
-HSJwJyVOgX0UE2OOEOKOqscsKa7R62XQxYkcWswGY+WUYXJvETx12Zydu2umB4f1
-RsJS3MyJMoi1FL+s+sNy3WQvbdv93VFpD1GOwF4Hv2sS7aaaQN9k/HfhCGBuz58Q
-dprPZMh+DD6LioUEdrHzjWivx5kn/jusgVthW0kE0rSHR++vEGwXqNx6HW9yyu/0
-ApApxc/UrkMwHFDh5yHg2dxleGhogM4kKHCFD/dLnKNyM1AGKD4mocY1aVW6ufRI
-teqRXiK4NhCV9voJdbBXO+6QLL/A+2DVUlfJJ8DYKByGC8YnPNSjsH11oFs4ySFM
-6aQ29iFHi/rggqOyXW6hxPl+ugT2KDrStDfI72Ne/xmM47HYK/WwxjqJ6o7QCtYT
-ld24vu2Xb51vYAlu2WcK66epm8AAxj4VWhB8U+16AGRZSmkHbfQOTJJ0d8YTR/uM
-gS0ASQzncWHgm8NxMD27
-=BneN
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
