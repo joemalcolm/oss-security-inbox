@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/4
-Message-ID: <20140624055328.GC24684@zoho.com>
-Date: Tue, 24 Jun 2014 05:53:28 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/8
+Message-ID: <53A8414B.1080607@enovance.com>
+Date: Mon, 23 Jun 2014 11:01:31 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Cc: wk@...pg.org
-Subject: Re: CVE request: GnuPG-1
+Subject: CVE request for vulnerability in OpenStack Neutron, Ceilometer and pyCADF library
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 24, 2014 at 05:36:15AM +0000, mancha wrote:
-> GnuPG 1.4.17 released on 20140623 [1] fixes a security flaw, reported by
-> Olivier Levillain and Florian Maury, that can be exploited via crafted
-> input to cause a denial of service by triggering an infinite loop [2].
-> 
-> Please allocate a CVE identifier for this issue.
-> 
-> Many thanks.
-> 
-> --mancha
-> 
-> [1] http://lists.gnupg.org/pipermail/gnupg-announce/2014q2/000344.html
-> [2] http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commitdiff;h=11fdfcf82bd8
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
 
-This issue has also been corrected in the GnuPG-2 branch [3] though
-there is not yet a point release which includes the fix. Contrary to my
-subject line, the CVE request is for both GnuPG 1 & 2.
+Title: User token leak to message queue in pyCADF notifier middleware
+Reporter: Zhi Kun Liu (IBM)
+Products: Neutron    (2014.1 versions up to 2014.1.1)
+          Ceilometer (2013.2 versions up to 2013.2.3,
+                      2014.1 versions up to 2014.1.1)
+          pyCADF library (all versions up to 0.5.0)
 
-[3] http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commitdiff;h=014b2103fcb1
+Description:
+Zhi Kun Liu from IBM reported a vulnerability in the notifier middleware
+available in the PyCADF library and formerly copied into Neutron and
+Ceilometer code. An attacker with read access to the message queue may
+obtain authentication tokens used in REST requests (X_AUTH_TOKEN) that
+goes through the notifier middleware. All services using the notifier
+middleware configured after the auth_token middleware pipeline are impacted.
+
+References:
+https://launchpad.net/bugs/1321080
+
+Thanks in advance,
+
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
-Content of type "application/pgp-signature" skipped
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
