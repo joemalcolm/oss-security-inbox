@@ -1,61 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/32
-Message-ID: <1412098773507.27352@cari.net>
-Date: Tue, 30 Sep 2014 17:35:21 +0000
-From: Zach Wikholm <zwikholm@...i.net>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/3
+Message-ID: <20140623123934.GC29448@kludge.henri.nerv.fi>
+Date: Mon, 23 Jun 2014 15:39:34 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Piwigo before 2.6.2 ws.php Arbitrary User Creation CSRF
 Content-Type: text/plain; charset=utf-8
 
-Hey everybody,
+This CSRF vulnerability in Piwigo also does not have CVE yet. Fixed in 2.6.2
+version.
 
-I don't think I've ever actually written to the list, but we also haven't ever encountered a bug like this. 
+Piwigo contains a flaw as HTTP requests to ws.php do not require multiple steps,
+explicit confirmation, or a unique token when performing certain sensitive
+actions. By tricking a user into following a specially crafted link, a
+context-dependent attacker can perform a Cross-Site Request Forgery (CSRF /
+XSRF) attack causing the victim to create arbitrary users.
 
-Personally, I think a bullet point list (or whatever people use these days) is needed of what all is actually wrong, what is broken and how we as a community can assist is desperately needed. Last time I checked there are a total of 6 CVEs currently assigned to bash related vulnerabilities and I'm sure there are more to come.  
+http://osvdb.org/103774
+http://piwigo.org/releases/2.6.2
+http://packetstormsecurity.com/files/125438/Piwigo-2.6.1-Cross-Site-Request-Forgery.html
 
- If there is one already, I apologize in advance. 
+---
+Henri Salo
 
-Zach W.
-________________________________________
-From: Ed Prevost <me@...ardprevost.info>
-Sent: Tuesday, September 30, 2014 8:31 AM
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] Healing the bash fork
-
-On 9/30/2014 8:08 AM, Tavis Ormandy wrote:
-> On Tue, Sep 30, 2014 at 8:02 AM, Mark R Bannister
-> <mark@...seconsulting.co.uk> wrote:
->>>> Florian's prefix/suffix patch is not going to protect against the setuid/setgid exploit that I reported to this list last week.> >
->>>> I discuss the setuid/setgid vulnerability at the following site, including demonstrating how Florian's prefix/suffix patch provides no protection:
->>>>
->>>> http://technicalprose.blogspot.co.uk/2014/09/shellshock-bug-third-vulnerability.html
->>> You do realize that your setuid program is patently unsafe, right? Say:
->>>
->>> $ echo -e '#!/bin/sh\necho pwn3d' >date;chmod 755 date;PATH=.:$PWD
->>> ../setuid_program
->>> pwn3d
->> Glad my over-simplified example has raised a few smirks.  Now for a slightly less simplified version:
->>
->> putenv("PATH=/bin:/usr/bin");
->> setreuid(0, 0);
->> system("date");
-> Keep going, eventually you're going to have to stop blacklisting
-> variables and use execve ;-)
->
-> $ env SHELLOPTS=xtrace PS4='$(id)' ./foo
->
->
->> But the point is I've tried to boil down a relatively complex program by studying endless strace outputs to attempt to demonstrate a real world exploit.  It wasn't actually "date" that was being called, but you get the point.
-> Yes, but it's not safe to use system() or popen() from setuid
-> programs, no bash patch is going to change that. In fact, bash already
-> does more than most other shells by dropping privileges if euid !=
-> uid, i.e. "privileged mode".
->
->> In the past, i.e. pre-Shellshock, the above code may have raised eyebrows, but as PATH was sanitised it would have passed numerous security audits.
->>
-> No, it's not safe to use system() or popen() in this context.
->
-> Tavis.
->
->
-I believe the term following this is 'Mansplained'
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
