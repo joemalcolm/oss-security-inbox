@@ -1,47 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/43
-Message-ID: <3138771E-CA0E-4C0C-B403-9A470283AA90@vmware.com>
-Date: Mon, 29 Sep 2014 17:27:24 +0000
-From: Ramon de C Valle <rcvalle@...are.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "chet.ramey@...e.edu" <chet.ramey@...e.edu>, Christos Zoulas <christos@...las.com>
-Subject: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/7
+Message-ID: <20140623141327.GF29448@kludge.henri.nerv.fi>
+Date: Mon, 23 Jun 2014 17:13:27 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: WordPress plugin wp-gpx-maps wp-gpx-maps_admin_tracks.php Improper Admin Verification File Upload PHP Code Execution 
 Content-Type: text/plain; charset=utf-8
 
+Can I get 2012 CVE identifier for Improper Admin Verification File Upload PHP
+Code Execution in WordPress plugin wp-gpx-maps, thanks. Changelog does not have
+fixed in version number listed.
 
-On Sep 26, 2014, at 5:52 PM, Bryan Drewery <bdrewery@...eBSD.org> wrote:
+OSVDB: http://osvdb.org/82900
+Fix in 1.1.23 version: https://plugins.trac.wordpress.org/changeset/556274/wp-gpx-maps
+Plugin page: http://wordpress.org/plugins/wp-gpx-maps/
 
-> On 9/26/2014 9:13 AM, Christos Zoulas wrote:
->> On Sep 26,  1:47pm, john.haxby@...cle.com (John Haxby) wrote:
->> -- Subject: Re: [oss-security] Re: CVE-2014-6271: remote code execution throu
->> 
->> | It's not so much the known attacks -- redefining ls, unset, command,
->> | typeset, declare, etc -- it's the future parser bugs that we don't yet
->> | know about.
->> | 
->> | A friend of mine said this could be a vulnerability gift that keeps on
->> | giving.
->> 
->> I think that at this point the conservative approach is best, so
->> until the bash author figures what the best solution is, the feature
->> is disabled by default for NetBSD. It is not wise to expose bash's
->> parser to the internet and then debug it live while being attacked.
->> 
->> christos
->> 
-> 
-> FreeBSD has taken a similar approach. We have used Christos' patch and
-> disabled the feature by default.
-> 
-> https://svnweb.freebsd.org/changeset/ports/369341
-> 
-> Regards,
-> Bryan Drewery
-> 
-In addition to Florian’s and upstream's patches, VMware has also used Christos’ patch and disabled the feature by default on all its virtual appliances across all its product line.
+---
+Henri Salo
 
---
-Ramon de C Valle
-VMware Product Security Engineering
-
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
