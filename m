@@ -1,52 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/17
-Message-ID: <20140409122129.43fbe8a6@hboeck.de>
-Date: Wed, 9 Apr 2014 12:21:29 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/2
+Message-ID: <20140623142352.6d583fbb@hboeck.de>
+Date: Mon, 23 Jun 2014 14:23:52 +0200
 From: Hanno Böck <hanno@...eck.de>
-To: Yves-Alexis Perez <corsac@...ian.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Heartbleed, clients and Android
+To: oss-sec <oss-security@...ts.openwall.com>
+Cc: cve-assign@...re.org
+Subject: CVE request: piwigo before 2.6.3 sql injection
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 9 Apr 2014 11:54:58 +0200
-Yves-Alexis Perez <corsac@...ian.org> wrote:
-
-> On Wed, Apr 09, 2014 at 11:30:29AM +0200, Hanno Böck wrote:
-> > I was asking myself some questions and I think others with more
-> > insight into what heartbleed means may be able to answer quickly:
-> > How does this affect client software? The PoCs we see send some
-> > malicous payload to servers and get some memory dumps. That doesn't
-> > affect clients?
-> 
-> Yes, it does affect clients.
-
-Can anyone explain how an attack scenario would work?
-Is it like:
-* we have a Man-in-the-Middle.
-* Client/Server establish connection.
-* MitM inserts a malicious package with the heartbeat-payload and sends
-  it to the client, client parses package, verifying MAC fails, but it
-  still will output memory
-
-Or is it ONLY an issue if we contact a malicious server that may
-extract random information from the application's memory? (which would
-reduce the impact somewhat, e.g. operating system update systems or
-wget etc. wouldn't have to worry)
+The Piwigo image gallery contains an sql injection before versions
+2.6.3 and 2.7.0_beta2
 
 
-> > Because the latter
-> > would include Android. We are all pretty aware that android updates
-> > are in large parts nonexistent.
-> 
-> I don't have much clue about Android, but I think I heard heartbeat
-> was disabled in Android, but I don't have a link right now. Also, I'm
-> unsure what actually use libssl in Android and what uses NSS.
+Upstream bug:
+http://piwigo.org/bugs/view.php?id=3089
 
-Seems Android disabled Heartbeat in 2012:
-https://android.googlesource.com/platform/external/openssl.git/+/android-4.1.2_r1
+commit:
+http://piwigo.org/dev/changeset/28678
 
-Still leaves some android versions as potentially vulnerable.
+release notes:
+http://piwigo.org/forum/viewtopic.php?id=24009
 
+Please assign a CVE.
 
 -- 
 Hanno Böck
@@ -55,4 +30,4 @@ http://hboeck.de/
 mail/jabber: hanno@...eck.de
 GPG: BBB51E42
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
