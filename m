@@ -1,48 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/13
-Message-Id: <201402192340.s1JNe4eM029545@linus.mitre.org>
-Date: Wed, 19 Feb 2014 18:40:04 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/6
+Message-ID: <20140623140208.GB16963@mail.corp.redhat.com>
+Date: Mon, 23 Jun 2014 16:02:08 +0200
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: 752395@...s.debian.org
+Subject: CVE request: python: _json module is vulnerable to arbitrary process memory read
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-> (We will proceed with option 2 unless option 1 is substantially better
-> for someone.)
+It was reported [1] that Python built-in _json module have a flaw
+(insufficient bounds checking), which allows a local user to read
+current process' arbitrary memory.
+From initial bug report [1]:
+...
+The sole prerequisites of this attack are that the attacker is able to
+control or influence the two parameters of the default scanstring
+function: the string to be decoded and the index.
 
-Option 2 has now been chosen.
+The bug is caused by allowing the user to supply a negative index
+value. The index value is then used directly as an index to an array
+in the C code; internally the address of the array and its index are
+added to each other in order to yield the address of the value that is
+desired. However, by supplying a negative index value and adding this
+to the address of the array, the processor's register value wraps
+around and the calculated value will point to a position in memory
+which isn't within the bounds of the supplied string, causing the
+function to access other parts of the process memory.
+...
 
-The clarified meaning of CVE-2014-1947 is now the vulnerability in
-older ImageMagick versions (such as 6.5.4) that use the "L%02ld"
-string. The root cause here is that the code did not cover the case of
-more than 99 layers, which is apparently allowable but relatively
-uncommon. This has a resultant buffer overflow, e.g, L99\0 is safe but
-L100\0 is unsafe. When the overflow occurs, it can be described as "1
-or more bytes too many."
+Can a CVE ID be assigned to this issue please?
+Also CC'ing the Debian bugreport here.
 
-A new ID of CVE-2014-2030 is now assigned for the vulnerability in
-newer ImageMagick versions that use the "L%06ld" string. The root
-cause here is that the code did not recognize the relationship between
-the 8 (or more) characters in "L%06ld" and the actual buffer size.
-This has a resultant buffer overflow of "4 or more bytes too many."
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+References:
+[1] Upstream bug report with additional technical details: http://bugs.python.org/issue21529
+[2] Debian bug tracker: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752395
+[3] RedHat bug tracker: https://bugzilla.redhat.com/show_bug.cgi?id=1112285
 
-iQEcBAEBAgAGBQJTBUBdAAoJEKllVAevmvms6DMIAKIPMAVIsUycaTjAgTdFoUmj
-aDrKyOIAWMLWNE4wOUBDLQkrObjwwptbh7AptBr2L1bscUPiLao1A2CQwXLtZDVV
-RX41OJ62YlZFZnPRay997+4oM5tbHa27UIc60paPFK8FBfMthf4JLWvuVUxWnFXl
-CI+9XYRvkW6bdEQng9UDA9xTjuUJWPzemjscbS4+WvixU3+iCwhZF5lCSjICarXU
-ZB5bmTnKqJPPhLvUB/6xIAhfGzXF7XuriGQL1jS1gllIZ59MKpOreRPNWgsWTVEs
-HfFxtx1OvfdDPB/twSeK7viVJiKm9fNHZYCYCKoQooxd6Ks84MDzGP835c2yLvU=
-=WQsh
------END PGP SIGNATURE-----
+Thanks.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security Team
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+
+Content of type "application/pgp-signature" skipped
