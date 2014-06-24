@@ -1,21 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/17
-Message-ID: <20140605123133.GA21252@openwall.com>
-Date: Thu, 5 Jun 2014 16:31:33 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: OpenSSL seven security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/9
+Message-ID: <20140624121054.6ddeb8be@hboeck.de>
+Date: Tue, 24 Jun 2014 12:10:54 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: piwigo before 2.6.3 sql injection
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, 24 Jun 2014 01:51:33 -0400 (EDT)
+cve-assign@...re.org wrote:
 
-This OpenSSL Security Advisory was just made public, along with new
-OpenSSL releases 0.9.8za, 1.0.0m, 1.0.1h:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> > The Piwigo image gallery contains an sql injection before versions
+> > 2.6.3 and 2.7.0_beta2
+> > http://piwigo.org/bugs/view.php?id=3089
+> > http://piwigo.org/dev/changeset/28678
+> > http://piwigo.org/forum/viewtopic.php?id=24009
+> 
+> Are you sure about this? Changeset 28678 doesn't seem to have been
+> implemented in the
+> http://piwigo.org/download/dlcounter.php?code=26xto263 file that's
+> recommended in the 2.6.3 Release Notes. Also,
+> http://piwigo.org/bugs/changelog_page.php suggests that 3089 was fixed
+> only in 2.7.0beta2, not in 2.6.3.
 
-http://www.openssl.org/news/secadv_20140605.txt
+You are probably right and I'm wrong.
 
-More info on CVE-2014-0224 (one of the vulns fixed):
+I also don't have any further info than the ones publicly available on
+their webpage.
 
-http://ccsinjection.lepidum.co.jp
+> http://piwigo.org/releases/2.6.3 says "[security] security failure
+> reported and fixed by Christopher Chrapka, ojezu.org." Is this instead
+> perhaps an unspecified vulnerability that is unrelated to the fix for
+> bug 3089?
 
-Alexander
+May very well be. So the sqj injection only affects the beta and we
+have another "unclear" vulnerability and need two CVEs?
+
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
