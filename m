@@ -1,85 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/9
-Message-Id: <E1WDazc-0002Lp-Nh@xenbits.xen.org>
-Date: Wed, 12 Feb 2014 14:40:52 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 88 - use-after-free in xc_cpupool_getinfo() under memory pressure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/14
+Message-Id: <201406241425.s5OEPg8f008148@linus.mitre.org>
+Date: Tue, 24 Jun 2014 10:25:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: mancha1@...o.com, wk@...pg.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: GnuPG-1
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-                    Xen Security Advisory XSA-88
-                              version 2
+> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commit;h=014b2103fcb12f261135e3954f26e9e07b39e342
+> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commit;h=11fdfcf82bd8d2b5bc38292a29876e10770f4b0a
+> http://lists.gnupg.org/pipermail/gnupg-announce/2014q2/000344.html
 
-      use-after-free in xc_cpupool_getinfo() under memory pressure
+> This release includes a *security fix* to stop a possible DoS using
+> garbled compressed data packets which can be used to put gpg into an
+> infinite loop.
 
-UPDATES IN VERSION 2
-====================
+> A packet like (a3 01 5b ff) leads to an infinite loop.
 
-Public release.
+Use CVE-2014-4617 for this issue affecting both GnuPG 1.x before
+1.4.17 and 2.x before 2.0.24.
 
-ISSUE DESCRIPTION
-=================
-
-If xc_cpumap_alloc() fails then xc_cpupool_getinfo() will free and incorrectly
-return the then-free pointer to the result structure.
-
-IMPACT
-======
-
-An attacker may be able to cause a multi-threaded toolstack using this
-function to race against itself leading to heap corruption and a
-potential DoS.
-
-Depending on the malloc implementation, privilege escalation cannot be
-ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-The flaw is present in Xen 4.1 onwards.  Only multithreaded toolstacks
-are vulnerable.  Only systems where management functions (such as
-domain creation) are exposed to untrusted users are vulnerable.
-
-xl is not multithreaded, so is not vulnerable.  However, multithreaded
-toolstacks using libxl as a library are vulnerable.  xend is
-vulnerable.
-
-MITIGATION
-==========
-
-Not allowing untrusted users access to toolstack functionality will
-avoid this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan and diagnosed by Andrew
-Cooper.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa88.patch        xen-unstable, Xen 4.3.x, Xen 4.2.x, Xen 4.1.x
-
-$ sha256sum xsa88*.patch
-7a73ca9db19a9ffe6e8cd259fa71dc1299738f26fa024303f4ab38931db75f14  xsa88.patch
-$
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJS+4fOAAoJEIP+FMlX6CvZfUUH/2wyYKHOkEaEmcjUbuyUM3CT
-8V9VgW4dhq/sk9p5SqR0xGB6N+f2XytCAFXI3kNmYjrs+jGK5cQgLjxMOwMKrpwm
-PsHCAZnGNzYMy48JtEUieEfwZqH/jNci7qJWNVdPoKnULOEd9X0hTri7vg1CoDI2
-DUBeLvmC5mCFBej4pcDGX++XsdL90EnGa0RfrrVfIVf16EfBjgr8KzLKXd1uBueC
-yWKg5z24+HoRqFp3n3+Q9T6GN+npOj/78mrlXJ7onKepONAmLqg0J6g/1hHuc4hY
-pwUnbSf0452FKTFs7KUodXoJNNX1i3IuOch9pBcKlrbT6K/g/qwMZ/Pl2Ir8a20=
-=vA6e
+iQEcBAEBAgAGBQJTqYoHAAoJEKllVAevmvmsQhUIAMb33SXyGjEUBXPH5DcMA6hT
+f+0xo7Hk9eHCuOo2mYuCIOba/juCIDm1ur/KCCmEShk7LyLczDwIxROOnSGmyhTG
+kss5LIAqmYcvVbFveWnVVMvPJgYXBABBnhPjs3r2hFN8dgzYYKrz8rbR+SkTFoiK
+kKRMAeYOSbpp/vIq1KvippLmCqWpk78Em8lKy5A00I8H7fUHsz1nXjVftGGYH7Og
+J0ZFFRIYQUnm0tMRXPLzIf7WCxnQB0XMyI82ag6b4JS2BE1rBAKWZ6c3W1eKeGjy
+VHvwKL3sKycKcb8Z0TOR1N0oqwtouy8pvyV6gpD7Y5xubLGZ6mdQpq6CptbQILM=
+=Ft2X
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa88.patch" of type "application/octet-stream" (851 bytes)
