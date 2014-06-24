@@ -1,43 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/12
-Message-ID: <20141222181458.GA9357@zoho.com>
-Date: Mon, 22 Dec 2014 18:14:58 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Cc: sms@...inode.info, cve-assign@...re.org
-Subject: CVE Request: Info-ZIP unzip 6.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/15
+Message-Id: <201406241429.s5OETXkZ008203@linus.mitre.org>
+Date: Tue, 24 Jun 2014 10:29:33 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: piwigo before 2.6.3 sql injection
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-OOB access (both read and write) issues exist in test_compr_eb
-(extract.c) that can result in application crash or other unspecified
-impact.
+> So the sql injection only affects the beta and we have another
+> "unclear" vulnerability and need two CVEs?
 
-This vulnerability can be triggered via crafted zip archives with extra
-fields that advertise STORED method compression (i.e. no compression)
-and have uncompressed field sizes smaller than the corresponding
-compressed field sizes.
+We will wait a short time for any other comments from anyone before
+assigning the two CVEs. One other observation is that 3089 says
+"Product Version 2.6.2" and "An admin can perform an SQL injection."
+Also, http://piwigo.org/forum/viewtopic.php?id=24009 is from
+2014-06-11 whereas http://piwigo.org/bugs/view.php?id=3089 is from
+2014-06-12.
 
-This issue is different from CVE-2014-8140 [1].
+So, possibly, the requirement for admin access was part of the
+motivation for not pushing out a new release immediately. And, the
+lack of the fix in 2.6.3 might be a result of the bug perhaps not
+being discovered until the day after the 2.6.3 release.
 
-Please allocate a CVE identifier for this vulnerability.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
---mancha
-
-
-Timeline:
-
-2014-10-24: Crasher bundled in afl
-2014-11-02: Existence of crasher shared on OSS-SEC [2]
-2014-11-03: Crasher analyzed and fix developed [3]
-2014-11-03: Maintainer contacted [4]
-2014-12-22: CVE requested
-
-----
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-8140
-[2] http://seclists.org/oss-sec/2014/q4/489
-[3] http://seclists.org/oss-sec/2014/q4/507
-[4] http://www.info-zip.org/phpBB3/viewtopic.php?f=7&t=450
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJTqYraAAoJEKllVAevmvmsIosIAKDw3uYMNhOwcPeZ/BHnRuTq
+5BTdbwu9W21c717iXIDVKWmiBZ96r7wrt3SeAUA5UidFqCYx7Qlg9+Ff58Tmw7O/
+tJ7o5dhJS09nRj1TSG5+W6KdeiitTHVDtCXYDc20xgnAQqnNotuS2O4kqhWjH20j
+xEIHCH6N1ePel+5vnaSO7vqOwJIoXUsb8VXVeLpnZUUgv2hCbLIFB2PZhmIWylll
+2eFABF4i1Uwze/gzeY7Xk7kFRn9hzCASKRZ1p8Bn5fko8FJ1CA+Rx935DoBkPt+n
+cY7vfdj2zOCJLGPKXvLAUh1GofSI++wiu6pEs4twHz2/B5MxlmE/OFooNURHzwI=
+=LH2i
+-----END PGP SIGNATURE-----
