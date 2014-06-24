@@ -1,19 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/15
-Message-ID: <20140304154558.GK17483@suse.de>
-Date: Tue, 4 Mar 2014 16:45:58 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE-2013-6800 is a dup of CVE-2013-1418
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/5
+Message-Id: <201406240554.s5O5sle0026103@linus.mitre.org>
+Date: Tue, 24 Jun 2014 01:54:47 -0400 (EDT)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Piwigo before 2.6.2 ws.php Arbitrary User Creation CSRF
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6800
-is the same issue as 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-1418
+This apparently has two discoverers who worked on different dates, so
+it has two CVEs:
 
-(basically the same code fix for the same issue, but that it
-was in 2 different github branches seems to have confused someone).
+> http://packetstormsecurity.com/files/125438/Piwigo-2.6.1-Cross-Site-Request-Forgery.html
 
-Ciao, Marcus
+Use CVE-2014-4613 for the pwg.users.add vector.
+
+
+> http://piwigo.org/bugs/view.php?id=0003055
+
+Use CVE-2014-4614 for the pwg.groups.addUser, pwg.groups.deleteUser,
+pwg.groups.setInfo, pwg.users.setInfo, pwg.permissions.add, and
+pwg.permissions.remove vectors.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTqRJmAAoJEKllVAevmvmsfRcH/1zYKcPXm6bAaiNk1e84w9wt
+QgeFxGikYxQnxZlf7gED+QPno7KLGgqtWiJMzwTEJLga8SjqqGU+lVlJ7V2mly1m
+uGC/R4+E1Jamajql2I+KnlvGelfHhB3e1ICpssqc5+EWzV60akelfqnNwSe8/VN6
+ZVJ1GTOTz30Q32YRH6IJJ4xhL6gZN57SkDRk4ApB24+ALzECSDhxr5S1OqWHruKR
+Y+KbfU+peIZi0Nfy8huFA5hHTUqYP+A74iKiFQTDIDgY3VQiJjmexEmDDb7PzCgf
+yMzYcHjF6KZlSqltez0wjirx11z7UmzQDwO6Sjpr+jtCaSsQrstfoLhHgmUskvk=
+=xJzF
+-----END PGP SIGNATURE-----
