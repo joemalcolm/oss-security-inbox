@@ -1,40 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/11
-Message-ID: <20140805183621.GH1674@oevtugenva.nrevsny.pk>
-Date: Tue, 5 Aug 2014 14:36:21 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/4
+Message-ID: <20140624055328.GC24684@zoho.com>
+Date: Tue, 24 Jun 2014 05:53:28 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: issues in ISO C++ 2011 regex library
+Cc: wk@...pg.org
+Subject: Re: CVE request: GnuPG-1
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 05, 2014 at 03:50:32PM +1000, Murray McAllister wrote:
-> Hello,
+On Tue, Jun 24, 2014 at 05:36:15AM +0000, mancha wrote:
+> GnuPG 1.4.17 released on 20140623 [1] fixes a security flaw, reported by
+> Olivier Levillain and Florian Maury, that can be exploited via crafted
+> input to cause a denial of service by triggering an infinite loop [2].
 > 
-> Maksymilian Arciemowicz reported a number of issues in the ISO C++
-> 2011 regex libraries:
+> Please allocate a CVE identifier for this issue.
 > 
-> http://seclists.org/fulldisclosure/2014/Aug/1
+> Many thanks.
 > 
-> Bugs:
+> --mancha
 > 
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61601
-> 
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61582
-> 
-> http://llvm.org/bugs/show_bug.cgi?id=20291
-> 
-> For the memory corruption bug (61582), there seems to be more than
-> one issue here (at least a heap-based buffer overflow and a stack
-> overflow of some sort). Can a single CVE be assigned, or do you need
-> specific details for each issue (I don't currently have those)?
-> 
-> With GCC 4.8 in Fedora, the affected program needs to be compiled
-> using the "-std=c++11" option.
+> [1] http://lists.gnupg.org/pipermail/gnupg-announce/2014q2/000344.html
+> [2] http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commitdiff;h=11fdfcf82bd8
 
-I think this issue is mis-named. "The ISO C++ 2011 regex library" is a
-specfication, not an implementation, and a vulnerability in it would
-be a fundamental flaw in the API design (analogous to gets in C). It
-seems like this CVE request is for one or more GCC/libstdc++ bugs, and
-it should be identified as such.
+This issue has also been corrected in the GnuPG-2 branch [3] though
+there is not yet a point release which includes the fix. Contrary to my
+subject line, the CVE request is for both GnuPG 1 & 2.
 
-Rich
+[3] http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commitdiff;h=014b2103fcb1
+
+
+Content of type "application/pgp-signature" skipped
