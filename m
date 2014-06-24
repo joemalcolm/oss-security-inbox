@@ -1,26 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/11
-Message-ID: <547710CA.2000301@sysdream.com>
-Date: Thu, 27 Nov 2014 12:53:46 +0100
-From: Damien Cauquil <d.cauquil@...dream.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/1
+Message-ID: <20140624053615.GA24684@zoho.com>
+Date: Tue, 24 Jun 2014 05:36:15 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-CC: n.chatelain@...dream.com
-Subject: CVE Request: Multiple vulnerabilities in Centreon <= 2.5.3
+Subject: CVE request: GnuPG-1
 Content-Type: text/plain; charset=utf-8
 
-We found two vulnerabilities in Centreon <= 2.5.3:
+GnuPG 1.4.17 released on 20140623 [1] fixes a security flaw, reported by
+Olivier Levillain and Florian Maury, that can be exploited via crafted
+input to cause a denial of service by triggering an infinite loop [2].
 
-1. Unauthenticated remote command execution
+Please allocate a CVE identifier for this issue.
 
-This vulnerability allows an unauthenticated user to execute arbitrary commands on the remote system.
+Many thanks.
 
-2. Information disclosure (local)
+--mancha
 
-A specific command-line utility allows local users to escalate privileges and retrieve sensitive files on the system, such as /etc/shadow. This vulnerability provides a root user access on files (read only). 
+[1] http://lists.gnupg.org/pipermail/gnupg-announce/2014q2/000344.html
+[2] http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commitdiff;h=11fdfcf82bd8
 
-
-Vendor was notified and most of the fixes were implemented and will be available in the next release (coming very soon).
-
-
-We would like to request 2 CVEs for these vulnerabilities.
-
+Content of type "application/pgp-signature" skipped
