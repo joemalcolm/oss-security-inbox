@@ -1,80 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/6
-Message-ID: <CACYkhxjdO=94++PWErZyMRzj4jW3JB8XaqXbt82d1-=PWGwtrg@mail.gmail.com>
-Date: Fri, 31 Jan 2014 13:03:58 +1100
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Cc: Florian octo Forster <octo@...plant.org>, sh@...kee.org
-Subject: Re: Re: collectd security contact
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/6
+Message-Id: <201406240557.s5O5vb3V026149@linus.mitre.org>
+Date: Tue, 24 Jun 2014 01:57:37 -0400 (EDT)
+From: cve-assign@...re.org
+To: tristan.cacqueray@...vance.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Neutron, Ceilometer and pyCADF library
 Content-Type: text/plain; charset=utf-8
 
-Thanks for the responses, I've sent the details over to octo.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Sebastian - I think the reference to ovsdb was not the old vulnerability,
-but that the contact details are all empty.
+> Title: User token leak to message queue in pyCADF notifier middleware
 
-Regards,
-  Michael
+> a vulnerability in the notifier middleware available in the PyCADF
+> library and formerly copied into Neutron and Ceilometer code. An
+> attacker with read access to the message queue may obtain
+> authentication tokens
 
+> auth token is exposed in meter http.request
 
-On 30 January 2014 20:58, Sebastian Harl <sh@...kee.org> wrote:
+> notifier.py grabs all environment variables. it should probably filter
+> out HTTP_X_AUTH_TOKEN
 
-> Hi,
->
-> > On 01/29/2014 02:28 PM, Michael Samuel wrote:
-> > > Hi,
-> > >
-> > > Does anyone here know who the security contact for collectd is?
-> > >
-> > > Thanks, Michael
-> > >
-> >
-> > - From AUTHORS file:
-> >
-> > Permanent project members
-> > =========================
-> >
-> > Florian "octo" Forster <octo at verplant.org>
-> >  - Initial author.
-> >
-> > Sebastian "tokkee" Harl <sh at tokkee.org>
-> >  - Bugfixes and enhancments in many places all around the project.
-> >  - perl plugin.
-> >  - users plugin.
-> >  - vserver plugin.
-> >  - Debian package.
-> >
-> > so one of them would be my guess.
->
-> Yup, we're good candidates for that :-)
->
-> > If you figure it out can you send an
-> > update to:
-> >
-> > http://osvdb.org/vendor/89051-collectd/1
->
-> This seems to be fixed long ago. Is there anything else that should be
-> done?
->
-> Cheers,
-> Sebastian
->
-> PS: Please Cc me on replies, I'm not on this list.
->
-> --
-> Sebastian "tokkee" Harl +++ GnuPG-ID: 0x8501C7FC +++ http://tokkee.org/
->
-> Those who would give up Essential Liberty to purchase a little Temporary
-> Safety, deserve neither Liberty nor Safety.         -- Benjamin Franklin
->
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.10 (GNU/Linux)
->
-> iEYEARECAAYFAlLqIk8ACgkQEFEKc4UBx/wQ0gCfX7JD/vmuWxEYdKBmkKDZFEb8
-> JgcAn3NF69RCN0gFU4zz5SRRK5JNFUGI
-> =xYzV
-> -----END PGP SIGNATURE-----
->
->
+Use CVE-2014-4615.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTqRMTAAoJEKllVAevmvmswCgH/RsIZ4ZOHVcfDiZ09THuS4LC
+G/3KSY7PiZMfmpzHO0gR2R7A7NTo9crH0r2YV4SpPjXN7LiFa8viChQgZygNly+I
+HOUIEikNZk63JUJoyEjyorXmZpkBC539hvMtxK4gkTkchsHhyiV4CqxroNhlC4Pl
+QUn1pHfT2GfYuHDYX78Rp9gnfDo+eGnr0BgIN/v12k06k61e/4bIUykgTXWnkefc
+VnTKIs2ESE5WMNNfdpaKVrmBolLADnZweT+hGhOCki2fsVYoNmzpi+CJZadhDzI9
+jtlqYfnkSdV+6ChEzsPcoVRqroZ9C3bddtDViXHKiPj8je9uF3zhXlOun0+XmMM=
+=iisx
+-----END PGP SIGNATURE-----
