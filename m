@@ -1,49 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/10
-Message-Id: <4B148965-3272-4583-9E8E-CCD9A6E99D5D@thoughtbot.com>
-Date: Wed, 17 Dec 2014 13:29:17 -0500
-From: Tute Costa - thoughtbot <tute@...ughtbot.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2014-8144] CSRF vulnerability in doorkeeper 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/16
+Message-Id: <B48B5501-0DDF-4547-B946-E08B73F9282C@iq.pl>
+Date: Tue, 24 Jun 2014 17:45:41 +0200
+From: Michał Grzędzicki <lazy@...pl>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: OpenVZ simfs container filesystem breakout
 Content-Type: text/plain; charset=utf-8
 
-Cross-site request forgery (CSRF) vulnerability in doorkeeper 1.4.0
-and earlier allows remote attackers to hijack the user's OAuth
-autorization code. This vulnerability has been assigned the CVE
-identifier CVE-2014-8144.
+An attacker is able to access files outside of his container.
 
-Versions Affected:  1.4.0 and below
-Fixed Versions:     1.4.1, 2.0.0
+Function open_by_handle_at() enables process to access files on a mounted filesystem
+using file_handle structure. This structure is using inode numbers to differentiate files.
+Calling this function requires CAP_DAC_READ_SEARCH capability and superuser inside
+a container by default has this capability.
 
-Impact
-------
+This enables an attacker to bypass simfs restrictions and access all files on an underlying
+filesystem including other VE’s residing on the same filesystem.
 
-Doorkeeper's endpoints didn't have CSRF protection. Any HTML document
-on the Internet can then read a user's authorization code with
-arbitrary scope from any Doorkeeper-compatible Rails app you are
-logged in.
+This is the same issue as the one affecting docker which was discovered recently by by Sebastian Krahmer.
+He wrote about it on this list http://www.openwall.com/lists/oss-security/2014/06/18/4 .
 
-Releases
---------
+This vulnerability is identified by CVE-2014-3519 .
 
-The 1.4.1 and 2.0.0 releases are available at
-https://rubygems.org/gems/doorkeeper and
-https://github.com/doorkeeper-gem/doorkeeper.
+For further technical information please refer to Sebastian Krahmers post and POC
+(http://stealth.openwall.net/xSports/shocker.c).
 
-Upgrade Process
----------------
+His POC code works with openvz with cosmetic modifications so we have to consider that public exploit is readily available.
 
-Upgrade doorkeeper version at least to 1.4.1.
+Affected versions:
+all RHEL6 based openvz kernels older then 042stab090.5 released today and using simfs (VE_LAYOUT=simfs).
 
-Workarounds
------------
+Unaffected versions:
+RHEL5 based openvz lack open_by_handle_at(2) function
+RHEL6 based openvz using exclusivelly ploop or parallels commercial vzfs
 
-There are no feasible workarounds for this vulnerability.
+Newest vzctl packages defaults to unaffected ploop layout. Parallels comercial vzfs is also unaffected.
 
-Credits
--------
-Thanks to Sergey Belov of DigitalOcean for finding the vulnerability,
-Phill Baker of DigitalOcean for reporting and fixing it, and to Egor
-Homakov of Sakurity.com for raising awareness.
+Disabling CAP_DAC_READ_SEARCH inside the containers can be used as an mitigation technique
+if kernel upgrade is not possible.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+# vzctl vied --save --capability DAC_READ_SEARCH:off --setmode restart
+(It will immediately restart the VE)
+
+I think it won’t break any typical software running inside the CT but Your milage may vary.
+
+
+References:
+http://kb.parallels.com/en/122142
+https://openvz.org/Download/kernel/rhel6/042stab090.5
+http://www.openwall.com/lists/oss-security/2014/06/18/4
+
+-- 
+Michał Grzędzicki
+e-mail: mg@...pl
+IQ PL Sp. z o.o.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
