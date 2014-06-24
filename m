@@ -1,52 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/12
-Message-ID: <20140703131349.GA9925@mail.corp.redhat.com>
-Date: Thu, 3 Jul 2014 15:13:49 +0200
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: pnp4nagios - Two URL Cross-Site Scripting Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/8
+Message-ID: <87tx7aivsw.fsf@vigenere.g10code.de>
+Date: Tue, 24 Jun 2014 09:57:51 +0200
+From: Werner Koch <wk@...pg.org>
+To: mancha <mancha1@...o.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: GnuPG-1
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+On Tue, 24 Jun 2014 07:53, mancha1@...o.com said:
 
-Can CVE(s) be assigned to the below issue? Not sure if it should be
-one or two IDs though.
+> This issue has also been corrected in the GnuPG-2 branch [3] though
+> there is not yet a point release which includes the fix. Contrary to my
 
-...
-Description
-
-Two vulnerabilities have been reported in PNP4Nagios, which can be
-exploited by malicious people to conduct cross-site scripting attacks.
-
-1) Input appended to the URL is not properly sanitised in
-"views/kohana_error_page.php" before being returned to the user. This
-can be exploited to execute arbitrary HTML and script code in a user's
-browser session in context of an affected site.
-
-2) Input appended to the URL is not properly sanitised in
-"views/template.php" before being returned to the user. This can be
-exploited to execute arbitrary HTML and script code in a user's
-browser session in context of an affected site.
+I am working on a 2.0.24 release.  Should be released today.
 
 
-Solution:
-Fixed in the GIT repository.
+Salam-Shalom,
 
-Provided and/or discovered by:
-Reported by the vendor.
+   Werner
 
-Original Advisory:
-PNP4Nagios:
-https://github.com/lingej/pnp4nagios/commit/e4a19768a5c5e5b1276caf3dd5bb721a540ec014
-https://github.com/lingej/pnp4nagios/commit/cb925073edeeb97eb4ce61a86cdafccc9b87f9bb
-
-References:
-https://bugs.gentoo.org/show_bug.cgi?id=516140
-https://bugzilla.redhat.com/show_bug.cgi?id=1115983
-
-Thanks.
 -- 
-Vasyl Kaigorodov | Red Hat Product Security Team
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+Die Gedanken sind frei.  Ausnahmen regelt ein Bundesgesetz.
 
-Content of type "application/pgp-signature" skipped
