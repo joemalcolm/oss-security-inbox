@@ -1,115 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/12
-Message-Id: <20141125200956.098966C4006@smtpvmsrv1.mitre.org>
-Date: Tue, 25 Nov 2014 15:09:56 -0500 (EST)
-From: cve-assign@...re.org
-To: nacin@...dpress.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: WordPress 4.0.1 Security Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/13
+Message-ID: <BD0FFF79-3834-4B2A-B885-0E83AE6DCE9B@redhat.com>
+Date: Tue, 24 Jun 2014 08:18:26 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: possible CVE request: rb_libtorrent opens UPNP port 0
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+It was brought to my attention today that a potential flaw in rb_libtorrent exists where it will open UPNP port 0, which (by the description of the issue) opens all ports to the system running rb_libtorrent via the given firewall (so even if you had, say, only port 22 open to the machine to start, fire up an application using rb_libtorrent such as qbittorrent, and all ports are forwarding to that machine).
 
->  * XSS in wptexturize() via comments or posts. Unauthenticated. Affected
-> versions <= 3.9.2 (except >= 3.8.5 / 3.7.5). Discovered by Jouko Pynnonen.
+I can't find any references on whether or not this is part of the UPNP spec or known behaviour, however.  Either way, I suppose that anyone running such a bittorrent client isn't expecting that all ports start forwarding (but, as a result, I'm not sure if this is malfunctioning firewall which is where knowing whether or not this is according to spec would be good).
 
-> http://klikki.fi/adv/wordpress.html
+So I'm not just asking for a CVE, but whether or not it's a flaw (I don't know enough about UPNP to hazard a guess).
 
-Use CVE-2014-9031.
+Here's some references:
 
-
->  * XSS in media playlists. Affected versions 3.9, 3.9.1, 3.9.2, 4.0.
-> Reported by Jon Cave.
-
-Use CVE-2014-9032.
+https://github.com/qbittorrent/qBittorrent/issues/1758
+https://lists.fedoraproject.org/pipermail/package-announce/2014-June/134652.html
+https://bugs.mageia.org/show_bug.cgi?id=13582
 
 
->  * CSRF in the password reset process. Affected versions 4.0, 3.9.2, 3.8.4,
-> 3.7.4.
-
-> http://core.trac.wordpress.org/changeset/30418
-
-Use CVE-2014-9033.
-
-
->  * Denial of service for giant passwords. This is the same issue as
-> CVE-2014-9016
-> in Drupal, and was reported by the same individuals to both projects. The
-> phpass library by Solar Designer was used in both projects without setting
-> a maximum password length, which can lead to CPU exhaustion upon hashing.
-> Reported by Javier Nieto Arevalo and Andres Rojas Guerrero.
-
-> http://core.trac.wordpress.org/changeset/30467
-
-Use CVE-2014-9034.
-
-We consider this distinct from CVE-2014-9016 because the use of a
-maximum password length can be chosen independently.
-
-
->  * XSS in Press This. Affected versions <= 4.0 (except >= 3.8.5 / 3.7.5 /
-> 3.9.3). Reported by John Blackbourn.
-
-Use CVE-2014-9035.
-
-
->  * XSS in HTML filtering of CSS in posts. Affected versions <= 4.0 (except
-> >= 3.8.5 / 3.7.5 / 3.9.3). Reported by Robert Chapin.
-
-Use CVE-2014-9036.
-
-(Note that, for the XSS issues, we have used the discoverer
-information as expressed in the
-http://openwall.com/lists/oss-security/2014/11/25/10 post -- this is
-slightly different from the way the discoverer information was
-expressed in the https://wordpress.org/news/2014/11/wordpress-4-0-1/
-announcement.)
-
-
->  * Hash comparison vulnerability in old-style MD5-stored
-> passwords. Affected versions <= 4.0 (except >= 3.8.5 / 3.7.5 / 3.9.3). The
-> WordPress install have once run WordPress < 2.5 (March 29, 2008), the user
-> must not have logged in since the install was updated to >= 2.5, and the
-> user needed to have a password for which the md5 hash was something that
-> could be collided with due to PHP dynamic type comparisons (something like
-> 1 in 170 million). Reported by David Anderson.
-
-Use CVE-2014-9037.
-
-
->  * SSRF: Safe HTTP requests did not sufficiently block the loopback IP
-> address space. Affected versions <= 4.0 (except >= 3.8.5 / 3.7.5 / 3.9.3).
-> Reported by Ben Bidner.
-
-> https://core.trac.wordpress.org/changeset/30444
-
-Use CVE-2014-9038.
-
-
-> * Previously an email address change would not invalidate a previous
-> password reset email.  Affected versions <= 4.0 (except >= 3.8.5 / 3.7.5 /
-> 3.9.3). WordPress now invalidates this if the user remembers their
-> password, logs in, and changes their email address. Reported by Momen
-> Bassel, Tanoy Bose, and Bojan Slavkovic.
-
-> http://core.trac.wordpress.org/changeset/30431
-
-Use CVE-2014-9039.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUdOGsAAoJEKllVAevmvmst7QIAJtdJNpYCY4mjY+o8DCovdSp
-q32y8P+xHhcZyiCp7Aac1OARc1Niy4qTBvIKh2kxDjx7wZ7R+mN2cMH/DvgN1zOE
-pHaj+HumkNCP8yfkh24M4eqViq68RHutIddkT4dZHMU/uGL9Xe3Ba39+c0h5hyGk
-Dyfb04BEkizvOQIonk3f6H+38S2XupGITt5gpxtHS2NUG9OQeVRcRG744IsdfsoU
-lx+Qenkqb+yYDX5mq3OfBYgJ+FnBnDyteyO6nJ0+1NNepBCiiwG0LtEHXBKRrpDw
-OyiUv+MzZfGnnMZ5rWTsg26y5vGPjlF6EiT0MxgpcHLGk/YiY0eUPQi2aagHeeY=
-=8PCM
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Product Security
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
