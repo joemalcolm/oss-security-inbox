@@ -1,60 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/10
-Message-ID: <539E20A0.3030708@redhat.com>
-Date: Mon, 16 Jun 2014 08:39:28 +1000
-From: David Jorm <djorm@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for commons-beanutils: 'class' property is exposed, potentially leading to RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/7
+Message-Id: <201406240600.s5O60lRU026649@linus.mitre.org>
+Date: Tue, 24 Jun 2014 02:00:47 -0400 (EDT)
+From: cve-assign@...re.org
+To: vkaigoro@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 752395@...s.debian.org
+Subject: Re: CVE request: python: _json module is vulnerable to arbitrary process memory read
 Content-Type: text/plain; charset=utf-8
 
-Hi All
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I have raised this twice with security@...che.org, on 30 April and June 
-3. I have received no response either time, therefore I am raising it on 
-oss-security.
+> The bug is caused by allowing the user to supply a negative index
+> value.
 
-CVE-2014-0114 describes a well-known issue in Apache Struts 1:
+> http://bugs.python.org/issue21529
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752395
+> https://bugzilla.redhat.com/show_bug.cgi?id=1112285
+> https://hackerone.com/reports/12297
 
-"It was found that the Struts 1 ActionForm object allowed access to the 
-'class' parameter, which is directly mapped to the getClass() method. A 
-remote attacker could use this flaw to manipulate the ClassLoader used 
-by an application server running Struts 1. This could lead to remote 
-code execution under certain conditions."
+Use CVE-2014-4616.
 
-The root cause of this flaw is that commons-beanutils exposes the class 
-property by default, with no mechanism to disable access to it. Struts 1 
-is considered EOL upstream, and upstream has not yet shipped a patch for 
-this flaw. Red Hat has shipped a patch, which was submitted upstream as 
-a pull request:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752395#5
+> Package: python2.7
 
-https://github.com/apache/struts1/pull/1
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752395#19
+> It affects Python 3.x in a similar way
 
-This patch disables access to the class property in struts itself, 
-rather than in commons-beanutils. Other frameworks built on 
-commons-beanutils, such as Apache Stripes, are likely to expose similar 
-issues. I think it would be a good idea to also assign a separate CVE ID 
-to commons-beanutils, and ship a patch for commons-beanutils itself. The 
-commons-beanutils patch could be inherited by other frameworks that may 
-not have the resources to produce their own patch.
+The same CVE ID applies to affected Python 2.x and 3.x versions.
 
-commons-beanutils 1.9.2 has now shipped:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-http://commons.apache.org/proper/commons-beanutils/javadocs/v1.9.2/RELEASE-NOTES.txt
-
-Incorporating a patch for this issue:
-
-https://issues.apache.org/jira/browse/BEANUTILS-463
-
-"A specialized BeanIntrospector implementation has been added which 
-allows suppressing properties. There is also a pre-configured instance 
-removing the class property from beans. Some notes have been added to 
-the user's guide."
-
-I think it would be appropriate to assign a CVE ID to this issue in 
-commons-beanutils, and publish an advisory. This would provide framework 
-developers with the necessary information and impetus to upgrade to 
-commons-beanutils 1.9.2 and make use of SuppressPropertiesBeanIntrospector.
-
-Thanks
---
-David Jorm / Red Hat Product Security
+iQEcBAEBAgAGBQJTqRPQAAoJEKllVAevmvmsjAkH+wSAH88T3s7cwEKRgKJRiOIY
+Gpuk14cxNukkHmA4RuaCqa8Tn/itTQIej+m4bYD6lKw8VZke3OfIK8mh8gele47w
+brEXQCO7Ie0+2ohGsAmjT5tUsOC9ZaTmj3Yg1ZqJkCcAIfGHk68m8dBlL2uqooPy
+RQ38a2dPvMw14vL9mK/OY1StiQiZRK56GpbsL5JE85n1mHft6jWLpIm8d5Pf4Toy
++mwwpiG2FLHMb4EgzllDRw/wDMfxtsMT4UFd6gVdb7Oau2/CR10+uLZzIDbN3o4q
+Bi1ScXCizjpKUl7+Sy8ZsZj1t7VMRaDyzeGlULUAO4/E6wuDVrw0G4jaJXMEkhY=
+=i8ZP
+-----END PGP SIGNATURE-----
