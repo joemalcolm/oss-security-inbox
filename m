@@ -1,27 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/12
-Message-ID: <54362BD8.3080008@redhat.com>
-Date: Thu, 09 Oct 2014 17:31:52 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-3691, foreman-proxy: failure to verify SSL certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/2
+Message-Id: <201406240548.s5O5mCIO026031@linus.mitre.org>
+Date: Tue, 24 Jun 2014 01:48:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: XSS in coppermine gallery before 1.5.28
 Content-Type: text/plain; charset=utf-8
 
-It was discovered that Foreman Smart Proxy failed to verify SSL 
-certificates. As noted in the upstream bug, "This permits any client 
-with access to the API to make requests and perform actions (permitting 
-control of Puppet CA, DHCP, DNS etc.)". (CVE-2014-3691)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A mitigation is available from the following:
+> Coppermine Gallery before 1.5.28 contains a Cross Site Scripting
+> vulnerability in the file keywordmgr.php.
+> http://forum.coppermine-gallery.net/index.php/topic,77376.0.html
+> http://sourceforge.net/p/coppermine/code/8674/
 
-https://groups.google.com/forum/#!topic/foreman-announce/jXC5ixybjqo
+> It is important that all users who run version cpg1.5.26 or older
+> update to this latest version
 
-References:
+> http://sourceforge.net/p/coppermine/code/8674/tree//trunk/cpg1.5.x/CHANGELOG.txt
+> Coppermine version: 1.5.27
+> 2014-03-11 [S] Fixed XSS issue {eenemeenemuu}
 
-http://projects.theforeman.org/issues/7822
-https://bugzilla.redhat.com/show_bug.cgi?id=1150879
+> http://sourceforge.net/p/coppermine/code/8674/tree//trunk/cpg1.6.x/CHANGELOG.txt
+> Coppermine version: 1.6.01
+> 2014-03-11 [S] Fixed XSS issue {eenemeenemuu}
 
-Cheers,
+As far as we can tell, all of this refers to the same vulnerability,
+and means that 1.5.27 and 1.6.01 are also fixed versions, but neither
+of those versions was recommended for use by any customer.
 
---
-Murray McAllister / Red Hat Product Security
+Use CVE-2014-4612.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTqRDUAAoJEKllVAevmvmsvl4IAITBbFAsvwmno8wreNsclIKi
+zODHgNc6YFkOQiCCUUAG8YGvzNANOFEhClBpHzzCdymf6xjUYLVPZOQ17eh64q7f
+8OoYOOME7XRc8Ku3TsXLPhg7GA3SatpBldPLHQWDzDKUIZhJYCdm5szNe0P3aZ+r
+rtdAmtWrHMIgRqrj/M4CTlliycWrv8dKnz6X9pMGYwSyRRD5GFBUCB1ajZvvpKkx
+ZPZqvSYPIacg9sUNC8amHP4j6Ny2E0CQo0PrH76gcp6MfPhGZARZiX6AXGMTus5C
+BE0xkn7SFURmWVhmLSV36LHjQU2rwBarWzlUQvV/YmYpvhpNQpmZPOOpxYjIaR4=
+=7VDe
+-----END PGP SIGNATURE-----
