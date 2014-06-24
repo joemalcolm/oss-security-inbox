@@ -1,37 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/7
-Message-ID: <539AC49C.40406@sysdream.com>
-Date: Fri, 13 Jun 2014 11:30:04 +0200
-From: Damien Cauquil <d.cauquil@...dream.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/10
+Message-ID: <53A95BEE.4050104@ssi.gouv.fr>
+Date: Tue, 24 Jun 2014 13:07:26 +0200
+From: Olivier Levillain <olivier.levillain@....gouv.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Proxmox VE < 3.2 user enumeration vulnerability
+Subject: Re: CVE request: GnuPG-1
 Content-Type: text/plain; charset=utf-8
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
 Hi list,
 
+Thank you for asking for a CVE.
 
-We recently found a vulnerability affecting Proxmox VE < 3.2 that allows
-an unauthenticated user to perform user enumeration. Vendor was
-contacted and  the vulnerability fixed in Proxmox VE 3.2, released on
-2014-03-10.
+Could you please also mention Jean-René Reinhard, who discovered the
+flaw Florian and I reported ?
 
-
-References:
-
-* Proxmox related commits:
-https://git.proxmox.com/?p=pve-access-control.git;a=commit;h=6126ab75a0837298427491ea64b9b2e1139c6ba6
+Best regards,
+Olivier Levillain
 
 
-We would like to request 1 CVE for this vulnerability.
+Le 24/06/2014 07:53, mancha a écrit :
+> On Tue, Jun 24, 2014 at 05:36:15AM +0000, mancha wrote:
+>> GnuPG 1.4.17 released on 20140623 [1] fixes a security flaw, reported by
+>> Olivier Levillain and Florian Maury, that can be exploited via crafted
+>> input to cause a denial of service by triggering an infinite loop [2].
+>>
+>> Please allocate a CVE identifier for this issue.
+>>
+>> Many thanks.
+>>
+>> --mancha
+>>
+>> [1] http://lists.gnupg.org/pipermail/gnupg-announce/2014q2/000344.html
+>> [2]
+http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commitdiff;h=11fdfcf82bd8
+>
+> This issue has also been corrected in the GnuPG-2 branch [3] though
+> there is not yet a point release which includes the fix. Contrary to my
+> subject line, the CVE request is for both GnuPG 1 & 2.
+>
+> [3]
+http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commitdiff;h=014b2103fcb1
+>
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
--- 
-Damien Cauquil
-R&D Director
-CHFI | CEH | ECSA | CEI
+iQIcBAEBAgAGBQJTqVvuAAoJEACa4ygttUrs19EQAJq3FaIBuczcE0qL3DIh6S0t
+MVBCLItOBfK+Ov5rZJqxE4tZQaVC3HIA76DnuxxyD0YGeSoxqnSLXlfANpc4E/vT
+Si8m9hVo8/O7crWrXWCMiuAkIgQBY7dsij9pAPezqnWRak28yl9+jFmciQ/XIP5k
+S/2Ut07JdZxBoPGe/vd1o3M0FcOitFtk6KfjhQs3bo+ko4pO5k+mfon4qhzL31AV
+oaxRctWyy4jBF5AiPI5u9Pe99G3EaZEnc4GogjaIO+WsVolbHqz9/lGtwJnPe4wC
+lUxJOG9wzHdyrZeHW/Up5R4UNW+C4Xy6jZ8K4OvmsDbTcMJ6nppjWEf7DUVSv6UJ
+fFW8CtuFsdPmwHMLG79J2tyrnLV5V99rxVDGOIO9buBnwd17tC+Oo2jtOsWv7BHS
+c53j++wzEcPOuaWogaw9USNK/Twd5bJAqVnv3GgaEwClgbORZuILSmfFWEiajDfb
++8vqtobtLlTOhS4B9LgmmNVlocx5GKxHzYG0TlTuLWtdV0YQb8sCdgkXNQCr+8qP
+ts7tU58qAz6VNdOK4YLp/rCIuHFvIiroIdN/6JPsSQjD1yk6cm93/Gc4Rx+i1WVW
+wLTuffOtKmf5PU5+GVah33+Ylkrp7lyLZyDm08ouo1MY0CcrczM4GsTtjv2hX9xk
+Rej60LwtFS5rS9+3n21f
+=JQvu
+-----END PGP SIGNATURE-----
 
-Sysdream
-108 avenue Gabriel Péri
-93400 Saint Ouen
-Tel: +33 (0) 1 78 76 58 21
-www.sysdream.com
