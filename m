@@ -1,103 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/4
-Message-Id: <E1Xxx8D-0000BD-C9@xenbits.xen.org>
-Date: Mon, 08 Dec 2014 12:09:37 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 114 (CVE-2014-9065,CVE-2014-9066) - p2m lock starvation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/3
+Message-Id: <201406240551.s5O5pXSB026078@linus.mitre.org>
+Date: Tue, 24 Jun 2014 01:51:33 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: piwigo before 2.6.3 sql injection
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-     Xen Security Advisory CVE-2014-9065,CVE-2014-9066 / XSA-114
-                              version 3
+> The Piwigo image gallery contains an sql injection before versions
+> 2.6.3 and 2.7.0_beta2
+> http://piwigo.org/bugs/view.php?id=3089
+> http://piwigo.org/dev/changeset/28678
+> http://piwigo.org/forum/viewtopic.php?id=24009
 
-                       p2m lock starvation
+Are you sure about this? Changeset 28678 doesn't seem to have been
+implemented in the
+http://piwigo.org/download/dlcounter.php?code=26xto263 file that's
+recommended in the 2.6.3 Release Notes. Also,
+http://piwigo.org/bugs/changelog_page.php suggests that 3089 was fixed
+only in 2.7.0beta2, not in 2.6.3.
 
-UPDATES IN VERSION 3
-====================
+http://piwigo.org/releases/2.6.3 says "[security] security failure
+reported and fixed by Christopher Chrapka, ojezu.org." Is this instead
+perhaps an unspecified vulnerability that is unrelated to the fix for
+bug 3089?
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The current read/write lock implementation is read-biased, which allows
-a consistent stream of readers to starve writers indefinitely.  There
-are certain rwlocks where guests are capable of applying arbitrary read
-pressure.
-
-IMPACT
-======
-
-A malicious guest administrator can deny service to other tasks.  If
-the NMI watchdog is active, a timeout might be triggered, resulting in
-a host crash.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.2 and later systems are vulnerable.
-
-Xen 4.1 and earlier are not vulnerable in normal configurations.  4.1
-and earlier are vulnerable only insofar as features are used which
-have already been explicitly discounted for security support purposes
-(TMEM, see XSA-15; XSM-based radical disaggregation, see XSA-77).
-
-Only x86 systems offer avenues for attacking this vulnerability.
-ARM systems do not and are therefore not vulnerable.
-
-MITIGATION
-==========
-
-There is no mitigation available for this issue.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue in
-practice for most systems.  (CVE-2014-9065 refers to these fixed
-cases.)
-
-In some deployments, large guests (more than around 30-40 VCPUs) may
-still be able to trigger intermittent problems; a complete fix to this
-issue requires substantial structural changes and is planned for Xen
-4.6.  (CVE-2014-9066 refers to these yet-to-be-fixed cases.)
-
-xsa114.patch                 xen-unstable
-xsa114-4.4.patch             Xen 4.4.x
-xsa114-4.3.patch             Xen 4.3.x
-xsa114-4.2.patch             Xen 4.2.x
-
-$ sha256sum xsa114*.patch
-d1c1a2d5d55bfe13ba99a9cb99b367a29389aa30f13ffacc02b465a006115b45  xsa114.patch
-a7a57c49d65de7e3cd480476b0a935ddac9e9d941aa6ca65e87170411a7c1176  xsa114-4.2.patch
-ae787074b857c40ab0059802846cb0152e24c937486968c769a9bfe8cbe3d10f  xsa114-4.3.patch
-b35ed8710693163cc33772c36e4c17dc76e25a0b2025fff4a5aa3b46c459938a  xsa114-4.4.patch
-$
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUhZTQAAoJEIP+FMlX6CvZYUkH/A/SYzqnOXvSa0tF7penNFb9
-NFwRBjTvddaTnB72UiIL6ca/3tV1la2cNpn+p4M+cGSuCwHV9QaEoRMtc6l77Yol
-I1ApyZWHS3Qwv2zKDp5dozDcO5yiVuVj+Az1O9f3NCv6PsQvJxYugB/3JKUnhS60
-ItmlwnxAEzRd0pvoG8zb7vdLKPyfJ9gYTW3OU50F13TbJEtIJ1ifzvCTC7zPv7da
-phYy7NClS9a1QeXOnwRNyoL8hBZ6OWJYxG66+8P/s0SUtvTOuOoVJ510cAwfv4Fw
-y96Ss+vfTu9u34GBaO/rTP5FkH1x9vptFGTIgjtDPZmwf30kCo4qyq3jnjyWKmM=
-=V6/o
+iQEcBAEBAgAGBQJTqRGSAAoJEKllVAevmvmsHlcIAMDmhzYQds1t5ZkPQomsaHsp
+ohF0honGOLkkbpYL2/OPf+7vpTeRE3TJk9UeNH0KIOhYLsPGFNd1bnJLwxCHjoBN
+sk1ALJ4lKhf58QI6d9GRRKJ9dfpaMSBrYm5L7D76Jaftet7pdFu1UKO3n4gVqqAo
+dQ7db3sQffxc3Geh1QTMAF7PCt8XYgFuR/lQ6KCKsKcYn/e/12qGS+PXI4FDDlxA
+xXIorMmRqTTWQjYXxQ/WyAXgKhs8Qm1hxwJ3HHtlMtBN98WXOOl/3na4pGMKB7OE
+CEYXuMCHJ8ua/208zPO4Re4Zz1ijLwarRj2ND2wV0TL+AY5p13WXEs3v2Q74LLc=
+=JMVl
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa114.patch" of type "application/octet-stream" (12633 bytes)
-
-Download attachment "xsa114-4.2.patch" of type "application/octet-stream" (10533 bytes)
-
-Download attachment "xsa114-4.3.patch" of type "application/octet-stream" (12286 bytes)
-
-Download attachment "xsa114-4.4.patch" of type "application/octet-stream" (12291 bytes)
