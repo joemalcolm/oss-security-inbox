@@ -1,47 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/5
-Message-Id: <201405190705.s4J74tuP026290@linus.mitre.org>
-Date: Mon, 19 May 2014 03:04:55 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/25/8
+Message-Id: <201406252307.s5PN7RRD020627@linus.mitre.org>
+Date: Wed, 25 Jun 2014 19:07:27 -0400 (EDT)
 From: cve-assign@...re.org
-To: mattd@...fuzz.com
+To: vdanen@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE requests / advisory: TeamPass <= 2.1.19
+Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> All the issues are found in TeamPass versions <= 2.1.19, and all were
-> reported by myself.
+There admittedly isn't a precise distinction between "opportunity for
+security improvement" (a CVE ID cannot be assigned) and "exposure" (a
+CVE ID can be assigned in some cases).
 
-Here are the CVE IDs for your discoveries. The commits mentioned in
-your original message have many other changes that are unrelated to
-your discoveries. Those other changes are not within the scope of any
-of these CVE IDs. If any of those changes should be interpreted as
-vulnerability fixes, one or more additional CVE IDs may be assigned.
+In web applications that function correctly with the HTTPOnly flag for
+a cookie, absence of this flag might be categorized as a CWE-668
+("Exposure of Resource to Wrong Sphere") issue. In general, factors
+that can be considered include:
 
-> Issue #1: File execution protection bypass via language path injection
+  -- are there compatibility downsides to setting the flag? (An
+     example of a downside might be: a popular but noncompliant
+     browser completely ignores the cookie if the flag is set.)
 
-Use CVE-2014-3771.
+     [ Obviously each CVE assignment is on a per-product basis, and
+       there wouldn't be a CVE about HTTPOnly if a product's design
+       relies on script access to a cookie. ]
 
+  -- does the flag interfere with plausible use cases? (An example of
+     a use case might be: script code that doesn't need to know the
+     value of a cookie, but was designed to read the cookie anyway to
+     assess whether an attack involving long cookie values is
+     occurring.)
 
-> Issue #2: File execution protection bypass via incorrect use of
->           session variables
+  -- are there vendors who recommend against the flag?
 
-Use CVE-2014-3772.
+  -- compared to the development cost in arranging for the flag to be
+     set, is it possible that the real-life benefit is too small?
 
+  -- are there other known or potential costs to setting the flag?
+     (There might not be a good example here, e.g., there probably
+     aren't bandwidth considerations where 9 or 10 more bytes is a
+     deal breaker.)
 
-> Issue #3: Multiple SQL injection vectors in sources/main.queries.php
-> Issue #4: Multiple SQL injection vectors in sources/datatable/*; and
->           datatable.logs.php (in the root directory, *not* in
->           sources/datatable directory)
+If the answer to all of these questions is no, then it starts becoming
+reasonable to argue that absence of the flag is an implementation
+error.
 
-Use CVE-2014-3773 for issues 3 and 4.
+> like running SELinux (or AppArmor), running a virus scanner, and
+> having a firewall
 
-
-> Issue #5: Multiple XSS vectors in items.php
-
-Use CVE-2014-3774.
+All of those seem to, in practice, have a relatively much greater
+chance of introducing new vulnerabilities because of the required
+implementation complexity.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -51,11 +63,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTeazMAAoJEKllVAevmvms4h0H/RbumrESu6O9eS2pUJIvgkow
-1oPUsqVY7WmXa/Uam5Irq27bM3f3Nt1WVgc3Fn5U7v5hXVjI7PPD9guIIN8tFado
-eTpjbyuVgHXeKfukESvIgbFQHrGvvlcYDGtS3MRBIPpXSEutqtlsFIHZHRzmqhWO
-roHNH2/u4dmLfPs14VV5/2iLBExBRQ1m3ZptWXGR3CL0RCAimYlYbdTTj6U6c0Ks
-CGumIGZDUFDSfMkjV+R3AHSP0QdMquq0sMWTVAKOUk5N9l8rAF3SDuHFJtBGJ0jR
-jz/5JzEsUPb8cAAi36tR6pwE+QtW2+hvrA4I+7W2YKG03HySlwQmWI9qLJ24D78=
-=jjpO
+iQEcBAEBAgAGBQJTq1TxAAoJEKllVAevmvmsyjwH/1x0dPNXz53WnUklU1uzNLNt
+h7SGdpfpiwjsiPADMj4aJNhJEQsZWcmmyDqgc7NINOyh1C0eUyG5y9zB8Sn+MAgy
+MnaVvNfhiP1MWFZ5fZdJ1WCY2stCyTDYlvYpxVPQtxdIKqpSlCS6wBEqDmripWx+
+y7sTK1iShNUYc0TQMcYmy6STChjscxZixInLxOA7LZqAksKrQuKH4n8R1vnZ7YU8
+m5CKE0sPXiNasijf2UPUTyTEe3wYVFInbkV2TDYmaPQol9Ym749tdb5913l+LfBT
+dYUHJRighPzWjxw0lxjlQgRovk1vsCtc4y4c+uKSA3lb03tWIr+Cwobt1GS47gs=
+=MYyX
 -----END PGP SIGNATURE-----
