@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/22/1
-Message-Id: <201406221721.s5MHLlgt003958@linus.mitre.org>
-Date: Sun, 22 Jun 2014 13:21:47 -0400 (EDT)
-From: cve-assign@...re.org
-To: corsac@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, team@...urity.debian.org, edi@....de
-Subject: Re: XSS vulnerability in apt-cacher-ng
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/25/4
+Message-ID: <20140625110054.GA634@kludge.henri.nerv.fi>
+Date: Wed, 25 Jun 2014 14:00:54 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: MediaWiki releases 1.19.17, 1.21.11, 1.22.8 and 1.23.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-June/000154.html
 
-> The way for the attacker to exploit this is to redirect the user's
-> browser in a LAN to apt-cacher-ng server (which address the attacker
-> has to know) with a manipulated URL.
-> 
-> http://anonscm.debian.org/gitweb/?p=apt-cacher-ng/apt-cacher-ng.git;a=commit;h=6f08e6a3995d1bed4e837889a3945b6dc650f6ad
+"""
+this is a notice that on Wednesday, June 25th, between 20:00-22:00 UTC we will
+release security and maintenance updates for all current and supported branches
+of the MediaWiki software. Downloads and patches will be available at that time.
+"""
 
-Use CVE-2014-4510.
+I'm not sure if those vulnerabilities already have CVEs. I asked from Markus G.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Also please note End of lifetime announcement for MediaWiki 1.21
+http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-June/000153.html
 
-iQEcBAEBAgAGBQJTpw+eAAoJEKllVAevmvmsjOkH/3W6Xz5VCheMUY3wbJ42/aMj
-UNNNvjJc6UnFCs9svZgBQJjWeqH4YM3T0jhayFunJOm46nasrBGKkANl8Jk4RJl2
-hM5UMl4nyKXJGR5IbNsSdzZ5lCa463juGzezU04N+qlthMnXFw1RJny0ezucYSPX
-JIdx+vCdMAfSCaejLDiE/Gk8nv3QTYbfgOjUPtyOlnppZlRlGJX7jRao49T+zx1V
-somdQ93TNr8N3yLmsD4ivNSeYoiaRrKQ0JnKGvM+hjIlFY2pP4fsA2cYyhj7F25/
-UpABIlHveN8go0RlaIa7dzFXQjUrUZlVeuBVjPlpQl0A4OQxIqHLuyRNMYYHdhk=
-=2TqM
------END PGP SIGNATURE-----
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
