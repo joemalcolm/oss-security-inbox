@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/20
-Message-ID: <5432AF52.1050207@redhat.com>
-Date: Mon, 06 Oct 2014 09:03:46 -0600
-From: Eric Blake <eblake@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/25/6
+Message-ID: <53AB1F3E.9070202@enovance.com>
+Date: Wed, 25 Jun 2014 15:13:02 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
+Subject: [OSSA 2014-021] User token leak to message queue in pyCADF notifier middleware (CVE-2014-4615)
 Content-Type: text/plain; charset=utf-8
 
-On 10/05/2014 08:11 AM, David A. Wheeler wrote:
-> Everyone: Thank you VERY MUCH for your timeline corrections and additions on shellshock.
-> 
-> My updated document is here:
->   http://www.dwheeler.com/essays/shellshock.html
-> The updated timeline is here:
->   http://www.dwheeler.com/essays/shellshock.html#timeline
+OpenStack Security Advisory: 2014-021
+CVE: CVE-2014-4615
+Date: June 25, 2014
+Title: User token leak to message queue in pyCADF notifier middleware
+Reporter: Zhi Kun Liu (IBM)
+Products: Neutron    (2014.1 versions up to 2014.1.1)
+          Ceilometer (2013.2 versions up to 2013.2.3,
+                      2014.1 versions up to 2014.1.1)
+          pyCADF library (all versions up to 0.5.0)
 
-You list the release of bash43-026 twice, ten hours apart.
+Description:
+Zhi Kun Liu from IBM reported a vulnerability in the notifier middleware
+available in the PyCADF library and formerly copied into Neutron and
+Ceilometer code. An attacker with read access to the message queue may
+obtain authentication tokens used in REST requests (X_AUTH_TOKEN) that
+goes through the notifier middleware. All services using the notifier
+middleware configured after the auth_token middleware pipeline are impacted.
 
-You should add the recent release of bash43-030 for CVE-2014-6278:
+pyCADF fix (included in 0.5.1 release):
+https://review.openstack.org/94878      (pyCADF)
 
-https://lists.gnu.org/archive/html/bug-bash/2014-10/msg00040.html
-5 Oct 2014 19:06:06 -0400
+Juno (development branch) fix:
+https://review.openstack.org/94891      (Neutron)
+
+Icehouse fix:
+https://review.openstack.org/101097     (Neutron)
+https://review.openstack.org/96944      (Ceilometer)
+
+Havana fix:
+https://review.openstack.org/101799     (Ceilometer)
+
+Notes:
+Ceilometer Juno (master) branch is not affected.
+Those fixes will be included in the Juno-2 development milestone and in
+future 2013.2.4 and 2014.1.2 releases.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4615
+https://launchpad.net/bugs/1321080
 
 -- 
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
