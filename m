@@ -1,21 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/3
-Message-ID: <20140903160226.756b1dc0@redhat.com>
-Date: Wed, 3 Sep 2014 16:02:26 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/25/2
+Message-ID: <20140625115655.464dc0ad@hboeck.de>
+Date: Wed, 25 Jun 2014 11:56:55 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: V8 Memory Corruption and Stack Overflow
+Subject: CVE request: timthumb remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+The timthumb code, used by a countless number of wordpress themes, has
+(again) a remote code execution vulnerability:
+http://seclists.org/fulldisclosure/2014/Jun/117
 
-The following node.js blog post points out a flaw in V8, which is
-bundled with node.js:
+All details there.
 
-http://blog.nodejs.org/2014/07/31/v8-memory-corruption-stack-overflow/
+This affects the very latest upstream version 2.8.13, I just opened an
+upstream bug:
+https://code.google.com/p/timthumb/issues/detail?id=485&thanks=485&ts=1403690188
 
-It does not seem this got CVE assigned by Google, or in response to the
-node.js update.
+No fix available at the moment.
 
 -- 
-Tomas Hoger / Red Hat Product Security
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
