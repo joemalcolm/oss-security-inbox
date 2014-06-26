@@ -1,22 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/25
-Message-ID: <542C6D5A.7080206@case.edu>
-Date: Wed, 01 Oct 2014 17:08:42 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Shawn <citypw@...il.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/14
+Message-ID: <53AC41BF.7020201@redhat.com>
+Date: Thu, 26 Jun 2014 09:52:31 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
-On 10/1/14, 5:04 PM, Shawn wrote:
-> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Nope, this one fixes 7168/7169.  It's the equivalent of the
-`parser-oob' patch.
 
-I have patches that fix 6277/6278 that are in the pipeline.
 
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+On 26/06/14 01:50 AM, Florian Weimer wrote:
+> On 06/26/2014 01:07 AM, cve-assign@...re.org wrote:
+>> -- compared to the development cost in arranging for the flag to
+>> be set, is it possible that the real-life benefit is too small?
+> 
+> You need a separate vulnerability to access the cookie.  These 
+> vulnerabilities will have to be addressed even if the HttpOnly flag
+> is set because indirectly, they usually give attackers access to 
+> information from which cookies are derived (e.g., by injecting a 
+> malicious login form).  Therefore, I think the HttpOnly flag is
+> just hardening, and it's not even a very effective form of it.
+
+By that logic then we wouldn't assign CVE's for bad salt/lacking
+salt/bad password encryption, as the "real" vulnerability" is in the
+access of that data. The reality is a lot of what used to be exotic
+security is now becoming basic standard practice, largely I think for
+two simple reasons: 1) attackers keep getting better and 2) the
+technical security debt in most existing software keeps getting
+discovered to be larger.
+
+
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJTrEG/AAoJEBYNRVNeJnmT6BQP/ixcrT9JPwkfbWUx3sIIGu5p
+URI1tdYlezUeSmdLFxUj9LreBRavk1EMrc0Hpz+kR/xLb1wyCPAek2ivN/I/obZ7
+aguCgUQcJhKWLU8hMGAZgL3kvb/SHDhcSv+DH/sME3ZhKtCEC9BxOgctNsdbIvXC
+gSKJ56MKgQ/YkLfbKEsk/sTwpo0FY7maA2+PLuIPy+pPH2LufIXl0gqewRGkk0Bf
+5bao4aMS7t/96R+B5sdOFq6/R8BdhKxgitzNe64cXT+OoIL5UZ6uurMkjORsRGAe
+MSOy5NwSiGzYZGD2xv2U13P90gROzwYdoL6RklFQumF+0infqucLdUtYoTeN0q5R
+VOBclkgnZ7UO83V2Ie147EkQ/222XqXwpVGkBqws/NnjQDDI55A3QekQ000Q2zd2
+sg6x/V7LYlqjlMqb/dtdxlzxv7mOpZltJEQPd11He3ISpK96uJ/6n81twEw/Plb5
+PCb8iImyPXJshaELlpxRMWJvCMq3xvohLmvCwKDlhEDUc1RVMKg5bDYguxRowa9b
+Cy2uLsaIwndG08bObtzDg0a5tXtRRYUqd2LeUT8J5B3u6XDroWHxemldpKJ5hK/d
+Jkh5K98B5iolpb43g+9KM73d9tCucBTsHa2XOGgiy/8C65QMfVQb/FtyQBCJ01n1
+t384/G45NKx9FN/KcCPH
+=aMTm
+-----END PGP SIGNATURE-----
