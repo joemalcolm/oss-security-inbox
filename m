@@ -1,52 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/9
-Message-ID: <20140912122940.GC3410@mail.corp.redhat.com>
-Date: Fri, 12 Sep 2014 14:29:40 +0200
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: 760455@...s.debian.org
-Subject: CVE request: automake: insecure use of /tmp in install-sh
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/16
+Message-ID: <53AC43A1.2010000@redhat.com>
+Date: Thu, 26 Jun 2014 10:00:33 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It was discovered [1] that there's an issue in how automake handles
-temp directories.
+On 26/06/14 05:45 AM, Jamie Strandboge wrote:
+> Based on this email and the one this is in response to, I find this
+> comment unclear. Is MITRE saying that:
+> 
+> a) lack of implementing SELinux, AppArmor, virus scanner, firewall,
+> <insert hardening software here> does not justify a CVE because of
+> the complexity? b) lack of implementing SELinux, AppArmor, virus
+> scanner, firewall, <insert hardening software here> does not
+> justify a CVE and also cannot be considered an implementation error
+> because of the complexity? c) implementing SELinux, AppArmor, virus
+> scanner, firewall, and/or <insert hardening software here> is not
+> worth it because the added complexity intrinsically makes the
+> system less secure? d) something else?
+> 
+> Thanks
 
-When the destination directory does not exist, install-sh checks if 
-"mkdir -p" works, but it does so in an insecure way. Here are the 
-relevant parts of the code:
+So one comment on this, replace the above with "DAC"
+(http://en.wikipedia.org/wiki/Discretionary_access_control) and I bet
+we'd hand it a CVE =).
 
-mkdirprog=${MKDIRPROG-mkdir}
-# ...
-        tmpdir=${TMPDIR-/tmp}/ins$RANDOM-$$
-        trap 'ret=$?; rmdir "$tmpdir/d" "$tmpdir" 2>/dev/null; exit
-$ret' 0
+Security lines move, I would expect most modern system of any type
+(Windows, Linux, router, maybe not my bathroom scale that talks
+wifi... yet) to have some sort of firewall enabled by default and not
+simply leave everything exposed to the world. So in that case not
+having a fire enabled by default would definitely violate the
+principle of least surprise and maybe even qualify for a CVE.
 
-        if (umask $mkdir_umask &&
-        exec $mkdirprog $mkdir_mode -p -- "$tmpdir/d") >/dev/null 2>&1
-        then
-# ...
-          rmdir "$tmpdir/d" "$tmpdir"
-        else
-# ...
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-In some shells (such as dash) $RANDOM is not set, so $tmpdir is easily 
-predictable. Moreover, "mkdir -p" follows symlinks to existing 
-directories. Local attacker can exploit this to create or remove empty 
-directories named "d". (But on modern Linux systems this is mitigated
-by the protected_symlinks feature.)
-
-References:
-[1]: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=760455
-[2]: https://bugzilla.redhat.com/show_bug.cgi?id=1140725
-[3]: https://bugs.gentoo.org/show_bug.cgi?id=522638
-
-Can a CVE ID be assigned to this please?
-
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
-
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJTrEOhAAoJEBYNRVNeJnmTqYoP/jcw48aEYnV1G974RVAg/FcJ
+DQ8RCTvm7zUEXAI4pS+is/2iQ+TdAZnuPQzLSA9fVme3cRIgu5Au2kBT//UTCcd2
+v6TCwtjBWr7qnt1MeFwa2+6c8QOoX3Vx/bH7b0mfN2M4g3t273dnvrdWLioeLt3J
+LrxgtqYnL+ohXitVZRwKOqG9WFaKRyuT0ukhEgUgzVsCKI0wFX2t1W2fvWc2e0iL
+PPpItcO5zMVGe3JVYM91hGc/d5pwr5qd9ip6tB+6X30XdVArFp0Lp3uzP2qRX53z
+SA4uNdkUTdMKnLG3QMU42GpC2Wp2PK4a8r40libWgJbaIlR1zseiUbjcg9gz1/b+
+w/RkNWE3YQ3fyKLiQh1iXU3VnIoqNrOaXP6iHLYTot7rKJKx9p8PQu8wyDETaRcs
+5+Xy8ouOgVTvLaR6sPGgMaP59QOeX2NyX2HDok2R6I0Gq+jg3Avyp9OowkxnM8AZ
+byzyf8KrUqeW4nY5tHT4b6tUJbrEuQ2Z4AL2ApI/N3sagMkQLvnyD3AB/gkVcwxI
+UroTxEnhmHaSiMYa1+Eeqh7/+vNsQddFMH1j/MavPtvMOwz6/itLOZs7A/i4YMWt
+surAlpJP5llL3gdSZQ4j5oSmWS/1CmkqKAEeObbhwqJ6FG+vRRIRGKRL6h9LNLHG
+2KHAU//lPwePVp/+qvsU
+=yV4Z
+-----END PGP SIGNATURE-----
