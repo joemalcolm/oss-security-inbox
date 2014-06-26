@@ -1,44 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/28
-Message-ID: <CALx_OUB=wGZKyubn--Qv8i_ysjFmn8TJgzKJZ_5M5ajOA_yOdw@mail.gmail.com>
-Date: Thu, 2 Oct 2014 01:15:51 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Shawn <citypw@...il.com>
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/20
+Message-ID: <CAFkuX4vuZEEHijtLDagG5Z2u6zHLudMFUXKwO8cNrWqx2bjaiA@mail.gmail.com>
+Date: Thu, 26 Jun 2014 12:51:32 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
+To: oss-security@...ts.openwall.com
+Subject: LMS-2014-06-16-1: Oberhumer LZO
 Content-Type: text/plain; charset=utf-8
 
-Nope. There are no CVEs assigned for general hardening (e.g.,
-Florian's patch) and the ordering of CVE IDs isn't necessarily
-chronological (because larger vendors get their own ranges to allocate
-without consulting any central authority).
+Hello All,
 
-In true chronological order, it went like this:
+This is to inform you of a security flaw in the Oberhumer LZO algorithm,
+typically packaged as liblzo2 or lzo-2. Please read the bug report inline.
 
-* CVE-2014-6271 - original RCE found by Stephane. Fixed by bash43-025
-and corresponding Sep 24 entries for other versions.
+Best,
+Don A. Bailey
+Founder / CEO
+Lab Mouse Security
+https://www.securitymouse.com/
 
-* CVE-2014-7169 - file creation / token consumption bug found by
-Tavis. Fixed by bash43-026 & co (Sep 26)
+#############################################################################
+#
+# Lab Mouse Security Report
+# LMS-2014-06-16-1
+#
 
-* CVE-2014-7186 - a probably no-sec-risk 10+ here-doc crash found by
-Florian and Todd. Fixed by bash43-028 & co (Oct 1).
+Report ID: LMS-2014-06-16-1
 
-* CVE-2014-7187 - a non-crashing, probably no-sec-risk off-by-one
-found by Florian.  Fixed by bash43-028 & co (Oct 1).
+CVE ID: CVE-2014-4607
 
-* CVE-2014-6277 - uninitialized memory issue, almost certainly RCE
-found by me. No specific patch yet.
+Researcher Name: Don A. Bailey
+Researcher Organization: Lab Mouse Security
+Researcher Email: donb at securitymouse.com
+Researcher Website: www.securitymouse.com
 
-* CVE-2014-6278 - command injection RCE found by me. No specific patch yet.
+Vulnerability Status: Patched
+Vulnerability Embargo: Broken
 
-*All* of these are mitigated by Florian's unofficial patch
-(http://www.openwall.com/lists/oss-security/2014/09/25/13) or its
-upstream version (bash43-027 & co, released on Sep 27). If you have
-that patch, there's no point in obsessing about the status of
-individual bugs, because they should no longer pose a security risk.
+Vulnerability Class: Integer Overflow
+Vulnerability Effect: Memory Corruption
+Vulnerability Impact: DoS, RCE
+Vulnerability DoS Practicality: Practical
+Vulnerability RCE Practicality: Impractical
+Vulnerability Criticality: High
 
-And you don't have it, patch your system now instead of waiting for
-any additional patches for '77 and '78 =)
+Vulnerability Scope:
+liblzo1:
+	- All versions of lzo1 are affected
+liblzo2:
+	- All versions of lzo2 are affected
+	- Except for platforms that set both of the
+	  LZO_UNALIGNED_OK_8 and LZO_UNALIGNED_OK_4 preprocessor macros
 
-/mz
+Vulnerability Tested:
+liblzo1:
+	x86_64: vulnerable
+	i386: vulnerable
+	ARM: vulnerable
+liblzo2:
+	x86_64: not vulnerable
+	i386: vulnerable
+	ARM: vulnerable
+
+Functions Affected:
+	lzo1x_decompress_safe
+	lzo1y_decompress_safe
+	lzo1z_decompress_safe
+
+Criticality Reasoning
+---------------------
+Despite the likelihood that this vulnerability will result in a simple denial
+of service, there is a strong possibility that memory corruption can result
+in remote code execution. If the LZO decompression algorithm is used in a
+threaded or kernel context, it may be possible to corrupt memory structures
+that control the flow of execution in other contexts. When the executive
+switches context, control of a secondary thread or process may be obtained.
+This attack is highly specialized and requires a deep understanding of the
+target architecture to succeed. Therefore, it is possible, but impractical,
+to implement a RCE attack using this bug.
+
+Despite RCE being impractical, the criticality level must be defined as High
+because the vulnerable algorithm has been in use since approximately 1999.
+The set of affected systems is potentially large and unmanageable due to the
+period of time the vulnerable algorithm has been deployed. As a result, there
+may still be legacy systems in production that are vulnerable to RCE.
+
+Vulnerability Description
+-------------------------
+An integer overflow may occur when processing any variant of a "literal run"
+in the lzo1x_decompress_safe function. Each of these three locations is
+subject to an integer overflow when processing zero bytes. The following code
+depicts how the size of the literal array is generated:
+        if (t == 0)
+        {
+            NEED_IP(1);
+            while (*ip == 0)
+            {
+                t += 255;
+                ip++;
+                NEED_IP(1);
+            }
+            t += 15 + *ip++;
+        }
+
+As long as zero byte (0x00) is encountered, the variable 't' will be
+incremented by 255. Using approximately sixteen megabytes of zeros, 't' will
+accumulate to a maximum unsigned integer value on a 32bit architecture. In
+combination with the following code, the value of 't' will overflow:
+        /* copy literals */
+        assert(t > 0); NEED_OP(t+3); NEED_IP(t+4);
+
+The NEED_OP() check will always pass in this case, because the size check
+within the macro will evaluate based on the overflown integer, not the value
+of 't'.
+
+This exposes the code that copies literals to memory corruption.
+
+It should be noted that the following code unintentionally saves certain
+architectures from exposure:
+#if defined(LZO_UNALIGNED_OK_8) && defined(LZO_UNALIGNED_OK_4)
+        t += 3;
+
+Because the variable 't' is added by the same amount required to overflow the
+NEED_OP() test, the integer will overflow to a safe amount, negating exposure
+to an exploit.
+
+It should be noted that if 't' is a 64bit integer, the overflow is still
+possible, but impractical. An overflow would require so much input data that
+an attack would be infeasible even in modern computers.
+
+Vulnerability Resolution
+------------------------
+To resolve this issue, the NEED_OP and NEED_IP macros should be enhanced to
+detect for integer overflow. This is the most reasonable and efficient
+location for catching corrupted or instrumented payloads. By testing for
+overflow here, an attacker is simply wasting time by forcing the function
+to process a large amount of zero bytes.
+
