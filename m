@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/23
-Message-ID: <20140808182716.GY1589@openwall.com>
-Date: Fri, 8 Aug 2014 22:27:16 +0400
-From: "(GalaxyMaster)" <galaxy@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/10
+Message-ID: <53ABCF86.7030607@redhat.com>
+Date: Thu, 26 Jun 2014 17:45:10 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
-Alexey,
+On 06/26/2014 05:38 PM, Henri Salo wrote:
+> On Thu, Jun 26, 2014 at 05:30:46PM +1000, Murray McAllister wrote:
+>> But websites set lots of cookies, which if stolen, have no relevance
+>> to being able to access the user's session, or do much of anything
+>> useful with anyway. I believe a lot of the "this cookie does not
+>> have HTTPOnly" issues are non-issues.
+>
+> Those CVEs should be REJECTED. Can you provide list of non-issues with CVE?
+>
+> ---
+> Henri Salo
+>
 
-On Fri, Aug 08, 2014 at 09:57:49PM +0400, gremlin@...mlin.ru wrote:
-> On 08-Aug-2014 09:21:02 -0700, Greg KH wrote:
->  > That doesn't prevent any other USB HID device from being plugged
->  > in and instantly working. Which again, you can prevent if you
->  > want to, but no one seems to do that...
-> 
-> Hmmm... To avoid possible confusion: that was CONFIG_USB_KBD - 
-> "USB HIDBP Keyboard (simple Boot) support", and CONFIG_USB_HID
-> was turned off.
+I was not clear, sorry. I had not looked at the original CVEs, and was 
+just talking in general: Red Hat has 
+https://access.redhat.com/site/articles/66234 and we get a lot of 
+httponly related reports (assuming others get them too).
 
-I think Greg was referring to kernel's feature of controlling power on
-USB ports (e.g. you can just switch of power for a port and nothing you
-insert there will have a chance to work until you instruct the kernel to
-switch the port back on).
+Cheers,
 
-> Bus 002 Device 064: ID 046d:c016 Logitech, Inc. Optical Wheel Mouse
-> 
-> Device IDs tell us the hub was reset several times :-)
-
-... or somebody insanely was plugging mouse in and out in a cycle :)
-
--- 
-(GM)
-
+--
+Murray McAllister / Red Hat Product Security
