@@ -1,27 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/24/2
-Message-ID: <21218.18131.870738.776866@gargle.gargle.HOWL>
-Date: Fri, 24 Jan 2014 11:56:19 +0100
-From: rf@...eap.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/8
+Message-ID: <53ABCC26.5000001@redhat.com>
+Date: Thu, 26 Jun 2014 17:30:46 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership
+Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
->>>>> "RF" == rf  <rf@...eap.de> writes:
+On 06/26/2014 04:31 PM, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> My thought on this: security lines move, e.g. with crypto certain
+> algorithms are no longer sufficient (e.g. DES), they are essentially
+> the same as no crypto when put up against modern hardware.
+>
+> So with web cookies they are often used as authentication tokens (the
+> alternative is in URL which has it's own list of problems, or form
+> values/etc.), I would hazard to say the vast majority of all web based
+> authentication uses cookies (I've never run into widely used
+> certificate based or other options). Also web sites have changed, no
+> longer static sites or "simple" CGI based sites, you pretty much
+> always use a framework, sometimes hosting your framework within a
+> lower level framework. Or you write custom code, whatever. The point
+> is this stuff has XSS flaws all over the place, it's more the rule
+> then the exception.
+>
+> So with widespread XSS in mind, I think it's safe to say that
+> virtually every web site (even sites that care deeply and spend
+> time/money and have bug bounties) have lurking XSS flaws, which if
+> HTTPOnly is not used can result in cookie theft. So in my mind
+> HTTPOnly isn't an option any more, but a requirement, ergo in most
+> situations no HTTPOnly = win a CVE.
+>
+> Evidence:
+>
+> http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=XSS
 
->>>>> "MM" == Moritz Muehlenhoff <jmm@...ian.org> writes:
-    MM> We maintain the http://anonscm.debian.org/viewvc/kernel-sec/
-    MM> repository which tracks all kernel vulnerabilities as soon as
-    MM> they're public. That's a good base for every Debian-derived
-    MM> distro with a modified kernel.
+It depends what the cookie is used for. It would be an issue if not used 
+on the session cookie and you could steal that.
 
-    RF> Sounds interesting. How am I supposed to extract information
-    RF> from this page? Are there some docs about how to use it?
+But websites set lots of cookies, which if stolen, have no relevance to 
+being able to access the user's session, or do much of anything useful 
+with anyway. I believe a lot of the "this cookie does not have HTTPOnly" 
+issues are non-issues.
 
-OK, think I got the basic idea. However, judging from a few CVE examples
-on the site, it seems there is no time advantage in using this site as
-compared to posts on this list. In fact the entries appear a couple of
-days later in some cases. So I'm afraid this won't be of too much help
-concerning the timing issue.
+Cheers,
 
-Roland
+--
+Murray McAllister / Red Hat Product Security
