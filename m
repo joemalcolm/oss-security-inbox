@@ -1,40 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/2
-Message-ID: <53390AA5.2080600@redhat.com>
-Date: Mon, 31 Mar 2014 00:26:45 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: CVEs, Crypto and "vulnerabilities"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/12
+Message-ID: <53AC07D1.3070301@canonical.com>
+Date: Thu, 26 Jun 2014 06:45:21 -0500
+From: Jamie Strandboge <jamie@...onical.com>
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 06/25/2014 06:07 PM, cve-assign@...re.org wrote:
+> There admittedly isn't a precise distinction between "opportunity for
+> security improvement" (a CVE ID cannot be assigned) and "exposure" (a
+> CVE ID can be assigned in some cases).
+> 
+> In web applications that function correctly with the HTTPOnly flag for
+> a cookie, absence of this flag might be categorized as a CWE-668
+> ("Exposure of Resource to Wrong Sphere") issue. In general, factors
+> that can be considered include:
+> 
+>   -- are there compatibility downsides to setting the flag? (An
+>      example of a downside might be: a popular but noncompliant
+>      browser completely ignores the cookie if the flag is set.)
+> 
+>      [ Obviously each CVE assignment is on a per-product basis, and
+>        there wouldn't be a CVE about HTTPOnly if a product's design
+>        relies on script access to a cookie. ]
+> 
+>   -- does the flag interfere with plausible use cases? (An example of
+>      a use case might be: script code that doesn't need to know the
+>      value of a cookie, but was designed to read the cookie anyway to
+>      assess whether an attack involving long cookie values is
+>      occurring.)
+> 
+>   -- are there vendors who recommend against the flag?
+> 
+>   -- compared to the development cost in arranging for the flag to be
+>      set, is it possible that the real-life benefit is too small?
+> 
+>   -- are there other known or potential costs to setting the flag?
+>      (There might not be a good example here, e.g., there probably
+>      aren't bandwidth considerations where 9 or 10 more bytes is a
+>      deal breaker.)
+> 
+> If the answer to all of these questions is no, then it starts becoming
+> reasonable to argue that absence of the flag is an implementation
+> error.
+> 
+>> like running SELinux (or AppArmor), running a virus scanner, and
+>> having a firewall
+> 
+> All of those seem to, in practice, have a relatively much greater
+> chance of introducing new vulnerabilities because of the required
+> implementation complexity.
 
-So the line in the sand is moving currently, I think this issue is
-another good example of something that may qualify for a CVE, or maybe
-not, depends where we draw the line.
+Based on this email and the one this is in response to, I find this comment
+unclear. Is MITRE saying that:
 
-https://github.com/opencart/opencart/issues/1279
+ a) lack of implementing SELinux, AppArmor, virus scanner, firewall, <insert
+    hardening software here> does not justify a CVE because of the complexity?
+ b) lack of implementing SELinux, AppArmor, virus scanner, firewall, <insert
+    hardening software here> does not justify a CVE and also cannot be
+    considered an implementation error because of the complexity?
+ c) implementing SELinux, AppArmor, virus scanner, firewall, and/or <insert
+    hardening software here> is not worth it because the added complexity
+    intrinsically makes the system less secure?
+ d) something else?
 
-So if someone has strong opinions either way please speak up.
+Thanks
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+-- 
+Jamie Strandboge                 http://www.ubuntu.com/
 
-iQIcBAEBAgAGBQJTOQqkAAoJEBYNRVNeJnmTrNAP/3SI4itDSx80AewQ9TlgDqEG
-r9K8Zt+XfXrez3nyGmopiQ1vHfwqCB3fU5gjzzUyVgc18i0Wq7E0bBGhz+zdtpx5
-5JsvC0zf4sWNr3yd12ZX+bU1uOHp2zjM+b3ZKqrrLV5pAk3c3Ut8DGwS4lg+nGzZ
-fyTsRACcZ6xoBfZVlCQgRuG88bdd2hRyQRlYQcXDrxrO7IjM3QMLA2TKrbyWMbd3
-KAtMcsPtYfG17X8L4nC8oykOuuNhYF+7M4aG8HOpHq9rTjK/M8Vobtsr/q2omlB6
-kfQ4d4yeP7wQWI8Y0vw5IqQOv6KLhFQUTXN88c/7/ZwqmAjDc4kpUeBuq/LBt6gV
-3FsQQeVhWaVJt19XWhmtJkipqjARRB+JgBcaeat2FWXtyKrXD8OifesvzxT76f68
-/lGYJg3hBuYhdPTHTfK/X9s/5GfQudd13tgW1L3gCFrH6a2ihj7KAzRaefoGEZ1D
-lkjHXTxas4KFQplBuougpfhpa0lgUaTazvlWFfXFjcG0wWZOVcv5W4Ab1qBsJiNk
-OC5vX/dXQ0KYChaaOFfub+dTyHstHgkYr3hGqeAfOnUv8nozC1PMUeOc8FeSU97v
-Tu9p4NivDuIririkyFR9P5KFIeus6+WHwMxJdZ65wu9lyNfG/dLc5qBqLEAtjo9F
-WbaS0jWRgMKBrBEBjYyf
-=csSm
------END PGP SIGNATURE-----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (885 bytes)
