@@ -1,40 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/3
-Message-ID: <20140212045342.GX2348@openstack.org>
-Date: Wed, 12 Feb 2014 04:53:42 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Glance
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/2
+Message-Id: <201406260020.s5Q0KLMc001531@linus.mitre.org>
+Date: Wed, 25 Jun 2014 20:20:21 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: piwigo before 2.6.3 sql injection
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public,
-although an advisory was not sent yet.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Title: Glance Swift store backend password leak
-Reporter: Nikhil Komawar (Rackspace)
-Products: Glance
-Versions: 2013.2 versions up to 2013.2.1
+The unspecified vulnerability "[security] security failure reported
+and fixed by Christopher Chrapka, ojezu.org" in
+http://piwigo.org/releases/2.6.3 is assigned CVE-2014-4648.
 
-Description:
-Nikhil Komawar from Rackspace reported an information leak in Glance
-logs. The password for the Swift store backend is logged at WARNING
-level as part of the URL when authentication to a store fails if
-image location is not disabled by policy or the store is a
-single-tenant configuration. An attacker with access to the logs
-(local shell, log aggregation system access, or accidental leak) may
-leverage this vulnerability to elevate privileges and gain direct
-full access to the Glance Swift store backend. Only Glance setups
-using the Swift store backend are affected.
+The SQL injection that was apparently first identified in 2.6.2 and
+(thus far) only fixed in 2.7.0beta2 (see the
+http://piwigo.org/bugs/view.php?id=3089 page) is assigned
+CVE-2014-4649.
 
-References:
-https://launchpad.net/bugs/1275062
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Thanks in advance,
-
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+iQEcBAEBAgAGBQJTq2aPAAoJEKllVAevmvmsMwAH/Rejl52Ahj5KKrCr5oAkpWaR
+QJtsBTFQbFGBg36aV9NnG13GLcrfHWVoLORwSr6M6W9UvslQQAA09fHfWlzj8hH9
+9Ed19JIF9PFJhfb3NVs2BwpcC2Jq5tuPEBHKZ/zP+DSP4SgKo7v8UUpkNGCAa4A4
+fL4jdfn8o4AW6laH2tZt7PlXxFsf2SW+PF4QqUT0aYbQrMqWrS7g+eNZQQB4LjwR
+SsRPo8pPGW+5fGOxjwU1e5TcekbnPGOymhzHdHx/3vIzWiIlh5pQ5bvG/OXPTed/
+CWwQ66VxYKGXQ0Uw43QT6USZY2/oyW1nGcjTq2H8oudg/KW+QJG/f1htOrawXr8=
+=+pZa
+-----END PGP SIGNATURE-----
