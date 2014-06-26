@@ -1,45 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/29/6
-Message-ID: <m5di6f$ie5$1@ger.gmane.org>
-Date: Sat, 29 Nov 2014 23:43:28 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/25
+Message-ID: <CAFkuX4vwpDMqX9wbbpzuoxGfKck6sfjNj4o37OEbwjXfUrTGng@mail.gmail.com>
+Date: Thu, 26 Jun 2014 12:58:37 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: PHP Object Injection in MantisBT filter API
+Subject: LMS-2014-06-16-6: LZ4 Core
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+Hello All,
 
-Please assign a CVE ID for the following issue.
+A vulnerability has been identified in the LZ4 core implementation. Please
+review the bug report attached inline.
 
+Best,
+Don A. Bailey
+Founder / CEO
+Lab Mouse Security
+https://www.securitymouse.com/
 
-Description:
+#############################################################################
+#
+# Lab Mouse Security Report
+# LMS-2014-06-16-6
+#
 
-In the function current_user_get_bug_filter(), the code loads a variable 
-from $_GET['filter']/$_POST['filter'] and if it's not numeric, feeds it 
-straight into unserialize() allowing an attacker to inject a PHP object.
+Report ID: LMS-2014-06-16-6
 
+CVE ID: CVE-2014-4611
 
-Affected versions:
-<= 1.2.17
+Researcher Name: Don A. Bailey
+Researcher Organization: Lab Mouse Security
+Researcher Email: donb at securitymouse.com
+Researcher Website: www.securitymouse.com
 
-Fixed in versions:
-1.2.18 (not yet released)
+Vulnerability Status: Reported / No response
+Vulnerability Embargo: Broken
 
-Patch:
-See Github [1]
+Vulnerability Class: Integer Overflow
+Vulnerability Effect: Memory Corruption
+Vulnerability Impact: DoS, OOW, RCE
+Vulnerability DoS Practicality: Practical
+Vulnerability OOW Practicality: Practical
+Vulnerability RCE Practicality: Untested
+Vulnerability Criticality: High
 
-Credit:
-Issue was reported by Mathias Karlsson (http://mathiaskarlsson.me) as 
-part of Offensive Security's bug bounty program [3].
-It was fixed by Paul Richards.
+Vulnerability Scope:
+All versions of the LZ4 software:https://code.google.com/p/lz4
 
-References:
-Further details available in our issue tracker [2]
+Functions Affected:
+	lz4.c:LZ4_decompress_generic
 
+Criticality Reasoning
+---------------------
+Due to the design of the algorithm, an attacker can specify any desired
+offset to a write pointer. The attacker can instrument the write in such
+a way as to only write four bytes at a specified offset. Subsequent code
+will allow the attacker to escape from the decompression algorithm without
+further memory corruption. This may allow the attacker to overwrite
+critical structures in memory that affect flow of execution. White DoS
+and OOW are obvious side effects of this flaw, RCE with respect to this
+flaw is untested.
 
-[1] http://github.com/mantisbt/mantisbt/commit/599364b2
-[2] http://www.mantisbt.org/bugs/view.php?id=17875
-[3] http://www.offensive-security.com/bug-bounty-program/
+Vulnerability Description
+-------------------------
+An integer overflow can occur when processing any variant of a "literal run"
+in the affected function.
 
-
+Vulnerability Resolution
+------------------------
+Pending.
 
