@@ -1,96 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/8
-Message-ID: <20140114165218.GK15189@redhat.com>
-Date: Tue, 14 Jan 2014 16:52:18 +0000
-From: "Daniel P. Berrange" <berrange@...hat.com>
-To: Eric Blake <eblake@...hat.com>
-Cc: cve-assign@...re.org, pmatouse@...hat.com, oss-security@...ts.openwall.com, libvirt-security@...hat.com
-Subject: Re: [Libvirt-Security] CVE Request -- libvirt: denial of service with keepalive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/19
+Message-Id: <201406261818.s5QII2KW003843@linus.mitre.org>
+Date: Thu, 26 Jun 2014 14:18:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: misc@...b.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Ansible CVE requests
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 14, 2014 at 09:33:24AM -0700, Eric Blake wrote:
-> 
-> 
-> On 01/14/2014 09:25 AM, cve-assign@...re.org wrote:
-> >> https://bugzilla.redhat.com/show_bug.cgi?id=1047577
-> > 
-> >> This is now fixed upstream by v1.2.1-rc1-33-g173c291:
-> > 
-> >> To avoid the crash, virNetServerClientStartKeepAlive needs to check if
-> >> the connection is still open before starting keep-alive protocol.
-> > 
-> > Use CVE-2014-1447 for this issue in which the product does not check
-> > whether the connection is still open. This corresponds to
-> > 173c2914734eb5c32df6d35a82bf503e12261bcf, which apparently would be of
-> > some value in some attack scenarios.
-> > 
-> > 
-> >> And really fixed by v1.2.1-rc1-37-g066c8ef:
-> > 
-> >> it is possible to hit a window when client->keepalive is NULL while
-> >> client->sock is not NULL. I was thinking client->sock == NULL was a
-> >> better check for a closed connection but apparently we have to go with
-> >> client->keepalive == NULL to actually fix the crash.
-> > 
-> > Use CVE-2014-1448 for this issue in which the product does not
-> > properly check whether the connection is still open. This corresponds
-> > to 066c8ef6c18bc1faf8b3e10787b39796a7a06cc0, which apparently is of
-> > value in additional attack scenarios.
-> > 
-> > In deciding to SPLIT, all of these factors were considered but we
-> > don't want to try to precisely specify whether any one factor would be
-> > sufficient on its own:
-> 
-> The libvirt team thinks the decision to SPLIT was overkill, and that a
-> single CVE would have been sufficient.
-> 
-> > 
-> > 1. There seem to be two distinct version-like identifiers,
-> > v1.2.1-rc1-33-g173c291 and v1.2.1-rc1-37-g066c8ef, which can be
-> > interpreted as different affected versions.
-> 
-> Neither of those versions is released.  The only released version is 1.2.1.
-> 
-> > 
-> > 2. The first patch alone was accepted in the
-> > https://www.redhat.com/archives/libvir-list/2014-January/msg00532.html
-> > and
-> > https://www.redhat.com/archives/libvir-list/2014-January/msg00554.html
-> > messages.
-> 
-> Yes, it took two patches to fully fix the issue.  But the symptoms of
-> the issue are identical (you either have the connection issue, or you
-> don't, and it wasn't until the second patch that you get rid of the
-> connection issue).  But this is no different to other cases of fixing
-> bugs in unreleased code.
-> 
-> > 
-> > 3. http://libvirt.org/downloads.html says "Once an hour, an automated
-> > snapshot is made from the git server source tree. These snapshots
-> > should be usable." This suggests that a "version" with only the first
-> > patch was, in some realistic sense, "packaged for distribution," and
-> > could conceivably be in use somewhere.
-> 
-> No, the hourly builds are NOT supported releases; we can update the
-> downloads.html page to explicitly mention that they are to be used at
-> own risk.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Agreed, there is only one single issue here. GIT snapshots do not count
-as end user packaged releases - if you were to take that view, then every
-single git commit would have be considered a 'package' since gitweb has
-a link to download a .zip of any revision. Clearly that ways lies insanity.
+> http://lwn.net/Articles/603205/
 
-> However, since you have already assigned both numbers, we can go ahead
-> and use them :(
+> https://bugs.mageia.org/show_bug.cgi?id=13278#c2
 
-It makes no sense for us to use 2 distinct CVEs for this. There is only
-one single issue we're going to document and manage here. Just use the
-first assigned CVE-2014-1447  and discard -1448
+> just in case, seems that it is this patch for "Security fix for safe_eval" :
+> https://github.com/ansible/ansible/commit/998793fd0ab55705d57527a38cee5e83f535974c
 
-Regards,
-Daniel
--- 
-|: http://berrange.com      -o-    http://www.flickr.com/photos/dberrange/ :|
-|: http://libvirt.org              -o-             http://virt-manager.org :|
-|: http://autobuild.org       -o-         http://search.cpan.org/~danberr/ :|
-|: http://entangle-photo.org       -o-       http://live.gnome.org/gtk-vnc :|
+> and for Security fix for vault :
+> https://github.com/ansible/ansible/commit/a0e027fe362fbc209dbeff2f72d6e95f39885c69
+
+> and for apt :
+> https://github.com/ansible/ansible/commit/c4b5e46054c74176b2446c82d4df1a2610eddc08
+
+(Note that 603205 isn't a complete list of the upstream Ansible
+vulnerabilities because Mageia is shipping a 1.4.x version and
+therefore wasn't interested in
+a0e027fe362fbc209dbeff2f72d6e95f39885c69.)
+
+We think 998793fd0ab55705d57527a38cee5e83f535974c is about fixing one
+type of issue, but feel free to identify any additional types of
+issues that are also fixed. Use CVE-2014-4657 for the general topic of
+"the product intentionally allows code execution of code with limited
+capabilities, but the code restrictions are insufficient."
+https://github.com/ansible/ansible/blob/release1.5.5/CHANGELOG.md
+suggests that this was fixed in 1.5.4.
+
+
+a0e027fe362fbc209dbeff2f72d6e95f39885c69 seems to be a
+straightforward case of "the product creates files that normally
+contain secret values, but does not ensure appropriate permissions."
+Use CVE-2014-4658.
+https://github.com/ansible/ansible/blob/release1.5.5/CHANGELOG.md
+suggests that this was fixed in 1.5.5.
+
+
+c4b5e46054c74176b2446c82d4df1a2610eddc08 is about multiple types of
+issues.
+https://github.com/ansible/ansible/blob/release1.5.5/CHANGELOG.md
+suggests that these were fixed in 1.5.5. One issue is doing an
+unconditional "chmod 0644" on a file that may have required stronger
+permissions for a site-specific reason. Use CVE-2014-4659.
+
+
+Also, the changes related to _strip_username_password apparently mean
+that the product might encounter an /etc/apt/sources.list line
+starting with:
+
+  deb http://user:pass@...ver:port/
+
+and would then construct a filename containing the user and pass
+fields, leaking credentials in a way that potentially crosses
+privilege boundaries. Use CVE-2014-4660.
+
+
+Does anyone want a CVE ID for this third potential
+c4b5e46054c74176b2446c82d4df1a2610eddc08 issue?
+
+The changes related to check_mode apparently mean that
+http://docs.ansible.com/developing_modules.html#check-mode wasn't
+properly implemented, and an administrator might unintentionally
+perform dangerous actions. CVE assignments for this type of problem
+seem uncommon, although that might be because the class of issues is
+underreported. (The bug here seems to be a case of "doesn't even
+notice whether check_mode is active" rather than "notices that
+check_mode is active but proceeds unsafely." See also the
+http://blog.afistfulofservers.net/post/2012/12/21/promises-lies-and-dryrun-mode/
+blog post.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTrGNaAAoJEKllVAevmvmsVEoIAIXaQOpESycBDcQCewvsFxEr
+/YTSassxW+SyyWtlL7TqVTBC6K+1B6ry+dQRA/pRbbECV1iUUOLwrsuD23kLTZG4
+idP6YM3AXJw8Qm69nAmiMsGBYubl/97V92DY5AwQMnXXASDEfrT2A+Ei6w8zrCCC
+VdJ50jus0Ttq0mch9QasGhzPm7w4Np4m2WF9Wpau1N0ZZTWvgf9srNmjHVQW1SS3
+5Ait3ALjn15AfLPmZZ9Z059xqjnaVZwBcOHrDpApmctngF3Axej5JXIGNQEfkGtU
+Z0Z8sTKbPEJ4GUo0KykJTuJcGMBpgZ+ad2gv5+vCy8ufdpHoLHyKf1aEo39gekc=
+=evpQ
+-----END PGP SIGNATURE-----
