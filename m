@@ -1,29 +1,153 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/23
-Message-ID: <alpine.BSF.2.00.1410070224500.13577@aneurin.horsfall.org>
-Date: Tue, 7 Oct 2014 02:30:22 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: OpenSSL RSA 1024 bits implementation broken?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/21
+Message-ID: <CAFkuX4v_w4Q-VDhu=qm2XVfWJLKsZopNajPu3TwGM8qH5is+6A@mail.gmail.com>
+Date: Thu, 26 Jun 2014 12:53:18 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
+To: oss-security@...ts.openwall.com
+Subject: LMS-2014-06-16-2: Linux Kernel LZO
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 6 Oct 2014, Pierre Schweitzer wrote:
+Hello All,
 
-> There appear to have some noise on the Internet regarding a possible 
-> flaw in the 1024 bits RSA implementation in OpenSSL which would allow 
-> bruteforcing the private key in ~20 minutes.
-> 
-> Does anyone has any information about this? The associated pastebin to 
-> the said information is: http://pastebin.com/D8itq6Ff Is this serious?
+A vulnerability has been identified in the Linux kernel implementation of
+the LZO algorithm. Please find the bug report inline.
 
-On the moderated crypto list where I hang out, it's receiving much 
-attention.  The consensus is that it's likely a buggy compiler or 
-optimiser that rounded integer division upwards instead of truncating it 
-as required by the C standard, and that the "discoverer", by refusing to 
-provide further details, is full of it.
+Best,
+Don A. Bailey
+Founder / CEO
+Lab Mouse Security
+https://www.securitymouse.com/
 
-You may be able to search the archives at cryptography@...zdowd.com; as I 
-said it's a moderated list, but full of techie people who really know 
-their onions.
+#############################################################################
+#
+# Lab Mouse Security Report
+# LMS-2014-06-16-2
+#
 
--- Dave
+Report ID: LMS-2014-06-16-2
+
+CVE ID: CVE-2014-4608
+
+Researcher Name: Don A. Bailey
+Researcher Organization: Lab Mouse Security
+Researcher Email: donb at securitymouse.com
+Researcher Website: www.securitymouse.com
+
+Vulnerability Status: Patched
+Vulnerability Embargo: Broken
+
+Vulnerability Class: Integer Overflow
+Vulnerability Effect: Memory Corruption
+Vulnerability Impact: DoS, OOW
+Vulnerability DoS Practicality: Practical
+Vulnerability OOW Practicality: Impractical
+Vulnerability Criticality: Moderate
+
+Vulnerability Scope:
+All versions of the Linux kernel (3x/2x) with LZO support (lib/lzo) that
+set the HAVE_EFFICIENT_UNALIGNED_ACCESS configuration option. Currently,
+this seems to include PowerPC and i386.
+
+Vulnerability Tested:
+	- Via btrfs
+	- Stand alone
+
+Functions Affected:
+	lib/lzo/lzo1x_decompress_safe.c:lzo1x_decompress_safe
+
+Criticality Reasoning
+---------------------
+While some variants of this LZO algorithm flaw result in Remote Code
+Execution (RCE), it is unlikely that the Linux kernel variant can. This is
+due to the fact that control of the memory region that is overwritten can
+not be controlled in a fashion that will result in the overwrite of objects
+critical to the flow of execution.
+
+However, it may be possible to overwrite "business logic" data in certain
+circumstances, by corrupting adjacent objects in memory. Linux's guard pages
+should mitigate this, however.
+
+Because RCE is impractical, Object Over Write (OOM) is only practical in
+constrained scenarios (read: impractical), and DoS is practical, the
+criticality level of this issue should be defined as Moderate.
+
+Furthermore, a Moderate definition is needed because of the use of LZO in
+btrfs, and the potential use of LZO in networking, opening up the potential
+for remote instrumentation of this vulnerability. It is notable that SuSE
+recently reported that they will start using btrfs by default later this
+year.
+
+Lastly, only certain platforms are affected, decreasing impact.
+
+Vulnerability Description
+-------------------------
+An integer overflow can occur when processing any variant of a "literal run"
+in the lzo1x_decompress_safe function. Each of these three locations is
+subject to an integer overflow when processing zero bytes. The following code
+depicts how the size of the literal array is generated:
+                        if (likely(state == 0)) {
+                                if (unlikely(t == 0)) {
+                                        while (unlikely(*ip == 0)) {
+                                                t += 255;
+                                                ip++;
+                                                NEED_IP(1);
+                                        }
+                                        t += 15 + *ip++;
+                                }
+                                t += 3;
+
+As long as a zero byte (0x00) is encountered, the variable 't' will be
+incremented by 255. Using approximately sixteen megabytes of zeros, 't' will
+accumulate to a maximum unsigned integer value on a 32bit architecture. In
+combination with the following code, the value of 't' will overflow:
+copy_literal_run:
+#if defined(CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS)
+                                if (likely(HAVE_IP(t + 15) &&
+HAVE_OP(t + 15))) {
+                                        const unsigned char *ie = ip + t;
+                                        unsigned char *oe = op + t;
+                                        do {
+                                                COPY8(op, ip);
+                                                op += 8;
+                                                ip += 8;
+                                                COPY8(op, ip);
+                                                op += 8;
+                                                ip += 8;
+                                        } while (ip < ie);
+                                        ip = ie;
+                                        op = oe;
+
+The HAVE_OP() check will always pass in this case, because the size check
+within the macro will evaluate based on the overflown integer, not the value
+of 't'.
+
+This exposes the code that copies literals to memory corruption. An
+interesting side effect of the vulnerable code shown above is that the
+value of 'op' can point to a region of memory just before the start of 'out'.
+
+It should be noted that the following code unintentionally saves all other
+architectures from exposure:
+#endif
+                                {
+                                        NEED_OP(t);
+                                        NEED_IP(t + 3);
+                                        do {
+                                                *op++ = *ip++;
+                                        } while (--t > 0);
+                                }
+
+NEED_OP() correctly tests the value of 't' here, disallowing the potential
+for overflow.
+
+It should be noted that if 't' is a 64bit integer, the overflow is still
+possible, but impractical. An overflow would require so much input data that
+an attack would obviously be infeasible even on modern computers.
+
+Vulnerability Resolution
+------------------------
+To resolve this issue, the HAVE_OP and HAVE_IP macros should be enhanced to
+detect for integer overflow. This is the most reasonable and efficient
+location for catching corrupted or instrumented payloads. By testing for
+overflow here, an attacker is simply wasting time by forcing the function
+to process a large amount of zero bytes.
+
