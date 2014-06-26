@@ -1,27 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/3
-Message-ID: <20141206015914.48aec4c8@pc>
-Date: Sat, 6 Dec 2014 01:59:14 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/30
+Message-ID: <53AC87E7.1080009@redhat.com>
+Date: Thu, 26 Jun 2014 22:51:51 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, misc@...b.org
+CC: cve-assign@...re.org
+Subject: Re: Re: Ansible CVE requests
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 6 Dec 2014 01:44:31 +0100
-Hanno Böck <hanno@...eck.de> wrote:
+On 06/26/2014 08:18 PM, cve-assign@...re.org wrote:
+> We think 998793fd0ab55705d57527a38cee5e83f535974c is about fixing one
+> type of issue, but feel free to identify any additional types of
+> issues that are also fixed. Use CVE-2014-4657 for the general topic of
+> "the product intentionally allows code execution of code with limited
+> capabilities, but the code restrictions are insufficient."
+> https://github.com/ansible/ansible/blob/release1.5.5/CHANGELOG.md
+> suggests that this was fixed in 1.5.4.
 
-> And that's what fails:
-> $ file --mime-type pie
-> pie: application/x-sharedlib
+It turns out that the fix was incomplete:
 
-Reported:
-http://bugs.gw.com/view.php?id=404
+https://github.com/ansible/ansible/commit/5429b85b9f6c2e640074176f36ff0
+
+Upstream announcement:
+
+https://groups.google.com/forum/?_escaped_fragment_=msg/ansible-announce/ieV1vZvcTXU/5Q93ThkY9rIJ
+
+I think this warrants a separate CVE ID.  There is some debate whether 
+this actually crosses a security boundary, but upstream thinks it does, 
+after some consideration.
+
+
+Note that the subsequent commit looks extremely suspicious as far as the 
+sandboxing is concerned:
+
+https://github.com/ansible/ansible/commit/35368e531b36c800ff6e61fc79fcd9
+
+I'll try to figure out what's going on.
 
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Florian Weimer / Red Hat Product Security
