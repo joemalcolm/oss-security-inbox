@@ -1,46 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/14
-Message-ID: <20140911163928.5c5c02a0@redhat.com>
-Date: Thu, 11 Sep 2014 16:39:28 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
-Cc: oss-security@...ts.openwall.com, CVE Assignments MITRE <cve-assign@...re.org>, secalert_us@...cle.com
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/13
+Message-ID: <057D567B-69ED-4E95-83F2-35C0B25C3E4B@redhat.com>
+Date: Thu, 26 Jun 2014 09:28:57 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 10 Sep 2014 10:28:53 -0700 Ritwik Ghoshal wrote:
+On 06/25/2014, at 17:07 PM, cve-assign@...re.org wrote:
 
-> Please use CVE-2014-4274 for this issue.
-> 
-> Please send an email to secalert_us@...cle.com to contact Oracle for
-> any security vulnerability related issues.
+> There admittedly isn't a precise distinction between "opportunity for
+> security improvement" (a CVE ID cannot be assigned) and "exposure" (a
+> CVE ID can be assigned in some cases).
+>
+> In web applications that function correctly with the HTTPOnly flag for
+> a cookie, absence of this flag might be categorized as a CWE-668
+> ("Exposure of Resource to Wrong Sphere") issue. In general, factors
+> that can be considered include:
+>
+> -- are there compatibility downsides to setting the flag? (An
+>    example of a downside might be: a popular but noncompliant
+>    browser completely ignores the cookie if the flag is set.)
+>
+>    [ Obviously each CVE assignment is on a per-product basis, and
+>      there wouldn't be a CVE about HTTPOnly if a product's design
+>      relies on script access to a cookie. ]
+>
+> -- does the flag interfere with plausible use cases? (An example of
+>    a use case might be: script code that doesn't need to know the
+>    value of a cookie, but was designed to read the cookie anyway to
+>    assess whether an attack involving long cookie values is
+>    occurring.)
+>
+> -- are there vendors who recommend against the flag?
+>
+> -- compared to the development cost in arranging for the flag to be
+>    set, is it possible that the real-life benefit is too small?
+>
+> -- are there other known or potential costs to setting the flag?
+>    (There might not be a good example here, e.g., there probably
+>    aren't bandwidth considerations where 9 or 10 more bytes is a
+>    deal breaker.)
+>
+> If the answer to all of these questions is no, then it starts becoming
+> reasonable to argue that absence of the flag is an implementation
+> error.
+>
+>> like running SELinux (or AppArmor), running a virus scanner, and
+>> having a firewall
+>
+> All of those seem to, in practice, have a relatively much greater
+> chance of introducing new vulnerabilities because of the required
+> implementation complexity.
 
-As pointed out in this Gentoo bug, release notes for the mentioned
-MySQL versions list another issue that seems to be security:
+Your answers are fair, but I don't (personally) see how something being "easy" to implement makes the absence of it a flaw.  I mean, HttpOnly is a mechanism to prevent a flaw (in something else) from being exploitable.  That by its very definition is something like SELinux, or a firewall, etc.  The presence or absence of HttpOnly doesn't create the flaw, the faulty software does.  I mean, the flaw is still there, and would still need to be fixed, HttpOnly is a bandaid.  A very useful one, as bandaids often are, but it's still a bandaid.  It doesn't fix a flaw, nor does its absence create one.
 
-https://bugs.gentoo.org/show_bug.cgi?id=518718
+"Implementation error" sounds, to me, like a bug.  Not a flaw.  The criteria set out doesn't really seem to define whether something is a flaw, but rather the business case for whether or not to call it one (is it too expensive to implement, is it worth it, does it make life more difficult for people, etc.).  Maybe I'm wrong or naive, but I wasn't under the impression that business-based use-cases (such as development cost/effort) had any impact on whether or not something is a security flaw -- I mean, it either is or it isn't.
 
-3) An off-by-one error related to certificate decoding in yaSSL can be
-exploited to cause a buffer overflow.
+Anyways, I was largely thinking out loud here to see what others thought about this as well.  I don't necessarily disagree with your reasoning, but I'm still not convinced that the absence of HttpOnly is a security _flaw_, regardless of how useful it might be.  Even Kurt's argument about everything containing XSS doesn't make me think that the lack of HttpOnly is a flaw -- the flaw is in the software.  Again, pointing to SELinux, even if we turned it on by default and made it available to the operating system, and if SELinux renders an exploitable flaw entirely ineffective, that doesn't make the flaw "not a flaw"; the flaw is still there and it's assigned a CVE.
 
-BZR commit:
+Kurt's argument about everything having an XSS makes it sound like, and the reasoning provided here as well, that we should no longer consider XSS a security flaw, but the absence of HttpOnly the security flaw.  I mean, if setting this flag "fixes" all XSS issues, then we should no longer be assigning CVEs to XSS issues, only to web servers/services that do not set HttpOnly or browsers that do not respect/handle it properly.  They can't _both_ get CVEs or be considered flaws, can they?
 
-http://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4647
-
-
-There are many other issues that deserve clarification.  For example,
-April CPU mentions client issue CVE-2014-2440.  Is it the same issue
-that got CVE-2014-0001 publicly assigned before?  The versions that
-fixed CVE-2014-2440 are the same that got CVE-2014-0001 fix, and there's
-no mention of the CVE-2014-0001 in April CPU.
-
-
-Actually, any CVE assigned to an open source project should have
-sufficient details made available to make it possible to link it to
-specific change or changes unambiguously.  Despite previous requests,
-Oracle seems to refuse that even when CVEs are public.  At the same
-time expecting advance notification with details.  Maybe this should be
-taken into account for e.g. distros membership?
+I guess this is the ground where things get a little muddy.  =)
 
 -- 
-Tomas Hoger / Red Hat Product Security
+Vincent Danen / Red Hat Product Security
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
