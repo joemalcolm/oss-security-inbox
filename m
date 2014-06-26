@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/8
-Message-ID: <1839529.gLatmdanF9@x2>
-Date: Wed, 10 Dec 2014 11:11:21 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Daniel Micay <danielmicay@...il.com>
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/18
+Message-ID: <53AC5DEA.5080207@securityvulns.ru>
+Date: Thu, 26 Jun 2014 21:53:01 +0400
+From: Vladimir '3APA3A' Dubrovin <vlad@...urityvulns.ru>
+To: oss-security@...ts.openwall.com, vdanen@...hat.com
+CC: cve-assign@...re.org
+Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday, December 09, 2014 03:24:39 PM Daniel Micay wrote:
-> > I studied this area 2 years ago for a gray hat talk and in preparation to
-> > help  set the policy going forward for Fedora and RHEL. The general
-> > reason I've heard mentioned about why its not used as fully as possible
-> > is that it adds memory pages that can't be coalesced or consolidated
-> > because they are not the same.
-> 
-> AFAIK, it doesn't cause a significant increase in memory usage. The
-> whole point of position independent code is that it can be reused across
-> processes. Dynamic libraries are already fully position independent.
 
-This was the issue as I remember it, when you use PIE, it introduces a 
-writable memory segment for the indirection that is filled in lazily. Because 
-this is writeable it is per process. It is also per DSO. With desktop apps 
-linking against a 60 or so libraries and an average of 150 apps running at any 
-time, the memory used starts to really add up. Server workloads tend to have 
-apps with less libraries linked in but many more processes active.
 
-Of course today systems are starting to ship with 16GB standard, but now we 
-add virtualization work loads and you have dozens more of the above. I think 
-this institutional memory of the old days kind of hinders any movement. We had 
-an internal debate of this on bz 786915 (which is not 100% open). The start up 
-performance never really a factor in the discussions. It was purely about 
-"wasted" memory.
+At least sharing session with Flash application may require Javascript 
+access to session cookies. It can be worked out in most cases, but it's 
+not so simple as
+"just make all session cookies HTTPOnly".
 
--Steve
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+Kurt Seifried пишет:
+> So with widespread XSS in mind, I think it's safe to say that
+> virtually every web site (even sites that care deeply and spend
+> time/money and have bug bounties) have lurking XSS flaws, which if
+> HTTPOnly is not used can result in cookie theft. So in my mind
+> HTTPOnly isn't an option any more, but a requirement, ergo in most
+> situations no HTTPOnly = win a CVE.
+>
+>
+
