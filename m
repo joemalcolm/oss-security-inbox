@@ -1,53 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/18
-Message-ID: <3230301C09DEF9499B442BBE162C5E482575DA92@SESTOEX04.enea.se>
-Date: Tue, 7 Oct 2014 10:23:07 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/6
+Message-Id: <201406260552.s5Q5qQ9T014584@linus.mitre.org>
+Date: Thu, 26 Jun 2014 01:52:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux kernel ALSA core control API vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-> Unfortunately, there are currently several pending requests that I feel fall in
-> the gray area (some are in here, and some off-list, which I surely would
-> require bringing to oss-security before they may possibly be satisfied), and
-> this bothers me.  Arguably, this indicates that we're beyond the (very
-> limited) time period where I could reasonably host a vendor-sec replacement
-> list without it becoming too controversial.  So I think that we'll need to discuss
-> several other requests before we approach yours, and I just fail to find time
-> to get into that lately.
-> 
-> That said, the first link from:
-> 
-> http://oss-security.openwall.org/wiki/vendors#enea
-> 
-> currently leads to:
-> 
-> http://mail.lists.enea.com/pipermail/security-announce/
-> 
-> and this shows:
-> 
-> "The Security-announce Archives
-> 
-> No messages have been posted to this list yet, so the archives are currently
-> empty."
-> 
-> Why is that?  We'd need some way to see that you're actually issuing security
-> updates, and how promptly you do that.
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Alexander,
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/sound/core/control.c?id=07f4d9d74a04aa7c72c5dae0ef97565f28f17b92
+> ALSA: control: Protect user controls against concurrent access
 
-We have actually sent advisories to this list! There must be some misconfiguration in the mailing list archive server, I have put an IT guy on it. "I can provide you  "Security Notification" we sent on Sep 25 or any other" if you want.
+> The user-control put and get handlers as well as the tlv do not
+> protect against concurrent access from multiple threads. Since the
+> state of the control is not updated atomically it is possible that
+> either two write operations or a write and a read operation race
+> against each other. Both can lead to arbitrary memory disclosure.
 
-This list is mainly for critical vulnerabilities (such as Heartbleed & Shellshock.. ) which we encourage Enea Linux users to update security patches immediately.
+> (aka "The first issue is a race conditions in the user-control put/get
+> and tlv handlers" ... "first affected release is v2.6.18")
 
-Some of our customers are using Enea products in deeply embedded products, and thus are not exposed to the outside world (Internet). They don't want to get security or other updates frequently. The other customers who are affected and want security updates, normally they have special desire/requirements (for instance some customers want monthly updates, some want the fixes in their specific branch directly etc.. ) So we provide security and other updates to customers based on our agreements with the customers through their contact channels and not via ESRT team. We don't send security advisories for these kind of updates. 
- 
-Our security strategy is to help Open Embedded, Yocto & vendor-kernels to backport security patches from mainline/ stable k.org/ upstream project as soon as possible so that not only Enea customers but all yocto users can get updates from yocto. We save time and also contribute back to the community. 
- 
-I believe that those vendors who are using Open Source products, they get more benefits if they collaborate with community rather than work isolated in their own world.   
- 
-Regarding letting some security researchers who are not employed with any specific distro onto the list: I am not in the position to decide this (I am not myself in :) ) but my personal opinion is that if a researcher is reliable and known and burns for security, why not. Most of the time this kind of persons help more because of their passion and desire :) they are normally not paid but they put their soul into detecting and solving security vulnerabilities. I just wish that there could be something that the distros could do for these people. If they are freelance, maybe the distros could give them different commitment/project, so they could get paid for their hard work :)
+Use CVE-2014-4652.
 
-Cheers
-/Sona
+
+
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/sound/core/control.c?id=fd9f26e4eca5d08a27d12c0933fceef76ed9663d
+> ALSA: control: Don't access controls outside of protected regions
+
+> A control that is visible on the card->controls list can be freed at
+> any time. This means we must not access any of its memory while not
+> holding the controls_rw_lock. Otherwise we risk a use after free
+> access.
+
+> (aka "There are a couple of places where a kcontrol is de-referenced
+> after controls_rwsem has been released" ... "first affected release
+> predates the git history")
+
+Use CVE-2014-4653.
+
+
+
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/sound/core/control.c?id=82262a46627bebb0febcc26664746c25cef08563
+> ALSA: control: Fix replacing user controls
+
+> The first is that the code does not check if the control is actually a
+> user control and neither does it check if the control is owned by the
+> process that tries to remove it. That allows userspace applications to
+> remove arbitrary controls, which can cause a user after free
+
+> (aka "The next issue is that SNDRV_CTL_IOCTL_ELEM_REPLACE does no
+> permission checking on the control that is to be replaced. This allows
+> a application to remove controls that were created by the kernel
+> driver and also controls that are locked by other applications." ...
+> "first affected release predates the git history")
+
+Use CVE-2014-4654.
+
+
+> The second issue is that on one hand when a control is replaced the
+> user_ctl_count limit is not checked and on the other hand the
+> user_ctl_count is increased (even though the number of user controls
+> does not change). This allows userspace, once the user_ctl_count limit
+> as been reached, to repeatedly replace a control until user_ctl_count
+> overflows.
+
+> (aka "SNDRV_CTL_IOCTL_ELEM_REPLACE also gets the user_ctl_count
+> handling wrong" ... "first affected release predates the git history")
+
+Use CVE-2014-4655.
+
+[ in other words, two different CVE IDs for the
+  82262a46627bebb0febcc26664746c25cef08563 commit ]
+
+
+
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/sound/core/control.c?id=883a1d49f0d77d30012f114b2e19fc141beb3e8e
+> ALSA: control: Make sure that id->index does not overflow
+
+> if (id.index > UINT_MAX - kcontrol->count)
+>     goto error;
+
+
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/sound/core/control.c?id=ac902c112d90a89e59916f751c2745f4dbdbb4bd
+> ALSA: control: Handle numid overflow
+
+> if (card->last_numid >= UINT_MAX - count)
+>    card->last_numid = 0;
+
+> (aka "The last two issues are overflows of id.index and id.numid" ...
+> "first affected release predates the git history")
+
+Use CVE-2014-4656.
+
+[ in other words, a single CVE ID for both the
+  883a1d49f0d77d30012f114b2e19fc141beb3e8e and
+  ac902c112d90a89e59916f751c2745f4dbdbb4bd commits ]
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTq7SSAAoJEKllVAevmvmsWqcH+wZvqFs9w+jOaeImZ29/XWbX
+lEnH70xDxS81Bp0MAst5Ve4w1sH5neTC1K97x8cpmXvgBmYdiTtAnB+EzidrStin
+1WKBSfAc4jx/Xt7FWwXgWSzCVGxotVGpk74MP4l/bpoOqFhXO5wQSGjGOEvX0qaF
+oVlep0ftGTVowoamTznrDnIEhVtdCBgymrHSSoz3LfSIHVBVqIt7WdFOcfXW4/aa
+lcPAG42sfoaQRPwE9VOIl7yVouMjHOBq4LFyamSXN2D8it3OrszQi1aayTWw/Fwo
+cASkfa+OtNPPJobRgzQFRellzsbfvmVlWOy7n54rQNUcG/N7P7a8kNHL5qU2Br4=
+=kz9h
+-----END PGP SIGNATURE-----
