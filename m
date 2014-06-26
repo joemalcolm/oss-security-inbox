@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/4
-Message-ID: <20141015055844.GA2572@gremlin.ru>
-Date: Wed, 15 Oct 2014 09:58:44 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: SSL POODLE (Truly scary SSL 3.0 vuln)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/29
+Message-ID: <CAFkuX4vj9qzKdiXPzcC6QM0CjVYCp9KCwC=Y-UfP4vsKSeJQcw@mail.gmail.com>
+Date: Thu, 26 Jun 2014 14:38:07 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
+To: Hanno Böck <hanno@...eck.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: LMS-2014-06-16-6: LZ4 Core
 Content-Type: text/plain; charset=utf-8
 
-On 15-Oct-2014 05:28:34 +0000, Sona Sarmadi wrote:
+Yes. These two issues were merged.
 
- > A reflection: Maybe we shouldn't post information like this
- > here or somewhere else which is not published yet even if
- > the information has leak out? Although all members here are
- > reliable but it is still an open mailing list and we should
- > be careful and act more responsible.
-
-Why? Old ciphers are well known as totally insecure (generally
-speaking, even some "new" are insecure as well), so the POODLE
-description does nothing but shows one more attack vector.
-
-The protection against the POODLE is quite simple:
-
-1. For servers: disable weak encryption (in assumption they are
-updated on a regular basis).
-
-2. For users: update old software. Alas, fully disabling weak
-encryption (e.g. set security.tls.version.min == 3 in Firefox)
-isn't what we can demand, but that leaves the user personally
-responsible for any and all data leaks.
-
- >> It's out:
-
-TP detected...
+D
 
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+
+On Thu, Jun 26, 2014 at 2:35 PM, Hanno Böck <hanno@...eck.de> wrote:
+
+> On Thu, 26 Jun 2014 12:58:37 -0600
+> "Don A. Bailey" <donb@...uritymouse.com> wrote:
+>
+> > CVE ID: CVE-2014-4611
+>
+> Is it intended that the lz4 upstream code and the linux kernel lz4
+> issue got the same CVE?? Or is this a mistake?
+>
+> --
+> Hanno Böck
+> http://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
+>
+
