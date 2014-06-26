@@ -1,34 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/11
-Message-ID: <20140705203627.GA8574@openwall.com>
-Date: Sun, 6 Jul 2014 00:36:27 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/24
+Message-ID: <CAFkuX4v-7fST6zneC9jdXSOV+4QKr+Ho8mtMuih3d0WeOcrieA@mail.gmail.com>
+Date: Thu, 26 Jun 2014 12:57:25 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+Subject: LMS-2014-06-16-5: Linux Kernel LZ4
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 05, 2014 at 10:25:50PM +0200, Yves-Alexis Perez wrote:
-> On dim., 2014-07-06 at 00:20 +0400, Solar Designer wrote:
-> > On Sat, Jul 05, 2014 at 09:58:15PM +0200, Yves-Alexis Perez wrote:
-> > > And the system is usable after that.
-> > 
-> > Yet both are vulnerable, with privilege escalation likely possible.
-> 
-> Yes, sorry if my initial answer was suggesting the kernels were not
-> vulnerable.
+Hello All,
 
-No, I was just clarifying for others.  You do actually have all kernels
-listed as vulnerable here:
+A vulnerability has been identified in the Linux kernel LZ4 implementation.
+Please find the bug report attached inline.
 
-https://security-tracker.debian.org/tracker/CVE-2014-4699
+Best,
+Don A. Bailey
+Founder / CEO
+Lab Mouse Security
+https://www.securitymouse.com/
 
-> It was just that we didn't managed to make them crash on the
-> few boxes we tried on.
+#############################################################################
+#
+# Lab Mouse Security Report
+# LMS-2014-06-16-5
+#
 
-I think the "Kernel panic - not syncing: Machine halted" is actually
-unexpected.  The PoC isn't meant to crash the machine, although as we've
-seen it might.  It's meant to test whether the issue is triggerable, and
-if it is we should assume that a real exploit may do more (including
-both DoS and privilege escalation).
+Report ID: LMS-2014-06-16-5
 
-Alexander
+CVE ID: CVE-2014-4611
+
+Researcher Name: Don A. Bailey
+Researcher Organization: Lab Mouse Security
+Researcher Email: donb at securitymouse.com
+Researcher Website: www.securitymouse.com
+
+Vulnerability Status: Patched
+Vulnerability Embargo: Broken
+
+Vulnerability Class: Integer Overflow
+Vulnerability Effect: Memory Corruption
+Vulnerability Impact: DoS, RCE
+Vulnerability DoS Practicality: Practical
+Vulnerability RCE Practicality: Practical
+Vulnerability Criticality: High
+
+Vulnerability Scope:
+All versions of the Linux kernel (3x/2x) with LZ4 support (lib/lz4).
+
+Functions Affected:
+	lib/lz4/lz4_decompress.c:lz4_uncompress
+
+Criticality Reasoning
+---------------------
+Due to the design of the algorithm, an attacker can specify any desired
+offset to a write pointer. The attacker can instrument the write in such
+a way as to only write four bytes at a specified offset. Subsequent code
+will allow the attacker to escape from the decompression algorithm without
+further memory corruption. This may allow the attacker to overwrite
+critical structures in memory that affect flow of execution.
+
+Vulnerability Description
+-------------------------
+An integer overflow can occur when processing any variant of a "literal run"
+in the lz4_uncompress function.
+
+Vulnerability Resolution
+------------------------
+The Linux kernel team has resolved this vulnerability.
+
