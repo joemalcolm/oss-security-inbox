@@ -1,38 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/11
-Message-ID: <20141103121458.43090be5@pc>
-Date: Mon, 3 Nov 2014 12:14:58 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: more unzip issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/3
+Message-Id: <201406260024.s5Q0ONr5001579@linus.mitre.org>
+Date: Wed, 25 Jun 2014 20:24:23 -0400 (EDT)
+From: cve-assign@...re.org
+To: till.maas@...team-pentesting.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE ID Request for Python CGIHTTPServer File Disclosure
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Surfing the upstream forum I saw that there are two further buffer
-overflows which didn't get a release yet:
-http://www.info-zip.org/phpBB3/viewtopic.php?f=7&t=437
-http://www.info-zip.org/phpBB3/viewtopic.php?f=7&t=267
-(these two seem to refer to the same issue)
-Also here:
-https://bugzilla.redhat.com/show_bug.cgi?id=532380
-http://bugs.debian.org/744212
+> http://bugs.python.org/issue21766
 
-And this one:
-http://www.info-zip.org/phpBB3/viewtopic.php?f=7&t=432
+Use CVE-2014-4650 for the "does not properly handle URL-encoded path
+separators in URLs" issue, with the two impacts of "gain access to the
+contents of CGI binaries or the source code of CGI scripts" and
+"execute code that was not intended to be executed."
 
+This CVE request was somewhat confusing in that it only mentioned
+file disclosure, but many CVE consumers would consider the
+code execution to be more important. If there is a complication --
+for example, if the code execution CVE request was being handled
+separately -- please let us know.
 
-Should they get CVEs?
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-(I was kind of surprised that on my Gentoo system the samples crashed
-although these issues were several months old)
-
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJTq2fSAAoJEKllVAevmvmsJ3wH/inxD0wVRzEdhXpu5Yr3kG8n
+WS4yvEjFKC+ev04Y6SM2K5JckJF3miA0VCURZ1075VRUiNESP2eseWEe6YGPC/OE
+OixE+pNfVv2Ex3HcHTkYyMRx5CJL1yCCOaeiYeqi2vIAa0fLbLbHqUiMSoSXPWfx
+IOMUF9IcMI3sovE3MQLQjhoiZnd4MErIhuEGRRdeg8P+F3mU+v67blwi7bfHqoH4
+JcaLiOCjs8HQ0zbqrOTjh6ucVNIDwThlOJnhEJBCoajOLW4Y3RR5ev4TXLyRZzgQ
+FC76zDC1xwfsVxel5Ld4kLtEvI2weUDKf4R+kp88E6ORg2hTyywM3SFfAffx01g=
+=dclN
+-----END PGP SIGNATURE-----
