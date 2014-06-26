@@ -1,37 +1,153 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/2
-Message-Id: <E1Xc1Se-0002pz-Ie@rmm6prod02.runbox.com>
-Date: Wed, 08 Oct 2014 20:20:04 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/22
+Message-ID: <CAFkuX4uAqnr2fwTdCVPdUwOMBmsX-yvXDD6JhvukTaMctrChYA@mail.gmail.com>
+Date: Thu, 26 Jun 2014 12:54:34 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
+To: oss-security@...ts.openwall.com
+Subject: LMS-2014-06-16-3: Libav LZO
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 8 Oct 2014 15:48:10 -0700, Tim <tim-security@...tinelchicken.org> wrote:
-> To me, it's not about anticipating the next bug, it is about providing
-> guidance to developers who care only so much about security so that we
-> can avoid some bugs that we didn't anticipate.
+Hello All,
 
-Agree!
+A vulnerability has been identified in the Libav LZO implementation. Please
+find the bug report attached inline.
 
-> PS- I'm of two minds on this.  More recently I've decided that educating
->     developers isn't nearly as effective as providing developers APIs and
->     development environments that make it unlikely they will shoot
->     themselves in the foot.  It's not that developers can't be trained,
->     it is that they will probably only be developers for a handful of 
->     years and move on to other roles later, with a whole new batch of
->     green coders coming in to fill their positions.  Anyway...
+Best,
+Don A. Bailey
+Founder / CEO
+Lab Mouse Security
+https://www.securitymouse.com/
 
-I don't think there's an either/or here.  Yes, if you *can* change the
-tools/libraries/development environments to prevent attacks, or reduce
-their effectiveness, you *should*.
+#############################################################################
+#
+# Lab Mouse Security Report
+# LMS-2014-06-16-3
+#
 
-That said, a fool with a tool is still a fool.  There's no way to create
-a development environment that can't be misused.  Thus, you'll always need
-to educate and train developers for situations the system cannot prevent.
-In the long term I think this will be easier, because novice developers will be able
-to learn from the many experts around them.  Today, the number of
-developers who understand security issues is a vanishingly small percentage
-of the total, so the novice has no one to learn from.
+Report ID: LMS-2014-06-16-3
 
---- David A. Wheeler
+CVE ID: CVE-2014-4609
+
+Researcher Name: Don A. Bailey
+Researcher Organization: Lab Mouse Security
+Researcher Email: donb at securitymouse.com
+Researcher Website: www.securitymouse.com
+
+Vulnerability Status: Patched
+Vulnerability Embargo: Broken
+
+Vulnerability Class: Integer Overflow
+Vulnerability Effect: Memory Corruption
+Vulnerability Impact: DoS, OOW, RCE
+Vulnerability DoS Practicality: Practical
+Vulnerability OOW Practicality: Practical
+Vulnerability RCE Practicality: Practical
+Vulnerability Criticality: Critical
+
+Vulnerability Scope:
+All versions of libav are affected.
+All architectures supported by libav are affected.
+
+Vulnerability Tested:
+Yes. RCE proven on 10 separate platforms including but not limited to:
+ - Ubuntu and Mint x86, x86_64
+ - Debian x86_64, x86
+ - FreeBSD x86_64, x86
+
+Functions Affected:
+	libavutil/lzo.c:av_lzo1x_decode
+
+Criticality Reasoning
+---------------------
+This vulnerability can be triggered through a compression payload embedded
+in a video file. Due to the nature of this memory corruption vulnerability,
+exploitation of the bug can be seamless and work in the background during
+normal video playback. A user will never notice that playback has been
+compromised.
+
+Testing was successfully performed on all variants of mplayer2, including
+gecko-mplayer2 embedded in Firefox, Iceweasel, Opera, Chromium, and Konqueror
+on Linux.
+
+Ease of compromise is partly due to libav's use of tmalloc, which places
+a header containing function pointers at the beginning of allocated heap
+regions. Exploitation of the compression vulnerability overwrites these
+function pointers, which then point to ROP payloads that allow for the
+bypassing of ASLR and NX security enhancements.
+
+Vulnerability Description
+-------------------------
+An integer overflow can occur when processing any variant of a "literal run"
+in the av_lzo1x_decode function. Each of these three locations is
+subject to an integer overflow when processing zero bytes. The following code
+depicts how the size of the literal array is generated:
+static inline int get_len(LZOContext *c, int x, int mask)
+{
+    int cnt = x & mask;
+    if (!cnt) {
+        while (!(x = get_byte(c)))
+            cnt += 255;
+        cnt += mask + x;
+    }
+    return cnt;
+}
+
+As long as a zero byte (0x00) is encountered, the variable 'cnt' will be
+incremented by 255. Using approximately sixteen megabytes of zeros, 'cnt' will
+accumulate to a maximum unsigned integer value in the 32bit variable.
+
+Therefore, get_len() will return a negative 'cnt' value to its caller. The
+checks in copy_backptr() will fail to properly test for negative 'cnt' values
+resulting in the following test never catching an error:
+    if (cnt > c->out_end - dst) {
+        cnt       = FFMAX(c->out_end - dst, 0);
+        c->error |= AV_LZO_OUTPUT_FULL;
+    }
+
+av_memcpy_backptr does not check for negative 'cnt' values, which results in
+a copy of one byte from 'src' to 'dst', evading a crash do to excessive
+copying.
+
+Finally, the copy function will never crash by calling memcpy with a negative
+value because it only calls memcpy when the signed 'cnt' variable is greater
+than zero. However, the pointers 'c->in' and 'c->out' will still be adjusted
+by a negative value, causing 'c->out' to point to an area of memory prior to
+the actual output buffer. This is how Lab Mouse Security was able to
+instrument this vulnerability to overwrite tmalloc function pointers with
+ROP payloads.
+
+It is notable that since the count value 'cnt' is passed around as an 'int',
+it will always be interpreted as a signed 32bit integer regardless of the
+underlying architecture. This means that this vulnerability affects all
+platforms and architectures regardless of whether they are 32bit or 64bit
+in nature.
+
+Vulnerability Resolution
+------------------------
+Resolving this issue requires several separate fixes.
+
+1) lzo.c:get_len()
+The return value of get_len must be evaluated for negative count values.
+A negative value should never be allowed in this context. Always error
+when a negative or zero value is returned.
+
+2) lzo.c:copy()
+A negative value should not be allowed as a parameter to copy(). In
+addition, the pointers 'c->in' and 'c->out' should be tested after they
+are changed by the count value. Verify that the new offset does not land
+outside of the bounds of the 'out' buffer.
+
+3) lzo:copy_backptr()
+Do not allow a negative 'cnt' value to be passed to copy_backptr. Augment
+the test cases to ensure that a negative value cannot be used to adjust
+the 'c->out' pointer.
+
+4) libavutil/mem.c:av_memcpy_backptr
+Return an error value.
+Do not allow a negative 'cnt' or 'back' value to be used.
+
+5) Always use a size_t for any size variable.
+Size variables should always represent the underlying architecture's largest
+natural unsigned integer. Use size_t, or a variant, to automatically scale
+the value to the underlying architecture.
+
