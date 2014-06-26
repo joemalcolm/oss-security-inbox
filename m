@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/20
-Message-ID: <20140606155846.GA179@oevtugenva.nrevsny.pk>
-Date: Fri, 6 Jun 2014 11:58:46 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/9
+Message-ID: <20140626073846.GA10043@kludge.henri.nerv.fi>
+Date: Thu, 26 Jun 2014 10:38:46 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
+Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 06, 2014 at 05:43:28PM +0200, rf@...eap.de wrote:
->     Greg> There is someone still maintaining 3.12-stable, why not rely
->     Greg> on those releases if you want that kernel version, instead of
->     Greg> rolling your own?
-> 
-> We thankfully do rely on that as our base. In this case though, the
-> patches haven't been ported until this moment. And I can't wait for them
-> to appear since there is no time-line when that will happen ...
+On Thu, Jun 26, 2014 at 05:30:46PM +1000, Murray McAllister wrote:
+> But websites set lots of cookies, which if stolen, have no relevance
+> to being able to access the user's session, or do much of anything
+> useful with anyway. I believe a lot of the "this cookie does not
+> have HTTPOnly" issues are non-issues.
 
-Indeed. This is probably the biggest security flaw in Linux in the
-past 5 years (if not the biggest ever) since it allows a full kernel
-compromise even from extremely tight sandboxes. In my opinion, the way
-the announcement was handled was really unprofessional. There should
-have been fixes prepared for, and/or committed into the git repos for,
-all currently maintained releases/branches at the time of the
-announcement. Anything else leaves everybody but users of the big
-mainstream distros scrambling to figure out how to get a
-non-vulnerable kernel that's compatible with their current setups.
+Those CVEs should be REJECTED. Can you provide list of non-issues with CVE?
 
-Rich
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
