@@ -1,46 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/7
-Message-Id: <201405010337.s413arU9021604@linus.mitre.org>
-Date: Wed, 30 Apr 2014 23:36:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Linux kernel: mm: try_to_unmap_cluster() should lock_page() before mlocking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/17
+Message-ID: <20140626193238.507c5845@hboeck.de>
+Date: Thu, 26 Jun 2014 19:32:38 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: MediaWiki releases 1.19.17, 1.21.11, 1.22.8 and 1.23.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 25 Jun 2014 17:03:33 -0700
+Chris Steipp <csteipp@...imedia.org> wrote:
 
-> Linux kernel kernel's Memory Management Unit(MMU) is vulnerable to a crash
-> caused by unlocked memory pages. It could occur during the memory page
-> migration or while cleaning the swap cache pages.
-> 
-> An unprivileged user/program could use this flaw to crash the system kernel,
-> resulting in DoS.
-> 
-> Upstream fix:
-> -------------
->    -> https://git.kernel.org/linus/57e68e9cd65b4b8eb4045a1e0d0746458502554c
-> 
-> Introduced in:
-> --------------
->    -> https://git.kernel.org/linus/b291f000393f5a0b679012b39d79fbc85c018233
+> Since the bug is public now
+> (http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-June/000155.html),
+> I didn't get a CVE in advance because I thought this was likely a
+> hardening fix. We couldn't find a way to exploit it to actually track
+> a user on our site. However, we kept it private until we released the
+> patch, since we weren't sure it couldn't be exploited on a wiki with
+> non-standard image handling.
 
-Use CVE-2014-3122.
+This is probably another very fundamental question of CVE assignment,
+but IMHO: "We're not sure if this can be exploited" is certainly worth
+a CVE.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+I'd suggest that one gets assigned.
 
-iQEcBAEBAgAGBQJTYcCXAAoJEKllVAevmvms6ZYIAI0DwhXZnaqj8OfEYNQfakn8
-ec1O0G3PeswsowxwK9RQsb/lu0qI+FbnxyiQHyfucCINHAElAW+agGEFsfvDIppc
-JuOZTeAjxHGb9cpuvS5Y/i7+pSKsKAWYGWeHwioIyDUBkVvb0KfKqmgooPtny0o3
-jN7Hanvjxer6tghjtxkIPoCvPiOZyvnqkxO6/Ksnb0+cYQXV0iGfnpn86invUh22
-CpDlLZtEv922TmcJCF+7mjr9qo8RwLkem1/OHWqxyotI4zGrE2KAeI6XWgbPAoMe
-tciH1ac+Lg7yU1QxFgmcF3y9wN20sK/UB7DRSNTmPl9/0te3b2ZtcPU8GMRRPPU=
-=DNdv
------END PGP SIGNATURE-----
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
