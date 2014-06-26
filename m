@@ -1,59 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/4
-Message-ID: <20140708125243.GA8599@openwall.com>
-Date: Tue, 8 Jul 2014 16:52:43 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/28
+Message-ID: <CAFkuX4s0So76HOb2wqBL1uJfxjyK=GKbX_CM_0s=ajZ37dvziw@mail.gmail.com>
+Date: Thu, 26 Jun 2014 14:37:47 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+Subject: Re: LMS-2014-06-16-1: Oberhumer LZO
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 05, 2014 at 10:25:47PM +0400, Solar Designer wrote:
-> Red Hat's statement is:
-> 
-> "This issue affects the versions of the Linux kernel as shipped with
-> Red Hat Enterprise Linux 5, 6, 7 and Red Hat Enterprise MRG 2. Future kernel
-> updates for Red Hat Enterprise Linux 5, 6, 7 and Red Hat Enterprise MRG 2 may
-> address this issue."
-> 
-> but it appears to have been posted before my unsuccessful attempts to
-> trigger the error condition on RHEL5'ish and RHEL6'ish kernels yesterday.
-> I fully agree that we need to treat these kernels as likely vulnerable
-> unless we can show otherwise, though - obviously, simply not being able
-> to trigger the problem with a particular PoC doesn't mean much.
+I will clarify my actions here, and this will be my only comment on this
+matter:
 
-Red Hat's statement has since been edited to:
+First and foremost I would like to thank the Linux kernel community, the
+oss distros community, and select members of this oss-security mailing list
+community, for helping move this issue forward.
 
-"This issue does not affect the versions of the Linux kernel as shipped
-with Red Hat Enterprise Linux 5.
+I would also like to thank Alexander (Solar) for his advice and direction,
+even if I didn't take all of it.
 
-Future kernel updates for Red Hat Enterprise Linux 6, 7 and Red Hat
-Enterprise MRG 2 will address this issue."
+I chose not to release the bug reports to the public within the timeframe
+suggested by Solar for several reasons:
+ 1) I have deep visibility into the vulnerable code and understand the
+constraints of exploitation and the breadth
+ 2) The public exposure was non-obvious, and was not advertised by the
+vendor
+ 3) The most widely effected vendors (Linux and Oberhumer) had yet to
+release a patch publicly
+ 4) The time between exposure and public release was short enough to
+negative exposure
 
-I was subscribed to this Bugzilla entry, yet I didn't receive an e-mail
-notification when this edit was made.  I guess Bugzilla does not send
-those for edits to past comments.  While I think I understand why Red
-Hat does it this way, and it's fine, maybe a better practice would be to
-also add new comments like "I've just edited our statement in comment #4
-above because ..." - that way, some revision history will be preserved,
-rationale for the change given, and e-mail notifications will be sent.
+This effort took coordination with a large number of entities world wide.
+It was not an easy effort, and we all did our best to push this as quickly
+and effectively as possible. But, I made a promise to the affected vendors
+that I would do my best to give them adequate time to coordinate and
+release. Oberhumer would not have been given sufficient time with an early
+release, and he was the most affected by this issue.
 
-Anyway, let me ask: Red Hat, how do you know RHEL5 kernels are not
-vulnerable, whereas RHEL6 are?  There must have been some analysis to
-arrive at these conclusions.  This will be very helpful to know for
-downstream projects (as it relates to your kernels), including OpenVZ
-and Owl.
+Had the lack of communication from Oberhumer persisted, a release would
+have occurred today regardless. I am glad he was able to release a patch.
 
-Since we're past the weekend and since some distros have already
-released security updates, I think it's OK to start talking about
-specific code paths triggering the problem publicly.  In fact, I think
-it's best to make this info public before the next weekend approaches.
+My job, as I saw it, was to responsibly coordinate word between all
+parties. I did that as best as I could given the teams, their time zones,
+their understanding of the bug, and their speed.
 
-Meanwhile, I've attached the patch for RHEL5.10/OpenVZ that we're using
-on Owl (lacking convincing rationale, let alone proof, why those kernels
-are not vulnerable).
+All in all, I think it worked out OK, and I am satisfied with the result
+thus far. There are things that could have gone better, but over all each
+team worked hard to produce solid patches in a reasonable time frame. We
+hit that goal.
 
-Thanks,
+Thank you,
+Don A. Bailey
+Founder / CEO
+Lab Mouse Security
+https://www.securitymouse.com/
 
-Alexander
 
-View attachment "linux-2.6.18-371.9.1.el5.028stab114.2-CVE-2014-4699.diff" of type "text/plain" (643 bytes)
+
+On Thu, Jun 26, 2014 at 2:28 PM, Solar Designer <solar@...nwall.com> wrote:
+
+> On Thu, Jun 26, 2014 at 12:51:32PM -0600, Don A. Bailey wrote:
+> > This is to inform you of a security flaw in the Oberhumer LZO algorithm,
+> > typically packaged as liblzo2 or lzo-2. Please read the bug report
+> inline.
+>
+> Thank you for posting this and the other 5 bug reports.  I think it's
+> also helpful to link to your blog post:
+>
+> "Raising Lazarus - The 20 Year Old Bug that Went to Mars"
+>
+> http://blog.securitymouse.com/2014/06/raising-lazarus-20-year-old-bug-that.html
+>
+> Don brought these issues to the distros list at "Mon Jun 23 16:57 UTC",
+> and they were already being patched by some of the affected projects at
+> the time - thus, (semi?)-public.  We argued for a while whether it's
+> appropriate to wait for more of the projects to have patches ready, or
+> to post to oss-security and other high-visibility places right away.
+> Initially, I asked that the issues be posted at least to oss-security,
+> as per distros list policy for public disclosure, within 24 hours.
+> However, as we know there ended up being a 4 day delay.  While this time
+> wasn't "wasted" - more patches were being produced, and Yves-Alexis
+> Perez of Debian came up with a lengthy list of projects that have the
+> affected code embedded - I do acknowledge that it's a violation of the
+> distros list policy, and I apologize for it.
+>
+> I'd appreciate guidance from the oss-security community on how to deal
+> with such cases going forward: the person reporting a vulnerability
+> willing to wait for more projects to have it patched vs. the already
+> (semi?)-public nature of the vulnerability via commits, etc. by some of
+> the projects.  Is letting the vulnerability stay in the limbo for 4 days
+> acceptable, or is it too much?  My initial gut feeling was "24 hours
+> max", which I communicated to Don and to distros list, but as we can see
+> actual disclosure occurred 4 days later.  (I did send a ping earlier
+> today, but I think the disclosure would have been today anyway.)  Should
+> I have pushed harder?  Should I have posted to oss-security myself (as a
+> BOFH list admin enforcing a policy), overriding others' preferences and
+> reasoning?
+>
+> Yves-Alexis, can you please post that lengthy list in here?  Having it
+> available right away would be partial justification/excuse for the
+> delay in disclosing these issues appropriately. ;-)
+>
+> Thanks,
+>
+> Alexander
+>
+
