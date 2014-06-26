@@ -1,35 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/8
-Message-ID: <20140927160123.GA20819@riva.ucam.org>
-Date: Sat, 27 Sep 2014 17:01:23 +0100
-From: Colin Watson <cjwatson@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/1
+Message-ID: <CAKcmtDwcUZGM2+TK5x6nt3xFb56H-SJ=Fx=jYvhQjURYRpjqhA@mail.gmail.com>
+Date: Wed, 25 Jun 2014 17:03:33 -0700
+From: Chris Steipp <csteipp@...imedia.org>
 To: oss-security@...ts.openwall.com
-Cc: Darren Hiebert <dhiebert@...rs.sourceforge.net>
-Subject: CVE request: exuberant-ctags: CPU/disk DoS on minified JavaScript file
+Subject: Re: MediaWiki releases 1.19.17, 1.21.11, 1.22.8 and 1.23.1
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Since the bug is public now
+(http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-June/000155.html),
+I didn't get a CVE in advance because I thought this was likely a
+hardening fix. We couldn't find a way to exploit it to actually track
+a user on our site. However, we kept it private until we released the
+patch, since we weren't sure it couldn't be exploited on a wiki with
+non-standard image handling.
 
-https://bugs.debian.org/742605 was reported some time ago against the
-Debian package of Exuberant Ctags (http://ctags.sourceforge.net/); it's
-a CPU/disk denial of service that results from attempting to run ctags
-over large volumes of public source code.
-
-Upstream fix, determined by bisection:
-  http://sourceforge.net/p/ctags/code/791/
-
-As far as I know this was not identified as a security problem upstream,
-just fixed as a normal bug in the course of development.  The
-sources.debian.net use case turns it into a DoS though.  CCing the
-upstream author for his information.
-
-Not affected: 5.6
-Affected: 5.8 (the latest release)
-
-Since we'd like to issue patches for this bug as security updates,
-please could I have a CVE identifier for this?
-
-Thanks,
-
--- 
-Colin Watson                                       [cjwatson@...ian.org]
+On Wed, Jun 25, 2014 at 4:00 AM, Henri Salo <henri@...v.fi> wrote:
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-June/000154.html
+>
+> """
+> this is a notice that on Wednesday, June 25th, between 20:00-22:00 UTC we will
+> release security and maintenance updates for all current and supported branches
+> of the MediaWiki software. Downloads and patches will be available at that time.
+> """
+>
+> I'm not sure if those vulnerabilities already have CVEs. I asked from Markus G.
+>
+> Also please note End of lifetime announcement for MediaWiki 1.21
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-June/000153.html
+>
+> ---
+> Henri Salo
