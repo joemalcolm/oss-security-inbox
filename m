@@ -1,48 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/10
-Message-ID: <54189023.6050908@enovance.com>
-Date: Tue, 16 Sep 2014 15:31:47 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/26
+Message-ID: <20140626202820.GA24972@openwall.com>
+Date: Fri, 27 Jun 2014 00:28:20 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-029] Configuration option leak through Keystone catalog (CVE-2014-3621)
+Subject: Re: LMS-2014-06-16-1: Oberhumer LZO
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-029
-CVE: CVE-2014-3621
-Date: September 16, 2014
+On Thu, Jun 26, 2014 at 12:51:32PM -0600, Don A. Bailey wrote:
+> This is to inform you of a security flaw in the Oberhumer LZO algorithm,
+> typically packaged as liblzo2 or lzo-2. Please read the bug report inline.
 
-Title: Configuration option leak through Keystone catalog
-Reporter: Brant Knudson (IBM)
-Products: Keystone
-Versions: up to 2013.2.3 and 2014.1 versions up to 2014.1.2.1
+Thank you for posting this and the other 5 bug reports.  I think it's
+also helpful to link to your blog post:
 
-Description:
-Brant Knudson from IBM reported a vulnerability in Keystone catalog url
-replacement. By creating a malicious endpoint a privileged user may
-reveal configuration options resulting in sensitive information, like
-master admin_token, being exposed through the service url. All Keystone
-setups that allow non-admin users to create endpoints are affected.
+"Raising Lazarus - The 20 Year Old Bug that Went to Mars"
+http://blog.securitymouse.com/2014/06/raising-lazarus-20-year-old-bug-that.html
 
-Juno (development branch) fix:
-https://review.openstack.org/121889
+Don brought these issues to the distros list at "Mon Jun 23 16:57 UTC",
+and they were already being patched by some of the affected projects at
+the time - thus, (semi?)-public.  We argued for a while whether it's
+appropriate to wait for more of the projects to have patches ready, or
+to post to oss-security and other high-visibility places right away.
+Initially, I asked that the issues be posted at least to oss-security,
+as per distros list policy for public disclosure, within 24 hours.
+However, as we know there ended up being a 4 day delay.  While this time
+wasn't "wasted" - more patches were being produced, and Yves-Alexis
+Perez of Debian came up with a lengthy list of projects that have the
+affected code embedded - I do acknowledge that it's a violation of the
+distros list policy, and I apologize for it.
 
-Icehouse fix:
-https://review.openstack.org/121890
+I'd appreciate guidance from the oss-security community on how to deal
+with such cases going forward: the person reporting a vulnerability
+willing to wait for more projects to have it patched vs. the already
+(semi?)-public nature of the vulnerability via commits, etc. by some of
+the projects.  Is letting the vulnerability stay in the limbo for 4 days
+acceptable, or is it too much?  My initial gut feeling was "24 hours
+max", which I communicated to Don and to distros list, but as we can see
+actual disclosure occurred 4 days later.  (I did send a ping earlier
+today, but I think the disclosure would have been today anyway.)  Should
+I have pushed harder?  Should I have posted to oss-security myself (as a
+BOFH list admin enforcing a policy), overriding others' preferences and
+reasoning?
 
-Havana fix:
-https://review.openstack.org/121891
+Yves-Alexis, can you please post that lengthy list in here?  Having it
+available right away would be partial justification/excuse for the
+delay in disclosing these issues appropriately. ;-)
 
-Notes:
-This fix will be included in the Juno release 2014.2.0 and in future
-stable 2013.2.4 and 2014.1.3 releases.
+Thanks,
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3621
-https://launchpad.net/bugs/1354208
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Alexander
