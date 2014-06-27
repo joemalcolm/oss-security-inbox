@@ -1,144 +1,143 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/13
-Message-ID: <82899.1404849358@critter.freebsd.dk>
-Date: Tue, 08 Jul 2014 19:55:58 +0000
-From: "Poul-Henning Kamp" <phk@....freebsd.dk>
-To: cve-assign@...re.org
-cc: oss-security@...ts.openwall.com
-Subject: Re: Varnish - no CVE == bug regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/2
+Message-ID: <CAFkuX4u3uphnNK4H8Oh6Xp5mmVhf56tUCii-2L+fmjz9fEG9gA@mail.gmail.com>
+Date: Thu, 26 Jun 2014 20:54:31 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: LMS-2014-06-16-6: LZ4 Core
 Content-Type: text/plain; charset=utf-8
 
-In message <201407081836.s68IaX7O002273@...us.mitre.org>, cve-assign@...re.org writes:
+Ahhh, so that's who this is. I only read Yann's blog post which was largely
+an emotional response, and so I ignored most (read: all) of it. Now that I
+understand who he is, this makes a *lot* more sense. Thanks for sending the
+email.
 
->Is it a supported configuration if auto_restart is off, and this
->hostname is specified using a DNS domain name?
+I also never saw his responses on the lz4 code site. I posted a note there,
+but never received updates or saw that he responded to my messages. I
+checked several times throughout this process. Unfortunately, this just
+breaks down to a communication error.
 
-Supported ?  Yes.
+I think the larger issue is that this was noted as a security problem some
+time ago on the lz4 site. I've never tried to hide that. What was
+interesting is the issue was dismissed by the lz4 developer, who I now know
+is Yann. It was never fixed and it was given a low priority. So, from this
+perspective, I think it is unfortunate that he is so angry. If he thought
+it was a serious issue back then he should have raised the priority. The
+original researcher never even pursued the issue after it was deemed a
+non-issue, nor did they attempt to seek out alternative implementations.
+The maintainers of LZ4 variants used in ZFS, for example, were never
+notified. I contacted those individuals myself.
 
-Recommended ?  No.
+Yann is technically wrong about a lot here, however.
+ - 64bit systems are still vulnerable, but impractical to exploit due to
+memory constraints
+ - I mentioned that the security flaw is unlikely to be exploited due to
+memory constraints
+ - I mentioned the ZFS 128k limit in my blog post as an example of why
+things *aren't* vulnerable
+ - There is no constraint or ceiling in the LZ4 decompression routine on
+the size of the input/output buffer
 
-Common ?  No.
+First issue - 64bit systems. It is still possible to generate an integer
+overflow on 64bit systems. The amount of memory (terabytes upon terabytes)
+would be necessary to succeed. This is indeed infeasible. But, this is also
+potentially the same logic that kept this bug hidden for 20 years. I am not
+here to speculate on whether something might be vulnerable or not. It is
+vulnerable code. Period.
 
-Actually ever seen ?  Only while developers debug.
+The security flaw is indeed unlikely to be exploited in most environments.
+I have never disputed this. I think the LZ4 bug is interesting because it
+is more easily instrumented than the LZO exploit. You can actually get a
+more precise overwrite with LZ4 than you can with LZO. As a result, it is
+extremely practical to write exploits for it, including RCE. Is it
+practical outside of the core library? Probably not, but that doesn't mean
+it shouldn't be secured.
 
-Background:
+I noted in my blog that ZFS is constrained to 128k. For some reason Yann
+didn't read this far. I think he misunderstands context. The LZ4 code as is
+in the library is vulnerable. Period. It can be instrumented for precise
+overwrites. Period. But, as I address in the blog, context - and thus the
+threat model - changes drastically with use of the library. This is why -
+and again, I called for this in my blog post - auditing of each
+implementation is imperative. Since these algorithms are widely used, and
+there is no enforced constraint on a call to LZ4's algorithm, there is no
+way to determine who is using this "correctly" or not. As an example, I
+have RCE examples for MPlayer2 on 8 or so different target platforms from
+x86, x86_64, and ARM on BSDs and Linux. This is because libav's
+implementation is slightly different enough to be easily instrumented by an
+attacker. Is LZ4 used similarly in another product? I don't know. That's
+why I'm calling for audits to find out. Let's find out!
 
-The backend hostname is resolved only once, at the time the
-administrator loads the configuration ("vcl.load" CLI command).
+Finally, Yann is right that there are block sizes, etc. But the
+decompression routine itself does not care or enforce a size constraint.
+Just like LZO's decompression routine, this means that it can be passed any
+amount of data the caller wants, and like LZO, users will implement this
+incorrectly.
 
-It is resolved through system services, however they are configured
-to do it (/etc/hosts, NIS, DNS, DNSSEC, etc.)
+It's unfortunate that Yann's feelings were hurt, and I feel bad that he was
+upset enough to react so caustically. I had no intention to make him look
+bad, or hurt his project. But, when I saw the bug reports during the Linux
+kernel audit from years ago with no reaction or patch, I suppose I presumed
+the worst. That's my fault, and I apologize for that.
 
-The resolved IP#'s (one IPv4 and one IPv6 allowed, no more) are
-then fixed in the compiled configuration and is stable for this
-loaded configuration and automatic (or manual) restarts of
-the child process will not change it.
+Hope this helps illuminate my perspective.
 
-This design were chosen to make sure that DNS system flakery only
-impacts varnish management operations, but not Varnish operation.
+Best,
+Don A. Bailey
+Founder / CEO
+Lab Mouse Security
+@InfoSecMouse
+https://www.securitymouse.com/
 
-If the hostname resolution fails, the load of the new configuration
-obviously fails.
 
-Since Varnish supports having multiple configurations loaded at the
-same time, it keeps running its current active configuration while
-you're trying to load the new configuration, and thus not affected
-if you have to spend 20 minutes to deal with shit DNS service.
 
-The resolved addresses can be verified from the CLI or via the
-shared memory Log/Statistics facility, before the loaded 
-configuration is activated ("vcl.use" CLI command)
+On Thu, Jun 26, 2014 at 8:37 PM, Solar Designer <solar@...nwall.com> wrote:
 
->It seems that, if an attacker is occasionally successful at DNS
->spoofing (or spoofing at another level) and can thus trigger even one
->use of a rogue backend server, there's a long-lived denial of service.
-
-First, if the attacker can spoof your DNS, what makes you think
-your HTTP traffic will end up at your Varnish server to begin with ?
-What about your emails ?
-
-Second the attacker would need to time his attack to be coincident
-with the administrator loading a configuration file.
-
-Third ... which is using hostnames instead of IP#, which seem
-to be preferred by many varnish admins because it takes DNS entirely
-out of the picture.
-
-Forth ... on a Varnish server which is not using some kind of split-
-horizon name-resolution (/etc/hosts, NIS, S-H DNS)
-
-Fifth ... against a Varnish admin who is not so worried about
-DNS-spoofing that he uses DNSSEC.
-
-I think there are a lot of things to worry about before this
-attack makes top of the list.
-
->> By definition Varnish must explicitly and implicitly trust the
->> backend HTTP server
+> On Thu, Jun 26, 2014 at 12:58:37PM -0600, Don A. Bailey wrote:
+> > A vulnerability has been identified in the LZ4 core implementation.
+> Please
+> > review the bug report attached inline.
+> [...]
+> > Report ID: LMS-2014-06-16-6
+> >
+> > CVE ID: CVE-2014-4611
+> [...]
+> > Vulnerability Status: Reported / No response
 >
->With many realistic network designs, there isn't 100% assurance that
->this trusted server is always the actual origin of network traffic
->that appears to be from this server, and has a malicious HTTP header.
+> Yann Collet, the author of LZ4 and maintainer of the LZ4 reference
+> implementation, has now posted a different point of view:
+>
+>
+> http://fastcompression.blogspot.fr/2014/06/debunking-lz4-20-years-old-bug-myth.html
+>
+> Aside from the bitterness (which I think is excessive, albeit
+> understandable), there's technical detail on why the vulnerability is
+> less severe, and a mention of it having been reported via "a brief note
+> on the LZ4 issue board".  I've just found this note here:
+>
+> https://code.google.com/p/lz4/issues/detail?id=52&can=1
+>
+> I guess there was some miscommunication, because there _was_ response
+> via comments on this issue.  Don's comment was posted on June 19, and
+> Yann replied via multiple comments on June 20, 22, 26.  The latest one
+> of these says "Fixed into r118", which is:
+>
+> https://code.google.com/p/lz4/source/detail?r=118
+>
+> and the commit message includes:
+>
+> "fix :  Issue 52  (malicious address space overflow in 32-bits mode when
+> using custom format)"
+>
+> Per Yann's blog post, and per comments on issue 52, we should credit
+> Ludvig Strigeus for earlier discovery of this issue specifically in LZ4,
+> although it was not treated as a security issue until Don's rediscovery
+> (per Yann's good reasons, it shouldn't have been, but that's arguable).
+>
+> Given the above, I think all of Ludvig, Don, and indeed Yann deserve
+> credit for getting this issue fixed, and I find it unfortunate that
+> feelings were hurt.
+>
+> Alexander
+>
 
-Oh, absolutely:  People can do BGP manipulation, they can cut and
-splice fibers, they can do all sorts of nasty things, including
-it seems, hijack alle your domains through the US justice system
-because they don't like your abuse@ handling.
-
-But it's not Varnish' task to worry about any of that.
-
-Varnish sits on top of a TCP stack, and if people use hostnames,
-we'll resolve them using the OS facility for hostname resolution,
-just like we send and receive TCP streams using the OS facilities.
-
-Varnish is no different from any other application in this respect.
-
->Thus, it seems that you are trusting data for which it's essentially
->impossible to know whether this data originated inside of your
->security boundary.
-
-Me ?  I don't trust anybody.
-
-The people who deploy Varnish have to make a lot of decisions, some
-of them hard, some of them easy, a lot of them about security,
-reliability and performance.  That's their job.
-
-My job is to deliver at tool for them, a tool they can understand
-and predict how will react, in particular I try to make it react
-the way people would intutivily expect it to.  (POLA: Principle
-Of Least Astonishment)
-
-Policies, including risk-mitigation for their particular network
-situation are entirely their own responsibility.
-
->If there shouldn't be CVE assignments, would it be possible to
->update your documentation so that "auto_restart off" is labeled
->as a known risk for long-lived DoS conditions?
-
-The current description is:
-
-	param.show auto_restart
-	200 132     
-	auto_restart
-		Value is: on [bool] (default)
-		Default is: on
-
-		Restart child process automatically if it dies.
-
-I have yet to meet an Varnish administrator who didn't understand
-the meaning and value of this, in particular in relation to DoS
-attaks, so I suspect that adding more verbiage might confuse
-people more than it would help.
-
-The only real problem we see with auto_restart is the opposite:
-people misconfigure something else and Varnish restarts automatically
-every X minutes, but they don't notice because autostart hides
-their mistake.
-
-Poul-Henning
-
--- 
-Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
-phk@...eBSD.ORG         | TCP/IP since RFC 956
-FreeBSD committer       | BSD since 4.3-tahoe    
-Never attribute to malice what can adequately be explained by incompetence.
