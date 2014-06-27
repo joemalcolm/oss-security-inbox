@@ -1,32 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/4
-Message-ID: <20140721081731.GB14914@suse.de>
-Date: Mon, 21 Jul 2014 10:17:31 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/12
+Message-Id: <201406271537.s5RFbQRf010546@linus.mitre.org>
+Date: Fri, 27 Jun 2014 11:37:26 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
 Cc: cve-assign@...re.org
-Subject: CVE-Request: KAuth authentication bypass
+Subject: Re: Xen Security Advisory 101 - information leak via gnttab_setup_table on ARM
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We'd like to request a CVE for the following issue:
+> XSA-101
 
-The polkit authentication backend in KDE's KAuth code
-used the UnixProcess subject for authenticating actions.
-This is subject to race conditions and allows local users
-to elevate their privileges by bypassing any of the KAuth checks.
-A followup of CVE-2013-4288.
+> When initialising an internal data structure on ARM platform Xen was
+> not correctly initialising the memory containing the list of a
+> domain's grant table pages.
 
-Discussion and patch can be found here:
+> Malicious guest administrators can obtain some of the memory contents
+> of other domains
 
-https://bugzilla.novell.com/show_bug.cgi?id=864716
+This was previously assigned CVE-2014-4022. We're not sure why a version
+of XSA-101 without that CVE ID was sent here on 25 June.
 
-Sebastian
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+iQEcBAEBAgAGBQJTrY8RAAoJEKllVAevmvmsdPYH+QF1sI1FYtaD8/+H0k9BKbSE
+CX9NlDT/GHkAO7tVnF6109pxdt5BFsTSC2kM+wDLVvzr3QIiw1295ckuiXKkzsQf
+f8pyB2uUzoKiKiaInPjWhWJpNfJQkMnxqyEyGnlqplsTAwrrzmGjgbCE0hJKOwoy
+lrP0T2pk7d5JCgVTQwB6bTlF/yHltWYB8yaZYvaLSTxZF3ZZpi1wmy1GFRWKF+8c
+bKiAUQpexO6aVFyrgQd67mnm5GAGai7+6Fnv0XfKcH/QviPYaB9px3yQyaslRHOY
+Dt9kNjY+dhD1ZF7/imWhGmEdDOU5WXAneHmy2V10f/Y96JKbHNWMA8ynMh26pUU=
+=rNka
+-----END PGP SIGNATURE-----
