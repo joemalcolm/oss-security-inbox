@@ -1,68 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/8
-Message-ID: <1404590295.1720.11.camel@scapa>
-Date: Sat, 05 Jul 2014 21:58:15 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/4
+Message-ID: <CAFkuX4tWZ7KiWJ-cKBigoJkMizcLDzVYR4+-9zo2x7J4RVGyfg@mail.gmail.com>
+Date: Thu, 26 Jun 2014 21:15:05 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+Subject: Re: LMS-2014-06-16-1: Oberhumer LZO
 Content-Type: text/plain; charset=utf-8
 
-On sam., 2014-07-05 at 22:51 +0400, Solar Designer wrote:
-> Maybe it's just me, but I find the above ambiguous.
+Totally understand. Not a problem at all, I thought I should just offer my
+perspective for this list, as they were not on the Linux kernel thread, nor
+the distros thread. :-)
 
-Sorry.
-> 
-> What exactly do you mean by "crash" and "panic" above?  How do you
-> know
-> it's a double fault?
-> What appears in dmesg on the first system, 
+I'm very happy to hear you agree that negative impact was minimal.
 
-I don't have the dmesg, only a smartphone photo. It says:
+D
 
-PANIC: double faute, error_code: 0x0
-Kernel panic - not syncing: Machine halted
-CPU 1: PID: 26960 Comm: ptraace Not tainted 3.14-1-amd64 #1 Debian 3.14.9-1
 
-> and
-> what on the second system?  
 
-[  127.690932] double fault: 0000 [#1] SMP 
-[  127.691029] CPU 1 
-[  127.691069] Modules linked in: cpufreq_userspace cpufreq_powersave cpufreq_conservative cpufreq_stats bnep rfcomm bluetooth parport_pc parport ip6table_filter ip6_tables xt_helper ipt_LOG xt_tcpudp xt_pkttype nf_conntrack_ipv4 nf_defrag_ipv4 xt_state xt_addrtype iptable_filter ip_tables x_tables fuse ext2 nf_conntrack_ftp nf_conntrack tp_smapi(O) thinkpad_ec(O) ecryptfs kvm_intel kvm usbhid hid arc4 sg sr_mod cdrom snd_hda_codec_analog iwl4965 ata_generic snd_hda_intel iwl_legacy ata_piix snd_hda_codec mac80211 thinkpad_acpi nvram uhci_hcd pcmcia snd_hwdep snd_pcm snd_page_alloc cfg80211 ehci_hcd snd_seq snd_seq_device snd_timer snd usbcore rfkill yenta_socket ac battery tpm_tis tpm coretemp soundcore tpm_bios e1000e iTCO_wdt usb_common i2c_i801 pcmcia_rsrc iTCO_vendor_support pcmcia_core power_supply psmouse serio_raw wmi evdev ext4 crc16 mbcache jbd2 cryptd aes_x86_64 aes_generic xts gf128mul dm_crypt dm_mod sd_mod crc_t10dif i915 thermal acpi_cpufreq mperf ahci libahci video libata scsi_mod processor i2c_algo_bit drm_kms_helper drm button i2c_core thermal_sys
-[  127.693595] 
-[  127.693631] Pid: 3893, comm: ptrace Tainted: G           O 3.2.0-4-amd64 #1 Debian 3.2.57-3+deb7u2 LENOVO 8897CTO/8897CTO
-[  127.693840] RIP: 0010:[<ffffffff81354c73>]  [<ffffffff81354c73>] sysret_check+0x57/0x5a
-[  127.693995] RSP: 0018:00007fff2e68a230  EFLAGS: 00010046
-[  127.694089] RAX: 0000000000000f36 RBX: 0000000000000000 RCX: 0001000000000000
-[  127.694212] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000001200011
-[  127.694336] RBP: 00007fff2e68a250 R08: 0000000000000f35 R09: 0000000000000f35
-[  127.694458] R10: 00007f17e6c9f9d0 R11: 0000000000000246 R12: 0000000000000000
-[  127.694581] R13: 00007fff2e68a3f0 R14: 0000000000000000 R15: 0000000000000000
-[  127.694705] FS:  00007f17e6c9f700(0000) GS:ffff8800be500000(0000) knlGS:0000000000000000
-[  127.694844] CS:  0010 DS: 0000 ES: 0000 CR0: 000000008005003b
-[  127.694915] CR2: 00007fff2e68a228 CR3: 00000000b917d000 CR4: 00000000000006e0
-[  127.694915] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[  127.694915] DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
-[  127.694915] Process ptrace (pid: 3893, threadinfo ffff88007ff56000, task ffff8800b89e0780)
-[  127.694915] Stack:
-[  127.694915]  0000000000000000 0000000000400670 00007fff2e68a3f0 0000000000000000
-[  127.694915]  00007fff2e68a310 000000000040090f 0000000100000006 00007fff2e68a2fe
-[  127.694915]  00000000000000bf 0000000000400444 00007fff2e68a2fe 00007f17e67a836c
-[  127.694915] Call Trace:
-[  127.694915] Code: 08 4c 8b 4c 24 10 4c 8b 44 24 18 48 8b 44 24 20 48 8b 54 24 30 48 8b 74 24 38 48 8b 7c 24 40 65 48 8b 24 25 00 bf 00 00 0f 01 f8 <48> 0f 07 0f ba e2 03 73 11 fb 66 66 66 90 66 66 90 57 e8 2a 9e 
-[  127.694915] RIP  [<ffffffff81354c73>] sysret_check+0x57/0x5a
-[  127.694915]  RSP <00007fff2e68a230>
-[  127.694915] ---[ end trace 0585c7d1a1a4e1cf ]---
+On Thu, Jun 26, 2014 at 9:10 PM, Solar Designer <solar@...nwall.com> wrote:
 
-And the system is usable after that.
+> Don,
+>
+> On Thu, Jun 26, 2014 at 02:37:47PM -0600, Don A. Bailey wrote:
+> > I chose not to release the bug reports to the public within the timeframe
+> > suggested by Solar for several reasons:
+> >  1) I have deep visibility into the vulnerable code and understand the
+> > constraints of exploitation and the breadth
+> >  2) The public exposure was non-obvious, and was not advertised by the
+> > vendor
+> >  3) The most widely effected vendors (Linux and Oberhumer) had yet to
+> > release a patch publicly
+> >  4) The time between exposure and public release was short enough to
+> > negative exposure
+>
+> Thank you for providing this reasoning.
+>
+> > My job, as I saw it, was to responsibly coordinate word between all
+> > parties. I did that as best as I could given the teams, their time zones,
+> > their understanding of the bug, and their speed.
+> >
+> > All in all, I think it worked out OK, and I am satisfied with the result
+> > thus far. There are things that could have gone better, but over all each
+> > team worked hard to produce solid patches in a reasonable time frame. We
+> > hit that goal.
+>
+> I am also of the opinion that everyone did their best, and that's great.
+>
+> I think actual negative impact of the delay is small or non-existent.
+> However, I felt we must have posted these additional comments on the
+> disclosure process in here, because it deviated from what's normally
+> expected for issues disclosed to the distros list:
+>
+>
+> http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists
+>
+> "When the security issue is finally to be made public, it is your (the
+> original reporter's) responsibility to post about it to oss-security
+> (indeed, you and others may also post to any other mailing lists, etc.)"
+>
+> I am tempted to add "on the same day" after "to oss-security", since
+> this is what we expect (and what usually happens), but there may be
+> occasional exceptions like this, so maybe we leave the wording as-is?
+>
+> Alexander
+>
 
-> What's the value of the kernel.panic_on_oops
-> sysctl, and is it the same on both systems?
-
-0 in both cases.
-
-Regards,
--- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
