@@ -1,68 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/11
-Message-ID: <CAFOKM3oZua=zY=eG76aU9QLhAgn_BoR0onH5tUEJ368YECUu_g@mail.gmail.com>
-Date: Wed, 17 Dec 2014 10:38:26 -0800
-From: Dean Pierce <pierce403@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: What is the "Grinch" polkit/wheel group issue?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/11
+Message-Id: <201406271526.s5RFQUU7010376@linus.mitre.org>
+Date: Fri, 27 Jun 2014 11:26:30 -0400 (EDT)
+From: cve-assign@...re.org
+To: pmatouse@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request -- Linux kernel: sctp: sk_ack_backlog wrap-around problem
 Content-Type: text/plain; charset=utf-8
 
-The key here is the line:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-"In order to exploit this, all we need is a single vulnerability in
-any package in a repo. There are tons to choose from. If we type
-‘PKCon’ or simply ‘man PKCon,’ we can find a list of repos in use and
-then pull a list of all bins and version numbers. I won’t provide one
-here because you don’t want everything handed to you."
+> sk_ack_backlog value is decremented for this socket, since the initial
+> value for sk_ack_backlog is 0, after the decrement, it will be 65535,
+> a wrap-around problem happens, and if we want to establish new
+> associations afterward in the same socket, ABORT would be triggered
 
-Had they actually found a package they could leverage to get root,
-then this would absolutely be a vulnerability, but they didn't.  While
-configuring pkcon to allow admins to install packages without typing
-in a password *is* something that might be unexpected for people
-unfamiliar with polkit, that is the exact type of use case it was
-built for.
+> A remote attacker can block further connection to the particular sctp
+> server socket by sending a specially crafted sctp packet.
 
-  - DEAN
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=d3217b15a19a4779c39b212358a5c71d725822ee
+> https://bugzilla.redhat.com/show_bug.cgi?id=1113967
 
-On Wed, Dec 17, 2014 at 10:24 AM, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 17/12/14 10:00 AM, Marcus Meissner wrote:
->> Hi,
->>
->> This probably needs a CVE too, or does it have one?
->>
->> https://www.alertlogic.com/blog/dont-let-grinch-steal-christmas/
->> http://www.pcworld.com/article/2860032/this-linux-grinch-could-put-a-hole-in-your-security-stocking.html
->>
->> Although it seems that the user is in the "wheel" group for this to be exploitable
->> and is hard to specify what actions should be safed by another query or which should not.
->>
->> Ciao, Marcus
->
-> Yeah I looked into this (the article/etc was completely confusing and
-> took some time to parse):
->
-> 1) the article states they contacted red hat, we were unable to find
-> any inbound email or bugzilla entry pertaining to this issue, as always
-> if you have an issue you wish to report please contact secalert@...hat.com
->
-> 2) this is expected behaviour, admin users can install software (do I
-> have to say this? really? yes. I was told I should say this).
->
-> 3) don't run web apps as admin users (do I have to say this? really?
-> yes. I was told I should say this).
->
-> 4) if you feel the need to run a web app as an admin user restrict what
-> they can do via SELinux, and  don't let them install software (do I have
-> to say this? really? yes. I was told I should say this).
->
-> So TL;DR: it's not a security vulnerability, and it will NOT be getting
-> a CVE.
->
-> I can only assume this article/vuln is perhaps referring to something
-> like Cpanel and other control panels that people sometimes install
-> insecurely/improperly and then never update. Or something. Who knows.
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
+Use CVE-2014-4667.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTrYyvAAoJEKllVAevmvmspboH+wTd8u74TVDKGExKiL/GLx1n
+uJoLaVZ0CmxnO5wEYcPZR1lcACTt9+01CxD8gwe+AFp+/4lcINvexZaGgG5lBHlY
+C/D7YHxrHGPmMEwBj7Cb3E4Vo83MwDovCfK83lNprAG2QKVg54DbupzD+a5fWdH+
+8blx0/2dJB8F1YgQd1osYghi+rZyHRwQZjR2VhyQYRTNEJHMjHAY8En+gfvgFMw+
+3l+p0XfOvJHTqBk4QBFa7kslX8VWmY2gvWXv67iTjfOVlqrpVCkfFkpm2ofW/+CF
+8sq1LFu3PT8EBvW4HSKS7+BYl5k/2oC7EWpstQBN34QBOK+2k9e1h3kj+QZ9KWA=
+=U2mC
+-----END PGP SIGNATURE-----
