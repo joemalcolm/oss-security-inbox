@@ -1,43 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/16/6
-Message-Id: <20140816075028.C212DC50460@smtptsrv1.mitre.org>
-Date: Sat, 16 Aug 2014 03:50:28 -0400 (EDT)
-From: cve-assign@...re.org
-To: ami_stuff@...pl
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, ffmpeg-security@...peg.org
-Subject: Re: CVE request: FFmpeg issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/10
+Message-ID: <20140627111545.GU19028@dhcp-25-225.brq.redhat.com>
+Date: Fri, 27 Jun 2014 13:15:45 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request -- Linux kernel: sctp: sk_ack_backlog wrap-around problem
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Description of the problem:
+For a TCP-style socket, while processing the COOKIE_ECHO chunk in
+sctp_sf_do_5_1D_ce(), after it has passed a series of sanity check, a
+new association would be created in sctp_unpack_cookie(), but
+afterwards, some processing maybe failed, and sctp_association_free()
+will be called to free the previously allocated association, in
+sctp_association_free(), sk_ack_backlog value is decremented for this
+socket, since the initial value for sk_ack_backlog is 0, after
+the decrement, it will be 65535, a wrap-around problem happens, and
+if we want to establish new associations afterward in the same
+socket, ABORT would be triggered since sctp deem the accept queue as
+full.
 
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=52b81ff4635c077b2bc8b8d3637d933b6629d803
-> author Christophe Gisquet
-> Mon, 11 Aug 2014
+A remote attacker can block further connection to the particular sctp
+server socket by sending a specially crafted sctp packet. 
 
-Use CVE-2014-5271.
+Upstream patch:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=d3217b15a19a4779c39b212358a5c71d725822ee
 
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1113967
 
-> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=3539d6c63a16e1b2874bb037a86f317449c58770
-> author Michael Niedermayer
-> Sun, 10 Aug 2014
-> Found-by: Piotr Bandurski
-
-Use CVE-2014-5272.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT7wzhAAoJEKllVAevmvmscI0H/107Vi4EeWQrOtG+wwz7JwC9
-J6tlSlnDt11XwnUBbi36UOPDvFjC+XZOiYL9fj+WHcmP66vl/PkcG1LzfVWcxKqm
-YaFRK9UMeX5U20g9GsMUQpMEo5YlgNjZEkN9qDVIMljN0R9cmXEOvhnVawEPfTw+
-Ad1RhqIrNqW1Tt9bs5xvklD+s6biQdCFzUx2yJ8OHjh9W6NWoKv8785pOfQYIpCK
-5YcNkDlJd7Z+yPuu8FMB8m6v/QMTqqHQRSjJWNtJ49VUIOaG5bRqbUqLXbf3zbB0
-3qvXnWP6VzMXPvBiub+t4X80nOrdpd7OGa8Eh3IsoQ/dL0SRyFNBWxmjnbUULY4=
-=VTvJ
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
