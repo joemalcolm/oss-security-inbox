@@ -1,89 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/18
-Message-Id: <201406272136.s5RLZqBg010364@linus.mitre.org>
-Date: Fri, 27 Jun 2014 17:35:52 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/17
+Message-Id: <201406272003.s5RK3hF9000066@linus.mitre.org>
+Date: Fri, 27 Jun 2014 16:03:43 -0400 (EDT)
 From: cve-assign@...re.org
-To: csteipp@...imedia.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: MediaWiki releases 1.19.17, 1.21.11, 1.22.8 and 1.23.1
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, jamie@...onical.com
+Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> I didn't get a CVE in advance because I thought this was likely a
-> hardening fix.
+> I suppose maybe there is a CWE for not having a virus scanner, which
+> makes sense as that could be considered an overall system weakness.
 
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=65839#c29
+Neither CVE nor CWE attempts to cover the general topic of system
+integration, i.e., questions such as "given the composition and role
+of this entire system, is it unreasonable to omit a virus scanner?" In
+practice, both CVE and CWE often tend to be about questions that may
+come up when considering somewhere around one line of code or one file
+of code. (This is just an observational statement, not an attempt to
+redefine why CVE and CWE exist.) Typical audiences may include (among
+others) developers who need to write a line of code safely or system
+administrators who need to patch a faulty line of code.
 
-We generally can't assign a CVE ID for a case where a vendor decides
-to add speculative restrictions in a tradeoff against
-functionality/usability. (Admittedly, the new restrictions here seem
-reasonable and had a careful cost/benefit analysis by the vendor.)
-
-Our understanding is that:
-
-  1. in both the old and new code, if someone uploads a filename.svg
-     file, then the MediaWiki product creates HTML code with,
-     basically, <a href="filename.svg"><img src="filename.svg.png"></a>
-
-     where filename.svg.png is in PNG format and contains PNG data from
-     the SVG file. In other words, a visitor can navigate among
-     articles without encountering inline SVG content. Also, both the
-     .svg file and the .svg.png file are normally hosted in a domain
-     controlled by the operator of the MediaWiki instance.
-
-  2. in the old code, people could upload an SVG file that loads
-     content from other domains
-
-  3. in the new code, people can't upload an SVG file that loads
-     content from other domains
-
-Here, 3 is a tradeoff because an SVG file that's very relevant to an
-article might be one that loads external content, and the uploader
-might not be capable of changing that. (Among other issues, there
-could be license concerns.)
-
-The rationale for 3 seems to be:
-
-  A. inline SVG content might become desirable in future releases
-     of the MediaWiki product, with inline external-domain content
-     remaining undesirable
-
-  and
-
-  B. there might be current third-party code that renders articles
-     (obtained from a MediaWiki instance) with inline SVG instead of
-     inline PNG
-
-Rationale A doesn't seem to qualify for a CVE because there's no
-inline-content concern in the current version. The tradeoff is being
-made in anticipation of future product directions.
-
-Rationale B is arguably a security problem because it sends
-article-visit information to operators of external web sites,
-something that apparently hasn't been occurring on many well-known
-MediaWiki instances in the past. (For example, for some of these
-instances, a visitor might expect that basic article visits would send
-requests only to *.wikimedia.org servers.) It'd be reasonable for a
-third-party vendor to make an announcement such as "this fixes the
-vulnerability of leaking article-visit information to arbitrary web
-servers, where we were intending to restrict that to a small set of
-servers." However, no such third-party vendor is known.
-
-> From: hanno@...eck.de
-> Date: Thu, 26 Jun 2014 19:32:38 +0200
-> 
-> This is probably another very fundamental question of CVE assignment,
-> but IMHO: "We're not sure if this can be exploited" is certainly worth
-> a CVE.
-> 
-> I'd suggest that one gets assigned.
-
-We agree that, if the old code enabled an exploit with respect to the
-security policy of any third-party product, then a CVE ID could be
-assigned. However, we first would need to know what product is
-affected before assigning the CVE ID.
+This doesn't mean that there's any objection to someone taking the
+position that lack of a virus scanner is the most serious security
+concern that they see in an entire system. This is a valid perspective
+but is outside of the problem spaces in which CVE and CWE have been
+operating. Even if everyone were looking at "whether or not a flaw is
+a flaw" decisions in precisely the same way, a conclusion of "yes,
+this system would really benefit from a virus scanner" leaves open the
+question of the best place to capture that information.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -93,11 +41,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTreLhAAoJEKllVAevmvms1vsH/2q+76Af858ef5/imRmLpag1
-18HgNQuDjMuzoOmkydpH4TYHnrPAm2Cj9Sw4k/5aWX+E7ufo3cImPOG5VsBtKKjA
-58RUbsC1Tn5/C3+NdNZr4MmFC4FQN+SDeDw9s6reoPJdVoPKg19ymE+DqCN8mxo4
-M0MVFWsu6KJumr4EAZcduDV23LuzblxI98ibxBgpiFzLAF/ASQabeT4xQoeELnud
-nEwqqqEiuVeEAXOM3lNfrZQVRmGFzIjWrTVBm1f40jYqL3PbADxxTdEJX9AAZOI0
-TYB9bqJ513Iva5+dnKOiKM3TO4Jje+7kjsrIrXub4O/+t+8izwN2FmIEjwYDNwU=
-=2xMI
+iQEcBAEBAgAGBQJTrcyXAAoJEKllVAevmvmsAiUIAKTfI78BYVzg2+8doGaOh3RC
+smEBRzI2JcdGtbiCeUr+QLcocNKfLKhTYVlre/1c+iF/INbiTn0r/2c3sWLBcrPb
+X2+CoSY9mRSSV8mDS3BB5xkpoCCedJJkjSY4WegaRKh6p4WLQVo2HhzC33aH1Sgi
+ertJ35l5kzqSPuLutZDLWONZPsjCYfyMonm9pXE/p7afpsMSE8ic0J5Fh/HC219N
+mPVE84q9ibFvSxAZH0zqlodBZjHDWRtZAg//xMxSmOejt3POMrZNFC/WjCj+2MVC
+k50X1hEus/DgQZTOn8rJFfl9FZ7wngGDJTtXQnkoAXI0bbo5DZeOz/CzfYO8P7k=
+=/jC4
 -----END PGP SIGNATURE-----
