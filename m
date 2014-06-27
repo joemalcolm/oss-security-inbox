@@ -1,38 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/21
-Message-ID: <54936570.6070001@redhat.com>
-Date: Thu, 18 Dec 2014 16:38:24 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: request for CVEs for git clients
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/8
+Message-ID: <1251940714.23099142.1403856038932.JavaMail.zimbra@redhat.com>
+Date: Fri, 27 Jun 2014 04:00:38 -0400 (EDT)
+From: Arun Babu Neelicattu <abn@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE request for commons-beanutils: 'class' property is exposed, potentially leading to RCE
 Content-Type: text/plain; charset=utf-8
 
-Can we please get CVEs for
-https://github.com/blog/1938-vulnerability-announced-update-your-git-clients
+Hi,
 
-In addition, the following updated versions of Git address this
-vulnerability:
+Is there a decision on this one? Did this one get missed?
 
-The Git core team has announced maintenance releases for all current
-versions of Git (v1.8.5.6, v1.9.5, v2.0.5, v2.1.4, and v2.2.1).
+-arun
 
-Git for Windows (also known as MSysGit) has released maintenance version
-1.9.5.
-
-The two major Git libraries, libgit2 and JGit, have released maintenance
-versions with the fix. Third party software using these libraries is
-strongly encouraged to update.
-
-====
-
-looks like most Linux users are ok though "The vulnerability concerns
-Git and Git-compatible clients that access Git repositories in a
-case-insensitive or case-normalizing filesystem."
-
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+----- Original Message -----
+> From: "David Jorm" <djorm@...hat.com>
+> To: oss-security@...ts.openwall.com
+> Sent: Monday, June 16, 2014 8:39:28 AM
+> Subject: [oss-security] CVE request for commons-beanutils: 'class' property is exposed, potentially leading to RCE
+> 
+> Hi All
+> 
+> I have raised this twice with security@...che.org, on 30 April and June
+> 3. I have received no response either time, therefore I am raising it on
+> oss-security.
+> 
+> CVE-2014-0114 describes a well-known issue in Apache Struts 1:
+> 
+> "It was found that the Struts 1 ActionForm object allowed access to the
+> 'class' parameter, which is directly mapped to the getClass() method. A
+> remote attacker could use this flaw to manipulate the ClassLoader used
+> by an application server running Struts 1. This could lead to remote
+> code execution under certain conditions."
+> 
+> The root cause of this flaw is that commons-beanutils exposes the class
+> property by default, with no mechanism to disable access to it. Struts 1
+> is considered EOL upstream, and upstream has not yet shipped a patch for
+> this flaw. Red Hat has shipped a patch, which was submitted upstream as
+> a pull request:
+> 
+> https://github.com/apache/struts1/pull/1
+> 
+> This patch disables access to the class property in struts itself,
+> rather than in commons-beanutils. Other frameworks built on
+> commons-beanutils, such as Apache Stripes, are likely to expose similar
+> issues. I think it would be a good idea to also assign a separate CVE ID
+> to commons-beanutils, and ship a patch for commons-beanutils itself. The
+> commons-beanutils patch could be inherited by other frameworks that may
+> not have the resources to produce their own patch.
+> 
+> commons-beanutils 1.9.2 has now shipped:
+> 
+> http://commons.apache.org/proper/commons-beanutils/javadocs/v1.9.2/RELEASE-NOTES.txt
+> 
+> Incorporating a patch for this issue:
+> 
+> https://issues.apache.org/jira/browse/BEANUTILS-463
+> 
+> "A specialized BeanIntrospector implementation has been added which
+> allows suppressing properties. There is also a pre-configured instance
+> removing the class property from beans. Some notes have been added to
+> the user's guide."
+> 
+> I think it would be appropriate to assign a CVE ID to this issue in
+> commons-beanutils, and publish an advisory. This would provide framework
+> developers with the necessary information and impetus to upgrade to
+> commons-beanutils 1.9.2 and make use of SuppressPropertiesBeanIntrospector.
+> 
+> Thanks
+> --
+> David Jorm / Red Hat Product Security
+> 
