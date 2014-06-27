@@ -1,61 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/15
-Message-ID: <5424320B.7000107@oracle.com>
-Date: Thu, 25 Sep 2014 16:17:31 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/7
+Message-ID: <CAFkuX4uVRjCzc7Q4m0Drt56yJj2iNtg77d0vYX+GM1n_LpSFfw@mail.gmail.com>
+Date: Fri, 27 Jun 2014 01:34:25 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
+To: Eddie Chapman <eddie@...k.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: LMS-2014-06-16-5: Linux Kernel LZ4
 Content-Type: text/plain; charset=utf-8
 
-On 25/09/14 04:01, Chet Ramey wrote:
-> On 9/24/14, 9:30 PM, Solar Designer wrote:
-> 
->>>>>> The bash patch seems incomplete to me, function parsing is still
->>>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+Thanks, Eddie. Good catch. Template fail.
 
-There seems to be a wider issue even when we have well-formed functions
-coming in, for example,
-
-    env rm='() { echo will not; }' bash -c 'rm core'
-
-Well, that's OK, I thought, I'll just start my scripts with
-
-   PATH=...
-   unalias -a
-   unset -f $(typeset -F)
-
-or something like that.   But what if
-
-   env unset='() { :; }' bash ...
-
-unset does nothing now.
-
-   command unset -f $(typeset -F)
-
-countered with
-
-   command='() { eval "$@"; }'
-
-At some stage scripts are going to break, especially if they're relying
-on command, but this whole exercise leaves me feeling uneasy.   ssh and
-sudo both restrict environment variables, but I just tried this:
-
-  $ xxx='() { echo hello; }' su
-  Password:
-  # xxx
-  hello
-
-Of course, su isn't affected, but if I drop one of these in for an
-overly-trusting admin who runs su on my terminal ...
+D
 
 
-My feeling is that if you're going to import functions from the
-environment then you should do that explicitly either through a switch
-(--import?) or a builtin that can import all or selected functions.  Or
-both.
 
-I worry that simply fixing CVE-2014-6271 and CVE-2014-7129 is just
-setting the scene for the next parser problem.
+On Fri, Jun 27, 2014 at 1:26 AM, Eddie Chapman <eddie@...k.net> wrote:
 
-jch
+> On 26/06/14 19:57, Don A. Bailey wrote:
+>
+>> Vulnerability Scope:
+>> All versions of the Linux kernel (3x/2x) with LZ4 support (lib/lz4).
+>>
+>
+> I think it's worth pointing out that the Linux kernel only introduced LZ4
+> support in 3.11. This is why from the new kernel.org stable releases
+> yesterday, only 3.14.9 and 3.15.2 contain the LZ4 patch. 3.10.45 and 3.4.95
+> don't.
+>
+> Eddie
+>
+
