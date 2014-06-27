@@ -1,51 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/17
-Message-Id: <201406272003.s5RK3hF9000066@linus.mitre.org>
-Date: Fri, 27 Jun 2014 16:03:43 -0400 (EDT)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, jamie@...onical.com
-Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/6
+Message-ID: <53AD1CC3.8040308@ehuk.net>
+Date: Fri, 27 Jun 2014 08:26:59 +0100
+From: Eddie Chapman <eddie@...k.net>
+To: "Don A. Bailey" <donb@...uritymouse.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: LMS-2014-06-16-5: Linux Kernel LZ4
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 26/06/14 19:57, Don A. Bailey wrote:
+> Vulnerability Scope:
+> All versions of the Linux kernel (3x/2x) with LZ4 support (lib/lz4).
 
-> I suppose maybe there is a CWE for not having a virus scanner, which
-> makes sense as that could be considered an overall system weakness.
+I think it's worth pointing out that the Linux kernel only introduced 
+LZ4 support in 3.11. This is why from the new kernel.org stable releases 
+yesterday, only 3.14.9 and 3.15.2 contain the LZ4 patch. 3.10.45 and 
+3.4.95 don't.
 
-Neither CVE nor CWE attempts to cover the general topic of system
-integration, i.e., questions such as "given the composition and role
-of this entire system, is it unreasonable to omit a virus scanner?" In
-practice, both CVE and CWE often tend to be about questions that may
-come up when considering somewhere around one line of code or one file
-of code. (This is just an observational statement, not an attempt to
-redefine why CVE and CWE exist.) Typical audiences may include (among
-others) developers who need to write a line of code safely or system
-administrators who need to patch a faulty line of code.
-
-This doesn't mean that there's any objection to someone taking the
-position that lack of a virus scanner is the most serious security
-concern that they see in an entire system. This is a valid perspective
-but is outside of the problem spaces in which CVE and CWE have been
-operating. Even if everyone were looking at "whether or not a flaw is
-a flaw" decisions in precisely the same way, a conclusion of "yes,
-this system would really benefit from a virus scanner" leaves open the
-question of the best place to capture that information.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTrcyXAAoJEKllVAevmvmsAiUIAKTfI78BYVzg2+8doGaOh3RC
-smEBRzI2JcdGtbiCeUr+QLcocNKfLKhTYVlre/1c+iF/INbiTn0r/2c3sWLBcrPb
-X2+CoSY9mRSSV8mDS3BB5xkpoCCedJJkjSY4WegaRKh6p4WLQVo2HhzC33aH1Sgi
-ertJ35l5kzqSPuLutZDLWONZPsjCYfyMonm9pXE/p7afpsMSE8ic0J5Fh/HC219N
-mPVE84q9ibFvSxAZH0zqlodBZjHDWRtZAg//xMxSmOejt3POMrZNFC/WjCj+2MVC
-k50X1hEus/DgQZTOn8rJFfl9FZ7wngGDJTtXQnkoAXI0bbo5DZeOz/CzfYO8P7k=
-=/jC4
------END PGP SIGNATURE-----
+Eddie
