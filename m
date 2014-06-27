@@ -1,37 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/6
-Message-ID: <542CAC3B.7070307@FreeBSD.org>
-Date: Wed, 01 Oct 2014 20:36:59 -0500
-From: Bryan Drewery <bdrewery@...eBSD.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/3
+Message-ID: <20140627031007.GA26847@openwall.com>
+Date: Fri, 27 Jun 2014 07:10:08 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Security advisory in Jenkins
+Subject: Re: LMS-2014-06-16-1: Oberhumer LZO
 Content-Type: text/plain; charset=utf-8
 
-On 10/1/2014 6:25 PM, Kohsuke Kawaguchi wrote:
-> Hello,
-> 
-> I just wanted to share that the Jenkins project issued a security advisory
-> today. These issues are independently found and we've aggregated into a
-> single release.
-> 
-> The relevant CVE IDs, our bug tracking IDs are available here
-> <https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01>
-> .
-> 
-> The new versions can be downloaded from here
-> <http://mirrors.jenkins-ci.org/>.
-> 
-> (This is the first time I do this, so my apologies in advance for probably
-> failing to follow the expected format.)
-> 
+Don,
 
-Kudos to all for finding and fixing these issues. It was quite a
-surprising list though. Were these fixes kept from release for an
-extended time? The timeframe for CVE-2013-2186 is especially concerning.
+On Thu, Jun 26, 2014 at 02:37:47PM -0600, Don A. Bailey wrote:
+> I chose not to release the bug reports to the public within the timeframe
+> suggested by Solar for several reasons:
+>  1) I have deep visibility into the vulnerable code and understand the
+> constraints of exploitation and the breadth
+>  2) The public exposure was non-obvious, and was not advertised by the
+> vendor
+>  3) The most widely effected vendors (Linux and Oberhumer) had yet to
+> release a patch publicly
+>  4) The time between exposure and public release was short enough to
+> negative exposure
 
--- 
-Regards,
-Bryan Drewery
+Thank you for providing this reasoning.
 
+> My job, as I saw it, was to responsibly coordinate word between all
+> parties. I did that as best as I could given the teams, their time zones,
+> their understanding of the bug, and their speed.
+> 
+> All in all, I think it worked out OK, and I am satisfied with the result
+> thus far. There are things that could have gone better, but over all each
+> team worked hard to produce solid patches in a reasonable time frame. We
+> hit that goal.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+I am also of the opinion that everyone did their best, and that's great.
+
+I think actual negative impact of the delay is small or non-existent.
+However, I felt we must have posted these additional comments on the
+disclosure process in here, because it deviated from what's normally
+expected for issues disclosed to the distros list:
+
+http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists
+
+"When the security issue is finally to be made public, it is your (the
+original reporter's) responsibility to post about it to oss-security
+(indeed, you and others may also post to any other mailing lists, etc.)"
+
+I am tempted to add "on the same day" after "to oss-security", since
+this is what we expect (and what usually happens), but there may be
+occasional exceptions like this, so maybe we leave the wording as-is?
+
+Alexander
