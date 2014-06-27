@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/5
-Message-ID: <20140326080856.GB6866@suse.de>
-Date: Wed, 26 Mar 2014 09:08:56 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/14
+Message-ID: <FDEFF68B-3510-4A68-BE5A-82A2696655E7@redhat.com>
+Date: Fri, 27 Jun 2014 10:45:48 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: KAuth security issues
+Cc: jamie@...onical.com, cve-assign@...re.org
+Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 26, 2014 at 08:56:51AM +0100, Florian Weimer wrote:
-> On 03/26/2014 08:10 AM, Sebastian Krahmer wrote:
->> I love to talk to myself, in particular via mailing lists.
->> This issue seems to be addressed meanwhile via
->>
->> https://git.reviewboard.kde.org/r/117056/
->>
->> by fixing the underlying polkit qt binding.
->
-> Is the proposed change really correct?  It uses getuid() as the subject, 
-> which looks wrong if you want to use this wrapper to check the capabilities 
-> of a D-Bus peer.
+On 06/26/2014, at 9:59 AM, cve-assign@...re.org wrote:
 
-Indeed, please see here:
+> It is closest to b. It would be very rare to assign a CVE for a design
+> choice by a system integrator. Suppose a new operating-system
+> distribution ships tomorrow without a virus scanner. Often the best
+> model for this would be a set of tasks that hasn't happened. For
+> example, the vendor hasn't yet investigated customer requirements for
+> what a virus scanner should do. The vendor hasn't performed the
+> release-engineering work of packaging a virus scanner. There are other
+> tasks as well. We don't think that CVE consumers are looking for us to
+> tag cases where a product lacks complete subsystem parity with all
+> possible competitors.
 
-https://bugzilla.novell.com/show_bug.cgi?id=864716
+I'm not sure that I understand or agree with this.  The above sounds to me like not having a virus scanner in an OS is a security flaw, but the only reason it's not being described as such is a technicality.
 
-I'd avoid anything with PolkitProcessSubject entirely.
+Virus scanners are useful proactive security, but I don't think that means the _lack_ of one exposes a vulnerability.  The vulnerability (which should be what gets a CVE) is exposed regardless of the presence of a virus scanner -- all the scanner does is make detection easier and possibly prevent something from being executed that may otherwise be unwittingly executed (or may not, the vendor cannot make that determination).
 
-Sebastian
+I suppose maybe there is a CWE for not having a virus scanner, which makes sense as that could be considered an overall system weakness.  So I guess the next question is whether or not there is a 1:1 mapping for CWE and CVE (i.e. if something has a weakness (software, OS, configuration) does that automatically make it an actual vulnerability).
+
+I'm also really confused on how any of these tasks have any bearing on what constitutes a vulnerability because they seem irrelevant as far as determining whether or not an actual flaw exists:
+
+- lack of a proactive security mechanism (virus scanner, etc.)
+- customer requirements (I fail to see how this impacts whether or not something is a flaw)
+- release engineering work (or, possibly, "how hard is this to fix?")
+- feature parity with other competitors
+
+All of these sound like marketing issues, not factors to determine whether or not a flaw is a flaw.
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+Vincent Danen / Red Hat Product Security
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
