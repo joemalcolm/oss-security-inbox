@@ -1,27 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/24
-Message-ID: <20140808183317.GZ1589@openwall.com>
-Date: Fri, 8 Aug 2014 22:33:17 +0400
-From: "(GalaxyMaster)" <galaxy@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/9
+Message-ID: <alpine.LFD.2.10.1406271454200.17407@javelin.pnq.redhat.com>
+Date: Fri, 27 Jun 2014 15:02:02 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: LMS-2014-06-16-5: Linux Kernel LZ4
 Content-Type: text/plain; charset=utf-8
 
-Greg,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Fri, Aug 08, 2014 at 09:49:18AM -0700, Greg KH wrote:
-> > Personally I would prefer disabling USB hotplug while a machine is locked
-> > (or while there are no active TTYs or something for servers).  Even if HID
-> > was whitelisted while the machine is locked, it would be a great start.
-> 
-> Then do just that, Linux has allowed you to do this for years, again,
-> but very few people take advantage of it.
+   Hi,
 
-If you are talking about switching power off on the USB bus I one of
-these few who use it regularly (it helps a lot to prolong laptop's
-battery life if you switch all these unnecessary entrypoints off) and I'm
-very grateful for this feature :)
++-- On Fri, 27 Jun 2014, Eddie Chapman wrote --+
+| I think it's worth pointing out that the Linux kernel only introduced LZ4 
+| support in 3.11. This is why from the new kernel.org stable releases 
+| yesterday, only 3.14.9 and 3.15.2 contain the LZ4 patch. 3.10.45 and 3.4.95 
+| don't.
 
--- 
-(GM)
+  It's been discussed in the other thread, yet just for the record, a reply 
+from the upstream author:
 
++-- On Fri, 27 Jun 2014 Yann Collet wrote --+
+|Hi Prasad
+|
+|Nope, latest lz4 release is not affected.
+|
+|
+|Moreover, even the linux kernel implementation is safe, for now. To trigger 
+|the risk, the program calling the lz4 linux kernel implementation must feed 
+|the decoder with blocks of more than 8 MB. None of them is doing that right 
+|now, so it's not exploitable.
+|
+|However, it's true that, in the future, maybe one program may wander into  
+|this area. So it's a good thing to update the LZ4 implementation today, 
+|before the risk get potentially exposed by a yet unknown future program.
+|
+|
+|I feel this version of the story should be more widely answered. The current  
+|risk has been overblown. If you have some way to answer to the sec-list 
+|article you linked to, could you please make it known ? In the meantime, I'm 
+|in contact with Greg k-h, to make sure the linux kernel implementation will 
+|get fixed for the next Linux release.
+|
+|Best regards
+|
+
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJTrToSAAoJEN0TPTL+WwQfJ84P/1NW/X6voek0O8LAEsu5Jkiv
+DE/nV6ByNV5kFNe9K+CG4QOeojRe9mYftwc/6F7eWKVZh7Q+qn3Slh2FhQMRY4R3
+AbsvDAKLTpJWVxkqjtJR91tV2/yOA2avkg413qRD6agszJqydG2z9Zapt1jmVmTc
+UbvNlLUrEgVNBL1yd9dMNoQ0iLtYyja1EYw7IPejKhzIyry8MxUbnCXWQOysCXTT
+HSJwJyVOgX0UE2OOEOKOqscsKa7R62XQxYkcWswGY+WUYXJvETx12Zydu2umB4f1
+RsJS3MyJMoi1FL+s+sNy3WQvbdv93VFpD1GOwF4Hv2sS7aaaQN9k/HfhCGBuz58Q
+dprPZMh+DD6LioUEdrHzjWivx5kn/jusgVthW0kE0rSHR++vEGwXqNx6HW9yyu/0
+ApApxc/UrkMwHFDh5yHg2dxleGhogM4kKHCFD/dLnKNyM1AGKD4mocY1aVW6ufRI
+teqRXiK4NhCV9voJdbBXO+6QLL/A+2DVUlfJJ8DYKByGC8YnPNSjsH11oFs4ySFM
+6aQ29iFHi/rggqOyXW6hxPl+ugT2KDrStDfI72Ne/xmM47HYK/WwxjqJ6o7QCtYT
+ld24vu2Xb51vYAlu2WcK66epm8AAxj4VWhB8U+16AGRZSmkHbfQOTJJ0d8YTR/uM
+gS0ASQzncWHgm8NxMD27
+=BneN
+-----END PGP SIGNATURE-----
