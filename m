@@ -1,40 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/16
-Message-Id: <201407162034.s6GKYeMc024616@linus.mitre.org>
-Date: Wed, 16 Jul 2014 16:34:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: vkaigoro@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS in PNP4Nagios
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/19
+Message-ID: <53ADE628.8040403@zytor.com>
+Date: Fri, 27 Jun 2014 14:46:16 -0700
+From: "H. Peter Anvin" <hpa@...or.com>
+To: oss-security@...ts.openwall.com
+CC: Yves-Alexis Perez <corsac@...ian.org>
+Subject: Re: LMS-2014-06-16-1: Oberhumer LZO
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> I suppose that CVE-2014-4740 will be used for something else in the
-> future, right?
+On 06/26/2014 02:21 PM, Yves-Alexis Perez wrote:
+> - syslinux [5] seems to embeds lzo but I'm unsure if the vulnerable
+> code is really present, I can't find lzo1x_decompress_safe() code
 
-Actually it's essentially the opposite.
+For the record, I just upgraded Syslinux to LZO 2.07.  The only code
+that ends up in the Syslinux build at all changed only in comments and
+in #if'd out code.  The only use of LZO is in the Syslinux core, which
+uses the assembly LZO implementation, which seems to have been unaffected.
 
-In an entry such as
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4740 the
-"REJECT" status can be considered an indication that no vulnerability
-will ever have that CVE ID. We have not transitioned anything out of
-REJECT in the past, and we do not envision doing that.
+Syslinux does not use LZO on arbitrary data.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+	-hpa
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQEcBAEBAgAGBQJTxuFGAAoJEKllVAevmvmszbIIAL6mdsUzBnIp4C8pzUzwDSVY
-ACK3Q1udQqCX+aOF3K4Iv3T1IqaqhCLYcGWeEgLjYoPuLV89XvMyLOjZjij4r5WC
-6645q7xL5ZYCIJZQe9xIrs8FmWLBikPAT/Pqt4LwWPjjUs4rC2TprUkn300HkLTl
-1tgulQEeTIUHezEuykyc7bGgGs4kmcHliJW8ElJvb9Z44APWWsojlqf2sdT+o8o4
-+PVR3dg1K4Jzwjugom6GQ8ZTJpx1vkQPYVQzNtcgxTDmFLUZFkoySl/pgyTgiXNS
-Uh7uRE/2w1/0sMpNYK3JX3rtHIrnoHVmjgHIgPhqAAJGrwSpaqgPe7PzQCpd31A=
-=r33v
+iQIcBAEBAgAGBQJTreYYAAoJEL2gYIVJO6zkF90P/RTyWaLtMMe24o1MfjgHOKsT
+bIypKYFGN3y0eU0I0ciMOiyuhLSLN7en/y8M558RjoKStriJ6yfQLiMJF4cxGBPJ
+J9GYoX9xT6/luBqefssCPB4uFeD+h/qYOlHxykq81I+c0bWsaunkHBAEmXlSihXe
+/Fu2dzDEm2bP7kYKx//t4tS2blU9papnFxMsQfc2NZV/U3xenhbHigOaibl5M4lv
+6zpH/J6qT5kB5PdAWJBr9OqU6DrcSdUXYIC5YObUHtdoCiUeTjVJinQPoeghvhlY
+VCj3Q/t7/w2E7r5aQ8IHBan58vIK173F6+cOwdLQtfkQZT1Fqm71sXOx81dT/LcQ
+FYiofMtCyMar4d0JWKVlXzHy7U5sZ9/WmFJX6l2nyd56TQsCBBFJjml5n9O/KNqb
+AEJgsqIaTUTjzobECuQdfS8B/8PwUDcVq1uga3r8HawXeWa4NnBP0nFgLY+gD0b+
+HD32+A80vc6YurQMvBVBlPwbFfbhcRsNLksKJdnOcE+hE9CgwsWsvSpS4B7NWsq4
+QOSOgPkzjpztHJKV5TLuN9x02Cn1uRMFDL1Dv/v0ql5qlLDF6YrrLb7rQPoveDSx
+8nvslwm3aHk1z2YOG9A2YQnI6qV4RCNkh3Y1wPz5jiqq5sadRKxg03xJQASFPHVM
+6tSmhFkxfgIE7MFttcxV
+=AiFW
 -----END PGP SIGNATURE-----
