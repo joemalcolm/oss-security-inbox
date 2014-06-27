@@ -1,58 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/15
-Message-ID: <5488A1FF.10709@enovance.com>
-Date: Wed, 10 Dec 2014 14:41:51 -0500
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-039.1] Neutron DoS through invalid DNS configuration (CVE-2014-7821) ERRATA 1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/13
+Message-Id: <201406271610.s5RGAgWs020234@linus.mitre.org>
+Date: Fri, 27 Jun 2014 12:10:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: timthumb remote code execution
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-039 (ERRATA 1)
-CVE: CVE-2014-7821
-Date: December 10, 2014
-Title: Neutron DoS through invalid DNS configuration
-Reporter: Henry Yamauchi, Charles Neill and Michael Xin (Rackspace)
-Products: Neutron
-Versions: up to 2014.1.3 and 2014.2
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
-Henry Yamauchi, Charles Neill and Michael Xin from Rackspace reported
-a vulnerability in Neutron. By configuring a maliciously crafted
-dns_nameservers an authenticated user may crash Neutron service
-resulting in a denial of service attack. All Neutron setups are affected.
+> http://seclists.org/fulldisclosure/2014/Jun/117
+> https://code.google.com/p/timthumb/issues/detail?id=485
 
-Errata:
-The former fix did not take into account the usage of hostnames as
-nameserver and caused a regression for this use-case. This update
-provides an additional fix for that issue.
+> The command line built on lines 967 and 969 is the problem area.
+> https://code.google.com/p/timthumb/source/browse/trunk/timthumb.php#967
 
-Kilo (development branch) fixes:
-https://review.openstack.org/135616 (original)
-https://review.openstack.org/137560 (errata)
+> The original project WordThumb 1.07 also vulnerable ... using the
+> older WordThumb.php script
 
-Juno fixes:
-https://review.openstack.org/135623 (original)
-https://review.openstack.org/139061 (errata)
+> Developed for use in the WordPress theme Mimbo Pro
 
-Icehouse fixes:
-https://review.openstack.org/135624 (original)
-https://review.openstack.org/139063 (errata)
+> several projects that shipped with "timthumb.php", such as,
 
-Notes:
-These fixes are included in the 2014.2.1 release and will be included in
-a future 2014.1.4 release.
+> Wordpress Gallery Plugin
+> https://wordpress.org/plugins/wordpress-gallery-plugin/
+> IGIT Posts Slider Widget
+> http://wordpress.org/plugins/igit-posts-slider-widget/
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7821
-https://launchpad.net/bugs/1378450
+> only vulnerable if the WebShot (aka WebShots) feature is enabled
+> (default is disabled).
 
-OSSA History:
-2014-12-10 - Errata 1
-2014-11-19 - Original Version
+Use CVE-2014-4663.
 
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+iQEcBAEBAgAGBQJTrZb/AAoJEKllVAevmvmsjDAIAKvNZhHNrmquxcY9SmBuu4mE
+PqYb23RBbjqXSBbzA8guw28WStkxG7atW7fsPA185LyaIn4PH92n4ZHyHphxlGnT
+iaZpcQFVbOtnmPdnf3JB64PJ9jviOmtfUyC9GnxlfLlbaPxTqgVnW9JZ2BybGKno
+YK3orCfmrjm5ma5BWsYjfWkf5YFYiWvNuz5xHgVqjGwisTREJ44SjVyoefWhHCRX
+zDBu2IoKBYJliZfwopM24aUyxE+C+sgLuxX6BRBPLRKd/kwh09Wsg/YJt+Jsc7Ah
+GHxm/tkmQZGLXpX3EEJNP5GJc/i7ePATnLAkwoadzP/nox5xSAQWhdTe/atC0aE=
+=afLD
+-----END PGP SIGNATURE-----
