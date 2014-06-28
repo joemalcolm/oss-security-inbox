@@ -1,36 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/5
-Message-Id: <201406130609.s5D69CZL017332@linus.mitre.org>
-Date: Fri, 13 Jun 2014 02:09:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: scheme48: insecure use of temporary files in cmuscheme48.el
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/28/3
+Message-ID: <CAD3Caney1k9wZq_6iFiDOQdHxuKtSZmO96WY77kSEsfUu_vyMg@mail.gmail.com>
+Date: Sat, 28 Jun 2014 15:15:58 +1200
+From: Matthew Daley <mattd@...fuzz.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request / advisory: Cherokee
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> the function scheme48-send-definition in cmuscheme48.el of scheme48
+I'd like to request a CVE ID for this issue. It was found in Cherokee
+(<http://cherokee-project.com>), an open-source webserver.
 
-> - (let ((loser "/tmp/s48lose.tmp"))
-> + (let ((loser (make-temp-file "s48lose")))
+This is the first such request (albeit a late one); this message
+serves as an advisory as well.
 
-Use CVE-2014-4150.
+Affected software: Cherokee
+Description: Cherokee supports authenticating users via LDAP. It does
+not ensure that users provide a non-empty password when doing so. If
+the underlying LDAP server allows unauthenticated binds (see RFC 4513,
+section 5.1.2: <http://tools.ietf.org/html/rfc4513#section-5.1.2>), an
+unauthenticated bind will be performed and not the name/password-based
+authenticated bind that Cherokee is expecting. This success of this
+bind will cause Cherokee to authenticate the user. This allows an
+attacker to authenticate as a user for which they only know the
+username and not the password.
+Affected versions: current releases (<= 1.2.103)
+Fix: https://github.com/cherokee/webserver/commit/fbda667221c51f0aa476a02366e0cf66cb012f88
+Reported by: Matthew Daley
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+--
 
-iQEcBAEBAgAGBQJTmpUUAAoJEKllVAevmvmsER8H/0rPq540dytUAvI0leAqO9ko
-udJF6/hAosUiJYiRS7AbAgNc12z5ZiTknOucMMs30IarTMNdOayS8n+dwP6D3yQn
-LISuAmUt4qYoFj47ZnARUbavHtA6YCtnTBxxV9eM98k4+6TebkjuW/seHArnaM/P
-WW7X332aN0hNNPlO3XnEf+KBLIQluySTxzFb3uv+oBHinDmT0ZTVMsWQ6IobQUti
-WtEf5r3O0OhPJfHEg6mg2i8TfWWDCNXP5YaIlwNz3kSrH9Fz4BCTrzHcEf4kwSF6
-9ddvQWu8DHOTmdOrDgKVsaYzvWyK9fQW3q7WLQox21vIRj8WADNxvuZwwsFhkTU=
-=on1k
------END PGP SIGNATURE-----
+I am aware that the CVE eligibility for an issue like this is
+sometimes questioned, and so I would like to offer my opinion:
+
+Having unauthenticated binds enabled on an LDAP server is indeed
+dangerous because of the possibility of security issues like this one
+arising. OpenLDAP denies them by default for this very reason (see
+section 14.3.1 of the OpenLDAP server administrators' guide,
+<http://www.openldap.org/doc/admin24/security.html#Authentication%20Methods>),
+but other servers such as Microsoft's Active Directory and Novell's
+eDirectory have them enabled by default.
+
+However, the fault lies with the client application that is using the
+LDAP server to authenticate and not with the server or its
+configuration itself. Providing an empty password is the RFC-specified
+way to perform an unauthenticated bind. It is up to clients themselves
+to ensure that if they want an authenticated bind performed, and not
+an unauthenticated one, that the password they provide is indeed
+non-empty. When an application is binding in order to use the
+resulting success/failure of the bind to decide whether to
+authenticate an external user, and not in order to access privileged
+LDAP directory information, this is always the case.
+
+RFC 4513 agrees, see section 6.3.1
+(<http://tools.ietf.org/html/rfc4513#section-6.3.1>).
+
+Section 5.1.2 (<http://tools.ietf.org/html/rfc4513#section-5.1.2>)
+recommends that servers default to disabling unauthenticated binds as
+well. However, if an administrator needs or wants to enable
+unauthenticated binds on a server, doing so should not cause other
+applications' authentication routines to become vulnerable to bypass
+in this way.
+
+In the past, CVEs have been assigned for this issue in other
+applications, such as Apache Shiro (CVE-2014-0074), JBoss
+(CVE-2012-5629), Spring Security (CVE-2014-0097) and PacketFence
+(CVE-2011-4068).
+
+--
+
+Please let me know if you need any further information.
+
+Thanks,
+
+- Matthew Daley
