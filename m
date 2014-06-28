@@ -1,48 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/46
-Message-Id: <E1XZpRF-0002mT-KO@rmm6prod02.runbox.com>
-Date: Thu, 02 Oct 2014 19:05:33 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-CC: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/28/2
+Message-ID: <184BB78B-1CDF-4A69-9C2A-2630D1C1144E@redhat.com>
+Date: Fri, 27 Jun 2014 19:09:03 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, jamie@...onical.com
+Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
-> On 10/01/2014 03:32 PM, Tomas Hoger wrote:
-> > The following indicates there is other prefix and suffix used, that
-> > makes these incompatibility issues worse:
-> >    http://support.apple.com/kb/HT6495
-> >    The names of all environment variables that introduce function
-> >    definitions are required to have a prefix "__BASH_FUNC<" and suffix
-> >    ">()" to prevent unintended function passing via HTTP headers.
+On 06/27/2014, at 14:03 PM, cve-assign@...re.org wrote:
 
-On Wed, 01 Oct 2014 16:27:46 +0200, Florian Weimer <fweimer@...hat.com> replied:
-> I initially dismissed this as a presentation artifact in the web page, 
-> but it's true, there are additional <> characters in the mangled name. 
-> I wonder what breaks as a result.  At least () and %% are somewhat 
-> benign in their effect if they are used unquoted in the relevant places 
-> (error, not accidental file creation).
-> 
-> (To be absolute clear, I do not see any security issues with Apple's 
-> choice of mangling.)
+>> I suppose maybe there is a CWE for not having a virus scanner, which
+>> makes sense as that could be considered an overall system weakness.
+>
+> Neither CVE nor CWE attempts to cover the general topic of system
+> integration, i.e., questions such as "given the composition and role
+> of this entire system, is it unreasonable to omit a virus scanner?" In
+> practice, both CVE and CWE often tend to be about questions that may
+> come up when considering somewhere around one line of code or one file
+> of code. (This is just an observational statement, not an attempt to
+> redefine why CVE and CWE exist.) Typical audiences may include (among
+> others) developers who need to write a line of code safely or system
+> administrators who need to patch a faulty line of code.
+>
+> This doesn't mean that there's any objection to someone taking the
+> position that lack of a virus scanner is the most serious security
+> concern that they see in an entire system. This is a valid perspective
+> but is outside of the problem spaces in which CVE and CWE have been
+> operating. Even if everyone were looking at "whether or not a flaw is
+> a flaw" decisions in precisely the same way, a conclusion of "yes,
+> this system would really benefit from a virus scanner" leaves open the
+> question of the best place to capture that information.
 
-I *do* worry a little about Apple's choice here.
+Then shouldn't be the same be true of the HttpOnly flag?  That line of thought is pretty much what I think in regards to that flag.
 
-The "%%" suffix chosen by the
-official bash release is not a sequence of shell metacharacters,
-so if the variable name is passed unquoted it is unlikely to cause problems.
-In contrast, "<" and ">" chosen by Apple *ARE* shell metacharacters.  If they get passed
-to a shell unquoted (say as a dump of the environment), there's a risk
-that the result might be turned into an exploit.  Yes, people should be quoting
-it anyway, but the need to quote environment variable *names* is not as obvious
-to some people as the need to quote variable *data*.
+I don't know if you missed my comment in an earlier message, so I'll note it below because I think this is the real point:
 
-Apple's rationale seems dubious, too.
-The claimed purpose of the angle brackets is to
-"to prevent unintended function passing via HTTP headers", but this is odd.
-HTTP header field values absolutely can contain less than and greater than;
-RFC 7230 section 3.2.6 simply says that they are not allowed in tokens,
-and thus can serve as delimiters http://tools.ietf.org/html/rfc7230
-Angle brackets have special meaning in HTML, of course, but that's different.
+"Kurt's argument about everything having an XSS makes it sound like, and the reasoning provided here as well, that we should no longer consider XSS a security flaw, but the absence of HttpOnly the security flaw.  I mean, if setting this flag "fixes" all XSS issues, then we should no longer be assigning CVEs to XSS issues, only to web servers/services that do not set HttpOnly or browsers that do not respect/handle it properly.  They can't _both_ get CVEs or be considered flaws, can they?"
 
---- David A. Wheeler
+-- 
+Vincent Danen / Red Hat Product Security
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
