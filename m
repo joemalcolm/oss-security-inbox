@@ -1,35 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/14
-Message-ID: <CD259A27-6941-4F90-AD90-59FD23BD1839@vmware.com>
-Date: Thu, 10 Jul 2014 21:59:26 +0000
-From: Ramon de C Valle <rdecvalle@...are.com>
-To: Tomas Hoger <thoger@...hat.com>, Murray McAllister <mmcallis@...hat.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Fwd: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/28/5
+Message-ID: <53AE5D6C.5050804@redhat.com>
+Date: Sat, 28 Jun 2014 00:15:08 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+CC: jamie@...onical.com
+Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
-Hi Thomas, Murray,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Jul 10, 2014, at 7:43 AM, Tomas Hoger <thoger@...hat.com> wrote:
-
-> On Wed, 9 Jul 2014 15:45:10 +0000 Ramon de C Valle wrote:
+On 27/06/14 07:09 PM, Vincent Danen wrote:
+> On 06/27/2014, at 14:03 PM, cve-assign@...re.org wrote:
 > 
->> I believe this should have a CVE assigned.
+>>> I suppose maybe there is a CWE for not having a virus scanner,
+>>> which makes sense as that could be considered an overall system
+>>> weakness.
+>> 
+>> Neither CVE nor CWE attempts to cover the general topic of
+>> system integration, i.e., questions such as "given the
+>> composition and role of this entire system, is it unreasonable to
+>> omit a virus scanner?" In practice, both CVE and CWE often tend
+>> to be about questions that may come up when considering somewhere
+>> around one line of code or one file of code. (This is just an
+>> observational statement, not an attempt to redefine why CVE and
+>> CWE exist.) Typical audiences may include (among others)
+>> developers who need to write a line of code safely or system 
+>> administrators who need to patch a faulty line of code.
+>> 
+>> This doesn't mean that there's any objection to someone taking
+>> the position that lack of a virus scanner is the most serious
+>> security concern that they see in an entire system. This is a
+>> valid perspective but is outside of the problem spaces in which
+>> CVE and CWE have been operating. Even if everyone were looking at
+>> "whether or not a flaw is a flaw" decisions in precisely the same
+>> way, a conclusion of "yes, this system would really benefit from
+>> a virus scanner" leaves open the question of the best place to
+>> capture that information.
 > 
-> Can you post more details of your analysis of the issue to clarify what
-> the issue is here?
-From https://bugs.ruby-lang.org/issues/10019, it seems that you’ve figured it out already. Correct me if I’m wrong but, for Base64, a value of 3072 for len isn’t enough to cause the off-by-one as the while loop will terminate with the value of len being zero (and the value of i being 4092). However, if the value of len is either is 3073* or 3074*, the while loop will terminate with the value of len being 1 or 2 respectively (and the value of i being 4092), with one of the subsequent if/else if conditions evaluating to true, resulting in the off-by-one.
-
-I see you’ve checked the template strings used by aws-sdk gem and its dependencies and they use ‘m0’ only, which rules out the possibility this off-by-one being caused by any of these gems. So, now I’m also not sure what the reporter is referring to.
-
-*It is possible to pass non multiple of 3 values as the len parameter of encodes function by passing a string with length smaller than the count (/ 3 * 3) passed in the template string (see https://github.com/ruby/ruby/blob/trunk/pack.c#L839).
-
+> Then shouldn't be the same be true of the HttpOnly flag?  That line
+> of thought is pretty much what I think in regards to that flag.
 > 
-> -- 
-> Tomas Hoger / Red Hat Security Response Team
+> I don't know if you missed my comment in an earlier message, so
+> I'll note it below because I think this is the real point:
+> 
+> "Kurt's argument about everything having an XSS makes it sound
+> like, and the reasoning provided here as well, that we should no
+> longer consider XSS a security flaw, but the absence of HttpOnly
+> the security flaw.  I mean, if setting this flag "fixes" all XSS
+> issues, then we should no longer be assigning CVEs to XSS issues,
+> only to web servers/services that do not set HttpOnly or browsers
+> that do not respect/handle it properly.  They can't _both_ get CVEs
+> or be considered flaws, can they?"
 
---
-Ramon de C Valle
-VMware Product Security Engineering
+Actually my point was more that back in the day cookie theft was
+relatively rare, now it is pretty common thanks largely to XSS:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=xss
+
+so in my opinion we should assume most web based apps have XSS vulns
+(I think that's a safe assumption =), as such then the use of HTTPOnly
+on cookies becomes a virtual necessity to protect cookies as opposed
+to a "nice to have hardening feature". In other words the security bar
+should be moved (at least that's my opinion).
+
+
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJTrl1rAAoJEBYNRVNeJnmT2GQP/RrJIhKthth3jqAx+BAY8qLj
+Q3SMl9Mze1jldiGH3pEC/kLDhoVXlP6hG7Md5PUae7bEUgowA/cAHRzyO+g7pQSq
+PX7RQwbDD8ynCyQ71os9pIGMWW54fU8nxCMQwVKDksKKRor4HO59k9xuDtoCdJKs
+B/gVPf3l3gDmtBdytyqXTgLpWL6xdzh8qM/I/81FNF9Zx21b1odhkCVR5FaeUkJc
+qeFc0ye2SId3xbCluJBFsccTCxDzLednp7RNGIm+g5gwR2siKOrYH7CPrSlPmj2S
+vIUSsqGyal6upK7JLnzLzlnd6BixxydISYuvOBCCsYMpJftjcjpjhLssFkHGe9Z/
+g8yHRWQiy7sI/BK8KhweRtiURV6Y2ac6+C+AtqM4idbJkLo/fNMjHGYz0Mdz4CWy
+czpeZWqecpe5qPVkFVw7Z84gbGbq6s1wCBExGoWg1o5Ov4hXl1w8t/llb+gS3mzd
+CnYXkXXYc9UEoSGpxjfEbqhOulyLz6ix6DN4qxe1v7ew671Eg3AWjT4lY3tNXYco
+EOtO+KZI+MsThF+1OCTG/2AqxZ/kQS22F4MOloU76KJrl8Jg2/wjbMPRkpiM+HO5
+lNhaieukYaCD14ELEW/HpxgcSbua8dnOP6vgJWKcpCcXg6G0QrzNpEfCBgD9gzKv
+o4hwlcpJ+eWGdp6vr3gv
+=qNmV
+-----END PGP SIGNATURE-----
