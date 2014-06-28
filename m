@@ -1,41 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/2
-Message-Id: <201405140612.s4E6Cn5B010955@linus.mitre.org>
-Date: Wed, 14 May 2014 02:12:49 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 736066@...s.debian.org
-Subject: Re: A number of EncFS issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/28/6
+Message-ID: <1403941006.29897.18.camel@scapa>
+Date: Sat, 28 Jun 2014 09:36:46 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: "H. Peter Anvin" <hpa@...or.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: LMS-2014-06-16-1: Oberhumer LZO
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On ven., 2014-06-27 at 14:46 -0700, H. Peter Anvin wrote:
+> On 06/26/2014 02:21 PM, Yves-Alexis Perez wrote:
+> > - syslinux [5] seems to embeds lzo but I'm unsure if the vulnerable
+> > code is really present, I can't find lzo1x_decompress_safe() code
+> 
+> For the record, I just upgraded Syslinux to LZO 2.07.  The only code
+> that ends up in the Syslinux build at all changed only in comments and
+> in #if'd out code. 
 
-> https://defuse.ca/audits/encfs.htm
-> the last one sounds CVE worthy
+Thanks for the investigation. Is there a reason not to link with lzo
+instead of embedding it?
 
-Use CVE-2014-3462 for that issue, i.e., 'The purpose of MAC headers is
-to prevent an attacker with read/write access to the ciphertext from
-being able to make changes without being detected. Unfortunately, this
-feature provides little security, since it is controlled by an option
-in the .encfs6.xml configuration file (part of the ciphertext), so the
-attacker can just disable it by setting "blockMACBytes" to 0 and
-adding 8 to "blockMACRandBytes" (so that the MAC is not interpreted as
-data).'
+>  The only use of LZO is in the Syslinux core, which
+> uses the assembly LZO implementation, which seems to have been unaffected.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Good point, my searches indeed usually don't include any non-C
+implementation, which might or might not be affected.
+> 
+> Syslinux does not use LZO on arbitrary data.
 
-iQEcBAEBAgAGBQJTcwbzAAoJEKllVAevmvms59MIALliH0nQBEhTa971v2fghjQS
-XW43V8j42cD4i2yR91GfhJMCilyrRlxY1IQS7isleOQNBufmUavOs4gZmq1A+EGv
-YD7F7MrQjLOKGLyl1aGbr5YpNmbYJONgqDnnpDdramjKo1MZKr/qexOLn51lLJQJ
-J1RUaZIm+tccToBmkyhHS6rmHF/kutlvXt1goHKPkWaBWIdCz8zkPZWASj1D4KYX
-Ynxtc+ikC60AdhQp1ggTmWff0NDnfjI7DUDWM88DbfLfGJ48/uAatgcEhKns326l
-Z4eomykAB4IA62fgm0XisPrXNpibQs2aEOfr3fDwyCRBi7IA5y7C2SCFZ9V37bM=
-=Rfv2
------END PGP SIGNATURE-----
+Thanks, so that's three reasons syslinux itself is not affected:
+
+- embedded LZO didn't contain the affected code;
+- syslinux core LZO assembly implementation is not touched;
+- LZO is done only on controlled data (not under anyone control?)
+
+Regards,
+-- 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
