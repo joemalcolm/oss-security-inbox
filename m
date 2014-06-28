@@ -1,40 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/6
-Message-ID: <53DA0DA0.3030707@redhat.com>
-Date: Thu, 31 Jul 2014 11:34:24 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: [CVE request] Array allocation fixes in libgfortran
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/28/7
+Message-Id: <201406281340.s5SDentZ005391@linus.mitre.org>
+Date: Sat, 28 Jun 2014 09:40:49 -0400 (EDT)
+From: cve-assign@...re.org
+To: mattd@...fuzz.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request / advisory: Cherokee
 Content-Type: text/plain; charset=utf-8
 
-On 07/24/2014 04:08 AM, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> several CVE-2002-0391-style integer overflows in array allocation in
->> libgfortran
->>
->> https://gcc.gnu.org/viewcvs/gcc?limit_changes=0&view=revision&revision=211721
->
-> Use CVE-2014-5044.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks.  The fixes have been backported to GCC 4.8 and 4.9:
+For reference, here is the URL mentioned on this list during the last
+discussion of a CVE assignment related to LDAP and an empty string:
 
-https://gcc.gnu.org/ml/gcc-cvs/2014-07/msg01136.html
-https://gcc.gnu.org/ml/gcc-cvs/2014-07/msg01135.html
+  http://securitysynapse.blogspot.ca/2013/09/dangers-of-ldap-null-base-and-bind.html
 
-> It seems fairly clear that there is only one CVE ID needed. However,
-> can you clarify what definition of "CVE-2002-0391-style integer
-> overflows" you were using? We think you might mean:
->
->    - any integer overflow caused by multiplying the number of elements
->      in an array by the size of a single element
->
->    - this includes, but isn't limited to, cases where the array
->      elements represent arguments
+The Cherokee vulnerability here is essentially a misinterpretation of
+an LDAP server response. Cherokee should be expecting the semantics:
 
-The first, combined with the fact that the overflowing calculation is 
-used to compute byte sizes for memory allocation purposes.
+  - If I send a username and a non-empty password, a successful bind means
+    that that's the correct password for the user
 
--- 
-Florian Weimer / Red Hat Product Security
+  - If I send a username and an empty password, a successful bind means
+    that (A) that's not the correct password for the user and (B)
+    the LDAP server probably happens to allow unauthenticated information
+    retrieval that might or might not be intentional
+
+Instead, Cherokee incorrectly assumes that the semantics are:
+
+  - If I send a username and any password (empty or non-empty), a
+    successful bind means that that's the correct password for the user
+
+Use CVE-2014-4668.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTrsWJAAoJEKllVAevmvms4xsH/2Mp62a/D0Sfnbj2xFBCkt6I
+fz/F0zC9Vue06vegJ/liSMJvpcJOxdO60lm1pEYAEXMdwM4OcewZ8+kRYhzCvOlf
+ibEZlIi6YSh9AceI34NxGTzqhh2yVFApdm7uEdItr+ZT9g4uNejtjUdU+wQN5Ozx
+8I4RJ5eYZPYNfrvru0RqvYW7iUOW2FG9nibhfZRSQ2NvsoJKXgMlz4GvknjqEijt
+Mv0cyZ1PSNopcGcfdjyz568fEBy+0HWaEkx9EnQq1ni757B5D2iycSjleWsBRrgi
+vQMOtmOEvVIC1RCVZuy8ZuTUIY8Lnfxxwmr7W+KjmiXtr2lUUhUZWHnM4s9d9bY=
+=ukMd
+-----END PGP SIGNATURE-----
