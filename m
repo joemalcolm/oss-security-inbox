@@ -1,64 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/4
-Message-Id: <201412180918.26441.tmb@65535.com>
-Date: Thu, 18 Dec 2014 09:18:25 +0000
-From: Tim Brown <tmb@...35.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Running Java across a privilege boundry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/29/1
+Message-ID: <20140629233105.GA20494@hurricane.linuxnetz.de>
+Date: Mon, 30 Jun 2014 01:31:05 +0200
+From: Robert Scheck <robert@...oraproject.org>
+To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
+Subject: CVE-2014-0103: Zarafa WebAccess/WebApp store passwords in cleartext on server
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday 26 November 2014 03:54:48 Solar Designer wrote:
-> On Sun, Nov 23, 2014 at 05:59:41PM +0300, Solar Designer wrote:
-> > So far no distro has expressed any interest in having this embargoed.
-> > 
-> > Distros list members: please speak up (here or on the distros list, with
-> > Tim CC'ed) if you'd like this embargoed.
-> > 
-> > Tim: if until Tuesday no distro says they want this embargoed, please go
-> > ahead and make the issue fully public.  (On a related note, I hate it
-> > when an issue is sort of "semi-public".  It's the worst possible case.
-> > When this happens, it's a reason to opt for a shorter embargo period, or
-> > for none at all indeed.)  If an embargo is requested, please make sure
-> > there's an exact date and time for the planned public disclosure.
-> 
-> So far no distro has expressed any interest in having this embargoed,
-> and no specific coordinated disclosure date has been proposed by anyone.
-> Tim, please make the issue public now by posting it in here.  Thanks!
+Hello,
 
-Apologies, I was locked in a server room for the last 2-3 weeks without access 
-to my Internet.
+the Zarafa Collaboration Platform currently provides two webbased
+interfaces, the older WebAccess and the newer WebApp. The second is
+partially based on the first however it is not bundled in the same
+Zarafa tarball on the source code level (while WebAccess is); might
+be relevant to distributions and downstreams.
 
-The issue for anyone that was interested was as follows:
+Zarafa WebAccess and WebApp store session information, including
+login credentials, on-disk in PHP session files. This session file
+contains a user's username and password to the Zarafa server in
+cleartext (CVE-2014-0103). Depending on the configured user backend
+in Zarafa this might affect Zarafa internal users only or even LDAP
+user credentials used by multiple services.
 
-> $ objdump -x /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java | grep RPATH
-> 
->   RPATH                $ORIGIN/../lib/amd64/jli:bootstrap/jre/lib/amd64/jli:
-> $ORIGIN/../lib/amd64:bootstrap/lib/amd64:
-> $ORIGIN/../jre/lib/amd64:bootstrap/jre/lib/amd64
-> $ mkdir -p bootstrap/jre/lib/amd64/jli
-> $ touch bootstrap/jre/lib/amd64/jli/libc.so.6
-> $ sudo java
-> java: error while loading shared libraries:
-> bootstrap/jre/lib/amd64/jli/libc.so.6: file too short
-> 
-> I haven't checked if this is an upstream problem or whether just Debian is
-> affected.
-> 
-> Whilst strictly speaking, there is no security boundary offered by Java
-> itself, in the case of unsafe RPATH headers on a ELF binary, sudo can do
-> nothing to sanitise the environment. Nor indeed could an arbitrary setuid
-> which ends up calling Java with additional privileges. (Unlike say PATH
-> etc which sudo can quite happily sanitise.)
-> 
-> As such, only fixing the java binary itself will prevent library injection
-> into any Java application that is run interactively (or maybe otherwise)
-> in such a manner.
+Affected products: Zarafa WebAccess < 7.1.10
+                   Zarafa WebApp < 1.6 beta
 
-Cheers,
-Tim
+Access Vector: Local
+Access Complexity: Low
+Authentication: None
+Confidentiality Impact: Partial
+Integrity Impact: None
+Availability Impact: None
+
+The flaw is solved in Zarafa WebAccess 7.1.10 and Zarafa WebApp 1.6
+beta by using PHP's OpenSSL support, namely openssl_encrypt() and
+openssl_decrypt(). However this requires PHP >= 5.3.0 while some
+Linux distributions like RHEL/CentOS 5 or SLES 10 ship PHP < 5.3 by
+default. On such systems Zarafa remains affected by this flaw.
+
+As of writing there is no final release of Zarafa WebApp 1.6, thus
+installing the pre-release or backporting relevant code is required.
+
+See also: https://bugzilla.redhat.com/show_bug.cgi?id=1073618 - thanks
+to the Red Hat Security Response Team, specifically to Vincent Danen.
+
+
+With kind regards
+
+Robert Scheck
 -- 
-Tim Brown
-<mailto:tmb@...35.com>
+Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
 
-Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
+Content of type "application/pgp-signature" skipped
