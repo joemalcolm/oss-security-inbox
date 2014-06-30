@@ -1,22 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/13
-Message-ID: <CALx_OUAdMG689eHBe54FvXLmcL6mYugy81wEhh3pfrwunfdqqA@mail.gmail.com>
-Date: Wed, 8 Oct 2014 07:26:25 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/30/2
+Message-Id: <201406300610.s5U6AIsW000205@linus.mitre.org>
+Date: Mon, 30 Jun 2014 02:10:18 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Confusion on CVE-2014-0235
 Content-Type: text/plain; charset=utf-8
 
-> Note that the hardening fix that was provided in a rush
-> post-disclosure is not the best one. [...]
-> It breaks backward compatibility because it restricts which
-> functions can be exported. For instance, you can't export a
-> /bin/rm function anymore (was useful as a debugging tool).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hmm, wasn't that breakage actually caused by the first (original)
-patch, which added a call to legal_identifier()? We had problems with
-the patch specifically because it managed to break several instances
-where people were trying to export "fake object-oriented" function
-names such as foo::bar.
+> CVE-2014-0235 file: extensive backtracking in awk rule regular expression
 
-/mz
+> CVE-2014-0235 Microsoft Internet Explorer CElement Use-After-Free Remote Code Execution Vulnerability
+
+Thanks for noting this. We have asked possibly responsible parties and
+will send correct CVE assignments here when they are known.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTsP7wAAoJEKllVAevmvmswzYH/j2HQruIYiSiWQCryZo8716e
+5Rofgdy9ZqLQ/mGdWt//XFC/PsBxoekiIwnsPrAF8OjYunhK3ldFwoDle9BFBTAv
+h4NFBhU9TG7vrytTs0TPhOlV8ovWLac+fzULH3Lb8fk4is1uFCgvDY+35Iau7fRt
+aaGpoU7MnCXP06i13y74S6zfQTLvJWRTjkJl6VF6LDRsxOQZ1IPN2l19VhEEt7aw
+FkA3+t96QnaiNrgNrQdoVOa02mGHeX/Ka9ucg7rfQHDo8jTLR7n8nS9dN5OcXfJQ
++/iu40df3pFSpZiBQkBVKGxMZ/FHLYSFTUyuGe4OCNkZJ8gEPBCiXo9Ka9NxtE0=
+=FlA7
+-----END PGP SIGNATURE-----
