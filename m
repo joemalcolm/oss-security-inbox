@@ -1,63 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/6
-Message-Id: <201405151716.s4FHGMKs002116@linus.mitre.org>
-Date: Thu, 15 May 2014 13:16:22 -0400 (EDT)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 95 - input handling vulnerabilities loading guest kernel on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/30/3
+Message-ID: <53B10290.5000507@redhat.com>
+Date: Mon, 30 Jun 2014 16:24:16 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE requests: nagios check_dhcp plug-in: read parts of INI config files belonging to root
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Good morning,
 
-> Xen Security Advisory XSA-95
+Dawid Golunski discovered a flaw in the Nagios check_dhcp plugin that
+allows "Malicious user that has local access to a system where
+check_dhcp plugin is installed with SUID could exploit  this
+vulnerability to read any INI format config files owned by root and
+potentially extract some sensitive information.":
 
-We would like to model this one as having four distinct primary issues.
-In other words, although the concepts of missing validation are
-similar, and the impacts may be the same, the types of validation can
-be categorized separately. Thus, there are four CVE IDs.
+http://seclists.org/fulldisclosure/2014/May/74
 
-> When loading a 32-bit ARM guest kernel the Xen tools did not correctly
-> validate the length of the kernel against the actual image size. This
-> would then lead to an overrun on the input buffer when loading the
-> kernel into guest RAM.
+This was fixed in version 2.0.2:
 
-Use CVE-2014-3714.
+<http://nagios-plugins.org/nagios-plugins-2-0-2-released/>
 
+Dawid later reported a race condition. Despite the above fix, it was
+still possible to read parts of root-owned files:
 
-> Furthermore when checking a 32-bit guest kernel for an appended DTB,
-> the Xen tools were prone to additional overruns also leading to an
-> overrun on the input buffer when loading the kernel into guest RAM.
+http://seclists.org/fulldisclosure/2014/Jun/141
 
-Use CVE-2014-3715.
+This was fixed in version 2.0.3:
 
+<http://nagios-plugins.org/nagios-plugins-2-0-3-released/>
 
-> Also, the tools would access a field in the putative DTB header
-> without checking for its alignment.
+Can CVEs please be assigned if they have not been already?
 
-Use CVE-2014-3716.
+Thanks,
 
-
-> When loading a 64-bit ARM guest kernel the tools similarly did not
-> fully validate the requested load addresses, possibly leading to an
-> overrun on the input buffer when loading the kernel into guest RAM.
-
-Use CVE-2014-3717.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTdPXqAAoJEKllVAevmvmsHAQH/RZMLQmt/JDGo6O0ZnMkzyMH
-tTXkjVjZI6Y2+DV5pFza5McAg3GXjlIxJztmsoWxic0Q7YEaNlH4bgt4lscQyzhR
-xkBFkU7aRUP3k7FOpY55Sf9jER6NycgrnD3+hyQdeBrg5lkIpiw0eaOrIMzep1uE
-xlmRA1ZTrvDA3nMEBAJ1dxCmuAj2GpIqTO5vCKKAOnFfjuTVjoPHNBfdRb9biRZW
-vR3jJmmpnc6OdwuAdMKGrhGuKh0qQb7AH0JaGhB0i0C1R2ahxHl5X/xnnxkXCgIw
-Yz3MvGOGiS8r9dPwl6XPmuBK5Q/wAAWVQVA6uTZSZZX/fVdR6FkY71syIYk/NC4=
-=sfjR
------END PGP SIGNATURE-----
+--
+Murray McAllister / Red Hat Product Security
