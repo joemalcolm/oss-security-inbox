@@ -1,71 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/1
-Message-ID: <53BE26BF.2050201@redhat.com>
-Date: Thu, 10 Jul 2014 15:38:07 +1000
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: rdecvalle@...are.com
-Subject: Re: Fwd: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/30/7
+Message-Id: <201406302121.s5ULLCv0020434@linus.mitre.org>
+Date: Mon, 30 Jun 2014 17:21:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: changing CVE ID for RH Bugzilla 1098222 (from CVE-2014-0235)
 Content-Type: text/plain; charset=utf-8
 
-On 07/10/2014 01:45 AM, Ramon de C Valle wrote:
-> I believe this should have a CVE assigned.
->
-> Begin forwarded message:
->
->> From: <wkwood@...il.com>
->> Subject: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
->> Date: July 9, 2014 at 11:40:24 AM GMT-3
->> To: <ruby-core@...y-lang.org>
->> Reply-To: Ruby developers <ruby-core@...y-lang.org>
->>
->> Issue #10019 has been reported by Will Wood.
->>
->> ----------------------------------------
->> Bug #10019: segmentation fault/buffer overrun in pack.c (encodes)
->> https://urldefense.proofpoint.com/v1/url?u=https://bugs.ruby-lang.org/issues/10019&k=oIvRg1%2BdGAgOoM1BIlLLqw%3D%3D%0A&r=bZpuVimtRQUx3xHFIlu%2BaciWn3GMzM%2FBnwDoBm5jP8U%3D%0A&m=i9HlGlVd0nBJk%2BZe%2FE83Lobm3nDyfJz6diLiqhjIJ8k%3D%0A&s=d306e2eedebf0fbb994e9059e7e7cdccfe735fd21518df0da6bf00045bccc481
->>
->> * Author: Will Wood
->> * Status: Open
->> * Priority: Normal
->> * Assignee:
->> * Category: core
->> * Target version:
->> * ruby -v: ruby 2.1.2p168 (2014-07-06 revision 46721) [i386-mingw32]
->> * Backport: 2.0.0: UNKNOWN, 2.1: UNKNOWN
->> ----------------------------------------
->> While working with an AWS sample I hit a segmentation fault.  The same sample works under 1.9.3.  It appeared to be coming from pack.c function encodes.  After looking at the source there's a 4K buffer allocated on the stack.  I made a minor change to base the buffer length off of the incoming buffer length with a pad and allocate it off the heap.  Anyway, after fixing this my code sample runs fine.  I'm including a patch file and the sample code.
->>
->> ---Files--------------------------------
->> pack.patch (2.74 KB)
->> BucketTest.rb (326 Bytes)
->>
->>
->> --
->> https://urldefense.proofpoint.com/v1/url?u=https://bugs.ruby-lang.org/&k=oIvRg1%2BdGAgOoM1BIlLLqw%3D%3D%0A&r=bZpuVimtRQUx3xHFIlu%2BaciWn3GMzM%2FBnwDoBm5jP8U%3D%0A&m=i9HlGlVd0nBJk%2BZe%2FE83Lobm3nDyfJz6diLiqhjIJ8k%3D%0A&s=85d6801be84da3628afd395bab2490b015b184aee10d0635d471b167d41ab70b
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hello Ramon,
+CVE-2014-0235 should have been a completely valid CVE assignment from
+Red Hat, but it would be extremely problematic to keep it because that
+ID was accidentally used by Microsoft (typo of CVE-2014-0325) and is
+in very widespread use for the wrong issue.
 
-Thanks for the notification! Have you reviewed the patch in 
-<https://bugs.ruby-lang.org/issues/10019>?
+Can you assign one or more new CVE IDs for Red Hat Bugzilla 1098222
+and send the CVE mapping here?
 
-I am not sure about this part:
+We're not sure how many vulnerabilities Red Hat is announcing in
+1098222. Was the intention to have only one vulnerability and one CVE
+for "the code before upstream version 5.19 tried to do regex matches
+against an arbitrarily large amount of file content"?
 
-  static void
-  encodes(VALUE str, const char *s, long len, int type, int tail_lf)
-  {
--    char buff[4096];
-+	long bufLen = len + 128;  // enough room
-+	char* buff = (char*)malloc(bufLen);
-      long i = 0;
+We realize that https://bugzilla.redhat.com/show_bug.cgi?id=1098222#c5
+mentions "This fix is also insufficient" but it appears that all of
+the discussion of incompleteness of a new fix occurred when 1098222
+was embargoed, and also the upstream commit message didn't refer to
+that first fix as security-related (the upstream commit message was
+"further optimize awk by not looking for the BEGIN regex ..."). So,
+this ordinarily wouldn't lead to any extra CVEs.
 
-Is len specified as part of the incoming data, or is it just the string 
-length? Is it not possible to send a string of around 4294967295 in length?
+However, we don't know whether Red Hat is announcing any part of
 
-Anyways, from the bug comment it sounded like this is not the final patch.
+  https://github.com/file/file/commit/4a284c89d6ef11aca34da65da7d673050a5ea320
 
-Cheers,
+as an additional vulnerability that was also fixed in 5.19.
 
---
-Murray McAllister / Red Hat Product Security
+If your intention was that everything related to regex matches is a
+single vulnerability, then only one CVE ID is needed to replace
+CVE-2014-0235.
+
+In a "REJECT" message for CVE-2014-0235, we can indicate the correct
+per-product CVE IDs for the Internet Explorer and file/CPU-consumption
+issues.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTsdOYAAoJEKllVAevmvmszXMH/j+hUEgUzlKkiEYn4rzI46P6
++yO/ycoLkPLHwwya9Q5cTA82J9eDz3kbP4sbMfRe8lkE2alU35/YQ7prs4X8dSTJ
+vlCFxzkQ5Uev4hNcqgZY/tMzhSD6b7WUAZSJo8H9Oaq1MIHiXVWkPmpKk81pjLAb
+GaWfxA8AIRgQynVbReOBJ9FC9K37kzFGFI90/mcvfBlzs1s7v/Ttax6nuN3TU3Fs
+C47gTKsKgbYzdTw3+8aZ3ofVULgtB1eN4VlDLqm6gmtHLBJZjGAxetGERhU/W2lN
+b056qsCtGtW2SZ1JBpXH5MMnzv8cxeR+1G9RXlJ/TeY3V3QxmWwxm8uzJ+jI5j0=
+=oqaA
+-----END PGP SIGNATURE-----
