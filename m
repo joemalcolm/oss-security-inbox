@@ -1,48 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/8
-Message-ID: <20141005140216.GA22646@openwall.com>
-Date: Sun, 5 Oct 2014 18:02:16 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/30/4
+Message-ID: <66D70536-77E8-4F75-B382-A88E757BAD1E@redhat.com>
+Date: Mon, 30 Jun 2014 07:43:37 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, jamie@...onical.com
+Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 05, 2014 at 04:38:15AM -0700, Jose R R wrote:
-> Hanno,
-> 
-> < https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck >
-> 
-> I've downloaded your bash test script and executed it against a Debian
-> 7 (Wheezy) -patched system (upper image)
-> 
-> as well as a local Debian Sid (unstable) build of bash where I applied
-> the October 02, 2014, bash43-029 (Bottom image)
-> 
-> < https://pbs.twimg.com/media/BzLfeIICQAA30vb.png:large >
+On 06/27/2014, at 21:23 PM, cve-assign@...re.org wrote:
 
-This shows that your two systems are not vulnerable.
+> You quoted two paragraphs on the topic of whether system-integration
+> issues are covered by CVE and CWE, and then wrote "shouldn't the same
+> be true of the HttpOnly flag?" It's unclear how to answer except by
+> saying: a decision to use or not use the HttpOnly flag isn't a
+> system-integration issue.
+>
+> You then mentioned 'if setting this flag "fixes" all XSS issues.' It
+> seems that a reasonable response here is: an XSS attack can have a
+> severe impact even if it's not designed to steal any cookies. (The
+> non-cookie-stealing severity varies, in part, based on the types of
+> input that are common for the web application in question.) The
+> HttpOnly flag is specific to cookies.
+>
+> Finally, you mentioned "They can't _both_ get CVEs" - a question that
+> seems to be about a superfluous CVE assignment in a case where the
+> only goal of an XSS attack is to steal a cookie, and the attack relies
+> on an XSS vulnerability in a certain web application that doesn't set
+> the HttpOnly flag. A response here is: there could be a scenario that
+> ended up with a single CVE assignment for a composite of one specific
+> instance of incorrect input validation and an incorrect cookie
+> restriction. This scenario seems rare. It would require that neither
+> issue was dangerous except in the presence of the other issue. For
+> example, it would require that the only possible impact of the
+> incorrect input validation was to pass JavaScript code that could
+> steal cookies (any other malicious JavaScript code would be blocked).
+> In most practical cases, two CVE assignments would often be possible
+> if someone happened to request two.
 
-A "vulnerable but non-exploitable" condition doesn't actually exist.
-It only means there's a non-security bug that would have been a security
-bug under different circumstances (which is why it got a CVE ID).
+Ahhh... ok, this makes more sense.  Thank you!
 
-> Thus agreeing with Sona:
 
-This shows the widespread confusion.
 
-> "but I think what most (non-expert) people
-> need is an explanation for each CVE, a set of test case from some
-> reliable source (preferably a script that runs all test cases and
-> shows vulnerable/not-vulnerable status) and a set of patches. So that
-> they can apply the patches, run the tests and assert that their
-> systems are not vulnerable to shellshock anymore."
-
-You only need the one-liner test from my reply to Sona:
-
-http://www.openwall.com/lists/oss-security/2014/10/05/7
-
-testfunc='() { echo bad; }' bash -c testfunc
-
-(Besides, tests for some of those CVEs can't be made reliable anyway.)
-
-Alexander
+-- 
+Vincent Danen / Red Hat Product Security
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
