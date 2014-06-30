@@ -1,37 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/17
-Message-ID: <20141001202017.666b7d73@hboeck.de>
-Date: Wed, 1 Oct 2014 20:20:17 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: Chet Ramey <chet.ramey@...e.edu>
-Subject: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/30/5
+Message-Id: <E1X1cTp-0007jI-7D@xenbits.xen.org>
+Date: Mon, 30 Jun 2014 14:22:49 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 101 (CVE-2014-4022) - information leak via gnttab_setup_table on ARM
 Content-Type: text/plain; charset=utf-8
 
-Haven't seen it here yet. lcamtuf now disclosed details of the two
-further parser bugs he found:
-http://lcamtuf.blogspot.de/2014/10/bash-bug-how-we-finally-cracked.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Basically if anyone hasn't applied one of the prefix patches yet now's
-the time to do so.
+           Xen Security Advisory CVE-2014-4022 / XSA-101
+                            version 3
 
-While prefixing should shield against them they should still be fixed
-for good.
+            information leak via gnttab_setup_table on ARM
 
-CVE-2014-6277 can still be triggered to segfault a fully patched bash:
-bash -c "f(){ x(){ _;}; x(){ _;}<<a;}"
+UPDATES IN VERSION 3
+====================
 
-Second issue PoC on fully patched system:
-env BASH_FUNC_x%%='() { _;}>_[$($())] { echo vuln;}' bash -c :
+Provide the CVE.
 
-(both likely not exploitable due to prefix shielding, but should be
-fixed anyway)
+ISSUE DESCRIPTION
+=================
 
--- 
-Hanno Böck
-http://hboeck.de/
+When initialising an internal data structure on ARM platform Xen was
+not correctly initialising the memory containing the list of a
+domain's grant table pages. This list is returned by the
+GNTTABOP_setup_table subhypercall, leading to an information leak.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+IMPACT
+======
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Malicious guest administrators can obtain some of the memory contents
+of other domains:
+
+Up to 8*max_nr_grant_frames bytes of uninitialised memory can be
+leaked to the calling domain. This memory may have been previously
+used by either the hypervisor or other guests.
+
+The default max_nr_grant_frames is 32, hence by default 256 bytes may
+be leaked in this way.  However this can be overridden via the
+"gnttab_max_nr_frames" hypervisor command line option.
+
+VULNERABLE SYSTEMS
+==================
+
+Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
+
+MITIGATION
+==========
+
+None.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa101.patch        xen-unstable, Xen 4.4.x
+
+$ sha256sum xsa101*.patch
+12ea475265a0804a3a42f620d7065a7408a5ae4b017c871847424c7247c204e9  xsa101.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJTsXKlAAoJEIP+FMlX6CvZAXwH/0Km16VstdF5P72chl3u9BsE
+aWLe8Xdb9lmPXiIWM+q2NN+Jp8tL08Ia4fyD1OC5zJqtf6TReI9qsBkzo2O6EfjF
+QdTluXrfYgkob0THsDW1Nd86wxy8UBLlz1dwu+jfKkYp9gMQgTtV1NNyrXEOwn1f
+vepA/V2kOVss7U5+OXqe10HOm+bK4Qs0vYwu1HnG/y6/I39eP2FXw8jMDSB1pKcJ
+1/zBll+R+LVXsQbJbKA6vS9RJiOeMXY1b8y6ThduVuW+bq/RydyqoTb25XPqhHcV
+6FaDe3JlncXvpJp4OEaAiHPyBqPRvNgr3WWW16lFGTtlLJdc+43/24WkrLfok6o=
+=srxg
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa101.patch" of type "application/octet-stream" (690 bytes)
