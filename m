@@ -1,78 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/5
-Message-ID: <CAMPTd_C5yO4b2W44AHnkx_G2uE3ishO+8_iotZMMrWhAvMhkGg@mail.gmail.com>
-Date: Sun, 21 Dec 2014 23:27:19 -0800
-From: Walter Parker <walterp@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/30/1
+Message-ID: <20140630054351.GA23853@lorien.valinor.li>
+Date: Mon, 30 Jun 2014 07:43:51 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Confusion on CVE-2014-0235
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Dec 21, 2014 at 10:39 PM, Hanno Böck <hanno@...eck.de> wrote:
+Hi
 
-> On Sun, 21 Dec 2014 23:30:10 -0700
-> Kurt Seifried <kseifried@...hat.com> wrote:
->
-> > Having to reconcile multiple logs/events across widely distributed
-> > systems, especially in high volume situations, 1-2 seconds is a deal
-> > breaker. Or people running SCADA systems for industrial plants. Or
-> > people that run financial systems.
->
-> I don't think this contradicts my statement that average consumer hw
-> doesn't need the high accuracy of ntp :-)
->
-> This is something that I don't want to see in the Linux/xBSD world. A
-split made between the software that the "average consumer" uses and the
-software that prosumers and professionals use for basic system services
-like timekeeping. We should all be be using the good stuff...
+I noticed that CVE-2014-0235 apparently was used twice:
 
->From what has been said so far, there appears to be two sides:
+CVE-2014-0235 file: extensive backtracking in awk rule regular
+expression (incomplete fix for CVE-2013-7345):
 
-One that points out that security in ntp is week therefore MITM attacks can
-be done. So the idea is to remove ntp and replace it something else, which
-would be using the time field in TLS transactions. Most arguments seem to
-come from the assuming the TLS servers are secure and have the correct
-time. Nothing has be said about how well the TLS servers would work as time
-servers
+ * https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-0235
 
-The other points out that ntp is a time protocol that specializes in
-getting and keeping time correct. It is designed to allow time to be set
-with high level of precision and accuracy (milliseconds on regular systems,
-microseconds when it really matters).
+But then also for Microsoft Internet Explorer 9: "Microsoft Internet
+Explorer 9 allows remote attackers to execute arbitrary code or cause
+a denial of service (memory corruption) via a crafted web site, aka
+"Internet Explorer Memory Corruption Vulnerability," a different
+vulnerability than CVE-2014-1751 and CVE-2014-1755.".
 
-Has there been any studies on the quality of TLS for a timeserver? From
-comments, to me, it looks like the TLS side is rationalizing the 1 second
-limit on TLS because they want want to use TLS as is, without further
-researching/refining the topic.
+ * https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-0235
 
-If we are going to build a secure time protocol, the timekeeping piece is
-at least as important as the security piece.
+Would be appreciated if you can clarify which is correct and how to
+reference the file issue.
 
-
-
-> > So it's not an either/or situation (care about security, or have
-> > accurate time, sometimes we need both).
->
-> Yeah, I totally agree that this would be the desired thing to have.
-> However the facts are that at the moment we don't. And imho for
-> consumer HW the slight inaccuracy of tlsdate doesn't matter, while the
-> insecurity of ntp does (as the very practical hsts attack has shown).
->
-> I read these days that the Linux foundation is sponsoring some work on
-> NTP. Anyone involved in this and can comment whether secure
-> authentication for NTP is something that's being looked at or if it is
-> only about creating a better implementation of the ntp software?
->
->
-Given there are 100's of millions of NTP clients in the field right now,
-where would we get the trusted TLS servers to use as time servers. We can't
-trust the web server that we are trying to connect to, as if it is a MITM
-attack, it could also have bad time.
-
-
-Walter
-
-
--- 
-The greatest dangers to liberty lurk in insidious encroachment by men of
-zeal, well-meaning but without understanding.   -- Justice Louis D. Brandeis
-
+Regards,
+Salvatore
