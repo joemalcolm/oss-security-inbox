@@ -1,60 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/07/3
-Message-Id: <201406070301.s57312XT020241@linus.mitre.org>
-Date: Fri, 6 Jun 2014 23:01:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: PHP configure script and Lynis tool /tmp/ issues reported on full disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/01/1
+Message-ID: <20140701154458.GC4636@suse.de>
+Date: Tue, 1 Jul 2014 17:44:58 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: default cipher suites in curl
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
->>   39     if [ "${OS}" = "AIX" ]; then
->>   40         TMPFILE=/tmp/lynis.$$
+libcurl up to early this year did not have default SSL ciphers
+when openssl was in use.
 
-> We can make a CVE assignment corresponding to your disclosure of this
-> lynis.$$ issue on oss-security. Use CVE-2014-3982. A CVE for this most
-> likely won't (or shouldn't) have a
-> http://seclists.org/fulldisclosure/2014/Jun/21 reference unless the
-> original fulldisclosure author confirms the association.
+Clients using the library could however set ciphers via 
+an option, but as it would work without, they might not have.
 
-We have heard from the original fulldisclosure author, and have
-permission to continue with the public CVE assignments here. The new
-status is that CVE-2014-3982 refers only to the above unsafe use of
-/tmp/lynis.$$ on AIX. It's quite possible that Linux distributions
-won't produce any security updates mapping to CVE-2014-3982.
 
-A second CVE ID, CVE-2014-3986, refers to this separate vulnerability
-on non-AIX platforms (i.e., any uname except for AIX):
+This was fixed in curl 7.35.0:
 
-  TMPFILE=`mktemp /tmp/lynis.XXXXXX`
-  ...
-  find ${I} -name "*.conf" -print >> ${TMPFILE}.unsorted
+Daniel Stenberg (12 Jan 2014)
+- OpenSSL: deselect weak ciphers by default
+  
+  By default even recent versions of OpenSSL support and accept both
+  "export strength" ciphers, small-bitsize ciphers as well as downright
+  deprecated ones.
+  
+  This change sets a default cipher set that avoids the worst ciphers, and
+  subsequently makes https://www.howsmyssl.com/a/check no longer grade
+  curl/OpenSSL connects as 'Bad'.
+  
+  Bug: http://curl.haxx.se/bug/view.cgi?id=1323
+  Reported-by: Jeff Hodges
 
-This apparently allows a straightforward symlink attack against the
-${TMPFILE}.unsorted file. Credit for this discovery belongs to the
-same author as in the http://seclists.org/fulldisclosure/2014/Jun/21
-post.
 
-(There are two CVE IDs because the provenance of the first full public
-disclosure is not the same, and because the scope of CVE-2014-3982 had
-already been defined.)
+Should it get a CVE?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTkn8OAAoJEKllVAevmvms5koH/RE9JjUTvar94cdrUd1XjlhJ
-B+lJS7H4oBrceS1aKg1kNtl8vHwlg7WsUzHKs4Ou7KIWHWTem3aMlz5p2C33mdM5
-4fyf0Cci6zg8vgkW1sTeKJaXtuZg/JddZwPv71ElcgR0WYxale+Esqy+EpAO1jNM
-i9Tsx9+1cY7IUu2BMd3X8mDxugNNufUeIeOCls7QMAkWdiW38+Gbx11Wj7EUMK8m
-PAuNuBVEVSsiA5GDSxaJr6ENTixip3O5PvCjB28txfJq0Si0xiBl2DgglxQ+eGRm
-OpHhK3cFY2XPRAZeu303Lhdm6vPWKMUL2ZM4aotf6hxf4ss4RKrczA/QauagIas=
-=7RvE
------END PGP SIGNATURE-----
+Ciao, Marcus
