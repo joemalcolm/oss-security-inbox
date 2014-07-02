@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/30
-Message-ID: <CAAWYm=tnJaV03oKNbecerd6XWbxBgfb6SfCvQC6XouyrBTV-Pw@mail.gmail.com>
-Date: Mon, 6 Oct 2014 12:06:55 -0400
-From: David White <dmwhite823@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL RSA 1024 bits implementation broken?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/3
+Message-ID: <53B42088.9090901@redhat.com>
+Date: Wed, 02 Jul 2014 17:08:56 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com, misc@...b.org
+Subject: Re: Ansible CVE requests
 Content-Type: text/plain; charset=utf-8
 
-I also perused the discussion at
-http://www.reddit.com/r/crypto/comments/2i9qke/openssl_bug_allows_rsa_1024_key_factorization_in/,
-which I found by googling this email subject.
-
-Most folks there are saying that this isn't true.
-
-On Mon, Oct 6, 2014 at 10:38 AM, Jeremy Stanley <fungi@...goth.org> wrote:
-
-> On 2014-10-06 16:34:29 +0200 (+0200), Pierre Schweitzer wrote:
-> > Following the information on that ML it appears not to be true. Or
-> > at least, there's no obvious evidence it happened. And lack of
-> > appropriate communication from reporter doesn't help getting rid
-> > of doubts. Unless I missed something from the thread you pointed?
+On 07/02/2014 04:49 PM, cve-assign@...re.org wrote:
+>> It turns out that the fix was incomplete.
 >
-> That's been the impression I got so far, but I have a reply on the
-> thread pending moderator approval linking to the blog post (which
-> seems not to have been mentioned there yet).
-> --
-> Jeremy Stanley
+>> I think this warrants a separate CVE ID.
 >
+> Use CVE-2014-4678 for the
+> https://github.com/ansible/ansible/commit/5429b85b9f6c2e640074176f36ff05fd5e4d1916
+> fix that was announced in the 2014-06-25 ansible-announce "Ansible
+> 1.6.4 update - security release" message at
+> https://groups.google.com/forum/message/raw?msg=ansible-announce/ieV1vZvcTXU/5Q93ThkY9rIJ
 
+Thanks.
 
+> Additional CVE IDs (at least two) will be assigned for:
+>
+> A. The 2014-06-25 ansible-announce "Ansible 1.6.5 - updated security
+> fix" message at
+> https://groups.google.com/forum/message/raw?msg=ansible-announce/A1px5egCnGQ/jH6f5HM7kpkJ
+
+I think the change in 1.6.5 was an attempt to fix a functionality 
+regression, not something that actually added restrictions to the 
+sandbox.  I am aware that this assessment is at odds with what upstream 
+has stated, so you might want to assign a CVE nevertheless.
 
 -- 
-David White
-Founder & CEO
-
-*Develop CENTS *
-Computing, Equipping, Networking, Training & Supporting
-Organizations Worldwide
-http://developcents.com
-
+Florian Weimer / Red Hat Product Security
