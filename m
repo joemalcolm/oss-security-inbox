@@ -1,21 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/9
-Message-Id: <E1XamWy-00028z-9B@rmm6prod02.runbox.com>
-Date: Sun, 05 Oct 2014 10:11:24 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/11
+Message-ID: <CAMMrfH4T32hcTG3kO_Ss8G4eXLkCwtMbsVpLwze3hx+NUVBzpg@mail.gmail.com>
+Date: Wed, 2 Jul 2014 11:37:16 -0400
+From: Brian Harring <ferringb@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, misc@...b.org
+Subject: Re: Re: Ansible CVE requests
 Content-Type: text/plain; charset=utf-8
 
-Everyone: Thank you VERY MUCH for your timeline corrections and additions on shellshock.
+On Wed, Jul 2, 2014 at 11:08 AM, Florian Weimer <fweimer@...hat.com> wrote:
 
-My updated document is here:
-  http://www.dwheeler.com/essays/shellshock.html
-The updated timeline is here:
-  http://www.dwheeler.com/essays/shellshock.html#timeline
+> On 07/02/2014 04:49 PM, cve-assign@...re.org wrote:
+>
+>> Additional CVE IDs (at least two) will be assigned for:
+>>
+>> A. The 2014-06-25 ansible-announce "Ansible 1.6.5 - updated security
+>> fix" message at
+>> https://groups.google.com/forum/message/raw?msg=ansible-
+>> announce/A1px5egCnGQ/jH6f5HM7kpkJ
+>>
+>
+> I think the change in 1.6.5 was an attempt to fix a functionality
+> regression, not something that actually added restrictions to the sandbox.
+>  I am aware that this assessment is at odds with what upstream has stated,
+> so you might want to assign a CVE nevertheless.
 
-It also includes references to:
-1. the *much* simpler vulnerability test posted by Solar Designer http://seclists.org/oss-sec/2014/q4/114
-2. the more detailed test at https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck
 
---- David A. Wheeler
+The change in 1.6.5 was in response to new vulnerabilities I reported- it's
+a separate CVE.
+
+Thanks-
+~brian
+
