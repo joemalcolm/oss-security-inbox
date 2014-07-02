@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/6
-Message-ID: <53F5FD90.7070107@enovance.com>
-Date: Thu, 21 Aug 2014 10:09:20 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-028] Glance store DoS through disk space exhaustion (CVE-2014-5356)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/10
+Message-ID: <CAC9YFzfc1OXzZa-m+3nKtb-bjRPPxi1Xd64XR0LYjB=nC-nCEA@mail.gmail.com>
+Date: Wed, 2 Jul 2014 16:54:51 -0300
+From: Rafael Mendonça França <rafaelmfranca@...il.com>
+To: rubyonrails-security@...glegroups.com, ruby-security-ann@...glegroups.com,  oss-security@...ts.openwall.com
+Subject: Amended Patches for CVE-2014-3483 for Rails 4.x
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-028
-CVE: CVE-2014-5356
-Date: August 21, 2014
-Title: Glance store DoS through disk space exhaustion
-Reporter: Thomas Leaman (HP), Stuart McLaren (HP)
-Products: Glance
-Versions: up to 2013.2.3 and 2014.1 versions up to 2014.1.2
+The original patches introduced a regression on the PostgreSQL Range
+feature. This regression was only introduced to Rails 4.x. Rails 3.2 users
+are not impacted.
 
-Description:
-Thomas Leaman and Stuart McLaren from Hewlett Packard reported a
-vulnerability in Glance. By uploading a large enough image to a Glance
-store, an authenticated user may fill the store space because the
-image_size_cap configuration option is not honored. This may prevent
-further image upload and/or cause service disruption. Note that the
-import method is not affected. All Glance setups using API v2 are
-affected (unless you use a policy to restrict/disable image upload).
+I'm including a new version of the patches and an incremental version that
+can be applied atop the previous patches.
 
-Juno (development branch) fix:
-https://review.openstack.org/91764
+* 4-1-postgres-sqli-amended.patch - Amended Patch for 4.1.2.
+* 4-0-postgres-sqli-amended.patch - Amended Patch for 4.0.6.
+* 4-1-postgres-sqli-incremental.patch - Incremental Patch for 4.1.3.
+* 4-0-postgres-sqli-incremental.patch - Incremental Patch for 4.0.7.
 
-Icehouse fix:
-https://review.openstack.org/115280
+Rafael Mendonça França
+http://twitter.com/rafaelfranca
+https://github.com/rafaelfranca
 
-Havana fix:
-https://review.openstack.org/115289
+Content of type "text/html" skipped
 
-Notes:
-This fix will be included in the Juno-3 development milestone and in
-future 2013.2.4 and 2014.1.3 releases.
+Download attachment "4-0-postgres-sqli-amended.patch" of type "application/octet-stream" (4367 bytes)
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-5356
-https://launchpad.net/bugs/1315321
+Download attachment "4-1-postgres-sqli-amended.patch" of type "application/octet-stream" (4556 bytes)
 
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Download attachment "4-0-postgres-sqli-incremental.patch" of type "application/octet-stream" (3031 bytes)
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Download attachment "4-1-postgres-sqli-incremental.patch" of type "application/octet-stream" (3078 bytes)
