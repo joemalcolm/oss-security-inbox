@@ -1,46 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/10
-Message-ID: <1723998.qaVZyOmMMY@eee>
-Date: Tue, 22 Jul 2014 14:00:03 -0700 (PDT)
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: ecryptfs-setup-private nitpick
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/5
+Message-ID: <CAC9YFzfDP3rQObMs0ZpU3vMsV4z+grdwK4XPRQ4Y1XBc1vHitA@mail.gmail.com>
+Date: Wed, 2 Jul 2014 14:11:30 -0300
+From: Rafael Mendonça França <rafaelmfranca@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2014-3482] [CVE-2014-3483] Ruby on Rails: Two Active Record SQL Injection Vulnerabilities Affecting PostgreSQL
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+There are two distinct but related vulnerabilities in PostgreSQL
+adapter for Active Record. These vulnerabilities have been assigned
+the CVE identifiers CVE-2014-3482 and CVE-2014-3483.
 
-Taking a look at ecryptfs-utils 103's ecryptfs-setup-private, there is a bit 
-of code that writes the mount pass to a file in /dev/shm hoping to "keep it 
-from leaking to the hard-drive":
+Versions Affected:  All Versions > 2.0
+Not affected:       Databases other than PostgreSQL
+Fixed Versions:     3.2.19, 4.0.7 & 4.1.3
 
-8<-------->8
-        # This will be wrapped by pam_ecryptfs's chauthtok as soon as the 
-user
-        # chooses a password.  Until that happens (hopefully soon), standard
-        # file permissions (600) are all that's protecting it.  Write it to
-        # ramdisk, to keep it from leaking to the hard-drive.
-        temp=`mktemp /dev/shm/.ecryptfs-XXXXXX`
-        printf "%s" "$MOUNTPASS" > "$temp"
-        mv -f -T "$temp" "/dev/shm/.ecryptfs-$USER" || error "Could not 
-create passphrase file"
-8<-------->8
+Impact
+------
+PostgreSQL supports a number of unique data types which are not
+present in other supported databases.  A bug in the SQL quoting code
+in ActiveRecord can allow an attacker to inject arbitrary SQL using
+carefully crafted values.
 
-Fastforward to 2014 and /dev/shm is, well, not a ramfs/ramdisk:
+Only applications which query against either bitstring or range types
+are vulnerable. The particular data types affected depend on the
+version of Rails you're using, but the vulnerable code will look the
+same.  Vulnerable code will take either take the form of:
 
-/dev/shm -> /run/shm, which is a tmpfs at least on Debian.
+  Model.where(bitstring: params[:some_value])
+  Model.where(range: params[:from]..params[:to])
 
-And as clearly stated by Documentation/filesystems/tmpfs.txt:
-"If you compare it to ramfs (which was the template to create tmpfs)
-you gain swapping and limit checking."
+The specific versions affected is included below, however all users
+running an affected release should upgrade immediately.
 
+SQL Injection Vulnerability in 'bitstring' quoting
+==================================================
+Versions Affected: 2.0.0-3.2.18
+Not Affected: 4.0 and Later
+Identifier: CVE-2014-3482
 
-So in the hope of avoiding a persistent storage the mount pass is written to 
-a file in a tmpfs that can be swapped to... disk.
+SQL Injection Vulnerability in 'range' quoting
+==============================================
+Versions Affected: 4.0.0-4.1.2
+Not Affected: All versions prior to 4.0.0
+Identifier: CVE-2014-3483
 
-The file is left on /dev/shm until pam_ecryptfs actually wraps it with the 
-login pass.
+Releases
+--------
+The 3.2.19, 4.0.7 & 4.1.3 releases are available at the normal locations.
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Workarounds
+-----------
+The only feasible workaround for this issue is to not allow user
+controlled values to be used in queries with the affected data types.
+Given the difficulty of ensuring this, upgrading is strongly advised.
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided
+patches for the two supported release series and the last major
+release series.  They are in git-am format and consist of a single
+changeset.
+
+* 4-1-postgres-sqli.patch - Patch for 4.1 series
+* 4-0-postgres-sqli.patch - Patch for 4.0 series
+* 3-2-postgres-sqli.patch - Patch for 3.2 series
+
+Please note that only the 4.0.x and 4.1.x series receive regular
+security updates at present.  Users of earlier unsupported releases
+are advised to upgrade as soon as possible as we cannot guarantee the
+continued availability of security fixes for earlier releases.
+
+Credits
+-------
+
+Thanks to Sean Griffin of thoughtbot for reporting the vulnerability
+to us, and to Jeff Jarmoc of Matasano and Charlie Somerville of GitHub
+for working with us to review the patches and advisories.
+
+Rafael Mendonça França
+http://twitter.com/rafaelfranca
+https://github.com/rafaelfranca
+
