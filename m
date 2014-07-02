@@ -1,44 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/3
-Message-ID: <20141120061028.GA4428@elende.valinor.li>
-Date: Thu, 20 Nov 2014 07:10:28 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: security@...pal.org, Gunnar Wolf <gwolf@...lf.org>, cve-assign@...re.org, team@...urity.debian.org
-Subject: Pending CVE assignments for SA-CORE-2014-006?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/2
+Message-Id: <201407021449.s62En2KN028569@linus.mitre.org>
+Date: Wed, 2 Jul 2014 10:49:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: fweimer@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, misc@...b.org
+Subject: Re: Ansible CVE requests
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I just wanted to ask back if the CVEs for SA-CORE-2014-006[1] were
-already requested (the advisory mention that they will be requested
-and added to the advisory). If so this will ease tracking the two
-issues. For reference they are:
+> It turns out that the fix was incomplete.
 
-> Session hijacking (Drupal 6 and 7)
-> 
-> A specially crafted request can give a user access to another user's
-> session, allowing an attacker to hijack a random session.
-> 
-> This attack is known to be possible on certain Drupal 7 sites which
-> serve both HTTP and HTTPS content ("mixed-mode"), but it is possible
-> there are other attack vectors for both Drupal 6 and Drupal 7.
->
-> Denial of service (Drupal 7 only)
-> 
-> Drupal 7 includes a password hashing API to ensure that user
-> supplied passwords are not stored in plain text.
-> 
-> A vulnerability in this API allows an attacker to send specially
-> crafted requests resulting in CPU and memory exhaustion. This may
-> lead to the site becoming unavailable or unresponsive (denial of
-> service).
-> 
-> This vulnerability can be exploited by anonymous users.
+> I think this warrants a separate CVE ID.
 
-They are fixed in Drupal7 7.34 and Drupal6 6.34.
+Use CVE-2014-4678 for the
+https://github.com/ansible/ansible/commit/5429b85b9f6c2e640074176f36ff05fd5e4d1916
+fix that was announced in the 2014-06-25 ansible-announce "Ansible
+1.6.4 update - security release" message at
+https://groups.google.com/forum/message/raw?msg=ansible-announce/ieV1vZvcTXU/5Q93ThkY9rIJ
 
- [1] https://www.drupal.org/SA-CORE-2014-006
+(CVE-2014-4678 exists because of an incomplete fix for CVE-2014-4657.)
 
- Regards,
- Salvatore
+Additional CVE IDs (at least two) will be assigned for:
+
+A. The 2014-06-25 ansible-announce "Ansible 1.6.5 - updated security
+fix" message at
+https://groups.google.com/forum/message/raw?msg=ansible-announce/A1px5egCnGQ/jH6f5HM7kpkJ
+
+B. The 2014-07-01 ansible-announce "Ansible 1.6.6 - refinements to
+previous security fixes" message at
+https://groups.google.com/forum/message/raw?msg=ansible-announce/WKL7BY3qddo/JkJiNrZzy3AJ
+
+(At least for item B, there may have been distinct problems reported
+by distinct discoverers, and per-discoverer CVE assignments may be
+best if that information is available. It seems likely that that
+information won't be available at the time when the CVEs are needed --
+and probably individual independent researchers won't be publishing
+separate advisories about subsets of the safe_eval problem -- so one
+CVE ID for A and one CVE ID for B is a realistic outcome.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTtBt6AAoJEKllVAevmvmsSLgIAKiP7W7Zu3c0u52+cim/ZY0c
+q6tjLtdGtkIGt6o1Y5MzLmmSXBSxKeTIiADRj4apRD8iUGLMz8KidsuWb+AgKvZC
+g+yxAqPwiGdyLshLKyegaUwDSZE2qdvYxDB2evTd8NPXyWpauyx4xBSgsFtuIehc
+aijeIQtcPok6sm4oPBFzymBGjb1PlufTOfAzciUQBs96IFnD3BsTEejCo6lBwM1X
+u8FOkMC4sIp98riL1r2eJhJ1ayX7/eFX2cW58VnQTCjL9SWcNE8WPWwcJJ+d5kpE
+zhUQM4jsJ+9uape9wYNcncyrnEYfC9KwVr2cdjzEGmtFG2t556cpx5TBbhBbo00=
+=OI7a
+-----END PGP SIGNATURE-----
