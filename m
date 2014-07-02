@@ -1,32 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/13
-Message-Id: <201402072354.12275.geissert@debian.org>
-Date: Fri, 7 Feb 2014 23:54:11 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request? buffer overflow in socket.recvfrom_into
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/9
+Message-ID: <alpine.LFD.2.10.1407030001050.22647@javelin.pnq.redhat.com>
+Date: Thu, 3 Jul 2014 00:03:00 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: LMS-2014-06-16-5: Linux Kernel LZ4
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A bug has been reported in python, where socket.recvfrom_into "fails to 
-check that the supplied buffer object is big enough for the requested read 
-and so will happily write off the end"[1]. Ryan Smith-Roberts goes on to say 
-"while very highly unlikely it's technically remotely exploitable".
+   Hello,
 
-Does anyone with a better python fu tell whether this should get a CVE id? A 
-quick search on Debian's code doesn't really tell me much [2]
++-- On Fri, 27 Jun 2014, P J P wrote --+
+|   It's been discussed in the other thread, yet just for the record, a reply 
+| from the upstream author:
+| 
+| +-- On Fri, 27 Jun 2014 Yann Collet wrote --+
+| |Hi Prasad
+| |
+| |Nope, latest lz4 release is not affected.
+| |Moreover, even the linux kernel implementation is safe, for now.
 
-I've been able to reproduce the bug in python 2.5 and greater, which 
-confirms what the bug report says.
+For the record:
+  -> http://blog.securitymouse.com/2014/07/i-was-wrong-proving-lz4-exploitable.html
 
+Summary: effectively, this post proves that
 
-[1] http://bugs.python.org/issue20246
-[2] 
-http://codesearch.debian.net/search?q=recvfrom_into%5C%28%5B%5E%5C%29%5D%2B%2C+filetype%3Apython+-
-package%3Apython2.7+-package%3Apython3.3+-package%3Apython3.4
+  - Exploits can be written against current implementations of LZ4
+  - Block sizes less than 8MB (and even less than 4MB) can be malicious
+  - Certain platforms are more affected than others (primarily RISC: ARM)
+  - Protecting against the 16MB and greater flaw was not sufficient
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJTtFBcAAoJEN0TPTL+WwQftO8P+wZ/Qjm4xEb2R1AYqRmIgoYf
+zbzUbPxaiuELv++63gkqb6DcKx9mwzDqxtk06ms6h25DTm+yQhqP4drwD4vg26kZ
+g1H/cfB1sokdv/z+bqwjZG+AqP0IcJSuttWzQA6/0+3hkj1DUEtSaKoeJcogKUaq
+lQQ3eRgLOvHBJHxmvHi326r31GAf8MrfeyupZabkDElEmJsXj6NwmUjeR1p8WcEN
+gV5QfZlGPtT+kLfdRZEy8NuwiTHxn61qkeEsLyNMXfjCaIeTSXqIGdoBJC0dbW+D
+7LLOWGulwoQszuxRbg/3rKT+UgGymhD4wnzTE/j+59M/dIHIIcAio8CNWq3xvtFK
+2Tl6/cHnmhdPdTOnNcy/FTkhRR00YD37sgMajyXLW+IfZW0CEJDXpHuH1+1WtmIP
+8gKJwKCEJLH9JormXbYjUGqVEvgxsaye6DFG5/qjk89126JeIEOGmIUc/pBhxJQc
+FhyRB29uQug7Xd2YSyos51CjsOVpStfgFLhJHgRkLuAN3CV1kc5fIiD4UCWO/NmM
+dLg8XdQorEP4uuFBh5kLEte9x4vWJwYnNXhuwA4XSLPaFvwpRlbq8W67Dz+SaZlT
+t38aUr6Aml+G9fJZadth3oIESWmVWe9mnKiLu7iwzLMo05hRy7ODUTkAVWrDuoU/
++CX9A4GefwYxk02c9NBZ
+=4WV7
+-----END PGP SIGNATURE-----
