@@ -1,39 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/4
-Message-ID: <546E942F.6000903@mccme.ru>
-Date: Fri, 21 Nov 2014 04:23:59 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing project brainstorming
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/4
+Message-ID: <53B42D80.1000306@collabora.co.uk>
+Date: Wed, 02 Jul 2014 17:04:16 +0100
+From: Simon McVittie <simon.mcvittie@...labora.co.uk>
+To: oss-security@...ts.openwall.com,  "dbus@...ts.freedesktop.org" <dbus@...ts.freedesktop.org>
+CC: Alban Créquy <alban.crequy@...labora.co.uk>,  Colin Walters <walters@...bum.org>, Thiago Macieira <thiago@....org>
+Subject: CVE-2014-3532, -3533: two local DoS vulnerabilities in dbus-daemon
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-20 19:54, Gynvael Coldwind wrote:
-> I would argue that "is also valuable" is underplaying it a little ;)
-> IMO having the input (and information on how was it loaded in some cases)
+Impact: denial of service (force system services to exit)
+Access required: local
+Versions affected by CVE-2014-3532: dbus >= 1.3.0 on Linux >= 2.6.37-rc4
+Versions affected by CVE-2014-3533: dbus >= 1.3.0 on all Unix platforms
 
-Yes, sometimes a crash is only happens under valgrind or with specific 
-ulimit etc.
+Alban Crequy at Collabora Ltd. discovered a bug in dbus-daemon's support
+for file descriptor passing. A malicious process could force system
+services or user applications to be disconnected from the D-Bus system
+bus by sending them a message containing a file descriptor, then causing
+that file descriptor to exceed the kernel's maximum recursion depth
+(itself introduced to fix a DoS) before dbus-daemon forwards the message
+to the victim process. Most services and applications exit when
+disconnected from the system bus, leading to a denial of service. This
+is tracked as fd.o#80163 and CVE-2014-3532.
 
-> If it came from a mutation-based fuzzer, the original (not-mutated) sample
-> can be useful too.
+Additionally, Alban discovered that bug fd.o#79694, a bug previously
+reported by Alejandro Martínez Suárez which was not believed to be a
+security flaw, could be used for a similar denial of service, by causing
+dbus-daemon to attempt to forward invalid file descriptors to a victim
+process when file descriptors become associated with the wrong message.
+Its security implications are tracked as fd.o#80469 and CVE-2014-3533.
 
-You mean the closest non-crashing parent (in case there is a chain of 
-samples as in AFL)?
+For the 1.8.x stable branch, these vulnerabilities are fixed in version
+1.8.6. For the 1.6.x old-stable branch, these vulnerabilities are fixed
+in version 1.6.22.
 
-And while we are at it, would you mind describing your experience in 
-case of ffmpeg. Your blogpost -- http://gynvael.coldwind.pl/?id=524 -- 
-gives only high level review of the work. The fuzzer and specific 
-methods of fuzzing seems to be proprietary. That's fine. But perhaps you 
-can describe other sides of the work:
-- how did you deduplicate crashes (full stacktrace, some frames only or 
-some other way);
-- how did you decide which issues are security-sensitive and which are not;
-- how did you requested CVEs (for which issues, which info was required);
-- (if you know) how security fixes were released by ffmpeg.
-This kind of questions.
+All earlier versions of dbus with the file descriptor passing feature
+(1.3.0 and up) are believed to be vulnerable. Distributions that
+backport security fixes should backport git commits
+07f4c12efe3b9bd45d109bc5fbaf6d9dbf69d78e and
+9ca90648fc870c24d852ce6d7ce9387a9fc9a94a, attached.
 
-Given the sheer number of findings you probably did everything 
-automatically?
+References:
 
--- 
-Alexander Cherepanov
+[fd.o#79694] https://bugs.freedesktop.org/show_bug.cgi?id=79694
+[fd.o#80469] https://bugs.freedesktop.org/show_bug.cgi?id=80469
+[fd.o#80163] https://bugs.freedesktop.org/show_bug.cgi?id=80163
+
+Regards,
+    S
+
+
+View attachment "0001-If-loader-contains-two-messages-with-fds-don-t-corru.patch" of type "text/x-patch" (1687 bytes)
+
+View attachment "0002-Handle-ETOOMANYREFS-when-sending-recursive-fds-SCM_R.patch" of type "text/x-patch" (4657 bytes)
