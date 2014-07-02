@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/2
-Message-Id: <201402070440.s174eF4c028344@linus.mitre.org>
-Date: Thu, 6 Feb 2014 23:40:15 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel: SELinux local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/8
+Message-ID: <alpine.LFD.2.10.1407022357240.22647@javelin.pnq.redhat.com>
+Date: Thu, 3 Jul 2014 00:00:08 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: LMS-2014-06-16-6: LZ4 Core
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> a crash caused by an empty SELinux security context
 
-Use CVE-2014-1874.
+For the record,
+  -> http://blog.securitymouse.com/2014/07/i-was-wrong-proving-lz4-exploitable.html
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Summary: effectively, this post proves that
+
+  - Exploits can be written against current implementations of LZ4
+  - Block sizes less than 8MB (and even less than 4MB) can be malicious
+  - Certain platforms are more affected than others (primarily RISC: ARM)
+  - Protecting against the 16MB and greater flaw was not sufficient
+
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJS9GHfAAoJEKllVAevmvmsW2MH/Apde3wwHYWYF8RFque5/jHX
-N6DyOq0IVZeh0S3z5Ar2KM+qBXzPyWs/u18oUQOf4pgVRpFT/TzAQuBdOErR20Vl
-951ZMHGhWooWr9KahBjDAM+W5MrKbDIQK1n3SZV1sTy5YxQFC2eYFKICjuxXTeuv
-Foujy/Ubgj4sBFFZ8QaxbubWGJo4tv6YMHgAz+TkwvfU8cJyfqc9jL6QwsnIc28+
-ejqnTxcgNb6LEu9zlJ5rlP1e6VUjig/ODCcsnBnWNIqSWgxfM/WhaAH1wSwCUvUX
-nMhAFzC62ED3MHHYmzXyil/Z5pHByNGkwItdeZVcPb2jv5wQcdu0jz8qZT9hJtQ=
-=G7md
+iQIcBAEBAgAGBQJTtE+wAAoJEN0TPTL+WwQf26AP/2tk/hf0iphw95CQ81FFWR65
+oM94rpgVlzOA6TUBvvAOR/umuB7Kee6ws0AGWE/GvW1xrmuuGWrGSuZl0lMoG5uk
+Ae5WEyVAbJt1XL4iCBWr9YReTNCE7Y32gcL9AXE7gr3XZdEJ65pI0NMDL+icEUtL
+CRmjx67A2HCmOPqCEe7GNozWLZxsQJwFabHhqeC9QRZLRtO18pYwLJLE5B6xB+1u
+DvYnNExXj4a8/99sC5KBHg/JDd4a/1bOgGbV+smOAiKoRNIQk3XL2JN/IF6HZWpU
+Of/fxdfAHAwlhA7aslASD40ME713ONfb6qsnOKxOdI2aQJucyRuNtz00s+EB9wAu
+alqJ2EqGMpVEb5uzdoLLeUoWRJ86EfcYBCF8r/3axupnbgkj7RpCrOhzMjpMUC4N
+EmuT06GgzZAA5aIe5+NYFpV7F35kTFgTWy1T1OCoHQGcRLiSbjjITgZ98wonzbeX
+AZnAERRAR/YyTOW+TNAph5yIxWghjmVGL6S+5PX89VgcDLr2bOqsDGYoUS3x+8Qj
+HgEl8dONGTwT5mHFds987TQcIx12mPZM72zUVWrY93ScuHraHc150soERU2AmKCw
+D6fZSUKnJGOn9ymfCztucW4Xv5pOO0WIoLn+v8b+EUJRXTqt5DjmG/5Xut8bB96f
++C2KC4R3rWep5t3J1CuQ
+=lMPc
 -----END PGP SIGNATURE-----
