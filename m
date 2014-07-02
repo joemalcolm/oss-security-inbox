@@ -1,12 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/4
-Message-ID: <3230301C09DEF9499B442BBE162C5E48257669F3@SESTOEX04.enea.se>
-Date: Tue, 14 Oct 2014 10:41:40 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Truly scary SSL 3.0 vuln to be revealed soon: 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/7
+Message-ID: <53B444AA.3060909@enovance.com>
+Date: Wed, 02 Jul 2014 13:43:06 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2014-022] Keystone V2 trusts privilege escalation through user supplied project id (CVE-2014-3520)
 Content-Type: text/plain; charset=utf-8
 
-This is probably something under embargo which somehow has leaked out ...
+OpenStack Security Advisory: 2014-022
+CVE: CVE-2014-3520
+Date: July 02, 2014
+Title: Keystone V2 trusts privilege escalation through user supplied
+       project id
+Reporter: Jamie Lennox (Red Hat)
+Products: Keystone
+Versions: up to 2013.2.3, and 2014.1 to 2014.1.1
 
-http://www.theregister.co.uk/2014/10/14/nasty_ssl_30_vulnerability_to_drop_tomorrow/
+Description:
+Jamie Lennox from Red Hat reported a vulnerability in Keystone trusts.
+By using an out of scope project id, a trustee may gain unauthorized
+access if the trustor has the required roles in the requested project
+id. All Keystone deployments configured to enable trusts and V2 API are
+affected.
+
+Juno (development branch) fix:
+https://review.openstack.org/104216
+
+Icehouse fix:
+https://review.openstack.org/104217
+
+Havana fix:
+https://review.openstack.org/104218
+
+Notes:
+This fix will be included in the Juno-2 development milestone and in
+future 2013.2.4 and 2014.1.2 releases.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3520
+https://launchpad.net/bugs/1331912
+
+--·
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
