@@ -1,40 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/13
-Message-Id: <20140707181403.2DAAF1A41139@me.com>
-Date: Mon,  7 Jul 2014 14:14:03 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem gyazo-1.0.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/1
+Message-ID: <20140702080316.GB13757@kludge.henri.nerv.fi>
+Date: Wed, 2 Jul 2014 11:03:16 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: WordPress plugin wysija-newsletters remote file upload
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem gyazo-1.0.0
+Can I get 2014 CVE for remote file upload vulnerability in WordPress plugin
+wysija-newsletters, thanks.
 
-Author: Larry W. Cashdollar, @_larry0
+Plugin name: MailPoet Newsletters
+Plugin page: https://wordpress.org/plugins/wysija-newsletters/
+Fixed in: 2.6.7
+Discovered and reported by Sucuri
 
-Date: 06/01/2014
+Reference:
+http://blog.sucuri.net/2014/07/remote-file-upload-vulnerability-on-mailpoet-wysija-newsletters.html
 
-OSVDB: 108563
+Also detected by wpscan-tool:
+https://github.com/wpscanteam/wpscan/commit/f9b10dc9db45f400918348b777f662c7140ee5fe
 
-CVE:Please Assign
+I can provide diffs between the versions if needed.
 
-Download: http://rubygems.org/gems/gyazo
+---
+Henri Salo
 
-Gem Author:  masui@...ecan.com
-
-From: ./gyazo-1.0.0/lib/gyazo/client.rb
-
-If this Gem is used in the context of a rails app a malicious user may inject commands via #{imagefile} and
-#{tmpfile} using shell meta characters like ; and sending an escaped \".
-
-0through the #{imagefile} name if the raw option is not set.  Also file names are time based and predictable leading
-to file clobbering vulnerabilities as the running process username.
- 57       unless opts[:raw]
- 58         tmpfile = "/tmp/gyazo_upload_#{Time.now.to_i}_#{Time.now.usec}.png"
- 59         if File.exist? imagefile
- 60           system "sips -s format png \"#{imagefile}\" --out \"#{tmpfile}\" > /dev/null"
- 61         end
- 62       end
-
-
-Advisory: http://www.vapid.dhs.org/advisories/gyazo-1.0.0.html
-
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
