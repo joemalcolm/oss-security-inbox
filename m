@@ -1,94 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/12
-Message-Id: <E1XS3yv-0000pi-6I@xenbits.xen.org>
-Date: Thu, 11 Sep 2014 13:00:13 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 107 (CVE-2014-6268) - Mishandling of uninitialised FIFO-based event channel control blocks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/13
+Message-Id: <201407022229.s62MT1mr015979@linus.mitre.org>
+Date: Wed, 2 Jul 2014 18:29:01 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2014-4715 for LZ4 issue 134
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-            Xen Security Advisory CVE-2014-6268 / XSA-107
-                              version 2
+The CVE-2014-4611 assignment, from the perspective of the LZ4 product,
+is for issue 52 fixed in r118:
 
-    Mishandling of uninitialised FIFO-based event channel control blocks
+  https://code.google.com/p/lz4/issues/detail?id=52
+  https://code.google.com/p/lz4/source/detail?r=118
 
-UPDATES IN VERSION 2
-====================
+As mentioned in the
+https://code.google.com/p/lz4/issues/detail?id=52#c30 comment:
 
-CVE assigned.
+  "The point is that there is no documentation in the code to require
+   a limit. This will eventually lead to people that misuse the API.
+   So, yes, it is a vulnerable algorithm"
 
-ISSUE DESCRIPTION
-=================
 
-When using the FIFO-based event channels, there are no checks for the
-existence of a control block when binding an event or moving it to a
-different VCPU.  This is because events may be bound when the ABI is
-in 2-level mode (e.g., by the toolstack before the domain is started).
+The CVE-2014-4715 assignment, from the perspective of the LZ4 product,
+is for issue 134 fixed in r119:
 
-The guest may trigger a Xen crash in evtchn_fifo_set_pending() if:
+  https://code.google.com/p/lz4/issues/detail?id=134
+  https://code.google.com/p/lz4/source/detail?r=119
 
-  a) the event is bound to a VCPU without a control block; or
-  b) VCPU 0 does not have a control block.
-
-In case (a), Xen will crash when looking up the current queue.  In
-(b), Xen will crash when looking up the old queue (which defaults to a
-queue on VCPU 0).
-
-IMPACT
-======
-
-A buggy or malicious guest can crash the host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.4 and onward are vulnerable.
-
-MITIGATION
-==========
-
-None.
-
-CREDITS
-=======
-
-This issue was originally reported by Vitaly Kuznetsov at Red Hat and
-diagnosed as a security issue by David Vrabel at Citrix.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This bug was publicly reported on xen-devel, before it was appreciated
-that there was a security problem.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa107-unstable.patch        xen-unstable
-xsa107-4.4.patch             Xen 4.4.x
-
-$ sha256sum xsa107*.patch
-b92ba8085b6684abbc8b012ae1a580b9e7ed7c8e67071a9e70381d4c1009638b  xsa107-4.4.patch
-cd954a5bd742c751f8db884a3f31bd636a8c5850acddf5f1160dd6be1f706a09  xsa107-unstable.patch
-$
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUEXRHAAoJEIP+FMlX6CvZknQIAIzPCOwG07XrKR7yu00lhCin
-TSppBKJ3y7XkIdmBF/3QSnev61yJ4MYdpWl7qiK4xpDP3IyH0mrtIYBQVwxKCV/R
-l/E2ztiEMugq86eCwvX5p/fAoyfqf1pBoVplqwcarS4vcmnnkOpK278TD2dPdw69
-G5VaFxOqVo4Z6xQyFIGHtinN00tbb/lVQTpldah7ZfqXknPAcSeZqEBuqmVSLGIo
-o9EgTAQm1wbh4tNn+O2KHeAbejjOTM7NYoidRqQY3qfN4m13MdAKliUbXIRdGggQ
-aMKU2n7eNga4Aly720cD6hkJAOKxG/dGUb8lm1qHsG01VjhP2zqGn41tkqsiSAs=
-=cld0
+iQEcBAEBAgAGBQJTtIcVAAoJEKllVAevmvmsi84H/2fKtg3q1OMRQBVPfRdTezHb
+kk22wdGtDRGBDA8MzTOEyh1pHmwsIiy1l11FTqUe3+1tQiBZT2/ws9/KkdhmlcGd
+Clb9h05tHKDLDZaxy8eHeTta+bBueYGyUm50rPKb9l5Ffjcd+ij0AhF/W6GePEyj
+Nv/zm3K7iuTxFuOhxXXX33lhCTV7w3oDlS7+NpuOIGJoyry5+VuVNXSmBN7Pq98X
+j3/kaQL/bxaxaIk3VhrgBBWwLcLpZd0xph9QGeJNlZL13UPBgIn7AkGXLqFnPIgu
+JeSpYONJrldZZfymxyZeSbrv6OgUi0w1xV+oPmr4TNXe4jCwxPFN+SMwZoQ7h2k=
+=zBon
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa107-4.4.patch" of type "application/octet-stream" (4744 bytes)
-
-Download attachment "xsa107-unstable.patch" of type "application/octet-stream" (4698 bytes)
