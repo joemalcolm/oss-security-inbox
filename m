@@ -1,44 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/41
-Message-ID: <20141120202309.59390173@pc>
-Date: Thu, 20 Nov 2014 20:23:09 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Fuzzing project brainstorming
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/6
+Message-ID: <79520.1404373357@critter.freebsd.dk>
+Date: Thu, 03 Jul 2014 07:42:37 +0000
+From: "Poul-Henning Kamp" <phk@....freebsd.dk>
+To: Marek Kroemeke <kroemeke@...il.com>
+cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, varnish-misc@...nish-cache.org
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 20 Nov 2014 08:52:15 -0800
-"M.T. Roebuck" <marvint.roebuck@...ox.lv> wrote:
+In message <CAOurorZCjmrrw0MPhca=8+qjLKofrhdHsJuee5_=rCBv87SPbg@...l.gmail.com>, Marek Kroemeke writes:
 
-> Maybe my problem is that your proposal seems herculean to me but
-> can't help to think it's a reminder or sign that we need to think
-> past the current state of things.
+>I'm not entirely convinced that there is a trust relationship between the
+>cache and the backend in every single use case. 
 
-Compared to "starting from scratch" starting such a fuzzing project is
-not herculean, it's more like grabbing the low hanging fruit.
+It may not be total trust, but trust there is:  On party delivers
+the other partys web-property.
 
-But arguments alike come up every now and then. Basically you'll hear
-two things: "We have to mitigate / sandbox" and "please rewrite
-everything in [insert favorite non-C programming language]".
-
-I don't want to downplay either of these approaches. It's just that you
-have to be realistic. Nobody will rewrite everything from scratch in
-rust/go/haskell/whatever any time soon. There are a few interesting
-projects that try to rewrite key sofware in safer languages (mitls and
-servo come to mind), but they are few and none of them is in a
-production state.
-
-Our systems we have today - the ones we use to have this discussion,
-manage our bank accounts and surf the web - have imperfect software
-written mostly in unsafe languages. I feel fuzzing can improve the
-state of things a lot.
-
+But as I said:  We will fix bugs, but we don't consider them DoS vulns.
 
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
+phk@...eBSD.ORG         | TCP/IP since RFC 956
+FreeBSD committer       | BSD since 4.3-tahoe    
+Never attribute to malice what can adequately be explained by incompetence.
