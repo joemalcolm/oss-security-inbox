@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/26
-Message-ID: <alpine.BSF.2.00.1410070434460.13577@aneurin.horsfall.org>
-Date: Tue, 7 Oct 2014 04:36:20 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: automated phishing email
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/9
+Message-ID: <alpine.LFD.2.10.1407031335350.27589@javelin.pnq.redhat.com>
+Date: Thu, 3 Jul 2014 13:37:10 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: LMS-2014-06-16-6: LZ4 Core
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 6 Oct 2014, Mason Loring Bliss wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> A co-worker suggested that this might have been aimed at procmail.
-> 
->     https://bpaste.net/show/41323f7d9b35
-> 
-> I'm curious if anyone has thoughts about what the target might have been for
-> this attempt.
++-- On Thu, 3 Jul 2014, P J P wrote --+
+|   -> http://blog.securitymouse.com/2014/07/i-was-wrong-proving-lz4-exploitable.html
 
-Pardon me for being new here, but that looks suspiciously like a 
-Shellshock type of attack.  Is Procmail also vulnerable to that sort of 
-thing?
+- -> http://fastcompression.blogspot.fr/2014/07/software-vulnerabilities-how-it-works.html
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
--- Dave
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJTtQ8uAAoJEN0TPTL+WwQfLZIP/i8s46oDy81fo+EGelG7tHiC
+9Y/L/BuneQzSzFn+MrMHWpab7e+2AoJcztKBRB0q3qd/DLr/UOz9Zqc33kE9YJWc
+H+WpL9oZx4D8Fq32PPCcgQWaOBRNWQD9FBMf+/1AbBgaqXusGI49mfRF5TTOeau6
+t2eYn3YrS/BRoxRIO9XxmjVhmTRNjYU9JQUuKQTkC7WdXpXjDm9/TStd8ah4a9jT
+gLBDnSn2BgS6HbbQBDbbY/X1nAK9bCQHSFhaBJhCJP2OhSf2m2IvKC0okJbnU4Sq
+qqpZ6RB6PLAqmzEj+N6XdiC1U14auQparefaOGNh8mD/xZcdatMWuJzKOhvp+xX1
+0raNHKqkYr589y2W+6IHtwc6F7SVx39TCpYnyeSoQoRcwoRPqZ+VsfUtIdazq6L7
+ENv1nNZsvOCQt3oGHH7Ze+HXcBJfpmzZ3j614Snf4ogFBpXJgRIhJSdGe+A45xEl
+FuNuIRhY5fi+VwpmSvtApLpy7iH8hSDEv2B9m4UwSIYmFOTEOqZ9XPvm/6O/u4ZY
+XjQBNwAMs1A7rbPphTF7xANaqyzdhL0NxaMzQ8ncwfPDQ4zEgc97SnxdFOsGJTrG
+RBNRPREdbF9V9Jw82wPmXSA5DvVky6Aoq9VFKcwCpC4gokX7f9Nnk6ZDzJaI53Fe
+Zpn2O7CVpBZaWP2ZM4cH
+=b30P
+-----END PGP SIGNATURE-----
