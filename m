@@ -1,27 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/14
-Message-ID: <etPan.53cd8d3d.41b71efb.13beb@varia.chipx86.com>
-Date: Mon, 21 Jul 2014 14:59:25 -0700
-From: Christian Hammond <christian@...nbaginc.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/19
+Message-ID: <20140703221738.1d65d21c@chromobil.localdomain>
+Date: Thu, 3 Jul 2014 22:17:38 +0200
+From: Stefan Bühler <stbuehler@...httpd.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests for Review Board
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, 03 Jul 2014 13:41:58 -0600
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-We have two security vulnerabilities that were just discovered, which both need CVEs assigned. This is for Review Board (https://www.reviewboard.org). Neither are publicly disclosed.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> 
+> 
+> On 03/07/14 11:12 AM, Stefan Bühler wrote:
+> > On Thu, 3 Jul 2014 08:15:06 +0000 Sven Kieske
+> > <S.Kieske@...twald.de> wrote:
+> > 
+> >> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+> >> 
+> >> I'd agree with this. And I don't get the argument from
+> >> poul-henning kamp, what I understand is: "hey, we trust our
+> >> backend server" well, but your backend server can make you crash,
+> >> so you probably shouldn't trust it in the first place?
+> >> 
+> >> you _never_ can trust input, so you have to validate it, either
+> >> way, at least enough to not crash or perform malicious actions.
+> >> 
+> >> Am 03.07.2014 09:48, schrieb Kurt Seifried:
+> >>> So as I understand this: Varnish front end for web servers, the
+> >>> web servers can trigger varnish to restart. Are the back end
+> >>> servers supposed to be able to cause varnish to restart?
+> >>> 
+> >>> I'm guessing not. Scenario: hosting env, or a website with a
+> >>> vuln, whatever, you can now cause the varnish front ends to
+> >>> restart constantly, effectively causing a permanent denial of
+> >>> service.
+> >>> 
+> >>> That sounds CVE worthy. Or am I missing something?
+> > 
+> > you should never trust *untrusted* input. your root shell usually 
+> > trusts the input it gets...
+> > 
+> > so the valgrind developers decided that they consider the backend 
+> > webservers trusted, at least regarding the capability to cause a
+> > DoS.
+> > 
+> > for the record - so does lighttpd (a backend can trigger OOM as
+> > lighty reads (nearly) as fast as possible from a backend, as
+> > backends often only handle one request at a time); we usually tell
+> > people to use X-sendfile instead of sending ISOs through php.
+> 
+> That also sounds like it needs a CVE then. You should not be able to
+> trivially DoS stuff, especially OOM, things should protect themselves
+> from OOM'ing especially if they accept user controlled input from the
+> network.
 
-The first was discovered in-house and applies to all Review Board 1.7.x and 2.0.x releases. It allows a user without access to a private review request to retrieve the original or patched files associated with that review request through the API, if they know all the relevant database IDs.
+And again "user controlled input"... a root shell also uses "user
+controlled input".
 
-The second was discovered by “Uchida.” It allows a user to compose a URL to a rendered section of a diff on Review Board and inject HTML through a query parameter. That URL could then be handed to another user (most likely embedded in an iframe in another page), allowing a custom script to be executed on their behalf. This also applies to both 1.7.x and 2.0.x.
+> > just because you disagree with such decisions doesn't make it CVE 
+> > worthy (missing or wrong documentation could).
+> 
+> So to be clear your argument is that the http backends serviced by
+> Varnish are supposed to be able to shut down Varnish, not by using an
+> administrative channel/command but by executing a denial of service
+> against Varnish? And that this is intended behaviour and thus not a
+> security vulnerability?
 
-Our plan is to get a release out with fixes for these sometime today/tonight.
+If you can get it for free to prevent it, it is of course desirable to
+prevent it; and this is what valgrind did in this case: they could fix
+it, so they did. But I guess if it would have meant changing a lot of
+core code they might have refused to fix it.
 
-Thanks,
+So the question is whether it is a priority for you; the original
+author of lighty decided performance was more important, and even if we
+now may have changed our mind about it, we don't want to break
+everything just trying to fix it now. (Our new development version
+includes a design to protect against such problems.)
 
-Christian
+> > in case you actually want to assign a CVE here, maybe we can get
+> > one for the bad openssl default cipherstring too? because for that
+> > it is really obvious that it is f*** wrong, but i think that none
+> > was assigned because upstream didn't agree with it.
 
--- 
-Christian Hammond - christian@...nbaginc.com
-Review Board - http://www.reviewboard.org
-Beanbag, Inc. - http://www.beanbaginc.com
+So you really want to tell me that it is intended to use openssl with
+the crappy default cipher? - just to keep the analogy here, as you
+somehow seem to have missed it.
+
+regards,
+Stefan
