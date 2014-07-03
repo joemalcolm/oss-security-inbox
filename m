@@ -1,32 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/22/5
-Message-ID: <CACqxkWK_LNFNqmm_9Ya5__rQZGNhFW79bCSFxyEroBeRDFApZw@mail.gmail.com>
-Date: Mon, 23 Jun 2014 00:03:07 +0100
-From: Nick Boyce <nick.boyce@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/14
+Message-ID: <20140703191226.629ee8bf@chromobil.localdomain>
+Date: Thu, 3 Jul 2014 19:12:26 +0200
+From: Stefan Bühler <stbuehler@...httpd.net>
 To: oss-security@...ts.openwall.com
-Cc: Richard Moore <rich@....org>, David Faure <faure@....org>
-Subject: Re: KMail/KIO POP3 SSL MITM Flaw
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-On 22 June 2014 22:58, David Faure <faure@....org> wrote:
+On Thu, 3 Jul 2014 08:15:06 +0000
+Sven Kieske <S.Kieske@...twald.de> wrote:
 
->> > I'm not sure whether to interpret the 'Versions' line in the advisory
->> > as "bug was introduced at kdelibs 4.10.95"
->
-> Yes, this is what
-> "Versions:       kdelibs 4.10.95 to 4.13.2"
-> means.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> I'd agree with this.
+> And I don't get the argument from poul-henning kamp, what I understand
+> is:
+> "hey, we trust our backend server"
+> well, but your backend server can make you crash, so you probably
+> shouldn't trust it in the first place?
+> 
+> you _never_ can trust input, so you have to validate it, either way,
+> at least enough to not crash or perform malicious actions.
+> 
+> Am 03.07.2014 09:48, schrieb Kurt Seifried:
+> > So as I understand this: Varnish front end for web servers, the web
+> > servers can trigger varnish to restart. Are the back end servers
+> > supposed to be able to cause varnish to restart?
+> > 
+> > I'm guessing not. Scenario: hosting env, or a website with a vuln,
+> >  whatever, you can now cause the varnish front ends to restart 
+> > constantly, effectively causing a permanent denial of service.
+> > 
+> > That sounds CVE worthy. Or am I missing something?
 
-Thanks - it might possibly have been "these are the versions we are
-supporting with a fix" instead.
+you should never trust *untrusted* input. your root shell usually
+trusts the input it gets...
 
->> There is an IBM ISS report [3] which implies the bug affects at least
->> kdelibs 4.6.x ....
->
-> No idea where they got that from.... I cannot confirm this.
+so the valgrind developers decided that they consider the backend
+webservers trusted, at least regarding the capability to cause a DoS.
 
-Your clarification and that correction are much appreciated.  Thanks
-for taking the time.
+for the record - so does lighttpd (a backend can trigger OOM as lighty
+reads (nearly) as fast as possible from a backend, as backends often
+only handle one request at a time); we usually tell people to use
+X-sendfile instead of sending ISOs through php.
 
-Cheers
-Nick
+just because you disagree with such decisions doesn't make it CVE
+worthy (missing or wrong documentation could).
+
+in case you actually want to assign a CVE here, maybe we can get one
+for the bad openssl default cipherstring too? because for that it is
+really obvious that it is f*** wrong, but i think that none was
+assigned because upstream didn't agree with it.
+
+regards,
+Stefan
