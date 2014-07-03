@@ -1,105 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/7
-Message-ID: <53A166AE.2030600@redhat.com>
-Date: Wed, 18 Jun 2014 20:15:10 +1000
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/16
+Message-ID: <53B5B206.9060507@redhat.com>
+Date: Thu, 03 Jul 2014 13:41:58 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: docker VMM breakout
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-Thanks for reporting this issue, Sebastian. Could a CVE ID please be 
-assigned to this issue, given it affects Docker 0.11?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Trevor Jay from Red Hat did some analysis, I am replying on his behalf 
-as he is not currently subscribed to oss-security:
 
-Starting on the 23rd of May and continuing through around the 28th, 
-docker transitioned from a model where container "types" (i.e. 
-libcontainer or LXC) had associated with them a list of capabilities to 
-drop to the opposite: all capabilities are dropped and each container 
-type has a list of capabilities to add back. Additionally, some checks 
-were added so that docker would only try to drop/keep capabilities that 
-actually exist on the kernel under which it's running (what a great 
-idea!). To my reading of the linux kernel, there are some capabilities 
-that you can't ever get back once you renounce, so these will not be 
-added back after being dropped. Funnily enough, CAP_DAC_OVERRIDE, seems 
-to be such a capability. This is---I suspect---why the post mid-may 0.11 
-tests I ran never show a process having this capability. This, *despite* 
-the fact that CAP_DAC_OVERRIDE is actually included on the "add back" 
-list for libcontainer. The current docker codebase tries to reactivate 
-CAP_DAC_OVERRIDE after dropping it, which I don't think should ever 
-work. I'd love to get someone with more kernel experience than me to 
-confirm this though.
 
-I tested libvirt via virsh and by default both CAP_DAC_READ_SEARCH and 
-CAP_DAC_OVERRIDE are available (and thus the PoC does run). However, 
-this default is well documented as is the general insecurity of libvirt 
-in regards to DAC, so I don't think a CVE ID is required for libvirt.
+On 03/07/14 11:12 AM, Stefan Bühler wrote:
+> On Thu, 3 Jul 2014 08:15:06 +0000 Sven Kieske
+> <S.Kieske@...twald.de> wrote:
+> 
+>> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+>> 
+>> I'd agree with this. And I don't get the argument from
+>> poul-henning kamp, what I understand is: "hey, we trust our
+>> backend server" well, but your backend server can make you crash,
+>> so you probably shouldn't trust it in the first place?
+>> 
+>> you _never_ can trust input, so you have to validate it, either
+>> way, at least enough to not crash or perform malicious actions.
+>> 
+>> Am 03.07.2014 09:48, schrieb Kurt Seifried:
+>>> So as I understand this: Varnish front end for web servers, the
+>>> web servers can trigger varnish to restart. Are the back end
+>>> servers supposed to be able to cause varnish to restart?
+>>> 
+>>> I'm guessing not. Scenario: hosting env, or a website with a
+>>> vuln, whatever, you can now cause the varnish front ends to
+>>> restart constantly, effectively causing a permanent denial of
+>>> service.
+>>> 
+>>> That sounds CVE worthy. Or am I missing something?
+> 
+> you should never trust *untrusted* input. your root shell usually 
+> trusts the input it gets...
+> 
+> so the valgrind developers decided that they consider the backend 
+> webservers trusted, at least regarding the capability to cause a
+> DoS.
+> 
+> for the record - so does lighttpd (a backend can trigger OOM as
+> lighty reads (nearly) as fast as possible from a backend, as
+> backends often only handle one request at a time); we usually tell
+> people to use X-sendfile instead of sending ISOs through php.
 
-Thanks
-David
+That also sounds like it needs a CVE then. You should not be able to
+trivially DoS stuff, especially OOM, things should protect themselves
+from OOM'ing especially if they accept user controlled input from the
+network.
 
-On 06/18/2014 05:36 PM, Sebastian Krahmer wrote:
-> Hi
->
-> As per list policy, here is the public forward.
-> The link has been redacted to reflect public location.
-> Its fixed in docker 1.0 since CAP_DAC_READ_SEARCH is no
-> longer available.
->
-> Other FS-related threats to container based VMM's
-> that have been discussed:
->
-> - subvolume related FS operations (snapshots etc)
-> - FS ioctl's that accept FS-handles as well (XFS)
-> - CAP_DAC_READ_SEARCH also defeats chroot and other
->    bind-mount containers (privileged LXC)
-> - CAP_MKNOD might be a problem too (still available in docker 1.0)
->    depending on the drivers available in the kernel
->
->
-> ----- Forwarded message from Sebastian Krahmer -----
->
-> Subject: [vs] docker VMM breakout
-> Date: Mon, 16 Jun 2014 10:56:16 +0200
->
-> Hi
->
-> I dont know if this really belongs here, but better safe
-> than sorry. There seem to be distributors that actually ship
-> docker as a 'solution' (to whatever problem :).
->
-> I already contacted upstream, they say its not working
-> anymore for them in version 1.0. I cannot test this, as I only
-> have docker 0.11 running (on a 3.11 kernel). I am not really
-> sure they really fixed the problem, they just told me that
-> they changed "something" in the capability handling.
->
-> In 0.11 the problem is that the apps that run in the container
-> have CAP_DAC_READ_SEARCH and CAP_DAC_OVERRIDE which allows the
-> containered app to access files not just by pathname (which would be
-> impossible due to the bind mount of the rootfs) but also by handles via
-> open_by_handle_at(). Handles are mostly 64bit values and can be kind
-> of pre-computed as they are inode-based and the inode of / is 2.
-> So you can go ahead and walk / by passing a handle of 2 and
-> search the FS until you find the inode# of the file you want
-> to access. Even though you are containered somewhere in /var/lib.
->
-> A PoC is available here:
->
-> http://stealth.openwall.net/xSports/shocker.c
->
-> Note that some FS (namely XFS) have their own fhandle ioctls,
-> so if you share the XFS fs structs with the container, there
-> might be different attack vectors despite of capability handling.
-> Since docker is heavily LXC based, any other LXC based container
-> solution might be at risk too. (I think file handles are a generic problem
-> for container based VMMs).
->
-> I request a CRD of June 30th. If within the next 2 days no other distributor
-> objects, I will already disclose this on June 18th, because the overall
-> issue is not really a critical thing.
->
-> Sebastian
->
+> just because you disagree with such decisions doesn't make it CVE 
+> worthy (missing or wrong documentation could).
 
+So to be clear your argument is that the http backends serviced by
+Varnish are supposed to be able to shut down Varnish, not by using an
+administrative channel/command but by executing a denial of service
+against Varnish? And that this is intended behaviour and thus not a
+security vulnerability?
+
+> in case you actually want to assign a CVE here, maybe we can get
+> one for the bad openssl default cipherstring too? because for that
+> it is really obvious that it is f*** wrong, but i think that none
+> was assigned because upstream didn't agree with it.
+> 
+> regards, Stefan
+> 
+
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJTtbIDAAoJEBYNRVNeJnmT/mkQAMmXrwXn4+Y/hGUGMfp3anFo
+7NVLg+50up/BhuVQ5fOA/EYClDQZNWSg8PrQWvo8cxwCtJOsXVFEHmG+2f7xNKkv
+rCN97rMVz448hoFSHq5qwtWcZw/V8/A13hlAclDA7f7p+/B57Pok7igOciGwLbJb
+zGXeODwFnHlX+eOZgn/hDt0FzG5n1cCHrnK4NgIT/yLSYDI5O235/0g999ooDrn7
+FwiOFxdnjkveBkcGde6VJ4TlyqA9qoYJ2S4t/fkvM9j/vXvag+V0wwSdDkpZuFNZ
+ycERIVWZW6hnr7aZ/G76Rie2E4LY8B0T9cJF9pTA7FkJWF2Yg8LbPHz5jSH1cQuZ
+bOanZXE8bPLAdLHKU0JWbDPYDdhjEk8mgLbbskSmMxslmygw9Z5kceUoug2Y75Xs
+LRcpOuv08b3QO3wJNV6Z8fbkOYcdeTJPRmNLYrWoPqJHx8jWZzaUq1d1T8YGqos/
+V1KiFzDKH8Yw+yjmYAe+8DXpiOUH90yMYC8d8ewsipDXNNVHhyVUTeV/bNYT+0Gn
+MU0GGSd90eLCC+czkw/tgY/XHIE0ycLeWDgTBUYkfOZ4UjgscMF6R5jcuJGMP71L
+ftBbGNXduNHLkXL3GFUII+fAWQpWn14usmZZTHsoecmOoBPUV9paRuGBtzPmz+xJ
+vHDLLMP7/qSLN88zY2d0
+=7hmC
+-----END PGP SIGNATURE-----
