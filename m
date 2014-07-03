@@ -1,68 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/6
-Message-ID: <54180453.2050309@treenet.co.nz>
-Date: Tue, 16 Sep 2014 21:35:15 +1200
-From: Amos Jeffries <squid3@...enet.co.nz>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-Request: squid pinger remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/2
+Message-ID: <79047.1404367766@critter.freebsd.dk>
+Date: Thu, 03 Jul 2014 06:09:26 +0000
+From: "Poul-Henning Kamp" <phk@....freebsd.dk>
+To: Solar Designer <solar@...nwall.com>
+cc: Marek Kroemeke <kroemeke@...il.com>, oss-security@...ts.openwall.com, varnish-misc@...nish-cache.org
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>> Latest version of Varnish cache (4.0.1 https://www.varnish-cache.org/ ) has 
+>> the same DoS vulnerability that 3.x had (which was subsequently fixed in
+>> that branch). 
 
-On 16/09/2014 6:56 p.m., cve-assign@...re.org wrote:
->> I made a fix for squid 3.4.6 and request a CVE
-> 
->> https://bugzilla.novell.com/show_bug.cgi?id=891268
-> 
-> Regardless of the "what happens to squid itself" answer, is it
-> known that the crash has a security impact? This message seemed to
-> conclude with an implied request for more information, e.g., "it
-> looks like you can," etc. An example of a security impact would be:
-> the administrator wanted pinger to be running, and a crash means
-> that pinger processes/threads are no longer available, and pinger
-> is not automatically restarted.
-> 
-> If there is a security impact, then the patch in Novell Bug 891268 
-> would probably correspond to at least three CVE IDs, e.g.,
-> 
-> 1. "used to index into a string array" possibly corresponds to 
-> http://cwe.mitre.org/data/definitions/129.html for the modified 
-> default case after case 136, and approximately two other places in
-> the patch
-> 
-> 2. added "if (n <= 0)" code possibly corresponds to 
-> http://cwe.mitre.org/data/definitions/389.html
-> 
-> 3. added "if (preply.psize) < 0" code apparently corresponds to a
-> more general issue with missing data validation
-> 
+Official response of the Varnish Project:
+-----------------------------------------
 
-What could happen worst-case (#1 or #3 on a proxy with logging set to
-level 2) is that the pinger can be used to deliver strings from heap
-to the Squid parent process cache.log.
+It is of course a mistake to have such a regressions and we'll fix
+that (and any other relevant bugs we become aware of).
 
-With #3 the size is not limited to c-string bytes terminated on first
-nil. There it amounts to the difference between the expected payload
-and received payload. A negative value in that calculation could
-result in a large number of bytes flooding the parent processes log,
-slowing the entire service down and/or exhausting log disk space,
-which in turn can crash the parent process.
+But this is not a DoS vulnerability, and a CVE is not warranted.
+
+Explanation:
+------------
+
+Varnish is a server side cache, which speeds up delivery of HTTP
+objects coming from one or more backend HTTP servers (typically
+apache, ngnix etc.)
+
+By definition Varnish must explicitly and implicitly trust the
+backend HTTP server -- it is the only source of authority it has over
+the HTTP content.
+
+Therefore, if your backend is compromised, your Varnish will
+faithfully serve whatever bogus contents the attackers put on your
+homepage, so I really don't think that the attackers being able to
+force an automatic restart of the varnish in front of it, is what
+you should be worried about.
+
+Once you fix your backend, Varnish will work the same as always.
 
 
-The best-case being that some HTTP servers are assigned incorrect RTT
-values. Which adversely affects latency based routing logics for all
-traffic involving that server IP.
+Even deeper explanation:
+------------------------
 
-Amos
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
+Notice that all the reported issues causes assert failures ?
 
-iQEcBAEBAgAGBQJUGARSAAoJELJo5wb/XPRj52QH/A1y8EHZvXYYReaeToydtZa7
-0vlbEMnDxBaVr4vNEp3Sf9UThZ/FUPYUjmMrBLCKyZ7wMJQPYWaf0HRdc9Qo6yau
-8uja0tzjzwYNrVbZ5kb83xlEbLnviytQZv3aTljbVRN7Ys1bOqhjSsUVv8mf2syS
-YGIzTktVgUX+k/eXXH4WoBEPhtlJvaAsnpyTL8RmtgBsVIvF/HltK/kSgFdS9t8O
-rWUbTdlsBHKH3QBLYVvk3opdPCByJ79kiu+c3TjKgbJyFxfktIqrWQgQPUh9kO1K
-o9mjhIrFwUSlpUmIzoFHAzqHWtBJnYBHfD/tZF3Iv9QjFQ5YqZUCT9MPdjA0ZP8=
-=frFw
------END PGP SIGNATURE-----
+About 10% of Varnish source code are asserts in one form or another,
+to make sure that Varnish does not operate on bogus data or violate
+invariants.
+
+There are many error situations so pathlogical that an assert is
+the only relevant error handling.  Adding a lot of code to handle
+an obscure error condition gracefully, means that you have a lot
+of code which never gets run and therefore may contain *real* bugs
+or vulnerabilities.
+
+Our goal is that you should never be able to cause an assert from
+the client side -- that we would consider a DoS attack -- and
+eventually we may set the same goal for the backend side.
+
+But given that we trust the backend ultimately, and that varnish
+and the backend are both controlled by the same HTTP content
+owner, that is not a particular high priority for us:  If your
+backend is that screwed, it doesn't really matter what Varnish does
+anyway.
+
+Also notice, that Varnish is designed to automatically restart after
+an assert, so very little, if any service disruption takes place
+as a result of these asserts.  These automatic restarts can be
+disabled if you prefer.
+
+-- 
+Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
+phk@...eBSD.ORG         | TCP/IP since RFC 956
+FreeBSD committer       | BSD since 4.3-tahoe    
+Never attribute to malice what can adequately be explained by incompetence.
