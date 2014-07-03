@@ -1,64 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/30
-Message-ID: <20140925173141.GA2460@openwall.com>
-Date: Thu, 25 Sep 2014 21:31:41 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Jason Cooper <osssecurity@...edaemon.net>
-Cc: oss-security@...ts.openwall.com, chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/3
+Message-ID: <CAOurorZCjmrrw0MPhca=8+qjLKofrhdHsJuee5_=rCBv87SPbg@mail.gmail.com>
+Date: Thu, 3 Jul 2014 07:38:12 +0100
+From: Marek Kroemeke <kroemeke@...il.com>
+To: Poul-Henning Kamp <phk@....freebsd.dk>
+Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com,  varnish-misc@...nish-cache.org
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 25, 2014 at 12:59:22PM -0400, Jason Cooper wrote:
-> On Thu, Sep 25, 2014 at 02:24:14AM +0400, Solar Designer wrote:
-> > On Wed, Sep 24, 2014 at 06:08:21PM -0400, Jason Cooper wrote:
-> > > [jason@...alhost] $ ssh -i .ssh/test_key -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
-> > > uid=1000(jason) gid=1000(jason) groups=1000(jason)
-> > > [jason@...alhost] $ # add 'command=/path/to/secsh -f /path/to/test.rc' in .ssh/authorized_keys on server
-> > > [jason@...alhost] $ ssh -i .ssh/test_key -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
-> > > secsh v0.8-rc1-2-ga86f09832fa2: access denied.
-> > 
-> > This is puzzling.  I tried:
-> > 
-> > command="/bin/env - date"
-> > 
-> > and:
-> > 
-> > command="exec /bin/env - date"
-> > 
-> > and neither prevents exploitation of the issue as above (I get the
-> > output of "id", not of "date"), which is not surprising given that the
-> > command is run via the shell before it reaches "env".
-> > 
-> > Maybe your target user account's login shell is not bash?  That would
-> > explain it, but it's also the easier case where the issue had been
-> > exposed via a subshell only (does your test.rc explicitly use bash?)
-> 
-> Nope, login shell is /bin/bash.  Please look at the code in
-> 
->   http://git.infradead.org/users/jcooper/secsh.git/blob/HEAD:/match.c
+Hi phk,
 
-I expected your code to be irrelevant, because the shell gets invoked
-first (to invoke your code).  I tested this with "env -".
+Thanks for a fast reply - much appreciated (even if I don't actually agree
+with you).
 
-> There is no shell, bash or otherwise, called ever.
+I'm not entirely convinced that there is a trust relationship between the
+cache and the backend in every single use case. The simplest example would
+be a CDN provider, where single customer could potentially keep crashing
+the CDN's caches with a simple php script that adds Vary: header. Or shared
+hosting where single customer can keep crashing the cache that fronts more
+then one site.
 
-Huh?  I thought OpenSSH always invokes the command via the shell.
+Best regards,
+Marek
 
-> While tinkering with this, I discovered that if you force ssh to provide
-> a pty (ssh -t ...), even with secsh locked down, the hack works.  You
-> *must* set 'no-pty' after 'command=' in your authorized_keys file to
-> prevent ssh from launching a shell. :-/
 
-Oh, so you're saying that your sshd does not use the shell when you
-specify no-pty?  This isn't the case here.  What version/package of
-OpenSSH are you using?
+On Thu, Jul 3, 2014 at 7:09 AM, Poul-Henning Kamp <phk@....freebsd.dk>
+wrote:
 
-I do have a habit to specify no-pty whenever I use "command=", but I
-also have a habit to start the actual command with "exec ..."
-specifically because the shell is invoked anyway (the "exec" then saves
-some memory on not keeping that shell around while the actual program
-runs).  I've tried specifying /full/path/to/program, like you do, but
-this does not prevent invocation going via the shell here.  My OpenSSH
-is rather old, though (with lots of patches).
+> >> Latest version of Varnish cache (4.0.1 https://www.varnish-cache.org/
+> ) has
+> >> the same DoS vulnerability that 3.x had (which was subsequently fixed in
+> >> that branch).
+>
+> Official response of the Varnish Project:
+> -----------------------------------------
+>
+> It is of course a mistake to have such a regressions and we'll fix
+> that (and any other relevant bugs we become aware of).
+>
+> But this is not a DoS vulnerability, and a CVE is not warranted.
+>
+> Explanation:
+> ------------
+>
+> Varnish is a server side cache, which speeds up delivery of HTTP
+> objects coming from one or more backend HTTP servers (typically
+> apache, ngnix etc.)
+>
+> By definition Varnish must explicitly and implicitly trust the
+> backend HTTP server -- it is the only source of authority it has over
+> the HTTP content.
+>
+> Therefore, if your backend is compromised, your Varnish will
+> faithfully serve whatever bogus contents the attackers put on your
+> homepage, so I really don't think that the attackers being able to
+> force an automatic restart of the varnish in front of it, is what
+> you should be worried about.
+>
+> Once you fix your backend, Varnish will work the same as always.
+>
+>
+> Even deeper explanation:
+> ------------------------
+>
+> Notice that all the reported issues causes assert failures ?
+>
+> About 10% of Varnish source code are asserts in one form or another,
+> to make sure that Varnish does not operate on bogus data or violate
+> invariants.
+>
+> There are many error situations so pathlogical that an assert is
+> the only relevant error handling.  Adding a lot of code to handle
+> an obscure error condition gracefully, means that you have a lot
+> of code which never gets run and therefore may contain *real* bugs
+> or vulnerabilities.
+>
+> Our goal is that you should never be able to cause an assert from
+> the client side -- that we would consider a DoS attack -- and
+> eventually we may set the same goal for the backend side.
+>
+> But given that we trust the backend ultimately, and that varnish
+> and the backend are both controlled by the same HTTP content
+> owner, that is not a particular high priority for us:  If your
+> backend is that screwed, it doesn't really matter what Varnish does
+> anyway.
+>
+> Also notice, that Varnish is designed to automatically restart after
+> an assert, so very little, if any service disruption takes place
+> as a result of these asserts.  These automatic restarts can be
+> disabled if you prefer.
+>
+> --
+> Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
+> phk@...eBSD.ORG         | TCP/IP since RFC 956
+> FreeBSD committer       | BSD since 4.3-tahoe
+> Never attribute to malice what can adequately be explained by incompetence.
+>
 
-Alexander
