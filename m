@@ -1,44 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/12
-Message-ID: <20140109195115.GB14212@hal.lan>
-Date: Thu, 9 Jan 2014 20:51:15 +0100
-From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/17
+Message-ID: <53B5B53E.9070500@redhat.com>
+Date: Thu, 03 Jul 2014 13:55:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: tmux local denial of service (2009)
+Subject: SaltStack - how to report security flaw?
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer <fweimer@...hat.com> [2014-01-09 20:06]:
-> On 01/09/2014 07:44 PM, cve-assign@...re.org wrote:
-> >-----BEGIN PGP SIGNED MESSAGE-----
-> >Hash: SHA1
-> >
-> >>allows users to override the socket path using the -S command line option.
-> >
-> >We'd like to consider this ineligible for a CVE unless there's new
-> >information. In many cases, "ability to cause an inconvenience" is not
-> >sufficient for a CVE assignment. The nature of the application
-> >apparently makes it unlikely that this would, for example, disrupt
-> >unattended root-executed scripts that have a hardcoded tmux command
-> >line.
-> 
-> I reported this here because tmux is sometimes used to start servers
-> on system boot:
-> 
-> http://unix.stackexchange.com/questions/71372/using-tmux-on-boot-up-of-linux-centos
-> http://askubuntu.com/questions/62434/why-does-upstart-keep-respawning-my-process
-> https://bowerstudios.com/node/953
-> http://code.google.com/p/webrtc2sip/issues/detail?id=80
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-In that case the right thing to do is setting TMPDIR to a
-directory only writable by the user (TMPDIR/-S/-L are documented
-in the manpage so this can hardly count as suprising to users).
-The development version also supports TMUX_TMPDIR in which
-sockets are created without a subdirectory and which e.g. may be
-set to XDG_RUNTIME_DIR.
-The Debian patch makes tmux potentially less secure due to being
-setgid and it was rejected by upstream, see
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529082#12
-In 2011 Debian reverted to the upstream behavior and no longer
-carries the patch referenced in the above bug report.
--- 
-Guido Berhoerster
+So I looked through the saltstack.org site and their github page
+https://github.com/saltstack and checked OSVDB
+(http://osvdb.com/vendor/271316-saltstack-inc/1) but I can't find any
+security contact or way to privately submit a security issue. Does
+anyone know if there is a way t privately report a security issue to
+saltstack or should I just submit a public issue in github? This is
+potentially remote code execution so I'd really prefer to submit it
+privately.
+
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJTtbU9AAoJEBYNRVNeJnmTSWMP/RtMK+TXbVP1PuwgtBJBAbQp
+QSpVOtDF4Upqa/S4AC+BcCe3kWpT0MvBSgUIRATUoyhCfGKrXZGuTF/+doQgUbZo
+JbsNVqjrh4rxr98A4muOvNLLM3KVLngV62ESbYCHZnYOVUsgEVgZRj3cQxT4QRZZ
+A4DSjU5i4zUYpc97mOk3TFyliZBc0ktL5X6WAbZsaJDgjpv55EVieACAE/JSkUPK
+/5hFg9mKrUr/QMUcSnjk2/00lE7vM7Tj0pd/2pP5QjWexYit7ZBBe5ADQK24ZvQL
+nI3XdgbQJl22KS4SxlhpX1zT5w+S75KR9f4wILHapM8v12D+MyvtQXgZoHEbJe6J
+OnRzpvo2Vje7MXCnXg1pYEx9UU4htgrv2CpEHt8oA0b4x13pY9m86kILhLxy0zt6
+xgOIYAoF7VwWxGrd72pMgU7wC/0oTK/BDX3O3i5CPooS+zp87mABEuR8zHV8GCJ7
+DUq9xSBfq0IhjQZKdLvWfHzC2rIWZQeCSd68phC5iDfO+GZlA4d7jy1CofYY5AHd
+qUjDqNFZN7P9H2GjywsoPYLYcqV4b/xrJWX3BkaudsEG/0wZrVhIYnDBRUViiRyp
+Elm/Uk9XVDNSEtUoVD4rzFqqUh2lgssxhgGiK7nr3dU1XnIanwXKl57sGCQxAZHP
+4pHI1t9fixNGbI9nPl/0
+=WOeS
+-----END PGP SIGNATURE-----
