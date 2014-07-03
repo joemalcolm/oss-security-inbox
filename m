@@ -1,26 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/9
-Message-ID: <CAE2SPAYY6crbkOPomtg5c14bEO9TsPHvRm0GR+Tkn-g7ajshvA@mail.gmail.com>
-Date: Thu, 6 Nov 2014 22:27:01 +0100
-From: Bastien ROUCARIES <roucaries.bastien@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/8
+Message-ID: <53B50B16.6000401@redhat.com>
+Date: Thu, 03 Jul 2014 01:49:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Stack smashing in libjpeg-turbo
+Subject: Re: CVE-2014-0235 cleanup
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Passing special crafted jpeg file to imagemagick (convert -rotate 270
-003632r270.jpg junk.jpg) could lead to stack smashing in libjpeg.so.62
-(libjpeg-turbo).
-
-This bug is triggered  by setting the optimize coding member of the
-JPEG initialization structure to TRUE. If this flag set it to FALSE,
-ImageMagick completes without complaint.
-
-Wokarround could consist to turn off compression optimization in
-imagemagick to prevent the stack smash.
-
-Please assing me CVE and make a cc to  768369@...s.debian.org.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
 
-Bastien
+
+On 03/07/14 01:40 AM, Solar Designer wrote:
+> Kurt,
+> 
+> On Thu, Jul 03, 2014 at 01:32:31AM -0600, Kurt Seifried wrote:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1098222 is for a
+>> single issue, an incomplete fix for CVE-2013-7345.
+>> 
+>> Please use CVE-2014-3538 for 
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1098222
+> 
+> Kurt, please always include (at least one-sentence) CVE
+> descriptions in your postings.  Not everyone is into CVEs as much
+> as you are, and not everyone will bother visiting URLs for an issue
+> that is only potentially relevant to them.  In this case, it's
+> "file: extensive backtracking in awk rule regular expression".
+> 
+> Thanks,
+> 
+> Alexander
+> 
+
+Ok
+
+CVE-2014-3538 file: extensive backtracking in awk rule regular
+expression (incomplete fix for CVE-2013-7345)
+
+It was discovered the original upstream fix for the CVE-2013-7345
+issue (bug 1079846) did not sufficiently address the problem.  A
+specially-crafted input file could still cause file to use an
+excessive amount of CPU time when trying to detect file type using awk
+regular expression rule.
+
+
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJTtQsWAAoJEBYNRVNeJnmTojoP/iNFQMKEh8sk/xfdWpelfdGZ
+Q7bDpQEL34DfdYU48URcHHHTfEZbsrqF89LnATFVQFRzP1YZQN8S5MbFgTZ8cQCz
+tUjFXiz0IkfKc81ozZSFPYI+f6r3JZecKtYixgWunPnlSm48UTn3pQw/MS/Gt+ix
+xjc1ZLeH7Ws4usOUgXc2jduFTRwUCSaiWKycAu9eY9KuuReHmPdEZ56f3D/g9EZu
+XHXNUgtVpGpy9rkona3kgafTD3iyU3UFW4y857faG5QIea9W5Z6lm3l+vLJVrBs1
+hPeD7m9DY93Ru4D156w8oxTSaqs4wZAIkJQgGZxvBFHYgbWQ2n2a0PeKZ4Uguwt4
+g5PezQUoeAzW+4nOVb36wdR7ifuzHnqquuvvUPL5ERK+kgnZ83ujPgeOCoDBO7Bs
+yK47Jvfe6gAmTnw6k+jzk7YxD+fSkYr84bwng3AEosH9mEXQIHMajdW726v8DZC9
+tgdHxtx5V7fZYldEmQvYqWN6BcE/XZS5uFmQzfkTSkiANA1VifqOFD+dpBplsYrU
+sTpcfZRpjGewmV7kE1upHH0vbTj8NUiWSoDjnmO4iNCdXcv3Ea0oL/CEEj0heZx5
+HXAg/da1JwE4e9kI+A4Jm2mBNri3b3BHQOz74PRyRMZYRfBX21eccWKQm0Ec5NXe
+v7DSJQd24wax8WzT0v2T
+=FY8y
+-----END PGP SIGNATURE-----
