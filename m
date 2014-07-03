@@ -1,34 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/30
-Message-ID: <20141008230523.GJ6890@pc.thejh.net>
-Date: Thu, 9 Oct 2014 01:05:23 +0200
-From: Jann Horn <jann@...jh.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: openssh on linux rce in sftp-only mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/11
+Message-ID: <53B511A0.5000905@mittwald.de>
+Date: Thu, 3 Jul 2014 08:15:06 +0000
+From: Sven Kieske <S.Kieske@...twald.de>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 08, 2014 at 06:44:32PM -0400, Josh Bressers wrote:
-> > > 
-> > > I think one has to assume if a user has unrestricted sftp access, they can
-> > > figure out how to do most anything. Even with the upstream hardening patch,
-> > > it really only protects the sftpd process. Any other processes the user may
-> > > own could be modified.
-> > 
-> > Not that easily - /proc/$pid/mem requires you to either be the same process
-> > or be attached to it via ptrace, I think.
-> > 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+I'd agree with this.
+And I don't get the argument from poul-henning kamp, what I understand
+is:
+"hey, we trust our backend server"
+well, but your backend server can make you crash, so you probably
+shouldn't trust it in the first place?
+
+you _never_ can trust input, so you have to validate it, either way,
+at least enough to not crash or perform malicious actions.
+
+Am 03.07.2014 09:48, schrieb Kurt Seifried:
+> So as I understand this: Varnish front end for web servers, the web
+> servers can trigger varnish to restart. Are the back end servers
+> supposed to be able to cause varnish to restart?
 > 
-> I can't speak for other systems (I don't understand the details), but I can
-> read arbitrary process memory for processes I own in Fedora 20.
+> I'm guessing not. Scenario: hosting env, or a website with a vuln,
+>  whatever, you can now cause the varnish front ends to restart 
+> constantly, effectively causing a permanent denial of service.
+> 
+> That sounds CVE worthy. Or am I missing something?
 
-Hmm, just tried it on Debian Testing, I can reproduce that.
+- -- 
+Mit freundlichen Grüßen / Regards
 
+Sven Kieske
 
-> Does someone know what the typical default is?
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad
+Oeynhausen
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-I looked through the git history of fs/proc/base.c now, looks like commit
-e268337dfe26dfc7efd422a804dbb27977a3cccc ("proc: clean up and fix
-/proc/<pid>/mem handling") changed the behavior to be more permissive. That commit
-is between kernel 3.2 and 3.3. Meh. :(
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQIcBAEBAgAGBQJTtRGcAAoJEC5d3lL7/I9zVvMP/jFbsehnY+A7/5lpdkXVoIr4
+It1W260bvFPhRgSmBuIngQdCANU5ms5HBHHmh+uVvJ6l7DzmWxsrofCKdHeBF1L4
+3m9v7fh7bh7qyG1nfes7AdMTIYdlREad6qvNV1Yqv40KGAZ+D/B81bGiptmI+rr5
+zOW1epfj5iTVpYKTbcuZyPQNpR1G4wp4dAzBxYYm+e5IZgbCAsiR/5E7MJsMuwKH
+Dn4XeSUgR+7+VqnyLjnWHL+B1l08HpqtgTbG8tJuK1TZYKevjeqAh0s497rhPQNr
+hMNkRhdNkDj3/7It4bL3j7aaFLMkUzYwRAdCZdcLXBDLzvmLwItDiuqep9yLDMV6
+D+iEwtzpwxviB0k093VWOlwOSPDR6PrkFx3Z8uR7L6T8z08pzKg+ExKFqi5DbbMh
+sS+QHtvY/BbQ2Dz2I56ndCdocxk8oo9h8K1OfrJMtu015+PrThRUiYoQkhHiiHiE
+j8laVDQfOeFBMqssp604TA4WPAmSnX+B8yoVwyfX//8twtaMfYZM6BtwwGXnwqtW
+DlKZZcxdXXTR8vQH02/It/Jd5NjKl2NYs/atTu6Lh5pQrtxdGD46gtZhEjl9+oVo
+xXtIEeryGfUtXIA/MW+Jbj8W7okbm5M7Ahyx18kXhCM4MxbMISndnZZhnVpGEU/3
+IWL5dhAyoT/CFIuTMlvr
+=n2yM
+-----END PGP SIGNATURE-----
