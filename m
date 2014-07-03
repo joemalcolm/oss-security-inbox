@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/17
-Message-ID: <lf41ci$7sa$1@ger.gmane.org>
-Date: Tue, 04 Mar 2014 09:03:42 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/5
+Message-ID: <20140703074027.GA17320@openwall.com>
+Date: Thu, 3 Jul 2014 11:40:27 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MantisBT 1.2.13 SQL injection vulnerability
+Subject: Re: CVE-2014-0235 cleanup
 Content-Type: text/plain; charset=utf-8
 
-On 28.02.2014 21:05, cve-assign@...re.org
-wrote:
->> http://www.mantisbt.org/bugs/view.php?id=17055
+Kurt,
+
+On Thu, Jul 03, 2014 at 01:32:31AM -0600, Kurt Seifried wrote:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1098222 is for a single
+> issue, an incomplete fix for CVE-2013-7345.
 > 
->> admin_config_report.php relied on unsanitized, inlined query
->> parameters, enabling a malicious user to perform an SQL injection
->> attack.
-> 
-> Use CVE-2014-2238.
-> 
+> Please use CVE-2014-3538 for
+> https://bugzilla.redhat.com/show_bug.cgi?id=1098222
 
-MantisBT 1.2.17 has been released [1] and is available for download [2].
+Kurt, please always include (at least one-sentence) CVE descriptions in
+your postings.  Not everyone is into CVEs as much as you are, and not
+everyone will bother visiting URLs for an issue that is only potentially
+relevant to them.  In this case, it's "file: extensive backtracking in
+awk rule regular expression".
 
-[1] http://www.mantisbt.org/blog/?p=288
-[2] https://sourceforge.net/projects/mantisbt/files/mantis-stable/1.2.17/
+Thanks,
 
-
----
-This email is free from viruses and malware because avast! Antivirus protection is active.
-http://www.avast.com
-
-
+Alexander
