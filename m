@@ -1,59 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/7
-Message-ID: <53B50ADD.30508@redhat.com>
-Date: Thu, 03 Jul 2014 01:48:45 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Marek Kroemeke <kroemeke@...il.com>
-CC: Solar Designer <solar@...nwall.com>, varnish-misc@...nish-cache.org
-Subject: Re: Varnish - no CVE == bug regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/12
+Message-ID: <20140703131349.GA9925@mail.corp.redhat.com>
+Date: Thu, 3 Jul 2014 15:13:49 +0200
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: pnp4nagios - Two URL Cross-Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello!
 
-On 03/07/14 01:42 AM, Poul-Henning Kamp wrote:
-> In message
-> <CAOurorZCjmrrw0MPhca=8+qjLKofrhdHsJuee5_=rCBv87SPbg@...l.gmail.com>,
-> Marek Kroemeke writes:
-> 
->> I'm not entirely convinced that there is a trust relationship
->> between the cache and the backend in every single use case.
-> 
-> It may not be total trust, but trust there is:  On party delivers 
-> the other partys web-property.
-> 
-> But as I said:  We will fix bugs, but we don't consider them DoS
-> vulns.
+Can CVE(s) be assigned to the below issue? Not sure if it should be
+one or two IDs though.
 
-So as I understand this: Varnish front end for web servers, the web
-servers can trigger varnish to restart. Are the back end servers
-supposed to be able to cause varnish to restart?
+...
+Description
 
-I'm guessing not. Scenario: hosting env, or a website with a vuln,
-whatever, you can now cause the varnish front ends to restart
-constantly, effectively causing a permanent denial of service.
+Two vulnerabilities have been reported in PNP4Nagios, which can be
+exploited by malicious people to conduct cross-site scripting attacks.
 
-That sounds CVE worthy. Or am I missing something?
+1) Input appended to the URL is not properly sanitised in
+"views/kohana_error_page.php" before being returned to the user. This
+can be exploited to execute arbitrary HTML and script code in a user's
+browser session in context of an affected site.
+
+2) Input appended to the URL is not properly sanitised in
+"views/template.php" before being returned to the user. This can be
+exploited to execute arbitrary HTML and script code in a user's
+browser session in context of an affected site.
 
 
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Solution:
+Fixed in the GIT repository.
 
-iQIcBAEBAgAGBQJTtQrdAAoJEBYNRVNeJnmT5qQQAMa9unISL+L/ED3uYEAdz7h6
-pt+zDtXClXMpBYjEcEhLkl0g9sMx/Uh0nU2xKXoBkCfX7ned2PECn6bixGdP4zGj
-fSPUbttBnot2saq9agzdVqlWsTZ2v/XHw1vNa31GxZGcyhyytQE7Y/ccjHX1+INw
-eehdpxp2uePF6NYAFOQDpTzPhjjPZRkue6yCV+pPxRzX9ryW2QGfC1OQnWb67tmz
-sT8tnKBK7Iot+qFNt/zo4OE4kCL5iWmLm/hXiWVjuGN26hGN855lCH0mlLTCWysN
-Noxyf/7LSiMe7s2Q6Xp9+M6pYC5t/BsFhV+OvSkWME7tL1jO4+daq7YgY9v38V53
-J8S4V6tsQNkNfEmQalPDVQB0YAXnReIVnqGyKoeL1WQVRPMxaKV0+ZIUTjYIUd4E
-2bW+bUxGRT6bhVd3CJ3dmmc/G6W+0kghjZIXIq8Ru/aLK4ARsehts9ihz2XnBsAT
-VX9wsxwibwrf5cTj/sS1Ap23NYzYhld0+GVjbH7gdaWyts+CSPTk3BiT8KTpjLXj
-44LNR1UTt6T6LVNGOzw+E5/7gj+trZW5cLDHHcmQUqaMcEYXUzm8rsem5Qv0GdZL
-RbBCBuF/pg/mW5NpW9Wq7gEjzOq9o2TJNgFrkc9IT0b/EdX/UBFIo9w46188/a8Z
-avNfepsLqUvODonYpG72
-=flp8
------END PGP SIGNATURE-----
+Provided and/or discovered by:
+Reported by the vendor.
+
+Original Advisory:
+PNP4Nagios:
+https://github.com/lingej/pnp4nagios/commit/e4a19768a5c5e5b1276caf3dd5bb721a540ec014
+https://github.com/lingej/pnp4nagios/commit/cb925073edeeb97eb4ce61a86cdafccc9b87f9bb
+
+References:
+https://bugs.gentoo.org/show_bug.cgi?id=516140
+https://bugzilla.redhat.com/show_bug.cgi?id=1115983
+
+Thanks.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security Team
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+
+Content of type "application/pgp-signature" skipped
