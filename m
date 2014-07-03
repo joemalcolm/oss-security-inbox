@@ -1,53 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/8
-Message-ID: <20140326123717.GA21851@stefanha-thinkpad.muc.redhat.com>
-Date: Wed, 26 Mar 2014 13:37:17 +0100
-From: Stefan Hajnoczi <stefanha@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/15
+Message-ID: <20140703173600.GA31938@eldamar.local>
+Date: Thu, 3 Jul 2014 19:36:00 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: pmatouse@...hat.com, Kevin Wolf <kwolf@...hat.com>, Michael Roth <mdroth@...ux.vnet.ibm.com>
-Subject: QEMU image format input validation fixes (multiple CVEs)
+Cc: cve-assign@...re.org
+Subject: Possible CVE request: php5: phpinfo() Type Confusion Information Leak Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Several missing input validation bugs in QEMU's disk image format code
-have been fixed.
+Hi
 
-CVEs are as follows:
-parallels: Sanity check for s->tracks (CVE-2014-0142)
-parallels: Fix catalog size integer overflow (CVE-2014-0143)
-qcow2: Check maximum L1 size in qcow2_snapshot_load_tmp() (CVE-2014-0143)
-qcow2: Fix L1 allocation size in qcow2_snapshot_load_tmp() (CVE-2014-0145)
-qcow2: Fix NULL dereference in qcow2_open() error path (CVE-2014-0146)
-block: Limit request size (CVE-2014-0143)
-dmg: prevent chunk buffer overflow (CVE-2014-0145)
-dmg: sanitize chunk length and sectorcount (CVE-2014-0145)
-qcow2: Fix new L1 table size check (CVE-2014-0143)
-qcow2: Avoid integer overflow in get_refcount (CVE-2014-0143)
-qcow2: Don't rely on free_cluster_index in alloc_refcount_block() (CVE-2014-0147)
-qcow2: Validate active L1 table offset and size (CVE-2014-0144)
-qcow2: Validate snapshot table offset/size (CVE-2014-0144)
-qcow2: Check refcount table size (CVE-2014-0144)
-qcow2: Check backing_file_offset (CVE-2014-0144)
-qcow2: Check header_length (CVE-2014-0144)
-curl: check data size before memcpy to local buffer.  (CVE-2014-0144)
-vhdx: Bounds checking for block_size and logical_sector_size (CVE-2014-0148)
-vdi: add bounds checks for blocks_in_image and disk_size header fields (CVE-2014-0144)
-vpc: Validate block size (CVE-2014-0142)
-vpc/vhd: add bounds check for max_table_entries and block_size (CVE-2014-0144)
-bochs: Check extent_size header field (CVE-2014-0142)
-bochs: Check catalog_size header field (CVE-2014-0143)
-bochs: Use unsigned variables for offsets and sizes (CVE-2014-0147)
-block/cloop: refuse images with bogus offsets (CVE-2014-0144)
-block/cloop: refuse images with huge offsets arrays (CVE-2014-0144)
-block/cloop: prevent offsets_size integer overflow (CVE-2014-0143)
-block/cloop: validate block_size header field (CVE-2014-0144)
+Recent PHP updates mention bug #67498 in their changes[1,2]: Fixed bug
+#67498 (phpinfo() Type Confusion Information Leak Vulnerability).
 
-Patches are available here:
-https://lists.gnu.org/archive/html/qemu-devel/2014-03/msg04994.html
+Upstream bug is at [3], which does not seem to have a CVE assigned.
+(If so, could one be assigned?).
 
-Patches will be in the upcoming QEMU 2.0 release and a QEMU 1.7.2
-stable release is also planned.  You are welcome to join #qemu on
-irc.oftc.net or the qemu-devel@...gnu.org mailing list if you need more
-information.
+ [1] http://www.php.net/ChangeLog-5.php#5.4.30
+ [2] http://www.php.net/ChangeLog-5.php#5.5.14
+ [3] https://bugs.php.net/bug.php?id=67498
 
-Stefan
+Thanks in advance,
+
+Regards,
+Salvatore
