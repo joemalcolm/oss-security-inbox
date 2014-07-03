@@ -1,96 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/5
-Message-Id: <E1WGAQa-0003OO-4k@xenbits.xen.org>
-Date: Wed, 19 Feb 2014 16:55:20 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 60 (CVE-2013-2212) - Excessive time to disable caching with HVM guests with PCI passthrough
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/4
+Message-ID: <53B5070F.1010501@redhat.com>
+Date: Thu, 03 Jul 2014 01:32:31 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE-2014-0235 cleanup
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-             Xen Security Advisory CVE-2013-2212 / XSA-60
-                             version 6
+Sorry deleted the original email.
 
-   Excessive time to disable caching with HVM guests with PCI passthrough
+> CVE-2014-0235 should have been a completely valid CVE assignment
+> from Red Hat, but it would be extremely problematic to keep it
+> because that ID was accidentally used by Microsoft (typo of
+> CVE-2014-0325) and is in very widespread use for the wrong issue.
 
-UPDATES IN VERSION 6
-====================
+https://bugzilla.redhat.com/show_bug.cgi?id=1098222 is for a single
+issue, an incomplete fix for CVE-2013-7345.
 
-Since the issue of this advisory, various fixes have been applied to
-the public Xen trees.
+Please use CVE-2014-3538 for
+https://bugzilla.redhat.com/show_bug.cgi?id=1098222
 
-ISSUE DESCRIPTION
-=================
-
-HVM guests are able to manipulate their physical address space such that
-processing a subsequent request by that guest to disable caches takes an
-extended amount of time changing the cachability of the memory pages assigned
-to this guest. This applies only when the guest has been granted access to
-some memory mapped I/O region (typically by way of assigning a passthrough
-PCI device).
-
-This can cause the CPU which processes the request to become unavailable,
-possibly causing the hypervisor or a guest kernel (including the domain 0 one)
-to halt itself ("panic").
-
-IMPACT
-======
-
-A malicious domain, given access to a device with memory mapped I/O
-regions, can cause the host to become unresponsive for a period of
-time, potentially leading to a DoS affecting the whole system.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen version 3.3 onwards is vulnerable.
-
-Only systems using the Intel variant of Hardware Assisted Paging (aka EPT) are
-vulnerable.
-
-MITIGATION
-==========
-
-This issue can be avoided by not assigning PCI devices to untrusted guests, or
-by running HVM guests with shadow mode paging (through adding "hap=0" to the
-domain configuration file).
-
-CREDITS
-=======
-
-Zhenzhong Duan found the issue as a bug, which on examination by the
-Xenproject.org Security Team turned out to be a security problem.
-
-RESOLUTION
-==========
-
-This issue has been fixed in the public xen.git trees.
-
-For xen-unstable (#staging, #master), in these git commits:
-  c13b0d65ddedd745 VMX: disable EPT when !cpu_has_vmx_pat
-  1c84d046735102e0 VMX: remove the problematic set_uc_mode logic
-  62652c00efa55fb4 VMX: fix cr0.cd handling
-  86d60e855fe118df VMX: flush cache when vmentry back to UC guest
-  f1c9658d6802c433 Revert "VMX: flush cache when vmentry back to UC guest"
-(Earliest commit is listed first.  Note that f1c9658d reverts
-not only 86d60e85 but also part of 62652c00.)
-
-For Xen 4.2 (#staging-4.2, #stable-4.2):
-  f1e0df14412c VMX: disable EPT when !cpu_has_vmx_pat
-  644e6c5c7106 VMX: remove the problematic set_uc_mode logic
-  0fffcffeb594 VMX: fix cr0.cd handling
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQEcBAEBAgAGBQJTBOHLAAoJEIP+FMlX6CvZOZsIAI1JT1S+76kGilCSef5r2XUx
-uQ/cFVNjlcACeIF9/ejglQzlfaUcB3fjERdHVuYdiURgiPOwUErJV+0Xg3avFTIj
-hE9KeUnBl9+vS8OwmO7va4LEZf3xl8LVhirbsepL6eubvmgtmxqf/MeV6kMF5xUU
-9t65V80qPNYpA+2SzUnRZFuzGHLd5IkTFUQXfKEzGH3lWu35qvGqyhYWRXHVmz9c
-4e49pqO6QenjSlLxvpiW/FpeUxothpq4xxrSom4XsZrBULp4EywU9EkaF5tuFnpg
-dyzfz3Ap7k0H+5NoHTfof+N7rzaEOyR/QtXIerpcwuf5qMIN0c2HSZBzGdrvlfw=
-=SC2T
+iQIcBAEBAgAGBQJTtQcPAAoJEBYNRVNeJnmTIdsQAM/2mjNs64W3DU814yXfLA+J
+zVGWMDhwVnuiXFkLy/ustTpSXT73YhutjGnSdUZzVZ1Ua8X6XLEsIIuIo9fjClna
+EjLnX99yW/a0YnISYnz/rznotALZbhbsoyV1LqmM/dKncSRM1J4oW/xeR/ZAQf8n
+Oo6fCgJIdO42YkaeF0S5w2JpShq9cImlwqsjmheBtr3Y0ne2/EEgsyN+8PChPcUZ
++iFCdR4rgAYKCgqOPMLjct/zmC2fVq4d2nhlQ//IXx4u2/Qs8wN2EXJ1eKS23Cc0
+QY/y35OEfH2p8Vc9JcxyX2qRebAcZ2Eb6BjkYolsL2l6R9L4XzgWwqsVG02rgC7x
+36n+ymb8RUytBrJOuOlO0uJM8lbUm9t3NvqTDFXxmt2GFUV87Yr1aUjnUwL++Hsp
+OA+2NW+vaFdCig9XV4D8Qg0KRk7rqAnbQXn4nrp+Ajv41jlHf+NGnmMYBW4tMLf2
+iC4L+LUFo52j368Bom/Jol/vM41cDDX9eXvxqzA+Zdg7iyMN2qpV39EXzwrHtB3y
+mjgWnCes8UYZGMCddfeGged3hNMHSGuGUvRE0gORFcyihXmwbG2crxJaHRvjNQLD
+3LeBx9taHQDc8j/EkIHjN/Wcr48JjFrmvibcCCwKR9kUIdbn2Bq5/GKu46/Bw+TQ
+WQ14w7Gqmze5Zs3kLjC9
+=Hd07
 -----END PGP SIGNATURE-----
-
