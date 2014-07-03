@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/10/2
-Message-ID: <20140910160008.GA16061@eldamar.local>
-Date: Wed, 10 Sep 2014 18:00:08 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/13
+Message-ID: <20140703131233.GA1576@kludge.henri.nerv.fi>
+Date: Thu, 3 Jul 2014 16:12:33 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: pnp4nagios - Two URL Cross-Site Scripting Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Thu, Jul 03, 2014 at 03:13:49PM +0200, Vasyl Kaigorodov wrote:
+> Can CVE(s) be assigned to the below issue? Not sure if it should be
+> one or two IDs though.
 
-The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
-the following issue, which could be exploited by a local user to run
-arbitrary code in context of the mysqld server.
+Is this different issue than in another CVE request:
 
-MyISAM temporary files could be used to mount a code-execution attack.
-(Bug #18045646).
+http://www.openwall.com/lists/oss-security/2014/07/03/1
 
-This is also tracked in[3] and [4] mentioning as relevant fix [5].
+I can help in analysis if needed.
 
-Was a CVE already requested for this issue? If not, could one be
-assigned?
+---
+Henri Salo
 
-Regards,
-Salvatore
-
- [1] https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-39.html
- [2] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-20.html
- [3] https://bugzilla.redhat.com/show_bug.cgi?id=1126271
- [4] https://bugs.gentoo.org/show_bug.cgi?id=518718
- [5] https://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4638
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
