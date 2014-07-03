@@ -1,43 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/6
-Message-ID: <542371C1.60407@case.edu>
-Date: Wed, 24 Sep 2014 21:37:05 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/7
+Message-ID: <53B50ADD.30508@redhat.com>
+Date: Thu, 03 Jul 2014 01:48:45 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Marek Kroemeke <kroemeke@...il.com>
+CC: Solar Designer <solar@...nwall.com>, varnish-misc@...nish-cache.org
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-On 9/24/14, 9:30 PM, Solar Designer wrote:
-> On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
->> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
->>> On 9/24/14, 5:32 PM, Solar Designer wrote:
->>>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
->>>>> Tavis Ormandy just tweetet this:
->>>>> https://twitter.com/taviso/status/514887394294652929
->>>>>
->>>>> The bash patch seems incomplete to me, function parsing is still
->>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
->>>>
->>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
->>>> Tavis on this "reply".
->>>
->>> I have a fix for this.
->>
->> Can you provide a pointer to the patch?  I put together a patch that
->> changed the report_error() to fatal_error() as I wasn't able to see
->> how to reset the parser state.  Was just about to send it out...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 03/07/14 01:42 AM, Poul-Henning Kamp wrote:
+> In message
+> <CAOurorZCjmrrw0MPhca=8+qjLKofrhdHsJuee5_=rCBv87SPbg@...l.gmail.com>,
+> Marek Kroemeke writes:
 > 
-> I think Chet is not on oss-security - we should be CC'ing him where
-> appropriate.  (I've added the CC on this reply.)
+>> I'm not entirely convinced that there is a trust relationship
+>> between the cache and the backend in every single use case.
+> 
+> It may not be total trust, but trust there is:  On party delivers 
+> the other partys web-property.
+> 
+> But as I said:  We will fix bugs, but we don't consider them DoS
+> vulns.
 
-I haven't sent the patch out.  It's not related to this problem -- this
-is just the easiest way to get to that code path -- and I still have
-some investigating to do.
+So as I understand this: Varnish front end for web servers, the web
+servers can trigger varnish to restart. Are the back end servers
+supposed to be able to cause varnish to restart?
 
-Chet
+I'm guessing not. Scenario: hosting env, or a website with a vuln,
+whatever, you can now cause the varnish front ends to restart
+constantly, effectively causing a permanent denial of service.
 
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+That sounds CVE worthy. Or am I missing something?
+
+
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJTtQrdAAoJEBYNRVNeJnmT5qQQAMa9unISL+L/ED3uYEAdz7h6
+pt+zDtXClXMpBYjEcEhLkl0g9sMx/Uh0nU2xKXoBkCfX7ned2PECn6bixGdP4zGj
+fSPUbttBnot2saq9agzdVqlWsTZ2v/XHw1vNa31GxZGcyhyytQE7Y/ccjHX1+INw
+eehdpxp2uePF6NYAFOQDpTzPhjjPZRkue6yCV+pPxRzX9ryW2QGfC1OQnWb67tmz
+sT8tnKBK7Iot+qFNt/zo4OE4kCL5iWmLm/hXiWVjuGN26hGN855lCH0mlLTCWysN
+Noxyf/7LSiMe7s2Q6Xp9+M6pYC5t/BsFhV+OvSkWME7tL1jO4+daq7YgY9v38V53
+J8S4V6tsQNkNfEmQalPDVQB0YAXnReIVnqGyKoeL1WQVRPMxaKV0+ZIUTjYIUd4E
+2bW+bUxGRT6bhVd3CJ3dmmc/G6W+0kghjZIXIq8Ru/aLK4ARsehts9ihz2XnBsAT
+VX9wsxwibwrf5cTj/sS1Ap23NYzYhld0+GVjbH7gdaWyts+CSPTk3BiT8KTpjLXj
+44LNR1UTt6T6LVNGOzw+E5/7gj+trZW5cLDHHcmQUqaMcEYXUzm8rsem5Qv0GdZL
+RbBCBuF/pg/mW5NpW9Wq7gEjzOq9o2TJNgFrkc9IT0b/EdX/UBFIo9w46188/a8Z
+avNfepsLqUvODonYpG72
+=flp8
+-----END PGP SIGNATURE-----
