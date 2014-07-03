@@ -1,27 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/27/5
-Message-ID: <20141027191800.GA660@jwilk.net>
-Date: Mon, 27 Oct 2014 20:18:00 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/21
+Message-ID: <53B5E174.3050000@redhat.com>
+Date: Fri, 04 Jul 2014 09:04:20 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: strings / libbfd crasher
+CC: Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: SaltStack - how to report security flaw?
 Content-Type: text/plain; charset=utf-8
 
-* Michal Zalewski <lcamtuf@...edump.cx>, 2014-10-27, 11:59:
->Well, there's also a trivial stack buffer overflow in srec.c near line 
->254:
+Hello,
+
+I have security@...tstack.com saved from a private thread. I do not know 
+who has access to read that.
+
+If that does not work let me know!
+
+Cheers,
+
+--
+Murray McAllister / Red Hat Product Security
+
+On 07/04/2014 05:55 AM, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
->      char buf[10];
->...
->        sprintf (buf, "\\%03o", (unsigned int) c);
+> So I looked through the saltstack.org site and their github page
+> https://github.com/saltstack and checked OSVDB
+> (http://osvdb.com/vendor/271316-saltstack-inc/1) but I can't find any
+> security contact or way to privately submit a security issue. Does
+> anyone know if there is a way t privately report a security issue to
+> saltstack or should I just submit a public issue in github? This is
+> potentially remote code execution so I'd really prefer to submit it
+> privately.
 >
->But with this test case, c will be -44, or "\1777777777777777777724",
+> - --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+> Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+>
+> iQIcBAEBAgAGBQJTtbU9AAoJEBYNRVNeJnmTSWMP/RtMK+TXbVP1PuwgtBJBAbQp
+> QSpVOtDF4Upqa/S4AC+BcCe3kWpT0MvBSgUIRATUoyhCfGKrXZGuTF/+doQgUbZo
+> JbsNVqjrh4rxr98A4muOvNLLM3KVLngV62ESbYCHZnYOVUsgEVgZRj3cQxT4QRZZ
+> A4DSjU5i4zUYpc97mOk3TFyliZBc0ktL5X6WAbZsaJDgjpv55EVieACAE/JSkUPK
+> /5hFg9mKrUr/QMUcSnjk2/00lE7vM7Tj0pd/2pP5QjWexYit7ZBBe5ADQK24ZvQL
+> nI3XdgbQJl22KS4SxlhpX1zT5w+S75KR9f4wILHapM8v12D+MyvtQXgZoHEbJe6J
+> OnRzpvo2Vje7MXCnXg1pYEx9UU4htgrv2CpEHt8oA0b4x13pY9m86kILhLxy0zt6
+> xgOIYAoF7VwWxGrd72pMgU7wC/0oTK/BDX3O3i5CPooS+zp87mABEuR8zHV8GCJ7
+> DUq9xSBfq0IhjQZKdLvWfHzC2rIWZQeCSd68phC5iDfO+GZlA4d7jy1CofYY5AHd
+> qUjDqNFZN7P9H2GjywsoPYLYcqV4b/xrJWX3BkaudsEG/0wZrVhIYnDBRUViiRyp
+> Elm/Uk9XVDNSEtUoVD4rzFqqUh2lgssxhgGiK7nr3dU1XnIanwXKl57sGCQxAZHP
+> 4pHI1t9fixNGbI9nPl/0
+> =WOeS
+> -----END PGP SIGNATURE-----
+>
 
-More likely "\37777777724"...
-
->which sounds a lot longer than 9 characters.
-
-...which is still longer than 9.
-
--- 
-Jakub Wilk
