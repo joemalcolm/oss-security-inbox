@@ -1,37 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/1
-Message-Id: <20141121002225.5A1DB52E0ED@smtpvbsrv1.mitre.org>
-Date: Thu, 20 Nov 2014 19:22:25 -0500 (EST)
-From: cve-assign@...re.org
-To: pwolanin@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...pal.org, gwolf@...lf.org, team@...urity.debian.org, carnil@...ian.org
-Subject: Re: [security] Pending CVE assignments for SA-CORE-2014-006?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/04/6
+Message-ID: <53B732BF.2090409@redhat.com>
+Date: Fri, 04 Jul 2014 17:03:27 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Possible CVE request: php5: phpinfo() Type Confusion Information Leak Vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Since it's identical code, should I use the same CVE number, or since
-> it's a contributed project, there will be a distinct one issued?
+On 03/07/14 11:36 AM, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> Recent PHP updates mention bug #67498 in their changes[1,2]: Fixed
+> bug #67498 (phpinfo() Type Confusion Information Leak
+> Vulnerability).
+> 
+> Upstream bug is at [3], which does not seem to have a CVE
+> assigned. (If so, could one be assigned?).
+> 
+> [1] http://www.php.net/ChangeLog-5.php#5.4.30 [2]
+> http://www.php.net/ChangeLog-5.php#5.5.14 [3]
+> https://bugs.php.net/bug.php?id=67498
+> 
+> Thanks in advance,
+> 
+> Regards, Salvatore
 
-The former. In other words, the CVE-2014-9016 ID originally assigned
-for the second issue in SA-CORE-2014-006 should also be used for
-SA-CONTRIB-2014-113 (i.e., the https://www.drupal.org/node/2378367
-report).
+There seems to be some confusion about this, e.g. "so what, if you can
+run PHP you can read the key file anyways right?" So one question I
+have, on a common setup of RHEL6/CentOS6 with Apache/PHP with:
+
+SSLCertificateKeyFile /etc/pki/tls/certs/server.key
+
+- -rw-------. 1 root root 1704 Aug  6  2013 /etc/pki/tls/certs/server.key
+
+is this still exploitable?
+
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQEcBAEBAgAGBQJUboU1AAoJEKllVAevmvms/DAIAKE/ID/3JcqO6Ks2Q0tjXV8G
-PtWg/ZiiCsaPejCkx1GmTd+2mxOezYWtwoxzSfYS29XMvj4RbdHUNWXrkihzY1EA
-BgFC2Uc9reqF+BqlQIQng52lJGQBPf6VV/mejtBfYHv+WOFogQPGqPFgZLTGxLvf
-Yd2Am8yiArTOoZNJxmkDju2L4Z7EWtGdMh3md4jgKB4A1eFjgmIl7be0vktAC1QI
-f9pg1lqMlIYrlgNlIKap8kf0F45wpLJxru7DNJgpNDoDHtFkcFa8i3/iVwjlzq26
-+PyQe1iF3IxCtlxZ6fFF6ObnBxrrv2iKjcebyVfYqdTK6Sbr959tXeCruNAUW7k=
-=CbgI
+iQIcBAEBAgAGBQJTtzK/AAoJEBYNRVNeJnmTGS8QANuLvRsHdDW/vpl3xXYyQ0uj
+490Bt9MrH92TME9wwLCrMgk7Z0MLHq+0Ll0J0YhZZtbXhmK4FRY7xwQVercHpP2m
+0Al8cjpAq0lw21TVgGQmCyLVFIgCrjbESRGGs+updfKOfpn+cBM75SlCWXJfACP2
+fMq7wz0OoGFYTH4ZCQIPHcNHm0+mR54LsqAmP+f1bnrCTDdBhi8TorX9YhbHgRQH
+vcEtT9Cnec87MMjB/x2QRWWvmOcrfSK63ZH3zBc1Bcn6CJQcPfKIen6tKFcIqjIj
+pgA4zE/5u5n0Y0HF1SmkaoJif7zwyOWyCgHdxXt7+vwjJMEjEKPwmIlWbVI9LJPP
+dqmzQ5rWaV/hSvvqK2H7s9ipuRwOzQzLsqAz7gmvz7tIHzmeD/g/yQl0BGOsy4LL
+eiBTN7gD7y/n58Kb+MKkCUYdZkMzcgFTqoXBFaTVlOYAd6Y4P72/hh+2xi1Ckaet
+LOKbCFgvFUzClCGD990iX3UhhOdoWf4g1XUpOD1YwKRYnkb5vwzCfQuxSP8rvND9
++hZPdQGKxmDkWfkiNTHdFUzjQVncMV/1ELx7N0RijHODPkHK0aiklKvqrt//gMjL
+iOr7T6jyV+DmOW+oBeY2704HZI5eWmbGMO1udLbPwmyu2eX/8Y4IGdZxPD88tgv8
+qfDY+PNVvZK7x2gAM0MY
+=po+/
 -----END PGP SIGNATURE-----
