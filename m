@@ -1,52 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/2
-Message-ID: <20140818062244.GA4602@kludge.henri.nerv.fi>
-Date: Mon, 18 Aug 2014 09:22:44 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Enigmail warning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/04/2
+Message-ID: <53B65410.4070705@mittwald.de>
+Date: Fri, 4 Jul 2014 07:10:48 +0000
+From: Sven Kieske <S.Kieske@...twald.de>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-Please read: http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/
+Am 03.07.2014 22:17, schrieb Stefan Bühler:> And again "user controlled
+input"... a root shell also uses "user
+> controlled input".
 
-Quote from thread below:
+A shell differs very much from varnish:
+you can configure the shell user to be just able to e.g. run
+certain commands, you almost never just use the plain "shell".
+you use it in the context of the operating system, which allows
+you to enforce additional security boundaries, and often does this by
+default.
+you can restrict certain shells to allow just specific commands.
+and after all, a shell is build to execute code/commands, varnish
+is there to serve cached web documents and to speed things up.
 
-Enigmail 1.7 is completely broken for my purposes.
+So I really think:
 
-Steps to reproduce the problem:
+With different intended usecases come different security models
+and different considerations what is a flaw or breach in this
+model.
 
-1) Write an email in TB.
-2) Ensure "Force encryption" in Enigmail.
-3) Ensure "Force signing" in Enigmail.
-4) Recheck encryption and signing settings... OK.
-5) Send the email.
-6) Look at the received email. OOPS. It is NOT signed and NOT encrypted.
+if you think the use case for varnish is to get crashed, well
+I just have to wonder what's that use case for?
 
-Sorry to say this so directly, but an encryption system, which CONFIRMS
-to the user in it's graphical user interface on two different places
-that it will encrypt AND THEN SENDS THE EMAIL WITHOUT ANY ENCRYPTION IN
-PLAIN TEXT ... is just the BIGGEST IMAGINABLE CATASTROPHE.
+Even the varnish devs seem to agree this is unwanted behaviour
+or why do they fix it?
 
-Sorry for my profane language but there is simply no excuse for such
-bullshit.
+This is merely about if(in general) and which(specific)
+"unwanted behaviour" is considered a security vulnerability.
 
-I am currently preparing a crypto class for journalists next week to
-teach them how to use safe email.
+And today, the tendency is most times to not tolerate any
+"unwanted behaviour" in any software.
 
-HOW am I going to explain that? A system tells the user in a separate
-window as well as in a menu line that everything will be encrypted but
-then it simply FORGOT to ENCRYPT and, ooops, their report will be
-intercepted and their source will be tortured ?
+Keep in mind this opens up more unexplored codepaths and can
+boil down, to what is widely known as "weird machines".
+(visit langsec.org for many interesting papers on input validation ;) )
 
-Ok...let's see....maybe there is some magic incompatibility with the TB
-or OS version or the specific configuration I used or whatever... As a
-computer scientist I can imagine many bug-explanations.
+Also Kurt did really sum it up very well, imho, so this will be my
+last post to this thread.
 
-Good that I am just a computer scientist. As a serious user (dissident,
-whistle-blower, diplomatic or military user) I would now be waiting for
-the bad guys come and get me with their water-board.
 
-Still as a computer scientist I need an answer to which system I will
-teach in my class next week. Command-line PGP ?!?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+-- 
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
