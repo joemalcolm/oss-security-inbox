@@ -1,57 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/28/4
-Message-Id: <201406280324.s5S3Nr0W021238@linus.mitre.org>
-Date: Fri, 27 Jun 2014 23:23:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, jamie@...onical.com
-Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/04/4
+Message-ID: <CALCETrU32d4ukoN6SNAQ1wBTd_BVFtgqUM1ZXitpFMDhuBwf2Q@mail.gmail.com>
+Date: Fri, 4 Jul 2014 14:05:08 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi everyone-
 
-You quoted two paragraphs on the topic of whether system-integration
-issues are covered by CVE and CWE, and then wrote "shouldn't the same
-be true of the HttpOnly flag?" It's unclear how to answer except by
-saying: a decision to use or not use the HttpOnly flag isn't a
-system-integration issue.
+Upstream commit b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a fixes a
+ptrace bug.  The exact scope of the bug is somewhat unclear right now.
+I see no reason why the bug should not be present as far back as Linux
+2.6.17, but it seems to be difficult to reproduce on old kernels.
 
-You then mentioned 'if setting this flag "fixes" all XSS issues.' It
-seems that a reasonable response here is: an XSS attack can have a
-severe impact even if it's not designed to steal any cookies. (The
-non-cookie-stealing severity varies, in part, based on the types of
-input that are common for the web application in question.) The
-HttpOnly flag is specific to cookies.
+There is some ongoing discussion on linux-distros about the impact and
+applicability of this bug.
 
-Finally, you mentioned "They can't _both_ get CVEs" - a question that
-seems to be about a superfluous CVE assignment in a case where the
-only goal of an XSS attack is to steal a cookie, and the attack relies
-on an XSS vulnerability in a certain web application that doesn't set
-the HttpOnly flag. A response here is: there could be a scenario that
-ended up with a single CVE assignment for a composite of one specific
-instance of incorrect input validation and an incorrect cookie
-restriction. This scenario seems rare. It would require that neither
-issue was dangerous except in the presence of the other issue. For
-example, it would require that the only possible impact of the
-incorrect input validation was to pass JavaScript code that could
-steal cookies (any other malicious JavaScript code would be blocked).
-In most practical cases, two CVE assignments would often be possible
-if someone happened to request two.
+More details and a PoC to follow some time next week.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+I'm being intentionally vague here: this bug has existed for a long
+time, but exploiting it at all is tricky enough (and possibly
+kernel-version dependent enough) that it's gone unnoticed.  I would
+currently prefer to give the distros and users a bit of a headstart
+before publicly disclosing the complete details of how to test/exploit
+the bug.  It is likely to have a high enough impact, at least on new
+enough kernels, that it should be patched ASAP.
 
-iQEcBAEBAgAGBQJTrjRBAAoJEKllVAevmvms2HsH/2VBdQVvAbOZKDgsjGVpiiJv
-ujE+n8WKhcTVRy4/Zoj0pLlquBPRYQ1j+6XSAGKESmUArdZ0L67O6vLLUM88wZwi
-rc6NfsaD2U0Aaa+oMUF/Hqn0sSbNMWn+DVGOBoxe4otkcoLITkJNVgOS6hzPM44f
-p5ufgTiCWlQZOivrazVAa8AhdiMdeeuta6MOv7FpwCwWWVvbjPZAP6Yr2gNHVNt0
-1vdp2hhpNK/qeC8y0x++laSc7TdhDULmQsRT3Ij9djOU8k1bUTc1iVKYGhaJ6ilL
-ZeHf/owCawdcaflaI80u1kewdqKo1lkMOaaPxFi5l6pcSXan4+yGbv0xzQ+R820=
-=LDPf
------END PGP SIGNATURE-----
+--Andy
