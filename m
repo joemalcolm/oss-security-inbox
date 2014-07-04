@@ -1,35 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/8
-Message-ID: <20141003150112.GA6786@zoho.com>
-Date: Fri, 3 Oct 2014 15:01:12 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, rgerhards@...adiscon.com
-Subject: Re: sysklogd vulnerability (CVE-2014-3634)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/04/1
+Message-ID: <20140704003143.GA13150@hunt>
+Date: Thu, 3 Jul 2014 17:31:43 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 03, 2014 at 01:53:02PM +0200, Rainer Gerhards wrote:
-> I didn't try out sysklogd as I was busy enough with rsyslog BUT I can
-> crash unpatched rsyslog v3 and the code path in question is extremely
-> similar in those two.
+On Thu, Jul 03, 2014 at 05:21:59PM -0600, Kurt Seifried wrote:
+> In this case it's pretty simple: the back end web servers are NOT
+> supposed to be able to shut down the varnish cache server (if this was
+> supposed to happen you'd have built a proper channel to do so). That
+> they can do so means it is a denial of service, and therefore a trust
+> boundary violation. Ergo it needs a CVE.
 
-OK, I just graduated from my crash-course on setting up an unpatched
-rsyslog 3.22.3 daemon.
+I disagree; I don't think a CVE is warranted.
 
-I've hit it with lots of pri "vals" including: x112,
-80000000000000000000000000000000, my lottery numbers, and the magical
-3500000000 but am unable to crash it.
+The developers have given us a clear and concise threat model that they
+use for Varnish. It is simple, it is self-consistent, and best of all
+it tells system administrators how they can safely use Varnish.
 
-printline()'s are very similar like you say so it would be worthwhile if
-we could dig a little.
+I think the OpenSSL ciphers is a poor analogy. A better analogy is PHP.
+(My apologies to the Varnish developers, this is in no way meant to
+equate Varnish with PHP. But stick with me...) The PHP interpreter is
+not safe against malicious scripts. The mod_php implementation is not
+safe for use if the PHP script authors are not as trusted as the Apache
+authors. mod_php is not safe to use with multiple script authors. The
+"safe_open" and similar functions are not security boundaries because
+the scripts are completely trusted by design.
 
-Rainer, would you be able to provide a backtrace? or be more specific
-about the steps you took to crash it?
+The HTTP backends behind Varnish are similar. If you have backend servers
+in different trust domains, you get to run multiple Varnish front ends. If
+you don't trust your HTTP servers, putting Varnish in front doesn't make
+them suddenly safe.
 
---mancha
+If we start assigning CVEs for unexpected behaviour regardless of a
+threat model we'll drive ourselves to insanity.
 
-PS I've taken Joey off the CC list because he's not expressed any
-interest in this and is probably busy adding to his spamassassin
-rulesets.
+The Varnish team gave us a clear and concise vision of what they consider
+trusted and untrusted. I am thankful they've thought it through and came
+up with something reasonable. It might not be the threat model you would
+have chosen -- which means it may not be the right tool for you.
 
-Content of type "application/pgp-signature" skipped
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
