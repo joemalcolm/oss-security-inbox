@@ -1,38 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/9
-Message-ID: <540EA31F.7030200@redhat.com>
-Date: Tue, 09 Sep 2014 00:50:07 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: vos tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/04/5
+Message-ID: <20140704213328.GA2058@openwall.com>
+Date: Sat, 5 Jul 2014 01:33:28 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
-https://pypi.python.org/pypi/vos
+Thanks for posting this, Andy!
 
-filed at https://github.com/canfar/vos/issues/42
+On Fri, Jul 04, 2014 at 02:05:08PM -0700, Andy Lutomirski wrote:
+> Upstream commit b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a fixes a
+> ptrace bug.
 
-vos-1.10.4/vos/md5_cache.py
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a
 
-import sqlite3, logging
-READBUF = 8192
+> The exact scope of the bug is somewhat unclear right now.
 
-class MD5_Cache:
+It's clear that this problem is specific to x86_64, though, and I think
+you omitted this detail inadvertently (it is clear from the commit).
 
-    def __init__(self, cache_db="/tmp/#vos_cached.db#"):
-        """Setup the sqlDB that will contain the cache table"""
-        self.cache_db = cache_db
+> I see no reason why the bug should not be present as far back as Linux
+> 2.6.17, but it seems to be difficult to reproduce on old kernels.
+> 
+> There is some ongoing discussion on linux-distros about the impact and
+> applicability of this bug.
+> 
+> More details and a PoC to follow some time next week.
 
-        ## initialize the md5Cache db
-        sqlConn = sqlite3.connect(self.cache_db)
-        with sqlConn:
-            sqlConn.execute("create table if not exists md5_cache (fname
-text PRIMARY KEY NOT NULL , md5 text, st_size int, st_mtime int)")
-        ## build cache lookup if doesn't already exists
+I think it's OK to hold the PoC, but most discussion of the bug should
+move in here.
 
+Thanks again,
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Alexander
