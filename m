@@ -1,52 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/24
-Message-ID: <5436B03D.4060008@gmail.com>
-Date: Thu, 09 Oct 2014 17:56:45 +0200
-From: Sven Kieske <svenkieske@...il.com>
-To: Dave Rutherford <dave@...lpettingzoo.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/12
+Message-ID: <1404595356.1720.16.camel@scapa>
+Date: Sat, 05 Jul 2014 23:22:36 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: team@...urity.debian.org, Ben Hutchings <benh@...ian.org>
+Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On sam., 2014-07-05 at 22:25 +0400, Solar Designer wrote:
+> Here are some distro vendor status pages on this bug:
+> 
+> "x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
+> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1337339
+> 
+> Ubuntu has just sent out 7 update announcements (for different of
+> their
+> supported distros/kernels), USN-2266-1 through USN-2272-1.
+> 
+> "ptrace,x86: force IRET path after a ptrace_stop()"
+> http://kernel.opensuse.org/cgit/kernel/commit/?h=openSUSE-13.1&id=d1f26676dad578a65c94782f0c2bd00b7aa68f1b
+> 
+> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
+> https://bugzilla.redhat.com/show_bug.cgi?id=1115927
 
-On 09.10.2014 17:34, Dave Rutherford wrote:
-> Who in the financial services industry went to jail for designing 
-> and selling derivatives based on subprime mortgages? Crashing not
-> just a server but the whole world economy? Oh that's right, no
-> one.
-That's not right,
-a french trader went to jail for taking to high risks
-and loosing some billions at the market:
+Hmhm, what are the reasons why the mainline (and opensuse) fix
+(b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a) is to force using IRET
+instead of SYSRET, while distros like Ubuntu and Redhat seem to “only”
+make sure RIP is canonical?
 
-http://www.dailymail.co.uk/news/article-2747667/French-rogue-trader-cost-bank-4-9bn-euros-freed-four-months-jail.html
+Regards,
+-- 
+Yves-Alexis
 
-(okay it turns out he did get out, but needs to
-wear some electronic tag still).
-
-Also:
-
-Even if you would be right and there would be no rules
-in the financial sector I would argue that this is no counter
-argument at all to not make new rules.
-I would argue those rules should also applie to financial
-sectors as well.
-
-kind regards
-
-Sven
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQGcBAEBAgAGBQJUNrA8AAoJEAq0kGAWDrql44kMAIxqlpjVkVyLmYCWSox4VGuq
-/d0adZw0Ln83GwVNhlb5r9iFHkcRyQaFnuVCoR+KJ1AscKYfe3ETa81IjSbn+PSu
-Vb0MOHy5QRk/NHcsfpSCNYfcIChFG2T+kV0TDmMwhh5uAyIwTmCJG476uWSXMiGG
-XfI2UBjcLZxjU7VEc6JkeP8oJtmwzi5vAoNoaXvaOvkH2w6jyTBTmQdz4bJcVYyD
-YeqJ2KCmrV1Are84etyyRliOuAdrjvGNaEUrfP5KzaoC0zYucc8xy59lLc1fMipZ
-pOO7/B50vY2vy3Sd1StjdAN7wzlfsaJuGbigWu3x0P5Xy3qKjYtNxkqi1apZ+p1r
-zLoOPrgdaqC9E9zu/wg6kXAwWGyp3wauR5vtcAgkV9jJDNvuXkABDvE+3BRU2TXy
-6YroF63LCq/q5gJZ57MEL1Rj0ysQMqtZnpuHuIK2v1i3Mce6Jkju6j3BQ0lntG33
-F26E0FC/SAUTeiG77DhiXkwWjPIqvq1ZrutQTewb/A==
-=ch9P
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
