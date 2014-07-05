@@ -1,68 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/16
-Message-ID: <53BC6F2C.1010803@amacapital.net>
-Date: Tue, 08 Jul 2014 15:22:36 -0700
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/6
+Message-ID: <20140705185159.GA6953@openwall.com>
+Date: Sat, 5 Jul 2014 22:51:59 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
-On 07/04/2014 02:05 PM, Andy Lutomirski wrote:
-> Hi everyone-
+On Sat, Jul 05, 2014 at 08:41:20PM +0200, Yves-Alexis Perez wrote:
+> On sam., 2014-07-05 at 22:25 +0400, Solar Designer wrote:
+> > So far, we're aware that the problem is definitely triggerable on recent
+> > kernels (at least mainline and recent Ubuntu) running on Intel CPUs
+> > (including in guest kernels in some VMs that run on Intel CPU hosts).
 > 
-> Upstream commit b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a fixes a
-> ptrace bug.  The exact scope of the bug is somewhat unclear right now.
-> I see no reason why the bug should not be present as far back as Linux
-> 2.6.17, but it seems to be difficult to reproduce on old kernels.
-> 
-> There is some ongoing discussion on linux-distros about the impact and
-> applicability of this bug.
-> 
-> More details and a PoC to follow some time next week.
-> 
-> I'm being intentionally vague here: this bug has existed for a long
-> time, but exploiting it at all is tricky enough (and possibly
-> kernel-version dependent enough) that it's gone unnoticed.  I would
-> currently prefer to give the distros and users a bit of a headstart
-> before publicly disclosing the complete details of how to test/exploit
-> the bug.  It is likely to have a high enough impact, at least on new
-> enough kernels, that it should be patched ASAP.
+> For what it's worth, we managed to reproduce the crash on Debian 3.14.9-1
+> kernel (from sid), but not on the stable 3.2.57-3+deb7u2 (there's a
+> double faute but no panic), on Intel CPUs.
 
-Time for full details.
+Maybe it's just me, but I find the above ambiguous.
 
-Intel CPUs implement sysret oddly: sysret will #GP *from kernel mode* if
-RIP/RCX is non-canonical.  This is only a problem because sysret does
-not affect RSP, so the kernel needs to load the user's RSP value prior
-to running sysret.  That means that an exception frame will be written
-to the address at RSP, which is necessarily user-controlled.  If RSP is
-a writable user address and the CPU does not have SMAP, then the
-kernel's general_protection handler will actually execute from a
-user-controlled stack, and user code can attempt to race with the kernel
-to take over the system.
+What exactly do you mean by "crash" and "panic" above?  How do you know
+it's a double fault?  What appears in dmesg on the first system, and
+what on the second system?  What's the value of the kernel.panic_on_oops
+sysctl, and is it the same on both systems?
 
-Even on SMAP systems (which no one has yet anyway), it's possible to set
-RSP to point to an important kernel data structure and overwrite it in a
-partially controlled manner.  Overwriting the IDT like this was
-traditional, but that's difficult now on Linux, since the public IDT
-address is read-only.
+Thanks,
 
-If RSP points somewhere non-writable, then sysret will double-fault and
-OOPS cleanly on an IST stack.
-
-The upshot is that allowing user code to set the saved RIP address to a
-non-canonical value in a non-IRET-using system call is bad.  On recent
-unpatched kernels, this can be done using fork(2).  On other kernels,
-there may or may not be other attack vectors.
-
-The upstream fix fixes a related bug in that the sysret path failed to
-restore some registers on the same fork(2) path.  This could potentially
-cause gdb to malfunction.
-
-I've attached a proof-of-concept exploit.  It double-faults reliably on
-unpatched Intel CPUs.  The precise cause of the double-fault is left as
-an exercise to the reader :)
-
---Andy
-
-
-View attachment "ptrace_fork.c" of type "text/plain" (1690 bytes)
+Alexander
