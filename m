@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/10
-Message-ID: <9CDF96C7-7D85-4757-9CA4-B322AFAA71A1@redhat.com>
-Date: Fri, 13 Jun 2014 12:44:34 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: CVE request: multiple /tmp races in ppc64-diag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/7
+Message-ID: <20140705193537.GA8255@openwall.com>
+Date: Sat, 5 Jul 2014 23:35:37 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
-Just quoting from our bug report:
+Andy, all -
 
-As noted in the SUSE bug report, numerous /tmp race conditions exist in ppc64-diag, in particular:
+On Sat, Jul 05, 2014 at 10:25:47PM +0400, Solar Designer wrote:
+> "x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
+[...]
+> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
 
-rtas_errd/diag_support.c:233:   char command[]="/usr/bin/find /proc/device-tree -name status -print > /tmp/get_dt_files";
-rtas_errd/diag_support.c:241:   fp1 = fopen("/tmp/get_dt_files", "r");
-rtas_errd/prrn_hotplug:8:TMPFILE=`mktemp -p /tmp`
-scripts/ppc64_diag_mkrsrc:126:mkdir "/tmp/diagSEsnap", 0775;
-scripts/ppc64_diag_mkrsrc:127:$general_eed_file = "/tmp/diagSEsnap/snapH.tar.gz";
+BTW, I'm not convinced it's such a good idea to allow setting RIP to
+exactly TASK_SIZE_MAX just because user code could run to that address
+(this was Andy's rationale).  Imagine that TASK_SIZE_MAX is ever set
+such that it's the very first non-canonical address.  If user code
+simply runs to that address, it gets a user mode fault.  However, if the
+kernel tries to set user RIP to that address via SYSRET, it'll get #GP
+while still in kernel mode - exactly the problem we're trying to fix.
 
-In the case of rtas_errd/prrn_hotplug, mktemp is used but is assumed to have succeeded; there is no check for the return value.
+So when fixing the problem in this way, or when including this as a
+hardening measure along with forcing the IRET path as well, I'd prefer
+to allow only "< TASK_SIZE_MAX", not "<= TASK_SIZE_MAX".
 
-mktemp should probably be used properly in all of these.  I don't know if the data in /tmp/diagSEsnap is sensitive or not, but if it is, the permissions on that directory should probably be tightened up.
+I think currently TASK_SIZE_MAX is below the first non-canonical
+address, so we're fine, but there's little reason to take the risk of
+possible (valid) future changes to TASK_SIZE_MAX.
 
-I think a single CVE should suffice for this.  The above is from ppc64-diag-2.6.1.
-
-Thanks.
-
-References:
-
-https://bugzilla.novell.com/show_bug.cgi?id=882667
-https://bugzilla.redhat.com/show_bug.cgi?id=1109371
-
-
--- 
-Vincent Danen / Red Hat Product Security
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Alexander
