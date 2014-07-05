@@ -1,39 +1,151 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/2
-Message-ID: <20140711053608.GZ179@oevtugenva.nrevsny.pk>
-Date: Fri, 11 Jul 2014 01:36:08 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/1
+Message-ID: <20140705082619.GA2646@openwall.com>
+Date: Sat, 5 Jul 2014 12:26:19 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+Subject: Re: LMS-2014-06-16-2: Linux Kernel LZO
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 10, 2014 at 04:42:39PM -0700, Tavis Ormandy wrote:
-> Rich Felker <dalias@...c.org> wrote:
-> 
-> > On Thu, Jul 10, 2014 at 08:52:24PM +0200, Florian Weimer wrote:
-> > > Stephane Chazelas discovered that directory traversal issue in locale
-> > > handling in glibc.  glibc accepts relative paths with ".." components in
-> > > the LC_* and LANG variables.  Together with typical OpenSSH
-> > > configurations (with suitable AcceptEnv settings in sshd_config), this
-> > > could conceivably be used to bypass ForceCommand restrictions (or
-> > > restricted shells), assuming the attacker has sufficient level of access
-> > > to a file system location on the host to create crafted locale
-> > > definitions there.
-> > 
-> > Am I correct in assuming this affects most typical git setups (e.g.
-> > gitolite) using ssh authorized_keys files with forced commands, where the
-> > malicious file could simply be created as part of the git repository? Or
-> > are these usually setup to filter the environment?
-> > 
-> 
-> I knew about this behaviour (I imagine lots of people were), but hadn't
-> considered it a vulnerability - it's more restricted across setuid, so had
-> assumed it was intentionally permitted. Locale files are not executable
-> code, so even if you imagine a ForceCommand+AcceptEnv configuration *and*
-> have the ability to create a message catalog, don't you still need another
-> bug to exploit this?
+On Thu, Jun 26, 2014 at 12:53:18PM -0600, Don A. Bailey wrote:
+> A vulnerability has been identified in the Linux kernel implementation of
+> the LZO algorithm. Please find the bug report inline.
 
-Replacing any format string with something containing %n in the
-translation?
+There's now a blog post claiming that "the patched Linux version is
+still vulnerable to integer overflows", along with detail and a proposed
+patch.  I did not review it.
 
-Rich
+http://blog.lekkertech.net/blog/2014/07/02/LZO-on-integer-overflows-and-auditing/
+
+> #############################################################################
+> #
+> # Lab Mouse Security Report
+> # LMS-2014-06-16-2
+> #
+> 
+> Report ID: LMS-2014-06-16-2
+> 
+> CVE ID: CVE-2014-4608
+> 
+> Researcher Name: Don A. Bailey
+> Researcher Organization: Lab Mouse Security
+> Researcher Email: donb at securitymouse.com
+> Researcher Website: www.securitymouse.com
+> 
+> Vulnerability Status: Patched
+> Vulnerability Embargo: Broken
+> 
+> Vulnerability Class: Integer Overflow
+> Vulnerability Effect: Memory Corruption
+> Vulnerability Impact: DoS, OOW
+> Vulnerability DoS Practicality: Practical
+> Vulnerability OOW Practicality: Impractical
+> Vulnerability Criticality: Moderate
+> 
+> Vulnerability Scope:
+> All versions of the Linux kernel (3x/2x) with LZO support (lib/lzo) that
+> set the HAVE_EFFICIENT_UNALIGNED_ACCESS configuration option. Currently,
+> this seems to include PowerPC and i386.
+> 
+> Vulnerability Tested:
+> 	- Via btrfs
+> 	- Stand alone
+> 
+> Functions Affected:
+> 	lib/lzo/lzo1x_decompress_safe.c:lzo1x_decompress_safe
+> 
+> Criticality Reasoning
+> ---------------------
+> While some variants of this LZO algorithm flaw result in Remote Code
+> Execution (RCE), it is unlikely that the Linux kernel variant can. This is
+> due to the fact that control of the memory region that is overwritten can
+> not be controlled in a fashion that will result in the overwrite of objects
+> critical to the flow of execution.
+> 
+> However, it may be possible to overwrite "business logic" data in certain
+> circumstances, by corrupting adjacent objects in memory. Linux's guard pages
+> should mitigate this, however.
+> 
+> Because RCE is impractical, Object Over Write (OOM) is only practical in
+> constrained scenarios (read: impractical), and DoS is practical, the
+> criticality level of this issue should be defined as Moderate.
+> 
+> Furthermore, a Moderate definition is needed because of the use of LZO in
+> btrfs, and the potential use of LZO in networking, opening up the potential
+> for remote instrumentation of this vulnerability. It is notable that SuSE
+> recently reported that they will start using btrfs by default later this
+> year.
+> 
+> Lastly, only certain platforms are affected, decreasing impact.
+> 
+> Vulnerability Description
+> -------------------------
+> An integer overflow can occur when processing any variant of a "literal run"
+> in the lzo1x_decompress_safe function. Each of these three locations is
+> subject to an integer overflow when processing zero bytes. The following code
+> depicts how the size of the literal array is generated:
+>                         if (likely(state == 0)) {
+>                                 if (unlikely(t == 0)) {
+>                                         while (unlikely(*ip == 0)) {
+>                                                 t += 255;
+>                                                 ip++;
+>                                                 NEED_IP(1);
+>                                         }
+>                                         t += 15 + *ip++;
+>                                 }
+>                                 t += 3;
+> 
+> As long as a zero byte (0x00) is encountered, the variable 't' will be
+> incremented by 255. Using approximately sixteen megabytes of zeros, 't' will
+> accumulate to a maximum unsigned integer value on a 32bit architecture. In
+> combination with the following code, the value of 't' will overflow:
+> copy_literal_run:
+> #if defined(CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS)
+>                                 if (likely(HAVE_IP(t + 15) &&
+> HAVE_OP(t + 15))) {
+>                                         const unsigned char *ie = ip + t;
+>                                         unsigned char *oe = op + t;
+>                                         do {
+>                                                 COPY8(op, ip);
+>                                                 op += 8;
+>                                                 ip += 8;
+>                                                 COPY8(op, ip);
+>                                                 op += 8;
+>                                                 ip += 8;
+>                                         } while (ip < ie);
+>                                         ip = ie;
+>                                         op = oe;
+> 
+> The HAVE_OP() check will always pass in this case, because the size check
+> within the macro will evaluate based on the overflown integer, not the value
+> of 't'.
+> 
+> This exposes the code that copies literals to memory corruption. An
+> interesting side effect of the vulnerable code shown above is that the
+> value of 'op' can point to a region of memory just before the start of 'out'.
+> 
+> It should be noted that the following code unintentionally saves all other
+> architectures from exposure:
+> #endif
+>                                 {
+>                                         NEED_OP(t);
+>                                         NEED_IP(t + 3);
+>                                         do {
+>                                                 *op++ = *ip++;
+>                                         } while (--t > 0);
+>                                 }
+> 
+> NEED_OP() correctly tests the value of 't' here, disallowing the potential
+> for overflow.
+> 
+> It should be noted that if 't' is a 64bit integer, the overflow is still
+> possible, but impractical. An overflow would require so much input data that
+> an attack would obviously be infeasible even on modern computers.
+> 
+> Vulnerability Resolution
+> ------------------------
+> To resolve this issue, the HAVE_OP and HAVE_IP macros should be enhanced to
+> detect for integer overflow. This is the most reasonable and efficient
+> location for catching corrupted or instrumented payloads. By testing for
+> overflow here, an attacker is simply wasting time by forcing the function
+> to process a large amount of zero bytes.
