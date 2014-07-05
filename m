@@ -1,50 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/16
-Message-ID: <20140808160953.GD9141@gremlin.ru>
-Date: Fri, 8 Aug 2014 20:09:53 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/3
+Message-ID: <44356.1404571012@critter.freebsd.dk>
+Date: Sat, 05 Jul 2014 14:36:52 +0000
+From: "Poul-Henning Kamp" <phk@....freebsd.dk>
+cc: Marek Kroemeke <kroemeke@...il.com>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, varnish-misc@...nish-cache.org
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-On 08-Aug-2014 08:18:21 -0700, Greg KH wrote:
+I have just read the followup discussion and will add these comments:
 
- >> That means, every device after being detected by the system must
- >> be explicitly activated by some human activity. Yes, users may
- >> and, most likely, will be fooled to do that (as they are fooled
- >> to connect the attacker's device), but this activation will at
- >> least make the use of untrusted devices more difficult.
- > How can I activate a USB keyboard (the only input device attached
- > to the system), with the USB keyboard that I plugged into it?
+First of all, if you want an overview of the security design of
+Varnish, it is here:
 
-I've mentioned this issue in the message you've replied to.
-Possible solution could be whitelisting physical ports, but...
+	https://www.varnish-cache.org/docs/trunk/phk/barriers.html
 
- > Again, fix the real problem here, if there is one, don't try
- > to throw "is this device ok to use" dialogs up, they just annoy
- > people and don't do anything.
+Second, since Varnish serves HTTP, a DoS is not something out of
+the ordinary.  It happens all the time to our users, we consider
+DoS attacks a fact of life.  The better we handle them, the better we
+handle them, but we will never be able to cope with them all,
+not in a world where Evil botnets or Good authors can point millions
+of browsers at the same web property in an instant.
 
-"Yes, yes, yes..." without reading the message. I know that.
+Third, with respect to "never trusting input":  Varnish doesn't.
+But in some cases we distust with an assert.  Either because it is
+an utterly pathological situation where no sane handling or recovery
+is possible or because the condition is so rare that our time is
+better spent improving quality and error handling elsewhere.
 
- > Oh, and if you want, you can disable all USB devices on your
- > Linux system by default, and only "authorize" them explicitly
- > if you programatically think they should be enabled.  We have
- > had support in the kernel for that for years now, but very few
- > people actually use it.
+Fourth, comparisons to root-shells and OpenSSL ciphers ?  Really ?
+Has nobody told you that a bad analogy is like a wet screwdriver ?
 
-I've faced that only once, and my solution was straightforward:
-those two servers were running a kernel built with only basic
-USB HID support (keyboard+mouse, IIRC) and without module load
-support. That appeared to be quite enough.
+Fifth, some of you have a really weird definition of "DoS", and
+since the same people seem very fond of analogies, I'll answer with
+one:  When I say "Varnish trust the backend backend", I mean that
+it does so because that is its job.  The backend is the guitar,
+Varnish is the PA system.  If you plug the guitar cable into 110VAC,
+you don't expect the PA to generate an 60Hz earthquake, you expect
+it to blow a fuse.  In Varnish that "fuse" is an assert.  If, like
+most PA systems, such abuse left Varnish as an irepairable smoking
+environmental hazard, *then* I would agree that it constituted a
+DoS, but the "fuse" in Varnish self-repairs in a fraction of a
+second, and as soon as you plug a working microphone back in again,
+Varnish will keep on rocking with you.  Would it be better not to
+blow the fuse ? Sure.  Does it matter ?  Not really.
 
- > So the tools to do this are already there, why aren't you using
- > them? :)
+Sixth, people building CDNs for third party traffic with Varnish
+had better know what they're doing, since that is (slightly) outside
+Varnish security and authority design.  The CDNs I know about do
+know what they're doing.  (There may be others.)
 
-You could guess: sometimes I'm developing USB devices and have to
-test them. That formed a good habit of connecting my devices to a
-hub instead of directly to BB :-)
+(If there are any questions, please keep me in the CC: I'm not
+on the oss-sec list).
 
+Poul-Henning
 
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
+phk@...eBSD.ORG         | TCP/IP since RFC 956
+FreeBSD committer       | BSD since 4.3-tahoe    
+Never attribute to malice what can adequately be explained by incompetence.
