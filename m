@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/11/4
-Message-Id: <201403111142.s2BBfxv1004802@linus.mitre.org>
-Date: Tue, 11 Mar 2014 07:41:59 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: When is broken crypto a vulnerability?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/06/4
+Message-ID: <20140706082003.GA10792@openwall.com>
+Date: Sun, 6 Jul 2014 12:20:03 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, Jul 06, 2014 at 04:06:12AM -0400, John Johansen wrote:
+> On 07/05/2014 08:37 PM, Marc Deslauriers wrote:
+> > On 14-07-05 05:22 PM, Yves-Alexis Perez wrote:
+> >> On sam., 2014-07-05 at 22:25 +0400, Solar Designer wrote:
+> >>> "ptrace,x86: force IRET path after a ptrace_stop()"
+> >>> http://kernel.opensuse.org/cgit/kernel/commit/?h=openSUSE-13.1&id=d1f26676dad578a65c94782f0c2bd00b7aa68f1b
+> >>>
+> >>> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
+> >>> https://bugzilla.redhat.com/show_bug.cgi?id=1115927
+> >>
+> >> Hmhm, what are the reasons why the mainline (and opensuse) fix
+> >> (b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a) is to force using IRET
+> >> instead of SYSRET, while distros like Ubuntu and Redhat seem to ???only???
+> >> make sure RIP is canonical?
+> > 
+> > AFAIK, our plan is to switch to the upstream fix for the next kernel updates.
+> 
+> yep, Ubuntu went with the original patch, as we where mostly through our process
+> when b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a hit. We decided to do a release with
+> the original patch so we could get something out this weekend, but will switch to
+> b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a asap
 
->> It's not completely clear what you mean. If it were a logic error in
->> the code, e.g., menu choice 2 of "AES encryption" is selected but the
->> code calls the function intended for menu choice 1 of "standard
->> encryption," then a CVE could be assigned to the specific codebase
->> that has that logic error.
+Why don't you keep both patches?  It sounds safer to me to use both.
 
-> Yes, that's exactly what I meant.
-> One product, it's already disclosed to the vendor and I will publish
-> details shortly. So we agree this one gets a CVE.
-
-This logic error issue was assigned CVE-2014-2319.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTHvSnAAoJEKllVAevmvmsXL8IALjFY7yhR0nyZDyqv7Wpi0DQ
-F9ie5JCp4JINw8WDVZys78L7Ssquakc6I1jEOhOkbCSlmFM3DJ4bCRbZgr8Fl+hV
-Llu0zDKGK4u5s6Dgx4kBgwQkN/5VKfjTLtNuCNHr1FWPVPYbRnskTQTnbWljYpfC
-ovGAx+7ZaSyomyZ701TOSEVocsSPVo/Oppfb6P7InsurGQx+V8ZQI0xO89fuffZ/
-NdnaBnGicj/i7XAh9ibGE++JDN2wvXmwHraK2z1plKx+eEfFt6174yu4DkcsYcHR
-4tztg+5lNsVr7d9BK5y8fCYI777M+ajShDZnkqMAxoPgaOgoExZS/YQVOusfReg=
-=SgGd
------END PGP SIGNATURE-----
+Alexander
