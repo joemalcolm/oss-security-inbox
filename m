@@ -1,41 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/5
-Message-Id: <201407110734.s6B7Xvfj015605@linus.mitre.org>
-Date: Fri, 11 Jul 2014 03:33:57 -0400 (EDT)
-From: cve-assign@...re.org
-To: vkaigoro@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: transmission peer communication vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/06/3
+Message-ID: <53B90374.40005@canonical.com>
+Date: Sun, 06 Jul 2014 04:06:12 -0400
+From: John Johansen <john.johansen@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> http://trac.transmissionbt.com/wiki/Changes#version-2.84
+On 07/05/2014 08:37 PM, Marc Deslauriers wrote:
+> On 14-07-05 05:22 PM, Yves-Alexis Perez wrote:
+>> On sam., 2014-07-05 at 22:25 +0400, Solar Designer wrote:
+>>> Here are some distro vendor status pages on this bug:
+>>>
+>>> "x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
+>>> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1337339
+>>>
+>>> Ubuntu has just sent out 7 update announcements (for different of
+>>> their
+>>> supported distros/kernels), USN-2266-1 through USN-2272-1.
+>>>
+>>> "ptrace,x86: force IRET path after a ptrace_stop()"
+>>> http://kernel.opensuse.org/cgit/kernel/commit/?h=openSUSE-13.1&id=d1f26676dad578a65c94782f0c2bd00b7aa68f1b
+>>>
+>>> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=1115927
+>>
+>> Hmhm, what are the reasons why the mainline (and opensuse) fix
+>> (b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a) is to force using IRET
+>> instead of SYSRET, while distros like Ubuntu and Redhat seem to “only”
+>> make sure RIP is canonical?
+>>
+>> Regards,
+>>
 > 
-> Transmission 2.84 (2014/07/01)
-> Fix peer communication vulnerability (no known exploits) reported by Ben Hawkes
+> AFAIK, our plan is to switch to the upstream fix for the next kernel updates.
+> 
+yep, Ubuntu went with the original patch, as we where mostly through our process
+when b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a hit. We decided to do a release with
+the original patch so we could get something out this weekend, but will switch to
+b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a asap
 
-Use CVE-2014-4909.
 
-This seems likely to be about:
-
-  http://inertiawar.com/submission.go
-  http://twitter.com/benhawkes/statuses/484378151959539712 (2 Jul 2014)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTv5LsAAoJEKllVAevmvmsM4UH/2FrtJ6JDH2eGrmY18I0a1/n
-/rSeFlsEahsetskFRTX1LKhZJqFyMu6HX52YiK+k2UGm1o25P9kDiuT3NadfDSZ4
-RrdzLqgzDsDzILJDx0w70dsWBNEXhfYg+F7ulhexPmBeHnI7kk/oMoWj0O/5gDoU
-pe7p5g0z/2MC5m+3gKOEcXv0V32F02TltCnWVUrPT1VS2cladBXE8l65PGGUzPyR
-cb6A2tHofAoFnUCIcUABbWvhhuJCcAEY1WpvXlHNfKaD7Fvx157cDTp0KvzM4O0J
-JA7d+iHXEdbJszuVaxXTt0yqv9aQuFRnnLAJTTrUrsmdvXyIpgaEMN6VQ6+VSgE=
-=vyg2
------END PGP SIGNATURE-----
