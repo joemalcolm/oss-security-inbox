@@ -1,45 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/3
-Message-Id: <201405190656.s4J6uUhV025771@linus.mitre.org>
-Date: Mon, 19 May 2014 02:56:30 -0400 (EDT)
-From: cve-assign@...re.org
-To: porridge@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: libgadu vulnerability: possible memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/06/1
+Message-ID: <53B89A56.9060606@canonical.com>
+Date: Sat, 05 Jul 2014 20:37:42 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> A crafted message from the file relay server may cause memory to
-> beoverwritten. The memory is not overwritten with data sent directly by the
-> server, but security implications cannot be ruled out.
+On 14-07-05 05:22 PM, Yves-Alexis Perez wrote:
+> On sam., 2014-07-05 at 22:25 +0400, Solar Designer wrote:
+>> Here are some distro vendor status pages on this bug:
+>>
+>> "x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
+>> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1337339
+>>
+>> Ubuntu has just sent out 7 update announcements (for different of
+>> their
+>> supported distros/kernels), USN-2266-1 through USN-2272-1.
+>>
+>> "ptrace,x86: force IRET path after a ptrace_stop()"
+>> http://kernel.opensuse.org/cgit/kernel/commit/?h=openSUSE-13.1&id=d1f26676dad578a65c94782f0c2bd00b7aa68f1b
+>>
+>> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1115927
 > 
-> The bug is public:
-> http://lists.ziew.org/pipermail/libgadu-devel/2014-May/001171.html
-> http://lists.ziew.org/pipermail/libgadu-devel/2014-May/001180.html
+> Hmhm, what are the reasons why the mainline (and opensuse) fix
+> (b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a) is to force using IRET
+> instead of SYSRET, while distros like Ubuntu and Redhat seem to “only”
+> make sure RIP is canonical?
+> 
+> Regards,
+> 
 
-Use CVE-2014-3775 for the issue as described in the 001180.html
-message. It is possible that the 001171.html and 001180.html messages
-are referring to exactly the same issue: in that case, there will be
-only one CVE ID in total. (The messages are somewhat different -- for
-example, 001180.html doesn't directly mention that exploitability is
-unproven -- but this may be a wording difference and not anything
-inherent about the code in 1.11.x versus 1.12 prereleases.)
+AFAIK, our plan is to switch to the upstream fix for the next kernel updates.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Marc.
 
-iQEcBAEBAgAGBQJTearAAAoJEKllVAevmvmsWukH/Ra+3gLP6QfYcqRSqeXf49hR
-YHklWJjvWVn1Hy51TEnpaM/pz0SngIVW3Vr+RSHnWBNpeaSOUyIlj5FabBBOEpTu
-Jls2oSwP5c5gHWJnCGCKSZUIYYHIaV+m1frefh/WJ8/rnq4QQon54nHv7iAVYSDp
-Vq9AA7aSpnuw4diIC5J44e+Kk64GFdcBZUDKRT4w6OxE0+qRuVBj6yploCPFo78f
-MQcttoVsyau/J6crgzn6KmKKCEiAdDub2kXYtWPw9NWRZiocDbwaY3TpPfoVjUi3
-0mQy5CchaodVlx48YgXqwyqVk23pIH8A6OckRDTJiGbpfHdwRsPcIgoex03G4S0=
-=ysDB
------END PGP SIGNATURE-----
+
