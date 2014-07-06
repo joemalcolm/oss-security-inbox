@@ -1,58 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2012/11/14/4
-Message-ID: <50A3660B.6030704@redhat.com>
-Date: Wed, 14 Nov 2012 02:36:11 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Florian Weimer <fweimer@...hat.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Gajim fails to handle invalid certificates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/06/5
+Message-ID: <53B90374.40005@canonical.com>
+Date: Sun, 06 Jul 2014 04:06:12 -0400
+From: John Johansen <john.johansen@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 11/14/2012 02:19 AM, Florian Weimer wrote:
-> On 11/14/2012 08:19 AM, Kurt Seiifried wrote:
+On 07/05/2014 08:37 PM, Marc Deslauriers wrote:
+> On 14-07-05 05:22 PM, Yves-Alexis Perez wrote:
+>> On sam., 2014-07-05 at 22:25 +0400, Solar Designer wrote:
+>>> Here are some distro vendor status pages on this bug:
+>>>
+>>> "x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
+>>> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1337339
+>>>
+>>> Ubuntu has just sent out 7 update announcements (for different of
+>>> their
+>>> supported distros/kernels), USN-2266-1 through USN-2272-1.
+>>>
+>>> "ptrace,x86: force IRET path after a ptrace_stop()"
+>>> http://kernel.opensuse.org/cgit/kernel/commit/?h=openSUSE-13.1&id=d1f26676dad578a65c94782f0c2bd00b7aa68f1b
+>>>
+>>> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
+>>> https://bugzilla.redhat.com/show_bug.cgi?id=1115927
+>>
+>> Hmhm, what are the reasons why the mainline (and opensuse) fix
+>> (b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a) is to force using IRET
+>> instead of SYSRET, while distros like Ubuntu and Redhat seem to “only”
+>> make sure RIP is canonical?
+>>
+>> Regards,
+>>
 > 
->> So do we consider this to be an OpenSSL issue of gajim? I'm sure
->> gajim is not the only program that does something like this.
+> AFAIK, our plan is to switch to the upstream fix for the next kernel updates.
 > 
-> As far as I understand things, it is not necessarily at all to set
-> a verification callback in OpenSSL.  If you load the root
-> certificate store and examine SSL_get_verify_result, that should be
-> sufficient.  You can even look at the peer certificate and continue
-> anyway if the user has overridden the certificate validity.  So
-> far, I haven't found a good reason to use a verify callback at all.
-> You need it to implement a custom PKIX validation policy, but that
-> should be pretty rare.  (I still have to check older OpenSSL
-> versions, though, perhaps there, the behavior was different.)
-> 
-> Anyway, if application developers set a verification callback, it
-> is their responsibility to implement it correctly.  Therefore, I
-> don't think this is an OpenSSL issue.
-
-Makes sense, just wanted to confirm this problem resides within Gajim.
-Please use CVE-2012-5524 for this issue.
+yep, Ubuntu went with the original patch, as we where mostly through our process
+when b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a hit. We decided to do a release with
+the original patch so we could get something out this weekend, but will switch to
+b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a asap
 
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJQo2YLAAoJEBYNRVNeJnmTfi4P/1WHAiTvcHoJRbouSwyzIWvZ
-PSaQd23ubVbji4Te+4ZaJ1se9fSw0j5RdrkXisTZYuoo5Fg/ev3CDU5K1dZFyZMz
-tZCZSuXmJeSTWSN4lW/59CbLUgL4kaJy+uxCx0kNObBT2BIiIg4/zNu4PIJttwdH
-+G4/iAGrEDOJAutiHg6zbG5kBgvr+rWnxEELBxV3IoctWBrdZ509OmVIYT6HuSkx
-cSM2nRauhtYGjVR+e0x8PpbX+xFTVET5i82m7N/TPLjtzP7RJPg5jQKl/1eu6tPy
-+SpTGZsoXN9dBSHf3cIw1d/Ysl5wuxN/wj9nSoNpcr3jPqLdEGvbK5Bqem8UyQxp
-yJa7Yk3Ge5LmR92HKJUo01VHWkuqeW1TyQ52tc+1592PN3xYIWHA6xP9DyiqdvHP
-ekMa6wm6G8Tqa/k5rTVWMB1TqJtHq9a46ClHNINSe1aDh/HVitVKVgEm65QpXwTt
-m62/VCGzkFVYa+p8ZVL/7SK0/NoDK7Gxckn7yta/XUzpH70j21yTsYyQNt/W4IDD
-YN6SXc0yMvyjaUEFAIADCIQwlfnLSYeYNh3iVMi4o4YTACVTxumYu4LfU6Tt5dT6
-USJlpnorGD7dSHVeky00vjxAtVJH2U8Nx61Fk/ZdB0qovK72VuSe+uvpmj41kors
-FsA39sWFXGjeqK+yHjkj
-=sFXa
------END PGP SIGNATURE-----
