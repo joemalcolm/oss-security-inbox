@@ -1,38 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/12
-Message-ID: <20140909083435.GA9815@steve.org.uk>
-Date: Tue, 9 Sep 2014 09:34:35 +0100
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/06/2
+Message-ID: <CAOp4FwSYvyF34qkdq7uqeRGwdB9uebpWsRqdRRoH702i+-uyJA@mail.gmail.com>
+Date: Sun, 6 Jul 2014 08:33:48 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: pinocchio tmp vuln
+Subject: Re: Possible CVE request: php5: phpinfo() Type Confusion Information Leak Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-> I have to say I don't understand at all why someone would be going
-> through random packages from PyPi (especially test automation related)
-> and searching for possible security issues.
+Stefan Esser has written a blog post about a PoC that can be used
+to disclose the SSL private key.
 
-  Because although the chances of them being exploited are low they
- are genuine issues which have security implications.
+https://www.sektioneins.de/en/blog/14-07-04-phpinfo-infoleak.html
 
-  There is copious documentation online about how file races are
- bad, including this quick reference:
+Kind regards,
+//Logan
+C-x-C-c
 
-    https://www.securecoding.cert.org/confluence/display/seccode/FIO21-C.+Do+not+create+temporary+files+in+shared+directories
 
-  PyPi?  've no idea why that was chosen, but I expect because it
- is a large mass of code that has had little similar attention paid
- to it in the past.  node.js will probably be next, I'm sure lots of
- modules exist created by inexperienced developers who haven't
- considered the implications of posting new code libraries.
-
-  I did something similar looking for /tmp abuses in Debian
- packages, via a very very automated scan:
-
-    http://blog.steve.org.uk/luonnos_viesti___31_hein_kuu_2014.html
-
-  Finding these issues was distressingly easy, and although in the
- real world the chances of significant impact are minimal they were
- genuine issues that should be reported and fixed.
-
-Steve
---
+-- 
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
