@@ -1,37 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/13
-Message-ID: <CAO-2N4LF5OuEUJijYZcXnN24tT5QUH4Yo==Aia0kvQpgdDg+2w@mail.gmail.com>
-Date: Wed, 8 Oct 2014 23:13:30 +0100
-From: Vitor Ventura <ventura.vitor@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: openssh on linux rce in sftp-only mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/18
+Message-Id: <20140707181449.12AC11A41139@me.com>
+Date: Mon,  7 Jul 2014 14:14:49 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem lean-ruport-0.3.8
 Content-Type: text/plain; charset=utf-8
 
-Yes you do need to connect to it via ptrace, in order to read the mem.
-Em 08/10/2014 22:58, "Jann Horn" <jann@...jh.net> escreveu:
+Title: Vulnerability Report for Ruby Gem lean-ruport-0.3.8
 
-> On Wed, Oct 08, 2014 at 03:32:23PM -0400, Josh Bressers wrote:
-> > >
-> > > I reported this to the OpenSSH developers, and although they included
-> my
-> > > patch as a mitigation, they did not treat it as a vuln in OpenSSH.
-> > >
-> > > I believe that treating this as a hardening patch makes sense. The SFTP
-> > > server behaves exactly as documented, it allows access to the whole
-> > > filesystem. And on Linux, that happens to equal write access to the
-> > > process RAM, so you should never give that access to someone who
-> > > shouldn't be able to run arbitrary code.
-> > >
-> >
-> > I think one has to assume if a user has unrestricted sftp access, they
-> can
-> > figure out how to do most anything. Even with the upstream hardening
-> patch,
-> > it really only protects the sftpd process. Any other processes the user
-> may
-> > own could be modified.
->
-> Not that easily - /proc/$pid/mem requires you to either be the same process
-> or be attached to it via ptrace, I think.
->
+Author: Larry W. Cashdollar, @_larry0
+
+Date: 06/01/2014
+
+OSVDB: 108581
+
+CVE:Please Assign
+
+Download: http://rubygems.org/gems/lean-ruport
+
+Gem Author:  james@....id.au
+
+From: ./lean-ruport-0.3.8/test/tc_database.rb
+
+Line 21 exposes the mysql password to the process table, if this Gem is used in the context of a rails application it might be possible to inject commands via the #{ user } and #{ password } variables if those are supplied by the user as they are not sanitized before being passed to the shell.
+
+018-		tmp_sql = /tmp/compare.sql
+19-		md_command =
+20-			"mysqldump -u#{ user } -p#{ password } --databases stonecodeblog"
+21:		`#{ md_command } > #{ tmp_sql }`
+22:		diff = `diff #{ orig_sql } #{ tmp_sql }`
+23-		assert( diff == , diff[0..500] ) 
+24-	end
+25-end
+
+
+Advisory: http://www.vapid.dhs.org/advisories/lean-ruport-0.3.8.html
 
