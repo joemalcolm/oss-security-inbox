@@ -1,56 +1,135 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/3
-Message-ID: <53F592FB.8020802@redhat.com>
-Date: Thu, 21 Aug 2014 16:34:35 +1000
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Lua CVE request [was Re: CVE request: possible overflow in vararg functions]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/25
+Message-ID: <CAFkuX4tkXruV7uX-AJ+EKe_uAvUDAwPFU1StkJBYwMUw05SRJA@mail.gmail.com>
+Date: Mon, 7 Jul 2014 15:31:14 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
+To: oss-security@...ts.openwall.com, distros@...openwall.org
+Subject: Re: LMS-2014-07-07-1: python-lz4
 Content-Type: text/plain; charset=utf-8
 
-Last spam, changing the subject so it is obvious where the issue is.
+For more information / PoC, please visit:
+http://blog.securitymouse.com/2014/07/hacking-cern-exploiting-python-lz4-for.html
 
-On 08/21/2014 04:33 PM, Murray McAllister wrote:
-> Additionally, Fedora has 5.2.2, but it does not have the fix, so even if
-> shipping 5.2.2 it may be worth checking...
+Thanks,
+Don A. Bailey
+Founder / CEO
+Lab Mouse Security
+@InfoSecMouse
+https://www.securitymouse.com/
+
+
+
+On Mon, Jul 7, 2014 at 10:50 AM, Don A. Bailey <donb@...uritymouse.com>
+wrote:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 >
-> On 08/21/2014 04:31 PM, Murray McAllister wrote:
->> Good morning,
->>
->> An overflow was reported to have been fixed in Lua 5.2.2. A reproducer
->> and patch are available from:
->>
->> http://www.lua.org/bugs.html#5.2.2-1
->>
->> The reproducer affects older versions too (such as 5.1.4). One way an
->> attacker could trigger this issue is if they can control parameters to a
->> loadstring call (an eval in Lua, http://en.wikipedia.org/wiki/Eval#Lua).
->>
->> Could a CVE please be assigned if one has not been already?
->>
->> Some notes:
->>
->> valgrind shows this crashes with invalid writes, but I am not sure if
->> this is really a stack or heap overflow but something else. In
->> luaD_precall():
->>
->> 330       for (; n < p->numparams; n++)
->> 331         setnilvalue(L->top++);  /* complete missing arguments */
->>
->> This goes through 49 times with the reproducer (?possibly lifting what
->> Lua thinks is the stack into the heap area?).
->>
->> After that finishes:
->>
->> 333       ci = next_ci(L);
->>
->> Results in a call to luaE_extendCI(), where the issue is triggered while
->> attempting to call luaM_new() (I did not get further than this yet).
->>
->> Thanks,
->>
->> --
->> Murray McAllister / Red Hat Product Security
->>
->> https://bugzilla.redhat.com/show_bug.cgi?id=1132304
+> Hello All,
+>
+> Please find the bug report for python-lz4 attached below.
+>
+> Steeve Morin (@steeve), the maintainer of the python-lz4 package, has been
+> great to work with. He worked quickly to get the package up to date by this
+> morning.
+>
+> Thanks,
+> Don A. Bailey
+> Founder / CEO
+> Lab Mouse Security
+> @InfoSecMousehttps://www.securitymouse.com/
+>
+> #############################################################################
+> #
+> # Lab Mouse Security Report
+> # LMS-2014-07-07-1
+> #
+>
+> Report ID: LMS-2014-07-07-1
+> Report Code Name: LAZARUS.7
+>
+> Researcher Name: Don A. Bailey
+> Researcher Organization: Lab Mouse Security
+> Researcher Email: donb@...uritymouse.com
+> Researcher Website: www.securitymouse.com
+>
+> Vulnerability Status: Reported
+> Vulnerability Embargo: None
+>
+> Vulnerability Class: Integer Overflow
+> Vulnerability Effect: Memory Corruption
+> Vulnerability Impact: DoS, OOW, RCE
+> Vulnerability DoS Practicality: Practical
+> Vulnerability OOW Practicality: Practical
+> Vulnerability RCE Practicality: Practical
+> Vulnerability Criticality: Critical
+>
+> Vulnerability Scope:
+> All versions of the python-lz4 package prior to r119.
+> 32bit variants of the package are critically affected.
+> 64bit variants are deemed infeasible to exploit at this time.
+>
+> Lab Mouse Security has engineered reliable RCE payloads for any application
+> that uses python-lz4, regardless of where or how the app uses the module in
+> its code base.
+>
+> python2.7 was used in exploit development. python3 exploits have not been
+> written, but preliminary analysis shows it is likely at risk to reliable
+> RCE.
+>
+> Criticality Reasoning
+> - ---------------------
+> Due to the way Python manages objects in memory, there are multiple ways to
+> craft a reliable exploit against python2.7 that will allow for RCE. It is
+> notable that Don A. Bailey designed his exploit to meet the following
+> conditions:
+>  - bypasses ASLR
+>  - bypasses NX
+>  - portable to any target architecture (tested on 32bit: ARM, x86)
+>  - no corresponding information disclosure is required to succeed, making
+>    this a 100% one-shot RCE for any python-lz4 use case
+>
+> Vulnerability Description
+> - -------------------------
+> An integer overflow can occur when processing any variant of a "literal run"
+> in the affected function. When certain payloads are processed, a pointer to
+> an output buffer can be set to an address outside of the output buffer. Since
+> the attacker can specify exact offsets in memory, it is very easy to create
+> a reliable RCE exploit.
+>
+> The design of internal Python memory objects facilitates exploitation by
+> allowing the attacker to manipulate how and when an object in memory will be
+> scrubbed. The garbage collector can be triggered later, or the cleanup of
+> an object can be performed at the attacker's will. This allows for an attack
+> to occur at any time once the payload has corrupted memory, making it more
+> difficult to identify whether an attack has already occurred.
+>
+> Vulnerability Resolution
+> - ------------------------
+> Resolved.
+>
+> References
+> - ----------https://github.com/steeve/python-lz4/commit/76c27bf5d52637b9a12de33b95bd884da2fed64dhttp://blog.securitymouse.com/2014/07/i-was-wrong-proving-lz4-exploitable.html
+>
+> #
+> #############################################################################
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG
+>
+> iQIcBAEBAgAGBQJTusUoAAoJEByNNxY/DGpEODoP/0ZYaN/QOiJhk2CSc7tWKdfj
+> wYRj3/A0m5/kAefqmgilfeC3NPCEv+CRD7AM07X5Rg/EyCGy4RvydQhPcun1UaDQ
+> Pn7gfYNIY2ysM1IMacDY5ujQrRf7GSHxWDrkViDXkfrJbYVUINgjhPqrtrx5T1ZS
+> k3UL+jdfUyEfYQfm4YPtVHnZJ01RPY4xRE+n/i7xGaVeNTSB3AaKqeKiCGeYAKXY
+> vyTE3PVnVdtTaHQ7XXDi9qRRd4PhNa8IISBvAaUERGNftKRPpbztWx7H1ACNy8cE
+> pnKL2AEjQyEwQeKoSNhafDMUzy/2cB8CJTsmq1iLK1TqsbPHLz3mOaLnW8meXd0i
+> IRXufZMBudu44cRoM1nc0XmwVykyxFQnbuxgpJofyv6wEAKj+dd/OfI/ZP6LJSV1
+> R9jbKNYMJj44UBgIeXn/HjeI/YUfhshZNj2sZrjtNd6RdAT8gUVJkXMkWbhS0Jmf
+> JDpmLu1HfMeI4BF4ylQukV/2enZHgLbJNut0E/V7pdxCKBhoX5of4YsLSLVDoJGQ
+> qntSw77UHXbcEMfevBXd6ZPG9TrcMw/vYVLhwUHfZrJWukteLyAw44p2afyw6wzw
+> EfMbceDxHBaj49QLvEVdAlJ8tF47ehIGHap7982vefHfcMqxTsrP9njMFtIVGouE
+> DRKkrldSf5S5HIPQo/xA
+> =HWn4
+> -----END PGP SIGNATURE-----
+>
 >
 
