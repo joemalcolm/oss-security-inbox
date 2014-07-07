@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/8
-Message-Id: <201402192211.s1JMBFI1011203@linus.mitre.org>
-Date: Wed, 19 Feb 2014 17:11:15 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/24
+Message-Id: <20140707181500.77CFB1A41139@me.com>
+Date: Mon,  7 Jul 2014 14:15:00 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem ciborg-3.0.0
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Title: Vulnerability Report for Ruby Gem ciborg-3.0.0
 
-> https://00f.net/2012/06/26/dnscache-poisoning-and-siphash/
-> https://github.com/pjps/ndjbdns/commit/16cb625eccbd68045737729792f09b4945a4b508
+Author: Larry W. Cashdollar, @_larry0
 
-This issue (or, in particular, its fix) is probably best considered a
-security improvement, with no CVE assignment. As far as we can tell,
-the code was attempting to implement and use djb33, and did actually
-implement and use djb33 without a "software mistake" in the
-traditional sense. Yes, we realize that there's a potentially
-important and potentially simple attack possibility that could have
-been avoided by not choosing djb33. That's not sufficient, however.
-Also, in this case, some aspects of making a better choice (e.g., with
-sufficiently fast and auditable pseudorandom hashing code) were
-probably not even understood in the research community at the time the
-software was originally written.
+Date: 06/01/2014
 
-CVE does, as a secondary form of inclusion, cover vulnerability
-advisories from a vendor who was the original author of a piece of
-software and publishes a change as a required security update. That is
-unlikely here; nobody is anticipating djbdns-1.06.
+OSVDB: 108586
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+CVE:Please Assign
 
-iQEcBAEBAgAGBQJTBSr/AAoJEKllVAevmvmslOcH/2B+Q7ZkFkn9thNarntNHzCF
-XNL5RXHb5vV5XA8KGdIrlzjFg5AisdUqQ+h+AzmWDrEHedm9jpuHkSBlH6iYvxFH
-s0wfbeP0T5kWHe//OHdniuQbVXGGztF1qKeKTeaVlzFpcTUdOgD4UomzYf8Uwbyk
-9VbaJVP4tSZoN572Lf94LBUVthiV/KAm+57BjGrNFZ9K4tniKvGVceVjuab7yDRE
-6160Dxpow7nD4ZWh/wJfxv6/Pr/6qrwjnps75rtfYGDhnp6JF1noRHZq/nxoAjN1
-9vP19dZsXla0dXAxFjLz9d4e8Dbcl/53XNUg7wP3JfSinOoc+lzwtHYFwQ+ghXo=
-=cfE8
------END PGP SIGNATURE-----
+Download: http://rubygems.org/gems/ciborg
+
+Gem Author:  commoncode@...otallabs.com
+
+From: ./ciborg-3.0.0/chef/travis-cookbooks/ci_environment/perlbrew/recipes/default.rb
+
+There is a /tmp file race condition when creating /tmp/perlbrew-installer if a malicious local user creates the file first they can overwrite the contents with their own code executing it as the ciborg process owner.
+
+014:  curl -s https://raw.github.com/gugod/App-perlbrew/master/perlbrew-install -o /tmp/perlbrew-installer
+15:  chmod +x /tmp/perlbrew-installer
+16:  /tmp/perlbrew-installer
+
+
+Advisory: http://www.vapid.dhs.org/advisories/ciborg-3.0.0.html
+
