@@ -1,48 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/8
-Message-ID: <20141018115921.34d5ad31@pc>
-Date: Sat, 18 Oct 2014 11:59:21 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/12
+Message-Id: <20140707181358.45E061A41139@me.com>
+Date: Mon,  7 Jul 2014 14:13:58 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem backup_checksum-3.0.23
 Content-Type: text/plain; charset=utf-8
 
-Am Fri, 17 Oct 2014 08:50:57 -0700
-schrieb Tim <tim-security@...tinelchicken.org>:
+Title: Vulnerability Report for Ruby Gem backup_checksum-3.0.23
 
-> It seems to be a better place to put HSTS-like information is the DNS.
+Author: Larry W. Cashdollar, @_larry0
 
-I hear this "we need to fix TLS/HTTPS with DNSSEC" a lot.
+Date: 06/01/2014
 
-There are a couple of difficulties with that:
-1. DNSSEC is currently mostly vapoware. At least since the kaminsky DNS
-attacks (2008!) I'm hearing "DNSSEC is coming". The reality is: it's
-not. Adoption is very rare today. This may change, but I don't see
-anyone rushing to DNSSEC.
-2. Even if DNSSEC would work: How exactly do you want a browser to
-check dnssec records? Should it have its own dns server? Because right
-now the usual setup is:
-* Provider runs DNS server
-* (sometimes) router is running a DNS server which is basically
-  forwarding requests to the provider DNS
-* Client has no own DNS, just queries router or provider DNS
+OSVDB: 108569
 
-Basically, the current situation doesn't really consider having DNSSEC
-verified on the client. This could of course be fixed by either having
-a local DNS resolver running or having the browsers ship their own DNS
-resolver. However that's a rather huge change and it will likely have
-some other implications (portal pages come to mind) - and I don't see
-anybody working on this.
+CVE:Please Assign
 
-That said: I wouldn't entirely throw the idea away of using dnssec to
-increase tls security. But it's not something we can do today or any
-time soon.
+Download: http://rubygems.org/gems/backup_checksum
 
--- 
-Hanno Böck
-http://hboeck.de/
+Gem Author:  lukasz.kaniowski@...il.com
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+From: ./backup_checksum-3.0.23/lib/backup/cli/utility.rb
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Lines 178 exposes the password to the process table, their is also remote command injection points if this gem is used in the context of a rails application as the user input isn't properly sanitized for #{password}.
+
+0175-          base64   = options[:base64] ? -base64 : 
+176-          password = options[:password_file] ? "-pass file:#{options[:password_file]}" : 
+177-          salt     = options[:salt] ? -salt : 
+178:          %x[openssl aes-256-cbc -d #{base64} #{password} #{salt} -in #{options[:in]} -out #{options[:out]}]
+179-        when gpg
+180:          %x[gpg -o #{options[:out]} -d #{options[:in]}]
+181-        else
+182-          puts "Unknown encryptor: #{options[:encryptor]}"
+183-          puts "Use either openssl or gpg."
+--
+220-          puts "Please wait..\n\n"
+222-        end
+223-      end
+224-
+
+
+Advisory: http://www.vapid.dhs.org/advisories/backup_checksum-3.0.23.html
+
