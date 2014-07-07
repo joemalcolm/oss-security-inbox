@@ -1,27 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/6
-Message-Id: <20140203035536.11599200F2@smtp.hushmail.com>
-Date: Mon, 03 Feb 2014 03:55:35 +0000
-From: "mancha" <mancha1@...h.com>
-To: solar@...nwall.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/9
+Message-Id: <20140707181338.B23F81A41139@me.com>
+Date: Mon,  7 Jul 2014 14:13:38 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem cap-strap-0.1.5
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 03 Feb 2014 03:45:27 +0000 "Solar Designer" wrote:
+Title: Vulnerability Report for Ruby Gem cap-strap-0.1.5
 
->Rather than post via Gmane's NNTP gateway, can you please reply
->to this message with the files MIME-attached, or include the files
->in message body with some sort of delimiters (e.g. Phrack-style)?
->
->Thanks,
->
->Alexander
+Author: Larry W. Cashdollar, @_larry0
 
-Hushmail screws up replies so this will likely not show up in the
-right hierarchy. Nonetheless, files promised attached.
+Date: 06/01/2014
 
---mancha
-Download attachment "Makefile" of type "application/octet-stream" (224 bytes)
+OSVDB: 108575
 
-Download attachment "nox32recvmmsg.c" of type "application/octet-stream" (2287 bytes)
+CVE:Please Assign
+
+Download: http://rubygems.org/gems/cap-strap
+
+Gem Author:  aaronjensen@...il.com
+
+From: ./cap-strap-0.1.5/lib/cap-strap/helpers.rb
+
+User supplied input isn't properly sanitized for #{user} and #{password} This can lead to command injection if this gem is used in the context of a rails application.
+
+Secondly the password is exposed to the process table listing.   The password crypt hash is also going to have the same 'sa' salt every time.
+
+022-def create_user(user, password)
+23-  unless user_exists?(user)
+24-    command = "useradd -s /bin/bash -d /home/#{user}"
+25:    command << " -p `perl -e print crypt(#{password}, salt)`" unless password.empty?
+26-    command << " -m #{user}"
+27-    run "#{sudo} #{command}"
+28-  end
+
+
+Advisory: http://www.vapid.dhs.org/advisories/cap-strap-0.1.5.html
+
+Title: Vulnerability Report for Ruby Gem cap-strap-0.1.5
+
+Author: Larry W. Cashdollar, @_larry0
+
+Date: 06/01/2014
+
+OSVDB: 108575
+
+CVE:Please Assign
+
+Download: http://rubygems.org/gems/cap-strap
+
+Gem Author:  aaronjensen@...il.com
+
+From: ./cap-strap-0.1.5/lib/cap-strap/helpers.rb
+
+User supplied input isn't properly sanitized for #{user} and #{password} This can lead to command injection if this gem is used in the context of a rails application.
+
+Secondly the password is exposed to the process table listing.   The password crypt hash is also going to have the same 'sa' salt every time.
+
+022-def create_user(user, password)
+23-  unless user_exists?(user)
+24-    command = "useradd -s /bin/bash -d /home/#{user}"
+25:    command << " -p `perl -e print crypt(#{password}, salt)`" unless password.empty?
+26-    command << " -m #{user}"
+27-    run "#{sudo} #{command}"
+28-  end
+
+
+Advisory: http://www.vapid.dhs.org/advisories/cap-strap-0.1.5.html
+
