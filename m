@@ -1,63 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/12
-Message-ID: <20140326230731.GZ21794@core.inversepath.com>
-Date: Thu, 27 Mar 2014 00:07:31 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2014-003] LibYAML input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/23
+Message-Id: <20140707181454.F372F1A41139@me.com>
+Date: Mon,  7 Jul 2014 14:14:54 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem lynx-0.2.0
 Content-Type: text/plain; charset=utf-8
 
+Title: Vulnerability Report for Ruby Gem lynx-0.2.0
 
-#2014-003 LibYAML input sanitization errors
+Author: Larry W. Cashdollar, @_larry0
 
-Description:
+Date: 06/01/2014
 
-The LibYAML project is an open source YAML 1.1 parser and emitter written in
-C.
+OSVDB: 108579
 
-The library is affected by a heap-based buffer overflow which can lead to
-arbitrary code execution. The vulnerability is caused by lack of proper
-expansion for the string passed to the yaml_parser_scan_uri_escapes()
-function.
+CVE:Please Assign
 
-A specially crafted YAML file, with a long sequence of percent-encoded
-characters in a URL, can be used to trigger the overflow.
+Download: http://rubygems.org/gems/lynx
 
-Affected version:
+Gem Author:  pan.thomakos@...il.com
 
-LibYAML <= 0.1.5
+From: ./lynx-0.2.0/lib/lynx/pipe/get.rb
 
-Fixed version:
+Doesn't properly sanitize user input before sending to command line: 
 
-LibYAML >= 0.1.6
+From: lynx/blob/master/lib/lynx/pipe/run.rb
+module Lynx
+  module Pipe
+    class Run < Basic
+      def perform(command)
+        system(command.to_s)
+      end
+    end
+  end
+end
 
-Credit: vulnerability report received from Ivan Fratric of the
-        Google Security Team.
+Exposes password to the process table
+From:lynx/blob/master/lib/lynx/command/basic.rb
 
-CVE: CVE-2014-2525
+@command << "--password=#{config.password}" if config.password
 
-Timeline:
+04-  module Pipe
+6-      def perform(command)
+7:        `#{command}`.strip
+8-      end
+9-    end
+10-  end
 
-2014-03-11: vulnerability report received
-2014-03-14: maintainer provides patch for review
-2014-03-17: reporter confirms patch
-2014-03-17: disclosure coordinated on 2014-03-26
-2014-03-18: contacted affected vendors
-2014-03-18: assigned CVE
-2014-03-26: LibYAML 0.1.6 released
-2014-03-26: advisory release
 
-References:
-http://pyyaml.org/wiki/LibYAML
-https://bitbucket.org/xi/libyaml/commits/bce8b60f0b9af69fa9fab3093d0a41ba243de048
+Advisory: http://www.vapid.dhs.org/advisories/lynx-0.2.0.html
 
-Permalink:
-http://www.ocert.org/advisories/ocert-2014-003.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
