@@ -1,45 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/1
-Message-Id: <20141023043008.5B737C50B61@smtptsrv1.mitre.org>
-Date: Thu, 23 Oct 2014 00:30:08 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: smarty: secure mode bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/22
+Message-Id: <20140707181436.B67C71A41139@me.com>
+Date: Mon,  7 Jul 2014 14:14:36 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem karo-2.3.8
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Title: Vulnerability Report for Ruby Gem karo-2.3.8
 
-> Can a CVE be assigned for the following smarty issue: upstream
-> released new version 3.1.21:
-> 
-> > Smarty 3.1.21 Released Oct 18, 2014
-> > Smarty 3.1.21 minor bug fixes and improvements. Also following up a
-> > security bug fix where <script language="php"> tags still worked in
-> > secure mode. To note, this only affects users using Smarty in secure
-> > mode and exposing templates to untrusted third parties.
-> 
-> https://code.google.com/p/smarty-php/source/browse/trunk/distribution/change_log.txt?r=4902
-> https://bugs.debian.org/765920
-> 
-> {literal}<{/literal}script language=php>echo 1+1;</script>
+Author: Larry W. Cashdollar, @_larry0
 
-Use CVE-2014-8350.
+Date: 06/01/2014
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+OSVDB: 108573
 
-iQEcBAEBAgAGBQJUSINZAAoJEKllVAevmvmsUZMH/jStJjghvRVAX4RijuoQ5Tuk
-ar0fNY4h8A8x/wb/Q7yfA06//uvPJeeUz6B1kptYnq6H+quBMm4JuWZSs1dRrjDi
-TJVmoNx4+bPPCfbaEsZfbX59HaDLf5rtDfeq1XeV+mHX7FgmuDcImDSsAjlra+Ko
-2ixpC6NZG8ii58mikQial1wWlbvguCqkZPvV4KdkXbly+CEiA4/y4AIXEbAmSZyB
-oyDNkZdpOHrF5FoHWIqsTOysTvQaaC0jnJbuC9wvyPaOLJS39ZgRi7pVvz7UYv/r
-HvLTwoPJB9UmS/DeKV2nstkk+BpRJy+JqXITvwRGNl8FAIvxfxiRJAzLAQFNzzE=
-=3ELY
------END PGP SIGNATURE-----
+CVE:Please Assign
+
+Download: http://rubygems.org/gems/karo
+
+Gem Author:  rahul.trikha@...il.com
+
+From: ./karo-2.3.8/lib/karo/db.rb
+
+Line 76 and 95 passes unsanitized user supplied input to the command line.  If this gem is used in the context of a rails application malicious input could lead to remote command injection.
+
+073-      host = "#{@...figuration["user"]}@#{@...figuration["host"]}"
+74-      cmd  = "ssh #{host} cat #{server_db_config_file}"
+75-
+76:      server_db_config_output = `#{cmd}`
+79-
+--
+89-    def drop_and_create_local_database(local_db_config)
+90-      command = case local_db_config["adapter"]
+91-      when "mysql2"
+93-      when "postgresql"
+95-          dropdb -h #{local_db_config["host"]} -U #{local_db_config["username"]} --if-exists #{local_db_config["database"]}
+
+
+Advisory: http://www.vapid.dhs.org/advisories/karo-2.3.8.html
+
