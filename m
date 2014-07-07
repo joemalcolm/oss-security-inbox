@@ -1,38 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/2
-Message-Id: <201406260020.s5Q0KLMc001531@linus.mitre.org>
-Date: Wed, 25 Jun 2014 20:20:21 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: piwigo before 2.6.3 sql injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/10
+Message-Id: <20140707181347.A44BC1A41139@me.com>
+Date: Mon,  7 Jul 2014 14:13:47 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Title: Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
 
-The unspecified vulnerability "[security] security failure reported
-and fixed by Christopher Chrapka, ojezu.org" in
-http://piwigo.org/releases/2.6.3 is assigned CVE-2014-4648.
+Author: Larry W. Cashdollar, @_larry0
 
-The SQL injection that was apparently first identified in 2.6.2 and
-(thus far) only fixed in 2.7.0beta2 (see the
-http://piwigo.org/bugs/view.php?id=3089 page) is assigned
-CVE-2014-4649.
+Date: 06/01/2014
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+OSVDB: 108582
 
-iQEcBAEBAgAGBQJTq2aPAAoJEKllVAevmvmsMwAH/Rejl52Ahj5KKrCr5oAkpWaR
-QJtsBTFQbFGBg36aV9NnG13GLcrfHWVoLORwSr6M6W9UvslQQAA09fHfWlzj8hH9
-9Ed19JIF9PFJhfb3NVs2BwpcC2Jq5tuPEBHKZ/zP+DSP4SgKo7v8UUpkNGCAa4A4
-fL4jdfn8o4AW6laH2tZt7PlXxFsf2SW+PF4QqUT0aYbQrMqWrS7g+eNZQQB4LjwR
-SsRPo8pPGW+5fGOxjwU1e5TcekbnPGOymhzHdHx/3vIzWiIlh5pQ5bvG/OXPTed/
-CWwQ66VxYKGXQ0Uw43QT6USZY2/oyW1nGcjTq2H8oudg/KW+QJG/f1htOrawXr8=
-=+pZa
------END PGP SIGNATURE-----
+CVE:Please Assign
+
+Download: http://rubygems.org/gems/codders-dataset
+
+Gem Author:  codders@...omonkey.org.uk
+
+From: ./codders-dataset-1.3.2.1/lib/dataset/database/postgresql.rb
+
+Lines 18 and 24 expose the password to the process table, and are vulnerable to command injection if used in the context of a rails application. The #{@...rname} and #{@...sword} variables aren't properly sanitized before being passed to the command line.
+
+015-      
+16-      def capture(datasets)
+17-        return if datasets.nil? || datasets.empty?
+18:        `pg_dump -c #{@...abase} > #{storage_path(datasets)}`
+19-      end
+20-      
+21-      def restore(datasets)
+22-        store = storage_path(datasets)
+23-        if File.file?(store)
+24:          `psql -U #{@...rname} -p #{@...sword} -e #{@...abase} < #{store}`
+25-          true
+26-        end
+27-      end
+
+
+Advisory: http://www.vapid.dhs.org/advisories/codders-dataset-1.3.2.1.html
+
