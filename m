@@ -1,19 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/6
-Message-ID: <CACYkhxiOxE0VhxE6iWqsO-GjWVn6EYeg4us1oEn6O8KU6ZdbdA@mail.gmail.com>
-Date: Mon, 7 Jul 2014 23:59:26 +1000
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/3
+Message-Id: <201407070351.s673pnd5019301@linus.mitre.org>
+Date: Sun, 6 Jul 2014 23:51:49 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: default cipher suites in curl
+Cc: cve-assign@...re.org
+Subject: Re: CVE request for commons-beanutils: 'class' property is exposed, potentially leading to RCE
 Content-Type: text/plain; charset=utf-8
 
-On 7 July 2014 22:05, Marcus Meissner <meissner@...e.de> wrote:
->> This will only happen when the server either doesn't support stronger
->> ciphers or when the server requests it's cipher order be honoured and
->> chooses export ciphers first.   An attacker can't trigger this with SSLv3
->> or TLS.
->
-> I was more thinking of a man in the middle attack during the connection
-> setup.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-That only works with SSLv2.   SSLv3 and TLSv1 won't allow this.
+> From: David Jorm <djorm@...hat.com>
+> I have now assigned CVE-2014-3540
+
+MITRE has not yet recognized this as a CVE assignment. A further
+explanation will follow.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTuhfgAAoJEKllVAevmvmsD8EH/i0FFJz1dl0KEvulIkmRd6bY
+Ezq681Wmq3IgQsZjWlc+2JriBGxIThylyD+qMZopB537x+yXIvpGA4b/bzuY1P68
+0BjLz646duYEN5mqhR8VqZC5kp8lREt6srNpazQoZEYxhb30Fy7TXHgQwO3qKlOo
+73N1/yL0nwZlCb0yUo/paphBxnYOR7AQh9KhammIjmDfpEc9TsITjp9xzAdNZjfU
+AvEjmoGzdyI9er/CyxWIYy0dTVn5lD782Xc/eScd3+SCMLCM0YyTriXXZyQyxXqI
+o2EMp+P0gMtlQDiu0hvK68efHyHMbR28GhYvdaMNxouB0X9mgbQWpglpGV4VnTM=
+=Vizk
+-----END PGP SIGNATURE-----
