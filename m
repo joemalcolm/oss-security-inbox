@@ -1,76 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/9
-Message-ID: <CAKcmtDw_z2woYUNvk17RPEfDmUJ3spTxSN6B-Y57T+9g9idApg@mail.gmail.com>
-Date: Fri, 28 Mar 2014 10:25:00 -0700
-From: Chris Steipp <csteipp@...imedia.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/20
+Message-Id: <20140707181452.0AE3C1A41139@me.com>
+Date: Mon,  7 Jul 2014 14:14:52 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem lawn-login-0.0.7
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 28, 2014 at 8:56 AM, Florent Daigniere <
-florent.daigniere@...stmatta.com> wrote:
+Title: Vulnerability Report for Ruby Gem lawn-login-0.0.7
 
-> On Fri, 2014-03-28 at 08:33 -0700, Chris Steipp wrote:
-> > On Mar 28, 2014 7:54 AM, "Florent Daigniere" <
-> > florent.daigniere@...stmatta.com> wrote:
-> > >
-> > > Sorry to be thick here but it still doesn't make any sense to me...
-> > >
-> > > The session-id should be renewed upon login AND any
-> credential/privilege
-> > > change (that includes password changes). This protects against session
-> > > fixation attacks (where the attacker coerce a user into using a session
-> > > he controls).
-> > >
-> > > On these pages, there's usually no need for anti-CSRF protection as
-> they
-> > > tend to require credentials (something the attacker, by definition,
-> > > doesn't have).
-> >
-> > Slightly different attack. The attacker (who knows their own password and
-> > chooses the reset-to password) was able to cause a logged out user
-> (victim)
-> > to login with the attacker's account via the change password form.
-> >
->
-> That is the textbook example of a session-fixation attack. The "end
-> state" is that the victim uses a session the attacker can control.
->
+Author: Larry W. Cashdollar, @_larry0
 
-Except that it has very little to do with the user's session. We can (and
-do) refresh the user's session id as part of the login process. We could
-refresh the user's session every time the user visits that form, and the
-PoC on the bug would still work.
+Date: 06/01/2014
 
-The PoC on the bug shows that a non mediawiki domain can make a POST to the
-mediawiki domain to login an anonymous user as the attacker.  Using the
-definition from owasp, "CSRF is an attack which forces an end user to
-execute unwanted actions on a web application in which he/she is currently
-authenticated" this satisfies the part that an attacker is taking unwanted
-action on behalf of the victim. If you want to argue that "logging in" is
-inherently an action by an unauthenticated user and so it doesn't meet they
-"in which he/she is currently authenticated" then I'm happy to not call
-this CSRF. However we did call the same attack a "login CSRF" for the
-nearly identical issue CVE-2010-1150 and a very similar CVE-2012-5394.
+OSVDB: 108576
+
+CVE:Please Assign
+
+Download: http://rubygems.org/gems/lawn-login
+
+Gem Author:  mike.skalnik@...il.com
+
+From: ./lawn-login-0.0.7/lib/lawn.rb
+
+Line 24 exposes the password to the process table via the #{password} variable.   If this Gem is used in the context of a rails application it maybe possible to inject commands remotely into the shell as these variables are not sanitized.
+
+021-  end
+22-  
+23-  def login(username, password)
+24:    `curl -s -f -F username=\#{username}\ -F password=\#{password}\ -F iss=\false\ -F output=\binary\ https://auth.lawn.gatech.edu/index.php`
+25-  end
+26-end
 
 
-
->
-> > This attack is somewhat specific to mediawiki since we allow users to
-> > define JavaScript that will be loaded on pages they visit while logged
-> > in... So the victim in this case would run the attacker's personal
-> > JavaScript.
-> >
->
-> It still doesn't make sense. Anti-CSRF tokens are only useful if the
-> "malicious script" is not running with the same origin!
->
-
-I think I threw you off here-- this is just one reason why an attacker
-might want to do this. It's tangential to the actual flaw we fixed.
-
-
->
-> Florent
->
+Advisory: http://www.vapid.dhs.org/advisories/lawn-login-0.0.7.html
 
