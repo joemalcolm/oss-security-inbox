@@ -1,103 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/5
-Message-ID: <54929FE9.8060907@treenet.co.nz>
-Date: Thu, 18 Dec 2014 22:35:37 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/5
+Message-ID: <20140707120556.GB7007@suse.de>
+Date: Mon, 7 Jul 2014 14:05:56 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+Subject: Re: default cipher suites in curl
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 18/12/2014 9:24 p.m., Lionel Debroux wrote:
+On Mon, Jul 07, 2014 at 12:46:42PM +1000, Michael Samuel wrote:
+> Hi,
 > 
-> In addition to what I wrote earlier: PaX contains several hundreds
-> of lines of hunks dealing with local variables needlessly made
-> static: ============================== ---
-> linux-3.17.6/drivers/mfd/max8925-i2c.c +++
-> linux-3.17.6-pax/drivers/mfd/max8925-i2c.c @@ -152,7 +152,7 @@
-> static int max8925_probe(struct i2c_clie const struct i2c_device_id
-> *id) { struct max8925_platform_data *pdata =
-> dev_get_platdata(&client->dev); -    static struct max8925_chip
-> *chip; +    struct max8925_chip *chip; struct device_node *node =
-> client->dev.of_node;
+> On 2 July 2014 01:44, Marcus Meissner <meissner@...e.de> wrote:
+> > Clients using the library could however set ciphers via
+> > an option, but as it would work without, they might not have.
 > 
-> if (node && !pdata) {
+> This will only happen when the server either doesn't support stronger
+> ciphers or when the server requests it's cipher order be honoured and
+> chooses export ciphers first.   An attacker can't trigger this with SSLv3
+> or TLS.
+
+I was more thinking of a man in the middle attack during the connection
+setup.
+
+> > Should it get a CVE?
 > 
-> (the first reference to the "chip" variable in that function is an 
-> unconditional devm_kzalloc)
+> If a weak cipher was negotiated, it's because the server preferred this and
+> the client didn't care.  There's no trust boundary crossed.
 
+" ... and the client did not care" is I think the point here.
 
-NP: I have not looked at either version of code outside the thread
-here. Just responding to your statement of needless...
+curl in that form would accept all weak ciphers.
 
+> An argument could be made that the clients would rather not establish a
+> connection at all than negotiate a weak cipher.  Not sure if that counts for
+> CVE or just hardening?
 
-The above sounds to me like the author wanted the alloc to only happen
-once, lazily on first use and remain allocated until the kerel or
-module was released. Or perhapse they wanted data in it to persist
-between calls.
+Thats my question here :)
 
-Neither of those cases is necessarily needless. But its utility does
-depend on how often the function is called. Saving a handful of rare
-event allocations per kernel lifetime is almost needless (unless they
-happen to all occur in a batch at some critical point). Saving
-thousands per second is very much useful.
+> Either way, this is a workaround for an OpenSSL bug.
 
-In the former case security is best served by removing the static, in
-the latter it is served by ensuring the struct content is fully
-cleaned or revalidated before use in each call.
-
-
-- From my long experience lurking on some of the mainline dev lists ...
-in order to get such "trivial" patches merged you will have to justify
-that you at least considered and investigated which cases like the
-above was the cause of the codes current form. And what the effect of
-the proposed change would be in both the security and performance arenas.
- People using PaX code are trusting that they have done the analysis,
-but that very code not being in mainline means there is possibly no
-hard proof of that. PaX may have decided that a huge performance
-penalty for some odd-ball drivers was worth some minor security gain
-for everybody.
-
-
-> ============================== or local structs which are not meant
-> to be modified and should therefore probably be made static /
-> static const (mainline doesn't use the GCC plugin for
-> constification): ============================== ---
-> linux-3.17.6/arch/arm/mach-omap2/wd_timer.c +++
-> linux-3.17.6-pax/arch/arm/mach-omap2/wd_timer.c @@ -110,7 +110,9 @@
-> static int __init omap_init_wdt(void) struct omap_hwmod *oh; char
-> *oh_name = "wd_timer2"; char *dev_name = "omap_wdt"; -    struct
-> omap_wd_timer_platform_data pdata; +    static struct
-> omap_wd_timer_platform_data pdata = { +        .read_reset_sources
-> = prm_read_reset_sources +    };
-> 
-> if (!cpu_class_is_omap2() || of_have_populated_dt()) return 0; @@
-> -121,8 +123,6 @@ static int __init omap_init_wdt(void) return
-> -EINVAL; }
-> 
-> -    pdata.read_reset_sources = prm_read_reset_sources; - pdev =
-> omap_device_build(dev_name, id, oh, &pdata, sizeof(struct
-> omap_wd_timer_platform_data)); WARN(IS_ERR(pdev), "Can't build
-> omap_device for %s:%s.\n", ==============================
-> 
-
-Now *that* does just appear to be a gratuitous cleanup / performance
-booster. Not security related.
-
-If there is a security angle to it I have an interest in learning what
-that is exactly. Implicit NULL'ing by the compiler?
-
-AYJ
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-
-iQEcBAEBAgAGBQJUkp/pAAoJELJo5wb/XPRjn6UH+gOROtCMf3KEmeI2BOwr5d+O
-aY9G49rs3BvxPFo8DkEjU4ON3QdlO+inhAFDYW/dYbjK7eJsl+OvMaDGZxZbFJMw
-BBAXf5fuS4gMLeLyTke8GEp9OfUjxWN8FAzlIFf9ueLLSZfevvJ9aHWEgu732TAf
-vu926kCnakoI4jiytAV+Tig8XRkljHTlEKhKIFknfIssLvAc5ffrQW38MmtZpj8c
-29dt1GMQ1AIVhi50FjTRMeTubjGzNNQvUsNub0G5D8Q/6yOKUYoQUxqIVUidExN6
-IlueeBS1J+ElNNtFcCV1Y9rGllL60N5kdHi9/SFS6PhE4vMkKaSC2bY7/rB8gSI=
-=FRUD
------END PGP SIGNATURE-----
+Ciao, Marcus
