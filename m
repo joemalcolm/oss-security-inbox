@@ -1,27 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/13
-Message-ID: <20141119095409.654e70be@127>
-Date: Wed, 19 Nov 2014 09:54:09 -0800
-From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
-To: oss-security@...ts.openwall.com
-Subject: Re: Location of OS security audit reports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/11
+Message-Id: <20140707181355.4D8E31A41139@me.com>
+Date: Mon,  7 Jul 2014 14:13:55 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem backup-agoddard-3.0.28
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 17 Nov 2014 10:52:29 +0700
-Nguyen Cong <cong.nguyenthe@...hiba-tsdv.com> wrote:
+Title: Vulnerability Report for Ruby Gem backup-agoddard-3.0.28
 
-> Is this what you want?
-> http://www.cvedetails.com/top-50-vendors.php
+Author: Larry W. Cashdollar, @_larry0
 
-Interesting and sort-of but no not really, but I appreciate the
-pointer and thank you.
+Date: 06/01/2014
 
-I see you're in Vietnam is there anything at all like a non-western
-OS in use there? Or anywhere in that part of the world? I must be
-naive but I thought I was just lacking information. It doesn't
-seem possible that there are only "western" OSs on the entire
-planet. Although my problem might just be that my definition of
-OS is all wrong.
+OSVDB: 108578
+
+CVE:Please Assign
+
+Download: http://rubygems.org/gems/backup-agoddard
+
+Gem Author:  anthony@...honygoddard.com
+
+From: ./backup-agoddard-3.0.28/lib/backup/cli/utility.rb
+
+Lines 178 and 180 exposed the password to the process table, they are also remote command injection points if this gem is used in the context of a rails application as the user input isn't properly sanitized.
+
+0175-          base64   = options[:base64] ? -base64 : 
+176-          password = options[:password_file].empty? ?  : "-pass file:#{options[:password_file]}"
+177-          salt     = options[:salt] ? -salt : 
+178:          %x[openssl aes-256-cbc -d #{base64} #{password} #{salt} -in #{options[:in]} -out #{options[:out]}]
+179-        when gpg
+180:          %x[gpg -o #{options[:out]} -d #{options[:in]}]
+181-        else
+182-          puts "Unknown encryptor: #{options[:encryptor]}"
+183-          puts "Use either openssl or gpg."
+--
+224-          puts "Please wait..\n\n"
+226-        end
+227-
+228-        if options[:installed]
+230-        end
+231-      end
+232-
 
 
+Advisory: http://www.vapid.dhs.org/advisories/backup-agoddard-3.0.28.html
 
