@@ -1,44 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/4
-Message-ID: <20140509131133.GA17772@kludge.henri.nerv.fi>
-Date: Fri, 9 May 2014 16:11:33 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/2
+Message-ID: <CACYkhxgo2-hoBHXPikQCu6gdTN6wuM9fmsc-2xTaU9saVmP5mg@mail.gmail.com>
+Date: Mon, 7 Jul 2014 12:46:42 +1000
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Denial of Service attacks against Dovecot v1.1+
+Subject: Re: default cipher suites in curl
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-Can I get CVE identifier for DoS attacks against Dovecot v1.1+, thank you.
+On 2 July 2014 01:44, Marcus Meissner <meissner@...e.de> wrote:
+> Clients using the library could however set ciphers via
+> an option, but as it would work without, they might not have.
 
-http://permalink.gmane.org/gmane.mail.imap.dovecot/77499
+This will only happen when the server either doesn't support stronger
+ciphers or when the server requests it's cipher order be honoured and
+chooses export ciphers first.   An attacker can't trigger this with SSLv3
+or TLS.
 
-"""
-There's an upper limit to how many IMAP/POP3 connections can exist that haven't logged in (and separate
-limits for post-login). Normally when this limit is reached, the oldest connection gets disconnected.
-There is of course some potential to try to DoS Dovecot by doing a lot of IMAP/POP3 connections, but because
-the oldest connection always gets destroyed this requires quite a lot of activity from the attacker.
+> Should it get a CVE?
 
-This "destroy oldest connection" however hasn't been working in v1.1+ releases for connections that have
-started SSL/TLS handshake, but haven't finished it. So an attacker could just do a bunch of TCP
-connections to port 993 and leave them hanging around and Dovecot would pretty quickly reach the upper
-limit without being able to disconnect any of the oldest connections.
+If a weak cipher was negotiated, it's because the server preferred this and
+the client didn't care.  There's no trust boundary crossed.
 
-Here are patches to fix this:
+An argument could be made that the clients would rather not establish a
+connection at all than negotiate a weak cipher.  Not sure if that counts for
+CVE or just hardening?
 
-http://hg.dovecot.org/dovecot-2.2/rev/41622541a7a3
-http://hg.dovecot.org/dovecot-2.1/rev/b7ac23b4d339
-http://hg.dovecot.org/dovecot-2.0/rev/48f90e7e92dc
-http://hg.dovecot.org/dovecot-1.2/rev/8ba4253adc9b
-http://hg.dovecot.org/dovecot-1.1/rev/fe0e6550585c
+Either way, this is a workaround for an OpenSSL bug.
 
-The fix will be in v2.2.13. Maybe also in v2.1.18 if I decide to release it. For older releases you need to
-patch it yourself.
-
-For people who are using dovecot-ee releases the fix is also in v2.2.12.12 and v2.1.7.7 releases.
-"""
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Regards,
+  Michael
