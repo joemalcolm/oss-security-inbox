@@ -1,47 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/15/3
-Message-Id: <201401151228.s0FCSMJ0018351@linus.mitre.org>
-Date: Wed, 15 Jan 2014 07:28:22 -0500 (EST)
-From: cve-assign@...re.org
-To: speiro@....upv.es
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: assorted kernel infoleak security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/16
+Message-Id: <20140707181421.69FDE1A41139@me.com>
+Date: Mon,  7 Jul 2014 14:14:21 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem point-cli-0.0.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Title: Vulnerability Report for Ruby Gem point-cli-0.0.1
 
-> - [PATCH] farsync: fix info leak in ioctl
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=96b340406724d87e4621284ebac5e059d67b2194
+Author: Larry W. Cashdollar, @_larry0
 
-Use CVE-2014-1444.
+Date: 06/01/2014
+
+OSVDB: 108577
+
+CVE:Please Assign
+
+Download: http://rubygems.org/gems/point-cli
+
+Gem Author:  adam@...chmedia.com
+
+From: ./point-cli-0.0.1/lib/commands/setup.rb
+
+Line 19 exposes the username and password combination to the process table.  If this Gem is used in the context of a rails application it is possible to remotely inject commands if the #{username} and #{password} are supplied by the user.
+
+016-  
+18-  
+19:  command = "curl -q -s -u \"#{username}:#{password}\" #{Point.site}/api_key"
+20-  if `#{command}` =~ /(\w{40})/
+21:    api_key = $1
+22-  else
+23-    puts "\e[31mAccess was denied or the server was unavailable. Please check your username & password is correct.\e[0m"
+24-    Process.exit(1)
+25-  end
+26-  
+27:  config_json = {:username => username, :apitoken => api_key}.to_json
+28-  File.open($point_config_file, w) { |f| f.write(config_json)}
+29-  puts "\e[32mConfiguration was successfully saved to #{$point_config_file}\e[0m"
+30-end
 
 
-> - [PATCH] wanxl: fix info leak in ioctl
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2b13d06c9584b4eb773f1e80bbaedab9a1c344e1
+Advisory: http://www.vapid.dhs.org/advisories/point-cli-0.0.1.html
 
-Use CVE-2014-1445.
-
-
-
-> - [PATCH] hamradio/yam: fix info leak in ioctl
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8e3fbf870481eb53b2d3a322d1fc395ad8b367ed
-
-Use CVE-2014-1446.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS1n39AAoJEKllVAevmvmsfHEIAK5ooGPxepk0Hcd1V0qVrPsl
-IYa2O398TsB+85ar+0NndzFtVSuUidJFTnpZy9fZ/gR4a25K8KUF6WqjiksEBhwR
-e7PqntAgXLwHBAJJeHvii3xFN8QNy0MRKvq9yKtA5If2PgA4BhZZ/o/SkoHz0Td3
-jJ8iWI49aeWVpuTm8RabFNom4xoC7ASC64xZ/FoEPOD/U1mtIO3/E8zI+KhAeP+m
-ao7fNTjnR4b/etasFoBh0W9fxUDk698sJe3Xffysj7VVoRU3qJmSv86s2W7UFNqv
-2NTl9Vzd1EF3BYRjLJxNN17ijQnFJktGfi09lRGxhWtkL5wDIOKD31r3iY6cxxM=
-=B9LN
------END PGP SIGNATURE-----
