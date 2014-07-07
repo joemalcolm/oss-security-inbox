@@ -1,36 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/8
-Message-ID: <54A1B237.9080203@internot.info>
-Date: Tue, 30 Dec 2014 06:57:43 +1100
-From: Joshua Rogers <honey@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request(s): GnuPG 2/GPG2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/21
+Message-Id: <20140707181441.943C41A41139@me.com>
+Date: Mon,  7 Jul 2014 14:14:41 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem kcapifony-2.1.6
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Title: Vulnerability Report for Ruby Gem kcapifony-2.1.6
 
-I found multiple vulnerabilities in GPG2.
-Could some CVE-ID(s) be assigned please.
-Patches were provided by multiple people.
+Author: Larry W. Cashdollar, @_larry0
 
+Date: 06/01/2014
+
+OSVDB: 108572
+
+CVE:Please Assign
+
+Download: http://rubygems.org/gems/kcapifony
+
+Gem Author:  roderik.van.der.veer@...stmaan.be
+
+From: ./kcapifony-2.1.6/lib/ksymfony1.rb
+
+Lines 482, 484, 522 and 524 expose the password to the process table via the #{config['pass']} variable.  If this Gem is used in the context of a rails application it maybe possible to inject commands remotely by supplying special shell meta characters like ; and & via #{config['user']} and #{config['pass']}.
+
+
+0479-      FileUtils::mkdir_p("backups")
+480-      case config[type]
+481-      when mysql
+482:        `mysqldump -u#{config[user]} --password=\"#{config[pass]}\" #{config[db]} > #{tmpfile}`
+483-      when pgsql
+484:        `pg_dump -U #{config[user]} --password=\"#{config[pass]}\" #{config[db]} > #{tmpfile}`
+485-      end
+486-      File.open(tmpfile, "r+") do |f|
 --
-Double free in scd/command.c:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773471
-
-Double free in sm/minip12.c:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773472
-
-
-These two seem related in code:
-Return after free in sm/gpgsm.c:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773473
-Return after free in dirmngr/ldapserver.c:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773523
---
-
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
+519-      
+520-      case config[type]
+521-      when mysql
+522:        `mysql -u#{config[user]} --password=\"#{config[pass]}\" #{config[db]} < backups/#{sqlfile}`
+523-      when pgsql
+524:        `psql -U #{config[user]} --password=\"#{config[pass]}\" #{config[db]} < backups/#{sqlfile}`
+525-      end
+526-      FileUtils.rm("backups/#{sqlfile}")
+527-    end
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Advisory: http://www.vapid.dhs.org/advisories/kcapifony-2.1.6.html
+
