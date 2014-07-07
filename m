@@ -1,28 +1,160 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/29
-Message-ID: <20140924195545.GG16787@gremlin.ru>
-Date: Wed, 24 Sep 2014 23:55:45 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/17
+Message-Id: <20140707181429.9B93B1A41139@me.com>
+Date: Mon,  7 Jul 2014 14:14:29 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem kompanee-recipes-0.1.4
 Content-Type: text/plain; charset=utf-8
 
-On 24-Sep-2014 21:39:37 +0200, Pierre Schweitzer wrote:
+Title: Vulnerability Report for Ruby Gem kompanee-recipes-0.1.4
 
- > Naive question regarding statement below. Does that mean that
- > exec*() system calls are concerned as well (like for instance
- > called from a fork())?
+Author: Larry W. Cashdollar, @_larry0
 
-Only execve() is a system call, all other (execl, execlp, execle,
-execv, execvp) are just front-ends for it. And, obviously, yes -
-they may pass unsane environment to the executed process.
+Date: 06/01/2014
 
- > On 24/09/2014 18:23, Michal Zalewski wrote:
+OSVDB: 108593
 
-- Because it messes up the order in which people normally read text.
-- Why top-posting is considered the most annoying thing in messages?
+CVE:Please Assign
+
+Download: http://rubygems.org/gems/kompanee-recipes
+
+Gem Author:  accounts+rubygems@...kompanee.com
+
+From: ./kompanee-recipes-0.1.4/lib/kompanee-recipes/heroku.rb
+
+If this Gem is used in the context of a Rails application it maybe possible for a remote user to inject commands into the shell via #{password} #{user} #{deploy_name} #{application} variables if that data is user supplied.
 
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+032-      task :install do
+33:        `heroku domains:add #{deploy_name}`
+34-      end
+35-
+37-        Removes the domain for the application from the Heroku server.
+39-      task :remove do
+40:        `heroku domains:remove #{deploy_name}`
+41-      end
+42-
+43-      namespace :addon do
+--
+47-        task :install do
+48:          `heroku addons:add custom_domains:basic`
+49-        end
+50-
+54-        task :remove do
+55:          `heroku addons:remove custom_domains:basic`
+56-        end
+57-      end
+58-    end
+--
+87-        [internal] Creates a Heroku credentials file.
+89-      task :create do
+90:        `if [ ! -d #{heroku_credentials_path} ]; then mkdir -p #{heroku_credentials_path}; fi`
+91:        `echo #{user} > #{heroku_credentials_file}`
+92:        `echo #{password} >> #{heroku_credentials_file}`
+93-      end
+94-
+96-        [internal] Switches the credentials file to either the current use or the
+99-      task :switch do
+--
+119-      restart the application.
+121-    task :default do
+122:      `git push heroku #{branch}`
+123-      deploy.migrate
+124-      deploy.restart
+125-    end
+--
+128-      Restarts the application.
+130-    task :restart do
+131:      `heroku restart`
+132-    end
+133-
+135-      Runs the migrate rake task.
+137-    task :migrate do
+138:      `heroku rake db:migrate`
+139-    end
+140-
+--
+144-    namespace :rollback do
+145-      task :default do
+146:        `heroku rollback`
+147-        deploy.restart
+148-      end
+149-    end
+--
+151-    namespace :web do
+152-      desc "Removes the maintenance page to resume normal site operation."
+153-      task :enable do
+154:        `heroku maintenance:off`
+155-      end
+156-
+158-      task :disable do
+159:        `heroku maintenance:on`
+160-      end
+161-    end
+162-
+--
+169-
+170-      heroku.domain.install
+171-
+173-      deploy.default
+174-    end
+175-  end
+--
+177-  namespace :website do
+179-    task :install do
+180:      `heroku create #{application}`
+181-    end
+182-
+183-    desc "Completely removes application from Heroku"
+184-    task :remove do
+185:      `heroku destroy --confirm #{application}`
+186-    end
+187-  end
+188-
+189-  namespace :db do
+191-    task :drop do
+192:      `heroku pg:reset`
+193-    end
+194-
+195-    namespace :backup do
+197-      task :default do
+198:        `heroku pgbackups:capture`
+199-      end
+200-
+201-      namespace :addon do
+--
+205-        task :install do
+206:          `heroku addons:add pgbackups:basic`
+207-        end
+208-
+212-        task :remove do
+213:          `heroku addons:remove pgbackups:basic`
+214-        end
+215-      end
+216-    end
+--
+219-    task :reset_and_seed do
+221-      db.backup
+222:      `heroku pg:reset`
+223:      `heroku rake db:seed`
+224-    end
+225-
+226-    desc "Seed database"
+227-    task :seed do
+229-      db.backup
+230:      `heroku rake db:seed`
+231-    end
+232-  end
+233-
+235-  task :shell do
+236:    `heroku shell`
+237-  end
+238-
+240-  task :invoke do
+242-  end
+243-end
+
+
+Advisory: http://www.vapid.dhs.org/advisories/kompanee-recipes-0.1.4.html
+
