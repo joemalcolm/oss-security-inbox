@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/2
-Message-Id: <20140912003251.CC07534E00A@smtpvbsrv1.mitre.org>
-Date: Thu, 11 Sep 2014 20:32:51 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: ioflo tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/13
+Message-Id: <20140707181403.2DAAF1A41139@me.com>
+Date: Mon,  7 Jul 2014 14:14:03 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem gyazo-1.0.0
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Title: Vulnerability Report for Ruby Gem gyazo-1.0.0
 
-> cProfile.runctx('skedder.run()', globals(), locals(), statfilepath)
-> And boom goes the file that got linked to.
+Author: Larry W. Cashdollar, @_larry0
 
-This perhaps is likely but your message doesn't show that a symlink
-attack can occur. Your message doesn't discuss what code ultimately
-uses the statfilepath pathname, or whether the open call for that
-pathname uses O_EXCL|O_CREAT. The following might possibly be relevant
-to this missing information:
+Date: 06/01/2014
 
-  http://hg.python.org/cpython/file/2.7/Lib/profile.py
-  def dump_stats(self, file):
-      f = open(file, 'wb')
+OSVDB: 108563
 
-We'll let you fill in the details.
+CVE:Please Assign
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Download: http://rubygems.org/gems/gyazo
 
-iQEcBAEBAgAGBQJUEj3vAAoJEKllVAevmvms4iAIAKQ9umu+PRuqQu3Qkt7O+TGw
-3L6ySYOw0Pu9lY93Z8aaWP89jr0jIwK2LMtqoLcdedlp9B9pwuB7U+vGHEXUvDL4
-Q9IZMH8h4ysJqC7vJiTU/Txhjm33S9xwd5gGkS0Zxco2toIROfXmhUlJHcICWPgK
-9HqXST8GjUXdz7Xv25stRHRcLEYsP+Kp479NZ8tkaKagTbLDz5Zqcnz+bOj12U4r
-3AZfKy/bWOFuV/33M21OMZ/60PLjgb3jL7cJ3Jb6lJrcJIjIPuf1ooz+16fMN8z4
-xd+z07R+5toTZjdyepTWIca33sJzrj2GQ1qQ2G24YAs8DJIGcKnn2qsL4VF5QeQ=
-=bp/N
------END PGP SIGNATURE-----
+Gem Author:  masui@...ecan.com
+
+From: ./gyazo-1.0.0/lib/gyazo/client.rb
+
+If this Gem is used in the context of a rails app a malicious user may inject commands via #{imagefile} and
+#{tmpfile} using shell meta characters like ; and sending an escaped \".
+
+0through the #{imagefile} name if the raw option is not set.  Also file names are time based and predictable leading
+to file clobbering vulnerabilities as the running process username.
+ 57       unless opts[:raw]
+ 58         tmpfile = "/tmp/gyazo_upload_#{Time.now.to_i}_#{Time.now.usec}.png"
+ 59         if File.exist? imagefile
+ 60           system "sips -s format png \"#{imagefile}\" --out \"#{tmpfile}\" > /dev/null"
+ 61         end
+ 62       end
+
+
+Advisory: http://www.vapid.dhs.org/advisories/gyazo-1.0.0.html
+
