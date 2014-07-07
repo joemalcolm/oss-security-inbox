@@ -1,109 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/9
-Message-ID: <20140129121607.Horde.SEQpsfCTNHs9l-gYKvkKMQ1@neo.wg.de>
-Date: Wed, 29 Jan 2014 12:16:07 +0100
-From: Jan Schneider <jan@...de.org>
-To: Murray McAllister <mmcallis@...hat.com>
-Cc: oss-security@...ts.openwall.com, Pedro Ribeiro <pedrib@...il.com>, Salvatore Bonaccorso <carnil@...ian.org>, Seth Arnold <seth.arnold@...onical.com>, security@...ian.org, security@...ntu.com, security@...de.org
-Subject: Re: Remote code execution in horde < 5.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/6
+Message-ID: <CACYkhxiOxE0VhxE6iWqsO-GjWVn6EYeg4us1oEn6O8KU6ZdbdA@mail.gmail.com>
+Date: Mon, 7 Jul 2014 23:59:26 +1000
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: default cipher suites in curl
 Content-Type: text/plain; charset=utf-8
 
+On 7 July 2014 22:05, Marcus Meissner <meissner@...e.de> wrote:
+>> This will only happen when the server either doesn't support stronger
+>> ciphers or when the server requests it's cipher order be honoured and
+>> chooses export ciphers first.   An attacker can't trigger this with SSLv3
+>> or TLS.
+>
+> I was more thinking of a man in the middle attack during the connection
+> setup.
 
-Zitat von Murray McAllister <mmcallis@...hat.com>:
-
-> On 01/29/2014 11:10 AM, Murray McAllister wrote:
->> On 01/28/2014 09:10 PM, Pedro Ribeiro wrote:
->>> Hi,
->>>
->>> There is a remote code execution bug in horde affecting all versions from
->>> at least horde 3.1.x to 5.1.1.
->>> This has been fixed in commit
->>> https://github.com/horde/horde/commit/da6afc7e9f4e290f782eca9dbca794f772caccb3
->>>
->>> Also check changelog
->>> https://github.com/horde/horde/blob/82c400788537cfc0106b68447789ff53793ac086/bundles/groupware/docs/CHANGES#L215
->>>
->>>
->>> Can you please assign a CVE for this issue?
->>>
->>> Thanks in advance.
->>>
->>> PS: while I discovered this bug independently reviewing horde3 code, the
->>> full credit should go to the horde maintainers as they discovered and
->>> fixed
->>> it first on horde5.
->>>
->>> Regards
->>> Pedro
->>>
->>
->> Morning,
->>
->> In Fedora there is horde and php-horde-Horde-Util:
->>
->> http://koji.fedoraproject.org/koji/buildinfo?buildID=446660
->> http://koji.fedoraproject.org/koji/buildinfo?buildID=449705
->>
->> I am not familiar with Horde or know the difference between those
->> packages, whether one is an older version and the other providing
->> equivalent functionality to version 5. The github commit in the original
->> message is in php-horde-Horde-Util for us.
->>
->> The same vulnerability is in our horde package too, but I could not find
->> this (horde-3.3.13/lib/Horde/Variables.php) in github:
->>
->> 21 class Variables {
->> 22
->> 23     var $_vars;
->> 24     var $_expectedVariables = array();
->> 25
->> 26     function Variables($vars = array())
->> 27     {
->> 28         if (is_null($vars)) {
->> 29             $vars = Util::dispelMagicQuotes($_REQUEST);
->> 30         }
->> 31         if (isset($vars['_formvars'])) {
->> 32             $this->_expectedVariables =
->> @unserialize($vars['_formvars']);
->> 33             unset($vars['_formvars']);
->> 34         }
->> 35         $this->_vars = $vars;
->>
->> Mailing here in case anyone else is shipping in a similar way (or if
->> another CVE is needed?).
->>
->> Cheers,
->>
->> --
->> Murray McAllister / Red Hat Security Response Team
->
-> As noted by Remi Collet at [1]:
->
-> ""horde" is the old application (version 3) build from a single  
-> tarball (but still available in the repository)
->
-> horde is now distributed via a pear channel and split in ~100 packages.
->
-> php-pear-Horde-Util 2.3.0 (with this fix) is already in the  
-> repository (but not yet used as pear-horde-horde 5.1.5 is still  
-> under  review)."
->
-> Sorry for the noise!
->
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=1059000#c3
->
-> --
-> Murray McAllister / Red Hat Security Response Team
-
-Packagers, please note that applying only this patch will break all  
-forms in Horde. The changed serialization method need to be used in  
-the Horde_Form package too.
-This is happening since Horde_Form 2.0.5 and introduced with this commit:
-https://github.com/horde/horde/commit/acf67ab4a633037849aca9e4a7592465b999ad93
-
--- 
-Jan Schneider
-The Horde Project
-http://www.horde.org/
-https://www.facebook.com/hordeproject
-
+That only works with SSLv2.   SSLv3 and TLSv1 won't allow this.
