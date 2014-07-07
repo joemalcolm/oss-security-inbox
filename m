@@ -1,33 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/14/5
-Message-ID: <534BC918.8020904@canonical.com>
-Date: Mon, 14 Apr 2014 07:40:08 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: rsync denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/4
+Message-ID: <53BA7CEF.8040009@apache.org>
+Date: Mon, 07 Jul 2014 12:56:47 +0200
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
+To: user@...cope.apache.org, dev@...cope.apache.org, announce@...che.org,  "security@...che.org" <security@...che.org>, full-disclosure@...ts.grok.org.uk, bugtraq@...urityfocus.com,  oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2014-3503 Apache Syncope
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-Ryan Finnie discovered that rsync 3.1.0 contains a denial of service issue when
-attempting to authenticate using a nonexistent username. A remote attacker could
-use this flaw to cause a denial of service via CPU consumption.
-
-Bug reports:
-https://bugzilla.samba.org/show_bug.cgi?id=10551
-https://bugs.launchpad.net/ubuntu/+source/rsync/+bug/1307230
-
-Fix:
-https://git.samba.org/?p=rsync.git;a=commitdiff;h=0dedfbce2c1b851684ba658861fe9d620636c56a
 
 
-Could a CVE please be assigned to this issue?
-
-Thanks,
-
-Marc.
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+View attachment "cve-2014-3503.txt.asc" of type "text/plain" (1408 bytes)
