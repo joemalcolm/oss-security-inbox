@@ -1,40 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/9
-Message-ID: <54826DC2.6080104@gmail.com>
-Date: Fri, 05 Dec 2014 21:45:22 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/15
+Message-Id: <20140707181406.529E81A41139@me.com>
+Date: Mon,  7 Jul 2014 14:14:06 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem gnms-2.1.1
 Content-Type: text/plain; charset=utf-8
 
-On 05/12/14 07:55 PM, Pavel Labushev wrote:
-> On Fri, 5 Dec 2014 14:15:03 -0800
-> Reed Loden <reed@...dloden.com> wrote:
-> 
->> For the record, Mozilla tried it several months ago and had to back it out.
->>
->> "Nautilus (the file manager) can't open PIE executables, which makes
->> distributing PIE executable essentially impossible."
-> 
-> Like it's essentially impossible to invoke the target ET_DYN binary via
-> a shell script or an ET_EXEC executable wrapper.
+Title: Vulnerability Report for Ruby Gem gnms-2.1.1
 
-Yup, it's a pretty lame excuse.
+Author: Larry W. Cashdollar, @_larry0
 
-Firefox is only looking at using ASLR for the first time in 2014, and it
-lost to supporting the workflow of opening Nautilus, navigating to some
-directory and double-clicking the binary (could just be a wrapper...)
-rather than using the .desktop file (or the CLI, or $LAUNCHER) or
-shipping a script for this.
+Date: 06/01/2014
 
-It's sad. Even if GNOME decides to add another hack to make this work,
-it'll be 6 months to get it released and another 2-3 years before
-Mozilla considers using it.
+OSVDB: 108594
 
-Meanwhile, plenty of other corporations (Valve, Google, [...]) are
-shipping PIE binaries without trouble - their user-facing app launchers
-even have icons, i18n and more in Nautilus, because they're not raw
-binaries.
+CVE:Please Assign
+
+Download: http://rubygems.org/gems/gnms
+
+Gem Author:  david.maciejak@...il.com
+
+From: ./gnms-2.1.1/lib/cmd_parse.rb
+
+The #{ip} variable isn't properly sanitized and can lead to remote command injection if a malicious user specifies an IP address with shell meta characters like ; and &. 
+
+0Command injection via #{ip} in ping and other functions.
+147-    lp=""
+148-    nmap_version = $config.nmap_vers.to_f()
+149-    if nmap_version >= 6.0 
+150:      lp=`#{$config.nmap_path} -sU -sT #{ip} --host_timeout 60 2>/dev/null| grep open | grep "^[0-9]"`
+151-    else
+152-      if nmap_version > 0.0
+153:        lp=`#{$config.nmap_path} -sU -sT #{ip} --host_timeout 60000 2>/dev/null| grep open | grep "^[0-9]"`
+154-      end
+155-    end
+177-# Return mac adress of the ip if in local arp table
+178-#
+179-def mac_tablelocal(ip)
+180:        `ping -c 1 -W 1 #{ip}`
+181:	lp=`arp -n #{ip} | grep #{ip} | awk {print $3;}`
+182-	#there is no entry
+183-	if lp.chomp == "--"
+184-	  lp=""
+232-def ping (ip)
+233:	pip=`#{$config.ping_path} #{ip} -c 1 -n -W 4 2>/dev/null | grep ^64`
+234-	return pip!=""
+235-end
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Advisory: http://www.vapid.dhs.org/advisories/gnms-2.1.1.html
+
