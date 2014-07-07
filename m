@@ -1,25 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/36
-Message-ID: <542458A4.3070702@canonical.com>
-Date: Thu, 25 Sep 2014 14:02:12 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/14
+Message-Id: <20140707181415.A68911A41139@me.com>
+Date: Mon,  7 Jul 2014 14:14:15 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem VladTheEnterprising-0.2
 Content-Type: text/plain; charset=utf-8
 
-On 14-09-25 01:49 PM, Huzaifa Sidhpurwala wrote:
-> Hi All,
-> 
-> Based on the current situation and the fact that there is confusion about what
-> patch to use for the bash issue. I wanted to post this here.
-> 
-> We have found a few more issues (OOB memory access). Also I am posting Florain's
-> patch here which should fix the issue in a more deeper way rather than just
-> apply duct-tape.
+Title: Vulnerability Report for Ruby Gem VladTheEnterprising-0.2
 
-Thanks for posting these!
+Author: Larry W. Cashdollar, @_larry0
 
-Marc.
+Date: 06/01/2014
+
+OSVDB: 108728
+
+CVE:Please Assign
+
+Download: http://rubygems.org/gems/VladTheEnterprising
+
+Gem Author:  mlwelles@...il.com
+
+From: ./VladTheEnterprising-0.2/lib/vlad/dba/mysql.rb
+
+The mysql root password can be read out of /tmp/my.cnf.#{target_host} if a local user waits to read that after it is written and before it is removed in line 394.
+
+It is also possible to clobber files owned by the  VladTheEnterprising user process via symlink attack because the my.cnf.#{target_host} doesn't have a randomly created filename.
+
+If this Gem is used in the context of a rails application and the user is allowed to specify the target host command injection can occur at line 394 if special shell meta characters are injected like ; and &.
+
+0384-      cnf << "host     = localhost\n"
+385-      cnf << "user     = root\n"
+386-      cnf << "password = #{mysql_root_password}\n"
+387:      File.open("/tmp/my.cnf.#{target_host}", "w") do |file|
+388-        file.write(cnf)
+389-      end
+390:      scp "/tmp/my.cnf.#{target_host}", ".my.cnf"
+391-    end
+392-
+393-    remote_task :remove_dot_my_cnf, :roles => :new_slave do
+394:      `rm /tmp/my.cnf.#{target_host}; exit 0`
+395-      run "rm -f .my.cnf; exit 0"
+396-    end
+397-
+--
+599-           :mysql_err => "/var/log/mysql.err",
+600-           :my_cnf => lambda { "/etc/mysql/conf.d/#{shortname}.cnf" },
+601-           :my_src_cnf => lambda { "files/mysql/configs/#{shortname}.cnf" },
+602:           :my_tmp_cnf => lambda { "/tmp/my.cnf-#{version}"},
+603-           :my_dest_cnf => lambda { my_cnf },
+604-           :mysql_config_nfs_copy => lambda { true },
+605-           :mysql_config_copy => lambda {
 
 
+Advisory: http://www.vapid.dhs.org/advisories/VladTheEnterprising-0.2.html
 
