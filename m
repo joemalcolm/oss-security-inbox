@@ -1,61 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/19/2
-Message-ID: <20140119124833.GA8740@kludge.henri.nerv.fi>
-Date: Sun, 19 Jan 2014 14:48:33 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: more info on "radiotap: bitmap-end-finding buffer overrun"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/8
+Message-Id: <20140707181341.5CA2F1A41139@me.com>
+Date: Mon,  7 Jul 2014 14:13:41 -0400 (EDT)
+From: larry0@...com (Larry W. Cashdollar)
+To: <oss-security@...ts.openwall.com>
+Subject: Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 17, 2014 at 12:50:55PM +0100, Raphael Geissert wrote:
-> Hi,
-> 
-> I was wondering if anyone has more info on the following commit:
-> https://github.com/torvalds/linux/commit/bd02cd2549cfcdfc57cb5ce57ffc3feb94f70575
-> 
-> AFAICS it is a different issue than CVE-2013-7027.
-> 
-> A web search points to the following Secunia advisory, but not much else:
-> http://secunia.com/community/advisories/56282
-> 
-> (not asking for a CVE at this time)
-> 
-> Cheers,
-> -- 
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
+Title: Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
 
-Johannes Berg replied:
+Author: Larry W. Cashdollar, @_larry0
 
-"""
-It's not important at all in the current code base, let me explain why I think so.
+Date: 06/01/2014
 
-The only (current) user of this code is the mac80211 injection code, so you
-already need permission to create raw sockets, which I believe is usually
-equivalent to root permissions.
+OSVDB: 108583
 
-With that aside, let's assume you build and manage to send a packet specifically
-to hit this particular issue. By nature of the issue, this packet must consist
-solely of a radiotap header, with header extension bitmap and at most 3 bytes of
-data. The latter is crucial as otherwise the bitmap would just overlap the data
-and you can't cause the invalid read. Now this means that your packet is really
-just the size of the fixed radiotap header, plus 3 bytes at most, so at most 11
-bytes.
+CVE:Please Assign
 
-Let's also say that the length field in your radiotap header is 8 (the minimum),
-which doesn't matter for the parser but does for the surrounding code. As a
-result, the checking code in ieee80211_monitor_start_xmit() will see that there
-are at least 2 more bytes after the radiotap header, and treat them as the
-802.11 frame control field. Regardless of the contents of those two bytes,
-ieee80211_hdrlen() will return at least 10.
+Download: http://rubygems.org/gems/codders-dataset
 
-Since 10 + 8 (the radiotap length we put into the packet) is far bigger than 11,
-I believe you can't even trigger the invalid read, since the packet will be
-dropped as invalid before the real radiotap parser is even initialized (i.e. the
-previously buggy code invoked.)
-"""
+Gem Author:  codders@...omonkey.org.uk
 
----
-Henri Salo
+From: ./codders-dataset-1.3.2.1/lib/dataset/database/mysql.rb
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Lines 18 and 24 expose the password to the process table, and are vulnerable to command injection if used in the context of a rails application.  The #{@...rname} and #{@...sword} variables aren't properly sanitized before being passed to the command line.
+
+015-      
+16-      def capture(datasets)
+17-        return if datasets.nil? || datasets.empty?
+18:        `mysqldump -u #{@...rname} --password=#{@...sword} --compact --extended-insert --no-create-db --add-drop-table --quick --quote-names #{@...abase} > #{storage_path(datasets)}`
+19-      end
+20-      
+21-      def restore(datasets)
+22-        store = storage_path(datasets)
+23-        if File.file?(store)
+24:          `mysql -u #{@...rname} --password=#{@...sword} --database=#{@...abase} < #{store}`
+25-          true
+26-        end
+27-      end
+
+
+Advisory: http://www.vapid.dhs.org/advisories/codders-dataset-1.3.2.1.html
+
