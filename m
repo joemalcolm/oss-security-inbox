@@ -1,54 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/02/7
-Message-Id: <201405022033.s42KXCN8017238@cvs.openbsd.org>
-Date: Fri, 02 May 2014 14:33:12 -0600
-From: Theo de Raadt <deraadt@....openbsd.org>
-To: kseifried@...hat.com
-cc: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, theo@....openbsd.org
-Subject: Re: CVE Request: OpenSSL NULL pointer dereference in do_ssl3_write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/15
+Message-ID: <53BC6D93.4070109@amacapital.net>
+Date: Tue, 08 Jul 2014 15:15:47 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
-> On 05/02/2014 09:30 AM, Marc Deslauriers wrote:
-> > Hello,
-> > 
-> > A null pointer dereference bug was discovered in so_ssl3_write().
-> > An attacker could possibly use this to cause OpenSSL to crash,
-> > resulting in a denial of service.
-> > 
-> > http://rt.openssl.org/Ticket/Display.html?user=guest&pass=guest&id=3321
-> >
-> >  
-> > http://anoncvs.estpak.ee/cgi-bin/cgit/openbsd-src/commit/lib/libssl?id=e76e308f1fab2253ab5b4ef52a1865c5ffecdf21
-> >
-> >  
-> > http://ftp.openbsd.org/pub/OpenBSD/patches/5.5/common/005_openssl.patch.sig
-> >
-> >  Could a CVE please be assigned to this issue?
-> > 
-> > Thanks,
-> > 
-> > Marc.
-> > 
+On 07/05/2014 12:35 PM, Solar Designer wrote:
+> Andy, all -
 > 
-> I think getting this one a CVE is time critical. Mitre: sorry if this
-> causes a duplicate, but I'm assigning a CVE now. Please use
-> CVE-2014-0198 for this issue. Also cc'ing Theo so OpenBSD gets
-> notified for sure. Speaking of which Theo: should we get you or an
-> OpenBSD deputy (Bob Beck?) onto distros@?
+> On Sat, Jul 05, 2014 at 10:25:47PM +0400, Solar Designer wrote:
+>> "x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
+> [...]
+>> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
+> 
+> BTW, I'm not convinced it's such a good idea to allow setting RIP to
+> exactly TASK_SIZE_MAX just because user code could run to that address
+> (this was Andy's rationale).  Imagine that TASK_SIZE_MAX is ever set
+> such that it's the very first non-canonical address.  If user code
+> simply runs to that address, it gets a user mode fault.  However, if the
+> kernel tries to set user RIP to that address via SYSRET, it'll get #GP
+> while still in kernel mode - exactly the problem we're trying to fix.
+> 
+> So when fixing the problem in this way, or when including this as a
+> hardening measure along with forcing the IRET path as well, I'd prefer
+> to allow only "< TASK_SIZE_MAX", not "<= TASK_SIZE_MAX".
 
-"So OpenBSD gets notified for sure"... That is kind of weird.  Read
-the commit message.  It is originally from the OpenSSL lists.  Do none
-of you read the lists?  It's obvious the OpenSSL developers don't.
+In the event that anyone changes TASK_SIZE_MAX to equal the first
+non-canonical address, then this is the least of your worries: someone
+can put a syscall instruction at the very last canonical address, and
+game over.
 
-The errata would have gone out same day Ted commited the fix, except I
-was in the Atlas mountains... and then it was forgotten until I got
-back home.
+This bug affected a lot of operating systems a few years ago, but AFAIK
+Linux was never vulnerable.
 
-I'm sure you've all got your "processes" for handling these things.
-But then you get paid for handling these things in some way, don't
-you?
-
-We don't get paid.  And therefore, I don't know where I should find
-the time to be on another mailing list.  It is not like I would have
-sent a mail to anyone.  In general our processes are simply commit &
-publish.  So I'll decline.
+--Andy
