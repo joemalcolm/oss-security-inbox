@@ -1,55 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/12
-Message-ID: <5404F7F5.8060609@fifthhorseman.net>
-Date: Mon, 01 Sep 2014 18:49:25 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-CC: Werner Koch <wk@...pg.org>, pkg-gnupg-maint@...ts.alioth.debian.org
-Subject: Re: gpg blindly imports keys from keyserver responses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/18
+Message-ID: <53BC763E.8050004@redhat.com>
+Date: Tue, 08 Jul 2014 16:52:46 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org, zf-security@...d.com
+Subject: Zend Framework CVEs
 Content-Type: text/plain; charset=utf-8
 
-On 09/01/2014 02:33 PM, Thijs Kinkhorst wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Stefan Tomanek reported to Debian that GnuPG accepts any key as a response 
-> from a keyserver, regardless of whether that key was actually requested:
-> https://bugs.debian.org/725411
-> 
-> There's some discussion about the issue; we believe that the primary way to 
-> verify key ownership is still the web of trust and manual fingerprint 
-> verification. It is however argued that as a user, requesting keys based on 
-> specifying the full fingerprint is a safe way to retreive a key for a known-
-> good fingerprint. But this argument is again somewhat countered by an attack 
-> on V3 keys which allows generating such fingerprints, making such a request 
-> dubious again.
+As I understand Zend it's a BSD style license, so Open Source, so
+posting here, CC'ing upstream and Mitre. Can we please get CVE's for:
 
-v3 keys themselves are a hazard because of this fingerprinting forgery,
-but i think that's a separate issue.  But it's not possible to generate
-a v3 fingerprint that matches a full v4 fingerprint because the length
-of the fingerprint differs (v3 fingerprint is 128 bits, v4 is 160 bits).
+http://framework.zend.com/security/advisory/ZF2014-04
+ZF2014-04: Potential SQL injection in the ORDER implementation of
+Zend_Db_Select
 
-So in some sense, it is reasonable to suggest that when requesting a
-given key from the keyservers explicitly by fingerprint, users should be
-able to rely on gnupg only adding *that key* (and the related OpenPGP
-certificate) to the local keyring, if the remote keyserver provides a
-matching key.
+http://framework.zend.com/security/advisory/ZF2014-03
+ZF2014-03: Potential XSS vector in multiple view helpers
 
-However, there are two problems: the most common situation where the
-keyservers are queried by key (rather than by user id) is upon receipt
-of a signed message that they can't verify.  In this case, the only
-thing the client has access to is the issuer id (the low 64 bits of the
-fingerprint) which is not a particularly strong indicator (see recent
-64-bit keyid collisions published by David Leon Gil).
+http://framework.zend.com/security/advisory/ZF2014-02
+ZF2014-02: Potential security issue in login mechanism of ZendOpenId
+and Zend_OpenId consumer
 
-Additionally, the "and related OpenPGP certificate" part is problematic,
-even with correctly-functioning keyservers, because anyone could upload
-a certificate with another pre-existing key as its subkey.  A
-well-behaving keyserver would be forced to return both the "legitimate"
-certificate and the certificate with the extra subkey.
+http://framework.zend.com/security/advisory/ZF2014-01
+ZF2014-01: Potential XXE/XEE attacks using PHP functions:
+simplexml_load_*, DOMDocument::loadXML, and xml_parse
 
-So avenues for third parties to force undesirable keys on users exist
-even with this streamlining.
+===
 
-	--dkg
+There are some CVE's for 2013 Zend issues, I haven't checked the
+mapping to/from the Zend advisories.
+
+http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=zend
+
+http://framework.zend.com/security/advisory/ZF2013-01
+http://framework.zend.com/security/advisory/ZF2013-02
+http://framework.zend.com/security/advisory/ZF2013-03
+http://framework.zend.com/security/advisory/ZF2013-04
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJTvHY+AAoJEBYNRVNeJnmTkNUQAMdyWWFujlInezhKS/WVmnyn
+MOlCXikvO0x/cveqKcb1cBYaaWwSWjEw9Q2Yd19+VyV+FZ4Sk8F3v+FllRIq8Yxt
+88K44XLKOjFhjzwqIKEsaqzNPfQckjoJ51ekEdiD6GlQ3MAtjuRGIRryVqOF3Je3
+ir5qfyQNp9dHjU67HsJ2p2LBk6LvwSe/QSMIYmkhvReEQcuL5F5nhk53IjvYZbCO
+uupZmjOZnjFoZ/XnKTnDdWeJ4hRcuYZd9edjbbCcPU8j7lw/w4D6p6AMq12+JQFY
+V4vReQh31Y38MpewlaTi84fWb6eR3M3g4aPk8YSTzN8hL1tkjmEe2ayNPQDpgV0q
+1Uf8+KTFK6JSDCKzVEZNr540V1rFh2WfPBzMbO5Qvqj9MFV9Dw6PylgTnX/LH6IT
+A3pfYszDb4TRwb7tp+Imdqz+I9odAg+N4q7WxFlBk+EbOEM8scd2jIvgvqDixh2T
+KWyZPU7Mveqzf/0+BwDmoG6tpeGBADJyiY2ZwFSMr55B0v72nVraDeCDM1l4p/QY
+mXjPa3dGGSJCfn5BaJoZ6wt1DRsDE7ZcON0RrCi4lr3Hb/RoXbLHNroqZYKghrBH
+lIz7cc6k3WQZGg+L9foMvv02nfG9VYlO3k2D1XcSkx+mBKIcVwhkb/lxxg8qPy42
+MVs/F3unXP4Ir5ST6Y2K
+=Xsd6
+-----END PGP SIGNATURE-----
