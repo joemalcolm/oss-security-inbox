@@ -1,49 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/25/3
-Message-ID: <1395743744.6294.40.camel@kazak.uk.xensource.com>
-Date: Tue, 25 Mar 2014 10:35:44 +0000
-From: Ian Campbell <Ian.Campbell@...rix.com>
-To: <cve-assign@...re.org>
-CC: <security@....org>, <oss-security@...ts.openwall.com>
-Subject: Re: Xen Security Advisory 90 - Linux netback crash trying to disable due to malformed packet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/10
+Message-Id: <201407081836.s68IaX7O002273@linus.mitre.org>
+Date: Tue, 8 Jul 2014 14:36:33 -0400 (EDT)
+From: cve-assign@...re.org
+To: phk@....freebsd.dk
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2014-03-24 at 15:47 -0400, cve-assign@...re.org wrote:
-> > XSA-90
-> 
-> > it tries to disable the interface ... This involves taking a mutex ...
-> > sleeping is not allowed ... The end result is that the backend domain
-> > (often, Dom0) crashes with "scheduling while atomic". Malicious guest
-> > administrators can cause denial of service.
-> 
-> Use CVE-2014-2580.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks.
+> https://www.varnish-cache.org/docs/trunk/reference/varnishd.html
+> auto_restart
+>   Units: bool
+>   Default: on
+> Restart child process automatically if it dies.
 
-> > This bug was publicly reported on xen-devel, before it was appreciated
-> > that there was a security problem. The public mailing list thread
-> > nevertheless contains information strongly suggestive of a security
-> > bug, and a different security bug (with CVE) is suggested as seeming
-> > "similar".
-> 
-> We didn't happen to notice a CVE ID of a similar bug within xen-devel.
 
-The first mail in the thread (<5324B182.70905@...rok.net>) had a link to
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=701744#88 which was a
-bug relating to CVE-2013-0216.
+> https://www.varnish-cache.org/docs/trunk/reference/vcl.html
+> Backend definition
+> host (mandatory)
+>   The host to be used. IP address or a hostname that resolves to a
+>   single IP address.
 
-> In some cases, we would use that bug's CVE ID (if available) within a
-> "NOTE:" sentence at the end of a new vulnerability's CVE description.
-> 
-> http://lists.xen.org/archives/html/xen-devel/2014-03/msg02707.html
-> says "by removing these checks we are introducing a way for a
-> malicious or buggy guest to trigger misbehaviour in the backend,
-> leading to e.g. a DoS" but we haven't tried to track down whether that
-> is directly applicable.
+Is it a supported configuration if auto_restart is off, and this
+hostname is specified using a DNS domain name?
 
-This was review of a separate patch unrelated to the bug in question.
+It seems that, if an attacker is occasionally successful at DNS
+spoofing (or spoofing at another level) and can thus trigger even one
+use of a rogue backend server, there's a long-lived denial of service.
+This is a denial of service caused by a well-defined attack against an
+issue in the Varnish code (an issue with no CVE ID at present).
 
-HTH,
+(It's not an interesting case if the attacker controls the domain name
+or is regularly successful in spoofing. The attacker could then
+trigger long-term use of nonexistent backend servers: from the end
+user's perspective, this isn't much different from a disruption of
+Varnish itself. And, presumably, it's even worse because the attacker
+could instead decide to provide wrong content instead of no content.)
 
-Ian.
+> By definition Varnish must explicitly and implicitly trust the
+> backend HTTP server
 
+With many realistic network designs, there isn't 100% assurance that
+this trusted server is always the actual origin of network traffic
+that appears to be from this server, and has a malicious HTTP header.
+Thus, it seems that you are trusting data for which it's essentially
+impossible to know whether this data originated inside of your
+security boundary.
+
+Still, this may be the security policy that you want to have. In other
+words, maybe what you are offering is sustained operation only in the
+case of a network infrastructure that's 100% impervious to a spoofing
+attack that succeeds for an instant of time. If there shouldn't be CVE
+assignments, would it be possible to update your documentation so that
+"auto_restart off" is labeled as a known risk for long-lived DoS
+conditions?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTvDmrAAoJEKllVAevmvmsG2gH/jFi8ju4yGdwqEh6paEWUdWY
+Mu1VPqBOxVJFsAGovRiQsXOdUaKAn1kyEw5uMUbCJo4/Zo+N8MAcGfm+wNNNRit2
+BeJCgE85O+OeluD67iyHazNRCkYgmtUboLdDpefs0BHGG0v+3cm3RU5WajLETL1B
+ChwQ6Kvxym3+/Cd+m92Ii6od5sAQDzh/5Cc0ypr4zaTU6hCR+qdaE7Wr2vG/yZe0
+hGdRkS6AU1Wcg3p15JVLCoLvqwQefhPccvgISvX/Y7Wz0piOlN5ZzhgrmzJut1bX
+Davr3Sy60Yf70iiR1db5MMWxx0EiK1jdioeD07uOkTb3z3OTH7PM0IHGkc23m5o=
+=6UYy
+-----END PGP SIGNATURE-----
