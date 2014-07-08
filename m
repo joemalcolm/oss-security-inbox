@@ -1,120 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/25/1
-Message-Id: <E1WSQEn-0000fB-Ad@xenbits.xen.org>
-Date: Tue, 25 Mar 2014 12:13:49 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 89 - HVMOP_set_mem_access is not preemptible
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/16
+Message-ID: <53BC6F2C.1010803@amacapital.net>
+Date: Tue, 08 Jul 2014 15:22:36 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 07/04/2014 02:05 PM, Andy Lutomirski wrote:
+> Hi everyone-
+> 
+> Upstream commit b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a fixes a
+> ptrace bug.  The exact scope of the bug is somewhat unclear right now.
+> I see no reason why the bug should not be present as far back as Linux
+> 2.6.17, but it seems to be difficult to reproduce on old kernels.
+> 
+> There is some ongoing discussion on linux-distros about the impact and
+> applicability of this bug.
+> 
+> More details and a PoC to follow some time next week.
+> 
+> I'm being intentionally vague here: this bug has existed for a long
+> time, but exploiting it at all is tricky enough (and possibly
+> kernel-version dependent enough) that it's gone unnoticed.  I would
+> currently prefer to give the distros and users a bit of a headstart
+> before publicly disclosing the complete details of how to test/exploit
+> the bug.  It is likely to have a high enough impact, at least on new
+> enough kernels, that it should be patched ASAP.
 
-                    Xen Security Advisory XSA-89
-                             version 2
+Time for full details.
 
-              HVMOP_set_mem_access is not preemptible
+Intel CPUs implement sysret oddly: sysret will #GP *from kernel mode* if
+RIP/RCX is non-canonical.  This is only a problem because sysret does
+not affect RSP, so the kernel needs to load the user's RSP value prior
+to running sysret.  That means that an exception frame will be written
+to the address at RSP, which is necessarily user-controlled.  If RSP is
+a writable user address and the CPU does not have SMAP, then the
+kernel's general_protection handler will actually execute from a
+user-controlled stack, and user code can attempt to race with the kernel
+to take over the system.
 
-UPDATES IN VERSION 2
-====================
+Even on SMAP systems (which no one has yet anyway), it's possible to set
+RSP to point to an important kernel data structure and overwrite it in a
+partially controlled manner.  Overwriting the IDT like this was
+traditional, but that's difficult now on Linux, since the public IDT
+address is read-only.
 
-Public release.
+If RSP points somewhere non-writable, then sysret will double-fault and
+OOPS cleanly on an IST stack.
 
-ISSUE DESCRIPTION
-=================
+The upshot is that allowing user code to set the saved RIP address to a
+non-canonical value in a non-IRET-using system call is bad.  On recent
+unpatched kernels, this can be done using fork(2).  On other kernels,
+there may or may not be other attack vectors.
 
-Processing of the HVMOP_set_mem_access HVM control operations does not
-check the size of its input and can tie up a physical CPU for extended
-periods of time.
+The upstream fix fixes a related bug in that the sysret path failed to
+restore some registers on the same fork(2) path.  This could potentially
+cause gdb to malfunction.
 
-IMPACT
-======
+I've attached a proof-of-concept exploit.  It double-faults reliably on
+unpatched Intel CPUs.  The precise cause of the double-fault is left as
+an exercise to the reader :)
 
-In a configuration where device models run with limited privilege (for
-example, stubdom device models), a guest attacker who successfully
-finds and exploits an unfixed security flaw in qemu-dm could leverage
-the other flaw into a Denial of Service affecting the whole host.
+--Andy
 
-In the more general case, in more abstract terms: a malicious
-administrator of a domain privileged with regard to an HVM guest can
-cause Xen to become unresponsive leading to a Denial of Service.
 
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from 4.1 onwards are vulnerable. In 4.2 only 64-bit
-versions of the hypervisor are vulnerable (HVMOP_set_mem_access is not
-available in 32-bit hypervisors).
-
-The vulnerability is only exposed to service domains for HVM guests
-which have privilege over the guest.  In a usual configuration that
-means only device model emulators (qemu-dm).
-
-In the case of HVM guests whose device model is running in an
-unrestricted dom0 process, qemu-dm already has the ability to cause
-problems for the whole system.  So in that case the vulnerability is
-not applicable.
-
-The situation is more subtle for an HVM guest with a stub qemu-dm.
-That is, where the device model runs in a separate domain (in the case
-of xl, as requested by "device_model_stubdomain_override=1" in the xl
-domain configuration file).  The same applies with a qemu-dm in a dom0
-process subjected to some kind kernel-based process privilege
-limitation (eg the chroot technique as found in some versions of
-XCP/XenServer).
-
-In those latter situations this issue means that the extra isolation
-does not provide as good a defence (against denial of service) as
-intended.  That is the essence of this vulnerability.
-
-However, the security is still better than with a qemu-dm running as
-an unrestricted dom0 process.  Therefore users with these
-configurations should not switch to an unrestricted dom0 qemu-dm.
-
-Finally, in a radically disaggregated system: where the HVM service
-domain software (probably, the device model domain image) is not
-always supplied by the host administrator, a malicious service domain
-administrator can excercise this vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this vulnerability.
-
-In a radically disaggregated system, restricting HVM service domains
-to software images approved by the host administrator will avoid the
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa89.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
-xsa89-4.1.patch    Xen 4.1.x
-
-$ sha256sum xsa89*.patch
-741c8fbbfa8e425d8debba17135d4c2e1e962d15717769bc93d68a65b5dc5ea6  xsa89.patch
-7d965e9bf1894b7d909bfaddbc6b7bdcee0ba91b86942ce85e0ae80464f2463e  xsa89-4.1.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTMXLgAAoJEIP+FMlX6CvZZ78H/RbnQJwEHxKxn3zhaEULpm57
-zBPG1D2cGP12UCkFQLqR8tWvPYmEtm3/x/FQHjzTCBBCM3GMFJ9BiKOX+u5+h2Bu
-17xPD3K8cH1tBkZpnQTkTBTz7XrfwV+C78kaNxo3TBvlgTIljaGCHxkXt0PmR1Vq
-DPZEQdYXj/v8pblmyHYuhd6zf3n6V07ABLqHyPc9n6yZ4/o2LFjqQPZJpYFiFZI+
-NGPw18+WCYlXc9w9ZtpGlNOo7Y5O2lraLLu7Gyi+JjC/BHXnb1XLgmgOSTyj2X5M
-5v6zIMXy3vqaXHyjqw7uX6EzhCPfPhXAXVjpVGDin+RY/Ykp0QBDweUxZb4U71U=
-=u+aG
------END PGP SIGNATURE-----
-
-Download attachment "xsa89.patch" of type "application/octet-stream" (3011 bytes)
-
-Download attachment "xsa89-4.1.patch" of type "application/octet-stream" (1247 bytes)
+View attachment "ptrace_fork.c" of type "text/plain" (1690 bytes)
