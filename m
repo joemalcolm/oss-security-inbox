@@ -1,199 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/14
-Message-ID: <5484D453.1000507@yahoo.fr>
-Date: Sun, 07 Dec 2014 23:27:31 +0100
-From: Lionel Debroux <lionel_debroux@...oo.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/5
+Message-ID: <20140708142342.GA10522@openwall.com>
+Date: Tue, 8 Jul 2014 18:23:42 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
-> > > > And of course a distro could backport and maintain it, it's a
-> > > > very tiny patch, much smaller than what they normall backport.
-> > > > Take it up with the distros if you want this.
-> > Tiny indeed. I'm surprised how few hunks it contains, given that
-> > PAX_ASLR involves
-> > $ grep CONFIG_PAX_ASLR pax-linux-3.17.4-test7.patch | wc -l
-> > 25
-> > hunks.
+On Sat, Jul 05, 2014 at 10:25:47PM +0400, Solar Designer wrote:
+> Here are some distro vendor status pages on this bug:
 > 
-> That's not a good comparison, as who knows what those config options
-> do.
->
-> And a "well written" option will never have a CONFIG_* option within
-> the .c files, as that's not the normal way to implement features in
-> the Linux kernel.
-Most occurrences of CONFIG_PAX_ASLR are in headers.
-
-1) struct mm_struct in include/linux/mm_types.h is grown by 3 unsigned
-longs under CONFIG_PAX_ASLR's control, at the end of the structure:
-
-+#if defined(CONFIG_PAX_NOEXEC) || defined(CONFIG_PAX_ASLR)
-+	unsigned long pax_flags;
-+#endif
-[...]
-+#ifdef CONFIG_PAX_ASLR
-+	unsigned long delta_mmap;		/* randomized offset */
-+	unsigned long delta_stack;		/* randomized offset */
-+#endif
-
-Hector Marco's patch adds an unsigned long in there, too, but in the
-middle of the structure.
-
-2) snippets similar to the following one are added to multiple
-arch/*/include/asm/elf.h
-+#ifdef CONFIG_PAX_ASLR
-+#define PAX_ELF_ET_DYN_BASE	0x00008000UL
-+
-+#define PAX_DELTA_MMAP_LEN	((current->personality == PER_LINUX_32BIT) ?
-16 : 10)
-+#define PAX_DELTA_STACK_LEN	((current->personality == PER_LINUX_32BIT)
-? 16 : 10)
-+#endif
-(this one is for ARM).
-
-3) CONFIG_PAX_ASLR also appears:
-    * when initializing the new fields in struct mm (Hector Marco's
-patch does it as well, of course);
-    * when modifying the PaX flags according to information embedded
-into ELF files or the corresponding xattrs;
-    * in proc_pid_status();
-    * for a getter/setter pair for mm->pax_flags.
-
-> > Is Hector Marco's ASLRv3 submission a much simpler reinvention of
-> > PaX's ASLR wheel, or is it rather a smaller wheel which does less
-> > than PaX's improved, field-tested ASLR does ?
+> "x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
+> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1337339
 > 
-> I don't know, never looked at the PaX code, sorry.  Why not look at
-> it yourself and compare it?
-In fact, I started doing so after sending my previous e-mail, before
-receiving yours :)
+> Ubuntu has just sent out 7 update announcements (for different of their
+> supported distros/kernels), USN-2266-1 through USN-2272-1.
 
-CONFIG_PAX_ASLR provides the foundation for the three main randomization
-options PAX_RANDKSTACK, PAX_RANDUSTACK and most of all, PAX_RANDMMAP,
-where most of the action is (increasing the entropy and range of ASLR).
-The snippets which use mm->delta_mmap and mm->delta_stack are mostly
-under CONFIG_PAX_RANDMMAP.
+and USN-2274-1
 
-Some of the snippets which seem to be associated with the improved
-randomization aren't under config options, e.g. the replacement of
-open-coded (!vma || addr + len <= vma->vm_start) checks by
-check_heap_stack_gap(vma, addr, len) calls to an out of line function
-which reads:
-
-bool check_heap_stack_gap(const struct vm_area_struct *vma, unsigned
-long addr, unsigned long len)
-{
-    if (!vma) {
-#ifdef CONFIG_STACK_GROWSUP
-        if (addr > sysctl_heap_stack_gap)
-            vma = find_vma(current->mm, addr - sysctl_heap_stack_gap);
-        else
-            vma = find_vma(current->mm, 0);
-        if (vma && (vma->vm_flags & VM_GROWSUP))
-            return false;
-#endif
-        return true;
-    }
-
-    if (addr + len > vma->vm_start)
-        return false;
-
-    if (vma->vm_flags & VM_GROWSDOWN)
-        return sysctl_heap_stack_gap <= vma->vm_start - addr - len;
-#ifdef CONFIG_STACK_GROWSUP
-    else if (vma->vm_prev && (vma->vm_prev->vm_flags & VM_GROWSUP))
-        return addr - vma->vm_prev->vm_end >= sysctl_heap_stack_gap;
-#endif
-
-    return true;
-}
-
-(reformatted to prevent wrapping, the original code correctly uses tabs
-for indentation)
-
-> > If the latter, I think it wouldn't be good to see another
-> > half-measure integrated to mainline, until the next mainline ASLR
-> > defeat against which PaX has protected for over a decade. Just
-> > my 2 cents.
+> "ptrace,x86: force IRET path after a ptrace_stop()"
+> http://kernel.opensuse.org/cgit/kernel/commit/?h=openSUSE-13.1&id=d1f26676dad578a65c94782f0c2bd00b7aa68f1b
 > 
-> The reason PaX isn't in the main kernel tree is that no one has
-> spent the time and effort to actually submit it in a mergable form.
-> So please, do so if you think this is something that is needed.
-In 2010(-2011 ?), I pushed some bits of constification work from PaX to
-mainline, nothing complicated.
-Pushing from PaX to mainline some of the more useful bits that I listed
-in a previous e-mail is a very different matter... well beyond the
-amount of time I could devote to it - and beyond my technical abilities,
-too.
+> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
+> https://bugzilla.redhat.com/show_bug.cgi?id=1115927
 
-However, pointing and pushing patches of lower complexity, why not.
-For instance:
-1) do you consider that using
-static inline bool check_heap_stack_gap(const struct vm_area_struct
-*vma, unsigned long addr, unsigned long len) {
-return (!vma || addr + len <= vma->vm_start);
-}
-defined in include/linux/sched.h (where PaX defines that prototype, and
-where most functions using it are defined) to replace those open-coded
-(!vma || addr + len <= vma->vm_start) checks is a worthwhile, though
-obviously no-op, cleanup in its own right ?
+Some more:
 
-2) do you consider that, even before the integration of PaX's refcount
-protection to mainline (which is there, like most of PaX, for security
-reasons, there have been refcount-related holes in the past...),
-switching to atomic_t for fs_struct.users,
-pipe_inode_info.{readers,writers,files,waiting_writers},
-kmem_cache.refcount (for SLAB and SLUB), tty_port.count,
-tty_ldisc_ops.refcount is worthwhile ?
-Most such refcounts at other places are already atomic, after all.
+"FS#41115 - [linux] [linux-lts] CVE-2014-4699 ptrace vulnerability"
+https://bugs.archlinux.org/task/41115?project=1
 
-3) I see a patch in USB core, which looks like it's written to avoid
-some potential integer overflows.
-diff -NurpX linux-3.17.1-pax/Documentation/dontdiff
-linux-3.17.1/drivers/usb/core/devio.c
-linux-3.17.1-pax/drivers/usb/core/devio.c
---- linux-3.17.4/drivers/usb/core/devio.c    2014-10-05
-21:52:19.775984000 +0200
-+++ linux-3.17.4-pax/drivers/usb/core/devio.c    2014-10-05
-21:54:24.336047472 +0200
-@@ -187,7 +187,7 @@ static ssize_t usbdev_read(struct file *
-     struct usb_dev_state *ps = file->private_data;
-     struct usb_device *dev = ps->dev;
-     ssize_t ret = 0;
--    unsigned len;
-+    size_t len;
-     loff_t pos;
-     int i;
+"CVE-2014-4699"
+https://security-tracker.debian.org/tracker/CVE-2014-4699
 
-@@ -229,22 +229,22 @@ static ssize_t usbdev_read(struct file *
-     for (i = 0; nbytes && i < dev->descriptor.bNumConfigurations; i++) {
-         struct usb_config_descriptor *config =
-             (struct usb_config_descriptor *)dev->rawdescriptors[i];
--        unsigned int length = le16_to_cpu(config->wTotalLength);
-+        size_t length = le16_to_cpu(config->wTotalLength);
+"KernelCare update for local privilege escalation CVE-2014-4699"
+http://www.cloudlinux.com/blog/clnews/kernelcare-update-for-local-privilege-escalation-cve20144699.php
 
-         if (*ppos < pos + length) {
+"CentOS 6, RHEL 6, CL 6 & OpenVZ can now be patched against
+CVE-2014-4699. The patched kernels are yet to be available from the
+vendors. Yet, due to the nature of the issue, we wanted to release the
+patch as soon as possible"
 
-             /* The descriptor may claim to be longer than it
-              * really is.  Here is the actual allocated length. */
--            unsigned alloclen =
-+            size_t alloclen =
-                 le16_to_cpu(dev->config[i].desc.wTotalLength);
+Just tracking how quickly distros patch a critical issue for which
+there's no published exploit yet.
 
--            len = length - (*ppos - pos);
-+            len = length + pos - *ppos;
-             if (len > nbytes)
-                 len = nbytes;
-
-             /* Simply don't write (skip over) unallocated parts */
-             if (alloclen > (*ppos - pos)) {
--                alloclen -= (*ppos - pos);
-+                alloclen = alloclen + pos - *ppos;
-                 if (copy_to_user(buf,
-                     dev->rawdescriptors[i] + (*ppos - pos),
-                     min(len, alloclen))) {
-Does that make sense ?
-
-
-Bye,
-Lionel.
+Alexander
