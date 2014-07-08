@@ -1,49 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/14
-Message-ID: <20140529194754.GZ11155@openstack.org>
-Date: Thu, 29 May 2014 19:47:54 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/12
+Message-ID: <53BC4CB5.5020406@redhat.com>
+Date: Tue, 08 Jul 2014 13:55:33 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-017] Nova VMWare driver leaks rescued images (CVE-2014-2573)
+Subject: Summer bug cleaning - rpcbind -h option
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-017
-CVE: CVE-2014-2573
-Date: May 29, 2014
-Title: Nova VMWare driver leaks rescued images
-Reporter: Jaroslav Henner (Red Hat)
-Products: Nova
-Versions: from 2013.2 to 2013.2.3, and 2014.1
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
-Jaroslav Henner from Red Hat reported a vulnerability in Nova. By
-requesting Nova place an image into rescue, then deleting the image,
-an authenticated user my exceed their quota. This can result in a
-denial of service via excessive resource consumption. Only setups
-using the Nova VMWare driver are affected.
+And an RPC one (and possibly other NFS utils):
 
-Juno (development branch) fix:
-https://review.openstack.org/75788
-https://review.openstack.org/80284
+https://bugzilla.redhat.com/show_bug.cgi?id=852282
+CVE-2012-3541 rpcbind: -h fails to control access to rpcbind
 
-Icehouse fix:
-https://review.openstack.org/88514
-https://review.openstack.org/89217
+I'm guessing nobody noticed or cares much because people use firewalls
+to control access to ports, not internal -h or whatever flags. The
+reason rpcbind qualifies for a CVE is it exposes rpcbind on interfaces
+against the direct configuration it was given (e.g. if you tell it to
+listen to localhost only it would expose itself to the world).
 
-Havana fix:
-https://review.openstack.org/89762
-https://review.openstack.org/89768
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-Notes:
-This fix will be included in the juno-1 development milestone and in
-future 2013.2.4 and 2014.1.1 releases.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-2573
-https://launchpad.net/bugs/1269418
-
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+iQIcBAEBAgAGBQJTvEy1AAoJEBYNRVNeJnmTQawP/iwQtCl3INhkkENSif1rrfz0
+5A8n7zJhYF5qf9IbAevd7aJwFEBL6j5zvLXg/QALZeMGGE+0gqyUjvIpsR+tmgsZ
+kUm+6dia4zVNZVFli2RfTrcYf+dtC+TP+IkNCkfATk8hwgkzBr97JQ0q1S6ygmfZ
+urCIHHYAtTHl3C+05/LUKGjmBTDHeTMbxJLf3j4JgSxqee/OyA4b3WVH3jbv5jue
+o4i8U85OnuICmrR11/HCbG3Kii7DN1hYP1eobDdGjKeCzwiJyByeQoGQ3dwjqjT8
+/XdOzuDXb5xLAzSisAbsPkIfRdQz4+LQCZd8g3xs4KsIfWMRXB7UsBOn2FuIoAKx
+l784ypilTFyiWMirbzNKYQE14vZkCBwqLRH3y6Ac0Tv4/DFvsdfSEYjI7OoaLcaK
+DRco4laV1xOwEcK5B/3jSRq0dbl38raFfRVnufoCBWAVhiYF18yEXYArP2jSZTLh
+okemjN5+LgHkjCa+ArSlXt4c+XQnF1yS7PFYdXzTCpS+XtRbIqlL+ynpQwClAEDd
+sHI7sgozcR7Z/AkfFLm0p2+OuebFMxfddGlsxcuy85REd1S3hFGmR1tyfnhfye+b
+rMYEeJQWDJqycbUCv2GKUtSZUDau3NgLkdAUFoxbktcHrTh9rSUoxkhsiUsjnrHf
+ysMM1GM1CkZLH6HVKSGp
+=He5z
+-----END PGP SIGNATURE-----
