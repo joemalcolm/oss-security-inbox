@@ -1,22 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/3
-Message-ID: <CAAA_pzd1uCfBXgsEFmz2uLCqwBfw2GCrdQSNp3KiO0r8giSOmA@mail.gmail.com>
-Date: Tue, 20 May 2014 09:42:19 -0500
-From: Kent Baxley <kent.baxley@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request one more openwsman issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/3
+Message-ID: <CA+wiQws6TQ6szB_1m6H6t1RcJQ=KyoN_OB5J1-Z-cgPuwwkHEg@mail.gmail.com>
+Date: Tue, 8 Jul 2014 16:26:32 +0900
+From: "Shota Fukumori (sora_h)" <her@...ah.jp>
+To: mmcallis@...hat.com
+Cc: oss-security@...ts.openwall.com, security <security@...y-lang.org>,  moses@...petlabs.com
+Subject: Re: possible CVE-2010 request: Ruby older than 1.9.2 appending current directory to the load path
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+I guess the change (committed r23816 in our svn repository,) is not a
+security issue (just a hardening).
 
-A new vulnerability was patched last night for openwsman.  This has
-been fixed in upstream version 2.4.6:
+so I think it shouldn't need CVE ID.
 
-Here is the specific upstream patch:
+Thoughts? > security@...y-lang.org
 
-https://github.com/Openwsman/openwsman/commit/b1c2192f4b4fa04286dc1bb7e467b34926099720
+On Tue, Jul 8, 2014 at 4:14 PM, Murray McAllister <mmcallis@...hat.com> wrote:
+> Good morning,
+>
+> CVE-2014-3248 (http://puppetlabs.com/security/cve/cve-2014-3248)
+> describes the following:
+>
+> "On platforms with Ruby 1.9.1 or earlier, an attacker could have Puppet
+> execute malicious code by convincing a privileged user to change
+> directories to one containing the malicious code and then run Puppet."
+>
+> The issue in Ruby was fixed here:
+>
+> https://www.ruby-lang.org/en/news/2010/08/18/ruby-1-9.2-released/
+>
+> The "$: doesn't include the current direcotry." entry, I guess.
+>
+> Is a 2010 CVE ID needed for this, or should it only be treated as hardening?
+>
+> Thanks,
+>
+> --
+> Murray McAllister / Red Hat Product Security
+
+
 
 -- 
-Kent Baxley
-Field Engineer, Canonical
-kent.baxley@...onical.com
+Shota Fukumori a.k.a. @sora_h http://sorah.jp/
