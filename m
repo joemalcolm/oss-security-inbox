@@ -1,55 +1,144 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/6
-Message-ID: <20140723100132.GH20911@core.inversepath.com>
-Date: Wed, 23 Jul 2014 12:01:32 +0200
-From: Daniele Bianco <danbia@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2014-005] LPAR2RRD input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/13
+Message-ID: <82899.1404849358@critter.freebsd.dk>
+Date: Tue, 08 Jul 2014 19:55:58 +0000
+From: "Poul-Henning Kamp" <phk@....freebsd.dk>
+To: cve-assign@...re.org
+cc: oss-security@...ts.openwall.com
+Subject: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
+In message <201407081836.s68IaX7O002273@...us.mitre.org>, cve-assign@...re.org writes:
 
-#2014-005 LPAR2RRD input sanitization errors
+>Is it a supported configuration if auto_restart is off, and this
+>hostname is specified using a DNS domain name?
 
-Description:
+Supported ?  Yes.
 
-LPAR2RRD is a performance monitoring and capacity planning software for IBM
-Power Systems. LPAR2RRD generates historical, future trends and nearly
-"real-time" CPU utilization graphs of LPAR's and shared CPU usage.
+Recommended ?  No.
 
-Insufficient input sanitization on the parameters passed to the application
-web gui leads to arbitrary command injection on the LPAR2RRD application
-server.
+Common ?  No.
 
-Affected version:
+Actually ever seen ?  Only while developers debug.
 
-LPAR2RRD <= 4.53, <= 3.5
+Background:
 
-Fixed version:
+The backend hostname is resolved only once, at the time the
+administrator loads the configuration ("vcl.load" CLI command).
 
-LPAR2RRD > 4.53
+It is resolved through system services, however they are configured
+to do it (/etc/hosts, NIS, DNS, DNSSEC, etc.)
 
-Credit: vulnerability report and PoC code received from Jürgen Bilberger
-        <juergen.bilberger AT daimler.com>.
+The resolved IP#'s (one IPv4 and one IPv6 allowed, no more) are
+then fixed in the compiled configuration and is stable for this
+loaded configuration and automatic (or manual) restarts of
+the child process will not change it.
 
-CVE: CVE-2014-4981 (version <= 3.5), CVE-2014-4982 (version <= 4.53)
+This design were chosen to make sure that DNS system flakery only
+impacts varnish management operations, but not Varnish operation.
 
-Timeline:
+If the hostname resolution fails, the load of the new configuration
+obviously fails.
 
-2014-07-08: vulnerability report received
-2014-07-08: contacted LPAR2RRD maintainers
-2014-07-20: patch provided by maintainers, assigned CVEs
-2010-07-22: contacted affected vendors
-2010-07-23: advisory release
+Since Varnish supports having multiple configurations loaded at the
+same time, it keeps running its current active configuration while
+you're trying to load the new configuration, and thus not affected
+if you have to spend 20 minutes to deal with shit DNS service.
 
-References:
-http://www.lpar2rrd.com
+The resolved addresses can be verified from the CLI or via the
+shared memory Log/Statistics facility, before the loaded 
+configuration is activated ("vcl.use" CLI command)
 
-Permalink:
-http://www.ocert.org/advisories/ocert-2014-005.html
+>It seems that, if an attacker is occasionally successful at DNS
+>spoofing (or spoofing at another level) and can thus trigger even one
+>use of a rogue backend server, there's a long-lived denial of service.
 
---
-  Daniele Bianco      Open Source Computer Security Incident Response Team
-  <danbia@...rt.org>                                  http://www.ocert.org
+First, if the attacker can spoof your DNS, what makes you think
+your HTTP traffic will end up at your Varnish server to begin with ?
+What about your emails ?
 
-  GPG Key 0x9544A497
-  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
+Second the attacker would need to time his attack to be coincident
+with the administrator loading a configuration file.
+
+Third ... which is using hostnames instead of IP#, which seem
+to be preferred by many varnish admins because it takes DNS entirely
+out of the picture.
+
+Forth ... on a Varnish server which is not using some kind of split-
+horizon name-resolution (/etc/hosts, NIS, S-H DNS)
+
+Fifth ... against a Varnish admin who is not so worried about
+DNS-spoofing that he uses DNSSEC.
+
+I think there are a lot of things to worry about before this
+attack makes top of the list.
+
+>> By definition Varnish must explicitly and implicitly trust the
+>> backend HTTP server
+>
+>With many realistic network designs, there isn't 100% assurance that
+>this trusted server is always the actual origin of network traffic
+>that appears to be from this server, and has a malicious HTTP header.
+
+Oh, absolutely:  People can do BGP manipulation, they can cut and
+splice fibers, they can do all sorts of nasty things, including
+it seems, hijack alle your domains through the US justice system
+because they don't like your abuse@ handling.
+
+But it's not Varnish' task to worry about any of that.
+
+Varnish sits on top of a TCP stack, and if people use hostnames,
+we'll resolve them using the OS facility for hostname resolution,
+just like we send and receive TCP streams using the OS facilities.
+
+Varnish is no different from any other application in this respect.
+
+>Thus, it seems that you are trusting data for which it's essentially
+>impossible to know whether this data originated inside of your
+>security boundary.
+
+Me ?  I don't trust anybody.
+
+The people who deploy Varnish have to make a lot of decisions, some
+of them hard, some of them easy, a lot of them about security,
+reliability and performance.  That's their job.
+
+My job is to deliver at tool for them, a tool they can understand
+and predict how will react, in particular I try to make it react
+the way people would intutivily expect it to.  (POLA: Principle
+Of Least Astonishment)
+
+Policies, including risk-mitigation for their particular network
+situation are entirely their own responsibility.
+
+>If there shouldn't be CVE assignments, would it be possible to
+>update your documentation so that "auto_restart off" is labeled
+>as a known risk for long-lived DoS conditions?
+
+The current description is:
+
+	param.show auto_restart
+	200 132     
+	auto_restart
+		Value is: on [bool] (default)
+		Default is: on
+
+		Restart child process automatically if it dies.
+
+I have yet to meet an Varnish administrator who didn't understand
+the meaning and value of this, in particular in relation to DoS
+attaks, so I suspect that adding more verbiage might confuse
+people more than it would help.
+
+The only real problem we see with auto_restart is the opposite:
+people misconfigure something else and Varnish restarts automatically
+every X minutes, but they don't notice because autostart hides
+their mistake.
+
+Poul-Henning
+
+-- 
+Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
+phk@...eBSD.ORG         | TCP/IP since RFC 956
+FreeBSD committer       | BSD since 4.3-tahoe    
+Never attribute to malice what can adequately be explained by incompetence.
