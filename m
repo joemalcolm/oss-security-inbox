@@ -1,21 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/27/4
-Message-ID: <CALx_OUD2S+XEc3r5gYaNvWU===M-jygoPe1e9tkxKbUKwpQMnQ@mail.gmail.com>
-Date: Mon, 27 Oct 2014 11:59:56 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/2
+Message-ID: <53BB9A66.6080201@redhat.com>
+Date: Tue, 08 Jul 2014 17:14:46 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: moses@...petlabs.com, security@...y-lang.org
+Subject: possible CVE-2010 request: Ruby older than 1.9.2 appending current directory to the load path
 Content-Type: text/plain; charset=utf-8
 
-Well, there's also a trivial stack buffer overflow in srec.c near line 254:
+Good morning,
 
-      char buf[10];
-...
-        sprintf (buf, "\\%03o", (unsigned int) c);
+CVE-2014-3248 (http://puppetlabs.com/security/cve/cve-2014-3248)
+describes the following:
 
-But with this test case, c will be -44, or "\1777777777777777777724",
-which sounds a lot longer than 9 characters.
+"On platforms with Ruby 1.9.1 or earlier, an attacker could have Puppet
+execute malicious code by convincing a privileged user to change
+directories to one containing the malicious code and then run Puppet."
 
-http://lcamtuf.coredump.cx/strings-stack-overflow
+The issue in Ruby was fixed here:
 
-/mz
+https://www.ruby-lang.org/en/news/2010/08/18/ruby-1-9.2-released/
+
+The "$: doesn't include the current direcotry." entry, I guess.
+
+Is a 2010 CVE ID needed for this, or should it only be treated as hardening?
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Product Security
