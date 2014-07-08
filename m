@@ -1,52 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/1
-Message-Id: <201401140500.s0E50JhY002839@linus.mitre.org>
-Date: Tue, 14 Jan 2014 00:00:19 -0500 (EST)
-From: cve-assign@...re.org
-To: me@...fdog.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: missing CPU-state sanitation during task-switch causes DOS / privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/6
+Message-ID: <53BC181E.40908@enovance.com>
+Date: Tue, 08 Jul 2014 12:11:10 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2014-023] Multiple XSS vulnerabilities in Horizon (CVE-2014-3473, CVE-2014-3474, and CVE-2014-3475)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+OpenStack Security Advisory: 2014-023
+CVE: CVE-2014-3473, CVE-2014-3474, and CVE-2014-3475
+Date: July 08, 2014
+Title: Multiple XSS vulnerabilities in Horizon
+Reporter: Jason Hullinger (HP)    - CVE-2014-3473
+          Craig Lorentzen (Cisco) - CVE-2014-3474
+          Michael Xin (Rackspace) - CVE-2014-3475
+Products: Horizon
+Versions: up to 2013.2.3, and 2014.1 versions up to 2014.1.1
 
-> local DOS in the end. One some architectures, privilege escalation
-> under non-common circumstances is possible,
+Description:
+Jason Hullinger from Hewlett Packard, Craig Lorentzen from Cisco and
+Michael Xin from Rackspace reported 3 cross-site scripting (XSS)
+vulnerabilities in Horizon. A malicious Orchestration template owner or
+catalog may conduct an XSS attack once a corrupted template is used in
+the Orchestration/Stack section of Horizon. A malicious Horizon user may
+store an XSS attack by creating a network with a corrupted name. A
+malicious Horizon administrator may store an XSS attack by creating a
+user with a corrupted email address. Once executed in a legitimate
+context these attacks may result in potential asset stealing (horizon
+user/admin access credentials, VMs/Network configuration/management,
+tenants' confidential information, etc.). All Horizon setups are affected.
+
+Juno (development branch) fix:
+https://review.openstack.org/105476
+
+Icehouse fix:
+https://review.openstack.org/105477
+
+Havana fix:
+https://review.openstack.org/105478
+
+Notes:
+This fix will be included in the Juno-2 development milestone and in
+future 2013.2.4 and 2014.1.2 releases.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3473
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3474
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3475
+https://launchpad.net/bugs/1308727
+https://launchpad.net/bugs/1320235
+https://launchpad.net/bugs/1322197
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
-> http://www.halfdog.net/Security/2013/Vm86SyscallTaskSwitchKernelPanic/
-> 
-> A closer analysis of the initial vm86-syscall problem showed, that
-> root cause was missing handling of FPU exceptions during task switch
-> at emms instruction. That was confirmed by Borislav Petkov. According
-> to discussion on LKML, the problem should affect only AMD CPUs, both
-> in i386 and amd64-mode ...
 
 
-> https://lkml.org/lkml/2014/1/9/637
-> 
-> From: Linus Torvalds
-> Date: Fri, 10 Jan 2014 08:42:33 +0800
-> 
-> Looking at this, I think this is just a bug in our
-> restore_fpu_checking() hackery for X86_FEATURE_FXSAVE_LEAK..
-
-Use CVE-2014-1438.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS1MN0AAoJEKllVAevmvmslFMH/3VQp0k8Qf3dZJqgH2ASeCeA
-HKVq+L15eIcLelHyspEc6Tp4Iv5Yj3+f6Ca5b1qLNuC7unNRtdvR7VffvrwzfG2S
-bSR6GyTCn4p44x8aTOX49mh7Zf51TgHi+Gd9bVI2u8ed5+Kq1dKPL6RxADlC/31V
-6vqovoce7rvHFPU+2oJKbCNfAyscmk/twtWGE6chI3L5LRX5j9A2Egk1putRIB5m
-QEQB8xqnt9UuZ237m7wiKemxX6FwbO3LN6UEGxrJA8VhFmr45wQimCY95w62Bw8Q
-k2X6UQoQqZ6RjfdL7uWtWZCJa0Wnsr8C0IoJgmMhj0UpyDo7KCsoQ4aAiup3ip0=
-=/mKV
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
