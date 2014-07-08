@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/1
-Message-ID: <53E009ED.30704@reser.org>
-Date: Mon, 04 Aug 2014 15:32:13 -0700
-From: Ben Reser <ben@...er.org>
-To: Tomas Hoger <thoger@...hat.com>
-CC: Marcus Meissner <meissner@...e.de>,  OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: Re: Possible CVE request: subversion MD5 collision authentication leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/8
+Message-ID: <alpine.LFD.2.10.1407082240370.32386@javelin.pnq.redhat.com>
+Date: Tue, 8 Jul 2014 22:43:39 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org
+Subject: Re: CVE-2014-4171 - Linux kernel mm/shmem.c denial of service
 Content-Type: text/plain; charset=utf-8
 
-On 8/4/14 12:38 PM, Tomas Hoger wrote:
-> I believe the attack here is supposed to create a collision against MD5
-> sums used as names of files under ~/.subversion/auth/svn.simple/.
-> However, as attacker does not control realm strings for any of the
-> trusted repositories, that would require preimage attack.  The lack of
-> (publicly) known efficient preimage attacks against MD5 should imply
-> such attack is still only theoretical.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I think your understanding of the current state of MD5 collision attacks is out
-of date.  Chosen prefix attacks are possible.  See:
-http://www.win.tue.nl/hashclash/ChosenPrefixCollisions/
+   Hi,
 
-The MD5 hash is created off the data in the following format:
-<$URL> $REALM
++-- On Wed, 18 Jun 2014, cve-assign@...re.org wrote --+
+| CVE-2014-4171 has been assigned to the
+|   http://ozlabs.org/~akpm/mmots/broken-out/shmem-fix-faulting-into-a-hole-while-its-punched.patch
 
-An attacker trying to take advantage of this only needs the $URL portion to
-match their server.  The $REALM can then be whatever data is required to make
-the MD5 hash match the system they are trying to attack.
+This patch has since been reverted and replaced with a new fix
 
-I know of nobody that has taken the time to generate a MD5 collision to take
-advantage of this.  But I'm pretty sure that it could be done.
+Please see:
+  -> https://lkml.org/lkml/2014/7/2/518
+
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJTvCbDAAoJEN0TPTL+WwQfv3AQAMMYbaPwpHko4Ftvr9o+3p1L
+oWfBFfjBtj/Rxyq7ZSWHAE40E0dNNS4eovHZidUiPJuA0rn0hB9CZMcHmeZyvjVd
++bOa0zT9RB+JCL4OslcuthjLNjhnjoN/7JYwpCDsn0+xUciCQ+7/h0QGCGbTzbmw
+a7Ifh85RcEEzdHATE2fRYixwJLhHjc3SaxhU19Uwi/JerKd8Cb/gO7tgjXGSjS7G
+cJB4OIqpO3572FOx75brO5Ggh5/gT/vu0J19jGqktMCmraTCwqubCeIE6m8u68n9
+IMjRNlucb+Zi70W9UsKzM39oyOOMt5g0g68U48q9LbbrVY+eRBXw/WbHyEFSpCaa
+D+RuknD9yEQRUzhEFWWnkT59gjGJG8RNtL2nx0orFuYBsJsJchkQ5QrD1/MGdWtK
+WOQDKdIZTKZLX+ddqUJwtZZimz2CG6c5CJJr4CmQ0hVsAXmewwESt2UzOYkJKY1D
+Z5akxBhPwuP2PMQ9X6Gc1yAGCfoebdNwwAIbThfoa8YLeMth2LcXth/WfJZFh286
+dvOSTNoEGHi2aeUu32ERFzfS4hAO08+MW2+889gsqfS2CAO3AmZ+PuvI9qJmd3Si
+pdP0QuxSPZ08yape8EPI84rP/qB3Z/VppYQ3dpO7WUwsvtH/FzH745J2vvmMtEFM
+k0zj947sqzFF70yjZhmT
+=JrKo
+-----END PGP SIGNATURE-----
