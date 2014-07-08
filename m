@@ -1,28 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/27
-Message-ID: <2122975425.60510606.1412808272904.JavaMail.zimbra@redhat.com>
-Date: Wed, 8 Oct 2014 18:44:32 -0400 (EDT)
-From: Josh Bressers <bressers@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/9
+Message-ID: <20140708182439.GA11179@openwall.com>
+Date: Tue, 8 Jul 2014 22:24:40 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: openssh on linux rce in sftp-only mode
+Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
-> > 
-> > I think one has to assume if a user has unrestricted sftp access, they can
-> > figure out how to do most anything. Even with the upstream hardening patch,
-> > it really only protects the sftpd process. Any other processes the user may
-> > own could be modified.
-> 
-> Not that easily - /proc/$pid/mem requires you to either be the same process
-> or be attached to it via ptrace, I think.
-> 
+On Tue, Jul 08, 2014 at 04:52:43PM +0400, Solar Designer wrote:
+> Anyway, let me ask: Red Hat, how do you know RHEL5 kernels are not
+> vulnerable, whereas RHEL6 are?  There must have been some analysis to
+> arrive at these conclusions.  This will be very helpful to know for
+> downstream projects (as it relates to your kernels), including OpenVZ
+> and Owl.
 
-I can't speak for other systems (I don't understand the details), but I can
-read arbitrary process memory for processes I own in Fedora 20.
+Petr Matousek has now clarified this as follows:
 
-Does someone know what the typical default is?
+https://bugzilla.redhat.com/show_bug.cgi?id=1115927#c14
 
-Thanks.
+"Red Hat Enterprise Linux 5 uses utrace which sets TIF_SIGPENDING when
+stopping the tracee and that is why iret path is always taken on return
+to user space."
 
--- 
-    JB
+Thanks, Petr!
+
+I think Petr is referring to kernel/utrace.c: quiesce() calling
+"set_tsk_thread_flag(target, TIF_SIGPENDING);" when it is called with
+interrupt=0, which it is from two places in utrace_set_flags().
+utrace_set_flags() is called from kernel/ptrace.c: ptrace_update() and
+ptrace_report().  There are many calls to these; I guess the relevant
+one is to ptrace_update() from ptrace_setup_finish(), which is in turn
+called from ptrace_traceme(), ptrace_attach(), and ptrace_clone_setup().
+
+I wouldn't vouch that there's no bypass, but I hope Red Hat's analysis
+is correct.
+
+Alexander
