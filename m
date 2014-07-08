@@ -1,61 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/6
-Message-ID: <53BC181E.40908@enovance.com>
-Date: Tue, 08 Jul 2014 12:11:10 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/14
+Message-ID: <CAH5b-BU9NPNhVfmJr3NKbZfFU6zpvmXu2prdR=8aeftwQi-Deg@mail.gmail.com>
+Date: Tue, 8 Jul 2014 21:44:16 +0200
+From: yersinia <yersinia.spiros@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-023] Multiple XSS vulnerabilities in Horizon (CVE-2014-3473, CVE-2014-3474, and CVE-2014-3475)
+Cc: cve-assign@...re.org
+Subject: Re: CVE-2014-4171 - Linux kernel mm/shmem.c denial of service
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-023
-CVE: CVE-2014-3473, CVE-2014-3474, and CVE-2014-3475
-Date: July 08, 2014
-Title: Multiple XSS vulnerabilities in Horizon
-Reporter: Jason Hullinger (HP)    - CVE-2014-3473
-          Craig Lorentzen (Cisco) - CVE-2014-3474
-          Michael Xin (Rackspace) - CVE-2014-3475
-Products: Horizon
-Versions: up to 2013.2.3, and 2014.1 versions up to 2014.1.1
+Il 18/giu/2014 13:45 <cve-assign@...re.org> ha scritto:
+>
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> CVE-2014-4171 has been assigned to the
+>
+>
+http://ozlabs.org/~akpm/mmots/broken-out/shmem-fix-faulting-into-a-hole-while-its-punched.patch
+>
+> issue in the Linux kernel.
+This link is broken now.
 
-Description:
-Jason Hullinger from Hewlett Packard, Craig Lorentzen from Cisco and
-Michael Xin from Rackspace reported 3 cross-site scripting (XSS)
-vulnerabilities in Horizon. A malicious Orchestration template owner or
-catalog may conduct an XSS attack once a corrupted template is used in
-the Orchestration/Stack section of Horizon. A malicious Horizon user may
-store an XSS attack by creating a network with a corrupted name. A
-malicious Horizon administrator may store an XSS attack by creating a
-user with a corrupted email address. Once executed in a legitimate
-context these attacks may result in potential asset stealing (horizon
-user/admin access credentials, VMs/Network configuration/management,
-tenants' confidential information, etc.). All Horizon setups are affected.
+Best regards
 
-Juno (development branch) fix:
-https://review.openstack.org/105476
+>
+> (See yesterday's http://www.spinics.net/lists/mm-commits/msg104782.html
+> message.)
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJToXqVAAoJEKllVAevmvmsi6EIAIXs1JhVikHCjgzXwM02lFTR
+> 1+AZWdKnnyDO83neQcy2Uzv/hmuEt3lczwlctGxLXIShdVvsUWVsZXuT5OOKVNrx
+> lsSNzbdb3ROLlA69jWINMD3OUSK4MGtUK5HdyZ33eTUG9PCizWTDl3dRsLvwh4i6
+> gvMottLwgskx5h5++Mow4cM6SsCxpyoN2G23TKnsPQ2yh+GbdDCX0vrxTcsi1v9+
+> O0Al7/JEdJsfi/H852lzGHsK4FjDctALEvjl1hVcyxjH68CrzIl1qulbl/biwyDw
+> 9WrLDKF2F76oLKlWepNjobdP3dZXnNQj95IrOAkdwRF+lP+q3koToQZ6WG+IcBw=
+> =oeNg
+> -----END PGP SIGNATURE-----
 
-Icehouse fix:
-https://review.openstack.org/105477
-
-Havana fix:
-https://review.openstack.org/105478
-
-Notes:
-This fix will be included in the Juno-2 development milestone and in
-future 2013.2.4 and 2014.1.2 releases.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3473
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3474
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3475
-https://launchpad.net/bugs/1308727
-https://launchpad.net/bugs/1320235
-https://launchpad.net/bugs/1322197
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
