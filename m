@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/8
-Message-ID: <alpine.BSF.2.00.1410301023410.57132@aneurin.horsfall.org>
-Date: Thu, 30 Oct 2014 10:32:39 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/3
+Message-ID: <53BCD41E.4080705@redhat.com>
+Date: Wed, 09 Jul 2014 15:33:18 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org, zf-security@...d.com, Kurt Seifried <kseifrie@...hat.com>
+Subject: Re: Zend Framework CVEs
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 29 Oct 2014, Michal Zalewski wrote:
+On 07/09/2014 08:52 AM, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> As I understand Zend it's a BSD style license, so Open Source, so
+> posting here, CC'ing upstream and Mitre. Can we please get CVE's for:
+>
+> http://framework.zend.com/security/advisory/ZF2014-04
+> ZF2014-04: Potential SQL injection in the ORDER implementation of
+> Zend_Db_Select
+>
+> http://framework.zend.com/security/advisory/ZF2014-03
+> ZF2014-03: Potential XSS vector in multiple view helpers
+>
+> http://framework.zend.com/security/advisory/ZF2014-02
+> ZF2014-02: Potential security issue in login mechanism of ZendOpenId
+> and Zend_OpenId consumer
+>
+> http://framework.zend.com/security/advisory/ZF2014-01
+> ZF2014-01: Potential XXE/XEE attacks using PHP functions:
+> simplexml_load_*, DOMDocument::loadXML, and xml_parse
 
-> (BUGTRAQ, too, although that list seems to be in a pretty bad shape 
-> these days and perhaps its days are numbered).
+Good morning,
 
-It could be because they're hosted at Security Focus, whose mailserver 
-could best be described as erratic.  It doesn't like long banners or greet 
-pauses (both anti-spammer defences) and retries frequently, as if that 
-will make any difference.  I'm told that this is a "feature" of Qmail 
-(along with its other antisocial habits).
+For the ZF2014-01 and ZF2014-02 assignments, refer to 
+http://www.openwall.com/lists/oss-security/2014/04/01/1
 
-Oddly enough, I do receive the occasional BugTraq message, so sometimes it 
-works, hence my description of them being erratic.  For example, this one 
-worked:
+Cheers,
 
-Received: from sf01smtp2.securityfocus.com (smtp.securityfocus.com [143.127.139.113])
-
-yet these failed miserably:
-
-Oct 30 09:46:20 aneurin sm-mta[79426]: s9TMhmHs079426: smtp.securityfocus.com [143.127.139.113] did not issue MAIL/EXPN/VRFY/ETRN during connection to IPv4
-Oct 30 09:46:30 aneurin sm-mta[79427]: s9TMhv1H079427: smtp.securityfocus.com [143.127.139.113] did not issue MAIL/EXPN/VRFY/ETRN during connection to IPv4
-
-Feedback to list owner, abuse, and postmaster go implacably unanswered.
-
--- 
-Dave Horsfall (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
-http://www.horsfall.org/spam.html (and check the home page whilst you're there)
+--
+Murray McAllister / Red Hat Product Security
