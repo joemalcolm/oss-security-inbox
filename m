@@ -1,65 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/2
-Message-ID: <CAP145pgToR-KYaq=4sUwLDV6XAL70aieziK1jZ4NL-9TTgseVA@mail.gmail.com>
-Date: Mon, 17 Nov 2014 02:49:37 +0100
-From: Robert Święcki <robert@...ecki.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/10
+Message-ID: <53BCFA71.1060300@mittwald.de>
+Date: Wed, 9 Jul 2014 08:14:40 +0000
+From: Sven Kieske <S.Kieske@...twald.de>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: FreeBSD Security Advisory FreeBSD-SA-14:13.pam
 Content-Type: text/plain; charset=utf-8
 
->>> This looks rather impressive.  Have you considered automatically
->>> detecting
->>> duplicates by e.g. analyzing stacktraces?
->>
->>
->> Feel free to take a look at honggfuzz -
->> https://code.google.com/p/honggfuzz/
->>
->> It provides a crude version of unification on the basis of offending
->> program counter (as well as simple disassembly of the offending
->> instruction).
->
->
-> Is it really interesting? For objdump many crashes are in quite generic
-> functions like bfd_getl16 and PC will not differentiate between them. Using
-> full stacktrace is probably too much but using only PC seems to be too
-> coarse.
+Am 04.06.2014 07:42, schrieb Solar Designer:
+> I mention this so that people are not confused why this one advisory is
+> posted in here, even though we had decided that vendor-specific
+> advisories are normally not to be posted to oss-security.
 
-It's actually a combination of signal/PC/fault_address/orig_file and
-"code value", which is very specific to Linux/arch, but under x86 it
-can quickly indicate you what kind of fault it was (execution of
-non-executable page, read, write etc.). It also disassembles the
-faulting instruction, so it's easy to quickly estimate severity.
+I'm sorry, but I'm still relatively new to this list, so forgive
+me my questioning:
 
->From personal experience - and for limited fuzzing (i.e. less than
-dozen or so of machines) where one needs to sort through the output
-manually anyway - very useful - e.g. (example output file from a
-non-related to libbdf fuzzing)
+I see lots of "vendor specific" advisories here. So my guess
+is that "vendor" means "a vendor who bundles software into
+a linux/bsd/whatever distribution"?
 
-SIGSEGV.PC.0x2e5458.CODE.-6.ADDR.0x2e5458.INSTR.[NOT_MMAPED].ppc32.mv.fuzz
+Because I would consider vulnerabilities in php, curl
+pnp4nagios (just picked as fresh examples) also as
+"vendor specific", as they are maintained by one
+vendor/project and those vulnerabilities don't occur
+in different tools or language implementations.
 
-...looks very promising (PC was set to a non-mapped page, if that
-address is controlled then it's an instant *win*:), as opposed to..
+What I would not consider "vendor specific"
+are issues inside algorithms or reference implementations
+of algorithms which are incorporated
+into different software projects (vendors) like
+the recent LZ4 and LZO vulns.
 
-SIGSEGV.PC.0xf7ea7109.CODE.1.ADDR.0x8.INSTR.mov_edx,_[rax+0x8].5858.fuzz
+Could you clarify this policy maybe a bit?
 
-...which is just a nul-ptr read.
+I find it quite useful to have a dedicated list
+collecting these reports, and also freebsd ones
+even if just freebsd is affected.
 
-As mentioned above - for fuzzing on one or one couple of PCs it's just
-fine. For cluster fuzzing, indeed a more specialized (in many aspects)
-fuzzer is needed.
+Lists like full disclosure create way more noise
+and are thus less useful.
 
->> It also disables address randomization to get repeatable
->> crashes. Example output (from testing strings-multiarch):
->
->
-> BTW is there a publicly available corpus of binaries from various
-> architectures?
-
-I don't think so - I'd start with rpm/deb search engines and extract
-ELFs for interesting architectures, then would use a search engine to
-find other remaining file formats. Also, objcopy converts between some
-of those formats (esp. when compiled with multiarch support).
+Thanks in advance.
 
 -- 
-Robert Święcki
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
