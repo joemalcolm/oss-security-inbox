@@ -1,45 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/16
-Message-Id: <201404101816.s3AIGoHk008545@linus.mitre.org>
-Date: Thu, 10 Apr 2014 14:16:50 -0400 (EDT)
-From: cve-assign@...re.org
-To: krahmer@...e.de, kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: pam_cifscreds stack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/8
+Message-ID: <85664.1404890117@critter.freebsd.dk>
+Date: Wed, 09 Jul 2014 07:15:17 +0000
+From: "Poul-Henning Kamp" <phk@....freebsd.dk>
+To: Michael Samuel <mik@...net.net>
+cc: oss-security@...ts.openwall.com
+Subject: Re: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+In message <CACYkhxgmsOG7H3FKhjvDQTfg_WptW1bv19q2CrcPLFTsdL+GiQ@...l.gmail.com>, Michael Samuel w
+rites:
 
-> We are tracking a patch at:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=870168
-> 
-> Fixing buffer overflow in cifskey, maybe also used in samba itself?
+>A CVE assignment will trigger out-of-band patches for distros that might
+>not do so otherwise.  Surely you agree that this is desirable?
 
-This seems potentially applicable:
+No, I do not.
 
-  https://git.samba.org/?p=cifs-utils.git;a=blob;f=cifskey.c
+If DNS is spoofed, then DNS is spoofed and anything which uses DNS
+is vulnerable, but it is not a security vulnerability in every
+single piece of software that might conceiveably use DNS lookups,
+it is a vulnerability in DNS which we have known about since DNS
+came about.
 
-Does anyone from Samba or Red Hat want to comment on whether this
-issue already has a CVE ID? CVE IDs for Samba vulnerabilities
-typically originate from the Red Hat CNA, but the specific process --
-and how far in advance a CVE ID might be allocated for Samba -- is not
-something visible to MITRE.
+If the so-called "security industry" wants to be taken seriously,
+it has to stop this kind of nonsense.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+It seems that the primary thing a CVE assignment will cause is for
+somebody to make another notch in his bedpost.
 
-iQEcBAEBAgAGBQJTRt+TAAoJEKllVAevmvms5ZgH/2jMjO0xCgD7By2xsk9Ox/5e
-3JW2rph7Zdnl3lm0OMVa+mJkyuw9gV/CMTsfLYb8ct5Boe+j4FoVLL/EdyPS3GAF
-ZXTfLWsZ+7gaONWn0sxXltWQ++/vv0stOgJxuRH7PGmX2eiug3y6M+9RoxztQe3v
-3RhcLpiYduYTnFULeEn26J7+Zgv2ZFU7Bo0q9fNSDeUhOby02vqDA7wiUhpfBzfr
-5PMWsL4x+EANFFDAlZNtumeRhz/4R7c7q783Ux2Y2zGwflhqvn22JK48vzBNIJEL
-0jKtsDw+od3RT45EXcmnBzXSHxn6pMXb1P2lzDBq+vQ1t5IkfI+BtDYL+l7waq4=
-=XiVs
------END PGP SIGNATURE-----
+I also have no idea what "out-of-band patches", nor for that matter
+which "distros" you are talking about here.
+
+Do you ?
+
+If so I'd like to hear about them, because as I said as the very first thing:
+We fix bugs in Varnish, and I'd like to receive a copy of those patches.
+
+-- 
+Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
+phk@...eBSD.ORG         | TCP/IP since RFC 956
+FreeBSD committer       | BSD since 4.3-tahoe    
+Never attribute to malice what can adequately be explained by incompetence.
