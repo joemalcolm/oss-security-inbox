@@ -1,29 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/22
-Message-Id: <E1XtgTn-0003zj-K6@rmm6prod02.runbox.com>
-Date: Wed, 26 Nov 2014 12:34:15 -0500 (EST)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Apple goto fail - lessons that should be learned
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/9
+Message-ID: <20140709095257.754de36f@redhat.com>
+Date: Wed, 9 Jul 2014 09:52:57 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: FreeBSD Security Advisory FreeBSD-SA-14:13.pam
 Content-Type: text/plain; charset=utf-8
 
-I recently looked at Apple's "goto fail" vulnerability
-revealed back in February this year, to see what could or should have
-been done to find the vulnerability BEFORE the code was released to users.
-You can see the result here:
+On Wed, 4 Jun 2014 09:42:31 +0400 Solar Designer wrote:
 
-http://www.dwheeler.com/essays/apple-goto-fail.html
+> On Wed, Jun 04, 2014 at 04:51:56AM +0000, FreeBSD Security Advisories
+> wrote:
+> > FreeBSD-SA-14:13.pam          Security Advisory
+> 
+> FreeBSD had reported this OpenPAM issue to the distros list because of
+> more likely than average relevance to other distros, and the FreeBSD
+> advisory is posted to oss-security for the same reason as well as to
+> meet distros list policy.
+> 
+> I mention this so that people are not confused why this one advisory
+> is posted in here, even though we had decided that vendor-specific
+> advisories are normally not to be posted to oss-security.  There's no
+> change in that preference, but there may be exceptions to it like this
+> time (for good reasons).
 
-As always, if there are additional measures, let me know.
+About a month has passed since, at it seems this wasn't a one-off post.
+As far as I can see, all FreeBSD security advisories released since
+were posted here as well:
 
-I've previously done this exercise with:
-* Heartbleed: http://www.dwheeler.com/essays/heartbleed.html
-* Shellshock: http://www.dwheeler.com/essays/shellshock.html
-* POODLE: http://www.dwheeler.com/essays/poodle-sslv3.html
+http://www.freebsd.org/security/advisories.html
 
-My hope is that everyone involved in software development and/or
-security analysis will get better at countering or detecting
-vulnerabilities *before* they get out to users.  Learning from the past
-seems like a way to help get there.
+http://www.openwall.com/lists/oss-security/2014/06/05/20
+http://www.openwall.com/lists/oss-security/2014/06/24/17
+http://www.openwall.com/lists/oss-security/2014/06/24/18
+http://www.openwall.com/lists/oss-security/2014/07/08/17
 
---- David A. Wheeler
+It seems we need someone form FreeBSD team to change their system to
+avoid posting all their errata here, or force moderation for all mails
+from security-advisories@...ebsd.org.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
