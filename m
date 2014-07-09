@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/7
-Message-ID: <52EF285D.3030103@redhat.com>
-Date: Mon, 03 Feb 2014 15:25:49 +1000
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/4
+Message-ID: <53BCD464.5030609@redhat.com>
+Date: Wed, 09 Jul 2014 15:34:28 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: multiple issues in Apache Cordova/PhoneGap
+Subject: Re: Zend Framework CVEs
 Content-Type: text/plain; charset=utf-8
 
-Multiple issues have been reported in Apache Cordova:
+On 07/09/2014 03:33 PM, Murray McAllister wrote:
+> On 07/09/2014 08:52 AM, Kurt Seifried wrote:
+>> -----BEGIN PGP SIGNED MESSAGE-----
+>> Hash: SHA1
+>>
+>> As I understand Zend it's a BSD style license, so Open Source, so
+>> posting here, CC'ing upstream and Mitre. Can we please get CVE's for:
+>>
+>> http://framework.zend.com/security/advisory/ZF2014-04
+>> ZF2014-04: Potential SQL injection in the ORDER implementation of
+>> Zend_Db_Select
+>>
+>> http://framework.zend.com/security/advisory/ZF2014-03
+>> ZF2014-03: Potential XSS vector in multiple view helpers
+>>
+>> http://framework.zend.com/security/advisory/ZF2014-02
+>> ZF2014-02: Potential security issue in login mechanism of ZendOpenId
+>> and Zend_OpenId consumer
+>>
+>> http://framework.zend.com/security/advisory/ZF2014-01
+>> ZF2014-01: Potential XXE/XEE attacks using PHP functions:
+>> simplexml_load_*, DOMDocument::loadXML, and xml_parse
+>
+> Good morning,
+>
+> For the ZF2014-01 and ZF2014-02 assignments, refer to
+> http://www.openwall.com/lists/oss-security/2014/04/01/1
+>
+> Cheers,
+>
+> --
+> Murray McAllister / Red Hat Product Security
 
-http://packetstormsecurity.com/files/124954/apachecordovaphonegap-bypass.txt
-
-These issues have been discussed and acknowledged on the Cordova 
-development list:
-
-http://callback.markmail.org/message/5kkxyetx2mnywo7q?q=+list:org.apache.incubator.callback-dev&page=3#query:%20list%3Aorg.apache.incubator.callback-dev+page:3+mid:34bp7ejg7yt6dr2z+state:results
-
-These issues also affect PhoneGap, the commercial product built by Adobe 
-Systems, which is based on Apache Cordova. However, there is no 
-indication that the Adobe CNA has assigned any CVE IDs to these issues. 
-Given Apache Cordova is an open source project, I think it is in scope 
-for CVE IDs to be assigned on the oss-security list.
-
-Thanks
---
-David Jorm / Red Hat Security Response Team
+Sorry for the spam - I did not see Moritz's reply before I sent this.
