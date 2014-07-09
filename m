@@ -1,43 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/4
-Message-Id: <20141106113944.E0DDD6C0013@smtpvmsrv1.mitre.org>
-Date: Thu,  6 Nov 2014 06:39:44 -0500 (EST)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: polarssl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/2
+Message-ID: <20140709051631.GA22935@inutil.org>
+Date: Wed, 9 Jul 2014 07:16:31 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, zf-security@...d.com
+Subject: Re: Zend Framework CVEs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Jul 08, 2014 at 04:52:46PM -0600, Kurt Seifried wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> As I understand Zend it's a BSD style license, so Open Source, so
+> posting here, CC'ing upstream and Mitre. Can we please get CVE's for:
+> 
+> http://framework.zend.com/security/advisory/ZF2014-04
+> ZF2014-04: Potential SQL injection in the ORDER implementation of
+> Zend_Db_Select
+> 
+> http://framework.zend.com/security/advisory/ZF2014-03
+> ZF2014-03: Potential XSS vector in multiple view helpers
 
-> https://polarssl.org/tech-updates/releases/polarssl-1.3.9-released
+These two still need CVE IDs.
+ 
+> http://framework.zend.com/security/advisory/ZF2014-02
+> ZF2014-02: Potential security issue in login mechanism of ZendOpenId
+> and Zend_OpenId consumer
 
-> this release fixes a mistake in the negotiation introduced in PolarSSL
-> 1.3.8. The mistake resulted in servers negotiating a weaker signature
-> algorithm than available.
+That's CVE-2014-2684 and CVE-2014-2685
+ 
+> http://framework.zend.com/security/advisory/ZF2014-01
+> ZF2014-01: Potential XXE/XEE attacks using PHP functions:
+> simplexml_load_*, DOMDocument::loadXML, and xml_parse
 
-Use CVE-2014-8627.
+That's CVE-2014-2681, CVE-2014-2682 and CVE-2014-2683
 
-
-> two remotely-triggerable memory leaks were found by the Codenomicon
-> Defensics tool and fixed in this release.
-
-Use CVE-2014-8628.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUW12QAAoJEKllVAevmvmsyoEIALzE4hgA/mL0iKq08PbTAby1
-Y0Jl//Dv3Zs7YnaTBtK9STSWg1Rh7dpKYN0+mJCMvhboQGgUSdE/XdQt2aHHg1oi
-MVJ7YFGsawZ6MjhsMbHTqcbyHH/ESVp7i4O2nBejVVRdYurocEaKS8BpVIFj1r3h
-ayDSAlDux4B1H3jWpuIYwv9zcb1HfscnhTNC/vjcJLFzrQCdA+eQhV221tCnS5Jt
-8goNPdUCMDQ1+pbTZDenoWutVLZq3hqXKkNaGJqUiitCXdnQxq/kmYfNeLBCJ6r7
-ezZLL+Fcjm2pP+z9NeqHj/JmA6//Vz/fpHVZzZSWUrfJvydXgMHnlMJQKz+8xBc=
-=sZJ1
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
