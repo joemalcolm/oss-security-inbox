@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/6
-Message-ID: <87r4705mka.fsf@redhat.com>
-Date: Tue, 18 Feb 2014 18:59:33 +0100
-From: Martin Prpic <mprpic@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/11
+Message-ID: <53BCFF24.2010903@redhat.com>
+Date: Wed, 09 Jul 2014 18:36:52 +1000
+From: Garth Mollett <gmollett@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MaraDNS DoS due to incorrect bounds checking on certain strings
+Subject: CVE request - Snoopy incomplete fix for CVE-2008-4796
 Content-Type: text/plain; charset=utf-8
 
-Hi, can a CVE be assigned to the following issue?
+Please see: http://seclists.org/fulldisclosure/2014/Jul/16
 
-It was reported that MaraDNS's recursive resolver, Deadwood, suffers
-from a flaw where string bounds checking was not done correctly under
-certain circumstances. As a result, it was possible for a remote
-attacker to send Deadwood a "packet of death", which would cause
-Deadwood to crash. Upstream notes that it currently appears that this
-attack can only be exploited by an IP address with a permission to
-perform recursive queries against Deadwood.
+Note, the new fix [1] referenced in the above FD posts does not look to
+be a complete fix either and may still allow command injection.
 
-It looks like these are the appropriate patches in git:
+Snoopy upstream has been notified and a more complete fix that removes
+curl and instead uses native php code should be available shortly [2].
 
-https://github.com/samboy/MaraDNS/commit/f015495d221f1c2b2f10db38e87cecf3839d6093
-https://github.com/samboy/MaraDNS/commit/2cfcd2397cb8168d4aa4594839fabe88420d03c3
+Thanks.
 
-References:
-
-http://samiam.org/blog/2014-02-12.html
-http://secunia.com/advisories/57033/
-https://bugzilla.redhat.com/show_bug.cgi?id=1066609
+[1].
+https://raw.githubusercontent.com/cogdog/feed2js/master/magpie/extlib/Snoopy.class.inc
+[2].
+http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log
 
 -- 
-Martin Prpič / Red Hat Security Response Team
+Garth Mollett / Red Hat Product Security
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
