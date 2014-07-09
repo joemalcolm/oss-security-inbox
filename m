@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/7
-Message-ID: <87lhn3w3jo.fsf@hope.eyrie.org>
-Date: Sat, 22 Nov 2014 09:25:31 -0800
-From: Russ Allbery <eagle@...ie.org>
-To: Tim Brown <tmb@...35.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Running Java across a privilege boundry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/12
+Message-ID: <20140709090652.GW1821@symphytum.spacehopper.org>
+Date: Wed, 9 Jul 2014 10:06:52 +0100
+From: Stuart Henderson <stu@...cehopper.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: FreeBSD Security Advisory FreeBSD-SA-14:13.pam
 Content-Type: text/plain; charset=utf-8
 
-Tim Brown <tmb@...35.com> writes:
+On 2014/07/09 08:14, Sven Kieske wrote:
+> Am 04.06.2014 07:42, schrieb Solar Designer:
+> > I mention this so that people are not confused why this one advisory is
+> > posted in here, even though we had decided that vendor-specific
+> > advisories are normally not to be posted to oss-security.
+> 
+> I'm sorry, but I'm still relatively new to this list, so forgive
+> me my questioning:
+> 
+> I see lots of "vendor specific" advisories here. So my guess
+> is that "vendor" means "a vendor who bundles software into
+> a linux/bsd/whatever distribution"?
 
-> Does anyone know of any obvious cases where Java is executed across a
-> privilege boundary? I'm specifically thinking of cases where it might be
-> executed via sudo, via another set[ug]id binary or where it gets called
-> from an untrusted working directory i.e. one not owned by the calling
-> user?
+This policy is presumably trying to stop the problem where lists receive
+notification from 20 OS distributions that they have updated some common
+package like PHP.
 
-"sudo service tomcat6 restart" would be a pretty obvious example that I
-suspect is not uncommon in server environments.
+Personally I'm happy to see vendor-specific advisories for some problems
+that just affect that vendor (but not the advisories for other problems
+common to many vendors), but think that it needs to be a manual selective
+process rather than just as another place where the advisories are CC'd.
 
-In general, Java is a general-purpose programming language, so I think
-there are plenty of examples of this just like there are with any other
-programming language.  Any large system written in Java probably has a few
-Java command-line tools or ways to spawn Java daemons, and in the normal
-course of setting up a system, it's likely that someone is granting access
-to run those tools via sudo.
-
--- 
-Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
