@@ -1,82 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/6
-Message-Id: <20140908152256.F2CC9C504C4@smtptsrv1.mitre.org>
-Date: Mon,  8 Sep 2014 11:22:56 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Python robotframework - tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/6
+Message-ID: <20140709063813.GA12973@openwall.com>
+Date: Wed, 9 Jul 2014 10:38:13 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-4699: Linux ptrace bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Jul 08, 2014 at 03:15:47PM -0700, Andy Lutomirski wrote:
+> In the event that anyone changes TASK_SIZE_MAX to equal the first
+> non-canonical address, then this is the least of your worries: someone
+> can put a syscall instruction at the very last canonical address, and
+> game over.
 
-> This is the first of many
+You're right.
 
-The MITRE CVE team obviously has no objection to your use of the
-oss-security list for raising new discussion topics such as the
-likelihood that a '../tmp/ substring represents a security problem.
-The comments below are only about obtaining CVE assignments from
-MITRE.
+> This bug affected a lot of operating systems a few years ago, but AFAIK
+> Linux was never vulnerable.
 
-> the reason I'm not assigning CVE's for these is this is a side project
+Looks like it was until 2.6.11.11:
 
-A CVE isn't going to be possible without further analysis explaining
-why a vulnerability exists in the specific case. There can't be an
-expectation that someone at MITRE is already familiar with the
-product, or will read and understand the complete source code as part
-of processing an oss-security message.
+http://lwn.net/Articles/137821/
 
-Items that seem to be missing from the original message include:
+Andi Kleen:
+[...]
+  o x86_64: Add a guard page at the end of the 47bit address space
+  o x86_64: Fix canonical checking for segment registers in ptrace
+  o x86_64: check if ptrace RIP is canonical
 
-1, Is the "merge('../tmp/passing.xml', '../tmp/failing.xml')"
-   debugging code, or is this code realistically used because a
-   different piece of software has created passing.xml and failing.xml
-   files?
+http://www.x86-64.org/pipermail/discuss/2005-May/006031.html
+https://kernel.googlesource.com/pub/scm/linux/kernel/git/stable/stable-queue/+/9cb395089b0a1aeaabd7900437c146a45a7ff067/2.6.11.11/x86_64-add-guard-page.patch
 
-2. If there is a realistic situation in which the
-   "merge('../tmp/passing.xml', '../tmp/failing.xml')" executes, would
-   the cwd realistically be a first-level directory such as the /root
-   or /tmp directory?
+"Add a guard page at the end of the 47bit address space.
 
-3. For purposes of risk analysis, is unconstrained use of a ../tmp/
-   pathname always equivalent to unconstrained use of a /tmp/ pathname?
+This works around a bug in the AMD K8 CPUs."
 
-A possible CVE assignment decision might be:
+https://access.redhat.com/security/cve/CVE-2005-1762
 
-A. If a different product came with a test suite containing:
+"The ptrace call in the Linux kernel 2.6.8.1 and 2.6.10 for the AMD64
+platform allows local users to cause a denial of service (kernel crash)
+via a "non-canonical" address."
 
-   test_program > /tmp/merged.xml
+So apparently the ptrace attack vector was tracked as CVE-2005-1762 at
+the time, whereas TASK_SIZE being equal to the first non-canonical
+address and triggering "a bug in the AMD K8 CPUs" (the known impact at
+the time, whatever it was) wasn't tracked as a security issue.
 
-then it could have a CVE because /tmp/merged.xml might be a symlink to
-an important file.
+Also related:
 
-B. If the test suite were changed to:
+"Bug 437712 - ptrace: PTRACE_SETREGS does not set RIP"
+https://bugzilla.redhat.com/show_bug.cgi?id=437712
 
-   test_program > ../tmp/merged.xml
+(some discussion of an earlier fix at ptrace level, NOTABUG by that time).
 
-with no constraints, then it could still have a CVE, because some
-people run test suites as root with a cwd of the /root directory.
-
-C. If ../tmp/ is used in "debugging code" that is intended to be run
-by a developer who understands the appropriate cwd, and this
-"debugging code" is not a "test suite" for users, then there is no CVE
-assignment. Admittedly, there might be cases where the distinction
-between "debugging code" and "test suite" is completely ambiguous.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUDclfAAoJEKllVAevmvms2jkH/1C3j3ktLAJgRu3lW6z2J55r
-7Xr7zd5mJQ9lrVg1HchoUx0l9mLPX5vKwlb43K2xg2vHDFFcL2VKFmEycHo5nfl+
-wt2VDwjsQ5S/6fjMcX6wZoNnY0kU5/xdiVUX2g5UAdbLip3VUVosqlsvpZBRwy67
-qWJS+IWftsUWp+1tf6i5Pp2TnLlfaiDRGnqOUJ4sccOUVkagwEBNoPZvdZ9bkuin
-wm7lVkwNBLIfbt/bbMFWmkeePoZgK2gHxGXpYlJNbvbAgUHcyEW8gNkS5uVEC+mP
-GMEoaS1H8wGu9r7GRN4hXJt71dOIU0LxVTpbsk6RNQN5msUR7h2Ft5p8pTwfh5c=
-=vfNO
------END PGP SIGNATURE-----
+Alexander
