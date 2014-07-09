@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/26/3
-Message-ID: <20141026234449.7dfa16c7@pc>
-Date: Sun, 26 Oct 2014 23:44:49 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/7
+Message-ID: <CACYkhxgmsOG7H3FKhjvDQTfg_WptW1bv19q2CrcPLFTsdL+GiQ@mail.gmail.com>
+Date: Wed, 9 Jul 2014 16:40:26 +1000
+From: Michael Samuel <mik@...net.net>
+To: Poul-Henning Kamp <phk@....freebsd.dk>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
-Am Sun, 26 Oct 2014 18:05:01 -0400 (EDT)
-schrieb cve-assign@...re.org:
+On 9 July 2014 16:13, Poul-Henning Kamp <phk@....freebsd.dk> wrote:
+> No, a restart shuts all connections.
+>
+> The master process' job is to hold the configured stated and start/stop
+> the worker process.  As part of the startup the socket is opened & bound,
+> but the master does not have anything to do with client sockets.  This
+> is mainly a security decision:  The master must be involatile.
 
-> There is currently no CVE ID for the
-> psa-dont-run-strings-on-untrusted-files.html "0xdeadbabe October 25,
-> 2014 7:20 PM" comment about "another one related with PE file headers
-> parsing." In general, a separate discovery that's potentially
-> exploitable for code execution could have its own CVE ID. Does anyone
-> want a CVE ID for that?
+I'm not disagreeing with that decision (which obviously has it's own
+merits), but if that's the case then this is a low-risk, low impact DoS
+vulnerability.
 
-The information in the comment is a bit scarce, it seems he hasn't
-published his sample (?).
-Anyway I checked the radare2-testsuite he was pointing to and found a
-crasher in the PE parser, I don't know if this is the same one, but I
-reported it upstream:
-https://sourceware.org/bugzilla/show_bug.cgi?id=17512
+A CVE assignment will trigger out-of-band patches for distros that might
+not do so otherwise.  Surely you agree that this is desirable?
 
-As this is a write to uninitialized memory it seems to me a CVE is
-deserved.
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Regards,
+  Michael
