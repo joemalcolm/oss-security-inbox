@@ -1,65 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/16
-Message-ID: <21393.53015.197089.405561@gargle.gargle.HOWL>
-Date: Fri, 6 Jun 2014 16:24:23 +0200
-From: rf@...eap.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/14
+Message-ID: <CAFkuX4tDJ4y6GBi-U27WL7bHRLNdzA5mcPAfSAmG+Ch2e-1C1Q@mail.gmail.com>
+Date: Wed, 9 Jul 2014 16:05:54 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
+Subject: LMS-2014-07-09-1: lz4-ruby Memory Corruption
 Content-Type: text/plain; charset=utf-8
 
->>>>> "Greg" == Greg KH <greg@...ah.com> writes:
+Hello All,
 
-    Greg> On Fri, Jun 06, 2014 at 11:11:42AM +0200, rf@...eap.de wrote:
-    >> >>>>> "Thomas" == Thomas Gleixner <tglx@...utronix.de> writes:
-    >>
-    >> Hi Thomas,
-    >>
-    >> >> On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
-    >> >> > On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer
-    >> >> > wrote:
-    >> >> > > I've attached patches by Thomas Gleixner (four e-mails, in
-    >> >> > > mbox format), as well as back-ports of those by John
-    >> >> > > Johansen of Canonical, who wrote:
-    >> >> >
-    >> >> > Maybe I'm missing something, but I can't find any statement
-    >> >> > of what version these patches are intended to apply cleanly
-    >> >> > to. They don't apply to latest stable.
-    >> >>
-    >> >> Thomas - can you answer Rich's question?  This is about
-    >> >> patches you sent on June 3 to linux-distros, which Kees then
-    >> >> saved into an mbox file.
-    >>
-    Thomas> They should apply cleanly, if all stable tagged futex
-    Thomas> patches before that are applied.
-    >>
-    >> could you please clarify whether
-    >>
-    >> f0d71b3dcb8332f7971b5f2363632573e6d9486a futex: Prevent attaching
-    >> to kernel threads 866293ee54227584ffcb4a42f69c1f365974ba7f futex:
-    >> Add another early deadlock detection check
+Please find the bug report for lz4-ruby attached below. For reference,
+please visit the following blog post that will demonstrate memory
+corruption using the latest version of Ruby and the LZ4 Ruby gem.
 
-    Greg> As people keep asking me this, I'll respond with, "why
-    Greg> wouldn't you apply them"?
+http://blog.securitymouse.com/2014/07/the-lz4-two-hour-challenge.html
 
-    Greg> They are going to be in the next kernel stable releases, along
-    Greg> with the other 4 patches, so I recommend them for your custom
-    Greg> kernels as well.
+Best,
+Don A. Bailey
+Lab Mouse Security
+Founder / CEO
+@InfoSecMouse
+https://www.securitymouse.com/
 
-Thanks for the reply. I did read your earlier message. To answer your
-question: I only apply patches that are absolutely necessary to fix a
-known problem. Want to make sure the changed stuff doesn't lead to a
-regression somewhere else. Futex stuff is a central component in the
-kernel ... I can't judge about any possible side effects from reading
-the code ... and this kernel is going on a number of production 
-clusters.
+#############################################################################
+#
+# Lab Mouse Security Report
+# LMS-2014-07-09-1
+#
 
-Anyway, I've applied all the (2+4) patches to our 3.12. 
-"futex: Make lookup_pi_state more robust" needed slight adjustment, but
-nothing serious. I'll go and test now. If someone wants the patch set,
-let me know. Then I can post it to the list.
+Report ID: LMS-2014-07-09-1
 
-Roland
+Researcher Name: Don A. Bailey
+Researcher Organization: Lab Mouse Security
+Researcher Email: donb@...uritymouse.com
+Researcher Website: www.securitymouse.com
 
--------
-http://www.q-leap.com / http://qlustar.com
-          --- HPC / Storage / Cloud Linux Cluster OS ---
+Vulnerability Status: Reported through general LZ4 disclosure
+		      Reported by Yann directly to
+https://github.com/komiya-atsushi/lz4-ruby/issues/9
+Vulnerability Embargo: None
+
+Vulnerability Class: Integer Overflow
+Vulnerability Effect: Memory Corruption
+Vulnerability Impact: DoS, OOW, RCE
+Vulnerability DoS Practicality: Practical
+Vulnerability OOW Practicality: Practical
+Vulnerability RCE Practicality: Practical
+Vulnerability Criticality: Critical
+
+Vulnerability Scope:
+All versions of the lz4-ruby package equal or prior to 0.3.2
+32bit variants of the package are critically affected.
+64bit variants are deemed infeasible to exploit at this time.
+
+Lab Mouse Security has engineered reliable mem corruption payloads for any
+application that uses lz4-ruby, regardless of where or how the app uses the
+module in its code base.
+
+ruby 2.1.2p95 was used in exploit development.
+
+Criticality Reasoning
+---------------------
+The Ruby LZ4 gem uses an old version of the LZ4 base package by default.
+When built, it fetches r113 from the Google Code repository rather than
+the latest stable version.
+
+Even though the Ruby LZ4 bindings use the LZ4_decompress_safe variant of the
+decompression algorithm, it is still vulnerable to the same memory corruption
+flaw that other "unsafe" variants are subject to.
+
+This vulnerability is proven in the reference URL at the bottom of this
+report.
+
+Vulnerability Description
+-------------------------
+An integer overflow can occur when processing any variant of a "literal run"
+in the affected function. When certain payloads are processed, a pointer to
+an output buffer can be set to an address outside of the output buffer. Since
+the attacker can specify exact offsets in memory, it is very easy to create
+a reliable RCE exploit.
+
+Ruby allocates a heap chunk for decompression of LZ4 payloads. While certain
+platforms do not allow for direct RCE using a heap chunk memory corruption,
+others may be susceptible to direct heap chunk instrumentation.
+
+Regardless, using memory pressure techniques or other application influence
+strategies, it may be possible to align payloads in memory in such a way that
+the business logic of an application can be corrupted. This is a standard OOW
+attack that may, in some cases, lead to RCE.
+
+At the least, this is a very reliable DoS bug, which may affect web services
+that use the LZ4 algorithm.
+
+Vulnerability Resolution
+------------------------
+Resolved.
+
+References
+----------http://blog.securitymouse.com/2014/07/the-lz4-two-hour-challenge.html
+
