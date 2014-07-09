@@ -1,39 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/27/3
-Message-Id: <201403270441.s2R4ffN1011851@linus.mitre.org>
-Date: Thu, 27 Mar 2014 00:41:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: hotpackets@...lokitty.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: T201403525 - Hypercube security Advisory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/5
+Message-ID: <85138.1404886418@critter.freebsd.dk>
+Date: Wed, 09 Jul 2014 06:13:38 +0000
+From: "Poul-Henning Kamp" <phk@....freebsd.dk>
+To: Michael Samuel <mik@...net.net>
+cc: oss-security@...ts.openwall.com
+Subject: Re: Re: Varnish - no CVE == bug regression
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+In message <CACYkhxgfcOr=sXxUmsT8VctvHHqN-tJnxa4cKrV9nS0OrccZ0A@...l.gmail.com>, Michael Samuel w
+rites:
+>So just to clarify:
+>
+>On 9 July 2014 05:55, Poul-Henning Kamp <phk@....freebsd.dk> wrote:
+>>         param.show auto_restart
+>>         200 132
+>>         auto_restart
+>>                 Value is: on [bool] (default)
+>>                 Default is: on
+>>
+>>                 Restart child process automatically if it dies.
+>
+>Does this mean that the parent holds the accept() socket open, so if a worker
+>dies (eg. due to the client injecting a header into it's own
+>connection) only that
+>connection is affected?
 
-> Hypercube -
-> http://sourceforge.net/projects/hypercubegraphv/files/latest/download
-> 
-> Version 1.62 is vulnerable to arbitrary insertions of malicious data
-> within cube parameters (see PARAMETER below)
-> 
-> <PARAMETER P="rm /etc/motd; ln -s /etc/motd /dev/random; cat /dev/zero >
+No, a restart shuts all connections.
 
-Use CVE-2014-2656.
+The master process' job is to hold the configured stated and start/stop
+the worker process.  As part of the startup the socket is opened & bound,
+but the master does not have anything to do with client sockets.  This
+is mainly a security decision:  The master must be involatile.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTM6jWAAoJEKllVAevmvms3cgH/3cWEhpSnlLtNWcFUP/+rAnO
-vS+09BGsMHscb6/dnCSKtPfxaiH73s33jul59FFYjV81S3uVXGummvEVQrbImghE
-tm3F7Ad+y1pw/2XDdUIrHyvSP+jiUH54YP5hWX2OZyb6qq53yxYh6SpRMmAhgdLm
-LYf16cBTKJWhWqPzMQs+TG/MEkCDY8A7brrDzFfTwOp8ftMs3ocHC5Nbm2LTiaPX
-lkdjNYOFqbQUjNYr3gBjYcTO5rP+xrfndCiAMu9D/JLRxbIx3gIaGHMF+6ImdFZp
-nHLuRz3VJN0WjcYnmxUDwruuT6CkRFI2KfPJzwy+z9ywOOF+WhpvqsERlh+7K6I=
-=3gm1
------END PGP SIGNATURE-----
+-- 
+Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
+phk@...eBSD.ORG         | TCP/IP since RFC 956
+FreeBSD committer       | BSD since 4.3-tahoe    
+Never attribute to malice what can adequately be explained by incompetence.
