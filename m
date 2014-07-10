@@ -1,51 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/03/4
-Message-ID: <lf1et8$n2h$1@ger.gmane.org>
-Date: Mon, 03 Mar 2014 09:36:04 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/12
+Message-ID: <87oawxuh79.fsf@mid.deneb.enyo.de>
+Date: Thu, 10 Jul 2014 21:50:02 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MantisBT 1.2.13 SQL injection vulnerability
+Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
-On 28.02.2014 21:05, cve-assign@...re.org 
-wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> http://www.mantisbt.org/bugs/view.php?id=17055
->
->> admin_config_report.php relied on unsanitized, inlined query parameters,
->> enabling a malicious user to perform an SQL injection attack.
->
-> Use CVE-2014-2238.
+* Solar Designer:
 
-Thank you.
+> The default sshd_config found in openssh-6.6p1.tar.gz does not list
+> AcceptEnv, so presumably by default OpenSSH portable does not accept any
+> environment variables.
 
-FYI, the reporter confirmed that the patch indeed resolves the issue.
+I expected it to accept TERM, which is sort of unavoidable.
 
-On 1 March 2014 09:46, Jakub Galczyk wrote:
- >
- > 2014-02-28 18:52 GMT+01:00 Damien Regad wrote:
- >
- >> You may have gone for the weekend and not seen my last message
- >> asking you to test the patch, so I went ahead and committed it. Let
- >> me know if the issue persists, I'll research further and make an
- >> additional fix as required.
- >>
- >> We'll probably release 1.2.17 next week, please try and confirm that
- >> the vulnerability is indeed gone on Monday if you can.
- >
- > Hi Damien,
- >
- > it works. Thank you once again!
- >
- > Best regards,
- > Jakub
+> However, apparently some distros override this safe default:
 
+Yes, indeed.  There is clear user demand for this, especially from
+organizations like Debian which have users in many different locales.
 
+> Is there a supported way for distros to configure OpenSSH such that
+> a number of environment variables would be accepted by default, but
+> only as long as no command is forced?  This could be an acceptable
+> tradeoff.
 
----
-This email is free from viruses and malware because avast! Antivirus protection is active.
-http://www.avast.com
+It is already possible to emulate this behavior with Match directives,
+so this is probably not sufficient reason for OpenSSH changes.
 
+However, on systems which follow POSIX strictly and do not share the
+historic glibc bug, the glibc fix is does not apply, so some OpenSSH
+changes to better support them might be necessary.
 
+On the other hand, as long as you use a general-purpose, shell-backed
+SSH implementation such as OpenSSH, it is difficult to completely rule
+out code execution by proper configuration.  But the library-based SSH
+implementations are likely less mature protocol-wise than OpenSSH,
+unfortunately.
