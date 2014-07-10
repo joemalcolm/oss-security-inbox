@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/15
-Message-ID: <546F4E34.80806@mccme.ru>
-Date: Fri, 21 Nov 2014 17:37:40 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/11
+Message-ID: <53BEEE12.20705@fifthhorseman.net>
+Date: Thu, 10 Jul 2014 15:48:34 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: cve request: libbfd?
+Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
-On 21.11.2014 16:15, Vasyl Kaigorodov wrote:
-> Has anyone from MITRE had a chance to look into it yet?
+On 07/10/2014 03:41 PM, Solar Designer wrote:
+> The default sshd_config found in openssh-6.6p1.tar.gz does not list
+> AcceptEnv, so presumably by default OpenSSH portable does not accept any
+> environment variables.
+> 
+> However, apparently some distros override this safe default:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1077843#c6
+> 
+> | Huzaifa S. Sidhpurwala  2014-03-21 02:31:29 EDT 
+> | 
+> | The sshd_config file by default contain the following AcceptEnv directives.
+> | 
+> | AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+> | AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+> | AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+> | AcceptEnv XMODIFIERS
 
-They were assigned in other threads, see below.
+Debian also ships a default sshd_config with:
 
-> On Tue, 11 Nov 2014, Vasyl Kaigorodov wrote:
->> >Directory traversal vulnerability allowing random files deleteion/creation
->> >Upstream tracker:https://sourceware.org/bugzilla/show_bug.cgi?id=17552
->> >Upstream patch:https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=dd9b91de2149ee81d47f708e7b0bbf57da10ad42
+AcceptEnv LANG LC_*
 
-There were two variants of this vulnerability -- file creation with ar 
-and file deletion with strip/objcopy. Both are fixed with the commit you 
-linked to above.
+To be clear: the override is in the default config files, there are no
+changes to the sshd binary itself, which still defaults to nothing in
+AcceptEnv.
 
-MITRE assigned CVE-2014-8737 to it here:
-http://www.openwall.com/lists/oss-security/2014/11/13/1
+	--dkg
 
->> >Out-of-bounds memory write while processing a crafted "ar" archive
->> >Upstream tracker:https://sourceware.org/bugzilla/show_bug.cgi?id=17533
->> >Upstream patch:https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=bb0d867169d7e9743d229804106a8fbcab7f3b3f
 
-MITRE assigned CVE-2014-8738 to it here:
-http://www.openwall.com/lists/oss-security/2014/11/13/2
-
--- 
-Alexander Cherepanov
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
