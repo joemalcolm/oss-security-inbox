@@ -1,78 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/13
-Message-ID: <CADk+mPC3wRy_ud4W1ktbCbUR3zfv=9adJYB3=NyK2BKzHwz6OA@mail.gmail.com>
-Date: Mon, 6 Oct 2014 12:46:38 +0200
-From: Rainer Gerhards <rgerhards@...adiscon.com>
-To: Simon McVittie <smcv@...ian.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: vulnerability in rsyslog
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/13
+Message-ID: <20140710201432.GA8341@openwall.com>
+Date: Fri, 11 Jul 2014 00:14:32 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
-2014-10-06 12:36 GMT+02:00 Simon McVittie <smcv@...ian.org>:
+On Thu, Jul 10, 2014 at 09:50:02PM +0200, Florian Weimer wrote:
+> * Solar Designer:
+> 
+> > The default sshd_config found in openssh-6.6p1.tar.gz does not list
+> > AcceptEnv, so presumably by default OpenSSH portable does not accept any
+> > environment variables.
+> 
+> I expected it to accept TERM,
 
-> On 06/10/14 08:34, Rainer Gerhards wrote:
-> > Sorry, it looks like I don't understand your question.
->
-> I think the clarification Sven is asking for is a statement like this
-> (I'm deliberately using imaginary version numbers which do not resemble
-> rsyslog's actual 7.x versions, to make it clear that I'm not making a
-> statement about this particular rsyslog vuln):
->
-> """
-> Releases 1.2.x < 1.2.4, 1.3.x < 1.3.7 and 1.4.x < 1.4.1 are vulnerable
-> unless the vendor-supplied patch is applied. Releases < 1.2, >= 1.2.4,
-> >= 1.3.7 and >= 1.4.1 are not vulnerable.
-> """
->
-> In most projects' version numbering practices:
->
-> * a version (release) is a fixed point that can never change (so if
->   1.2.3 is vulnerable to CVE-1066-1234 it will always be vulnerable
->   to CVE-1066-1234)
->
->
-same with rsyslog
+Good point.  Perhaps the documentation of AcceptEnv needs to be revised
+to mention this exception.
 
+> which is sort of unavoidable.
 
-> * a stable release series or stable branch can have later versions that
->   are intended to supersede an earlier version completely, while having
->   minimal changes to fix serious bugs (so the upstream project can
->   address CVE-1066-1234 by releasing 1.2.3.1 or 1.2.4)
->
->
-same with rsyslog
+Actually, it is avoidable.  Yes, there is:
 
+	if (s->term)
+		child_set_env(&env, &envsize, "TERM", s->term);
 
-> * alternatively, the upstream project can release recommended patches
->   to be applied by sysadmins or vendors, which might be labelled
->   "1.2.3 patch 1" or something if the project is particularly formal,
->   or might just be identified by git/svn/etc. commit ID
->
->
-we usually do not do that. The patch set I mentioned (here on list and in
-the advisory) contains patches for versions we will never touch.
+but there's also:
 
+static int
+session_pty_req(Session *s)
+{
+[...]
+	if (no_pty_flag || !options.permit_tty) {
+		debug("Allocating a pty not permitted for this authentication.");
+		return 0;
+	}
+[...]
+	s->term = packet_get_string(&len);
 
-> * even if 1.2.3 is vulnerable and always will be, a downstream vendor
->   like Debian or Red Hat might release a derived version like
->   1.2.3-4+deb7u5 which incorporates the recommended patch from the
->   upstream project, or a patch from the vendor or a third party, and so
->   is not vulnerable
->
->
-same here
+So it looks like listing "no-pty" in authorized_keys prevents not only
+allocation of a pty, but also passing of TERM.  And this makes sense.
 
-Yeah, so to solve the obviously vague wording:
-
-- 7.6.7 is not vulnerable, all previous v7 are.
-- 8.4.2 is not vulnerable, all previous v8 are.
-- all older ("totally dead") versions are vulnerable to the extend as
-described in the advisory and patches as linked to in the advisory can be
-used to solve the issue for some of these versions.
-- for v7 and v8 no specific patch files exist because we have released new
-stable versions. Nobody should ever use an old stable version, because the
-difference to the current stable is missing bugfixes.
-
-Thanks,
-Rainer
-
+Alexander
