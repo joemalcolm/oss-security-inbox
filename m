@@ -1,39 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/12
-Message-Id: <201407231927.s6NJRShv015893@linus.mitre.org>
-Date: Wed, 23 Jul 2014 15:27:28 -0400 (EDT)
-From: cve-assign@...re.org
-To: jmbsvicetto@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request for Drupal Core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/5
+Message-ID: <53BE86D8.7020706@redhat.com>
+Date: Thu, 10 Jul 2014 14:28:08 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: GnuPG computation error checks
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 07/10/2014 01:26 PM, Solar Designer wrote:
+> There was a discussion in 2001 and patches by Florian Weimer to add
+> extra checks into GnuPG's cipher/rsa.c: check_secret_key() and rsa_sign():
 
-> SA-CORE-2014-003 - Drupal core - Multiple vulnerabilities
-> https://www.drupal.org/SA-CORE-2014-003
+Wow, that was a long time ago.
 
-See:
+> Given the improved RSA side-channel attack understanding and the
+> countermeasures added to deal with CVE-2013-4242 and CVE-2013-4576
+> (cache timing and acoustic side-channels) in GnuPG, are Florian's added
+> checks still safe to have, or are they possibly vulnerable to
+> side-channel leaks on their own?  check_secret_key() does perform a very
+> basic sanity check on the secret key even without Florian's patch, and
+> this might be a side-channel leak concern too, but Florian's checks are
+> (purposefully) much more extended
 
-  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5019
-  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5020
-  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5021
-  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5022
+The check_secret_key() could be problematic from a side-channel 
+perspective, yes, particularly since mpi_gcd is unlikely to be hardened 
+against such attacks.  It might be possible to come up with equivalent 
+checks that are safer, but I'm not sure if that's worth the effort.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+> and include a check in rsa_sign() as
+> well (more susceptible since it involves dealing with changing and
+> possibly attacker-chosen data rather than only with the secret key?)
 
-iQEcBAEBAgAGBQJTztQAAAoJEKllVAevmvmsyNkH/1ZI5CIr9iToBCe27f1nTktM
-DYp4htzMuN1RDt31sSk3lzZY/VUBs04fwHn1KKxbL7unTqcubHvnSIX8eBotbF0g
-yobVqRnefg8bMCfeipjj2+x8Fn2Dy5Db6FPqsLekRo4vfncIL3j8c2Kot7PmAEnV
-KSENRna9PA4yVbufkeSJ/rZAvllI+b1Sm4pP6rEmdl1vJdLHC672LvTbI5lVd0sz
-FmSNUydVwBGkuCYrr0/ioYod28MCA4KZtbziHOMi9EERxgm7CE+k/t61vkOsXxQq
-GxSCLr6M46GXx7D0i/jBWWN/UBWrj5yzaIz0B2Q4tAicj04Ys6ao2mCzOXBsZao=
-=VQFk
------END PGP SIGNATURE-----
+rsa_sign only uses the public exponent (sk.e) and the signature 
+(resarr[0]).  It does leak those bits, but I'm not sure if we consider 
+side-channel attacks on RSA *verification* (recovering signatures, 
+document hashes, or public keys—not private key material) as 
+vulnerabilities.
+
+I believe OpenSSL has a similar safety check, see RSA_eay_mod_exp() in 
+crypto/rsa/rsa_eay.c.  There was some paper about it, but I think it 
+involved deliberately faulty hardware, so it doesn't really count, IMHO.
+
+-- 
+Florian Weimer / Red Hat Product Security
