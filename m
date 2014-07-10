@@ -1,65 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/9
-Message-ID: <5983384.fqBtkCuopK@x2>
-Date: Wed, 30 Apr 2014 11:55:31 -0400
-From: Steve Grubb <sgrubb@...hat.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: local privilege escalation due to capng_lock as used in seunshare
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/7
+Message-ID: <87r41tvyfr.fsf@mid.deneb.enyo.de>
+Date: Thu, 10 Jul 2014 20:52:24 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, April 30, 2014 02:35:52 AM Solar Designer wrote:
-> On Tue, Apr 29, 2014 at 06:18:58PM -0400, Steve Grubb wrote:
-> > On Wednesday, April 30, 2014 02:12:22 AM Solar Designer wrote:
-> > > On Tue, Apr 29, 2014 at 05:49:04PM -0400, Steve Grubb wrote:
-> > > > On Tuesday, April 29, 2014 02:20:47 PM Andy Lutomirski wrote:
-> > > > >   if (setuid(getuid()) != 0)
-> > > > >   
-> > > > >     err(1, "setuid(getuid())");
-> > > > 
-> > > > If you do not want the saved uid to be available, you need to use
-> > > > setresuid. That removes it. I would classify this as a bug in the test
-> > > > program.
-> > > 
-> > > Not quite.
-> > 
-> > If the program was amended to use setresuid(), does the bug still exist?
-> 
-> Yes, because it affects other similar correct programs that haven't yet
-> been amended to work safely on your non-Unix system. ;-)  Alternatively,
-> you may declare that your system is deliberately incapable of running
-> programs written for traditional Unix safely, and will stay that way.
-> That will be a reason for people to prefer other Linux distros over Red
-> Hat's, but at least it'd be fair. ;-(
-> 
-> To paraphrase your question, since sendmail got a workaround for the old
-> capabilities bug in the Linux kernel, does the bug in those old kernel
-> versions still exist?  The answer is also yes, it does, potentially
-> affecting other programs running on those vulnerable kernels.(*)  The
-> bug needed to be fixed in the kernel, and it was (for later versions).
-> 
-> (*) Of course, most people should not actually run those old kernels
-> because of other vulnerabilities that have been found and fixed since,
-> but that's a separate matter.
-> 
-> I hope you don't mind the rhetoric.  I mean it to be friendly.  I hope
-> it serves to deliver the message well.
+Stephane Chazelas discovered that directory traversal issue in locale
+handling in glibc.  glibc accepts relative paths with ".." components
+in the LC_* and LANG variables.  Together with typical OpenSSH
+configurations (with suitable AcceptEnv settings in sshd_config), this
+could conceivably be used to bypass ForceCommand restrictions (or
+restricted shells), assuming the attacker has sufficient level of
+access to a file system location on the host to create crafted locale
+definitions there.
 
-No problem. I chatted with Petr Matousek about this and I think we understand 
-the issue now.
+Bug report: https://sourceware.org/bugzilla/show_bug.cgi?id=17137
 
-In my opinion, the issue is that I think SECURE_NOROOT doesn't get its 
-semantics right as is. I'm thinking if noroot is set and cap_setuid is set, 
-suid should be as normal but with no capabilities. If noroot is set and 
-cap_setuid is unset, no transition of any uid should occur. If noroot is 
-unset, then works as normal.
+Git commits:
 
-If this was not the intention, then SECURE_NOSUID should have been created at 
-the same time the other SECUREBITS options were created so that each part of 
-credential change could be completely controlled. Not designing the ability to 
-control all parts is what creates this hole...for years I might add.
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=d183645616b
+  Related alloca hardening (technically not covered by the CVE assignment)
 
-So, I wonder if SECURE_NOROOT should be fixed or if ancient kernels need to 
-suddenly backport PR_SET_NO_NEW_PRIVS?
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=4e8f95a0df7
+  Actual fix
 
--Steve
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=58536726692
+  Documentation updates
+
+(To backport the new test in a reliable fashion, you need to tweak the
+Makefile to set the LOCPATH environment variable.)
