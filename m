@@ -1,37 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/29/4
-Message-ID: <20140829163929.GA28244@eldamar.local>
-Date: Fri, 29 Aug 2014 18:39:29 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>, Ryan King <rking@...optic.com>
-Subject: CVE Request: Clipboard Perl module: clipedit: insecure use of temporary files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/10
+Message-ID: <20140710194150.GA7128@openwall.com>
+Date: Thu, 10 Jul 2014 23:41:50 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Thu, Jul 10, 2014 at 09:23:48PM +0200, Florian Weimer wrote:
+> * Rich Felker:
+> 
+> > Am I correct in assuming this affects most typical git setups (e.g.
+> > gitolite) using ssh authorized_keys files with forced commands, where
+> > the malicious file could simply be created as part of the git
+> > repository?
+> 
+> Probably, especially if there is a checkout of the repository in the
+> file system under a predictable path.  (I expect that most hosted
+> repositories use the bare format.)  I don't know how common this is
+> with the existing Git hosting frameworks.  Some of them don't use
+> OpenSSH and may not implement environment variable processing at all.
+> 
+> > Or are these usually setup to filter the environment?
+> 
+> It seems fairly likely because unexpected, but benign locale settings
+> would interfere with the hook script processing (which likely assume
+> U.S. date formats and UTF-8).
 
-The Clipboard Perl module distribution [1] ships a small script
-'clipedit' which insecurely uses temporary files by using the pid of
-the process in the used filename in /tmp[2]. The affected code looks
-like:
+The man page for sshd_config(5) says this about AcceptEnv:
 
- [...]
-  7 my $tmpfilename = "/tmp/clipedit$$";  
-  8 open my $tmpfile, ">$tmpfilename" or die "Failure to open $tmpfilename: $!";  
-  9 print $tmpfile $orig;  
- 10 close $tmpfile;
- [...]
- 13 system($ed, $tmpfilename);  
- 14   
- 15 open $tmpfile, $tmpfilename or die "Failure to open $tmpfilename: $!";
- 16 my $edited = join '', <$tmpfile>;
- [...]
- 49 unlink($tmpfilename) or die "Couldn't remove $tmpfilename: $!";
+"The default is not to accept any environment variables."
 
-Could you assing a CVE for this issue?
+The default sshd_config found in openssh-6.6p1.tar.gz does not list
+AcceptEnv, so presumably by default OpenSSH portable does not accept any
+environment variables.
 
- [1] https://metacpan.org/release/Clipboard
- [2] https://rt.cpan.org/Ticket/Display.html?id=98435
+However, apparently some distros override this safe default:
 
-Regards,
-Salvatore
+https://bugzilla.redhat.com/show_bug.cgi?id=1077843#c6
+
+| Huzaifa S. Sidhpurwala  2014-03-21 02:31:29 EDT 
+| 
+| The sshd_config file by default contain the following AcceptEnv directives.
+| 
+| AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+| AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+| AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+| AcceptEnv XMODIFIERS
+
+Is there a supported way for distros to configure OpenSSH such that a
+number of environment variables would be accepted by default, but only
+as long as no command is forced?  This could be an acceptable tradeoff.
+
+Alexander
