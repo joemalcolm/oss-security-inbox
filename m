@@ -1,17 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/6
-Message-ID: <BFB17C16CEB8834FBCE8DCF6B3CFC7B601604CD5@SEAEMBX02.olympus.F5Net.com>
-Date: Tue, 29 Apr 2014 08:06:27 +0000
-From: Dolev Farhi <D.Farhi@...com>
-To: "cve-assign@...re.org" <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request - XSS in FOG open imaging system
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/8
+Message-ID: <20140710190930.GV179@oevtugenva.nrevsny.pk>
+Date: Thu, 10 Jul 2014 15:09:30 -0400
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Thu, Jul 10, 2014 at 08:52:24PM +0200, Florian Weimer wrote:
+> Stephane Chazelas discovered that directory traversal issue in locale
+> handling in glibc.  glibc accepts relative paths with ".." components
+> in the LC_* and LANG variables.  Together with typical OpenSSH
+> configurations (with suitable AcceptEnv settings in sshd_config), this
+> could conceivably be used to bypass ForceCommand restrictions (or
+> restricted shells), assuming the attacker has sufficient level of
+> access to a file system location on the host to create crafted locale
+> definitions there.
 
-As reported in http://fogproject.org/forum/threads/stored-xss-vulnerability-in-fog-project-version-0-27-through-0-32.10394/
+Am I correct in assuming this affects most typical git setups (e.g.
+gitolite) using ssh authorized_keys files with forced commands, where
+the malicious file could simply be created as part of the git
+repository? Or are these usually setup to filter the environment?
 
-a persistent XSS was found in versions 0.27 through 0.32.
-
-Can a CVE please be assigned to this?
-
+Rich
