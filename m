@@ -1,82 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/13
-Message-Id: <201402101840.s1AIenJG025444@linus.mitre.org>
-Date: Mon, 10 Feb 2014 13:40:49 -0500 (EST)
-From: cve-assign@...re.org
-To: patrakov@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: WebKit-GTK + Puseaudio: unexpectedly high sound volume
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/9
+Message-ID: <87vbr5uiez.fsf@mid.deneb.enyo.de>
+Date: Thu, 10 Jul 2014 21:23:48 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Rich Felker:
 
-> http://openwall.com/lists/oss-security/2013/10/08/4
+> Am I correct in assuming this affects most typical git setups (e.g.
+> gitolite) using ssh authorized_keys files with forced commands, where
+> the malicious file could simply be created as part of the git
+> repository?
 
-> The following combination of software has a nasty bug when used 
-> together, that I personally consider to be a vulnerability:
-> 
-> * PulseAudio (any version, especially when used in flat-volume mode that 
-> is the default everywhere except Ubuntu).
-> * Any browser based on Webkit-GTK 2.x (any version with HTML5 
-> audio/video support based on GStreamer).
+Probably, especially if there is a checkout of the repository in the
+file system under a predictable path.  (I expect that most hosted
+repositories use the bare format.)  I don't know how common this is
+with the existing Git hosting frameworks.  Some of them don't use
+OpenSSH and may not implement environment variable processing at all.
 
+> Or are these usually setup to filter the environment?
 
-> http://openwall.com/lists/oss-security/2013/10/21/7
-
-> For each of the two points below, there is a (non-100%) majority
-> supporting it.
-> 
-> 1. This is not an audio issue. It is a sandboxing issue in Webkit-GTK.
-> 
-> (that's the statement that Arun needs to think about a bit more, but
-> which, I think, captures the most essential component of the problem,
-> even without flat volumes, due to disobeying sliders in pavucontrol if
-> a web app resets the volume using a periodic timer)
-> 
-> 2. There is nothing to fix in PulseAudio code.
-
-
-> https://www.w3.org/Bugs/Public/show_bug.cgi?id=23642
-> Comment 1
-
-> WebKitGtk+ is ok as it is now and complies with the standard, though I
-> agree with you that there's a security issue with the volume and I
-> think the problem is with the standard.
-
-It is conceivable for a CVE assignment to apply to a combination of
-two products, and not apply to either product alone, but we prefer not
-to do that if there's any type of (partial) agreement that one product
-could be chosen.
-
-Use CVE-2013-7324 for this issue in WebKit-GTK. When the issue is
-later listed on the
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-7324 web page,
-we will try to include a note that the WebKit-GTK behavior complies
-with existing W3C standards and existing practices for GNOME desktop
-integration.
-
-
-> PulseAudio's security model is based on clients not sending malicious
-> requests to change the stream volume
-
-If there ever happens to be a later vendor announcement that this
-model is incorrect, and that a different model is required as a
-security fix, then a second CVE assignment could be made.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS+RxLAAoJEKllVAevmvmsbocIAMkf8XGhegKtNyseitiL19FK
-G9Ap7h2kVTUEC8QP3B02YZ+8ti1C3B8Tbx6O4k5GhTFSOgsr1uDX81vhmSFSY9or
-3CskFqsNoe/c+LEZeeW0lThr6AG35EBzmIBuIpmxOHk52raWi/KEviM58I0GijzU
-1JbsI6FtnOfCOXGXeScl3yBigiEX66uAi0ZcHuhJanJuye+wk/JUaB/GZxyL/tu+
-srHc6bi55sZ2/52nv7qViug+Y9uUkUTdvfTJzyQ4/XBwsvlE2tp7k7Q0JD8qrXbb
-JENELCwpDfN4bNS7hCj8y/De0dEH9WXtIuNM6GXRe1gLaoDJcMWhmWYp5A0wi+I=
-=pkWX
------END PGP SIGNATURE-----
+It seems fairly likely because unexpected, but benign locale settings
+would interfere with the hook script processing (which likely assume
+U.S. date formats and UTF-8).
