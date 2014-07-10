@@ -1,67 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/4
-Message-ID: <CAFkuX4tWZ7KiWJ-cKBigoJkMizcLDzVYR4+-9zo2x7J4RVGyfg@mail.gmail.com>
-Date: Thu, 26 Jun 2014 21:15:05 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: LMS-2014-06-16-1: Oberhumer LZO
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/6
+Message-id: <bbd87774-5049-49a4-a9ce-b59d329bb1a6@me.com>
+Date: Thu, 10 Jul 2014 18:50:09 +0000 (GMT)
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Vulnerabilities in Ruby Gem brbackup-0.1.1
 Content-Type: text/plain; charset=utf-8
 
-Totally understand. Not a problem at all, I thought I should just offer my
-perspective for this list, as they were not on the Linux kernel thread, nor
-the distros thread. :-)
+Title: Vulnerabilities in Ruby Gem brbackup-0.1.1
+Date: 7/1/2014
+Advisory Author: Larry W. Cashdollar, @_larry0
+Gem Author: Tung Nguyen tongueroo[at]gmail.com
+OSVDB: 108899,108900,108901
+CVEID: N/A
 
-I'm very happy to hear you agree that negative impact was minimal.
+Download: http://rubygems.org/gems/brbackup
+Vulnerability: The following code exposes the database password to the command line, if this gem is used in the context of a rails application command injection can be achived by placing shell metacharacters like ; in the user supplied input for variable dbuser. I suspect the other variables are injectable by playing with " and '.
+Also line 313 is vulnerable to SQL injection via the '#{name}' variable.
+From: brbackup-0.1.1/lib/brbackup.rb
 
-D
+311-
+312-    def db_has_myisam?(name)
+313-      query = "SELECT 1 FROM information_schema.tables WHERE table_schema='#{name}' AND engine='MyISAM' LIMIT 1;"
+314:      %x{mysql -u #{dbuser} {password_option} -N -e"{query}"}.strip == '1'
+315-    end
+316-
+317-    def restore_database(name, io)
+Where password_option will expose the password to the process table if the password is not nil or empty.
+338-  def password_option
+339     dbpass.nil? || dbpass.empty? ? "" : "-p'#{dbpass}'"
+Gem Author Contacted: 7/8/2014, WONTFIX.
 
-
-
-On Thu, Jun 26, 2014 at 9:10 PM, Solar Designer <solar@...nwall.com> wrote:
-
-> Don,
->
-> On Thu, Jun 26, 2014 at 02:37:47PM -0600, Don A. Bailey wrote:
-> > I chose not to release the bug reports to the public within the timeframe
-> > suggested by Solar for several reasons:
-> >  1) I have deep visibility into the vulnerable code and understand the
-> > constraints of exploitation and the breadth
-> >  2) The public exposure was non-obvious, and was not advertised by the
-> > vendor
-> >  3) The most widely effected vendors (Linux and Oberhumer) had yet to
-> > release a patch publicly
-> >  4) The time between exposure and public release was short enough to
-> > negative exposure
->
-> Thank you for providing this reasoning.
->
-> > My job, as I saw it, was to responsibly coordinate word between all
-> > parties. I did that as best as I could given the teams, their time zones,
-> > their understanding of the bug, and their speed.
-> >
-> > All in all, I think it worked out OK, and I am satisfied with the result
-> > thus far. There are things that could have gone better, but over all each
-> > team worked hard to produce solid patches in a reasonable time frame. We
-> > hit that goal.
->
-> I am also of the opinion that everyone did their best, and that's great.
->
-> I think actual negative impact of the delay is small or non-existent.
-> However, I felt we must have posted these additional comments on the
-> disclosure process in here, because it deviated from what's normally
-> expected for issues disclosed to the distros list:
->
->
-> http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists
->
-> "When the security issue is finally to be made public, it is your (the
-> original reporter's) responsibility to post about it to oss-security
-> (indeed, you and others may also post to any other mailing lists, etc.)"
->
-> I am tempted to add "on the same day" after "to oss-security", since
-> this is what we expect (and what usually happens), but there may be
-> occasional exceptions like this, so maybe we leave the wording as-is?
->
-> Alexander
->
-
+Advisory: http://www.vapid.dhs.org/advisories/brbackup-0.1.1.html
+Content of type "text/html" skipped
