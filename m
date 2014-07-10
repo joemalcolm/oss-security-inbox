@@ -1,61 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/1
-Message-ID: <538FE2D3.9080203@redhat.com>
-Date: Wed, 04 Jun 2014 21:24:03 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Monty Ijzerman <mijzerman@...are.com>
-CC: Ramon de C Valle <rdecvalle@...are.com>
-Subject: Re: Request for linux-distros subscription
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/14
+Message-ID: <CD259A27-6941-4F90-AD90-59FD23BD1839@vmware.com>
+Date: Thu, 10 Jul 2014 21:59:26 +0000
+From: Ramon de C Valle <rdecvalle@...are.com>
+To: Tomas Hoger <thoger@...hat.com>, Murray McAllister <mmcallis@...hat.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Fwd: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Thomas, Murray,
 
-On 06/04/2014 02:41 PM, Raphael Geissert wrote:
-> On Wednesday 04 June 2014 12:33:13 Ramon de C Valle wrote:
->> I'd also appreciate comments by others active in this community
->> and would be happy  to answer any questions anyone might have.
+On Jul 10, 2014, at 7:43 AM, Tomas Hoger <thoger@...hat.com> wrote:
+
+> On Wed, 9 Jul 2014 15:45:10 +0000 Ramon de C Valle wrote:
 > 
-> Other than earlier product re-qualification I don't see how you
-> could justify joining the list, am I missing something? If that's
-> the only reason, I guess a question that should be asked is: is 
-> exposing the details to more people actually worth the extra time?
+>> I believe this should have a CVE assigned.
 > 
-> (speaking for myself here)
+> Can you post more details of your analysis of the issue to clarify what
+> the issue is here?
+From https://bugs.ruby-lang.org/issues/10019, it seems that you’ve figured it out already. Correct me if I’m wrong but, for Base64, a value of 3072 for len isn’t enough to cause the off-by-one as the while loop will terminate with the value of len being zero (and the value of i being 4092). However, if the value of len is either is 3073* or 3074*, the while loop will terminate with the value of len being 1 or 2 respectively (and the value of i being 4092), with one of the subsequent if/else if conditions evaluating to true, resulting in the off-by-one.
+
+I see you’ve checked the template strings used by aws-sdk gem and its dependencies and they use ‘m0’ only, which rules out the possibility this off-by-one being caused by any of these gems. So, now I’m also not sure what the reporter is referring to.
+
+*It is possible to pass non multiple of 3 values as the len parameter of encodes function by passing a string with length smaller than the count (/ 3 * 3) passed in the template string (see https://github.com/ruby/ruby/blob/trunk/pack.c#L839).
+
 > 
-> Cheers,
-> 
+> -- 
+> Tomas Hoger / Red Hat Security Response Team
 
-It sounds like adding VMware is not warranted, they don't ship "a
-Linux[1]", so I see no compelling reason for them to be added. For the
-few Open Source  projects they are involved in, those upstreams are
-notified as part of the process of bringing things to the distros list
-so that should suffice.
+--
+Ramon de C Valle
+VMware Product Security Engineering
 
-[1] if they are added then by that logic we need to add every product
-which has virtualization support or a ported environment that can run
-Linux (busybox anyone?) which is basically crazy.
-
-- -- 
-Kurt Seifried - Red Hat - Product Security - Cloud stuff and such
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJTj+LTAAoJEBYNRVNeJnmTh0sP/j7eJrirtTDEAW9zhhNfZvHf
-TK8KnpO//eCz5nM1qIYJwVjfxUp+j+hwaf08/jhRITM086UbBkz915X3hdKpybJF
-LKNPmudJn+Z9wxu07tZyT6INnRUX8jVs0RPHE3bDlxhANqhi8HPLHpsyHClEw7KD
-XAT/zcn0q3PlVX2XnAFjVvJTkMlLfcZtYt3D2k1Hsj/N0aCFwJT3qM+PAAuWn3nO
-za2oj3PeK40XfvolZymHv9Tj1AN1JmezHeqjXVajZ2Hs4ptHGEmqMVEU4URgZ6Pr
-2KTD4CDBJnKDHCZ3BbEDbs6rMFRvjc28dRyaR/UEfXjSyE3qd9Uf9d6bb7yQry4K
-3j9e4wP8yfYLN582ifIPc/mTs2IiIfL2wh3faujXEvBQjMybFd61hxjCKegHy9gm
-d6E3MStfLY32mCWchCYYisszL5sissGCnUGZ8MYTTwk31HlAufVbSVbsTX4uClnf
-aMEF8Eu/eyXru7gkXgqS2Bp2FLRgCQb5QUYKTgjD5p+5Xpn/6kwH93jAje/TILQ9
-iO9BV8yGIoPnOBf3tovY+mAjPCOT4Rzcwe9oDnm0remL9liCKVoKmUEXFoUs22LW
-Shxt0xlu4Eqi9wS5CvfCzApQHwAzvVWIrw4XZqLx9hhzpuOmWtujbYS0fANwNAbM
-tgqdUzt30dzhjDm6AsSJ
-=Tayi
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
