@@ -1,55 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/13
-Message-Id: <201407222220.s6MMKcUs004725@linus.mitre.org>
-Date: Tue, 22 Jul 2014 18:20:38 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, msweet@...le.com, odyx@...ian.org
-Subject: Re: CVE Request: cups: Incomplete fix for CVE-2014-3537
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/4
+Message-ID: <20140710115902.GB15915@mail.corp.redhat.com>
+Date: Thu, 10 Jul 2014 13:59:02 +0200
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: transmission peer communication vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Transmission version 2.84 fixes peer communication vulnerability (no
+known exploits) reported by Ben Hawkes.
 
-> https://cups.org/str.php?L4455
+Changelog: http://trac.transmissionbt.com/wiki/Changes#version-2.84
+References:
+https://bugs.gentoo.org/show_bug.cgi?id=516822
+https://bugzilla.redhat.com/show_bug.cgi?id=1118290
 
->> if language[0] is null, we do not reach the lstat calls for filename and afterwards
-> Yes, it looks like this needs to be an lstat as well
+Can we have CVE assigned for this?
 
-Use CVE-2014-5029.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security Team
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
 
-
-> we should probably add similar protections to the directory index
-> files (which are also using stat)
-> 
-> index.html
-> index.class
-> index.pl
-> index.php
-> index.pyc
-> index.py
-
-Use CVE-2014-5030.
-
-
-> +    * Similarly, if the file/directory does not have world read permissions, do
-> +    * not allow access...
-
-Use CVE-2014-5031.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTzuMfAAoJEKllVAevmvms+k4H/jS66EIxmyPHptNkW9UTaZiJ
-Raxu8JKzkSokST95E9VJ/Z7CWILE5YRIRY2TCFqAncuMt1rjuaB3irVw9tqdxu1+
-qSgiqmxMevQSpC0HlKcbUzZXICjWHdDsKAFW70neGoho3baO6hBQslc+5dwnuHj3
-Yb2AQMKIw88aUxLu6qgGZ5Dlg7FF0Ulyds1kGTuvDJ8EJcaOMfm7oA6mKvZrjV21
-JChFdKrmCBOIaNXJU39XseQr2Ft0g2ChRojCPIrjfRb4JM55VDvk/eNc1wCFsrNQ
-0PYpWcz15Hh4sKLngzWoeZSBV/hw5QXDs7uOEjC0yllo2F/b9VcWCYYDFBA82c4=
-=6Kuo
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
