@@ -1,29 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/6
-Message-ID: <20140409051527.GA19802@zoho.com>
-Date: Wed, 9 Apr 2014 05:15:27 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/1
+Message-ID: <mpro.n8isj3002s6w40j6j.taviso@cmpxchg8b.com>
+Date: Thu, 10 Jul 2014 16:42:39 -0700
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
+Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 08, 2014 at 09:59:33PM -0600, Kurt Seifried wrote:
-> So it appears there are projects that statically compile OpenSSL into
-> their software, one example:
+Rich Felker <dalias@...c.org> wrote:
+
+> On Thu, Jul 10, 2014 at 08:52:24PM +0200, Florian Weimer wrote:
+> > Stephane Chazelas discovered that directory traversal issue in locale
+> > handling in glibc.  glibc accepts relative paths with ".." components in
+> > the LC_* and LANG variables.  Together with typical OpenSSH
+> > configurations (with suitable AcceptEnv settings in sshd_config), this
+> > could conceivably be used to bypass ForceCommand restrictions (or
+> > restricted shells), assuming the attacker has sufficient level of access
+> > to a file system location on the host to create crafted locale
+> > definitions there.
 > 
-> https://code.google.com/p/mod-spdy/
+> Am I correct in assuming this affects most typical git setups (e.g.
+> gitolite) using ssh authorized_keys files with forced commands, where the
+> malicious file could simply be created as part of the git repository? Or
+> are these usually setup to filter the environment?
 > 
-> I have to assume there are more. So if you know of any please post
-> them to OSS-Security (and Full-Disclosure) so people can find out (and
-> hopefully all the security scanners/etc. add them to their checks).
 
-Good point Kurt.
+I knew about this behaviour (I imagine lots of people were), but hadn't
+considered it a vulnerability - it's more restricted across setuid, so had
+assumed it was intentionally permitted. Locale files are not executable
+code, so even if you imagine a ForceCommand+AcceptEnv configuration *and*
+have the ability to create a message catalog, don't you still need another
+bug to exploit this?
 
-I would also add suites that don't statically link OpenSSL libs but
-bundle their own copies (e.g. Tor Browser Bundle).
+However, admittedly there was that zonefile parsing vulnerability and IIRC
+TZ also permits directory traversal when not setuid. TZ is just as plausibly
+part of AcceptEnv as LC_ALL, so maybe if it wasn't intentional there's at
+least a weak argument there for calling it a glibc vulnerability.
 
---mancha
+Anyway, if we're clearing up old unexploitable glibc bugs, here's another
+one to consider. LD_PROFILE uses the inherited umask, so you can create
+root-owned world writable files like this:
 
-[1] https://blog.torproject.org/blog/tor-browser-354-released
+$ umask 0
+$ LD_PROFILE=libc.so.6 su --version
+su from util-linux 2.24.2
+$ ls -l /var/profile
+-rw-rw-rw-. 1 root taviso 18M Jul 10 16:12 libc.so.6.profile
 
-Content of type "application/pgp-signature" skipped
+I hadn't reported it as you have to have created /var/profile, and...
+
+$ sudo yum whatprovides /var/profile
+No matches found
+
+But maybe some other distros have a package (or a bug that lets you create
+directories), I havn't checked. There are a bunch of ways to abuse this if
+you have /var/profile.
+
+Tavis.
+
+p.s. I think LD_HWCAP_MASK is still not in unsecure_vars :-)
+
