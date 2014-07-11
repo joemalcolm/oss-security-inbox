@@ -1,58 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/16
-Message-ID: <20141121070314.2580b4f4@127>
-Date: Fri, 21 Nov 2014 07:03:14 -0800
-From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing project brainstorming
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/4
+Message-Id: <201407110720.s6B7KQ3w015257@linus.mitre.org>
+Date: Fri, 11 Jul 2014 03:20:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Zend Framework CVEs
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 20 Nov 2014 20:23:09 +0100
-Hanno Böck <hanno@...eck.de> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> 
-> Compared to "starting from scratch" starting such a fuzzing project is
-> not herculean, it's more like grabbing the low hanging fruit.
+> http://framework.zend.com/security/advisory/ZF2014-03
+> ZF2014-03: Potential XSS vector in multiple view helpers
 
-Ok but it's a very large space, really infinite. And I didn't mean
-my message as a comparison.
-
-> 
-> But arguments alike come up every now and then. Basically you'll hear
-> two things: "We have to mitigate / sandbox" and "please rewrite
-> everything in [insert favorite non-C programming language]".
-
-I think we keep doing what we're doing. But your message was
-a reminder that someone somewhere should be thinking hard
-about how to replace the "our systems we have today". Not rewrite
-but replace.
-
-> 
-> I don't want to downplay either of these approaches. It's just that
-> you have to be realistic. Nobody will rewrite everything from scratch
-
-Sometimes inspiration comes outta nowhere.
-
-> in rust/go/haskell/whatever any time soon. There are a few interesting
-
-No not going to happen soon, but starting now would be better than
-waiting. I guess that's my point. Maybe it has started out there
-somewhere already.
-
-> projects that try to rewrite key sofware in safer languages (mitls and
-> servo come to mind), but they are few and none of them is in a
-> production state.
-
-Don't know them but am curious and will have to look.
-
-> 
-> Our systems we have today - the ones we use to have this discussion,
-> manage our bank accounts and surf the web - have imperfect software
-> written mostly in unsafe languages. I feel fuzzing can improve the
-> state of things a lot.
-
-I agree completely and I know you're right.  Sometimes my fuzzing,
-some might call it PEBKAC, turns up a thing or two. (^:
-Maybe call it involuntary fuzzing instead of stupid-user tricks.
+Use CVE-2014-4913.
 
 
+> http://framework.zend.com/security/advisory/ZF2014-04
+> ZF2014-04: Potential SQL injection in the ORDER implementation of
+> Zend_Db_Select
+
+Use CVE-2014-4914.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTv4/eAAoJEKllVAevmvmsrlEIAKTeNhFouPxxjXrFCpbo3iKT
+3XI0N90/qNLWOrasMxCzu57fSf1p+z70WiF277mRMVfPrAAKNwaeqUi9reHXvZmK
+ot80tstqfFWbVCNh0rJJZPAtee1KR0e90TPPKAk7mHpzVlJpAiL/ZeTTCUsS8kPU
+ZyTlAfh9iL4kL0QDIc2/howgYdS7a3h0RYqBAd6mKp2ghwjlWAf55j1sA45vqSdw
+bLCDZpjyikwe9LhnBkDi+LilNwEl9WGcsutLuRwAyo/tCuIa8vA3Ev+TcpmJh8Qx
+kfpsZNBM/tsct8YsdNW339g8d4Qgnt5+BkynOyWhy9PjrIsVvtSgOuy1fCit2hY=
+=CAcB
+-----END PGP SIGNATURE-----
