@@ -1,74 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/02/1
-Message-ID: <547D5BB8.5020906@redhat.com>
-Date: Tue, 02 Dec 2014 17:27:04 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/2
+Message-ID: <20140711053608.GZ179@oevtugenva.nrevsny.pk>
+Date: Fri, 11 Jul 2014 01:36:08 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Buffer overflow in antiword 0.37
+Subject: Re: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
-On 12/02/2014 03:18 AM, Fabian Keil wrote:
-> The attached patch prevents a buffer overflow in antiword 0.37
-> (http://www.winfield.demon.nl/):
->
-> Program received signal SIGBUS, Bus error.
-> 0x000000000044b55b in vName2String (szName=0x80140d58c "\"\037\202 \306!n\"n#n$n3", aucBytes=0x7fffffffde20 "\"", tNameSize=32767) at wordole.c:74
-> 74			*pcChar = (char)aucBytes[tIndex];
-> (gdb) f 1
-> #1  0x00000000004499f2 in bGetPPS (pFile=0x800c19190, aulRootList=0x801409060, tRootListLen=4, pPPS=0x7fffffffe3b0) at wordole.c:262
-> 262			vName2String(atPPSlist[iIndex].szName, aucBytes, tNameSize);
-> (gdb) l -
-> 257				atPPSlist = xfree(atPPSlist);
-> 258				return FALSE;
-> 259			}
-> 260			tNameSize = (size_t)usGetWord(0x40, aucBytes);
-> 261			tNameSize = (tNameSize + 1) / 2;
-> 262			vName2String(atPPSlist[iIndex].szName, aucBytes, tNameSize);
-> 263			atPPSlist[iIndex].ucType = ucGetByte(0x42, aucBytes);
-> 264			if (atPPSlist[iIndex].ucType == 5) {
-> 265				iRootIndex = iIndex;
-> 266			}
-> (gdb) p sizeof(atPPSlist[iIndex].szName)
-> $1 = 32
-> (gdb) p tNameSize
-> $2 = 32767
-> (gdb) l vName2String
-> 56	/*
-> 57	 * vName2String - turn the name into a proper string.
-> 58	 */
-> 59	static void
-> 60	vName2String(char *szName, const UCHAR *aucBytes, size_t tNameSize)
-> 61	{
-> 62		char	*pcChar;
-> 63		size_t	tIndex;
-> 64	
-> 65		fail(aucBytes == NULL || szName == NULL);
-> (gdb) l
-> 66	
-> 67		if (tNameSize < 2) {
-> 68			szName[0] = '\0';
-> 69			return;
-> 70		}
-> 71		for (tIndex = 0, pcChar = szName;
-> 72		     tIndex < 2 * tNameSize;
-> 73		     tIndex += 2, pcChar++) {
-> 74			*pcChar = (char)aucBytes[tIndex];
-> 75		}
-> (gdb)
-> 76		szName[tNameSize - 1] = '\0';
-> 77	} /* end of vName2String */
->
-> The buffer overflow has been reported upstream and the patch was accepted,
-> but apparently there will not be an official antiword release any time soon.
->
-> The bug was found with afl-fuzz.
->
-> Fabian
->
+On Thu, Jul 10, 2014 at 04:42:39PM -0700, Tavis Ormandy wrote:
+> Rich Felker <dalias@...c.org> wrote:
+> 
+> > On Thu, Jul 10, 2014 at 08:52:24PM +0200, Florian Weimer wrote:
+> > > Stephane Chazelas discovered that directory traversal issue in locale
+> > > handling in glibc.  glibc accepts relative paths with ".." components in
+> > > the LC_* and LANG variables.  Together with typical OpenSSH
+> > > configurations (with suitable AcceptEnv settings in sshd_config), this
+> > > could conceivably be used to bypass ForceCommand restrictions (or
+> > > restricted shells), assuming the attacker has sufficient level of access
+> > > to a file system location on the host to create crafted locale
+> > > definitions there.
+> > 
+> > Am I correct in assuming this affects most typical git setups (e.g.
+> > gitolite) using ssh authorized_keys files with forced commands, where the
+> > malicious file could simply be created as part of the git repository? Or
+> > are these usually setup to filter the environment?
+> > 
+> 
+> I knew about this behaviour (I imagine lots of people were), but hadn't
+> considered it a vulnerability - it's more restricted across setuid, so had
+> assumed it was intentionally permitted. Locale files are not executable
+> code, so even if you imagine a ForceCommand+AcceptEnv configuration *and*
+> have the ability to create a message catalog, don't you still need another
+> bug to exploit this?
 
-This issue was assigned CVE-2014-8123 on the distros list.
+Replacing any format string with something containing %n in the
+translation?
 
-Cheers,
-
---
-Murray McAllister / Red Hat Product Security
+Rich
