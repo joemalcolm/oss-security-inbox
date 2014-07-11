@@ -1,110 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/25
-Message-ID: <54875A87.3040304@gmail.com>
-Date: Tue, 09 Dec 2014 15:24:39 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/3
+Message-Id: <201407110711.s6B7BMu6015135@linus.mitre.org>
+Date: Fri, 11 Jul 2014 03:11:22 -0400 (EDT)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com, vkaigoro@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: XSS in PNP4Nagios
 Content-Type: text/plain; charset=utf-8
 
-On 09/12/14 11:18 AM, Steve Grubb wrote:
-> 
-> I studied this area 2 years ago for a gray hat talk and in preparation to help 
-> set the policy going forward for Fedora and RHEL. The general reason I've 
-> heard mentioned about why its not used as fully as possible is that it adds 
-> memory pages that can't be coalesced or consolidated because they are not the 
-> same.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-AFAIK, it doesn't cause a significant increase in memory usage. The
-whole point of position independent code is that it can be reused across
-processes. Dynamic libraries are already fully position independent.
+> Jun 04, 2014 This issue was detected by Peter Osterberg
+> https://github.com/lingej/pnp4nagios/commits/master/share/pnp/application/views/kohana_error_page.php
+> https://github.com/lingej/pnp4nagios/commit/f846a6c9d007ca2bee05359af747619151195fc9
+> http://sourceforge.net/p/pnp4nagios/code/ci/f846a6c9d007ca2bee05359af747619151195fc9
 
-Windows uses a relocation-only model rather than PIC, so their full ASLR
-has zero runtime cost after start-up. The downside is that use an awful
-hack to work around the reuse issue. It caches the random base and
-reuses it for all instances of the library / executable.
+> - <p><?php echo $message ?></p>
+> + <p><?php echo html::specialchars($message) ?></p>
 
-> For Fedora and RHEL 7, the intended policy is PIE for all daemons, privileged 
-> apps, network facing, and parsers of untrusted media. Enforcement is not so 
-> easy. How do you identify in an automated way parsers of untrusted media? I 
-> have a script that can grade an installed system that uses rpms:
-> 
-> http://people.redhat.com/sgrubb/files/rpm-chksec
-> 
-> It has options to grade the system or an individual rpm for compliance with 
-> the intended policy.
-
-Why not use it across the board on x86_64? The cost is in the range of
-0-5% at the moment (usually ~1%) and will be reduced to nearly 0% in
-every case when the next GCC / binutils versions are released since it
-won't add indirection to global accesses.
-
-> During my research, I found a couple interesting things. These ASLR related 
-> tidbits below are pulled from the speech I gave about when open source 
-> security mechanisms don't work as intended (all measured on a 64 bit system):
-> 
-> 1) On non-PIE applications, the heap doesn't get much randomization. Just 14 
-> bits.
-
-It seems that the dss section (sbrk) isn't randomized at all on a
-non-PaX kernel.
-
-    #include <stdio.h>
-    #include <stdlib.h>
-
-    int main() {
-        printf("%p\n", sbrk(0));
-        return 0;
-    }
-
-> 2)  Also non-PIE applications seems to be some bias in the numbers chosen. 
-> This could be an effect of 14 bits of randomization. It did follow a bell curve 
-> such that guessing some addresses was much luckier than others. (I did not get 
-> a sample size large enough on PIE apps to see if the same bias could be 
-> measured.)
-> 
-> 3) When using PIE, you pretty much got 29 bits of randomness everywhere. That 
-> lead to the question of why the heap on non-PIE is so limited in address 
-> scope. As I remember, there was some coupling with sbrk() that caused 
-> this....which might need revisiting.
-
-Linux puts the dss section near the start of the address space because
-it grows up and the mmap base is chosen near the end of the address
-space. In an ideal world, dss wouldn't have existed at all. PaX has
-*much* higher entropy for mmap and I think it occasionally inserts a gap
-rather than just using a random base.
-
-> 4) Then I started wondering about the heap when you use other memory manager 
-> libraries such as jemalloc. This turned out to be interesting. You get about 
-> 19 bits of randomness using it. Its not as bad as non-PIE glibc but not as 
-> good as PIE glibc. You also got the same amount of randomness whether the app 
-> was PIE or not. This is an area ripe for more experimenting, exploiting, and 
-> patching. Supposedly some of these heap managers use mmap as the underlying 
-> allocator. So, why aren't they getting 29 bits, too? :-)
-
-In jemalloc, *all* memory is allocated via chunks and in a default build
-it never unmaps them. It does virtual memory management via a global
-red-black tree tracking extents of chunks. The default is 4M chunks
-aligned to 4M boundaries. It can obtain chunks from sbrk until failure
-and then use mmap, but the default is the opposite.
-
-It can distinguish a huge allocation (>=4M) from small/large ones
-managed inside a chunk with a header by checking for 4M alignment and
-can then find the metadata for the small/large allocs via an offset -
-which is how it has ~2% metadata overhead even for small sizes.
-
-Reducing the chunk size wouldn't hurt much for small/large allocations,
-but it will wipe out large size classes and turn them into huge allocs
-where global locking is required.
-
-You've made me realize that jemalloc has a potential security issue
-here. It uses getenv without an issetugid check for the MALLOC_CONF env
-variable so an attacker could control some aspects of the allocator for
-a setuid / setcap binary. I'll send a pull request fixing this.
-
-OpenBSD malloc does ASLR at an allocator level, which is quite neat. It
-uses a similar chunk allocation model but they're always page size and
-the number of cached chunks is limited.
+Use CVE-2014-4907.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+
+> Jun 13, 2014  pnp/views/kohana_error_page: plug another XSS hole
+> https://github.com/lingej/pnp4nagios/commits/master/share/pnp/application/views/kohana_error_page.php
+> https://github.com/lingej/pnp4nagios/commit/e4a19768a5c5e5b1276caf3dd5bb721a540ec014
+
+> Jun 13, 2014  Plug potential XSS hole in views/template.php
+> https://github.com/lingej/pnp4nagios/commits/master/share/pnp/application/views/template.php
+> https://github.com/lingej/pnp4nagios/commit/cb925073edeeb97eb4ce61a86cdafccc9b87f9bb
+
+Use CVE-2014-4908 for both e4a19768a5c5e5b1276caf3dd5bb721a540ec014
+and cb925073edeeb97eb4ce61a86cdafccc9b87f9bb. These are both
+
+  <meta http-equiv="refresh" content="[INSERT_NUMBER_HERE]; url=<?php echo $_SERVER['REQUEST_URI'] ?>">
+
+issues. We realize that it is possible that
+e4a19768a5c5e5b1276caf3dd5bb721a540ec014 was reported by an external
+researcher, and cb925073edeeb97eb4ce61a86cdafccc9b87f9bb was
+discovered internally by the vendor, but there is apparently no
+available information confirming that.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTv41fAAoJEKllVAevmvms0VQH/iq8EixcjtpNl7VYMISM8NBj
+9bBx5ECqlgGYgjB2hLqo2ZjoHZ4BwSLsDfMA3WYdj/ikdO/JsAnULog2My3/3HR3
+uNjT7RolRcWXAZH1hiL9xIbLthewmaSeoxaV0Maa6NiV4UVBYJknsAAA4coVFMFe
++fCt1QjnkKNzNriGEMIen/k3fkYg8AUCbNvZIs6MznORjPq57MMu6MTbU/Pz0q8I
+AMfpkOH55PdGjKUhtOzquV1z3qrp97I29sKYAP04iFZgBQyn/u0CcPO2LWTqiigC
++scaKEROyGq/XzvsbcFtTUedhfx+isnlh2OixUDv6SI3oGBWhVQmmFLbuWC/b4Q=
+=TZ2O
+-----END PGP SIGNATURE-----
