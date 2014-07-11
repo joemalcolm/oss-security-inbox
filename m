@@ -1,38 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/11
-Message-ID: <54254455.7030408@oracle.com>
-Date: Fri, 26 Sep 2014 11:47:49 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/7
+Message-ID: <20140711081900.GA29513@lorien.valinor.li>
+Date: Fri, 11 Jul 2014 10:19:00 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Non-upstream patches for bash
+Cc: mmcallis@...hat.com, vkaigoro@...hat.com, cve-assign@...re.org
+Subject: Re: Re: CVE request: XSS in PNP4Nagios
 Content-Type: text/plain; charset=utf-8
 
-On 26/09/14 01:23, Ángel González wrote:
-> Forwarding to the oss-security thread the patch I sent to bug-bash 
-> 1 hour ago.
+Hi,
+
+On Fri, Jul 11, 2014 at 03:11:22AM -0400, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> The trick here is to delay parsing of functions coming from the
-> environment until they are actually needed.
+> > Jun 04, 2014 This issue was detected by Peter Osterberg
+> > https://github.com/lingej/pnp4nagios/commits/master/share/pnp/application/views/kohana_error_page.php
+> > https://github.com/lingej/pnp4nagios/commit/f846a6c9d007ca2bee05359af747619151195fc9
+> > http://sourceforge.net/p/pnp4nagios/code/ci/f846a6c9d007ca2bee05359af747619151195fc9
 > 
-> Thus extra code (CVE-2014-6271) or even a parsing vulnerability like
-> CVE-2014-7169 won't be triggered unless you attempt to run the exported
-> function (or you use a builtin such as declare or type that must print
-> the code, things like type -t are safe to use).
-
-Even with this?
-
-type='() { echo hi there; }' bash
-
-(Or the added stuff from Florian's patch).
-
-I got myself into a right old mess by redefining declare, typeset, unset
-and command.
-
+> > - <p><?php echo $message ?></p>
+> > + <p><?php echo html::specialchars($message) ?></p>
 > 
-> It can be applied standalone (and remain compatible with older bash
-> versions), or it could be combined with some of the other patches.
-> It also makes bash more efficient by not parsing unused functions :)
+> Use CVE-2014-4907.
 > 
-> Although it passes the testsuite, it has only been lightly tested, don't
-> install in your nuclear plant yet. 😉
+> 
+> 
+> > Jun 13, 2014  pnp/views/kohana_error_page: plug another XSS hole
+> > https://github.com/lingej/pnp4nagios/commits/master/share/pnp/application/views/kohana_error_page.php
+> > https://github.com/lingej/pnp4nagios/commit/e4a19768a5c5e5b1276caf3dd5bb721a540ec014
+> 
+> > Jun 13, 2014  Plug potential XSS hole in views/template.php
+> > https://github.com/lingej/pnp4nagios/commits/master/share/pnp/application/views/template.php
+> > https://github.com/lingej/pnp4nagios/commit/cb925073edeeb97eb4ce61a86cdafccc9b87f9bb
+> 
+> Use CVE-2014-4908 for both e4a19768a5c5e5b1276caf3dd5bb721a540ec014
+> and cb925073edeeb97eb4ce61a86cdafccc9b87f9bb. These are both
+> 
+>   <meta http-equiv="refresh" content="[INSERT_NUMBER_HERE]; url=<?php echo $_SERVER['REQUEST_URI'] ?>">
+> 
+> issues. We realize that it is possible that
+> e4a19768a5c5e5b1276caf3dd5bb721a540ec014 was reported by an external
+> researcher, and cb925073edeeb97eb4ce61a86cdafccc9b87f9bb was
+> discovered internally by the vendor, but there is apparently no
+> available information confirming that.
 
+I noticed that on Red Hat's Bugzilla these two are aliased to
+CVE-2014-4740. Should thus CVE-2014-4740 be rejected, or is
+CVE-204-4740 used for something different?
+
+ https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-4740 i.e.
+ https://bugzilla.redhat.com/show_bug.cgi?id=1115983 .
+
+Regards,
+Salvatore
