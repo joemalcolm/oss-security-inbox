@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/8
-Message-ID: <543FEA96.4070205@redhat.com>
-Date: Thu, 16 Oct 2014 09:56:06 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/5
+Message-Id: <201407110734.s6B7Xvfj015605@linus.mitre.org>
+Date: Fri, 11 Jul 2014 03:33:57 -0400 (EDT)
+From: cve-assign@...re.org
+To: vkaigoro@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: transmission peer communication vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 16/10/14 06:03 AM, Hanno Böck wrote:
-> it's a pretty neat and simple idea:
-> Kill HSTS through NTP by sending victims PC into the future.
-> https://www.blackhat.com/docs/eu-14/materials/eu-14-Selvi-Bypassing-HTTP-Strict-Transport-Security-wp.pdf
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> http://trac.transmissionbt.com/wiki/Changes#version-2.84
 > 
-> Same should work for HPKP. The idea of setting some security feature
-> through a header needs a revisit.
-> The solution would be to have a more reliable PC time. How do we do
-> that?
+> Transmission 2.84 (2014/07/01)
+> Fix peer communication vulnerability (no known exploits) reported by Ben Hawkes
 
-The obvious solution being to whitelist your site (in the chrome/firefox
-source code)if you truly care:
+Use CVE-2014-4909.
 
-email agm@...omium.org asking to be added to the whitelist, from the
-domain you want white listed (otherwise they tend to ignore it). Usually
-within a few business days they'll add it to the source code, and then
-in the next browser update they will update the list and you will now be
-white listed.
+This seems likely to be about:
 
-https://chromium.googlesource.com/chromium/chromium/+/trunk/net/http/transport_security_state_static.json
+  http://inertiawar.com/submission.go
+  http://twitter.com/benhawkes/statuses/484378151959539712 (2 Jul 2014)
 
-I've done this for my domains, you should too!
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJTv5LsAAoJEKllVAevmvmsM4UH/2FrtJ6JDH2eGrmY18I0a1/n
+/rSeFlsEahsetskFRTX1LKhZJqFyMu6HX52YiK+k2UGm1o25P9kDiuT3NadfDSZ4
+RrdzLqgzDsDzILJDx0w70dsWBNEXhfYg+F7ulhexPmBeHnI7kk/oMoWj0O/5gDoU
+pe7p5g0z/2MC5m+3gKOEcXv0V32F02TltCnWVUrPT1VS2cladBXE8l65PGGUzPyR
+cb6A2tHofAoFnUCIcUABbWvhhuJCcAEY1WpvXlHNfKaD7Fvx157cDTp0KvzM4O0J
+JA7d+iHXEdbJszuVaxXTt0yqv9aQuFRnnLAJTTrUrsmdvXyIpgaEMN6VQ6+VSgE=
+=vyg2
+-----END PGP SIGNATURE-----
