@@ -1,66 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/2
-Message-ID: <54767742.207@mccme.ru>
-Date: Thu, 27 Nov 2014 03:58:42 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/10
+Message-ID: <20140711104721.GA1931@mail.corp.redhat.com>
+Date: Fri, 11 Jul 2014 12:47:21 +0200
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, officesecurity@...ts.freedesktop.org,  Michael Meeks <michael.meeks@...labora.com>, Miklos Vajna <vmiklos@...e.cz>, Moritz Muehlenhoff <jmm@...ian.org>
-Subject: CVE Request: LibreOffice -- several issues
+Subject: Re: Re: CVE request: XSS in PNP4Nagios
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-26 19:48, Caolán McNamara wrote:
-> On Wed, 2014-11-26 at 18:43 +0300, Alexander Cherepanov wrote:
->> https://www.libreoffice.org/about-us/security/advisories/ , which
->> happily lists several DoS issues: CVE-2012-4233, CVE-2013-4156. IMHO
->> this reaffrims the default security policy.
->
->>>From our side, the page is generally intended to just list all resolved
-> CVEs which were opened wrt LibreOffice (and a few which were opened
-> against libraries bundled into upstream provided LibreOffice builds).
-> There's no filtering out of any CVEs logged about LibreOffice that might
-> be considered not significant.
->
-> Again, from our side, when presented with DoS documents we do tend to
-> push back against granting them security bug status. Not that we don't
-> think they are serious, just that we think they don't merit extra
-> special (time expensive) security level handing. I *think* 2012-4233 was
-> issued/requested directly by the discoverer high-tech bridge security
-> research. Maybe it initially looked a bit more serious than it turned
-> out.
->
-> In other cases e.g. 2012-4156 the affected application is really Apache
-> OpenOffice not LibreOffice but the same document that corrupts AOO
-> causes us to deref a NULL and fall over so it got listed there because
-> we people asked about it, given our shared code base origin. (maybe
-> something similar was also the case for 2012-4233, I forget, it was
-> years ago)
+> We need to REJECT CVE-2014-4740 because of the multiple conflicting
+> uses.
+> 
+> http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-4740 says
+> that CVE-2014-4740 is only about
+> f846a6c9d007ca2bee05359af747619151195fc9. The correct CVE ID for
+> f846a6c9d007ca2bee05359af747619151195fc9 is CVE-2014-4907.
 
-1. Thanks for the info, it's interesting and explains a bit of history. 
-OTOH I didn't imply that you somehow filtered the page or something. 
-(The list of CVEs indeed looks suspicious -- such a large project cannot 
-have so little CVES. But that's another question.) Nevertheless the pair 
-of pages (.../security/ and .../security/advisories/) looks misleading.
+I suppose that CVE-2014-4740 will be used for something else in the future, right?
+I have corrected CVE ID in https://bugzilla.redhat.com/show_bug.cgi?id=1115983
 
-2. In fact, I don't care too much if you treat DoS documents as security 
-issues or if CVEs are assigned for them. I don't yet have a strong 
-opinion about it. What bothers me is the disconnect between an assumed 
-and a real security (and security process) of LO. If you have a security 
-policy which is not default I think it should be clearly communicated to 
-an end user.
-
-3. IMHO the usual use-case for LO is to open untrusted files in various 
-formats and I thought that security of LO would be akin to the one of 
-browsers. For comparison, I was aware that `strings` has some problems 
-but the situation with LO took me by surprise. Perhaps it's just me (I 
-don't use LO actively). Actually, hints are there: LO in Debian Stable 
-is last updated 1.5 years ago and a list of CVEs for LO is ridiculously 
-short.
-
-All this leads to the thought that non-security treatment of DoS issues 
-is just the tip of the iceberg. Assuming that many security bugs were 
-fixed in current versions of LO the fact that LO in Debian Stable isn't 
-updated for a long time probably means that security fixes are not 
-marked as such and hence are not backported. Please correct me if I'm wrong.
-
+Thanks.
 -- 
-Alexander Cherepanov
+Vasyl Kaigorodov | Red Hat Product Security Team
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+
+Content of type "application/pgp-signature" skipped
