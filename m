@@ -1,77 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/3
-Message-ID: <CABniQZOdRKismzSsAUDVf2kpN-sgJnCzm9xaHV60BPqc79g3vg@mail.gmail.com>
-Date: Mon, 8 Dec 2014 19:06:36 +0800
-From: Shawn <citypw@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/8
+Message-Id: <201407110840.s6B8egJF018309@linus.mitre.org>
+Date: Fri, 11 Jul 2014 04:40:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org, mmcallis@...hat.com, vkaigoro@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: XSS in PNP4Nagios
 Content-Type: text/plain; charset=utf-8
 
-Hi Greg,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Mon, Dec 8, 2014 at 3:44 AM, Greg KH <greg@...ah.com> wrote:
-> On Sun, Dec 07, 2014 at 10:43:17PM +0800, Shawn wrote:
->> Hi Lionel,
->>
->> Thanks for your extraordinary explanation about Grsec/PaX. I'm a big
->> fan of Grsec/PaX. But I think compare the ASLR implementation of
->> vallina kernel with Grsecurity/PaX is not fair. Linux upstream doesn't
->> hold the security-oriented philosophy, while Grsecurity/PaX community
->> are expertise of system-lvl security.
->
-> Ok, do you seriously think this?  If so, please provide details as to
-> why you feel this way.  The Linux kernel developers take security very
-> seriously, otherwise no one would be using Linux for "secure" systems,
-> right?
->
-Like Lionel explained in last reply, the term *security* has different
-meaning in the different context. Don't give me wrong, I love
-GNU/Linux( GCC/GLIBC/KERNEL), which are fundamentals of the FOSS
-ecosystem. I've been always telling my customers/friends that
-GNU/Linux( with vanilla kernel) is more secure than M$-windows. But
-Grsecurity/PaX is the must-need stuff to those who has some digital
-assets in a critical scene.
+> I noticed that on Red Hat's Bugzilla these two are aliased to
+> CVE-2014-4740. Should thus CVE-2014-4740 be rejected, or is
+> CVE-204-4740 used for something different?
 
->> Developer/users could take bear of 5%-10% performance penalty caused
->> by new features, but I don't think most developers/users would accept
->> even 1% performance penalty caused by security defensive mitigation.
->> Personally, I hope we could see Grsecurity/PaX being part of mainline
->> linux kernel in the future.
->
-> Great, please do the work to split it up and submit it to be merged,
-> that would be a wonderful thing for you to do if you think the features
-> there are needed.
->
-I wish I could. Debian/Mempo or hardened-Gentoo can satisfy my daily bread.
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-4740 i.e.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1115983 .
 
->> IMOHO, offset2lib is a very critical impact to the GNU/Linux
->> mitigation. What if the bad buys already have some 0day vulns? This
->> will make their work so much easier to write massive exploit. Hope
->> upstream could patch this issue as quickly as possible. Plz don't let
->> this work to the burden of GNU/Linux distro community.
->
-> What exactly do you mean here?  The fact that this option isn't enabled
-> by lots of distros already means that there isn't much of an issue,
-> right?
->
-Do you think the mitigations of NX+ASLR+PIE+STACK CANARY can be
-defeated in a few seconds is not a big deal? What do you mean about
-"this option isn't enabled"? The most of suid programs has been
-shipped with these mitigations: NX/ASLR/PIE/STACK
-CANARY/FORTIFY...some are compiled with RELRO. What I mean is this
-issue should be fixed by the upstream, not let distro community to
-maintain a tiny patch.
+We need to REJECT CVE-2014-4740 because of the multiple conflicting
+uses.
 
-> thanks,
->
-> greg k-h
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-4740 says
+that CVE-2014-4740 is only about
+f846a6c9d007ca2bee05359af747619151195fc9. The correct CVE ID for
+f846a6c9d007ca2bee05359af747619151195fc9 is CVE-2014-4907.
 
+However, https://bugzilla.redhat.com/show_bug.cgi?id=1115983 says that
+CVE-2014-4740 is only about e4a19768a5c5e5b1276caf3dd5bb721a540ec014
+and cb925073edeeb97eb4ce61a86cdafccc9b87f9bb. The correct CVE ID for
+those two is CVE-2014-4908.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
-
-regards
-Shawn
+iQEcBAEBAgAGBQJTv6KzAAoJEKllVAevmvmsQhsIAJbbGeIR6ym+m7CaNTJT0J4T
+1pYnvPXkTXn6C7g7Dn1vCZqWISry6XAamP3OTIk8iXEkY+hJkQUKf6FiAsBP3uST
+RjKy9Gs96hXxKtC4Ym5O+DcXyhWQYrOBqmfsidYGY8dH3L4aHFUAlGAAGNsJrIQp
+bwc7VEfCqnRLhC4tyQ0YYBQKWOPO7BKKBBn0gQD/gJ2h98efknGYeEhNoVaAzzA/
+jqBuh7ob2b4MwkOJlcpo5zHMd+b10L5R7hSu6VHvr81WY5JcQ4gXFKoXIZcjp6ZH
+uda6OZrKE5DScie8e1yQkT+EhDSGcDSqAXpLJdklC0aoH8GDIPe4sdmCwhoRvTU=
+=74N8
+-----END PGP SIGNATURE-----
