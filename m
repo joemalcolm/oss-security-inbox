@@ -1,39 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/21
-Message-ID: <20140930140731.GB27220@suse.de>
-Date: Tue, 30 Sep 2014 16:07:31 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/6
+Message-Id: <201407110746.s6B7kEj0015983@linus.mitre.org>
+Date: Fri, 11 Jul 2014 03:46:14 -0400 (EDT)
+From: cve-assign@...re.org
+To: matthieu.herrb@...s.fr
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: X.Org intel driver dev snapshots, backlight helper issue
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Tue, Sep 30, 2014 at 08:41:24AM -0500, Kobrin, Eric wrote:
-> > "innocuous looking setuid program" made my day ;)
-> 
-> > We should take care not to blame all and everything to bash.
-> 
-> I don't find that blame is a useful tool for fixing security problems. What's more interesting to me is: what system components are in a position to help. If a change in bash can make a bunch of "innocuous looking setuid programs" not be  vectors for the import of malicious functions, let's do it.
+> http://lists.x.org/archives/xorg-commit/2014-July/036840.html
 
-In no shell-universe
+> xf86_video_intel_backlight_helper will be installed setuid
 
-setreuid(0, 0); system("date");
+> (only beta versions have it)
 
-is an "innocuous looking setuid program". It fails in so many ways
-that I cant enumerate it here, despite missing sanity checks for readability
-and in that suids must not use system() or popen() in the first place.
+Use CVE-2014-4910 for the
 
-If one finds a construct in code that looks similar to this, fix it. Really.
-No bash update (and no other shell) will ever make this secure. If we start
-fixing the underlying system so that above code is innocuous indeed, rather
-than fixing the programmers producing such code, our road ends at php.
+    - don't allow '/' in the interface name to avoid escaping the /sys
+      hierarchy
 
-Sebastian
+issue.
 
--- 
+At present, there is no CVE ID for the
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+    - check snprintf() return value for overflow.
 
+issue. We are not sure whether this has any impact beyond triggering
+an attempt to use an unintended filename under /sys/class/backlight/.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTv5WIAAoJEKllVAevmvms4YUH/3LASmq6IpPVfcmHgFwVliaF
+V3IAD2OrD5G+7YjkC0qCFAoazleHJfTJziP8Qkz1OpZe9GIKhCLhyEyicwwIzgpQ
+pcETqlPBuV4xPD3l0aSJLuYQC36sAWCACS+GIPZm26ZozWs7z2WTDzDcP9eyzFe1
+mvOuRo28leuR+3qhyoNotjxgB+JbMr8jw8stx2qgbeIdJ9Dw+X2sfq9QG5UAF4ZM
+Ob5NeBHfynXT1LpL0ZM1kYdY6BzJGdhcsKtNyMPkf/6RmmfKDLxgHXUHd6y6gtr1
+GjpQn1gcKjAhCr+3e57aHsTZa8oUxDSAW0FKeHMJeOPZx5omg4Yg6CZvGA3xOYw=
+=IXgK
+-----END PGP SIGNATURE-----
