@@ -1,70 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/9
-Message-ID: <536A9FBC.5060402@redhat.com>
-Date: Wed, 07 May 2014 15:03:56 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [AMENDED] [CVE-2014-0130] Ruby on Rails: Directory Traversal Vulnerability With Certain Route Configurations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/9
+Message-Id: <201407111021.s6BALT8v022422@linus.mitre.org>
+Date: Fri, 11 Jul 2014 06:21:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Vulnerability Report for Ruby Gem kompanee-recipes-0.1.4
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 05/07/2014 10:53 AM, Jacob Kaplan-Moss wrote:
-> Hey Rafael -
-> 
-> On Tue, May 6, 2014 at 5:50 PM, Rafael Mendonça França < 
-> rafaelmfranca@...il.com> wrote:
-> 
->> An earlier version of this advisory incorrectly assumed that the
->> only way to trigger this vulnerability was with routes containing
->> '*action'.  There are additional attack vectors and as a result
->> *all* users are advised to upgrade to a fixed version as soon as
->> possible.
->> 
-> 
-> Can you clarify what these "additional attack vectors" are? We've
-> been looking at this closely here at Heroku, and as far as we can
-> tell it's only the original vector (*action/:action). What are we
-> missing here?
-> 
-> We'd like to be better able to evaluate if we're vulnerable -- and,
-> more importantly, we'd like to understand if this is a big enough
-> deal for us to notify our customers and directly encourage them to
-> upgrade (a step we've taken in the past). However, without more
-> details about these "additional vectors" we're kinda shooting in
-> the dark. Can you share more details?
-> 
-> Thanks!
-> 
-> Jacob Kaplan-Moss Director of Security, Heroku
+We are not sure of the best way to interpret statements such as
 
-I'm also looking at our code and other people's code. The pattern of
-*action doesn't seem to popular, in fact searching github shows _0_
-occurrence of "*action" in ruby code (lots of occurrences in non ruby
-code). So either this pattern is never used or GitHub is blocking that
-specific search term for Ruby, which doesn't seem to be the case, or
-it's incredibly rare.
+> If this Gem is used in the context of a Rails application it maybe
+> possible for a remote user to inject commands into the shell via
+> #{password} #{user} #{deploy_name} #{application} variables if that
+> data is user supplied.
 
-So yeah knowing the other vectors would be good! Thanks.
+At this level, one question might be: is it possible that this Gem
+wasn't ever intended to be used in the context of a Rails application?
+(This question may also apply to some other recent CVE requests.)
+
+At a slightly higher level:
+
+http://rubygems.org/gems/kompanee-recipes says "These are the common
+recipes we've been using here at The Kompanee." It seems unclear
+whether this is really intended to have widespread use as-is except by
+thekompanee.com insiders. For example, parts of it seem highly
+site-specific such as lib/kompanee-recipes/bash.rb "This will install
+a more secure SSH environment ... it will ... change the default
+port ... ln -fs /usr/share/kompanee-common/ssh/sshd_config
+/etc/ssh/sshd_config" or lib/kompanee-recipes/environment.rb 'Sets
+intelligent defaults for Kompanee Rackspace deployments ... :domain,
+"thekompanee.com" ... :server_ip, "174.143.212.245" ... Most of these
+values can be overridden in each application's deploy.rb file.
+Unfortunately some of them can't be such as :scm but they're our
+recipies so... LIVE WITH IT.'
+
+In general, code can be publicly distributed but, realistically,
+site-specific. It would perhaps be reasonable to decline to assign CVE
+IDs for anything in kompanee-recipes because the entire Gem is
+arguably being published as example code that could be adapted by
+other organizations, not as a general-use product.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJTap+7AAoJEBYNRVNeJnmTLtsP/1AQ6FF0G49ptkxLa6JkXGkH
-IKABgxgQHi3e/BeKi6I+eEb3aXuOCMQzReUrbsdxiFJxcfa+Md7Em3kZmig4Idaf
-fCyZ0Hhi5yyiMsOeRuERHUIxwMqXfCu9oZMDCWd7uO7WyblxD0KhcUoCMj5ZM8po
-Y+JluKR95Mu3Guu71V5yJUzrQN8fBtqnLEFd6e/CGcADRG0z6+q+2D9nRRkhYarD
-s6uyt5XezE73ULoYO7FAQkMVFy7JS5O7bkdgc+Md9niGS7DU1rqQ5CdpRTsaL2FU
-XcwvTK+ZzlktV9B+50G8e13ML3VwXCxGHxoYVxeBCUe+8Qy8CV9Eg0qnC7oGuqbV
-VcbMHYZdpHbZ/PzkQazEeYq3EShgtrMD6FK0lbYyimREAYMxU5CJLOZpcfA8U7Wm
-NUGj5g2YfMJxXK1+O3mme9YhE+QM5bBIPkTGeigcTGztHaZ+D7EyRHu6uxvfWS9y
-rwf3vUtqIBqe7Di3aPN6Wx10gL0cnh5t1KiL95zv8gnr6GmYoxsGiozAMQSngC5C
-qYMvWCaHJ8COvTNKGbCenslHzJHhpVsW1TdsC8yZlaWY/k28sv5oouNGJOJECgpb
-q2GhVqrdsgEamRnds0h7Lt3QG+3FVUxlktGgJzC2pSVIyBlus/WNbhN8QuZEzwx2
-oZ2yFFrB2ERdug9AVajd
-=vuiW
+iQEcBAEBAgAGBQJTv7oIAAoJEKllVAevmvmsKcgIAMLvYt3CXRyjdeJXFshRaOjR
+lw+XRRVez3c3TuuD7fpJdySJgneYIwqhkCPgVrroWsbK1s/9dudWz7urYOgbi3Mc
+LaFNZlUgM+phWf3mGFUEk3eHWBJ/e1DD7+WMxYzkoh1Rs4NAOoeCnBmDfSv35gaP
+bp0eVlgzMthvnoOs/EO3eXWmYR+8rD6CNugTvusKXceUa+HZgY+L/F4ijSXaeZbk
+DTS+ZuMFYHBjAh2tfE9Bel82EqaMLlEzIwFGwLZuJE6spHex26cR1k4fOE6p3wBN
+BaZi3u8DDe7hG2Dd+ZffIUO2aPh8fqIsd3vxazYHWUKkIvPZsZkYtSj790WrtZ4=
+=gOdq
 -----END PGP SIGNATURE-----
