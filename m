@@ -1,73 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/10
-Message-ID: <52EF4F92.2060103@redhat.com>
-Date: Mon, 03 Feb 2014 01:13:06 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/12/1
+Message-ID: <20140712155451.GK179@oevtugenva.nrevsny.pk>
+Date: Sat, 12 Jul 2014 11:54:51 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: OpenSSH J-PAKE vulnerability (no cause for panic! remain calm!)
+Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Jul 10, 2014 at 08:52:24PM +0200, Florian Weimer wrote:
+> Stephane Chazelas discovered that directory traversal issue in locale
+> handling in glibc.  glibc accepts relative paths with ".." components
+> in the LC_* and LANG variables.  Together with typical OpenSSH
+> configurations (with suitable AcceptEnv settings in sshd_config), this
+> could conceivably be used to bypass ForceCommand restrictions (or
+> restricted shells), assuming the attacker has sufficient level of
+> access to a file system location on the host to create crafted locale
+> definitions there.
+> 
+> Bug report: https://sourceware.org/bugzilla/show_bug.cgi?id=17137
 
-On 01/29/2014 06:50 AM, cve-assign@...re.org wrote:
-> Use CVE-2014-1692. The CVE description will indicate that the
-> issue requires an unusual installation.
-> 
->> As I understand it this can be enabled via code edit/gcc command
->> line options, so not sure if this qualified for a CVE or not
->> (vuln in code, yes, is code reachable? not under any default
->> setup, and even on non-default you have to go pretty far off to
->> enable it).
-> 
-> An impact on the default installation isn't necessary.
-> Vulnerabilities that occur only after the user modifies code aren't
-> eligible for a CVE. However, if there's some type of "installation
-> option" mentioned by the vendor, someone may have chosen that
-> option, and it may be worthwhile to track the issue with a CVE. The
-> nature of an "installation option" obviously varies widely across
-> both open-source and closed-source products.
-> 
-> In this case, there's:
-> 
->> http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/Makefile.inc
->
->>  Add support for an experimental zero-knowledge password
->> authentication method using the J-PAKE protocol ...
-> 
->> This is experimental, work-in-progress code and is presently 
->> compiled-time disabled (turn on -DJPAKE in Makefile.inc).
-> 
->> http://www.openbsd.org/cgi-bin/cvsweb/~checkout~/src/usr.bin/ssh/Makefile.inc?rev=1.41;content-type=text%2Fplain
->
->>  #CFLAGS+=	-DJPAKE
-> 
-> This is close to the edge of what "installation option" means, but
-> our feeling is that the vendor wouldn't have provided that #CFLAGS
-> line at all unless it were expected that an end user might want to
-> make the one-character change.
+On further review, I question whether this is actually a valid
+vulnerability. The ability to use absolute pathnames as locale strings
+is a documented feature in both POSIX and glibc, and even after the
+patch, absolute pathnames are still accepted for locales in
+non-suid[-like] programs, meaning that bypass of ForceCommand is still
+possible as long as AcceptEnv is accepting LC_*.
 
-Just to close this email thread, Mitre assigned one:
+The scope of the actual issue seems to be limited to situations where
+an application was assuming LC_* was safe due to being non-absolute
+(e.g. checking that the initial character is not '/') then getting hit
+by directory traversal due to embedded ".." in the string. This seems
+like a bug, but unless there are applications which were performing
+such naive checks then accepting untrusted LC_* vars, I question
+whether this was really CVE-worthy.
 
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-1692
+Does this analysis seem correct, or am I missing something? Aside from
+general interest, I'm asking largely because we're in the process of
+discussing how locale path searching should work in musl libc, and I'm
+trying to understand the reasonable expectations for security aspects
+of the locale system from an application and user standpoint.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJS70+RAAoJEBYNRVNeJnmT5V4P/RDdFaGl0YNanqE4OU8Xu6qz
-a//9Aupt8DPYgSFq9UvIJHMpK8+PBH5SIqM2byGOvAwActrK4qDrwcgdng1LKbEz
-IqFHycNfwW4y5EB2hSd28d0WvPlsdBLekc4hClLXfek5P8nwFeixb7SW7zp6SzSb
-BIT9z4L77a1V/u2F4LtMwGPEIebGOZzpaLPwKeRZDhigZ3IvYG7q7FiukiJiUio8
-Zx8gw6912Uh43J23Dd9gsUtm/cRZ0vjzfgvJlyNX++ew0bKT7s8uVUHWar//KuXF
-oT2PVORkQLfJ1zRvHw8FW+pBsCWVYhdeSQ2caf+Y0/03WXoRm6IU2StI/4i2nb32
-o6tf1hBt45QtfYduI9h378tINQhzKgR23OPUXmc8ZE8lp9kLH4P1+yhiEovJU/u4
-oo6FivRmYBlvVoGx7LbLHEIPQaR0xgdSb9j6E7eaGzFT1a9UhaCS0nCAn0tyaeT5
-SHFGKIl+s99pU5JGyl5Wm2TFe0aVt0USf78GyovqzW4OT+g/llmBQH4MCS4OJdak
-KZtDOvTBn1CDTutNQL2nnd9geaQlPJeFTd+RFbi1dwRz9Dd+N6AR1/P8At2lzNqX
-DN9wP4Xpuzk696+Ij4mvvLupwiL9bDSGsy4H7UcmEZCUmQf6+JCztFEO3YjITdai
-VjBpviosVXRv/n4qDGRf
-=WJSy
------END PGP SIGNATURE-----
+Rich
