@@ -1,19 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/21
-Message-Id: <DC67BBE7-5989-4F4D-9C84-79A197F36ADF@alchemistowl.org>
-Date: Wed, 9 Apr 2014 08:00:44 +0200
-From: Arrigo Triulzi <arrigo@...hemistowl.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/12/2
+Message-ID: <CAFkuX4sEip+0LFtQnERe9ts-f5M+MZi_sb09AOy2QFngmndtxA@mail.gmail.com>
+Date: Sat, 12 Jul 2014 15:43:08 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
+Subject: LMS-2014-07-10-1 - CloudFlare GoLang LZ4 Memory Corruption
 Content-Type: text/plain; charset=utf-8
 
-On Apr 9, 2014, at 05:59, Kurt Seifried <kseifried@...hat.com> wrote:
-> So it appears there are projects that statically compile OpenSSL into
-> their software, one example:
+Hello All,
 
-Note that OpenVPN has also advertised on Twitter that they too have released a new version with a patch for Heartbleed. Most architectures ship with OpenVPN dynamically linked but they do distribute with their own private copy.
+Please find the bug report attached to this email.
 
-Arrigo
+Best,
+Don A. Bailey
+Founder / CEO
+Lab Mouse Security
+@InfoSecMouse
+https://www.securitymouse.com/
 
+#############################################################################
+#
+# Lab Mouse Security Report
+# LMS-2014-07-10-1
+#
 
-Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
+Report ID: LMS-2014-07-10-1
+
+Researcher Name: Don A. Bailey
+Researcher Organization: Lab Mouse Security
+Researcher Email: donb@...uritymouse.com
+Researcher Website: www.securitymouse.com
+
+Vulnerability Status: Reported
+Vulnerability Embargo: None
+
+Vulnerability Class: Integer Overflow
+Vulnerability Effect: Memory Corruption
+Vulnerability Impact: DoS, OOW, RCE
+Vulnerability DoS Practicality: Practical
+Vulnerability OOW Practicality: Practical
+Vulnerability RCE Practicality: Practical
+Vulnerability Criticality: Critical
+
+Vulnerability Scope:
+All versions of the Cloudflare golz4 package prior to commit
+199f5f7878062ca17a98e079f2dbe1205e2ed898 on github. There are no tags
+or releases for this software package, so master must be used, or
+a branch past the above commit id.
+
+32bit variants of the package are critically affected.
+64bit variants are deemed infeasible to exploit at this time, but still
+affected by the vulnerability.
+
+Lab Mouse Security has engineered reliable RCE payloads for test applications
+that use golz4, but a "one-shot" exploit against golz4 is not currently
+possible due to the memory layout of GoLang.
+
+Criticality Reasoning
+---------------------
+Due to the way GoLang manages objects memory, there are multiple ways to
+craft a reliable exploit against golz4 that will allow for RCE. It is
+notable that Don A. Bailey designed his exploit to meet the following
+conditions:
+ - bypasses ASLR
+ - bypasses NX
+ - portable to any target architecture (tested on 32bit: ARM, x86)
+
+Against applications that the user does not have the source code for, a
+corresponding memory disclosure vulnerability must be used to accurately
+craft a malicious RCE payload.
+
+DoS or OOW is always reliable with this exploit.
+
+Vulnerability Description
+-------------------------
+An integer overflow can occur when processing any variant of a "literal run"
+in the affected function. When certain payloads are processed, a pointer to
+an output buffer can be set to an address outside of the output buffer. Since
+the attacker can specify exact offsets in memory, it is very easy to create
+a reliable RCE exploit.
+
+LZ4_uncompress as well as LZ4_decompress_safe are vulnerable for LZ4 Core
+releases prior to r119. LZ4_decompress_safe in releases for r119 and later
+are still vulnerable on 64bit platforms, but considered not feasible or
+practical to exploit - at this time.
+
+Vulnerability Resolution
+------------------------
+Resolved.
+
+References
+----------https://github.com/cloudflare/golz4/commit/2dcef6a6aeec3ad36816c726fb1386460d27a466https://github.com/cloudflare/golz4/commit/199f5f7878062ca17a98e079f2dbe1205e2ed898
+http://blog.securitymouse.com/2014/07/bla-bla-lz4-bla-bla-golang-or-whatever.htmlhttp://blog.securitymouse.com/2014/07/i-was-wrong-proving-lz4-exploitable.htmlhttp://blog.securitymouse.com/2014/07/the-lz4-two-hour-challenge.html
+
