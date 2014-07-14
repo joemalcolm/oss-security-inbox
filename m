@@ -1,43 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/9
-Message-ID: <20141024184936.GN10820@dhcp-25-225.brq.redhat.com>
-Date: Fri, 24 Oct 2014 20:49:37 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/14/6
+Message-ID: <20140714180742.GR179@oevtugenva.nrevsny.pk>
+Date: Mon, 14 Jul 2014 14:07:42 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: kvm issues
+Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Jul 14, 2014 at 11:57:04AM +0200, Florian Weimer wrote:
+> On 07/12/2014 05:54 PM, Rich Felker wrote:
+> >>Bug report: https://sourceware.org/bugzilla/show_bug.cgi?id=17137
+> >
+> >On further review, I question whether this is actually a valid
+> >vulnerability. The ability to use absolute pathnames as locale strings
+> >is a documented feature in both POSIX and glibc, and even after the
+> >patch, absolute pathnames are still accepted for locales in
+> >non-suid[-like] programs, meaning that bypass of ForceCommand is still
+> >possible as long as AcceptEnv is accepting LC_*.
+> 
+> This is not correct, glibc never accepted absolute pathnames in the
+> sense that they were resolved as absolute path names.  They were
+> always resolved relative to LOCPATH, with or without a leading
+> slash.
+> 
+> When the lack of conformance was reported as a glibc bug a couple of
+> years ago, the bug report was labeled as invalid:
+> 
+>   https://sourceware.org/bugzilla/show_bug.cgi?id=11635
+> 
+> We didn't want to break backwards compatibility here, so we
+> documented the existing behavior and just prohibited ".." pathname
+> components. This allowed us to treat this as a glibc vulnerability,
+> with a fairly simple and isolated fix (although the gettext part is
+> still pending).
 
-a number of kvm issues were disclosed today, here's the list.
+Thanks for the explanation. This makes sense, and contrary to the
+claims in the bug report, I believe it's possible to claim this
+behavior is conforming, but only if you don't advertise localedef
+support.
 
-CVE-2014-3610
-  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=854e8bb1aa06c578c2c9145fa6bfe3680ef63b23
-  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=8b3c3104c3f4f706e99365c3e0d2aa61b95f969f
+I tend to agree that it's the most reasonable choice from a security
+standpoint, and necessary if you want to support configurations where
+the choice of locale is coming from a different privilege domain.
 
-CVE-2014-3611
-  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=2febc839133280d5a5e8e1179c94ea674489dae2
-
-CVE-2014-3646
-  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=a642fc305053cc1c6e47e4f4df327895747ab485
-
-CVE-2014-3645
-  inadvertently fixed via
-  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=bfd0a56b90005f8c8a004baf407ad90045c2b11e
-
-CVE-2014-3647
-  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=234f3ce485d54017f15cf5e0699cff4100121601
-  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=d1442d85cc30ea75f7d399474ca738e0bc96f715
-
-CVE-2014-8369
-  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=3d32e4dbe71374a6780eaf51d719d76f9a9bf22f
-
-CVE-2014-8480
-  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=3f6f1480d86bf9fc16c160d803ab1d006e3058d5
-
-CVE-2014-8481
-  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=a430c9166312e1aa3d80bce32374233bdbfeba32
-
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Rich
