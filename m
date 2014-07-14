@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/18
-Message-ID: <20140410184107.GA25259@hunt>
-Date: Thu, 10 Apr 2014 11:41:07 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/14/5
+Message-ID: <53C40F02.5030802@redhat.com>
+Date: Mon, 14 Jul 2014 11:10:26 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros list membership
+Subject: Re: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 10, 2014 at 10:25:54AM +0400, Solar Designer wrote:
-> The distros and linux-distros lists exist as an addition to
-> oss-security.  It is pointless for a distro to be on
-> distros/linux-distros while not also being on oss-security.  Granted,
-> Anthony has just joined oss-security (welcome!), yet the sudden interest
-> in advance notification while apparently not caring about timely
-> notification (on just-made-public issues) just a week ago is suspicious.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Amazon's interest here isn't sudden; when I intereviewed with Amazon
-roughly two years ago, it was for more or less this role, security work
-for the Amazon Linux AMI. At the time I recommended building a history of
-security bulletins and publicly contributing to fixes and discussions. At
-least the security bulletins has happened.. :)
+On 14/07/14 11:01 AM, Ramon de C Valle wrote:
+> The fix for the (off-by-one) issue was added in
+> https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/46778.
+> Is MITRE or Red Hat going to assign a CVE for it?
 
-Sadly I can't speak to any of the specific team members; I don't recall
-any of the names currently under discussion.
+I (and by extension Red Hat) are no longer doing the CVE assignments
+for public issues here unless it is a time dependant emergency,
+basically any CVE requests here will be handled by Mitre.
 
-Thanks
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+iQIcBAEBAgAGBQJTxA8BAAoJEBYNRVNeJnmTQecP/i+ZpwCqVpra/KG4NIs/HWTh
+bzsSq17Q8DQ+VmM5aar19D9xJT6ap6zeR0pHfsNbeN+YOGyjLKfGRc5mOGWwy0do
++mfCiqvHX3khA5T73EJK5DsValsQPhXzt0moVA+a3iY5yyFhzyj+MB85b+3LU4CL
+RiBk9zhi8HxReVAk9cHxTEhNz9dTML+ukMeLhTbAeDXY79R3hXfvgYYfe32eT7xe
+tn4d+Rf6Sic30FF7AQWOyLnuIYjM+kTLqw9d56SoqyXAAr9a0SU9CQFb9vI5RD6E
+ZgEBiGoBiJdmN5W6Mzf8M2/0990/XLttzWbSFdrsUlcLAELFaTb1nLAxvIdEtVip
+IkpEh53x7modo5OyUR42/Tr0R3n0m7g+5i3c0TwMuH+KFO3MhvzmwCYbPUUsFMqP
+egaaXiJBa0y8Kej6K/Aqm1ua/0AHhIIWCy8xLoPi9Q2GJLSTRl42gyN6F2gmXi0r
+eDbIj2t+O7U84YLITtzil8IwFZKnO2RdfyIHKvSouhgkWszAr707vP0X5s8FCOL2
+1k1r+hv5R72ZCKVuMKQjVjNGmpD4NVGclD5RlKSnMtdeeIqlBSz3jaVihRwB/r8O
+wRRKZ/n/uLAkML8VFWGKqJgF35tUq/84Xs+W2Wu/AUeozyFtEBTQnA7aoxfKhqxB
+1G9UwkloGN4a+UWPxtZo
+=HXAc
+-----END PGP SIGNATURE-----
