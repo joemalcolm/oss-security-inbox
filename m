@@ -1,28 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/4
-Message-ID: <20140506175538.1b62a08f@redhat.com>
-Date: Tue, 6 May 2014 17:55:38 +0200
-From: Stefan Cornelius <scorneli@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/14/3
+Message-ID: <53C3A970.7070007@redhat.com>
+Date: Mon, 14 Jul 2014 11:57:04 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
+Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 07/12/2014 05:54 PM, Rich Felker wrote:
+>> Bug report: https://sourceware.org/bugzilla/show_bug.cgi?id=17137
+>
+> On further review, I question whether this is actually a valid
+> vulnerability. The ability to use absolute pathnames as locale strings
+> is a documented feature in both POSIX and glibc, and even after the
+> patch, absolute pathnames are still accepted for locales in
+> non-suid[-like] programs, meaning that bypass of ForceCommand is still
+> possible as long as AcceptEnv is accepting LC_*.
 
-It was discovered that libxml2, a library providing support to read,
-modify and write XML files, incorrectly performs entity substituton in
-the doctype prolog, even if the application using libxml2 disabled any
-entity substitution. A remote attacker could provide a
-specially-crafted XML file that, when processed, would lead to the
-exhaustion of CPU and memory resources or file descriptors.
+This is not correct, glibc never accepted absolute pathnames in the 
+sense that they were resolved as absolute path names.  They were always 
+resolved relative to LOCPATH, with or without a leading slash.
 
-This issue was discovered by Daniel Berrange of Red Hat.
+When the lack of conformance was reported as a glibc bug a couple of 
+years ago, the bug report was labeled as invalid:
 
-Upstream patch:
-https://git.gnome.org/browse/libxml2/commit/?id=9cd1c3cfbd32655d60572c0a413e017260c854df
+   https://sourceware.org/bugzilla/show_bug.cgi?id=11635
 
-Red Hat bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=1090976
+We didn't want to break backwards compatibility here, so we documented 
+the existing behavior and just prohibited ".." pathname components. 
+This allowed us to treat this as a glibc vulnerability, with a fairly 
+simple and isolated fix (although the gettext part is still pending).
+
+> The scope of the actual issue seems to be limited to situations where
+> an application was assuming LC_* was safe due to being non-absolute
+> (e.g. checking that the initial character is not '/') then getting hit
+> by directory traversal due to embedded ".." in the string. This seems
+> like a bug, but unless there are applications which were performing
+> such naive checks then accepting untrusted LC_* vars, I question
+> whether this was really CVE-worthy.
+
+Your analysis is correct for POSIX-compliant systems, but not for glibc. 
+  Unfortunately, POSIX compliance makes it quite difficult to fix this.
 
 -- 
-Stefan Cornelius / Red Hat Security Response Team
+Florian Weimer / Red Hat Product Security
