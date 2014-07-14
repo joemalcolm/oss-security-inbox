@@ -1,18 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/4
-Message-ID: <20141030183449.GI1127@sentinelchicken.org>
-Date: Thu, 30 Oct 2014 11:34:49 -0700
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/14/2
+Message-ID: <mpro.n8ojlv0v1aa5y06jd.taviso@cmpxchg8b.com>
+Date: Sun, 13 Jul 2014 19:15:32 -0700
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Some weird Apache redirection exploit?
+Subject: Re: glibc locale issues
 Content-Type: text/plain; charset=utf-8
 
-> What is it trying to do?  I've never seen it in my logs before.
+Tavis Ormandy <taviso@...xchg8b.com> wrote:
 
+> I just remembered another charset issues I had looked into but abandoned.
 > 
-> 117.27.254.25 - - [31/Oct/2014:05:16:15 +1100] "GET ?redirect:${%23w%3d%23context.get('com.opensymphony.xwork2.dispatcher.HttpServletResponse').getWriter(),%23w.println('[/ok-helo.wang]'),%23w.flush(),%23w.close()} HTTP/1.1" 200 7543 "-" "Python-urllib/2.6"
+> First of all, I think the need_so logic in gconv_trans is broken, but even
+> if it worked there is an off by one error in __gconv_translit_find() (it
+> does + 3 instead of + 3 + 1 in the allocation.
 
+To be clear, I suspect this is exploitable. It would be nice if you could
+modify the buffer such that gconv will open a path with a string you've
+appended it (e.g. CHARSET=//. pkexec ./../../../../tmp/foo.so), if not maybe
+the one byte overflow is still exploitable. You have a reasonable amount of
+control, e.g. CHARSET=//AAAAA pkexec $(perl -e 'print "A" x 125'
 
-An exploit for one of the many Apache Struts vulnerabilities.
+Tavis.
 
-tim
