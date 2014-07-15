@@ -1,69 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/39
-Message-ID: <1411771342.2031.5.camel@16bits.net>
-Date: Sat, 27 Sep 2014 00:42:22 +0200
-From: Ángel González <angel@...its.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/15/1
+Message-Id: <201407150509.s6F59ftP010060@linus.mitre.org>
+Date: Tue, 15 Jul 2014 01:09:41 -0400 (EDT)
+From: cve-assign@...re.org
+To: rdecvalle@...are.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, thoger@...hat.com, mmcallis@...hat.com
+Subject: Re: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
 Content-Type: text/plain; charset=utf-8
 
-John Haxby wrote
-> On 26/09/14 01:23, Ángel González wrote:
-> > Forwarding to the oss-security thread the patch I sent to bug-bash 
-> > 1 hour ago.
-> > 
-> > The trick here is to delay parsing of functions coming from the
-> > environment until they are actually needed.
-> > 
-> > Thus extra code (CVE-2014-6271) or even a parsing vulnerability like
-> > CVE-2014-7169 won't be triggered unless you attempt to run the exported
-> > function (or you use a builtin such as declare or type that must print
-> > the code, things like type -t are safe to use).
-> 
-> Even with this?
-> 
-> type='() { echo hi there; }' bash
-> 
-> (Or the added stuff from Florian's patch).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+> Is MITRE or Red Hat going to assign a CVE for it?
 
-This patch doesn't remove the exportable functions feature. Thus, it is
-a priori unsafe to run any command using an identifier which can be set
-in the environment by an attacker*
+We haven't yet been able to determine whether the discussion is about
+two separate vulnerabilities.
 
-I mentioned that `type -p' was safe meaning "not triggering the parsing
-of the name passed as argument", as I expected that a careful script
-might be running type -p on untrusted variables before doing something
-with them. And indeed it is safe… if they use the real 'type' builtin.
+http://openwall.com/lists/oss-security/2014/07/09/13 says:
 
+  ruby -v: ruby 2.1.2p168 (2014-07-06 revision 46721) [i386-mingw32]
 
+  ...
 
-> I got myself into a right old mess by redefining declare, typeset, unset
-> and command.
+  While working with an AWS sample I hit a segmentation fault. The
+  same sample works under 1.9.3.
 
-Given that builtins have precedence over builtins, you can get trapped
-very hard. You can't use builtin, unset, set, declare, eval…
+First, we don't know what "The same sample works under 1.9.3" means.
+It might mean "The same AWS sample is also a working vulnerability
+reproducer when using Ruby 1.9.3." It might instead mean "With this
+AWS sample, my program works normally when using Ruby 1.9.3; in other
+words, no vulnerability is observed."
 
+http://openwall.com/lists/oss-security/2014/07/10/15 says:
 
-IMHO, the best a script can do to protect itself (and only after patch
-25 restricts the names of exported functions) is:
+  Anyway, whatever the reporter is referring to, he mentions it
+  doesn't occur in 1.9.3, and looking at 1.9.3, the only related
+  differences I immediately noticed are the absence of the check at
+  https://github.com/ruby/ruby/blob/trunk/pack.c#L829 in pack_pack
+  function and padding being an int (instead of char) in the encodes
+  function.
 
+These differences in pack.c obviously aren't the same as (and
+aren't expected to be the same as) the pack.c code changes in
+Revision 46778 (aka the
+https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/46778/diff/pack.c
+changes).
 
-> if [ "$1" != "--environment-cleaned" ]; then
->  /usr/bin/env -i "$0" --environment-cleaned "$@"
-> else
->  shift
->  <do things>
-> fi
+(We realize that 1.9.3 is of interest because it is the "Old stable"
+distribution advertised on the
+https://www.ruby-lang.org/en/downloads/ page.)
 
+Is one of these scenarios the correct interpretation?
 
-Assuming that env(1) is on /usr/bin/env (it's /bin/env on some unix),
-argv[0] is the real script name, and it has +x (instead of needing to be
-passed as an argument to the shell).
+  1. There is only one vulnerability. Version 2.1.2 is an example of
+     an affected version. Version 1.9.3 is an example of a
+     non-affected version.
 
-Best regards
+  2. There is only one vulnerability. Version 2.1.2 is an example of
+     an affected version. Version 1.9.3 is also an example of an
+     affected version.
 
+  3. A vulnerability in pack.c was fixed during Ruby 1.x development,
+     but then a regression occurred during Ruby 2.x development, and
+     the vulnerability is present in, for example, version 2.1.2.
+     (A regression would generally mean that two CVE IDs are
+     required.)
 
-* Or conversely, it is unsafe to let an attacker set an environment
-variable matching a command name later used without sanitization. 
+  4. The Ruby 1.x pack.c and the Ruby 2.x pack.c are vulnerable in
+     substantially different ways, requiring different fixes.
+     (Again, this would generally mean that two CVE IDs are
+     required.)
 
+We don't require that the set of affected versions is precisely
+determined before a CVE assignment. Narrowing it down to one of the
+above scenarios is probably required because otherwise the correct
+number of CVE IDs isn't known.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTxLXwAAoJEKllVAevmvmsQvMIAL9+jrIe5n2thqScfEOiJOZY
+cmbCkJO32ZorlxWK99duvvOY3XNx/TXO2lQ55/pzYz9VbF/7VmqWOX9vRtf+9qOy
+gkGFSwDzwyRKxRKZ3GqCyeNvleAl3pMdu9Yo/fqGTVRmYPqT6Xhd4wXzye+jdnlU
+Fkh1OEfm9dEBEgECAUeslBkkSx1aQBFM6ZNHVPE7bSBhAtMbw5u3Bi0DLnq5lxLf
+/yvPWAZQ/uEJFJoFBeODPHTQyvTmbeakmePJceyKyWqyVshaK1BqAxwf/fM+aX0J
+byakIe2rtSvsYdstn4Plnh6tHBNYDfTLgsNt5JtEnnv4HQgD3dktgd/gsB56HO4=
+=wul9
+-----END PGP SIGNATURE-----
