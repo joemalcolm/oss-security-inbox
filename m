@@ -1,46 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/30/1
-Message-Id: <20140830012713.7DB46332007@smtpvbsrv1.mitre.org>
-Date: Fri, 29 Aug 2014 21:27:13 -0400 (EDT)
-From: cve-assign@...re.org
-To: pierre@...ctos.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Full disclosure: denial of service in srvx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/15/2
+Message-ID: <CA+tbMaUt1xQJBHAUDrhzagmc5Ni7v08DQ3OD2XOtvgzWnFrbvg@mail.gmail.com>
+Date: Tue, 15 Jul 2014 03:38:27 -0600
+From: Kyle Kelley <rgbkrk@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: IPython Notebook Cross 2014-3429
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hey OSS Security list,
 
-> Putting an extremely high value to these parameters, such as
-> 184467440723049 will lead to an integer overflow. When attempting to
-> queue the function execution, srvx will add it in the past, will attempt
-> to execute it immediately and thus will loop forever on this, and will
-> finally crash due to memory exhaustion.
+We posted details to MITRE back in early May and got assigned a CVE number
+(CVE-2014-3429) but haven't seen details been posted yet. It has been
+patched for some time now. In the interest of full disclosure, I'm
+providing the same details to this list.
 
-Use CVE-2014-5508 for the integer overflow.
+Email address of requester: security@...thon.org; rgbkrk@...il.com
+Software name: IPython notebook
+Type of vulnerability: Cross domain websocket hijacking
+Attack outcome: Remote execution
+Patch/issue: https://github.com/ipython/ipython/pull/4845
+Changelog:
+http://ipython.org/ipython-doc/stable/whatsnew/github-stats-2.0.html
+Affected versions: 0.12 ≤ version < 1.2
 
+Summary: The origin of websocket requests was not verified within the
+IPython notebook server. If an attacker has knowledge of an IPython kernel
+id they can run arbitrary code on a user's machine when the client visits a
+crafted malicious page.
 
-> most generic fix. It is here to deny any function adding in the past.
+Post on our own mailing list:
+http://permalink.gmane.org/gmane.comp.python.ipython.devel/13198 Note:
+truncated CVE was posted to the mailing list, corrected after (my bad).
 
-(As far as we could tell from your discussion, there is no way for an
-attacker to specify a negative number directly. That situation would
-require a separate CVE ID. In other words, the patch to timeq.c
-apparently detects a condition that's possible only after an integer
-overflow occurs.)
+Thank you,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Kyle Kelley
 
-iQEcBAEBAgAGBQJUASdPAAoJEKllVAevmvms/A8H/3123WncqL1ImFXko4/AVfMW
-zbhQDGo4NGwVeBNLUPl6G+u/nnFcVtRwQaqG3vKWM6ZgsXUjhSSWhlfPtE6vEvPo
-QA6Vz/SUd8zs91iNtERyAsWaTcSHR4nVTJ4dBW7hfQWEtI2T3COL8jpcwdsfRHmq
-hLDXoY7Ixn3P/494exKKJ276fLv+vG9cqdPk+Tx668c31lkcInv5MNr963v+3JQd
-UHFXhGnSh7tPH1O5ro5KK5fJa632EwHidc/Ozyksi5QrVasn1D6xByToMkxRUU+s
-cIlPBQVdFeHHc3LONZtxgF/851DCcxigmLlWqmE7xFP5ouut5Jk4YYrQJ92WtFk=
-=Gxld
------END PGP SIGNATURE-----
