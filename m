@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/03/2
-Message-ID: <20140303110527.1292bce1@redhat.com>
-Date: Mon, 3 Mar 2014 11:05:27 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: GnuTLS GNUTLS-SA-2014-2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/15
+Message-Id: <201407161744.s6GHhwHo018365@linus.mitre.org>
+Date: Wed, 16 Jul 2014 13:43:58 -0400 (EDT)
+From: cve-assign@...re.org
+To: vkaigoro@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 754899@...s.debian.org
+Subject: Re: CVE request: rawstudio: Insecure use of temporary file
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-New versions of GnuTLS were released today fixing incorrect error
-handling during X.509 certificate verification.  This issue could cause
-GnuTLS to accept crafted certificate as valid, even if it wasn't issue
-by a trusted CA.
+> rs_filter_graph in librawstudio/rs-filter.c
+> 
+> /tmp/rs-filter-graph
+> /tmp/rs-filter-graph.png
+> 
+> This allows the truncation of arbitrary files
 
-http://lists.gnutls.org/pipermail/gnutls-devel/2014-March/006794.html
-http://lists.gnutls.org/pipermail/gnutls-devel/2014-March/006795.html
-http://gnutls.org/security.html#GNUTLS-SA-2014-2
+Use CVE-2014-4978.
 
-This got CVE-2014-0092 (not mentioned in the gnutls-devel list release
-announcements, but mentioned on the security page).
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+iQEcBAEBAgAGBQJTxrkkAAoJEKllVAevmvms1ZQH/1CXZsXAyu4nHm/i3NhxkYFy
+XGaEFEWDLOzv1u6FhR1l74NjnPJYus7LyAlFFsicxclDVBUklZMsDfgAjPv0HBOO
+akcZOMrTZIhUfZJSHSaB5ps0ocdSy/dHtK0jn3b1p4hOgCqcR9SFvYSykSyLbz7z
+tVn4KJq7RWb99rBrOVhqEahzI+uZCeCvSM+PGSMS4bCo7dnJ++nL8WmWCQzmOYs5
+jN/4BrUGd+w1m74jJAzm0Fu8M8NKcctcmE+64GuOoXrib+kph0PLkH5ouhcjW1I0
+8/UpGBl5xkM14yqCfG3ZegeKJGBdNLAzb+3wEl0ftcPPsz7qCSrvhJ4A562u6GI=
+=Er9a
+-----END PGP SIGNATURE-----
