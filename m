@@ -1,27 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/10
-Message-ID: <CALCETrVPEaK_=yh2FvQcKS3cow6Wk00cKeAxC5eW3GvX6DjO=A@mail.gmail.com>
-Date: Mon, 12 May 2014 12:21:49 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: seunshare and setexeccon issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/8
+Message-ID: <20140716100627.GB25957@suse.de>
+Date: Wed, 16 Jul 2014 12:06:27 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: qemu-bridge-helper minimizing patch
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 12, 2014 at 12:16 PM, Solar Designer <solar@...nwall.com> wrote:
-> On Mon, May 12, 2014 at 10:34:00AM -0700, Andy Lutomirski wrote:
->> I'm not sure how many CVE numbers should be assigned here.  As far as
->> I know, none have been assigned so far.
->
-> I think you missed this:
->
-> http://www.openwall.com/lists/oss-security/2014/05/08/1
->
-> in which CVE-2014-3215 was assigned.
+Hi,
 
-I did.  Thanks.
+For the qemu-bridge-helper which is part of qemu and meant
+to run as suid root, I removed a lot of dependencies with
+this patch:
 
-FWIW, it appears that common exim configurations are vulnerable, so
-this might be worse than just an exposure.
+http://bugzillafiles.novell.org/attachment.cgi?id=598793
 
---Andy
+It was linked against the whole set of qemu libs before,
+so very good chance to exploit the suid via one of the
+more than 50 libs' init code.
+It also fixes minor theoretically issue to be on the safe side:
+Dropping uid to user once work has been done but before sending
+the fd across a UNIX socket.
+
+I dont think that there is a CVE required for any of this (unless
+someone manages to make an exploit for one of the dependency-libs
+that were loaded before).
+
+If someone from RH could bring this upstream, it would be very
+helpful. Last time I tried commiting a fix for ivshmem I just
+got reverse-blaming.
+
+Sebastian
+
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
