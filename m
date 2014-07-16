@@ -1,55 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/22
-Message-ID: <53161E8E.90907@moritz-naumann.com>
-Date: Tue, 04 Mar 2014 18:42:22 +0000
-From: Moritz Naumann <info@...itz-naumann.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/7
+Message-ID: <20140716093303.GB6197@mail.corp.redhat.com>
+Date: Wed, 16 Jul 2014 11:33:03 +0200
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+Cc: 754899@...s.debian.org
+Subject: CVE request: rawstudio: Insecure use of temporary file
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hello,
 
-Felix Eckhofer:
-> On Ubuntu, both Google Chrome 33.0.1750.146 from the official
-> Google repo as well as Chromium 32.0.1700.107 from Ubuntu's repo
-> crashes when trying to open the demo site and also when trying to
-> open a page with an image embedded such as
-> https://dump.tribut.de/democmrgnet.html
+The following was reported:
+...
+The function "rs_filter_graph" located in file
+./librawstudio/rs-filter.c contains the following code:
 
+         g_string_append_printf(str, "}\n");
+         g_file_set_contents("/tmp/rs-filter-graph", str->str, str->len, NULL);
 
-Ubuntu 13.10 x86_64 backtrace (incomplete due to missing
-net/ssl/ssl_info.cc):
+         ignore = system("dot -Tpng >/tmp/rs-filter-graph.png </tmp/rs-filter-graph");
+         ignore = system("gnome-open /tmp/rs-filter-graph.png");
 
-http://pastebin.com/JKbGez4n
+This code makes insecure use of two temporary files:
 
+    /tmp/rs-filter-graph.png
+    /tmp/rs-filter-graph
 
-Here's a "test" with various web browsers and operating systems (I do
-not expect all of these systems to have the latest security updates
-installed):
+This allows the truncation of arbitrary files which are owned by
+the user running rawstudio - for example:
 
-http://browsershots.org/https://demo.cmrg.net:443/
+    ln -s ~/.important /tmp/rs-filter-graph
+    ln -s /etc/shadow /tmp/rs-filter-graph.png
 
-According to this, Safari 6.1.2 (AppleWebKit 537.74.9) on Mac OS X
-10.8 (Mountain Lion), connects without a warning, too:
-http://browsershots.org/screenshots/ba96ee74531204523d00c6becc1911af
+Can CVE be assigned to this?
 
-Moritz
------BEGIN PGP SIGNATURE-----
+References:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=754899
+https://bugzilla.redhat.com/show_bug.cgi?id=1120093
 
-iQJ8BAEBCgBmBQJTFh6CXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXREMEEwRkYzMTUwODdEMEUzQkU0QzVGMkVC
-RDk2RUNBRDkzNDUwMEIwAAoJEL2W7K2TRQCwrfQP/A1hCDortjSfTgUMBptXJLVi
-bsc0vc87LDmM4Wq5tJ9JEt5r11aZPNwP9xcL3sXPfrg1WIRhFh2E+utCkXTCsXcP
-eHP7rJlAjpo1nIO2DI3sjZozkPdiW5d/8clKY37cziQq4PnO6PgWhJwd/sftDWnX
-edH3ZG2//BYL9ueSy8LXaPjjTQ+WHKNJ+SleFLz57Pc7vGQuc3bgdwRmjoZFQfMc
-wfBrqau2jnoIDCksHTGzZXaJQSkjtHc/UIsIdr/qYSaL/qUxbu9iDoMsmjqVLIEr
-4zlSPZudoddoaR1SEUdQMGRgz+/pN4jLjEz8iK1YufDFyMrYx6kJNoQgCeh0VKe5
-vpiU+6H/UTRKnOF6HvNXhe+cikL2aFbax94JCP5NxjFCwlY3/fdn/scN2r73eJih
-GkXrMqEQdjvYERDm89zjKAm7HG9MHZgTzrbZaG0Txfsd/sxvh30Y0nwcd4TSB1KO
-P6lumzBi2SYTucJPF5f6dsYiL3yapYDjBa51uxQasDUtUqYtjps+RZjPsBFA7SVn
-YmSRGxquMXkUsKEa0cDfRGF3CTIx99YOOGKeZXG0RBUU/xkcP9NK602MudSqLvuE
-PIUWoggf/58CjnF7cJkYg19q7OInmX9uig6EOLV6wE0IyJeoNBwz54X7/gQIjOJU
-c9bmPcCcqkeRDWFSTJV3
-=d0oK
------END PGP SIGNATURE-----
+Thanks.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security Team
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+
+Content of type "application/pgp-signature" skipped
