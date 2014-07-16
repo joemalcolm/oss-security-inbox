@@ -1,32 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/30
-Message-ID: <3230301C09DEF9499B442BBE162C5E4825755BC7@SESTOEX04.enea.se>
-Date: Thu, 2 Oct 2014 10:38:54 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Shawn <citypw@...il.com>
-Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/13
+Message-ID: <5F0E9E9A-1F99-41F5-8936-2D4A5B9EF633@vmware.com>
+Date: Wed, 16 Jul 2014 15:54:19 +0000
+From: Ramon de C Valle <rdecvalle@...are.com>
+To: Tomas Hoger <thoger@...hat.com>
+CC: "cve-assign@...re.org" <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "mmcallis@...hat.com" <mmcallis@...hat.com>
+Subject: Re: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
 Content-Type: text/plain; charset=utf-8
 
-Thanks Michal,
 
-> * CVE-2014-6277 - uninitialized memory issue, almost certainly RCE found by
-> me. No specific patch yet.
+On Jul 16, 2014, at 12:16 PM, Tomas Hoger <thoger@...hat.com> wrote:
 
-According to shellshock  test (https://shellshocker.net/shellshock_test.sh) 
-Florian's patch (Gnu patch bash43-027)  and all other GNU patches (bash43-025 , 
-bash43-026   & bash43-027 ) seems to have solved all so far known shellshock  
-vulnerabilities.  
+> On Tue, 15 Jul 2014 15:10:05 +0000 Ramon de C Valle wrote:
+> 
+>>> First, we don't know what "The same sample works under 1.9.3" means.
+>>> It might mean "The same AWS sample is also a working vulnerability
+>>> reproducer when using Ruby 1.9.3." It might instead mean "With this
+>>> AWS sample, my program works normally when using Ruby 1.9.3; in
+>>> other words, no vulnerability is observed.”
+>> 
+>> It meant that his sample worked normally when he used Ruby 1.9.3. (I
+>> assumed this because the version he specified as containing the bug
+>> in the report was Ruby 2.1, and specified Ruby 2.0 as requiring
+>> backport, but not Ruby 1.9.3.)
+> 
+> It's reasonable to assume that reporter did not touch the "Backport:"
+> field at all.  The issue was reported for ruby 2.1.2p168 (see the "ruby
+> -v" field).  Backport value was original set to:
+> 
+>  2.0.0: UNKNOWN, 2.1: UNKNOWN
+> 
+> which happens to be the default value pre-filed into the field for you
+> by the bug tracker when you try create a new issue.  You can easily
+> check by visiting:
+> 
+> https://urldefense.proofpoint.com/v1/url?u=https://bugs.ruby-lang.org/projects/ruby-trunk/issues/new&k=oIvRg1%2BdGAgOoM1BIlLLqw%3D%3D%0A&r=bZpuVimtRQUx3xHFIlu%2BaciWn3GMzM%2FBnwDoBm5jP8U%3D%0A&m=lvYqyGvlOo5QOKyQaxN7hxz4fIAGdWpnzcVczLGTTHE%3D%0A&s=9741b68b74eb44558252f0c9758238f5eb18199838d2f3821f2214c00241ff20
+> 
+> All changes from UNKNOWN to REQUIRED were not done by the reporter, as
+> you can see from the bug comments.
+> 
+> I don't think you can draw the conclusion based on the Backport field.
+Yes, you’re right. I didn’t notice that. So, it’s still unclear what the author meant with that statement (i.e., Ruby 1.9.3 may also be affected if there exists another issue).
 
-root@...uarm:~# ./shellshock_test.sh
-CVE-2014-6271 (original shellshock): not vulnerable bash: shellshocker: command not found
-CVE-2014-6278 (Florian's patch): not vulnerable
-CVE-2014-7169 (taviso bug): not vulnerable
-CVE-2014-//// (exploit 3 on http://shellshocker.net/): not vulnerable
-CVE-2014-7186 (redir_stack bug): not vulnerable
-CVE-2014-7187 (nested loops off by one): not vulnerable
+> 
+> -- 
+> Tomas Hoger / Red Hat Security Response Team
+--
+Ramon de C Valle
+VMware Product Security Engineering
 
-I guess CVE-2014-//// in the "shellshock_test.sh" should be CVE-2014-6277, right?
 
-Thanks
-/Sona
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
