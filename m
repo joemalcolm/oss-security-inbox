@@ -1,70 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/04/2
-Message-ID: <20140104140230.GA31452@gremlin.ru>
-Date: Sat, 4 Jan 2014 18:02:30 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: kwallet crypto misuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/14
+Message-Id: <201407161732.s6GHW2eO018214@linus.mitre.org>
+Date: Wed, 16 Jul 2014 13:32:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: libressl before 2.0.2 under linux PRNG failure
 Content-Type: text/plain; charset=utf-8
 
-On 03-Jan-2014 12:44:42 -0500, Daniel Kahn Gillmor wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- >>> UTF-16 encoding combined with Blowfish's 64 bit block size
- >>> means there are just four password characters per block.
+> https://www.agwa.name/blog/post/libressls_prng_is_unsafe_on_linux
 
- >> But this is: any and all passwords, being used for encryption
- >> key generation, must be hashed, then salted, then hashed
- >> again. SHA-256 may be a good choice for generating Blowfish
- >> 256-bit key this way.
+> forking a process can create repeated random numbers
 
- > what kind of hashing and salting are you talking about?
+> Please assign CVE.
 
-I'm talting about that very kind of hashing and salting which is
-normally used to generate an encryption key for symmetric cipher
-from the supplied password.
+The existence of a popular blog post discussing a number of
+interrelated LibreSSL and OpenSSL issues doesn't mean that we have a
+good way to proceed by assigning a single CVE ID.
 
- > i don't think hashing and salting makes sense in the context
- > that you were quoting above. Are you aware that kwallet stores
- > a database of passwords that need to be able to be produced back
- > for the user (or the user's applications) in the clear?
+It's not yet clear whether zero or more CVE IDs are needed. Here's a
+series of quotes from the blog post and its comments, with some
+initial thoughts about why we didn't immediately assign a CVE ID.
 
-Are you aware that database of passwords is just user's data, which
-may be virtually anything?
+"OpenSSL faces the same issue [...] The difference is that OpenSSL
+provides a way to explicitly reseed the PRNG"
 
-Suppose you want to generate a password for some resource and store
-it safely. One of the easiest methods to do that is running
+It's possible that some people accept a security principle roughly
+like "the design of code surrounding a PRNG must anticipate that any
+number of fork calls may occur, and must (without requiring any extra
+step within an application) guarantee that the random-number stream
+isn't duplicated." If this is the security principle, then maybe there
+should be separate CVE IDs for OpenSSL (requires an extra step) and
+LibreSSL before 2.0.2 (cannot guarantee this at all).
 
-`mkpassphrase | gpg -ea > some_resource.gpg`
+"LibreSSL aims to be a drop-in replacement for OpenSSL"
 
-but let's suppose you don't want to keep a keypair on that machine,
-so most likely you'll run
+We didn't immediately find any statement on www.libressl.org or in a
+libressl-2.0.x.tar.gz README stating that the useful functionality of
+LibreSSL is supposed to exactly match OpenSSL. One could assert that
+the above security principle is false, and instead accept a security
+principle of "the best behavior of a random-number stream after a fork
+is undefined; different choices might be preferred by different
+applications." In other words, a behavior that is surprising to former
+OpenSSL users isn't inherently wrong unless the LibreSSL documentation
+ruled out any surprises.
 
-`mkpassphrase | gpg -ca > some_resource.gpg`
+Also, for example, a CVE ID probably can't be assigned for the general
+concept of "unfortunately, has turned RAND_poll into a no-op"
+(especially because the blog post suggests that this no-op change was
+intentional and will remain in place).
 
-GPG will ask you (twice) for a password and produce the output like
+More generally, both of these:
 
------BEGIN PGP MESSAGE-----
+"OpenSSL is safer for two reasons ... 1. If OpenSSL can't open
+/dev/urandom, RAND_bytes returns an error code."
 
-jA0ECgMC0nbVtnsmoZ9g0lQBFVTSY/avTaGibkt/dFGciqjGih1OXfLCPBRkv9gq
-sDqdOrjzSO0A+P5ziDalFWJEaNQR5mYQaj/eUP8YAM4e5baFvW+7mSMesuMXqEY1
-+E0TCzY=
-=9DoC
------END PGP MESSAGE-----
+"OpenSSL is safer for two reasons ... 2. OpenSSL allows you to
+explicitly seed the PRNG by calling RAND_poll."
 
-Now, once you need to access the data (generated password in this
-exemple), you may run
+are apparently closer to the level of a "possibly controversial design
+decision" than an "implementation error."
 
-`gpg < some_resource.gpg`
+Possibly the combination of
 
-provide the encryption password (try "Rent/Author!film2Cool") and
-get back the previously generated password: Sticky5scum0robust#Comic
+"Their fix is to use pthread_atfork to register a callback that
+reseeds the PRNG when fork() is called."
 
-So, please don't mess the encryption password (key source) and stored
-password (user's data).
+and
 
+"The fix is a huge step in the right direction but is not perfect - a
+program that invokes the clone syscall directly will bypass the atfork
+handlers."
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+would require two CVE IDs, if the vendor decided to describe their
+code change specifically as a vulnerability fix, and then an
+incomplete fix was asserted because of this clone scenario.
 
-Content of type "application/pgp-signature" skipped
+"Comment 23634 ... a very common privilege separation technique is
+[...] OpenSSL has the API to make this work (as do other crypto
+libraries such as libsodium); LibreSSL does not."
+
+In most cases, a missing API does not qualify for a CVE ID.
+
+"LibreSSL provides no good way to use the PRNG from a process running
+inside a chroot jail. ... Unfortunately, /dev/urandom usually doesn't
+exist inside chroot jails."
+
+and
+
+"I see no reason why /dev/urandom cannot be made available inside
+containers: ... If it is not there, the container is likely
+misconfigured."
+
+This one seems to be different perspectives about what Linux
+configurations are common or correct, and what Linux configurations
+are uncommon or incorrect.
+
+"it falls back to a truly scary-looking function (lines 306-517) that
+attempts to get entropy from sketchy sources such as the PID, time of
+day, memory addresses, and other properties of the running process."
+
+This may be another example of a design tradeoff. Some applications
+might prefer "sketchy sources" as an alternative to reporting an error
+about lack of good sources. Other applications definitely would not
+prefer this.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTxrZPAAoJEKllVAevmvmspQYIAKFg+GDqTZpNVec2aLARp0aa
+YM8VjTaA1XMKlkcOGNoc+Qx7RBC9qtRX0MQqUbl5bW/8taktcTlsNs7J+FEKR11b
+2hT2u5IRmr55ghznoRDadffptAxhqSL1eeWlAg5OJjvtqvJBvbD2GXTSDol2dqtJ
+5Eav8hAsQx7pnWxtYuuL7mDQwgCobB/jgaEu2QJFMK0KyLsCOo80cQSvxsx/tbvw
+OHnvO8OeqOXjVnaK0zs0LeWq1gyQMdwDwNQ9sjFaPnvvPIjXPJQKDQJWiAnOnV4T
+JFhSzMbWrm8XochCS8ql2nmcZ6X5XzocWehd7DuM3R18F3LPu+oxwB+8mS319SM=
+=1h5L
+-----END PGP SIGNATURE-----
