@@ -1,58 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/19/2
-Message-ID: <CAGGN9eceQ2wZhA5OskNJowcrECe6zOmtS6WG6WfetRMXxENUWA@mail.gmail.com>
-Date: Sun, 19 Oct 2014 19:26:02 +1000
-From: Lord Tuskington <l.tuskington@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: Cyanogenmod MITM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/1
+Message-ID: <53C5EB3D.1010909@redhat.com>
+Date: Tue, 15 Jul 2014 21:02:21 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request - Snoopy incomplete fix for CVE-2008-4796
 Content-Type: text/plain; charset=utf-8
 
-After reading el reg's article regarding a cyanogenmod MITM flaw, I started
-looking through the code to see if I could find it. It didn't take long.
-This finding was not what users are led to believe by cyanogenmod's blog
-post. I reported the issue to cyanogenmod, but got a rather unsatisfactory
-reply. They didn't seem willing to modify the blog post to more accurately
-reflect the problem. Below is my email exchange with cyanogenmod's security
-address:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- Lord Tuskington,
+Please see: http://seclists.org/fulldisclosure/2014/Jul/16
 
- Thank your for your response. Truth is we assumed as much, but the lack of
-meaningful information in the Register's sensational article didn't leave
-us much room to interpret it besides what it presented at face value.
+> Note, the new fix [1] referenced in the above FD posts does not
+> look to be a complete fix either and may still allow command
+> injection.
+> 
+> Snoopy upstream has been notified and a more complete fix that
+> removes curl and instead uses native php code should be available
+> shortly [2].
+> 
+> Thanks.
+> 
+> [1].
+> https://raw.githubusercontent.com/cogdog/feed2js/master/magpie 
+> /extlib/Snoopy.class.inc [2].
+> http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy 
+> /Snoopy.class.php?view=log
+> 
+> -- Garth Mollett / Red Hat Product Security
 
- As you noted, this has already been addressed in our shipping code branch
-(cm-11), prior to the article's publishing. This was the net result of the
-messaging provided in the blog post, with CM 11 being 'safe' from this
-issue.
+Ping, has there been any movement on this?
 
- We normally do not patch non-shipping code (in this case 10.2 and prior),
-though we may in this case.
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
- We do not expect to make a advisory on the 10.2 item at this time.
-
- Thank you,
-Abhisek Devkota
-
-  On Oct 17, 2014 8:50 PM, "Lord Tuskington" <l.tuskington@...il.com> wrote:
-  Hello from Greenland!
-
-I think you may be confused about the issue discussed here:
-http://www.cyanogenmod.org/blog/in-response-to-the-register-mitm-article
-
-If I understand correctly, the original reporter may have been referring to
-a vulnerability fixed by this commit, which was merged 20 days ago:
-
-https://github.com/CyanogenMod/android_external_apache-http/commit/f925f10b1feba92868fd4e8966592ec1bf755d67
-
-The vulnerable code is still present in the cm-10.2 branch:
-
-https://github.com/CyanogenMod/android_external_apache-http/blob/cm-10.2/src/org/apache/http/conn/ssl/AbstractVerifier.java#L228-244
-If you release an advisory, please credit "Lord Tuskington of TuskCorp" for
-reporting this vulnerability responsibly.
-Regards
-
-Lord Tuskington
-Chief Financial Pinniped
-TuskCorp
-
+iQIcBAEBAgAGBQJTxes9AAoJEBYNRVNeJnmTNm0P/2R+z+MZui9DGToLzrfkLXA3
++XrhLojAXmDU0M7qtSNPL7JfGSxBy7EILULQ5qRTSBYh1TzCxNUyL7fcteuqBzxS
+wE7WolOJ++VcLjx+Dfkh/yV7cTfcSI3od+j2iY5ROl5nQzpgpOjYGEQ2sPSazzaW
+sojbv3nNE3JXIoj41lhdqnvIO1/60TqwQakLIHOQiz+vcoCg8fmvaWgWVaveb1Zn
+tgRBHniURLhuOASGPI60pNZtks247MmNXF4kVXnH2bPnsSG8fZgXvDF8vZMGWQun
+JveKQ3PqIxqVb5CerKFswPHxXNqo+I4/dKqa+FIed865UF3oKFKXzj//0ELxZROy
+OXJxV8HACT4JdraZ8R7d+qwhMx1T/xSlGI4vsUNiV72L89zNwla1clyLVqJG/hxF
+76ArDY21/BcWW5tw8NFmpPcfJQR5wvuZtXp868zJXGerpprcY4q7ArWJHS51gsSR
+Bsk14jIN+A1nA89N3wkhToi3063JmP/cB61UI2Tb+wFizeQCEJ4B1KHVWXaCvGDO
+Q0/9UR4XC24U+gCklIscW4KlX0KS7Geoad4A77K+DFZVCxc9KxgmDKrtVVHE7Nv6
+ZKllto/QTiIZEAjd8NQDJhg89Yf0vcvVuTR+21w3oBrRqUP5arYzCk/xG03criw5
++TZ+i01Hh+HVL64FuWH+
+=PKS/
+-----END PGP SIGNATURE-----
