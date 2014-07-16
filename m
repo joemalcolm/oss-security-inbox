@@ -1,22 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/11
-Message-ID: <53ABD0DD.8060801@redhat.com>
-Date: Thu, 26 Jun 2014 09:50:53 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/5
+Message-ID: <53C6236C.5080106@redhat.com>
+Date: Wed, 16 Jul 2014 17:02:04 +1000
+From: Garth Mollett <gmollett@...hat.com>
+To: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request - Snoopy incomplete fix for CVE-2008-4796
 Content-Type: text/plain; charset=utf-8
 
-On 06/26/2014 01:07 AM, cve-assign@...re.org wrote:
->    -- compared to the development cost in arranging for the flag to be
->       set, is it possible that the real-life benefit is too small?
+Sorry, I should have been more clear in my request.
 
-You need a separate vulnerability to access the cookie.  These 
-vulnerabilities will have to be addressed even if the HttpOnly flag is 
-set because indirectly, they usually give attackers access to 
-information from which cookies are derived (e.g., by injecting a 
-malicious login form).  Therefore, I think the HttpOnly flag is just 
-hardening, and it's not even a very effective form of it.
+This is the original fix for CVE-2008-4796:
+http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?r1=1.26&r2=1.27
 
--- 
-Florian Weimer / Red Hat Product Security
+Note using escapeshellcmd instead of escapeshellarg and still allows
+injection of params to to curl.
+
+This was then updated to this:
+http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?r1=1.27&r2=1.28
+
+Looking at the changes starting around line 927 (in 1.28)
+escapeshellcmd($URI) is replaced with escapeshellarg($URI) however the
+code handling $cmdline_params is changed to this:
+
+$safer_header = strtr($headers[$curr_header], "\"", " ");
+$cmdline_params .= " -H \"" . $safer_header . "\"";
+[..]
+$cmdline_params .= " -d \"$body\"";
+exec($this->curl_path . " -k -D \"$headerfile\"" . $cmdline_params . " "
+. escapeshellarg($URI), $results, $return);
+
+Which by my reading still allows command injection.
+
+Then, starting from revision 1.29 through 1.33 this code is all removed
+and replaced with native php instead of calling curl.
+
+I am not at all involved with this project nor do I have any kind of
+extra insight on this. Sorry if my original email was misleading or
+confusing.
+
+Please let me know if there is anything else I can do in order clarify
+if a CVE assignment is needed for this or not.
+
+On 07/16/2014 03:57 PM, cve-assign@...re.org wrote:
+> The information that has been sent so far doesn't determine whether
+> there should be one CVE ID or two CVE IDs. A statement of "does still
+> allow command injection" would potentially mean two CVE IDs, whereas
+> "may still allow command injection" could end up as "does not still
+> allow command injection."
+> 
+> The original CVE request was on July 9, and implied that watching
+> http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log
+> was of interest because a second security fix might be announced there
+> "shortly." However, that view=log page was last updated on July 8. We
+> will continue to check that view=log page from time to time.
+> 
+> 
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
