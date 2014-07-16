@@ -1,27 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/17/2
-Message-ID: <CAA7hUgGu1ZiqD3ncQTYJrGgK0m40awMP6oSA9yS2dLL0A3aqnw@mail.gmail.com>
-Date: Wed, 17 Sep 2014 12:02:03 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Cc: Steve French <sfrench@...ba.org>
-Subject: CVE request: [CIFS] Possible null ptr deref in SMB2_tcon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/6
+Message-ID: <20140716111344.397eae9e@pc1>
+Date: Wed, 16 Jul 2014 11:13:44 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: libressl before 2.0.2 under linux PRNG failure
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Commit 18f39e7b[1] of the linux kernel repository fixes a remote null
-pointer dereference on the client when it resolves DFS referrals but
-the server deletes the IPC$ share. The commit has already been merged
-for the 3.16, 3.14, and 3.10 branches.
+This has made the news lately:
+https://www.agwa.name/blog/post/libressls_prng_is_unsafe_on_linux
 
-Could a CVE id be assigned please?
+Should get a CVE. Affected is portable libressl 2.0.0 and 2.0.1 on
+Linux. 2.0.2 has been released:
+https://marc.info/?l=openbsd-tech&m=140548206911600&w=2
 
-Thanks in advance.
+Under certain conditions forking a process can create repeated random
+numbers.
 
-[1]https://github.com/torvalds/linux/commit/18f39e7be0121317550d03e267e3ebd4dbfbb3ce
+LibreSSL 2.0.2 contains a workaround, although the reporter of this
+issue thinks this may not be the best approach.
 
-Cheers,
+Please assign CVE.
+
+cu,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Hanno Böck - freier Journalist		https://hboeck.de/
+E-Mail/Jabber: hanno@...eck.de		PGP-Key: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
