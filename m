@@ -1,52 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/15
-Message-ID: <20141001160815.GC11247@titan.lakedaemon.net>
-Date: Wed, 1 Oct 2014 12:08:15 -0400
-From: Jason Cooper <osssecurity@...edaemon.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/16
+Message-Id: <201407162034.s6GKYeMc024616@linus.mitre.org>
+Date: Wed, 16 Jul 2014 16:34:40 -0400 (EDT)
+From: cve-assign@...re.org
+To: vkaigoro@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: XSS in PNP4Nagios
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 01, 2014 at 08:55:35AM -0700, Greg KH wrote:
-> On Wed, Oct 01, 2014 at 07:15:56AM -0400, Jason Cooper wrote:
-> > On Wed, Oct 01, 2014 at 01:08:09PM +0200, Hanno Böck wrote:
-> > > Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
-> > > schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
-> > > 
-> > > > Finally: *PLEASE* let me know if you have any good ideas on how to
-> > > > find vulnerabilities like this ahead-of-time. My article "How to
-> > > > Prevent the Next
-> > > > Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a
-> > > > number of ways that Heartbleed-like vulnerabilities could have been
-> > > > detected ahead-of-time, in ways that are general enough to be
-> > > > useful.  I'd like to do the same with Shellshock, so we can quickly
-> > > > eliminate a whole class of problems.
-> > > 
-> > > The "class of problems" here is imho that we have a bunch of tools that
-> > > get rare attention from anyone, are run by few volunteers, but they're
-> > > an essential part in running the Internet.
-> > > 
-> > > Just think about busybox, curl, wget, coreutils, gettext, gzip, ... - a
-> > > vuln in any of these could have severe consequences.
-> > > 
-> > > Maybe the topic here should be: "How can we get the (whitehat) IT
-> > > seucrity community to have a deeper look at neglected but important
-> > > opensource projects."
-> > 
-> > The LF has the Core Infrastructure Initiative:
-> > 
-> >   http://www.linuxfoundation.org/programs/core-infrastructure-initiative/faq
-> 
-> Yes, that's exactly what that group is doing, and they have a huge list
-> of these types of projects that they are looking into funding to help
-> prevent this type of thing from happening again.  I'll go add bash to
-> the list there as I don't think it is currently on it at the moment.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Could we also update the FAQ to include "How to recommend a project?"?
-A few days ago I tried to recommend bash.  I dug around, and finally
-just sent an email to Ted.  Which I don't think is the correct answer
-;-)
+> I suppose that CVE-2014-4740 will be used for something else in the
+> future, right?
 
-thx,
+Actually it's essentially the opposite.
 
-Jason.
+In an entry such as
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4740 the
+"REJECT" status can be considered an indication that no vulnerability
+will ever have that CVE ID. We have not transitioned anything out of
+REJECT in the past, and we do not envision doing that.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTxuFGAAoJEKllVAevmvmszbIIAL6mdsUzBnIp4C8pzUzwDSVY
+ACK3Q1udQqCX+aOF3K4Iv3T1IqaqhCLYcGWeEgLjYoPuLV89XvMyLOjZjij4r5WC
+6645q7xL5ZYCIJZQe9xIrs8FmWLBikPAT/Pqt4LwWPjjUs4rC2TprUkn300HkLTl
+1tgulQEeTIUHezEuykyc7bGgGs4kmcHliJW8ElJvb9Z44APWWsojlqf2sdT+o8o4
++PVR3dg1K4Jzwjugom6GQ8ZTJpx1vkQPYVQzNtcgxTDmFLUZFkoySl/pgyTgiXNS
+Uh7uRE/2w1/0sMpNYK3JX3rtHIrnoHVmjgHIgPhqAAJGrwSpaqgPe7PzQCpd31A=
+=r33v
+-----END PGP SIGNATURE-----
