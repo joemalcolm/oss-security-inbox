@@ -1,87 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/22
-Message-ID: <237401539.57998163.1401826607784.JavaMail.root@vmware.com>
-Date: Tue, 3 Jun 2014 13:16:47 -0700 (PDT)
-From: Ramon de C Valle <rdecvalle@...are.com>
-To: oss-security@...ts.openwall.com
-Cc: VMware Security Response Center <security@...are.com>,  Monty Ijzerman <mijzerman@...are.com>
-Subject: Re: Request for linux-distros subscription
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/4
+Message-Id: <201407160612.s6G6CGbC027394@linus.mitre.org>
+Date: Wed, 16 Jul 2014 02:12:16 -0400 (EDT)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Vulnerability Report for Ruby Gem kompanee-recipes-0.1.4
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-Hi Alexander, Kurt, others,
+> is it possible that this Gem wasn't ever intended to be used in the
+> context of a Rails application?
 
-(I'm resending it since my email client screwed the quote levels in the original message.)
+We haven't seen any response to this yet. (At least from our
+perspective, this is completely fine -- sending a message here
+containing "CVE:Please Assign" doesn't mean that the person is
+required to respond to questions from us.)
 
-- ----- Original Message -----
-> From: "Kurt Seifried" <kseifried@...hat.com>
-> To: oss-security@...ts.openwall.com
-> Cc: "VMware Security Response Center" <security@...are.com>
-> Sent: Tuesday, June 3, 2014 1:22:15 PM
-> Subject: Re: [oss-security] Request for linux-distros subscription
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 06/02/2014 10:59 PM, "VMware Security Response Center" wrote:
-> > 
-> > Hi, I would like to request to be subscribed to the
-> > linux-distros@...openwall.org list for VMware Security Response
-> > Center (VSRC).
-> > 
-> > My PGP fingerprint:
-> > 
-> > pub  2048R/C61F6A1D 2014-06-03 Key fingerprint = DD30 8A5F 937B
-> > B437 EDDB  051D 7F84 295B C61F 6A1D uid Monty Ijzerman
-> > <mijzerman@...vmware.com> sig  sig   C61F6A1D 2014-06-03 __________
-> > __________ [selfsig] Notation data:
-> > preferred-email-encoding@....com pgpmime
-> > 
-> > sub  2048R/FCED34F0 2014-06-03 sig sbind  C61F6A1D 2014-06-03
-> > __________ __________ []
-> > 
-> > 
-> > Thank you for your consideration.
-> > 
-> > Monty Ijzerman
-> > 
-> > VMware Security Response Center security@...are.com
-> > 
-> 
-> So to put it bluntly: who are you, and why should we give you access
-> to distros? A quick google search shows you do appear to work for
-> vmware, but I can't find any contributions or participation in any
-> public forum like oss-security and so on.
-I can attest that Monty is my colleague and the Manager of VMware Security Response Center. As a former colleague of you (Kurt) and also former linux-distros subscriber, I would like to ask for your consideration for subscribing Monty (or myself) to linux-distros on behalf of VMware. Although ESXi isn't a Linux distribution, it implements Linux-compatible system calls and provides a GNU/Linux -like ecosystem that allows many applications that are compiled on/for Linux operating systems to run seamlessly. This ecosystem includes OSS that should be supported in timely fashion pretty much like like any other Linux distribution on the list. It also implements a Linux kernel module interface and uses many Linux device drivers and kernel modules that also should be supported. In addition, ESXi is the base layer that many of the Linux distributions on the list rely upon and run atop of in many datacenters around the world.
+Just to clarify: we are aware of the full set of messages:
 
-Let me know if you have any questions, and thanks again for your consideration.
+  Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
+  Vulnerability Report for Ruby Gem cap-strap-0.1.5
+  Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
+  Vulnerability Report for Ruby Gem backup-agoddard-3.0.28
+  Vulnerability Report for Ruby Gem backup_checksum-3.0.23
+  Vulnerability Report for Ruby Gem gyazo-1.0.0
+  Vulnerability Report for Ruby Gem VladTheEnterprising-0.2
+  Vulnerability Report for Ruby Gem gnms-2.1.1
+  Vulnerability Report for Ruby Gem point-cli-0.0.1
+  Vulnerability Report for Ruby Gem kompanee-recipes-0.1.4
+  Vulnerability Report for Ruby Gem lean-ruport-0.3.8
+  Vulnerability Report for Ruby Gem kajam-1.0.3.rc2
+  Vulnerability Report for Ruby Gem lawn-login-0.0.7
+  Vulnerability Report for Ruby Gem kcapifony-2.1.6
+  Vulnerability Report for Ruby Gem karo-2.3.8
+  Vulnerability Report for Ruby Gem lynx-0.2.0
+  Vulnerability Report for Ruby Gem ciborg-3.0.0
+  Vulnerabilities in Ruby Gem brbackup-0.1.1
 
-> 
-> - --
-> Kurt Seifried - Red Hat - Product Security - Cloud stuff and such
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
-> 
-> 
-- --
-Ramon de C Valle
-VMware Product Security Engineering
+and we have not yet assigned any CVE IDs. What we think might be the
+best option is to disregard any vulnerability-related observations
+that are qualified with a phrase such as "if this gem is used in the
+context of a rails application." As far as we know, existence of a Gem
+only implies a choice of a packaging mechanism for a piece of Ruby
+code. Existence of a Gem doesn't, as far as we know, imply that the
+author is claiming that the code will operate safely in cases where
+its input arrives from an untrusted source in a way that crosses
+privilege boundaries. This option would result in approximately 20
+CVEs for other types of issues such as:
+
+  - "expose the password to the process table" (e.g., an attacker can
+     obtain sensitive information by running the ps program at the
+     right time)
+
+  - symlink attacks
+
+but no CVEs for issues involving shell metacharacters in variable
+names. The shell-metacharacter CVE IDs could be assigned later if
+anyone identifies a product that actually uses one of the applicable
+Gems unsafely within a Rails application.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBCgAGBQJTji0cAAoJEMHrzpMNBOIMAecP/igTsiSCjXMOXqrfppI9ky13
-gtdmbRFCt9QfZSAkRP+8TNV/IT5t1/BOB/ZB032Z98bpUz/NPEmAzMn/kqMWyjc0
-UTjKepOJhOcDjjR3sW2in1vYRH7qpVjZ13SRwxGq5sQ/tOiEmmSz3Ijb61oMrnyA
-HYslS/wkGDSLWSJ1uh0OKEW+n8FMtE0/a0CFuYekyHvg/dOtZkCwE18dooJFfJM9
-dUaJlgAYSyGYr9rPX/zE1UdRvKpB7IhemhlUad6UqwA7jiqDtYMWIckzkn7lLj4q
-kb5y1T6Znj5O7XqdiscR/RIbXZYKptTvcoQ5tEk5kmYICaqh4pDRDIhsuHAeILyk
-oO9eUa94Aya+i+WBc09T7TZAmhHslp9NpPQFVGhp7EXkmy7vdQfDw7WfiRkX0daW
-GTMZbg6LOmlxsdqTHrGQShNNBFAVTjV1QgTNB7ewyLHqR15l6atGZGWX1cRYi/rs
-Rg5h5TTVbLCg5DL672ms+CiGBM+6J+jtXhEz7NaX6ffJMixqYrqsjXMCSUVyk7U2
-NUQIU7XSvlbag2C/kKCoJSa60NcC6kF9mfemnAMmzA3201BjRCHG2fztYHoEEU2o
-nEmE6/dhr/AhWgusWBgXgT6H2gnkInvG+nkEi39shf+tvDc7RUnCBniYuIAwSusO
-7kTwahEuwvKWPSl3xhFl
-=xpy6
+iQEcBAEBAgAGBQJTxhclAAoJEKllVAevmvmscfgH/0QiThSi/wjrMepw3hpuFF/K
+8+2nHFlPfVEt3AIoATECqshGYIbft3JDMsFgi545jdQ2uzVsETABA+IyhYAoqwmD
+twRLhcCOzQVs9KP4/omdKlOV33m4Xf/blRqSUD6luDSJDdvQtSeQZGDwvkPGmqzb
+eO4JoeF19MZhF5jnDt8F5mukf0TbW4859GtFbEd3jU7dYMEMWCL0UCy71SU/rfoU
+cEuNPp83O1EIJ8bcTS9tz8nILrMEf7n6zbJmtM3cdyD0pHxaiei9gdWZ74XWALcp
+AAsn+SHOSsffZ5htsFJZSqlsyD2dTm3zaEdhzAKn9lqZuPQE0TJ2/5AtNsI0/m8=
+=3GVP
 -----END PGP SIGNATURE-----
