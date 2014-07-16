@@ -1,54 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/9
-Message-ID: <53E4E28B.20600@ehuk.net>
-Date: Fri, 08 Aug 2014 15:45:31 +0100
-From: Eddie Chapman <eddie@...k.net>
-To: oss-security@...ts.openwall.com, greg@...ah.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/12
+Message-ID: <20140716171625.5fcebbf3@redhat.com>
+Date: Wed, 16 Jul 2014 17:16:25 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: Ramon de C Valle <rdecvalle@...are.com>
+Cc: "cve-assign@...re.org" <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "mmcallis@...hat.com" <mmcallis@...hat.com>
+Subject: Re: Re: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
 Content-Type: text/plain; charset=utf-8
 
-On 08/08/14 15:34, Greg KH wrote:
-> I don't understand what you are trying to solve here.  Step back, what
-> is the real "problem" that BadUSB shows?  Files being copied to places
-> they shouldn't be, or, rebooting your machine and booting from a
-> different media.  Why not go after the root cause here, don't be
-> paranoid about trying to detect a new keyboard being plugged in.
->
-> Again, we have had devices like this out there for quite a while, the
-> USB Rubber Ducky as one example.  Others are things like the Teensy
-> device[1], which has been used in "pen testing" for a very long time.
->
-> Don't try to defend against a random keyboard device, try to defend
-> against a user doing bad things, be it input from a "real" keyboard, or
-> a "fake" one, it shouldn't matter.
->
-> The only thing "new" about the BadUSB hack, is it shows how to turn a
-> "normal" device into a USB Rubber Ducky, which will save you a few
-> dollars (and shows just how insecure a number of USB devices are.)  Not
-> that the attack vector is somehow new and novel or unknown at all.
->
-> thanks,
->
-> greg k-h
->
-> [1] Highly recommended if you want to do things with USB from a device
-> side.  Easily programmable, very cheap, and very tiny, you can have
-> loads of "fun" with these things...
+On Tue, 15 Jul 2014 15:10:05 +0000 Ramon de C Valle wrote:
 
-Greg, very relieved to see you involved in this thread. If anyone can 
-speak authoritatively about Linux USB it's you.
+> > First, we don't know what "The same sample works under 1.9.3" means.
+> > It might mean "The same AWS sample is also a working vulnerability
+> > reproducer when using Ruby 1.9.3." It might instead mean "With this
+> > AWS sample, my program works normally when using Ruby 1.9.3; in
+> > other words, no vulnerability is observed.”
+>
+> It meant that his sample worked normally when he used Ruby 1.9.3. (I
+> assumed this because the version he specified as containing the bug
+> in the report was Ruby 2.1, and specified Ruby 2.0 as requiring
+> backport, but not Ruby 1.9.3.)
 
-The main question in my mind, and what I see as the main issue, is once 
-the kernel has booted, how much can USB devices get up to, if anything, 
-behind the kernel's back? Assuming you don't switch on a machine with 
-USB devices already plugged in, assuming your motherboard's USB 
-controller chip hasn't been doctored by the 
-manufacturer/government/whoever, and assuming you plug a device (not a 
-hub) directly into a motherboard USB port, how much *significant* 
-interaction between device and USB controller goes on that could not be 
-seen, even with the right debug settings enabled? i.e. could a clean 
-device really have something as (presumably complicated) as its firmware 
-being overwritten without the kernel knowing and potentially alerting 
-about it?
+It's reasonable to assume that reporter did not touch the "Backport:"
+field at all.  The issue was reported for ruby 2.1.2p168 (see the "ruby
+-v" field).  Backport value was original set to:
 
-Eddie
+  2.0.0: UNKNOWN, 2.1: UNKNOWN
+
+which happens to be the default value pre-filed into the field for you
+by the bug tracker when you try create a new issue.  You can easily
+check by visiting:
+
+https://bugs.ruby-lang.org/projects/ruby-trunk/issues/new
+
+All changes from UNKNOWN to REQUIRED were not done by the reporter, as
+you can see from the bug comments.
+
+I don't think you can draw the conclusion based on the Backport field.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
