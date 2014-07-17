@@ -1,81 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/18
-Message-ID: <20140606152120.GA13400@kroah.com>
-Date: Fri, 6 Jun 2014 08:21:20 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/17/2
+Message-ID: <20140717083635.GA9631@lappy.redhat.com>
+Date: Thu, 17 Jul 2014 18:36:47 +1000
+From: Grant Murphy <gmurphy@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
+Subject: [OSSA 2014-024] Use of non-constant time comparison operation (CVE-2014-3517)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 06, 2014 at 04:24:23PM +0200, rf@...eap.de wrote:
-> >>>>> "Greg" == Greg KH <greg@...ah.com> writes:
-> 
->     Greg> On Fri, Jun 06, 2014 at 11:11:42AM +0200, rf@...eap.de wrote:
->     >> >>>>> "Thomas" == Thomas Gleixner <tglx@...utronix.de> writes:
->     >>
->     >> Hi Thomas,
->     >>
->     >> >> On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
->     >> >> > On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer
->     >> >> > wrote:
->     >> >> > > I've attached patches by Thomas Gleixner (four e-mails, in
->     >> >> > > mbox format), as well as back-ports of those by John
->     >> >> > > Johansen of Canonical, who wrote:
->     >> >> >
->     >> >> > Maybe I'm missing something, but I can't find any statement
->     >> >> > of what version these patches are intended to apply cleanly
->     >> >> > to. They don't apply to latest stable.
->     >> >>
->     >> >> Thomas - can you answer Rich's question?  This is about
->     >> >> patches you sent on June 3 to linux-distros, which Kees then
->     >> >> saved into an mbox file.
->     >>
->     Thomas> They should apply cleanly, if all stable tagged futex
->     Thomas> patches before that are applied.
->     >>
->     >> could you please clarify whether
->     >>
->     >> f0d71b3dcb8332f7971b5f2363632573e6d9486a futex: Prevent attaching
->     >> to kernel threads 866293ee54227584ffcb4a42f69c1f365974ba7f futex:
->     >> Add another early deadlock detection check
-> 
->     Greg> As people keep asking me this, I'll respond with, "why
->     Greg> wouldn't you apply them"?
-> 
->     Greg> They are going to be in the next kernel stable releases, along
->     Greg> with the other 4 patches, so I recommend them for your custom
->     Greg> kernels as well.
-> 
-> Thanks for the reply. I did read your earlier message. To answer your
-> question: I only apply patches that are absolutely necessary to fix a
-> known problem. 
+OpenStack Security Advisory: 2014-024
+CVE: CVE-2014-3517
+Date: July 17, 2014
+Title: Use of non-constant time comparison operation
+Reporter: Alex Gaynor (Rackspace)
+Products: Nova
+Versions: Up to 2013.2.3, and 2014.1 to 2014.1.1
 
-"known problem" to whom?  :)
+Alex Gaynor from Rackspace reported a timing attack vulnerability in Nova.  
+By analyzing response times to requests for instance metadata, an attacker 
+may be able to guess a valid instance ID signature. This could allow access 
+to important configuration details of another instance. Only setups 
+configured to proxy metadata requests via Neutron are affected.
 
-With that kind of attitude, you are going to miss a lot of valuable
-kernel fixes for issues.  I'd recommend using a stable kernel release
-instead, but hey, it's your systems...
+Juno (development branch) fix:
+https://review.openstack.org/107396
 
-> Want to make sure the changed stuff doesn't lead to a regression
-> somewhere else.
+Icehouse
+https://review.openstack.org/107397
 
-Nothing is ever "sure" in software.
+Havana
+https://review.openstack.org/107398
 
-> Futex stuff is a central component in the kernel ... I can't judge
-> about any possible side effects from reading the code ...  and this
-> kernel is going on a number of production clusters.
+Notes:
+This fix will be included in the Juno-2 development milestone and in future 
+2013.2.4 and 2014.1.2 releases
 
-Test it out first, like you should any update.  There are futex test
-suites out there, run them yourself to verify that nothing is broken.
-As for if it fixes potentially future problems that others might not
-know about, well, that's a gamble on everyone's part, right?
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3517
+https://launchpad.net/bugs/1325128
 
-> Anyway, I've applied all the (2+4) patches to our 3.12. 
+-- 
+Grant Murphy
+OpenStack Vulnerability Management Team
 
-Why are you "stuck" at 3.12?  There is someone still maintaining
-3.12-stable, why not rely on those releases if you want that kernel
-version, instead of rolling your own?
-
-thanks,
-
-greg k-h
+Content of type "application/pgp-signature" skipped
