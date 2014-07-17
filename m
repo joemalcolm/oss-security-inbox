@@ -1,74 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/10/2
-Message-ID: <53974054.1070205@collabora.co.uk>
-Date: Tue, 10 Jun 2014 18:28:52 +0100
-From: Simon McVittie <simon.mcvittie@...labora.co.uk>
-To: oss-security@...ts.openwall.com,  "dbus@...ts.freedesktop.org" <dbus@...ts.freedesktop.org>
-CC: Alban Créquy <alban.crequy@...labora.co.uk>
-Subject: CVE-2014-3477 (fd.o#78979): local DoS in dbus-daemon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/17/3
+Message-ID: <20140717175813.GR17402@oevtugenva.nrevsny.pk>
+Date: Thu, 17 Jul 2014 13:58:13 -0400
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: libressl before 2.0.2 under linux PRNG failure
 Content-Type: text/plain; charset=utf-8
 
-D-Bus <http://www.freedesktop.org/wiki/Software/dbus/> is an
-asynchronous inter-process communication system, commonly used
-for system services or within a desktop session on Linux and other
-operating systems.
+On Wed, Jul 16, 2014 at 11:13:44AM +0200, Hanno Böck wrote:
+> Hi,
+> 
+> This has made the news lately:
+> https://www.agwa.name/blog/post/libressls_prng_is_unsafe_on_linux
+> 
+> Should get a CVE. Affected is portable libressl 2.0.0 and 2.0.1 on
+> Linux. 2.0.2 has been released:
+> https://marc.info/?l=openbsd-tech&m=140548206911600&w=2
+> 
+> Under certain conditions forking a process can create repeated random
+> numbers.
+> 
+> LibreSSL 2.0.2 contains a workaround, although the reporter of this
+> issue thinks this may not be the best approach.
+> 
+> Please assign CVE.
 
-Alban Crequy at Collabora Ltd. discovered and fixed a denial-of-service
-flaw in dbus-daemon, part of the reference implementation of D-Bus.
-Additionally, in highly unusual environments the same flaw could lead to
-a side channel between processes that should not be able to communicate.
+I'm skeptical of assigning a CVE for this. The case in which repeated
+random numbers could happen is not a typical or even reasonably-safe
+usage case. Fork without exec is already a risky usage pattern for
+several reasons:
 
-On the stable branch, this is fixed in version 1.8.4:
-http://dbus.freedesktop.org/releases/dbus/dbus-1.8.4.tar.gz
-http://dbus.freedesktop.org/releases/dbus/dbus-1.8.4.tar.gz.asc
+- In programs which use arbitrary libraries including some which may
+  be internally multi-threaded, it may invoke undefined behavior.
+  (Behavior is undefined if the forked child of a multi-threaded
+  process calls any non-async-signal-safe function before a successful
+  exec, per POSIX.)
 
-On the previous stable branch, this is fixed in version 1.6.20:
-http://dbus.freedesktop.org/releases/dbus/dbus-1.6.20.tar.gz
-http://dbus.freedesktop.org/releases/dbus/dbus-1.6.20.tar.gz.asc
+- In general, it exposes the address space layout and all data from
+  the parent (rather than just data the child actually needs) to the
+  child, greatly increasing the risk of leaking this information.
 
-Distributions supporting other versions should base their changes on
-this commit:
-http://cgit.freedesktop.org/dbus/dbus/commit/?h=dbus-1.8&id=24c590703ca47eb71ddef453de43126b90954567
+The only typical usage case I'm aware of that involves SSL and fork
+without exec is a service that forks a child for each connection. This
+normally does not involve grandchild processes without exec, nor does
+it involve the main service process exiting, which would be necessary
+in order for the pid to be re-assigned. Also, it's likely that such
+service processes run in their own process group, in which case it's
+impossible for the pid to be re-assigned even if the main serice
+process dies.
 
-Summary:
+In addition, the versions of libressl that fixed this issue added new,
+possibly worse issues at the same time. See:
 
-If a client C1 is prohibited from sending a message to a service S1, and
-S1 is not currently running, then C1 can attempt to send a message to
-S1's well-known bus name, causing dbus-daemon to start S1 [1]. When S1
-has started and obtained its well-known bus name, the dbus-daemon
-evaluates its security policy, decides that it will not deliver the
-message to S1, and constructs an AccessDenied error. However, instead of
-sending that AccessDenied error reply to C1 as a reply to the denied
-message, dbus-daemon incorrectly sends it to S1 as a reply to the
-request to obtain its well-known bus name.
+http://port70.net/~nsz/47_arc4random.html
 
-Impact A: denial of service. S1 will fail to initialize, and exit,
-denying service to legitimate clients of S1.
-
-Impact B: side channel. In environments where C1 and S1 are untrusted
-and are administratively prohibited from communicating, S1 could also
-use these incorrectly-directed error messages as a side channel to
-receive information from C1.
-
-Mitigations:
-
-Impact A: if a legitimate client was actively using S1, S1 would already
-have been started, so C1 can only deny service to a legitimate client
-that only recently became active.
-
-Impact B: in practice processes sharing a system bus can typically
-communicate in other ways (non-D-Bus IPC mechanisms, files in /tmp,
-etc.), so impact B is not relevant on normal systems. It might be
-relevant on systems when an LSM such as SELinux is used in a highly
-restrictive configuration.
-
-Footnotes:
-
-[1] This is perhaps unexpected, but the dbus-daemon is behaving as
-designed: it cannot necessarily evaluate which security policies it
-should apply to S1 until S1 has actually connected back to dbus-daemon,
-because S1 might change its uid, SELinux context, etc. during startup.
-The conceptual model is that activatable services are always running,
-and that the dbus-daemon delaying their startup until they are actually
-needed is a form of lazy evaluation. As such, the D-Bus maintainers do
-not consider this to be a bug or vulnerability.
+Rich
