@@ -1,20 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/17
-Message-ID: <547512D7.8010008@oracle.com>
-Date: Tue, 25 Nov 2014 15:37:59 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-CC: Hanno Böck <hanno@...eck.de>, Tobias Stoeckmann <tobias@...eckmann.org>
-Subject: Re: OpenBSD patch issue also affects GNU patch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/17/4
+Message-Id: <201407171848.s6HImLda009711@linus.mitre.org>
+Date: Thu, 17 Jul 2014 14:48:21 -0400 (EDT)
+From: cve-assign@...re.org
+To: rdecvalle@...are.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, thoger@...hat.com, mmcallis@...hat.com
+Subject: Re: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
 Content-Type: text/plain; charset=utf-8
 
-On 11/25/14 03:28 PM, Hanno Böck wrote:
-> I don't know if this is a random coincidence or if gnu patch and
-> openbsd patch share some common ancestor code (haven't checked details).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I believe both descended from Larry Wall's original patch program.
-https://en.wikipedia.org/wiki/Patch_%28Unix%29
+Use CVE-2014-4975 for the issue that was fixed in:
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+  http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=46778
+
+This is an issue that is mentioned in:
+
+  https://bugs.ruby-lang.org/issues/10019
+
+but no final information is yet available about whether this is the
+same as the issue specified by the Description section of Bug #10019.
+At this point, it seems likely that that Description section will be
+mapped to a different CVE ID for a vulnerability related to pack("m0")
+calls.
+
+Note that, within the two references above, the CVE-2014-4975 issue is
+referred to by all of these terms:
+
+  - the off-by-one issue
+  - the off-by-one overflow
+  - the pack.c encodes buffer overrun fixed in Revision 46778
+
+Those three phrases above refer to the same issue.
+
+The issue that doesn't have a CVE ID might be referred to by all of
+these terms:
+
+  - the issue from the Bug #10019 Description section
+  - the issue from the reporter
+  - the original Will Wood report
+  - the issue reported for an AWS sample
+  - the issue involving the aws-sdk gem or its dependencies
+  - the issue involving pack("m0") calls
+
+Finally, just to clarify, the issue that doesn't have a CVE ID is also
+called "buffer overrun in pack.c (encodes)" but this might or might
+not be the same as "the pack.c encodes buffer overrun fixed in
+Revision 46778."
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTyBnAAAoJEKllVAevmvmsSMUH/jxTMolgs5Sy8rl8OLYT2bez
+VFguZQLdS5OAOhVbUX8Ju25lbKkyGQ4743NShvKT5K9Uw/REcLmU6et57Bzf2ZhR
++8AuKCiYDROpu9DpXkk2epWI31W8oIV74exvlEms3B1VkEJBggxUb1TPemEBj23Z
+80z2MGm61hNBTkjuDnjh0Z2kStn9iBYAIw8+tTePzbTCPzwCXi6/n+rtyzx+m93A
+ocnz1Wrqkrjy0lA6FsSayYI9eympbl6o9t3KYaKPvLcBVwOVRhZRSTKjuweBMj37
+YmxgJAuCD+8OTV5aW2C0lYVMkLzmthlJj/PiE7XarNNHQRQDsYcKDOaNoJ/6MTg=
+=4Kug
+-----END PGP SIGNATURE-----
