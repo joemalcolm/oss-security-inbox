@@ -1,34 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/20
-Message-Id: <20141119231133.1B6CB6C0038@smtpvmsrv1.mitre.org>
-Date: Wed, 19 Nov 2014 18:11:33 -0500 (EST)
-From: cve-assign@...re.org
-To: paul@...tisforge.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/18/3
+Message-ID: <20140718195122.GA20292@eldamar.local>
+Date: Fri, 18 Jul 2014 21:51:22 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: bozohttpd: basic http authentication bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-> https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40
-> the selection list in the filters
+Can a CVE be assigned for the following bozohttpd basic http
+authetication bypass vulnerability? It was fixed in bozohttpd version
+20140708. Quoting NetBSD advisory:
 
-Use CVE-2014-8986.
+> Abstract
+> ========
+> 
+> When checking for restricted access via .htpasswd files, bozohttpd
+> fails to properly check for truncation, allowing specially crafted
+> requests to bypass access control without a password.  Files of
+> length 10 or more are not affected.
+> 
+> 
+> Technical Details
+> =================
+> 
+> A call to snprintf() was not properly checking for truncation of
+> a provided user path, allowing a later concatenation of the
+> ".htpasswd" file name to exceed the maximum pathname length.  This
+> stops the check for .htpasswd file from working correctly, bypassing
+> the basic HTTP authentication scheme.  Files with names longer than
+> ".htpasswd" are not visible as they require at least enough for a
+> valid path to be available.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+ [1] http://mail-index.netbsd.org/current-users/2014/07/17/msg025287.html
+ [2] https://bugs.debian.org/755197
 
-iQEcBAEBAgAGBQJUbSJ9AAoJEKllVAevmvmsLLwIAJ3a8SSjNYCt954ecBzKk9VJ
-jxl/jrdNyhbkgYwU/akTTVmxW8y6ruOXkjoP1hq9cDsHuRBb9IA8iag4sDYz0k1s
-BdTD435iPb6jpjEr3cFnTtfDgyEpo8Y9uzawNFB4GDkIf9/cMMtrSUr0BlLhGssm
-O0L5KD+UzcEOFNoEr6w+QJtl2YNlRQT/T7t5ifbeHvWPSsdCiRsHEwau46dqLLez
-4COYKrERQADqtulZcHufuQydRy0JW5nQ3HNbRW84FmnuX99zFq8V+29whn3aH507
-RChuqMkYf65gBmvq6gg5wABiPLerivvCGXTqxBeYDf5WGlR2SkyIARvIE2FFnS8=
-=irjR
------END PGP SIGNATURE-----
+Thanks in advance,
+
+Regards,
+Salvatore
