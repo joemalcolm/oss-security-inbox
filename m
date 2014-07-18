@@ -1,25 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/6
-Message-ID: <CAA7hUgHBbHc_p38+5f7a0-UxZ97+C4UQrrXzMOT67r0=S9KNww@mail.gmail.com>
-Date: Fri, 17 Jan 2014 12:50:55 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: more info on "radiotap: bitmap-end-finding buffer overrun"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/18/2
+Message-Id: <201407181730.s6IHUYAa023743@linus.mitre.org>
+Date: Fri, 18 Jul 2014 13:30:34 -0400 (EDT)
+From: cve-assign@...re.org
+To: thoger@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, gmollett@...hat.com, kseifried@...hat.com
+Subject: Re: CVE request - Snoopy incomplete fix for CVE-2008-4796
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I was wondering if anyone has more info on the following commit:
-https://github.com/torvalds/linux/commit/bd02cd2549cfcdfc57cb5ce57ffc3feb94f70575
+> 2002
+> http://sourceforge.net/p/snoopy/bugs/13/
+> 
+> It seems this allowed the most simple injections:
+>   https://example.com;id
+>   https://example.com/foo.html;id
+> 
+> Fixed in 2004 via:
+> http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log#rev1.11
 
-AFAICS it is a different issue than CVE-2013-7027.
+Use CVE-2002-2444.
 
-A web search points to the following Secunia advisory, but not much else:
-http://secunia.com/community/advisories/56282
 
-(not asking for a CVE at this time)
+> 2008
+> ...
+> Followed by a similar fix for headers few days later, which probably
+> was not picked up by folks backporting the above commit as the fix for
+> this CVE:
+> http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log#rev1.27
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Use CVE-2008-7313 for this vulnerability involving headers. This issue
+exists because of an incomplete fix for CVE-2008-4796.
+
+
+> 2014
+
+> http://mstrokin.com/sec/feed2js-magpierss-0day-vulnerability-not-really-it-is-actually-cve-2005-3330-cve-2008-4796/
+
+Use CVE-2014-5008. This issue exists because of an incorrect fix for
+CVE-2008-4796 (i.e., use of escapeshellcmd where escapeshellarg was
+required).
+
+
+> https://github.com/cogdog/feed2js/pull/12#issuecomment-48283706
+
+Use CVE-2014-5009. This issue exists because of an incorrect fix for
+CVE-2014-5008.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTyVl2AAoJEKllVAevmvmsVmgH/i8/r/RQYS5Bu/vzlDVjZbK/
+vIjD4rUuUOJ+A75GOR5IjsHg0Ybh5nvx4eTHCTeQhFsNibKUqn8n6SIJlghbtx3C
+H2rSGAN4B1+F/xa/3qTU0CAqsear/UqlwCbyD/VvSuS6plYYfk24/UcmDFZ7+N6P
+fIf0JAx+0pBWB74s3BdMcSbJNW/19hVMF4vRfsmirTQUn9yjXlB8QyAEVsqw2qSU
+T18YscFWBTrB2ifYBD14ku7wK+EFUBNdSsq2/Hykxroka+n2maZVJUpZmpEFSfzZ
+jKtciy2Vw/lj/JuCZb02yqL3Lzjph6AYjNWjcbUWtXNPXajiYNMD85PsAtwhkBw=
+=hYe5
+-----END PGP SIGNATURE-----
