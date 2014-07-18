@@ -1,22 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/4
-Message-ID: <542A16AC.9070903@case.edu>
-Date: Mon, 29 Sep 2014 22:34:20 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: "Kobrin, Eric" <ekobrin@...mai.com>, "dwheeler@...eeler.com" <dwheeler@...eeler.com>
-CC: chet.ramey@...e.edu, oss-security <oss-security@...ts.openwall.com>, solar <solar@...nwall.com>, lcamtuf <lcamtuf@...edump.cx>, fweimer <fweimer@...hat.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/18/6
+Message-Id: <201407182212.s6IMC5JT004797@linus.mitre.org>
+Date: Fri, 18 Jul 2014 18:12:05 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: bozohttpd: basic http authentication bypass
 Content-Type: text/plain; charset=utf-8
 
-On 9/29/14, 6:06 PM, Kobrin, Eric wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> What is the motivation to not store executable code (functions) differently from standard variables?
+> http://ftp.netbsd.org/pub/NetBSD/security/advisories/NetBSD-SA2014-007.txt.asc
 
-What would you use for such a store, considering the environment is the
-only portable way to pass this information from one process to another in
-the general case, and support the current set of use cases?
+> Remote user may access protected files
 
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+> A call to snprintf() was not properly checking for truncation of
+> a provided user path, allowing a later concatenation of the
+> ".htpasswd" file name to exceed the maximum pathname length.  This
+> stops the check for .htpasswd file from working correctly, bypassing
+> the basic HTTP authentication scheme.
+
+Use CVE-2014-5015.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTyZtdAAoJEKllVAevmvmsRZcH/0TkprRLpsVED9cIjQuujlih
+vFHenTAkkk1oJFcu7w3jYFjEddGLXq64t7YYYAs/ElC4c95pZ3rLGnW+XxHqMU6c
+ucpYSG7WgyFEHKQeCZOx1Qicm5xxe3kgtpmJwMBz8EiPagWBOIYShpas7qWjeIPE
+onsrZ32uBN7ziwQpIIxpxphb/2x1nO8ACN4frgR1BcrMYBuIxxAFEJp86H7jaJND
+Aya8y0phZfAEBtS5qpUiVzD9W8bXAxxtXF4+3SAKlNAsziok7SdQv2Ka+2y9nZPh
+HX7ZY2KjBifat7hNEtZoNz7P92IqQdIugAJXrDXDTuFJGhSOATgcgDs43//cp7A=
+=OARR
+-----END PGP SIGNATURE-----
