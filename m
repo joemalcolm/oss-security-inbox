@@ -1,36 +1,157 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/4
-Message-ID: <CAD3CancDiRhPs9zeqg8SK19A3JbAb_eCx+x0e3STFMLPneTrXw@mail.gmail.com>
-Date: Tue, 4 Feb 2014 23:27:34 +1300
-From: Matthew Daley <mattd@...fuzz.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/18/1
+Message-ID: <CAJVRA1Shfw4w4dq4f0qzr8RMHcJNg6npxdxLGUyGCy5sB4bAdw@mail.gmail.com>
+Date: Fri, 18 Jul 2014 06:16:09 -0700
+From: coderman <coderman@...il.com>
+To: Full Disclosure <fulldisclosure@...lists.org>,  liberationtech <liberationtech@...ts.stanford.edu>, cpunks <cypherpunks@...nks.org>,  oss-security@...ts.openwall.com
+Subject: Strong Security Processes Require Strong Privacy Protections
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 4, 2014 at 11:04 PM, Henri Salo <henri@...v.fi> wrote:
-> On Tue, Feb 04, 2014 at 10:35:46AM +0100, Hanno Böck wrote:
->> python-gnupg 0.3.5 lists in the changelog:
->> "Added improved shell quoting to guard against shell injection."
->>
->> Sounds like a severe security issue, but further info is lacking.
->
-> Diff attached. New function shell_quote() seems to represent major changes to
-> shell input quoting against unsafe input.
-> [...]
+"Strong Security Processes Require Strong Privacy Protections"
 
-This appears to (at least) miss escaping of backslashes:
+A request for all security conscious organizations handling
+vulnerability reports to deploy privacy enhancing technologies.
 
-$ ls foo
-ls: cannot access foo: No such file or directory
-$ python
-Python 2.7.6 (default, Jan 11 2014, 14:34:26)
-[GCC 4.8.2] on linux2
-Type "help", "copyright", "credits" or "license" for more information.
->>> import gnupg
->>> gnupg.GPG().sign_file(open("/dev/null"), "'\\\"; touch foo #'")
-<gnupg.Sign object at 0x7fb3dbfad7d0>
->>>
-$ ls foo
-foo
+---
 
-- Matthew
+With the Snowden disclosures and Google's Project Zero on the minds of
+security professionals everywhere, it is time to evaluate one more
+aspect of this renewed focus on 0day and targeted attacks:
+vulnerability submission to vendors. [0][1]
+
+Software vulnerabilities of use to nation states and espionage
+organizations are recognized as a threat to privacy and basic human
+rights. Their impact no longer dismissable or discounted given
+evidence of misuse. I will not discuss hardware vulnerabilities in
+this treatment as they entail different considerations and
+constraints. [2]
+
+Reporting vulnerabilities of this nature in turn requires strong
+privacy protections commensurate with the five and six digit monetary
+values they command, and the adversaries intent on discouraging their
+discovery or mitigation. [3][4]
+
+---
+
+Therefore, any organization handling vulnerability reports must
+support strong privacy for vulnerability submission. This is mandatory
+even if most or all issues received via this channel are not 0day, not
+high value, and entail very little risk to users.
+
+The characteristics of a strong private reporting method are:
+
+- Email must not be used. In the best circumstances email leaks too
+much information. In common situations it is passed around clear text,
+trivially interfered with, and winds through software with huge
+usability and vulnerability problems. Email for initial security
+vulnerability reporting must cease immediately. [5][6]
+
+- Public web systems for vulnerability reporting must not be used.
+Like email, this leaks too much information and is vulnerable to a
+wide array of attacks destroying any privacy intended. [7][8]
+
+- Submission of reports via hidden site required. This has become
+fashionable in media organizations as the "secure drop" for
+whistleblowers, and it is equally apropriate for vulnerability
+reporting. This significantly raises the cost of surveilling a
+vulnerability reporting service, and ensures that passive interception
+of reported vulnerabilities is impossible. [9]
+
+- Encryption of submitted reports required. PGP and GPG are wonderful
+tools, despite encrypted email being a dismal failure. While the
+hidden drop may protect the privacy of the reporter, encryption of the
+report content to specific vulnerability researchers' keys ensures
+privacy to the receiver. A compromise of the hidden site must not lead
+to access of reported vulnerabilities. [10]
+
+- Submitter anonymity the default. Submissions and communication must
+accomodate an anonymous identity. If a researcher wishes to claim
+credit they must opt-in and provide additional information. No
+psuedonymous account requirements, no key linking across submissions.
+
+- Obfuscated disclosure should be available if desired. Capturing 0day
+in the wild used for espionage or cyber effects is a rare event.
+Publicly disclosing when, where, and how you obtained such captures
+ensures you're likely never to see any others. Researchers in position
+to observe and inspect such events should be able to report the
+vulnerabilities without credit and without indicating the origin. A
+vendor could provide a "cover story" for how the vulnerability was
+discovered internally, to best protect sources' ability to continue to
+discover these types of weaponized exploits in the wild.
+
+Finally, it goes without saying that this privacy applies during
+reporting and mitigation phases of defect resolution. Once a patch is
+prepared and public the details of the vulnerability should be public
+as well, via email list, public blog, or any other useful medium.
+
+---
+
+As participants in the security industry it behooves us all to set an
+example for others and to demonstrate a committment to security and
+privacy via action.
+
+Security conscious organizations handling vulnerability reports can
+support strong privacy and send a clear message deploying private
+reporting methods described above.
+
+Security researchers must demand strong privacy from organizations
+they collaborate with, even in the most trivial or minor of
+circumstances, so that infrequent severe vulnerabilities may also be
+reported in confidence.
+
+Privacy is a basic human right we must all support. Let's demonstrate
+our support by using privacy enhancing technologies to resolve risks
+to privacy!
+
+
+best regards,
+
+
+
+0. "The NSA Revelations All in One Chart"
+ https://projects.propublica.org/nsa-grid/
+
+1. "Announcing Project Zero"
+ No link as the announcement is only supported over HTTP; attempt
+HTTPS and you're redirected to plain-text. This is an embarassment
+that should be fixed, Google Project Zero!  (the other plain-text
+sites below have not unreasonable exuses ;)
+
+2. "New technologies are radically advancing our freedoms but they are
+also enabling unparalleled invasions of privacy"
+ https://www.eff.org/issues/privacy
+
+3. "A Declaration of Cyber-War"
+ http://www.vanityfair.com/culture/features/2011/04/stuxnet-201104
+'''On July 15, the day Stuxnet’s existence became widely known, the
+Web sites of two of the world’s top mailing lists for newsletters on
+industrial-control-systems security fell victim to
+distributed-denial-of-service attacks...'''
+
+4. "The Real Story of Stuxnet"
+ http://spectrum.ieee.org/telecom/security/the-real-story-of-stuxnet
+'''Just as Kaspersky’s engineers were tricking Gauss into
+communicating with their own servers, those very servers suddenly went
+down,...'''
+
+5. "Universal Email Encryption Specification"
+ http://ritter.vg/blog-uee_email_encryption.html
+
+6. "Pond" (not like email)
+ https://pond.imperialviolet.org/tech.html
+
+7. "Bullrun (decryption program)"
+ https://en.wikipedia.org/wiki/Bullrun_%28decryption_program%29
+
+8. "How secure is HTTPS today? How often is it attacked?"
+ https://www.eff.org/deeplinks/2011/10/how-secure-https-today
+
+9. "How the NSA Attacks Tor/Firefox Users With QUANTUM and FOXACID"
+ https://www.schneier.com/blog/archives/2013/10/how_the_nsa_att.html
+ (this is what a hard to attack system looks like, and keeping
+disclosure entirely within the network from clients to hidden sites
+amplifies the difficulty significantly.)
+
+10. "The Rise of the Middle and the Future of End-to-End: Reflections
+on the Evolution of the Internet Architecture"
+ https://www.ietf.org/rfc/rfc3724.txt
