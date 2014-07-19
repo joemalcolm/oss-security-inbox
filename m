@@ -1,49 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/1
-Message-ID: <CALx_OUCG9nbwZJcdAzSyL=_JQhEiv045Vjo-2d+=AZTOqB41_w@mail.gmail.com>
-Date: Sun, 2 Nov 2014 16:57:23 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/5
+Message-Id: <85tx6dr3bx.fsf@boum.org>
+Date: Sat, 19 Jul 2014 13:32:50 +0200
+From: intrigeri <intrigeri@...m.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE's for intersection vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-> BTW is there a method to quickly sort out crashes (or other bad behavior)
-> into potentially exploitable and presumably non-exploitable, i.e. separate
-> security issues from non-security ones?
+Hi,
 
-Nah, not really. You just sort of need to have a look.
+Kurt Seifried wrote (19 Jul 2014 00:33:38 GMT) :
+> So long story short: we have a program called sosreport that is used
+> to send system information back to Red Hat so we can help customers
+> troubleshoot their problems. It would appear we have three main
+> classes of (potential) security vulnerabilities:
 
-For very quick and error-prone triage, it's probably fair to say with
-out-of-bound writes that are far away from 0x0 *and* are not stack
-exhaustion, you can presume exploitability. That presumption gets
-stronger if the address is close to existing memory mappings or if it
-changes from one test case to another. It's possibly a bit weaker if
-it's only caught by Valgrind or so, because not all off-by-one issues
-are necessarily a problem under normal circumstances, due to things
-such as alignment padding or non-essential variables; when it's bad
-enough to crash under normal operating conditions, the evidence of
-exploitability is stronger.
+The severity of these potential vulnerabilities may partly depend on
+how well sosreport authenticates the server it sends information to.
 
-For derefs in the fixed vicinity of 0x0, you can probably assume
-non-exploitability except for certain specific circumstances (e.g.,
-kernel bugs, use of uninitialized memory whose content you feel you
-could influence). Call stack exhaustion is generally non-exploitable
-in itself.
-
-For read derefs, non-exploitability can be a weak initial assumption,
-too, but this can change easily (e.g., if the next thing the program
-would do with the data it tries to read is use it to write to the read
-address, or something of that sort). Read derefs in places such as
-free(), malloc(), sprintf(), strcpy(), etc, are probably exploitable.
-
-> Simple fuzzing of objdump with zzuf (not even afl) quickly gives out tens
-> and hundreds of different cases of mentioned errors (mostly from the first
-> group:-). Now what?
-
-Well, deduping is important. If you're running without ASLR, you can
-get reasonably good results by grouping problems by %eip / %rip where
-the crash occurred. Looking at the call stack is good, too. But some
-memory corruption issues will have latent effects. With these, ASAN /
-Valgrind / debugging allocator can help.
-
-/mz
+Cheers,
+--
+intrigeri
