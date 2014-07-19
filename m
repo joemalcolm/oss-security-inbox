@@ -1,31 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/17/2
-Message-ID: <5326946D.40306@redhat.com>
-Date: Mon, 17 Mar 2014 17:21:33 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/8
+Message-ID: <op.xi85tggsaaa6dx@otcain>
+Date: Sat, 19 Jul 2014 19:09:06 +0300
+From: "Dolev Farhi" <dolevf@...oo.com>
 To: oss-security@...ts.openwall.com
-CC: 741659@...s.debian.org
-Subject: CVE request: kdirstat, insufficient quote escaping leading to arbitrary command execution
+Subject: Re: CVE's for intersection vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+On Sat, 19 Jul 2014 14:32:50 +0300, intrigeri <intrigeri@...m.org> wrote:
 
-Adrian Panasiuk discovered that the KDirStat (KDE Directory Statistics) 
-tool did not correctly escape quotes when deleting a directory 
-permanently. Attempting to use KDirStat to permanently delete a 
-directory that has a malicious name could result in arbitrary command 
-execution.
+> Hi,
+>
+> Kurt Seifried wrote (19 Jul 2014 00:33:38 GMT) :
+>> So long story short: we have a program called sosreport that is used
+>> to send system information back to Red Hat so we can help customers
+>> troubleshoot their problems. It would appear we have three main
+>> classes of (potential) security vulnerabilities:
+>
+> The severity of these potential vulnerabilities may partly depend on
+> how well sosreport authenticates the server it sends information to.
+>
+> Cheers,
+> --
+> intrigeri
 
-Original report: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=741659
 
-The Debian report is about single quotes. On Fedora 
-(https://bugzilla.redhat.com/show_bug.cgi?id=1077059) double quotes were 
-needed.
+Just wanna mention that sosreport is used by many companies other than red  
+hat (e.g. a company may ask for an sosreport from their customers), i know  
+that we use it to get environment data from customers.
 
-Can a CVE please be assigned if one has not been already? (And maybe it 
-should be escaping ';' too if not already?)
 
-Thanks,
+-- 
 
---
-Murray McAllister / Red Hat Security Response Team
+
+
+/df
+
+---
+This email is free from viruses and malware because avast! Antivirus protection is active.
+http://www.avast.com
+
