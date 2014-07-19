@@ -1,56 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/6
-Message-ID: <20141030185256.GC71386@TC.local>
-Date: Thu, 30 Oct 2014 11:52:56 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, secalert@...hat.com
-Subject: Arbitrary file existence disclosure in Sprockets (CVE-2014-7819)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/2
+Message-Id: <201407190139.s6J1d8MO011563@linus.mitre.org>
+Date: Fri, 18 Jul 2014 21:39:08 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE's for intersection vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Arbitrary file existence disclosure in Sprockets
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There is an information leak vulnerability in Sprockets. This vulnerability
-has been assigned the CVE identifier CVE-2014-7819.
+> But then we have #4:
 
-Versions Affected:  ALL
-Not affected:       NONE
-Fixed Versions:     2.12.X
+Yes, see CVE-2014-4039 in
 
-Impact
-------
-Specially crafted requests can be used to determine whether a file exists on
-the filesystem that is outside an application's root directory.  The files will not be served, but attackers can determine whether or not the file exists.
+   http://openwall.com/lists/oss-security/2014/06/17/1
 
-All users running an affected release should either upgrade or use one of the work arounds immediately.
+   and
 
-Releases 
--------- 
-The 2.12.X releases are available at the normal locations. 
+   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4039
 
-Workarounds 
------------ 
-In Rails applications, work around this issue, set config.serve_static_assets = false in an initializer.  This work around will not be possible in all hosting environments and upgrading is advised.
+Here, a technical-support tool (very similar in purpose to sosreport)
+makes a copy of a mode 0600 /var/log/messages file within a
+(potentially) mode 0644 /tmp/diagSEsnap/snapH.tar.gz archive file.
+There can realistically be usernames and passwords in
+/var/log/messages, at least when that log file is used by poorly
+written site-specific software. Thus, a CVE can be assigned.
 
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+A CVE could also be assigned if there wasn't a mode 0644 local file,
+but the archive containing /var/log/messages was transmitted
+externally in a "technical-support data stream" (as in CVE-2014-4040).
 
-* 2-12-sec-static-files.patch - Patch for the 2.12.x release series
+Incidentally, some vendors assign a CVE ID if one of their products
+logs a password to a file that has default permissions of 0600, even
+if the vendor's documentation says that the customer must not change
+the permissions. Their rationale is that the password logging was a
+security-relevant implementation error. At some point, it comes down
+to the vendor understanding its own customers. If they know that
+customers ignore the documentation and use 0644 instead, this would be
+a reasonable motivation for declaring the coding error to be
+security-relevant.
 
-Credits 
-------- 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-This vulnerability was reported by multiple researchers working independently.  Thanks to each of them for reporting the issue to us and verifying the fixes.
-
-* Eaden McKee
-* Dennis Hackethal & Christian Hansen of Crowdcurity
-* Juan C. Müller & Mike McClurg of Greenhouse.io 
-* Alex Ianus of Coinbase
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "2-12-sec-static-files.patch" of type "text/plain" (3026 bytes)
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJTycv7AAoJEKllVAevmvms/lgIAKS6Vp9JEI+3JhXeoaAAIF2n
+CvwnK1wha7RF25+T5xBG3S+5BBVe0fl6OL5w9HQxtVk9XMF8Wo3qsGbUHWtMwrlY
+PncO/hc6UA5ZeMS5Hhv4xD/GYbVgpW4Y485daCdP6aUdmbUeDr0iuUlYJN/VjvEd
++zTvc+8i4Fa43VhGXLXGr9uUxgmlKcewzvOYkVwrxttPjyLM1T5o225/u4zMPeo+
+9UTPbRYx0vwB0OFsN/8+CvklcyYXGIR9joXr8uFp01IRzpb5uiywuv1aMDppIF3w
+5BqCYjLRBXpBorvRhKX6jiui2iX+t+7Yv4jpO3iEhTDXqsYenqqCfG9Qwt/K9RE=
+=9uMS
+-----END PGP SIGNATURE-----
