@@ -1,52 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/3
-Message-ID: <20141123105219.72265811@pc>
-Date: Sun, 23 Nov 2014 10:52:19 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/1
+Message-ID: <53C9BCE2.2030305@redhat.com>
+Date: Fri, 18 Jul 2014 18:33:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE's for intersection vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 23 Nov 2014 01:24:11 -0800
-Michal Zalewski <lcamtuf@...edump.cx> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> WDYT?
+So long story short: we have a program called sosreport that is used
+to send system information back to Red Hat so we can help customers
+troubleshoot their problems. It would appear we have three main
+classes of (potential) security vulnerabilities:
 
-lesspipe is a tough one.
+1) sosreport collects sensitive information that is unexpected/should
+not be included, e.g. potentially it could grab configuration files
+with credentials for third party systems/etc. My take on this is this
+type of data should only be included if explicitly added/requested by
+the end user (it should default to safe for well known sensitive files
+in other words).
 
-First of all let me remind that I recently found an out of bounds
-access in less's unicode decoding itself. Upstream is not responsing
-atm. It's only a read error, but it was not even fuzzing, it was an
-accidental finding, I'd expect that further analysis might yield to
-more.
+2) sosreport collects sensitive information that would be "normal",
+e.g. HTTP logs with GET requests, or usernames used to log into
+services. My take on this is that we should document this behaviour
+and provide options for the users to review/sanitize data prior to it
+being sent to Red Hat, but that this is security hardening and not a
+vulnerability, so no CVE.
+
+3) sosreport unintentionally collects sensitive information, e.g. a
+service mistakenly logs username/password to a world readable log
+file, which sosreport then includes. My take on this would be that a
+CVE is deserved for the program logging the sensitive information
+(which normally it would get in any event), but that no CVE should be
+assigned for sosreport (since #1 the flaw isn't in sosreport, and
+ideally with #2 the user sees it and sanitizes it any ways).
+
+But then we have #4:
+
+4) sosreport unintentionally collects sensitive information, e.g. a
+service mistakenly logs username/password to a secured log file. Now
+normally this would not get a CVE since the logfile has secure
+permissions, however we have a situation where sosreport is
+potentially exposing the information. So do we assign a CVE for this
+intersection vulnerability?
 
 
-Now lesspipe: I didn't know that this thing exists until very
-recently but I was aware that less did some kind of parsing and e.g. I
-quite liked the idea that you can "less" gz/bzip2 files.
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-Actually leaving security asside I quite like the idea of lesspipe, so
-I'm reluctant to say "lesspipe scripts have gotta die / be disabled".
-
-That said the alternative is a tough one. It would be something
-like this:
-* Fuzz all the things in lesspipe
-* Report what you find
-* Kill the tools that have unsatisfying upstream reactions and replace
-  them with more secure ones.
-And even after doing this this probably wouldn't count as a high
-security solution.
-
-I'm aware this feels like a huge effort, but actually it fits very
-well in the project I'm about to start anyway. And lesspipe gives a good
-starting point to what tools might deserve some more fuzzing.
-
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQIcBAEBAgAGBQJTybziAAoJEBYNRVNeJnmT/ugQAI1JZ4ytuOT2kAlAdAkAFIb2
+Cggz2KKkS+KKJDwc4hTN8SR1BBlNQGimc7CUPSoex4UnBxk8MBfXjYX+6NEkxVav
+OSJNm5UKkNgj4f/8Eagqvjhr5SDnBX2upYb4FzmyViF/kUw4mihJnhADE9MdJpHp
+0RLMBgQnkUrpB/wQu4ESPzZGf7MdoB3+3vRLQ2viYMT3MY3kf9iusYA4YNvXzaMo
+fcT6yV/fJDVqjEem7yGGJKOzSgPf5IrY25iNtMS1LiEn0PgDBeVV7gG77ee2vWEP
+2G3naLZwVQNTVpNJk2ahdI9TV4quv5Sv65F/xYYzesZQccd/ZRMAMLgn0KgP9WHz
+eUjb1dNyQPK3AYJAhbdUr1H+AWrJSQ45IVoIUYdFTHoEGfogmvg4pvXtAi7gugK4
+m/2MUYkw6sl2F4SuwQJeSbeLe/zDpR4ThXuhoghQ2kazsKWsOYZ918qeR3gUFKQF
+g8p3dbknBDao7yBg+1UPqJskgAGnGYQsbC0fqPwRSAtyodpaHrxQSqOPrpwkNcTx
+vMly1vH8mLg+qbhds+CdvWD/0/cj+pWg69l3Z2AbYQW6GvwIIYXRxgsqOk75wPqt
+xdY67JuxA01IhOCavwc1sNfeWssLJZzN6YTb+NwwTjqLx4SXDVyiF1NHczPn+F1t
+iF1QKZLIimXfxBcceBxN
+=PIbq
+-----END PGP SIGNATURE-----
