@@ -1,42 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/21
-Message-ID: <CALx_OUAMNk5_ksge6uUSHdtdMr3pkdjPMG9=SpL6mG0jJKAZjQ@mail.gmail.com>
-Date: Thu, 25 Sep 2014 08:52:43 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271 first patch and remote exploit via CGI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/3
+Message-ID: <53C9F6C6.40608@redhat.com>
+Date: Fri, 18 Jul 2014 22:40:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Good news and bad news on Python sockets and pickle
 Content-Type: text/plain; charset=utf-8
 
-> In the press, there are contrary statements about the initial patches[1]
-> posted by Florian Weimer. A user on Twitter posted[2] that the patch was
-> incomplete. There is agreement on that much. Where I see different
-> responses is on whether the first patch can still be exploited remotely via
-> the CGI vector outlined in Florian's initial post, and what damage can
-> still be done. I haven't seen a proof of concept yet, but I also haven't
-> seen a trusted voice give a definitive statement that it can't be abused.
->
-> Could anyone lay out what's still possible for a remote attacker via CGI
-> with only the first patch applied?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The first patch closes the immediate RCE loophole. Many people have
-expressed concerns that the patch is dangerous because in many
-real-world situations, it still permits bash to parse function
-definitions originating from attackers, and the security of the scheme
-hinges on the parser not having the usual range of low-level C
-language bugs that normally plague such code; and, on top of that, the
-parsing process having absolutely no side effects on the subsequently
-executed scripts.
+So first the good news, I looked at the top projects on pypi
+(arbitrarily defined as more than 1000 downloads in the last month for
+at least one version), so for the most recent version of these that
+meant about 8,072 packages.
 
-Both of these assumptions have been shown to be incorrect, although
-not to directly execute code in the most likely scenarios that would
-be vulnerable without the original patch; so, you're probably OK, but
-relying on thing staying this way is fragile. There's an unofficial
-patch from Florian that limits the exposure:
+I looked for cases where pickle.loads is used on untrusted data, the
+good news is didn't find many, the main two uses cases were taking
+data from zeroMQ and memcached and then unpickling it, looks like
+those would be compromised in any event if malicious data got in
+there, let alone RCE type stuff.
 
-http://www.openwall.com/lists/oss-security/2014/09/25/13
+However having said that we do have this one in the past:
 
-You have to use your own judgment to decide whether to stick to the
-original patch, also use Florian's one in the interim, or do something
-else.
+CVE-2012-4406	OpenStack Object Storage (swift) before 1.7.0 uses the
+loads function in the pickle Python module unsafely when storing and
+loading metadata in memcached, which allows remote attackers to
+execute arbitrary code via a crafted pickle object.
 
-/mz
+So here is my question, is all pickle.loads from things like memcached
+(which has no auth) generally CVE worthy? If so I can post a list of
+the potentials, I'll be honest, I'm to lazy to go digging through it
+(I'm not sure how many uses shared/public memcached configs/etc.).
+
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQIcBAEBAgAGBQJTyfbGAAoJEBYNRVNeJnmTYokQAMgZvPbYFaCU7IBV5Dxl4yD9
+A92UDWFsHhzvvNkJWOFmrsWJ+2HN1QvL7IvucLpIuVhETAA97ZJW1257bx5eZWR5
+ABY6wbUd8fmtyunTdNIxBiNpDYA7Lwxo0PD6EZqjBpzB+pzIbfojecfzQReOFyO6
+SgLoc4fRPnvBk2pD/F0FfgNRY0Vk2b7JbZgj+enIqC3U2Ug921Ej5d4DmAcBe5oN
+Sn7WCAmbG0p6l3TKh4n3T5GAELO1BeWAN8aOO//4eE2uuTGesPkD+F5299nGRCzS
+Ff6NeuHvS+aIR5XzeksXXhhy1Sv8/RAWoWt9jQoQirSx8BijW2NQbx1vv09pA4XG
+cxjkmhatCQtMIoI18fK2uIRHGPnQSi1tw/pB9YdMjFG+LKcs6VFwwLE3pCnGuARm
+asIKgHSUqTlam2FpwuyiVzTtsj2sa7QokMhjJ53hFQL6UavVXNiTBf9cK+FLlUrI
+Rz41bfkOomgkznLxsK/MzMjGWWPkX/xvazE8C+a+jh7WBfA2X+Wngzuw+nKja1X0
+QUzbQ6RMLrTBKxni1cUXVh0eCed2v9ElTxXz/LrtC1uZNK4GP/vlTEHsOOqgJws8
+XswAt9BM9MzC2orgjCNkgDSoP5lRIPPX5iVtqT6A1RBC2lSiHsNhm53wbM5fcIqp
+BlVoPs+Cn2TjDth7uVsZ
+=251x
+-----END PGP SIGNATURE-----
