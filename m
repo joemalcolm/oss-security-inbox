@@ -1,43 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/4
-Message-Id: <52F4A6A6020000780011A10D@nat28.tlf.novell.com>
-Date: Fri, 07 Feb 2014 08:25:58 +0000
-From: "Jan Beulich" <JBeulich@...e.com>
-To: <cve-assign@...re.org>
-Cc: <oss-security@...ts.openwall.com>,<security@....org>
-Subject: Re: Xen Security Advisory 84 - integer overflow in several XSM/Flask hypercalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/6
+Message-ID: <53CA8F9E.9000502@redhat.com>
+Date: Sat, 19 Jul 2014 09:32:46 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Good news and bad news on Python sockets and pickle
 Content-Type: text/plain; charset=utf-8
 
->>> On 06.02.14 at 18:23, <cve-assign@...re.org> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> We can provide the three CVE assignments for XSA-84 (as well as the
-> one CVE assignment for XSA-85 and the one CVE assignment for XSA-86).
-> However, could you please clarify:
-> 
->> http://xenbits.xen.org/xsa/advisory-84.html 
-> 
->> UPDATES IN VERSION 2
->> ====================
->> 
->> Public release.
->> 
->> The patch for 4.1 was extended to cover a few further similar issues.
-> 
-> Here, was the original scope of "The patch for 4.1" (before it was
-> extended) exclusively:
-> 
->   "a different overflow issue on FLASK_{GET,SET}BOOL and expose
->    unreasonably large memory allocation to arbitrary guests"
-> 
-> ? Or do you mean that, originally, the "patch for 4.1" addressed
-> another vulnerability, and this "different overflow issue" was one of
-> the version-2 extensions to the scope of XSA-84?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The original patch was dealing with just the unbounded memory
-allocation. The missing bounds checking was what the incremental
-addition dealt with.
 
-Jan
 
+On 19/07/14 12:00 AM, gremlin@...mlin.ru wrote:
+> On 18-Jul-2014 22:40:38 -0600, Kurt Seifried wrote:
+> 
+>> I looked for cases where pickle.loads is used on untrusted data, 
+>> the good news is didn't find many, the main two uses cases were 
+>> taking data from zeroMQ and memcached and then unpickling it, 
+>> looks like those would be compromised in any event if malicious 
+>> data got in there, let alone RCE type stuff. [...] So here is my
+>> question, is all pickle.loads from things like memcached (which
+>> has no auth) generally CVE worthy? If so I can post a list of the
+>> potentials, I'll be honest, I'm to lazy to go digging through it
+>> (I'm not sure how many uses shared/public memcached
+>> configs/etc.).
+> 
+> All these issues aren't related to pickle.loads - they are just
+> the ordinary use of untrusted data (which itself may worth a CVE).
+
+Uhmm yes and no, it's one thing to pull some data out of memcached and
+use it for something, it's another to do so in a way that essentially
+executes it.
+
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQIbBAEBAgAGBQJTyo+eAAoJEBYNRVNeJnmTM/YP+O+LZzbOxVirdgmKdaV0owyV
+R2bLrNQhJWajoGdmhcxSyraleIuZaTkO7qc/dcSDGzUlrP5UIcIff7tmx5FeG1ZN
+juOJF/bkcvCFA3pQjdNhUHThYfr1qaRuKNGh8lr7dqCEybKXQLy1BheUccEQ4KgX
+aq0r+Eo4a7fHYp9vckG3sPwmhOfxzWKMACiJQrn6LEVrApvUF4DyIcQn0qlhQpgN
+UKbIOPyEJ3E2JVCbeXbC3a5flnjWUdlai6th+F72TmugMKSp7CfDOUCmCeiJNLy9
+ANAYiJCdd+aiBGy3VvCVfUoZ6fMs1gY1JnX02aGnCFWcAunTJUiiIfrfZtYE9wco
+jq9WVjhxsvwgqGRawvQJujGH3Irs3/I+vSrz1ZNxo+gY/PWgLuJTrmyeJ5X2Xx7f
+Gn3MAnRz7dep5wDUtsgn4uLwuWjNae08EVR7pjCkewdL4Z7r2J3NBX2hqiYPKqoL
+7Ij0ZZ48I5zKTtUkjPusG1U2rI+PctRXkYVdqgM3d5buRca5C1cUXoTGeb0/jQGv
+0xdp4cREk2dZ4rxNxy7hh8LGZgI39DPFCDqhydORYYsuj606LkGY7W1yv2Qy9WWt
+QXSLkgiwbqnxpjq/GFXUmgMII5I/68iGdSlUXXgGB+Vu7q03jWFeGNvrvPd4EsGo
+KVi0u2VDUmcc6VmWlOc=
+=7d1y
+-----END PGP SIGNATURE-----
