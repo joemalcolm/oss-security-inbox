@@ -1,22 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/1
-Message-ID: <alpine.BSF.2.00.1410161225110.1909@aneurin.horsfall.org>
-Date: Thu, 16 Oct 2014 12:34:30 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Re: Abusing TZ for fun (and little profit)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/4
+Message-ID: <20140719060047.GA26691@gremlin.ru>
+Date: Sat, 19 Jul 2014 10:00:47 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: Good news and bad news on Python sockets and pickle
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 16 Oct 2014, Jakub Wilk wrote:
+On 18-Jul-2014 22:40:38 -0600, Kurt Seifried wrote:
 
-> $ TZ=$PWD/tz sudo -u root strace -e read date
+ > I looked for cases where pickle.loads is used on untrusted data,
+ > the good news is didn't find many, the main two uses cases were
+ > taking data from zeroMQ and memcached and then unpickling it,
+ > looks like those would be compromised in any event if malicious
+ > data got in there, let alone RCE type stuff.
+ > [...]
+ > So here is my question, is all pickle.loads from things like
+ > memcached (which has no auth) generally CVE worthy? If so I can
+ > post a list of the potentials, I'll be honest, I'm to lazy to
+ > go digging through it (I'm not sure how many uses shared/public
+ > memcached configs/etc.).
 
-Perhaps I've missed something here, but surely if you have "sudo" 
-privileges then you can read the file for yourself?  And if you're trying 
-to trace a set-uid program then it won't work anyway?  Neither my Mac nor 
-my FreeBSD box have "strace", and my Penguin is dead, so I cannot verify 
-this.
+All these issues aren't related to pickle.loads - they are just the
+ordinary use of untrusted data (which itself may worth a CVE).
+
 
 -- 
-Dave Horsfall (VK2KFU)
-http://www.horsfall.org/spam.html
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
