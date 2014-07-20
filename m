@@ -1,91 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/7
-Message-Id: <E1WBOEf-0000s1-Tq@xenbits.xen.org>
-Date: Thu, 06 Feb 2014 12:39:17 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 86 - libvchan failure handling malicious ring indexes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/20/5
+Message-ID: <op.xjaivivdaaa6dx@otcain>
+Date: Sun, 20 Jul 2014 12:48:44 +0300
+From: "Dolev Farhi" <dolevf@...oo.com>
+To: oss-security@...ts.openwall.com, "Kurt Seifried" <kseifried@...hat.com>
+Subject: Re: CVE's for intersection vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, 20 Jul 2014 12:03:00 +0300, Kurt Seifried <kseifried@...hat.com>  
+wrote:
 
-                     Xen Security Advisory XSA-86
-                              version 2
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On 19/07/14 10:09 AM, Dolev Farhi wrote:
+>> On Sat, 19 Jul 2014 14:32:50 +0300, intrigeri <intrigeri@...m.org>
+>> wrote:
+>>
+>>> Hi,
+>>>
+>>> Kurt Seifried wrote (19 Jul 2014 00:33:38 GMT) :
+>>>> So long story short: we have a program called sosreport that is
+>>>> used to send system information back to Red Hat so we can help
+>>>> customers troubleshoot their problems. It would appear we have
+>>>> three main classes of (potential) security vulnerabilities:
+>>>
+>>> The severity of these potential vulnerabilities may partly depend
+>>> on how well sosreport authenticates the server it sends
+>>> information to.
+>>>
+>>> Cheers, -- intrigeri
+>>
+>>
+>> Just wanna mention that sosreport is used by many companies other
+>> than red hat (e.g. a company may ask for an sosreport from their
+>> customers), i know that we use it to get environment data from
+>> customers.
+>
+> Well... fiddlesticks.
+>
+> That is outside of my responsibility, and indeed outside of what I'm
+> even aware of (if you use sosreport and do so in an insecure manner
+> please report to oss-security for uhmm.. re-education? Heck of I know
+> what to do/say.).
+>
+> - --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+> Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+>
+> iQIcBAEBAgAGBQJTy4XEAAoJEBYNRVNeJnmTQIgQAJMzCeC49n6KTjC04yKgChb6
+> pi2lkJZqG1gb4Ze8bNOuagdqLSEdFIS21EYIeOpeLKkQ+wXylSFumN1M0P+kBYh0
+> n3YVzVqHgJ8DPlhLR7pPOcx2M60HMi12PvYDsqGdHaPdrgj0kknH+9340+4dkEhj
+> lWEeKmzgZtMigOQIFn4cLtG1f55CfTD8odO7HdMu0mXhIUJ7DUDjCXiWVswjHjL4
+> tyKplqaAHOS0cForSVviUkkEWyRSY/Ylb/JFtr0sM19cUbDlelLwH8NHyuHs4/71
+> 9EMiRQMGNLDOmov0jbjInS2A775SjtnvyUCvgvEyglHR3iWQ4YPQG627+A7HJZky
+> K09TNd0JhB+CufgDuIBCOytNKaPnlEA9wYWShUPB8x/0nWvsvBWB2WeK61bgo9W3
+> zfuH4SYXOL0CPGt3pCKNpZ5PqoPcRSLgCLqyhsHTZAkAe0dvgY24lP8HWve9h2at
+> aq6UKajnXz7we2IxkjVxZfuxoIwi8SdhjBDMBr+P+sEfdGeKyI37x9iGnSoWD3zX
+> vRgjsYF745Kb5ruCKvhOy5VF9GsA70uX51+YiZVib0661OZAJZfaYWoypTsuyAt4
+> 68zUr2KkIqSzl31Fx8Ak20NqHJRYsnU/j0vdxInLqpvTrodrPuPQyFPW+/U8keFG
+> at2j4IX/ezuZdi5yRQ4e
+> =9hGj
+> -----END PGP SIGNATURE-----
 
-           libvchan failure handling malicious ring indexes
+well, of course it is not in your responsibility.
 
-UPDATES IN VERSION 2
-====================
+but it is red hat responsibility to reduce the chances of it collecting  
+key configuration files containing possible credentials, which is what  
+they appear to do.
 
-Public release.
 
-ISSUE DESCRIPTION
-=================
 
-libvchan (a library for inter-domain communication) does not correctly
-handle unusual or malicious contents in the xenstore ring.  A
-malicious guest can exploit this to cause a libvchan-using facility to
-read or write past the end of the ring.
+-- 
 
-IMPACT
-======
+/df
 
-libvchan-using facilities are vulnerable to denial of service and
-perhaps privilege escalation.
+---
+This email is free from viruses and malware because avast! Antivirus protection is active.
+http://www.avast.com
 
-There are no such services provided in the upstream Xen Project
-codebase.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of libvchan are vulnerable.  Only installations which use
-libvchan for communication involving untrusted domains are vulnerable.
-
-libvirt, xapi, xend, libxl and xl do not use libvchan.  If your
-installation contains other Xen-related software components it is
-possible that they use libvchan and might be vulnerable.
-
-Xen versions 4.1 and earlier do not contain libvchan.
-
-MITIGATION
-==========
-
-Disabling libvchan-based facilities could be used to mitigate the
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Marek Marczykowski-Górecki of Invisible
-Things Lab.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-After the patch is applied to the Xen tree and built, any software
-which is statically linked against libvchan will need to be relinked
-against the new libvchan.a for the fix to take effect.
-
-xsa86.patch        Xen 4.2.x, 4.3.x, 4.4-RC series, and xen-unstable
-
-$ sha256sum xsa86*.patch
-cd2df017e42717dd2a1b6f2fdd3ad30a38d3c0fbdd9d08b5f56ee0a01cd87b51  xsa86.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJS84JeAAoJEIP+FMlX6CvZsvYH/3HbxPvs42Al1gncMsc4uh+R
-V+j48ENTQzSNhVTtXQq9bUgNk5Dp/kok7RpZbxCWIBl79UUP/fpPUT/FjD5egMOX
-NU8FslhmalOkkpmyeX0Kt1SvhQt6FvaozTTOdR47wHerfd+mKkYchFRrkCBvllBU
-/UIVItU6fA5xyXSsFy8quT66g2a88OTlv30YTsg3jhDo48FxO7A54ay4xVAIyOFK
-4Wl+hpEgTSE47VRSIGriAvjOMSSQjiMFPjR/DSbUMj8FaVhwVSitIEG9cRhn+3HE
-I6HqPFzy2jP+Lzj/WFkkZrt/k12GL4cZafg7th3/YcmABfR23QMN5SwfYDLKqqw=
-=XbpF
------END PGP SIGNATURE-----
-
-Download attachment "xsa86.patch" of type "application/octet-stream" (6024 bytes)
