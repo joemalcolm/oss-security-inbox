@@ -1,71 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/16
-Message-ID: <20140722223507.GA30313@boyd>
-Date: Tue, 22 Jul 2014 17:35:07 -0500
-From: Tyler Hicks <tyhicks@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/20/1
+Message-ID: <20140720082359.GA3614@pisco.westfalen.local>
+Date: Sun, 20 Jul 2014 10:23:59 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Dustin Kirkland <kirkland@...ntu.com>
-Subject: Re: ecryptfs-setup-private nitpick
+Subject: Status of CVE-2012-4542/Linux?
 Content-Type: text/plain; charset=utf-8
 
-Hi Raphael!
+Hi,
+I'm wondering on the status of CVE-2012-4542 in the mainline Linux kernel:
 
-On 2014-07-22 14:00:03, Raphael Geissert wrote:
-> Hi,
-> 
-> Taking a look at ecryptfs-utils 103's ecryptfs-setup-private, there is a bit 
-> of code that writes the mount pass to a file in /dev/shm hoping to "keep it 
-> from leaking to the hard-drive":
-> 
-> 8<-------->8
->         # This will be wrapped by pam_ecryptfs's chauthtok as soon as the 
-> user
->         # chooses a password.  Until that happens (hopefully soon), standard
->         # file permissions (600) are all that's protecting it.  Write it to
->         # ramdisk, to keep it from leaking to the hard-drive.
->         temp=`mktemp /dev/shm/.ecryptfs-XXXXXX`
->         printf "%s" "$MOUNTPASS" > "$temp"
->         mv -f -T "$temp" "/dev/shm/.ecryptfs-$USER" || error "Could not 
-> create passphrase file"
-> 8<-------->8
-> 
-> Fastforward to 2014 and /dev/shm is, well, not a ramfs/ramdisk:
-> 
-> /dev/shm -> /run/shm, which is a tmpfs at least on Debian.
-> 
-> And as clearly stated by Documentation/filesystems/tmpfs.txt:
-> "If you compare it to ramfs (which was the template to create tmpfs)
-> you gain swapping and limit checking."
-> 
-> 
-> So in the hope of avoiding a persistent storage the mount pass is written to 
-> a file in a tmpfs that can be swapped to... disk.
+The patches referenced in https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-4542
+(https://lkml.org/lkml/2013/1/24/279) haven't been merged,
+so I'm wondering whether this is fixed upstream in a different manner
+or still unfixed?
 
-I consider encrypted swap to be a prerequisite to enabling any
-disk/file encryption solution. Ubuntu sets up encrypted swap when the
-user selects to encrypt their home directory from the installer.
-
-Unfortunately, the ecryptfs-setup-private man page doesn't recommend
-encrypting your swap but ecryptfs-utils ships a script called
-ecryptfs-setup-swap that enables encrypted swap.
-
-Ignoring the encrypted swap argument, ecryptfs-setup-private shouldn't
-be storing the plaintext mount passphrase in a manner that is swappable.
-I think POSIX shared memory segments should provide the persistence and
-pinnable memory (SHM_LOCKED) needed.
-
-Either Dustin (cc'ed) or I will make this improvement. Thanks for the
-feedback!
-
-Tyler
-
-> 
-> The file is left on /dev/shm until pam_ecryptfs actually wraps it with the 
-> login pass.
-> 
-> Cheers,
-> -- 
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Cheers,
+        Moritz
