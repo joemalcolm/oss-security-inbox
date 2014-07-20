@@ -1,36 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/4
-Message-ID: <loom.20141114T142435-20@post.gmane.org>
-Date: Fri, 14 Nov 2014 13:36:11 +0000 (UTC)
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/20/3
+Message-ID: <53CB85C4.3070000@redhat.com>
+Date: Sun, 20 Jul 2014 03:03:00 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-8598: MantisBT XML Import/Export plugin unrestricted access
+Subject: Re: CVE's for intersection vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hanno Böck <hanno@...> writes:
-> What's holding this up?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Just me doing this in my spare time, and not having much of that at the
-moment, sorry...
+On 19/07/14 10:09 AM, Dolev Farhi wrote:
+> On Sat, 19 Jul 2014 14:32:50 +0300, intrigeri <intrigeri@...m.org>
+> wrote:
+> 
+>> Hi,
+>> 
+>> Kurt Seifried wrote (19 Jul 2014 00:33:38 GMT) :
+>>> So long story short: we have a program called sosreport that is
+>>> used to send system information back to Red Hat so we can help
+>>> customers troubleshoot their problems. It would appear we have
+>>> three main classes of (potential) security vulnerabilities:
+>> 
+>> The severity of these potential vulnerabilities may partly depend
+>> on how well sosreport authenticates the server it sends
+>> information to.
+>> 
+>> Cheers, -- intrigeri
+> 
+> 
+> Just wanna mention that sosreport is used by many companies other
+> than red hat (e.g. a company may ask for an sosreport from their
+> customers), i know that we use it to get environment data from
+> customers.
 
-> Makes me feel mantis isn't really handling security issues in a
-> responsible way 
+Well... fiddlesticks.
 
-I resent your comment. We have released patches to the public for all
-identified vulnerabilities, so from my perspective it's not like we're
-leaving the community without a solution for known issues. 
+That is outside of my responsibility, and indeed outside of what I'm
+even aware of (if you use sosreport and do so in an insecure manner
+please report to oss-security for uhmm.. re-education? Heck of I know
+what to do/say.).
 
-I personally believe it's better (i.e. more "responsible") to disclose an
-issue with a fix for it, thus allowing admins to patch their systems, rather
-than hide the problem until we're ready to go live with a new release.
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-If you can't wait for 1.2.18 to come out, you are welcome to patch your
-system manually. With regards to the XML plugin issues, you can also simply
-deactivate it.
-
-Best regards
-
-D. Regad
-MantisBT Developer
-
-
+iQIcBAEBAgAGBQJTy4XEAAoJEBYNRVNeJnmTQIgQAJMzCeC49n6KTjC04yKgChb6
+pi2lkJZqG1gb4Ze8bNOuagdqLSEdFIS21EYIeOpeLKkQ+wXylSFumN1M0P+kBYh0
+n3YVzVqHgJ8DPlhLR7pPOcx2M60HMi12PvYDsqGdHaPdrgj0kknH+9340+4dkEhj
+lWEeKmzgZtMigOQIFn4cLtG1f55CfTD8odO7HdMu0mXhIUJ7DUDjCXiWVswjHjL4
+tyKplqaAHOS0cForSVviUkkEWyRSY/Ylb/JFtr0sM19cUbDlelLwH8NHyuHs4/71
+9EMiRQMGNLDOmov0jbjInS2A775SjtnvyUCvgvEyglHR3iWQ4YPQG627+A7HJZky
+K09TNd0JhB+CufgDuIBCOytNKaPnlEA9wYWShUPB8x/0nWvsvBWB2WeK61bgo9W3
+zfuH4SYXOL0CPGt3pCKNpZ5PqoPcRSLgCLqyhsHTZAkAe0dvgY24lP8HWve9h2at
+aq6UKajnXz7we2IxkjVxZfuxoIwi8SdhjBDMBr+P+sEfdGeKyI37x9iGnSoWD3zX
+vRgjsYF745Kb5ruCKvhOy5VF9GsA70uX51+YiZVib0661OZAJZfaYWoypTsuyAt4
+68zUr2KkIqSzl31Fx8Ak20NqHJRYsnU/j0vdxInLqpvTrodrPuPQyFPW+/U8keFG
+at2j4IX/ezuZdi5yRQ4e
+=9hGj
+-----END PGP SIGNATURE-----
