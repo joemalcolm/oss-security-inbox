@@ -1,50 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/20
-Message-ID: <5346FF9C.8030101@enovance.com>
-Date: Thu, 10 Apr 2014 22:31:24 +0200
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/20/2
+Message-ID: <20140720082511.GB3614@pisco.westfalen.local>
+Date: Sun, 20 Jul 2014 10:25:11 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-013] Keystone DoS through V3 API authentication chaining (CVE-2014-2828)
+Subject: CVE request: cacti XSS
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-013
-CVE: CVE-2014-2828
-Date: April 10, 2014
-Title: Keystone DoS through V3 API authentication chaining
-Reporter: Abu Shohel Ahmed (Ericsson)
-Products: Keystone
-Versions: from 2013.1 to 2013.2.3
+Hi,
+please assign a CVE ID for http://bugs.cacti.net/view.php?id=2456
 
-Description:
-Abu Shohel Ahmed from Ericsson reported a vulnerability in Keystone V3
-API authentication. By sending a single request with the same
-authentication method multiple times, a remote attacker may generate
-unwanted load on the Keystone host, potentially resulting in a Denial of
-Service against a Keystone service. Only Keystone setups enabling V3 API
-are affected.
-
-Juno (development branch) fix:
-https://review.openstack.org/84425
-
-Icehouse (milestone-proposed branch) fix:
-https://review.openstack.org/84735
-
-Havana fix:
-https://review.openstack.org/86024
-
-Notes:
-This fix is included in the icehouse-rc2 development milestone and will
-be included in a future 2013.2.4 release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-2828
-https://launchpad.net/bugs/1300274
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+Cheers,
+        Moritz
