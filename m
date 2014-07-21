@@ -1,33 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/13/1
-Message-ID: <CAFKiAGDwoeMn+VGeU5VMAP3ihRCcXpf+KC2ttq=-dSbLk9DMqw@mail.gmail.com>
-Date: Mon, 13 Jan 2014 03:59:01 -0500
-From: George Staikos <staikos@....org>
-To: Florian Weimer <fweimer@...hat.com>
-Cc: security@....org, oss-security@...ts.openwall.com
-Subject: Re: kwallet crypto misuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/12
+Message-ID: <20140721171543.GA30351@chaz.gmail.com>
+Date: Mon, 21 Jul 2014 18:15:43 +0100
+From: Stephane Chazelas <stephane.chazelas@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
-This issue has been known for years but it seems kwallet is unmaintained. I
-had to stop working on it before I could fix this,  among other issues.
-Somebody should fix the crypto, yes, though I'm not sure how urgent an
-issue this really is.
- On Jan 2, 2014 3:15 AM, "Florian Weimer" <fweimer@...hat.com> wrote:
+2014-07-10 16:42:39 -0700, Tavis Ormandy:
+> Rich Felker <dalias@...c.org> wrote:
+> 
+> > On Thu, Jul 10, 2014 at 08:52:24PM +0200, Florian Weimer wrote:
+> > > Stephane Chazelas discovered that directory traversal issue in locale
+> > > handling in glibc.  glibc accepts relative paths with ".." components in
+> > > the LC_* and LANG variables.  Together with typical OpenSSH
+> > > configurations (with suitable AcceptEnv settings in sshd_config), this
+> > > could conceivably be used to bypass ForceCommand restrictions (or
+> > > restricted shells), assuming the attacker has sufficient level of access
+> > > to a file system location on the host to create crafted locale
+> > > definitions there.
+[...]
+> I knew about this behaviour (I imagine lots of people were), but hadn't
+> considered it a vulnerability - it's more restricted across setuid, so had
+> assumed it was intentionally permitted. Locale files are not executable
+> code, so even if you imagine a ForceCommand+AcceptEnv configuration *and*
+> have the ability to create a message catalog, don't you still need another
+> bug to exploit this?
+[...]
 
-> I just noticed this is now public:
->
-> <http://gaganpreet.in/blog/2013/07/24/kwallet-security-analysis/>
->
-> Short summary: kwallet uses Blowfish to encrypt its password store, and
-> despite an attempt at implementing CBC mode (in a file called cbc.cc no
-> less), it's actually ECB mode.  UTF-16 encoding combined with Blowfish's 64
-> bit block size means there are just four password characters per block.
->  Encryption is convergent as well.  This may enable recovery of passwords
-> through codebook attacks.
->
-> Should we treat this as a minor vulnerability?
->
-> --
-> Florian Weimer / Red Hat Product Security Team
->
+LC_*, LANG, LANGUAGE are about setting all the aspect of
+localisation, not only message catalogs:
+- character set
+- character classes (see my other post about bash honouring the
+  [:blank:] characters as token separators, and [:alpha:] as
+  valid variable names.
+- transliteration (toupper/tolower) you can make "foo" match
+  "bar" case insensitively by making them all map to XXX in
+  uppercase.
+- sort orders (so that one can make [A-Z] include / or B sort
+  before A)
+- decimal point (so one can have 123 be understood as 1.3 (2
+  being the decimal point)
+- month/day names (newline in a month name for the output of ls
+  -l or date) (as in January is "Jan\n-rw----- 1...")
+- ...
+- not to mention the fact that the whole localisation code is
+  quite complex and I wouldn't be surprised if it crashed
+  miserabily on unexpected/incorrect locale data
+
+Note that it's not about the ability to create message catalogs
+but about the ability to upload files with arbitrary names.
+
+Most git hosting deployment fulfill all the criteria I'd say.
+
+
+> However, admittedly there was that zonefile parsing vulnerability and IIRC
+> TZ also permits directory traversal when not setuid. TZ is just as plausibly
+> part of AcceptEnv as LC_ALL, so maybe if it wasn't intentional there's at
+> least a weak argument there for calling it a glibc vulnerability.
+[...]
+
+the main problem here I'd say is that those variables are
+honoured *by default* by most of a Unix tool chest, and the
+shell to start with (see my other email in this thread about
+bash), so even "ForceCommand LC_ALL=C some/command" won't fix
+everything.
+
+-- 
+Stephane
 
