@@ -1,56 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/27
-Message-ID: <545D5097.9000407@mantisbt.org>
-Date: Sat, 08 Nov 2014 00:07:03 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/13
+Message-ID: <53CD59A9.1050306@oracle.com>
+Date: Mon, 21 Jul 2014 11:19:21 -0700
+From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
 To: oss-security@...ts.openwall.com
-Cc: Egidio Romano <n0b0d13s@...il.com>
-Subject: CVE-2014-7146: MantisBT XmlImportExport plugin PHP Code Injection Vulnerability
+Subject: Re: Additional information on CVE-2014-2469?
 Content-Type: text/plain; charset=utf-8
 
-Egidio "EgiX" Romano discovered a vulnerability in the MantisBT XML 
-import plugin, and reserved CVE-2014-7146 for it.
+Hi Moritz,
 
-This message provides details on the issue, including resolution. Kindly 
-update the CVE database accordingly.
-
-Description:
-
-When importing data with the plugin, user input passed through the 
-"description" field (and the "issuelink" attribute) of the uploaded XML 
-file isn't properly sanitized before being used in a call to the 
-preg_replace() function which uses the 'e' modifier. This can be 
-exploited to inject and execute arbitrary PHP code when the 
-Import/Export plugin is installed.
-
-The XML Import/Export "official" plugin comes bundled with MantisBT 
-releases.
+As far as we know CVE-2014-2469 affects lighttpd in Solaris only. I have
+fixed the typo in our advisory. Thank you for pointing it out.
 
 
-Affected versions:
->= 1.2.0a3, <= 1.2.17
-
-Fixed in versions:
-1.2.18 (not yet released)
-
-Patch:
-See Github [4]
-
-This fix is a backport of an existing commit [1] from master branch, 
-which has been confirmed as addressing the issue.
-
-Credit:
-Issue was discovered by Egidio Romano (http://karmainsecurity.com/)
-Original fix (master branch) by Dominik Blunk
-Backporting fix to 1.2.x branch by Damien Regad (MantisBT Developer)
-
-References:
-Further details available in our issue tracker [2]
-See also related issue/vulnerability [3] (CVE-2014-8598)
+Thanks,
+-Ritwik Ghoshal
 
 
-[1] https://github.com/mantisbt/mantisbt/commit/84017535
-[2] http://www.mantisbt.org/bugs/view.php?id=17725
-[3] http://www.mantisbt.org/bugs/view.php?id=17780
-[4] https://github.com/mantisbt/mantisbt/commit/bed19db9
+> -------- Original Message --------
+> Subject:     [oss-security] Additional information on CVE-2014-2469?
+> Date:     Sun, 20 Jul 2014 11:10:59 +0200
+> From:     Moritz Muehlenhoff <jmm@...ian.org>
+> Reply-To:     oss-security@...ts.openwall.com
+> To:     oss-security@...ts.openwall.com
+>
+>
+>
+> Is there anyone from Oracle on the list? Does anyone have further
+> information on CVE-2014-2469?
+> https://blogs.oracle.com/sunsecurity/entry/cve_2014_2469_denial_of
+>
+> I assume that's a typo in the advisory and was meant to say lighttpd
+> instead of lighthttpd? If so, Is this Solaris/Oracle-specific?
+>
+> Cheers,
+>         Moritz
+>
+>
+>
 
