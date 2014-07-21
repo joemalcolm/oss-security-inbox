@@ -1,60 +1,246 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/12
-Message-ID: <20140331204204.GA27032@gremlin.ru>
-Date: Tue, 1 Apr 2014 00:42:04 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/2
+Message-ID: <53CC779A.7010006@moodle.com>
+Date: Mon, 21 Jul 2014 10:14:50 +0800
+From: Michael de Raadt <michaeld@...dle.com>
 To: oss-security@...ts.openwall.com
-Subject: GOST 28147-89 gets 512 bit and 1 kbit keys
+Subject: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
-Hello list!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The GOST 28147-89 block cipher celebrates its' 25-years jubilee this
-year. First published in 1989, it's one of the oldest (if not the most)
-of all symmetric block ciphers which are currently in use.
+The following security notifications are now public after release.
 
-Original publishing describes possible key sizes of 32, 64, 128 and 256
-bits. However, the internal representation of key data consists of 32
-subkeys of 32 bits each - for example, when the 256 bits key is split
-into 8 subkeys k0...k7 of 32 bits each, the internal keys are:
+Thanks to OSS members for their continued cooperation.
 
-int: 00 01 02 03 04 05 06 07  08 09 10 11 12 13 14 15
-sub: k0 k1 k2 k3 k4 k5 k6 k7  k0 k1 k2 k3 k4 k5 k6 k7
+=======================================================================
+MSA-14-0020: Identity confusion in Shibboleth authentication
 
-int: 16 17 18 19 20 21 22 23  24 25 26 27 28 29 30 31
-sub: k0 k1 k2 k3 k4 k5 k6 k7  k7 k6 k5 k4 k3 k2 k1 k0
+Description:       Shibboleth was allowing empty session IDs and
+                   confusing sessions when more than one instance was
+                   associated with an empty ID.
+Issue summary:     User taking over other user's session using
+                   Shibboleth authentication plugin
+Severity/Risk:     Serious
+Versions affected: 2.5 to 2.5.6, 2.4 to 2.4.10 and earlier unsupported
+                   versions
+Versions fixed:    2.5.7 and 2.4.11
+Reported by:       Colin Campbell
+Issue no.:         MDL-45485
+CVE identifier:    CVE-2014-3552
+Changes (2.5):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=refs%2Fheads%2FMOODLE_25_STABLE&st=commit&s=MDL-45485
 
-(see http://en.wikipedia.org/wiki/GOST_28147-89)
+=======================================================================
+MSA-14-0021: Code injection in Repositories
 
-But now, the 512 bits and 1 kbit keys come to scene... For 512 bits key
-split into 16 subkeys k0...kF, the internal keys are:
+Description:       Serialised data passed by repositories could
+                   potentially contain objects defined by add-ons that
+                   could include executable code.
+Issue summary:     Potential PHP Object Injection in Repositories
+Severity/Risk:     Serious
+Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
+                   earlier unsupported versions
+Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
+Reported by:       Robin Bailey
+Issue no.:         MDL-45616
+CVE identifier:    CVE-2014-3541
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45616
 
-int: 00 01 02 03 04 05 06 07  08 09 10 11 12 13 14 15
-sub: k0 k1 k2 k3 k4 k5 k6 k7  k8 k9 kA kB kC kD kE kF
+=======================================================================
+MSA-14-0022: XML External Entity vulnerability in LTI module
 
-int: 16 17 18 19 20 21 22 23  24 25 26 27 28 29 30 31
-sub: k7 k6 k5 k4 k3 k2 k1 k0  kF kE kD kC kB kA k9 k8
+Description:       It was possible for manipulated XML files passed
+                   from LTI servers to be interpreted by Moodle to
+                   allow access to server-side files.
+Issue summary:     XXE attack through LTI
+Severity/Risk:     Serious
+Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
+                   earlier unsupported versions
+Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
+Reported by:       pnig0s@...ebuf
+Issue no.:         MDL-45463
+CVE identifier:    CVE-2014-3542
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45463
 
-and for 1 kbit key the internal keys are, obviously, just k00...k1F.
+=======================================================================
+MSA-14-0023: XML External Entity vulnerability in IMSCC and IMSCP
 
-Also, the number of rounds for 512 bits and 1 kbit keys encryption
-will be increased up to 48 and 64 respectively.
+Description:       It was possible for manipulated XML files to be
+                   uploaded to the IMSCC course format or the IMSCP
+                   resource to allow access to server-side files.
+Issue summary:     XXE Vulnerabilities in IMS CC and resource
+Severity/Risk:     Serious
+Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
+                   earlier unsupported versions
+Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
+Reported by:       pnig0s@...ebuf
+Issue no.:         MDL-45417
+CVE identifier:    CVE-2014-3543
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45417
 
-This makes GOST 28147-89 the second (after Threefish) block cipher
-capable of using 512 bit and 1 kbit keys. Together with its' resistance
-against superpipelined bruteforcing (rumoured to be effectively used
-somewhere in South-Eastern Asia to break Rijndael), that means the "old
-horse" is still running.
+=======================================================================
+MSA-14-0024: Cross-site scripting vulnerability in profile field
 
-The updated standard will get the new GOST registry number from the
-GOST-R 34.xxx series and is expected to be published till the end of
-2014.
+Description:       Filtering of the Skype profile field was not
+                   removing potentially harmful code.
+Issue summary:     Persistent XSS Found
+Severity/Risk:     Serious
+Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
+                   earlier unsupported versions
+Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
+Reported by:       Osanda Malith Jayathissa
+Issue no.:         MDL-45683
+CVE identifier:    CVE-2014-3544
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45683
 
-So... Let's wait for its' appearance in OpenSSL :-)
+=======================================================================
+MSA-14-0025: Remote code execution in Quiz
+
+Description:       It was possible to inject code into Calculated
+                   questions that would be executed on the server.
+Issue summary:     Remote code execution in quiz calculated question
+Severity/Risk:     Serious
+Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
+                   earlier unsupported versions
+Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
+Reported by:       Frédéric Massart
+Issue no.:         MDL-46148
+Workaround:        Disable calculated question types.
+CVE identifier:    CVE-2014-3545
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46148
+
+=======================================================================
+MSA-14-0026: Information leak in profile and notes pages
+
+Description:       It was possible to get limited user information,
+                   such as user name and courses, by manipulating the
+                   URL of profile and notes pages.
+Issue summary:     /user/edit.php reveals account name
+Severity/Risk:     Serious
+Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
+                   earlier unsupported versions
+Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
+Reported by:       Patrick Webster
+Issue no.:         MDL-45760
+CVE identifier:    CVE-2014-3546
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45760
+
+=======================================================================
+MSA-14-0027: Forum group posting issue
+
+Description:       Forum was allowing users who were members of more
+                   than one group to post to all groups without
+                   the capability to access all groups.
+Issue summary:     Forum post to all participants in separate group
+Severity/Risk:     Minor
+Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
+                   earlier unsupported versions
+Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
+Reported by:       Jakob Ackermann
+Issue no.:         MDL-38990
+CVE identifier:    CVE-2014-3553
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-38990
+
+=======================================================================
+MSA-14-0028: Cross-site scripting possible in external badges
+
+Description:       The details of badges from external sources were not
+                   being filtered.
+Issue summary:     XSS vulnerabilities with external badges
+Severity/Risk:     Serious
+Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6
+Versions fixed:    2.7.1, 2.6.4 and 2.5.7
+Reported by:       Frédéric Massart
+Issue no.:         MDL-46042
+CVE identifier:    CVE-2014-3547
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46042
+
+=======================================================================
+MSA-14-0029: Cross-site scripting vulnerability in exception dialogues
+
+Description:       Content of exception dialogues presented from AJAX
+                   calls was not being escaped before being presented
+                   to users.
+Issue summary:     Exception dialogs do not escape the content
+Severity/Risk:     Minor
+Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
+                   earlier unsupported versions
+Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
+Reported by:       Frédéric Massart
+Issue no.:         MDL-45471
+CVE identifier:    CVE-2014-354
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45471
+
+=======================================================================
+MSA-14-0030: Cross-site scripting through logs of failed logins
+
+Description:       Log entries of failed login attempts were not
+                   filtered correctly.
+Issue summary:     XSS in 'failed login' logs
+Severity/Risk:     Serious
+Versions affected: 2.7
+Versions fixed:    2.7.1
+Reported by:       Skylar Kelty
+Issue no.:         MDL-46201
+CVE identifier:    CVE-2014-3549
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46201
+
+=======================================================================
+MSA-14-0031: Cross-site scripting though scheduled task error messages
+
+Description:       Error messages generated by scheduled tasks were
+                   being presented to admins without correct filtering.
+Issue summary:     XSS in scheduled tasks success/error message
+Severity/Risk:     Serious
+Versions affected: 2.7
+Versions fixed:    2.7.1
+Reported by:       Skylar Kelty
+Issue no.:         MDL-46227
+CVE identifier:    CVE-2014-3550
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46227
+
+=======================================================================
+MSA-14-0032: Cross-site scripting in advanced grading methods
+
+Description:       Fields in rubrics were not being correctly filtered.
+Issue summary:     XSS on the (qualification, rating) field by rubric/
+                   advanced grading
+Severity/Risk:     Serious
+Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
+                   earlier unsupported versions
+Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
+Reported by:       Javier E. García Prada
+Issue no.:         MDL-46223
+CVE identifier:    CVE-2014-3551
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46223
+
+=======================================================================
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJTzHeaAAoJECGmGwK/mszPW+IIAMsfox5NixoV6BZ8j5mcURGU
+F+I4AoyqzoJTfrpno5ASYEq/gdA2RSrQ3QMUK49qAR67YamSwg4Fabpkvef9+i02
+R0qhg4C10sf4sJl9GeWVqePYyfWLNVSizzzPhATMQqtCyxShnF9rWMZ7E7JQNoHG
+Yhhv5VSe5wHqGOt7Z2mNYv0iBYyy4nw6VwauaOJouq9pTmeaIa6uLHBrbg4Vs/Z1
+JTfUTXgw3+AC/dnT2mUPvXAgKrnVGFj3tOtZ/BjO6vXM5tlGU8eVmoASh/uLi1sQ
+umuDZUfrv+X7veiSjWE+mSEiQsA/d8bfgtyAP2GmWq6Uvu1tV6fjd4c24QmM86U=
+=3BN+
+-----END PGP SIGNATURE-----
 
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
-
-Content of type "application/pgp-signature" skipped
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (3748 bytes)
