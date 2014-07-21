@@ -1,32 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/1
-Message-ID: <546A9155.7090507@internot.info>
-Date: Tue, 18 Nov 2014 11:22:45 +1100
-From: Joshua Rogers <oss@...ernot.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/7
+Message-ID: <53CCFF43.8030209@enovance.com>
+Date: Mon, 21 Jul 2014 07:53:39 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Wordpress WP-DB-Backup v2.2.4 Plugin Remote Database Backup Download Vulnerability
+Subject: [OSSA 2014-025] Denial of Service in Neutron allowed address pair (CVE-2014-3555)
 Content-Type: text/plain; charset=utf-8
 
-On 18/11/14 10:30, Larry W. Cashdollar wrote:
-> Turns out Matthew Bryant had already covered everything I had but a few months ago here:
->
-> http://thehackerblog.com/auditing-wp-db-backup-wordpress-plugin-why-using-the-database-password-for-entropy-is-a-bad-idea/
-On that blog..
-> So we have to bruteforce these five hexadecimal digits – what’s the
-> math on that? Since our keyspace is any hex character and we have a
-> total of five digits we have 16^5 possibilities or 1,048,576
-> permutations. 
-Using birthday problem maths..
-1048576! / ((1048576-1205)! * 1048576^1205) =
-0.500538915
+OpenStack Security Advisory: 2014-025
+CVE: CVE-2014-3555
+Date: July 17, 2014
+Title: Denial of Service in Neutron allowed address pair
+Reporter: Liping Mao (Cisco)
+Products: Neutron
+Versions: up to 2013.2.3, and 2014.1 versions up to 2014.1.1
 
-1-0.500538915=
-.499461085
+Description:
+Liping Mao from Cisco reported a denial of service vulnerability in
+Neutron's handling of allowed address pair. By creating a large number
+of allowed address pairs, an authenticated user may overwhelm neutron
+firewall rules and render compute nodes unusable. All Neutron setups are
+affected.
 
-aka. after 1,205 attempts, you'd have a 50% chance of hitting the
-correct location..
+Juno (development branch) fix:
+https://review.openstack.org/107734
 
-Just something to consider.
+Icehouse fix:
+https://review.openstack.org/107733
 
--- 
--- Joshua Rogers <https://internot.info/>
+Havana fix:
+https://review.openstack.org/107731
+
+Notes:
+This fix will be included in the Juno-2 development milestone and in
+future 2013.2.4 and 2014.1.2 releases.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3555
+https://launchpad.net/bugs/1336207
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
