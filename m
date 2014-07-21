@@ -1,66 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/21/2
-Message-Id: <201404212316.s3LNGC2V019537@linus.mitre.org>
-Date: Mon, 21 Apr 2014 19:16:12 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/10
+Message-Id: <201407211400.s6LE07sa026477@linus.mitre.org>
+Date: Mon, 21 Jul 2014 10:00:07 -0400 (EDT)
 From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - node-connect: methodOverride middleware reflected cross-site scripting
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744374
-> 
-> Package: node-connect
-> 
-> The Node Security Project discovered an XSS vulnerability in the node
-> connect module, please fix this bug by upgrading node-connect.
-> 
-> https://nodesecurity.io/advisories/methodOverride_Middleware_Reflected_Cross-Site_Scripting
-> https://github.com/senchalabs/connect/issues/831
-> 
-> First fix:
-> https://github.com/senchalabs/connect/commit/277e5aad6a95d00f55571a9a0e11f2fa190d8135
-> 
-> Second fix:
-> https://github.com/senchalabs/connect/commit/126187c4e12162e231b87350740045e5bb06e93a
-> 
-> Not sure if it needs one or two CVE's (did they do a release in
-> between the fixes?
+>> MSA-14-0029: Cross-site scripting vulnerability in exception dialogues
 
-https://github.com/senchalabs/connect/blob/2.x/History.md
+>> CVE identifier:    CVE-2014-354
 
-2.8.2 / 2013-07-03
-add whitelisting of supported methods to methodOverride()
+> What is the correct CVE ID for the
+> https://moodle.org/mod/forum/discuss.php?d=264270 page? CVE-2014-354
+> is malformed.
 
-2.8.1 / 2013-06-27
-fix: escape req.method in 404 response
+We're not sure why the reply to this message didn't have a Cc to the
+oss-security list, but (in any case) the correct CVE ID for a publicly
+known vulnerability isn't private information, so we can directly
+forward the ID here.
 
-https://github.com/senchalabs/connect/blob/2.x/lib/utils.js has:
-    .replace(/&(?!\w+;)/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-
-
-CVE-2013-7370: XSS in the Sencha Labs Connect middleware before 2.8.1
-               for Node.js
-
-               -- allows attacks via an HTTP request with a crafted method
-                  name containing JavaScript code
-
-
-CVE-2013-7371: XSS in the Sencha Labs Connect middleware before 2.8.2
-               for Node.js
-
-               -- allows attacks via an HTTP request with a crafted method
-                  name containing JavaScript code that doesn't rely on
-                  the < character, the > character, or the " character
-
-               -- vulnerability exists because of an incomplete fix for
-                  CVE-2013-7370
+CVE-2014-3548 is correct, and
+https://moodle.org/mod/forum/discuss.php?d=264270 has been updated.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -70,11 +35,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTVaYyAAoJEKllVAevmvmsqcEH/iDu42BeFf7KXcNWNQx777sK
-2ag52t32MigGmY/PASjQhDidHkgzIzLPd3QNYkV4RGxYtn4MQjZP3q/Kex/EFHTv
-uwQB8LFtc5Ku3y3uxt1jZHWBoy8By3flCFQ+OABQAytbHie5HdY3GUBjHa6bVbqi
-GRkrlNaTsuFgUCFeCifF2w01RaCmLPpUMkQ2ZHkbyX6J3T1HnLIoQ/W1WnRiFTg3
-/7jvpcn880llnsou+8NWEcTXnWj4Di+4fd3Q2r42kDlGj7oHbzcIUVz3Awzd1kSU
-sbYI1b82Zzw4sjnTewQWRJ8zLBFuP0BO4PtPsR8JgOvO9dKiD5e3Vwpj1PShm/Y=
-=aLBt
+iQEcBAEBAgAGBQJTzRxwAAoJEKllVAevmvmsedwH/RXmxlVNMjeb4jlFJ/pEqfEW
+JDoHvNAajBTZHOAyWhfVEHG1OdMUWtY8FvMtRqV1Yu5+Lhiyatm61860I1X/+4Bm
+SPFaAHp+J/U67VWLra+u+E64usAUAKRIb8Nkhm0XrM70D7oBUX8zny4dXC/nc7gC
+f2Eb2WPFYcWWKs8cM/gPeQv0gJotAO+ethPeiwZM+E7qRTuxu1Bny/j4d5f+BrAn
+3g8ci3lCIrzKz6ulmYsxh9yEMYxlIH8awDTGRX31HryUGNFbGEr0rIY5gT2ETMlF
+nCWuphKaAyI20LkUywbi+++w2KNzeUJxLwI7ZUOpp7PmwEfIYRVOF5ALxRO9Ib0=
+=x+Vl
 -----END PGP SIGNATURE-----
