@@ -1,36 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/13
-Message-ID: <20141125211306.GA8685@pisco.westfalen.local>
-Date: Tue, 25 Nov 2014 22:13:06 +0100
-From: jmm@...ian.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/11
+Message-ID: <mpro.n92ies014eut609mb.taviso@cmpxchg8b.com>
+Date: Mon, 21 Jul 2014 08:16:05 -0700
+From: Tavis Ormandy <taviso@...xchg8b.com>
 To: oss-security@...ts.openwall.com
-Cc: mmcallis@...hat.com, cve-assign@...re.org
-Subject: Re: Re: CVE request: icecast: possible leak of on-connect scripts
+Subject: Re: Re: glibc locale issues
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 20, 2014 at 09:52:44AM -0500, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> > It was reported that Icecast could possibly leak the contents of
-> > on-connect scripts to clients, which may contain sensitive information.
-> > This issue has been fixed in the 2.4.1 release:
-> 
-> > "Fix on-connect and on-disconnect script STDIN/STDOUT/STDERR corruption
-> > due to shared file descriptors."
-> 
-> > Information contained can include passwords
-> 
-> > http://icecast.org/news/icecast-release-2_4_1/
-> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=770222
-> > https://trac.xiph.org/ticket/2089
-> > https://trac.xiph.org/ticket/2087
-> > https://trac.xiph.org/changeset/19308
-> 
-> Use CVE-2014-9018.
+Florian Weimer <fweimer@...hat.com> wrote:
 
-I think this icecast2 issue should also receive a CVE ID:
-https://trac.xiph.org/changeset/19137/
+> On 07/14/2014 04:15 AM, Tavis Ormandy wrote:
+> > Tavis Ormandy <taviso@...xchg8b.com> wrote:
+> >
+> > > I just remembered another charset issues I had looked into but
+> > > abandoned.
+> >>
+> > > First of all, I think the need_so logic in gconv_trans is broken, but
+> > > even if it worked there is an off by one error in
+> > > __gconv_translit_find() (it does + 3 instead of + 3 + 1 in the
+> > > allocation.
+> >
+> > To be clear, I suspect this is exploitable. It would be nice if you
+> > could modify the buffer such that gconv will open a path with a string
+> > you've appended it (e.g. CHARSET=//. pkexec ./../../../../tmp/foo.so),
+> 
+> This is about the glib part and the alias processing, right?
 
-Cheers,
-        Moritz
+No, it's nothing to do with glib.
+
+> 
+> iconv/gconv_charset.h:strip() normalizes the transliteration argument to
+> iconv_open, so the resulting file names follow a particular pattern, and
+> there cannot be enough slashes to ascend to a writable directory.
+
+Is it possible you're thinking of the LC_ALL thing? (the questionable
+ForceCommand bypass with path traversal if you're forcecommand'd to an
+application that does something odd with localized strings and you can
+create a file and your sshd has been configured with AcceptEnv LC_*). This
+is an unrelated heap overflow - not a path traversal.
+
+> 
+> > if not maybe the one byte overflow is still exploitable.
+> 
+> Hmm.  How likely is that?  It overflows in to malloc metadata, and the
+> glibc malloc hardening should catch that these days.
+> 
+
+No, it's quite definitely possible, I'm really close but was busy this week.
+
+Tavis.
+
