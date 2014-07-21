@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/17
-Message-ID: <alpine.LFD.2.10.1402210021060.2844@javelin.pnq.redhat.com>
-Date: Fri, 21 Feb 2014 00:24:00 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: cve-assign@...re.org
-cc: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Linux kernel: s390: crash due to linkage stack instruction
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/3
+Message-Id: <201407210549.s6L5n7Ld012182@linus.mitre.org>
+Date: Mon, 21 Jul 2014 01:49:07 -0400 (EDT)
+From: cve-assign@...re.org
+To: michaeld@...dle.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
-+-- On Thu, 20 Feb 2014, cve-assign@...re.org wrote --+
-| > https://git.kernel.org/linus/8d7f6690cedb83456edd41c9bd583783f0703bf0
-| Use CVE-2014-2039.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  Thank you.
+> MSA-14-0029: Cross-site scripting vulnerability in exception dialogues
 
-May I request you to please remove my email when replying 'oss-sec' list? I 
-get each mail twice.
+> CVE identifier:    CVE-2014-354
 
+What is the correct CVE ID for the
+https://moodle.org/mod/forum/discuss.php?d=264270 page? CVE-2014-354
+is malformed.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTzKjzAAoJEKllVAevmvmscLQIAIBmnNZFolaxvu3bUT40U4FI
+pXOsZPmMP/3Po64IhtUrcXOT0V86kVgopMZ1jYWs/wf1wIUJ6AL+L4Jz/Nfxno0J
+X7H7LindxcNrtK8aVvA38iPfvH4M45biWY9suvlraubO6Mw5L5KrxZqoGX1qHyuj
+zKFbQqQeJtfIlZMoSdp2KhPeOr1J6HJaHBdWf/kDjTpwz1UiXZXowOnrlJX2N2BR
+r9muYIA8r1VBvcJYYkJmYVvGBg1Q/TfW4vMtleN1LQA7nVIBCnyMlsWNRg8tBWeQ
+pNVHfcRuP5Q8glsH+0QnnhaDNiPiMIQps7UWPIP9Vrrf2q/6aspujqqXwgNPEbQ=
+=xa+l
+-----END PGP SIGNATURE-----
