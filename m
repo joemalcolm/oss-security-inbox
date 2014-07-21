@@ -1,156 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/20
-Message-ID: <001c01d010d8$85ad6ca0$910845e0$@mantisforge.org>
-Date: Fri, 5 Dec 2014 22:12:12 -0000
-From: "P Richards" <paul@...tisforge.org>
-To: <oss-security@...ts.openwall.com>, <cve-assign@...re.org>, "'Damien Regad'" <dregad@...tisbt.org>
-Subject: RE: CVE-2014-6316: URL redirection issue in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/4
+Message-ID: <20140721081731.GB14914@suse.de>
+Date: Mon, 21 Jul 2014 10:17:31 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-Request: KAuth authentication bypass
 Content-Type: text/plain; charset=utf-8
 
-In addition, the credit information for this report again appears to be not state the facts correctly. The issue with ?return= was something that I've previously complained about, and the development team chose not to fix at the time.
+Hi
 
- 
+We'd like to request a CVE for the following issue:
 
-The CVE indicator of 2014 makes it appear that the vulnerability was first identified in 2014, but in fact, it's one that's been known about since a lot earlier - but previous developers argued not to fix I believe (I'll need to pull out a old HDD and go for chat logs to confirm).
+The polkit authentication backend in KDE's KAuth code
+used the UnixProcess subject for authenticating actions.
+This is subject to race conditions and allows local users
+to elevate their privileges by bypassing any of the KAuth checks.
+A followup of CVE-2013-4288.
 
- 
+Discussion and patch can be found here:
 
-For example, I have test web requests stored demonstrating this issue since at least April 2013 (http://tinypic.com/r/k0pee/8) , and I believe that actually the identification of this issue pre-dates this. 
+https://bugzilla.novell.com/show_bug.cgi?id=864716
 
- 
+Sebastian
 
-Therefore, I don’t believe it is correct to state that the issue was first reported by “Mathias Karlsson” in May 2014, when it was identified as an issue prior to April 2013.
+-- 
 
- 
-
-Equally, I don’t believe that putting in the description “Paul Richards also found another redirection issue in permalink_page.php, which turned out to have the same root cause.” is a valid indication of the issue - in terms of the ?return parameter, Mantis used the same functionality in around 4-5 pages.
-
- 
-
-In addition, whilst I did state that I would leave testing of the fix to someone else, the final fix for this issue looks rather similar to the proposal fix I suggested for further testing of:
-
- 
-
-[23:16:46] <paulr>          if ( preg_match( '@^(?P<path>' . preg_quote( $t_path, '@' ) . ')' . $t_pattern . '$@', $t_url, $t_matches ) ) {
-
-[23:16:46] <paulr>                  $t_type = 1;
-
-[23:16:46] <paulr> -        } else if ( preg_match( '@^(?P<path>' . preg_quote( $t_short_path, '@' ) . ')' . $t_pattern . '$@', $t_url, $t_matches ) ) {
-
-[23:16:46] <paulr> +        } else if ( $t_short_path != '' && ( preg_match( '@^(?P<path>' . preg_quote( $t_short_path, '@' ) . ')' . $t_pattern . '$@', $t_url, $t_matches ) ) ) {
-
-[23:16:46] <paulr>                  $t_type = 2;
-
-[23:16:46] <paulr>          } else if ( preg_match( '@^(?P<path>)' . $t_pattern . '$@', $t_url, $t_matches ) ) {
-
-[23:16:46] <paulr>                  $t_type = 3;
-
-[23:16:46] <paulr>          }
-
-[23:16:46] <paulr>  
-
-[23:16:57] <paulr> not directly related or well
-
-[23:17:07] <paulr> i'm wondering if the above would be correct or not ;p
-
- 
-
-Paul
-
- 
-
- 
-
- 
-
------Original Message-----
-From: Damien Regad [mailto:dregad@...tisbt.org] 
-Sent: 03 December 2014 23:13
-To: oss-security@...ts.openwall.com
-Subject: [oss-security] CVE-2014-6316: URL redirection issue in MantisBT
-
- 
-
-Greetings,
-
- 
-
-Please update CVE-2014-6316 with the information below
-
- 
-
- 
-
-Description:
-
- 
-
-A bug in the URL sanitization routine allows an attacker to craft an URL that can redirect outside of the MantisBT instance's domain when the software is installed at the web server's root.
-
- 
-
-e.g.  <http://example.com/login_page.php?return=http://google.com> http://example.com/login_page.php?return=http://google.com will redirect to Google.
-
- 
-
-Affected versions:
-
-=> 1.2.0a3, <= 1.2.17
-
- 
-
-Fixed in versions:
-
-1.2.18 (not yet released)
-
- 
-
-Patch:
-
-See Github [1]
-
- 
-
-Credit:
-
- 
-
-Redirection in login_page.php was first reported [3] by Mathias Karlsson
-
-( <http://mathiaskarlsson.me> http://mathiaskarlsson.me) as part of Offensive Security's bug bounty program [4]; issue was also independently discovered and reported by Ryan Giobbi who made the original CVE request [2], Shahee Mirza [5] and Alejo Popovici [6].
-
- 
-
-Paul Richards also found another redirection issue in permalink_page.php, which turned out to have the same root cause.
-
- 
-
-The issue was fixed by Damien Regad (MantisBT Developer).
-
- 
-
-References:
-
-Further details available in our issue tracker [2]
-
- 
-
- 
-
-[1]  <http://github.com/mantisbt/mantisbt/commit/e66ecc9f> http://github.com/mantisbt/mantisbt/commit/e66ecc9f
-
-[2]  <https://www.mantisbt.org/bugs/view.php?id=17648> https://www.mantisbt.org/bugs/view.php?id=17648
-
-[3]  <https://www.mantisbt.org/bugs/view.php?id=17362> https://www.mantisbt.org/bugs/view.php?id=17362
-
-[4]  <http://www.offensive-security.com/bug-bounty-program/> http://www.offensive-security.com/bug-bounty-program/
-
-[5]  <https://www.mantisbt.org/bugs/view.php?id=17698> https://www.mantisbt.org/bugs/view.php?id=17698
-
-[6]  <https://www.mantisbt.org/bugs/view.php?id=17811> https://www.mantisbt.org/bugs/view.php?id=17811
-
- 
-
- 
-
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
