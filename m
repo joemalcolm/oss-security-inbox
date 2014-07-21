@@ -1,160 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/17
-Message-Id: <20140707181429.9B93B1A41139@me.com>
-Date: Mon,  7 Jul 2014 14:14:29 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem kompanee-recipes-0.1.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/9
+Message-ID: <20140721123647.GA28192@chaz.gmail.com>
+Date: Mon, 21 Jul 2014 13:36:47 +0100
+From: Stephane Chazelas <stephane.chazelas@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem kompanee-recipes-0.1.4
+2014-07-10 15:09:30 -0400, Rich Felker:
+> On Thu, Jul 10, 2014 at 08:52:24PM +0200, Florian Weimer wrote:
+> > Stephane Chazelas discovered that directory traversal issue in locale
+> > handling in glibc.  glibc accepts relative paths with ".." components
+> > in the LC_* and LANG variables.  Together with typical OpenSSH
+> > configurations (with suitable AcceptEnv settings in sshd_config), this
+> > could conceivably be used to bypass ForceCommand restrictions (or
+> > restricted shells), assuming the attacker has sufficient level of
+> > access to a file system location on the host to create crafted locale
+> > definitions there.
+> 
+> Am I correct in assuming this affects most typical git setups (e.g.
+> gitolite) using ssh authorized_keys files with forced commands, where
+> the malicious file could simply be created as part of the git
+> repository? Or are these usually setup to filter the environment?
+[...]
 
-Author: Larry W. Cashdollar, @_larry0
+It does affect git setups. You may run into the issue even
+*before* the git command is run on the server.
 
-Date: 06/01/2014
+As I mentionned in my initial report, the issue is agravated by
+several misfeatures in openssh and bash.
 
-OSVDB: 108593
+openssh runs the supplied forcecommand with the login shell of
+the server user instead of just "sh". So, crafted locales can be used
+to affect the processing of those shells.
 
-CVE:Please Assign
+That is especially a problem with bash (the shell of the GNU
+project which is even still used as /bin/sh on some systems and
+the default shell for adduser on most GNU/Linux systems and
+others).
 
-Download: http://rubygems.org/gems/kompanee-recipes
+With bash (even when not interactive and even when called as
+"sh"), LC_CTYPE is used for the parsing of the command line.
+For instance the "blank" character class is used as token
+delimiters, alnum to validate variable names...
 
-Gem Author:  accounts+rubygems@...kompanee.com
+For instance, with a forcecommand=/bin/false, one can turn that
+into an "ls" by making all the "/bin/fae" characters "blank"
+characters (yash also has the problem).
 
-From: ./kompanee-recipes-0.1.4/lib/kompanee-recipes/heroku.rb
+bash (though not when called as sh) explicitely reads ~/.bashrc
+(and /etc/bash.bashrc or equivalent) when called over ssh. With
+the typical /etc/bash.bashrc found on Debian, I could craft a
+locale that made that executes "sh" when interpreting it.
 
-If this Gem is used in the context of a Rails application it maybe possible for a remote user to inject commands into the shell via #{password} #{user} #{deploy_name} #{application} variables if that data is user supplied.
+gitlab allows you to upload files (attachments to comments), the
+files are stored on the server with the name provided by the
+client, and the path to those files on the server are easy to
+guess.
 
+With a gitlab user on the gitlab server with "bash" as the login
+shell, I could get a sh prompt on the server, with none of the
+gitlab code being involved.
 
-032-      task :install do
-33:        `heroku domains:add #{deploy_name}`
-34-      end
-35-
-37-        Removes the domain for the application from the Heroku server.
-39-      task :remove do
-40:        `heroku domains:remove #{deploy_name}`
-41-      end
-42-
-43-      namespace :addon do
---
-47-        task :install do
-48:          `heroku addons:add custom_domains:basic`
-49-        end
-50-
-54-        task :remove do
-55:          `heroku addons:remove custom_domains:basic`
-56-        end
-57-      end
-58-    end
---
-87-        [internal] Creates a Heroku credentials file.
-89-      task :create do
-90:        `if [ ! -d #{heroku_credentials_path} ]; then mkdir -p #{heroku_credentials_path}; fi`
-91:        `echo #{user} > #{heroku_credentials_file}`
-92:        `echo #{password} >> #{heroku_credentials_file}`
-93-      end
-94-
-96-        [internal] Switches the credentials file to either the current use or the
-99-      task :switch do
---
-119-      restart the application.
-121-    task :default do
-122:      `git push heroku #{branch}`
-123-      deploy.migrate
-124-      deploy.restart
-125-    end
---
-128-      Restarts the application.
-130-    task :restart do
-131:      `heroku restart`
-132-    end
-133-
-135-      Runs the migrate rake task.
-137-    task :migrate do
-138:      `heroku rake db:migrate`
-139-    end
-140-
---
-144-    namespace :rollback do
-145-      task :default do
-146:        `heroku rollback`
-147-        deploy.restart
-148-      end
-149-    end
---
-151-    namespace :web do
-152-      desc "Removes the maintenance page to resume normal site operation."
-153-      task :enable do
-154:        `heroku maintenance:off`
-155-      end
-156-
-158-      task :disable do
-159:        `heroku maintenance:on`
-160-      end
-161-    end
-162-
---
-169-
-170-      heroku.domain.install
-171-
-173-      deploy.default
-174-    end
-175-  end
---
-177-  namespace :website do
-179-    task :install do
-180:      `heroku create #{application}`
-181-    end
-182-
-183-    desc "Completely removes application from Heroku"
-184-    task :remove do
-185:      `heroku destroy --confirm #{application}`
-186-    end
-187-  end
-188-
-189-  namespace :db do
-191-    task :drop do
-192:      `heroku pg:reset`
-193-    end
-194-
-195-    namespace :backup do
-197-      task :default do
-198:        `heroku pgbackups:capture`
-199-      end
-200-
-201-      namespace :addon do
---
-205-        task :install do
-206:          `heroku addons:add pgbackups:basic`
-207-        end
-208-
-212-        task :remove do
-213:          `heroku addons:remove pgbackups:basic`
-214-        end
-215-      end
-216-    end
---
-219-    task :reset_and_seed do
-221-      db.backup
-222:      `heroku pg:reset`
-223:      `heroku rake db:seed`
-224-    end
-225-
-226-    desc "Seed database"
-227-    task :seed do
-229-      db.backup
-230:      `heroku rake db:seed`
-231-    end
-232-  end
-233-
-235-  task :shell do
-236:    `heroku shell`
-237-  end
-238-
-240-  task :invoke do
-242-  end
-243-end
+I suspect other git server implementations are affected.
 
-
-Advisory: http://www.vapid.dhs.org/advisories/kompanee-recipes-0.1.4.html
+regards,
+Stephane
 
