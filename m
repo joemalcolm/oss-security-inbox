@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/11/2
-Message-ID: <626CFEB5-94D4-4B49-8ADC-A5D379B51725@redhat.com>
-Date: Sat, 11 Jan 2014 13:37:51 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "Open Source Security" <oss-security@...ts.openwall.com>
-Subject: Re: CVE assignment for jinja2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/6
+Message-ID: <CAOp4FwSFBoSMj1yFB8pv9qq47t=-=GLwMFBOOTM=GH__GSgYRA@mail.gmail.com>
+Date: Mon, 21 Jul 2014 12:53:04 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request for Drupal Core
 Content-Type: text/plain; charset=utf-8
 
-On 01/10/2014, at 22:34 PM, Kurt Seifried wrote:
-
-> https://github.com/mitsuhiko/jinja2/commit/acb672b6a179567632e032f547582f30fa2f4aa7
+On Mon, Jul 21, 2014 at 12:29 PM, Jorge Manuel B. S. Vicetto
+<jmbsvicetto@...il.com> wrote:
+> Hi.
 >
-> dirname = '_jinja2-cache-%d' % os.getuid()
+> Has a CVE request been made for the following Drupal Security Advisory?
+
+I think that it's better that the request is made for 4 CVE entries,
+as these are 4 different issues, even
+if Drupal issued a single Security advisory.
+
+
 >
-> Arun Babu Neelicattu of Red Hat spotted this commit which introduces a
-> temporary file creation vulnerability. This issue has been assigned
-> CVE-2014-0012. For information on how to safely create temporary files
-> please see
-> http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
+> SA-CORE-2014-003 - Drupal core - Multiple vulnerabilities
+> https://www.drupal.org/SA-CORE-2014-003
 >
-> For Python simply use ?mkstemp? for files and ?mkdtemp? for
-> directories from the ?tempfile? module.
+> Regards,
+>
+> Jorge Manuel B. S. Vicetto
+> Gentoo Developer
+>
+> https://bugs.gentoo.org/show_bug.cgi?id=517364
 
-MITRE assigned CVE-2014-1402 to this yesterday:
 
-http://seclists.org/oss-sec/2014/q1/71 (the report, the followup has the CVE assignment).
-
-That means you'll need to reject this assignment; the commit that Arun spotted was due to the Debian bug report (which the git commit notes, and Ratul linked to in his initial CVE request to the list).
 
 -- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
