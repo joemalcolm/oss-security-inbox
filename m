@@ -1,26 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/11
-Message-ID: <CABRvpqDtYFbjbFNby6kCQnMz_8WtwZqE5t9LFBAKGTgTRPjaBQ@mail.gmail.com>
-Date: Tue, 25 Nov 2014 14:56:33 -0500
-From: Andrew Nacin <nacin@...dpress.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: WordPress 4.0.1 Security Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/8
+Message-ID: <53CD04EB.1040003@redhat.com>
+Date: Mon, 21 Jul 2014 14:17:47 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: glibc locale issues
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 25, 2014 at 1:32 PM, Andrew Nacin <nacin@...dpress.org> wrote:
-
->  *  Previously an email address change would not invalidate a previous
-> password reset email.  Affected versions <= 4.0 (except >= 3.8.5 / 3.7.5 /
-> 3.9.3). WordPress now invalidates this if the user remembers their
-> password, logs in, and changes their email address. Affected
+On 07/14/2014 04:15 AM, Tavis Ormandy wrote:
+> Tavis Ormandy <taviso@...xchg8b.com> wrote:
 >
+>> I just remembered another charset issues I had looked into but abandoned.
+>>
+>> First of all, I think the need_so logic in gconv_trans is broken, but even
+>> if it worked there is an off by one error in __gconv_translit_find() (it
+>> does + 3 instead of + 3 + 1 in the allocation.
+>
+> To be clear, I suspect this is exploitable. It would be nice if you could
+> modify the buffer such that gconv will open a path with a string you've
+> appended it (e.g. CHARSET=//. pkexec ./../../../../tmp/foo.so),
 
-Editing error. Last bullet should have read:
+This is about the glib part and the alias processing, right?
 
-* Previously an email address change would not invalidate a previous
-password reset email.  Affected versions <= 4.0 (except >= 3.8.5 / 3.7.5 /
-3.9.3). WordPress now invalidates this if the user remembers their
-password, logs in, and changes their email address. Reported by Momen
-Bassel, Tanoy Bose, and Bojan Slavković.
+iconv/gconv_charset.h:strip() normalizes the transliteration argument to 
+iconv_open, so the resulting file names follow a particular pattern, and 
+there cannot be enough slashes to ascend to a writable directory.
 
+> if not maybe the one byte overflow is still exploitable.
+
+Hmm.  How likely is that?  It overflows in to malloc metadata, and the 
+glibc malloc hardening should catch that these days.
+
+-- 
+Florian Weimer / Red Hat Product Security
