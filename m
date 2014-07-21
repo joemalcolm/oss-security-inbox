@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/28/7
-Message-ID: <CALCETrWFMvAqePk62dCTCxJFgRL43EM-ZWsQP4-9Fzy-K5oNdA@mail.gmail.com>
-Date: Mon, 28 Apr 2014 11:38:12 -0700
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/14
+Message-ID: <etPan.53cd8d3d.41b71efb.13beb@varia.chipx86.com>
+Date: Mon, 21 Jul 2014 14:59:25 -0700
+From: Christian Hammond <christian@...nbaginc.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0181: Linux network reconfiguration due to incorrect netlink checks
+Subject: CVE requests for Review Board
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 22, 2014 at 8:01 PM, Andy Lutomirski <luto@...capital.net> wrote:
-> On Apr 22, 2014 2:37 PM, "Andy Lutomirski" <luto@...capital.net> wrote:
->>
->> It is possible to reconfigure the network on Linux by calling write(2)
->> on an appropriately connected network socket.  By passing such a
->> socket as stdout or stderr to a setuid program, anyone can reconfigure
->> the network.
->
-> s/network socket/netlink socket
+Hi,
 
-The fix is here:
+We have two security vulnerabilities that were just discovered, which both need CVEs assigned. This is for Review Board (https://www.reviewboard.org). Neither are publicly disclosed.
 
-https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=90f62cf30a78721641e08737bda787552428061e
+The first was discovered in-house and applies to all Review Board 1.7.x and 2.0.x releases. It allows a user without access to a private review request to retrieve the original or patched files associated with that review request through the API, if they know all the relevant database IDs.
 
-It depends on a few commits immediately preceding it as well as
-https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=78541c1dc60b65ecfce5a6a096fc260219d6784e.
+The second was discovered by “Uchida.” It allows a user to compose a URL to a rendered section of a diff on Review Board and inject HTML through a query parameter. That URL could then be handed to another user (most likely embedded in an iframe in another page), allowing a custom script to be executed on their behalf. This also applies to both 1.7.x and 2.0.x.
 
-So far the fix has not made it to Linus' tree or to -stable.
+Our plan is to get a release out with fixes for these sometime today/tonight.
 
---Andy
+Thanks,
+
+Christian
+
+-- 
+Christian Hammond - christian@...nbaginc.com
+Review Board - http://www.reviewboard.org
+Beanbag, Inc. - http://www.beanbaginc.com
