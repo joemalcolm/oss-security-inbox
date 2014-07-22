@@ -1,88 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/28/2
-Message-ID: <CAOp4FwT7-6=AaS+kyoyLreugeZLK5mdZ0=bDf8w7xm4joMtg2g@mail.gmail.com>
-Date: Mon, 28 Jul 2014 11:06:11 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: rsync vulnerable to collisions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/10
+Message-ID: <1723998.qaVZyOmMMY@eee>
+Date: Tue, 22 Jul 2014 14:00:03 -0700 (PDT)
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: ecryptfs-setup-private nitpick
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 28, 2014 at 5:18 AM, Michael Samuel <mik@...net.net> wrote:
-> Hi,
->
-> After some semi-public discussion on Twitter I have come up with a method
-> of creating blocks that collide under the rsync algorithm.
->
-> The rsync algorithm consists of two checksums - a rolling sum based off
-> Addler32 (notable difference - it doesn't use a prime modulus in
-> rsync), and MD5.
-> MD4 was used before rsync 3 (protocol version < 30), so presumably the change
-> was introduced do to security concerns about MD4.
->
-> Fast MD5 collisions have existed for quote some time - the attack I used as a
-> basis is from 2006, and the much more serious chosen-prefix collision is from
-> 2009.  Generating a collision on my desktop PC takes less than a minute.  I have
-> not yet created a chosen-prefix collision, but I believe a similar
-> technique is possible.
->
-> Note that rsyncing a file over itself with two colliding blocks will
-> not break rsync as it
-> prefers copying data from it's original location.  The minimum
-> requirement is that an
-> attacker can write to synced file twice - the process would need to be:
-> - introduce collision 1
-> - rsync
-> - introduce collision 2
-> - rsync
->
-> Also note that a full file md5sum is calculated, so introducing these
-> collisions would
-> cause rsync to fail for that file (DoS attack)... unless it's the
-> first block you're switching.
->
-> If you use --inplace, the change is introduced despite the error
-> message - this may be
-> common when moving around virtual machine images or databases.
->
-> Note that changing the block size is not a very effective mitigation
-> (the collision can be
-> aligned to both block sizes), and the checksum seed doesn't help - it
-> should've been
-> fed into md5 before the data, not after.
->
-> I provided colliding blocks to both Wayne Davison and the Internet Bug Bounty a
-> week ago.  The IBB ticket is still sitting in New, and my last
-> response from Wayne was
-> effectively denying that this is a vulnerability.  Since this
-> information is known to the
-> few that follow me on Twitter, I have decided it best to inform oss-security.
->
-> I provided Wayne with some rather awful patches that bring in libdetectcoll and
-> blake2b.  He has not provided feedback, so I have not done further work on this.
->
-> I won't provide full details yet, but if any distributions would like
-> some collisions to
-> perform specific tests (perhaps on Openstack Swift), please get in
-> contact privately.
->
-> For more information of MD5 colliisons and libdetectcoll, please see
-> Marc Stevens'
-> excellent work: https://marc-stevens.nl/research/
+Hi,
 
-This will certainly cause issues with people running rsyncd for file
-synchronisation.
+Taking a look at ecryptfs-utils 103's ecryptfs-setup-private, there is a bit 
+of code that writes the mount pass to a file in /dev/shm hoping to "keep it 
+from leaking to the hard-drive":
 
-I think that it might be a good idea to switch to another hashing
-algorithm, or at least offer
-an alternative to MD5.
+8<-------->8
+        # This will be wrapped by pam_ecryptfs's chauthtok as soon as the 
+user
+        # chooses a password.  Until that happens (hopefully soon), standard
+        # file permissions (600) are all that's protecting it.  Write it to
+        # ramdisk, to keep it from leaking to the hard-drive.
+        temp=`mktemp /dev/shm/.ecryptfs-XXXXXX`
+        printf "%s" "$MOUNTPASS" > "$temp"
+        mv -f -T "$temp" "/dev/shm/.ecryptfs-$USER" || error "Could not 
+create passphrase file"
+8<-------->8
+
+Fastforward to 2014 and /dev/shm is, well, not a ramfs/ramdisk:
+
+/dev/shm -> /run/shm, which is a tmpfs at least on Debian.
+
+And as clearly stated by Documentation/filesystems/tmpfs.txt:
+"If you compare it to ramfs (which was the template to create tmpfs)
+you gain swapping and limit checking."
 
 
->
-> Regards,
->   Michael
+So in the hope of avoiding a persistent storage the mount pass is written to 
+a file in a tmpfs that can be swapped to... disk.
 
+The file is left on /dev/shm until pam_ecryptfs actually wraps it with the 
+login pass.
 
-
+Cheers,
 -- 
-This message is strictly personal and the opinions expressed do not
-represent those of my employers, either past or present.
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
