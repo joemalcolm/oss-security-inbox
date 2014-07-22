@@ -1,54 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/26/1
-Message-Id: <20140826000046.ED92DC5050C@smtptsrv1.mitre.org>
-Date: Mon, 25 Aug 2014 20:00:46 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/15
+Message-Id: <201407222231.s6MMVJ6b005465@linus.mitre.org>
+Date: Tue, 22 Jul 2014 18:31:19 -0400 (EDT)
 From: cve-assign@...re.org
-To: abn@...hat.com
+To: geissert@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Multiple issues in com.ning:async-http-client
+Subject: Re: GLPI: unprivileged users can access cost information
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> 1. async-http-client: SSL/TLS certificate verification disabled
-> https://github.com/AsyncHttpClient/async-http-client/issues/352
+> a user without access to cost information can in fact see the
+> information when selecting cost as a search criteria. This is fixed by
+> commit which appears to have been included for version 0.84.7.
+> 
+> https://forge.indepnet.net/issues/4984
+> https://forge.indepnet.net/projects/glpi/repository/revisions/23061
+> http://www.glpi-project.org/spip.php?page=annonce&id_breve=326&lang=en
 
-Here, slandelle, representing the vendor, appears to mostly confirm
-the original discovery (the "would stop working with self-signed
-certificates" objection seems to have been dropped based on
-clarification from the discoverer). The primary issue seems to be the
-one mentioned in the
-https://github.com/AsyncHttpClient/async-http-client/issues/352#issuecomment-21795006
-comment -- specifically, the code's decision on whether to verify
-server certificates depends on unusual circumstances that might occur,
-for example, if HTTPS communication also uses client certificates.
-This decision process apparently has no relationship to the design
-objectives of the async-http-client product.
-
-Use CVE-2013-7397 for this issue involving an unexpected/improper
-decision process.
-
-There is no CVE ID for the issue of whether the product should provide
-a simple way to disable certificate verification, given that enabling
-certificate verification is the default. The discoverer and vendor
-disagree about this.
-
-
-> 2. async-http-client: No SSL HostName verification
-> https://github.com/AsyncHttpClient/async-http-client/issues/197
-
-Here,
-https://github.com/AsyncHttpClient/async-http-client/issues/197#issuecomment-21760413
-mentions two closely related code problems. Better URLs for these are:
-
-  https://github.com/AsyncHttpClient/async-http-client/blob/a12093438aa28e559c30cbbf1c7162f7d468fa2b/api/src/main/java/org/asynchttpclient/AsyncHttpClientConfigBean.java#L69
-  https://github.com/AsyncHttpClient/async-http-client/blob/ff2d6b3b6776f1c15dd0e94e8d630ebfd868a0b0/api/src/main/java/org/asynchttpclient/AsyncHttpClientConfig.java#L619
-
-Also, jfarcand, representing the vendor, did an
-https://github.com/AsyncHttpClient/async-http-client/commit/3c9152e2c75f7e8b654beec40383748a14c6b51b
-merge for "Fix for #197 -- use a hostname verifier that does hostname
-verification." Use CVE-2013-7398 for this issue.
+Use CVE-2014-5032.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -58,11 +29,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJT+81JAAoJEKllVAevmvmsG4IIAKrP+jq03GfPA9o+s0VveyhI
-mJ/s8ft0ok9bAk6fewHZjoFDZBiq5v1Qk6rI081Ad6wEcGaRZSpptTP4xt5BUcIC
-0NdSdGNZVulJgSETUGsvJBDddKb0SHaOjQN1TdbqCW/BY+wdwHGwES5smNi6chAf
-HmClGSXguKeDMHqYGjIiBsfRTYtIYJCQj9GpSnnoJINHpaOc6dBbigkDZlaB4u9K
-UJBLvqTeJtAh6FsvBtlJlHjHBe46GwAmpEOYGDPmnVG1DUWsBMh/UL980pCLiX4A
-/1pIXRTtZv0a6slFll1/SciKv/LsA8l3gIVx8qXGu4lGsTZW0T336Ksf8xXayyo=
-=9fRx
+iQEcBAEBAgAGBQJTzuWXAAoJEKllVAevmvmsTUYIALGINZBT+2sBe1llbZwdzM/E
+0h5AeMQeP1jJ7TDPBeeLyU4r0ZYcBbuk+o6sLwKSiJGn27rgRSaH7a+mlMN7S+Ax
+wausrHZsPwLl0xN8m9LvDJZvOExkC1mEFwm644BQ2AKrC4LikP5bisP0BKPeI0re
+YFwBduU52Q0nt97VCR32/euaTQ6/dmfVoPo/M20U8U33qfSgZ5eAOx2ZDCk3GnlY
+xVy4vNLVJ+3o0Bx8jWIyhav43alwbd4GjqpOSiRSSI9I7O10R3pmdtAxrlbGpJbY
+bnHLyaXpUMe75/4etszIoW+ZWvuxVVYcMcuXlUU0tRDrSYaJiL6FIxiaEcD/sfc=
+=KVBH
 -----END PGP SIGNATURE-----
