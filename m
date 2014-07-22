@@ -1,46 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/7
-Message-ID: <20140716093303.GB6197@mail.corp.redhat.com>
-Date: Wed, 16 Jul 2014 11:33:03 +0200
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: 754899@...s.debian.org
-Subject: CVE request: rawstudio: Insecure use of temporary file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/9
+Message-Id: <201407222007.s6MK7n5O028490@linus.mitre.org>
+Date: Tue, 22 Jul 2014 16:07:49 -0400 (EDT)
+From: cve-assign@...re.org
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: cacti XSS
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The following was reported:
-...
-The function "rs_filter_graph" located in file
-./librawstudio/rs-filter.c contains the following code:
+> http://bugs.cacti.net/view.php?id=2456
 
-         g_string_append_printf(str, "}\n");
-         g_file_set_contents("/tmp/rs-filter-graph", str->str, str->len, NULL);
+> Product Version 0.8.8b
 
-         ignore = system("dot -Tpng >/tmp/rs-filter-graph.png </tmp/rs-filter-graph");
-         ignore = system("gnome-open /tmp/rs-filter-graph.png");
+> You need console access to create any of these items, but you don't
+> need full administrator privileges.
 
-This code makes insecure use of two temporary files:
+(One of the vectors reported by flekyy was separately disclosed a week
+before the others reported by flekyy.)
 
-    /tmp/rs-filter-graph.png
-    /tmp/rs-filter-graph
 
-This allows the truncation of arbitrary files which are owned by
-the user running rawstudio - for example:
+> Add a new Data Source with the following name: [XSS] -- Browse to
+> http://<IP>/cacti/data_sources.php [^] and you'll see a popup with the
+> text "XSS"
 
-    ln -s ~/.important /tmp/rs-filter-graph
-    ln -s /etc/shadow /tmp/rs-filter-graph.png
+Use CVE-2014-5025.
 
-Can CVE be assigned to this?
 
-References:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=754899
-https://bugzilla.redhat.com/show_bug.cgi?id=1120093
+>  - If you create a Graph Tree with Title: [XSS]
+> 
+>  - If you create a CDEF with Name: [XSS]
+> 
+>  - If you create a Data Source with Title: [XSS] you'll see a popup
+>    with the text "XSS" if you try any action (Delete, Change data
+>    template, Change Host, Enable...)
+> 
+>  - If you create a Graph with Title: [XSS]
+> 
+>  - If you create a Data Input Method with Name: [XSS]
+> 
+>  - If you create a Graph Template with Name: [XSS]
+> 
+>  - If you create a Host Templates with Name: [XSS]
 
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security Team
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+Use CVE-2014-5026.
 
-Content of type "application/pgp-signature" skipped
+
+If anyone has found that the patch fixes an additional attack vector
+(if that vector crosses privilege boundaries), then we could assign an
+additional CVE ID for the discovery by paulgevers. For example, there
+is not yet any report stating that the patch to user_admin.php
+resolves an issue that crosses privilege boundaries.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTzsLfAAoJEKllVAevmvmshB0H/1eC2Rn9LHI+3uZfjv53VwyK
+JklpHD/yWvLQVZjIed9qrEUb3qjISnztp600LpqB6aesv+4qsDlwh6rHlpYLQuLj
+Z1tYowsE85auhZofCuM+2KsY3K+pYiN8/6E/w27WQEDozbd1sDO8ViWvLmEtrfAP
+waTfqbJqRVChd+9xxKM1/gxAmcRBQB3QS/6a+MZTwzzxiLSnkdIzzX0H9I8VEVQu
+chosLdj5VhOtMVkDfDx6a8eZeUSC4DFTkj0PG1RxgIny83CspuzuppjIAZ1RZFXP
+V52Mak1HZ137Nl9n3W669CDNtg/o9mVVqczoqcjTvm/VlK8ZqkI3x9cMfpYZVF4=
+=XUHr
+-----END PGP SIGNATURE-----
