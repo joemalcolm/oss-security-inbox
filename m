@@ -1,39 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/4
-Message-ID: <546C07B1.5020100@mccme.ru>
-Date: Wed, 19 Nov 2014 06:00:01 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/12
+Message-Id: <201407222140.s6MLeOKR001014@linus.mitre.org>
+Date: Tue, 22 Jul 2014 17:40:24 -0400 (EDT)
+From: cve-assign@...re.org
+To: christian@...nbaginc.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE requests for Review Board
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-19 02:50, Seth Arnold wrote:
-> On Wed, Nov 19, 2014 at 12:21:29AM +0100, Hanno Böck wrote:
->> It'd already be a good start to do this for format-parsing tools. So
->> stuff that runs on files. Everything else is more complicated, fuzzing
->> file formats is the easiest.
->
-> You'd be surprised how infrequently file formats come up.. :)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-zzuf can fuzz network too.
+> https://www.reviewboard.org/news/2014/07/22/review-board-1-7-27-and-2-0-3-security-releases/
+> July 22, 2014 - 2:07 AM 
+> Review Board 1.7.27 and 2.0.3 security releases
 
->>> Getting AFL to work with every package suggested for Ubuntu main is
->>> probably too much work.
->>
->> You may overestimate the complexity of afl. Once you get used to it it
->> basically takes minutes to start a fuzzing job.
->> And Michal is very open to suggestions to improve it (and it is
->> improving on a daily basis right now).
->
-> Oh, AFL itself looks pretty blindingly easy to use: CC=... CXX=...  and go
-> with it. It's our packaging and building infrastracture that I think would
-> make it more complicated: they're designed to make repeatable builds
-> easy, not necessarily to allow arbitrary changes to the compiler. And,
-> AFL only works for C/C++.
+> One of the security vulnerabilities allowed an attacker to construct a
+> URL that would inject custom JavaScript into the page, which could
+> then be passed to a user, allowing the custom code to run in their
+> session.
 
-That's an advanced mode of AFL. Too advanced for many things, I would 
-say. Use afl-fuzz -dn or zzuf. You need just a sample (or several) for a 
-format you are interested in.
+Use CVE-2014-5027.
 
--- 
-Alexander Cherepanov
+
+> The other vulnerability allowed users without access to a private
+> review request to construct a URL for accessing original or patched
+> files from the repository, if they knew the right series of database
+> IDs.
+
+Use CVE-2014-5028.
+
+(Incidentally, we're not sure whether the original request sent July 21
+was within the oss-security list charter. MITRE does not control the list
+charter, but
+
+  http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+
+says "List Content Guidelines ... Public security issues only please"
+whereas the original request said "two security vulnerabilities ...
+Neither are publicly disclosed." If you want a CVE ID for an
+undisclosed vulnerability in the future -- for example, because you
+want to include the CVE ID number when the
+https://www.reviewboard.org/news/ entry first becomes public -- there
+are other options, such as sending the CVE request directly to
+cve-assign@...re.org instead.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTztl7AAoJEKllVAevmvmsFjEH/i3c93xE5j9OKoAH9pgUkAkV
+9VOoEgRoGaHXR2YDxPkEfapYhV7RZhjTcoQlW5oftH7QXE0FsyY7VhXbetn4GMv7
+bEhpzmkfz2kZN0YlBRHZr9FtuOsX8zqe77fHK3lsZsy/nBEh+W8onxZWCvThZvnA
+pucywbiGjkSAIgjKzLBF2YRRs0Xv660td8zZWHz9PunJPH5yWGLi6WywUmtkCidC
+pF22tWpvwJmGorN1kQFYjwavXSeE9jXRFt9kacFmWibA/z2srtMnx8EGgbbV9IrT
+ENjapy6bzUo7oTO0UoALRBnGj2IbO4CvQlKMK0kwudDsplFpb7i/nrTO77uFjQw=
+=STIj
+-----END PGP SIGNATURE-----
