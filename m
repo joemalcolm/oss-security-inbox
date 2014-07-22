@@ -1,52 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/28
-Message-ID: <54231DF9.9060002@reactos.org>
-Date: Wed, 24 Sep 2014 21:39:37 +0200
-From: Pierre Schweitzer <pierre@...ctos.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/16
+Message-ID: <20140722223507.GA30313@boyd>
+Date: Tue, 22 Jul 2014 17:35:07 -0500
+From: Tyler Hicks <tyhicks@...onical.com>
 To: oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Cc: Dustin Kirkland <kirkland@...ntu.com>
+Subject: Re: ecryptfs-setup-private nitpick
 Content-Type: text/plain; charset=utf-8
 
+Hi Raphael!
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2014-07-22 14:00:03, Raphael Geissert wrote:
+> Hi,
+> 
+> Taking a look at ecryptfs-utils 103's ecryptfs-setup-private, there is a bit 
+> of code that writes the mount pass to a file in /dev/shm hoping to "keep it 
+> from leaking to the hard-drive":
+> 
+> 8<-------->8
+>         # This will be wrapped by pam_ecryptfs's chauthtok as soon as the 
+> user
+>         # chooses a password.  Until that happens (hopefully soon), standard
+>         # file permissions (600) are all that's protecting it.  Write it to
+>         # ramdisk, to keep it from leaking to the hard-drive.
+>         temp=`mktemp /dev/shm/.ecryptfs-XXXXXX`
+>         printf "%s" "$MOUNTPASS" > "$temp"
+>         mv -f -T "$temp" "/dev/shm/.ecryptfs-$USER" || error "Could not 
+> create passphrase file"
+> 8<-------->8
+> 
+> Fastforward to 2014 and /dev/shm is, well, not a ramfs/ramdisk:
+> 
+> /dev/shm -> /run/shm, which is a tmpfs at least on Debian.
+> 
+> And as clearly stated by Documentation/filesystems/tmpfs.txt:
+> "If you compare it to ramfs (which was the template to create tmpfs)
+> you gain swapping and limit checking."
+> 
+> 
+> So in the hope of avoiding a persistent storage the mount pass is written to 
+> a file in a tmpfs that can be swapped to... disk.
 
-Hi,
+I consider encrypted swap to be a prerequisite to enabling any
+disk/file encryption solution. Ubuntu sets up encrypted swap when the
+user selects to encrypt their home directory from the installer.
 
-Naive question regarding statement below. Does that mean that exec*()
-system calls are concerned as well (like for instance called from a fork())?
+Unfortunately, the ecryptfs-setup-private man page doesn't recommend
+encrypting your swap but ecryptfs-utils ships a script called
+ecryptfs-setup-swap that enables encrypted swap.
 
-Regards,
+Ignoring the encrypted swap argument, ecryptfs-setup-private shouldn't
+be storing the plaintext mount passphrase in a manner that is swappable.
+I think POSIX shared memory segments should provide the persistence and
+pinnable memory (SHM_LOCKED) needed.
 
-On 24/09/2014 18:23, Michal Zalewski wrote:
-> Note that on Linux systems where /bin/sh is symlinked to /bin/bash,
-> any popen() / system() calls from within languages such as PHP would
-> be of concern due to the ability to control HTTP_* in the env.
->
-> /mz
+Either Dustin (cc'ed) or I will make this improvement. Thanks for the
+feedback!
 
+Tyler
 
-- -- 
-Pierre Schweitzer <pierre at reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> 
+> The file is left on /dev/shm until pam_ecryptfs actually wraps it with the 
+> login pass.
+> 
+> Cheers,
+> -- 
+> Raphael Geissert - Debian Developer
+> www.debian.org - get.debian.net
 
-iQIcBAEBAgAGBQJUIx35AAoJEHVFVWw9WFsLU7QP/3E77YP5Arh3UMrTYYd0ylfa
-r/L0k4t9/OSs9fg1GWsr6GP+Jma82y61uavFnE9LglAEY2A5hEkFdCWuPm6r2d58
-iOJVaCUdZH8x0NyM6nMmvnG0GKMyQgn9LyzKMeHTUmChIIscYaL22RGq2wI/Bm2N
-xk04VpxXM/kgdRhGUlKqmahEEskLeiSZlbfhKCT+4WXptFdOIdcAlIg3UW13QPk5
-EO0neFqbsLZLWYz/a4CAVoANt8UFUhSrceH/2sk0ObEWoGMcZIiZ0vsWfogO8y6s
-J0BnZZDq81seUU4QoRw1/BwMh6zh6SmlH3cw2wPyoq2qC4mBBdYCrxBlamd9cFyY
-A20MUZ5xXudZhZNlWv7Y7kKemoH0qQDT9xja7vvWvl95h1bNhTLoJKr/gfUQY56e
-BBo7nNXKXtpXEtoVbfd3hTt7reXLjqlqpmLdmClgGM9JotKS7JCiOpytibqW7pOn
-UKL00tUlBkcp2dYREegy0X+Rli8OOAJXTm0g+yvOiglMM1hXG067hkLDwZnQraOF
-0/WZWOFfMSCHbciZYbIgP4ptQTHomWS5vy0ukZ+rGy3th/fXlAwb1Kv7PcmByD6+
-WXBSngDlR85v+DYJjaWqtQIudMudfm0Z/s08jBJtUI83LjPWQeHtv0STXx5JVtS8
-HP5Bbv53yyPzBuWSSRYf
-=Oavc
------END PGP SIGNATURE-----
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
