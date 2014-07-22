@@ -1,29 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/11
-Message-ID: <7412B80A-E1BB-4630-BC68-2FEBBD2FD6A5@redhat.com>
-Date: Wed, 19 Feb 2014 15:18:43 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: CVE request for CGI::Application information disclosure flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/5
+Message-ID: <53CE4864.6070809@redhat.com>
+Date: Tue, 22 Jul 2014 13:17:56 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux peer_cred Mischmasch
 Content-Type: text/plain; charset=utf-8
 
-I don't believe a CVE was requested for this issue.  Looks like it requires a 2013 CVE.  Copying-and-pasting from our bug [5]:
+On 07/22/2014 12:15 PM, Sebastian Krahmer wrote:
+> While maybe_add_creds() (via SOCK_PASSCRED) and scm_send()
+> (via unix_{stream,dgram}_sendmsg()) use the real UID,
+>
+> cred_to_ucred() (via SO_PEERCRED) passes the EUID (this time
+> also kuid_munged()).
 
-
-It was reported [1],[2] that the CGI::Application perl module suffered from a flaw where, in certain cases, it would unexpectedly dump a complete set of web query data and server environment information as an error page.  This could allow unintended disclosure of sensitive information.
-
-A suggested fix is available [3] and the commit that caused the problem [4] was most likely introduced in version 4.19.
-
-
-[1] https://rt.cpan.org/Public/Bug/Display.html?id=84403
-[2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739505
-[3] https://github.com/markstos/CGI--Application/pull/15
-[4] https://github.com/markstos/CGI--Application/commit/61d327646f01fe
-[5] https://bugzilla.redhat.com/show_bug.cgi?id=1067180
-
-
-Thanks.
+There should also be a discrepancy regarding when the credentials are 
+captured (time of send for SOCK_PASSCRED, time of socket creation for 
+SO_PEERCRED).  The latter is required because privileged processes 
+assume that they can safely write to stderr, so picking the current 
+process credentials may well introduce vulnerabilities.
 
 -- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Florian Weimer / Red Hat Product Security
