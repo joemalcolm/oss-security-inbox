@@ -1,18 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/2
-Message-ID: <5487A7C9.90807@gmail.com>
-Date: Tue, 09 Dec 2014 20:54:17 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/11
+Message-Id: <201407222100.s6ML068N029428@linus.mitre.org>
+Date: Tue, 22 Jul 2014 17:00:06 -0400 (EDT)
+From: cve-assign@...re.org
+To: krahmer@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request: KAuth authentication bypass
 Content-Type: text/plain; charset=utf-8
 
-On 09/12/14 03:24 PM, Daniel Micay wrote:
->
-> It seems that the dss section (sbrk) isn't randomized at all on a
-> non-PaX kernel.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-(ignore this, it was a different problem)
+> https://bugzilla.novell.com/show_bug.cgi?id=864716
+
+This was previously discussed in, for example:
+
+  http://openwall.com/lists/oss-security/2014/04/03/1
+
+but apparently nobody responded to our question then. It would have
+been useful for your new CVE request to have included a pointer back
+to the earlier discussion here about exactly the same
+bugzilla.novell.com bug number.
+
+We understand that a patch now exists (one did not exist at the time
+of the previous discussion).
+
+We also understand that org.kde.fontinst.service and
+org.kde.kcontrol.kcmclock.service have been mentioned as examples of
+services that can be attacked on systems without the patch.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Can you confirm that you are asking for a CVE ID for the KAuth
+product, not the "PolicyKit Library Qt Bindings" product?
+
+Should there also be a separate CVE ID for
+
+  https://bugzilla.novell.com/show_bug.cgi?id=864716#c25
+
+  "The deprecated polkit method in polkit-qt5 bindings has been
+   updated to polkit_unix_process_new_for_owner."
+
+?
+
+Should there also be a separate CVE ID for
+
+  https://bugzilla.novell.com/show_bug.cgi?id=864716#c37
+
+  "Qt, since 5.3, aborts action if the Q*Application is SUID."
+
+?
+
+(This may be a largely unrelated issue, but perhaps "Qt before 5.3
+proceeds with an action even if the Q*Application is SUID" is an
+implied vulnerability report.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTztBxAAoJEKllVAevmvms8hYH/163QCQpWJS884zElop5AcaZ
+2c9zQOJUNgD7LZX/8wZmjQe/FllyKN5kLOSroxHyP3gINwMFgPPtxzGYuiZCy55H
+Z/Ncm+/gQI2tF5GSVfOBPYV9r93bNHwxy+gVCCMH4sODCbImiZn0+Pec0ZbuiJs3
+6nHbnTZmUCWnQ8XgDgtWlzh72P6HjVXCHwvVczw+IXYpSeXmm6qKkx+Co+ueNWgN
+1v30E/TKUbqlZ9nO9i3AkeTJD1D93lsysqLH+XW8GOt19TO/hW40VDGGc7ZH9srB
+KixViBvTCJKRL4bkKFVwB9NrTIw8CJzgNTIlI5J3TQlJOLNHeiI6GLxVo1gQWe4=
+=ZJrr
+-----END PGP SIGNATURE-----
