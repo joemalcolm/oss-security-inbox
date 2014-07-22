@@ -1,40 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/7
-Message-ID: <54115BB5.5030303@mittwald.de>
-Date: Thu, 11 Sep 2014 10:22:13 +0200
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/1
+Message-ID: <20140722013637.GG17656@core.inversepath.com>
+Date: Tue, 22 Jul 2014 03:36:37 +0200
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2014-004] Ansible input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
 
+#2014-004 Ansible input sanitization errors
 
-On 10/09/14 18:00, Salvatore Bonaccorso wrote:
-> MyISAM temporary files could be used to mount a code-execution attack.
-> (Bug #18045646).
+Description:
 
-Funny enough, when you search for this bug on bugs.mysql.com you get:
+The Ansible project is an open source configuration management platform.
 
-http://bugs.mysql.com/bug.php?id=18045646
+The Ansible platform suffers from input sanitization errors that allow
+arbitrary code execution as well as information leak, in case an attacker is
+able to control certain playbook variables.
 
-"No such bug #18045646 or bug is referenced in the Oracle bug system."
+The first vulnerability involves the escalation of a local permission access
+level into arbitrary code execution. The code execution can be triggered by
+interpolation of file names maliciously crafted as lookup plugin commands, in
+combination with its pipe feature.
 
-Is this marked as private or something like that? Even if it's public
-now?
+The second vulnerability concerns the unsafe parsing of action arguments in
+the face of an attacker controlling variable data (whether fact data,
+with_fileglob data, or other sources), allowing an attacker to supply their
+own options to an action. The impact of this is dependent on the action
+module the attacker targets. For example, an attacker controlling variables
+passed to the copy or template actions would be able to trigger arbitrary
+code execution (in addition to simple information leakage) via the validate
+option's acceptance of arbitrary shell code.
 
+Affected version:
+
+Ansible <= 1.6.6
+
+Fixed version:
+
+Ansible >= 1.6.7
+
+Credit: vulnerability report received from Brian Harring <ferringb AT
+        gmail.com>.
+
+CVE: CVE-2014-4966 (lookup function), CVE-2014-4967 (action arguments)
+
+Timeline:
+
+2014-07-01: vulnerability report received
+2014-07-02: contacted Ansible maintainers
+2014-07-02: disclosure coordinated on 2014-07-17
+2014-07-15: assigned CVEs
+2014-07-06: maintainer provides patch for review
+2014-07-17: maintainer provides updated patch based on reporter's feedback
+2014-07-17: embargo date lifted due to ongoing evaluations of patch
+            effectiveness and additional reporter feedback
+2014-07-17: maintainer provides updated patch which provides solutions for
+            additional findings
+2014-07-18: disclosure date updated to 2014-07-21
+2014-07-18: maintainer provides updated patch for review
+2014-07-20: maintainer provides updated patch indicating all reported
+            issues as closed
+2014-07-21: advisory release
+
+References:
+http://www.ansible.com
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2014-004.html
 
 -- 
-Mit freundlichen Grüßen / Regards
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
 
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
