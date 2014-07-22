@@ -1,40 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/3
-Message-Id: <201402181209.s1IC9bX2004678@linus.mitre.org>
-Date: Tue, 18 Feb 2014 07:09:37 -0500 (EST)
-From: cve-assign@...re.org
-To: fw@...eb.enyo.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: freeradius denial of service in rlm_pap hash processing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/6
+Message-ID: <CAA7hUgHvbpWiWGB1iHf9Q_qnxhTP3d_-_U4QsXSqU1RjZHQTAw@mail.gmail.com>
+Date: Tue, 22 Jul 2014 14:45:04 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: GLPI: unprivileged users can access cost information
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> SSHA (and presumably SSHA) processing runs into a stack-based buffer
-> overflow in the freeradius rlm_pap module if the password source uses
-> an unusually long hashed password
+A bug has been identified by Simone Imeri in GLPI where a user without
+access to cost information can in fact see the information when
+selecting cost as a search criteria[1]. This is fixed by commit [2]
+which appears to have been included for version  0.84.7 [3].
 
-> http://lists.freebsd.org/pipermail/freebsd-bugbusters/2014-February/000610.html
-> https://github.com/FreeRADIUS/freeradius-server/commit/0d606cfc29a.patch
-> https://github.com/FreeRADIUS/freeradius-server/commit/ff5147c9e5088c7.patch
-> https://github.com/FreeRADIUS/freeradius-server/commit/f610864d4c8f51d.patch
+I believe this should get a CVE id.
 
-Use CVE-2014-2015.
+[1]https://forge.indepnet.net/issues/4984
+[2]https://forge.indepnet.net/projects/glpi/repository/revisions/23061
+[3]http://www.glpi-project.org/spip.php?page=annonce&id_breve=326&lang=en
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTA0vZAAoJEKllVAevmvmsO1AH/2JorTtiL73XUWNRXRCkwPTb
-TVSio3o53e8lUJfYdqRt0qG9KkjUSnPwHkQgWZTRZwyrFBJznqJ3bvFYSLYZXq3y
-XdtUQ256wpW8vyGWxJtRCx0N+OGWpN2Y/bDh6TuMVGALCPm7avRrMUUFWOSMp+Jo
-nwVw5raIzssFFQigSL7MxO/Pg9kns1fZuOkA3hZLGdEEc5cnldIdXr+LyuBkkDiL
-WPuzSly2flWXWmnZFk5Ki1lAm6rVcL8hz4HvF6WYuLgL68MNfsBSmaNs7bgJBLnP
-h1PcOKOCkyQMgPZflPhgQkFHUtirX2DEz3AyGN1qux6BFbIATZIu0OAyYbDhT/Q=
-=KOVs
------END PGP SIGNATURE-----
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
