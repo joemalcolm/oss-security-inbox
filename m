@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/7
-Message-ID: <54804D3B.2090306@redhat.com>
-Date: Thu, 04 Dec 2014 13:02:03 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/3
+Message-ID: <20140722101554.GA13988@suse.de>
+Date: Tue, 22 Jul 2014 12:15:54 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: procmail heap overflow in getlline()
+Subject: Linux peer_cred Mischmasch
 Content-Type: text/plain; charset=utf-8
 
-On 12/04/2014 11:26 AM, Martino Dell'Ambrogio wrote:
-> For what is worth, I strongly believe this is a security bug for the
-> same reason.
-> As soon as there is an undocumented way to execute code, it will be
-> impossible for a .procmailrc file generator to avoid execution of code.
-> Workaround measures like security capabilities can not be taken into
-> account as they are not implicit.
+Hi
 
-There are many documented code execution opportunities (some of them 
-still rather subtle), so I find any arguments based on the existence of 
-a hypothetical secure procmailrc file generator not very convincing.
+There seem to be some inconsistencies in the handling of peer credentials
+on UNIX sockets. I checked kernel 3.15.1 and runtime-tested on a 3.11.10.
 
-:0
-|echo code execution >/dev/tty
+While maybe_add_creds() (via SOCK_PASSCRED) and scm_send()
+(via unix_{stream,dgram}_sendmsg()) use the real UID,
 
-:0
-* ?echo code execution >/dev/tty
-/dev/null
+cred_to_ucred() (via SO_PEERCRED) passes the EUID (this time
+also kuid_munged()).
 
-… and so on.
+That should probably being consolidated and in particular its unclear
+to me why one time you need kuid munging and onother time you dont.
+
+
+Sebastian
 
 -- 
-Florian Weimer / Red Hat Product Security
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
