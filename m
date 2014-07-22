@@ -1,37 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/5
-Message-ID: <5315B2A0.4000201@fifthhorseman.net>
-Date: Tue, 04 Mar 2014 11:01:52 +0000
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/13
+Message-Id: <201407222220.s6MMKcUs004725@linus.mitre.org>
+Date: Tue, 22 Jul 2014 18:20:38 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, msweet@...le.com, odyx@...ian.org
+Subject: Re: CVE Request: cups: Incomplete fix for CVE-2014-3537
 Content-Type: text/plain; charset=utf-8
 
-On 03/04/2014 05:38 AM, cve-assign@...re.org wrote:
->   - The server can support strong cipher suites, but is misconfigured
->     to select only 40-bit cipher suites. This is a similar situation.
->     If the user must use the server immediately (i.e., he doesn't have
->     time to contact the server operator and ask for a
->     reconfiguration), a 40-bit cipher suite is the right choice.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A misconfigured server might only offer a 40-bit cipher to a peer that
-offers a 40-bit cipher, but might offer a stronger cipher to a peer that
-does *not* offer any 40-bit ciphers.
+> https://cups.org/str.php?L4455
 
-arguably, this involves two different misconfigurations (both server and
-client), but the issue would be mitigated if the client was not offering
-a weak cipher and claiming it was a successfully secure connection.
+>> if language[0] is null, we do not reach the lstat calls for filename and afterwards
+> Yes, it looks like this needs to be an lstat as well
 
-Here is another situation where konqueror successfully indicates a
-"secure" connection to a server that has a known-insecure configuration:
- point konqueror at: https://demo.cmrg.net/ -- you'll see a successful
-connection, though that server only offers DHE over a
-trivially-crackable 16-bit group.
-
-NSS-based browsers will throw an ssl_error_weak_server_ephemeral_dh_key
-error and refuse the connection; konqueror claims it is a secure connection.
-
-	--dkg
+Use CVE-2014-5029.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1011 bytes)
+> we should probably add similar protections to the directory index
+> files (which are also using stat)
+> 
+> index.html
+> index.class
+> index.pl
+> index.php
+> index.pyc
+> index.py
+
+Use CVE-2014-5030.
+
+
+> +    * Similarly, if the file/directory does not have world read permissions, do
+> +    * not allow access...
+
+Use CVE-2014-5031.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTzuMfAAoJEKllVAevmvms+k4H/jS66EIxmyPHptNkW9UTaZiJ
+Raxu8JKzkSokST95E9VJ/Z7CWILE5YRIRY2TCFqAncuMt1rjuaB3irVw9tqdxu1+
+qSgiqmxMevQSpC0HlKcbUzZXICjWHdDsKAFW70neGoho3baO6hBQslc+5dwnuHj3
+Yb2AQMKIw88aUxLu6qgGZ5Dlg7FF0Ulyds1kGTuvDJ8EJcaOMfm7oA6mKvZrjV21
+JChFdKrmCBOIaNXJU39XseQr2Ft0g2ChRojCPIrjfRb4JM55VDvk/eNc1wCFsrNQ
+0PYpWcz15Hh4sKLngzWoeZSBV/hw5QXDs7uOEjC0yllo2F/b9VcWCYYDFBA82c4=
+=6Kuo
+-----END PGP SIGNATURE-----
