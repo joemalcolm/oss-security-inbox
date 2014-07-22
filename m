@@ -1,38 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/30/3
-Message-ID: <53B10290.5000507@redhat.com>
-Date: Mon, 30 Jun 2014 16:24:16 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/4
+Message-ID: <53CE4169.5060900@debian.org>
+Date: Tue, 22 Jul 2014 11:48:09 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests: nagios check_dhcp plug-in: read parts of INI config files belonging to root
+Subject: Re: Linux peer_cred Mischmasch
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+On 22/07/14 11:15, Sebastian Krahmer wrote:
+> While maybe_add_creds() (via SOCK_PASSCRED) and scm_send()
+> (via unix_{stream,dgram}_sendmsg()) use the real UID,
 
-Dawid Golunski discovered a flaw in the Nagios check_dhcp plugin that
-allows "Malicious user that has local access to a system where
-check_dhcp plugin is installed with SUID could exploit  this
-vulnerability to read any INI format config files owned by root and
-potentially extract some sensitive information.":
+One possible justification for this disparity is that the privileged
+processes for which there is any difference (ruid != euid, CAP_SETUID or
+CAP_SYS_ADMIN) can manipulate their apparent identity in outgoing
+SCM_CREDENTIALS messages, so they can choose which of their (potentially
+many) possible identities to present to the peer...
 
-http://seclists.org/fulldisclosure/2014/May/74
+> cred_to_ucred() (via SO_PEERCRED) passes the EUID (this time
+> also kuid_munged()).
 
-This was fixed in version 2.0.2:
+... whereas SO_PEERCRED just asks the kernel "who is at the other end?"
+without any cooperation from the target process, so there is opportunity
+for the target process to influence the result per-request, and the
+kernel has to return "the" uid (even if there is in fact no such thing
+as the process's single uid). The euid seems like as good a version of
+"who the process is currently trying to be" as any other.
 
-<http://nagios-plugins.org/nagios-plugins-2-0-2-released/>
+(I'm considering ruid != euid to be a form of privilege even if it has
+no CAP_* capabilities, because it has the privilege "can arrange to do
+anything that either ruid or euid can do", which in general is a
+superset of the abilities of either ruid or euid individually.)
 
-Dawid later reported a race condition. Despite the above fix, it was
-still possible to read parts of root-owned files:
+Silly analogy: SOCK_PASSCRED is the process presenting its passport at a
+border. It knows the border is there, is in control of the passport it
+presents, and if it is a spy with a pile of forged passports (privileged
+process), or someone with dual citizenship and multiple equally valid
+passports (ruid != euid), it can choose which one it hands over.
+SO_PEERCRED is more like identifying the process from CCTV pictures: it
+can pretend to be someone else by wearing a Mission-Impossible-style
+mask, but it can only have one version of its face visible at a time :-)
 
-http://seclists.org/fulldisclosure/2014/Jun/141
+    S
 
-This was fixed in version 2.0.3:
-
-<http://nagios-plugins.org/nagios-plugins-2-0-3-released/>
-
-Can CVEs please be assigned if they have not been already?
-
-Thanks,
-
---
-Murray McAllister / Red Hat Product Security
