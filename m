@@ -1,83 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/14/5
-Message-Id: <201402141650.s1EGoTGQ004218@linus.mitre.org>
-Date: Fri, 14 Feb 2014 11:50:29 -0500 (EST)
-From: cve-assign@...re.org
-To: helmut@...divi.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Bug#738855: initscripts: Skip killing root-owned process starting with @
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/8
+Message-ID: <53CEB9F6.6060907@amacapital.net>
+Date: Tue, 22 Jul 2014 12:22:30 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux peer_cred Mischmasch
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 07/22/2014 04:17 AM, Florian Weimer wrote:
+> On 07/22/2014 12:15 PM, Sebastian Krahmer wrote:
+>> While maybe_add_creds() (via SOCK_PASSCRED) and scm_send()
+>> (via unix_{stream,dgram}_sendmsg()) use the real UID,
+>>
+>> cred_to_ucred() (via SO_PEERCRED) passes the EUID (this time
+>> also kuid_munged()).
+> 
+> There should also be a discrepancy regarding when the credentials are
+> captured (time of send for SOCK_PASSCRED, time of socket creation for
+> SO_PEERCRED).  The latter is required because privileged processes
+> assume that they can safely write to stderr, so picking the current
+> process credentials may well introduce vulnerabilities.
+> 
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=738855
-> Message #34
+Indeed.  IMO both of these interfaces are flawed, but PASSCRED is
+terminally broken and should never be used.  See, for example,
+CVE-2013-1979, which is the immediate cause of the ruid thing.
 
-This message starts by discussing initscripts, but ends by discussing
-a CVE assignment for systemd. That CVE assignment would potentially be
-reasonable, but we wanted to first clarify what is being asked. We
-think you mean:
+I'm making very very slow progress toward SCM_IDENTITY, a non-broken
+replacement for both of these.
 
-  - adding a patch to initscripts to introduce more compatibility
-    between initscripts and systemd may be considered a security
-    enhancement, and probably would not be considered a vulnerability
-    fix, so no CVE ID is being requested for a problem in the
-    unpatched initscripts code
-
-  - this systemd commit
-
-       http://cgit.freedesktop.org/systemd/systemd/commit/src/core/killall.c?id=bd3fa1d2434aa28564251ac4da34d01537de8c4b
-
-    introduced the killall.c file. In the first version of this file, the
-
-       /* Non-root processes otherwise are always subject to be killed */
-       if (uid != 0)
-               return false;
-
-       ...
-
-       /* Processes with argv[0][0] = '@' we ignore from the killing
-        * spree.
-        *
-        * http://www.freedesktop.org/wiki/Software/systemd/RootStorageDaemons */
-        if (count == 1 && c == '@')
-                return true;
-       
-        return false;
-
-    code was included.
-
-  - you are proposing that the above "return true" line is a
-    vulnerability because it may allow a not-fully-privileged root
-    user to cause data loss. This could possibly have one CVE ID. One
-    of the arguments against assigning a CVE ID is that this "return
-    true" could have been an intentional tradeoff between perfect
-    privilege checking and design complexity. For environments with
-    not-fully-privileged root users, we're not sure whether there's
-    general acceptable of a guideline that OS components must never
-    contain any program logic to make any security-relevant decision
-    on the basis of the uid value.
-
-  - versions of systemd before
-    bd3fa1d2434aa28564251ac4da34d01537de8c4b, in which killall.c did
-    not exist, may have had other problems because the right processes
-    were not killed at the right times. This could possibly have a
-    second CVE ID if there were security implications.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS/kjTAAoJEKllVAevmvmsNHQH/AlPmrhJVIatj4vPKWj8bPSj
-Te1Yc9/kU3Z/Ox7zu4tM7HpAK4ZlNk1NNl8trgICnc0dMcbcv/KjL5wj/g9AzLTk
-GR1ItUF6JtiyTrEfP/WhaH1DEkKn3p5/XvBWdzd+0+cxFVoBnvYwMtXWv2vWsLPQ
-QRSOeInvqYQtpaetXUA3TNATd9FjTBCX8xYwj1rPAee0cQ3CSeE4+HckG5hCtvct
-aJ0/F6SuiSBzc3BvlmZC+8QPptYc6XrcSdkXDB11dkqeDJ4jXGRL+IBTYS2rfEWl
-xg44LbowiUjoN/4gieZZsrHVgAdhGi404HiediU5qorDFSrc7Dcmk4/xHWLcYqU=
-=BYck
------END PGP SIGNATURE-----
+--Andy
