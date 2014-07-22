@@ -1,79 +1,181 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/8
-Message-ID: <20140218190309.GA16793@higgins.local>
-Date: Tue, 18 Feb 2014 11:03:09 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, secalert@...hat.com
-Subject: XSS Vulnerability in number_to_currency, number_to_percentage and number_to_human (CVE-2014-0081)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/14
+Message-ID: <CAFkuX4tpmEfSo8q1Usj4SHrpCXASFVht_zyj=U_rkG=H++hY-g@mail.gmail.com>
+Date: Tue, 22 Jul 2014 16:27:16 -0600
+From: "Don A. Bailey" <donb@...uritymouse.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: LMS-2014-06-16-3: Libav LZO
 Content-Type: text/plain; charset=utf-8
 
-XSS Vulnerability in number_to_currency, number_to_percentage and number_to_human
+Hello All,
 
-There is an XSS vulnerability in the number_to_currency, number_to_percentage
-and number_to_human helpers in Ruby on Rails. This vulnerability has been
-assigned the CVE identifier CVE-2014-0081.
+For fun, Lab Mouse has released a web application that allows users to
+encode their own videos with an LZO exploit payload. Upload the video file
+and shellcode of your choice to the app, choose the target, and it will
+auto-encode your shellcode into the exploit video. Videos are then
+presented for download within a zip file.
 
-Versions Affected:  All.
-Fixed Versions:     4.1.0.beta2, 4.0.3, 3.2.17.
+Source code for the payload generator and the ROP chains is included on the
+site.
 
-Impact
-------
-These helpers allows users to nicely format a numeric value. Some of the parameters
-to the helper (format, negative_format and units) are not escaped correctly.
-Application which pass user controlled data as one of these parameters are
-vulnerable to an XSS attack.
+https://lzo.securitymouse.com/lzo
 
-All users passing user controlled data to these parameters of the number helpers
-should either upgrade or use one of the workarounds immediately.
 
-Releases
---------
-The 4.1.0.rc1, 4.0.3 and 3.2.17 releases are available at the normal locations.
+Don A. Bailey
+Founder / CEO
+Lab Mouse Security
+@InfoSecMouse <https://twitter.com/InfoSecMouse>
+https://www.securitymouse.com/
 
-Workarounds
------------
 
-The workaround for this issue is to escape the value passed to the parameter.
-For example, replace code like this:
 
-```
-<%= number_to_currency(1.02, format: params[:format]) %>
-```
+On Thu, Jun 26, 2014 at 12:54 PM, Don A. Bailey <donb@...uritymouse.com>
+wrote:
 
-With code like this
+> Hello All,
+>
+> A vulnerability has been identified in the Libav LZO implementation.
+> Please find the bug report attached inline.
+>
+> Best,
+> Don A. Bailey
+> Founder / CEO
+> Lab Mouse Security
+> https://www.securitymouse.com/
+>
+> #############################################################################
+> #
+> # Lab Mouse Security Report
+> # LMS-2014-06-16-3
+> #
+>
+> Report ID: LMS-2014-06-16-3
+>
+> CVE ID: CVE-2014-4609
+>
+> Researcher Name: Don A. Bailey
+> Researcher Organization: Lab Mouse Security
+> Researcher Email: donb at securitymouse.com
+> Researcher Website: www.securitymouse.com
+>
+> Vulnerability Status: Patched
+> Vulnerability Embargo: Broken
+>
+> Vulnerability Class: Integer Overflow
+> Vulnerability Effect: Memory Corruption
+> Vulnerability Impact: DoS, OOW, RCE
+> Vulnerability DoS Practicality: Practical
+> Vulnerability OOW Practicality: Practical
+> Vulnerability RCE Practicality: Practical
+> Vulnerability Criticality: Critical
+>
+> Vulnerability Scope:
+> All versions of libav are affected.
+> All architectures supported by libav are affected.
+>
+> Vulnerability Tested:
+> Yes. RCE proven on 10 separate platforms including but not limited to:
+>  - Ubuntu and Mint x86, x86_64
+>  - Debian x86_64, x86
+>  - FreeBSD x86_64, x86
+>
+> Functions Affected:
+> 	libavutil/lzo.c:av_lzo1x_decode
+>
+> Criticality Reasoning
+> ---------------------
+> This vulnerability can be triggered through a compression payload embedded
+> in a video file. Due to the nature of this memory corruption vulnerability,
+> exploitation of the bug can be seamless and work in the background during
+> normal video playback. A user will never notice that playback has been
+> compromised.
+>
+> Testing was successfully performed on all variants of mplayer2, including
+> gecko-mplayer2 embedded in Firefox, Iceweasel, Opera, Chromium, and Konqueror
+> on Linux.
+>
+> Ease of compromise is partly due to libav's use of tmalloc, which places
+> a header containing function pointers at the beginning of allocated heap
+> regions. Exploitation of the compression vulnerability overwrites these
+> function pointers, which then point to ROP payloads that allow for the
+> bypassing of ASLR and NX security enhancements.
+>
+> Vulnerability Description
+> -------------------------
+> An integer overflow can occur when processing any variant of a "literal run"
+> in the av_lzo1x_decode function. Each of these three locations is
+> subject to an integer overflow when processing zero bytes. The following code
+> depicts how the size of the literal array is generated:
+> static inline int get_len(LZOContext *c, int x, int mask)
+> {
+>     int cnt = x & mask;
+>     if (!cnt) {
+>         while (!(x = get_byte(c)))
+>             cnt += 255;
+>         cnt += mask + x;
+>     }
+>     return cnt;
+> }
+>
+> As long as a zero byte (0x00) is encountered, the variable 'cnt' will be
+> incremented by 255. Using approximately sixteen megabytes of zeros, 'cnt' will
+> accumulate to a maximum unsigned integer value in the 32bit variable.
+>
+> Therefore, get_len() will return a negative 'cnt' value to its caller. The
+> checks in copy_backptr() will fail to properly test for negative 'cnt' values
+> resulting in the following test never catching an error:
+>     if (cnt > c->out_end - dst) {
+>         cnt       = FFMAX(c->out_end - dst, 0);
+>         c->error |= AV_LZO_OUTPUT_FULL;
+>     }
+>
+> av_memcpy_backptr does not check for negative 'cnt' values, which results in
+> a copy of one byte from 'src' to 'dst', evading a crash do to excessive
+> copying.
+>
+> Finally, the copy function will never crash by calling memcpy with a negative
+> value because it only calls memcpy when the signed 'cnt' variable is greater
+> than zero. However, the pointers 'c->in' and 'c->out' will still be adjusted
+> by a negative value, causing 'c->out' to point to an area of memory prior to
+> the actual output buffer. This is how Lab Mouse Security was able to
+> instrument this vulnerability to overwrite tmalloc function pointers with
+> ROP payloads.
+>
+> It is notable that since the count value 'cnt' is passed around as an 'int',
+> it will always be interpreted as a signed 32bit integer regardless of the
+> underlying architecture. This means that this vulnerability affects all
+> platforms and architectures regardless of whether they are 32bit or 64bit
+> in nature.
+>
+> Vulnerability Resolution
+> ------------------------
+> Resolving this issue requires several separate fixes.
+>
+> 1) lzo.c:get_len()
+> The return value of get_len must be evaluated for negative count values.
+> A negative value should never be allowed in this context. Always error
+> when a negative or zero value is returned.
+>
+> 2) lzo.c:copy()
+> A negative value should not be allowed as a parameter to copy(). In
+> addition, the pointers 'c->in' and 'c->out' should be tested after they
+> are changed by the count value. Verify that the new offset does not land
+> outside of the bounds of the 'out' buffer.
+>
+> 3) lzo:copy_backptr()
+> Do not allow a negative 'cnt' value to be passed to copy_backptr. Augment
+> the test cases to ensure that a negative value cannot be used to adjust
+> the 'c->out' pointer.
+>
+> 4) libavutil/mem.c:av_memcpy_backptr
+> Return an error value.
+> Do not allow a negative 'cnt' or 'back' value to be used.
+>
+> 5) Always use a size_t for any size variable.
+> Size variables should always represent the underlying architecture's largest
+> natural unsigned integer. Use size_t, or a variant, to automatically scale
+> the value to the underlying architecture.
+>
+>
+>
 
-```
-<%= number_to_currency(1.02, format: h(params[:format])) %>
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 4-1-beta-number_helpers_xss.patch - Patch for 4.1-beta series
-* 4-0-number_helpers_xss.patch - Patch for 4.0 series
-* 3-2-number_helpers_xss.patch - Patch for 3.2 series
-
-Please note that only the 4.0.x and 3.2.x series are supported at present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible as we
-cannot guarantee the continued availability of security fixes for unsupported
-releases.
-
-Credits
--------
-
-Thanks to Kevin Reintjes for reporting the issue to us.
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-2-number_helpers_xss.patch" of type "text/plain" (9151 bytes)
-
-View attachment "4-0-number_helpers_xss.patch" of type "text/plain" (10930 bytes)
-
-View attachment "4-1-beta-number_helpers_xss.patch" of type "text/plain" (8295 bytes)
-
-Content of type "application/pgp-signature" skipped
