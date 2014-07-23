@@ -1,45 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/10
-Message-ID: <000c01cff485$82f86ba0$88e942e0$@mantisforge.org>
-Date: Thu, 30 Oct 2014 21:07:27 -0000
-From: "P Richards" <paul@...tisforge.org>
-To: <oss-security@...ts.openwall.com>
-Subject: RE: SQL injection vulnerability in MantisBT SOAP API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/5
+Message-ID: <CANT6BaPObcB3DUgU2ZEDnLmaUy9aVabwgo9B++Cyo4WqzGWoqA@mail.gmail.com>
+Date: Wed, 23 Jul 2014 00:23:35 -0700
+From: Dustin Kirkland <kirkland@...ntu.com>
+To: Tyler Hicks <tyhicks@...onical.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: ecryptfs-setup-private nitpick
 Content-Type: text/plain; charset=utf-8
 
-CVE-2014-8554 is already assigned to this issue...
+On Tue, Jul 22, 2014 at 3:35 PM, Tyler Hicks <tyhicks@...onical.com> wrote:
+> Hi Raphael!
+>
+> On 2014-07-22 14:00:03, Raphael Geissert wrote:
+>> Hi,
+>>
+>> Taking a look at ecryptfs-utils 103's ecryptfs-setup-private, there is a bit
+>> of code that writes the mount pass to a file in /dev/shm hoping to "keep it
+>> from leaking to the hard-drive":
+>>
+>> 8<-------->8
+>>         # This will be wrapped by pam_ecryptfs's chauthtok as soon as the
+>> user
+>>         # chooses a password.  Until that happens (hopefully soon), standard
+>>         # file permissions (600) are all that's protecting it.  Write it to
+>>         # ramdisk, to keep it from leaking to the hard-drive.
+>>         temp=`mktemp /dev/shm/.ecryptfs-XXXXXX`
+>>         printf "%s" "$MOUNTPASS" > "$temp"
+>>         mv -f -T "$temp" "/dev/shm/.ecryptfs-$USER" || error "Could not
+>> create passphrase file"
+>> 8<-------->8
+>>
+>> Fastforward to 2014 and /dev/shm is, well, not a ramfs/ramdisk:
+>>
+>> /dev/shm -> /run/shm, which is a tmpfs at least on Debian.
+>>
+>> And as clearly stated by Documentation/filesystems/tmpfs.txt:
+>> "If you compare it to ramfs (which was the template to create tmpfs)
+>> you gain swapping and limit checking."
+>>
+>>
+>> So in the hope of avoiding a persistent storage the mount pass is written to
+>> a file in a tmpfs that can be swapped to... disk.
+>
+> I consider encrypted swap to be a prerequisite to enabling any
+> disk/file encryption solution. Ubuntu sets up encrypted swap when the
+> user selects to encrypt their home directory from the installer.
+>
+> Unfortunately, the ecryptfs-setup-private man page doesn't recommend
+> encrypting your swap but ecryptfs-utils ships a script called
+> ecryptfs-setup-swap that enables encrypted swap.
 
++1, always encrypt your swap, if you have any respect or concern for
+the privacy of the data on your computer.  We've tried to make it as
+easy as possible to encrypt your swap in Ubuntu and ecryptfs.  The
+documentation could be updated to make this more clear.
 
------Original Message-----
-From: dregad@...il.com [mailto:dregad@...il.com] On Behalf Of Damien Regad
-Sent: 30 October 2014 20:55
-To: oss-security@...ts.openwall.com
-Subject: [oss-security] SQL injection vulnerability in MantisBT SOAP API
+> Ignoring the encrypted swap argument, ecryptfs-setup-private shouldn't
+> be storing the plaintext mount passphrase in a manner that is swappable.
+> I think POSIX shared memory segments should provide the persistence and
+> pinnable memory (SHM_LOCKED) needed.
+>
+> Either Dustin (cc'ed) or I will make this improvement. Thanks for the
+> feedback!
 
-Description:
+Indeed, thanks!
 
-Several SQL injection vulnerabilities were identified in CVE-2014-1609, and subsequently fixed in MantisBT release 1.2.16 [1].
-
-However, it was recently discovered that the patch did not fully address the original problem in the SOAP API. Research demonstrates that using a specially crafted 'project id' parameter when calling mc_project_get_attachments(), an attacker could still perform an SQL injection.
-
-Affected versions:
-MantisBT >= 1.1.0a4, <= 1.2.17
-
-Fixed in versions:
-1.2.18 (not yet released)
-
-Credit:
-Issue was discovered by
-- Edwin Gozeling and Wim Visser from ITsec Security Services BV
-(http://www.itsec.nl)
-- Paul Richards (former MantisBT developer)
-
-References:
-- further details, including patch available in our issue tracker [2] (
-
-Please assign a CVE ID for this issue, which is a follow-up on
-CVE-2014-1609 (the released fix of which was incomplete).
-
-[1] http://www.mantisbt.org/bugs/view.php?id=16880
-[2] http://www.mantisbt.org/bugs/view.php?id=17812
-
+> Tyler
+>
+>>
+>> The file is left on /dev/shm until pam_ecryptfs actually wraps it with the
+>> login pass.
+>>
+>> Cheers,
+>> --
+>> Raphael Geissert - Debian Developer
+>> www.debian.org - get.debian.net
