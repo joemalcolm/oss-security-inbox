@@ -1,84 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/1
-Message-ID: <53BA0713.2070603@redhat.com>
-Date: Mon, 07 Jul 2014 12:33:55 +1000
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/9
+Message-ID: <CACYkhxj4WS_69bKpSPj_9b+yrTN=rbVhXZeSp=ZCgtE5AjpPbQ@mail.gmail.com>
+Date: Wed, 23 Jul 2014 22:46:16 +1000
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: CVE request for commons-beanutils: 'class' property is exposed, potentially leading to RCE
+Subject: Re: ecryptfs-setup-private nitpick
 Content-Type: text/plain; charset=utf-8
 
-Given that no one else has replied, I have now assigned CVE-2014-3540 to 
-this flaw via the Red Hat CNA:
+On 23 July 2014 22:37, Michael Samuel <mik@...net.net> wrote:
+> Perhaps I'm wrong, but it appears that at-least on my system encrypted
+> swap comes up very early in boot - maybe even before the urandom rcS.d
+> script.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-3540
-
-Thanks
-David
-
-On 06/27/2014 06:00 PM, Arun Babu Neelicattu wrote:
-> Hi,
->
-> Is there a decision on this one? Did this one get missed?
->
-> -arun
->
-> ----- Original Message -----
->> From: "David Jorm" <djorm@...hat.com>
->> To: oss-security@...ts.openwall.com
->> Sent: Monday, June 16, 2014 8:39:28 AM
->> Subject: [oss-security] CVE request for commons-beanutils: 'class' property is exposed, potentially leading to RCE
->>
->> Hi All
->>
->> I have raised this twice with security@...che.org, on 30 April and June
->> 3. I have received no response either time, therefore I am raising it on
->> oss-security.
->>
->> CVE-2014-0114 describes a well-known issue in Apache Struts 1:
->>
->> "It was found that the Struts 1 ActionForm object allowed access to the
->> 'class' parameter, which is directly mapped to the getClass() method. A
->> remote attacker could use this flaw to manipulate the ClassLoader used
->> by an application server running Struts 1. This could lead to remote
->> code execution under certain conditions."
->>
->> The root cause of this flaw is that commons-beanutils exposes the class
->> property by default, with no mechanism to disable access to it. Struts 1
->> is considered EOL upstream, and upstream has not yet shipped a patch for
->> this flaw. Red Hat has shipped a patch, which was submitted upstream as
->> a pull request:
->>
->> https://github.com/apache/struts1/pull/1
->>
->> This patch disables access to the class property in struts itself,
->> rather than in commons-beanutils. Other frameworks built on
->> commons-beanutils, such as Apache Stripes, are likely to expose similar
->> issues. I think it would be a good idea to also assign a separate CVE ID
->> to commons-beanutils, and ship a patch for commons-beanutils itself. The
->> commons-beanutils patch could be inherited by other frameworks that may
->> not have the resources to produce their own patch.
->>
->> commons-beanutils 1.9.2 has now shipped:
->>
->> http://commons.apache.org/proper/commons-beanutils/javadocs/v1.9.2/RELEASE-NOTES.txt
->>
->> Incorporating a patch for this issue:
->>
->> https://issues.apache.org/jira/browse/BEANUTILS-463
->>
->> "A specialized BeanIntrospector implementation has been added which
->> allows suppressing properties. There is also a pre-configured instance
->> removing the class property from beans. Some notes have been added to
->> the user's guide."
->>
->> I think it would be appropriate to assign a CVE ID to this issue in
->> commons-beanutils, and publish an advisory. This would provide framework
->> developers with the necessary information and impetus to upgrade to
->> commons-beanutils 1.9.2 and make use of SuppressPropertiesBeanIntrospector.
->>
->> Thanks
->> --
->> David Jorm / Red Hat Product Security
->>
-
+Ok  don't mind me - ecryptfs-setup-swap puts /dev/random not
+/dev/urandom in crypttab.
