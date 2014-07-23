@@ -1,63 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/14/1
-Message-ID: <5415FF31.2000100@sumptuouscapital.com>
-Date: Sun, 14 Sep 2014 22:48:49 +0200
-From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE assignment for c-icap Server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/2
+Message-ID: <20140723063207.GA5885@suse.de>
+Date: Wed, 23 Jul 2014 08:32:07 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request: KAuth authentication bypass
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
-
-On 09/01/2014 11:30 PM, Kristian Fiskerstrand wrote:
-> Hi,
+On Tue, Jul 22, 2014 at 05:00:06PM -0400, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
 > 
-> [0] lists a vulnerability for c-icap Server as:  "contains a flaw
-> in the parse_request() function of request.c that may allow a
-> remote denial of service. The issue is triggered when the buffer
-> fails to contain a ' ' or '?' symbol, which will cause the end
-> pointer to increase and surpass allocated memory. With a specially
-> crafted request (e.g. via the OPTIONS method), a remote attacker
-> can cause a loss of availability for the program." as described in
-> [1]. From what I can see this was fixed in [2].
+> > https://bugzilla.novell.com/show_bug.cgi?id=864716
 > 
-> Has a CVE been assigned to this issue already? if not I request
-> that one is assigned.
+> This was previously discussed in, for example:
 > 
-> References: [0] http://www.osvdb.org/show/osvdb/89304 [1]
-> http://osvdb.org/ref/89/c-icap.txt [2]
-> http://sourceforge.net/p/c-icap/code/1018/
+>   http://openwall.com/lists/oss-security/2014/04/03/1
+> 
+> but apparently nobody responded to our question then. It would have
+> been useful for your new CVE request to have included a pointer back
+> to the earlier discussion here about exactly the same
+> bugzilla.novell.com bug number.
+> 
+> We understand that a patch now exists (one did not exist at the time
+> of the previous discussion).
+> 
+> We also understand that org.kde.fontinst.service and
+> org.kde.kcontrol.kcmclock.service have been mentioned as examples of
+> services that can be attacked on systems without the patch.
 > 
 > 
+> Can you confirm that you are asking for a CVE ID for the KAuth
+> product, not the "PolicyKit Library Qt Bindings" product?
 
-Friendly ping for any feedback on this post.
+Yes indeed. Its the KDE KAuth code using the wrong kind of subject
+for authentication.
+
+> 
+> Should there also be a separate CVE ID for
+> 
+>   https://bugzilla.novell.com/show_bug.cgi?id=864716#c25
+> 
+>   "The deprecated polkit method in polkit-qt5 bindings has been
+>    updated to polkit_unix_process_new_for_owner."
+> 
+> ?
+
+No, it was a patch proposal for above mentioned bug and it was wrong.
+
+> 
+> Should there also be a separate CVE ID for
+> 
+>   https://bugzilla.novell.com/show_bug.cgi?id=864716#c37
+> 
+>   "Qt, since 5.3, aborts action if the Q*Application is SUID."
+> 
+> ?
+
+Thats up to the Qt developers to request a CVE for this; if its needed.
+I did not analyze this potential issue as its not related to the KAuth bug in any way.
+
+Sebastian
 
 
-- -- 
-- ----------------------------
-Kristian Fiskerstrand
-Blog: http://blog.sumptuouscapital.com
-Twitter: @krifisk
-- ----------------------------
-Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-- ----------------------------
-Dura necessitas
-Necessity is harsh
------BEGIN PGP SIGNATURE-----
+-- 
 
-iQIcBAEBCgAGBQJUFf8wAAoJEPw7F94F4TagXoEP/jcjVZf0r0yHX4aosAr0o2cP
-KXHot+wDTo3WZsBpHUt1U6LS8hNMZzX7GbgJkerx3uayhncdMrAGThDwxJrx7Ixg
-/BVcwlKh9fBfZSO52zFl/bhP/X0APlxSg6LMQaBtGjAZ2991oQf/xKYmdxsH+Try
-jrKiOMRP272sFmeWP8hUhhcWfbLc+/7BBSoXqA8DvmJIOWT8OapU4Jv7shJnsr+y
-MpVtK9AtQlqw3I7hZ/iTKjORexOLliWFulZUcKu1gd8lpo8aKHQR6qK+JGwWaaFK
-1lUMTAyGsfUF8h9S/iGH1AOnTzSuD6n0rJ7y7QuHgUODP0Ax7ywsvveWFW2HlRRT
-GXo3umPB2tqSkX6QcSg4d81/WR8GJYus7MSjlCu4HJ6xaprX0AdCh1WM10Bih0/6
-bcHDHJEBLaVwsfpD0KikiRCBrja1DTPHFajRERKqdiM0GR7vcy1kqDio9mGibrzf
-5hvYLqDQWN/hTbYOsoSJ88tAs5HbhZTHQFmyUxd0tyrzQRPlneudYimWyFXHwaT+
-9D3PS7UJi/Nad+IMiXNu2tCwFC2bZkbq+d3B50o+VT+8/vcv//X+/3o6sP0osC7H
-0JEJAMKzg8DlaVErnxkGfoC8t6UVDfrRmhPv1+CTlwruCEoC0z2w1UNw4qiXF9xx
-lGZZ8JsFjp/olojmGhax
-=Uvcf
------END PGP SIGNATURE-----
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
