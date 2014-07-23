@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/8
-Message-Id: <201401021945.s02Jj5eM028477@linus.mitre.org>
-Date: Thu, 2 Jan 2014 14:45:05 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/4
+Message-Id: <201407230645.s6N6jecX019944@linus.mitre.org>
+Date: Wed, 23 Jul 2014 02:45:40 -0400 (EDT)
 From: cve-assign@...re.org
-To: dkg@...thhorseman.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, fweimer@...hat.com
-Subject: Re: kwallet crypto misuse
+To: krahmer@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request: KAuth authentication bypass
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Thanks very much for this additional information. At this point, it
-seems very unlikely that the "\0a\0b\0c\0d" issue will have an
-additional CVE assignment. We were asking just because of the
-possibility of a clear implementation error in which security was
-weakened by using a "wrong" character width.
+>> https://bugzilla.novell.com/show_bug.cgi?id=864716
 
-> Do you think MITRE or other folks should be recommending pre-whitening
-> the strings before encrypting them
+> Yes indeed. Its the KDE KAuth code using the wrong kind of subject
+> for authentication.
 
-It's possible that a group elsewhere at MITRE would work on
-recommendations in that area or other areas. For purposes of the CVE
-assignments in this situation, that type of opportunity for security
-improvement wasn't being considered.
+Use CVE-2014-5033.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -33,11 +26,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJSxcEIAAoJEKllVAevmvmsyJoH/R/Z4u6+P/T7Hk3Mj0h1nidp
-cmG3PUnqQFSzYwWoo3NIst8KTpt1MZQmbAtfTkY3w2hEpqwbQk18pNLzY+lcUFIr
-wamgvXoyWPOYNcp7NypQfHoRQOT9TdFjhIxJXy9R1VLqfyeubs19uN+iYILDS+ik
-BgdStB2F1geISFG6M+hO+WtFouk61b5ZaC5ejEjkkEs7U6LQnRcF4WxNmZ3ym2ml
-zO/kSfpUpzgjMurtRbBFhuh13L2Ohl0nxiizsUv735JH5aL+TX7V8d1B/+11ZXTs
-RP85J3qyCRYswi0oaCLhOx4Qv/YcUZlCJZIHyTb7seJvJShV6xclQunJD3GFZDU=
-=YscU
+iQEcBAEBAgAGBQJTz1lXAAoJEKllVAevmvmsw6gH/0X45jv78r/o1z2vkF/fepoP
+zIxaGdT4/55xhaK5Lsm4GYpBpJJ8FvJZk6C3/WKSJEiAVw15qSnx2c3GYf7aMdtF
+eKdBsu3IWbq0sTnDVJMsY7442RGANfFBSl89TfArhyk5Nk04RbNs1lK3FgfZbY4a
+g7iWHKm8fD403QushPk0JETlW3hThdz02t4SBOh+bz+PBKN9e/vjYW9j9F6nbbSq
++PeXyapiUrWWpuLgNSM31lUm2zjd7gPhYmYybviNrz81b3uEwvbMYdLBz4sNecwL
+0lplt6D2l6XQ5288OVkoxzjD27Egls7pMpuCMY4dcJM5idsxv6g9wqJqEqCCeZ8=
+=VVsd
 -----END PGP SIGNATURE-----
