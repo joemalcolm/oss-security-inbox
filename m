@@ -1,52 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/8
-Message-ID: <20140107133950.GB9302@scapa.corsac.net>
-Date: Tue, 7 Jan 2014 14:39:50 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/8
+Message-ID: <CACYkhxjOrdNn4YRqe9zgX_8cm1r7HXLVE1Ppu6tSYVWvjm08dQ@mail.gmail.com>
+Date: Wed, 23 Jul 2014 22:37:08 +1000
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: lightdm-gtk-greeter - local DOS due to NULL pointer dereference
+Subject: Re: ecryptfs-setup-private nitpick
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Perhaps I'm wrong, but it appears that at-least on my system encrypted
+swap comes up very early in boot - maybe even before the urandom rcS.d
+script.
 
-On Tue, Jan 07, 2014 at 11:47:31AM +0100, Guido Berhoerster wrote:
-> Hi,
-> 
-> an openSUSE user discovered that it is trivial to crash
-> lightdm-gtk-greeter by entering an empty username due to a NULL
-> pointer dereference. When a greeter crashes the lightdm daemon
-> exits.
-> This constitutes a local denial of service which can be triggered
-> by any unprivileged attacker requiring the intervention of an
-> administrator to restart lightdm. It affects all versions of
-> lightdm-gtk-greeter.
-> 
-> The initial downstream report is at
-> https://bugzilla.novell.com/show_bug.cgi?id=857303, the bug has
-> been reported upstream at
-> https://bugs.launchpad.net/lightdm-gtk-greeter/+bug/1266449 and
-> fixes for the 1.1 and 1.3 series are available at
-> https://build.opensuse.org/package/view_file/home:gberh:branches:OBS_Maintained:lightdm-gtk-greeter/lightdm-gtk-greeter.openSUSE_12.2_Update/lightdm-gtk-greeter-handle-invalid-user.patch?expand=1
-> and
-> https://build.opensuse.org/package/view_file/home:gberh:branches:OBS_Maintained:lightdm-gtk-greeter/lightdm-gtk-greeter.openSUSE_13.1_Update/lightdm-gtk-greeter-handle-invalid-user.patch?expand=1
-> 
-> Could a CVE be assigned to this issue please?
+Should urandom be an upstart script which any crypto daemons depend on
+(including cryptdisks-udev), rather than rcS.d?
 
-I can confirm the bug on Debian (lightdm-gtk-greeter 1.6.1-4 and
-1.7.0-1) as well as that the patch above seems to correctly fix it.
-
-Regards,
-- -- 
-Yves-Alexis Perez
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQEcBAEBCgAGBQJSzAOiAAoJEG3bU/KmdcClIVcH/iiWbn87U8CSi7Lpkw3qT/X5
-eNgtg9uPflrkPUjmCq2GcagCZHWB8voKOGTZUaSQ9gE1vS/AsjcqZFt7vc+YYoEZ
-+IgR2jbJj/6qlFxB78kKKvscsxX0W5iwmRiTjwLwnCb6rt5AmnHm6Qp7KhEXM5mA
-DgHr+1zDzuQwQoGicDq+pU9yDxWrvXn/d0y1WbpYliqkh+Ao2jtl3CrboLsJaU/e
-scuxy0QDBaOWZAbgdUTWjhnERzTd9ZxC68IcsnXb3gdHw77TYzDOf8Muu9H0OV95
-L4ClypusfRdsNR71hiG8c5+YxVxBiJayd4iDK7AXcmwZhWTpvxMK6ef78SjPXjs=
-=gy2y
------END PGP SIGNATURE-----
+On 23 July 2014 17:23, Dustin Kirkland <kirkland@...ntu.com> wrote:
+> On Tue, Jul 22, 2014 at 3:35 PM, Tyler Hicks <tyhicks@...onical.com> wrote:
+>> Hi Raphael!
+>>
+>> On 2014-07-22 14:00:03, Raphael Geissert wrote:
+>>> Hi,
+>>>
+>>> Taking a look at ecryptfs-utils 103's ecryptfs-setup-private, there is a bit
+>>> of code that writes the mount pass to a file in /dev/shm hoping to "keep it
+>>> from leaking to the hard-drive":
+>>>
+>>> 8<-------->8
+>>>         # This will be wrapped by pam_ecryptfs's chauthtok as soon as the
+>>> user
+>>>         # chooses a password.  Until that happens (hopefully soon), standard
+>>>         # file permissions (600) are all that's protecting it.  Write it to
+>>>         # ramdisk, to keep it from leaking to the hard-drive.
+>>>         temp=`mktemp /dev/shm/.ecryptfs-XXXXXX`
+>>>         printf "%s" "$MOUNTPASS" > "$temp"
+>>>         mv -f -T "$temp" "/dev/shm/.ecryptfs-$USER" || error "Could not
+>>> create passphrase file"
+>>> 8<-------->8
+>>>
+>>> Fastforward to 2014 and /dev/shm is, well, not a ramfs/ramdisk:
+>>>
+>>> /dev/shm -> /run/shm, which is a tmpfs at least on Debian.
+>>>
+>>> And as clearly stated by Documentation/filesystems/tmpfs.txt:
+>>> "If you compare it to ramfs (which was the template to create tmpfs)
+>>> you gain swapping and limit checking."
+>>>
+>>>
+>>> So in the hope of avoiding a persistent storage the mount pass is written to
+>>> a file in a tmpfs that can be swapped to... disk.
+>>
+>> I consider encrypted swap to be a prerequisite to enabling any
+>> disk/file encryption solution. Ubuntu sets up encrypted swap when the
+>> user selects to encrypt their home directory from the installer.
+>>
+>> Unfortunately, the ecryptfs-setup-private man page doesn't recommend
+>> encrypting your swap but ecryptfs-utils ships a script called
+>> ecryptfs-setup-swap that enables encrypted swap.
+>
+> +1, always encrypt your swap, if you have any respect or concern for
+> the privacy of the data on your computer.  We've tried to make it as
+> easy as possible to encrypt your swap in Ubuntu and ecryptfs.  The
+> documentation could be updated to make this more clear.
+>
+>> Ignoring the encrypted swap argument, ecryptfs-setup-private shouldn't
+>> be storing the plaintext mount passphrase in a manner that is swappable.
+>> I think POSIX shared memory segments should provide the persistence and
+>> pinnable memory (SHM_LOCKED) needed.
+>>
+>> Either Dustin (cc'ed) or I will make this improvement. Thanks for the
+>> feedback!
+>
+> Indeed, thanks!
+>
+>> Tyler
+>>
+>>>
+>>> The file is left on /dev/shm until pam_ecryptfs actually wraps it with the
+>>> login pass.
+>>>
+>>> Cheers,
+>>> --
+>>> Raphael Geissert - Debian Developer
+>>> www.debian.org - get.debian.net
