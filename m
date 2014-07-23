@@ -1,47 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/5
-Message-ID: <CAD3CandN-EBYXyAqtPyd8CK=JvdoA_1V2vRX0Xbae1PYModgsQ@mail.gmail.com>
-Date: Mon, 18 Aug 2014 22:44:50 +1200
-From: Matthew Daley <mattd@...fuzz.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, Eduardo Silva <eduardo@...key.io>
-Subject: CVE request / advisory: Monkey web server <= v1.5.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/6
+Message-ID: <20140723100132.GH20911@core.inversepath.com>
+Date: Wed, 23 Jul 2014 12:01:32 +0200
+From: Daniele Bianco <danbia@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2014-005] LPAR2RRD input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I'd like to request a CVE ID for this issue. It was found in software
-from the Monkey Project (monkey-project.com), which develop the
-open-source Monkey Web Server.
+#2014-005 LPAR2RRD input sanitization errors
 
-This is the first such request and the issue is (now) public; this
-message serves as an advisory as well.
+Description:
 
-Affected software: Monkey Web Server
-Description: When the File Descriptor Table (FDT) mechanism is enabled
-(the default setting), any HTTP requests that result in a custom error
-message being returned cause a file descriptor (to the custom error
-message content file) to be leaked. An attacker can therefore
-repeatedly send such requests so as to leak a large number of
-descriptors. Eventually, the server will reach the OS-enforced
-per-process limit on the amount of open file descriptors (as given by
-`ulimit -n`). From this point on, and until the server is restarted,
-any request that requires the opening of another file in order to be
-handled will fail; even valid requests from other parties for normal
-files will fail with an HTTP 403 error. This is a simple
-denial-of-service attack.
-Workaround: Do not use custom error messages, or disable the File
-Descriptor Table by using the "FDT off" directive in the server
-configuration file (see
-http://monkey-project.com/documentation/1.5/configuration/server.html#fdt).
-Affected versions: <= v1.5.2
-Fixed version: v1.5.3
-Fix: https://github.com/monkey/monkey/commit/b2d0e6f92310bb14a15aa2f8e96e1fb5379776dd
-Release notes: http://monkey-project.com/Announcements/v1.5.3
-Reported by: Matthew Daley
+LPAR2RRD is a performance monitoring and capacity planning software for IBM
+Power Systems. LPAR2RRD generates historical, future trends and nearly
+"real-time" CPU utilization graphs of LPAR's and shared CPU usage.
 
-Please let me know if you need any further information.
+Insufficient input sanitization on the parameters passed to the application
+web gui leads to arbitrary command injection on the LPAR2RRD application
+server.
 
-Thanks,
+Affected version:
 
-- Matthew Daley
+LPAR2RRD <= 4.53, <= 3.5
+
+Fixed version:
+
+LPAR2RRD > 4.53
+
+Credit: vulnerability report and PoC code received from Jürgen Bilberger
+        <juergen.bilberger AT daimler.com>.
+
+CVE: CVE-2014-4981 (version <= 3.5), CVE-2014-4982 (version <= 4.53)
+
+Timeline:
+
+2014-07-08: vulnerability report received
+2014-07-08: contacted LPAR2RRD maintainers
+2014-07-20: patch provided by maintainers, assigned CVEs
+2010-07-22: contacted affected vendors
+2010-07-23: advisory release
+
+References:
+http://www.lpar2rrd.com
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2014-005.html
+
+--
+  Daniele Bianco      Open Source Computer Security Incident Response Team
+  <danbia@...rt.org>                                  http://www.ocert.org
+
+  GPG Key 0x9544A497
+  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
