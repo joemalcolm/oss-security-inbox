@@ -1,124 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/19/4
-Message-ID: <CA+rthh8ofxGo_v5LhNz_r_e0CHjRXGww7XRwnn_qUx4W-uXTpw@mail.gmail.com>
-Date: Fri, 19 Dec 2014 22:41:28 +0100
-From: Mathias Krause <minipli@...glemail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/3
+Message-ID: <20140723064325.GB5885@suse.de>
+Date: Wed, 23 Jul 2014 08:43:25 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+Subject: Re: Re: Linux peer_cred Mischmasch
 Content-Type: text/plain; charset=utf-8
 
-On 18 December 2014 at 22:50, Greg KH <greg@...ah.com> wrote:
-> On Thu, Dec 18, 2014 at 11:36:03AM +0100, Mathias Krause wrote:
->> On 18 December 2014 at 10:35, Amos Jeffries <squid3@...enet.co.nz> wrote:
->> > On 18/12/2014 9:24 p.m., Lionel Debroux wrote:
->> All wrong. As Lionel wrote, the code assigns the variable before
->> reading it. So no data is meant to persist between multiple calls to
->> this function. However, if max8925_probe() gets called concurrently,
->> the 'chip' pointer may change beneath one of the threads -- not good.
->> So this is clearly a fix.
->
-> But that function can not be called concurrently, so this doesn't
-> matter.
+On Tue, Jul 22, 2014 at 12:22:30PM -0700, Andy Lutomirski wrote:
+> On 07/22/2014 04:17 AM, Florian Weimer wrote:
+> > On 07/22/2014 12:15 PM, Sebastian Krahmer wrote:
+> >> While maybe_add_creds() (via SOCK_PASSCRED) and scm_send()
+> >> (via unix_{stream,dgram}_sendmsg()) use the real UID,
+> >>
+> >> cred_to_ucred() (via SO_PEERCRED) passes the EUID (this time
+> >> also kuid_munged()).
+> > 
+> > There should also be a discrepancy regarding when the credentials are
+> > captured (time of send for SOCK_PASSCRED, time of socket creation for
+> > SO_PEERCRED).  The latter is required because privileged processes
+> > assume that they can safely write to stderr, so picking the current
+> > process credentials may well introduce vulnerabilities.
 
-Thanks for clarifying this. Still, it's worth to fix this, no? Even if
-this is not a bug in a sense that it would be exploitable in any way,
-it's obfuscating things.
+It does, and that should be ok.
 
->> >  People using PaX code are trusting that they have done the analysis,
->>
->> Obviously they did.
->
-> Someone got it wrong :)
+> > 
+> 
+> Indeed.  IMO both of these interfaces are flawed, but PASSCRED is
+> terminally broken and should never be used.  See, for example,
+> CVE-2013-1979, which is the immediate cause of the ruid thing.
 
-Fixing obfuscated code is wrong -- got it.
+Thats what I was wondering whether CVE-2013-1979 only fixed SCM_CREDENTIALS
+case and missed to fix SO_PEERCRED.
+I am not fully convinced thats OK to get one time the euid and another time
+the uid (even though I liked the spy example:)
 
->> > but that very code not being in mainline means there is possibly no
->> > hard proof of that.
->>
->> You're wrong, again. No-one submitted the fix to LKML, that's the reason.
->
-> And if they did, they would have gotten the review I just gave.
+Sebastian
 
-So you advocate for leaving the 'static' in place just because "it's
-not a bug"? That's ridiculous!
-Can you please point me to the part in Documentation/CodingStyle were
-it says obfuscated code is the preferred kernel coding style? Thanks.
+-- 
 
->> >> or local structs which are not meant
->> >> to be modified and should therefore probably be made static /
->> >> static const (mainline doesn't use the GCC plugin for
->> >> constification):
->> >> [...]
->> >
->> > Now *that* does just appear to be a gratuitous cleanup / performance
->> > booster. Not security related.
->>
->> Wrong. PaX contains a gcc plugin that does *automatic* constification
->> of eligible structures (structures containing function pointers).
->> That's incompatible with run-time modification of the data structures
->> in question. Therefore this change fixes the incompatibility by making
->> the run-time assignment a compile time constant.
->
-> Ok, that's not very obvious just looking at the patch :)
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-Lionel mentioning "GCC plugin for constification" might have been a
-hint there's more to it ;)
-
-LWN wrote something about it a few years ago: https://lwn.net/Articles/461696/
-The comments are worth reading, as the PaX Team explains a few more
-things in there.
-
->> Making structures containing function pointers r/o actually is
->> security related. Read only data structures cannot be abused by memory
->> corruption bugs, e.g., like the exploit for CVE-2013-2094 which
->> overwrites function pointers in ptmx_fops to get code execution. But,
->> well, that's true for PaX only, as write protected kernel r/o data is
->> something mainline only gets when CONFIG_DEBUG_RODATA is set -- a
->> '"Kernel hacking" debug option. Tells much about the state of security
->> philosophy in the mainline kernel...
->
-> Cut it out with your "state of security philosophy" crap please, it
-> benifits no one except making you try to feel better about yourself.
->
-> If you wish to help us out with the "state of security" in the kernel,
-> please send patches to do so.
-
-Honestly, no, thanks. I won't try to increase the state of security in
-the kernel. It's just not worth the pain, IMHO. It's way easier for me
-to build upon the PaX / grsecurity patches and contribute security
-enhancements there. Those patches already fix quite a few issues and
-are dedicated to enhance the state of kernel security. So why should I
-step back and try to re-implement things upstream that are already
-solved for years (or decades, even) in PaX / grsecurity?
-
->  Participate in patch review, read all
-> 10000 patches that get merged every 2 months and send me git ids to be
-> included in stable kernels, or any number of other valid, helpful things
-> you could do instead of just pointing at a huge, external, patchset and
-> saying that somehow the kernel developers (all 5000 of us I guess) have
-> no idea what we are doing.
-
-Don't put words into my mouth I never said. I never said, you guys
-have no idea what you're doing. I also never suggested to merge PaX /
-grsecurity into mainline. I never will! Just because it would defeat
-the purpose of the patch. The developers of PaX and grsecurity would
-loose control over there changes made to the kernel, possibly making
-those changes bit-rot and weaken each and every kernel release.
-No, in fact, I prefer the permanent fork mode of PaX and grsecurity as
-it gives me certainty, the guys caring about security actually look
-after if there changes are still functioning by solving merge
-conflicts themselves. As those changes are spread all over the tree
-that won't work with the upstream maintainer model.
-
-It looks like none of the 5000 kernel developers has a strong interest
-in security. If just a single one would, why wouldn't that single
-person take DEBUG_RODATA out of it's ridiculous location and make it
-the default -- only optionally with an inverted option below "Kernel
-hacking" to allow debugging crappy drivers. Please tell me. But I'd
-guess the answer is that such a change would "fix no bug". Therefore
-it "doesn't matter." So, unfortunately, that kernel hardening feature
-has to live on as a "debug option" -- sad, very sad, IMHO.
-
-
-Thanks,
-Mathias
