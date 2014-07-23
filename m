@@ -1,39 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/5
-Message-ID: <j3kr95yppl491ta52iabvjpa.1396989798173@email.android.com>
-Date: Tue, 8 Apr 2014 16:44:00 -0400
-From: Bobby Broughton <bobby@...ehosting.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/10
+Message-ID: <53CFC94C.8040506@parallels.com>
+Date: Wed, 23 Jul 2014 18:40:12 +0400
+From: Vasily Averin <vvs@...allels.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: kernel: vfs: refcount issues during unmount on symlink
 Content-Type: text/plain; charset=utf-8
 
-Once you gain a session id, you can hijack the person's session allowing for unauthorized access.
+https://bugzilla.redhat.com/show_bug.cgi?id=1122472
+"
+A flaw was found in the way reference counting was handled in the Linux kernel's
+VFS subsystem when unmount on symlink was performed.
 
-Here's a good article:
+On Red Hat Enterprise Linux 6 an unprivileged local user could use this flaw to
+cause OOM conditions leading to denial of service or, potentially, trigger
+use-after-free error.
 
-https://www.mattslifebytes.com/?p=533
+On Red Hat Enterprise Linux 7 a privileged local user with CAP_SYS_ADMIN
+capability (also in a container) could use this flaw to cause OOM conditions
+leading to denial of service or, potentially, trigger use-after-free error.
 
+Acknowledgements:
+Red Hat would like to thank Vasily Averin of Parallels for reporting this issue.
+"
+https://lkml.org/lkml/2014/7/21/98
 
-Sent from my Verizon Wireless 4G LTE smartphone
+Problem was fixed in OpenVZ kernel 2.6.32-042stab092.3
+https://openvz.org/Download/kernel/rhel6/042stab092.3/changes
 
+Also I would like to add that KernelCare project (http://kernelcare.com) have released
+a live hot update for this issue, both for affected OpenVZ and RHEL6 kernels.
+http://www.cloudlinux.com/blog/clnews/kernelcare-update-for-openvz-pcs-and-centosrhel-6-kernels-psbm28104.php
 
--------- Original message --------
-From: Donald Stufft
-Date:04/08/2014 4:28 PM (GMT-05:00)
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
-
-
-On Apr 8, 2014, at 3:37 PM, Yves-Alexis Perez <corsac@...ian.org> wrote:
-
->  (for example, I'm still unsure how easy
-> it really is to find some valuable data in those 64kB of process heap
-> memory).
-
-Real easy, here’s a Python script which looks for cookies https://gist.github.com/mitsuhiko/10130454
-
------------------
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-
-
+Thank you,
+	Vasily Averin
