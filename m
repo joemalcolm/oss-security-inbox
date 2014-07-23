@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/18
-Message-ID: <5424359E.9060606@case.edu>
-Date: Thu, 25 Sep 2014 11:32:46 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Solar Designer <solar@...nwall.com>
-CC: chet.ramey@...e.edu, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/11
+Message-ID: <CABbbngCzpmXUzKqdP0e8=SH4dEoG2bSKCs+yuuq3hKS8-B1+3Q@mail.gmail.com>
+Date: Wed, 23 Jul 2014 11:37:38 -0700
+From: Forest Monsen <forest.monsen@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: CVE Request for Drupal Core
 Content-Type: text/plain; charset=utf-8
 
-On 9/24/14, 6:27 PM, Solar Designer wrote:
-> On Wed, Sep 24, 2014 at 12:08:46PM -0400, Chet Ramey wrote:
->> On 9/24/14, 11:16 AM, Solar Designer wrote:
->>
->>> I see no good workaround. 
->>
->> You're correct; there is not a good workaround.  Since there are publicly
->> available patches for all bash versions back 15 years or so, though, the
->> best path forward is to apply those as quickly as possible.
-> 
-> Thank You for providing those patches!  It is rare for an upstream
-> author to provide security fix backports going this far back, and it is
-> really helpful in this case.
+On Mon, Jul 21, 2014 at 1:29 AM, Jorge Manuel B. S. Vicetto <
+jmbsvicetto@...il.com> wrote:
 
-Thanks for the kind words.  In this spirit, I've attached a patch for
-bash-2.05b, since I've been told that there are still systems running it
-out there.
+> SA-CORE-2014-003 - Drupal core - Multiple vulnerabilities
+> https://www.drupal.org/SA-CORE-2014-003
+>
 
-Chet
+Four issues to examine here:
+- Denial of service with malicious HTTP Host header (Base system - Drupal 6
+and 7 - Critical)
+- Access bypass (File module - Drupal 7 - Critical)
+- Cross-site scripting (Form API option groups - Drupal 6 and 7 -
+Moderately critical)
+- Cross-site scripting (Ajax system - Drupal 7 - Moderately critical)
 
+Best,
+Forest Monsen
 
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
-
-Download attachment "funcdef-import-2.05b.patch" of type "application/x-patch" (2472 bytes)
