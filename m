@@ -1,47 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/2
-Message-ID: <20140320075225.GC2503@sivokote.iziade.m$>
-Date: Thu, 20 Mar 2014 09:52:25 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/12
+Message-Id: <201407231927.s6NJRShv015893@linus.mitre.org>
+Date: Wed, 23 Jul 2014 15:27:28 -0400 (EDT)
+From: cve-assign@...re.org
+To: jmbsvicetto@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request for Drupal Core
 Content-Type: text/plain; charset=utf-8
 
-For a start you could ask the mirrors of FD
-(seclists.org, lists.openwall.com).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-In this thread solardiz wrote about delete
-requests.
+> SA-CORE-2014-003 - Drupal core - Multiple vulnerabilities
+> https://www.drupal.org/SA-CORE-2014-003
 
-On Wed, Mar 19, 2014 at 10:44:09AM -0700, Chris Steipp wrote:
-> It would be great to know something about what it took to host the old
-> list, if anyone knows. There are certainly existing organizations who run
-> large mailing lists, have lawyers to deal with takedowns, and believe in
-> free access to knowledge.
-> 
-> Or if anyone has seen another place where this is being discussed by the FD
-> community, I'd welcome a pointer.
-> 
-> 
-> On Wed, Mar 19, 2014 at 9:14 AM, Georgi Guninski <guninski@...inski.com>wrote:
-> 
-> > What is the number of email addresses who
-> > posted on FD?
-> >
-> > (to roughly estimate cost of hosting)
-> >
-> > On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
-> > > Apologies for posting on list mainly dedicated
-> > > to CVE's.
-> > >
-> > > The Full Disclosure mailing list died today:
-> > > http://lists.grok.org.uk/
-> > > http://seclists.org/fulldisclosure/2014/Mar/332
-> > >
-> > > I suppose it is time for a new list.
-> > >
-> > > Any ideas?
-> > >
-> > > --
-> > > guninski
-> >
+See:
+
+  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5019
+  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5020
+  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5021
+  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5022
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJTztQAAAoJEKllVAevmvmsyNkH/1ZI5CIr9iToBCe27f1nTktM
+DYp4htzMuN1RDt31sSk3lzZY/VUBs04fwHn1KKxbL7unTqcubHvnSIX8eBotbF0g
+yobVqRnefg8bMCfeipjj2+x8Fn2Dy5Db6FPqsLekRo4vfncIL3j8c2Kot7PmAEnV
+KSENRna9PA4yVbufkeSJ/rZAvllI+b1Sm4pP6rEmdl1vJdLHC672LvTbI5lVd0sz
+FmSNUydVwBGkuCYrr0/ioYod28MCA4KZtbziHOMi9EERxgm7CE+k/t61vkOsXxQq
+GxSCLr6M46GXx7D0i/jBWWN/UBWrj5yzaIz0B2Q4tAicj04Ys6ao2mCzOXBsZao=
+=VQFk
+-----END PGP SIGNATURE-----
