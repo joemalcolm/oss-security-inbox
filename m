@@ -1,118 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/9
-Message-ID: <20140605052325.GA16859@kroah.com>
-Date: Wed, 4 Jun 2014 22:23:25 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/4
+Message-ID: <20140724093423.GB27882@kludge.henri.nerv.fi>
+Date: Thu, 24 Jul 2014 12:34:23 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, VMware Security Response Center <security@...are.com>, Monty Ijzerman <mijzerman@...are.com>
-Subject: Re: Request for linux-distros subscription
+Subject: Re: CVE request: Mailpoet (wordpress-plugin) remote file upload exploited in the wild
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 04, 2014 at 10:07:34PM -0700, Ramon de C Valle wrote:
-> Hi Greg,
+On Thu, Jul 24, 2014 at 11:26:08AM +0200, Hanno Böck wrote:
+> Hi,
 > 
-> - ----- Original Message -----
-> > From: "Greg KH" <greg@...ah.com>
-> > To: oss-security@...ts.openwall.com
-> > Cc: "Solar Designer" <solar@...nwall.com>, "VMware Security Response Center" <security@...are.com>, "Monty Ijzerman"
-> > <mijzerman@...are.com>
-> > Sent: Thursday, June 5, 2014 1:09:29 AM
-> > Subject: Re: [oss-security] Request for linux-distros subscription
-> > 
-> > On Wed, Jun 04, 2014 at 12:33:13PM -0700, Ramon de C Valle wrote:
-> > > Hi Alexander,
-> > > 
-> > > > On Tue, Jun 03, 2014 at 01:16:47PM -0700, Ramon de C Valle wrote:
-> > > > > I can attest that Monty is my colleague and the Manager of VMware
-> > > > > Security
-> > > > > Response Center. As a former colleague of you (Kurt) and also former
-> > > > > linux-distros subscriber, I would like to ask for your consideration
-> > > > > for
-> > > > > subscribing Monty (or myself) to linux-distros on behalf of VMware.
-> > > > > Although ESXi isn't a Linux distribution, it implements
-> > > > > Linux-compatible
-> > > > > system calls and provides a GNU/Linux -like ecosystem that allows many
-> > > > > applications that are compiled on/for Linux operating systems to run
-> > > > > seamlessly. This ecosystem includes OSS that should be supported in
-> > > > > timely
-> > > > > fashion pretty much like like any other Linux distribution on the list.
-> > > > > It
-> > > > > also implements a Linux kernel module interface and uses many Linux
-> > > > > device
-> > > > > drivers and kernel modules that also should be supported. In addition,
-> > > > > ESXi is the base layer that many of the Linux distributions on the list
-> > > > > rely upon and run atop of in many datacenters around the world.
-> > > > 
-> > > > Thank you, Ramon.  This is pretty good rationale, but I feel that
-> > > > getting VMware onto linux-distros for the reasons given above would be a
-> > > > (possibly desirable) change in who the list is for.  So far, it's been
-> > > > for Linux distros, and I deliberately chose the linux-distros name for
-> > > > it.  Now a non-Linux-distro wants to be specifically on linux-distros
-> > > > (not just on distros), and be exposed to Linux-specific vulnerability
-> > > > details (albeit for good reasons).  I'd appreciate comments by others
-> > > > active in this community.
-> > > I'm afraid I can't comment on Greg's comments due to my lack of legal
-> > > understanding. However, in addition to the reasons explained above and
-> > > also Alan's comments (which, IMO, also add to our reasons), I'd also
-> > > appreciate comments by others active in this community and would be
-> > > happy to answer any questions anyone might have.
-> > 
-> > Ok, let's keep this on a purely community basis, no legal issues
-> > involved (to quell the tide of private emails about this as well.)
-> > 
-> > Your company takes the Linux kernel drivers (a large majority of the
-> > Linux kernel source tree) and builds a product around it, while refusing
-> > to contribute back to those drivers.  What you are doing has been
-> > explicitly stated as something you should not be doing by a number of
-> > community members.  Somehow you feel that your tiny "core" of a custom
-> > kernel is more important than the larger body of community work you are
-> > relying on in order for that core to work properly.
-> I'd appreciate any references to back the "a large majority of the
-> Linux kernel source tree", "while refusing to contribute back to those
-> drivers", and "tiny "core" of a custom kernel" statements if you want
-> me to make any comments.
-
-You referenced it above in your statement about why you want to be part
-of the group.  You write:
-	It also implements a Linux kernel module interface and uses many
-	Linux device drivers and kernel modules that also should be
-	supported.
-
-That Linux kernel driver codebase is huge, and odds are, much larger
-than the core kernel you are linking it to (just by the virtue of the
-fact that the Linux kernel core is much smaller than the driver portion
-of the source tree you are using.)  If I'm wrong in that your kernel is
-much larger than the drivers being used here, well, you all are doing
-something wrong :)
-
-> > Because of this reliance on that large body of code, you are now asking
-> > to be notified ahead of time about vulnerabilities in that code base by
-> > the same community members you are ignoring in the first place.
-> Same for "Because of this reliance on that large body of code".
+> A remote file upload in the wordpress plugin Mailpoet is currently
+> widely exploited:
+> http://blog.sucuri.net/2014/07/remote-file-upload-vulnerability-on-mailpoet-wysija-newsletters.html
+> http://blog.sucuri.net/2014/07/mailpoet-vulnerability-exploited-in-the-wild-breaking-thousands-of-wordpress-sites.html
 > 
-> > 
-> > Does that seem like a fair thing to be asking for?
-> > 
-> > To me it does not, but feel free to persuade me otherwise.
-> My intention isn't to persuade anyone.
+> It is fixed in the version 2.6.7. Upstream changelog:
+> http://wordpress.org/plugins/wysija-newsletters/changelog/
+> Fixed security issue reported by Sucuri
+> 
+> 
+> The changelog lists also another security issue, fixed in version 2.6.8,
+> however without any details:
+> Fixed security issue reported by our dear Dominic. Thank you sir!
+> 
+> I know that CVE requests without details aren't liked much here,
+> however at the moment I don't have the time to digg into version diffs.
+> 
+> 
+> Please assign CVE for the first and proceed how you think appropriate
+> for the second.
+> 
+> 
+> -- 
+> Hanno Böck
+> http://hboeck.de/
+> 
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
 
-Well, as that is what you are supposed to be doing in order to get
-admission, it seems odd that you don't intend to do this.
+Already assigned. Please see
+http://www.openwall.com/lists/oss-security/2014/07/02/1 thanks. Top 379 plugin
+in http://seclists.org/nmap-dev/2011/q2/352 by the way.
 
-> If everyone thinks that we shouldn't be subscribed to linux-distros,
-> that's fine. I just would like a fair reasoning of why not, instead of
-> biased and emotionally-filled comments.
+---
+Henri Salo
 
-Taking emotions out of humans and decisions causes other major problems,
-don't try to do that.  On the linux-distro list, you will have to be
-interacting with (well, supposed to be) the humans of those open source
-projects in order to address the issues found on the list.  Those
-community members are actual people with emotions and histories of
-dealing with companies in various manners.  If you somehow think that
-they will not react in ways that they feel are in the best interest of
-their project's long-term interests, well, then you are forgetting how
-open source communities work.
-
-thanks,
-
-greg k-h
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
