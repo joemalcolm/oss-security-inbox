@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/12
-Message-ID: <Pine.LNX.4.64.1412051036470.25424@beijing.mitre.org>
-Date: Fri, 5 Dec 2014 10:37:22 -0500 (EST)
-From: cve-assign@...re.org
-To: Damien Regad <dregad@...tisbt.org>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: PHP Object Injection in MantisBT filter API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/6
+Message-ID: <20140724181124.GA30484@kludge.henri.nerv.fi>
+Date: Thu, 24 Jul 2014 21:11:24 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: WordPress plugin vitamin traversal arbitrary file access 
 Content-Type: text/plain; charset=utf-8
 
+Can I get 2012 CVE for WordPress plugin vitamin path parameter traversal
+arbitrary file access vulnerability, thanks. Files: add_headers.php, minify.php
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Affected: 1.0
+Fixed in: 1.1
 
->In the function current_user_get_bug_filter(), the code loads a variable
->from $_GET['filter']/$_POST['filter'] and if it's not numeric, feeds it
->straight into unserialize() allowing an attacker to inject a PHP object.
+Short description of plugin:
 
-Use CVE-2014-9280.
+ Vitamin is about SEO, speed and security. It includes sitemaps for SEO, cache
+ for speed, antispam and hacker blocks for security. 
 
-- ---
+Plugin page: http://wordpress.org/plugins/vitamin/
+Changelog: http://wordpress.org/plugins/vitamin/changelog/
+OSVDB: http://osvdb.org/84463 http://osvdb.org/84464
+SCM: https://plugins.trac.wordpress.org/changeset/582232/vitamin
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+---
+Henri Salo
 
-iQEVAwUBVIHQnallVAevmvmsAQKGJgf+OKpsaxKCv2/tLY55l9EqJWyq4XJ6w7et
-xxB8XG1nBtz87UzPqFOznjbdMn1MIQRSGAzxPaQNe8EF0fMxDErTivNeMrRcVdlP
-TEwQS6YQr0UdJpBH0ngpUrC63fBDkHX5c2mdbUE3rniSjj4pReQS4B8EcLFaTG/z
-B/ZerfEiOSI8xk3O5fnMcZ4ryDQLB6fUyLamcXDVDJi74R0Ah8God8pJiZQN4y+W
-Jsle18GcUvobf8eEO+FIbAZ6mcTtSqxESSr0e3+4rl6j8rZofMtXfP+wgm94lINJ
-asyqDE//Yg2uASsB896SGMwVE642DP1KllxHEs1zMt5Mo+12N171WA==
-=+kx+
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
