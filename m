@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/19
-Message-ID: <20140304123322.GD5757@debjann.fritz.box>
-Date: Tue, 4 Mar 2014 13:33:22 +0100
-From: Jann Horn <jann@...jh.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/2
+Message-Id: <201407240236.s6O2aFeU004750@linus.mitre.org>
+Date: Wed, 23 Jul 2014 22:36:15 -0400 (EDT)
+From: cve-assign@...re.org
+To: vvs@...allels.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: kernel: vfs: refcount issues during unmount on symlink
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 04, 2014 at 12:28:21PM +0000, John Haxby wrote:
-> 
-> On 4 Mar 2014, at 11:24, Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
-> 
-> >> Google Chrome doesn’t permit the link though, it just crashes :)
-> > 
-> > On what platform?  Is this for any connection, or just for a primary
-> > connection?  That is, can any web site can crash google chrome with <img
-> > src="https://demo.cmrg.net/" /> ?
-> > 
-> > (sorry, i don't have either chrome or safari handy to test it myself
-> > right now)
-> 
-> Chrome crashes on both Linux and Mavericks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Could this be https://code.google.com/p/chromium/issues/detail?id=91341 or so?
+> https://bugzilla.redhat.com/show_bug.cgi?id=1122472
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+> A flaw was found in the way reference counting was handled in the Linux kernel's
+> VFS subsystem when unmount on symlink was performed.
+
+Use CVE-2014-5045 for this issue in the mountpoint_last function in
+fs/namei.c (not yet patched at
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/fs/namei.c).
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT0HDIAAoJEKllVAevmvmsVIoIAKE1tc6jm3tD2y6RlHUNOV6u
+cAgX0+nBMH0ksSPQvATuzmBqDnndAxmW0xSorhYLYTltpM6ZI3uKmSU1Y/7Yt/xI
+FehQi2fhidDH3Z+Z28iHJ85YhznUZQESiIr2nPR5FzIlZS4JkT+tadfAsEZQ8QsA
+diJABliZ9wVwzqODywRlkw9sEow57uCKSkW+muungtBmlpIM1arN4J6mRfxK37OT
+5iPNgk2ktXJw+J+8bGnbH/aIr3nhCSTiZUEUAujRvd+72gSqvLKsLfUbb45fXEBB
+xk3zsksBCKkJEp0qtjImN22t23kOfiIe/WXD1v3KaH2XCB5nUeTgjNPG2bo6uxQ=
+=tRtt
+-----END PGP SIGNATURE-----
