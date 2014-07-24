@@ -1,67 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/18/2
-Message-Id: <201407181730.s6IHUYAa023743@linus.mitre.org>
-Date: Fri, 18 Jul 2014 13:30:34 -0400 (EDT)
-From: cve-assign@...re.org
-To: thoger@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, gmollett@...hat.com, kseifried@...hat.com
-Subject: Re: CVE request - Snoopy incomplete fix for CVE-2008-4796
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/8
+Message-ID: <CAFBnvyXBmCv=vN+YZEZTOzg3Gps2j8O6gQbaM=KaOQKpdeNa4Q@mail.gmail.com>
+Date: Thu, 24 Jul 2014 20:59:19 +0200
+From: Adan Alvarez <adan.alvarez.90@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Duplicated CVE - Cacti XSS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-> 2002
-> http://sourceforge.net/p/snoopy/bugs/13/
-> 
-> It seems this allowed the most simple injections:
->   https://example.com;id
->   https://example.com/foo.html;id
-> 
-> Fixed in 2004 via:
-> http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log#rev1.11
+I requested a CVE to mitre three days ago because of the security bug I
+found: http://bugs.cacti.net/view.php?id=2456
 
-Use CVE-2002-2444.
+CVE-2014-5043.
 
+Unfortunately, there are currently two CVE assigned to this security issue:
+CVE-2014-5025 and CVE-2014-5026.
 
-> 2008
-> ...
-> Followed by a similar fix for headers few days later, which probably
-> was not picked up by folks backporting the above commit as the fix for
-> this CVE:
-> http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log#rev1.27
+So I don't know what should I do.
 
-Use CVE-2008-7313 for this vulnerability involving headers. This issue
-exists because of an incomplete fix for CVE-2008-4796.
+On the other hand,  I just discovered another XSS vulnerability that is not
+solved by the current patch.
 
+Here you have the details to reproduce it:
 
-> 2014
+Create a new user or edit an existing one with the following Full Name:
+[XSS]
+Then go to System Utilities - View User Log, and if the user has logged in
+you will see a popup with the text "XSS".
 
-> http://mstrokin.com/sec/feed2js-magpierss-0day-vulnerability-not-really-it-is-actually-cve-2005-3330-cve-2008-4796/
+Maybe the CVE-2014-5043 can by used to identify this last discovery.
 
-Use CVE-2014-5008. This issue exists because of an incorrect fix for
-CVE-2008-4796 (i.e., use of escapeshellcmd where escapeshellarg was
-required).
+Regards,
+Adan
 
-
-> https://github.com/cogdog/feed2js/pull/12#issuecomment-48283706
-
-Use CVE-2014-5009. This issue exists because of an incorrect fix for
-CVE-2014-5008.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTyVl2AAoJEKllVAevmvmsVmgH/i8/r/RQYS5Bu/vzlDVjZbK/
-vIjD4rUuUOJ+A75GOR5IjsHg0Ybh5nvx4eTHCTeQhFsNibKUqn8n6SIJlghbtx3C
-H2rSGAN4B1+F/xa/3qTU0CAqsear/UqlwCbyD/VvSuS6plYYfk24/UcmDFZ7+N6P
-fIf0JAx+0pBWB74s3BdMcSbJNW/19hVMF4vRfsmirTQUn9yjXlB8QyAEVsqw2qSU
-T18YscFWBTrB2ifYBD14ku7wK+EFUBNdSsq2/Hykxroka+n2maZVJUpZmpEFSfzZ
-jKtciy2Vw/lj/JuCZb02yqL3Lzjph6AYjNWjcbUWtXNPXajiYNMD85PsAtwhkBw=
-=hYe5
------END PGP SIGNATURE-----
