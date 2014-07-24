@@ -1,88 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/7
-Message-ID: <20140320114957.GH2503@sivokote.iziade.m$>
-Date: Thu, 20 Mar 2014 13:49:57 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: FD mailing list died. Time for new one (or something better!)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/1
+Message-Id: <201407240208.s6O28XNR004364@linus.mitre.org>
+Date: Wed, 23 Jul 2014 22:08:33 -0400 (EDT)
+From: cve-assign@...re.org
+To: fweimer@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: [CVE request] Array allocation fixes in libgfortran
 Content-Type: text/plain; charset=utf-8
 
-Interesting idea :)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-How hard is to implement?
+> several CVE-2002-0391-style integer overflows in array allocation in
+> libgfortran
+> 
+> https://gcc.gnu.org/viewcvs/gcc?limit_changes=0&view=revision&revision=211721
 
-Some human will be in technical charge.
-How resistant is this against dishonest
-operator?
+Use CVE-2014-5044.
 
-Suggestion:  make the project easy to
-install and import the DB in case it
-dies too for whatever reasons.
+It seems fairly clear that there is only one CVE ID needed. However,
+can you clarify what definition of "CVE-2002-0391-style integer
+overflows" you were using? We think you might mean:
 
-Why not implement all alternatives?
+  - any integer overflow caused by multiplying the number of elements
+    in an array by the size of a single element
 
-This might cause duplicate traffic.
+  - this includes, but isn't limited to, cases where the array
+    elements represent arguments
 
-So far several alternatives are:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-1. Public service mailing list (easy)
-2. Standard mailing list (legal issues)
-3. coderman's solution
-4. forum or Question&Answers site (might support email)
-
-
-
-On Thu, Mar 20, 2014 at 03:18:23AM -0700, coderman wrote:
-> a modest and proportionate proposal,
-> 
-> fuller-disclosure:
->  - a hidden list (local accts only, no clearnet linkage)
->  - a hidden daily digest (per mod prefs, see below)
->  - a hidden xmpp (otr required - plaintext abused)
->  - a hidden web archive (of the list traffic, read-only)
->  - a hidden public chat (group xmpp+/|ircd, no clearnet linkage)
->  - a hidden pastebin with or without simple nonce auth
->  - a advogato reputation sys to stack rank and put below the fold
->    (for list digest content, public chat, web archive, and public pastes)
-> 
-> use case A: "JerkVendor is Jerk"
->  - more accomodating disclosure fails,
->     good faith and gratis effort returned with bile.
->  - bugtraq drama ensues, takedowns.
->  - "Hey, the advisory is still up here! ->  fullerd.onion/..."
-> 
-> use case B: "The Hot Drop"
->  - *whispers* 'remember the Athens Affair? i'd rather not Opt-Out to report'
->  - BREAKING NEWS: "Anonymous russian hackers drop dox on spyhack to
-> darknet fullerd.onion..."
-> 
-> use case C: "It's my party and I'll..."
->  - 'so how it happened was,
->     , i coaxed pre-auth SSL cert parsefail remote exec with escalate to system'
->  - "Hey DEF CON! fuck that full-disclosure closure drama,
->     let's get this party started!"
->  - DEF CON XX official start and group xmpp/ircd distributes nonce for
-> 0day to thousands of hidden participants simultaneously.
->     [ remainder of distribution happens over sneakernet at con
->       due to unexplained outage across entire Tor network for all users... ]
-> 
-> 
-> not a concern at all, ever:
->  - "HOLY SHIT TAKE THAT DOWN NOW!!!" legal motions
->  - "HOLY SHIT TAKE THAT DOWN NOW!!!" supporter/peer pressure
->  - "HOLY SHIT TAKE THAT DOWN NOW!!!" matters of national security
->  - "HOLY SHIT TAKE THAT DOWN NOW!!!" hint in datagram at 100Gbps
-> [ the inverse is use case D: "99.44% Peace of Mind" ]
-> 
-> 
-> 
-> i don't see the point in anything less; other technologies filling
-> existing roles fine, while the truly necessary drops have zero outlet.
-> 
-> .
-> .
-> .
-> finding someone with strong reputation and good judgement to publicly
-> validate and speak to the efforts of the equally reputable but
-> absolutely anonymous service operator?
-> ... now that's a hard sell ...  *grin*
+iQEcBAEBAgAGBQJT0GoDAAoJEKllVAevmvmsFnAH/0NvbICQOkjYCUuhVPkptG1H
+EHsDkC8Ll+H8vAB9uBBFY5bFPLKNLiVZv7E8Y51X4MqiugwVRgJ4mHxd88LgnI+A
+1gsQbW3GR2uphO7MxHFGDNiwAsht0KONUTI+dGvi8gOBiQeLDWWxM5uxoqjc4EwP
+5kCa/Vo+d+l6UvSbk2KNqqcWapfVIgDpPGqkFADDQ+UfUfFAOaRj6xV1siBjxgDE
+ONJbFQIlrXBPWXDnDC5uKycrpdTQGojHuhK+7mLejOHMIc7oT/Fvt3IOMrNn4EVE
+/frwqAit/n2WkeU52poljl/w6d56Bx2+i33pJy98zYKaOi+eve3AmnisVGhFgoI=
+=1dP4
+-----END PGP SIGNATURE-----
