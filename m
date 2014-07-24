@@ -1,56 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/5
-Message-Id: <20141120065509.B0880B2E1EB@smtpvbsrv1.mitre.org>
-Date: Thu, 20 Nov 2014 01:55:09 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 767227@...s.debian.org
-Subject: Re: CVE request: lsyncd command injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/5
+Message-ID: <alpine.LFD.2.10.1407241928340.6909@javelin.pnq.redhat.com>
+Date: Thu, 24 Jul 2014 19:30:10 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request Linux Kernel: net: SCTP: NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> There is a command injection flaw in lsyncd, a file change monitoring
-> and synchronization daemon:
-> 
-> https://github.com/axkibe/lsyncd/issues/220
-> 
-> https://github.com/creshal/lsyncd/commit/18f02ad013b41a72753912155ae2ba72f2a53e52
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=767227
+    Hello,
 
-Use CVE-2014-8990. The scope of this CVE ID includes both:
+Linux kernel built with the support for Stream Control Transmission Protocol 
+(CONFIG_IP_SCTP) is vulnerable to a NULL pointer dereference flaw. It could 
+occur when simultaneous new connections are initiated between a same pair of 
+hosts.
 
-  1. code execution with ` characters or other characters that are
-     special to a shell
-  2. denial of service scenarios in which a user with write access
-     to a local directory uses special characters to make
-     synchronization fail (might have security relevance in some
-     scenarios)
+A remote user/program could use this flaw to crash the system kernel resulting
+in DoS.
 
-The MITRE CVE team does not have a Lua expert. The code change adds:
+Upstream fix:
+- -------------
+   -> http://patchwork.ozlabs.org/patch/372475/
 
-  local path1 = event.path:gsub ('"', '\\"'):gsub ('`', '\\`'):gsub ('%$','\\%$')
-  local path2 = event2.path:gsub ('"', '\\"'):gsub ('`', '\\`'):gsub ('%$','\\%$')
 
-This does not seem to be the typical fix approach for unsafe input to
-a shell. Has anyone concluded that this is an incomplete fix that ought
-to be modified before the 2.1.6 release?
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJUbY53AAoJEKllVAevmvmsovEH/RdJAnkv4IR3AiSZ9RUVjmn7
-5U52az+5OPJLx3P3Z7MrEytMirvjrr3/tWYu06FDfOFRgwSc0lbt5DHjr2+dBemw
-kSsuw7BUc7NBAploOFyX/HEqafSYNs4ykRCKxtYhrnqq9R/pa+E86Ol74lxqqXX+
-0gwKt3j49qrs+t7Ll7QWn3BdnGgtLNjMn0Zh2kgczUnevZ4wY4ssohM5JQXC9ImS
-IlbXuy0INovx9j1DBplNrGQ07p3ETjH0gcYcucb/MvS6r1RaJXXrrg3bd5CUVEpj
-kwyDtPrs/LuSj+Gi+wq4xRBpzmXxLoJ2yc4Czg+ch5qFToXx0cu9Zo/LOJB9m9g=
-=q6u/
+iQIcBAEBAgAGBQJT0RFqAAoJEN0TPTL+WwQfGG8P/jDznmANj2c3rVe0Sx3BaxRX
+zwbkaqg3eiKiqmBh+Wnf+n6tDsvGA2TUYAF+lqOEM5twJee89Z+WtTRoI6+6MMCE
+AwiohGZyIIutPYwVmZk1lgWnbiVb7jLpoU225ztzMKGuPCO+kDwvFyjmXK6XsfrW
+ww02NoJjysibS/OteJ9gDGbbGVmWuAly+IhwURTLTeuUBmfnV2vO1nFNT9WzWjpU
+30Cw09Kac47UvW2RvQLOi+elTl36oTKjbFPp2So8LYxEvaxakooI7w8y7OtSYMxG
+b3IHIDzgsbQTXFTQzp9mSSymHkAKGMtMpjqBPB8AHk5yVYWF4WM2Rx5vagTyqWUp
+TcwbP9OloND+AoTsWabKyIwIzElnw2xaNEWXU4CxagDookPx+CqLLJF5abRDUlK7
+T+/LIpCMtZnRuJF0CQedMSOBCie9zRgdwesmRdtvRBpQ4JzpwFOlFoKbkDtSSvXd
+9ArbbJHst4uuGEjih2PWRL6OCigk+a3mmXmcGtAChbuouW26dOPfOSbXO+0WpC0K
+YNpttf/9cudRVows1/iS249prMrJvwktvCBiPOOMK4hDUAp+Q7w7XIWmSOlmD4Fd
+7IlzylhC79eUN26bhm19pMtEFkz0K5l/t1HrAgZ91htWuT8sxtBu2uYKivk8rIiH
+LgN0haqjXaAYidUwDO+b
+=T+/w
 -----END PGP SIGNATURE-----
