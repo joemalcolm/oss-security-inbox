@@ -1,59 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/24/4
-Message-ID: <20140824205108.GA3545@hurricane.linuxnetz.de>
-Date: Sun, 24 Aug 2014 22:51:08 +0200
-From: Robert Scheck <robert@...oraproject.org>
-To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
-Subject: CVE request: Multiple incorrect default permissions in Zarafa
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/3
+Message-ID: <20140724112608.19bd4bba@pc>
+Date: Thu, 24 Jul 2014 11:26:08 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Mailpoet (wordpress-plugin) remote file upload exploited in the wild
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-I discovered that the Zarafa Collaboration Platform has multiple incorrect
-default permissions (CWE-276):
+A remote file upload in the wordpress plugin Mailpoet is currently
+widely exploited:
+http://blog.sucuri.net/2014/07/remote-file-upload-vulnerability-on-mailpoet-wysija-newsletters.html
+http://blog.sucuri.net/2014/07/mailpoet-vulnerability-exploited-in-the-wild-breaking-thousands-of-wordpress-sites.html
 
-1. In order to fix CVE-2014-0103, Zarafa introduced constants PASSWORD_KEY
-and PASSWORD_IV in /etc/zarafa/webaccess-ajax/config.php (Zarafa WebAccess)
-and /etc/zarafa/webapp/config.php (Zarafa WebApp), both are the upstream
-path names of a default installation, downstream names might be different.
-Both files have default permissions of root:root and 644, thus decryption
-of the symmetric encrypted passwords in the on-disk PHP session files is
-possible again (similar like initially described in CVE-2014-0103). Affects
-Zarafa WebAccess >= 7.1.10, Zarafa WebApp >= 1.6 beta.
-
-2. The log directory /var/log/zarafa/ is shipped by default with root:root
-and 755 and all created log files by the Zarafa daemons have by default
-root:root and 644. This is leaking (depending on the log level of the given
-service) only e.g. subject, sender/recipient, message-id, SMTP queue id of
-in- and outbound e-mails but might be even a cleartext protocol dump of
-IMAP, POP3, CalDAV and iCal as well (including possible credentials) to any
-local system user. Affects Zarafa >= 5.00.
-
-3. The directories /var/lib/zarafa-webaccess/tmp/ (Zarafa WebAccess) and
-/var/lib/zarafa-webapp/tmp/ (Zarafa WebApp) are read- and writable by the
-Apache system user by default - but also world readable for local system
-users (e.g. apache:apache and 755 on RHEL). Thus all the temporary session
-data such as uploaded e-mail attachments can be read-only accessed because
-all created files below previously mentioned directories have permissions
-644, too. Upstream path names changed over the time and releases. Affects
-Zarafa WebAccess >= 4.1, Zarafa WebApp (any version).
-
-4. The optional (but proprietary) license daemon /usr/bin/zarafa-licensed
-runs by default with root permissions, the subscription/license key is put
-into '/etc/zarafa/license/*'. The license files are recommented (according
-upstream documentation) to be created using echo(1) which usually leads to
-root:root and 644. But the parent directory /etc/zarafa/license/ is shipped
-by default with root:root and 755. As result the key files can be accessed
-and copied by any local system user. Affects Zarafa >= 4.1.
-
-As of writing Zarafa doesn't seem to have built-in permission checks (like
-e.g. fetchmail(1) has), too.
+It is fixed in the version 2.6.7. Upstream changelog:
+http://wordpress.org/plugins/wysija-newsletters/changelog/
+Fixed security issue reported by Sucuri
 
 
-With kind regards
+The changelog lists also another security issue, fixed in version 2.6.8,
+however without any details:
+Fixed security issue reported by our dear Dominic. Thank you sir!
 
-Robert Scheck
+I know that CVE requests without details aren't liked much here,
+however at the moment I don't have the time to digg into version diffs.
+
+
+Please assign CVE for the first and proceed how you think appropriate
+for the second.
+
+
 -- 
-Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
+Hanno Böck
+http://hboeck.de/
 
-Content of type "application/pgp-signature" skipped
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
