@@ -1,28 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/40
-Message-Id: <20141007215642.E464E6C003C@smtpvmsrv1.mitre.org>
-Date: Tue,  7 Oct 2014 17:56:42 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/9
+Message-Id: <201407241926.s6OJQkbM005862@linus.mitre.org>
+Date: Thu, 24 Jul 2014 15:26:46 -0400 (EDT)
 From: cve-assign@...re.org
-To: kseifried@...hat.com
+To: adan.alvarez.90@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Discussion: information leakage from server and client software - CVE/hardening/other?
+Subject: Re: Duplicated CVE - Cacti XSS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> So for example the
-> http://boingboing.net/2014/10/07/adobe-ebook-drm-secretly-build.html
-> article would indicate to me that this is CVE worthy under #4 
+> I requested a CVE to mitre
+> 
+> CVE-2014-5043.
+> 
+> another XSS vulnerability that is not solved by the current patch.
+> 
+> Here you have the details to reproduce it:
+> 
+> Create a new user or edit an existing one with the following Full
+> Name: [XSS] Then go to System Utilities - View User Log, and if the
+> user has logged in you will see a popup with the text "XSS".
+> 
+> Maybe the CVE-2014-5043 can by used to identify this last discovery.
 
-Currently not; Adobe has a statement quoted at:
+Yes, this is what we will do. CVE-2014-5043 was not previously bound
+to any conflicting public vulnerability information, so we will
+establish the public scope of CVE-2014-5043 as exclusively this new
+"System Utilities - View User Log" XSS issue. Our understanding is
+that this crosses privilege boundaries because the attacker must have
+"User Administration" enabled under "Realm Permissions" but the
+attacker does not need to have all of the Realm Permissions. If this
+is incorrect and "User Administration" is always equivalent to the
+"admin" user at all Cacti sites, then this CVE wouldn't be needed.
 
-  http://arstechnica.com/security/2014/10/adobes-e-book-reader-sends-your-reading-logs-back-to-adobe-in-plain-text/
-
-indicating that the information disclosure is intentional, and is
-(from their point of view) useful to them. This is just an example of
-a behavior that might also occur in an open-source product. The Adobe
-issue itself is off-topic for this list.
+In any case, http://www.openwall.com/lists/oss-security/2014/07/22/9
+still defines the meaning of CVE-2014-5025 and CVE-2014-5026.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -32,11 +46,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUNGE1AAoJEKllVAevmvmsPGoH/iEVan/w5VupVHcepPvXtMPU
-aBsC1Zf5wJP9THQDZebMPafZihh15VZdV5jTwcg3uJYYVSA3l/oLNVk6JYFlxfAu
-ma8UDNiny/lArA28pGi4Ktu+/3bG6tlr/q6jb4OdjZlmdSFOtiLx0r87jrO8RG78
-YdvK97pdM19HghlQtc8iDGrkLn2sfROI8VxvnNt0KncVICJGKgZSy1rI7nRK+Yri
-NSO26F7PDOBW5ZCXaY8WxdeJka95AWH2ILQ+X4KHxkDvY5d6NOSVOjpf19oB5x02
-PkdLwCUoBNrndpvRses2evgdm0Qr7Vg3/MSw6I11AxKEHI8JDIMMdIVWznTZp0Q=
-=9O10
+iQEcBAEBAgAGBQJT0V1ZAAoJEKllVAevmvms1I8H/ig+KhutHxd5FBmV0V3Id9bj
+5uxkBIIKw6kA7LM5KU8bnAc6PeE5Xg2N8GJCL5wlysGluCAT+Dbco2X8Nvsi4RUG
+AM3Z/WcxTA+duHpRea2Cd9W3PRGnx42vQDFAuIB44MLKjHtlENasic6BauBw+gy6
+F6CrX463/o6A5fXu1U7PMEKRKwIRozdLxuTrEJhhUJe012sRchQRvDme2nKtHOz5
+woCD8BPh8t5iO5TPzAI0+Fc8EQMduN2RpvsQhZanYZDjVdnCayi2p/at02RDk/Xq
+OoOVDBue0T4smnH50qNYYSknn0e0C9zSlXUefL54JNO+7qoqbDzHt1vNFmw3io0=
+=mGH4
 -----END PGP SIGNATURE-----
