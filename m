@@ -1,52 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/20
-Message-Id: <201406031835.s53IZmNF024373@linus.mitre.org>
-Date: Tue, 3 Jun 2014 14:35:48 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE-2014-0234 Installer: OpenShift Enterprise: openshift.sh default password creation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/26/2
+Message-ID: <53D37103.1020301@redhat.com>
+Date: Sat, 26 Jul 2014 11:12:35 +0200
+From: Daniel Borkmann <dborkman@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org, ppandit@...hat.com
+Subject: Re: Re: CVE request Linux Kernel: net: SCTP: NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 07/26/2014 04:21 AM, cve-assign@...re.org wrote:
+...
+> Use CVE-2014-5077 for this issue in the sctp_assoc_update function in
+> net/sctp/associola.c (not yet patched at
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/net/sctp/associola.c).
 
-Are there any additional thoughts about CVE-2014-0234 before we cover
-it on the cve.mitre.org web site? See:
+It's currently in the -net tree [1], I expect a pull request for
+mainline to happen quite soon.
 
-  http://openwall.com/lists/oss-security/2014/05/29/4
+Cheers,
 
-We had planned to proceed with this viewpoint:
+Daniel
 
-  1. If Red Hat shipped Red Hat OpenShift Enterprise 2 with a publicly
-     known password in broker.conf, Red Hat is allowed to categorize
-     that as a vulnerability and assign a CVE ID.
-
-  2. There was also an issue in an example script. The script in
-     question had comments of "not comprehensive nor robust enough ...
-     require significant adaptations ... Please adapt it."
-     Nonetheless, this is a script authored by Red Hat, and Red Hat
-     might have been treating it as a supported part of a software
-     product. If so, then Red Hat is allowed to categorize a script
-     issue as a vulnerability and assign a CVE ID. Unless Red Hat
-     chooses to take that position, the default decision for that type
-     of disclaimed example code is that a CVE ID assignment isn't made.
-
-  3. The CVE IDs in 1 and 2 can't be the same.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTjhTwAAoJEKllVAevmvmsIG4H/itFt85cWqZpQFrJ0XWI3t/w
-J3E7YQgh16vSIL2kifooOblAjrtGnUt+HqeoELhdVd5QJfj9h9bfzxr/rvs+czC/
-nbaZrphHdwt/qk1LECTh4mvSaqcDvSXRkc/bhjMcFRNwU8Jrq09jlrkyN3+SUYrp
-VeFG6PCdgJfEl23aP/mhiTNseNrwIooHW5HrrzdOP/BYae3TirmpYJuaGIVze1mN
-/tmvFxb1n/7y00PQ2jMWjxw2Y29BrIb771iY/pBufp+DRDC/Od2Mykxsj4Sjizni
-hAzoWUh8iEbwiuZANgxnOmqUxHtHGEO5ZgXpeyanQMg/uAhQkZrFTpSHWBAa9P0=
-=2HvF
------END PGP SIGNATURE-----
+   [1] http://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=1be9a950c646c9092fb3618197f7b6bfb50e82aa
