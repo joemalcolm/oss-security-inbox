@@ -1,40 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/23/5
-Message-ID: <20140923191627.GA27818@zoho.com>
-Date: Tue, 23 Sep 2014 19:16:27 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Python 2.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/26/1
+Message-Id: <201407260221.s6Q2Lhtb013026@linus.mitre.org>
+Date: Fri, 25 Jul 2014 22:21:43 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request Linux Kernel: net: SCTP: NULL pointer dereference
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Python 2.7.8 fixes a potential wraparound in buffer() [1a & 1b] with
-possible CWE-200 implications [2].
+> Linux kernel built with the support for Stream Control Transmission Protocol
+> (CONFIG_IP_SCTP) is vulnerable to a NULL pointer dereference flaw. It could
+> occur when simultaneous new connections are initiated between a same pair of
+> hosts.
+> 
+> A remote user/program could use this flaw to crash the system kernel resulting
+> in DoS.
+> 
+> http://patchwork.ozlabs.org/patch/372475/
 
-If not yet assigned, please consider a CVE designation for this issue.
+Use CVE-2014-5077 for this issue in the sctp_assoc_update function in
+net/sctp/associola.c (not yet patched at
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/net/sctp/associola.c).
 
-Thanks.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
---mancha
-
-(Note: Though the request is for Python 2.7, vulnerable code appears to
-exist in EOL'd versions 1.6.1 through 2.6.9 as well)
-
--------
- 
-[1a] Issue report: http://bugs.python.org/issue21831
-[1b] Upstream fix:
-https://hg.python.org/cpython/diff/8d963c7db507/Objects/bufferobject.c
-
-[2]  PoC for Python 2.7:
-
---- overflow.py ---
-import sys
-a = bytearray('CVE request')
-b = buffer(a, sys.maxsize, sys.maxsize)
-print b[:8192]
--------------------
-
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJT0xAbAAoJEKllVAevmvmsiHcIAMNXsXM6x1ZWJg76+Cx/KDBu
+CP2O8uheLuZ6DysmnF0UjN8x9LVSN3QEnKlhohULeohoslSISkiQr7bJLtYodLjA
+lvugVwmOhSPKiz/5ro8RoTTNNljDY3xGOE4+W+m8ypbTK69Dudqu0gEWe5ipSLWF
+CzaYajr0uB76jv+i6qaGxfiEClcSkGRbV25uq3t8DFYlNyu9phVTrHk16MzQi3Us
+3rST3OviZX2ZVVmx/IP0XuN7HVS6TXCuwA1mAlpXnADLvwQ7UVxr5O9Gvzor3d3M
+adGp6FZ7cJ28WJICemDct3Y2ELQNJE2H99wsXAhOQf2+VfeHRmEJ42GHNVFh7mI=
+=RQ8e
+-----END PGP SIGNATURE-----
