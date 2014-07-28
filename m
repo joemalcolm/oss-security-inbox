@@ -1,39 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/5
-Message-ID: <52F89EEA.40106@redhat.com>
-Date: Mon, 10 Feb 2014 10:42:02 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/28/2
+Message-ID: <CAOp4FwT7-6=AaS+kyoyLreugeZLK5mdZ0=bDf8w7xm4joMtg2g@mail.gmail.com>
+Date: Mon, 28 Jul 2014 11:06:11 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+Subject: Re: rsync vulnerable to collisions
 Content-Type: text/plain; charset=utf-8
 
-On 02/10/2014 08:34 AM, P J P wrote:
-
-> ===
-> ...
-> By exploiting a hash table collision, an attacker has no way to trigger
-> a DoS, but he can actually do something way more interesting: force the
-> resolver to send the same query for the same TLD, over and over again,
-> always to the same set of servers, no matter what the intended TTL is
-> and no matter what the cache size is.
+On Mon, Jul 28, 2014 at 5:18 AM, Michael Samuel <mik@...net.net> wrote:
+> Hi,
 >
-> And suddenly, poisoning dnscache with a malicious TLD much, much, much
-> easier and faster.
-> ===
+> After some semi-public discussion on Twitter I have come up with a method
+> of creating blocks that collide under the rsync algorithm.
 >
-> Not sure if it qualifies for a CVE; the excerpt above deems it a likely
-> candidate.
+> The rsync algorithm consists of two checksums - a rolling sum based off
+> Addler32 (notable difference - it doesn't use a prime modulus in
+> rsync), and MD5.
+> MD4 was used before rsync 3 (protocol version < 30), so presumably the change
+> was introduced do to security concerns about MD4.
+>
+> Fast MD5 collisions have existed for quote some time - the attack I used as a
+> basis is from 2006, and the much more serious chosen-prefix collision is from
+> 2009.  Generating a collision on my desktop PC takes less than a minute.  I have
+> not yet created a chosen-prefix collision, but I believe a similar
+> technique is possible.
+>
+> Note that rsyncing a file over itself with two colliding blocks will
+> not break rsync as it
+> prefers copying data from it's original location.  The minimum
+> requirement is that an
+> attacker can write to synced file twice - the process would need to be:
+> - introduce collision 1
+> - rsync
+> - introduce collision 2
+> - rsync
+>
+> Also note that a full file md5sum is calculated, so introducing these
+> collisions would
+> cause rsync to fail for that file (DoS attack)... unless it's the
+> first block you're switching.
+>
+> If you use --inplace, the change is introduced despite the error
+> message - this may be
+> common when moving around virtual machine images or databases.
+>
+> Note that changing the block size is not a very effective mitigation
+> (the collision can be
+> aligned to both block sizes), and the checksum seed doesn't help - it
+> should've been
+> fed into md5 before the data, not after.
+>
+> I provided colliding blocks to both Wayne Davison and the Internet Bug Bounty a
+> week ago.  The IBB ticket is still sitting in New, and my last
+> response from Wayne was
+> effectively denying that this is a vulnerability.  Since this
+> information is known to the
+> few that follow me on Twitter, I have decided it best to inform oss-security.
+>
+> I provided Wayne with some rather awful patches that bring in libdetectcoll and
+> blake2b.  He has not provided feedback, so I have not done further work on this.
+>
+> I won't provide full details yet, but if any distributions would like
+> some collisions to
+> perform specific tests (perhaps on Openstack Swift), please get in
+> contact privately.
+>
+> For more information of MD5 colliisons and libdetectcoll, please see
+> Marc Stevens'
+> excellent work: https://marc-stevens.nl/research/
 
-How it is possible to poison the cache if the response is not cached?
+This will certainly cause issues with people running rsyncd for file
+synchronisation.
 
-If dnscache updates the cache with additional or authoritative data, 
-overriding existing data (as most resolvers do), then it is possible to 
-do so without relying on the implementation anomaly quoted above.
+I think that it might be a good idea to switch to another hashing
+algorithm, or at least offer
+an alternative to MD5.
 
-In short, I'm not convinced at all that the alleged security implication 
-exist.
 
-(This message shall not be interpreted as an endorsement of dnscache.)
+>
+> Regards,
+>   Michael
+
+
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
