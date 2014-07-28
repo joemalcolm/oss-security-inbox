@@ -1,42 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/12
-Message-ID: <20141007075850.GA6308@openwall.com>
-Date: Tue, 7 Oct 2014 11:58:50 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Who named shellshock?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/28/3
+Message-Id: <20140728231034.60C4F1F1BFB@smtpksrv1.mitre.org>
+Date: Mon, 28 Jul 2014 19:10:34 -0400 (EDT)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: WordPress plugin vitamin traversal arbitrary file access
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 07, 2014 at 09:47:28AM +0200, Florian Weimer wrote:
-> * Solar Designer:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> Can I get 2012 CVE for WordPress plugin vitamin path parameter traversal
+> arbitrary file access vulnerability, thanks. Files: add_headers.php, minify.php
 > 
-> > It is insufficient that "it was an honest mistake" and that "apologies
-> > were made and accepted."
+> Affected: 1.0
+> Fixed in: 1.1
 > 
-> Why?
+> Changelog: http://wordpress.org/plugins/vitamin/changelog/
+> SCM: https://plugins.trac.wordpress.org/changeset/582232/vitamin
 
-In my opinion, it was important for this community to know whether or
-not the information leaked to someone unintended prior to the CRD.  Your
-previous messages did not specifically address this question, hence my
-insistence on a reply.
+Use CVE-2012-6651. The scope of this CVE ID is the directory
+traversal. It isn't directly about the ability to access .php
+and .phtml files in unpatched versions, apparently corrected with
+lines such as:
 
-> Who determines what is appropriate in such cases, anyway?
+  if( 'php' == strtolower($ext) ) { die("Adding headers to php files is forbidden"); }
 
-Everyone determines for themselves.  I felt I was in a position where
-this community would reasonably expect me to ask you this inconvenient
-question.  So I did.
+We did not research that in depth, but suspect that it may be a
+usability fix rather than a security fix.
 
-> > The article has "Sep 24, 2014 8:35 AM PT" on it, which is 15:35 UTC.
-> > Did the article's author receive the information before or after 14:00,
-> > and when exactly?
-> 
-> The author does not work for the news organization in question, and he
-> had legitimate and need-to-know access to the information as part of
-> his regular employment.  I hope this clarifies things.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Yes, it does.  Thank you!
-
-To summarize, this article does not indicate any leak, given the
-clarification you provided.
-
-Alexander
+iQEcBAEBAgAGBQJT1tc9AAoJEKllVAevmvmsbRwIAJhf/l3HLBx5f4HgY2yEozXF
+alxy3DonvvENWr05OlFwLZI90MsYV+V4bvtFA9Qpnsun/Q202qu+/xWfhj6/2LKf
+7FRS/7gSsdjUQSuSmyjgO8NpfW7y41D8Zt/+O9hjGj8K5FCuDjoBkuSblJvfW8x7
+Lo/mZPrvyrjcSL5ZhUpff++IiLUo0yBWVddu2ehii2o9fjtPTQA2PCa6wZIdgoHv
+Mv7p2QRVPvVubfM83WoxmpUq7uukNFYTnPivVgaqw9VqMKHNw6gJlD9o877AJOTk
+HCTYa8cL16P85OlVqC2KR/0K+jwcyrtrIQGPBlR9px69TXa/HVsmzmsJSdD/Bzs=
+=cnlx
+-----END PGP SIGNATURE-----
