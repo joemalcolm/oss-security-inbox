@@ -1,88 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/01/3
-Message-ID: <20140801141346.GA8965@eldamar.local>
-Date: Fri, 1 Aug 2014 16:13:46 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: Steve Kemp <steve@...ve.org.uk>, Claude Bulin <xcfa@...family.org>, CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE request: xcfa: Insecure use of temporary files, subject to race conditions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/29/6
+Message-ID: <20140729232610.GD21596@openwall.com>
+Date: Wed, 30 Jul 2014 03:26:10 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Martin Schwidefsky <schwidefsky@...ibm.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Subscribtion request to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Tue, Jul 29, 2014 at 05:03:38PM +0200, Martin Schwidefsky wrote:
+> our friends from SuSE suggested that it might make sense that
+> I in my role as maintainer for Linux on System z (alias s390)
+> get added to the linux-distros mailing list.
+> If you agree that this indeed makes sense could you subscribe
+> me please?
 
-Steve Kemp discovered several problems in xcfa, a tool to extract
-audio CDs and convert files to various formats related to insecure use
-of temporary files possibly allowing arbitrary code execution.
+I've been meaning to post a follow-up on the other request by IBM to
+join (linux-)distros.  Unfortunately, I am in too bad a lack of time
+right now.  So no changes in subscriber lists in August.  I intend to
+revisit this topic in September.
 
-I'm full-quoting his findings from the Debian BTS:
+I do feel that IBM joining one of these lists makes sense, but this and
+the details need to be discussed.
 
-https://bugs.debian.org/756600
-
-> xcfa contains several insecure uses of temporary files.
-> 
-> For example the file src/get_info.c has code to test that
-> curl is present, in the function GetInfo_wget which
-> essentially runs:
-> 
-> 	wget --user-agent=\"Mozilla 22.0\" --directory-prefix=/tmp/  http://google.fr/
->         ..
->         if [ -e /tmp/index.html ]; then 
-> 		rm /tmp/index.html
-> 	fi
-> 
-> This is probably safe, because wget will not follow symlinks, and will
-> instead create "index.html.1" - but any existing file called /tmp/index.html
-> will be removed regardless.
-> 
-> More serious issues exist throughout the codebase.  For example the
-> code in dvdread_create_recap_audio, located in src/dvd_read.c contains
-> this lovely function:
-> 
->         // Suppression du fichier precedant si il existe
->         g_unlink ("/tmp/get_infos_dvd.sh");
->         g_unlink ("/tmp/infos_dvd.txt");
-> 
->         fp = fopen ("/tmp/get_infos_dvd.sh", "w");
-> 
->         fprintf (fp, "#!/bin/sh\n");
->         fprintf (fp, "\n");
->         fprintf (fp, "set -e\n");
->         fprintf (fp, "\n");
-> 
-> 	..
-> 	..
-> 
->         system ("chmod +x /tmp/get_infos_dvd.sh");
-> 
->         system ("/tmp/get_infos_dvd.sh");
->         g_unlink ("/tmp/get_infos_dvd.sh");
-> 
-> 
-> Similarly the code which copies files to the trashbin, located in src/file_trash.c,
-> has some nice code which runs:
-> 
->         system ("env | grep \"KDE_FULL_SESSION\" > /tmp/tst_kde_full_session.txt");
->         if ((fp = fopen ("/tmp/tst_kde_full_session.txt", "r")) != NULL) {
->                 while (fgets (buf, MAX_CARS_KDE, fp) != NULL) {
->                         if (strcmp (buf, "KDE_FULL_SESSION") == 0) {
->                                 if (strcmp (buf, "true") == 0 || strcmp (buf, "TRUE") == 0) {
->                                         BoolRet = TRUE;
->                                         break;
->                                 }
->                         }
->                 }
->                 fclose (fp);
->         }
->         g_unlink ("/tmp/tst_kde_full_session.txt");
-> 
-> 
-> In short this codebase is rife with race-conditions allowing arbitrary shell executation,
-> via /tmp/get_infos_dvd.sh, and file truncation/deletion.
-> 
-> I'd strongly urge the maintainer to audit the codebase for additional issues, with the
-> help of upstream.
-
-Would one CVE suffice? Could you allocate a CVE for these issues in xcfa?
-
-Regards,
-Salvatore
+Alexander
