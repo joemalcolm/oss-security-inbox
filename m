@@ -1,22 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/28/5
-Message-ID: <20141028193442.GC32688@symphytum.spacehopper.org>
-Date: Tue, 28 Oct 2014 19:34:42 +0000
-From: Stuart Henderson <sthen@...nbsd.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: ftp(1) can be made execute arbitrary commands by malicious webserver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/29/4
+Message-ID: <20140729221437.3a1f69ac@redhat.com>
+Date: Tue, 29 Jul 2014 22:14:37 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Additional information on CVE-2014-2469?
 Content-Type: text/plain; charset=utf-8
 
-On 2014/10/28 17:50, Alistair Crooks wrote:
->    The FTP client will follow HTTP redirects, and uses the part of the
->    path after the last / from the last resource it accesses as the output
->    filename (as long as -o is not specified).
+On Mon, 21 Jul 2014 11:19:21 -0700 Ritwik Ghoshal wrote:
 
-BTW, I changed OpenBSD's ftp(1) a while ago to just use the "filename"
-part of the original request, rather than taking a name from the
-redirection target (this also matches what curl -O does) - it's a bit
-less convenient in some cases, but it felt like a bad idea to allow the
-output filename to be under control of the remote host (though I was
-more thinking of the situation where someone might run it from their
-home directory and write to something like .profile).
+> > Is there anyone from Oracle on the list? Does anyone have further
+> > information on CVE-2014-2469?
+> > https://blogs.oracle.com/sunsecurity/entry/cve_2014_2469_denial_of
+> 
+> As far as we know CVE-2014-2469 affects lighttpd in Solaris only. I
+> have fixed the typo in our advisory. Thank you for pointing it out.
 
+Is there a good reason to not provide any actionable details?  Flaw
+details and/or patch link (I'm assuming this got corrected upstream
+too).  It's not uncommon for vendors fixing a vendor-specific issue to
+send a heads-up here and to upstream rather than letting everyone else
+using affected component to struggle trying to find any details.  In
+this case, you don't even seem to know if it actually was vendor
+specific.
+
+Can Oracle ensure that actionable details are provided for any Oracle
+assigned CVEs for open-source components?  Regardless of who the
+upstream is.  MySQL is a good example - there were previous requests to
+provide at least minimal details to unambiguously map assigned CVEs to
+specific issues, all refused or ignored.  This is a good place to share
+such information.
+
+-- 
+Tomas Hoger / Red Hat Security Response Team
