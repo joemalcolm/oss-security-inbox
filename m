@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/8
-Message-ID: <83670BE1-1FB4-4552-9404-7707C66233F2@akamai.com>
-Date: Mon, 29 Sep 2014 22:41:29 -0500
-From: "Kobrin, Eric" <ekobrin@...mai.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Array importing in bash 4.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/29/3
+Message-ID: <53D7F13E.7070103@redhat.com>
+Date: Tue, 29 Jul 2014 21:08:46 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: [CVE Request] glibc iconv_open buffer overflow (was: Re:  Re: glibc locale issues)
 Content-Type: text/plain; charset=utf-8
 
-On Sep 29, 2014, at 1:55 PM, Florian Weimer <fweimer@...hat.com> wrote:
+On 07/21/2014 02:17 PM, Florian Weimer wrote:
+> On 07/14/2014 04:15 AM, Tavis Ormandy wrote:
+>> Tavis Ormandy <taviso@...xchg8b.com> wrote:
+>>
+>>> I just remembered another charset issues I had looked into but
+>>> abandoned.
+>>>
+>>> First of all, I think the need_so logic in gconv_trans is broken, but
+>>> even
+>>> if it worked there is an off by one error in __gconv_translit_find() (it
+>>> does + 3 instead of + 3 + 1 in the allocation.
+>>
+>> To be clear, I suspect this is exploitable. It would be nice if you could
+>> modify the buffer such that gconv will open a path with a string you've
+>> appended it (e.g. CHARSET=//. pkexec ./../../../../tmp/foo.so),
+>
+> This is about the glib part and the alias processing, right?
+>
+> iconv/gconv_charset.h:strip() normalizes the transliteration argument to
+> iconv_open, so the resulting file names follow a particular pattern, and
+> there cannot be enough slashes to ascend to a writable directory.
+>
+>> if not maybe the one byte overflow is still exploitable.
+>
+> Hmm.  How likely is that?  It overflows in to malloc metadata, and the
+> glibc malloc hardening should catch that these days.
 
-> On 09/29/2014 05:47 PM, Kobrin, Eric wrote:
->> This code also reveals a difference from the function export code.
->> 
->> The ARRAY_EXPORT code frees temp_string after using it. The function export code mallocs, but never frees it. That behavior predates the recent patches.
-> 
-> That's because parse_and_execute takes ownership of the string by 
-> default.  See the comment in builtins/evalstring.c:
+Not necessarily on 32-bit architectures, so I agree with Tavis now, and 
+we need a CVE.  The upstream bug is:
 
+   <https://sourceware.org/bugzilla/show_bug.cgi?id=17187>
 
-I did miss that comment. Assuming that parse_and_execute operates as expected, the memory doesn't leak so long as parse_and_execute is invoked.
+The discussion on the libc-alpha mailing list about the fix is still 
+ongoing, and nothing has been committed yet.
 
-How do you feel about changing from this:
-
-   if (absolute_program (tname) == 0 && (posixly_correct == 0 || legal_identifier (tname)))
-     parse_and_execute (temp_string, tname, SEVAL_NONINT|SEVAL_NOHIST|SEVAL_FUNCDEF|SEVAL_ONECMD);
-
-to this? (please forgive style gaffes)
-
-   if (absolute_program (tname) == 0 && (posixly_correct == 0 || legal_identifier (tname)))
-   {
-     parse_and_execute (temp_string, tname, SEVAL_NONINT|SEVAL_NOHIST|SEVAL_FUNCDEF|SEVAL_ONECMD);
-   }
-   else
-   {
-     FREE(temp_string);
-   }
-
--- Eric Kobrin
+-- 
+Florian Weimer / Red Hat Product Security
