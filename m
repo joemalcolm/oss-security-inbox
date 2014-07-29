@@ -1,20 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/6
-Message-ID: <CAPCUbK7D5fd5W6=adx-NR5VbLuP6T8KgHd7r5oFXSqG0ONVthg@mail.gmail.com>
-Date: Mon, 18 Aug 2014 12:25:54 +0100
-From: Pedro Cunha <pedroagracio@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Enigmail warning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/29/1
+Message-ID: <20140729093053.GB22781@suse.de>
+Date: Tue, 29 Jul 2014 11:30:53 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: tboot failing to measure commandline parameters
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 18, 2014 at 7:57 AM, Henri Salo <henri@...v.fi> wrote:
+Hi,
 
-> I haven't done any research on this issue yet and I hope that project
-> developer
->  responds to that thread with facts and plans. You might want to share your
-> information there.
->
+The trusted boot loader module "tboot" did not measure all commandline parameters,
+which made it possible to pretend a measured boot while there was workaround
+possibility (breaking the measured boot chain).
 
-​I'm using Thunderbird 31.0 with Enigmail 1.7 on Windows 8.1 and I can't
-reproduce your issue either.​
+All previous tboot versions < 1.8.2 are affected.
 
+http://sourceforge.net/p/tboot/code/ci/0efdaf7c5348701484d24562e6e5323d85bb94d3/
+
+http://sourceforge.net/p/tboot/mailman/message/32655538/
+http://sourceforge.net/p/tboot/mailman/message/32659733/
+
+A CVE is needed I think.
+
+Ciao, Marcus
