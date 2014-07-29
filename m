@@ -1,51 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/1
-Message-ID: <20141222065146.6b89a005@pc>
-Date: Mon, 22 Dec 2014 06:51:46 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/29/2
+Message-ID: <53D78EF3.9000709@redhat.com>
+Date: Tue, 29 Jul 2014 22:09:23 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+Subject: CVE-2014-3554: libndp buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 21 Dec 2014 12:31:07 +0100
-Florian Weimer <fw@...eb.enyo.de> wrote:
+Good morning,
 
-> Some folks want to run their servers within a few milliseconds of each
-> other, and do not care so much about security or resiliency.
+The below was previously sent to the distros list. A patch is available 
+from https://bugzilla.redhat.com/attachment.cgi?id=917255
 
-I perfectly understand that some people need more accuracy than tlsdate
-can give. However it's probably rare, right? I don't see any reason why
-average consumer hardware (Desktop, smartphone etc.) would have any
-problem with the 1-2 sec max inaccuracy of tlsdate.
+libndp (libndp.org) provides a library for the IPv6 Neighbor Discovery 
+Protocol. Andrew Ayer discovered a buffer overflow flaw in the 
+ndp_msg_opt_dnssl_domain() function when handling the DNS Search List 
+(DNSSL) in IPv6 router advertisements. A malicious router or 
+man-in-the-middle attacker could use this flaw to cause an application 
+using libndp to crash or, potentially, execute arbitrary code. 
+(CVE-2014-3554)
 
-> Reconciling this with cryptography is certainly a challenge.  On the
-> other hand, this does not have to be the default.
+Please credit Andrew Ayer with the discovery.
 
-I think it shouldn't be too hard to get both.
-You could do an asymmetric key exchange before you do any time
-transmission. Then the only thing you really need is a single
-authentication operation (HMAC or whatever). That shouldn't delay by
-any significant amount.
+Cheers,
 
-> I think most desktop-based distributions could get away with something
-> like tlsdate.
-> 
-> In contrast, servers with long-running connections and I/O polling
-> loops often do not react gracefully to jumps in time.  (I once
-> disconnected a few hundreds, if not thousands of users from an IRC
-> server just by setting its time correctly.)  Sure, you can avoid that
-> by using the appropriate kernel clock for timeout handling, but I have
-> the impression that the correct clock changes every couple of years.
+--
+Murray McAllister / Red Hat Product Security
 
-tlsdate has tlsdated, I hope it acts intelligent and doesn't do time
-jumps. Haven't tested though.
-
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+https://bugzilla.redhat.com/show_bug.cgi?id=1118583
