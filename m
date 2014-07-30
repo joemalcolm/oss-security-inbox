@@ -1,54 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/10
-Message-ID: <52C6FDC6.7020606@debian.org>
-Date: Fri, 03 Jan 2014 18:13:26 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/30/1
+Message-ID: <20140730070911.GA9168@kludge.henri.nerv.fi>
+Date: Wed, 30 Jul 2014 10:09:11 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: kwallet crypto misuse
+Subject: CVE-2014-3120 ElasticSearch
 Content-Type: text/plain; charset=utf-8
 
-On 03/01/14 17:44, Daniel Kahn Gillmor wrote:
-> what kind of hashing and salting are you talking about?  i don't
-> think hashing and salting makes sense in the context that you were
-> quoting above.  Are you aware that kwallet stores a database of
-> passwords that need to be able to be produced back for the user (or
-> the user's applications) in the clear?
+Heads up if you are using ElasticSearch. There has been several cases where
+ElasticSearch has been used in server compromise. This is the vulnerability what
+they are using. I have also seen this hitting honeypots.
 
-My understanding was that kwallet is like gnome-keyring or the Firefox
-password store: it contains a large number of stored passwords, all
-encrypted with a (key derived from a) master password. (Terminology in
-this email is borrowed from Firefox, and might not match KWallet.)
-It's important to distinguish between the stored passwords and the
-master password.
+ElasticSearch contains a flaw that is triggered as input passed via the 'source'
+parameter to /_search is not properly sanitized. This allows a remote attacker
+to manipulate files and execute arbitrary commands.
 
-Issue 1[1] described in that blog post: the *master* password is
-passed through a key derivation function (which does not need to be
-reversible) in order to turn it into an encryption key, but that KDF
-is not very good (hashing, but no salt), making it vulnerable to
-dictionary or brute-force attacks assisted by precomputation (rainbow
-tables), particularly if the password used is relatively weak. As far
-as I can see, MITRE has not allocated a CVE ID for this. (Or is it
-considered to be part of CVE-2013-7252?)
+OSVDB: http://osvdb.org/106949
+Good article:
+http://bouk.co/blog/elasticsearch-rce/#how_to_secure_against_this_vulnerability
 
-You're right that the *stored* passwords cannot be hashed/salted in a
-non-reversible way for this particular use case, because the user
-needs to be able to recover the original stored password.
+---
+Henri Salo
 
-Issue 2 described in that blog post: when the stored passwords are
-encrypted using the key derived from the master password, KWallet uses
-ECB, which is bad at hiding patterns in data. For instance, if a
-password is stored more than once, an attacker can determine that this
-is likely to have been done, by noticing the corresponding pattern in
-the output. As far as I can see, this is now CVE-2013-7252.
-
-Issue 3 (which exacerbates issue 2 rather than being something
-separate, AIUI?) is that the encoding of the stored passwords is
-relatively low-entropy: if the stored password happens to be entirely
-Latin-1 (which is quite likely in practice), then it has a pattern,
-namely "odd-numbered bytes are zero".
-
-    S
-
-[1] I don't know where the boundary between vulnerability and lack of
-hardening is, so I'm deliberately using a more neutral term
-
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
