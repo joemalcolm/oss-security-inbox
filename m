@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/30
-Message-ID: <20140808212023.GA19092@kroah.com>
-Date: Fri, 8 Aug 2014 14:20:23 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/30/5
+Message-ID: <edf518d05bab2fa8146e3c783427c852@mail.marples.name>
+Date: Wed, 30 Jul 2014 19:32:50 +0100
+From: Roy Marples <roy@...ples.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: CVE Request: dhcpcd DoS attack
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 08, 2014 at 11:03:58PM +0200, Yves-Alexis Perez wrote:
-> On ven., 2014-08-08 at 22:41 +0200, Yves-Alexis Perez wrote:
-> > > 
-> > > Then do just that, Linux has allowed you to do this for years, again,
-> > > but very few people take advantage of it.
-> > 
-> > Reading that thread, that's exactly what I thought about that. I guess
-> > it could be a good idea to set usbcore.authorized_default to 0 when the
-> > systems is locked (logind could provide that information). There's still
-> > the issue that it's then not possible to unlock the system in some
-> > situation (for example because you had to unplug the keyboard while
-> > logged out, or stuff like that). But at least that would be a
-> > possibility.
-> 
-> Actually, since it's a module parameter, it doesn't seem possible to
-> toggle it without reloading the module (or rebooting if it's builtin).
-> So it might not be that easy to do the locking part.
+Hi
 
-echo "0" > /sys/module/usbcore/parameters/authorized_default
+dhcpcd-4.0.0 though to dhcpcd.6.4.2 are vulnerable to a DoS attack.
 
+As reported by Tobias Stoeckmann:
+In function get_option, the DHO_OPTIONSOVERLOADED option checks if there
+are overloaded options, like bootfile or servername.  It tries to make
+sure that it's called only once, BUT overwrites that information after
+receiving a DHO_END.  A malicious server could set the option
+DHO_OPTIONSOVERLOADED yet another time in the bootfile or servername
+section, which will result in another jump -- maybe into the same area.
+
+This has been fixed upstream here:
+http://roy.marples.name/projects/dhcpcd/ci/1d2b93aa5ce25a8a710082fe2d36a6bf7f5794d5?sbs=0
+
+I would like to request a CVE for the issue.
+
+dhcpcd-6.4.3 has been released with the above fix.
+
+Thanks
+
+Roy
