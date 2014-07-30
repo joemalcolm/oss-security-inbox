@@ -1,70 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/3
-Message-ID: <5404BDC6.6060906@sumptuouscapital.com>
-Date: Mon, 01 Sep 2014 20:41:10 +0200
-From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
-To: oss-security@...ts.openwall.com
-CC: Werner Koch <wk@...pg.org>, pkg-gnupg-maint@...ts.alioth.debian.org
-Subject: Re: gpg blindly imports keys from keyserver responses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/30/4
+Message-Id: <20140730180553.84A2A6C025F@smtpvmsrv1.mitre.org>
+Date: Wed, 30 Jul 2014 14:05:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: tboot failing to measure commandline parameters
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-On 09/01/2014 08:33 PM, Thijs Kinkhorst wrote:
-> All,
-
-Hi Thijs,
-
-FYI your email results in a BAD signature for me, presumably due to
-line-wrapping issue.
-
+> The trusted boot loader module "tboot" did not measure all commandline parameters,
+> which made it possible to pretend a measured boot while there was workaround
+> possibility (breaking the measured boot chain).
 > 
-> All in all, the safe choice seems to be to patch this issue, so 
-> Debian will release updates for it. It has been fixed upstream in 
-> GnuPG 1.4.17 with this commit: http://git.gnupg.org/cgi- 
-> bin/gitweb.cgi?p=gnupg.git;a=commit;h=5230304349490f31aa64ee2b69a8a2bc06bf7816
->
->
+> All previous tboot versions < 1.8.2 are affected.
 > 
-Please note that this patch alone is not sufficient to fix the issue
-as it brought usability issues fixed in later versions. Specifically
-the first patch blocked retrieval of multiple keys at once, e.g during
-a --refresh operation, and retrieval by subkey signing ID.
+> Security Fix: TBOOT Argument Measurement Vulnerability for GRUB2 + ELF Kernels
+> http://sourceforge.net/p/tboot/code/ci/0efdaf7c5348701484d24562e6e5323d85bb94d3/
+> http://sourceforge.net/p/tboot/mailman/message/32655538/
+> http://sourceforge.net/p/tboot/mailman/message/32659733/
 
-> I'll leave it to the numbering authorities whether this is 
-> something that should get a CVE id.
-
-My personal opinion is this is expected behavior as the keyservers are
-not trusted, and as you point out above, there are proper measures
-that should be used that invalidate this as an attack vector, i.e. by
-performing proper key verification.
+Use CVE-2014-5118.
 
 - -- 
-- ----------------------------
-Kristian Fiskerstrand
-Blog: http://blog.sumptuouscapital.com
-Twitter: @krifisk
-- ----------------------------
-Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-- ----------------------------
-"History is a gallery of pictures in which there are few originals and
-many copies."
-(Alexis de Tocqueville)
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBCgAGBQJUBL3FAAoJEPw7F94F4TageFQP/jCgcMKfRKVRo4crPCJLot90
-N4mwGKOzausg07/TMjoZ689NJ6cIBINHT/BqKzggMzhCTOyphV/L44Hp6UIaiYx8
-6DVtnd5JatTytAFJnua7G3r4dVHztGfGg29WipF/pPfE3THTYfCdWuluq151hP/9
-csDgeKP1jg8l0AckNd+uFUzrkSs6AIqJH1IWHvsIOSuXS4jrmNoJgXfO+F0QJNd0
-3Or1F+T7lF0kUql0ctxFADHvOy3Dj522IcQbprIFijlbeWvdIzYHquTMg6k/9FyE
-f3HKiyLwti6FT68NVWYuTrvumQ4SelyxWm0Dzhe5ahOfgwI0NCN0I06InC2sFvrQ
-Udl5HkMC9tBr16NXGmKI4OYvSu+FX8XmfM7z47me4uSUrgvwbuxAaPsiXTf782WD
-/qCAzlF+b1Tf3DKbt1PjIxT9scfS+2OfJnFVw4zFf04SVhg5fjLg20pU7G5kgMKL
-N+CWG4BcJef1u09NMJkEUo/28jSj6d8pVJPAiBhG6woi5SPlmTN/pC6DReYH0ZqQ
-eQXDYorcOzB2KCFQVfY84A0JMnoQEqeDT4CdVuprlJyGb3Ued2yYFbKHoQnLOKEU
-6IZyjzNsQ8uTyHbYBoZPZESuptdiI8jhSmXl1qEtv3Wy3uPnm/OL4DWeA5rGQ27n
-fMpQUj7778mrO61EiHJJ
-=fBqR
+iQEcBAEBAgAGBQJT2TMTAAoJEKllVAevmvmsqIUIAJSv0E/CR8Qi9UOJ/DlI/uzk
+9Ylv1vjg7upZDDXZxQKVEugNSgUfOFMIzYOrI896E9tPJlDQEYq9ZSA/Q8NAFco4
+smjcW0+ggZRxZRssw0LHLUakmPL+Wr3R9yKppe87J+ceL6e4Levsa4xIg1EQ7y+2
+chV61RYY4Fy9Mf2dRJzMYukInOmaQf+JGuRjwkLObG1iRTbzECNRheMk6Y36cRNb
+N6tzbYoCZPf5aeWUOpZBHy+YhukHVIWxbBZyqfbESsrXg7NPMshJ6y7cz9d4Dlnf
+d0yAhc+9lYsejr/QNNzC06yo5hPck9T1dnISo5mwXlA+580guRy3aDf57K5GO4k=
+=xlz4
 -----END PGP SIGNATURE-----
