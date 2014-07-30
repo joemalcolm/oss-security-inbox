@@ -1,38 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/20/6
-Message-ID: <5495C5D5.2010801@gmail.com>
-Date: Sat, 20 Dec 2014 13:54:13 -0500
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/30/3
+Message-Id: <20140730170757.E8CDAC5003B@smtptsrv1.mitre.org>
+Date: Wed, 30 Jul 2014 13:07:57 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+Cc: cve-assign@...re.org
+Subject: CVE-2014-5117 - Tor before 0.2.4.23 RELAY_EARLY issue
 Content-Type: text/plain; charset=utf-8
 
-On 20/12/14 12:47 PM, ncl@...k.li wrote:
-> On 20/12/14 03:27, Hanno Böck wrote:
->> A strange discussion. Because ntp is insecure by design. It is an
->> unauthenticated, insecure protocol that is suspectible to
->> man-in-the-middle-attacks. Frankly, I don't care which implementation
->> of an insecure protocol has less buffer overflows.
-> 
-> How broken are the authentication methods already present in ntpd?[1]
-> So far there appears to be only DES/MD5 keys, and with autokey, RSA/DH
-> (but apparently autokey doesn't work behind NAT?)
-> As far as I know, distros don't typically set these up, would it be
-> worth it to enable and improve on these, or just make something new?
-> 
-> Considering OSes already set up their own ntp pools[2], they could also
-> provide their own trusted keys in their ntpd packages.
-> 
-> 
-> [1] http://www.ntp.org/ntpfaq/NTP-s-config-adv.htm#AEN3143
-> [2] (ubuntu|openbsd|debian|netbsd|fedora).pool.ntp.org
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Those operating systems don't actually have their own NTP pools. They
-are just vendor zones hitting the same ntp.org pool. The resources put
-into it amount it asking ntp.org for a vendor zone and they only do it
-because upstream kindly asks for it (perhaps for metrics):
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5117 is for
+an issue in Tor that requires relays to upgrade to 0.2.4.23 or
+0.2.5.6-alpha.
 
-http://www.pool.ntp.org/vendors.html#vendor-zone
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJT2SXTAAoJEKllVAevmvmsJvEH/Rg7RGOHZg9YBIHsgyRzoZhb
+J2PYoMsEWJ8wqtV4BHVTCVxBlghZzJCNRmn61z1/agHwP/DBVFrMePWlu9LibDCV
+HzmHtJNNy19vAWBXIJRIuw/YlMHLiV7k46BviTjXZslr1VU851Jeuhivh1SISzK7
+Q/m8VfOpZmWnLcN5VkAP6iq/zDV0+M/+ZsGKbyVGXbKZwm6MkSQV0my7tShi4YSZ
+RgBXJ6DjMVPrvO/9nTX40hHQuaTONpfLzEwbXUNUhrLyqzCZGt3oHbL3JjUkyIfh
+wc0tk7Z0hpKO6fvScz6MGDSROJlyaZsxG73xcuBm1917FbShPL8VjVHtdz+Sc+E=
+=ysKs
+-----END PGP SIGNATURE-----
