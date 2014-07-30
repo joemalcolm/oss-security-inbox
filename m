@@ -1,20 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/2
-Message-ID: <87k31t127w.fsf@redhat.com>
-Date: Mon, 15 Dec 2014 14:17:55 +0100
-From: Martin Prpic <mprpic@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/30/2
+Message-ID: <20140730133846.GB9168@kludge.henri.nerv.fi>
+Date: Wed, 30 Jul 2014 16:38:46 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS flaw fixed in dokuwiki 2014-09-29b
+Subject: CVE request: WordPress plugin wppageflip index.php pageflipbook_language parameter traversal local file inclusion
 Content-Type: text/plain; charset=utf-8
 
-Hi, can a CVE please be assigned to the following issue:
+Can I get 2012 CVE for following vulnerability in A Page Flip Book plugin for
+WordPress (wppageflip), thanks.
 
-Release 2014-09-29b "Hrun":
- Security Hotfix 2014-09-29b: prevents XSS attack via SWF uploads
+Description:
 
-I'm assuming this was fixed via: https://github.com/splitbrain/dokuwiki/commit/778ddf6f2cd9ed38b9db2d73e823b8c21243a960
+A Page Flip Book Plugin for WordPress contains a flaw that may allow a remote
+attacker to execute arbitrary commands or code. This issue is triggered when
+input passed to the wp-content/plugins/wppageflip/pageflipbook.php script from
+index.php is not properly sanitizing user input, specifically directory
+traversal style attacks (e.g., ../../) supplied to the 'pageflipbook_language'
+parameter. This may allow an attacker to include a file from the targeted host
+that contains arbitrary commands or code that will be executed by the vulnerable
+script. Such attacks are limited due to the script only calling files already on
+the target host. In addition, this flaw can potentially be used to disclose the
+contents of any file on the system accessible by the web server.
 
-Thank you!
+Plugin page: http://wordpress.org/plugins/wppageflip/
+Discussion:
+http://wordpress.org/support/topic/pageflipbook-pageflipbook_language-parameter-local-file-inclusion
+Related:
+http://ceriksen.com/2012/07/10/wordpress-a-page-flip-book-plugin-local-file-inclusion-vulnerability/
+http://secunia.com/advisories/49505/
 
---
-Martin Prpič / Red Hat Product Security
+I was unable to reproduce this vulnerability in version 3.0 of this plugin so
+fixed in the latest version at least. Other versions not tested.
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
