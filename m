@@ -1,44 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/30
-Message-ID: <20140926181243.GT23797@oevtugenva.nrevsny.pk>
-Date: Fri, 26 Sep 2014 14:12:43 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/1
+Message-Id: <20140731000845.B0635C50501@smtptsrv1.mitre.org>
+Date: Wed, 30 Jul 2014 20:08:45 -0400 (EDT)
+From: cve-assign@...re.org
+To: stu@...cehopper.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, hanno@...eck.de
+Subject: Re: CVE request: libressl before 2.0.2 under linux PRNG failure
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 26, 2014 at 02:06:21PM +0100, Simon McVittie wrote:
-> > Tell everyone to stop using setuid/setgid now and forever?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yes!
+>> I see a number of web pages relating to this issue are mentioning that
+>> it has already been assigned CVE-2014-2970, can anyone throw light on this?
 
-> Minimizing use of setuid/setgid, and making sure the setuid/setgid
-> things are suitably hardened, is a good idea. However, tools for
-> controlled privilege escalation (sudo, pkexec, Apache suexec) rely on
-> setuid in order to work. There's a reason the feature exists at all.
+> At MITRE, we (obviously) know where CVE-2014-2970 came from, and we'll
+> send information here about the resolution as soon as it happens.
 
-These could all be done by having the process with root privileges
-inherit them from a daemon parent that already has root, rather than
-requiring the kernel to elevate the privileges of a process via the
-setuid bit. This inherently eliminates all attacker control of the
-process's initial state and limits the input/attack surface to the
-communication channel clients have with the daemon (e.g. a single unix
-socket).
+We've since learned that nobody ever assigned CVE-2014-2970 to that
+LibreSSL issue, and apparently every appearance of CVE-2014-2970 in "a
+number of web pages" was ultimately the result of a miscommunication
+outside of MITRE.
 
-As a bonus, a kernel that completely lacks setuid/setgid support
-immediately allows you to do lots of other security/functionality
-enhancements, like allowing any process to chroot at any time,
-allowing bind-mount-like filters blocking/replacing a process's view
-of part of the filesystem, etc.
+A complication is that CVE-2014-2970 had been assigned to a different
+issue, and that issue isn't yet public. What you should do is:
 
-> I still think a large part of the answer is "consider it to be a serious
-> bug when a setuid/setgid tool does non-trivial things without first
-> filtering its attacker-controlled environment through a whitelist".
+  - if you're part of the embargo audience that has been using
+    CVE-2014-2970 for a private vulnerability, use CVE-2014-5139
+    instead
 
-The problem with this is that the environmental state (I don't mean
-just env vars, but everything a process inherits) is not of fixed
-scope, but continually growing, and each new feature added is a
-potential channel through which an attacker controls the behavior of
-the setuid process.
+  - if you're not part of that embargo audience, all we can suggest is
+    that it's very likely that you'll see a public disclosure of
+    CVE-2014-5139 in the future
 
-Rich
+Also:
+
+  - MITRE is not part of the embargo audience and does not know what
+    the CVE-2014-5139 vulnerability is
+
+  - MITRE has separately communicated the CVE ID change to the
+    organization that originally assigned CVE-2014-2970
+
+Soon, the MITRE CVE web site will have this for CVE-2014-2970:
+
+  ** REJECT **
+
+  DO NOT USE THIS CANDIDATE NUMBER.  ConsultIDs: CVE-2014-5139.  Reason:
+  This candidate is a duplicate of CVE-2014-5139, and has also been used
+  to refer to an unrelated topic that is currently outside the scope of
+  CVE.  This unrelated topic is a LibreSSL code change adding
+  functionality for certain process-bifurcation use cases that might
+  arise in future LibreSSL-based applications.  There is no CVE ID
+  associated with this LibreSSL code change.  As of 20140730,
+  CVE-2014-5139 is an undisclosed vulnerability in a different product,
+  with ongoing vulnerability coordination that had previously used the
+  CVE-2014-2970 ID.
+
+
+The MITRE CVE web site entry for CVE-2014-5139 will have the details
+of the issue after the public disclosure happens.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT2YhdAAoJEKllVAevmvms8ucH/RR5XB+vo3gsdgZttTYTxC9G
+jYODUmi6BBg3FwQSPiqny8DWbvSvZhZaNoDKrf8EdfJthc9dSlJ1hoFogblqj79U
+meYqvTWFdaVkGPiBFbX293g7J/VDQVpcXxYI24Kc+MR8OAfu4jV9imeZZ62iouuk
+4BbhvtUD2yFqag5S3YUqhFfo3FIOQVYyh+M52927HzQSTDheUWCapHZfUP7lOYAL
+vQeyDSayP5QNcLpjeKhshS5/L1aTDOMY4KreYDSvs/0+wgvE+FexqyjwzeoSpyGr
+HHkrIyuIIHPT3aTbSvaxAgso51fPRKCEZsR7eh2XFnePEi+Cq6KysTQhASC1iWM=
+=3pTv
+-----END PGP SIGNATURE-----
