@@ -1,56 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/6
-Message-ID: <53CA8F9E.9000502@redhat.com>
-Date: Sat, 19 Jul 2014 09:32:46 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/6
+Message-ID: <53DA0DA0.3030707@redhat.com>
+Date: Thu, 31 Jul 2014 11:34:24 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Good news and bad news on Python sockets and pickle
+Subject: Re: Re: [CVE request] Array allocation fixes in libgfortran
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 07/24/2014 04:08 AM, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> several CVE-2002-0391-style integer overflows in array allocation in
+>> libgfortran
+>>
+>> https://gcc.gnu.org/viewcvs/gcc?limit_changes=0&view=revision&revision=211721
+>
+> Use CVE-2014-5044.
 
+Thanks.  The fixes have been backported to GCC 4.8 and 4.9:
 
+https://gcc.gnu.org/ml/gcc-cvs/2014-07/msg01136.html
+https://gcc.gnu.org/ml/gcc-cvs/2014-07/msg01135.html
 
-On 19/07/14 12:00 AM, gremlin@...mlin.ru wrote:
-> On 18-Jul-2014 22:40:38 -0600, Kurt Seifried wrote:
-> 
->> I looked for cases where pickle.loads is used on untrusted data, 
->> the good news is didn't find many, the main two uses cases were 
->> taking data from zeroMQ and memcached and then unpickling it, 
->> looks like those would be compromised in any event if malicious 
->> data got in there, let alone RCE type stuff. [...] So here is my
->> question, is all pickle.loads from things like memcached (which
->> has no auth) generally CVE worthy? If so I can post a list of the
->> potentials, I'll be honest, I'm to lazy to go digging through it
->> (I'm not sure how many uses shared/public memcached
->> configs/etc.).
-> 
-> All these issues aren't related to pickle.loads - they are just
-> the ordinary use of untrusted data (which itself may worth a CVE).
+> It seems fairly clear that there is only one CVE ID needed. However,
+> can you clarify what definition of "CVE-2002-0391-style integer
+> overflows" you were using? We think you might mean:
+>
+>    - any integer overflow caused by multiplying the number of elements
+>      in an array by the size of a single element
+>
+>    - this includes, but isn't limited to, cases where the array
+>      elements represent arguments
 
-Uhmm yes and no, it's one thing to pull some data out of memcached and
-use it for something, it's another to do so in a way that essentially
-executes it.
+The first, combined with the fact that the overflowing calculation is 
+used to compute byte sizes for memory allocation purposes.
 
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIbBAEBAgAGBQJTyo+eAAoJEBYNRVNeJnmTM/YP+O+LZzbOxVirdgmKdaV0owyV
-R2bLrNQhJWajoGdmhcxSyraleIuZaTkO7qc/dcSDGzUlrP5UIcIff7tmx5FeG1ZN
-juOJF/bkcvCFA3pQjdNhUHThYfr1qaRuKNGh8lr7dqCEybKXQLy1BheUccEQ4KgX
-aq0r+Eo4a7fHYp9vckG3sPwmhOfxzWKMACiJQrn6LEVrApvUF4DyIcQn0qlhQpgN
-UKbIOPyEJ3E2JVCbeXbC3a5flnjWUdlai6th+F72TmugMKSp7CfDOUCmCeiJNLy9
-ANAYiJCdd+aiBGy3VvCVfUoZ6fMs1gY1JnX02aGnCFWcAunTJUiiIfrfZtYE9wco
-jq9WVjhxsvwgqGRawvQJujGH3Irs3/I+vSrz1ZNxo+gY/PWgLuJTrmyeJ5X2Xx7f
-Gn3MAnRz7dep5wDUtsgn4uLwuWjNae08EVR7pjCkewdL4Z7r2J3NBX2hqiYPKqoL
-7Ij0ZZ48I5zKTtUkjPusG1U2rI+PctRXkYVdqgM3d5buRca5C1cUXoTGeb0/jQGv
-0xdp4cREk2dZ4rxNxy7hh8LGZgI39DPFCDqhydORYYsuj606LkGY7W1yv2Qy9WWt
-QXSLkgiwbqnxpjq/GFXUmgMII5I/68iGdSlUXXgGB+Vu7q03jWFeGNvrvPd4EsGo
-KVi0u2VDUmcc6VmWlOc=
-=7d1y
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security
