@@ -1,55 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/3
-Message-ID: <CAOp4FwT_t=b1d9ugEUBLpv40o8nMDL9w-4b=9yWD1BvXqjJQkw@mail.gmail.com>
-Date: Fri, 12 Sep 2014 10:20:23 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/4
+Message-Id: <20140731063539.BCF301F02E4@smtpksrv1.mitre.org>
+Date: Thu, 31 Jul 2014 02:35:39 -0400 (EDT)
+From: cve-assign@...re.org
+To: forest.monsen@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 11, 2014 at 11:42 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 11/09/14 01:36 PM, Ritwik Ghoshal wrote:
->> On 9/11/2014 1:28 AM, Sven Kieske wrote:
->>>
->>>
->>> On 10/09/14 18:00, Salvatore Bonaccorso wrote:
->>>> Hi
->>>>
->>>> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
->>>> the following issue, which could be exploited by a local user to run
->>>> arbitrary code in context of the mysqld server.
->>>
->>> While I'm investigating this:
->>> Does someone happen to know in which version this vuln got introduced?
->>>
->>
->> A complete list of all affected-supported MySQL releases will be
->> published via Oracle's quarterly Critical Patch Update(CPU) advisory.
->> More information about our CPU program is available at -
->> http://www.oracle.com/technetwork/topics/security/alerts-086861.html
->>
->>
->> Thanks,
->> -Ritwik
->
-> So you're saying you won't tell anyone until the middle of October? So
-> we have to wait just under 3 months from the release of MySQL 5.5.39 to
-> find out exactly what versions are affected by security flaws fixed in it?
->
-> Are you serious?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Indeed. Given MySQL's widespread usage, we can't wait that long. Maybe
-Oracle needs to review its policy for critical updates.
+> We'd like to request CVE identifiers for:
+
+> SA-CONTRIB-2014-073- Date - Cross Site Scripting (XSS)
+> https://www.drupal.org/node/2312609
+
+Use CVE-2014-5169.
 
 
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
+> SA-CONTRIB-2014-074 - Storage API - Code execution
+> https://www.drupal.org/node/2312769
 
+Use CVE-2014-5170. This can be characterized as an implementation
+error in setting up a defense in depth mechanism. In other words, the
+module maintainer was supposed to obtain .htaccess file content from
+one resource, but instead obtained .htaccess file content from a wrong
+or obsolete resource.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-This message is strictly personal and the opinions expressed do not
-represent those of my employers, either past or present.
+iQEcBAEBAgAGBQJT2eMhAAoJEKllVAevmvmsCK8H/A3eA35sDLP0kSzujR9ioSgP
+WphxIIvZ4JEp0pnqFO1wlUvAISON4jtSEAyo4t+ts8EIPB4Xhc1AMi/wc1VArOTD
+18DUYBIso1RbcSL+pRs8/1fx68ylc27Pj5mW+LM2QxK32Vjqc2r1grlKWA/6omX+
+VBFEzh7BxvGvO+l5CR64ZrQiQrEMPi9cgp2fIMnkdSxDxbsokUWuiMjmwRuF6zLO
+o2nlVk3EnGTHDPzlcj+uBEReADSkFnKYjslZj/vf/M/MBWJ0HcNyspUK67aqQje1
+sPECKPf5w3uToR0vJSbx83aiMCtWvxybGxD0+Wkg8r+k4B3WCqH+yX6F4SQIwzQ=
+=hNAC
+-----END PGP SIGNATURE-----
