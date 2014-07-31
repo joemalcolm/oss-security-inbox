@@ -1,116 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/13
-Message-ID: <20140619225549.GA12600@sherlock>
-Date: Thu, 19 Jun 2014 15:55:49 -0700
-From: Andrew Gaul <gaul@...che.org>
-To: oss-security@...ts.openwall.com, Kurt Seifried <kseifried@...hat.com>
-Subject: Re: TMP flaw in rackspace jclouds?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/5
+Message-ID: <20140731104706.523aff9a@redhat.com>
+Date: Thu, 31 Jul 2014 10:47:06 +0200
+From: Stefan Cornelius <scorneli@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-3564 gpgme: heap-based buffer overflow in gpgsm status handler
 Content-Type: text/plain; charset=utf-8
 
-[bcc: jclouds private list]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I attached a patch which changes ScriptBuilder to use the "mktemp -d"
-approach that Ignasi suggested.  I verified this against the ec2 live
-tests, specifically testCreateAndRunAService, as well as the
-scriptbuilder unit tests.  I encourage someone more familiar with
-compute to test this since I have limited experience with those
-services.
+Hi,
 
-The code runs on the target node as Ignasi describes and thus it poses
-no risk to the master jclouds application.  However, users could run
-untrusted software on their target nodes and we should address this in
-the next minor release.  I estimate a low severity to this issue and
-prefer to continue discussion on the public bug tracker.  Does anyone
-have a different understanding of this flaw?
+Tomáš Trnka discovered a heap-based buffer overflow in gpgme. He has
+provided a very good bug report in [1], so I'll refrain from copy
+and pasting it here.
 
-On Thu, Jun 19, 2014 at 09:32:25AM +0200, Ignasi Barrera wrote:
-> Take into account that the "statement" list will be rendered to a String,
-> composed with other script fragments into a final bash script, uploaded to
-> a node, and executed there locally as a bash script.
-> 
-> That code won't be executed in the machine running jclouds, but as a bash
-> script in the provisioned node, so the name of the temporal directory
-> should better be generated in the script itself. A good approach would be
-> to directly use the "mktemp"command.
-> El 19/06/2014 06:36, "Andrew Gaul" <gaul@...che.org> escribió:
-> 
-> > Kurt, thank you for bringing this flaw to my attention and I will
-> > address it tomorrow.  I do not have a security background; can you
-> > estimate the severity and whether we can continue discussion on the
-> > public bug tracker?  For now I have bcc the Apache jclouds private
-> > mailing list.  Also note that jclouds is an Apache project not a
-> > Rackspace project and the canonical URLs are:
-> >
-> > https://github.com/jclouds/jclouds
-> > https://issues.apache.org/jira/browse/JCLOUDS
-> >
-> > On Wed, Jun 18, 2014 at 08:52:59PM -0600, Kurt Seifried wrote:
-> > > -----BEGIN PGP SIGNED MESSAGE-----
-> > > Hash: SHA1
-> > >
-> > > https://github.com/rackspace/jclouds/
-> > >
-> > > So CC'ing Andrew, he's a consistent contributor, I can't file an issue
-> > > in Github (no link to it) so posting here and CC'ing him.
-> > >
-> > >
-> > https://github.com/rackspace/jclouds/blob/master/scriptbuilder/src/main/java/org/jclouds/scriptbuilder/domain/Statements.java
-> > >
-> > >   public static Statement extractTargzAndFlattenIntoDirectory(URI tgz,
-> > > String dest) {
-> > >       return new StatementList(ImmutableSet.<Statement> builder()
-> > >             .add(exec("mkdir /tmp/$$"))
-> > >             .add(extractTargzIntoDirectory(tgz, "/tmp/$$"))
-> > >             .add(exec("mkdir -p " + dest))
-> > >             .add(exec("mv /tmp/$$/*/* " + dest))
-> > >             .add(exec("rm -rf /tmp/$$")).build());
-> > >    }
-> > >
-> > >
-> > > This is insecure, $$ == PID == predictable
-> > >
-> > > http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
-> > >
-> > > use java.io.File.createTempFile() ? some interesting info at
-> > >
-> > http://www.veracode.com/blog/2009/01/how-boring-flaws-become-interesting/
-> > >
-> > > for directories there is a helpful posting at
-> > >
-> > http://stackoverflow.com/questions/617414/create-a-temporary-directory-in-java
-> > >
-> > > Thanks.
-> > >
-> > >
-> > > - --
-> > > Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> > > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> > > -----BEGIN PGP SIGNATURE-----
-> > > Version: GnuPG v1
-> > > Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-> > >
-> > > iQIcBAEBAgAGBQJTolCLAAoJEBYNRVNeJnmTrVYQAJ5glkD/0Ha5+F99Qj9ioNmm
-> > > ZnO4G6TqKctfiqW/X02wMocKLMRV8q5WI/nvs71hCoK5HaVmbtNrV71wE0omHLjB
-> > > smzFz6d8qZaTcOHdvgbSlWEGPjcVnESo0F3K0vgK2L/LtB5mgny6pHDn+c/cqrgt
-> > > Er4n+U3oXlkon/ksW+drWpKOpmGOhn7c4fbE45ci6KnzDbbGpGHF0fZL3lSEfJR0
-> > > 0D/HQzKIAJpI7VvZU8+/d/MHasndgJoAHmUCkTBYU55Vf5eYsm+xWZ1Mt46IyAap
-> > > crMTCHHE1GVUAexYbMxy+lohHbpl+pB/d////LzesJjByRSv87r+1oLhdwank3P9
-> > > Fz1h3sq57JyLFQIcpm4TS7xh3TaByFGCiA5G/mR+CkuS6sZEapSkviu/x7ygmOdG
-> > > cJKM+5CogeE1P1PWsoQ41JcSwfuWAfc5IODvkjLb3MfyoXJRaKcBVdVcdHBUK4BA
-> > > 7xcD9SbDsujxHOJLknFaO22uTtlrDS4yXJaNal6L9P7DCsSSrxG1PmmE+t5qrtYw
-> > > HQoz+RuOMhY/2FWJqOxa7ru99rIQmxxpWgoknUlT+yYJRfoub0kpibyJLBLy2SEx
-> > > xmdqe/i9nHCsGAworK4bEL2vLvsNBiJgdSHlzg7E5POI1tbveE12fIUmSgrgV+zO
-> > > WjPZ/O4oOj0FVWoeyQUN
-> > > =SUf5
-> > > -----END PGP SIGNATURE-----
-> >
-> > --
-> > Andrew Gaul
-> > http://gaul.org/
-> >
+This is now fixed in version 1.5.1, the commit fixing this is linked in
+[2].
 
--- 
-Andrew Gaul
-http://gaul.org/
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=1113267
+[2]
+http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gpgme.git;a=commit;h=2cbd76f7911fc215845e89b50d6af5ff4a83dd77
 
-View attachment "mktemp.patch" of type "text/x-diff" (7431 bytes)
+Thanks,
+- -- 
+Stefan Cornelius / Red Hat Product Security
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBAgAGBQJT2gKUAAoJEETwiYCjVSmPvvkIAIrxlBpsXTV51esgDCt5j4PE
+fBdjTLxAU9YJ7yZOUcZSsS3I8VHMvkHTZ8zeoPWAsLGU9Us/N7JboIXZhtgUJBLd
+qypxeVwiA08WfOLD30STDUwwbQSgScHsf/7vrljzaXJmvlRsph4AcR/x9lWhuRJv
+/3d9XrbIC9i0BOhcUcJKcwByLk7076mFTaJAWAqbLwHdqbAszKzLhBZMvUmXk3zN
+5HJtFR4+7qWVdot70T41ssYxn8bYfPYsuoCuYcFdwcJ3LkR0c7n9uf1zn6g1rdvU
+WbzsMYml2lVan+w1l9o7BFo/9j5zhk3q5t8Nf6q0ghuk51DL6pxBNYtPiWByUUo=
+=LafS
+-----END PGP SIGNATURE-----
