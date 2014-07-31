@@ -1,26 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/21/4
-Message-ID: <alpine.BSF.2.11.1412220516410.87591@aneurin.horsfall.org>
-Date: Mon, 22 Dec 2014 05:25:08 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/3
+Message-ID: <20140731051228.GA6391@lorien.valinor.li>
+Date: Thu, 31 Jul 2014 07:12:28 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Steve Kemp <steve@...ve.org.uk>, CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: XML-DT: Insecure use of temporary files
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 21 Dec 2014, Florian Weimer wrote:
+Hi
 
-> [...] but I have the impression that the correct clock changes every 
-> couple of years.
+Steve Kemp reported to to the Debian BTS in [1] that the XML-DT Perl
+module distribution contains mkdtskel and mkxmltype using insecurely
+temporary files using the pid of the process in the temporary file
+name.
 
-This sounds like you're referring to leap seconds, where due to the 
-Earth's rotation slowing down (as determined by the International Earth 
-Rotation Service), an extra second is inserted every so often, typically 
-in July; it's quite fun watching it on a GPS receiver (assuming that it 
-even survives the event, as I've seen a few cheaper ones lose the plot).
+ [1] https://bugs.debian.org/756566
 
-There is a serious proposal to phase out leap seconds (no URL handy right 
-now), and I have no idea how that will affect time-based security.
+Could a CVE be assigned for this issue?
 
--- 
-Dave Horsfall DTM (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
-http://www.horsfall.org/spam.html (and check the home page whilst you're there)
+Regards,
+Salvatore
