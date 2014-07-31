@@ -1,49 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/6
-Message-ID: <m483v4$7pt$1@ger.gmane.org>
-Date: Sat, 15 Nov 2014 18:53:41 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/10
+Message-ID: <CAKcmtDyuaT4HMke1joaVH+Ydx2Eh=0qvKjLMixX+ZaaSkf-CVQ@mail.gmail.com>
+Date: Thu, 31 Jul 2014 13:17:33 -0700
+From: Chris Steipp <csteipp@...imedia.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: information disclosure in MantisBT attachments
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: Possible CVE Request: MediaWiki Security and Maintenance Releases: 1.19.18, 1.22.9 and 1.23.2
 Content-Type: text/plain; charset=utf-8
 
-Please assign a CVE ID for the following issue.
+On Thu, Jul 31, 2014 at 12:35 PM, Salvatore Bonaccorso
+<carnil@...ian.org> wrote:
+> Hi
+>
+> New Security and maintenance releases for mediawiki (1.19.18, 1.22.9
+> and 1.23.2) were released:
+>
+> http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-July/000157.html
+>
+> From the announcement, three SECURITY tagged bugs were fixed.
+>
+> Are CVE assignments for those already been requested, or if not, could
+> you assign CVEs for these?
+
+None have been requested or assigned.
+
+* (bug 68187) SECURITY: Prepend jsonp callback with comment.
+** This was hardening against CVE-2014-4671, I don't think CVEs are
+being assigned for these?
+
+* (bug 66608) SECURITY: Fix for XSS issue in bug 66608: Generate the
+URL used for loading a new page in Javascript,instead of relying on
+the URL in the link that has been clicked.
+** Standard Dom XSS. Credit goes to Michael M.
+
+* (bug 65778) SECURITY: Copy prevent-clickjacking between OutputPage
+and ParserOutput.
+** This probably should get a CVE, since downstreams will all want to
+patch this. We prevent iframing certain pages to prevent clickjacking
+/ redressing attacks, but when those pages were transcluded into
+non-protected pages, the resulting page could be iframed. Credit goes
+to Kevin Israel.
 
 
-Description:
-
-MantisBT issue attachments can be downloaded without permission.
-
-Due to an incorrect access check, by guessing the download URL 
-correctly, unprivileged users can download files from a private project 
-with restricted access to attachments, i.e. where 
-$g_download_attachments_threshold /
-$g_view_attachments_threshold are set e.g. to 55 (developer), if another 
-project to which they have access does not restrict attachments download.
-
-Affected versions:
-<= 1.2.17
-
-Fixed in versions:
-1.2.18 (not yet released)
-
-Patch:
-See Github [1]
-
-Credit:
-Issue was discovered by Florian Fuchs and fixed by Paul Richards (former 
-MantisBT developer)
-
-References:
-Further details available in our issue tracker [2]
-
-
-D. Regad
-MantisBT Developer
-http://www.mantisbt.org
-
-
-[1] http://github.com/mantisbt/mantisbt/commit/5f0b150b
-[2] http://www.mantisbt.org/bugs/view.php?id=17742
-
-
+>
+> Regards,
+> Salvatore
