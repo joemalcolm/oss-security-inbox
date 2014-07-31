@@ -1,19 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/8
-Message-ID: <5474BA81.6070108@redhat.com>
-Date: Tue, 25 Nov 2014 10:21:05 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: CVE REJECT CVE-2014-3605
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/8
+Message-Id: <20140731154509.2B8ED6C0262@smtpvmsrv1.mitre.org>
+Date: Thu, 31 Jul 2014 11:45:09 -0400 (EDT)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: WordPress plugin wppageflip index.php pageflipbook_language parameter traversal local file inclusion
 Content-Type: text/plain; charset=utf-8
 
-Docker upstream assigned CVE-2014-6407 and did not use CVE-2014-3605
-(which we previously communicated to them, so we should not reuse it).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+> Can I get 2012 CVE for following vulnerability in A Page Flip Book plugin for
+> WordPress (wppageflip)
+> 
+> http://wordpress.org/support/topic/pageflipbook-pageflipbook_language-parameter-local-file-inclusion
+> http://ceriksen.com/2012/07/10/wordpress-a-page-flip-book-plugin-local-file-inclusion-vulnerability/
+> 
+> input passed to the wp-content/plugins/wppageflip/pageflipbook.php script from
+> index.php is not properly sanitizing user input, specifically directory
+> traversal style attacks (e.g., ../../) supplied to the 'pageflipbook_language'
+> parameter
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+The wording seems a bit garbled ("is not properly sanitizing user input" should
+probably be "is not properly sanitized") but it's fairly obvious what is meant.
 
+Use CVE-2012-6652.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT2mO5AAoJEKllVAevmvmsGCwH/iYX5kdurISZLd3nYpBiGhHG
+ITPJbO7rTWqm7VcalPBUKSYkdzZcav5flA/zxm79A/v4uC+rgr7+tPbCjCQaVcHF
+4RwOt/T9EClb5sDSBh3d308byiTavEqO1iIONsirQriJLzOvXZJsIAzdVv2EGnFD
+eEUNueyu6izaFTW4uYIkfwSZCoJw9Kbkdb0Jo8e16KJdFHtzkolEwQdSk/9Jzk51
+yVrQrAOmVHizdeuR471/Zm8g1GXsIYGf96HfM5J5s7vEdk1rEwPHICMH/EU9Hpjg
+LjleUoNYyVv+Lz0sDZNZjwvG6sPGeX8J98PHLSrFf2SFrPCf+V5CthjVQslMROA=
+=EuG/
+-----END PGP SIGNATURE-----
