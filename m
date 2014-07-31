@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/27
-Message-ID: <20141002072210.GA29659@openwall.com>
-Date: Thu, 2 Oct 2014 11:22:10 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Sona Sarmadi <sona.sarmadi@...a.com>, oss-security@...ts.openwall.com
-Cc: Chet Ramey <chet.ramey@...e.edu>
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/7
+Message-ID: <20140731095907.GL27690@symphytum.spacehopper.org>
+Date: Thu, 31 Jul 2014 10:59:07 +0100
+From: Stuart Henderson <stu@...cehopper.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, hanno@...eck.de
+Subject: Re: Re: CVE request: libressl before 2.0.2 under linux PRNG failure
 Content-Type: text/plain; charset=utf-8
 
-Sona - Chet is not on oss-security, we should be CC'ing him on relevant
-messages.  I've just added the CC on this one.
+On 2014/07/30 20:08, cve-assign@...re.org wrote:
+> >> I see a number of web pages relating to this issue are mentioning that
+> >> it has already been assigned CVE-2014-2970, can anyone throw light on this?
+> 
+> > At MITRE, we (obviously) know where CVE-2014-2970 came from, and we'll
+> > send information here about the resolution as soon as it happens.
+> 
+> We've since learned that nobody ever assigned CVE-2014-2970 to that
+> LibreSSL issue, and apparently every appearance of CVE-2014-2970 in "a
+> number of web pages" was ultimately the result of a miscommunication
+> outside of MITRE.
+> 
+> A complication is that CVE-2014-2970 had been assigned to a different
+> issue, and that issue isn't yet public. What you should do is:
+> 
+>   - if you're part of the embargo audience that has been using
+>     CVE-2014-2970 for a private vulnerability, use CVE-2014-5139
+>     instead
+> 
+>   - if you're not part of that embargo audience, all we can suggest is
+>     that it's very likely that you'll see a public disclosure of
+>     CVE-2014-5139 in the future
 
-On Thu, Oct 02, 2014 at 06:48:54AM +0000, Sona Sarmadi wrote:
-> > On 10/1/14, 5:04 PM, Shawn wrote:
-> > > http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
-> > 
-> > Nope, this one fixes 7168/7169.  It's the equivalent of the `parser-oob' patch.
-> 
-> Chet is 7168 new vulnerability or is a typo and should be CVE-2014-7186?
-> Doesn't bash43-026  fix CVE-2014-7169?
-> 
-> 
-> Is this summary correct?
-> 1) CVE-2014-6271 (Initial vulnerability, Bash Code Injection Vulnerability via Specially Crafted Environment Variables): GNU fix bash43-025  & bash32-052 
-> 
-> 
-> 2) CVE-2014-7169 (Further parser error,  this was assigned to cover incomplete fix for CVE-2014-6271): GNU fix bash43-026  & bash32-053
-> 
-> 
-> 3) CVE-2014-6277 (this is the hardening patch which adds function name mangling, it makes exploitation over the network impossible): Florian's patch /GNU fix bash43-027 & bash32-054
-> 
-> 
-> 4) CVE-2014-6278 (bash: code execution via specially crafted environment): Florian's patch /GNU fix bash43-027 & bash32-054
-> 
-> 
-> 5) CVE-2014-7186 (Out of bound memory read error in redir_stack): GNU fix bash43-028 ??
-> 
-> 
-> 6) CVE-2014-7187 (Off-by-one error in nested loops): No upstream patch available yet ?
-> 
-> 
-> Thanks 
-> -- Sona
+Interesting, thanks. So how does a reporter get hold of an embargoed CVE
+number and mistakenly apply it to libressl? It seems strange to have
+pulled this number out of thin air. And how long do these embargoes
+last, this seems a relatively long time to be sitting on a bug which is
+important enough to have been embargoed.
+
+I await the announcement of CVE-2014-5139 with interest!
