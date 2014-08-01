@@ -1,58 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/4
-Message-ID: <m4qchh$gtc$1@ger.gmane.org>
-Date: Sat, 22 Nov 2014 17:10:28 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/01/2
+Message-ID: <20140801101259.GA18750@suse.de>
+Date: Fri, 1 Aug 2014 12:12:59 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: ben@...er.org
+Subject: Possible CVE request: subversion MD5 collision authentication leak
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-20 00:11, cve-assign@...re.org 
-wrote:
->> https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40
->> the selection list in the filters
->
-> Use CVE-2014-8986.
+Hi,
 
-Thanks.
+The subversion list has fixed a md5 collision attack possibility.
 
-Here's some additional information to document this CVE.
+http://mail-archives.apache.org/mod_mbox/subversion-dev/201407.mbox/%3C53DAB4A7.8030004%40reser.org%3E
 
+http://svn.apache.org/r1550691
+http://svn.apache.org/r1550772
 
-Description:
+The referenced E-Mail speaks about CVE request, so not sure who will assign
+one.
 
-The MantisBT Configuration Report page (adm_config_report.php) did not 
-check that the config value retrieved from the cookie was valid, 
-allowing XSS attacks.
-
-The severity of this issue is mitigated by the need to have a 
-high-privileged account (by default, administrator) to access the 
-configuration report page.
-
-Affected versions:
- >= 1.2.13, <= 1.2.17
-
-Fixed in versions:
-1.2.18 (not yet released)
-
-Patch:
-See Github [1]
-
-Credit:
-Issue was discovered by Paul Richards, and jointly fixed by Paul 
-Richards & Damien Regad (MantisBT Developer)
-
-References:
-Further details available in our issue tracker [2]
-
-
-D. Regad
-MantisBT Developer
-http://www.mantisbt.org
-
-
-[1] http://github.com/mantisbt/mantisbt/commit/e326b73a
-[2] http://www.mantisbt.org/bugs/view.php?id=17889
-
-
-
+Ciao, Marcus
