@@ -1,28 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/7
-Message-ID: <20141123214942.204a552b@pc>
-Date: Sun, 23 Nov 2014 21:49:42 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/01/1
+Message-ID: <CA+tbMaX-6SHyNHB9GFQuoo7zL8bXCzycY83=WN65JKzpyZw9jw@mail.gmail.com>
+Date: Thu, 31 Jul 2014 23:23:18 -0500
+From: Kyle Kelley <rgbkrk@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: The Fuzzing Project
+Cc: security@...thon.org, IPython developers list <ipython-dev@...py.org>
+Subject: CVE Request: Enforce use of HTTPS for MathJax in IPython
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+All,
 
-As already mentioned in various threads I hereby announce the Fuzzing
-Project:
-https://fuzzing-project.org/
+We would like to request a CVE for a vulnerability in the IPython notebook,
+reported today by Leopold Schabel on IPython's GitHub issue tracker at
+https://github.com/ipython/ipython/issues/6246.
 
-This is still a lot of work in progress. I welcome all feedback,
-contributions and especially links to your reports of the bugs you
-fuzzed.
+Email address of requester: security@...thon.org; rgbkrk@...il.com
+Software name: IPython notebook
+Type of vulnerability: Use of insecure resources
+Attack outcome: Remote execution
+Patch/issue: https://github.com/ipython/ipython/pull/6249,
+https://github.com/ipython/ipython/issues/6246
+Affected versions: 0.12 ≤ version ≤ 2.1
 
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
+Summary: When using the IPython notebook without encryption (i.e. running
+the server on HTTP instead of HTTPS), mathjax is loaded over HTTP. An
+attacker with fortuitous network position could execute code on a local
+IPython notebook by modifying the mathjax javascript.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+This issue was fixed in the git master branch (development branch for
+upcoming v. 2.2) with commit cf793ebc4, on 7/31/2014:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+https://github.com/ipython/ipython/commit/cf793ebc4f9e8483f104667e4c73748357fa8c56
+
+Mitigations:
+* Run the notebook with SSL (see
+http://ipython.org/ipython-doc/2/notebook/public_server.html#securing-a-notebook-server
+).
+* Install mathjax
+    from IPython.external.mathjax import install_mathjax
+    install_mathjax()
+
+Regards,
+
+Kyle Kelley
+
