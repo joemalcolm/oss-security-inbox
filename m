@@ -1,20 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/6
-Message-ID: <53AD1CC3.8040308@ehuk.net>
-Date: Fri, 27 Jun 2014 08:26:59 +0100
-From: Eddie Chapman <eddie@...k.net>
-To: "Don A. Bailey" <donb@...uritymouse.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: LMS-2014-06-16-5: Linux Kernel LZ4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/01/3
+Message-ID: <20140801141346.GA8965@eldamar.local>
+Date: Fri, 1 Aug 2014 16:13:46 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: Steve Kemp <steve@...ve.org.uk>, Claude Bulin <xcfa@...family.org>, CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE request: xcfa: Insecure use of temporary files, subject to race conditions
 Content-Type: text/plain; charset=utf-8
 
-On 26/06/14 19:57, Don A. Bailey wrote:
-> Vulnerability Scope:
-> All versions of the Linux kernel (3x/2x) with LZ4 support (lib/lz4).
+Hi
 
-I think it's worth pointing out that the Linux kernel only introduced 
-LZ4 support in 3.11. This is why from the new kernel.org stable releases 
-yesterday, only 3.14.9 and 3.15.2 contain the LZ4 patch. 3.10.45 and 
-3.4.95 don't.
+Steve Kemp discovered several problems in xcfa, a tool to extract
+audio CDs and convert files to various formats related to insecure use
+of temporary files possibly allowing arbitrary code execution.
 
-Eddie
+I'm full-quoting his findings from the Debian BTS:
+
+https://bugs.debian.org/756600
+
+> xcfa contains several insecure uses of temporary files.
+> 
+> For example the file src/get_info.c has code to test that
+> curl is present, in the function GetInfo_wget which
+> essentially runs:
+> 
+> 	wget --user-agent=\"Mozilla 22.0\" --directory-prefix=/tmp/  http://google.fr/
+>         ..
+>         if [ -e /tmp/index.html ]; then 
+> 		rm /tmp/index.html
+> 	fi
+> 
+> This is probably safe, because wget will not follow symlinks, and will
+> instead create "index.html.1" - but any existing file called /tmp/index.html
+> will be removed regardless.
+> 
+> More serious issues exist throughout the codebase.  For example the
+> code in dvdread_create_recap_audio, located in src/dvd_read.c contains
+> this lovely function:
+> 
+>         // Suppression du fichier precedant si il existe
+>         g_unlink ("/tmp/get_infos_dvd.sh");
+>         g_unlink ("/tmp/infos_dvd.txt");
+> 
+>         fp = fopen ("/tmp/get_infos_dvd.sh", "w");
+> 
+>         fprintf (fp, "#!/bin/sh\n");
+>         fprintf (fp, "\n");
+>         fprintf (fp, "set -e\n");
+>         fprintf (fp, "\n");
+> 
+> 	..
+> 	..
+> 
+>         system ("chmod +x /tmp/get_infos_dvd.sh");
+> 
+>         system ("/tmp/get_infos_dvd.sh");
+>         g_unlink ("/tmp/get_infos_dvd.sh");
+> 
+> 
+> Similarly the code which copies files to the trashbin, located in src/file_trash.c,
+> has some nice code which runs:
+> 
+>         system ("env | grep \"KDE_FULL_SESSION\" > /tmp/tst_kde_full_session.txt");
+>         if ((fp = fopen ("/tmp/tst_kde_full_session.txt", "r")) != NULL) {
+>                 while (fgets (buf, MAX_CARS_KDE, fp) != NULL) {
+>                         if (strcmp (buf, "KDE_FULL_SESSION") == 0) {
+>                                 if (strcmp (buf, "true") == 0 || strcmp (buf, "TRUE") == 0) {
+>                                         BoolRet = TRUE;
+>                                         break;
+>                                 }
+>                         }
+>                 }
+>                 fclose (fp);
+>         }
+>         g_unlink ("/tmp/tst_kde_full_session.txt");
+> 
+> 
+> In short this codebase is rife with race-conditions allowing arbitrary shell executation,
+> via /tmp/get_infos_dvd.sh, and file truncation/deletion.
+> 
+> I'd strongly urge the maintainer to audit the codebase for additional issues, with the
+> help of upstream.
+
+Would one CVE suffice? Could you allocate a CVE for these issues in xcfa?
+
+Regards,
+Salvatore
