@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/22/3
-Message-ID: <20140322084114.GC2742@sivokote.iziade.m$>
-Date: Sat, 22 Mar 2014 10:41:14 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/01/4
+Message-ID: <53DBA899.1060904@reser.org>
+Date: Fri, 01 Aug 2014 07:47:53 -0700
+From: Ben Reser <ben@...er.org>
+To: Marcus Meissner <meissner@...e.de>,  OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: Possible CVE request: subversion MD5 collision authentication leak
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 21, 2014 at 11:23:52AM +0200, Georgi Guninski wrote:
-> For a start I suggest a group of people start
-> a public mailing list on some public service.
+On 8/1/14 3:12 AM, Marcus Meissner wrote:
+> The subversion list has fixed a md5 collision attack possibility.
 > 
-> I can volunteer time.
+> http://mail-archives.apache.org/mod_mbox/subversion-dev/201407.mbox/%3C53DAB4A7.8030004%40reser.org%3E
 > 
-> Off the top of my head options are:
-> A. googlegroups
+> http://svn.apache.org/r1550691
+> http://svn.apache.org/r1550772
+> 
+> The referenced E-Mail speaks about CVE request, so not sure who will assign
+> one.
 
-google want my mobile phone, so i can't start
-group there, sorry.
-
-> B. sourceforge:  http://sourceforge.net/apps/trac/sourceforge/wiki/Mailing%20lists
-> 
-> google are BB, have no experience with sourceforge ML.
-> (not sure sourceforge is applicable because of need of project).
-> 
-> This approach has disadvantages, but an advantage is
-> not dealing with DDOS/legal stuff.
+Already got one (the request was directed at security@...che.org who hand them
+out to us): CVE-2014-3528.
