@@ -1,38 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/04/1
-Message-ID: <20140504062625.GA26153@eldamar.local>
-Date: Sun, 4 May 2014 08:26:25 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/02/3
+Message-ID: <20140802170723.GA29958@gremlin.ru>
+Date: Sat, 2 Aug 2014 21:07:23 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Cc: Assign a CVE Identifier <cve-assign@...re.org>, Steffen Ullrich <coyote.frank@....net>
-Subject: Re: Debian Bug#746579: libwww-perl: HTTPS_CA_DIR or HTTPS_CA_FILE disables peer certificate verification for IO::Socket::SSL
+Subject: Re: CVE Request: Enforce use of HTTPS for MathJax in IPython
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 31-Jul-2014 23:23:18 -0500, Kyle Kelley wrote:
 
-On Fri, May 02, 2014 at 02:54:33PM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746579
-> 
-> Package: libwww-perl
-> Version: 6.06-1
-> Tags: security
-> Usertags: serious
-> 
-> If LWP uses IO::Socket::SSL as SSL socket class (this is the default),
-> setting HTTPS_CA_DIR or HTTPS_CA_FILE environment variable disables(!)
-> server cerificate verification:
+ > Summary: When using the IPython notebook without encryption
+ > (i.e. running the server on HTTP instead of HTTPS), mathjax is
+ > loaded over HTTP. An attacker with fortuitous network position
+ > could execute code on a local IPython notebook by modifying the
+ > mathjax javascript.
 
-An update on this issue for the affected versions:
+HTTPS wouldn't help much: the attackers (most of which are known to
+use 3-letter names) can (and they really do) issue a fake certificate
+for their decoy servers.
 
-Steffen Ullrich proposed a fix for this in [1]. The issue seem to be
-introduced in LWP::Protocol::https in commit[2], which is version
-6.04.
+In general, nothing received from the Net could be trusted. And the
+HTTPS doesn't guarantee anything beyond "this certificate was signed
+by this CA" - was that voluntary or forced.
 
- [1] https://github.com/libwww-perl/lwp-protocol-https/pull/14
- [2] https://github.com/dagolden/lwp-protocol-https/commit/bcc46ce2dab53d2e2baa583f2243d6fc7d36dcc8
+Enforcing HTTPS for the whole site is even more stupid: normally only
+user-specific data (login procedure, personal settings for registered
+users, etc) should be forced to go through HTTPS; everything else
+should normally be left up to the users' wish.
 
-Regards,
-Salvatore
+But the terminal state of mental disability is... yes, using scripts
+from outer sources: intercepting one popular source like
+https://ajax.googleapis.com/ajax/libs/jquery/*/jquery.min.js will
+allow the attacker to not bother of intercepting other sites directly.
+
+ > This issue was fixed in the git master branch (development branch
+ > for upcoming v. 2.2) with commit cf793ebc4, on 7/31/2014:
+
+Not a vulnerability, not a fix.
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
