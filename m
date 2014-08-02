@@ -1,135 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/23
-Message-ID: <542981F3.4010006@redhat.com>
-Date: Mon, 29 Sep 2014 09:59:47 -0600
-From: Eric Blake <eblake@...hat.com>
-To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com, Tavis Ormandy <taviso@...xchg8b.com>
-CC: chet.ramey@...e.edu, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/02/4
+Message-ID: <etPan.53dd4a95.327b23c6.d5d9@Thor.local>
+Date: Sat, 2 Aug 2014 16:31:17 -0400
+From: Donald Stufft <donald@...fft.io>
+To: gremlin@...mlin.ru, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Enforce use of HTTPS for MathJax in IPython
 Content-Type: text/plain; charset=utf-8
 
-On 09/29/2014 09:24 AM, Florian Weimer wrote:
-> On 09/28/2014 03:39 AM, Chet Ramey wrote:
->> OK, here are the more-or-less final versions of the patches for
->> bash-2.05b
->> through bash-4.3.  I made two changes from earlier today: the function
->> export suffix is now `%%', which is not part of a the set of valid
->> variable
->> name characters but avoids any potential problems with including
->> shell metacharacters in the name; and this version refuses to import
->> shell
->> functions whose name contains a slash, for reasons I discussed earlier.
+On August 2, 2014 at 1:08:12 PM, gremlin@...mlin.ru (gremlin@...mlin.ru) wrote:
+> On 31-Jul-2014 23:23:18 -0500, Kyle Kelley wrote:
 > 
-> Chet, thanks for posting an official version of the prefix/suffix patch.
+> > Summary: When using the IPython notebook without encryption
+> > (i.e. running the server on HTTP instead of HTTPS), mathjax is
+> > loaded over HTTP. An attacker with fortuitous network position
+> > could execute code on a local IPython notebook by modifying the
+> > mathjax javascript.
 > 
-> I looked at how the “%%” encoding works with Debian's “at” (which is
-> also used by Fedora and downstreams).  Unfortunately, it does not
-> address the issue, “at” still prints error messages, both with dash as
-> /bin/sh and bash.
+> HTTPS wouldn't help much: the attackers (most of which are known to
+> use 3-letter names) can (and they really do) issue a fake certificate
+> for their decoy servers.
 
-'at' is already broken, independently of bash.  For example:
-
-https://lists.gnu.org/archive/html/bug-bash/2014-09/msg00300.html
-
-echo pwd | env "/tmp/exploit=me" at tomorrow
-
-produces a shell script with these lines:
-
-#!/bin/sh
-...
-/tmp/exploit=me; export /tmp/exploit
-
-So even on Debian, where /bin/sh is dash, this script attempts to
-execute the file named /tmp/exploit=me, possibly under the privileges of
-'at' rather than as the user that created the file.  No bash needed.
-
-So let's not use 'at' as justification for changing bash, but instead
-lobby to get 'at' fixed.
-
->  As a result, I wonder if a suffix which is actually
-> within the shell variable syntax wouldn't be a better choice (e.g.,
-> three randomly chosen alphanumerics), as that would make the “at”
-> environment serialization code work again.
-
-No.  Absolutely not.  The moment that you pick a suffix which collides
-with VALID environment variable names, you have opened yourself up to
-exploitation.  And we _still_ have the issue that upstream bash hasn't
-fully isolated functions to be completely independent of variables.  As
-I've already pointed out on the bash list:
-
-function a=b () { :; }
-export -f 'a=b'
-export FUNC_BASH_a=one
-bash -c 'echo "$FUNC_BASH_a"
-
-Per POSIX, this MUST output "one", not "() { :; }" - we aren't quite
-there yet.  But your proposal to use alphanumerics as the suffix instead
-of invalid identifiers will make it all the more apparent when
-collisions like this occur.
-
->  (I'm not concerned about
-> “at” specifically, we'll change it anyway, it's about similar code out
-> there which we don't know about it yet.)
-
-Any code which is not robust to non-identifiers in the names of
-environment variables already needs to be patched, independently of
-bash.  True, bash's change is making it all the more obvious that there
-are non-identifiers in the environment, but the problem is not bash's.
+There are attackers other than 3 letter agencies.
 
 > 
-> Eric, does “%%” even work for Cygwin, or does it cause strange effects
-> there?  (For the Windows shell, “%” is the variable starter character, a
-> bit like “$” in sh-type shells.)
+> In general, nothing received from the Net could be trusted. And the
+> HTTPS doesn't guarantee anything beyond "this certificate was signed
+> by this CA" - was that voluntary or forced.
+> 
+> Enforcing HTTPS for the whole site is even more stupid: normally only
+> user-specific data (login procedure, personal settings for registered
+> users, etc) should be forced to go through HTTPS; everything else
+> should normally be left up to the users' wish.
 
-Cygwin has no problem with %% in the environment name.  Regardless of
-the version of bash:
+This is incredibly wrong. First off if only your login procedures, personal
+settings, etc are password protected then it's trivial for a MITM to simply
+strip the HTTPS from the link to the login page. The vast bulk of users simply
+won't notice that they are visiting a page via HTTP instead of HTTPS.
+Furthermore, even if you manage to login over HTTPS, HTTP, being a stateless
+protocol, includes authentication credentials with every request. This is
+typically taken in the form of cookies which are sent with every request. In
+order to protect these cookies they need to only be sent over a HTTPS connection.
+Even if you set cookies to secure, that still doesn't prevent an attacker from
+writing cookies and doing a fixation attack to trick a victim into being logged
+into another account. Perhaps they don't notice this and they do something
+sensitive, such as adding a credit card to their account, and in reality they
+are adding their credit card to another account.
 
-$ uname
-CYGWIN_NT-6.2-WOW64
-$ env 'a%%=foo' sh -c 'env | grep foo'
-a%%=foo
+Even simply redirecting to HTTPS isn't enough, because a MITM attacker could
+simply intercept the redirect and terminate the TLS themselves and return a
+plaintext page. You must use HSTS with a long timeout to enforce HTTPS for the
+entire domain.
 
-I don't know if mingw has a problem, but if so, the mingw developers
-need to propose an alternate solution.
+Even with HSTS on just that single domain isn't enough, you need to use the
+includeSubdomains option otherwise a MITM attacker simply needs to convince
+your browser, through a redirect or embedded image or what have you, to visit
+a non-existant sub domain of your domain which, due to the nature of browser's
+cookie domain policy, will be able to write cookies doing a session fixation
+or even read cookies if you don't have them set to secure.
+
+Finally if the domain that is to be protected is a subdomain itself, than the
+parent domain must also have HTTPS enforced via HSTS with includeSubdomains
+because again, the browser policy allows a parent domain to set a cookie that
+the sub domains will read allowing yet another avenue for a fixation attack.
+
+So sure, this doesn't prevent a TLA with access to a root key doing a targeted
+attack against a site, however it does prevent an attacker who just happens
+to be on the same network (Coffeshop Wifi etc) from attacking you.
 
 > 
-> Related to that is that we should try to converge back to uniform bash
-> behavior across distributions.  Right now, the majority seems to use
-> “()” as the suffix (which is problematic, per the above), and they also
-> reject characters such as “.:-” in import function names (a restriction
-> which was inherited from the first patch which only tried to block
-> command execution).  The latest upstream patch uses “%%”, and allows
-> anything allowed in a regular function definition, except absolute
-> pathnames.
+> But the terminal state of mental disability is... yes, using scripts
+> from outer sources: intercepting one popular source like
+> https://ajax.googleapis.com/ajax/libs/jquery/*/jquery.min.js will
+> allow the attacker to not bother of intercepting other sites directly.
 > 
-> I'm not sure how to move towards a common solution.  I think avoiding
-> non-serializable environments could be a compelling reason to switch the
-> suffix, but “%%” does not provide that.
-
-I see two probably solutions for 'at'; we need something along these
-lines ANYWAYS because of the 'env /tmp/exploit=me' situation:
-1. ignore ALL non-identifiers, making it impossible to export functions
-into a bash script run by 'at' (anyone relying on that will now have to
-define their functions as part of their script startup, instead of
-inheritance)
-2. special-case %% identifiers to generate code in the 'at' script to
-require #!/bin/bash and use 'export -f' on the function name substring
-(in other words, make 'at' become smarter about the function conventions
-of bash).
-
-But I see no reason to move away from %% suffixing.
-
+> > This issue was fixed in the git master branch (development branch
+> > for upcoming v. 2.2) with commit cf793ebc4, on 7/31/2014:
 > 
-> (From a security POV, *requiring* that imported functions contain at
-> least one special character would actually be best, but obviously,
-> that's not backwards-compatible.)
+> Not a vulnerability, not a fix.
+> 
 
-We already discussed that battle, and decided that the security of NO
-collisions is worth the backwards-compatible break.
+Absolutely is a vuln and is a fix.
 
 -- 
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
