@@ -1,42 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/7
-Message-Id: <201401172032.s0HKWiMi017597@linus.mitre.org>
-Date: Fri, 17 Jan 2014 15:32:44 -0500 (EST)
-From: cve-assign@...re.org
-To: mancha1@...h.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Poppler library: DoS fixed in 0.24.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/02/1
+Message-ID: <20140802053430.GA25642@eldamar.local>
+Date: Sat, 2 Aug 2014 07:34:30 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: XML-DT: Insecure use of temporary files
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> It was discovered the JBIG2Stream::readSegments function in the
-> Poppler library (prior to 0.24.5) does not properly handle
-> segExtraBytes values, which allows remote attackers to cause a
-> denial of service (application crash) via a crafted PDF that
-> triggers a segmentation fault caused by an improper format
-> control string.
+On Thu, Jul 31, 2014 at 07:12:28AM +0200, Salvatore Bonaccorso wrote:
+> Hi
 > 
-> https://bugs.kde.org/show_bug.cgi?id=328511
-> Upstream fix: 
-> http://cgit.freedesktop.org/poppler/poppler/commit/?id=58e04a08afee
+> Steve Kemp reported to to the Debian BTS in [1] that the XML-DT Perl
+> module distribution contains mkdtskel and mkxmltype using insecurely
+> temporary files using the pid of the process in the temporary file
+> name.
+> 
+>  [1] https://bugs.debian.org/756566
+> 
+> Could a CVE be assigned for this issue?
 
-Use CVE-2013-7296.
+For the record: Ths was fixed in XML-DT 0.65 upstream, see
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+https://metacpan.org/diff/file?target=AMBS/XML-DT-0.65/&source=AMBS/XML-DT-0.63/
 
-iQEcBAEBAgAGBQJS2ZLMAAoJEKllVAevmvmsTbQH/3xqY6FrVy2LyO3g/9ko+g9v
-gREbkwfRBwkOURyZbNjExr1bKPibeogGIeW4gnFT//D7UOPtPA+teGCoCFxh4ASX
-ud8QPbqphhCT6IT/3xcd7Ln5JOZlJzrpm6OhWmld7kit5BcVg8b0diaVQRuaYw8c
-tiTjbonWIaWQCdBiBCTmtKWu7KT3pdznAFm9zmr8qBAEkGkzodtd2ogj2A+4vR0E
-kmZuA+dzy/qHZmoDGgqQjfJw0+lk7pyrjxthDzlpgjAQlKM4TNQs2EcAqz9MVOEQ
-J9x0hbzKYL+n3VpCNLN9xqAf0K0vDBCeGOhoMGFR1TaBMJqhcfqtvF+w8VTzsZA=
-=26w8
------END PGP SIGNATURE-----
+Regards,
+Salvatore
