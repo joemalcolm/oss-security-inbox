@@ -1,30 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/9
-Message-ID: <20141121092736.GA22086@mail.corp.redhat.com>
-Date: Fri, 21 Nov 2014 10:27:37 +0100
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-7817 glibc: command execution in wordexp() with WRDE_NOCMD specified
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/02/2
+Message-ID: <20140802054756.GB25642@eldamar.local>
+Date: Sat, 2 Aug 2014 07:47:56 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: Chris Steipp <csteipp@...imedia.org>
+Cc: oss-security@...ts.openwall.com, CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: Possible CVE Request: MediaWiki Security and Maintenance Releases: 1.19.18, 1.22.9 and 1.23.2
 Content-Type: text/plain; charset=utf-8
 
-> > After a lightning review of one of my systems, I found the following use
-> > glibc's wordexp: adobe's flash plugin, ardour2, mailx, enca. I've not
-> > looked into which input is under a would-be-attacker's control.
-> > 
-> > --mancha
+Hi Chris,
+
+On Thu, Jul 31, 2014 at 01:17:33PM -0700, Chris Steipp wrote:
+> On Thu, Jul 31, 2014 at 12:35 PM, Salvatore Bonaccorso
+> <carnil@...ian.org> wrote:
+> > Hi
+> >
+> > New Security and maintenance releases for mediawiki (1.19.18, 1.22.9
+> > and 1.23.2) were released:
+> >
+> > http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-July/000157.html
+> >
+> > From the announcement, three SECURITY tagged bugs were fixed.
+> >
+> > Are CVE assignments for those already been requested, or if not, could
+> > you assign CVEs for these?
 > 
-> alsa-lib is also affected.
+> None have been requested or assigned.
 
-During internal discussions of this we found that alsa-lib is affected - but
-with CVE-2014-7817 fix applied it's not.
-mailx though is affected even with CVE-2014-7817 applied, I will post
-a separate CVE request for this to oss-sec shortly (since
-CVE-2014-7817 is public - someone will find out about mailx anyways,
-so see no reason keeping this private anymore).
+Thanks for feedback (btw. should have Cc'ed you in advance on
+this request).
 
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+> * (bug 68187) SECURITY: Prepend jsonp callback with comment.
+> ** This was hardening against CVE-2014-4671, I don't think CVEs are
+> being assigned for these?
 
-Content of type "application/pgp-signature" skipped
+No strong opinion here. There was at last CVE-2014-1546 assigned in
+bugzilla for this
+(https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-1546). So a CVE
+might also be assigned for this.
+
+Regards,
+Salvatore
