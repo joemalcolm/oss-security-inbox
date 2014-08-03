@@ -1,54 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/5
-Message-ID: <CAMpsgwbnPx0C2eUuOdrN3-186KpJ3wsogDC2TF2-ZKbjJ6UG7w@mail.gmail.com>
-Date: Sat, 29 Mar 2014 09:19:32 +0100
-From: Victor Stinner <victor.stinner@...il.com>
-To: Vincent Danen <vdanen@...hat.com>
-Cc: OSS Security List <oss-security@...ts.openwall.com>,  "security@...hon.org" <security@...hon.org>
-Subject: Re: [PSRT] CVE request: os.makedirs(exist_ok=True) is not thread-safe in Python
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/03/5
+Message-ID: <etPan.53de6125.66334873.d5d9@Thor.local>
+Date: Sun, 3 Aug 2014 12:19:49 -0400
+From: Donald Stufft <donald@...fft.io>
+To: gremlin@...mlin.ru, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Enforce use of HTTPS for MathJax in IPython
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I changed the title of the issue to "os.makedirs(exist_ok=True) is not
-thread-safe: umask is set temporary to 0, serious security problem". So the
-vulnerability requires an application using exist_ok=True, a
-second vulnerability to inject arbitrary code, and at least another thread.
-Since umask() is restored the line after umask(0) and CPython has a GIL,
-the window to exploit the vulnerability is very short (leess than a second,
-closer to 5 ms). This vulnerability looks theorical to me, so I'm not ok to
-call it "serious", but it would be nice to fix it.
+On August 3, 2014 at 3:57:58 AM, gremlin@...mlin.ru (gremlin@...mlin.ru) wrote:
+> On 02-Aug-2014 20:07:23 -0600, Kurt Seifried wrote:
+>  
+> >>> Enforcing HTTPS for the whole site is even more stupid: normally
+> >>> only user-specific data (login procedure, personal settings for
+> >>> registered users, etc) should be forced to go through HTTPS;
+> >>> everything else should normally be left up to the users' wish.
+> >> This is incredibly wrong. First off if only your login procedures,
+> >> personal
+> > +1. If you commit to encrypting the entire site then you can do
+> > things like [...]
+>  
+> Simple question: who do you trust more - your ISP or site owner?
+> Or should I ask whether you trush either of them?
+>  
+> Hint: ISPs may be subjected to SORM-2 (been there, seen that, no
+> t-shirt this time), Jindun Gongcheng, or other pretty things. Site
+> owners may be interested in tracking their users' activity (that's
+> why I prefer browsing online shops anonymously, without logging in).
+> Other people may try to eavesdrop (or even intercept) connections
+> from users to servers.
 
-Hum, I didn't check if umask() releases the GIL.
+This is a nonsensical point too. I have to trust the site owners
+to some degree. To what degree broadly depends on what the site
+itself does however at the very least they’ll be able to see what
+account I’m attempting to use.
 
-Victor
+With enforced HTTPS and HSTS I don’t have to trust my ISP.
 
-Le vendredi 28 mars 2014, Vincent Danen <vdanen@...hat.com> a écrit :
+>  
+> > It's not about the users wish. It's about the site's wish. The
+> > site is providing the service, the site provides the TOS/AUP/etc.
+> > The site may choose optionally to leave it up to the user, but
+> > this is a VERY bad idea.
+>  
+> When people want to make their systems secure, they use client-side
+> certificates. When people want to make their systems public, they
+> normally don't care of who access them and don't track their users.
+>  
+> When a site allows anonymous access, that may be performed via HTTP.
+> Authenticated (over HTTPS) users may (and normally should) work via
+> HTTPS, but forcing all users to use HTTPS is "a VERY bad idea"
+> // (q) Kurt Seifried, 2014-08-03
+>  
 
-> Cc'ing security@...hon.org <javascript:;> so that they are aware of the
-> CVE assignment (so please keep them in the cc).  Just copying and pasting
-> from the Red Hat bug:
->
->
-> It was reported [1] that a patch added to Python 3.2 [2] caused a race
-> condition where a file created could be created with world read/write
-> permissions instead of the permissions dictated by the original umask of
-> the process.  This could allow a local attacker that could win the race to
-> view and edit files created by a program using this call.
->
-> Note that prior versions of Python, including 2.x, do not include the
-> vulnerable _get_masked_mode() function that is used by os.makedirs() when
-> exist_ok is set to True.
->
->
-> [1] http://bugs.python.org/issue21082
-> [2] http://bugs.python.org/issue9299
->
->
-> Our bug is here: https://bugzilla.redhat.com/show_bug.cgi?id=1082177
->
-> Could a CVE be assigned to this issue please?  Thank you.
->
-> --
-> Vincent Danen / Red Hat Security Response Team
+What is the downside to forcing HTTPS.
 
+--  
+Donald Stufft
+PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
