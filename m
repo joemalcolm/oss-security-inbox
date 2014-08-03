@@ -1,273 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/9
-Message-Id: <201402071749.s17Hn0qh001521@linus.mitre.org>
-Date: Fri, 7 Feb 2014 12:49:00 -0500 (EST)
-From: cve-assign@...re.org
-To: djorm@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: multiple issues in Apache Cordova/PhoneGap
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/03/2
+Message-ID: <20140803055144.GB29958@gremlin.ru>
+Date: Sun, 3 Aug 2014 09:51:44 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Enforce use of HTTPS for MathJax in IPython
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> Multiple issues have been reported in Apache Cordova:
-> 
-> http://packetstormsecurity.com/files/124954/apachecordovaphonegap-bypass.txt
-
-We have been looking at this report, and have this initial response.
-
-First, the CVE assignments are based on the NDSS 2014 paper itself:
-
-  http://www.internetsociety.org/ndss2014/programme#session3
-  http://www.cs.utexas.edu/~shmat/shmat_ndss14nofrak.pdf
-
-not on the apachecordovaphonegap-bypass.txt summary. Although the
-summary presumably covers the most important points about the authors'
-research and solutions, it doesn't focus on software mistakes in the
-same way that CVE does. The NDSS paper mentions a vulnerability in
-Android, framework vulnerabilities (in Apache Cordova and possibly
-other frameworks), and vulnerabilities in individual apps.
-
-
-Page 5 of the NDSS paper says:
-
-> On Android prior to API level 17, these interfaces are generically
-> insecure. Malicious JavaScript executing inside WebView can use the
-> Java reflection API to invoke any method of any Java object exposed
-> via 'addJavascriptInterface' and take control over the local side of
-> the application
-
-This Android vulnerability is CVE-2012-6636. The available information
-about the point of original disclosure is
-http://50.56.33.56/blog/?p=314 and we don't happen to know if the
-researcher has a personal domain name for 50.56.33.56 that should be
-used instead.
-
-In this p=314 post, the researcher says "Prior to Android 4.2, if an
-application uses the addJavascriptInterface and allows an attacker to
-control the content rendered in a WebView, then an attacker can take
-control over the parent application regardless of the type of
-interface exposed." This seems to be a different finding than in the
-referenced
-http://www.cis.syr.edu/~wedu/Research/paper/webview_acsac2011.pdf
-paper. (Yes, webview_acsac2011.pdf can have CVE-2011-#### ID
-assignments but we are not working on that at the moment.)
-
-Incidentally, several other researchers are apparently working on
-reports about use of addJavascriptInterface in individual Android
-apps. For example, see the "Threat Report of Android App" .png file
-within the blog.trustlook.com reference in CVE-2014-1670. That
-reference mentions "hundreds of vulnerable apps."
-
-
-Page 4 of the NDSS paper says:
-
-> in our threat model we consider malicious advertisers, but not
-> malicious ad brokers. The latter are trusted by app developers and,
-> critically, their Web code is indistinguishable from the app's own
-> code as far as the SOP is concerned.
-
-This seems to be a useful threat model for the research goals, but is
-not necessarily a threat model that applies directly to CVE
-assignment. Specifically, a hybrid application framework could take
-the position that malicious advertisers are entirely a broker's
-problem. In other words, an app could be offered to users with a
-statement of "We use these ad brokers. If you do not trust these ad
-brokers and all of their advertisers, you should not install this
-app." (Admittedly, with current advertising models, this statement
-might be essentially useless and might never occur.) The implication
-is that lack of protection against malicious advertisers is not
-fundamentally a software mistake and, by itself, does not qualify for
-a CVE assignment. To have a CVE assignment, there needs to be an
-implementation error in the mechanism for protection against malicious
-advertisers.
-
-
-Page 7 of the NDSS paper says
-
-> they allow JavaScript on the Web side to choose a bridge via
-> 'setNativeToJsBridgeMode' and 'setJsToNativeBridgeMode' functions.
-> These functions are not intended to be called directly by hybrid apps,
-> since apps are supposed to access the framework only through the
-> public API, but they are not protected by the SOP.
-
-Here, the unintended availability of function calls might be
-considered a vulnerability, but it is not really independent of the
-existence of a specific vulnerable bridge. If no bridge were vulnerable,
-ability to call setNativeToJsBridgeMode and setJsToNativeBridgeMode
-might be considered a non-security bug.
+On 02-Aug-2014 16:31:17 -0400, Donald Stufft wrote:
 
-> Therefore, a malicious script is free to invoke them in order to
-> select a vulnerable bridge. Consequently, even if some bridges are
-> secure, a single vulnerable bridge is sufficient to bypass all of the
-> framework's defenses. Availability of bridges varies from version to
-> version even within the same framework
+ >>> loaded over HTTP. An attacker with fortuitous network position
+ >>> could execute code on a local IPython notebook by modifying
+ >>> the mathjax javascript.
+ >> HTTPS wouldn't help much: the attackers (most of which are known
+ >> to use 3-letter names) can (and they really do) issue a fake
+ >> certificate for their decoy servers.
+ > There are attackers other than 3 letter agencies.
 
-The "varies from version to version" observation, with no further
-details, complicates the CVE assignment process. The two Apache
-Cordova CVE-2014-#### assignments below apply to all event-based
-bridges that can be attacked in version 3.3.0. If anyone wants to
-mention event-based bridges that could be attacked in previous
-versions, but cannot be attacked (or do not exist at all) in 3.3.0,
-additional CVE assignments are possible.
+Those attackers don't have things like SORM-2 or Jindun Gongcheng.
 
-Page 10 of the NDSS paper says:
+ >> In general, nothing received from the Net could be trusted. And
+ >> the HTTPS doesn't guarantee anything beyond "this certificate
+ >> was signed by this CA" - was that voluntary or forced.
 
-> For event-based bridges only, PhoneGap on Android attempts to enforce
-> the NoBridge property.
+Any objections on this point? :-)
 
-Also, page 7 of the NDSS paper says:
+ >> Enforcing HTTPS for the whole site is even more stupid: normally
+ >> only user-specific data (login procedure, personal settings for
+ >> registered users, etc) should be forced to go through HTTPS;
+ >> everything else should normally be left up to the users' wish.
+ > This is incredibly wrong. First off if only your login procedures,
+ > personal settings, etc are password protected
 
-> Exploiting event-based bridges ... some analyses mistakenly concluded
-> that event-based bridges cannot be exploited by malicious JavaScript
+Why password? Use client certificates instead.
 
-> This conclusion is false. Modified, malicious clones of the
-> framework's JavaScript library can access local resources via
-> event-based bridges even when confined in an iframe.
-> 
-> First, if the malicious script inside an iframe cannot receive
-> synchronization events from the framework's local half, it can
-> simply block for a predefined interval ...
+ > then it's trivial for a MITM to simply strip the HTTPS from the
+ > link to the login page.
 
-Use CVE-2014-1881 for this first issue.
+At which point? Inside of my browser? Bwa-ha-ha...
+Redirect from http://example.net/login to https://example.net/login
+will perform just fine when there's a mistype.
 
+ > The vast bulk of users simply won't notice that they are visiting
+ > a page via HTTP instead of HTTPS.
 
-> Second, even if the framework's utility objects are not
-> visible from an iframe, the main JavaScript objects implementing the
-> bridge are available, and malicious code can access them directly.
+Nothing new: 95% of people are morons.
 
-Use CVE-2014-1882 for this second issue.
+But once you'll create a system which can be used even by morons,
+it will be used only by morons.
 
+ > Furthermore, even if you manage to login over HTTPS, HTTP,
+ > being a stateless protocol, includes authentication credentials
+ > with every request. This is typically taken in the form of
+ > cookies which are sent with every request.
 
-> Before version 2.6, PhoneGap on Android used a WebView callback
-> 'shouldOverrideUrlLoading' to intercept the loading of foreign-origin
-> content. This callback is not invoked for iframe fetches or
-> XMLHttpRequests. Therefore, this defense cannot prevent a hybrid app
-> from loading unauthorized content as, for example, an ad in an iframe.
-> PhoneGap 2.6, released on April 9, 2013, uses the
-> 'shouldInterceptRequest' callback which correctly intercepts the
-> loading of iframes. This callback is only supported by Android API 11
-> or later.
+If you want to get some real security, use client certificates.
 
-Use CVE-2014-1883. A CVE-2013-#### ID was considered, but there didn't
-seem to be an obvious disclosure of the issue in 2013 on the
-https://github.com/phonegap/phonegap/blob/2.6.0/changelog page.
+ > In order to protect these cookies they need to only be sent
+ > over a HTTPS connection.
 
+"This is incredibly wrong." // (q) Donald Stufft, 2014-08-02
 
-> Windows Phone 7 and 8. PhoneGap installs a handler for the browser's
-> navigation event and checks the whitelist before allowing navigation.
-> This event is not triggered for iframe fetches and XMLHttpRequests.
-> Therefore, this defense fails to guarantee NoLoad.
+Here's my cookie named "auth":
+d4791d97c2e8aebfb09b0ce1e5d5bcc998fcdc02a2d4d7a5f7669c01d28fac5b
+It is known to contain my IPv4 address (among other information)
+and be Blowfish-encrypted. You've intercepted it. Next action?
 
-Use CVE-2014-1884.
+Another option: I browse online shop anonymously (without logging
+in, which is wise: I don't want to see offers on things I don't
+actually need). You've intercepted my cookies. Next action?
 
+ > [...]
+ > So sure, this doesn't prevent a TLA with access to a root key
+ > doing a targeted attack against a site, however it does prevent
+ > an attacker who just happens to be on the same network (Coffeshop
+ > Wifi etc) from attacking you.
 
-> All tested versions of PhoneGap for Android, including 2.6,
-> incorrectly match intercepted URLs against the whitelist. PhoneGap
-> uses Java's regular expression engine and anchors the expression for
-> each whitelisted domain only at the beginning, but not the end
+Unlike TLA, an attacker in the same network can only eavesdrop
+passively. So, I can either keep anonimity (without logging in) or
+switch to HTTPS intentionally. Just don't push me there unless I've
+logged in...
 
-This one is clearly an implementation error and is assigned
-CVE-2012-6637 for the
-http://labs.mwrinfosecurity.com/blog/2012/04/30/building-android-javajavascript-bridges/
-reference.
+(Normally I use secure tunnel to the trusted server when using public
+hotspots, so this is just to keep the discussion).
 
+ >> But the terminal state of mental disability is... yes, using
+ >> scripts from outer sources: intercepting one popular source like
+ >> https://ajax.googleapis.com/ajax/libs/jquery/*/jquery.min.js
+ >> will allow the attacker to not bother of intercepting other
+ >> sites directly.
 
-> The 'stringByEvaluatingJavaScriptFromString' and
-> 'WebBrowser.InvokeScript' functions, used by the framework's local
-> half on iOS and Windows Phone, respectively, to inject JavaScript into
-> browsers, execute it in the main frame, not the iframe that invoked
-> the bridge.
+Any comments on this?
 
-We currently don't know whether to classify this as an implementation
-error or something closer to "known behavior." This behavior does not
-seem to be referenced in the apachecordovaphonegap-bypass.txt summary.
 
-As far as we can tell, items 4 and 5 in
-apachecordovaphonegap-bypass.txt are usability problems, not security
-problems. In item 4, the Same Origin Policy violation seems to be
-entirely in the direction of blocking too much.
-
-
-> Examples of vulnerable PhoneGap apps include ForzeArmate
-
-Use CVE-2014-1885.
-
-
-> the Edinburgh by Bus app
-
-Use CVE-2014-1886.
-
-
-> DrinkedIn BarFinder
-
-Use CVE-2014-1887.
-
-
-(Yes, we realize that it may not be especially important to have CVE
-assignments for these three examples, given that potentially hundreds
-of similar examples may have been provided.)
-
-
-> HTTP/HTTPS is ignored when checking URLs against the white list. A
-> network attacker can thus downgrade connections from HTTPS to HTTP and
-> inject malicious scripts into whitelisted origins.
-
-There is no CVE assignment for this. Although distinguishing between
-HTTP and HTTPS is important, addressing this would probably be best
-considered a security enhancement, not a vulnerability fix.
-
-> PhoneGap on iOS only allows domain names to be specified in the
-> whitelist file, but not HTTP/HTTPS schemes. This prevents the app
-> creator from specifying that certain domains should be loaded only
-> over HTTPS, which is a very important property
-
-There is no CVE assignment for this. Extending the format of the
-whitelist file would be considered a security enhancement.
-
-> out of 7,167 hybrid PhoneGap apps in our study, 2,124 whitelist all
-> domains and would have been vulnerable to fracking even if PhoneGap's
-> implementation of whitelisting had been correct.
-
-There is no list of apps and thus we are not exploring the possibility
-of assigning 2124 CVE IDs.
-
-> PhoneGap on BlackBerry does not take advantage of this facility and
-> enforces NoLoad rather than NoBridge
-
-There is no CVE assignment for this. Use of preferable
-platform-specific capabilities, wherever available, would probably be
-best considered a security enhancement.
-
-> Windows Phone 7.1 has a single permission for all sensors (ID CAP
-> SENSORS). If a hybrid app requests this permission and exposes it to
-> untrusted Web content, the latter will be able to access any sensor on
-> the device.
-
-There is no CVE assignment for this. Extending this permission model
-would be considered a security enhancement.
-
-> The key idea behind NoFrak is that all accesses to bridges from the
-> Web side must be authenticated by unforgeable capability tokens.
-
-There is no CVE assignment for "older versions do not use capability
-tokens" because that would focus too strongly on a solution instead of
-the vulnerabilities.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS9RqTAAoJEKllVAevmvmsHMcIAIFWPzqrQ8TNHkekxSJcJxcM
-AG5Y9hXnnt0/4HjwIF/v0UiLWWdLR7Skq83UTGQJuV4neSNT/sGZm8TvcmaF3Y+4
-pOdiMCmVp9sy/8GGmYGNWwpTOhLLzhgEc699UlBbfqKJXy/A+1WNkJ5tcKE9lrz+
-LbZpp3yqOmD5S3lGhK3KgzPIDD6LKqUIGRXZ/WI1UwKz8Vd3pEbCUmHXk0bH6gpY
-5Jd2ugrwUszw4zkrxCWYRiNfdBVwNlQVUvMwk8Gi/bItLxUO8iFPp8KNLHdipMaG
-+5RgXfbhURotw16amtgzKvrO25tcS0iPwfjJmh0SBB068mumzeUCrLYOGBkolco=
-=GrH2
------END PGP SIGNATURE-----
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
