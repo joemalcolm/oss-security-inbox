@@ -1,40 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/6
-Message-Id: <201404180658.s3I6wd2E024497@linus.mitre.org>
-Date: Fri, 18 Apr 2014 02:58:39 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Linux kernel: arch: x86: net: bpf_jit: an off-by-one bug in x86_64 cond jump target
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/03/3
+Message-ID: <20140803075700.GC29958@gremlin.ru>
+Date: Sun, 3 Aug 2014 11:57:00 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Enforce use of HTTPS for MathJax in IPython
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 02-Aug-2014 20:07:23 -0600, Kurt Seifried wrote:
 
-> An off-by-one bug is found in the x86_64 cond jump target of the BPF JIT
-> filter code. In case a conditional jump is followed by a long jump,
-> conditional jump target is one byte past the start of target instruction.
-> 
-> A user/program could use this flaw to crash the kernel resulting in DoS, or
-> potentially escalate user privileges on a system to gain root access.
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a03ffcf873fe0f2565386ca8ef832144c42e67fa
+ >>> Enforcing HTTPS for the whole site is even more stupid: normally
+ >>> only user-specific data (login procedure, personal settings for
+ >>> registered users, etc) should be forced to go through HTTPS;
+ >>> everything else should normally be left up to the users' wish.
+ >> This is incredibly wrong. First off if only your login procedures,
+ >> personal
+ > +1. If you commit to encrypting the entire site then you can do
+ > things like [...]
 
-Use CVE-2014-2889.
+Simple question: who do you trust more - your ISP or site owner?
+Or should I ask whether you trush either of them?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Hint: ISPs may be subjected to SORM-2 (been there, seen that, no
+t-shirt this time), Jindun Gongcheng, or other pretty things. Site
+owners may be interested in tracking their users' activity (that's
+why I prefer browsing online shops anonymously, without logging in).
+Other people may try to eavesdrop (or even intercept) connections
+from users to servers.
 
-iQEcBAEBAgAGBQJTUMwvAAoJEKllVAevmvmsz+IIAKwl69aIi5WPttTAnTfCWsCP
-8t+Q1ncbwc0fe1U2NdO3Wz2LwsCHs3LiP/skTNREa3r8vZO3UIpl17iE22K7fREL
-O3kRqacWzRRr5M/y8b0AJbRJ7WiTu1O3363gYFAwWeUN8KUA8YDcT5K1Yp98EIdA
-eSyabe3sHxupDcGrJgeuCWG2QOY3BLb4qm0nO5se+VpEXym3zMefFv3e/Sl0Mhw/
-QifRpIGfaggI3dDGblMjhVyeKCAm0ak3w72nNfEj/8F3JgaUQA5elINDBUYAnQWh
-P8diXwR4EK3gtib0G0PEbNrp8LPmugDrfXBr2L4yOoxh+gzlAYsLEutLjhR0op0=
-=yduS
------END PGP SIGNATURE-----
+ > It's not about the users wish. It's about the site's wish. The
+ > site is providing the service, the site provides the TOS/AUP/etc.
+ > The site may choose optionally to leave it up to the user, but
+ > this is a VERY bad idea.
+
+When people want to make their systems secure, they use client-side
+certificates. When people want to make their systems public, they
+normally don't care of who access them and don't track their users.
+
+When a site allows anonymous access, that may be performed via HTTP.
+Authenticated (over HTTPS) users may (and normally should) work via
+HTTPS, but forcing all users to use HTTPS is "a VERY bad idea"
+// (q) Kurt Seifried, 2014-08-03
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
