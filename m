@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/8
-Message-Id: <201401081718.s08HI8SJ005829@linus.mitre.org>
-Date: Wed, 8 Jan 2014 12:18:08 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE split and a missed file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/04/2
+Message-ID: <20140804213843.60c89e4f@redhat.com>
+Date: Mon, 4 Aug 2014 21:38:43 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: Ben Reser <ben@...er.org>
+Cc: Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: Re: Possible CVE request: subversion MD5 collision authentication leak
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, 01 Aug 2014 07:47:53 -0700 Ben Reser wrote:
 
-> It is split into 6 new CVEs covering 6 files of the 35
+> On 8/1/14 3:12 AM, Marcus Meissner wrote:
+> > The subversion list has fixed a md5 collision attack possibility.
+> > 
+> > http://mail-archives.apache.org/mod_mbox/subversion-dev/201407.mbox/%3C53DAB4A7.8030004%40reser.org%3E
+> > 
+> > http://svn.apache.org/r1550691
+> > http://svn.apache.org/r1550772
+> > 
+> > The referenced E-Mail speaks about CVE request, so not sure who
+> > will assign one.
+> 
+> Already got one (the request was directed at security@...che.org who
+> hand them out to us): CVE-2014-3528.
 
-The CVEs are about vulnerability fixes, and don't necessarily capture
-all of the information that would be used in integrating the patches
-into one's own kernel build tree. For example, a file can be changed
-in order to be compatible with a vulnerability fix that affects
-interaction between functions, or a file can be changed so that its
-code executes faster after a vulnerability fix.
+I believe the attack here is supposed to create a collision against MD5
+sums used as names of files under ~/.subversion/auth/svn.simple/.
+However, as attacker does not control realm strings for any of the
+trusted repositories, that would require preimage attack.  The lack of
+(publicly) known efficient preimage attacks against MD5 should imply
+such attack is still only theoretical.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSzYblAAoJEKllVAevmvmsKZYIAIKFAy8u6j5R8gQPO9ts940y
-98QyUGVyFTCHCEJ0JRxOXgBC5ZjcSyGv2+eu5XCHed02l8D9y5o0wn8CgO5qxWrO
-cYrjfB2Ekwhq+AygPQs+jKDpb9UW6DYozR5tOUP/SRq5dWAJ5IiwKQ6nGCoNSd/J
-y8meGGM/meeMlJS1NkPtD/EOGeBNB254NZijFZFjKtx82ZjpKInAt8RU/jU37LAw
-WTRMP1J6SuSksfqn8vaUkUc0JxmizdDf5mAPUIzvBp8U9vwTfoi+3RavsfUQ1UU+
-8JgVO5UcUjXY26vZ6p6rlbw+Jst0BUtCRcEA5VnLz4F6O3GOUtSC0UMD3XB+k2Y=
-=pMzz
------END PGP SIGNATURE-----
+-- 
+Tomas Hoger / Red Hat Product Security
