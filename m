@@ -1,92 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/16
-Message-Id: <201405292136.s4TLaJfo000730@linus.mitre.org>
-Date: Thu, 29 May 2014 17:36:19 -0400 (EDT)
-From: cve-assign@...re.org
-To: geissert@...ian.org, guillem@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: another path traversal in dpkg-source during unpack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/04/1
+Message-ID: <20140804173249.GL24041@dhcp-25-225.brq.redhat.com>
+Date: Mon, 4 Aug 2014 19:32:50 +0200
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: aliguori@...zon.com, mst@...hat.com, Amit Shah <amit.shah@...hat.com>, Laszlo Ersek <lersek@...hat.com>
+Subject: CVE Request --  qemu: missing field list terminator in vmstate_xhci_event
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+It was found that vmstate_xhci_event field list was missing
+VMSTATE_END_OF_LIST() terminator and traversing through this list
+would result in out-of-bounds access during vm state saving and
+loading.
 
-> Another path traversal was discovered
+Depending on how vmstate_xhci_event is placed in the qemu binary,
+this issue can range from non-issue, infinite loop to (potentially)
+privilege escalation in case the we end up with fields that have info
+and/or field_exist members initialized in a way that is useful for
+exploitation (most probably unlikely).
 
-The short answer is that bug 746498 is CVE-2014-3864, and bug 749183
-is CVE-2014-3865. We can also, first, review the status of the CVEs
-related to our 1 May 2014 message. The proposed CVE mappings for all
-four of these CVEs are indicated below; these would potentially start
-to be processed for the cve.mitre.org web site as early as today.
+In the worst case, attacker able to alter the migration data could
+use this flaw to to corrupt QEMU process memory.
 
+Upstream commit:
+http://git.qemu.org/?p=qemu.git;a=commit;h=3afca1d6d413592c2b78cf28f52fa24a586d8f56
 
-CVE-2014-3127 (revised CVE description to be published at
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3127 soon):
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=1126543
 
-dpkg 1.15.9 on Debian squeeze introduces support for the "C-style
-encoded filenames" feature without recognizing that the squeeze patch
-program lacks this feature, which triggers an interaction error that
-allows remote attackers to conduct directory traversal attacks and
-modify files outside of the intended directories via a crafted source
-package. NOTE: this can be considered a release engineering problem in
-the effort to fix CVE-2014-0471.
-
-
-
-CVE-2014-3227 (new CVE to be published at
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-3227 and
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3227 soon):
-
-dpkg 1.15.9, 1.16.x before 1.16.14, and 1.17.x before 1.17.9 expect
-the patch program to be compliant with a need for the "C-style encoded
-filenames" feature, but is supported in environments with noncompliant
-patch programs, which triggers an interaction error that allows remote
-attackers to conduct directory traversal attacks and modify files
-outside of the intended directories via a crafted source package.
-NOTE: this vulnerability exists because of reliance on unrealistic
-constraints on the behavior of an external program.
-
-
-
-CVE-2014-3864 (new CVE to be published at
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-3864 and
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3864 soon):
-
-(reference is
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746498)
-
-Directory traversal vulnerability in dpkg-source 1.3.0 allows remote
-attackers to modify files outside of the intended directories via a
-crafted source package that lacks a --- header line.
-
-
-
-CVE-2014-3865 (new CVE to be published at
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-3865 and
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3865 soon):
-
-(reference is
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=749183)
-
-Multiple directory traversal vulnerabilities in dpkg-source 1.3.0
-allow remote attackers to modify files outside of the intended
-directories via a source package with a crafted Index: pseudo-header
-in conjunction with (1) missing --- and +++ header lines or (2) a +++
-header line with a blank pathname.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTh6enAAoJEKllVAevmvms6i8IAIahGPbHIJ3n35oJt0XiADnD
-6UByicAe4TTLVlT/HMDYAAEqLcYz12IttOLzaO38F8SV4mb2OlQolCpRB7wM/5pb
-B3KPjpMV8BWB5MhWi22bVE8Thna+cMlM565adnw1bUhoBcEh9d3Bsy8l8c8bhtDm
-JMdcmFA5pubpJtbsjfBppq8rLTLg8+LKy9eS9KOG8SGgT7gl0rSehK1ueg04gPIo
-h9f0dbYfkUPsylTFpClKumrNmUnQVhd6tpDCNj0Q4W/D1c2QxfQbPCM7KRYfL/KV
-8Uutyf17KKGVh4aJ7XAJiaYhIIYm9CrJjPevP/DOWqIRoWQzb1FEeN2+8zzw1js=
-=jt0J
------END PGP SIGNATURE-----
+Thanks,
+-- 
+Petr Matousek / Red Hat Security Response Team
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
