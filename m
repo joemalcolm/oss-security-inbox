@@ -1,40 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/2
-Message-ID: <20141207121605.GA3994@hurricane.linuxnetz.de>
-Date: Sun, 7 Dec 2014 13:16:05 +0100
-From: Robert Scheck <robert@...oraproject.org>
-To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
-Cc: Red Hat Security Response Team <secalert@...hat.com>
-Subject: CVE request: Unauthenticated remote disk space exhaustion in Zarafa WebAccess and WebApp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/7
+Message-ID: <CACYkhxhGVjNw-VvWMC65-5y0t8GBQvu2qBurNMTE8N0RQ3gWmw@mail.gmail.com>
+Date: Tue, 5 Aug 2014 16:17:41 +1000
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: [CVE Requests] rsync and librsync collisions
 Content-Type: text/plain; charset=utf-8
 
-Good afternoon,
+On 5 August 2014 16:12, Loganaden Velvindron <loganaden@...il.com> wrote:
+> Can you please post at least a PoC or steps that others can use to
+> reproduce the issues in rsync and librsync ?
+>
+> IMHO, that would *really* help.
 
-I discovered a flaw in Zarafa WebAccess >= 7.0.0 and Zarafa WebApp (any
-version) that could allow a remote unauthenticated attacker to exhaust the
-disk space of /tmp. Depending on the setup /tmp might be on / (e.g. RHEL).
-Zarafa WebApp is a fork and the successor of the Zarafa WebAccess.
+I have provided a privileged few with PoC to help grease the wheels.
 
-The affected files are /usr/share/zarafa-webaccess/senddocument.php as well
-as /usr/share/zarafa-webapp/senddocument.php. The default upload size is 30
-MB (via /etc/httpd/conf.d/zarafa-webaccess.conf / zarafa-webapp.conf).
+My plan was to wait for fixes before releasing the full write-up and code.
 
-I do not know if $tmpname is predictable (for race conditions) but likely
-not. The 2nd parameter is only a prefix according to the PHP documentation
-of tempnam().
-
-Upstream removed the file "senddocument.php" (which is neither referenced
-nor used anywhere in the code) as solution and thus followed my suggestion
-for Zarafa WebApp 2.0 beta 3 (SVN 46848) and Zarafa WebAccess 7.2.0 beta 1
-(SVN 47004).
-
-See https://bugzilla.redhat.com/show_bug.cgi?id=1139442 for whole history.
-
-
-With kind regards
-
-Robert Scheck
--- 
-Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
-
-Content of type "application/pgp-signature" skipped
+Regards,
+  Michael
