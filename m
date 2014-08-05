@@ -1,38 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/29
-Message-ID: <20141120085215.3f2b2cb4@127>
-Date: Thu, 20 Nov 2014 08:52:15 -0800
-From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/6
+Message-ID: <CAOp4FwT5a4-1PmpnOBz3ZWArUBNRZuX3ebH2=ud5-m5cWj1a7A@mail.gmail.com>
+Date: Tue, 5 Aug 2014 10:12:03 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing project brainstorming
+Subject: Re: [CVE Requests] rsync and librsync collisions
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 20 Nov 2014 13:34:31 +0100
-Hanno Böck <hanno@...eck.de> wrote:
-
+On Tue, Aug 5, 2014 at 10:03 AM, Michael Samuel <mik@...net.net> wrote:
 > Hi,
-> 
-> Following the discussions here I feel this whole fuzzing thing could
-> need a project to coordinate efforts and I will probably start
-> something within the following days.
-> 
-> I wanted to lay out my rough plans / brainstorming and welcome any
-> feedback and especially if people have worries about such a project.
+>
+> I think there should be CVEs assigned for this:
+>
+> rsync: MD5 collision DoS attack or limited file corruption
+> librsync: MD4 collision file corruption
+>
+> Note: librsync is not the same code, protocol or maintainer as rsync.
+>
+> The librsync attack is far easier to perform, since there's no
+> whole-file checksum and it will simply copy the first instance of a
+> collision into any place where the second collision is.
+>
+> The rdiff utility that ships with librsync truncates hashes to 8
+> bytes, allowing a very fast and efficient birthday attack - so even if
+> MD4 was replaced attacks would still be possible while the hash is
+> truncted.  This also affects duplicity - they both use
+> RS_DEFAULT_STRONG_LEN - so the _librsyncmodule that ships with
+> duplicity will need recompiling after the fix ships.
+>
+> Previous posting for context:
+> http://www.openwall.com/lists/oss-security/2014/07/28/1
 
-From a naive perspective. I don't mean to diminish your
-idea/contribution. I like the ideas you've put forth but I'm not
-qualified to address them technically. But what I read from this
-is a real need to start something completely new from the ground
-up. In other words replace the system that's in place. Starting
-from scratch. Perhaps it's already being worked on but is only
-a seed. Like Linus' work as a student those years ago.
+Hi,
 
-Maybe my problem is that your proposal seems herculean to me but
-can't help to think it's a reminder or sign that we need to think
-past the current state of things.
+Can you please post at least a PoC or steps that others can use to
+reproduce the issues in rsync and librsync ?
 
-I look forward to the section on how to "get fuzzing for beginners"
-and best of luck to you all on this idea/project.
+IMHO, that would *really* help.
+
+>
+> Regards,
+>   Michael
 
 
 
+-- 
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
