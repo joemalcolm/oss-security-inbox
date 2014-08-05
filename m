@@ -1,45 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/2
-Message-ID: <5FE3BA37-EA93-41FA-817E-36863E27705C@redhat.com>
-Date: Fri, 17 Jan 2014 17:47:26 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0021: chrony traffic amplification in cmdmon protocol
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/9
+Message-ID: <20140805112910.GD29958@gremlin.ru>
+Date: Tue, 5 Aug 2014 15:29:10 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Enforce use of HTTPS for MathJax in IPython
 Content-Type: text/plain; charset=utf-8
 
-On 01/17/2014, at 17:39 PM, cve-assign@...re.org wrote:
+On 03-Aug-2014 12:19:49 -0400, Donald Stufft wrote:
 
->> With the news about the traffic amplification issue in ntpd, one of
->> our developers looked at chronyd
->
-> At cve-assign@...re.org, we've received a number of reports that have
-> protocol descriptions, and ask for CVE assignments for amplification
-> attacks. We've declined making assignments for those. One of the
-> criteria we're currently using is:
->
-> - cases in which a vendor of a UDP protocol implementation announces
->   that they made a security-relevant mistake by having configuration
->   or code elements that allow amplification attacks, and publishes
->   a fix for this mistake
->
-> One of the other CVE Numbering Authorities was also receiving similar
-> reports. We coordinated with them and learned that they were looking
-> at CVE eligibility in much the same way.
->
-> The "in which a vendor of a UDP protocol implementation" above was
-> what we had for the CVE-2013-5211 ntpd issue (with some definition of
-> "announces"). We don't know the ultimate outcome of how amplification
-> attacks will interact with the scope of CVE, but we did want to point
-> out that this CVE-2014-0021 assignment seemed inconsistent with what
-> we've been doing.
+ >> Simple question: who do you trust more - your ISP or site owner?
+ >> Or should I ask whether you trush either of them?
+ > This is a nonsensical point too. I have to trust the site owners
+ > to some degree. To what degree broadly depends on what the site
+ > itself does however at the very least they'll be able to see
+ > what account I'm attempting to use.
 
-Is this not a same/similar case?  chronyd, much like ntpd, has some commands that allow for amplification, just like ntpd does.
+Or unable to see that unless _you_ deside to log in.
 
-I'm not going to argue (I didn't assign it, I'm just reporting that it was assigned), but it struck me as being essentially the same type of flaw.  So if ntpd received a CVE for essentially the same thing, I can see why this one was assigned as well.
+Together with disabling cookies by default and wiping them on
+a regular basis, that may be wise (depending of the sites you
+visit, of course).
 
-I'm not sure which part is inconsistent here.  Granted, chrony does not yet have a published fix, but my understanding is that is in the works.  In other words, there will be a fix of some sort (to at least reduce the amplification quite substantially).  Is that the part that seemed inconsistent?  The lack of a published fix?
+ > With enforced HTTPS and HSTS I don't have to trust my ISP.
+
+You should either trust them or avoid signing the contract :-)
+
+However, if you suspect them in something unpleasant, you may
+enforce HTTPS on _your_ side, using it everywhere (with sites
+that support it).
+
+Also, self-signed certificates (or own CA) is safer for your
+users than any third-party: when a server certificate changes
+without previous notice, user may be absolutely sure something
+went wrong.
+
+ >> When a site allows anonymous access, that may be performed
+ >> via HTTP. Authenticated (over HTTPS) users may (and normally
+ >> should) work via HTTPS, but forcing all users to use HTTPS
+ >> is "a VERY bad idea" // (q) Kurt Seifried, 2014-08-03
+ > What is the downside to forcing HTTPS.
+
+Is this a question?
+
+Well, now I have a non-trivial answer to it: I've faced the error
+"ssl_error_no_cypher_overlap" several times when trying to access
+such HTTPS-only sites, and, instead of getting there "insecurely",
+I was unable to get there at all.
+
+Yes, I use modern OpenSSL version built without support for weak
+algorithms.
+
 
 -- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
