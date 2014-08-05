@@ -1,39 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/3
-Message-ID: <20140216133617.GB12853@alf.mars>
-Date: Sun, 16 Feb 2014 14:36:17 +0100
-From: Helmut Grohne <helmut@...divi.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/11
+Message-ID: <20140805183621.GH1674@oevtugenva.nrevsny.pk>
+Date: Tue, 5 Aug 2014 14:36:21 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Bug#738855: initscripts: Skip killing root-owned process starting with @
+Subject: Re: CVE request: issues in ISO C++ 2011 regex library
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 16, 2014 at 12:10:43AM +0400, Solar Designer wrote:
-> I reluctantly approved Petter's posting, although it was unclear if it
-> was CC'ed to oss-security on purpose or accidentally.
-
-It is common practise on bugs.d.o. to just reply to everyone. I should
-have made clear that oss-sec should only be included for security
-relevant aspects.
-
-> FYI, the thread on oss-security started here:
+On Tue, Aug 05, 2014 at 03:50:32PM +1000, Murray McAllister wrote:
+> Hello,
 > 
-> http://www.openwall.com/lists/oss-security/2014/02/14/4
+> Maksymilian Arciemowicz reported a number of issues in the ISO C++
+> 2011 regex libraries:
 > 
-> and you may see follow-ups (which were _not_ CC'ed to the Debian bug)
-> via the "thread-next" link.
+> http://seclists.org/fulldisclosure/2014/Aug/1
 > 
-> Dimitri, since you were the one to add the CC:, what would you like us
-> to do?  So far, Petter's is the only such comment CC'ed to oss-security
-> after yours, but I suspect that many more comments will be posted to the
-> Debian bug later (since there's no consensus), and many may/would be
-> CC'ed to oss-security without specific reason (OK, maybe my bringing the
-> question up will affect this and it won't be happening).
+> Bugs:
+> 
+> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61601
+> 
+> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61582
+> 
+> http://llvm.org/bugs/show_bug.cgi?id=20291
+> 
+> For the memory corruption bug (61582), there seems to be more than
+> one issue here (at least a heap-based buffer overflow and a stack
+> overflow of some sort). Can a single CVE be assigned, or do you need
+> specific details for each issue (I don't currently have those)?
+> 
+> With GCC 4.8 in Fedora, the affected program needs to be compiled
+> using the "-std=c++11" option.
 
-As the one who moved this discussion to oss-sec, I intended only the
-security implications of the approach chosen by systemd (and proposed
-for initscripts) to be discussed here.
+I think this issue is mis-named. "The ISO C++ 2011 regex library" is a
+specfication, not an implementation, and a vulnerability in it would
+be a fundamental flaw in the API design (analogous to gets in C). It
+seems like this CVE request is for one or more GCC/libstdc++ bugs, and
+it should be identified as such.
 
->From my POV, please block future messages to the bug discussing
-implementation details from oss-sec. 
-
-Helmut
+Rich
