@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/7
-Message-ID: <542CAEFD.3080802@case.edu>
-Date: Wed, 01 Oct 2014 21:48:45 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Shawn <citypw@...il.com>
-CC: chet.ramey@...e.edu, oss-security@...ts.openwall.com
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/8
+Message-ID: <53E08028.7090602@reser.org>
+Date: Mon, 04 Aug 2014 23:56:40 -0700
+From: Ben Reser <ben@...er.org>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: Re: Possible CVE request: subversion MD5 collision authentication leak
 Content-Type: text/plain; charset=utf-8
 
-On 10/1/14, 5:11 PM, Shawn wrote:
-> On Thu, Oct 2, 2014 at 5:08 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
->> On 10/1/14, 5:04 PM, Shawn wrote:
->>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
->>
->> Nope, this one fixes 7168/7169.  It's the equivalent of the
->> `parser-oob' patch.
->>
->> I have patches that fix 6277/6278 that are in the pipeline.
->>
-> oh, s0rry for the mistake...that'd be great if we can get the patch as
-> quickly as possible. Thanks.
+On 8/4/14 6:38 PM, Michael Samuel wrote:
+> Just to clarify - does the attacker have control of both $REALM parameters?
 
-I hope to have them by the end of the week.  It's a backporting issue:
-the fix I have for 6278 uses capabilities not in previous versions of bash.
-There's a very simple fix that can be used in a pinch, but it doesn't
-prevent the function from being defined.
+Only their own server.  If they had access to the server they were attacking
+they would presumably have access to the repository directly and could do
+anything they wanted already.
 
-Chet
+> A chosen prefix collision still requires the attacker provide both
+> inputs (or at-least the suffix to both inputs).
 
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+I stand corrected.  Re-read the documentation at the link I shared earlier and
+you're right you need to be able to modify the suffix on both sides of the
+collision.
+
+Which means that yes this is theoretical.
+
+Thanks for setting me right.
