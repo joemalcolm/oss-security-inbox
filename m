@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/19/2
-Message-Id: <201404190329.s3J3T70d004570@linus.mitre.org>
-Date: Fri, 18 Apr 2014 23:29:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, 744817@...s.debian.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: insecure temporary file handling in clang's scan-build utility
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/5
+Message-ID: <CACYkhxidkdspBMgaV+o5r_k8UTdLBsQy57Yso298PVQUoR3+0w@mail.gmail.com>
+Date: Tue, 5 Aug 2014 16:03:29 +1000
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: [CVE Requests] rsync and librsync collisions
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> Jakub Wilk discovered that clang's scan-build utility insecurely handled
-> temporary files.
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744817
+I think there should be CVEs assigned for this:
 
-> The GetHTMLRunDir subroutine ...
-> 
-> 3) The function doesn't fail if the directory already exists, even if 
-> it's owned by another user.
+rsync: MD5 collision DoS attack or limited file corruption
+librsync: MD4 collision file corruption
 
-Use CVE-2014-2893.
+Note: librsync is not the same code, protocol or maintainer as rsync.
 
+The librsync attack is far easier to perform, since there's no
+whole-file checksum and it will simply copy the first instance of a
+collision into any place where the second collision is.
 
-[ other notes:
+The rdiff utility that ships with librsync truncates hashes to 8
+bytes, allowing a very fast and efficient birthday attack - so even if
+MD4 was replaced attacks would still be possible while the hash is
+truncted.  This also affects duplicity - they both use
+RS_DEFAULT_STRONG_LEN - so the _librsyncmodule that ships with
+duplicity will need recompiling after the fix ships.
 
-> 1) The directory name is easily predictable
+Previous posting for context:
+http://www.openwall.com/lists/oss-security/2014/07/28/1
 
-This doesn't seem to be independently exploitable.
-
-> 2) The directory is created with default permissions (instead of 0700).
-
-Using default permissions is not necessarily wrong, from a CVE
-perspective, in all development environments. See the
-http://openwall.com/lists/oss-security/2014/03/09/1 post. In any case,
-we're not currently making a separate CVE assignment for the
-permissions issue. ]
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTUezyAAoJEKllVAevmvms3VoH/AiIbJnqY+jfvDtCpQN7YRiw
-I/2aoWY5uBPgD7V2F7JVnejX64QIN5jG8PB78JJRRRLNo9W71kJGpWpdZYVsVIFI
-3rymLYd32AnAWdwx4b3NeRCncMWon5tN6WYhUvClzNl1v1A1XzP167PSPAczYhSf
-pOUcJ8KiibI/UN3MuHVs35PKOTyQv9CXV9ITy6yE/TloCWXmd6zBJT4Ozd0hr39Z
-XEAUcz9XhcKETC2SZuIbEKf5yk6oEhOacN3VN3JcT1lXe5Fq7YaYeMY95PRxBRPT
-XHb0pEzJIO2eEpfrJkm/gdLUaXzgDyw4CSKJ35zhmveOxz6zLnstHKg9+OXPoC0=
-=l1R7
------END PGP SIGNATURE-----
+Regards,
+  Michael
