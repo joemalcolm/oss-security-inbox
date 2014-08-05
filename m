@@ -1,21 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/09/3
-Message-ID: <20140609111726.3c1ec2e4@redhat.com>
-Date: Mon, 9 Jun 2014 11:17:26 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: OpenJDK CVE duplicates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/10
+Message-ID: <53E0F2A5.801@enovance.com>
+Date: Tue, 05 Aug 2014 11:05:09 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request for vulnerability in OpenStack Keystone
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Three vulnerabilities was discovered in OpenStack (see below). In order
+to ensure full traceability, we need CVE number(s) assigned that we can
+attach to further notifications. These issues are already public,
+although an advisory was not sent yet.
 
-CVE-2014-0462 and CVE-2014-2405 should be rejected as duplicates of
-libjpeg CVE-2013-6629 and libpng CVE-2013-6954 respectively.  Those
-were incorrectly used for known issues in the bundled library versions,
-but replaced by previously assigned ids before updates announcements.
-They were used briefly in the NEWS file though:
+Title: Multiple vulnerabilities in Keystone revocation events
+Reporter: Lance Bragstad (Rackspace) and Brant Knudson (IBM)
+Products: Keystone
+Versions: 2014.1 versions up to 2014.1.1
 
-http://icedtea.classpath.org/hg/release/icedtea6-1.13/rev/72245beb1811
+Description:
+Lance Bragstad from Rackspace and Brant Knudson from IBM reported 3
+vulnerabilities in Keystone revocation events. Lance Bragstad discovered
+that UUID v2 tokens processed by the V3 API are incorrectly updated and
+get their "issued_at" time regenerated. Brant Knudson discovered that
+the MySQL token driver stores expiration dates incorrectly which
+prevents manual revocation and that domain-scoped tokens don't get
+revoked when the domain is disabled. Tokens impacted by one of these
+bugs may allow a user to evade token revocation. Only Keystone setups
+configured to use revocation events are affected.
+
+References:
+https://launchpad.net/bugs/1347961
+https://launchpad.net/bugs/1348820
+https://launchpad.net/bugs/1349597
+
+Thanks in advance,
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
