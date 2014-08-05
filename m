@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/22/5
-Message-Id: <20140822192542.BB86BC504D7@smtptsrv1.mitre.org>
-Date: Fri, 22 Aug 2014 15:25:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Qemu: out of bounds memory access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/4
+Message-ID: <53E070A8.4040508@redhat.com>
+Date: Tue, 05 Aug 2014 15:50:32 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: submit@...ec.org
+Subject: CVE request: issues in ISO C++ 2011 regex library
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-> https://lists.gnu.org/archive/html/qemu-devel/2014-08/msg03338.html
+Maksymilian Arciemowicz reported a number of issues in the ISO C++ 2011 
+regex libraries:
 
-> A user with a custom PCI device could use this flaw to leak qemu process'
-> memory bytes or corrupt them on the host.
+http://seclists.org/fulldisclosure/2014/Aug/1
 
-(the patch is not available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/acpi/pcihp.c yet)
+Bugs:
 
-Use CVE-2014-5388 for this off-by-one error with impacts of
-both memory corruption and information disclosure.
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61601
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61582
 
-iQEcBAEBAgAGBQJT95jhAAoJEKllVAevmvmssUQH/3c+qdnt7Yh6wTCegmKMxPmP
-TYEc2XcdQPCtb4XKwn3ND2PE00xLjtmRqmWVcXgdlhgXs2j1NNq5FvPdPuXz99Kh
-tXXAmAB7Kq9I8TYeZ6RARYd5eWHKzXQvXAU7rIWlIx6QkvzIW+MmMW7OmHLwRBh7
-yoRqQ6tEIZfG1zN3UcG34H70Ke44efe9sDjrbq5UsuLX01uQV1CM4aJlIx75OJit
-QKXsME/0BJYPUqMojzUvT2H/Ddn2rdMpGE9lgVZ902rK214L/qmahLi3ZxDvvgz6
-urfSafRkuausMFVuATy2Xr9wa1bzV6pJCUlZFtXm0euJSQxv0DdHSD5PFyTyOtM=
-=eBq9
------END PGP SIGNATURE-----
+http://llvm.org/bugs/show_bug.cgi?id=20291
+
+For the memory corruption bug (61582), there seems to be more than one 
+issue here (at least a heap-based buffer overflow and a stack overflow 
+of some sort). Can a single CVE be assigned, or do you need specific 
+details for each issue (I don't currently have those)?
+
+With GCC 4.8 in Fedora, the affected program needs to be compiled using 
+the "-std=c++11" option.
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Product Security
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1126688
+https://bugzilla.redhat.com/show_bug.cgi?id=1126691
+https://bugzilla.redhat.com/show_bug.cgi?id=1126695
