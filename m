@@ -1,125 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/12
-Message-ID: <1470974623.11810985.1392850156115.JavaMail.zimbra@redhat.com>
-Date: Wed, 19 Feb 2014 17:49:16 -0500 (EST)
-From: David Jorm <djorm@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Possible CVE Requests: several issues fixed in Jenkins (Advisory 2014-02-14)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/07/3
+Message-ID: <CABRvpqDyXoeTWQMSN25u-xXTidYCmp=aFXyASSZq2E8ymOSCgA@mail.gmail.com>
+Date: Thu, 7 Aug 2014 00:00:06 -0400
+From: Andrew Nacin <nacin@...dpress.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: WordPress 3.9.2 release - needs CVE's
 Content-Type: text/plain; charset=utf-8
 
-> Hi
-> 
-> Jenkins Advisory from 2014-02-14[1] mentions several security fixes,
-> where for SECURITY-76 and SECURITY-88 CVE-2013-5573 was assigned.
-> 
->  [1]
->  https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-02-14
-> 
-> Do some of the following need also a CVE assignment?
-> 
-> ----cut---------cut---------cut---------cut---------cut---------cut-----
-> SECURITY-105
-> | In some places, Jenkins XML API uses XStream to deserialize arbitrary
-> | content, which is affected by CVE-2013-7285 reported against XStream.
-> | This allows malicious users of Jenkins with a limited set of permissions
-> | to execute arbitrary code inside Jenkins master.
-> 
-> https://github.com/jenkinsci/jenkins/commit/d030fbbaeeb5ee8980b5680b26217930834387f4
-> 
-> SECURITY-76 & SECURITY-88 / CVE-2013-5573
-> | Restrictions of HTML tags for user-editable contents are too lax. This
-> | allows malicious users of Jenkins to trick other unsuspecting users into
-> | providing sensitive information.
-> 
-> https://github.com/jenkinsci/jenkins/commit/7541e83cc9812afc2b464f0a3254a2453da53f4c
-> https://github.com/jenkinsci/jenkins/commit/535c1115bbf07f8a57d509f2d00598d6e21870d4
-> 
-> SECURITY-109
-> | Plugging a hole in the earlier fix to SECURITY-55. Under some
-> | circimstances, a malicious user of Jenkins can configure job X to
-> | trigger another job Y that the user has no access to.
-> 
-> https://github.com/jenkinsci/jenkins/commit/b6b2a367a7976be80a799c6a49fa6c58d778b50e
-> 
-> SECURITY-108
-> | CLI job creation had a directory traversal vulnerability. This allows a
-> | malicious user of Jenkins with a limited set of permissions to overwrite
-> | files in the Jenkins master and escalate privileges.
-> 
-> https://github.com/jenkinsci/jenkins/commit/ad38d8480f20ce3cbf8fec3e2003bc83efda4f7d
-> 
-> SECURITY-106
-> | The embedded Winstone servlet container is susceptive to session
-> | hijacking attack.
-> 
-> https://github.com/jenkinsci/jenkins/commit/29351af4bd01f61715418916fc12c52be46bd9b0
-> (issue in jenkins-winstone?)
-> 
-> SECURITY-93
-> | The password input control in the password parameter definition in the
-> | Jenkins UI was serving the actual value of the password in HTML, not an
-> | encrypted one. If a sensitive value is set as the default value of such
-> | a parameter definition, it can be exposed to unintended audience.
-> 
-> https://github.com/jenkinsci/jenkins/commit/bf539198564a1108b7b71a973bf7de963a6213ef
-> 
-> SECURITY-89
-> | Deleting the user was not invalidating the API token, allowing users to
-> | access Jenkins when they shouldn't be allowed to do so.
-> 
-> https://github.com/jenkinsci/jenkins/commit/5548b5220cfd496831b5721124189ff18fbb12a3
-> 
-> SECURITY-80
-> | Jenkins UI was vulnerable to click jacking attacks.
-> 
-> https://github.com/jenkinsci/jenkins/commit/16931bd7bf7560e26ef98328b8e95e803d0e90f6
-> 
-> SECURITY-79
-> | "Jenkins' own user database" was revealing the presence/absence of users
-> | when login attempts fail.
-> 
-> https://github.com/jenkinsci/jenkins/commit/fbf96734470caba9364f04e0b77b0bae7293a1ec
-> 
-> SECURITY-77
-> | Jenkins had a cross-site scripting vulnerability in one of its cookies.
-> | If Jenkins is deployed in an environment that allows an attacker to
-> | override Jenkins cookies in victim's browser, this vulnerability can be
-> | exploited.
-> 
-> https://github.com/jenkinsci/jenkins/commit/a0b00508eeb74d7033dc4100eb382df4e8fa72e7
-> 
-> SECURITY-75
-> | Jenkins was vulnerable to session fixation attack. If Jenkins is
-> | deployed in an environment that allows an attacker to override Jenkins
-> | cookies in victim's browser, this vulnerability can be exploited.
-> 
-> https://github.com/jenkinsci/jenkins/commit/8ac74c350779921598f9d5edfed39dd35de8842a
-> 
-> SECURITY-74
-> | Stored XSS vulnerability. A malicious user of Jenkins with a certain set
-> | of permissions can cause Jenkins to store arbitrary HTML fragment.
-> 
-> https://github.com/jenkinsci/jenkins/commit/5d57c855f3147bfc5e7fda9252317b428a700014
-> 
-> SECURITY-73
-> | Some of the system diagnostic functionalities were checking a lesser
-> | permission than it should have. In a very limited circumstances, this
-> | can cause an attacker to gain information that he shouldn't have
-> | access to.
-> 
-> https://github.com/jenkinsci/jenkins/commit/0530a6645aac10fec005614211660e98db44b5eb
-> ----cut---------cut---------cut---------cut---------cut---------cut-----
-> 
-> Do some of these issue need a CVE assigned?
-> 
-> Regards,
-> Salvatore
-> 
+Thanks Kurt, this was next on my to-do list.
 
-It looks to me as though at least some of these issues definitely need CVE IDs assigned. I reported SECURITY-105, and it is my opinion that this flaw needs a separate CVE ID to CVE-2013-7285. The Jenkins patch blocks DynamicProxyConverter from the Jenkins wrapper class XStream2, without changing the XStream library at all. This implements a less-general solution than the XStream patch for CVE-2013-7285, and the patch applies to a completely separate codebase (i.e. Jenkins itself,not XStream). Therefore it is my understanding that this flaw as it affects Jenkins qualifies for a unique CVE ID. When reporting this flaw to upstream, the Jenkins engineers agreed that it qualified for a unique CVE ID, and I offered to assign a CVE ID from the Red Hat CNA. This offer was refused, but then the advisory was released without a unique CVE ID, which is puzzling indeed.
+On Wed, Aug 6, 2014 at 11:42 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+>
+> This release fixes a possible denial of service issue in PHP's XML
+> processing, reported by Nir Goldshlager of the Salesforce.com Product
+> Security Team. It was fixed by Michael Adams and Andrew Nacin of the
+> WordPress security team and David Rothstein of the Drupal security
+> team. This is the first time our two projects have coordinated on
+> joint security releases.
 
-Could someone from MITRE please weigh in and assign CVE IDs as appropriate for these flaws?
 
-Thanks
---
-David Jorm / Red Hat Security Response Team
+Sigh. XML sucks and I somehow doubt many others are doing this right,
+either. PHP + libxml makes it pretty much impossible to parse an XML file
+safely. The issue was internal entity expansion (quadratic, not
+exponential). Not XXE and potentially not all that bad depending on server
+configuration.
+
+Per their security advisory, Drupal submitted a CVE request for this as
+well. This is actually a vulnerability in an external library (
+http://scripts.incutio.com/xmlrpc/). We use the library as-is, while they
+forked it. (Well, they took the class and broke it into individual
+functions — the code was the same and our patches differed only in coding
+standards.) Not sure how this should be handled.
+
+For WordPress, this affected versions 1.5 - 3.9.1 (except 3.7.4 / 3.8.4 --
+these were branch releases today in addition to 3.9.2).
+
+https://core.trac.wordpress.org/changeset/29405/branches/3.9
+
+- -Fixes a possible but unlikely code execution when processing widgets
+> (WordPress is not affected by default), discovered by Alex Concha of
+> the WordPress security team.
+>
+
+This is an unsafe serialization vulnerability. Affected versions 3.9 and
+3.9.1.
+
+https://core.trac.wordpress.org/changeset/29389
+
+
+> - -Prevents information disclosure via XML entity attacks in the
+> external GetID3 library, reported by Ivan Novikov of ONSec.
+>
+
+This is an XXE in GetID3, http://getid3.sourceforge.net/. Upstream
+CVE-2014-2053.
+Affected WordPress versions 3.6 - 3.9.1 (except 3.7.4 / 3.8.4)
+
+https://core.trac.wordpress.org/changeset/29390
+
+
+> - -Adds protections against brute attacks against CSRF tokens, reported
+> by David Tomaschik of the Google Security Team.
+
+
+Same reporter, same same line of code, but two separate issues here. One,
+when building CSRF tokens, the individual pieces were not separated by
+delimiter, so $action + $user_id could have been post_1 + user 23 or post
+12 + user 3. Second issue: Nonces were not being compared in a
+time-constant manner. Neither are easy to exploit.
+
+Affected WordPress versions 2.0.3 - 3.9.1 (except 3.7.4 / 3.8.4)
+
+https://core.trac.wordpress.org/changeset/29384
+https://core.trac.wordpress.org/changeset/29408
+
+- -Contains some additional security hardening, like preventing
+> cross-site scripting that could be triggered only by administrators.
+>
+
+XSS: https://core.trac.wordpress.org/changeset/29398
+
+Affected WordPress versions 2.5 - 3.9.1 (except 3.7.4 / 3.8.4)
+
