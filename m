@@ -1,45 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/5
-Message-ID: <20141003112609.GA10428@openwall.com>
-Date: Fri, 3 Oct 2014 15:26:09 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: rgerhards@...adiscon.com, joey@...odrom.org
-Subject: Re: sysklogd vulnerability (CVE-2014-3634)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/07/5
+Message-ID: <4A77F227-42E4-4734-89BC-219656AA6A09@redhat.com>
+Date: Thu, 07 Aug 2014 12:12:27 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: CVE-2014-3562: Vulnerability in 389-ds
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 03, 2014 at 11:24:43AM +0000, mancha wrote:
-> On Fri, Oct 03, 2014 at 09:12:28AM +0000, mancha wrote:
-> > In sysklogd's syslogd, invalid priority values between 192 and 1023
-> > (directly or arrived at via overflow wraparound) can propagate through
-> > code causing out-of-bounds access to the f_pmask array within the
-> > 'filed' structure by up to 104 bytes past its end. Though most likely
-> > insufficient to reach unallocated memory because there are around 544
-> > bytes past f_pmask in 'filed' (mod packing and other differences),
-> > incorrect access of fields at higher positions of the 'filed'
-> > structure definition can cause unexpected behavior including message
-> > mis-classification, forwarding issues, message loss, or other.
-> 
-> To expand on the above, because the out-of-bounds access is limited to
-> the filed structure, the effect on message handling, etc. appears
-> limited to the would-be attacker's own message. Unlike the more serious
-> impact seen in rsyslog, my limited testing and code review suggests the
-> flaw, while there, has no real security impact. Nevertheless, my patch
-> fixes the handling of malformed PRI parts.
+This was initially sent to the distros list on August 5th:
 
-What about the DoS impact claimed here, though? -
+It was found that when replication was enabled for each attribute in Red
+Hat Directory Server / 389 Directory Server, which is the default
+configuration, the server returned replicated metadata when the
+directory was searched while debugging was enabled. A remote attacker
+could use this flaw to disclose potentially sensitive information.
 
-http://www.rsyslog.com/remote-syslog-pri-vulnerability-cve-2014-3683/
 
- sysklogd
- ~~~~~~~~
- A segfault seems possible in sysklogd if a negative facility value (due to
- integer overrun in facility parsing) is used. This could be used to
- carry out a remote DoS.
+Acknowledgements:
 
-If this can be used to crash syslogd, it's "real security impact", even
-if rather limited.
+This issue was discovered by Ludwig Krispenz of Red Hat.
 
-Have you tried triggering this condition (getting syslogd to crash)?
+Further details can be found here: https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-3562
 
-Alexander
+-- 
+Vincent Danen / Red Hat Product Security
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
