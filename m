@@ -1,40 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/10
-Message-ID: <CAFRnB2VZkhKRJK7iKaGPA6hk8SVuqxt9KWGmjmL2xs66wZa6qA@mail.gmail.com>
-Date: Wed, 05 Nov 2014 04:45:46 +0000
-From: Alex Gaynor <alex.gaynor@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/07/4
+Message-ID: <53E33148.5010102@redhat.com>
+Date: Thu, 07 Aug 2014 17:56:56 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: is MD5 finally dead?
+Subject: Re: CVE request: issues in ISO C++ 2011 regex library
 Content-Type: text/plain; charset=utf-8
 
-As far as I can tell, HMAC doesn't actually require pre-image resistance,
-it requires that the compression function used by the has be a PRF -- or at
-least that's what the HMAC paper says. Are these two formulations
-equivalent?
+On 08/06/2014 04:36 AM, Rich Felker wrote:
+> On Tue, Aug 05, 2014 at 03:50:32PM +1000, Murray McAllister wrote:
+>> Hello,
+>>
+>> Maksymilian Arciemowicz reported a number of issues in the ISO C++
+>> 2011 regex libraries:
+>>
+>> http://seclists.org/fulldisclosure/2014/Aug/1
+>>
+>> Bugs:
+>>
+>> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61601
+>>
+>> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61582
+>>
+>> http://llvm.org/bugs/show_bug.cgi?id=20291
+>>
+>> For the memory corruption bug (61582), there seems to be more than
+>> one issue here (at least a heap-based buffer overflow and a stack
+>> overflow of some sort). Can a single CVE be assigned, or do you need
+>> specific details for each issue (I don't currently have those)?
+>>
+>> With GCC 4.8 in Fedora, the affected program needs to be compiled
+>> using the "-std=c++11" option.
+>
+> I think this issue is mis-named. "The ISO C++ 2011 regex library" is a
+> specfication, not an implementation, and a vulnerability in it would
+> be a fundamental flaw in the API design (analogous to gets in C). It
+> seems like this CVE request is for one or more GCC/libstdc++ bugs, and
+> it should be identified as such.
+>
+> Rich
+>
 
-Alex
+Thanks for pointing that out, and sorry for the confusion!
 
-On Wed Nov 05 2014 at 8:42:59 PM Michael Samuel <mik@...net.net> wrote:
+There is some discussion in 
+https://bugzilla.redhat.com/show_bug.cgi?id=1126691 about why these 
+should not be treated as security issues.
 
-> Hi,
->
-> On 5 November 2014 15:21, Kurt Seifried <kseifried@...hat.com> wrote:
-> > http://natmchugh.blogspot.co.uk/2014/10/how-i-created-two-
-> images-with-same-md5.html
-> >
-> > It seems like MD5 should probably be classed with DES as instant CVE
-> > win, either now, or pretty soon....
->
-> This is the same chosen-prefix attack that was used to forge
-> certificates.  Using md5 in
-> a collision-hostile environment is definitely CVE worthy, and has been
-> for a while. (BTW,
-> no CVE for rsync yet)
->
-> In the case of an unknown-prefix, HMAC[1] or anything requiring a
-> preimage, it's
-> just hardening to use swap out MD5 (and SHA-1).
->
-> [1] Unless you accidentally swap the key and data fields!
->
+Cheers,
 
+--
+Murray McAllister / Red Hat Product Security
