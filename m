@@ -1,13 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/5
-Message-ID: <CALx_OUC40AYVDPSZ3v19iS9Z0qgvSyJt5ju14RTsOeicE4G-Wg@mail.gmail.com>
-Date: Fri, 26 Sep 2014 23:47:17 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/07/1
+Message-ID: <CABbbngCsfunhvGac_sLSNDU-x6yv_cdXmct3AB=vr0EqSM1SPA@mail.gmail.com>
+Date: Wed, 6 Aug 2014 17:10:13 -0700
+From: Forest Monsen <forest.monsen@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: Mitre CVE assign department <cve-assign@...re.org>
+Subject: CVE request for Drupal core, and contributed modules
 Content-Type: text/plain; charset=utf-8
 
-FWIW, I'm pretty sure I bumped into another bad-looking and probably
-exploitable parser issue; for now, I sent the details privately to
-Chet, Florian, and Alexander. But the bottom line is, the parser
-really shouldn't be exposed to the outside world.
+Hi there,
+
+We'd like to request a CVE identifier for Drupal Core:
+
+SA-CORE-2014-004 - Drupal core - Denial of service
+https://www.drupal.org/SA-CORE-2014-004
+
+And the appropriate number for the following Drupal contributed modules:
+
+SA-CONTRIB-2014-075 - Biblio Autocomplete - SQL Injection and Access Bypass
+https://www.drupal.org/node/2316717
+
+SA-CONTRIB-2014-076 - Fasttoggle - Access bypass
+https://www.drupal.org/node/2316747
+
+Thanks -
+
+Forest Monsen, for the Drupal Security Team
+
