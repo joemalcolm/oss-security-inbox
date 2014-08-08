@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/8
-Message-ID: <20141103113734.0d5d3005@pc>
-Date: Mon, 3 Nov 2014 11:37:34 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/09/3
+Message-ID: <53E4F8FF.80500@gmail.com>
+Date: Fri, 08 Aug 2014 09:21:19 -0700
+From: lazytyped <lazytyped@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: unzip -l crasher
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-Am Mon, 03 Nov 2014 11:25:00 +0100
-schrieb Martin Carpenter <mcarpenter@...e.fr>:
+On 08/08/2014 09:17, Greg KH wrote:
+> There is a USB firmware download spec, which is quite easy to use, if
+> manufacturers actually followed it (side note, I was one of the authors
+> of that spec...)  And if USB device manufacturers actually required
+> signed firmware to run in their devices, that would solve this issue
+> instantly as long as the signing keys don't leak.
 
-> "ERROR: Spammer stay away!"
-> 
-> Does anyone have an upstream contact?
+Or, for cheap devices like USB dongles, just keep the firmware
+read-only. Who's going to update it anyway.
 
-They have a public forum and last time I posted there I got a reply
-from the main author.
+But yes, either the update should be signed and verified, or
+hardware-switch controlled or impossible to begin with (read-only). Not
+only for USB devices.
 
-As this is already public I just posted a message there (Unzip Bugs
-subforum) but it needs moderator approval before it will appear:
-http://www.info-zip.org/phpBB3/viewforum.php?f=7
 
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+      -  twiz
