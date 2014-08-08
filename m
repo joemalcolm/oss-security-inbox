@@ -1,42 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/9
-Message-Id: <201404101126.s3ABQ7pe003427@linus.mitre.org>
-Date: Thu, 10 Apr 2014 07:26:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Linux kernel: IB/core: crash while resolving passive side RoCE L2 address in cma_req_handler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/20
+Message-ID: <20140808164918.GA13621@kroah.com>
+Date: Fri, 8 Aug 2014 09:49:18 -0700
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Aug 08, 2014 at 09:23:21AM -0700, Dean Pierce wrote:
+> Being able to "infect" a USB device (allowing unsigned firmware to be
+> flashed on) is bad.
 
-> Linux kernel built with the InfiniBand communication link(CONFIG_INFINIBAND)
-> along with the support for Remote Direct Memory Access(RDMA) over Convered
-> Ethernet(RoCE), is vulnerable to a crash caused by invalid memory access.
-> It occurs while trying to resolve RoCE L2 address on the server side.
+"bad"?  Why is that?  Loads of devices work this way, a whole class of
+USB controller chips work exactly in this manner, they require the
+firmware to be dowloaded to the device from the host operating system
+before they work at all.  They are really common and cheap and used all
+over the place and have been on the market since the early 1990's.
+
+> Being able to "infect" a host controller is bad.
+
+And is something that I have never seen anyone say is possible, have
+you?  If so, details would be great to have.
+
+> Using a USB device to get DMA, memory dumps, files, etc via loaded drivers
+> is bad, whether they are using legitimate code paths or kernel bugs.
+
+How can a USB device get any of those things without the Host operating
+system give them to it the device?
+
+> I'm not so worried about the keyboard thing.  That's only interesting
+> because it's the automation of exploiting a machine that has already been
+> compromised.
 > 
-> A remote unprivileged user/program could use this flaw to crash the kernel,
-> resulting in DoS.
+> Personally I would prefer disabling USB hotplug while a machine is locked
+> (or while there are no active TTYs or something for servers).  Even if HID
+> was whitelisted while the machine is locked, it would be a great start.
+
+Then do just that, Linux has allowed you to do this for years, again,
+but very few people take advantage of it.
+
+> In regards to the PCI stuff, don't miss Joe's talk at DEFCON on Sunday.
 > 
-> https://patchwork.kernel.org/patch/3896781/
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b2853fd6c2d0f383dbdf7427e263eb576a633867
+> https://www.defcon.org/html/defcon-22/dc-22-speakers.html#FitzPatrick
+> 
+> People have much more exposed PCI on their laptops and servers than they
+> realize.  It's super cheap, super easy, and when we start selling kits this
+> afternoon, it's going to be super accessible.
 
-Use CVE-2014-2739.
+express card and thunderbolt are pcie, it's fun to play with, glad to
+see some "kits" to make it more accessable.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+> VTd/IOMMU would be nice to have if implemented properly, but it seems like
+> even OSX, the only OS currently using VTd as a security feature, still
+> hasn't gotten it quite right.
 
-iQEcBAEBAgAGBQJTRn7rAAoJEKllVAevmvmsfTcIALjPNjHagE/k+E+Uh8x8gf4O
-HmW834RHsyV+nHiwwa0TBMiE3phh9spgsLKzADsuc6Uj2v5NfW3clz8j/FJLv4vq
-uAb4wCAff/YE6+al9aJOiLtDmXk4ZS5w54o9baYU+KXqAPk26lyMRVDDKJWD5h3G
-QwbUhNFnWuSdXo46Q/sWC3FHgCkF6EhtgOOcGsiiPv39jdtd1HZEcuYl8tqnjVT+
-fBP0bEaPQs5E7CVRQ9nnPkYRNeZSHGnibN1n1ZPykIAGxDHAjZX1sGjYfEQ6dCq9
-bQce4CcFQW5wG4dnLsaMzcEmU84rjzilFYYKsh3oJFTn+575RIiOI71ZXs2ulFU=
-=b+5a
------END PGP SIGNATURE-----
+What exactly do you mean by "get it right"?
+
+> Also firewire attacks are still a thing.  What's up with that?
+
+The hardware is designed to do this, the host operating system can't do
+much about bad hardware, sorry.
+
+> ExpressCard and Thunderbolt adapters are super cheap, and Inception is
+> still being actively maintained with new targets being added
+> regularly.
+
+It makes it easy to back up laptops :)
+
+thanks,
+
+greg k-h
