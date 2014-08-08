@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/25/5
-Message-Id: <201403251744.s2PHi6ia004479@linus.mitre.org>
-Date: Tue, 25 Mar 2014 13:44:06 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: possible CVE request: smb4k credentials cache leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/12
+Message-ID: <20140808151821.GA14066@kroah.com>
+Date: Fri, 8 Aug 2014 08:18:21 -0700
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Aug 08, 2014 at 07:00:00PM +0400, gremlin@...mlin.ru wrote:
+> That means, every device after being detected by the system must
+> be explicitly activated by some human activity. Yes, users may
+> and, most likely, will be fooled to do that (as they are fooled
+> to connect the attacker's device), but this activation will at
+> least make the use of untrusted devices more difficult.
 
-> https://bugs.gentoo.org/show_bug.cgi?id=505376 notes that smb4k (an
-> SMB/CIFS share browser for KDE) version 1.1.1 fixes a potential security
-> issue:
-> 
-> "Fixed potential security issue reported by Heiner Markert. Do not allow
-> the cruid option to be entered via the "Additional options" line edit.
-> 
-> http://sourceforge.net/projects/smb4k/files/Smb4K%20%28stable%20releases%29/1.1.1/
+How can I activate a USB keyboard (the only input device attached to the
+system), with the USB keyboard that I plugged into it?
 
-> https://bugs.gentoo.org/show_bug.cgi?id=505376#c4
-> Apparently cruid is used to set the uid of the owner of the credentials cache.
+Fun times...
 
-Use CVE-2014-2581.
+Again, fix the real problem here, if there is one, don't try to throw
+"is this device ok to use" dialogs up, they just annoy people and don't
+do anything.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Oh, and if you want, you can disable all USB devices on your Linux
+system by default, and only "authorize" them explicitly if you
+programatically think they should be enabled.  We have had support in
+the kernel for that for years now, but very few people actually use it.
 
-iQEcBAEBAgAGBQJTMb+XAAoJEKllVAevmvms7asH/iPuxfHYpHI86Z/75L+n0Qa9
-fLr2TAWAdOz9WDsJuNcRNlc7jDuzXNLz8tEqYUBGD0+g1nuzqfhjCksNWEJmmNYL
-tCJat/DSuijiS4MdNxEqgFIceZco4Uv8mjDkgNgM5EqbeJhq3IWRraTppFfdbiAG
-agup67AsZSkf3VuV3NlwcTQfaxilsZY7TQocsFT1SU65Z//9bnGNxgm1G9sWLq4M
-bWYBqyiJur7rUGY6uCMJaLw4PcDDblewZo9R1VTfn405z8iw5LZvc4g+v2arUj9l
-LclDHQvIoVENBLOUgBKdNjla2GL6sEplEokFNWTgU0Tm9xDMuxU24ZeBqgwzxU8=
-=ktDl
------END PGP SIGNATURE-----
+So the tools to do this are already there, why aren't you using them? :)
+
+greg k-h
