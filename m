@@ -1,35 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/4
-Message-ID: <20140606033827.GO507@oevtugenva.nrevsny.pk>
-Date: Thu, 5 Jun 2014 23:38:27 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/09/2
+Message-ID: <20140808143514.GD20054@haproxy.com>
+Date: Fri, 8 Aug 2014 16:35:14 +0200
+From: Willy Tarreau <willy@...roxy.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
-> Hi,
+On Fri, Aug 08, 2014 at 06:36:12AM -0700, Greg KH wrote:
+> On Fri, Aug 08, 2014 at 02:20:21PM +0300, Dan Carpenter wrote:
+> > I'm surprised we haven't had any discussion about the recent BadUSB
+> > articles.
+> > 
+> > http://arstechnica.com/security/2014/07/this-thumbdrive-hacks-computers-badusb-exploit-makes-devices-turn-evil/
+> > http://security.stackexchange.com/questions/64524/how-to-prevent-badusb-attacks-on-linux-desktop
+> > 
+> > We could put a popup if there is a second keyboard attached to check
+> > that the person controlling the existing keyboard is aware of the second
+> > one.
 > 
-> This was handled via linux-distros, hence the mandatory oss-security
-> posting.  The issue was made public earlier today, and is included in
-> this Debian advisory:
-> 
-> https://lists.debian.org/debian-security-announce/2014/msg00130.html
-> 
-> ---
-> CVE-2014-3153
-> 
->     Pinkie Pie discovered an issue in the futex subsystem that allows a
->     local user to gain ring 0 control via the futex syscall. An
->     unprivileged user could use this flaw to crash the kernel (resulting
->     in denial of service) or for privilege escalation.
-> ---
-> 
-> I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
-> as well as back-ports of those by John Johansen of Canonical, who wrote:
+> "popup" where?  Multi-seat machines wouldn't like that very much, as
+> would yubikeys (as was pointed out), or a raft of other USB devices that
+> export a keyboard device for the buttons they control (video cameras,
+> external speakers, barcode scanners, etc.)
 
-Maybe I'm missing something, but I can't find any statement of what
-version these patches are intended to apply cleanly to. They don't
-apply to latest stable.
+Also, keyboards are one aspect of the problem. The biggest aspect is not new and
+has been abused for years, which is the main reason why so many large companies
+physically remove (stick or desolder) USB ports : you're connecting a *device*
+to your system and there's no way to make that 100% safe using software only.
+With a bogus driver and a DMA-capable device, you can end up accessing kernel
+locations and causing a lot more discrete harm such as unlocking displays,
+changing UIDs of running processes, etc. And that's much harder to detect,
+especially in closed drivers or with closed systems.
 
-Rich
+So I'd rather not clobber keyboard drivers for 100% of the users in order to
+improve safety by a few percent for a few percent of users.
+
+One more efficient solution could be to have a sysctl to disable hotplugging
+of USB devices, all of them. Software would then detect the new devices, and
+decide to load the drivers among a whitelist associated to a given port. The
+administrator could add new rules, and it could be the user for personal
+desktop PCs. But even then you still have the risk of the user not understanding
+what's happening and bindly clicking "OK".
+
+Just my 2 cents,
+Willy
+
