@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/27
-Message-ID: <20140131232703.GB22845@openwall.com>
-Date: Sat, 1 Feb 2014 03:27:03 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/23
+Message-ID: <20140808182716.GY1589@openwall.com>
+Date: Fri, 8 Aug 2014 22:27:16 +0400
+From: "(GalaxyMaster)" <galaxy@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 31, 2014 at 08:28:11PM +0100, rf@...eap.de wrote:
-> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
->     SD> On Wed, Jan 22, 2014 at 11:51:39AM +0100, rf@...eap.de wrote:
->     >> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
->     SD> Are Qlustar's security updates (not just security advisories)
->     SD> publicly available?
->     >>
->     >> Yes, all our packages are publicly available from our website.
+Alexey,
+
+On Fri, Aug 08, 2014 at 09:57:49PM +0400, gremlin@...mlin.ru wrote:
+> On 08-Aug-2014 09:21:02 -0700, Greg KH wrote:
+>  > That doesn't prevent any other USB HID device from being plugged
+>  > in and instantly working. Which again, you can prevent if you
+>  > want to, but no one seems to do that...
 > 
->     SD> Where do I find them?  Somehow I only found "Qlustar Installer
->     SD> 8.1.0-3/precise Size: 705MB".
+> Hmmm... To avoid possible confusion: that was CONFIG_USB_KBD - 
+> "USB HIDBP Keyboard (simple Boot) support", and CONFIG_USB_HID
+> was turned off.
+
+I think Greg was referring to kernel's feature of controlling power on
+USB ports (e.g. you can just switch of power for a port and nothing you
+insert there will have a chance to work until you instruct the kernel to
+switch the port back on).
+
+> Bus 002 Device 064: ID 046d:c016 Logitech, Inc. Optical Wheel Mouse
 > 
-> http://repo.qlustar.com/repo/ubuntu
+> Device IDs tell us the hub was reset several times :-)
 
-For example, how do I find your most recent security updates in that
-tree, for these two advisories? -
+... or somebody insanely was plugging mouse in and out in a cycle :)
 
-https://qlustar.com/news/qsa-0131141-linux-kernel-vulnerabilities
-https://qlustar.com/news/qsa-0131142-security-bundle
+-- 
+(GM)
 
-I found some recently modified files here:
-
-http://repo.qlustar.com/repo/ubuntu/pool/main/q/qlustar-kernel/
-
-but they don't match the package names given in the advisories.
-
-Alexander
