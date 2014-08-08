@@ -1,12 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/3
-Message-ID: <CALx_OUCR1CCBman9Hhv2z54ciRbRGArrw=ExNLY=n+PCZbbkuA@mail.gmail.com>
-Date: Tue, 11 Nov 2014 18:01:50 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/34
+Message-ID: <20140808215500.GT1674@oevtugenva.nrevsny.pk>
+Date: Fri, 8 Aug 2014 17:55:00 -0400
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-> I don't know of a way to de-dupe that manually.
+On Fri, Aug 08, 2014 at 01:36:36PM +0100, John Haxby wrote:
+> On 08/08/14 12:20, Dan Carpenter wrote:
+> > The attack looks like someone who says, "Can you copy some files from
+> > my USB flash drive which?" (not knowing it is infected) and then there
+> > is a popup, "This newly inserted USB device is trying to type commands,
+> > is that ok?  y/N?".
+> 
+> That's all very well, but:
+> 
+> > One of the attacks involves a USB stick that acts as three separate
+> > devices -- two thumb drives and a keyboard. When the device is first
+> > plugged into a computer and is detected by the OS, it acts as a regular
+> > storage device. However, when the computer is restarted and the device
+> > detects that it's talking to the BIOS, it switches on the hidden storage
+> > device and also emulates the keyboard, Nohl said.
+> > 
+> > Acting as a keyboard, the device sends the necessary button presses
+> > to bring up the boot menu and boots a minimal Linux system from the
+> > hidden thumb drive. The Linux system then infects the bootloader of the
+> > computer's hard disk drive, essentially acting like a boot virus, he said.
 
-Err, "automatically".
+This sounds like an argument for password-protecting your BIOS and
+bootloader if anything, and disabling boot from any device except the
+primary hdd except when installing.
+
+Rich
