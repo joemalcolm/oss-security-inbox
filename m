@@ -1,44 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/5
-Message-ID: <5482596B.3030607@amacapital.net>
-Date: Fri, 05 Dec 2014 17:18:35 -0800
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/4
+Message-ID: <20140808133612.GA4427@kroah.com>
+Date: Fri, 8 Aug 2014 06:36:12 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-On 12/05/2014 04:44 PM, Hanno Böck wrote:
-> On Fri, 05 Dec 2014 17:43:44 -0500
-> Daniel Kahn Gillmor <dkg-QLrU/DhXBlmnlhUoGqYIEF6hYfS7NtTn@...lic.gmane.org> wrote:
+On Fri, Aug 08, 2014 at 02:20:21PM +0300, Dan Carpenter wrote:
+> I'm surprised we haven't had any discussion about the recent BadUSB
+> articles.
 > 
->> i couldn't find a reference to this in the nautilus bugtracker, so i
->> just posted:
->>
->>  https://bugzilla.gnome.org/show_bug.cgi?id=741183
+> http://arstechnica.com/security/2014/07/this-thumbdrive-hacks-computers-badusb-exploit-makes-devices-turn-evil/
+> http://security.stackexchange.com/questions/64524/how-to-prevent-badusb-attacks-on-linux-desktop
 > 
-> I tried to dig into this a bit. I'm not really sure, but based on the
-> output I assume nautilus is relying on file or libmagic to assess the
-> file type.
-> 
-> And that's what fails:
-> $ file --mime-type pie
-> pie: application/x-sharedlib
-> 
-> 
-> It seems there is no really easy way to separate executables from
-> shared libraries and whether this should be considered a bug in
-> file/libmagic. The only thing I quickly found that would be possible is
-> searching if a SONAME is present. libmagic uses some "magic" file
-> format to parse files, I don't know if that's capable of such complex
-> parsing.
-> 
+> We could put a popup if there is a second keyboard attached to check
+> that the person controlling the existing keyboard is aware of the second
+> one.
 
-Why does gcc and/or ld write a non-zero entry point?  If they didn't,
-that would be an easy way to check.
+"popup" where?  Multi-seat machines wouldn't like that very much, as
+would yubikeys (as was pointed out), or a raft of other USB devices that
+export a keyboard device for the buttons they control (video cameras,
+external speakers, barcode scanners, etc.)
 
---Andy
+> The attack looks like someone who says, "Can you copy some files from
+> my USB flash drive which?" (not knowing it is infected) and then there
+> is a popup, "This newly inserted USB device is trying to type commands,
+> is that ok?  y/N?".
 
-> (oh, btw, this is one more reason to wipe out potential security bugs
-> in file...)
-> 
+Shoudn't we just ensure that copying "bad" files to a location they
+shouldn't be at is the thing to protect from instead?  This isn't a USB
+thing explicitly at all, there have been loads of devices out there that
+do this type of thing for a while (can't remember the name, one is
+programmable to do this very thing with lots of fun scripts that come
+with it).
 
+Oh, and we should also ensure that if you plug in a "malformed" USB
+device, we don't crash the kernel, like we have in the past, hopefully
+all bugs there are now addressed, many thanks to Kees for that work.
+
+thanks,
+
+greg k-h
