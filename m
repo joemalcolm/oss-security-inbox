@@ -1,138 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/20
-Message-ID: <CAFkuX4vuZEEHijtLDagG5Z2u6zHLudMFUXKwO8cNrWqx2bjaiA@mail.gmail.com>
-Date: Thu, 26 Jun 2014 12:51:32 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/3
+Message-ID: <53E4C454.6060901@oracle.com>
+Date: Fri, 08 Aug 2014 13:36:36 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: LMS-2014-06-16-1: Oberhumer LZO
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+On 08/08/14 12:20, Dan Carpenter wrote:
+> The attack looks like someone who says, "Can you copy some files from
+> my USB flash drive which?" (not knowing it is infected) and then there
+> is a popup, "This newly inserted USB device is trying to type commands,
+> is that ok?  y/N?".
 
-This is to inform you of a security flaw in the Oberhumer LZO algorithm,
-typically packaged as liblzo2 or lzo-2. Please read the bug report inline.
+That's all very well, but:
 
-Best,
-Don A. Bailey
-Founder / CEO
-Lab Mouse Security
-https://www.securitymouse.com/
+> One of the attacks involves a USB stick that acts as three separate
+> devices -- two thumb drives and a keyboard. When the device is first
+> plugged into a computer and is detected by the OS, it acts as a regular
+> storage device. However, when the computer is restarted and the device
+> detects that it's talking to the BIOS, it switches on the hidden storage
+> device and also emulates the keyboard, Nohl said.
+> 
+> Acting as a keyboard, the device sends the necessary button presses
+> to bring up the boot menu and boots a minimal Linux system from the
+> hidden thumb drive. The Linux system then infects the bootloader of the
+> computer's hard disk drive, essentially acting like a boot virus, he said.
 
-#############################################################################
-#
-# Lab Mouse Security Report
-# LMS-2014-06-16-1
-#
 
-Report ID: LMS-2014-06-16-1
+From
+http://www.infoworld.com/d/security/most-usb-thumb-drives-can-be-reprogrammed-infect-computers-247489
+via http://catless.ncl.ac.uk/Risks/28.14.html#subj6.1 (which seems to be
+down at the moment).
 
-CVE ID: CVE-2014-4607
+The vulnerabilities aren't restricted to thumb drives.  If there's room
+for a 1-wire chip in an Apple Lightning connector
+(http://www.chipworks.com/en/technical-competitive-analysis/resources/blog/inside-the-apple-lightning-cable/)
+then there's room for a lot more in the USB connector.  Borrowing a
+cable to charge your mobile phone could become a risky business.
 
-Researcher Name: Don A. Bailey
-Researcher Organization: Lab Mouse Security
-Researcher Email: donb at securitymouse.com
-Researcher Website: www.securitymouse.com
-
-Vulnerability Status: Patched
-Vulnerability Embargo: Broken
-
-Vulnerability Class: Integer Overflow
-Vulnerability Effect: Memory Corruption
-Vulnerability Impact: DoS, RCE
-Vulnerability DoS Practicality: Practical
-Vulnerability RCE Practicality: Impractical
-Vulnerability Criticality: High
-
-Vulnerability Scope:
-liblzo1:
-	- All versions of lzo1 are affected
-liblzo2:
-	- All versions of lzo2 are affected
-	- Except for platforms that set both of the
-	  LZO_UNALIGNED_OK_8 and LZO_UNALIGNED_OK_4 preprocessor macros
-
-Vulnerability Tested:
-liblzo1:
-	x86_64: vulnerable
-	i386: vulnerable
-	ARM: vulnerable
-liblzo2:
-	x86_64: not vulnerable
-	i386: vulnerable
-	ARM: vulnerable
-
-Functions Affected:
-	lzo1x_decompress_safe
-	lzo1y_decompress_safe
-	lzo1z_decompress_safe
-
-Criticality Reasoning
----------------------
-Despite the likelihood that this vulnerability will result in a simple denial
-of service, there is a strong possibility that memory corruption can result
-in remote code execution. If the LZO decompression algorithm is used in a
-threaded or kernel context, it may be possible to corrupt memory structures
-that control the flow of execution in other contexts. When the executive
-switches context, control of a secondary thread or process may be obtained.
-This attack is highly specialized and requires a deep understanding of the
-target architecture to succeed. Therefore, it is possible, but impractical,
-to implement a RCE attack using this bug.
-
-Despite RCE being impractical, the criticality level must be defined as High
-because the vulnerable algorithm has been in use since approximately 1999.
-The set of affected systems is potentially large and unmanageable due to the
-period of time the vulnerable algorithm has been deployed. As a result, there
-may still be legacy systems in production that are vulnerable to RCE.
-
-Vulnerability Description
--------------------------
-An integer overflow may occur when processing any variant of a "literal run"
-in the lzo1x_decompress_safe function. Each of these three locations is
-subject to an integer overflow when processing zero bytes. The following code
-depicts how the size of the literal array is generated:
-        if (t == 0)
-        {
-            NEED_IP(1);
-            while (*ip == 0)
-            {
-                t += 255;
-                ip++;
-                NEED_IP(1);
-            }
-            t += 15 + *ip++;
-        }
-
-As long as zero byte (0x00) is encountered, the variable 't' will be
-incremented by 255. Using approximately sixteen megabytes of zeros, 't' will
-accumulate to a maximum unsigned integer value on a 32bit architecture. In
-combination with the following code, the value of 't' will overflow:
-        /* copy literals */
-        assert(t > 0); NEED_OP(t+3); NEED_IP(t+4);
-
-The NEED_OP() check will always pass in this case, because the size check
-within the macro will evaluate based on the overflown integer, not the value
-of 't'.
-
-This exposes the code that copies literals to memory corruption.
-
-It should be noted that the following code unintentionally saves certain
-architectures from exposure:
-#if defined(LZO_UNALIGNED_OK_8) && defined(LZO_UNALIGNED_OK_4)
-        t += 3;
-
-Because the variable 't' is added by the same amount required to overflow the
-NEED_OP() test, the integer will overflow to a safe amount, negating exposure
-to an exploit.
-
-It should be noted that if 't' is a 64bit integer, the overflow is still
-possible, but impractical. An overflow would require so much input data that
-an attack would be infeasible even in modern computers.
-
-Vulnerability Resolution
-------------------------
-To resolve this issue, the NEED_OP and NEED_IP macros should be enhanced to
-detect for integer overflow. This is the most reasonable and efficient
-location for catching corrupted or instrumented payloads. By testing for
-overflow here, an attacker is simply wasting time by forcing the function
-to process a large amount of zero bytes.
-
+jch
