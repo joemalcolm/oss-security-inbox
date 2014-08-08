@@ -1,176 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/1
-Message-ID: <20141002000436.GA23335@openwall.com>
-Date: Thu, 2 Oct 2014 04:04:36 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Kohsuke Kawaguchi <kk@...suke.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Security advisory in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/32
+Message-ID: <53E5441D.5040503@ehuk.net>
+Date: Fri, 08 Aug 2014 22:41:49 +0100
+From: Eddie Chapman <eddie@...k.net>
+To: Greg KH <greg@...ah.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 01, 2014 at 04:25:08PM -0700, Kohsuke Kawaguchi wrote:
-> I just wanted to share that the Jenkins project issued a security advisory
-> today. These issues are independently found and we've aggregated into a
-> single release.
-> 
-> The relevant CVE IDs, our bug tracking IDs are available here
-> <https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01>
-> .
-> 
-> The new versions can be downloaded from here
-> <http://mirrors.jenkins-ci.org/>.
-> 
-> (This is the first time I do this, so my apologies in advance for probably
-> failing to follow the expected format.)
+On 08/08/14 20:46, Greg KH wrote:
+> On Fri, Aug 08, 2014 at 06:40:50PM +0100, Eddie Chapman wrote:
+>> Yes, immensely. It's clear to me now that being able to re-programme a USB
+>> device firmware is not quite as easy and straightforward as is being made
+>> out to be in certain quarters.
+>
+> On the contrary, it's trivial to do on a whole bunch of USB devices as
+> that is how they were _designed_ to work.  So much so that there is a
+> whole USB spec on exactly how to do this in a way that will work across
+> all different operating systems:
+> 	http://www.usb.org/developers/docs/devclass_docs/DFU_1.1.pdf
+> I don't remember when the 1.0 version of this spec was published, I
+> think around 1995 or so.
+>
+> So I really don't see how this ability is anything "shocking" to anyone.
 
-Thank you for posting this!
+Yes, I knew about that, but what I meant was that, in practise, in the 
+real world, for an attacker to achieve this in any sort of effective way 
+across large numbers of targets is quite difficult. I found this comment 
+from the ars article the OP linked an interesting argument:
 
-No problem with the format, but the lack of information included in the
-posting itself is not great.  We've all seen websites getting
-restructured or going away in some years, whereas mailing list archives
-tend to remain available in at least some of the places.
+"I can't believe we're this far into the comment chain and there's still 
+a belief that simple USB devices with updateable firmware are anything 
+but exceedingly rare, let alone common or the norm.
 
-So I hope you don't mind me copy-pasting the advisory below, off your
-wiki above:
+Yes, there's a DFU standard, but next to nobody implements it, and 
+certainly the number of implementations for USB drives is vanishingly 
+small. The margin for a thumb drive is basically zero already, and 
+that's with small, cheap roms; why would any sane manufacturer add the 
+cost of end-user modifiable firmware? At the factory, the rom gets 
+written (and verified) on a burner and assembled later -- you'd have an 
+expensive line for sure if you waited 'til after assembly to verify (let 
+alone program) your firmware. Yield issues at the burner are cheap -- 
+yield issues after assembly are not. Mass storage (and HID, for that 
+matter) devices are well-known entities with fairly fixed 
+implementations -- they just don't need updates, and the cost to enable 
+them is prohibitive.
 
----
-Jenkins Security Advisory 2014-10-01
+Now, a WiFi or 3G dongle or something else complex and dynamic could 
+certainly be updated in the field (and many absolutely are), but thumb 
+drives are not likely. Not impossible, of course, but unlikely.
 
-Added by Kohsuke Kawaguchi, last edited by Kohsuke Kawaguchi on Oct 01, 2014
+Fixed-function is cheaper. Field upgrades are expensive. Thumb drive 
+margins are razor-thin."
 
-This advisory announces:
+( 
+http://arstechnica.com/security/2014/07/this-thumbdrive-hacks-computers-badusb-exploit-makes-devices-turn-evil/?comments=1&post=27317503#comment-27317503 
+)
 
- * multiple security vulnerabilities that were found in Jenkins core.
- * two security vulnerabilities found in the monitoring plugin
+I don't know how much of what is said there is accurate, but it sounds 
+plausible and makes sense. Without a survey of a large sample of devices 
+I suppose we'll never know for sure what % implement the DFU standard, 
+but I'd be willing to bet it is small.
 
-Description
+Another person just a couple of comments later argues:
 
-SECURITY-87/CVE-2014-3661 (anonymous DoS attack through CLI handshake)
+"Even in the cases where a drive is conceptually upgradeable, there's 
+still the question of what the malicious payload would actually be, 
+since there is a lot more variability in the embedded space in terms of 
+chips and implementation than on the desktop. What's the MCU? 8051 (and 
+pals)? ColdFire? Something from STMicro? Which instruction set? Memory 
+map? Is there even room in the existing eeprom or flash for the 
+composite device function (since it's the existing function plus the 
+malicious new function)?"
 
-This vulnerability allows unauthenticated users with access to Jenkins' HTTP/HTTPS port to mount a DoS attack on Jenkins through thread exhaustion.
+I think that observation is probably accurate. Thus, it seems to me that 
+criminals will look at this and conclude it is much easier and 
+profitable to continue infecting machines in traditional ways.
 
-SECURITY-110/CVE-2014-3662 (User name discovery)
+Eddie
 
-Anonymous users can test if the user of a specific name exists or not through login attempts.
-
-SECURITY-127&128/CVE-2014-3663 (privilege escalation in job configuration permission)
-
-An user with a permission limited to Job/CONFIGURE can exploit this vulnerability to effectively create a new job, which should have been only possible for users with Job/CREATE permission, or to destroy jobs that he/she does not have access otherwise.
-
-SECURITY-131/CVE-2014-3664 (directory traversal attack)
-
-Users with Overall/READ permission can access arbitrary files in the file system readable by the Jenkins process, resulting in the exposure of sensitive information, such as encryption keys.
-
-SECURITY-138/CVE-2014-3680 (Password exposure in DOM)
-
-If a parameterized job has a default value in a password field, that default value gets exposed to users with Job/READ permission.
-
-SECURITY-143/CVE-2014-3681 (XSS vulnerability in Jenkins core)
-
-Reflected cross-site scripting vulnerability in Jenkins core. An attacker can navigate the user to a carefully crafted URL and have the user execute unintended actions.
-
-SECURITY-150/CVE-2014-3666 (remote code execution from CLI)
-
-Unauthenticated user can execute arbitrary code on Jenkins master by sending carefully crafted packets over the CLI channel.
-
-SECURITY-155/CVE-2014-3667 (exposure of plugin code)
-
-Programs that constitute plugins can be downloaded by anyone with the Overall/READ permission, resulting in the exposure of otherwise sensitive information, such as hard-coded keys in plugins, if any.
-
-SECURITY-159/CVE-2013-2186 (arbitrary file system write)
-
-Security vulnerability in commons fileupload allows unauthenticated attacker to upload arbitrary files to Jenkins master.
-
-SECURITY-149/CVE-2014-1869 (XSS vulnerabilities in ZeroClipboard)
-
-reflective XSS vulnerability in one of the library dependencies of Jenkins.
-
-SECURITY-113/CVE-2014-3678 (XSS vulnerabilities in monitoring plugin)
-
-Monitoring plugin allows an attacker to cause a victim into executing unwanted actions on Jenkins instance.
-
-SECURITY-113/CVE-2014-3679 (hole in access control)
-
-Certain pages in monitoring plugin are visible to anonymous users, allowing them to gain information that they are not supposed to.
-
-Severity
-
-SECURITY-87 is rated medium, as it results in the loss of functionality.
-
-SECURITY-110 is rated medium, as it results in a limited amount of information exposure.
-
-SECURITY-127 and SECURITY-128 are rated high. The former can be used to further escalate privileges, and the latter results in loss of data.
-
-SECURITY-131 and SECURITY-138 is rated critical. This vulnerabilities results in exposure of sensitie information and is easily exploitable.
-
-SECURITY-143 is rated high. It is a passive attack, but it can result in a compromise of Jenkins master or loss of data.
-
-SECURITY-150 is rated critical. This attack can be mounted by any unauthenticated anonymous user with HTTP reachability to Jenkins instance, and results in remote code execution on Jenkins.
-
-SECURITY-155 is rated medium. This only affects users who have installed proprietary plugins on publicly accessible instances, which is relatively uncommon.
-
-SECURITY-159 is rated critical. This attack can be mounted by any unauthenticated anonymous user with HTTP reachability to Jenkins instance.
-
-SECURITY-113 is rated high. It is a passive attack, but it can result in a compromise of Jenkins master or loss of data.
-
-Affected Versions
-
- * All the Jenkins releases <= 1.582
- * All the LTS releases <= 1.565.2
- * Monitoring plugin <= 1.52.1
-
-Credit
-
-The Jenkins project would like to thank the following people for finding the vulnerabilities:
-
- * Daniel Beck for finding SECURITY-87, SECURITY-110, SECURITY-127, SECURITY-128
- * Jesse Glick for finding SECUIRTY-131, SECURITY-155
- * Matthias Schmalz for finding SECURITY-138
- * Seth Graham for finding SECURITY-143
- * Stephen Connolly for finding SECURITY-150
- * Manfred Moser for finding SECURITY-159
- * Wilder Rodrigues for finding SECURITY-113
- * Kurt Seifried for finding SECURITY-149
-
-Fix
-
- * Main line users should upgrade to Jenkins 1.583
- * LTS users should upgrade to 1.565.3
- * User of monitoring plugin should upgrade to 1.53
-
-These versions include fixes to all the vulnerabilities described above. All the prior versions are affected by these vulnerabilities.
-
-Other Resources
-
-Corresponding security advisory on CloudBees regarding DEV@...ud and Jenkins Enterprise by CloudBees
----
-
-The link from "Other Resources" is:
-
-http://www.cloudbees.com/jenkins-security-advisory-2014-10-01
-
-and that other advisory additionally lists affected and fixed versions
-of Jenkins Enterprise by CloudBees:
-
----
-Affected Versions:
- * All the Jenkins releases <= 1.582
- * All the LTS releases <= 1.565.2
- * Monitoring plugin <= 1.52.1
- * Jenkins Enterprise by CloudBees 1.565.1.1 up to 1.565.2.x, 1.554.1.1 up to 1.554.9.x, and 1.532.1.1 up to 1.532.9.x
----
-
----
-Fix:
- * Main line users should upgrade to Jenkins 1.583
- * LTS users should upgrade to 1.565.3
- * Jenkins Enterprise by CloudBees users should upgrade to either 1.565.3.1, 1.554.10.1, or 1.532.10.1 (depending on release lines)
- * Jenkins Operations Center by CloudBees users should upgrade to 1.554.10.1
- * DEV@...ud users need not take any actions. Your instances are being patched and upgraded.
----
-
-Now there's in fact a slight problem with the format: overly-long lines.
-This is what I got when copy-pasting from the wiki.  But most important
-is that the actual content is now in here.
-
-Alexander
+>> That's not to say that the research being discussed hasn't thrown up
+>> some very interesting issues around hardware and trust.
+>
+> Never trust hardware.  Until you have to.  :)
+>
+> greg k-h
+>
