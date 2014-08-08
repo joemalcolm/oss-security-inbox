@@ -1,38 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/6
-Message-Id: <20141121050014.B82D46C0086@smtpvmsrv1.mitre.org>
-Date: Fri, 21 Nov 2014 00:00:14 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: heap buffer overflow in PCRE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/1
+Message-ID: <20140808112021.GA4961@mwanda>
+Date: Fri, 8 Aug 2014 14:20:21 +0300
+From: Dan Carpenter <dan.carpenter@...cle.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I'm surprised we haven't had any discussion about the recent BadUSB
+articles.
 
->> [1]: http://bugs.exim.org/show_bug.cgi?id=1546
+http://arstechnica.com/security/2014/07/this-thumbdrive-hacks-computers-badusb-exploit-makes-devices-turn-evil/
+http://security.stackexchange.com/questions/64524/how-to-prevent-badusb-attacks-on-linux-desktop
 
-> http://bugs.exim.org/show_bug.cgi?id=1546#c8 has "If you can, please
-> reference CVE-2014-8964 ...
+We could put a popup if there is a second keyboard attached to check
+that the person controlling the existing keyboard is aware of the second
+one.
 
-CVE-2014-8964 is the correct CVE ID from MITRE. At the time of
-assignment, we did not know whether the existence of the bug (without
-a packaged release fixing it) was already widely public.
+The attack looks like someone who says, "Can you copy some files from
+my USB flash drive which?" (not knowing it is infected) and then there
+is a popup, "This newly inserted USB device is trying to type commands,
+is that ok?  y/N?".
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUbsZbAAoJEKllVAevmvmsrwUIAKWAo/lg9GmAr2BvQQqvAYY/
-PBrmUCDHB7CMERgWnt277PFiwkhfPByT8cp6sbp9TnWtmKsFycTeVTOGOdfK0NPW
-V5Pv8CzwghJ+NMaGJ/xIesMi/h/DXqv0e42t7SHgp4f6IJ57E/R+6DGHFluVtlJE
-8P+DVenlVDPYxluDGr5iqWAh8LX1HpUG7upHKjOQ4FcRSoWOgKws0uL/HxPIPq7R
-5zZo/na+cZaFPjfydgfOJeSywm8stwNpJ0TFuuFZp3TTGnPSw450dBX2ElWfS8/D
-eL6mT+MILZD4TXFzxAGS65w9VYY4h4glAZd8iXwly90v7ZTO+iqoa1YHHcQs0Hg=
-=kpvf
------END PGP SIGNATURE-----
+regards,
+dan carpenter
