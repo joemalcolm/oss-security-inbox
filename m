@@ -1,33 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/9
-Message-ID: <20141017155057.GK1844@sentinelchicken.org>
-Date: Fri, 17 Oct 2014 08:50:57 -0700
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/8
+Message-ID: <20140808143422.GA6151@kroah.com>
+Date: Fri, 8 Aug 2014 07:34:22 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-> It's not entirely a bad idea. You could say "if http header time and
-> system time differ severely (> 1 week or something) then don't connect
-> to hsts sites".
+On Fri, Aug 08, 2014 at 10:05:11AM -0400, Daniel Kahn Gillmor wrote:
+> On 08/08/2014 10:00 AM, Greg KH wrote:
+> > On Fri, Aug 08, 2014 at 09:56:34AM -0400, Daniel Kahn Gillmor wrote:
+> >>
+> >> For example, you could register keyboards by serial number with the
+> >> system,
+> > 
+> > Most USB keyboards in the system do not have a unique serial number.
+> > Heck, most USB devices in the system do not have a unique serial number,
+> > the only USB device that is required to do so is a USB printer,
+> > everything else is free to not have one at all, or have the same serial
+> > number for all devices made of that type.
+> > 
+> > Never treat a USB serial number as "unique", except for a USB printer,
+> > sorry.
+> 
+> ugh, that's a shame.  are there any other characteristics we could use
+> to gin up a phony serial number for this kind of use?  Even making an
+> allowlist by model number would raise the bar a little bit for a generic
+> attacker.
 
+You can do what Windows does, which is to have a list of devices and the
+"location" they were plugged into in the past and check that.  But it's
+really annoying to just move your keyboard from one plug to another and
+have to deal with pop-up windows asking about your drivers.
 
-Well, the premise here is that the attacker has the ability to modify
-plaintext traffic between you and your server AND has some way to
-perform an HTTPS->HTTP downgrade attack.  That's what HSTS is for,
-right?  So if you receive an HSTS header at some point, then an
-attacker uses NTP to change your system time, then before you even
-connect to the server, you no longer require HTTPS.  So, the attacker
-can perform that downgrade attack, at which point any Date header
-can't be trusted.  So I don't think a Date header would help at all.
+> Though i suppose you could create a device that claims to be 400
+> different keyboards at once -- or in a rapid hotplug succession until it
+> finds the common model that you've already allowed :(
 
-It seems to be a better place to put HSTS-like information is the DNS.
-If we ever got to the point where DNSSEC were actually deployed and
-not downgradable, then a record of some kind indicating which services
-should be "secure" could solve this.  Even when records expire, they
-wouldn't be MitM-able since there should be a full chain of trust from
-the root servers.  The same problem exists for a variety of protocols,
-including all STARTTLS ones, which are often trivially downgradable in
-practice.
+I don't understand what you are trying to solve here.  Step back, what
+is the real "problem" that BadUSB shows?  Files being copied to places
+they shouldn't be, or, rebooting your machine and booting from a
+different media.  Why not go after the root cause here, don't be
+paranoid about trying to detect a new keyboard being plugged in.
 
-tim
+Again, we have had devices like this out there for quite a while, the
+USB Rubber Ducky as one example.  Others are things like the Teensy
+device[1], which has been used in "pen testing" for a very long time.
+
+Don't try to defend against a random keyboard device, try to defend
+against a user doing bad things, be it input from a "real" keyboard, or
+a "fake" one, it shouldn't matter.
+
+The only thing "new" about the BadUSB hack, is it shows how to turn a
+"normal" device into a USB Rubber Ducky, which will save you a few
+dollars (and shows just how insecure a number of USB devices are.)  Not
+that the attack vector is somehow new and novel or unknown at all.
+
+thanks,
+
+greg k-h
+
+[1] Highly recommended if you want to do things with USB from a device
+side.  Easily programmable, very cheap, and very tiny, you can have
+loads of "fun" with these things...
