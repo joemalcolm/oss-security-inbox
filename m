@@ -1,127 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/02/4
-Message-ID: <5456B3AA.4090102@mccme.ru>
-Date: Mon, 03 Nov 2014 01:43:54 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/16
+Message-ID: <20140808160953.GD9141@gremlin.ru>
+Date: Fri, 8 Aug 2014 20:09:53 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: strings / libbfd crasher
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-On 2014-10-31 08:57, cve-assign@...re.org wrote:
+On 08-Aug-2014 08:18:21 -0700, Greg KH wrote:
 
-Thanks for assigning CVEs for these issues but I have a couple of 
-questions regarding CVE-worthiness of various things. And some questions 
-for the community.
+ >> That means, every device after being detected by the system must
+ >> be explicitly activated by some human activity. Yes, users may
+ >> and, most likely, will be fooled to do that (as they are fooled
+ >> to connect the attacker's device), but this activation will at
+ >> least make the use of untrusted devices more difficult.
+ > How can I activate a USB keyboard (the only input device attached
+ > to the system), with the USB keyboard that I plugged into it?
 
->> a crasher in the PE parser, I don't know if this is the same one, but
->> I reported it upstream:
->> https://sourceware.org/bugzilla/show_bug.cgi?id=17512
->>
->> As this is a write to uninitialized memory it seems to me a CVE is
->> deserved.
->>
->> https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=7e1e19887abd24aeb15066b141cdff5541e0ec8e
->
-> Use CVE-2014-8501 for the 7e1e19887abd24aeb15066b141cdff5541e0ec8e
-> issue.
+I've mentioned this issue in the message you've replied to.
+Possible solution could be whitelisting physical ports, but...
 
-AddressSanitizer said "stack-buffer-overflow" and then "WRITE of size 
-8". Ok.
+ > Again, fix the real problem here, if there is one, don't try
+ > to throw "is this device ok to use" dialogs up, they just annoy
+ > people and don't do anything.
 
->> https://sourceware.org/bugzilla/show_bug.cgi?id=17512#c16
->>
->> Seems to be different from the previous crasher.
->>
->> https://sourceware.org/bugzilla/show_bug.cgi?id=17512#c17
->>
->> objdump-pe-crasher2 gives a heap overflow
->
-> Use CVE-2014-8502 for the objdump-pe-crasher2 issue.
+"Yes, yes, yes..." without reading the message. I know that.
 
-Here, AddressSanitizer said "heap-buffer-overflow" and then "READ of 
-size 1".
+ > Oh, and if you want, you can disable all USB devices on your
+ > Linux system by default, and only "authorize" them explicitly
+ > if you programatically think they should be enabled.  We have
+ > had support in the kernel for that for years now, but very few
+ > people actually use it.
 
-Why this crasher is judged as CVE worthy? Is it oversight or are invalid 
-reads assumed to be exploitable by default?
+I've faced that only once, and my solution was straightforward:
+those two servers were running a kernel built with only basic
+USB HID support (keyboard+mouse, IIRC) and without module load
+support. That appeared to be quite enough.
 
-Another possibility is to treat all crashes in all libraries as CVE 
-worthy. We don't know how these libraries are used ITW and any crash in 
-any of them could potentially lead to data loss in some application. But...
+ > So the tools to do this are already there, why aren't you using
+ > them? :)
 
-> [ The http://openwall.com/lists/oss-security/2014/10/27/2 post
-> suggests that there isn't a known way to exploit objdump-elf-crasher
-> or objdump-pe-crasher for code execution. There are currently no CVE
-> IDs associated with objdump-elf-crasher or objdump-pe-crasher. ]
+You could guess: sometimes I'm developing USB devices and have to
+test them. That formed a good habit of connecting my devices to a
+hub instead of directly to BB :-)
 
-...it seems libbfd is not treated as a library any crash in which is CVE 
-worthy.
-
->> https://sourceware.org/bugzilla/show_bug.cgi?id=17512#c33
->> https://sourceware.org/bugzilla/show_bug.cgi?id=17512#c34
->
-> Use CVE-2014-8503 for this ihex parser issue.
-
-Again "READ of size 1".
-
-BTW is there a method to quickly sort out crashes (or other bad 
-behavior) into potentially exploitable and presumably non-exploitable, 
-i.e. separate security issues from non-security ones? For instance, to 
-run it through valgrind and sort out errors as follows:
-
-Presumably non-exploitable:
-- Invalid read of size ...
-- Use of uninitialised value of size ...
-- Conditional jump or move depends on uninitialised value(s)
-- Syscall param write(buf) points to uninitialised byte(s)
-- Stack overflow in thread ...
-
-Potentially exploitable:
-- Invalid write of size ...
-   (straight buffer overrun?)
-- Argument 'size' of function malloc has a fishy (possibly negative) 
-value: ...
-   (integer overflow?)
-- Jump to the invalid address stated on the next line
-   (corrupted stack?)
-
-Simple fuzzing of objdump with zzuf (not even afl) quickly gives out 
-tens and hundreds of different cases of mentioned errors (mostly from 
-the first group:-). Now what?
-
-Bonus:
-
-https://sourceware.org/bugzilla/show_bug.cgi?id=17533
-
-$ printf '!<arch>\n//%48d%8s`\n' -2 '' > test.a
-$ objdump -x test.a
-Segmentation fault
-
-At least 2.22, 2.24 and head are affected. ar, size, strip etc. are also 
-affected.
-
-valgrind on head shows:
-
-==14181== Invalid write of size 8
-==14181==    at 0x4C2E467: memset (vg_replace_strmem.c:1094)
-==14181==    by 0x448AD2: bfd_zalloc (opncls.c:1011)
-==14181==    by 0x43F08A: _bfd_slurp_extended_name_table (archive.c:1298)
-==14181==    by 0x43E89B: bfd_generic_archive_p (archive.c:831)
-==14181==    by 0x4466A6: bfd_check_format_matches (format.c:305)
-==14181==    by 0x407DCD: display_any_bfd (objdump.c:3356)
-==14181==    by 0x409F52: display_file (objdump.c:3410)
-==14181==    by 0x4048F9: main (objdump.c:3692)
-==14181==  Address 0x55fb9a0 is 0 bytes after a block of size 4,064 alloc'd
-==14181==    at 0x4C27C20: malloc (vg_replace_malloc.c:296)
-==14181==    by 0x4D51DC: objalloc_create (objalloc.c:95)
-==14181==    by 0x448177: _bfd_new_bfd (opncls.c:73)
-==14181==    by 0x448307: bfd_fopen (opncls.c:197)
-==14181==    by 0x409F40: display_file (objdump.c:3403)
-==14181==    by 0x4048F9: main (objdump.c:3692)
-
-This is "Invalid write", hence potentially exploitable? Is further 
-analysis required before deciding if this is a security issue? Or, more 
-strictly, is further analysis required before deciding if this issue is 
-CVE worthy?
 
 -- 
-Alexander Cherepanov
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
