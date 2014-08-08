@@ -1,72 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/9
-Message-ID: <5467B4A5.3080403@gmail.com>
-Date: Sat, 15 Nov 2014 21:16:37 +0100
-From: Sven Kieske <svenkieske@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/18
+Message-ID: <20140808162102.GA21994@kroah.com>
+Date: Fri, 8 Aug 2014 09:21:02 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: SCTP issues
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 13.11.2014 17:40, Petr Matousek wrote:
-> Hi,
+On Fri, Aug 08, 2014 at 08:09:53PM +0400, gremlin@...mlin.ru wrote:
+>  > Oh, and if you want, you can disable all USB devices on your
+>  > Linux system by default, and only "authorize" them explicitly
+>  > if you programatically think they should be enabled.  We have
+>  > had support in the kernel for that for years now, but very few
+>  > people actually use it.
 > 
-> CVE-2014-3673 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9de7922bc709eee2f609cd01d98aaedc4cf5ea74
->
->  CVE-2014-3687 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b69040d8e39f20d5215a03502a8e8b4c6ab78395
->
->  CVE-2014-3688 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=26b87c7881006311828bb0ab271a551a62dcceb4
->
->  References: https://bugzilla.redhat.com/show_bug.cgi?id=<CVE>
+> I've faced that only once, and my solution was straightforward:
+> those two servers were running a kernel built with only basic
+> USB HID support (keyboard+mouse, IIRC) and without module load
+> support. That appeared to be quite enough.
+
+That doesn't prevent any other USB HID device from being plugged in and
+instantly working.  Which again, you can prevent if you want to, but no
+one seems to do that...
+
+>  > So the tools to do this are already there, why aren't you using
+>  > them? :)
 > 
-> Thanks,
-> 
+> You could guess: sometimes I'm developing USB devices and have to
+> test them. That formed a good habit of connecting my devices to a
+> hub instead of directly to BB :-)
 
+A USB hub doesn't do anything special except slow things down and add
+complexity to the overall USB system, and does nothing for "security" at
+all.
 
-I already banged my head at this, but didn't come very far:
-
-Did somebody got a working exploit (one commit mentions
-this should be easily exploitable via nmap) yet?
-
-I admit I'm not very good at creating RAW
-IP-Packets, I tried to start with these
-example wireshark captures:
-http://wiki.wireshark.org/SampleCaptures#Stream_Control_Transmission_Protocol_.28SCTP.29
-
-I would also be interested in tutorials
-or other literature (links) which
-provide information how to create
-raw IP-Packets in general and how to
-manipulate their content.
-
-My goals are to better understand these
-issues and to do some pentesting on
-my own infrastructure, plus maybe
-test for some other possible protocol
-implementation weaknesses in the linux kernel.
-
-I know this is a little of topic, so
-you can also reply off list, if you wish.
-
-kind regards and thanks in advance.
-
-Sven
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQGcBAEBAgAGBQJUZ7SlAAoJEAq0kGAWDrqldXwMAJlauwJb8PwJu7bO43bR1GX2
-charo2jKfZV84wlx5rcmPRu6qFa4Q0KT/kBdRVVklg2DyCvkCTnwH2HtTdfGMqHL
-sPtEglPv1hpzuKtp+cbKZOEFtBiSf5OeUACXb/2fklqrf8qU/Ez9Yv8QmoBvXas5
-x3SALI0RzCqm65VTOqBMLyAAA3XsrwHyVoLfC/3R2TpM9X4Py5s7jz9JXk/u2bro
-j/eDT6x/Xow+XAPqt03i6IFVl13KgoQABsUetZnGj28W77Ed1Dz+WCGqTiyTTuRZ
-B18iWe2aYIaIdYM45zB9fxEzeqAWbGfnjxTwOqROQI1IhzsKZeCuhdtAPf4sfjlP
-sokIR4wUE+W+AOOdA6QAFC07Z/3mj6F/vb7P0Vt2WHZEZSCjEp4v7LcWA9mbEXHp
-JsFadkfVoGIxITs94xEoOPBn61KpgNrnHHEVKqMzXbgRL1N5Rv9nvEg/kv4JRDCx
-bZfAblFgE1qAIvX/iAFkN/mjHekysZMPHuvEI/8EYA==
-=xzcB
------END PGP SIGNATURE-----
+greg k-h
