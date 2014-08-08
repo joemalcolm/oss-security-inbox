@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/26/1
-Message-Id: <201407260221.s6Q2Lhtb013026@linus.mitre.org>
-Date: Fri, 25 Jul 2014 22:21:43 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Linux Kernel: net: SCTP: NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/30
+Message-ID: <20140808212023.GA19092@kroah.com>
+Date: Fri, 8 Aug 2014 14:20:23 -0700
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> Linux kernel built with the support for Stream Control Transmission Protocol
-> (CONFIG_IP_SCTP) is vulnerable to a NULL pointer dereference flaw. It could
-> occur when simultaneous new connections are initiated between a same pair of
-> hosts.
+On Fri, Aug 08, 2014 at 11:03:58PM +0200, Yves-Alexis Perez wrote:
+> On ven., 2014-08-08 at 22:41 +0200, Yves-Alexis Perez wrote:
+> > > 
+> > > Then do just that, Linux has allowed you to do this for years, again,
+> > > but very few people take advantage of it.
+> > 
+> > Reading that thread, that's exactly what I thought about that. I guess
+> > it could be a good idea to set usbcore.authorized_default to 0 when the
+> > systems is locked (logind could provide that information). There's still
+> > the issue that it's then not possible to unlock the system in some
+> > situation (for example because you had to unplug the keyboard while
+> > logged out, or stuff like that). But at least that would be a
+> > possibility.
 > 
-> A remote user/program could use this flaw to crash the system kernel resulting
-> in DoS.
-> 
-> http://patchwork.ozlabs.org/patch/372475/
+> Actually, since it's a module parameter, it doesn't seem possible to
+> toggle it without reloading the module (or rebooting if it's builtin).
+> So it might not be that easy to do the locking part.
 
-Use CVE-2014-5077 for this issue in the sctp_assoc_update function in
-net/sctp/associola.c (not yet patched at
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/net/sctp/associola.c).
+echo "0" > /sys/module/usbcore/parameters/authorized_default
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT0xAbAAoJEKllVAevmvmsiHcIAMNXsXM6x1ZWJg76+Cx/KDBu
-CP2O8uheLuZ6DysmnF0UjN8x9LVSN3QEnKlhohULeohoslSISkiQr7bJLtYodLjA
-lvugVwmOhSPKiz/5ro8RoTTNNljDY3xGOE4+W+m8ypbTK69Dudqu0gEWe5ipSLWF
-CzaYajr0uB76jv+i6qaGxfiEClcSkGRbV25uq3t8DFYlNyu9phVTrHk16MzQi3Us
-3rST3OviZX2ZVVmx/IP0XuN7HVS6TXCuwA1mAlpXnADLvwQ7UVxr5O9Gvzor3d3M
-adGp6FZ7cJ28WJICemDct3Y2ELQNJE2H99wsXAhOQf2+VfeHRmEJ42GHNVFh7mI=
-=RQ8e
------END PGP SIGNATURE-----
