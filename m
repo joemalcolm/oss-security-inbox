@@ -1,44 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/12
-Message-ID: <53BC4CB5.5020406@redhat.com>
-Date: Tue, 08 Jul 2014 13:55:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/29
+Message-ID: <1407531838.29725.31.camel@scapa>
+Date: Fri, 08 Aug 2014 23:03:58 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Summer bug cleaning - rpcbind -h option
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On ven., 2014-08-08 at 22:41 +0200, Yves-Alexis Perez wrote:
+> > 
+> > Then do just that, Linux has allowed you to do this for years, again,
+> > but very few people take advantage of it.
+> 
+> Reading that thread, that's exactly what I thought about that. I guess
+> it could be a good idea to set usbcore.authorized_default to 0 when the
+> systems is locked (logind could provide that information). There's still
+> the issue that it's then not possible to unlock the system in some
+> situation (for example because you had to unplug the keyboard while
+> logged out, or stuff like that). But at least that would be a
+> possibility.
 
-And an RPC one (and possibly other NFS utils):
+Actually, since it's a module parameter, it doesn't seem possible to
+toggle it without reloading the module (or rebooting if it's builtin).
+So it might not be that easy to do the locking part.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=852282
-CVE-2012-3541 rpcbind: -h fails to control access to rpcbind
+Regards,
+-- 
+Yves-Alexis
 
-I'm guessing nobody noticed or cares much because people use firewalls
-to control access to ports, not internal -h or whatever flags. The
-reason rpcbind qualifies for a CVE is it exposes rpcbind on interfaces
-against the direct configuration it was given (e.g. if you tell it to
-listen to localhost only it would expose itself to the world).
-
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJTvEy1AAoJEBYNRVNeJnmTQawP/iwQtCl3INhkkENSif1rrfz0
-5A8n7zJhYF5qf9IbAevd7aJwFEBL6j5zvLXg/QALZeMGGE+0gqyUjvIpsR+tmgsZ
-kUm+6dia4zVNZVFli2RfTrcYf+dtC+TP+IkNCkfATk8hwgkzBr97JQ0q1S6ygmfZ
-urCIHHYAtTHl3C+05/LUKGjmBTDHeTMbxJLf3j4JgSxqee/OyA4b3WVH3jbv5jue
-o4i8U85OnuICmrR11/HCbG3Kii7DN1hYP1eobDdGjKeCzwiJyByeQoGQ3dwjqjT8
-/XdOzuDXb5xLAzSisAbsPkIfRdQz4+LQCZd8g3xs4KsIfWMRXB7UsBOn2FuIoAKx
-l784ypilTFyiWMirbzNKYQE14vZkCBwqLRH3y6Ac0Tv4/DFvsdfSEYjI7OoaLcaK
-DRco4laV1xOwEcK5B/3jSRq0dbl38raFfRVnufoCBWAVhiYF18yEXYArP2jSZTLh
-okemjN5+LgHkjCa+ArSlXt4c+XQnF1yS7PFYdXzTCpS+XtRbIqlL+ynpQwClAEDd
-sHI7sgozcR7Z/AkfFLm0p2+OuebFMxfddGlsxcuy85REd1S3hFGmR1tyfnhfye+b
-rMYEeJQWDJqycbUCv2GKUtSZUDau3NgLkdAUFoxbktcHrTh9rSUoxkhsiUsjnrHf
-ysMM1GM1CkZLH6HVKSGp
-=He5z
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
