@@ -1,39 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/37
-Message-ID: <CAOMtMF0UGj5J6WQ7GAGB9uU9sje0wQMM=qQX8mt7sdnkdzhbJQ@mail.gmail.com>
-Date: Mon, 29 Sep 2014 20:52:48 +0200
-From: Bernhard Hermann <bernhard.hermann@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/6
+Message-ID: <20140808140013.GA5441@kroah.com>
+Date: Fri, 8 Aug 2014 07:00:13 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: langsec-discuss@...l.langsec.org
-Subject: Re: Fwd: Non-upstream patches for bash
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-On 29 Sep 2014 08:40, "Sven Kieske" <s.kieske@...twald.de> wrote:
->
-> On 27/09/14 17:06, Solar Designer wrote:
-> > Of course, what input is trusted vs. not may be unclear.  Apparently, 20
-> > years ago bash developers considered all env vars to be trusted input,
-> > regardless of the names, which is how we got here.
+On Fri, Aug 08, 2014 at 09:56:34AM -0400, Daniel Kahn Gillmor wrote:
+> 
+> For example, you could register keyboards by serial number with the
+> system,
 
-> 'Input sanitization: “you can suppress ‘bad
-> stuff’ in input+output to make it safe”
->
-> Reality: Halting problem. Deal with it.'
+Most USB keyboards in the system do not have a unique serial number.
+Heck, most USB devices in the system do not have a unique serial number,
+the only USB device that is required to do so is a USB printer,
+everything else is free to not have one at all, or have the same serial
+number for all devices made of that type.
 
-This seems to me to be the good old CODE vs. DATA issue.
+Never treat a USB serial number as "unique", except for a USB printer,
+sorry.
 
-IMHO, ENV vars are supposed to always be DATA, never CODE.
-If code is allowed, the parser might always fail. Judging by the recently
-dug up dirt, it most certainly will.
-Passing code as ENV is an ugly hack, probably born out of necessity arising
-when trying to implicitly propagate code, because no alernatives are
-apparent, are they?
-
-If it's done at all, it should at least be explicit.
-
-That's why I'm voting for having the *BSD approach in upstream: make the
-parsing of ENV vars optional, default OFF.
-
-br,
-Bernhard Hermann
-
+greg k-h
