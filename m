@@ -1,95 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/5
-Message-ID: <546C306C.4080101@redhat.com>
-Date: Tue, 18 Nov 2014 22:53:48 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: [Clamav-devel] ClamAV(R) blog: ClamAV 0.98.5 has been released!
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/15
+Message-ID: <53E4F121.2000309@ehuk.net>
+Date: Fri, 08 Aug 2014 16:47:45 +0100
+From: Eddie Chapman <eddie@...k.net>
+To: Greg KH <greg@...ah.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-Context:
+On 08/08/14 16:23, Greg KH wrote:
+> On Fri, Aug 08, 2014 at 03:45:31PM +0100, Eddie Chapman wrote:
+>> The main question in my mind, and what I see as the main issue, is once the
+>> kernel has booted, how much can USB devices get up to, if anything, behind
+>> the kernel's back?
+>
+> "behind"?  Hopefully nothing, but as been proven in the past, bugs
+> happen and there are things that can go wrong.  Look at the raft of USB
+> HID (input devices) bugfixes that happened a while ago to fix buffer
+> overflow issues that had been found (and were being exploited for years
+> it turned out.)  There are a lot of USB drivers in the kernel, doing
+> some good fuzz-testing of them with a USB device that can do that would
+> be great for people to do to verify that we have caught all of these
+> types of bugs.
+>
+>> Assuming you don't switch on a machine with USB devices already
+>> plugged in,
+>
+> Like a laptop with built-in USB devices?  :)
 
-https://bugzilla.clamav.net/show_bug.cgi?id=11088
+He he, good point.
 
-I found this in 2013, made a note, forgot about it, checked it again
-recently and found clamscan still crashing hence CVE-2013-6497.
+>> assuming your motherboard's USB controller chip hasn't
+>> been doctored by the manufacturer/government/whoever, and assuming you plug
+>> a device (not a hub) directly into a motherboard USB port, how much
+>> *significant* interaction between device and USB controller goes on that
+>> could not be seen, even with the right debug settings enabled? i.e. could a
+>> clean device really have something as (presumably complicated) as its
+>> firmware being overwritten without the kernel knowing and potentially
+>> alerting about it?
+>
+> Firmware can't be sent to a device unless it is enumerated by the kernel
+> USB subsystem, and that is usually visable to the kernel by default.
+>
+> Sending firmware to a device is the least of your worries, see above for
+> the real problems that you can try to exploit.
 
-I don't have any other notes I've forgotten about. I think. =)
+That's good to know. Not sure about the least of worries, the 
+overwriting of firmware seems to be the crux of what people are worried 
+about, isn't it? But I see your point, we don't need to worry since 
+you're saying firmware cannot be written unless it's initiated by the 
+kernel. But a lot of the discussion I've read on this issue seems to 
+assume that a "clean" USB device can have it's firmware replaced by the 
+bad guys with malware almost without the OS having a say in the matter. 
+e.g. USB stick with evil firmware infects USB controller, which in turn 
+infects other USB sticks subsequently plugged in. Although I've seen 
+people involved in USB hardware manufacture argue this is nowhere near 
+as easy as some of the hysteria surrounding this suggests.
 
-On 18/11/14 04:11 PM, Steven Morgan wrote:
-> FYI:
-> 
-> ---------- Forwarded message ----------
-> From: Joel Esler (jesler) <jesler@...co.com>
-> Date: Tue, Nov 18, 2014 at 5:11 PM
-> Subject: [Clamav-devel] ClamAV® blog: ClamAV 0.98.5 has been released!
-> To: ClamAV Development <clamav-devel@...ts.clamav.net>, ClamAV users ML <
-> clamav-users@...ts.clamav.net>, "clamav-announce@...ts.clamav.net" <
-> clamav-announce@...ts.clamav.net>
-> 
-> 
-> 
-> 
-> http://blog.clamav.net/2014/11/clamav-0985-has-been-released.html
-> 
-> ClamAV 0.98.5 has been released!
-> 
-> Welcome to ClamAV 0.98.5! ClamAV 0.98.5 includes important new features
-> for collecting and analyzing file properties. Software developers and
-> analysts may collect file property meta data using the ClamAV API for
-> subsequent analysis by ClamAV bytecode programs. Using these features
-> will require that libjson-c is installed, but otherwise libjson-c is not
-> needed.
-> 
-> Look for our upcoming series of blog posts to learn more about using the
-> ClamAV API and bytecode facilities for collecting and analyzing file
-> properties.
-> 
-> ClamAV 0.98.5 also includes these new features and bug fixes:
-> 
-> 
-> • Support for the XDP file format and extracting, decoding, and scanning
-> PDF files within XDP files. Addition of shared library support for LLVM
-> versions 3.1 - 3.5 for the purpose of just-in-time(JIT) compilation of
-> ClamAV bytecode signatures. Andreas Cadhalpun submitted the patch
-> implementing this support.
-> • Enhancements to the clambc command line utility to assist ClamAV bytecode
-> signature authors by providing introspection into compiled bytecode
-> programs.
-> • Resolution of many of the warning messages from ClamAV compilation.
-> • Improved detection of malicious PE files.
-> • Security fix for ClamAV crash when using 'clamscan -a'. This issue was
-> identified by Kurt Siefried of Red Hat.
-> • Security fix for ClamAV crash when scanning maliciously crafted yoda's
-> crypter files. This issue, as well as several other bugs fixed in this
-> release, were identified by Damien Millescamp of Oppida.
-> • ClamAV 0.98.5 now works with OpenSSL in FIPS compliant mode. Thanks to
-> Reinhard Max for supplying the patch.
-> • Bug fixes and other feature enhancements. See Changelog or git log for
-> details.
-> 
-> 
-> Thanks to the following ClamAV community members for code submissions
-> and bug reporting included in ClamAV 0.98.5:
-> 
-> Andreas Cadhalpun
-> Sebastian Andrzej Siewior
-> Damien Millescamp
-> Reinhard Max
-> Kurt Seifried
-> 
-> Please download the latest release of ClamAV from 0.98.5 from our download
-> page.
-> _______________________________________________
-> http://lurker.clamav.net/list/clamav-devel.html
-> Please submit your patches to our Bugzilla: http://bugs.clamav.net
-> 
-> http://www.clamav.net/contact.html#ml
-> 
+But, theoretically, isn't it is possible for device and controller to do 
+their own thing between each other without the OS knowing anything? 
+After all, the OS controls the USB controller, but the controller is in 
+control of the device? Or does the kernel's control extend to the device?
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Eddie
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+>  Testing the USB stack
+> with "invalid" configuration descriptors is a great place to start.
+> Hopefully we have fixed all of these issues, but no one is guaranteeing
+> anything...
+>
+> Sorry I can't make you feel better, at least you can't do DMA directly
+> to/from USB devices, so that attack vector is not there, unlike Firewire
+> and PCIe.
+>
+> greg k-h
+>
