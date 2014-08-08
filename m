@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/41
-Message-id: <AB82DAA0-8E9E-4987-B448-A5E8AB7A71D0@me.com>
-Date: Mon, 06 Oct 2014 18:41:42 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Who named shellshock?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/27
+Message-ID: <20140808194602.GD8896@kroah.com>
+Date: Fri, 8 Aug 2014 12:46:02 -0700
+From: Greg KH <greg@...ah.com>
+To: Eddie Chapman <eddie@...k.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-turns out to be https://twitter.com/addelindh
+On Fri, Aug 08, 2014 at 06:40:50PM +0100, Eddie Chapman wrote:
+> Yes, immensely. It's clear to me now that being able to re-programme a USB
+> device firmware is not quite as easy and straightforward as is being made
+> out to be in certain quarters.
 
-On Oct 6, 2014, at 6:12 PM, Larry W. Cashdollar <larry0@...com> wrote:
+On the contrary, it's trivial to do on a whole bunch of USB devices as
+that is how they were _designed_ to work.  So much so that there is a
+whole USB spec on exactly how to do this in a way that will work across
+all different operating systems:
+	http://www.usb.org/developers/docs/devclass_docs/DFU_1.1.pdf
+I don't remember when the 1.0 version of this spec was published, I
+think around 1995 or so.
 
-> I thought it was https://twitter.com/ErrataRob
-> 
-> On Oct 6, 2014, at 5:04 PM, Michal Zalewski <lcamtuf@...edump.cx> wrote:
-> 
->> I don't think it happened on Twitter - using advanced search with date
->> ranges, I don't see any mentions that would predate this article,
->> which already seems to be using the term:
->> 
->> http://www.csoonline.com/article/2687265/application-security/remote-exploit-in-bash-cve-2014-6271.html
->> 
->> It's odd that an article posted at 8 AM on Sept 24 would have any idea
->> of how the bug is already being called by the security community,
->> especially ahead of any Twitter buzz. But both Stephane and Florian
->> implied that some of the pre-notified parties apparently started
->> leaking details to the press and were getting ready to make a splash
->> the moment it goes public, so maybe that's the explanation.
->> 
->> /mz
-> 
+So I really don't see how this ability is anything "shocking" to anyone.
 
+> That's not to say that the research being discussed hasn't thrown up
+> some very interesting issues around hardware and trust.
+
+Never trust hardware.  Until you have to.  :)
+
+greg k-h
