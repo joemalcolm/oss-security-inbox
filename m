@@ -1,46 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/03/1
-Message-ID: <20140303093849.GA12584@dhcp-25-225.brq.redhat.com>
-Date: Mon, 3 Mar 2014 10:38:50 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/24
+Message-ID: <20140808183317.GZ1589@openwall.com>
+Date: Fri, 8 Aug 2014 22:33:17 +0400
+From: "(GalaxyMaster)" <galaxy@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Paolo Bonzini <pbonzini@...hat.com>, gleb <gleb@...hat.com>, Lars Bull <larsbull@...gle.com>, Andrew Honig <ahonig@...gle.com>
-Subject: CVE-2014-0049 -- Linux kernel: kvm: mmio_fragments out-of-the-bounds access
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-The problem occurs when the guest performs a pusha with the stack
-address
-pointing to an mmio address (or an invalid guest physical address) to
-start with, but then extending into an ordinary guest physical address.
-When doing repeated emulated pushes emulator_read_write sets mmio_needed
-to 1 on the first one.  On a later push when the stack points to regular
-memory, mmio_nr_fragments is set to 0, but mmio_is_needed is not set
-to 0.
+Greg,
 
-As a result, KVM exits to userspace, and then returns to
-complete_emulated_mmio.  In complete_emulated_mmio
-vcpu->mmio_cur_fragment is incremented.  The termination condition of
-vcpu->mmio_cur_fragment == vcpu->mmio_nr_fragments is never achieved.
-The code bounces back and fourth to userspace incrementing
-mmio_cur_fragment past it's buffer.  If the guest does nothing else it
-eventually leads to a a crash on a memcpy from invalid memory address.
+On Fri, Aug 08, 2014 at 09:49:18AM -0700, Greg KH wrote:
+> > Personally I would prefer disabling USB hotplug while a machine is locked
+> > (or while there are no active TTYs or something for servers).  Even if HID
+> > was whitelisted while the machine is locked, it would be a great start.
+> 
+> Then do just that, Linux has allowed you to do this for years, again,
+> but very few people take advantage of it.
 
-However if a guest code can cause the vm to be destoryed in another
-vcpu with excellent timing, then kvm_clear_async_pf_completion_queue
-can be used by the guest to control the data that's pointed to by the
-call to cancel_work_item, which can be used to gain execution.
-
-Introduced by:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=f78146b0f
-
-Upstream patch:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a08d3b3b
-
-Acknowledgements:
-
-Red Hat would like to thank Lars Bull of Google for reporting this
-issue.
+If you are talking about switching power off on the USB bus I one of
+these few who use it regularly (it helps a lot to prolong laptop's
+battery life if you switch all these unnecessary entrypoints off) and I'm
+very grateful for this feature :)
 
 -- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+(GM)
+
