@@ -1,30 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/15
-Message-ID: <4583871.CFr9RnDb4t@x2>
-Date: Tue, 03 Jun 2014 11:08:12 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/7
+Message-ID: <53E4D917.1090500@fifthhorseman.net>
+Date: Fri, 08 Aug 2014 10:05:11 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Bug in bash <= 4.3 [security feature bypassed]
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday, June 03, 2014 04:16:31 PM Hector Marco wrote:
-> Recently we discovered a bug in bash. After some time after reporting
-> it to bash developers, it has not been fixed.
+On 08/08/2014 10:00 AM, Greg KH wrote:
+> On Fri, Aug 08, 2014 at 09:56:34AM -0400, Daniel Kahn Gillmor wrote:
+>>
+>> For example, you could register keyboards by serial number with the
+>> system,
 > 
-> We think that this is a security issue because in some circumstances
-> the bash security feature could be bypassed allowing the bash to be a
-> valid target shell in an attack.
+> Most USB keyboards in the system do not have a unique serial number.
+> Heck, most USB devices in the system do not have a unique serial number,
+> the only USB device that is required to do so is a USB printer,
+> everything else is free to not have one at all, or have the same serial
+> number for all devices made of that type.
 > 
-> We strongly recommend to patch your bash code.
-> 
-> Why don't fix this bug by simple adding mandatory "if" clause ?
-> Any comments about this issue are welcomed.
-> 
-> 
-> Details at:
-> http://hmarco.org/bugs/bash_4.3-setuid-bug.html
+> Never treat a USB serial number as "unique", except for a USB printer,
+> sorry.
 
-Aren't the calls to setuid and setgid backwards too? As in "POS36-C. Observe 
-correct revocation order while relinquishing privileges"
+ugh, that's a shame.  are there any other characteristics we could use
+to gin up a phony serial number for this kind of use?  Even making an
+allowlist by model number would raise the bar a little bit for a generic
+attacker.
 
--Steve
+Though i suppose you could create a device that claims to be 400
+different keyboards at once -- or in a rapid hotplug succession until it
+finds the common model that you've already allowed :(
+
+ugh,
+
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
