@@ -1,41 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/2
-Message-Id: <201407160557.s6G5vRgO026324@linus.mitre.org>
-Date: Wed, 16 Jul 2014 01:57:27 -0400 (EDT)
-From: cve-assign@...re.org
-To: gmollett@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: CVE request - Snoopy incomplete fix for CVE-2008-4796
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/5
+Message-ID: <53E4D712.4040205@fifthhorseman.net>
+Date: Fri, 08 Aug 2014 09:56:34 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 08/08/2014 07:58 AM, Florian Weimer wrote:
+> On 08/08/2014 01:20 PM, Dan Carpenter wrote:
+>> We could put a popup if there is a second keyboard attached to check
+>> that the person controlling the existing keyboard is aware of the second
+>> one.
+> 
+> Wouldn't this make using Yubikeys quite inconvenient?
 
-The information that has been sent so far doesn't determine whether
-there should be one CVE ID or two CVE IDs. A statement of "does still
-allow command injection" would potentially mean two CVE IDs, whereas
-"may still allow command injection" could end up as "does not still
-allow command injection."
+It sure would.
 
-The original CVE request was on July 9, and implied that watching
-http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy/Snoopy.class.php?view=log
-was of interest because a second security fix might be announced there
-"shortly." However, that view=log page was last updated on July 8. We
-will continue to check that view=log page from time to time.
+And if the popup were modal/blocking (i.e. if it refused to connect the
+new device until the user agreed to it), which is the safest approach on
+a single-seat system, it causes another issue: if the user's HID devices
+are failing, and they're plugging in a new keyboard specifically to work
+around their failed hardware, there would be no way to dismiss the
+popup/grant permissions on the new device.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+You could have a more nuanced approach, though, to improve things at
+least for a machine used regularly.
 
-iQEcBAEBAgAGBQJTxhOyAAoJEKllVAevmvmsp8QIAItfZ1ZI8+5gPL7F3VRfqgFp
-6WJI7sdYZ5bXKyvCpk3cr0oP6gijFRtfQITFKjj8LzbKDbwRxK6n3iC0+9FKWnYH
-84AHQYcTHMCy6YOVF36VH9hFgrz1Z5lAJ1xlZpA3Vb7cuR5NrkJ914ZMBs7ULcp5
-K+YqSpsexYYJdNBsHcpzMRCHzir4fXLtpdMhJg+rTguaSwitrAC/ezIgDVSmkupj
-rOmF0JcX7BrPvdc1mKoNJPE6sLSOQ3u5YQ1QMHMFUYzmzmyLfJiiYqWMyyIinXme
-UTu9gHVJsvxjfrz+Ti748NccKSYhDAQCTdLYJdHcgPfTVLL+PNIXFohkJoZCCwo=
-=np9G
------END PGP SIGNATURE-----
+For example, you could register keyboards by serial number with the
+system, and have an allowlist that wouldn't cause modal blocking.  This
+would handle the yubikey case, and potentially also the failing HID
+case, if the user had cleared the secondary kbd before the primary failed.
+
+You could also avoid the popup if the system doesn't detect *any* actual
+HID device plugged in, to solve the problem of a machine that booted
+with no devices available.
+
+But please remember that a second keyboard is only one vector of attack.
+ There are other user-interface devices and other system hardware that
+can be emulated by a sufficiently devious USB device.
+
+The same thing goes, of course, for PCI devices, disks, CPUs,
+expressCards (or whatever they're called today), firewire, RAM, etc. all
+of which are becoming more hot-pluggable on modern hardware.
+
+A well-thought-out system-wide policy of what to do on device hotplug
+might be useful, with a set of standard profiles (single-seat personal
+desktop (laptop), server, multi-seat desktop) to encourage sane behavior
+by default.  I have no idea what form such a policy might take, though.
+
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
