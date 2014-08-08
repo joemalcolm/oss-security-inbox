@@ -1,44 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/19
-Message-Id: <20140707181444.6FF041A41139@me.com>
-Date: Mon,  7 Jul 2014 14:14:44 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem kajam-1.0.3.rc2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/10
+Message-ID: <20140808150000.GA9141@gremlin.ru>
+Date: Fri, 8 Aug 2014 19:00:00 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem kajam-1.0.3.rc2
+On 08-Aug-2014 14:20:21 +0300, Dan Carpenter wrote:
 
-Author: Larry W. Cashdollar, @_larry0
+ > I'm surprised we haven't had any discussion about the recent
+ > BadUSB articles.
 
-Date: 06/01/2014
+No real reason - everything is trivial. Making custom USB device
+is cheap (<= 2 USD for ATtiny85, several discrete elements and
+PCB) and fast (2 hours in home environment).
 
-OSVDB: 108530
+PoC: http://pics.rsh.ru/img/usb_device_ne6amlw7.jpg [800x320 53.3k]
 
-CVE:Please Assign
+That's real device (hardware RNG for my Linux servers that heavily
+depend on it while performing some of their functions); the green
+blob covers its' analog part which isn't related to this discussion.
 
-Download: http://rubygems.org/gems/kajam
+ > We could put a popup
 
-Gem Author:  scienceblock@...il.com
+Where?
 
-From: ./kajam-1.0.3.rc2/vendor/plugins/dataset/lib/dataset/database/mysql.rb
+ > if there is a second keyboard attached
 
-Lines 18 and 24 expose the mysql user password to the process table via #{@...sword}.  If this Gem is used in the context of a rails application it maybe possible to inject commands via user supplied input as these variables are not sanitized before being passed to the shell.
+How would you distinguish between two devices at the boot time
+when each claims it is a keyboard?
 
-015-      
-16-      def capture(datasets)
-17-        return if datasets.nil? || datasets.empty?
-18:        `mysqldump -u #{@...rname} --password=#{@...sword} --compact --extended-insert --no-create-db --add-drop-table --quick --quote-names #{@...abase} > #{storage_path(datasets)}`
-19-      end
-20-      
-21-      def restore(datasets)
-22-        store = storage_path(datasets)
-23-        if File.file?(store)
-24:          `mysql -u #{@...rname} --password=#{@...sword} --database=#{@...abase} < #{store}`
-25-          true
-26-        end
-27-      end
+ > to check that the person controlling the existing keyboard is
+ > aware of the second one.
+
+Laptop has trouble with its' internal keyboard. You plug the
+external one and... yes, stay unable to use it.
+
+ > The attack looks like someone who says, "Can you copy some
+ > files from my USB flash drive which?" (not knowing it is
+ > infected) and then there is a popup, "This newly inserted
+ > USB device is trying to type commands, is that ok? y/N?".
+
+I can promote this idea further: kill the plug-and-play support.
+
+That means, every device after being detected by the system must
+be explicitly activated by some human activity. Yes, users may
+and, most likely, will be fooled to do that (as they are fooled
+to connect the attacker's device), but this activation will at
+least make the use of untrusted devices more difficult.
 
 
-Advisory: http://www.vapid.dhs.org/advisories/kajam-1.0.3.rc2.html
-
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
