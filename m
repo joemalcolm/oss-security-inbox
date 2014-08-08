@@ -1,42 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/17
-Message-ID: <20140107235818.GA16720@openwall.com>
-Date: Wed, 8 Jan 2014 03:58:18 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/25
+Message-ID: <20140808185059.GB12127@gremlin.ru>
+Date: Fri, 8 Aug 2014 22:50:59 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Cc: security@...godb.com
-Subject: Re: MongoDB memory over-read via incorrect BSON object length (was: [HITB-Announce] HITB Magazine Issue 10 Out Now)
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 07, 2014 at 05:15:11PM -0500, cve-assign@...re.org wrote:
-> >There is a memory over-read bug that can be used by an authenticated
-> >user (if applicable) to obtain raw MongoDB server process memory
-> >contents via incorrect BSON object length.  I guess that under most
-> >deployments this does not cross a security boundary, but for some it
-> >could (differently-privileged MongoDB users, data already deleted from
-> >the DB yet staying in process memory, or/and metadata that is not
-> >normally retrievable).
-> 
-> Use CVE-2012-6619.
+On 08-Aug-2014 22:27:16 +0400, (GalaxyMaster) wrote:
 
-Thanks!  To make sure MongoDB developers are aware of this, I am CC'ing
-this reply to security@...godb.com as specified here:
+ > Alexey,
 
-http://docs.mongodb.org/manual/tutorial/create-a-vulnerability-report/
+Aye, Dmitry? :-)
 
-Past MongoDB security issues are listed here:
+ >>> That doesn't prevent any other USB HID device from being plugged
+ >>> in and instantly working. Which again, you can prevent if you
+ >>> want to, but no one seems to do that...
+ >> Hmmm... To avoid possible confusion: that was CONFIG_USB_KBD -
+ >> "USB HIDBP Keyboard (simple Boot) support", and CONFIG_USB_HID
+ >> was turned off.
+ > I think Greg was referring to kernel's feature of controlling
+ > power on USB ports (e.g. you can just switch of power for a port
+ > and nothing you insert there will have a chance to work until
+ > you instruct the kernel to switch the port back on).
 
-http://www.mongodb.org/about/alerts/#security-related
+That may be good for servers, but almost unusable on worstations:
+people tend to charge mobile devices while they work.
 
-and they don't appear to include this "new" issue yet.
+Personally I'd like to be able to shorten D+ and D- lines for all
+unused ports and keep them in "charge-only" state. However, that'll
+require disconnecting them from the socket to get this scheme:
 
-I've just added these two links to:
+Host                       Device
 
-http://oss-security.openwall.org/wiki/software#mongodb
+VCC    ----------------    VCC
 
-MongoDB - here's some more context regarding the specific vulnerability
-(now known as CVE-2012-6619, as per the assignment above):
+D-     ---+        +---    D-
+          |        |
+D+     ---+        +---    D+
 
-http://www.openwall.com/lists/oss-security/2014/01/07/2
+GND    ----------------    GND
 
-Alexander
+It is possible, but adding even a single component to a system
+board causes a marketoids' butthurt.
+
+ >> Bus 002 Device 064: ID 046d:c016 Logitech, Inc. Optical Wheel
+ >> Mouse
+ >> Device IDs tell us the hub was reset several times :-)
+ > ... or somebody insanely was plugging mouse in and out in a
+ > cycle :)
+
+That device wasn't a mouse, but I really appreciate your idea :-)
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
