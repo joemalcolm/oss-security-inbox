@@ -1,31 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/6
-Message-ID: <alpine.LFD.2.10.1405141836180.17630@javelin.pnq.redhat.com>
-Date: Wed, 14 May 2014 18:41:14 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request Linux kernel: forbid uaddr == uaddr2 in futex_wait_requeue_pi() to avoid null dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/13
+Message-ID: <20140808152331.GB14066@kroah.com>
+Date: Fri, 8 Aug 2014 08:23:31 -0700
+From: Greg KH <greg@...ah.com>
+To: Eddie Chapman <eddie@...k.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+On Fri, Aug 08, 2014 at 03:45:31PM +0100, Eddie Chapman wrote:
+> The main question in my mind, and what I see as the main issue, is once the
+> kernel has booted, how much can USB devices get up to, if anything, behind
+> the kernel's back?
 
-Linux kernel built with the fast userspace mutexes(CONFIG_FUTEX) support is 
-vulnerable to a NULL pointer dereference flaw. It could occur when a waiting 
-task requests wait to be re-queued from non-PI futex to a PI-aware futex via 
-FUTEX_WAIT_REQUEUE_PI operation.
+"behind"?  Hopefully nothing, but as been proven in the past, bugs
+happen and there are things that can go wrong.  Look at the raft of USB
+HID (input devices) bugfixes that happened a while ago to fix buffer
+overflow issues that had been found (and were being exploited for years
+it turned out.)  There are a lot of USB drivers in the kernel, doing
+some good fuzz-testing of them with a USB device that can do that would
+be great for people to do to verify that we have caught all of these
+types of bugs.
 
-An unprivileged user/program could use this flaw to crash the system kernel 
-resulting in DoS.
+> Assuming you don't switch on a machine with USB devices already
+> plugged in,
 
-Upstream fix:
--------------
-   -> https://git.kernel.org/linus/6f7b0a2a5c0fb03be7c25bd1745baa50582348ef
+Like a laptop with built-in USB devices?  :)
 
-Introduced in:
---------------
-   -> https://git.kernel.org/linus/52400ba946759af28442dee6265c5c0180ac7122
+> assuming your motherboard's USB controller chip hasn't
+> been doctored by the manufacturer/government/whoever, and assuming you plug
+> a device (not a hub) directly into a motherboard USB port, how much
+> *significant* interaction between device and USB controller goes on that
+> could not be seen, even with the right debug settings enabled? i.e. could a
+> clean device really have something as (presumably complicated) as its
+> firmware being overwritten without the kernel knowing and potentially
+> alerting about it?
 
+Firmware can't be sent to a device unless it is enumerated by the kernel
+USB subsystem, and that is usually visable to the kernel by default.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+Sending firmware to a device is the least of your worries, see above for
+the real problems that you can try to exploit.  Testing the USB stack
+with "invalid" configuration descriptors is a great place to start.
+Hopefully we have fixed all of these issues, but no one is guaranteeing
+anything...
+
+Sorry I can't make you feel better, at least you can't do DMA directly
+to/from USB devices, so that attack vector is not there, unlike Firewire
+and PCIe.
+
+greg k-h
