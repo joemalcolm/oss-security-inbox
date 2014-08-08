@@ -1,88 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/19/3
-Message-ID: <CAFJ0LnFeEFF8uFvpLBu1v7SgFO2jatRb0zEtka3KnPxeYcuneA@mail.gmail.com>
-Date: Sun, 19 Oct 2014 05:20:50 -0700
-From: Nick Kralevich <nnk@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/19
+Message-ID: <CAFOKM3q_ch-WxC8pQtvqu6KJ4UH81oFtSL8kmaDMS28m4hoQuQ@mail.gmail.com>
+Date: Fri, 8 Aug 2014 09:23:21 -0700
+From: Dean Pierce <pierce403@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org
-Subject: Re: CVE request: remote code execution in Android CTS
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-Nick from the Android Security team here.
+Being able to "infect" a USB device (allowing unsigned firmware to be
+flashed on) is bad.
 
-In the future, please feel free to send these kinds of reports to
-security@...roid.com. Please see
-http://developer.android.com/guide/faq/security.html#issue for contact
-information.
+Being able to "infect" a host controller is bad.
+Using a USB device to get DMA, memory dumps, files, etc via loaded drivers
+is bad, whether they are using legitimate code paths or kernel bugs.
 
-Android's Compatibility Test Suite (CTS) is an executable software
-package intended to be downloaded and run from your computer. Please
-see https://source.android.com/compatibility/cts-intro.html for more
-information.
+I'm not so worried about the keyboard thing.  That's only interesting
+because it's the automation of exploiting a machine that has already been
+compromised.
 
-The files within the software package are not intended to be modified.
+Personally I would prefer disabling USB hotplug while a machine is locked
+(or while there are no active TTYs or something for servers).  Even if HID
+was whitelisted while the machine is locked, it would be a great start.
 
-If I'm reading your report correctly, you're claiming that an attacker
-who has the ability to locally modify a software package has the
-ability to get code execution. This isn't a security bug. What you're
-describing is another example of
-http://blogs.msdn.com/b/oldnewthing/archive/2007/10/31/5788080.aspx .
-You're on the wrong side of the airtight hatch.
+In regards to the PCI stuff, don't miss Joe's talk at DEFCON on Sunday.
 
-If you are aware of ways to exploit this functionality that doesn't
-involve tricking the user into replacing a file, please feel free to
-contact us at security@...roid.com.
+https://www.defcon.org/html/defcon-22/dc-22-speakers.html#FitzPatrick
 
--- Nick
+People have much more exposed PCI on their laptops and servers than they
+realize.  It's super cheap, super easy, and when we start selling kits this
+afternoon, it's going to be super accessible.
 
-On Sun, Oct 19, 2014 at 2:28 AM, Lord Tuskington <l.tuskington@...il.com> wrote:
-> CTS parses api-coverage.xsl without providing the FEATURE_SECURE_PROCESSING
-> option. See lines 60-67 of
-> cts/tools/cts-api-coverage/src/com/android/cts/apicoverage/HtmlReport.java:
+VTd/IOMMU would be nice to have if implemented properly, but it seems like
+even OSX, the only OS currently using VTd as a security feature, still
+hasn't gotten it quite right.
+
+Also firewire attacks are still a thing.  What's up with that?  ExpressCard
+and Thunderbolt adapters are super cheap, and Inception is still being
+actively maintained with new targets being added regularly.
+
+  - DEAN
+On Aug 8, 2014 8:48 AM, "Eddie Chapman" <eddie@...k.net> wrote:
+
+> On 08/08/14 16:23, Greg KH wrote:
 >
-> InputStream xsl =
-> CtsApiCoverage.class.getResourceAsStream("/api-coverage.xsl");
-> StreamSource xslSource = new StreamSource(xsl);
-> TransformerFactory factory = TransformerFactory.newInstance();
-> Transformer transformer = factory.newTransformer(xslSource);
->
-> StreamSource xmlSource = new StreamSource(xmlIn);
-> StreamResult result = new StreamResult(out);
-> transformer.transform(xmlSource, result);
->
-> An attacker who is able to control api-coverage.xsl could inject arbitrary
-> code into it, which would be executed. For example:
->
-> <xsl:stylesheet version="1.0"
-> xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-> xmlns:rt="http://xml.apache.org/xalan/java/java.lang.Runtime"
-> xmlns:str="http://xml.apache.org/xalan/java/java.lang.String"
+>> On Fri, Aug 08, 2014 at 03:45:31PM +0100, Eddie Chapman wrote:
 >>
-> <xsl:output method="text"/>
->     <xsl:template match="/">
->        <xsl:variable name="Command"><![CDATA[calc.exe]]></xsl:variable>
->        <xsl:variable name="RT" select="rt:getRuntime()"/>
->        <xsl:variable name="proc" select="rt:exec($RT, $Command)"/>
->        <xsl:text>Process: </xsl:text><xsl:value-of select="$proc"/>
->     </xsl:template>
-> </xsl:stylesheet>
+>>> The main question in my mind, and what I see as the main issue, is once
+>>> the
+>>> kernel has booted, how much can USB devices get up to, if anything,
+>>> behind
+>>> the kernel's back?
+>>>
+>>
+>> "behind"?  Hopefully nothing, but as been proven in the past, bugs
+>> happen and there are things that can go wrong.  Look at the raft of USB
+>> HID (input devices) bugfixes that happened a while ago to fix buffer
+>> overflow issues that had been found (and were being exploited for years
+>> it turned out.)  There are a lot of USB drivers in the kernel, doing
+>> some good fuzz-testing of them with a USB device that can do that would
+>> be great for people to do to verify that we have caught all of these
+>> types of bugs.
+>>
+>>  Assuming you don't switch on a machine with USB devices already
+>>> plugged in,
+>>>
+>>
+>> Like a laptop with built-in USB devices?  :)
+>>
 >
-> Would pop a calc. This crosses a trust boundary because an attacker could
-> provide an XSL stylesheet that, for example, has enhanced visual layout. A
-> person consuming that stylesheet would assume it could not possibly contain
-> arbitrary code that would be executed, as it's just a stylesheet. The XSL
-> extensions to execute code should be disabled by passing
-> FEATURE_SECURE_PROCESSING.
+> He he, good point.
 >
-> Regards
+>  assuming your motherboard's USB controller chip hasn't
+>>> been doctored by the manufacturer/government/whoever, and assuming you
+>>> plug
+>>> a device (not a hub) directly into a motherboard USB port, how much
+>>> *significant* interaction between device and USB controller goes on that
+>>> could not be seen, even with the right debug settings enabled? i.e.
+>>> could a
+>>> clean device really have something as (presumably complicated) as its
+>>> firmware being overwritten without the kernel knowing and potentially
+>>> alerting about it?
+>>>
+>>
+>> Firmware can't be sent to a device unless it is enumerated by the kernel
+>> USB subsystem, and that is usually visable to the kernel by default.
+>>
+>> Sending firmware to a device is the least of your worries, see above for
+>> the real problems that you can try to exploit.
+>>
 >
-> Lord Tuskington
+> That's good to know. Not sure about the least of worries, the overwriting
+> of firmware seems to be the crux of what people are worried about, isn't
+> it? But I see your point, we don't need to worry since you're saying
+> firmware cannot be written unless it's initiated by the kernel. But a lot
+> of the discussion I've read on this issue seems to assume that a "clean"
+> USB device can have it's firmware replaced by the bad guys with malware
+> almost without the OS having a say in the matter. e.g. USB stick with evil
+> firmware infects USB controller, which in turn infects other USB sticks
+> subsequently plugged in. Although I've seen people involved in USB hardware
+> manufacture argue this is nowhere near as easy as some of the hysteria
+> surrounding this suggests.
 >
-> Chief Financial Pinniped
+> But, theoretically, isn't it is possible for device and controller to do
+> their own thing between each other without the OS knowing anything? After
+> all, the OS controls the USB controller, but the controller is in control
+> of the device? Or does the kernel's control extend to the device?
 >
-> TuskCorp
+> Eddie
+>
+>   Testing the USB stack
+>> with "invalid" configuration descriptors is a great place to start.
+>> Hopefully we have fixed all of these issues, but no one is guaranteeing
+>> anything...
+>>
+>> Sorry I can't make you feel better, at least you can't do DMA directly
+>> to/from USB devices, so that attack vector is not there, unlike Firewire
+>> and PCIe.
+>>
+>> greg k-h
+>>
+>>
 
-
-
--- 
-Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
