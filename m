@@ -1,56 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/14
-Message-ID: <53AC41BF.7020201@redhat.com>
-Date: Thu, 26 Jun 2014 09:52:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/26
+Message-ID: <20140808194040.GC8896@kroah.com>
+Date: Fri, 8 Aug 2014 12:40:40 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-
-
-On 26/06/14 01:50 AM, Florian Weimer wrote:
-> On 06/26/2014 01:07 AM, cve-assign@...re.org wrote:
->> -- compared to the development cost in arranging for the flag to
->> be set, is it possible that the real-life benefit is too small?
+On Fri, Aug 08, 2014 at 10:27:16PM +0400, (GalaxyMaster) wrote:
+> Alexey,
 > 
-> You need a separate vulnerability to access the cookie.  These 
-> vulnerabilities will have to be addressed even if the HttpOnly flag
-> is set because indirectly, they usually give attackers access to 
-> information from which cookies are derived (e.g., by injecting a 
-> malicious login form).  Therefore, I think the HttpOnly flag is
-> just hardening, and it's not even a very effective form of it.
+> On Fri, Aug 08, 2014 at 09:57:49PM +0400, gremlin@...mlin.ru wrote:
+> > On 08-Aug-2014 09:21:02 -0700, Greg KH wrote:
+> >  > That doesn't prevent any other USB HID device from being plugged
+> >  > in and instantly working. Which again, you can prevent if you
+> >  > want to, but no one seems to do that...
+> > 
+> > Hmmm... To avoid possible confusion: that was CONFIG_USB_KBD - 
+> > "USB HIDBP Keyboard (simple Boot) support", and CONFIG_USB_HID
+> > was turned off.
+> 
+> I think Greg was referring to kernel's feature of controlling power on
+> USB ports (e.g. you can just switch of power for a port and nothing you
+> insert there will have a chance to work until you instruct the kernel to
+> switch the port back on).
 
-By that logic then we wouldn't assign CVE's for bad salt/lacking
-salt/bad password encryption, as the "real" vulnerability" is in the
-access of that data. The reality is a lot of what used to be exotic
-security is now becoming basic standard practice, largely I think for
-two simple reasons: 1) attackers keep getting better and 2) the
-technical security debt in most existing software keeps getting
-discovered to be larger.
+No, that is one option (note, it doesn't work for all hardware.)  I was
+referring to the "authorized_default" option the USB core provides.  You
+can set it to be:
+	 0 - all devices plugged in are not authorized
+	 1 - all devices are plugged in are automatically authorized
+	-1 - all devices are plugged in are automatically authorized,
+	     except for wireless USB devices, which have to be
+	     explicitly authorized.
 
+-1 is the default value.
 
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+If you set it to 0, you can look at the device, but no driver can bind
+to it until you authorize it (through a sysfs file) and then it can work
+properly.
 
-iQIcBAEBAgAGBQJTrEG/AAoJEBYNRVNeJnmT6BQP/ixcrT9JPwkfbWUx3sIIGu5p
-URI1tdYlezUeSmdLFxUj9LreBRavk1EMrc0Hpz+kR/xLb1wyCPAek2ivN/I/obZ7
-aguCgUQcJhKWLU8hMGAZgL3kvb/SHDhcSv+DH/sME3ZhKtCEC9BxOgctNsdbIvXC
-gSKJ56MKgQ/YkLfbKEsk/sTwpo0FY7maA2+PLuIPy+pPH2LufIXl0gqewRGkk0Bf
-5bao4aMS7t/96R+B5sdOFq6/R8BdhKxgitzNe64cXT+OoIL5UZ6uurMkjORsRGAe
-MSOy5NwSiGzYZGD2xv2U13P90gROzwYdoL6RklFQumF+0infqucLdUtYoTeN0q5R
-VOBclkgnZ7UO83V2Ie147EkQ/222XqXwpVGkBqws/NnjQDDI55A3QekQ000Q2zd2
-sg6x/V7LYlqjlMqb/dtdxlzxv7mOpZltJEQPd11He3ISpK96uJ/6n81twEw/Plb5
-PCb8iImyPXJshaELlpxRMWJvCMq3xvohLmvCwKDlhEDUc1RVMKg5bDYguxRowa9b
-Cy2uLsaIwndG08bObtzDg0a5tXtRRYUqd2LeUT8J5B3u6XDroWHxemldpKJ5hK/d
-Jkh5K98B5iolpb43g+9KM73d9tCucBTsHa2XOGgiy/8C65QMfVQb/FtyQBCJ01n1
-t384/G45NKx9FN/KcCPH
-=aMTm
------END PGP SIGNATURE-----
+Paranoid systems should set the default to 0.
+
+The option can be changed while the kernel runs, good idea to use -1 as
+a default, boot up, all needed devices are found, then set it to 0 so no
+new device can be plugged in (watch out, if you unplug and then plug, it
+will not work, so power spikes that cause devices to drop off the bus
+and come back can be a pain.)
+
+thanks,
+
+greg k-h
