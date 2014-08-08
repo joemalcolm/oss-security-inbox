@@ -1,57 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/3
-Message-ID: <20140310161740.GG21728@suse.de>
-Date: Mon, 10 Mar 2014 17:17:40 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request for Quick Blind TCP Connection Spoofing with SYN Cookies
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/21
+Message-ID: <53E50BA2.2070302@ehuk.net>
+Date: Fri, 08 Aug 2014 18:40:50 +0100
+From: Eddie Chapman <eddie@...k.net>
+To: Greg KH <greg@...ah.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 08/08/14 17:17, Greg KH wrote:
+> On Fri, Aug 08, 2014 at 04:47:45PM +0100, Eddie Chapman wrote:
+>>> Firmware can't be sent to a device unless it is enumerated by the kernel
+>>> USB subsystem, and that is usually visable to the kernel by default.
+>>>
+>>> Sending firmware to a device is the least of your worries, see above for
+>>> the real problems that you can try to exploit.
+>>
+>> That's good to know. Not sure about the least of worries, the overwriting of
+>> firmware seems to be the crux of what people are worried about, isn't it?
+>
+> I don't know, is that something that people really care about?  And if
+> so, why?  What can you do with a device that you can rewrite the
+> firmware to that you can't do with any other USB device that you are
+> intentionally making "malicious"?  (i.e. USB Rubber Ducky and friends)
+>
+>> But I see your point, we don't need to worry since you're saying firmware
+>> cannot be written unless it's initiated by the kernel.
+>
+> Or userspace, but the kernel is involved here in sending the data to the
+> device, it has to.
+>
+>> But a lot of the discussion I've read on this issue seems to assume
+>> that a "clean" USB device can have it's firmware replaced by the bad
+>> guys with malware almost without the OS having a say in the matter.
+>
+> Not true, the OS has to be involved in order to rewrite the firmware.
+> It is the thing that is sending the "bad" packets to the USB device on
+> behalf of the userspace program that is asking to rewrite the firmware
+> on the device.
+>
+>> e.g. USB stick with evil firmware infects USB controller,
+>
+> The USB host controller, no, that's not possible that I have ever heard
+> of, or seen before.  But pointers to the details would be appreciated if
+> somehow you think this is the case.
 
-Did this issue:
-http://www.jakoblell.com/blog/2013/08/13/quick-blind-tcp-connection-spoofing-with-syn-cookies/
-ever get a CVE or should it get one?
+Excellent, thanks for clarifying that. This is the kind of hard detail 
+and fact which you don't find in much of the discussion out there about 
+this issue. I've seen people arguing that something like this is 
+possible, but of course if you dig more deeply there is no evidence 
+behind these assumptions.
 
-At least some hardening measures have been implemented now:
-http://thread.gmane.org/gmane.comp.security.oss.general/10875
+>> which in turn infects other USB sticks subsequently plugged in.
+>
+> Unless the program to rewrite other USB devices was downloaded and run
+> from the "evil" device, no, the OS knows all about this.
+>
+> Now if the OS can actually do anything about it or not is a different
+> story, again, if you allow user space programs the ability to write to
+> random USB devices, well, you get what you deserve here...
 
-Made "4 times" harder in 3.13 by these two patches:
+Right, so ultimately userspace and/or the kernel has to be involved in 
+some way. Again, thanks for clarifying that, you might call this stuff 
+USB 101, but I'm not sure you'd find many people outside of kernel 
+development who know this kind of detail about low level interactions 
+between USB hardware.
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=8c27bd75f04fb9cb70c69c3cfe24f4e6d8e15906
-commit 8c27bd75f04fb9cb70c69c3cfe24f4e6d8e15906
-Author: Florian Westphal <fw@...len.de>
-Date:   Fri Sep 20 22:32:55 2013 +0200
+>> Although I've seen people involved in USB hardware manufacture argue
+>> this is nowhere near as easy as some of the hysteria surrounding this
+>> suggests.
+>
+> There is a USB firmware download spec, which is quite easy to use, if
+> manufacturers actually followed it (side note, I was one of the authors
+> of that spec...)  And if USB device manufacturers actually required
+> signed firmware to run in their devices, that would solve this issue
+> instantly as long as the signing keys don't leak.
+>
+>> But, theoretically, isn't it is possible for device and controller to do
+>> their own thing between each other without the OS knowing anything?
+>
+> There are some "basic" housekeeping functions that the USB host
+> controller and device do in their handshaking and keep-alive and the
+> like that the OS doesn't "know" about, because if the OS did know about
+> it, the whole thing would just take too long and waste too much CPU
+> time.  But sending random data?  No that's not possible.
 
-    tcp: syncookies: reduce cookie lifetime to 128 seconds
-    
-    We currently accept cookies that were created less than 4 minutes ago
-    (ie, cookies with counter delta 0-3).  Combined with the 8 mss table
-    values, this yields 32 possible values (out of 2**32) that will be valid.
-    
-    Reducing the lifetime to < 2 minutes halves the guessing chance while
-    still providing a large enough period.
-    
-    While at it, get rid of jiffies value -- they overflow too quickly on
-    32 bit platforms.
-    
-    getnstimeofday is used to create a counter that increments every 64s.
-    perf shows getnstimeofday cost is negible compared to sha_transform;
-    normal tcp initial sequence number generation uses getnstimeofday, too.
+>> After all, the OS controls the USB controller, but the controller is
+>> in control of the device? Or does the kernel's control extend to the
+>> device?
+>
+> Think of a USB host controller as a "dumb" ethernet controller.  It has
+> a big ring-buffer of data that it sends to a device when asked to.  It
+> also listens for data from a device, when asked, and puts that in a
+> buffer for the kernel to do something with.  There is no "mixing" of the
+> data, and a USB device can not talk to any other USB device on the
+> system, without the kernel giving the data to the other device.
+>
+> So the kernel "controls" a device only by sending it data, receiving
+> data from it, and by virtue of some of that data being "special",
+> telling the device to do some things (send configuration information, go
+> toggle a serial port pin, etc.)  That data can only come from the
+> kernel, to the USB host controller, and then to the device.
+>
+> Again, over simplification, as there are some commands that the host
+> controller handles on its own by virtue of "housekeeping" and
+> enumeration, and other basic things, none of which should ever be an
+> attack vector to the device, unless you have a really broken device.
+>
+> Does that help?
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=086293542b991fb88a2e41ae7b4f82ac65a20e1a
-commit 086293542b991fb88a2e41ae7b4f82ac65a20e1a
-Author: Florian Westphal <fw@...len.de>
-Date:   Fri Sep 20 22:32:56 2013 +0200
+Yes, immensely. It's clear to me now that being able to re-programme a 
+USB device firmware is not quite as easy and straightforward as is being 
+made out to be in certain quarters. That's not to say that the research 
+being discussed hasn't thrown up some very interesting issues around 
+hardware and trust.
 
-    tcp: syncookies: reduce mss table to four values
+Eddie
 
-    Halve mss table size to make blind cookie guessing more difficult.
-    This is sad since the tables were already small, but there
-    is little alternative except perhaps adding more precise mss information
-    in the tcp timestamp.  Timestamps are unfortunately not ubiquitous.
-
-    Guessing all possible cookie values still has 8-in 2**32 chance.
-
-
-Ciao, Marcus
+>
+> greg "usb-101 is now over" k-h
+>
