@@ -1,72 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/4
-Message-Id: <201402281826.s1SIQ1GX013546@linus.mitre.org>
-Date: Fri, 28 Feb 2014 13:26:01 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE requests: MediaWiki 1.22.3, 1.21.6 and 1.19.12 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/2
+Message-ID: <53E4BB51.4090103@redhat.com>
+Date: Fri, 08 Aug 2014 13:58:09 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 08/08/2014 01:20 PM, Dan Carpenter wrote:
+> We could put a popup if there is a second keyboard attached to check
+> that the person controlling the existing keyboard is aware of the second
+> one.
 
-Some of this seems straightforward and we will send CVE assignments a
-little later. Our first question is about the UploadBase.php diff in:
+Wouldn't this make using Yubikeys quite inconvenient?
 
-   https://gerrit.wikimedia.org/r/#/q/7d923a6b53f7fbcb0cbc3a19797d741bf6f440eb,n,z
-
-Our first thought is that it might be best to have separate CVEs for
-"Disallow uploading non-whitelisted namespaces" and "disallow iframe
-elements" because they are distinct types of problems. The first one
-seems similar to what is discussed in:
-
-   http://en.wikipedia.org/wiki/User:Aarchiba/SVG_sanitizer
-
-The first CVE would, roughly, have a root cause of "does not recognize
-that a trust relationship with a specific external site is reasonably
-required for use of a namespace." The second CVE would, roughly, have
-a root cause of "does not block IFRAME elements."
-
-Does anyone have an opposing view: for example, that adding the
-hardcoded $validNamespaces list can't be interpreted as a "normal"
-vulnerability fix? Across all products, adding a list of off-site URLs
-maintained by various third parties is rarely the essence of a
-security patch.
-
-(As a side issue, SVG_sanitizer allows
-http://www.w3.org/XML/1998/namespace but the patched UploadBase.php
-does not.)
-
-
-Our second question is about
-https://bugzilla.wikimedia.org/show_bug.cgi?id=61346 Comment 9. Do all
-valid tokens have the same length, and thus an attacker (if he looked
-at the source code) would already know that the wrong-length attempts
-would always fail?
-
-If not, a separate CVE would be needed on the basis of different
-affected versions.
-
-(This question is only about MediaWiki as shipped. If a system
-administrator would need to modify the source code to use a different
-length, and an attacker could detect that more easily because of
-'strlen( $answer ) !== strlen( $test )' tests, that doesn't qualify
-for a CVE.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTENPlAAoJEKllVAevmvms/CIH/0TXSB+zHiFnVSQSyv1mqVGH
-wObqMrao+532CKiqjgmQBezQEZhkCb2vNEeQoofx4CzTegQjvyL4wSIuPGx9JSa6
-SkUoocGqHXOVCkk2ROwxZMTM22B6tUzogXKctyd66PgVYdmj9P4hXngueDVLszAs
-Q2eLpHzyTK5GOEf0Vcrj26jGl7ouf9ROmSicuwEMVp0r5UCV3+puJtJzKnTz3shF
-Dd7s94l2ebqskBsv7t/DOH2jRaXzxIBnn7046Ywtvv/fNFwodhv+MGaIsfSmj+gc
-maKEy/vzdYjbJDLVvKSeBeuNuAGoI4nuna0krveG0+VpFZ4z3Mdt4SrlRjXsDNo=
-=U5hr
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security
