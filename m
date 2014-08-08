@@ -1,41 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/3
-Message-ID: <546BF2C0.6060000@mccme.ru>
-Date: Wed, 19 Nov 2014 04:30:40 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: LibreOffice -- several issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/9
+Message-ID: <53E4E28B.20600@ehuk.net>
+Date: Fri, 08 Aug 2014 15:45:31 +0100
+From: Eddie Chapman <eddie@...k.net>
+To: oss-security@...ts.openwall.com, greg@...ah.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On 08/08/14 15:34, Greg KH wrote:
+> I don't understand what you are trying to solve here.  Step back, what
+> is the real "problem" that BadUSB shows?  Files being copied to places
+> they shouldn't be, or, rebooting your machine and booting from a
+> different media.  Why not go after the root cause here, don't be
+> paranoid about trying to detect a new keyboard being plugged in.
+>
+> Again, we have had devices like this out there for quite a while, the
+> USB Rubber Ducky as one example.  Others are things like the Teensy
+> device[1], which has been used in "pen testing" for a very long time.
+>
+> Don't try to defend against a random keyboard device, try to defend
+> against a user doing bad things, be it input from a "real" keyboard, or
+> a "fake" one, it shouldn't matter.
+>
+> The only thing "new" about the BadUSB hack, is it shows how to turn a
+> "normal" device into a USB Rubber Ducky, which will save you a few
+> dollars (and shows just how insecure a number of USB devices are.)  Not
+> that the attack vector is somehow new and novel or unknown at all.
+>
+> thanks,
+>
+> greg k-h
+>
+> [1] Highly recommended if you want to do things with USB from a device
+> side.  Easily programmable, very cheap, and very tiny, you can have
+> loads of "fun" with these things...
 
-Could CVEs please be assigned to the following issues?
+Greg, very relieved to see you involved in this thread. If anyone can 
+speak authoritatively about Linux USB it's you.
 
-https://bugs.freedesktop.org/show_bug.cgi?id=86446
-Crashes importing malformed .doc -- DoS
+The main question in my mind, and what I see as the main issue, is once 
+the kernel has booted, how much can USB devices get up to, if anything, 
+behind the kernel's back? Assuming you don't switch on a machine with 
+USB devices already plugged in, assuming your motherboard's USB 
+controller chip hasn't been doctored by the 
+manufacturer/government/whoever, and assuming you plug a device (not a 
+hub) directly into a motherboard USB port, how much *significant* 
+interaction between device and USB controller goes on that could not be 
+seen, even with the right debug settings enabled? i.e. could a clean 
+device really have something as (presumably complicated) as its firmware 
+being overwritten without the kernel knowing and potentially alerting 
+about it?
 
-https://bugs.freedesktop.org/show_bug.cgi?id=86447
-Crashes importing malformed .ppt -- DoS
-
-https://bugs.freedesktop.org/show_bug.cgi?id=86448
-Crashes importing malformed .rtf -- DoS
-
-https://bugs.freedesktop.org/show_bug.cgi?id=86449
-Crash importing malformed .rtf -- potentially exploitable for RCE
-
-https://bugs.freedesktop.org/show_bug.cgi?id=86451
-Crashes importing malformed .rtf
-
-Tested with LibreOffice 3.5.4 on Debian Stable (amd64).
-
-Found during one evening with zzuf.
-
-IIUC any crasher (or 100% cpu usage) in LO is a security issue because 
-it takes down all other windows with it. But Michael Meeks from 
-officesecurity@...ts.freedesktop.org indicated that they are not 
-interested in CVEs for DoS-only crashers (I haven't asked about RCE) 
-because they still have 180 crashers in their own testing. All info 
-about their testing is regularly posted to LO devel mailing list.
-
--- 
-Alexander Cherepanov
+Eddie
