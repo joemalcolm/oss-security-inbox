@@ -1,40 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/23
-Message-ID: <5422FD09.6080503@redhat.com>
-Date: Wed, 24 Sep 2014 19:19:05 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/09/4
+Message-ID: <1407588686.28424.7.camel@scapa>
+Date: Sat, 09 Aug 2014 14:51:26 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-On 09/24/2014 07:03 PM, Hanno Böck wrote:
-> On Wed, 24 Sep 2014 18:30:35 +0200
-> Florian Weimer <fweimer@...hat.com> wrote:
->
->> This depends on how PHP is invoked.  mod_php does not set the CGI
->> environment variables.
->>
->> However, it is true that if CGI programs spawn subprocesses, they may
->> be affected even if the CGI program itself is not written in bash.
->
-> Regarding php, isn't it quite common to run it through mod_fcgid with a
-> (bash) wrapper script? At least that's what apache wiki documents:
-> https://wiki.apache.org/httpd/php-fcgid
+On ven., 2014-08-08 at 16:35 +0200, Willy Tarreau wrote:
+> On Fri, Aug 08, 2014 at 06:36:12AM -0700, Greg KH wrote:
+> > On Fri, Aug 08, 2014 at 02:20:21PM +0300, Dan Carpenter wrote:
+> > > I'm surprised we haven't had any discussion about the recent BadUSB
+> > > articles.
+> > > 
+> > > http://arstechnica.com/security/2014/07/this-thumbdrive-hacks-computers-badusb-exploit-makes-devices-turn-evil/
+> > > http://security.stackexchange.com/questions/64524/how-to-prevent-badusb-attacks-on-linux-desktop
+> > > 
+> > > We could put a popup if there is a second keyboard attached to check
+> > > that the person controlling the existing keyboard is aware of the second
+> > > one.
+> > 
+> > "popup" where?  Multi-seat machines wouldn't like that very much, as
+> > would yubikeys (as was pointed out), or a raft of other USB devices that
+> > export a keyboard device for the buttons they control (video cameras,
+> > external speakers, barcode scanners, etc.)
+> 
+> Also, keyboards are one aspect of the problem. The biggest aspect is not new and
+> has been abused for years, which is the main reason why so many large companies
+> physically remove (stick or desolder) USB ports : you're connecting a *device*
+> to your system and there's no way to make that 100% safe using software only.
+> With a bogus driver and a DMA-capable device, you can end up accessing kernel
+> locations and causing a lot more discrete harm such as unlocking displays,
+> changing UIDs of running processes, etc. And that's much harder to detect,
+> especially in closed drivers or with closed systems.
 
-I don't know what's common with PHP.  I don't think there is much public 
-documentation about what it takes to run PHP at scale in a secure 
-fashion (also taking compromised or downright malicious customers into 
-account).
+What do you mean by DMA-capable device. Afaict USB devices can't do bus
+mastering on the PCI Express bus, they can only request the USB
+controller to do that for them. Did someone already managed to
+sucessfully control DMA transfers from an USB device?
 
-> So that'd mean many php installations are affected even if they don't
-> use subprocesses.
->
-> I'm not sure if this wrapper can be avoided.
+(it's still safer to have a configured I/OMMU, imho, but I'm pretty
+unsure they could be switched on by default…)
+> 
 
-The wrapper does not run per request.  I have not tested this, but I 
-don't think it sees any request-specific environment variables at this 
-point.  FCGI transfers request information over a socket at descriptor 0 
-and not through environment variables.
+> One more efficient solution could be to have a sysctl to disable hotplugging
+> of USB devices, all of them.
 
+Grsecurity supports that (see GRKERNSEC_DENYUSB, Brad basically checks a
+sysctl during hub_port_connect_change()). Or you could use the
+authorized_default Greg mentioned.
+
+It also helps to disable module autoloading.
+
+>  Software would then detect the new devices, and
+> decide to load the drivers among a whitelist associated to a given port. The
+> administrator could add new rules, and it could be the user for personal
+> desktop PCs. But even then you still have the risk of the user not understanding
+> what's happening and bindly clicking "OK".
+
+As always, what's usually hard is the policy and the default behavior,
+since a lot of people have different needs…
+
+Regards,
 -- 
-Florian Weimer / Red Hat Product Security
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
