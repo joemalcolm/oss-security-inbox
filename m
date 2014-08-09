@@ -1,40 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/08/3
-Message-Id: <201405081414.s48EDuDi001504@linus.mitre.org>
-Date: Thu, 8 May 2014 10:13:56 -0400 (EDT)
-From: cve-assign@...re.org
-To: D.Farhi@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Local File inclusion in Cobbler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/09/1
+Message-ID: <1407575867.1757.17.camel@scapa>
+Date: Sat, 09 Aug 2014 11:17:47 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> as reported in https://github.com/cobbler/cobbler/issues/939
+On ven., 2014-08-08 at 14:36 -0700, Greg KH wrote:
+> On Fri, Aug 08, 2014 at 11:27:06PM +0200, Yves-Alexis Perez wrote:
+> > On ven., 2014-08-08 at 14:20 -0700, Greg KH wrote:
+> > > > Actually, since it's a module parameter, it doesn't seem possible to
+> > > > toggle it without reloading the module (or rebooting if it's
+> > > builtin).
+> > > > So it might not be that easy to do the locking part.
+> > > 
+> > > echo "0" > /sys/module/usbcore/parameters/authorized_default
+> > 
+> > I did that, but unplugging/replugging my mouse still works after that.
 > 
-> A local file inclusion is possible by specifying full path to any
-> desired file in the Kickstart value in Cobbler's WebUI in all
-> versions.
+> Hm, not good, take it to the linux-usb@...r.kernel.org mailing list and
+> we can debug it there.
 > 
-> by specifiying 'Kickstart' value to /etc/passwd or any other crucial
-> system file, local files are exposed by the cobbler web_ui
+To follow up on this.
 
-Use CVE-2014-3225.
+The correct way to do this is to do:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+for bus in /sys/bus/usb/usb*;
+do
+  echo 0 > ${bus}/authorized_default
+done
 
-iQEcBAEBAgAGBQJTa5CKAAoJEKllVAevmvmsc0AH/iRGXp6uC+loqXis7PcgsGFH
-UIFPfrqW7zS5bZ3JWJ41zPTDVJmv5sFCPie9NADsrAEQj0YcrNCRdRNgPy4MTi8t
-z/+UYftRRoiM8P4jMRVk8Ko2aLwG05m2kJ/j0XQpI45dYoGF0x++gbwORLEhMgtr
-ePZv7NTjyRwnJygIDLXPGUpnBglkZI/KDPV5qBNDfgHBNMk/FUtZF5zWgVdFvTvx
-FbeT3lwGKyjNMwd6rBMGQwU52YV1cV3NT7tq+fL5mvvV7QYR1POFfDsJbOBpS/jj
-EwW0UleNZ2fWXGI1cQiIIakBOrtWyauyR/IQ6OM98vZ8fqkMw6bT1K7Qjbl9ld8=
-=erju
------END PGP SIGNATURE-----
+to disable registration of new USB devices (kernel will still enumerate
+them, but no driver will handle them).
+
+Echo 1 (or -1) to re-enable registration. Current devices will keep
+working. If you want to completely disable a bus (including power), use
+'authorized' instead of 'authorized_default' sysfs entry.
+
+Regards,
+-- 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
