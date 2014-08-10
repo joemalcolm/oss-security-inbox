@@ -1,30 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/02/5
-Message-ID: <5363BA29.4000005@canonical.com>
-Date: Fri, 02 May 2014 11:30:49 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/10/2
+Message-ID: <CABLZJbxn3Ou-VFJ4MPrZqZ6TUDPsEBATmG9tVb0qOAddVoYZDw@mail.gmail.com>
+Date: Sun, 10 Aug 2014 11:34:42 +0200
+From: Maksymilian A <max@...t.cx>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: OpenSSL NULL pointer dereference in do_ssl3_write
+Cc: mmcallis@...hat.com
+Subject: Re: CVE request: issues in ISO C++ 2011 regex library
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Not taking into account the vulnerabilities prior to gcc 4.9.1, one
+CVE can be considered reasonable assignment CVE for a missing
+implementation of error_stack error_space and error_complexity. Lack
+of protection against resource exhaustion in official release, will
+lead to situations like in glibc.
 
-A null pointer dereference bug was discovered in so_ssl3_write(). An attacker
-could possibly use this to cause OpenSSL to crash, resulting in a denial of service.
+proftpd glibc remote denial of service exploit
+http://cert.cx/stuff/proftpd.gnu.c
 
-http://rt.openssl.org/Ticket/Display.html?user=guest&pass=guest&id=3321
+There is many vendors what uses remotely RE.
 
-http://anoncvs.estpak.ee/cgi-bin/cgit/openbsd-src/commit/lib/libssl?id=e76e308f1fab2253ab5b4ef52a1865c5ffecdf21
+Maksymilian Arciemowicz
+http://cxsecurity.com/
 
-http://ftp.openbsd.org/pub/OpenBSD/patches/5.5/common/005_openssl.patch.sig
 
-Could a CVE please be assigned to this issue?
-
-Thanks,
-
-Marc.
-
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+2014-08-07 9:56 GMT+02:00 Murray McAllister <mmcallis@...hat.com>:
+> On 08/06/2014 04:36 AM, Rich Felker wrote:
+>>
+>> On Tue, Aug 05, 2014 at 03:50:32PM +1000, Murray McAllister wrote:
+>>>
+>>> Hello,
+>>>
+>>> Maksymilian Arciemowicz reported a number of issues in the ISO C++
+>>> 2011 regex libraries:
+>>>
+>>> http://seclists.org/fulldisclosure/2014/Aug/1
+>>>
+>>> Bugs:
+>>>
+>>> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61601
+>>>
+>>> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61582
+>>>
+>>> http://llvm.org/bugs/show_bug.cgi?id=20291
+>>>
+>>> For the memory corruption bug (61582), there seems to be more than
+>>> one issue here (at least a heap-based buffer overflow and a stack
+>>> overflow of some sort). Can a single CVE be assigned, or do you need
+>>> specific details for each issue (I don't currently have those)?
+>>>
+>>> With GCC 4.8 in Fedora, the affected program needs to be compiled
+>>> using the "-std=c++11" option.
+>>
+>>
+>> I think this issue is mis-named. "The ISO C++ 2011 regex library" is a
+>> specfication, not an implementation, and a vulnerability in it would
+>> be a fundamental flaw in the API design (analogous to gets in C). It
+>> seems like this CVE request is for one or more GCC/libstdc++ bugs, and
+>> it should be identified as such.
+>>
+>> Rich
+>>
+>
+> Thanks for pointing that out, and sorry for the confusion!
+>
+> There is some discussion in
+> https://bugzilla.redhat.com/show_bug.cgi?id=1126691 about why these should
+> not be treated as security issues.
+>
+> Cheers,
+>
+> --
+> Murray McAllister / Red Hat Product Security
