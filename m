@@ -1,50 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/14/4
-Message-ID: <20140214081819.GA8547@alf.mars>
-Date: Fri, 14 Feb 2014 09:18:19 +0100
-From: Helmut Grohne <helmut@...divi.de>
-To: Dimitri John Ledkov <xnox@...ian.org>
-Cc: 738855@...s.debian.org, oss-security@...ts.openwall.com
-Subject: Re: Bug#738855: initscripts: Skip killing root-owned process starting with @
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/10/1
+Message-ID: <53E6CDFD.40202@redhat.com>
+Date: Sat, 09 Aug 2014 19:42:21 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: BadUSB discussion
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 14, 2014 at 12:28:52AM +0000, Dimitri John Ledkov wrote:
-> Thanks a lot for the review!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hmm. Maybe you can hold this patch off for a little longer?
+Probably because nobody cares, this is all old, USB, like every
+hardware standard, is a disaster from a security point of view.
+Covered this kind of thing back in 2012:
 
-Pulling in oss-sec, because I am no longer sure that the remedy
-addresses all relevant aspects. Summary of previous discussion follows
-for oss-sec:
+http://www.linuxpromagazine.com/content/download/65948/521578/version/1/file/040-041_kurt.pdf
 
-Dimitri Ledkov asked for the initscripts package to exempt root-owned
-processes whose process name starts with an '@' from being killed in the
-sendsigs script during shutdown. This support would make initscripts a
-little more compatible with systemd, which is a good thing! The relevant
-systemd documentation can be found at:
-http://www.freedesktop.org/wiki/Software/systemd/RootStorageDaemons/
+Back when I had hair.. *sob*.
 
-However, I doubt that the proposed restriction (effective UID of process
-equals 0) is sufficient. For example in a SELinux context being root may
-mean significantly less. Russel Coker runs a machine where you can log
-into as root remotely, see http://www.coker.com.au/selinux/play.html. In
-this context allowing user processes to not be killed merely by changing
-their name could cause data loss during shutdown by blocking umount. I
-do not understand the consequences of the above technique in other
-security extension contexts, so I am asking here for help.
+On 08/08/14 05:20 AM, Dan Carpenter wrote:
+> I'm surprised we haven't had any discussion about the recent
+> BadUSB articles.
+> 
+> http://arstechnica.com/security/2014/07/this-thumbdrive-hacks-computers-badusb-exploit-makes-devices-turn-evil/
+>
+> 
+http://security.stackexchange.com/questions/64524/how-to-prevent-badusb-attacks-on-linux-desktop
+> 
+> We could put a popup if there is a second keyboard attached to
+> check that the person controlling the existing keyboard is aware of
+> the second one.
+> 
+> The attack looks like someone who says, "Can you copy some files
+> from my USB flash drive which?" (not knowing it is infected) and
+> then there is a popup, "This newly inserted USB device is trying to
+> type commands, is that ok?  y/N?".
+> 
+> regards, dan carpenter
+> 
 
-The alternative mechanism currently used by initscripts is to allow
-daemons to write their PID to /run/sendsigs.omit.d/$daemon. Being a
-file-based approach, it can be easily controlled in the SELinux context
-using restorecon.
+- -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Another aspect of interest could be processes running as root with their
-capability bounding set cleared or reduced.
-
-So dear oss-sec readers, do you think that allowing processes whose
-effective UID is 0 to not being killed during shutdown is a good idea?
-
-If the answer is no, then please assign a CVE identifier for systemd
-(version 38+, src/core/killall.c).
-
-Helmut
+iQIcBAEBAgAGBQJT5s39AAoJEBYNRVNeJnmT+o8QAKHYCq6eGWZgHKoqBZsRBNJz
+HYzgKvRx2FzgINL+OJiob6r0VXd+1wdm+2HAn7evToR0e3kcauaQR6oLBo56f3tj
+hhlvBRKK8rfeW1yN3AaGqLmUvuF5+zb4MwEF0duGlkd9AXBeQEIRr3124yZHgGf8
+B1Zlda5SSvQW6Rg3JsZ3lvzeKvE4H7Vif60RVf18fEDYzteutl+X+Af1vrcID1ok
+3AkUPeFweopNq3e0DORWnkbW3SfE1D7KTa1KAI2LyPEAAqWVAvqr22g1HTm/ykHE
+Q3XOPm/aJPaYaHrnNbsD8a2V3+eHxRfmdwEztOn5ctW9WGrL+w2Zzx4zPM/vQXBv
+QPZqwColubVqZqgW5oSSsgKPbVIxR1UU7ymiYRz+TpXpqx00KvEbXVwfRz5VUMbi
+MaY0HlBYj0LG9t/+ebHewHgyUfoVq1CEFVfxFI2PZRcCmhXDKgyRjNR9SnqAj7m3
+aQvmyQArqY75Rmx07VfnP4w7/xQQQ2KBoTZ/zVhV6Y7e/RGt+gAj2hMy9ElK8mTY
+vtHdmeWw5TuhB/rs9sNDkEVT1WiTmaeWYWFvsQtyACqgH0zCi3WzD+4+/fgBEwYq
+8O+jIhnL5wxu8IxzYXfd46vAk63CetSn74MDWhIdMHH8AYXtNunVPiTNC137Awmh
+YFXm6N79F7yvgnXoyYGO
+=1JVW
+-----END PGP SIGNATURE-----
