@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/34
-Message-ID: <20140808215500.GT1674@oevtugenva.nrevsny.pk>
-Date: Fri, 8 Aug 2014 17:55:00 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/11/2
+Message-ID: <20140811183822.GA5736@eldamar.local>
+Date: Mon, 11 Aug 2014 20:38:22 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: Plack::App::File does not prune trailing slashes: possible code exposure / information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 08, 2014 at 01:36:36PM +0100, John Haxby wrote:
-> On 08/08/14 12:20, Dan Carpenter wrote:
-> > The attack looks like someone who says, "Can you copy some files from
-> > my USB flash drive which?" (not knowing it is infected) and then there
-> > is a popup, "This newly inserted USB device is trying to type commands,
-> > is that ok?  y/N?".
-> 
-> That's all very well, but:
-> 
-> > One of the attacks involves a USB stick that acts as three separate
-> > devices -- two thumb drives and a keyboard. When the device is first
-> > plugged into a computer and is detected by the OS, it acts as a regular
-> > storage device. However, when the computer is restarted and the device
-> > detects that it's talking to the BIOS, it switches on the hidden storage
-> > device and also emulates the keyboard, Nohl said.
-> > 
-> > Acting as a keyboard, the device sends the necessary button presses
-> > to bring up the boot menu and boots a minimal Linux system from the
-> > hidden thumb drive. The Linux system then infects the bootloader of the
-> > computer's hard disk drive, essentially acting like a boot virus, he said.
+Hi
 
-This sounds like an argument for password-protecting your BIOS and
-bootloader if anything, and disabling boot from any device except the
-primary hdd except when installing.
+Plack 1.0031 contains the following Changes entry[1]:
 
-Rich
+    [SECURITY]
+        - Plack::App::File would previously strip trailing slashes off
+          provided paths. This in combination with the common pattern
+          of serving files with Plack::Middleware::Static could allow
+          an attacker to bypass a whitelist of generated files (avar) #446
+
+See [2,3] for more details about this issue, which might lead to
+information disclosure.
+
+ [1] http://api.metacpan.org/source/MIYAGAWA/Plack-1.0031/Changes
+ [2] https://github.com/plack/Plack/issues/405
+ [3] https://github.com/plack/Plack/pull/446
+
+Can a CVE be assigned for this isssue (as an example, CVE-2013-7329
+was previously also assigned for CGI::Application).
+
+Regards,
+Salvatore
