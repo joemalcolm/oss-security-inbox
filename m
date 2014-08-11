@@ -1,42 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/1
-Message-ID: <CAJeQoQdP0VzvWTSzYYjtqnGKyJ0ZgJR0w3Bi7GHPAGP4uMGU-w@mail.gmail.com>
-Date: Mon, 13 Oct 2014 21:20:24 +0200
-From: Egidio Romano <n0b0d13s@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Rejection Request: CVE-2014-7983 Joomla com_contact Persistent XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/11/3
+Message-Id: <69AEC4CC-A12D-459C-8FDF-E5072D9E10DC@gmail.com>
+Date: Mon, 11 Aug 2014 18:09:59 -0400
+From: Marcel Kinard <cmarcelk@...il.com>
+To: dev@...dova.apache.org, security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: Apache Cordova 3.5.1: CVE-2014-3502 update
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+The following text is amended from the original that was sent on August 4th. More background information on this amendment can be found at http://cordova.apache.org/announcements/2014/08/06/android-351-update.html
 
-I believe this CVE [1] should be rejected for the following reason: the
-vulnerable parameter (jform[contact_email]) [2] is "persistent" only within
-a session variable, which happens within the ContactControllerContact::submit()
-method, where the data submitted to the contact form is stored inside the
-"com_contact.contact.data" session variable [3] through the
-JApplication::setUserState() method [4]. This means that a potential
-attacker can be able to execute evil JavaScript/HTML code only within its
-own session, not affecting the security of other Joomla! users or website
-visitors. Even though the same "issue" might be exploited as a reflected
-XSS vulnerability, in my view it still cannot be considered a security
-threat because, in order to do that, the attacker needs to know the session
-token of the victim user, since the ContactControllerContact::submit()
-method calls the JSession::checkToken() method [5] to prevent cross-site
-request forgeries (CSRF).
+Android Platform Release: 04 Aug 2014
 
-Please let me know if you believe I'm wrong or I'm missing something. Thank
-you.
+CVE-2014-3502: Cordova apps can potentially leak data to other apps via URL
+loading
 
-References:
-[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7983
-[2]
-http://hauntit.blogspot.it/2014/03/en-joomla-322-pre-auth-persistent-xss.html
-[3]
-https://github.com/joomla/joomla-cms/blob/3.2.2/components/com_contact/controllers/contact.php#L86
-[4] http://docs.joomla.org/How_to_use_user_state_variables
-[5]
-https://github.com/joomla/joomla-cms/blob/3.2.2/components/com_contact/controllers/contact.php#L26
 
-Best regards,
-Egidio
+Severity: Medium
 
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+Cordova Android versions up to 3.5.0
+
+Description:
+Android applications built with the Cordova framework can launch other
+applications through the use of anchor tags, or by redirecting the webview to
+an Android intent URL. An attacker who can manipulate the HTML content of a
+Cordova application can create links which open other applications and send
+arbitrary data to those applications. An attacker who can run arbitrary
+JavaScript code within the context of the Cordova application can also set the
+document location to such a URL. By using this in concert with a second,
+vulnerable application, an attacker might be able to use this method to send
+data from the Cordova application to the network.
+
+The latest release of Cordova Android takes steps to block explicit Android
+intent urls, so that they can no longer be used to start arbitrary applications
+on the device.
+
+Implicit intents, including URLs with schemes such as "tel", "geo", and "sms"
+can still be used to open external applications by default, but this behaviour
+can be overridden by plugins.
+
+Upgrade path:
+Developers who are concerned about this should rebuild their applications with
+Cordova Android 3.5.1.
+
+Credit:
+This issue was discovered by David Kaplan and Roee Hay of IBM Security Systems.
