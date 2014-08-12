@@ -1,62 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/11/1
-Message-ID: <mpro.n8isj3002s6w40j6j.taviso@cmpxchg8b.com>
-Date: Thu, 10 Jul 2014 16:42:39 -0700
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/12/6
+Message-ID: <CAOP=4wi3cJpTV0N4rz+NWGU7R+-OEFG8n7bjZOX3uQOPjDWEWQ@mail.gmail.com>
+Date: Tue, 12 Aug 2014 14:48:28 -0700
+From: Kenton Varda <kenton@...dstorm.io>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+Subject: CVE Request: ro bind mount bypass using user namespaces
 Content-Type: text/plain; charset=utf-8
 
-Rich Felker <dalias@...c.org> wrote:
+Due to a bug in the Linux kernel's implementation of remount, on systems
+with unprivileged user namespaces enabled, it is possible for an
+unprivileged user to gain write access to any visible read-only bind mount.
+It is also possible to bypass flags like nodev, nosuid, and noexec.
 
-> On Thu, Jul 10, 2014 at 08:52:24PM +0200, Florian Weimer wrote:
-> > Stephane Chazelas discovered that directory traversal issue in locale
-> > handling in glibc.  glibc accepts relative paths with ".." components in
-> > the LC_* and LANG variables.  Together with typical OpenSSH
-> > configurations (with suitable AcceptEnv settings in sshd_config), this
-> > could conceivably be used to bypass ForceCommand restrictions (or
-> > restricted shells), assuming the attacker has sufficient level of access
-> > to a file system location on the host to create crafted locale
-> > definitions there.
-> 
-> Am I correct in assuming this affects most typical git setups (e.g.
-> gitolite) using ssh authorized_keys files with forced commands, where the
-> malicious file could simply be created as part of the git repository? Or
-> are these usually setup to filter the environment?
-> 
+This problem affects sandboxing / containerization systems that do not
+expose the regular filesystem to the sandboxed process, but do expose a
+bind-mounted view of that filesystem using these flags to enforce security.
+This bug may enable a sandbox break-out. Sandboxes which have used
+seccomp-bpf to disable the "mount" system call or to disable user
+namespaces are likely safe.
 
-I knew about this behaviour (I imagine lots of people were), but hadn't
-considered it a vulnerability - it's more restricted across setuid, so had
-assumed it was intentionally permitted. Locale files are not executable
-code, so even if you imagine a ForceCommand+AcceptEnv configuration *and*
-have the ability to create a message catalog, don't you still need another
-bug to exploit this?
+Eric Biederman has proposed the following patches to fix the problem:
 
-However, admittedly there was that zonefile parsing vulnerability and IIRC
-TZ also permits directory traversal when not setuid. TZ is just as plausibly
-part of AcceptEnv as LC_ALL, so maybe if it wasn't intentional there's at
-least a weak argument there for calling it a glibc vulnerability.
+https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=a6138db815df5ee542d848318e5dae681590fccd
+https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=07b645589dcda8b7a5249e096fece2a67556f0f4
+https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=9566d6742852c527bf5af38af5cbb878dad75705
+https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=ffbc6f0ead47fa5a1dc9642b0331cb75c20a640e
+https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=db181ce011e3c033328608299cd6fac06ea50130
 
-Anyway, if we're clearing up old unexploitable glibc bugs, here's another
-one to consider. LD_PROFILE uses the inherited umask, so you can create
-root-owned world writable files like this:
-
-$ umask 0
-$ LD_PROFILE=libc.so.6 su --version
-su from util-linux 2.24.2
-$ ls -l /var/profile
--rw-rw-rw-. 1 root taviso 18M Jul 10 16:12 libc.so.6.profile
-
-I hadn't reported it as you have to have created /var/profile, and...
-
-$ sudo yum whatprovides /var/profile
-No matches found
-
-But maybe some other distros have a package (or a bug that lets you create
-directories), I havn't checked. There are a bunch of ways to abuse this if
-you have /var/profile.
-
-Tavis.
-
-p.s. I think LD_HWCAP_MASK is still not in unsecure_vars :-)
+-Kenton Varda, Sandstorm.io
 
