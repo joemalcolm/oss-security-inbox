@@ -1,54 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/6
-Message-ID: <CANmXKc4quVKOdVY26Mid-MRQHRwc2yPbd+hUWonhKrj-1pBhOg@mail.gmail.com>
-Date: Wed, 30 Apr 2014 11:33:30 +0100
-From: Conor McCarthy <mr.spuratic@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: rxvt@...morp.de
-Subject: CVE request: rxvt-unicode user-assisted arbitrary commands execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/12/1
+Message-ID: <20140812120629.GJ30701@core.inversepath.com>
+Date: Tue, 12 Aug 2014 14:06:29 +0200
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2014-006] Ganeti insecure archive permission
 Content-Type: text/plain; charset=utf-8
 
-All,
- I would like to request a CVE for the following issue.
 
-rxvt-unicode-9.20 (aka urxvt) includes a security update [1] to address a
-user-assisted arbitrary commands execution issue. This can be exploited
-by the unprocessed display of certain escape sequences in a crafted text
-file or program output.
+#2014-006 Ganeti insecure archive permission
 
-Vendor/author Marc Lehmann was notified last week, the updated version was
-released on 2014-04-26. My thanks to Marc for his prompt responses and
-valuable assistance.
+Description:
 
-This is a similar attack vector to CVE-2003-0063, CVE-2008-2383,
-and CVE-2010-2713.
+Ganeti, an open source virtualisation manager, suffers from an insecure file
+permission vulnerability that leads to sensitive information disclosure.
 
-rxvt-unicode supports the xterm OSC escape sequences[2] to read, write and
-delete the X properties of the terminal window. This function is in the
-group of OSC escapes which allow read/write access to the icon name and
-window title, however read access to those is allowed only with the
-"-insecure" command line option. The update in 9.20 makes "-insecure"
-a requirement for read access to the window properties also.
+The Ganeti upgrade command 'gnt-cluster upgrade' creates an archive of the
+current configuration of the cluster (e.g. the contents of
+'/var/lib/ganeti').  The archive is named following the pattern ganet*.tar
+and is written to '/var/lib/'. Such archives are written with too lax
+permissions that make it possible to access them as unprivileged user.
 
-This OSC feature was added to rxvt-unicode-2.7, so I believe it affects all
-versions from 2.7 to 9.19 inclusive. (I have confirmed it present in version
-3.0, prior to that parts of the code are not supported by a contemporary
-g++ .)
+The configuration archive contains sensitive information, including SSL keys
+for the inter-node RPC communication as well as the credentials for the
+remote API (RAPI). Such information can be used to control various operations
+of the cluster, including shutting down and removing instances and nodes from
+the cluster, or assuming the identity of the cluster in a MITM attack.
 
-Arbitrary window properties can be written, and arbitrary properties can
-be read, placing the contents in the terminal input buffer, as is the
-convention. From a bash prompt in urxvt (9.19):
+This vulnerability only affects Ganeti clusters meeting the following
+criterias:
 
-    $ echo $'\e]3;?WM_CLASS\x07'; read -d $'\a' x; printf "\n%q\n" "$x";
-    ^[]3;urxvt^G
-    $'\E]3;urxvt'
+  * The cluster is running Ganeti version 2.10.0 or higher.
+  * The upgrade command was run, for example when upgrading from 2.10 to
+    2.11.
+  * Unprivileged users have access to the host machines and in particular
+    to the cluster master.
 
-It follows that arbitrary command sequences can be constructed using this,
-and unintentionally executed if used in conjunction with various other
-escape sequences.
+In the fixed releases the upgrade command sets the permissions of the
+archives properly. However, in case previous versions have created an unsafe
+archive already, the following mitigations are advised:
 
-Regards,
- Conor.
+  * Remove the access to the archive for unprivileged users (for example
+    by running 'chmod 400 /var/lib/ganeti*.tar').
+  * Renew the SSL keys by running 'gnt-cluster renew-crypto'. You may need
+    to pass the --new-cluster-certificate, --new-confd-hmac-key,
+    --new-rapi-certificate, --new-spice-certificate and
+    --new-cluster-domain-secret flags.
+  * Renew the RAPI credentials by editing the '/var/lib/ganeti/rapi_users'
+    file. Note that this will need to be updated in any out-of-the-cluster
+    RAPI client.
+  * Look for any other information regarded as secret in '/var/lib/ganeti'
+    and change it. For example VNC and SPICE passwords are not by default
+    kept there, but could, if Ganeti is so configured.
 
-[1] http://dist.schmorp.de/rxvt-unicode/Changes
-[2] http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+Affected version:
+
+Ganeti >= 2.10.0, <= 2.10.6
+
+Ganeti >= 2.11.0, <= 2.11.4
+
+Fixed version:
+
+Ganeti >= 2.10.7
+
+Ganeti >= 2.11.5
+
+Credit: vulnerability report, PoC received from Ganeti authors Helga Velroyen
+       <helgav AT google.com> and Guido Trotter <ultrotter AT google.com>,
+       patch created by Apollon Oikonomopoulos.
+
+CVE: N/A
+
+Timeline:
+
+2014-08-07: vulnerability report received
+2014-08-07: disclosure coordinated on 2014-08-12
+2014-08-08: contacted affected vendors
+2014-08-12: advisory release
+
+References:
+http://git.ganeti.org/?p=ganeti.git;a=commit;h=a89f62e2db9ccf715d64d1a6322474b54d2d9ae0
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2014-006.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
