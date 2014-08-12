@@ -1,47 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/5
-Message-ID: <20141112111556.GB4976@suse.de>
-Date: Wed, 12 Nov 2014 12:15:56 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-request: systemd-resolved DNS cache poisoning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/12/4
+Message-Id: <E1XHBja-00085c-GD@xenbits.xen.org>
+Date: Tue, 12 Aug 2014 13:03:26 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 97 (CVE-2014-5146,CVE-2014-5149) - Long latency virtual-mmu operations are not preemptible
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-systemd-resolved contains a caching resolver, which has to be enabled via
-/etc/nsswitch.conf in order to be integrated.
+      Xen Security Advisory CVE-2014-5146,CVE-2014-5149 / XSA-97
+                              version 3
 
-Any local name resolvings via getaddrinfo() etc. are then routed via DBUS
-to systemd-resolved which resolves the name and caches it according
-to TTL from the answer.
+        Long latency virtual-mmu operations are not preemptible
 
-However, systemd-resolved does not implement any of the hardening
-recommendations of rfc5452.
+UPDATES IN VERSION 3
+====================
 
-At its simplest, an attacker triggers a query to a domain he controls
-via SMTP or SSH-login. Upon receipt of the question, he can just add
-any answer he wants to have cached to the legit answer he provides
-for the query, e.g. providing two anser RR's: One for the question asked
-and one for a question that has never been asked - even if the DNS server
-is not authoritative for this domain.
+Public release.
 
-The attacker would need to guess the source port of the origin since he only
-sees the query from victims upstream DNS, but since systemd-resolved also uses fix
-source ports, thats easy.
-systemd-resolved creates cache entries soley from what is provided in
-the DNS replies.
+ISSUE DESCRIPTION
+=================
 
-This issue has already been reported to upstream.
+Some MMU virtualization operations on HVM guests must process every
+page assigned to a guest.  For larger guests, this can tie up a vcpu
+for a significant amount of time, as the operations are not
+preemptible.
 
-Thanks to Santa L. Helper for private discussion. 
+For guests using Hardware Assisted Paging (HAP, see below) this is
+CVE-2014-5146.  For guests not using HAP this is CVE-2014-5149.
 
-Sebastian
+IMPACT
+======
 
--- 
+A malicious HVM guest with a large allocation of shadow/p2m RAM
+can mount a denial of service attack affecting the whole system.
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+VULNERABLE SYSTEMS
+==================
 
+ARM systems are not vulnerable.
+
+All x86 Xen versions are vulnerable.
+
+The vulnerability is only exposed to HVM guests.
+
+In the default configuration, the vulnerability is only exposed to
+large guests (guests assigned more than 128Gbytes of memory).
+
+MITIGATION
+==========
+
+Running only PV guests, or only smaller guests will avoid this
+problem.
+
+Since the vulnerability actually depends on the guest's shadow memory,
+if you are overriding the default allocation (which is about 0.5% of
+guest RAM) by using the "shadow_memory=" VM configuration file option,
+you should adjust your idea of a 'smaller' guest accordingly.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich.
+
+RESOLUTION
+==========
+
+For HAP-enabled guests, the attached patch resolves ths issue.
+
+HAP (Hardware Assisted Paging, aka nested paging) is enabled by
+default if the system is suitably capable.  The VM configuration file
+can disable or enable HAP explicitly by setting "hap=0" or "hap=1".
+HAP can also be globally disabled by specifying "hap=off" on the
+hypervisor command line.
+
+There is no resolution for guests using shadow pagetables (i.e., not
+using HAP) at this time.
+
+xsa97-hap-unstable.patch                             xen-unstable
+xsa97-hap-4.4.patch                                  Xen 4.4.x
+xsa97-hap-4.3.patch                                  Xen 4.3.x
+xsa97-hap-4.2-prereq.patch, xsa97-hap-4.2.patch      Xen 4.2.x
+
+$ sha256sum xsa97*.patch
+c9e0e9f136db1b976ea371be10430598a7f21b4a33b4849f2081566657ff5da1  xsa97-hap-4.2.patch
+c525a99263eed6f93fad685ae9dad1ae10c8930345ec52659211541640797bb5  xsa97-hap-4.2-prereq.patch
+cfab6521221a5058a0dfbb6d59c3c4cd0e7f4239bb6cbee2723de22c33caafda  xsa97-hap-4.3.patch
+138511f2fd8362366e09dda18443387886ec4397eecc1a2f6a7e85643bd415e8  xsa97-hap-4.4.patch
+58c56daa01f20be0317700d383dfbba8de35695bd38a9860c0c0463181d76351  xsa97-hap-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJT6hBmAAoJEIP+FMlX6CvZ8sgIAIqtUEu6CS5+H3enavmmLhuh
+PGLCqQOBVWn99+m6bMqk+WvZOkW9CLxiX6+78XsheJlmUFBtHc3rG53wR0voo6Vr
+BXyU3XY2n4aEh1klstS3gq/J37L86fEi2a+MaAePbPZ4qdWvFh3zDhRrLTQ/TDvK
+0tfze9fF6K24Ab7jAcstF2gn+NhrrS3L3pvvgD/P5T1LR8HrEsyyhTlf7c34T5cp
+RnSM19CUqAVAJeyN6WI2meZ3C+nvxLiNRUEQQikf4yCKqGxevzjBLAbXlcw4ELnF
+9rG7Yd1aRJh4pQkViFDIdB3x8Xb9HuT7kFsQ7kBZc3an9JkbxxTGQd82XjODM1Q=
+=A/Ph
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa97-hap-4.2.patch" of type "application/octet-stream" (15396 bytes)
+
+Download attachment "xsa97-hap-4.2-prereq.patch" of type "application/octet-stream" (15663 bytes)
+
+Download attachment "xsa97-hap-4.3.patch" of type "application/octet-stream" (15369 bytes)
+
+Download attachment "xsa97-hap-4.4.patch" of type "application/octet-stream" (15406 bytes)
+
+Download attachment "xsa97-hap-unstable.patch" of type "application/octet-stream" (15362 bytes)
