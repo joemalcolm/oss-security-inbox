@@ -1,223 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/20/2
-Message-ID: <CAEDdjHeefif2i1O8W6TfqLtFawkAPVPuF2vkzms+=GL8o305Bg@mail.gmail.com>
-Date: Sun, 20 Apr 2014 15:36:05 +0100
-From: Pedro Ribeiro <pedrib@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Remote code execution in Pimcore CMS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/12/3
+Message-Id: <E1XHBjh-00087j-Aj@xenbits.xen.org>
+Date: Tue, 12 Aug 2014 13:03:33 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 103 (CVE-2014-5148) - Flaw in handling unknown system register access from 64-bit userspace on ARM
 Content-Type: text/plain; charset=utf-8
 
-On 19 April 2014 18:39,  <cve-assign@...re.org> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> I have discovered a PHP object injection in Pimcore CMS.
->> https://github.com/pedrib/PoC/blob/master/pimcore-2.1.0.txt
->
-> MITRE currently doesn't look for "CVE request" in the Subject line.
-> For some posts, the right number of CVE IDs can be determined more
-> quickly than for others. So, in this case, we'll just ask for
-> additional information.
->
-> pimcore-2.1.0.txt says:
->
->   Payload [1] abuses several Zend classes to achieve remote code
->   execution
->
-> and then says:
->
->   payload [3] does not work on Pimcore versions between 2.0.1 and
->   2.1.0
->
-> Is it also true that:
->
->   payload [1] does not work on Pimcore versions between 2.0.1 and
->   2.1.0
->
-> ?
->
-> The payload [1] code is obviously a close derivative of the payload
-> [3] code, but they are not identical. We're not sure whether there was
-> an important reason for mentioning [3] specifically.
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I agree the advisory is too ambiguous, let me state the facts for clarity:
-- All versions suffer from the same flaw, passing user data to the
-unserialize() function, therefore in theory it is possible to achieve
-PHP code execution in all versions from 1.4.9 up to and including
-2.1.0.
-- At this point, I can only prove code execution in versions 1.4.9 and
-1.4.10 with payload [1] under the condition of running under PHP 5.3.3
-or lower.
-- Version 2.0.0 and above should only run in PHP 5.4+. However, this
-is only enforced in version 2.0.1 and above. Therefore it might be
-possible to run 2.0.0 on PHP 5.3.3, but I have not attempted this, and
-it might be unlikely to find it deployed it anywhere in this
-configuration.
-- For versions 1.4.9 and 2.1.0, running under any PHP version, payload
-[3] provides a proof of concept for arbitrary file deletion.
+              Xen Security Advisory CVE-2014-5148 / XSA-103
+                                version 3
 
-However, a fellow researcher has sent me a private mail indicating
-that it might be possible to achieve code execution on any PHP
-version. I am working on a PoC for that but it's not available at this
-point.
+ Flaw in handling unknown system register access from 64-bit userspace on ARM
 
-> For this statement:
->
->   Version 2.0.0 might be vulnerable if anyone is running it
->   on PHP versions <= 5.3.3... which according to the developers is
->   not possible, but the requirement was only enforced in 2.0.1.
->
-> First, we think that "Version 2.0.0 might be vulnerable" means
-> "Version 2.0.0 might be vulnerable to exactly the same remote code
-> execution problem that existed in 1.4.9 to 1.4.10 (inclusive)."
->
+UPDATES IN VERSION 3
+====================
 
-Correct.
+Public release.
 
-> Also, we think you mean that the correct set of affected versions has
-> two possibilities. The set is possibly disputed by the developers, but
-> it is either:
->
->    1.4.9 to 1.4.10 (inclusive): Remote code execution (when server is running PHP <= 5.3.3).
->
-> or
->
->    1.4.9 to 1.4.10 (inclusive) and 2.0.0: Remote code execution (when server is running PHP <= 5.3.3).
->
-The 2nd one is correct, 1.4.9, 1.4.10 and 2.0.0.
+ISSUE DESCRIPTION
+=================
 
-> Also, based on
-> http://sourceforge.net/projects/pimcorebuilds/files/archive/ it seems
-> that version 1.4.10 was the last 1.x version. In other words, it's not
-> a situation in which the problem was fixed within a later 1.x version,
-> but then reappeared in 2.0.0 because of a regression.
->
-> Is all of this correct?
->
+When handling an unknown system register access from 64-bit userspace
+Xen would incorrectly return to the second instruction of the trap
+handler for faults in kernel space rather than the first instruction
+of the trap handler for faults in 64-bit userspace.
 
-Correct.
+Any user in a guest which is running a 64-bit kernel who is able to
+spawn a 64-bit process can cause a trap to the kernel to be taken at
+an unexpected (but not user controlled) exception address.
 
-> It seems very likely that the right number of CVE IDs is two, but the
-> questions above can clarify that. (Separate CVE IDs are needed when
-> the usable attack methodology differs across versions.)
->
+Known versions of Linux in the default configuration will Oops and kill the
+offending process, and therefore avoid this vulnerability. However local
+configuration may turn such an Oops into a kernel panic, and therefore a
+guest denial of service.
 
+IMPACT
+======
 
-So in conclusion:
-- theoretically code execution on all version
-- in practice, code execution in 1.4.9 and 1.4.10 and arbitrary file
-deletion in 1.4.9 to 2.1.0
+Depending on the guest kernel implementation, kernel crash (guest DoS)
+or privilege elevation to that of the guest kernel cannot be ruled
+out.
 
-It's all the same flaw and the same attack methodology, just different
-proof of concept. At the moment I am not able to achieve code
-execution on 2.0.0 and above with PHP > 5.3.3, but this might be just
-a question of time.
-So I think it is really only one CVE number.
+This issue does not enable an attack on the host.
 
-Regards,
-Pedro
+VULNERABLE SYSTEMS
+==================
 
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
->
-> iQEcBAEBAgAGBQJTUrQLAAoJEKllVAevmvmskG0H/Ri4cooLcXXm54PAtXLu6aX7
-> WdlXx2KQuypsyada/3rXXOSNRqowJoBJiB3KGeyt6Y3SUiLG/2hsmoOqMotEXyMB
-> TRTkbKn0PZOGZMCzaAQN2iwJnAPfcU5I6YEP2s7D6DjiT0KXSGh5kRsuolVeWqMD
-> FPxxxp3blLDj+7rVX59PLJREYN8y2go7qIKVdAzv+aZ4nrKeIt+c0msbBfyqNvxe
-> +vEW6ByZw8sFxFIFMUXhS2v6GN5kssFMWNA46594BzQcwaXIZ4knqTAENgbarXp7
-> eAojDQ7MVTDnWy5oqmO3Ma3Ys5uURpWMNaQtyOhOU+JK1wTmuyj0JjessLEFwXA=
-> =kCC0
-> -----END PGP SIGNATURE-----
+64-bit ARM systems may be vulnerable, depending on the guest kernel.
 
+All versions of Linux released by Linux upstream to date avoid this
+vulnerability.  Systems based on modified versions of Linux may be
+vulnerable.
 
+32-bit ARM systems, and X86 systems, are not vulnerable.
 
+MITIGATION
+==========
 
+There is no known mitigation for this issue.
 
-On 19 April 2014 18:39,  <cve-assign@...re.org> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> I have discovered a PHP object injection in Pimcore CMS.
->> https://github.com/pedrib/PoC/blob/master/pimcore-2.1.0.txt
->
-> MITRE currently doesn't look for "CVE request" in the Subject line.
-> For some posts, the right number of CVE IDs can be determined more
-> quickly than for others. So, in this case, we'll just ask for
-> additional information.
->
-> pimcore-2.1.0.txt says:
->
->   Payload [1] abuses several Zend classes to achieve remote code
->   execution
->
-> and then says:
->
->   payload [3] does not work on Pimcore versions between 2.0.1 and
->   2.1.0
->
-> Is it also true that:
->
->   payload [1] does not work on Pimcore versions between 2.0.1 and
->   2.1.0
->
-> ?
->
-> The payload [1] code is obviously a close derivative of the payload
-> [3] code, but they are not identical. We're not sure whether there was
-> an important reason for mentioning [3] specifically.
->
-> For this statement:
->
->   Version 2.0.0 might be vulnerable if anyone is running it
->   on PHP versions <= 5.3.3... which according to the developers is
->   not possible, but the requirement was only enforced in 2.0.1.
->
-> First, we think that "Version 2.0.0 might be vulnerable" means
-> "Version 2.0.0 might be vulnerable to exactly the same remote code
-> execution problem that existed in 1.4.9 to 1.4.10 (inclusive)."
->
-> Also, we think you mean that the correct set of affected versions has
-> two possibilities. The set is possibly disputed by the developers, but
-> it is either:
->
->    1.4.9 to 1.4.10 (inclusive): Remote code execution (when server is running PHP <= 5.3.3).
->
-> or
->
->    1.4.9 to 1.4.10 (inclusive) and 2.0.0: Remote code execution (when server is running PHP <= 5.3.3).
->
-> Also, based on
-> http://sourceforge.net/projects/pimcorebuilds/files/archive/ it seems
-> that version 1.4.10 was the last 1.x version. In other words, it's not
-> a situation in which the problem was fixed within a later 1.x version,
-> but then reappeared in 2.0.0 because of a regression.
->
-> Is all of this correct?
->
-> It seems very likely that the right number of CVE IDs is two, but the
-> questions above can clarify that. (Separate CVE IDs are needed when
-> the usable attack methodology differs across versions.)
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
->
-> iQEcBAEBAgAGBQJTUrQLAAoJEKllVAevmvmskG0H/Ri4cooLcXXm54PAtXLu6aX7
-> WdlXx2KQuypsyada/3rXXOSNRqowJoBJiB3KGeyt6Y3SUiLG/2hsmoOqMotEXyMB
-> TRTkbKn0PZOGZMCzaAQN2iwJnAPfcU5I6YEP2s7D6DjiT0KXSGh5kRsuolVeWqMD
-> FPxxxp3blLDj+7rVX59PLJREYN8y2go7qIKVdAzv+aZ4nrKeIt+c0msbBfyqNvxe
-> +vEW6ByZw8sFxFIFMUXhS2v6GN5kssFMWNA46594BzQcwaXIZ4knqTAENgbarXp7
-> eAojDQ7MVTDnWy5oqmO3Ma3Ys5uURpWMNaQtyOhOU+JK1wTmuyj0JjessLEFwXA=
-> =kCC0
-> -----END PGP SIGNATURE-----
+CREDITS
+=======
+
+This issue was reported as a bug by Riku Voipio, discovered via
+Linaro's LAVA testing and was diagnosed as a security issue by Ian
+Campbell.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+The patch for XSA-103 (specifically, xsa102-*-02.patch) must be
+applied first.
+
+xsa103-unstable.patch        xen-unstable
+xsa103-4.4.patch             Xen 4.4.x
+
+$ sha256sum xsa103*.patch
+fee2e0be91d08aa28ba44b616edd99a1bfcdec419966c3f9e843a842d649e4ea  xsa103-4.4.patch
+838d059618d31b272ec10ac8cbb6613a68b634c98418aff2a33cd514ed06b55a  xsa103-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJT6hBtAAoJEIP+FMlX6CvZ6+sIAMiAJEzJl2pWk61kr3QT1llk
+lYYEEX94QxxJIzg62o4RnMzYZXsmOT6y2YP62nEziRbBaFcgmB0bNrx+Qc52+QWk
+iea2lYAJUGmEdwnY6x2raLF6Wd2alCjZxXF1UzSJJ6Vu8WiTNFXHI+mKlc9JY4bN
+aStmfgvN3j6Nmjav8k9ar/8QVfc4Oe0xOlzwFt5DlNHewExWN1y+HtPnrBTkGu5K
+ckgjvbxs4/SF4No59XqY0XxdpEDIEXo46keJ07DG6/nVzIl83ZtpBhxiNX8xfz91
+ZYzu6feGbgtvy1+utxo/l3qBAn7TrDXn58mLTgKTM2dD3D4Crv9tKLuOXF1xVLM=
+=hjBc
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa103-4.4.patch" of type "application/octet-stream" (1078 bytes)
+
+Download attachment "xsa103-unstable.patch" of type "application/octet-stream" (1082 bytes)
