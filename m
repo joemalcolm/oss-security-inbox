@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/28/3
-Message-Id: <201401282014.s0SKEdw3007820@linus.mitre.org>
-Date: Tue, 28 Jan 2014 15:14:39 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Linux kernel: netfilter: nf_nat: leakage of uninitialized buffer in IRC NAT helper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/12/7
+Message-ID: <53EAA926.5070809@amacapital.net>
+Date: Tue, 12 Aug 2014 16:54:14 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: ro bind mount bypass using user namespaces
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> Linux kernel built with the NetFilter Connection Tracking(NF_CONNTRACK)
-> support for IRC protocol(NF_NAT_IRC), is vulnerable to an information leakage
-> flaw. It could occur when communicating over direct client-to-client IRC
-> connection(/dcc) via a NAT-ed network. Kernel attempts to mangle IRC TCP
-> packet's content, wherein an uninitialised 'buffer' object is copied to a
-> socket buffer and sent over to the other end of a connection.
+On 08/12/2014 02:48 PM, Kenton Varda wrote:
+> Due to a bug in the Linux kernel's implementation of remount, on systems
+> with unprivileged user namespaces enabled, it is possible for an
+> unprivileged user to gain write access to any visible read-only bind mount.
+> It is also possible to bypass flags like nodev, nosuid, and noexec.
 > 
-> https://git.kernel.org/linus/2690d97ade05c5325cbf7c72b94b90d265659886
-> https://bugzilla.redhat.com/show_bug.cgi?id=1058748
+> This problem affects sandboxing / containerization systems that do not
+> expose the regular filesystem to the sandboxed process, but do expose a
+> bind-mounted view of that filesystem using these flags to enforce security.
+> This bug may enable a sandbox break-out. Sandboxes which have used
+> seccomp-bpf to disable the "mount" system call or to disable user
+> namespaces are likely safe.
 
-Use CVE-2014-1690.
+nosuid/nodev failures are probably exploitable for full root in many
+common configurations.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS6A6QAAoJEKllVAevmvms8oUIAIue3EnbDUNmDojuAhfS2G8W
-ar7B6BknStwQo6VggXIwqrmFyLbf8aykupuAXTusCE3fIbR5Mz2l1GVF1jbJRjfT
-HRvG40HPTyI+AXWRoAiCHP9DdsN4Q55CV+HDd/8zUDllRVWjZQ3B+1lP6HK+X9yp
-j8Jlqvmdz1sac9F01/OhfvCJlwzajGNEn1gZMHMzNao0+QpEBhIoqbAIuNdwn44Z
-tWTe2Y/rXhayjY5QHzxbn+umC+rHDppJzuqstjzva0Dr6RAYAD+tWif1d/qGfwty
-8boM7M/doelpKjR6FSPJUXYzH1bHybAbtj6ho6jnwK5hgqrgmnu+l3ojlOjLUoQ=
-=C1pO
------END PGP SIGNATURE-----
+--Andy
