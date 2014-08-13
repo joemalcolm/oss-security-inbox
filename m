@@ -1,53 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/13
-Message-ID: <5F0E9E9A-1F99-41F5-8936-2D4A5B9EF633@vmware.com>
-Date: Wed, 16 Jul 2014 15:54:19 +0000
-From: Ramon de C Valle <rdecvalle@...are.com>
-To: Tomas Hoger <thoger@...hat.com>
-CC: "cve-assign@...re.org" <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "mmcallis@...hat.com" <mmcallis@...hat.com>
-Subject: Re: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/6
+Message-ID: <CAOP=4wiVi_nL2LCnB1Ee0FKxoyMFaP=xb985_kAu=mwGeC+vyQ@mail.gmail.com>
+Date: Wed, 13 Aug 2014 00:18:40 -0700
+From: Kenton Varda <kenton@...dstorm.io>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: ro bind mount bypass using user namespaces
 Content-Type: text/plain; charset=utf-8
 
+I'm happy with however you want to assign credit here, but for
+clarification:
 
-On Jul 16, 2014, at 12:16 PM, Tomas Hoger <thoger@...hat.com> wrote:
+I actually observed that all these bits could be modified. My first
+observation was with nosuid. But, I thought they were just the same issue
+applied to different bits in the same bitfield. I specifically used the RO
+bit in my PoC. Looking back, it looks like I didn't explicitly point out
+which other bits were affected, but Eric quickly re-discovered them, and
+also discovered from reviewing the code that the other bits had even fewer
+guards against modification compared to the RO bit.
 
-> On Tue, 15 Jul 2014 15:10:05 +0000 Ramon de C Valle wrote:
-> 
->>> First, we don't know what "The same sample works under 1.9.3" means.
->>> It might mean "The same AWS sample is also a working vulnerability
->>> reproducer when using Ruby 1.9.3." It might instead mean "With this
->>> AWS sample, my program works normally when using Ruby 1.9.3; in
->>> other words, no vulnerability is observed.”
->> 
->> It meant that his sample worked normally when he used Ruby 1.9.3. (I
->> assumed this because the version he specified as containing the bug
->> in the report was Ruby 2.1, and specified Ruby 2.0 as requiring
->> backport, but not Ruby 1.9.3.)
-> 
-> It's reasonable to assume that reporter did not touch the "Backport:"
-> field at all.  The issue was reported for ruby 2.1.2p168 (see the "ruby
-> -v" field).  Backport value was original set to:
-> 
->  2.0.0: UNKNOWN, 2.1: UNKNOWN
-> 
-> which happens to be the default value pre-filed into the field for you
-> by the bug tracker when you try create a new issue.  You can easily
-> check by visiting:
-> 
-> https://urldefense.proofpoint.com/v1/url?u=https://bugs.ruby-lang.org/projects/ruby-trunk/issues/new&k=oIvRg1%2BdGAgOoM1BIlLLqw%3D%3D%0A&r=bZpuVimtRQUx3xHFIlu%2BaciWn3GMzM%2FBnwDoBm5jP8U%3D%0A&m=lvYqyGvlOo5QOKyQaxN7hxz4fIAGdWpnzcVczLGTTHE%3D%0A&s=9741b68b74eb44558252f0c9758238f5eb18199838d2f3821f2214c00241ff20
-> 
-> All changes from UNKNOWN to REQUIRED were not done by the reporter, as
-> you can see from the bug comments.
-> 
-> I don't think you can draw the conclusion based on the Backport field.
-Yes, you’re right. I didn’t notice that. So, it’s still unclear what the author meant with that statement (i.e., Ruby 1.9.3 may also be affected if there exists another issue).
+Andrew Lutomirski has further discovered that this problem can be used to
+escalate a regular user to root privileges on typical Linux configurations,
+independent of any sandboxing effort.
 
-> 
-> -- 
-> Tomas Hoger / Red Hat Security Response Team
---
-Ramon de C Valle
-VMware Product Security Engineering
+Thanks,
+-Kenton
 
+On Tue, Aug 12, 2014 at 10:49 PM, <cve-assign@...re.org> wrote:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> We are assigning two CVE IDs because the available information is that
+> there were two discoverers. Even if the discoverer information is
+> later clarified, there will still be these two CVE IDs.
+>
+> >
+> https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=db181ce011e3c033328608299cd6fac06ea50130
+> >
+> > Kenton Varda <kenton@...dstorm.io> discovered that by remounting a
+> > read-only bind mount read-only in a user namespace the
+> > MNT_LOCK_READONLY bit would be cleared, allowing an unprivileged user
+> > to the remount a read-only mount read-write.
+>
+> Use CVE-2014-5206.
+>
+>
+> >
+> https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=9566d6742852c527bf5af38af5cbb878dad75705
+> >
+> > While investigating the issue where in "mount --bind -oremount,ro ..."
+> > would result in later "mount --bind -oremount,rw" succeeding even if
+> > the mount started off locked I realized that there are several
+> > additional mount flags that should be locked and are not.
+>
+> Use CVE-2014-5207.
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJT6vjTAAoJEKllVAevmvmsEI4H+wWrFmadZJwDhgU8i5IfiVIl
+> Oz/iPTeSCelGIH6BA5GAMbaEmMUf/ay0Jpa31y6MhOiw1KMsGGFvzGkLoy3Pb/T5
+> G682hBmQbZD1OnBdk3z2EnMd5i0/B3kzc1rXi4m9QJcmi216xnJnD0+lEVbRj5nf
+> jruRJplaRiwYuXszZSWhAOBVMFb5MJ/4aNmUkKdpiywQjOWhykgjNNyxXby9Rxpo
+> AkoLecJPn/IJ4mRmLTp3vo1x/GZUXmXFvKfsJdB5Ps+kOnX7ptMyap4GTjSvXcIc
+> FSJ9Zfad0iAnflEQTAKEVHFu5vSzbUdWVC+qMapVjZXRnku8y3UzYJVEvqQDUTc=
+> =Qzne
+> -----END PGP SIGNATURE-----
+>
+
