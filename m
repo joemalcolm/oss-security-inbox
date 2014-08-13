@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/21
-Message-ID: <89A5CF7D-85F3-4904-807C-71D718E70C65@dwheeler.com>
-Date: Tue, 07 Oct 2014 07:59:05 -0400
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: oss-security@...ts.openwall.com,Hanno Böck <hanno@...eck.de>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/1
+Message-ID: <CALCETrVE3Lb3Vrhqp6ejO_oLrskFKkvRriQOxupS1vPFQQ74Sg@mail.gmail.com>
+Date: Tue, 12 Aug 2014 22:04:28 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: ro bind mount bypass using user namespaces
 Content-Type: text/plain; charset=utf-8
 
-> * Heartbleed is an out of bounds memory read. Well understood and yes,
-  it should be possible to implement mitigations against these kinds of
-  things.
+On Tue, Aug 12, 2014 at 4:54 PM, Andy Lutomirski <luto@...capital.net> wrote:
+> On 08/12/2014 02:48 PM, Kenton Varda wrote:
+>> Due to a bug in the Linux kernel's implementation of remount, on systems
+>> with unprivileged user namespaces enabled, it is possible for an
+>> unprivileged user to gain write access to any visible read-only bind mount.
+>> It is also possible to bypass flags like nodev, nosuid, and noexec.
+>>
+>> This problem affects sandboxing / containerization systems that do not
+>> expose the regular filesystem to the sandboxed process, but do expose a
+>> bind-mounted view of that filesystem using these flags to enforce security.
+>> This bug may enable a sandbox break-out. Sandboxes which have used
+>> seccomp-bpf to disable the "mount" system call or to disable user
+>> namespaces are likely safe.
+>
+> nosuid/nodev failures are probably exploitable for full root in many
+> common configurations.
 
-It is not only possible, I have already posted a list of ways to find Heartbleed:
-http://www.dwheeler.com/essays/heartbleed.html
+Yup.  I have a fairly reliable exploit now.  Will post the code in a
+couple of weeks.
 
-I think identifying specific ways to counter classes of vulnerabilities is really important.
-
-> What class of bug is Shellshock? "Weird feature invented in
-  pre-Internet era"? How do you conquer this class of bugs?
-
-I am still struggling with this one.  I am trying to create that list here:
-http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
-
-But to be honest, that list is pretty pathetic. This is a challenging class of vulnerability to detect or prevent ahead of time. Ideas would be very welcome.
-
---- David A.Wheeler
+--Andy
