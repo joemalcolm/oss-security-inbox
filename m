@@ -1,88 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/17
-Message-Id: <E1XRKar-0006Os-UL@xenbits.xen.org>
-Date: Tue, 09 Sep 2014 12:32:21 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 107 - Mishandling of uninitialised FIFO-based event channel control blocks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/3
+Message-Id: <20140813054741.0C8C41F026F@smtpksrv1.mitre.org>
+Date: Wed, 13 Aug 2014 01:47:41 -0400 (EDT)
+From: cve-assign@...re.org
+To: nacin@...dpress.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: WordPress 3.9.2 release - needs CVE's
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-                    Xen Security Advisory XSA-107
+>> -Fixes a possible but unlikely code execution when processing widgets
+>> (WordPress is not affected by default), discovered by Alex Concha of
+>> the WordPress security team.
 
-    Mishandling of uninitialised FIFO-based event channel control blocks
+> This is an unsafe serialization vulnerability. Affected versions 3.9 and
+> 3.9.1.
+> 
+> https://core.trac.wordpress.org/changeset/29389
 
-ISSUE DESCRIPTION
-=================
+Use CVE-2014-5203.
 
-When using the FIFO-based event channels, there are no checks for the
-existence of a control block when binding an event or moving it to a
-different VCPU.  This is because events may be bound when the ABI is
-in 2-level mode (e.g., by the toolstack before the domain is started).
 
-The guest may trigger a Xen crash in evtchn_fifo_set_pending() if:
+>> -Adds protections against brute attacks against CSRF tokens, reported
+>> by David Tomaschik of the Google Security Team.
 
-  a) the event is bound to a VCPU without a control block; or
-  b) VCPU 0 does not have a control block.
+> Same reporter, same same line of code, but two separate issues here. One,
+> when building CSRF tokens, the individual pieces were not separated by
+> delimiter, so $action + $user_id could have been post_1 + user 23 or post
+> 12 + user 3. Second issue: Nonces were not being compared in a
+> time-constant manner. Neither are easy to exploit.
+> 
+> Affected WordPress versions 2.0.3 - 3.9.1 (except 3.7.4 / 3.8.4)
 
-In case (a), Xen will crash when looking up the current queue.  In
-(b), Xen will crash when looking up the old queue (which defaults to a
-queue on VCPU 0).
+> https://core.trac.wordpress.org/changeset/29384
 
-IMPACT
-======
+Use CVE-2014-5204.
 
-A buggy or malicious guest can crash the host.
 
-VULNERABLE SYSTEMS
-==================
+> https://core.trac.wordpress.org/changeset/29408
 
-Xen 4.4 and onward are vulnerable.
+Use CVE-2014-5205.
 
-MITIGATION
-==========
 
-None.
+>> -Contains some additional security hardening, like preventing
+>> cross-site scripting that could be triggered only by administrators.
+>>
+>
+> XSS: https://core.trac.wordpress.org/changeset/29398
 
-CREDITS
-=======
+We think this can have a CVE ID only if it allows privilege escalation
+from Administrator to Super Admin in a Multisite installation. Does
+it? (On other installations, Administrator has the unfiltered_html
+capability.)
 
-This issue was originally reported by Vitaly Kuznetsov at Red Hat and
-diagnosed as a security issue by David Vrabel at Citrix.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This bug was publicly reported on xen-devel, before it was appreciated
-that there was a security problem.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa107-unstable.patch        xen-unstable
-xsa107-4.4.patch             Xen 4.4.x
-
-$ sha256sum xsa107*.patch
-b92ba8085b6684abbc8b012ae1a580b9e7ed7c8e67071a9e70381d4c1009638b  xsa107-4.4.patch
-cd954a5bd742c751f8db884a3f31bd636a8c5850acddf5f1160dd6be1f706a09  xsa107-unstable.patch
-$
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUDsJxAAoJEIP+FMlX6CvZrs8H/ixMJYY0qJHbmPuCLxUDK+pz
-nrZ1mvqTfpN+M31GtHGKNFOBMUe7SaeQe7SJ8ucXwy8vqSwzzydWcu0ctjrLzyh9
-cxnTx5Yu5yLHVWRlFT1ZI2+XnxuCLfW3xwXfZIQkSKWAHfCv78uvdc8u8nB8cdPy
-8WiwJ77tNLtQXz8Jv5k8znIXLiLoCG3gO7TB7KwhZq1DeY8mL63N16CC3Eohu/1e
-pNYGO6KjWSwFLqh/dPaorqHD+IXQUwCosLnqah1/+Qh3L97UB3j779lv3+YHakmZ
-Ryu3OxqcjeuMTj4K2Iz2SeXixBz7YXl71zVnZlAq5jEasOA6xjTPFN7f8mUt34k=
-=MQuU
+iQEcBAEBAgAGBQJT6vtbAAoJEKllVAevmvmsj50H/0KjAlZw8T7hQEiNypBwZ0Am
+9CwHU6rwG2LrsPExN94huJNzTduUoGdb80EyQaYZFjRXhwV0gJbT7/JuvVTgPosk
+EOy5inmeyD49fQc2XoZmJtj+Fvq2nT6Eahl7CIeKi6TkmfnAYx56mBCEgQDOTwNE
+3ProL0arbJoW/h52i0VaRihnvbH8fu417+mGaRy9yCNK96O7tHnbH769WNsqww4k
+TnAcd9pc0eOU1BT0FUM/mt7/sTtCuTmaLo8z8JdKFsGogrp21CoR8LEWK1qaRwGk
+t8DXL0kug8qZosFu8CRsPtp9Sytt4ea/P1v+cZNFG5mc0T7pZLCzwQZqWong1kY=
+=75KS
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa107-4.4.patch" of type "application/octet-stream" (4744 bytes)
-
-Download attachment "xsa107-unstable.patch" of type "application/octet-stream" (4698 bytes)
