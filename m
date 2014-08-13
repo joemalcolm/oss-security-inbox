@@ -1,31 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/5
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF4C4F6900@IMCMBX01.MITRE.ORG>
-Date: Thu, 4 Sep 2014 05:13:08 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: Kurt Seifried <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: RE: heap overflow in procmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/5
+Message-Id: <20140813060155.B57B0C504B9@smtptsrv1.mitre.org>
+Date: Wed, 13 Aug 2014 02:01:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: fweimer@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: [CVE Request] glibc iconv_open buffer overflow (was: Re: Re: glibc locale issues)
 Content-Type: text/plain; charset=utf-8
 
-Kurt,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->So this is potentially a very bad issue, so I'm assigning a CVE, sorry
->Mitre (safe assumption: they're all tucked away in bed like normal sane
->people =).
+>> iconv/gconv_charset.h:strip() normalizes the transliteration argument to
+>> iconv_open, so the resulting file names follow a particular pattern, and
+>> there cannot be enough slashes to ascend to a writable directory.
+>>
+>>> if not maybe the one byte overflow is still exploitable.
+>>
+>> Hmm.  How likely is that?  It overflows in to malloc metadata, and the
+>> glibc malloc hardening should catch that these days.
+>
+> Not necessarily on 32-bit architectures, so I agree with Tavis now, and
+> we need a CVE.  The upstream bug is:
+>
+>    <https://sourceware.org/bugzilla/show_bug.cgi?id=17187>
 
-That's actually an unsafe assumption, which has introduced a vulnerability into your logic.  There are counter-examples by two different CVE CNA team members in this thread alone.
+Use CVE-2014-5119. A CVE-2005-#### number isn't needed because the
+msg00091.html message (referenced in 17187) does not state any
+security implications.
 
-For additional evidence that counters your assumption, here are a handful of recent oss-security posts by cve-assign between midnight (Eastern time) and 4 AM.  This list is far from complete.
-http://www.openwall.com/lists/oss-security/2014/09/02/1
-http://www.openwall.com/lists/oss-security/2014/08/13/3
-http://www.openwall.com/lists/oss-security/2014/08/13/4
-http://www.openwall.com/lists/oss-security/2014/08/13/5
-http://www.openwall.com/lists/oss-security/2014/08/14/2
-http://www.openwall.com/lists/oss-security/2014/08/14/5
-http://www.openwall.com/lists/oss-security/2014/08/15/3
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-When an issue has been made widely public to the security industry, CNAs are expected to attempt to coordinate more closely with MITRE before assigning a CVE ID themselves.  This helps to reduce confusion and duplicates.  Anything posted to oss-security is considered "widely public."
-
-- Steve
-
+iQEcBAEBAgAGBQJT6v7uAAoJEKllVAevmvmseTkIAMfWM1+WNFXL0zj5YmVAbl6e
+VzXYStCQinR6ilSaFQE52uar5CagHTcEXlvsOMgyB+SgVKDFNjlb4ClSdXIrJsPN
+CNVnG2kBwPMIYKYoddVk+wor4+HzhGfBMb9x59UzWFgyjtjo8oNL5rIIlVV06ta2
+nX8MD4sk8b0aT0cNiahw59iH0raeGcvoGEJE9xweOTd9OU5psJUr3tw1qOXBTPTz
+uX8HJ8rWnxDEzFsAy4/qkNLAutoxwx0NXJgKul+xP5Tgg2KkdUWhu2rPm8Kb5swe
+v4IFlq8/TmItAClFdrGBv3/NwaGNubrfthEG0t7uuVQKy4FIIkVOvks7M98h1Ug=
+=B7sS
+-----END PGP SIGNATURE-----
