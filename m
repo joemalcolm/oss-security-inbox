@@ -1,65 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/2
-Message-ID: <548FBE54.1030203@redhat.com>
-Date: Tue, 16 Dec 2014 16:08:36 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/9
+Message-ID: <CALCETrW=hBTZM0=6PB1ALe8EUZiBEM26JjCTbMFvVfGsVPZGyA@mail.gmail.com>
+Date: Wed, 13 Aug 2014 09:47:25 -0700
+From: Andy Lutomirski <luto@...capital.net>
 To: oss-security@...ts.openwall.com
-Subject: file(1): multiple denial of service issues (resource consumption), CVE-2014-8116 and CVE-2014-8117
+Subject: Re: CVE Request: ro bind mount bypass using user namespaces
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+[sorry for awkward threading]
 
-Thomas Jarosch of Intra2net AG reported a number of denial of service 
-issues (resource consumption) in the ELF parser used by file(1). These 
-issues were fixed in the 5.21 release of file(1), but by mistake are 
-missing from the changelog.
+On Tue, Aug 12, 2014 at 4:54 PM, Andy Lutomirski <luto@...capital.net> wrote:
+> On 08/12/2014 02:48 PM, Kenton Varda wrote:
+>> Due to a bug in the Linux kernel's implementation of remount, on systems
+>> with unprivileged user namespaces enabled, it is possible for an
+>> unprivileged user to gain write access to any visible read-only bind mount.
+>> It is also possible to bypass flags like nodev, nosuid, and noexec.
+>>
+>> This problem affects sandboxing / containerization systems that do not
+>> expose the regular filesystem to the sandboxed process, but do expose a
+>> bind-mounted view of that filesystem using these flags to enforce security.
+>> This bug may enable a sandbox break-out. Sandboxes which have used
+>> seccomp-bpf to disable the "mount" system call or to disable user
+>> namespaces are likely safe.
+>
+> nosuid/nodev failures are probably exploitable for full root in many
+> common configurations.
 
-The important commits are:
+These vulnerabilities only exist if you can unshare your user
+namespace, which, as a practical matter, requires a 3.12-ish or newer
+kernel.  (I think the option was available earlier, but I don't think
+any distros enabled it.)  You need CONFIG_USER_NS=y and, if you have
+some patch that lets you turn off user namespaces (is that what
+kernel.unpriv_user_ns or whatever is?  it's not there on my system),
+then you *may* be safe.
 
-https://github.com/file/file/commit/b4c01141e5367f247b84dcaf6aefbb4e741842b8
-https://github.com/file/file/commit/d7cdad007c507e6c79f51f058dd77fab70ceb9f6
-https://github.com/file/file/commit/6f737ddfadb596d7d4a993f7ed2141ffd664a81c
+Note that, even if only root can unshare user namespaces, it's still
+plausible that code in a userns sandbox could use these bugs to root
+the host.
 
-There were a few regressions along the way, so the following are also 
-all needed:
+I've attached a test case for CVE-2014-5207.  This test demonstrates
+the problem, but it shouldn't be able to harm the system it runs on.
+You can run it as root or as an unprivileged user.
 
-https://github.com/file/file/commit/8a905717660395b38ec4966493f6f1cf2f33946c
-https://github.com/file/file/commit/90018fe22ff8b74a22fcd142225b0a00f3f12677
-https://github.com/file/file/commit/6bf45271eb8e0e6577b92042ce2003ba998d1686
+Note that, if you're using whatever patch adds that sysfs entry, it's
+probably worth running the test case as root, but it may still fail.
+If it doesn't explicitly report that you're safe, then you shouldn't
+take its output to mean that you're safe; the hardening patch may
+interfere with this particular test, even if it wouldn't prevent an
+exploit.
 
-Please credit "Thomas Jarosch of Intra2net AG".
+Kenton, want to post your test for the -5206 issue?
 
-Details of what CVE is for what:
+--Andy
 
-""
-================================================
-Please use CVE-2014-8116 for these two:
-
-https://github.com/file/file/commit/b4c01141e5367f247b84dcaf6aefbb4e741842b8
-limit the number of program and section header number of sections to be
-http://cwe.mitre.org/data/definitions/400.html
-CWE-400: Uncontrolled Resource Consumption ('Resource Exhaustion')
-
-https://github.com/file/file/commit/d7cdad007c507e6c79f51f058dd77fab70ceb9f6
-Stop reporting bad capabilities after the first few.
-http://cwe.mitre.org/data/definitions/400.html
-CWE-400: Uncontrolled Resource Consumption ('Resource Exhaustion')
-
-================================================
-Please use CVE-2014-8117 for this one:
-
-https://github.com/file/file/commit/6f737ddfadb596d7d4a993f7ed2141ffd664a81c
-reduce recursion level from 20 to 10 and make a symbolic constant for it.
-http://cwe.mitre.org/data/definitions/674.html
-CWE-674: Uncontrolled Recursion
-""
-
-Red Hat's bugs (to be opened shortly):
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1171580
-https://bugzilla.redhat.com/show_bug.cgi?id=1174606
-
-Regards,
-
---
-Murray McAllister / Red Hat Product Security
+View attachment "check_CVE-2014-5207.c" of type "text/x-csrc" (2508 bytes)
