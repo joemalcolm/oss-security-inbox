@@ -1,105 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/12
-Message-Id: <E1WsBVA-0008GF-7u@xenbits.xen.org>
-Date: Wed, 04 Jun 2014 13:45:12 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 98 - insufficient permissions checks accessing guest memory on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/8
+Message-ID: <53EB8E29.1070606@mittwald.de>
+Date: Wed, 13 Aug 2014 16:08:04 +0000
+From: Sven Kieske <S.Kieske@...twald.de>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: ro bind mount bypass using user namespaces
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-                    Xen Security Advisory XSA-98
-                            version 2
 
-       insufficient permissions checks accessing guest memory on ARM
+Am 12.08.2014 23:48, schrieb Kenton Varda:
+> Due to a bug in the Linux kernel's implementation of remount, on systems
+> with unprivileged user namespaces enabled, it is possible for an
+> unprivileged user to gain write access to any visible read-only bind mount.
+> It is also possible to bypass flags like nodev, nosuid, and noexec.
 
-UPDATES IN VERSION 2
-====================
+Hi,
 
-Public release.
+does someone happen to know in which released kernel version this bug
+got introduced?
 
-ISSUE DESCRIPTION
-=================
+Was it always there since remounting of bind mounts was possible?
 
-When accessing guest memory Xen does not correctly perform permissions
-checks on the (possibly guest provided) virtual address: it only
-checks that the mapping is readable by the guest, even when writing on
-behalf of the guest.  This allows a guest to write to memory which
-it should only be able to read.
+according to debian this at least affects 2.6.32 kernels
+in oldstable:
 
-A guest running on a vulnerable system is able to write to memory
-which should be read-only.  This includes supposedly read only foreign
-mappings established using the grant table mechanism.  Such read-only
-mappings are commonly used as part of the paravirtualised I/O drivers
-(such as guest disk write and network transmit).
+https://security-tracker.debian.org/tracker/CVE-2014-5206
+https://security-tracker.debian.org/tracker/CVE-2014-5207
 
-In order to exploit this vulnerability the guest must have a mapping
-of the memory; it does not allow access to arbitrary addresses.
+Sadly I can't find any other public available bugtracker
+from redhat, gentoo etc. who track these.
 
-In the event that a guest executes code from a page which has been
-shared read-only with another guest it would be possible to mount a
-take over attack on that guest.
+-- 
+Mit freundlichen Grüßen / Regards
 
-IMPACT
-======
+Sven Kieske
 
-A domain which is deliberately exchanging data with another,
-malicious, domain, may be vulnerable to privilege escalation.  The
-vulnerability depends on the precise behaviour of the victim domain.
-
-In a typical configuration this means that, depending on the behaviour
-of the toolstack or device driver domain, a malicious guest
-administrator might be able to escalate their privilege to that of the
-whole host.
-
-VULNERABLE SYSTEMS
-==================
-
-Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
-
-MITIGATION
-==========
-
-None.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall.
-
-RESOLUTION
-==========
-
-Applying the appropriate pair of attached patches resolves this issue.
-
-xsa98-unstable-{01,02}.patch        xen-unstable
-xsa98-4.4-{01,02}.patch             Xen 4.4.x
-
-$ sha256sum xsa98*.patch
-6f63bc2e0a0a39bbd9137513a5d130ae2c78d1fd2ebf9172bf49456f73f0a67b  xsa98-4.4-01.patch
-b338472ecce3c31a55d1a936eebbd4e46cb3ad989b91a64d4b8c5d3ca80d875d  xsa98-4.4-02.patch
-b8535aad5ae969675d59781a81ce0b24491f1abc01aaf36c3620fd7fb6cc84eb  xsa98-unstable-01.patch
-f5e8a93525a8905653da6377097f77681ff8121b973063ff6081e27547ceaa67  xsa98-unstable-02.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTjyK/AAoJEIP+FMlX6CvZfcAIALcaI5AdccPTHVJjTFqAly6A
-ZJ787YT7utUjaHTuqo+rFn7UkQLfXtqGXoLmxX4I6kTWSasiN89MCUiMMEhAKz/p
-WAyHPxOgbU/67hE6K6G9Xfon+Oi0NmQyaT8yiq2tgNMA5BT0TLRa1hVP70ixvXGd
-bC1MTMKLHynrMByK2S7NKt3YZLg0t8yTtCAYQ/BbjiS+2WYA552HEI7xrFPNhZ7Y
-WMykHUp+G6xBj3E1xxHnuvmixr/8mAgZmfkqLdzb66wUxuxev6ZhACS5JkjFGI8S
-lFMGZ52W/JiinqxtXs9WPGPiaBmW0+AmfCr6OjMfPsOzeZavrmFMAsz9AUehDag=
-=96+i
------END PGP SIGNATURE-----
-
-Download attachment "xsa98-4.4-01.patch" of type "application/octet-stream" (5699 bytes)
-
-Download attachment "xsa98-4.4-02.patch" of type "application/octet-stream" (7800 bytes)
-
-Download attachment "xsa98-unstable-01.patch" of type "application/octet-stream" (5701 bytes)
-
-Download attachment "xsa98-unstable-02.patch" of type "application/octet-stream" (7913 bytes)
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
