@@ -1,50 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/28
-Message-ID: <20141126222509.GA29773@kludge.henri.nerv.fi>
-Date: Thu, 27 Nov 2014 00:25:09 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: jack@...ezen.org
-Subject: CVE request: Canto Feed URL Parsing Command Line Injection 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/4
+Message-Id: <20140813054959.D96781F025B@smtpksrv1.mitre.org>
+Date: Wed, 13 Aug 2014 01:49:59 -0400 (EDT)
+From: cve-assign@...re.org
+To: kenton@...dstorm.io
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: ro bind mount bypass using user namespaces
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2013 CVE for Canto feed URL parsing command line injection
-vulnerability, thanks.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Project website: http://codezen.org/canto-ng/
-Affected versions: All versions prior to v0.9.0
-Debian version affected: 0.7.10-4
-Canto was later removed from Debian. Versions 0.7.10-4 (wheezy) and 0.7.9-1
-(squeeze) are not affected with this payload.
-Upstream fix:
-https://github.com/themoken/canto-curses/commit/2817869f98c54975f31e2dd674c1aefa70749cca
-PoCs attached from the original advisory email.
-OSVDB: http://osvdb.org/101335
+We are assigning two CVE IDs because the available information is that
+there were two discoverers. Even if the discoverer information is
+later clarified, there will still be these two CVE IDs.
 
-Reported in Debian BTS https://bugs.debian.org/731582 by
-<the_walrus_88@...lymail.net>. Quoting the mail:
+> https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=db181ce011e3c033328608299cd6fac06ea50130
+> 
+> Kenton Varda <kenton@...dstorm.io> discovered that by remounting a
+> read-only bind mount read-only in a user namespace the
+> MNT_LOCK_READONLY bit would be cleared, allowing an unprivileged user
+> to the remount a read-only mount read-write.
 
-"""
-I have just found a command line injection security vuln in
-canto. The program fetches feeds from configured sites, and the
-feeds contain URLs that people may want to visit. If a user
-starts canto and chooses to go to one URL from one feed, canto
-constructs a sh command line to visit the URL, but it doesn't
-remove metachars. Therefore a malicious feed (owner turned bad,
-man in the middle attack if fetched with http) can put in bad
-data in all link and guid elements of the feed and use this to
-hack the user when they visit some of the URLs. Not good. See my
-conf.py and evil.rss files for an example. Sorry for my English!
-"""
+Use CVE-2014-5206.
 
-In case someone finds more issues you can contact developer via:
-http://codezen.org/canto-ng/contact-bugs/
 
----
-Henri Salo
+> https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=9566d6742852c527bf5af38af5cbb878dad75705
+> 
+> While investigating the issue where in "mount --bind -oremount,ro ..."
+> would result in later "mount --bind -oremount,rw" succeeding even if
+> the mount started off locked I realized that there are several
+> additional mount flags that should be locked and are not.
 
-Download attachment "evil.rss" of type "application/x-rss+xml" (1526 bytes)
+Use CVE-2014-5207.
 
-View attachment "conf.py" of type "text/x-python" (75 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+iQEcBAEBAgAGBQJT6vjTAAoJEKllVAevmvmsEI4H+wWrFmadZJwDhgU8i5IfiVIl
+Oz/iPTeSCelGIH6BA5GAMbaEmMUf/ay0Jpa31y6MhOiw1KMsGGFvzGkLoy3Pb/T5
+G682hBmQbZD1OnBdk3z2EnMd5i0/B3kzc1rXi4m9QJcmi216xnJnD0+lEVbRj5nf
+jruRJplaRiwYuXszZSWhAOBVMFb5MJ/4aNmUkKdpiywQjOWhykgjNNyxXby9Rxpo
+AkoLecJPn/IJ4mRmLTp3vo1x/GZUXmXFvKfsJdB5Ps+kOnX7ptMyap4GTjSvXcIc
+FSJ9Zfad0iAnflEQTAKEVHFu5vSzbUdWVC+qMapVjZXRnku8y3UzYJVEvqQDUTc=
+=Qzne
+-----END PGP SIGNATURE-----
