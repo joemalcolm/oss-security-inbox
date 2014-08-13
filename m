@@ -1,15 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/27
-Message-ID: <542ACBDC.9090403@edwardprevost.info>
-Date: Tue, 30 Sep 2014 08:27:24 -0700
-From: Ed Prevost <me@...ardprevost.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/7
+Message-ID: <1407944123.16212.8.camel@scapa>
+Date: Wed, 13 Aug 2014 17:35:23 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Subject: Re: CVE Request: ro bind mount bypass using user namespaces
 Content-Type: text/plain; charset=utf-8
 
-On 9/30/2014 6:41 AM, Kobrin, Eric wrote:
->> "innocuous looking setuid program" made my day ;)
->> We should take care not to blame all and everything to bash.
-> I don't find that blame is a useful tool for fixing security problems. What's more interesting to me is: what system components are in a position to help. If a change in bash can make a bunch of "innocuous looking setuid programs" not be  vectors for the import of malicious functions, let's do it.
->
-+1 and I swear I'm not some groupie fan-boy paid by Eric.
+
+On Tue, Aug 12, 2014 at 02:48:28PM -0700, Kenton Varda wrote:
+> Due to a bug in the Linux kernel's implementation of remount, on systems
+> with unprivileged user namespaces enabled, it is possible for an
+> unprivileged user to gain write access to any visible read-only bind mount.
+> It is also possible to bypass flags like nodev, nosuid, and noexec.
+> 
+So that means running with both USER_NS=y and
+kernel.unprivileged_userns_clone=1?
+
+Regards,
+-- 
+Yves-Alexis
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
