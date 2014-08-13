@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/15
-Message-ID: <5427198F.5000202@case.edu>
-Date: Sat, 27 Sep 2014 16:09:51 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Michal Zalewski <lcamtuf@...edump.cx>
-CC: chet.ramey@...e.edu, Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/2
+Message-ID: <CALCETrWiPOM40ucrk_YWiYTY=3yk4RhCSBUQ=0s=gXR-tgiMUQ@mail.gmail.com>
+Date: Tue, 12 Aug 2014 22:43:00 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: ro bind mount bypass using user namespaces
 Content-Type: text/plain; charset=utf-8
 
-On 9/27/14, 3:39 PM, Michal Zalewski wrote:
->> STD::what::does::this::do
-> 
-> We ran into this problem with the original patch at Google, but TBH,
-> we've just bitten the bullet.
-> 
-> I'm not sure how hard we should try to accommodate outliers like this
-> specifically for functions - as far as I can tell, you can't really
-> get away with meaningfully using colons in variable names, right? But
-> if you just want to minimize breakage without getting into existential
-> discussions, wouldn't wihtelisting : and perhaps periods and - going
-> out on a limb - brackets be good enough?
+On Tue, Aug 12, 2014 at 10:04 PM, Andy Lutomirski <luto@...capital.net> wrote:
+> On Tue, Aug 12, 2014 at 4:54 PM, Andy Lutomirski <luto@...capital.net> wrote:
+>> On 08/12/2014 02:48 PM, Kenton Varda wrote:
+>>> Due to a bug in the Linux kernel's implementation of remount, on systems
+>>> with unprivileged user namespaces enabled, it is possible for an
+>>> unprivileged user to gain write access to any visible read-only bind mount.
+>>> It is also possible to bypass flags like nodev, nosuid, and noexec.
 
-We already make function names and variable names different, so there's
-no going back -- variable names have the usual restrictions, but with
-function names it's essentially anything goes.
+...
 
-Since we would be going from essentially anything goes to a very small
-set of acceptable exceptions, I can see a steady stream of "I used to
-be able to use character X in my function names and can't now."  Frankly,
-the really dangerous one is `/', since it allows you to circumvent scripts
-that attempt to use full pathnames to bypass shell function lookups.  I
-am more interested in other dangerous characters, the existential debate
-between whitelists and blacklists notwithstanding.
+>
+> Yup.  I have a fairly reliable exploit now.  Will post the code in a
+> couple of weeks.
 
-Chet
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+To clarify: my exploit has nothing to do with sandboxing.  It roots
+default-ish configurations of Fedora 20 and Ubuntu 14.04.
+
+--Andy
