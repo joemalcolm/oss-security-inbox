@@ -1,44 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/17/4
-Message-ID: <20140116223951.63336947.reed@reedloden.com>
-Date: Thu, 16 Jan 2014 22:39:51 -0800
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Cc: mmcallis@...hat.com
-Subject: Re: CVE-2013-6488: Jenkins fails to sanitize input before adding it to the page
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/9
+Message-ID: <32f4c270.615c227c.53ed1fb9.a6091@o2.pl>
+Date: Thu, 14 Aug 2014 22:44:41 +0200
+From: Piotr Bandurski <ami_stuff@...pl>
+To: Open Source Security<oss-security@...ts.openwall.com>
+Cc: ffmpeg-security@...peg.org
+Subject: CVE request: FFmpeg issues
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 17 Jan 2014 13:02:03 +1100
-Murray McAllister <mmcallis@...hat.com> wrote:
+Hi,
 
-> We recently received a report from Teguh P. Alko about an issue 
-> affecting Jenkins. Input was not sanitized before adding it to the page. 
-> The fix is public here since the start of 2013:
-> 
-> https://github.com/jenkinsci/jenkins/commit/f8d2a0ba6c2e261f48287bdd95bd7a2d7a8d2d0e
+I would like to request CVEs for the following issues:
 
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16
-is the security advisory that includes the above fix.
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=52b81ff4635c077b2bc8b8d3637d933b6629d803
+fixes asseration failure in prores_ks encoder
+https://trac.ffmpeg.org/ticket/2760
+Found-by: MarkZV
 
-> This could be used for copy and paste attacks, with the end result being 
-> similar to that of cross-site scripting attacks. It has been assigned 
-> CVE-2013-6488.
+http://git.videolan.org/?p=ffmpeg.git;a=commit;h=3539d6c63a16e1b2874bb037a86f317449c58770
+fixes out of array access in iff decoder
+Found-by: Piotr Bandurski
 
-Fairly sure that's just a dupe of CVE-2013-0328. See
-http://seclists.org/oss-sec/2013/q1/368.
+Regards
 
-> Please credit at least "Teguh P. Alko" in any advisories.
-
-Why? He/she's not the original reporter.
-
-> I am Cc'ing Reed to see if he knows who the other independent reporter 
-> is (from that Jira "SECURITY-46" bug in the above commit; as I 
-> understand it those bugs are not made public but I could be wrong).
-
-Jenkins's SECURITY-46 maps to
-https://bugzilla.mozilla.org/show_bug.cgi?id=819251, which I just
-opened up. The reporter is "Atulkumar Hariba Shedage".
-
-Hope that helps.
-
-~reed
