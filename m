@@ -1,88 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/15/1
-Message-Id: <201401150546.s0F5kIRL011815@linus.mitre.org>
-Date: Wed, 15 Jan 2014 00:46:18 -0500 (EST)
-From: cve-assign@...re.org
-To: eblake@...hat.com
-Cc: pmatouse@...hat.com, cve-assign@...re.org, oss-security@...ts.openwall.com, libvirt-security@...hat.com, jdenemar@...hat.com, berrange@...hat.com
-Subject: Re: CVE Request -- libvirt: denial of service with keepalive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/10
+Message-ID: <mpro.nabff205xxnps07lv.taviso@cmpxchg8b.com>
+Date: Thu, 14 Aug 2014 14:23:27 -0700
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: [CVE Request] glibc iconv_open buffer overflow (was: Re: Re: glibc locale issues)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+John Haxby <john.haxby@...cle.com> wrote:
 
-Thanks very much for the additional information about your release
-process. In this situation, the cost of having two CVEs outweighs any
-possible benefit, so we've proceeded to make the change to a single
-CVE as follows:
+> On 13/08/14 07:01, cve-assign@...re.org
+> wrote:
+> > > > iconv/gconv_charset.h:strip() normalizes the transliteration
+> > > > argument to iconv_open, so the resulting file names follow a
+> > > > particular pattern, and there cannot be enough slashes to ascend to
+> > > > a writable directory.
+> >>>
+> > > > > if not maybe the one byte overflow is still exploitable.
+> >>>
+> > > > Hmm.  How likely is that?  It overflows in to malloc metadata, and
+> > > > the glibc malloc hardening should catch that these days.
+> > 
+> > > Not necessarily on 32-bit architectures, so I agree with Tavis now,
+> > > and we need a CVE.  The upstream bug is:
+> > 
+> >>    <https://sourceware.org/bugzilla/show_bug.cgi?id=17187>
+> > 
+> > Use CVE-2014-5119. A CVE-2005-#### number isn't needed because the
+> > msg00091.html message (referenced in 17187) does not state any security
+> > implications.
+> 
+> That's correct.  Neither I nor any of the readers of my original bug
+> report commented on any possible security implications.  (Mind you, in
+> 2005 I was probably a little more naïve.)
+> 
+> jch
+> 
 
-> Use CVE-2014-1447 for this issue in which the product does not check
-> whether the connection is still open. This corresponds to
-> 173c2914734eb5c32df6d35a82bf503e12261bcf, which apparently would be of
-> some value in some attack scenarios.
+FWIW, after discussion and debugging with Florian I think everyone is
+convinced this is exploitable on x64 and x86. Additionally, there's also a
+trivial root if a directory exists with certain characters restrictions.
 
-> Use CVE-2014-1448 for this issue in which the product does not
-> properly check whether the connection is still open. This corresponds
-> to 066c8ef6c18bc1faf8b3e10787b39796a7a06cc0, which apparently is of
-> value in additional attack scenarios.
+See here for more information.
 
-Both of these issues are now within the scope of CVE-2014-1447.
-CVE-2014-1448 has been REJECTed - it will appear at
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-1448 in the
-coming days with a brief explanation and a pointer back to
-CVE-2014-1447.
+https://sourceware.org/ml/libc-alpha/2014-07/msg00590.html
 
+I believe the current plan is to completely remove the transliteration
+module support, as it hasn't worked for 10+ years.
 
-We wanted to clarify one point about CVE assignment by MITRE. The
-comments mentioned "Neither of those versions is released" and "the
-hourly builds are NOT supported releases." The guidance we currently
-provide to our CVE Numbering Authority participants is that
-assignments should only be for vulnerabilities in software that was
-"made generally available to the vendor's customers." This guidance
-does not include any restrictions on whether a vulnerability's context
-is in a release, or on whether any support is offered for
-vulnerability remediation. For example, beta software has been
-explicitly in scope for the past 14 years.
+Tavis.
 
-> GIT snapshots do not count as end user packaged releases - if you were
-> to take that view, then every single git commit would have be
-> considered a 'package' since gitweb has a link to download a .zip of
-> any revision.
-
-The distinction is that downloads.html says "should be usable" but a
-gitweb page with a .zip link typically doesn't say that. Admittedly,
-the distinction may be practically irrelevant in the specific case of
-libvirt-git-snapshot.tar.gz. You understand your customers, but we
-don't understand your customers. If a new vulnerability were
-introduced in one snapshot and fixed in the next snapshot, you might
-have very good information that there's nobody at all who would even
-want to track that vulnerability.
-
-One challenge for us is that not all codebases are the same. For this
-FFmpeg issue:
-
-   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-3670
-
-people might think the CVE is largely useless because no release was
-affected. However, some well-known third parties use git snapshots of
-FFmpeg. The end result is that the vulnerable code either was shipped
-to many, many end users -- or else it was "almost" shipped to those
-end users except that a delay caused a sufficiently later snapshot to
-be used instead.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS1h9WAAoJEKllVAevmvmswG4H/1Q+KlNxMgssyliPDx1J/BgA
-ve5UacYKAwcAWG34/mJAm4TvdIgeJ0xZBJU9C9qFfK+fIxQacnOznWBOEEGJ2bw2
-UQXakpCfWEM6tjJwCjpOs7Hx1dXQSEXB9y47NqylQHN9xg36XlBwhvjzKSDUmwvi
-DfNTvo/yWLa79rFVMgsgyVs7bXBIoNyO7el9lE6rsXHj/jG3aSej++ip2Umuw2MY
-wlgW1mrXcw96Fvlp1fOHScaCAItEG86kJ+HiXOz3u01k8w6pUimm6CvbBBlQPvYt
-iclq8dALGSfu8iIBrlUz+zyEu7odTXNsdNi8yx9El6jC46ILCJfeotqnF74EVeo=
-=2K5m
------END PGP SIGNATURE-----
