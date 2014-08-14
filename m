@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/5
-Message-ID: <20140912111325.05c964ce@redhat.com>
-Date: Fri, 12 Sep 2014 11:13:25 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/4
+Message-ID: <53EC68D8.2000702@redhat.com>
+Date: Thu, 14 Aug 2014 17:44:24 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE id request: cacti remote code execution and SQL injection
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 11 Sep 2014 12:36:00 -0700 Ritwik Ghoshal wrote:
+On 08/13/2014 07:07 AM, Nico Golde wrote:
+> Hi,
+> Mischa Sallé and Wilco Baan Hofman reported a security issue in cacti to
+> Debian when processing arguments passed to the graph settings script:
+> http://svn.cacti.net/viewvc?view=rev&revision=7454
+>
+> We consider this issue to be public given the public fix.
+> Can someone assign a CVE id? We do have some indication that this was reported
+> in parallel Fedora, in case anyone from RedHat already assigned a CVE id to
+> this.
+>
+> Thanks!
+> Nico
+>
 
-> On 9/11/2014 1:28 AM, Sven Kieske wrote:
-> > On 10/09/14 18:00, Salvatore Bonaccorso wrote:
-> >> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference
-> >> to the following issue, which could be exploited by a local user
-> >> to run arbitrary code in context of the mysqld server.
-> > 
-> > While I'm investigating this:
-> > Does someone happen to know in which version this vuln got
-> > introduced?
-> 
-> A complete list of all affected-supported MySQL releases will be
-> published via Oracle's quarterly Critical Patch Update(CPU) advisory.
-> More information about our CPU program is available at -
-> http://www.oracle.com/technetwork/topics/security/alerts-086861.html
+Hi all,
 
-Is CPU actually going to include the information Sven asked for?  Such
-information was on included in past CPUs - they only mention the last
-affected version in supported branch.  So in case of this flaw, it's
-most likely only going to say:
+Red Hat did not assign a CVE for this (the original report was 
+https://bugzilla.redhat.com/show_bug.cgi?id=1127165).
 
-  Supported Versions Affected: 5.5.38 and earlier, 5.6.19 and earlier
+Cheers,
 
-That will not answer the original question, or provide more information
-than what's already available.
-
-I mean it's reasonable to admit the info about the first affected
-version is not readily available and won't be looked for, just noting
-that CPU is very unlikely to provide that information.
-
--- 
-Tomas Hoger / Red Hat Product Security
+--
+Murray McAllister / Red Hat Product Security
