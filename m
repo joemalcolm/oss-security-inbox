@@ -1,89 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/2
-Message-Id: <201404180535.s3I5ZjZQ022492@linus.mitre.org>
-Date: Fri, 18 Apr 2014 01:35:45 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/2
+Message-Id: <20140814054031.48A9CC503C6@smtptsrv1.mitre.org>
+Date: Thu, 14 Aug 2014 01:40:31 -0400 (EDT)
 From: cve-assign@...re.org
-To: geissert@...ian.org
+To: nacin@...dpress.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE ids for CyaSSL 2.9.4?
+Subject: Re: WordPress 3.9.2 release - needs CVE's
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://www.yassl.com/yaSSL/Blog/Entries/2014/4/11_wolfSSL_Security_Advisory__April_9%2C_2014.html
+>>  > XSS: https://core.trac.wordpress.org/changeset/29398
+>>
+>> We think this can have a CVE ID only if it allows privilege escalation
+>> from Administrator to Super Admin in a Multisite installation. Does
+>> it? (On other installations, Administrator has the unfiltered_html
+>> capability.)
+>>
+>
+> Yes.
 
-> Issue #1 (Memory Corruption)
-> lack a buffer length check in DoAlert()
-
-Use CVE-2014-2896.
-
-
-> Issue #2 (Out of bounds read)
-> Affected Versions:  CyaSSL 2.5.0 - CyaSSL 2.9.0
-> does not check the padding length for a verify failure
-
-Use CVE-2014-2897.
-
-
-> Issue #3 (Dangerous Default Behavior, out of bounds read)
-> Affected Versions:  CyaSSL 2.9.0 and previous versions
-> Vulnerability Type:  Unchecked Error Condition (CWE-391)
-> A user who repeatedly calls CyaSSL_read() without checking the return
-> code can cause an out-of-bound memory access
-
-Use CVE-2014-2898.
-
-
-> Issue #4 (NULL pointer dereference)
-> requesting the peer certificate in a certificate parsing failure
-> 
-> if an SSL client receives a client_key_exchange message ... if the
-> client does not have the peer's ephemeral key.
-
-Use CVE-2014-2899.
-
-
-> Issue #5 (Unknown Critical Certificate Extension Allowed)
-> CyaSSL previously accepted certificates with unknown critical extensions
-
-Use CVE-2014-2900.
-
-
-
-> https://www.cs.utexas.edu/~shmat/shmat_oak14.pdf
-> TABLE V: Semantic discrepancies in certificate validation (incorrect
-> answers in bold)
-
-[Note that these last four CVE IDs are not for issues fixed in
-2.9.4.]
-
-> Intermediate CA not authorized to issue certificates for server's
-> hostname
-
-Use CVE-2014-2901.
-
-
-> CA certificate not authorized for signing other certificates
-
-Use CVE-2014-2902.
-
-
-> Server certificate not authorized for use in SSL/TLS handshake
-
-Use CVE-2014-2903.
-
-
-> Server certificate not authorized for server authentication
-
-Use CVE-2014-2904.
-
-
-("Intermediate CA not authorized to issue further intermediate CA
-certificates, but followed in the chain by an intermediate CA
-certificate ... followed by a leaf CA certificate," also found in
-TABLE V, is not a vulnerability. This is a violation of the X.509
-specification that causes valid data to be rejected.)
+Use CVE-2014-5240.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -93,11 +31,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTULb8AAoJEKllVAevmvmsbMUIAJi7S8lW3pY3QBlgEwVVtU5u
-bPZ3Yyl2kkV43o8K4NpD5r8eZ9FfM8sJQhbjAMlrjLdHBbTHIAxSewNbrDY0T+gt
-fLAB6SPb7jcXQgRfSQ5GNiVdRrp5nCQt5YN/yvo6XVxR13yBM4WniUDBSgRBpR6j
-tw1GDUyjNBJOmlQ6DKNou8+T8wx4XWRIheuL1PjFSXuFOHEDNuPvDO90S/THU9xW
-Ysv2uV+rWPICxS7E/wsUBPaWKi7mkcu2kCesMMBcx86L8YdArcvl9K471xXSfgnj
-Wyi+VcD/67NRAH31pNqGVJ5AN4CM3ElB3delQDI/AdWT9KgYC5a4nS9YTbLMFGw=
-=SHEL
+iQEcBAEBAgAGBQJT7EsgAAoJEKllVAevmvms+hoH/ilXPjm0IpKxiCloifcRPBk2
+QnYSIOiCf3YkTjJ338M8+eCVFOvyZ5l0AUzTkGbVPlT9umDQPyQremAc9+zQnc30
+d6OCfEmUdxodhh88Ir55YsxUtw00iZBFYZvDzTmdQJpGElqQmaff1o4R63ANTU/+
+RbEEGsbrEjhhDw7lwTGuaXj2s24rMG4YgBd+Ny2aUhFCrj54gQlMlM1uhtKXdmJp
+FuBwPJIu8ZmZJA1Lt9eglJ4mn+LJMaVaVLU2JXAihznyNiZuB5W95ZTF8NQjKBJa
++2olT6n/NhlQL9ud4qTxZbEI9zNu8zgANBWRQVhW/LM21tPuPUyb4/AKJmbyiRw=
+=YagB
 -----END PGP SIGNATURE-----
