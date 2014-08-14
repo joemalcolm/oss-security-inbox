@@ -1,46 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/13
-Message-ID: <F208899F-F87F-440A-A2E5-D97E229F4853@vmware.com>
-Date: Wed, 9 Jul 2014 15:45:10 +0000
-From: Ramon de C Valle <rdecvalle@...are.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Fwd: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/6
+Message-ID: <CACXSKC9=iK2RRQ3_Xz55bO7vVW3+LvjHdvTV_S9fvCYHGLOi_A@mail.gmail.com>
+Date: Thu, 14 Aug 2014 12:48:42 +0700
+From: Vitaly Nikolenko <vnik5287@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: ro bind mount bypass using user namespaces
 Content-Type: text/plain; charset=utf-8
 
-I believe this should have a CVE assigned.
+just wanted to mention that the test script was also submitted in this
+commit
+https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=db181ce011e3c033328608299cd6fac06ea50130
 
-Begin forwarded message:
+On Ubuntu 14.04.1, mounting with MS_REMOUNT | MS_BIND (within a user
+namespace) resets nosuid, nodev, noexec flags.
 
-> From: <wkwood@...il.com>
-> Subject: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
-> Date: July 9, 2014 at 11:40:24 AM GMT-3
-> To: <ruby-core@...y-lang.org>
-> Reply-To: Ruby developers <ruby-core@...y-lang.org>
-> 
-> Issue #10019 has been reported by Will Wood.
-> 
-> ----------------------------------------
-> Bug #10019: segmentation fault/buffer overrun in pack.c (encodes)
-> https://urldefense.proofpoint.com/v1/url?u=https://bugs.ruby-lang.org/issues/10019&k=oIvRg1%2BdGAgOoM1BIlLLqw%3D%3D%0A&r=bZpuVimtRQUx3xHFIlu%2BaciWn3GMzM%2FBnwDoBm5jP8U%3D%0A&m=i9HlGlVd0nBJk%2BZe%2FE83Lobm3nDyfJz6diLiqhjIJ8k%3D%0A&s=d306e2eedebf0fbb994e9059e7e7cdccfe735fd21518df0da6bf00045bccc481
-> 
-> * Author: Will Wood
-> * Status: Open
-> * Priority: Normal
-> * Assignee: 
-> * Category: core
-> * Target version: 
-> * ruby -v: ruby 2.1.2p168 (2014-07-06 revision 46721) [i386-mingw32]
-> * Backport: 2.0.0: UNKNOWN, 2.1: UNKNOWN
-> ----------------------------------------
-> While working with an AWS sample I hit a segmentation fault.  The same sample works under 1.9.3.  It appeared to be coming from pack.c function encodes.  After looking at the source there's a 4K buffer allocated on the stack.  I made a minor change to base the buffer length off of the incoming buffer length with a pad and allocate it off the heap.  Anyway, after fixing this my code sample runs fine.  I'm including a patch file and the sample code.
-> 
-> ---Files--------------------------------
-> pack.patch (2.74 KB)
-> BucketTest.rb (326 Bytes)
-> 
-> 
-> -- 
-> https://urldefense.proofpoint.com/v1/url?u=https://bugs.ruby-lang.org/&k=oIvRg1%2BdGAgOoM1BIlLLqw%3D%3D%0A&r=bZpuVimtRQUx3xHFIlu%2BaciWn3GMzM%2FBnwDoBm5jP8U%3D%0A&m=i9HlGlVd0nBJk%2BZe%2FE83Lobm3nDyfJz6diLiqhjIJ8k%3D%0A&s=85d6801be84da3628afd395bab2490b015b184aee10d0635d471b167d41ab70b
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
