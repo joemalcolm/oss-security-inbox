@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/7
-Message-ID: <20140129095757.GA12576@lorien.valinor.li>
-Date: Wed, 29 Jan 2014 10:57:57 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: security@...s.org, pmatthaei@...ian.org
-Subject: CVE Request: otrs: CSRF issue in customer web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/7
+Message-ID: <53ECB4C0.6030302@oracle.com>
+Date: Thu, 14 Aug 2014 14:08:16 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com, fweimer@...hat.com
+CC: cve-assign@...re.org
+Subject: Re: Re: [CVE Request] glibc iconv_open buffer overflow (was: Re: Re: glibc locale issues)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 13/08/14 07:01, cve-assign@...re.org wrote:
+>>> iconv/gconv_charset.h:strip() normalizes the transliteration argument to
+>>> iconv_open, so the resulting file names follow a particular pattern, and
+>>> there cannot be enough slashes to ascend to a writable directory.
+>>>
+>>>> if not maybe the one byte overflow is still exploitable.
+>>>
+>>> Hmm.  How likely is that?  It overflows in to malloc metadata, and the
+>>> glibc malloc hardening should catch that these days.
+> 
+>> Not necessarily on 32-bit architectures, so I agree with Tavis now, and
+>> we need a CVE.  The upstream bug is:
+> 
+>>    <https://sourceware.org/bugzilla/show_bug.cgi?id=17187>
+> 
+> Use CVE-2014-5119. A CVE-2005-#### number isn't needed because the
+> msg00091.html message (referenced in 17187) does not state any
+> security implications.
 
-A CSRF issue in otrs was announced in [1]. Is a CVE for this issue
-already assigned?
+That's correct.  Neither I nor any of the readers of my original bug
+report commented on any possible security implications.  (Mind you, in
+2005 I was probably a little more naïve.)
 
->From upstream announcement:
-
-An attacker that managed to take over the session of a logged in
-customer could create tickets and/or send follow-ups to existing
-tickets due to missing challenge token checks.
-
-Commits for various branches (3.1.x, 3.2.x and 3.3.x) are in [2], [3]
-and [4].
-
-Bugreport at [5].
-
- [1] https://www.otrs.com/security-advisory-2014-01-csrf-issue-customer-web-interface/
- [2] https://github.com/OTRS/otrs/commit/ca2c3390fd60d9a3f810ed2c22cbc2c193457b77
- [3] https://github.com/OTRS/otrs/commit/6f324aaf8647729d509eebf063a0181f9f9196f7
- [4] https://github.com/OTRS/otrs/commit/92f417277f43832f1a0462f2485fe1fd3fd52312
- [5] http://bugs.otrs.org/show_bug.cgi?id=10099
-
-Regards,
-Salvatore
+jch
