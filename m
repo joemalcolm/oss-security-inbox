@@ -1,21 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/11
-Message-ID: <546CDAE1.9050909@spiderschwe.in>
-Date: Wed, 19 Nov 2014 19:01:05 +0100
-From: Niklas Kielblock <niklas@...derschwe.in>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Location of OS security audit reports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/8
+Message-Id: <20140814161024.4A85B1F04E5@smtpksrv1.mitre.org>
+Date: Thu, 14 Aug 2014 12:10:24 -0400 (EDT)
+From: cve-assign@...re.org
+To: lcars@...rt.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: [oCERT-2014-006] Ganeti insecure archive permission
 Content-Type: text/plain; charset=utf-8
 
-The Chinese government publishes its own Linux distribution and there 
-are many others making distributions targeting specific cultural groups, 
-but I'm not aware of any greater efforts to build unique national 
-operating systems.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On 19/11/2014 18:54, M.T. Roebuck wrote:
-> I see you're in Vietnam is there anything at all like a non-western
-> OS in use there? Or anywhere in that part of the world? I must be
-> naive but I thought I was just lacking information. It doesn't
-> seem possible that there are only "western" OSs on the entire
-> planet. Although my problem might just be that my definition of
-> OS is all wrong.
+> Such archives are written with too lax permissions that make it
+> possible to access them as unprivileged user.
+
+> The configuration archive contains sensitive information, including
+> SSL keys for the inter-node RPC communication as well as the
+> credentials for the remote API (RAPI).
+
+Use CVE-2014-5247.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT7N2eAAoJEKllVAevmvmsrioH/33ive+8TrDkuY7hfT+4UsHK
+GO6NH8c3omBnlNGXsdQ27xSBXzhol/kfW03/NcqBMK9SKPtcGMUk3GugMWAtv2yt
+oDyvOP54QUtCS8ei7faqQLUjjW5zOxfrVJg14eaPPVYOdfatfoHOvVqcz7chqzUg
+/RgoIvaslpRRK74s7CQdMOqQNOcfmD2KBxAUGNUUX/REx3QE2ojTUXTEL0dcTfyx
+nn7HfoyikBE1VpHA+GS8Ew0Nqh5wTP+W0YGnL7AU+btY/BQR4aZJma567BnL63CC
+Hb9pVneqCJq8HUjygmwgPDaDO6ivCnUuhZypg4kVg8ja37OysWfokzicK7kl03o=
+=pveN
+-----END PGP SIGNATURE-----
