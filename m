@@ -1,29 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/21/2
-Message-ID: <CABbbngAEqn=u0RNKdfqFA9z-85aCos8U6uVkJrPjGMPWW=E7jA@mail.gmail.com>
-Date: Mon, 20 Jan 2014 23:12:41 -0800
-From: Forest Monsen <forest.monsen@...il.com>
-To: Mitre CVE assign department <cve-assign@...re.org>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/5
+Message-Id: <20140814081240.A1F7E1BE0C5@smtpvbsrv1.mitre.org>
+Date: Thu, 14 Aug 2014 04:12:40 -0400 (EDT)
+From: cve-assign@...re.org
+To: csteipp@...imedia.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Possible CVE Request: MediaWiki Security and Maintenance Releases: 1.19.18, 1.22.9 and 1.23.2
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 20, 2014 at 8:32 AM, <cve-assign@...re.org> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> The advisory says "attacker must have access to the
-> original session ID of the victim." Do you know whether the relevant
-> attacks occur at times when this original session ID is invalid?
->
+> * (bug 68187) SECURITY: Prepend jsonp callback with comment.
+> ** This was hardening against CVE-2014-4671, I don't think CVEs are
+> being assigned for these?
 
-I'm going to interpret your question as "Do you know whether the relevant
-attacks [can] occur at times when this original session ID is invalid?"
+Use CVE-2014-5241.
 
-On reviewing the vulnerability discussion, it seems clear that no, the
-attack can not succeed if the original session ID is invalid. And this is
-the point of the patch addressing the issue; when logging in a new user
-after a purchase, the session is now regenerated with user_login_finalize
-(Drupal 7,
-http://drupalcode.org/project/ubercart.git/blobdiff/f210d304fc6e7c1758fc7822a5eeab0b93016b77..0f715a22aef41d6e1e3b94d922a2930eae2706c5:/uc_cart/uc_cart.module)
-or user_external_login (Drupal 6,
-http://drupalcode.org/project/ubercart.git/blobdiff/e35463375646fbcc6953f6046de596300801181f..4784812f9e65b8bf27ae73b5cc522abdc2afb422:/uc_cart/uc_cart.module).
+[ Related discussion:
 
+  > From: Salvatore Bonaccorso <carnil@...ian.org>
+  > Date: Sat, 2 Aug 2014 07:47:56 +0200
+
+  > There was at last CVE-2014-1546 assigned in bugzilla for this
+  > (https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-1546). So a
+  > CVE might also be assigned for this.
+
+  Yes, a product with an affected JSONP endpoint can have its own
+  individual CVE ID. It is also possible that the vendor of a
+  JSONP endpoint has determined that a successful attack is entirely
+  the fault of the SWF parser, and does not want to have a CVE ID.
+  This might, hypothetically, occur if the JSONP response from a
+  product is always noncompliant SWF data, but some SWF parsers accept
+  it anyway. ]
+
+
+> * (bug 66608) SECURITY: Fix for XSS issue in bug 66608: Generate the
+> URL used for loading a new page in Javascript,instead of relying on
+> the URL in the link that has been clicked.
+> ** Standard Dom XSS. Credit goes to Michael M.
+
+Use CVE-2014-5242.
+
+
+> * (bug 65778) SECURITY: Copy prevent-clickjacking between OutputPage
+> and ParserOutput.
+> ** This probably should get a CVE, since downstreams will all want to
+> patch this. We prevent iframing certain pages to prevent clickjacking
+> / redressing attacks, but when those pages were transcluded into
+> non-protected pages, the resulting page could be iframed. Credit goes
+> to Kevin Israel.
+
+Use CVE-2014-5243.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT7G8NAAoJEKllVAevmvmsZagH/3tDEp3tiZaGWLs8CG4Ul2vg
+Vgak1YxgAkTe7zQkl5dwTYjSVPUFenV7ig+8HokEepK3gf5tO1hQw7tgAshyR4cz
+MsOCq4VJ3YD8/KwS1GNJPoarMlbbAQrNztudD5Rz3zBywMHiOgq2ZWhYro7cQhKD
+68+jEunzEmFwOsdHlMXKNKO7aFlyheX7LcaTyALPRwKBrtP2NWXLqDLInK44CX4x
+CfvRUOQdjFBbNVJJEsubm5y+plqTqHtHQC5DcG8nihlYrCDvG4bmB6pIy/CEHQQU
+4k0IpSBs2KLbLzWG5073hAfm0FbjkJNL8MJQIXRPfmIZevZIwz74i0vDgM1bjuc=
+=L99h
+-----END PGP SIGNATURE-----
