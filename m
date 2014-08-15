@@ -1,31 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/2
-Message-ID: <546E90BB.90303@redhat.com>
-Date: Thu, 20 Nov 2014 18:09:15 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, nacin@...dpress.org
-Subject: Re: WordPress 4.0.1 Security Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/9
+Message-ID: <53EE6B40.6070205@perl-hackers.net>
+Date: Fri, 15 Aug 2014 21:19:12 +0100
+From: Alberto Simoes <ambs@...l-hackers.net>
+To: cve-assign@...re.org, carnil@...ian.org
+CC: oss-security@...ts.openwall.com, steve@...ve.org.uk,  756566@...s.debian.org, Nuno Carvalho <mestre.smash@...il.com>
+Subject: Re: CVE Request: XML-DT: Insecure use of temporary files
 Content-Type: text/plain; charset=utf-8
 
-I'm not aware of any being assigned. Andrew?
 
-On 20/11/14 01:47 PM, Henri Salo wrote:
-> https://wordpress.org/news/2014/11/wordpress-4-0-1/
-> 
-> WordPress 4.0.1 is now available. This is a critical security release for all
-> previous versions and we strongly encourage you to update your sites
-> immediately.
-> 
-> Can I get CVEs for vulnerabilities fixed in this release, thank you. I am not
-> sure if some or any of these has been requested already.
-> 
-> ---
-> Henri Salo
-> 
+Hello all,
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+This was fixed in XML-DT-0.66 fixing that issue.
+It was just released to CPAN.
 
+Thank you
+alberto
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+On 15/08/14, 21:10, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> mkdtskel and mkxmltype using insecurely temporary files using the pid
+>> of the process in the temporary file name.
+>>
+>> /tmp/_xml_$$
+>>
+>> https://bugs.debian.org/756566
+>
+> Use CVE-2014-5260.
+>
+>
+>> fixed in XML-DT 0.65 upstream, see
+>>
+>> https://metacpan.org/diff/file?target=AMBS/XML-DT-0.65/&source=AMBS/XML-DT-0.63/
+>
+> This actually doesn't seem to be fixed. However, we don't immediately
+> see a security problem in version 0.65 (only a usability problem), so
+> a second CVE ID isn't assigned at this point.
+>
+> Specifically, the latest version has:
+>
+>    https://metacpan.org/source/AMBS/XML-DT-0.65/mkxmltype
+>
+>    system("head -$lines $fname | xmllint --recover - > $fname");
+>
+> which looks unintended (maybe $fname will always end up as a
+> zero-length file?).
+>
+> This apparently also affects libxml-dt-perl (0.65-1) from the
+> https://packages.debian.org/sid/libxml-dt-perl page.
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJT7mhqAAoJEKllVAevmvmsd6wH/1kq/+SPIZPj73hx7gHdF6Bs
+> apbtdF7zITzl+o9sNkiq/PR8a8Hln6ZvqCuyZMinQu9xv1mfanpheSsCw810q5ou
+> dP1Bhv+4zN91ukEMKnugYH3xnLn3GXnm0XXDL+mN90I4ev/CKJbKzLoeqHWxy0Ah
+> k1YDC1dG5eS9EIT6OhOWAZKX1zYB5SJ8SiyIhomp94Jymtnqd6IKs7kTkinaeoJ6
+> AgSEFugTT6pr46rRKf+dkZ+KhsrhTLYVUGVajwYVOSQRPKLaMdIfdAwcM99fhfrX
+> k81O1GIO2CPRXslzzdqTTgoqaPjx9TqXQZdCA2CCKrDH1RHIpyPQCNrGAbTOeMk=
+> =dNlw
+> -----END PGP SIGNATURE-----
+>
+
