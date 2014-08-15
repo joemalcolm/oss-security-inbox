@@ -1,30 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/2
-Message-ID: <3230301C09DEF9499B442BBE162C5E4825768692@SESTOEX04.enea.se>
-Date: Wed, 15 Oct 2014 05:28:34 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Truly scary SSL 3.0 vuln to be revealed soon:
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/8
+Message-Id: <20140815201012.637CB6C0046@smtpvmsrv1.mitre.org>
+Date: Fri, 15 Aug 2014 16:10:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, steve@...ve.org.uk, ambs@...l-hackers.net, 756566@...s.debian.org
+Subject: Re: CVE Request: XML-DT: Insecure use of temporary files
 Content-Type: text/plain; charset=utf-8
 
-Thanks Hanno,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-A reflection: Maybe we shouldn't post  information like this here or somewhere else which is not published yet even if the information has leak out? Although all members here are reliable but it is still an open mailing list and we should be careful and act more responsible. 
+> mkdtskel and mkxmltype using insecurely temporary files using the pid
+> of the process in the temporary file name.
+> 
+> /tmp/_xml_$$
+> 
+> https://bugs.debian.org/756566
 
-Cheers
-Sona
+Use CVE-2014-5260.
 
-> It's out:
+
+> fixed in XML-DT 0.65 upstream, see
 > 
-> https://www.openssl.org/~bodo/ssl-poodle.pdf
-> http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
-> exploiting-ssl-30.html
-> 
-> My conclusion stays the same: Disable SSLv3.
-> 
-> --
-> Hanno Böck
-> http://hboeck.de/
-> 
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
+> https://metacpan.org/diff/file?target=AMBS/XML-DT-0.65/&source=AMBS/XML-DT-0.63/
+
+This actually doesn't seem to be fixed. However, we don't immediately
+see a security problem in version 0.65 (only a usability problem), so
+a second CVE ID isn't assigned at this point.
+
+Specifically, the latest version has:
+
+  https://metacpan.org/source/AMBS/XML-DT-0.65/mkxmltype
+
+  system("head -$lines $fname | xmllint --recover - > $fname");
+
+which looks unintended (maybe $fname will always end up as a
+zero-length file?). 
+
+This apparently also affects libxml-dt-perl (0.65-1) from the
+https://packages.debian.org/sid/libxml-dt-perl page.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT7mhqAAoJEKllVAevmvmsd6wH/1kq/+SPIZPj73hx7gHdF6Bs
+apbtdF7zITzl+o9sNkiq/PR8a8Hln6ZvqCuyZMinQu9xv1mfanpheSsCw810q5ou
+dP1Bhv+4zN91ukEMKnugYH3xnLn3GXnm0XXDL+mN90I4ev/CKJbKzLoeqHWxy0Ah
+k1YDC1dG5eS9EIT6OhOWAZKX1zYB5SJ8SiyIhomp94Jymtnqd6IKs7kTkinaeoJ6
+AgSEFugTT6pr46rRKf+dkZ+KhsrhTLYVUGVajwYVOSQRPKLaMdIfdAwcM99fhfrX
+k81O1GIO2CPRXslzzdqTTgoqaPjx9TqXQZdCA2CCKrDH1RHIpyPQCNrGAbTOeMk=
+=dNlw
+-----END PGP SIGNATURE-----
