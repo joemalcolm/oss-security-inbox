@@ -1,127 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/4
-Message-ID: <20141023121232.4ac7017b@pc>
-Date: Thu, 23 Oct 2014 12:12:32 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/7
+Message-ID: <20140815180213.GQ16682@ngolde.de>
+Date: Fri, 15 Aug 2014 20:02:13 +0200
+From: Nico Golde <oss-security+ml@...lde.de>
 To: oss-security@...ts.openwall.com
-Subject: strings / libbfd crasher
+Subject: Re: CVE id request: cacti remote code execution and SQL injection
 Content-Type: text/plain; charset=utf-8
 
 Hi,
+* Murray McAllister <mmcallis@...hat.com> [2014-08-14 09:48]:
+> On 08/13/2014 07:07 AM, Nico Golde wrote:
+> >Hi,
+> >Mischa Sallé and Wilco Baan Hofman reported a security issue in cacti to
+> >Debian when processing arguments passed to the graph settings script:
+> >http://svn.cacti.net/viewvc?view=rev&revision=7454
+> >
+> >We consider this issue to be public given the public fix.
+> >Can someone assign a CVE id? We do have some indication that this was reported
+> >in parallel Fedora, in case anyone from RedHat already assigned a CVE id to
+> >this.
+> 
+> Red Hat did not assign a CVE for this (the original report was 
+> https://bugzilla.redhat.com/show_bug.cgi?id=1127165).
 
-I'm forwarding this here so it doesn't get lost:
-https://twitter.com/lcamtuf/status/524213424373243905
-https://twitter.com/lcamtuf/status/524214698237898753
-http://lcamtuf.coredump.cx/stringme
+Can someone from Mitre assign a CVE id in this case?
 
-Short: Michal Zalewski (who is also on this list and probably can give
-us some more info) fuzzed a sample that crashes the strings command,
-due to a bug in libbfd.
-(by the way: nice catch, always interesting to see potential vulns in
-places you don't expect them.)
-
-strings/libbfd belong to binutils.
-I haven't seen a corresponding commit, their latest release is a bit
-old.
-
-I think it deserves a CVE and further analysis. Seems to be "only" an
-out of bounds read.
-
-Some valgrind output that gives an idea whats going on:
-
-
-==6858== Memcheck, a memory error detector
-==6858== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==6858== Using Valgrind-3.10.0 and LibVEX; rerun with -h for copyright info
-==6858== Command: strings stringme
-==6858== 
-==6858== Invalid read of size 1
-==6858==    at 0x4E8708F: srec_scan (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E87529: srec_object_p (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E7C00C: bfd_check_format_matches (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x401F45: main (in /usr/x86_64-pc-linux-gnu/binutils-bin/2.24/strings)
-==6858==  Address 0x590beb6 is 0 bytes after a block of size 6 alloc'd
-==6858==    at 0x4C28F60: malloc (in /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6858==    by 0x4E7C92D: bfd_malloc (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E86CEA: srec_scan (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E87529: srec_object_p (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E7C00C: bfd_check_format_matches (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x401F45: main (in /usr/x86_64-pc-linux-gnu/binutils-bin/2.24/strings)
-==6858== 
-==6858== Invalid read of size 1
-==6858==    at 0x4E8709E: srec_scan (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E87529: srec_object_p (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E7C00C: bfd_check_format_matches (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x401F45: main (in /usr/x86_64-pc-linux-gnu/binutils-bin/2.24/strings)
-==6858==  Address 0x590beb7 is 1 bytes after a block of size 6 alloc'd
-==6858==    at 0x4C28F60: malloc (in /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6858==    by 0x4E7C92D: bfd_malloc (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E86CEA: srec_scan (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E87529: srec_object_p (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E7C00C: bfd_check_format_matches (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x401F45: main (in /usr/x86_64-pc-linux-gnu/binutils-bin/2.24/strings)
-==6858== 
-==6858== Invalid read of size 1
-==6858==    at 0x4E87200: srec_scan (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E87529: srec_object_p (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E7C00C: bfd_check_format_matches (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x401F45: main (in /usr/x86_64-pc-linux-gnu/binutils-bin/2.24/strings)
-==6858==  Address 0x590beb8 is 2 bytes after a block of size 6 alloc'd
-==6858==    at 0x4C28F60: malloc (in /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6858==    by 0x4E7C92D: bfd_malloc (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E86CEA: srec_scan (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E87529: srec_object_p (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E7C00C: bfd_check_format_matches (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x401F45: main (in /usr/x86_64-pc-linux-gnu/binutils-bin/2.24/strings)
-==6858== 
-==6858== Invalid read of size 1
-==6858==    at 0x4E87207: srec_scan (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E87529: srec_object_p (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E7C00C: bfd_check_format_matches (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x401F45: main (in /usr/x86_64-pc-linux-gnu/binutils-bin/2.24/strings)
-==6858==  Address 0x590beb9 is 3 bytes after a block of size 6 alloc'd
-==6858==    at 0x4C28F60: malloc (in /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so)
-==6858==    by 0x4E7C92D: bfd_malloc (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E86CEA: srec_scan (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E87529: srec_object_p (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E7C00C: bfd_check_format_matches (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x401F45: main (in /usr/x86_64-pc-linux-gnu/binutils-bin/2.24/strings)
-==6858== 
-==6858== 
-==6858== Process terminating with default action of signal 11 (SIGSEGV)
-==6858==  Access not within mapped region at address 0x60B4000
-==6858==    at 0x4E87200: srec_scan (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E87529: srec_object_p (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x4E7C00C: bfd_check_format_matches (in /usr/lib64/binutils/x86_64-pc-linux-gnu/2.24/libbfd-2.24.so)
-==6858==    by 0x401F45: main (in /usr/x86_64-pc-linux-gnu/binutils-bin/2.24/strings)
-==6858==  If you believe this happened as a result of a stack
-==6858==  overflow in your program's main thread (unlikely but
-==6858==  possible), you can try to increase the size of the
-==6858==  main thread stack using the --main-stacksize= flag.
-==6858==  The main thread stack size used in this run was 8388608.
-==6858== 
-==6858== HEAP SUMMARY:
-==6858==     in use at exit: 9,046 bytes in 7 blocks
-==6858==   total heap usage: 41 allocs, 34 frees, 13,216 bytes allocated
-==6858== 
-==6858== LEAK SUMMARY:
-==6858==    definitely lost: 0 bytes in 0 blocks
-==6858==    indirectly lost: 0 bytes in 0 blocks
-==6858==      possibly lost: 0 bytes in 0 blocks
-==6858==    still reachable: 9,046 bytes in 7 blocks
-==6858==         suppressed: 0 bytes in 0 blocks
-==6858== Rerun with --leak-check=full to see details of leaked memory
-==6858== 
-==6858== For counts of detected and suppressed errors, rerun with: -v
-==6858== ERROR SUMMARY: 4178251 errors from 4 contexts (suppressed: 0
-from 0)
-
-
+Thanks!
+Nico
 -- 
-Hanno Böck
-http://hboeck.de/
+Nico Golde - XMPP: nion@...ber.ccc.de - GPG: 0xA0A0AAAA
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Content of type "application/pgp-signature" skipped
