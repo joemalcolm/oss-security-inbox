@@ -1,135 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/25
-Message-ID: <CAFkuX4tkXruV7uX-AJ+EKe_uAvUDAwPFU1StkJBYwMUw05SRJA@mail.gmail.com>
-Date: Mon, 7 Jul 2014 15:31:14 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
-To: oss-security@...ts.openwall.com, distros@...openwall.org
-Subject: Re: LMS-2014-07-07-1: python-lz4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/6
+Message-ID: <53EE2DEE.1030305@enovance.com>
+Date: Fri, 15 Aug 2014 11:57:34 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2014-026] Multiple vulnerabilities in Keystone revocation events (CVE-2014-5251, CVE-2014-5252, CVE-2014-5253)
 Content-Type: text/plain; charset=utf-8
 
-For more information / PoC, please visit:
-http://blog.securitymouse.com/2014/07/hacking-cern-exploiting-python-lz4-for.html
+OpenStack Security Advisory: 2014-026
+CVE: CVE-2014-5251, CVE-2014-5252, CVE-2014-5253
+Date: August 15, 2014
+Title: Multiple vulnerabilities in Keystone revocation events
+Reporter: Lance Bragstad (Rackspace) - CVE-2014-5252
+          Brant Knudson (IBM)        - CVE-2014-5251, CVE-2014-5253
+Products: Keystone
+Versions: 2014.1 versions up to 2014.1.1
 
-Thanks,
-Don A. Bailey
-Founder / CEO
-Lab Mouse Security
-@InfoSecMouse
-https://www.securitymouse.com/
+Description:
+Lance Bragstad from Rackspace and Brant Knudson from IBM reported 3
+vulnerabilities in Keystone revocation events. Lance Bragstad discovered
+that UUID v2 tokens processed by the V3 API are incorrectly updated and
+get their "issued_at" time regenerated (CVE-2014-5252). Brant Knudson
+discovered that the MySQL token driver stores expiration dates
+incorrectly which prevents manual revocation (CVE-2014-5251) and that
+domain-scoped tokens don't get revoked when the domain is disabled
+(CVE-2014-5253). Tokens impacted by one of these bugs may allow a user
+to evade token revocation. Only Keystone setups configured to use
+revocation events are affected.
+
+Juno (development branch) fix:
+https://review.openstack.org/111106
+https://review.openstack.org/109747
+https://review.openstack.org/109819
+https://review.openstack.org/109820
+
+Icehouse fix:
+https://review.openstack.org/112087
+https://review.openstack.org/111772
+https://review.openstack.org/112083
+https://review.openstack.org/112084
+
+Notes:
+These fixes will be included in the Juno-3 development milestone and are
+already included in the 2014.1.2.1 release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-5251
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-5252
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-5253
+https://launchpad.net/bugs/1347961
+https://launchpad.net/bugs/1348820
+https://launchpad.net/bugs/1349597
+
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
 
-On Mon, Jul 7, 2014 at 10:50 AM, Don A. Bailey <donb@...uritymouse.com>
-wrote:
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> Hello All,
->
-> Please find the bug report for python-lz4 attached below.
->
-> Steeve Morin (@steeve), the maintainer of the python-lz4 package, has been
-> great to work with. He worked quickly to get the package up to date by this
-> morning.
->
-> Thanks,
-> Don A. Bailey
-> Founder / CEO
-> Lab Mouse Security
-> @InfoSecMousehttps://www.securitymouse.com/
->
-> #############################################################################
-> #
-> # Lab Mouse Security Report
-> # LMS-2014-07-07-1
-> #
->
-> Report ID: LMS-2014-07-07-1
-> Report Code Name: LAZARUS.7
->
-> Researcher Name: Don A. Bailey
-> Researcher Organization: Lab Mouse Security
-> Researcher Email: donb@...uritymouse.com
-> Researcher Website: www.securitymouse.com
->
-> Vulnerability Status: Reported
-> Vulnerability Embargo: None
->
-> Vulnerability Class: Integer Overflow
-> Vulnerability Effect: Memory Corruption
-> Vulnerability Impact: DoS, OOW, RCE
-> Vulnerability DoS Practicality: Practical
-> Vulnerability OOW Practicality: Practical
-> Vulnerability RCE Practicality: Practical
-> Vulnerability Criticality: Critical
->
-> Vulnerability Scope:
-> All versions of the python-lz4 package prior to r119.
-> 32bit variants of the package are critically affected.
-> 64bit variants are deemed infeasible to exploit at this time.
->
-> Lab Mouse Security has engineered reliable RCE payloads for any application
-> that uses python-lz4, regardless of where or how the app uses the module in
-> its code base.
->
-> python2.7 was used in exploit development. python3 exploits have not been
-> written, but preliminary analysis shows it is likely at risk to reliable
-> RCE.
->
-> Criticality Reasoning
-> - ---------------------
-> Due to the way Python manages objects in memory, there are multiple ways to
-> craft a reliable exploit against python2.7 that will allow for RCE. It is
-> notable that Don A. Bailey designed his exploit to meet the following
-> conditions:
->  - bypasses ASLR
->  - bypasses NX
->  - portable to any target architecture (tested on 32bit: ARM, x86)
->  - no corresponding information disclosure is required to succeed, making
->    this a 100% one-shot RCE for any python-lz4 use case
->
-> Vulnerability Description
-> - -------------------------
-> An integer overflow can occur when processing any variant of a "literal run"
-> in the affected function. When certain payloads are processed, a pointer to
-> an output buffer can be set to an address outside of the output buffer. Since
-> the attacker can specify exact offsets in memory, it is very easy to create
-> a reliable RCE exploit.
->
-> The design of internal Python memory objects facilitates exploitation by
-> allowing the attacker to manipulate how and when an object in memory will be
-> scrubbed. The garbage collector can be triggered later, or the cleanup of
-> an object can be performed at the attacker's will. This allows for an attack
-> to occur at any time once the payload has corrupted memory, making it more
-> difficult to identify whether an attack has already occurred.
->
-> Vulnerability Resolution
-> - ------------------------
-> Resolved.
->
-> References
-> - ----------https://github.com/steeve/python-lz4/commit/76c27bf5d52637b9a12de33b95bd884da2fed64dhttp://blog.securitymouse.com/2014/07/i-was-wrong-proving-lz4-exploitable.html
->
-> #
-> #############################################################################
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG
->
-> iQIcBAEBAgAGBQJTusUoAAoJEByNNxY/DGpEODoP/0ZYaN/QOiJhk2CSc7tWKdfj
-> wYRj3/A0m5/kAefqmgilfeC3NPCEv+CRD7AM07X5Rg/EyCGy4RvydQhPcun1UaDQ
-> Pn7gfYNIY2ysM1IMacDY5ujQrRf7GSHxWDrkViDXkfrJbYVUINgjhPqrtrx5T1ZS
-> k3UL+jdfUyEfYQfm4YPtVHnZJ01RPY4xRE+n/i7xGaVeNTSB3AaKqeKiCGeYAKXY
-> vyTE3PVnVdtTaHQ7XXDi9qRRd4PhNa8IISBvAaUERGNftKRPpbztWx7H1ACNy8cE
-> pnKL2AEjQyEwQeKoSNhafDMUzy/2cB8CJTsmq1iLK1TqsbPHLz3mOaLnW8meXd0i
-> IRXufZMBudu44cRoM1nc0XmwVykyxFQnbuxgpJofyv6wEAKj+dd/OfI/ZP6LJSV1
-> R9jbKNYMJj44UBgIeXn/HjeI/YUfhshZNj2sZrjtNd6RdAT8gUVJkXMkWbhS0Jmf
-> JDpmLu1HfMeI4BF4ylQukV/2enZHgLbJNut0E/V7pdxCKBhoX5of4YsLSLVDoJGQ
-> qntSw77UHXbcEMfevBXd6ZPG9TrcMw/vYVLhwUHfZrJWukteLyAw44p2afyw6wzw
-> EfMbceDxHBaj49QLvEVdAlJ8tF47ehIGHap7982vefHfcMqxTsrP9njMFtIVGouE
-> DRKkrldSf5S5HIPQo/xA
-> =HWn4
-> -----END PGP SIGNATURE-----
->
->
-
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
