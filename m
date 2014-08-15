@@ -1,38 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/10
-Message-ID: <20141121094943.GB1620@suse.de>
-Date: Fri, 21 Nov 2014 10:49:43 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: falonsoe@...hat.com
-Subject: Re: CVE-2014-7817 glibc: command execution in wordexp() with WRDE_NOCMD specified
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/5
+Message-ID: <FDB32F43-A947-47FF-AD46-F3395531F5A0@redhat.com>
+Date: Fri, 15 Aug 2014 07:44:44 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: CVE request for accountsservice local encrypted password disclosure flaw
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 20, 2014 at 07:17:22PM +0000, mancha wrote:
-> On Thu, Nov 20, 2014 at 11:38:20AM -0500, Francisco Alonso wrote:
-> > Hello,
-> > 
-> > It was discovered that the wordexp() function could ignore the WRDE_NOCMD flag under certain input conditions resulting in the execution 
-> > of a shell for command substitution when the applicaiton did not request it. 
-> > 
-> > Bug report:
-> > https://sourceware.org/bugzilla/show_bug.cgi?id=CVE-2014-7817
-> > 
-> > Git commit:
-> > https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=a39208bd7fb76c1b01c127b4c61f9bfd915bfe7c
-> > 
-> > References:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1157689
-> > https://sourceware.org/ml/libc-alpha/2014-11/msg00519.html
-> 
-> Francisco, thanks for the post.
-> 
-> After a lightning review of one of my systems, I found the following use
-> glibc's wordexp: adobe's flash plugin, ardour2, mailx, enca. I've not
-> looked into which input is under a would-be-attacker's control.
+The upstream bug report was opened in 2012, so this probably requires a 2012 CVE.
 
-I quickly had a look at flash-player diassembler and it calls wordexp with flags=0 in 3 places.
+Just cutting-and-pasting from our bug entry:
 
-So it even calls the unsafe variant.
+It was reported that accountsservice invokes usermod with the -p parameter when calling SetPassword(), which can leak encrypted passwords locally (being that they are briefly visible via ps).
 
-Ciao, Marcus
+As noted in the upstream bug:
+
+The relevant code is in src/user.c in the user_change_password_authorized_cb() function:
+
+        argv[0] = "/usr/sbin/usermod";
+        argv[1] = "-p";
+        argv[2] = strings[0];
+        argv[3] = "--";
+        argv[4] = user->user_name;
+        argv[5] = NULL;
+
+strings[0] has been set to the crypted password in user_set_password(). The crypted password has been passed from the client (ie: gnome-control-center).
+
+This has not yet been corrected upstream.
+
+References:
+
+https://bugs.freedesktop.org/show_bug.cgi?id=55000
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=757912
+https://bugzilla.redhat.com/show_bug.cgi?id=1130538
+
+
+Thanks.
+
+-- 
+Vincent Danen / Red Hat Product Security
+
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
