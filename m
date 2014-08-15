@@ -1,78 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/9
-Message-ID: <1985973.3iiugZcOjL@x2>
-Date: Wed, 10 Dec 2014 09:25:27 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/3
+Message-Id: <20140815062446.A3D2E1F051D@smtpksrv1.mitre.org>
+Date: Fri, 15 Aug 2014 02:24:46 -0400 (EDT)
+From: cve-assign@...re.org
+To: tristan.cacqueray@...vance.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Keystone
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday, December 09, 2014 10:09:02 PM Steve Grubb wrote:
-> On Tuesday, December 09, 2014 08:03:10 PM Daniel Micay wrote:
-> > On 09/12/14 11:18 AM, Steve Grubb wrote:
-> > > 4) Then I started wondering about the heap when you use other memory
-> > > manager libraries such as jemalloc. This turned out to be interesting.
-> > > You get about 19 bits of randomness using it. Its not as bad as non-PIE
-> > > glibc but not as good as PIE glibc. You also got the same amount of
-> > > randomness whether the app was PIE or not. This is an area ripe for more
-> > > experimenting, exploiting, and patching. Supposedly some of these heap
-> > > managers use mmap as the underlying allocator. So, why aren't they
-> > > getting 29 bits, too? :-)
-> > 
-> > Your measurement of the difference is quite accurate.
-> 
-> There's other allocators, too.
-> 
-> libtalloc:
-> $ ./all-bits
-> heap       14 bits
-> pie-heap   29 bits
-> 
-> Hoard:
-> $ ./all-bits
-> heap       25 bits
-> pie-heap   25 bits
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-tcmalloc:
-$ ./all-bits 
-heap       11 bits
-pie-heap   26 bits
+> Multiple vulnerabilities in Keystone revocation events
 
-and just so they are all in one place:
 
-jemalloc:
-$ ./all-bits 
-heap       19 bits
-pie-heap   19 bits
+> https://launchpad.net/bugs/1347961
 
-glibc:
-$ ./all-bits 
-heap       14 bits
-pie-heap   29 bits
+> When MySQL is used to store revocation events, events are returned
+> from the database with the timestamps truncated to the second. This
+> causes a revocation event for a token (which has the issued_at
+> timestamp to the microsecond) to not match
 
-Are there any other allocators in common use?
+Use CVE-2014-5251.
 
-This is quite a range in heap ASLR just based on which library you link 
-against. Might be nice if some of the low performers gain some more bits of 
-randomness.
 
--Steve
+> https://launchpad.net/bugs/1348820
 
-> Different allocators, different strategies, different randomness. While
-> people are thinking about this, it might be a good time to check everything
-> that's popular. Hmmm...now that I think about it, I haven't looked for
-> address bias in the last samples....  :-)
-> 
-> -Steve
-> 
-> > The page multiple constraint zaps 12 potential bits of entropy, but
-> > jemalloc's 4M chunk alignment increases that to 22 bits. I'm not sure
-> > what can be done about it because there's a very strong performance case
-> > for the design.
-> > 
-> > I sent in a fix for the MALLOC_CONF part of this at least, so an
-> > attacker won't be able to reduce it further:
-> > 
-> > https://github.com/jemalloc/jemalloc/pull/174
+> When the server converted a V2 token to a V3 token it regenerated the
+> issued_at time ... This was causing the server to fail to revoke a V2
+> token
 
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+Use CVE-2014-5252.
+
+
+> https://launchpad.net/bugs/1349597
+
+> A token scoped to a domain wouldn't be revoked for a domain-wide
+> revocation event.
+
+Use CVE-2014-5253.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT7ac2AAoJEKllVAevmvmsKIoH/id1hfj2XZ/6vUAbSgb4Yrar
+y6Ozz2ma5KfeSXxC5BQs9TEh9w4sG2Bz6HTmGHjwt4XAhR6X/56d/xmHDtwJXyiu
+NLEitTX6By23ehPVO26D4/h0wRFYzWve5ey/WLzeJVfM1P0HgBRxjeMFZF+rFcVm
+OusIkEardviGTZDX+gz8YNu6Bmd+OMSVrAi0ow/Oyw2YVZPmRnFLi/xp66jHxHer
+Hnq7c7lZ4Pna1N1L/3Bn3Cf/aW1V6u6FmIT6CP5697myylYEDTcvU9sX9suCxuzs
+GrSXYHHXbK0BVJxYgUGeNbVVB1paxuQkuk2LnQNS6aOeOM8BIeAFZAySyWKKEs0=
+=me1L
+-----END PGP SIGNATURE-----
