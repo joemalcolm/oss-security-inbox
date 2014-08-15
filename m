@@ -1,42 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/12
-Message-ID: <CAFOKM3p2kcWkvEhxRwj2AwUtpTNv4x=uwknmpxDmRgoECk4cwQ@mail.gmail.com>
-Date: Wed, 19 Mar 2014 09:33:58 -0700
-From: Dean Pierce <pierce403@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/4
+Message-Id: <20140815082443.A4B241F0585@smtpksrv1.mitre.org>
+Date: Fri, 15 Aug 2014 04:24:43 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, steve@...ve.org.uk, xcfa@...family.org
+Subject: Re: CVE request: xcfa: Insecure use of temporary files, subject to race conditions
 Content-Type: text/plain; charset=utf-8
 
-Hosting?  That's what the cloud is for.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I have no idea who runs https://groups.google.com/group/FullDisclosure
+> https://bugs.debian.org/756600
 
-but they seem modeled after original fd charter.  I trust Google as a
-neutral third party more than I would trust most security researchers.
- They already host all the old newsgroup archives.  It's also free,
-easily consumable, and most importantly, babysat for security issues
-in a way that even a team of skilled volunteers would have a hard time
-pulling off.
+As mentioned in the
+http://openwall.com/lists/oss-security/2014/05/06/3 post, the Symlink
+Following composite is treated as somewhat of a special case in CVE.
+This doesn't, for example, mean that all problematic uses of files in
+/tmp are always covered by a single CVE ID.
 
-  - DEAN
+>> rm /tmp/index.html
 
-On Wed, Mar 19, 2014 at 9:14 AM, Georgi Guninski <guninski@...inski.com> wrote:
-> What is the number of email addresses who
-> posted on FD?
->
-> (to roughly estimate cost of hosting)
->
-> On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
->> Apologies for posting on list mainly dedicated
->> to CVE's.
+>> any existing file called /tmp/index.html will be removed regardless
+
+This may be an issue that is typically treated as a usability problem
+(or maybe a documentation problem), not a security problem. The rm
+program should remove /tmp/index.html - it should not remove the
+target of a /tmp/index.html symlink. (If there is a race condition
+within an implementation of rm, that would not be an xcfa
+vulnerability.)
+
+Ideally, xcfa would not remove /tmp/index.html because /tmp/index.html
+might be an important file unrelated to xcfa. However, there doesn't
+seem to be a way to design an "attack" in the traditional sense, and
+/tmp/index.html isn't a filename that would be important in typical
+cases. For example, if I have a critical file named file.txt~ and a
+less important file named file.txt, and I decide to modify file.txt
+with emacs, then file.txt~ is overwritten with no warning. This is
+typically not considered an emacs vulnerability.
+
+https://bugs.debian.org/756600 covers a number of Symlink Following
+issues that allow overwriting files. Use CVE-2014-5254 for all of
+these.
+
+>>         fp = fopen ("/tmp/get_infos_dvd.sh", "w");
 >>
->> The Full Disclosure mailing list died today:
->> http://lists.grok.org.uk/
->> http://seclists.org/fulldisclosure/2014/Mar/332
+>>         fprintf (fp, "#!/bin/sh\n");
+
+>>         fclose (fp);
+>>         system ("chmod +x /tmp/get_infos_dvd.sh");
 >>
->> I suppose it is time for a new list.
->>
->> Any ideas?
->>
->> --
->> guninski
+>>         system ("/tmp/get_infos_dvd.sh");
+
+This one doesn't seem to be necessarily a Symlink Following issue. At
+the instant of the fopen, /tmp/get_infos_dvd.sh might be a plain file
+(not a symlink), owned by the attacker but with 0777 permissions. The
+fopen/fprintf/fclose would succeed, and the chmod would fail. The
+attacker can insert malicious code into /tmp/get_infos_dvd.sh in
+between the fclose line and the second system line. Use CVE-2014-5255
+for this.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT7cM6AAoJEKllVAevmvmsAi4H/3NbVEUpX3DIPvGI/Ac36aOu
+X0tzmPmJl4ZzpMpPlL6l6ZissTz7tJPaEhEUfxivdETU8TKaPPmt29oQdAaAC9hl
+sBe728+SIxzIX+7JZOt56NDkjdt0/LI4D+8lY/jNY2oJj4gGtYUr8FoeLsiWbavP
+QH3yS6+llkzduuU9zExhuobXHt1eokQdF53x1G2EFZYOzDti+eQtCrpZIKWrbrYs
+GZhfYAzFgN6+ncE1xi8WkZPxGGd1bOKEso2cD1tHkl65rvOiFPk9RolqeDNpAqyi
+nYW67Ah2a3/XQy4VqJbqS+7ospbTZD6B8AVKTBCvm1oQ4FGdxakJW3Pu3FAKWB0=
+=BHy4
+-----END PGP SIGNATURE-----
