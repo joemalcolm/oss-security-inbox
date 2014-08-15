@@ -1,107 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/9
-Message-Id: <20140908224505.8C2D66C0017@smtpvmsrv1.mitre.org>
-Date: Mon,  8 Sep 2014 18:45:05 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Python robotframework - tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/2
+Message-ID: <53ED9F0B.6090507@redhat.com>
+Date: Thu, 14 Aug 2014 23:47:55 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org, Tristan Cacqueray <tristan.cacqueray@...vance.com>
+Subject: Re: CVE request for vulnerability in OpenStack Keystone
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Sorry  I don't have the original email.
 
->> 1, Is the "merge('../tmp/passing.xml', '../tmp/failing.xml')"
->>    debugging code, or is this code realistically used because a
->>    different piece of software has created passing.xml and failing.xml
->>    files?
+On August 5 Tristan asked for a CVE:
 
-> It's part of __main__ so it gets executed.
+http://seclists.org/oss-sec/2014/q3/296
 
-This doesn't really answer the question. In
-e8e423dc99094d761ea6944e71bb75eb5c418c8c, the upstream vendor says
-it's debug code. Also, note that result_merger.py is distributed with
-0644 permissions. As far as we can tell, the
-"merge('../tmp/passing.xml', '../tmp/failing.xml')" is executed (in
-the potentially unsafe way) only if a user explicitly runs a command
-such as:
+No reply with a CVE or questions, can I go ahead and assign them?
 
-  python full_pathname/result_merger.py
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Otherwise, "__name__ == '__main__'" would be false.
 
-There's apparently no motivation for an end user to enter this python
-command in order to execute debug code that was meaningful only to the
-developer.
-
-To have a CVE for an issue involving a symlink attack, what we
-typically look for is a case in which code is executed during normal
-use of a product. In interpreting "normal use" situations, we think
-it's reasonable to exclude a user's decision to locate random 0644
-files and launch them in isolation with a script interpreter. The 0644
-permissions are, at least in some cases, a signal that the file was
-not intended to be executed in isolation. Products do not, in general,
-come with security expectations that running a 0644 file directly is
-safe (unless running the 0644 file is encouraged by the
-documentation). There doesn't seem to be a good argument for a CVE
-assignment regardless of the vendor's decision to delete the debug
-code.
-
-Possibly an example with sh would be simpler:
-
-  % ls -ld /var/productdir/tmp
-  drwxr-xr-x ...
-  % cat /usr/bin/script1.sh
-  #!/bin/sh
-  export MYDIR=/var/productdir
-  /bin/sh /usr/lib/product-1.0/files/script2.sh
-  % cat /usr/lib/product-1.0/files/script2.sh
-  echo test > $MYDIR/tmp/file.txt
-  % ls -l /usr/bin/script1.sh
-  -rwxr-xr-x ...
-  % ls -l /usr/lib/product-1.0/files/script2.sh
-  -rw-r--r-- ...
-
-Here, there could be a symlink attack if script2.sh is used in
-isolation. However, it seems best not to categorize script2.sh as
-having an "unsafe use of /tmp" or "symlink attack" vulnerability. For
-an arbitrary script2.sh file in an analogous situation, we'd typically
-want to see the following before assigning a CVE ID:
-
-  - documentation telling a user to run
-    "sh /usr/lib/product-1.0/files/script2.sh"
-
-or
-
-  - executable permissions (such as 0755) for script2.sh along with
-    (probably) a reason to expect that it would actually be run,
-    such as any of these:
-
-       - the location of script2.sh would realistically be added
-         to a user's path
-
-       - documentation of the purpose of script2.sh, when run in
-         isolation, exists
-
-       - by reading the script2.sh code, a user could notice that
-         it accomplishes something useful in isolation
-
-       - the actual filename suggests that the code accomplishes
-         something useful in isolation
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUDjDEAAoJEKllVAevmvmsGagIALXkDmmPDZyaOpi4TUjKmyfI
-oqaRfHRdp1UIsCKIscA3G2fSOs4IoulCn8XL03Gq3/mF4WstKCBbpTfRV+Tj0Wxj
-TlT5tG4pdYnqCTwIhDOElHme4HqvOnR8ID2wZg4gIDNdS6RMNcVBjEgVjGdyOcP8
-19GIT/e4avvN5NaugyJWi4paKkjfDDvsoXiHFQvYSR11/lBO6mYJKS+r13x55b2l
-aM/53LIi7vGwI3Y/UgX5KClPRkAxnjBvkkzUJ8SJRM30tlUy6DoxlXyCX7hvz3Oj
-vO94HlWdS/2cJeLeyTxZeT4fG92pscFcCTIXZsqTAagWNe8FC0JUzvNfpYsP20A=
-=Rcqe
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
