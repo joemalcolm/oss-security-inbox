@@ -1,45 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/19
-Message-ID: <546D15B7.8090107@enovance.com>
-Date: Wed, 19 Nov 2014 23:12:07 +0100
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-039] Neutron DoS through invalid DNS configuration (CVE-2014-7821)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/16/4
+Message-Id: <20140816074318.04AF31BE00D@smtpvbsrv1.mitre.org>
+Date: Sat, 16 Aug 2014 03:43:18 -0400 (EDT)
+From: cve-assign@...re.org
+To: forest.monsen@...il.com, nacin@...dpress.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for Drupal core, and contributed modules
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-039
-CVE: CVE-2014-7821
-Date: November 19, 2014
-Title: Neutron DoS through invalid DNS configuration
-Reporter: Henry Yamauchi, Charles Neill and Michael Xin (Rackspace)
-Products: Neutron
-Versions: up to 2014.1.3 and 2014.2
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
-Henry Yamauchi, Charles Neill and Michael Xin from Rackspace reported
-a vulnerability in Neutron. By configuring a maliciously crafted
-dns_nameservers an authenticated user may crash Neutron service
-resulting in a denial of service attack. All Neutron setups are affected.
+> SA-CORE-2014-004 - Drupal core - Denial of service
+> https://www.drupal.org/SA-CORE-2014-004
 
-Kilo (development branch) fix:
-https://review.openstack.org/135616
+[ as mentioned in the
+http://openwall.com/lists/oss-security/2014/08/07/3 post, "It was
+fixed by Michael Adams and Andrew Nacin of the WordPress security team
+and David Rothstein of the Drupal security team ... the code was the
+same and our patches differed only in coding standards" ]
 
-Juno fix:
-https://review.openstack.org/135623
+> http://cgit.drupalcode.org/drupal/diff/includes/xmlrpc.inc?id=1849830
+> https://core.trac.wordpress.org/changeset/29405/branches/3.9
 
-Icehouse fix:
-https://review.openstack.org/135624
-
-Notes:
-This fix will be included in future 2014.1.4 and 2014.2.1 releases.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7821
-https://launchpad.net/bugs/1378450
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Use CVE-2014-5265 for the code changes in xmlrpc.inc (Drupal) and
+class-IXR.php (WordPress) to prevent entity declarations and therefore
+address the "vulnerable to an XML entity expansion attack ... can
+cause CPU and memory exhaustion" concern.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+> http://cgit.drupalcode.org/drupal/diff/includes/xmlrpc.inc?id=1849830
+> http://cgit.drupalcode.org/drupal/diff/modules/openid/xrds.inc?id=1849830
+> https://core.trac.wordpress.org/changeset/29405/branches/3.9
+
+Use CVE-2014-5266 for the "Skip parsing if there is an unreasonably
+large number of tags" in both xmlrpc.inc and xrds.inc (Drupal) and the
+"Bail if there are too many elements to parse" in class-IXR.php
+(WordPress).
+
+
+> http://cgit.drupalcode.org/drupal/diff/modules/openid/xrds.inc?id=1849830
+
+Use CVE-2014-5267 for the code change to reject any XRDS document with
+a /<!DOCTYPE/i match. (This is not really identical to CVE-2014-5265,
+although part of the goal is the same.)
+
+
+> And the appropriate number for the following Drupal contributed modules:
+
+> SA-CONTRIB-2014-075 - Biblio Autocomplete - SQL Injection and Access Bypass
+> https://www.drupal.org/node/2316717
+
+> SQL Injection
+
+Use CVE-2014-5249. See http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5249
+
+
+> Additionally, the AJAX autocompletion callback itself was not properly
+> secured, thus potentially allowing any visitor access to the data,
+> including the anonymous user.
+
+Use CVE-2014-5250. See http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5250
+
+
+
+> SA-CONTRIB-2014-076 - Fasttoggle - Access bypass
+> https://www.drupal.org/node/2316747
+
+Use CVE-2014-5268. We think this means that, in the vulnerable
+version, an unauthorized person could change an arbitrary user account
+from "allow" status to "block" status, or change an arbitrary user
+account from "block" status to "allow" status.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT7wsYAAoJEKllVAevmvmsW34H/R+NgzTuSggQlC8D654fZD3j
+RL37cUifwHUPj4Vfm2LoNlUJDtkpLRFGgj2cpb2T7lgtth45m2SVtVgPteqcztYK
+vQSEmQxMXt6yxdTahWWGAWFf254glI4OJiG8mpeuqZPByD2T/SiesB0SbzInusqm
+JYcPH8/0w3jkVkIx7lSz4x2H79+dXIyY1xe9trWVy69X13yz+hMpnjs2i34pWHpe
+EEr+1gr9H0f+rhfi99nqnT6o1JPRptj/PcFaaR0FNaCwT9SW8h6H5faAhp8urTde
+qd4SkFTNFOz3PqbwUD+bxbrfC1QlTiFpKqZpsS2qSikBbhU90r58xQjhlF42atY=
+=dbkG
+-----END PGP SIGNATURE-----
