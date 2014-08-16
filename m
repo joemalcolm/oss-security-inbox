@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/13
-Message-Id: <201406041456.s54EujjG012256@linus.mitre.org>
-Date: Wed, 4 Jun 2014 10:56:45 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/16/6
+Message-Id: <20140816075028.C212DC50460@smtptsrv1.mitre.org>
+Date: Sat, 16 Aug 2014 03:50:28 -0400 (EDT)
 From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 96 - Vulnerabilities in HVM MSI injection
+To: ami_stuff@...pl
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, ffmpeg-security@...peg.org
+Subject: Re: CVE request: FFmpeg issues
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> XSA-96
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=52b81ff4635c077b2bc8b8d3637d933b6629d803
+> author Christophe Gisquet
+> Mon, 11 Aug 2014
 
-> HVMOP_inject_msi ... doesn't check the returned pointer for being
-> non-NULL before dereferencing
-
-Use CVE-2014-3967.
+Use CVE-2014-5271.
 
 
-> handles certain errors by logging messages, without ... rate limiting
-> ... spamming of the hypervisor
+> http://git.videolan.org/?p=ffmpeg.git;a=commit;h=3539d6c63a16e1b2874bb037a86f317449c58770
+> author Michael Niedermayer
+> Sun, 10 Aug 2014
+> Found-by: Piotr Bandurski
 
-Use CVE-2014-3968.
+Use CVE-2014-5272.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -32,11 +33,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTjzMLAAoJEKllVAevmvmsrgcIAJOjpx9mtG4xU0datjs649TC
-IjObNZjgQxd9JGW637asaamyBD2qpt/h692FuXz/Iuc9mKQ1l2dgI3PbMqXkBhyF
-5MyggeUFWqthefcQXHOrU88I/6roBLmfmJ/QPhSPoDdX7LJpXk6LhnFxt7oG5Ex0
-8hE33fJZ/MQ7p6NaLYtlBZSoOTGD8eud2eSYK8Xg6gYrxFHfX8z0CczxFQVEsUKq
-UXNooExJSErEVqna9awzfTpqlKy3tuxONJ2iuB93gWVDNBgrptI25dQzjRPGRxy/
-e+NifrIXp1KoEuo7/MpzmESChFeWjopfN1jjLxU4e53ivi59u86vYBEYnt9I86I=
-=dTrg
+iQEcBAEBAgAGBQJT7wzhAAoJEKllVAevmvmscI0H/107Vi4EeWQrOtG+wwz7JwC9
+J6tlSlnDt11XwnUBbi36UOPDvFjC+XZOiYL9fj+WHcmP66vl/PkcG1LzfVWcxKqm
+YaFRK9UMeX5U20g9GsMUQpMEo5YlgNjZEkN9qDVIMljN0R9cmXEOvhnVawEPfTw+
+Ad1RhqIrNqW1Tt9bs5xvklD+s6biQdCFzUx2yJ8OHjh9W6NWoKv8785pOfQYIpCK
+5YcNkDlJd7Z+yPuu8FMB8m6v/QMTqqHQRSjJWNtJ49VUIOaG5bRqbUqLXbf3zbB0
+3qvXnWP6VzMXPvBiub+t4X80nOrdpd7OGa8Eh3IsoQ/dL0SRyFNBWxmjnbUULY4=
+=VTvJ
 -----END PGP SIGNATURE-----
