@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/10
-Message-ID: <CAE2SPAYAbaidpPa65861pQjaEERgdrcXC+WttHE67FSLpWB=Mg@mail.gmail.com>
-Date: Sat, 22 Nov 2014 21:15:21 +0100
-From: Bastien ROUCARIES <roucaries.bastien@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Stack smashing in libjpeg-turbo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/16/5
+Message-Id: <20140816074717.657911BE00E@smtpvbsrv1.mitre.org>
+Date: Sat, 16 Aug 2014 03:47:17 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com, msalle@...hef.nl, wilcobh@...hef.nl, elbrus@...ian.org
+Cc: cve-assign@...re.org
+Subject: Re: CVE id request: cacti remote code execution and SQL injection
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 6, 2014 at 10:27 PM, Bastien ROUCARIES
-<roucaries.bastien@...il.com> wrote:
-> Hi,
->
-> Passing special crafted jpeg file to imagemagick (convert -rotate 270
-> 003632r270.jpg junk.jpg) could lead to stack smashing in libjpeg.so.62
-> (libjpeg-turbo).
->
-> This bug is triggered  by setting the optimize coding member of the
-> JPEG initialization structure to TRUE. If this flag set it to FALSE,
-> ImageMagick completes without complaint.
->
-> Wokarround could consist to turn off compression optimization in
-> imagemagick to prevent the stack smash.
->
-> Please assing me CVE and make a cc to  768369@...s.debian.org.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We get a reduced test case that does not need imagemagick. The bug lie
-in libjpeg-turbo. Upstream is investigating
+> http://svn.cacti.net/viewvc?view=rev&revision=7454
+> https://bugzilla.redhat.com/show_bug.cgi?id=1127165
 
->
-> Bastien
+> Since there is no check whether $size is actually a number, only that
+> it starts with a number ... it's possible to insert commands by adding
+> a ';' followed by any command.
+
+Use CVE-2014-5261 for this issue involving shell metacharacters.
+
+
+> Incomplete and incorrect input parsing leads to ... SQL injection
+> attack scenarios
+
+Use CVE-2014-5262 for the SQL injection.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT7wwXAAoJEKllVAevmvmszMsH/jCWZKh5R2ZO8T0WC1t/gN5R
+OjCyukw70QsOJtj/bYvHedMkKrkmGF3lpqKYV0vh6PZcc8tKiNNOQ1EK0pyqUyA3
+fpPJzzb3tBvsr66lTUzicGb33L2ZXUSymbWOszaSDE4grt554KySkAe8dX+jztW7
+Xk5aznEc4LBQZKG8TqK3i6bsA75aN8v/m0aXXh9QD1E0lYvR98tfBsGh6unAxZTR
+NJPR3ZUTE6VorlBm1ikoPFcmuuGiNM3kPxawm1rFpOa8Zy9WuTlKJkY26eYK8x30
+pm/AchyANfDLLwlkKIf/aUncCGKIvhGGo4+GGt2QeaBI8zEhvKVmr9ZeHApE1K0=
+=x8CR
+-----END PGP SIGNATURE-----
