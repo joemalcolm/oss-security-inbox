@@ -1,83 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/5
-Message-ID: <54769F47.9060208@redhat.com>
-Date: Thu, 27 Nov 2014 14:49:27 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: 771125@...s.debian.org
-Subject: CVE request: mutt: heap-based buffer overflow in mutt_substrdup()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/16/1
+Message-Id: <20140816013436.CE18BC502F1@smtptsrv1.mitre.org>
+Date: Fri, 15 Aug 2014 21:34:36 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com, aliguori@...zon.com, mst@...hat.com, amit.shah@...hat.com, lersek@...hat.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request --  qemu: missing field list terminator in vmstate_xhci_event
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Jakub Wilk reported a crash in mutt:
+> It was found that vmstate_xhci_event field list was missing
+> VMSTATE_END_OF_LIST() terminator and traversing through this list
+> would result in out-of-bounds access
+> 
+> http://git.qemu.org/?p=qemu.git;a=commit;h=3afca1d6d413592c2b78cf28f52fa24a586d8f56
+> https://bugzilla.redhat.com/show_bug.cgi?id=1126543
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=771125
+Use CVE-2014-5263.
 
-Looking in mutt-1.5.23-2.fc20.x86_64:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-char *mutt_substrdup (const char *begin, const char *end)
-{
-   size_t len;
-   char *p;
-
-   if (end)
-     len = end - begin;
-   else
-     len = strlen (begin);
-
-   p = safe_malloc (len + 1);
-   memcpy (p, begin, len);
-   p[len] = 0;
-   return p;
-}
-
-"end" can be less than "begin", and in this case -1 tries to be stored 
-in the unsigned int len. The safe_malloc will therefore be called with 
-"0" (due to the +1), and then the following memcpy will use the huge len.
-
-(gdb) b mutt_substrdup
-Breakpoint 1 at 0x46daf0: file lib.c, line 814.
-(gdb) c
-Continuing.
-
-Breakpoint 1, mutt_substrdup (
-     begin=begin@...ry=0xe4b630 "From jwilk@...lk.net Wed Nov 26 
-18:01:22 2014\nFrom:\n\rI\n",
-     end=end@...ry=0xe4b65e "From:\n\rI\n") at lib.c:814
-814     {
-(gdb) c
-Continuing.
-
-Breakpoint 1, mutt_substrdup (begin=begin@...ry=0xe4b65e "From:\n\rI\n",
-     end=end@...ry=0xe4b662 ":\n\rI\n") at lib.c:814
-814     {
-(gdb) c
-Continuing.
-
-Breakpoint 1, mutt_substrdup (begin=0xe4b665 "I\n", 
-end=end@...ry=0xe4b664 "\rI\n") at lib.c:814
-814     {
-(gdb) x/s begin
-0xe4b665:       "I\n"
-(gdb) x/s end
-0xe4b664:       "\rI\n"
-(gdb) n
-818       if (end)
-(gdb) n
-819         len = end - begin;
-(gdb) n
-823       p = safe_malloc (len + 1);
-(gdb) p len
-$1 = 18446744073709551615
-(gdb) p len + 1
-$2 = 0
-
-We haven't looked yet where the overlap occurs, nor have a patch yet.
-
-I did have to put "set weed=off" in .muttrc for the issue to present.
-
-Cheers,
-
---
-Murray McAllister / Red Hat Product Security
+iQEcBAEBAgAGBQJT7rS1AAoJEKllVAevmvms81IIAJStFbBq3fpNs3M/E3yijako
+dlSiffBGimmv1s3oV41suqvE7WVv2zDRjfnRBAcRFFND5zj3Ga7hldP+59E2yeaG
+5X25gnsxrJDhEbGFUHLM3hUi928czOWxH/L1TRN+Vq+HvWfkd6y2qNhPTgM8Q7lb
+u92AqJwG0nI1PEjkES4Dnjv6OArHPDzTlNdVJJnizEV+Y7svYhHKb0xDnAT/DHAJ
+xO2va5qP7ukpVGClXY7Cuj6YnhCJ1Wel4NLMN6G7gBntuml2SK60XHi/OqhxucjI
+NWnRtZm9is9bqwsIlbvRF3qhZpWFXO7e8r4bHqigNQhIbQINbzGfTwhNNnkFTaQ=
+=PmsW
+-----END PGP SIGNATURE-----
