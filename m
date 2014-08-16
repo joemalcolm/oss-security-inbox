@@ -1,34 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/29
-Message-ID: <CAFkuX4vj9qzKdiXPzcC6QM0CjVYCp9KCwC=Y-UfP4vsKSeJQcw@mail.gmail.com>
-Date: Thu, 26 Jun 2014 14:38:07 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
-To: Hanno Böck <hanno@...eck.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: LMS-2014-06-16-6: LZ4 Core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/16/3
+Message-Id: <20140816061241.DF7C91F05FA@smtpksrv1.mitre.org>
+Date: Sat, 16 Aug 2014 02:12:41 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Plack::App::File does not prune trailing slashes: possible code exposure / information disclosure
 Content-Type: text/plain; charset=utf-8
 
-Yes. These two issues were merged.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-D
+>    - Plack::App::File would previously strip trailing slashes off
+>      provided paths. This in combination with the common pattern
+>      of serving files with Plack::Middleware::Static could allow
+>      an attacker to bypass a whitelist of generated files
+> 
+> http://api.metacpan.org/source/MIYAGAWA/Plack-1.0031/Changes
+> https://github.com/plack/Plack/issues/405
 
+The underlying issue is that Plack::App::File allowed a trailing slash
+in a pathname referring to a plain file. There is at least one
+specification suggesting that this is wrong:
 
+  http://pubs.opengroup.org/onlinepubs/9699919799/xrat/V4_xbd_chap04.html#tag_21_04_12
 
-On Thu, Jun 26, 2014 at 2:35 PM, Hanno Böck <hanno@...eck.de> wrote:
+  Pathnames that end with one or more trailing <slash> characters must
+  refer to directory paths. Earlier versions of this standard were not
+  specific about the distinction between trailing <slash> characters
+  on files and directories, and both were permitted.
 
-> On Thu, 26 Jun 2014 12:58:37 -0600
-> "Don A. Bailey" <donb@...uritymouse.com> wrote:
->
-> > CVE ID: CVE-2014-4611
->
-> Is it intended that the lz4 upstream code and the linux kernel lz4
-> issue got the same CVE?? Or is this a mistake?
->
-> --
-> Hanno Böck
-> http://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
->
+Without going into the question of whether Plack is responsible for
+following that specification, it seems that the vendor identified
+arguably wrong behavior that had a security impact, and fixed it. Use
+CVE-2014-5269.
 
+(In some related but non-identical situations -- for example, if a
+product decided to reject a valid pathname such as /etc//// as a
+possibly misguided attempt at security hardening -- there wouldn't be
+a CVE ID.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT7vXRAAoJEKllVAevmvmsybAIAISVSn6yyAhD842i4/pVgJ5t
+86heLybkqoFgCYlmWXDacwX6stqK8/ndhD1+mhUCMXNs1iqsPJ43xBT+RF1gOVOw
+5AoYOIiqyWF0rLYdkgAaOYxNxDIHhb+iZswEyLi3RNKAAZESunDO5RzIhxn492d/
+NoCZEzT/FWLju0skoV8+YTN5UrAxPZspVD7tRJ99tFQTsmDj72qMRUqfrey59W0e
+O4jtU+7laffKTPFVlHzO7X2BuAm9739mObaicvgH3CjCdOV3Zg9jp2zzpvfdMxfH
+SDzwJctY+Q4mlIGK0vv2h3ouKUKQudeVGevQzh8Epa7G/Jrp6bq7f8mVaTRLyCo=
+=e2Sd
+-----END PGP SIGNATURE-----
