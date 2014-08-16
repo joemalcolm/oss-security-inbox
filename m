@@ -1,35 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/9
-Message-ID: <CALx_OUCcR8FvPmqO5Y2YvOpNx83r-YcTy303DzN2FYiQ8kaSdA@mail.gmail.com>
-Date: Mon, 29 Sep 2014 20:44:38 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: "Kobrin, Eric" <ekobrin@...mai.com>
-Cc: "chet.ramey@...e.edu" <chet.ramey@...e.edu>, "dwheeler@...eeler.com" <dwheeler@...eeler.com>,  oss-security <oss-security@...ts.openwall.com>, solar <solar@...nwall.com>,  fweimer <fweimer@...hat.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/16/7
+Message-Id: <20140816075347.40DB9C5007F@smtptsrv1.mitre.org>
+Date: Sat, 16 Aug 2014 03:53:47 -0400 (EDT)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for accountsservice local encrypted password disclosure flaw
 Content-Type: text/plain; charset=utf-8
 
-> 1. Is it necessary that functions exported in one version of bash be
->    imported into other versions?
->
-> 2. Is it necessary for exported functions to be able to transition
->    through other processes and back into bash, or is function export
->    intended to support bash-invoked-from-bash only?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-In general, I suspect that the "is it necessary" part is somewhat
-moot. Very few things in bash are "necessary". But it's been there for
-a long time and it's clear that a small fraction of users have come to
-depend on the behavior.
+> can leak encrypted passwords locally (being that they are briefly visible via ps)
+> https://bugs.freedesktop.org/show_bug.cgi?id=55000
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=757912
+> https://bugzilla.redhat.com/show_bug.cgi?id=1130538
 
-If we need to break that existing code to eliminate the risk, so be
-it; the feature is fairly obscure, so the damage will be limited.
+Use CVE-2012-6655.
 
-But if the prefix approach works fine, and nobody can come up with any
-compelling security-relevant reasons why it's a bad outcome... then
-what's the point of breaking existing scripts?
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-I mean, all the arguments against the prefix approach boil down to
-"but if the attacker can set arbitrarily named variables to arbitrary
-values, then..." - and if that's something you allow across a security
-boundary, you're almost certainly in trouble no matter what.
-
-/mz
+iQEcBAEBAgAGBQJT7w2kAAoJEKllVAevmvms2zAH/j/EKgu2A8+T/YPQ3Zq7KG2R
+o+cnL1xvYtXcR28G4JocBhFPs1E+dUSjmNdJmyV8BH/tplxVy597D78/kke7P4CB
+Ogq/54KJZ0KRglvc8ZFL3tLfu8enMuA3PDOpl9LZNNoTsZR30MIz/h+uoxQ708iW
+d/xpPcIS9iwDr3TxAN/vywOv/XZWWVuUVEyRGozG7fV8ODyWcqaqD5cAi9UbkyL6
+z9uCBqyoEGYAH9jPq5t6RrtgJfxaQEG2ERHoFPYJJcrIQVO89kCSOg756faCuWFw
+LymGNPf0o1quxv7XzrD/Sdz2IRFXUvOchzRryrRE2jQDHZaGmHu41iAfj9TAfiY=
+=7BGM
+-----END PGP SIGNATURE-----
