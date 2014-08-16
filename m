@@ -1,42 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/14/5
-Message-ID: <53C40F02.5030802@redhat.com>
-Date: Mon, 14 Jul 2014 11:10:26 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/16/2
+Message-Id: <20140816045811.2DFAB1F05E8@smtpksrv1.mitre.org>
+Date: Sat, 16 Aug 2014 00:58:11 -0400 (EDT)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: libgcrypt, ELGAMAL side-channel attack
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 14/07/14 11:01 AM, Ramon de C Valle wrote:
-> The fix for the (off-by-one) issue was added in
-> https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/46778.
-> Is MITRE or Red Hat going to assign a CVE for it?
+> libgcrypt older than 1.6.0, and older than 1.5.4, are vulnerable to a
+> ELGAMAL side-channel attack:
+> 
+> http://lists.gnupg.org/pipermail/gnupg-announce/2014q3/000352.html
 
-I (and by extension Red Hat) are no longer doing the CVE assignments
-for public issues here unless it is a time dependant emergency,
-basically any CVE requests here will be handled by Mitre.
+As far as we can tell, you are probably asking for a CVE ID for the
+vulnerability with the "touching exposed metal on the computer's
+chassis" attack vector and the impact of determining Elgamal
+encryption subkeys. Use CVE-2014-5270. Some additional details,
+probably less relevant to most readers, are included below.
+
+
+> (This may be similar sort of issue to CVE-2013-4242.)
+
+We don't think it is especially similar. CVE-2013-4242 is about
+information leaks in the caching implementation of Intel x86
+processors. The existing CVE that is related to the above 000352.html
+reference is CVE-2013-4576.
+
+More specifically, 000352.html is about the
+http://www.cs.tau.ac.il/~tromer/handsoff/ document. This document says
+"We have disclosed our attack to GnuPG developers under CVE-2013-4576,
+suggested suitable countermeasures, and worked with the developers to
+test them. New versions of GnuPG 1.x and of libgcrypt (which underlies
+GnuPG 2.x), containing these countermeasures and resistant to the
+key-extraction attack described here, were released concurrently with
+the first public posting of these results. GnuPG version 1.4.16
+onwards, and libgcrypt 1.6.0 onwards, resist the key-extraction attack
+described here." The authors of this document may have intended for
+CVE-2013-4576 to apply to both the acoustic attack vector and the
+"exposed metal" attack vector. Also, note that the primary
+CVE-2013-4576 reference does mention "exposed metal" (first line of
+page 5). However, that reference does not demonstrate how to use
+"exposed metal" to exploit a vulnerability. Furthermore,
+http://www.cs.tau.ac.il/~tromer/handsoff/ says:
+
+  Q5: What's new since your paper on acoustic cryptanalysis?
+  New attack channels. The new channels discussed here are physically
+  different than the acoustic channel, and result in different attack
+  scenarios.
+
+Thus, we think it is best to have a separate CVE ID (CVE-2014-5270)
+for the new information about the use of "exposed metal" in practical
+vulnerability exploitation, and to maintain CVE-2013-4576 as bound
+solely to acoustic attacks. Please keep in mind, though, that the
+vector difference between CVE-2014-5270 and CVE-2013-4576 is based
+only on different science, not different software behavior. As far as
+we know, the acoustic attack and "exposed metal" attack are
+characterized by:
+
+  - the same affected and unaffected versions of every product
+  - the same underlying issue in the code
+  - the same code fixes (e.g., ciphertext normalization and ciphertext
+    randomization)
+
+Specifically, the primary CVE-2013-4576 reference says "New versions
+of GnuPG ... and libgcrypt, containing these countermeasures and
+resisting our current key-extraction attack, were released
+concurrently with this paper's first public posting." We think this
+means that Libgcrypt 1.6.0 had the CVE-2013-4576 fix, even though
+http://lists.gnupg.org/pipermail/gnupg-announce/2013q4/000336.html
+does not mention fixing an acoustic issue.
+
+Finally, about other vulnerabilities that are different from both
+CVE-2013-4576 and CVE-2014-5270:
+
+1. Both the primary CVE-2013-4576 reference and the primary
+CVE-2014-5270 reference mention that RSA key distinguishability
+remains present in all software versions. The primary CVE-2014-5270
+reference adds that "mitigating it in software, without a large
+overhead, remains an open problem." There is currently no CVE ID for
+this key-distinguishability issue. At least at present, the rationale
+is roughly that preventing key distinguishability is outside the scope
+of what the software offers.
+
+2. The Description section of
+https://bugzilla.redhat.com/show_bug.cgi?id=1128531 refers to the
+above 000352.html but lists
+http://www.cs.unc.edu/~reiter/papers/2012/CCS.pdf as a reference. This
+CCS.pdf document seems to be completely unrelated to the acoustic and
+"exposed metal" issues. If anyone is interested in one or more
+CVE-2012-#### IDs for CCS.pdf, please specify what aspects of the
+paper are about vulnerabilities that belong in CVE, and whether you
+feel that each is a vulnerability in GnuPG or libgcrypt, or a
+vulnerability in Xen.
 
 - -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJTxA8BAAoJEBYNRVNeJnmTQecP/i+ZpwCqVpra/KG4NIs/HWTh
-bzsSq17Q8DQ+VmM5aar19D9xJT6ap6zeR0pHfsNbeN+YOGyjLKfGRc5mOGWwy0do
-+mfCiqvHX3khA5T73EJK5DsValsQPhXzt0moVA+a3iY5yyFhzyj+MB85b+3LU4CL
-RiBk9zhi8HxReVAk9cHxTEhNz9dTML+ukMeLhTbAeDXY79R3hXfvgYYfe32eT7xe
-tn4d+Rf6Sic30FF7AQWOyLnuIYjM+kTLqw9d56SoqyXAAr9a0SU9CQFb9vI5RD6E
-ZgEBiGoBiJdmN5W6Mzf8M2/0990/XLttzWbSFdrsUlcLAELFaTb1nLAxvIdEtVip
-IkpEh53x7modo5OyUR42/Tr0R3n0m7g+5i3c0TwMuH+KFO3MhvzmwCYbPUUsFMqP
-egaaXiJBa0y8Kej6K/Aqm1ua/0AHhIIWCy8xLoPi9Q2GJLSTRl42gyN6F2gmXi0r
-eDbIj2t+O7U84YLITtzil8IwFZKnO2RdfyIHKvSouhgkWszAr707vP0X5s8FCOL2
-1k1r+hv5R72ZCKVuMKQjVjNGmpD4NVGclD5RlKSnMtdeeIqlBSz3jaVihRwB/r8O
-wRRKZ/n/uLAkML8VFWGKqJgF35tUq/84Xs+W2Wu/AUeozyFtEBTQnA7aoxfKhqxB
-1G9UwkloGN4a+UWPxtZo
-=HXAc
+iQEcBAEBAgAGBQJT7uO3AAoJEKllVAevmvmsF0MH/iKQ8WojpaKy2JkvEiapm25P
+PSvrnfzEt3i4K0ZCnIdM2AQVE2wcdlN4lSofkBCPTDhKZgEFyQiXalpvKw8wZy4Q
++do667tIYReuEvjzq9YGKt5n/6x6olAH8HAcu/Wla9eNxppTNpyIPE2W6iFyU3Ez
+83yaRlLpFKCdEyfCIAYl/AjrYJw7vHZFpn0X6tWvZ/lnlAOamDknZslktm3qyxom
+HIhEB5g3Hsk85J5TfrylqSv2kZu7heVEs/CWrLiJlyUCXKql6M2VX9PcyPhZSVAl
+WGrYKC7Q1mfzsiqFBsFA1vRy/FDgGimriykL0WWn/TVwMNsFEA/rrHRNViV0o6A=
+=YPoP
 -----END PGP SIGNATURE-----
