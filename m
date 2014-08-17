@@ -1,73 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/07/7
-Message-Id: <201404072132.s37LWF5J021244@linus.mitre.org>
-Date: Mon, 7 Apr 2014 17:32:15 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Possible CVE Request: Uncontrolled Resource Consumption with XMPP-Layer Compression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/17/4
+Message-Id: <emc4b99b3e-161e-4362-bf82-7d65052aa02a@tlv-l-farhi>
+Date: Sun, 17 Aug 2014 13:42:57 +0000
+From: "Dolev Farhi" <dolevf@...oo.com>
+To: oss-security@...ts.openwall.com
+Subject: Re[2]: FreeNAS default blank password
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+They do not seem to have a security related mailbox but they have the 
+devel mailing list.
 
-> Is this something which should get one CVE, or is a CVE for each
-> implementation needed?
+freenas-devel at lists.freenas.org
 
-A single CVE for this cross-vendor situation seems wrong because the
-specification apparently does not require implementations to have an
-unrestricted decompression capability.
+------ Original Message ------
+From: "Kurt Seifried" <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Sent: 17/08/2014 05:14:30
+Subject: Re: [oss-security] FreeNAS default blank password
 
-There could conceivably be two CVEs for a single implementation,
-although we haven't yet found a reference that is reporting an
-implementation's problems at that level of detail. Most likely there
-would be one CVE per implementation.
+>Also does anyone have a security contact for FreeNAS? I searched and
+>struck out, was hoping security@ would work.
+>
+>--
+>Kurt Seifried -- Red Hat -- Product Security -- Cloud
+>PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
 
-> http://xmpp.org/resources/security-notices/uncontrolled-resource-consumption-with-highly-compressed-xmpp-stanzas/
-
-The two types of CVEs would be:
-
-(1)
-> XEP-0170 on "Recommended Order of Stream Feature Negotiation" suggests
-> to negotiate stream compression after the authentication of the
-> principals. This suggests that xmppbombs can be used only after the
-> user authentication. When decompressing XMPP stanzas, an XMPP server
-> must limit the resources allocated to this task. If the server fails
-> to do that, it can monopolize the CPU usage and allocate all the
-> available memory.
-
-Here, the root cause is that the behavior in the authenticated case
-does not properly address resource consumption. Apparently multiple
-vendors are characterizing this as a vulnerability.
-
-(2)
-> it has been reported that some implementations allow the use of
-> compression before the authentication phase therefore opening up this
-> vulnerability to unknown attackers.
-
-Here, the root cause is a violation of a specification, resulting in a
-security impact.
-
-A hypothetical example is that a server is willing to decompress
-relatively short strings in unauthenticated sessions (e.g., decompress
-32 kilobytes to 32 megabytes). That same server has no restrictions on
-authenticated sessions, and can produce gigabytes of uncompressed
-data. In this scenario, two CVE IDs would be assigned because the two
-resource-consumption issues occur for different reasons.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTQxkWAAoJEKllVAevmvmsBs4H/RbrYMIZK+/VDh//wVFXySou
-dIeEeguVFWqs5YMAp6GCsXbQoZYhCpGmENTuu5hXst8KhxLvnCmQ4XuRVWedaGdQ
-qVwI1ip5EOgi3Ij1V7ML6KiPlcx8FhPLxWOE5O/xH6e4vX3qQHiEynWNVOgEP/zq
-nIjrgivTQygJwHZQp6FevGiD/S5lSeyaKlP82E0mCaRHPo1ZDnlPqoVux8O0TlND
-oysVbHsCcdXBGAusoUPANvtmQrSN6UHC3H9Zy/vV2Vc029ew5Zr/AgGwiR4Je5d5
-+0XnH/6sJoVzGWTah5e5vQhFV24h9w5kXBu/Sr8zWzwjsYOby1Y7dh2evLdN1qk=
-=58gv
------END PGP SIGNATURE-----
