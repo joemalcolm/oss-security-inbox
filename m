@@ -1,40 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/4
-Message-ID: <874msv1rqw.fsf@redhat.com>
-Date: Tue, 16 Dec 2014 17:31:03 +0100
-From: Martin Prpic <mprpic@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/17/2
+Message-ID: <53F01006.6070006@redhat.com>
+Date: Sat, 16 Aug 2014 20:14:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: insufficient 'X-Forwarded-For' header validation in rabbitmq-server
+Subject: Re: FreeNAS default blank password
 Content-Type: text/plain; charset=utf-8
 
-Hi, the following issue was fixed in RabbitMQ. I don't see a CVE for to
-this anywhere; can one please be assigned?
-
-"""
-RabbitMQ 3.3.0 introduced a mechanism (the 'loopback_users'
-configuration item) allowing access for some users to be restricted to
-only connect via localhost. By default the "guest" user is restricted in
-this way.
-
-Unfortunately, the HTTP framework used by the management plugin trusts
-the easily-forged "X-Forwarded-For" header when determining the remote
-address. It is therefore possible to subvert this access control
-mechanism for the HTTP API. Attackers would still need to know or guess
-the username and password. 
-"""
-
-Upstream patches:
-
-http://hg.rabbitmq.com/rabbitmq-management/rev/c3c41177a11a
-http://hg.rabbitmq.com/rabbitmq-management/rev/35e916df027d
-
-References:
-
-https://groups.google.com/forum/#!topic/rabbitmq-users/DMkypbSvIyM
-http://www.rabbitmq.com/release-notes/README-3.4.0.txt
-https://bugzilla.redhat.com/show_bug.cgi?id=1174872
-
-Thank you!
+Also does anyone have a security contact for FreeNAS? I searched and
+struck out, was hoping security@ would work.
 
 -- 
-Martin Prpič / Red Hat Product Security
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
