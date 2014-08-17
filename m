@@ -1,49 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/3
-Message-Id: <201401091112.s09BBtAZ015692@linus.mitre.org>
-Date: Thu, 9 Jan 2014 06:11:55 -0500 (EST)
-From: cve-assign@...re.org
-To: ratulg@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: drupal7-entity: multiple access bypass vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/17/1
+Message-ID: <53F00F7F.4090200@redhat.com>
+Date: Sat, 16 Aug 2014 20:12:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org, security@...enas.org
+Subject: FreeNAS default blank password
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+So I installed the latest FreeNAS (9.2.1.7), install is simple, no
+options, it just drops it onto the disk you specify, you reboot, it works.
 
-> The entity module for Drupal
-> 
-> The module's entity wrapper access API doesn't sufficiently protect 
-> comment, user and node statistics properties from unprivileged user access.
+By default you get a text based menu with some options (setup
+network/DNS/etc.), and one option is "Reset WebGUI Login Credentials".
 
-Use CVE-2014-1398.
+The problem is at first boot (and if you ever pick "Reset WebGUI Login
+Credentials") the web admin has a blank password, anyone that can access
+it can set the admin password and then use the web GUI to fire up a root
+shell (there's a nice little web shell command line).
+
+So an attacker can easily race the admin to the WebGUI, set a new
+password, login as root, setup a backdoor, then reset the WebGUI
+password so it's blank again and the admin would be none the wiser (log
+files won't help because the attacker has root can can easily sanitize
+them).
+
+There is no way from the text GUI to set the Web GUI admin password. I
+don't think there is even a CLI tool to set the web GUI password (I
+can't find it easily).
+
+Either way, does this deserve a CVE? Forcing a user to set the admin Web
+GUI password through the Web GUI, meaning it must be exposed to some
+degree prior to securing it. My understanding is default/blank admin
+credentials now == CVE. Thanks.
 
 
-> The module's entity wrapper access API doesn't sufficiently check entity 
-> access on referenced entities such as taxonomy terms.
-
-Use CVE-2014-1399. (We are interpreting "doesn't sufficiently protect" and
-"doesn't sufficiently check" as different flaw categories.)
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-> The module's entity_access() API doesn't protect unpublished comments 
-> from being viewed by unprivileged users.
-
-Use CVE-2014-1400.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSzoMZAAoJEKllVAevmvmsO+sH/j/OSRR3n2FzkO3oV7w8MvH9
-6kKhqfvft9DftI2AXP2W9/ugRr+RUgf0/8mFk+dJeJ5UMlGn/f8MajDXsSD66mc0
-xR1PrAkkTwYiEcnVb/esFEEPoBKiezPRlPbaR1c33cuo82MS+VoUTVQmp3snz5v2
-OcSW1AWX/zulIRxjASF/uAKD+HUQLtPf8Fx/0Qh1qFA7jA1A8MGQ94xvXbR+vk9b
-3OhMLf1cY8ROG0nO+FSMDVly0InmYqABb9AByHXhf45gu/sCnYrmYxChbyLA8M5P
-fsEVpDeojUwBOAccJdRqIJZAO+lZ7lcwYVxSgLBCCJ6GiWAcwMZLsVIDbtyZIHc=
-=QQmr
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
