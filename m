@@ -1,64 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/17
-Message-ID: <20140319180829.GN2551@sivokote.iziade.m$>
-Date: Wed, 19 Mar 2014 20:08:29 +0200
-From: Georgi Guninski <guninski@...inski.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/17/3
+Message-ID: <CAH5b-BXyWS72CcLSNPFn2MbrO1aty58Lb=7vHXVfqJTvaos_yg@mail.gmail.com>
+Date: Sun, 17 Aug 2014 09:47:53 +0200
+From: devzero2000 <pinto.elia@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+Subject: Re: FreeNAS default blank password
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 19, 2014 at 09:31:36PM +0400, Solar Designer wrote:
-> On Wed, Mar 19, 2014 at 05:04:03PM +0200, Georgi Guninski wrote:
-> > On Wed, Mar 19, 2014 at 06:18:41PM +0400, Solar Designer wrote:
-> > > of CVE.  So you could consider treating or ignoring your CVE allergy
-> > 
-> > I am pretty sure someone@...re was coauthor of the
-> > "responsibility RFC" which shows whose servants
-> > mitre are.
-> 
-> Whether that is true or not, this has absolutely nothing to do with
+Il 17/Ago/2014 04:12 "Kurt Seifried" <kseifried@...hat.com> ha scritto:
+>
+> So I installed the latest FreeNAS (9.2.1.7), install is simple, no
+> options, it just drops it onto the disk you specify, you reboot, it works.
+>
+> By default you get a text based menu with some options (setup
+> network/DNS/etc.), and one option is "Reset WebGUI Login Credentials".
+>
+> The problem is at first boot (and if you ever pick "Reset WebGUI Login
+> Credentials") the web admin has a blank password, anyone that can access
+> it can set the admin password and then use the web GUI to fire up a root
+> shell (there's a nice little web shell command line).
+>
+> So an attacker can easily race the admin to the WebGUI, set a new
+> password, login as root, setup a backdoor, then reset the WebGUI
+> password so it's blank again and the admin would be none the wiser (log
+> files won't help because the attacker has root can can easily sanitize
+> them).
+>
+> There is no way from the text GUI to set the Web GUI admin password. I
+> don't think there is even a CLI tool to set the web GUI password (I
+> can't find it easily).
+>
+> Either way, does this deserve a CVE? Forcing a user to set the admin Web
+> GUI password through the Web GUI, meaning it must be exposed to some
+> degree prior to securing it. My understanding is default/blank admin
+> credentials now == CVE. Thanks.
+>
+>
+Many device have a "default" password on first install that everyone know.
+For me "blank" password or "admin admin"  are equal as security risk. I
+have missed something ?
 
-I claim it is true, if you don't believe it consider
-consulting something better than the emacs doctor:
-
-http://tools.ietf.org/html/draft-christey-wysopal-vuln-disclosure-00
-
-Internet Engineering Task Force                           Steve Christey
-INTERNET-DRAFT
-
-**MITRE**
-
-Valid for six months                                       Chris Wysopal
-Category: Best Current Practice                             @stake, Inc.
-                                                           February 2002
-
-Responsible
-Vulnerability
-Disclosure
-Process
-draft-christey-wysopal-vuln-disclosure-00.txt
-
-to reproduce it  search for something like
-responsible disclosure RFC
-
-
->From the link:
-
-Authors' Addresses
-
-   Steve Christey
-      The MITRE Corporation
-         202 Burlington Road
-	    Bedford, MA 01730
-	       USA
-
-	          E-Mail: coley@...re.org
-
-		     Chris Wysopal
-		        @stake, Inc.
-			   196 Broadway
-			      Cambridge, MA 02139-1902
-			         USA
-
-				    E-Mail: cwysopal@...take.com
+Best regards
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
 
