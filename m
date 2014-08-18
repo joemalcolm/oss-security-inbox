@@ -1,108 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/7
-Message-ID: <20140410061333.GA6831@u109add4315675089e695.ant.amazon.com>
-Date: Wed, 9 Apr 2014 23:13:33 -0700
-From: Matt Wilson <msw@...zon.com>
-To: Kurt Seifried <kseifried@...hat.com>
-CC: <oss-security@...ts.openwall.com>, Max Spevack <spevack@...zon.com>, Anthony Liguori <aliguori@...zon.com>, "Mark J. Cox" <mjc@...hat.com>, Cristian Gafton <gafton@...zon.com>
-Subject: Re: Request for linux-distros list membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/10
+Message-ID: <CAC9YFzd_TOLvMkevM1UXAPU6gM86TqZX3zn+9DHos9+YmFe6qw@mail.gmail.com>
+Date: Mon, 18 Aug 2014 14:11:26 -0300
+From: Rafael Mendonça França <rafaelmfranca@...il.com>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com,  ruby-security-ann@...glegroups.com
+Subject: [Ruby on Rails] [CVE-2014-3514] Strong Parameter bypass with create_with
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 09, 2014 at 11:57:33PM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 04/09/2014 09:13 PM, Anthony Liguori wrote:
-> > On 04/09/14 19:04, Kurt Seifried wrote:
-> >> On 04/09/2014 09:23 AM, Anthony Liguori wrote:
-> >>> Hi,
-> > 
-> >>> I would like to request membership to the closed linux-distros 
-> >>> mailing list on behalf of the Amazon Linux AMI distribution.
-> >>> We do not currently have anyone on this list from Amazon but
-> >>> we would like to change that.  The Amazon Linux AMI
-> >>> distribution is RPM based, optimized for EC2, and tracks a
-> >>> number of packages (including the kernel) directly from
-> >>> upstream.
-> > 
-> >>> Here is my GPG fingerprint:
-> > 
-> >>> pub   2048R/5682E5FF 2013-07-30 Key fingerprint = EF0F 60F4
-> >>> 390F A270 BC30  4A93 1AAD C710 5682 E5FF uid
-> >>> Anthony Liguori <anthony@...emonkey.ws> sub   2048R/44FFA77F
-> >>> 2013-07-30
-> > 
-> >>> I'm sending this from my personal account since this is the uid
-> >>>  associated with my GPG key but I would prefer to be subscribed
-> >>> to my @amazon.com (CC'd here).
-> > 
-> >>> If anyone has any questions, please don't hestitate to ask. 
-> >>> Thanks for your consideration!
-> > 
-> >>> Regards,
-> > 
-> >>> Anthony Liguori
-> > 
-> >> I find it a bit odd you can't send this from your work email 
-> >> address. Would it be possible to add that email address to your
-> >> key and then use your work email address?
-> > 
-> > We use DKIM which doesn't work very well with all mailing lists.
-> > You should receive this okay since you are on CC but I'm not sure
-> > everyone will get this through the mailing list.  If it doesn't
-> > make it, I'll send this same (signed) message via the
-> > @codemonkey.ws address.
-> > 
-> > I also added this address as a uid to my key.  Here it is again:
-> > 
-> > pub   2048R/5682E5FF 2013-07-30 Key fingerprint = EF0F 60F4 390F
-> > A270 BC30  4A93 1AAD C710 5682 E5FF uid                  Anthony
-> > Liguori <aliguori@...zon.com> uid                  Anthony Liguori
-> > <anthony@...emonkey.ws> sub   2048R/44FFA77F 2013-07-30
-> > 
-> >> I guess I'm wondering is this an official request on behalf of 
-> >> Amazon or some random Amazon (employee? contractor?) asking for 
-> >> access to distros@.
-> > 
-> > Yes, this is an official request on behalf of Amazon.  I am
-> > requesting access on behalf of the Amazon Linux AMI team[1].
-> > 
-> > [1] http://aws.amazon.com/amazon-linux-ami/
-> > 
-> > Regards,
-> > 
-> > Anthony Liguori
-> 
-> So first off I'm inclined to have Amazon on the distros list (same
-> reasons as Oracle basically).
-> 
-> My only concern is are you the correct person, I have no clue who is
-> on the Amazon security team for their Linux distribution, I've never
-> seen you post anything anywhere.
+There is a vulnerability in the create_with method in Active Record. This
+vulnerability has been assigned the CVE identifier CVE-2014-3514.
 
-Perhaps Google "Anthony Liguori site:qemu.org"
+Versions Affected:  4.0.0 and All Later Versions.
+Not affected:       Versions earlier than 4.0.0
+Fixed Versions:     4.0.9 4.1.5
 
-> Your search - site:aws.amazon.com Anthony Liguori - did not match any
-> documents.
-> 
-> Your search - site:aws.amazon.com aliguori@...zon.com - did not match
-> any documents.
-> 
-> Can we somehow get confirmation from Amazon that this is the right
-> person to have on distros? Thanks.
+Impact
+------
+The create_with functionality in Active Record was implemented incorrectly
+and completely bypasses the strong parameters protection.  Applications
+which pass user-controlled values to create_with could allow attackers to
+set arbitrary attributes on models.
 
-Apologies for not having PGP set up for my work email.
+All users running an affected release should either upgrade or use one of
+the workarounds immediately.
 
-I can confirm that Anthony is one of several correct people for
-dealing with security issues relating to Amazon Linux AMI. Cristian
-Gafton and I also deal with security issues, as we did in the Olden
-vendor-sec Days at Red Hat and rPath. I've added Mark Cox to CC: in
-case he'd like to weigh in on our backgrounds.
+Releases
+--------
+The 4.0.9 and 4.1.5 releases are available at the normal locations.
 
-Max Spevack, previous Fedora Project leader and the manager in charge
-of Amazon Linux AMI, is also on Cc:.
+Workarounds
+-----------
+To avoid this vulnerability you will have to either remove all calls to
+create_with, or carefully audit your codebase to ensure it sanitizes the
+input first.  For example you should replace code like this:
 
-Today we're just looking to get Anthony added to linux-distros as the
-primary contact.
+  user.blog_posts.create_with(params[:blog_post]).create
 
---msw
+with either:
+
+  user.blog_posts.create(params[:blog_post])
+
+or:
+
+  user.blog_posts.create_with(params[:blog_post].permit(:title, :body,
+:etc)).create
+
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided
+patches for the two supported release series.  They are in git-am format
+and consist of a single changeset.
+
+* 4-1-create_with.patch - Patch for 4.1 series
+* 4-0-create_with.patch - Patch for 4.0 series
+
+Please note that only the 4.0.x and 4.1.x series receive regular security
+updates at present.  Users of earlier unsupported releases are advised to
+upgrade as soon as possible as we cannot guarantee the continued
+availability of security fixes for earlier releases.
+
+Credits
+-------
+
+Thanks to Stephen Touset of Square for reporting the vulnerability to us,
+and to Jeff Jarmoc of Matasano and Charlie Somerville of GitHub for helping
+verify the patches and advisories.
+
+Rafael Mendonça França
+http://twitter.com/rafaelfranca
+https://github.com/rafaelfranca
+
