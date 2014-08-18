@@ -1,30 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/04/4
-Message-ID: <CALCETrU32d4ukoN6SNAQ1wBTd_BVFtgqUM1ZXitpFMDhuBwf2Q@mail.gmail.com>
-Date: Fri, 4 Jul 2014 14:05:08 -0700
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/7
+Message-ID: <CAA=AuEdGH6p36s5cpNsZTha=Htts8vwyijtgXVj0ds--yP3ehg@mail.gmail.com>
+Date: Mon, 18 Aug 2014 13:56:06 +0200
+From: Jerome Athias <athiasjerome@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-4699: Linux ptrace bug
+Subject: Re: Enigmail warning
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone-
+1) Kindly have a look at the License(s)
+2) I also can't reproduce your issue with the level of details that
+you're providing. (Some extensions can cause conflicts with Enigmail,
+preventing it from succesfully signing/encrypting outgoing mail. #FAQ)
+I'm assuming that you're not trying to mix S/MIME and PGP/MIME in the
+same message.
 
-Upstream commit b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a fixes a
-ptrace bug.  The exact scope of the bug is somewhat unclear right now.
-I see no reason why the bug should not be present as far back as Linux
-2.6.17, but it seems to be difficult to reproduce on old kernels.
-
-There is some ongoing discussion on linux-distros about the impact and
-applicability of this bug.
-
-More details and a PoC to follow some time next week.
-
-I'm being intentionally vague here: this bug has existed for a long
-time, but exploiting it at all is tricky enough (and possibly
-kernel-version dependent enough) that it's gone unnoticed.  I would
-currently prefer to give the distros and users a bit of a headstart
-before publicly disclosing the complete details of how to test/exploit
-the bug.  It is likely to have a high enough impact, at least on new
-enough kernels, that it should be patched ASAP.
-
---Andy
+2014-08-18 8:22 GMT+02:00 Henri Salo <henri@...v.fi>:
+> Please read: http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/
+>
+> Quote from thread below:
+>
+> Enigmail 1.7 is completely broken for my purposes.
+>
+> Steps to reproduce the problem:
+>
+> 1) Write an email in TB.
+> 2) Ensure "Force encryption" in Enigmail.
+> 3) Ensure "Force signing" in Enigmail.
+> 4) Recheck encryption and signing settings... OK.
+> 5) Send the email.
+> 6) Look at the received email. OOPS. It is NOT signed and NOT encrypted.
+>
+> Sorry to say this so directly, but an encryption system, which CONFIRMS
+> to the user in it's graphical user interface on two different places
+> that it will encrypt AND THEN SENDS THE EMAIL WITHOUT ANY ENCRYPTION IN
+> PLAIN TEXT ... is just the BIGGEST IMAGINABLE CATASTROPHE.
+>
+> Sorry for my profane language but there is simply no excuse for such
+> bullshit.
+>
+> I am currently preparing a crypto class for journalists next week to
+> teach them how to use safe email.
+>
+> HOW am I going to explain that? A system tells the user in a separate
+> window as well as in a menu line that everything will be encrypted but
+> then it simply FORGOT to ENCRYPT and, ooops, their report will be
+> intercepted and their source will be tortured ?
+>
+> Ok...let's see....maybe there is some magic incompatibility with the TB
+> or OS version or the specific configuration I used or whatever... As a
+> computer scientist I can imagine many bug-explanations.
+>
+> Good that I am just a computer scientist. As a serious user (dissident,
+> whistle-blower, diplomatic or military user) I would now be waiting for
+> the bad guys come and get me with their water-board.
+>
+> Still as a computer scientist I need an answer to which system I will
+> teach in my class next week. Command-line PGP ?!?
