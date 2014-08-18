@@ -1,26 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/21
-Message-ID: <CALPTtNVKmLRRJWq1Bm4UDptSjGTbLwK1m7ezApeY8wg9W0g1jw@mail.gmail.com>
-Date: Fri, 5 Dec 2014 14:15:03 -0800
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/4
+Message-ID: <20140818065755.GD4602@kludge.henri.nerv.fi>
+Date: Mon, 18 Aug 2014 09:57:55 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+Cc: Noel Kuntze <noel@...ilie-kuntze.de>
+Subject: Re: Enigmail warning
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 5, 2014 at 7:09 AM, Daniel Micay <danielmicay@...il.com> wrote:
+On Mon, Aug 18, 2014 at 08:28:33AM +0200, Noel Kuntze wrote:
+> I'm using Thunderbird 31.0 with Enigmail 1.7 and can't reproduce that issue.
+> I'm on Arch Linux, what OS are you using? Also, please state any specialties.
 
->
-> Mozilla has no excuse for not enabling PIE for Firefox, because 99% of
-> the code is in dynamic libraries already. It has no performance impact.
->
+I haven't done any research on this issue yet and I hope that project developer
+responds to that thread with facts and plans. You might want to share your
+information there.
 
-For the record, Mozilla tried it several months ago and had to back it out.
+---
+Henri Salo
 
-"Nautilus (the file manager) can't open PIE executables, which makes
-distributing PIE executable essentially impossible."
-
-https://bugzilla.mozilla.org/show_bug.cgi?id=857628#c6 (which caused
-https://bugzilla.mozilla.org/show_bug.cgi?id=1076892)
-
-~reed
-
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
