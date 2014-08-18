@@ -1,98 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/1
-Message-ID: <5462AF1B.2000204@mccme.ru>
-Date: Wed, 12 Nov 2014 03:51:39 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/6
+Message-ID: <CAPCUbK7D5fd5W6=adx-NR5VbLuP6T8KgHd7r5oFXSqG0ONVthg@mail.gmail.com>
+Date: Mon, 18 Aug 2014 12:25:54 +0100
+From: Pedro Cunha <pedroagracio@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: strings / libbfd crasher
+Subject: Re: Enigmail warning
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-05 05:25, Michal Zalewski wrote:
->> Thanks a lot for your explanation! The data for most things that you
->> describe seems to be available from valgrind so it could be scripted.
+On Mon, Aug 18, 2014 at 7:57 AM, Henri Salo <henri@...v.fi> wrote:
+
+> I haven't done any research on this issue yet and I hope that project
+> developer
+>  responds to that thread with facts and plans. You might want to share your
+> information there.
 >
-> Sort of. Microsoft actually had a triage tool along these lines
-> ("!exploitable" or something like that).
 
-Yes, and it surprisingly is open source:
+​I'm using Thunderbird 31.0 with Enigmail 1.7 on Windows 8.1 and I can't
+reproduce your issue either.​
 
-   http://msecdbg.codeplex.com/
-
-> It's always pretty coarse in the end, though.
-
-That's no surprise:-)
-
-Hm, googling found a discussion of similar question here:
-
-https://security.stackexchange.com/questions/6998/best-way-to-triage-crashes-found-via-fuzzing-on-linux
-
-which links to an "exploitable" GDB extension:
-
-http://www.cert.org/blogs/certcc/post.cfm?EntryID=90
-https://github.com/jfoote/exploitable
-
-> This reminds me... Mateusz Jurczyk and Gynvael Coldwind were fuzzing
-> ffmpeg on several thousand cores for a while and bumped into something
-> around 1k seemingly distinctive crashes:
->
-> http://googleonlinesecurity.blogspot.com/2014/01/ffmpeg-and-thousand-fixes.html
->
-> I can imagine that their initial enthusiasm has quickly waned when
-> they realized how much effort it's going to take to triage all that
-> and get it fixed.
-
-It is interesting how they separated security issues from non-security 
-ones and how CVEs were assigned. They list a bunch of CVEs and for the 
-first bunch of issues their "personal feeling is that between 10% and 
-20% of the problems could be considered easily exploitable security issues".
-
-> In this case, I think they had a pretty good
-> relationship with the maintainers, which probably helped a lot =)
-
-For binutils Nick Clifton remains very responsive for two weeks already 
-(issues are usually fixed in under 1 day excluding weekends). I guees we 
-can try to see how maintainers of other software react to a stream of 
-crashes:-)
-
->> That's after deduping by a call stack as available in valgrind output:-(
->
-> The codebase is kind of bad,
-
-Is codebase generally much better? You aim at "the more difficult or 
-better-fuzzed targets" but what about other software? Or put it another 
-way: how big portion of widely used software you consider "the more 
-difficult or better-fuzzed targets"?
-
-My guess is that too much software is of similar or lower quality. This 
-leads to a question: how to deal with it. Suppose we are fuzzing some 
-programs and find tens, hundreds or thousands (cf. ffmpeg above) of 
-distinct crashes. Ok, all bugs should be fixed, hence we submit all 
-crashes to maintainers. But how we as a community want to handle it -- 
-separate security and non-security cases, prioritize fixes in some way, 
-disclose all publicly from the beginning or report it privately, track 
-everything with CVEs?
-
-It seems to me that manually analyzing exploitability of the issues adds 
-a nontrivial amount of work to the process and requires a quite 
-experienced men.
-
-> but I'd imagine that there aren't
-> hundreds of fundamentally distinctive bugs in libbfd that can be
-> reached via strings or equivalent (unless the library is configured
-> with all the exotic binary formats that are normally off).
-
-You are effectively saying that "deduping by a call stack as available 
-in valgrind output" is not very good. Quite probably. Perhaps taking 
-last 4 frames (as done by valgrind itself) is better.
-
-> There are definitely many instances where the same bad coding pattern
-> is copied and pasted into several dozen places, though. For example,
-> the srec bugs I initially bumped were essentially widespread
-> throughout the entire file, with something like a dozen possible crash
-> locations.
-
-So, can such cases be deduped automatically? Or should they? Or you mean 
-that they are easy to analyze manually?
-
--- 
-Alexander Cherepanov
