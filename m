@@ -1,76 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/6
-Message-ID: <CAOP=4wiVi_nL2LCnB1Ee0FKxoyMFaP=xb985_kAu=mwGeC+vyQ@mail.gmail.com>
-Date: Wed, 13 Aug 2014 00:18:40 -0700
-From: Kenton Varda <kenton@...dstorm.io>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: ro bind mount bypass using user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/3
+Message-ID: <53F19D11.50901@familie-kuntze.de>
+Date: Mon, 18 Aug 2014 08:28:33 +0200
+From: Noel Kuntze <noel@...ilie-kuntze.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Enigmail warning
 Content-Type: text/plain; charset=utf-8
 
-I'm happy with however you want to assign credit here, but for
-clarification:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I actually observed that all these bits could be modified. My first
-observation was with nosuid. But, I thought they were just the same issue
-applied to different bits in the same bitfield. I specifically used the RO
-bit in my PoC. Looking back, it looks like I didn't explicitly point out
-which other bits were affected, but Eric quickly re-discovered them, and
-also discovered from reviewing the code that the other bits had even fewer
-guards against modification compared to the RO bit.
+Hello Henri,
 
-Andrew Lutomirski has further discovered that this problem can be used to
-escalate a regular user to root privileges on typical Linux configurations,
-independent of any sandboxing effort.
+I'm using Thunderbird 31.0 with Enigmail 1.7 and can't reproduce that issue.
+I'm on Arch Linux, what OS are you using? Also, please state any specialties.
 
-Thanks,
--Kenton
+Regards,
+Noel Kuntze
 
-On Tue, Aug 12, 2014 at 10:49 PM, <cve-assign@...re.org> wrote:
+GPG Key id: 0x63EC6658
+Fingerprint: 23CA BB60 2146 05E7 7278 6592 3839 298F 63EC 6658
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> We are assigning two CVE IDs because the available information is that
-> there were two discoverers. Even if the discoverer information is
-> later clarified, there will still be these two CVE IDs.
->
-> >
-> https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=db181ce011e3c033328608299cd6fac06ea50130
-> >
-> > Kenton Varda <kenton@...dstorm.io> discovered that by remounting a
-> > read-only bind mount read-only in a user namespace the
-> > MNT_LOCK_READONLY bit would be cleared, allowing an unprivileged user
-> > to the remount a read-only mount read-write.
->
-> Use CVE-2014-5206.
->
->
-> >
-> https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=9566d6742852c527bf5af38af5cbb878dad75705
-> >
-> > While investigating the issue where in "mount --bind -oremount,ro ..."
-> > would result in later "mount --bind -oremount,rw" succeeding even if
-> > the mount started off locked I realized that there are several
-> > additional mount flags that should be locked and are not.
->
-> Use CVE-2014-5207.
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
->
-> iQEcBAEBAgAGBQJT6vjTAAoJEKllVAevmvmsEI4H+wWrFmadZJwDhgU8i5IfiVIl
-> Oz/iPTeSCelGIH6BA5GAMbaEmMUf/ay0Jpa31y6MhOiw1KMsGGFvzGkLoy3Pb/T5
-> G682hBmQbZD1OnBdk3z2EnMd5i0/B3kzc1rXi4m9QJcmi216xnJnD0+lEVbRj5nf
-> jruRJplaRiwYuXszZSWhAOBVMFb5MJ/4aNmUkKdpiywQjOWhykgjNNyxXby9Rxpo
-> AkoLecJPn/IJ4mRmLTp3vo1x/GZUXmXFvKfsJdB5Ps+kOnX7ptMyap4GTjSvXcIc
-> FSJ9Zfad0iAnflEQTAKEVHFu5vSzbUdWVC+qMapVjZXRnku8y3UzYJVEvqQDUTc=
-> =Qzne
-> -----END PGP SIGNATURE-----
->
+Am 18.08.2014 um 08:22 schrieb Henri Salo:
+> Please read: http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/
+> 
+> Quote from thread below:
+> 
+> Enigmail 1.7 is completely broken for my purposes.
+> 
+> Steps to reproduce the problem:
+> 
+> 1) Write an email in TB.
+> 2) Ensure "Force encryption" in Enigmail.
+> 3) Ensure "Force signing" in Enigmail.
+> 4) Recheck encryption and signing settings... OK.
+> 5) Send the email.
+> 6) Look at the received email. OOPS. It is NOT signed and NOT encrypted.
+> 
+> Sorry to say this so directly, but an encryption system, which CONFIRMS
+> to the user in it's graphical user interface on two different places
+> that it will encrypt AND THEN SENDS THE EMAIL WITHOUT ANY ENCRYPTION IN
+> PLAIN TEXT ... is just the BIGGEST IMAGINABLE CATASTROPHE.
+> 
+> Sorry for my profane language but there is simply no excuse for such
+> bullshit.
+> 
+> I am currently preparing a crypto class for journalists next week to
+> teach them how to use safe email.
+> 
+> HOW am I going to explain that? A system tells the user in a separate
+> window as well as in a menu line that everything will be encrypted but
+> then it simply FORGOT to ENCRYPT and, ooops, their report will be
+> intercepted and their source will be tortured ?
+> 
+> Ok...let's see....maybe there is some magic incompatibility with the TB
+> or OS version or the specific configuration I used or whatever... As a
+> computer scientist I can imagine many bug-explanations.
+> 
+> Good that I am just a computer scientist. As a serious user (dissident,
+> whistle-blower, diplomatic or military user) I would now be waiting for
+> the bad guys come and get me with their water-board.
+> 
+> Still as a computer scientist I need an answer to which system I will
+> teach in my class next week. Command-line PGP ?!?
+> 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
 
+iQIcBAEBAgAGBQJT8Z0PAAoJEDg5KY9j7GZYXlQP/Rp2rcj0Tybu56WuVl8UVQtO
+65c5XE09o0A7WEAnt71i0aWxydl7rGMweU0vNcsP3UZ/aYRDkR3SwtX2lq+z3AE3
+7i3vhsj45P20l1+fWieiL8inyxDMEgOtCX00vTQIIFoNxkTdfiMZC1qwWwRRVksL
+a/WYxafEHt0a91AanhrUvMpgIp8kXH2e0XPCfgFafcm2iKHkmuLU9wSe2AsFXZtd
+39Y526EvPiYtCY2uxD85Rh9pYMRTecDcpewqnCzhDbMT02qI5DFRINBgtUOCQsPI
+eHZyORKe88cw1u/u7bMbO4IYjUWWFrPWl8Jiy1CoFQJMkm/W5JQw1yavIMCVBW6M
+mNb+oH6wL5N6vClvB7o7+nStbHY3i7qt3BVwusOMK3I8+tcIS2NONB1DdZgQnESh
+s9QAQ3tXvwZC/GWxZ//qwd+/6yiidVCRPBv0al4uHkZB2C/TmxIpjSWAHDF0eHSG
+0RoR34DhLXVJF31Gmz7fmUAy5sLd05d0UoHaAB8eErazOvxRqy8Xh3bWZQUPVb+p
+LpVPj/ZvRllTiVi/OPpvzSm82cWy+6MJTZDnswZC6cO/iW5VL9hf2X3OcKt7mWOF
+yykejM9KxjpUIP2HaBvjgA84e5mcwE6QO7kwI7fVQ5GDHykrAKOE14WjcALK/W6y
+OEGJe5cXbEt6WV53JAKV
+=z7+c
+-----END PGP SIGNATURE-----
