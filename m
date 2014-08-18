@@ -1,48 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/6
-Message-Id: <20141231173026.E41C76C0142@smtpvmsrv1.mitre.org>
-Date: Wed, 31 Dec 2014 12:30:26 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, stas@....net
-Subject: Re: CVE Request: PHP: out of bounds read crashes php-cgi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/1
+Message-ID: <53F17401.7020309@redhat.com>
+Date: Sun, 17 Aug 2014 21:33:21 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: FreeNAS default blank password
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+It's one thing to have a default password (that's bad), but to expose it
+by default to a web interface and the entire internal network/world and
+expose it is another thing entirely. There is no way to securely setup
+FreeNAS short of doing it all offline with a laptop plugged into it
+until you have configured and secured it (which yeah... nobody is going
+to do).
 
-> https://bugs.php.net/bug.php?id=68618 (out of bounds read crashes
-> php-cgi).
+How hard would it be to not allow any remote Web GUI access until the
+user accesses the text based console and sets the admin password? sigh.
+
+On 17/08/14 01:47 AM, devzero2000 wrote:
+> Il 17/Ago/2014 04:12 "Kurt Seifried" <kseifried@...hat.com> ha scritto:
+>>
+>> So I installed the latest FreeNAS (9.2.1.7), install is simple, no
+>> options, it just drops it onto the disk you specify, you reboot, it works.
+>>
+>> By default you get a text based menu with some options (setup
+>> network/DNS/etc.), and one option is "Reset WebGUI Login Credentials".
+>>
+>> The problem is at first boot (and if you ever pick "Reset WebGUI Login
+>> Credentials") the web admin has a blank password, anyone that can access
+>> it can set the admin password and then use the web GUI to fire up a root
+>> shell (there's a nice little web shell command line).
+>>
+>> So an attacker can easily race the admin to the WebGUI, set a new
+>> password, login as root, setup a backdoor, then reset the WebGUI
+>> password so it's blank again and the admin would be none the wiser (log
+>> files won't help because the attacker has root can can easily sanitize
+>> them).
+>>
+>> There is no way from the text GUI to set the Web GUI admin password. I
+>> don't think there is even a CLI tool to set the web GUI password (I
+>> can't find it easily).
+>>
+>> Either way, does this deserve a CVE? Forcing a user to set the admin Web
+>> GUI password through the Web GUI, meaning it must be exposed to some
+>> degree prior to securing it. My understanding is default/blank admin
+>> credentials now == CVE. Thanks.
+>>
+>>
+> Many device have a "default" password on first install that everyone know.
+> For me "blank" password or "admin admin"  are equal as security risk. I
+> have missed something ?
 > 
-> http://git.php.net/?p=php-src.git;a=commit;h=f9ad3086693fce680fbe246e4a45aa92edd2ac35
+> Best regards
+>> --
+>> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+>> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>>
+> 
 
-Use CVE-2014-9427.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Can you clarify what threat models exist that cross privilege
-boundaries? Bug #68618 says "could disclose server memory, but anyone
-that can upload php scripts can do far worse." Is the only relevant
-scenario that the attacker uploads a crafted .php file and thereby
-obtains read access (that would otherwise be unavailable) to memory
-locations within a parent process?
 
-Or is it relevant that a victim may accidentally upload an
-incorrect .php file, and may expect that this is harmless, but the
-actual behavior is that PHP reads and executes out-of-bounds data that
-the victim did not wish to execute?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUpC2DAAoJEKllVAevmvmsVe4H/j/BC4vvhBLkW/HlwJcEzY+K
-AqRpWEVMJkdENeipMbtITrKnL/bIdG/46SNLZ53HkHVXL8p7rWCPu6eNdOlmlH1N
-9o65IyMmsoVfRa5dQxENKLYCo/vwtu+tCeRxDdgHS686EF+BhIQY7JtNGcXfnnNG
-1sZAwt5XjHP+m6ySJSR5ZVPeXyYe3goWjqdz+I4WbIEjgz+GsdikUA0jo6nFUwN9
-sWl0RJ14Q3/lfH+Rrm8zXNZ94moLifRdrUTwsLgpKD/L1ir/gCMo8lBjYJeQ0wcu
-6WneySUyOpA7oKQioM0tG36/I0u2/8EO0M9V2EfdLqj2k3SELi+ej2Tcw4RiOn8=
-=1Nqq
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
