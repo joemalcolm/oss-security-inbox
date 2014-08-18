@@ -1,45 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/41
-Message-ID: <127C3BAFC01B4F4AA1B07F6D89FF8A1612F4F4BF@G6W2502.americas.hpqcorp.net>
-Date: Thu, 2 Oct 2014 17:30:13 +0000
-From: "Menkhus, Mark (Global Cyber Security SSRT)" <mark.menkhus@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Sona Sarmadi <sona.sarmadi@...a.com>
-CC: Solar Designer <solar@...nwall.com>
-Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/2
+Message-ID: <20140818062244.GA4602@kludge.henri.nerv.fi>
+Date: Mon, 18 Aug 2014 09:22:44 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Enigmail warning
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Please read: http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/
 
-What URL do I point to see the security bugs listed by CVE for CVE for bash43-25 through -28?
+Quote from thread below:
 
-I didn't see it in the patches themselves - ftp://ftp.cwru.edu/pub/bash/bash-4.3-patches 
+Enigmail 1.7 is completely broken for my purposes.
 
-Sorry, I am new to bash culture,
-Mark Menkhus
-Hewlett Packard
+Steps to reproduce the problem:
 
------Original Message-----
-From: Chet Ramey [mailto:chet.ramey@...e.edu] 
-Sent: Thursday, October 02, 2014 8:58 AM
-To: Sona Sarmadi; oss-security@...ts.openwall.com
-Cc: Solar Designer; chet.ramey@...e.edu
-Subject: Re: [oss-security] more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+1) Write an email in TB.
+2) Ensure "Force encryption" in Enigmail.
+3) Ensure "Force signing" in Enigmail.
+4) Recheck encryption and signing settings... OK.
+5) Send the email.
+6) Look at the received email. OOPS. It is NOT signed and NOT encrypted.
 
-On 10/2/14, 3:22 AM, Solar Designer wrote:
-> Sona - Chet is not on oss-security, we should be CC'ing him on 
-> relevant messages.  I've just added the CC on this one.
-> 
-> On Thu, Oct 02, 2014 at 06:48:54AM +0000, Sona Sarmadi wrote:
->>> On 10/1/14, 5:04 PM, Shawn wrote:
->>>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
->>>
->>> Nope, this one fixes 7168/7169.  It's the equivalent of the `parser-oob' patch.
+Sorry to say this so directly, but an encryption system, which CONFIRMS
+to the user in it's graphical user interface on two different places
+that it will encrypt AND THEN SENDS THE EMAIL WITHOUT ANY ENCRYPTION IN
+PLAIN TEXT ... is just the BIGGEST IMAGINABLE CATASTROPHE.
 
-My mistake, it's 7186/7187.  There are fixes for both in one patch.  The fix for the off-by-one error is not obvious, but it's in there in the third chunk.
+Sorry for my profane language but there is simply no excuse for such
+bullshit.
 
-Chet
+I am currently preparing a crypto class for journalists next week to
+teach them how to use safe email.
 
---
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+HOW am I going to explain that? A system tells the user in a separate
+window as well as in a menu line that everything will be encrypted but
+then it simply FORGOT to ENCRYPT and, ooops, their report will be
+intercepted and their source will be tortured ?
+
+Ok...let's see....maybe there is some magic incompatibility with the TB
+or OS version or the specific configuration I used or whatever... As a
+computer scientist I can imagine many bug-explanations.
+
+Good that I am just a computer scientist. As a serious user (dissident,
+whistle-blower, diplomatic or military user) I would now be waiting for
+the bad guys come and get me with their water-board.
+
+Still as a computer scientist I need an answer to which system I will
+teach in my class next week. Command-line PGP ?!?
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
