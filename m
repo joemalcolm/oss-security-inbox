@@ -1,96 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/6
-Message-Id: <E1WBOEF-0000Zm-Nk@xenbits.xen.org>
-Date: Thu, 06 Feb 2014 12:38:51 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 85 - Off-by-one error in FLASK_AVC_CACHESTAT hypercall
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/9
+Message-ID: <CACqxkW+2djiP73Of9B7tFH8_ac5EKR5vG9nydYva6W06DbPgcA@mail.gmail.com>
+Date: Mon, 18 Aug 2014 18:00:04 +0100
+From: Nick Boyce <nick.boyce@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Enigmail warning
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 18 August 2014 07:22, Henri Salo <henri@...v.fi> wrote:
 
-                     Xen Security Advisory XSA-85
-                              version 2
+> http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/
+> Quote from thread below:
+> Enigmail 1.7 is completely broken for my purposes.
+> Steps to reproduce the problem:
+>
+> 1) Write an email in TB.
+> 2) Ensure "Force encryption" in Enigmail.
+> 3) Ensure "Force signing" in Enigmail.
+> 4) Recheck encryption and signing settings... OK.
+> 5) Send the email.
+> 6) Look at the received email. OOPS. It is NOT signed
+>     and NOT encrypted.
 
-          Off-by-one error in FLASK_AVC_CACHESTAT hypercall
+Um ... I see from the Enigmail "Announcements" forum [1] that some
+major changes have been made to the package over the last 24 months:
+specifically a decision was made to replace older C++ code (with
+maintainability issues) by new pure Javascript code, thus hopefully
+achieving platform, GPG and TB version independence
 
-UPDATES IN VERSION 2
-====================
+You can see how that sort of upheaval in the codebase might result in
+horrible problems like this.
 
-Public release.
+[ I switched away from TB to Claws/Kmail some time ago, so this is all
+news to me, but up till that point the behaviour of TB V3 - 10 and
+Enigmail 1.0/1 in encrypting my mail was never less than excellent for
+me. ]
 
-ISSUE DESCRIPTION
-=================
+More relevantly, the (primary ?) author specifically asked [2] for
+testers to step up and test the new Javascript version thoroughly
 
-The FLASK_AVC_CACHESTAT hypercall, which provides access to per-cpu
-statistics on the Flask security policy, incorrectly validates the
-CPU for which statistics are being requested.
+  "In order to reduce the risk of severe errors in
+   the release versions, I will regularly ask for help
+   in testing after I completed such changes."
 
-IMPACT
-======
+which leaves me wondering how many stepped up to perform that task. It
+would be interesting - and maybe alarming - to know.
 
-An attacker can cause the hypervisor to read past the end of an
-array. This may result in either a host crash, leading to a denial of
-service, or access to a small and static region of hypervisor memory,
-leading to an information leak.
+[1] http://sourceforge.net/p/enigmail/forum/announce/
+[2] https://www.enigmail.net/list_archive/2012-January/014667.html
 
-VULNERABLE SYSTEMS
-==================
-
-Xen version 4.2 and later are vulnerable to this issue when built with
-XSM/Flask support. XSM support is disabled by default and is enabled
-by building with XSM_ENABLE=y.
-
-Only systems with the maximum supported number of physical CPUs are
-vulnerable. Systems with a greater number of physical CPUs will only
-make use of the maximum supported number and are therefore vulnerable.
-
-By default the following maximums apply:
- * x86_32: 128 (only until Xen 4.2.x)
- * x86_64: 256
-These defaults can be overridden at build time via max_phys_cpus=N.
-
-The vulnerable hypercall is exposed to all domains.
-
-MITIGATION
-==========
-
-Rebuilding Xen with more supported physical CPUs can avoid the
-vulnerability; provided that the supported number is strictly greater
-than the actual number of CPUs on any host on which the hypervisor is
-to run.
-
-If XSM is compiled in, but not actually in use, compiling it out (with
-XSM_ENABLE=n) will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Matthew Daley.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa85.patch        xen-unstable, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa85*.patch
-20571024e6815eeb40d2f92a3d70ae699047cffafb5431ec74b652e0843a5315  xsa85.patch
-$
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJS84H+AAoJEIP+FMlX6CvZXy8H/An+HT3e3Av9G3PWIv+i10O3
-FE7fhT53tBCbDlcqDghoO9PE6YctWV8glJHdg5TfpzXkjbVL2Go/poUhwvVqxePj
-ja5x5saXHvXoKwglc7sZmryil5bhecTKspNL5AfTlvP4dyNZMnOAvlbnyCtKUS45
-bH0TSonTL50yRH1tCEaIKYDnOisIk3E5yduIpkRnqwamKw+DbHMGlmq5sPZq4rLH
-EYa/yhqh4bDStGAlRuBHG8ms+F7SgxH8dTjXhCbTe5BeAxYg1cP5yGX61y14xJJt
-KAObUS4E1KOcP1jRWIQ1HhHQxwWwEDdRk+ZQspGuIt34hY1SfMcbpFu7LutcI4Y=
-=SiDW
------END PGP SIGNATURE-----
-
-Download attachment "xsa85.patch" of type "application/octet-stream" (948 bytes)
+Nick
+-- 
+"Bob has a problem requiring secure communication.
+ He decides to use certificates.
+ Now Bob has two problems."
