@@ -1,51 +1,170 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/6
-Message-ID: <548036C9.3010000@tillo.ch>
-Date: Thu, 04 Dec 2014 11:26:17 +0100
-From: Martino Dell'Ambrogio <tillo@...lo.ch>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/8
+Message-Id: CVE-2014-3577
+Date: Mon, 18 Aug 2014 16:13:09 +0200 (CEST)
+From: Dirk-Willem van Gulik <dirkx@...weaving.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: procmail heap overflow in getlline()
+Subject: CVE-2014-3577: Apache HttpComponents client: Hostname verification susceptible to MITM attack
 Content-Type: text/plain; charset=utf-8
 
-For what is worth, I strongly believe this is a security bug for the 
-same reason.
-As soon as there is an undocumented way to execute code, it will be 
-impossible for a .procmailrc file generator to avoid execution of code.
-Workaround measures like security capabilities can not be taken into 
-account as they are not implicit.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Martino Dell'Ambrogio
-Security Auditor
-Web: http://www.tillo.ch/
-Email: tillo@...lo.ch
+            Security Advisory - Apache Software Foundation
+                  Apache HttpComponents / hc.apache.org
 
-On 12/04/2014 10:58 AM, Florian Weimer wrote:
-> On 12/04/2014 09:41 AM, Kurt Seifried wrote:
->> On 04/12/14 12:57 AM, Santiago Vila wrote:
->>> On Wed, Dec 03, 2014 at 05:30:57PM -0600, Joshua J. Drake wrote:
->>>> Is it possible to trigger this issue with untrusted input or only
->>>> trusted input from procmailrc?
->>>
->>> This is an issue with the handling of .procmailrc file, which contains
->>> the filter rules for procmail. An external attacker is not supposed to
->>> provide the .procmailrc file at /home/user, only the email to be
->>> filtered, so, IMHO, this is a bug but maybe not a security bug.
->>>
->>> Thanks.
->>
->> I disagree. Many mail servers allow people to edit their .procmailrc but
->> explicitly block shell accounts. This would allow a user with a non
->> interactive shell account to execute arbitrary commands using procmailrc
->> even if they were otherwise restricted (e.g. using permissions or
->> SELinux for example).
->
-> procmail already executes commands in lines starting with “|” (and the 
-> documentation suggests it does not honor SHELL, so SHELL=/bin/false 
-> does not block this).  If permissions/SELinux contain that, they will 
-> also work against a procmailrc parser exploit.  In other words, I 
-> don't think there's a security bug here.
->
+           Hostname verification susceptible to MITM attack
+
+                       CVE-2014-3577 / CVSS 1.4
+
+Apache HttpComponents (prior to revision 4.3.5/4.0.2) may be susceptible 
+to a 'Man in the Middle Attack' due to a flaw in the default hostname 
+verification during SSL/TLS when a specially crafted server side 
+certificate is used.
+
+Background
+- ----------
+
+During an SSL connection (https) the client verifies the hostname in 
+the URL against the hostname as encoded in the servers certificate (CN,
+subjectAlt fields). This is to ensure that the client connects to the
+'real' server, as opposed to something in middle (man in the middle)
+that may compromise end to end confidentiality and integrity.
+
+Details
+- -------
+
+The flaw is in the default Apache HttpComponents 
+
+              org.apache.http.conn.ssl.AbstractVerifier 
+
+that is used in client mode for verification of hostname of the server
+side certificate. It parsed the entire subject distinguished name (DN)
+for the occurrence of any <CN=> substring (regardles of field).
+
+Therefore a DN of with a O field such as
+
+                  O="foo,CN=www.apache.org” 
+
+and a CN of "www.evil.org” and ordered such that the O appears prior to
+the CN field would incorrectly match match on the <www.apache.org> in
+the O field as opposed to just the values in the CN and alternative
+subject name(s). 
+
+The doctored field can be any field but the CN field itself; including 
+the <E> or emailAddress field as long as it appears before the CN (some 
+CAs reorder the DN).
+
+A third party in posession of such a doctored certificate and who also
+has the ability to intercept or reroute the traffic to a https server
+under its control (e.g. through DNS doctoring or various forms of
+traffic rerouting or spoofing) can thus perform a 'man in the middle'
+attack and compromise end to end confidentiality and integrety.
+
+Note that while some certificate authorities may be relatively strict
+on what they allow in the various fields - most are NOT; and allow 
+for a relatively large amount of leeway in, for example, the OU 
+and E fields.
+
+Impact:
+- -------
+
+A man-in-the-middle can interpose itself between the server and the
+code using an affected version of Apache HttpComponents as a client.
+
+Leading to complete loss of end to end confidentiality and end to 
+end integrety of the connection.
+
+Versions affected: 
+- ------------------
+All versions prior to HttpClient 4.3.5 (including the Android port) 
+and HttpAsyncClient 4.0.2. The fix was introduced in these versions.
+
+http://search.maven.org/#artifactdetails|org.apache.httpcomponents|
+httpclient|4.3.5|jar
+http://search.maven.org/#artifactdetails|org.apache.httpcomponents|
+httpasyncclient|4.0.2|jar
+
+These have been silently pushed out to Maven central and Apache Dist 
+as of 2014-08-1. An Android build was released on 2014-08-15.
+
+Resolution
+- ----------
+
+A fix has been applied as of revision 1614065 and is part of release 
+HttpClient 4.3.5 (including HttpClient port for Android against the
+official Google Android SDK)and HttpClient (async) 4.0.2.
+
+Upgrading to these versions newer resolves this issue.
+
+Mitigations and work arounds
+- ----------------------------
+
+If upgrading to version 4.3.5/4.0.2 is not an option; one could change 
+the default org.apache.http.conn.ssl.AbstractVerifier of earlier 
+versions for revision 1614065 of newer.
+
+Note that exploitation of this flaw also requires some level of DNS or
+IP spoofing (or existing 'in the middle infrastructure' such as a corporate
+proxy or other TCP level equipment en-route). This need may allow for site 
+specific alternative mitigations.
+
+Reproducing the flaw
+- --------------------
+
+If so required; the following statements will allow the testing of a
+Apache HttpComponents client against a server with a thus crafted
+certificate:
+
+    openssl req -new -x509 -keyout /dev/stdout \
+      -subj "/O=foo, CN=www.apache.org/CN=machine-domain-name/" \
+      -set_serial 86653 -nodes |\
+    openssl s_server -cert /dev/stdin -accept 8443 -www
+
+and a Apache HttpComponents client that connects to
+"https://www.apache.org:8443/" with the DNS entry for www.apache.org
+pointing to the machine-domain-name.
+
+Credits and timeline
+- --------------------
+
+The flaw was found and reported by Subodh Iyengar <http://www.subodh.io>,
+and Will Shackleton <http://www.shackleton.io/> from Facebook. It was
+reported on the 23rd of July. A fix was applied by and released on 
+2014-08-01. An Android build was released on the  2014-08-15. This 
+security advisory fully discloses the issue and current insights known 
+to the Apache Software foundation (the vendor).
+
+Apache would like to thank all involved for their help with this.
+
+A similar issue was reported by Florian Weimer of Red Hat in 2012 and 
+was fixed by https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692442#56.
+It has now been assigned CVE-2012-6153.
 
 
+Common Vulnerability Scoring (Version 2) and vector
+- ---------------------------------------------------
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4234 bytes)
+CVSS Base Score               5.8
+Impact Subscore               4.9
+Exploitability Subscore       8.6
+CVSS Temporal       Score     4.8
+CVSS Environmental Score      1.4
+Modified Impact Subscore      5.2
+    ------------------------------
+    Overall CVSS Score        1.4
+
+CVSS v2 Vector 
+      AV:N/AC:M/Au:N/C:P/I:N/A:P/E:F/RL:OF/RC:C/CDP:L/TD:L/CR:H/IR:L/AR:L
+
+1.09 / : 1692 $
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4
+Comment: This message is encrypted and/or signed with PGP (gnu-pg, gpg). Contact dirkx@...weaving.org if you cannot read it.
+
+iQCVAwUBU/IJ7DGmPZbsFAuBAQIuRQP/XyoVzCcusgWFTf8HgzJ4A7PlkfxIsotb
+pgGcGzvlRtNkRKlB7WqelJ2lDCWTEUYuwul2UcU2FBZdzC2EMHSaaVH1NmaRT+1w
+4fvn9NpvRjZvg1SsaHrX81oocHG6Yp7aownP+Q94yEs3XFtEg/Qx1cUKkvp6j1kh
+3xFnfTN51Ys=
+=RaXt
+-----END PGP SIGNATURE-----
