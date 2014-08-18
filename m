@@ -1,49 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/47
-Message-ID: <542DDB36.2000006@enovance.com>
-Date: Thu, 02 Oct 2014 19:09:42 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-033] Cinder-volume host data leak to vm instance (CVE-2014-3641)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/12
+Message-ID: <CAC9YFzd9hW7yXA+di24PiTm9Ziw938yR+UDZOQbfUtFNdLE3sg@mail.gmail.com>
+Date: Mon, 18 Aug 2014 15:52:17 -0300
+From: Rafael Mendonça França <rafaelmfranca@...il.com>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com,  ruby-security-ann@...glegroups.com
+Subject: Re: [Ruby on Rails] [CVE-2014-3514] Strong Parameter bypass with create_with
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-033
-CVE: CVE-2014-3641
-Date: October 02, 2014
-Title: Cinder-volume host data leak to vm instance
-Reporter: Duncan Thomas (HP)
-Products: Cinder
-Versions: up to 2014.1.2
+These are the attached patches.
 
-Description:
-Duncan Thomas from Hewlett Packard reported a vulnerability in Cinder
-GlusterFS and Linux Smbfs drivers. By overwriting a volume from within
-an instance with a malicious qcow2 header, an authenticated user may be
-able to clone and attach that corrupted volume resulting in affected
-drivers leaking an arbitrary file from the Cinder-volume host to the
-virtual instance. Note that the host file must be readable by the Cinder
-context to be exposed. Only Cinder setups using GlusterFS volume driver
-configured with glusterfs_qcow2_volumes=False (which is the default) or
-Cinder setups using Smbfs volume driver configured with
-smbfs_default_volume_format=raw (which is not the default) are affected.
-
-Juno (development branch) fix:
-https://review.openstack.org/125671
-
-Icehouse fix:
-https://review.openstack.org/125710
-
-Notes:
-This fix will be included in the Juno release 2014.2 and in
-the upcoming 2014.1.3 release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3641
-https://launchpad.net/bugs/1350504
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Rafael Mendonça França
+http://twitter.com/rafaelfranca
+https://github.com/rafaelfranca
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+On Mon, Aug 18, 2014 at 2:11 PM, Rafael Mendonça França <
+rafaelmfranca@...il.com> wrote:
+
+> There is a vulnerability in the create_with method in Active Record. This
+> vulnerability has been assigned the CVE identifier CVE-2014-3514.
+>
+> Versions Affected:  4.0.0 and All Later Versions.
+> Not affected:       Versions earlier than 4.0.0
+> Fixed Versions:     4.0.9 4.1.5
+>
+> Impact
+> ------
+> The create_with functionality in Active Record was implemented incorrectly
+> and completely bypasses the strong parameters protection.  Applications
+> which pass user-controlled values to create_with could allow attackers to
+> set arbitrary attributes on models.
+>
+> All users running an affected release should either upgrade or use one of
+> the workarounds immediately.
+>
+> Releases
+> --------
+> The 4.0.9 and 4.1.5 releases are available at the normal locations.
+>
+> Workarounds
+> -----------
+> To avoid this vulnerability you will have to either remove all calls to
+> create_with, or carefully audit your codebase to ensure it sanitizes the
+> input first.  For example you should replace code like this:
+>
+>   user.blog_posts.create_with(params[:blog_post]).create
+>
+> with either:
+>
+>   user.blog_posts.create(params[:blog_post])
+>
+> or:
+>
+>   user.blog_posts.create_with(params[:blog_post].permit(:title, :body,
+> :etc)).create
+>
+>
+> Patches
+> -------
+> To aid users who aren't able to upgrade immediately we have provided
+> patches for the two supported release series.  They are in git-am format
+> and consist of a single changeset.
+>
+> * 4-1-create_with.patch - Patch for 4.1 series
+> * 4-0-create_with.patch - Patch for 4.0 series
+>
+> Please note that only the 4.0.x and 4.1.x series receive regular security
+> updates at present.  Users of earlier unsupported releases are advised to
+> upgrade as soon as possible as we cannot guarantee the continued
+> availability of security fixes for earlier releases.
+>
+> Credits
+> -------
+>
+> Thanks to Stephen Touset of Square for reporting the vulnerability to us,
+> and to Jeff Jarmoc of Matasano and Charlie Somerville of GitHub for helping
+> verify the patches and advisories.
+>
+> Rafael Mendonça França
+> http://twitter.com/rafaelfranca
+> https://github.com/rafaelfranca
+>
+
+Content of type "text/html" skipped
+
+Download attachment "4-0-create_with.patch" of type "application/octet-stream" (4128 bytes)
+
+Download attachment "4-1-create_with.patch" of type "application/octet-stream" (4136 bytes)
