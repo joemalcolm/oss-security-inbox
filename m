@@ -1,45 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/11
-Message-Id: <201404101205.s3AC5X20011936@linus.mitre.org>
-Date: Thu, 10 Apr 2014 08:05:33 -0400 (EDT)
-From: cve-assign@...re.org
-To: fw@...eb.enyo.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: redmine open redirector
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/11
+Message-ID: <53F24A1E.4080409@redhat.com>
+Date: Mon, 18 Aug 2014 12:46:54 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, rubyonrails-security@...glegroups.com, ruby-security-ann@...glegroups.com
+Subject: Re: [Ruby on Rails] [CVE-2014-3514] Strong Parameter bypass with create_with
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Can you provide a URL or a copy of the patches? Thanks.
 
-> Redmine versions 2.4.5 and 2.5.1 fixed an open redirector issue. The
-> code verifying the redirection URIs accepted scheme-relative URIs
-> which can lead to different hosts:
+On 18/08/14 11:11 AM, Rafael Mendonça França wrote:
+> There is a vulnerability in the create_with method in Active Record. This
+> vulnerability has been assigned the CVE identifier CVE-2014-3514.
 > 
-> http://www.redmine.org/projects/redmine/wiki/Security_Advisories
-> http://www.redmine.org/projects/redmine/wiki/Changelog
-> https://github.com/redmine/redmine/commit/7567c3d8b21fe67e5f04e6839c1fce061600f2f3
+> Versions Affected:  4.0.0 and All Later Versions.
+> Not affected:       Versions earlier than 4.0.0
+> Fixed Versions:     4.0.9 4.1.5
+> 
+> Impact
+> ------
+> The create_with functionality in Active Record was implemented incorrectly
+> and completely bypasses the strong parameters protection.  Applications
+> which pass user-controlled values to create_with could allow attackers to
+> set arbitrary attributes on models.
+> 
+> All users running an affected release should either upgrade or use one of
+> the workarounds immediately.
+> 
+> Releases
+> --------
+> The 4.0.9 and 4.1.5 releases are available at the normal locations.
+> 
+> Workarounds
+> -----------
+> To avoid this vulnerability you will have to either remove all calls to
+> create_with, or carefully audit your codebase to ensure it sanitizes the
+> input first.  For example you should replace code like this:
+> 
+>   user.blog_posts.create_with(params[:blog_post]).create
+> 
+> with either:
+> 
+>   user.blog_posts.create(params[:blog_post])
+> 
+> or:
+> 
+>   user.blog_posts.create_with(params[:blog_post].permit(:title, :body,
+> :etc)).create
+> 
+> 
+> Patches
+> -------
+> To aid users who aren't able to upgrade immediately we have provided
+> patches for the two supported release series.  They are in git-am format
+> and consist of a single changeset.
+> 
+> * 4-1-create_with.patch - Patch for 4.1 series
+> * 4-0-create_with.patch - Patch for 4.0 series
+> 
+> Please note that only the 4.0.x and 4.1.x series receive regular security
+> updates at present.  Users of earlier unsupported releases are advised to
+> upgrade as soon as possible as we cannot guarantee the continued
+> availability of security fixes for earlier releases.
+> 
+> Credits
+> -------
+> 
+> Thanks to Stephen Touset of Square for reporting the vulnerability to us,
+> and to Jeff Jarmoc of Matasano and Charlie Somerville of GitHub for helping
+> verify the patches and advisories.
+> 
+> Rafael Mendonça França
+> http://twitter.com/rafaelfranca
+> https://github.com/rafaelfranca
+> 
 
-On the Redmine Security Advisories page, "(referenced as
-JVN#93004610)" would typically imply that these URLs may exist later:
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-  http://jvn.jp/jp/JVN93004610/index.html
-  http://jvn.jp/en/jp/JVN93004610/index.html
 
-Use CVE-2014-1985.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTRoieAAoJEKllVAevmvmsziwIAJ3vaw7fWg8eOQqCTDycCLtO
-mHZsUF2YJxNPIo1L916ZAzIL2e7Xd7s6DlK1hoOJIpaNcgSu26YFK307Zv3NNAQ0
-nmWCl+s6VIgsi6YMzFmmSjllMMMwWzF41PoaFwjGbl9HEkN6Ted3TCIjG0PMWlSk
-tbV2uW6AVT15QZw08FIphSrLrsj0HHeLtSn/yHuo1bh1yc4a6pQyn6zmdIiG+W4E
-YypkH16jDoRXqJPDZeWABd/7fbfiZTOozgBUkgBbeV0/vKAsft7+6hnSKZGGhe1q
-J2a22CKuF2dH6HbcNhnIQ46lP2/ZVY+9pkOHNu4w51OHGynB8vDiRw3JtWgkC2o=
-=BSF/
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
