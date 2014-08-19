@@ -1,34 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/08/3
-Message-ID: <20140308023940.GZ22749@teltox.donarmstrong.com>
-Date: Fri, 7 Mar 2014 18:39:40 -0800
-From: Don Armstrong <don@...ian.org>
-To: mmcallis@...hat.com, 740670@...s.debian.org
-Cc: oss-security@...ts.openwall.com, Jakub Wilk <jwilk@...ian.org>
-Subject: Re: Bug#740670: possible CVE requests: perltidy insecure temporary file usage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/4
+Message-ID: <53F31BBF.4050003@reactos.org>
+Date: Tue, 19 Aug 2014 11:41:19 +0200
+From: Pierre Schweitzer <pierre@...ctos.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: FreeNAS default blank password
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 04 Mar 2014, Murray McAllister wrote:
-> Jakub Wilk and Don Armstrong are discussing in
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=740670 1) perltidy
-> creating a temporary file with default permissions instead of 0600
-> 2) the use of tmpnam().
 
-The following trivial patch fixes this issue by just using File::Temp
-instead:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://git.donarmstrong.com/?p=perltidy.git;a=blob;f=debian/patches/fix_insecure_tmpnam_usage_740670
- 
-I'm currently preparing an upload which will resolve this issue for
-Debian in unstable and testing; I'm not certain if it necessitates a CVE
-or security update in stable, but if anyone feels that way, I don't mind
-preparing one.
+In such situation, we can then also wonder about other software such as
+Icinga-web, where installation comes with default username and password
+(properly documented). Be it using packages or "mainstream"
+installation:
+https://wiki.icinga.org/display/howtos/Setting+up+Icinga+Web+on+Ubuntu.
+Such credentials give full access (root access) to the installation.
 
--- 
-Don Armstrong                      http://www.donarmstrong.com
+If Icinga wasn't configured yet, it's not such a drama, but otherwise,
+it can become rather critical:
+- -> Access to the whole infrastructure schema
+- -> Possibility to submit checks which can help to harass a host/service
+- -> Possibility to disable all the checks around to shut monitoring down
+- -> Possibility to overload the master host by issuing too many checks
+(master needs to handle them - MySQL dump, pnp4nagios, perf data
+analysis, and so on)
 
-listen, what you do in the privacy
-of your neighbour's house while they're away
-is your own business
- -- a softer world #511
-    http://www.asofterworld.com/index.php?id=511
+On 19/08/2014 10:46, cve-assign@...re.org wrote:
+> > My understanding is default/blank admin credentials now == CVE
+>
+> There isn't a precise rule of this type. For example, there may be
+> situations in which the blank credentials can only be entered over a
+> trusted interface (for some definition of "trusted" that is consistent
+> with the vendor's security policy and otherwise reasonable for the
+> product's context).
+>
+> > So an attacker can easily race the admin to the WebGUI, set a new
+> > password
+>
+> Similarly, "race the admin to the WebGUI" situations don't always
+> qualify for CVE IDs. There are many products in which the full
+> functionality of install.php is available to the first client who
+> visits install.php. A product can have a design constraint that
+> installation must not require the person to have any ability to use a
+> command line (or other non-browser method) for any part of the initial
+> product setup. This design constraint was historically reasonable for
+> some types of shared web hosting, for example.
+>
+> For this FreeNAS case, the blank password seems unreasonable because
+>
+>   -- the requirement for a reboot implies that the product is not
+>      intended for use in constrained scenarios such as shared web
+>      hosting
+>
+>   -- the web interface exposes a root shell. This is quite different
+>      from a case where use of install.php has a consequence limited to
+>      "the machine ends up with a web application that wasn't supposed
+>      to be there, and maybe some disk consumption or other minor
+>      resource consumption."
+>
+> Use CVE-2014-5334.
+>
+
+- -- 
+Pierre Schweitzer <pierre at reactos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJT8xu+AAoJEHVFVWw9WFsLa6cP/RIPZmZF7FU0cfSpfPjf4mlR
+5RcLNefjBlOGQrQE+0se77UOvkOPU8AHgD9jSFkDaqYrn2M/kNQb6/3hvSA34kcx
+Ew2vHJ3skfEo0upSwuEvb34FEZ3FeQOwTqeRy7cizCqIUojmN1mSHWPWFlADWEWY
+ALbVbnrFEYCfbco1T0JKMIe85OnjKXAstCnrJaahw0eefv7nYqBv/Lf0TBWRcfHF
+UO3+n2yk/W+TaVR4PTL/Rz/jNGvQOk9obfMEPRZQ6gqBTFlJO5EaN9DSrCwN2/Qw
+FNSstXMoAeFEokv1Og9/Pct0eucR11GzxwO+COkCKm3/5laFgzuEOLc3KnRBdHop
+a/jSDTMcrhWI3uUCQBodvRu09TWw4fSOBMGpPLe8KsNFFTQUdoMGNxIpCkVpEmOF
+cpJJ7yc1zREp7RoHJrvimw+OBa82Lprffvnqu4MKsyIu57i8jpaE9tsY0WdVqa1c
+WRbtlykhKW1dwRxtRZHSrCTJm3HMEYW7j/qdKDjmxtydDuJ+G7cjHCkypGA0sRPZ
+3/p5gkl8QSt5nv9Gk5uFS3zQHou8ramg46R3TNOA4oeQwEIGjGpjCA7jQDyW4Cs9
+9D9WVAg0qHES/wbSI6CsA7hOayCAPRMKgsiPx5Q6DrnOzeOs50w3XIVBjwo7JLNf
+pvhelZjoKp+1WhXHBQnP
+=b+iT
+-----END PGP SIGNATURE-----
+
