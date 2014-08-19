@@ -1,27 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/28/6
-Message-ID: <20140528215331.GA5567@kroah.com>
-Date: Wed, 28 May 2014 14:53:31 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/7
+Message-ID: <53F3665B.809@enovance.com>
+Date: Tue, 19 Aug 2014 10:59:39 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Cc: Andy Lutomirski <luto@...capital.net>
-Subject: Re: CVE request: Linux kernel DoS with syscall auditing
+Subject: Re: CVE request for vulnerability in OpenStack Glance
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 28, 2014 at 02:45:59PM -0700, Andy Lutomirski wrote:
-> Issuing a system call with a random large number will OOPS, depending
-> on configuration.  A configuration that will enable this bug is:
+On 08/19/2014 10:43 AM, Tristan Cacqueray wrote:
+> A vulnerability was discovered in OpenStack (see below). In order to
+> ensure full traceability, we need a CVE number assigned that we can
+> attach to further notifications. This issue is already public, although
+> an advisory was not sent yet.
 > 
-> # auditctl -a exit,always -S open
+> Title: Glance store DoS through disk space exhaustion
+> Reporter: Thomas Leaman (HP), Stuart McLaren (HP)
+> Products: Glance
+> Versions: up to 2013.2.3 and 2014.1 to 2014.1.1
 > 
-> No privilege whatsoever is required to trigger the OOPS.
+> Description:
+> Thomas Leaman and Stuart McLaren from Hewlett Packard reported a
+> vulnerability in Glance. By uploading a large enough image to a Glance
+> store, an authenticated user may fill the store space because the
+> image_size_cap configuration option is not honored. This may prevent
+> further image upload and/or cause service disruption. Note that the
+> import method is not affected. All Glance setups using API v2 are
+> affected (unless you use a policy to restrict/disable image upload).
 > 
-> It's possible that this can be extended to more than just a DoS --
-> with some care and willingness to exploit timing attacks, this is a
-> read of arbitrary single bits in kernel memory.
+> References:
+> https://launchpad.net/bugs/1315321
+> 
+> Thanks in advance,
+> 
 
-Is there a kernel fix for this anywhere?
+Oups, an error slipped in the CVE request, affected versions did not
+include the recent 2014.1.2 that is also vulnerable:
 
-thanks,
+Versions: up to 2013.2.3 and 2014.1 to 2014.1.2
 
-greg k-h
+
+Sorry for the confusion!
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
