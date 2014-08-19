@@ -1,41 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/3
-Message-ID: <20140724112608.19bd4bba@pc>
-Date: Thu, 24 Jul 2014 11:26:08 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/6
+Message-ID: <53F3628B.3050505@enovance.com>
+Date: Tue, 19 Aug 2014 10:43:23 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Mailpoet (wordpress-plugin) remote file upload exploited in the wild
+Subject: CVE request for vulnerability in OpenStack Glance
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
 
-A remote file upload in the wordpress plugin Mailpoet is currently
-widely exploited:
-http://blog.sucuri.net/2014/07/remote-file-upload-vulnerability-on-mailpoet-wysija-newsletters.html
-http://blog.sucuri.net/2014/07/mailpoet-vulnerability-exploited-in-the-wild-breaking-thousands-of-wordpress-sites.html
+Title: Glance store DoS through disk space exhaustion
+Reporter: Thomas Leaman (HP), Stuart McLaren (HP)
+Products: Glance
+Versions: up to 2013.2.3 and 2014.1 to 2014.1.1
 
-It is fixed in the version 2.6.7. Upstream changelog:
-http://wordpress.org/plugins/wysija-newsletters/changelog/
-Fixed security issue reported by Sucuri
+Description:
+Thomas Leaman and Stuart McLaren from Hewlett Packard reported a
+vulnerability in Glance. By uploading a large enough image to a Glance
+store, an authenticated user may fill the store space because the
+image_size_cap configuration option is not honored. This may prevent
+further image upload and/or cause service disruption. Note that the
+import method is not affected. All Glance setups using API v2 are
+affected (unless you use a policy to restrict/disable image upload).
 
+References:
+https://launchpad.net/bugs/1315321
 
-The changelog lists also another security issue, fixed in version 2.6.8,
-however without any details:
-Fixed security issue reported by our dear Dominic. Thank you sir!
-
-I know that CVE requests without details aren't liked much here,
-however at the moment I don't have the time to digg into version diffs.
-
-
-Please assign CVE for the first and proceed how you think appropriate
-for the second.
-
+Thanks in advance,
 
 -- 
-Hanno Böck
-http://hboeck.de/
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
