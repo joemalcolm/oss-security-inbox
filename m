@@ -1,25 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/6
-Message-ID: <54720C78.7000706@mccme.ru>
-Date: Sun, 23 Nov 2014 19:34:00 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/9
+Message-ID: <53F3B0FD.9080909@enovance.com>
+Date: Tue, 19 Aug 2014 16:18:05 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)
+Subject: [OSSA 2014-027] Persistent XSS in Horizon Host Aggregates interface (CVE-2014-3594)
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-23 12:24, Michal Zalewski wrote:
-> there's isoinfo (?!)
+OpenStack Security Advisory: 2014-027
+CVE: CVE-2014-3594
+Date: August 19, 2014
+Title: Persistent XSS in Horizon Host Aggregates interface
+Reporters: Dennis Felsch and Mario Heiderich (Ruhr-University Bochum)
+Products: Horizon
+Versions: up to 2013.2.3, and 2014.1 versions up to 2014.1.2
 
-$ mkdir dir/
-$ genisoimage -o empty.iso dir/ 2> /dev/null
-$ time zzuf -qcs: isoinfo -i empty.iso
-zzuf[s=48,r=0.004]: signal 11 (SIGSEGV)
+Description:
+Dennis Felsch and Mario Heiderich from the Horst Görtz Institute for
+IT-Security, Ruhr-University Bochum reported a persistent XSS in
+Horizon. A malicious administrator may conduct a persistent XSS attack
+by registering a malicious host aggregate in Horizon Host Aggregate
+interface. Once executed in a legitimate context this attack may reveal
+another admin token, potentially resulting in a lateral privilege
+escalation. All Horizon setups are affected.
 
-real	0m0.210s
-user	0m0.084s
-sys	0m0.008s
+Juno (development branch) fix:
+https://review.openstack.org/115310
 
-:-)
+Icehouse fix:
+https://review.openstack.org/115311
+
+Havana fix:
+https://review.openstack.org/115313
+
+Notes:
+This fix will be included in the Juno-3 development milestone and in
+future 2013.2.4 and 2014.1.3 releases.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3594
+https://launchpad.net/bugs/1349491
 
 -- 
-Alexander Cherepanov
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
