@@ -1,99 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/7
-Message-ID: <2ECE9D9EEF1F524185270138AE23265947D16793@S0MSMAIL111.arc.local>
-Date: Tue, 14 Oct 2014 14:31:01 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Multiple disputed issues in util-vserver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/5
+Message-ID: <20140819130832.GA25374@suse.de>
+Date: Tue, 19 Aug 2014 15:08:32 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: security@...nel.org, OSS Security List <oss-security@...ts.openwall.com>
+Subject: incomplete fix for CVE-2014-4611: kernel: integer overflow in lz4_uncompress 
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-While fixing a bug, I noticed some strange behavior in linux vserver
-virtualization, that I would call a security problems, but project
-developers see it differently. Since the util-vserver packages and patched
-kernel were or are included in some Linux distros, I would be interested in
-the communities' opinion on that.
+Jan Beulich writes in our bug for CVE-2014-4611:
 
-Issue 1: When calling util-vserver tool on the host to execute a job within
-the guest, e.g. to install updates, the host process (in host PID ns) might
-end up being the child of a guest process (with PID only in guest ns), thus
-the parent PID of the host process pointing to a guest ns PID. If the host
-process wants to signal the parent process or some other tool operates using
-the ppid, a host process might interact with another arbitrary host process
-on error (see [1]). Compared to issue 2-3, I'm not sure for myself if it is
-really a bug and what the correct behavior of kernel with pid namespaces
-would be. At least it breaks bash process handling (gets stuck) when calling
-"vserver exec" in a certain way, start-stop-daemon or upstart might not like
-it also.
+https://bugzilla.novell.com/show_bug.cgi?id=883949#c12
 
-Issue 2: When entering the container from the host or executing commands
-within the container, e.g. to perform common administrative tasks, a
-malicious login shell inside the container might overwrite the
-/usr/sbin/vcontext on the host, thus allowing on to execute arbitrary code
-on the host with root privileges next time vcontext is invoked. See [3].
-Feedback from developer: " Yes, vlogin is known to have several security
-issues. It's a maintenance backdoor, much like the iLO or iDRAC on hardware.
-If you can find ways to improve it, patches would be accepted, but I doubt
-it will ever be possible to do what it does securely." Project documentation
-does not strike out those restrictions (or at least I did not find that or
-the list of "several known security issues" online), other sources, e.g.
-container vs system virtualization comparison strike out the importance of
-the feature to enter a guest from the host easily for maintenance, so I
-guess that those tools were not useful just for me alone. This issue I would
-rate a killer for production use, e.g. for mass hosting.
+Jan Beulich <jbeulich@...e.com> changed:
 
-Issue 3: It seems that handling of open tty FDs on enter, that allows to
-inject arbitrary keyboard input to be read by the parent process, also
-affects the tool to start the guest container. This seems to be the same
-issue with "vserver start" as reported in [2] for vserver enter, which was
-classified as less relevant back than. My rating would be little lower than
-2 but still quite high for mass hosting: manual restart, e.g. during
-maintenance, seems quite common to me.
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+                 CC|                            |jbeulich@...e.com
 
->From my point of view, those issues might be expected behavior as claimed by
-the developers, but if so it should be at least stated more clearly in
-documentation:
-
-a) never use any tools except vserver stop (to terminate the container) to
-interact with a running and possibly compromised container from the host
-b) only use network/socket-based tools to connect to processes inside a
-possibly compromised guest, e.g. SSH. 
-c) never start a possibly compromised container from interactive shell to
-avoid injection of shell commands
-
-Regarding documentation I would even vote for a solution d), that all those
-tools get a mandatory argument like
-'--i-know-entering-insecure-container-may-kill-my-host' so that it is not
-very likely, that someone will use those tools for something else then
-testing or nice-world administration.
-
-Opinions to issues 1-3?
-
-What about solutions?
-
-Kind regards,
-Roman
-
-[1]
-http://list.linux-vserver.org/archive?mss:6788:201410:moeiomapkoefmmdnmcji
-[2] http://www.openwall.com/lists/oss-security/2012/11/05/8
-[3] Guest -> Host escape POC: C-code to be put as /bin/bash replacement in
-guest, will overwrite /usr/sbin/vcontext on host. Available on request
+--- Comment #12 from Jan Beulich <jbeulich@...e.com> 2014-08-15 21:42:33 UTC ---
+Except that it has been determined quite some time ago that all three fixes
+having gone in upstream so far don't really fix anything. I posted a patch that
+I think actually addresses the issue (https://lkml.org/lkml/2014/7/4/288), but
+till now no-one cared to comment on it, apply it, or point out what's still
+wrong, despite the ping 3 weeks later (https://lkml.org/lkml/2014/7/25/23). It
+was - instead of the insufficient Linux ones - in fact meanwhile applied to the
+Xen clone of that code.
 
 
-DI Roman Fiedler
-Scientist
-Safety & Security Department
-Assistive Healthcare Information Technology
+Perhaps the kernel folks want to look at it again if they missed it so far.
 
-AIT Austrian Institute of Technology GmbH
-Reininghausstraße 13/1  |  8020 Graz  |  Austria
-T +43(0) 50550 2957  |  M +43(0) 664 8561599  |  F +43(0) 50550 2950
-roman.fiedler@....ac.at | http://www.ait.ac.at/
-
-FN: 115980 i HG Wien  |  UID: ATU14703506
-http://www.ait.ac.at/Email-Disclaimer
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
+Ciao, Marcus
