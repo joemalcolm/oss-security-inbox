@@ -1,32 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/18
-Message-ID: <1418936361.5935.54.camel@juliet.mcarpenter.org>
-Date: Thu, 18 Dec 2014 21:59:21 +0100
-From: Martin Carpenter <mcarpenter@...e.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: Running Java across a privilege boundry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/8
+Message-Id: <20140819155002.2F34C72E002@smtpvbsrv1.mitre.org>
+Date: Tue, 19 Aug 2014 11:50:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: mattd@...fuzz.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, eduardo@...key.io
+Subject: Re: CVE request / advisory: Monkey web server <= v1.5.2
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2014-12-18 at 21:43 +0300, Alexander Cherepanov wrote:
-> Relative paths is not the only problem. /tmp is even worse:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> https://github.com/monkey/monkey/commit/b2d0e6f92310bb14a15aa2f8e96e1fb5379776dd
+> http://monkey-project.com/Announcements/v1.5.3
 > 
-> https://bugs.debian.org/759868
+> simple denial-of-service
+> 
+> any HTTP requests that result in a custom error message being returned
+> cause a file descriptor ... to be leaked
 
-Nice, thanks. Revised:
+Use CVE-2014-5336.
 
-8.7 RUNPATH and RPATH
-Libraries that define RPATH or RUNPATH should ensure that this does not
-contain relative paths or paths that traverse insecure directories
-(eg /tmp or /var/tmp). This is to prevent an executable from loading a
-library from an untrusted location. (This should include the corner
-cases whereby the path list starts or ends with a colon, or includes two
-consecutive colons).
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-("insecure directories" is intentionally broad (not just "world
-writable"). Clarify?).
-
-I'll file a bug against debian-policy in ~24h unless there are further
-edits/additions/objections.
-
-
+iQEcBAEBAgAGBQJT83F0AAoJEKllVAevmvms8N0H/jUJyJCQI6zg5JD0y6ZaCG5o
+jrTFWNLM6T+7PeLVyYMnuhAxcI7pLh0UqPbpYAZTiAULCFo+WtrD5qXEUaIiu/9L
+STRuUsoLwwBBjZY0LJJ6t2tCJ2p+YFw3dq9lDJOHydcJ6rKzZcmwApgyYb+Azpvo
+VCSjtEZj5jbh73WpRbevxoRr4lmvyZ8J0i9321sHvqVAGZVZl0cuDiXb3qP++v8E
+FjgCMhCzQr/IP17iigov5mOXNPg6z4K4z0EyrTolsa3T7Azo9WvciZG/bfJfVWuA
+oH2jmUruCA+qREVcpqThxaX3Fbda8SLV/vvGvSa8My64Jwh8iwpP8v7hdGkri/Y=
+=pDlF
+-----END PGP SIGNATURE-----
