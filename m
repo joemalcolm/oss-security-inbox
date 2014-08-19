@@ -1,54 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/15
-Message-ID: <20141017234133.GM1844@sentinelchicken.org>
-Date: Fri, 17 Oct 2014 16:41:33 -0700
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/3
+Message-ID: <20140819094211.GB14387@kludge.henri.nerv.fi>
+Date: Tue, 19 Aug 2014 12:42:11 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+Cc: plugins@...dpress.org
+Subject: CVE request: WordPress plugin wp-source-control remote path traversal file access
 Content-Type: text/plain; charset=utf-8
 
-Hi Phil,
+Product: WordPress plugin wp-source-control
+Plugin page: https://wordpress.org/plugins/wp-source-control/
+Developer: https://profiles.wordpress.org/mmdeveloper/
 
-> That's called "DANE" and it uses TLSA records in DNS.  It's slowly
-> bootstrapping into use in SMTP and server-server XMPP as an
-> opportunistic TLS latch, providing the correct trust anchors too.
-> 
-> Various feature-request bugs against browsers have eventually gotten
-> closed as will-not-fix or equivalent, because verified DNSSEC is not
-> seen as something which is likely to be widely deployed in clients;
-> there's a chicken/egg problem here.
-> 
-> By contrast, servers are more likely to be placed with care and
-> attention to DNS resolution, so someone running an SMTP or XMPP server
-> who wants to use DANE can fix their DNS setup, once.  So it's seeing
-> more use there.  Postfix has DANE support; Exim has it as an
-> experimental feature (which just means that the API might change); the
-> Prosody XMPP client can be set up to use DANE.
-> 
-> (For clarity: the server/receiver side of any connection requires no
-> code changes to support DANE, although having SNI support probably
-> helps; the initiator which verifies the peer is the only one which needs
-> changes, but they're currently ugly ones).
+Vulnerability Type: Remote Path Traversal File Access
+Vulnerable Versions: All. Current is 3.0.0
+Fixed Version: N/A
 
-Sure, I read up on this a while ago, but wasn't sure if it was
-catching on.  Thanks for the update.
+Vulnerability Details:
 
+Wp Source Control plugin for WordPress contains a flaw that allows traversing
+outside of a restricted path. The issue is due to the downloadfiles/download.php
+script not properly sanitizing user input, specifically path traversal style
+attacks (e.g. '../'). With a specially crafted request, a remote attacker can
+gain access to arbitrary files, which can be read by web server process.
 
-> You're ignoring the attack vectors against DNSSEC.
+Root cause:
 
-Yes, true, but this is no different than the current situation with
-TLS.  Why bother subverting DNSSEC in order to remove HSTS-like
-controls, and then downgrade from HTTPS->HTTP in order to get at the
-traffic, when you can just get at the TLS traffic directly by
-subverting that PKI?
+Unsanitized user input to file_get_contents() function.
 
-In order to address the nation-state scenario, I think we need the
-ability to apply multiple signatures to the same server key.  If a CA
-in Israel and a CA in Iran both signed the same key, what are the
-chances of collusion?  One way to achieve multiple signatures would be
-to leverage DNSSEC and stuff fingerprints in signed DNS records,
-leveraging two separate PKIs for the same TLS keys.  I'd be interested
-to know if you know of any attempts to do this already.
+Proof-of-concept:
 
-cheers,
-tim
+/wp-content/plugins/wp-source-control/downloadfiles/download.php?path=../../../../wp-config.php
+
+Notes:
+
+Vendor contact details unknown.
+
+This vulnerability can be used to get WordPress database address, username and
+password, which can be used in certain environments to elevate privileges and
+execute malicious PHP code.
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
