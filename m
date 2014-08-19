@@ -1,20 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/4
-Message-ID: <20140310164036.GJ18088@dhcp-25-225.brq.redhat.com>
-Date: Mon, 10 Mar 2014 17:40:36 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0131 -- kernel: net: use-after-free during segmentation with zerocopy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/1
+Message-Id: <B9EF2AC5-DED5-4758-AEFB-FFC880D264F6@apache.org>
+Date: Tue, 19 Aug 2014 10:06:08 +0200
+From: Jacopo Cappellato <jacopoc@...che.org>
+To: "user@...iz.apache.org ML" <user@...iz.apache.org>, dev@...iz.apache.org, security Team <security@...che.org>, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, gregory draperi <gregory.draperi@...il.com>
+Subject: [CVE-2014-0232] Apache OFBiz Cross-site scripting (XSS) vulnerability
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way segmentation was performed on skbs
-originated from vhost-net when zerocopy feature was enabled.
+CVE-2014-0232: Apache OFBiz Cross-site scripting (XSS) vulnerability
 
-This flaw could be potentially used to leak kernel memory.
+Severity: Important
 
-Upstream patch submission:
-http://marc.info/?l=linux-netdev&m=139446896921968&w=2
+Vendor:
+The Apache Software Foundation
 
--- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Versions Affected:
+Apache OFBiz 11.04.01 to 11.04.04
+Apache OFBiz 12.04.01 to 11.04.03
+The unsupported Apache OFBiz 09.04.x, 10.04.x versions may be also affected
+
+
+Description:
+Result and error messages returned by some OFBiz services could be a vector for XSS attacks.
+
+Mitigation:
+11.04.x users should upgrade to 11.04.05
+12.04.x users should upgrade to 12.04.04
+
+http://svn.apache.org/r1608698
+
+Credit:
+This issue was discovered by ﻿Gregory Draperi.
+
+References:
+
+http://ofbiz.apache.org/download.html#vulnerabilities
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
