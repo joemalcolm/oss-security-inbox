@@ -1,19 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/13
-Message-Id: <201402121611.s1CGB6We013412@linus.mitre.org>
-Date: Wed, 12 Feb 2014 11:11:06 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/2
+Message-Id: <20140819084601.077F0C502AB@smtptsrv1.mitre.org>
+Date: Tue, 19 Aug 2014 04:46:01 -0400 (EDT)
 From: cve-assign@...re.org
-To: mmcallis@...hat.com
+To: kseifried@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
+Subject: Re: FreeNAS default blank password
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> that's still 4 bytes too many
+> My understanding is default/blank admin credentials now == CVE
 
-Use CVE-2014-1947.
+There isn't a precise rule of this type. For example, there may be
+situations in which the blank credentials can only be entered over a
+trusted interface (for some definition of "trusted" that is consistent
+with the vendor's security policy and otherwise reasonable for the
+product's context).
+
+> So an attacker can easily race the admin to the WebGUI, set a new
+> password
+
+Similarly, "race the admin to the WebGUI" situations don't always
+qualify for CVE IDs. There are many products in which the full
+functionality of install.php is available to the first client who
+visits install.php. A product can have a design constraint that
+installation must not require the person to have any ability to use a
+command line (or other non-browser method) for any part of the initial
+product setup. This design constraint was historically reasonable for
+some types of shared web hosting, for example.
+
+For this FreeNAS case, the blank password seems unreasonable because
+
+  -- the requirement for a reboot implies that the product is not
+     intended for use in constrained scenarios such as shared web
+     hosting
+
+  -- the web interface exposes a root shell. This is quite different
+     from a case where use of install.php has a consequence limited to
+     "the machine ends up with a web application that wasn't supposed
+     to be there, and maybe some disk consumption or other minor
+     resource consumption."
+
+Use CVE-2014-5334.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -23,11 +53,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJS+5y4AAoJEKllVAevmvmsIWEIALFbHQ54/qebyTcMY7e/HwEM
-daQGR0Eo2u9rrP+XzNPHr+MDX7GgG2YVyai6uloZ5d+18o/pEn0WnpIYfHLTT+R5
-U0TOj4drUFaL4so9xAv2UiW4cKHvSG2Ol96a/aeQzyT5pjuocYwiip+X2o4efo8/
-aNycBs1XcZQsZY5rxj4tFRPkk20nUXnMrsx5IU/N11Ph1wCe7YELgCQS24c976BC
-B80noQp168isrz8YLtoOTcFPG80gHrHVEhd8Gl1b8o7uTl0ZCYfxN8rwCHkbWkHq
-YIOp+c0ccqAFEeEFuIKbgcHes22SkkaadwMLFmevj+GNHW/ykbhHTmy23nNh8iY=
-=r8N9
+iQEcBAEBAgAGBQJT8w43AAoJEKllVAevmvms7TMH/3OLAq98z/Vd1WH9/RLD2iPe
+WmHVg1RVCL45cVnbnZ8VGyHxbnJmGv1FsTVSBuKs58/y5NZEUdZvpcGMS6lf3JGm
+8u03oK6eJ9WCPF6v/b++ezr373pJjZhYcpH0IgL37dvItIAx5dZKqmyYgwTbivWG
+1R0sy+4vj+kqZ8c1udDtUEMfEsVuWq1iR//J8CDyLTWjf93WAThZUa2PXJE8RDNK
+vQjGIaruqa89eEap8SPJkdtRSo3mQoykFa6A7fqStsd/76kEA1M45f1Q9g2zavuo
+V2Q7xjJIUPrlWv4J+n6b4rEEJWLeAPconuOSnPHfJpijkfdo1Nyi3dQxWtyu7a4=
+=e9C0
 -----END PGP SIGNATURE-----
