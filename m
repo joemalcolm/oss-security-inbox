@@ -1,27 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/6
-Message-ID: <CALx_OUDJpLzJ+nKSBRXpm2KTNjB4JNpuyB6-EHnEzAMW0E053Q@mail.gmail.com>
-Date: Wed, 8 Oct 2014 19:30:55 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/20/5
+Message-ID: <53F4594D.5020909@gandrade.net>
+Date: Wed, 20 Aug 2014 09:16:13 +0100
+From: Guilherme Andrade <g@...drade.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Enigmail warning
 Content-Type: text/plain; charset=utf-8
 
-> I think you're taking on a too rigid mindset here.
+Reproducible on OS X 10.9.4 with Thunderbird 31 + Enigmail 1.7 as well.
 
-Well, I just honestly don't understand how adding the prefix to
-environment variable fits in the mold of the rule you cite ("When an
-existing construct in a system is widely expected to be used for
-storing data, avoid overloading it for use of storing code"). It
-strikes me as the epitome of overloaded, in-band transmission of code
-alongside with data - pretty close to the menace of HTML + JS, just
-done in a slightly smarter way.
 
-If what Florian has implemented embodies the spirit of the rule we're
-preaching here, I'm all for it, but not sure if most developers would
-interpret it this way. A natural interpretation would be, "don't put
-functions in the environment", which is fine, except that there aren't
-many other places to put them if you really want to implement exports
-in the first place.
+Cheers,
 
-/mz
+On 20/08/14 07:21, securitylists wrote:
+> Hi,
+> 
+> We were able to reproduce the bug by trying to send an encrypted message to a bcc recipient. The message was promptly sent without encryption or confirmation. It is usually not very relevant to use bcc when sending messages encrypted with public keys but it can be chosen by accident and it shouldn't break the encryption like that.
+> 
+> Please let me know if you are able to reproduce this.
+> 
+> The client was Thunderbird 31.0 running on Ubuntu with Enigmail 1.7.
+> 
+> Antti Kurittu
+> Information Security Specialist
+> National Cyber Security Center NCSC-FI 
+> Finnish Communications Regulatory Authority FICORA
+> Itämerenkatu 3 A PL 313, 00181 Helsinki, Finland
+> +358 29 539 0100 
+> http://www.cert.fi/en/ 
+> PGP-fingerprint: 00CC B1BF 86B9 C3D8 3B4B  6A16 C496 0441 42CF CA51
+> 
+> -----Original Message-----
+> From: Nick Boyce [mailto:nick.boyce@...il.com] 
+> Sent: 18. elokuuta 2014 20:00
+> To: oss-security@...ts.openwall.com
+> Subject: Re: [oss-security] Enigmail warning
+> 
+> On 18 August 2014 07:22, Henri Salo <henri@...v.fi> wrote:
+> 
+>> http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/
+>> Quote from thread below:
+>> Enigmail 1.7 is completely broken for my purposes.
+>> Steps to reproduce the problem:
+>>
+>> 1) Write an email in TB.
+>> 2) Ensure "Force encryption" in Enigmail.
+>> 3) Ensure "Force signing" in Enigmail.
+>> 4) Recheck encryption and signing settings... OK.
+>> 5) Send the email.
+>> 6) Look at the received email. OOPS. It is NOT signed
+>>     and NOT encrypted.
+> 
+> Um ... I see from the Enigmail "Announcements" forum [1] that some major changes have been made to the package over the last 24 months:
+> specifically a decision was made to replace older C++ code (with maintainability issues) by new pure Javascript code, thus hopefully achieving platform, GPG and TB version independence
+> 
+> You can see how that sort of upheaval in the codebase might result in horrible problems like this.
+> 
+> [ I switched away from TB to Claws/Kmail some time ago, so this is all news to me, but up till that point the behaviour of TB V3 - 10 and Enigmail 1.0/1 in encrypting my mail was never less than excellent for me. ]
+> 
+> More relevantly, the (primary ?) author specifically asked [2] for testers to step up and test the new Javascript version thoroughly
+> 
+>   "In order to reduce the risk of severe errors in
+>    the release versions, I will regularly ask for help
+>    in testing after I completed such changes."
+> 
+> which leaves me wondering how many stepped up to perform that task. It would be interesting - and maybe alarming - to know.
+> 
+> [1] http://sourceforge.net/p/enigmail/forum/announce/
+> [2] https://www.enigmail.net/list_archive/2012-January/014667.html
+> 
+> Nick
+> --
+> "Bob has a problem requiring secure communication.
+>  He decides to use certificates.
+>  Now Bob has two problems."
+> 
+
+-- 
+Guilherme
+
+https://www.gandrade.net/
+PGP: 0x35CB8191 / 1968 5252 3901 B40F ED8A  D67A 9330 79B1 35CB 8191
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
