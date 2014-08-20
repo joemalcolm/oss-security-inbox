@@ -1,102 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/12/3
-Message-Id: <E1XHBjh-00087j-Aj@xenbits.xen.org>
-Date: Tue, 12 Aug 2014 13:03:33 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 103 (CVE-2014-5148) - Flaw in handling unknown system register access from 64-bit userspace on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/20/4
+Message-Id: <20140820081428.F36B933E001@smtpvbsrv1.mitre.org>
+Date: Wed, 20 Aug 2014 04:14:28 -0400 (EDT)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: WordPress plugin wp-source-control remote path traversal file access
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-              Xen Security Advisory CVE-2014-5148 / XSA-103
-                                version 3
+> downloadfiles/download.php?path=../../../../wp-config.php
 
- Flaw in handling unknown system register access from 64-bit userspace on ARM
+Use CVE-2014-5368.
 
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When handling an unknown system register access from 64-bit userspace
-Xen would incorrectly return to the second instruction of the trap
-handler for faults in kernel space rather than the first instruction
-of the trap handler for faults in 64-bit userspace.
-
-Any user in a guest which is running a 64-bit kernel who is able to
-spawn a 64-bit process can cause a trap to the kernel to be taken at
-an unexpected (but not user controlled) exception address.
-
-Known versions of Linux in the default configuration will Oops and kill the
-offending process, and therefore avoid this vulnerability. However local
-configuration may turn such an Oops into a kernel panic, and therefore a
-guest denial of service.
-
-IMPACT
-======
-
-Depending on the guest kernel implementation, kernel crash (guest DoS)
-or privilege elevation to that of the guest kernel cannot be ruled
-out.
-
-This issue does not enable an attack on the host.
-
-VULNERABLE SYSTEMS
-==================
-
-64-bit ARM systems may be vulnerable, depending on the guest kernel.
-
-All versions of Linux released by Linux upstream to date avoid this
-vulnerability.  Systems based on modified versions of Linux may be
-vulnerable.
-
-32-bit ARM systems, and X86 systems, are not vulnerable.
-
-MITIGATION
-==========
-
-There is no known mitigation for this issue.
-
-CREDITS
-=======
-
-This issue was reported as a bug by Riku Voipio, discovered via
-Linaro's LAVA testing and was diagnosed as a security issue by Ian
-Campbell.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-The patch for XSA-103 (specifically, xsa102-*-02.patch) must be
-applied first.
-
-xsa103-unstable.patch        xen-unstable
-xsa103-4.4.patch             Xen 4.4.x
-
-$ sha256sum xsa103*.patch
-fee2e0be91d08aa28ba44b616edd99a1bfcdec419966c3f9e843a842d649e4ea  xsa103-4.4.patch
-838d059618d31b272ec10ac8cbb6613a68b634c98418aff2a33cd514ed06b55a  xsa103-unstable.patch
-$
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJT6hBtAAoJEIP+FMlX6CvZ6+sIAMiAJEzJl2pWk61kr3QT1llk
-lYYEEX94QxxJIzg62o4RnMzYZXsmOT6y2YP62nEziRbBaFcgmB0bNrx+Qc52+QWk
-iea2lYAJUGmEdwnY6x2raLF6Wd2alCjZxXF1UzSJJ6Vu8WiTNFXHI+mKlc9JY4bN
-aStmfgvN3j6Nmjav8k9ar/8QVfc4Oe0xOlzwFt5DlNHewExWN1y+HtPnrBTkGu5K
-ckgjvbxs4/SF4No59XqY0XxdpEDIEXo46keJ07DG6/nVzIl83ZtpBhxiNX8xfz91
-ZYzu6feGbgtvy1+utxo/l3qBAn7TrDXn58mLTgKTM2dD3D4Crv9tKLuOXF1xVLM=
-=hjBc
+iQEcBAEBAgAGBQJT9FhvAAoJEKllVAevmvmsIs8IALADGGS6A9WyVihZvNDf/x41
+99l5eT+p0HQ5KryOnHPfYWsl1JR9658y7p9kHOWrbrAzUq/hYp7nNPKwIXxQWdfI
+0Z6z1pJ3CgU/23j9TPT88Dlw4zBLBsA+Kas1iJJHJj/J1eJtx9PQQLrZpo1OhfhS
+kk6zS/UdbnscyItEiUwZQ6XD8Q3FJZi9OqNMsq4rerdqHdI/b2PAjiTvk8isI8Zp
+k6U1kknZUmM7fjqqSqQU5ve/rNuKkJP3NHBDUmf6U3AgANFw2NujhGlJGITKddYl
+zcvtWcDtdNrrqw6JrEoF92KeKXxi6aPOJ7uPZYTEH7hMo4CqKEuXH7gB0f5Vmwg=
+=LaED
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa103-4.4.patch" of type "application/octet-stream" (1078 bytes)
-
-Download attachment "xsa103-unstable.patch" of type "application/octet-stream" (1082 bytes)
