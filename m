@@ -1,48 +1,10 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/2
-Message-ID: <52C61B94.80706@redhat.com>
-Date: Thu, 02 Jan 2014 19:08:20 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/5
+Message-ID: <etPan.53f51ace.6b8b4567.a293@cro-mbp.local>
+Date: Wed, 20 Aug 2014 16:01:50 -0600
+From: "C. R. Oldham" <cr@...tstack.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: radare2 endless loop
+Subject: SaltStack 2014.1.10 released
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 01/02/2014 04:02 PM, Simon . wrote:
-> Hi,
-> 
-> just got mailed this simple poc by gitclown!
-> 
-> http://sprunge.us/IhNT
-> 
-> isse #485 fixed in teh git by pancake
-> 
-> 
-> Greetings Simon .
-
-Not clear how this would get exploited (you try to reverse a binary)
-in any meaningful sense (you get bored and kill it). Can you provide
-an exploitation scenario?
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJSxhuTAAoJEBYNRVNeJnmT8/MP/jLOLzSmDpjDsR7Dt5QWFU2l
-cBPxMYd8TMLRjCVWjlItEsJgJFZ8coirzFl6QUWWKuTHdAsKZpPnHeHAGRrBRVBo
-9iEQjAw3MufZTNZLqY91Fn3fDWSQ1qCSOuPOv6V9BfL6+uCeBROfpl2K3JtMfO6u
-uXQ1o5swuJuOHm+ImX0wnt1dGM4chgrehZ+39NqU2dxiPFwIfYrMhojU385+8kBS
-vG5xyzcadsFVfxQFotQLpVaB3/BIDKuA9jWLZcHTEVa5pOMqLcMvYsKJ/Y784fRy
-//NI2Qd8F7k5oJtOedTn/KTTmZ/UXud+sASK6zOk9xM/10bHUhbIKhELyyJ/viWT
-eK9UmkGZ+MzbbqH99I/YNq4diE9yjLvbUPyoNDyfDYtlBwyOoM5m4ljPnpYDkHGg
-OHcSNXrOYB2E9pfvkDywZOS4lTHwHABMZrEYTqyuMZZTjkCMMgw0txelOcmp48sV
-3DhlieZQPvtDlvkrHd/qHTpmnglPjJiCkp1lfTj6G51135lF1tzAESRBulDdUsj6
-sibCVzy02X2dpRvonQj903HTctS8OzcEYoc9ScgRGFSoIpjE55uzCPKHhuG9pYx7
-ao+VNBBvQ7OpHIfbkQbtwlEUD/nODP4ZdRbmpfqes4p0WoIlV8olEeBclhQbg0qO
-Ra0iIkb7lJOdchhwQHfb
-=wIky
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (719 bytes)
