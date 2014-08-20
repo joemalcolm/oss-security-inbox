@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/3
-Message-ID: <CAH8yC8=1DU=jiA=LRT2y3uUJ+nxuJbOQ9f2DWzqgsjOB6FCD1A@mail.gmail.com>
-Date: Thu, 5 Jun 2014 22:51:39 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: Hector Marco <hecmargi@....es>
-Cc: oss-security@...ts.openwall.com,  Full Disclosure List <fulldisclosure@...lists.org>, bugs@...uritytracker.com,  BugTraq <bugtraq@...urityfocus.com>
-Subject: Re: [FD] Bug in bash <= 4.3 [security feature bypassed]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/20/6
+Message-ID: <324234793.19597612.1408552022569.JavaMail.zimbra@redhat.com>
+Date: Wed, 20 Aug 2014 12:27:02 -0400 (EDT)
+From: Arun Babu Neelicattu <abn@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Multiple issues in com.ning:async-http-client
 Content-Type: text/plain; charset=utf-8
 
-> 2014-06-03 16:16 GMT+02:00 Hector Marco <hecmargi@....es>:
->
-> Hi everyone,
->
-> Recently we discovered a bug in bash. After some time after reporting
-> it to bash developers, it has not been fixed.
->
-> We think that this is a security issue because in some circumstances
-> the bash security feature could be bypassed allowing the bash to be a
-> valid target shell in an attack.
->
-> We strongly recommend to patch your bash code.
->
-> Why don't fix this bug by simple adding mandatory "if" clause ?
-> Any comments about this issue are welcomed.
->
->
-> Details at:
-> http://hmarco.org/bugs/bash_4.3-setuid-bug.html
-It looks like Rage Against The Cage has been rediscovered. Also known
-as Android ADB Setuid bug.
+Hi,
 
-Jeff
+We noticed these issues were filed upstream and were never assigned 
+CVE(s). Can we please get CVE(s) assigned to the following issues 
+please?
+
+1. async-http-client: SSL/TLS certificate verification disabled
+https://github.com/AsyncHttpClient/async-http-client/issues/352
+
+2. async-http-client: No SSL HostName verification
+https://github.com/AsyncHttpClient/async-http-client/issues/197
+
+Cheers,
+Arun
+-- 
+Arun Neelicattu / Red Hat Product Security
+PGP: 0xC244393B 5229 F596 474F 00A1 E416  CF8B 36F5 5054 C244 393B
