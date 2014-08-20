@@ -1,43 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/9
-Message-ID: <20140709095257.754de36f@redhat.com>
-Date: Wed, 9 Jul 2014 09:52:57 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/20/2
+Message-ID: <53F4217A.203@redhat.com>
+Date: Wed, 20 Aug 2014 14:18:02 +1000
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: FreeBSD Security Advisory FreeBSD-SA-14:13.pam
+Subject: CVE-2014-3596 - Apache Axis 1 vulnerable to MITM attack
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 4 Jun 2014 09:42:31 +0400 Solar Designer wrote:
+Hi All
 
-> On Wed, Jun 04, 2014 at 04:51:56AM +0000, FreeBSD Security Advisories
-> wrote:
-> > FreeBSD-SA-14:13.pam          Security Advisory
-> 
-> FreeBSD had reported this OpenPAM issue to the distros list because of
-> more likely than average relevance to other distros, and the FreeBSD
-> advisory is posted to oss-security for the same reason as well as to
-> meet distros list policy.
-> 
-> I mention this so that people are not confused why this one advisory
-> is posted in here, even though we had decided that vendor-specific
-> advisories are normally not to be posted to oss-security.  There's no
-> change in that preference, but there may be exceptions to it like this
-> time (for good reasons).
+I noticed that the fix for CVE-2012-5784 was incomplete. The code added 
+to check that the server hostname matches the domain name in the 
+subject's CN field was flawed. This can be exploited by a 
+Man-in-the-middle (MITM) attack where the attacker can spoof a valid 
+certificate using a specially crafted subject.
 
-About a month has passed since, at it seems this wasn't a one-off post.
-As far as I can see, all FreeBSD security advisories released since
-were posted here as well:
+Note that Axis 1 is EOL upstream, and the incomplete patch for 
+CVE-2012-5784 was never merged upstream. It was, however, shipped by 
+various vendors, including Debian and Red Hat. I do not believe Axis 2 
+is affected.
 
-http://www.freebsd.org/security/advisories.html
+The incomplete patch:
 
-http://www.openwall.com/lists/oss-security/2014/06/05/20
-http://www.openwall.com/lists/oss-security/2014/06/24/17
-http://www.openwall.com/lists/oss-security/2014/06/24/18
-http://www.openwall.com/lists/oss-security/2014/07/08/17
+https://issues.apache.org/jira/secure/attachment/12560257/CVE-2012-5784-2.patch
 
-It seems we need someone form FreeBSD team to change their system to
-avoid posting all their errata here, or force moderation for all mails
-from security-advisories@...ebsd.org.
+Is attached to this issue:
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+https://issues.apache.org/jira/browse/AXIS-2883
+
+The flaw exists in the getCN(String) method. An attacker could craft a 
+subject that includes a CN in a field other than the CN, and this CN 
+would be used when validating the hostname.
+
+Since Axis 1 is EOL upstream, I have assigned CVE-2014-3596 to this 
+issue from the Red Hat CNA. I have now made this issue public:
+
+https://access.redhat.com/security/cve/CVE-2014-3596
+
+An upstream bug, along with a proposed patch, is available here:
+
+https://issues.apache.org/jira/browse/AXIS-2905
+
+Thanks
+--
+David Jorm / Red Hat Product Security
