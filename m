@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/20
-Message-ID: <542F2082.6020502@redhat.com>
-Date: Fri, 03 Oct 2014 16:17:38 -0600
-From: Eric Blake <eblake@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/9
+Message-Id: <5B402C50-41A3-48F9-AB0A-2ED0CA934C3C@saltstack.com>
+Date: Thu, 21 Aug 2014 10:44:55 -0600
+From: "C. R. Oldham" <cr@...tstack.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshock timeline
+Subject: Revised: Salt 2014.1.10 released
 Content-Type: text/plain; charset=utf-8
 
-On 10/03/2014 04:10 PM, Eric Blake wrote:
-> On 10/03/2014 01:28 PM, David A. Wheeler wrote:
->> FYI, I've created a timeline of major Shellshock events here:
->>
->>   http://www.dwheeler.com/essays/shellshock.html#timeline
->>
->> If anyone has corrections or key additions, let me know.
+Greetings,
 
-In section 1.2, you mention that Florian suggested suffix additions; but
-he was not alone in the suggestion; I also independently came up with
-the idea (primarily because patch 25 included a change to a comment line
-that mentioned the past attempt to use a suffix):
+We are pleased to announce the 2014.1.10 release of Salt. The release notes can be found here: 
 
-https://lists.gnu.org/archive/html/bug-bash/2014-09/msg00094.html 24 Sep
-2014 15:38:31 -0600
+http://docs.saltstack.com/en/latest/topics/releases/2014.1.10.html
 
-My arguments at the time were based more on namespace pollution
-considerations (what happens when a function name and variable name
-collide), and it wasn't until later that I learned that the oss-security
-list was discussing ramifications of the fact that ANY parser bug is a
-major hole if untrusted user data is unconditionally presented to the
-parser, without regards to namespace pollution.
+The sources are available on pypi:
+
+https://pypi.python.org/pypi/salt/2014.1.10
+
+Salt 2014.1.10 fixes security issues documented by CVE-2014-3563: Insecure tmp-file creation in seed.py, salt-ssh, and salt-cloud. Upgrading is recommended.
+
+Special thanks to Kurt Seifried at Red Hat for investigating these issues and bringing them to our attention (and also letting me know that my first post got mangled somehow).
 
 -- 
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
+C. R. Oldham, Platform Engineer, SaltStack, Inc.
+801-564-4673 / cr@...tstack.com / https://github.com/cro
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (456 bytes)
