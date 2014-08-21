@@ -1,28 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/8
-Message-ID: <20141211182323.1b5113fb@pc>
-Date: Thu, 11 Dec 2014 18:23:23 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/2
+Message-ID: <53F592AA.6090503@redhat.com>
+Date: Thu, 21 Aug 2014 16:33:14 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PIE bypass using VDSO ASLR weakness
+Subject: Re: CVE request: possible overflow in vararg functions
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 11 Dec 2014 11:15:44 +0530
-Reno Robert <renorobert@...il.com> wrote:
+Additionally, Fedora has 5.2.2, but it does not have the fix, so even if 
+shipping 5.2.2 it may be worth checking...
 
-> Given that ASLR is not effective in VDSO and comes down to 11 quality
-> bits as per pax test making return-to-vdso feasible even for PIE
-> binary, whether this should be considered as a bug and CVE be
-> assigned?
+On 08/21/2014 04:31 PM, Murray McAllister wrote:
+> Good morning,
+>
+> An overflow was reported to have been fixed in Lua 5.2.2. A reproducer
+> and patch are available from:
+>
+> http://www.lua.org/bugs.html#5.2.2-1
+>
+> The reproducer affects older versions too (such as 5.1.4). One way an
+> attacker could trigger this issue is if they can control parameters to a
+> loadstring call (an eval in Lua, http://en.wikipedia.org/wiki/Eval#Lua).
+>
+> Could a CVE please be assigned if one has not been already?
+>
+> Some notes:
+>
+> valgrind shows this crashes with invalid writes, but I am not sure if
+> this is really a stack or heap overflow but something else. In
+> luaD_precall():
+>
+> 330       for (; n < p->numparams; n++)
+> 331         setnilvalue(L->top++);  /* complete missing arguments */
+>
+> This goes through 49 times with the reproducer (?possibly lifting what
+> Lua thinks is the stack into the heap area?).
+>
+> After that finishes:
+>
+> 333       ci = next_ci(L);
+>
+> Results in a call to luaE_extendCI(), where the issue is triggered while
+> attempting to call luaM_new() (I did not get further than this yet).
+>
+> Thanks,
+>
+> --
+> Murray McAllister / Red Hat Product Security
+>
+> https://bugzilla.redhat.com/show_bug.cgi?id=1132304
 
-I opened a bug in the kernel's bugtracker:
-https://bugzilla.kernel.org/show_bug.cgi?id=89591
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
