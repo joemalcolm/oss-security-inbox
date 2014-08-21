@@ -1,36 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/16/7
-Message-Id: <20140816075347.40DB9C5007F@smtptsrv1.mitre.org>
-Date: Sat, 16 Aug 2014 03:53:47 -0400 (EDT)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for accountsservice local encrypted password disclosure flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/11
+Message-ID: <53F62638.4060402@sumptuouscapital.com>
+Date: Thu, 21 Aug 2014 19:02:48 +0200
+From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: SaltStack 2014.1.10 released
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA512
 
-> can leak encrypted passwords locally (being that they are briefly visible via ps)
-> https://bugs.freedesktop.org/show_bug.cgi?id=55000
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=757912
-> https://bugzilla.redhat.com/show_bug.cgi?id=1130538
+On 08/21/2014 07:00 PM, Kurt Seifried wrote:
+> Ok several people replied privately now, Thunderbird definitely
+> has issues with this, and one person reports apple mail can't see
+> it either. Perhaps we found a new way to send stealthy emails? ;)
 
-Use CVE-2012-6655.
+Not sure if it is new - from a quick glance it looks like the email in
+question is missing a MIME boundary before the body.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+- ----------------------------
+Kristian Fiskerstrand
+Blog: http://blog.sumptuouscapital.com
+Twitter: @krifisk
+- ----------------------------
+Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+- ----------------------------
+"We can only see a short distance ahead, but we can see plenty there
+that needs to be done."
+(Alan Turing)
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJT7w2kAAoJEKllVAevmvms2zAH/j/EKgu2A8+T/YPQ3Zq7KG2R
-o+cnL1xvYtXcR28G4JocBhFPs1E+dUSjmNdJmyV8BH/tplxVy597D78/kke7P4CB
-Ogq/54KJZ0KRglvc8ZFL3tLfu8enMuA3PDOpl9LZNNoTsZR30MIz/h+uoxQ708iW
-d/xpPcIS9iwDr3TxAN/vywOv/XZWWVuUVEyRGozG7fV8ODyWcqaqD5cAi9UbkyL6
-z9uCBqyoEGYAH9jPq5t6RrtgJfxaQEG2ERHoFPYJJcrIQVO89kCSOg756faCuWFw
-LymGNPf0o1quxv7XzrD/Sdz2IRFXUvOchzRryrRE2jQDHZaGmHu41iAfj9TAfiY=
-=7BGM
+iQIcBAEBCgAGBQJT9iY2AAoJEPw7F94F4TaghdAP/i0OpUdd69xx8YT+MmQyIRry
+q6jgPeKh8fTHekTX97WauJ95xVSR6/sIwqJnfUoL6UaeuJxVhqxrUgAGwd2KIA2c
+zb5dNERjaITmt6hELcypgxTjAM9GFK8ReTy9xNXoGJ/P6uQM3wBclBq9dusIMsV5
+TCkmdF8I+kO410OTKqLas6cYLiM0ezP8qb3BLegAeB43PebLmj44AbTPmeQwzAYK
+H2+c2Mordhx9IcUt0tBlYnoUCL/j07M+qMpUGe93GayRO4fuTcmNziBp38Erv3/P
+J+UxzaVkXmvDcAENVkkkXixpU3NLrsVJm7JYdXFSTu7Of4NoS7xMnyIt2DJ+qkF+
+vg4XEW4roZmJyDkSXVV+SnzV5GjI9+zz2Nwx85CdSI9yiEqO5VlNConT6dIHrE88
+YeJESzyY6YNxCYf6zzhStdw5Azv0xqlvzaKgeSUTESrFdcIndM6zXsK1IdbbnWUV
+act2o/tU5lqlAjGaXB6PPHRNOHU65MYyRVpUplmRf6BC8PMUfAPEqkWNr4VA82BX
+IfGKI7tCV+O5VvzfywPiMToEov5lCr4PV7/RBrJUNr4pCMAOJkAWYcQ2rcdLxXsN
+gZTKJXK3eLytlar7muGmrTwQx41kEBqlm0ZK0XKtgEzmo0CkoQzqZ6+TL7MY/KU9
+1F5CoK95WV4XJzGxvViU
+=kcAw
 -----END PGP SIGNATURE-----
