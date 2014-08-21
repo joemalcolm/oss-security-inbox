@@ -1,31 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/18
-Message-ID: <5411F9A0.1060707@oracle.com>
-Date: Thu, 11 Sep 2014 12:36:00 -0700
-From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/6
+Message-ID: <53F5FD90.7070107@enovance.com>
+Date: Thu, 21 Aug 2014 10:09:20 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+Subject: [OSSA 2014-028] Glance store DoS through disk space exhaustion (CVE-2014-5356)
 Content-Type: text/plain; charset=utf-8
 
-On 9/11/2014 1:28 AM, Sven Kieske wrote:
-> 
-> 
-> On 10/09/14 18:00, Salvatore Bonaccorso wrote:
->> Hi
->>
->> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
->> the following issue, which could be exploited by a local user to run
->> arbitrary code in context of the mysqld server.
-> 
-> While I'm investigating this:
-> Does someone happen to know in which version this vuln got introduced?
-> 
+OpenStack Security Advisory: 2014-028
+CVE: CVE-2014-5356
+Date: August 21, 2014
+Title: Glance store DoS through disk space exhaustion
+Reporter: Thomas Leaman (HP), Stuart McLaren (HP)
+Products: Glance
+Versions: up to 2013.2.3 and 2014.1 versions up to 2014.1.2
 
-A complete list of all affected-supported MySQL releases will be
-published via Oracle's quarterly Critical Patch Update(CPU) advisory.
-More information about our CPU program is available at -
-http://www.oracle.com/technetwork/topics/security/alerts-086861.html
+Description:
+Thomas Leaman and Stuart McLaren from Hewlett Packard reported a
+vulnerability in Glance. By uploading a large enough image to a Glance
+store, an authenticated user may fill the store space because the
+image_size_cap configuration option is not honored. This may prevent
+further image upload and/or cause service disruption. Note that the
+import method is not affected. All Glance setups using API v2 are
+affected (unless you use a policy to restrict/disable image upload).
+
+Juno (development branch) fix:
+https://review.openstack.org/91764
+
+Icehouse fix:
+https://review.openstack.org/115280
+
+Havana fix:
+https://review.openstack.org/115289
+
+Notes:
+This fix will be included in the Juno-3 development milestone and in
+future 2013.2.4 and 2014.1.3 releases.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-5356
+https://launchpad.net/bugs/1315321
+
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
-Thanks,
--Ritwik
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
