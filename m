@@ -1,100 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/22
-Message-ID: <bacd566d-55ad-483f-8e4e-9b09497f302d@email.android.com>
-Date: Wed, 01 Oct 2014 16:36:32 -0400
-From: Colin Mahns <goatman93@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/4
+Message-ID: <53F5B0FC.9090708@redhat.com>
+Date: Thu, 21 Aug 2014 10:42:36 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Subject: Re: CVE request: possible overflow in vararg functions
 Content-Type: text/plain; charset=utf-8
 
-I'd love it if more companies dedicated back money or time to FLOSS projects they benefit from, but it might be a hard sell. Not every company has the same mentality that they need to give back to stay successful. Others might think "giving back" entails to things they might receive tax breaks on too, rather than something that keeps them from wasting time and money in the future...
+On 08/21/2014 08:31 AM, Murray McAllister wrote:
+> Good morning,
+>
+> An overflow was reported to have been fixed in Lua 5.2.2. A reproducer
+> and patch are available from:
+>
+> http://www.lua.org/bugs.html#5.2.2-1
+>
+> The reproducer affects older versions too (such as 5.1.4). One way an
+> attacker could trigger this issue is if they can control parameters to a
+> loadstring call (an eval in Lua, http://en.wikipedia.org/wiki/Eval#Lua).
 
-On October 1, 2014 3:53:52 PM EDT, Loganaden Velvindron <loganaden@...il.com> wrote:
->On Wed, Oct 1, 2014 at 8:14 PM, Greg KH <greg@...ah.com> wrote:
->> On Wed, Oct 01, 2014 at 12:08:15PM -0400, Jason Cooper wrote:
->>> On Wed, Oct 01, 2014 at 08:55:35AM -0700, Greg KH wrote:
->>> > On Wed, Oct 01, 2014 at 07:15:56AM -0400, Jason Cooper wrote:
->>> > > On Wed, Oct 01, 2014 at 01:08:09PM +0200, Hanno Böck wrote:
->>> > > > Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
->>> > > > schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
->>> > > >
->>> > > > > Finally: *PLEASE* let me know if you have any good ideas on
->how to
->>> > > > > find vulnerabilities like this ahead-of-time. My article
->"How to
->>> > > > > Prevent the Next
->>> > > > > Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html)
->lists a
->>> > > > > number of ways that Heartbleed-like vulnerabilities could
->have been
->>> > > > > detected ahead-of-time, in ways that are general enough to
->be
->>> > > > > useful.  I'd like to do the same with Shellshock, so we can
->quickly
->>> > > > > eliminate a whole class of problems.
->>> > > >
->>> > > > The "class of problems" here is imho that we have a bunch of
->tools that
->>> > > > get rare attention from anyone, are run by few volunteers, but
->they're
->>> > > > an essential part in running the Internet.
->>> > > >
->>> > > > Just think about busybox, curl, wget, coreutils, gettext,
->gzip, ... - a
->>> > > > vuln in any of these could have severe consequences.
->>> > > >
->>> > > > Maybe the topic here should be: "How can we get the (whitehat)
->IT
->>> > > > seucrity community to have a deeper look at neglected but
->important
->>> > > > opensource projects."
->>> > >
->>> > > The LF has the Core Infrastructure Initiative:
->>> > >
->>> > >  
->http://www.linuxfoundation.org/programs/core-infrastructure-initiative/faq
->>> >
->>> > Yes, that's exactly what that group is doing, and they have a huge
->list
->>> > of these types of projects that they are looking into funding to
->help
->>> > prevent this type of thing from happening again.  I'll go add bash
->to
->>> > the list there as I don't think it is currently on it at the
->moment.
->>>
->>> Could we also update the FAQ to include "How to recommend a
->project?"?
->>> A few days ago I tried to recommend bash.  I dug around, and finally
->>> just sent an email to Ted.  Which I don't think is the correct
->answer
->>> ;-)
->>
->> It isn't, but Ted is a good contact for it :)
->>
->> Fixing the FAQ is on the list of things to do that was discussed at
->the
->> last meeting, hopefully it will be done soon.
->>
->> thanks,
->>
->> greg k-h
+loadstring only compiles the argument, it does not actually run any 
+code.  So it's not really an eval as such.  As far as I can tell, the 
+issue only arises if the code is executed.
+
+loadstring accepts precompiled bytecode and does not perform sufficient 
+verification on it.  It is possible to recognize a bytecode argument 
+string filter that out, but if you do not that, attacks against the 
+bytecode interpreter are possible, enabling malicious code to break out 
+of the sandbox.  But it is not entirely clear if we can assume that a 
+trust boundary is crossed.
+
+However, this modified reproducer crashes as well, but only if you do 
+not supply enough arguments (on the command line or to the surrounding 
+function which fills in the ... argument list):
+
+function f(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10,
+            p11, p12, p13, p14, p15, p16, p17, p18, p19, p20,
+            p21, p22, p23, p24, p25, p26, p27, p28, p29, p30,
+            p31, p32, p33, p34, p35, p36, p37, p38, p39, p40,
+            p41, p42, p43, p44, p45, p46, p48, p49, p50, ...)
+   local a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14
+end
+f(...)
+
+This means we cannot rule out that existing code in the Lua process 
+exposes the vulnerability because a programmer might use this style to 
+extract elements from an array whose contents (and length) is determined 
+by an untrusted source.
+
+> valgrind shows this crashes with invalid writes, but I am not sure if
+> this is really a stack or heap overflow but something else. In
+> luaD_precall():
 >
->I believe that small companies can benefit from committing engineering
->efforts to audit Open Source software that they all rely heavily upon.
+> 330       for (; n < p->numparams; n++)
+> 331         setnilvalue(L->top++);  /* complete missing arguments */
 >
->I keep arguing and try to talk to managers that they need to become
->more active in Open Source, as they would also benefit in terms of
->less downtime, and better vulnerability management. Having a good Open
->Source strategy helps IT managers have better control of their IT
->infrastructure. On top of training IT staff, maybe it's a good time to
->introduce the idea of "Strong Open Source rating", and committing 10%
->of their IT employees working hours to improve relevant Open Source
->projects.
->
->-- 
->This message is strictly personal and the opinions expressed do not
->represent those of my employers, either past or present.
+> This goes through 49 times with the reproducer (?possibly lifting what
+> Lua thinks is the stack into the heap area?).
+
+The Lua-level stack is allocated on the heap, so from a vulnerability 
+viewpoint, this is a heap overflow.
 
 -- 
-Sent from my Android device with K-9 Mail. Please excuse my brevity.
+Florian Weimer / Red Hat Product Security
