@@ -1,36 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/11
-Message-ID: <Pine.LNX.4.64.1412051035320.25424@beijing.mitre.org>
-Date: Fri, 5 Dec 2014 10:36:16 -0500 (EST)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/13
+Message-ID: <20140821171305.GB24894@gremlin.ru>
+Date: Thu, 21 Aug 2014 21:13:05 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-cc: cve-assign@...re.org
-Subject: Re: CVE Request: DB credentials disclosure in MantisBT's unattended upgrade script
+Subject: Re: SaltStack 2014.1.10 released
 Content-Type: text/plain; charset=utf-8
 
+On 21-Aug-2014 20:44:19 +0400, I wrote:
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+ >> Did anyone else have this message fail to render in their email
+ >> client (I get a blank panel with the .sig attachment at the
+ >> bottom using Thunderbird/Enigmail/Fedora).
+ > I use mutt, and it tells me everything is ok:
+ > http://pics.rsh.ru/img/kurt_signature_in_mutt_bgxvgqe3.png
 
->The unattended upgrade script retrieved DB connection settings from POST
->parameters, allowing an attacker to get the script to connect to their host
->with the current DB config credentials.
+I had to read that more carefully (to be honest, messages from Kurt
+were signed inline for a time)... Yes, the message from C. R. Oldham
+was malformed: http://pics.rsh.ru/img/cr_bad_message_sz46z1tq.png
 
-Use CVE-2014-9279.
+Here's raw message data, including significant headers:
 
-- ---
+ >>> X-Mailer: Airmail Beta (250)
+ >>> MIME-Version: 1.0
+ >>> Content-Type: multipart/signed;
+ >>>  boundary="78CE6B75-3942-4514-B1F6-81C3B83FC90E";
+ >>>  protocol="application/pgp-signature"; micalg=pgp-sha512
+ >>> Content-Disposition: inline
+ >>> Subject: [oss-security] SaltStack 2014.1.10 released
+ >>> Status: RO
+ >>> Content-Length: 1416
+ >>> Lines: 39
+ >>> 
+ >>> 
+ >>> http://docs.saltstack.com/en/latest/topics/releases/2014.1.10.html =20
+ >>> 
+ >>> The sources are available on pypi: =20
+ >>> 
+ >>> https://pypi.python.org/pypi/salt/2014.1.10 =20
+ >>> 
+ >>> Salt 2014.1.10 fixes security issues documented by CVE-2014-3563: =22Inse=
+ >>> cure tmp-file creation in seed.py, salt-ssh, and salt-cloud.=22 Upgrading=
+ >>>  is recommended. =20
+ >>> 
+ >>> 
+ >>> -- =20
+ >>> C. R. Oldham, Platform Engineer, SaltStack
+ >>> cr=40saltstack.com
+ >>> 
+ >>> 
+ >>> --78CE6B75-3942-4514-B1F6-81C3B83FC90E
+ >>> Content-Transfer-Encoding: 7bit
+ >>> Content-Disposition: attachment; filename=signature.asc
+ >>> Content-Type: application/pgp-signature; name=signature.asc
+ >>> Content-Description: Message signed with OpenPGP using AMPGpg
+ >>> 
+ >>> -----BEGIN PGP SIGNATURE-----
+ >>> Comment: GPGTools - https://gpgtools.org
+ >>> 
+...
+ >>> -----END PGP SIGNATURE-----
+ >>> 
+ >>> --78CE6B75-3942-4514-B1F6-81C3B83FC90E--
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEVAwUBVIHQUallVAevmvmsAQJ4GggAuFASSLrELbRB9MldfS46aXSpS/1BkveR
-dmIbdhwCj+hy9NCaUNUyY6G6bXkk7o+1qDkrTuJyxY/DU7HVlIfdpyOqA9ormShk
-wlOZ69mvtnzx922PRMVME3yl5UAGNHOgXtsx4688e/gX9SPETTaGV1+EJF5qHpjX
-rfCEFJ0HJMm6bkneMoSTBgQ9l0rLr6vAvL045T+AhHKiWm+5F0gHh865lymeDn34
-KIublRlsYus5cbYEQaLyn6rIiy2FsxuUz/OeLuUX7Tu2cDq3qNgD1l2ZTajiVuix
-5afkenNTbm7vdTVcVdYxhv2QM9Jq+lPOoln8Kq1jiyUmDMnEnI0pWA==
-=CH0f
------END PGP SIGNATURE-----
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+
+Content of type "application/pgp-signature" skipped
