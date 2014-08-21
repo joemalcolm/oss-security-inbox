@@ -1,82 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/6
-Message-ID: <20141208151353.GB29797@mail.corp.redhat.com>
-Date: Mon, 8 Dec 2014 16:13:53 +0100
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: MantisBT 1.2.18 Released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/7
+Message-ID: <53F62036.1030707@redhat.com>
+Date: Thu, 21 Aug 2014 10:37:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, "C. R. Oldham" <cr@...tstack.com>
+Subject: Re: SaltStack 2014.1.10 released
 Content-Type: text/plain; charset=utf-8
 
-Hi Damien,
+Did anyone else have this message fail to render in their email client
+(I get a blank panel with the .sig attachment at the bottom using
+Thunderbird/Enigmail/Fedora). The original content:
 
-Thanks for posting this announcement.
-Since this is public now - can we please have more information about
-#17243/CVE-2014-8553? I can't find this CVE assignment on oss-sec, and
-also the corresponding bug is marked private.
+================
+http://docs.saltstack.com/en/latest/topics/releases/2014.1.10.html =20
 
-Thanks.
+The sources are available on pypi: =20
+
+https://pypi.python.org/pypi/salt/2014.1.10 =20
+
+Salt 2014.1.10 fixes security issues documented by CVE-2014-3563: =22Inse=
+cure tmp-file creation in seed.py, salt-ssh, and salt-cloud.=22 Upgrading=
+ is recommended. =20
+================
+
+Something got mangled along the line.
 -- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
-On Sun, 07 Dec 2014, Damien Regad wrote:
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> Greetings,
-> 
-> Please see the announcement below. This release fixes a number of CVEs I
-> requested over the past few weeks (plus a few others). See the announcement
-> for further details.
-> 
-> D. Regad
-> 
-> 
-> -------- Forwarded Message --------
-> Subject: 	MantisBT 1.2.18 Released
-> Date: 	Fri, 5 Dec 2014 19:50:40 -0800
-> Newsgroups: 	gmane.comp.bug-tracking.mantis.devel
-> 
-> 
-> 
-> MantisBT 1.2.18 is an important security update for the stable 1.2.x branch.
-> All installations that are currently running any 1.2.x version are strongly
-> advised to upgrade to this release. Download it from [2].
-> 
-> This release resolves a total of 43 issues, including fixes for 23 security-
-> related bugs and vulnerabilities:
-> 
-> -  7 Cross-Site Scripting (XSS) issues: #17297/CVE-2014-9272,
->    #17583/CVE-2014-9270, #17870/CVE-2014-8987, #17874/CVE-2014-9271,
->    #17876/CVE-2014-9281, #17889/CVE-2014-8986, #17890/CVE-2014-9269
-> 
-> -  2 Code injection issues: #17725/CVE-2014-7146, #17875/CVE-2014-9280
-> 
-> -  2 SQL injection (XSS) issues: #17812/CVE-2014-8554, #17841/CVE-2014-9089
-> 
-> -  5 Information disclosure issues: #9885, #17744, #17877/CVE-2014-9279,
->    #17742/CVE-2014-8988, #17243/CVE-2014-8553
-> 
-> -  7 Other security issues: #10966, #17338, #17640/CVE-2014-6387,
->    #17648/CVE-2014-6316, #17780/CVE-2014-8598, #17811/CVE-2014-9117, #17878
-> 
-> Please refer to the changelog [1] on the MantisBT web site for complete
-> details
-> on each of these issues.
-> 
-> We would like to thank the following individuals and organizations for their
-> valued contribution in discovering and fixing these issues, in no particular
-> order: Mati Aharoni from Offensive Security and their bug bounty program,
-> Matthias Karlsson, Matthew Daley, Egidio Romano, Florian Fuchs, Shahee
-> Mirza,
-> Oleg K, Alejo Popovici, Edwin Gozeling, Paul Richards, Roland Becker,
-> Victor Boctor and Damien Regad.
-> 
-> 
-> [1] http://www.mantisbt.org/bugs/changelog_page.php?version_id=191
-> [2] http://sourceforge.net/projects/mantisbt/files/mantis-stable/
-> 
-> Thanks,
-> MantisBT Team
-> 
-> 
-> 
 
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
