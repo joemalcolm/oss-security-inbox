@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/31
-Message-ID: <8E89095AEEE73C4A94D5DDD2B92DEF722C1EB125@810-EXCHANGE03.cbb.local>
-Date: Wed, 1 Oct 2014 21:51:25 +0000
-From: "Henry, Bobby" <Bobby.Henry@...edient.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "Chet Ramey" <chet.ramey@...e.edu>
-Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/12
+Message-ID: <20140821170356.GM16858@eightyeight.xmission.com>
+Date: Thu, 21 Aug 2014 11:03:58 -0600
+From: Aaron Toponce <aaron.toponce@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: SaltStack 2014.1.10 released
 Content-Type: text/plain; charset=utf-8
 
-I agree, there's gotta be something we can send him for all the hard work.
-- Bobby
+On Thu, Aug 21, 2014 at 08:44:19PM +0400, gremlin@...mlin.ru wrote:
+> On 21-Aug-2014 10:37:10 -0600, Kurt Seifried wrote:
+>  > Did anyone else have this message fail to render in their email
+>  > client (I get a blank panel with the .sig attachment at the bottom
+>  > using Thunderbird/Enigmail/Fedora).
+> 
+> I use mutt, and it tells me everything is ok:
+> http://pics.rsh.ru/img/kurt_signature_in_mutt_bgxvgqe3.png
 
------Original Message-----
-From: Ed Prevost [mailto:me@...ardprevost.info] 
-Sent: Wednesday, October 01, 2014 5:46 PM
-To: oss-security@...ts.openwall.com; Chet Ramey
-Subject: Re: [oss-security] more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+I too use mutt(1), and I get the following error:
 
-On 10/1/2014 2:11 PM, Shawn wrote:
-> On Thu, Oct 2, 2014 at 5:08 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
->> On 10/1/14, 5:04 PM, Shawn wrote:
->>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
->> Nope, this one fixes 7168/7169.  It's the equivalent of the 
->> `parser-oob' patch.
->>
->> I have patches that fix 6277/6278 that are in the pipeline.
->>
-> oh, s0rry for the mistake...that'd be great if we can get the patch as 
-> quickly as possible. Thanks.
->
->> --
->> ``The lyf so short, the craft so long to lerne.'' - Chaucer
->>                  ``Ars longa, vita brevis'' - Hippocrates
->> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
->
->
-Really!? Honestly!? "as quickly as possible"
+    [-- Error: Inconsistent multipart/signed structure! --]
+    [-- application/pgp-signature is unsupported (use 'v' to view this part) --]
 
-Man, we really should rally together and at least send Chet a recovery beer basket or something.
+-- 
+. o .   o . o   . . o   o . .   . o .
+. . o   . o o   o . o   . o o   . . o
+o o o   . o .   . o o   o o .   o o o
 
---Ed
-Application & Network Security, Research Scientist http://EdwardPrevost.info https://twitter.com/@EdwardPrevost
-
+Content of type "application/pgp-signature" skipped
