@@ -1,112 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/38
-Message-ID: <542D8C9E.6000904@fifthhorseman.net>
-Date: Thu, 02 Oct 2014 13:34:22 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/10
+Message-ID: <53F625C2.10607@redhat.com>
+Date: Thu, 21 Aug 2014 11:00:50 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: Re: gnome-shell lockscreen bypass with printscreen key
+Subject: Re: SaltStack 2014.1.10 released
 Content-Type: text/plain; charset=utf-8
 
-On 10/02/2014 12:33 PM, cve-assign@...re.org wrote:
->> https://bugzilla.gnome.org/show_bug.cgi?id=737456
+Ok several people replied privately now, Thunderbird definitely has
+issues with this, and one person reports apple mail can't see it either.
+Perhaps we found a new way to send stealthy emails? ;)
+
+On 21/08/14 10:37 AM, Kurt Seifried wrote:
+> Did anyone else have this message fail to render in their email client
+> (I get a blank panel with the .sig attachment at the bottom using
+> Thunderbird/Enigmail/Fedora). The original content:
 > 
-> Clearly, something is wrong, but the CVE ID or IDs need to apply to a
-> specific aspect of the problem.
+> ================
+> http://docs.saltstack.com/en/latest/topics/releases/2014.1.10.html =20
 > 
-> Our understanding from
-> https://bugzilla.gnome.org/show_bug.cgi?id=737456#c10 is that "the
-> prtsc key is not disabled when the screen is locked" is intentional
-> behavior. Thus, that's not the root cause. 
+> The sources are available on pypi: =20
+> 
+> https://pypi.python.org/pypi/salt/2014.1.10 =20
+> 
+> Salt 2014.1.10 fixes security issues documented by CVE-2014-3563: =22Inse=
+> cure tmp-file creation in seed.py, salt-ssh, and salt-cloud.=22 Upgrading=
+>  is recommended. =20
+> ================
+> 
+> Something got mangled along the line.
+> 
 
-I think i agree with this analysis.  I only discovered this problem
-because i was trying to take a screenshot of the lockscreen to report a
-different (non-security) bug in the lockscreen.
-
-I did not expect to be able to use the printscreen key combination to do
-that, but the fact that i could do so was useful.
-
-However, the screencapture (video) feature *is* disabled during
-lockscreen for precisely the reasons i expected printscreen to be
-disabled.  I'm not sure what to make of that pair of decisions.
-
-> It might be reasonable to
-> argue that, as a consequence, anyone with physical access to that key
-> is implicitly allowed to consume memory and disk space. In many
-> environments, anyone with physical access to that key also happens to
-> be able to turn off the computer.
-
-Turning off the computer is a very different attack from filling up
-someone's home directory.  You recover from a turned-off computer by
-turning it back on.  If your home directory is full, you have to figure
-out what is taking up the storage space, which is not something all
-users are familiar with.
-
-If your home directory uses metered storage (i.e. you pay by the MiB) or
-is backed up to a service that is itself metered, then filling up the
-home directory is actually a direct financial cost to the end user in a
-way that turning off the computer does not.
-
-> There could be a CVE assignment for
-> https://bugzilla.gnome.org/show_bug.cgi?id=737456#c20 - "for that
-> short period of time those windows are not only shown (which is a bad
-> enough privacy issue on it's own), but also accept input (which makes
-> the already-bad issue even worse)." However, the bug discussion
-> doesn't suggest that there's a reasonable way to solve this within
-> gnome-shell itself. In other words, gnome-shell doesn't have any
-> direct or immediate ability to control the screen when it's not
-> running.
-
-I see how this is difficult to assign as a specific problem.
-Alternately, one can argue that *any* crashing bug in a program designed
-to lock the screen is by definition a security flaw.  If gnome-shell
-wants to provide lock-screen capability, then any crashing bug in
-gnome-shell that can be triggered while the screen is locked is a
-security vulnerability.
-
-Any crash in xscreensaver, for example, is a security flaw.
-
-> Possibly we're left with the following, which is unusual for a CVE but
-> still valid: "PrtSc is an unauthenticated request that's available to
-> untrusted parties. It's also a very expensive request. The combination
-> of this PrtSc behavior and the existence of the oom-killer allows
-> authentication bypass for command execution. Therefore, PrtSc must be
-> rate limited, and the lack of rate limiting is a vulnerability."
-> Unless there's a better alternative, the CVE ID will be assigned for
-> that vulnerability characterization.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-The above sounds about right to me.  another way to look at it is:
-
- * gnome-shell is supposed to lock the screen.
- * when it is doing this, it must not crash.
- * gnome-shell has a short-term memory leak via prtsc
- * prtsc can be triggered while locked.
- * the short-term memory leak is bad enough to cause a crash.
- * when locked, gnome-shell *must* police its own internal resource
-usage to avoid crashing.
- * rate-limiting is one way of policing this resource usage.
-
-However, this still leaves gnome-shell users vulnerable to the next
-gnome-shell crash while locked.  it's fixing one crashing problem, but
-not fixing the larger problem that a screenlocking program effectively
-fails open when it fails.
-
-Is there a way to make a screenlocking program that is designed to fail
-closed instead?
-
-fwiw, https://bugzilla.gnome.org/show_bug.cgi?id=737456#c5 raises an
-interesting alternate approach to resolving the underlying problem:
-
-    Not sure what crazy side effects that might have if any but ...
-    Jasper can we simply unmap all windows when we lock and map them on
-    unlock?
-
-I don't know enough about X11 to know if this proposal is sufficient to
-protect the user from command execution after a gnome-shell crash, or
-what the side effects would be.
-
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
