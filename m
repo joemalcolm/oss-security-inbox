@@ -1,37 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/29/5
-Message-ID: <B96C52C4A4B18B46890F549CBC7A5934FECA5A@exch.corp.isecpartners.com>
-Date: Fri, 29 Aug 2014 21:09:12 +0000
-From: Nicolas Guigo <nguigo@...cpartners.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "Salvatore Bonaccorso (carnil@...ian.org)" <carnil@...ian.org>, "team@...urity.debian.org" <team@...urity.debian.org>, "camrdale@...il.com" <camrdale@...il.com>
-Subject: RE: CVE requests for 2 separate vulns in torrentflux 2.4.5-1 (debian stable)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/3
+Message-ID: <53F592FB.8020802@redhat.com>
+Date: Thu, 21 Aug 2014 16:34:35 +1000
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Lua CVE request [was Re: CVE request: possible overflow in vararg functions]
 Content-Type: text/plain; charset=utf-8
 
-[cced debian security and package maintainer]
+Last spam, changing the subject so it is obvious where the issue is.
 
------Original Message-----
-From: Nicolas Guigo
-Sent: Friday, August 29, 2014 2:08 PM
-To: 'oss-security@...ts.openwall.com'
-Subject: CVE requests for 2 separate vulns in torrentflux 2.4.5-1 (debian 
-stable)
+On 08/21/2014 04:33 PM, Murray McAllister wrote:
+> Additionally, Fedora has 5.2.2, but it does not have the fix, so even if
+> shipping 5.2.2 it may be worth checking...
+>
+> On 08/21/2014 04:31 PM, Murray McAllister wrote:
+>> Good morning,
+>>
+>> An overflow was reported to have been fixed in Lua 5.2.2. A reproducer
+>> and patch are available from:
+>>
+>> http://www.lua.org/bugs.html#5.2.2-1
+>>
+>> The reproducer affects older versions too (such as 5.1.4). One way an
+>> attacker could trigger this issue is if they can control parameters to a
+>> loadstring call (an eval in Lua, http://en.wikipedia.org/wiki/Eval#Lua).
+>>
+>> Could a CVE please be assigned if one has not been already?
+>>
+>> Some notes:
+>>
+>> valgrind shows this crashes with invalid writes, but I am not sure if
+>> this is really a stack or heap overflow but something else. In
+>> luaD_precall():
+>>
+>> 330       for (; n < p->numparams; n++)
+>> 331         setnilvalue(L->top++);  /* complete missing arguments */
+>>
+>> This goes through 49 times with the reproducer (?possibly lifting what
+>> Lua thinks is the stack into the heap area?).
+>>
+>> After that finishes:
+>>
+>> 333       ci = next_ci(L);
+>>
+>> Results in a call to luaE_extendCI(), where the issue is triggered while
+>> attempting to call luaM_new() (I did not get further than this yet).
+>>
+>> Thanks,
+>>
+>> --
+>> Murray McAllister / Red Hat Product Security
+>>
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1132304
+>
 
-Hi oss-sec,
-
-Please find the vulns descriptions at the below links:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=759574
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=759573
-
-thanks!
-Nicolas
-
---
-Nicolas Guigo
-Senior Security Engineer
-iSEC Partners (NCC GROUP)
-(206) 948-3687
-9C80 28B2 F016 4DA4 24C9  D1D7 129C FDF6 0CDC B828
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4552 bytes)
