@@ -1,49 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/13
-Message-Id: <201407022229.s62MT1mr015979@linus.mitre.org>
-Date: Wed, 2 Jul 2014 18:29:01 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/1
+Message-ID: <53F5923F.5000402@redhat.com>
+Date: Thu, 21 Aug 2014 16:31:27 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2014-4715 for LZ4 issue 134
+Subject: CVE request: possible overflow in vararg functions
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Good morning,
 
-The CVE-2014-4611 assignment, from the perspective of the LZ4 product,
-is for issue 52 fixed in r118:
+An overflow was reported to have been fixed in Lua 5.2.2. A reproducer 
+and patch are available from:
 
-  https://code.google.com/p/lz4/issues/detail?id=52
-  https://code.google.com/p/lz4/source/detail?r=118
+http://www.lua.org/bugs.html#5.2.2-1
 
-As mentioned in the
-https://code.google.com/p/lz4/issues/detail?id=52#c30 comment:
+The reproducer affects older versions too (such as 5.1.4). One way an 
+attacker could trigger this issue is if they can control parameters to a 
+loadstring call (an eval in Lua, http://en.wikipedia.org/wiki/Eval#Lua).
 
-  "The point is that there is no documentation in the code to require
-   a limit. This will eventually lead to people that misuse the API.
-   So, yes, it is a vulnerable algorithm"
+Could a CVE please be assigned if one has not been already?
 
+Some notes:
 
-The CVE-2014-4715 assignment, from the perspective of the LZ4 product,
-is for issue 134 fixed in r119:
+valgrind shows this crashes with invalid writes, but I am not sure if 
+this is really a stack or heap overflow but something else. In 
+luaD_precall():
 
-  https://code.google.com/p/lz4/issues/detail?id=134
-  https://code.google.com/p/lz4/source/detail?r=119
+330       for (; n < p->numparams; n++)
+331         setnilvalue(L->top++);  /* complete missing arguments */
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+This goes through 49 times with the reproducer (?possibly lifting what 
+Lua thinks is the stack into the heap area?).
 
-iQEcBAEBAgAGBQJTtIcVAAoJEKllVAevmvmsi84H/2fKtg3q1OMRQBVPfRdTezHb
-kk22wdGtDRGBDA8MzTOEyh1pHmwsIiy1l11FTqUe3+1tQiBZT2/ws9/KkdhmlcGd
-Clb9h05tHKDLDZaxy8eHeTta+bBueYGyUm50rPKb9l5Ffjcd+ij0AhF/W6GePEyj
-Nv/zm3K7iuTxFuOhxXXX33lhCTV7w3oDlS7+NpuOIGJoyry5+VuVNXSmBN7Pq98X
-j3/kaQL/bxaxaIk3VhrgBBWwLcLpZd0xph9QGeJNlZL13UPBgIn7AkGXLqFnPIgu
-JeSpYONJrldZZfymxyZeSbrv6OgUi0w1xV+oPmr4TNXe4jCwxPFN+SMwZoQ7h2k=
-=zBon
------END PGP SIGNATURE-----
+After that finishes:
+
+333       ci = next_ci(L);
+
+Results in a call to luaE_extendCI(), where the issue is triggered while 
+attempting to call luaM_new() (I did not get further than this yet).
+
+Thanks,
+
+--
+Murray McAllister / Red Hat Product Security
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1132304
