@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/24/3
-Message-ID: <52E2482F.9040608@oracle.com>
-Date: Fri, 24 Jan 2014 11:02:07 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/8
+Message-ID: <20140821164419.GA24894@gremlin.ru>
+Date: Thu, 21 Aug 2014 20:44:19 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership
+Subject: Re: SaltStack 2014.1.10 released
 Content-Type: text/plain; charset=utf-8
 
-On 24/01/14 10:40, rf@...eap.de wrote:
->>>>>> "MM" == Moritz Muehlenhoff <jmm@...ian.org> writes:
->     MM> We maintain the http://anonscm.debian.org/viewvc/kernel-sec/
->     MM> repository which tracks all kernel vulnerabilities as soon as
->     MM> they're public. That's a good base for every Debian-derived
->     MM> distro with a modified kernel.
-> 
-> Sounds interesting. How am I supposed to extract information from this
-> page? Are there some docs about how to use it?
+On 21-Aug-2014 10:37:10 -0600, Kurt Seifried wrote:
 
-Try this:
+ > Did anyone else have this message fail to render in their email
+ > client (I get a blank panel with the .sig attachment at the bottom
+ > using Thunderbird/Enigmail/Fedora).
 
-  svn co svn://svn.debian.org/svn/kernel-sec
+I use mutt, and it tells me everything is ok:
+http://pics.rsh.ru/img/kurt_signature_in_mutt_bgxvgqe3.png
 
-jch
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+
+Content of type "application/pgp-signature" skipped
