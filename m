@@ -1,34 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/24
-Message-Id: <20140707181500.77CFB1A41139@me.com>
-Date: Mon,  7 Jul 2014 14:15:00 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem ciborg-3.0.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/15
+Message-ID: <alpine.LFD.2.10.1408220034530.14756@javelin.pnq.redhat.com>
+Date: Fri, 22 Aug 2014 01:04:26 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+cc: security@...nel.org, Greg Kroah-Hartman <gregkh@...uxfoundation.org>, Yann Collet <yann.collet.73@...il.com>
+Subject: Re: incomplete fix for CVE-2014-4611: kernel: integer overflow in lz4_uncompress 
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem ciborg-3.0.0
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Author: Larry W. Cashdollar, @_larry0
+   Hello Marcus,
 
-Date: 06/01/2014
++-- On Tue, 19 Aug 2014, Marcus Meissner wrote --+
+| Jan Beulich writes in our bug for CVE-2014-4611:
+| 
+| https://bugzilla.novell.com/show_bug.cgi?id=883949#c12
+| 
+| --- Comment #12 from Jan Beulich <jbeulich@...e.com> 2014-08-15 21:42:33 UTC ---
+| Except that it has been determined quite some time ago that all three fixes
+| having gone in upstream so far don't really fix anything. I posted a patch that
+| I think actually addresses the issue (https://lkml.org/lkml/2014/7/4/288), but
+| till now no-one cared to comment on it, apply it, or point out what's still
+| wrong, despite the ping 3 weeks later (https://lkml.org/lkml/2014/7/25/23).
 
-OSVDB: 108586
+  Jan's patch above does not seem right. It patches a non-existent function 
+'lz4_uncompress_unknownoutputs', and does not apply.
 
-CVE:Please Assign
+$ git apply --check lz4-add-overrun-checks-to-lz4_uncompress_unknownoutputsize.patch
+error: patch failed: lib/lz4/lz4_decompress.c:89
+error: lib/lz4/lz4_decompress.c: patch does not apply
+ 
+| Perhaps the kernel folks want to look at it again if they missed it so far.
 
-Download: http://rubygems.org/gems/ciborg
+  I've referred Jan's comment to Yann Collet(CC'd here). He is the creator of 
+LZ4 and has agreed to create a saner patch for the said issue. We'll fix it 
+soon.
 
-Gem Author:  commoncode@...otallabs.com
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-From: ./ciborg-3.0.0/chef/travis-cookbooks/ci_environment/perlbrew/recipes/default.rb
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-There is a /tmp file race condition when creating /tmp/perlbrew-installer if a malicious local user creates the file first they can overwrite the contents with their own code executing it as the ciborg process owner.
-
-014:  curl -s https://raw.github.com/gugod/App-perlbrew/master/perlbrew-install -o /tmp/perlbrew-installer
-15:  chmod +x /tmp/perlbrew-installer
-16:  /tmp/perlbrew-installer
-
-
-Advisory: http://www.vapid.dhs.org/advisories/ciborg-3.0.0.html
-
+iQIcBAEBAgAGBQJT9knCAAoJEN0TPTL+WwQfHtMQALaHo4eTLxKIiDon/wDoJ3y6
+OP3FPoLV8QkqdNOgejHp48lrPKxWLzlikCdtenKKWHTl8mTngTgrrCoMlS7IZZx2
+TdhR40GCoQeHG/BEmGiuBSbxilgvxNcmvaYxpwHF6CHQhtR0TxROhVUrkYoigNp0
+7BDEKt3wCypy/K5GP3mAdMrbGVSmGXqfviRxEBr3K9eBgYkjoxrhw9UcfUWUzIY4
+kzqXwKYICJVW1+z4Zyk89KSx/BI1tA4l/A+94SUJB4GnP/nqz+APr2mzutZGB/BE
+79F4YwfiP5E5+cRe+HUzQC1H1+LYdjMiTJov6tlNBhAigMErTWvR5pw5odQuts0S
+ivDeWPELOVUQyLjj6rDnBydHnMjOYJtImmLze5Nt+HgL+Buffg/ZaiDHC/TkPstQ
+oHO05AAPW8iyoOHwBEVmc2sJPRbndMSwBjq8uNLCv8aPrb+yXxQus8zfHRUVzBMD
+aM7oAyryY3f5DjGYxqm4GC9FZGUen4u/TC8dzGpPr7VZ8jViWwmFz0tSf0ivL4p5
+tx6cgYGd6pvgBiZTXST0ZOLvyk1OyUYVt/bqb1nj/nxNDdrSE7vYB3l/5pePLgJe
+EpXOU13CZbNq7sGL+YcxzOZEJQsMQpgKDcweHxD6NJJYr4ut9GFGD5T42G3+K1IM
+kN0wJcUuEyQz5OD/6Hcl
+=c+qv
+-----END PGP SIGNATURE-----
