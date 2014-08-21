@@ -1,36 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/6
-Message-ID: <CAL2OCeX0+cNufGHC9P2wdu7wYkAUN8YPuieamwVxmc4_+XRuxQ@mail.gmail.com>
-Date: Wed, 19 Mar 2014 21:56:07 +0800
-From: Qixue Xiao <s2exqx@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/16
+Message-ID: <53F621C2.8050902@rylee.me>
+Date: Thu, 21 Aug 2014 11:43:46 -0500
+From: Rylee Fowler <rylee@...ee.me>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for a bug in gnu coreutils 8.22
+Subject: Re: SaltStack 2014.1.10 released
 Content-Type: text/plain; charset=utf-8
 
-I am not sure whether this needs a CVE.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
+It failed for me, too. Thunderbird/Enigmail/W8.1.
 
-this bug will result an illegal memory access, which may be leak
-information without authority.
+On 8/21/2014 11:37 AM, Kurt Seifried wrote:
+> Did anyone else have this message fail to render in their email 
+> client (I get a blank panel with the .sig attachment at the bottom 
+> using Thunderbird/Enigmail/Fedora). The original content:
+> 
+> ================ 
+> http://docs.saltstack.com/en/latest/topics/releases/2014.1.10.html 
+> =20
+> 
+> The sources are available on pypi: =20
+> 
+> https://pypi.python.org/pypi/salt/2014.1.10 =20
+> 
+> Salt 2014.1.10 fixes security issues documented by CVE-2014-3563: 
+> =22Inse= cure tmp-file creation in seed.py, salt-ssh, and 
+> salt-cloud.=22 Upgrading= is recommended. =20 ================
+> 
+> Something got mangled along the line.
+> 
 
-and the author had fixed it after my report.
+- -- 
+Rylee Fowler
+PGP: 41EA 1D94 F261 8602 6CD4 B2B5 05A6 3421 F637 E333
+https://keybase.io/rylee
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
 
-please see:
-http://debbugs.gnu.org/cgi/bugreport.cgi?bug=16855
-
-
-### Bug overview
-
-    shuf -er or shuf -eer [ segment fault]
-    impact [coreutils 8.22 ]
-
-```
-[15:03:59]xqx <at> server:~/data/xqx/projects/coreutils-8.22$
-./obj-gcov/src/shuf -er
-Segmentation fault (core dumped)
-
-```
-
-thanks
-.
-
+iQEcBAEBCgAGBQJT9iHCAAoJEAWmNCH2N+MzHaAIALs3foLZZfdX9pr98TRv/cTU
+jJIPwac7drpS1J9XbSYXcwEKn6ly5QZfI50HJ9+4drJlxRg9oA6ubse15jF+CGo/
+zLCDQ2/nCNscx4hwwtAWR3UFsfWKcSAXWD6yC0P847UI9LLeyVWamopph4n45vlm
+7x0VBSrQB5zpHIPkCe+5fxSbTMaG5AT0sAIY38DlEkp/FyeZrJEPQjXdFFr12JQq
+RfZdoDzNSzkSpH77AwuAT+mr4o85EOEudsfylDFPSxiGg1uNBEFP3XuVj4OvkmEz
+XFWF9Du+zWKQ8L/ei8ucbofB/E7CnPz8FrA/enFI5Q0pM2n0PMebwAWlfFFc98w=
+=kwIi
+-----END PGP SIGNATURE-----
