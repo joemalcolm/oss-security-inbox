@@ -1,55 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/20
-Message-Id: <201403191933.s2JJXFr8001893@linus.mitre.org>
-Date: Wed, 19 Mar 2014 15:33:15 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: rack-ssl rubygem: XSS in error page
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/22/4
+Message-ID: <53F78168.8000102@kenwilliams.us>
+Date: Fri, 22 Aug 2014 12:44:08 -0500
+From: ken <ken@...williams.us>
+To: oss-security@...ts.openwall.com
+Subject: FYI, change to Secunia vuln db EULA
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> https://github.com/josh/rack-ssl/commit/9d7d7300b907e496db68d89d07fbc2e0df0b487b
+FYI, Secunia has clarified what they mean by “commercial use” in a 
+revised EULA.  In short, only “students, the press (if the use is for 
+media coverage), private persons and hobby researchers” can 
+use/view/access Secunia vulnerability data.
 
-> Handle bad URIs gracefully.
-> 
-> Some adapters (i.e. jruby-rack) will pass through bad URIs, then display
-> the resulting exception. This creates an attack vector for XSS attacks.
+Non-profit organizations, private companies, and public authorities and 
+entities are NOT allowed to access or use any Secunia data, for any reason.
 
-Use CVE-2014-2538.
+The revised EULA can be found here:
+http://secunia.com/community/profile/
+under the “Create Profile” tab.
 
-The basis of this CVE assignment is that the rack-ssl product is
-apparently accepting some level of responsibility for the behavior of
-adapters. The commit message in 2013 wasn't really worded in the form
-of a vulnerability-fix announcement. There's another interpretation in
-which it would be categorized as security hardening to work around XSS
-vulnerabilities in adapters. The commit message mentions jruby-rack.
-https://github.com/jruby/jruby-rack/blob/master/History.txt includes
-"1.1.12 (28/11/12) ... refactored / updated error handling ... unify
-exception handling across decorating app factories with support for
-configuring exception handling with the *jruby.rack.error* option."
-Perhaps this means that jruby-rack is less likely to have a patch that
-makes XSS impossible because the jruby-rack developers want exception
-handling to be fully configurable? In any case, an additional CVE
-assignment for jruby-rack could be made if the jruby-rack developers
-want one. That might, for example, cover the case of using jruby-rack
-with an unpatched version of rack-ssl.
+You may wish to review their EULA to ensure that you're in compliance.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Regards,
+Ken
 
-iQEcBAEBAgAGBQJTKe8oAAoJEKllVAevmvmsZpYH/2n3KxkRpatJvwxlAyB6I0O5
-JfWFemsXOZHddGA1KcLAhW3o5op0CrH2HBpOsJssScO+2qT0GQVI1kOmoYY3wyxh
-9qDXWz16KPtEg6+CyoxWiTFEV/cXxakToXUWMU9483KXQMiH021cntTStWcBEo/A
-4nRHwjY53hbq77ENHlHsHP065LWedaZQJuzdxZkEdlxHOraLkxohYJQjjVlpGj7B
-PUHyhnIBtGqHK312SXwBm8TNgTO7db31tlmYYiQ3Ftg0S6Mn3zAgwTG5U2iczf60
-yl/prDTpm0KVMhJVKkttbvWUliFchmt8lF+whZU/HVwC7FoUtcO8b3hyq354CvI=
-=wXBE
------END PGP SIGNATURE-----
+
+
