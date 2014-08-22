@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/5
-Message-ID: <20140320094346.GG2503@sivokote.iziade.m$>
-Date: Thu, 20 Mar 2014 11:43:46 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/22/5
+Message-Id: <20140822192542.BB86BC504D7@smtptsrv1.mitre.org>
+Date: Fri, 22 Aug 2014 15:25:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request Qemu: out of bounds memory access
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 20, 2014 at 11:31:08AM +0200, Georgi Guninski wrote:
-> On Wed, Mar 19, 2014 at 06:14:22PM +0200, Georgi Guninski wrote:
-> > What is the number of email addresses who
-> > posted on FD?
-> > 
-> 
-> The list was large, some might run this on the full archives
-> 
-> Since May 2003:
-> 
-> $ egrep '^From:.*<.*' fd | egrep -o '<.*>'|uniq | wc -l
-> 59751
-> 
-> $ egrep '^From:' fd | grep -v '<' | uniq | wc -l
-> 8552
-> 
-> (the intersection might not be empty).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I take the above back:
-$ egrep '^From:.*<.*' fd | egrep -o '<.*>'| sort |uniq | wc -l
-9318
-$ egrep '^From:' fd | grep -v '<' | sort | uniq | wc -l
-2101
+> https://lists.gnu.org/archive/html/qemu-devel/2014-08/msg03338.html
+
+> A user with a custom PCI device could use this flaw to leak qemu process'
+> memory bytes or corrupt them on the host.
+
+(the patch is not available at
+http://git.qemu.org/?p=qemu.git;a=history;f=hw/acpi/pcihp.c yet)
+
+Use CVE-2014-5388 for this off-by-one error with impacts of
+both memory corruption and information disclosure.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT95jhAAoJEKllVAevmvmssUQH/3c+qdnt7Yh6wTCegmKMxPmP
+TYEc2XcdQPCtb4XKwn3ND2PE00xLjtmRqmWVcXgdlhgXs2j1NNq5FvPdPuXz99Kh
+tXXAmAB7Kq9I8TYeZ6RARYd5eWHKzXQvXAU7rIWlIx6QkvzIW+MmMW7OmHLwRBh7
+yoRqQ6tEIZfG1zN3UcG34H70Ke44efe9sDjrbq5UsuLX01uQV1CM4aJlIx75OJit
+QKXsME/0BJYPUqMojzUvT2H/Ddn2rdMpGE9lgVZ902rK214L/qmahLi3ZxDvvgz6
+urfSafRkuausMFVuATy2Xr9wa1bzV6pJCUlZFtXm0euJSQxv0DdHSD5PFyTyOtM=
+=eBq9
+-----END PGP SIGNATURE-----
