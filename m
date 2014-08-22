@@ -1,33 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/1
-Message-ID: <CAKcmtDwcUZGM2+TK5x6nt3xFb56H-SJ=Fx=jYvhQjURYRpjqhA@mail.gmail.com>
-Date: Wed, 25 Jun 2014 17:03:33 -0700
-From: Chris Steipp <csteipp@...imedia.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/22/2
+Message-ID: <20140822052648.GA47946@redoubt.spodhuis.org>
+Date: Fri, 22 Aug 2014 01:26:48 -0400
+From: Phil Pennock <oss-security-phil@...dhuis.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: MediaWiki releases 1.19.17, 1.21.11, 1.22.8 and 1.23.1
+Subject: Re: SaltStack 2014.1.10 released
 Content-Type: text/plain; charset=utf-8
 
-Since the bug is public now
-(http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-June/000155.html),
-I didn't get a CVE in advance because I thought this was likely a
-hardening fix. We couldn't find a way to exploit it to actually track
-a user on our site. However, we kept it private until we released the
-patch, since we weren't sure it couldn't be exploited on a wiki with
-non-standard image handling.
+On 2014-08-21 at 19:02 +0200, Kristian Fiskerstrand wrote:
+> On 08/21/2014 07:00 PM, Kurt Seifried wrote:
+> > Ok several people replied privately now, Thunderbird definitely
+> > has issues with this, and one person reports apple mail can't see
+> > it either. Perhaps we found a new way to send stealthy emails? ;)
+> 
+> Not sure if it is new - from a quick glance it looks like the email in
+> question is missing a MIME boundary before the body.
 
-On Wed, Jun 25, 2014 at 4:00 AM, Henri Salo <henri@...v.fi> wrote:
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-June/000154.html
->
-> """
-> this is a notice that on Wednesday, June 25th, between 20:00-22:00 UTC we will
-> release security and maintenance updates for all current and supported branches
-> of the MediaWiki software. Downloads and patches will be available at that time.
-> """
->
-> I'm not sure if those vulnerabilities already have CVEs. I asked from Markus G.
->
-> Also please note End of lifetime announcement for MediaWiki 1.21
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-June/000153.html
->
-> ---
-> Henri Salo
+Kristian is right; slightly disappointing that it took so many mails for
+someone to just look at the structure and report on the root cause,
+instead of just trying to see how various different clients handle a
+"dodgy" message.  Memo to self: I know how to spread malware amongst the
+security community, now.
+
+Per specification for multipart/* types, if there is content before the
+first MIME boundary then it is deliberately not displayed by
+MIME-capable email clients; this is usually used by user-agents to
+insert a "this message is MIME, upgrade your ancient client" type of
+message, but even that is rare today.
+
+Given a boundary defined as "foo" then the message is divided up into
+sections ("body parts") by lines "\r\n--foo\r\n" and ending with a final
+line "\r\n--foo--\r\n".
+
+When the first boundary line got dropped, the content of the message
+became preamble.  The definition is in RFC2046.  The definition for
+OpenPGP in MIME is in RFC3156, which states:
+
+----------------------------8< cut here >8------------------------------
+   The multipart/signed body MUST consist of exactly two parts.  The
+   first part contains the signed data in MIME canonical format,
+   including a set of appropriate content headers describing the data.
+
+   The second body MUST contain the OpenPGP digital signature.  It MUST
+   be labeled with a content type of "application/pgp-signature".
+----------------------------8< cut here >8------------------------------
+
+So: message as posted to list was malformed, something dropped a
+significant line; every MIME compliant mail-client, by deliberate
+design, dropped everything before the first boundary line, so yes this
+is a way to sneak through messages.  The only MIME part left was a
+signature, which is a protocol violation, and so the behaviours observed
+are just "how do mail-clients report malformed signed messages".
+
+-Phil
+
+Content of type "application/pgp-signature" skipped
