@@ -1,35 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/01/5
-Message-ID: <14a05c4e737.10e2d6f504944.3116791881300478503@zoho.com>
-Date: Mon, 01 Dec 2014 15:13:18 +0300
-From: Vit Ry <frodox@...o.com>
-To: <oss-security@...ts.openwall.com>
-Cc: <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Graphviz format string vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/22/3
+Message-ID: <alpine.LFD.2.10.1408221815010.7247@javelin.pnq.redhat.com>
+Date: Fri, 22 Aug 2014 18:16:49 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request Qemu: out of bounds memory access
 Content-Type: text/plain; charset=utf-8
 
-Where is "format string vulnerability"? 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Could you provide an exploit, please? :)
+    Hello,
 
----
-Regards,
-Vit Ry.
+An out of bounds memory access flaw was found in Qemu's ACPI PCI hotplug 
+interface. It leads to Qemu's memory corruption via OOB write(4 bytes) and 
+information disclosure(~12 bytes) through OOB read.
 
+A user with a custom PCI device could use this flaw to leak qemu process' 
+memory bytes or corrupt them on the host.
 
+Upstream fix:
+- -------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2014-08/msg03338.html
 
----- On Tue, 25 Nov 2014 08:40:57 +0300 Joshua Rogers  wrote ---- 
->Hi, 
-> 
->A format string vulnerability has been found in `graphviz'. 
->The fix commit is here: 
->https://github.com/ellson/graphviz/commit/99eda421f7ddc27b14e4ac1d2126e5fe41719081 
-> 
->Could I get a CVE-ID for this? 
-> 
-> 
->Thanks, 
->-- 
->-- Joshua Rogers <https://internot.info/> 
->
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJT9zu6AAoJEN0TPTL+WwQfujMQAJtMJk7v8gguLfbPEj3qPpfa
+Vw2x3SZIh+kO5bPSF7TqHI+O9mscWGpPxPqRz2HRlrNu7uMQgjiaLssXLmO5YjBy
+2+TvLXKhDhpbr1X3IkmOkhAs+ZNJWatbHTxD4NulMEHTxrMrRkA8l0/swxTgA8m9
+3d1pKx3uKHU0SQCL7oSZNTZM2VGVhwAWY4wP37gde8Gv+Tgi+wR8uxuBgXekq7IW
+DVf2Q91bUtw9kor9aYrJ49BzIOyoMuQ42FNz/85ha+DCWAIr4dzyrZ7uRmJrJuz9
+T0xA/8J5APdZ9+lh7CPuKta/Ysu3ardZQRcl4rBxCwBhKfIxu3blgjhgyb8FKXfK
+pWegt/Ow0XQhWLmAd2mw6UW2JO2JxIVlCMJSLtDf08R62EwOB4R0w0SQwyd+c5Gi
+3+nDKllig8bJ2Pap+GFmrjb6SDrjEz2Jviz22KYQWVXbyZaDpQVtS7EKpO9Svf5H
+hiTGJu3JxLJj6R5xF4GCbAIfSoCcCCm54BA9nkQLjgrlhUnxEPwbu9C2yQD9XYqL
+ROvebFPt+NKPDcjICs7xiHtnn9htYI4aWWfRaJlcappveCfo/a++/iBPSzV6LXsp
+yuxW2MLvdZxEkYQ01EHFyE+Ooe97z4tlVigXX8dvki1s3mBiV7CwRLBP/hRzQEnM
+PKeD580m8YSk8wXatKnf
+=QT4+
+-----END PGP SIGNATURE-----
