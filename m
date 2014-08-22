@@ -1,62 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/6
-Message-ID: <CAJVRA1R4-PzLay0e54Pd2WjuNoAg-WH4YqZf9eafrrdYsvxhMA@mail.gmail.com>
-Date: Thu, 20 Mar 2014 03:18:23 -0700
-From: coderman <coderman@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: FD mailing list died. Time for new one (or something better!)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/22/1
+Message-Id: <20140822033412.B31F61F067E@smtpksrv1.mitre.org>
+Date: Thu, 21 Aug 2014 23:34:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Enigmail warning
 Content-Type: text/plain; charset=utf-8
 
-a modest and proportionate proposal,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-fuller-disclosure:
- - a hidden list (local accts only, no clearnet linkage)
- - a hidden daily digest (per mod prefs, see below)
- - a hidden xmpp (otr required - plaintext abused)
- - a hidden web archive (of the list traffic, read-only)
- - a hidden public chat (group xmpp+/|ircd, no clearnet linkage)
- - a hidden pastebin with or without simple nonce auth
- - a advogato reputation sys to stack rank and put below the fold
-   (for list digest content, public chat, web archive, and public pastes)
+> http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/
 
-use case A: "JerkVendor is Jerk"
- - more accomodating disclosure fails,
-    good faith and gratis effort returned with bile.
- - bugtraq drama ensues, takedowns.
- - "Hey, the advisory is still up here! ->  fullerd.onion/..."
+This seems to discuss at least two non-identical issues.
 
-use case B: "The Hot Drop"
- - *whispers* 'remember the Athens Affair? i'd rather not Opt-Out to report'
- - BREAKING NEWS: "Anonymous russian hackers drop dox on spyhack to
-darknet fullerd.onion..."
+http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/#b315
+and http://sourceforge.net/p/enigmail/bugs/294/ are about "an email
+with only Bcc recipients is sent in plain text." This is assigned
+CVE-2014-5369.
 
-use case C: "It's my party and I'll..."
- - 'so how it happened was,
-    , i coaxed pre-auth SSL cert parsefail remote exec with escalate to system'
- - "Hey DEF CON! fuck that full-disclosure closure drama,
-    let's get this party started!"
- - DEF CON XX official start and group xmpp/ircd distributes nonce for
-0day to thousands of hidden participants simultaneously.
-    [ remainder of distribution happens over sneakernet at con
-      due to unexplained outage across entire Tor network for all users... ]
+http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/#10f1
+and
+http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/#0a5a
+are about one or more issues in which there is unexpected cleartext
+e-mail transmission unrelated to use of Bcc. This perhaps requires a
+non-default configuration. It is conceivable -- although perhaps
+unlikely -- that the problem is a UI bug (e.g., an encryption choice
+is presented even when the product is configured to never use
+encryption). In any case, none of this has a CVE assignment yet. There
+isn't enough information to determine whether to assign zero, one, or
+two additional CVE IDs. The scope of CVE-2014-5369 is only the
+behavior that occurs when all recipients are Bcc recipients.
 
+Finally, these are additional (possibly related) references that
+haven't yet been mentioned on oss-security:
 
-not a concern at all, ever:
- - "HOLY SHIT TAKE THAT DOWN NOW!!!" legal motions
- - "HOLY SHIT TAKE THAT DOWN NOW!!!" supporter/peer pressure
- - "HOLY SHIT TAKE THAT DOWN NOW!!!" matters of national security
- - "HOLY SHIT TAKE THAT DOWN NOW!!!" hint in datagram at 100Gbps
-[ the inverse is use case D: "99.44% Peace of Mind" ]
+  http://sourceforge.net/p/enigmail/bugs/290/
+  http://twitter.com/mtigas/statuses/494228366028210176/photo/1
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-i don't see the point in anything less; other technologies filling
-existing roles fine, while the truly necessary drops have zero outlet.
-
-.
-.
-.
-finding someone with strong reputation and good judgement to publicly
-validate and speak to the efforts of the equally reputable but
-absolutely anonymous service operator?
-... now that's a hard sell ...  *grin*
+iQEcBAEBAgAGBQJT9rkoAAoJEKllVAevmvmsBKUH/23mh9gvRZfW64TJtc6cj2Wa
+1l6Gv6bpqAh0hSdhhQGEC25+C3YR8TTzJaUcIciyUGidCQ/p3rF/ORRcAx4Ptsae
+N5cvXFT6/Ep2lpaJF+Opi3buoJ1O0w6P2PQN+qif6mcIQFjH2GFRdGwKqEFlcW9j
+Of4a1vMC2YCDfqk8hTWdsqCzgCi1eOOe3xmQOTL/uUR3ilgdk1KkqhBaHUqhYX+x
+JaEVPyVZPRJqH+8QZJNYmKbU5JV1UUMK5IvuQoT+eKyYLIvY+Z1PVRYQPVITOxTZ
+hSiBXBrhRbmgixDb05IBHamuE83nXDEkm/j7sx6ezaEEl7Xv0DwMLYwxVl155sc=
+=x0nf
+-----END PGP SIGNATURE-----
