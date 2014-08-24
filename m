@@ -1,94 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/6
-Message-Id: <E1XWjq1-00053B-Bn@xenbits.xen.org>
-Date: Wed, 24 Sep 2014 10:30:21 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 105 (CVE-2014-7155) - Missing privilege level checks in x86 HLT, LGDT, LIDT, and LMSW emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/24/4
+Message-ID: <20140824205108.GA3545@hurricane.linuxnetz.de>
+Date: Sun, 24 Aug 2014 22:51:08 +0200
+From: Robert Scheck <robert@...oraproject.org>
+To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
+Subject: CVE request: Multiple incorrect default permissions in Zarafa
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-            Xen Security Advisory CVE-2014-7155 / XSA-105
-                              version 3
+I discovered that the Zarafa Collaboration Platform has multiple incorrect
+default permissions (CWE-276):
 
-    Missing privilege level checks in x86 HLT, LGDT, LIDT, and LMSW emulation
+1. In order to fix CVE-2014-0103, Zarafa introduced constants PASSWORD_KEY
+and PASSWORD_IV in /etc/zarafa/webaccess-ajax/config.php (Zarafa WebAccess)
+and /etc/zarafa/webapp/config.php (Zarafa WebApp), both are the upstream
+path names of a default installation, downstream names might be different.
+Both files have default permissions of root:root and 644, thus decryption
+of the symmetric encrypted passwords in the on-disk PHP session files is
+possible again (similar like initially described in CVE-2014-0103). Affects
+Zarafa WebAccess >= 7.1.10, Zarafa WebApp >= 1.6 beta.
 
-UPDATES IN VERSION 3
-====================
+2. The log directory /var/log/zarafa/ is shipped by default with root:root
+and 755 and all created log files by the Zarafa daemons have by default
+root:root and 644. This is leaking (depending on the log level of the given
+service) only e.g. subject, sender/recipient, message-id, SMTP queue id of
+in- and outbound e-mails but might be even a cleartext protocol dump of
+IMAP, POP3, CalDAV and iCal as well (including possible credentials) to any
+local system user. Affects Zarafa >= 5.00.
 
-This issue has been assigned CVE-2014-7155.
+3. The directories /var/lib/zarafa-webaccess/tmp/ (Zarafa WebAccess) and
+/var/lib/zarafa-webapp/tmp/ (Zarafa WebApp) are read- and writable by the
+Apache system user by default - but also world readable for local system
+users (e.g. apache:apache and 755 on RHEL). Thus all the temporary session
+data such as uploaded e-mail attachments can be read-only accessed because
+all created files below previously mentioned directories have permissions
+644, too. Upstream path names changed over the time and releases. Affects
+Zarafa WebAccess >= 4.1, Zarafa WebApp (any version).
 
-ISSUE DESCRIPTION
-=================
+4. The optional (but proprietary) license daemon /usr/bin/zarafa-licensed
+runs by default with root permissions, the subscription/license key is put
+into '/etc/zarafa/license/*'. The license files are recommented (according
+upstream documentation) to be created using echo(1) which usually leads to
+root:root and 644. But the parent directory /etc/zarafa/license/ is shipped
+by default with root:root and 755. As result the key files can be accessed
+and copied by any local system user. Affects Zarafa >= 4.1.
 
-The emulation of the instructions HLT, LGDT, LIDT, and LMSW fails to
-perform supervisor mode permission checks.
+As of writing Zarafa doesn't seem to have built-in permission checks (like
+e.g. fetchmail(1) has), too.
 
-However these instructions are not usually handled by the emulator.
-Exceptions to this are
-- - when the instruction's memory operand (if any) lives in (emulated or
-  passed through) memory mapped IO space,
-- - in the case of guests running in 32-bit PAE mode, when such an
-  instruction is (in execution flow) within four instructions of one
-  doing a page table update,
-- - when an Invalid Opcode exception gets raised by a guest instruction,
-  and the guest then (likely maliciously) alters the instruction to
-  become one of the affected ones.
 
-Malicious guest user mode code may be able to leverage this to install
-e.g. its own Interrupt Descriptor Table (IDT).
+With kind regards
 
-IMPACT
-======
+Robert Scheck
+-- 
+Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
 
-Malicious HVM guest user mode code may be able to crash the guest or
-escalate its own privilege to guest kernel mode.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions from at least 3.2.x onwards are vulnerable.  Older
-versions have not been inspected.
-
-Only user processes in HVM guests can take advantage of this
-vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-There is no mitigation available for HVM guests.
-
-CREDITS
-=======
-
-This issue was discovered Andrei Lutas at BitDefender and analyzed by
-Andrew Cooper at Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa105.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa105*.patch
-dfb5ede7cc5609a812a7b1239479cefd387f9f9c8c25e11e64199bc592ad7e39  xsa105.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJUIpzkAAoJEIP+FMlX6CvZ0IkIALIftvFcaV2iH54bpvWuurXs
-m87HvWm0Omy8S5R+K+meJmy05jERWVUg0eaX0nn8KcFsg8H9lNEsdJwc8vmGyhxx
-tIY1IeHHH/Mbx7kdtdmVrtUaoz/IV2LYIHzsLEPcQ7gLMkMwydCxKL97Rf83Tsq+
-Y6Zu3H0vQoR0wVVeh1ks8708TM2TZeNOc0B9foJBult3Zm/ihdBo12eZzVqm/e9g
-HCYswBKFntj4Iq0sAyhfc5KATirkCnWqpKXJ6oMACEy5H3+Xrh9/u79zatHd/FWL
-3FL2yGwQTGqqtVRUhEQD7cfWl9FLRcFZyudWQzIkSlDAGHHrpxVinp/nplm5PvA=
-=lJ+I
------END PGP SIGNATURE-----
-
-Download attachment "xsa105.patch" of type "application/octet-stream" (1304 bytes)
+Content of type "application/pgp-signature" skipped
