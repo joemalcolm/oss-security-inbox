@@ -1,94 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/04/7
-Message-ID: <543032BD.90409@redhat.com>
-Date: Sat, 04 Oct 2014 11:47:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, dkg@...thhorseman.net
-CC: cve-assign@...re.org
-Subject: Re: Re: gnome-shell lockscreen bypass with printscreen key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/24/3
+Message-ID: <20140824165705.GA9782@kludge.henri.nerv.fi>
+Date: Sun, 24 Aug 2014 19:57:05 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-5443: Seafile local horizontal privilege escalation vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Also note it can use up your disk quota as well. On Fedora 20 I tried
-it, held the key down, it continues taking screen shots for some time
-after I let go, what was interesting is the screenshot files started out
-full size but then got smaller, then full size again, then smaller, so
-even on an SSD it appears that it's taking the screenshot, writing it to
-disk, but getting interrupted, I never got it to OOM.
+Product: Seafile server for Linux
+Vendor: Seafile Ltd. http://seafile.com/
+Affected versions: 3.1.1, 3.0.4 and probably prior
+Fixed in version: 3.1.2
+Founder of this vulnerability: Kimmo Huoman
+Vendor notification: 2014-08-05
+Solution date: 2014-08-07
+CVE reference: CVE-2014-5443
 
-On 03/10/14 02:08 PM, cve-assign@...re.org wrote:
->> another way to look at it is
-> 
-> OK, we'll incorporate your suggestion and assign CVE-2014-7300 for:
-> 
-> "PrtSc is an unauthenticated request that's available to untrusted
-> parties. A series of requests can consume a large amount of memory.
-> The combination of this PrtSc behavior and the existence of the
-> oom-killer allows authentication bypass for command execution.
-> Therefore, the product must limit the aggregate memory consumption of
-> all active requests, and the lack of this limit is a vulnerability."
-> 
-> [ the rest of this message has no more CVE assignments ]
-> 
-> 
->> https://bugzilla.gnome.org/show_bug.cgi?id=737456#c34
-> 
->> We agreed on IRC that the best compromise here is to simply only allow
->> screenshots to be saved to the clipboard while the screen is locked.
->> That way taking screenshots is not impossible but someone with access
->> to the machine can't simply abuse it to fill the disk.
-> 
-> It appears that discussion of this might still be ongoing (e.g., "Can
-> an unauthenticated person inject anything else into the clipboard
-> while the screen is locked?" "Yes." etc.). However, a second CVE ID
-> probably isn't needed. A decision to store PrtSc data in memory,
-> rather than on disk, is a solution for the original issue (the
-> ultimate cause of the excessive memory consumption is that the system
-> can't write PrtSc data to disk as fast as a person can request more
-> PrtSc data). This new solution happens to address a second issue: a
-> system administrator might want to ensure that an unauthenticated
-> person, after going to a locked screen, can't write even one PrtSc
-> worth of data to disk. This seems to be essentially a policy change,
-> not a fix for behavior that everyone always would've considered wrong.
-> 
->> the screencapture (video) feature *is* disabled during lockscreen for
->> precisely the reasons i expected printscreen to be disabled. I'm not
->> sure what to make of that pair of decisions.
-> 
-> This seems unrelated to the question of CVE assignments, but one
-> possibility is that triggering of a video from the locked screen might
-> be much less acceptable to customers. For example, there might be high
-> support costs or other expenses whenever a legitimate user presses
-> Control+Shift+Alt+R once to start a screencast recording, is somehow
-> distracted (arguably easier when they can't see the screen), and lets
-> the recording continue for a very long time.
-> 
->> Turning off the computer is a very different attack from filling up
->> someone's home directory.
-> 
-> Right. However, unauthenticated triggering of the oom-killer isn't, by
-> itself, typically worse than unauthenticated powering off. In the
-> former case, the user loses data in one process; in the latter, the
-> user loses data in all processes. In other words, unauthenticated
-> memory exhaustion wasn't the essence of the original issue. The issue
-> required the "special" nature of screen-locking processes, i.e., the
-> unusually severe impact when a process dies.
-> 
->> Is there a way to make a screenlocking program that is designed to fail
->> closed
-> 
-> Alan Coopersmith commented on this separately. All we can add is there
-> currently isn't a CVE ID for the fail-open behavior of the screen-lock
-> functionality in gnome-shell. The design wasn't intended to be a
-> fail-closed design. Also, selecting a fail-closed design would've
-> required additional research that apparently has never been completed.
-> We normally don't have CVE IDs of the form "this product doesn't
-> properly address unsolved research problems."
-> 
-> 
+Description:
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Local horizontal privilege escalation
 
+Steps to reproduce:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+1. Install seafile for user1 (using the defaults)
+2. Start seafile for user1 (./seafile.sh start; ./seahub.start) [ to create
+admin account ]
+3. Install seafile for user2 (no need to change any of the defaults, this won't
+be run at all)
+4. Change user2 password with command-line tool (./reset-admin.sh)
+5. Login to user1 installation as admin with the login information created in
+previous step
+6. Check user1 email address and change password for that account with CLI
+7. Login to UI with new information and browse files...
+
+Provided that the user hasn't logged out, he won't even notice the password
+change. Files keep on syncing etc also. Also all the files removed from the
+libraries (don't delete the library itself, just the files) are removed from the
+synced clients.
+
+The issue seems to be related to ccnet handling user accounts instead of Django,
+which allows password changing through the daemon running (be default) at port
+13418. If I change port in ccnet.conf to another, the client can't connect and
+password can't be changed (before changing the ccnet.conf for other account to
+correspond).
+
+Changelog says:
+
+Use unix domain socket in ccnet to listen for local connections. This isolates
+the access to ccnet daemon for different users. Thanks to Kimmo Huoman and Henri
+Salo for reporting this issue.
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
