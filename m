@@ -1,43 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/05/5
-Message-Id: <201402051239.s15CdI6Y021951@linus.mitre.org>
-Date: Wed, 5 Feb 2014 07:39:18 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 737385@...s.debian.org
-Subject: Re: CVE request: a2ps insecure temporary file use
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/24/2
+Message-ID: <20140824045114.GQ12888@oevtugenva.nrevsny.pk>
+Date: Sun, 24 Aug 2014 00:51:14 -0400
+From: Rich Felker <dalias@...c.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: FYI, change to Secunia vuln db EULA
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sat, Aug 23, 2014 at 09:49:03PM -0500, ken wrote:
+> 
+> I feel a need to clarify my previous email ...
+> 
+> Secunia obviously has an extremely useful and comprehensive
+> vulnerability database.  All of their vulnerability mgmt, patch mgmt,
+> and scanning products are excellent too.  The IT industry needs high
+> quality vuln and patch mgmt solutions like this, and Secunia needs
+> revenue so they can maintain and improve their products/solutions,
+> conduct research, build new products, make a profit, etc.
+> 
+> There are some potentially adverse consequences to their decision to
+> close their vulnerability database:
+> 
+> 1) All direct links to Secunia vuln db entries are effectively dead
+> ends now ... unless the link clicker is a student, press, private
+> person, hobby/non-commercial security researcher and gets "community"
+> (free) access, OR is a non-profit organization, private company, or
+> public authority/entity who has paid the annual fee[1] for the VIM
+> product.  I imagine most people reading this email fall into the
+> latter group, do not have access, and will need to pay for access.
 
->> https://bugzilla.redhat.com/show_bug.cgi?id=1060630#c5
+Are you saying that the links go to a paywall now? Or simply that the
+person who follows the link has some "obligation not to look" unless
+they fall in one of the categories in the first group above? If what
+you mean is the latter, then I think the issue only matters to parties
+who are conducting large scale, programmatic access to their database.
+Anyone is a "private person", and can certainly justify access to any
+one record (or any reasonable amount of records) as a private person.
+Only in the case of bulk automated access where it's clear that the
+access is being performed on someone else's behalf or to scrape the
+data, etc. is there any question.
 
->> * Mon Feb 12 2001 Tim Waugh <twaugh@...hat.com>
->> - Fix tmpfile security patch so that it actually _works_ (bug #27155).
+> 2) Vendors can apparently no longer review the Secunia vuln db so they
+> can submit updates and corrections (unless the vendor has purchased
+> the VIM product?).  Will this result in Secunia vuln db info becoming
+> less accurate and up-to-date?
 
->> And notes 
->> http://pkgs.fedoraproject.org/cgit/a2ps.git/plain/a2ps-4.13-security.patch 
->> is the patch.
+Directly, probably not. If they decide to be jerks about it though,
+people might just get fed up with dealing with them and not bother to
+contribute.
 
-> I spent a little time looking but could not determine if a release was 
-> made to fix only part of the problem. So one ID is fine by us.
+> 3) If you maintain a public or private vulnerability database, or
+> vulnerability website, you will no longer be able to effectively
+> reference or cross-reference the Secunia vuln db, unless you pay for
+> access.  How will this impact OSVDB, NVD, CVE, IAVM, PacketStorm, etc?
 
-Use CVE-2001-1593.
+At least in the US and most jurisdictions I'm aware of, copyright has
+no bearing on your right to link, so I don't see this having any
+effect.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+> Depending on your interests in vulnerabilities and role(s) in the
+> security industry, you may see other consequences.
+> 
+> 
+> Bottom line for me is that I had been using the public, freely
+> available Secunia vuln info every day for over 10 years, and I had
+> been regularly submitting vuln info/updates/corrections.  I'm
+> currently not using it at all (in compliance with their EULA).  If
+> the VIM cost fits into my budget, then I'll definitely purchase it.
 
-iQEcBAEBAgAGBQJS8jCQAAoJEKllVAevmvmsYOsH/ip2JAUT4e/oQ9/TjFuOtR7E
-QbmXDrv18am2/MCQ8phfXIelF8CAByXdvbdj1KNwyTSxqTcs+6HZDNNsTt66wIsI
-H6Yajsc3HPdAITKOvL6oiS1kl0d/Ndbk36+KBrCmwCqp09tHKIU3UoN5jiZXMQIr
-A3RaQ6/MdWyd9QQ9MsgwclLwvkzBzlbgc76N/TCaIv/hEf+gKkeOF6S+el1pJdQ4
-XTZ9FDlaRv6kRUO+fePLCU0CANmZj5vJNDA1JicElUly/lFTpTxB8ZB/1JAyeEC9
-eD8KQ7RjUrUiwXKDTbm33ekGLPY6wpNfSEtM9e7N26omhnCeENwxMU2ePoVA7ws=
-=LDwH
------END PGP SIGNATURE-----
+In my opinion, there's something wrong with feeling obligated to pay
+to access something you contributed to building with the understanding
+that you were building a community resource, and even more wrong with
+taking data built for you by a community and trying to restrict that
+community's access to it.
+
+Rich
