@@ -1,55 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/7
-Message-Id: <20141126074624.DB5BE336017@smtpvbsrv1.mitre.org>
-Date: Wed, 26 Nov 2014 02:46:24 -0500 (EST)
-From: cve-assign@...re.org
-To: cherepan@...me.ru
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: LibreOffice -- several issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/24/1
+Message-ID: <53F9529F.4070808@kenwilliams.us>
+Date: Sat, 23 Aug 2014 21:49:03 -0500
+From: ken <ken@...williams.us>
+To: oss-security@...ts.openwall.com
+Subject: Re: FYI, change to Secunia vuln db EULA
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> https://bugs.freedesktop.org/show_bug.cgi?id=86449
-> Crash importing malformed .rtf -- potentially exploitable for RCE
+I feel a need to clarify my previous email ...
 
-Use CVE-2014-9093 for bug 86449.
+Secunia obviously has an extremely useful and comprehensive
+vulnerability database.  All of their vulnerability mgmt, patch mgmt,
+and scanning products are excellent too.  The IT industry needs high
+quality vuln and patch mgmt solutions like this, and Secunia needs
+revenue so they can maintain and improve their products/solutions,
+conduct research, build new products, make a profit, etc.
 
-(For reference, http://openwall.com/lists/oss-security/2014/11/19/3 is
-about finding a series of bugs in version 3.5.4 on Debian stable -- in
-other words, a version based on a mid-2012 codebase -- and reporting
-them directly upstream without commenting on 4.2.x or 4.3.x.)
+There are some potentially adverse consequences to their decision to
+close their vulnerability database:
 
-For the others, in addition to the
-http://openwall.com/lists/oss-security/2014/11/19/18 post, "Michael
-Meeks from officesecurity@...ts.freedesktop.org indicated that they
-are not interested in CVEs for DoS-only crashers" is also relevant.
-This has multiple possible interpretations, e.g., "not interested"
-because their security team won't track the issues using CVEs, or "not
-interested" because they are not vulnerabilities. The "is a security
-issue because it takes down all other windows with it" is often
-relevant to CVE because it represents a default security policy if
-there is no information from a vendor about their security policy.
-However, a vendor is free to establish a security policy such as "if
-you are working with a potentially untrusted file, you MUST NOT have
-any other windows open in which you are maintaining state about your
-other editing work." In other words, they can define all DoS-only
-crashers to be applicable only in unsupported use cases.
+1) All direct links to Secunia vuln db entries are effectively dead
+ends now ... unless the link clicker is a student, press, private
+person, hobby/non-commercial security researcher and gets "community"
+(free) access, OR is a non-profit organization, private company, or
+public authority/entity who has paid the annual fee[1] for the VIM
+product.  I imagine most people reading this email fall into the
+latter group, do not have access, and will need to pay for access.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+2) Vendors can apparently no longer review the Secunia vuln db so they
+can submit updates and corrections (unless the vendor has purchased
+the VIM product?).  Will this result in Secunia vuln db info becoming
+less accurate and up-to-date?
 
-iQEcBAEBAgAGBQJUdYFGAAoJEKllVAevmvmsaSUH/3uQpWpaK6vMVpN3BrWaj/uS
-IqjmfqeeyHpUtrOC+zYmFI+1gMXwj4jQvmWz9RB2LFWLWbsn9gLt5xG+0D8CTX6m
-VWk9PnNnIbfKToWfEu1m0JsvZNolihIiGMwITx8YeSEF4s1DfwkSZIwCx/WBm1/m
-yRRSJPmyrYlMKA9985c6FphnTQ/+6IteypvdwdX5gfs0L1OEB0UeDbQCqe+0SY3N
-rnkSZAPLtUDIjUplAI1UlVeh35dCJ1nWuBG+1yUmzJlaz+QSaMR6iUQWcYbpdNfy
-tBPr+Fhh1ep8SyrLVhjEGGU+sFKJCEUD0iN0J0AC1iRklYOqKOtI4T8VNh2UCOY=
-=dyEX
------END PGP SIGNATURE-----
+3) If you maintain a public or private vulnerability database, or
+vulnerability website, you will no longer be able to effectively
+reference or cross-reference the Secunia vuln db, unless you pay for
+access.  How will this impact OSVDB, NVD, CVE, IAVM, PacketStorm, etc?
+
+Depending on your interests in vulnerabilities and role(s) in the
+security industry, you may see other consequences.
+
+
+Bottom line for me is that I had been using the public, freely
+available Secunia vuln info every day for over 10 years, and I had
+been regularly submitting vuln info/updates/corrections.  I'm
+currently not using it at all (in compliance with their EULA).  If
+the VIM cost fits into my budget, then I'll definitely purchase it.
+
+Maybe this is a necessary and/or business-savvy decision for Secunia.
+I don't know, and it's not my place to guess or judge.  I simply
+consider it unfortunate that a once publicly accessible and invaluable
+vuln db is now closed to many/most of us.
+
+
+Regards,
+Ken
+
+The opinions and statements in this email are my own and do not
+necessarily reflect the opinions or policies of my employer.
+
+
+[1] $28,400/year as of Feb 2013.  May not fit into budget for some
+non-profits, govt agencies, smaller businesses.
+Reference: http://goo.gl/N2DikW
