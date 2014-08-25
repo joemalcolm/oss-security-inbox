@@ -1,25 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/14
-Message-ID: <54296DB0.1000900@case.edu>
-Date: Mon, 29 Sep 2014 10:33:20 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Osmond Sun <osmond.sun@...il.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/25/1
+Message-Id: <20140825170929.6085E6C0056@smtpvmsrv1.mitre.org>
+Date: Mon, 25 Aug 2014 13:09:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: robert@...oraproject.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Multiple incorrect default permissions in Zarafa
 Content-Type: text/plain; charset=utf-8
 
-On 9/29/14, 9:01 AM, Osmond Sun wrote:
-> I found the function parsing is still imperfect.
-> e.g. $env x="() { :;}; `touch vulnerablefile`" bash -c "echo this is a test "
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-If that is the command you ran, this doesn't show any vulnerability.  The
-double quotes surrounding the assignment to x in the argument to `env'
-mean that command substitution is performed before env runs.  It's the
-command substitution that creates the file, so the file exists before bash
-is invoked.
+> I discovered that the Zarafa Collaboration Platform has multiple incorrect
+> default permissions (CWE-276):
 
-Chet
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+This needs separate CVE IDs because the product/version information
+isn't identical in any of the cases.
+
+> 1. In order to fix CVE-2014-0103, Zarafa introduced constants PASSWORD_KEY
+> and PASSWORD_IV in /etc/zarafa/webaccess-ajax/config.php (Zarafa WebAccess)
+> and /etc/zarafa/webapp/config.php (Zarafa WebApp), both are the upstream
+> path names of a default installation, downstream names might be different.
+> Both files have default permissions of root:root and 644, thus decryption
+> of the symmetric encrypted passwords in the on-disk PHP session files is
+> possible again (similar like initially described in CVE-2014-0103). Affects
+> Zarafa WebAccess >= 7.1.10, Zarafa WebApp >= 1.6 beta.
+
+Use CVE-2014-5447. The scope of this CVE ID is only the 0644 permission issue,
+not anything about the encryption algorithm. There is only one CVE ID because
+it appears that the design was chosen once and then directly copied into
+two products that have their own pathname conventions.
+
+
+> 2. The log directory /var/log/zarafa/ is shipped by default with root:root
+> and 755 and all created log files by the Zarafa daemons have by default
+> root:root and 644. This is leaking (depending on the log level of the given
+> service) only e.g. subject, sender/recipient, message-id, SMTP queue id of
+> in- and outbound e-mails but might be even a cleartext protocol dump of
+> IMAP, POP3, CalDAV and iCal as well (including possible credentials) to any
+> local system user. Affects Zarafa >= 5.00.
+
+Use CVE-2014-5448. The scope of this CVE ID is only the permission issue.
+In some cases of other products, there have been reported vulnerabilities
+related to the existence of a protocol dump (e.g., the administrator may be
+configuring protocol dumps without realizing this, or the dumping code
+tried to remove especially sensitive information but failed, etc.). Any
+such issue, if one exists, would have a separate CVE ID.
+
+
+> 3. The directories /var/lib/zarafa-webaccess/tmp/ (Zarafa WebAccess) and
+> /var/lib/zarafa-webapp/tmp/ (Zarafa WebApp) are read- and writable by the
+> Apache system user by default - but also world readable for local system
+> users (e.g. apache:apache and 755 on RHEL). Thus all the temporary session
+> data such as uploaded e-mail attachments can be read-only accessed because
+> all created files below previously mentioned directories have permissions
+> 644, too. Upstream path names changed over the time and releases. Affects
+> Zarafa WebAccess >= 4.1, Zarafa WebApp (any version).
+
+Use CVE-2014-5449. The scope of this CVE ID is only the permission
+issue. There is only one CVE ID because it appears that the design was
+chosen once and then directly copied into two products that have their
+own pathname conventions.
+
+
+> 4. The optional (but proprietary) license daemon /usr/bin/zarafa-licensed
+> runs by default with root permissions, the subscription/license key is put
+> into '/etc/zarafa/license/*'. The license files are recommended (according
+> upstream documentation) to be created using echo(1) which usually leads to
+> root:root and 644. But the parent directory /etc/zarafa/license/ is shipped
+> by default with root:root and 755. As result the key files can be accessed
+> and copied by any local system user. Affects Zarafa >= 4.1.
+
+Use CVE-2014-5450. The scope of this CVE ID is only the permission
+issue. In some cases of other products, there have been reported
+vulnerabilities related to the presence of sensitive data on the
+command line, which is exposed to local users who run the ps program
+or a similar program. Here,
+
+  http://doc.zarafa.com/6.40/Administrator_Manual/en-US/html/_configure_the_license_manager.html
+
+does not specify that only root may be logged in during execution of
+the echo command. If this is a vulnerability in Zarafa, then a
+separate CVE ID is needed.
+
+This might be an open question. Stealing a license key might have an
+adverse effect on the vendor's revenue, but perhaps doesn't have an
+adverse effect on confidentiality, integrity, or availability of data
+within the specific Zarafa instance. There are many possible vendor
+strategies for detecting and thwarting stolen license keys. Some of
+these do have an availability impact.
+
+If the original vulnerability report was coordinated with upstream,
+then maybe upstream has agreed that weak permissions for license files
+were unintended. However, maybe upstream intentionally chose "echo" as
+a security/complexity tradeoff (i.e., the attack is relatively
+unlikely, and "echo" was an easy way to write the documentation).
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT+20eAAoJEKllVAevmvmsbKYH/2Qz1J3Ig/VAIc8EfWmrzUoP
+MGipVqXOUyI6layARuZN7NnEqVuW/tafvWwCDXMcFX21KE74w7b3RhAh574i2/wU
+hwLIKrM9IrMhMblnaQH+urBoddB5Qw4FST0XgcevwQxWyak19j2CdnWrSn+yPTKo
+r5vcqsy39xobYfaGLB3L5zd+j24Aqi8ZpvK56miwFtfujX1eUQsyMKCVMYDRYaPU
+bSDrF7pDVYMq8oolBGVbCMwdLWGfoqYxT92Be+q7aruIfg+/7AetTSTTckO/Iid/
+pbkyTF8K2Wt2OKO2GJaab0tiU5vZ1vvEfRrqVfexM+t4Eg9RlF9jyJTkG2HatN0=
+=lLHM
+-----END PGP SIGNATURE-----
