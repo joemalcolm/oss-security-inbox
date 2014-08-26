@@ -1,32 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/6
-Message-ID: <548694FC.9070209@redhat.com>
-Date: Tue, 09 Dec 2014 11:51:48 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
-Subject: CVE question: Return of POODLE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/26/5
+Message-ID: <53FC4D2F.7070902@redhat.com>
+Date: Tue, 26 Aug 2014 11:02:39 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: cve-assign@...re.org, mmcallis@...hat.com
+CC: oss-security@...ts.openwall.com
+Subject: Re: Lua CVE request [was Re: CVE request: possible overflow in vararg functions]
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+On 08/25/2014 11:08 PM, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> We wanted to check whether we were interpreting this correctly before
+> proceeding to CVE assignment.
+>
+> http://openwall.com/lists/oss-security/2014/08/21/4 says "loadstring
+> accepts precompiled bytecode and does not perform sufficient
+> verification on it ... But it is not entirely clear if we can assume
+> that a trust boundary is crossed." We think this may mean something
+> like: "By default, an attacker who is able to control input to the
+> loadstring function can include a representation of os.execute in that
+> input. A realistic Lua program is (probably?) not going to call
+> loadstring unless it plans to run the chunk. Therefore the attacker
+> already has the privileges of the Lua process, and it is not relevant
+> that the attacker can also exploit implementation flaws in the
+> bytecode interpreter."
 
-Before i ask my question:
+Lua has some sandboxing functionality, but it can be bypassed by 
+supplying precompiled bytecode.  There have been extensive discussions 
+about this on the lua-users mailing list, e.g.:
 
-It seems some TLS implementations may be vulnerable to POODLE like 
-attack if they use SSL 3.0 type padding and the padding bytes are not 
-checked by the implementation.
+<http://lua-users.org/lists/lua-l/2011-10/msg01215.html>
 
-https://www.imperialviolet.org/2014/12/08/poodleagain.html
-https://devcentral.f5.com/articles/cve-2014-8730-padding-issue-8151
+> http://openwall.com/lists/oss-security/2014/08/21/4 also says "It is
+> possible to recognize a bytecode argument string filter that out, but
+> if you do not that, attacks against the bytecode interpreter are
+> possible." Were there missing words here (possibly "string and filter
+> that out")?
 
+Right, and that's a valid observation.
 
-CVE-2014-8730 was assigned to this issue (by MITRE i suppose) and its 
-not clear if this CVE has been assigned to their code or to the protocol 
-weakness.
+> In general, it seems that this observation about the bytecode
+> interpreter is largely unrelated to the
+> http://www.lua.org/bugs.html#5.2.2-1 bug report.
 
-I have not checked if any implementations are vulnerable, but could 
-MITRE please confirm if its ok to reuse this CVE if any crypto-libs are 
-found vulnerable, or if they plan to assign another CVE id?
+It's relevant to deciding whether there's security impact or not.  If 
+this functionality is utterly insecure anyway, this bug wouldn't be a 
+security bug.
 
+> Alternatively, there could be separate CVE IDs for
+> Lua programs that lack the filtering mentioned above. Is this issue
+> best considered to be not yet publicly disclosed?
+
+No, oss-security is a public list, and the general problem has been 
+widely discussed (see above).
+
+>> this modified reproducer crashes as well
+>
+> As far as we can tell, this is within the scope of the vendor's
+> disclosure, and isn't a separate problem. The
+> http://www.lua.org/bugs.html#5.2.2-1 bug report is about "vararg
+> functions with many fixed parameters called with few arguments."
+
+What I was trying to show is this: Existing code which uses a large 
+number of arguments (for example, for dissecting a table or string) 
+could expose this issue when called with too few arguments (say, if the 
+table was too short).  This means that a crafted argument to loadstring 
+is not always needed to trigger this bug, and the security properties of 
+loadstring do not matter.  In short, I think this vararg processing bug 
+should be treated as a security bug.
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Florian Weimer / Red Hat Product Security
