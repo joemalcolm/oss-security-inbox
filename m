@@ -1,21 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/7
-Message-ID: <20140623141327.GF29448@kludge.henri.nerv.fi>
-Date: Mon, 23 Jun 2014 17:13:27 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: WordPress plugin wp-gpx-maps wp-gpx-maps_admin_tracks.php Improper Admin Verification File Upload PHP Code Execution 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/26/1
+Message-Id: <20140826000046.ED92DC5050C@smtptsrv1.mitre.org>
+Date: Mon, 25 Aug 2014 20:00:46 -0400 (EDT)
+From: cve-assign@...re.org
+To: abn@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Multiple issues in com.ning:async-http-client
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2012 CVE identifier for Improper Admin Verification File Upload PHP
-Code Execution in WordPress plugin wp-gpx-maps, thanks. Changelog does not have
-fixed in version number listed.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-OSVDB: http://osvdb.org/82900
-Fix in 1.1.23 version: https://plugins.trac.wordpress.org/changeset/556274/wp-gpx-maps
-Plugin page: http://wordpress.org/plugins/wp-gpx-maps/
+> 1. async-http-client: SSL/TLS certificate verification disabled
+> https://github.com/AsyncHttpClient/async-http-client/issues/352
 
----
-Henri Salo
+Here, slandelle, representing the vendor, appears to mostly confirm
+the original discovery (the "would stop working with self-signed
+certificates" objection seems to have been dropped based on
+clarification from the discoverer). The primary issue seems to be the
+one mentioned in the
+https://github.com/AsyncHttpClient/async-http-client/issues/352#issuecomment-21795006
+comment -- specifically, the code's decision on whether to verify
+server certificates depends on unusual circumstances that might occur,
+for example, if HTTPS communication also uses client certificates.
+This decision process apparently has no relationship to the design
+objectives of the async-http-client product.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Use CVE-2013-7397 for this issue involving an unexpected/improper
+decision process.
+
+There is no CVE ID for the issue of whether the product should provide
+a simple way to disable certificate verification, given that enabling
+certificate verification is the default. The discoverer and vendor
+disagree about this.
+
+
+> 2. async-http-client: No SSL HostName verification
+> https://github.com/AsyncHttpClient/async-http-client/issues/197
+
+Here,
+https://github.com/AsyncHttpClient/async-http-client/issues/197#issuecomment-21760413
+mentions two closely related code problems. Better URLs for these are:
+
+  https://github.com/AsyncHttpClient/async-http-client/blob/a12093438aa28e559c30cbbf1c7162f7d468fa2b/api/src/main/java/org/asynchttpclient/AsyncHttpClientConfigBean.java#L69
+  https://github.com/AsyncHttpClient/async-http-client/blob/ff2d6b3b6776f1c15dd0e94e8d630ebfd868a0b0/api/src/main/java/org/asynchttpclient/AsyncHttpClientConfig.java#L619
+
+Also, jfarcand, representing the vendor, did an
+https://github.com/AsyncHttpClient/async-http-client/commit/3c9152e2c75f7e8b654beec40383748a14c6b51b
+merge for "Fix for #197 -- use a hostname verifier that does hostname
+verification." Use CVE-2013-7398 for this issue.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT+81JAAoJEKllVAevmvmsG4IIAKrP+jq03GfPA9o+s0VveyhI
+mJ/s8ft0ok9bAk6fewHZjoFDZBiq5v1Qk6rI081Ad6wEcGaRZSpptTP4xt5BUcIC
+0NdSdGNZVulJgSETUGsvJBDddKb0SHaOjQN1TdbqCW/BY+wdwHGwES5smNi6chAf
+HmClGSXguKeDMHqYGjIiBsfRTYtIYJCQj9GpSnnoJINHpaOc6dBbigkDZlaB4u9K
+UJBLvqTeJtAh6FsvBtlJlHjHBe46GwAmpEOYGDPmnVG1DUWsBMh/UL980pCLiX4A
+/1pIXRTtZv0a6slFll1/SciKv/LsA8l3gIVx8qXGu4lGsTZW0T336Ksf8xXayyo=
+=9fRx
+-----END PGP SIGNATURE-----
