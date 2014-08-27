@@ -1,45 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/12
-Message-ID: <20140929141221.GC17554@lappy.redhat.com>
-Date: Tue, 30 Sep 2014 00:12:23 +1000
-From: Grant Murphy <gmurphy@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-031] Admin-only network attributes may be reset to defaults by non-privileged users (CVE-2014-6414)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/27/3
+Message-Id: <20140827052420.EF0581F050D@smtpksrv1.mitre.org>
+Date: Wed, 27 Aug 2014 01:24:20 -0400 (EDT)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com, 759282@...s.debian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: php-pear, pear's insecure /tmp/ use for cache data
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: OSSA-2014-031
-CVE: CVE-2014-6414
-Date: September 29, 2014
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Title: Admin-only network attributes may be reset to defaults by non-privileged users
-Reporter: Elena Ezhova (Mirantis)
-Products: Neutron
-Versions: up to 2013.2.4 and 2014.1 versions up to 2014.1.2
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=759282
 
-Description:
-Elena Ezhova from Mirantis reported a vulnerability in Neutron. By updating a network
-attribute with a default value a non-privileged user may reset admin-only network
-attributes. This may lead to unexpected behavior with security implications for
-operators with a custom policy.json, or in some extreme cases network outages
-resulting in denial of service. All deployments using neutron networking are
-affected by this flaw.
+Use CVE-2014-5459.
 
-Juno (development branch) fix:
-https://review.openstack.org/114531
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Icehouse fix:
-https://review.openstack.org/123849
-
-Notes:
-This fix will be included in the Juno release 2014.2.0 and in
-future 2014.1.3 release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6414
-https://launchpad.net/bugs/1357379
-
---
-Grant Murphy
-OpenStack Vulnerability Management Team
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJT/WsUAAoJEKllVAevmvmsaXEH/3bwwhDnyGdxilowL2kx/S+j
+gRmak0Uegsz5ZfDgl3PIzxKBc2EkwZrRhPlgeBVx6+OtGlp6MHjrMXYHp06LJBXj
+RegI3t+gyBXEjUrOHmOHdY1N7RnprMu5YZnB5LErKicqp0SivDEDcSiecSbDTk9o
+LXlvE1mPHfZzwhiqWUtFfyNVUb7CmnQWT5WLgWDaRVAXIqWNIiv/fwwIJgD3MTSp
+k6WmlhCwXAWBLq3t8zgV8jSSsZW2KCgFpzUJEZuzPlTpSaZys6zCl2s8tgfwpGCj
+zWVZmyRmn6IAC6t/huK/Zs3nhuNX2SKksLGtxVnGvklNd1gkUimvqVDSX2YZ1Wk=
+=S9dC
+-----END PGP SIGNATURE-----
