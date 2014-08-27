@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/21/4
-Message-ID: <CALCETrXLM_-4g3SzJd5kcMuHji5j3WLmybMiOxLaH87WL=zRTA@mail.gmail.com>
-Date: Tue, 21 Oct 2014 13:48:03 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
-Subject: CVE-2014-3690: KVM DoS triggerable by malicious host userspace
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/27/4
+Message-Id: <20140827221432.152E3C00FB@smtp.hushmail.com>
+Date: Wed, 27 Aug 2014 23:14:31 +0100
+From: "Benjamin Harris" <bch@...h.ai>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: XRMS SQLi to RCE 0day
 Content-Type: text/plain; charset=utf-8
 
-[sorry for somewhat late notice -- I didn't notice that the patch was
-public until just now]
+Hi
 
-KVM has a bug that allows malicious host user code that can open the
-/dev/kvm device on a VMX (Intel) machine to DoS the system.  (In my
-proof of concept, the DoS is a rather spectacular failure of the whole
-system, although I haven't checked whether the kernel panics.  A more
-refined exploit *might* be able to kill targetted user processes, but
-it would be tricky and is subject to possibly unavoidable races that
-are likely to take down the whole system.)
+OSS-Security: Can I request a CVE for this please?
 
-This is *not* triggerable by a guest, although a guest that can
-compromise its host QEMU could use this bug to take down everything
-else running on the host.
+XRMS Description:
+----------------------
 
-I would guess that all kernels that support VMX are vulnerable, but I
-haven't tested old kernels.
+The most advanced open source customer relationship management 
+(CRM), Sales Force Automation (SFA) suite: also features business 
+intelligence (BI) tools, Computer Telephony Integration (CTI), and 
+advanced plugin architecture. PHP/ADOdb/LAMP
 
-The fix is here:
+Brief:
+-------------------------------
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=d974baa398f34393db76be45f7d4d04fbdbb4a0a
+I tried to report this to the developers/get it fixed a month ago, 
+although I've had no response from the developers. This should work 
+against latest, was found a long time ago, and I recently found it 
+while brushing off some hard drives.
 
-PoC available upon request, and I'll post it publicly in a few days,
-because it's kind of fun to watch the fireworks.
+Details:
+------------------------
 
---Andy
+We get SQL injection via $_SESSION poisoning which we use to 
+retrieve admin credentials. We then authenticate with these 
+credentials and exploit a trivial command injection. Attached is a 
+working POC.
+
+Many thanks,
+Ben
+View attachment "release.py" of type "text/x-python" (8063 bytes)
