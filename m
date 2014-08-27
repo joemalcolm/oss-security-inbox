@@ -1,78 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/31/1
-Message-ID: <CADvE9NmXfTL0M4CO49sg_1u7UdfxavQZEZcQqHjRA+50R9o6mw@mail.gmail.com>
-Date: Sun, 31 Aug 2014 01:10:54 +0000
-From: "Jorge Manuel B. S. Vicetto" <jmbsvicetto@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Fwd: ezmlm warning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/27/2
+Message-Id: <20140827052039.1C49D1F050D@smtpksrv1.mitre.org>
+Date: Wed, 27 Aug 2014 01:20:39 -0400 (EDT)
+From: cve-assign@...re.org
+To: fweimer@...hat.com, mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Lua CVE request [was Re: CVE request: possible overflow in vararg functions]
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm forwarding this email to the ml as I just noticed this is the 3rd
-time since Jun 19th that because of DMARC emails from some members are
-being rejected by receivers domains, like gmail for me. As I don't
-recall reading about this topic before in this ml, I'm raising the
-issue in case others are unaware and start getting warnings for losing
-emails or are surprised by some members not getting their emails.
->From the warnings sent to me, this seems to have affected messages
-with numbers 10358, 10965, 10969, 10972, 13596 and 13652.
-I'm not sure if at this point there's anything that can be done by
-members to avoid losing emails - except perhaps using a different mail
-service or hosting their own as it seems unlikely that gmail, yahoo
-and others can be forced to change their policies.
-I first heard about this from my colleague at Gentoo Robin H. Johnson
-(robbat2), who raised this issue with the IETF[1]. I see that gmail
-now has a support article about it as well[2].
+> http://www.lua.org/bugs.html#5.2.2-1
+> Stack overflow in vararg functions with many fixed parameters called with few arguments.
 
- [1] - http://www.ietf.org/mail-archive/web/ietf/current/msg87171.html
- [2] - https://support.google.com/mail/answer/2451690
-
-Regards,
-
-Jorge Manuel B. S. Vicetto
-Gentoo Developer
+Use CVE-2014-5461.
 
 
----------- Forwarded message ----------
-From:  <oss-security-help@...ts.openwall.com>
-Date: Sat, Aug 30, 2014 at 10:47 AM
-Subject: ezmlm warning
-To: jmbsvicetto@...il.com
+> Lua has some sandboxing functionality, but it can be bypassed by
+> supplying precompiled bytecode.  There have been extensive discussions
+> about this on the lua-users mailing list, e.g.:
+> 
+> <http://lua-users.org/lists/lua-l/2011-10/msg01215.html>
 
+We did not immediately find information to decide on the number of CVE
+IDs. Picking a few random frames from
+http://www.youtube.com/watch?v=OSMOTDLrBCQ suggested that
+approximately three CVE-2011-#### IDs could be assigned. If anyone has
+better information, or even the same information in a text format,
+that could be useful (if the CVE-2011-#### IDs are needed).
 
-Hi! This is the ezmlm program. I'm managing the
-oss-security@...ts.openwall.com mailing list.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-<snip>
-
-Messages to you from the oss-security mailing list seem to
-have been bouncing. I've attached a copy of the first bounce
-message I received.
-
-<snip>
-
-   13596
-   13652
-
---- Enclosed is a copy of the bounce message I received.
-
-Return-Path: <>
-Received: (qmail 26140 invoked for bounce); 18 Aug 2014 11:41:16 -0000
-Date: 18 Aug 2014 11:41:16 -0000
-From: MAILER-DAEMON@...her.openwall.net
-To: oss-security-return-13596-@...ts.openwall.com
-Subject: failure notice
-
-Hi. This is the qmail-send program at mother.openwall.net.
-I'm afraid I wasn't able to deliver your message to the following addresses.
-This is a permanent error; I've given up. Sorry it didn't work out.
-
-<jmbsvicetto@...il.com>:
-74.125.143.27 failed after I sent the message.
-Remote host said: 550-5.7.1 Unauthenticated email from yahoo.com is
-not accepted due to domain's
-550-5.7.1 DMARC policy. Please contact administrator of yahoo.com domain if
-550-5.7.1 this was a legitimate mail. Please visit
-550-5.7.1 http://support.google.com/mail/answer/2451690 to learn about DMARC
-550 5.7.1 initiative. kk9si21001854lbc.122 - gsmtp
+iQEcBAEBAgAGBQJT/WotAAoJEKllVAevmvmsIakH/00bWTQa336V/umZwZBZdlf1
+hRxiiKg+ra2kDTHaZTqF/bz4j6LPrsYXD2antj9V2VoI3iMgxOemdajYC9Um3QDq
+x9ocSRDnxoxsMhvapO+2Y0DsnaHzWwj008mTB1Sl5OuEPTnNK3V4gRlMErZU4Mi/
+meJqBDfh4XemDnQ+3TtAbf6FeY/eDTOIujf118uSDYdw77r7vig217X7rbH2BFAt
+9QPjWylkGyXiX2P+C6k4TbSBLfMpyzHNBE9CTtrm7FV0wsjzll7F6ylpOaeS3VwH
+G5TRK4lZQqoRMauiERyaCZ2rJZGQKUyV2LPbtn7F5B7pjun1Hei8rv2fKoGPej4=
+=DZHj
+-----END PGP SIGNATURE-----
