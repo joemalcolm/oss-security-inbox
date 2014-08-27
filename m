@@ -1,64 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/11
-Message-ID: <CAKcmtDwgazRxxrFK2gMxexw=0oAFXdyT+qMyPpJxg=w94DF-uQ@mail.gmail.com>
-Date: Fri, 28 Feb 2014 13:05:51 -0800
-From: Chris Steipp <csteipp@...imedia.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE requests: MediaWiki 1.22.3, 1.21.6 and 1.19.12 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/27/1
+Message-Id: <20140827051235.3A34D6C0006@smtpvmsrv1.mitre.org>
+Date: Wed, 27 Aug 2014 01:12:35 -0400 (EDT)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux Kernel unbound recursion in ISOFS
 Content-Type: text/plain; charset=utf-8
 
-On Feb 28, 2014 12:01 PM, "Simon McVittie" <smcv@...ian.org> wrote:
->
-> On 28/02/14 18:26, cve-assign@...re.org wrote:
-> > The first CVE would, roughly, have a root cause of "does not
-> > recognize that a trust relationship with a specific external site
-> > is reasonably required for use of a namespace."
->
-> Please note that (unless XML is being used very weirdly here) these
-> URLs are not going to be dereferenced: "XML elements in namespace
-> 'http://ns.adobe.com/Flows/1.0/'" merely describes a set of elements,
-> in the same way that "XML elements whose name starts with 'abc'"
-> describes a set of elements. The trust relationship that seems to have
-> been applied here goes something like this:
->
->     I trust that none of my users' SVG viewers will ever execute
->     JavaScript (etc.) as a result of seeing arbitrary
->     XML elements in the namespace <http://ns.adobe.com/Flows/1.0/>,
->     excluding any that I have specifically filtered out
->
-> which doesn't seem like a great approach.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Correct. The whitelist of namespaces is an attempt to limit the scope of
-what we have to blacklist.
+> https://code.google.com/p/google-security-research/issues/detail?id=88
 
->
-> (Analogously, you could say "my HTML sanitizer is going to allow all
-> HTML elements that start with abc, because I'm pretty sure nobody will
-> implement an element containing JavaScript that starts with abc"; that
-> also seems an undesirable way to go about it, because as soon as some
-> browser vendor decides that an <abcScript> element is their next great
-> new feature, you have cross-site scripting.)
->
-> If element is defined in the current SVG standard not to cause code
-> execution, it's reasonable to think that all non-faulty SVG viewers
-> will not execute arbitrary code for them; but extensibility means that
-> it is not reasonable to believe that no SVG viewer will ever execute
-> arbitrary code as a result of encountering elements that are *not* in
-> the current SVG standard. Counter-example; imagine that SVG 2.0 is
-> published tomorrow and adds a <javascript> element and an
-> onGyroscopeMotion attribute to the SVG namespace, and browser vendors
-> implement them. A blacklist-based sanitizer will not protect you from
-> that instance of XSS.
->
-> As with any extensible format that can contain scripting and will be
-> interpreted by browsers, if untrusted SVG needs to be made safe, then
-> sanitizing via a whitelist of known-good elements and attributes is
-> the only safe way to deal with it. In the case of SVG, that whitelist
-> is likely to be inconveniently long.
+> - recurse.iso: crashes / reboots a kernel due to kernel stack overflow / corruption.
 
-It's very long. I've been working on it.
+Use CVE-2014-5471.
 
 
->
->     S
+> - deadlock.iso: causes a deadlock in the mount process in "inode_wait"
 
+Use CVE-2014-5472.
+
+
+> https://github.com/torvalds/linux/commit/410dd3cf4c9b36f27ed4542ee18b1af5e68645a4
+
+> We did not check relocated directory in any way when processing Rock
+> Ridge 'CL' tag.
+
+There are the two CVE IDs above, instead of one CVE ID for "did not
+check ... in any way."
+
+CVE-2014-5471 is about the need for code to prevent unchecked
+recursion (CWE-674), whereas CVE-2014-5472 is not about CWE-674. On
+some systems, CVE-2014-5472 might have only a minor security impact by
+enabling a user to start an unkillable process (i.e., it would be
+minor if there were a low limit on the number of processes the user is
+allowed to start).
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJT/WhZAAoJEKllVAevmvmskWYH/2YTlXYpcG5AgNusDLxCEdqs
+r+1qOetYYD2VhLr3LqcI0gDAU26V2sNcCej1h4wiVx4q83yN95ZleCYOEEzy99OG
+vjQQp/bnhcL1++UJEZvnxvSXbUw8sOcLky60GEHQ6F+MICZcCAUKShtOn0meeQgr
+Cke9dXw8pcXFmt7N8R+ztdpot4pxPKUVNmiNNhKC6q9yIQQ+rDVnYD+81+l5vMD3
+fpFunsqUclRczEBoh5ptyZ89mNFUytlz1R1gFxN/3fkseFfxybVpBKL3XW364USj
+ett5kJxt/jI2yam7rP/eAV166EtjenBNgS6q6boFO8GiyM6OsUYVsYBIUEhuB24=
+=R3U4
+-----END PGP SIGNATURE-----
