@@ -1,67 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/17
-Message-ID: <20141008151122.GB3882@chaz.gmail.com>
-Date: Wed, 8 Oct 2014 16:11:22 +0100
-From: "stephane.chazelas" <stephane.chazelas@...il.com>
-To: "David A. Wheeler" <dwheeler@...eeler.com>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Stéphane Chazelas: How *DID* you find Shellshock?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/27/7
+Message-ID: <53FE6F3E.1050502@redhat.com>
+Date: Wed, 27 Aug 2014 17:52:30 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Open Source only?
 Content-Type: text/plain; charset=utf-8
 
-2014-10-08 10:26:21 -0400, David A. Wheeler:
-> This is a question for Stéphane Chazelas, but I'm "cc"ing
-> oss-security because I think many of us want to know the
-> answer.
+On 27/08/14 05:04 PM, Solar Designer wrote:
+> Hi,
 > 
-> Stéphane: How *DID* you find Shellshock, in as much detail as you can recall?
+> I've just rejected a posting giving the following reason:
 > 
-> I'm told you found the bug after "reflecting on an earlier
-> bug" you found in bash "a few months earlier."
-> (http://www.smh.com.au/it-pro/security-it/stephane-chazelas-the-man-who-found-the-webs-most-dangerous-internet-security-bug-20140927-10mixr.html)
+> Message lacks Subject, and the software appears to be non Open Source:
+> partial(?) source code is available, but under a EULA that doesn't
+> appear to meet OSI definition.
 > 
-> What I'm hoping is that we can learn some lessons and re-apply
-> them elsewhere.
-[...]
+> The message was CC'ed to full-disclosure, so it will probably appear
+> there.
+> 
+> While message lacking Subject is a technicality, which the sender may
+> address (and resend the message), the issue of software that comes with
+> source code, but isn't under an Open Source license is one we might want
+> to decide on, if we haven't already (I think we have, which is why I
+> mentioned it as one of two reasons to reject that posting).  Also, it
+> may at times be tricky (and unreliable and time-consuming) for list
+> moderators to determine whether a license is Open Source or not, as well
+> as whether the software is possibly dual-licensed.  Should we perhaps
+> err on the side of approving postings whenever in doubt?
 
-That's something I've been asked often and all the journalists
-have transformed what I said.
+Simple: If we go with Open Source only then "is the code available under
+an approved license"?
 
-In any case, I didn't find the bug by observing exploits, I have
-no reason to beleive it's been exploited before being disclosed
-(though of course I can't rule it out). I did not find it by
-looking at bash's code either.
+http://opensource.org/licenses
 
-some copy-pasting of what I've said to others:
+Obviously if there needs to be an exception (e.g. a closed source/poorly
+licensed source interacts significantly with something Open Source it
+might be worth discussing).
 
-In July, I had found a vulnerability in the GNU libc (not bash)
-related to environment variables (CVE-2014-0475). It could be
-network exploitable with one particular vector: the bypass of
-OpenSSH's ForceCommand (used for instance in git servers or
-poor-man's VPNs). And it was agravated by a poor design choice
-of bash [(actually two: the parsing of .bashrc over ssh and the
-locale dependant parsing (that latter one not specific to
-bash))] which again could cause arbitrary command execution if
-enough conditions were met (a very narrow attack surface
-compared to shellshock).
+The other aspect of this: in my experience the majority of closed source
+vendors just don't care about security. So discussing it, especially
+without their input/even being aware of it is quite pointless.
 
-Again, that was not following any observation of an exploit
-attempt, just a reflection on a mechanism I knew about.
-
-I put that attack vector in context with that little known
-feature of bash, the exporting/importing of functions for which
-I already knew part of the mechanism. Started to think of the
-possible way it was implemented, thought that it could very well
-be the very simplest way, in which case that was a big security
-hole.
-
-More details at
-
-http://thread.gmane.org/gmane.comp.shells.bash.bugs/22367
-Which I've just posted.
-
-and:
-
-http://thread.gmane.org/gmane.comp.shells.bash.bugs/22096
+> Alexander
 
 -- 
-Stephane
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
