@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/14
-Message-Id: <201401072219.s07MJ7JQ026776@linus.mitre.org>
-Date: Tue, 7 Jan 2014 17:19:07 -0500 (EST)
-From: cve-assign@...re.org
-To: ratulg@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: graphviz: stack-based buffer overflow in yyerror()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/28/2
+Message-ID: <20140828065641.10074f2d@pc>
+Date: Thu, 28 Aug 2014 06:56:41 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Open Source only?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 27 Aug 2014 17:52:30 -0600
+Kurt Seifried <kseifried@...hat.com> wrote:
 
->an error within the "yyerror()"
->function (lib/cgraph/scan.l) and can be exploited to cause a stack-based
->buffer overflow via a specially crafted file.
+> Simple: If we go with Open Source only then "is the code available
+> under an approved license"?
+> 
+> http://opensource.org/licenses
 
-Use CVE-2014-0978.
+Being part on the Gentoo licensing team for a while I can tell you that
+there exists no list of approved licenses that is nearby complete
+(neither FSFs nor OSIs is anywhere near).
+There's a very large number of licenses out there that comply with
+every definition of Free Software or Open Source Software that you'll
+find in no list whatsoever, mostly slight variations of the various
+BSD-alike licenses that are only used for a single piece of software.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+As for the original matter, I agree that we should go with open source
+licenses only, however given I know that it can sometimes be hard to
+decide, I think nobody should blame the list moderators if they decide
+in doubt to let messages through if they have unclear licensing
+situation. Because doing the research if something should be considered
+foss can sometimes be painful and a lot of work.
 
-iQEcBAEBAgAGBQJSzH0dAAoJEKllVAevmvmsdcAIALBfNun5cNjVGVEVmWYQIncL
-cZIWWhasJDtZoSSP7sEqSWUnTvIft/9Ke6O6dCykngQo6kIEQYqUfxeKpB2c+Asi
-b144u4i7nLyustXMCAHkJ58Z2sr5+IfvrjY8g7MzCQU3eRVw4O4NcNGK7qmU3nyv
-D3YX3b4ON2a6FWmGNFYmo9aJ7x1suMIjXKPqM7m//+6qpEdSH7kETMvLR86lJZuj
-L2FBvbPVvpN8VgAMrASONQBMsVAaqXDSuizQgfAxqktqBCO/8lSsJ+0kE4ybMHkr
-gN1hL4z+mo7gkVqeaemtds41ZaM51pAQvp+vkUGx3y35SppqcxiSr55GqjZTBts=
-=F0p9
------END PGP SIGNATURE-----
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
