@@ -1,68 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/13
-Message-ID: <5484C9B4.6030507@gmail.com>
-Date: Sun, 07 Dec 2014 16:42:12 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/28/4
+Message-ID: <20140828111330.GA5036@hurricane.linuxnetz.de>
+Date: Thu, 28 Aug 2014 13:13:30 +0200
+From: Robert Scheck <robert@...oraproject.org>
+To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
+Subject: Zarafa WebApp < 1.6 affected by CVE-2010-4207 or CVE-2012-5881
 Content-Type: text/plain; charset=utf-8
 
-> And a "well written" option will never have a CONFIG_* option within
-> the .c files, as that's not the normal way to implement features in
-> the Linux kernel.
+Hello,
 
-Needing to maintain invasive changes out-of-tree makes things different.
-It's done in way that minimizes merge conflicts.
+I discovered that Zarafa WebApp < 1.6 is affected by CVE-2010-4207 or
+CVE-2012-5881 (depends on WebApp version) as it bundles charts.swf by
+YUI, see http://yuilibrary.com/support/20121030-vulnerability/ for the
+list of affected md5sums.
 
-> The reason PaX isn't in the main kernel tree is that no one has spent
-> the time and effort to actually submit it in a mergable form.  So
-> please, do so if you think this is something that is needed.
+[root@tux ~]# rpm -q zarafa-webapp
+zarafa-webapp-1.5-44025.noarch
+[root@tux ~]#
 
-I don't think that's an fair assessment.
+[root@tux ~]# rpm -ql zarafa-webapp | grep charts.swf | xargs md5sum
+923c8afe50fc45ed42d92d6ab83b11f6 /usr/share/zarafa-webapp/client/extjs/resources/charts.swf
+[root@tux ~]#
 
-There's a small fraction of it that could be split up and pushed
-upstream with a large amount of effort. Lots of people have attempted to
-upstream grsecurity/PaX features in various forms, and there are success
-stories like kptr_restrict, dmesg_restrict, ptrace_scope,
-protected_symlinks and protected_hardlinks features among others.
+I don't know how to abuse this but upstream notice "This defect allows
+JavaScript injection exploits to be created against domains that host
+these affected .swf files, whether or not the .swf files are embedded
+in your application." seems to be important enough for this heads up.
 
-I have a lot of respect for people like Kees Cook who are willing to
-deal with the politics and endless disappointments. Most people are not
-willing to do that, especially if they aren't being paid.
-
-There was little success in upstreaming stuff like making most vtables
-constant, despite it being an obvious improvement. Some maintainers
-don't see the value, so it doesn't work out. Fixes for info leaks also
-have the same fate, and the stable kernels tend to be missing the ones
-that do land in mainline; unlike the grsec LTS kernels.
-
-Linux kernel development involves a lot of politics and compromises
-between different priorities. I don't upstreaming most of the features
-is realistic. Many of them involve ABI changes to fix age old info leaks
-and to implement aggressive userspace exploit mitigations.
-
-For example, PaX ASLR breaks code making incorrect assumptions about the
-mmap hint parameter / address space layout. There are at least a dozen
-cases of this in various official Arch Linux packages.
-
-PaX is now making heavy use of GCC plugins to alter code generation in
-order to implement many of the hardening features. Some of these also
-change the semantics of the language. I don't think that's ever going to
-be merged upstream, but those features have a high value. For example,
-KERNEXEC provides a software implementation of SMEP and enforces RO/NX
-pages across the kernel - fully eliminating RWX pages.
-
-The fact that it uses GCC plugins to deal with issues like size
-overflows and vtable constification and thanks to lack of upstream
-interest in improving security. In OpenBSD, these issues are tackled via
-extensive work to modernize the code. It's unrealistic for issues like
-this to be handled without stricter coding guidelines and a willingness
-to accept large patches introducing good practices.
-
-Submitting thousands of constification / size overflow patches and
-somehow landing even half of them is unrealistic. These patches aren't
-really welcome, and telling people that it's all they have to do is just
-setting up more drama.
+Given that Zarafa WebApp 1.6 (final release) happened on 2014-07-21
+there might be distributions/downstreams still shipping Zarafa WebApp
+1.5. Zarafa WebApp does not use that file so removing it on packaging
+level is fine. Fedora is not affected; it doesn't ship Zarafa WebApp.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+With kind regards
+
+Robert Scheck
+-- 
+Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
+
+Content of type "application/pgp-signature" skipped
