@@ -1,129 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/9
-Message-Id: <E1WrnlZ-0000ry-NR@xenbits.xen.org>
-Date: Tue, 03 Jun 2014 12:24:33 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 96 - Vulnerabilities in HVM MSI injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/28/5
+Message-ID: <53FF5BEF.9090905@reactos.org>
+Date: Thu, 28 Aug 2014 18:42:23 +0200
+From: Pierre Schweitzer <pierre@...ctos.org>
+To: oss-security@...ts.openwall.com
+Subject: Full disclosure: denial of service in srvx
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
-                    Xen Security Advisory XSA-96
-                            version 2
+ZeRoFiGhter and I (Pierre Schweitzer), at OnlineGamesNet.net discovered
+the following issue on OnlineGamesNet.net on the 14th of July.
 
-                Vulnerabilities in HVM MSI injection
+This is full disclosure of a denial of service security issue in srvx
+software (http://www.srvx.net/). Vendor was contacted a month ago (on
+the 16th of July) and acknowledge good reception of the issue and the
+patches. The issues is today still unfixed in development trunk.
 
-UPDATES IN VERSION 2
-====================
+1 - Description:
+=========
+When configuring the HelpServ bots in srvx, there is not bound check for
+intervals in which various functions are executed (for instance the
+EmptyInterval parameter). These parameters can be accessed and set by
+either IRCops (with access to OpServ bot) or by HelpServ bot managers
+(who do not require to be IRCops).
 
-Public release.
+Putting an extremely high value to these parameters, such as
+184467440723049 will lead to an integer overflow. When attempting to
+queue the function execution, srvx will add it in the past, will attempt
+to execute it immediately and thus will loop forever on this, and will
+finally crash due to memory exhaustion.
 
-ISSUE DESCRIPTION
-=================
+Furthermore, any restart of the service will not be possible, as the
+value is stored in the configuration file. It will be required to
+manually edit the configuration file to correct the wrongly set values
+for the bot.
 
-The implementation of the HVM control operation HVMOP_inject_msi, while
-checking whether a particular IRQ was already set up in the necessary
-way, fails to properly check all respective conditions. In particular
-it doesn't check the returned pointer for being non-NULL before de-
-referencing it.
+2 - How to reproduce:
+=============
+Simply create a bot with HelpServ module.
+Set the high value: ?helpserv set HelpServ EmptyInterval 184467440723049
+To fasten the coming crash: ?writeall and then ?restart
+srvx will not show up again, it will crash on boot.
 
-Furthermore that same code also handles certain errors by logging
-messages, without (under default settings) at least making these
-messages subject to rate limiting.
+3 - Risks:
+=====
+Low. HelpServ module needs to be activated on your server. Furthermore,
+only supposedly trusted people can change these settings (bot managers &
+IRCops).
 
-IMPACT
-======
+4 - Available fixes:
+===========
+See the two patches attached (generated against the development trunk).
+These two patches are not dependent and can be applied separately and
+both fix the issue.
 
-The NULL pointer de-reference would lead to a host crash, and hence a
-denial of service would result. Since host and guest page tables are
-fully separated for HVM guests, the guest would not be able to leverage
-the vulnerability for other kinds of attacks (privilege escalation or
-information leak).
+0001-Ensure-that-timeq-added-function-isn-t-added-in-the-.patch: most
+generic fix. It is here to deny any function adding in the past. In such
+case, it will be dropped.
+This patches fixes any issue linked to integer overflow for timeq
+functions execution.
+Applied alone it fixes the said issue.
 
-The spamming of the hypervisor log could similarly lead to a denial of
-service.
+0002-Bound-check-for-intervals-in-mod-helpserv.-This-prev.patch: the
+bound check fix. It adds controls to the input of the users for the
+function interval execution. And thus, prevents any overflow. It's set
+to 2y, a widely used value in srvx for intervals (see timed bans).
+Applied alone it fixes the said issue.
 
-In a configuration where device models run with limited privilege (for
-example, stubdom device models), a guest attacker who successfully
-finds and exploits an unfixed security flaw in qemu-dm could leverage
-the other flaw into a Denial of Service affecting the whole host.
+5 - Mitigation:
+========
+Inform concerned people (ie, with enough accesses) about the risks. 2y
+is enough for maximum bound. Reduce accesses to not trusted enough people.
 
-In the more general case, in more abstract terms: a malicious
-administrator of a domain privileged with regard to an HVM guest can
-cause Xen to become unresponsive leading to a Denial of Service.
+6 - Affected versions:
+=============
+1.3.1
+Development trunk
 
-VULNERABLE SYSTEMS
-==================
+With my best regards,
 
-All Xen versions from 4.2 onwards are vulnerable.
+-- 
+Pierre Schweitzer <pierre at reactos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
 
-The vulnerability is only exposed to service domains for HVM guests
-which have privilege over the guest.  In a usual configuration that
-means only device model emulators (qemu-dm).
 
-In the case of HVM guests whose device model is running in an
-unrestricted dom0 process, qemu-dm already has the ability to cause
-problems for the whole system.  So in that case the vulnerability is
-not applicable.
+View attachment "0001-Ensure-that-timeq-added-function-isn-t-added-in-the-.patch" of type "text/x-patch" (647 bytes)
 
-The situation is more subtle for an HVM guest with a stub qemu-dm.
-That is, where the device model runs in a separate domain (in the case
-of xl, as requested by "device_model_stubdomain_override=1" in the xl
-domain configuration file).  The same applies with a qemu-dm in a dom0
-process subjected to some kind kernel-based process privilege
-limitation (eg the chroot technique as found in some versions of
-XCP/XenServer).
+View attachment "0002-Bound-check-for-intervals-in-mod-helpserv.-This-prev.patch" of type "text/x-patch" (3557 bytes)
 
-In those latter situations this issue means that the extra isolation
-does not provide as good a defence (against denial of service) as
-intended.  That is the essence of this vulnerability.
-
-However, the security is still better than with a qemu-dm running as
-an unrestricted dom0 process.  Therefore users with these
-configurations should not switch to an unrestricted dom0 qemu-dm.
-
-Finally, in a radically disaggregated system: where the HVM service
-domain software (probably, the device model domain image) is not
-always supplied by the host administrator, a malicious service domain
-administrator can exercise this vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this vulnerability.
-
-In a radically disaggregated system, restricting HVM service domains
-to software images approved by the host administrator will avoid the
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa96.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa96*.patch
-1b64beddf8f6e9c08af24676551c18fd778a8db65a6c24fec07cc7e95531e2af  xsa96.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTjb4eAAoJEIP+FMlX6CvZQkQIALjKap2DRMbpr8GPUp91zMoL
-DdDqVnmgQo1GD8zF/CE0PBDXlIhU28tJ2XZmeePcwA4cRnacxxJTQhb3bp2ZJd6F
-hJ82UxDGUZy1uZV7IA+ji2pdECBg30r2i7Ukj4kX3FZHM+PZjcxHowVxEXVMxF//
-8HGWwvB3b56HqbCZ7donLvU+uaG1voPF6zV9Dutu4UwC5tTkqdJ8qNqz/kfn69Ug
-Abn5uNOJQXRjY7kcegTO4uFB9iL5+LUDfWdUTghVYxITlfGSRF18IbhUk8P61u+H
-v75OEk/tO5kMORpMRgnhqTMyPaWEaCHUeZU+5lBxZvHYGbabAuvuW06zr9vXG3s=
-=ZSzI
------END PGP SIGNATURE-----
-
-Download attachment "xsa96.patch" of type "application/octet-stream" (1416 bytes)
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (3968 bytes)
