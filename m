@@ -1,48 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/8
-Message-ID: <20140916150511.GA14682@kludge.henri.nerv.fi>
-Date: Tue, 16 Sep 2014 18:05:11 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/28/3
+Message-ID: <87tx4xfaz9.fsf@mid.deneb.enyo.de>
+Date: Thu, 28 Aug 2014 07:18:34 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+Subject: CVE-2014-0485: unsafe Python pickle in s3ql
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Nikolaus Rath discovered a vulnerability in s3ql which can result in
+remote code execution, caused by the unsafe use of Python's pickle
+serialization library.
 
-On Tue, Sep 16, 2014 at 10:15:43AM -0400, Marc Deslauriers wrote:
-> On 14-09-11 10:39 AM, Tomas Hoger wrote:
-> > On Wed, 10 Sep 2014 10:28:53 -0700 Ritwik Ghoshal wrote:
-> > 
-> >> Please use CVE-2014-4274 for this issue.
-> >>
-> >> Please send an email to secalert_us@...cle.com to contact Oracle for
-> >> any security vulnerability related issues.
-> > 
-> > As pointed out in this Gentoo bug, release notes for the mentioned
-> > MySQL versions list another issue that seems to be security:
-> > 
-> > https://bugs.gentoo.org/show_bug.cgi?id=518718
-> > 
-> > 3) An off-by-one error related to certificate decoding in yaSSL can be
-> > exploited to cause a buffer overflow.
-> 
-> There is also mention of:
-> 
-> "Clients could determine based on connection error message content whether an
-> account existed. (Bug #16513435, Bug #17357528, Bug #19273967)"
-> 
-> I believe this is the fix for CVE-2012-5615, and is fixed with the following commit:
-> 
-> http://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4676
-> 
-> Marc.
-> 
-> 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+The upstream commit is here:
 
-iEYEARECAAYFAlQYUacACgkQXf6hBi6kbk9miwCgxs1bkE4GldQy/dBlF8CBdXOE
-DoYAnRfG9bhaXmdCZFufnLSBZMKuW3fn
-=e8Ky
------END PGP SIGNATURE-----
+  <https://bitbucket.org/nikratio/s3ql/commits/091ac263809b4e8>
+
+(This issue was reported privately to Debian, the distros list was
+notified, and this is the public heads-up required by list policy.)
