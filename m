@@ -1,25 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/14/2
-Message-ID: <mpro.n8ojlv0v1aa5y06jd.taviso@cmpxchg8b.com>
-Date: Sun, 13 Jul 2014 19:15:32 -0700
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: glibc locale issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/29/4
+Message-ID: <20140829163929.GA28244@eldamar.local>
+Date: Fri, 29 Aug 2014 18:39:29 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>, Ryan King <rking@...optic.com>
+Subject: CVE Request: Clipboard Perl module: clipedit: insecure use of temporary files
 Content-Type: text/plain; charset=utf-8
 
-Tavis Ormandy <taviso@...xchg8b.com> wrote:
+Hi
 
-> I just remembered another charset issues I had looked into but abandoned.
-> 
-> First of all, I think the need_so logic in gconv_trans is broken, but even
-> if it worked there is an off by one error in __gconv_translit_find() (it
-> does + 3 instead of + 3 + 1 in the allocation.
+The Clipboard Perl module distribution [1] ships a small script
+'clipedit' which insecurely uses temporary files by using the pid of
+the process in the used filename in /tmp[2]. The affected code looks
+like:
 
-To be clear, I suspect this is exploitable. It would be nice if you could
-modify the buffer such that gconv will open a path with a string you've
-appended it (e.g. CHARSET=//. pkexec ./../../../../tmp/foo.so), if not maybe
-the one byte overflow is still exploitable. You have a reasonable amount of
-control, e.g. CHARSET=//AAAAA pkexec $(perl -e 'print "A" x 125'
+ [...]
+  7 my $tmpfilename = "/tmp/clipedit$$";  
+  8 open my $tmpfile, ">$tmpfilename" or die "Failure to open $tmpfilename: $!";  
+  9 print $tmpfile $orig;  
+ 10 close $tmpfile;
+ [...]
+ 13 system($ed, $tmpfilename);  
+ 14   
+ 15 open $tmpfile, $tmpfilename or die "Failure to open $tmpfilename: $!";
+ 16 my $edited = join '', <$tmpfile>;
+ [...]
+ 49 unlink($tmpfilename) or die "Couldn't remove $tmpfilename: $!";
 
-Tavis.
+Could you assing a CVE for this issue?
 
+ [1] https://metacpan.org/release/Clipboard
+ [2] https://rt.cpan.org/Ticket/Display.html?id=98435
+
+Regards,
+Salvatore
