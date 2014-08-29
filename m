@@ -1,20 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/7
-Message-ID: <CALx_OUB_dVWkY6LVVXguoC27moKgVb+3-iVZ15Z_X4EJCFYPWw@mail.gmail.com>
-Date: Tue, 18 Nov 2014 22:41:05 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/29/5
+Message-ID: <B96C52C4A4B18B46890F549CBC7A5934FECA5A@exch.corp.isecpartners.com>
+Date: Fri, 29 Aug 2014 21:09:12 +0000
+From: Nicolas Guigo <nguigo@...cpartners.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "Salvatore Bonaccorso (carnil@...ian.org)" <carnil@...ian.org>, "team@...urity.debian.org" <team@...urity.debian.org>, "camrdale@...il.com" <camrdale@...il.com>
+Subject: RE: CVE requests for 2 separate vulns in torrentflux 2.4.5-1 (debian stable)
 Content-Type: text/plain; charset=utf-8
 
-> Speaking of fuzzing so that clamav issue, was triggered by a file that
-> existed in public since 2010 or so (at least that's what virustotal had
-> for the first submission date). So you'd think based on what people use
-> clamav for it would have been heavily fuzzed by now (scanning all sorts
-> of random/malicious input) but I guess people don't report stuff upstream.
+[cced debian security and package maintainer]
 
-Tavis looked at several commercial AV engines some time ago, I think
-it wasn't pretty. I suspect that clamav may be very much worth fuzzing
-or auditing.
+-----Original Message-----
+From: Nicolas Guigo
+Sent: Friday, August 29, 2014 2:08 PM
+To: 'oss-security@...ts.openwall.com'
+Subject: CVE requests for 2 separate vulns in torrentflux 2.4.5-1 (debian 
+stable)
 
-/mz
+Hi oss-sec,
+
+Please find the vulns descriptions at the below links:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=759574
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=759573
+
+thanks!
+Nicolas
+
+--
+Nicolas Guigo
+Senior Security Engineer
+iSEC Partners (NCC GROUP)
+(206) 948-3687
+9C80 28B2 F016 4DA4 24C9  D1D7 129C FDF6 0CDC B828
+
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4552 bytes)
