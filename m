@@ -1,62 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/6
-Message-ID: <CAJvxAA3oJA660cmHRw8vKLGD_W3RTys7h0rPVhqmQhAH65xNLg@mail.gmail.com>
-Date: Wed, 12 Feb 2014 10:00:37 +0200
-From: Shay Chen <sectooladdict.vendors@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/29/3
+Message-ID: <540070FA.8020402@redhat.com>
+Date: Fri, 29 Aug 2014 14:24:26 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [Benchmark 2014] WAVSEP Vulnerability Scanner Benchmark 2013/2014
+Subject: CVE request: glibc character set conversion from IBM code pages
 Content-Type: text/plain; charset=utf-8
 
-The **2014** *WAVSEP* web application scanner benchmark has been published
--
+In 2012, a crasher in IBM930 decoding was reported and fixed:
 
-And currently includes new products that were tested for the first time, as
-well as returning vendors that were not tested for a while.
+<https://sourceware.org/bugzilla/show_bug.cgi?id=14134>
+<https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=6e230d11837f3a>
 
+This change went into glibc 2.16.
 
+Today, Adhemerval Zanella Netto reported in additional code page 
+decoding functions (IBM933, IBM935, IBM937, IBM939, IBM1364):
 
-Covering a total **63** vulnerability scanners, including commercial
-scanners, multiple SAAS engines and open source vendors, the research
-compares the performance of the various tested scanners in the following
-aspects:
+<https://sourceware.org/bugzilla/show_bug.cgi?id=17325>
+<https://sourceware.org/ml/libc-alpha/2014-08/msg00473.html>
 
+Upstream commit is still pending.
 
+These crashers are out-of-bounds reads at a fixed offset relative to the 
+data segment of a DSO, and in all cases I've seen, they were right in 
+the middle of an unmapped segment of the same DSO.  This means that 
+these bugs are just crashers, but they can still result in 
+denial-of-service conditions.
 
-(*) Prices vs. Features
+Since the affected version ranges are not identical, this needs two 
+separate CVE identifiers, probably one from 2012 and one from 2014.
 
-(*) Automated Crawling (WIVET)
-
-(*) Technology and Input Delivery Method Support
-
-(*) Backup/Hidden File Detection Accuracy (*NEW!*)
-
-(*) Unvalidated Redirect Detection Accuracy (*NEW!*)
-
-(*) SQL Injection Detection Accuracy
-
-(*) Cross Site Scripting Detection Accuracy
-
-(*) Path Traversal / LFI Detection Accuracy
-
-(*) (XSS/Phishing via) Remote File Inclusion
-
-(*) Supported Vulnerability Detection Features (e.g. audit features)
-
-(*) Authentication and Usability Features
-
-(*) Coverage and Scan Barrier Support (AntiCSRF Tokens, CAPTCHA, etc)
-
-(*) Etc
-
-
-
-The benchmark **one page** result summary can be viewed through the
-following link:
-
-http://sectoolmarket.com/price-and-feature-comparison-of-web-application-scanners-unified-list.html
-
-The full article, which includes analysis and conclusions, can be accessed
-through the following link:
-
-http://sectooladdict.blogspot.com/2014/02/wavsep-web-application-scanner.html
-
+-- 
+Florian Weimer / Red Hat Product Security
