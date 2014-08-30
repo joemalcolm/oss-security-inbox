@@ -1,27 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/32
-Message-ID: <CAN4CQ4y5s=wdw5aPP+wy+Uaon_AGACdBz04VDPRWte+b1x_Hrw@mail.gmail.com>
-Date: Wed, 1 Oct 2014 16:25:08 -0700
-From: Kohsuke Kawaguchi <kk@...suke.org>
-To: oss-security@...ts.openwall.com
-Subject: Security advisory in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/30/1
+Message-Id: <20140830012713.7DB46332007@smtpvbsrv1.mitre.org>
+Date: Fri, 29 Aug 2014 21:27:13 -0400 (EDT)
+From: cve-assign@...re.org
+To: pierre@...ctos.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Full disclosure: denial of service in srvx
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I just wanted to share that the Jenkins project issued a security advisory
-today. These issues are independently found and we've aggregated into a
-single release.
+> Putting an extremely high value to these parameters, such as
+> 184467440723049 will lead to an integer overflow. When attempting to
+> queue the function execution, srvx will add it in the past, will attempt
+> to execute it immediately and thus will loop forever on this, and will
+> finally crash due to memory exhaustion.
 
-The relevant CVE IDs, our bug tracking IDs are available here
-<https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01>
-.
+Use CVE-2014-5508 for the integer overflow.
 
-The new versions can be downloaded from here
-<http://mirrors.jenkins-ci.org/>.
 
-(This is the first time I do this, so my apologies in advance for probably
-failing to follow the expected format.)
--- 
-Kohsuke Kawaguchi
+> most generic fix. It is here to deny any function adding in the past.
 
+(As far as we could tell from your discussion, there is no way for an
+attacker to specify a negative number directly. That situation would
+require a separate CVE ID. In other words, the patch to timeq.c
+apparently detects a condition that's possible only after an integer
+overflow occurs.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUASdPAAoJEKllVAevmvms/A8H/3123WncqL1ImFXko4/AVfMW
+zbhQDGo4NGwVeBNLUPl6G+u/nnFcVtRwQaqG3vKWM6ZgsXUjhSSWhlfPtE6vEvPo
+QA6Vz/SUd8zs91iNtERyAsWaTcSHR4nVTJ4dBW7hfQWEtI2T3COL8jpcwdsfRHmq
+hLDXoY7Ixn3P/494exKKJ276fLv+vG9cqdPk+Tx668c31lkcInv5MNr963v+3JQd
+UHFXhGnSh7tPH1O5ro5KK5fJa632EwHidc/Ozyksi5QrVasn1D6xByToMkxRUU+s
+cIlPBQVdFeHHc3LONZtxgF/851DCcxigmLlWqmE7xFP5ouut5Jk4YYrQJ92WtFk=
+=Gxld
+-----END PGP SIGNATURE-----
