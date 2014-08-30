@@ -1,39 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/11
-Message-ID: <CADi5LzwE8XkND7YZhcLDyqUxUXoMP8-dto3pzw04yhsN7ATEhA@mail.gmail.com>
-Date: Wed, 12 Nov 2014 14:29:07 -0800
-From: Karthik Rangarajan <rangarajan.karthik@...il.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE Request: Multiple Vulnerabilities - XSS/Remote Code Injection in MODX
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/30/2
+Message-Id: <20140830031619.13313332007@smtpvbsrv1.mitre.org>
+Date: Fri, 29 Aug 2014 23:16:19 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, rking@...optic.com
+Subject: Re: CVE Request: Clipboard Perl module: clipedit: insecure use of temporary files
 Content-Type: text/plain; charset=utf-8
 
-Bump - can a CVE be assigned to the remote code execution
-vulnerability as well as the multiple XSS vulnerabilities in MODX?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Sun, Nov 9, 2014 at 3:37 PM, Karthik Rangarajan
-<rangarajan.karthik@...il.com> wrote:
-> Hello,
->
-> MODX has released a security advisory for MODX Evolution <=1.0.14. The
-> version is affected by multiple XSS vulnerabilities as well as a
-> command injection vulnerability. Please find the advisory below:
->
-> http://forums.modx.com/thread/94952/multiple-vulnerabilities-xss-remote-command-injection
->
-> Can a CVE please be assigned for these vulnerabilities?
->
-> Thanks,
-> Karthik
->
-> --
-> Regards,
-> Karthik Rangarajan
+> 7 my $tmpfilename = "/tmp/clipedit$$";
+> 8 open my $tmpfile, ">$tmpfilename" or die "Failure to open $tmpfilename: $!";
 
+> 49 unlink($tmpfilename) or die "Couldn't remove $tmpfilename: $!";
 
+Use CVE-2014-5509.
 
--- 
-Regards,
-Karthik Rangarajan
-MS, Information Security
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Twitter: @krangarajan
+iQEcBAEBAgAGBQJUAUFCAAoJEKllVAevmvmsqBoIAKnRgIc/kTM9YJDgvodoP040
+uaufQFYwSY0V88QF8jtiIEhnTUy7G+T2gCJ0B1UdadaqbQj+5Nlfq8kQsVvuimXJ
+hYhjqC+gmqXHbi+WdoR6T3S68kl0W5OA1kEAAJ0udM2B+75/rO0P+qND+rzAEk+Y
+JVqp1YbW3RvZMKj/Yun+PB/7l88mcQbpR8D8wBGmis9DTH+vStOL5/iGY+8XoPV1
+GzO8Ulc4i4sSyhqj2vq7vW/zxdgmXd9UxbKHg9P2yb7vT63AYaftJsw7KI2JWt86
+XG0y+2RpRS8DTAixekkSA9ZWTMU5KsjUsZEKwZ+mqAvQATBMOIWSqdDJ04y0/p0=
+=wp08
+-----END PGP SIGNATURE-----
