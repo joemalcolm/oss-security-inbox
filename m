@@ -1,46 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/01/1
-Message-ID: <CA+tbMaX-6SHyNHB9GFQuoo7zL8bXCzycY83=WN65JKzpyZw9jw@mail.gmail.com>
-Date: Thu, 31 Jul 2014 23:23:18 -0500
-From: Kyle Kelley <rgbkrk@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/31/2
+Message-ID: <20140831112429.GW1251@yuggoth.org>
+Date: Sun, 31 Aug 2014 11:24:29 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Cc: security@...thon.org, IPython developers list <ipython-dev@...py.org>
-Subject: CVE Request: Enforce use of HTTPS for MathJax in IPython
+Subject: Re: Fwd: ezmlm warning
 Content-Type: text/plain; charset=utf-8
 
-All,
+On 2014-08-31 01:10:54 +0000 (+0000), Jorge Manuel B. S. Vicetto wrote:
+> I'm forwarding this email to the ml as I just noticed this is the 3rd
+> time since Jun 19th that because of DMARC emails from some members are
+> being rejected by receivers domains, like gmail for me. As I don't
+> recall reading about this topic before in this ml, I'm raising the
+> issue in case others are unaware and start getting warnings for losing
+> emails or are surprised by some members not getting their emails.
+[...]
 
-We would like to request a CVE for a vulnerability in the IPython notebook,
-reported today by Leopold Schabel on IPython's GitHub issue tracker at
-https://github.com/ipython/ipython/issues/6246.
+As someone who helps operate a fairly large listserv myself, this
+has been coming up a lot lately with our subscribers. The official
+recommendations from the DMARC coalition (as far as I've been able
+to tell) are published at http://www.dmarc.org/faq.html#s_3
 
-Email address of requester: security@...thon.org; rgbkrk@...il.com
-Software name: IPython notebook
-Type of vulnerability: Use of insecure resources
-Attack outcome: Remote execution
-Patch/issue: https://github.com/ipython/ipython/pull/6249,
-https://github.com/ipython/ipython/issues/6246
-Affected versions: 0.12 ≤ version ≤ 2.1
-
-Summary: When using the IPython notebook without encryption (i.e. running
-the server on HTTP instead of HTTPS), mathjax is loaded over HTTP. An
-attacker with fortuitous network position could execute code on a local
-IPython notebook by modifying the mathjax javascript.
-
-This issue was fixed in the git master branch (development branch for
-upcoming v. 2.2) with commit cf793ebc4, on 7/31/2014:
-
-https://github.com/ipython/ipython/commit/cf793ebc4f9e8483f104667e4c73748357fa8c56
-
-Mitigations:
-* Run the notebook with SSL (see
-http://ipython.org/ipython-doc/2/notebook/public_server.html#securing-a-notebook-server
-).
-* Install mathjax
-    from IPython.external.mathjax import install_mathjax
-    install_mathjax()
-
-Regards,
-
-Kyle Kelley
-
+The "solution" my fellow sysadmins and I have been leaning toward is
+to unsubscribe and reject subscription requests for any address at
+an obviously DMARC-enforcing domain, and start building a blacklist
+(if someone else already has a DNS-based RBL for this, I'd be quite
+interested to use and possible help maintain it as well). MTA
+operators enforcing DMARC quite obviously wish to go play in their
+own sandbox where a small (statistically, though still quite
+important in my opinion) traditional E-mail use case is simply not
+considered worth supporting. I'm personally perfectly happy if
+nobody at one of those domains ever receives an E-mail message from
+me again.
+-- 
+Jeremy Stanley
