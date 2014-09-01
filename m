@@ -1,76 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/2
-Message-ID: <52FAD5B9.1060603@redhat.com>
-Date: Wed, 12 Feb 2014 13:00:25 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/12
+Message-ID: <5404F7F5.8060609@fifthhorseman.net>
+Date: Mon, 01 Sep 2014 18:49:25 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
+CC: Werner Koch <wk@...pg.org>, pkg-gnupg-maint@...ts.alioth.debian.org
+Subject: Re: gpg blindly imports keys from keyserver responses
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+On 09/01/2014 02:33 PM, Thijs Kinkhorst wrote:
 
-Does anyone have further information about 
-<http://secunia.com/advisories/56844/>? (I could not get the 
-http://freecode.com/projects/imagemagick/tags/bugfixes link to show 
-anything useful.)
+> Stefan Tomanek reported to Debian that GnuPG accepts any key as a response 
+> from a keyserver, regardless of whether that key was actually requested:
+> https://bugs.debian.org/725411
+> 
+> There's some discussion about the issue; we believe that the primary way to 
+> verify key ownership is still the web of trust and manual fingerprint 
+> verification. It is however argued that as a user, requesting keys based on 
+> specifying the full fingerprint is a safe way to retreive a key for a known-
+> good fingerprint. But this argument is again somewhat countered by an attack 
+> on V3 keys which allows generating such fingerprints, making such a request 
+> dubious again.
 
-diffing ImageMagick-6.8.7/coders/psd.c ImageMagick-6.8.8/coders/psd.c:
+v3 keys themselves are a hazard because of this fingerprinting forgery,
+but i think that's a separate issue.  But it's not possible to generate
+a v3 fingerprint that matches a full v4 fingerprint because the length
+of the fingerprint differs (v3 fingerprint is 128 bits, v4 is 160 bits).
 
-""
-@@ -1224,7 +1224,7 @@
-                Allocate layered image.
-              */
-              layer_info[i].image=CloneImage(image,layer_info[i].page.width,
--              layer_info[i].page.height == ~0U ? 1 : 
-layer_info[i].page.height,
-+              layer_info[i].page.height == ~0UL ? 1 : 
-layer_info[i].page.height,
-                MagickFalse,&image->exception);
-              if (layer_info[i].image == (Image *) NULL)
-                {
-@@ -2112,9 +2112,6 @@
-    StringInfo
-      *bim_profile;
+So in some sense, it is reasonable to suggest that when requesting a
+given key from the keyservers explicitly by fingerprint, users should be
+able to rely on gnupg only adding *that key* (and the related OpenPGP
+certificate) to the local keyring, if the remote keyserver provides a
+matching key.
 
--  unsigned char
--    layer_name[4];
--
-    /*
-      Open image file.
-    */
-@@ -2372,12 +2369,15 @@
-          property=(const char *) GetImageProperty(next_image,"label");
-          if (property == (const char *) NULL)
-            {
-+            char
-+              layer_name[MaxTextExtent];
-+
-              (void) WriteBlobMSBLong(image,16);
-              (void) WriteBlobMSBLong(image,0);
-              (void) WriteBlobMSBLong(image,0);
--            (void) FormatLocaleString((char *) layer_name,MaxTextExtent,
--              "L%06ld",(long) layer_count++);
--            WritePascalString( image, (char*)layer_name, 4 );
-+            (void) 
-FormatLocaleString(layer_name,MaxTextExtent,"L%06ld",(long)
-+              layer_count++);
-+            WritePascalString(image,layer_name,4);
-            }
-          else
-            {
+However, there are two problems: the most common situation where the
+keyservers are queried by key (rather than by user id) is upon receipt
+of a signed message that they can't verify.  In this case, the only
+thing the client has access to is the issuer id (the low 64 bits of the
+fingerprint) which is not a particularly strong indicator (see recent
+64-bit keyid collisions published by David Leon Gil).
 
-""
+Additionally, the "and related OpenPGP certificate" part is problematic,
+even with correctly-functioning keyservers, because anyone could upload
+a certificate with another pre-existing key as its subkey.  A
+well-behaving keyserver would be forced to return both the "legitimate"
+certificate and the certificate with the extra subkey.
 
-Would the issue have been writing the amount of 6 long ints into the 4 
-byte layer_name buffer?
+So avenues for third parties to force undesirable keys on users exist
+even with this streamlining.
 
-Having a (very brief) look at ImageMagick-6.5.4 on RHEL 6, it's using 
-"L%02ld" instead of "L%06ld", but that's still 4 bytes too many before 
-the layer_name[MaxTextExtent]; change.
+	--dkg
 
-Could a CVE please be assigned if it has not been already?
 
-Sorry for missing anything obvious.
-
---
-Murray McAllister / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
