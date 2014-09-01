@@ -1,41 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/17
-Message-ID: <545CC7EB.4000903@internot.info>
-Date: Sat, 08 Nov 2014 00:23:55 +1100
-From: Joshua Rogers <oss@...ernot.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/3
+Message-ID: <5404BDC6.6060906@sumptuouscapital.com>
+Date: Mon, 01 Sep 2014 20:41:10 +0200
+From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-Request: dpkg handling of 'control' and warnings format string vulnerability
+CC: Werner Koch <wk@...pg.org>, pkg-gnupg-maint@...ts.alioth.debian.org
+Subject: Re: gpg blindly imports keys from keyserver responses
 Content-Type: text/plain; charset=utf-8
 
-On 08/11/14 00:14, Sven Kieske wrote:
-> to quote the man page of dpkg:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+On 09/01/2014 08:33 PM, Thijs Kinkhorst wrote:
+> All,
+
+Hi Thijs,
+
+FYI your email results in a BAD signature for me, presumably due to
+line-wrapping issue.
+
+> 
+> All in all, the safe choice seems to be to patch this issue, so 
+> Debian will release updates for it. It has been fixed upstream in 
+> GnuPG 1.4.17 with this commit: http://git.gnupg.org/cgi- 
+> bin/gitweb.cgi?p=gnupg.git;a=commit;h=5230304349490f31aa64ee2b69a8a2bc06bf7816
 >
->> --no-act, --dry-run, --simulate Do everything which is supposed to
->> be done, but don't write any changes. This is used to see what
->> would happen with the specified action, without actually modifying
->> anything.
-> So the users assumes this does not "modify anything"
-> and if I understood this bug correct this gives at least
-> access to the stack and allows to write/read memory.
-Yes, you understood the bug correctly.
+>
+> 
+Please note that this patch alone is not sufficient to fix the issue
+as it brought usability issues fixed in later versions. Specifically
+the first patch blocked retrieval of multiple keys at once, e.g during
+a --refresh operation, and retrieval by subkey signing ID.
 
-In reality, the vuln/bug is not a huge one. People _normally_ download
-.deb files to install them.
-But in some cases, that isn't always true.
-If the bug was triggered before apt's signature handling, then it could
-be a huge one. But it isn't(I'm guessing...)
+> I'll leave it to the numbering authorities whether this is 
+> something that should get a CVE id.
 
-And as I said, what if another program that, for example, integrates
-with a browser, uses dpkg to analyze the .deb file.
+My personal opinion is this is expected behavior as the keyservers are
+not trusted, and as you point out above, there are proper measures
+that should be used that invalidate this as an attack vector, i.e. by
+performing proper key verification.
 
-The bug itself isn't confined to the -i flag either. It's in the
-handling of the warnings. i.e very easy to trigger.
+- -- 
+- ----------------------------
+Kristian Fiskerstrand
+Blog: http://blog.sumptuouscapital.com
+Twitter: @krifisk
+- ----------------------------
+Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+- ----------------------------
+"History is a gallery of pictures in which there are few originals and
+many copies."
+(Alexis de Tocqueville)
+-----BEGIN PGP SIGNATURE-----
 
-I'm taking a guess here, and going to say that there are other ways of
-passing  arbitrary strings to the warning function. I may be wrong though.
-
-
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
-
+iQIcBAEBCgAGBQJUBL3FAAoJEPw7F94F4TageFQP/jCgcMKfRKVRo4crPCJLot90
+N4mwGKOzausg07/TMjoZ689NJ6cIBINHT/BqKzggMzhCTOyphV/L44Hp6UIaiYx8
+6DVtnd5JatTytAFJnua7G3r4dVHztGfGg29WipF/pPfE3THTYfCdWuluq151hP/9
+csDgeKP1jg8l0AckNd+uFUzrkSs6AIqJH1IWHvsIOSuXS4jrmNoJgXfO+F0QJNd0
+3Or1F+T7lF0kUql0ctxFADHvOy3Dj522IcQbprIFijlbeWvdIzYHquTMg6k/9FyE
+f3HKiyLwti6FT68NVWYuTrvumQ4SelyxWm0Dzhe5ahOfgwI0NCN0I06InC2sFvrQ
+Udl5HkMC9tBr16NXGmKI4OYvSu+FX8XmfM7z47me4uSUrgvwbuxAaPsiXTf782WD
+/qCAzlF+b1Tf3DKbt1PjIxT9scfS+2OfJnFVw4zFf04SVhg5fjLg20pU7G5kgMKL
+N+CWG4BcJef1u09NMJkEUo/28jSj6d8pVJPAiBhG6woi5SPlmTN/pC6DReYH0ZqQ
+eQXDYorcOzB2KCFQVfY84A0JMnoQEqeDT4CdVuprlJyGb3Ued2yYFbKHoQnLOKEU
+6IZyjzNsQ8uTyHbYBoZPZESuptdiI8jhSmXl1qEtv3Wy3uPnm/OL4DWeA5rGQ27n
+fMpQUj7778mrO61EiHJJ
+=fBqR
+-----END PGP SIGNATURE-----
