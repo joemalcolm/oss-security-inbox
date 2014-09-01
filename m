@@ -1,60 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/6
-Message-ID: <20140618100359.GA422@openwall.com>
-Date: Wed, 18 Jun 2014 14:03:59 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/2
+Message-Id: <201409012033.20783.thijs@debian.org>
+Date: Mon, 1 Sep 2014 20:33:20 +0200
+From: Thijs Kinkhorst <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Graham Dumpleton <graham.dumpleton@...il.com>
-Subject: Re: Security release for mod_wsgi (version 3.5)
+Cc: Werner Koch <wk@...pg.org>, pkg-gnupg-maint@...ts.alioth.debian.org
+Subject: gpg blindly imports keys from keyserver responses
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 18, 2014 at 08:08:10PM +1200, Matthew Daley wrote:
-> I may be wrong as I haven't been following this discussion entirely, but...
+All,
 
-I think Graham is not on oss-security.  CC added.
+Stefan Tomanek reported to Debian that GnuPG accepts any key as a response 
+from a keyserver, regardless of whether that key was actually requested:
+https://bugs.debian.org/725411
 
-Graham, please comment on the potential off-by-one bug reported by
-Matthew below:
+There's some discussion about the issue; we believe that the primary way to 
+verify key ownership is still the web of trust and manual fingerprint 
+verification. It is however argued that as a user, requesting keys based on 
+specifying the full fingerprint is a safe way to retreive a key for a known-
+good fingerprint. But this argument is again somewhat countered by an attack 
+on V3 keys which allows generating such fingerprints, making such a request 
+dubious again.
 
-> On Wed, Jun 18, 2014 at 12:39 AM, Graham Dumpleton
-> <graham.dumpleton@...il.com> wrote:
-> > This feature was added for one specific user and wouldn't be a well known feature unless people were reading change notes diligently as don't believe it is even covered in the documentation.
-> >
-> > Given that this code also only executes as root, the only error which could technically arise in this code for setgroups() is if the number of groups exceeded NGROUPS_MAX.
-> >
-> > This should not occur though as the number of groups was previously validated when the configuration was read:
-> >
-> >     if (groups_list) {
-> >         const char *group_name = NULL;
-> >         long groups_maximum = NGROUPS_MAX;
-> >         const char *items = NULL;
-> >
-> > #ifdef _SC_NGROUPS_MAX
-> >         groups_maximum = sysconf(_SC_NGROUPS_MAX);
-> >         if (groups_maximum < 0)
-> >             groups_maximum = NGROUPS_MAX;
-> > #endif
-> >         groups = (gid_t *)apr_pcalloc(cmd->pool,
-> >                                       groups_maximum*sizeof(groups[0]));
-> >
-> >         groups[groups_count++] = gid;
-> >
-> >         items = groups_list;
-> >         group_name = ap_getword(cmd->pool, &items, ',');
-> >
-> >         while (group_name && *group_name) {
-> >             if (groups_count > groups_maximum)
-> 
-> This is an off-by-one error, isn't it? As in, it should be testing for
-> groups_count >= groups_maximum and not the current test.
-> 
-> >                 return "Too many supplementary groups WSGI daemon process";
-> >
-> >             groups[groups_count++] = ap_gname2id(group_name);
-> >             group_name = ap_getword(cmd->pool, &items, ',');
-> >         }
-> >     }
-> >
-> > Thus was pre-validated input.
-> 
-> - Matthew Daley
+All in all, the safe choice seems to be to patch this issue, so Debian will 
+release updates for it. It has been fixed upstream in GnuPG 1.4.17 with this 
+commit:
+http://git.gnupg.org/cgi-
+bin/gitweb.cgi?p=gnupg.git;a=commit;h=5230304349490f31aa64ee2b69a8a2bc06bf7816
+
+I'll leave it to the numbering authorities whether this is something that 
+should get a CVE id.
+
+
+Cheers,
+Thijs Kinkhorst
+Debian Security Team
+
+Download attachment "signature.asc " of type "application/pgp-signature" (474 bytes)
