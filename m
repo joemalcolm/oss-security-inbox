@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/8
-Message-ID: <20140319140313.GA8498@openwall.com>
-Date: Wed, 19 Mar 2014 18:03:13 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/7
+Message-ID: <20140901201636.GB17700@zoho.com>
+Date: Mon, 1 Sep 2014 20:16:36 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Cc: Qixue Xiao <s2exqx@...il.com>
-Subject: Re: CVE request for a bug in gnu coreutils 8.22
+Subject: Re: gpg blindly imports keys from keyserver responses
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 19, 2014 at 09:56:07PM +0800, Qixue Xiao wrote:
-> I am not sure whether this needs a CVE.
+On Mon, Sep 01, 2014 at 10:05:11PM +0200, Kristian Fiskerstrand wrote:
+> On 09/01/2014 09:43 PM, mancha wrote:
+> > On Mon, Sep 01, 2014 at 08:41:10PM +0200, Kristian Fiskerstrand
+> > wrote:
+> >> 
+> >> My personal opinion is this is expected behavior as the
+> >> keyservers are not trusted, and as you point out above, there are
+> >> proper measures that should be used that invalidate this as an
+> >> attack vector, i.e. by performing proper key verification.
+> > 
+> > Hi.
+> > 
+> > Isn't it the opposite? Were key servers fully trusted I'd agree 
+> > "expected behavior" would be to blindly import the server's reply.
+> > 
+> > However, the lack of trustworthiness of keyservers is precisely why
+> > the check is relevant.
 > 
+> I'd consider it security hardening and not a vulnerability.
 > 
-> this bug will result an illegal memory access, which may be leak
-> information without authority.
 
-I think you posted the same message a few days ago and got a reply
-requesting more info:
+I wasn't weighing in on whether the change be considered a vulnerability
+fix or a hardening feature (which are usually deemed CVE unworthy).
 
-http://www.openwall.com/lists/oss-security/2014/03/14/7
+My objection was to the characterization as "expected behavior".
 
-I guess maybe you're posting without being subscribed and this is why
-you didn't see the reply?  If so, please note for next time that you
-should either be subscribed or clearly state that you are not.
+--mancha
 
-Alexander
+Content of type "application/pgp-signature" skipped
