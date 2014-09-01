@@ -1,41 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/14
-Message-ID: <52F410E9.7090907@redhat.com>
-Date: Fri, 07 Feb 2014 09:47:05 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/4
+Message-ID: <20140901194358.GA17700@zoho.com>
+Date: Mon, 1 Sep 2014 19:43:58 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-CC: 737778@...s.debian.org
-Subject: Re: CVE request: f2py insecure temporary file use
+Cc: Werner Koch <wk@...pg.org>, pkg-gnupg-maint@...ts.alioth.debian.org
+Subject: Re: gpg blindly imports keys from keyserver responses
 Content-Type: text/plain; charset=utf-8
 
-On 02/06/2014 02:59 PM, Murray McAllister wrote:
-> Hello,
->
-> Jakub Wilk reported insecure temporary file use in f2py. From
-> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737778>:
->
-> ""
-> numpy/f2py/__init__.py contains this code:
->
->       from numpy.distutils.exec_command import exec_command
->       import tempfile
->       if source_fn is None:
->           fname = os.path.join(tempfile.mktemp()+'.f')
->       else:
->           fname = source_fn
->
->       f = open(fname,'w')
-> ""
->
-> Can a CVE please be assigned if one hasn't been already?
->
-> References:
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737778
-> https://bugzilla.redhat.com/show_bug.cgi?id=1062009
->
-> Thanks,
+On Mon, Sep 01, 2014 at 08:41:10PM +0200, Kristian Fiskerstrand wrote:
+> 
+> My personal opinion is this is expected behavior as the keyservers are
+> not trusted, and as you point out above, there are proper measures
+> that should be used that invalidate this as an attack vector, i.e. by
+> performing proper key verification.
 
-Thomas Spura noted in the Red Hat Bugzilla that a patch has been merged 
-upstream:
+Hi.
 
-https://github.com/numpy/numpy/pull/4262
+Isn't it the opposite? Were key servers fully trusted I'd agree
+"expected behavior" would be to blindly import the server's reply.
+
+However, the lack of trustworthiness of keyservers is precisely why the
+check is relevant.
+
+Note: it is not being suggested this check be considered a replacement
+for full key verification. But, it is not unreasonable for a user to
+expect when instructing gpg to import a key with FP 0xf00 that the gpg
+binary is indeed importing a key with FP 0xf00.
+
+--mancha
+
+PS Thijs' email signature verified for me using mutt. What is your email
+client-side configuration?
+
+
+Content of type "application/pgp-signature" skipped
