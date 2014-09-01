@@ -1,14 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/20
-Message-ID: <4E87864C-D4B8-4A4F-9AFB-513B1629ACEA@akamai.com>
-Date: Tue, 30 Sep 2014 08:41:24 -0500
-From: "Kobrin, Eric" <ekobrin@...mai.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/6
+Message-ID: <5404D177.9020200@sumptuouscapital.com>
+Date: Mon, 01 Sep 2014 22:05:11 +0200
+From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: gpg blindly imports keys from keyserver responses
 Content-Type: text/plain; charset=utf-8
 
-> "innocuous looking setuid program" made my day ;)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-> We should take care not to blame all and everything to bash.
+On 09/01/2014 09:43 PM, mancha wrote:
+> On Mon, Sep 01, 2014 at 08:41:10PM +0200, Kristian Fiskerstrand
+> wrote:
+>> 
+>> My personal opinion is this is expected behavior as the
+>> keyservers are not trusted, and as you point out above, there are
+>> proper measures that should be used that invalidate this as an
+>> attack vector, i.e. by performing proper key verification.
+> 
+> Hi.
+> 
+> Isn't it the opposite? Were key servers fully trusted I'd agree 
+> "expected behavior" would be to blindly import the server's reply.
+> 
+> However, the lack of trustworthiness of keyservers is precisely why
+> the check is relevant.
 
-I don't find that blame is a useful tool for fixing security problems. What's more interesting to me is: what system components are in a position to help. If a change in bash can make a bunch of "innocuous looking setuid programs" not be  vectors for the import of malicious functions, let's do it.
+I'd consider it security hardening and not a vulnerability.
+
+...
+
+> 
+> --mancha
+> 
+> PS Thijs' email signature verified for me using mutt. What is your
+> email client-side configuration?
+> 
+
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101
+Thunderbird/31.0 with Enigmail version 1.7 (20140809-1935)
+
+- -- 
+- ----------------------------
+Kristian Fiskerstrand
+Blog: http://blog.sumptuouscapital.com
+Twitter: @krifisk
+- ----------------------------
+Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+- ----------------------------
+Adde parvum parvo magnus acervus erit
+Add little to little and there will be a big pile
+-----BEGIN PGP SIGNATURE-----
+
+iQIcBAEBCgAGBQJUBNF1AAoJEPw7F94F4TagHIMQAKkKfG7ZVn5WMh8dj1sBtl4U
+fLdRywFyDV6swGPv/pHpsQuW7+vb3lHTAD4AyYlfmcOwaAVhtEBrwlBWqX3FotJJ
+Mtkb4SxErqWmlPHYI9fgOXoYMSrJ4PDoRSuSOxvLJ48qnvDwJTExDHqvAo7du8v4
+/v4gvjwj/NQMF2In0N8BYchEEE8QH7p3zeMTWC1jo1kgbwX82GyHecREIQYWofhS
+/2QWj1rxr3arVi5DH4Irkn27bnIAw50jmoaFM1Wn3gJKQL+F/txJw6FwaXoSeAqK
+zx63DcptNueO9nXV0xmxvr3SK8l5exHqsW61pIr4AUFoJmj9a7A+9xUlioYOX2BK
+Uqv9cJBYPtPxkY7pcT5p6Ew/007h0K5Ddrt3Kq75ucGMPP6fyN+x7ObLcMffOdqg
+9//jtqyW49IMDelCoyl/3PNc8A8KkCZuZ1kglNh34x/1QCdaSJ6HFuf5dsBOFSYp
+Ejr+oKugHPDv03zgbwGRTDM+fyG+btsRpOaeFwYnhVQNjsLXf331J+/BdZ6KfSib
+zXZgDaa0yRTw2nzjO3yvxEP+Gtf/ffCrd3ALf38a+3m58ILJVRFQYC81okvECBOJ
+cKbU7gYPnYdXGsyxIlPC10tGCQlkvhIvXPH3AtzSrLgOLzwsRDAy03RUpHvM4XWO
+H99NRHXyiGGDhTc2LzRr
+=T0fO
+-----END PGP SIGNATURE-----
