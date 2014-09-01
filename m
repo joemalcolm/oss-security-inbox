@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/4
-Message-ID: <20140211080529.GA13430@dq>
-Date: Tue, 11 Feb 2014 02:05:29 -0600
-From: "Joshua J. Drake" <oss-sec-addjsif@...p.org>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-1939 searchBoxJavaBridge_ in Android Jelly Bean
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/8
+Message-ID: <87vbp7m5ph.fsf@vigenere.g10code.de>
+Date: Mon, 01 Sep 2014 22:44:10 +0200
+From: Werner Koch <wk@...pg.org>
+To: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
+Cc: oss-security@...ts.openwall.com,  pkg-gnupg-maint@...ts.alioth.debian.org
+Subject: Re: gpg blindly imports keys from keyserver responses
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 10, 2014 at 11:32:23PM -0500, cve-assign@...re.org wrote:
-> 
-> Use CVE-2014-1939. For example, see:
-> 
-> https://android.googlesource.com/platform/frameworks/base/+/jb-release/core/java/android/webkit/
-> https://android.googlesource.com/platform/frameworks/base/+/jb-release/core/java/android/webkit/SearchBoxImpl.java
-> 
-> versus:
-> 
-> https://android.googlesource.com/platform/frameworks/base/+/kitkat-release/core/java/android/webkit/
+On Mon,  1 Sep 2014 20:41, kristian.fiskerstrand@...ptuouscapital.com
+said:
 
-Thanks for the CVE assignment.
+> My personal opinion is this is expected behavior as the keyservers are
+> not trusted, and as you point out above, there are proper measures
 
-For interested parties, I consider the actual issue to be the use of
-the unsafe addJavascriptInterface API at all. This happens in
-BrowserFrame.java (not in SearchBoxImpl.java) See use of the
-javascriptInterfaces and mJavaScriptObjects variables and the
-nativeAddJavascriptInterface JNI function.
+I fully agree with your opinion.  If we would have rejected the patch we
+would not have run into this mess.  I agreed to add the patch because it
+won't harm and had to find out that it costed me about 3 days to get the
+regressions fixed :-(.  And now theses funny complaints that it is
+unsafe to import arbitrary keys.
 
-Joshua
+I recall mail clients which always imported attached keys - not a bad
+thing.  S/MIME works the same.  One could debate whether such
+automatically imported keys may eventuallt expire from the keyring but
+this is orthogonal to the issues at hand.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (829 bytes)
+*gpgv* is the tool to verify signatures using a well defined set of
+keys.  It has been written exactly for that purpose.  *gpg* requires
+that you use one of the available trust models - presence of a key in
+the keyring is not such a model.
+
+
+Shalom-Salam,
+
+   Werner
+
+-- 
+Die Gedanken sind frei.  Ausnahmen regelt ein Bundesgesetz.
+
