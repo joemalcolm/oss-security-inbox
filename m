@@ -1,66 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/1
-Message-ID: <20140329090823.GB2473@sivokote.iziade.m$>
-Date: Sat, 29 Mar 2014 11:08:23 +0200
-From: Georgi Guninski <guninski@...inski.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/10
+Message-ID: <5404E592.2020802@sumptuouscapital.com>
+Date: Mon, 01 Sep 2014 23:30:58 +0200
+From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org
-Subject: Re: OT What are the delays in delivery of Fyodor's Full Disclosure list?
+Subject: CVE assignment for c-icap Server
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 28, 2014 at 11:09:38AM -0700, Fyodor wrote:
-> On Fri, Mar 28, 2014 at 8:56 AM, Georgi Guninski <guninski@...inski.com>wrote:
-> 
-> > Sorry for offtopic.
-> >
-> > What are the delays in the delivery in
-> > Fyodor's Full Disclosure list?
-> >
-> 
-> It is because the list is not even three days old yet and already has more
-> than 6,000 members and I'm still trying to set things up, including a team
-> of list members to help moderate.  But as of now, I'm still the only
-> moderator and I need to sleep sometimes.  I also have other projects to
-> work on than just moderating fulldisclosure.
-> 
-> Today at  17:06:09 +0200 I tried to post
-> > to fulldisclosure@...lists.org,
-> > now is 17:53:51 EET 2014 and neither I
-> > received the message nor it is on the mirror.
-> >
-> 
-> I'm sorry I wasn't able to get to your message in the first 47 minutes.
->  But it did eventually post:
-> 
-> http://seclists.org/fulldisclosure/2014/Mar/397
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-According to the headers it is more like
-2 hours and 10 minutes.
+Hi,
 
-> "lightly moderated" is not far away from
-> > "lightly pregnant" IMHO.
-> >
-> 
-> John tried to run the old fulldisclosure list unmoderated at first and it
-> lead to a disastrous crapflood of furry porn and other non-security junk as
-> soon as the list got big enough that trolls deemed it worthy to disrupt.
->  He switched to moderation many years ago.  I think he may have set
-> auto-moderation for people who always post good stuff, and I hope we'll be
-> able to do that too.
-> 
-> If you want to try creating a fully unmoderated fulldisclosure list,
-> nothing is stopping you, and I sincerely wish you the best.
-> 
+[0] lists a vulnerability for c-icap Server as:  "contains a flaw in
+the parse_request() function of request.c that may allow a remote
+denial of service. The issue is triggered when the buffer fails to
+contain a ' ' or '?' symbol, which will cause the end pointer to
+increase and surpass allocated memory. With a specially crafted
+request (e.g. via the OPTIONS method), a remote attacker can cause a
+loss of availability for the program." as described in [1]. From what
+I can see this was fixed in [2].
 
-I don't see this thread on F-FD,
-appears it is censored by moderation
-just because the moderator didn't like
-it. I see little difference with Bugtraq.
+Has a CVE been assigned to this issue already? if not I request that
+one is assigned.
 
-Let me remind that alpeh1 sold Bugtraq.
+References:
+[0] http://www.osvdb.org/show/osvdb/89304
+[1] http://osvdb.org/ref/89/c-icap.txt
+[2] http://sourceforge.net/p/c-icap/code/1018/
 
--- 
-blog: https://j.ludost.net/blog/
-forum: https://j.ludost.net/ss/index.php 
+- -- 
+- ----------------------------
+Kristian Fiskerstrand
+Blog: http://blog.sumptuouscapital.com
+Twitter: @krifisk
+- ----------------------------
+Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+- ----------------------------
+Veni vidi visa
+I came, I saw, I bought
+-----BEGIN PGP SIGNATURE-----
 
+iQIcBAEBCgAGBQJUBOWQAAoJEPw7F94F4TagjwUQAKFjqW2KCIrw9gI7aZrwBn9Z
+z+jCml/7AjUeqsVeLVkDi1FX+SN53bxgL8g7T+PmqKUS4esZ875RVXnz4Jviivhm
+WD7p1cDOojVHB/MVO5CRvbkNwSn92rLixcvtE6+O6d/OZcjz5bUwXxQvgznKPCRr
+oZoLl54izPuwuHbkj4bvzU2b0FLZA4Vsj75LxDyJDWaI2f+hD09iMO+T/25qQ7vK
+B8NYToE2W/X9VVeWL5kx8HrRX2cgYy8jI5yGxphIscsoaBx0wD3JcV4FG9YUy+zm
+Jk3RPY00PEyGt1SNf8LVLEE5uQoT/SbOhVc5Ofhru9JdZQDj2jqzZXmPjWYldfeR
+yabp6qphxZvIo3j07avAzdZlatQ/9TwBH7MbALf23k1P0rOlBe1Es+UsjrMSSLs1
+fuJdv1s/ctC4hlF7RwBCBL8gnQz3eSYwAukYXs9ehF+JtSQGXu/rJMid97774kRs
+8zB8pLbzmdLgJVnCrC+Mdd8HEXv2TviLyNMWVPAOyX2jesRUByWFv65MsxXlgmL6
+v2xFEg8prXxgmwM67MiyS3Gxn+LkR2KkBpOQMySlxyyEuCLzjTUa3rOEjzYBiHgJ
+gkeM8qevyZxFqRT8ycw8Xy/cdtYtgqI2WyxapsKCwzl5mP++PKp4tntx4aY3TrXc
+lfbxFKuRgQ1ZFgzBFaT2
+=UoU4
+-----END PGP SIGNATURE-----
