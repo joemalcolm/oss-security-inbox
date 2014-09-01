@@ -1,45 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/11/1
-Message-ID: <52D0D7D2.7050204@redhat.com>
-Date: Fri, 10 Jan 2014 22:34:10 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE assignment for jinja2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/11
+Message-Id: <20140901214340.A7848332024@smtpvbsrv1.mitre.org>
+Date: Mon,  1 Sep 2014 17:43:40 -0400 (EDT)
+From: cve-assign@...re.org
+To: roy@...ples.name
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: dhcpcd DoS attack
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-https://github.com/mitsuhiko/jinja2/commit/acb672b6a179567632e032f547582f30fa2f4aa7
+> http://roy.marples.name/projects/dhcpcd/ci/1d2b93aa5ce25a8a710082fe2d36a6bf7f5794d5?sbs=0
 
-dirname = '_jinja2-cache-%d' % os.getuid()
+> In function get_option, the DHO_OPTIONSOVERLOADED option checks if there
+> are overloaded options, like bootfile or servername.  It tries to make
+> sure that it's called only once, BUT overwrites that information after
+> receiving a DHO_END.  A malicious server could set the option
+> DHO_OPTIONSOVERLOADED yet another time in the bootfile or servername
+> section, which will result in another jump -- maybe into the same area.
 
-Arun Babu Neelicattu of Red Hat spotted this commit which introduces a
-temporary file creation vulnerability. This issue has been assigned
-CVE-2014-0012. For information on how to safely create temporary files
-please see
-http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
+> dhcpcd-4.0.0 though to dhcpcd.6.4.2 are vulnerable
 
-For Python simply use ?mkstemp? for files and ?mkdtemp? for
-directories from the ?tempfile? module.
+> dhcpcd-6.4.3 has been released with the above fix.
+
+Use CVE-2014-6060. Presumably this crosses privilege boundaries. (The
+type of DoS impact is not stated, and the server is implicitly allowed
+to conduct some types of DoS attacks against the client -- for
+example, by refusing to allocate an IP address.)
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJS0NfSAAoJEBYNRVNeJnmT9BMQAMg1DOmYdeZc+E4iKDf8DB8Z
-pUwmv0fq64L1zkWK6tPi4PcEAh2b37RaVKTW8pU7QAzsDYiQvuPpgFKrAKD/wKJq
-S6ySyyILmc8+ZDdamkRTq97i8Cfe/tf5wR/el4Cax+P8sL5qlfAKzfzdoG6PHErk
-zlvfv6ESAPDAmh6iC4ckd4+Kkda6xdN1pAJsY3y+TTtE/tnCRJfR5r6QZLsJma8p
-ovRZ4zzbn0I+i5/kyReVKKRQSaHF2jMY5Mt12V/vkIFyHovL9MJC7GrSos0VM6C1
-V6YtkWjc/GYyIeookaHXRpaJx65BLqPcaQ6EpQ8jcogkfnHT0Eyh9G9EItcfqA9g
-2rd7/1H6zpM+ijzq4SVFZAzhXvUmstk6ruUzbP90BPwrD6YEobzRTys/ZsV9Wnek
-HCTW2NYh/qXRSvQrwNoKB8rIrvg2YKoz40LBsMF3fsvrWKZ86zBNYsgebXecdc+T
-F+fNh7ioBWZnKGpZFCCzarAzrV1OjkSuAmf7cLLITSttJOAZkD1bcn40R2Z6YiRf
-fWKgR8Af/SqIq6/8EVk9FEzJ9ni2I/0qaPOzX5927xSV+4vogyYBq4RZhEwqCQjs
-+zfpiOUwzDuiQ5aRmMYqJSXK5ww+qO5hNiLyyxfLY/psaP2Y2df5zaRltvMLxCuk
-wU92wxHFjUBKS5wBgwlP
-=7f5m
+iQEcBAEBAgAGBQJUBOgTAAoJEKllVAevmvmswEUIAMkBxocvxtTziw5PJQrUr6y9
+Im6hdAVOVs8PSNHMvrUPqlB1xer5CNj+GvZ1eSyuavzikxPfBmekiTn9PMilEXRV
+OczR9FyjZnTgRD1CtBzaMO8KQ7V3ojiF3NSQyQV+cBZVyLpxvPeXDq8Uw9qIwmMJ
+eyM8LpmY1XCQ1/vXu8lsDYOeKp3JRvZmjVXfwpXWmLVuVnsfoTGp0Sln+B3VbCQg
+jMbeiEkaScXCbh4zKVtFYwR8a3mDhOiD0sSVQdl7jE/wZP+7K8QodGLJTp7KjTOO
+AoLUshwGfK0ACyWbEiG4MdW8ouIiLoTxKV1+F3r0McMoMGO3nAkVrNPXDeNXQZM=
+=uS8R
 -----END PGP SIGNATURE-----
