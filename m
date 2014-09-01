@@ -1,69 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/14/5
-Message-ID: <20140314180531.GA6692@steve.org.uk>
-Date: Fri, 14 Mar 2014 18:05:31 +0000
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/5
+Message-ID: <5404D08E.9030803@sumptuouscapital.com>
+Date: Mon, 01 Sep 2014 22:01:18 +0200
+From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
 To: oss-security@...ts.openwall.com
-Subject: Insecure usage of temporary files in GNU Readline
+Subject: Re: CVE Request: dhcpcd DoS attack
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-  Whilst auditing some code for insecure uses of temporary
- files I spotted a potential area of concern in GNU readline.
- (via an embedded copy of the same inside the Debian source
- of GDB.)
+On 07/30/2014 08:32 PM, Roy Marples wrote:
+> Hi
+> 
+> dhcpcd-4.0.0 though to dhcpcd.6.4.2 are vulnerable to a DoS
+> attack.
+> 
 
-  The code in question comes from readline 6.x and is contained
- in util.c:
+...
 
+> 
+> I would like to request a CVE for the issue.
+> 
 
-int
-_rl_tropen ()
-{
-  char fnbuf[128];
+Has a CVE been assigned to this request?
 
-  if (_rl_tracefp)
-    fclose (_rl_tracefp);
-  sprintf (fnbuf, "/var/tmp/rltrace.%ld", getpid());
-  unlink(fnbuf);
-  _rl_tracefp = fopen (fnbuf, "w+");
-  return _rl_tracefp != 0;
-}
+- -- 
+- ----------------------------
+Kristian Fiskerstrand
+Blog: http://blog.sumptuouscapital.com
+Twitter: @krifisk
+- ----------------------------
+Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
+fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
+- ----------------------------
+Adde parvum parvo magnus acervus erit
+Add little to little and there will be a big pile
+-----BEGIN PGP SIGNATURE-----
 
-
-  _rl_tropen is invoked from _rl_trace, which is a debugging aid,
- and it is implied that the function is private, because it is defined
- in rlprivate.h:
-
-/* rlprivate.h -- functions and variables global to the readline library,
-          but not intended for use by applications. */
-
-  That said the function _is_ available for using/linking, as
- a trivial test program would demonstrate:
-
-       http://pastebin.com/T0XimKED
-
-   Given how widely used this library is potentially many applications are
- unknowingly vulnerable to a classic race-condition.
-
-  I'm throwing this out there for two reasons:
-
-    * In theory this is exploitable, and should be fixed.
-
-    * In practice I cannot find an application which invokes _rl_trace,
-      although there are tantalising clues such as this page of commits
-      which refers to a snapshot of GNU Bash:
-
-            https://gitlab.com/bminor/bash/commit/b0c16657b4514191b4f6c328615d162726758247
-
-   Feel free to allocate an identifier, or even scan some of your
- projects that have readline dependencies ;)
-
-   This is the first announcement of this issue I've made, I can
- imagine some more paranoid distributions might wish to update, but
- equally this seems so low-risk that I didn't consider it worthy
- of vendor-sec.
-
-Steve
--- 
-http://tweaked.io/
+iQIcBAEBCgAGBQJUBNCGAAoJEPw7F94F4TagukAQALEQe9InKcrsX8lsZ3ak5Nvv
+iUGNSpoWGihT7BWNT2OFwuRVpXITLym5M/cPL4Uupg5FCQRIDf6w66bRHnd1+0Ll
+XcQkuK9KYP5fu4Fqb/0w7FCz+Wgrf8SaRg+2qXymgbBlO830fjfMZ+7oapBOYy+Y
+vc8cLH1nTMM7nCuoMKNt4oerTPAvLcafJnMaEEGkjomeP91LhLBohwLTfyXH2lym
+KOickeJ/1Ni670LfLrcl4xzYaUHlL3sQloYKDApOzb3RPT6c7Xh7K+lr0j8QW52p
+km/9ymm3Zm3HPN+rU0QASu1y1ibbz9prMF5ydRZAjNAEj2ocG+TupKspnqfpdf+b
+LJkFj9dEtZ4F9zzczEA8Gbz7Yae/3xcBxu2Lcy07/jJyfCYXnXeZTbX+tx4He/Zz
+2Fa4vUxN6/oQBoiegsAT5QAn81CUZbnkGuTJSTbTuMQohDCWRhKrDBHvcyFT8UL3
+S9axKwfJXjRqp3DR1o1FYjrw9IyJrkJu16P+qr2j4G3DvZC2QzwpMIuWsSgQxc93
+acblzJt0FoaH6RBmpUJqcUDArVRad0UFTIcFGq+PLIzUlExv1VF2679ImHN0USY7
+a8ELascBdOKyn9ZLa4Xl5jDXsOY1J+W4Cd5O+BHq7I9hcWlIjvP8viYDWq5eD202
+6OfZwpeWwdLSgC5Y0Bjd
+=TqOP
+-----END PGP SIGNATURE-----
