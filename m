@@ -1,28 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/45
-Message-ID: <6900DC89-C4A7-46EC-9F6C-FF03A426D610@akamai.com>
-Date: Mon, 29 Sep 2014 17:06:00 -0500
-From: "Kobrin, Eric" <ekobrin@...mai.com>
-To: "dwheeler@...eeler.com" <dwheeler@...eeler.com>
-CC: oss-security <oss-security@...ts.openwall.com>, chet.ramey <chet.ramey@...e.edu>, solar <solar@...nwall.com>, lcamtuf <lcamtuf@...edump.cx>, fweimer <fweimer@...hat.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/02/1
+Message-Id: <20140902042333.B317733200B@smtpvbsrv1.mitre.org>
+Date: Tue,  2 Sep 2014 00:23:33 -0400 (EDT)
+From: cve-assign@...re.org
+To: fweimer@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: glibc character set conversion from IBM code pages
 Content-Type: text/plain; charset=utf-8
 
-On Sep 29, 2014, at 2:50 PM, "David A. Wheeler" <dwheeler@...eeler.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On Mon, 29 Sep 2014 10:49:22 -0700, Tavis Ormandy <taviso@...xchg8b.com> wrote:
->> If an adversary can choose the variable name, it's game over by definition.
->> He can choose LD_PRELOAD, SHELLOPTS='xtrace' PS4='$(foo)', ...
+> In 2012, a crasher in IBM930 decoding was reported and fixed:
 > 
-> I agree. If an adversary can arbitrary control the environment, it is definitely game over.
-> What's more, this has been true for decades and this is *clearly* documented all over the place.
-> If some program allows an untrusted user to control the content in arbitrary environment variables,
-> that would be a security vulnerability in that other program, not in bash.
+> https://sourceware.org/bugzilla/show_bug.cgi?id=14134
+> https://sourceware.org/git/?p=glibc.git;a=commit;h=6e230d11837f3ae7b375ea69d7905f0d18eb79e5
+> 
+> This change went into glibc 2.16.
 
-It was also a flaw in the other program when the adversary was able to set the values. That flaw is so prevalent that we now have these recent patches.
+Use CVE-2012-6656.
 
-My point is that we can tell the other people that they are using bash wrong, or we can take steps to make it harder to use unsafely. Introducing namespaces with prefixing and suffixing is fine for a quick patch, but I'd argue that it is too fragile for long term use.
 
-What is the motivation to not store executable code (functions) differently from standard variables?
+> additional code page decoding functions (IBM933, IBM935, IBM937,
+> IBM939, IBM1364):
+> 
+> https://sourceware.org/bugzilla/show_bug.cgi?id=17325
+> https://sourceware.org/ml/libc-alpha/2014-08/msg00473.html
 
--- Eric Kobrin
+Use CVE-2014-6040.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUBUWzAAoJEKllVAevmvmsdCYH/RKCplNUGUz2+hey24f9mQnO
+Ecq/zoDEQL61tJn9QY/JdW6x0GSn9QHy8qCKRDv+M6m3PVi3kp74oK17M66sg0tF
+uznZdUXWQGfJdPwOyKplufYij3j1TMOgwjL+VGwQ63bddmBGJLCVxgHe/j+dI6z5
+nIVT0vxcVylDpNI4AyBunTg1Pu13D/zGkreDI6tVarfpExk44Tw9v4Zg/z0Sh8Nz
+8xwG2QnXFctMUQhlLn8zGHD27USO96Sj5YFT4LZBlgOusyaUOUi9vjm/xdgSD0wv
++g5rSKwAUW/UYsU263FvZg7ZYM04lD0ShCYmLAHWKcM1Dq9N+NX9vjzyd18fK9U=
+=tGjg
+-----END PGP SIGNATURE-----
