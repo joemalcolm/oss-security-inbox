@@ -1,20 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/16
-Message-ID: <m5t4qt$dun$1@ger.gmane.org>
-Date: Fri, 05 Dec 2014 21:33:33 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Multiple XSS vulnerabilities in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/02/3
+Message-Id: <20140902231318.EC9651F0272@smtpksrv1.mitre.org>
+Date: Tue,  2 Sep 2014 19:13:18 -0400 (EDT)
+From: cve-assign@...re.org
+To: nguigo@...cpartners.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, carnil@...ian.org, team@...urity.debian.org, camrdale@...il.com
+Subject: Re: CVE requests for 2 separate vulns in torrentflux 2.4.5-1 (debian stable)
 Content-Type: text/plain; charset=utf-8
 
-On 2014-12-05 16:56, cve-assign@...re.org 
-wrote:
-> Use CVE-2014-9281 [sic] for the copy_field.php issue, originally
-> incorrectly reported for test_langs.php (bug 17876).
->
-> Continue to use CVE-2014-9271 for the file uploads issue (bug 17874).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The two issues in our tracker have been updated accordingly.
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=759574
+> 
+> The XSS that can be triggered by an unauthenticated attacker. A malicious
+> torrent file such as the POC attached can be crafted and shared by an
+> attacker. Upon starting the download from Torrentflux, some of the file
+> contents are pasted without output encoding into a script section,
+> triggering the XSS. An alternate vector (authenticated) is for an attacker
+> to upload the torrent file to his own account and subsequently share a link
+> the torrent's details
+
+Use CVE-2014-6027 (i.e., for both vectors).
 
 
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=759573
+> 
+> An authenticated attacker on the webapp can access all users' cookies stored
+> in the database by iterating the cid (cookie id) in the following fashion:
+> 
+> /torrentflux/profile.php?op=editCookies&cid=<ITERATOR>
+> 
+> The function getCookie is implemented at torrentflux/www/functions.php
+> L395
 
+Use CVE-2014-6028 for this report about the ability to read cookies.
+
+
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=759573#16
+> From: Salvatore Bonaccorso <carnil@...ian.org>
+> 
+> FTR in the bug: Given that it is also possible to delete or modify
+> cookies.
+
+Use CVE-2014-6029 for this report about the ability to delete or
+modify cookies. (The nature of the attack is not identical and it was
+reported by a different person.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUBk5PAAoJEKllVAevmvmsgtYH/1/JqyAnliUKei7JOKrFelFq
+/gkmffgsWLn3YWAbnm0mwqwZO2QWTjIXpqcqf2M6UyGqYTOwqaNwBVxWv+f83exz
+tsg6A4dCHGVJQCzaO4SbbzL2i+F6dmo2Tn9GS3u1x7W3BirgDSp+v9z0dswN67aU
+Ra5HyJCr2tQUw6PXr63b1Brfgcw20kBtfRb0FI/S4+89R2tbMr+nhrs5W9XVugbp
+jb6qCsAi2HHSIpZFucNNSX2KaLiDQyZ9qXKZVMqlRL66osE5nw7LyDmhlU6aO0y9
+QsRBU7jj0k1xmlrpXhZWVIX5L4Yp9hkiQPYI3VKd/RAT0JWQd/FVa9Hlg1dj104=
+=SLx9
+-----END PGP SIGNATURE-----
