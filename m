@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/16/4
-Message-ID: <539F5AE5.30001@debian.org>
-Date: Mon, 16 Jun 2014 23:00:21 +0200
-From: Sylvestre Ledru <sylvestre@...ian.org>
-To: cve-assign@...re.org, 744817@...s.debian.org, mmcallis@...hat.com
-CC: oss-security@...ts.openwall.com
-Subject: Re: Bug#744817: CVE request: insecure temporary file handling in clang's scan-build utility
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/02/2
+Message-ID: <540613D4.5030901@redhat.com>
+Date: Tue, 02 Sep 2014 13:00:36 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, Martin Schwidefsky <schwidefsky@...ibm.com>
+Subject: Re: Subscribtion request to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-On 16/06/2014 22:51, Sylvestre Ledru wrote:
-> On 19/04/2014 05:29, cve-assign@...re.org wrote:
->>> Jakub Wilk discovered that clang's scan-build utility insecurely handled
->>> temporary files.
->>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744817
->>> The GetHTMLRunDir subroutine ...
->>> 3) The function doesn't fail if the directory already exists, even if
->>> it's owned by another user.
->> Use CVE-2014-2893.
->>
-> I think I fixed it upstream:
-> http://llvm.org/viewvc/llvm-project?view=revision&revision=211051
-> http://llvm.org/viewvc/llvm-project/cfe/trunk/tools/scan-build/scan-build?r1=210971&r2=211051&pathrev=211051
->
-Actual patch fixed:
-http://llvm.org/viewvc/llvm-project/cfe/trunk/tools/scan-build/scan-build?r1=210971&r2=211053&pathrev=211053
-Sorry about the noise
+Thread bump =) One question, when you say "my role as maintainer for
+Linux on System z" is that mostly kernel, user space as well, or?
 
-Sylvestre
+On 29/07/14 05:26 PM, Solar Designer wrote:
+> On Tue, Jul 29, 2014 at 05:03:38PM +0200, Martin Schwidefsky wrote:
+>> our friends from SuSE suggested that it might make sense that
+>> I in my role as maintainer for Linux on System z (alias s390)
+>> get added to the linux-distros mailing list.
+>> If you agree that this indeed makes sense could you subscribe
+>> me please?
+> 
+> I've been meaning to post a follow-up on the other request by IBM to
+> join (linux-)distros.  Unfortunately, I am in too bad a lack of time
+> right now.  So no changes in subscriber lists in August.  I intend to
+> revisit this topic in September.
+> 
+> I do feel that IBM joining one of these lists makes sense, but this and
+> the details need to be discussed.
+> 
+> Alexander
+> 
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (881 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
