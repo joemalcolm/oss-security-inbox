@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/19
-Message-ID: <542C4234.1080006@pikewerks.com>
-Date: Wed, 01 Oct 2014 14:04:36 -0400
-From: Andrew Tappert <andrew@...ewerks.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/3
+Message-ID: <20140903160226.756b1dc0@redhat.com>
+Date: Wed, 3 Sep 2014 16:02:26 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Tom O'Connor <toconnor@...ewerks.com>
-Subject: CVE Request: linux kernel net_get_random_once bug
+Subject: CVE request: V8 Memory Corruption and Stack Overflow
 Content-Type: text/plain; charset=utf-8
 
+Hi!
 
-My colleague Tom O'Connor and I have identified a security bug in the
-Linux kernel that results in drastically degraded randomness of IP IDs,
-TCP sequence numbers, and ephemeral port numbers on affected systems.
-The bug existed in kernel versions 3.13 and 3.14.  We are posting here
-rather than to the private "distros" list because the bug has already
-been fixed.  However, we don't think that the security implications of
-the bug have been acknowledged anywhere, and we think it needs a CVE.  A
-full write-up on the bug is posted at
-http://secondlookforensics.com/ngro-linux-kernel-bug/.
+The following node.js blog post points out a flaw in V8, which is
+bundled with node.js:
+
+http://blog.nodejs.org/2014/07/31/v8-memory-corruption-stack-overflow/
+
+It does not seem this got CVE assigned by Google, or in response to the
+node.js update.
 
 -- 
-Andrew Tappert
-Raytheon Cyber Products
-http://secondlookforensics.com/
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+Tomas Hoger / Red Hat Product Security
