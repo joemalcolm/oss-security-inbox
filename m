@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/02/4
-Message-ID: <52EEDB9E.4050908@redhat.com>
-Date: Mon, 03 Feb 2014 10:58:22 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0039: fwsnort loaded configuration file from cwd when run as a non-root user
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/7
+Message-ID: <504ACB59-093F-4240-896A-3FEEA2F1CE78@redhat.com>
+Date: Wed, 03 Sep 2014 10:40:00 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request for nodejs/v8
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+On 09/03/2014, at 10:32 AM, Vincent Danen wrote:
 
-When fwsnort was run as a non-root user, it opened the fwsnort.conf file
-from the current working directory if a configuration file was not
-explicitly specified. The configuration file can specify a directory to
-load libraries from, so this would have been an issue if running fwsnort
-in an attacker-controlled directory.
+> I don't see a CVE mentioned for this issue anywhere.  Can one be assigned if it has not already been?
+>
+> Described on the nodejs blog as:
+>
+> A memory corruption vulnerability, which results in a denial-of-service, was identified in the versions of V8 that ship with Node.js 0.8 and 0.10. In certain circumstances, a particularly deep recursive workload that may trigger a GC and receive an interrupt may overflow the stack and result in a segmentation fault. For instance, if your work load involves successive JSON.parse calls and the parsed objects are significantly deep, you may experience the process aborting while parsing.
+>
+> This issue was identified by Tom Steele of ^Lift Security and Fedor Indunty, Node.js Core Team member worked closely with the V8 team to find our resolution.
+>
+>
+> https://codereview.chromium.org/339883002
+> http://blog.nodejs.org/2014/07/31/v8-memory-corruption-stack-overflow/
+> https://github.com/joyent/node/commit/530af9cb8e700e7596b3ec812bad123c9fa06356
+> https://bugzilla.redhat.com/show_bug.cgi?id=1125464
 
-Michael Rash has released fwsnort-1.6.4 to fix this issue:
+Sorry, just realized that Tomas asked the same question a few hours ago:
 
-http://www.cipherdyne.org/fwsnort/download/
-https://github.com/mrash/fwsnort/blob/master/ChangeLog
+"CVE request: V8 Memory Corruption and Stack Overflow"
 
-The patch (with further issue details) for CVE-2014-0039 is:
+They're the same thing.
 
-https://github.com/mrash/fwsnort/commit/fa977453120cc48e1654f373311f9cac468d3348
+-- 
+Vincent Danen / Red Hat Product Security
 
-For the affected versions, I had only tested 1.6.3 (on Fedora and EPEL).
-
-Cheers,
-
---
-Murray McAllister / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
