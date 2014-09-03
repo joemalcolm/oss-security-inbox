@@ -1,35 +1,141 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/29
-Message-Id: <1412201145.2542960.174109065.62846747@webmail.messagingengine.com>
-Date: Thu, 02 Oct 2014 00:05:45 +0200
-From: Hannes Frederic Sowa <hannes@...essinduktion.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/5
+Message-ID: <20140903153205.GA30469@kludge.henri.nerv.fi>
+Date: Wed, 3 Sep 2014 18:32:05 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: xfs directory hash ordering bug
+Cc: TYPO3 Security Team <security@...o3.org>
+Subject: CVE request: TYPO3-EXT-SA-2014-10
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+Can I get 11 CVEs for following TYPO3 Extensions in Collective Security Bulletin
+(CSB) TYPO3-EXT-SA-2014-010, thanks. I verified that these have not yet been
+requested by TYPO3 team.
 
-Another kernel bug which did not get a CVE yet, but should be considered
-to get one (sorry for the late notification):
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-010/
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c88547a8119e3b581318ab65e9b72f27f23e641d
+Extension: CWT Frontend Edit (cwt_feedit)
+Affected Versions: 1.2.4 and all versions below
+Vulnerability Type: Arbitrary Code Execution
+Severity: Critical
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:C/I:C/A:C/E:F/RL:O/RC:C
+Solution: An updated version 1.2.5 is available from the TYPO3 extension manager
+and at http://typo3.org/extensions/repository/download/cwt_feedit/1.2.5/t3x/.
+Users of the extension are advised to update the extension as soon as possible.
+Credits: Credits go to Milan Altenburg who discovered and reported the issue.
 
-Basically it allows a local user to corrupt a xfs filesystem by just
-creating directories. Depending on whether it is the root filesystem or
-not the kernel panics or just oopses and forcefully disconnects the
-filesystem.
+Extension: LDAP (eu_ldap)
+Affected Versions: 2.8.17 and all versions below
+Vulnerability Type: Information Disclosure
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:H/Au:S/C:C/I:N/A:N/E:ND/RL:O/RC:C
+Solution: An updated version 2.8.18 is available from the TYPO3 extension
+manager and at
+http://typo3.org/extensions/repository/download/eu_ldap/2.8.18/t3x/. Users of
+the extension are advised to update the extension as soon as possible.
+Credits: Credits go to Florian Seirer who discovered and reported the issue.
 
-The commit states that xfs_repair repairs the filesystem but IIRC
-further access to that directory would still cause the kernel to either
-oops or panic. So xfs_repair could not correctly fix the filesystem in
-all situations. But I am not sure anymore and didn't follow up on this
-(I had a relocation coming up).
+Extension: Flat Manager (flatmgr)
+Affected Versions: 2.7.9 and all versions below
+Vulnerability Type: SQL Injection
+Severity: High
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:C/I:P/A:N/E:F/RL:O/RC:C
+Solution: An updated version 2.7.10 is available from the TYPO3 extension
+manager and at
+http://typo3.org/extensions/repository/download/flatmgr/2.7.10/t3x/. Users of
+the extension are advised to update the extension as soon as possible.
+Credits: Credits go to Ingo Schmitt who discovered and reported the issue.
 
-My initial report here:
-http://marc.info/?l=linux-xfs&m=139590613002926&w=2
+Extension: Open Graph protocol (jh_opengraphprotocol)
+Affected Versions: 1.0.1 and all versions below
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:P/I:P/A:N/E:F/RL:O/RC:C
+Solution: An updated version 1.0.2 is available from the TYPO3 extension manager
+and at
+http://typo3.org/extensions/repository/download/jh_opengraphprotocol/1.0.2/t3x/.
+Users of the extension are advised to update the extension as soon as possible.
+Credits: Credits go to Heiko Kromm who discovered and reported the issue.
 
-Reproducer:
-http://oss.sgi.com/cgi-bin/gitweb.cgi?p=xfs/cmds/xfstests.git;a=commitdiff;h=947ee8bd4b59770534297572b14c695e9c6e001e
+Extension: ke DomPDF (ke_dompdf)
+Affected Versions: 0.0.3 and all versions below
+Vulnerability Type: Remote Code Execution
+Severity: Critical
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:C/I:C/A:C/E:F/RL:O/RC:C
+Solution: An updated version 0.0.5 is available from the TYPO3 extension manager
+and at http://typo3.org/extensions/repository/download/ke_dompdf/0.0.5/t3x/.
+Users of the extension are advised to update the extension as soon as possible.
+Credits: Credits go to Hendrik Nadler who discovered and reported the issue.
 
-Thanks,
-Hannes
+Extension: LumoNet PHP Include (lumophpinclude)
+Affected Versions: 1.2.0 and all versions below
+Vulnerability Type: Arbitrary Code Execution
+Severity: Critical
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:C/I:C/A:C/E:F/RL:O/RC:C
+Solution: An updated version 1.2.1 is available from the TYPO3 extension manager
+and at
+http://typo3.org/extensions/repository/download/lumophpinclude/1.2.1/t3x/. Users
+of the extension are advised to update the extension as soon as possible.
+Credits: Credits go to Jost Baron who discovered and reported the issue.
+
+Extension: News Pack (news_pack)
+Affected Versions: 0.1.0 and all versions below
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:P/I:P/A:N/E:F/RL:U/RC:C
+Solution: Versions of this extension that are known to be vulnerable will no
+longer be available for download from the TYPO3 Extension Repository. The
+extension author failed in providing a security fix for the reported
+vulnerability in a decent amount of time. Please uninstall and delete the
+extension folder from your installation.
+Credits: Credits go to Frederic Gaus who discovered and reported the issue.
+
+Extension: SB Folderdownload (sb_akronymmanager)
+Affected Versions: 0.5.0 and all versions below
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:P/I:P/A:N/E:F/RL:U/RC:C
+Solution: Versions of this extension that are known to be vulnerable will no
+longer be available for download from the TYPO3 Extension Repository. The
+extension author failed in providing a security fix for the reported
+vulnerability in a decent amount of time. Please uninstall and delete the
+extension folder from your installation.
+
+Extension: Address visualization with Google Maps (st_address_map)
+Affected Versions: 0.3.5 and all versions below
+Vulnerability Type: SQL Injection
+Severity: High
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:C/I:P/A:N/E:F/RL:O/RC:C
+Solution: An updated version 0.3.6 is available from the TYPO3 extension manager
+and at
+http://typo3.org/extensions/repository/download/st_address_map/0.3.6/t3x/. Users
+of the extension are advised to update the extension as soon as possible.
+Credits: Credits go to Marc Bastian Heinrichs who discovered and reported the
+issue.
+
+Extension: Google Sitemap (weeaar_googlesitemap)
+Affected Versions: 0.4.3 and all versions below
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:P/I:P/A:N/E:F/RL:U/RC:C
+Solution: Versions of this extension that are known to be vulnerable will no
+longer be available for download from the TYPO3 Extension Repository. The
+extension author failed in providing a security fix for the reported
+vulnerability in a decent amount of time. Please uninstall and delete the
+extension folder from your installation.
+
+Extension: wt_directory (wt_directory)
+Affected Versions: 1.4.0 and all versions below
+Vulnerability Type: SQL Injection
+Severity: High
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:C/I:P/A:N/E:F/RL:O/RC:C
+Solution: An updated version 1.4.1 is available from the TYPO3 extension manager
+and at http://typo3.org/extensions/repository/download/wt_directory/1.4.1/t3x/.
+Users of the extension are advised to update the extension as soon as possible.
+Credits: Credits go to Marc Bastian Heinrichs who discovered and reported the
+issue.
+
+---
+Henri Salo
+
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
