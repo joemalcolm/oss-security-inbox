@@ -1,28 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/1
-Message-Id: <E1Xc1KZ-0001rU-NF@rmm6prod02.runbox.com>
-Date: Wed, 08 Oct 2014 20:11:43 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/2
+Message-ID: <20140903155905.21358f55@redhat.com>
+Date: Wed, 3 Sep 2014 15:59:05 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Open Source only?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 8 Oct 2014 14:53:44 -0700, Tracy Reed <treed@...raviolet.org> wrote:
-> While it is too late for our hardware etc. perhaps strong type systems such as
-> found in Haskell can help here?
+On Thu, 28 Aug 2014 03:04:02 +0400 Solar Designer wrote:
 
-No.  At least not in the sense of totally separating data and code.
-It's trivial to implement a language (say Lisp) inside Haskell,
-and then hand data to that implementation to be executed.
+> I've just rejected a posting giving the following reason:
+> 
+> Message lacks Subject, and the software appears to be non Open Source:
+> partial(?) source code is available, but under a EULA that doesn't
+> appear to meet OSI definition.
+> 
+> The message was CC'ed to full-disclosure, so it will probably appear
+> there.
+> 
+> While message lacking Subject is a technicality, which the sender may
+> address (and resend the message), the issue of software that comes
+> with source code, but isn't under an Open Source license is one we
+> might want to decide on, if we haven't already (I think we have,
+> which is why I mentioned it as one of two reasons to reject that
+> posting).  Also, it may at times be tricky (and unreliable and
+> time-consuming) for list moderators to determine whether a license is
+> Open Source or not, as well as whether the software is possibly
+> dual-licensed.  Should we perhaps err on the side of approving
+> postings whenever in doubt?
 
-That does not make Haskell *bad*; you can implement an interpreter
-in any Turing-complete language.  And it's absurd to say "NEVER
-mix data and code" - it's sometimes the right approach to use.
-But mixing code with data is probably an *overused* approach,
-given the risks that come with it.
+Investigating license status to decide whether some post should be
+approved sounds like a very bad use of your time.  List charter already
+says Open Source software issues only are expected to be posted here.
+If post is related to something that is obviously closed source, it
+should be rejected.  If it's something which has source available,
+allow it in without investigating if it has OSI approved license, or is
+properly licensed at all.
 
-We need to help developers know what is safe, and what is less safe.
-Then they can avoid easily-avoided problems, and know when they have
-extra work to do.
+The above can be re-visited if there is actually a relevant number of
+abuses.
 
---- David A. Wheeler
+Just my 2c.
+
+-- 
+Tomas Hoger / Red Hat Product Security
