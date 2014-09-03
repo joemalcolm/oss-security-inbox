@@ -1,52 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/1
-Message-ID: <54163664.8070505@moodle.com>
-Date: Mon, 15 Sep 2014 08:44:20 +0800
-From: Michael de Raadt <michaeld@...dle.com>
-To: oss-security@...ts.openwall.com
-Subject: Moodle security notifications public
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/4
+Message-ID: <20140903144312.GR7949@mentor.com>
+Date: Wed, 3 Sep 2014 10:43:13 -0400
+From: Joe MacDonald <Joe_MacDonald@...tor.com>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Open Source only?
 Content-Type: text/plain; charset=utf-8
 
-The following security notifications are now public after release.
+[Re: [oss-security] Open Source only?] On 14.08.27 (Wed 17:52) Kurt Seifried wrote:
 
-Thanks to OSS members for their continued cooperation.
+> On 27/08/14 05:04 PM, Solar Designer wrote:
+> > Hi,
+> > 
+> > I've just rejected a posting giving the following reason:
+> > 
+> > Message lacks Subject, and the software appears to be non Open Source:
+> > partial(?) source code is available, but under a EULA that doesn't
+> > appear to meet OSI definition.
+> > 
+> > The message was CC'ed to full-disclosure, so it will probably appear
+> > there.
+> > 
+> > While message lacking Subject is a technicality, which the sender may
+> > address (and resend the message), the issue of software that comes with
+> > source code, but isn't under an Open Source license is one we might want
+> > to decide on, if we haven't already (I think we have, which is why I
+> > mentioned it as one of two reasons to reject that posting).  Also, it
+> > may at times be tricky (and unreliable and time-consuming) for list
+> > moderators to determine whether a license is Open Source or not, as well
+> > as whether the software is possibly dual-licensed.  Should we perhaps
+> > err on the side of approving postings whenever in doubt?
+> 
+> Simple: If we go with Open Source only then "is the code available under
+> an approved license"?
+> 
+> http://opensource.org/licenses
 
-=======================================================================
-MSA-14-0033: URL parameter injection in CAS authentication
+It's been my experience working with Open Source projects that as others
+have said, there are a lot of licenses that don't quite match an OSI
+or FSF approved license but are very close and would reasonably warrant
+the software being discussed here.  But the "or something close" is kind
+of the current state of affairs which puts the onus on the moderators,
+which isn't ideal.
 
-Description:       A flaw in the third-party CAS library, utilised by
-                    Moodle, has been found, which could potentially
-                    allow unauthorised access and privilege escalation.
-Issue summary:     Upgrade phpCAS to 1.3.3 or greater - security
-                    vulnerabilities
-Severity/Risk:     Serious
-Versions affected: 2.7 to 2.7.1, 2.6 to 2.6.4, 2.5 to 2.5.7 and earlier
-                    unsupported versions
-Versions fixed:    2.7.2 and 2.6.5 (NOTE: A fix to 2.5 was not
-                    possible. CAS users with Moodle 2.5 or earlier are
-                    encouraged to upgrade to a more recent release.)
-Reported by:       Eric Merrill
-Issue no.:         MDL-46766
-CVE identifier:    CVE-2014-4172
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46766
+I'd be inclined to suggest that the moderators use their own judgement
+without worrying too much about list look-ups and feel free to err on
+the side of letting through too much rather than too little and members
+are free to ask a topic be taken off-list, citing either the above (or
+SPDX or the FSF list, if they like, though honestly I think the FSF goes
+a bit far in their definition of non-free, I think PERL is perfectly
+fair game for this list) as the reason why it isn't relevant.
 
-=======================================================================
-MSA-14-0034: Identity information revealed early in Q&A forum
+Or, of course, as below.  Because you're perfectly correct, lots of
+closed-source vendors either don't care or don't want their errors
+discussed openly.  Either has no place here, Full Disclosure is a
+perfectly fine venue for that.
 
-Description:       Users who had not yet posted the required answer in
-                    a Q&A forum in order to access past posts were able
-                    to see the name of the last person who had posted.
-Issue summary:     Other authors are visible in /mod/forum/view.php
-                    before student has posted their own answer.
-Severity/Risk:     Minor
-Versions affected: 2.7 to 2.7.1, 2.6 to 2.6.4, 2.5 to 2.5.7 and earlier
-                    unsupported versions
-Versions fixed:    2.7.2, 2.6.5 and 2.5.8
-Reported by:       Amanda Doughty
-Issue no.:         MDL-46619
-CVE identifier:    CVE-2014-3617
-Changes (master): 
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46619
+Just my thoughts.
 
-=======================================================================
+-J.
+
+> Obviously if there needs to be an exception (e.g. a closed source/poorly
+> licensed source interacts significantly with something Open Source it
+> might be worth discussing).
+> 
+> The other aspect of this: in my experience the majority of closed source
+> vendors just don't care about security. So discussing it, especially
+> without their input/even being aware of it is quite pointless.
+> 
+> > Alexander
+> 
+-- 
+-Joe MacDonald.
+:wq
+
+Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
