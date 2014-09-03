@@ -1,34 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/06/4
-Message-ID: <20140706082003.GA10792@openwall.com>
-Date: Sun, 6 Jul 2014 12:20:03 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/1
+Message-ID: <20140903092857.76a69dc9@mschwide>
+Date: Wed, 3 Sep 2014 09:28:57 +0200
+From: Martin Schwidefsky <schwidefsky@...ibm.com>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Subscribtion request to linux-distros
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Jul 06, 2014 at 04:06:12AM -0400, John Johansen wrote:
-> On 07/05/2014 08:37 PM, Marc Deslauriers wrote:
-> > On 14-07-05 05:22 PM, Yves-Alexis Perez wrote:
-> >> On sam., 2014-07-05 at 22:25 +0400, Solar Designer wrote:
-> >>> "ptrace,x86: force IRET path after a ptrace_stop()"
-> >>> http://kernel.opensuse.org/cgit/kernel/commit/?h=openSUSE-13.1&id=d1f26676dad578a65c94782f0c2bd00b7aa68f1b
-> >>>
-> >>> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
-> >>> https://bugzilla.redhat.com/show_bug.cgi?id=1115927
-> >>
-> >> Hmhm, what are the reasons why the mainline (and opensuse) fix
-> >> (b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a) is to force using IRET
-> >> instead of SYSRET, while distros like Ubuntu and Redhat seem to ???only???
-> >> make sure RIP is canonical?
-> > 
-> > AFAIK, our plan is to switch to the upstream fix for the next kernel updates.
+On Tue, 02 Sep 2014 13:00:36 -0600
+Kurt Seifried <kseifried@...hat.com> wrote:
+
+That is mostly for the kernel, for the user space components other
+maintainers are responsible. But I could serve as a gateway for
+the user space aspects as well.
+
+> Thread bump =) One question, when you say "my role as maintainer for
+> Linux on System z" is that mostly kernel, user space as well, or?
 > 
-> yep, Ubuntu went with the original patch, as we where mostly through our process
-> when b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a hit. We decided to do a release with
-> the original patch so we could get something out this weekend, but will switch to
-> b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a asap
+> On 29/07/14 05:26 PM, Solar Designer wrote:
+> > On Tue, Jul 29, 2014 at 05:03:38PM +0200, Martin Schwidefsky wrote:
+> >> our friends from SuSE suggested that it might make sense that
+> >> I in my role as maintainer for Linux on System z (alias s390)
+> >> get added to the linux-distros mailing list.
+> >> If you agree that this indeed makes sense could you subscribe
+> >> me please?
+> > 
+> > I've been meaning to post a follow-up on the other request by IBM to
+> > join (linux-)distros.  Unfortunately, I am in too bad a lack of time
+> > right now.  So no changes in subscriber lists in August.  I intend to
+> > revisit this topic in September.
+> > 
+> > I do feel that IBM joining one of these lists makes sense, but this and
+> > the details need to be discussed.
+> > 
+> > Alexander
+> > 
+> 
 
-Why don't you keep both patches?  It sounds safer to me to use both.
 
-Alexander
+-- 
+blue skies,
+   Martin.
+
+"Reality continues to ruin my life." - Calvin.
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
