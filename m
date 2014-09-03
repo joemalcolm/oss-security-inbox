@@ -1,80 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/21
-Message-Id: <2F6F66D0-3535-414E-B926-8D4C59E90685@vmware.com>
-Date: Tue, 3 Jun 2014 16:52:14 -0300
-From: Ramon de C Valle <rdecvalle@...are.com>
-To: oss-security@...ts.openwall.com
-Cc: VMware Security Response Center <security@...are.com>, Monty Ijzerman <mijzerman@...are.com>
-Subject: Re: Request for linux-distros subscription
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/6
+Message-ID: <6DA72294-7749-423B-AA9F-3E8C21F724C4@redhat.com>
+Date: Wed, 03 Sep 2014 10:32:05 -0600
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: CVE request for nodejs/v8
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+I don't see a CVE mentioned for this issue anywhere.  Can one be assigned if it has not already been?
 
-Hi Alexander, Kurt, others,
+Described on the nodejs blog as:
 
-On Jun 3, 2014, at 1:22 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+A memory corruption vulnerability, which results in a denial-of-service, was identified in the versions of V8 that ship with Node.js 0.8 and 0.10. In certain circumstances, a particularly deep recursive workload that may trigger a GC and receive an interrupt may overflow the stack and result in a segmentation fault. For instance, if your work load involves successive JSON.parse calls and the parsed objects are significantly deep, you may experience the process aborting while parsing.
 
-Signed PGP part
-On 06/02/2014 10:59 PM, "VMware Security Response Center" wrote:
->
-> Hi, I would like to request to be subscribed to the
-> linux-distros@...openwall.org list for VMware Security Response
-> Center (VSRC).
->
-> My PGP fingerprint:
->
-> pub  2048R/C61F6A1D 2014-06-03 Key fingerprint = DD30 8A5F 937B
-> B437 EDDB  051D 7F84 295B C61F 6A1D uid Monty Ijzerman
-> <mijzerman@...vmware.com> sig  sig   C61F6A1D 2014-06-03 __________
-> __________ [selfsig] Notation data:
-> preferred-email-encoding@....com pgpmime
->
-> sub  2048R/FCED34F0 2014-06-03 sig sbind  C61F6A1D 2014-06-03
-> __________ __________ []
->
->
-> Thank you for your consideration.
->
-> Monty Ijzerman
->
-> VMware Security Response Center security@...are.com
->
-
-So to put it bluntly: who are you, and why should we give you access
-to distros? A quick google search shows you do appear to work for
-vmware, but I can't find any contributions or participation in any
-public forum like oss-security and so on.
-I can attest that Monty is my colleague and the Manager of VMware Security Response Center. As a former colleague of you (Kurt) and also former linux-distros subscriber, I would like to ask for your consideration for subscribing Monty (or myself) to linux-distros on behalf of VMware. Although ESXi isn't a Linux distribution, it implements Linux-compatible system calls and provides a GNU/Linux -like ecosystem that allows many applications that are compiled on/for Linux operating systems to run seamlessly. This ecosystem includes OSS that should be supported in timely fashion pretty much like like any other Linux distribution on the list. It also implements a Linux kernel module interface and uses many Linux device drivers and kernel modules that also should be supported. In addition, ESXi is the base layer that many of the Linux distributions on the list rely upon and run atop of in many datacenters around the world.
-
-Let me know if you have any questions, and thanks again for your consideration.
+This issue was identified by Tom Steele of ^Lift Security and Fedor Indunty, Node.js Core Team member worked closely with the V8 team to find our resolution.
 
 
-- --
-Kurt Seifried - Red Hat - Product Security - Cloud stuff and such
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+https://codereview.chromium.org/339883002
+http://blog.nodejs.org/2014/07/31/v8-memory-corruption-stack-overflow/
+https://github.com/joyent/node/commit/530af9cb8e700e7596b3ec812bad123c9fa06356
+https://bugzilla.redhat.com/show_bug.cgi?id=1125464
 
 
+-- 
+Vincent Danen / Red Hat Product Security
 
-
-—
-Ramon de C Valle
-VMware Product Security Engineering
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
-
-iQIcBAEBCgAGBQJTjiduAAoJEMHrzpMNBOIM/D8QAIM3SQDTXi3vf6MkLEVoqndK
-UfQMmkQS2cZruXEez04QVtOCqygAcQDkdFbDPv8A2S2obA/hwlVq/otfaGGlZa3R
-pvhkzKCIXfS1U7m4/p/4zXec1bOoORl22yikLZ9EZFYAsNDX0CuNCRB9h3JsJEsx
-ws+Hvp6DZLl0OH0ve9sW6kQKROblpNT16OktGSxzFhoK9ngsd0EBxrQbgQRIGMVs
-3rIHrXNDyCF5RGdks5LvwUOtANgSWxm6TYqla4YoKXxbUwZAoxkYaeF1QVWDu7+4
-7zhTskuhU5KaJ1hm4FOWNOrH7W5QMPPfTaAHQ6Viye1JLNx9ohogGU4TeBWE6HB/
-bZlmGCzPqKWcZNtskR7j11HiWp9s5HLAQ76zZZLRHbEdm5akt/J8WwLNFevdB2i6
-YsFG5jFtVfAvwvMvNqg/XfP9MBvtB0c4BsJqc+DFpiHTdgdw/NShwpnyY8hBlqZP
-AYimh8+1lw2i4p5d+HJ4V1WH9P77HExev3X/E5tjeif9L+Gkegz28BLx0S7FGREy
-TeFwXlqX1aJ+foGzss1UxVXF6LhVyP7+nJUlVfB9GetKXXUj1bR5+jYWmK+vfMHs
-TcO00iJ3BA6A24ZDWMioqQkPEgkHUuM3rtAjVi0zgvZPliT7DZrkqzKnkmq4bQ9Q
-lD2QMsyogIw+XIZknsty
-=Sgs2
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
