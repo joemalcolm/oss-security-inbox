@@ -1,41 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/2
-Message-Id: <20140814054031.48A9CC503C6@smtptsrv1.mitre.org>
-Date: Thu, 14 Aug 2014 01:40:31 -0400 (EDT)
-From: cve-assign@...re.org
-To: nacin@...dpress.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: WordPress 3.9.2 release - needs CVE's
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/8
+Message-ID: <CAJ_zFkLvkQyghiMBXd=gAMmQZWgtOW5e1LxSQQ-fYwdymwBRhA@mail.gmail.com>
+Date: Wed, 3 Sep 2014 11:52:11 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I noticed a heap overflow in procmail when parsing addresses with
+unbalanced quotes. I encountered this by accident when trying to
+organize a large usenet archive, this post to rec.arts.poems causes
+formail to crash.
 
->>  > XSS: https://core.trac.wordpress.org/changeset/29398
->>
->> We think this can have a CVE ID only if it allows privilege escalation
->> from Administrator to Super Admin in a Multisite installation. Does
->> it? (On other installations, Administrator has the unfiltered_html
->> capability.)
->>
->
-> Yes.
+https://groups.google.com/forum/message/raw?msg=alt.arts.poetry.comments/DCuLO3qzovI/CZk15MlfqNkJ
 
-Use CVE-2014-5240.
+I've attached an mbox for reference.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+$ formail -s < mbox > /dev/null
+*** Error in `formail': free(): invalid next size (fast): 0x00007f103784a080 ***
+Segmentation fault (core dumped)
+$ rpm -q procmail
+procmail-3.22-33.fc20.x86_64
 
-iQEcBAEBAgAGBQJT7EsgAAoJEKllVAevmvms+hoH/ilXPjm0IpKxiCloifcRPBk2
-QnYSIOiCf3YkTjJ338M8+eCVFOvyZ5l0AUzTkGbVPlT9umDQPyQremAc9+zQnc30
-d6OCfEmUdxodhh88Ir55YsxUtw00iZBFYZvDzTmdQJpGElqQmaff1o4R63ANTU/+
-RbEEGsbrEjhhDw7lwTGuaXj2s24rMG4YgBd+Ny2aUhFCrj54gQlMlM1uhtKXdmJp
-FuBwPJIu8ZmZJA1Lt9eglJ4mn+LJMaVaVLU2JXAihznyNiZuB5W95ZTF8NQjKBJa
-+2olT6n/NhlQL9ud4qTxZbEI9zNu8zgANBWRQVhW/LM21tPuPUyb4/AKJmbyiRw=
-=YagB
------END PGP SIGNATURE-----
+
+It looks like the fix is
+
+--- formisc.c 2013-08-04 00:13:33.000000000 -0700
++++ formisc.c 2014-09-03 11:42:25.986002396 -0700
+@@ -84,12 +84,11 @@
+  case '"':*target++=delim='"';start++;
+       }
+      ;{ int i;
+- do
++ while(*start)
+    if((i= *target++= *start++)==delim) /* corresponding delimiter? */
+       break;
+    else if(i=='\\'&&*start)    /* skip quoted character */
+       *target++= *start++;
+- while(*start); /* anything? */
+       }
+      hitspc=2;
+    }
+
+
+Tavis.
+
+Download attachment "mbox" of type "application/octet-stream" (3597 bytes)
