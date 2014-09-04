@@ -1,27 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/6
-Message-ID: <CAJB2JzuT73pYyZXS8tZQgV5FjDBsqWk3_ZjqawvRDPD+Jcd+EQ@mail.gmail.com>
-Date: Mon, 20 Oct 2014 16:40:05 +0200
-From: Mario Vilas <mvilas@...il.com>
-To: Grond <grond66@...il.com>
-Cc: Nick Kralevich <nnk@...gle.com>, oss-security@...ts.openwall.com,  fulldisclosure <fulldisclosure@...lists.org>
-Subject: Re: [FD] CVE request: remote code execution in Android CTS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/1
+Message-ID: <5407DD63.80803@redhat.com>
+Date: Wed, 03 Sep 2014 21:32:51 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 20, 2014 at 4:27 AM, Grond <grond66@...il.com> wrote:
+So this is potentially a very bad issue, so I'm assigning a CVE, sorry
+Mitre (safe assumption: they're all tucked away in bed like normal sane
+people =). Please use CVE-2014-3618 for this issue.
 
-> Is this kind of file ever *intended* to be used as an executable script?
-> If the answer is "no"; then you should apply fixes.
->
-
-Seems to me like it was. Also, wouldn't a user who can edit those files
-also be able to, for example, patch the executable files as well? I haven't
-actually checked the file permissions but it seems like a reasonable
-assumption.
-
+On 03/09/14 12:52 PM, Tavis Ormandy wrote:
+> I noticed a heap overflow in procmail when parsing addresses with
+> unbalanced quotes. I encountered this by accident when trying to
+> organize a large usenet archive, this post to rec.arts.poems causes
+> formail to crash.
+> 
+> https://groups.google.com/forum/message/raw?msg=alt.arts.poetry.comments/DCuLO3qzovI/CZk15MlfqNkJ
+> 
+> I've attached an mbox for reference.
+> 
+> $ formail -s < mbox > /dev/null
+> *** Error in `formail': free(): invalid next size (fast): 0x00007f103784a080 ***
+> Segmentation fault (core dumped)
+> $ rpm -q procmail
+> procmail-3.22-33.fc20.x86_64
+> 
+> 
+> It looks like the fix is
+> 
+> --- formisc.c 2013-08-04 00:13:33.000000000 -0700
+> +++ formisc.c 2014-09-03 11:42:25.986002396 -0700
+> @@ -84,12 +84,11 @@
+>   case '"':*target++=delim='"';start++;
+>        }
+>       ;{ int i;
+> - do
+> + while(*start)
+>     if((i= *target++= *start++)==delim) /* corresponding delimiter? */
+>        break;
+>     else if(i=='\\'&&*start)    /* skip quoted character */
+>        *target++= *start++;
+> - while(*start); /* anything? */
+>        }
+>       hitspc=2;
+>     }
+> 
+> 
+> Tavis.
+> 
 
 -- 
-“There's a reason we separate military and the police: one fights the enemy
-of the state, the other serves and protects the people. When the military
-becomes both, then the enemies of the state tend to become the people.”
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
