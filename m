@@ -1,88 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/2
-Message-ID: <54855230.9070108@yahoo.fr>
-Date: Mon, 08 Dec 2014 08:24:32 +0100
-From: Lionel Debroux <lionel_debroux@...oo.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/3
+Message-Id: <20140904035230.000C71F029D@smtpksrv1.mitre.org>
+Date: Wed,  3 Sep 2014 23:52:29 -0400 (EDT)
+From: cve-assign@...re.org
+To: taviso@...gle.com, kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
-On 07/12/2014 20:44, Greg KH wrote:
-> On Sun, Dec 07, 2014 at 10:43:17PM +0800, Shawn wrote:
-> > Hi Lionel,
-> >
-> > Thanks for your extraordinary explanation about Grsec/PaX. I'm a
-> > big fan of Grsec/PaX. But I think compare the ASLR implementation
-> > of vallina kernel with Grsecurity/PaX is not fair. Linux upstream
-> > doesn't hold the security-oriented philosophy, while
-> > Grsecurity/PaX community are expertise of system-lvl security.
-> Ok, do you seriously think this?  If so, please provide details as
-> to why you feel this way.  The Linux kernel developers take security
-> very seriously, otherwise no one would be using Linux for "secure"
-> systems, right?
-While Linux is clearly rather secure in _relative_ terms (far more
-secure than classic Windows, etc.), showing that mainline pays some
-amount of attention to security, people who really want a more secure
-Linux in _absolute_ terms don't use mainline Linux, because they know
-that PaX/grsec provide _much_ more attention to security ;)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+>> I noticed a heap overflow in procmail when parsing addresses with
+>> unbalanced quotes.
 
-Elevator pitch:
-* PaX/grsecurity contains various generic protections which don't exist
-on mainline against exploit techniques / exploit helpers (e.g.
-infoleaks) which have been known for sometimes over a decade;
-* PaX/grsecurity has stronger mitigations than mainline for some
-mitigations that mainline also implements - e.g. for ASLR, the trigger
-for this discussion;
-* backports for security fixes are usually performed more quickly in
-PaX/grsec than in mainline, stable kernels.
-It's common for PoC not to work on PaX/grsec kernels (spender usually
-twits or posts on LWN); making exploits work there would require (much)
-more effort. Running an outdated PaX/grsec kernel is safer than running
-a HEAD mainline kernel.
+>> formisc.c
 
+>> $ formail -s < mbox > /dev/null
+>> *** Error in `formail': free(): invalid next size
 
-Now for some specific examples:
-1) an example representative of the above is
-https://lwn.net/Articles/598372/ from May. Look at the first 4 posts if
-you don't have time; however, other, later posts are also interesting,
-e.g. spender showing how easily mainline KASLR can be defeated, even
-from within a seccomp sandbox, which is largely why he and PaXTeam never
-bothered.
+> CVE-2014-3618 for this issue
 
-* the security backport (for one of the most dangerous holes in the
-Linux kernel) was pushed to grsec 3.2 and 3.14 over a week before it was
-pushed to mainline 3.2 and 3.14 (second post, by myself);
-* two generic PaX/grsec defeats kill the published exploit for sure, one
-probabilistically kills it (different struct layout - of course, that
-only really helps if the attacker isn't able to download your kernel),
-and a fourth generic protection, stronger than mainline's, makes it
-harder to get information about addresses.
+The CVE team at MITRE agrees that CVE-2014-3618 can continue to
+be used for this formail issue.
 
-2) likewise, Luto's PoC for CVE-2014-5207 (
-http://seclists.org/fulldisclosure/2014/Oct/33 ) uses an operations
-structure in userspace, so MEMORY_UDEREF and KERNEXEC kill the exploit.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Kernels with MEMORY_UDEREF and KERNEXEC enabled do not blissfully
-dereference operations struct in userspace and do not blissfully execute
-arbitrary user-provided userspace code, which is, uh, not so secure, right ?
-
-
-Before someone makes the usual blunder of pointing out SMAP as an
-equivalent to MEMORY_UDEREF: PaXTeam reminded, in the
-https://lwn.net/Articles/617895/ thread, that PaX's MEMORY_UDEREF is a
-strict superset of Broadwell's SMAP, and that SMAP could be made more
-useful (but I don't know how).
-What's more, MEMORY_UDEREF, unlike Broadwell's SMAP, which requires
-special hardware support, has worked for years on thousands of computers
-across multiple architectures...
-That thread also points out that PaX leverages the PCID capability of
-modern x86_64 processors; mainline has no support for it.
-
-
-PaX/grsecurity can be used alongside existing LSMs, since it modifies
-the kernel at the appropriate, lower level. PaX focuses on preventing
-exploitation, rather than on enforcing policy.
-
-
-Lionel.
+iQEcBAEBAgAGBQJUB+GEAAoJEKllVAevmvmsIo4IAMFI3Ya78DjKWrGZatHQL8jj
+fb0GdS5r9dKpuhU3Pyoj30YzEwJwCOF1mkIY9iCb/KPpVMdyDcxKWIf7bKe9kibe
+n+OfziWTn//W04yjCH02kEPRsyKQs46oQH1YUnV4Z32OKedGeeDhZPdQ5fj8VO0E
+m4OA657P45VhhiWPYY3xmVdGj8l7nnsl2ABTZRp6Ya7i9AC0SGIYA1au1exMkIHl
+daEwcLVGaU+BONAoZ6MUIhF6F07O3IxYJ0v6/079uTT9Bs3Ct3fjucpi45GMo90n
+hNewEWTGVjkn4rzTTWvyAiwdeFYyzii5CGseWQnDiP3qGWNdXQwGLLy8yFIF9/c=
+=1LSS
+-----END PGP SIGNATURE-----
