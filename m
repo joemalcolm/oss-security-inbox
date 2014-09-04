@@ -1,43 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/20
-Message-ID: <5422F300.7010207@redhat.com>
-Date: Wed, 24 Sep 2014 18:36:16 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/2
+Message-ID: <20140904033953.GA18643@oevtugenva.nrevsny.pk>
+Date: Wed, 3 Sep 2014 23:39:53 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: Re: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
-On 09/24/2014 04:05 PM, Florian Weimer wrote:
-> Stephane Chazelas discovered a vulnerability in bash, related to how
-> environment variables are processed: trailing code in function
-> definitions was executed, independent of the variable name.
+On Wed, Sep 03, 2014 at 11:52:11AM -0700, Tavis Ormandy wrote:
+> I noticed a heap overflow in procmail when parsing addresses with
+> unbalanced quotes. I encountered this by accident when trying to
+> organize a large usenet archive, this post to rec.arts.poems causes
+> formail to crash.
+> 
+> https://groups.google.com/forum/message/raw?msg=alt.arts.poetry.comments/DCuLO3qzovI/CZk15MlfqNkJ
+> 
+> I've attached an mbox for reference.
+> 
+> $ formail -s < mbox > /dev/null
+> *** Error in `formail': free(): invalid next size (fast): 0x00007f103784a080 ***
+> Segmentation fault (core dumped)
+> $ rpm -q procmail
+> procmail-3.22-33.fc20.x86_64
+> 
+> 
+> It looks like the fix is
+> 
+> --- formisc.c 2013-08-04 00:13:33.000000000 -0700
+> +++ formisc.c 2014-09-03 11:42:25.986002396 -0700
+> @@ -84,12 +84,11 @@
+>   case '"':*target++=delim='"';start++;
+>        }
+>       ;{ int i;
+> - do
+> + while(*start)
+>     if((i= *target++= *start++)==delim) /* corresponding delimiter? */
+>        break;
+>     else if(i=='\\'&&*start)    /* skip quoted character */
+>        *target++= *start++;
+> - while(*start); /* anything? */
+>        }
+>       hitspc=2;
+>     }
 
-It was pointed out to me off-list that a patched bash will still import 
-functions from the environment, including from variable names which 
-override shell commands.  This is not an immediate vulnerability because 
-it requires setting environment variables under *specific* names.  If 
-you can do that, there are already many variables which can affect the 
-execution of shell scripts, and some of them offer direct code execution 
-because they are subject to command substitution (BASH_ENV, for 
-example).  The current vulnerability mainly exists because the name of 
-the environment variable does not matter at all.
+Unless I'm misunderstanding your report, the problem is in the formail
+utility which comes with procmail, not procmail itself. This should be
+clarified in the title of the vuln, perhaps as "heap overflow in
+procmail's formail utility" rather than "heap overflow in procmail".
 
-My main concern with the current patch is that still exposes the bash 
-parser and function definition printer to attacks from the network. Bugs 
-in those fairly large components could cause another critical issue.
-
-For hardening against such issues, I proposed a separate environment 
-variable with a well-known name, say BASH_FUNCDEFS, which lists the 
-names of environment variables which are to be imported as functions. 
-This would bring the attack requirements to the level which we have with 
-BASH_ENV now.
-
-Removing the functionality completely is difficult because it is 
-actually used (search for “export -f”).
-
-(If you find additional bugs, please do not discuss them here, but 
-follow the usual disclosure procedures.  Thanks.)
-
--- 
-Florian Weimer / Red Hat Product Security
+Rich
