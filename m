@@ -1,41 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/13
-Message-ID: <20140909085351.GB4712@suse.de>
-Date: Tue, 9 Sep 2014 10:53:51 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-Request: squid pinger remote DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/8
+Message-ID: <54081072.8090606@redhat.com>
+Date: Thu, 04 Sep 2014 01:10:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "Christey, Steven M." <coley@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
-Hi
 
-I made a fix for squid 3.4.6 and request a CVE for
-this issue:
 
-The pinger code that checks for nodes being alive doesnt
-properly validate ICMP and ICMPv6 replies, in particular
-icmp6 types which are used to index into a string array.
-This could cause crashes when the index is OOB.
+On 03/09/14 11:13 PM, Christey, Steven M. wrote:
+> Kurt,
+> 
+>> So this is potentially a very bad issue, so I'm assigning a CVE, sorry
+>> Mitre (safe assumption: they're all tucked away in bed like normal sane
+>> people =).
+> 
+> That's actually an unsafe assumption, which has introduced a vulnerability into your logic.  There are counter-examples by two different CVE CNA team members in this thread alone.
+> 
+> For additional evidence that counters your assumption, here are a handful of recent oss-security posts by cve-assign between midnight (Eastern time) and 4 AM.  This list is far from complete.
+> http://www.openwall.com/lists/oss-security/2014/09/02/1
+> http://www.openwall.com/lists/oss-security/2014/08/13/3
+> http://www.openwall.com/lists/oss-security/2014/08/13/4
+> http://www.openwall.com/lists/oss-security/2014/08/13/5
+> http://www.openwall.com/lists/oss-security/2014/08/14/2
+> http://www.openwall.com/lists/oss-security/2014/08/14/5
+> http://www.openwall.com/lists/oss-security/2014/08/15/3
+> 
+> When an issue has been made widely public to the security industry, CNAs are expected to attempt to coordinate more closely with MITRE before assigning a CVE ID themselves.  This helps to reduce confusion and duplicates.  Anything posted to oss-security is considered "widely public."
+> 
+> - Steve
 
-A patch is available here:
-
-https://bugzilla.novell.com/show_bug.cgi?id=891268
-
-I also made some cleanups and error checking on the
-receive socket.
-
-I am not deep into the overall squid architecture so
-I dont know what happens to squid itself when the
-pinger sub-process crashes (think SIGPIPE etc). But to me
-it looks like you can only DoS the pinger sub-system,
-not the whole squid.
-
-Sebastian
+Sorry, it was meant tongue in cheek, the main reason I assumed Mitre was
+off because it came in relatively not super late in the day and no reply
+from Mitre when I noticed it. I also wanted to avoid the notify you guys
+then wait to confirm you weren't awake so I could get to bed early
+(cause getting to bed early worked out for me today, sigh).
 
 -- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
 
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
