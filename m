@@ -1,28 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/02/2
-Message-id: <CEA9AF9E-3001-46EB-8032-D89EB21F5CF2@me.com>
-Date: Sun, 02 Feb 2014 09:56:42 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: oss-security@...ts.openwall.com
-Subject: Persistent XSS in Wordpress 3.3.1+dfsg-1 (Packaged with Ubuntu 12.04.4)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/10
+Message-Id: <20140904145155.8E11833200D@smtpvbsrv1.mitre.org>
+Date: Thu,  4 Sep 2014 10:51:55 -0400 (EDT)
+From: cve-assign@...re.org
+To: thoger@...hat.com, vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: V8 Memory Corruption and Stack Overflow - Node.js
 Content-Type: text/plain; charset=utf-8
 
-Title: Persistent XSS in Wordpress 3.3.1+dfsg-1 (Packaged with Ubuntu 12.04.4)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Author: Larry W. Cashdollar, @_larry0
+http://blog.nodejs.org/2014/07/31/v8-memory-corruption-stack-overflow/
+is CVE-2014-5256. This CVE ID has been in public use for about two
+weeks (examples are the http://xforce.iss.net/xforce/xfdb/95057 and
+http://www-01.ibm.com/support/docview.wss?uid=swg21682094 references)
+but unfortunately the CVE ID isn't mentioned in any obvious place on
+the nodejs.org web site, possibly because we only thought it was
+likely that upstream would do that, and we didn't directly ask.
 
-Date: 2/1/2014
+Also, the specific wording "A memory corruption vulnerability, which
+results in a denial-of-service, was identified in the versions of V8"
+was discussed with upstream. The information that we have is that the
+issue actually should not be considered a vulnerability in V8, and
+instead should be considered a vulnerability in Node.js. It is not a
+case where a CVE assignment by Google would have been expected.
 
-Vendor: Not notified yet.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Download: http://wordpress.org/download 
-
-Versions Impacted: 3.3.1 -> 3.8.1 tested 2/2/2014.
-
-CVE: Please assign.
-
-Persistent XSS injection description field in Media Library.
-
-Description: A persistent cross site scripting vulnerability exists in the latest version of WordPress in the Media Library.  It appears the Description field is not properly sanitized when viewed.  The malicious code is stored when the description field is saved.
-
-Full Advisory: http://vapid.dhs.org/advisories/wordpress/XSS/xss_wordpress.html
+iQEcBAEBAgAGBQJUCHvMAAoJEKllVAevmvmsKWwIAMicXsaWhOBpfBNzyU/g8GBl
+zHUahsVdrvIit5+IfLASl+BjWbaGP2MhhF9c10Lvh6bDtPhogbVTntYWbbWAXsCT
+9niu+SrPRlXFzjbfS0wZJrVq12ySfbLoHAABDW+OSSpzkgXR9SaZ8WVVcEW85SHI
+2ORtPAjxwDIG5KXCUtHRT5kztFZ7SeTOOzZ6of8XYGGC1HsWB0aU6/bIgPKp2uvq
+2UPGmDtKTMDB8U17yK0ikSvlmL8yJGQUq7af1Y6eh+msgjnJgR+uHLzWoJAB2cu6
+nYEjTHn9aOoEFXbj2ikyTE2MzbY9Nm5d5qM168lDNchR17q0nsbDz2QweW1DXkc=
+=kw2P
+-----END PGP SIGNATURE-----
