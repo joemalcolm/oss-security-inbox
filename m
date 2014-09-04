@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/9
-Message-ID: <32f4c270.615c227c.53ed1fb9.a6091@o2.pl>
-Date: Thu, 14 Aug 2014 22:44:41 +0200
-From: Piotr Bandurski <ami_stuff@...pl>
-To: Open Source Security<oss-security@...ts.openwall.com>
-Cc: ffmpeg-security@...peg.org
-Subject: CVE request: FFmpeg issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/5
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF4C4F6900@IMCMBX01.MITRE.ORG>
+Date: Thu, 4 Sep 2014 05:13:08 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: Kurt Seifried <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: RE: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Kurt,
 
-I would like to request CVEs for the following issues:
+>So this is potentially a very bad issue, so I'm assigning a CVE, sorry
+>Mitre (safe assumption: they're all tucked away in bed like normal sane
+>people =).
 
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=52b81ff4635c077b2bc8b8d3637d933b6629d803
-fixes asseration failure in prores_ks encoder
-https://trac.ffmpeg.org/ticket/2760
-Found-by: MarkZV
+That's actually an unsafe assumption, which has introduced a vulnerability into your logic.  There are counter-examples by two different CVE CNA team members in this thread alone.
 
-http://git.videolan.org/?p=ffmpeg.git;a=commit;h=3539d6c63a16e1b2874bb037a86f317449c58770
-fixes out of array access in iff decoder
-Found-by: Piotr Bandurski
+For additional evidence that counters your assumption, here are a handful of recent oss-security posts by cve-assign between midnight (Eastern time) and 4 AM.  This list is far from complete.
+http://www.openwall.com/lists/oss-security/2014/09/02/1
+http://www.openwall.com/lists/oss-security/2014/08/13/3
+http://www.openwall.com/lists/oss-security/2014/08/13/4
+http://www.openwall.com/lists/oss-security/2014/08/13/5
+http://www.openwall.com/lists/oss-security/2014/08/14/2
+http://www.openwall.com/lists/oss-security/2014/08/14/5
+http://www.openwall.com/lists/oss-security/2014/08/15/3
 
-Regards
+When an issue has been made widely public to the security industry, CNAs are expected to attempt to coordinate more closely with MITRE before assigning a CVE ID themselves.  This helps to reduce confusion and duplicates.  Anything posted to oss-security is considered "widely public."
+
+- Steve
 
