@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/25
-Message-ID: <20141006192608.652f6395@hboeck.de>
-Date: Mon, 6 Oct 2014 19:26:08 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/7
+Message-ID: <54080F42.1030805@redhat.com>
+Date: Thu, 04 Sep 2014 01:05:38 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: automated phishing email
+CC: Assign a CVE Identifier <cve-assign@...re.org>, taviso@...gle.com
+Subject: Re: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
-Am Mon, 6 Oct 2014 13:12:39 -0400
-schrieb Mason Loring Bliss <mason@...sses.org>:
+Please for the love of whatever... well whatever you love, use the
+"Security" sensitive tag in our BZ or the "security" keyword so the
+Product Security Team sees it (otherwise we may not, I mean have you
+seen how many bugs get filed daily in our BZ?).
 
-> A co-worker suggested that this might have been aimed at procmail.
+On 04/09/14 12:01 AM, Michal Zalewski wrote:
+> It's been "widely public" for two months, right?
 > 
->     https://bpaste.net/show/41323f7d9b35
+> https://bugzilla.redhat.com/show_bug.cgi?id=1121299
 > 
-> I'm curious if anyone has thoughts about what the target might have
-> been for this attempt.
-
-qmail is vulnerable:
-http://marc.info/?l=qmail&m=141183309314366&w=2
-
-However I think this is probably not aimed at something. It's likely
-just "try if we find something vulnerable, we don't care what it is".
-
-Btw: at least one of the exploit scripts is still online. This is one
-of the issues that comes with this event: There are *many* hosts out
-there that have a very bad abuse handling. These things stay online
-far too long.
 
 -- 
-Hanno Böck
-http://hboeck.de/
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
 
 Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
