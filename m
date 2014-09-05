@@ -1,71 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/13
-Message-ID: <20140821171305.GB24894@gremlin.ru>
-Date: Thu, 21 Aug 2014 21:13:05 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/4
+Message-ID: <20140905070242.GA17069@kludge.henri.nerv.fi>
+Date: Fri, 5 Sep 2014 10:02:42 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: SaltStack 2014.1.10 released
+Cc: TYPO3 Security Team <security@...o3.org>
+Subject: CVE request: TYPO3-EXT-SA-2014-005
 Content-Type: text/plain; charset=utf-8
 
-On 21-Aug-2014 20:44:19 +0400, I wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- >> Did anyone else have this message fail to render in their email
- >> client (I get a blank panel with the .sig attachment at the
- >> bottom using Thunderbird/Enigmail/Fedora).
- > I use mutt, and it tells me everything is ok:
- > http://pics.rsh.ru/img/kurt_signature_in_mutt_bgxvgqe3.png
+Can I get 2014 CVE for TYPO3-EXT-SA-2014-005, thanks. If I am correct one CVEs
+is enough as both issues are about same Ajax dispatcher.
 
-I had to read that more carefully (to be honest, messages from Kurt
-were signed inline for a time)... Yes, the message from C. R. Oldham
-was malformed: http://pics.rsh.ru/img/cr_bad_message_sz46z1tq.png
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-005/
+http://osvdb.org/103259
+http://osvdb.org/103260
 
-Here's raw message data, including significant headers:
+Release Date: February 12, 2014
+Affected Versions: yag: Version 3.0.0 and below, pt_extbase: Version 1.5.0 and below
+Vulnerability Type: Access Bypass
+Severity: High
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:C/I:P/A:N/E:F/RL:O/RC:C
 
- >>> X-Mailer: Airmail Beta (250)
- >>> MIME-Version: 1.0
- >>> Content-Type: multipart/signed;
- >>>  boundary="78CE6B75-3942-4514-B1F6-81C3B83FC90E";
- >>>  protocol="application/pgp-signature"; micalg=pgp-sha512
- >>> Content-Disposition: inline
- >>> Subject: [oss-security] SaltStack 2014.1.10 released
- >>> Status: RO
- >>> Content-Length: 1416
- >>> Lines: 39
- >>> 
- >>> 
- >>> http://docs.saltstack.com/en/latest/topics/releases/2014.1.10.html =20
- >>> 
- >>> The sources are available on pypi: =20
- >>> 
- >>> https://pypi.python.org/pypi/salt/2014.1.10 =20
- >>> 
- >>> Salt 2014.1.10 fixes security issues documented by CVE-2014-3563: =22Inse=
- >>> cure tmp-file creation in seed.py, salt-ssh, and salt-cloud.=22 Upgrading=
- >>>  is recommended. =20
- >>> 
- >>> 
- >>> -- =20
- >>> C. R. Oldham, Platform Engineer, SaltStack
- >>> cr=40saltstack.com
- >>> 
- >>> 
- >>> --78CE6B75-3942-4514-B1F6-81C3B83FC90E
- >>> Content-Transfer-Encoding: 7bit
- >>> Content-Disposition: attachment; filename=signature.asc
- >>> Content-Type: application/pgp-signature; name=signature.asc
- >>> Content-Description: Message signed with OpenPGP using AMPGpg
- >>> 
- >>> -----BEGIN PGP SIGNATURE-----
- >>> Comment: GPGTools - https://gpgtools.org
- >>> 
-...
- >>> -----END PGP SIGNATURE-----
- >>> 
- >>> --78CE6B75-3942-4514-B1F6-81C3B83FC90E--
+Problem Description: The extension pt_extbase comes with an Ajax dispatcher for
+Extbase. Using this dispatcher it is possible to call every action in every
+controller of every Extbase extension installed on the system. The dispatcher
+failes to do access checks, thus it is possible to bypass access checks for
+Extbase Backend Modules like the backend user administration module. The
+extension yag also delivered an Ajax dispatcher, which was unused but
+vulnerable.
 
+Important Note: The unused Ajax Dispatcher code in extension yag has been
+removed. If any other installed extensions made use of this dispatcher, it will
+stop working. Additionally the Ajax dispatcher in pt_extbase was modified to do
+access checks. Third party extensions using this dispatcher need to be added to
+the list of allowed actions.
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Solution: Updated versions 3.0.1 and 1.5.1 are available from the TYPO3
+extension manager and at
+http://typo3.org/extensions/repository/download/yag/3.0.1/t3x/ and
+http://typo3.org/extensions/repository/download/pt_extbase/1.5.1/t3x/. Users of
+the extension are advised to update the extension as soon as possible.
 
-Content of type "application/pgp-signature" skipped
+Credits: Credits go to Andrea Schmuttermair who discovered and reported this
+issue.
+
+- ---
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iEYEARECAAYFAlQJYBIACgkQXf6hBi6kbk/80QCg0vRIZzIqXrCu78OhArS6oBFG
+2wIAoMBuWqqmvBha7wf/y9f/VHXSxg/i
+=lMT7
+-----END PGP SIGNATURE-----
