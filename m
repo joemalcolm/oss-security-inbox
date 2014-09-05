@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/3
-Message-Id: <20140306044550.B9C0920106@smtp.hushmail.com>
-Date: Thu, 06 Mar 2014 04:45:50 +0000
-From: "mancha" <mancha1@...h.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/5
+Message-ID: <20140905072950.GB17330@kludge.henri.nerv.fi>
+Date: Fri, 5 Sep 2014 10:29:50 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request/Clarification - PHP
+Cc: TYPO3 Security Team <security@...o3.org>
+Subject: CVE request: TYPO3-EXT-SA-2014-003
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Two issues were recently identified as security concerns in
-libmagic: CVE-2014-1943 (infinite recursion flaw) &
-CVE-2014-2270 (improper bounds checking).
+Can I get 2014 CVE for TYPO3-EXT-SA-2014-003, thanks.
 
-What is the policy regarding CVE allocation for products
-vulnerable by virtue of bundling copies of vulnerable products
-(as opposed to, say, linking vulnerable system libraries)?
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-003
+http://osvdb.org/103258
 
-I bring this up because PHP embeds a copy of libmagic which
-it uses in its fileinfo extension. PHP has since patched its
-embedded libmagic to address above-mentioned issues: [1],[2].
+Release Date: February 12, 2014
+Affected Versions: Version 3.5.1 and below
+Vulnerability Type: Insecure Unserialize
+Severity: High
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:P/I:P/A:C/E:P/RL:O/RC:C
+Problem Description: Failing to sanitize user input properly, tt_news is
+vulnerable to insecure unserialize.
 
-In the event this merits separate CVEs, please allocate.
+Solution: An updated version 3.5.2 is available from the TYPO3 extension manager
+and at http://typo3.org/extensions/repository/download/tt_news/3.5.2/t3x/. Users
+of the extension are advised to update the extension as soon as possible.
 
-If not, this thread can serve to clarify MITRE policy regarding
-inherited vulnerabilities as well as provide a heads up for
-vendors shipping PHP.
+Credits: Credits go to Pascal Jungblut who discovered and reported this issue.
 
-Thanks.
+- ---
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
---mancha
-
-Upstream PHP Fixes:
-[1] http://git.php.net/?p=php-src.git;a=commitdiff;h=89f864c547 
-(CVE-2014-1943)
-[2] http://git.php.net/?p=php-src.git;a=commitdiff;h=a33759fd27 
-(CVE-2014-2270)
-
+iEYEARECAAYFAlQJZm4ACgkQXf6hBi6kbk96fQCfa6PcsVH0CUH+k4xSwrElxPK9
+v+kAoKxoNWuztBqkCUbVutnKyXDwMQJE
+=iHog
+-----END PGP SIGNATURE-----
