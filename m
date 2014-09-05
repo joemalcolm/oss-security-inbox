@@ -1,74 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/5
-Message-Id: <201401141625.s0EGP7PY016109@linus.mitre.org>
-Date: Tue, 14 Jan 2014 11:25:07 -0500 (EST)
-From: cve-assign@...re.org
-To: pmatouse@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, libvirt-security@...hat.com, jdenemar@...hat.com, eblake@...hat.com
-Subject: Re: CVE Request -- libvirt: denial of service with keepalive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/8
+Message-ID: <20140905094034.GB17649@kludge.henri.nerv.fi>
+Date: Fri, 5 Sep 2014 12:40:34 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: TYPO3 Security Team <security@...o3.org>
+Subject: CVE request: TYPO3-EXT-SA-2013-014
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1047577
+Can I get 2013 CVE for TYPO3-EXT-SA-2013-014, thanks. Reasoning for CVE in
+information disclosure case is that this vulnerability exposes sensitive user
+data.
 
-> This is now fixed upstream by v1.2.1-rc1-33-g173c291:
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2013-014/
+http://osvdb.org/97812
 
-> To avoid the crash, virNetServerClientStartKeepAlive needs to check if
-> the connection is still open before starting keep-alive protocol.
+It has been discovered that the extension "Direct Mail" (direct mail) is
+susceptible to Information Disclosure.
 
-Use CVE-2014-1447 for this issue in which the product does not check
-whether the connection is still open. This corresponds to
-173c2914734eb5c32df6d35a82bf503e12261bcf, which apparently would be of
-some value in some attack scenarios.
+Release Date: September 25, 2013
+Affected Versions: Version 3.1.1 and below
+Vulnerability Type: Information Disclosure
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:P/I:P/A:N/E:P/RL:O/RC:C
+Problem Description: Failing to check authentication codes properly, direct_mail
+exposes user data including the original authentication code.
 
+Solution: An updated version 3.1.2 is available from the TYPO3 extension manager
+and at http://typo3.org/extensions/repository/download/direct_mail/3.1.2/t3x/.
+Users of the extension are advised to update the extension as soon as possible.
 
-> And really fixed by v1.2.1-rc1-37-g066c8ef:
+Credits: Credits go to Bernhard Kraft who discovered and reported this issue. 
 
-> it is possible to hit a window when client->keepalive is NULL while
-> client->sock is not NULL. I was thinking client->sock == NULL was a
-> better check for a closed connection but apparently we have to go with
-> client->keepalive == NULL to actually fix the crash.
-
-Use CVE-2014-1448 for this issue in which the product does not
-properly check whether the connection is still open. This corresponds
-to 066c8ef6c18bc1faf8b3e10787b39796a7a06cc0, which apparently is of
-value in additional attack scenarios.
-
-In deciding to SPLIT, all of these factors were considered but we
-don't want to try to precisely specify whether any one factor would be
-sufficient on its own:
-
-1. There seem to be two distinct version-like identifiers,
-v1.2.1-rc1-33-g173c291 and v1.2.1-rc1-37-g066c8ef, which can be
-interpreted as different affected versions.
-
-2. The first patch alone was accepted in the
-https://www.redhat.com/archives/libvir-list/2014-January/msg00532.html
-and
-https://www.redhat.com/archives/libvir-list/2014-January/msg00554.html
-messages.
-
-3. http://libvirt.org/downloads.html says "Once an hour, an automated
-snapshot is made from the git server source tree. These snapshots
-should be usable." This suggests that a "version" with only the first
-patch was, in some realistic sense, "packaged for distribution," and
-could conceivably be in use somewhere.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+- ---
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJS1WRSAAoJEKllVAevmvmsIt8H/jCNn0XONft+Gt8BJcj/GdnU
-UF/3f0Q9w3yvn94o39BYmHGpd1ComLzdWHDCEIg0b8J88jvSRCZCqLjgQQvWKKWZ
-CEnTnnaeJhmYLGTNFKmbA/4eBLAr8fTbUJUjfZMxZoCOA5pfYY1pWne6ofU0nC7w
-5A89qUre9HKCsjCL7TzPgQOsp38TJG+dHdkhWEmmMRA499If9QHjv5Qkb429QGqS
-rcMb72E4TVG4l9ItNyhu4E3GB/k3UDpLLBbGyfdysQLml0Ut+0Dnp2hOdpcOBSTr
-tY8i8kQhNuGKyfeP6gzWHUeh2SRSJRcDzGzjVMVf/in1EUWvUaMgYwqz9tfpLOg=
-=9kpY
+iEYEARECAAYFAlQJhRIACgkQXf6hBi6kbk/T8QCaAxtYYv2J3HQChte+F5oPqLtB
+Z4kAn2YpjPfhOonCCcne9g3SYmEAmtb+
+=rI3r
 -----END PGP SIGNATURE-----
