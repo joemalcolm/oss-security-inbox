@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/37
-Message-ID: <alpine.LRH.2.11.1409301931540.17801@fairfax.gathman.org>
-Date: Tue, 30 Sep 2014 19:40:07 -0400 (EDT)
-From: "Stuart D. Gathman" <stuart@...hman.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/2
+Message-ID: <mpro.nbeumz0i35e9407lv.taviso@cmpxchg8b.com>
+Date: Thu, 4 Sep 2014 21:18:36 -0700
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 30 Sep 2014, David A. Wheeler wrote:
+Rich Felker <dalias@...c.org> wrote:
 
-> Finally: *PLEASE* let me know if you have any good ideas on how to
-> find vulnerabilities like this ahead-of-time. My article "How to
-> Prevent the Next Hearbleed"
-> (http://www.dwheeler.com/essays/heartbleed.html) lists a number of
-> ways that Heartbleed-like vulnerabilities could have been detected
-> ahead-of-time, in ways that are general enough to be useful.  I'd like
-> to do the same with Shellshock, so we can quickly eliminate a whole
-> class of problems.
+> On Wed, Sep 03, 2014 at 09:44:12PM -0700, Tavis Ormandy wrote:
+> > Rich Felker <dalias@...c.org> wrote:
+> > > 
+> > > Unless I'm misunderstanding your report, the problem is in the formail
+> > > utility which comes with procmail, not procmail itself. This should be
+> > > clarified in the title of the vuln, perhaps as "heap overflow in
+> > > procmail's formail utility" rather than "heap overflow in procmail".
+> > 
+> > I'm not sure what "title" you mean, are you referring to my email
+> > subject? If you are, I think "<problem> in <package>" is pretty
+> > reasonable, but perhaps this is subjective (hah!).
+> 
+> Yes, the email subject. "<problem> in <package>" seems reasonable, but
+> when <package> is also the name of the main program in <package>, and the
+> actual vuln is in a secondary program included with it, I think it's
+> confusing.
 
-I don't know if this can be made efficient enought to be practical, but 
-imagine a virtual machine where every byte of memory is tagged with the 
-security domain.  When a byte is copied, the tag is copied also.  (It is 
-not possible in general to distinguish copies from writes, but at least 
-when copying between domains via system calls, this is detectable.) 
-Then, when a privileged program is running, its memory can be scanned for 
-data from a lower privilege domain.
+You're free to form the subject line of your emails any crazy way you like,
+you can put the entire email in there if it makes you happy.
 
-I think this is optimizable, since most memory will have the same tag, 
-and can be managed via virtual memory paging.  Update on write logic will 
-create a more detailed map for "hot" pages.
+If you want a list policy on Subject lines, talk to the moderators - not me.
+I personally think information like version, platforms, programs and patches
+belong in the body.
 
-Caveat: someone probably already did this, and I just never heard of it.
+Tavis.
+
