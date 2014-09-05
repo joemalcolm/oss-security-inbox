@@ -1,63 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/12
-Message-Id: <201407222140.s6MLeOKR001014@linus.mitre.org>
-Date: Tue, 22 Jul 2014 17:40:24 -0400 (EDT)
-From: cve-assign@...re.org
-To: christian@...nbaginc.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE requests for Review Board
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/6
+Message-ID: <20140905074507.GA17689@kludge.henri.nerv.fi>
+Date: Fri, 5 Sep 2014 10:45:07 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: TYPO3 Security Team <security@...o3.org>
+Subject: CVE request: TYPO3-EXT-SA-2014-001
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://www.reviewboard.org/news/2014/07/22/review-board-1-7-27-and-2-0-3-security-releases/
-> July 22, 2014 - 2:07 AM 
-> Review Board 1.7.27 and 2.0.3 security releases
+Can I get three 2014 CVEs for TYPO3-EXT-SA-2014-001, thanks. One CVE might be
+enough as per same reporters and fixed in version.
 
-> One of the security vulnerabilities allowed an attacker to construct a
-> URL that would inject custom JavaScript into the page, which could
-> then be passed to a user, allowing the custom code to run in their
-> session.
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-001/
+http://osvdb.org/103255
+http://osvdb.org/103256
+http://osvdb.org/103257
 
-Use CVE-2014-5027.
+It has been discovered that the extension "mm_forum" (mm_forum) is vulnerable to
+Arbitrary Code Execution, Cross-Site Scripting and Cross-Site Request Forgery.
 
+Release Date: February 12, 2014
+Affected Versions: Version 1.9.2 and below
+Vulnerability Type: Arbitrary Code Execution, Cross-Site Scripting and
+Cross-Site Request Forgery (CSRF).
 
-> The other vulnerability allowed users without access to a private
-> review request to construct a URL for accessing original or patched
-> files from the repository, if they knew the right series of database
-> IDs.
+Severity: Critical
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:C/I:P/A:N/E:F/RL:O/RC:C
 
-Use CVE-2014-5028.
+Problem Description: Failing to properly sanitize user-supplied input the
+extension is vulnerable to Cross-Site Scripting. It was possible to upload
+arbitrary files as files were not checked against the file deny pattern, thus
+Arbitrary Code Execution was possible by uploading PHP files. Additionally it
+was possible to create posts on behalf of logged in users (CSRF).
 
-(Incidentally, we're not sure whether the original request sent July 21
-was within the oss-security list charter. MITRE does not control the list
-charter, but
+Solution: An updated version 1.9.3 is available from the TYPO3 extension manager
+and at http://typo3.org/extensions/repository/download/mm_forum/1.9.3/t3x/.
+Users of the extension are advised to update the extension as soon as possible.
 
-  http://oss-security.openwall.org/wiki/mailing-lists/oss-security
+Credits: Credits go to Michael Knabe and Stano Paska who discovered and reported
+the issue.
 
-says "List Content Guidelines ... Public security issues only please"
-whereas the original request said "two security vulnerabilities ...
-Neither are publicly disclosed." If you want a CVE ID for an
-undisclosed vulnerability in the future -- for example, because you
-want to include the CVE ID number when the
-https://www.reviewboard.org/news/ entry first becomes public -- there
-are other options, such as sending the CVE request directly to
-cve-assign@...re.org instead.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+- ---
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJTztl7AAoJEKllVAevmvmsFjEH/i3c93xE5j9OKoAH9pgUkAkV
-9VOoEgRoGaHXR2YDxPkEfapYhV7RZhjTcoQlW5oftH7QXE0FsyY7VhXbetn4GMv7
-bEhpzmkfz2kZN0YlBRHZr9FtuOsX8zqe77fHK3lsZsy/nBEh+W8onxZWCvThZvnA
-pucywbiGjkSAIgjKzLBF2YRRs0Xv660td8zZWHz9PunJPH5yWGLi6WywUmtkCidC
-pF22tWpvwJmGorN1kQFYjwavXSeE9jXRFt9kacFmWibA/z2srtMnx8EGgbbV9IrT
-ENjapy6bzUo7oTO0UoALRBnGj2IbO4CvQlKMK0kwudDsplFpb7i/nrTO77uFjQw=
-=STIj
+iEYEARECAAYFAlQJagMACgkQXf6hBi6kbk9qjwCg0+G4rJGGPPV+ZV5eiW6AFB9L
+2esAn2QCte+R0/4IVV2Z93U4tc9ZsHFz
+=1KRZ
 -----END PGP SIGNATURE-----
