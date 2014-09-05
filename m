@@ -1,40 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/7
-Message-ID: <6809f7a14d6c979bb28436d2ff59cd20.squirrel@aphrodite.kinkhorst.nl>
-Date: Tue, 3 Jun 2014 11:39:27 +0200
-From: "Thijs Kinkhorst" <thijs@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/7
+Message-ID: <20140905085939.GA18039@kludge.henri.nerv.fi>
+Date: Fri, 5 Sep 2014 11:59:39 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mediawiki invalid usernames on Special:PasswordReset were parsed as wikitext
+Cc: TYPO3 Security Team <security@...o3.org>
+Subject: CVE request: TYPO3-EXT-SA-2014-002
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Can you please assign a CVE id for the issue "invalid usernames on
-Special:PasswordReset were parsed as wikitext" in Mediawiki?
+Can I get six 2014 CVEs for following vulnerabilities listed in
+TYPO3-EXT-SA-2014-002, thanks. Note that PHPIDS issue in this advisory already
+has CVE.
 
->From the bug:
-https://bugzilla.wikimedia.org/show_bug.cgi?id=65501
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-002/
+http://osvdb.org/103323
+http://osvdb.org/103324
+http://osvdb.org/103325
+http://osvdb.org/103326
+http://osvdb.org/103327
+http://osvdb.org/103328
+http://osvdb.org/103329
 
-> Omer Iqbal noticed that invalid usernames on Special:PasswordReset were
-> parsed as wikitext.
->
-> Although this can't be abused on a typical wiki, in the very special
-case > that a wiki has wgRawHtml enabled, and rely on limiting who can
-edit to
-> prevent attackers from adding javascript, the username on
-> Special:PasswordReset can be supplied by anyone and will be parsed with
-> wgRawHtml enabled.
->
-> Since Special:PasswordReset is whitelisted by default on private wikis,
-> this could potentially lead to an xss crossing a privilege boundary.
->
-> The attack is additionally mitigated by default XFO rules preventing that
-> special page from being used in an iframe, so the threat from this is
-> very low.
+Extension: Alphabetic Sitemap (alpha_sitemap)
+Affected Versions: 0.0.3 and all versions below
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0:  AV:N/AC:L/Au:N/C:P/I:P/A:N/E:P/RL:U/RC:C
+Solution: Versions of this extension that are known to be vulnerable will no
+longer be available for download from the TYPO3 Extension Repository. The
+extension author failed in providing a security fix for the reported
+vulnerability in a decent amount of time. Please uninstall and delete the
+extension folder from your installation.
 
-It was fixed in 1.22.7, 1.21.10 and 1.19.16:
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-May/000151.html
+Credits: Credits go to Wouter Wolters who discovered and reported the issue.
 
+- ---
+Extension: femanager (femanager)
+Affected Versions: 1.0.8 and all versions below
+Vulnerability Type: Privilege Escalation
+Severity: High
+Suggested CVSS v2.0:  AV:N/AC:L/Au:S/C:P/I:C/A:N/E:F/RL:O/RC:C
+Problem Description: Failing to properly check access rights, the extension is
+susceptible to privilege escalation, making it possible for a logged in frontend
+user to modify or delete other frontend user records.
 
-Thanks,
-Thijs
+Solution: An updated version 1.0.9 is available from the TYPO3 extension manager
+and at http://typo3.org/extensions/repository/download/femanager/1.0.9/t3x/.
+Users of the extension are advised to update the extension as soon as possible.
+
+- ---
+Extension: Statistics (ke_stats)
+Affected Versions: 1.1.1 and all versions below
+Vulnerability Type: SQL Injection
+Severity: Critical
+Suggested CVSS v2.0:  AV:N/AC:L/Au:N/C:C/I:P/A:N/E:F/RL:O/RC:C
+Solution: An updated version 1.1.2 is available from the TYPO3 extension manager
+and at http://typo3.org/extensions/repository/download/ke_stats/1.1.2/t3x/.
+Users of the extension are advised to update the extension as soon as possible.
+
+Note: This vulnerability is known to be exploited in the wild.
+Credits: Credits go to Extension Author Christian Bülter who discovered and
+reported the issue.
+
+- ---
+Extension: External links click statistics (outstats)
+Affected Versions: 0.0.3 and all versions below
+Vulnerability Type: Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0:  AV:N/AC:L/Au:N/C:P/I:P/A:N/E:P/RL:U/RC:C
+Solution: Versions of this extension that are known to be vulnerable will no
+longer be available for download from the TYPO3 Extension Repository. The
+extension author failed in providing a security fix for the reported
+vulnerability in a decent amount of time. Please uninstall and delete the
+extension folder from your installation.
+
+Credits: Credits go to TYPO3 Security Team Member Franz G. Jahn who discovered
+and reported the issue.
+
+- ---
+Extension: smarty (smarty)
+Affected Versions: 1.13.3 and all versions below
+Vulnerability Type: Arbitrary php include via template source file
+Severity: Medium
+Suggested CVSS v2.0:  AV:N/AC:H/Au:S/C:C/I:C/A:P/E:P/RL:O/RC:C
+Problem Description: The extension smarty bundles the template engine smarty.
+Old versions of this library are known to be vulnerable to arbitrary php file
+include via template source file.
+
+Solution: An updated version 1.13.4 is available from the TYPO3 extension
+manager and at
+http://typo3.org/extensions/repository/download/smarty/1.13.4/t3x/. Users of the
+extension are advised to update the extension as soon as possible.
+
+Credits: Credits go to Extension Author Simon Tuck who discovered and reported
+the issue.
+
+- ---
+Extension: WEC Map (wec_map)
+Affected Versions: 3.0.2 and all versions below
+Vulnerability Type: SQL Injection and Cross-Site Scripting
+Severity: Medium
+Suggested CVSS v2.0:  AV:N/AC:M/Au:N/C:C/I:P/A:N/E:P/RL:O/RC:C
+Solution: An updated version 3.0.3 is available from the TYPO3 extension manager
+and at http://typo3.org/extensions/repository/download/wec_map/3.0.3/t3x/. Users
+of the extension are advised to update the extension as soon as possible.
+
+Credits: Credits go to Extension Author Jan Bartels who discovered and reported
+the issue.
+
+- ---
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iEYEARECAAYFAlQJe3sACgkQXf6hBi6kbk/FVgCgpT9LQeDY3wR/D/Eqx3Qoyi7H
+FOIAn0WAmWaxgB4e+SR/CdvnP+FchzjJ
+=WELV
+-----END PGP SIGNATURE-----
