@@ -1,51 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/07/6
-Message-ID: <CAFRnB2V0XiYBZoyA+NEVjhirwUr+C8ctfYoyhsAPKzhQSU8Lfg@mail.gmail.com>
-Date: Mon, 7 Apr 2014 14:00:53 -0700
-From: Alex Gaynor <alex.gaynor@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/3
+Message-ID: <20140905065328.GA17330@kludge.henri.nerv.fi>
+Date: Fri, 5 Sep 2014 09:53:28 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+Cc: TYPO3 Security Team <security@...o3.org>
+Subject: CVE request: TYPO3-EXT-SA-2014-006
 Content-Type: text/plain; charset=utf-8
 
-To my knowledge, the OpenSSL team does not maintain a pre-notification list
-of any sort (I maintain a library which critically depends on OpenSSL and
-we investigated getting on to such a list).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Alex
+Can I get 2014 CVE for TYPO3-EXT-SA-2014-006, thanks.
 
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-006/
+http://osvdb.org/105758
 
-On Mon, Apr 7, 2014 at 1:56 PM, Reed Loden <reed@...dloden.com> wrote:
+Release Date: April 10, 2014
+Affected Versions: powermail: Version 2.0.0 - 2.0.10
+Vulnerability Type: Captcha Bypass
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:N/I:N/A:P/E:F/RL:O/RC:C
+Problem Description: The extension powermail offers the use of a captch
+validation to secure forms. It was possible to bypass the captcha validation and
+submit forms.
+Important Note: Other field validators weren't involved so any other validation
+worked as expected.
+Solution: Updated version 2.0.11 is available from the TYPO3 extension manager
+and at http://typo3.org/extensions/repository/download/powermail/2.0.11/t3x/.
+Users of the extension are advised to update the extension as soon as possible
+as long as they use captchas in their forms.
+Credits: Credits go to Jigal van Hemert who discovered and reported this issue.
 
-> I just asked around on IRC, and one of the Ubuntu guys said they didn't
-> get any prior notification of this, so fixed packages won't be out
-> until tomorrow at the earliest (for Ubuntu).
->
-> Was this not coordinated with the distros at all? If not, that seems
-> like major fail on the reporters and NCSC-FI's part. :/
->
-> 2c,
-> ~reed
->
-> On Mon, 7 Apr 2014 21:43:46 +0200
-> Tomas Hoger <thoger@...hat.com> wrote:
->
-> > Hi!
-> >
-> > There's a new OpenSSL release 1.0.1g that fixes information leak issue:
-> >
-> > http://www.openssl.org/news/secadv_20140407.txt
-> > http://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=96db902
-> > http://heartbleed.com/
-> >
-> > --
-> > Tomas Hoger / Red Hat Security Response Team
->
+- ---
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-
-
--- 
-"I disapprove of what you say, but I will defend to the death your right to
-say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
-"The people's good is the highest law." -- Cicero
-GPG Key fingerprint: 125F 5C67 DFE9 4084
-
+iEYEARECAAYFAlQJXegACgkQXf6hBi6kbk8S6QCcDgRePHwBPfgTAdzL+8xxFK+L
+0BkAn3ZGwxRoHTlALdOdoETUK+dkugV6
+=ZOfL
+-----END PGP SIGNATURE-----
