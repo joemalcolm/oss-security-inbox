@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/28/2
-Message-ID: <20140828065641.10074f2d@pc>
-Date: Thu, 28 Aug 2014 06:56:41 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/1
+Message-ID: <20140905004630.GA19445@oevtugenva.nrevsny.pk>
+Date: Thu, 4 Sep 2014 20:46:30 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Open Source only?
+Subject: Re: Re: heap overflow in procmail
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 27 Aug 2014 17:52:30 -0600
-Kurt Seifried <kseifried@...hat.com> wrote:
-
-> Simple: If we go with Open Source only then "is the code available
-> under an approved license"?
+On Wed, Sep 03, 2014 at 09:44:12PM -0700, Tavis Ormandy wrote:
+> Rich Felker <dalias@...c.org> wrote:
+> > 
+> > Unless I'm misunderstanding your report, the problem is in the formail
+> > utility which comes with procmail, not procmail itself. This should be
+> > clarified in the title of the vuln, perhaps as "heap overflow in
+> > procmail's formail utility" rather than "heap overflow in procmail".
 > 
-> http://opensource.org/licenses
+> I'm not sure what "title" you mean, are you referring to my email subject?
+> If you are, I think "<problem> in <package>" is pretty reasonable, but
+> perhaps this is subjective (hah!).
 
-Being part on the Gentoo licensing team for a while I can tell you that
-there exists no list of approved licenses that is nearby complete
-(neither FSFs nor OSIs is anywhere near).
-There's a very large number of licenses out there that comply with
-every definition of Free Software or Open Source Software that you'll
-find in no list whatsoever, mostly slight variations of the various
-BSD-alike licenses that are only used for a single piece of software.
+Yes, the email subject. "<problem> in <package>" seems reasonable,
+but when <package> is also the name of the main program in <package>,
+and the actual vuln is in a secondary program included with it, I
+think it's confusing. I'm not sure what percentage of procmail users
+also use formail along with it, but in general, there will be cases
+where <package> is extremely widely used but the program with the
+actual vulnerability of is obscure and mostly unused.
 
-As for the original matter, I agree that we should go with open source
-licenses only, however given I know that it can sometimes be hard to
-decide, I think nobody should blame the list moderators if they decide
-in doubt to let messages through if they have unclear licensing
-situation. Because doing the research if something should be considered
-foss can sometimes be painful and a lot of work.
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Rich
