@@ -1,42 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/8
-Message-ID: <20140418011605.5524ce40.reed@reedloden.com>
-Date: Fri, 18 Apr 2014 01:16:05 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/07/1
+Message-ID: <20140907074739.GA29387@alf.mars>
+Date: Sun, 7 Sep 2014 09:47:39 +0200
+From: Helmut Grohne <helmut@...divi.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Nagios Remote Plugin Executor <= 2.15 Remote Command Execution
+Subject: CVE request: /tmp file vulnerability in ace
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Please assign a CVE number for the ace build process using predictable
+filenames in a world-writeable directory (DAC violation).
 
-On Fri, 18 Apr 2014 09:03:17 +0100
-John Haxby <john.haxby@...cle.com> wrote:
+Upstream: http://www.dre.vanderbilt.edu/~schmidt/ACE.html
 
-> And ‘$’   you have ` but you don’t guard against $(do something unpleasant).
+In bin/generate_doxygen.pl line 177 it says:
+> my $output = "/tmp/".$i.".".$$.".doxygen";
 
-See the original advisory
-(http://seclists.org/fulldisclosure/2014/Apr/240), which calls bash
-command substitutions out as being handled already.
+This path is later opened for writing. For context, see:
+http://sources.debian.net/src/ace/6.2.7%2Bdfsg-1/bin/generate_doxygen.pl/#L177
 
-Specifically:
+Initial disclosure: http://bugs.debian.org/760709
 
-""""
-The code is also making sure that arguments do not contain bash command
-substitution i.e. $(ps aux)
+(end of CVE request)
 
-if(strstr(macro_argv[x],"$(")) {
-        syslog(LOG_ERR,"Error: Request contained a bash command
-substitution!"); return ERROR;
-""""
+A quick "grep -r /tmp $ace_source" indicates more occasions that may be
+worth researching. Most of the results reside within examples or
+documentation though.
 
-~reed
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+An interesting find is bin/g++-dep line 63:
+> TMP=/tmp/g++dep$$
+This path is also used for writing. The context can be found at:
+http://sources.debian.net/src/ace/6.2.7%2Bdfsg-1/bin/g%2B%2Bdep/#L63
+I am not sure whether instance is actually executed during the build,
+but the Debian package installs it to the development package available
+for user consumption.
 
-iKYEARECAGYFAlNQ30xfFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3Bl
-bnBncC5maWZ0aGhvcnNlbWFuLm5ldDZCNTZGOUFDMDdCNjg1RDdEQzQ1NjBEQTZC
-QTIyMjI2RjNDMzNENUEACgkQa6IiJvPDPVojoQCfanlDh9kJQi2iZB4JX55fGoL6
-hqsAoNhC4WFK/R3CqUdu6XfZObfnyWFY
-=KpWS
------END PGP SIGNATURE-----
+Thanks
+
+Helmut
