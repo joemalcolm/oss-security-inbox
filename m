@@ -1,38 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/15/2
-Message-ID: <CA+tbMaUt1xQJBHAUDrhzagmc5Ni7v08DQ3OD2XOtvgzWnFrbvg@mail.gmail.com>
-Date: Tue, 15 Jul 2014 03:38:27 -0600
-From: Kyle Kelley <rgbkrk@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: IPython Notebook Cross 2014-3429
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/3
+Message-ID: <CAJVRA1QqH6uNwF8eXxiGLfaLcjpobfPJxCM-he9HgUJ0t86TOg@mail.gmail.com>
+Date: Sun, 7 Sep 2014 22:50:25 -0700
+From: coderman <coderman@...il.com>
+To: oss-security@...ts.openwall.com, kseifried@...hat.com
+Subject: Re: Python robotframework - tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-Hey OSS Security list,
+On 9/7/14, Kurt Seifried <kseifried@...hat.com> wrote:
+> ... help push us over CVE10k
 
-We posted details to MITRE back in early May and got assigned a CVE number
-(CVE-2014-3429) but haven't seen details been posted yet. It has been
-patched for some time now. In the interest of full disclosure, I'm
-providing the same details to this list.
+hi Kurt, are you buying drinks next $seccon? at least C10k gave us epoll...
 
-Email address of requester: security@...thon.org; rgbkrk@...il.com
-Software name: IPython notebook
-Type of vulnerability: Cross domain websocket hijacking
-Attack outcome: Remote execution
-Patch/issue: https://github.com/ipython/ipython/pull/4845
-Changelog:
-http://ipython.org/ipython-doc/stable/whatsnew/github-stats-2.0.html
-Affected versions: 0.12 ≤ version < 1.2
+;)
 
-Summary: The origin of websocket requests was not verified within the
-IPython notebook server. If an attacker has knowledge of an IPython kernel
-id they can run arbitrary code on a user's machine when the client visits a
-crafted malicious page.
 
-Post on our own mailing list:
-http://permalink.gmane.org/gmane.comp.python.ipython.devel/13198 Note:
-truncated CVE was posted to the mailing list, corrected after (my bad).
-
-Thank you,
-
-Kyle Kelley
-
+best regards,
