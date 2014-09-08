@@ -1,49 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/6
-Message-ID: <CAOp4FwT5a4-1PmpnOBz3ZWArUBNRZuX3ebH2=ud5-m5cWj1a7A@mail.gmail.com>
-Date: Tue, 5 Aug 2014 10:12:03 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [CVE Requests] rsync and librsync collisions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/6
+Message-Id: <20140908152256.F2CC9C504C4@smtptsrv1.mitre.org>
+Date: Mon,  8 Sep 2014 11:22:56 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Python robotframework - tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 5, 2014 at 10:03 AM, Michael Samuel <mik@...net.net> wrote:
-> Hi,
->
-> I think there should be CVEs assigned for this:
->
-> rsync: MD5 collision DoS attack or limited file corruption
-> librsync: MD4 collision file corruption
->
-> Note: librsync is not the same code, protocol or maintainer as rsync.
->
-> The librsync attack is far easier to perform, since there's no
-> whole-file checksum and it will simply copy the first instance of a
-> collision into any place where the second collision is.
->
-> The rdiff utility that ships with librsync truncates hashes to 8
-> bytes, allowing a very fast and efficient birthday attack - so even if
-> MD4 was replaced attacks would still be possible while the hash is
-> truncted.  This also affects duplicity - they both use
-> RS_DEFAULT_STRONG_LEN - so the _librsyncmodule that ships with
-> duplicity will need recompiling after the fix ships.
->
-> Previous posting for context:
-> http://www.openwall.com/lists/oss-security/2014/07/28/1
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Hi,
+> This is the first of many
 
-Can you please post at least a PoC or steps that others can use to
-reproduce the issues in rsync and librsync ?
+The MITRE CVE team obviously has no objection to your use of the
+oss-security list for raising new discussion topics such as the
+likelihood that a '../tmp/ substring represents a security problem.
+The comments below are only about obtaining CVE assignments from
+MITRE.
 
-IMHO, that would *really* help.
+> the reason I'm not assigning CVE's for these is this is a side project
 
->
-> Regards,
->   Michael
+A CVE isn't going to be possible without further analysis explaining
+why a vulnerability exists in the specific case. There can't be an
+expectation that someone at MITRE is already familiar with the
+product, or will read and understand the complete source code as part
+of processing an oss-security message.
 
+Items that seem to be missing from the original message include:
 
+1, Is the "merge('../tmp/passing.xml', '../tmp/failing.xml')"
+   debugging code, or is this code realistically used because a
+   different piece of software has created passing.xml and failing.xml
+   files?
 
--- 
-This message is strictly personal and the opinions expressed do not
-represent those of my employers, either past or present.
+2. If there is a realistic situation in which the
+   "merge('../tmp/passing.xml', '../tmp/failing.xml')" executes, would
+   the cwd realistically be a first-level directory such as the /root
+   or /tmp directory?
+
+3. For purposes of risk analysis, is unconstrained use of a ../tmp/
+   pathname always equivalent to unconstrained use of a /tmp/ pathname?
+
+A possible CVE assignment decision might be:
+
+A. If a different product came with a test suite containing:
+
+   test_program > /tmp/merged.xml
+
+then it could have a CVE because /tmp/merged.xml might be a symlink to
+an important file.
+
+B. If the test suite were changed to:
+
+   test_program > ../tmp/merged.xml
+
+with no constraints, then it could still have a CVE, because some
+people run test suites as root with a cwd of the /root directory.
+
+C. If ../tmp/ is used in "debugging code" that is intended to be run
+by a developer who understands the appropriate cwd, and this
+"debugging code" is not a "test suite" for users, then there is no CVE
+assignment. Admittedly, there might be cases where the distinction
+between "debugging code" and "test suite" is completely ambiguous.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUDclfAAoJEKllVAevmvms2jkH/1C3j3ktLAJgRu3lW6z2J55r
+7Xr7zd5mJQ9lrVg1HchoUx0l9mLPX5vKwlb43K2xg2vHDFFcL2VKFmEycHo5nfl+
+wt2VDwjsQ5S/6fjMcX6wZoNnY0kU5/xdiVUX2g5UAdbLip3VUVosqlsvpZBRwy67
+qWJS+IWftsUWp+1tf6i5Pp2TnLlfaiDRGnqOUJ4sccOUVkagwEBNoPZvdZ9bkuin
+wm7lVkwNBLIfbt/bbMFWmkeePoZgK2gHxGXpYlJNbvbAgUHcyEW8gNkS5uVEC+mP
+GMEoaS1H8wGu9r7GRN4hXJt71dOIU0LxVTpbsk6RNQN5msUR7h2Ft5p8pTwfh5c=
+=vfNO
+-----END PGP SIGNATURE-----
