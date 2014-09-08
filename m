@@ -1,44 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/16
-Message-ID: <5493206A.1050500@mccme.ru>
-Date: Thu, 18 Dec 2014 21:43:54 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-Subject: Re: Running Java across a privilege boundry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/7
+Message-ID: <540DD776.4040003@redhat.com>
+Date: Mon, 08 Sep 2014 10:21:10 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: Re: Python robotframework - tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-On 2014-12-18 20:50, Martin Carpenter wrote:
->> I requested a separate tag for relative RPATH a while ago:
->> https://bugs.debian.org/732682
->> Now we "only" need someone to write the code. :-)
->
-> Great! Is that all we need? The tests reference the Debian policy manual
-> (package debian-policy):
->
-> https://www.debian.org/doc/debian-policy/ch-sharedlibs.html
->
-> (for completeness: also sections 10.2, 10.3).
->
-> This references neither RPATH nor RUNPATH. Perhaps we need to fix that
-> first?
+On 08/09/14 09:22 AM, cve-assign@...re.org wrote:
+>> This is the first of many
+> 
+> The MITRE CVE team obviously has no objection to your use of the
+> oss-security list for raising new discussion topics such as the
+> likelihood that a '../tmp/ substring represents a security problem.
+> The comments below are only about obtaining CVE assignments from
+> MITRE.
+> 
+>> the reason I'm not assigning CVE's for these is this is a side project
+> 
+> A CVE isn't going to be possible without further analysis explaining
+> why a vulnerability exists in the specific case. There can't be an
+> expectation that someone at MITRE is already familiar with the
+> product, or will read and understand the complete source code as part
+> of processing an oss-security message.
+> 
+> Items that seem to be missing from the original message include:
+> 
+> 1, Is the "merge('../tmp/passing.xml', '../tmp/failing.xml')"
+>    debugging code, or is this code realistically used because a
+>    different piece of software has created passing.xml and failing.xml
+>    files?
 
-https://bugs.debian.org/555982
+It's part of __main__ so it gets executed.
 
-> Suggested addition:
->
-> 8.7 RUNPATH and RPATH
-> Libraries that define RPATH or RUNPATH should ensure that this does not
-> contain relative paths. This is to prevent an executable from loading a
-> library from an untrusted location. (This should include the corner
-> cases whereby the path starts or ends with a colon, or includes two
-> consecutive colons).
->
->
-> Did I miss anything?
+> 2. If there is a realistic situation in which the
+>    "merge('../tmp/passing.xml', '../tmp/failing.xml')" executes, would
+>    the cwd realistically be a first-level directory such as the /root
+>    or /tmp directory?
 
-Relative paths is not the only problem. /tmp is even worse:
+yes if you run from within /root or /tmp, the "run from /root" would be
+the obvious worry as it would indicate the root user is being used.
 
-https://bugs.debian.org/759868
+> 3. For purposes of risk analysis, is unconstrained use of a ../tmp/
+>    pathname always equivalent to unconstrained use of a /tmp/ pathname?
+
+If it ends up using /tmp/ then I would say that's a problem. is it
+always a problem? I can't say.
+
+> A possible CVE assignment decision might be:
+> 
+> A. If a different product came with a test suite containing:
+> 
+>    test_program > /tmp/merged.xml
+> 
+> then it could have a CVE because /tmp/merged.xml might be a symlink to
+> an important file.
+> 
+> B. If the test suite were changed to:
+> 
+>    test_program > ../tmp/merged.xml
+> 
+> with no constraints, then it could still have a CVE, because some
+> people run test suites as root with a cwd of the /root directory.
+> 
+> C. If ../tmp/ is used in "debugging code" that is intended to be run
+> by a developer who understands the appropriate cwd, and this
+> "debugging code" is not a "test suite" for users, then there is no CVE
+> assignment. Admittedly, there might be cases where the distinction
+> between "debugging code" and "test suite" is completely ambiguous.
+> 
+> 
 
 -- 
-Alexander Cherepanov
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
