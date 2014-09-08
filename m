@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/2
-Message-ID: <B3A9C97F-6AE4-4AF4-B9C0-567B158B58EA@akamai.com>
-Date: Wed, 1 Oct 2014 19:16:40 -0500
-From: "Kobrin, Eric" <ekobrin@...mai.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/1
+Message-ID: <540D194B.60609@redhat.com>
+Date: Sun, 07 Sep 2014 20:49:47 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: More parser odities
+Subject: Python robotframework - tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-This oddity also allows bypass of the absolute_program protection added in the recent patches:
+This is the first of many, only looking at programs with >5000 downloads
+in the last month.
 
-$ env $'BASH_FUNC_#badname%%'=$'() { :; }\n/bin/ls () { echo wrongfunc; }  ' ./bash -c '/bin/ls'
-fbash: error importing function definition for `#badname'
-wrongfunc
+https://pypi.python.org/pypi/robotframework-pabot/
+
+robotframework-pabot-0.8/pabot/result_merger.py
+
+if __name__ == '__main__':
+    merge('../tmp/passing.xml',
+'../tmp/failing.xml').save('../tmp/merged.xml')
 
 
-I really do think it is time to take a different approach for a long-term solution.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
--- Eric Kobrin
 
-On Oct 1, 2014, at 5:35 PM, "Kobrin, Eric" <ekobrin@...mai.com> wrote:
-
-> Using bash from the GNU git, subsequently patched to level 28:
-> 
-> $ env $'BASH_FUNC_#badname%%'=$'() { :; }\nfoo () { echo wrongfunc; } ' ./bash -c 'foo'
-> ./bash: error importing function definition for `#badname'
-> wrongfunc
-> 
-> 
-> This is an artifact of the name and value being passed directly to parse_and_execute, separated by a space. Structures started in the name such as comments, quoted strings, etc. are allowed to continue into the body. Some of the existing safety checks stop the obvious attacks, but things like this can still get through.
-> 
-> 
-> I don't know of a safe way to pass the contents of an environment variable to parse_and_execute. Has anyone worked on a simplified grammar which could be more rigorously checked?
-> 
-> If there were one, with a parser called bash-simple-parse in following example, this problem would be easier to manage.
-> 
-> This way `function f() {...}' can be parsed, but `export -f f' could store a version of the function readable by bash-simple-parse. The function importer can then call bash-simple-parse and extract a function definition, knowing that nothing other than a function definition (not even the name) will be returned. That result can then be bound to the name provided, directly in the variable setup function without ever invoking the general parser.
-> 
-> Thoughts?
-> 
-> -- Eric Kobrin
-> 
-> 
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
