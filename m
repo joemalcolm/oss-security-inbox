@@ -1,26 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/13
-Message-ID: <20140320182032.GC20297@dhcp-25-225.brq.redhat.com>
-Date: Thu, 20 Mar 2014 19:20:32 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: zoltan.kiss@...rix.com, Michael Tsirkin <mtsirkin@...hat.com>
-Subject: CVE request -- kernel: net: potential information leak when ubuf backed skbs are skb_zerocopy()ied
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/5
+Message-Id: <A16F2469-DB16-458A-B979-BCE764ECB420@gmail.com>
+Date: Mon, 8 Sep 2014 15:03:00 +0300
+From: Mikko Korpela <mikko.korpela@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Python robotframework - tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-An information flaw was found in the way skb_zerocopy() copied skbs that
-are backed by userspace buffers (for example vhost-net and recent xen
-netback). Once the source skb is consumed, ubuf destructor is called and
-potentially releases the corresponding userspace buffers, which can then
-for example be repurposed, while the destination skb is still pointing
-to the them.
+Hi Kurt
 
-This issue is similar to CVE-2014-0131.
+I'm the developer of robotframework-pabot package.
 
-Upstream patch:
-https://lkml.org/lkml/2014/3/20/421
+Could you elaborate what is the security issue in pabot?
 
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Mikko Korpela
