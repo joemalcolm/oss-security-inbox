@@ -1,19 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/9
-Message-ID: <alpine.LFD.2.10.1402202028360.31891@javelin.pnq.redhat.com>
-Date: Thu, 20 Feb 2014 20:31:45 +0530 (IST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/4
+Message-ID: <alpine.LFD.2.10.1409081209470.31417@javelin.pnq.redhat.com>
+Date: Mon, 8 Sep 2014 12:39:19 +0530 (IST)
 From: P J P <ppandit@...hat.com>
 To: oss security list <oss-security@...ts.openwall.com>
-cc: cve-assign@...re.org
-Subject: Re: Re: CVE request New-djbdns: dnscache: possible DoS
+Subject: CVE-2014-3615 Qemu: information leakage when guest sets high resolution
 Content-Type: text/plain; charset=utf-8
 
-+-- On Thu, 20 Feb 2014, cve-assign@...re.org wrote --+
-| There would be too many CVEs if every case of "does not read data as fast as 
-| possible" were classified as a DoS problem.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  It is not - 'does not read data as fast as possible', but 'reads data as 
-slow as possible', and that is why has a DoS problem.
+    Hello,
 
---
-Prasad J Pandit / Red Hat Security Response Team
+An information leakage flaw was found in Qemu's VGA emulator. It could lead to
+leaking host memory bytes to a VNC client. It could occur when a guest GOP
+driver attempts to set a high display resolution.
+
+A privileged user/program able to set such high resolution could use this flaw
+to leak host memory bytes.
+
+Upstream fixes:
+- ---------------
+    -> http://git.qemu.org/?p=qemu.git;a=commit;h=c1b886c45dc70f247300f549dce9833f3fa2def5
+    -> http://git.qemu.org/?p=qemu.git;a=commit;h=ab9509cceabef28071e41bdfa073083859c949a7
+
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJUDVYfAAoJEN0TPTL+WwQf3qsQALTsOCpDNXMBnRJ8ziz7pVLA
+Uoepy8fFeCxMELy7ZleGRDThCGzDeH4XCoHZ0prnV17I8imwHXvzWJKktzQSfXos
+y1LUvhxLpbUUwxyiGD/3iNXCzKLDdIXIUJd2+VB5BQUmJ5INhy25Za2/qFV3jhhb
+JHrYlzFJYD7LKnFzLlGtlYjRa6VF5+yCP0MlGmYV9ENbKOiFOhc+aB7MJkab2dYQ
+3qQd0LRXoU4Ms8cvh51EPes3nUy6UlfQhBnbfc97M5lvm/1hnRN6UN/UDCNpsjZ/
+yJT7rSqpEmAEk5UrhLOE52jZMdthFMz2Z84DVbu48dLrwg/ei0wXslV3ROpQmvsU
+jsxjyw/fzMAL2XXjqiqCe31X5dFmEPRJjROJcNE68xoifS+7y4VDRzHUNOK/jJAS
+cp4bHJii7p96aF2ACBbu16M13ax83q9/cH+HmKib7qGRgAnyfqRrn3kVn3PdIFJD
+yCji5dlmczLmrYG8NFYW9edB6XD9evX5RZijWHkMYdf9Q0FJcWL1eQnvWtNelvKC
+96PcZaXlYzgyy1Qd1+1zdmO2r/G45FplsG6VX0cRXEz8e6/sDRGd2IoEFKmkoQcA
+AU+wsPn8d3sZ0YDHAgFkn3g9O5RRAtR5fh2jSWQRjuVXyqaKfEAeVWr3utupAuf3
+P47T1YbVkKCXbnQQoDCq
+=Q6KC
+-----END PGP SIGNATURE-----
