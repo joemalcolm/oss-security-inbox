@@ -1,110 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/7
-Message-ID: <271481227.2167788.1401944854094.JavaMail.root@vmware.com>
-Date: Wed, 4 Jun 2014 22:07:34 -0700 (PDT)
-From: Ramon de C Valle <rdecvalle@...are.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/2
+Message-ID: <540E7816.90001@redhat.com>
+Date: Tue, 09 Sep 2014 13:46:30 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>,  VMware Security Response Center <security@...are.com>,  Monty Ijzerman <mijzerman@...are.com>
-Subject: Re: Request for linux-distros subscription
+Subject: Re: [CVE Requests] rsync and librsync collisions
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Good morning,
 
-Hi Greg,
+The below still require a CVE or two (unless MITRE disagrees).
 
-- - ----- Original Message -----
-> From: "Greg KH" <greg@...ah.com>
-> To: oss-security@...ts.openwall.com
-> Cc: "Solar Designer" <solar@...nwall.com>, "VMware Security Response Center" <security@...are.com>, "Monty Ijzerman"
-> <mijzerman@...are.com>
-> Sent: Thursday, June 5, 2014 1:09:29 AM
-> Subject: Re: [oss-security] Request for linux-distros subscription
-> 
-> On Wed, Jun 04, 2014 at 12:33:13PM -0700, Ramon de C Valle wrote:
-> > Hi Alexander,
-> > 
-> > > On Tue, Jun 03, 2014 at 01:16:47PM -0700, Ramon de C Valle wrote:
-> > > > I can attest that Monty is my colleague and the Manager of VMware
-> > > > Security
-> > > > Response Center. As a former colleague of you (Kurt) and also former
-> > > > linux-distros subscriber, I would like to ask for your consideration
-> > > > for
-> > > > subscribing Monty (or myself) to linux-distros on behalf of VMware.
-> > > > Although ESXi isn't a Linux distribution, it implements
-> > > > Linux-compatible
-> > > > system calls and provides a GNU/Linux -like ecosystem that allows many
-> > > > applications that are compiled on/for Linux operating systems to run
-> > > > seamlessly. This ecosystem includes OSS that should be supported in
-> > > > timely
-> > > > fashion pretty much like like any other Linux distribution on the list.
-> > > > It
-> > > > also implements a Linux kernel module interface and uses many Linux
-> > > > device
-> > > > drivers and kernel modules that also should be supported. In addition,
-> > > > ESXi is the base layer that many of the Linux distributions on the list
-> > > > rely upon and run atop of in many datacenters around the world.
-> > > 
-> > > Thank you, Ramon.  This is pretty good rationale, but I feel that
-> > > getting VMware onto linux-distros for the reasons given above would be a
-> > > (possibly desirable) change in who the list is for.  So far, it's been
-> > > for Linux distros, and I deliberately chose the linux-distros name for
-> > > it.  Now a non-Linux-distro wants to be specifically on linux-distros
-> > > (not just on distros), and be exposed to Linux-specific vulnerability
-> > > details (albeit for good reasons).  I'd appreciate comments by others
-> > > active in this community.
-> > I'm afraid I can't comment on Greg's comments due to my lack of legal
-> > understanding. However, in addition to the reasons explained above and
-> > also Alan's comments (which, IMO, also add to our reasons), I'd also
-> > appreciate comments by others active in this community and would be
-> > happy to answer any questions anyone might have.
-> 
-> Ok, let's keep this on a purely community basis, no legal issues
-> involved (to quell the tide of private emails about this as well.)
-> 
-> Your company takes the Linux kernel drivers (a large majority of the
-> Linux kernel source tree) and builds a product around it, while refusing
-> to contribute back to those drivers.  What you are doing has been
-> explicitly stated as something you should not be doing by a number of
-> community members.  Somehow you feel that your tiny "core" of a custom
-> kernel is more important than the larger body of community work you are
-> relying on in order for that core to work properly.
-I'd appreciate any references to back the "a large majority of the Linux kernel source tree", "while refusing to contribute back to those drivers", and "tiny "core" of a custom kernel" statements if you want me to make any comments.
+Cheers,
 
-> 
-> Because of this reliance on that large body of code, you are now asking
-> to be notified ahead of time about vulnerabilities in that code base by
-> the same community members you are ignoring in the first place.
-Same for "Because of this reliance on that large body of code".
+--
+Murray McAllister / Red Hat Product Security
 
-> 
-> Does that seem like a fair thing to be asking for?
-> 
-> To me it does not, but feel free to persuade me otherwise.
-My intention isn't to persuade anyone. If everyone thinks that we shouldn't be subscribed to linux-distros, that's fine. I just would like a fair reasoning of why not, instead of biased and emotionally-filled comments.
+On 08/05/2014 04:03 PM, Michael Samuel wrote:
+> Hi,
+>
+> I think there should be CVEs assigned for this:
+>
+> rsync: MD5 collision DoS attack or limited file corruption
+> librsync: MD4 collision file corruption
+>
+> Note: librsync is not the same code, protocol or maintainer as rsync.
+>
+> The librsync attack is far easier to perform, since there's no
+> whole-file checksum and it will simply copy the first instance of a
+> collision into any place where the second collision is.
+>
+> The rdiff utility that ships with librsync truncates hashes to 8
+> bytes, allowing a very fast and efficient birthday attack - so even if
+> MD4 was replaced attacks would still be possible while the hash is
+> truncted.  This also affects duplicity - they both use
+> RS_DEFAULT_STRONG_LEN - so the _librsyncmodule that ships with
+> duplicity will need recompiling after the fix ships.
+>
+> Previous posting for context:
+> http://www.openwall.com/lists/oss-security/2014/07/28/1
+>
+> Regards,
+>    Michael
+>
 
-> 
-> thanks,
-> 
-> greg k-h
-> 
-- - --
-Ramon de C Valle
-VMware Product Security Engineering
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
-
-iQIcBAEBCgAGBQJTj/r2AAoJEMHrzpMNBOIMxtsP/07nWChvFcKQHfRSChtVr53k
-uJXMJJ+dUkUTrvdLc5MdSyzfnrv/ipqCt5LpaZiNQqKCoPFZbNOLvOHpUvnBF+Yo
-UF/mPbGVBmgtAl8EE6MmeaNnTjwmq+vo/Du/3Cd90mByuRsAIm0g72cy8hOW4oca
-DNVVcNunjXe5q1KWiAuGqR4iDf9J4rbXTL0V3hSJQDmpibbJ9pQDF/qchCuJnuSy
-8Fj0LFzENPUcWbXuw8j8egXwhWjnWB67lhYotZ/Q89hXOh0WANQ8tOv4kvqKyut0
-6c6LdEig5oMIT/yc6JDSf3eT8TnN3ve6dxBsQEn+TsjZfyrnXs0zVBmzQ3K+Lteh
-dUqE+lnkVGT+zVdaVI5HbA8Zgy8q1Gtk2G6JXlRWAQRDaW0ifGqupK7fqIllz89V
-fkrqLiwPp82+ffETZIioygI7qw2y9doFcZoiSfQ4MAcjnl92brvjbiGtqc3yzIm9
-fG8VuJtCN9PSNgvlAnJywNmXmeh8H10JeboEd5affpjKKfwq9iXcGql8kipUXz/Z
-mVcAGI4TA7+b4NR9QmJUpdH3RaIY7UMfLNmn7O771MQlsZstv4MazJEXDRvqnhwS
-9okNzIco4Y7P3HfYCoaFhVAJ6lwoaTd7QBkb416Lyj1qgACNSPAr99BPVcwtsq2K
-YbTvcjib9aKnhJjTs2os
-=F3DR
------END PGP SIGNATURE-----
