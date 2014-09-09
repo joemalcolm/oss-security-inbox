@@ -1,28 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/8
-Message-ID: <5344E969.4070809@redhat.com>
-Date: Wed, 09 Apr 2014 12:02:09 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/14
+Message-ID: <CAEZyo3DAOuTJcYv0jzGE5bT4HX0dHiDmk5mJqEDQXk0tsX2_Jw@mail.gmail.com>
+Date: Tue, 9 Sep 2014 11:57:11 +0300
+From: Mikko Korpela <mikko.korpela@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: pinocchio tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-On 04/09/2014 01:07 AM, Yves-Alexis Perez wrote:
+I would say that the major impact for test automation tool for using a
+fixed location for some file is that there can't be more then one
+instance of that tool running on the same machine. Which is an issue
+when you try to scale your testing.
 
-> Mon, 07 Apr 2014 06:10 : Huzaifa Sidhpurwala sends a mail to distros
->                          list with no details but an offer to request
->                          them privately
+Test automation on the other hand IMHO requires that we are working in
+a secure sand box. If there is a malicious user on the same machine
+then I bet things have already gone very wrong somewhere else.
 
+Ystävällisin terveisin ;) ,
+Mikko
 
-After i sent a mail to distros, i was contacted by security engineers
-from most major distributions. I answered most of the them as soon as i
-could with complete details including the upstream patch.
-
-Some of them mailed during my night time. I saw these emails the next
-day, and it was pointless to answer them at that time, since the issue
-was already public.
+2014-09-09 11:34 GMT+03:00 Steve Kemp <steve@...ve.org.uk>:
+>> I have to say I don't understand at all why someone would be going
+>> through random packages from PyPi (especially test automation related)
+>> and searching for possible security issues.
+>
+>   Because although the chances of them being exploited are low they
+>  are genuine issues which have security implications.
+>
+>   There is copious documentation online about how file races are
+>  bad, including this quick reference:
+>
+>     https://www.securecoding.cert.org/confluence/display/seccode/FIO21-C.+Do+not+create+temporary+files+in+shared+directories
+>
+>   PyPi?  've no idea why that was chosen, but I expect because it
+>  is a large mass of code that has had little similar attention paid
+>  to it in the past.  node.js will probably be next, I'm sure lots of
+>  modules exist created by inexperienced developers who haven't
+>  considered the implications of posting new code libraries.
+>
+>   I did something similar looking for /tmp abuses in Debian
+>  packages, via a very very automated scan:
+>
+>     http://blog.steve.org.uk/luonnos_viesti___31_hein_kuu_2014.html
+>
+>   Finding these issues was distressingly easy, and although in the
+>  real world the chances of significant impact are minimal they were
+>  genuine issues that should be reported and fixed.
+>
+> Steve
+> --
 
 
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Mikko Korpela
