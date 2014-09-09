@@ -1,51 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/20
-Message-Id: <20141126171457.702D9B2E0C2@smtpvbsrv1.mitre.org>
-Date: Wed, 26 Nov 2014 12:14:57 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: cpio heap-based buffer overflow [was Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/25
+Message-ID: <CAEZyo3ASqgsg1zD4nO7ShE8QS5yTPdiS6XPsG_d7EOZp8-aJYg@mail.gmail.com>
+Date: Tue, 9 Sep 2014 22:14:21 +0300
+From: Mikko Korpela <mikko.korpela@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: pinocchio tmp vuln
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+"And we will need that because there are so many
+devices hitting the streets with so many noob vulns that it's only a
+matter of time before someone is killed."
 
->> http://seclists.org/fulldisclosure/2014/Nov/74
+So umm.. Your saying that you guys are saving the world by finding out
+random packages that use easily guessable filenames from /tmp/ that
+everybody has access to?
 
->> Even grabbing something as seemingly innocuous as cpio, a short spin
->> with afl-fuzz (or, probably, anything else) will immediately yield
->> this:
->>
->> http://lcamtuf.coredump.cx/afl/vulns/lesspipe-cpio-bad-write.cpio
->>
->> It's a file with declared block length of 0xffffffff. That gets us
->> here, with the value populated to c_filesize (copyin.c, list_file()):
->>
->>    link_name = (char *) xmalloc ((unsigned int) file_hdr->c_filesize + 1);
->>    link_name[file_hdr->c_filesize] = '\0';
->>
->> ...where we end up allocating a zero-byte buffer and then promptly
->> writing out of bounds (just under the buffer on 32-bit systems or
->> somewhere above it on 64-bit).
+I think security (like safety) has its place, but it is largely
+context dependent - you don't put locks to every door in your house
+(or I hope you don't) or you end up spending all the time opening and
+closing them.
 
-> Could a CVE please be assigned to the above issue in cpio?
+I'm not arguing that the things you guys are talking about are not
+important in many contexts but test automation??
 
-Use CVE-2014-9112.
+It is part of software development process - and in many cases
+requires that the system under test must be executed in some very
+unsecure way to enable access to the internals of the tested system.
+So in this place where these tests are executing (developers little
+sandbox that is far away from the evil world around us) if someone
+"evil" has access to the /tmp/ folder or the machine in any way then
+you are already screwed.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+So could someone please give me an example case of a test automation
+tool where removing a /tmp/ vuln would have had any significance?
 
-iQEcBAEBAgAGBQJUdgnBAAoJEKllVAevmvmsp80H/3Fh+1yfg7i8W9O9Y/ghfCAz
-Bin+VrfprdyXE49ggXWFGu0/RapPaDu5SVZBlvpCYQhcA1/UFuAvI5etL1mjPYVi
-XrM2pO4u80TW2GdDe24ChhGj7wmlWoUz6/VSc3Zk/kXTF6aD8tDG7vxkIkvvldrq
-muFNoZBf8cZZTHzrr5uHs+8PIJ/XfKw87k504SbCdNrgaXSsrSa0D2L8u9nEfIW2
-VZt0SiwGyScbtW0MYSUqRg8Zby4H+2XLtgM1jfqczakHey0Jri84JJ5J5QJxEMBG
-dHV53iuCNTNjtF6vi8asT3ifpsvv29uNN53T5Rx2csYa5elozeshgu+mE0fUURE=
-=nhR6
------END PGP SIGNATURE-----
+(By the way I kind of think that I'm saving the world also :P by
+giving people test automation tools so they can get bugs out of their
+software systems - and bugs really kill people)
+
+2014-09-09 19:39 GMT+03:00 John Haxby <john.haxby@...cle.com>:
+> On 09/09/14 09:34, Steve Kemp wrote:
+>>                                          I'm sure lots of
+>>  modules exist created by inexperienced developers who haven't
+>>  considered the implications of posting new code libraries.
+>
+> We see lots of people making the same mistakes over and over again.
+>
+> Apart from the obvious newbie mistakes of failing to create proper
+> temporary directories, we also get things like the slightly more subtle
+> shipping a "secure" web server with a fixed self-signed cert.   Or
+> copying a user-supplied string into a MAXPATH+1 buffer because that's
+> long enough for any pathname.   Or ...
+>
+> I don't need to go on, we've all seen them and Kurt highlighting
+> problems is all goodness because at least it gets people thinking a bit
+> more about security.  And we will need that because there are so many
+> devices hitting the streets with so many noob vulns that it's only a
+> matter of time before someone is killed.
+>
+> jch
+
+
+
+-- 
+Mikko Korpela
