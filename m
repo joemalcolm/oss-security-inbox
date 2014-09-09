@@ -1,24 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/8
-Message-ID: <20140203061046.GA773@openwall.com>
-Date: Mon, 3 Feb 2014 10:10:46 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/17
+Message-Id: <E1XRKar-0006Os-UL@xenbits.xen.org>
+Date: Tue, 09 Sep 2014 12:32:21 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 107 - Mishandling of uninitialised FIFO-based event channel control blocks
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 02, 2014 at 08:14:44AM +0400, Solar Designer wrote:
-> Just off Twitter:
-> 
-> <noptrix> recvmmsg.c - linux 3.4+ local root (CONFIG_X86_X32=y) expl0it - http://pastebin.com/DH3Lbg54
-> 
-> SHA-256(recvmmsg.c.txt) = 4603acf96e845cecd2c5877a68fa5b5c591ba00c52859ded2a31a9daf48a457d
-> 
-> for the version I just downloaded (but did not review, although it looks
-> sane at first glance).  The exploit includes offsets for 3 Ubuntu kernels.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Another exploit:
+                    Xen Security Advisory XSA-107
 
-https://github.com/saelo/cve-2014-0038
+    Mishandling of uninitialised FIFO-based event channel control blocks
 
-Alexander
+ISSUE DESCRIPTION
+=================
+
+When using the FIFO-based event channels, there are no checks for the
+existence of a control block when binding an event or moving it to a
+different VCPU.  This is because events may be bound when the ABI is
+in 2-level mode (e.g., by the toolstack before the domain is started).
+
+The guest may trigger a Xen crash in evtchn_fifo_set_pending() if:
+
+  a) the event is bound to a VCPU without a control block; or
+  b) VCPU 0 does not have a control block.
+
+In case (a), Xen will crash when looking up the current queue.  In
+(b), Xen will crash when looking up the old queue (which defaults to a
+queue on VCPU 0).
+
+IMPACT
+======
+
+A buggy or malicious guest can crash the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.4 and onward are vulnerable.
+
+MITIGATION
+==========
+
+None.
+
+CREDITS
+=======
+
+This issue was originally reported by Vitaly Kuznetsov at Red Hat and
+diagnosed as a security issue by David Vrabel at Citrix.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This bug was publicly reported on xen-devel, before it was appreciated
+that there was a security problem.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa107-unstable.patch        xen-unstable
+xsa107-4.4.patch             Xen 4.4.x
+
+$ sha256sum xsa107*.patch
+b92ba8085b6684abbc8b012ae1a580b9e7ed7c8e67071a9e70381d4c1009638b  xsa107-4.4.patch
+cd954a5bd742c751f8db884a3f31bd636a8c5850acddf5f1160dd6be1f706a09  xsa107-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUDsJxAAoJEIP+FMlX6CvZrs8H/ixMJYY0qJHbmPuCLxUDK+pz
+nrZ1mvqTfpN+M31GtHGKNFOBMUe7SaeQe7SJ8ucXwy8vqSwzzydWcu0ctjrLzyh9
+cxnTx5Yu5yLHVWRlFT1ZI2+XnxuCLfW3xwXfZIQkSKWAHfCv78uvdc8u8nB8cdPy
+8WiwJ77tNLtQXz8Jv5k8znIXLiLoCG3gO7TB7KwhZq1DeY8mL63N16CC3Eohu/1e
+pNYGO6KjWSwFLqh/dPaorqHD+IXQUwCosLnqah1/+Qh3L97UB3j779lv3+YHakmZ
+Ryu3OxqcjeuMTj4K2Iz2SeXixBz7YXl71zVnZlAq5jEasOA6xjTPFN7f8mUt34k=
+=MQuU
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa107-4.4.patch" of type "application/octet-stream" (4744 bytes)
+
+Download attachment "xsa107-unstable.patch" of type "application/octet-stream" (4698 bytes)
