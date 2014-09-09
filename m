@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/3
-Message-ID: <20141116191712.6bd930f7@127>
-Date: Sun, 16 Nov 2014 19:17:12 -0800
-From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/18
+Message-ID: <20140909130221.GA6119@1wt.eu>
+Date: Tue, 9 Sep 2014 15:02:21 +0200
+From: Willy Tarreau <w@....eu>
 To: oss-security@...ts.openwall.com
-Subject: Location of OS security audit reports
+Subject: CVE Request: haproxy read out of bounds
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-I haven't had any success yet in finding security audit reports for
-any *nix OS (I haven't looked for them for MS/Apple products).
+I'd like to get a CVE ID for a new vulnerability affecting HAProxy 1.5
+before 1.5.4. In short, a user can cause HAProxy to parse contents out
+of a buffer by sending multiple gigs of carefully crafted chunks faster
+than the target server can read them. No memory write is performed during
+this phase, but the process may crash when tring to parse chunked data
+out of the request buffer.
 
-Can you tell me where to find them? I thought that I'm not
-using the right word or word combination. This list seemed to be
-a good target as most here are in the security milieu.
+All the details and the patch are available here :
 
-I'm looking for complete and comprehensive reports from an
-extensive and exhaustive security audit of the entire OS.
+   http://git.haproxy.org/?p=haproxy-1.5.git;a=commitdiff;h=b4d05093bc89f71377230228007e69a1434c1a0c
 
-But if my goal of extensive and exhaustive is too lofty then
-something less so might at least help.
+The fix was included in 1.5.4.
 
-Also I am interested in OSs that are not *nix or MS/Apple.
-I know of Haiku OS but are there any others? Does China
-or Japan or any other country have their own OSs?
-
-Is the world really limited to just a few?
-
--- 
-
+Thanks,
+Willy
 
