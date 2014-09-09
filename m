@@ -1,45 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/4
-Message-ID: <53CE4169.5060900@debian.org>
-Date: Tue, 22 Jul 2014 11:48:09 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux peer_cred Mischmasch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/5
+Message-ID: <540E99B6.10408@redhat.com>
+Date: Tue, 09 Sep 2014 00:09:58 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: ioflo tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-On 22/07/14 11:15, Sebastian Krahmer wrote:
-> While maybe_add_creds() (via SOCK_PASSCRED) and scm_send()
-> (via unix_{stream,dgram}_sendmsg()) use the real UID,
+Easier one:
 
-One possible justification for this disparity is that the privileged
-processes for which there is any difference (ruid != euid, CAP_SETUID or
-CAP_SYS_ADMIN) can manipulate their apparent identity in outgoing
-SCM_CREDENTIALS messages, so they can choose which of their (potentially
-many) possible identities to present to the peer...
+https://pypi.python.org/pypi/ioflo
+ioflo-0.9.39/ioflo/app/run.py:
 
-> cred_to_ucred() (via SO_PEERCRED) passes the EUID (this time
-> also kuid_munged()).
+    p.add_argument('-S', '--statistics',
+            action='store',
+            nargs='?',
+            const=True,
+            default=False,
+            help=("Profile and compute performance statistics. "
+            "Put statistics into file path given by optional argument. "
+            "Default statistics file path is /tmp/ioflo/profile/NAME. "))
 
-... whereas SO_PEERCRED just asks the kernel "who is at the other end?"
-without any cooperation from the target process, so there is opportunity
-for the target process to influence the result per-request, and the
-kernel has to return "the" uid (even if there is in fact no such thing
-as the process's single uid). The euid seems like as good a version of
-"who the process is currently trying to be" as any other.
+Then later we have:
 
-(I'm considering ruid != euid to be a form of privilege even if it has
-no CAP_* capabilities, because it has the privilege "can arrange to do
-anything that either ruid or euid can do", which in general is a
-superset of the abilities of either ruid or euid individually.)
+        else:
+            import cProfile
+            import pstats
+            if isinstance(statistics, bool):  # use default
+                statistics = os.path.join('/tmp', 'ioflo', 'profiles',
+'name')
+#
+# Which is "/tmp/ioflo/profiles/name"
+#
+            try:
+                statfilepath =
+os.path.abspath(os.path.expanduser(statistics))
+                if not os.path.exists(statfilepath):
+                    os.makedirs(os.path.dirname(statfilepath))
+            except OSError as ex:
+                console.terse("Error: creating server profile statistics
+file"
+                              " '{0}'\n{1}'\n".format(statfilepath, ex))
+                raise
 
-Silly analogy: SOCK_PASSCRED is the process presenting its passport at a
-border. It knows the border is there, is in control of the passport it
-presents, and if it is a spy with a pile of forged passports (privileged
-process), or someone with dual citizenship and multiple equally valid
-passports (ruid != euid), it can choose which one it hands over.
-SO_PEERCRED is more like identifying the process from CCTV pictures: it
-can pretend to be someone else by wearing a Mission-Impossible-style
-mask, but it can only have one version of its face visible at a time :-)
+            cProfile.runctx('skedder.run()', globals(), locals(),
+statfilepath)
+            p = pstats.Stats(statfilepath)
+            p.sort_stats('time').print_stats()
+            p.print_callers()
+            p.print_callees()
 
-    S
+And boom goes the file that got linked to.
 
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
