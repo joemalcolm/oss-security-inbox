@@ -1,105 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/19
-Message-Id: <E1WsDfm-0004kR-Qv@xenbits.xen.org>
-Date: Wed, 04 Jun 2014 16:04:18 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 98 (CVE-2014-3969) - insufficient permissions checks accessing guest memory on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/20
+Message-ID: <540F1EF5.9050904@redhat.com>
+Date: Tue, 09 Sep 2014 09:38:29 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: pinocchio tmp vuln
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-            Xen Security Advisory CVE-2014-3969 / XSA-98
-                            version 3
 
-       insufficient permissions checks accessing guest memory on ARM
+On 09/09/14 02:34 AM, Steve Kemp wrote:
+>> I have to say I don't understand at all why someone would be going
+>> through random packages from PyPi (especially test automation related)
+>> and searching for possible security issues.
+> 
+>   Because although the chances of them being exploited are low they
+>  are genuine issues which have security implications.
+> 
+>   There is copious documentation online about how file races are
+>  bad, including this quick reference:
+> 
+>     https://www.securecoding.cert.org/confluence/display/seccode/FIO21-C.+Do+not+create+temporary+files+in+shared+directories
+> 
+>   PyPi?  've no idea why that was chosen, but I expect because it
+>  is a large mass of code that has had little similar attention paid
+>  to it in the past.  node.js will probably be next, I'm sure lots of
+>  modules exist created by inexperienced developers who haven't
+>  considered the implications of posting new code libraries.
 
-UPDATES IN VERSION 3
-====================
+Actually one reason I picked PyPI is simply because it has
+popularity/usage info, each package web page says how many times it was
+downloaded in the last day/week/month, so I picked a quick an easy audit
+of packages downloaded more than 5000 times in the last month.
 
-CVE assigned.
+Also this is to maybe help raise awareness of security a bit, things
+like tmp issues
 
-ISSUE DESCRIPTION
-=================
+1) shouldn't exist, especially in Python, mkstemp! mkdtemp! no need to
+reinvent attempts to create files securely, or to do it totally insecurely.
 
-When accessing guest memory Xen does not correctly perform permissions
-checks on the (possibly guest provided) virtual address: it only
-checks that the mapping is readable by the guest, even when writing on
-behalf of the guest.  This allows a guest to write to memory which
-it should only be able to read.
+2) vendors should fix tmp, luckily this is happening, our PaaS OpenShift
+Enterprise, and the service OpenShift Online both use poly instantiated
+/tmp for each user cartridge (a cartridge is essentially on or more
+services/applications like PHP, MySQL, etc. being used to run something
+like say Wordpress). So the exploitation of tmp vulns on OpenShift would
+generally require additional vulnerabilities in order to get file system
+access (at which point a tmp vuln is likely not that interesting to an
+attacker, especially in the case of OpenShift and the way cartridges are
+restricted).
 
-A guest running on a vulnerable system is able to write to memory
-which should be read-only.  This includes supposedly read only foreign
-mappings established using the grant table mechanism.  Such read-only
-mappings are commonly used as part of the paravirtualised I/O drivers
-(such as guest disk write and network transmit).
 
-In order to exploit this vulnerability the guest must have a mapping
-of the memory; it does not allow access to arbitrary addresses.
+>   I did something similar looking for /tmp abuses in Debian
+>  packages, via a very very automated scan:
+> 
+>     http://blog.steve.org.uk/luonnos_viesti___31_hein_kuu_2014.html
+> 
+>   Finding these issues was distressingly easy, and although in the
+>  real world the chances of significant impact are minimal they were
+>  genuine issues that should be reported and fixed.
 
-In the event that a guest executes code from a page which has been
-shared read-only with another guest it would be possible to mount a
-take over attack on that guest.
+Yup. Also this is a way to unwind, I know a lot of people that play
+computer card games like solitaire to wind down, looking at tmp vulns is
+essentially the same pleasantly monotonous experience, at least for me =).
 
-IMPACT
-======
+Also a reminder:
 
-A domain which is deliberately exchanging data with another,
-malicious, domain, may be vulnerable to privilege escalation.  The
-vulnerability depends on the precise behaviour of the victim domain.
+https://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
 
-In a typical configuration this means that, depending on the behaviour
-of the toolstack or device driver domain, a malicious guest
-administrator might be able to escalate their privilege to that of the
-whole host.
+has a specific list of the correct ways to do it, if I'm missing a
+language let me know and I'll add it.
 
-VULNERABLE SYSTEMS
-==================
+> Steve
+> --
+> 
 
-Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-MITIGATION
-==========
 
-None.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall.
-
-RESOLUTION
-==========
-
-Applying the appropriate pair of attached patches resolves this issue.
-
-xsa98-unstable-{01,02}.patch        xen-unstable
-xsa98-4.4-{01,02}.patch             Xen 4.4.x
-
-$ sha256sum xsa98*.patch
-6f63bc2e0a0a39bbd9137513a5d130ae2c78d1fd2ebf9172bf49456f73f0a67b  xsa98-4.4-01.patch
-b338472ecce3c31a55d1a936eebbd4e46cb3ad989b91a64d4b8c5d3ca80d875d  xsa98-4.4-02.patch
-b8535aad5ae969675d59781a81ce0b24491f1abc01aaf36c3620fd7fb6cc84eb  xsa98-unstable-01.patch
-f5e8a93525a8905653da6377097f77681ff8121b973063ff6081e27547ceaa67  xsa98-unstable-02.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTj0N1AAoJEIP+FMlX6CvZYRsH/3PPF+SBphp/IOcJmcoUBI0Y
-SZumMMtaH3jU49/0V/azYOpKET2VtCHBilBajUAB7kNx+EGHv5NZf6Vn7FMBDCVl
-gk7Hq39tR0axBTpp4FhK8MJQIEsMUvsohokRFiMsDmhKtWOEKPfmNrgLz6cEvo5H
-ci46UH0JzPhMVY4tXhd7jo9Vuyae8df+b0yYFZ2QyVdWN3AShlrp62JAXb1lJT8E
-LO/67uDud7bhuODA+CWmL0jHq7xsJoRitp5gJph9QmSNbkXGJfPy6Sow4qzatnsR
-Vb9lgJq5MHRodkaie9z4UeANysAJ1J+USvARyMx+xnQ64ETzFIm6pUotzySZWEU=
-=vyB+
------END PGP SIGNATURE-----
-
-Download attachment "xsa98-4.4-01.patch" of type "application/octet-stream" (5699 bytes)
-
-Download attachment "xsa98-4.4-02.patch" of type "application/octet-stream" (7800 bytes)
-
-Download attachment "xsa98-unstable-01.patch" of type "application/octet-stream" (5701 bytes)
-
-Download attachment "xsa98-unstable-02.patch" of type "application/octet-stream" (7913 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
