@@ -1,33 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/4
-Message-ID: <20140925013021.GA29104@openwall.com>
-Date: Thu, 25 Sep 2014 05:30:21 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/3
+Message-ID: <CAOp4FwTbrELvh2vzw_TQZWN1TQWwmGfycEdkW2cjREzq18e9NA@mail.gmail.com>
+Date: Tue, 9 Sep 2014 09:06:52 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Chet Ramey <chet.ramey@...e.edu>
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: Re: [CVE Requests] rsync and librsync collisions
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
-> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
-> > On 9/24/14, 5:32 PM, Solar Designer wrote:
-> >> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
-> >>> Tavis Ormandy just tweetet this:
-> >>> https://twitter.com/taviso/status/514887394294652929
-> >>>
-> >>> The bash patch seems incomplete to me, function parsing is still
-> >>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
-> >>
-> >> Thanks for bringing this to oss-security.  I've added CC to Chet and
-> >> Tavis on this "reply".
-> >
-> > I have a fix for this.
-> 
-> Can you provide a pointer to the patch?  I put together a patch that
-> changed the report_error() to fatal_error() as I wasn't able to see
-> how to reset the parser state.  Was just about to send it out...
+On Sep 9, 2014 7:47 AM, "Murray McAllister" <mmcallis@...hat.com> wrote:
+>
+> Good morning,
+>
+> The below still require a CVE or two (unless MITRE disagrees).
+>
 
-I think Chet is not on oss-security - we should be CC'ing him where
-appropriate.  (I've added the CC on this reply.)
+Have the details been made public yet ?
+> Cheers,
+>
+> --
+> Murray McAllister / Red Hat Product Security
+>
+>
+> On 08/05/2014 04:03 PM, Michael Samuel wrote:
+>>
+>> Hi,
+>>
+>> I think there should be CVEs assigned for this:
+>>
+>> rsync: MD5 collision DoS attack or limited file corruption
+>> librsync: MD4 collision file corruption
+>>
+>> Note: librsync is not the same code, protocol or maintainer as rsync.
+>>
+>> The librsync attack is far easier to perform, since there's no
+>> whole-file checksum and it will simply copy the first instance of a
+>> collision into any place where the second collision is.
+>>
+>> The rdiff utility that ships with librsync truncates hashes to 8
+>> bytes, allowing a very fast and efficient birthday attack - so even if
+>> MD4 was replaced attacks would still be possible while the hash is
+>> truncted.  This also affects duplicity - they both use
+>> RS_DEFAULT_STRONG_LEN - so the _librsyncmodule that ships with
+>> duplicity will need recompiling after the fix ships.
+>>
+>> Previous posting for context:
+>> http://www.openwall.com/lists/oss-security/2014/07/28/1
+>>
+>> Regards,
+>>    Michael
+>>
+>
 
-Alexander
