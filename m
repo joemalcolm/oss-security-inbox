@@ -1,50 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/7
-Message-ID: <20140102173607.GA5382@pisco.westfalen.local>
-Date: Thu, 2 Jan 2014 18:36:07 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/12
+Message-ID: <20140909083435.GA9815@steve.org.uk>
+Date: Tue, 9 Sep 2014 09:34:35 +0100
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE to the ntp monlist DDoS issue?
+Subject: Re: pinocchio tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 30, 2013 at 11:40:37PM +0100, Florian Weimer wrote:
-> * Moritz Muehlenhoff:
-> 
-> > On Mon, Dec 30, 2013 at 09:05:56AM -0500, cve-assign@...re.org wrote:
-> >> -----BEGIN PGP SIGNED MESSAGE-----
-> >> Hash: SHA1
-> >> 
-> >> > Has anyone thought about assigning a CVE to this?
-> >> 
-> >> http://bugs.ntp.org/show_bug.cgi?id=1532 was assigned CVE-2013-5211.
-> >
-> > Shouldn't this rather be CVE-2010-XXXX ?
-> 
-> I don't think this was previously discussed as a security issue in
-> public.  There is a 2011 reference here that explicitly cites
-> amplification factors, though:
-> 
-> <http://lists.ntp.org/pipermail/pool/2011-December/005616.html>
-> 
-> This has an odd feeling of déjà vu to me, but I suspect the previous
-> discusssions have been on private channels of which I no longer have
-> records.
+> I have to say I don't understand at all why someone would be going
+> through random packages from PyPi (especially test automation related)
+> and searching for possible security issues.
 
-This blog posting from 2010 already describes the attack:
-https://www.securepla.net/using-ntp-to-enumerate-client-ips/
+  Because although the chances of them being exploited are low they
+ are genuine issues which have security implications.
 
-| ADDITIONAL ATTACKS
-| HD Moore also discussed that he had figured out a way to DDoS a
-| system using NTP with very minimal requests.  Although he has not
-| released data on this type of DDoS, we put our heads together here
-| on what the attack could be.  When you make a monlist request, you
-| send 1 udp packet to the NTP server and 600+ responses are returned.
-| We think that using this request against all the NTP servers and
-| peers, you could send hundreds of thousands of UDP packets to a
-| victim with minimal request packets.  By spoofing the source address
-| and requesting monlists repetitively, all responses from those NTP
-| servers will be forwarded to the victim.
+  There is copious documentation online about how file races are
+ bad, including this quick reference:
 
-Cheers,
-        Moritz
+    https://www.securecoding.cert.org/confluence/display/seccode/FIO21-C.+Do+not+create+temporary+files+in+shared+directories
 
+  PyPi?  've no idea why that was chosen, but I expect because it
+ is a large mass of code that has had little similar attention paid
+ to it in the past.  node.js will probably be next, I'm sure lots of
+ modules exist created by inexperienced developers who haven't
+ considered the implications of posting new code libraries.
+
+  I did something similar looking for /tmp abuses in Debian
+ packages, via a very very automated scan:
+
+    http://blog.steve.org.uk/luonnos_viesti___31_hein_kuu_2014.html
+
+  Finding these issues was distressingly easy, and although in the
+ real world the chances of significant impact are minimal they were
+ genuine issues that should be reported and fixed.
+
+Steve
+--
