@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/17
-Message-ID: <831f0d69-549b-4b25-aebf-149bfa6f7a0a@flaska.net>
-Date: Thu, 20 Mar 2014 21:34:05 +0100
-From: Jan Kundrát <jkt@...ska.net>
-To: <cve-assign@...re.org>
-Cc: <oss-security@...ts.openwall.com>
-Subject: Re: Requesting a CVE id for Trojita, an e-mail client: SSL stripping
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/19
+Message-Id: <20140909142451.EA2B6332004@smtpvbsrv1.mitre.org>
+Date: Tue,  9 Sep 2014 10:24:51 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, tjay@...hat.com
+Subject: Re: headintheclouds tmp vulns - also request for referees decision on tmp vulns in deployment tools
 Content-Type: text/plain; charset=utf-8
 
-On Thursday, 20 March 2014 20:42:09 CEST, cve-assign@...re.org wrote:
-> Use CVE-2014-2567.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks, Trojita 0.4.1 is now released [1] and includes a fix for this 
-vulnerability.
+> there shouldn't be any users on the docker image while it's being
+> deployed (or indeed any software pretty much at all)
 
-With kind regards,
-Jan
+> it is a pretty blatant tmp vuln
 
-[1] 
-http://jkt.flaska.net/blog/Trojita_0_4_1__a_security_update_for_CVE_2014_2567.html
+It's missing one of the essential characteristics of a vulnerability:
+an attack that crosses privilege boundaries.
 
--- 
-Trojitá, a fast Qt IMAP e-mail client -- http://trojita.flaska.net/
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUDw0YAAoJEKllVAevmvmslxIH/0WJOQfMGT0U9aBjL+xD9p10
+Ym7mFPXVEpP4joqhj+t5rqZrw8TXtl8hIAeprwVyRG4Lk2ZgcMfRbje3JRWc0wj6
+qHcZAFzIwDiKBWel9ttlQDAL4ZXQbUoNxMiRMdTYS8Ohmvx6aWpxARw8QJuahPpz
+80gkSInRkdcJJigUGkNnrCxhIL2UgNRGIJ8X5zxqZDiXEI+dSJ0tCL+Z8g254NAk
+AxyONOJvq/QQcbb4sqlgUUsm+DzmqsqpriBjpwvXsMqPg29ihEWw1mJ1ZqxOZVWv
+XtC3FfoJrtVO3/VcChMgaDVfUNEN8w2qTo6iiMpoHW7enWBU3+6LI2P0lv5rGgo=
+=+c+S
+-----END PGP SIGNATURE-----
