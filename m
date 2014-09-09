@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/13/4
-Message-ID: <20140413081714.GB21839@zoho.com>
-Date: Sun, 13 Apr 2014 08:17:14 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/8
+Message-ID: <540EA23E.5050104@redhat.com>
+Date: Tue, 09 Sep 2014 00:46:22 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, Trevor Jay <tjay@...hat.com>
+Subject: headintheclouds tmp vulns - also request for referees decision on tmp vulns in deployment tools
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 08, 2014 at 09:59:33PM -0600, Kurt Seifried wrote:
-> So it appears there are projects that statically compile OpenSSL into
-> their software, one example:
-> 
-> I have to assume there are more. So if you know of any please post
-> them to OSS-Security (and Full-Disclosure) so people can find out (and
-> hopefully all the security scanners/etc. add them to their checks).
+So in theory this is software is used for docker provisioning thing, so
+there shouldn't be any users on the docker image while it's being
+deployed (or indeed any software pretty much at all), so part of me
+wants to say this shouldn't qualify for a CVE if used normally, however
+it is a pretty blatant tmp vuln. So for the sake of starting a
+conversation about tmp vulns on systems that shouldn't have any users or
+ways to exploit the tmp vuln I'm posting this one. Basically if a tree
+falls in the forest but no beavers were present does anyone care that a
+lumber jack might get squashed?
 
-Three more for the list:
+https://pypi.python.org/pypi/headintheclouds
+headintheclouds-0.5.2/headintheclouds/tasks.py
 
-NoMachine
-https://www.nomachine.com/forums/forums/topic/openssl-security-vulnerability
+    remote_scripts_directory = '/tmp/bootstrap_scripts'
+    sudo('mkdir -p %s' % remote_scripts_directory)
+    for path in sorted(scripts):
+        filename = os.path.basename(path)
+        remote_script = '%s/%s' % (remote_scripts_directory, filename)
+        put('bootstrap/%s' % filename, remote_script, use_sudo=True)
+        run('source %s' % remote_script)
 
-VMware
-http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&docType=kc&externalId=2076225
 
-FileMaker
-http://help.filemaker.com/app/answers/detail/a_id/13384
 
---mancha
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Content of type "application/pgp-signature" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
