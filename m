@@ -1,112 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/18
-Message-ID: <CAOurorZDn999+N3CVr_8z1xZrqf20eKmiwuAYipCTdabRH0pRA@mail.gmail.com>
-Date: Thu, 3 Jul 2014 21:07:39 +0100
-From: Marek Kroemeke <kroemeke@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/4
+Message-ID: <CACYkhxjv+J3KCceP-EFfV0T7DpAwLvcHDhgoiBT_hzLWYY1cVA@mail.gmail.com>
+Date: Tue, 9 Sep 2014 15:22:36 +1000
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Varnish - no CVE == bug regression
+Subject: Re: [CVE Requests] rsync and librsync collisions
 Content-Type: text/plain; charset=utf-8
 
-I doubt that CDNs like Akamai, Fastly(varnish?), Cloudflare(nginx?) etc..
-would agree that the fact that a core part of their infrastructure could be
-DoSed by one of their users is not a security vulnerability, but I'm happy
-to be in minority regarding this view.
+[ A reminder - librsync is a different codebase and protocol to rsync ]
 
-To be clear - I think that asserts in varnish are great, they decrease the
-severity of the problem from something potentially very dangerous to "just
-a DoS", but don't we usually try to track these as well with CVEs ?
+On 9 September 2014 15:06, Loganaden Velvindron <loganaden@...il.com> wrote:
+> Have the details been made public yet ?
 
-regards,
-Marek
+The exploit code and example colliding blocks are not public, but I
+don't believe it
+would be hard to attempt your own exploit, especially against librsync
+with default
+parameters (a birthday attack is trivial).
 
+There's an experimental patch for librsync:
+https://github.com/therealmik/librsync/tree/blake2
 
-On Thu, Jul 3, 2014 at 8:41 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+Some review (especially by upstream) is required, and some agreement among users
+on details is required.  See
+https://github.com/librsync/librsync/issues/5 if you maintain
+a downstream project (such as Duplicity).
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->
->
-> On 03/07/14 11:12 AM, Stefan Bühler wrote:
-> > On Thu, 3 Jul 2014 08:15:06 +0000 Sven Kieske
-> > <S.Kieske@...twald.de> wrote:
-> >
-> >> -----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
-> >>
-> >> I'd agree with this. And I don't get the argument from
-> >> poul-henning kamp, what I understand is: "hey, we trust our
-> >> backend server" well, but your backend server can make you crash,
-> >> so you probably shouldn't trust it in the first place?
-> >>
-> >> you _never_ can trust input, so you have to validate it, either
-> >> way, at least enough to not crash or perform malicious actions.
-> >>
-> >> Am 03.07.2014 09:48, schrieb Kurt Seifried:
-> >>> So as I understand this: Varnish front end for web servers, the
-> >>> web servers can trigger varnish to restart. Are the back end
-> >>> servers supposed to be able to cause varnish to restart?
-> >>>
-> >>> I'm guessing not. Scenario: hosting env, or a website with a
-> >>> vuln, whatever, you can now cause the varnish front ends to
-> >>> restart constantly, effectively causing a permanent denial of
-> >>> service.
-> >>>
-> >>> That sounds CVE worthy. Or am I missing something?
-> >
-> > you should never trust *untrusted* input. your root shell usually
-> > trusts the input it gets...
-> >
-> > so the valgrind developers decided that they consider the backend
-> > webservers trusted, at least regarding the capability to cause a
-> > DoS.
-> >
-> > for the record - so does lighttpd (a backend can trigger OOM as
-> > lighty reads (nearly) as fast as possible from a backend, as
-> > backends often only handle one request at a time); we usually tell
-> > people to use X-sendfile instead of sending ISOs through php.
->
-> That also sounds like it needs a CVE then. You should not be able to
-> trivially DoS stuff, especially OOM, things should protect themselves
-> from OOM'ing especially if they accept user controlled input from the
-> network.
->
-> > just because you disagree with such decisions doesn't make it CVE
-> > worthy (missing or wrong documentation could).
->
-> So to be clear your argument is that the http backends serviced by
-> Varnish are supposed to be able to shut down Varnish, not by using an
-> administrative channel/command but by executing a denial of service
-> against Varnish? And that this is intended behaviour and thus not a
-> security vulnerability?
->
-> > in case you actually want to assign a CVE here, maybe we can get
-> > one for the bad openssl default cipherstring too? because for that
-> > it is really obvious that it is f*** wrong, but i think that none
-> > was assigned because upstream didn't agree with it.
-> >
-> > regards, Stefan
-> >
->
-> - --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
-> Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
->
-> iQIcBAEBAgAGBQJTtbIDAAoJEBYNRVNeJnmT/mkQAMmXrwXn4+Y/hGUGMfp3anFo
-> 7NVLg+50up/BhuVQ5fOA/EYClDQZNWSg8PrQWvo8cxwCtJOsXVFEHmG+2f7xNKkv
-> rCN97rMVz448hoFSHq5qwtWcZw/V8/A13hlAclDA7f7p+/B57Pok7igOciGwLbJb
-> zGXeODwFnHlX+eOZgn/hDt0FzG5n1cCHrnK4NgIT/yLSYDI5O235/0g999ooDrn7
-> FwiOFxdnjkveBkcGde6VJ4TlyqA9qoYJ2S4t/fkvM9j/vXvag+V0wwSdDkpZuFNZ
-> ycERIVWZW6hnr7aZ/G76Rie2E4LY8B0T9cJF9pTA7FkJWF2Yg8LbPHz5jSH1cQuZ
-> bOanZXE8bPLAdLHKU0JWbDPYDdhjEk8mgLbbskSmMxslmygw9Z5kceUoug2Y75Xs
-> LRcpOuv08b3QO3wJNV6Z8fbkOYcdeTJPRmNLYrWoPqJHx8jWZzaUq1d1T8YGqos/
-> V1KiFzDKH8Yw+yjmYAe+8DXpiOUH90yMYC8d8ewsipDXNNVHhyVUTeV/bNYT+0Gn
-> MU0GGSd90eLCC+czkw/tgY/XHIE0ycLeWDgTBUYkfOZ4UjgscMF6R5jcuJGMP71L
-> ftBbGNXduNHLkXL3GFUII+fAWQpWn14usmZZTHsoecmOoBPUV9paRuGBtzPmz+xJ
-> vHDLLMP7/qSLN88zY2d0
-> =7hmC
-> -----END PGP SIGNATURE-----
->
+I don't know what's happening with rsync upstream, there hasn't been much
+communication.  I attempted a patch, but it got a bit hairy due to
+hard-coded details in
+the code (such as hash output length).
 
+Regards,
+  Michael
