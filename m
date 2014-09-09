@@ -1,43 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/1
-Message-ID: <546D34AA.9080206@amacapital.net>
-Date: Wed, 19 Nov 2014 16:24:10 -0800
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux user namespaces can bypass group-based restrictions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/11
+Message-ID: <CAEZyo3D_yax0DSei2DjC9FwMitCaMQ6uxVvwk+YKz7wOeYMsWQ@mail.gmail.com>
+Date: Tue, 9 Sep 2014 11:16:44 +0300
+From: Mikko Korpela <mikko.korpela@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: pinocchio tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-On 11/17/2014 10:43 AM, Andy Lutomirski wrote:
-> This is a heads-up, as there is no fix right now.
-> 
-> On Linux, if you can unshare your user namespace (which is the case on
-> many distributions), then you can map your fsuid and fsgid into the
-> new namespace and, inside that namespace, drop all of your other
-> groups.
-> 
-> This may allow you to access files protected by POSIX ACLs as "other",
-> even if the ACL should have prohibited it based on one of your
-> supplementary group IDs.
-> 
-> This does not appear to allow you to violate negative sudoers
-> group entries and the like, since sudo(8) would be confined to the
-> user namespace as well and will therefore not gain privilege.
-> 
-> To those who care about credit: this was discovered by some
-> combination of me, Theodore Ts'o, Eric Biederman, Alan Cox, and Casey
-> Schaufler.
-> 
-> See here for some more discussion:
-> http://thread.gmane.org/gmane.linux.man/7385/
-> 
-> Disabling CONFIG_USER_NS works around this issue.
+This pinocchio sounds like a cool testing tool.
 
-Does this need a CVE?  Fedora and Ubuntu are likely to be affected in
-their default configurations.  I don't know about the other distributions.
+I have to say I don't understand at all why someone would be going
+through random packages from PyPi (especially test automation related)
+and searching for possible security issues.
+Could someone explain why this kind of security issues (malicious user
+making a symlink to some random file that is used during testing)
+should be in the scope of test automation tools?
 
---Andy
 
-> 
-> --Andy
-> 
+2014-09-09 9:26 GMT+03:00 David Jorm <djorm@...hat.com>:
+> On 09/09/2014 04:21 PM, Kurt Seifried wrote:
+>>
+>> https://pypi.python.org/pypi/pinocchio/
+>>
+>> pinocchio       stopwatch       --with-stopwatch        Select tests based
+>> on execution time
+>>
+>> pinocchio-0.4.1/pinocchio/stopwatch.py
+>>
+>>      def finalize(self, result):
+>>          """
+>>          Save the recorded times, OR dump them into /tmp if the file
+>>          open fails.
+>>          """
+>>          try:
+>>              fp = open(self.stopwatch_file, 'w')
+>>          except (IOError, OSError):
+>>              t = int(time.time())
+>>              filename = '/tmp/nose-stopwatch-%s.pickle' % (t,)
+>>
+>> int(time.time) is easily guessed, create a few thousand and you're
+>> covered for the next few hours and can stop anyone from using stopwatch,
+>> or you can just blow away files as usual =).
+>>
+>>              fp = open(filename, 'w')
+>>              log.warning('WARNING: stopwatch cannot write to "%s"' %
+>> (self.stopwatch_file))
+>>              log.warning('WARNING: stopwatch is using "%s" to save times'
+>> % (filename,))
+>>
+>>          dump(self.times, fp)
+>>          fp.close()
+>>
+>>
+>>
+>>
+>
+> You're a troll :)
 
+
+
+-- 
+Mikko Korpela
