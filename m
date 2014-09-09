@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/11
-Message-ID: <CAMMrfH4T32hcTG3kO_Ss8G4eXLkCwtMbsVpLwze3hx+NUVBzpg@mail.gmail.com>
-Date: Wed, 2 Jul 2014 11:37:16 -0400
-From: Brian Harring <ferringb@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, misc@...b.org
-Subject: Re: Re: Ansible CVE requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/9
+Message-ID: <540EA31F.7030200@redhat.com>
+Date: Tue, 09 Sep 2014 00:50:07 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: vos tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 2, 2014 at 11:08 AM, Florian Weimer <fweimer@...hat.com> wrote:
+https://pypi.python.org/pypi/vos
 
-> On 07/02/2014 04:49 PM, cve-assign@...re.org wrote:
->
->> Additional CVE IDs (at least two) will be assigned for:
->>
->> A. The 2014-06-25 ansible-announce "Ansible 1.6.5 - updated security
->> fix" message at
->> https://groups.google.com/forum/message/raw?msg=ansible-
->> announce/A1px5egCnGQ/jH6f5HM7kpkJ
->>
->
-> I think the change in 1.6.5 was an attempt to fix a functionality
-> regression, not something that actually added restrictions to the sandbox.
->  I am aware that this assessment is at odds with what upstream has stated,
-> so you might want to assign a CVE nevertheless.
+filed at https://github.com/canfar/vos/issues/42
+
+vos-1.10.4/vos/md5_cache.py
+
+import sqlite3, logging
+READBUF = 8192
+
+class MD5_Cache:
+
+    def __init__(self, cache_db="/tmp/#vos_cached.db#"):
+        """Setup the sqlDB that will contain the cache table"""
+        self.cache_db = cache_db
+
+        ## initialize the md5Cache db
+        sqlConn = sqlite3.connect(self.cache_db)
+        with sqlConn:
+            sqlConn.execute("create table if not exists md5_cache (fname
+text PRIMARY KEY NOT NULL , md5 text, st_size int, st_mtime int)")
+        ## build cache lookup if doesn't already exists
 
 
-The change in 1.6.5 was in response to new vulnerabilities I reported- it's
-a separate CVE.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Thanks-
-~brian
 
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
