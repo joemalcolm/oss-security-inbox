@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/4
-Message-ID: <CAE2SPAaRKQDosMwKpYr1txntDo4Ku1Ax0hjdzj_PoGL=Rjv_ww@mail.gmail.com>
-Date: Wed, 29 Oct 2014 16:17:09 +0100
-From: Bastien ROUCARIES <roucaries.bastien@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/15
+Message-ID: <20140909094635.GC1829@kludge.henri.nerv.fi>
+Date: Tue, 9 Sep 2014 12:46:35 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Request cve for imagemagick security problem (DOS)
+Subject: Re: pinocchio tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I request a CVE indentifier for imagemagick.
+On Tue, Sep 09, 2014 at 11:57:11AM +0300, Mikko Korpela wrote:
+> Test automation on the other hand IMHO requires that we are working in
+> a secure sand box. If there is a malicious user on the same machine
+> then I bet things have already gone very wrong somewhere else.
+> 
+> Ystävällisin terveisin ;) ,
+> Mikko
 
-Removing profile from jpg image create infinite loop with at least
-6.8.9.6 version.
+Many times these tools are executed in normal shell environments with lots of
+users and not in safe/clean server (even robotfw). In my opinion these issues
+should be fixed in code and get CVE assigned even the risk is minimal. 
 
-Version 6.7.7.10 is not affected.
+Code audits for PyPi packages are more than welcome thought some level of
+coordination is required to avoid confusion. These are often easy to report and
+fix, but I understand if reporter has lack of time. Kurt if you need
+coordination help you can contact me off-list.
 
-Version 6.8.9.9 and more recent are fixed.
+Ystävällisin terveisin ;),
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-You could lead to do by doing convert test.jpg +profile '!icc,*' out.jpg
-
-I could be exploited through imagick and thus maybe remotly exploitable.
-
-Moreinformation https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764872
-and fix is
-http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26399#p116146
-
-Thanks
-
-Bastien
+iEYEARECAAYFAlQOzHsACgkQXf6hBi6kbk/qJACfciJ1RPqjM11kWF150v16GOGj
+91YAoIn1EiKD2eYNnB6YSS0cFAz2Io1h
+=uljW
+-----END PGP SIGNATURE-----
