@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/25/2
-Message-Id: <201403251601.s2PG1APi016867@linus.mitre.org>
-Date: Tue, 25 Mar 2014 12:01:10 -0400 (EDT)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 89 - HVMOP_set_mem_access is not preemptible
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/13
+Message-ID: <20140909085351.GB4712@suse.de>
+Date: Tue, 9 Sep 2014 10:53:51 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-Request: squid pinger remote DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-> Processing of the HVMOP_set_mem_access HVM control operations does not
-> check the size of its input and can tie up a physical CPU for extended
-> periods of time.
+I made a fix for squid 3.4.6 and request a CVE for
+this issue:
 
-Use CVE-2014-2599.
+The pinger code that checks for nodes being alive doesnt
+properly validate ICMP and ICMPv6 replies, in particular
+icmp6 types which are used to index into a string array.
+This could cause crashes when the index is OOB.
 
-> In 4.2 only 64-bit versions of the hypervisor are vulnerable
-> (HVMOP_set_mem_access is not available in 32-bit hypervisors).
+A patch is available here:
 
-Typically we would not assign separate CVE IDs on the basis that
-64-bit environments have different affected versions than 32-bit
-environments (unless there were a separate product such as "Xen64" for
-the former case).
+https://bugzilla.novell.com/show_bug.cgi?id=891268
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+I also made some cleanups and error checking on the
+receive socket.
 
-iQEcBAEBAgAGBQJTMadRAAoJEKllVAevmvmsMPAH/jv5L/0rB8xH8GTjtTlYmLqU
-0YLmogJRjgWWC4PIvyJKdps/ulAvnML2GLlx1SifCtDPBvaYDfWTpSboZ00RDMBK
-zkbiZId6nAoB+1UGMBlSvsLFLn4dq6zlH7GetC3pSzgkaFUxIChUdxmgAuF8q2gi
-cZugePte51ydXVksbBl6dEoNeunFi4oYXTWyo6EVsV+I5n5jUlTYus2CyFGkOD6n
-9TrEoIwNvoEsVGLL2JkPKxzgOnrF1jvci1qPpgbeKFBOc4fNqPbvOYm0NcWj1B0I
-bPFKrsJ5zvq07d8UMQpMCQMxYnbjRx9C64kbo1snnAqGkr4VCQeOXk5Tpdrl5Oc=
-=BfxD
------END PGP SIGNATURE-----
+I am not deep into the overall squid architecture so
+I dont know what happens to squid itself when the
+pinger sub-process crashes (think SIGPIPE etc). But to me
+it looks like you can only DoS the pinger sub-system,
+not the whole squid.
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
