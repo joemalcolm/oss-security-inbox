@@ -1,40 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/6
-Message-ID: <20141001111556.GQ23926@titan.lakedaemon.net>
-Date: Wed, 1 Oct 2014 07:15:56 -0400
-From: Jason Cooper <osssecurity@...edaemon.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/6
+Message-ID: <540E9C59.6010606@redhat.com>
+Date: Tue, 09 Sep 2014 00:21:13 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: pinocchio tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 01, 2014 at 01:08:09PM +0200, Hanno Böck wrote:
-> Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
-> schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
-> 
-> > Finally: *PLEASE* let me know if you have any good ideas on how to
-> > find vulnerabilities like this ahead-of-time. My article "How to
-> > Prevent the Next
-> > Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a
-> > number of ways that Heartbleed-like vulnerabilities could have been
-> > detected ahead-of-time, in ways that are general enough to be
-> > useful.  I'd like to do the same with Shellshock, so we can quickly
-> > eliminate a whole class of problems.
-> 
-> The "class of problems" here is imho that we have a bunch of tools that
-> get rare attention from anyone, are run by few volunteers, but they're
-> an essential part in running the Internet.
-> 
-> Just think about busybox, curl, wget, coreutils, gettext, gzip, ... - a
-> vuln in any of these could have severe consequences.
-> 
-> Maybe the topic here should be: "How can we get the (whitehat) IT
-> seucrity community to have a deeper look at neglected but important
-> opensource projects."
+https://pypi.python.org/pypi/pinocchio/
 
-The LF has the Core Infrastructure Initiative:
+pinocchio	stopwatch	--with-stopwatch	Select tests based on execution time
 
-  http://www.linuxfoundation.org/programs/core-infrastructure-initiative/faq
+pinocchio-0.4.1/pinocchio/stopwatch.py
 
-thx,
+    def finalize(self, result):
+        """
+        Save the recorded times, OR dump them into /tmp if the file
+        open fails.
+        """
+        try:
+            fp = open(self.stopwatch_file, 'w')
+        except (IOError, OSError):
+            t = int(time.time())
+            filename = '/tmp/nose-stopwatch-%s.pickle' % (t,)
 
-Jason.
+int(time.time) is easily guessed, create a few thousand and you're
+covered for the next few hours and can stop anyone from using stopwatch,
+or you can just blow away files as usual =).
+
+            fp = open(filename, 'w')
+            log.warning('WARNING: stopwatch cannot write to "%s"' %
+(self.stopwatch_file))
+            log.warning('WARNING: stopwatch is using "%s" to save times'
+% (filename,))
+
+        dump(self.times, fp)
+        fp.close()
+
+
+
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
