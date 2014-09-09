@@ -1,62 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/10
-Message-ID: <1784519.tIOlXC7y92@x2>
-Date: Tue, 29 Apr 2014 18:18:58 -0400
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: local privilege escalation due to capng_lock as used in seunshare
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/24
+Message-Id: <20140909184415.E47D1332025@smtpvbsrv1.mitre.org>
+Date: Tue,  9 Sep 2014 14:44:15 -0400 (EDT)
+From: cve-assign@...re.org
+To: krahmer@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request: squid snmp off-by-one
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, April 30, 2014 02:12:22 AM Solar Designer wrote:
-> On Tue, Apr 29, 2014 at 05:49:04PM -0400, Steve Grubb wrote:
-> > On Tuesday, April 29, 2014 02:20:47 PM Andy Lutomirski wrote:
-> > >   if (setuid(getuid()) != 0)
-> > >   
-> > >     err(1, "setuid(getuid())");
-> > 
-> > If you do not want the saved uid to be available, you need to use
-> > setresuid. That removes it. I would classify this as a bug in the test
-> > program.
->
-> Not quite.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-If the program was amended to use setresuid(), does the bug still exist?
+> There is an off-by-one in squid when receiving UDP SNMP
+> requests.
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=895773
 
--Steve
- 
-> Per POSIX.1-2001, setuid() "shall set the real user ID, effective user
-> ID, and the saved set-user-ID of the calling process to uid" if the
-> process has "appropriate privileges".  On traditional Unix systems,
-> without capabilities, running as root historically does constitute
-> "appropriate privileges".  If we want current systems to support safely
-> running programs written for traditional Unix (including SUID root
-> programs), which I think is taken for granted by many of us, we must not
-> deviate from those semantics in dangerous ways.  Any such deviation is a
-> vulnerability in our current kernel code or configuration.
-> 
-> Distributions must not ship with settings or programs that allow anyone
-> other than an administrator to alter the definition of "appropriate
-> privileges" in a way that, while compliant with this vague wording in
-> POSIX, introduces a vulnerability for correct programs written for
-> traditional Unix systems.
-> 
-> What we have here is a reincarnation of:
-> 
-> "Sendmail Workaround for Linux Capabilities Bug"
-> https://www.sendmail.com/sm/open_source/security/security_docs/sendmail.8.10
-> .1.LINUX-SECURITY.txt
-> 
-> albeit in slightly different shape (not entirely in the kernel, but with
-> a userland "helper").
-> 
-> I think that sendmail-exposed vulnerability was in the kernel (not in
-> sendmail), and I think the vulnerability Andy is reporting is in some
-> distros (apparently, Red Hat's).
-> 
-> Of course, it is possible that I have missed something important as I
-> did not look into this issue closely, but the above is my current
-> understanding based on Andy's message.
-> 
-> Alexander
+Use CVE-2014-6270.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUD0olAAoJEKllVAevmvmsZDUH/0ffFvC6ttCpyOVws24ue+e5
+8T8HCn5Nww/SjF7JrU76s04888HqoX/FHE92Z4XNlBSFcatL6slFPkF0zdDgp1X6
+pM0eFk3AC8u3NPiFySLjpbjypTP6fS5MnsixVBo/1+vtCIxHCyNdQTxMhyhzVFI5
+Ouq0UvxDnqRmpMW0GuUjANYrGMkb44stBxBAi+iovHQuR6XMbeyRpzy9w7o6sO8s
+8/gR3O8mJjwJeVd7SHNmk0H3Rdn8GOlnvJjz9CnqoGa+2IntJl4iWoLv8H/O9qAo
+f5fbeXRwlM6FV8XIH0BLeW5PCwcTtQP4aRRkBH3MxhFp75Dny/kSOWlgEoQsbTQ=
+=rP71
+-----END PGP SIGNATURE-----
