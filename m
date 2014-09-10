@@ -1,28 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/08/2
-Message-ID: <BFB17C16CEB8834FBCE8DCF6B3CFC7B601606FA5@SEAEMBX02.olympus.F5Net.com>
-Date: Thu, 8 May 2014 06:43:38 +0000
-From: Dolev Farhi <D.Farhi@...com>
-To: "cve-assign@...re.org" <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE Request - Local File inclusion in Cobbler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/10/3
+Message-ID: <54107C6C.9080209@redhat.com>
+Date: Wed, 10 Sep 2014 10:29:32 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Technically speaking Oracle is a CNA and should be handling this, I have
+no idea how to contact them though, Mitre, can you guys reach out to
+them? Also does this affect MariaDB?
 
-as reported in https://github.com/cobbler/cobbler/issues/939
+On 10/09/14 10:00 AM, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
+> the following issue, which could be exploited by a local user to run
+> arbitrary code in context of the mysqld server.
+> 
+> MyISAM temporary files could be used to mount a code-execution attack.
+> (Bug #18045646).
+> 
+> This is also tracked in[3] and [4] mentioning as relevant fix [5].
+> 
+> Was a CVE already requested for this issue? If not, could one be
+> assigned?
+> 
+> Regards,
+> Salvatore
+> 
+>  [1] https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-39.html
+>  [2] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-20.html
+>  [3] https://bugzilla.redhat.com/show_bug.cgi?id=1126271
+>  [4] https://bugs.gentoo.org/show_bug.cgi?id=518718
+>  [5] https://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4638
+> 
 
-A local file inclusion is possible by specifying full path to any desired file in the Kickstart value in Cobbler's WebUI in all versions.
-
-Cobbler ease setup of network installation environments.
-
-After informing cobbler team, a patch will be released in the next version of Cobbler to address this issue
-
-Can a CVE please be assign to this?
-
-tx
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-
-
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
