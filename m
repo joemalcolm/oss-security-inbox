@@ -1,109 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/3
-Message-ID: <CAOfWR+HQm9ijdK+op=83e3br7EKo-0nr3_xxO+BGOQ663ojA8w@mail.gmail.com>
-Date: Mon, 17 Nov 2014 22:39:29 -0500
-From: Robert Watson <robertcwatson1@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/10/5
+Message-ID: <54108A55.30000@oracle.com>
+Date: Wed, 10 Sep 2014 10:28:53 -0700
+From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+CC: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-Solutions to the most difficult problems are often found by approaching it
-from the opposite direction...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-What about using fuzzing to find those tools withOUT vulnerabilities and
-"certifying them" in some way as safe for all inputs?
+Please use CVE-2014-4274 for this issue.
 
-If a tool has too many problems or no champion to fix them, then there lies
-a need to be filled for a programmer to produce a better tool.
+Please send an email to secalert_us@...cle.com to contact Oracle for any
+security vulnerability related issues. More information is available at -
+http://www.oracle.com/us/support/assurance/vulnerability-remediation/reporting-security-vulnerabilities/index.html
 
-On passing audit, the new tool would become the preferred tool for new
-distro releases, especially for systems running websites.
+Thanks,
+- -Ritwik
 
-Robert "DocSalvager" Watson
+On 9/10/2014 10:15 AM, Ritwik Ghoshal wrote:
+> 
+> I'll look into this and get back to you shortly.
+> 
+> Thanks,
+> -Ritwik
+> 
+> 
+> On 9/10/2014 9:29 AM, Kurt Seifried wrote:
+>> Technically speaking Oracle is a CNA and should be handling this, I have
+>> no idea how to contact them though, Mitre, can you guys reach out to
+>> them? Also does this affect MariaDB?
+> 
+>> On 10/09/14 10:00 AM, Salvatore Bonaccorso wrote:
+>>> Hi
+>>>
+>>> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
+>>> the following issue, which could be exploited by a local user to run
+>>> arbitrary code in context of the mysqld server.
+>>>
+>>> MyISAM temporary files could be used to mount a code-execution attack.
+>>> (Bug #18045646).
+>>>
+>>> This is also tracked in[3] and [4] mentioning as relevant fix [5].
+>>>
+>>> Was a CVE already requested for this issue? If not, could one be
+>>> assigned?
+>>>
+>>> Regards,
+>>> Salvatore
+>>>
+>>>  [1] https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-39.html
+>>>  [2] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-20.html
+>>>  [3] https://bugzilla.redhat.com/show_bug.cgi?id=1126271
+>>>  [4] https://bugs.gentoo.org/show_bug.cgi?id=518718
+>>>  [5] https://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4638
+>>>
+> 
+> 
+> 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
 
-(sorry... forgot to eliminate signature. please delete prior message. -
-docsalvager)
-
-On Mon, Nov 17, 2014 at 10:37 PM, Robert Watson <robertcwatson1@...il.com>
-wrote:
-
-> Solutions to the most difficult problems are often found by approaching it
-> from the opposite direction...
->
-> What about using fuzzing to find those tools withOUT vulnerabilities and
-> "certifying them" in some way as safe for all inputs?
->
-> If a tool has too many problems or no champion to fix them, then there
-> lies a need to be filled for a programmer to produce a better tool.
->
-> On passing audit, the new tool would become the preferred tool for new
-> distro releases, especially for systems running websites.
->
-> Robert "DocSalvager" Watson
->
->
-> *Trust in truth keeps hope alive*
->
-> *     iCare for AffordableCare
-> <http://www.nationalpartnership.org/issues/health/HIT/>*
->
-> *robertcwatson1@...il.com <robertcwatson1@...il.com>*
->
-> *www.docsalvage.info <http://www.docsalvage.info/>*
-> *www.softwarerevisions.net <http://www.softwarerevisions.net/>*
-> *www.CivicChorale.org <http://www.civicchorale.org/>*
->
-> <http://www.charliecrist.com/> <https://www.healthcare.gov/>
-> <http://www.wunderground.com/cgi-bin/findweather/getForecast?query=Tallahassee,%20FL>
->
->
-> On Mon, Nov 17, 2014 at 4:30 PM, Daniel Kahn Gillmor <
-> dkg@...thhorseman.net> wrote:
->
->> On 11/16/2014 07:15 AM, Robert Święcki wrote:
->> > To sum up: If somebody uses 'file' in an unconstrained OS environment
->> > on untrusted inputs, and he gets pwnd in the result, then it's not a
->> > security problem, it's an incompetence problem - and IMO it should be
->> > discussed elsewhere.
->>
->> I think other people have made good points already that tools like
->> "file" and "strings" are routinely used on untrusted input, and so
->> deserve to be treated as part of the attack surface in a normal free
->> software operating system (and therefore vulnerabilities in them warrant
->> mention here on oss-security).
->>
->> I'd like to present one other argument against the kind of distinction
->> that Robert suggests making here, though.
->>
->> If "file" or "strings" (or libmagic or libbfd, respectively) are
->> considered as "private" tools that should only be run on trusted inputs,
->> then we are effectively creating an entirely new class of
->> vulnerabilities that we need to report and fix, which may not have any
->> resolution.  In particular, we would need to report vulnerabilities in
->> tools that use these "private" tools on public data.
->>
->> For example:
->>
->>  * roundcube (a webmail client) relies on libmagic1
->>
->>  * rox-filer (a graphical filesystem browser) relies on /usr/bin/file
->>
->>  * rkhunter (a tool for scanning potentially-malicious files for
->> rootkits) relies on /usr/bin/file.
->>
->> The composable nature of unix-style tools means that a bug in one
->> component is very likely to be a security vulnerability.
->>
->> And if our interest is in not overwhelming the list with vulnerability
->> assignments, then declaring certain tools "off-limits" or "only to be
->> run on trusted inputs" is actually likely to *increase* instead of
->> decrease the total number of vulnerability counts (since we would now
->> need to report vulnerabilities in packages like roundcube and rkhunter
->> and rox-filer for exposing file and libmagic to untrusted input), while
->> still not leaving our users any safer.
->>
->>         --dkg
->>
->>
->
-
+iQEcBAEBAgAGBQJUEIpRAAoJEB1zxS9196oudt4IAKDHu+phcRPSlXzXgjRMm5Tp
+Viv7ejTo2wANPK6hAD7/7aBjb2qAMvtY2HXUtm8spqA5199pV2mGSS7ItuQFBOCc
+FE0AKnPg6CoDZKe1hVhjOHveZiBJkKpGYOs74bxwhu1acPlF/oq38CWAV7yb8pjo
+74Nuc+JErZGCIEVNJXpgrQMfHJ1OS8VbWCEtOkgLpU8fNBlwR9jMQQtlOqAv+PEB
+OA3nE5guX6CtHGCKa4YaMVmWh0au/q72R3fONP1WwAYrXjlBznovCdE9sZjzw1Np
+01/51rso0ranMYN76h6DCztD6bQKVWJaDSOoGOJyD234EcF4DUb642ch9OAp+3A=
+=Qule
+-----END PGP SIGNATURE-----
