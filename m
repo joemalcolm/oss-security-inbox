@@ -1,62 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/35
-Message-Id: <20141002163354.0A7AD6C0119@smtpvmsrv1.mitre.org>
-Date: Thu,  2 Oct 2014 12:33:54 -0400 (EDT)
-From: cve-assign@...re.org
-To: dkg@...thhorseman.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: gnome-shell lockscreen bypass with printscreen key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/10/4
+Message-ID: <5410874B.5010608@oracle.com>
+Date: Wed, 10 Sep 2014 10:15:55 -0700
+From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
+To: oss-security@...ts.openwall.com
+CC: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
+
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
+ 
+I'll look into this and get back to you shortly.
 
-> https://bugzilla.gnome.org/show_bug.cgi?id=737456
+Thanks,
+- -Ritwik
 
-Clearly, something is wrong, but the CVE ID or IDs need to apply to a
-specific aspect of the problem.
 
-Our understanding from
-https://bugzilla.gnome.org/show_bug.cgi?id=737456#c10 is that "the
-prtsc key is not disabled when the screen is locked" is intentional
-behavior. Thus, that's not the root cause. It might be reasonable to
-argue that, as a consequence, anyone with physical access to that key
-is implicitly allowed to consume memory and disk space. In many
-environments, anyone with physical access to that key also happens to
-be able to turn off the computer.
+On 9/10/2014 9:29 AM, Kurt Seifried wrote:
+> Technically speaking Oracle is a CNA and should be handling this, I have
+> no idea how to contact them though, Mitre, can you guys reach out to
+> them? Also does this affect MariaDB?
+>
+> On 10/09/14 10:00 AM, Salvatore Bonaccorso wrote:
+>> Hi
+>>
+>> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
+>> the following issue, which could be exploited by a local user to run
+>> arbitrary code in context of the mysqld server.
+>>
+>> MyISAM temporary files could be used to mount a code-execution attack.
+>> (Bug #18045646).
+>>
+>> This is also tracked in[3] and [4] mentioning as relevant fix [5].
+>>
+>> Was a CVE already requested for this issue? If not, could one be
+>> assigned?
+>>
+>> Regards,
+>> Salvatore
+>>
+>>  [1] https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-39.html
+>>  [2] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-20.html
+>>  [3] https://bugzilla.redhat.com/show_bug.cgi?id=1126271
+>>  [4] https://bugs.gentoo.org/show_bug.cgi?id=518718
+>>  [5] https://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4638
+>>
+>
 
-There could be a CVE assignment for
-https://bugzilla.gnome.org/show_bug.cgi?id=737456#c20 - "for that
-short period of time those windows are not only shown (which is a bad
-enough privacy issue on it's own), but also accept input (which makes
-the already-bad issue even worse)." However, the bug discussion
-doesn't suggest that there's a reasonable way to solve this within
-gnome-shell itself. In other words, gnome-shell doesn't have any
-direct or immediate ability to control the screen when it's not
-running.
-
-Possibly we're left with the following, which is unusual for a CVE but
-still valid: "PrtSc is an unauthenticated request that's available to
-untrusted parties. It's also a very expensive request. The combination
-of this PrtSc behavior and the existence of the oom-killer allows
-authentication bypass for command execution. Therefore, PrtSc must be
-rate limited, and the lack of rate limiting is a vulnerability."
-Unless there's a better alternative, the CVE ID will be assigned for
-that vulnerability characterization.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJULX3fAAoJEKllVAevmvmsKH4H/2mB7o9lrspTzY+R09IViS00
-m5b+RYKpKE9qJamASkm5CXETQ2xzGHk6iYl+sk+FXQ1K5QfwDMwBPhFxAmcG/I0M
-s3xPlKjrE0l5u1GcZF9N1p9pWyLd1NUgjyL5gXX6O5JKApyITkilI+aAdVRqYskZ
-dlZsHalhdFc3v/yQzthDCiNKYpOqtWy7+uOXHLFrKaeDdLU1z6lRWmmxm3OWSrTv
-f/DKQ57K/DbMERPidFPuUdHn4QoJTjhw3YgKqnfKQ5JdfESrFCKobaFZiffN86ba
-cf/kioXH2r904m0L75N3kvaJ8iC0GDMzSOdf1PNer3qsxDnjWJmZnQ7hP4YVaGQ=
-=QrXH
+Version: GnuPG v2.0.22 (MingW32)
+ 
+iQEcBAEBAgAGBQJUEIdFAAoJEB1zxS9196ou0qwIAIKBYjuDJJJPRHxCnTWacMrz
+ZQV/tZ7ajz2u0sY6m22Tpq1QUr5u4gf4rM6TL6MQS+r1Req4dsIXdicJvHrSQgmM
+N5yrWdbwMbx3mZOw0LZp/clV8fWJCb1e9IWckaWyn0IaDp/yyzQl7vHHmWvkOiUt
+qDUgpYbEVF8U/mrVYGT6Gmz3Rm8d9p9NcTRgxLoPShFKrwWlsDJoczdhE3UA+NTf
+sZ5n+q1hYmKymW300KcsSbV6JMvETAu6N5w48n2i8llFyiTkAGwjmtbVRjxbrLgw
+zHs6NVal793YUDRPFLeZxJV/0gkefxai7UfmXSe8z9ShtPE152GBoxN0TJsfKhQ=
+=+ZJ9
 -----END PGP SIGNATURE-----
+
