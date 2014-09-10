@@ -1,87 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/4
-Message-Id: <E1W6LFX-0000mR-TA@xenbits.xen.org>
-Date: Thu, 23 Jan 2014 14:27:20 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 83 (CVE-2014-1642) - Out-of-memory condition yielding memory corruption during IRQ setup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/10/1
+Message-ID: <8738bzu4zm.fsf@twoticketsplease.de>
+Date: Wed, 10 Sep 2014 12:47:25 +0200
+From: Moritz Heidkamp <moritz.heidkamp@...uta.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request for select() buffer overrun in CHICKEN Scheme on the Android platform
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-               Xen Security Advisory CVE-2014-1642 / XSA-83
-                              version 3
+I would like to request a CVE for a select() buffer overrun
+vulnerability in CHICKEN Scheme on the Android platform. This is
+basically the same issue as CVE-2012-6122 [1], thus the same workaround
+applies: Set the maximum number of open files ulimit to a value lower
+than or equal to FD_SETSIZE. Alternatively, apply the patch that fixes
+the issue (see below).
 
-       Out-of-memory condition yielding memory corruption during IRQ setup
+Since the Android platform target was added fairly recently, the only
+affected release versions are 4.9.0 and 4.9.0.1.
 
-UPDATES IN VERSION 3
-====================
+The issue is fixed by switching to POSIX poll() on Android, too. This
+fix will be included in the upcoming release versions 4.9.0.2, 4.9.1,
+4.10.0, and 5.0.
 
-CVE assigned.
+For the official announcement, see
+http://lists.nongnu.org/archive/html/chicken-users/2014-08/msg00055.html
 
-ISSUE DESCRIPTION
-=================
+The patch on the discussion list is
+http://lists.nongnu.org/archive/html/chicken-hackers/2014-08/msg00017.html
+and it got applied as
+http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=bbf5c1d5839970c17b37406155180853c325c710
 
-When setting up the IRQ for a passed through physical device, a flaw
-in the error handling could result in a memory allocation being used
-after it is freed, and then freed a second time.  This would typically
-result in memory corruption.
+A patch which changes the default to be POSIX poll() so that platforms
+added in the future will be more likely not to be affected by this issue
+is being discussed at
+http://lists.nongnu.org/archive/html/chicken-hackers/2014-08/msg00019.html
 
-IMPACT
-======
+Regards
+Moritz
 
-Malicious guest administrators can trigger a use-after-free error, resulting
-in hypervisor memory corruption.  The effects of memory corruption could be
-anything, including a host-wide denial of service, or privilege escalation.
+[1] Original announcement:
+    http://lists.nongnu.org/archive/html/chicken-users/2012-06/msg00031.html
 
-VULNERABLE SYSTEMS
-==================
 
-Xen 4.2.x and later are vulnerable.
-Xen 4.1.x and earlier are not vulnerable.
-
-Only systems making use of device passthrough are vulnerable.
-
-Only systems with a 64-bit hypervisor configured to support more than 128
-CPUs or with a 32-bit hypervisor configured to support more than 64 CPUs are
-vulnerable.
-
-MITIGATION
-==========
-
-This issue can be avoided by not assigning PCI devices to untrusted guests on
-systems supporting Intel VT-d or AMD Vi.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan, prompted by modelling
-improvements contributed by Andrew Coooper.  The issue was diagnosed
-by Matthew Daley and Andrew Coooper.  The patch was prepared by Andrew
-Cooper.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa83.patch                 Xen 4.2.x, Xen 4.3.x, xen-unstable
-
-$ sha256sum xsa83*.patch
-71ba62c024ed867f99f335ed63d7e04a7981d348cc29a3718e5c48f15a1e0fb1  xsa83.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJS4SaHAAoJEIP+FMlX6CvZ4GEH/1iRjPPj+FedKNsROJ4XZDYQ
-rhu5evDxGjFKC1YD5aDexDPMKYn1lLtOy2YnsW4nqPJdHCpBpPIhzTFisaNUqMzE
-XQwQwBSVYhxZAV2J9v3e7nsz0wswVdAHkbFf2df1eUvmiGsKQPHuCqlCZEbQjW/w
-7F9MC2Qo9nlg/1GtNE5J4U4jB9EtEhI5Kbvh3WFoOLz7vtJDKlsYQlcTZLJVdDjN
-OFoptImqig7Yin0/ix4AKYt5+trnkpvKjR3dfIeM3WUxG3Nc4qKxy5C5cbVfgKnr
-/sidbCO4K4G56fvl3aBg49594x8aFh8MYZF42CDCEnojXCaiXidwBiWUV9KHN5g=
-=5A46
------END PGP SIGNATURE-----
-
-Download attachment "xsa83.patch" of type "application/octet-stream" (598 bytes)
