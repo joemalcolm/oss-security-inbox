@@ -1,17 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/7
-Message-ID: <1399406067.23373.18.camel@banzai>
-Date: Tue, 06 May 2014 21:54:27 +0200
-From: Nicolas Grégoire <nicolas.gregoire@...rri.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/10/2
+Message-ID: <20140910160008.GA16061@eldamar.local>
+Date: Wed, 10 Sep 2014 18:00:08 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-> 4629ee0 fixed the issue for general entities, while the 9cd1c3c fixes
-> the same type of problem for parameter entities. 
+The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
+the following issue, which could be exploited by a local user to run
+arbitrary code in context of the mysqld server.
 
-That's much clearer, thanks!
+MyISAM temporary files could be used to mount a code-execution attack.
+(Bug #18045646).
 
-Nicolas
+This is also tracked in[3] and [4] mentioning as relevant fix [5].
 
+Was a CVE already requested for this issue? If not, could one be
+assigned?
+
+Regards,
+Salvatore
+
+ [1] https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-39.html
+ [2] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-20.html
+ [3] https://bugzilla.redhat.com/show_bug.cgi?id=1126271
+ [4] https://bugs.gentoo.org/show_bug.cgi?id=518718
+ [5] https://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4638
