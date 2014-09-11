@@ -1,86 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/9
-Message-ID: <20140218190447.GB16793@higgins.local>
-Date: Tue, 18 Feb 2014 11:04:47 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, secalert@...hat.com
-Subject: Data Injection Vulnerability in Active Record (CVE-2014-0080)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/23
+Message-ID: <54123519.1020709@oracle.com>
+Date: Thu, 11 Sep 2014 16:49:45 -0700
+From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
+To: Tomas Hoger <thoger@...hat.com>
+CC: oss-security@...ts.openwall.com, CVE Assignments MITRE <cve-assign@...re.org>, secalert_us@...cle.com
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-Data Injection Vulnerability in Active Record
+On 9/11/2014 7:39 AM, Tomas Hoger wrote:
+> April CPU mentions client issue CVE-2014-2440.  Is it the same issue
+> that got CVE-2014-0001 publicly assigned before?  The versions that
+> fixed CVE-2014-2440 are the same that got CVE-2014-0001 fix, and there's
+> no mention of the CVE-2014-0001 in April CPU.
 
-There is a data injection vulnerability in Active Record. Specially
-crafted strings can be used to save data in PostgreSQL array columns that may
-not be intended. This vulnerability has been assigned the CVE identifier
-CVE-2014-0080.
 
-Versions Affected:  4.0.x, 4.1.0.beta1
-Not affected:       3.2.x and older
-Fixed Versions:     4.0.3, 4.1.0.beta2
+Yes, CVE-2014-2440 is same as CVE-2014-0001. We have updated our CPU
+April, 14 advisory with a note under MySQL risk matrix that states the
+same. Please see -
+http://www.oracle.com/technetwork/topics/security/cpuapr2014-1972952.html
 
-Impact
-------
-Specially crafted strings may be used to save data to array columns in
-PostgreSQL databases. This vulnerability cannot be used to delete data or
-execute arbitrary SQL statements, but *can* be used to add data that could
-have an impact on the application (such as setting an admin flag). Only array
-type columns in PostgreSQL are impacted.
-
-All users running an affected release should either upgrade or use one of the
-work arounds immediately.
-
-Releases
---------
-The FIXED releases are available at the normal locations.
-
-Workarounds
------------
-To work around this issue, apply this monkey patch:
-
-```ruby
-module ActiveRecord
-  module ConnectionAdapters
-    class PostgreSQLColumn
-      module Cast
-        alias :old_quote_and_escape :quote_and_escape
-
-        ARRAY_ESCAPE = "\\" * 2 * 2 # escape the backslash twice for PG arrays
-        def quote_and_escape(value)
-          case value
-          when "NULL", Numeric
-            value
-          else
-            value = value.gsub(/\\/, ARRAY_ESCAPE)
-            value.gsub!(/"/,"\\\"")
-            "\"#{value}\""
-          end
-        end
-      end
-    end
-  end
-end
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 4-1-beta-array_injection.patch - Patch for 4.1-beta series
-* 4-0-array_injection.patch - Patch for 4.0 series
-
-Credits
--------
-
-Thanks Godfrey Chan for reporting this!
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "4-0-array_injection.patch" of type "text/plain" (2193 bytes)
-
-View attachment "4-1-beta-array_injection.patch" of type "text/plain" (2255 bytes)
-
-Content of type "application/pgp-signature" skipped
+Thanks,
+-Ritwik
