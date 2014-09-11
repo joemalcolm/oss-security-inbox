@@ -1,38 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/14
-Message-ID: <5486F2E6.6020803@redhat.com>
-Date: Tue, 09 Dec 2014 18:32:30 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Two rpm flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/14
+Message-ID: <20140911163928.5c5c02a0@redhat.com>
+Date: Thu, 11 Sep 2014 16:39:28 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
+Cc: oss-security@...ts.openwall.com, CVE Assignments MITRE <cve-assign@...re.org>, secalert_us@...cle.com
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-Two flaws in RPM (actually one of them is in cpio, which is embedded 
-into RPM) was found by Florian Weimer of Red Hat Product Security.
-Details as follows:
+On Wed, 10 Sep 2014 10:28:53 -0700 Ritwik Ghoshal wrote:
 
-CVE-2013-6435:
-It was found that RPM wrote file contents to the target installation 
-directory under a temporary name, and verified its cryptographic 
-signature only after the temporary file has been written completely. 
-Under certain conditions, the system interprets the unverified temporary 
-file contents and extracts commands from it. This could allow an 
-attacker to modify signed RPM files in such a way that they would 
-execute code chosen by the attacker during package installation.
+> Please use CVE-2014-4274 for this issue.
+> 
+> Please send an email to secalert_us@...cle.com to contact Oracle for
+> any security vulnerability related issues.
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=1039811
+As pointed out in this Gentoo bug, release notes for the mentioned
+MySQL versions list another issue that seems to be security:
 
-CVE-2014-8118:
-It was found that RPM could encounter an integer overflow, leading to a 
-stack-based overflow, while parsing a crafted CPIO header in the payload 
-section of an RPM file.  This could allow an attacker to modify signed 
-RPM files in such a way that they would execute code chosen by the 
-attacker during package installation.
+https://bugs.gentoo.org/show_bug.cgi?id=518718
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=1168715
+3) An off-by-one error related to certificate decoding in yaSSL can be
+exploited to cause a buffer overflow.
 
+BZR commit:
+
+http://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4647
+
+
+There are many other issues that deserve clarification.  For example,
+April CPU mentions client issue CVE-2014-2440.  Is it the same issue
+that got CVE-2014-0001 publicly assigned before?  The versions that
+fixed CVE-2014-2440 are the same that got CVE-2014-0001 fix, and there's
+no mention of the CVE-2014-0001 in April CPU.
+
+
+Actually, any CVE assigned to an open source project should have
+sufficient details made available to make it possible to link it to
+specific change or changes unambiguously.  Despite previous requests,
+Oracle seems to refuse that even when CVEs are public.  At the same
+time expecting advance notification with details.  Maybe this should be
+taken into account for e.g. distros membership?
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Tomas Hoger / Red Hat Product Security
