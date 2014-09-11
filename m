@@ -1,66 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/12
-Message-ID: <CAP145ph3E=6sxGHxktOd2H8DvKGOWO4kYR2pwx_kCsCDRtZD5Q@mail.gmail.com>
-Date: Mon, 17 Nov 2014 16:17:33 +0100
-From: Robert Święcki <robert@...ecki.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/20
+Message-ID: <5411FB20.5070003@redhat.com>
+Date: Thu, 11 Sep 2014 13:42:24 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-2014-11-17 14:10 GMT+01:00 Hanno Böck <hanno@...eck.de>:
-> Am Mon, 17 Nov 2014 13:48:39 +0100
-> schrieb Raphael Geissert <geissert@...ian.org>:
->
->> > c) fuzz all the tools in there and report at least the
->> > low-hanging-fruit-bugs? (and then maybe try to replace the
->> > "they-don't-fix-bugs-or-don't-have-a-dev-any-more"-tools with more
->> > secure ones)
+On 11/09/14 01:36 PM, Ritwik Ghoshal wrote:
+> On 9/11/2014 1:28 AM, Sven Kieske wrote:
 >>
->> d) acknowledge the fact that most tools were not "designed for
->> security" and that we should talk about mitigation. It's about risk
->> analysis.
->
-> Fair point, however it doesn't exclude doing c) as well. (however it
-> was my understanding that all widely deployed memory corruption
-> mitigation methods are mostly incomplete and can usually be circumvented
-> by tricky enough exploits - but I'm no expert on this)
+>>
+>> On 10/09/14 18:00, Salvatore Bonaccorso wrote:
+>>> Hi
+>>>
+>>> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
+>>> the following issue, which could be exploited by a local user to run
+>>> arbitrary code in context of the mysqld server.
+>>
+>> While I'm investigating this:
+>> Does someone happen to know in which version this vuln got introduced?
+>>
+> 
+> A complete list of all affected-supported MySQL releases will be
+> published via Oracle's quarterly Critical Patch Update(CPU) advisory.
+> More information about our CPU program is available at -
+> http://www.oracle.com/technetwork/topics/security/alerts-086861.html
+> 
+> 
+> Thanks,
+> -Ritwik
 
-We'll probably never (in a foreseeable future) get to a point in which
-gimp/vlc etc. will be safe (to a reasonable degree) to use with
-arbitrary files just by the means of fuzzing (or for that matter, by
-manual code review, which with such large code-base seems just
-unfeasible). The main point of fuzzing seems to be to minimize
-existing attack surface before applying decent mitigation techniques
-(syscall sandboxes, fault isolation containers etc.)
+So you're saying you won't tell anyone until the middle of October? So
+we have to wait just under 3 months from the release of MySQL 5.5.39 to
+find out exactly what versions are affected by security flaws fixed in it?
 
-The reasons for that are:
-
-a). it's a moving target - new code for new and existing media types
-is being added every month
-b). even if we start fuzzing it now, it seems to me like a temporary
-effort (but I can accept that I'm wrong on that)
-c). there are too many "this-type-of-tools" to be taken care of with
-sufficient attention (file archivers, media players, image converters,
-hundreds of file parsers, ...)
-d). fuzzing is able to discover only subset of bugs
-
-So, even if after such fuzzing round we ended up with such tools in a
-better condition, ergo fewer users will get pwned (which is definitely
-a good thing), this by no means should be enough to just use stock vlc
-with untrusted media files (if one cares about security of her/his OS)
-w/o good evaluation of the risks involved.
-
-I know that this sounds awfully impractical (at least for the time
-being, because the landscape here is changing pretty rapidly), but
-some would say that the best advice they can give to "average users"
-now is to watch "untrusted" movies with web browsers which are
-employing well-reviewed and tested sandboxing technologies and their
-media decoders are well tested (also: fuzzed). I guess "regular" media
-players will follow with this approach in some time.
-
-By no means I want to discourage the effort, just trying discuss its
-goals (less avg users pwnd - vs - it's safe to use vlc with everything
-now).
+Are you serious?
 
 -- 
-Robert Święcki
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
