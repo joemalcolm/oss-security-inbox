@@ -1,48 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/9
-Message-Id: <201402192212.s1JMCmvN011265@linus.mitre.org>
-Date: Wed, 19 Feb 2014 17:12:48 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request New-djbdns: dnscache: possible DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/16
+Message-ID: <5411CE6D.1080206@redhat.com>
+Date: Thu, 11 Sep 2014 10:31:41 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: pinocchio tmp vuln
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 11/09/14 04:12 AM, John Haxby wrote:
+> Imagine an internet-connected TV that has the potential to overheat and
+> catch fire due to some bug.   Some script-kiddie thinks that it would be
+> fun to use one of the other vulns to break in and cause the TV to catch
+> fire.  At night.  When the owners are asleep ...
+> 
+> Security education is important.
+> 
+> jch
 
-> dnscache(8) resolver reads messages over a TCP connection one byte at a time.
-> For long messages, it'll trigger as many read(2) calls as the length of a
-> message. Thus consuming extra CPU cycles. A malicious remote user could use
-> this to cause a DoS.
+There are much worse things:
 
-> https://github.com/pjps/ndjbdns/commit/a67293ce12832b55ec4271536282290ed17863f6
+1) imagine internet connected ovens all with a virus that puts them into
+self cleaning mode (e.g. get as hot as you can) on Xmas day, thus
+literally millions of dinners/etc getting burnt and stinking up the house
 
-Changing the TCP read approach can be considered a performance
-improvement (and, somewhat marginally, a security improvement), with
-no CVE assignment. The commit mentions "making slight gain in
-performance" and "could also lead to potential denial of service." The
-original implementation might have chosen its approach for
-design-for-auditability reasons, i.e., it may not have been a
-"mistake" at all. It seems impractical to assign CVE IDs to all
-opportunities to speed up the processing of untrusted input in all
-products. The situation would be different if it were clearly a logic
-error in the code, e.g., processing the first byte once, the second
-byte four times, the third byte nine times, etc.
+2) Imagine a network connected kettle that has a software safety to
+prevent overheat... the attacker tells it to get as hot as possible
+until it melts/catches fire. My boss has such a kettle, luckily the
+overhead is "in hardware" apparently...
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+3) Imagine your dishwasher full of heated steam under pressure telling
+you it's ok to be opened... you get a face full of steam and burned
 
-iQEcBAEBAgAGBQJTBSsHAAoJEKllVAevmvmsuAEIAIeUgu7aq8joD+a0bHBhoHed
-Un8pGhWyjvPxYVbn6odNRfuT2nNanF2zL3MYOY5ZtXVWZQmqJVI/FSYVms9hrLhQ
-CVOyWTKltDbeh/AqgZSadMPmsprcT7XlIazDsJsL9YacGDLkM4cxraZXYP0rluUN
-tMLSQIlo83bVCUv4+cH2qP9dTDhGyXLuIUz5v4L8ni9blW0VC7SEvEzk6pLTvkn2
-zPgI/X+dVRyxtEMk1T2ri4QObiL6NaZ2Eerd+I9Y8rGYpQH2XGyj3puhGroSmEuQ
-N1HKOkfyZqGH8JaAv5Y6Rz+Bgo+lMh1wT4Px4xXs9Rttgt3P0Ak8RGrKnTeTBGU=
-=6Jj8
------END PGP SIGNATURE-----
+4) your Internet connected smoke alarm, which can receive software
+updates automatically (e.g. the NEST protect now owned by Google) is
+programmed to not alert on fires between say midnight and 8am while
+you're sleeping.. and your kettle is catching fire.
+
+5) self driving cars - existing car software is terrible (like all
+software): http://www.wired.com/2014/08/car-hacking-chart/
+
+6) all the internet connected medical devices, from Dave Dittrich's
+slides in 2003 (can't find an older copy):
+http://www.slidefinder.net/l/looking_vulnerabilities_dave_dittrich_university/vulnerabilities/29749404/p2
+
+We've already crossed the bridge of software flaws being able to kill
+people, luckily there's not much economic incentive for the bad guys to
+exploit them ... yet. Would you pay 2 bitcoins to unbrick your car?
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
