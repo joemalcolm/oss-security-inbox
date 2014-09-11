@@ -1,35 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/1
-Message-ID: <1843140.sMbTx3NoQB@x2>
-Date: Wed, 28 May 2014 21:06:40 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/18
+Message-ID: <5411F9A0.1060707@oracle.com>
+Date: Thu, 11 Sep 2014 12:36:00 -0700
+From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
 To: oss-security@...ts.openwall.com
-Cc: Andy Lutomirski <luto@...capital.net>
-Subject: Re: CVE request: Linux kernel DoS with syscall auditing
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, May 28, 2014 02:45:59 PM Andy Lutomirski wrote:
-> Issuing a system call with a random large number will OOPS, depending
-> on configuration.  A configuration that will enable this bug is:
+On 9/11/2014 1:28 AM, Sven Kieske wrote:
 > 
-> # auditctl -a exit,always -S open
 > 
-> No privilege whatsoever is required to trigger the OOPS.
+> On 10/09/14 18:00, Salvatore Bonaccorso wrote:
+>> Hi
+>>
+>> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
+>> the following issue, which could be exploited by a local user to run
+>> arbitrary code in context of the mysqld server.
+> 
+> While I'm investigating this:
+> Does someone happen to know in which version this vuln got introduced?
+> 
 
-Do you have more information about this? I don't get an oops and I run with 
-the audit system on all the time.
+A complete list of all affected-supported MySQL releases will be
+published via Oracle's quarterly Critical Patch Update(CPU) advisory.
+More information about our CPU program is available at -
+http://www.oracle.com/technetwork/topics/security/alerts-086861.html
 
-
-> It's possible that this can be extended to more than just a DoS --
-> with some care and willingness to exploit timing attacks, this is a
-> read of arbitrary single bits in kernel memory.
-
-What platform? Where do the arbitrary bits go? What syscall are we talking 
-about?
-
-There is a linux-audit mail list which seems to not have any emails about this 
-problem. That is really the best place to discuss any issues with this 
-subsystem and get it fixed.
 
 Thanks,
--Steve
+-Ritwik
