@@ -1,46 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/11
-Message-ID: <20140716170438.2d1a1bce@redhat.com>
-Date: Wed, 16 Jul 2014 17:04:38 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: cve-assign@...re.org
-Cc: rdecvalle@...are.com, oss-security@...ts.openwall.com, mmcallis@...hat.com
-Subject: Re: Re: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/5
+Message-Id: <20140911073317.B5D0BC50159@smtptsrv1.mitre.org>
+Date: Thu, 11 Sep 2014 03:33:17 -0400 (EDT)
+From: cve-assign@...re.org
+To: helmut@...divi.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: /tmp file vulnerability in ace
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 16 Jul 2014 02:04:37 -0400 (EDT) cve-assign@...re.org wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> > Ruby 1.9.3, 2.0, and 2.1 are affected by the off-by-one. We're still
-> > not sure about the presence of a different issue affecting Ruby 2.0
-> > and 2.1. I left a comment on the report pointing out that 1.9.3 is
-> > also affected by the off-by-one
-> 
-> Yesterday,
-> 
-> https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/46778
-> 
-> and
-> 
-> https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/46778/diff/pack.c
-> 
-> were publicly readable, but today both of them result in a "Ruby Issue
-> Tracking System" login screen. We're not sure how to interpret this,
-> e.g., maybe all of 46778 has become private because the "different
-> issue affecting Ruby 2.0 and 2.1" is now embargoed?
+> bin/generate_doxygen.pl line 177
+> "/tmp/".$i.".".$$.".doxygen";
+> This path is later opened for writing.
+> http://bugs.debian.org/760709
 
-That's probably unrelated change / regression in the Ruby bug tracker.
+Use CVE-2014-6311.
 
-Checking some other random bug report, when logged in using a
-completely unprivileged account, I see:
-- revision strings (rXXXX) are clickable links pointing to URLs as above
-- actual revisions / diff are accessible
 
-While doing the same while not logged in:
-- revision strings (rXXXX) are not turned to links
-- revision / diff pages redirect to login
+> An interesting find is bin/g++-dep line 63:
+> > TMP=/tmp/g++dep$$
+> This path is also used for writing.
 
-Anyway, you can view the above commit / diff via:
-http://svn.ruby-lang.org/cgi-bin/viewvc.cgi?view=revision&revision=46778
+As far as we can tell, there is no bin/g++-dep in the
+download.dre.vanderbilt.edu upstream distribution. The bin/g++-dep
+issue, if confirmed, would not be within the scope of CVE-2014-6311.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUEU9/AAoJEKllVAevmvmsTgcIAJAqv12JKagw5jgNdo2m2bPE
+X5fM+YJxkNevkEaA0XEwlaXTC3ZnMMoZ/LG589AUJPvP7TWW8iyhD+k0k5AC6Tr8
+sEtgOaXoP47vzY2ZxBM5CWzBrkpdd0lmccRgiVnDJ/LUQQybszdN/yAW/rAnDPwn
+PNIfReANHYqLjNIPHzYZW7vhRh/9kppvQ6vQpvQ3wMlUbnWomVLEkGakeDuNHsiy
+USdap+bIb1Dg+1LKbWe+Nu+TqfPyZ/A8jwnT7l0LawPhw/8iOgIyf0UvRfkXUhGK
+v+sU81J2/nABk8ni38v4ZTnziS69zpajzZmvjz30J0Jf8OiXp91rLVobvFSWuEA=
+=+tJB
+-----END PGP SIGNATURE-----
