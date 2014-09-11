@@ -1,43 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/22
-Message-Id: <20141119231410.AC71A72E057@smtpvbsrv1.mitre.org>
-Date: Wed, 19 Nov 2014 18:14:10 -0500 (EST)
-From: cve-assign@...re.org
-To: dregad@...tisbt.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: information disclosure in MantisBT attachments
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/17
+Message-Id: <B802AC79-88F1-478F-9CB1-40EFD4AD78A1@gmail.com>
+Date: Thu, 11 Sep 2014 21:04:33 +0300
+From: Mikko Korpela <mikko.korpela@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: pinocchio tmp vuln
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Ok :D - I'll give up.
+I love you guys.
 
-> MantisBT issue attachments can be downloaded without permission.
+Just please next time when randomly greppig strings cotaining word tmp just please read the code and ask from the developer what is this all about and could this be a security issue.
+
+-- 
+Mikko Korpela
+
+> Kurt Seifried <kseifried@...hat.com> kirjoitti 11.9.2014 kello 19.31:
 > 
-> Due to an incorrect access check, by guessing the download URL
-> correctly, unprivileged users can download files from a private project
-> with restricted access to attachments, i.e. where
-> $g_download_attachments_threshold /
-> $g_view_attachments_threshold are set e.g. to 55 (developer), if another
-> project to which they have access does not restrict attachments download.
+>> On 11/09/14 04:12 AM, John Haxby wrote:
+>> Imagine an internet-connected TV that has the potential to overheat and
+>> catch fire due to some bug.   Some script-kiddie thinks that it would be
+>> fun to use one of the other vulns to break in and cause the TV to catch
+>> fire.  At night.  When the owners are asleep ...
+>> 
+>> Security education is important.
+>> 
+>> jch
 > 
-> http://github.com/mantisbt/mantisbt/commit/5f0b150b79868ea9d791e2c46b45b3f41b410e50
-> http://www.mantisbt.org/bugs/view.php?id=17742
-
-Use CVE-2014-8988.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUbSKQAAoJEKllVAevmvmsYkoH/RBI5X7xjf89SuLHRtWnKEim
-2lWoyMDGZYmfCVTobud4K+zsAAnXE3t5MVQBXHbjxP2rgKSFtMl6P1c6nsf9plrI
-YqudUDmQfYyeq5mbOp2gSRRwyYYbO8Rvr3lvtHcG6jMnD2Jb41sv0FZZ2NusdXKd
-DabAkXlR/ZaGsRwKOdFmRLLQRBdbQT2sZVYme3Nm3GWLSjdwOKhQlUrw0x8uauVN
-DnucD61jd5qMPglVFV30aWuR42N39LNZ8w29VbTDXJIxxUCItBupj3IarRuvvrkd
-sPhp0ur2GgPawkmeYoFAko4ZLpBtybBisTQwh3odoeRYGbZmIPF4lEsS4wk364c=
-=Fq7Y
------END PGP SIGNATURE-----
+> There are much worse things:
+> 
+> 1) imagine internet connected ovens all with a virus that puts them into
+> self cleaning mode (e.g. get as hot as you can) on Xmas day, thus
+> literally millions of dinners/etc getting burnt and stinking up the house
+> 
+> 2) Imagine a network connected kettle that has a software safety to
+> prevent overheat... the attacker tells it to get as hot as possible
+> until it melts/catches fire. My boss has such a kettle, luckily the
+> overhead is "in hardware" apparently...
+> 
+> 3) Imagine your dishwasher full of heated steam under pressure telling
+> you it's ok to be opened... you get a face full of steam and burned
+> 
+> 4) your Internet connected smoke alarm, which can receive software
+> updates automatically (e.g. the NEST protect now owned by Google) is
+> programmed to not alert on fires between say midnight and 8am while
+> you're sleeping.. and your kettle is catching fire.
+> 
+> 5) self driving cars - existing car software is terrible (like all
+> software): http://www.wired.com/2014/08/car-hacking-chart/
+> 
+> 6) all the internet connected medical devices, from Dave Dittrich's
+> slides in 2003 (can't find an older copy):
+> http://www.slidefinder.net/l/looking_vulnerabilities_dave_dittrich_university/vulnerabilities/29749404/p2
+> 
+> We've already crossed the bridge of software flaws being able to kill
+> people, luckily there's not much economic incentive for the bad guys to
+> exploit them ... yet. Would you pay 2 bitcoins to unbrick your car?
+> 
+> -- 
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
