@@ -1,19 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/4
-Message-ID: <2285C7A7-1EA6-41DF-B9CC-4EBC8F9862E5@redhat.com>
-Date: Wed, 03 Dec 2014 07:37:54 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: CVE request: out-of-bounds memory access flaw in unrtf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/3
+Message-Id: <8B0E1EA6-2266-4CF4-A2AF-B1EC7D9EE94A@stufft.io>
+Date: Thu, 11 Sep 2014 03:17:03 -0400
+From: Donald Stufft <donald@...fft.io>
+To: oss-security@...ts.openwall.com
+Subject: Re: pinocchio tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-An out-of-bounds memory access flaw was reported in unrtf:
 
-https://lists.gnu.org/archive/html/bug-unrtf/2014-11/msg00000.html
-https://bugzilla.redhat.com/show_bug.cgi?id=1170233
+> On Sep 9, 2014, at 11:38 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+> 
+> 
+> 
+> On 09/09/14 02:34 AM, Steve Kemp wrote:
+>>> I have to say I don't understand at all why someone would be going
+>>> through random packages from PyPi (especially test automation related)
+>>> and searching for possible security issues.
+>> 
+>>  Because although the chances of them being exploited are low they
+>> are genuine issues which have security implications.
+>> 
+>>  There is copious documentation online about how file races are
+>> bad, including this quick reference:
+>> 
+>>    https://www.securecoding.cert.org/confluence/display/seccode/FIO21-C.+Do+not+create+temporary+files+in+shared+directories
+>> 
+>>  PyPi?  've no idea why that was chosen, but I expect because it
+>> is a large mass of code that has had little similar attention paid
+>> to it in the past.  node.js will probably be next, I'm sure lots of
+>> modules exist created by inexperienced developers who haven't
+>> considered the implications of posting new code libraries.
+> 
+> Actually one reason I picked PyPI is simply because it has
+> popularity/usage info, each package web page says how many times it was
+> downloaded in the last day/week/month, so I picked a quick an easy audit
+> of packages downloaded more than 5000 times in the last month.
 
-Could a CVE be assigned to this?  Thanks.
 
 
--- 
-Vincent Danen / Red Hat Product Security
+If there’s anything PyPI can do to help make looking for security bugs on
+stuff hosted on PyPI easier just shoot me an email. I’m an admin there.
+
+---
+Donald Stufft
+PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+
+
