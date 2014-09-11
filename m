@@ -1,36 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/2
-Message-ID: <545B100B.4090601@internot.info>
-Date: Thu, 06 Nov 2014 17:07:07 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: CVE-Request: dpkg handling of 'control' and warnings format string vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/12
+Message-Id: <E1XS3yv-0000pi-6I@xenbits.xen.org>
+Date: Thu, 11 Sep 2014 13:00:13 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 107 (CVE-2014-6268) - Mishandling of uninitialised FIFO-based event channel control blocks
 Content-Type: text/plain; charset=utf-8
 
-A format string vulnerability vuln has been found in the latest version
-of dpkg.
-https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-An example is: https://internot.info/docs/dpkg_fstring.deb
+            Xen Security Advisory CVE-2014-6268 / XSA-107
+                              version 2
 
-> dpkg -i --dry-run
-> '/home/www/www.internot.info/htdocs/docs/dpkg_fstring.deb'
-> dpkg: warning: parsing file '/tmp/dpkg.heOSnC/control' near line 2
-> package 'backup:01f15700.00431828.00000001.00000001.0000001a':
->  '%08x.%08x.%08x.%08x.%08x
-> Description: Stuff
-> maintainer: Joshua Rogers
-> version: 1
-> ' is not a valid architecture name: escription: Stuff
-> maintainer: Joshua Rogers
-> version: 1
->
+    Mishandling of uninitialised FIFO-based event channel control blocks
 
-The vulnerable function, warningv([..]), is called in many other places,
-and is not limited to '-i'.
+UPDATES IN VERSION 2
+====================
 
-Could I get a CVE-ID for this?
+CVE assigned.
 
-Thanks
--- 
--- Joshua Rogers <https://internot.info/>
+ISSUE DESCRIPTION
+=================
+
+When using the FIFO-based event channels, there are no checks for the
+existence of a control block when binding an event or moving it to a
+different VCPU.  This is because events may be bound when the ABI is
+in 2-level mode (e.g., by the toolstack before the domain is started).
+
+The guest may trigger a Xen crash in evtchn_fifo_set_pending() if:
+
+  a) the event is bound to a VCPU without a control block; or
+  b) VCPU 0 does not have a control block.
+
+In case (a), Xen will crash when looking up the current queue.  In
+(b), Xen will crash when looking up the old queue (which defaults to a
+queue on VCPU 0).
+
+IMPACT
+======
+
+A buggy or malicious guest can crash the host.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.4 and onward are vulnerable.
+
+MITIGATION
+==========
+
+None.
+
+CREDITS
+=======
+
+This issue was originally reported by Vitaly Kuznetsov at Red Hat and
+diagnosed as a security issue by David Vrabel at Citrix.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This bug was publicly reported on xen-devel, before it was appreciated
+that there was a security problem.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa107-unstable.patch        xen-unstable
+xsa107-4.4.patch             Xen 4.4.x
+
+$ sha256sum xsa107*.patch
+b92ba8085b6684abbc8b012ae1a580b9e7ed7c8e67071a9e70381d4c1009638b  xsa107-4.4.patch
+cd954a5bd742c751f8db884a3f31bd636a8c5850acddf5f1160dd6be1f706a09  xsa107-unstable.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUEXRHAAoJEIP+FMlX6CvZknQIAIzPCOwG07XrKR7yu00lhCin
+TSppBKJ3y7XkIdmBF/3QSnev61yJ4MYdpWl7qiK4xpDP3IyH0mrtIYBQVwxKCV/R
+l/E2ztiEMugq86eCwvX5p/fAoyfqf1pBoVplqwcarS4vcmnnkOpK278TD2dPdw69
+G5VaFxOqVo4Z6xQyFIGHtinN00tbb/lVQTpldah7ZfqXknPAcSeZqEBuqmVSLGIo
+o9EgTAQm1wbh4tNn+O2KHeAbejjOTM7NYoidRqQY3qfN4m13MdAKliUbXIRdGggQ
+aMKU2n7eNga4Aly720cD6hkJAOKxG/dGUb8lm1qHsG01VjhP2zqGn41tkqsiSAs=
+=cld0
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa107-4.4.patch" of type "application/octet-stream" (4744 bytes)
+
+Download attachment "xsa107-unstable.patch" of type "application/octet-stream" (4698 bytes)
