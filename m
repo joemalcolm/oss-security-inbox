@@ -1,52 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/1
-Message-ID: <20140627023740.GA26647@openwall.com>
-Date: Fri, 27 Jun 2014 06:37:40 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/19
+Message-ID: <5411FAB7.5010001@oracle.com>
+Date: Thu, 11 Sep 2014 12:40:39 -0700
+From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: LMS-2014-06-16-6: LZ4 Core
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 26, 2014 at 12:58:37PM -0600, Don A. Bailey wrote:
-> A vulnerability has been identified in the LZ4 core implementation. Please
-> review the bug report attached inline.
-[...]
-> Report ID: LMS-2014-06-16-6
+On 9/11/2014 3:14 AM, John Haxby wrote:
+> On 11/09/14 09:22, Sven Kieske wrote:
+>>
+>> On 10/09/14 18:00, Salvatore Bonaccorso wrote:
+>>>> MyISAM temporary files could be used to mount a code-execution attack.
+>>>> (Bug #18045646).
+>> Funny enough, when you search for this bug on bugs.mysql.com you get:
+>>
+>> http://bugs.mysql.com/bug.php?id=18045646
+>>
+>> "No such bug #18045646 or bug is referenced in the Oracle bug system."
+>>
+>> Is this marked as private or something like that? Even if it's public
+>> now?
 > 
-> CVE ID: CVE-2014-4611
-[...]
-> Vulnerability Status: Reported / No response
+> It's probably marked as a security bug so only those people with a need
+> to know can see it, even though it's public.
+> 
 
-Yann Collet, the author of LZ4 and maintainer of the LZ4 reference
-implementation, has now posted a different point of view:
+Yes, information about security bug is private. Also 18045646 is an
+internal tracking ID.
 
-http://fastcompression.blogspot.fr/2014/06/debunking-lz4-20-years-old-bug-myth.html
-
-Aside from the bitterness (which I think is excessive, albeit
-understandable), there's technical detail on why the vulnerability is
-less severe, and a mention of it having been reported via "a brief note
-on the LZ4 issue board".  I've just found this note here:
-
-https://code.google.com/p/lz4/issues/detail?id=52&can=1
-
-I guess there was some miscommunication, because there _was_ response
-via comments on this issue.  Don's comment was posted on June 19, and
-Yann replied via multiple comments on June 20, 22, 26.  The latest one
-of these says "Fixed into r118", which is:
-
-https://code.google.com/p/lz4/source/detail?r=118
-
-and the commit message includes:
-
-"fix :  Issue 52  (malicious address space overflow in 32-bits mode when using custom format)"
-
-Per Yann's blog post, and per comments on issue 52, we should credit
-Ludvig Strigeus for earlier discovery of this issue specifically in LZ4,
-although it was not treated as a security issue until Don's rediscovery
-(per Yann's good reasons, it shouldn't have been, but that's arguable).
-
-Given the above, I think all of Ludvig, Don, and indeed Yann deserve
-credit for getting this issue fixed, and I find it unfortunate that
-feelings were hurt.
-
-Alexander
+Thanks,
+-Ritwik
