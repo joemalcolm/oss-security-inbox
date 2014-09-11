@@ -1,16 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/22
-Message-ID: <loom.20141107T214651-542@post.gmane.org>
-Date: Fri, 7 Nov 2014 20:49:28 +0000 (UTC)
-From: jb <jb.1234abcd@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/9
+Message-ID: <54117573.50701@oracle.com>
+Date: Thu, 11 Sep 2014 11:12:03 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: random number generators - rand(), random(), etc
+Subject: Re: pinocchio tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-could you please take a look at this ?
-https://sourceware.org/ml/libc-alpha/2014-11/msg00143.html
+On 09/09/14 20:14, Mikko Korpela wrote:
+> "And we will need that because there are so many
+> devices hitting the streets with so many noob vulns that it's only a
+> matter of time before someone is killed."
+> 
+> So umm.. Your saying that you guys are saving the world by finding out
+> random packages that use easily g
 
-jb
+No.
 
+That is a little out of context.   The problem is that there are a lot
+of naïve developers who have little idea about security issues.  The
+more we (any of us can do) to highlight the problems anywhere means that
+there are better chances of those same developers becoming aware of the
+issues.
 
+The fatality bit is perhaps a little over the top, but not much.   I
+recall a couple of problems from comparatively recent times that caused
+physical destruction of hardware: one was a (CRT) monitor, the other a
+printer.  I think the printer was potentially connected to the Internet.
+ In older times, we had disk packs coming out of a drive like a huge
+multi-layered frisbee (someone had the bright idea of double the spin
+but the bearings for the disk weren't up to it) or the chain in a chain
+printer breaking and finding a letter "p" embedded in the wall months later.
+
+Imagine an internet-connected TV that has the potential to overheat and
+catch fire due to some bug.   Some script-kiddie thinks that it would be
+fun to use one of the other vulns to break in and cause the TV to catch
+fire.  At night.  When the owners are asleep ...
+
+Security education is important.
+
+jch
