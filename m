@@ -1,44 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/8
-Message-ID: <alpine.LFD.2.10.1407022357240.22647@javelin.pnq.redhat.com>
-Date: Thu, 3 Jul 2014 00:00:08 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: LMS-2014-06-16-6: LZ4 Core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/11
+Message-ID: <5411987D.7090805@redhat.com>
+Date: Thu, 11 Sep 2014 14:41:33 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: static IV used in Percona XtraBackup
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 11/26/2013 07:17 PM, Florian Weimer wrote:
+> On 11/26/2013 11:52 AM, Marcus Meissner wrote:
+>> Hi,
+>>
+>> This came to our desk:
+>> https://bugzilla.novell.com/show_bug.cgi?id=852224
+>> https://bugs.launchpad.net/percona-xtrabackup/+bug/1185343
+>>
+>> constant IV used in CTR Mode, allowing plaintext retrieval
+>> attacks.
+>
+> Is suppose this is part of the fix.
+>
+> +void
+> +xb_crypt_init_iv()
+> +{
+> +    uint seed = time(NULL);
+> +    srandom(seed);
+> +}
+> +
+> +void
+> +xb_crypt_create_iv(void* ivbuf, size_t ivlen)
+> +{
+> +    size_t i;
+> +    ulong rndval;
+> +
+> +    for (i = 0; i < ivlen; i++) {
+> +        if (i % 4 == 0) {
+> +            rndval = (ulong) random();
+> +        }
+> +        ((uchar*)ivbuf)[i] = ((uchar*)&rndval)[i % 4];
+> +    }
+> +}
+>
+> This still risks keystream reuse because time() is fairly coarse.
+>
+> What's worse, on 64-bit big-endian architectures, it results in a
+> constant zero IV because RAND_MAX is not large enough to reach the upper
+> 32 bits in the first four bytes of the rndval variable.
 
+It appears that both issues have been addressed by the switch to 
+libgcrypt for the encryption.
 
-For the record,
-  -> http://blog.securitymouse.com/2014/07/i-was-wrong-proving-lz4-exploitable.html
-
-Summary: effectively, this post proves that
-
-  - Exploits can be written against current implementations of LZ4
-  - Block sizes less than 8MB (and even less than 4MB) can be malicious
-  - Certain platforms are more affected than others (primarily RISC: ARM)
-  - Protecting against the 16MB and greater flaw was not sufficient
-
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJTtE+wAAoJEN0TPTL+WwQf26AP/2tk/hf0iphw95CQ81FFWR65
-oM94rpgVlzOA6TUBvvAOR/umuB7Kee6ws0AGWE/GvW1xrmuuGWrGSuZl0lMoG5uk
-Ae5WEyVAbJt1XL4iCBWr9YReTNCE7Y32gcL9AXE7gr3XZdEJ65pI0NMDL+icEUtL
-CRmjx67A2HCmOPqCEe7GNozWLZxsQJwFabHhqeC9QRZLRtO18pYwLJLE5B6xB+1u
-DvYnNExXj4a8/99sC5KBHg/JDd4a/1bOgGbV+smOAiKoRNIQk3XL2JN/IF6HZWpU
-Of/fxdfAHAwlhA7aslASD40ME713ONfb6qsnOKxOdI2aQJucyRuNtz00s+EB9wAu
-alqJ2EqGMpVEb5uzdoLLeUoWRJ86EfcYBCF8r/3axupnbgkj7RpCrOhzMjpMUC4N
-EmuT06GgzZAA5aIe5+NYFpV7F35kTFgTWy1T1OCoHQGcRLiSbjjITgZ98wonzbeX
-AZnAERRAR/YyTOW+TNAph5yIxWghjmVGL6S+5PX89VgcDLr2bOqsDGYoUS3x+8Qj
-HgEl8dONGTwT5mHFds987TQcIx12mPZM72zUVWrY93ScuHraHc150soERU2AmKCw
-D6fZSUKnJGOn9ymfCztucW4Xv5pOO0WIoLn+v8b+EUJRXTqt5DjmG/5Xut8bB96f
-+C2KC4R3rWep5t3J1CuQ
-=lMPc
------END PGP SIGNATURE-----
+-- 
+Florian Weimer / Red Hat Product Security
