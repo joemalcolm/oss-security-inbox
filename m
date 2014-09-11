@@ -1,91 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/7
-Message-Id: <E1WCp0d-0004Oa-VA@xenbits.xen.org>
-Date: Mon, 10 Feb 2014 11:26:43 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 86 (CVE-2014-1896) - libvchan failure handling malicious ring indexes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/4
+Message-Id: <20140911072847.E536E1F075E@smtpksrv1.mitre.org>
+Date: Thu, 11 Sep 2014 03:28:47 -0400 (EDT)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: TYPO3 extensions
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-             Xen Security Advisory CVE-2014-1896 / XSA-86
-                              version 3
+TYPO3-EXT-SA-2014-006
+powermail
+Captcha Bypass
+CVE-2014-6288
 
-           libvchan failure handling malicious ring indexes
 
-UPDATES IN VERSION 3
-====================
+TYPO3-EXT-SA-2014-005
+same Ajax dispatcher in pt_extbase and yag
+Access Bypass
+CVE-2014-6289
 
-CVE assigned.
 
-ISSUE DESCRIPTION
-=================
+TYPO3-EXT-SA-2014-003
+tt_news
+Insecure Unserialize
+CVE-2014-6290
 
-libvchan (a library for inter-domain communication) does not correctly
-handle unusual or malicious contents in the xenstore ring.  A
-malicious guest can exploit this to cause a libvchan-using facility to
-read or write past the end of the ring.
 
-IMPACT
-======
+TYPO3-EXT-SA-2014-002
+alpha_sitemap Cross-Site Scripting  CVE-2014-6291
+femanager Privilege Escalation      CVE-2014-6292
+ke_stats SQL Injection              CVE-2014-6293
+outstats Cross-Site Scripting       CVE-2014-6294
 
-libvchan-using facilities are vulnerable to denial of service and
-perhaps privilege escalation.
+> Problem Description: The extension smarty bundles the template engine smarty.
+> Old versions of this library are known to be vulnerable to arbitrary php file
+> include via template source file.
 
-There are no such services provided in the upstream Xen Project
-codebase.
+We're not sure whether a CVE request was intended for this. Here, the
+wording "via template source file" would typically mean an attack
+vector, but maybe what is meant is that a template source file is the
+vulnerable file. If the scenario were something like "the extension
+enables an attack by accepting template source files from untrusted
+parties in a way that is unintended by Smarty," then the extension
+could be considered the primary affected product and could have its
+own CVE ID for this issue. If this Problem Description text is
+intended to mean that Smarty is the primary affected product, then a
+CVE for the previously known issue in Smarty might already exist. If
+anyone knows the best reference for "Old versions of this library are
+known to be vulnerable," that could help resolve the question.
 
-VULNERABLE SYSTEMS
-==================
+wec_map SQL Injection               CVE-2014-6295
+wec_map Cross-Site Scripting        CVE-2014-6296
 
-All versions of libvchan are vulnerable.  Only installations which use
-libvchan for communication involving untrusted domains are vulnerable.
 
-libvirt, xapi, xend, libxl and xl do not use libvchan.  If your
-installation contains other Xen-related software components it is
-possible that they use libvchan and might be vulnerable.
+TYPO3-EXT-SA-2014-001
+mm_forum
+Cross-Site Scripting CVE-2014-6297
+upload arbitrary files ... Code Execution by uploading PHP files CVE-2014-6298
+CSRF CVE-2014-6299
 
-Xen versions 4.1 and earlier do not contain libvchan.
+> One CVE might be enough as per same reporters and fixed in version.
 
-MITIGATION
-==========
+We typically cannot combine the different flaw types into one CVE. We
+could combine them into one CVE if CSRF were the single root cause of
+all of the issues, but nobody has reported that here, and it seems
+relatively unlikely.
 
-Disabling libvchan-based facilities could be used to mitigate the
-vulnerability.
 
-CREDITS
-=======
+> Can I get 2013 CVE for TYPO3-EXT-SA-2013-014
+> direct_mail exposes user data including the original authentication code
 
-This issue was discovered by Marek Marczykowski-Górecki of Invisible
-Things Lab.
+CVE-2013-7400
 
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-After the patch is applied to the Xen tree and built, any software
-which is statically linked against libvchan will need to be relinked
-against the new libvchan.a for the fix to take effect.
-
-xsa86.patch        Xen 4.2.x, 4.3.x, 4.4-RC series, and xen-unstable
-
-$ sha256sum xsa86*.patch
-cd2df017e42717dd2a1b6f2fdd3ad30a38d3c0fbdd9d08b5f56ee0a01cd87b51  xsa86.patch
-$
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJS+LcuAAoJEIP+FMlX6CvZBjgH/RdmdarkaX/Bravq46egUtWT
-OohBLoP+tnkg3w3DSvWlD45dlnwH2ptD/PTxyoH7XMoiajX0h3WRYf8ddu63Nwtl
-qghb6EDuYF+iLf9nthdYqreVLdKQOJYXCv6c3i6odHRzGadb3cWTIv1xSDZcn+Qw
-djSk2huXpuRVkpJeX05PNCkBktRe0Shwy0zgTUNC0GjWItma+NIKdvRODkON1Ai9
-ilRsmlQXc2BJ7RcJGmvtcHEdIgLMJ8MzRZWspFPTuqRbQ1+XUJUxxQvJBAqIYRQ3
-29iS0GxqXZDSWtTlY4xwAEdwtzsqVZx8VMQioxLUSB4fqm1s4XEfQEkH5VwoBs8=
-=HSDt
+iQEcBAEBAgAGBQJUEU6+AAoJEKllVAevmvmsWT8H/jpM07K0kv8DX/LiVleIWagI
+zm4vq8G9QHzOqUwiD88yTtqhNgOkfifuudWpKLQ9Af4HHhGKZzKaSS/UWdxkDjId
+Ymfca2z7Ug6OSI2rujGUShga1pHhzyuKXvWuj0HzjWbI+AQ37lFxoNkIPJ8UTKIZ
+lOask4pVXxldhs7gFUIu5H4g0CvI9KQR9P+AnEC8cjlOJOh96CwFTD0OIkz2teVT
+i9ZP9GS+40lr1Jx3iENAdZIH1XbgCciNWG5hkMFj/2ytAs31mHR8Tr2ZY/IzvEi+
+f89BTObrb9o+ecfHnfrsnlPU/9pZ6rUFe+HIPPfHnVHl4/BRjoeGPeJ7hdj75Ns=
+=1pSZ
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa86.patch" of type "application/octet-stream" (6024 bytes)
