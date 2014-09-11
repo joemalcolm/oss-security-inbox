@@ -1,48 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/22/2
-Message-ID: <CACqxkWK2=4-S1PgGC+8rX6oyQ=WosTpmnRVTtGqm6072kTdQgQ@mail.gmail.com>
-Date: Sun, 22 Jun 2014 18:54:21 +0100
-From: Nick Boyce <nick.boyce@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: rich@....org
-Subject: Re: KMail/KIO POP3 SSL MITM Flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/1
+Message-ID: <54114A31.4030406@redhat.com>
+Date: Thu, 11 Sep 2014 01:07:29 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: photini tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-On 18 June 2014 21:07, Richard Moore <rich@....org> wrote:
+https://pypi.python.org/pypi/Photini
+Photini-14.09.0/setup.py:
 
-> Title:          KMail/KIO POP3 SSL MITM Flaw
-> CVE:            CVE-2014-3494
-> Versions:       kdelibs 4.10.95 to 4.13.2
-[...]
-> The POP3 kioslave used by kmail will accept invalid
-> certificates without presenting a dialog to the user due
-> a bug that leads to an inability to display the dialog
-> combined with an error in the way the result is checked.
-[...]
-> This flaw allows an active attacker to perform MITM
-> attacks against the ioslave which could result in the
-> leakage of sensitive data such as the authentication
-> details and the contents of emails.
 
-Is there anything you can add as to how long this bug has been in the
-codebase ?  In particular, is the Kmail in Debian 'oldstable' systems
-affected (squeeze/kdelibs 4.4.5), or that in Debian 'stable' systems
-(wheezy/kdelibs 4.8.4) ?
+# extend install command to add menu shortcut
+class install(_install):
+    def run(self):
+        _install.run(self)
+        if self.dry_run:
+            return
+        if sys.platform.startswith('linux'):
+            icon_path = os.path.join(
+                self.install_purelib, 'photini/data/icon_48.png')
+            temp_file = '/tmp/photini.desktop'
+            with open(temp_file, 'w') as of:
+                for line in open('src/linux/photini.desktop').readlines():
+                    of.write(line)
+                of.write('Icon=%s' % icon_path)
+            self.spawn(['desktop-file-install', '--delete-original',
+temp_file])
+		
 
-I'm not sure whether to interpret the 'Versions' line in the advisory
-as "bug was introduced at kdelibs 4.10.95" - and there is no further
-information on the CVE at Mitre [1], or in the Debian bug [2]; there
-appears to be no relevant bug at bugs.kde.org (a search for the CVE,
-or any of the keywords "kdelibs pop3 ssl kioslave" returns nothing
-relevant).
 
-There is an IBM ISS report [3] which implies the bug affects at least
-kdelibs 4.6.x ....
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3494
-[2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752052
-[3] http://xforce.iss.net/xforce/xfdb/93875
 
-Thanks,
-
-Nick
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
