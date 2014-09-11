@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/02/3
-Message-ID: <CAA7hUgE_sQ+Sxq8OHhi-_iO3yN9xF1bnxvEESszmp4PknPn3Dg@mail.gmail.com>
-Date: Wed, 2 Apr 2014 11:15:30 +0200
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/21
+Message-ID: <CAP7Re_CDRr-eoVrzJToePNU6aGiwmcQ7aG9QLxw4cvOHTf9=Dg@mail.gmail.com>
+Date: Thu, 11 Sep 2014 13:32:27 -0700
+From: Ben Hawkes <hawkes@...rtiawar.com>
 To: oss-security@...ts.openwall.com
-Cc: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Information on CVE-2014-0158, openjpeg
+Subject: Multiple Linux USB driver CVE assignment
 Content-Type: text/plain; charset=utf-8
 
-On 2 April 2014 11:02, Huzaifa Sidhpurwala <huzaifas@...hat.com> wrote:
-> On 04/02/2014 02:01 PM, Raphael Geissert wrote:
-[...]
->> IIRC without that patch some of the structures were not initialized
->> and applications (like the ones shipped by openjpeg itself) would try
->> to dereference NULL pointers, and just crash - no memory write was
->> involved.
->>
->> Or is there more into CVE-2014-0158 that I might be missing?
->
-> I dont agree with this being only a crash. I put some details at:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1082925#c1
+We've assigned the following CVEs:
 
-I do agree with the overall explanation but from that point on I don't
-think there is anything in openjpeg that would lead to a heap write
-before triggering a null pointer dereference or an OOB heap read. IIRC
-the latter being fixed in general by segfault4.patch, which ensures
-that all allocated heap memory is initialized.
+CVE-2014-3182 :
+https://code.google.com/p/google-security-research/issues/detail?id=89
+- "Linux kernel hid-logitech-dj.c device_index arbitrary kfree"
 
-> Anyway, this CVE is a dupe, MITRE could you please reject this CVE?
+CVE-2014-3183 :
+https://code.google.com/p/google-security-research/issues/detail?id=90
+- "Linux kernel hid-logitech-dj.c logi_dj_ll_raw_request heap
+overflow"
 
-Well, depending on the above this specific bug might be split off
-CVE-2013-1447 - the original id covered bugs that could only be
-classified as leading to denial of service, nothing more.
+CVE-2014-3184  :
+https://code.google.com/p/google-security-research/issues/detail?id=91
+- "Linux kernel HID report fixup multiple off-by-one issues"
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+CVE-2014-3185  :
+https://code.google.com/p/google-security-research/issues/detail?id=98
+- "Linux Kernel Buffer Overflow in Whiteheat USB Serial Driver"
+
+CVE-2014-3181 :
+https://code.google.com/p/google-security-research/issues/detail?id=100
+- "Magic Mouse HID device driver overflow"
+
+Thanks,
+Ben
