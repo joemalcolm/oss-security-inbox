@@ -1,43 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/20
-Message-ID: <54368341.5010609@openstack.org>
-Date: Thu, 09 Oct 2014 14:44:49 +0200
-From: Thierry Carrez <thierry@...nstack.org>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-034] Swift metadata constraints are not correctly enforced (CVE-2014-7960)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/13
+Message-ID: <20140911155303.6b5975d0@redhat.com>
+Date: Thu, 11 Sep 2014 15:53:03 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: Sven Kieske <s.kieske@...twald.de>
+Cc: <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-034
-CVE: CVE-2014-7960
-Date: October 09, 2014
-Title: Swift metadata constraints are not correctly enforced
-Reporter: Rajaneesh Singh
-Products: Swift
-Versions: up to 2.1.0
+On Thu, 11 Sep 2014 10:22:13 +0200 Sven Kieske wrote:
 
-Description:
-Rajaneesh Singh reported a vulnerability in the way Swift enforces
-metadata constraints. By adding metadata in several separate calls, an
-authenticated attacker can bypass the max_meta_count constraint,
-potentially resulting in the storage of more metadata than allowed in
-configuration.
+> On 10/09/14 18:00, Salvatore Bonaccorso wrote:
+>
+> > MyISAM temporary files could be used to mount a code-execution
+> > attack. (Bug #18045646).
+> 
+> Funny enough, when you search for this bug on bugs.mysql.com you get:
+> 
+> http://bugs.mysql.com/bug.php?id=18045646
+> 
+> "No such bug #18045646 or bug is referenced in the Oracle bug system."
+> 
+> Is this marked as private or something like that? Even if it's public
+> now?
 
-Juno (development branch) fix:
-https://review.openstack.org/125360
+Too many digits for bugs.mysql.com bug ids, those tends to have no more
+than 5 digits.  As the error message you got suggests - it's likely an
+id in some internal bug tracking system.  Don't expect it to be useful
+for anything else than matching release notes entry to bzr commit.
 
-Icehouse fix:
-https://review.openstack.org/126645
+Also note that security fixes are not mentioned in release notes for
+some time - inclusion of this one is likely an omission rather than
+intention.
 
-Notes:
-This fix will be included in the upcoming 2.2.0 Juno release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7960
-https://launchpad.net/bugs/1365350
-
---
-Thierry Carrez
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+-- 
+Tomas Hoger / Red Hat Product Security
