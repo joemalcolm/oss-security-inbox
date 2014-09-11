@@ -1,51 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/15
-Message-ID: <CAOp4FwQ6g4x7YxDmrub5hTtMb9U4YcktUkrjcj_E22SxHMysFQ@mail.gmail.com>
-Date: Tue, 7 Oct 2014 13:31:09 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/2
+Message-ID: <54114B74.8050005@redhat.com>
+Date: Thu, 11 Sep 2014 01:12:52 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: pscripts tmp vuln leading to possible code exec
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 7, 2014 at 1:11 PM, Hanno Böck <hanno@...eck.de> wrote:
-> Hi,
->
-> Yesterday I wrote down some thoughts on Shellshock, Heartbleed and the
-> whole issue of free software security:
-> https://blog.hboeck.de/archives/857-How-to-stop-Bleeding-Hearts-and-Shocking-Shells.html
->
-> Basically my key point is: These events caused interest in the sec
-> community and people had a look - and found further issues.
->
-> My question would be: Can we get that attention somehow *before* an
-> event like shellshock happens? We probably all could name products that
-> could have sec bugs with similar severity.
->
-> I outlined a vague idea: Would it work if we'd say we make a "sec
-> people, please have a look at software XY"-day? Would people do that?
->
-> Heartbleed and Shellshock give me the feeling that there probably are,
-> right now, security bugs with simliar severity active on our systems.
-> Let's have a discussion how we can find them.
->
-
-OpenBSD has been pretty successful at building a secure Operating
-System. I think that their approach works pretty well. By looking at
-what they are doing, this might give insight on how to increase
-interest in doing code audits in other Open Source projects.
+https://pypi.python.org/pypi/pscripts
+pscripts-0.1.160/pscripts/external_ip_address.py
 
 
-
-> cu,
-> --
-> Hanno Böck
-> http://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
+##########################################
+# Settings
+#--------------
+ip_cache_file = '/tmp/.current_external_ip'
 
 
+def save_ip_addy(new_ip, domain):
+    ip_updates = shelve.open(ip_cache_file)
+    ip_updates[domain] = new_ip
+    log.debug("Caching IP address: {}, under domain: {}".format(new_ip,
+domain))
+    ip_updates.close
+
+def read_ip_addy(domain):
+    ip_updates = shelve.open(ip_cache_file)
+    if ip_updates:
+        if not domain in ip_updates:
+            return None
+        else:
+            ip = ip_updates[domain]
+            log.debug("Cached IP address: {} retrieved for domain:
+{}".format(ip, domain))
+            return ip
+
+			
+#################################
+# ENTRY POINT
+def
+update_ddns_server(updater_urls="/etc/external_ip_updater/urls.yaml",
+update=True, manual_force_update=False):
+    try:
+        external_ip = get_ip()
+        if external_ip == None:
+            log.warn("Unable to determine external IP.  This may be
+temporary or not.  Verify this warning doesn't persist.")
+            return
+        log.debug("External IP address {}".format(str(external_ip)))
+        ddns_urls = read_yaml_update_urls(updater_urls)
+        for domain, update_url in ddns_urls.items():
+            log.debug("For domain: {}, the update url is:
+{}".format(domain,update_url))
+            prev_ext_ip = read_ip_addy(domain)
+            changed = ip_addy_changed(external_ip, prev_ext_ip)
+            if changed or manual_force_update or periodic_force_update():
+                log.debug("IP changed or forcing update.")
+                if update or manual_force_update:
+                    log.info("Updating domain: {} with IP:
+{}".format(domain, external_ip))
+                    touch_ddns_server(update_url)
+                    save_ip_addy(external_ip,domain)
+
+Then later on:
+					
+def test_update_ip():
+    updater_urls = "/etc/external_ip_updater/urls.yaml"
+    update_ddns_server(updater_urls, force_update=True)
+
+So it looks like you might be able to write to the cache and then do a
+man in the middle attack against the updater which I'm guessing == code
+exec.
 
 -- 
-This message is strictly personal and the opinions expressed do not
-represent those of my employers, either past or present.
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
