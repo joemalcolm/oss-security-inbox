@@ -1,31 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/22/2
-Message-ID: <5447E185.2030303@redhat.com>
-Date: Wed, 22 Oct 2014 10:55:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2014-3712 Katello: user parameters passed to to_sym
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/6
+Message-Id: <20140911073628.3F6A333200D@smtpvbsrv1.mitre.org>
+Date: Thu, 11 Sep 2014 03:36:28 -0400 (EDT)
+From: cve-assign@...re.org
+To: moritz.heidkamp@...uta.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for select() buffer overrun in CHICKEN Scheme on the Android platform
 Content-Type: text/plain; charset=utf-8
 
-Jan Rusnacko of Red Hat reports:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Katello code exposes potential to_sym Denial of Service attack vector
-from user input parameters. The two places identified are:
+> http://lists.nongnu.org/archive/html/chicken-users/2014-08/msg00055.html
+> http://lists.nongnu.org/archive/html/chicken-hackers/2014-08/msg00017.html
+> http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=bbf5c1d5839970c17b37406155180853c325c710
 
-https://github.com/Katello/katello/blob/9231e24f93fa804e557fc95637cfa2c5bb92f6a7/app/controllers/katello/content_search_controller.rb#L617
-
-https://github.com/Katello/katello/blob/9231e24f93fa804e557fc95637cfa2c5bb92f6a7/app/controllers/katello/api/api_controller.rb#L87
-
-This type of attack is documented here -
-http://docs.fedoraproject.org/en-US/Fedora_Security_Team/1/html/Secure_Ruby_Development_Guide/RubySymbols.html
-
-This has been confirmed in testing by Eric Helms of Red Hat.
-
-cvss2=3.5/AV:N/AC:M/Au:S/C:N/I:N/A:P
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Use CVE-2014-6310.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+> A patch which changes the default to be POSIX poll() so that platforms
+> added in the future will be more likely not to be affected by this issue
+
+This type of additional development work (anticipatory hardening) is
+not eligible for a CVE ID.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUEVCaAAoJEKllVAevmvmsO1IH/jt+OKCgiJpYGYEdfQVjp+oP
+clXybzQEuz4GzcB0FM5pdMBp5boVDSh6CfvXiZh3ojAxbF1/akODxPjoUOZktKzk
+B0DsXHQfJQtliDyO478Kbmsf6fMirqZHZ6hcWy8PiceY8iC4zZo1/oSkddktFx5c
+CnR3u0VwG1xmRj4CZHlDQLwtQLCwjpuBhZxdm2le2UnJNsHncBUX6jDjaUfsvdWB
+mukXscmSqLqTerZhb0f/TY/TSlkUQT+yXJqZwmNt6Q1/mAAxRgCC0N8omfgCbX8Z
+0AcPR21LgEzPINDkgPOKNRoqpoIUqgalLOn+xKN66UyqdBk9PDS9Ctmm8bvDww0=
+=XVQj
+-----END PGP SIGNATURE-----
