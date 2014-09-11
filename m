@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/21
-Message-Id: <20141119231301.AB2EC52E012@smtpvbsrv1.mitre.org>
-Date: Wed, 19 Nov 2014 18:13:01 -0500 (EST)
-From: cve-assign@...re.org
-To: dregad@...tisbt.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/10
+Message-ID: <541175FF.3050606@oracle.com>
+Date: Thu, 11 Sep 2014 11:14:23 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> The MantisBT Configuration Report page (adm_config_report.php) did not
-> escape a parameter before displaying it on the page, allowing an
-> attacker to execute arbitrary JavaScript code.
+On 11/09/14 09:22, Sven Kieske wrote:
 > 
-> The severity of this issue is mitigated by the need to have a
-> high-privileged account (by default, administrator) to access the
-> configuration report page.
+> On 10/09/14 18:00, Salvatore Bonaccorso wrote:
+>> > MyISAM temporary files could be used to mount a code-execution attack.
+>> > (Bug #18045646).
+> Funny enough, when you search for this bug on bugs.mysql.com you get:
 > 
-> in the "set configuration" box
+> http://bugs.mysql.com/bug.php?id=18045646
 > 
-> https://github.com/mantisbt/mantisbt/commit/49c3d0893091fb1bb6b92639e59a72203be0bc4a
-> http://www.mantisbt.org/bugs/view.php?id=17870
+> "No such bug #18045646 or bug is referenced in the Oracle bug system."
+> 
+> Is this marked as private or something like that? Even if it's public
+> now?
 
-Use CVE-2014-8987.
+It's probably marked as a security bug so only those people with a need
+to know can see it, even though it's public.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUbSKHAAoJEKllVAevmvms+KIH/jStXq5SSAuLwLaKcxVCcl/i
-VHzHofuXLVYbOdh68T/f0Y4xtIQl99xecXM1EbCLQ7qkIrsnqCodNCZ7KI2T78AQ
-01xqYno3adOlqyg6A5rpiXWuQk60j7yWucM90lDKpA1HgbJd5qpCcF4gVnyXaVp2
-kgP+DnWfDYx51jrRiqsdLe3rg7qucmxcBOpB2jq7ErGacuKkKQLoOyOOFmwSVgpW
-uR5UztEfkNNRD600SRDDa8RpWxvLpeNK0KTe482wEDUl4wfNevOKbdp5R8NV1Gdo
-gKV6BcN1Dc7Nt47A8iYzD3zJTs6xxnt943C4ygNdwLkwzaZs3DmUOyr7IBHKSV4=
-=Jj13
------END PGP SIGNATURE-----
+jch
