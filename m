@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/16
-Message-Id: <201403201945.s2KJjaN7016175@linus.mitre.org>
-Date: Thu, 20 Mar 2014 15:45:36 -0400 (EDT)
-From: cve-assign@...re.org
-To: pmatouse@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, zoltan.kiss@...rix.com, mtsirkin@...hat.com
-Subject: Re: CVE request -- kernel: net: potential information leak when ubuf backed skbs are skb_zerocopy()ied
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/22
+Message-ID: <CAP7Re_CbZyV4=kKZjGRSh7xb3gY-R3zTd8M6qEK8H6TfTd47Ww@mail.gmail.com>
+Date: Thu, 11 Sep 2014 14:26:12 -0700
+From: Ben Hawkes <hawkes@...rtiawar.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Multiple Linux USB driver CVE assignment
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+And a final addition:
 
-> An information flaw was found in the way skb_zerocopy() copied skbs that
-> are backed by userspace buffers (for example vhost-net and recent xen
-> netback). Once the source skb is consumed, ubuf destructor is called and
-> potentially releases the corresponding userspace buffers, which can then
-> for example be repurposed, while the destination skb is still pointing
-> to the them.
-> 
-> This issue is similar to CVE-2014-0131.
-> 
-> Upstream patch:
-> https://lkml.org/lkml/2014/3/20/421
+CVE-2014-3186 :
+https://code.google.com/p/google-security-research/issues/detail?id=101
+- "PicoLCD HID device driver pool overflow"
 
-Use CVE-2014-2568.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTK0KNAAoJEKllVAevmvms+UkH/jUSasHTIEdX1iRHqyVSpHjA
-b0PAYGAs7fZ3s/WtslGVEVaC7+ShGIK2wzxPWVe+6iM0WTPykzKyWmR8pOU8FKLD
-2ChlkU/V9tKcU1IS+2TEAnX7VQO/bbftbl+HctKWQDSPg99/NuinO3oxPheaktbw
-8OeH6X+mvPspKV0yRjJ8oKvfgExbmANKjE34U+vbxQH8g2H+JnU9qC1EGmpitOkk
-0Aw5mXjK8rhhCbi8ehBegjB1cui8TmjpfJfI2RIBzaSNLPIbT82tAcnIPjDBY5x+
-qwxvxkx0uJnt7bDS5ESPUNw2QIRyOQUIAwk4rBIA8fHIMOjPGzDAKEj+wqeN/6s=
-=vvFF
------END PGP SIGNATURE-----
+On Thu, Sep 11, 2014 at 1:32 PM, Ben Hawkes <hawkes@...rtiawar.com> wrote:
+> We've assigned the following CVEs:
+>
+> CVE-2014-3182 :
+> https://code.google.com/p/google-security-research/issues/detail?id=89
+> - "Linux kernel hid-logitech-dj.c device_index arbitrary kfree"
+>
+> CVE-2014-3183 :
+> https://code.google.com/p/google-security-research/issues/detail?id=90
+> - "Linux kernel hid-logitech-dj.c logi_dj_ll_raw_request heap
+> overflow"
+>
+> CVE-2014-3184  :
+> https://code.google.com/p/google-security-research/issues/detail?id=91
+> - "Linux kernel HID report fixup multiple off-by-one issues"
+>
+> CVE-2014-3185  :
+> https://code.google.com/p/google-security-research/issues/detail?id=98
+> - "Linux Kernel Buffer Overflow in Whiteheat USB Serial Driver"
+>
+> CVE-2014-3181 :
+> https://code.google.com/p/google-security-research/issues/detail?id=100
+> - "Magic Mouse HID device driver overflow"
+>
+> Thanks,
+> Ben
