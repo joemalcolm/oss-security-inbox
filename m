@@ -1,18 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/3
-Message-ID: <CAJVRA1QqH6uNwF8eXxiGLfaLcjpobfPJxCM-he9HgUJ0t86TOg@mail.gmail.com>
-Date: Sun, 7 Sep 2014 22:50:25 -0700
-From: coderman <coderman@...il.com>
-To: oss-security@...ts.openwall.com, kseifried@...hat.com
-Subject: Re: Python robotframework - tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/15
+Message-ID: <5411CE6C.2000105@redhat.com>
+Date: Thu, 11 Sep 2014 10:31:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: pinocchio tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-On 9/7/14, Kurt Seifried <kseifried@...hat.com> wrote:
-> ... help push us over CVE10k
+On 11/09/14 04:12 AM, John Haxby wrote:
+> Imagine an internet-connected TV that has the potential to overheat and
+> catch fire due to some bug.   Some script-kiddie thinks that it would be
+> fun to use one of the other vulns to break in and cause the TV to catch
+> fire.  At night.  When the owners are asleep ...
+> 
+> Security education is important.
+> 
+> jch
 
-hi Kurt, are you buying drinks next $seccon? at least C10k gave us epoll...
+There are much worse things:
 
-;)
+1) imagine internet connected ovens all with a virus that puts them into
+self cleaning mode (e.g. get as hot as you can) on Xmas day, thus
+literally millions of dinners/etc getting burnt and stinking up the house
+
+2) Imagine a network connected kettle that has a software safety to
+prevent overheat... the attacker tells it to get as hot as possible
+until it melts/catches fire. My boss has such a kettle, luckily the
+overhead is "in hardware" apparently...
+
+3) Imagine your dishwasher full of heated steam under pressure telling
+you it's ok to be opened... you get a face full of steam and burned
+
+4) your Internet connected smoke alarm, which can receive software
+updates automatically (e.g. the NEST protect now owned by Google) is
+programmed to not alert on fires between say midnight and 8am while
+you're sleeping.. and your kettle is catching fire.
+
+5) self driving cars - existing car software is terrible (like all
+software): http://www.wired.com/2014/08/car-hacking-chart/
+
+6) all the internet connected medical devices, from Dave Dittrich's
+slides in 2003 (can't find an older copy):
+http://www.slidefinder.net/l/looking_vulnerabilities_dave_dittrich_university/vulnerabilities/29749404/p2
+
+We've already crossed the bridge of software flaws being able to kill
+people, luckily there's not much economic incentive for the bad guys to
+exploit them ... yet. Would you pay 2 bitcoins to unbrick your car?
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-best regards,
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
