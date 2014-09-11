@@ -1,24 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/33
-Message-ID: <1412114038.5404.57.camel@juliet.mcarpenter.org>
-Date: Tue, 30 Sep 2014 23:53:58 +0200
-From: Martin Carpenter <martin.carpenter@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/8
+Message-ID: <54115D25.8060302@mittwald.de>
+Date: Thu, 11 Sep 2014 10:28:21 +0200
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2014-09-30 at 08:08 -0700, Tavis Ormandy wrote:
-> > system("date");
+
+
+On 10/09/14 18:00, Salvatore Bonaccorso wrote:
+> Hi
 > 
-> Keep going, eventually you're going to have to stop blacklisting
-> variables and use execve ;-)
+> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
+> the following issue, which could be exploited by a local user to run
+> arbitrary code in context of the mysqld server.
 
-... and beware what you whitelist:
+While I'm investigating this:
+Does someone happen to know in which version this vuln got introduced?
 
-OpenSolaris/on-src/usr/src/cmd/date/date.c:
-295     /* correct the kernel's "gmt_lag" and the PC's RTC */
-296     (void) system("/usr/sbin/rtc -c > /dev/null 2>&1");
+Thanks!
 
-[wryly noticed some time in the last week]
+-- 
+Mit freundlichen Grüßen / Regards
 
+Sven Kieske
 
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
