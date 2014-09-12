@@ -1,55 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/22
-Message-ID: <546A68E7.5010002@fifthhorseman.net>
-Date: Mon, 17 Nov 2014 11:30:15 -1000
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/10
+Message-ID: <20140912131455.GA19179@openwall.com>
+Date: Fri, 12 Sep 2014 17:14:55 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+Cc: bert hubert <bert.hubert@...herlabs.nl>
+Subject: PowerDNS Recursor 3.6.0 can be crashed remotely (CVE-2014-3614)
 Content-Type: text/plain; charset=utf-8
 
-On 11/16/2014 07:15 AM, Robert Święcki wrote:
-> To sum up: If somebody uses 'file' in an unconstrained OS environment
-> on untrusted inputs, and he gets pwnd in the result, then it's not a
-> security problem, it's an incompetence problem - and IMO it should be
-> discussed elsewhere.
+Hi,
 
-I think other people have made good points already that tools like
-"file" and "strings" are routinely used on untrusted input, and so
-deserve to be treated as part of the attack surface in a normal free
-software operating system (and therefore vulnerabilities in them warrant
-mention here on oss-security).
+A security advisory and a security update for PowerDNS Recursor were
+posted on September 10:
 
-I'd like to present one other argument against the kind of distinction
-that Robert suggests making here, though.
+http://blog.powerdns.com/2014/09/10/security-update-powerdns-recursor-3-6-1/
+http://doc.powerdns.com/html/powerdns-advisory-2014-01.html
 
-If "file" or "strings" (or libmagic or libbfd, respectively) are
-considered as "private" tools that should only be run on trusted inputs,
-then we are effectively creating an entirely new class of
-vulnerabilities that we need to report and fix, which may not have any
-resolution.  In particular, we would need to report vulnerabilities in
-tools that use these "private" tools on public data.
+"Issue: A specific sequence of packets can crash PowerDNS Recursor 3.6.0 remotely
+CVE: CVE-2014-3614
+Affected: All deployments of PowerDNS Recursor 3.6.0
+Not Affected: PowerDNS Authoritative Server, PowerDNS Recursor versions other than 3.6.0"
 
-For example:
+"There appears to be no way to use this crash for system compromise or
+stack overflow."
 
- * roundcube (a webmail client) relies on libmagic1
+Please refer to the URL above for much more detail, and a patch.
+Looking at the patch, I see that one of the conditions it handles is
+"labellen > 63", and it throws an exception when this happens.  It is
+not clear to me whether or not arbitrary code execution is possible via
+this vulnerability (via any of several issues that are now patched).
+The pieces seen within the (very limited) context of the patch look like
+the risk is there, and it'd take thorough analysis or a PoC to arrive at
+either conclusion with confidence.
 
- * rox-filer (a graphical filesystem browser) relies on /usr/bin/file
+This issue was brought to the distros list at about the same time that
+it was made public.  Per distros list policy, the issue must also be
+brought to oss-security:
 
- * rkhunter (a tool for scanning potentially-malicious files for
-rootkits) relies on /usr/bin/file.
+http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists
 
-The composable nature of unix-style tools means that a bug in one
-component is very likely to be a security vulnerability.
+"When the security issue is finally to be made public, it is your (the
+original reporter's) responsibility to post about it to oss-security"
 
-And if our interest is in not overwhelming the list with vulnerability
-assignments, then declaring certain tools "off-limits" or "only to be
-run on trusted inputs" is actually likely to *increase* instead of
-decrease the total number of vulnerability counts (since we would now
-need to report vulnerabilities in packages like roundcube and rkhunter
-and rox-filer for exposing file and libmagic to untrusted input), while
-still not leaving our users any safer.
+Since the issue was already public on the same day, I think it should
+have been posted to oss-security right away, without use of the distros
+list.  (Any distro on the distros list is supposed to also be on
+oss-security.)  The wiki page states this, too:
 
-	--dkg
+"Please only use these lists to report and discuss security issues that
+are not yet public (but that are to be made public very soon - please
+see below).  For security issues that are already public or that are to
+be made public right away, please post to oss-security instead."
 
+Even though formally it was not my responsibility to bring the issue to
+oss-security, I apologize to the oss-security community for the two day
+delay in doing so.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+Alexander
