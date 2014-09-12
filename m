@@ -1,22 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/2
-Message-Id: <201402200515.s1K5FBrk013119@linus.mitre.org>
-Date: Thu, 20 Feb 2014 00:15:11 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/14
+Message-Id: <20140912183635.177896C0058@smtpvmsrv1.mitre.org>
+Date: Fri, 12 Sep 2014 14:36:35 -0400 (EDT)
 From: cve-assign@...re.org
-To: pwouters@...hat.com
+To: dregad@...tisbt.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for unfixed CVE-2013-6466 in openswan-2.6.40
+Subject: Re: CVE request: MantisBT Null byte poisoning in LDAP authentication
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> openswan-2.6.40 (released Feb 14) was supposed to address
-> CVE-2013-6466 (which also affected libreswan as per CVE-2013-6467) but
-> the fix is incomplete and openswan can still crashed using mangled or
-> missing IKEv2 payloads.
+> https://github.com/mantisbt/mantisbt/commit/fc02c46eea9d9e7cc472a7fc1801ea65d467db76
+> http://www.mantisbt.org/bugs/view.php?id=17640
+> 
+> a Null byte poisoning issue with LDAP authentication affecting
+> MantisBT <= 1.2.17.
+> 
+> A malicious user can exploit this vulnerability to login as any
+> registered user and without knowing their password, to systems relying
+> on LDAP for user authentication (e.g. Active Directory or OpenLDAP
+> with "allow bind_anon_cred").
 
-Use CVE-2014-2037.
+Use CVE-2014-6387.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -26,11 +32,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTBY7oAAoJEKllVAevmvmsWv4IAMg8NTfLA7HMt7U2ADHuVLpX
-htKO2JV7dXuFgiHj6WCjs5DCIlVALDLFqjbqC0MjDFEX/NPRuMxq+C+yYIurq+mS
-YXsIZqsJaPm5sX4aJ1KlFlt1eWpPjdpBicaxE5g83kc38Cip0DxER0ZSPuPt8+o7
-302LY4lIkRLbTcrNCGjJjatj1VVskaWqMDTZSzS4tqIuBmGBUjaEBr+3BDHy6k4q
-6hUMzpIf/slDG9d+NUTxu2tx1tcuPRvHC8R22W6MVd/zKegYcNfGpczBe0upRpz3
-1UkzZCKN5Zo7TuOKSByV82QGp7md/HBuL+Jmvw3ZQB0tr0MgvoOC2r3i5iYGtU8=
-=X4Ym
+iQEcBAEBAgAGBQJUEzyiAAoJEKllVAevmvmsq80H/3AsQrTt9Tdjz2aJGA/zfzxG
+oDelDHm1OOVJcDMVmvxcYC7uRbS/Gk+MpsDD7p5rQ0ACgYU7n0Z5F3I6xXYFc3rl
+utYQmBKqKAiOvSf5qNMSVnqxH5E4gXuhMbMiho5AvD9XgTyKc1Wuulq/gSjdrMZ8
+b4uYIhNzmTAcrpofbEovCUm/t+16vQIRR7U/bdUAOrt8n8+7OH1JxEPUzih2CSZL
+qyL9yi9qD+0IviDD/QwqDOBkv/sP8BIGdZeHo50hlZENZpBbC5ZAoEHW0ZYJRUfW
+ZucqYEwcj5uYoue7PGoM8LrPj8cpa9KUAUNYakf2snq/WUAGoU54+9ExwT5ww2s=
+=P710
 -----END PGP SIGNATURE-----
