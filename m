@@ -1,40 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/1
-Message-ID: <5302DF4A.6010607@redhat.com>
-Date: Mon, 17 Feb 2014 23:19:22 -0500
-From: Paul Wouters <pwouters@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for unfixed CVE-2013-6466 in openswan-2.6.40
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/16
+Message-Id: <20140912184305.DFB14C50734@smtptsrv1.mitre.org>
+Date: Fri, 12 Sep 2014 14:43:05 -0400 (EDT)
+From: cve-assign@...re.org
+To: alan.coopersmith@...cle.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Confusion around gksu & CVE-2014-2943
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-openswan-2.6.40 (released Feb 14) was supposed to address CVE-2013-6466 (which also affected libreswan as per CVE-2013-6467) but the fix is incomplete and
-openswan can still crashed using mangled or missing IKEv2 payloads.
+> Several sites identify CVE-2014-2943 as being a vulnerability in gksu:
+> 
+> https://community.rapid7.com/community/metasploit/blog/2014/07/07/virtualbox-filename-command-execution-via-gksu
+> http://www.securityfocus.com/bid/68427
+> 
+> But the Mitre & NVD databases use that CVE id for a different issue:
+> 
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-2943
+> https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-2943
 
-libreswan-3.8 that properly addressed this issue was released on January 15. Exploit code has been available as part of the libreswan test suite at
-https://github.com/libreswan/libreswan/tree/master/testing/pluto/ikev2-15-fuzzer
+> Anyone know what the right CVE is for the gksu bug?
 
+MITRE has been working on this for a few days but unfortunately hasn't
+received a definitive reply about the gksu CVE ID. For now, all we can
+say is that CVE-2014-2943 is currently a correct CVE ID for a Cobham
+Aviator satellite terminal issue. The correct CVE ID for the gksu
+issue is not CVE-2014-2943. We hope to resolve this by early next
+week.
 
-Program received signal SIGSEGV, Segmentation fault.
-0x0000000000000000 in ?? ()
-(gdb) bt
-#0  0x0000000000000000 in ?? ()
-#1  0x00007f6f17b89477 in process_v2_packet (mdp=0x7f6f17e504a0 <md.16140>)
-    at /root/openswan-2.6.40/programs/pluto/ikev2.c:541
-#2  0x00007f6f17ba5c6f in process_packet (mdp=<optimized out>) at /root/openswan-2.6.40/programs/pluto/demux.c:175
-#3  0x00007f6f17ba5dbc in comm_handle (ifp=ifp@...ry=0x7f6f182abb30) at /root/openswan-2.6.40/programs/pluto/demux.c:220
-#4  0x00007f6f17b73bc8 in call_server () at /root/openswan-2.6.40/programs/pluto/server.c:764
-#5  0x00007f6f17b5b46d in main (argc=29, argv=0x7fffc5817a18) at /root/openswan-2.6.40/programs/pluto/plutomain.c:1110
-(gdb) f 1
-#1  0x00007f6f17b89477 in process_v2_packet (mdp=0x7f6f17e504a0 <md.16140>)
-    at /root/openswan-2.6.40/programs/pluto/ikev2.c:541
-541		stf = (svm->processor)(md);
-(gdb) p svm->processor
-$2 = (state_transition_fn *) 0x0
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-I would like a new CVE number to track the openswan-2.6.40 vulnerability.
-
-Regards,
-
-Paul
+iQEcBAEBAgAGBQJUEz5FAAoJEKllVAevmvmsB60IAKFE/iYOcjmhuE42YPEsC+1E
+Dq+ws8Epwurvn/v34WjpvxjZbdX5HApN8JBTaaM8u3n3cZXQFrAiWVc+NNCGVcFt
+uvQb/jx2SbsVrpaxvMebCws1CXm+LzNMRmPzhKWBl2NRWARb1OU0nwYc9NEIrFN5
+4Juj0MiQ8tFSqZ0FREjJZ+k34lNkDW0+MtEAWD2qpAeLWYmcbemBLol5SnIb7B3k
+9vAD56hcWBIATqh0KoihRLOg4phmnAyCrlB3mmRaUUzhpuz9XdSQVCgnrsHSCZgm
+qROKGv2UzrEZXfCF+KFnmji6dfNyBe12b/3GINftVopNlPl/Wiiypccr/jTZHLk=
+=9w8L
+-----END PGP SIGNATURE-----
