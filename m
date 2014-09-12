@@ -1,35 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/1
-Message-Id: <20141008002937.F352BC5059A@smtptsrv1.mitre.org>
-Date: Tue,  7 Oct 2014 20:29:37 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/12
+Message-Id: <20140912145431.2EA823AE011@smtpvbsrv1.mitre.org>
+Date: Fri, 12 Sep 2014 10:54:31 -0400 (EDT)
 From: cve-assign@...re.org
-To: kseifried@...hat.com
+To: helmut@...divi.de
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Discussion: information leakage from server and client software - CVE/hardening/other?
+Subject: Re: CVE request: /tmp file vulnerability in ace
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> we could for example have challenged CVE-2011-4083 for example saying
-> that it is useful to us
+> I point out that said bin/g++-dep file can be found within
+> http://download.dre.vanderbilt.edu/previous_versions/ACE-6.2.7.tar.bz2.
 
-Our perspective is that, on balance, that's a preferable way to
-proceed. Probably very few people outside of Red Hat would understand
-whether "private entitlement keys" tend to cause problems for
-customers. If you had a situation where:
+In our download, the filename is g++dep (without the '-').
 
-  - disclosure of an entitlement key didn't matter much
-    because the key is node-locked to the hardware of
-    a specific customer
+If anyone is later requesting a CVE ID for that, we can mention:
 
-  and
+  ACE_wrappers/debian/debian.changelog
 
-  - bugs sometimes caused customers to have a wrong key
+  ace (5.6.3-4) unstable; urgency=low
+  
+    * Add the following missing programs to libace-dev:
+      o $ACE_ROOT/bin/generate_export_file.pl
+      o $ACE_ROOT/bin/split-cpp
+      o $ACE_ROOT/bin/g++dep
+      o $ACE_ROOT/bin/add_rel_link.sh
 
-then you probably wouldn't want a third party obtaining a CVE ID based
-on a guess that "entitlement key" seems roughly the same as sending
-the full contents of the /root/.ssh directory.
+This apparently means that at least one version of libace-dev was
+shipped with the generate_doxygen.pl file but without the g++dep file,
+and thus we'd have a situation of "different affected versions."
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -39,11 +40,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUNITCAAoJEKllVAevmvms/R0IAJuCOq/RlCFALooKjS9t8NsQ
-o4anQNsySmh3YYB8yW8siqf2j0oOgL/yv2JIuz0YlMRO9wG58jz7Ef5mt3CHbNDf
-jiaMca2237fcpWa1DWTYeYX9p3yNuiV+LulSNlT4HjF+1SCrprFbaciGACjgFrnk
-74X0HNzai8I3TLZyKwo9Phy4hIfrC9j+j6TS0d84QjxpiM4rRmbm0ss1UaUlR918
-a5Kk2oefMF/uD3w5HgOTcAd4QmpHpXS701a7ebDbOcasUTC0jIJEp886S07ZFZa6
-SOvp8VCF6dEzPsqLlG/PHcOyRzbt0pkDyDz+H4IenxgJjFmnfLQyjSgnWSfpZNA=
-=KayV
+iQEcBAEBAgAGBQJUEwi8AAoJEKllVAevmvmsgC4IAK0MJIS6xqVkszWvLOx91ec0
+o9z7NTem7ywTWhv8X9Herbcb9fbev8SfEb3uFSZd+iFylzAgwKSD3VhPcdADjBVS
+C71GBpbDwzqE8+vVN8BalMdGu7D29cANALHng1U1gMYbKd0O2Bxv62yccuKf543X
+ilX2WDacFKimTi6yJoEAM31FzHQqQlKJ7ePvbPYal8tbtrtDnbNLcPbJGhoztqLO
+8ReheWMkHdCRjIaFqiaFxcfcsK5cTn/RqFkD5gDi+WnFBFvKkdhM4WqRhNWwJvqS
+c6qBwzP0oMX6/s3BSPHWtjbPJ06ZmVgLAbkLWLPyKQ8+UuXd6JmMKNgR0S17Ddg=
+=1vFr
 -----END PGP SIGNATURE-----
