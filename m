@@ -1,47 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/5
-Message-Id: <20140813060155.B57B0C504B9@smtptsrv1.mitre.org>
-Date: Wed, 13 Aug 2014 02:01:55 -0400 (EDT)
-From: cve-assign@...re.org
-To: fweimer@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: [CVE Request] glibc iconv_open buffer overflow (was: Re: Re: glibc locale issues)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/5
+Message-ID: <20140912111325.05c964ce@redhat.com>
+Date: Fri, 12 Sep 2014 11:13:25 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, 11 Sep 2014 12:36:00 -0700 Ritwik Ghoshal wrote:
 
->> iconv/gconv_charset.h:strip() normalizes the transliteration argument to
->> iconv_open, so the resulting file names follow a particular pattern, and
->> there cannot be enough slashes to ascend to a writable directory.
->>
->>> if not maybe the one byte overflow is still exploitable.
->>
->> Hmm.  How likely is that?  It overflows in to malloc metadata, and the
->> glibc malloc hardening should catch that these days.
->
-> Not necessarily on 32-bit architectures, so I agree with Tavis now, and
-> we need a CVE.  The upstream bug is:
->
->    <https://sourceware.org/bugzilla/show_bug.cgi?id=17187>
+> On 9/11/2014 1:28 AM, Sven Kieske wrote:
+> > On 10/09/14 18:00, Salvatore Bonaccorso wrote:
+> >> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference
+> >> to the following issue, which could be exploited by a local user
+> >> to run arbitrary code in context of the mysqld server.
+> > 
+> > While I'm investigating this:
+> > Does someone happen to know in which version this vuln got
+> > introduced?
+> 
+> A complete list of all affected-supported MySQL releases will be
+> published via Oracle's quarterly Critical Patch Update(CPU) advisory.
+> More information about our CPU program is available at -
+> http://www.oracle.com/technetwork/topics/security/alerts-086861.html
 
-Use CVE-2014-5119. A CVE-2005-#### number isn't needed because the
-msg00091.html message (referenced in 17187) does not state any
-security implications.
+Is CPU actually going to include the information Sven asked for?  Such
+information was on included in past CPUs - they only mention the last
+affected version in supported branch.  So in case of this flaw, it's
+most likely only going to say:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+  Supported Versions Affected: 5.5.38 and earlier, 5.6.19 and earlier
 
-iQEcBAEBAgAGBQJT6v7uAAoJEKllVAevmvmseTkIAMfWM1+WNFXL0zj5YmVAbl6e
-VzXYStCQinR6ilSaFQE52uar5CagHTcEXlvsOMgyB+SgVKDFNjlb4ClSdXIrJsPN
-CNVnG2kBwPMIYKYoddVk+wor4+HzhGfBMb9x59UzWFgyjtjo8oNL5rIIlVV06ta2
-nX8MD4sk8b0aT0cNiahw59iH0raeGcvoGEJE9xweOTd9OU5psJUr3tw1qOXBTPTz
-uX8HJ8rWnxDEzFsAy4/qkNLAutoxwx0NXJgKul+xP5Tgg2KkdUWhu2rPm8Kb5swe
-v4IFlq8/TmItAClFdrGBv3/NwaGNubrfthEG0t7uuVQKy4FIIkVOvks7M98h1Ug=
-=B7sS
------END PGP SIGNATURE-----
+That will not answer the original question, or provide more information
+than what's already available.
+
+I mean it's reasonable to admit the info about the first affected
+version is not readily available and won't be looked for, just noting
+that CPU is very unlikely to provide that information.
+
+-- 
+Tomas Hoger / Red Hat Product Security
