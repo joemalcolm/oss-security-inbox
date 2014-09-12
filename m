@@ -1,37 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/9
-Message-ID: <alpine.LFD.2.10.1407031335350.27589@javelin.pnq.redhat.com>
-Date: Thu, 3 Jul 2014 13:37:10 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: LMS-2014-06-16-6: LZ4 Core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/15
+Message-Id: <20140912183958.D1DA96C000A@smtpvmsrv1.mitre.org>
+Date: Fri, 12 Sep 2014 14:39:58 -0400 (EDT)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: [CVE Requests] rsync and librsync collisions
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-+-- On Thu, 3 Jul 2014, P J P wrote --+
-|   -> http://blog.securitymouse.com/2014/07/i-was-wrong-proving-lz4-exploitable.html
+> The below still require a CVE or two (unless MITRE disagrees).
 
-- -> http://fastcompression.blogspot.fr/2014/07/software-vulnerabilities-how-it-works.html
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+>> I think there should be CVEs assigned for this:
+>>
+>> rsync: MD5 collision DoS attack or limited file corruption
+>> librsync: MD4 collision file corruption
+>>
+>> Note: librsync is not the same code, protocol or maintainer as rsync.
 
+The short answer is that we neither agree nor disagree at present; we
+think that either any required CVE assignment can be made by us after
+a full public disclosure, or any required CVE assignment can be made
+by a different CNA now.
+
+Further details: MITRE has been contacted about this rsync and
+librsync report through multiple channels. The reply that we sent
+wasn't previously copied here because it didn't seem to be about a
+publicly known vulnerability.
+
+MITRE has no role in determining the list charter, but
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security says
+"List Content Guidelines ... Public security issues only please."
+
+http://www.openwall.com/lists/oss-security/2014/07/28/1 says "my last
+response from Wayne was effectively denying that this is a
+vulnerability" and "I won't provide full details yet, but if any
+distributions would like some collisions to perform specific tests
+(perhaps on Openstack Swift), please get in contact privately."
+
+http://www.openwall.com/lists/oss-security/2014/08/05/7 adds "I have
+provided a privileged few with PoC" and "My plan was to wait for fixes
+before releasing the full write-up and code."
+
+Our feeling is that, if the issue is not really public, sending a CVE
+request to the oss-security list is not a standard procedure. It seems
+that the simplest way forward would occur if one of the
+above-mentioned "privileged few" is a CNA on the
+http://cve.mitre.org/cve/cna.html list. They can evaluate the
+information that they have and make one or more CVE assignments. If
+the meaning of the CVE assignments is understandable without referring
+to the non-public details, then it might be useful to send the CVE
+assignments here, even before the full public disclosure.
+
+MITRE is not currently interested in receiving an advance copy of the
+full public disclosure or any related PoC information from anyone.
+We'll see whether the CNA process above can work.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJTtQ8uAAoJEN0TPTL+WwQfLZIP/i8s46oDy81fo+EGelG7tHiC
-9Y/L/BuneQzSzFn+MrMHWpab7e+2AoJcztKBRB0q3qd/DLr/UOz9Zqc33kE9YJWc
-H+WpL9oZx4D8Fq32PPCcgQWaOBRNWQD9FBMf+/1AbBgaqXusGI49mfRF5TTOeau6
-t2eYn3YrS/BRoxRIO9XxmjVhmTRNjYU9JQUuKQTkC7WdXpXjDm9/TStd8ah4a9jT
-gLBDnSn2BgS6HbbQBDbbY/X1nAK9bCQHSFhaBJhCJP2OhSf2m2IvKC0okJbnU4Sq
-qqpZ6RB6PLAqmzEj+N6XdiC1U14auQparefaOGNh8mD/xZcdatMWuJzKOhvp+xX1
-0raNHKqkYr589y2W+6IHtwc6F7SVx39TCpYnyeSoQoRcwoRPqZ+VsfUtIdazq6L7
-ENv1nNZsvOCQt3oGHH7Ze+HXcBJfpmzZ3j614Snf4ogFBpXJgRIhJSdGe+A45xEl
-FuNuIRhY5fi+VwpmSvtApLpy7iH8hSDEv2B9m4UwSIYmFOTEOqZ9XPvm/6O/u4ZY
-XjQBNwAMs1A7rbPphTF7xANaqyzdhL0NxaMzQ8ncwfPDQ4zEgc97SnxdFOsGJTrG
-RBNRPREdbF9V9Jw82wPmXSA5DvVky6Aoq9VFKcwCpC4gokX7f9Nnk6ZDzJaI53Fe
-Zpn2O7CVpBZaWP2ZM4cH
-=b30P
+iQEcBAEBAgAGBQJUEz2bAAoJEKllVAevmvmspzoH/j4aV6Ce69mB8+g2WKRptewL
+UpFZGzQF8dJWn0s1JWYYFLK+RA3iNUPdKLH+5j517xYhySq/lAOWtivJf8nhWM6O
+0/3NKvKYDGJO/6lAOV15YvxDYKMfoyvV6/koGwrenegHcLbtAukTk6XT1bwK1nKO
+XTy3ZaGipi5csyq2qGIkLGFIqGxOQRPXgv1Byjo4J412esCJDwgEhoTOqxo73pWC
+fV235YYG8l/bKWIBGpQwUh7De4slhrz0lycGghxcOj5PpE2Blp9UyoOHlb2coJxu
+jeaWTZhsa6TpFeFh1xL/MoZCSLm2ag5y/2wq/HBaIKcezRZp37K9yTbRoJqYAlQ=
+=FTO9
 -----END PGP SIGNATURE-----
