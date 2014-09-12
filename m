@@ -1,52 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/9
-Message-ID: <547245B7.4010802@yahoo.fr>
-Date: Sun, 23 Nov 2014 21:38:15 +0100
-From: Lionel Debroux <lionel_debroux@...oo.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/6
+Message-ID: <20140912095556.GA1850@alf.mars>
+Date: Fri, 12 Sep 2014 11:55:56 +0200
+From: Helmut Grohne <helmut@...divi.de>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: /tmp file vulnerability in ace
 Content-Type: text/plain; charset=utf-8
 
-I hope that no distro is configured to let lesspipe call programs which
-parse Berkeley DBs, because that's not robust either:
+On Thu, Sep 11, 2014 at 03:33:17AM -0400, cve-assign@...re.org wrote:
+> Use CVE-2014-6311.
 
-1) I've just experienced corruption of the database used by the "moc"
-ncurses-based console audio player, certainly after I used the power
-button on my computer without being able to sync first.
-Now, as long as that corrupt database is in ~/.moc/cache/tags.db, even
-with any corresponding DB log file, moc hangs on startup, pegging one
-core at 100% for minutes (that is, until I run `killall -9 mocp`).
-Attaching to the process through GDB and peeking through backtraces
-every few seconds always shows something below __bam_search -> __db_lget
--> __lock_vec.
+Thanks.
 
-However:
-* db5.3_verify prints several error messages and exits with a status
-code of 1, as it should;
-* db5.3_dump -d a is happy as well with that file, exiting with a status
-code of 0.
-The only thing wrong with that database seems to be a fully zero-ed page.
+> > An interesting find is bin/g++-dep line 63:
+> > > TMP=/tmp/g++dep$$
+> > This path is also used for writing.
+> 
+> As far as we can tell, there is no bin/g++-dep in the
+> download.dre.vanderbilt.edu upstream distribution. The bin/g++-dep
+> issue, if confirmed, would not be within the scope of CVE-2014-6311.
 
-2) that gave me the idea to fuzz db5.3_verify on Debian sid amd64, using
-a trivial test database:
-$ rm -f test.db
-$ echo -e "test\ntest" | db5.3_load -T -t hash test.db
-$ zzuf -qcs0:200 -U 10 -C 10 db5.3_verify test.db
-zzuf[s=1,r=0.004]: signal 9 (memory exceeded?)
-zzuf[s=12,r=0.004]: signal 9 (memory exceeded?)
-zzuf[s=64,r=0.004]: signal 9 (memory exceeded?)
-zzuf[s=66,r=0.004]: signal 9 (memory exceeded?)
-zzuf[s=110,r=0.004]: signal 8 (SIGFPE)
-zzuf[s=188,r=0.004]: signal 9 (memory exceeded?)
-$ zzuf -qcs0:2000 -C 10 db5.3_dump -d a test.db
-zzuf[s=110,r=0.004]: signal 8 (SIGFPE)
-zzuf[s=290,r=0.004]: signal 8 (SIGFPE)
-zzuf[s=445,r=0.004]: signal 8 (SIGFPE)
-zzuf[s=893,r=0.004]: signal 8 (SIGFPE)
-zzuf[s=1407,r=0.004]: signal 8 (SIGFPE)
-zzuf[s=1540,r=0.004]: signal 8 (SIGFPE)
-zzuf[s=1695,r=0.004]: signal 8 (SIGFPE)
-zzuf[s=1736,r=0.004]: signal 8 (SIGFPE)
+I point out that said bin/g++-dep file can be found within
+http://download.dre.vanderbilt.edu/previous_versions/ACE-6.2.7.tar.bz2.
 
+Nevertheless, this is not a CVE request, because it is not clear to me
+in what ways this file is intended for user consumption (if at all). The
+issue covered by CVE-2014-6311, on the other hand, can be reproduced by
+executing Debian's dpkg-buildpackage or following upstream's
+documentation.
 
-Lionel.
+Helmut
