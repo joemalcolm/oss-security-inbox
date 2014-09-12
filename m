@@ -1,56 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/3
-Message-ID: <20141230042727.GB26543@eldamar.local>
-Date: Tue, 30 Dec 2014 05:27:27 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: MiniUPnPd: several issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/4
+Message-ID: <54129CD2.3000306@mittwald.de>
+Date: Fri, 12 Sep 2014 09:12:18 +0200
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 09, 2014 at 09:32:59PM +0100, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> Quoting from the Bug in the Debian bugtracker at
-> https://bugs.debian.org/772644 several issues were found in in
-> MiniUPnP:
-> 
-> On Tue, Dec 09, 2014 at 10:20:32PM +0800, Thomas Goirand wrote:
-> > Stephen Röttger from Google did a security audit of MiniUPnPd, and found a few
-> > issues, all now fixed upstream.
-> > 
-> > Extract from private messages who were forwarded to me (but which is fine to
-> > disclose since there's already some public commits.
-> > 
-> > > MiniUPnP is vulnerable to DNS rebinding attacks which allows an attacker to
-> > > trigger upnp actions through a malicious website. Wikipedia describes the
-> > > attack quite well: http://en.wikipedia.org/wiki/DNS_rebinding.
-> > > To mitigate this attack, MiniUPnP should check if the request's host header
-> > > either contains an IP address or the hostname of the device.
-> > > 
-> > > Besides that, I found a few memory corruption vulnerabilities in the code.
-> > 
-> > Fixes:
-> > 
-> > https://github.com/miniupnp/miniupnp/commit/d00b75782e7d73e78d0b935cee6f4873bc48c9e8
-> > https://github.com/miniupnp/miniupnp/commit/7c91c4e933e96b913b72685d093126d282b87db6
-> > 
-> > Some memory corruption fix:
-> > 
-> > https://github.com/miniupnp/miniupnp/commit/e6bc04aa06341fa4df3ccae87a167e9adf816911
-> > 
-> > A buffer overrun in ParseHttpHeaders() fix:
-> > 
-> > https://github.com/miniupnp/miniupnp/commit/dd39ecaa935a9c23176416b38a3b80d577f21048
-> > 
-> > Added check if BuildHeader_upnphttp() failed to allocate memory:
-> > 
-> > https://github.com/miniupnp/miniupnp/commit/ec94c5663fe80dd6ceea895c73e2be66b1ef6bf4
-> 
-> Can CVEs be assigned for these issues?
 
-Adding MITRE explicitly as CC, as I forgot in my first mail for the
-CVE request.
 
-Regards,
-Salvatore
+On 11/09/14 21:36, Ritwik Ghoshal wrote:
+> A complete list of all affected-supported MySQL releases will be
+> published via Oracle's quarterly Critical Patch Update(CPU) advisory.
+> More information about our CPU program is available at -
+> http://www.oracle.com/technetwork/topics/security/alerts-086861.html
+> 
+> 
+> Thanks,
+
+Well I hope than that I can soon migrate to mariadb or postgresql.
+In other words, to a db which takes security serious and handles
+it professional, as this is clearly not professional behaviour.
+
+Thanks for your information anyway.
+
+-- 
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
