@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/24/4
-Message-ID: <CAAnPYQ7NhQmfN1oRK6K7+_ehCC12iKftpxY6nNHvJF7vSjeY2Q@mail.gmail.com>
-Date: Wed, 24 Dec 2014 21:32:57 +0000
-From: Gynvael Coldwind <gynvael@...dwind.pl>
-To: oss-security@...ts.openwall.com,  Bastien ROUCARIES <roucaries.bastien@...il.com>
-Cc: jodie.cunningham+osssecurity@...il.com
-Subject: Re: Imagemagick fuzzing bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/7
+Message-ID: <20140912140344.5864641a@redhat.com>
+Date: Fri, 12 Sep 2014 14:03:44 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Sven Kieske <s.kieske@...twald.de>
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+On Fri, 12 Sep 2014 09:12:18 +0200 Sven Kieske wrote:
 
-Original reporter from google side here.
+> Well I hope than that I can soon migrate to mariadb or postgresql.
+> In other words, to a db which takes security serious and handles
+> it professional, as this is clearly not professional behaviour.
 
+I honestly fail to see MariaDB as a sliver bullet here.  No doubt
+MariaDB upstream is more open with respect to security issues handling
+and does not seem to obfuscate security flaw details the same way MySQL
+upstream does.  However, I don't believe they have any better
+visibility into what Oracle assigned CVEs are for.  So for example, they
+likely did not have a way to be sure that CVE-2014-2440 is dupe a of
+CVE-2014-0001 until it was confirmed elsewhere in this thread.
 
-> You are aware that there is graphicsmagick which shares lots of code
-> with im (it's an early fork)? It'd be nice to also report these issues
-> to them if they apply. (I also reported a couple of issues in both
-> im/gm lately and devs were always quick to fix things)
->
+At this point, it seems reasonable to assume that any Oracle assigned
+CVE most likely affects matching 5.x MariaDB versions, and that it is
+fixed when MariaDB is rebased to a fixed MySQL version.  With 10.x being
+a full fork no longer being rebased to new MySQL releases, it will
+become increasingly uncertain if certain MySQL CVE is applicable to
+MariaDB as well, or to know if it was addressed.
 
-Do you know if either im or gm backport fixes from each other?
-I fuzzed only im, so I've reported to im. I don't mind reporting to both in
-the future, but if they DO backport fixes, that would lead into collisions
-(i.e. two different fixes for one bug, makes merging harder).
-
-Cheers,
-Gynvael
-
+-- 
+Tomas Hoger / Red Hat Product Security
