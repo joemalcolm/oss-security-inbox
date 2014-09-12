@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/19
-Message-ID: <CALoOobP1ZMj222dXwA_EucGGOpN9fJxHDKfAM5krTyk2BfXVDg@mail.gmail.com>
-Date: Fri, 5 Dec 2014 14:03:25 -0800
-From: Paul Pluzhnikov <ppluzhnikov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/8
+Message-ID: <20140912140442.35eef409@redhat.com>
+Date: Fri, 12 Sep 2014 14:04:42 +0200
+From: Tomas Hoger <thoger@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Sriraman Tallam <tmsriram@...gle.com>
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 5, 2014 at 1:07 PM, Hanno Böck <hanno@...eck.de> wrote:
->
-> On Fri, 05 Dec 2014 15:55:27 -0500
-> Daniel Micay <danielmicay@...il.com> wrote:
->
-> > The context of the architecture you're testing on is required for the
-> > numbers to be meaningful. It's known to be expensive on x86 and should
-> > be nearly free elsewhere if there aren't compiler / linker perf bugs.
+On Thu, 11 Sep 2014 16:49:45 -0700 Ritwik Ghoshal wrote:
 
-FWIW, we've measured 1-2.5% degradation in our highly-optimized x86_64
-binaries, and Sri's patch avoids most of it.
+> On 9/11/2014 7:39 AM, Tomas Hoger wrote:
+> > April CPU mentions client issue CVE-2014-2440.  Is it the same issue
+> > that got CVE-2014-0001 publicly assigned before?  The versions that
+> > fixed CVE-2014-2440 are the same that got CVE-2014-0001 fix, and
+> > there's no mention of the CVE-2014-0001 in April CPU.
+> 
+> Yes, CVE-2014-2440 is same as CVE-2014-0001. We have updated our CPU
+> April, 14 advisory with a note under MySQL risk matrix that states the
+> same. Please see -
+> http://www.oracle.com/technetwork/topics/security/cpuapr2014-1972952.html
 
-Sri also tells me that H.J. Lu committed a patch for pie+copyrelocs to
-GNU-ld, and made the GCC copyreloc optimization (which has been
-committed) the default when linker support is available.
+Awesome, thank you for the confirmation!
+
+Any hints on the remaining questions from the mail? :)
 
 -- 
-Paul Pluzhnikov
+Tomas Hoger / Red Hat Product Security
