@@ -1,18 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/15
-Message-ID: <20140606135721.GA7794@inutil.org>
-Date: Fri, 6 Jun 2014 15:57:21 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/3
+Message-ID: <CAOp4FwT_t=b1d9ugEUBLpv40o8nMDL9w-4b=9yWD1BvXqjJQkw@mail.gmail.com>
+Date: Fri, 12 Sep 2014 10:20:23 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0085 / Zookeeper
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-could some from Red Hat please clarify on 
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-0085 ?
+On Thu, Sep 11, 2014 at 11:42 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 11/09/14 01:36 PM, Ritwik Ghoshal wrote:
+>> On 9/11/2014 1:28 AM, Sven Kieske wrote:
+>>>
+>>>
+>>> On 10/09/14 18:00, Salvatore Bonaccorso wrote:
+>>>> Hi
+>>>>
+>>>> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
+>>>> the following issue, which could be exploited by a local user to run
+>>>> arbitrary code in context of the mysqld server.
+>>>
+>>> While I'm investigating this:
+>>> Does someone happen to know in which version this vuln got introduced?
+>>>
+>>
+>> A complete list of all affected-supported MySQL releases will be
+>> published via Oracle's quarterly Critical Patch Update(CPU) advisory.
+>> More information about our CPU program is available at -
+>> http://www.oracle.com/technetwork/topics/security/alerts-086861.html
+>>
+>>
+>> Thanks,
+>> -Ritwik
+>
+> So you're saying you won't tell anyone until the middle of October? So
+> we have to wait just under 3 months from the release of MySQL 5.5.39 to
+> find out exactly what versions are affected by security flaws fixed in it?
+>
+> Are you serious?
 
-Does this affect stock releases from http://zookeeper.apache.org/ or is this CVE for a combination
-of Zookeeper and Red Hat JBoss A-MQ ?
+Indeed. Given MySQL's widespread usage, we can't wait that long. Maybe
+Oracle needs to review its policy for critical updates.
 
-Cheers,
-        Moritz
+
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+
+
+
+-- 
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
