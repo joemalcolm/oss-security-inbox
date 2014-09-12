@@ -1,64 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/13
-Message-ID: <54240C86.8050504@redhat.com>
-Date: Thu, 25 Sep 2014 14:37:26 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/2
+Message-Id: <20140912003251.CC07534E00A@smtpvbsrv1.mitre.org>
+Date: Thu, 11 Sep 2014 20:32:51 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: ioflo tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-On 09/24/2014 08:54 PM, Michal Zalewski wrote:
->> My main concern with the current patch is that still exposes the bash parser
->> and function definition printer to attacks from the network. Bugs in those
->> fairly large components could cause another critical issue.
->
-> Yup, that surprised me when testing the patch, too - I can still get a
-> function called HTTP_COOKIE, for example. I worry about potential side
-> effects of parsing even in absence of parser bugs. In most
-> object-oriented languages, such side effects are practically
-> guaranteed. Bash may be saved by simplicity, but not sure how robust
-> that assumption is.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The parser does make an effort to properly stage all operations for 
-later execution, without executing them immediately.
+> cProfile.runctx('skedder.run()', globals(), locals(), statfilepath)
+> And boom goes the file that got linked to.
 
-There is certainly the question of incomplete state recovery on parse 
-errors.
+This perhaps is likely but your message doesn't show that a symlink
+attack can occur. Your message doesn't discuss what code ultimately
+uses the statfilepath pathname, or whether the open call for that
+pathname uses O_EXCL|O_CREAT. The following might possibly be relevant
+to this missing information:
 
-> I've written more code in bash than I should have and never used
-> function exports, or even realized that they exist. I wonder if they
-> can be made optional (e.g., gated by a flag on the subprocess) without
-> breakage.
+  http://hg.python.org/cpython/file/2.7/Lib/profile.py
+  def dump_stats(self, file):
+      f = open(file, 'wb')
 
-I've been told that there are users.  From what I can see, exported 
-functions seem somewhat popular in test harnesses:
+We'll let you fill in the details.
 
-   <http://codesearch.debian.net/search?q=export\+-f>
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Reportedly, some users even create the function definitions outside 
-bash, so they rely function name and variable name being identical.  But 
-I honestly cannot see a way to preserve such an assumption.
-
-A subprocess flag is unlikely to be present when it is needed.  One 
-common use case is to define and export functions in bash.profile, and 
-expect them to exist in interactive shells created as grandchildren. 
-The fix is to use bashrc instead of bash.profile and non-exported functions.
-
-> Another option may be to export them through specially prefixed
-> variables, which should be transparent but minimize the risk of
-> interfering with web servers and such.
-
-I added suffixes as well, see the attached patch.  This patch has seen 
-some testing, but it certainly needs more.  There are some possibilities 
-for simplification if it's acceptable to use asprintf.
-
-What do you think about this approach?
-
-(Chet, this patch is identical to the patch I sent to you a couple of 
-minutes ago.)
-
--- 
-Florian Weimer / Red Hat Product Security
-
-View attachment "variables-affix.patch" of type "text/x-patch" (5113 bytes)
+iQEcBAEBAgAGBQJUEj3vAAoJEKllVAevmvms4iAIAKQ9umu+PRuqQu3Qkt7O+TGw
+3L6ySYOw0Pu9lY93Z8aaWP89jr0jIwK2LMtqoLcdedlp9B9pwuB7U+vGHEXUvDL4
+Q9IZMH8h4ysJqC7vJiTU/Txhjm33S9xwd5gGkS0Zxco2toIROfXmhUlJHcICWPgK
+9HqXST8GjUXdz7Xv25stRHRcLEYsP+Kp479NZ8tkaKagTbLDz5Zqcnz+bOj12U4r
+3AZfKy/bWOFuV/33M21OMZ/60PLjgb3jL7cJ3Jb6lJrcJIjIPuf1ooz+16fMN8z4
+xd+z07R+5toTZjdyepTWIca33sJzrj2GQ1qQ2G24YAs8DJIGcKnn2qsL4VF5QeQ=
+=bp/N
+-----END PGP SIGNATURE-----
