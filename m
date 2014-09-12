@@ -1,72 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/7
-Message-ID: <966D5BC4-E4E8-45FE-89B9-C4A92B11A648@redhat.com>
-Date: Thu, 23 Jan 2014 16:46:54 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: CVE-2014-0022 insecure install of rpm packages via yum cron
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/1
+Message-Id: <20140912003139.372F06C0026@smtpvmsrv1.mitre.org>
+Date: Thu, 11 Sep 2014 20:31:39 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: vos tmp vuln
 Content-Type: text/plain; charset=utf-8
 
-Just wanted to give a heads up of a flaw that was reported to our bugzilla.  Our primary bug on this is here:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1057377
+> vos-1.10.4/vos/md5_cache.py
+>    def __init__(self, cache_db="/tmp/#vos_cached.db#"):
 
-I'm just going to cut-n-paste what I wrote in the bug.  Obviously no CVE needs to be assigned; this is for others who may be shipping yum.
+Nothing in your message shows that the MD5_Cache class is ever used
+with that /tmp pathname. Also, your message doesn't show whether or
+not the ultimate open call for that pathname uses O_EXCL|O_CREAT. The
+following might possibly be relevant to this missing information:
 
-Gabriel VLASIU reported [1] that yum-cron would install unsigned RPM packages that yum itself would refuse to install.  The yum-cron code is based on that in yum-updatesd.py.  This is due to  the installUpdates() function (processPkgs() in yum-updatesd.py) failing to fully check the return code of the called sigCheckPkg() function.  sigCheckPkg() is described thus:
+  - the "md5Cache = md5_cache.MD5_Cache()" line in scripts/vsync
 
-    def sigCheckPkg(self, po):
-        """Verify the GPG signature of the given package object.
+  - https://github.com/python/cpython/blob/master/Modules/_sqlite/connection.c
 
-        :param po: the package object to verify the signature of
-        :return: (result, error_string)
-           where result is::
+Those two items may be enough to show that a symlink attack can occur,
+but we'll let you fill in the details.
 
-              0 = GPG signature verifies ok or verification is not required.
-              1 = GPG verification failed but installation of the right GPG key
-                    might help.
-              2 = Fatal GPG verification error, give up.
-        """
+For CVE assignments, it's not enough to show that the code contains a
+/tmp pathname that is apparently used for write access. In a typical
+case, it's also necessary to show that the piece of code is actually
+executed during use of the product, the /tmp pathname is actually
+used, and the specific open operation is unsafe in the presence of a
+symlink. All of this can be straightforward for a self-contained sh or
+possibly Perl script, but is often much less straightforward for
+Python.
 
-However, the processPkgs() and installUpdates() calling function do not account for return code 2:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-    def processPkgs(self, dlpkgs):
-...
-        for po in dlpkgs:
-            result, err = self.updd.sigCheckPkg(po)
-            if result == 0:
-                continue
-            elif result == 1:
-                try:
-                    self.updd.getKeyForPackage(po)
-                except yum.Errors.YumBaseError, errmsg:
-                    self.failed([str(errmsg)])
-
-and:
-
-    def installUpdates(self, emit):
-...
-        for po in dlpkgs:
-            result, err = self.sigCheckPkg(po)
-            if result == 0:
-                continue
-            elif result == 1:
-                try:
-                    self.getKeyForPackage(po)
-                except yum.Errors.YumBaseError, errmsg:
-                    self.emitUpdateFailed(errmsg)
-                    return False
-
-yum-cron.py replaced yum-cron.sh in Fedora 19 (3.4.3-47); earlier versions of Fedora use yum-updatesd.
-
-This has been corrected upstream [2] and in Fedora via yum-3.4.3-132.fc19 and yum-3.4.3-130.fc20.
-
-This does not affect Red Hat Enterprise Linux 6 as it used neither yum-updatesd nor yum-cron; it used a shellscript that called yum itself to do updates.
-
-
-[1] https://bugzilla.redhat.com/show_bug.cgi?id=1052440
-[2] http://yum.baseurl.org/gitweb?p=yum.git;a=commitdiff;h=9df69e579496ccb6df5c3f5b5b7bab8d648b06b4
-
--- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+iQEcBAEBAgAGBQJUEj37AAoJEKllVAevmvmsqMsH/iOBf4ACYyNyc97bTf0upT+s
+V5KYwtG8UpXk7rwwbiELUFt3N7Y07NBbKDwnvKCRnZflRytCEdn1S9qrsQ5pOO/p
+VDJlX9xFEjqJhYjRpqcXT81p2OaHiv3s0sdfHhPdcubXDuax+EqNgRVmOPmxSQo3
+0x4/dK7ZDPXhF16oZXy/K7ETsrBoxztVRv1D13V+fI81ghJe9JYcKdlQX3j911U2
+5rnepL3WxNHQu0KhGvMEIsLkfR5X0eM6JGrXFXYxOJ7sZd3ba0cmjgLzJsDnTvxW
+TF9yNFok0CkQEAt4m0FD8ioRKLE8ep0giKZd1aix6twGpgkapgmoTEFKRV0lmrQ=
+=+bTm
+-----END PGP SIGNATURE-----
