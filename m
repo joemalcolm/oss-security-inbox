@@ -1,85 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/16/1
-Message-ID: <20141116151037.785d9abf@pc>
-Date: Sun, 16 Nov 2014 15:10:37 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/13
+Message-ID: <20140912154925.GA20915@openwall.com>
+Date: Fri, 12 Sep 2014 19:49:26 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+Cc: bert hubert <bert.hubert@...herlabs.nl>
+Subject: Re: PowerDNS Recursor 3.6.0 can be crashed remotely (CVE-2014-3614)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Sep 12, 2014 at 05:14:55PM +0400, Solar Designer wrote:
+> Since the issue was already public on the same day, I think it should
+> have been posted to oss-security right away, without use of the distros
+> list.
 
-I wanted to share a couple of issues I recently found via zzuf and afl
-fuzzing. It's a telling story about the state of some of the free
-software projects involved and I can only encourage others to join the
-effort to find bugs via fuzzing. Some of them are really low hanging
-fruit.
-I'm cc-ing cve-assigners, I leave it up to you to decide which you
-assign CVEs. If you want / need more info on details please ask.
+I was wrong.  The issue was first brought to the distros list via a
+separate message on September 8, two days before public disclosure.
+So use of the distros list was appropriate.  The only thing that went
+wrong (as far as list policy is concerned) was that on September 10 a
+notification wasn't sent to oss-security (but was sent to distros).
 
-
-Imagemagick:
-Multiple issues in PCX, DCM parser and generic issue in resize code
-http://www.imagemagick.org/script/changelog.php
-These already got CVEs:
-http://int21.de/cve/CVE-2014-8354-ImageMagick-oob-heap-overflow.html
-http://int21.de/cve/CVE-2014-8355-ImageMagick-pcx-oob-heap-overflow.html
-http://int21.de/cve/CVE-2014-8562-ImageMagick-dcm-oob-heap-overflow.html
-
-GraphicsMagick:
-Fork of Imagemagick, so some of the above also affect it, tests with
-the same fuzzed sample set turned out one independent other issue:
-http://sourceforge.net/p/graphicsmagick/code/ci/37ab9576dbdfeecd8bbc0a312a49b362846016c1/
-Heap Overflow / oob read
-One more issue with PNGs that turned out to be weird, it caused an
-error message to overflow:
-http://sourceforge.net/p/graphicsmagick/code/ci/0dc6e1d3119f1dda668b0f2d1464459a06767879/
-
-elfutils:
-Checks done with the set of files that crashed binutils turned out one
-issue:
-https://lists.fedorahosted.org/pipermail/elfutils-devel/2014-October/004215.html
-Invalid read
-american fuzzy lop found a couple more:
-https://lists.fedorahosted.org/pipermail/elfutils-devel/2014-November/004230.html
-and more:
-https://lists.fedorahosted.org/pipermail/elfutils-devel/2014-November/004249.html
-
-GIMP:
-Invalid reads in import plugins for fli and tga.
-https://bugzilla.gnome.org/show_bug.cgi?id=739133
-https://bugzilla.gnome.org/show_bug.cgi?id=739134
-
-claws-mail / gdk-pixbuf
-Assert in gdk-pixbuf when trying to load a malformed file as an
-animation. This was an accidental discovery when I clicked on a
-malformed PNG I send while reporting another issue (in graphicsmagick)
-in my mail client (and it crashed with an assert).
-https://bugzilla.gnome.org/show_bug.cgi?id=739785
-http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3322
-
-file/libmagic:
-out of bounds read when parsing JPG header
-http://bugs.gw.com/view.php?id=398
-https://github.com/file/file/commit/59e63838913eee47f5c120a6c53d4565af638158
-
-ndisasm:
-Actually I found this by running ndisasm on /dev/urandom - no joke!
-Crash / oob read:
-http://bugzilla.nasm.us/show_bug.cgi?id=3392289
-
-less:
-Out of bounds read, upstream doesn't answer and doesn't have a public
-bug tracker. This wasn't really found by fuzzing but by running less on
-a likely malwared gif, I reduced it to a smaller testcase:
-http://int21.de/cve/less-oob
-
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Alexander
