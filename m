@@ -1,57 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/17/3
-Message-ID: <20140717175813.GR17402@oevtugenva.nrevsny.pk>
-Date: Thu, 17 Jul 2014 13:58:13 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/13/1
+Message-ID: <lv1cgv$10c$1@ger.gmane.org>
+Date: Sat, 13 Sep 2014 14:15:27 +0200
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: libressl before 2.0.2 under linux PRNG failure
+Subject: Re: CVE request: MantisBT Null byte poisoning in LDAP authentication
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 16, 2014 at 11:13:44AM +0200, Hanno Böck wrote:
-> Hi,
-> 
-> This has made the news lately:
-> https://www.agwa.name/blog/post/libressls_prng_is_unsafe_on_linux
-> 
-> Should get a CVE. Affected is portable libressl 2.0.0 and 2.0.1 on
-> Linux. 2.0.2 has been released:
-> https://marc.info/?l=openbsd-tech&m=140548206911600&w=2
-> 
-> Under certain conditions forking a process can create repeated random
-> numbers.
-> 
-> LibreSSL 2.0.2 contains a workaround, although the reporter of this
-> issue thinks this may not be the best approach.
-> 
-> Please assign CVE.
+On 2014-09-12 20:36, cve-assign@...re.org 
+wrote:
+> Use CVE-2014-6387.
 
-I'm skeptical of assigning a CVE for this. The case in which repeated
-random numbers could happen is not a typical or even reasonably-safe
-usage case. Fork without exec is already a risky usage pattern for
-several reasons:
+Thank you.
 
-- In programs which use arbitrary libraries including some which may
-  be internally multi-threaded, it may invoke undefined behavior.
-  (Behavior is undefined if the forked child of a multi-threaded
-  process calls any non-async-signal-safe function before a successful
-  exec, per POSIX.)
+Will post back here when MantisBT 1.2.18 is released.
+Until then, affected systems can apply the patch manually.
 
-- In general, it exposes the address space layout and all data from
-  the parent (rather than just data the child actually needs) to the
-  child, greatly increasing the risk of leaking this information.
 
-The only typical usage case I'm aware of that involves SSL and fork
-without exec is a service that forks a child for each connection. This
-normally does not involve grandchild processes without exec, nor does
-it involve the main service process exiting, which would be necessary
-in order for the pid to be re-assigned. Also, it's likely that such
-service processes run in their own process group, in which case it's
-impossible for the pid to be re-assigned even if the main serice
-process dies.
 
-In addition, the versions of libressl that fixed this issue added new,
-possibly worse issues at the same time. See:
-
-http://port70.net/~nsz/47_arc4random.html
-
-Rich
