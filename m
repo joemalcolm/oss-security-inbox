@@ -1,52 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/10
-Message-ID: <mpro.nabff205xxnps07lv.taviso@cmpxchg8b.com>
-Date: Thu, 14 Aug 2014 14:23:27 -0700
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: [CVE Request] glibc iconv_open buffer overflow (was: Re: Re: glibc locale issues)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/2
+Message-ID: <alpine.LFD.2.10.1409151702240.15703@javelin.pnq.redhat.com>
+Date: Mon, 15 Sep 2014 17:03:47 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request Linux kernel: net: guard tcp_set_keepalive against crash
 Content-Type: text/plain; charset=utf-8
 
-John Haxby <john.haxby@...cle.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On 13/08/14 07:01, cve-assign@...re.org
-> wrote:
-> > > > iconv/gconv_charset.h:strip() normalizes the transliteration
-> > > > argument to iconv_open, so the resulting file names follow a
-> > > > particular pattern, and there cannot be enough slashes to ascend to
-> > > > a writable directory.
-> >>>
-> > > > > if not maybe the one byte overflow is still exploitable.
-> >>>
-> > > > Hmm.  How likely is that?  It overflows in to malloc metadata, and
-> > > > the glibc malloc hardening should catch that these days.
-> > 
-> > > Not necessarily on 32-bit architectures, so I agree with Tavis now,
-> > > and we need a CVE.  The upstream bug is:
-> > 
-> >>    <https://sourceware.org/bugzilla/show_bug.cgi?id=17187>
-> > 
-> > Use CVE-2014-5119. A CVE-2005-#### number isn't needed because the
-> > msg00091.html message (referenced in 17187) does not state any security
-> > implications.
-> 
-> That's correct.  Neither I nor any of the readers of my original bug
-> report commented on any possible security implications.  (Mind you, in
-> 2005 I was probably a little more naïve.)
-> 
-> jch
-> 
+    Hello,
 
-FWIW, after discussion and debugging with Florian I think everyone is
-convinced this is exploitable on x64 and x86. Additionally, there's also a
-trivial root if a directory exists with certain characters restrictions.
+Linux kernel built with the Networking support(CONFIG_NET) is vulnerable to a
+crash, while resetting a socket timer. It could occur while doing a
+setsockopt(SO_KEEPALIVE) call.
 
-See here for more information.
+A privileged user/process able to create RAW socket could use this flaw to
+crash the system kernel resulting in DoS.
 
-https://sourceware.org/ml/libc-alpha/2014-07/msg00590.html
+Upstream fix:
+- -------------
+   -> https://git.kernel.org/linus/3e10986d1d698140747fcfc2761ec9cb64c1d582
 
-I believe the current plan is to completely remove the transliteration
-module support, as it hasn't worked for 10+ years.
+Reference:
+- ----------
+   -> https://bugzilla.redhat.com/show_bug.cgi?id=1141742
 
-Tavis.
 
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJUFs6bAAoJEN0TPTL+WwQfMF0P/3tYlFTCHpF594o/p84wdpyK
+KS6LaQIryYcxbZR6Pk28fpSf9bejXcj8RE0+eX2qCtZsCJYa2x8YhxoIppODqe+E
+EhMzedgxBlnOyg8xfbi/Mj92uYuf3ipLBMyBdMUUop8rb7cXw3wCEX4rgG+cih5n
+3EhlcBJu6qFcpn463CUFtWAkv+pGGYtA1Ts7qNJB1A2BuWWIo0RjnNWO7VpxnFum
+b2BE2kVKkWCgT1UtDNFiTl3tOvuCQMjvmqSeFg/VdgWikXHEXjZVtOBi2JMzqkCA
+qCJO5A54grC2HwIMvRKcd8JnUqVKdZ7j4oO6KVngEH+jDTrJgilRoQ4goa+g0Ex2
+UWiHqF7Z5IdeT2xRsf8bA1yZCHvciJleuVincYw96x70KBDqB4GgafabUaPYVZbw
+zwCm5sYB1yGecRjf3ggjIa9W1amJ6WH+R0We7AfK/wU7E0lmKJeQBYYT5i4dB+dg
+S4weE7kBYxcyIIJ+76pkTWtG/mbPPV1RTZ4nih9QwgHtMM3Ak0fmuBNhR34w80BL
+uj80qFXFs5ADnIpWKiE2091EJOQWrKVj22WVP5IznNGsUKvm7VItwjimfOFZRu32
+AlzgjLRl4bq/GxNdLJGnirDW6HainPMIY4kZkdi4C7ItA81odIpdcEMol9QrcJjS
+3RwyDR2QPgcqYmYCA3W/
+=skE4
+-----END PGP SIGNATURE-----
