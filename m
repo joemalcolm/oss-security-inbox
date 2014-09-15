@@ -1,55 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/5
-Message-ID: <CAHgqqbRry6jysnJB2MsM4rcL5YKA0jQ6ys3yALg+9GMNRaoomQ@mail.gmail.com>
-Date: Wed, 14 May 2014 15:03:09 +0300
-From: Dolev Farhi <dolevf87@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>, cve-assign <cve-assign@...re.org>
-Subject: Zenoss Open Source monitoring System - Open Redirect & Stored XSS Vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/1
+Message-ID: <54163664.8070505@moodle.com>
+Date: Mon, 15 Sep 2014 08:44:20 +0800
+From: Michael de Raadt <michaeld@...dle.com>
+To: oss-security@...ts.openwall.com
+Subject: Moodle security notifications public
 Content-Type: text/plain; charset=utf-8
 
-hi,
+The following security notifications are now public after release.
 
-Several security issues were found in Zenoss monitoring system.
+Thanks to OSS members for their continued cooperation.
 
+=======================================================================
+MSA-14-0033: URL parameter injection in CAS authentication
 
-1.  Stored XSS.
-A persistent XSS vulnerability was found in Zenoss core, by creating a
-malicious host with the Title <script>alert("Xss")</script> any user
-browsing
-to the relevant manufacturers page will get a client-side script executed
-immediately.
+Description:       A flaw in the third-party CAS library, utilised by
+                    Moodle, has been found, which could potentially
+                    allow unauthorised access and privilege escalation.
+Issue summary:     Upgrade phpCAS to 1.3.3 or greater - security
+                    vulnerabilities
+Severity/Risk:     Serious
+Versions affected: 2.7 to 2.7.1, 2.6 to 2.6.4, 2.5 to 2.5.7 and earlier
+                    unsupported versions
+Versions fixed:    2.7.2 and 2.6.5 (NOTE: A fix to 2.5 was not
+                    possible. CAS users with Moodle 2.5 or earlier are
+                    encouraged to upgrade to a more recent release.)
+Reported by:       Eric Merrill
+Issue no.:         MDL-46766
+CVE identifier:    CVE-2014-4172
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46766
 
-Proof of concept:
-1. Create a device with with the Title <script>alert("XSS")</script>
- 2. Navigate to the  Infrastructure -> Manufacturers page.
- 3. pick the name of the manufacturer of the device, e.g. Intel
- 4. select the type of the hardware the device is assigned to, e.g.
-GenuineIntel_ Intel(R) Core(TM) i7-2640M CPU _ 2.80GHz
- 5. the XSS Executes.
-    <tr class="even">
-      <td class="tablevalues"><a
-href='/zport/dmd/Devices/Server/Linux/devices/localhost/devicedetail'><script>alert("xss")</script></a></td>
-      <td class="tablevalues">GenuineIntel_        Intel(R) Core(TM)
-i7-2640M CPU _ 2.80GHz</td>
-    </tr>
+=======================================================================
+MSA-14-0034: Identity information revealed early in Q&A forum
 
+Description:       Users who had not yet posted the required answer in
+                    a Q&A forum in order to access past posts were able
+                    to see the name of the last person who had posted.
+Issue summary:     Other authors are visible in /mod/forum/view.php
+                    before student has posted their own answer.
+Severity/Risk:     Minor
+Versions affected: 2.7 to 2.7.1, 2.6 to 2.6.4, 2.5 to 2.5.7 and earlier
+                    unsupported versions
+Versions fixed:    2.7.2, 2.6.5 and 2.5.8
+Reported by:       Amanda Doughty
+Issue no.:         MDL-46619
+CVE identifier:    CVE-2014-3617
+Changes (master): 
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46619
 
-
-2. Open Redirect vulnerability.
-an open redirect is possible via http://zenoss
--url.com/:8080/zport/acl_users/cookieAuthHelper/login_form?came_from=[
-http://malicious-website.com ]  allowing an
-attacker to redirect a user to a malicious website.
-
-
-
-Can CVE numbers please be assigned to these?
-
-Tx.
-
-
-
--- 
-additional proof of concept vid.
-https://www.youtube.com/watch?v=wtmdsz24evo&feature=youtu.be
-
+=======================================================================
