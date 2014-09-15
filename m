@@ -1,33 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/4
-Message-ID: <CAN0s7yQTf4iP1ee54dsjbEj=B+WsiwEzJ_o89tLeq2iNpBmm1g@mail.gmail.com>
-Date: Wed, 17 Dec 2014 19:15:10 +0200
-From: Elad Alfassa <elad@...oraproject.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: What is the "Grinch" polkit/wheel group issue?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/6
+Message-Id: <20140915152812.40B77336003@smtpvbsrv1.mitre.org>
+Date: Mon, 15 Sep 2014 11:28:12 -0400 (EDT)
+From: cve-assign@...re.org
+To: kristian.fiskerstrand@...ptuouscapital.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE assignment for c-icap Server
 Content-Type: text/plain; charset=utf-8
 
-This is not a vulnerability, this is expected behaviour.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, Dec 17, 2014 at 7:00 PM, Marcus Meissner <meissner@...e.de> wrote:
->
-> Hi,
->
-> This probably needs a CVE too, or does it have one?
->
-> https://www.alertlogic.com/blog/dont-let-grinch-steal-christmas/
->
-> http://www.pcworld.com/article/2860032/this-linux-grinch-could-put-a-hole-in-your-security-stocking.html
->
-> Although it seems that the user is in the "wheel" group for this to be
-> exploitable
-> and is hard to specify what actions should be safed by another query or
-> which should not.
->
-> Ciao, Marcus
->
+> http://sourceforge.net/p/c-icap/bugs/59/
+> i found the bug in the parse_request() function.
+> Please see the details in the attachment.
+
+> <Peter Berestov> pberestov@...il.com
+> If a buffer doesn't contain " " or "?" then the *end pointer will increase
+> The pointer can leave the area of memory allocated for the buffer.
+
+Use CVE-2013-7401 for this specific issue discovered by Peter
+Berestov.
 
 
--- 
--Elad Alfassa.
+> chtsanti 2013-10-02
+> 
+> This bug and many other related fixed in trunk with patches:
+> r1018 and r1021.
+> 
+> http://sourceforge.net/p/c-icap/code/1018/
+> 
+> Fix multiple problems on parsing ICAP requests. In many cases the c-icap may
+> crash if not found a normal ICAP request.
 
+Use CVE-2013-7402 for the chtsanti discoveries, i.e., the other issues
+in the pre-r1018 code that made a remote crash possible. This might,
+for example, include attack vectors with invalid method names.
+
+There is no CVE ID for the http://sourceforge.net/p/c-icap/code/1021
+issue. This seems to be a usability problem that was introduced by the
+first version of the security fixes.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUFwT6AAoJEKllVAevmvmsIoEH/AnEdl+oKCBmSfWw/ixQonyY
+pKmh4HF1OTh3AsC1tJ88hbDasvr3ZpvPcmPbFtLoRkB5IgFBrCfiAWMAbp3h3gp8
+HyCaaz/im7D+gJuDDf1fxCyCqt8pG+Haffk0QGMAVnmbkCyk4NWMt20OXXj/lV/k
+G0sXNLwl3J4f/BdjzcjMISZzq1qYq785epzyDycNKynpYA7z3e1fjesJyZ/wB2T5
+O9bkjXRuhmjzbSTxYLAwXURVl4c7BWqJJASPq84UDg+R/pW5y3/OUMRrGJ2t79Rp
+bAPDDp3mo47PutGcbKTJsZqg2Lu/UJmxvxk+ximP5VeB4MqFcwZv0tVi4byxPx8=
+=WCEN
+-----END PGP SIGNATURE-----
