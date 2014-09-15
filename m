@@ -1,71 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/8
-Message-ID: <CAOp4FwSoO+uOZukXagZD2k=Q_gJLrdKDpg+N526dCaGiP7AabA@mail.gmail.com>
-Date: Mon, 29 Sep 2014 15:17:55 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Chester Ramey <chet.ramey@...e.edu>, Christos Zoulas <christos@...las.com>
-Subject: Re: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/4
+Message-ID: <20140915114853.GF8587@suse.de>
+Date: Mon, 15 Sep 2014 13:48:53 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: libceph auth token overflow
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Sep 28, 2014 at 8:52 PM, Bryan Drewery <bdrewery@...ebsd.org> wrote:
-> On 2014-09-26 15:52, Bryan Drewery wrote:
->>
->> On 9/26/2014 9:13 AM, Christos Zoulas wrote:
->>>
->>> On Sep 26,  1:47pm, john.haxby@...cle.com (John Haxby) wrote:
->>> -- Subject: Re: [oss-security] Re: CVE-2014-6271: remote code execution
->>> throu
->>>
->>> | It's not so much the known attacks -- redefining ls, unset, command,
->>> | typeset, declare, etc -- it's the future parser bugs that we don't yet
->>> | know about.
->>> |
->>> | A friend of mine said this could be a vulnerability gift that keeps on
->>> | giving.
->>>
->>> I think that at this point the conservative approach is best, so
->>> until the bash author figures what the best solution is, the feature
->>> is disabled by default for NetBSD. It is not wise to expose bash's
->>> parser to the internet and then debug it live while being attacked.
->>>
->>> christos
->>>
->>
->> FreeBSD has taken a similar approach. We have used Christos' patch and
->> disabled the feature by default.
->>
->> https://svnweb.freebsd.org/changeset/ports/369341
->
->
-> FYI I have updated the FreeBSD bash to 27 and modified the
-> --import-functions script to be implicit for interactive shells and to also
-> give a warning when functions are ignored.
->
-> https://svnweb.freebsd.org/ports/head/shells/bash/files/extrapatch-import-functions?revision=369467&view=co&pathrev=369467
->
+Hi,
 
-HI Chet,
+spotted by Brad, has no CVE id yet.
 
-As you are aware, a sixth security issue has been discovered.
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c27a3e4d667fdcad3db7b104f75659478e0c68d8
 
-Due to the nature of the vulnerability, I believe that it's best to
-break backward compatibility as done by FreeBSD and NetBSD until a
-proper patch is developed. We are lucky to have security researchers
-reporting their findings publicly. What about others that don't ?
+libceph: do not hard code max auth ticket len
 
-I strongly believe that it's much safer to have it disabled, and have
-a complete and comprehensive audit of the source code, and then
-re-enable it.
+We hard code cephx auth ticket buffer size to 256 bytes. This isn't enough for
+any moderate setups and, in case tickets themselves are not encrypted, leads to
+buffer overflows (ceph_x_decrypt() errors out, but ceph_decode_copy() doesn't -
+it's just a memcpy() wrapper). Since the buffer is allocated dynamically
+anyway, allocated it a bit later, at the point where we know how much is going
+to be needed.
+
+Fixes: http://tracker.ceph.com/issues/8979
 
 
-
-> --
-> Regards,
-> Bryan Drewery
-
-
-
--- 
-This message is strictly personal and the opinions expressed do not
-represent those of my employers, either past or present.
+Ciao, marcus
