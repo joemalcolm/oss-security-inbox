@@ -1,25 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/48
-Message-ID: <20140925231758.7b050bd3@pc>
-Date: Thu, 25 Sep 2014 23:17:58 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: nss RSA forgery (CVE-2014-1568)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/10
+Message-Id: <20140915173434.78E30C505B1@smtptsrv1.mitre.org>
+Date: Mon, 15 Sep 2014 13:34:34 -0400 (EDT)
+From: cve-assign@...re.org
+To: gmurphy@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Neutron
 Content-Type: text/plain; charset=utf-8
 
-Some more info, but not much:
-http://www.intelsecurity.com/advanced-threat-research/
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Initially I thought this is probably not such a big deal because the
-bleichenbacher attack requires e to be very small (like e=3 or e=4) and
-everyone uses e=65537 these days. But it seems I was wrong on that,
-lots of CAs still with e=3.
+> https://launchpad.net/bugs/1357379
+> 
+> Admin-only network attributes may be reset to defaults by
+> non-privileged users
+> 
+> may lead to unexpected behavior with security implications for
+> operators with a custom policy.json, or in some extreme cases network
+> outages
 
--- 
-Hanno Böck
-http://hboeck.de/
+Use CVE-2014-6414.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEcBAEBAgAGBQJUFyLSAAoJEKllVAevmvms7A0H/i8ej5/rLZXsS6yGvj/p1Ema
+YIlA2ap2WyAxjTVPM0bt9p+OgMLELSWxd0ol7JFBoV7wNd1WvJvpB51tNJqp+KBY
+rOcW1VR2Chrhyjabw1LmfOcl+v3nKq7FTo7Iuw5DnT+qcLHrBztHZYUIG7vQC2Fc
+airHA2tIGcgI8DgDqgJnHssM29zpMtH5nFlT7DMwxuqj8BH04FSaebyBXTtvSXjU
+cS3Da5DF9M2slSDd1oWjRI8VVCYVJF3vttj8gC+NUAmCkYhvu0VmN/PxQwXbi4Lf
+t7UvaPMiJkRbUsELrBQxXwm+QW+NIXwicJxkbL7FamIf3C/eg0Jw6aSTVuD22ZQ=
+=qc6q
+-----END PGP SIGNATURE-----
