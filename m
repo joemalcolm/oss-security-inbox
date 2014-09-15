@@ -1,20 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/8
-Message-ID: <5459A5DD.8030507@redhat.com>
-Date: Tue, 04 Nov 2014 21:21:49 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: is MD5 finally dead?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/8
+Message-Id: <20140915172330.1BCE1C505D4@smtptsrv1.mitre.org>
+Date: Mon, 15 Sep 2014 13:23:30 -0400 (EDT)
+From: cve-assign@...re.org
+To: ppandit@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request Linux kernel: net: guard tcp_set_keepalive against crash
 Content-Type: text/plain; charset=utf-8
 
-http://natmchugh.blogspot.co.uk/2014/10/how-i-created-two-images-with-same-md5.html
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It seems like MD5 should probably be classed with DES as instant CVE
-win, either now, or pretty soon....
+> https://git.kernel.org/linus/3e10986d1d698140747fcfc2761ec9cb64c1d582
+> https://bugzilla.redhat.com/show_bug.cgi?id=1141742
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> A privileged user/process able to create RAW socket could use this flaw to
+> crash the system kernel resulting in DoS.
 
+Use CVE-2012-6657.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUFyAGAAoJEKllVAevmvmsVrAH/2MCxNBia7m4Ly7aZPe1ixq4
+mZXMDl4M2xLGrYiVMTCC9YUXP8uECdkSQwiJu2Owhzf8CYuMbZXLRLQ29/272fxh
+PXGM1Gw7Xz1bxj0zbmrqePqRcWJu/xFYG69USJklljdoIr3SdP7lF9tin/suCnli
+IfAfTk6GOIydVXqosjI7oxwr8Bqic74KON2EgrYYQ53ZApguK7rzdlZ9xoqm2p04
+RVfeahLK70Zlny5vCpDBePJ78vohPXyXYXDms3hpsIozwTGWDVfSqINtw/8W1TFx
+J2PKLA8vhcB9ryOi2jW6Ks+OMvtlr4mmhey6w6Pv1wuejYO6IueGIlJm156nIf4=
+=QOzi
+-----END PGP SIGNATURE-----
