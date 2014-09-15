@@ -1,39 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/11
-Message-ID: <53BEEE12.20705@fifthhorseman.net>
-Date: Thu, 10 Jul 2014 15:48:34 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/9
+Message-Id: <20140915173109.E22EAC506A8@smtptsrv1.mitre.org>
+Date: Mon, 15 Sep 2014 13:31:09 -0400 (EDT)
+From: cve-assign@...re.org
+To: loganaden@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for Linux kernel: udf: Avoid infinite loop when processing indirect ICBs
 Content-Type: text/plain; charset=utf-8
 
-On 07/10/2014 03:41 PM, Solar Designer wrote:
-> The default sshd_config found in openssh-6.6p1.tar.gz does not list
-> AcceptEnv, so presumably by default OpenSSH portable does not accept any
-> environment variables.
-> 
-> However, apparently some distros override this safe default:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1077843#c6
-> 
-> | Huzaifa S. Sidhpurwala  2014-03-21 02:31:29 EDT 
-> | 
-> | The sshd_config file by default contain the following AcceptEnv directives.
-> | 
-> | AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
-> | AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
-> | AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
-> | AcceptEnv XMODIFIERS
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Debian also ships a default sshd_config with:
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c03aa9f6e1f938618e6db2e23afef0574efeeb6
 
-AcceptEnv LANG LC_*
+Use CVE-2014-6410.
 
-To be clear: the override is in the default config files, there are no
-changes to the sshd binary itself, which still defaults to nothing in
-AcceptEnv.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+iQEcBAEBAgAGBQJUFyE5AAoJEKllVAevmvms5+EH/1CXV5Hc24YCgq/w0cymjUTC
+VziE51daC8t8GWfGsdjbHhPQx6HmGyZ1hqPaG92Xo+dHFmYLmleiGfenXn4uOAo4
+5H1igxGjlP8uVYIGIbG27ZpmmLjqqOridKoiW3Ym52FNWqt67PpCNFNsZlOXFzt5
+9L4xwmpN5kQMdw+MPDs6QdcRViPjODNlUTLaKqk7eRBri7FRYmsp7xwrAsfPT3h6
+XlNLOTdKIU3HO+BiaSBIgsvgGAmIn6ab4Xh6uKr/6fxi4NTg0veMw+tGn3JighI9
+zDrOkKsHLnw4kgd1Hu/nXqtwvprTSnoGCEBY7ZmZAJioRkuO526hZJz1IJZrNaw=
+=4jN2
+-----END PGP SIGNATURE-----
