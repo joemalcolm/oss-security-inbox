@@ -1,51 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/02/2
-Message-ID: <533BD229.4000602@redhat.com>
-Date: Wed, 02 Apr 2014 14:32:33 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/3
+Message-ID: <CAOp4FwSrjp4jzeCXQg0vqYgLTyb-nvPwJcYxY==FhpbpqrEzCA@mail.gmail.com>
+Date: Mon, 15 Sep 2014 15:39:39 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-CC: "Steven M. Christey" <coley@...us.mitre.org>
-Subject: Re: Information on CVE-2014-0158, openjpeg
+Subject: CVE request for Linux kernel: udf: Avoid infinite loop when processing indirect ICBs
 Content-Type: text/plain; charset=utf-8
 
-On 04/02/2014 02:01 PM, Raphael Geissert wrote:
-> Hi,
-> 
-> I just became aware of CVE-2014-0158[1], which was recently assigned
-> to openjpeg.
-> Looking at the proposed patch (as the description is rather brief), it
-> seems to me that it is a dup of one of the bugs covered by
-> CVE-2013-1447.
-> 
-You are correct, i just realised that this issue is already patched when
-i looked at those issues.
+This was fixed by a guy from Suse.
 
-> Quoting from my post to oss-security:
->> 5. null pointer dereferences, division by zero, and anything that
-> would just fit as DoS (CVE-2013-1447)
-> 
->> [listing the group of issues and attachments]
->> 5.
->> [...]
->> segfault6.patch
-> 
-> Which is exactly what is being commented about in [2], a copy of which
-> is also available at [3].
-> 
-> IIRC without that patch some of the structures were not initialized
-> and applications (like the ones shipped by openjpeg itself) would try
-> to dereference NULL pointers, and just crash - no memory write was
-> involved.
-> 
-> Or is there more into CVE-2014-0158 that I might be missing?
-> 
-
-I dont agree with this being only a crash. I put some details at:
-https://bugzilla.redhat.com/show_bug.cgi?id=1082925#c1
-
-Anyway, this CVE is a dupe, MITRE could you please reject this CVE?
+Upstream commit:
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c03aa9f6e1f938618e6db2e23afef0574efeeb65
 
 
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
