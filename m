@@ -1,41 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/29
-Message-Id: <E1XcJF9-0007dc-DU@rmm6prod02.runbox.com>
-Date: Thu, 09 Oct 2014 15:19:19 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/3
+Message-ID: <CAOp4FwTAFW816AHSE8xZHvVXTYEtArDTNPzTiU+5sOYdEw4efA@mail.gmail.com>
+Date: Tue, 16 Sep 2014 10:32:40 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: [CVE Requests] rsync and librsync collisions
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 9 Oct 2014 08:28:23 -0700, Tim <tim-security@...tinelchicken.org> wrote:
-> Seriously though, I agree with you that some form of liability ought
-> to be introduced in order to create the business incentive to change
-> development practices.  However, the devil is in the details, and as
-> Michal pointed out, you don't want to squash open source innovation.
+On Tue, Sep 16, 2014 at 9:47 AM, Michael Samuel <mik@...net.net> wrote:
+> On 13 September 2014 04:39,  <cve-assign@...re.org> wrote:
+>> The short answer is that we neither agree nor disagree at present; we
+>> think that either any required CVE assignment can be made by us after
+>> a full public disclosure, or any required CVE assignment can be made
+>> by a different CNA now.
+>
+> The bug is publicly disclosed.  The exploit isn't (and I believe list rules
+> dictate that I can't post exploits here).
+>
+>> MITRE is not currently interested in receiving an advance copy of the
+>> full public disclosure or any related PoC information from anyone.
+>> We'll see whether the CNA process above can work.
+>
+> I don't care who assigns the CVE, but it would be nice to be able to link
+> the tickets for this together somehow.
+>
+> An experimental branch of librsync that uses blake2 is available here:
+> https://github.com/therealmik/librsync/tree/blake2
+>
+> Dropbox have responded that they have fixed this bug independently, but
+> have not pushed anything out to their forked librsync github repo.
 
-I am more skeptical, because unless you get the details right for liability,
-the cure is worse than the disease.  One problem is that there needs to
-be broad agreement on "what is not acceptable and thus is okay to sue for".
-Without that, liability is just a system for enriching lawyers.
+Has Dropbox made a public statement regarding this ?
 
-This has been challenging to do in software; process standards typically fail to keep up,
-and we don't know how to ensure that product standards are met ahead-of-time.
+>
+> I have not heard further from the rsync maintainer.  I will publicly release
+> colliding blocks and construction details soon, so if you use rsync on
+> untrusted files, consider using the -W option to avoid a DoS.
+>
 
-Those interested in software liability should read
-"Cybersecurity as Realpolitik" by Dan Geer (Black Hat USA 2014) at
-http://geer.tinho.net/geer.blackhat.6viii14.txt
-https://www.youtube.com/watch?v=nT-TGvYOBpI
-He proposes:
-0. Consult criminal code to see if damage caused was due to intent
-   or willfulness.
-1. If you deliver your software with complete and buildable source
-   code and a license that allows disabling any functionality or
-   code the licensee decides, your liability is limited to a refund.
-2. In any other case, you are liable for whatever damage your
-   software causes when it is used normally.
+Has the rsync maintainer acknowledged the issue publicly ?
 
-I'm skeptical of this specific list, to be honest.  It's very difficult to
-identify a liability scheme that would make sense.  On the other hand,
-clearly the current system could stand improvement :-).
+> Regards,
+>   Michael
 
---- David A. Wheeler
+
+
+-- 
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
