@@ -1,73 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/10/2
-Message-ID: <CABLZJbxn3Ou-VFJ4MPrZqZ6TUDPsEBATmG9tVb0qOAddVoYZDw@mail.gmail.com>
-Date: Sun, 10 Aug 2014 11:34:42 +0200
-From: Maksymilian A <max@...t.cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/6
+Message-ID: <54180453.2050309@treenet.co.nz>
+Date: Tue, 16 Sep 2014 21:35:15 +1200
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Cc: mmcallis@...hat.com
-Subject: Re: CVE request: issues in ISO C++ 2011 regex library
+Subject: Re: Re: CVE-Request: squid pinger remote DoS
 Content-Type: text/plain; charset=utf-8
 
-Not taking into account the vulnerabilities prior to gcc 4.9.1, one
-CVE can be considered reasonable assignment CVE for a missing
-implementation of error_stack error_space and error_complexity. Lack
-of protection against resource exhaustion in official release, will
-lead to situations like in glibc.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-proftpd glibc remote denial of service exploit
-http://cert.cx/stuff/proftpd.gnu.c
+On 16/09/2014 6:56 p.m., cve-assign@...re.org wrote:
+>> I made a fix for squid 3.4.6 and request a CVE
+> 
+>> https://bugzilla.novell.com/show_bug.cgi?id=891268
+> 
+> Regardless of the "what happens to squid itself" answer, is it
+> known that the crash has a security impact? This message seemed to
+> conclude with an implied request for more information, e.g., "it
+> looks like you can," etc. An example of a security impact would be:
+> the administrator wanted pinger to be running, and a crash means
+> that pinger processes/threads are no longer available, and pinger
+> is not automatically restarted.
+> 
+> If there is a security impact, then the patch in Novell Bug 891268 
+> would probably correspond to at least three CVE IDs, e.g.,
+> 
+> 1. "used to index into a string array" possibly corresponds to 
+> http://cwe.mitre.org/data/definitions/129.html for the modified 
+> default case after case 136, and approximately two other places in
+> the patch
+> 
+> 2. added "if (n <= 0)" code possibly corresponds to 
+> http://cwe.mitre.org/data/definitions/389.html
+> 
+> 3. added "if (preply.psize) < 0" code apparently corresponds to a
+> more general issue with missing data validation
+> 
 
-There is many vendors what uses remotely RE.
+What could happen worst-case (#1 or #3 on a proxy with logging set to
+level 2) is that the pinger can be used to deliver strings from heap
+to the Squid parent process cache.log.
 
-Maksymilian Arciemowicz
-http://cxsecurity.com/
+With #3 the size is not limited to c-string bytes terminated on first
+nil. There it amounts to the difference between the expected payload
+and received payload. A negative value in that calculation could
+result in a large number of bytes flooding the parent processes log,
+slowing the entire service down and/or exhausting log disk space,
+which in turn can crash the parent process.
 
 
-2014-08-07 9:56 GMT+02:00 Murray McAllister <mmcallis@...hat.com>:
-> On 08/06/2014 04:36 AM, Rich Felker wrote:
->>
->> On Tue, Aug 05, 2014 at 03:50:32PM +1000, Murray McAllister wrote:
->>>
->>> Hello,
->>>
->>> Maksymilian Arciemowicz reported a number of issues in the ISO C++
->>> 2011 regex libraries:
->>>
->>> http://seclists.org/fulldisclosure/2014/Aug/1
->>>
->>> Bugs:
->>>
->>> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61601
->>>
->>> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61582
->>>
->>> http://llvm.org/bugs/show_bug.cgi?id=20291
->>>
->>> For the memory corruption bug (61582), there seems to be more than
->>> one issue here (at least a heap-based buffer overflow and a stack
->>> overflow of some sort). Can a single CVE be assigned, or do you need
->>> specific details for each issue (I don't currently have those)?
->>>
->>> With GCC 4.8 in Fedora, the affected program needs to be compiled
->>> using the "-std=c++11" option.
->>
->>
->> I think this issue is mis-named. "The ISO C++ 2011 regex library" is a
->> specfication, not an implementation, and a vulnerability in it would
->> be a fundamental flaw in the API design (analogous to gets in C). It
->> seems like this CVE request is for one or more GCC/libstdc++ bugs, and
->> it should be identified as such.
->>
->> Rich
->>
->
-> Thanks for pointing that out, and sorry for the confusion!
->
-> There is some discussion in
-> https://bugzilla.redhat.com/show_bug.cgi?id=1126691 about why these should
-> not be treated as security issues.
->
-> Cheers,
->
-> --
-> Murray McAllister / Red Hat Product Security
+The best-case being that some HTTP servers are assigned incorrect RTT
+values. Which adversely affects latency based routing logics for all
+traffic involving that server IP.
+
+Amos
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+
+iQEcBAEBAgAGBQJUGARSAAoJELJo5wb/XPRj52QH/A1y8EHZvXYYReaeToydtZa7
+0vlbEMnDxBaVr4vNEp3Sf9UThZ/FUPYUjmMrBLCKyZ7wMJQPYWaf0HRdc9Qo6yau
+8uja0tzjzwYNrVbZ5kb83xlEbLnviytQZv3aTljbVRN7Ys1bOqhjSsUVv8mf2syS
+YGIzTktVgUX+k/eXXH4WoBEPhtlJvaAsnpyTL8RmtgBsVIvF/HltK/kSgFdS9t8O
+rWUbTdlsBHKH3QBLYVvk3opdPCByJ79kiu+c3TjKgbJyFxfktIqrWQgQPUh9kO1K
+o9mjhIrFwUSlpUmIzoFHAzqHWtBJnYBHfD/tZF3Iv9QjFQ5YqZUCT9MPdjA0ZP8=
+=frFw
+-----END PGP SIGNATURE-----
