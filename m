@@ -1,107 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/7
-Message-ID: <53A281FB.4020905@redhat.com>
-Date: Thu, 19 Jun 2014 16:23:55 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/2
+Message-ID: <CACYkhxhmU74Xsi4H_tBYxY17Y0ovHDdrPfn1pLp1hW6OY6U8dw@mail.gmail.com>
+Date: Tue, 16 Sep 2014 15:47:09 +1000
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: mod_wsgi group privilege dropping [was Re:  Security release for mod_wsgi (version 3.5)]
+Subject: Re: Re: [CVE Requests] rsync and librsync collisions
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 13 September 2014 04:39,  <cve-assign@...re.org> wrote:
+> The short answer is that we neither agree nor disagree at present; we
+> think that either any required CVE assignment can be made by us after
+> a full public disclosure, or any required CVE assignment can be made
+> by a different CNA now.
 
-Could a CVE be assigned to the way mod_wsgi handles group privilege 
-dropping (logs error but continues running if group privilege dropping 
-fails):
+The bug is publicly disclosed.  The exploit isn't (and I believe list rules
+dictate that I can't post exploits here).
 
-http://seclists.org/oss-sec/2014/q2/545
-http://seclists.org/oss-sec/2014/q2/555
+> MITRE is not currently interested in receiving an advance copy of the
+> full public disclosure or any related PoC information from anyone.
+> We'll see whether the CNA process above can work.
 
-For the off-by-one error reported by Matthew Daley:
+I don't care who assigns the CVE, but it would be nice to be able to link
+the tickets for this together somehow.
 
-http://seclists.org/oss-sec/2014/q2/566
+An experimental branch of librsync that uses blake2 is available here:
+https://github.com/therealmik/librsync/tree/blake2
 
-I am not familiar enough to know whether any privilege boundaries are 
-crossed here, or if a user can influence anything.
+Dropbox have responded that they have fixed this bug independently, but
+have not pushed anything out to their forked librsync github repo.
 
-Both of these issues have been fixed in the 4.2.4 release:
+I have not heard further from the rsync maintainer.  I will publicly release
+colliding blocks and construction details soon, so if you use rsync on
+untrusted files, consider using the -W option to avoid a DoS.
 
-http://modwsgi.readthedocs.org/en/latest/release-notes/version-4.2.4.html
-
-Thanks,
-
---
-Murray McAllister / Red Hat Product Security
-
-On 06/18/2014 09:27 PM, Graham Dumpleton wrote:
-> Fixed and released in mod_wsgi 4.2.4. Available through the normal download locations for mod_wsgi.
->
-> https://github.com/GrahamDumpleton/mod_wsgi/releases
-> https://pypi.python.org/pypi/mod_wsgi
->
-> Thanks for highlighting the issues.
->
-> Graham
->
-> On 18/06/2014, at 8:43 PM, Graham Dumpleton <graham.dumpleton@...il.com> wrote:
->
->> I saw the email as it popped up in my twitter feed of all places.
->>
->> Am about to make a release which improves the error handling and the one off error.
->>
->> Graham
->>
->> On 18/06/2014, at 8:03 PM, Solar Designer <solar@...nwall.com> wrote:
->>
->>> On Wed, Jun 18, 2014 at 08:08:10PM +1200, Matthew Daley wrote:
->>>> I may be wrong as I haven't been following this discussion entirely, but...
->>>
->>> I think Graham is not on oss-security.  CC added.
->>>
->>> Graham, please comment on the potential off-by-one bug reported by
->>> Matthew below:
->>>
->>>> On Wed, Jun 18, 2014 at 12:39 AM, Graham Dumpleton
->>>> <graham.dumpleton@...il.com> wrote:
->>>>> This feature was added for one specific user and wouldn't be a well known feature unless people were reading change notes diligently as don't believe it is even covered in the documentation.
->>>>>
->>>>> Given that this code also only executes as root, the only error which could technically arise in this code for setgroups() is if the number of groups exceeded NGROUPS_MAX.
->>>>>
->>>>> This should not occur though as the number of groups was previously validated when the configuration was read:
->>>>>
->>>>>    if (groups_list) {
->>>>>        const char *group_name = NULL;
->>>>>        long groups_maximum = NGROUPS_MAX;
->>>>>        const char *items = NULL;
->>>>>
->>>>> #ifdef _SC_NGROUPS_MAX
->>>>>        groups_maximum = sysconf(_SC_NGROUPS_MAX);
->>>>>        if (groups_maximum < 0)
->>>>>            groups_maximum = NGROUPS_MAX;
->>>>> #endif
->>>>>        groups = (gid_t *)apr_pcalloc(cmd->pool,
->>>>>                                      groups_maximum*sizeof(groups[0]));
->>>>>
->>>>>        groups[groups_count++] = gid;
->>>>>
->>>>>        items = groups_list;
->>>>>        group_name = ap_getword(cmd->pool, &items, ',');
->>>>>
->>>>>        while (group_name && *group_name) {
->>>>>            if (groups_count > groups_maximum)
->>>>
->>>> This is an off-by-one error, isn't it? As in, it should be testing for
->>>> groups_count >= groups_maximum and not the current test.
->>>>
->>>>>                return "Too many supplementary groups WSGI daemon process";
->>>>>
->>>>>            groups[groups_count++] = ap_gname2id(group_name);
->>>>>            group_name = ap_getword(cmd->pool, &items, ',');
->>>>>        }
->>>>>    }
->>>>>
->>>>> Thus was pre-validated input.
->>>>
->>>> - Matthew Daley
->>
->
-
+Regards,
+  Michael
