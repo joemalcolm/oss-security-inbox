@@ -1,29 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/2
-Message-ID: <20140618051915.GA15532@elende.valinor.li>
-Date: Wed, 18 Jun 2014 07:19:15 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, rjbs@...n.org, bastian.blank@...dativ.de, team@...urity.debian.org, gregoa@...ian.org
-Subject: CVE-2014-0477: Email::Address: Denial-of-Service in Email::Address::parse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/5
+Message-ID: <20140916071635.GB24192@suse.de>
+Date: Tue, 16 Sep 2014 09:16:35 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request: squid pinger remote DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Tue, Sep 16, 2014 at 02:56:30AM -0400, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> > I made a fix for squid 3.4.6 and request a CVE
+> 
+> > https://bugzilla.novell.com/show_bug.cgi?id=891268
+> 
+> Regardless of the "what happens to squid itself" answer, is it known
+> that the crash has a security impact? This message seemed to conclude
 
-Bastian Blank reported a denial of service vulnerability in
-Email::Address, a Perl module for RFC 2822 address parsing and
-creation[1]. Email::Address::parse uses significant time on parsing
-empty quoted string, as allowed by RFC 2822.
+Well, in any case whether its restarted or not, it should be fixed.
+For me its a remote DoS, its your decision if it qualifies for a CVE.
+The indexing bug is the "real issue" whereas the others IMHO qualify
+as hardening and only produce junk-packets or fake logs if exploited.
 
-CVE-2014-0477 was assigned to reference this issue.
+Sebastian
 
-Bastian Blank suggested a fix which was applied upstream as [2]
-contained in a new upstream version 1.905[3] which contain additional
-commits to avoid slowdowns.
+-- 
 
- [1] https://metacpan.org/release/Email-Address
- [2] https://github.com/rjbs/Email-Address/commit/83f8306117115729ac9346523762c0c396251eb5
- [3] https://github.com/rjbs/Email-Address/blob/master/Changes
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-Regards,
-Salvatore
