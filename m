@@ -1,52 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/4
-Message-ID: <20140131010744.GA18619@openwall.com>
-Date: Fri, 31 Jan 2014 05:07:44 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/10
+Message-ID: <54189023.6050908@enovance.com>
+Date: Tue, 16 Sep 2014 15:31:47 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: responsible use of distros and linux-distros lists (was: Linux kernel: fs: fix get_dumpable() incorrect tests (CVE-2013-2929))
+Subject: [OSSA 2014-029] Configuration option leak through Keystone catalog (CVE-2014-3621)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 31, 2014 at 04:51:55AM +0400, Solar Designer wrote:
-> I'm afraid the issue below was never brought to oss-security (as it must
-> have been).  The fix was committed on November 13:
-> 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=d049f74f2dbe71354d43d393ac3a188947811348
-> 
-> including detailed description and the CVE-2013-2929 reference.  So it
-> was clearly disclosed as a security issue, yet bringing it to
-> oss-security specifically seems to have falled through the cracks. :-(
+OpenStack Security Advisory: 2014-029
+CVE: CVE-2014-3621
+Date: September 16, 2014
 
-Unfortunately, I was not watching closely enough to notice this did
-not(?) get to oss-security in time, so we got a nasty violation of
-linux-distros list policy here.  Can those distros and linux-distros
-members who would like the lists to stay around please help police the
-lists, detecting and correcting such instances of negligence much
-sooner?  Thanks!
+Title: Configuration option leak through Keystone catalog
+Reporter: Brant Knudson (IBM)
+Products: Keystone
+Versions: up to 2013.2.3 and 2014.1 versions up to 2014.1.2.1
 
-Timely posting to oss-security (yes, this one specific place) is
-important, because that way a distro (or anyone) who chooses not to join
-linux-distros (or distros, as appropriate) or is not accepted may
-nevertheless be confident they receive info on all the same issues once
-the issues are publicly disclosed, by being subscribed to oss-security.
+Description:
+Brant Knudson from IBM reported a vulnerability in Keystone catalog url
+replacement. By creating a malicious endpoint a privileged user may
+reveal configuration options resulting in sensitive information, like
+master admin_token, being exposed through the service url. All Keystone
+setups that allow non-admin users to create endpoints are affected.
 
-Fire-and-forget use of distros and linux-distros lists is inappropriate.
-By posting to one of these lists, you accept certain responsibility:
+Juno (development branch) fix:
+https://review.openstack.org/121889
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros#how-to-use-the-lists
+Icehouse fix:
+https://review.openstack.org/121890
 
-"When the security issue is finally to be made public, it is your (the
-original reporter's) responsibility to post about it to oss-security
-(indeed, you and others may also post to any other mailing lists, etc.)"
+Havana fix:
+https://review.openstack.org/121891
 
-If you're unwilling to accept that responsibility, please refrain from
-posting to those lists.
+Notes:
+This fix will be included in the Juno release 2014.2.0 and in future
+stable 2013.2.4 and 2014.1.3 releases.
 
-Unfortunately, people sometimes don't read or ignore or forget about
-this requirement, or forget that they have sent something to the distros
-or linux-distros lists but not yet to oss-security - so let's be
-watching and reminding!  (Or maybe we should automate the reminders.
-Or maybe we should automate the public disclosure.  Or maybe we should
-shutdown the lists.)
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3621
+https://launchpad.net/bugs/1354208
 
-Alexander
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
