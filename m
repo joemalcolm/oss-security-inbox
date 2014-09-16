@@ -1,36 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/11
-Message-Id: <201403052136.s25LaHPU020698@linus.mitre.org>
-Date: Wed, 5 Mar 2014 16:36:17 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: file: crashes when checking softmagic for some corrupt PE executables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/7
+Message-ID: <5418460F.1050202@canonical.com>
+Date: Tue, 16 Sep 2014 10:15:43 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com,  Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
+CC: CVE Assignments MITRE <cve-assign@...re.org>, secalert_us@...cle.com
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 14-09-11 10:39 AM, Tomas Hoger wrote:
+> On Wed, 10 Sep 2014 10:28:53 -0700 Ritwik Ghoshal wrote:
+> 
+>> Please use CVE-2014-4274 for this issue.
+>>
+>> Please send an email to secalert_us@...cle.com to contact Oracle for
+>> any security vulnerability related issues.
+> 
+> As pointed out in this Gentoo bug, release notes for the mentioned
+> MySQL versions list another issue that seems to be security:
+> 
+> https://bugs.gentoo.org/show_bug.cgi?id=518718
+> 
+> 3) An off-by-one error related to certificate decoding in yaSSL can be
+> exploited to cause a buffer overflow.
 
-> One question about the CVE ID, as the bug was submitted on 2013-12-20
-> should that have recieved a 2013 CVE?
+There is also mention of:
 
-The year portion of a CVE ID is typically for when the issue is
-first publicly identified as a security problem, not when the issue is
-first reported in a possibly different context.
+"Clients could determine based on connection error message content whether an
+account existed. (Bug #16513435, Bug #17357528, Bug #19273967)"
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+I believe this is the fix for CVE-2012-5615, and is fixed with the following commit:
 
-iQEcBAEBAgAGBQJTF5gVAAoJEKllVAevmvmswDUH/2s8Jjn1dIwTdT1YAMVI5OLt
-hTox7n32EWIqIELqm0iTVgxXUknDZfXfIOUFxMQSN+1Ib55Aa8WSkJB75Sh1LLPq
-zaKLX+PeE/wWOJOjgXCwLKVQkWCrJBDEtp4gRF74Ob9YsUvBvaIdYN31IG/cs1Dk
-LY/3r3XOrAwGmo46kKfycBTp2wBEPfDlCzFq4jtvOXxGozJuaA+uxp5tfOEHRZvk
-KY6VIyxtJqeRge0NPPU5shSEgmJUI1viRfEEtGtl+R9YIyBGfUiyCiBV+bLnZCs2
-f0FjEbEhm7esQ2oJPEpq5qiz2zTPbz+qQX6HyVTnS/ZgdwQXV0mO9To3kqRS2w0=
-=N7n/
------END PGP SIGNATURE-----
+http://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4676
+
+Marc.
+
+
