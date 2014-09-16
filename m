@@ -1,31 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/1
-Message-Id: <20141024074832.3DE7E6C0003@smtpvmsrv1.mitre.org>
-Date: Fri, 24 Oct 2014 03:48:32 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/4
+Message-Id: <20140916065630.3E149C50084@smtptsrv1.mitre.org>
+Date: Tue, 16 Sep 2014 02:56:30 -0400 (EDT)
 From: cve-assign@...re.org
-To: luto@...capital.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, pbonzini@...hat.com, nadav.amit@...il.com
-Subject: Re: CVE Request: Linux 3.17 guest-triggerable KVM OOPS
+To: krahmer@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request: squid pinger remote DoS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Nadav Amit discovered an error in the instruction decoder that
-> would cause certain RIP-relative instructions to OOPS the decoder.
-> Specifically, rather than adding RIP to the operand address, RIP would
-> be added to *0 from the host's perspective.
+> I made a fix for squid 3.4.6 and request a CVE
 
-Use CVE-2014-8480.
+> https://bugzilla.novell.com/show_bug.cgi?id=891268
 
+Regardless of the "what happens to squid itself" answer, is it known
+that the crash has a security impact? This message seemed to conclude
+with an implied request for more information, e.g., "it looks like you
+can," etc. An example of a security impact would be: the administrator
+wanted pinger to be running, and a crash means that pinger
+processes/threads are no longer available, and pinger is not
+automatically restarted.
 
-> I also discovered that Nadav's fix was incomplete (or that there was
-> another bug, depending on your perspective).  Certain invalid
-> instructions (due to multiple error cases, including a failure to
-> fetch part of the instruction or due to the instruction being too
-> long) could trigger the same NULL pointer dereference.
+If there is a security impact, then the patch in Novell Bug 891268
+would probably correspond to at least three CVE IDs, e.g.,
 
-Use CVE-2014-8481.
+1. "used to index into a string array" possibly corresponds to
+http://cwe.mitre.org/data/definitions/129.html for the modified
+default case after case 136, and approximately two other places in the
+patch
+
+2. added "if (n <= 0)" code possibly corresponds to
+http://cwe.mitre.org/data/definitions/389.html
+
+3. added "if (preply.psize) < 0" code apparently corresponds to a more
+general issue with missing data validation
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -35,11 +45,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUSgPZAAoJEKllVAevmvmspakH/06k2WAHqG90ZGTkg90CP/+Z
-qO+Wlc1VorlncDDDCGphA4PyRcA66y/o3gcTfWm0EntrLwxP7U3acpk2AJWm+QE5
-Ak06BW/bdLT/C6acvtIpsG2E6HdcWXZtI5AsNzT+FMmajyfHlzIoRrh+fdV2Ix+w
-iF2FLlhYl65pW9j1I+Zq7hP8HusrRxVvBsPzMEu+ETKkywXvnQ8LG5tUuHGA2RDV
-R5CVXX0LilC0B6OY3DkAJoXAWWHi+afO53XWjCeWAIvlO0GlZtZFQnHY8LUhttf0
-8tQahl5zkREK4czACJNieUuMZF6oH358m1HgJamWKc2ZXYn1DzqztYEUfMtdnWY=
-=ciPH
+iQEcBAEBAgAGBQJUF95xAAoJEKllVAevmvmsMiMIAIM7LbYrQTVH8bgbKj34D0WI
+fHruTwHwpIXfs2YvmuSJLnvmMdtRyIe0Y5Nx6CLC9oL5mlaKCtiyGN3Y5tom37LS
+/ro/Q5nv10VzWf2B67s1gaOKHhVr36bzCUaRWjj2ispiANxIdYGoEhmdABN2atE+
+0IzkAXTsoPtfYBc3VHeLdLVnsrI0yV3c2btoaG0ABN39+5QGTCAct2m9rq19/HJ5
+LMXjfIkjpwlzhhy0MCBevn6dFIn9iDFBsmeKXEnib284Re9TQ7kpM8lv1p0zvcFI
+c+AYJn4WEV2FE7i4rNY/08ykxSZ+jrNV/mZnTLNLqFfRsVIPIc3RbdN6LYTFofs=
+=mktA
 -----END PGP SIGNATURE-----
