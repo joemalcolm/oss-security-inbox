@@ -1,46 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/5
-Message-ID: <CAHmME9qAQf2OBkBeAe3CUqfveS0FPG6H1CgzxLyBYtZ-4NFbvQ@mail.gmail.com>
-Date: Thu, 6 Nov 2014 14:04:47 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request: Qt Creator fails to verify SSH host key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/8
+Message-ID: <20140916150511.GA14682@kludge.henri.nerv.fi>
+Date: Tue, 16 Sep 2014 18:05:11 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Qt Creator contains a hand-rolled SSH client, for remote debugging and
-deployment onto mobile devices and small Linux computers. In my experience
-with it, it's quite a slick library, actually. Unfortunately, they don't
-check host keys when connecting, which makes a man-in-the-middle attack
-trivial.
+On Tue, Sep 16, 2014 at 10:15:43AM -0400, Marc Deslauriers wrote:
+> On 14-09-11 10:39 AM, Tomas Hoger wrote:
+> > On Wed, 10 Sep 2014 10:28:53 -0700 Ritwik Ghoshal wrote:
+> > 
+> >> Please use CVE-2014-4274 for this issue.
+> >>
+> >> Please send an email to secalert_us@...cle.com to contact Oracle for
+> >> any security vulnerability related issues.
+> > 
+> > As pointed out in this Gentoo bug, release notes for the mentioned
+> > MySQL versions list another issue that seems to be security:
+> > 
+> > https://bugs.gentoo.org/show_bug.cgi?id=518718
+> > 
+> > 3) An off-by-one error related to certificate decoding in yaSSL can be
+> > exploited to cause a buffer overflow.
+> 
+> There is also mention of:
+> 
+> "Clients could determine based on connection error message content whether an
+> account existed. (Bug #16513435, Bug #17357528, Bug #19273967)"
+> 
+> I believe this is the fix for CVE-2012-5615, and is fixed with the following commit:
+> 
+> http://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4676
+> 
+> Marc.
+> 
+> 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-It looks like this is something that occurred to them during development,
-but it was never written on time and the code has shipped without it:
-
-src/libs/ssh/sshconnection.cpp:
-    // TODO: Mechanism for checking the host key. First connection to host:
-save, later: compare
-src/libs/ssh/sshexception_p.h:
-    SSH_DISCONNECT_HOST_KEY_NOT_VERIFIABLE = 9,
-
-
-I reported this bug to the development team, alongside another bug
-involving cipher-suite compatibility with OpenSSH 6.7 (no CTR modes). They
-marked the latter as priority 1, and fixed it within 24 hours. The former,
-however, has received a bit more of a hesitant reaction. The most recent
-vendor feedback seems to indicate they're not super interested in
-implementing this.
-
-The bug report can be found here:
-https://bugreports.qt-project.org/browse/QTCREATORBUG-13339
-
-So, I'm reporting it to this list, on the off-chance that I'm right and
-this should be considered a security vulnerability, in which case a CVE can
-track the status of the vendor response. Or, if the list decides this is
-actually no big deal, and host key checking isn't such an essential thing
-(?!), I'll close the bug report.
-
-Thanks,
-Jason
-
+iEYEARECAAYFAlQYUacACgkQXf6hBi6kbk9miwCgxs1bkE4GldQy/dBlF8CBdXOE
+DoYAnRfG9bhaXmdCZFufnLSBZMKuW3fn
+=e8Ky
+-----END PGP SIGNATURE-----
