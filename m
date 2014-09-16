@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/4
-Message-ID: <5344D48A.9040505@redhat.com>
-Date: Tue, 08 Apr 2014 23:03:06 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Alan Coopersmith <alan.coopersmith@...cle.com>, oss-security@...ts.openwall.com
-Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/1
+Message-ID: <20140916051720.GB4828@suse.de>
+Date: Tue, 16 Sep 2014 07:17:20 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE-Request: squid pinger remote DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Sep 09, 2014 at 10:53:51AM +0200, Sebastian Krahmer wrote:
+> Hi
+> 
+> I made a fix for squid 3.4.6 and request a CVE for
+> this issue:
+> 
+> The pinger code that checks for nodes being alive doesnt
+> properly validate ICMP and ICMPv6 replies, in particular
+> icmp6 types which are used to index into a string array.
+> This could cause crashes when the index is OOB.
+> 
+> A patch is available here:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=891268
+> 
+> I also made some cleanups and error checking on the
+> receive socket.
+> 
+> I am not deep into the overall squid architecture so
+> I dont know what happens to squid itself when the
+> pinger sub-process crashes (think SIGPIPE etc). But to me
+> it looks like you can only DoS the pinger sub-system,
+> not the whole squid.
 
-Also nodejs, fixed in github head, but older installs are vulnerable:
+Mitre?Ping?
 
-https://github.com/joyent/node/tree/master/deps/openssl/openssl
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJTRNSKAAoJEBYNRVNeJnmTzZIP/0wd8ypeHdQ2fFEhTuUsTMSS
-R/kziSJ5dDyFmUh17I7Uzh3aIicZcTrdMuGFi5qYS7Cn/ix+u1MxsQM2VLlrLbc+
-2RB9DT0zsB+OfEzIz7DzFbTT+1/2PuR+zeYfw0kPk05ZaRToMaVmjj+qO5gzU6Ix
-P3UIp3CorodMj/Bk6ZuLgwgEXKkEcWHMoEzo0tI1oWjIXM7CXKwKWkLSlKz9E4ZS
-yXQ+PW4RsGAFOCNxXETNWFRnFvlxTxeQIxGdHW3hJVgqXq1xADucv3z1ia3ReWtx
-zWyK8GmFyNmXDWF1SGxWpTBOYplqFcCXZ+ZoaA0kVnDJxmIQZjRoZGKl5jaj5TZl
-RGW3vw2/vW/44gFJAZ9W5x7qkKUiKskF9oSOMIUBX6ASgsJMt3S1+Epkwuc+iVBR
-Dzugw2qdlEF8F8c+jeaUF6bR84LiEehAK7QOUwsmxI4gJbOx1HdCYiXGAy2y1QY/
-5fTCHvYUCqrm+BVuCo2w8giG9I9nE6msm/0epmi60GYu/PPYcgMU2aN2Qm3kbR5v
-GhSS4popNECvxhdpoQALzVShfD4wGAHaySrmbXsWTTaTxDFGeI9Nh89IxW0zi7XI
-gNEKJlYpdGg/aYeJrDaYIsArcpHS29MPy+eRYpE1XrQVXhMclwZ95zbKlGdZrySw
-4/NRih28579EGqZqEuGU
-=Qtzg
------END PGP SIGNATURE-----
+Ciao, Marcus
