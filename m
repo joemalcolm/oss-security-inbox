@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/13
-Message-ID: <538DCF76.50002@upv.es>
-Date: Tue, 03 Jun 2014 15:36:54 +0200
-From: Hector Marco <hecmargi@....es>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/17/3
+Message-ID: <20140917113530.GA13643@lappy.redhat.com>
+Date: Wed, 17 Sep 2014 21:35:31 +1000
+From: Grant Murphy <gmurphy@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-1226 s3dvt Root shell (still)
+Subject: CVE request for vulnerability in OpenStack keystonemiddleware
 Content-Type: text/plain; charset=utf-8
 
-CVE-2014-1226 s3dvt Root shell (still)
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although an
+advisory was not sent yet.
+
+Title: TLS cert verification option not honoured in paste configs
+Reporter: Qin Zhao (IBM)
+Products: keystonemiddleware, python-keystoneclient
+Versions: versions up to 1.1.1 (keystonemiddleware), versions up to 0.10.1
+(python-keystoneclient)
+
+Description:
+Qin Zhao from IBM reported a vulnerability in keystonemiddleware (formerly
+shipped as python-keystoneclient). When the 'insecure' SSL option is set in 
+a paste configuration file it is effectively ignored, regardless of its 
+value.  As a result certificate verification will be disabled, leaving TLS
+connections open to MITM attacks. All versions of keystonemiddleware with
+TLS settings configured via a paste.ini file are affected by this flaw.
+
+References:
+http://launchpad.net/bugs/1353315
 
 
-About s3dvt:
+Thanks in advance,
 
-s3dvt is part of the 3d network display server which can be used as
-3d desktop environment.
-
-
-
-Vulnerability:
-
-The s3dvt developers forgot to review all the code. There is still a
-vulnerable function as in the previous CVE-2013-6825. At the date of
-Jun 1, 2014 the last commit of the s3dvt is still vulnerable and
-exploitable. Commit: 1e9c9c53fa192cbf4f79d724b5e6c76374516968
+--
+Grant Murphy
+OpenStack Vulnerability Management Team
 
 
-Details, patches, discussion and strategy to exploit at:
-http://hmarco.org/bugs/CVE-2014-1226-s3dvt_0.2.2-root-shell.html
-
-
-Because we found a bug in bash <= 4.3 this vulnerability can be
-successfully exploited. Bash bug details at:
-http://hmarco.org/bugs/bash_4.3-setuid-bug.html
-
-
-
-Hector Marco
-http://hmarco.org
-
+Content of type "application/pgp-signature" skipped
