@@ -1,55 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/15
-Message-ID: <20141005165414.GA23489@openwall.com>
-Date: Sun, 5 Oct 2014 20:54:14 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/17/4
+Message-ID: <CAFRnB2V2wRWmaWf6aAMK_h8zqVoEwDgihksAxcWwKwtu4Bry5w@mail.gmail.com>
+Date: Wed, 17 Sep 2014 10:14:33 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+Subject: Twisted Security Issue
 Content-Type: text/plain; charset=utf-8
 
-Sona,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Oh, I didn't realize you actually are with a distro vendor:
+Hello all,
 
-"Enea Linux is a Yocto-based Linux distribution targeted for
-communication and networking solutions."
+The twisted security project has identified, fixed, and released a
+release fixing a security issue, I would like a CVE assigned:
 
-Then you do in fact have a valid reason to test for and patch the
-individual bugs even when they're no longer security relevant.  My
-advice is that if you feel you're a "non-expert" in bash bugs, you
-simply apply all bash upstream's patches, and keep adding them to your
-package of bash as more upstream patches become available.  You do not
-need to issue security advisories (or whatever you normally do when
-fixing security vulnerabilities) each time: it's sufficient to do that
-once, when you've just included the prefix/suffix patch (bash43-027 or
-equivalent).  Once you have bash43-027, further patches to bash are no
-different than e.g. the many patches that are issued for VIM (a project
-that tends to release hundreds of post-release patches, most of them
-non-security).
+Title: trustRoot not respected in HTTP client
+Reporter: Alex Gaynor and David Reid (Rackspace)
+Products: Twisted (14.0 only).
+Description:
+When specifying the trustRoot (CA store) for the HTTP client, Twisted
+did not respect the user's specification, and always used the default
+of the platform trust. This means that users attempting to use this
+feature to implement certificate pinning, or otherwise restrict the
+trust CAs would still have accepted any certificate signed by a CA.
 
-I hope this helps.
+Twisted 14.0.1 has been issued to resolve this issue; (Distributors
+should note that this release has failing tests, and that a 14.0.2
+release will be issued tomorrow, this does not effect the fix, only
+the tests).
 
-Alexander
+Alex
 
-On Sun, Oct 05, 2014 at 05:44:15PM +0400, Solar Designer wrote:
-> On Sun, Oct 05, 2014 at 10:22:06AM +0000, Sona Sarmadi wrote:
-> > I think what most (non-expert) people need is an explanation for each CVE
-> 
-> No.  Most non-expert people only need to know that they need either the
-> prefix/suffix patch included or function imports disabled, preferably in
-> a security update from their distro vendor.  This makes the individual
-> parser bugs, which got CVEs assigned, irrelevant.
-[...]
-> > 2) Do we need to apply *all* of these individual bash patches (i.e. bash43-025 through bash43-029)? Even  bash43-027 which is not solving any specific CVE?  Or should we apply 27 or all the others?
-> 
-> If you choose to build bash from source (why?) rather than simply use
-> your distro's security update, [...]
-[...]
-> > 3) Do you have a script or summary of all tests in one place like  http://en.wikipedia.org/wiki/Shellshock_%28software_bug%29 or https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck ? Or maybe these are good enough & reliable? 
-> 
-> You only need the one-liner test above.  Running tests for the various
-> CVEs is a distraction (it's moderately useful e.g. for a distro vendor,
-> to see what non-security bugs may need to be patched, but mostly not for
-> an end-user or sysadmin).
-> 
-> Alexander
+- --
+"I disapprove of what you say, but I will defend to the death your
+right to say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+"The people's good is the highest law." -- Cicero
+GPG Key fingerprint: 125F 5C67 DFE9 4084
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v0.6.1-dev
+Comment: http://openpgpjs.org
+
+wsFcBAEBCAAQBQJUGZdCCRASX1xn3+lAhAAAR58P/j7yagn9+/+IAflzeS2v
+hNRBhAUWsFpbwor7FvppXMTPjAFsMP1soBn1RQygRr3uKM4my1myX7UQl2Gj
+qYtiZpcsvdQO6X5lZwU3Zbl0q7eHXGdwZMO0/xw5TUPTMyATcOk/rgiAm8Z0
+BT0zV0lYU3oMB1E3ee/xuOkCpSlPq8BZfsFcVNi/uHzWS9Qgt5RuujIEEQfv
+V+rTU8bmdGMC98Rsz0vfJJ93acpkuC3iKejz4SzMJdrmq/mSLhr/sgGZFanl
+20KwHEjmL41NvoJlwHJ2fL8y4aVusXsuUFpmxuEq/cAaoREi7N8VFHzhS1+U
+4cT0rqjW89wGZWhK6jjI31acKZ8s3Irkk6UeQ1XfSxgFh8UTCMCBWVCM1Cwe
+pfXEXcBduO4xNAiKVFtHU/RHr5hNjGop2bCOtwP6+yYBp1SODb8N8vTxhvOx
+zKu8tMGb0hWIY6O/TbW/oki/t+eonYBnsp5ytELUz7IqQYZu7xRjgH19uXKj
+XDG0vwq3lfxwmH0ILVxwR3l+vTBWc8JxQAz3X+mT8OmHHeXFWM/ajwcooug1
+9umK7heXrLnLaPdY99ICZp0xXwHo9fIn5pZT8gxIkUF8L8OWeD6uSleeiCBu
+nbsPCQjg4fIcmjJcpJIvqukSF4tumIPxUJDi1nk/37I02dF8i1IQnzmjHT3Y
+HrSs
+=GOlp
+-----END PGP SIGNATURE-----
+
