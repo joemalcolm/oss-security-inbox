@@ -1,27 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/5
-Message-ID: <CAA7hUgE_k-kCW=N-ddE=Z9V=_XnH6d=-j6V+V_Y+JmJQFx2ROw@mail.gmail.com>
-Date: Tue, 18 Nov 2014 09:52:26 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/17/5
+Message-ID: <FC72FC641B949240B947AC6F1F83FBAF4C54D0C5@IMCMBX01.MITRE.ORG>
+Date: Wed, 17 Sep 2014 19:31:49 +0000
+From: "Christey, Steven M." <coley@...re.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE ID Syntax Change - Deadline Approaching
 Content-Type: text/plain; charset=utf-8
 
-On 17 November 2014 17:49, Raphael Geissert <geissert@...ian.org> wrote:
-[...]
-> Just to give an example of an in-browser crash, the other day I opened
-> a 4-years old pdf of a random company and it made chromium's pdf
-> plugin crash.
-> No problem opening it with pdf.js under firefox or poppler.
 
-Apparently it wasn't clear enough to some people the intention of the
-example I gave (which is obviously flawed as a comparative argument).
+As we approach the end of 2014, CVE identifiers are getting closer and
+closer to the magic CVE-2014-9999 mark, which means that MITRE will be
+issuing a 5-digit CVE ID within a matter of months, in accordance with
+the new syntax that was selected in 2013 (basically using 5, 6, or
+even more digits as needed).  Some people are still unaware that this
+change has happened or have been slow to implement it.
 
-It was a way to say: bugs do exist on an code base, even on scenarios
-that were not specifically setup to try to identify them, such as when
-fuzzing.
+Once a CVE identifier is issued using the new syntax, some security
+products and processes could break or report incorrect vulnerability
+identifiers, making vulnerability management more difficult.  Consider
+a product that stops processing an XML document because its validation
+step assumes that CVE IDs have only 4 digits.  Perhaps worse, consider
+a critical vulnerability in a popular product that is given a 5-digit
+CVE ID, which is inadvertently and silently truncated to a 4-digit ID
+for a low-priority issue in a rarely-used product.  We know of at
+least 5 different products or services that have had problems.
+Custom, in-house software is not necessarily immune, either.
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+MITRE has been assigning CVE IDs faster than ever; we're up to
+CVE-2014-6446 even though it's only September, which puts us on pace
+to exceed 9000 for 2014 by the end of the year - and the rate of
+assignment could increase in the coming months.  Even if we don't
+reach 10,000 CVE-2014-xxxx identifiers by the end of 2014, MITRE will
+be issuing at least one 5-digit identifier no later than January 13,
+2015, to ensure that all software is tested for support of the new
+syntax.
+
+To help people address this problem, we have created a web page about
+the ID syntax change, including the product features most likely to be
+affected, along with some test data.
+
+  http://cve.mitre.org/cve/identifiers/syntaxchange.html
+
+For a list of the 19 early adopters who have stated that they are
+compliant with the new syntax, see:
+
+  http://cve.mitre.org/cve/identifiers/compliant_organizations.html
+
+The clock is ticking!  You can reach us at cve-id-change@...re.org if
+you have any questions.
+
+
+Thank you,
+The MITRE CVE Team
+
