@@ -1,52 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/15
-Message-ID: <20140319173136.GB9023@openwall.com>
-Date: Wed, 19 Mar 2014 21:31:36 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/17/2
+Message-ID: <CAA7hUgGu1ZiqD3ncQTYJrGgK0m40awMP6oSA9yS2dLL0A3aqnw@mail.gmail.com>
+Date: Wed, 17 Sep 2014 12:02:03 +0200
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Cc: Steve French <sfrench@...ba.org>
+Subject: CVE request: [CIFS] Possible null ptr deref in SMB2_tcon
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 19, 2014 at 05:04:03PM +0200, Georgi Guninski wrote:
-> On Wed, Mar 19, 2014 at 06:18:41PM +0400, Solar Designer wrote:
-> > of CVE.  So you could consider treating or ignoring your CVE allergy
-> 
-> I am pretty sure someone@...re was coauthor of the
-> "responsibility RFC" which shows whose servants
-> mitre are.
+Hi,
 
-Whether that is true or not, this has absolutely nothing to do with
-whether the technical content of the "CVE request" messages and
-follow-ups to them is valuable or not.  I think it is valuable.
+Commit 18f39e7b[1] of the linux kernel repository fixes a remote null
+pointer dereference on the client when it resolves DFS referrals but
+the server deletes the IPC$ share. The commit has already been merged
+for the 3.16, 3.14, and 3.10 branches.
 
-Also, if you're concerned of MITRE possibly providing non-public
-vulnerability feeds to somewhere, that concern obviously does not apply
-to the public CVE requests made on this list.
+Could a CVE id be assigned please?
 
-Regarding new FD:
+Thanks in advance.
 
-> Is it reasonable to use a public service for the list --
-> outsourcing legal stuff?
+[1]https://github.com/torvalds/linux/commit/18f39e7be0121317550d03e267e3ebd4dbfbb3ce
 
-I think it's reasonable to try, but with an external service you
-probably won't be able to impose the daily quota per sender that you
-suggested.
-
-> Running a mirror/torrent is much easier than running
-> a mailing list, so even if stuff gets deleted it will
-> be in the mirrors.
-
-OK.
-
-You mentioned hosting costs.  I think a $20/month VPS will do.  Perhaps
-AWS "free tier" will do as well (IIRC, it's free for the first year).
-It's not related to how many people or e-mail addresses have posted (the
-statistic you asked for), but rather to the number of subscribers, to
-the amount of spam coming to the posting address (and to other related
-addresses, such as list admin's and even list robot's, as you must
-minimize backscatter) that you'd have to filter out, and to the
-acceptable mail delivery delays (a bigger server will let you do more
-concurrent deliveries, so the delays will be less - if you do configure
-the number of concurrent deliveries according to server capacity).
-
-Alexander
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
