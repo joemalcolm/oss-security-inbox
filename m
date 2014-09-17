@@ -1,52 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/11/4
-Message-ID: <20140111205823.GA16165@eldamar.local>
-Date: Sat, 11 Jan 2014 21:58:23 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/17/1
+Message-ID: <368735800.29665699.1410927016211.JavaMail.zimbra@redhat.com>
+Date: Wed, 17 Sep 2014 00:10:16 -0400 (EDT)
+From: Arun Babu Neelicattu <abn@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE assignment for jinja2
+Subject: Duplicate Request: CVE-2013-4444 as a duplicate of CVE-2013-2185
 Content-Type: text/plain; charset=utf-8
 
-Hi Vicnent,
+Recently Apache Tomcat issued an advisory [1] for CVE-2013-4444 [2]. However, this flaw was reported to the Apache Tomcat Security team last year. We were instructed that Apache Tomcat team did not consider this a vulnerability. Red Hat Product Security handled this issue as CVE-2013-2185 [3] in our affected products.
 
-Disclaimer: to be taken with some caution.
+We request that CVE-2013-4444 be marked as a duplicate of CVE-2013-2185.
 
-On Sat, Jan 11, 2014 at 01:37:51PM -0700, Vincent Danen wrote:
-> On 01/10/2014, at 22:34 PM, Kurt Seifried wrote:
-> 
-> > https://github.com/mitsuhiko/jinja2/commit/acb672b6a179567632e032f547582f30fa2f4aa7
-> >
-> > dirname = '_jinja2-cache-%d' % os.getuid()
-> >
-> > Arun Babu Neelicattu of Red Hat spotted this commit which introduces a
-> > temporary file creation vulnerability. This issue has been assigned
-> > CVE-2014-0012. For information on how to safely create temporary files
-> > please see
-> > http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
-> >
-> > For Python simply use ?mkstemp? for files and ?mkdtemp? for
-> > directories from the ?tempfile? module.
-> 
-> MITRE assigned CVE-2014-1402 to this yesterday:
-> 
-> http://seclists.org/oss-sec/2014/q1/71 (the report, the followup has the CVE assignment).
-> 
-> That means you'll need to reject this assignment; the commit that Arun spotted was due to the Debian bug report (which the git commit notes, and Ratul linked to in his initial CVE request to the list).
+-arun
 
-Aren't the two CVE assignments correct this way as the second
-temporary file creation vulnerability was introduced by the mentioned
-commit?
+[1] http://tomcat.apache.org/security-7.html#Fixed_in_Apache_Tomcat_7.0.40
+[2] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4444
+[3] https://bugzilla.redhat.com/CVE-2013-2185
 
-Initially there was assigned CVE-2014-1402 for:
-
-http://seclists.org/oss-sec/2014/q1/71
-
-wich is also http://bugs.debian.org/734747 and was attempted to be
-fixed with commit
-https://github.com/mitsuhiko/jinja2/commit/acb672b6a179567632e032f547582f30fa2f4aa7
-
-But the above commit introduces a new temporary file creation
-vulnerability, which then got CVE-2014-0012 assigned by Kurt.
-
-Regards,
-Salvatore
+-- 
+Arun Neelicattu / Red Hat Product Security
+PGP: 0xC244393B 5229 F596 474F 00A1 E416  CF8B 36F5 5054 C244 393B
