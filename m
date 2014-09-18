@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/4
-Message-ID: <2ECE9D9EEF1F524185270138AE23265947D4731D@S0MSMAIL112.arc.local>
-Date: Tue, 25 Nov 2014 09:09:14 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "security@...ntu.com" <security@...ntu.com>, Seth Arnold <seth.arnold@...onical.com>
-Subject: AW: parse_datetime() bug in coreutils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/18/1
+Message-ID: <CACYkhxjxuCUj0b5VzicAzKgq42xFU2Rdk736yETPY1d11h5xcw@mail.gmail.com>
+Date: Thu, 18 Sep 2014 12:30:22 +1000
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: [CVE Requests] rsync and librsync collisions
 Content-Type: text/plain; charset=utf-8
 
-> Von: Seth Arnold [mailto:seth.arnold@...onical.com]
-> 
-> Hello,
-> 
-> Fiedler Roman discovered that coreutils' parse_datetime() function
-> has some flaws that may be exploitable if the date(1), touch(1),
-> or potentially other programs, accept untrusted input for certain
-> parameters.
+Ok, for rsync you can download colliding blocks (and a brief description) here:
 
-As some people won't have a hard time to correlate this: the issue was
-discovered fixing the php session cleanup code running with root privileges,
-which, apart from the symlink issues, could to my opinion also allow to pass
-a single but arbitrary parameters to touch, see [1]
+https://github.com/therealmik/rsync-collision
 
-> [Snip]
+I don't get the feeling that this will be fixed upstream, but a simple
+fix would be
+to incorporate libdetectcoll from Marc Stevens into rsync, and when a collision
+attempt is detected to simply send a data block.
 
-[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=766147
+A longer-term would be to just replace MD5 with a collision-resistant hash
+function - blake2 is a good fit.  The 128-bit output is right on the
+edge of being
+strong enough.
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
+I submitted a very rough patch which does both, but I haven't had the
+time to clean
+the rough edges - the libdetectcoll codebase needs a fair amount of cleaning
+(printfs etc), and the rsync codebase needs a fair bit of refactor to
+handle hash
+output lengths > 16 bytes.
+
+Regards,
+  Michael
