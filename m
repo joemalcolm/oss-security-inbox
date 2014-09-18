@@ -1,41 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/4
-Message-ID: <20140926093519.GA6682@rivest.lan>
-Date: Fri, 26 Sep 2014 02:35:20 -0700
-From: Dwayne Litzenberger <dlitz@...tz.net>
-To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/18/2
+Message-Id: <20140918064927.BCB0F6C0031@smtpvmsrv1.mitre.org>
+Date: Thu, 18 Sep 2014 02:49:27 -0400 (EDT)
+From: cve-assign@...re.org
+To: alan.coopersmith@...cle.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Confusion around gksu & CVE-2014-2943
 Content-Type: text/plain; charset=utf-8
 
-For folks like me who are running production systems that don't need 
-exported functions at all, I've hacked together a little wrapper that 
-just refuses to run bash if any environment variable's value starts with 
-a left-paren:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-    https://github.com/dlitz/bash-shellshock
+> Several sites identify CVE-2014-2943 as being a vulnerability in gksu:
+> 
+> https://community.rapid7.com/community/metasploit/blog/2014/07/07/virtualbox-filename-command-execution-via-gksu
+> http://www.securityfocus.com/bid/68427
+> 
+> But the Mitre & NVD databases use that CVE id for a different issue:
+> 
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-2943
+> https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-2943
 
-TL;DR:
+> Anyone know what the right CVE is for the gksu bug?
 
-    $ ls -l /bin/bash*
-    lrwxrwxrwx 1 root root      20 Sep 26 01:12 /bin/bash -> /bin/bash-shellshock
-    -rwxr-xr-x 1 root root 1029624 Sep 24 11:51 /bin/bash.real
-    -rwxr-xr-x 1 root root   10368 Sep 26 00:32 /bin/bash-shellshock
+The right CVE for the gksu bug is CVE-2014-2886.
 
-    $ XX=1 XXX='(hello' /bin/bash -c env
-    bash-shellshock: Refusing to start due to possibly unsafe environment variable (see syslog)
+(The right CVE for the Cobham Aviator PIN algorithm issue, also
+formerly known as CVE-2014-2943, is now CVE-2014-2942. The MITRE
+CVE web site and NVD web site will have these changes in the
+coming days. The entry currently at
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-2943
+will be replaced with an explanation of the two correct CVE IDs.)
 
-It also supports log-only and variable-stripping modes, configurable 
-system-wide.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-I've made binary .deb packages for Debian and Ubuntu, for anyone foolish 
-enough to trust me.  (If you've ever run "sudo pip install pycrypto", 
-then you're already that foolish. ;)
-
-Tags and SHA256SUMS.asc files are signed using my OpenPGP key.
-
--- 
-Dwayne C. Litzenberger <dlitz@...tz.net>
- OpenPGP: 19E1 1FE8 B3CF F273 ED17  4A24 928C EC13 39C2 5CF7
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJUGnzrAAoJEKllVAevmvms74MH/2OpvkjxIkmiDEIL4PHt55BU
+YhmcrKpJjZWB9TdMLAF2V3ZFh8vAOkIALqex7JDzZn994MmOHxXyqSE4NzzQ2Siw
+XADaGAYCXYE+0fd6zQlNn9XHNX+zt8U4j1GYnjEegoz1FwOE/6GMBp+K9X3Lqvr9
+h9DnYWlULD22GaBQn4/YZq6niVe1KTsonB3INxUVO6L0dahY27zM9EikCT1y7XOz
+ZHoxPom8EzFP6L0Yo/VSz/q+i3EOioRXzLhCcCWQWcPzOl1aRMvzkRvDV4rqtGEz
+cJuzzrH+m5ghKEkVSNhoL9NlZlICKwE9A3pKCoBtyAF3Yq0/oOyUbBdFs5Cd6kw=
+=iqNx
+-----END PGP SIGNATURE-----
