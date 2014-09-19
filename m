@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/14/4
-Message-ID: <CAEDdjHfAkToGRQT0b3iZU8RnUXt=mSKbWRaiVx+3LXLDdgFnBQ@mail.gmail.com>
-Date: Mon, 14 Apr 2014 10:16:43 +0100
-From: Pedro Ribeiro <pedrib@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/19/1
+Message-ID: <20140919201001.GA8261@jwilk.net>
+Date: Fri, 19 Sep 2014 22:10:01 +0200
+From: Jakub Wilk <jwilk@...ian.org>
 To: oss-security@...ts.openwall.com
-Cc: Bernhard Rusch <Bernhard.Rusch@...ments.at>
-Subject: Remote code execution in Pimcore CMS
+Subject: python-requests: CVE-2014-1829, CVE-2014-1830: password disclosure on redirect
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+FYI: a while ago python-requests 2.3.0 was released, with the following 
+bugfix:
 
-I have discovered a PHP object injection in Pimcore CMS.
+* No longer expose Authorization or Proxy-Authorization headers on 
+redirect. Fix CVE-2014-1829 and CVE-2014-1830 respectively.
 
-Depending on the PHP version under which Pimcore is running, it is possible
-to achieve remote code execution in the worst case, and arbitrary file
-deletion at best.
 
-Please find attached the report, which is also available at
+References:
+https://bugs.debian.org/733108
+https://github.com/kennethreitz/requests/issues/1885
+https://bugzilla.redhat.com/show_bug.cgi?id=1046626
 
-https://github.com/pedrib/PoC/blob/master/pimcore-2.1.0.txt
-
-Can you please provide a CVE number for this?
-
-Thanks in advance.
-
-Regards
-Pedro
-
-Content of type "text/html" skipped
-
-View attachment "pimcore-2.1.0.txt" of type "text/plain" (7191 bytes)
+-- 
+Jakub Wilk
