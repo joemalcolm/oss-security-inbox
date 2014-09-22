@@ -1,23 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/18/4
-Message-ID: <20140718200127.GM21186@symphytum.spacehopper.org>
-Date: Fri, 18 Jul 2014 21:01:27 +0100
-From: Stuart Henderson <stu@...cehopper.org>
-To: oss-security@...ts.openwall.com
-Cc: hanno@...eck.de, cve-assign@...re.org
-Subject: Re: Re: CVE request: libressl before 2.0.2 under linux PRNG failure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/7
+Message-ID: <alpine.LFD.2.10.1409222359400.8285@javelin.pnq.redhat.com>
+Date: Tue, 23 Sep 2014 00:02:21 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Steve French <sfrench@...ba.org>
+Subject: Re: CVE request: [CIFS] Possible null ptr deref in SMB2_tcon
 Content-Type: text/plain; charset=utf-8
 
-> > https://www.agwa.name/blog/post/libressls_prng_is_unsafe_on_linux
-> 
-> > forking a process can create repeated random numbers
-> 
-> > Please assign CVE.
-> 
-> The existence of a popular blog post discussing a number of
-> interrelated LibreSSL and OpenSSL issues doesn't mean that we have a
-> good way to proceed by assigning a single CVE ID.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I see a number of web pages relating to this issue are mentioning that
-it has already been assigned CVE-2014-2970, can anyone throw light on this?
+   Hello Moritz,
 
++-- On Mon, 22 Sep 2014, Moritz Muehlenhoff wrote --+
+| True, but on Debian and derivatives like Ubuntu mount.cifs is usually setuid root.
+
+  I see. Thank you so much for the confirmation, I appreciate it. 
+
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJUIGs1AAoJEN0TPTL+WwQfH9wP/iFuNPdKoYc79NFygRgIvlfj
+nVlFYkgVBejdAwv3mPfOC8rgejPOxNwN9p1dNO/mTBwapx8rrc4TlhpZc8UWv+V7
+ethoTgqU675NXu5c7rD9R2Qnm2iBYNlqJ2+eqO5D/0FjttVz8W5gcGdI5okKz9jS
+NTfRHum6//WvnMHJo417tZi1jH90bfobD8TvaMs91E/hNoqIvsHaAIKQPogIDvkP
+Qf3btryzqohcD5Jz3dpgK4bixMmUemxSQ6F4UcImsiECk+dVzTSIQf2NH4qjvGCq
+12aC1tcNxCCfiS6cY33Zvyrnl+RsOB8eC280m7HjhD0bEGoS5vCx0JX7Zp3iQcSS
+8AZljGoZDOSM8FdSCmHpXXcMoc4w0DZ342832nxdkeaRW6OfaQEI1pDjeic9TcKl
+9TPYi3xFsDc3QUyIRp1vhEzocILBHYq0ER+HWrxmKdAZiGlhD/EOPzeUZ4JHY6Fm
+ylUt2P8sFkF6NgsE6/shngdiS0B6LX2ajczgwOBHpgP8RuKapPH2Fj8VVlRkrchd
+Xcr/S0lc5h1ypn9zrZ+BT3ryeBEa46KziDpbMctuIQIqReFJfzt+wriIHNvb+YPb
+Bxqg5oUiqP3nMZHXpOf69MwgO5VSZlK+HvFsXKm7p2gZibOx+W/t85kl8MAbIUxL
+XuHf1zWjO9ecY5JmOE1p
+=Dqba
+-----END PGP SIGNATURE-----
