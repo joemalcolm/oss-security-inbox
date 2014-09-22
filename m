@@ -1,66 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/03/5
-Message-ID: <5314CA15.7090006@redhat.com>
-Date: Mon, 03 Mar 2014 11:29:41 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/1
+Message-Id: <20140922060857.8EECD34E008@smtpvbsrv1.mitre.org>
+Date: Mon, 22 Sep 2014 02:08:57 -0400 (EDT)
+From: cve-assign@...re.org
+To: krahmer@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, squid3@...enet.co.nz
+Subject: Re: CVE-Request: squid pinger remote DoS
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 03/03/2014 06:06 AM, Tim Brown wrote:
-> On Thursday 27 February 2014 17:30:54 Marcus Meissner wrote:
->> Hi,
->> 
->> I am wondering a bit ...
->> 
->> We received this bugreport for the KDE default webbrowser
->> Konqueror: https://bugzilla.novell.com/show_bug.cgi?id=865241
->> 
->> Basically https://www.howsmyssl.com reports that even the weak 
->> EXPORT ciphera are in use by konqueror.
->> 
->> And yes, it is right... DES40, RC2, DES_CBC  (single DES) ...
->> should definitely not be used these days anymore.
->> 
->> 
->> Do you think use of export ciphers should get CVEs these days?
->> 
->> It does not seem intentional, konqueror just uses everything
->> openssl has without explicit filtering by default.
+> I made a fix for squid 3.4.6 and request a CVE for
+> this issue:
+> 
+> The pinger code that checks for nodes being alive doesnt
+> properly validate ICMP and ICMPv6 replies, in particular
+> icmp6 types which are used to index into a string array.
+> This could cause crashes when the index is OOB.
+> 
+> A patch is available here:
+> 
+> https://bugzilla.novell.com/show_bug.cgi?id=891268
+> 
+> I also made some cleanups and error checking on the
+> receive socket.
 
-As the stated purpose of encryption is to strongly protect
-communications, both integrity (e.g. modification) and confidentiality
-(e.g. not being able to read it) then using encryption such as DES
-40/56 can be broken in single digit seconds (I'm guessing near real
-time now with dedicated hard ware) and hours on standard PCs obviously
-violates the stated intent of using encryption.
 
-So the question becomes where do we draw the line? 40 and 56 are
-obviously weak, standard computers, let alone something with a GPU can
-crack it quickly. Do we draw the line at <128 bits, <3DES or something
-else?
+> From: Amos Jeffries <squid3@...enet.co.nz>
 
+> What could happen worst-case (#1 or #3 ... flooding the parent
+> processes log, slowing the entire service down and/or exhausting log
+> disk space, which in turn can crash the parent process. ... The
+> best-case being that some HTTP servers are assigned incorrect RTT
+> values. Which adversely affects latency based routing logics ...
+
+
+As far as we can tell, CVE IDs are required for cases #1 and #3:
+
+> 1. "used to index into a string array" possibly corresponds to
+> http://cwe.mitre.org/data/definitions/129.html for the modified
+> default case after case 136, and approximately two other places in the
+> patch
+
+Use CVE-2014-7141.
+
+
+> 3. added "if (preply.psize) < 0" code apparently corresponds to a more
+> general issue with missing data validation
+
+Use CVE-2014-7142.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJTFMoUAAoJEBYNRVNeJnmTh3gP/1tNIrALc+jAp/x1GuvVphn6
-WrB9LG6sKWD+4lvQDEDGtqJwxU8L7r4rh0BDasUQlh0M5+ykwObud3qD1+AWejLE
-gpxPhyqFuDw6EDxVRmkLV5IDT2KVSwSUuZgeT54bsuvVgnnFG+leA3TqAN15zOrT
-SBdmBOAIS5xf65BhuuL5vyU+DpUe9J2A9aF0eeBELhi2UALXdr3voU5kKukD3ZCo
-2/aWHIJDQ/F2dxtLqzO5Y3VWhbbSyaTdO2ah/iBn8sfd7yEh+RHa4On3pf15716b
-Ekz1XilF5umZ7A2MUfGTsUIkxKqLl56a97XuwRgCqCOgvJ5nsNLk5GX+0owPr9wt
-YBWMO1JCY/TWJVMYfCEuFgRSyERcHozIJYtqMWDHNPgt9Qg8gpTSvRX1mNUUm0um
-p6Bz9k/RhZ2e7y50JlMgoAFVi2VxlvhwRUmUcNGIiziMQTAqbaaxaZJH9AahSm7A
-nqprQkbtx6A0zTv80M0PpXnGEhOU48GeoDIP5COyyFF8uA6ewuc17qM0B0isQLTz
-kVI71fDflhs/QObuk6+tvUDPAWBlHuj+pCxBJEO0PDh8rQ6yBug2nMfYk+zE4W3v
-sYXBclQGESg8ANWPIYBzratci3RJrh0IMw1CdT+TjL3LldBJ4q1ll2Ndf+hy1Fsg
-88iw1FGkCTBFc+kRkzHJ
-=IRqF
+iQEcBAEBAgAGBQJUH7xuAAoJEKllVAevmvmsBbIH/2N7bDbuvxY/iGH6Jtj65rNK
+fIZqVWUiAGvr/ZxtmxM++sikol+7mtspqjyxuu0L5r4Uzz230aCiiKsVGFqNmOOB
+4WvW9kL7X7KXBh0Knn/i3eJP930BtdJUY5lOV+pRfkKfAV4ZqoJR2kF3Jfw0UMHi
+sabnXcG4Kex+nnQhA7aJliZhAwJI0Ou51H7PCwYi9HOugO3E8sA8xb8cwBSihdzm
+XI4qKFVTzx4fm/YUE8XizHah099FBNMJAPXrIQKVuawL7L7zDEeA45x0IDulgZ+w
+Rysl8bSDtxkONsGgxcwE5HbOjoOF/8eWttQyyj473ts4Lr5tLduAfJqOqYxZ0gc=
+=60QN
 -----END PGP SIGNATURE-----
