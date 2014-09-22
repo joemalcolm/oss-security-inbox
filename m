@@ -1,66 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/25
-Message-ID: <CAEZyo3ASqgsg1zD4nO7ShE8QS5yTPdiS6XPsG_d7EOZp8-aJYg@mail.gmail.com>
-Date: Tue, 9 Sep 2014 22:14:21 +0300
-From: Mikko Korpela <mikko.korpela@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: pinocchio tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/3
+Message-Id: <20140922061548.6CAAE6C0039@smtpvmsrv1.mitre.org>
+Date: Mon, 22 Sep 2014 02:15:48 -0400 (EDT)
+From: cve-assign@...re.org
+To: gmurphy@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack keystonemiddleware
 Content-Type: text/plain; charset=utf-8
 
-"And we will need that because there are so many
-devices hitting the streets with so many noob vulns that it's only a
-matter of time before someone is killed."
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-So umm.. Your saying that you guys are saving the world by finding out
-random packages that use easily guessable filenames from /tmp/ that
-everybody has access to?
+> http://launchpad.net/bugs/1353315
 
-I think security (like safety) has its place, but it is largely
-context dependent - you don't put locks to every door in your house
-(or I hope you don't) or you end up spending all the time opening and
-closing them.
+> Products: keystonemiddleware, python-keystoneclient
+> Versions: versions up to 1.1.1 (keystonemiddleware), versions up to 0.10.1
+> (python-keystoneclient)
 
-I'm not arguing that the things you guys are talking about are not
-important in many contexts but test automation??
+> When the 'insecure' SSL option is set in a paste configuration file it
+> is effectively ignored
 
-It is part of software development process - and in many cases
-requires that the system under test must be executed in some very
-unsecure way to enable access to the internals of the tested system.
-So in this place where these tests are executing (developers little
-sandbox that is far away from the evil world around us) if someone
-"evil" has access to the /tmp/ folder or the machine in any way then
-you are already screwed.
+> The scenario where a deployer specifically sets:
+> 
+>   ssl_insecure = false
+> 
+> ... in an attempt to ensure that verification is performed will be
+> sorely disappointed
 
-So could someone please give me an example case of a test automation
-tool where removing a /tmp/ vuln would have had any significance?
+Use CVE-2014-7144.
 
-(By the way I kind of think that I'm saving the world also :P by
-giving people test automation tools so they can get bugs out of their
-software systems - and bugs really kill people)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-2014-09-09 19:39 GMT+03:00 John Haxby <john.haxby@...cle.com>:
-> On 09/09/14 09:34, Steve Kemp wrote:
->>                                          I'm sure lots of
->>  modules exist created by inexperienced developers who haven't
->>  considered the implications of posting new code libraries.
->
-> We see lots of people making the same mistakes over and over again.
->
-> Apart from the obvious newbie mistakes of failing to create proper
-> temporary directories, we also get things like the slightly more subtle
-> shipping a "secure" web server with a fixed self-signed cert.   Or
-> copying a user-supplied string into a MAXPATH+1 buffer because that's
-> long enough for any pathname.   Or ...
->
-> I don't need to go on, we've all seen them and Kurt highlighting
-> problems is all goodness because at least it gets people thinking a bit
-> more about security.  And we will need that because there are so many
-> devices hitting the streets with so many noob vulns that it's only a
-> matter of time before someone is killed.
->
-> jch
-
-
-
--- 
-Mikko Korpela
+iQEcBAEBAgAGBQJUH740AAoJEKllVAevmvmsGwwH/1+0pBSPRa2l1eSYsznGI8Ar
+7c0UPVCsPAN5vCveHMYWAa+/BnfsSCXAkGOumu8/l+QIHjQIdcp0RFB5DXeIYqGi
++6JxooSvqOBan2pAyYZX6nVkEPTQ9/13xFyf14bYlGRHlR5E9wHxyjqSJawBmOln
+OxcTG3piOdcGdCFtAgp4mzkLTlx9reKxAsub8dUD0lVA0w0NNAEWk4amMMIOEBIS
+s7IyU31C+eAxyf9BaIAdNumB5Dd3/LTc3mvyUlSmwcmhpIykRg+5Tzvlo+sFkt6G
+tszw/Y2IHQZiD0oYBcFzcdR4DsVUQ/HsOeWntGhoQgDvKp+iQW3meAe6uNo0i48=
+=CHBP
+-----END PGP SIGNATURE-----
