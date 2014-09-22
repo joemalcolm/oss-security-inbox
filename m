@@ -1,48 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/6
-Message-ID: <54336631.70900@edwardprevost.info>
-Date: Mon, 06 Oct 2014 21:04:01 -0700
-From: Ed Prevost <me@...ardprevost.info>
-To: oss-security@...ts.openwall.com
-Subject: Re: Who named shellshock?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/5
+Message-ID: <alpine.LFD.2.10.1409221838500.4095@javelin.pnq.redhat.com>
+Date: Mon, 22 Sep 2014 18:43:19 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+cc: Steve French <sfrench@...ba.org>
+Subject: Re: CVE request: [CIFS] Possible null ptr deref in SMB2_tcon
 Content-Type: text/plain; charset=utf-8
 
-On 10/6/2014 8:55 PM, Solar Designer wrote:
-> On Mon, Oct 06, 2014 at 08:33:44PM -0700, Michal Zalewski wrote:
->> This is the bit from Stephane:
->>
->> http://www.openwall.com/lists/oss-security/2014/10/03/14
->>
->> -- snip! --
->> A release schedule with public disclosure on the 24th at
->> 14:00 UTC and early notification to other unix and linux
->> vendors on the 22nd and select infrastructure provider
->> notification (such as CDNs including Microsoft) on the 23rd
->> proposed on the 16th by Florian.
->>
->> [...]
->>
->> bashdoor.com was registered (not by me) with a creation date of
->> 2014-09-24 13:59 UTC sometime before 2014-09-24 06:59:10Z
->> according to whois. Florian also said here that someone brought
->> the early notification sent to vendors/infrastructure to the
->> press, so someone obviously intended to take it to the press. I
->> don't know whom.
->> -- snip! --
-> Thanks!
->
->> The bashdoor.com thing sounds a bit damning (doesn't sound like
->> something that would be in the notifications to CDNs & co?).
-> This certainly sounds bad, but what matters most is whether any info on
-> the bug got to an unintended party before 2014-09-24 14:00 UTC or not.
-> The name bashdoor.com itself does not leak any vulnerability details,
-> nor that there was in fact a bash vulnerability coming.  This does
-> suggest that someone wasn't 100% busy using the then non-public info for
-> its intended purpose, but it does not indicate they violated the trust
-> of whoever disclosed the info to them (except possibly by cybersquatting
-> the domain), nor put bash users at any additional risk.
->
-> Alexander
->
->
-I'd say it still has a sleazy feel to it. lol
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+   Hello Raphael,
+
++-- On Wed, 17 Sep 2014, Raphael Geissert wrote --+
+| Commit 18f39e7b[1] of the linux kernel repository fixes a remote null
+| pointer dereference on the client when it resolves DFS referrals but
+| the server deletes the IPC$ share.
+
+  IIUC, this would occur while mounting a remote share, right? mount(2) would 
+be a privileged operation on the client.
+
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJUICBvAAoJEN0TPTL+WwQfkeoP/0S5bandiEWUbwjosPyXPhip
+oHlYjjKztzTpQ6fQC0+nkppZdLSF9O5gkwXjy0qqgOt6woTuMbJLz2hD1Ea/rRAC
+JHoKZDbE97+mc6biauq+Is12h0wbSyhCS+McX2i3ftVg9Qwr2Hv/dV3POveRk3/f
+emXTbdQbDAOxqqsX7QqtlRDIv1m071wtKcE+sOYrlS+X75f3L94PEz8OJMzM+f/Y
+CvZd1HB0ml9VVTFbmI640yBTF9zApVJbzYdKoVNNkh0RKD4awmHQWxCZSuJQn7Aq
+KWCye+eJEJXeeBm3CKYHFtjeXPrhQx0a35c1yGPma7Hf+NzVk4J1S/qdZYGnRM8y
+oyaPkbNrnpDZu4SlvKOXJCvd52Xzg50qr9tzgfv/NPtkezliKDswcNdVOtEA+gOp
+40dbBBT5o9lbQ/Wbj+QnCy+9lW+RqTg9pezS9cD0zsI7iIlnU47SYtSQZoKLjG9w
+Tpicr/pXS3n7Bfa2+bGZUGohcjluNub8GkQMfXidYEyhABFxViugEOf3PVrA0KcB
+jR6d2D/Skl0+gnr2RDAQcJle7AclPDxOYgOwAnUihn0xCohwAgWzMHkhxH5eXxfq
+9gE6PM/ewASR+aDlafUEQcukKixQFp/sSi4+/eHbKbTjAP+mJpeE3rX2OSgKCDJH
+Kfg9bJ75KJ5Zal1/aAr8
+=w6WX
+-----END PGP SIGNATURE-----
