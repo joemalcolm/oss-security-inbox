@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/30/2
-Message-Id: <201406300610.s5U6AIsW000205@linus.mitre.org>
-Date: Mon, 30 Jun 2014 02:10:18 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/4
+Message-Id: <20140922061940.5FCA8C508C8@smtptsrv1.mitre.org>
+Date: Mon, 22 Sep 2014 02:19:40 -0400 (EDT)
 From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Confusion on CVE-2014-0235
+To: geissert@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, sfrench@...ba.org
+Subject: Re: CVE request: [CIFS] Possible null ptr deref in SMB2_tcon / Linux kernel
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> CVE-2014-0235 file: extensive backtracking in awk rule regular expression
+> https://github.com/torvalds/linux/commit/18f39e7be0121317550d03e267e3ebd4dbfbb3ce
 
-> CVE-2014-0235 Microsoft Internet Explorer CElement Use-After-Free Remote Code Execution Vulnerability
+> a remote null pointer dereference on the client when it resolves DFS
+> referrals but the server deletes the IPC$ share
 
-Thanks for noting this. We have asked possibly responsible parties and
-will send correct CVE assignments here when they are known.
+Use CVE-2014-7145.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -26,11 +26,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTsP7wAAoJEKllVAevmvmswzYH/j2HQruIYiSiWQCryZo8716e
-5Rofgdy9ZqLQ/mGdWt//XFC/PsBxoekiIwnsPrAF8OjYunhK3ldFwoDle9BFBTAv
-h4NFBhU9TG7vrytTs0TPhOlV8ovWLac+fzULH3Lb8fk4is1uFCgvDY+35Iau7fRt
-aaGpoU7MnCXP06i13y74S6zfQTLvJWRTjkJl6VF6LDRsxOQZ1IPN2l19VhEEt7aw
-FkA3+t96QnaiNrgNrQdoVOa02mGHeX/Ka9ucg7rfQHDo8jTLR7n8nS9dN5OcXfJQ
-+/iu40df3pFSpZiBQkBVKGxMZ/FHLYSFTUyuGe4OCNkZJ8gEPBCiXo9Ka9NxtE0=
-=FlA7
+iQEcBAEBAgAGBQJUH770AAoJEKllVAevmvmsiL4IAJ9aj8yfekGtS4Kyt2dRLnly
+av6SgC6boqceDNhRzBSQ+c4l1u64ve8oaLz64AaEgwnbZmtRZSygUc/6vgs83oGu
+DvZ5Pmdz9pSP60hU+z6RQtSHcOdyHEhxU/wgBbRorVIM10heuBr+yVPyC9lYdGzP
+nsQgISYRwI+GsPb4HRGUCKaNR2q2LzYVveSB40Iulzql8P8YEK3rAj7z/iBaVRBR
+CYeYtWg/LTc1EKdPCJrxPgbfqEZ6dIdgWLLTOH7LbQcY6mv8LpvjdwJ9aHzqFu2Y
+UvFTqjsQjm4u0WlMZkjBKNOnjFkf7CSAdDgut7mrgOyxAjtc75Quh+WSaWzxeis=
+=U4yc
 -----END PGP SIGNATURE-----
