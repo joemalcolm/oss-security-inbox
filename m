@@ -1,52 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/1
-Message-Id: <201404220114.s3M1E2I2029202@linus.mitre.org>
-Date: Mon, 21 Apr 2014 21:14:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: mattd@...fuzz.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request / advisory: gdomap (GNUstep core package <= 1.24.6)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/6
+Message-ID: <20140922160021.GA8492@inutil.org>
+Date: Mon, 22 Sep 2014 18:00:21 +0200
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Steve French <sfrench@...ba.org>
+Subject: Re: CVE request: [CIFS] Possible null ptr deref in SMB2_tcon
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Sep 22, 2014 at 06:43:19PM +0530, P J P wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+>    Hello Raphael,
+> 
+> +-- On Wed, 17 Sep 2014, Raphael Geissert wrote --+
+> | Commit 18f39e7b[1] of the linux kernel repository fixes a remote null
+> | pointer dereference on the client when it resolves DFS referrals but
+> | the server deletes the IPC$ share.
+> 
+>   IIUC, this would occur while mounting a remote share, right? mount(2) would 
+> be a privileged operation on the client.
 
-> gdomap (GNUstep Distributed Objects nameserver)
+True, but on Debian and derivatives like Ubuntu mount.cifs is usually setuid root.
 
-> After receiving a crafted invalid request, gdomap will attempt to log
-> an error message to the system logger. However, due to incorrect setup
-> of the logger during server initialization, the logger and gdomap
-> itself will mess up program state enough that program execution will
-> be aborted. gdomap listens to all interfaces, allowing a remote
-> unauthenticated attacker to DOS the nameserver.
-
-> https://savannah.gnu.org/bugs/?41751
-> http://svn.gna.org/viewcvs/gnustep/libs/base/trunk/Tools/gdomap.c?r1=37756&r2=37755&pathrev=37756
-> http://svn.gna.org/viewcvs/gnustep/libs/base/trunk/ChangeLog?r1=37756&r2=37755&pathrev=37756
-
-> closes the fd that openlog() just made ... this closed fd's number is
-> re-used for gdomap's UDP listening socket ... then closes what it
-> thinks is still its fd (but is actually now the UDP listening socket
-> mentioned above)
-
-> Tools/gdomap.c: Don't open syslog connection until after we have
-> forked and closed old descriptors .. fix for bug #41751
-
-Use CVE-2014-2980.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTVcIOAAoJEKllVAevmvmsBEkH/jdrTeZ3gB0ESGkNFChbtmXx
-6BC5CzThnaeLhtDWx67GHE1TSpxyCJQLJtnocZwn9Z4E97UbLUR/EuD2bBlnsavE
-/BsVUOxZ+TAxThvwTqTRGKi/LFsJBzlfe2zZuwsXC1BNCuUAvguwBmbrDGMTFbdB
-+kzVDsdLOPlTAZVB7xFirokNQFu+i367plde3MvLPeMwIB80aWJyMNjwtwPW7x91
-t3jgpZ7V+3Y4eJ09JHo08mxJYqdw03c10sWRkmWqLn51IH6u7BC/gh/s6wCBsZQu
-wgFQ1Mnwes+pNCgGnc8HJgH8qGphPPvS8HyI+HoVw49A++rgU1USIe6ADck12Uo=
-=siER
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
