@@ -1,86 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/6
-Message-ID: <CAKcmtDyrSpxv6MongipHWOtj8i6-ZGTgxW=cxSsmNgfXGjQ8Hw@mail.gmail.com>
-Date: Fri, 28 Mar 2014 08:33:38 -0700
-From: Chris Steipp <csteipp@...imedia.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/2
+Message-Id: <20140922061228.16D576C0039@smtpvmsrv1.mitre.org>
+Date: Mon, 22 Sep 2014 02:12:28 -0400 (EDT)
+From: cve-assign@...re.org
+To: alex.gaynor@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Twisted Security Issue
 Content-Type: text/plain; charset=utf-8
 
-On Mar 28, 2014 7:54 AM, "Florent Daigniere" <
-florent.daigniere@...stmatta.com> wrote:
->
-> Sorry to be thick here but it still doesn't make any sense to me...
->
-> The session-id should be renewed upon login AND any credential/privilege
-> change (that includes password changes). This protects against session
-> fixation attacks (where the attacker coerce a user into using a session
-> he controls).
->
-> On these pages, there's usually no need for anti-CSRF protection as they
-> tend to require credentials (something the attacker, by definition,
-> doesn't have).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Slightly different attack. The attacker (who knows their own password and
-chooses the reset-to password) was able to cause a logged out user (victim)
-to login with the attacker's account via the change password form.
+> When specifying the trustRoot (CA store) for the HTTP client, Twisted
+> did not respect the user's specification, and always used the default
+> of the platform trust. This means that users attempting to use this
+> feature to implement certificate pinning, or otherwise restrict the
+> trust CAs would still have accepted any certificate signed by a CA.
+> 
+> Twisted 14.0.1 has been issued to resolve this
 
-This attack is somewhat specific to mediawiki since we allow users to
-define JavaScript that will be loaded on pages they visit while logged
-in... So the victim in this case would run the attacker's personal
-JavaScript.
+Use CVE-2014-7143.
 
->
-> Are you saying that Mediawiki has a logic bug (some form of
-> authorization bypass) allowing any authenticated user to change someone
-> else's credentials without knowing them? If so, it's a different
-> category of bug and there again, the control is unlikely to be "adding
-> an anti-CSRF token".
->
-> Florent
-> PS: While we're at it: yes you should be comparing anti-CSRF tokens in
-> constant-time, unlike what
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=62497#c13 is suggesting.
->
->
-> On Fri, 2014-03-28 at 07:19 -0700, Chris Steipp wrote:
-> > The session-id is renewed when the user successfully logs in with a
-> > password reset. The issue that we patched was that the anti-CSRF token
-for
-> > non-authenticated users on the password change form was guessable, and
-> > would remain that way even if we regenerated the user's session-id each
-> > time they accessed the password rest / login form.
-> >
-> >
-> >
-> >
-> > On Fri, Mar 28, 2014 at 2:23 AM, Florent Daigniere <
-> > florent.daigniere@...stmatta.com> wrote:
-> >
-> > > On Thu, 2014-03-27 at 18:37 -0700, Chris Steipp wrote:
-> > > > Hi, we just patched a login CSRF in MediaWiki today. An attacker
-could
-> > > > login a victim as the attacker. Can we get a cve assigned for this?
-> > > >
-> > > > Patch:
-> > > >
-> > >
-https://gerrit.wikimedia.org/r/#/c/121517/1/includes/specials/SpecialChangePassword.php
-> > > >
-> > > > Release announcement:
-> > > >
-> > >
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-March/000145.html
-> > > >
-> > > > Wikimedia bug:
-> > > > https://bugzilla.wikimedia.org/show_bug.cgi?id=62497
-> > >
-> > >
-> > > That looks like a session-fixation bug to me; not a CSRF... and
-> > > therefore it's the wrong control: the session-id should be "renewed",
-> > > that's all.
-> > >
-> > > Florent
-> > >
->
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
+iQEcBAEBAgAGBQJUH71eAAoJEKllVAevmvmsRaAH/2qxppDYa1jQSSgD+wMzROaA
+WerCsjha9VIhcYATLNRl/YIItZn2v+oQBbNOfFgFUpETzIupk2ZC0CQitE7JarWG
+tGbd6gjllfj6Or5swjgYvOGvst6WIcgW58iWUseQ5dOO2OmAiSwdFzsbameR3uXQ
+SiTbn0VV0CLj4X45NPpONOx2PFdNDU4pxcz/GHaNGc1C++E1LCQgX2gX/DAuFqc0
+pd/srMentAQxLmRkFvDsYlzDgxl/GAWHk9zzh4IXOwhLthWOP9V3NB50UGtZ9Owu
+PcJzpXN3qktXDD8xS/2t8xFm3mqIDDkJx1uyA58F81j7MGqv0IulRir+mcyhtqo=
+=hS6Z
+-----END PGP SIGNATURE-----
