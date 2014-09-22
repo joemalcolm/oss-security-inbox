@@ -1,46 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/06/11
-Message-ID: <EFFFF206-8C51-4A20-9E6D-6E173B0D218D@redhat.com>
-Date: Tue, 06 May 2014 14:39:38 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: Postfix bounces arbitrary content
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/8
+Message-ID: <54207EB0.6030806@reactos.org>
+Date: Mon, 22 Sep 2014 21:55:28 +0200
+From: Pierre Schweitzer <pierre@...ctos.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Full disclosure: denial of service in srvx
 Content-Type: text/plain; charset=utf-8
 
-I noticed this bug in the Debian BTS and didn't see it mentioned anywhere:
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=741888
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm going to copy-n-paste a bit of the bug below for context:
+On 30/08/2014 03:27, cve-assign@...re.org wrote:
+> > Putting an extremely high value to these parameters, such as
+> > 184467440723049 will lead to an integer overflow. When attempting to
+> > queue the function execution, srvx will add it in the past, will attempt
+> > to execute it immediately and thus will loop forever on this, and will
+> > finally crash due to memory exhaustion.
+>
+> Use CVE-2014-5508 for the integer overflow.
 
-"""
-An unmodified Postfix install can be made to bounce arbitrary
-content from an arbitrary internal address to an arbitrary external
-address, by an external sender who has no affiliation with the
-organization that's running Postfix.
+Thanks. This has been used for the pull request upstream, which has
+finally been merged to their trunk.
+So, it's fixed in development trunk.
 
-The possibilities for offensive use of this exploit are interesting.
-Suppose I want to prevent alice@...om from receiving an important
-message that I think bob@...om may be about to send to her.  I can
-take 5,000 randomly selected articles from my local news spool, and
-cause b.com to bounce all of them from bob@...om to postmaster@...om.
-This will likely cause a.com to block incoming mail from bob@...om,
-or from all of b.com... thus blocking Bob's message to Alice.
-"""
+See:
+https://github.com/GameSurge/srvx/commit/1c24a6f22c2782fb072239246f868515dbca7459
 
-The reporter also references an almost-10-year-old email message to the postfix-user mailing list (to which there were no replies):
+- -- 
+Pierre Schweitzer <pierre at reactos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-http://article.gmane.org/gmane.mail.postfix.user/96511
+iQIcBAEBAgAGBQJUIH6wAAoJEHVFVWw9WFsLyLgP/A/1oVUobq/vc7zGnPYg/eQi
+KkkC165VMsNamjhBIx5M4CZGa7Lndhxhojr5HvnjlAY+rYlS3RkMMlxVsR6QZ85q
+X3/Ilhs9Zrw2wKjqwhh0yoCSzHz/H9w4pEdMsSqQhUy6H2ETEFFHHMoUDIvzR4ad
+YPbmUfEhtRsFR5FPvdvMG5nEj7J244vQXUB6M4FnYtsc8ujtaRmc8/6FB+SWk8Dg
+xpdGj42mmmYVklB5kg5pef5BQ7q+Fhe4ode9BlCIG3SLasBecBi5wmvJtaLTN2hZ
+ZukejPPfp4KpZSCeoUd1JCqG5k0muSBJBNMiCbOcu/1lE0PCj6I6Esi21MbQB1oE
+gXMgZqzXKhS6P4eB8sq4s/t1hVQduSTKf1sf8JcQ8TipcQYm0MXcP6j7Ztck8Akk
+/bxlsabGl4wV9+v0PlZej+Q3OQV16ErG6LxDBSBCy7dnPFAVqB0o/1Xl7taezsyp
+prKGQJmr5JIlvvJyHetTEYX5ENSfcnr1zXDXgYZk9ubwJEncyqpfPg/t1+ozI3rt
+xKyfRB5Ej7G/bAANXdbqL9UyljBltrFbRxWcpPyHQ8ocy9NsRJxmFX+4P68aFCXF
+nsLpWWN95T22o8mz+n1aeXszzcfPommzzudAs6NDOjxSubu8/WapV89gz+DhqerZ
+jkGkRna/d2M9sdEIvddm
+=3ZYr
+-----END PGP SIGNATURE-----
 
-I don't believe this was reported to upstream at all, but I can't be 100% sure of that.
-
-I'm not so much looking for a CVE assignment (unless one is warranted) as much as some determination as to whether or not this is a flaw because the way I see it, it's no different the spoofing the origin of an email (someone else's email address) to cause bounces to go to that address and with the same end result (from what it sounds to me).  It's quite possible that I'm missing something, but given there was no response to a similar message from 10 years ago, I'm not sure if it got missed or no one cares (or think it security-relevant or otherwise exciting).
-
-Anyways, I see this bug in the Debian BTS and I see no response from Debian maintainers or any indication it was reported upstream, so I was curious what others might think or if I'm missing something (because I don't see anything too terribly exciting here).
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Security Response Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
