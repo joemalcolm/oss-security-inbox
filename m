@@ -1,44 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/3
-Message-ID: <CA+wiQws6TQ6szB_1m6H6t1RcJQ=KyoN_OB5J1-Z-cgPuwwkHEg@mail.gmail.com>
-Date: Tue, 8 Jul 2014 16:26:32 +0900
-From: "Shota Fukumori (sora_h)" <her@...ah.jp>
-To: mmcallis@...hat.com
-Cc: oss-security@...ts.openwall.com, security <security@...y-lang.org>,  moses@...petlabs.com
-Subject: Re: possible CVE-2010 request: Ruby older than 1.9.2 appending current directory to the load path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/23/3
+Message-Id: <E1XWOzI-0000xa-CH@xenbits.xen.org>
+Date: Tue, 23 Sep 2014 12:14:32 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 106 - Missing privilege level checks in x86 emulation of software interrupts
 Content-Type: text/plain; charset=utf-8
 
-I guess the change (committed r23816 in our svn repository,) is not a
-security issue (just a hardening).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-so I think it shouldn't need CVE ID.
+                    Xen Security Advisory XSA-106
+                              version 2
 
-Thoughts? > security@...y-lang.org
+    Missing privilege level checks in x86 emulation of software interrupts
 
-On Tue, Jul 8, 2014 at 4:14 PM, Murray McAllister <mmcallis@...hat.com> wrote:
-> Good morning,
->
-> CVE-2014-3248 (http://puppetlabs.com/security/cve/cve-2014-3248)
-> describes the following:
->
-> "On platforms with Ruby 1.9.1 or earlier, an attacker could have Puppet
-> execute malicious code by convincing a privileged user to change
-> directories to one containing the malicious code and then run Puppet."
->
-> The issue in Ruby was fixed here:
->
-> https://www.ruby-lang.org/en/news/2010/08/18/ruby-1-9.2-released/
->
-> The "$: doesn't include the current direcotry." entry, I guess.
->
-> Is a 2010 CVE ID needed for this, or should it only be treated as hardening?
->
-> Thanks,
->
-> --
-> Murray McAllister / Red Hat Product Security
+UPDATES IN VERSION 2
+====================
 
+Public Release.
 
+ISSUE DESCRIPTION
+=================
 
--- 
-Shota Fukumori a.k.a. @sora_h http://sorah.jp/
+The emulation of instructions which generate software interrupts fails
+to perform supervisor mode permission checks.
+
+However these instructions are not usually handled by the emulator.
+Exceptions to this are
+- - when a memory operand (implicit for the affected instructions) lives
+  in (emulated or passed through) memory mapped IO space,
+- - in the case of guests running in 32-bit PAE mode, when such an
+  instruction is (in execution flow) within four instructions of one
+  doing a page table update,
+- - when an Invalid Opcode exception gets raised by a guest instruction,
+  and the guest then (likely maliciously) alters the instruction to
+  become one of the affected ones,
+- - when the guest is in real mode (in which case there are no privilege
+  checks anyway).
+
+IMPACT
+======
+
+Malicious HVM guest user mode code may be able to crash the guest.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions from 3.3 onwards are vulnerable.
+
+Only user processes in HVM guests can take advantage of this
+vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+There is no mitigation available for HVM guests.
+
+CREDITS
+=======
+
+This issue was discovered Andrei Lutas at BitDefender and analyzed by
+Andrew Cooper at Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa106.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa106*.patch
+301060f801ab39c15ac773e1bcc250f0e6bf30d748007a96173459b83afc9270  xsa106.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUIWPoAAoJEIP+FMlX6CvZeUAIAIV9TvZK3c6ffMYcWOaeRa+s
+bSZiFhIzMumnxpJTgCBjqOsQHT5bw1CTf3iW49SBsHly5X/oWJg0ys+shWjBXKl0
+SwAkJcywOG3c2ZdxyCJdSM2eQbOhDgympqde7GTTkG29uoqAyAa0kDXn9lBllJPY
+H7ZIB7K+EA77yxgADH/YO4ZGFWelnUaOb+3qorw3GtdWAVHhhXr4Gnq98vOFnRlU
+7JI71KH647gjiBQgdy6Wmkn7q7xsLfpYkxs9YronwyjxxHnEOO3Gx3zkEHHIaio/
+YzqQPh96d1FZaO5La8ddhlBDyulDDMVKwLg82rtICD8kWwTtqZHuSFHbTmvC+qs=
+=rTiy
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa106.patch" of type "application/octet-stream" (922 bytes)
