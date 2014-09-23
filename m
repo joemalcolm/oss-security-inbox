@@ -1,38 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/4
-Message-ID: <20141209020725.GA27278@openwall.com>
-Date: Tue, 9 Dec 2014 05:07:25 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Tim Brown <tmb@...35.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Running Java across a privilege boundry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/23/2
+Message-Id: <E1XWOzA-0000vf-7e@xenbits.xen.org>
+Date: Tue, 23 Sep 2014 12:14:24 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 104 - Race condition in HVMOP_track_dirty_vram
 Content-Type: text/plain; charset=utf-8
 
-Distros -
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Tim is not responding to my ping's about making the issue public. :-(
-Can someone from the distros list, preferably from a distro who actually
-bothered to handle the issue (did anyone?) make the issue public ASAP,
-by posting in here?  Please.  Thanks.
+                    Xen Security Advisory XSA-104
+                              version 2
 
-Alexander
+               Race condition in HVMOP_track_dirty_vram
 
-On Wed, Nov 26, 2014 at 06:54:48AM +0300, Solar Designer wrote:
-> On Sun, Nov 23, 2014 at 05:59:41PM +0300, Solar Designer wrote:
-> > So far no distro has expressed any interest in having this embargoed.
-> > 
-> > Distros list members: please speak up (here or on the distros list, with
-> > Tim CC'ed) if you'd like this embargoed.
-> > 
-> > Tim: if until Tuesday no distro says they want this embargoed, please go
-> > ahead and make the issue fully public.  (On a related note, I hate it
-> > when an issue is sort of "semi-public".  It's the worst possible case.
-> > When this happens, it's a reason to opt for a shorter embargo period, or
-> > for none at all indeed.)  If an embargo is requested, please make sure
-> > there's an exact date and time for the planned public disclosure.
-> 
-> So far no distro has expressed any interest in having this embargoed,
-> and no specific coordinated disclosure date has been proposed by anyone.
-> Tim, please make the issue public now by posting it in here.  Thanks!
-> 
-> Alexander
+UPDATES IN VERSION 2
+====================
+
+Public Release.
+
+ISSUE DESCRIPTION
+=================
+
+The routine controlling the setup of dirty video RAM tracking latches
+the value of a pointer before taking the respective guarding lock, thus
+making it possible for a stale pointer to be used by the time the lock
+got acquired and the pointer gets dereferenced.
+
+The hypercall providing access to the affected function is available to
+the domain controlling HVM guests.
+
+IMPACT
+======
+
+Malicious or buggy stub domain kernels or tool stacks otherwise living
+outside of Domain0 can mount a denial of service attack which, if
+successful, can affect the whole system.
+
+Only domains controlling HVM guests can exploit this vulnerability.
+(This includes domains providing hardware emulation services to HVM
+guests.)
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions from 4.0.0 onwards are vulnerable.
+
+This vulnerability is only applicable to Xen systems using stub
+domains or other forms of disaggregation of control domains for HVM
+guests.
+
+MITIGATION
+==========
+
+There is no mitigation available for this issue.
+
+(The security of a Xen system using stub domains is still better than
+with a qemu-dm running as an unrestricted dom0 process.  Therefore
+users with these configurations should not switch to an unrestricted
+dom0 qemu-dm.)
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper at Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa104.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa104*.patch
+fc02f6365ca79a6ef386c882b57fab8b56aa12b54fc9b05054552f0f25e32047  xsa104.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUIWPgAAoJEIP+FMlX6CvZoIYH/3HEaknB8j0LpU/OQzO/zhLV
+EJzzXY4kzsabm3HP0bisTMpa8oMdFCnedcGzegqt/Ig+9CRwtbAijD/IokoODhAC
+GPYDxZag52l/7PT/qG9WtbGX8CYEHFYLsHZc0Xi3Jo/3cRfdZ8F38UlvjPJVDyXO
+s3CAHEoPGcgUgCf0kKVADDta80k8USz6ptugqnkagHByF6TK+Fl/EfGpUpx36RWF
+6Sl0rtZeKdlqM9uZdf71EKJD1T8/F8CW2h7aKgRYD3IJb/yFpcbYVy+ePtl/XBT+
+TDo7ZeqCcuNcge8fiWngD5MvjfDygkkgL7FzNAzGVQcK8NND3NSlctu9Qe8CqJA=
+=+BMV
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa104.patch" of type "application/octet-stream" (1651 bytes)
