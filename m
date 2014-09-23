@@ -1,20 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/20
-Message-ID: <CALx_OUBSE1NYimVDhToGgxdx6hwaRZJ3DwEYFZ62GXLzfU4nXw@mail.gmail.com>
-Date: Tue, 8 Apr 2014 22:51:41 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/23/6
+Message-ID: <CABoQFUC05AbzR1BU=GDywYYGSjf2L0Cq02viUtsE3oscaw50_Q@mail.gmail.com>
+Date: Tue, 23 Sep 2014 23:47:05 +0200
+From: Nicolas RUFF <nicolas.ruff@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Jussi Eronen <juhani.eronen@...ora.fi>
-Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+Subject: Multiple issues in libVNCserver
 Content-Type: text/plain; charset=utf-8
 
-I find it somewhat perplexing that Codenomicon apparently had time to
-register the vanity domain two days before pinging the vendor (or
-rather unnecessarily, having CERT do it on their behalf).
+Hello list,
 
-> Domain Name: HEARTBLEED.COM
-> Creation Date: 2014-04-05 15:13:33
-> [...]
-> Mon, 07 Apr 2014 ~15:30: NCSC-FI reports issue to OpenSSL
+I am currently reviewing libVNCserver for potential security issues.
 
-/mz
+Project home is: https://github.com/LibVNC/libvncserver
+
+Here are my findings so far. Found bugs are either client- or server-side
+(libVNCserver provides both). All bugs require authentication. However they
+still pose a significant issue in the following scenarios:
+* VNC server is running in password-less mode because authentication is
+required afterwards (e.g. X11 login screen).
+* Attacker is located in a man-in-the-middle position.
+* Attacker has legitimate access to the VNC server but possibly not to the
+host server (e.g. virtual machine, remote assistance to a customer).
+
+Fixes are being committed - a few of them are still pending in the pull
+request.
+
+CVE-2014-6051 Integer overflow in MallocFrameBuffer() on client side.
+
+A malicious VNC server could advertise a very large screen size (by RFB
+protocol, width and height are 16-bit integers), resulting in an integer
+overflow during malloc() on client-side. Heap corruption, and possibly
+remote code execution on client-side could ensue.
+
+CVE-2014-6052 Lack of malloc() return value checking on client side.
+
+malloc() return value was not checked on client-side during framebuffer
+setup. A malicious VNC server that advertises a large enough screen size to
+make malloc() fail could basically map the framebuffer at address 0, and
+write anything-anywhere in client process memory using selective
+FramebufferUpdate messages. This could certainly turn into remote code
+execution on client-side.
+
+CVE-2014-6053 Server crash on a very large ClientCutText message.
+
+A malicious client could advertise a very large ClientCutText message size
+(by RFB protocol, size is encoded on a 32-bit integer). malloc() is likely
+to fail in that case; as malloc() return value is not checked, this will
+most likely result in a server crash.
+
+Note: this issue also affects RealVNC as per CVE-2010-5304.
+http://www.iss.net/security_center/reference/vuln/VNC_Client_Cut_Text_DoS.htm
+http://packetstormsecurity.com/files/89160/RealVNC-VNC-Server-Free-Edition-4.1.3-Denial-Of-Service.html
+
+CVE-2014-6054 Server crash when scaling factor is set to zero.
+
+A malicious client could set the scaling factor to 0, which will result in
+a server crash (division by zero).
+
+CVE-2014-6055 Multiple stack overflows in File Transfer feature.
+
+1/ The non-standard file transfer messages (UltraVNC feature) will blindly
+strcpy() client-provided file and directory names into a stack-based buffer
+of size MAX_PATH, resulting in multiple stack-based buffer overflows on
+server-side.
+
+2/ Client-supplied FileTime attribute is copied into a stack-based
+buffer of size 64 during rfbFileTransferOffer message parsing, resulting in
+a stack-based buffer overflow on server-side.
+
+Regards,
+- Nicolas RUFF
+
