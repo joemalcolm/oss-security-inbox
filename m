@@ -1,23 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/27
-Message-ID: <543408B5.3040602@redhat.com>
-Date: Tue, 07 Oct 2014 17:37:25 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/23/5
+Message-ID: <20140923191627.GA27818@zoho.com>
+Date: Tue, 23 Sep 2014 19:16:27 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+Subject: CVE Request: Python 2.7
 Content-Type: text/plain; charset=utf-8
 
-On 10/07/2014 12:21 PM, Hanno Böck wrote:
->    What class of bug is Shellshock? "Weird feature invented in
->    pre-Internet era"? How do you conquer this class of bugs?
+Hello.
 
-There are two bugs: Calling “eval” on untrusted input (a relatively 
-common issue), and the fact that this particular code path should never 
-have been exposed to the network at all.  The second part is not 
-strictly a bash bug, even if we addressed that with a change in bash. 
-If this issue had been discovered when the first CGI-enabled web server 
-was implemented, maybe it would not have been called a bash bug, but a 
-bug in how CGI used environment variables.
+Python 2.7.8 fixes a potential wraparound in buffer() [1a & 1b] with
+possible CWE-200 implications [2].
 
--- 
-Florian Weimer / Red Hat Product Security
+If not yet assigned, please consider a CVE designation for this issue.
+
+Thanks.
+
+--mancha
+
+(Note: Though the request is for Python 2.7, vulnerable code appears to
+exist in EOL'd versions 1.6.1 through 2.6.9 as well)
+
+-------
+ 
+[1a] Issue report: http://bugs.python.org/issue21831
+[1b] Upstream fix:
+https://hg.python.org/cpython/diff/8d963c7db507/Objects/bufferobject.c
+
+[2]  PoC for Python 2.7:
+
+--- overflow.py ---
+import sys
+a = bytearray('CVE request')
+b = buffer(a, sys.maxsize, sys.maxsize)
+print b[:8192]
+-------------------
+
+
+Content of type "application/pgp-signature" skipped
