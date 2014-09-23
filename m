@@ -1,37 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/19/1
-Message-ID: <CAD3CandanRzZBUWFXdyrZZEahKXRvarDmqpXhDKjWQMM7+RD4Q@mail.gmail.com>
-Date: Sat, 19 Apr 2014 12:51:04 +1200
-From: Matthew Daley <mattd@...fuzz.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request / advisory: gdomap (GNUstep core package <= 1.24.6)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/23/4
+Message-Id: <E1XWOzE-0000wc-M4@xenbits.xen.org>
+Date: Tue, 23 Sep 2014 12:14:28 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 105 - Missing privilege level checks in x86 HLT, LGDT, LIDT, and LMSW emulation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'd like to request a CVE ID for this issue. It was found in software
-from GNUstep (www.gnustep.org), which develop an open-source
-development framework and runtime for client and server applications.
+                    Xen Security Advisory XSA-105
+                              version 2
 
-This is the first such request and the issue is (now) public; this
-message serves as an advisory as well.
+    Missing privilege level checks in x86 HLT, LGDT, LIDT, and LMSW emulation
 
-Affected software: gdomap (GNUstep Distributed Objects nameserver)
-Description: After receiving a crafted invalid request, gdomap will
-attempt to log an error message to the system logger. However, due to
-incorrect setup of the logger during server initialization, the logger
-and gdomap itself will mess up program state enough that program
-execution will be aborted. gdomap listens to all interfaces, allowing
-a remote unauthenticated attacker to DOS the nameserver. (Please see
-the bug tracker entry for more detailed information.)
-Bug tracker: https://savannah.gnu.org/bugs/?41751
-Affected versions: current releases (GNUstep core package <= 1.24.6)
-Fix: http://svn.gna.org/viewcvs/gnustep/libs/base/trunk/Tools/gdomap.c?r1=37756&r2=37755&pathrev=37756
-Release notes: http://svn.gna.org/viewcvs/gnustep/libs/base/trunk/ChangeLog?r1=37756&r2=37755&pathrev=37756
-Reported by: Matthew Daley
+UPDATES IN VERSION 2
+====================
 
-Please let me know if you need any further information.
+Public Release.
 
-Thanks,
+Convert patch line endings from DOS to Unix style.
 
-- Matthew Daley
+ISSUE DESCRIPTION
+=================
+
+The emulation of the instructions HLT, LGDT, LIDT, and LMSW fails to
+perform supervisor mode permission checks.
+
+However these instructions are not usually handled by the emulator.
+Exceptions to this are
+- - when the instruction's memory operand (if any) lives in (emulated or
+  passed through) memory mapped IO space,
+- - in the case of guests running in 32-bit PAE mode, when such an
+  instruction is (in execution flow) within four instructions of one
+  doing a page table update,
+- - when an Invalid Opcode exception gets raised by a guest instruction,
+  and the guest then (likely maliciously) alters the instruction to
+  become one of the affected ones.
+
+Malicious guest user mode code may be able to leverage this to install
+e.g. its own Interrupt Descriptor Table (IDT).
+
+IMPACT
+======
+
+Malicious HVM guest user mode code may be able to crash the guest or
+escalate its own privilege to guest kernel mode.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions from at least 3.2.x onwards are vulnerable.  Older
+versions have not been inspected.
+
+Only user processes in HVM guests can take advantage of this
+vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+There is no mitigation available for HVM guests.
+
+CREDITS
+=======
+
+This issue was discovered Andrei Lutas at BitDefender and analyzed by
+Andrew Cooper at Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa105.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa105*.patch
+dfb5ede7cc5609a812a7b1239479cefd387f9f9c8c25e11e64199bc592ad7e39  xsa105.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUIWPjAAoJEIP+FMlX6CvZu8UIAIQ9G7ms9bLRy75r3tYBTaW4
+/Gwc3jYWy5rBsDF8gwtbMfVCVFqLXJbzb3RzTuQqCI/3D3F5s1VgMEm9rrG6DK+R
+e+czy4ceT1jTbWvSO1xGOY/eRHCY88PQ0BAQqBCMjurLXc25oUFiP0WogOX5Kwpu
+1ASU6nQjZYjHruohHzgY0L6GJL27Ik1/4jNG/Min52dMxzp92Kn9rRtYR2kjwNin
+20mftHsuzD3YpNIoAdcgBLx8A611ISkvia2uFXZyJEDLsDVqhdNUSGH3Qo0d1ISO
+eFVL3X6WDYPZuJhNPbPfT93GeMI73b+ryFovYggPEZ/to9D0hrf4KaQmnbbqch8=
+=OoOJ
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa105.patch" of type "application/octet-stream" (1304 bytes)
