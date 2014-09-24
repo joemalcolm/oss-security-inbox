@@ -1,56 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/18/5
-Message-ID: <CAD3Canf8ZQ=29mRPPGWd353LJVO6ojSHAH1fxqVOcMAHZTyimQ@mail.gmail.com>
-Date: Sat, 18 Jan 2014 14:43:23 +1300
-From: Matthew Daley <mattd@...fuzz.com>
-To: oss-security@...ts.openwall.com
-Cc: Tommi Mäkitalo <tommi@...net.org>
-Subject: CVE requests / advisory: cxxtools <= 2.2, Tntnet <= 2.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/39
+Message-ID: <20140924222706.GA972@openwall.com>
+Date: Thu, 25 Sep 2014 02:27:06 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Chet Ramey <chet.ramey@...e.edu>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Sep 24, 2014 at 12:08:46PM -0400, Chet Ramey wrote:
+> On 9/24/14, 11:16 AM, Solar Designer wrote:
+> 
+> > I see no good workaround. 
+> 
+> You're correct; there is not a good workaround.  Since there are publicly
+> available patches for all bash versions back 15 years or so, though, the
+> best path forward is to apply those as quickly as possible.
 
-I'd like to request CVE IDs for these 2 issues. They were found in
-software from the Tntnet Project (www.tntnet.org), which develop
-Tntnet, an open-source web server for C++ web applications.
+Thank You for providing those patches!  It is rare for an upstream
+author to provide security fix backports going this far back, and it is
+really helpful in this case.
 
-This is the first such request and the issues are (now) public; this
-message serves as an advisory as well.
-
-
-* Issue #1
-
-Affected software: cxxtools
-Description: By sending a crafted HTTP query parameter containing two
-percent signs in a row, URL parsing would enter an infinite recursive
-loop, leading to a crash. This allows a remote attacker to DOS the
-server.
-Affected versions: current releases (<= 2.2)
-Fixed in version: 2.2.1
-Fix: https://github.com/maekitalo/cxxtools/commit/142bb2589dc184709857c08c1e10570947c444e3
-Release notes: http://www.tntnet.org/download/cxxtools-2.2.1/Releasenotes-2.2.1.markdown
-Reported by: Julian Wiesener
-
-
-* Issue #2
-
-Affected software: Tntnet
-Description: By sending a crafted HTTP request that uses "\n" to end
-its headers instead of the expected "\r\n", it is possible that
-headers from a previous unrelated request will seemingly be appended
-to the crafted request (due to a missing null termination). This
-allows a remote attacker to use sensitive headers from other users'
-requests in their own requests, such as cookies or HTTP authentication
-credentials.
-Affected versions: current releases  (<= 2.2)
-Fixed in version: 2.2.1
-Fix: https://github.com/maekitalo/tntnet/commit/9bd3b14042e12d84f39ea9f55731705ba516f525
-and https://github.com/maekitalo/tntnet/commit/9d1a859e28b78bfbf769689454b529ac7709dee4
-Release notes: http://www.tntnet.org/download/tntnet-2.2.1/Releasenotes-2.2.1.markdown
-Reported by: Matthew Daley
-
-Please let me know if you need any further information.
-
-Thanks,
-
-- Matthew Daley
+Alexander
