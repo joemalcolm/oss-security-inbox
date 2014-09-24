@@ -1,50 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/5
-Message-ID: <536A7BD1.5040506@redhat.com>
-Date: Wed, 07 May 2014 12:30:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: A note on DBus and the Hash DOS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/15
+Message-ID: <5422EC08.7000905@case.edu>
+Date: Wed, 24 Sep 2014 12:06:32 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: "Alexander E. Patrakov" <patrakov@...il.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 9/24/14, 12:01 PM, Alexander E. Patrakov wrote:
 
-So many years ago some hash dos stuff happened. I checked into a
-variety of programs using embedded copies of various things like
-XML/etc. Also other programs that use hashing for stuff, one of which
-is DBus.
+>> I see no good workaround.  Starting the forced command with "unset
+>> SSH_ORIGINAL_COMMAND &&" does not help - we'd need to unset the variable
+>> before starting bash, not from bash.
+> 
+> Won't installing dash and setting the shell of users who have forced
+> commands to dash mitigate this somehow?
 
-The bad news: DBus has a vulnerable hash implementation
+Why not install the publicly-available bash patches and rebuild bash?
+That's the real solution.
 
-The good news: there doesn't appear to be many (any?) ways to inject
-data easily to trigger this vulnerability.
-
-So I don't think this needs a CVE since it isn't really trigger-able,
-but posted this more as a reminder that hash DoS vulns are probably
-still lurking in various places.
-
-With thanks to Florian Weimer of the Red Hat Product Security Team who
-did the actual code audit bits.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJTanvQAAoJEBYNRVNeJnmTLz0P/2cxxh5dWawa5zBBDR0WFjrd
-AK3QCgf+YRjbzyuUcL+mo7Vu1THbdR+EmyLih8SBmhm4hjwf6Q/ZZThKnFA6+9MO
-3eYIxkJAHuHNG0RILOmxW7LVrWMW3VLoldaFlC1W2dBEgJMXacTUE31HL2PUFQ5R
-44LYYtmGhSyHZOUjCasHmvxbqm37ktzXVxLUi2TVyKZVMYgJ8BPDxmaZTiqGI7/y
-03908LSI6sasxLYMU8SFj7AY9CcvL/cCpednnoOevul3AdjNeUGo89rAiNCwys4K
-svoh4updd+QFw6frxpGkY6W8BINIz+Pd2OeXyoeq9Dl+7SWsmyJmvij2ZUahjEQo
-cGwJ6DvY1UvxUMj2hrRGwDuAaFvldgi7vLoOXSQa6Kp36ittCdj2aB4vpi71dxa6
-pmpeSUvvLcSxLiDiYPMYgUUjF9M14qA3PcAzp9rU4e7CgqpqTxfEGqN41CSG/BpF
-F3mVPhhzoHL4bH4EwLgW0a04kFxQnU8cvsLXxuHlQKjSrbISadqFKLk4HLNyy+cu
-ixEvVYqqBRBwgCc+ZL+TvGmzefgngxaXsXXw1O8Z3h5WQer1+mMx9A3cEvS7MQ6n
-gd92IjiJg5rE4SdCCdnmQsmD34GUWJN2OlUJ9+uGNy4lLgu23LWgFRZcgeMAVaEy
-7LHGWbwB0IUvQmRC/S6z
-=9i7N
------END PGP SIGNATURE-----
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
