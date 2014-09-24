@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/9
-Message-ID: <20141211182730.GA11928@kroah.com>
-Date: Thu, 11 Dec 2014 13:27:30 -0500
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/14
+Message-ID: <5422EAEE.9010009@gmail.com>
+Date: Wed, 24 Sep 2014 22:01:50 +0600
+From: "Alexander E. Patrakov" <patrakov@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: PIE bypass using VDSO ASLR weakness
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 11, 2014 at 06:23:23PM +0100, Hanno Böck wrote:
-> On Thu, 11 Dec 2014 11:15:44 +0530
-> Reno Robert <renorobert@...il.com> wrote:
-> 
-> > Given that ASLR is not effective in VDSO and comes down to 11 quality
-> > bits as per pax test making return-to-vdso feasible even for PIE
-> > binary, whether this should be considered as a bug and CVE be
-> > assigned?
-> 
-> I opened a bug in the kernel's bugtracker:
-> https://bugzilla.kernel.org/show_bug.cgi?id=89591
+24.09.2014 21:16, Solar Designer wrote:
+> $ ssh -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
+> uid=500(sandbox) gid=500(sandbox) groups=500(sandbox)
+> Received disconnect from 127.0.0.1: Command terminated on signal 11.
+>
+> This is with command="set" in .ssh/authorized_keys for the key being
+> used.  (Without the "; /usr/bin/id" portion, the command prints the
+> environment variables, including SSH_ORIGINAL_COMMAND being the function
+> with just "ignored" in its body.)  As we can see, the command runs, and
+> moreover in this case bash happened to segfault after having run "id".
+>
+> I see no good workaround.  Starting the forced command with "unset
+> SSH_ORIGINAL_COMMAND &&" does not help - we'd need to unset the variable
+> before starting bash, not from bash.
 
-Don't do that, stick to the linux-kernel mailing list, cc:ing the proper
-developers involved.  I say this as most kernel subsystems do not use
-bugzilla.kernel.org (USB and Networking are two examples), while others
-use it heavily (like ACPI).
+Won't installing dash and setting the shell of users who have forced 
+commands to dash mitigate this somehow?
 
-For "core" issues like this, stick to the mailing lists, they work
-better.
-
-Actually, for "security" stuff, use the security@...nel.org alias,
-that's the best way to get a quick response.
-
-thanks,
-
-greg k-h
+-- 
+Alexander E. Patrakov
