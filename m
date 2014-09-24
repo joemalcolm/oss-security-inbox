@@ -1,46 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/14
-Message-ID: <CAH5b-BU9NPNhVfmJr3NKbZfFU6zpvmXu2prdR=8aeftwQi-Deg@mail.gmail.com>
-Date: Tue, 8 Jul 2014 21:44:16 +0200
-From: yersinia <yersinia.spiros@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE-2014-4171 - Linux kernel mm/shmem.c denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/30
+Message-ID: <542322F1.2080707@case.edu>
+Date: Wed, 24 Sep 2014 16:00:49 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: mancha <mancha1@...o.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Il 18/giu/2014 13:45 <cve-assign@...re.org> ha scritto:
->
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> CVE-2014-4171 has been assigned to the
->
->
-http://ozlabs.org/~akpm/mmots/broken-out/shmem-fix-faulting-into-a-hole-while-its-punched.patch
->
-> issue in the Linux kernel.
-This link is broken now.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Best regards
+On 9/24/14, 3:12 PM, mancha wrote:
 
->
-> (See yesterday's http://www.spinics.net/lists/mm-commits/msg104782.html
-> message.)
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
->
-> iQEcBAEBAgAGBQJToXqVAAoJEKllVAevmvmsi6EIAIXs1JhVikHCjgzXwM02lFTR
-> 1+AZWdKnnyDO83neQcy2Uzv/hmuEt3lczwlctGxLXIShdVvsUWVsZXuT5OOKVNrx
-> lsSNzbdb3ROLlA69jWINMD3OUSK4MGtUK5HdyZ33eTUG9PCizWTDl3dRsLvwh4i6
-> gvMottLwgskx5h5++Mow4cM6SsCxpyoN2G23TKnsPQ2yh+GbdDCX0vrxTcsi1v9+
-> O0Al7/JEdJsfi/H852lzGHsK4FjDctALEvjl1hVcyxjH68CrzIl1qulbl/biwyDw
-> 9WrLDKF2F76oLKlWepNjobdP3dZXnNQj95IrOAkdwRF+lP+q3koToQZ6WG+IcBw=
-> =oeNg
-> -----END PGP SIGNATURE-----
+> Hello Chet et al.
+> 
+> While taking a closer look at this issue on Bash 4.2, I noticed a
+> potential NULL deref. i.e.
+> 
+>   $ FOO='() { :;}; blah4242' bash -c "echo bleh"
+> 
+> This occurs in bgp_prune() where, because bgpids.npid=0 and
+> js_c_childmax=-1, the code in the loop executes but bgpids.list=NULL.
 
+Thanks for the report.  This is a problem, but the patch closes off
+that code path.
+
+Chet
+
+- -- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (Darwin)
+
+iEYEARECAAYFAlQjIvAACgkQu1hp8GTqdKulqgCeKgb8enVUZMM9qQgmCAEgjpg0
+C2QAnRGtrZb9Uh9kMTAiDvtI9E6U5BSp
+=Fxrx
+-----END PGP SIGNATURE-----
