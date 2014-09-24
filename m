@@ -1,37 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/03/6
-Message-ID: <20140303223212.GA15803@eldamar.local>
-Date: Mon, 3 Mar 2014 23:32:12 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/41
+Message-ID: <CAJKgmrXxbAsoDYi+WCRKXKzav-T63sMRjKiaxjMLVZGkz2JzkA@mail.gmail.com>
+Date: Wed, 24 Sep 2014 17:59:21 -0500
+From: Nick Semenkovich <nick@...enkovich.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: file: crashes when checking softmagic for some corrupt PE executables
+Subject: Re: nss RSA forgery (CVE-2014-1568)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+The commits are available in the mercurial repo:
 
-file can be made to crash when checking some corrupt PE executables,
-and so could be used to mount a denial of service for file, or an
-application using file/libmagic.
+https://hg.mozilla.org/projects/nss/rev/fb7208e91ae8
+https://hg.mozilla.org/projects/nss/rev/ad411fb64046
+https://hg.mozilla.org/projects/nss/rev/4e90910ad2f9
 
-Upstream bugreport: http://bugs.gw.com/view.php?id=313
+Offhand, it looks like an issue with the encoding of DigestInfo.
 
-> Some corrupt PE executables contain invalid offset information in
-> their internal directories that libmagic attempts to follow and run
-> string searches on. mcopy() does not do bounds checking on the
-> indirect offset read from the file and sets up ms->search with invalid
-> pointers and lengths.
-> 
-> The offending line in my case is the msdos magic file is 121:
-> >>>>(&0x0f.l+(-4)) search/0x3000 MSCF \b, InstallShield self-extracting archive
-> 
-> The offset read indirectly was invalid and its bounds were not checked
-> in mcopy.
 
-Upstream has fixed this with following commit:
 
-https://github.com/glensc/file/commit/447558595a3650db2886cd2f416ad0beba965801
+On Wed, Sep 24, 2014 at 5:03 PM, Hanno Böck <hanno@...eck.de> wrote:
+>
+> One serious vuln per day isn't enough, so nss decided to bring us
+> another one.
+>
+> Mozilla reports this:
+> https://www.mozilla.org/security/announce/2014/mfsa2014-73.html
+> Bugtracker entry still private, so hard to judge about details.
+> Interesting: Two independent discoveries (we had the same with
+> heartbleed and I couldn't believe this was coincidence).
+>
+> This is what mcaffee has to say:
+> http://blogs.mcafee.com/executive-perspectives/need-know-berserk-mozilla
+>
+> They say its related to BER/ASN1-parsing, but adam langley disagrees:
+> https://twitter.com/agl__/status/514881918110683136
+>
+>
+> And it seems cyassl had something similar, also found by intel:
+> http://www.yassl.com/yaSSL/Blog/Entries/2014/9/12_CyaSSL_3.2.0_Released.html
+>
+> No real details yet and information seems confusing.
+>
+> --
+> Hanno Böck
+> http://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
 
-Can a CVE be assigned for this issue?
 
-Regards,
-Salvatore
+
+
+-- 
+Nick Semenkovich
+Laboratory of Dr. Jeffrey I. Gordon
+Medical Scientist Training Program
+School of Medicine
+Washington University in St. Louis
+https://nick.semenkovich.com/
