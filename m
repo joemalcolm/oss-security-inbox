@@ -1,42 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/3
-Message-Id: <20140904035230.000C71F029D@smtpksrv1.mitre.org>
-Date: Wed,  3 Sep 2014 23:52:29 -0400 (EDT)
-From: cve-assign@...re.org
-To: taviso@...gle.com, kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: heap overflow in procmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/1
+Message-ID: <1411532432.17652.15.camel@bonedaddy.net>
+Date: Wed, 24 Sep 2014 12:20:32 +0800
+From: Paul Wise <pabs3@...edaddy.net>
+To: oss-security@...ts.openwall.com, contact@...tsecurity.io
+Subject: CVE request: various NodeJS module vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi all,
 
->> I noticed a heap overflow in procmail when parsing addresses with
->> unbalanced quotes.
+This is a request for CVEs for the following vulnerabilities discovered
+by the Node Security Project. I left out their advisories where I could
+find an assigned CVE.
 
->> formisc.c
+https://nodesecurity.io/advisories
 
->> $ formail -s < mbox > /dev/null
->> *** Error in `formail': free(): invalid next size
+qs Denial-of-Service Memory Exhaustion
+https://nodesecurity.io/advisories/qs_dos_memory_exhaustion
 
-> CVE-2014-3618 for this issue
+qs Denial-of-Service Extended Event Loop Blocking
+https://nodesecurity.io/advisories/qs_dos_extended_event_loop_blocking
 
-The CVE team at MITRE agrees that CVE-2014-3618 can continue to
-be used for this formail issue.
+syntax-error potential for script injection
+https://nodesecurity.io/advisories/syntax-error-potential-script-injection
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+send Directory Traversal
+https://nodesecurity.io/advisories/send-directory-traversal
 
-iQEcBAEBAgAGBQJUB+GEAAoJEKllVAevmvmsIo4IAMFI3Ya78DjKWrGZatHQL8jj
-fb0GdS5r9dKpuhU3Pyoj30YzEwJwCOF1mkIY9iCb/KPpVMdyDcxKWIf7bKe9kibe
-n+OfziWTn//W04yjCH02kEPRsyKQs46oQH1YUnV4Z32OKedGeeDhZPdQ5fj8VO0E
-m4OA657P45VhhiWPYY3xmVdGj8l7nnsl2ABTZRp6Ya7i9AC0SGIYA1au1exMkIHl
-daEwcLVGaU+BONAoZ6MUIhF6F07O3IxYJ0v6/079uTT9Bs3Ct3fjucpi45GMo90n
-hNewEWTGVjkn4rzTTWvyAiwdeFYyzii5CGseWQnDiP3qGWNdXQwGLLy8yFIF9/c=
-=1LSS
------END PGP SIGNATURE-----
+Crumb CORS Token Disclosure
+https://nodesecurity.io/advisories/crumb_cors_token_disclosure
+
+-- 
+bye,
+pabs
+
+http://bonedaddy.net/pabs3/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
