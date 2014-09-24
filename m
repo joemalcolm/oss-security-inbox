@@ -1,40 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/40
-Message-ID: <op.xm34y9patrc8xl@dhcp-4-217.brq.redhat.com>
-Date: Thu, 02 Oct 2014 19:17:23 +0200
-From: Martin Bříza <mbriza@...hat.com>
-To: oss-security@...ts.openwall.com, "Sebastian Krahmer" <krahmer@...e.de>
-Cc: "David Edmundson" <david@...idedmundson.co.uk>
-Subject: Re: various sddm vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/8
+Message-Id: <E1XWjph-00051m-Gn@xenbits.xen.org>
+Date: Wed, 24 Sep 2014 10:30:01 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 104 (CVE-2014-7154) - Race condition in HVMOP_track_dirty_vram
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 01 Oct 2014 13:24:52 +0200, Sebastian Krahmer <krahmer@...e.de>  
-wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Hi
->
-> During review we found several issues in the sddm
-> display manager which allow local users to obtain
-> root privileges. More on this is here:
->
-> https://bugzilla.suse.com/show_bug.cgi?id=897788
->
-> Sebastian
->
+            Xen Security Advisory CVE-2014-7154 / XSA-104
+                              version 3
 
-Hi,
-first, please let me thank you for your very valuable input, Sebastian.
+               Race condition in HVMOP_track_dirty_vram
 
-We (me and d_ed, David Edmundson) took a look at this. Although we don't  
-believe any of the issues you reported could lead to a privilege  
-escalation (as some of the resulting bugreports suggest), we consider them  
-to be security issues.
-Currently, there are two pull requests open [1] [2] potentionally fixing  
-all mentioned issues. We're waiting for peer review from the other  
-developers and possibly yours, too.
+UPDATES IN VERSION 3
+====================
 
-Cheers,
-Martin
+This issue has been assigned CVE-2014-7154.
 
-[1] https://github.com/sddm/sddm/pull/279
-[2] https://github.com/sddm/sddm/pull/280
+ISSUE DESCRIPTION
+=================
+
+The routine controlling the setup of dirty video RAM tracking latches
+the value of a pointer before taking the respective guarding lock, thus
+making it possible for a stale pointer to be used by the time the lock
+got acquired and the pointer gets dereferenced.
+
+The hypercall providing access to the affected function is available to
+the domain controlling HVM guests.
+
+IMPACT
+======
+
+Malicious or buggy stub domain kernels or tool stacks otherwise living
+outside of Domain0 can mount a denial of service attack which, if
+successful, can affect the whole system.
+
+Only domains controlling HVM guests can exploit this vulnerability.
+(This includes domains providing hardware emulation services to HVM
+guests.)
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions from 4.0.0 onwards are vulnerable.
+
+This vulnerability is only applicable to Xen systems using stub
+domains or other forms of disaggregation of control domains for HVM
+guests.
+
+MITIGATION
+==========
+
+There is no mitigation available for this issue.
+
+(The security of a Xen system using stub domains is still better than
+with a qemu-dm running as an unrestricted dom0 process.  Therefore
+users with these configurations should not switch to an unrestricted
+dom0 qemu-dm.)
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper at Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa104.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa104*.patch
+fc02f6365ca79a6ef386c882b57fab8b56aa12b54fc9b05054552f0f25e32047  xsa104.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUIpziAAoJEIP+FMlX6CvZO2wIAMm2konqFYzaAZXbEH25T24K
+aNTRF+x+RFwZy/701GupySti6Go6HPvm4uya09qIVRyTkafH2WF+VT93rBRlROHM
+z5ZFwR/wKLFj3TPr/Fhb52ynwDdRPMvFkaWGxvSvxjASBbAPxCAlE8SuTmG1nBOe
+RtnHNk6cxV5UeYTZ8TosG7RvlPIVA17o82btJ6DPbXIn2tENLTJaZf9cTtNZxKPo
+kIEuo9E0JFQQyje+t7lImbMQbbe216JTRtATTivVuP68AcE/TSRggLwoBxSitjUp
+YNbcfbHUeg2qltftvlZKeGgvrVceQ+Vj59cFNRj4r+xRXXywAAGZkgCpZNLeQnA=
+=gwmy
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa104.patch" of type "application/octet-stream" (1651 bytes)
