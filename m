@@ -1,44 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/06/1
-Message-ID: <20140806220710.GW27690@symphytum.spacehopper.org>
-Date: Wed, 6 Aug 2014 23:07:10 +0100
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/26
+Message-ID: <20140924191221.GA7626@zoho.com>
+Date: Wed, 24 Sep 2014 19:12:21 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, hanno@...eck.de
-Subject: Re: Re: CVE request: libressl before 2.0.2 under linux PRNG failure
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On 2014/07/31 10:59, Stuart Henderson wrote:
-> On 2014/07/30 20:08, cve-assign@...re.org wrote:
-> > >> I see a number of web pages relating to this issue are mentioning that
-> > >> it has already been assigned CVE-2014-2970, can anyone throw light on this?
-> > 
-> > > At MITRE, we (obviously) know where CVE-2014-2970 came from, and we'll
-> > > send information here about the resolution as soon as it happens.
-> > 
-> > We've since learned that nobody ever assigned CVE-2014-2970 to that
-> > LibreSSL issue, and apparently every appearance of CVE-2014-2970 in "a
-> > number of web pages" was ultimately the result of a miscommunication
-> > outside of MITRE.
-> > 
-> > A complication is that CVE-2014-2970 had been assigned to a different
-> > issue, and that issue isn't yet public. What you should do is:
-> > 
-> >   - if you're part of the embargo audience that has been using
-> >     CVE-2014-2970 for a private vulnerability, use CVE-2014-5139
-> >     instead
-> > 
-> >   - if you're not part of that embargo audience, all we can suggest is
-> >     that it's very likely that you'll see a public disclosure of
-> >     CVE-2014-5139 in the future
+On Wed, Sep 24, 2014 at 12:08:46PM -0400, Chet Ramey wrote:
+> On 9/24/14, 11:16 AM, Solar Designer wrote:
 > 
-> Interesting, thanks. So how does a reporter get hold of an embargoed CVE
-> number and mistakenly apply it to libressl? It seems strange to have
-> pulled this number out of thin air. And how long do these embargoes
-> last, this seems a relatively long time to be sitting on a bug which is
-> important enough to have been embargoed.
+> > I see no good workaround. 
 > 
-> I await the announcement of CVE-2014-5139 with interest!
+> You're correct; there is not a good workaround.  Since there are
+> publicly available patches for all bash versions back 15 years or so,
+> though, the best path forward is to apply those as quickly as
+> possible.
+> 
+> Chet
 
-Aha - and it's been announced. "Crash with SRP ciphersuite in Server Hello message".
+Hello Chet et al.
 
+While taking a closer look at this issue on Bash 4.2, I noticed a
+potential NULL deref. i.e.
+
+  $ FOO='() { :;}; blah4242' bash -c "echo bleh"
+
+This occurs in bgp_prune() where, because bgpids.npid=0 and
+js_c_childmax=-1, the code in the loop executes but bgpids.list=NULL.
+
+I didn't look closely enough to know if this situation is only reachable
+via the recently-fixed vulnerable code-path or not.
+
+--mancha
+
+Content of type "application/pgp-signature" skipped
