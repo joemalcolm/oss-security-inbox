@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/12
-Message-ID: <538DCF60.7070104@upv.es>
-Date: Tue, 03 Jun 2014 15:36:32 +0200
-From: Hector Marco <hecmargi@....es>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2013-6825 DCMTK Root Privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/2
+Message-Id: <20140924060320.9575C72E066@smtpvbsrv1.mitre.org>
+Date: Wed, 24 Sep 2014 02:03:20 -0400 (EDT)
+From: cve-assign@...re.org
+To: security@....org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Xen Security Advisory 104 - Race condition in HVMOP_track_dirty_vram
 Content-Type: text/plain; charset=utf-8
 
-CVE-2013-6825 DCMTK Root Privilege escalation
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-About DCMTK:
+> Xen Security Advisory XSA-104
+> 
+> The routine controlling the setup of dirty video RAM tracking latches
+> the value of a pointer before taking the respective guarding lock, thus
+> making it possible for a stale pointer to be used
 
-DCMTK is a collection of libraries and applications implementing large parts
-the DICOM standard. It includes software for examining, constructing and
-converting DICOM image files, handling offline media, sending and receiving
-images over a network connection, as well as demonstrative image storage and
-worklist servers
+Use CVE-2014-7154.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-
-Vulnerability:
-
-A bug in DCMTK for versions prior to 3.6.1 allows to do a privilege 
-escalation.
-All DCMTK versions since 1993 to the current 3.6.1 (released 
-February-2014) are
-affected. The vulnerable packages are:
-
-- dcmpsrcv
-- dcmprscp
-- movescu
-- storescp
-- dcmqrscp
-- wlmscpfs
-- dcmrecv
-
-
-Details, patches, discussion and strategy to exploit at:
-http://hmarco.org/bugs/dcmtk-3.6.1-privilege-escalation.html
-
-
-
-Hector Marco
-http://hmarco.org
-
+iQEcBAEBAgAGBQJUIl34AAoJEKllVAevmvmsbdkH/1DkA7TpowOy5CN0Pceb5fm8
+xOCXJ3fUu2bR/z8xKGS2wi8QtuiisWngeKNnCLeT50PTZZxiTEuulpAwCHLDxcMM
+h4ndULD2+pE0YrieZv8rqNIPW1kt0RNNAEYYH4dzoWjasTxbbwkiz8c9EMmcVCAK
+90CNUon8lhONYsClae4/NGnIVyyTsQ7Oe2gkTVn7fGWD66L701gjJBCsFH3kysZH
++ZnaRamHfo1ucZU6Z099i5LqGWDNn4yeNIkPknGEeX/SWCksFCpWU80n2pA0RHo6
+jCiSk6NqUi1wB3/EzBHurfopAc7/l1L6A/jraitL0kahcTj6s5Go4ZheDIvjiRA=
+=Qdj8
+-----END PGP SIGNATURE-----
