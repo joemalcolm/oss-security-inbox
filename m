@@ -1,31 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/20
-Message-ID: <CAOMtMF17RLOL9O=q2EUuPQBfO0vrS0kjuMMAs_BZx4VmOhM-yQ@mail.gmail.com>
-Date: Fri, 26 Sep 2014 15:37:52 +0200
-From: Bernhard Hermann <bernhard.hermann@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/35
+Message-ID: <20140924221036.GR8223@suse.de>
+Date: Thu, 25 Sep 2014 00:10:36 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: christos@...las.com, chet.ramey@...e.edu
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+Subject: Re: nss RSA forgery (CVE-2014-1568)
 Content-Type: text/plain; charset=utf-8
 
-On Sep 26, 2014 2:48 PM, "John Haxby" <john.haxby@...cle.com> wrote:
-> Sufficiently unusual, I'd venture, that it should not be done
-> implicitly.   Florian's "BASH_FUNC_x()" makes it easier to blacklist
-> these environment variables and ensures that a web server's HTTP_ prefix
-> will not just create an oddly named function ... is that enough?  Should
-> bash simply make importing functions something that one has to ask for
-> explicitly as Christos Zoulas (and others) suggested[1]?
+On Thu, Sep 25, 2014 at 12:03:21AM +0200, Hanno Böck wrote:
+> One serious vuln per day isn't enough, so nss decided to bring us
+> another one.
+> 
+> Mozilla reports this:
+> https://www.mozilla.org/security/announce/2014/mfsa2014-73.html
+> Bugtracker entry still private, so hard to judge about details.
+> Interesting: Two independent discoveries (we had the same with
+> heartbleed and I couldn't believe this was coincidence).
+> 
+> This is what mcaffee has to say:
+> http://blogs.mcafee.com/executive-perspectives/need-know-berserk-mozilla
+> 
+> They say its related to BER/ASN1-parsing, but adam langley disagrees:
+> https://twitter.com/agl__/status/514881918110683136
+> 
+> 
+> And it seems cyassl had something similar, also found by intel:
+> http://www.yassl.com/yaSSL/Blog/Entries/2014/9/12_CyaSSL_3.2.0_Released.html
+> 
+> No real details yet and information seems confusing.
 
-I strongly believe that it should have been implemented this way from the
-start.
-Can anyone argument why making the import of functions explicit might be
-unwanted in any use case?
+I also see gnutls posted a new release some days, with this entry without CVE
 
-Importing implicitly looks to me like buying powdered drugs from anonymous
-shady street dealers - there's a slim chance you might get what you wanted,
-but the odds (& esp. implications) of getting something toxic "from your
-environment" are most probably higher.
+http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/7663
+"** libgnutls: Fixed issue with certificates being sanitized by gnutls prior
+to signature verification. That resulted to certain non-DER compliant modifications
+of valid certificates, being corrected by libtasn1's parser and restructured as
+the original. Issue found and reported by Antti Karjalainen and Matti Kamunen from
+Codenomicon."
 
-best regards,
-Bernhard Hermann
+which smells similar.
 
+Ciao, Marcus
