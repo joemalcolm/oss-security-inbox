@@ -1,39 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/26
-Message-ID: <20141126210109.2978acc6@pc>
-Date: Wed, 26 Nov 2014 21:01:09 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/23
+Message-ID: <5422FD09.6080503@redhat.com>
+Date: Wed, 24 Sep 2014 19:19:05 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Apple goto fail - lessons that should be learned
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 26 Nov 2014 12:34:15 -0500 (EST)
-"David A. Wheeler" <dwheeler@...eeler.com> wrote:
+On 09/24/2014 07:03 PM, Hanno Böck wrote:
+> On Wed, 24 Sep 2014 18:30:35 +0200
+> Florian Weimer <fweimer@...hat.com> wrote:
+>
+>> This depends on how PHP is invoked.  mod_php does not set the CGI
+>> environment variables.
+>>
+>> However, it is true that if CGI programs spawn subprocesses, they may
+>> be affected even if the CGI program itself is not written in bash.
+>
+> Regarding php, isn't it quite common to run it through mod_fcgid with a
+> (bash) wrapper script? At least that's what apache wiki documents:
+> https://wiki.apache.org/httpd/php-fcgid
 
-> I've previously done this exercise with:
-> * Heartbleed: http://www.dwheeler.com/essays/heartbleed.html
-> * Shellshock: http://www.dwheeler.com/essays/shellshock.html
-> * POODLE: http://www.dwheeler.com/essays/poodle-sslv3.html
+I don't know what's common with PHP.  I don't think there is much public 
+documentation about what it takes to run PHP at scale in a secure 
+fashion (also taking compromised or downright malicious customers into 
+account).
 
-I've written something similar on POODLE (and BERserk), not sure if I
-posted this here before:
-https://blog.hboeck.de/archives/858-Dancing-protocols,-POODLEs-and-other-tales-from-TLS.html
+> So that'd mean many php installations are affected even if they don't
+> use subprocesses.
+>
+> I'm not sure if this wrapper can be avoided.
 
-Not surprisingly I come to somewhat similar conclusions (protocol
-downgrade protection, encrypt-then-mac etc.)
-BERserk has somewhat similar problems, e.g. it's basically also a "we
-don't deprecate weak/old crypto" (PKCS #1 1.5 and RSA with e=3).
-
-But the most important conclusion from POODLE is imho: Be very careful
-with implementing workarounds for broken hard/software - and don't do
-them if they compromise security.
-
+The wrapper does not run per request.  I have not tested this, but I 
+don't think it sees any request-specific environment variables at this 
+point.  FCGI transfers request information over a socket at descriptor 0 
+and not through environment variables.
 
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Florian Weimer / Red Hat Product Security
