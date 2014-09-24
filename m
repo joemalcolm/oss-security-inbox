@@ -1,26 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/6
-Message-ID: <20140331103208.GA15223@altlinux.org>
-Date: Mon, 31 Mar 2014 14:32:09 +0400
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/28
+Message-ID: <54231DF9.9060002@reactos.org>
+Date: Wed, 24 Sep 2014 21:39:37 +0200
+From: Pierre Schweitzer <pierre@...ctos.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: pam_timestamp internals
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
+
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
 Hi,
 
-On Mon, Mar 24, 2014 at 01:46:43PM +0100, Sebastian Krahmer wrote:
-> When playing with some PAM modules for my own projects, I came
-> across some implications of pam_timestamp (which is part of
-> upstream linux-pam) that should probably be addressed.
-> 
-> Most importantly, there seems to be a path traversal issue:
+Naive question regarding statement below. Does that mean that exec*()
+system calls are concerned as well (like for instance called from a fork())?
 
-Thanks, Sebastian!  The issue has been fixed in upstream linux-pam by commit
-https://git.fedorahosted.org/cgit/linux-pam.git/commit/?id=Linux-PAM-1_1_8-32-g9dcead8
+Regards,
+
+On 24/09/2014 18:23, Michal Zalewski wrote:
+> Note that on Linux systems where /bin/sh is symlinked to /bin/bash,
+> any popen() / system() calls from within languages such as PHP would
+> be of concern due to the ability to control HTTP_* in the env.
+>
+> /mz
 
 
--- 
-ldv
+- -- 
+Pierre Schweitzer <pierre at reactos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Content of type "application/pgp-signature" skipped
+iQIcBAEBAgAGBQJUIx35AAoJEHVFVWw9WFsLU7QP/3E77YP5Arh3UMrTYYd0ylfa
+r/L0k4t9/OSs9fg1GWsr6GP+Jma82y61uavFnE9LglAEY2A5hEkFdCWuPm6r2d58
+iOJVaCUdZH8x0NyM6nMmvnG0GKMyQgn9LyzKMeHTUmChIIscYaL22RGq2wI/Bm2N
+xk04VpxXM/kgdRhGUlKqmahEEskLeiSZlbfhKCT+4WXptFdOIdcAlIg3UW13QPk5
+EO0neFqbsLZLWYz/a4CAVoANt8UFUhSrceH/2sk0ObEWoGMcZIiZ0vsWfogO8y6s
+J0BnZZDq81seUU4QoRw1/BwMh6zh6SmlH3cw2wPyoq2qC4mBBdYCrxBlamd9cFyY
+A20MUZ5xXudZhZNlWv7Y7kKemoH0qQDT9xja7vvWvl95h1bNhTLoJKr/gfUQY56e
+BBo7nNXKXtpXEtoVbfd3hTt7reXLjqlqpmLdmClgGM9JotKS7JCiOpytibqW7pOn
+UKL00tUlBkcp2dYREegy0X+Rli8OOAJXTm0g+yvOiglMM1hXG067hkLDwZnQraOF
+0/WZWOFfMSCHbciZYbIgP4ptQTHomWS5vy0ukZ+rGy3th/fXlAwb1Kv7PcmByD6+
+WXBSngDlR85v+DYJjaWqtQIudMudfm0Z/s08jBJtUI83LjPWQeHtv0STXx5JVtS8
+HP5Bbv53yyPzBuWSSRYf
+=Oavc
+-----END PGP SIGNATURE-----
+
