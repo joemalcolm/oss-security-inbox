@@ -1,37 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/2
-Message-ID: <CACYkhxhmU74Xsi4H_tBYxY17Y0ovHDdrPfn1pLp1hW6OY6U8dw@mail.gmail.com>
-Date: Tue, 16 Sep 2014 15:47:09 +1000
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/9
+Message-Id: <9E06B91C-A201-4D5D-BB34-59AC83CB566E@arko.net>
+Date: Wed, 24 Sep 2014 21:58:22 +0900
+From: André Arko <andre@...o.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [CVE Requests] rsync and librsync collisions
+Subject: [CVE-2013-0334] Ruby dependency manager Bundler may install gems from a different source than expected
 Content-Type: text/plain; charset=utf-8
 
-On 13 September 2014 04:39,  <cve-assign@...re.org> wrote:
-> The short answer is that we neither agree nor disagree at present; we
-> think that either any required CVE assignment can be made by us after
-> a full public disclosure, or any required CVE assignment can be made
-> by a different CNA now.
+Bundler 1.7 is a security-only release to address CVE-2013-0334, a vulnerability where a gem might be installed from an unintended source server, particularly while using both rubygems.org and gems.github.com.
 
-The bug is publicly disclosed.  The exploit isn't (and I believe list rules
-dictate that I can't post exploits here).
+Versions Affected: All versions < 1.7.0
+Not Affected: Any Gemfile with one or zero sources
 
-> MITRE is not currently interested in receiving an advance copy of the
-> full public disclosure or any related PoC information from anyone.
-> We'll see whether the CNA process above can work.
+Fixed Versions: 1.7.0
+Releases: 1.7.0 (2014-09-14)
 
-I don't care who assigns the CVE, but it would be nice to be able to link
-the tickets for this together somehow.
+This announcement is also posted on the Bundler website, at http://bundler.io/blog/2014/08/14/bundler-may-install-gems-from-a-different-source-than-expected-cve-2013-0334.html.
 
-An experimental branch of librsync that uses blake2 is available here:
-https://github.com/therealmik/librsync/tree/blake2
+Impact:
 
-Dropbox have responded that they have fixed this bug independently, but
-have not pushed anything out to their forked librsync github repo.
+Any Gemfile with multiple top-level `source` lines cannot reliably control the gem server that a particular gem is fetched from. As a result, Bundler might install the wrong gem if more than one source provides a gem with the same name.
 
-I have not heard further from the rsync maintainer.  I will publicly release
-colliding blocks and construction details soon, so if you use rsync on
-untrusted files, consider using the -W option to avoid a DoS.
+This is especially possible in the case of Github's legacy gem server, hosted at gems.github.com. An attacker might create a malicious gem on Rubygems.org with the same name as a commonly-used Github gem. From that point forward, running `bundle install` might result in the malicious gem being used instead of the expected gem.
 
-Regards,
-  Michael
+To mitigate this, the Bundler and Rubygems.org teams worked together to copy almost every gem hosted on gems.github.com to rubygems.org, reducing the number of gems that can be used for such an attack.
+
+
+Resolution:
+
+To resolve this issue, upgrade to Bundler 1.7 by running `gem install bundler`. The next time you run `bundle install` for any Gemfile that contains multiple sources, each gem available from multiple sources will print a warning.
+
+For every warning printed, edit the Gemfile to either specify a `:source` option for that gem, or move the `gem` line into a block that is passed to a `source` method call.
+
+For detailed information about the changes to how sources are handled in Bundler version 1.7, see http://bundler.io/v1.7/whats_new.html
+
+
+Workarounds:
+
+If you are unable to upgrade to Bundler 1.7, it is possible to work around the issue by removing all but one `source` line from your Gemfile. Gems from other sources must be installed via the `:git` option, which is not susceptible to this issue, or unpacked into the application repository and used via the `:path`option.
+
+Unfortunately, backporting a fix for this issue proved impractical, as previous versions of Bundler lacked the ability to distinguish between gem servers.
+
+
+Credits:
+
+Thanks to Andreas Loupasakis and Fotos Georgiadis for reporting this issue, James Tucker, Tony Arcieri, Eric Hodel, Michael Koziarski, and Kurt Seifried for assistance with the eventual solution, and David Radcliffe for importing legacy Github gems into Rubygems.org.
+
+André Arko (@indirect), Tim Moore (@tmoore), and the Bundler team (@bundlerio)
+team@...dler.io
+
+Download attachment "signature.asc" of type "application/pgp-signature" (794 bytes)
