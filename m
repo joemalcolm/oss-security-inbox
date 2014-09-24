@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/19/2
-Message-ID: <CALPTtNX_Md5=nmquZriMqhZ3AQv5pGEEikV5RbNLh7NzY=Wt8A@mail.gmail.com>
-Date: Thu, 18 Dec 2014 17:15:39 -0800
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/13
+Message-ID: <20140924155450.GG31318@kludge.henri.nerv.fi>
+Date: Wed, 24 Sep 2014 18:54:50 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: request for CVEs for git clients
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-http://git-blame.blogspot.com.es/2014/12/git-1856-195-205-214-and-221-and.html
-says CVE-2014-9390 is already assigned.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-~reed
+On Wed, Sep 24, 2014 at 07:16:20PM +0400, Solar Designer wrote:
+> Florian posted a Debian security advisory on this ([DSA 3032-1] bash
+> security update) to the debian-security-announce list, but somehow it is
+> not yet seen at:
+> 
+> https://www.debian.org/security/
+> https://lists.debian.org/debian-security-announce/2014/
+> 
+> (I guess it will be very soon.)
 
-On Thu, Dec 18, 2014 at 3:38 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->
-> Can we please get CVEs for
->
-> https://github.com/blog/1938-vulnerability-announced-update-your-git-clients
->
-> In addition, the following updated versions of Git address this
-> vulnerability:
->
-> The Git core team has announced maintenance releases for all current
-> versions of Git (v1.8.5.6, v1.9.5, v2.0.5, v2.1.4, and v2.2.1).
->
-> Git for Windows (also known as MSysGit) has released maintenance version
-> 1.9.5.
->
-> The two major Git libraries, libgit2 and JGit, have released maintenance
-> versions with the fix. Third party software using these libraries is
-> strongly encouraged to update.
->
-> ====
->
-> looks like most Linux users are ok though "The vulnerability concerns
-> Git and Git-compatible clients that access Git repositories in a
-> case-insensitive or case-normalizing filesystem."
->
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
->
+It will take some time that /security/ URL gets updated. Latest information
+about CVEs can be seen here:
 
+https://security-tracker.debian.org/tracker/CVE-2014-6271
+
+- ---
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iEYEARECAAYFAlQi6UoACgkQXf6hBi6kbk/L9wCggJR1kzvxv787MrjwSAK8o/Nz
+aA4AnjtrbddPB1fp+CvwB9JPWXHX+lS+
+=PX64
+-----END PGP SIGNATURE-----
