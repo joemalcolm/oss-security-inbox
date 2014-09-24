@@ -1,79 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/10
-Message-ID: <20140218190658.GC16793@higgins.local>
-Date: Tue, 18 Feb 2014 11:06:58 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, secalert@...hat.com
-Subject: Denial of Service Vulnerability in Action View when using render :text (CVE-2014-0082)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/5
+Message-Id: <E1XWjq4-00054B-SR@xenbits.xen.org>
+Date: Wed, 24 Sep 2014 10:30:24 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 106 (CVE-2014-7156) - Missing privilege level checks in x86 emulation of software interrupts
 Content-Type: text/plain; charset=utf-8
 
-Denial of Service Vulnerability in Action View when using render :text
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There is a denial of service vulnerability in the text rendering component of
-Action View. This vulnerability has been assigned the CVE identifier
-CVE-2014-0082.
+            Xen Security Advisory CVE-2014-7156 / XSA-106
+                              version 3
 
-Versions Affected: 3.0.x, 3.1.x, 3.2.x
-Not affected: 4.0.x
-Fixed Versions: 3.2.17
+    Missing privilege level checks in x86 emulation of software interrupts
 
-Impact
-------
+UPDATES IN VERSION 3
+====================
 
-Strings sent in specially crafted headers will be converted to symbols. This can
-cause a denial of service since symbols are not removed by the garbage collector.
-All users running an affected release should either upgrade or use one of the work
-arounds immediately.
+This issue has been assigned CVE-2014-7156.
 
-Releases
---------
+ISSUE DESCRIPTION
+=================
 
-The FIXED releases are available at the normal locations.
+The emulation of instructions which generate software interrupts fails
+to perform supervisor mode permission checks.
 
-Workarounds
------------
+However these instructions are not usually handled by the emulator.
+Exceptions to this are
+- - when a memory operand (implicit for the affected instructions) lives
+  in (emulated or passed through) memory mapped IO space,
+- - in the case of guests running in 32-bit PAE mode, when such an
+  instruction is (in execution flow) within four instructions of one
+  doing a page table update,
+- - when an Invalid Opcode exception gets raised by a guest instruction,
+  and the guest then (likely maliciously) alters the instruction to
+  become one of the affected ones,
+- - when the guest is in real mode (in which case there are no privilege
+  checks anyway).
 
-Users who cannot upgrade may apply this monkey patch as an initializer to work around
-the issue:
+IMPACT
+======
 
-```
-ActiveSupport.on_load(:action_view) do
-  ActionView::Template::Text.class_eval do
-    def formats
-      [@mime_type.respond_to?(:ref) ? @mime_type.ref : @mime_type.to_s]
-    end
-  end
-end
-```
+Malicious HVM guest user mode code may be able to crash the guest.
 
-Patches
--------
+VULNERABLE SYSTEMS
+==================
 
-To aid users who aren't able to upgrade immediately we have provided patches for the
-supported release series. They are in git-am format and consist of a single changeset.
+Xen versions from 3.3 onwards are vulnerable.
 
- * 3-2-render_text_dos.patch - Patch for 3.2 series
- * 3-1-render_text_dos.patch - Patch for 3.1 series
- * 3-0-render_text_dos.patch - Patch for 3.0 series
+Only user processes in HVM guests can take advantage of this
+vulnerability.
 
-Please note that only the 4.0.x and 3.2.x series are supported at present. Users of
-earlier unsupported releases are advised to upgrade as soon as possible as we cannot
-guarantee the continued availability of security fixes for unsupported releases.
+MITIGATION
+==========
 
-Credits
--------
+Running only PV guests will avoid this issue.
 
-Thanks to Toby Hsieh of SlideShare for reporting the issue to us and working in
-the patch with us.
+There is no mitigation available for HVM guests.
 
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
+CREDITS
+=======
 
-View attachment "3-0-render_text_dos.patch" of type "text/plain" (1952 bytes)
+This issue was discovered Andrei Lutas at BitDefender and analyzed by
+Andrew Cooper at Citrix.
 
-View attachment "3-1-render_text_dos.patch" of type "text/plain" (1946 bytes)
+RESOLUTION
+==========
 
-View attachment "3-2-render_text_dos.patch" of type "text/plain" (1947 bytes)
+Applying the attached patch resolves this issue.
 
-Content of type "application/pgp-signature" skipped
+xsa106.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa106*.patch
+301060f801ab39c15ac773e1bcc250f0e6bf30d748007a96173459b83afc9270  xsa106.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUIpznAAoJEIP+FMlX6CvZNzsH/2EiupxpKxmHXoWxZAqlDz5E
++cdmv5axHGO74bU8xGe/WFcfOCjx8LaPifWd/g6AMlSa7BHe1i1sPmOifr6jhRlz
+xfJonBcXl6/Z7LpfaYdu2M+6mDXoO2Ov5yKEYDNPyzwfmRH+bLBBGrGTzJvyaEj2
+PS2JgtIzIVRFHdmYh7zJeS9isKt9+/lKplAIluKUUUhnX1pMUaTV9Ax67MUs7BdJ
+SHh37YoMIZAxAkRl80nT7gBdohLUmQJZm3CVFFjk71hSFlvdRJNZuVJnxMyXXBA3
+awQlxUAhUQmP8ls1JTK0EMVe9EAPvyqgPlk/2Ch8UBtpg0MeGzBs9UJwjYeP47Y=
+=c9bK
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa106.patch" of type "application/octet-stream" (922 bytes)
