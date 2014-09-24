@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/4
-Message-ID: <E3637A9E-AA30-41C9-B868-781F50A0F06B@redhat.com>
-Date: Tue, 09 Dec 2014 21:54:57 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request: denial of service flaw in firebird
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/10
+Message-ID: <87d2alglkw.fsf@mid.deneb.enyo.de>
+Date: Wed, 24 Sep 2014 16:05:51 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Cc: chet.ramey@...e.edu
+Subject: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-I've not seen a CVE for this; could one be assigned?  Thanks.
+Stephane Chazelas discovered a vulnerability in bash, related to how
+environment variables are processed: trailing code in function
+definitions was executed, independent of the variable name.
 
-It was found that an unauthenticated remote attacker could send a 
-malformed network packet to a firebird server, which would cause the 
-server to crash.
+In many common configurations, this vulnerability is exploitable over
+the network.
 
-http://www.firebirdsql.org/en/news/security-updates-for-v2-1-and-v2-5-series-66011/
-http://tracker.firebirdsql.org/browse/CORE-4630
-http://sourceforge.net/p/firebird/code/60331/
-https://bugs.mageia.org/show_bug.cgi?id=14726
-https://bugzilla.redhat.com/show_bug.cgi?id=1172445
-
-
--- 
-Vincent Danen / Red Hat Product Security
+Chet Ramey, the GNU bash upstream maintainer, will soon release
+official upstream patches.
