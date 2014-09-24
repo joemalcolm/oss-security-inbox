@@ -1,51 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/01/1
-Message-ID: <538B81A2.7040603@sumptuouscapital.com>
-Date: Sun, 01 Jun 2014 21:40:18 +0200
-From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/22
+Message-ID: <20140924190321.2d43a072@pc>
+Date: Wed, 24 Sep 2014 19:03:21 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: GnuTLS and libtasn1 security fixes
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On Wed, 24 Sep 2014 18:30:35 +0200
+Florian Weimer <fweimer@...hat.com> wrote:
 
-On 05/30/2014 10:31 AM, Tomas Hoger wrote:
-> Hi!
+> This depends on how PHP is invoked.  mod_php does not set the CGI 
+> environment variables.
 > 
-> New GnuTLS and libtasn1 versions fix few issues you might be
-> interested to look at:
+> However, it is true that if CGI programs spawn subprocesses, they may
+> be affected even if the CGI program itself is not written in bash.
 
-Thanks Thomas.
+Regarding php, isn't it quite common to run it through mod_fcgid with a
+(bash) wrapper script? At least that's what apache wiki documents:
+https://wiki.apache.org/httpd/php-fcgid
 
-Based on your research of this issue can you comment anything on
-whether CVE-2014-3466 affects the 2.x series as well? It seems like at
-least CVE-2014-3465 is 3.x series only.
+So that'd mean many php installations are affected even if they don't
+use subprocesses.
 
-- -- 
-- ----------------------------
-Kristian Fiskerstrand
-Blog: http://blog.sumptuouscapital.com
-Twitter: @krifisk
-- ----------------------------
-Public PGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-- ----------------------------
-Testis unus, testis nullus
-A single witness is no witness
------BEGIN PGP SIGNATURE-----
+I'm not sure if this wrapper can be avoided.
 
-iQIcBAEBCgAGBQJTi4GiAAoJEPw7F94F4Tagv/MP/ji+/N+rUGV89E41CHCRrBXx
-8GGgGJ60qKGwoJxtpsbgZ9QHKUFBCfPVRAm8BRbWgmJ6lA80Gy4bzXKKxS80vvtO
-Q1URG+EQFgy+lSK3iaYY1b8AH9RTVfIlKwXmUoWASnEOlVej+Lt2q2K187OsSj/I
-d3iGR5WOXVl08ui0ScONtsczxZNjRmN9yKmUnt6wHfkazoQRNCv4cCU6vsSI9T9c
-97LP2bR4aX1ryCwQzraVC9Ne4Q0nbpqah5fJ26ak8cre1Zzi4prVpwoBRslmsPgf
-HqGuvv6iVUgIlpmC1KLa/B4jAQ9PdDpK918olgIprFyYudrHrzfy+f9Q4x1bu83l
-qnm4PXsbMmek2DOr+lmMuwxWYTnRAVVH9Hzcp1QDwow7X8hWmJQc0GomlhsT73r0
-HuBRSQNmSpkK7/0St7h/2RrdgQzULj06N0BqChO3OLp4TQrMrlclseqotQ6nNZ6t
-B0F/iY9U2vtAvgMNyXmz3zuhs1z3qAEosJTxHW8sq5s4sTf4dOltbfZC8Opn1X6d
-4QyHJg8og9oLDyH9H4Exy14VUis+kts2i3DUNG7L+SAI3Hd71cWAhetmaKi/elW3
-GAdro8sv0LhrhvhahwyHF6BHbnI+Jpn6+8zzxnLHUGHaooqp1icQWTyn8PbnVXrO
-IFHs07jwQ2m5W35zHWeP
-=u100
------END PGP SIGNATURE-----
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
