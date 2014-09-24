@@ -1,53 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/3
-Message-ID: <2052842.oVAkyH98iA@x2>
-Date: Tue, 09 Dec 2014 22:09:02 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Daniel Micay <danielmicay@...il.com>
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/16
+Message-ID: <5422EC8E.1050003@case.edu>
+Date: Wed, 24 Sep 2014 12:08:46 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday, December 09, 2014 08:03:10 PM Daniel Micay wrote:
-> On 09/12/14 11:18 AM, Steve Grubb wrote:
-> > 4) Then I started wondering about the heap when you use other memory
-> > manager libraries such as jemalloc. This turned out to be interesting.
-> > You get about 19 bits of randomness using it. Its not as bad as non-PIE
-> > glibc but not as good as PIE glibc. You also got the same amount of
-> > randomness whether the app was PIE or not. This is an area ripe for more
-> > experimenting, exploiting, and patching. Supposedly some of these heap
-> > managers use mmap as the underlying allocator. So, why aren't they
-> > getting 29 bits, too? :-)
-> 
-> Your measurement of the difference is quite accurate.
+On 9/24/14, 11:16 AM, Solar Designer wrote:
 
-There's other allocators, too.
+> I see no good workaround. 
 
-libtalloc:
-$ ./all-bits 
-heap       14 bits
-pie-heap   29 bits
+You're correct; there is not a good workaround.  Since there are publicly
+available patches for all bash versions back 15 years or so, though, the
+best path forward is to apply those as quickly as possible.
 
-Hoard:
-$ ./all-bits 
-heap       25 bits
-pie-heap   25 bits
-
-Different allocators, different strategies, different randomness. While people 
-are thinking about this, it might be a good time to check everything that's 
-popular. Hmmm...now that I think about it, I haven't looked for address bias 
-in the last samples....  :-)
-
--Steve
-
-> The page multiple constraint zaps 12 potential bits of entropy, but
-> jemalloc's 4M chunk alignment increases that to 22 bits. I'm not sure
-> what can be done about it because there's a very strong performance case
-> for the design.
-> 
-> I sent in a fix for the MALLOC_CONF part of this at least, so an
-> attacker won't be able to reduce it further:
-> 
-> https://github.com/jemalloc/jemalloc/pull/174
-
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
