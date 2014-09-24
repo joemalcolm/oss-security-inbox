@@ -1,26 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/2
-Message-ID: <20140401045208.GA2420@lorien.valinor.li>
-Date: Tue, 1 Apr 2014 06:52:08 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/38
+Message-ID: <20140924222414.GA903@openwall.com>
+Date: Thu, 25 Sep 2014 02:24:14 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Shaarli: Several XSS in index.php
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Wed, Sep 24, 2014 at 06:08:21PM -0400, Jason Cooper wrote:
+> I wrote some code a while ago to automate git push via single-purpose
+> ssh keys. [1]  By design, it wipes the environment, sets vars found in
+> the config, and accepts only configured commands for
+> SSH_ORIGINAL_COMMAND.  I've tested the latest HEAD against this attack,
+> and it appears to mitigate it:
+> 
+> [jason@...alhost] $ ssh -i .ssh/test_key -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
+> uid=1000(jason) gid=1000(jason) groups=1000(jason)
+> [jason@...alhost] $ # add 'command=/path/to/secsh -f /path/to/test.rc' in .ssh/authorized_keys on server
+> [jason@...alhost] $ ssh -i .ssh/test_key -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
+> secsh v0.8-rc1-2-ga86f09832fa2: access denied.
 
-Multiple cross-site scripting vulnerabilities were reported in
-Shaarli, which can be found in upstream issue[1].
+This is puzzling.  I tried:
 
- [1] https://github.com/sebsauvage/Shaarli/issues/134
+command="/bin/env - date"
 
-The issues were fixed upstream by commit
-53da201749f8f362323ef278bf338f1d9f7a925a [2].
+and:
 
- [2] https://github.com/sebsauvage/Shaarli/commit/53da201749f8f362323ef278bf338f1d9f7a925a
+command="exec /bin/env - date"
 
-Could a CVE be assigned for this flaw? (One is sufficient, as it is one
-reporter and one affected file?).
+and neither prevents exploitation of the issue as above (I get the
+output of "id", not of "date"), which is not surprising given that the
+command is run via the shell before it reaches "env".
 
-Regards,
-Salvatore
+Maybe your target user account's login shell is not bash?  That would
+explain it, but it's also the easier case where the issue had been
+exposed via a subshell only (does your test.rc explicitly use bash?)
+
+Alexander
