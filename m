@@ -1,38 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/3
-Message-Id: <20140924060541.D623EC50556@smtptsrv1.mitre.org>
-Date: Wed, 24 Sep 2014 02:05:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 106 - Missing privilege level checks in x86 emulation of software interrupts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/33
+Message-ID: <20140924213254.GA337@openwall.com>
+Date: Thu, 25 Sep 2014 01:32:54 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Chet Ramey <chet.ramey@...e.edu>, Tavis Ormandy <taviso@...xchg8b.com>
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> Xen Security Advisory XSA-106
+On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
+> Tavis Ormandy just tweetet this:
+> https://twitter.com/taviso/status/514887394294652929
 > 
-> The emulation of instructions which generate software interrupts fails
-> to perform supervisor mode permission checks.
-> 
-> Xen versions from 3.3 onwards are vulnerable.
+> The bash patch seems incomplete to me, function parsing is still
+> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
 
-Use CVE-2014-7156.
+Thanks for bringing this to oss-security.  I've added CC to Chet and
+Tavis on this "reply".
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUIl4FAAoJEKllVAevmvmsXEIH/AjbuceIIQad82apFIKhYB47
-uPr21Z6mov7g24e/0CH4HiQBsdtva8HfRwM3e+dykQT+PqSxqImRnSvnY+qzOalo
-k46iR9+fZJNnH1SOSOvTqJS+yVzL8ia4RI/e99bvA194+irEi3rzjOusqdHh6Wfr
-07TbvqZK4bHpPtwrQTdPpn/EbFmDE49uiQpFKFwzfhtXr9eHj241fDcyYeYpU2Ri
-b84gLRHqVYrjuANn1L2DgrceB5Epw0Inzn0O5bSTWFEwEIVRBsdHZ/0+37DBoMO2
-ZnzZxrEMGt8NYjDgl1H3rwzopw3jzW28AzxvlbhGjeH8R/Hq5Sbhq1doedN1UMo=
-=AP6d
------END PGP SIGNATURE-----
+Alexander
