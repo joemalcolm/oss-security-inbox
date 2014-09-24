@@ -1,31 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/40
-Message-ID: <20141120201815.4087143c@pc>
-Date: Thu, 20 Nov 2014 20:18:15 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/20
+Message-ID: <5422F300.7010207@redhat.com>
+Date: Wed, 24 Sep 2014 18:36:16 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing project brainstorming
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 21 Nov 2014 05:30:36 +1300
-Amos Jeffries <squid3@...enet.co.nz> wrote:
+On 09/24/2014 04:05 PM, Florian Weimer wrote:
+> Stephane Chazelas discovered a vulnerability in bash, related to how
+> environment variables are processed: trailing code in function
+> definitions was executed, independent of the variable name.
 
-> Since they are coming from fuzzing a copy of the exact input which led
-> to it is also valuable. There is nothing worse than having to guess at
-> what might have led to a crash when the input could literally have
-> been anything at all.
+It was pointed out to me off-list that a patched bash will still import 
+functions from the environment, including from variable names which 
+override shell commands.  This is not an immediate vulnerability because 
+it requires setting environment variables under *specific* names.  If 
+you can do that, there are already many variables which can affect the 
+execution of shell scripts, and some of them offer direct code execution 
+because they are subject to command substitution (BASH_ENV, for 
+example).  The current vulnerability mainly exists because the name of 
+the environment variable does not matter at all.
 
-I see it pretty much as a given condition that you give the copy of the
-crashing input to the upstream devs. I can hardly think of a reason not
-to do so (the only thing that comes to mind are confidential or
-copyrighted files, I try to make sure I always start fuzzing with
-inputs that are freely licensed or created by myself to avoid that).
+My main concern with the current patch is that still exposes the bash 
+parser and function definition printer to attacks from the network. Bugs 
+in those fairly large components could cause another critical issue.
+
+For hardening against such issues, I proposed a separate environment 
+variable with a well-known name, say BASH_FUNCDEFS, which lists the 
+names of environment variables which are to be imported as functions. 
+This would bring the attack requirements to the level which we have with 
+BASH_ENV now.
+
+Removing the functionality completely is difficult because it is 
+actually used (search for “export -f”).
+
+(If you find additional bugs, please do not discuss them here, but 
+follow the usual disclosure procedures.  Thanks.)
 
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Florian Weimer / Red Hat Product Security
