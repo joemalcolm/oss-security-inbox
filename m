@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/15
-Message-Id: <201406041505.s54F53MN012908@linus.mitre.org>
-Date: Wed, 4 Jun 2014 11:05:03 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/4
+Message-Id: <20140924060426.8C75172E064@smtpvbsrv1.mitre.org>
+Date: Wed, 24 Sep 2014 02:04:26 -0400 (EDT)
 From: cve-assign@...re.org
-To: thijs@...ian.org
+To: security@....org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: mediawiki invalid usernames on Special:PasswordReset were parsed as wikitext
+Subject: Re: Xen Security Advisory 105 - Missing privilege level checks in x86 HLT, LGDT, LIDT, and LMSW emulation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=65501
+> Xen Security Advisory XSA-105
+> 
+> The emulation of the instructions HLT, LGDT, LIDT, and LMSW fails to
+> perform supervisor mode permission checks.
+> 
+> Xen versions from at least 3.2.x onwards are vulnerable.
 
-> invalid usernames on Special:PasswordReset were parsed as wikitext ...
-> could potentially lead to an xss crossing a privilege boundary
-
-Use CVE-2014-3966.
+Use CVE-2014-7155.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -26,11 +28,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTjzUKAAoJEKllVAevmvms3m0H/30lQ070bNB7iCT0dq78dqK7
-68dv98nM/DFos1TnyvBrYPQp+opf1fGv2jjquenpnAfI/rG0/jp9sxDhAC6tn/NT
-EHkCwiGMfgaG0T52NaxCQC2TitKh9eqTIrhP2DznmXfq64mqtAKM7HVNkgm8K7ES
-JGMeih9pxoURZPmLG+3NRFs4AtZQuPKQYEhBQxTocuCfxcjQarfdvA02i+R0niv8
-GJHLGnSrxlVaWOwOy2eF6557ASyUzIY4T4txh3jHvmht/0xtVTRuB2MRUHaJ6cjw
-hOn8/EnVO9OgsGku7+KuwkOXLpkIJEBJTjke/CoE10dCY52dtCykJv8OA9HRNwE=
-=e6Ww
+iQEcBAEBAgAGBQJUIl3/AAoJEKllVAevmvmsLGoH/2hnJ2Gn+MqmDKeoaG5qsoLb
+GE8IOEnUiDkB6ahlL+PwoWgiC5d/W554W31xId0eqZleoFnCtRHHULfy0rC7bbMd
+MbYa47QOF+dImT8cRHads23oc7OlwBwPbaDhUr9Ez6g1a5hLt8CaE9K8g4xILx5u
+oMsN/+tjFbPzbex2pgtL5ZJW7RXzUlT7UGCr8fBnw0O916OHZzhctAekrsYWjVqu
+0KUMRiO/oAgb9Xyzlmkr+DDFcq5VEHegHqDQjNoVodW9dwylP7t9mGZbGO4t1myY
+foklnZiKpYwYBSOQK92s1xWvWaiOCUcgPJTxF4F7ruSfIoKBxSNjivKZn7DlTBU=
+=5UGs
 -----END PGP SIGNATURE-----
