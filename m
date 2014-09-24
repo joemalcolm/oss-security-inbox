@@ -1,48 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/17/3
-Message-ID: <CAH5b-BXyWS72CcLSNPFn2MbrO1aty58Lb=7vHXVfqJTvaos_yg@mail.gmail.com>
-Date: Sun, 17 Aug 2014 09:47:53 +0200
-From: devzero2000 <pinto.elia@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/17
+Message-ID: <CALx_OUCRut18sUVLMjQJpBCdUWs8vasAzdsBnhccsk7TFhTE=w@mail.gmail.com>
+Date: Wed, 24 Sep 2014 09:23:10 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
 To: oss-security@...ts.openwall.com
-Subject: Re: FreeNAS default blank password
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Il 17/Ago/2014 04:12 "Kurt Seifried" <kseifried@...hat.com> ha scritto:
->
-> So I installed the latest FreeNAS (9.2.1.7), install is simple, no
-> options, it just drops it onto the disk you specify, you reboot, it works.
->
-> By default you get a text based menu with some options (setup
-> network/DNS/etc.), and one option is "Reset WebGUI Login Credentials".
->
-> The problem is at first boot (and if you ever pick "Reset WebGUI Login
-> Credentials") the web admin has a blank password, anyone that can access
-> it can set the admin password and then use the web GUI to fire up a root
-> shell (there's a nice little web shell command line).
->
-> So an attacker can easily race the admin to the WebGUI, set a new
-> password, login as root, setup a backdoor, then reset the WebGUI
-> password so it's blank again and the admin would be none the wiser (log
-> files won't help because the attacker has root can can easily sanitize
-> them).
->
-> There is no way from the text GUI to set the Web GUI admin password. I
-> don't think there is even a CLI tool to set the web GUI password (I
-> can't find it easily).
->
-> Either way, does this deserve a CVE? Forcing a user to set the admin Web
-> GUI password through the Web GUI, meaning it must be exposed to some
-> degree prior to securing it. My understanding is default/blank admin
-> credentials now == CVE. Thanks.
->
->
-Many device have a "default" password on first install that everyone know.
-For me "blank" password or "admin admin"  are equal as security risk. I
-have missed something ?
+Note that on Linux systems where /bin/sh is symlinked to /bin/bash,
+any popen() / system() calls from within languages such as PHP would
+be of concern due to the ability to control HTTP_* in the env.
 
-Best regards
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
-
+/mz
