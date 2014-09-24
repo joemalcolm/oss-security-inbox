@@ -1,38 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/8
-Message-ID: <CAPFpk5eTOGmrLDj4Mv=_5avNp4rNtdjSr4CGjJ2pT-M+8jOx0Q@mail.gmail.com>
-Date: Sat, 22 Nov 2014 14:11:14 -0500
-From: Marc Chadwick <marc@...dwick.net>
-To: oss-security@...ts.openwall.com
-Cc: Tim Brown <tmb@...35.com>
-Subject: Re: Running Java across a privilege boundry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/25
+Message-ID: <54231788.1040901@case.edu>
+Date: Wed, 24 Sep 2014 15:12:08 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Michal Zalewski <lcamtuf@...edump.cx>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On Nov 22, 2014 11:26 AM, "Russ Allbery" <eagle@...ie.org> wrote:
->
-> Tim Brown <tmb@...35.com> writes:
->
-> > Does anyone know of any obvious cases where Java is executed across a
-> > privilege boundary? I'm specifically thinking of cases where it might be
-> > executed via sudo, via another set[ug]id binary or where it gets called
-> > from an untrusted working directory i.e. one not owned by the calling
-> > user?
->
-> "sudo service tomcat6 restart" would be a pretty obvious example that I
-> suspect is not uncommon in server environments.
->
-> In general, Java is a general-purpose programming language, so I think
-> there are plenty of examples of this just like there are with any other
-> programming language.  Any large system written in Java probably has a few
-> Java command-line tools or ways to spawn Java daemons, and in the normal
-> course of setting up a system, it's likely that someone is granting access
-> to run those tools via sudo.
->
-> --
-> Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
+On 9/24/14, 2:54 PM, Michal Zalewski wrote:
+>> My main concern with the current patch is that still exposes the bash parser
+>> and function definition printer to attacks from the network. Bugs in those
+>> fairly large components could cause another critical issue.
+> 
+> Yup, that surprised me when testing the patch, too - I can still get a
+> function called HTTP_COOKIE, for example. I worry about potential side
+> effects of parsing even in absence of parser bugs. In most
+> object-oriented languages, such side effects are practically
+> guaranteed. Bash may be saved by simplicity, but not sure how robust
+> that assumption is.
 
-I thought tomcat 6 used authbind in its init script, but I could be wrong.
-If that's the case, authbind is written in C, so I'm not sure that's what
-Tim has in mind. Similarly, jsvc is written in C. Maybe the tabuki wrapper
-service?
+Lots of code out there uses exported functions.
 
+> I've written more code in bash than I should have and never used
+> function exports, or even realized that they exist. I wonder if they
+> can be made optional (e.g., gated by a flag on the subprocess) without
+> breakage.
+> 
+> Another option may be to export them through specially prefixed
+> variables, which should be transparent but minimize the risk of
+> interfering with web servers and such.
+
+There are several options for making shell functions inherited via the
+environment more robust, none of them backwards compatible.  I will
+choose one and implement it for a future bash version.
+
+The leading candidates both raise the bar by requiring a potential
+attacker to be able to create arbitrarily-named environment variables as
+well as environment variables with specific values.
+
+I considered (and implemented) a blacklist approach that would have
+protected against a set of commonly-named variables (HTTP_*, CGI_*,
+SSH_*, LC_*, and so on), but the consensus was that that was too easily
+circumvented.  I removed it from the distributed patches.
+
+Chet
+
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
