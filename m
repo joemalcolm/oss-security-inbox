@@ -1,60 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/26
-Message-ID: <546E1482.2080700@mittwald.de>
-Date: Thu, 20 Nov 2014 17:19:14 +0100
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Fuzzing project brainstorming
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/34
+Message-ID: <20140925000321.7bbdaf04@pc>
+Date: Thu, 25 Sep 2014 00:03:21 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: nss RSA forgery (CVE-2014-1568)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+One serious vuln per day isn't enough, so nss decided to bring us
+another one.
 
-On 20/11/14 16:50, Hanno Böck wrote:
-> There lays deeper a question that I asked myself already: What's
-> an "okay" way of reporting these things? Basically what I usually
-> did is just sending crash samples to upstream devs and add some
-> valgrind/asan output. One could argue that I'm offloading the real
-> work to the upstream devs, however I feel they know their code
-> better than I do (and often I'm just not qualified to create the
-> fix). Until now I feel most upstreams were okay with that.
+Mozilla reports this:
+https://www.mozilla.org/security/announce/2014/mfsa2014-73.html
+Bugtracker entry still private, so hard to judge about details.
+Interesting: Two independent discoveries (we had the same with
+heartbleed and I couldn't believe this was coincidence).
 
-Maybe it would be worth it to contact the "hydra" devs about this
-as they provided also reproducing test-cases for the crashes, when
-reporting to debian?
+This is what mcaffee has to say:
+http://blogs.mcafee.com/executive-perspectives/need-know-berserk-mozilla
 
-sadly hydra is not open source.
+They say its related to BER/ASN1-parsing, but adam langley disagrees:
+https://twitter.com/agl__/status/514881918110683136
 
-- -- 
-Mit freundlichen Grüßen / Regards
 
-Sven Kieske
+And it seems cyassl had something similar, also found by intel:
+http://www.yassl.com/yaSSL/Blog/Entries/2014/9/12_CyaSSL_3.2.0_Released.html
 
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad
-Oeynhausen
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+No real details yet and information seems confusing.
 
-iQIcBAEBAgAGBQJUbhSCAAoJEC5d3lL7/I9ze6AP/0d+zGjckKfIrldv8czlMgvZ
-bqA6lCrtlz+2GIqXWSIgQVU8miyEB/rPUJTPQQ+upiR9f1Rx3Tym0/w0iKiuhKDm
-Xh3GJqcrmlYut6HEPz4Mg81HfD6Qr2Yrvzot/GXepDvxBI13HFbu7YGpi4era3bR
-qJDRjcTaBZnxPPHZpO+49Ih1G8616N1bTjJS4EIU7XlHJIOQygJQtwWx7AVe1CCo
-ZEBR4jG65C5ulvrBNKc9GT+8SOy6F8JSOg7SevXr7SJBnvDRVtkqNDFTq84M1XCL
-xGgZTKNdQ9GJIexlVCAoGwpHtMTZ3+dToxolxLlL2ixlyb7vV8UgYtSe1EvdbfMq
-xvL6Il27lfdYIwQZrK+1C56EugeopXi2b/GLalU71PGXeIIHUws7djpHAjkOj59F
-yNT8svwkajnSRzkoMwkATu3+eHkvSNhZTZKRYz6RgkovyMS8AOraqDmJCLqfni3l
-tEzrBUAlmtghAKUWzPpDsoeZ7I96z2zYgdJamSGMdYf81vbDUU202BejpF1gKMTx
-XM2nS2MS8PNaF7y2w7Nc9FYlo+vM2VaT9hoGbTTo2NjIdrpkyHwmpoI7oZ/n1/kN
-QF+cjkAu3+lUuMYw2vKvXSUmiuGIpXpwfKti6y7CwyMaYTeuHHgyCU2YVbIqgVNe
-c1g4fDtUHktAsAHIR56c
-=Joj1
------END PGP SIGNATURE-----
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
