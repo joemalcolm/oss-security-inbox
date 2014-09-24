@@ -1,50 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/23/3
-Message-ID: <537F9320.4070606@enovance.com>
-Date: Fri, 23 May 2014 14:27:44 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/19
+Message-ID: <20140924163242.GF16787@gremlin.ru>
+Date: Wed, 24 Sep 2014 20:32:42 +0400
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-016] Heat template URL information leakage (CVE-2014-3801)
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-016
-CVE: CVE-2014-3801
-Date: May 23, 2014
-Title: Heat template URL information leakage
-Reporter: Jason Dunsmore (Rackspace)
-Products: Heat
-Versions: 2013.2 to 2013.2.3, and 2014.1
+On 24-Sep-2014 22:01:50 +0600, Alexander E. Patrakov wrote:
 
-Description:
-Jason Dunsmore from Rackspace reported a vulnerability in Heat. An
-authenticated user may temporarily see the URL of a provider template
-used in another tenant by listing heat resources types. This may result
-in disclosure of additional information if the template itself can be
-accessed. The URL disappears from the listing after a certain point in
-the stack creation. All Heat setups are affected.
+ >> I see no good workaround. Starting the forced command with
+ >> "unset >SSH_ORIGINAL_COMMAND &&" does not help - we'd need
+ >> to unset the variable before starting bash, not from bash.
 
-Juno (development branch) fix:
-https://review.openstack.org/89695
+ > Won't installing dash and setting the shell of users who have
+ > forced commands to dash mitigate this somehow?
 
-Icehouse fix:
-https://review.openstack.org/94625
+Possibly, that will require making /bin/sh symlink to point at
+dash (or zsh, or whatever) as well...
 
-Havana fix:
-https://review.openstack.org/94644
-
-Notes:
-This fix will be included in the juno-1 development milestone and in
-future 2013.2.4 and 2014.1.1 releases.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3801
-https://launchpad.net/bugs/1311223
 
 -- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
