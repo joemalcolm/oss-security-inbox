@@ -1,25 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/13
-Message-ID: <BD0FFF79-3834-4B2A-B885-0E83AE6DCE9B@redhat.com>
-Date: Tue, 24 Jun 2014 08:18:26 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: possible CVE request: rb_libtorrent opens UPNP port 0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/27
+Message-ID: <87ppekbz97.fsf@mid.deneb.enyo.de>
+Date: Wed, 24 Sep 2014 21:21:40 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-It was brought to my attention today that a potential flaw in rb_libtorrent exists where it will open UPNP port 0, which (by the description of the issue) opens all ports to the system running rb_libtorrent via the given firewall (so even if you had, say, only port 22 open to the machine to start, fire up an application using rb_libtorrent such as qbittorrent, and all ports are forwarding to that machine).
+* Florian Weimer:
 
-I can't find any references on whether or not this is part of the UPNP spec or known behaviour, however.  Either way, I suppose that anyone running such a bittorrent client isn't expecting that all ports start forwarding (but, as a result, I'm not sure if this is malfunctioning firewall which is where knowing whether or not this is according to spec would be good).
+> Someone has posted large parts of the prenotification as a news
+> article, so in the interest of full disclosure, here is what we wrote
+> to the non-vendors (vendors also received patches):
 
-So I'm not just asking for a CVE, but whether or not it's a flaw (I don't know enough about UPNP to hazard a guess).
+Oh dear.  It's now been implied that something leaked before the
+embargo was over, or that more information was disclosed than planned.
 
-Here's some references:
+This is not the case, on neither count.  I was just annoyed that parts
+of a private message I wrote ended up on a news site without my prior
+consent.  The disclosure as such wasn't a problem, except for a single
+technical inaccuracy that has since been corrected.  It was an honest
+mistake, apologies were made and accepted.  It did not impact the
+disclosure schedule at all (it happened after the disclosure), nor the
+amount of information being disclosed in any material way (the Red Hat
+blog post contained essentially the same information).  Once I saw
+what happened, I decided to publish the full message here.
 
-https://github.com/qbittorrent/qBittorrent/issues/1758
-https://lists.fedoraproject.org/pipermail/package-announce/2014-June/134652.html
-https://bugs.mageia.org/show_bug.cgi?id=13582
+So to repeat: The embargo was scheduled for 14:00 UTC today, and my
+initial brief posting was not prompted by a desire to withhold
+information.  I just wanted to limit the amount of possibly
+conflicting technical information, and I had other duties to attend
+to.  (In retrospect, I should probably have included the message from
+the prenotification from the start, which would have avoided any
+confusion.)
 
+We'll also want to discuss additional hardening measures (see my
+message about BASH_FUNCDEFS), and we previously agreed to do this
+publicly, after disclosure.  Obviously, the technical details are
+necessarily public once we do that.
 
--- 
-Vincent Danen / Red Hat Product Security
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+It's often tricky to decide how much information to include in a
+public vulnerability disclosure.  In this particular case, I think we
+had to publish technical details so that those who cannot patch
+immediately can at least try to mitigate this vulnerability using
+filters on devices in front of web servers, or tools like
+mod_security.  And without the technical details, I doubt this
+vulnerability would have received the attention it deserves until
+someone figures things out.  We could easily have obfuscated the patch
+to delay this, but what's the point?
