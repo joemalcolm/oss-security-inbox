@@ -1,42 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/12
-Message-ID: <544170AF.604@fifthhorseman.net>
-Date: Fri, 17 Oct 2014 15:40:31 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com, Nikos Mavrogiannopoulos <nmav@...tls.org>
-Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/36
+Message-ID: <20140924221117.GA687@openwall.com>
+Date: Thu, 25 Sep 2014 02:11:17 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On 10/16/2014 12:42 PM, Sona Sarmadi wrote:
->> Hanno Böck wrote:
->>> It's out:
->>>
->>> https://www.openssl.org/~bodo/ssl-poodle.pdf
->>> http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
->> exploiting-ssl-30.html
+Florian,
+
+On Wed, Sep 24, 2014 at 09:21:40PM +0200, Florian Weimer wrote:
+> * Florian Weimer:
 > 
-> OpenSSL has patches for this and 3 other vulnerabilities: 
+> > Someone has posted large parts of the prenotification as a news
+> > article, so in the interest of full disclosure, here is what we wrote
+> > to the non-vendors (vendors also received patches):
 > 
->    https://www.openssl.org/news/secadv_20141015.txt
+> Oh dear.  It's now been implied that something leaked before the
+> embargo was over, or that more information was disclosed than planned.
 > 
-> GnuTLS also implements the SSLv3 protocol, does anyone know if there are any  patches for GnuTLS for the SSL 3.0 protocol vulnerability? 
+> This is not the case, on neither count.  I was just annoyed that parts
+> of a private message I wrote ended up on a news site without my prior
+> consent.  The disclosure as such wasn't a problem, except for a single
+> technical inaccuracy that has since been corrected.  It was an honest
+> mistake, apologies were made and accepted.  It did not impact the
+> disclosure schedule at all (it happened after the disclosure), nor the
+> amount of information being disclosed in any material way (the Red Hat
+> blog post contained essentially the same information).  Once I saw
+> what happened, I decided to publish the full message here.
 
-Please see: http://www.gnutls.org/security.html#GNUTLS-SA-2014-4
+This brings up the question: why did someone (merely?) running a news
+site receive the exact advance notification message (or a portion of
+it), and when did they receive it?  I doubt a person merely running a
+news site actually received advance notification in this case (I hope
+not!), but I think you need to clarify this aspect.
 
-and Nikos' writeup here:
+> So to repeat: The embargo was scheduled for 14:00 UTC today, and my
+> initial brief posting was not prompted by a desire to withhold
+> information.  I just wanted to limit the amount of possibly
+> conflicting technical information, and I had other duties to attend
+> to.  (In retrospect, I should probably have included the message from
+> the prenotification from the start, which would have avoided any
+> confusion.)
 
- http://nmav.gnutls.org/2014/10/what-about-poodle.html
+Yes, I think including the full message in your first notification to
+oss-security would have worked best.
 
-From the latter link:
+> We'll also want to discuss additional hardening measures (see my
+> message about BASH_FUNCDEFS), and we previously agreed to do this
+> publicly, after disclosure.  Obviously, the technical details are
+> necessarily public once we do that.
+> 
+> It's often tricky to decide how much information to include in a
+> public vulnerability disclosure.  In this particular case, I think we
+> had to publish technical details so that those who cannot patch
+> immediately can at least try to mitigate this vulnerability using
+> filters on devices in front of web servers, or tools like
+> mod_security.  And without the technical details, I doubt this
+> vulnerability would have received the attention it deserves until
+> someone figures things out.  We could easily have obfuscated the patch
+> to delay this, but what's the point?
 
->>> The good news is, that only browsers use this construct, and no
->>> other applications should be affected.
+You're right.
 
-Nikos (or anyone else on OSS-security), are you sure that only browsers
-do this?  what about mail clients like Thunderbird or Mail.app making
-IMAPS or POPS or submission connections?
+Thank you!
 
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+Alexander
