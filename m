@@ -1,49 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/3
-Message-ID: <CAD3CanfQNXvv3jVN9Cu6ySusTKbmNXhxnpj2oXCoJF5-3JYv1w@mail.gmail.com>
-Date: Mon, 12 May 2014 21:15:10 +1200
-From: Matthew Daley <mattd@...fuzz.com>
-To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org, bugtraq@...urityfocus.com
-Subject: Re: CVE-2014-0196: Linux kernel pty layer race condition memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/6
+Message-Id: <E1XWjq1-00053B-Bn@xenbits.xen.org>
+Date: Wed, 24 Sep 2014 10:30:21 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 105 (CVE-2014-7155) - Missing privilege level checks in x86 HLT, LGDT, LIDT, and LMSW emulation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I've written a "slightly-less-than-POC" privilege escalation exploit for
-this vulnerability that works on newer kernels:
-http://bugfuzz.com/stuff/cve-2014-0196-md.c (SHA1:
-6b1c5c651231b33a5e11b5c8c6ed07cd15f658f5)
+            Xen Security Advisory CVE-2014-7155 / XSA-105
+                              version 3
 
-Note the warning mentioned in the header; run it at your own risk ;)
+    Missing privilege level checks in x86 HLT, LGDT, LIDT, and LMSW emulation
 
-- Matthew Daley
+UPDATES IN VERSION 3
+====================
 
+This issue has been assigned CVE-2014-7155.
 
-On Mon, May 5, 2014 at 10:08 PM, Marcus Meissner <meissner@...e.de> wrote:
+ISSUE DESCRIPTION
+=================
 
-> Hi,
->
-> SUSE customer Ericsson reported a kernel crash to us which turned out
-> to be a race condition in the PTY write buffer handling.
->
-> When two processes/threads write to the same pty, the buffer end could
-> be overwritten and so memory corruption into adjacent buffers could lead
-> to crashes / code execution.
->
-> Jiri Slaby and Peter Hurley localized and fixed this problem.
->
-> CVE-2014-0196 has been assigned to this issue.
->
-> Jiri thinks this was introduced during 2.6.31 development by
-> d945cb9cce20ac7143c2de8d88b187f62db99bdc (pty: Rework the pty
-> layer to use the normal buffering logic) in 2.6.31-rc3. Until then, pty
-> was writing directly to a line discipline without using buffers.
->
-> https://bugzilla.novell.com/show_bug.cgi?id=875690
->
-> Patch is also attached.
->
-> Ciao, Marcus
->
+The emulation of the instructions HLT, LGDT, LIDT, and LMSW fails to
+perform supervisor mode permission checks.
 
+However these instructions are not usually handled by the emulator.
+Exceptions to this are
+- - when the instruction's memory operand (if any) lives in (emulated or
+  passed through) memory mapped IO space,
+- - in the case of guests running in 32-bit PAE mode, when such an
+  instruction is (in execution flow) within four instructions of one
+  doing a page table update,
+- - when an Invalid Opcode exception gets raised by a guest instruction,
+  and the guest then (likely maliciously) alters the instruction to
+  become one of the affected ones.
+
+Malicious guest user mode code may be able to leverage this to install
+e.g. its own Interrupt Descriptor Table (IDT).
+
+IMPACT
+======
+
+Malicious HVM guest user mode code may be able to crash the guest or
+escalate its own privilege to guest kernel mode.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions from at least 3.2.x onwards are vulnerable.  Older
+versions have not been inspected.
+
+Only user processes in HVM guests can take advantage of this
+vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+There is no mitigation available for HVM guests.
+
+CREDITS
+=======
+
+This issue was discovered Andrei Lutas at BitDefender and analyzed by
+Andrew Cooper at Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa105.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa105*.patch
+dfb5ede7cc5609a812a7b1239479cefd387f9f9c8c25e11e64199bc592ad7e39  xsa105.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUIpzkAAoJEIP+FMlX6CvZ0IkIALIftvFcaV2iH54bpvWuurXs
+m87HvWm0Omy8S5R+K+meJmy05jERWVUg0eaX0nn8KcFsg8H9lNEsdJwc8vmGyhxx
+tIY1IeHHH/Mbx7kdtdmVrtUaoz/IV2LYIHzsLEPcQ7gLMkMwydCxKL97Rf83Tsq+
+Y6Zu3H0vQoR0wVVeh1ks8708TM2TZeNOc0B9foJBult3Zm/ihdBo12eZzVqm/e9g
+HCYswBKFntj4Iq0sAyhfc5KATirkCnWqpKXJ6oMACEy5H3+Xrh9/u79zatHd/FWL
+3FL2yGwQTGqqtVRUhEQD7cfWl9FLRcFZyudWQzIkSlDAGHHrpxVinp/nplm5PvA=
+=lJ+I
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa105.patch" of type "application/octet-stream" (1304 bytes)
