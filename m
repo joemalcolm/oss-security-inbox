@@ -1,26 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/15
-Message-ID: <57A89B78-F96E-4E49-9AAC-034AB2BA25B0@redhat.com>
-Date: Wed, 05 Nov 2014 13:51:25 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: CVE-2014-7828 FreeIPA 4.0/4.1 does not require password when OTP used
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/31
+Message-ID: <54232567.1000704@case.edu>
+Date: Wed, 24 Sep 2014 16:11:19 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Pierre Schweitzer <pierre@...ctos.org>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Just a heads-up that FreeIPA 4.0 and 4.1 (_not_ earlier versions), when 
-OTP is used, did not requite the password (or second factor of 2FA) to 
-login.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://fedorahosted.org/freeipa/ticket/4690
-https://bugzilla.redhat.com/show_bug.cgi?id=1160871
-This was assigned CVE-2014-7828.  A patch to fix it is available:
+On 9/24/14, 3:39 PM, Pierre Schweitzer wrote:
+> 
+> Hi,
+> 
+> Naive question regarding statement below. Does that mean that exec*()
+> system calls are concerned as well (like for instance called from a fork())?
 
-https://www.redhat.com/archives/freeipa-devel/2014-November/msg00068.html
+No; they do not invoke a shell.
 
-Upstream is recommending users disable 2FA until they can get a fix out 
-tomorrow:
+- -- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (Darwin)
 
-https://www.redhat.com/archives/freeipa-users/2014-November/msg00077.html
-
--- 
-Vincent Danen / Red Hat Product Security
+iEYEARECAAYFAlQjJWcACgkQu1hp8GTqdKthrQCdF7b800vGLs/mfMZakRtDp/c1
+vwEAmwQjo0qfqQTNE0CHKu+kXkQ+BTXx
+=zEjf
+-----END PGP SIGNATURE-----
