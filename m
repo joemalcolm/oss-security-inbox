@@ -1,47 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/15/1
-Message-Id: <201404151405.s3FE5mVW020157@linus.mitre.org>
-Date: Tue, 15 Apr 2014 10:05:48 -0400 (EDT)
-From: cve-assign@...re.org
-To: marc.deslauriers@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: rsync denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/20
+Message-ID: <542436C9.1080502@case.edu>
+Date: Thu, 25 Sep 2014 11:37:45 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Solar Designer <solar@...nwall.com>
+CC: chet.ramey@...e.edu, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> rsync 3.1.0 contains a denial of service issue
-
-> a remote client can send an invalid username and cause an infinite CPU
-> loop on the server child process.
+On 9/24/14, 10:47 PM, Solar Designer wrote:
+> On Wed, Sep 24, 2014 at 03:12:08PM -0400, Chet Ramey wrote:
+>> There are several options for making shell functions inherited via the
+>> environment more robust, none of them backwards compatible.  I will
+>> choose one and implement it for a future bash version.
 > 
-> The server master process is unaffected, allowing the remote client to
-> do this multiple times toward system-wide denial of service.
-
-> Wayne Davison 2014-04-13 21:14:04 UTC
+> While we're at it, I think it's preferable not to output error messages
+> triggerable by untrusted input, e.g.:
 > 
-> I've committed a fix for this into git for release in 3.1.1.
+> $ ssh -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id' 
+> bash: warning: SSH_ORIGINAL_COMMAND: ignoring function definition attempt
+> bash: error importing function definition for `SSH_ORIGINAL_COMMAND'
+> 
+> (as seen with the current bash patches).  This might be unnecessarily
+> revealing or/and it might confuse whatever other program was invoking
+> something via bash, resulting in attacker-triggerable unintended
+> behavior in that caller program.  Yes, there are numerous other error
+> conditions anyway - such as running out of memory - which may result in
+> messages printed to stderr.  Yet we might want to avoid printing error
+> messages for environment variable value parsing errors (ideally, we'd
+> avoid the parsing itself as well), unless a debugging or a verbose mode
+> is enabled locally (in a way that can't realistically be triggered via
+> an unsuspecting network service).
 
-https://bugzilla.samba.org/show_bug.cgi?id=10551
-https://bugs.launchpad.net/ubuntu/+source/rsync/+bug/1307230
-https://git.samba.org/?p=rsync.git;a=commit;h=0dedfbce2c1b851684ba658861fe9d620636c56a
+I disagree.  It's important for a program -- not just the shell -- to tell
+the user when it attempts to do something on his behalf and is unable to
+do it.
 
-Use CVE-2014-2855.
+Chet
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTTTxZAAoJEKllVAevmvms0osIAISAV1FFI1QsgpIaAzizTP7I
-JvnQ60EWLWlgHSAmTEEByU9GIzNIpgkccUt5MuTU55kbs/Twybxk1jBJwLbRv+57
-lugTYi8gmKV26W1dnYY6gIEo3QyJNAXMK9I+4/fW8MSsPdkP3R7LumHagwoEryI5
-vH1YVqwfFz49s9tQ3G2QY9i6B2gKEgPjmFo2n/K+UJAgD9rtqA8QCAGKd1XfdPPL
-aG2Q2q31WfFw9w4fwDTEhY7s9Tn1Y+0f7HraJY9g6hqptSztxqH90wo9vzPthzs6
-Io4MvYtwvQR725imLaSS51PiVYhqEBU22uV9fH8j/8NJvImmMNoFpelX4J1NBKY=
-=U7Ut
------END PGP SIGNATURE-----
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
