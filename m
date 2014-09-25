@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/17/1
-Message-ID: <20140717055037.GO5412@outflux.net>
-Date: Wed, 16 Jul 2014 22:50:37 -0700
-From: Kees Cook <kees@...flux.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-4943: Linux privilege escalation in ppp over l2tp sockets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/9
+Message-ID: <20140925024718.GA30787@openwall.com>
+Date: Thu, 25 Sep 2014 06:47:18 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Chet Ramey <chet.ramey@...e.edu>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-CVE-2014-4943 is a flaw in the Linux kernel allowing an unprivileged user
-to escalate to kernel privilege when CONFIG_PPPOL2TP is enabled. If built
-as a module, a work-around to limit this to just the root user would be
-to add this to /etc/modprobe.conf:
+On Wed, Sep 24, 2014 at 03:12:08PM -0400, Chet Ramey wrote:
+> There are several options for making shell functions inherited via the
+> environment more robust, none of them backwards compatible.  I will
+> choose one and implement it for a future bash version.
 
-alias pppox-proto-1 off
-blacklist l2tp_ppp
+While we're at it, I think it's preferable not to output error messages
+triggerable by untrusted input, e.g.:
 
-Upstream commit:
-https://git.kernel.org/linus/3cf521f7dc87c031617fd47e4b7aa2593c2f3daf
+$ ssh -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id' 
+bash: warning: SSH_ORIGINAL_COMMAND: ignoring function definition attempt
+bash: error importing function definition for `SSH_ORIGINAL_COMMAND'
 
--Kees
+(as seen with the current bash patches).  This might be unnecessarily
+revealing or/and it might confuse whatever other program was invoking
+something via bash, resulting in attacker-triggerable unintended
+behavior in that caller program.  Yes, there are numerous other error
+conditions anyway - such as running out of memory - which may result in
+messages printed to stderr.  Yet we might want to avoid printing error
+messages for environment variable value parsing errors (ideally, we'd
+avoid the parsing itself as well), unless a debugging or a verbose mode
+is enabled locally (in a way that can't realistically be triggered via
+an unsuspecting network service).
 
--- 
-Kees Cook                                            @outflux.net
+Alexander
