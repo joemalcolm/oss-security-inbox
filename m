@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/2
-Message-ID: <20140216132649.GA12853@alf.mars>
-Date: Sun, 16 Feb 2014 14:26:49 +0100
-From: Helmut Grohne <helmut@...divi.de>
-To: oss-security@...ts.openwall.com
-Cc: 738855@...s.debian.org
-Subject: Re: Re: Bug#738855: initscripts: Skip killing root-owned process starting with @
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/38
+Message-ID: <54245D00.4030809@case.edu>
+Date: Thu, 25 Sep 2014 14:20:48 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Michal Zalewski <lcamtuf@...edump.cx>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Feb 15, 2014 at 05:22:15PM +0100, Florian Weimer wrote:
-> * Helmut Grohne:
+On 9/25/14, 2:09 PM, Michal Zalewski wrote:
+>>> Have these been reported upstream?
+>> Nope, but i just cced Chet on it now :)
 > 
-> > In this context allowing user processes to not be killed merely by
-> > changing their name could cause data loss during shutdown by
-> > blocking umount.
+> I think that Chet was cc:ed on the original report from Todd last
+> night (as was I).
 > 
-> Does that actually work?  If so, it's a funcitonality bug that should
-> be fixed.
+> /mz
 
-Usually, user processes are killed by sendsigs and that is why they
-cannot block umount. For instance, if a processes ends up being
-unkillable (e.g. due to a kernel oops), you can experience data loss
-(been there, done that). What is new here is that systemd proposed a
-generic exemption mechanism for processes with effective UID 0.
+I saw it.  I'm looking at the more serious parsing one first.  (The one
+you sent to oss-security -- please remember I'm not on that list and
+continue to cc me on these.)
 
-Judging from the responses received so far, I think that the consensus
-is that effective UID 0 should be considered fully privileged no matter
-how restricted such a process is. That is a perfectly fine choice
-(especially in the presence of user namespaces), but we'll have to keep
-it in mind when looking at other system components that may violate this
-assumption (e.g. SELinux, Linux capabilities).
-
-I conclude that the implementation in systemd is not considered
-vulnerable.
-
-Helmut
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
