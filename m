@@ -1,34 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/3
-Message-Id: <201401231340.s0NDeojk017432@linus.mitre.org>
-Date: Thu, 23 Jan 2014 08:40:50 -0500 (EST)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 83 - Out-of-memory condition yielding memory corruption during IRQ setup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/15
+Message-ID: <5424320B.7000107@oracle.com>
+Date: Thu, 25 Sep 2014 16:17:31 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 25/09/14 04:01, Chet Ramey wrote:
+> On 9/24/14, 9:30 PM, Solar Designer wrote:
+> 
+>>>>>> The bash patch seems incomplete to me, function parsing is still
+>>>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
 
-> Xen Security Advisory XSA-83
-> Malicious guest administrators can trigger a use-after-free error
+There seems to be a wider issue even when we have well-formed functions
+coming in, for example,
 
-Use CVE-2014-1642.
+    env rm='() { echo will not; }' bash -c 'rm core'
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Well, that's OK, I thought, I'll just start my scripts with
 
-iQEcBAEBAgAGBQJS4RseAAoJEKllVAevmvmshVkIALxl5LOA1zRbmZQxpe4e/0dv
-XTPSYx/TdVh8lsyAht50BtfrCNQxWyGeZcIXuQrHgp+6C91EQidZnR/ylhKuPT5X
-n/YP23jJ0tfmUCnkciFWIEVz025IMJnOys1vk/fi+ZLHQz9wvIpR7c6TrKsrUlvV
-OlBgAJIGRkxEFuOrzLDoM9eH94J6dhY1viZ1uGPcrTu541BXPt8qn64jKxLaid2V
-SmK20kudkku6z2DbVrEt2a2ul22m7jefYEW52x1smmNFaj5Ekh2i5R3BQzfX+7YO
-B/MuXuf3lMcF0vL6311ObXTZdO2utWuB2he1ozCwytiNaPem3w/cPzT4QuZ/jv8=
-=Ueqv
------END PGP SIGNATURE-----
+   PATH=...
+   unalias -a
+   unset -f $(typeset -F)
+
+or something like that.   But what if
+
+   env unset='() { :; }' bash ...
+
+unset does nothing now.
+
+   command unset -f $(typeset -F)
+
+countered with
+
+   command='() { eval "$@"; }'
+
+At some stage scripts are going to break, especially if they're relying
+on command, but this whole exercise leaves me feeling uneasy.   ssh and
+sudo both restrict environment variables, but I just tried this:
+
+  $ xxx='() { echo hello; }' su
+  Password:
+  # xxx
+  hello
+
+Of course, su isn't affected, but if I drop one of these in for an
+overly-trusting admin who runs su on my terminal ...
+
+
+My feeling is that if you're going to import functions from the
+environment then you should do that explicitly either through a switch
+(--import?) or a builtin that can import all or selected functions.  Or
+both.
+
+I worry that simply fixing CVE-2014-6271 and CVE-2014-7129 is just
+setting the scene for the next parser problem.
+
+jch
