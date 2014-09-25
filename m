@@ -1,37 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/5
-Message-Id: <201404011751.s31Hot6p003959@linus.mitre.org>
-Date: Tue, 1 Apr 2014 13:50:55 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Shaarli: Several XSS in index.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/51
+Message-ID: <20140925223044.GB26480@lappy.bne.redhat.com>
+Date: Fri, 26 Sep 2014 08:30:45 +1000
+From: Grant Murphy <gmurphy@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2014-030] TLS cert verification option not honoured in paste configs (CVE-2014-7144)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+OpenStack Security Advisory: 2014-030
+CVE: CVE-2014-7144
+Date: September 25, 2014
 
-> Multiple cross-site scripting vulnerabilities were reported in
-> Shaarli
-> 
-> https://github.com/sebsauvage/Shaarli/issues/134
-> https://github.com/sebsauvage/Shaarli/commit/53da201749f8f362323ef278bf338f1d9f7a925a
+Title: TLS cert verification option not honoured in paste configs
+Reporter: Qin Zhao (IBM)
+Products: keystonemiddleware, python-keystoneclient
+Versions: versions up to 1.1.1 (keystonemiddleware),
+          versions up to 0.10.1 (python-keystoneclient)
 
-Use CVE-2013-7351.
+Description:
+Qin Zhao from IBM reported a vulnerability in keystonemiddleware
+(formerly shipped as python-keystoneclient). When the 'insecure' option
+is set in a paste configuration file it is effectively ignored,
+regardless of its value. As a result certificate verification will be
+disabled, leaving TLS connections open to MITM attacks. All versions of
+keystonemiddleware with TLS settings configured via a paste.ini file are
+affected by this flaw.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+keystonemiddleware fix:
+https://review.openstack.org/113191
 
-iQEcBAEBAgAGBQJTOvwDAAoJEKllVAevmvmsKxMH/i/Uabd6Xi/o6C5RvRb7x3Kl
-ewJogaUG1cLFv3PjYpeYqSnoe1lyzMBcipGLVIZQp6EZS25p+CnMft3u9Te/CVMf
-wwGLQYsSO0Kz/uQZSNnshkUykqNvWF089/GCDwIQZtFfk8480Uh6sAP54Fv3DLo3
-4U2nSvCewE5ExFjMYDRI1KvxvY8P+3bbuPU5kKV1+RaWiq8Z0SZCxRIxz2+PL3G/
-BaBI9MWW9+Q11EzcFY/6khIPnPggevhoGgWKmEpkD+JBxEdKz125nPFO1d90Sygc
-mQLTHPUjVQ/b61CJJqULutA8UfWrG8r96PEC14220U0g/lB0o7ymazE07Dq29IQ=
-=Zu78
------END PGP SIGNATURE-----
+python-keystoneclient fix:
+https://review.openstack.org/112232
+
+Notes:
+These fixes are included in the keystonemiddleware 1.2.0 release
+and in the python-keystoneclient 0.11.0 release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7144
+https://launchpad.net/bugs/1353315
+
+--
+Grant Murphy
+OpenStack Vulnerability Management Team
+
+Content of type "application/pgp-signature" skipped
