@@ -1,23 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/01/3
-Message-ID: <m33rhm$9cf$1@ger.gmane.org>
-Date: Sun, 02 Nov 2014 00:49:11 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: SQL injection vulnerability in MantisBT SOAP API [CVE-2014-8554]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/53
+Message-ID: <5424A88D.3010805@case.edu>
+Date: Thu, 25 Sep 2014 19:43:09 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Simon McVittie <smcv@...ian.org>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Following up on earlier messages about this issue, please note that I 
-just pushed a patch to our official repository on Github [1].
+On 9/25/14, 12:20 PM, Simon McVittie wrote:
+> On 25/09/14 16:59, John Haxby wrote:
 
-We plan to release MantisBT 1.2.18 in the next few days, as we're 
-finalizing fixes for a few additional issues. I'll post back here when 
-the new version goes live.
+>> There are lots of things one could do to eliminate that risk, of course,
+>> but step back and what are we arguing for?
+> 
+> I'm arguing that privilege boundaries should take responsibility for
+> their nature as a privilege boundary, and not pass the buck to the code
+> that they call into.
 
-Damien
+It doesn't help if some process sets ruid = euid and execs bash, but bash
+doesn't import functions from the environment if ruid != euid.
 
-
-[1] http://github.com/mantisbt/mantisbt/commit/99ffb0af (1.2.x branch)
-     http://github.com/mantisbt/mantisbt/commit/5faf97ab (master)
-
-
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
