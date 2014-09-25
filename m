@@ -1,20 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/3
-Message-Id: <E1XbhBX-0002tA-9n@rmm6prod02.runbox.com>
-Date: Tue, 07 Oct 2014 22:41:03 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Separating code and data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/18
+Message-ID: <5424359E.9060606@case.edu>
+Date: Thu, 25 Sep 2014 11:32:46 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Solar Designer <solar@...nwall.com>
+CC: chet.ramey@...e.edu, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 7 Oct 2014 16:40:22 +0000, "Mehaffey, John" <John_Mehaffey@...tor.com> wrote:
-> I think that separating code and data belongs on David's list of "Most Important
-> Software Innovations" (www.dwheeler.com/innovation/innovation.html), although
-> arguably the "Separating Text Content from Format" innovation is an example 
-> of the class.
+On 9/24/14, 6:27 PM, Solar Designer wrote:
+> On Wed, Sep 24, 2014 at 12:08:46PM -0400, Chet Ramey wrote:
+>> On 9/24/14, 11:16 AM, Solar Designer wrote:
+>>
+>>> I see no good workaround. 
+>>
+>> You're correct; there is not a good workaround.  Since there are publicly
+>> available patches for all bash versions back 15 years or so, though, the
+>> best path forward is to apply those as quickly as possible.
+> 
+> Thank You for providing those patches!  It is rare for an upstream
+> author to provide security fix backports going this far back, and it is
+> really helpful in this case.
 
-Ah!  Thanks for remembering my page!!  
+Thanks for the kind words.  In this spirit, I've attached a patch for
+bash-2.05b, since I've been told that there are still systems running it
+out there.
 
-It's certainly true that there are real security advantages to separating code and data.  This topic brings up the old Harvard architecture vs. Von Neumann architecture discussion.  However, I think that the idea of having separate code and data streams is actually much older than digital computers.  The Jacquard loom separated code and data, and that dates to 1801.  The innovation was actually probably the other way, Von Neumann's allowing their *combination* ("Baby" is usually considered the first working example).
+Chet
 
---- David A. Wheeler
+
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+
+Download attachment "funcdef-import-2.05b.patch" of type "application/x-patch" (2472 bytes)
