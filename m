@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/05/1
-Message-ID: <20140405172618.GA4235@eldamar.local>
-Date: Sat, 5 Apr 2014 19:26:18 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/21
+Message-ID: <CALx_OUAMNk5_ksge6uUSHdtdMr3pkdjPMG9=SpL6mG0jJKAZjQ@mail.gmail.com>
+Date: Thu, 25 Sep 2014 08:52:43 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
 To: oss-security@...ts.openwall.com
-Subject: Possible CVE Request: Uncontrolled Resource Consumption with XMPP-Layer Compression
+Subject: Re: CVE-2014-6271 first patch and remote exploit via CGI
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> In the press, there are contrary statements about the initial patches[1]
+> posted by Florian Weimer. A user on Twitter posted[2] that the patch was
+> incomplete. There is agreement on that much. Where I see different
+> responses is on whether the first patch can still be exploited remotely via
+> the CGI vector outlined in Florian's initial post, and what damage can
+> still be done. I haven't seen a proof of concept yet, but I also haven't
+> seen a trusted voice give a definitive statement that it can't be abused.
+>
+> Could anyone lay out what's still possible for a remote attacker via CGI
+> with only the first patch applied?
 
->From [1] thee is an security notice from the XMPP Standards Foundation
-affecting several XMPP server implementations:
+The first patch closes the immediate RCE loophole. Many people have
+expressed concerns that the patch is dangerous because in many
+real-world situations, it still permits bash to parse function
+definitions originating from attackers, and the security of the scheme
+hinges on the parser not having the usual range of low-level C
+language bugs that normally plague such code; and, on top of that, the
+parsing process having absolutely no side effects on the subsequently
+executed scripts.
 
-> The XMPP Standards Foundation has published a security notice
-> describing an uncontrolled resource consumption vulnerability in
-> several XMPP server implementations that support application-layer
-> compression. Details can be found at:
-> 
-> http://xmpp.org/resources/security-notices/uncontrolled-resource-consumption-with-highly-compressed-xmpp-stanzas/
-> 
-> Peter
+Both of these assumptions have been shown to be incorrect, although
+not to directly execute code in the most likely scenarios that would
+be vulnerable without the original patch; so, you're probably OK, but
+relying on thing staying this way is fragile. There's an unofficial
+patch from Florian that limits the exposure:
 
- [1] http://mail.jabber.org/pipermail/security/2014-April/000979.html
+http://www.openwall.com/lists/oss-security/2014/09/25/13
 
-Is this something which should get one CVE, or is a CVE for each
-implementation needed?
+You have to use your own judgment to decide whether to stick to the
+original patch, also use Florian's one in the interim, or do something
+else.
 
-Regards,
-Salvatore
+/mz
