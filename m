@@ -1,83 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/30/5
-Message-Id: <E1X1cTp-0007jI-7D@xenbits.xen.org>
-Date: Mon, 30 Jun 2014 14:22:49 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 101 (CVE-2014-4022) - information leak via gnttab_setup_table on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/8
+Message-ID: <542382EF.4020806@redhat.com>
+Date: Thu, 25 Sep 2014 08:20:23 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 09/25/2014 07:35 AM, Huzaifa Sidhpurwala wrote:
+> On 09/25/2014 07:07 AM, Chet Ramey wrote:
+>> On 9/24/14, 9:30 PM, Solar Designer wrote:
+>>> On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
+>>>> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
+>>>>> On 9/24/14, 5:32 PM, Solar Designer wrote:
+>>>>>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
+>>>>>>> Tavis Ormandy just tweetet this:
+>>>>>>> https://twitter.com/taviso/status/514887394294652929
+>>>>>>>
+>>>>>>> The bash patch seems incomplete to me, function parsing is still
+>>>>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+>>>>>>
+>>>>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
+>>>>>> Tavis on this "reply".
+>>>>>
+>>>>> I have a fix for this.
+>>>>
+>>>> Can you provide a pointer to the patch?  I put together a patch that
+>>>> changed the report_error() to fatal_error() as I wasn't able to see
+>>>> how to reset the parser state.  Was just about to send it out...
+>>>
+>>> I think Chet is not on oss-security - we should be CC'ing him where
+>>> appropriate.  (I've added the CC on this reply.)
+>>
+>> I haven't sent the patch out.  It's not related to this problem -- this
+>> is just the easiest way to get to that code path -- and I still have
+>> some investigating to do.
+>>
+> 
+> Please note, We have assigned CVE-2014-3659 to this issue.
+> 
+> 
 
-           Xen Security Advisory CVE-2014-4022 / XSA-101
-                            version 3
+I got this message from MITRE some time back:
 
-            information leak via gnttab_setup_table on ARM
+"No, we are keeping CVE-2014-7169. CVE-2014-7169 was already public at
+nvd.nist.gov before 1146319 was created. Also, the nvd.nist.gov entry
+most likely has a much wider audience. We will enter a REJECT entry
+for CVE-2014-3659."
 
-UPDATES IN VERSION 3
-====================
+So CVE-2014-3659 stands rejected and we will use CVE-2014-7169 for this
+issue.
 
-Provide the CVE.
-
-ISSUE DESCRIPTION
-=================
-
-When initialising an internal data structure on ARM platform Xen was
-not correctly initialising the memory containing the list of a
-domain's grant table pages. This list is returned by the
-GNTTABOP_setup_table subhypercall, leading to an information leak.
-
-IMPACT
-======
-
-Malicious guest administrators can obtain some of the memory contents
-of other domains:
-
-Up to 8*max_nr_grant_frames bytes of uninitialised memory can be
-leaked to the calling domain. This memory may have been previously
-used by either the hypervisor or other guests.
-
-The default max_nr_grant_frames is 32, hence by default 256 bytes may
-be leaked in this way.  However this can be overridden via the
-"gnttab_max_nr_frames" hypervisor command line option.
-
-VULNERABLE SYSTEMS
-==================
-
-Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
-
-MITIGATION
-==========
-
-None.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa101.patch        xen-unstable, Xen 4.4.x
-
-$ sha256sum xsa101*.patch
-12ea475265a0804a3a42f620d7065a7408a5ae4b017c871847424c7247c204e9  xsa101.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTsXKlAAoJEIP+FMlX6CvZAXwH/0Km16VstdF5P72chl3u9BsE
-aWLe8Xdb9lmPXiIWM+q2NN+Jp8tL08Ia4fyD1OC5zJqtf6TReI9qsBkzo2O6EfjF
-QdTluXrfYgkob0THsDW1Nd86wxy8UBLlz1dwu+jfKkYp9gMQgTtV1NNyrXEOwn1f
-vepA/V2kOVss7U5+OXqe10HOm+bK4Qs0vYwu1HnG/y6/I39eP2FXw8jMDSB1pKcJ
-1/zBll+R+LVXsQbJbKA6vS9RJiOeMXY1b8y6ThduVuW+bq/RydyqoTb25XPqhHcV
-6FaDe3JlncXvpJp4OEaAiHPyBqPRvNgr3WWW16lFGTtlLJdc+43/24WkrLfok6o=
-=srxg
------END PGP SIGNATURE-----
-
-Download attachment "xsa101.patch" of type "application/octet-stream" (690 bytes)
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
