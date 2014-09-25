@@ -1,45 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/12
-Message-ID: <5390079C.1050702@redhat.com>
-Date: Thu, 05 Jun 2014 16:01:00 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/7
+Message-ID: <5423784C.6010608@redhat.com>
+Date: Thu, 25 Sep 2014 07:35:00 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, carnil@...ian.org
-Subject: Re: CVE Request: Horde_Ldap: Stricter parameter check in bind() to detect empty passwords
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On 06/05/2014 05:51 AM, Salvatore Bonaccorso wrote:
-> Hi,
->
-> Horde_Ldap released an update fixing a security issue mentioned in the
-> changes:
->
->> [jan] SECURITY: Stricter parameter check in bind() to detect empty
->> passwords.
->
-> https://github.com/horde/horde/commit/8f719b53b0ee2d4b8a40a770430683c98fb5f2fd
->
-> fixed in 2.0.6 with commit:
->
-> https://github.com/horde/horde/commit/4c3e18f1724ab39bfef10c189a5b52036a744d55
->
-> Could a CVE be assigned for this issue?
->
-> Regards,
-> Salvatore
->
+On 09/25/2014 07:07 AM, Chet Ramey wrote:
+> On 9/24/14, 9:30 PM, Solar Designer wrote:
+>> On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
+>>> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
+>>>> On 9/24/14, 5:32 PM, Solar Designer wrote:
+>>>>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
+>>>>>> Tavis Ormandy just tweetet this:
+>>>>>> https://twitter.com/taviso/status/514887394294652929
+>>>>>>
+>>>>>> The bash patch seems incomplete to me, function parsing is still
+>>>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+>>>>>
+>>>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
+>>>>> Tavis on this "reply".
+>>>>
+>>>> I have a fix for this.
+>>>
+>>> Can you provide a pointer to the patch?  I put together a patch that
+>>> changed the report_error() to fatal_error() as I wasn't able to see
+>>> how to reset the parser state.  Was just about to send it out...
+>>
+>> I think Chet is not on oss-security - we should be CC'ing him where
+>> appropriate.  (I've added the CC on this reply.)
+> 
+> I haven't sent the patch out.  It's not related to this problem -- this
+> is just the easiest way to get to that code path -- and I still have
+> some investigating to do.
+> 
 
-Thanks for pointing this one out. FWIW, I discussed this issue with Kurt 
-Seifried and we believe it would be hardening fix, not a CVE-named issue.
+Please note, We have assigned CVE-2014-3659 to this issue.
 
-It seems this flaw could let you accidentally connect to an LDAP server 
-without a password, but the flaw in this scenario is in the LDAP server, 
-and this fix helps prevent you from doing that.
 
-Some further explanations about this are available in 
-http://securitysynapse.blogspot.ca/2013/09/dangers-of-ldap-null-base-and-bind.html
-
-Cheers,
-
---
-Murray McAllister / Red Hat Security Response Team
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
