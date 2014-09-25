@@ -1,51 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/1
-Message-ID: <1399944995.3095.25.camel@chianamo>
-Date: Tue, 13 May 2014 09:36:35 +0800
-From: Paul Wise <pabs3@...edaddy.net>
-To: oss-security@...ts.openwall.com, contact@...tsecurity.io
-Subject: CVE request: various NodeJS module vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/22
+Message-id: <CA104541-38FE-4230-A6E3-552F9C7832CC@me.com>
+Date: Thu, 25 Sep 2014 11:53:41 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello List,
 
-This is a request for CVEs for the following vulnerabilities discovered
-by the Node Security Project. I left out their advisories where I could
-find an assigned CVE;
+A colleague of mine added an ifdef for FUNCTION_EXPORT, his modifications can be found here: 
 
-CVE-2013-7370 CVE-2013-7371 CVE-2013-6393 CVE-2013-4660
+https://github.com/akamai/bash/commit/7caac6ee41f645fc21b6e5eddc820151f6e6c43c
 
-https://nodesecurity.io/advisories
+Thank you.
+— Larry C$
 
-printer potential command injection on untrusted input
-https://nodesecurity.io/advisories/printer_potential_command_injection
-hapi file descriptor leak can cause DoS vulnerability
-https://nodesecurity.io/advisories/hapi_File_descriptor_leak_DoS_vulnerability
+On Sep 24, 2014, at 9:30 PM, Solar Designer <solar@...nwall.com> wrote:
 
-marked multiple content injection vulnerabilities
-https://nodesecurity.io/advisories/marked_multiple_content_injection_vulnerabilities
+> On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
+>> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
+>>> On 9/24/14, 5:32 PM, Solar Designer wrote:
+>>>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
+>>>>> Tavis Ormandy just tweetet this:
+>>>>> https://twitter.com/taviso/status/514887394294652929
+>>>>> 
+>>>>> The bash patch seems incomplete to me, function parsing is still
+>>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+>>>> 
+>>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
+>>>> Tavis on this "reply".
+>>> 
+>>> I have a fix for this.
+>> 
+>> Can you provide a pointer to the patch?  I put together a patch that
+>> changed the report_error() to fatal_error() as I wasn't able to see
+>> how to reset the parser state.  Was just about to send it out...
+> 
+> I think Chet is not on oss-security - we should be CC'ing him where
+> appropriate.  (I've added the CC on this reply.)
+> 
+> Alexander
 
-st directory traversal
-https://nodesecurity.io/advisories/st_directory_traversal
-
-codem-transcode potential command injection in ffprobe functionality
-https://nodesecurity.io/advisories/codem-transcode_command_injection
-Hubot Scripts Potential command injection in email.coffee
-https://nodesecurity.io/advisories/Hubot_Potential_command_injection_in_email.coffee
-
-Tomato API Admin Auth Weakness
-https://nodesecurity.io/advisories/Tomato_API_Admin_Auth_Weakness
-
-ep_imageconvert unauthenticated remote command injection
-https://nodesecurity.io/advisories/ep_imageconvert_command_injection
-
-potential command injection in libnotify.notify
-https://nodesecurity.io/advisories/libnotify_potential_command_injection_in_libnotify.notify
-
--- 
-bye,
-pabs
-
-http://bonedaddy.net/pabs3/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
