@@ -1,53 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/25/3
-Message-ID: <544BFA4C.8060301@reactos.org>
-Date: Sat, 25 Oct 2014 21:30:20 +0200
-From: Pierre Schweitzer <pierre@...ctos.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/28
+Message-ID: <542445CC.3010404@redhat.com>
+Date: Thu, 25 Sep 2014 22:11:48 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: Vulnerability fixed in Quassel?
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 09/25/2014 09:49 PM, Solar Designer wrote:
 
-On 24/10/2014 12:41, Bas Pape wrote:
->> Should a CVE be assigned, note that Quassel took the code
->> (cipher.cpp) from Konversation, and the same issue has been
->> reported there [1].
-> 
-> Sorry, forgot to actually paste the link. The konversation bug can
-> be found at https://bugs.kde.org/show_bug.cgi?id=210792
-> 
+> I agree.  I only suggested it as an interim measure if you felt that a
+> more invasive change was not acceptable yet.
+>
+> I think Florian's prefix-suffix patch is actually a better way to go
+> (right now, unless there's some drawback I am not yet aware of), and at
+> a later time function imports should require to be enabled with a
+> non-default option.
+>
 
-Was a CVE ID assigned for the Konversation bug?
+I agree with Alexander here, and strongly suggest that we should be 
+using Florain's prefix-suffix patch.
 
-In any case, it's way worse than my understanding (thanks for the
-clarifications!).
 
-So I believe a CVE should be assigned to that commit for Quassel. Do
-we need the project owners to ask for it? Or MITRE can just assign it?
-
-Cheers,
-- -- 
-Pierre Schweitzer <pierre at reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJUS/pHAAoJEHVFVWw9WFsLxXsP/0y1psVaN43frKtTyYCyZXNk
-MrAtV34l0Iyv+zz00UWntVT/od6zwS9qLi++3lHaSdF3SkB1wjARW7tkDmDVUHMZ
-HFuCn0nBJE62sUiRMzRwOyd7gSmiFAUr4XvWZq+8/bd3LZD//15WDMLlw5ZoL5b8
-+qZVqq+SH7dPvQwksUeTonZvoMv6L1UJXmWAEkzPmMZoYL/C2l2/EeO5rWQRH751
-4BFjK654VixbEIfQ9rzCBntPXA3YDZsUFMgdO6ZPoL6znNRhSFpMeE2GZlYEeQN4
-jVxN9e4J0N40VgorGWr6AIBzhdwsv9bQaK4U8LIXTa2oBRDIVOeub6Idcoh5SXXF
-EQNafshYmLi+kc9BWW4IiDezZ1iW3xVcakjjaUk40wfurfnASb0GlxYbaHGEMP2L
-tSV0rW7y7C25P8BbSxn4NxeG0DFh7iaBVWfRZCO2harUO+XiSW8eQyMGZIijN4f9
-zal6LIuObqllUuqfbQbhK1ZRlfDQbcNs18UO6oydyIV9c68EEb6KxTm2u5BujS/T
-KXqMh12w7ifqVfnp0FQ0BTnHzb6XKXSvDqYQHySWLp52vWSr/1dVUuPdzTAJ81Va
-rMBIAd9QEJdOUyU333xW2u9nJx1rBl9pxV0xBoIfPD8nop5Z/BS28YrxTVuY+TSR
-GSaGhsPu/W/BNijoH+Xb
-=LIKv
------END PGP SIGNATURE-----
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
