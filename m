@@ -1,26 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/15
-Message-ID: <20140703173600.GA31938@eldamar.local>
-Date: Thu, 3 Jul 2014 19:36:00 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Possible CVE request: php5: phpinfo() Type Confusion Information Leak Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/19
+Message-ID: <54243678.7010503@case.edu>
+Date: Thu, 25 Sep 2014 11:36:24 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Solar Designer <solar@...nwall.com>
+CC: chet.ramey@...e.edu, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 9/24/14, 8:14 PM, Solar Designer wrote:
+> On Wed, Sep 24, 2014 at 03:12:08PM -0400, Chet Ramey wrote:
+>> There are several options for making shell functions inherited via the
+>> environment more robust, none of them backwards compatible.  I will
+>> choose one and implement it for a future bash version.
+>>
+>> The leading candidates both raise the bar by requiring a potential
+>> attacker to be able to create arbitrarily-named environment variables as
+>> well as environment variables with specific values.
+>>
+>> I considered (and implemented) a blacklist approach that would have
+>> protected against a set of commonly-named variables (HTTP_*, CGI_*,
+>> SSH_*, LC_*, and so on), but the consensus was that that was too easily
+>> circumvented.  I removed it from the distributed patches.
+> 
+> What about no longer inheriting functions with names that don't contain
+> any lowercase letters?
 
-Recent PHP updates mention bug #67498 in their changes[1,2]: Fixed bug
-#67498 (phpinfo() Type Confusion Information Leak Vulnerability).
+It's a heuristic like any other, but I think it's even more obscure and
+mysterious than the other suggestions.
 
-Upstream bug is at [3], which does not seem to have a CVE assigned.
-(If so, could one be assigned?).
-
- [1] http://www.php.net/ChangeLog-5.php#5.4.30
- [2] http://www.php.net/ChangeLog-5.php#5.5.14
- [3] https://bugs.php.net/bug.php?id=67498
-
-Thanks in advance,
-
-Regards,
-Salvatore
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
