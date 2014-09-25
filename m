@@ -1,56 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/3
-Message-ID: <53C9F6C6.40608@redhat.com>
-Date: Fri, 18 Jul 2014 22:40:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Good news and bad news on Python sockets and pickle
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/2
+Message-ID: <54236E85.1020708@case.edu>
+Date: Wed, 24 Sep 2014 21:23:17 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu, Tavis Ormandy <taviso@...xchg8b.com>
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 9/24/14, 5:32 PM, Solar Designer wrote:
+> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
+>> Tavis Ormandy just tweetet this:
+>> https://twitter.com/taviso/status/514887394294652929
+>>
+>> The bash patch seems incomplete to me, function parsing is still
+>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+> 
+> Thanks for bringing this to oss-security.  I've added CC to Chet and
+> Tavis on this "reply".
 
-So first the good news, I looked at the top projects on pypi
-(arbitrarily defined as more than 1000 downloads in the last month for
-at least one version), so for the most recent version of these that
-meant about 8,072 packages.
+I have a fix for this.
 
-I looked for cases where pickle.loads is used on untrusted data, the
-good news is didn't find many, the main two uses cases were taking
-data from zeroMQ and memcached and then unpickling it, looks like
-those would be compromised in any event if malicious data got in
-there, let alone RCE type stuff.
-
-However having said that we do have this one in the past:
-
-CVE-2012-4406	OpenStack Object Storage (swift) before 1.7.0 uses the
-loads function in the pickle Python module unsafely when storing and
-loading metadata in memcached, which allows remote attackers to
-execute arbitrary code via a crafted pickle object.
-
-So here is my question, is all pickle.loads from things like memcached
-(which has no auth) generally CVE worthy? If so I can post a list of
-the potentials, I'll be honest, I'm to lazy to go digging through it
-(I'm not sure how many uses shared/public memcached configs/etc.).
-
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJTyfbGAAoJEBYNRVNeJnmTYokQAMgZvPbYFaCU7IBV5Dxl4yD9
-A92UDWFsHhzvvNkJWOFmrsWJ+2HN1QvL7IvucLpIuVhETAA97ZJW1257bx5eZWR5
-ABY6wbUd8fmtyunTdNIxBiNpDYA7Lwxo0PD6EZqjBpzB+pzIbfojecfzQReOFyO6
-SgLoc4fRPnvBk2pD/F0FfgNRY0Vk2b7JbZgj+enIqC3U2Ug921Ej5d4DmAcBe5oN
-Sn7WCAmbG0p6l3TKh4n3T5GAELO1BeWAN8aOO//4eE2uuTGesPkD+F5299nGRCzS
-Ff6NeuHvS+aIR5XzeksXXhhy1Sv8/RAWoWt9jQoQirSx8BijW2NQbx1vv09pA4XG
-cxjkmhatCQtMIoI18fK2uIRHGPnQSi1tw/pB9YdMjFG+LKcs6VFwwLE3pCnGuARm
-asIKgHSUqTlam2FpwuyiVzTtsj2sa7QokMhjJ53hFQL6UavVXNiTBf9cK+FLlUrI
-Rz41bfkOomgkznLxsK/MzMjGWWPkX/xvazE8C+a+jh7WBfA2X+Wngzuw+nKja1X0
-QUzbQ6RMLrTBKxni1cUXVh0eCed2v9ElTxXz/LrtC1uZNK4GP/vlTEHsOOqgJws8
-XswAt9BM9MzC2orgjCNkgDSoP5lRIPPX5iVtqT6A1RBC2lSiHsNhm53wbM5fcIqp
-BlVoPs+Cn2TjDth7uVsZ
-=251x
------END PGP SIGNATURE-----
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
