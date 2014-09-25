@@ -1,57 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/5
-Message-ID: <5428FEBF.20102@mittwald.de>
-Date: Mon, 29 Sep 2014 08:39:59 +0200
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-CC: <langsec-discuss@...l.langsec.org>
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/52
+Message-ID: <5424A802.5030203@case.edu>
+Date: Thu, 25 Sep 2014 19:40:50 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On 27/09/14 17:06, Solar Designer wrote:
-> Of course, what input is trusted vs. not may be unclear.  Apparently, 20
-> years ago bash developers considered all env vars to be trusted input,
-> regardless of the names, which is how we got here.
+On 9/25/14, 12:19 PM, Solar Designer wrote:
 
-Well, from a scientific point of view, this was already
-solved, if I'm interpreting bash correctly.
+> I think Florian's prefix-suffix patch is actually a better way to go
+> (right now, unless there's some drawback I am not yet aware of), and at
+> a later time function imports should require to be enabled with a
+> non-default option.
 
-See page 12 in this paper:
-http://langsec.org/ShotgunParsersShmoo.pdf
+Yes, some variant of that will be the next thing to work on.
 
-To quote for the lazy:
-
-'Input sanitization: “you can suppress ‘bad
-stuff’ in input+output to make it safe”
-
-Reality: Halting problem. Deal with it.'
-
-This should be true for all turing complete
-input languages (which I assume bash is capable of).
-
-So you can not "filter" turing complete input languages
-unless you restrict your language so hard that you
-in fact create another class of languages, e.g.
-just allow regex, which would create a context-free
-language[1], which would circumvent whole classes of exploits.
-
-Also cc'ing langsec-list, as they are interested
-in getting this stuff fixed in real applications.
-
-[1]https://en.wikipedia.org/wiki/Context-free_language
-
+Chet
 -- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
