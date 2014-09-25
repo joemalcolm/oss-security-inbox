@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/5
-Message-ID: <alpine.LFD.2.10.1405091851300.16696@javelin.pnq.redhat.com>
-Date: Fri, 9 May 2014 19:03:44 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request Linux kernel: filter: prevent nla extensions to peek beyond the end of the message
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/26
+Message-ID: <20140925161928.GC869@openwall.com>
+Date: Thu, 25 Sep 2014 20:19:28 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+On Thu, Sep 25, 2014 at 11:36:24AM -0400, Chet Ramey wrote:
+> On 9/24/14, 8:14 PM, Solar Designer wrote:
+> > What about no longer inheriting functions with names that don't contain
+> > any lowercase letters?
+> 
+> It's a heuristic like any other, but I think it's even more obscure and
+> mysterious than the other suggestions.
 
-Linux kenrel built with the BPF interpreter support in the networking core is 
-vulnerable to an out of bounds buffer access flaw. It occurs when accessing a 
-netlink attribute from the skb->data buffer.
+I agree.  I only suggested it as an interim measure if you felt that a
+more invasive change was not acceptable yet.
 
-An unprivileged user/program could use this flaw to crash the system kernel 
-resulting in DoS.
+I think Florian's prefix-suffix patch is actually a better way to go
+(right now, unless there's some drawback I am not yet aware of), and at
+a later time function imports should require to be enabled with a
+non-default option.
 
-Upstream fix:
--------------
-   -> https://git.kernel.org/linus/05ab8f2647e4221cbdb3856dd7d32bd5407316b3
-
-Introduced by:
---------------
-   -> https://git.kernel.org/linus/4738c1db1593687713869fa69e733eebc7b0d6d8
-   -> https://git.kernel.org/linus/d214c7537bbf2f247991fb65b3420b0b3d712c67
-
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+Alexander
