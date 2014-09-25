@@ -1,59 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/24
-Message-ID: <20140925160532.GA869@openwall.com>
-Date: Thu, 25 Sep 2014 20:05:33 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/29
+Message-ID: <20140925165922.GX23926@titan.lakedaemon.net>
+Date: Thu, 25 Sep 2014 12:59:22 -0400
+From: Jason Cooper <osssecurity@...edaemon.net>
 To: oss-security@...ts.openwall.com
 Cc: chet.ramey@...e.edu
 Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 25, 2014 at 04:17:31PM +0100, John Haxby wrote:
-> There seems to be a wider issue even when we have well-formed functions
-> coming in, for example,
+On Thu, Sep 25, 2014 at 02:24:14AM +0400, Solar Designer wrote:
+> On Wed, Sep 24, 2014 at 06:08:21PM -0400, Jason Cooper wrote:
+> > I wrote some code a while ago to automate git push via single-purpose
+> > ssh keys. [1]  By design, it wipes the environment, sets vars found in
+> > the config, and accepts only configured commands for
+> > SSH_ORIGINAL_COMMAND.  I've tested the latest HEAD against this attack,
+> > and it appears to mitigate it:
+> > 
+> > [jason@...alhost] $ ssh -i .ssh/test_key -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
+> > uid=1000(jason) gid=1000(jason) groups=1000(jason)
+> > [jason@...alhost] $ # add 'command=/path/to/secsh -f /path/to/test.rc' in .ssh/authorized_keys on server
+> > [jason@...alhost] $ ssh -i .ssh/test_key -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
+> > secsh v0.8-rc1-2-ga86f09832fa2: access denied.
 > 
->     env rm='() { echo will not; }' bash -c 'rm core'
+> This is puzzling.  I tried:
+> 
+> command="/bin/env - date"
+> 
+> and:
+> 
+> command="exec /bin/env - date"
+> 
+> and neither prevents exploitation of the issue as above (I get the
+> output of "id", not of "date"), which is not surprising given that the
+> command is run via the shell before it reaches "env".
+> 
+> Maybe your target user account's login shell is not bash?  That would
+> explain it, but it's also the easier case where the issue had been
+> exposed via a subshell only (does your test.rc explicitly use bash?)
 
-John first brought this aspect up on the private distros list, but I
-asked for it to be moved to oss-security, which John did (thanks!)
+Nope, login shell is /bin/bash.  Please look at the code in
 
-My reply on distros was:
+  http://git.infradead.org/users/jcooper/secsh.git/blob/HEAD:/match.c
 
-| It appears that right now we're only dealing with the case when the
-| attacker can't specify arbitrary env var names.  Attacks are limited in
-| that way if performed e.g. via/on sshd forced command or httpd CGI
-| interface.
-| 
-| With an arbitrary env var, you could arguably do lots of damage anyway -
-| e.g., via LD_PRELOAD.  However, I think there are notable exceptions to
-| this - e.g., when a sudo-like program or/and libc resets the known
-| variables like LD_*, but does not use a whitelist, so things like a
-| variable named "rm" (or BASH_FUNC_rm() after Florian's patch) would
-| make it through a SUID exec, switching of privs to another user, and  
-| exec'ing a script.  So, yes, there may be an issue here for some setups
-| that are risky but are not necessarily exploitable otherwise.
-| 
-| I don't know if there's any plan to deal with this issue.  We really
-| ought to discuss it on oss-security.
+line 70.  match_cmd() compares the contents of $SSH_ORIGINAL_COMMAND to
+the configured list of acceptable commands.  It returns the array index
+only if there is an exact match.  Then, in secsh.c, we execute the
+command from the array of allowed commands.  The buffer holding
+$SSH_ORIGINAL_COMMAND is never trusted, nor executed.
 
-> My feeling is that if you're going to import functions from the
-> environment then you should do that explicitly either through a switch
-> (--import?) or a builtin that can import all or selected functions.  Or
-> both.
+There is no shell, bash or otherwise, called ever.
 
-While your specific examples are not necessarily relevant, I agree that
-in the long run the functionality should be restricted in a way like you
-suggest.
+While tinkering with this, I discovered that if you force ssh to provide
+a pty (ssh -t ...), even with secsh locked down, the hack works.  You
+*must* set 'no-pty' after 'command=' in your authorized_keys file to
+prevent ssh from launching a shell. :-/
 
-> I worry that simply fixing CVE-2014-6271 and CVE-2014-7129 is just
-> setting the scene for the next parser problem.
+thx,
 
-That's my feeling too.
-
-At the very least, we also need Florian's patch adding a prefix and a
-suffix to the variable names, although this won't be sufficient against
-local attacks via existing blacklist-using sudo-like wrappers.
-
-Our excuse is that blacklists are not a good practice anyway.
-
-Alexander
+Jason.
