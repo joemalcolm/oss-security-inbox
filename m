@@ -1,45 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/21
-Message-ID: <0623B177-1579-44FA-B3D2-11D7E1E3B099@akamai.com>
-Date: Thu, 9 Oct 2014 10:02:16 -0500
-From: "Kobrin, Eric" <ekobrin@...mai.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/16
+Message-ID: <CALx_OUBjdYAEokon7_vU+nC524OYLY1rT1Svx72KnpMGFy_tqQ@mail.gmail.com>
+Date: Thu, 25 Sep 2014 08:21:58 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security@...ts.openwall.com
+Cc: Chester Ramey <chet.ramey@...e.edu>
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On Oct 8, 2014, at 7:53 PM, Tim <tim-security@...tinelchicken.org> wrote:
+> There seems to be a wider issue even when we have well-formed functions
+> coming in, for example,
+>
+>     env rm='() { echo will not; }' bash -c 'rm core'
 
-> 
-> 1) A single dedicated environment variable for all function exports.
-> e.g.:
-> 
-> BASH_FUNCTIONS='f() { ... }
-> g() { ... }
-> ...
-> '
-> 
-> It can be easier to defend a single environment variable than
-> multiple, and something like "BASH_FUNCTIONS" would become much more
-> like LD_PRELOAD from a threat perspective.
-> 
+Sure. This is less of an immediate concern because in the scenarios we
+are most worried about, the attacker usually doesn't have the ability
+to set arbitrary variables (and if he could, it would be a problem
+greater than anything that bash could deal with - LD_PRELOAD and all).
+It is, however, customary to be able to set the *values* of variables
+whose names are constrained in some way - most notably, HTTP_*.
 
-I submitted a patch along these lines last week. It leaves the code in the disparate (still namespaced) variables, but lists the function names to import in a single variable. The patched bash iterates over the names in that variable and then looks for the functions to import.
+FWIW, I tried to sum up the exposure and our thoughts on the patches here:
+http://lcamtuf.blogspot.com/2014/09/quick-notes-about-bash-bug-its-impact.html
 
-This was done with the goal of allowing programs to filter the exported function list without having to contain a bash parser. It also means that the security flaw in the calling program must be larger before it would translate into the ability to inject functions into the shell.
-
-In an unconstrained world, I'd rather alter print_cmd to emit a different, easier to validate syntax for exported functions. This would allow a safer parser that *could not* accidentally execute code. Lacking the time to build and test that, I put together this patch instead.
-
-Here are some bits from the patch description (quoting myself):
-
-> The school of security thinking to which I subscribe emphasizes distance from hazards.
-> The currently released bash variants create an environment (no pun intended) in which a small fault in another program can result in RCE. An adversary only needs the power to, for example, insert a single character into a variable name and append to that variable's value to bypass all of the current checks. A defensive program must conversely, do a lot of work to sanitize the environment before it can know that no grand*child bash will execute malicious code from an environment variable.
-> 
-> My patch changes the nature of function import and raises the required power bar, it makes it so that the proximate fault must be much larger before the RCE occurs. It also provides an explicit defense for any program which wishes to break the import chain. 
-
-...
-
-> In this version of bash, it uses a second variable (BASH_IMPORT_FUNC) to export the function name list. It no longer examines the environment until it finds "() {" Instead, it starts with a list of desired imports and checks to make sure they start with "() {". It also applies the existing safety checks, and a few new ones, before taking action.
-> 
-> Programs which wish to block exported functions (as I imagine apache would) can simply delete BASH_IMPORT_FUNC from the environment and no functions will be imported should that program (even transitively) invoke bash. It allows even finer grained control than that. The variable holds a delimited list of function names (sans BASHFUNC prefix/suffix) and can be edited to alter which functions are imported. The importer defends against potentially harmful manipulations of this variable. The delimiter ')' was chosen because it cannot appear in function names.
-
--- Eric Kobrin
+/mz
