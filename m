@@ -1,38 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/28/4
-Message-ID: <20140528151733.GA67102@redoubt.spodhuis.org>
-Date: Wed, 28 May 2014 11:17:33 -0400
-From: Phil Pennock <oss-security-phil@...dhuis.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Re: Fwd: [exim-announce] Exim 4.82.1 Security Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/23
+Message-ID: <54243BDC.30704@oracle.com>
+Date: Thu, 25 Sep 2014 16:59:24 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 25/09/14 16:31, Simon McVittie wrote:
+> The particularly nasty thing about CVE-2014-6271 is that the name of the
+> variable is not relevant when exploiting that vulnerability, only the
+> value, which means it will bypass many whitelists of safe variable
+> names. I don't think that reduces the value of filtering
+> attacker-supplied environments through a whitelist when not using a
+> version of bash that is vulnerable.
 
-On 2014-05-28 at 10:57 -0400, Phil Pennock wrote:
-> Heads-up went to packagers who've worked closely with us in the past
-> and, I believe, belatedly to linux-distros@.
+(Added Chet back),
 
-I believed in error, it seems.  Sorry, hectic; it had been raised as
-possibly a good idea, but not acted upon.  Process improvement
-forthcoming, we'll try to include linux-distros@ in future.
+Indeed, and Michal Zalewski makes a similar point in
+http://lcamtuf.blogspot.com/2014/09/quick-notes-about-bash-bug-its-impact.html
 
-Todd's investigation has not discovered any Linux distribution other
-than Gentoo which even made EXPERIMENTAL_DMARC an available build
-option, and for Gentoo it was a use-flag.
+I also said:
+> I worry that simply fixing CVE-2014-6271 and CVE-2014-7129 is just
+> setting the scene for the next parser problem.
 
-Nor do FreeBSD, OpenBSD or DragonFlyBSD (DPorts checked), although
-PkgSrc in NetBSD also exposed DMARC as a build option.
+Whitelisting won't protect you against the next parser bug and, anyway,
+not everything has a blacklist, let alone a whitelist (su, I'm looking
+at you).
 
-- -Phil, pdp@...m.org
------BEGIN PGP SIGNATURE-----
+I'm sure that there are going to be chains of exploits where each
+program in the chain doesn't believe that it needs a whitelist.
 
-iQEcBAEBCAAGBQJThf4EAAoJEKBsj+IM0duFEywH/A2+rOGrLDaTrmGuFGFUu5Iv
-5/cQgD3V9kLjgBvATTPvZHY4SCoGqHJHo/fRw5IS7jnbzL+kD2yYElZuzrxavyb5
-BIIXHLwjLTarSB7EQ58+Rj2LXic3ucQ466zeKOV+Lko05+DfF//0X5j5osvMtMxJ
-reh4ZNy2dRdCAZj6nIlJAp46lbs0E6UMeh9TfMWvC0NCQ1ybT5LC8081sZ+AfwCo
-FPTYtWiPypWWDAhSGVYr2rjF0XFCCN3SATQwqPpl1bMKLvWhcauxQkBVQosLooM0
-rIvuyvBm0CkRk/GInBhZPXHxl/oc7lBbm8qEzM7p6405lHF6tSWSQphZYmSqrvY=
-=bBJS
------END PGP SIGNATURE-----
+For example, suid program A doesn't need a whitelist because it doesn't
+go anywhere near a shell, the closest it gets is exec'ing one of a
+well-defined set of programs ...
+
+... one of which is written in python (say) and was recently modified to
+exec a shell script for some perfectly innocent reason.
+
+There are lots of things one could do to eliminate that risk, of course,
+but step back and what are we arguing for?
+
+I've seen several seasoned shell script writers, me included, who were
+unaware of this feature in bash.   Both problems arose because of the
+uncontrolled nature of function importing: you have no choice.
+
+I /think/ Michal is arguing for making the import explicit.  I certainly am.
+
+I'm equally certain Chet will do the right thing.
+
+jch
