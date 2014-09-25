@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/7
-Message-ID: <53ECB4C0.6030302@oracle.com>
-Date: Thu, 14 Aug 2014 14:08:16 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com, fweimer@...hat.com
-CC: cve-assign@...re.org
-Subject: Re: Re: [CVE Request] glibc iconv_open buffer overflow (was: Re: Re: glibc locale issues)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/1
+Message-ID: <20140925001402.GA2702@openwall.com>
+Date: Thu, 25 Sep 2014 04:14:02 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Chet Ramey <chet.ramey@...e.edu>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On 13/08/14 07:01, cve-assign@...re.org wrote:
->>> iconv/gconv_charset.h:strip() normalizes the transliteration argument to
->>> iconv_open, so the resulting file names follow a particular pattern, and
->>> there cannot be enough slashes to ascend to a writable directory.
->>>
->>>> if not maybe the one byte overflow is still exploitable.
->>>
->>> Hmm.  How likely is that?  It overflows in to malloc metadata, and the
->>> glibc malloc hardening should catch that these days.
+On Wed, Sep 24, 2014 at 03:12:08PM -0400, Chet Ramey wrote:
+> There are several options for making shell functions inherited via the
+> environment more robust, none of them backwards compatible.  I will
+> choose one and implement it for a future bash version.
 > 
->> Not necessarily on 32-bit architectures, so I agree with Tavis now, and
->> we need a CVE.  The upstream bug is:
+> The leading candidates both raise the bar by requiring a potential
+> attacker to be able to create arbitrarily-named environment variables as
+> well as environment variables with specific values.
 > 
->>    <https://sourceware.org/bugzilla/show_bug.cgi?id=17187>
-> 
-> Use CVE-2014-5119. A CVE-2005-#### number isn't needed because the
-> msg00091.html message (referenced in 17187) does not state any
-> security implications.
+> I considered (and implemented) a blacklist approach that would have
+> protected against a set of commonly-named variables (HTTP_*, CGI_*,
+> SSH_*, LC_*, and so on), but the consensus was that that was too easily
+> circumvented.  I removed it from the distributed patches.
 
-That's correct.  Neither I nor any of the readers of my original bug
-report commented on any possible security implications.  (Mind you, in
-2005 I was probably a little more naïve.)
+What about no longer inheriting functions with names that don't contain
+any lowercase letters?  I guess typical function names use some lowercase
+letters (are all-lowercase, or also contain non-letters, or use
+CamelCaps), whereas typical names of environment variables set by
+network services do not contain any lowercase letters (usually consist
+of uppercase letters and underscore only).  This is not pretty, but it
+isn't as limited as a blacklist of specific prefixes would be, so maybe
+it'd work reasonably well for an interim period until you're able to
+break backwards compatibility to a greater degree?
 
-jch
+Alexander
