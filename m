@@ -1,46 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/4
-Message-Id: <20140731063539.BCF301F02E4@smtpksrv1.mitre.org>
-Date: Thu, 31 Jul 2014 02:35:39 -0400 (EDT)
-From: cve-assign@...re.org
-To: forest.monsen@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/6
+Message-ID: <542496A2.1050600@windriver.com>
+Date: Thu, 25 Sep 2014 17:26:42 -0500
+From: Mark Hatle <mark.hatle@...driver.com>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: [security-vendor] Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 9/25/14, 5:13 PM, Marc Deslauriers wrote:
+> On 14-09-25 01:49 PM, Huzaifa Sidhpurwala wrote:
+>> Hi All,
+>>
+>> Based on the current situation and the fact that there is confusion about what
+>> patch to use for the bash issue. I wanted to post this here.
+>>
+>> We have found a few more issues (OOB memory access). Also I am posting Florain's
+>> patch here which should fix the issue in a more deeper way rather than just
+>> apply duct-tape.
+>>
+>
+> Could we please get two CVE numbers assigned for the two OOB memory issues?
 
-> We'd like to request CVE identifiers for:
+Using the two patches, CVE-2014-6271 and the one line eol-pushback.patch, I am 
+not able to reproduce what I expect should be happing with bash 4.2.
 
-> SA-CONTRIB-2014-073- Date - Cross Site Scripting (XSS)
-> https://www.drupal.org/node/2312609
+Should I be seeing a problem with the reproducers that were mentioned in an 
+earlier piece of this thread, either:
 
-Use CVE-2014-5169.
+bash -c 'true <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF
+<<EOF <<EOF <<EOF <<EOF <<EOF'
+
+or
+
+(for x in {1..200} ; do echo "for x$x in ; do :"; done; for x in {1..200} ; do 
+echo done ; done) > test-script.sh $ bash test-script.sh
 
 
-> SA-CONTRIB-2014-074 - Storage API - Code execution
-> https://www.drupal.org/node/2312769
+The first one gives me a series of:
 
-Use CVE-2014-5170. This can be characterized as an implementation
-error in setting up a defense in depth mechanism. In other words, the
-module maintainer was supposed to obtain .htaccess file content from
-one resource, but instead obtained .htaccess file content from a wrong
-or obsolete resource.
+bash: line 1: warning: here-document at line 1 delimited by end-of-file (wanted 
+`EO')
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+But does not result in a segfault.. (perhaps my memory layout/allocations just 
+happen to be avoiding that)
 
-iQEcBAEBAgAGBQJT2eMhAAoJEKllVAevmvmsCK8H/A3eA35sDLP0kSzujR9ioSgP
-WphxIIvZ4JEp0pnqFO1wlUvAISON4jtSEAyo4t+ts8EIPB4Xhc1AMi/wc1VArOTD
-18DUYBIso1RbcSL+pRs8/1fx68ylc27Pj5mW+LM2QxK32Vjqc2r1grlKWA/6omX+
-VBFEzh7BxvGvO+l5CR64ZrQiQrEMPi9cgp2fIMnkdSxDxbsokUWuiMjmwRuF6zLO
-o2nlVk3EnGTHDPzlcj+uBEReADSkFnKYjslZj/vf/M/MBWJ0HcNyspUK67aqQje1
-sPECKPf5w3uToR0vJSbx83aiMCtWvxybGxD0+Wkg8r+k4B3WCqH+yX6F4SQIwzQ=
-=hNAC
------END PGP SIGNATURE-----
+And the test-script.sh runs w/o segfault or other error being present.. again 
+maybe I'm lucky?
+
+
+(Or am I simply missing something in the reproducer steps?)
+
+Mark Hatle
+Wind River Systems
