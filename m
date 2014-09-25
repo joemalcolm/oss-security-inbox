@@ -1,98 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/9
-Message-Id: <20141016160742.CE78D6C0025@smtpvmsrv1.mitre.org>
-Date: Thu, 16 Oct 2014 12:07:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: mprpic@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: various security flaws in dokuwiki
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/44
+Message-ID: <CAJ_zFkKbDjzmK0F_+t6Qzeoh94ktrxLU_kfei_FehhGmUOS=GA@mail.gmail.com>
+Date: Thu, 25 Sep 2014 12:39:21 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>, chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Sep 25, 2014 at 12:18 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
+> On 9/25/14, 12:15 PM, Solar Designer wrote:
+>
+>> What do you think of distros' going with Florian's prefix-suffix patch
+>> right now?  I think it breaks function imports/exports between
+>> pre-patch and post-patch bash versions, but keeps them intact for
+>> patched versions.  Right?  If so, this sounds acceptable for immediate
+>> use by distros.  Do you agree?
+>
+> I haven't looked at that particular patch in detail yet, but I am wondering
+> why adding both a prefix and a suffix is better than just adding a prefix.
+>
 
-> The following security-related flaws have been fixed in the
-> 2014-05-05 and 2014-09-29 releases of dokuwiki:
+I think it's just paranoia, it demonstrates significant enough control
+over the environment that it's unlikely someone could construct it via
+a naive cgi environment or similar. If someone can create variables
+with an arbitrary suffix and prefix, then there are likely bigger
+problems to worry about than what bash is doing. FWIW, I like
+Florian's approach.
 
-> https://github.com/splitbrain/dokuwiki/issues/765
-
-There are two CVE IDs for 765 because there are apparently two
-different types of problems.
-
-> I can simply open an image I have no permission for in the media
-> manager, I get a permission denied message in the media details tab
-> and when I click on the detail tabs they load via ajax with the real
-> content.
-
-This issue appears to be about incorrect authorization logic in the
-inc/template.php file. Use CVE-2014-8761.
-
-
-> The media diff ajax call is a bit more difficult to test as the ns
-> parameter (but only that one) is a post parameter, but after changing
-> the code to accept a get parameter as well I can clearly see that it
-> uses the ns parameter for the permission check (and nothing else).
-
-Here, within the ajax_mediadiff function, the ns parameter is
-untrusted input, so this is an instance of CWE-807. Use CVE-2014-8762.
-
-
-There was also a third report in 765:
-
-> https://github.com/splitbrain/dokuwiki/issues/765#issuecomment-47109046
-> 
-> I noticed this same issue with media manager & acl just today, but
-> from the other way around. When a user has full access to a namespace
-> but no access to the parent namespace. The media manager shows the
-> images but gives a denied access message when viewing details.
-
-We think this might not be a vulnerability, if the user in this
-scenario was supposed to be able to view details, and "a denied access
-message" suggests that the authorization check was incorrect only
-because it was too strict. There is currently no CVE ID for this.
-
-
-> http://www.freelists.org/post/dokuwiki/Fwd-Dokuwiki-maybe-security-issue-Null-byte-poisoning-in-LDAP-authentication
-
-The first issue is about a valid username, and a non-empty password
-that begins with a \0 character. It is analogous to CVE-2014-8088 in
-the http://openwall.com/lists/oss-security/2014/10/10/5 post and
-CVE-2014-6387 in the
-http://openwall.com/lists/oss-security/2014/09/12/14 post. Use
-CVE-2014-8763 for the occurrence of this mistake within DokuWiki.
-
-
-> In addition, I have just found that Dokuwiki is also vulnerable to
-> null-byte-forced anonymous binds (as opposed to just unauthenticated
-> binds):
-> 
-> With a Dokuwiki instance using Active Directory for LDAP
-> authentication (as described earlier), one can log in using a username
-> that has a null byte as the first character and with a password that
-> similarly has a null byte as the first character. This will result in
-> an anonymous bind being performed by Dokuwiki, and hence the log in
-> will always succeed, regardless of the whether the username exists or
-> not in the LDAP directory.
-
-Use CVE-2014-8764 for this additional issue. (Within an application
-that uses LDAP, input validation related to the possibility of an
-empty or invalid username, and input validation related to the
-possibility of an empty or invalid password, are relevant for
-different reasons.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUP+w5AAoJEKllVAevmvmsfjMH/i2Lg02JfsecntpuGpfn7yE3
-32WhweD8x/LFg/aTgd7HfXVcPyr9g6ZXsUyS1xKrhgCvOFMgNNE3M+ii+YvLXWqJ
-Wr/mOXmdYTy7+mY+EwZ6iQItzqKPpZKZNuEtz2RijA7gp02Xp9b1d440DQ1W+add
-1WMoGMuSslaOKQNbsLgHzNyDUlzw/+Bshle56KuenNRhn4jHt2hGel/MnNvsgYc5
-It6Mv5xO3pZxDFnw+Al62iMJXGqVJQmMjTOxOW4nCUbxcIO9NAbnQQIWHilH29cS
-3etv4DY4/Bq/wApiveOJt6lAHrVtyQkig5lyjYZjJXcgxmpOp/h+BZNnaM44+kA=
-=UoQp
------END PGP SIGNATURE-----
+Tavis.
