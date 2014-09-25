@@ -1,25 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/09/3
-Message-ID: <53E4F8FF.80500@gmail.com>
-Date: Fri, 08 Aug 2014 09:21:19 -0700
-From: lazytyped <lazytyped@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/3
+Message-ID: <CA+aC4kvt85eV1pGP6ofsgndBwzv17LFLC12WytDj2EYLjT02Mw@mail.gmail.com>
+Date: Wed, 24 Sep 2014 18:26:53 -0700
+From: Anthony Liguori <anthony@...emonkey.ws>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On 08/08/2014 09:17, Greg KH wrote:
-> There is a USB firmware download spec, which is quite easy to use, if
-> manufacturers actually followed it (side note, I was one of the authors
-> of that spec...)  And if USB device manufacturers actually required
-> signed firmware to run in their devices, that would solve this issue
-> instantly as long as the signing keys don't leak.
+On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
+> On 9/24/14, 5:32 PM, Solar Designer wrote:
+>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
+>>> Tavis Ormandy just tweetet this:
+>>> https://twitter.com/taviso/status/514887394294652929
+>>>
+>>> The bash patch seems incomplete to me, function parsing is still
+>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+>>
+>> Thanks for bringing this to oss-security.  I've added CC to Chet and
+>> Tavis on this "reply".
+>
+> I have a fix for this.
 
-Or, for cheap devices like USB dongles, just keep the firmware
-read-only. Who's going to update it anyway.
+Can you provide a pointer to the patch?  I put together a patch that
+changed the report_error() to fatal_error() as I wasn't able to see
+how to reset the parser state.  Was just about to send it out...
 
-But yes, either the update should be signed and verified, or
-hardware-switch controlled or impossible to begin with (read-only). Not
-only for USB devices.
-
-
-      -  twiz
+> Chet
+> --
+> ``The lyf so short, the craft so long to lerne.'' - Chaucer
+>                  ``Ars longa, vita brevis'' - Hippocrates
+> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
