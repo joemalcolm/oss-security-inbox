@@ -1,48 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/03/3
-Message-ID: <20140803075700.GC29958@gremlin.ru>
-Date: Sun, 3 Aug 2014 11:57:00 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/4
+Message-ID: <20140925013021.GA29104@openwall.com>
+Date: Thu, 25 Sep 2014 05:30:21 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Enforce use of HTTPS for MathJax in IPython
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On 02-Aug-2014 20:07:23 -0600, Kurt Seifried wrote:
+On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
+> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
+> > On 9/24/14, 5:32 PM, Solar Designer wrote:
+> >> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
+> >>> Tavis Ormandy just tweetet this:
+> >>> https://twitter.com/taviso/status/514887394294652929
+> >>>
+> >>> The bash patch seems incomplete to me, function parsing is still
+> >>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+> >>
+> >> Thanks for bringing this to oss-security.  I've added CC to Chet and
+> >> Tavis on this "reply".
+> >
+> > I have a fix for this.
+> 
+> Can you provide a pointer to the patch?  I put together a patch that
+> changed the report_error() to fatal_error() as I wasn't able to see
+> how to reset the parser state.  Was just about to send it out...
 
- >>> Enforcing HTTPS for the whole site is even more stupid: normally
- >>> only user-specific data (login procedure, personal settings for
- >>> registered users, etc) should be forced to go through HTTPS;
- >>> everything else should normally be left up to the users' wish.
- >> This is incredibly wrong. First off if only your login procedures,
- >> personal
- > +1. If you commit to encrypting the entire site then you can do
- > things like [...]
+I think Chet is not on oss-security - we should be CC'ing him where
+appropriate.  (I've added the CC on this reply.)
 
-Simple question: who do you trust more - your ISP or site owner?
-Or should I ask whether you trush either of them?
-
-Hint: ISPs may be subjected to SORM-2 (been there, seen that, no
-t-shirt this time), Jindun Gongcheng, or other pretty things. Site
-owners may be interested in tracking their users' activity (that's
-why I prefer browsing online shops anonymously, without logging in).
-Other people may try to eavesdrop (or even intercept) connections
-from users to servers.
-
- > It's not about the users wish. It's about the site's wish. The
- > site is providing the service, the site provides the TOS/AUP/etc.
- > The site may choose optionally to leave it up to the user, but
- > this is a VERY bad idea.
-
-When people want to make their systems secure, they use client-side
-certificates. When people want to make their systems public, they
-normally don't care of who access them and don't track their users.
-
-When a site allows anonymous access, that may be performed via HTTP.
-Authenticated (over HTTPS) users may (and normally should) work via
-HTTPS, but forcing all users to use HTTPS is "a VERY bad idea"
-// (q) Kurt Seifried, 2014-08-03
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Alexander
