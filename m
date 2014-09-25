@@ -1,52 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/2
-Message-ID: <20141209010407.GA14610@glandium.org>
-Date: Tue, 9 Dec 2014 10:04:07 +0900
-From: Mike Hommey <mh@...ndium.org>
-To: Hector Marco <hecmargi@....es>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/32
+Message-ID: <542455A4.9070703@redhat.com>
+Date: Thu, 25 Sep 2014 23:19:24 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-> Hi,
-> 
-> This is a disclosure of a weakness of the ASLR Linux implementation.
-> The problem appears when the executable is PIE compiled and it has an
-> address leak belonging to the executable. We named this weakness:
-> offset2lib.
-> 
-> In this scenario, an attacker is able to de-randomize all mmapped
-> areas (libraries, mapped files, etc.) by knowing only an address
-> belonging to the application and the offset2lib value.
-> 
-> We have built a PoC which bypasses on a 64 bit Linux system, the three
-> most widely adopted and effective protection techniques: No-eXecutable
-> bit (NX), address space layout randomization (ASLR) and stack smashing
-> protector (SSP). The exploit obtains a remote shell in less than one
-> second.
-> 
-> We have proposed the ASLRv3 which is a small Linux patch which removes
-> the offset2lib weakness.
-> 
-> Details of the weakness, steps to exploit the offset2lib weakness, a
-> working proof of concept exploit, recommendations and a demonstrative
-> video has been publish at:
-> http://cybersecurity.upv.es/attacks/offset2lib/offset2lib.html
+Hi All,
 
-If you have the base address of the executable and are able to read any
-byte in the process address space, as my reading of the paper suggests,
-then you don't even need offsetlib, and no amount of ASLR can save you.
+Based on the current situation and the fact that there is confusion 
+about what patch to use for the bash issue. I wanted to post this here.
 
-Just read the ELF program headers that you can find at the base address
-of the executable to find the PT_DYNAMIC segment. In that segment, find
-the DT_DEBUG entry, which will give you a pointer to a r_debug struct,
-which definition you can find in /usr/include/link.h.
+We have found a few more issues (OOB memory access). Also I am posting 
+Florain's patch here which should fix the issue in a more deeper way 
+rather than just apply duct-tape.
 
-That struct has a r_map member that gives you a linked list of libraries
-the dynamic linker (ld.so) loaded, with the base address for each of
-them.
+Any feed back etc is welcome!
 
-Those data structures are used by gdb, so removing the DT_DEBUG pointer
-would break debugging with gdb.
 
-Mike
+-------- Forwarded Message --------
+Subject: Non-upstream patches for bash
+Date: Thu, 25 Sep 2014 19:37:36 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>, Joshua Bressers 
+<bressers@...hat.com>
+
+Note that if you ship 4.3, you might want to reevaluate a decision to
+enable array variable import from the environment.
+
+Internal analysis revealed two out-of-bounds array accesses in the bash
+parser.  This was also independently and privately reported by Todd
+Sabin <tsabin@...online.net>.
+
+The redir_stack issue is this:
+
+$ bash -c 'true <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF
+<<EOF <<EOF <<EOF <<EOF <<EOF'
+bash: line 2: warning: here-document at line 2 delimited by end-of-file
+(wanted `EOF')
+bash: line 2: warning: here-document at line 2 delimited by end-of-file
+(wanted `EOF')
+bash: line 2: warning: here-document at line 2 delimited by end-of-file
+(wanted `EOF')
+bash: line 2: warning: here-document at line 2 delimited by end-of-file
+(wanted `EOF')
+bash: line 2: warning: here-document at line 2 delimited by end-of-file
+(wanted `EOF')
+bash: line 2: warning: here-document at line 2 delimited by end-of-file
+(wanted `EOF')
+bash: line 2: warning: here-document at line 2 delimited by end-of-file
+(wanted `EOF')
+bash: line 2: warning: here-document at line 2 delimited by end-of-file
+(wanted `EOF')
+bash: line 2: warning: here-document at line 2 delimited by end-of-file
+(wanted `EOF')
+bash: line 2: warning: here-document at line 2 delimited by end-of-file
+(wanted `EOF')
+bash: line 2: make_here_document: bad instruction type 33
+Segmentation fault (core dumped)
+
+The word_lineno issue is this (only visible with address sanitizer, but
+it's probably to come up with something better):
+
+$ (for x in {1..200} ; do echo "for x$x in ; do :"; done; for x in
+{1..200} ; do echo done ; done) > test-script.sh $ bash test-script.sh
+
+Both issues are fixed by the parser-oob patches.
+
+I'm also including the function definition affix patch which has already
+been posted to oss-security.  (variables-affix-3.0.patch has only seen
+very light review and testing yet, but it's a fairly straightforward
+backport.)
+
+You'll also want Chet's one-liner patch posted to oss-security.
+
+-- 
+Florian Weimer / Red Hat Product Security
+
+
+
+
+
+View attachment "parser-oob-4.2.patch" of type "text/x-patch" (2567 bytes)
+
+View attachment "variables-affix-3.0.patch" of type "text/x-patch" (5416 bytes)
+
+View attachment "parser-oob-3.2.patch" of type "text/x-patch" (1980 bytes)
+
+View attachment "variables-affix-4.2.patch" of type "text/x-patch" (5114 bytes)
