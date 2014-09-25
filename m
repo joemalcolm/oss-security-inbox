@@ -1,70 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/01/7
-Message-ID: <547CFEBA.1070609@amacapital.net>
-Date: Mon, 01 Dec 2014 15:50:18 -0800
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: AW: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/11
+Message-ID: <20140925115951.GS399@core.inversepath.com>
+Date: Thu, 25 Sep 2014 13:59:51 +0200
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2014-007] libvncserver multiple issues
 Content-Type: text/plain; charset=utf-8
 
-On 11/26/2014 11:32 AM, Fiedler Roman wrote:
->> Von: Matthew Daley [mailto:mattd-Lyx97FHGs0pBDgjK7y7TUQ@...lic.gmane.org]
->>
->> On Thu, Nov 27, 2014 at 4:28 AM, Fiedler Roman <Roman.Fiedler-c/U4JCCwIJZeoWH0uzbU5w@...lic.gmane.org>
->> wrote:
->>> (...)
->>> My test program was:
->>>
->>> #include <fcntl.h>
->>> #include <stdio.h>
->>> #include <sys/stat.h>
->>>
->>> int main(int argc, char **argv) {
->>>   int fd;
->>>   struct stat statBuf;
->>>   int result;
->>>
->>>   fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
->>>   result=fstat(fd, &statBuf);
->>>   if(result) {
->>>     fprintf(stderr, "Stat failed\n");
->>>     return(1);
->>>   }
->>>   fprintf(stderr, "New element type is %d\n", S_ISDIR(fd));
->>
->> FWIW, this should probably be S_ISDIR(statBuf.st_mode).
-> 
-> You are completely right, how stupid to miss that. I did not challenge the 
-> result, since it was the same as with "ls -al".
-> 
-> Also with S_ISDIR(statBuf.st_mode), result is the same, at least on my side.
-> 
-> 
-> 
-> #include <fcntl.h>
-> #include <stdio.h>
-> #include <sys/stat.h>
-> 
-> int main(int argc, char **argv) {
->   int fd;
->   struct stat statBuf;
->   int result;
-> 
->   fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
->   result=fstat(fd, &statBuf);
->   if(result) {
->     fprintf(stderr, "Stat failed\n");
->     return(1);
->   }
->   fprintf(stderr, "New element type is %d\n", S_ISDIR(statBuf.st_mode));
->   return(0);
-> }
-> 
-> 
-> $ ./test
-> New element type is 0
-> 
+#2014-007 libvncserver multiple issues
 
-Report it to linux-fsdevel@...r.kernel.org?
+Description:
 
---Andy
+Virtual Network Computing (VNC) is a graphical sharing system based on the
+Remote Frame Buffer (RFB) protocol.
+
+The LibVNCServer project, an open source library for implementing VNC
+compliant communication, suffers from a number of bugs that can be potentially
+exploited with security impact.
+
+Various implementation issues resulting in remote code execution and/or DoS
+conditions on both the VNC server and client side have been discovered.
+
+ 1. A malicious VNC server can trigger incorrect memory management
+    handling by advertising a large screen size parameter to the VNC
+    client. This would result in multiple memory corruptions and could
+    allow remote code execution on the VNC client.
+
+ 2. A malicious VNC client can trigger multiple DoS conditions on the VNC
+    server by advertising a large screen size, ClientCutText message
+    length and/or a zero scaling factor parameter.
+
+ 3. A malicious VNC client can trigger multiple stack-based buffer
+    overflows by passing a long file and directory names and/or attributes
+    (FileTime) when using the file transfer message feature.
+
+It should be noted that every described issue represents a post-authentication
+bug, therefore the server side conditions can be anonymously leveraged only if
+the VNC server is configured to allow unauthenticated sessions.
+
+Affected version:
+
+LibVNCServer <= 0.9.9
+
+Fixed version:
+
+LibVNCServer, N/A
+
+Credit: vulnerability report received from Nicolas Ruff
+        of Google Security Team <nruff AT google.com>.
+
+CVE: CVE-2014-6051 (1), CVE-2014-6052 (1), CVE-2014-6053 (2),
+     CVE-2014-6054 (2), CVE-2014-6055 (3)
+
+Timeline:
+
+2014-09-05: vulnerability report received
+2014-09-16: contacted affected vendors
+2014-09-22: contacted additional affected vendors
+2014-09-25: advisory release
+
+References:
+(1) https://github.com/newsoft/libvncserver/commit/045a044e8ae79db9244593fbce154cdf6e843273
+(2) https://github.com/newsoft/libvncserver/commit/6037a9074d52b1963c97cb28ea1096c7c14cbf28
+(2) https://github.com/newsoft/libvncserver/commit/05a9bd41a8ec0a9d580a8f420f41718bdd235446
+(3) https://github.com/newsoft/libvncserver/commit/06ccdf016154fde8eccb5355613ba04c59127b2e
+(3) https://github.com/newsoft/libvncserver/commit/f528072216dec01cee7ca35d94e171a3b909e677
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2014-007.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
