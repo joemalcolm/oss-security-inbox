@@ -1,49 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/25
-Message-ID: <542CF50E.7060001@redhat.com>
-Date: Thu, 02 Oct 2014 00:47:42 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/42
+Message-ID: <20140925190947.GN23797@oevtugenva.nrevsny.pk>
+Date: Thu, 25 Sep 2014 15:09:47 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Remote code execution via XSL extensions in SpagoBI
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Just to confirm this isn't a troll ;) despite a scary sounding
-contributor agreement SpagoBI is Open Source:
+On Wed, Sep 24, 2014 at 09:42:53AM -0700, Tim wrote:
+> 
+> >  >> I see no good workaround. Starting the forced command with
+> >  >> "unset >SSH_ORIGINAL_COMMAND &&" does not help - we'd need
+> >  >> to unset the variable before starting bash, not from bash.
+> > 
+> >  > Won't installing dash and setting the shell of users who have
+> >  > forced commands to dash mitigate this somehow?
+> > 
+> > Possibly, that will require making /bin/sh symlink to point at
+> > dash (or zsh, or whatever) as well...
+> 
+> Right, and it makes sense to do this.  Bash doesn't belong as /bin/sh
+> to begin with.  It's slow to load, uses 5 times as much memory as dash
+> and doesn't exactly encourage you to write posix-compliant shell
+> scripts.  Bash's redeeming qualities lie in it's UI, not in it's
+> non-interactive scripting.
 
-http://www.spagoworld.org/xwiki/bin/view/SpagoBI/OpenSource
+Indeed, this really should be part of the recommended mitigation for
+preventing similar issues in the future. Bash is much larger and more
+complex (and obviously, doing idiotic things like parsing and
+executing code out of environment variables during startup) than what
+I would consider the level of reasonable/acceptable risk for code
+that's going to be involved in processing untrusted input.
 
-On 02/10/14 12:40 AM, David Jorm wrote:
-> Hi All
-> 
-> Can a CVE ID please be assigned for part 1) of this issue:
-> 
-> https://www.spagoworld.org/jira/browse/SPAGOBI-1885
-> 
-> Anyone who has permission to define a document that uses the
-> accessibility engine can supply an XSL file that will be used to
-> transform the data in the presentation view. SpagoBI is using Xalan to
-> perform the transformation, and there's two problems:
-> 
-> 1) FEATURE_SECURE_PROCESSING is not set. This means an attacker can
-> provide an XSL document with embedded Java code, which will be executed
-> on the server.
-> 
-> 2) SpagoBI is using Xalan 2.6.0. A flaw in this version means that if
-> with FEATURE_SECURE_PROCESSING set, an attacker can bypass the
-> restrictions, and provide XSL documents with embedded Java code. To
-> address this, you need to upgrade to >= 2.7.2:
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-0107
-> 
-> I have provided a reproducer to the developers via email.
-> 
-> Thanks
-> -- 
-> David Jorm / Red Hat Product Security
+There are several alternatives available to provide /bin/sh such as
+Debian's dash, Busybox ash, mksh, and perhaps others. These should
+also work well as login shells for users with forced commands (e.g.
+gitolite type use).
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Certainly applying the Bash patches (if they fully fix the issue by
+removing the parsing and execution of code from env vars, rather than
+just "fixing" the parser) is the mechanical "fix" for this issue.
+However I think eliminating the use of Bash where it's not needed and
+using alternatives (and at some point, auditing those) is the better
+direction to take from a hardening perspective.
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Rich
