@@ -1,35 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/8
-Message-ID: <54A434A9.3000907@blindspotsecurity.com>
-Date: Wed, 31 Dec 2014 09:38:49 -0800
-From: "Timothy D. Morgan" <tim.advisories@...ndspotsecurity.com>
-To: oss-security@...ts.openwall.com
-Subject: Command Injection in mime-support/run-mailcap (CVE-2014-7209)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/47
+Message-Id: <20140925202801.0ED5572E070@smtpvbsrv1.mitre.org>
+Date: Thu, 25 Sep 2014 16:28:01 -0400 (EDT)
+From: cve-assign@...re.org
+To: mancha1@...o.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Python 2.7
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I discovered a shell injection vulnerability in the run-mailcap script of the
-mime-support package.  This vulnerability is exploitable in a variety of very
-specific scenarios when an attacker can convince a victim to open a file with a
-malicious file name using the run-mailcap script.  Only a handful of software
-packages (such as email clients) are likely to call run-mailcap directly, but it can
-also be called by xdg-open, which is much more widely used.  However, in the xdg-open
-case, the victim must not be using one of the popular desktop environments in order
-for the issue to be triggered.  In the xdg-open case, it was possible to execute
-arbitrary code using Google Chrome/Chromium file downloads as a vector.  (Yes, this
-is a separate issue from the xdg-open shell injection vulnerability that was reported
-not long ago.)
+> http://bugs.python.org/issue21831
+> https://hg.python.org/cpython/diff/8d963c7db507/Objects/bufferobject.c
+> avoid overflow with large buffer sizes and/or offsets (closes #21831)
 
-It seems that mime-support is primarily used by Debian-based Linux distributions,
-though FreeBSD does have a port for it.  I'm not sure what other distros may make it
-available.  Debian has released a security update (DSA-3114-1) for the issue.  I am
-also attaching patches which correct the flaw in the previous version.
+> import sys
+> a = bytearray('CVE request')
+> b = buffer(a, sys.maxsize, sys.maxsize)
+> print b[:8192]
 
-Thanks to Salvatore Bonaccorso and Charles Plessy for developing the patches.
+Our understanding is that this request is entirely about the integer
+overflow. The request is, as far as we know, not about whether static
+analysis could have detected that read access to "b" is attempted at a
+time when the size of "a" is smaller than the offset argument used in
+the "b =" line.
 
-tim
+Use CVE-2014-7185.
 
-View attachment "0001-CVE-2014-7209-Fix-shell-command-injection.patch" of type "text/x-patch" (2486 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-View attachment "0002-Resolve-file-name-to-an-absolute-path.patch" of type "text/x-patch" (1615 bytes)
+iQEcBAEBAgAGBQJUJHo6AAoJEKllVAevmvmsYHkIALazOVosrd1c8CRuzLTp6zt4
+/lCyEPo+YlQSn6QLfe4EMZPPZMK6CnbMmCXlpiCr8Ha4oay9ZO3XgXWkiDRz/T7N
+c2JdHYen60d9iZDjVWQtCvMOBaQEU9jby0cwHetnq4fRK5WMhC869NjquTgoWqA6
+tWTbr9NrF+QNgUaJug2DFVd3fW7ev2Uq4aueVh2+or9pMc1yFCATrbVqKiUz8LE7
+/UrX1G/xzjxyvDI+N9CYgZrjqVh2PGwbUyzd12ncPOE7guHhcf7X7L/uY9PGGi1R
+2c60Jj4bb5JsBn1tfNAYkdC7VL0qxSdrWV6H0cMQgw2ZZk8N7HkKmUaSXnNSznQ=
+=BwJB
+-----END PGP SIGNATURE-----
