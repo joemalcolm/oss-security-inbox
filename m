@@ -1,54 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/7
-Message-ID: <54379B5A.8070009@redhat.com>
-Date: Fri, 10 Oct 2014 10:39:54 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/27
+Message-ID: <542440BC.3040005@debian.org>
+Date: Thu, 25 Sep 2014 17:20:12 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On 10/09/2014 10:56 PM, Pavel Labushev wrote:
-> On Thu, 09 Oct 2014 15:00:04 -0400 (EDT)
-> "David A. Wheeler" <dwheeler@...eeler.com> wrote:
->
->> On Thu, 9 Oct 2014 10:34:49 -0700, Tracy Reed <treed@...raviolet.org> wrote:
->>> Sure, but at least with Haskell (and the like) you have to make it very
->>> explicit that this is what you want to do.
->>
->> Not in this case.  A Haskell implementation of the POSIX "sh" specification,
->> that then added function imports, could have made the same mistake
->> just as easily.
->
-> Just as easily? Might be, but that's a totally unjustified conclusion.
+On 25/09/14 16:59, John Haxby wrote:
+> I'm sure that there are going to be chains of exploits where each
+> program in the chain doesn't believe that it needs a whitelist.
+> 
+> For example, suid program A doesn't need a whitelist because it doesn't
+> go anywhere near a shell, the closest it gets is exec'ing one of a
+> well-defined set of programs ...
 
-You need to put labels on shell variables.  The SELinux folks did not do 
-it, but maybe they considered it.  It seems unlikely that a shell 
-rewrite came up with this concept on its own.  None of the Bourne-like 
-shells we have implement anything like that, after all.
+If those programs are not specifically designed to be a privilege
+boundary, and suid program A is, then in my opinion, it is a serious bug
+for suid program A to execute them in an attacker-controlled environment.
 
-Not using a parser generator, but a manually written recursive descent 
-parser might have helped because you could have called the function 
-corresponding to the function definition production directly.  (However, 
-there would still have been parser exposure to the network.)
+> ... one of which is written in python (say)
 
-> First of all, *if* a programmer wants to express higher level concepts
-> (such as "untrusted data" and how it may and may not be manipulated) in
-> languages like Haskell, he doesn't resort to some sort of manual labour
-> of maintaining a masochistic discipline of performing tedious repetitive
-> tasks in the context of ubiquitous uncertainty and fuzzy reasoning, no.
-> He expresses himself in a much more concise and abstract way, and places
-> much of the burden of reasoning and proving on the machine.
+This nicely proves my point, actually. You've already lost, assuming the
+Python program imports the standard library's "os" module (in practice
+it will). No need for any bash subtleties:
 
-The Haskell standard library does not even distinguish between a read 
-error and an end-of-stream condition.  You can't build reliable software 
-on top of that.
+    echo "__import__('subprocess').call(['/bin/sh'])" > ./os.py
+    PYTHONPATH=`pwd` suid-program-A
 
-Some of the incomplete state reset issues might have been more obvious 
-with Haskell (but you can easily thread a state variable incorrectly, in 
-effect discarding intended updates).  But in any language, not using 
-global variables for parser state (and building the state from scratch 
-each time before calling the parser) would avoid those in a fairly 
-reliable way.
+(Any standard library module not built into the Python executable would
+do nicely, "os" is just an example that's likely to work.)
 
--- 
-Florian Weimer / Red Hat Product Security
+> There are lots of things one could do to eliminate that risk, of course,
+> but step back and what are we arguing for?
+
+I'm arguing that privilege boundaries should take responsibility for
+their nature as a privilege boundary, and not pass the buck to the code
+that they call into.
+
+    S
+
