@@ -1,35 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/35
-Message-ID: <20141120090840.48aa528b@127>
-Date: Thu, 20 Nov 2014 09:08:40 -0800
-From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/14
+Message-ID: <CAESArwmSU5Yv8K=X52UhR5gmw_ZYNakk1OSBO4soZjEBm2X4Ww@mail.gmail.com>
+Date: Thu, 25 Sep 2014 07:50:26 -0700
+From: Reed Black <reed@...afeword.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Location of OS security audit reports
+Subject: CVE-2014-6271 first patch and remote exploit via CGI
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 20 Nov 2014 08:41:23 +0700
-Nguyen Cong <cong.nguyenthe@...hiba-tsdv.com> wrote:
+In the press, there are contrary statements about the initial patches[1]
+posted by Florian Weimer. A user on Twitter posted[2] that the patch was
+incomplete. There is agreement on that much. Where I see different
+responses is on whether the first patch can still be exploited remotely via
+the CGI vector outlined in Florian's initial post, and what damage can
+still be done. I haven't seen a proof of concept yet, but I also haven't
+seen a trusted voice give a definitive statement that it can't be abused.
 
-> Sorry if my pointer is not meaningful enough to you, maybe
-> I miss-understand your request.
+Could anyone lay out what's still possible for a remote attacker via CGI
+with only the first patch applied?
 
-It was good but not a security code audit. I appreciate the link.
-
-
-> > I see you're in Vietnam is there anything at all like a non-western
-> > OS in use there? Or anywhere in that part of the world? I must be
-> > naive but I thought I was just lacking information. It doesn't
-> > seem possible that there are only "western" OSs on the entire
-> > planet. Although my problem might just be that my definition of
-> > OS is all wrong.
-> I don't really know the meaning of western OSs that you mentioned.
-
-Western OS == Windows, OSX, FreeBSD, Solaris, SUSE, etc., etc.
-
-> But we do have OSs for our own. Thank you for questioning but
-> this might a little bit off the topic, and we should not spam the
-> list.
-
-Agreed, can you email me an example of "OSs of our own"?
-
+[1] http://seclists.org/oss-sec/2014/q3/650
+[2] http://www.openwall.com/lists/oss-security/2014/09/24/33
 
