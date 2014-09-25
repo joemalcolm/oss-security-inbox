@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/8
-Message-ID: <85664.1404890117@critter.freebsd.dk>
-Date: Wed, 09 Jul 2014 07:15:17 +0000
-From: "Poul-Henning Kamp" <phk@....freebsd.dk>
-To: Michael Samuel <mik@...net.net>
-cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Varnish - no CVE == bug regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/31
+Message-Id: <20140925173451.5DAB417FDA3@rebar.astron.com>
+Date: Thu, 25 Sep 2014 13:34:51 -0400
+From: christos@...las.com (Christos Zoulas)
+To: oss-security@...ts.openwall.com
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-In message <CACYkhxgmsOG7H3FKhjvDQTfg_WptW1bv19q2CrcPLFTsdL+GiQ@...l.gmail.com>, Michael Samuel w
-rites:
+On Sep 25,  8:15pm, solar@...nwall.com (Solar Designer) wrote:
+-- Subject: Re: [oss-security] CVE-2014-6271: remote code execution through b
 
->A CVE assignment will trigger out-of-band patches for distros that might
->not do so otherwise.  Surely you agree that this is desirable?
+| There's obviously a trade-off here.  I agree that keeping the error
+| messages is the right thing if we can keep them contained to local usage
+| (and local attack) scenarios under typical setups.  I think applying
+| Florian's prefix-suffix patch will achieve that (besides its main goal
+| of actually mitigating most attacks).
+| 
+| What do you think of distros' going with Florian's prefix-suffix patch
+| right now?  I think it breaks function imports/exports between
+| pre-patch and post-patch bash versions, but keeps them intact for
+| patched versions.  Right?  If so, this sounds acceptable for immediate
+| use by distros.  Do you agree?
 
-No, I do not.
+I think that at this point the only salvation is to disable function
+import by default and provide a command line flag and a "set" flag
+to explicitly enable it (so that scripts that depend on it can
+easily be fixed). It is not a widely used feature, and both subshells
+and sourced scripts don't need it or use it. It might have seemed
+like a good idea a couple of decades ago, but it needs to go.
 
-If DNS is spoofed, then DNS is spoofed and anything which uses DNS
-is vulnerable, but it is not a security vulnerability in every
-single piece of software that might conceiveably use DNS lookups,
-it is a vulnerability in DNS which we have known about since DNS
-came about.
-
-If the so-called "security industry" wants to be taken seriously,
-it has to stop this kind of nonsense.
-
-It seems that the primary thing a CVE assignment will cause is for
-somebody to make another notch in his bedpost.
-
-I also have no idea what "out-of-band patches", nor for that matter
-which "distros" you are talking about here.
-
-Do you ?
-
-If so I'd like to hear about them, because as I said as the very first thing:
-We fix bugs in Varnish, and I'd like to receive a copy of those patches.
-
--- 
-Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
-phk@...eBSD.ORG         | TCP/IP since RFC 956
-FreeBSD committer       | BSD since 4.3-tahoe    
-Never attribute to malice what can adequately be explained by incompetence.
+christos
