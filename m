@@ -1,68 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/24/5
-Message-ID: <CAFmghwz_PYOz8YPcAMH32m6-moAGuZR8jvkD=VDCCH5j6Pd07Q@mail.gmail.com>
-Date: Mon, 24 Nov 2014 16:23:48 -0500
-From: Eric Windisch <eric.windisch@...ker.com>
-To: oss-security@...ts.openwall.com
-Subject: Docker 1.3.2 - Security Advisory [24 Nov 2014]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/35
+Message-ID: <542459D0.9000901@redhat.com>
+Date: Thu, 25 Sep 2014 23:37:12 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-Today, we are releasing Docker 1.3.2 in order to address two critical
-security issues. This release also includes several bugfixes, including
-changes to the insecure-registry option. Below are CVE descriptions for the
-vulnerabilities addressed in this release.
+On 09/25/2014 11:26 PM, Solar Designer wrote:
+> On Thu, Sep 25, 2014 at 11:19:24PM +0530, Huzaifa Sidhpurwala wrote:
+>> Based on the current situation and the fact that there is confusion
+>> about what patch to use for the bash issue. I wanted to post this here.
+>
+> Thanks!
+>
+>> From: Florian Weimer <fweimer@...hat.com>
+> [...]
+>> Internal analysis revealed two out-of-bounds array accesses in the bash
+>> parser.  This was also independently and privately reported by Todd
+>> Sabin <tsabin@...online.net>.
+>
+> Have these been reported upstream?
+>
+Nope, but i just cced Chet on it now :)
 
-Docker 1.3.2 is available immediately for all supported platforms:
-https://docs.docker.com/installation/
+> What's the oldest version of bash affected by them?
+>
+> Your reproducers didn't trigger any obvious misbehavior here with 3.1.8
+> with lots of unrelated patches.  Of course, this does not mean much, but
+> maybe these issues are in fact 3.2+?
+>
+Yes 3.2+, i have not checked older versions though.
+
+> Alexander
+>
 
 
-Docker Security Advisory [24 Nov 2014]
-=================================================================
-
-=====================================================
-[CVE-2014-6407] Archive extraction allowing host privilege escalation
-=====================================================
-Severity: Critical
-Affects: Docker up to 1.3.1
-
-The Docker engine, up to and including version 1.3.1, was vulnerable to
-extracting files to arbitrary paths on the host during ‘docker pull’ and
-‘docker load’ operations. This was caused by symlink and hardlink
-traversals present in Docker's image extraction. This vulnerability could
-be leveraged to perform remote code execution and privilege escalation.
-
-Docker 1.3.2 remedies this vulnerability. Additional checks have been added
-to pkg/archive and image extraction is now performed in a chroot. No
-remediation is available for older versions of Docker and users are advised
-to upgrade.
-
-Related vulnerabilities discovered by Florian Weimer of Red Hat Product
-Security and independent researcher, Tõnis Tiigi.
-
-=================================================================
-[CVE-2014-6408] Security options applied to image could lead to container
-escalation
-=================================================================
-Severity: Critical
-Affects: Docker 1.3.0-1.3.1
-
-Docker versions 1.3.0 through 1.3.1 allowed security options to be applied
-to images, allowing images to modify the default run profile of containers
-executing these images. This vulnerability could allow a malicious image
-creator to loosen the restrictions applied to a container’s processes,
-potentially facilitating a break-out.
-
-Docker 1.3.2 remedies this vulnerability. Security options applied to
-images are no longer consumed by the Docker engine and will be ignored.
-Users are advised to upgrade.
-
-=================================================================
-Other changes:
-=================================================================
-
-Besides the above CVEs, the 1.3.2 release allows administrators to pass a
-CIDR-formatted range of addresses for '—insecure-registry'. In addition,
-allowing a cleartext registry to exist on localhost is now default
-behavior. This change was made due to user feedback following the changes
-made in 1.3.1 to resolve CVE-2014-5277.
-
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
