@@ -1,37 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/16/1
-Message-ID: <1402904535.30096.12.camel@scapa>
-Date: Mon, 16 Jun 2014 09:42:15 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: Ben Hutchings <ben@...adent.org.uk>, oss-sec <oss-security@...ts.openwall.com>
-Cc: team@...urity.debian.org, 751417@...s.debian.org
-Subject: Re: Bug#751417: linux-image-3.2.0-4-5kc-malta: no SIGKILL after prctl(PR_SET_SECCOMP, 1, ...) on MIPS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/48
+Message-ID: <20140925231758.7b050bd3@pc>
+Date: Thu, 25 Sep 2014 23:17:58 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: nss RSA forgery (CVE-2014-1568)
 Content-Type: text/plain; charset=utf-8
 
-On dim., 2014-06-15 at 19:31 +0100, Ben Hutchings wrote:
-> Please can you assign a CVE ID to this bug?
+Some more info, but not much:
+http://www.intelsecurity.com/advanced-threat-research/
 
-Hi Ben,
+Initially I thought this is probably not such a big deal because the
+bleichenbacher attack requires e to be very small (like e=3 or e=4) and
+everyone uses e=65537 these days. But it seems I was wrong on that,
+lots of CAs still with e=3.
 
-we usually don't assign CVE from our pool for public issues, and I'm
-especially reluctant here as I don't know if someone else aware of this
-issue could have assign one.
-
-So I'm asking on oss-sec to assign one so it gets some publicity for
-security people and someone has a chance to yell if a CVE has already
-been assigned.
-
-oss-sec / MITRE: it seems that SECCOMP on MIPS doesn't behave properly
-(see [1] for all the details). I'm unsure when it started (I guess when
-seccomp was first added to MIPS, it seems at least 3.2 is affected), and
-it's fixed in 3.15 (with 137f7df8cead00688524c82360930845396b8a21).
-
-Can someone assign a CVE is this is indeed a new issue?
-
-Regards,
-
-[1]: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=751417
 -- 
-Yves-Alexis
+Hanno Böck
+http://hboeck.de/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
