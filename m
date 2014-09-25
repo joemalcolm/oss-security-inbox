@@ -1,33 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/30/3
-Message-Id: <20140730170757.E8CDAC5003B@smtptsrv1.mitre.org>
-Date: Wed, 30 Jul 2014 13:07:57 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2014-5117 - Tor before 0.2.4.23 RELAY_EARLY issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/6
+Message-ID: <542371C1.60407@case.edu>
+Date: Wed, 24 Sep 2014 21:37:05 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 9/24/14, 9:30 PM, Solar Designer wrote:
+> On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
+>> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
+>>> On 9/24/14, 5:32 PM, Solar Designer wrote:
+>>>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
+>>>>> Tavis Ormandy just tweetet this:
+>>>>> https://twitter.com/taviso/status/514887394294652929
+>>>>>
+>>>>> The bash patch seems incomplete to me, function parsing is still
+>>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+>>>>
+>>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
+>>>> Tavis on this "reply".
+>>>
+>>> I have a fix for this.
+>>
+>> Can you provide a pointer to the patch?  I put together a patch that
+>> changed the report_error() to fatal_error() as I wasn't able to see
+>> how to reset the parser state.  Was just about to send it out...
+> 
+> I think Chet is not on oss-security - we should be CC'ing him where
+> appropriate.  (I've added the CC on this reply.)
 
-http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-5117 is for
-an issue in Tor that requires relays to upgrade to 0.2.4.23 or
-0.2.5.6-alpha.
+I haven't sent the patch out.  It's not related to this problem -- this
+is just the easiest way to get to that code path -- and I still have
+some investigating to do.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Chet
 
-iQEcBAEBAgAGBQJT2SXTAAoJEKllVAevmvmsJvEH/Rg7RGOHZg9YBIHsgyRzoZhb
-J2PYoMsEWJ8wqtV4BHVTCVxBlghZzJCNRmn61z1/agHwP/DBVFrMePWlu9LibDCV
-HzmHtJNNy19vAWBXIJRIuw/YlMHLiV7k46BviTjXZslr1VU851Jeuhivh1SISzK7
-Q/m8VfOpZmWnLcN5VkAP6iq/zDV0+M/+ZsGKbyVGXbKZwm6MkSQV0my7tShi4YSZ
-RgBXJ6DjMVPrvO/9nTX40hHQuaTONpfLzEwbXUNUhrLyqzCZGt3oHbL3JjUkyIfh
-wc0tk7Z0hpKO6fvScz6MGDSROJlyaZsxG73xcuBm1917FbShPL8VjVHtdz+Sc+E=
-=ysKs
------END PGP SIGNATURE-----
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
