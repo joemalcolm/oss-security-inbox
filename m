@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/11/5
-Message-ID: <20141111185108.GA28844@kludge.henri.nerv.fi>
-Date: Tue, 11 Nov 2014 20:51:08 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Joomla component com_sexycontactform and WordPress plugin sexy-contact-form unrestricted file upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/43
+Message-ID: <54246A74.7040807@case.edu>
+Date: Thu, 25 Sep 2014 15:18:12 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 9/25/14, 12:15 PM, Solar Designer wrote:
 
-References for the issue:
-- - http://www.exploit-db.com/exploits/35057/
-- - http://osvdb.org/113669
-- - http://packetstormsecurity.com/files/128822/WordPress-Joomla-Creative-Contact-Form-0.9.7-Shell-Upload.html
+> What do you think of distros' going with Florian's prefix-suffix patch
+> right now?  I think it breaks function imports/exports between
+> pre-patch and post-patch bash versions, but keeps them intact for
+> patched versions.  Right?  If so, this sounds acceptable for immediate
+> use by distros.  Do you agree?
 
-Exploit-DB says "Vulnerability discovered by Gianni Angelozzi" and it is dated
-2014-10-25, but from log files I can see that the attacks started 2014-10-02 in
-one of the sites I investigated.
+I haven't looked at that particular patch in detail yet, but I am wondering
+why adding both a prefix and a suffix is better than just adding a prefix.
 
-- ---
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Chet
 
-iEYEARECAAYFAlRiWpwACgkQXf6hBi6kbk/HoQCeM/9NtPVP7ZY0x3Lg99WkK89u
-YFQAn3UnPpUI9ZRlNqsniLz8twANb/qz
-=nQsK
------END PGP SIGNATURE-----
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
