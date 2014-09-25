@@ -1,49 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/29
-Message-ID: <20140930162803.GA12700@openwall.com>
-Date: Tue, 30 Sep 2014 20:28:03 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/49
+Message-ID: <20140926001121.5499836a@pc>
+Date: Fri, 26 Sep 2014 00:11:21 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Rainer Gerhards <rgerhards@...adiscon.com>
-Subject: Re: vulnerability in rsyslog
+Subject: Re: nss RSA forgery (CVE-2014-1568)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 30, 2014 at 01:55:12PM +0200, Sven Kieske wrote:
-> I don't understand the following statement in the
-> pri-vuln.txt in section "Patches":
+On Thu, 25 Sep 2014 23:17:58 +0200
+Hanno Böck <hanno@...eck.de> wrote:
+
+> Some more info, but not much:
+> http://www.intelsecurity.com/advanced-threat-research/
 > 
-> "Version 7.4.6, while no longer being project
-> supported received a patch and is also not vulnerable."
+> Initially I thought this is probably not such a big deal because the
+> bleichenbacher attack requires e to be very small (like e=3 or e=4)
+> and everyone uses e=65537 these days. But it seems I was wrong on
+> that, lots of CAs still with e=3.
 > 
-> What was patched when this version is not vulnerable?
-> Or do you mean it is not vulnerable after the patch got applied?
 
-I think Rainer is not subscribed to oss-security.  I've just added him
-to CC on this reply.  Rainer - please address Sven's questions above.
+Correcing me: There are not lots of, but exactly 6.
 
-All - please note that the bug is likely present in many other syslog
-services.  It likely dates back all the way to Eric Allman's syslog,
-although I have not checked to make sure yet.
+Camerfirma_Chambers_of_Commerce_Root.pem: 3 (0x3)
+Camerfirma_Global_Chambersign_Root.pem: 3 (0x3)
+Digital_Signature_Trust_Co._Global_CA_1.pem: 3 (0x3)
+Digital_Signature_Trust_Co._Global_CA_3.pem: 3 (0x3)
+Go_Daddy_Class_2_CA.pem: 3 (0x3)
+Starfield_Class_2_CA.pem: 3 (0x3)
 
-pri-vuln.txt in the tarball attached to Rainer's message specifically
-mentions sysklogd as "mildly affected":
 
-| Affected
-| --------
-| - rsyslog, most probably all versions (checked 5.8.6+)
-| - sysklogd (checked most recent versions)
-| - potentially others (see root cause)
+Some background: having very small exponents for RSA isn't a problem if
+you do everything right, but it vastly increases the likelyhood of
+issues like this popping up. It'd seem like a good safeguard to get rid
+of all e=3 keys.
 
-[...]
+-- 
+Hanno Böck
+http://hboeck.de/
 
-| sysklogd
-| ~~~~~~~~
-| Sysklogd is mildly affected. Having a quick look at the current git master
-| branch, the wrong action may be applied to messages with invalid facility.
-| 
-| A segfault seems unlikely, as the maximum misadressing is 104 bytes of the
-| f_pmask table, which is always within properly allocated memory (albeit to
-| wrong data items). This can lead to triggering invalid selector lines and
-| thus wrongly writing to files or wrongly forwarding to other hosts.
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
