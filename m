@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/4
-Message-Id: <201406130556.s5D5uIOD015983@linus.mitre.org>
-Date: Fri, 13 Jun 2014 01:56:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: PHP heap-based buffer overflow in DNS TXT record parsing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/40
+Message-ID: <CAD6CYKOUv0g=YW_j9juQ_DyV-jyKyU=ujOw31UfDCNEbf1=cwA@mail.gmail.com>
+Date: Thu, 25 Sep 2014 20:48:25 +0200
+From: Alexandre Dulaunoy <a@....be>
+To: oss-security@...ts.openwall.com
+Cc: huzaifas@...hat.com, chet.ramey@...e.edu, chet@...cwru.edu,  lcamtuf@...edump.cx
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Sep 25, 2014 at 8:35 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
 
-> A malicious server or man-in-the-middle attacker could possibly use this
-> flaw to execute arbitrary code
-> https://github.com/php/php-src/commit/b34d7849ed90ced9345f8ea1c59bc8d101c18468
-> https://bugzilla.redhat.com/show_bug.cgi?id=1108447
+>> On 09/25/2014 08:31 AM, Chet Ramey wrote:
+>
+>> Wondering if you saw
+>> http://www.openwall.com/lists/oss-security/2014/09/24/40 ?
+>
+> The (one-line) patch I sent last night appears to fix this.  Please verify.
 
-Use CVE-2014-4049.
+Indeed, we tested the yacc fix along with bash43-025 on different systems.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Applying bash43-025 and eol-pushback.patch fixed it.
 
-iQEcBAEBAgAGBQJTmpHfAAoJEKllVAevmvmsoesIAKZMmR5ccj6QakqSVrPY/ZtZ
-qpx5zL9c25w5B4MzyShU6l0pJhmhlN704fg33D8yfb5sgyNabtk0MgIsdd0voIKE
-sQVWag0Wu8ARcGkwqHcotSz+UnmkbnyGYs31RJpfd3XPAJEMJkFh8Wyh2ZbRy5C7
-zFyC3HAjkO0MRKmSM7UNTXerPYx0GUo3EsPf9KwMSY7vr04KXEqph5OmPkWhztVa
-4DqQAmIbnLuoB8ldndSeQXKn90FBsSAe4CjFRrMVlNVrDWOsZizcgSLlWT4s19nV
-NolSWwNTbqxGMioXMSyisHMxwuIDPx7ZyFe4Jp9xv8UCm9wyI2BXBpp18fEnL2k=
-=ecsW
------END PGP SIGNATURE-----
+We made some notes there for the people upgrading from the source:
+
+http://www.circl.lu/pub/tr-27/#recommendations
+
+Feedback welcome.
+
+-- 
+--                   Alexandre Dulaunoy (adulau) -- http://www.foo.be/
+--
+--         "Knowledge can create problems, it is not through ignorance
+--                                that we can solve them" Isaac Asimov
