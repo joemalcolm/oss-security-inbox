@@ -1,80 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/3
-Message-Id: <201402100049.s1A0nGET009913@linus.mitre.org>
-Date: Sun, 9 Feb 2014 19:49:16 -0500 (EST)
-From: cve-assign@...re.org
-To: gmc@...library.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: multiple issues in Koha
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/17
+Message-ID: <54243561.5020905@debian.org>
+Date: Thu, 25 Sep 2014 16:31:45 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> http://koha-community.org/security-release-february-2014/
+On 25/09/14 16:17, John Haxby wrote:
+> At some stage scripts are going to break, especially if they're relying
+> on command, but this whole exercise leaves me feeling uneasy.   ssh and
+> sudo both restrict environment variables, but I just tried this:
 > 
-> Issues fixed with the release:
+>   $ xxx='() { echo hello; }' su
+>   Password:
+>   # xxx
+>   hello
+> 
+> Of course, su isn't affected, but if I drop one of these in for an
+> overly-trusting admin who runs su on my terminal ...
 
-> [1] tools/pdfViewer.pl could be used to read arbitrary files on the server
-> (http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11660)
+An overly-trusting admin who runs su on your terminal is already doomed,
+because the su in your $PATH could be something that prompts for a
+password, captures it, stuffs it into the real su's stdin while
+suppressing the password prompt, then pipes su's stdout and stdin
+to/from the terminal.
 
-> my $tmpFileName = $cgi->param('tmpFileName');
-> open FH, "<$tmpFileName";
+But, more generally, as I said while dealing with a D-Bus- and
+environment-variable-related vulnerability, I think anything that starts
+in a potentially attacker-controlled environment, and escalates its
+privileges, should filter the environment through a (small!) whitelist
+of known-good variables before it does anything non-trivial. pkexec is
+an example of a setuid executable that is on the "good list" here: if
+you don't try to execute one of its few "good" variables (e.g. LANG,
+TERM) as the name of a command, then you won't execute an exported
+function of this type.
 
-Use CVE-2014-1922 for this issue involving absolute path traversal.
+Unfortunately, this is not consistently done, and in particular su(8)
+has not traditionally sanitized the environment in this way before
+invoking PAM modules (which are a plugin architecture, hence an
+unbounded attack surface).
 
+The particularly nasty thing about CVE-2014-6271 is that the name of the
+variable is not relevant when exploiting that vulnerability, only the
+value, which means it will bypass many whitelists of safe variable
+names. I don't think that reduces the value of filtering
+attacker-supplied environments through a whitelist when not using a
+version of bash that is vulnerable.
 
-> [2] the staff interface help editor could be used to modify or create
-> arbitrary files on the server
-> (http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11661)
+    S
 
-> edithelp.pl can be used to write arbitrary files to the server
-
-> To get it to write to /tmp, I had to count the number of directories
-> upward and add a few ..-s in order to get to the root of the server
-> and than to /tmp.
-
-> Included in the following releases: 3.8.23, 3.10.13, 3.12.10, and 3.14.3.
-
-
-> [3] member-picupload.pl could be used to write to arbitrary files on the server
-> (http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11662)
-
-> open (my $upload_fh, '>', "$upload_dir/$filename");
-
-> Included in the following releases: 3.8.23, 3.10.13, 3.12.10, and 3.14.3.
-
-Use CVE-2014-1923 for both the edithelp.pl issue (Bug 11661) and the
-member-picupload.pl issue (Bug 11662), apparently directory traversal
-issues.
-
-
-> [4] the MARC framework import/export function did not require
-> authentication, ...
-> (http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11666)
-
-Use CVE-2014-1924.
-
-
-> [4] the MARC framework import/export function ... could be used to
-> perform unexpected SQL commands
-> (http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=11666)
-
-Use CVE-2014-1925.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS+CGoAAoJEKllVAevmvmsqa4H/09BePODbfBm7UtPX/NTXeqh
-K1W8Lrwy5nPotr129X8LPAxlXTGvpIZ/IFtrz+NpfoMSE1g8OEZcDiofZzlqDQ0d
-FJ8032wXVCVRzLgOz/nQkMXdn8Koe0FgesPsXdivKFF3bGROnJ4O8DlIrk6NWoN0
-P+dH7jL2u97KWIGzBoJaCw+9pYlKr2LHm+o7kyBINI9sYdqFdC6awrCVn4jnTrvg
-5fGhGlIDdrIoQ3KD7lkR/rJRq0jLP3G8cb0W7kNyNQt4so9KzBJqrqb2Ix7TUJKk
-mJhIaUua6SB2xtJI11ejCwVohphklCkbpow7G7mIvGbAufvzNeJY07AWhbnkb3w=
-=Ru/L
------END PGP SIGNATURE-----
