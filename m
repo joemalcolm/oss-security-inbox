@@ -1,21 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/6
-Message-ID: <535981270.36709296.1412753682161.JavaMail.zimbra@redhat.com>
-Date: Wed, 8 Oct 2014 03:34:42 -0400 (EDT)
-From: Wade Mealing <wmealing@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: cve-assign@...re.org
-Subject: CVE request  for VDSM denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/10
+Message-ID: <5423858E.7070006@case.edu>
+Date: Wed, 24 Sep 2014 23:01:34 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+On 9/24/14, 9:30 PM, Solar Designer wrote:
 
-The issue (outlined here https://bugzilla.redhat.com/show_bug.cgi?id=1148688 ) allows
-an attacker to hold open an ssl connection effectively denying new connections the
-ability to complete any new ssl connections.
+>>>>> The bash patch seems incomplete to me, function parsing is still
+>>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+>>>>
+>>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
+>>>> Tavis on this "reply".
+>>>
+>>> I have a fix for this.
+>>
+>> Can you provide a pointer to the patch?  I put together a patch that
+>> changed the report_error() to fatal_error() as I wasn't able to see
+>> how to reset the parser state.  Was just about to send it out...
+> 
+> I think Chet is not on oss-security - we should be CC'ing him where
+> appropriate.  (I've added the CC on this reply.)
 
-I would like a CVE number to assign to this issue.  Please assign me one.
+Here's the patch.  It's not specific to this vulnerability -- I can get
+it to work from at least one other code path.  Please take a look and
+see if you can bypass it.
 
-Thanks,
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
 
-Wade Mealing
+View attachment "eol-pushback.patch" of type "text/x-patch" (312 bytes)
