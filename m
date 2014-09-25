@@ -1,68 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/4
-Message-ID: <CAOMtMF3Uqxaidt+p=Sq+PYKS9k6x_2wCU+YxobJ3REJgUSM2WQ@mail.gmail.com>
-Date: Sun, 23 Nov 2014 15:19:36 +0100
-From: Bernhard Hermann <bernhard.hermann@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/13
+Message-ID: <54240C86.8050504@redhat.com>
+Date: Thu, 25 Sep 2014 14:37:26 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-I agree to both of you and to me it is an important issue. I don't want to
-be infected with malware while checking whether a file is malware :-( or my
-distro doing something in the background that I'm not even aware of.
+On 09/24/2014 08:54 PM, Michal Zalewski wrote:
+>> My main concern with the current patch is that still exposes the bash parser
+>> and function definition printer to attacks from the network. Bugs in those
+>> fairly large components could cause another critical issue.
+>
+> Yup, that surprised me when testing the patch, too - I can still get a
+> function called HTTP_COOKIE, for example. I worry about potential side
+> effects of parsing even in absence of parser bugs. In most
+> object-oriented languages, such side effects are practically
+> guaranteed. Bash may be saved by simplicity, but not sure how robust
+> that assumption is.
 
-Unfortunately I don't feel like I'm up to the task. But I would be very
-glad if others (you two seem very qualified to me) would tackle these
-problems.
+The parser does make an effort to properly stage all operations for 
+later execution, without executing them immediately.
 
-If money can help with this I'd be willing to throw in a few dozen currency
-units to support this cause. (I hope that doesn't reduce intrinsic
-motivation?)
+There is certainly the question of incomplete state recovery on parse 
+errors.
 
-br,
-BH
- On 23 Nov 2014 10:52, "Hanno Böck" <hanno@...eck.de> wrote:
+> I've written more code in bash than I should have and never used
+> function exports, or even realized that they exist. I wonder if they
+> can be made optional (e.g., gated by a flag on the subprocess) without
+> breakage.
 
-> On Sun, 23 Nov 2014 01:24:11 -0800
-> Michal Zalewski <lcamtuf@...edump.cx> wrote:
->
-> > WDYT?
->
-> lesspipe is a tough one.
->
-> First of all let me remind that I recently found an out of bounds
-> access in less's unicode decoding itself. Upstream is not responsing
-> atm. It's only a read error, but it was not even fuzzing, it was an
-> accidental finding, I'd expect that further analysis might yield to
-> more.
->
->
-> Now lesspipe: I didn't know that this thing exists until very
-> recently but I was aware that less did some kind of parsing and e.g. I
-> quite liked the idea that you can "less" gz/bzip2 files.
->
-> Actually leaving security asside I quite like the idea of lesspipe, so
-> I'm reluctant to say "lesspipe scripts have gotta die / be disabled".
->
-> That said the alternative is a tough one. It would be something
-> like this:
-> * Fuzz all the things in lesspipe
-> * Report what you find
-> * Kill the tools that have unsatisfying upstream reactions and replace
->   them with more secure ones.
-> And even after doing this this probably wouldn't count as a high
-> security solution.
->
-> I'm aware this feels like a huge effort, but actually it fits very
-> well in the project I'm about to start anyway. And lesspipe gives a good
-> starting point to what tools might deserve some more fuzzing.
->
-> cu,
-> --
-> Hanno Böck
-> http://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
->
+I've been told that there are users.  From what I can see, exported 
+functions seem somewhat popular in test harnesses:
 
+   <http://codesearch.debian.net/search?q=export\+-f>
+
+Reportedly, some users even create the function definitions outside 
+bash, so they rely function name and variable name being identical.  But 
+I honestly cannot see a way to preserve such an assumption.
+
+A subprocess flag is unlikely to be present when it is needed.  One 
+common use case is to define and export functions in bash.profile, and 
+expect them to exist in interactive shells created as grandchildren. 
+The fix is to use bashrc instead of bash.profile and non-exported functions.
+
+> Another option may be to export them through specially prefixed
+> variables, which should be transparent but minimize the risk of
+> interfering with web servers and such.
+
+I added suffixes as well, see the attached patch.  This patch has seen 
+some testing, but it certainly needs more.  There are some possibilities 
+for simplification if it's acceptable to use asprintf.
+
+What do you think about this approach?
+
+(Chet, this patch is identical to the patch I sent to you a couple of 
+minutes ago.)
+
+-- 
+Florian Weimer / Red Hat Product Security
+
+View attachment "variables-affix.patch" of type "text/x-patch" (5113 bytes)
