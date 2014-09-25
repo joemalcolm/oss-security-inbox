@@ -1,50 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/1
-Message-ID: <20140929004405.GA25460@openwall.com>
-Date: Mon, 29 Sep 2014 04:44:05 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Chester Ramey <chet.ramey@...e.edu>
-Subject: binary-patching bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/39
+Message-ID: <140925183500.AA18269.SM@caleb.ins.cwru.edu>
+Date: Thu, 25 Sep 2014 14:35:00 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: huzaifas@...hat.com
+Cc: chet.ramey@...e.edu, chet@...cwru.edu, lcamtuf@...edump.cx, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> On 09/25/2014 08:31 AM, Chet Ramey wrote:
 
-I've just tweeted some crazy stuff, and it is even crazier to talk about
-this on a mailing list focused on Open Source, but ...
+> Wondering if you saw
+> http://www.openwall.com/lists/oss-security/2014/09/24/40 ?
 
-<solardiz> cp -ip bash{,~} && env - perl -pe 's/\((\) {\0)/\0\1/g' bash > bash~ && test `cmp -l bash{,~} | wc -l` = 1 && ln bash{,-} && mv -v bash{~,}
-<solardiz> Previous tweet disables function imports in bash due to strncmp(..., 4). Tested on some Linux & FreeBSD, from bash & csh. At your own risk.
-<solardiz> perl -pe 's/\(\) {\0/(){\0\0/g' followed by an "exactly one match" check may be safer e.g. for an Internet-wide scan^Wpatch. ;-) #shellshock
-<solardiz> bash 1.14.7 and bash 4.3 (and all inbetween?) use STREQN ("() {", string, 4) and define STREQN via strncmp(). Allows portable binary patch.
+The (one-line) patch I sent last night appears to fix this.  Please verify.
 
-The idea is that the length 4 STREQN() aka !strncmp() when invoked on a
-shorter constant string will require that the entire env var value be
-that string - that is, either empty (in my first tweet above) or a
-3-char string (in my third tweet above).  Neither case leaves any room
-for an attacker to provide arbitrary input to the parser via the former
-function imports feature.
+Chet
 
-This dirty hack may be handy for patching otherwise unmaintained systems.
-
-The primary risk I see here is that some build of bash might include
-custom patches where this check had been changed to use something other
-than (an equivalent of) strncmp().  I am not aware of any such cases.
-
-Here's how to test that the feature is indeed disabled (or at least
-broken, although that is an insufficient test for security).  Before the
-binary patch:
-
-$ testfunc() { echo test; }
-$ export -f testfunc
-$ bash -c testfunc
-test
-
-After the binary patch (first tweet):
-
-$ testfunc() { echo test; }
-$ export -f testfunc
-$ bash -c testfunc
-bash: testfunc: command not found
-
-Alexander
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
