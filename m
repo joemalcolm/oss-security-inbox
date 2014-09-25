@@ -1,54 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/27/6
-Message-ID: <20140827230402.GA30819@openwall.com>
-Date: Thu, 28 Aug 2014 03:04:02 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/30
+Message-ID: <20140925173141.GA2460@openwall.com>
+Date: Thu, 25 Sep 2014 21:31:41 +0400
 From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Open Source only?
+To: Jason Cooper <osssecurity@...edaemon.net>
+Cc: oss-security@...ts.openwall.com, chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Sep 25, 2014 at 12:59:22PM -0400, Jason Cooper wrote:
+> On Thu, Sep 25, 2014 at 02:24:14AM +0400, Solar Designer wrote:
+> > On Wed, Sep 24, 2014 at 06:08:21PM -0400, Jason Cooper wrote:
+> > > [jason@...alhost] $ ssh -i .ssh/test_key -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
+> > > uid=1000(jason) gid=1000(jason) groups=1000(jason)
+> > > [jason@...alhost] $ # add 'command=/path/to/secsh -f /path/to/test.rc' in .ssh/authorized_keys on server
+> > > [jason@...alhost] $ ssh -i .ssh/test_key -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
+> > > secsh v0.8-rc1-2-ga86f09832fa2: access denied.
+> > 
+> > This is puzzling.  I tried:
+> > 
+> > command="/bin/env - date"
+> > 
+> > and:
+> > 
+> > command="exec /bin/env - date"
+> > 
+> > and neither prevents exploitation of the issue as above (I get the
+> > output of "id", not of "date"), which is not surprising given that the
+> > command is run via the shell before it reaches "env".
+> > 
+> > Maybe your target user account's login shell is not bash?  That would
+> > explain it, but it's also the easier case where the issue had been
+> > exposed via a subshell only (does your test.rc explicitly use bash?)
+> 
+> Nope, login shell is /bin/bash.  Please look at the code in
+> 
+>   http://git.infradead.org/users/jcooper/secsh.git/blob/HEAD:/match.c
 
-I've just rejected a posting giving the following reason:
+I expected your code to be irrelevant, because the shell gets invoked
+first (to invoke your code).  I tested this with "env -".
 
-Message lacks Subject, and the software appears to be non Open Source:
-partial(?) source code is available, but under a EULA that doesn't
-appear to meet OSI definition.
+> There is no shell, bash or otherwise, called ever.
 
-The message was CC'ed to full-disclosure, so it will probably appear
-there.
+Huh?  I thought OpenSSH always invokes the command via the shell.
 
-While message lacking Subject is a technicality, which the sender may
-address (and resend the message), the issue of software that comes with
-source code, but isn't under an Open Source license is one we might want
-to decide on, if we haven't already (I think we have, which is why I
-mentioned it as one of two reasons to reject that posting).  Also, it
-may at times be tricky (and unreliable and time-consuming) for list
-moderators to determine whether a license is Open Source or not, as well
-as whether the software is possibly dual-licensed.  Should we perhaps
-err on the side of approving postings whenever in doubt?
+> While tinkering with this, I discovered that if you force ssh to provide
+> a pty (ssh -t ...), even with secsh locked down, the hack works.  You
+> *must* set 'no-pty' after 'command=' in your authorized_keys file to
+> prevent ssh from launching a shell. :-/
 
-Here's a relevant example, where the decision was not to proceed to
-discuss the issue on oss-security as soon as it was pointed out that the
-product in question wasn't Open Source:
+Oh, so you're saying that your sshd does not use the shell when you
+specify no-pty?  This isn't the case here.  What version/package of
+OpenSSH are you using?
 
-http://www.openwall.com/lists/oss-security/2012/03/08/3
-
-I now tried to find a counter-example, where a non Open Source issue
-was actually discussed on oss-security with no one objecting to that,
-and I could not.  The closest I found are some interactions between
-behavior of non-OSS and OSS, e.g. Tavis' posting on vmware-tools vs.
-dash, which is clearly appropriate for oss-security due to dash:
-
-http://www.openwall.com/lists/oss-security/2013/08/22/12
-
-I think this falls in the same category too (so is appropriate):
-
-"[OSSA 2014-017] Nova VMWare driver leaks rescued images (CVE-2014-2573)"
-http://www.openwall.com/lists/oss-security/2014/05/29/14
-
-Maybe such a counter-example already exists somewhere in the list
-archives, but anyhow what do we want our policy on this to be going
-forward?
+I do have a habit to specify no-pty whenever I use "command=", but I
+also have a habit to start the actual command with "exec ..."
+specifically because the shell is invoked anyway (the "exec" then saves
+some memory on not keeping that shell around while the actual program
+runs).  I've tried specifying /full/path/to/program, like you do, but
+this does not prevent invocation going via the shell here.  My OpenSSH
+is rather old, though (with lots of patches).
 
 Alexander
