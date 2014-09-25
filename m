@@ -1,71 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/2
-Message-Id: <201405190346.s4J3ke7C019784@linus.mitre.org>
-Date: Sun, 18 May 2014 23:46:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: dolevf87@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: OpenFiler - Arbitrary Code Execution & Stored XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/46
+Message-ID: <CALx_OUDxmuso3cVpcM9dUKobjQxiZFLC72d0py_4xbPuccsTuQ@mail.gmail.com>
+Date: Thu, 25 Sep 2014 12:53:35 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security@...ts.openwall.com
+Cc: Tavis Ormandy <taviso@...gle.com>, Chester Ramey <chet.ramey@...e.edu>,  Solar Designer <solar@...nwall.com>
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> Yeah, that general approach is probably the best.  I was just wondering.
+> I don't really see the need to use a prefix and a suffix, though.
 
-Can you provide more information about how these issues cross
-privilege boundaries?
+Prefix is definitely more valuable, because specific prefixes are
+enforced by Apache and its ilk, but the suffix for the HTTP header ->
+shell variable propagation is within attacker's control.
 
-There does not seem to be much documentation available on the
-openfiler.com web site, at least not under the
-http://openfiler.com/learn page.
-http://www.openfiler.com/learn/how-to/graphical-installation says "You
-can learn how to manage the Openfiler system by browsing the
-administrator guide online which can be found here" and this is a link
-to the http://www.openfiler.com/docs/manual/ URL, which yields a "Page
-not found" error.
-
-https://forums.openfiler.com/index.php?/topic/3190-manual/ (possibly
-out-of-date) says "The official manual is not free."
-
-As far as we can tell from the graphical-installation page, Openfiler
-is a Linux distribution, and all of the Linux accounts (including
-root) are under the control of an application-level account named
-openfiler. The attacks seem to require access to this account or
-possibly an equivalent account. Although the ability to use `
-characters for shell commands is arguably a bug, an attacker with
-access to the openfiler account can apparently change the root
-password and other passwords, and then login directly to execute any
-commands as root.
-
-For example (again, possibly out-of-date):
-  https://forums.openfiler.com/index.php?/topic/3661-root-account-is-locked-down/
-
-  As far as the GUI is concerned, the 'root' account is just a normal
-  user. You need to log in as 'openfiler' to administer the system.
-
-Maybe there's an argument that one only needs network connectivity to
-TCP port 446 for the administrative web interface, but one needs
-connectivity to TCP port 22 (maybe?) to login as root.
-
-Also, http://www.exploit-db.com/exploits/33248/ seems to be about XSS
-attacks conducted by the openfiler account against the openfiler
-account.
-
-The issues can have CVE IDs only if there's privilege escalation in a
-realistic way.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTeX3gAAoJEKllVAevmvms9lsIALryes3uY6dITdbP/1R4ee/0
-FGFDq0WH8VvEwSiNzqGyavupGeq0O0X0PEkOnb3mwAcBV38X4MU3K7zsSGaoWEEt
-4X7o7VU7XhewwSO6t+LabaVZcu0Vk3Y5sSDuOUH2GxmvGQcJAFstQF5bVp4Jan8q
-O4oz3T0ny9AX1rJhxcoII0ReatWsl5h7HrkskvS8DGwiqBlFAeUwQMr63gDYqCYK
-nHLl1dmrl9EGwKTOVeZcjUdmV5ElZtw6oTSsXrMYZKU5aeBb16mD+LpmHUFzyT3j
-oqoRdqUeZbxB8gxj2mVyp1n+7Pnt2vDvH5VE5+OADceaZV1pNDpoukVveWq34n4=
-=3gFo
------END PGP SIGNATURE-----
+/mz
