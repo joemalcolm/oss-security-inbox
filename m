@@ -1,97 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/14/7
-Message-ID: <20140214220759.GA31440@alf.mars>
-Date: Fri, 14 Feb 2014 23:07:59 +0100
-From: Helmut Grohne <helmut@...divi.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/25
+Message-ID: <20140925161546.GB869@openwall.com>
+Date: Thu, 25 Sep 2014 20:15:46 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: Bug#738855: initscripts: Skip killing root-owned process starting with @
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Sorry for being unclar here.
+On Thu, Sep 25, 2014 at 11:37:45AM -0400, Chet Ramey wrote:
+> On 9/24/14, 10:47 PM, Solar Designer wrote:
+> > While we're at it, I think it's preferable not to output error messages
+> > triggerable by untrusted input, e.g.:
+[...]
 
-On Fri, Feb 14, 2014 at 11:50:29AM -0500, cve-assign@...re.org wrote:
-> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=738855
-> > Message #34
-> 
-> This message starts by discussing initscripts, but ends by discussing
-> a CVE assignment for systemd. That CVE assignment would potentially be
-> reasonable, but we wanted to first clarify what is being asked. We
-> think you mean:
-> 
->   - adding a patch to initscripts to introduce more compatibility
->     between initscripts and systemd may be considered a security
->     enhancement, and probably would not be considered a vulnerability
->     fix, so no CVE ID is being requested for a problem in the
->     unpatched initscripts code
+> I disagree.  It's important for a program -- not just the shell -- to tell
+> the user when it attempts to do something on his behalf and is unable to
+> do it.
 
-Almost. The patch proposed for initscripts does not enhance its
-security, but it makes it easier to write daemons against both systemd
-and sysv init (initscripts). The anticipated problem is not present in
-initscripts, but it could be introduced via the compatibility patch.
-Whether there actually is a vulnerability in the patch or not, nothing
-has been shipped to actual systems and that is why no CVE is being
-requested here.
+There's obviously a trade-off here.  I agree that keeping the error
+messages is the right thing if we can keep them contained to local usage
+(and local attack) scenarios under typical setups.  I think applying
+Florian's prefix-suffix patch will achieve that (besides its main goal
+of actually mitigating most attacks).
 
->   - this systemd commit
-> 
->        http://cgit.freedesktop.org/systemd/systemd/commit/src/core/killall.c?id=bd3fa1d2434aa28564251ac4da34d01537de8c4b
-> 
->     introduced the killall.c file. In the first version of this file, the
-> 
->        /* Non-root processes otherwise are always subject to be killed */
->        if (uid != 0)
->                return false;
-> 
->        ...
-> 
->        /* Processes with argv[0][0] = '@' we ignore from the killing
->         * spree.
->         *
->         * http://www.freedesktop.org/wiki/Software/systemd/RootStorageDaemons */
->         if (count == 1 && c == '@')
->                 return true;
->        
->         return false;
-> 
->     code was included.
-> 
->   - you are proposing that the above "return true" line is a
->     vulnerability because it may allow a not-fully-privileged root
->     user to cause data loss. This could possibly have one CVE ID. One
->     of the arguments against assigning a CVE ID is that this "return
->     true" could have been an intentional tradeoff between perfect
->     privilege checking and design complexity. For environments with
->     not-fully-privileged root users, we're not sure whether there's
->     general acceptable of a guideline that OS components must never
->     contain any program logic to make any security-relevant decision
->     on the basis of the uid value.
+What do you think of distros' going with Florian's prefix-suffix patch
+right now?  I think it breaks function imports/exports between
+pre-patch and post-patch bash versions, but keeps them intact for
+patched versions.  Right?  If so, this sounds acceptable for immediate
+use by distros.  Do you agree?
 
-You have well captured the intended message. Fundamentally the issue
-boils to the question of whether there is such a thing as an
-"unprivileged process with effective UID 0". If there isn't, then there
-is no vulnerability in systemd (and the proposed patch to initscripts is
-fine as well). Specifically, I am seeking input on whether there are
-practical situations in which a process with effective UID 0 can be
-considered less privileged than say accessing arbitrary block devices
-for writing (which would have similar implications wrt. data loss). The
-anticipated scope is LSMs and Linux capabilities in action.
-
-At least theoretically, a process could be jailed in a chroot with most
-of its capabilities (especially CAP_MKNOD and CAP_CHROOT) revoked.  Such
-a process could be considered unprivileged. The state of the art to
-craft such a jail would more likely involve Linux user namespaces though
-and thus avoid effective UID 0 alltogether.
-
->   - versions of systemd before
->     bd3fa1d2434aa28564251ac4da34d01537de8c4b, in which killall.c did
->     not exist, may have had other problems because the right processes
->     were not killed at the right times. This could possibly have a
->     second CVE ID if there were security implications.
-
-I am making no claims about systemd's behaviour before this commit. In
-any case those early versions tend not to be around in actual systems,
-so I doubt that tracking vulnerabilities there would be useful at
-present.
-
-Helmut
+Alexander
