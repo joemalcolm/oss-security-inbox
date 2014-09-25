@@ -1,29 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/6
-Message-ID: <87y4qzmqkq.fsf@redhat.com>
-Date: Tue, 25 Nov 2014 13:07:17 +0100
-From: Martin Prpic <mprpic@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/5
+Message-Id: <20140925013647.858A2C5082A@smtptsrv1.mitre.org>
+Date: Wed, 24 Sep 2014 21:36:47 -0400 (EDT)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: CVE request: missing checks for small-sized files in hivex
+Cc: cve-assign@...re.org
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Can a CVE please be assigned to the following issue?
+MITRE is currently using CVE-2014-7169 to track the report of the
+incomplete patch, i.e., incorrect function parsing that's present in
+builds that are up-to-date with the
+http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-025 changes. We
+realize that other people may be releasing further information about
+the technical details and implications later. CVE-2014-7169 expresses
+the affected upstream versions as "GNU Bash through 4.3 bash43-025" --
+in general, this would include distribution packages released earlier
+today (2014-09-24).
 
-It was reported that hivex [1], a library that can read and write hive files (undocumented binary files that Windows uses to store the Windows Registry on disk), did not properly handle small-sized hive files. An attacker able to supply a hive file of a small size to an application using the hivex library could use this flaw to read, and possibly write, up to 4095 bytes beyond the end of the allocated buffer, potentially resulting in arbitrary code execution with the with the privileges of the user running that application.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-This issue has been fixed in upstream version 1.3.11 of hivex. Upstream patches are available at:
-
-https://github.com/libguestfs/hivex/commit/357f26fa64fd1d9ccac2331fe174a8ee9c607adb
-https://github.com/libguestfs/hivex/commit/4bbdf555f88baeae0fa804a369a81a83908bd705
-
-References:
-
-[1] https://www.redhat.com/archives/libguestfs/2014-October/msg00235.html
-[2] https://bugzilla.redhat.com/show_bug.cgi?id=1167756
-
-Thanks,
-
---
-Martin Prpič / Red Hat Product Security
+iQEcBAEBAgAGBQJUI3DaAAoJEKllVAevmvms+/kH/32ZGjC+BSqKoz6ZBUCMLnQ2
++Li91/GvD0Rs8bqKPDsz30spiJR57ZluKMrlxJrlIffiHqAFiYkQ3+JXmnK/HAnA
+OtgToNtZ+1BV2jPrjXhuy2h+E5paTXMhM0T12xaUo89vtE7oer4Pld4JDqreXSSk
+1Nfu5AaGcvbBmwaNRn1qw+nARw0CFPmMRa169jQAesAAcyNx8V7IPgFpPj4K4S8c
+0zKXVdhIZxXvPcdZ5QzXKhcluOyOl1dJsjXR1qXT03QJsvhRighqb/3dZy+4mLyl
+JWhDfs7l8XXGCzbF8eSg2CNBpTGy1d/32F7YqaKj53xWFWyktHtbk4nJ5hlPlKU=
+=E9tp
+-----END PGP SIGNATURE-----
