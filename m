@@ -1,32 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/10/2
-Message-ID: <52CFC3FB.2010007@redhat.com>
-Date: Fri, 10 Jan 2014 15:27:15 +0530
-From: Ratul Gupta <ratulg@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/34
+Message-ID: <20140926210907.GA31108@openwall.com>
+Date: Sat, 27 Sep 2014 01:09:07 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: python-jinja2: arbitrary code execution vulnerability
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Chet,
 
-Jinja2, a template engine written in pure python, was found to use /tmp 
-as a default directory for jinja2.bccache.FileSystemBytecodeCache, which 
-is insecure because the /tmp directory is world-writable and the 
-filenames used like 'FileSystemBytecodeCache' are often predictable. A 
-malicious user could exploit this bug to execute arbitrary code as 
-another user.
+On Thu, Sep 25, 2014 at 09:07:07PM -0400, Chet Ramey wrote:
+> On 9/24/14, 9:30 PM, Solar Designer wrote:
+> > On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
+> >> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
+> >>> On 9/24/14, 5:32 PM, Solar Designer wrote:
+> >>>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
+> >>>>> Tavis Ormandy just tweetet this:
+> >>>>> https://twitter.com/taviso/status/514887394294652929
+> >>>>>
+> >>>>> The bash patch seems incomplete to me, function parsing is still
+> >>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+> >>>>
+> >>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
+> >>>> Tavis on this "reply".
+> >>>
+> >>> I have a fix for this.
+> >>
+> >> Can you provide a pointer to the patch?  I put together a patch that
+> >> changed the report_error() to fatal_error() as I wasn't able to see
+> >> how to reset the parser state.  Was just about to send it out...
+> 
+> I have positive confirmation that this patch works, so here are patches for
+> bash versions bash-2.05b to bash-4.3.
+> 
+> I will probably push these out tomorrow.
 
-PoC is given on the debian page: 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=734747
+Since these patches look final and are updating the bash patchlevel
+number, is it OK for distros to use them as-is, with the patchlevel
+number update already?
 
-References:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=734747
-https://bugzilla.redhat.com/show_bug.cgi?id=1051421
+They are not yet on ftp.gnu.org.  BTW, I notice that your earlier
+bash 2.05b patch isn't there, either.
 
-Can a CVE please be assigned to this issue?
+And while I am at it - thank you for providing detached signatures for
+bash patches!  This is something the VIM project fails at, whereas you
+do it right.  Appreciated!
 
--- 
-Regards,
-
-Ratul Gupta / Red Hat Security Response Team
-
+Alexander
