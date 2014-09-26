@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/12/1
-Message-ID: <5439E3BB.2060603@redhat.com>
-Date: Sat, 11 Oct 2014 20:13:15 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/13
+Message-ID: <54254F01.3050502@redhat.com>
+Date: Fri, 26 Sep 2014 13:33:21 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: Re: Request for CVE assignment for tigervnc affected by similar flaws as in CVE-2014-6051 and CVE-2014-6052 of libvncserver
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-On 11/10/14 03:59 PM, cve-assign@...re.org wrote:
-> First, in general, when asking for a CVE assignment for an issue
-> "similar" to an existing CVE, it is very useful to provide an
-> additional statement or reference indicating why the issue should not
-> be mapped to the existing CVE. A difference in the product name does
-> not always require a separate CVE.
+On 09/26/2014 10:54 AM, Mark R Bannister wrote:
+> Testing patch 25 and 26 from Chet, it looks to me like this is still an incomplete fix.  The third vulnerability I'd like to report is the feature itself in bash that allows functions to be passed in the environment, e.g.
+> $ env ls='() { echo vulnerable; }' bash -c ls
+>
+> This allows an attacker to replace a command used by a bash script with arbitrary code.  It is then down to an attacker to find a suitable command that the bash script (or any child shells) might call without a path component.
+>
+> I can't see this being a problem for Apache custom headers (the variable name is turned to uppercase and prefixed by HTTP_), nor sudo commands if env_reset is on (the default), but this continues to be a major vulnerability for setuid/setgid scripts (S_ISUID or S_ISGID) where the environment is preserved.
 
-Agreed. One pain point i have encountered with CVE SPLIT/MERGE is the
-"when is a code fork a fork, or just a normal fork?" E.g. sometimes it's
-easy: like one week after the MariaDB fork from MySQL it's obvious that
-any flaw affecting one will affect the other and they're basically the
-same code, but as time goes on MariaDB is diverging. One thing that
-would be hugely useful here to solve the CVE MERGE problem, and to let
-people know what related software packages they should look at would be
-a database of code considered "equivalent" by Mitre for the purposes of
-CVE MERGE and also for people to check if other things are affected by
-the same flaw.
+I agree this looks scary at first glance, but we discussed this 
+previously, see for example:
 
-I suspect there aren't actually that many entries, and populating it as
-they come up would be pretty simple, especially if there's an easy way
-to submit entries (just send an email?).  Would this be something Mitre
-can do perhaps?
+   <http://www.openwall.com/lists/oss-security/2014/09/24/20>
+
+Shell scripts derive part of their power and flexibility from their 
+openness to the execution environment.  You can tweak PATH, BASH_ENV (or 
+ENV for other Bourne-like shells), IFS, HOME, and many other variables 
+to change behavior.  There are even more knobs to affect the behavior of 
+the external commands almost all shell scripts call when they run.
+
+This makes them not suitable at all for writing SUID programs or other 
+code that runs in untrusted environments.  This is well-documented, and 
+given the amount of shell scripts out there which rely on these aspects 
+of the UNIX shell design, it's not something we can change, particularly 
+not as part of a security update which system administrators are more or 
+less forced to install.
+
+In your specific example, you can achieve the same effect by setting 
+PATH to a directory with a customer ls program, or by setting BASH_ENV 
+to a file which contains a definition of a function called ls.
+
+Overriding external programs with shell functions in such a way has to 
+be supported.  Otherwise, scripts which define shell functions would 
+break if the system administrator installs new software which happens to 
+include a program of the same name of the shell function.
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Florian Weimer / Red Hat Product Security
