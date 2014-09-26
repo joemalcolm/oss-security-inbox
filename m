@@ -1,45 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/14/1
-Message-Id: <201406140231.s5E2VJok014648@linus.mitre.org>
-Date: Fri, 13 Jun 2014 22:31:19 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Horde_Ldap: Stricter parameter check in bind() to detect empty passwords
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/3
+Message-ID: <20140926055447.GB21051@scapa.corsac.net>
+Date: Fri, 26 Sep 2014 07:54:48 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: Marcus Meissner <meissner@...e.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: nss RSA forgery (CVE-2014-1568)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Sep 25, 2014 at 12:10:36AM +0200, Marcus Meissner wrote:
+> On Thu, Sep 25, 2014 at 12:03:21AM +0200, Hanno Böck wrote:
+> > One serious vuln per day isn't enough, so nss decided to bring us
+> > another one.
+> > 
+> > Mozilla reports this:
+> > https://www.mozilla.org/security/announce/2014/mfsa2014-73.html
+> > Bugtracker entry still private, so hard to judge about details.
+> > Interesting: Two independent discoveries (we had the same with
+> > heartbleed and I couldn't believe this was coincidence).
+> > 
+> > This is what mcaffee has to say:
+> > http://blogs.mcafee.com/executive-perspectives/need-know-berserk-mozilla
+> > 
+> > They say its related to BER/ASN1-parsing, but adam langley disagrees:
+> > https://twitter.com/agl__/status/514881918110683136
+> > 
+> > 
+> > And it seems cyassl had something similar, also found by intel:
+> > http://www.yassl.com/yaSSL/Blog/Entries/2014/9/12_CyaSSL_3.2.0_Released.html
 
-> From: Matthew Daley <mattd@...fuzz.com>
-> Date: Mon, 9 Jun 2014 21:03:15 +1200
+So, according to:
 
-> If either of these arguments is empty() (as in, the PHP standard
-> library function empty()), the LDAP bind user DN or password from
-> Horde configuration is passed to ldap_bind instead. ... The issue is
-> that empty() returns true not just for null values but also - amongst
-> other things - for empty strings. Hence, a user can simply provide an
-> empty password
+http://www.intelsecurity.com/advanced-threat-research/#
+http://tif.mcafee.com/threats/12817
 
+that's indeed the same (or really close) vulnerability. Can a CVE be
+assigned?
+> > 
+> > No real details yet and information seems confusing.
+> 
+> I also see gnutls posted a new release some days, with this entry without CVE
+> 
+> http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/7663
+> "** libgnutls: Fixed issue with certificates being sanitized by gnutls prior
+> to signature verification. That resulted to certain non-DER compliant modifications
+> of valid certificates, being corrected by libtasn1's parser and restructured as
+> the original. Issue found and reported by Antti Karjalainen and Matti Kamunen from
+> Codenomicon."
+> 
+> which smells similar.
+> 
+When trying to test NSS updates I tried with epiphany browser, which
+uses gnutls (through libsoup and glib-networking), and it seemed indeed
+affected. It's apparently fixed in the 3.3 branch at 3.3.8:
 
-> https://github.com/horde/horde/commit/8f719b53b0ee2d4b8a40a770430683c98fb5f2fd
-> https://github.com/horde/horde/commit/4c3e18f1724ab39bfef10c189a5b52036a744d55
+http://article.gmane.org/gmane.network.gnutls.general/3593
 
-Use CVE-2014-3999.
+Can a CVE be assigned too?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Regards,
+-- 
+Yves-Alexis Perez
 
-iQEcBAEBAgAGBQJTm7OgAAoJEKllVAevmvmssNYIAJt3DBazJ1nrIA5IcnknAUB/
-YFQnObBFxB4TNYklhign83+PbedbY6zZ3NxiHa0+mHwDmfKVhQkLjr+5iKcBbEUv
-rqe96qE5uih4HnXgVMCQdEDlP3kqqkHh4oMOFsPOVRaVcHVmlLZ4LYy3CP6BLWnM
-9o/Fr3wildChCoLlvSeX33dZOie/bmCjLJHLept++qBsoeZfIVII7DsJI1O1EOcL
-hJr2XKMH1qQvj8PhRi2p58D2XDzokqLUPhw/9Iyyng6I0fAwLKaPGh6pziXQ9Cn9
-7GnjM07trieN+om3mlgQq+qNHNPhVYNsJmbI+eOqLHavp0SHnG2BVu8zbT4itkY=
-=DhHf
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
