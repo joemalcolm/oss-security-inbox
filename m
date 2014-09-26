@@ -1,37 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/13/2
-Message-ID: <548C6259.3000100@gentoo.org>
-Date: Sat, 13 Dec 2014 10:59:21 -0500
-From: Sean Amoss <ackle@...too.org>
-To: OSS Security List <oss-security@...ts.openwall.com>
-CC: cve-assign@...re.org, security@...too.org
-Subject: CVE Request: ZNC NULL Pointer Dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/12
+Message-ID: <20140926132018.1447804d@pc>
+Date: Fri, 26 Sep 2014 13:20:18 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Mediawiki before 1.19.19, 1.22.11 and 1.23.4 insufficient CSS filtering of SVGs
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-It looks like the following issue has not received a CVE identifier as
-of yet:
+I know, I know, this is not a "the internet is on fire"-style vuln :-)
 
-A NULL pointer dereference has been found in the
-"CWebAdminMod::ChanPage()" function in modules/webadmin.cpp.
+However, can we please get a CVE for this:
+https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-September/000161.html
 
-This was reported to Gentoo [1] by means of a Secunia advisory [2],
-which in turn referenced the upstream bug request [3].
+* (bug 69008) SECURITY: Enhance CSS filtering in SVG files. Filter
+  <style> elements; normalize style elements and attributes before
+  filtering; add checks for attributes that contain css; add unit tests
+  for html5sec and reported bugs.
+
+If anyone wants to discuss if this is a real vulnerability, I think it
+is: Including malicious CSS by less-privileged users could lead to UI
+manipulation which could cause a more-privileged user to do actions
+like giving the less-prived user more privs.
 
 
-[1] https://bugs.gentoo.org/show_bug.cgi?id=507794
-[2] https://secunia.com/advisories/57795/
-[3] https://github.com/znc/znc/issues/528
+Upstream Bug:
+https://bugzilla.wikimedia.org/show_bug.cgi?id=69008
 
+Code commit:
+https://gerrit.wikimedia.org/r/#/c/162777/
 
-Thanks,
-Sean
+Please assign a CVE.
+
+cu,
 -- 
-Sean Amoss
-Gentoo Security | GLSA Coordinator
-E-Mail : ackle@...too.org
-GnuPG FP : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
+Hanno Böck
+http://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Download attachment "signature.asc" of type "application/pgp-signature" (214 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
