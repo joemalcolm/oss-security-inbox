@@ -1,33 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/4
-Message-ID: <53180D03.3060906@fedoraproject.org>
-Date: Thu, 06 Mar 2014 06:52:03 +0100
-From: Remi Collet <remi@...oraproject.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/37
+Message-ID: <20140926215649.GA31262@openwall.com>
+Date: Sat, 27 Sep 2014 01:56:49 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: file: crashes when checking softmagic for some corrupt PE executables
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-Le 05/03/2014 19:29, mancha a écrit :
-
-> The initial fix for this problem [1] had an off-by-one flaw
-> that has since been corrected [2].
+On Thu, Sep 25, 2014 at 11:37:12PM +0530, Huzaifa Sidhpurwala wrote:
+> On 09/25/2014 11:26 PM, Solar Designer wrote:
+> >What's the oldest version of bash affected by them?
+> >
+> >Your reproducers didn't trigger any obvious misbehavior here with 3.1.8
+> >with lots of unrelated patches.  Of course, this does not mean much, but
+> >maybe these issues are in fact 3.2+?
 > 
-> I am unsure of the policy regarding the issuance of new CVE 
-> identifiers associated with incomplete/flawed fixes associated
-> with previously allocated CVEs. But, in this particular case
-> file 5.17 shipped with [1] and not [2].
+> Yes 3.2+, i have not checked older versions though.
 
-[1] fix a security risk.
+I took a look at the code in 3.1, and it looked just as vulnerable.  So
+I tried harder, and was able to trigger both issues that you're patching
+with parser-oob-3.2.patch on 3.1.
 
-[2] don't fix any security risk. It's only a regression noticed when
-analysis some files (used in PHP test suite, p.e.). I don't think this
-need a new CVE.
+For the redir_stack issue, I had to use many more <<EOF's, and I
+actually closed those EOF's.  In fact, I used 1000 of them (both opening
+and closing).  This gave me a segfault.
 
-> 
-> --mancha
-> 
-> [1] https://github.com/file/file/commit/447558595a36
-> [2] https://github.com/file/file/commit/70c65d2e1841
-> 
-> 
+For the nested blocks (for loops in this case), I also used as many as
+1000 of them, and got this:
 
+$ bash test-script.sh 
+test-script.sh: line 909: syntax error near unexpected token `newline'
+test-script.sh: line 909: `for x909 in ; do :'
+
+And this remains exactly line 909 when I try 909, 1000, or 2000 nested
+loops.  With "only" 908 nested loops, this symptom goes away - but I
+guess those 908 loops are not actually processed correctly, see below.
+
+So I guess it's just my (un)lucky memory layout within the bash process
+that requires more of these things to trigger visible misbehavior.
+
+Regarding the nested blocks patch:
+
+     case CASE:
+     case SELECT:
+     case FOR:
+-      if (word_top < MAX_CASE_NEST)
++      if (word_top + 1 < MAX_CASE_NEST)
+        word_top++;
+       word_lineno[word_top] = line_number;
+       break;
+
+I think it's sweeping the remaining problem under the rug.  It will not
+result in correct handling of arbitrarily many nested blocks, nor in a
+proper error message.  It merely prevents the out-of-bounds access here.
+
+Luckily, these shouldn't be security issues anymore once we prevent the
+parsers from being exposed to untrusted input.
+
+Alexander
