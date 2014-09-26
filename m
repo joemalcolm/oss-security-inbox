@@ -1,47 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/10
-Message-ID: <33006C99F5A5194A9B7A7715DFA3E383B5E402B7@ALA-MBA.corp.ad.wrs.com>
-Date: Tue, 18 Nov 2014 15:10:58 +0000
-From: "Radzykewycz, T (Radzy)" <radzy@...driver.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/17
+Message-ID: <542564CD.9090205@debian.org>
+Date: Fri, 26 Sep 2014 14:06:21 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-There's no guarantee about anything being "bug free".  Even certification by NIAP doesn't guarantee that it's bug free.  Nor that it's secure.  But it does make it relatively more likely to have fewer bugs and be more secure.  Same with OSS tool fuzzing and some kind of database indicating the level of fuzzing that has happened on them.
+On 26/09/14 09:54, Mark R Bannister wrote:
+> Patch every OS to clear the environment on setuid/setgid and live
+> with a few other programs that might break?
 
-If I were a Linux distro maintainer, looking at packages to include, I would appreciate this information.  (For that matter, I'd appreciate it for my own use, though that's less relevant.)
+Apache suexec, among other things, can't work if the environment is
+cleared. It needs to pass the CGI environment variables through, and is
+setuid itself.
 
-If there is a distro maintainer on this list, please chime in.
+Properly-written setuid components are often a necessary part of letting
+unprivileged components benefit from privilege-separation (e.g. CGI
+scripts running with less privilege than the web server, with neither
+running as root). The problem is that not all setuid components are
+properly-written.
 
+> Tell everyone to stop using setuid/setgid now and forever?
 
-________________________________________
-From: Źmicier Januszkiewicz [gauri@....by]
-Sent: Tuesday, November 18, 2014 3:17 AM
-To: oss-security@...ts.openwall.com
-Subject: [security-vendor] Re: [oss-security] Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+Minimizing use of setuid/setgid, and making sure the setuid/setgid
+things are suitably hardened, is a good idea. However, tools for
+controlled privilege escalation (sudo, pkexec, Apache suexec) rely on
+setuid in order to work. There's a reason the feature exists at all.
 
-2014-11-18 4:37 GMT+01:00 Robert Watson <robertcwatson1@...il.com>:
+I still think a large part of the answer is "consider it to be a serious
+bug when a setuid/setgid tool does non-trivial things without first
+filtering its attacker-controlled environment through a whitelist".
 
-> What about using fuzzing to find those tools withOUT vulnerabilities and
-> "certifying them" in some way as safe for all inputs?
+If it needs to pass environment variables through to a child, this
+pseudocode is a good pattern (AIUI, sudo does this):
 
-I think the main issue with this approach would be that one cannot
-prove that something DOES NOT exist. One can easily prove that
-something DOES exist by producing evidence: you can prove a bug exists
-by providing reproduction steps or a proof-of-concept file that
-triggers the issue. On the other hand, it would be very problematic to
-prove a program is bug-free -- what evidence can you bring to support
-that? Since one can theoretically produce an infinite amount of test
-cases given e.g. a grammar, how would you test a program against "all
-inputs"? If it's via fuzzing, who can "certify" that a fuzzer you used
-indeed produced "all inputs"? Would we need fuzzer certifications,
-then?
+        let saved_environ = copy of environ
+        let environ = empty
 
-I think every time after a product passes an audit, a certification,
-or whatever, another guy comes about and spots a security issue nobody
-else has spotted before. Is the product still secure? Does that kind
-of certification actually mean anything with respect to "having no
-bugs"? I strongly doubt that.
+        setenv(PATH = "/usr/bin:/bin")  # or some other safe value
+        setenv(HOME = "/")
+        # ... and repeat for a few other well-known variables that are
+        # often relied on
 
-Cheers,
-Z.
+        if saved_environ["LANG"] has a safe value {
+                setenv(LANG = saved_environ["LANG"])
+                # ... and repeat for a few other well-known variables
+                # that can safely be passed-through if their values are
+                # suitably constrained
+        }
+
+        parse options
+        decide what to do
+        do PAM authentication/authorization etc.
+        drop privileges / set up privileges as necessary
+
+        if configured to pass environment through {
+                copy some or all of saved_environ back into environ
+        }
+
+        exec(child, child_args)
+
+Regards,
+    S
+
