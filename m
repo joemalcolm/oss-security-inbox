@@ -1,51 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/8
-Message-ID: <53ABCC26.5000001@redhat.com>
-Date: Thu, 26 Jun 2014 17:30:46 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/30
+Message-ID: <20140926181243.GT23797@oevtugenva.nrevsny.pk>
+Date: Fri, 26 Sep 2014 14:12:43 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-On 06/26/2014 04:31 PM, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> My thought on this: security lines move, e.g. with crypto certain
-> algorithms are no longer sufficient (e.g. DES), they are essentially
-> the same as no crypto when put up against modern hardware.
->
-> So with web cookies they are often used as authentication tokens (the
-> alternative is in URL which has it's own list of problems, or form
-> values/etc.), I would hazard to say the vast majority of all web based
-> authentication uses cookies (I've never run into widely used
-> certificate based or other options). Also web sites have changed, no
-> longer static sites or "simple" CGI based sites, you pretty much
-> always use a framework, sometimes hosting your framework within a
-> lower level framework. Or you write custom code, whatever. The point
-> is this stuff has XSS flaws all over the place, it's more the rule
-> then the exception.
->
-> So with widespread XSS in mind, I think it's safe to say that
-> virtually every web site (even sites that care deeply and spend
-> time/money and have bug bounties) have lurking XSS flaws, which if
-> HTTPOnly is not used can result in cookie theft. So in my mind
-> HTTPOnly isn't an option any more, but a requirement, ergo in most
-> situations no HTTPOnly = win a CVE.
->
-> Evidence:
->
-> http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=XSS
+On Fri, Sep 26, 2014 at 02:06:21PM +0100, Simon McVittie wrote:
+> > Tell everyone to stop using setuid/setgid now and forever?
 
-It depends what the cookie is used for. It would be an issue if not used 
-on the session cookie and you could steal that.
+Yes!
 
-But websites set lots of cookies, which if stolen, have no relevance to 
-being able to access the user's session, or do much of anything useful 
-with anyway. I believe a lot of the "this cookie does not have HTTPOnly" 
-issues are non-issues.
+> Minimizing use of setuid/setgid, and making sure the setuid/setgid
+> things are suitably hardened, is a good idea. However, tools for
+> controlled privilege escalation (sudo, pkexec, Apache suexec) rely on
+> setuid in order to work. There's a reason the feature exists at all.
 
-Cheers,
+These could all be done by having the process with root privileges
+inherit them from a daemon parent that already has root, rather than
+requiring the kernel to elevate the privileges of a process via the
+setuid bit. This inherently eliminates all attacker control of the
+process's initial state and limits the input/attack surface to the
+communication channel clients have with the daemon (e.g. a single unix
+socket).
 
---
-Murray McAllister / Red Hat Product Security
+As a bonus, a kernel that completely lacks setuid/setgid support
+immediately allows you to do lots of other security/functionality
+enhancements, like allowing any process to chroot at any time,
+allowing bind-mount-like filters blocking/replacing a process's view
+of part of the filesystem, etc.
+
+> I still think a large part of the answer is "consider it to be a serious
+> bug when a setuid/setgid tool does non-trivial things without first
+> filtering its attacker-controlled environment through a whitelist".
+
+The problem with this is that the environmental state (I don't mean
+just env vars, but everything a process inherits) is not of fixed
+scope, but continually growing, and each new feature added is a
+potential channel through which an attacker controls the behavior of
+the setuid process.
+
+Rich
