@@ -1,21 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/31
-Message-Id: <E1XcJJc-0008Hw-2U@rmm6prod02.runbox.com>
-Date: Thu, 09 Oct 2014 15:23:56 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/9
+Message-ID: <878ul64v34.fsf@wylie.me.uk>
+Date: Fri, 26 Sep 2014 09:58:07 +0100
+From: alan@...ie.me.uk (Alan J. Wylie)
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>, chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 8 Oct 2014 21:31:37 -0700, Michal Zalewski <lcamtuf@...edump.cx> wrote:
-> Sure, agreed. I don't think the code / data catchphrase accurately
-> conveys this principle to developers, though =)
+Chet Ramey <chet.ramey-oNH6vCZdlc4@...lic.gmane.org> writes:
 
-I've expanded the detection or prevention section of my paper in general:
-  http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
+> Thanks for the kind words.  In this spirit, I've attached a patch for
+> bash-2.05b, since I've been told that there are still systems running it
+> out there.
 
-In particular, I've given more information on separating code/data here,
-in a way that I hope captures the point for developers:
- http://www.dwheeler.com/essays/shellshock.html#separate-code-data
+In this case, would it also be appropriate to back-port the patch for
+the bug I reported 10 years ago?
 
---- David A. Wheeler
+https://lists.gnu.org/archive/html/bug-bash/2004-09/msg00193.html 
+
+-- 
+Alan J. Wylie                                          http://www.wylie.me.uk/
