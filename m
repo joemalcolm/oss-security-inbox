@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/6
-Message-ID: <20140305170434.GA6487@kroah.com>
-Date: Wed, 5 Mar 2014 09:04:34 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/16
+Message-ID: <5425637A.8040404@canonical.com>
+Date: Fri, 26 Sep 2014 09:00:42 -0400
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
+Subject: CVE Request: Go crypto/tls vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 05, 2014 at 05:30:22PM +0100, Moritz Muehlenhoff wrote:
-> On Wed, Mar 05, 2014 at 08:23:53AM +0100, Salva Peiró wrote:
-> > Hi,
-> > 
-> > I've found a vulnerability in the staging kernel tree,
-> > Can anyone assign a CVE ID for this?
-> > 
-> > - staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
-> > https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?h=staging-linus&id=084b6e7765b9554699afa23a50e702a3d0ae4b24
-> 
-> I don't think CVE IDs should be assigned for vulnerabilities
-> in the staging tree. 
+Hello,
 
-I'm happy to agree with that (as the maintainer of the drivers/staging/
-tree).  Please note, that if a user does use a staging tree driver, it
-will "taint" the kernel with the "TAINT_CRAP" flag, and tell the user
-that they are on their own.
+>From the Go 1.3.2 release announcement:
 
-But I'm not in charge of CVEs, if people are looking to create a ton of
-them, feel free to assign them to staging tree driver issues... :)
+"The crpyto/tls fix addresses a security bug that affects programs that use
+crypto/tls to implement a TLS server from Go 1.1 onwards. If the server enables
+TLS client authentication using certificates (this is rare) and explicitly sets
+SessionTicketsDisabled to true in the tls.Config, then a malicious client can
+falsely assert ownership of any client certificate it wishes."
 
-thanks,
+https://groups.google.com/forum/#!msg/golang-nuts/eeOHNw_shwU/OHALUmroA5kJ
 
-greg k-h
+Could a CVE please be assigned to this issue?
+
+Thanks,
+
+Marc.
+
+-- 
+Marc Deslauriers
+Ubuntu Security Engineer     | http://www.ubuntu.com/
+Canonical Ltd.               | http://www.canonical.com/
