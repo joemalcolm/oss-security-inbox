@@ -1,44 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/10
-Message-Id: <20140707181347.A44BC1A41139@me.com>
-Date: Mon,  7 Jul 2014 14:13:47 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/29
+Message-ID: <5425AB66.9090408@redhat.com>
+Date: Fri, 26 Sep 2014 12:07:34 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
+On 26/09/14 11:55 AM, Rich Felker wrote:
+> On Fri, Sep 26, 2014 at 01:41:45PM +0100, Mark R Bannister wrote:
+>> Arguments that people shouldn't have setuid shell scripts don't
+>> stack up, because even if you write your setuid program in some
+>> other language, you might unwittingly exec something written in
+>> bash.
+>> As /bin/sh is symlinked to /bin/bash in RHEL, the moment you call
+>> out to the system to do a piece of work for you, you're at risk of
+>> invoking bash and thereby being vulnerable to a root exploit. For
+>> example:
+>>
+>> $ env bzip2='() { echo vulnerable >&2; }' /usr/bin/bzdiff /tmp/file1.bz /tmp/file2.bz
+>>
+>> $ env test='() { echo vulnerable >&2; }' /usr/bin/ldd /usr/bin/gcc
+>>
+>> So this is not about whether or not someone has written a setuid
+>> shell script. This has uncovered a potential new exploit for any
+>> setuid program. Indeed the very first setuid program that I
+>> discovered this exploit with was a binary (compiled C program) that
+>> happened to exec ldd while it was running.
+>>
+>> I don't think this issue can be swept under the carpet.
+> 
+> Any setuid program that's execing an external program that was not
+> also designed to be run setuid, without scrubbing the environment and
+> other environmental state (rlimits, inherited file descriptors, ...),
+> or else fully dropping privileges to the original invoking user, is a
+> gaping security hole already. This has nothing to do with bash.
+> 
+> Rich
 
-Author: Larry W. Cashdollar, @_larry0
+This is a classic case of "yes the correct thing to do is..." but the
+reality is "we should fix this centrally rather than try to make
+everyone do the right thing (aka boiling the ocean)". This is like tmp
+vulns, it's 2014, the solution for tmp vulns is polyinstantiated /tmp
+per user, and per application /tmp dirs in addition to this. Solve it
+once centrally (e.g. in PAM/systemd) and boom, done.
 
-Date: 06/01/2014
+We should always try to do the best/safest thing because most devs are
+going to try to do the most insanely dangerous thing.
 
-OSVDB: 108582
-
-CVE:Please Assign
-
-Download: http://rubygems.org/gems/codders-dataset
-
-Gem Author:  codders@...omonkey.org.uk
-
-From: ./codders-dataset-1.3.2.1/lib/dataset/database/postgresql.rb
-
-Lines 18 and 24 expose the password to the process table, and are vulnerable to command injection if used in the context of a rails application. The #{@...rname} and #{@...sword} variables aren't properly sanitized before being passed to the command line.
-
-015-      
-16-      def capture(datasets)
-17-        return if datasets.nil? || datasets.empty?
-18:        `pg_dump -c #{@...abase} > #{storage_path(datasets)}`
-19-      end
-20-      
-21-      def restore(datasets)
-22-        store = storage_path(datasets)
-23-        if File.file?(store)
-24:          `psql -U #{@...rname} -p #{@...sword} -e #{@...abase} < #{store}`
-25-          true
-26-        end
-27-      end
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-Advisory: http://www.vapid.dhs.org/advisories/codders-dataset-1.3.2.1.html
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
