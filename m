@@ -1,28 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/6
-Message-ID: <5318848E.3030303@redhat.com>
-Date: Thu, 06 Mar 2014 15:22:06 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/23
+Message-ID: <20140926152825.GA5414@kludge.henri.nerv.fi>
+Date: Fri, 26 Sep 2014 18:28:25 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: cloud-init DNS resolution fix
+Subject: CVE request: TYPO3-EXT-SA-2014-012
 Content-Type: text/plain; charset=utf-8
 
-Prior to version 0.7.0, cloud-init could send requests for EC2 instance 
-data to untrusted systems:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://bugs.launchpad.net/cloud-init/+bug/1040200
-http://bazaar.launchpad.net/~cloud-init-dev/cloud-init/trunk/revision/635
+Can I get two 2014 CVEs for following vulnerabilities, thanks.
 
-This could allow someone who has control over a suitable domain name to 
-obtain root rights on an affected system.
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-012/
 
-This was reported and fixed silently in 2012, so it would need a 2012 
-CVE name.
+It has been discovered that the extension "JobControl" (dmmjobcontrol) is
+susceptible to Cross-Site Scripting and SQL Injection.
 
-(This issue is not specific to cloud-init, there seem to be some wget 
-scripts out there which exhibit the same behavior, but it's probably 
-some custom stuff that's not distributed anywhere, so no CVE is needed 
-for that.)
+Release Date: September 25, 2014
+Component Type: Third party extension. This extension is not a part of the TYPO3
+default installation.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+Affected Versions: version 2.14.0 and below
+Vulnerability Type: Cross-Site Scripting, SQL Injection
+Severity: High
+Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:A/I:P/A:N/E:H/RL:U/RC:C
+
+Problem Description: The extension fails to properly escape user input in SQL
+and HTML context.
+
+Solution: Versions of this extension that are known to be vulnerable will no
+longer be available for download from the TYPO3 Extension Repository. The
+extension author is longer maintaining this extension. Please uninstall and
+delete the extension folder from your installation.
+
+Credits: Credits go to Hans-Martin Münch who discovered and reported the issues.
+
+- ---
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iEYEARECAAYFAlQlhhkACgkQXf6hBi6kbk8KGgCeNHD9OCRRuD4NSceJcs/7F5bB
+TugAn3E3Tw1NaD82hrIzDHEgApJ7e4pl
+=uzcS
+-----END PGP SIGNATURE-----
