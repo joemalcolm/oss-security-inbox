@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/3
-Message-ID: <CABRvpqCOFA+etze+LPjy4mzYWCTqQWgv9sdzTweSzCS=PG8iew@mail.gmail.com>
-Date: Thu, 20 Nov 2014 20:17:39 -0500
-From: Andrew Nacin <nacin@...dpress.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: WordPress 4.0.1 Security Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/19
+Message-ID: <54256634.1040405@debian.org>
+Date: Fri, 26 Sep 2014 14:12:20 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Nothing yet. I have a request drafted and I'll follow up with it soon. It
-has the proper details / affected versions etc.
-On Nov 20, 2014 8:09 PM, "Kurt Seifried" <kseifried@...hat.com> wrote:
+On 26/09/14 00:43, Chet Ramey wrote:
+>> I'm arguing that privilege boundaries should take responsibility for
+>> their nature as a privilege boundary, and not pass the buck to the
+>> code that they call into.
+>
+> It doesn't help if some process sets ruid = euid and execs bash,
+> but bash doesn't import functions from the environment if
+> ruid != euid.
 
-> I'm not aware of any being assigned. Andrew?
->
-> On 20/11/14 01:47 PM, Henri Salo wrote:
-> > https://wordpress.org/news/2014/11/wordpress-4-0-1/
-> >
-> > WordPress 4.0.1 is now available. This is a critical security release
-> for all
-> > previous versions and we strongly encourage you to update your sites
-> > immediately.
-> >
-> > Can I get CVEs for vulnerabilities fixed in this release, thank you. I
-> am not
-> > sure if some or any of these has been requested already.
-> >
-> > ---
-> > Henri Salo
-> >
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
->
+Yes, what I'm saying is that in that situation, we should blame the
+"some process", not bash. It is the "some process" that opted to act as
+a privilege boundary (by being setuid or whatever), so it should be
+responsible for taking extra care when it executes non-trivial code
+(e.g. bash) with its elevated privileges.
+
+    S
 
