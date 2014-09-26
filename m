@@ -1,54 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/1
-Message-Id: <201402080052.s180qkHq003809@linus.mitre.org>
-Date: Fri, 7 Feb 2014 19:52:46 -0500 (EST)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request and heads-up on insecure temp file handling in unpack200 (OpenJDK, Oracle Java)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/33
+Message-ID: <5425D1F1.2030606@FreeBSD.org>
+Date: Fri, 26 Sep 2014 15:52:01 -0500
+From: Bryan Drewery <bdrewery@...eBSD.org>
+To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
+CC: Christos Zoulas <christos@...las.com>
+Subject: Re: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> I'm not sure if this affects IBM's JDK, but it seems to affect
-> Oracle's (based on a quick test on my mac)
+On 9/26/2014 9:13 AM, Christos Zoulas wrote:
+> On Sep 26,  1:47pm, john.haxby@...cle.com (John Haxby) wrote:
+> -- Subject: Re: [oss-security] Re: CVE-2014-6271: remote code execution throu
 > 
-> the unpack200 program included in OpenJDK did not properly handle the
-> logfile properly. If the the log file was unable to be opened, it
-> would create /tmp/unpack.log instead as the fallback, but do so in an
-> insecure manner, as shown in unpack.cpp (the below is from OpenJDK 6):
+> | It's not so much the known attacks -- redefining ls, unset, command,
+> | typeset, declare, etc -- it's the future parser bugs that we don't yet
+> | know about.
+> | 
+> | A friend of mine said this could be a vulnerability gift that keeps on
+> | giving.
 > 
-> 4732 void unpacker::redirect_stdio() {
-> ...
-> 4759     sprintf(log_file_name, "/tmp/unpack.log");
-
-> 4761     if ((errstrm = fopen(log_file_name, "a+")) != NULL) {
+> I think that at this point the conservative approach is best, so
+> until the bash author figures what the best solution is, the feature
+> is disabled by default for NetBSD. It is not wise to expose bash's
+> parser to the internet and then debug it live while being attacked.
 > 
-> The same exists in OpenJDK 7 and 8.
+> christos
 > 
-> This could allow a malicious local attacker to conduct local attacks,
-> such as symlink attacks, where a file could be overwritten if the user
-> running unpack200 had write permissions.
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737562
-> https://bugzilla.redhat.com/show_bug.cgi?id=1060907
 
-Use CVE-2014-1876.
+FreeBSD has taken a similar approach. We have used Christos' patch and
+disabled the feature by default.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+https://svnweb.freebsd.org/changeset/ports/369341
 
-iQEcBAEBAgAGBQJS9X4vAAoJEKllVAevmvmsY18H/jhe8ReMewYm51zFXb3Ma5vg
-hzG5hmArGvX6DaEXj8qwtT1ifUys2KFq/EaIYcQVtoivWeZgXh5LERfjUybl0aPY
-4pr9U1quWra7QJtTTr49mi48mJS/Ef1Lj0yQ2GxwYyOVN7250SuUMjkT6euXWBxd
-ol6/Y/rYzabU+k/1OXRSU1auHvjX3nj++vontWv5clIDDDTPMacStLn5JbYImcoi
-UQJjuVFhAwu2Ue9ztpC0+OBpftFkMsX+y3Xzx92c2+orerDPioqdE5JzVBSp8Ei1
-F7Ai06g0QOjxZc9SUFdgGAzQyLyM3gPfk2P8HnMVvNeps9u9Wt8DiEWM8/xKCkg=
-=d/PB
------END PGP SIGNATURE-----
+Regards,
+Bryan Drewery
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
