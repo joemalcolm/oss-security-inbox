@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/24
-Message-ID: <545D366F.9050703@redhat.com>
-Date: Fri, 07 Nov 2014 22:15:27 +0100
-From: Eric Blake <eblake@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/11
+Message-ID: <54254455.7030408@oracle.com>
+Date: Fri, 26 Sep 2014 11:47:49 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: random number generators - rand(), random(), etc
+Subject: Re: Re: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-On 11/07/2014 09:49 PM, jb wrote:
-> Hi,
-> could you please take a look at this ?
-> https://sourceware.org/ml/libc-alpha/2014-11/msg00143.html
+On 26/09/14 01:23, Ángel González wrote:
+> Forwarding to the oss-security thread the patch I sent to bug-bash 
+> 1 hour ago.
+> 
+> The trick here is to delay parsing of functions coming from the
+> environment until they are actually needed.
+> 
+> Thus extra code (CVE-2014-6271) or even a parsing vulnerability like
+> CVE-2014-7169 won't be triggered unless you attempt to run the exported
+> function (or you use a builtin such as declare or type that must print
+> the code, things like type -t are safe to use).
 
-Anything in particular we're supposed to look at?  Besides the obvious
-fact that anyone using rand() or random() in a security-conscious
-program should be shot, and therefore, any possible bug in the
-implementation of these notoriously weak functions shouldn't have any
-implication on programs that use secure random number sources?
+Even with this?
 
--- 
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
+type='() { echo hi there; }' bash
 
+(Or the added stuff from Florian's patch).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
+I got myself into a right old mess by redefining declare, typeset, unset
+and command.
+
+> 
+> It can be applied standalone (and remain compatible with older bash
+> versions), or it could be combined with some of the other patches.
+> It also makes bash more efficient by not parsing unused functions :)
+> 
+> Although it passes the testsuite, it has only been lightly tested, don't
+> install in your nuclear plant yet. 😉
+
