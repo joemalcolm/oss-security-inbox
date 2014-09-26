@@ -1,106 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/6
-Message-ID: <548AEFF8.9020907@reactos.org>
-Date: Fri, 12 Dec 2014 14:39:04 +0100
-From: Pierre Schweitzer <pierre@...ctos.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/1
+Message-ID: <5424BC3B.9080906@case.edu>
+Date: Thu, 25 Sep 2014 21:07:07 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: denial of service in suricata
+CC: Solar Designer <solar@...nwall.com>, chet.ramey@...e.edu, Tavis Ormandy <taviso@...xchg8b.com>, lcamtuf@...edump.cx
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 9/24/14, 9:30 PM, Solar Designer wrote:
+> On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
+>> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
+>>> On 9/24/14, 5:32 PM, Solar Designer wrote:
+>>>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
+>>>>> Tavis Ormandy just tweetet this:
+>>>>> https://twitter.com/taviso/status/514887394294652929
+>>>>>
+>>>>> The bash patch seems incomplete to me, function parsing is still
+>>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+>>>>
+>>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
+>>>> Tavis on this "reply".
+>>>
+>>> I have a fix for this.
+>>
+>> Can you provide a pointer to the patch?  I put together a patch that
+>> changed the report_error() to fatal_error() as I wasn't able to see
+>> how to reset the parser state.  Was just about to send it out...
 
-On 12/12/2014 02:14 PM, Victor Julien wrote:
-> On 12/12/2014 02:10 PM, Pierre Schweitzer wrote:
->> So, here to have an attack possible, it would require to send
->> gzipped traffic (as expressed in the bug report) and to "hope"
->> that zlib somehow fails in the process (due to low memory
->> situation or to old zlib) with Z_STREAM_ERROR, so that we have
->> cascade with a NULL pointer being propagated so that there's a
->> segfault?
->> 
->> Or am I wrong with my scenario?
-> 
-> No, I think this could be an attack vector indeed. Technically I
-> think this was an issue in libhtp and not suricata btw. Not sure if
-> that matters much, suri is the main user to libhtp as far as I
-> know.
+I have positive confirmation that this patch works, so here are patches for
+bash versions bash-2.05b to bash-4.3.
 
-I wondered the same actually.
-But, I just replaced the usage of Suricata. And for an attacker,
-that's a real opportunity. Take down the IDS and do your nasty work.
-So, I considered it as a security vulnerability for IDS itself.
-Especially since Suricata is shipped directly with libhtp, it's not an
-external dependency.
-For the lib, I believe it's a bit too wide.
+I will probably push these out tomorrow.
 
-But, well, comments are welcome on this (and up to MITRE after all).
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
 
-Just for the record, the pull request on libhtp is available here:
-https://github.com/OISF/libhtp/pull/82
+View attachment "bash205b-009" of type "text/plain" (1013 bytes)
 
-Nevertheless thanks for your feedback Victor!
+View attachment "bash30-018" of type "text/plain" (1414 bytes)
 
-Cheers,
-Pierre
+View attachment "bash31-019" of type "text/plain" (1413 bytes)
 
-> 
-> Cheers, Victor
-> 
->> On 12/12/2014 02:02 PM, Victor Julien wrote:
->>> On 12/12/2014 01:56 PM, Pierre Schweitzer wrote:
->>>> It appears, looking at bug #1272 [1] in Suricata, that it
->>>> was possible to crash Suricata with specific packets due to a
->>>> bug in the libhtp (which got fixed with libhtp 0.5.16).
->>>> 
->>>> It got fixed with the release 2.0.5 from Suricata.
->>>> 
->>>> Was a CVE already assigned to this issue? Otherwise can a CVE
->>>> be assigned?
->>>> 
->>>> With my best regards,
->>>> 
->>>> [1]: https://redmine.openinfosecfoundation.org/issues/1272
->>>> 
->>>> 
->>> 
->>> To our knowledge this couldn't be triggered by specific
->>> traffic conditions. Rather it seemed to be an issue when:
->>> 
->>> - older zlib versions were used that didn't always setup
->>> properly for a reason unknown to us
->>> 
->>> OR
->>> 
->>> - extreme memory pressure (malloc's failing)
->>> 
->>> Cheers, Victor
->>> 
->> 
->> 
-> 
-> 
+View attachment "bash32-053" of type "text/plain" (1413 bytes)
 
+View attachment "bash40-040" of type "text/plain" (1566 bytes)
 
-- -- 
-Pierre Schweitzer <pierre@...ctos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+View attachment "bash41-013" of type "text/plain" (1492 bytes)
 
-iQIcBAEBAgAGBQJUiu/4AAoJEHVFVWw9WFsLJ20P+QH9+AYBu98340Mew8U3x3f7
-w/PsCw5GlihMahZmsTXcjA2NxupOYdKu2AYBWPKuwPnAKl0BSYQFTJVRgchaS+WQ
-DeGFG2T+vXM7bjjwK+ZR+ahGipwsxk9uaJbHp/uoUPzh92+9Uuj12Bj7hMn8eT9H
-OZnso9EejGofgYZkyfubZKYZ6e6I3KW5E7L5/iG3Jq/rb1fu9lcyC0kTeQiLOWJF
-wUw2pLU1faXVr1fMls7Ny/4Cy5voSdC6GClKrji+OMMBSaRLnqjn5fMGUfDuKPuS
-lpdrGYGhZOZr/v4bLB6Y1wvYqisHe1svj4EAtBx6CbY5C9FM2/PUgU7St55v6Hjl
-UQp/eJR5epqFFUQoAROTH2dqUvgCv9YvqSg6bbzKJaqe3DZyk+bwDcwrLT3i8ERj
-Lb+ZHCaFHs9kIo1Bk+kL5pZl2edFsSCjyHDwrACyNN8IIno7/MmvVvw+EBqqxK14
-IlXOiL8kb3tJJ6aN51+ZvxnfRSYuCmfde7htWI2ZXtloFa8iY/UdaYrIkv43kiAU
-VjT9pqm6yCBOPaLsTtIKiXpOC0/XbCAF+R5KqMENHrN0aunGD29soBvW09nharK4
-9uYqejn+Pll2EJa0rD30MFh7Jp4wP7W3TcpO7/7dmO0m70F3xF3kLOXp3Ht/PuDy
-21AgwtfZ0F6SrtG2FdaI
-=gffl
------END PGP SIGNATURE-----
+View attachment "bash42-049" of type "text/plain" (1561 bytes)
+
+View attachment "bash43-026" of type "text/plain" (1576 bytes)
