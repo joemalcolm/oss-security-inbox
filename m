@@ -1,48 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/9
-Message-ID: <87sihocg6d.fsf@mid.deneb.enyo.de>
-Date: Wed, 12 Nov 2014 21:33:30 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/31
+Message-ID: <20140926181315.GX18948@frohike.xs4all.nl>
+Date: Fri, 26 Sep 2014 20:13:15 +0200
+From: Peter Bex <Peter.Bex@...all.nl>
 To: oss-security@...ts.openwall.com
-Subject: Additional authority files
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-I noticed that for two high-profile bugs this year, we hit a
-limitation with the CVE authority file:
+On Fri, Sep 26, 2014 at 12:07:34PM -0600, Kurt Seifried wrote:
+> This is a classic case of "yes the correct thing to do is..." but the
+> reality is "we should fix this centrally rather than try to make
+> everyone do the right thing (aka boiling the ocean)". This is like tmp
+> vulns, it's 2014, the solution for tmp vulns is polyinstantiated /tmp
+> per user, and per application /tmp dirs in addition to this. Solve it
+> once centrally (e.g. in PAM/systemd) and boom, done.
+> 
+> We should always try to do the best/safest thing because most devs are
+> going to try to do the most insanely dangerous thing.
 
-We had no proper way to refer to the prefix/suffix patch for bash
-because it does not address a specific vulnerability. All the
-individual vulnerabilities received separate CVE entries, and none was
-left we could associate with the prefix/suffix patch.
+That's the first sensible thing I've read on this whole topic :)
 
-For POODLE, we did not have CVE identifiers associated for the
-fallback behavior because it was not considered a vulnerability.  We
-do not have ways to refer to specific client behavioral changes (even
-where this is appropriate, such as sending TLS_FALLBACK_SCSV during
-fallback).  We did not have a way to refer to TLS_FALLBACK_SCSV
-support in server code, either.
-
-(In the POODLE case, we also saw that putting the year into the name
-can be quite misleading—the vulnerability which was considered
-CVE-worthy was disclosed around 2002, discussed in an OpenSSL advisory
-in 2003, and should have been associated with that timeframe, and not
-the year 2014.)
-
-Recent discussions about issues brought to this list suggest to me
-that the reluctance to label things as a vulnerability continues.  (I
-won't speculate about the reasons.)  Unfortunately, it happens too
-often that people operate systems well outside their documented
-security margins—which allows vendors disclaim any security
-vulnerability, but these misguided practices still can cause
-operational issues which cannot be ignored, require mitigations, and
-discussions would benefit from the clarity only an authority file can
-bring.
-
-Consequently, I wonder if we need separate authority files for
-Potentially Unwanted Behaviors (comparable to Potentually Unwanted
-Applications, avoiding the vulnerability stigma just as PUAs avoid the
-“malware” label) and Recommended Behavioral Changes (same thing, but
-on the fixes side).  This would help us to make sure we talk about the
-same things, just as CVE does now for vulnerabilities.
-
-Thoughts?
+Cheers,
+Peter
+-- 
+http://www.more-magic.net
