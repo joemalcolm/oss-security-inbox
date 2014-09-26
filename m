@@ -1,48 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/3
-Message-Id: <8B0E1EA6-2266-4CF4-A2AF-B1EC7D9EE94A@stufft.io>
-Date: Thu, 11 Sep 2014 03:17:03 -0400
-From: Donald Stufft <donald@...fft.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/39
+Message-ID: <1411771342.2031.5.camel@16bits.net>
+Date: Sat, 27 Sep 2014 00:42:22 +0200
+From: Ángel González <angel@...its.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: pinocchio tmp vuln
+Subject: Re: Re: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-
-> On Sep 9, 2014, at 11:38 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+John Haxby wrote
+> On 26/09/14 01:23, Ángel González wrote:
+> > Forwarding to the oss-security thread the patch I sent to bug-bash 
+> > 1 hour ago.
+> > 
+> > The trick here is to delay parsing of functions coming from the
+> > environment until they are actually needed.
+> > 
+> > Thus extra code (CVE-2014-6271) or even a parsing vulnerability like
+> > CVE-2014-7169 won't be triggered unless you attempt to run the exported
+> > function (or you use a builtin such as declare or type that must print
+> > the code, things like type -t are safe to use).
 > 
+> Even with this?
 > 
+> type='() { echo hi there; }' bash
 > 
-> On 09/09/14 02:34 AM, Steve Kemp wrote:
->>> I have to say I don't understand at all why someone would be going
->>> through random packages from PyPi (especially test automation related)
->>> and searching for possible security issues.
->> 
->>  Because although the chances of them being exploited are low they
->> are genuine issues which have security implications.
->> 
->>  There is copious documentation online about how file races are
->> bad, including this quick reference:
->> 
->>    https://www.securecoding.cert.org/confluence/display/seccode/FIO21-C.+Do+not+create+temporary+files+in+shared+directories
->> 
->>  PyPi?  've no idea why that was chosen, but I expect because it
->> is a large mass of code that has had little similar attention paid
->> to it in the past.  node.js will probably be next, I'm sure lots of
->> modules exist created by inexperienced developers who haven't
->> considered the implications of posting new code libraries.
-> 
-> Actually one reason I picked PyPI is simply because it has
-> popularity/usage info, each package web page says how many times it was
-> downloaded in the last day/week/month, so I picked a quick an easy audit
-> of packages downloaded more than 5000 times in the last month.
+> (Or the added stuff from Florian's patch).
+
+
+This patch doesn't remove the exportable functions feature. Thus, it is
+a priori unsafe to run any command using an identifier which can be set
+in the environment by an attacker*
+
+I mentioned that `type -p' was safe meaning "not triggering the parsing
+of the name passed as argument", as I expected that a careful script
+might be running type -p on untrusted variables before doing something
+with them. And indeed it is safe… if they use the real 'type' builtin.
 
 
 
-If there’s anything PyPI can do to help make looking for security bugs on
-stuff hosted on PyPI easier just shoot me an email. I’m an admin there.
+> I got myself into a right old mess by redefining declare, typeset, unset
+> and command.
 
----
-Donald Stufft
-PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+Given that builtins have precedence over builtins, you can get trapped
+very hard. You can't use builtin, unset, set, declare, eval…
 
+
+IMHO, the best a script can do to protect itself (and only after patch
+25 restricts the names of exported functions) is:
+
+
+> if [ "$1" != "--environment-cleaned" ]; then
+>  /usr/bin/env -i "$0" --environment-cleaned "$@"
+> else
+>  shift
+>  <do things>
+> fi
+
+
+Assuming that env(1) is on /usr/bin/env (it's /bin/env on some unix),
+argv[0] is the real script name, and it has +x (instead of needing to be
+passed as an argument to the shell).
+
+Best regards
+
+
+* Or conversely, it is unsafe to let an attacker set an environment
+variable matching a command name later used without sanitization. 
 
