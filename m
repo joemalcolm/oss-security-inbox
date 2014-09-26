@@ -1,43 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/01/8
-Message-Id: <201404012016.s31KFuCh023297@linus.mitre.org>
-Date: Tue, 1 Apr 2014 16:15:56 -0400 (EDT)
-From: cve-assign@...re.org
-To: pmatouse@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux Kernel, two security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/35
+Message-ID: <20140926211441.GB31108@openwall.com>
+Date: Sat, 27 Sep 2014 01:14:41 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Sep 25, 2014 at 07:40:50PM -0400, Chet Ramey wrote:
+> On 9/25/14, 12:19 PM, Solar Designer wrote:
+> 
+> > I think Florian's prefix-suffix patch is actually a better way to go
+> > (right now, unless there's some drawback I am not yet aware of), and at
+> > a later time function imports should require to be enabled with a
+> > non-default option.
+> 
+> Yes, some variant of that will be the next thing to work on.
 
-> second commit mentioned in the bugzilla,
+I suggest that you use Florian's prefix-suffix convention as-is (not
+necessarily the code, but same prefixes and suffixes, so that your
+official change would be compatible with Florian's patch).  This is
+because multiple distros have adopted Florian's patch already.  While
+we'll be breaking compatibility for function exports/imports across
+pre-patch and post-patch bash versions anyway, at least you can maintain
+compatibility between distros' bash packages and your official releases.
 
-> that also fixes a crash.
-
-> https://bugzilla.kernel.org/show_bug.cgi?id=70551#c18
-
-This apparently has the:
-
-  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1d147bfa64293b2723c4fec50922168658e613ba
-
-change in 3.13.7.
-
-Use CVE-2014-2706.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTOx0mAAoJEKllVAevmvmsaXsH/ip5f2S87KPG8BAK2KYZ86vz
-MwKtI7IicLJToltRdwoUeqrf4Qh747/nYHh16cNkvsRN7XYDUbAJWWIKzFAOi3S1
-CnWehZVwPyKksWCpXjNMrhFcqehXS0FuM9jokvAWGcHP3K4AikR55T60zTTvgtuJ
-7DpGGG6GPLoFI5NT4hGCA9PZ0KH1SQpF/p4Y+aRJ/urvedj4EyiIBqgnF2KFQbwc
-CjZWkaz33OUE6t6kd1+Yzxlv2EaY+v0siA+S6XxLLfcrMjTfX0B+d/bt0Pv7ks0H
-EcRdw653spFEjiBxIuYhivyvuR1Go9TBL7w8X/LL45p6QiEpS2UnaiuroaLc77c=
-=vY9U
------END PGP SIGNATURE-----
+Alexander
