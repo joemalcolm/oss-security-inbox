@@ -1,87 +1,252 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/4
-Message-ID: <20140618073628.GB27915@suse.de>
-Date: Wed, 18 Jun 2014 09:36:28 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/7
+Message-ID: <1411691031.31097.1.camel@16bits.net>
+Date: Fri, 26 Sep 2014 02:23:51 +0200
+From: Ángel González <angel@...its.net>
 To: oss-security@...ts.openwall.com
-Subject: docker VMM breakout
+Subject: Re: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Forwarding to the oss-security thread the patch I sent to bug-bash 
+1 hour ago.
 
-As per list policy, here is the public forward.
-The link has been redacted to reflect public location.
-Its fixed in docker 1.0 since CAP_DAC_READ_SEARCH is no
-longer available.
+The trick here is to delay parsing of functions coming from the
+environment until they are actually needed.
 
-Other FS-related threats to container based VMM's
-that have been discussed:
+Thus extra code (CVE-2014-6271) or even a parsing vulnerability like
+CVE-2014-7169 won't be triggered unless you attempt to run the exported
+function (or you use a builtin such as declare or type that must print
+the code, things like type -t are safe to use).
 
-- subvolume related FS operations (snapshots etc)
-- FS ioctl's that accept FS-handles as well (XFS)
-- CAP_DAC_READ_SEARCH also defeats chroot and other
-  bind-mount containers (privileged LXC)
-- CAP_MKNOD might be a problem too (still available in docker 1.0)
-  depending on the drivers available in the kernel
+It can be applied standalone (and remain compatible with older bash
+versions), or it could be combined with some of the other patches.
+It also makes bash more efficient by not parsing unused functions :)
 
+Although it passes the testsuite, it has only been lightly tested, don't
+install in your nuclear plant yet. 😉
 
------ Forwarded message from Sebastian Krahmer -----
-
-Subject: [vs] docker VMM breakout
-Date: Mon, 16 Jun 2014 10:56:16 +0200
-
-Hi
-
-I dont know if this really belongs here, but better safe
-than sorry. There seem to be distributors that actually ship
-docker as a 'solution' (to whatever problem :).
-
-I already contacted upstream, they say its not working
-anymore for them in version 1.0. I cannot test this, as I only
-have docker 0.11 running (on a 3.11 kernel). I am not really
-sure they really fixed the problem, they just told me that
-they changed "something" in the capability handling.
-
-In 0.11 the problem is that the apps that run in the container
-have CAP_DAC_READ_SEARCH and CAP_DAC_OVERRIDE which allows the
-containered app to access files not just by pathname (which would be
-impossible due to the bind mount of the rootfs) but also by handles via
-open_by_handle_at(). Handles are mostly 64bit values and can be kind
-of pre-computed as they are inode-based and the inode of / is 2.
-So you can go ahead and walk / by passing a handle of 2 and
-search the FS until you find the inode# of the file you want
-to access. Even though you are containered somewhere in /var/lib.
-
-A PoC is available here:
-
-http://stealth.openwall.net/xSports/shocker.c
-
-Note that some FS (namely XFS) have their own fhandle ioctls,
-so if you share the XFS fs structs with the container, there
-might be different attack vectors despite of capability handling.
-Since docker is heavily LXC based, any other LXC based container
-solution might be at risk too. (I think file handles are a generic problem
-for container based VMMs).
-
-I request a CRD of June 30th. If within the next 2 days no other distributor
-objects, I will already disclose this on June 18th, because the overall
-issue is not really a critical thing.
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+Best regards
 
 
+--------- Original message --------
+Subject: Re: Issues with exported functions
+Date: Fri, 26 Sep 2014 00:58:43 +0200
 
------ End forwarded message -----
+Lazily import functions coming from the environment
 
--- 
+diff --git a/variables.h b/variables.h
+index 1a783b9..f496b9d 100644
+--- a/variables.h
++++ b/variables.h
+@@ -125,6 +125,7 @@ typedef struct _vlist {
+ #define att_imported	0x0008000	/* came from environment */
+ #define att_special	0x0010000	/* requires special handling */
+ #define att_nofree	0x0020000	/* do not free value on unset */
++#define att_unparsed	0x0040000	/* it was not parsed after loading from environ */
+ 
+ #define	attmask_int	0x00ff000
+ 
+@@ -153,6 +154,7 @@ typedef struct _vlist {
+ #define imported_p(var)		((((var)->attributes) & (att_imported)))
+ #define specialvar_p(var)	((((var)->attributes) & (att_special)))
+ #define nofree_p(var)		((((var)->attributes) & (att_nofree)))
++#define unparsed_p(var)		((((var)->attributes) & (att_unparsed)))
+ 
+ #define tempvar_p(var)		((((var)->attributes) & (att_tempvar)))
+ 
+diff --git a/variables.c b/variables.c
+index 92a5a10..a0e42ff 100644
+--- a/variables.c
++++ b/variables.c
+@@ -351,34 +351,13 @@ initialize_shell_variables (env, privmode)
+ 	 the environment in privileged mode. */
+       if (privmode == 0 && read_but_dont_execute == 0 && STREQN ("() {", string, 4))
+ 	{
+-	  string_length = strlen (string);
+-	  temp_string = (char *)xmalloc (3 + string_length + char_index);
+ 
+-	  strcpy (temp_string, name);
+-	  temp_string[char_index] = ' ';
+-	  strcpy (temp_string + char_index + 1, string);
+-
+-	  /* Don't import function names that are invalid identifiers from the
+-	     environment, though we still allow them to be defined as shell
+-	     variables. */
+-	  if (legal_identifier (name))
+-	    parse_and_execute (temp_string, name, SEVAL_NONINT|SEVAL_NOHIST|SEVAL_FUNCDEF|SEVAL_ONECMD);
+-
+-	  if (temp_var = find_function (name))
+-	    {
+-	      VSETATTR (temp_var, (att_exported|att_imported));
+-	      array_needs_making = 1;
+-	    }
+-	  else
+-	    {
+-	      if (temp_var = bind_variable (name, string, 0))
++	      if (temp_var = bind_function (name, 0))
+ 		{
+-		  VSETATTR (temp_var, (att_exported | att_imported | att_invisible));
++		  VSETATTR (temp_var, (att_exported | att_imported | att_unparsed));
++		  SET_EXPORTSTR(temp_var, savestring (string));
+ 		  array_needs_making = 1;
+ 		}
+-	      last_command_exit_value = 1;
+-	      report_error (_("error importing function definition for `%s'"), name);
+-	    }
+ 	}
+ #if defined (ARRAY_VARS)
+ #  if ARRAY_EXPORT
+@@ -1049,8 +1028,11 @@ print_var_function (var)
+ 
+   if (function_p (var) && var_isset (var))
+     {
+-      x = named_function_string ((char *)NULL, function_cell(var), FUNC_MULTILINE|FUNC_EXTERNAL);
+-      printf ("%s", x);
++	  if (!maybe_parse_unparsed_func (var))
++	    {
++          x = named_function_string ((char *)NULL, function_cell(var), FUNC_MULTILINE|FUNC_EXTERNAL);
++          printf ("%s", x);
++	    }
+     }
+ }
+ 
+@@ -3929,7 +3911,16 @@ make_env_array_from_var_list (vars)
+       if (var->exportstr)
+ 	value = var->exportstr;
+       else if (function_p (var))
+-	value = named_function_string ((char *)NULL, function_cell (var), 0);
++		{
++		  if (unparsed_p (var))
++		    {
++			  value = var->exportstr;
++			}
++		  else
++		    {
++			  value = named_function_string ((char *)NULL, function_cell (var), 0);
++		    }
++		}
+ #if defined (ARRAY_VARS)
+       else if (array_p (var))
+ #  if ARRAY_EXPORT
+diff --git a/execute_cmd.h b/execute_cmd.h
+index 67ae93a..4f4e3ee 100644
+--- a/execute_cmd.h
++++ b/execute_cmd.h
+@@ -27,6 +27,7 @@ extern struct fd_bitmap *new_fd_bitmap __P((int));
+ extern void dispose_fd_bitmap __P((struct fd_bitmap *));
+ extern void close_fd_bitmap __P((struct fd_bitmap *));
+ extern int executing_line_number __P((void));
++extern int maybe_parse_unparsed_func __P((SHELL_VAR*));
+ extern int execute_command __P((COMMAND *));
+ extern int execute_command_internal __P((COMMAND *, int, int, int, struct fd_bitmap *));
+ extern int shell_execve __P((char *, char **, char **));
+diff --git a/execute_cmd.c b/execute_cmd.c
+index 9cebaef..df060d3 100644
+--- a/execute_cmd.c
++++ b/execute_cmd.c
+@@ -4368,6 +4368,46 @@ execute_builtin (builtin, words, flags, subshell)
+   return (result);
+ }
+ 
++int
++maybe_parse_unparsed_func (var)
++     SHELL_VAR *var;
++{
++	int result, string_length, char_index;
++	char *temp_string;
++
++	if (!unparsed_p(var))
++    return 0;
++
++	string_length = strlen (var->exportstr);
++	char_index = strlen (var->name);
++	temp_string = (char *)xmalloc (3 + string_length + char_index);
++
++	strcpy (temp_string, var->name);
++	temp_string[char_index] = ' ';
++	strcpy (temp_string + char_index + 1, var->exportstr);
++
++	/* Don't import function names that are invalid identifiers from the
++	 environment, though we still allow them to be defined as shell
++	 variables. */
++	result = 1;
++	if (legal_identifier (var->name) &&
++			!(result = parse_and_execute (temp_string, var->name, SEVAL_NONINT|SEVAL_NOHIST|SEVAL_FUNCDEF|SEVAL_ONECMD)))
++		{
++			var = find_function (var->name);
++			VSETATTR (var, (att_exported|att_imported));
++			VUNSETATTR(var, att_unparsed);
++		}
++	else
++		{
++			if (!legal_identifier (var->name))
++				free (temp_string);
++			last_command_exit_value = 1;
++			report_error (_("error importing function definition for `%s'"), var->name);
++			return result;
++		}
++	return 0;
++}
++
+ static int
+ execute_function (var, words, flags, fds_to_close, async, subshell)
+      SHELL_VAR *var;
+@@ -4403,6 +4443,10 @@ execute_function (var, words, flags, fds_to_close, async, subshell)
+   GET_ARRAY_FROM_VAR ("BASH_LINENO", bash_lineno_v, bash_lineno_a);
+ #endif
+ 
++  if (result = maybe_parse_unparsed_func (var))
++     return result;
++
++
+   tc = (COMMAND *)copy_command (function_cell (var));
+   if (tc && (flags & CMD_IGNORE_RETURN))
+     tc->flags |= CMD_IGNORE_RETURN;
+@@ -4502,7 +4546,7 @@ execute_function (var, words, flags, fds_to_close, async, subshell)
+     push_args (words->next);
+ 
+   /* Number of the line on which the function body starts. */
+-  line_number = function_line_number = tc->line;
++  line_number = function_line_number = tc ? tc->line : 0;
+ 
+ #if defined (JOB_CONTROL)
+   if (subshell)
+diff --git a/builtins/type.def b/builtins/type.def
+index bd9ecfc..25c1943 100644
+--- a/builtins/type.def
++++ b/builtins/type.def
+@@ -274,7 +274,8 @@ describe_command (command, dflags)
+ 	  printf (_("%s is a function\n"), command);
+ 
+ 	  /* We're blowing away THE_PRINTED_COMMAND here... */
+-
++      if (result = maybe_parse_unparsed_func (func))
++		return result;
+ 	  result = named_function_string (command, function_cell (func), FUNC_MULTILINE|FUNC_EXTERNAL);
+ 	  printf ("%s\n", result);
+ 	}
+diff --git a/builtins/setattr.def b/builtins/setattr.def
+index 3be3189..f25558e 100644
+--- a/builtins/setattr.def
++++ b/builtins/setattr.def
+@@ -348,7 +348,7 @@ show_var_attributes (var, pattr, nodefs)
+      int pattr, nodefs;
+ {
+   char flags[16], *x;
+-  int i;
++  int i, result;
+ 
+   i = 0;
+ 
+@@ -411,6 +411,8 @@ show_var_attributes (var, pattr, nodefs)
+      reused as input to recreate the current state. */
+   if (function_p (var) && nodefs == 0 && (pattr == 0 || posixly_correct == 0))
+     {
++      if (result = maybe_parse_unparsed_func (var))
++		return result;
+       printf ("%s\n", named_function_string (var->name, function_cell (var), FUNC_MULTILINE|FUNC_EXTERNAL));
+       nodefs++;
+       if (pattr == 0 && i == 1 && flags[0] == 'f')
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+
 
