@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/3
-Message-ID: <20140604055843.GB12734@openwall.com>
-Date: Wed, 4 Jun 2014 09:58:43 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Ramon de C Valle <rdecvalle@...are.com>
-Cc: oss-security@...ts.openwall.com, VMware Security Response Center <security@...are.com>, Monty Ijzerman <mijzerman@...are.com>
-Subject: Re: Request for linux-distros subscription
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/21
+Message-ID: <21541.28197.731713.679550@gargle.gargle.HOWL>
+Date: Fri, 26 Sep 2014 15:46:13 +0200
+From: rf@...eap.de
+To: oss-security@...ts.openwall.com
+CC: zeromq-dev@...ts.zeromq.org
+Subject: CVE request: zeromq
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 03, 2014 at 01:16:47PM -0700, Ramon de C Valle wrote:
-> I can attest that Monty is my colleague and the Manager of VMware Security Response Center. As a former colleague of you (Kurt) and also former linux-distros subscriber, I would like to ask for your consideration for subscribing Monty (or myself) to linux-distros on behalf of VMware. Although ESXi isn't a Linux distribution, it implements Linux-compatible system calls and provides a GNU/Linux -like ecosystem that allows many applications that are compiled on/for Linux operating systems to run seamlessly. This ecosystem includes OSS that should be supported in timely fashion pretty much like like any other Linux distribution on the list. It also implements a Linux kernel module interface and uses many Linux device drivers and kernel modules that also should be supported. In addition, ESXi is the base layer that many of the Linux distributions on the list rely upon and run atop of in many datacenters around the world.
+Hi,
 
-Thank you, Ramon.  This is pretty good rationale, but I feel that
-getting VMware onto linux-distros for the reasons given above would be a
-(possibly desirable) change in who the list is for.  So far, it's been
-for Linux distros, and I deliberately chose the linux-distros name for
-it.  Now a non-Linux-distro wants to be specifically on linux-distros
-(not just on distros), and be exposed to Linux-specific vulnerability
-details (albeit for good reasons).  I'd appreciate comments by others
-active in this community.
+I've taken over CVE handling for zeromq. There were two issues fixed
+recently. Could you please assign a CVE to them?
 
-Does VMware have OSS products?  Would it be reasonable to include VMware
-security advisory/contact details on our wiki?
+Matthew Hawn found that libzmq (ZeroMQ/C++) did not validate the other
+party's security handshake properly, allowing a man-in-the-middle
+downgrade attack. 
+Code commit: https://github.com/zeromq/libzmq/issues/1190
 
-http://oss-security.openwall.org/wiki/vendors
+Matthew Hawn found that libzmq (ZeroMQ/C++) did not implement a
+uniqueness check on connection nonces, and the CurveZMQ RFC was
+ambiguous about nonce validation. This allowed replay attacks.
+Code commit: https://github.com/zeromq/libzmq/issues/1191
 
-If there are specific OSS products with their own advisory/contact
-details (different from VMware's catch-all), they may be added to:
+Only ZMQ versions 4.0.x with x < 5 are affected. 4.0.5 is about to be released.
 
-http://oss-security.openwall.org/wiki/software
+Thanks,
 
-This sort of info could help us evaluate your request.
+Roland
 
-Alexander
+-------
+http://www.q-leap.com / http://qlustar.com
+          --- HPC / Storage / Cloud Linux Cluster OS ---
