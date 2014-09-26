@@ -1,46 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/7
-Message-ID: <52F0F944.6050600@redhat.com>
-Date: Tue, 04 Feb 2014 15:29:24 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: Henri Salo <henri@...v.fi>, oss-security@...ts.openwall.com
-CC: Matthew Daley <mattd@...fuzz.com>
-Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/2
+Message-Id: <20140926040205.B6FCA72E1E5@smtpvbsrv1.mitre.org>
+Date: Fri, 26 Sep 2014 00:02:05 -0400 (EDT)
+From: cve-assign@...re.org
+To: huzaifas@...hat.com, marc.deslauriers@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-On 02/04/2014 02:50 PM, Henri Salo wrote:
-> Upstream has made new version for testing. Please do comment if you have time. I
-> will also test that later and maybe provide more unit tests.
->
-> https://code.google.com/p/python-gnupg/issues/detail?id=98#c4
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I can't create a Google account right now.
+> From: Marc Deslauriers
+> Could we please get two CVE numbers assigned for the two OOB memory issues?
 
-This:
-         if not s:
-             result = "''"
-         elif len(s) >= 2 and (s[0], s[-1]) == ("'", "'"):
-             result = '"%s"' % s.replace('"', r'\"').replace("'", r"'\''")
-         elif not UNSAFE.search(s):
-             result = s
-         else:
-             result = "'%s'" % s.replace("'", r"'\''")
-         return result
 
-should be:
+> From: Florian Weimer
 
-	return "'" + s.replace("'"', r"'\''")  + "'"
+> The redir_stack issue is this:
 
-If I write "wrap them in ''", I mean single quotes, not double quotes. 
-Those behave differently in shell.
+> -static REDIRECT *redir_stack[10];
 
-If upstream really wants to strip the outer '', it can use this instead:
+This is apparently an error in handling here documents that can be
+fixed by not using the above array size.
 
-	if s[:1] == "'" and s[-1:] == "'":
-	    s = s[1:-1]
-	return "'" + s.replace("'"', r"'\''")  + "'"
+Use CVE-2014-7186.
 
-Again, this may or may not be safe in some Far-Eastern locales.
 
--- 
-Florian Weimer / Red Hat Product Security Team
+> The word_lineno issue is this
+
+>      case FOR:
+> -      if (word_top < MAX_CASE_NEST)
+> +      if (word_top + 1 < MAX_CASE_NEST)
+
+This is apparently an off-by-one error in the processing of deeply
+nested for loops.
+
+Use CVE-2014-7187.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUJORKAAoJEKllVAevmvmsX7YH/jmzRQO8Uyc5R4M3KP/yomee
+7f+WOjD5j7aLuaRATnFZD9NuuchP9jofpJfkV5nUw2QuT5+1Hb+WW7k8tQHB4+w+
+P0RZLIMAPJDe5hJGtUIOFwBfvii4lSDw1G9ij6/1ObIGETPJmO8ioT4jTP98hRvf
+F3I+RiVKjytMQhZKwvuK4gsT2b8pHcP0iAKTiSiV/U9qME4lIZkBee8a3pFSaYKw
+RlHohbPy6ucBwSRtYaTzKBNM1g6XXMrVWa09YvL8hdtJM1w2hrD+Bxm/PZnER5Sr
+VCpQqJVOZtKeykNQ95v8xIitwhEcwwy3AGXfg4urvqYAJ5EnyJKV1u2Ky97Ds5A=
+=imiZ
+-----END PGP SIGNATURE-----
