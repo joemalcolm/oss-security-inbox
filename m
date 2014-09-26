@@ -1,36 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/24
-Message-Id: <20140909184415.E47D1332025@smtpvbsrv1.mitre.org>
-Date: Tue,  9 Sep 2014 14:44:15 -0400 (EDT)
-From: cve-assign@...re.org
-To: krahmer@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: squid snmp off-by-one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/10
+Message-ID: <20140926124151.670c9f3b@pc>
+Date: Fri, 26 Sep 2014 12:41:51 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, 26 Sep 2014 09:54:40 +0100
+"Mark R Bannister" <mark@...seconsulting.co.uk> wrote:
 
-> There is an off-by-one in squid when receiving UDP SNMP
-> requests.
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=895773
+> I can't see this being a problem for Apache custom headers (the
+> variable name is turned to uppercase and prefixed by HTTP_), nor sudo
+> commands if env_reset is on (the default), but this continues to be a
+> major vulnerability for setuid/setgid scripts (S_ISUID or S_ISGID)
+> where the environment is preserved.
 
-Use CVE-2014-6270.
+scripts don't allow setuid. for a reason. It'd open a whole bunch of
+security issues.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+This could be an issue if you have a suid binary calling a script.
+There are even people writing howtos to do that to circumvent unix
+security measures. [1]
 
-iQEcBAEBAgAGBQJUD0olAAoJEKllVAevmvmsZDUH/0ffFvC6ttCpyOVws24ue+e5
-8T8HCn5Nww/SjF7JrU76s04888HqoX/FHE92Z4XNlBSFcatL6slFPkF0zdDgp1X6
-pM0eFk3AC8u3NPiFySLjpbjypTP6fS5MnsixVBo/1+vtCIxHCyNdQTxMhyhzVFI5
-Ouq0UvxDnqRmpMW0GuUjANYrGMkb44stBxBAi+iovHQuR6XMbeyRpzy9w7o6sO8s
-8/gR3O8mJjwJeVd7SHNmk0H3Rdn8GOlnvJjz9CnqoGa+2IntJl4iWoLv8H/O9qAo
-f5fbeXRwlM6FV8XIH0BLeW5PCwcTtQP4aRRkBH3MxhFp75Dny/kSOWlgEoQsbTQ=
-=rP71
------END PGP SIGNATURE-----
+I don't know (and haven't tested) if this preserves env, but the point
+is: suid binaries shouldn't do stupid things. If they do that's their
+fault. There should be extra many security conscious eyes on setuid
+bins (we recently saw a memleak in a setuid bin causing trouble
+elsewhere [2]).
+
+If you can pass any env var to a suid script and it executes
+something else you have a problem no matter what. LD_PRELOAD etc.
+
+[1] http://www.tuxation.com/setuid-on-shell-scripts.html
+[2]
+http://googleprojectzero.blogspot.de/2014/08/the-poisoned-nul-byte-2014-edition.html
+
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
