@@ -1,24 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/4
-Message-ID: <mpro.nbd15n0gwpos407lv.taviso@cmpxchg8b.com>
-Date: Wed, 3 Sep 2014 21:44:12 -0700
-From: Tavis Ormandy <taviso@...xchg8b.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/5
+Message-ID: <20140926115849.6ca9ab7f@pc>
+Date: Fri, 26 Sep 2014 11:58:49 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: heap overflow in procmail
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-Rich Felker <dalias@...c.org> wrote:
-> 
-> Unless I'm misunderstanding your report, the problem is in the formail
-> utility which comes with procmail, not procmail itself. This should be
-> clarified in the title of the vuln, perhaps as "heap overflow in
-> procmail's formail utility" rather than "heap overflow in procmail".
-> 
-> Rich
+On Thu, 25 Sep 2014 23:19:24 +0530
+Huzaifa Sidhpurwala <huzaifas@...hat.com> wrote:
 
-I'm not sure what "title" you mean, are you referring to my email subject?
-If you are, I think "<problem> in <package>" is pretty reasonable, but
-perhaps this is subjective (hah!).
+> $ (for x in {1..200} ; do echo "for x$x in ; do :"; done; for x in
+> {1..200} ; do echo done ; done) > test-script.sh $ bash test-script.sh
 
-Tavis.
+While I can reproduce the other example and get a segfault, I don't see
+anything with this. Is there a typo in it? (tried some variants to
+correct, but nothing leads to anything interesting)
+I just get a syntax error:
 
+$ (for x in {1..200} ; do echo "for x$x in ; do :"; done; for x in
+{1..200} ; do echo done ; done) > test-script.sh $ bash test-script.sh
+bash: syntax error near unexpected token `$'
+
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
