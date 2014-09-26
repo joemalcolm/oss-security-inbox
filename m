@@ -1,55 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/31
-Message-ID: <543412D2.7080106@oracle.com>
-Date: Tue, 07 Oct 2014 17:20:34 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/4
+Message-ID: <20140926093519.GA6682@rivest.lan>
+Date: Fri, 26 Sep 2014 02:35:20 -0700
+From: Dwayne Litzenberger <dlitz@...tz.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+Cc: chet.ramey@...e.edu
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On 07/10/14 16:45, Michal Zalewski wrote:
->>>    What class of bug is Shellshock? "Weird feature invented in
->>> >>    pre-Internet era"? How do you conquer this class of bugs?
->> >
->> > There are two bugs: Calling “eval” on untrusted input (a relatively common
->> > issue), and the fact that this particular code path should never have been
->> > exposed to the network at all.  The second part is not strictly a bash bug,
->> > even if we addressed that with a change in bash. If this issue had been
->> > discovered when the first CGI-enabled web server was implemented, maybe it
->> > would not have been called a bash bug, but a bug in how CGI used environment
->> > variables.
-> Possibly, but it probably wouldn't have stayed that way for long. Even
-> though the bug was introduced long before the arrival of Apache, I
-> would guess that it had affected Sendmail from day one.
-> 
-> In practice, it's usually counterproductive to try to precisely pin
-> the blame; bash is the place where we can fix it more easily and
-> produce more intuitive behavior with one less things for other
-> developers to worry about it.
+For folks like me who are running production systems that don't need 
+exported functions at all, I've hacked together a little wrapper that 
+just refuses to run bash if any environment variable's value starts with 
+a left-paren:
 
-In the particular case of shellshock, "everyone knows" that calling eval
-on untrusted input is a really bad idea.   It's bad in anything that has
-an eval mechanism.   The problem, still, with bash is that happens
-without you having any control over it.
+    https://github.com/dlitz/bash-shellshock
 
-For example,
+TL;DR:
 
-   env 'BASH_FUNC_ls()=() { echo hi there; }' bash -c ls
+    $ ls -l /bin/bash*
+    lrwxrwxrwx 1 root root      20 Sep 26 01:12 /bin/bash -> /bin/bash-shellshock
+    -rwxr-xr-x 1 root root 1029624 Sep 24 11:51 /bin/bash.real
+    -rwxr-xr-x 1 root root   10368 Sep 26 00:32 /bin/bash-shellshock
 
-Obviously that's artificial and the Florian's fix ensures that it's
-difficult to trigger remotely.   This doesn't mean that the eval over
-which you have no control is a good idea.
+    $ XX=1 XXX='(hello' /bin/bash -c env
+    bash-shellshock: Refusing to start due to possibly unsafe environment variable (see syslog)
 
-In this particular case you could argue that any application that could
-possibly exec a shell or possibly cross a trust boundary should clean
-its environment: we even have a nice easy to recognise pattern (anything
-that begins BASH_FUNC_ which also happens to strip out the other two
-implementations of the wrapper).
+It also supports log-only and variable-stripping modes, configurable 
+system-wide.
 
-However, I deliberately included "possibly" twice to encompass
-practically all non-trivial applications.  If you're going to try to pin
-a class of bug on shellshock then it's something like "uncontrollable
-eval on untrusted input" and bash is still doing this. it's not been
-fixed (excepting NetBSD and FreeBSD).
+I've made binary .deb packages for Debian and Ubuntu, for anyone foolish 
+enough to trust me.  (If you've ever run "sudo pip install pycrypto", 
+then you're already that foolish. ;)
 
-jch
+Tags and SHA256SUMS.asc files are signed using my OpenPGP key.
+
+-- 
+Dwayne C. Litzenberger <dlitz@...tz.net>
+ OpenPGP: 19E1 1FE8 B3CF F273 ED17  4A24 928C EC13 39C2 5CF7
+
+Content of type "application/pgp-signature" skipped
