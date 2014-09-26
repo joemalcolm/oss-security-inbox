@@ -1,46 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/12
-Message-ID: <CALCETrUnDQ1Nh6r9G0C-w6_txEcnqOEUt-8ew5bSR=xSUqtDDQ@mail.gmail.com>
-Date: Mon, 12 May 2014 13:34:12 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: seunshare and setexeccon issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/25
+Message-ID: <CAKcmtDxDbo+kGrrz_8XTJqwwQb3XvjZm36zfCutBgogczQNyGw@mail.gmail.com>
+Date: Fri, 26 Sep 2014 09:13:26 -0700
+From: Chris Steipp <csteipp@...imedia.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Mediawiki before 1.19.19, 1.22.11 and 1.23.4 insufficient CSS filtering of SVGs
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 12, 2014 at 12:26 PM, Solar Designer <solar@...nwall.com> wrote:
-> On Mon, May 12, 2014 at 12:21:49PM -0700, Andy Lutomirski wrote:
->> On Mon, May 12, 2014 at 12:16 PM, Solar Designer <solar@...nwall.com> wrote:
->> > On Mon, May 12, 2014 at 10:34:00AM -0700, Andy Lutomirski wrote:
->> >> I'm not sure how many CVE numbers should be assigned here.  As far as
->> >> I know, none have been assigned so far.
->> >
->> > I think you missed this:
->> >
->> > http://www.openwall.com/lists/oss-security/2014/05/08/1
->> >
->> > in which CVE-2014-3215 was assigned.
->>
->> I did.  Thanks.
+The issue was that javascript could be injected via the css, so basic xss.
+
+On Fri, Sep 26, 2014 at 4:20 AM, Hanno Böck <hanno@...eck.de> wrote:
+> Hi,
 >
-> Does your CVE request still stand, or are you satisfied with this one
-> CVE id for the interaction (not for a particular component)?
-
-I think that one CVE is for the interaction is fine.
-
+> I know, I know, this is not a "the internet is on fire"-style vuln :-)
 >
->> FWIW, it appears that common exim configurations are vulnerable, so
->> this might be worse than just an exposure.
+> However, can we please get a CVE for this:
+> https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-September/000161.html
 >
-> Please try to demo this.  Thanks!
-
-I can give it a shot, but there's no ETA, since I have no clue how to
-use exim.  I just looked at the source, and it appears to use setuid
-(as opposed to setresuid) to drop privileges, and it will dlopen
-user-requested libraries.
-
-I think that the other issues in the original post may be CVE-worthy
-despite their low impact -- they can, at best, cause sandbox
-protection to be less effective than intended.
-
---Andy
+> * (bug 69008) SECURITY: Enhance CSS filtering in SVG files. Filter
+>   <style> elements; normalize style elements and attributes before
+>   filtering; add checks for attributes that contain css; add unit tests
+>   for html5sec and reported bugs.
+>
+> If anyone wants to discuss if this is a real vulnerability, I think it
+> is: Including malicious CSS by less-privileged users could lead to UI
+> manipulation which could cause a more-privileged user to do actions
+> like giving the less-prived user more privs.
+>
+>
+> Upstream Bug:
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=69008
+>
+> Code commit:
+> https://gerrit.wikimedia.org/r/#/c/162777/
+>
+> Please assign a CVE.
+>
+> cu,
+> --
+> Hanno Böck
+> http://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
