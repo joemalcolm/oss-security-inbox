@@ -1,40 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/8
-Message-Id: <20141126074814.2114433600F@smtpvbsrv1.mitre.org>
-Date: Wed, 26 Nov 2014 02:48:14 -0500 (EST)
-From: cve-assign@...re.org
-To: roucaries.bastien@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 768369@...s.debian.org
-Subject: Re: Stack smashing in libjpeg-turbo
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/15
+Message-ID: <54256077.6060503@oracle.com>
+Date: Fri, 26 Sep 2014 13:47:51 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu, christos@...las.com
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=768369#114
+On 26/09/14 12:33, Florian Weimer wrote:
+> On 09/26/2014 10:54 AM, Mark R Bannister wrote:
+>> Testing patch 25 and 26 from Chet, it looks to me like this is still
+>> an incomplete fix.  The third vulnerability I'd like to report is the
+>> feature itself in bash that allows functions to be passed in the
+>> environment, e.g.
+>> $ env ls='() { echo vulnerable; }' bash -c ls
+>>
+>> This allows an attacker to replace a command used by a bash script
+>> with arbitrary code.  It is then down to an attacker to find a
+>> suitable command that the bash script (or any child shells) might call
+>> without a path component.
+>>
+>> I can't see this being a problem for Apache custom headers (the
+>> variable name is turned to uppercase and prefixed by HTTP_), nor sudo
+>> commands if env_reset is on (the default), but this continues to be a
+>> major vulnerability for setuid/setgid scripts (S_ISUID or S_ISGID)
+>> where the environment is preserved.
 > 
-> I created a minimal test case in around 200 lines.
+> I agree this looks scary at first glance, but we discussed this
+> previously, see for example:
 > 
-> It uses a file with the intercepted scanlines of the calls to jpeg_write_scanlines.
+>   <http://www.openwall.com/lists/oss-security/2014/09/24/20>
 > 
-> Also the Exif marker is read from such a file.
-> (And without this Exif marker the stack smash does not happen...)
+> Shell scripts derive part of their power and flexibility from their
+> openness to the execution environment.  You can tweak PATH, BASH_ENV (or
+> ENV for other Bourne-like shells), IFS, HOME, and many other variables
+> to change behavior.  There are even more knobs to affect the behavior of
+> the external commands almost all shell scripts call when they run.
+> 
+> This makes them not suitable at all for writing SUID programs or other
+> code that runs in untrusted environments.  This is well-documented, and
+> given the amount of shell scripts out there which rely on these aspects
+> of the UNIX shell design, it's not something we can change, particularly
+> not as part of a security update which system administrators are more or
+> less forced to install.
+> 
+> In your specific example, you can achieve the same effect by setting
+> PATH to a directory with a customer ls program, or by setting BASH_ENV
+> to a file which contains a definition of a function called ls.
+> 
+> Overriding external programs with shell functions in such a way has to
+> be supported.  Otherwise, scripts which define shell functions would
+> break if the system administrator installs new software which happens to
+> include a program of the same name of the shell function.
+> 
 
-Use CVE-2014-9092.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+It's not so much the known attacks -- redefining ls, unset, command,
+typeset, declare, etc -- it's the future parser bugs that we don't yet
+know about.
 
-iQEcBAEBAgAGBQJUdYGqAAoJEKllVAevmvmsA7QH/ijNNlUkWF2Vst56xw9AZNUN
-dYdTRNXISkzOotHcglCpOomIzjbTWy4ablsLxryr0kUc4ZjIc5RlZuCTKAaVJ+EC
-RgphhkmFHkKNqPSVMLtIOpP4ZX/0uPSKAMlzoXsRzRgmEBG6pnYnokJTa47sit26
-iSpvAqXUNwJ/ZA14eUFMDdP6FbpOB4wmHS9h5nnUO7lzhmM/93XasD6WluBB0EBo
-F9xZ/a0pCfEV+9RwKMiGsr2w+nPYDzUWlnrNbVnw8ou9msI/tolGadUbbwCM1NY9
-FiemAFw4ZRExQIjDKaubApDlNuYzckmDNvBWJkwdVIJvBvQqNPVmUMP4MefDGhw=
-=F4GF
------END PGP SIGNATURE-----
+A friend of mine said this could be a vulnerability gift that keeps on
+giving.
+
+CVE-2014-7169 was discovered very quickly after CVE-2014-6271.  Do you
+think that's the end of it?   (Just in case: I'm not getting at anyone
+here, certainly not Chet, Florian or anyone else who has been working
+overtime on these.)
+
+Importing functions from the environment is relatively unusual.  I'd
+probably go so far as to say very unusual.
+
+Sufficiently unusual, I'd venture, that it should not be done
+implicitly.   Florian's "BASH_FUNC_x()" makes it easier to blacklist
+these environment variables and ensures that a web server's HTTP_ prefix
+will not just create an oddly named function ... is that enough?  Should
+bash simply make importing functions something that one has to ask for
+explicitly as Christos Zoulas (and others) suggested[1]?
+
+jch
+
+
+[1] http://openwall.com/lists/oss-security/2014/09/25/31
+    http://openwall.com/lists/oss-security/2014/09/25/26
+    I suggested it as well, but Christos is far more lucid than I am.
+
