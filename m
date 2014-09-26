@@ -1,80 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/4
-Message-Id: <201407160612.s6G6CGbC027394@linus.mitre.org>
-Date: Wed, 16 Jul 2014 02:12:16 -0400 (EDT)
-From: cve-assign@...re.org
-To: larry0@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Vulnerability Report for Ruby Gem kompanee-recipes-0.1.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/32
+Message-ID: <5425AFBD.7020009@redhat.com>
+Date: Fri, 26 Sep 2014 12:26:05 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 26/09/14 12:12 PM, Rich Felker wrote:
+> On Fri, Sep 26, 2014 at 02:06:21PM +0100, Simon McVittie wrote:
+>>> Tell everyone to stop using setuid/setgid now and forever?
+> 
+> Yes!
+> 
+>> Minimizing use of setuid/setgid, and making sure the setuid/setgid
+>> things are suitably hardened, is a good idea. However, tools for
+>> controlled privilege escalation (sudo, pkexec, Apache suexec) rely on
+>> setuid in order to work. There's a reason the feature exists at all.
+> 
+> These could all be done by having the process with root privileges
+> inherit them from a daemon parent that already has root, rather than
+> requiring the kernel to elevate the privileges of a process via the
+> setuid bit. This inherently eliminates all attacker control of the
+> process's initial state and limits the input/attack surface to the
+> communication channel clients have with the daemon (e.g. a single unix
+> socket).
 
-> is it possible that this Gem wasn't ever intended to be used in the
-> context of a Rails application?
+setuid/setgid is not just for root. For example the Postfix server makes
+use of various groups and setuid/setgid binaries and directories so that
+there are well defined interfaces between Postfix components that run
+with different privilege levels.
 
-We haven't seen any response to this yet. (At least from our
-perspective, this is completely fine -- sending a message here
-containing "CVE:Please Assign" doesn't mean that the person is
-required to respond to questions from us.)
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Just to clarify: we are aware of the full set of messages:
 
-  Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
-  Vulnerability Report for Ruby Gem cap-strap-0.1.5
-  Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
-  Vulnerability Report for Ruby Gem backup-agoddard-3.0.28
-  Vulnerability Report for Ruby Gem backup_checksum-3.0.23
-  Vulnerability Report for Ruby Gem gyazo-1.0.0
-  Vulnerability Report for Ruby Gem VladTheEnterprising-0.2
-  Vulnerability Report for Ruby Gem gnms-2.1.1
-  Vulnerability Report for Ruby Gem point-cli-0.0.1
-  Vulnerability Report for Ruby Gem kompanee-recipes-0.1.4
-  Vulnerability Report for Ruby Gem lean-ruport-0.3.8
-  Vulnerability Report for Ruby Gem kajam-1.0.3.rc2
-  Vulnerability Report for Ruby Gem lawn-login-0.0.7
-  Vulnerability Report for Ruby Gem kcapifony-2.1.6
-  Vulnerability Report for Ruby Gem karo-2.3.8
-  Vulnerability Report for Ruby Gem lynx-0.2.0
-  Vulnerability Report for Ruby Gem ciborg-3.0.0
-  Vulnerabilities in Ruby Gem brbackup-0.1.1
-
-and we have not yet assigned any CVE IDs. What we think might be the
-best option is to disregard any vulnerability-related observations
-that are qualified with a phrase such as "if this gem is used in the
-context of a rails application." As far as we know, existence of a Gem
-only implies a choice of a packaging mechanism for a piece of Ruby
-code. Existence of a Gem doesn't, as far as we know, imply that the
-author is claiming that the code will operate safely in cases where
-its input arrives from an untrusted source in a way that crosses
-privilege boundaries. This option would result in approximately 20
-CVEs for other types of issues such as:
-
-  - "expose the password to the process table" (e.g., an attacker can
-     obtain sensitive information by running the ps program at the
-     right time)
-
-  - symlink attacks
-
-but no CVEs for issues involving shell metacharacters in variable
-names. The shell-metacharacter CVE IDs could be assigned later if
-anyone identifies a product that actually uses one of the applicable
-Gems unsafely within a Rails application.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTxhclAAoJEKllVAevmvmscfgH/0QiThSi/wjrMepw3hpuFF/K
-8+2nHFlPfVEt3AIoATECqshGYIbft3JDMsFgi545jdQ2uzVsETABA+IyhYAoqwmD
-twRLhcCOzQVs9KP4/omdKlOV33m4Xf/blRqSUD6luDSJDdvQtSeQZGDwvkPGmqzb
-eO4JoeF19MZhF5jnDt8F5mukf0TbW4859GtFbEd3jU7dYMEMWCL0UCy71SU/rfoU
-cEuNPp83O1EIJ8bcTS9tz8nILrMEf7n6zbJmtM3cdyD0pHxaiei9gdWZ74XWALcp
-AAsn+SHOSsffZ5htsFJZSqlsyD2dTm3zaEdhzAKn9lqZuPQE0TJ2/5AtNsI0/m8=
-=3GVP
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
