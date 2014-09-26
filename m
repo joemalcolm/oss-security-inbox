@@ -1,24 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/13/1
-Message-ID: <20140313092109.GA24079@scapa.corsac.net>
-Date: Thu, 13 Mar 2014 10:21:10 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/27
+Message-ID: <20140926175541.GS23797@oevtugenva.nrevsny.pk>
+Date: Fri, 26 Sep 2014 13:55:41 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: IMAP STARTTLS sniff tool
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 12, 2014 at 03:22:47PM +0200, Henri Salo wrote:
-> On Wed, Mar 12, 2014 at 03:50:10PM +0400, Solar Designer wrote:
-> > Either way, I'm also not sure if we want to expand the scope on
-> > oss-security to cover topics like this.  Probably not.
+On Fri, Sep 26, 2014 at 01:41:45PM +0100, Mark R Bannister wrote:
+> Arguments that people shouldn't have setuid shell scripts don't
+> stack up, because even if you write your setuid program in some
+> other language, you might unwittingly exec something written in
+> bash.
+> As /bin/sh is symlinked to /bin/bash in RHEL, the moment you call
+> out to the system to do a piece of work for you, you're at risk of
+> invoking bash and thereby being vulnerable to a root exploit. For
+> example:
 > 
-> In my opinion this is useful information.
+> $ env bzip2='() { echo vulnerable >&2; }' /usr/bin/bzdiff /tmp/file1.bz /tmp/file2.bz
+> 
+> $ env test='() { echo vulnerable >&2; }' /usr/bin/ldd /usr/bin/gcc
+> 
+> So this is not about whether or not someone has written a setuid
+> shell script. This has uncovered a potential new exploit for any
+> setuid program. Indeed the very first setuid program that I
+> discovered this exploit with was a binary (compiled C program) that
+> happened to exec ldd while it was running.
+> 
+> I don't think this issue can be swept under the carpet.
 
-I agree this can be useful information, but as Alexander said, I don't
-think it belongs on this list.
+Any setuid program that's execing an external program that was not
+also designed to be run setuid, without scrubbing the environment and
+other environmental state (rlimits, inherited file descriptors, ...),
+or else fully dropping privileges to the original invoking user, is a
+gaping security hole already. This has nothing to do with bash.
 
-Regards,
--- 
-Yves-Alexis Perez
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+Rich
