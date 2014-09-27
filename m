@@ -1,81 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/9
-Message-Id: <D0988EAA-FCFA-4034-8953-BE0199109B39@gmail.com>
-Date: Wed, 18 Jun 2014 21:27:23 +1000
-From: Graham Dumpleton <graham.dumpleton@...il.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Security release for mod_wsgi (version 3.5)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/6
+Message-ID: <alpine.LNX.2.02.1409271523400.11452@v8.schaltsekun.de>
+Date: Sat, 27 Sep 2014 15:26:01 +0200 (CEST)
+From: Roman Drahtmueller <draht@...altsekun.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-Fixed and released in mod_wsgi 4.2.4. Available through the normal download locations for mod_wsgi.
-
-https://github.com/GrahamDumpleton/mod_wsgi/releases
-https://pypi.python.org/pypi/mod_wsgi
-
-Thanks for highlighting the issues.
-
-Graham
-
-On 18/06/2014, at 8:43 PM, Graham Dumpleton <graham.dumpleton@...il.com> wrote:
-
-> I saw the email as it popped up in my twitter feed of all places.
 > 
-> Am about to make a release which improves the error handling and the one off error.
-> 
-> Graham
-> 
-> On 18/06/2014, at 8:03 PM, Solar Designer <solar@...nwall.com> wrote:
-> 
->> On Wed, Jun 18, 2014 at 08:08:10PM +1200, Matthew Daley wrote:
->>> I may be wrong as I haven't been following this discussion entirely, but...
->> 
->> I think Graham is not on oss-security.  CC added.
->> 
->> Graham, please comment on the potential off-by-one bug reported by
->> Matthew below:
->> 
->>> On Wed, Jun 18, 2014 at 12:39 AM, Graham Dumpleton
->>> <graham.dumpleton@...il.com> wrote:
->>>> This feature was added for one specific user and wouldn't be a well known feature unless people were reading change notes diligently as don't believe it is even covered in the documentation.
->>>> 
->>>> Given that this code also only executes as root, the only error which could technically arise in this code for setgroups() is if the number of groups exceeded NGROUPS_MAX.
->>>> 
->>>> This should not occur though as the number of groups was previously validated when the configuration was read:
->>>> 
->>>>   if (groups_list) {
->>>>       const char *group_name = NULL;
->>>>       long groups_maximum = NGROUPS_MAX;
->>>>       const char *items = NULL;
->>>> 
->>>> #ifdef _SC_NGROUPS_MAX
->>>>       groups_maximum = sysconf(_SC_NGROUPS_MAX);
->>>>       if (groups_maximum < 0)
->>>>           groups_maximum = NGROUPS_MAX;
->>>> #endif
->>>>       groups = (gid_t *)apr_pcalloc(cmd->pool,
->>>>                                     groups_maximum*sizeof(groups[0]));
->>>> 
->>>>       groups[groups_count++] = gid;
->>>> 
->>>>       items = groups_list;
->>>>       group_name = ap_getword(cmd->pool, &items, ',');
->>>> 
->>>>       while (group_name && *group_name) {
->>>>           if (groups_count > groups_maximum)
->>> 
->>> This is an off-by-one error, isn't it? As in, it should be testing for
->>> groups_count >= groups_maximum and not the current test.
->>> 
->>>>               return "Too many supplementary groups WSGI daemon process";
->>>> 
->>>>           groups[groups_count++] = ap_gname2id(group_name);
->>>>           group_name = ap_getword(cmd->pool, &items, ',');
->>>>       }
->>>>   }
->>>> 
->>>> Thus was pre-validated input.
->>> 
->>> - Matthew Daley
+> FWIW, I'm pretty sure I bumped into another bad-looking and probably
+> exploitable parser issue; for now, I sent the details privately to
+> Chet, Florian, and Alexander. But the bottom line is, the parser
+> really shouldn't be exposed to the outside world.
 > 
 
+By way of exposing the parser to potentionally harmful content: Is the 
+importing of functions the only occasion, or are there more than this?
+
+Thanks,
+Roman.
