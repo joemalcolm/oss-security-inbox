@@ -1,44 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/13
-Message-ID: <CAA7UWsXsgRg7tODj4AZddz38hnQcNTwPu5PV0oX77GZ1K1RY0g@mail.gmail.com>
-Date: Fri, 10 Oct 2014 12:01:52 -0400
-From: David Leon Gil <coruus@...il.com>
-To: Daniel Kahn Gillmor <dkg@...thhorseman.net>, kristian.fiskerstrand@...ptuouscapital.com
-Cc: oss-security@...ts.openwall.com,  "gnupg-devel@...pg.org" <gnupg-devel@...pg.org>, Werner Koch <wk@...pg.org>, thijs@...ian.org
-Subject: Re: 0xdeadbeef comes of age: making keysteak with GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/3
+Message-Id: <20140927042902.ED08A72E405@smtpvbsrv1.mitre.org>
+Date: Sat, 27 Sep 2014 00:29:02 -0400 (EDT)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: TYPO3-EXT-SA-2014-012
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 10, 2014 at 11:47 AM, Daniel Kahn Gillmor
-<dkg@...thhorseman.net> wrote:
-> If we're going to advocate for accessing keyservers via https (which i
-> think is a lovely idea, even if it doesn't mitigate all possible
-> attacks), it's worth advocating for the well-curated
-> hkps.pool.sks-keyservers.net [0], rather than encouraging everyone to
-> flood either https://keybase.io or https://pgp.mit.edu with traffic.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-My problem with the HKPS pool is that I don't know Kristian.[1] And I
-don't have any reason to believe that he'd suffer serious financial
-damage if the private key for the "sks-keyservers.net CA" got used
-maliciously.[2]
+> http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-012/
+> 
+> the extension "JobControl" (dmmjobcontrol)
 
-(While I know that if a root CA were caught intentionally issuing an
-MitM cert for keybase.io or pgp.mit.edu would face likely
-delisting/bankruptcy.)
+> Cross-Site Scripting
 
-I'd be really happy if Kristian published a GPG-signed log of every
-valid certificate for servers in the HKPS pool; then it would be
-possible for the distrustful -- or targeted -- to, say, query multiple
-HKPS keyservers. This is even better than trusting Root CAs +
-Kristian.[3])
+Use CVE-2014-7200.
 
-[1] Most hkps.pool.sks-keyservers.net don't have an alternative trust
-path to a standard root CA.
 
-[2] This is different from saying that I think he *would
-intentionally* sign a malicious cert, which I don't. I just have no
-idea how secure the private key for that CA is. And I know that a
-fully isolated, physically secure facility, and a good HSM are really
-expensive. (But maybe he is doing this?)
+> SQL Injection.
 
-[3] If this is already available somewhere, apologies; I haven't
-managed to find anything like it.
+Use CVE-2014-7201.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUJjyqAAoJEKllVAevmvmsxmcIAJ7ALeJZwa2wybzfNdzIrAHu
+yypYZkLcUreAo7kKaRJfjIjNJcqLI2DtGb3xQBdBkOKaIqiBWAX0f+T4H1oOxL0+
+Yu0KBWCzprR3EJygH3Ba48BjQcoXJ6Zasjlt/uWJgha38Jxy8/6fJd99/7ObZhvu
+jL4CJEDZulhbR23yEL2NbNUEPX9EYhb2XCc+ZJOBgkT76g8PVAHTULhuuMk5dt3P
+gIWsOmFJ+5N5m9ziYmcDGknmqf4GYcPqP+AVO3gPXT7QsRlff1HlUQEOSUiePSFf
+lHb1eX7CktKkpi5TwVfw9olYaTM5aXMDQzGcIFzdLH1ZKwjY4BhjuaHSFplt1aI=
+=jnmE
+-----END PGP SIGNATURE-----
