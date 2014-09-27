@@ -1,68 +1,178 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/5
-Message-ID: <CAM2EdxD_+z3_kszaCmvf61YzW4kaZkq03LBsjE+yksUZev9oQg@mail.gmail.com>
-Date: Mon, 12 May 2014 16:03:10 +0530
-From: Savio Bot <54v330@...il.com>
-To: Matthew Daley <mattd@...fuzz.com>
-Cc: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: Re: [FD] CVE-2014-0196: Linux kernel pty layer race condition memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/13
+Message-ID: <CALwvWpFS8Z6XZjw1ax=HkKJvanSn-BTiRzHZhqaJM-Z8hoSjqg@mail.gmail.com>
+Date: Sat, 27 Sep 2014 20:27:28 +0100
+From: Steve Jones <trevd1234@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi There
 
-So is this bug also present in 2.6?
+I've been meaning to post all day. After looking at the code with the
+intention of fixing I can say in my opinion the Parse is 70% of the
+problem , the Core shell language grammar is 15% and the bashes
+bashism and it need to allow things like redirection at any position
+and other fun things is the final 15%
 
-Regards,
-savio
-On 12-May-2014 3:58 PM, "Matthew Daley" <mattd@...fuzz.com> wrote:
+The Shell language Grammar is way to ambiguous this is created as a
+result of allow multiple tokens for 1 action ; which are repurposed
+without an unambiguous termination of the previous statement  or to
+put it another way the Parser  can't count and Grammar lacks
+consistency and to me seems to me missing an explicit fucking
+terminator ..
 
-> Sorry, forgot to mention that this targets 64-bit kernels.
+Even from a non security view point it is f**ked
+
+This    " function t2(){ sl } }; } "  should not be  a value statement
+block and if it is I'm never writing another shell script again.
+
+A little more on the parser - It's not robust at all and is also
+lacking a thing like basic sanity checking. Also seems parsing
+strategy does not seem suitable for the complexes and ambiguity of the
+Grammar and as a result doesn't stand a chance.
+
+I certainly not a breaker and just a developer with a security minded
+bent but even I was able to force arbitrary memory in another process
+address space just from random fuzzing alone ....
+
+
+Couple of things the wrap :
+
+For anyone rusty with thatt context free grammar terminalogy
+:http://pages.cs.wisc.edu/~fischer/cs536.s08/course.hold/html/NOTES/3.CFG.html
+
+Don't worry though as the documentation just define it's own terms
+
+DEFINITIONS
+       The following definitions are used throughout the rest of this document.
+       blank  A space or tab.
+       word   A sequence of characters considered as a single unit by
+the shell.  Also known as a token.
+       name   A word consisting only of alphanumeric characters and
+underscores, and beginning with an alphabetic character or an
+underscore.  Also referred to as an identifier.
+       metacharacter
+              A character that, when unquoted, separates words.  One
+of the following:
+              |  & ; ( ) < > space tab
+       control operator
+              A token that performs a control function.  It is one of
+the following symbols:
+              || & && ; ;; ( ) | |& <newline>
+
+
+I'm sure some of you folks may have notice that whitespace has amazing
+properties and the difference between    { list;} and    { list} and
+ { list; }
+So here's a "don't this somethings something mught break"
+
+              list is simply executed in the current shell
+environment.  list must be terminated with a newline or semicolon.
+This is known as a group command.  The return status is the exit
+status  of  list.   Note
+              that  unlike  the metacharacters ( and ), { and } are
+reserved words and must occur where a reserved word is permitted to be
+recognized.  Since they do not cause a word break, they must be
+separated from
+              list by whitespace or another shell metacharacter.
+
+
+This is ambiguous token reuse ( many other examples about )
+ A list is a sequence of one or more pipelines separated by one of the
+operators ;, &, &&, or ||, and optionally terminated by one of ;  &,or
+<newline>.
+The use of the word optionally is incorrect and should be replace with "must be"
+
+A Grep to run in the bash source code directory. This show all the
+areas that the developer was confused  though there
+
+grep -B4 -niR " xxx " --exclude-dir=doc
+
+variables.c is troubling
+
+variables.c:4331:    stupidly_hack_special_variables (var->name); /* XXX */
+
+and another choice one :
+braces.c:423:      QUIT; /* XXX - memory leak here */
+
+Finally : Bash is everywhere - not only being used as the shell
+interpreter but in the form of libbash which needs to be check to see
+if they reused the parsed.
+This is both statically  and dynamically linked
+
+Executables and libraries are also not adverse to calling bash via an
+execv . I freely speculate the some bashes are just name sh
+
+You could start with a scan of every shell script
+ find / -type f -iname "*.sh" -exec grep bash -lh {} \;
+
+In summary Bash is screwed  .Using an alternative can be as simple
+install one or "impossible " du the bashism
+I Maybe more productive less distruptive the make use a new iparser
+from an existing project the GPLv3 Adds legal compatibility with
+Apache2
+More on this later perhaps?
+
+Thanks for reading folks
+Trfevd
+
+
+Apologies if lines are .. using a webclient :(
+
+
+
+
+On 27 September 2014 16:06, Solar Designer <solar@...nwall.com> wrote:
+> On Sat, Sep 27, 2014 at 03:26:01PM +0200, Roman Drahtmueller wrote:
+>> By way of exposing the parser to potentionally harmful content: Is the
+>> importing of functions the only occasion, or are there more than this?
 >
-> On Mon, May 12, 2014 at 9:15 PM, Matthew Daley <mattd@...fuzz.com> wrote:
-> > Hi,
-> >
-> > I've written a "slightly-less-than-POC" privilege escalation exploit for
-> > this vulnerability that works on newer kernels:
-> > http://bugfuzz.com/stuff/cve-2014-0196-md.c (SHA1:
-> > 6b1c5c651231b33a5e11b5c8c6ed07cd15f658f5)
-> >
-> > Note the warning mentioned in the header; run it at your own risk ;)
-> >
-> > - Matthew Daley
-> >
-> >
-> > On Mon, May 5, 2014 at 10:08 PM, Marcus Meissner <meissner@...e.de>
-> wrote:
-> >>
-> >> Hi,
-> >>
-> >> SUSE customer Ericsson reported a kernel crash to us which turned out
-> >> to be a race condition in the PTY write buffer handling.
-> >>
-> >> When two processes/threads write to the same pty, the buffer end could
-> >> be overwritten and so memory corruption into adjacent buffers could lead
-> >> to crashes / code execution.
-> >>
-> >> Jiri Slaby and Peter Hurley localized and fixed this problem.
-> >>
-> >> CVE-2014-0196 has been assigned to this issue.
-> >>
-> >> Jiri thinks this was introduced during 2.6.31 development by
-> >> d945cb9cce20ac7143c2de8d88b187f62db99bdc (pty: Rework the pty
-> >> layer to use the normal buffering logic) in 2.6.31-rc3. Until then, pty
-> >> was writing directly to a line discipline without using buffers.
-> >>
-> >> https://bugzilla.novell.com/show_bug.cgi?id=875690
-> >>
-> >> Patch is also attached.
-> >>
-> >> Ciao, Marcus
-> >
-> >
+> That's a great question.  This aspect is arguably more important than
+> individual parsing bugs, in part because distros are already adopting
+> Florian's prefix/suffix patch turning parser bugs on function imports
+> into non-security issues.
 >
-> _______________________________________________
-> Sent through the Full Disclosure mailing list
-> http://nmap.org/mailman/listinfo/fulldisclosure
-> Web Archives & RSS: http://seclists.org/fulldisclosure/
+> Has anyone started reviewing bash for possible other code paths where
+> untrusted input may hit the parser?
 >
-
+> Of course, what input is trusted vs. not may be unclear.  Apparently, 20
+> years ago bash developers considered all env vars to be trusted input,
+> regardless of the names, which is how we got here.
+>
+> Are bash scripts themselves exclusively trusted input, or should we
+> assume that portions of them (which?) may be untrusted (e.g., for
+> scripts generated by other programs, with some user input substituted
+> into them)?  Clearly, it makes no sense to treat scripts as untrusted in
+> their entirety - the very purpose of bash is to do a wide variety of
+> things based on script contents - but maybe some individual tokens, etc.
+> within scripts may reasonably (and thus should?) be treated as untrusted
+> (to the extent possible within bash script syntax specs).
+>
+> For example, what if a DHCP client sanitizes some input field and then
+> embeds it in a generated script?  That's risky design, yet bash could
+> try to be robust when faced with scripts like that.  Ideally, it should
+> behave only as specified, with no extra "features" available e.g. via
+> syntactically correct yet overly long tokens, etc.
+>
+> Perhaps this boils down to the parser's robustness in general: treating
+> whatever we can (even within scripts) as untrusted input is the same as
+> having the most robust parser.  This is why I wrote "arguably" in the
+> first paragraph above.
+>
+> Now, is it realistic to make bash's parser so robust by finding and
+> patching individual bugs?  I doubt it.  We should find and patch the
+> bugs, but perhaps we shouldn't declare bash's parser robust, and perhaps
+> we shouldn't treat bash issues triggerable via untrusted script contents
+> as security issues.  Perhaps we should instead declare bash unsafe to
+> use on scripts containing any untrusted input in them, and focus on
+> treating inputs to such scripts (env vars and command line) safely.
+>
+> This also means that we should treat any programs that generate bash
+> scripts with (sanitized) untrusted input in them as unsafe, and patch
+> those to use safer mechanisms to pass (sanitized) inputs to scripts
+> (preferably use env vars with fixed names).
+>
+> Comments?
+>
+> Alexander
