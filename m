@@ -1,33 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/7
-Message-ID: <20140912140344.5864641a@redhat.com>
-Date: Fri, 12 Sep 2014 14:03:44 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Sven Kieske <s.kieske@...twald.de>
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/2
+Message-Id: <20140927042610.2E1AB72E352@smtpvbsrv1.mitre.org>
+Date: Sat, 27 Sep 2014 00:26:10 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Mediawiki before 1.19.19, 1.22.11 and 1.23.4 insufficient CSS filtering of SVGs
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 12 Sep 2014 09:12:18 +0200 Sven Kieske wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Well I hope than that I can soon migrate to mariadb or postgresql.
-> In other words, to a db which takes security serious and handles
-> it professional, as this is clearly not professional behaviour.
+> From: Chris Steipp
+> The issue was that javascript could be injected via the css, so basic xss.
 
-I honestly fail to see MariaDB as a sliver bullet here.  No doubt
-MariaDB upstream is more open with respect to security issues handling
-and does not seem to obfuscate security flaw details the same way MySQL
-upstream does.  However, I don't believe they have any better
-visibility into what Oracle assigned CVEs are for.  So for example, they
-likely did not have a way to be sure that CVE-2014-2440 is dupe a of
-CVE-2014-0001 until it was confirmed elsewhere in this thread.
+> https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-September/000161.html
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=69008
+> https://gerrit.wikimedia.org/r/#/c/162777/
+> 
+> 
+> * (bug 69008) SECURITY: Enhance CSS filtering in SVG files. Filter
+>   <style> elements; normalize style elements and attributes before
+>   filtering; add checks for attributes that contain css; add unit tests
+>   for html5sec and reported bugs.
 
-At this point, it seems reasonable to assume that any Oracle assigned
-CVE most likely affects matching 5.x MariaDB versions, and that it is
-fixed when MariaDB is rebased to a fixed MySQL version.  With 10.x being
-a full fork no longer being rebased to new MySQL releases, it will
-become increasingly uncertain if certain MySQL CVE is applicable to
-MariaDB as well, or to know if it was addressed.
+Use CVE-2014-7199.
 
--- 
-Tomas Hoger / Red Hat Product Security
+(This set of issues had multiple discoverers but apparently all of the
+discoverers are among the primary MediaWiki developers or reviewers
+and thus there aren't separate CVEs for each discoverer.)
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUJjvDAAoJEKllVAevmvmsX34H/RYV27EGsrpNF6ZAPVpzpzuc
+SGiXSM4drnmPSWUGted+y7UixP76w6a2+aQhdb3d9IVbheysQAFCjFD8cORme4Sj
+ibUXzzOVCItztaYenPanAmtbPaTyhqPY1ORHVD+sYwGfuJ++KbaSnZE9RrfE5sDq
+kem17lbFBcEmKqlM3+lKwyaAoZe83BJHjeAgtGlnPbGqSRbjR5ZXQsEhiLzFUw3y
+AP8FD3AfSm7cKLVqEevVdo5n83UVByiGjfkW3YRqnKBSsLfNg6FIN9FuSvf/JqS7
+T9pJs8XOFy7RtYFwoiNldgiBTPdsFwxhi6ii16jEabFowckJyJW9VjgDFa1CLss=
+=aB5+
+-----END PGP SIGNATURE-----
