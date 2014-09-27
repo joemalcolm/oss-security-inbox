@@ -1,83 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/3
-Message-ID: <20140326071053.GA6866@suse.de>
-Date: Wed, 26 Mar 2014 08:10:53 +0100
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: KAuth security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/18
+Message-ID: <54273E5D.4040602@case.edu>
+Date: Sat, 27 Sep 2014 18:46:53 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: John Haxby <john.haxby@...cle.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu, christos@...las.com
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-I love to talk to myself, in particular via mailing lists.
-This issue seems to be addressed meanwhile via
+On 9/26/14, 8:47 AM, John Haxby wrote:
+> On 26/09/14 12:33, Florian Weimer wrote:
+>> On 09/26/2014 10:54 AM, Mark R Bannister wrote:
+>>> Testing patch 25 and 26 from Chet, it looks to me like this is still
+>>> an incomplete fix.  The third vulnerability I'd like to report is the
+>>> feature itself in bash that allows functions to be passed in the
+>>> environment, e.g.
+>>> $ env ls='() { echo vulnerable; }' bash -c ls
+>>>
+>>> This allows an attacker to replace a command used by a bash script
+>>> with arbitrary code.  It is then down to an attacker to find a
+>>> suitable command that the bash script (or any child shells) might call
+>>> without a path component.
+>>>
+>>> I can't see this being a problem for Apache custom headers (the
+>>> variable name is turned to uppercase and prefixed by HTTP_), nor sudo
+>>> commands if env_reset is on (the default), but this continues to be a
+>>> major vulnerability for setuid/setgid scripts (S_ISUID or S_ISGID)
+>>> where the environment is preserved.
+>>
+>> I agree this looks scary at first glance, but we discussed this
+>> previously, see for example:
+>>
+>>   <http://www.openwall.com/lists/oss-security/2014/09/24/20>
+>>
+>> Shell scripts derive part of their power and flexibility from their
+>> openness to the execution environment.  You can tweak PATH, BASH_ENV (or
+>> ENV for other Bourne-like shells), IFS, HOME, and many other variables
+>> to change behavior.  There are even more knobs to affect the behavior of
+>> the external commands almost all shell scripts call when they run.
+>>
+>> This makes them not suitable at all for writing SUID programs or other
+>> code that runs in untrusted environments.  This is well-documented, and
+>> given the amount of shell scripts out there which rely on these aspects
+>> of the UNIX shell design, it's not something we can change, particularly
+>> not as part of a security update which system administrators are more or
+>> less forced to install.
+>>
+>> In your specific example, you can achieve the same effect by setting
+>> PATH to a directory with a customer ls program, or by setting BASH_ENV
+>> to a file which contains a definition of a function called ls.
+>>
+>> Overriding external programs with shell functions in such a way has to
+>> be supported.  Otherwise, scripts which define shell functions would
+>> break if the system administrator installs new software which happens to
+>> include a program of the same name of the shell function.
+>>
+> 
+> 
+> It's not so much the known attacks -- redefining ls, unset, command,
+> typeset, declare, etc -- it's the future parser bugs that we don't yet
+> know about.
+> 
+> A friend of mine said this could be a vulnerability gift that keeps on
+> giving.
+> 
+> CVE-2014-7169 was discovered very quickly after CVE-2014-6271.  Do you
+> think that's the end of it?   (Just in case: I'm not getting at anyone
+> here, certainly not Chet, Florian or anyone else who has been working
+> overtime on these.)
+> 
+> Importing functions from the environment is relatively unusual.  I'd
+> probably go so far as to say very unusual.
+> 
+> Sufficiently unusual, I'd venture, that it should not be done
+> implicitly.   Florian's "BASH_FUNC_x()" makes it easier to blacklist
+> these environment variables and ensures that a web server's HTTP_ prefix
+> will not just create an oddly named function ... is that enough?  Should
+> bash simply make importing functions something that one has to ask for
+> explicitly as Christos Zoulas (and others) suggested[1]?
 
-https://git.reviewboard.kde.org/r/117056/
+I think function exports are used more widely than you think, and I am not
+willing to break backwards compatibility that much by disabling function
+exports by default.
 
-by fixing the underlying polkit qt binding. I think that will also
-affect recently seen smb4k issue, as it is using KAuth too.
-
-Sebastian
-
-On Mon, Mar 24, 2014 at 10:27:23AM +0100, Sebastian Krahmer wrote:
-> 
-> I sent this to security@....org last week and to some KDE
-> developers one more week ago. No response so far, so here we go.
-> 
-> regards,
-> Sebastian
-> 
-> --------8<--------------------
-> 
-> Hi
-> 
-> I sent this mail to the KAuth author a week ago. So far no reply, so
-> I am trying it here again.
-> 
-> When I looked at the KAuth framework it seems like it is using
-> 
-> PolkitQt1::UnixProcessSubject subject(pid)
-> 
-> (i.e. unix process subjects) for the polkit auth, which is always racy.
-> Please refer to:
-> 
-> CVE-2013-4288 polkit: unix-process subject for authorization is racy
-> CVE-2013-4311 libvirt: insecure calling of polkit via libgobject API
-> CVE-2013-4324 spice-gtk: use of insecure polkit libgobject-1 API
-> CVE-2013-4325 hplip: use of insecure polkit DBUS API
-> CVE-2013-4326 rtkit: use of insecure polkit DBUS API
-> CVE-2013-4327 systemd: use of insecure polkit DBUS API
-> 
-> which were using exactly this vulnerable way auf authenticating
-> via polkit.
-> 
-> The bug is semi-public:
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=864716
-> 
-> A non-racy way would be to use system-bus subject for authentication.
-> (Yet I dont know how this fits in the KAuth API).
-> Nevertheless, there needs to be done something, as basically
-> the KAuth authentication is non-existing if using process subjects.
-> 
-> regards,
-> Sebastian
-> 
-> -- 
-> 
-> ~ perl self.pl
-> ~ $_='print"\$_=\47$_\47;eval"';eval
-> ~ krahmer@...e.de - SuSE Security Team
-> 
-> ----- End forwarded message -----
-> 
-> -- 
-> 
-> ~ perl self.pl
-> ~ $_='print"\$_=\47$_\47;eval"';eval
-> ~ krahmer@...e.de - SuSE Security Team
+Chet
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
