@@ -1,23 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/18
-Message-ID: <5422F1AB.9080604@redhat.com>
-Date: Wed, 24 Sep 2014 18:30:35 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/8
+Message-ID: <20140927160123.GA20819@riva.ucam.org>
+Date: Sat, 27 Sep 2014 17:01:23 +0100
+From: Colin Watson <cjwatson@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Cc: Darren Hiebert <dhiebert@...rs.sourceforge.net>
+Subject: CVE request: exuberant-ctags: CPU/disk DoS on minified JavaScript file
 Content-Type: text/plain; charset=utf-8
 
-On 09/24/2014 06:23 PM, Michal Zalewski wrote:
-> Note that on Linux systems where /bin/sh is symlinked to /bin/bash,
-> any popen() / system() calls from within languages such as PHP would
-> be of concern due to the ability to control HTTP_* in the env.
+Hi,
 
-This depends on how PHP is invoked.  mod_php does not set the CGI 
-environment variables.
+https://bugs.debian.org/742605 was reported some time ago against the
+Debian package of Exuberant Ctags (http://ctags.sourceforge.net/); it's
+a CPU/disk denial of service that results from attempting to run ctags
+over large volumes of public source code.
 
-However, it is true that if CGI programs spawn subprocesses, they may be 
-affected even if the CGI program itself is not written in bash.
+Upstream fix, determined by bisection:
+  http://sourceforge.net/p/ctags/code/791/
+
+As far as I know this was not identified as a security problem upstream,
+just fixed as a normal bug in the course of development.  The
+sources.debian.net use case turns it into a DoS though.  CCing the
+upstream author for his information.
+
+Not affected: 5.6
+Affected: 5.8 (the latest release)
+
+Since we'd like to issue patches for this bug as security updates,
+please could I have a CVE identifier for this?
+
+Thanks,
 
 -- 
-Florian Weimer / Red Hat Product Security
+Colin Watson                                       [cjwatson@...ian.org]
