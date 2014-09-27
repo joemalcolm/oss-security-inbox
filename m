@@ -1,28 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/9
-Message-ID: <CALx_OUCeXAduQYu4tCB0qmDAqfwgfP2xKHLfBcGYAc_CZbe_7w@mail.gmail.com>
-Date: Wed, 8 Oct 2014 21:31:37 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: "David A. Wheeler" <dwheeler@...eeler.com>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/1
+Message-ID: <20140927005553.GA418@openwall.com>
+Date: Sat, 27 Sep 2014 04:55:53 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-Sure, agreed. I don't think the code / data catchphrase accurately
-conveys this principle to developers, though =)
+On Sat, Sep 27, 2014 at 01:56:49AM +0400, Solar Designer wrote:
+> I took a look at the code in 3.1, and it looked just as vulnerable.  So
+> I tried harder, and was able to trigger both issues that you're patching
+> with parser-oob-3.2.patch on 3.1.
+> 
+> For the redir_stack issue, I had to use many more <<EOF's, and I
+> actually closed those EOF's.  In fact, I used 1000 of them (both opening
+> and closing).  This gave me a segfault.
 
-/mz
+With parser-oob-3.2.patch applied to my 3.1.19 (with other patches),
+this problem is gone, and 1000 EOF's (as well as commands that follow
+the one using 1000 opening and closing EOF's) work as expected.
 
-On Wed, Oct 8, 2014 at 9:03 PM, David A. Wheeler <dwheeler@...eeler.com> wrote:
-> I would take a functional approach to this: is there a way an attacker could
-> send data that would be misinterpreted as code? If so, could that harm
-> anything?
->
-> It is obviously much better if the communication does not use shared
-> resources (like the environment). But this is all logical - in the end all
-> of this is in the same memory. The goal is to maximize the separation enough
-> so that attackers cannot misuse it. The better the separation, the less risk
-> later.
->
->
-> --- David A.Wheeler
+> For the nested blocks (for loops in this case), I also used as many as
+> 1000 of them, and got this:
+> 
+> $ bash test-script.sh 
+> test-script.sh: line 909: syntax error near unexpected token `newline'
+> test-script.sh: line 909: `for x909 in ; do :'
+> 
+> And this remains exactly line 909 when I try 909, 1000, or 2000 nested
+> loops.  With "only" 908 nested loops, this symptom goes away - but I
+> guess those 908 loops are not actually processed correctly, see below.
+
+This weird behavior, including the 909 magic number, remained even with
+parser-oob-3.2.patch applied (which, as it relates to this issue,
+contains only the off-by-one one-liner).  The same 909 magic number
+works for both 32- and 64-bit builds, so it's not a memory layout thing.
+I am able to change it to 834 (and change the error message as well) by
+editing the command from:
+
+(for x in {1..2000} ; do echo "for x$x in ; do :"; done; for x in {1..2000} ; do echo done ; done) > test-script.sh
+
+to:
+
+(for x in {1..2000} ; do echo "for x$x in x; do :"; done; for x in {1..2000} ; do echo done ; done) > test-script.sh
+
+Notice the added "x" before a semicolon.  Changing the size of this
+token, or the number of values listed in that for loop (e.g., to "x y
+z") does not affect the observed behavior (it's still line 834).
+
+Specifically:
+
+$ (for x in {1..2000} ; do echo "for x$x in; do :"; done; for x in {1..2000} ; do echo done ; done) > test-script.sh; bash test-script.sh 
+test-script.sh: line 909: syntax error near unexpected token `newline'
+test-script.sh: line 909: `for x909 in; do :'
+$ (for x in {1..2000} ; do echo "for x$x in x; do :"; done; for x in {1..2000} ; do echo done ; done) > test-script.sh; bash test-script.sh 
+test-script.sh: line 834: syntax error near unexpected token `in'
+test-script.sh: line 834: `for x834 in x; do :'
+$ (for x in {1..2000} ; do echo "for x$x in more stuff here; do :"; done; for x in {1..2000} ; do echo done ; done) > test-script.sh; bash test-script.sh 
+test-script.sh: line 834: syntax error near unexpected token `in'
+test-script.sh: line 834: `for x834 in more stuff here; do :'
+
+I guess some other buffer fills up.
+
+Anyway, with (a port of) the variables-affix-3.0.patch applied as well
+(which works fine for me), I consider the above a non-security issue.
+
+Alexander
