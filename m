@@ -1,38 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/7
-Message-ID: <20140901201636.GB17700@zoho.com>
-Date: Mon, 1 Sep 2014 20:16:36 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: gpg blindly imports keys from keyserver responses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/4
+Message-Id: <20140927043210.3373DC5051E@smtptsrv1.mitre.org>
+Date: Sat, 27 Sep 2014 00:32:10 -0400 (EDT)
+From: cve-assign@...re.org
+To: rf@...eap.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: zeromq
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 01, 2014 at 10:05:11PM +0200, Kristian Fiskerstrand wrote:
-> On 09/01/2014 09:43 PM, mancha wrote:
-> > On Mon, Sep 01, 2014 at 08:41:10PM +0200, Kristian Fiskerstrand
-> > wrote:
-> >> 
-> >> My personal opinion is this is expected behavior as the
-> >> keyservers are not trusted, and as you point out above, there are
-> >> proper measures that should be used that invalidate this as an
-> >> attack vector, i.e. by performing proper key verification.
-> > 
-> > Hi.
-> > 
-> > Isn't it the opposite? Were key servers fully trusted I'd agree 
-> > "expected behavior" would be to blindly import the server's reply.
-> > 
-> > However, the lack of trustworthiness of keyservers is precisely why
-> > the check is relevant.
-> 
-> I'd consider it security hardening and not a vulnerability.
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I wasn't weighing in on whether the change be considered a vulnerability
-fix or a hardening feature (which are usually deemed CVE unworthy).
+> did not validate the other party's security handshake properly,
+> allowing a man-in-the-middle downgrade attack.
+> https://github.com/zeromq/libzmq/issues/1190
 
-My objection was to the characterization as "expected behavior".
+Use CVE-2014-7202.
 
---mancha
 
-Content of type "application/pgp-signature" skipped
+> libzmq (ZeroMQ/C++) did not implement a uniqueness check on connection
+> nonces, and the CurveZMQ RFC was ambiguous about nonce validation.
+> This allowed replay attacks.
+> https://github.com/zeromq/libzmq/issues/1191
+
+Use CVE-2014-7203.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUJj1gAAoJEKllVAevmvms22oIALa4cmzIr+BMlDJvOW1jqBG3
+WxIMxb3UEW58SSElxlXOaO8WniY3DepSMHqS6YfVIzpKzKtB0KTmQyurOqpNdGkH
+uVrj5UXOT+fCqySURRDAJambPw2XdqauXHxABmFGrfBR97Lx9buTIH5Q0NCW5ZD5
+T4Vkl1tTzv9IcYXhzcDeqqxLALvm4Fl7blvoxwhI5nWcPYCCzIowHz5aCqNT+Waw
+WQ6f8ba1C3mvdmEZKBUtQ+lFdvqFFIZxS4tXgoCCLkOq6nj1nTiKDyxyd1BjCJIn
+xf80XD+fEsMUUTiSL8GebqOPwzC8UD9c9RRslPqmOIP5QC81XBDXITRWx55lzWg=
+=9D3H
+-----END PGP SIGNATURE-----
