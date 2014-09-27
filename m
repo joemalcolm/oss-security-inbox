@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/5
-Message-ID: <20140620060232.GA19214@lorien.valinor.li>
-Date: Fri, 20 Jun 2014 08:02:32 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: 752092@...s.debian.org
-Subject: Re: CVE request: softhsm, softhsm-keyconv tool creates world-readable files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/10
+Message-ID: <5426FFF4.2020902@case.edu>
+Date: Sat, 27 Sep 2014 14:20:36 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>
+CC: chet.ramey@...e.edu, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Hello Murray,
+On 9/27/14, 2:17 PM, Chet Ramey wrote:
 
-(keeping the Cc on the bureport to answer this also there):
+> So what's your opinion on the appropriate set of restrictions? This is a
+> question that goes farther than what a particular shell will import,
+> since I'm going to align the restrictions on what functions a shell will
+> import from the environment with what functions that shell will let a
+> user define.  That means that a posix-mode shell will require imported
+> functions to be valid identifiers, but a non-posix mode shell will allow
+> words.  The original check that was in bash-4.3 does this.  What additional
+> checks should there be? I can see starting with rejecting function names
+> that can be confused with pathnames.
+> 
+> Please chime in and let me know what you think.
 
-On Fri, Jun 20, 2014 at 03:46:30PM +1000, Murray McAllister wrote:
-[...]
-> The Debian bug also notes a similar issue was fixed in ldns - I've
-> asked for more details about that in the bug).
+Sorry, I should have added that I'm not interested in rehashing decisions
+that were made 25 years ago, and I am completely aware that this "violates"
+Posix.  (That's why it doesn't do this in posix mode.)
 
-This should be CVE-2014-3209 (dns-keygen generates keys with world
-readable permissions ).
+Chet
 
-Regards,
-Salvatore
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
