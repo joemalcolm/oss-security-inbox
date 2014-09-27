@@ -1,58 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/7
-Message-ID: <CAA=AuEdGH6p36s5cpNsZTha=Htts8vwyijtgXVj0ds--yP3ehg@mail.gmail.com>
-Date: Mon, 18 Aug 2014 13:56:06 +0200
-From: Jerome Athias <athiasjerome@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/5
+Message-ID: <CALx_OUC40AYVDPSZ3v19iS9Z0qgvSyJt5ju14RTsOeicE4G-Wg@mail.gmail.com>
+Date: Fri, 26 Sep 2014 23:47:17 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
 To: oss-security@...ts.openwall.com
-Subject: Re: Enigmail warning
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-1) Kindly have a look at the License(s)
-2) I also can't reproduce your issue with the level of details that
-you're providing. (Some extensions can cause conflicts with Enigmail,
-preventing it from succesfully signing/encrypting outgoing mail. #FAQ)
-I'm assuming that you're not trying to mix S/MIME and PGP/MIME in the
-same message.
-
-2014-08-18 8:22 GMT+02:00 Henri Salo <henri@...v.fi>:
-> Please read: http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/
->
-> Quote from thread below:
->
-> Enigmail 1.7 is completely broken for my purposes.
->
-> Steps to reproduce the problem:
->
-> 1) Write an email in TB.
-> 2) Ensure "Force encryption" in Enigmail.
-> 3) Ensure "Force signing" in Enigmail.
-> 4) Recheck encryption and signing settings... OK.
-> 5) Send the email.
-> 6) Look at the received email. OOPS. It is NOT signed and NOT encrypted.
->
-> Sorry to say this so directly, but an encryption system, which CONFIRMS
-> to the user in it's graphical user interface on two different places
-> that it will encrypt AND THEN SENDS THE EMAIL WITHOUT ANY ENCRYPTION IN
-> PLAIN TEXT ... is just the BIGGEST IMAGINABLE CATASTROPHE.
->
-> Sorry for my profane language but there is simply no excuse for such
-> bullshit.
->
-> I am currently preparing a crypto class for journalists next week to
-> teach them how to use safe email.
->
-> HOW am I going to explain that? A system tells the user in a separate
-> window as well as in a menu line that everything will be encrypted but
-> then it simply FORGOT to ENCRYPT and, ooops, their report will be
-> intercepted and their source will be tortured ?
->
-> Ok...let's see....maybe there is some magic incompatibility with the TB
-> or OS version or the specific configuration I used or whatever... As a
-> computer scientist I can imagine many bug-explanations.
->
-> Good that I am just a computer scientist. As a serious user (dissident,
-> whistle-blower, diplomatic or military user) I would now be waiting for
-> the bad guys come and get me with their water-board.
->
-> Still as a computer scientist I need an answer to which system I will
-> teach in my class next week. Command-line PGP ?!?
+FWIW, I'm pretty sure I bumped into another bad-looking and probably
+exploitable parser issue; for now, I sent the details privately to
+Chet, Florian, and Alexander. But the bottom line is, the parser
+really shouldn't be exposed to the outside world.
