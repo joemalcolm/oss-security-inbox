@@ -1,43 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/16/4
-Message-ID: <54691022.1070406@internot.info>
-Date: Mon, 17 Nov 2014 07:59:14 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/15
+Message-ID: <5427198F.5000202@case.edu>
+Date: Sat, 27 Sep 2014 16:09:51 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Michal Zalewski <lcamtuf@...edump.cx>
+CC: chet.ramey@...e.edu, Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On 17/11/14 07:43, Michal Zalewski wrote:
->> However, even if tools like file/ndisasm/gimp/readelf can be used by
->> > many (w/o strong system isolation boundaries) to analyze untrusted
->> > inputs (for reverse engineering, malware analysis and similar
->> > purposes) - I'd simply put a blame on those users
-> Well, it's always the easy option, but keep in mind that there are
-> countless tutorials that tell people to use 'file' or 'strings' to
-> examine sketchy file, or use tools such as objdump to do hobby
-> forensics.
-I agree with Michal on this.
-It's like saying Ritchie's fault for the fact that C does not have
-inbuilt bound checking, allowing for buffer overflows...
+On 9/27/14, 3:39 PM, Michal Zalewski wrote:
+>> STD::what::does::this::do
+> 
+> We ran into this problem with the original patch at Google, but TBH,
+> we've just bitten the bullet.
+> 
+> I'm not sure how hard we should try to accommodate outliers like this
+> specifically for functions - as far as I can tell, you can't really
+> get away with meaningfully using colons in variable names, right? But
+> if you just want to minimize breakage without getting into existential
+> discussions, wouldn't wihtelisting : and perhaps periods and - going
+> out on a limb - brackets be good enough?
 
-I won't really expand on this, but my opinion is that _any_ program that
-is 'trusted', such as `file' and `strings', that contains a flaw in it
-that could pwn the running user, is a security risk.
+We already make function names and variable names different, so there's
+no going back -- variable names have the usual restrictions, but with
+function names it's essentially anything goes.
 
-I'll also add, from the `file' manpage:
->   There has been a file command in every UNIX since at least Research
-> Version 4 (man page dated November, 1973).  The System V version intro‐
->      duced one significant major change: the external list of magic
-> types.  This slowed the program down slightly but made it a lot more
-> flexible.
-`file' is also used by internals of most programs that handle any input
-too. Or some variant of it(probably libmagic).
+Since we would be going from essentially anything goes to a very small
+set of acceptable exceptions, I can see a steady stream of "I used to
+be able to use character X in my function names and can't now."  Frankly,
+the really dangerous one is `/', since it allows you to circumvent scripts
+that attempt to use full pathnames to bypass shell function lookups.  I
+am more interested in other dangerous characters, the existential debate
+between whitelists and blacklists notwithstanding.
 
-
-And one last point.. `vlc' is used with untrusted input(i.e .mp4s, avis,
-mp3s, etc.). If somebody gets pwned because they try to watch a video
-they download, is it their fault?..
-
-Thanks,
+Chet
 -- 
--- Joshua Rogers <https://internot.info/>
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
