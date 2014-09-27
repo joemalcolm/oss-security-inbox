@@ -1,36 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/28/6
-Message-ID: <54502AF8.4040608@redhat.com>
-Date: Tue, 28 Oct 2014 17:47:04 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/17
+Message-ID: <20140928002744.079ef259@pc>
+Date: Sun, 28 Sep 2014 00:27:44 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
+Subject: test script for various bash vulns
 Content-Type: text/plain; charset=utf-8
 
-Will someone/people vet the exploits to make sure they are not trojan
-horses/self harming (e.g. the rm -rf * embedded in it somewhere?).
-Strikes me as a heck of a watering hole attack potentially (and yes,
-list members should know better, but ... yeah).
+Hi,
 
-On 28/10/14 07:47 AM, Alexander Cherepanov wrote:
-> On 2014-10-15 12:30, Solar Designer wrote:
->> - Please don't send fully working exploits (but testcases that exercise
->> the flaw are welcome)
->>
->> FWIW, I've always been tempted to remove the latter guideline,
-> 
-> Then perhaps just remove it? It always seemed to me a strange
-> restriction. Other guidelines are either technical in nature or they are
-> intended to reduce the amount of noise. This restriction seems to be
-> neither.
-> 
-> Of you can replace it with something like this:
-> - Please only send fully working exploits which themselves are open-source.
-> 
+I thought I'd share this:
+https://github.com/hannob/bashcheck
 
+Will be updated once further issues appear if they're testable.
+
+(if there's a reliable test for CVE-2014-7187 without fsanitize-address
+that'd be handy, suggestions welcome)
+
+cu,
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Hanno Böck
+http://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
 Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
