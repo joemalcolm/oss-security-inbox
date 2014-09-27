@@ -1,46 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/8
-Message-ID: <54081072.8090606@redhat.com>
-Date: Thu, 04 Sep 2014 01:10:42 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "Christey, Steven M." <coley@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: heap overflow in procmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/19
+Message-Id: <20140927233330.55A2817FDA3@rebar.astron.com>
+Date: Sat, 27 Sep 2014 19:33:30 -0400
+From: christos@...las.com (Christos Zoulas)
+To: chet.ramey@...e.edu, John Haxby <john.haxby@...cle.com>,  oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
+On Sep 27,  6:46pm, chet.ramey@...e.edu (Chet Ramey) wrote:
+-- Subject: Re: [oss-security] Re: CVE-2014-6271: remote code execution throu
 
+| I think function exports are used more widely than you think, and I am not
+| willing to break backwards compatibility that much by disabling function
+| exports by default.
 
-On 03/09/14 11:13 PM, Christey, Steven M. wrote:
-> Kurt,
-> 
->> So this is potentially a very bad issue, so I'm assigning a CVE, sorry
->> Mitre (safe assumption: they're all tucked away in bed like normal sane
->> people =).
-> 
-> That's actually an unsafe assumption, which has introduced a vulnerability into your logic.  There are counter-examples by two different CVE CNA team members in this thread alone.
-> 
-> For additional evidence that counters your assumption, here are a handful of recent oss-security posts by cve-assign between midnight (Eastern time) and 4 AM.  This list is far from complete.
-> http://www.openwall.com/lists/oss-security/2014/09/02/1
-> http://www.openwall.com/lists/oss-security/2014/08/13/3
-> http://www.openwall.com/lists/oss-security/2014/08/13/4
-> http://www.openwall.com/lists/oss-security/2014/08/13/5
-> http://www.openwall.com/lists/oss-security/2014/08/14/2
-> http://www.openwall.com/lists/oss-security/2014/08/14/5
-> http://www.openwall.com/lists/oss-security/2014/08/15/3
-> 
-> When an issue has been made widely public to the security industry, CNAs are expected to attempt to coordinate more closely with MITRE before assigning a CVE ID themselves.  This helps to reduce confusion and duplicates.  Anything posted to oss-security is considered "widely public."
-> 
-> - Steve
+Let's think this through for a minute:
 
-Sorry, it was meant tongue in cheek, the main reason I assumed Mitre was
-off because it came in relatively not super late in the day and no reply
-from Mitre when I noticed it. I also wanted to avoid the notify you guys
-then wait to confirm you weren't awake so I could get to bed early
-(cause getting to bed early worked out for me today, sigh).
+- subshells are just the results of fork() so they just work (functions
+  are still loaded in memory).
+- sourced scripts again are in the process image and just work.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+So we are talking about functions that are inherited during exec,
+either directly (by executing another bash script from the shell,
+or running bash again.) or indirectly (some other command runs a bash
+shell or script) or remotely (if you are passing function definitions
+in your ssh environment).
 
+Lets assume that we want to import for interactive shells, because
+we want the user to have his familiar working setup; we can easily
+do that because we know when the shell is interactive.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+For non-interactive shell scripts, I'd say that the default behavior
+should be off. If you want it on, turn it on explicitly. It is a
+dangerous feature (being able to override commands in a way the
+script does not expect). This was recognized before, this is why
+it is off when you are setuid. Let's correct it.  You don't want
+to be affecting the shell in such an intrusive way before the user
+is given control and a choice. Let the people who want to use the
+feature to have to turn it on explicitly.
+
+I think some stuff might break, but it will be easily fixable and
+worth the extra work because:
+
+	- we would not be exposing the parser anymore
+	- we would be starting up scripts in a more controlled environment
+
+christos
