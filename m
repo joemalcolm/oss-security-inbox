@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/12/6
-Message-ID: <CAOP=4wi3cJpTV0N4rz+NWGU7R+-OEFG8n7bjZOX3uQOPjDWEWQ@mail.gmail.com>
-Date: Tue, 12 Aug 2014 14:48:28 -0700
-From: Kenton Varda <kenton@...dstorm.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/16
+Message-ID: <20140927215110.GW23797@oevtugenva.nrevsny.pk>
+Date: Sat, 27 Sep 2014 17:51:10 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: ro bind mount bypass using user namespaces
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-Due to a bug in the Linux kernel's implementation of remount, on systems
-with unprivileged user namespaces enabled, it is possible for an
-unprivileged user to gain write access to any visible read-only bind mount.
-It is also possible to bypass flags like nodev, nosuid, and noexec.
+On Fri, Sep 26, 2014 at 12:26:05PM -0600, Kurt Seifried wrote:
+> On 26/09/14 12:12 PM, Rich Felker wrote:
+> > On Fri, Sep 26, 2014 at 02:06:21PM +0100, Simon McVittie wrote:
+> >>> Tell everyone to stop using setuid/setgid now and forever?
+> > 
+> > Yes!
+> > 
+> >> Minimizing use of setuid/setgid, and making sure the setuid/setgid
+> >> things are suitably hardened, is a good idea. However, tools for
+> >> controlled privilege escalation (sudo, pkexec, Apache suexec) rely on
+> >> setuid in order to work. There's a reason the feature exists at all.
+> > 
+> > These could all be done by having the process with root privileges
+> > inherit them from a daemon parent that already has root, rather than
+> > requiring the kernel to elevate the privileges of a process via the
+> > setuid bit. This inherently eliminates all attacker control of the
+> > process's initial state and limits the input/attack surface to the
+> > communication channel clients have with the daemon (e.g. a single unix
+> > socket).
+> 
+> setuid/setgid is not just for root. For example the Postfix server makes
+> use of various groups and setuid/setgid binaries and directories so that
+> there are well defined interfaces between Postfix components that run
+> with different privilege levels.
 
-This problem affects sandboxing / containerization systems that do not
-expose the regular filesystem to the sandboxed process, but do expose a
-bind-mounted view of that filesystem using these flags to enforce security.
-This bug may enable a sandbox break-out. Sandboxes which have used
-seccomp-bpf to disable the "mount" system call or to disable user
-namespaces are likely safe.
+But the same could be achieved, with none of the risks of
+setuid/setgid, via IPC to a daemon that already has the right
+user/group.
 
-Eric Biederman has proposed the following patches to fix the problem:
-
-https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=a6138db815df5ee542d848318e5dae681590fccd
-https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=07b645589dcda8b7a5249e096fece2a67556f0f4
-https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=9566d6742852c527bf5af38af5cbb878dad75705
-https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=ffbc6f0ead47fa5a1dc9642b0331cb75c20a640e
-https://git.kernel.org/cgit/linux/kernel/git/ebiederm/user-namespace.git/commit/?h=for-linus&id=db181ce011e3c033328608299cd6fac06ea50130
-
--Kenton Varda, Sandstorm.io
-
+Rich
