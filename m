@@ -1,36 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/12
-Message-ID: <20140617154606.39e9f085@redhat.com>
-Date: Tue, 17 Jun 2014 15:46:06 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: graham.dumpleton@...il.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Security release for mod_wsgi (version 3.5)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/14
+Message-ID: <CALx_OUCaGM+OF_SjQR0Eoqpv+KSf_eB524P1HCqJG8Jz6faExg@mail.gmail.com>
+Date: Sat, 27 Sep 2014 12:39:57 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: Chester Ramey <chet.ramey@...e.edu>
+Cc: Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>,  Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 17 Jun 2014 22:39:49 +1000 Graham Dumpleton wrote:
+> STD::what::does::this::do
 
-> So just to be safe one could in all cases exit anyway, but I believe
-> the possibility that these could cause an issue is extremely limited,
-> with the only case being where the user provides a bad gid for #nnn
-> to the 'group' option which did actually exceed some integer range
-> which was actually enforced by the operating system being used. If
-> they used an actual group name, which would be the typical case, they
-> shouldn't be able to trigger a problem.
+We ran into this problem with the original patch at Google, but TBH,
+we've just bitten the bullet.
 
-My concern was more about things that are outside your control and can
-still cause set*id calls to fail even if you feed them with sane data.
-Some of these include other errors that can be encountered inside
-syscall (e.g. memory allocation issues), capability issues, or simply
-having MAC system (think SELinux) policy denying id change.  Those were
-mentioned here:
+I'm not sure how hard we should try to accommodate outliers like this
+specifically for functions - as far as I can tell, you can't really
+get away with meaningfully using colons in variable names, right? But
+if you just want to minimize breakage without getting into existential
+discussions, wouldn't wihtelisting : and perhaps periods and - going
+out on a limb - brackets be good enough?
 
-http://www.openwall.com/lists/oss-security/2011/08/11/6
-http://www.openwall.com/lists/oss-security/2011/08/11/9
-
-Of course, while none of these are known to offer such easily and widely
-usable attack vector as RLIMIT_NPROC causing setuid failure, it seems
-reasonable to fix all properly while at it.
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+/mz
