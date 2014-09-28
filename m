@@ -1,36 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/6
-Message-ID: <53871407.8070306@redhat.com>
-Date: Thu, 29 May 2014 21:03:35 +1000
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: sos: /etc/fstab collected by sosreport, possibly containing passwords
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/1
+Message-ID: <542766C7.2030902@case.edu>
+Date: Sat, 27 Sep 2014 21:39:19 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>
+CC: chet.ramey@...e.edu, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, Eric Blake <eblake@...hat.com>
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+On 9/27/14, 2:17 PM, Chet Ramey wrote:
+> On 9/27/14, 10:28 AM, Tavis Ormandy wrote:
+> 
+>> It does look bad, but are you sold on the prefix/suffix solution Chet?
+>> That will at least mean these are not security issues.
+> 
+> Yes.  I have no problems worth mentioning with the exported function
+> encoding approach.  I have attached patches implementing it that can
+> be applied to bash versions from bash-2.05b to bash-4.3.  Please take
+> a look, make sure they can be applied cleanly, and so on.
+> 
+> There is another discussion worth having before officially releasing
+> these, which I will do later today.
 
- From <https://bugzilla.redhat.com/show_bug.cgi?id=1102633>:
+OK, here are the more-or-less final versions of the patches for bash-2.05b
+through bash-4.3.  I made two changes from earlier today: the function
+export suffix is now `%%', which is not part of a the set of valid variable
+name characters but avoids any potential problems with including
+shell metacharacters in the name; and this version refuses to import shell
+functions whose name contains a slash, for reasons I discussed earlier.
 
-It was reported that sosreport collected and stored "/etc/fstab" in the 
-resulting archive of debugging information. This may contain plain text 
-passwords (or a link to the file containing them), for example, 
-credentials for Samba mounts. This could leak passwords to an attacker 
-who is able to access the archive. Sensitive information in "/etc/fstab" 
-should be sanitized before being stored by sosreport.
+Please let me know if you have any issues with these.
 
-Note that "/etc/fstab" is world-readable, so local attackers should not 
-be a concern (they can read the file anyway). This could be an issue 
-when the sosreport is sent to other parties.
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
 
-Acknowledgements:
+View attachment "funcexport-encode-2.05b.patch" of type "text/x-patch" (5818 bytes)
 
-Red Hat would like to thank Dolev Farhi of F5 Networks for reporting 
-this issue.
+View attachment "funcexport-encode-3.0.patch" of type "text/x-patch" (5822 bytes)
 
-I think it should have a CVE, but I am less sure due to "/etc/fstab" 
-being world-readable, so I have not assigned one.
+View attachment "funcexport-encode-3.1.patch" of type "text/x-patch" (5764 bytes)
 
-Thanks,
+View attachment "funcexport-encode-3.2.patch" of type "text/x-patch" (5764 bytes)
 
---
-Murray McAllister / Red Hat Security Response Team
+View attachment "funcexport-encode-4.0.patch" of type "text/x-patch" (5764 bytes)
+
+View attachment "funcexport-encode-4.1.patch" of type "text/x-patch" (5764 bytes)
+
+View attachment "funcexport-encode-4.2.patch" of type "text/x-patch" (5764 bytes)
+
+View attachment "funcexport-encode-4.3.patch" of type "text/x-patch" (5990 bytes)
