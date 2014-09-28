@@ -1,38 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/14
-Message-ID: <20141105161401.4dd89654@redhat.com>
-Date: Wed, 5 Nov 2014 16:14:01 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/5
+Message-ID: <CAOp4FwS3REpdEUA=iUb+tJ1N7-05K8mtd_k8mmso-0KOOrj2UA@mail.gmail.com>
+Date: Sun, 28 Sep 2014 08:36:19 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: PHP xmlrpc date_from_ISO8601() buffer overflow (in php < 5.2.7)
+Cc: chet.ramey@...e.edu
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Fri, Sep 26, 2014 at 6:13 PM, Christos Zoulas <christos@...las.com> wrote:
+> On Sep 26,  1:47pm, john.haxby@...cle.com (John Haxby) wrote:
+> -- Subject: Re: [oss-security] Re: CVE-2014-6271: remote code execution throu
+>
+> | It's not so much the known attacks -- redefining ls, unset, command,
+> | typeset, declare, etc -- it's the future parser bugs that we don't yet
+> | know about.
+> |
+> | A friend of mine said this could be a vulnerability gift that keeps on
+> | giving.
+>
+> I think that at this point the conservative approach is best, so
+> until the bash author figures what the best solution is, the feature
+> is disabled by default for NetBSD. It is not wise to expose bash's
+> parser to the internet and then debug it live while being attacked.
+>
+> christos
+>
+> $NetBSD: patch-shell.c,v 1.1 2014/09/25 20:28:32 christos Exp $
+>
+> Add flag to disable importing of function unless explicitly enabled
+>
+> --- shell.c.christos    2014-01-14 08:04:32.000000000 -0500
+> +++ shell.c     2014-09-25 16:11:51.000000000 -0400
+> @@ -229,6 +229,7 @@
+>  #else
+>  int posixly_correct = 0;       /* Non-zero means posix.2 superset. */
+>  #endif
+> +int import_functions = 0;      /* Import functions from environment */
+>
+>  /* Some long-winded argument names.  These are obviously new. */
+>  #define Int 1
+> @@ -248,6 +249,7 @@
+>    { "help", Int, &want_initial_help, (char **)0x0 },
+>    { "init-file", Charp, (int *)0x0, &bashrc_file },
+>    { "login", Int, &make_login_shell, (char **)0x0 },
+> +  { "import-functions", Int, &import_functions, (char **)0x0 },
+>    { "noediting", Int, &no_line_editing, (char **)0x0 },
+>    { "noprofile", Int, &no_profile, (char **)0x0 },
+>    { "norc", Int, &no_rc, (char **)0x0 },
+>
+> $NetBSD: patch-variables.c,v 1.1 2014/09/25 20:28:32 christos Exp $
+>
+> Only read functions from environment if flag is set.
+>
+> --- variables.c.christos        2014-09-25 16:09:41.000000000 -0400
+> +++ variables.c 2014-09-25 16:12:10.000000000 -0400
+> @@ -105,6 +105,7 @@
+>  extern int assigning_in_environment;
+>  extern int executing_builtin;
+>  extern int funcnest_max;
+> +extern int import_functions;
+>
+>  #if defined (READLINE)
+>  extern int no_line_editing;
+> @@ -349,7 +350,7 @@
+>
+>        /* If exported function, define it now.  Don't import functions from
+>          the environment in privileged mode. */
+> -      if (privmode == 0 && read_but_dont_execute == 0 && STREQN ("() {", string, 4))
+> +      if (import_functions && privmode == 0 && read_but_dont_execute == 0 && STREQN ("() {", string, 4))
+>         {
+>           string_length = strlen (string);
+>           temp_string = (char *)xmalloc (3 + string_length + char_index);
 
-While looking at the recent PHP CVE-2014-3668, a worse problem was
-spotted in the same code that affected older PHP versions.  The
-date_from_ISO8601() function optionally copied input to a fixed size
-local buffer without performing any bounds checks:
-
-http://git.php.net/?p=php-src.git;a=blob;f=ext/xmlrpc/libxmlrpc/xmlrpc.c;h=d82f270#l168
-
-The issue was reported and corrected via:
-
-https://bugs.php.net/bug.php?id=45226
-http://git.php.net/?p=php-src.git;a=commitdiff;h=c818d0d
-
-The fix was included in PHP 5.2.7:
-
-http://php.net/ChangeLog-5.php#5.2.7
-
-  Fixed bugs #45226, #18916 (xmlrpc_set_type() segfaults and wrong behavior
-  with valid ISO8601 date string). (Jeff Lawsons)
-
-It wasn't flagged as security fix, which seems incorrect to me.  This
-overflow can be triggered by a malicious XML passed to xmlrpc_decode*
-PHP functions.
-
-Can a CVE be assigned?  I'm not sure if this needs 2008 or 2014 id.
+I agree: This should be disabled until a proper solution is found.
 
 -- 
-Tomas Hoger / Red Hat Product Security
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
