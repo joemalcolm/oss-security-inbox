@@ -1,74 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/6
-Message-ID: <543E1046.5010508@reactos.org>
-Date: Wed, 15 Oct 2014 08:12:22 +0200
-From: Pierre Schweitzer <pierre@...ctos.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/6
+Message-ID: <CAOp4FwTWN+sW8hq9eHAdX-7U27iT2z8fZkR0yyaW9=DLsR9-jA@mail.gmail.com>
+Date: Sun, 28 Sep 2014 08:47:31 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
+Cc: John Haxby <john.haxby@...cle.com>, chet.ramey@...e.edu, christos@...las.com
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-Hi,
-
-For "standard" IT people, this was kind of a good thing actually.
-Without knowing anything about the vulnerability itself, you were at
-least aware that something totally wrong was coming with SSLv3. So, it
-was letting a few hours to disable (for instance) SSLv3 on the
-infrastructure (or to check it had been properly done a while ago)
-before the issue comes out publicly with all the details and
-eventually PoC to exploit it.
-That's kind of great opportunity to make sure we're safe before it
-gets wrong.
-
-Just my 2 cents.
-
-On 10/15/2014 07:28 AM, Sona Sarmadi wrote:
-> Thanks Hanno,
-> 
-> A reflection: Maybe we shouldn't post  information like this here
-> or somewhere else which is not published yet even if the
-> information has leak out? Although all members here are reliable
-> but it is still an open mailing list and we should be careful and
-> act more responsible.
-> 
-> Cheers Sona
-> 
->> It's out:
->> 
->> https://www.openssl.org/~bodo/ssl-poodle.pdf 
->> http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
+On Sun, Sep 28, 2014 at 2:46 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
+> On 9/26/14, 8:47 AM, John Haxby wrote:
+>> On 26/09/14 12:33, Florian Weimer wrote:
+>>> On 09/26/2014 10:54 AM, Mark R Bannister wrote:
+>>>> Testing patch 25 and 26 from Chet, it looks to me like this is still
+>>>> an incomplete fix.  The third vulnerability I'd like to report is the
+>>>> feature itself in bash that allows functions to be passed in the
+>>>> environment, e.g.
+>>>> $ env ls='() { echo vulnerable; }' bash -c ls
+>>>>
+>>>> This allows an attacker to replace a command used by a bash script
+>>>> with arbitrary code.  It is then down to an attacker to find a
+>>>> suitable command that the bash script (or any child shells) might call
+>>>> without a path component.
+>>>>
+>>>> I can't see this being a problem for Apache custom headers (the
+>>>> variable name is turned to uppercase and prefixed by HTTP_), nor sudo
+>>>> commands if env_reset is on (the default), but this continues to be a
+>>>> major vulnerability for setuid/setgid scripts (S_ISUID or S_ISGID)
+>>>> where the environment is preserved.
+>>>
+>>> I agree this looks scary at first glance, but we discussed this
+>>> previously, see for example:
+>>>
+>>>   <http://www.openwall.com/lists/oss-security/2014/09/24/20>
+>>>
+>>> Shell scripts derive part of their power and flexibility from their
+>>> openness to the execution environment.  You can tweak PATH, BASH_ENV (or
+>>> ENV for other Bourne-like shells), IFS, HOME, and many other variables
+>>> to change behavior.  There are even more knobs to affect the behavior of
+>>> the external commands almost all shell scripts call when they run.
+>>>
+>>> This makes them not suitable at all for writing SUID programs or other
+>>> code that runs in untrusted environments.  This is well-documented, and
+>>> given the amount of shell scripts out there which rely on these aspects
+>>> of the UNIX shell design, it's not something we can change, particularly
+>>> not as part of a security update which system administrators are more or
+>>> less forced to install.
+>>>
+>>> In your specific example, you can achieve the same effect by setting
+>>> PATH to a directory with a customer ls program, or by setting BASH_ENV
+>>> to a file which contains a definition of a function called ls.
+>>>
+>>> Overriding external programs with shell functions in such a way has to
+>>> be supported.  Otherwise, scripts which define shell functions would
+>>> break if the system administrator installs new software which happens to
+>>> include a program of the same name of the shell function.
+>>>
 >>
->> 
-exploiting-ssl-30.html
->> 
->> My conclusion stays the same: Disable SSLv3.
->> 
->> -- Hanno Böck http://hboeck.de/
->> 
->> mail/jabber: hanno@...eck.de GPG: BBB51E42
+>>
+>> It's not so much the known attacks -- redefining ls, unset, command,
+>> typeset, declare, etc -- it's the future parser bugs that we don't yet
+>> know about.
+>>
+>> A friend of mine said this could be a vulnerability gift that keeps on
+>> giving.
+>>
+>> CVE-2014-7169 was discovered very quickly after CVE-2014-6271.  Do you
+>> think that's the end of it?   (Just in case: I'm not getting at anyone
+>> here, certainly not Chet, Florian or anyone else who has been working
+>> overtime on these.)
+>>
+>> Importing functions from the environment is relatively unusual.  I'd
+>> probably go so far as to say very unusual.
+>>
+>> Sufficiently unusual, I'd venture, that it should not be done
+>> implicitly.   Florian's "BASH_FUNC_x()" makes it easier to blacklist
+>> these environment variables and ensures that a web server's HTTP_ prefix
+>> will not just create an oddly named function ... is that enough?  Should
+>> bash simply make importing functions something that one has to ask for
+>> explicitly as Christos Zoulas (and others) suggested[1]?
+>
+> I think function exports are used more widely than you think, and I am not
+> willing to break backwards compatibility that much by disabling function
+> exports by default.
+
+Hi Chet,
+
+I think that it's high time to consider breaking compatibility, and
+getting users to rewrite their scripts.
+
+In OpenBSD, developers do not hesitate to break backward compatibility
+if it helps to improve security. OpenBSD proved that the approach has
+its benefits and despite a few grumblings, users tend to follow.
 
 
-- -- 
-Pierre Schweitzer <pierre@...ctos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBAgAGBQJUPhBBAAoJEHVFVWw9WFsLG5AQAIRUEYp0f9Wt73J4YjhzPweB
-9CEfmF6GN4Tp8GgH35dRCU2cQrh28CEuQPjFC/ay3CkcjBnmtc0n69BjwFP6m8bc
-sW9XzLifQQ85UiMA5Zyr1C94TAlso+c77xk0EVh7hu8B5iwXwYwRFD4+BKMumDXx
-nQOKJzq0EbSswDngZqP+54sO4pafytI8XfcGWhmIvC7oSwIxacY8O1UBrwVYWTca
-s4ukOpZB5eZtVzCjWaKojzd01/dsLYHXny6aUOzV4/+I/z77WymbCaUZxjGLg7Om
-ej26rAZeDRLjCu8uusK5ejJYvpMKs0E7c/xzCMHgzlXiZNHulVo213wD1NKdA4MY
-Rw7tA3jo1WqOw8/j9XRhtHpUGhGnYERtWV1+4rAPjJ6cZinz5ooinR6hNCbAXKz/
-wxhgRhauxjgM2vCE2hd0T/PBjY6mP6IKYUquIsSYRan26XnbRp5Na184q9V92CPw
-EYgBdSfiuxmF1GT4a2U5OEWeWqEetQtIoLdp/7Ch4nZ7bhkNnGxnVGSEqLZRLd7s
-zgMyVgDC2L6NnwUd7YyVDE5DR6pgsflp/dnGvwScKfjtbtNV/jASNLKoO5BjOnn/
-IOa1fsgdBL5NDw5RFOnSi2ifsY9/7+xCa7VUWKMT5W/XbsABRusgnyJxEKgM5n+B
-3S85hEbRiamLnLCbV59A
-=4kV1
------END PGP SIGNATURE-----
+>
+> Chet
+>
+> --
+> ``The lyf so short, the craft so long to lerne.'' - Chaucer
+>                  ``Ars longa, vita brevis'' - Hippocrates
+> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+
+
+
+-- 
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
