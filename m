@@ -1,18 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/13
-Message-ID: <CAJVRA1Q8t46KVm8_5RZn6E858ME2pUbgb2BhK8p6txVyYjFRnA@mail.gmail.com>
-Date: Tue, 4 Nov 2014 20:36:39 -0800
-From: coderman <coderman@...il.com>
-To: oss-security@...ts.openwall.com, kseifried <kseifried@...hat.com>
-Subject: Re: is MD5 finally dead?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/3
+Message-ID: <54276F2B.7030500@redhat.com>
+Date: Sat, 27 Sep 2014 20:15:07 -0600
+From: Eric Blake <eblake@...hat.com>
+To: chet.ramey@...e.edu, Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>
+CC: Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-On 11/4/14, Kurt Seifried <kseifried@...hat.com> wrote:
-> ...
-> It seems like MD5 should probably be classed with DES as instant CVE
-> win, either now, or pretty soon....
+On 09/27/2014 07:39 PM, Chet Ramey wrote:
+> On 9/27/14, 2:17 PM, Chet Ramey wrote:
+>> On 9/27/14, 10:28 AM, Tavis Ormandy wrote:
+>>
+>>> It does look bad, but are you sold on the prefix/suffix solution Chet?
+>>> That will at least mean these are not security issues.
+>>
+>> Yes.  I have no problems worth mentioning with the exported function
+>> encoding approach.  I have attached patches implementing it that can
+>> be applied to bash versions from bash-2.05b to bash-4.3.  Please take
+>> a look, make sure they can be applied cleanly, and so on.
+>>
+>> There is another discussion worth having before officially releasing
+>> these, which I will do later today.
+> 
+> OK, here are the more-or-less final versions of the patches for bash-2.05b
+> through bash-4.3.  I made two changes from earlier today: the function
+> export suffix is now `%%', which is not part of a the set of valid variable
+> name characters but avoids any potential problems with including
+> shell metacharacters in the name; and this version refuses to import shell
+> functions whose name contains a slash, for reasons I discussed earlier.
+> 
+> Please let me know if you have any issues with these.
+
+I'm also worried about this:
 
 
-waiting for an HMAC-MD5 break before putting a fork in it.
+  	  /* Don't import function names that are invalid identifiers from the
+  	     environment. */
+! 	  if (absolute_program (tname) == 0 && (posixly_correct == 0 ||
+legal_identifier (tname)))
+! 	    parse_and_execute (temp_string, tname,
+SEVAL_NONINT|SEVAL_NOHIST|SEVAL_FUNCDEF|SEVAL_ONECMD);
 
-best regards,
+One of the complaints upstream is that:
+
+https://lists.gnu.org/archive/html/bug-bash/2014-09/msg00215.html
+>> Yes, it does do this detection, but too late for our concern, since things 
+>> occur in the following order:
+>> 
+>>  (1) set_shell_name(argv[0]) => this detects "sh" and sets 'act_like_sh'
+>>  (2) shell_initialize() => this decides to import funcs from env depending on 
+>> flags like 'posixly_correct'
+>>  (3) if (act_like_sh) ... sv_strict_posix ("POSIXLY_CORRECT")
+
+Are you 100% sure that posixly_correct is correctly initialized at this
+point in parsing the incoming environment variables, regardless of
+whether you invoked '/bin/sh', 'bash -o posix', or 'POSIXLY_CORRECT=1
+bash'?  I'm especially worried about the latter - if 'FUNC_BASH_a:%%=()
+{...}' occurs in the environment earlier than 'POSIXLY_CORRECT=1', then
+you may end up allowing function 'a:' in the namespace because you
+didn't realize you should have been in posix mode.  Note - I have not
+audited the code to see if you do a getenv("POSIXLY_CORRECT") (or
+equivalent) prior to the processing loop of parsing incoming environment
+variables in general, but since you are more familiar with the code
+base, I'm hoping you can give a reassuring answer.
+
+-- 
+Eric Blake   eblake redhat com    +1-919-301-3266
+Libvirt virtualization library http://libvirt.org
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
