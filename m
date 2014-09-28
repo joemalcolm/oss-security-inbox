@@ -1,56 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/2
-Message-Id: <20140926040205.B6FCA72E1E5@smtpvbsrv1.mitre.org>
-Date: Fri, 26 Sep 2014 00:02:05 -0400 (EDT)
-From: cve-assign@...re.org
-To: huzaifas@...hat.com, marc.deslauriers@...onical.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/10
+Message-ID: <5428009D.6040909@redhat.com>
+Date: Sun, 28 Sep 2014 06:35:41 -0600
+From: Eric Blake <eblake@...hat.com>
+To: Hanno Böck <hanno@...eck.de>, Chet Ramey <chet.ramey@...e.edu>
+CC: Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 09/27/2014 11:22 PM, Hanno Böck wrote:
+> On Sat, 27 Sep 2014 21:39:19 -0400
+> Chet Ramey <chet.ramey@...e.edu> wrote:
+> 
+>> OK, here are the more-or-less final versions of the patches for
+>> bash-2.05b through bash-4.3.  I made two changes from earlier today:
+>> the function export suffix is now `%%', which is not part of a the
+>> set of valid variable name characters but avoids any potential
+>> problems with including shell metacharacters in the name; and this
+>> version refuses to import shell functions whose name contains a
+>> slash, for reasons I discussed earlier.
+> 
+> From what I can see your official patches still don't contain the
+> out-of-bound memory fixes.
 
-> From: Marc Deslauriers
-> Could we please get two CVE numbers assigned for the two OOB memory issues?
+Correct, because those patches aren't official yet.  But at the same
+time, the out-of-bounds bugs can no longer be used as a remote exploit
+vehicle, because the official patch 4.3.27 (and friends) guarantee that
+arbitrary values no longer call into the parser.
+
+> 
+> While not exposing the parser to random variables should shield that
+> somewhat and reduce impact, they still should be fixed and the redhat
+> patch looks pretty straightforward.
+
+I'm sure Chet has plans to post more official patches in the coming week.
+
+-- 
+Eric Blake   eblake redhat com    +1-919-301-3266
+Libvirt virtualization library http://libvirt.org
 
 
-> From: Florian Weimer
-
-> The redir_stack issue is this:
-
-> -static REDIRECT *redir_stack[10];
-
-This is apparently an error in handling here documents that can be
-fixed by not using the above array size.
-
-Use CVE-2014-7186.
-
-
-> The word_lineno issue is this
-
->      case FOR:
-> -      if (word_top < MAX_CASE_NEST)
-> +      if (word_top + 1 < MAX_CASE_NEST)
-
-This is apparently an off-by-one error in the processing of deeply
-nested for loops.
-
-Use CVE-2014-7187.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUJORKAAoJEKllVAevmvmsX7YH/jmzRQO8Uyc5R4M3KP/yomee
-7f+WOjD5j7aLuaRATnFZD9NuuchP9jofpJfkV5nUw2QuT5+1Hb+WW7k8tQHB4+w+
-P0RZLIMAPJDe5hJGtUIOFwBfvii4lSDw1G9ij6/1ObIGETPJmO8ioT4jTP98hRvf
-F3I+RiVKjytMQhZKwvuK4gsT2b8pHcP0iAKTiSiV/U9qME4lIZkBee8a3pFSaYKw
-RlHohbPy6ucBwSRtYaTzKBNM1g6XXMrVWa09YvL8hdtJM1w2hrD+Bxm/PZnER5Sr
-VCpQqJVOZtKeykNQ95v8xIitwhEcwwy3AGXfg4urvqYAJ5EnyJKV1u2Ky97Ds5A=
-=imiZ
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
