@@ -1,27 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/22/1
-Message-ID: <5447B40A.9030509@canonical.com>
-Date: Wed, 22 Oct 2014 09:41:30 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/11
+Message-ID: <d0540d670e407d290a72510b122bde36@shatow.net>
+Date: Sun, 28 Sep 2014 11:52:10 -0500
+From: Bryan Drewery <bdrewery@...eBSD.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: systemd-shim DoS issue
+Cc: chet.ramey@...e.edu, Christos Zoulas <christos@...las.com>
+Subject: Re: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 2014-09-26 15:52, Bryan Drewery wrote:
+> On 9/26/2014 9:13 AM, Christos Zoulas wrote:
+>> On Sep 26,  1:47pm, john.haxby@...cle.com (John Haxby) wrote:
+>> -- Subject: Re: [oss-security] Re: CVE-2014-6271: remote code 
+>> execution throu
+>> 
+>> | It's not so much the known attacks -- redefining ls, unset, command,
+>> | typeset, declare, etc -- it's the future parser bugs that we don't 
+>> yet
+>> | know about.
+>> |
+>> | A friend of mine said this could be a vulnerability gift that keeps 
+>> on
+>> | giving.
+>> 
+>> I think that at this point the conservative approach is best, so
+>> until the bash author figures what the best solution is, the feature
+>> is disabled by default for NetBSD. It is not wise to expose bash's
+>> parser to the internet and then debug it live while being attacked.
+>> 
+>> christos
+>> 
+> 
+> FreeBSD has taken a similar approach. We have used Christos' patch and
+> disabled the feature by default.
+> 
+> https://svnweb.freebsd.org/changeset/ports/369341
 
-systemd-shim version 8 shipped with a debugging clause enabled that may result
-in a denial of service attack by local users.
+FYI I have updated the FreeBSD bash to 27 and modified the 
+--import-functions script to be implicit for interactive shells and to 
+also give a warning when functions are ignored.
 
-Fixed by:
-https://github.com/desrt/systemd-shim/commit/d2e91c118f6128875274a638007702d1cc665893
-
-Could a CVE please be assigned to this issue?
-
-Thanks,
-
-Marc.
+https://svnweb.freebsd.org/ports/head/shells/bash/files/extrapatch-import-functions?revision=369467&view=co&pathrev=369467
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+Regards,
+Bryan Drewery
