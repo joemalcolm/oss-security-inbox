@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/10
-Message-Id: <F5675C51-856C-45A3-A237-3BFE777AA3AE@oracle.com>
-Date: Tue, 4 Mar 2014 12:28:21 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/9
+Message-ID: <CACYkhxibD6Biiv+zYyNuFzDgsaLV956F48skN2Qf7MVJvwxw9w@mail.gmail.com>
+Date: Sun, 28 Sep 2014 21:13:22 +1000
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+Cc: Chester Ramey <chet.ramey@...e.edu>
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
+On 28 September 2014 01:06, Solar Designer <solar@...nwall.com> wrote:
+> This also means that we should treat any programs that generate bash
+> scripts with (sanitized) untrusted input in them as unsafe, and patch
+> those to use safer mechanisms to pass (sanitized) inputs to scripts
+> (preferably use env vars with fixed names).
 
-On 4 Mar 2014, at 11:24, Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
+The problem with this approach is that a sh is useful for both system(3)
+and wrapping things like java.
 
->> Google Chrome doesn’t permit the link though, it just crashes :)
-> 
-> On what platform?  Is this for any connection, or just for a primary
-> connection?  That is, can any web site can crash google chrome with <img
-> src="https://demo.cmrg.net/" /> ?
-> 
-> (sorry, i don't have either chrome or safari handy to test it myself
-> right now)
+This problem came up because bash was parsing environment variables
+even when the script wasn't referencing them.  I don't think anyone lets
+network users set completely arbitrary environment variable names.
 
-Chrome crashes on both Linux and Mavericks.
+I think Debian's approach of dash as /bin/sh, and bash as an interactive
+shell is the right balance.
 
-openssl s_client doesn’t report problems, but I wouldn’t expect it to.
+I switched a Fedora box to using dash as /bin/sh, and so far have only
+logged one bug for something that broke, and it pretty much deserved
+to break (BZ #1146733).
 
-wget just downloads index.html without any issue.
-
-Firefox, elinks, midori and curl all refuse one way or another.
-
-I didn’t test any more.  Apart from chrome, those are all on Fedora 20.
-
-I agree that the connections being so trivially decryptable represents a flaw that should be fixed.
-
-jch
-
-Download attachment "signature.asc" of type "application/pgp-signature" (236 bytes)
+Regards,
+  Michael
