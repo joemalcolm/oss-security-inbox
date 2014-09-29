@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/29
-Message-ID: <CABJ8ys96+Ksmg5moqacpbLdfnQOL1+XWCjpSvyFxr=99N8PuGg@mail.gmail.com>
-Date: Mon, 29 Sep 2014 22:58:12 +0800
-From: Osmond Sun <osmond.sun@...il.com>
-To: Chester Ramey <chet.ramey@...e.edu>
-Cc: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/21
+Message-ID: <A9DC0B5B-6E71-4A9D-A45E-69D6127AF0D6@akamai.com>
+Date: Mon, 29 Sep 2014 10:42:28 -0500
+From: "Kobrin, Eric" <ekobrin@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "chet.ramey@...e.edu" <chet.ramey@...e.edu>
 Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-I see, Thanks
+On Sep 29, 2014, at 10:33 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
+> If that is the command you ran, this doesn't show any vulnerability. 
 
-Osmond
+I've seen quite a few examples like this which don't do precisely what the submitter thought.
 
-2014-09-29 22:33 GMT+08:00 Chet Ramey <chet.ramey@...e.edu>:
-> On 9/29/14, 9:01 AM, Osmond Sun wrote:
->> I found the function parsing is still imperfect.
->> e.g. $env x="() { :;}; `touch vulnerablefile`" bash -c "echo this is a test "
->
-> If that is the command you ran, this doesn't show any vulnerability.  The
-> double quotes surrounding the assignment to x in the argument to `env'
-> mean that command substitution is performed before env runs.  It's the
-> command substitution that creates the file, so the file exists before bash
-> is invoked.
->
-> Chet
-> --
-> ``The lyf so short, the craft so long to lerne.'' - Chaucer
->                  ``Ars longa, vita brevis'' - Hippocrates
-> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+I hope this isn't another such example:
+
+$ env $'BASH_FUNC_\nfoo%%=() { echo 123\n }' ./bash -c 'foo'
+./bash: error importing function definition for `
+foo'
+123
+
+This doesn't seem like desired behavior.
+
+In the version before the recent patches, adding unexpected characters could cause segfaults.
+
+-- Eric
