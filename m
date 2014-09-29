@@ -1,42 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/27
-Message-ID: <542440BC.3040005@debian.org>
-Date: Thu, 25 Sep 2014 17:20:12 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/22
+Message-ID: <EED4C03C-C488-47B6-BDFC-FB054FC80585@akamai.com>
+Date: Mon, 29 Sep 2014 10:47:32 -0500
+From: "Kobrin, Eric" <ekobrin@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "chet.ramey@...e.edu" <chet.ramey@...e.edu>, Florian Weimer <fweimer@...hat.com>
+Subject: Re: Array importing in bash 4.3 (was: Re: Fwd: Non-upstream patches for bash)
 Content-Type: text/plain; charset=utf-8
 
-On 25/09/14 16:59, John Haxby wrote:
-> I'm sure that there are going to be chains of exploits where each
-> program in the chain doesn't believe that it needs a whitelist.
+On Sep 29, 2014, at 10:42 AM, Florian Weimer <fweimer@...hat.com> wrote:
+
+>> From: Florian Weimer <fweimer@...hat.com>
+>> 
+>> Note that if you ship 4.3, you might want to reevaluate a decision to
+>> enable array variable import from the environment.
 > 
-> For example, suid program A doesn't need a whitelist because it doesn't
-> go anywhere near a shell, the closest it gets is exec'ing one of a
-> well-defined set of programs ...
+> I changed the subject because I'm sure this parenthetical comment got lost.
+> 
+> Fortunately, in bash 4.3 (patchlevel 25), you cannot just -DARRAY_EXPORT 
+> and get array variable import/export.  The code doesn't compile, and if 
+> you fix that, it does not link, and if you fix that, well, you end up 
+> with the following issue.  But I doubt anybody has done this, so it's 
+> not a vulnerability (yet) and does not need CVE assignment etc.
+> 
+> The array import/export feature allows one to export and import 
+> variables while preserving their array status.  Unfortunately, it 
+> enables this:
+> 
+> $ env -i 'FOO=([$(echo broken > /dev/tty)]=a)' ./bash -c true
+> broken
+> ./bash: []=a: bad array subscript
+> 
+> As I said, it is currently not an issue, but it's probably best not to 
+> enable this in the future at all, or use it with another form of mangling.
+> 
+> -- 
+> Florian Weimer / Red Hat Product Security
 
-If those programs are not specifically designed to be a privilege
-boundary, and suid program A is, then in my opinion, it is a serious bug
-for suid program A to execute them in an attacker-controlled environment.
+This code also reveals a difference from the function export code.
 
-> ... one of which is written in python (say)
+The ARRAY_EXPORT code frees temp_string after using it. The function export code mallocs, but never frees it. That behavior predates the recent patches.
 
-This nicely proves my point, actually. You've already lost, assuming the
-Python program imports the standard library's "os" module (in practice
-it will). No need for any bash subtleties:
-
-    echo "__import__('subprocess').call(['/bin/sh'])" > ./os.py
-    PYTHONPATH=`pwd` suid-program-A
-
-(Any standard library module not built into the Python executable would
-do nicely, "os" is just an example that's likely to work.)
-
-> There are lots of things one could do to eliminate that risk, of course,
-> but step back and what are we arguing for?
-
-I'm arguing that privilege boundaries should take responsibility for
-their nature as a privilege boundary, and not pass the buck to the code
-that they call into.
-
-    S
+-- Eric Kobrin
 
