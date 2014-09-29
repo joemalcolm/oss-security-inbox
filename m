@@ -1,23 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/10/3
-Message-ID: <20140610194548.GB6566@pisco.westfalen.local>
-Date: Tue, 10 Jun 2014 21:45:50 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: nab@...ux-iscsi.org, jdsm@...nico.ulisboa.pt
-Subject: CVE request: Linux kernel / target information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/14
+Message-ID: <54296DB0.1000900@case.edu>
+Date: Mon, 29 Sep 2014 10:33:20 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Osmond Sun <osmond.sun@...il.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-Please assign a CVE ID:
+On 9/29/14, 9:01 AM, Osmond Sun wrote:
+> I found the function parsing is still imperfect.
+> e.g. $env x="() { :;}; `touch vulnerablefile`" bash -c "echo this is a test "
 
-Jorge Daniel Sequeira Matias discovered an information leak in the rd_mcp backend
-of the iSCSI target subsystem in the Linux kernel (originally reported to the
-Debian Security Team and investigated by Nicholas A. Bellinger):
+If that is the command you ran, this doesn't show any vulnerability.  The
+double quotes surrounding the assignment to x in the argument to `env'
+mean that command substitution is performed before env runs.  It's the
+command substitution that creates the file, so the file exists before bash
+is invoked.
 
-Introduced in 2.6.38 and fixed in 3.14 with
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=4442dc8a92b8f9ad8ee9e7f8438f4c04c03a22dc
-
-Cheers,
-        Moritz
-
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
