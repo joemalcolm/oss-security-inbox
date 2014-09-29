@@ -1,44 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/20/1
-Message-Id: <20140820015058.2E9156C001F@smtpvmsrv1.mitre.org>
-Date: Tue, 19 Aug 2014 21:50:58 -0400 (EDT)
-From: cve-assign@...re.org
-To: tristan.cacqueray@...vance.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Glance
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/27
+Message-ID: <54296195.9050405@edwardprevost.info>
+Date: Mon, 29 Sep 2014 06:41:41 -0700
+From: Ed Prevost <me@...ardprevost.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> Title: Glance store DoS through disk space exhaustion
-> Versions: up to 2013.2.3 and 2014.1 to 2014.1.2
-> 
-> By uploading a large enough image to a Glance store, an authenticated
-> user may fill the store space because the image_size_cap configuration
-> option is not honored.
-> 
-> https://launchpad.net/bugs/1315321
-> 
-> This vulnerability seems to be introduced in Grizzly at least, and as
-> we don't support grizzly anymore we'll mark every versions up to
-> 2013.2.3 affected.
-
-Use CVE-2014-5356.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT8/3qAAoJEKllVAevmvmsQ14IAJDCmC7pBQh9cgdWn7s4w7OT
-eI0hfxyR1WW2nsxeaWYrV/h9OHz8p2QdOibXcIXwGu8gjcFOZcnR1nMm6m3Xf1yf
-1Y8/ZTKrN9aYEQrvH3FCiT7NKDDVmrOAeJQS8GSYyiuxOfyIhBGiDhQI5HKTiX15
-HVE8Kfuy0kPGqHeNZAiR/Q3Gaedw/2RvPQ76I7I+6/O3SuSxdPuRV1Yz/ma7pshS
-NZ/NV9MF03RGpUWCsIkFQdy5vLV0rMMFLSav++BMwc2ngn/JdN+8dqvSZAdJum+6
-K+F0DNdlAOkApNfGdr0QbKBQIWi51Yby0H1WeanCf6TDnZ7bK+BcyFs3VKH1Wkk=
-=PD5Z
------END PGP SIGNATURE-----
+On 9/29/2014 6:07 AM, Chet Ramey wrote:
+> On 9/29/14, 8:55 AM, Giles Coochey wrote:
+>> On 29/09/2014 12:17, Loganaden Velvindron wrote:
+>>> HI Chet, As you are aware, a sixth security issue has been discovered.
+>>> Due to the nature of the vulnerability, I believe that it's best to break
+>>> backward compatibility as done by FreeBSD and NetBSD until a proper patch
+>>> is developed. We are lucky to have security researchers reporting their
+>>> findings publicly. What about others that don't ? I strongly believe that
+>>> it's much safer to have it disabled, and have a complete and
+>>> comprehensive audit of the source code, and then re-enable it.
+>> Am I the only one who is wondering: Who is paying Chet to do this?
+> Nobody is paying me to do this.
+>
+I have been praying for you since Wed, watching this list has made me
+empathize for you greatly. Any chance you have a bitcoin or other
+donations link somewhere?
