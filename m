@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/2
-Message-Id: <20141107010033.3B1586C0029@smtpvmsrv1.mitre.org>
-Date: Thu,  6 Nov 2014 20:00:33 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/40
+Message-Id: <20140929200114.8E576C504C4@smtptsrv1.mitre.org>
+Date: Mon, 29 Sep 2014 16:01:14 -0400 (EDT)
 From: cve-assign@...re.org
-To: oss@...ernot.info
+To: cjwatson@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: dpkg handling of 'control' and warnings format string vulnerability
+Subject: Re: CVE request: exuberant-ctags: CPU/disk DoS on minified JavaScript file
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> A format string vulnerability vuln has been found in the latest version
-> of dpkg.
-> https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135
+> https://bugs.debian.org/742605 was reported some time ago against the
+> Debian package of Exuberant Ctags (http://ctags.sourceforge.net/); it's
+> a CPU/disk denial of service that results from attempting to run ctags
+> over large volumes of public source code.
 
->> package 'backup:01f15700.00431828.00000001.00000001.0000001a':
->>  '%08x.%08x.%08x.%08x.%08x
+> Not affected: 5.6
+> Affected: 5.8 (the latest release)
 
-> The vulnerable function, warningv([..]), is called in many other places,
-> and is not limited to '-i'.
+> Upstream fix, determined by bisection:
+>   http://sourceforge.net/p/ctags/code/791/
+> 
+> As far as I know this was not identified as a security problem upstream,
+> just fixed as a normal bug in the course of development.
 
-Use CVE-2014-8625. We're aware of "does not show evidence of allowing
-attackers to cross privilege boundaries" in
-https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135/comments/2 --
-we'll certainly look for any discussion on this list that disputes the
-CVE.
+It seems unlikely that there's an alternate perspective in which it's
+not an upstream vulnerability. Untrusted .js input seems to be a
+common use case, and the impact is an infinite loop (or similar).
+
+> The sources.debian.net use case turns it into a DoS ... Since we'd
+> like to issue patches for this bug as security updates, please could I
+> have a CVE identifier for this?
+
+Use CVE-2014-7204.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -35,11 +43,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUXBjtAAoJEKllVAevmvmsQ0sH/19C6CPOWWM6y6vWaomyuflF
-qyYSj/6bfNCzlruNKgD+WvHehhNd1L3VgmWHzjGAmOAvBAlyLHvUVRaFaQ7idk4B
-+D42vblcsM4vHg8tSg3RLyDjEU9ptn0VbYPZJdOW54ByOhhadIMtj2r5MW/vgdDq
-2FIeezr1WGENliUMxGCakYeReGh5LOL/djG6ZIXjOjazkjzyWXkuSU48jysQRu43
-gBo5jv6GFPHIknNvhrCTOFApfc2eh6WcAPkwaivywzCc0its52wrxFopphp0KPFl
-bN69HEKAcJ/dNBEeQLry4Bpe1XD2CrVVv64zKRCPPf3ZLxZ/pIHjhWQgO04I7No=
-=AzqO
+iQEcBAEBAgAGBQJUKboyAAoJEKllVAevmvmsWkoH/0PjJDl0EV42AF4FG71fP8Nr
+6c16Ieb/JoJjZGC5idn/20+j+yczi7vmoHfV6OUchEFjGlICAv1bMBsCQf/vl35k
+VO6T2360SOXaxM2TV4B57INLkP+W90vDPG5ipSYNJibbP7cAeJs9xzME4frKH1Ah
+Bz6dAQtGBOAmBOKVcmqWnugaJxuSezAnegeGHox8OOSQUASoyY1A/syNP8oC5Gql
+ty9aigFS0lLq1cQdHPvHkK6Wce5iSlvlIzxCgCfsFfrDKCceH+lWJjJlalEZprtz
+lwexkSXHEJCe9kxeV8EyC/xykhAQUyNZz10qWX68YKakUeU4qZcG0KSDHbQjX3E=
+=e/jY
 -----END PGP SIGNATURE-----
