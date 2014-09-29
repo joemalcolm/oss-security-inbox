@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/4
-Message-ID: <54801E26.2070104@redhat.com>
-Date: Thu, 04 Dec 2014 01:41:10 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, "Joshua J. Drake" <oss-sec-pmgetbl@...p.org>
-CC: Tero Marttila <terom@...me.fi>
-Subject: Re: CVE request: procmail heap overflow in getlline()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/11
+Message-ID: <54295975.4050809@case.edu>
+Date: Mon, 29 Sep 2014 09:07:01 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Giles Coochey <giles.coochey@...secspec.co.uk>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-On 04/12/14 12:57 AM, Santiago Vila wrote:
-> On Wed, Dec 03, 2014 at 05:30:57PM -0600, Joshua J. Drake wrote:
->> Is it possible to trigger this issue with untrusted input or only
->> trusted input from procmailrc?
+On 9/29/14, 8:55 AM, Giles Coochey wrote:
+> On 29/09/2014 12:17, Loganaden Velvindron wrote:
+>> HI Chet, As you are aware, a sixth security issue has been discovered.
+>> Due to the nature of the vulnerability, I believe that it's best to break
+>> backward compatibility as done by FreeBSD and NetBSD until a proper patch
+>> is developed. We are lucky to have security researchers reporting their
+>> findings publicly. What about others that don't ? I strongly believe that
+>> it's much safer to have it disabled, and have a complete and
+>> comprehensive audit of the source code, and then re-enable it.
 > 
-> This is an issue with the handling of .procmailrc file, which contains
-> the filter rules for procmail. An external attacker is not supposed to
-> provide the .procmailrc file at /home/user, only the email to be
-> filtered, so, IMHO, this is a bug but maybe not a security bug.
-> 
-> Thanks.
+> Am I the only one who is wondering: Who is paying Chet to do this?
 
-I disagree. Many mail servers allow people to edit their .procmailrc but
-explicitly block shell accounts. This would allow a user with a non
-interactive shell account to execute arbitrary commands using procmailrc
-even if they were otherwise restricted (e.g. using permissions or
-SELinux for example). I bet if gmail filters allowed code exec Google
-would seriously freak out and fix it asap =).
-
-
+Nobody is paying me to do this.
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
