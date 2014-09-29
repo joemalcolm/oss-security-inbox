@@ -1,33 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/4
-Message-ID: <1036394040.39580983.1401771578643.JavaMail.root@vmware.com>
-Date: Mon, 2 Jun 2014 21:59:38 -0700 (PDT)
-From: "\"VMware Security Response Center\"" <security@...are.com>
-To: oss-security@...ts.openwall.com
-Cc: VMware Security Response Center <security@...are.com>
-Subject: Request for linux-distros subscription
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/2
+Message-ID: <1411952951.6106.20.camel@bonedaddy.net>
+Date: Mon, 29 Sep 2014 09:09:11 +0800
+From: Paul Wise <pabs3@...edaddy.net>
+To: oss-security@...ts.openwall.com, contact@...tsecurity.io
+Subject: CVE request: various NodeJS module vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+Hi all,
 
-Hi,
-I would like to request to be subscribed to the linux-distros@...openwall.org
-list for VMware Security Response Center (VSRC).
+This is a request for CVEs for the following vulnerabilities discovered
+by the Node Security Project. I left out their advisories where I could
+find an assigned CVE.
 
-My PGP fingerprint:
+https://nodesecurity.io/advisories
 
-pub  2048R/C61F6A1D 2014-06-03            
-     Key fingerprint = DD30 8A5F 937B B437 EDDB  051D 7F84 295B C61F 6A1D
-uid Monty Ijzerman <mijzerman@...vmware.com>
-sig  sig   C61F6A1D 2014-06-03 __________ __________ [selfsig]
-    Notation data: preferred-email-encoding@....com pgpmime
+Arbitrary JavaScript Execution in Bassmaster
+https://nodesecurity.io/advisories/bassmaster_js_injection
 
-sub  2048R/FCED34F0 2014-06-03            
-sig sbind  C61F6A1D 2014-06-03 __________ __________ []
+qs Denial-of-Service Memory Exhaustion
+https://nodesecurity.io/advisories/qs_dos_memory_exhaustion
+
+qs Denial-of-Service Extended Event Loop Blocking
+https://nodesecurity.io/advisories/qs_dos_extended_event_loop_blocking
+
+syntax-error potential for script injection
+https://nodesecurity.io/advisories/syntax-error-potential-script-injection
+
+send Directory Traversal
+https://nodesecurity.io/advisories/send-directory-traversal
+
+Crumb CORS Token Disclosure
+https://nodesecurity.io/advisories/crumb_cors_token_disclosure
 
 
-Thank you for your consideration.
+-- 
+bye,
+pabs
 
-Monty Ijzerman
+http://bonedaddy.net/pabs3/
 
-VMware Security Response Center
-security@...are.com
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
