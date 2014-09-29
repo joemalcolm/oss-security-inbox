@@ -1,91 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/32
-Message-ID: <542455A4.9070703@redhat.com>
-Date: Thu, 25 Sep 2014 23:19:24 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/25
+Message-ID: <CABSMkWMrozzLJkjdvO-50eEg+f9O+mGg=RFxPuNTMQ9pr1m7gQ@mail.gmail.com>
+Date: Mon, 29 Sep 2014 14:59:18 +0200
+From: Daniel Calvo Castro <daniel.calvo@...nelsecurity.es>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Non-upstream patches for bash
+Subject: Re: test script for various bash vulns
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+Hi list,
 
-Based on the current situation and the fact that there is confusion 
-about what patch to use for the bash issue. I wanted to post this here.
+Thank you Hanno for your contributions once again, just want to share with
+community other useful resource:
 
-We have found a few more issues (OOB memory access). Also I am posting 
-Florain's patch here which should fix the issue in a more deeper way 
-rather than just apply duct-tape.
+https://github.com/mubix/shellshocker-pocs
 
-Any feed back etc is welcome!
+Kind Regards,
 
-
--------- Forwarded Message --------
-Subject: Non-upstream patches for bash
-Date: Thu, 25 Sep 2014 19:37:36 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Huzaifa Sidhpurwala <huzaifas@...hat.com>, Joshua Bressers 
-<bressers@...hat.com>
-
-Note that if you ship 4.3, you might want to reevaluate a decision to
-enable array variable import from the environment.
-
-Internal analysis revealed two out-of-bounds array accesses in the bash
-parser.  This was also independently and privately reported by Todd
-Sabin <tsabin@...online.net>.
-
-The redir_stack issue is this:
-
-$ bash -c 'true <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF
-<<EOF <<EOF <<EOF <<EOF <<EOF'
-bash: line 2: warning: here-document at line 2 delimited by end-of-file
-(wanted `EOF')
-bash: line 2: warning: here-document at line 2 delimited by end-of-file
-(wanted `EOF')
-bash: line 2: warning: here-document at line 2 delimited by end-of-file
-(wanted `EOF')
-bash: line 2: warning: here-document at line 2 delimited by end-of-file
-(wanted `EOF')
-bash: line 2: warning: here-document at line 2 delimited by end-of-file
-(wanted `EOF')
-bash: line 2: warning: here-document at line 2 delimited by end-of-file
-(wanted `EOF')
-bash: line 2: warning: here-document at line 2 delimited by end-of-file
-(wanted `EOF')
-bash: line 2: warning: here-document at line 2 delimited by end-of-file
-(wanted `EOF')
-bash: line 2: warning: here-document at line 2 delimited by end-of-file
-(wanted `EOF')
-bash: line 2: warning: here-document at line 2 delimited by end-of-file
-(wanted `EOF')
-bash: line 2: make_here_document: bad instruction type 33
-Segmentation fault (core dumped)
-
-The word_lineno issue is this (only visible with address sanitizer, but
-it's probably to come up with something better):
-
-$ (for x in {1..200} ; do echo "for x$x in ; do :"; done; for x in
-{1..200} ; do echo done ; done) > test-script.sh $ bash test-script.sh
-
-Both issues are fixed by the parser-oob patches.
-
-I'm also including the function definition affix patch which has already
-been posted to oss-security.  (variables-affix-3.0.patch has only seen
-very light review and testing yet, but it's a fairly straightforward
-backport.)
-
-You'll also want Chet's one-liner patch posted to oss-security.
-
--- 
-Florian Weimer / Red Hat Product Security
+Daniel
 
 
 
+2014-09-28 0:27 GMT+02:00 Hanno Böck <hanno@...eck.de>:
 
+> Hi,
+>
+> I thought I'd share this:
+> https://github.com/hannob/bashcheck
+>
+> Will be updated once further issues appear if they're testable.
+>
+> (if there's a reliable test for CVE-2014-7187 without fsanitize-address
+> that'd be handy, suggestions welcome)
+>
+> cu,
+> --
+> Hanno Böck
+> http://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
+>
 
-View attachment "parser-oob-4.2.patch" of type "text/x-patch" (2567 bytes)
-
-View attachment "variables-affix-3.0.patch" of type "text/x-patch" (5416 bytes)
-
-View attachment "parser-oob-3.2.patch" of type "text/x-patch" (1980 bytes)
-
-View attachment "variables-affix-4.2.patch" of type "text/x-patch" (5114 bytes)
