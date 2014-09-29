@@ -1,25 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/16/3
-Message-ID: <CAH72vigsw+FgsAN8dds25=RaXmOp2hzTPGDG8g9+XS8bNJdNJw@mail.gmail.com>
-Date: Wed, 16 Apr 2014 13:36:35 +0200
-From: Źmicier Januszkiewicz <gauri@....by>
-To: oss-security@...ts.openwall.com
-Subject: libmms heap-based buffer overflow fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/32
+Message-ID: <CA+YQQ6XvvScCsvtCp5iHfrBUY6ENEqxW1MHyOxoFHGk8hp_JWw@mail.gmail.com>
+Date: Mon, 29 Sep 2014 10:49:22 -0700
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: "Kobrin, Eric" <ekobrin@...mai.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Florian Weimer <fweimer@...hat.com>,  "chet.ramey@...e.edu" <chet.ramey@...e.edu>, Michal Zalewski <lcamtuf@...edump.cx>,  Solar Designer <solar@...nwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+On 29 September 2014 10:39, Kobrin, Eric <ekobrin@...mai.com> wrote:
+> On Sep 29, 2014, at 11:59 AM, Eric Blake <eblake@...hat.com> wrote:
+>
+>> But I see no reason to move away from %% suffixing.
+>
+> The suffix fixes the obvious CGI hole, but it leaves exposed programs in which the adversary gets to choose the variable name as well.
+>
+> env $'BASH_FUNC_foo%%=() { echo 123\n }' bash -c "foo"
+>
+> I think that a more robust solution, such using a separate store for functions, is needed if function import is to survive as a feature.
+>
+> -- Eric Kobrin
 
-It seems libmms has fixed a buffer overflow in a recent 0.6.4 version
-with the following commit.
+If an adversary can choose the variable name, it's game over by
+definition. He can choose LD_PRELOAD, SHELLOPTS='xtrace' PS4='$(foo)',
+LD_DEBUG_OUTPUT, PYTHONINSPECT, etc, etc.
 
-http://sourceforge.net/p/libmms/code/ci/03bcfccc22919c72742b7338d02859962861e0e8
+This general solution is robust, now we're just hammering out the details.
 
-This may be triggered via an overly long line of a MMSH (MMS over
-HTTP) server response, effectively overflowing the buffer which has a
-static size (defined as BUF_SIZE, didn't check the actual numeric
-value).
-
-Please assign a CVE name for this, if there is none.
-
-Kind regards,
-Z.
+-- 
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
