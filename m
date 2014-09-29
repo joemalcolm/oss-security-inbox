@@ -1,26 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/23
-Message-id: <59FCC113-F663-467A-800C-28DD34804A99@me.com>
-Date: Mon, 17 Nov 2014 18:30:11 -0500
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Wordpress WP-DB-Backup v2.2.4 Plugin Remote Database Backup Download Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/28
+Message-ID: <CANX6+4OwHnxO5pAHhYzkZrvrxLpC19yZ6e=vYaC_QawSdk0fOQ@mail.gmail.com>
+Date: Mon, 29 Sep 2014 09:41:40 -0400
+From: Paul Burchard <paulburchard@...il.com>
+To: Sven Kieske <s.kieske@...twald.de>
+Cc: langsec-discuss@...l.langsec.org, oss-security@...ts.openwall.com
+Subject: Re: [langsec-discuss] Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-Hello List,
+Even for regular languages, which are theoretically decidable, decision
+problems are exponentially costly to solve.  The main langsec approach that
+does not restrict the type of security questions that can be asked is to
+use languages with some kind of bounded recursion.
+ On 27/09/14 17:06, Solar Designer wrote:
+> Of course, what input is trusted vs. not may be unclear.  Apparently, 20
+> years ago bash developers considered all env vars to be trusted input,
+> regardless of the names, which is how we got here.
 
-So I had been tinkering with the WP-DB-Backup v2.2.4 plugin that uses security through obscurity to hide the location of the wordpress database backups it creates.  The advisory with PoC I had been working on is here: 
+Well, from a scientific point of view, this was already
+solved, if I'm interpreting bash correctly.
 
-http://www.vapid.dhs.org/advisories/wordpress/plugins/wp-db-backup-v2.2.4/
+See page 12 in this paper:
+http://langsec.org/ShotgunParsersShmoo.pdf
 
-I contacted the plugin author with my advisory and my proposed fix. The author acknowledged my work, but I never heard from him again.
+To quote for the lazy:
 
-Turns out Matthew Bryant had already covered everything I had but a few months ago here:
+'Input sanitization: “you can suppress ‘bad
+stuff’ in input+output to make it safe”
 
-http://thehackerblog.com/auditing-wp-db-backup-wordpress-plugin-why-using-the-database-password-for-entropy-is-a-bad-idea/
+Reality: Halting problem. Deal with it.'
 
-We aren’t sure if this is CVE worthy, it seems since the database is exposed one only needs to guess the database name in order to succeed besides a bunch of brute forcing stuff. :-)  I thought I would see what you folks had to say.
+This should be true for all turing complete
+input languages (which I assume bash is capable of).
 
+So you can not "filter" turing complete input languages
+unless you restrict your language so hard that you
+in fact create another class of languages, e.g.
+just allow regex, which would create a context-free
+language[1], which would circumvent whole classes of exploits.
 
-Thanks
-Larry
+Also cc'ing langsec-list, as they are interested
+in getting this stuff fixed in real applications.
+
+[1]https://en.wikipedia.org/wiki/Context-free_language
+
+--
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+_______________________________________________
+langsec-discuss mailing list
+langsec-discuss@...l.langsec.org
+https://mail.langsec.org/cgi-bin/mailman/listinfo/langsec-discuss
+
