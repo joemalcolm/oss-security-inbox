@@ -1,21 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/6
-Message-ID: <20141114165835.GA2211@kroah.com>
-Date: Fri, 14 Nov 2014 08:58:35 -0800
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-Subject: Re: Re: CVE-request: systemd-resolved DNS cache poisoning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/43
+Message-ID: <3138771E-CA0E-4C0C-B403-9A470283AA90@vmware.com>
+Date: Mon, 29 Sep 2014 17:27:24 +0000
+From: Ramon de C Valle <rcvalle@...are.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "chet.ramey@...e.edu" <chet.ramey@...e.edu>, Christos Zoulas <christos@...las.com>
+Subject: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 14, 2014 at 09:42:13AM +0100, Sebastian Krahmer wrote:
-> I'd be happy with no CVE being assigned. At the end I just want to
-> have the cache hardened.
 
-Which is a fair thing to ask for.  Is that work happening upstream in
-the systemd repo?  I haven't seen this issue brought up on the systemd
-mailing list, but I might just have missed it.
+On Sep 26, 2014, at 5:52 PM, Bryan Drewery <bdrewery@...eBSD.org> wrote:
 
-thanks,
+> On 9/26/2014 9:13 AM, Christos Zoulas wrote:
+>> On Sep 26,  1:47pm, john.haxby@...cle.com (John Haxby) wrote:
+>> -- Subject: Re: [oss-security] Re: CVE-2014-6271: remote code execution throu
+>> 
+>> | It's not so much the known attacks -- redefining ls, unset, command,
+>> | typeset, declare, etc -- it's the future parser bugs that we don't yet
+>> | know about.
+>> | 
+>> | A friend of mine said this could be a vulnerability gift that keeps on
+>> | giving.
+>> 
+>> I think that at this point the conservative approach is best, so
+>> until the bash author figures what the best solution is, the feature
+>> is disabled by default for NetBSD. It is not wise to expose bash's
+>> parser to the internet and then debug it live while being attacked.
+>> 
+>> christos
+>> 
+> 
+> FreeBSD has taken a similar approach. We have used Christos' patch and
+> disabled the feature by default.
+> 
+> https://svnweb.freebsd.org/changeset/ports/369341
+> 
+> Regards,
+> Bryan Drewery
+> 
+In addition to Florian’s and upstream's patches, VMware has also used Christos’ patch and disabled the feature by default on all its virtual appliances across all its product line.
 
-greg k-h
+--
+Ramon de C Valle
+VMware Product Security Engineering
+
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
