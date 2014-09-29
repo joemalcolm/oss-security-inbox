@@ -1,96 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/6
-Message-Id: <E1WCp0J-0004NW-OI@xenbits.xen.org>
-Date: Mon, 10 Feb 2014 11:26:23 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 85 (CVE-2014-1895) - Off-by-one error in FLASK_AVC_CACHESTAT hypercall
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/42
+Message-ID: <20140929200634.GA31580@hunt>
+Date: Mon, 29 Sep 2014 13:06:34 -0700
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: atd (was: Re: Re: Healing the bash fork)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Sep 29, 2014 at 09:59:47AM -0600, Eric Blake wrote:
+> So even on Debian, where /bin/sh is dash, this script attempts to
+> execute the file named /tmp/exploit=me, possibly under the privileges of
+> 'at' rather than as the user that created the file.  No bash needed.
 
-             Xen Security Advisory CVE-2014-1895 / XSA-85
-                              version 3
+Where does 'at' use the privileges of the at daemon when executing
+scripts?
 
-          Off-by-one error in FLASK_AVC_CACHESTAT hypercall
+With just a quick check of the atd sources it looks like privileges are
+properly changed before executing the script:
 
-UPDATES IN VERSION 3
-====================
+http://sources.debian.net/src/at/3.1.15-1/atd.c/#L380
 
-CVE assigned.
+Thanks
 
-ISSUE DESCRIPTION
-=================
-
-The FLASK_AVC_CACHESTAT hypercall, which provides access to per-cpu
-statistics on the Flask security policy, incorrectly validates the
-CPU for which statistics are being requested.
-
-IMPACT
-======
-
-An attacker can cause the hypervisor to read past the end of an
-array. This may result in either a host crash, leading to a denial of
-service, or access to a small and static region of hypervisor memory,
-leading to an information leak.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen version 4.2 and later are vulnerable to this issue when built with
-XSM/Flask support. XSM support is disabled by default and is enabled
-by building with XSM_ENABLE=y.
-
-Only systems with the maximum supported number of physical CPUs are
-vulnerable. Systems with a greater number of physical CPUs will only
-make use of the maximum supported number and are therefore vulnerable.
-
-By default the following maximums apply:
- * x86_32: 128 (only until Xen 4.2.x)
- * x86_64: 256
-These defaults can be overridden at build time via max_phys_cpus=N.
-
-The vulnerable hypercall is exposed to all domains.
-
-MITIGATION
-==========
-
-Rebuilding Xen with more supported physical CPUs can avoid the
-vulnerability; provided that the supported number is strictly greater
-than the actual number of CPUs on any host on which the hypervisor is
-to run.
-
-If XSM is compiled in, but not actually in use, compiling it out (with
-XSM_ENABLE=n) will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Matthew Daley.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa85.patch        xen-unstable, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa85*.patch
-20571024e6815eeb40d2f92a3d70ae699047cffafb5431ec74b652e0843a5315  xsa85.patch
-$
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJS+LcqAAoJEIP+FMlX6CvZPk8H/iA8bLP81SKPT6IUlaw8RjzU
-ZECj3ord+tLAcjvu93RmI5WVANNscwNdxhBIVQApzFOqMC5LGho5HHXgvi2WuRo4
-zc3b4djT0PN6tTMAhJZU9WwZxIQx+60VSDpIJbVGyLrEjGHxS/l/liM3cOuj5FZs
-ZpT3cQ47yHskkgCXGhdR4keAaXEA9qBtQ6EbraMWt/ynjXmZ2UGQyRB+md3IaG38
-FOhzVIVvsGJ0ZrxhByrBrNYN04Fdnqx707dNIg5fYflqzuTJkuMiL4dLlBJBMeiP
-aVEIAW1TD3ObiXNbC3/AjrXdgttA5e1JIHGJb9LV0RO1rhjuyZGLiLNp+Omx3KI=
-=wpcu
------END PGP SIGNATURE-----
-
-Download attachment "xsa85.patch" of type "application/octet-stream" (948 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
