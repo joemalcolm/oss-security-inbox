@@ -1,42 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/11/6
-Message-ID: <20140311170931.GM18088@dhcp-25-225.brq.redhat.com>
-Date: Tue, 11 Mar 2014 18:09:32 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: Chris Palmer <snackypants@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0131 -- kernel: net: use-after-free during segmentation with zerocopy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/34
+Message-Id: <20140929175703.5DD5572E0FE@smtpvbsrv1.mitre.org>
+Date: Mon, 29 Sep 2014 13:57:03 -0400 (EDT)
+From: cve-assign@...re.org
+To: echain.tw@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: QNAP QTS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 11, 2014 at 09:50:45AM -0700, Chris Palmer wrote:
-> It would be nice to clarify this bug description. It's a kernel memory
-> disclosure bug (not a memory leak in the sense of failing to collect
-> garbage).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Correct.
+> QNAP QTS employ Bash as the default shell and we discover an arbitrary
+> code execution flaw with UID=0
 
-> Although UAF is often worse than that, it's not in this case,
-> because there's 0 chance the after-free-user of the fragment will think the
-> fragment is bigger than it is and subsequently write too much data into it.
-> Is that right?
+As far as we can tell, the
+http://www.qnap.com/useng/index.php?lang=en-us&sn=885&c=3036&sc=&n=22457
+reference suggests that the code execution for that PoC occurs because
+the QNAP Bash build has the CVE-2014-6271 vulnerability. In that case,
+the applicable CVE ID is CVE-2014-6271, not a separate CVE ID specific
+to QNAP's build.
 
-The after-free-user is a reader, not a writer.
+If you mean something else -- for example, if another reference states
+that the implementation language of restore_config.cgi is not sh and
+that the design of restore_config.cgi was supposed to drop privileges
+immediately, but there's an implementation flaw in which Bash is
+launched before privileges are dropped -- then there could conceivably
+be a separate CVE ID for that restore_config.cgi issue. Similarly, if
+you're referring to an authentication bypass -- for example, if the
+implementation language of restore_config.cgi is not sh and the design
+of restore_config.cgi was supposed to exit immediately for
+unauthenticated requests, but there's an implementation flaw in which
+Bash is launched before missing authentication is detected, then there
+could conceivably be a separate CVE ID.
 
-> On Mar 10, 2014 9:41 AM, "Petr Matousek" <pmatouse@...hat.com> wrote:
-> 
-> > A flaw was found in the way segmentation was performed on skbs
-> > originated from vhost-net when zerocopy feature was enabled.
-> >
-> > This flaw could be potentially used to leak kernel memory.
-> >
-> > Upstream patch submission:
-> > http://marc.info/?l=linux-netdev&m=139446896921968&w=2
-> >
-> > --
-> > Petr Matousek / Red Hat Security Response Team
-> > PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
-> >
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+iQEcBAEBAgAGBQJUKZzGAAoJEKllVAevmvmsYVkIAL4Y1FNV4YcHY8r2jIHfg1Ez
+zLtThhTE6s3CMPfmDJPnjCm9uwTNvT9QLSJ9v6eZhoaXvutCqdKNqjfcdabZhikr
+7JRHJcg4jTOcrang/w9+9SL8dJ3C/JUFfJZyUKfA2d19vCCuXwpnOZKq/70C2Pl1
+tU8U1VONrZCuSImAIWpy/aoFtc5GeSGxkblb6StMteZIXbDM+PsAyrtY0yRX9UuG
+VIpeX0aVVH6XW8+1L1jVYolYDdN3M8pZWBJYArFxgg+A/vSu7Vk5ZsGO/vY8y7jv
+x1h76ah6I7cw3GSUt9fujizBEi+ekAWaGXqB6pOG3/HUO1xI9BJofuDQSg+ZtIE=
+=kin/
+-----END PGP SIGNATURE-----
