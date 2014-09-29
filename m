@@ -1,34 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/2
-Message-Id: <201405120731.s4C7VHeZ002793@linus.mitre.org>
-Date: Mon, 12 May 2014 03:31:17 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Drupal Flag 7.x-3.5 Module Vulnerability report: Arbitrary code execution due to improper input handling in flag importer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/7
+Message-ID: <20140929103757.GA4688@jwilk.net>
+Date: Mon, 29 Sep 2014 12:37:57 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Solar Designer <solar@...nwall.com>, 2014-09-27, 19:06:
+>Has anyone started reviewing bash for possible other code paths where 
+>untrusted input may hit the parser?
 
-> http://seclists.org/fulldisclosure/2014/May/44
-> https://bugzilla.redhat.com/show_bug.cgi?id=1096604
+I haven't look at the code, but what makes me nervous is that the parser 
+is not locale-agnostic. Here's an example how it can be exploited:
+http://bugs.python.org/issue22187
 
-Use CVE-2014-3453.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTcHiJAAoJEKllVAevmvmsbx4H/0zCtTWbbEA5FmmJV4EzGsgP
-yQn3ti5Ziq9Uif+hFCRu5tCYy7ZEfO3o0k/PtbSI/jkwf7y/HroXU0EWHKFE2VyP
-vqw2jLNnr9P0LjqEpHJjC4y3sYlR82OiSX8r0Zu2iNU4XbsYCT7zznIficrhY89A
-rVnHF7BHMySOxwtxVAMp1lpYdSROYXhdtL/8ZHiPZvug5ggcH/FsmS3exSL4YCVF
-sqqNcBknrvGfV413ydeTkOvVyajCOpXINuMEzRXIN1ExJHXHxHUBaGDKXnTj1w7Q
-JsgJGg9tlQKhjj1cQ3yEPnGxrKR38HfP6oByfXhaYsmNIdAWmBsdc2tojgABXNM=
-=b41R
------END PGP SIGNATURE-----
+-- 
+Jakub Wilk
