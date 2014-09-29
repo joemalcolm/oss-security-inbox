@@ -1,80 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/5
-Message-ID: <CAOp4FwS3REpdEUA=iUb+tJ1N7-05K8mtd_k8mmso-0KOOrj2UA@mail.gmail.com>
-Date: Sun, 28 Sep 2014 08:36:19 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/17
+Message-ID: <542973CB.4010605@fifthhorseman.net>
+Date: Mon, 29 Sep 2014 10:59:23 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+Subject: gnome-shell lockscreen bypass with printscreen key
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 26, 2014 at 6:13 PM, Christos Zoulas <christos@...las.com> wrote:
-> On Sep 26,  1:47pm, john.haxby@...cle.com (John Haxby) wrote:
-> -- Subject: Re: [oss-security] Re: CVE-2014-6271: remote code execution throu
->
-> | It's not so much the known attacks -- redefining ls, unset, command,
-> | typeset, declare, etc -- it's the future parser bugs that we don't yet
-> | know about.
-> |
-> | A friend of mine said this could be a vulnerability gift that keeps on
-> | giving.
->
-> I think that at this point the conservative approach is best, so
-> until the bash author figures what the best solution is, the feature
-> is disabled by default for NetBSD. It is not wise to expose bash's
-> parser to the internet and then debug it live while being attacked.
->
-> christos
->
-> $NetBSD: patch-shell.c,v 1.1 2014/09/25 20:28:32 christos Exp $
->
-> Add flag to disable importing of function unless explicitly enabled
->
-> --- shell.c.christos    2014-01-14 08:04:32.000000000 -0500
-> +++ shell.c     2014-09-25 16:11:51.000000000 -0400
-> @@ -229,6 +229,7 @@
->  #else
->  int posixly_correct = 0;       /* Non-zero means posix.2 superset. */
->  #endif
-> +int import_functions = 0;      /* Import functions from environment */
->
->  /* Some long-winded argument names.  These are obviously new. */
->  #define Int 1
-> @@ -248,6 +249,7 @@
->    { "help", Int, &want_initial_help, (char **)0x0 },
->    { "init-file", Charp, (int *)0x0, &bashrc_file },
->    { "login", Int, &make_login_shell, (char **)0x0 },
-> +  { "import-functions", Int, &import_functions, (char **)0x0 },
->    { "noediting", Int, &no_line_editing, (char **)0x0 },
->    { "noprofile", Int, &no_profile, (char **)0x0 },
->    { "norc", Int, &no_rc, (char **)0x0 },
->
-> $NetBSD: patch-variables.c,v 1.1 2014/09/25 20:28:32 christos Exp $
->
-> Only read functions from environment if flag is set.
->
-> --- variables.c.christos        2014-09-25 16:09:41.000000000 -0400
-> +++ variables.c 2014-09-25 16:12:10.000000000 -0400
-> @@ -105,6 +105,7 @@
->  extern int assigning_in_environment;
->  extern int executing_builtin;
->  extern int funcnest_max;
-> +extern int import_functions;
->
->  #if defined (READLINE)
->  extern int no_line_editing;
-> @@ -349,7 +350,7 @@
->
->        /* If exported function, define it now.  Don't import functions from
->          the environment in privileged mode. */
-> -      if (privmode == 0 && read_but_dont_execute == 0 && STREQN ("() {", string, 4))
-> +      if (import_functions && privmode == 0 && read_but_dont_execute == 0 && STREQN ("() {", string, 4))
->         {
->           string_length = strlen (string);
->           temp_string = (char *)xmalloc (3 + string_length + char_index);
+hi OSS-security folks--
 
-I agree: This should be disabled until a proper solution is found.
+gnome-shell currently handles the lockscreen for modern versions of gnome.
 
--- 
-This message is strictly personal and the opinions expressed do not
-represent those of my employers, either past or present.
+gnome-shell also handles the "take a screenshot" action, which is mapped
+by default to the prtsc key.
+
+the prtsc key is not disabled when the screen is locked.
+
+taking a bunch of screenshots at once bloats gnome-shell to the point
+where it's pretty easy to get it targeted by the kernel's oom-killer.
+
+This means that anyone with access to the keyboard of a locked GNOME
+session can (briefly) disable the lockscreen, which lets them see and
+interact with the running gnome session:
+
+  https://bugzilla.gnome.org/show_bug.cgi?id=737456
+
+It looks like fixes are targeted for GNOME 3.14.1.
+
+Regards,
+
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
