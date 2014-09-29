@@ -1,54 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/15/2
-Message-ID: <534D440B.2040802@redhat.com>
-Date: Tue, 15 Apr 2014 08:36:59 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request - node-connect: methodOverride middleware reflected cross-site scripting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/9
+Message-ID: <20140929123221.GA4178@jwilk.net>
+Date: Mon, 29 Sep 2014 14:32:21 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Pylint checks not as static as one would think
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Pylint[0] is advertised as "a static code checker, meaning it can 
+analyse your code without actually running it"[1] and that it "does 
+not import live modules"[1].
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744374
+This is, unfortunately, far from reality. Here's a PoC:
 
-Package: node-connect
-Severity: serious
-Tags: security fixed-upstream
+$ cat moo.py
+from _moo import *
 
-The Node Security Project discovered an XSS vulnerability in the node
-connect module, please fix this bug by upgrading node-connect.
+$ cat moo.c
+#include <stdio.h>
+#include <signal.h>
+void __attribute__((constructor)) moo() {
+	printf("moo!\n");
+	kill(0, SIGSEGV);
+}
 
-Vulnerable: <=2.8.0
-Patched: >=2.8.1
-Report:
-https://nodesecurity.io/advisories/methodOverride_Middleware_Reflected_Cross-Site_Scripting
-Upstream bug report: https://github.com/senchalabs/connect/issues/831
-First fix:
-https://github.com/senchalabs/connect/commit/277e5aad6a95d00f55571a9a0e11f2fa190d8135
-Second fix:
-https://github.com/senchalabs/connect/commit/126187c4e12162e231b87350740045e5bb06e93a
+$ gcc -Wall -shared -fPIC moo.c -o _moo.so
 
-Not sure if it needs one or two CVE's (did they do a release in
-between the fixes?
+$ pylint moo.py
+No config file found, using default configuration
+moo!
+Segmentation fault
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBAgAGBQJTTUQLAAoJEBYNRVNeJnmTwBwP/2qZhjIslHZSwN4tiNHR+SHM
-8GU+fWdDO0+4d6/AZoNpZkFva+E51SnfZJFOiE6f7DZ/aUNxm74H0osvJrl1FeLy
-ZsknGBMCS4bYE25xj8rftPy6hq47uzxaKKHdXzeI4Sh0Jgqt3DPDpjYBG4Tfos9P
-exk8fUmN93Mx/WzyUAyOQ9ujYVU0rIf9xATAX4PymIGJXoZzin46/6IML+2M9IQ6
-iL8yhI8QOw/OiI+KRKAMZ8imsdpzxpa24RtihcrX6bi3IBM8fdYcHK3R+z3U6RhH
-2nYjMhEVmGkEQ/q1ucei01Q1EMJHWlcbLJRzJTR5GbhX3gFEkQJP3k4EDRxEqVJq
-ptrxl+0AFdLFlhA8pHcMIZJn5Xx3MFOA7bLnq4nWwEzCCohXpsMUign0/wN8XDI2
-3fFLP9BzfRmOqR+UAWHa5Fz31vviZxXFdcz7PUsPwpXltLQSJtxgrBECztckmJ2j
-QKMOrv2Rfpg9I4TB0dH/eIWaY+BA+t/FhmJWiYhf+cJMZX1tiYESJboHARbOdcdO
-AGAAQGpbuGrnjE2qXTSD/TZFwCPmndyiSiklnOw+qi6jn5ZA41jROV0PoQ5iAX/s
-PkNbbRohxK5FMNYxpdMRAYRSylqsBjQl9NyYxk+G8GaO5EiiBQHKxX+QU+J1cowH
-z/dPU58DCebeL6EO8IPZ
-=BDer
------END PGP SIGNATURE-----
+My understanding is that upstream Pylint maintainers consider this 
+behavior intentional[2]. But even then, I think it's a serious 
+documentation flaw.
+
+Should a CVE ID be assigned to this bug? If yes, it should be a 
+CVE-2010-XXXX.
+
+
+[0] http://www.pylint.org/
+[1] http://docs.pylint.org/faq.html#about-pylint
+[2] https://bugs.debian.org/591676#28
+
+-- 
+Jakub Wilk
