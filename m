@@ -1,40 +1,135 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/14
-Message-ID: <alpine.LRH.2.03.1404101009030.28311@amazon.com>
-Date: Thu, 10 Apr 2014 10:18:29 -0700 (PDT)
-From: Max Spevack <spevack@...zon.com>
-To: Anthony Liguori <aliguori@...zon.com>
-cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, Matt Wilson <msw@...zon.com>
-Subject: Re: Request for linux-distros list membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/23
+Message-ID: <542981F3.4010006@redhat.com>
+Date: Mon, 29 Sep 2014 09:59:47 -0600
+From: Eric Blake <eblake@...hat.com>
+To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com, Tavis Ormandy <taviso@...xchg8b.com>
+CC: chet.ramey@...e.edu, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
->>> Can we somehow get confirmation from Amazon that this is the right 
->>> person to have on distros? Thanks.
->>
->> Yes, we need this sort of confirmation.  My other concerns are:
->
-> Matt commented earlier.  Max will also confirm.  Is that sufficient?
->
-> Between the three of us, there should be enough public evidence and 
-> enough people already on the list who have worked with one of us in 
-> the past.
+On 09/29/2014 09:24 AM, Florian Weimer wrote:
+> On 09/28/2014 03:39 AM, Chet Ramey wrote:
+>> OK, here are the more-or-less final versions of the patches for
+>> bash-2.05b
+>> through bash-4.3.  I made two changes from earlier today: the function
+>> export suffix is now `%%', which is not part of a the set of valid
+>> variable
+>> name characters but avoids any potential problems with including
+>> shell metacharacters in the name; and this version refuses to import
+>> shell
+>> functions whose name contains a slash, for reasons I discussed earlier.
+> 
+> Chet, thanks for posting an official version of the prefix/suffix patch.
+> 
+> I looked at how the “%%” encoding works with Debian's “at” (which is
+> also used by Fedora and downstreams).  Unfortunately, it does not
+> address the issue, “at” still prints error messages, both with dash as
+> /bin/sh and bash.
 
-(Similar to msw, I also apologize for unsigned email coming from my 
-@amazon.com address.)
+'at' is already broken, independently of bash.  For example:
 
-I can also confirm that Anthony is the right person for this ask, from 
-Amazon's perspective.
+https://lists.gnu.org/archive/html/bug-bash/2014-09/msg00300.html
 
-If you're looking for internet confirmation of my role as the manager of 
-the team that produces the Amazon Linux AMI, please see:
+echo pwd | env "/tmp/exploit=me" at tomorrow
 
-http://aws.typepad.com/aws/2013/03/amazon-linux-ami-201303-now-available.html
+produces a shell script with these lines:
 
-http://aws.typepad.com/aws/2013/09/amazon-linux-ami-201309-now-available.html
+#!/bin/sh
+...
+/tmp/exploit=me; export /tmp/exploit
 
-And if you're looking for confirmation of my history working with Linux 
-before Amazon, I expect that Bill Nottingham, Mark Cox, Josh Bressers, 
-and other current or former Red Hatters could provide that.
+So even on Debian, where /bin/sh is dash, this script attempts to
+execute the file named /tmp/exploit=me, possibly under the privileges of
+'at' rather than as the user that created the file.  No bash needed.
 
-Thanks,
-Max
+So let's not use 'at' as justification for changing bash, but instead
+lobby to get 'at' fixed.
+
+>  As a result, I wonder if a suffix which is actually
+> within the shell variable syntax wouldn't be a better choice (e.g.,
+> three randomly chosen alphanumerics), as that would make the “at”
+> environment serialization code work again.
+
+No.  Absolutely not.  The moment that you pick a suffix which collides
+with VALID environment variable names, you have opened yourself up to
+exploitation.  And we _still_ have the issue that upstream bash hasn't
+fully isolated functions to be completely independent of variables.  As
+I've already pointed out on the bash list:
+
+function a=b () { :; }
+export -f 'a=b'
+export FUNC_BASH_a=one
+bash -c 'echo "$FUNC_BASH_a"
+
+Per POSIX, this MUST output "one", not "() { :; }" - we aren't quite
+there yet.  But your proposal to use alphanumerics as the suffix instead
+of invalid identifiers will make it all the more apparent when
+collisions like this occur.
+
+>  (I'm not concerned about
+> “at” specifically, we'll change it anyway, it's about similar code out
+> there which we don't know about it yet.)
+
+Any code which is not robust to non-identifiers in the names of
+environment variables already needs to be patched, independently of
+bash.  True, bash's change is making it all the more obvious that there
+are non-identifiers in the environment, but the problem is not bash's.
+
+> 
+> Eric, does “%%” even work for Cygwin, or does it cause strange effects
+> there?  (For the Windows shell, “%” is the variable starter character, a
+> bit like “$” in sh-type shells.)
+
+Cygwin has no problem with %% in the environment name.  Regardless of
+the version of bash:
+
+$ uname
+CYGWIN_NT-6.2-WOW64
+$ env 'a%%=foo' sh -c 'env | grep foo'
+a%%=foo
+
+I don't know if mingw has a problem, but if so, the mingw developers
+need to propose an alternate solution.
+
+> 
+> Related to that is that we should try to converge back to uniform bash
+> behavior across distributions.  Right now, the majority seems to use
+> “()” as the suffix (which is problematic, per the above), and they also
+> reject characters such as “.:-” in import function names (a restriction
+> which was inherited from the first patch which only tried to block
+> command execution).  The latest upstream patch uses “%%”, and allows
+> anything allowed in a regular function definition, except absolute
+> pathnames.
+> 
+> I'm not sure how to move towards a common solution.  I think avoiding
+> non-serializable environments could be a compelling reason to switch the
+> suffix, but “%%” does not provide that.
+
+I see two probably solutions for 'at'; we need something along these
+lines ANYWAYS because of the 'env /tmp/exploit=me' situation:
+1. ignore ALL non-identifiers, making it impossible to export functions
+into a bash script run by 'at' (anyone relying on that will now have to
+define their functions as part of their script startup, instead of
+inheritance)
+2. special-case %% identifiers to generate code in the 'at' script to
+require #!/bin/bash and use 'export -f' on the function name substring
+(in other words, make 'at' become smarter about the function conventions
+of bash).
+
+But I see no reason to move away from %% suffixing.
+
+> 
+> (From a security POV, *requiring* that imported functions contain at
+> least one special character would actually be best, but obviously,
+> that's not backwards-compatible.)
+
+We already discussed that battle, and decided that the security of NO
+collisions is worth the backwards-compatible break.
+
+-- 
+Eric Blake   eblake redhat com    +1-919-301-3266
+Libvirt virtualization library http://libvirt.org
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
