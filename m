@@ -1,23 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/07/2
-Message-ID: <20140407153814.GC19083@dhcp-25-225.brq.redhat.com>
-Date: Mon, 7 Apr 2014 17:38:15 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0155 -- kernel: kvm: BUG caused by invalid entry in guest ioapic redirection table
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/5
+Message-ID: <5428FEBF.20102@mittwald.de>
+Date: Mon, 29 Sep 2014 08:39:59 +0200
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+CC: <langsec-discuss@...l.langsec.org>
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-It was found that invalid entries in guest ioapic redirection table
-could lead to BUG_ON in ioapic_deliver() function.
+On 27/09/14 17:06, Solar Designer wrote:
+> Of course, what input is trusted vs. not may be unclear.  Apparently, 20
+> years ago bash developers considered all env vars to be trusted input,
+> regardless of the names, which is how we got here.
 
-A privileged user in the guest could use this flaw to crash the host.
+Well, from a scientific point of view, this was already
+solved, if I'm interpreting bash correctly.
 
-Upstream fix:
-https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=5678de3f15010b9022ee45673f33bcfc71d47b60
+See page 12 in this paper:
+http://langsec.org/ShotgunParsersShmoo.pdf
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1081589
+To quote for the lazy:
+
+'Input sanitization: “you can suppress ‘bad
+stuff’ in input+output to make it safe”
+
+Reality: Halting problem. Deal with it.'
+
+This should be true for all turing complete
+input languages (which I assume bash is capable of).
+
+So you can not "filter" turing complete input languages
+unless you restrict your language so hard that you
+in fact create another class of languages, e.g.
+just allow regex, which would create a context-free
+language[1], which would circumvent whole classes of exploits.
+
+Also cc'ing langsec-list, as they are interested
+in getting this stuff fixed in real applications.
+
+[1]https://en.wikipedia.org/wiki/Context-free_language
 
 -- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
