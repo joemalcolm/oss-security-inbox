@@ -1,46 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/5
-Message-ID: <20141007035532.GA2905@openwall.com>
-Date: Tue, 7 Oct 2014 07:55:32 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/12
+Message-ID: <20140929141221.GC17554@lappy.redhat.com>
+Date: Tue, 30 Sep 2014 00:12:23 +1000
+From: Grant Murphy <gmurphy@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Who named shellshock?
+Subject: [OSSA 2014-031] Admin-only network attributes may be reset to defaults by non-privileged users (CVE-2014-6414)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 06, 2014 at 08:33:44PM -0700, Michal Zalewski wrote:
-> This is the bit from Stephane:
-> 
-> http://www.openwall.com/lists/oss-security/2014/10/03/14
-> 
-> -- snip! --
-> A release schedule with public disclosure on the 24th at
-> 14:00 UTC and early notification to other unix and linux
-> vendors on the 22nd and select infrastructure provider
-> notification (such as CDNs including Microsoft) on the 23rd
-> proposed on the 16th by Florian.
-> 
-> [...]
-> 
-> bashdoor.com was registered (not by me) with a creation date of
-> 2014-09-24 13:59 UTC sometime before 2014-09-24 06:59:10Z
-> according to whois. Florian also said here that someone brought
-> the early notification sent to vendors/infrastructure to the
-> press, so someone obviously intended to take it to the press. I
-> don't know whom.
-> -- snip! --
+OpenStack Security Advisory: OSSA-2014-031
+CVE: CVE-2014-6414
+Date: September 29, 2014
 
-Thanks!
+Title: Admin-only network attributes may be reset to defaults by non-privileged users
+Reporter: Elena Ezhova (Mirantis)
+Products: Neutron
+Versions: up to 2013.2.4 and 2014.1 versions up to 2014.1.2
 
-> The bashdoor.com thing sounds a bit damning (doesn't sound like
-> something that would be in the notifications to CDNs & co?).
+Description:
+Elena Ezhova from Mirantis reported a vulnerability in Neutron. By updating a network
+attribute with a default value a non-privileged user may reset admin-only network
+attributes. This may lead to unexpected behavior with security implications for
+operators with a custom policy.json, or in some extreme cases network outages
+resulting in denial of service. All deployments using neutron networking are
+affected by this flaw.
 
-This certainly sounds bad, but what matters most is whether any info on
-the bug got to an unintended party before 2014-09-24 14:00 UTC or not.
-The name bashdoor.com itself does not leak any vulnerability details,
-nor that there was in fact a bash vulnerability coming.  This does
-suggest that someone wasn't 100% busy using the then non-public info for
-its intended purpose, but it does not indicate they violated the trust
-of whoever disclosed the info to them (except possibly by cybersquatting
-the domain), nor put bash users at any additional risk.
+Juno (development branch) fix:
+https://review.openstack.org/114531
 
-Alexander
+Icehouse fix:
+https://review.openstack.org/123849
+
+Notes:
+This fix will be included in the Juno release 2014.2.0 and in
+future 2014.1.3 release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6414
+https://launchpad.net/bugs/1357379
+
+--
+Grant Murphy
+OpenStack Vulnerability Management Team
+
+Content of type "application/pgp-signature" skipped
