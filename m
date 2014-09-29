@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/14
-Message-ID: <5422EAEE.9010009@gmail.com>
-Date: Wed, 24 Sep 2014 22:01:50 +0600
-From: "Alexander E. Patrakov" <patrakov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/16
+Message-ID: <CALx_OUDWD2FoneQ6hwGG5cjaN+jHFNPgW2xeZ47OrBzVT3MT+Q@mail.gmail.com>
+Date: Mon, 29 Sep 2014 07:45:22 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
 To: oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Cc: Chester Ramey <chet.ramey@...e.edu>
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-24.09.2014 21:16, Solar Designer wrote:
-> $ ssh -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id'
-> uid=500(sandbox) gid=500(sandbox) groups=500(sandbox)
-> Received disconnect from 127.0.0.1: Command terminated on signal 11.
->
-> This is with command="set" in .ssh/authorized_keys for the key being
-> used.  (Without the "; /usr/bin/id" portion, the command prints the
-> environment variables, including SSH_ORIGINAL_COMMAND being the function
-> with just "ignored" in its body.)  As we can see, the command runs, and
-> moreover in this case bash happened to segfault after having run "id".
->
-> I see no good workaround.  Starting the forced command with "unset
-> SSH_ORIGINAL_COMMAND &&" does not help - we'd need to unset the variable
-> before starting bash, not from bash.
+> Am I the only one who is wondering: Who is paying Chet to do this?
 
-Won't installing dash and setting the shell of users who have forced 
-commands to dash mitigate this somehow?
+Chet probably had a busy couple of weeks because of a piece of code
+that went unnoticed for longer than the age of some people posting to
+this list. As soon as additional problems with the original fix
+cropped up, he also worked pretty hard to adopt a more robust prefix
+approach, which shipped upstream about a day ago.
 
--- 
-Alexander E. Patrakov
+While I'd be the first to line up and just get rid of the affected
+functionality, the worries about compatibility with existing code are
+pretty valid. Heck, we unexpectedly bumped into issues with that when
+fixing the bug at Google. We were surprised to notice that some people
+do use function exports in their code, and then, that some of them use
+mock object-oriented notation like function foo::bar { ... } - which
+actually malfunctioned after the first patch.
+
+So, I don't think there's a lot of value in making random accusations.
+
+/mz
