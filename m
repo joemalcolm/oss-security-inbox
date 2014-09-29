@@ -1,50 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/21
-Message-ID: <142BCE00-6581-4515-A8A1-E2C25CAFD923@redhat.com>
-Date: Mon, 03 Feb 2014 15:02:27 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Cc: secalert_us@...cle.com
-Subject: CVE request and heads-up on insecure temp file handling in unpack200 (OpenJDK, Oracle Java)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/41
+Message-Id: <20140929200545.916746C000C@smtpvmsrv1.mitre.org>
+Date: Mon, 29 Sep 2014 16:05:45 -0400 (EDT)
+From: cve-assign@...re.org
+To: jwilk@...lk.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Pylint checks not as static as one would think
 Content-Type: text/plain; charset=utf-8
 
-I don't believe a CVE has been assigned or requested for this yet.  Spotted this on Debian's bug tracker and filed our own bug, the description of which follows which should serve to describe the issue.  I'm not sure if this affects IBM's JDK, but it seems to affect Oracle's (based on a quick test on my mac), so cc'ing Oracle here.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm not sure if MITRE will be handling the assignment or if Oracle will, but as this had already been reported publicly to the Debian BTS, I didn't think there was a point in _not_ sending this to oss-sec.
+> Pylint is advertised as "a static code checker, meaning it can
+> analyse your code without actually running it"[1] and that it "does
+> not import live modules"[1].
+> 
+> This is, unfortunately, far from reality. Here's a PoC:
+> 
+> $ cat moo.py
+> from _moo import *
+> 
+> $ cat moo.c
+> #include <stdio.h>
+> #include <signal.h>
+> void __attribute__((constructor)) moo() {
+>         printf("moo!\n");
+>         kill(0, SIGSEGV);
+> }
+> 
+> $ gcc -Wall -shared -fPIC moo.c -o _moo.so
+> 
+> $ pylint moo.py
+> No config file found, using default configuration
+> moo!
+> 
+> My understanding is that upstream Pylint maintainers consider this 
+> behavior intentional[2]. But even then, I think it's a serious 
+> documentation flaw.
+> 
+> [1] http://docs.pylint.org/faq.html#about-pylint
+> [2] https://bugs.debian.org/591676#28
 
-Thanks.
+We think there's a valid alternate interpretation of the
+documentation:
 
+> it can analyse your code without actually running it
 
+This describes the general functionality of the product, without
+commenting on whether code might be run in some circumstances. If the
+user provides exclusively Python source code, and doesn't provide
+mixed input containing both Python source code and potentially
+malicious .so files, then the situation is different.
 
-Jakub Wilk reported in a Debian bug report that the unpack200 program included in OpenJDK did not properly handle the logfile properly.  If the the log file was unable to be opened, it would create /tmp/unpack.log instead as the fallback, but do so in an insecure manner, as shown in unpack.cpp (the below is from OpenJDK 6):
+> There are a few other differences, such as the fact that Pylint does
+> not import live modules while Pychecker does
 
-4732 void unpacker::redirect_stdio() {
-...
-4757 #else
-4758     sprintf(tmpdir,"/tmp");
-4759     sprintf(log_file_name, "/tmp/unpack.log");
-4760 #endif
-4761     if ((errstrm = fopen(log_file_name, "a+")) != NULL) {
-4762       log_file = errstrm_name = saveStr(log_file_name);
-4763       return ;
-4764     }
-4765
-4766     char *tname = tempnam(tmpdir,"#upkg");
-4767     sprintf(log_file_name, "%s", tname);
-4768     if ((errstrm = fopen(log_file_name, "a+")) != NULL) {
-4769       log_file = errstrm_name = saveStr(log_file_name);
-4770       return ;
-4771     }
+This can be interpreted to mean "if you want a product with an
+explicit strategy of importing live modules in order to find a wider
+class of problems, then choose Pychecker instead of Pylint." A brief
+statement that contrasts major features, in general terms, is not
+equivalent to something like:
 
-The same exists in OpenJDK 7 and 8.
+  [hypothetical] 6.x Is import of live modules always prevented?
+  Yes, this is an explicit security constraint in our design.
 
-This could allow a malicious local attacker to conduct local attacks, such as symlink attacks, where a file could be overwritten if the user running unpack200 had write permissions.
+We agree that it would be a significant security improvement to have
+clearer documentation, e.g.,
 
+  [hypothetical] 6.y Is import of live modules always prevented?
+  No, astng does import live modules when source is unavailable.
 
-References:
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737562
-https://bugzilla.redhat.com/show_bug.cgi?id=1060907
+but we feel there is no vulnerability and thus no CVE.
 
--- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUKbs7AAoJEKllVAevmvms5FYIAKJKORvzuEeNWW/AzAxQE3ZY
+E9sffj45bqmuZ9vEPiOG21GvyvHr21WJ3JwVM4dcipuCBL+j3PvjwPuYB0JESkrr
+AjOBh+Wa5vFwG1Vb+YoSeNYH50zS1RFpLFVFGXMrN+P6JcEfwNirZcbuzXDK4DCN
+1XdgNNdBcLEYr5sR3KLJtGD97uJKDKoaJv/S9qTdUS+cMnlcgdhJmY+XQbgDp4Cf
+950axM4DMXQWjg5ki8FSBZHOfYIDKUmJp2OE7i7OqDimsFKPQ5p/EKfz+B/yH+6R
+UkiCOC/5Odr/uOwMg9qY9zN0DHhwGKkQvAUHfNrb3jExr/S805mO7azVyL3mr50=
+=xUZH
+-----END PGP SIGNATURE-----
