@@ -1,20 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/13/1
-Message-ID: <lv1cgv$10c$1@ger.gmane.org>
-Date: Sat, 13 Sep 2014 14:15:27 +0200
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/33
+Message-ID: <54299D1E.6060302@redhat.com>
+Date: Mon, 29 Sep 2014 19:55:42 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MantisBT Null byte poisoning in LDAP authentication
+Subject: Re: Array importing in bash 4.3
 Content-Type: text/plain; charset=utf-8
 
-On 2014-09-12 20:36, cve-assign@...re.org 
-wrote:
-> Use CVE-2014-6387.
+On 09/29/2014 05:47 PM, Kobrin, Eric wrote:
+> This code also reveals a difference from the function export code.
+>
+> The ARRAY_EXPORT code frees temp_string after using it. The function export code mallocs, but never frees it. That behavior predates the recent patches.
 
-Thank you.
+That's because parse_and_execute takes ownership of the string by 
+default.  See the comment in builtins/evalstring.c:
 
-Will post back here when MantisBT 1.2.18 is released.
-Until then, affected systems can apply the patch manually.
+/* Parse and execute the commands in STRING.  Returns whatever
+    execute_command () returns.  This frees STRING.  FLAGS is a
+    flags word; look in common.h for the possible values.  Actions
+    are:
+         (flags & SEVAL_NONINT) -> interactive = 0;
+         (flags & SEVAL_INTERACT) -> interactive = 1;
+         (flags & SEVAL_NOHIST) -> call bash_history_disable ()
+         (flags & SEVAL_NOFREE) -> don't free STRING when finished
+         (flags & SEVAL_RESETLINE) -> reset line_number to 1
+*/
 
 
-
+-- 
+Florian Weimer / Red Hat Product Security
