@@ -1,46 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/8
-Message-ID: <20140905094034.GB17649@kludge.henri.nerv.fi>
-Date: Fri, 5 Sep 2014 12:40:34 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/39
+Message-Id: <E3118B72-56E2-4D6D-9618-A8A4029469C9@oracle.com>
+Date: Mon, 29 Sep 2014 20:39:07 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Cc: TYPO3 Security Team <security@...o3.org>
-Subject: CVE request: TYPO3-EXT-SA-2013-014
+Cc: ekobrin <ekobrin@...mai.com>, "chet.ramey" <chet.ramey@...e.edu>, solar <solar@...nwall.com>, lcamtuf <lcamtuf@...edump.cx>, fweimer <fweimer@...hat.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Can I get 2013 CVE for TYPO3-EXT-SA-2013-014, thanks. Reasoning for CVE in
-information disclosure case is that this vulnerability exposes sensitive user
-data.
+On 29 Sep 2014, at 19:50, David A. Wheeler <dwheeler@...eeler.com> wrote:
 
-http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2013-014/
-http://osvdb.org/97812
+> That said, a lot of people are looking to find other attack paths.  Shellshock has pointed out
+> a kind of attack path that most people hadn't examined before.
+> I'd still like to see Christos Zoulas's approach included eventually, since that's an even stronger
+> countermeasure.  After all, if function imports only happen on request, then
+> non-requesters will have no problem. But I also understand that Zoulas's approach
+> is backwards-incompatible, and thus the bash folks are hesitant to apply it.
+> If that can't be added now, perhaps it could be added in a next release of bash?
 
-It has been discovered that the extension "Direct Mail" (direct mail) is
-susceptible to Information Disclosure.
+Normally I’d be all for maintaining backwards compatibility: we spend a lot of time fixing bugs in a way that doesn’t break anything.  On this occasion, though, I think Christos Zoulos’s approach is both correct and needed.
 
-Release Date: September 25, 2013
-Affected Versions: Version 3.1.1 and below
-Vulnerability Type: Information Disclosure
-Severity: Medium
-Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:P/I:P/A:N/E:P/RL:O/RC:C
-Problem Description: Failing to check authentication codes properly, direct_mail
-exposes user data including the original authentication code.
-
-Solution: An updated version 3.1.2 is available from the TYPO3 extension manager
-and at http://typo3.org/extensions/repository/download/direct_mail/3.1.2/t3x/.
-Users of the extension are advised to update the extension as soon as possible.
-
-Credits: Credits go to Bernhard Kraft who discovered and reported this issue. 
-
-- ---
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlQJhRIACgkQXf6hBi6kbk/T8QCaAxtYYv2J3HQChte+F5oPqLtB
-Z4kAn2YpjPfhOonCCcne9g3SYmEAmtb+
-=rI3r
------END PGP SIGNATURE-----
+jch
