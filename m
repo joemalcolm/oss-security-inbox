@@ -1,54 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/3
-Message-Id: <20141106113538.812C56C0054@smtpvmsrv1.mitre.org>
-Date: Thu,  6 Nov 2014 06:35:38 -0500 (EST)
-From: cve-assign@...re.org
-To: thoger@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: PHP xmlrpc date_from_ISO8601() buffer overflow (in php < 5.2.7)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/30
+Message-ID: <3230301C09DEF9499B442BBE162C5E48257492F9@SESTOEX04.enea.se>
+Date: Mon, 29 Sep 2014 17:17:38 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "Giles Coochey" <giles.coochey@...secspec.co.uk>
+Subject: RE: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> While looking at the recent PHP CVE-2014-3668, a worse problem was
-> spotted in the same code that affected older PHP versions.  The
-> date_from_ISO8601() function optionally copied input to a fixed size
-> local buffer without performing any bounds checks:
+> > Am I the only one who is wondering: Who is paying Chet to do this?
 > 
-> http://git.php.net/?p=php-src.git;a=blob;f=ext/xmlrpc/libxmlrpc/xmlrpc.c;h=d82f270#l168
+> Nobody is paying me to do this.
 > 
-> The issue was reported and corrected via:
-> 
-> https://bugs.php.net/bug.php?id=45226
-> http://git.php.net/?p=php-src.git;a=commit;h=c818d0d01341907fee82bdb81cab07b7d93bb9db
-> 
-> The fix was included in PHP 5.2.7:
-> 
-> http://php.net/ChangeLog-5.php#5.2.7
-> 
->   Fixed bugs #45226, #18916 (xmlrpc_set_type() segfaults and wrong behavior
->   with valid ISO8601 date string). (Jeff Lawsons)
-> 
-> It wasn't flagged as security fix, which seems incorrect to me.  This
-> overflow can be triggered by a malicious XML passed to xmlrpc_decode*
-> PHP functions.
+> --
 
-Use CVE-2014-8626.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUW1xjAAoJEKllVAevmvmsOowIAIsXbqHmKb2XiWPEulUL+DS8
-rokejI8IfqNaRYwlAs8LPOkzB5zsKnbSHtFgVhOCaOXgfASPSU5IuL2yyxami2rW
-WuNmzW3vU8U5lBkVe11km8OqO2Db9z9KtDyuBOVG1hCFbzNTTljwwzri4lTpGzxN
-vUTLzaBBW3DCFp0ADEET2ua54HJLbzRxDRHbK9L4HuHfKao/PzuAZz02+xv6LYgU
-u+oq+CKHYnqfOMUomaOy1KPeYEEL1UGhCoCqmdR7geKE/KoEDVI+ueTwM+mZKo9Z
-0IaE+Wh4gZV88/TkthzRcnLdqqSdCKpJCEEoUrvPTr+rpKXRp+rvhVOwx0+dKtg=
-=mwMi
------END PGP SIGNATURE-----
+Thanks a lot Chet, your work is highly appreciated !!
+-----
+Sona Sarmadi
+Software Engineer/Security Responsible for Enea Linux
+Enea
