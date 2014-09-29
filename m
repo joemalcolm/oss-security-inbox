@@ -1,55 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/9
-Message-ID: <alpine.LFD.2.10.1407030001050.22647@javelin.pnq.redhat.com>
-Date: Thu, 3 Jul 2014 00:03:00 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: LMS-2014-06-16-5: Linux Kernel LZ4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/37
+Message-ID: <CAOMtMF0UGj5J6WQ7GAGB9uU9sje0wQMM=qQX8mt7sdnkdzhbJQ@mail.gmail.com>
+Date: Mon, 29 Sep 2014 20:52:48 +0200
+From: Bernhard Hermann <bernhard.hermann@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: langsec-discuss@...l.langsec.org
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 29 Sep 2014 08:40, "Sven Kieske" <s.kieske@...twald.de> wrote:
+>
+> On 27/09/14 17:06, Solar Designer wrote:
+> > Of course, what input is trusted vs. not may be unclear.  Apparently, 20
+> > years ago bash developers considered all env vars to be trusted input,
+> > regardless of the names, which is how we got here.
 
-   Hello,
+> 'Input sanitization: “you can suppress ‘bad
+> stuff’ in input+output to make it safe”
+>
+> Reality: Halting problem. Deal with it.'
 
-+-- On Fri, 27 Jun 2014, P J P wrote --+
-|   It's been discussed in the other thread, yet just for the record, a reply 
-| from the upstream author:
-| 
-| +-- On Fri, 27 Jun 2014 Yann Collet wrote --+
-| |Hi Prasad
-| |
-| |Nope, latest lz4 release is not affected.
-| |Moreover, even the linux kernel implementation is safe, for now.
+This seems to me to be the good old CODE vs. DATA issue.
 
-For the record:
-  -> http://blog.securitymouse.com/2014/07/i-was-wrong-proving-lz4-exploitable.html
+IMHO, ENV vars are supposed to always be DATA, never CODE.
+If code is allowed, the parser might always fail. Judging by the recently
+dug up dirt, it most certainly will.
+Passing code as ENV is an ugly hack, probably born out of necessity arising
+when trying to implicitly propagate code, because no alernatives are
+apparent, are they?
 
-Summary: effectively, this post proves that
+If it's done at all, it should at least be explicit.
 
-  - Exploits can be written against current implementations of LZ4
-  - Block sizes less than 8MB (and even less than 4MB) can be malicious
-  - Certain platforms are more affected than others (primarily RISC: ARM)
-  - Protecting against the 16MB and greater flaw was not sufficient
+That's why I'm voting for having the *BSD approach in upstream: make the
+parsing of ENV vars optional, default OFF.
 
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+br,
+Bernhard Hermann
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJTtFBcAAoJEN0TPTL+WwQftO8P+wZ/Qjm4xEb2R1AYqRmIgoYf
-zbzUbPxaiuELv++63gkqb6DcKx9mwzDqxtk06ms6h25DTm+yQhqP4drwD4vg26kZ
-g1H/cfB1sokdv/z+bqwjZG+AqP0IcJSuttWzQA6/0+3hkj1DUEtSaKoeJcogKUaq
-lQQ3eRgLOvHBJHxmvHi326r31GAf8MrfeyupZabkDElEmJsXj6NwmUjeR1p8WcEN
-gV5QfZlGPtT+kLfdRZEy8NuwiTHxn61qkeEsLyNMXfjCaIeTSXqIGdoBJC0dbW+D
-7LLOWGulwoQszuxRbg/3rKT+UgGymhD4wnzTE/j+59M/dIHIIcAio8CNWq3xvtFK
-2Tl6/cHnmhdPdTOnNcy/FTkhRR00YD37sgMajyXLW+IfZW0CEJDXpHuH1+1WtmIP
-8gKJwKCEJLH9JormXbYjUGqVEvgxsaye6DFG5/qjk89126JeIEOGmIUc/pBhxJQc
-FhyRB29uQug7Xd2YSyos51CjsOVpStfgFLhJHgRkLuAN3CV1kc5fIiD4UCWO/NmM
-dLg8XdQorEP4uuFBh5kLEte9x4vWJwYnNXhuwA4XSLPaFvwpRlbq8W67Dz+SaZlT
-t38aUr6Aml+G9fJZadth3oIESWmVWe9mnKiLu7iwzLMo05hRy7ODUTkAVWrDuoU/
-+CX9A4GefwYxk02c9NBZ
-=4WV7
------END PGP SIGNATURE-----
