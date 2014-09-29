@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/21/2
-Message-ID: <20141221123950.GA14937@eldamar.local>
-Date: Sun, 21 Dec 2014 13:39:50 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: Mediawiki security releases 1.24.1, 1.23.8, 1.22.15 and 1.19.23
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/36
+Message-Id: <E1XYg1P-0007bB-Jr@rmm6prod02.runbox.com>
+Date: Mon, 29 Sep 2014 14:50:07 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+CC: "ekobrin" <ekobrin@...mai.com>, "chet.ramey" <chet.ramey@...e.edu>, "solar" <solar@...nwall.com>, "lcamtuf" <lcamtuf@...edump.cx>, "fweimer" <fweimer@...hat.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-Hi
+> On Sep 29, 2014, at 11:59 AM, Eric Blake <eblake@...hat.com> wrote:
+>> But I see no reason to move away from %% suffixing.
 
-New security releases for Mediawiki (1.24.1, 1.23.8, 1.22.15 and 1.19.23) were
-announced:
+On 29 September 2014 10:39, Kobrin, Eric <ekobrin@...mai.com> wrote:
+> The suffix fixes the obvious CGI hole, but it leaves exposed programs in which the adversary gets to choose the variable name as well...
 
-https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-December/000173.html
+On Mon, 29 Sep 2014 10:49:22 -0700, Tavis Ormandy <taviso@...xchg8b.com> wrote:
+> If an adversary can choose the variable name, it's game over by definition.
+> He can choose LD_PRELOAD, SHELLOPTS='xtrace' PS4='$(foo)', ...
 
-> == Security fixes in 1.24.1, 1.23.8, 1.22.15 and 1.19.23 ==
-> * (bug T76686) [SECURITY] thumb.php outputs wikitext message as raw HTML,
->   which could lead to xss. Permission to edit MediaWiki namespace is required
->   to exploit this.
-> * (bug T77028) [SECURITY] Malicious site can bypass CORS restrictions in
->   $wgCrossSiteAJAXdomains in API calls if it only included an allowed domain as
->   part of its name.
+I agree. If an adversary can arbitrary control the environment, it is definitely game over.
+What's more, this has been true for decades and this is *clearly* documented all over the place.
+If some program allows an untrusted user to control the content in arbitrary environment variables,
+that would be a security vulnerability in that other program, not in bash.
 
-Could CVE's be assigned for these two issues?
+> This general solution is robust, now we're just hammering out the details.
 
-References:
+I agree, Florian Weimer's approach does a *great* job of completely countering
+the general attack path as currently understood.
+I also like Chet Ramey's tweak that changes the suffix from "()" to "%%", that's a nice refinement
+(the suffix no longer contains metacharacters).
 
- * https://phabricator.wikimedia.org/T76686 (not accessible atm)
- * https://phabricator.wikimedia.org/T77028 (seem to be only affecting
-   1.20 and above)
- * https://bugzilla.redhat.com/show_bug.cgi?id=1175828
+That said, a lot of people are looking to find other attack paths.  Shellshock has pointed out
+a kind of attack path that most people hadn't examined before.
+I'd still like to see Christos Zoulas's approach included eventually, since that's an even stronger
+countermeasure.  After all, if function imports only happen on request, then
+non-requesters will have no problem. But I also understand that Zoulas's approach
+is backwards-incompatible, and thus the bash folks are hesitant to apply it.
+If that can't be added now, perhaps it could be added in a next release of bash?
 
-Regards,
-Salvatore
+--- David A. Wheeler
