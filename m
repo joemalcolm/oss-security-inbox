@@ -1,80 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/28/7
-Message-ID: <52E832C6.7020204@dest-unreach.org>
-Date: Tue, 28 Jan 2014 23:44:22 +0100
-From: Gerhard Rieger <gerhard@...t-unreach.org>
-To: oss-security@...ts.openwall.com
-Subject: Socat security advisory 5 - PROXY-CONNECT address overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/29
+Message-ID: <CABJ8ys96+Ksmg5moqacpbLdfnQOL1+XWCjpSvyFxr=99N8PuGg@mail.gmail.com>
+Date: Mon, 29 Sep 2014 22:58:12 +0800
+From: Osmond Sun <osmond.sun@...il.com>
+To: Chester Ramey <chet.ramey@...e.edu>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-Socat security advisory 5 - PROXY-CONNECT address overflow
+I see, Thanks
 
-Overview
-  socats PROXY-CONNECT address is vulnerable to a buffer overflow with
-  data from command line
+Osmond
 
-Vulnerability Id: CVE-2014-0019
-
-Serverity: Low
-
-Details
-  Due to a missing check during assembly of the HTTP request line a
-  long target server name (<hostname> in the documentation) in
-  the PROXY-CONNECT address can cause a stack buffer overrun.
-  Exploitation requires that the attacker is able to provide the
-  target server name to the PROXY-CONNECT address in the command
-  line. This can happen for example in scripts that receive data
-  from untrusted sources.
-
-Testcase
-  This overflow can not always be reliably reproduced. It may be helpful
-  to build socat with gcc option -Wp,-D_FORTIFY_SOURCE=2 or to run socat
-  under ElectricFence or another memory checker.
-
-  In one terminal run a dummy server because socat first needs to
-  establish a connection:
-
-    socat tcp-l:8080,reuseaddr /dev/null
-
-  In a second terminal run the check:
-
-    socat - PROXY-CONNECT:localhost:$(perl -e "print 'A' x
-384"):1,proxyport=8080
-
-  If this command terminates with Segmentation Violation, with a
-  buffer overflow message or similar, your version of socat is
-  vulnerable.
-
-  However, a Connection refused message does not necessarily mean that your
-  version is not vulnerable!
-
-Affected versions
-  1.3.0.0 - 1.7.2.2
-  2.0.0-b1 - 2.0.0-b6
-
-Not affected or corrected versions
-  1.0.0.0 - 1.2.0.0
-  1.7.2.3 and later
-  2.0.0-b7 and later
-
-Workaround
-  Truncate the target server name to a length of 256 characters before
-  passing it to socats command line
-
-Download
-  The updated sources can be downloaded from:
-
-    http://www.dest-unreach.org/socat/download/socat-1.7.2.3.tar.gz
-    http://www.dest-unreach.org/socat/download/socat-2.0.0-b7.tar.gz
-
-  Patch to 1.7.2.2:
-    http://www.dest-unreach.org/socat/download/socat-1.7.2.3.patch.gz
-
-  Patch to 2.0.0-b6:
-    http://www.dest-unreach.org/socat/download/socat-2.0.0-b7.patch.gz
-
-Credits
-   Credits to Florian Weimer of the Red Hat Product Security Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+2014-09-29 22:33 GMT+08:00 Chet Ramey <chet.ramey@...e.edu>:
+> On 9/29/14, 9:01 AM, Osmond Sun wrote:
+>> I found the function parsing is still imperfect.
+>> e.g. $env x="() { :;}; `touch vulnerablefile`" bash -c "echo this is a test "
+>
+> If that is the command you ran, this doesn't show any vulnerability.  The
+> double quotes surrounding the assignment to x in the argument to `env'
+> mean that command substitution is performed before env runs.  It's the
+> command substitution that creates the file, so the file exists before bash
+> is invoked.
+>
+> Chet
+> --
+> ``The lyf so short, the craft so long to lerne.'' - Chaucer
+>                  ``Ars longa, vita brevis'' - Hippocrates
+> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
