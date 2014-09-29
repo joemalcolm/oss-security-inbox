@@ -1,56 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/9
-Message-ID: <CACqxkW+2djiP73Of9B7tFH8_ac5EKR5vG9nydYva6W06DbPgcA@mail.gmail.com>
-Date: Mon, 18 Aug 2014 18:00:04 +0100
-From: Nick Boyce <nick.boyce@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/8
+Message-ID: <CAOp4FwSoO+uOZukXagZD2k=Q_gJLrdKDpg+N526dCaGiP7AabA@mail.gmail.com>
+Date: Mon, 29 Sep 2014 15:17:55 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Enigmail warning
+Cc: Chester Ramey <chet.ramey@...e.edu>, Christos Zoulas <christos@...las.com>
+Subject: Re: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-On 18 August 2014 07:22, Henri Salo <henri@...v.fi> wrote:
-
-> http://sourceforge.net/p/enigmail/forum/support/thread/3e7268a4/
-> Quote from thread below:
-> Enigmail 1.7 is completely broken for my purposes.
-> Steps to reproduce the problem:
+On Sun, Sep 28, 2014 at 8:52 PM, Bryan Drewery <bdrewery@...ebsd.org> wrote:
+> On 2014-09-26 15:52, Bryan Drewery wrote:
+>>
+>> On 9/26/2014 9:13 AM, Christos Zoulas wrote:
+>>>
+>>> On Sep 26,  1:47pm, john.haxby@...cle.com (John Haxby) wrote:
+>>> -- Subject: Re: [oss-security] Re: CVE-2014-6271: remote code execution
+>>> throu
+>>>
+>>> | It's not so much the known attacks -- redefining ls, unset, command,
+>>> | typeset, declare, etc -- it's the future parser bugs that we don't yet
+>>> | know about.
+>>> |
+>>> | A friend of mine said this could be a vulnerability gift that keeps on
+>>> | giving.
+>>>
+>>> I think that at this point the conservative approach is best, so
+>>> until the bash author figures what the best solution is, the feature
+>>> is disabled by default for NetBSD. It is not wise to expose bash's
+>>> parser to the internet and then debug it live while being attacked.
+>>>
+>>> christos
+>>>
+>>
+>> FreeBSD has taken a similar approach. We have used Christos' patch and
+>> disabled the feature by default.
+>>
+>> https://svnweb.freebsd.org/changeset/ports/369341
 >
-> 1) Write an email in TB.
-> 2) Ensure "Force encryption" in Enigmail.
-> 3) Ensure "Force signing" in Enigmail.
-> 4) Recheck encryption and signing settings... OK.
-> 5) Send the email.
-> 6) Look at the received email. OOPS. It is NOT signed
->     and NOT encrypted.
+>
+> FYI I have updated the FreeBSD bash to 27 and modified the
+> --import-functions script to be implicit for interactive shells and to also
+> give a warning when functions are ignored.
+>
+> https://svnweb.freebsd.org/ports/head/shells/bash/files/extrapatch-import-functions?revision=369467&view=co&pathrev=369467
+>
 
-Um ... I see from the Enigmail "Announcements" forum [1] that some
-major changes have been made to the package over the last 24 months:
-specifically a decision was made to replace older C++ code (with
-maintainability issues) by new pure Javascript code, thus hopefully
-achieving platform, GPG and TB version independence
+HI Chet,
 
-You can see how that sort of upheaval in the codebase might result in
-horrible problems like this.
+As you are aware, a sixth security issue has been discovered.
 
-[ I switched away from TB to Claws/Kmail some time ago, so this is all
-news to me, but up till that point the behaviour of TB V3 - 10 and
-Enigmail 1.0/1 in encrypting my mail was never less than excellent for
-me. ]
+Due to the nature of the vulnerability, I believe that it's best to
+break backward compatibility as done by FreeBSD and NetBSD until a
+proper patch is developed. We are lucky to have security researchers
+reporting their findings publicly. What about others that don't ?
 
-More relevantly, the (primary ?) author specifically asked [2] for
-testers to step up and test the new Javascript version thoroughly
+I strongly believe that it's much safer to have it disabled, and have
+a complete and comprehensive audit of the source code, and then
+re-enable it.
 
-  "In order to reduce the risk of severe errors in
-   the release versions, I will regularly ask for help
-   in testing after I completed such changes."
 
-which leaves me wondering how many stepped up to perform that task. It
-would be interesting - and maybe alarming - to know.
 
-[1] http://sourceforge.net/p/enigmail/forum/announce/
-[2] https://www.enigmail.net/list_archive/2012-January/014667.html
+> --
+> Regards,
+> Bryan Drewery
 
-Nick
+
+
 -- 
-"Bob has a problem requiring secure communication.
- He decides to use certificates.
- Now Bob has two problems."
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
