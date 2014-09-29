@@ -1,16 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/25/5
-Message-ID: <CAAnPYQ55GEgBLTEUZLmt0tHd7R_9F3zkAKo=xeg3=kX5zUWniw@mail.gmail.com>
-Date: Thu, 25 Dec 2014 17:14:16 +0000
-From: Gynvael Coldwind <gynvael@...dwind.pl>
-To: oss-security@...ts.openwall.com
-Subject: Re: Imagemagick fuzzing bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/10
+Message-ID: <542956C5.5010505@coochey.net>
+Date: Mon, 29 Sep 2014 13:55:33 +0100
+From: Giles Coochey <giles@...chey.net>
+To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-Well, that clears things up. Thanks Alex!
+On 29/09/2014 12:17, Loganaden Velvindron wrote:
+> HI Chet, As you are aware, a sixth security issue has been discovered.
+> Due to the nature of the vulnerability, I believe that it's best to
+> break backward compatibility as done by FreeBSD and NetBSD until a
+> proper patch is developed. We are lucky to have security researchers
+> reporting their findings publicly. What about others that don't ? I
+> strongly believe that it's much safer to have it disabled, and have a
+> complete and comprehensive audit of the source code, and then
+> re-enable it.
 
-I'll run my samples through gm and report these as well.
+Am I the only one who is wondering: Who is paying Chet to do this?
 
---
-Gynvael
+-- 
+Regards,
 
+Giles Coochey, CCNP, CCNA, CCNAS
+NetSecSpec Ltd
++44 (0) 8444 780677
++44 (0) 7584 634135
+http://www.netsecspec.co.uk
+giles.coochey@...secspec.co.uk
+
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (6454 bytes)
