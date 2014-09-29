@@ -1,43 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/3
-Message-ID: <53609C06.8010809@redhat.com>
-Date: Wed, 30 Apr 2014 16:45:26 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/44
+Message-ID: <5429C972.30103@enovance.com>
+Date: Mon, 29 Sep 2014 17:04:50 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: possible miniupnpc buffer overflow
+Subject: CVE request for vulnerability in OpenStack Cinder, Nova and Trove
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
 
-It was pointed out in
-https://bugzilla.redhat.com/show_bug.cgi?id=1085618 that miniupnpc
-version 1.9 fixes a possible buffer overflow:
+Title: Potential leak of passwords into log files
+Reporter: Amrith Kumar (Tesora)
+Products: Cinder, Nova, Trove
+Versions: up to 2013.2.3, 2014.1 versions up to 2014.1.2
 
-https://github.com/miniupnp/miniupnp/commit/3a87aa2f10bd7f1408e1849bdb59c41dd63a9fe9
+Description:
+Amrith Kumar from Tesora reported two vulnerabilities in the
+processutils.execute() and strutils.mask_password() functions available
+from oslo-incubator that are copied into each project's code. An
+attacker with read access to the services' logs may obtain passwords
+used as a parameter of a command that have failed or when the
+mask_password did not mask passwords properly.
 
-I am not familiar with the code but it may be just a crash, with an
-invalid read here (on line 131):
+References:
+https://launchpad.net/bugs/1343604
+https://launchpad.net/bugs/1345233
 
-129                         /* parse header lines */
-130                         for(i = 0; i < endofheaders - 1; i++) {
-131                                 if(colon <= linestart &&
-header_buf[i]==':')
+Thanks in advance,
 
-Can a CVE be assigned if one has not been already?
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-On a related note, I'm not sure if there are other issues close by. For
-example, in version 1.9, miniwget.c:
 
-172                         /* copy the remaining of the received data
-back to buf */
-173                         n = header_buf_used - endofheaders;
-174                         memcpy(buf, header_buf + endofheaders, n);
-
-n and endofheaders are signed ints, and header_buf_used is unsigned.
-Mixing the types together (and the signed int in the memcpy) may warrant
-further investigation.
-
-Cheers,
-
---
-Murray McAllister / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
