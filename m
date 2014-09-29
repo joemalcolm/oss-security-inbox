@@ -1,46 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/16/1
-Message-id: <16C7FA0D-D5C1-4691-8B33-8B3AE558B8A3@me.com>
-Date: Tue, 15 Apr 2014 20:02:54 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Remote Command Injection in Ruby Gem sfpagent 0.4.14
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/6
+Message-ID: <20140929084120.GA8464@openwall.com>
+Date: Mon, 29 Sep 2014 12:41:20 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Chester Ramey <chet.ramey@...e.edu>, Antti Louko <alo@....fi>
+Subject: Re: binary-patching bash
 Content-Type: text/plain; charset=utf-8
 
-Title: Remote Command Injection in Ruby Gem sfpagent 0.4.14
+On Mon, Sep 29, 2014 at 04:44:05AM +0400, Solar Designer wrote:
+> I've just tweeted some crazy stuff, and it is even crazier to talk about
+> this on a mailing list focused on Open Source, but ...
+> 
+> <solardiz> cp -ip bash{,~} && env - perl -pe 's/\((\) {\0)/\0\1/g' bash > bash~ && test `cmp -l bash{,~} | wc -l` = 1 && ln bash{,-} && mv -v bash{~,}
 
-Date: 4/15/2014
+I just did a Google web search for "bash binary patch" and found (on
+page 2 of search results) that this very approach had been suggested
+before, by Antti Louko:
 
-Author: Larry W. Cashdollar, @_larry0
+https://www.schneier.com/blog/archives/2014/09/nasty_vulnerabi.html#c6679473
 
-CVE: Please assign one at your leisure. 
+| alo  September 25, 2014 5:41 PM 
+| 
+| It is actually quite easy to binary patch bash. Open bash with eg. emacs
+| and search for string "() {" and replace "(" with a null character. This
+| disables the horrible "function definition from the environment" feature
+| altogether.
 
-Download: http://rubygems.org/gems/sfpagent
+https://www.schneier.com/blog/archives/2014/09/nasty_vulnerabi.html#c6679613
 
-Vulnerability
-The list variable generated from the user supplied JSON[body] input is passed directly to the system() shell on line 649. If a user supplies a module name with shell metacharacters like ; they might be able to execute shell commands on the remote system as the sfpagent running user id.
-I think to fix this youâ€TMd need to sanitize all input from the user with shellwords.escape.
+| alo  September 27, 2014 7:06 AM 
+| 
+| As I wrote earlier, simple binary patch removes whole "automagic
+| function definitions from the environment". I made a simple Python
+| script to make the patch. It simply finds null-ending string "() {" and
+| writes null over first "(".
+| 
+| The script assumes that the first occurrence is the correct one. At
+| least bash shells I have, that is the only and correct one. This can be
+| also used to disable the feature in already patched vendor supplied bash
+| binaries.
 
-637                         code, body = get_data(address, port, '/modules')
-638                         raise Exception, "Unable to get modules list from {name}" if code.to_i != 200
-639 
-640                         modules = JSON[body]
-641                         list = ''
-642                         schemata.each { |m|
-643                                 list += "{m} " if File.exist?("{modules_dir}/{m}") and
-644                                                    (not modules.has_key?(m) or modules[m] != get_local_module_hash(m, modules_dir).to_s)
-645                         }
-646 
-647                         return true if list == ''
-648 
-649                         if system("cd #{modules_dir}; #{install_module} #{address} #{port} #{list} 1>/dev/null 2>/tmp/install_module.error")
-650                                 Sfp::Agent.logger.info "Push modules #{list}to #{name} [OK]"
-651                         else
-652                                 Sfp::Agent.logger.warn "Push modules #{list}to #{name} [Failed]"
-653                         end
-654 
-655                         return true
+No analysis as to why this patch works was included in the comments,
+though.  Also, patching the first occurrence is riskier than making sure
+there's exactly one occurrence, as my one-liner does.  (For extra
+safety, my one-liner can be further improved to check the actual output
+from "cmp -l" with e.g. "egrep -c ' 50[[:space:]]+0$'" in place of
+"wc -l", but that didn't fit in the tweet and is less portable.)
 
-Vendor: Notified 4/15/14. Version 0.4.15 fixes this issue.
+The Python script is:
 
-Advisory: http://www.vapid.dhs.org/advisories/spfagent-remotecmd.html
+http://alo.fi/bash/Patch-bash.py
+
+SHA-256 of Patch-bash.py above as of the time of this writing:
+
+4de321a4fb8c1787f983b754d434c1dde6fe58e3c76f2f6b3b77f10a3d0ea171  Patch-bash.py
+
+Antti, you could want to enhance the Python script with an "exactly one
+match" check, and post the new SHA-256 in here.  While not tweetable, I
+do see some advantage in this being written in just one language, as
+opposed to my mix of shell and Perl.
+
+I thought of doing the same in Perl or sed alone, and it'd fit in a
+tweet easily (e.g., using "perl -pi.orig -e"), but not with the kind of
+safety I wanted to include - the "exactly one match" check, and creating
+a backup and updating bash atomically ("perl -i" unfortunately writes
+over the file, so it'd bump into "Text file busy" or have bash broken
+for new invocations for a while, and would keep bash broken if patching
+fails).  Hence the mix.
+
+> <solardiz> Previous tweet disables function imports in bash due to strncmp(..., 4). Tested on some Linux & FreeBSD, from bash & csh. At your own risk.
+> <solardiz> perl -pe 's/\(\) {\0/(){\0\0/g' followed by an "exactly one match" check may be safer e.g. for an Internet-wide scan^Wpatch. ;-) #shellshock
+> <solardiz> bash 1.14.7 and bash 4.3 (and all inbetween?) use STREQN ("() {", string, 4) and define STREQN via strncmp(). Allows portable binary patch.
+> 
+> The idea is that the length 4 STREQN() aka !strncmp() when invoked on a
+> shorter constant string will require that the entire env var value be
+> that string - that is, either empty (in my first tweet above) or a
+> 3-char string (in my third tweet above).  Neither case leaves any room
+> for an attacker to provide arbitrary input to the parser via the former
+> function imports feature.
+> 
+> This dirty hack may be handy for patching otherwise unmaintained systems.
+> 
+> The primary risk I see here is that some build of bash might include
+> custom patches where this check had been changed to use something other
+> than (an equivalent of) strncmp().  I am not aware of any such cases.
+> 
+> Here's how to test that the feature is indeed disabled (or at least
+> broken, although that is an insufficient test for security).  Before the
+> binary patch:
+> 
+> $ testfunc() { echo test; }
+> $ export -f testfunc
+> $ bash -c testfunc
+> test
+> 
+> After the binary patch (first tweet):
+> 
+> $ testfunc() { echo test; }
+> $ export -f testfunc
+> $ bash -c testfunc
+> bash: testfunc: command not found
+
+Alexander
