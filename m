@@ -1,27 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/18
-Message-ID: <20140909130221.GA6119@1wt.eu>
-Date: Tue, 9 Sep 2014 15:02:21 +0200
-From: Willy Tarreau <w@....eu>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: haproxy read out of bounds
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/15
+Message-ID: <54296FE3.6030903@redhat.com>
+Date: Mon, 29 Sep 2014 16:42:43 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
+Subject: Array importing in bash 4.3 (was: Re: Fwd: Non-upstream patches for bash)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> From: Florian Weimer <fweimer@...hat.com>
+>
+> Note that if you ship 4.3, you might want to reevaluate a decision to
+> enable array variable import from the environment.
 
-I'd like to get a CVE ID for a new vulnerability affecting HAProxy 1.5
-before 1.5.4. In short, a user can cause HAProxy to parse contents out
-of a buffer by sending multiple gigs of carefully crafted chunks faster
-than the target server can read them. No memory write is performed during
-this phase, but the process may crash when tring to parse chunked data
-out of the request buffer.
+I changed the subject because I'm sure this parenthetical comment got lost.
 
-All the details and the patch are available here :
+Fortunately, in bash 4.3 (patchlevel 25), you cannot just -DARRAY_EXPORT 
+and get array variable import/export.  The code doesn't compile, and if 
+you fix that, it does not link, and if you fix that, well, you end up 
+with the following issue.  But I doubt anybody has done this, so it's 
+not a vulnerability (yet) and does not need CVE assignment etc.
 
-   http://git.haproxy.org/?p=haproxy-1.5.git;a=commitdiff;h=b4d05093bc89f71377230228007e69a1434c1a0c
+The array import/export feature allows one to export and import 
+variables while preserving their array status.  Unfortunately, it 
+enables this:
 
-The fix was included in 1.5.4.
+$ env -i 'FOO=([$(echo broken > /dev/tty)]=a)' ./bash -c true
+broken
+./bash: []=a: bad array subscript
 
-Thanks,
-Willy
+As I said, it is currently not an issue, but it's probably best not to 
+enable this in the future at all, or use it with another form of mangling.
 
+-- 
+Florian Weimer / Red Hat Product Security
