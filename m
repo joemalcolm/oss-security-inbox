@@ -1,62 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/15
-Message-Id: <201404101806.s3AI6nMr008075@linus.mitre.org>
-Date: Thu, 10 Apr 2014 14:06:49 -0400 (EDT)
-From: cve-assign@...re.org
-To: tristan.cacqueray@...vance.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Keystone
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/1
+Message-ID: <20140929004405.GA25460@openwall.com>
+Date: Mon, 29 Sep 2014 04:44:05 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Chester Ramey <chet.ramey@...e.edu>
+Subject: binary-patching bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> https://launchpad.net/bugs/1300274
-> 
-> Keystone DoS through V3 API authentication chaining
-> 
-> a vulnerability in Keystone V3 API authentication. By sending a single
-> request with the same authentication method multiple times, a remote
-> attacker may generate unwanted load on the Keystone host, potentially
-> resulting in a Denial of Service against a Keystone service. Only
-> Keystone setups enabling V3 API are affected.
-> 
-> Sanitizes authentication methods received in requests.
-> 
-> When a user authenticates against Identity V3 API, he can specify
-> multiple authentication methods. This patch removes duplicates, which
-> could have been used to achieve DoS attacks.
-> 
-> the difference that I see between many authentication requests versus
-> one request with many authentication methods, is that in the first
-> case an operator may limit the rate at which requests are processed,
-> but it's more difficult to protect Keystone against few requests
-> triggering many authentication trials.
+I've just tweeted some crazy stuff, and it is even crazier to talk about
+this on a mailing list focused on Open Source, but ...
 
-Use CVE-2014-2828.
+<solardiz> cp -ip bash{,~} && env - perl -pe 's/\((\) {\0)/\0\1/g' bash > bash~ && test `cmp -l bash{,~} | wc -l` = 1 && ln bash{,-} && mv -v bash{~,}
+<solardiz> Previous tweet disables function imports in bash due to strncmp(..., 4). Tested on some Linux & FreeBSD, from bash & csh. At your own risk.
+<solardiz> perl -pe 's/\(\) {\0/(){\0\0/g' followed by an "exactly one match" check may be safer e.g. for an Internet-wide scan^Wpatch. ;-) #shellshock
+<solardiz> bash 1.14.7 and bash 4.3 (and all inbetween?) use STREQN ("() {", string, 4) and define STREQN via strncmp(). Allows portable binary patch.
 
-For reference: this was apparently disputed internally by the vendor
-before a conclusion was reached that this is a vulnerability in the
-context of the vendor's security policy. Obviously an attacker who
-sends more authentication requests generates more system load.
-Apparently the decision is that it was a mistake for
-auth/controllers.py, when handling one request, to process superfluous
-data that had no real purpose other than increasing resource
-consumption.
+The idea is that the length 4 STREQN() aka !strncmp() when invoked on a
+shorter constant string will require that the entire env var value be
+that string - that is, either empty (in my first tweet above) or a
+3-char string (in my third tweet above).  Neither case leaves any room
+for an attacker to provide arbitrary input to the parser via the former
+function imports feature.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+This dirty hack may be handy for patching otherwise unmaintained systems.
 
-iQEcBAEBAgAGBQJTRt1TAAoJEKllVAevmvms3aEIAL3ri80WKGeYIT+99PIHROOw
-GbBvXRIsLL5xLwTIgCdUe6ozNR4z9WOSVSMLIPT4rHZEaXEqe7jV9yqAeVW5c7IX
-RQ6YFtTC/wGPxMHjoQyjx1TQp1Ymubcie1golNJC6rSAFnEM211HM8VEQxh/NiCe
-FH0vfawOxioFIp0KxiTTKHNUbY39AI+6ENylEQwfOzfjEP7Vvbp+k8MrwctIZxEB
-x5aJH/5kENJQSd5JzQbIzA4qt6THTEg8SiXTRJTd5RdHyKh/oBelZhkuf/Q16ERe
-/CwfUpwKB1Z0rKN+tefdBu0fW/Rr428MJ7dIONskJhdPQNHJyvCsLt411l66Nf0=
-=Ck8/
------END PGP SIGNATURE-----
+The primary risk I see here is that some build of bash might include
+custom patches where this check had been changed to use something other
+than (an equivalent of) strncmp().  I am not aware of any such cases.
+
+Here's how to test that the feature is indeed disabled (or at least
+broken, although that is an insufficient test for security).  Before the
+binary patch:
+
+$ testfunc() { echo test; }
+$ export -f testfunc
+$ bash -c testfunc
+test
+
+After the binary patch (first tweet):
+
+$ testfunc() { echo test; }
+$ export -f testfunc
+$ bash -c testfunc
+bash: testfunc: command not found
+
+Alexander
