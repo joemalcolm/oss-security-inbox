@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/12
-Message-ID: <CAEDdjHdXnyR-7=72xNTFScZArx_sK06k2KoXwYi0zvVL47voqA@mail.gmail.com>
-Date: Mon, 3 Feb 2014 10:54:54 +0000
-From: Pedro Ribeiro <pedrib@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Leo Feyer <leo@...tao.org>, Andreas Schempp <andreas.schempp@...minal42.ch>
-Subject: CVE request: PHP object insertion in Contao CMS <= 3.2.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/46
+Message-ID: <5429F05C.6060807@case.edu>
+Date: Mon, 29 Sep 2014 19:50:52 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Eric Blake <eblake@...hat.com>, Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>
+CC: chet.ramey@...e.edu, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6271: remote code execution through bash
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 9/27/14, 10:15 PM, Eric Blake wrote:
 
-I have discovered a vulnerability that might lead to code execution in
-Contao CMS <= 3.2.4
-Contao CMS <= 3.2.4 does not properly validate user input in several
-locations which is then passed directly into PHP's unserialize.
 
-This has been fixed in Contao 2.3.5 as per commit:
-https://github.com/contao/core/commit/8c9cb044bdc887a8202bb65a64545c025664f957
-and
-https://github.com/contao/core/commit/1717336598fdcf1ed3f4ad488e140147cb31516d
+> 
+> Are you 100% sure that posixly_correct is correctly initialized at this
+> point in parsing the incoming environment variables, regardless of
+> whether you invoked '/bin/sh', 'bash -o posix', or 'POSIXLY_CORRECT=1
+> bash'?  
 
-Announcements can be found at
+For POSIXLY_CORRECT: yes.  Very early on in main() the shell looks for
+POSIXLY_CORRECT and POSIX_PEDANTIC in the environment and sets
+posixly_correct to 1 if either one is found.
 
-https <https://contao.org/en/news/contao-3_2_5.html>://<https://contao.org/en/news/contao-3_2_5.html>
-contao.org <https://contao.org/en/news/contao-3_2_5.html>/<https://contao.org/en/news/contao-3_2_5.html>
-en <https://contao.org/en/news/contao-3_2_5.html>/news/<https://contao.org/en/news/contao-3_2_5.html>
-contao <https://contao.org/en/news/contao-3_2_5.html>-3_2_5.<https://contao.org/en/news/contao-3_2_5.html>
-html <https://contao.org/en/news/contao-3_2_5.html>
+For bash -o posix: yes.  Options (including long options like --posix)
+are parsed well before the environment is read.
 
-https <https://contao.org/en/news/contao-2_11_14.html>://<https://contao.org/en/news/contao-2_11_14.html>
-contao.org <https://contao.org/en/news/contao-2_11_14.html>/<https://contao.org/en/news/contao-2_11_14.html>
-en <https://contao.org/en/news/contao-2_11_14.html>/news/<https://contao.org/en/news/contao-2_11_14.html>
-contao <https://contao.org/en/news/contao-2_11_14.html>-2_11_14.<https://contao.org/en/news/contao-2_11_14.html>
-html <https://contao.org/en/news/contao-2_11_14.html>
+For /bin/sh: no.  As documented, the shell enters posix mode after it
+reads the startup files.
 
-Thanks to the Contao developers for being so responsive.
-The full report can be found at my repo in
-https://github.com/pedrib/PoC/blob/master/contao-3.2.4.txt
-
-Can you please assign a CVE for the vulnerability described above?
-
-Thanks in advance.
-
-Regards,
-
-Pedro Ribeiro
-Agile Information Security
-
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
