@@ -1,187 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/2
-Message-ID: <CAFkuX4tsfCy938d5AhTDSsCj_xk2gpkm2JXdRLZbpBhN6EiKgg@mail.gmail.com>
-Date: Sat, 5 Jul 2014 02:34:59 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: LMS-2014-06-16-2: Linux Kernel LZO
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/19
+Message-ID: <5429799B.4090900@redhat.com>
+Date: Mon, 29 Sep 2014 17:24:11 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, Tavis Ormandy <taviso@...xchg8b.com>
+CC: chet.ramey@...e.edu, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>, Eric Blake <eblake@...hat.com>
+Subject: Healing the bash fork (was: Re: CVE-2014-6271: remote code execution through bash)
 Content-Type: text/plain; charset=utf-8
 
-Yeah, this was a smart catch by Dvorak. Ironically (or not, depending on
-viewpoint) the Linux kernel team and I were emailing about the exact same
-issue in LZ4. The problems with the LZO patch extend farther than just
-these two issues. Identifying valid pointer offsets can be a tricky
-endeavor within the kernel because of compiler optimizations, memory
-segmentation, alignment issues, and other subtleties.
+On 09/28/2014 03:39 AM, Chet Ramey wrote:
+> OK, here are the more-or-less final versions of the patches for bash-2.05b
+> through bash-4.3.  I made two changes from earlier today: the function
+> export suffix is now `%%', which is not part of a the set of valid variable
+> name characters but avoids any potential problems with including
+> shell metacharacters in the name; and this version refuses to import shell
+> functions whose name contains a slash, for reasons I discussed earlier.
 
-Greg, Jan, Linus, and a few others deserve credit for identifying the best
-solution for all affected architectures. I'm assisting where I am able.
-Patches will soon follow.
+Chet, thanks for posting an official version of the prefix/suffix patch.
 
-Best,
-D
+I looked at how the “%%” encoding works with Debian's “at” (which is 
+also used by Fedora and downstreams).  Unfortunately, it does not 
+address the issue, “at” still prints error messages, both with dash as 
+/bin/sh and bash.  As a result, I wonder if a suffix which is actually 
+within the shell variable syntax wouldn't be a better choice (e.g., 
+three randomly chosen alphanumerics), as that would make the “at” 
+environment serialization code work again.  (I'm not concerned about 
+“at” specifically, we'll change it anyway, it's about similar code out 
+there which we don't know about it yet.)
 
+Eric, does “%%” even work for Cygwin, or does it cause strange effects 
+there?  (For the Windows shell, “%” is the variable starter character, a 
+bit like “$” in sh-type shells.)
 
+Related to that is that we should try to converge back to uniform bash 
+behavior across distributions.  Right now, the majority seems to use 
+“()” as the suffix (which is problematic, per the above), and they also 
+reject characters such as “.:-” in import function names (a restriction 
+which was inherited from the first patch which only tried to block 
+command execution).  The latest upstream patch uses “%%”, and allows 
+anything allowed in a regular function definition, except absolute 
+pathnames.
 
-On Sat, Jul 5, 2014 at 2:26 AM, Solar Designer <solar@...nwall.com> wrote:
+I'm not sure how to move towards a common solution.  I think avoiding 
+non-serializable environments could be a compelling reason to switch the 
+suffix, but “%%” does not provide that.
 
-> On Thu, Jun 26, 2014 at 12:53:18PM -0600, Don A. Bailey wrote:
-> > A vulnerability has been identified in the Linux kernel implementation of
-> > the LZO algorithm. Please find the bug report inline.
->
-> There's now a blog post claiming that "the patched Linux version is
-> still vulnerable to integer overflows", along with detail and a proposed
-> patch.  I did not review it.
->
->
-> http://blog.lekkertech.net/blog/2014/07/02/LZO-on-integer-overflows-and-auditing/
->
-> >
-> #############################################################################
-> > #
-> > # Lab Mouse Security Report
-> > # LMS-2014-06-16-2
-> > #
-> >
-> > Report ID: LMS-2014-06-16-2
-> >
-> > CVE ID: CVE-2014-4608
-> >
-> > Researcher Name: Don A. Bailey
-> > Researcher Organization: Lab Mouse Security
-> > Researcher Email: donb at securitymouse.com
-> > Researcher Website: www.securitymouse.com
-> >
-> > Vulnerability Status: Patched
-> > Vulnerability Embargo: Broken
-> >
-> > Vulnerability Class: Integer Overflow
-> > Vulnerability Effect: Memory Corruption
-> > Vulnerability Impact: DoS, OOW
-> > Vulnerability DoS Practicality: Practical
-> > Vulnerability OOW Practicality: Impractical
-> > Vulnerability Criticality: Moderate
-> >
-> > Vulnerability Scope:
-> > All versions of the Linux kernel (3x/2x) with LZO support (lib/lzo) that
-> > set the HAVE_EFFICIENT_UNALIGNED_ACCESS configuration option. Currently,
-> > this seems to include PowerPC and i386.
-> >
-> > Vulnerability Tested:
-> >       - Via btrfs
-> >       - Stand alone
-> >
-> > Functions Affected:
-> >       lib/lzo/lzo1x_decompress_safe.c:lzo1x_decompress_safe
-> >
-> > Criticality Reasoning
-> > ---------------------
-> > While some variants of this LZO algorithm flaw result in Remote Code
-> > Execution (RCE), it is unlikely that the Linux kernel variant can. This
-> is
-> > due to the fact that control of the memory region that is overwritten can
-> > not be controlled in a fashion that will result in the overwrite of
-> objects
-> > critical to the flow of execution.
-> >
-> > However, it may be possible to overwrite "business logic" data in certain
-> > circumstances, by corrupting adjacent objects in memory. Linux's guard
-> pages
-> > should mitigate this, however.
-> >
-> > Because RCE is impractical, Object Over Write (OOM) is only practical in
-> > constrained scenarios (read: impractical), and DoS is practical, the
-> > criticality level of this issue should be defined as Moderate.
-> >
-> > Furthermore, a Moderate definition is needed because of the use of LZO in
-> > btrfs, and the potential use of LZO in networking, opening up the
-> potential
-> > for remote instrumentation of this vulnerability. It is notable that SuSE
-> > recently reported that they will start using btrfs by default later this
-> > year.
-> >
-> > Lastly, only certain platforms are affected, decreasing impact.
-> >
-> > Vulnerability Description
-> > -------------------------
-> > An integer overflow can occur when processing any variant of a "literal
-> run"
-> > in the lzo1x_decompress_safe function. Each of these three locations is
-> > subject to an integer overflow when processing zero bytes. The following
-> code
-> > depicts how the size of the literal array is generated:
-> >                         if (likely(state == 0)) {
-> >                                 if (unlikely(t == 0)) {
-> >                                         while (unlikely(*ip == 0)) {
-> >                                                 t += 255;
-> >                                                 ip++;
-> >                                                 NEED_IP(1);
-> >                                         }
-> >                                         t += 15 + *ip++;
-> >                                 }
-> >                                 t += 3;
-> >
-> > As long as a zero byte (0x00) is encountered, the variable 't' will be
-> > incremented by 255. Using approximately sixteen megabytes of zeros, 't'
-> will
-> > accumulate to a maximum unsigned integer value on a 32bit architecture.
-> In
-> > combination with the following code, the value of 't' will overflow:
-> > copy_literal_run:
-> > #if defined(CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS)
-> >                                 if (likely(HAVE_IP(t + 15) &&
-> > HAVE_OP(t + 15))) {
-> >                                         const unsigned char *ie = ip + t;
-> >                                         unsigned char *oe = op + t;
-> >                                         do {
-> >                                                 COPY8(op, ip);
-> >                                                 op += 8;
-> >                                                 ip += 8;
-> >                                                 COPY8(op, ip);
-> >                                                 op += 8;
-> >                                                 ip += 8;
-> >                                         } while (ip < ie);
-> >                                         ip = ie;
-> >                                         op = oe;
-> >
-> > The HAVE_OP() check will always pass in this case, because the size check
-> > within the macro will evaluate based on the overflown integer, not the
-> value
-> > of 't'.
-> >
-> > This exposes the code that copies literals to memory corruption. An
-> > interesting side effect of the vulnerable code shown above is that the
-> > value of 'op' can point to a region of memory just before the start of
-> 'out'.
-> >
-> > It should be noted that the following code unintentionally saves all
-> other
-> > architectures from exposure:
-> > #endif
-> >                                 {
-> >                                         NEED_OP(t);
-> >                                         NEED_IP(t + 3);
-> >                                         do {
-> >                                                 *op++ = *ip++;
-> >                                         } while (--t > 0);
-> >                                 }
-> >
-> > NEED_OP() correctly tests the value of 't' here, disallowing the
-> potential
-> > for overflow.
-> >
-> > It should be noted that if 't' is a 64bit integer, the overflow is still
-> > possible, but impractical. An overflow would require so much input data
-> that
-> > an attack would obviously be infeasible even on modern computers.
-> >
-> > Vulnerability Resolution
-> > ------------------------
-> > To resolve this issue, the HAVE_OP and HAVE_IP macros should be enhanced
-> to
-> > detect for integer overflow. This is the most reasonable and efficient
-> > location for catching corrupted or instrumented payloads. By testing for
-> > overflow here, an attacker is simply wasting time by forcing the function
-> > to process a large amount of zero bytes.
->
+(From a security POV, *requiring* that imported functions contain at 
+least one special character would actually be best, but obviously, 
+that's not backwards-compatible.)
 
+-- 
+Florian Weimer / Red Hat Product Security
