@@ -1,38 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/11
-Message-id: <3BFF7C5B-3CD6-4162-9479-0F63A7E54C2B@me.com>
-Date: Tue, 18 Nov 2014 14:17:09 -0500
-From: Larry Cashdollar <larry0@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Wordpress WP-DB-Backup v2.2.4 Plugin Remote Database Backup Download Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/45
+Message-ID: <6900DC89-C4A7-46EC-9F6C-FF03A426D610@akamai.com>
+Date: Mon, 29 Sep 2014 17:06:00 -0500
+From: "Kobrin, Eric" <ekobrin@...mai.com>
+To: "dwheeler@...eeler.com" <dwheeler@...eeler.com>
+CC: oss-security <oss-security@...ts.openwall.com>, chet.ramey <chet.ramey@...e.edu>, solar <solar@...nwall.com>, lcamtuf <lcamtuf@...edump.cx>, fweimer <fweimer@...hat.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
+On Sep 29, 2014, at 2:50 PM, "David A. Wheeler" <dwheeler@...eeler.com> wrote:
 
-> On Nov 17, 2014, at 7:22 PM, Joshua Rogers <oss@...ernot.info> wrote:
+> On Mon, 29 Sep 2014 10:49:22 -0700, Tavis Ormandy <taviso@...xchg8b.com> wrote:
+>> If an adversary can choose the variable name, it's game over by definition.
+>> He can choose LD_PRELOAD, SHELLOPTS='xtrace' PS4='$(foo)', ...
 > 
->> On 18/11/14 10:30, Larry W. Cashdollar wrote:
->> Turns out Matthew Bryant had already covered everything I had but a few months ago here:
->> 
->> http://thehackerblog.com/auditing-wp-db-backup-wordpress-plugin-why-using-the-database-password-for-entropy-is-a-bad-idea/
-> On that blog..
->> So we have to bruteforce these five hexadecimal digits – what’s the
->> math on that? Since our keyspace is any hex character and we have a
->> total of five digits we have 16^5 possibilities or 1,048,576
->> permutations.
-> Using birthday problem maths..
-> 1048576! / ((1048576-1205)! * 1048576^1205) =
-> 0.500538915
-> 
-> 1-0.500538915=
-> .499461085
-> 
-> aka. after 1,205 attempts, you'd have a 50% chance of hitting the
-> correct location..
-> 
-> Just something to consider.
-> 
-Plus I have a working PoC.  I would imagine many sites using Wordpress database names that could be guessed.
+> I agree. If an adversary can arbitrary control the environment, it is definitely game over.
+> What's more, this has been true for decades and this is *clearly* documented all over the place.
+> If some program allows an untrusted user to control the content in arbitrary environment variables,
+> that would be a security vulnerability in that other program, not in bash.
 
+It was also a flaw in the other program when the adversary was able to set the values. That flaw is so prevalent that we now have these recent patches.
 
-> -- 
-> -- Joshua Rogers <https://internot.info/>
+My point is that we can tell the other people that they are using bash wrong, or we can take steps to make it harder to use unsafely. Introducing namespaces with prefixing and suffixing is fine for a quick patch, but I'd argue that it is too fragile for long term use.
+
+What is the motivation to not store executable code (functions) differently from standard variables?
+
+-- Eric Kobrin
