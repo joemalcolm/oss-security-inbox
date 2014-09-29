@@ -1,21 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/10
-Message-ID: <20140227145833.3cb1e385@redhat.com>
-Date: Thu, 27 Feb 2014 14:58:33 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/38
+Message-ID: <5429ADF1.2000800@edwardprevost.info>
+Date: Mon, 29 Sep 2014 12:07:29 -0700
+From: Ed Prevost <me@...ardprevost.info>
 To: oss-security@...ts.openwall.com
-Cc: jwilk@...ian.org
-Subject: Re: CVE requests: Pacemaker, Python Imaging Library, eyeD3, 9base, rc, Gamera, RPLY - insecure use of /tmp
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 10 Feb 2014 23:21:00 +0100 Jakub Wilk wrote:
-
-> * Pacemaker:
-> https://bugs.debian.org/633964
-> This needs a CVE-2011-#### id.
-
-This should be fixed upstream for a while:
-https://github.com/ClusterLabs/pacemaker/commit/23ad834
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+On 9/29/2014 11:52 AM, Bernhard Hermann wrote:
+> On 29 Sep 2014 08:40, "Sven Kieske" <s.kieske@...twald.de> wrote:
+>> On 27/09/14 17:06, Solar Designer wrote:
+>>> Of course, what input is trusted vs. not may be unclear.  Apparently, 20
+>>> years ago bash developers considered all env vars to be trusted input,
+>>> regardless of the names, which is how we got here.
+>> 'Input sanitization: “you can suppress ‘bad
+>> stuff’ in input+output to make it safe”
+>>
+>> Reality: Halting problem. Deal with it.'
+> This seems to me to be the good old CODE vs. DATA issue.
+>
+> IMHO, ENV vars are supposed to always be DATA, never CODE.
+> If code is allowed, the parser might always fail. Judging by the recently
+> dug up dirt, it most certainly will.
+> Passing code as ENV is an ugly hack, probably born out of necessity arising
+> when trying to implicitly propagate code, because no alernatives are
+> apparent, are they?
+>
+> If it's done at all, it should at least be explicit.
+>
+> That's why I'm voting for having the *BSD approach in upstream: make the
+> parsing of ENV vars optional, default OFF.
+>
+> br,
+> Bernhard Hermann
+>
++1 I find this akin to Eric Kobrin's recommendation "using a separate
+store for functions"
