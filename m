@@ -1,36 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/21/1
-Message-ID: <87ppbdqlxg.fsf@mid.deneb.enyo.de>
-Date: Sun, 21 Dec 2014 12:31:07 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/31
+Message-ID: <609F45F8-68FE-4388-8D92-B57AA4F56508@akamai.com>
+Date: Mon, 29 Sep 2014 12:39:03 -0500
+From: "Kobrin, Eric" <ekobrin@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Florian Weimer <fweimer@...hat.com>, Tavis Ormandy <taviso@...xchg8b.com>, "chet.ramey@...e.edu" <chet.ramey@...e.edu>, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-* Hanno Böck:
+On Sep 29, 2014, at 11:59 AM, Eric Blake <eblake@...hat.com> wrote:
 
-> Is there any reason not to tell everyone to use tlsdate?
+> But I see no reason to move away from %% suffixing.
 
-Some folks want to run their servers within a few milliseconds of each
-other, and do not care so much about security or resiliency.  They may
-even use their own internal time source (either fed by the local
-standard time over NTP, or by GPS, CDMA or some other wireless time
-service such as DCF-77 in Germany).
+The suffix fixes the obvious CGI hole, but it leaves exposed programs in which the adversary gets to choose the variable name as well.
 
-Reconciling this with cryptography is certainly a challenge.  On the
-other hand, this does not have to be the default.
+env $'BASH_FUNC_foo%%=() { echo 123\n }' bash -c "foo"
 
-> What's the distro's take on this? afaik many ship ntp-based solutions
-> by default.
+I think that a more robust solution, such using a separate store for functions, is needed if function import is to survive as a feature.
 
-NTP (as in protocol), yes, ntp (as in implementation), perhaps not.
-
-I think most desktop-based distributions could get away with something
-like tlsdate.
-
-In contrast, servers with long-running connections and I/O polling
-loops often do not react gracefully to jumps in time.  (I once
-disconnected a few hundreds, if not thousands of users from an IRC
-server just by setting its time correctly.)  Sure, you can avoid that
-by using the appropriate kernel clock for timeout handling, but I have
-the impression that the correct clock changes every couple of years.
+-- Eric Kobrin
