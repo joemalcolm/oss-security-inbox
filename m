@@ -1,12 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/37
-Message-ID: <5433130C.9030208@gmail.com>
-Date: Mon, 06 Oct 2014 16:09:16 -0600
-From: smkr <steve.mckuhr@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/18
+Message-ID: <CALx_OUDbS_mgxc8ypD30y-kcXQ0OUtjPUXzDw7Jk04QDws=S8A@mail.gmail.com>
+Date: Mon, 29 Sep 2014 08:04:17 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-1572 - [SECURITY] The 'realname' parameter is not correctly filtered on user account...
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.mozilla.org/show_bug.cgi?id=1074812
+> So, I don't think there's a lot of value in making random accusations.
 
-haven't seen any discussion on this, if I missed it, sorry for the spam
+Err, OK, might have misread Giles' comment as the opposite of what he
+wanted to say - apologies to Giles!
+
+There have been some other fairly confrontational responses in the
+various threads, and I sort of read it through such lens.
+
+/mz
