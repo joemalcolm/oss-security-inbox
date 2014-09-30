@@ -1,92 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/16
-Message-ID: <545CC5D0.4030309@mittwald.de>
-Date: Fri, 7 Nov 2014 14:14:56 +0100
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Re: CVE-Request: dpkg handling of 'control' and warnings format string vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/4
+Message-ID: <542A16AC.9070903@case.edu>
+Date: Mon, 29 Sep 2014 22:34:20 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: "Kobrin, Eric" <ekobrin@...mai.com>, "dwheeler@...eeler.com" <dwheeler@...eeler.com>
+CC: chet.ramey@...e.edu, oss-security <oss-security@...ts.openwall.com>, solar <solar@...nwall.com>, lcamtuf <lcamtuf@...edump.cx>, fweimer <fweimer@...hat.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 9/29/14, 6:06 PM, Kobrin, Eric wrote:
 
+> What is the motivation to not store executable code (functions) differently from standard variables?
 
+What would you use for such a store, considering the environment is the
+only portable way to pass this information from one process to another in
+the general case, and support the current set of use cases?
 
-On 07/11/14 02:27, Seth Arnold wrote:
-> On Thu, Nov 06, 2014 at 08:00:33PM -0500, cve-assign@...re.org
-> wrote:
->>> A format string vulnerability vuln has been found in the latest
->>> version of dpkg. 
->>> https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135
-> 
->> Use CVE-2014-8625. We're aware of "does not show evidence of
->> allowing attackers to cross privilege boundaries" in 
->> https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135/comments/2
->> -- we'll certainly look for any discussion on this list that
->> disputes the CVE.
-> 
-> The build recipes in Debian packaging are all-powerful; they run 
-> arbitrary commands and executables with full privileges of the
-> user building the package.
-> 
-> The maintainer scripts in Debian binary packages are all-powerful; 
-> they run arbitrary commands and executables with root privileges
-> when packages are installed.
-> 
-> There is no need to resort to format string vulnerabilities in
-> control files to execute malicious code in an untrusted package. It
-> would be easier and more reliable to simply put malicious code
-> directly in the debian/rules file or postinst scripts.
-> 
-> It is not safe to build packages from untrusted sources. It is not
-> safe to install packages from untrusted sources.
-> 
-> This is why we did not assign a CVE from Ubuntu's CVE pool.
-
-to quote the man page of dpkg:
-
-> --no-act, --dry-run, --simulate Do everything which is supposed to
-> be done, but don't write any changes. This is used to see what
-> would happen with the specified action, without actually modifying
-> anything.
-
-So the users assumes this does not "modify anything"
-and if I understood this bug correct this gives at least
-access to the stack and allows to write/read memory.
-
-So this is against the defined/intended behaviour, imho
-and should thus get a CVE?
-
-- -- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad
-Oeynhausen
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJUXMXQAAoJEC5d3lL7/I9zbN0QAIWfKkzOCT4pbm9rFhUXclXx
-edHlyS/bcnd1i5TB9pPgXv13F37bDzz9B59YDoYtVheo0EoSHPx2Bt3Tnaacg4jt
-8I508UjSrPX56gsoaye7dgCZr6ivAYvFFkmPKMUfj87xJHDXTYfSj//HFPRt4uZa
-PnqBbAYdt/WH4bdpZqLN8aRie2LUwTXFGxYNfVUq2bN4cIdkyoSckQ2OpL7fuU3C
-G5PiK0tg4ySKQ6BP+GYkRwsCvkyFrDvqiRChU8seN5S/cEmpfeBmF/8PMDeALoPQ
-8bgMm3DsBRt2EQfvacYnFXC4oNLeYCoqGCTDPd0tDA17inHfYRs7XypVp+WmKVZw
-8OOfudS00l25FWiRG3EF+EbM5U8ibZ+UPzR+YKSUMC6UTTNjJli74B8d5NULYTxI
-zEKZWmcJdezbS56OIkd56m5sVnYfCDKvbUCCy0wPYE+EeKtszHuIXiy0eeDj9Fze
-iCL39IdNWzjBjxeBWEUp7QrYbfLlM5Q1/mic6woc7CIekw9blniuypvkaVkZ7Smb
-apWjplMIUdwmAJlRA1POW0FzuCScWGbMcdlwm2jmcZGxqP+T5p6IOKw6NLUJfRfP
-a3tPsgCBLJ8zu5Bs/suDgCLkMdu5biuwj1P5YrcbxhjkwtSA1prUazIJ/g+4eX5l
-7UeZKbfh5uyfP5zOuvCB
-=7KnX
------END PGP SIGNATURE-----
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
