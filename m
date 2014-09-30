@@ -1,37 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/5
-Message-ID: <544518A0.90000@enovance.com>
-Date: Mon, 20 Oct 2014 14:13:52 +0000
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/34
+Message-ID: <20140930221959.GH23797@oevtugenva.nrevsny.pk>
+Date: Tue, 30 Sep 2014 18:19:59 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Nova
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+On Tue, Sep 30, 2014 at 08:41:24AM -0500, Kobrin, Eric wrote:
+> > "innocuous looking setuid program" made my day ;)
+> 
+> > We should take care not to blame all and everything to bash.
+> 
+> I don't find that blame is a useful tool for fixing security
+> problems. What's more interesting to me is: what system components
+> are in a position to help. If a change in bash can make a bunch of
+> "innocuous looking setuid programs" not be vectors for the import of
+> malicious functions, let's do it.
 
-Title: Nova VMware instance in resize state may leak
-Reporter: Zhu Zhu (IBM)
-Products: Nova
-Versions: up to 2014.1.3
+While it sounds nice in theory, I don't think this approach really
+works, at least not in general. There's a whole school of security
+dedicated to removing documented functionality that's deemed "risky"
+that completely ignores the security implications of breaking the
+previously documented interface contract. The best-known might be
+dummying out printf/scanf %n support; if a program is expecting %n to
+work as documented, and needs the correct offset to be stored in the
+target object, very bad things could happen (buffer overflows, random
+memory writes, etc.) if the offset is never written and the target
+variable remains uninitialized or still holds an outdated value.
 
-Description:
-Zhu Zhu from IBM reported a vulnerability in Nova VMware driver. If an
-authenticated user deletes an instance while it is in resize state, it
-will cause the original instance to not be deleted. An attacker can use
-this to launch a denial of service attack. All Nova VMware setups are
-affected.
+I'm going to play the devil's advocate here: what if somebody has a
+script that relies on redefining certain commands via bash function
+export/import in order to suppress functionality that could be
+dangerous when the child script is invoked to process untrusted input?
+(Perhaps the author of the exporting script wants to avoid making
+changes to the script that runs in the child process.)
 
-References:
-https://launchpad.net/bugs/1359138
+In the case of function importing, I do think the feature should just
+be removed, despite the risk of changing the documented functionality.
+It's basically impossible to use correctly (unlike my above example,
+%n, which is trivial to use safely), and it's "wrong" not just on a
+security basis, but also on a language-semantics basis (a really
+really ugly kind of dynamic scope that's inherited from outside the
+program). But I don't think "component X is in a position to help" is
+inherently a valid argument that component X should attempt to help.
+"Blame", or more specifically interface contracts, are a useful
+concept that should not be thrown out.
 
-Thanks in advance,
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+Rich
