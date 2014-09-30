@@ -1,40 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/2
-Message-Id: <201404220118.s3M1IDQL029245@linus.mitre.org>
-Date: Mon, 21 Apr 2014 21:18:13 -0400 (EDT)
-From: cve-assign@...re.org
-To: forest.monsen@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request for Drupal Core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/22
+Message-ID: <CALx_OUCwUaQP6cxOt_9KkRSNPERdmv4NZ81Rn7BNa_=By_AXkQ@mail.gmail.com>
+Date: Tue, 30 Sep 2014 07:27:48 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security@...ts.openwall.com
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> Florian's prefix/suffix patch is not going to protect against the setuid/setgid exploit that I reported to this list last week.
+>
+> I discuss the setuid/setgid vulnerability at the following site, including demonstrating how Florian's prefix/suffix patch provides no protection:
+>
+> http://technicalprose.blogspot.co.uk/2014/09/shellshock-bug-third-vulnerability.html
 
-> SA-CORE-2014-002 - Drupal core - Information Disclosure
-> https://drupal.org/SA-CORE-2014-002
+You do realize that your setuid program is patently unsafe, right? Say:
 
-> Drupal's form API ... When pages are cached ... there is a chance that
-> interim form input recorded for one anonymous user (which may include
-> sensitive or private information, depending on the nature of the form)
-> will be disclosed to other users interacting with the same form at the
-> same time
+$ echo -e '#!/bin/sh\necho pwn3d' >date;chmod 755 date;PATH=.:$PWD
+./setuid_program
+pwn3d
 
-Use CVE-2014-2983.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTVcMIAAoJEKllVAevmvmsOhMH/jxUssmaa2sl7LFx/mA3jg46
-mSI/dHm9v5ONYa14zoXi2DAEi8birAKjbIgtz/b2kd9Q5RVCzD5qVQiTIjYgQCFD
-w5VkFkxZp33sG5HsgBGbpQPbHX+M0inHqvH3j4XE36w0QZ8rtNwehWIb/alZoqw2
-M4U6OyC6fEUgsJuoeIxg+zvJFYniWOQFI1y5t/XZ6NaTEHyXK85wabaNEuzt4t2O
-V+zXgdO1gAudEbvYe9kAJ81tcxv9rYXUhpmxePlF5mkQxIDU9RevgRAaCjpvUO/J
-SThzZT7mBZbUSd7xubU7B2EGGx9JWqKOTKG0KRG4EKkZ+aHpH7UcjOFKUjrxGBY=
-=vHDf
------END PGP SIGNATURE-----
+/mz
