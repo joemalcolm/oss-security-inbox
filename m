@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/20/1
-Message-ID: <535390B7.5000703@debian.org>
-Date: Sun, 20 Apr 2014 11:17:43 +0200
-From: Sylvestre Ledru <sylvestre@...ian.org>
-To: cve-assign@...re.org, 744817@...s.debian.org, mmcallis@...hat.com
-CC: oss-security@...ts.openwall.com
-Subject: Re: Bug#744817: CVE request: insecure temporary file handling in clang's scan-build utility
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/16
+Message-ID: <542A9A20.90904@mittwald.de>
+Date: Tue, 30 Sep 2014 13:55:12 +0200
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: vulnerability in rsyslog
 Content-Type: text/plain; charset=utf-8
 
-On 19/04/2014 05:29, cve-assign@...re.org wrote:
-> > Jakub Wilk discovered that clang's scan-build utility insecurely handled
-> > temporary files.
->
-> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744817
->
-> > The GetHTMLRunDir subroutine ...
->
-> > 3) The function doesn't fail if the directory already exists, even if
-> > it's owned by another user.
->
-> Use CVE-2014-2893.
-I am going to have a look next week. It should be trivial to fix.
+Hi,
 
-Sylvestre
+I don't understand the following statement in the
+pri-vuln.txt in section "Patches":
 
+"Version 7.4.6, while no longer being project
+supported received a patch and is also not vulnerable."
 
+What was patched when this version is not vulnerable?
+Or do you mean it is not vulnerable after the patch got applied?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (881 bytes)
+-- 
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
