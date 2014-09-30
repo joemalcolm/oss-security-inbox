@@ -1,38 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/2
-Message-ID: <CALwhT97-=jY4n7_ah0PMwD1BH0xauUSwRp71dO9rQGD0ukmj2w@mail.gmail.com>
-Date: Wed, 3 Dec 2014 17:48:28 -0800
-From: Karthik Kambatla <kasha@...udera.com>
-To: security@...che.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: Apache Hadoop 2.5.2 release to fix CVE-2014-3627
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/8
+Message-ID: <83670BE1-1FB4-4552-9404-7707C66233F2@akamai.com>
+Date: Mon, 29 Sep 2014 22:41:29 -0500
+From: "Kobrin, Eric" <ekobrin@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Array importing in bash 4.3
 Content-Type: text/plain; charset=utf-8
 
-Apologies for the delay in getting this across to you, Apache Hadoop 2.5.2
-(released on 11/19) fixes the following security issue:
+On Sep 29, 2014, at 1:55 PM, Florian Weimer <fweimer@...hat.com> wrote:
 
---
+> On 09/29/2014 05:47 PM, Kobrin, Eric wrote:
+>> This code also reveals a difference from the function export code.
+>> 
+>> The ARRAY_EXPORT code frees temp_string after using it. The function export code mallocs, but never frees it. That behavior predates the recent patches.
+> 
+> That's because parse_and_execute takes ownership of the string by 
+> default.  See the comment in builtins/evalstring.c:
 
-CVE-2014-3627: Apache Hadoop distributed cache vulnerability
 
-Severity: Severe
+I did miss that comment. Assuming that parse_and_execute operates as expected, the memory doesn't leak so long as parse_and_execute is invoked.
 
-Vendor: The Apache Software Foundation
+How do you feel about changing from this:
 
-Versions Affected:
-Hadoop 0.23.0 to 0.23.11
-Hadoop 2.0.0 to 2.5.1
+   if (absolute_program (tname) == 0 && (posixly_correct == 0 || legal_identifier (tname)))
+     parse_and_execute (temp_string, tname, SEVAL_NONINT|SEVAL_NOHIST|SEVAL_FUNCDEF|SEVAL_ONECMD);
 
-Users affected: Users running the YARN NodeManager daemon with Kerberos
-authentication
+to this? (please forgive style gaffes)
 
-Impact: Vulnerability allows a cluster user to expose private files owned
-by the user running the YARN NodeManager process.  The malicious cluster
-user can create a public tar archive containing a symlink to a local file
-on the node owned by the user running the YARN NodeManager process.  The
-permissions of the local file will be changed to be world-readable when the
-public archive is localized on the node.
+   if (absolute_program (tname) == 0 && (posixly_correct == 0 || legal_identifier (tname)))
+   {
+     parse_and_execute (temp_string, tname, SEVAL_NONINT|SEVAL_NOHIST|SEVAL_FUNCDEF|SEVAL_ONECMD);
+   }
+   else
+   {
+     FREE(temp_string);
+   }
 
-Mitigation: Users should upgrade to 2.5.2.
-
-Credit: This issue was discovered by Jason Lowe of Yahoo!
-
+-- Eric Kobrin
