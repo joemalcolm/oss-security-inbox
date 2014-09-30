@@ -1,40 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/6
-Message-ID: <20140501033032.GA24878@openwall.com>
-Date: Thu, 1 May 2014 07:30:32 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: local privilege escalation due to capng_lock as used in seunshare
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/32
+Message-ID: <1412098773507.27352@cari.net>
+Date: Tue, 30 Sep 2014 17:35:21 +0000
+From: Zach Wikholm <zwikholm@...i.net>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 30, 2014 at 11:55:31AM -0400, Steve Grubb wrote:
-> In my opinion, the issue is that I think SECURE_NOROOT doesn't get its 
-> semantics right as is. I'm thinking if noroot is set and cap_setuid is set, 
-> suid should be as normal but with no capabilities. If noroot is set and 
-> cap_setuid is unset, no transition of any uid should occur. If noroot is 
-> unset, then works as normal.
+Hey everybody,
 
-Of the three cases above, only the "noroot is set and cap_setuid is
-unset" case currently has semantics different from what you propose,
-and the rest are already as you described, correct?
+I don't think I've ever actually written to the list, but we also haven't ever encountered a bug like this. 
 
-Is my understanding correct that setuid(2)'s "appropriate privileges"
-end up being altered via lacking CAP_SETUID, even though we do gain UID 0
-during the SUID root exec?  This appears consistent with the code.
+Personally, I think a bullet point list (or whatever people use these days) is needed of what all is actually wrong, what is broken and how we as a community can assist is desperately needed. Last time I checked there are a total of 6 CVEs currently assigned to bash related vulnerabilities and I'm sure there are more to come.  
 
-If so, we may either prevent this combination of settings from occurring
-(in the way you describe or otherwise) or maybe we should fix setuid(2)
-(and a few others?) to treat the lack of CAP_SETUID differently.
+ If there is one already, I apologize in advance. 
 
-IIRC, the "sendmail bug" was fixed in the kernel by requiring privileges
-to drop capabilities, so an attacker wouldn't simply drop CAP_SETUID.
-Your proposed change is in line with that, but the behavior feels
-hackish and unexpected.  That said, Linux 2.4+ already set the precedent
-of ignoring SUID/SGID in some cases, yet proceeding with exec, so it
-won't be a new bad thing (rather, more of the moderately old bad thing).
+Zach W.
+________________________________________
+From: Ed Prevost <me@...ardprevost.info>
+Sent: Tuesday, September 30, 2014 8:31 AM
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] Healing the bash fork
 
-Sorry for so many messages.  It's been years since I looked at this code
-closely, so it takes a while to recall what it's about.
-
-Alexander
+On 9/30/2014 8:08 AM, Tavis Ormandy wrote:
+> On Tue, Sep 30, 2014 at 8:02 AM, Mark R Bannister
+> <mark@...seconsulting.co.uk> wrote:
+>>>> Florian's prefix/suffix patch is not going to protect against the setuid/setgid exploit that I reported to this list last week.> >
+>>>> I discuss the setuid/setgid vulnerability at the following site, including demonstrating how Florian's prefix/suffix patch provides no protection:
+>>>>
+>>>> http://technicalprose.blogspot.co.uk/2014/09/shellshock-bug-third-vulnerability.html
+>>> You do realize that your setuid program is patently unsafe, right? Say:
+>>>
+>>> $ echo -e '#!/bin/sh\necho pwn3d' >date;chmod 755 date;PATH=.:$PWD
+>>> ../setuid_program
+>>> pwn3d
+>> Glad my over-simplified example has raised a few smirks.  Now for a slightly less simplified version:
+>>
+>> putenv("PATH=/bin:/usr/bin");
+>> setreuid(0, 0);
+>> system("date");
+> Keep going, eventually you're going to have to stop blacklisting
+> variables and use execve ;-)
+>
+> $ env SHELLOPTS=xtrace PS4='$(id)' ./foo
+>
+>
+>> But the point is I've tried to boil down a relatively complex program by studying endless strace outputs to attempt to demonstrate a real world exploit.  It wasn't actually "date" that was being called, but you get the point.
+> Yes, but it's not safe to use system() or popen() from setuid
+> programs, no bash patch is going to change that. In fact, bash already
+> does more than most other shells by dropping privileges if euid !=
+> uid, i.e. "privileged mode".
+>
+>> In the past, i.e. pre-Shellshock, the above code may have raised eyebrows, but as PATH was sanitised it would have passed numerous security audits.
+>>
+> No, it's not safe to use system() or popen() in this context.
+>
+> Tavis.
+>
+>
+I believe the term following this is 'Mansplained'
