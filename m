@@ -1,57 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/11
-Message-ID: <m5o5ek$qui$1@ger.gmane.org>
-Date: Thu, 04 Dec 2014 00:13:24 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/15
+Message-ID: <CADk+mPAEBYgJapiyLRYhrLiBLRhmuvPd1fh_SfkOghxTsbm0qw@mail.gmail.com>
+Date: Tue, 30 Sep 2014 12:49:23 +0200
+From: Rainer Gerhards <rgerhards@...adiscon.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-6316: URL redirection issue in MantisBT
+Subject: vulnerability in rsyslog
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+Hi list,
 
-Please update CVE-2014-6316 with the information below
+attached find a tarball with the advisory ("pri-vuln.txt") and patches for
+important versions. The 7.6.6 and 8.4.1 versions released today are fully
+patched.
 
+Best regards,
+Rainer Gerhards
+rsyslog development lead
 
-Description:
+Content of type "text/html" skipped
 
-A bug in the URL sanitization routine allows an attacker to craft an URL 
-that can redirect outside of the MantisBT instance's domain when the 
-software is installed at the web server's root.
-
-e.g. http://example.com/login_page.php?return=http://google.com will 
-redirect to Google.
-
-Affected versions:
-=> 1.2.0a3, <= 1.2.17
-
-Fixed in versions:
-1.2.18 (not yet released)
-
-Patch:
-See Github [1]
-
-Credit:
-
-Redirection in login_page.php was first reported [3] by Mathias Karlsson 
-(http://mathiaskarlsson.me) as part of Offensive Security's bug bounty 
-program [4]; issue was also independently discovered and reported by 
-Ryan Giobbi who made the original CVE request [2], Shahee Mirza [5] and 
-Alejo Popovici [6].
-
-Paul Richards also found another redirection issue in 
-permalink_page.php, which turned out to have the same root cause.
-
-The issue was fixed by Damien Regad (MantisBT Developer).
-
-References:
-Further details available in our issue tracker [2]
-
-
-[1] http://github.com/mantisbt/mantisbt/commit/e66ecc9f
-[2] https://www.mantisbt.org/bugs/view.php?id=17648
-[3] https://www.mantisbt.org/bugs/view.php?id=17362
-[4] http://www.offensive-security.com/bug-bounty-program/
-[5] https://www.mantisbt.org/bugs/view.php?id=17698
-[6] https://www.mantisbt.org/bugs/view.php?id=17811
-
-
+Download attachment "pri-vuln.tar.gz" of type "application/x-gzip" (14087 bytes)
