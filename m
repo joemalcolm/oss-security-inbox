@@ -1,30 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/7
-Message-ID: <54A1ADC4.7060406@internot.info>
-Date: Tue, 30 Dec 2014 06:38:44 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: Double Free in PHP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/36
+Message-ID: <CALx_OUATMhBsedMAMLMWrn_OVmvxPD8TXTtnvykb7xAgb_H3vQ@mail.gmail.com>
+Date: Tue, 30 Sep 2014 16:34:34 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-On 30/12/14 03:36, cve-assign@...re.org wrote:
->> I found a double-free in PHP: https://bugs.php.net/bug.php?id=68676
->> > 
->> > And it has been patched in the following commits:
->> > 
->> > http://git.php.net/?p=php-src.git;a=commit;h=2bcf69d073190e4f032d883f3416dea1b027a39e
->> > http://git.php.net/?p=php-src.git;a=commit;h=24125f0f26f3787c006e4a51611ba33ee3b841cb
->> > http://git.php.net/?p=php-src.git;a=commit;h=fbf3a6bc1abcc8a5b5226b0ad9464c37f11ddbd6
-> Use CVE-2014-9425.
-I found in total I believe 5(don't quote me on that)
-double-free's/use-after-frees/invalid-free's in PHP. Should I use the
-same CVE-ID for all of them?
+> Either of these approaches completely solves the shellshock problem as currently revealed publicly.  (Some of the CVE information is still not public, so it's *possible* there is another big reveal, but I have no indication of one.)
 
+Everything should be covered by Florian's patch. More here:
 
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
+http://lcamtuf.blogspot.com/2014/09/bash-bug-apply-unofficial-patch-now.html
 
+I'll post the technical details & PoCs tomorrow(ish).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+/mz
