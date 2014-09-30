@@ -1,87 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/2
-Message-Id: <E1W6JiW-0005PJ-M7@xenbits.xen.org>
-Date: Thu, 23 Jan 2014 12:49:08 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 83 - Out-of-memory condition yielding memory corruption during IRQ setup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/25
+Message-ID: <CAJ_zFk+r0tEFnASgV2mbzewCz4SW7JvP0UrYiBU=X284Gw8EYQ@mail.gmail.com>
+Date: Tue, 30 Sep 2014 08:08:05 -0700
+From: Tavis Ormandy <taviso@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, Sep 30, 2014 at 8:02 AM, Mark R Bannister
+<mark@...seconsulting.co.uk> wrote:
+>> > Florian's prefix/suffix patch is not going to protect against the setuid/setgid exploit that I reported to this list last week.> >
+>> > I discuss the setuid/setgid vulnerability at the following site, including demonstrating how Florian's prefix/suffix patch provides no protection:
+>> >
+>> > http://technicalprose.blogspot.co.uk/2014/09/shellshock-bug-third-vulnerability.html
+>>
+>> You do realize that your setuid program is patently unsafe, right? Say:
+>>
+>> $ echo -e '#!/bin/sh\necho pwn3d' >date;chmod 755 date;PATH=.:$PWD
+>> ../setuid_program
+>> pwn3d
+>
+> Glad my over-simplified example has raised a few smirks.  Now for a slightly less simplified version:
+>
+> putenv("PATH=/bin:/usr/bin");
+> setreuid(0, 0);
+> system("date");
 
-                    Xen Security Advisory XSA-83
-                              version 2
+Keep going, eventually you're going to have to stop blacklisting
+variables and use execve ;-)
 
-       Out-of-memory condition yielding memory corruption during IRQ setup
+$ env SHELLOPTS=xtrace PS4='$(id)' ./foo
 
-UPDATES IN VERSION 2
-====================
 
-Public release.
+>
+> But the point is I've tried to boil down a relatively complex program by studying endless strace outputs to attempt to demonstrate a real world exploit.  It wasn't actually "date" that was being called, but you get the point.
 
-ISSUE DESCRIPTION
-=================
+Yes, but it's not safe to use system() or popen() from setuid
+programs, no bash patch is going to change that. In fact, bash already
+does more than most other shells by dropping privileges if euid !=
+uid, i.e. "privileged mode".
 
-When setting up the IRQ for a passed through physical device, a flaw
-in the error handling could result in a memory allocation being used
-after it is freed, and then freed a second time.  This would typically
-result in memory corruption.
+>
+> In the past, i.e. pre-Shellshock, the above code may have raised eyebrows, but as PATH was sanitised it would have passed numerous security audits.
+>
 
-IMPACT
-======
+No, it's not safe to use system() or popen() in this context.
 
-Malicious guest administrators can trigger a use-after-free error, resulting
-in hypervisor memory corruption.  The effects of memory corruption could be
-anything, including a host-wide denial of service, or privilege escalation.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 4.2.x and later are vulnerable.
-Xen 4.1.x and earlier are not vulnerable.
-
-Only systems making use of device passthrough are vulnerable.
-
-Only systems with a 64-bit hypervisor configured to support more than 128
-CPUs or with a 32-bit hypervisor configured to support more than 64 CPUs are
-vulnerable.
-
-MITIGATION
-==========
-
-This issue can be avoided by not assigning PCI devices to untrusted guests on
-systems supporting Intel VT-d or AMD Vi.
-
-CREDITS
-=======
-
-This issue was discovered by Coverity Scan, prompted by modelling
-improvements contributed by Andrew Coooper.  The issue was diagnosed
-by Matthew Daley and Andrew Coooper.  The patch was prepared by Andrew
-Cooper.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa83.patch                 Xen 4.2.x, Xen 4.3.x, xen-unstable
-
-$ sha256sum xsa83*.patch
-71ba62c024ed867f99f335ed63d7e04a7981d348cc29a3718e5c48f15a1e0fb1  xsa83.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJS4Q+yAAoJEIP+FMlX6CvZjQQIALVrMD9bMEfBbQJ6ZvZZBP2f
-g8y7FvzGMC2fiP1gPyOxwHYI2lAsT6euiFgEunamlWAtTpgFhTeXLrx/pbdKpMv9
-AwWA94umPrSSNVoUGtX9JqPcg9lzWCxgTjkKcmGyH6Yo/Z78juYeQMTss3/DQ0ms
-asIYS011i/6lyKDo1XKJiabzOYI0F/R1JQEDnaVZBTk57+1Ux+9acnt5KK1dt9t3
-KpcOQCiJKqVDFMaQ0NmTUQS7pC/5N/QZRe5AdMG1LhJI7Yw5tbHnTxdSYxnprQEn
-KUJfYQYycp4XJU7U6GMFE0Ybqf3FMlNqS+KHcetgN7XA6C8xjyDoMIUsGzA9/3E=
-=P/H4
------END PGP SIGNATURE-----
-
-Download attachment "xsa83.patch" of type "application/octet-stream" (598 bytes)
+Tavis.
