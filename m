@@ -1,44 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/18/3
-Message-Id: <201403181417.s2IEHFlS025180@linus.mitre.org>
-Date: Tue, 18 Mar 2014 10:17:15 -0400 (EDT)
-From: cve-assign@...re.org
-To: pmatouse@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, libvirt-security@...hat.com, eblake@...hat.com, berrange@...hat.com
-Subject: Re: CVE request -- libvirt: unprivileged user can crash libvirtd during spice migration
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/3
+Message-ID: <542A1084.3030506@case.edu>
+Date: Mon, 29 Sep 2014 22:08:04 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: cve-assign@...re.org, jwilk@...lk.net
+CC: chet.ramey@...e.edu, oss-security@...ts.openwall.com
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 9/29/14, 11:44 AM, cve-assign@...re.org wrote:
+>> the parser is not locale-agnostic. Here's an example how it can be
+>> exploited:
+>> http://bugs.python.org/issue22187
+> 
+> The discussion in Issue22187 is about changing code in Python 2.x to
+> work around this. However, is it useful to assign one new
+> CVE-2014-#### ID for Bash, on the expectation that Bash was intended
+> to recognize valid characters in zh_CN.GBK, but instead is identifying
+> part of a two-byte character as a \ character, and this has security
+> implications for products that attempt to do otherwise-correct quoting
+> of untrusted strings for use in sh commands?
 
-> Upstream fix:
-> http://libvirt.org/git/?p=libvirt.git;a=commit;h=484cc321
+Can someone send me a test case to look at?
 
-Use CVE-2013-7336.
-
-> (this issue was reported to libvirt-security mailing list in the year
-> 2k13 so might need 2k13 CVE)
-
-http://libvirt.org/securityprocess.html says the libvirt-security
-mailing list is "while this email address is backed by a mailing list,
-it is invitation only." The date of a report to a private list does
-not directly affect the date portion of a CVE ID. However, there was
-an apparently public commit in 2013 that mentioned "the daemon
-crashed."
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTKFS/AAoJEKllVAevmvmsQo4H/izs/JxyMWwWqc4s5IDV5vXt
-mTgCBHrzOxHqo9X1VsaKYCsFwjccS/LZcGuQOwkuLZzZwilfzxhzwbFHqQITigbG
-RrLeAdXFofCUrrzZsgpuh8xr/PKBr1f2mzJxPmjDIcfdaLzHcZBb57YCIxdCYqGY
-muohfA9G67STmVKY5jKfP9Obpe/pmINIrUWC10ATQdk7qJdDiITveCSX3LDqTyOl
-O3w1OlLjKc99nWFQN4b4I0CCSFIOA91A6EDwW9hrY3vDRIMsqdDf/RilFn/vaUkd
-Ih5D5wmpKWy1zXvmX/XF0FsqYrpCagNoA5iAZYjtntCaD/r1BAijlINGKcARo/s=
-=1aqs
------END PGP SIGNATURE-----
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
