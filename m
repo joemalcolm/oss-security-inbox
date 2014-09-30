@@ -1,23 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/4
-Message-ID: <53328843.7030101@redhat.com>
-Date: Wed, 26 Mar 2014 08:56:51 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/26
+Message-ID: <542AC920.3080600@debian.org>
+Date: Tue, 30 Sep 2014 16:15:44 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: KAuth security issues
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-On 03/26/2014 08:10 AM, Sebastian Krahmer wrote:
-> I love to talk to myself, in particular via mailing lists.
-> This issue seems to be addressed meanwhile via
+On 30/09/14 15:27, Michal Zalewski wrote:
+>> Florian's prefix/suffix patch is not going to protect against the
+>> setuid/setgid exploit that I reported to this list last week.
+...
+>> http://technicalprose.blogspot.co.uk/2014/09/shellshock-bug-third-vulnerability.html
 >
-> https://git.reviewboard.kde.org/r/117056/
->
-> by fixing the underlying polkit qt binding.
+> You do realize that your setuid program is patently unsafe, right?
+> Say:
+> 
+> $ echo -e '#!/bin/sh\necho pwn3d' >date;chmod 755 date;PATH=.:$PWD 
+> ./setuid_program
+> pwn3d
 
-Is the proposed change really correct?  It uses getuid() as the subject, 
-which looks wrong if you want to use this wrapper to check the 
-capabilities of a D-Bus peer.
+Other ways to attack this "simple, easy and wrong" setuid program
+include LD_PRELOAD and, depending on implementation details, any of:
 
--- 
-Florian Weimer / Red Hat Product Security Team
+LD_LIBRARY_PATH (if sh(1) and/or date(1) is dynamically-linked)
+ENV (if sh(1) is ksh, at least according to sudo source code)
+BASH_ENV (if sh(1) is bash)
+PYTHONPATH (if you replace date(1) with any Python script)
+PERL5LIB (if you replace date(1) with any Perl script)
+DBUS_SESSION_BUS_ADDRESS (if you replace date(1) with something that
+uses D-Bus)
+...
+
+and that's without getting into odd corners of Unix which are not
+directly executed, but can be used to construct a more subtle
+vulnerability (e.g. IFS).
+
+Several of these are "disarmed" if ruid != euid (e.g. D-Bus, to address
+CVE-2012-3524), but by calling setresuid() you lost that protection. If
+you're going to do that, there is little that libraries or executables
+can do to save you.
+
+sudo attempts to have a comprehensive blacklist (plugins/sudoers/env.c
+in my copy) but IMO, its length demonstrates that any blacklist-based
+approach is unsustainable. I continue to believe that any setuid program
+that executes non-trivial code without whitelist-filtering its
+environment is seriously flawed; and sh(1), as invoked by system(), is
+certainly non-trivial.
+
+Or to put it another way, executables that make themselves a privilege
+boundary can't trust what they receive from outside the boundary, and
+need to take responsibility for passing a sanitized version to things
+inside the boundary - doubly so if the things inside the boundary have
+no way to detect that a privilege boundary was ever crossed.
+
+    S
