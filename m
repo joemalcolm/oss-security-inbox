@@ -1,50 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/10
-Message-ID: <546DB556.90402@mittwald.de>
-Date: Thu, 20 Nov 2014 10:33:10 +0100
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Location of OS security audit reports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/12
+Message-ID: <542A784C.3050508@redhat.com>
+Date: Tue, 30 Sep 2014 11:30:52 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
+On 09/30/2014 05:11 AM, gremlin@...mlin.ru wrote:
+> On 29-Sep-2014 22:34:20 -0400, Chet Ramey wrote:
+>
+>   >> What is the motivation to not store executable code (functions)
+>   >> differently from standard variables?
+>
+>   > What would you use for such a store, considering the environment
+>   > is the only portable way to pass this information from one process
+>   > to another in the general case, and support the current set of
+>   > use cases?
+>
+> C.O. to the rescue: temporary file.
 
+You cannot use a named temporary file because the creator does not know 
+its required lifetime.  That's a challenge all solutions not based on 
+the process environment will face.
 
-On 17/11/14 04:17, M.T. Roebuck wrote:
-> Also I am interested in OSs that are not *nix or MS/Apple.
-> I know of Haiku OS but are there any others? Does China
-> or Japan or any other country have their own OSs?
-> 
-> Is the world really limited to just a few?
+Theoretically, you could pass an unnamed temporary file via a file 
+descriptor, and communicate the descriptor number in some safe way (but 
+what's that, if you don't trust the environment?).  But that's going to 
+be far less interoperable than what we currently have, and barely more 
+secure.
 
-Of course it is not.
+> If one shell instance needs to pass some functions to another, it
+> could dump those functions to a temporary file and pass the --load
+> (or, better, --load-functions) options with a filename parameter.
 
+We need to keep support exporting functions to grandchildren through 
+non-bash processes (that is, bash -> some-other-program -> bash).
 
-Take the l4 family for example
-seL4 is open source:
-
-https://github.com/seL4
-
-the implementation was proofed
-to fulfill the specification, read more at:
-
-http://sel4.systems/
-
-many other systems are at least certified
-for common criteria EL4+
-
-HTH
 -- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+Florian Weimer / Red Hat Product Security
