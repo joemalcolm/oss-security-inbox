@@ -1,45 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/28/3
-Message-ID: <544FC08F.5080309@enovance.com>
-Date: Tue, 28 Oct 2014 12:13:03 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-038] Nova network DoS through API filtering (CVE-2014-3708)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/37
+Message-ID: <alpine.LRH.2.11.1409301931540.17801@fairfax.gathman.org>
+Date: Tue, 30 Sep 2014 19:40:07 -0400 (EDT)
+From: "Stuart D. Gathman" <stuart@...hman.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-038
-CVE: CVE-2014-3708
-Date: October 28, 2014
-Title: Nova network DoS through API filtering
-Reporter: Mohammed Naser (Vexxhost)
-Products: Nova
-Versions: up to 2014.1.3, and 2014.2
+On Tue, 30 Sep 2014, David A. Wheeler wrote:
 
-Description:
-Mohammed Naser from Vexxhost reported a vulnerability in Nova API
-filters. By listing active servers using an ip filter, an authenticated
-user may overload nova-network or neutron-server process, resulting in a
-denial of services. All Nova setups are affected.
+> Finally: *PLEASE* let me know if you have any good ideas on how to
+> find vulnerabilities like this ahead-of-time. My article "How to
+> Prevent the Next Hearbleed"
+> (http://www.dwheeler.com/essays/heartbleed.html) lists a number of
+> ways that Heartbleed-like vulnerabilities could have been detected
+> ahead-of-time, in ways that are general enough to be useful.  I'd like
+> to do the same with Shellshock, so we can quickly eliminate a whole
+> class of problems.
 
-Kilo (development branch) fix:
-https://review.openstack.org/131460
+I don't know if this can be made efficient enought to be practical, but 
+imagine a virtual machine where every byte of memory is tagged with the 
+security domain.  When a byte is copied, the tag is copied also.  (It is 
+not possible in general to distinguish copies from writes, but at least 
+when copying between domains via system calls, this is detectable.) 
+Then, when a privileged program is running, its memory can be scanned for 
+data from a lower privilege domain.
 
-Juno fix:
-https://review.openstack.org/131462
+I think this is optimizable, since most memory will have the same tag, 
+and can be managed via virtual memory paging.  Update on write logic will 
+create a more detailed map for "hot" pages.
 
-Icehouse fix:
-https://review.openstack.org/131461
-
-Notes:
-This fix will be included in future 2014.1.4 and 2014.2.1 releases.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3708
-https://launchpad.net/bugs/1358583
-
---·
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+Caveat: someone probably already did this, and I just never heard of it.
