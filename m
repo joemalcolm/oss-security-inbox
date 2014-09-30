@@ -1,23 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/21/4
-Message-Id: <201401211808.s0LI8LBk009013@linus.mitre.org>
-Date: Tue, 21 Jan 2014 13:08:21 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/5
+Message-Id: <20140930023940.33C5872E0FC@smtpvbsrv1.mitre.org>
+Date: Mon, 29 Sep 2014 22:39:40 -0400 (EDT)
 From: cve-assign@...re.org
-To: dkg@...thhorseman.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 736247@...s.debian.org
-Subject: Re: Fwd: [Python-modules-team] Bug#736247: python-xdg: get_runtime_dir(strict=False): insecure use of /tmp
+To: tristan.cacqueray@...vance.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Cinder, Nova and Trove
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> as reported by Jakub Wilk in http://bugs.debian.org/736247, there is a
-> TOCTOU failure in python's xdg module
+> A vulnerability was discovered in OpenStack (see below). In order to
+> ensure full traceability, we need a CVE number assigned that we can
+> attach to further notifications. This issue is already public, although
+> an advisory was not sent yet.
 > 
-> 1) Create symlink /tmp/pyxdg-runtime-dir-fallback-victim, pointing to a 
-> directory owned by the victim
+> Products: Cinder, Nova, Trove
+> Versions: up to 2013.2.3, 2014.1 versions up to 2014.1.2
+> 
+> Amrith Kumar from Tesora reported two vulnerabilities in the
+> processutils.execute() and strutils.mask_password() functions available
+> from oslo-incubator that are copied into each project's code. An
+> attacker with read access to the services' logs may obtain passwords
+> used as a parameter of a command that have failed or when the
+> mask_password did not mask passwords properly.
+> 
+> https://launchpad.net/bugs/1343604
+> https://launchpad.net/bugs/1345233
 
-Use CVE-2014-1624.
+There are (at least) two CVE IDs needed because of the different
+vulnerability types. The older code in which processutils.execute was
+simply logging cmd directly, without any masking step, can be
+considered an instance of the
+http://cwe.mitre.org/data/definitions/532.html issue. For this, use
+CVE-2014-7230.
+
+The older code with a short _FORMAT_PATTERNS list, with a later
+replacement by longer _FORMAT_PATTERNS_1 and _FORMAT_PATTERNS_2 lists,
+can be considered an instance of the
+http://cwe.mitre.org/data/definitions/184.html issue. Bug #1343604
+mentions 'mask_password did not, for example, catch the usage ...
+/usr/sbin/mysqld --password=top-secret ... They did catch ...
+/usr/sbin/mysqld --password="top-secret" ... make the strings in
+strutils.mask_password more robust.' For this, use CVE-2014-7231.
+
+The additional complication is that there were apparently already
+releases with incomplete fixes for CVE-2014-7230. Separate CVE IDs are
+needed when parts of the problem were fixed in different releases. For
+example, Cinder 2013.2.4 contains a fix for the "Running cmd
+(subprocess)" logging problem but apparently does not contain a fix
+for the "Running cmd (SSH)" logging problem. The patch for the latter
+is shown in the
+https://git.openstack.org/cgit/openstack/trove/commit/?id=9672744f090d462cac5eb757ceaacd7122362708
+commit. Is this a remaining vulnerability in Cinder 2013.2.4 and
+possibly other products? If so, then we will assign another CVE ID.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -27,11 +64,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJS3rYbAAoJEKllVAevmvmsstgH/0w3D687UMenhRZvTHdoPWwi
-nk1vTE9SGraAUIe24g0VbdqI3vVUuMN1XqQnljFr2fkCWvhw2c2KCXg99TIcCmLo
-wlqRIAf37dCgHXLyHjzlboNKZm+Mlrh57vis4VJIyrq8byW0jmgR9Dv+tACMeWkj
-9Wkt1slsPiIMvFOjIZKjN8r8a85XbhpCQIrV4/uFMyOOarQHB9IT25YKNaldegFY
-CylvlLM7mi4Ux1JU+ZIUMdwxQoSOtvq3OKYwbHNZoYMH5mGcwwgRN4/tTbuqxmOn
-u8TYG3xqqVS4j2QuUG//LACrftlcJ0e/XtQTmSvJlVju/9bE2KD1U3ewrvUYHE0=
-=9769
+iQEcBAEBAgAGBQJUKhdhAAoJEKllVAevmvmsu4MIAKRxemkmF1byrCIXSNAR2Y7P
+p7ERBGHORZVT8O9MnJWue19sSc1LiWkmUCBLXgKaApJe3USEqFJjTKpm8GW10zmr
+hnOUBVnD8kOB4oqy8rAeEFp6+e+p5AVJY+xcJggVP5Q1KAT/it3AS3e7+YFqHVk/
+0833Y1WWmME3KW+1QVPPV//bjLl0AqbYBH5n3HV1fFnn2eo/LEaMgLKAlcUFIq3A
+onbuxpQ0lUIptpvQa7inSfi7D8kOgXjYsRrrwJKkM6nZAM2bt+68mxxiW7FUDUPp
+q0iAAKMIPg+OgEi3t+8HJZIZR6oaGgVQ7Askc9kohA4e0Az6qB7TV3rKf2g/tfw=
+=YprV
 -----END PGP SIGNATURE-----
