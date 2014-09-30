@@ -1,123 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/19
-Message-ID: <CAFOKM3q_ch-WxC8pQtvqu6KJ4UH81oFtSL8kmaDMS28m4hoQuQ@mail.gmail.com>
-Date: Fri, 8 Aug 2014 09:23:21 -0700
-From: Dean Pierce <pierce403@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/1
+Message-ID: <5429FAAC.7020604@case.edu>
+Date: Mon, 29 Sep 2014 20:34:52 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: Array importing in bash 4.3
 Content-Type: text/plain; charset=utf-8
 
-Being able to "infect" a USB device (allowing unsigned firmware to be
-flashed on) is bad.
+On 9/29/14, 10:42 AM, Florian Weimer wrote:
+>> From: Florian Weimer <fweimer@...hat.com>
+>>
+>> Note that if you ship 4.3, you might want to reevaluate a decision to
+>> enable array variable import from the environment.
+> 
+> I changed the subject because I'm sure this parenthetical comment got lost.
+> 
+> Fortunately, in bash 4.3 (patchlevel 25), you cannot just -DARRAY_EXPORT
+> and get array variable import/export.  The code doesn't compile, and if you
+> fix that, it does not link, and if you fix that, well, you end up with the
+> following issue.
 
-Being able to "infect" a host controller is bad.
-Using a USB device to get DMA, memory dumps, files, etc via loaded drivers
-is bad, whether they are using legitimate code paths or kernel bugs.
+That's a ton of trouble to go through just for this.  I don't have any
+plans to enable array export.
 
-I'm not so worried about the keyboard thing.  That's only interesting
-because it's the automation of exploiting a machine that has already been
-compromised.
+> The array import/export feature allows one to export and import variables
+> while preserving their array status.  Unfortunately, it enables this:
+> 
+> $ env -i 'FOO=([$(echo broken > /dev/tty)]=a)' ./bash -c true
+> broken
+> ./bash: []=a: bad array subscript
 
-Personally I would prefer disabling USB hotplug while a machine is locked
-(or while there are no active TTYs or something for servers).  Even if HID
-was whitelisted while the machine is locked, it would be a great start.
+That's actually how array assignment works.  The array index is run
+through the shell word expansions, including command substitution, and
+then the arithmetic expression evaluator to get the index.
 
-In regards to the PCI stuff, don't miss Joe's talk at DEFCON on Sunday.
-
-https://www.defcon.org/html/defcon-22/dc-22-speakers.html#FitzPatrick
-
-People have much more exposed PCI on their laptops and servers than they
-realize.  It's super cheap, super easy, and when we start selling kits this
-afternoon, it's going to be super accessible.
-
-VTd/IOMMU would be nice to have if implemented properly, but it seems like
-even OSX, the only OS currently using VTd as a security feature, still
-hasn't gotten it quite right.
-
-Also firewire attacks are still a thing.  What's up with that?  ExpressCard
-and Thunderbolt adapters are super cheap, and Inception is still being
-actively maintained with new targets being added regularly.
-
-  - DEAN
-On Aug 8, 2014 8:48 AM, "Eddie Chapman" <eddie@...k.net> wrote:
-
-> On 08/08/14 16:23, Greg KH wrote:
->
->> On Fri, Aug 08, 2014 at 03:45:31PM +0100, Eddie Chapman wrote:
->>
->>> The main question in my mind, and what I see as the main issue, is once
->>> the
->>> kernel has booted, how much can USB devices get up to, if anything,
->>> behind
->>> the kernel's back?
->>>
->>
->> "behind"?  Hopefully nothing, but as been proven in the past, bugs
->> happen and there are things that can go wrong.  Look at the raft of USB
->> HID (input devices) bugfixes that happened a while ago to fix buffer
->> overflow issues that had been found (and were being exploited for years
->> it turned out.)  There are a lot of USB drivers in the kernel, doing
->> some good fuzz-testing of them with a USB device that can do that would
->> be great for people to do to verify that we have caught all of these
->> types of bugs.
->>
->>  Assuming you don't switch on a machine with USB devices already
->>> plugged in,
->>>
->>
->> Like a laptop with built-in USB devices?  :)
->>
->
-> He he, good point.
->
->  assuming your motherboard's USB controller chip hasn't
->>> been doctored by the manufacturer/government/whoever, and assuming you
->>> plug
->>> a device (not a hub) directly into a motherboard USB port, how much
->>> *significant* interaction between device and USB controller goes on that
->>> could not be seen, even with the right debug settings enabled? i.e.
->>> could a
->>> clean device really have something as (presumably complicated) as its
->>> firmware being overwritten without the kernel knowing and potentially
->>> alerting about it?
->>>
->>
->> Firmware can't be sent to a device unless it is enumerated by the kernel
->> USB subsystem, and that is usually visable to the kernel by default.
->>
->> Sending firmware to a device is the least of your worries, see above for
->> the real problems that you can try to exploit.
->>
->
-> That's good to know. Not sure about the least of worries, the overwriting
-> of firmware seems to be the crux of what people are worried about, isn't
-> it? But I see your point, we don't need to worry since you're saying
-> firmware cannot be written unless it's initiated by the kernel. But a lot
-> of the discussion I've read on this issue seems to assume that a "clean"
-> USB device can have it's firmware replaced by the bad guys with malware
-> almost without the OS having a say in the matter. e.g. USB stick with evil
-> firmware infects USB controller, which in turn infects other USB sticks
-> subsequently plugged in. Although I've seen people involved in USB hardware
-> manufacture argue this is nowhere near as easy as some of the hysteria
-> surrounding this suggests.
->
-> But, theoretically, isn't it is possible for device and controller to do
-> their own thing between each other without the OS knowing anything? After
-> all, the OS controls the USB controller, but the controller is in control
-> of the device? Or does the kernel's control extend to the device?
->
-> Eddie
->
->   Testing the USB stack
->> with "invalid" configuration descriptors is a great place to start.
->> Hopefully we have fixed all of these issues, but no one is guaranteeing
->> anything...
->>
->> Sorry I can't make you feel better, at least you can't do DMA directly
->> to/from USB devices, so that attack vector is not there, unlike Firewire
->> and PCIe.
->>
->> greg k-h
->>
->>
-
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
