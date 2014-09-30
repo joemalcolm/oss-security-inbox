@@ -1,40 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/3
-Message-ID: <CACYkhxihUc1V_CXH48FtfdKtk1FsDHOOwTDCL-ZmLodwz9Ly+w@mail.gmail.com>
-Date: Wed, 12 Mar 2014 21:36:10 +1100
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: claws-mail vcalendar plugin stores user/password in cleartext
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/30
+Message-ID: <CADk+mPDpm2MaV4pfo7sBGoYpS2q+zCfNxjaOu78nvQgkABJ-yg@mail.gmail.com>
+Date: Tue, 30 Sep 2014 18:41:17 +0200
+From: Rainer Gerhards <rgerhards@...adiscon.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: vulnerability in rsyslog
 Content-Type: text/plain; charset=utf-8
 
-On 12 March 2014 20:56, Marcus Meissner <meissner@...e.de> wrote:
+2014-09-30 18:28 GMT+02:00 Solar Designer <solar@...nwall.com>:
 
-> Note comment by author(?):
-> "However, while I agree that CURLOPT_SSL_VERIFYHOST should probably be
-> enabled, I do not see any usefulness in enabling CURLOPT_SSL_VERIFYPEER. I
-> do not really buy into the extortion racket that certificate authority
-> companies run."
+> On Tue, Sep 30, 2014 at 01:55:12PM +0200, Sven Kieske wrote:
+> > I don't understand the following statement in the
+> > pri-vuln.txt in section "Patches":
+> >
+> > "Version 7.4.6, while no longer being project
+> > supported received a patch and is also not vulnerable."
+> >
+> > What was patched when this version is not vulnerable?
+> > Or do you mean it is not vulnerable after the patch got applied?
+>
+>
+My apologies, this is a type that skipped past all proof-reading. It should
+say "7.6.6", which is the v7 version released today. v7.4.x is not only
+non-project supported, it's also heavily outdated and missing many other
+patches as well (just to point this out).
+
+
+> I think Rainer is not subscribed to oss-security.  I've just added him
+> to CC on this reply.  Rainer - please address Sven's questions above.
 >
 
-For people that take this (somewhat valid) stance WRT CAs, the answer is to
-retrieve
-the self-signed certificate and either add it to the system's ca-trust
-store, or specify
-CURLOPT_CAINFO with a file containing the self-signed certificate.
+yes, not subscribed, please CC me for follow-up questions.
 
-Note that CURLOPT_CAINFO doesn't do proper pinning - this won't work with a
-CA-issued certificate unless the CA certificate was in the file too, as the
-host
-certificate would contain the CA:false basicConstraint.  That CA could
-issue another
-certificate for the host and it would be accepted.
 
-Disabling SSL_VERIFYPEER is as obviously broken as an inetd service calling
-gets().
-An author's claim that this is fine runs counter to users' expectation that
-enabling TLS
-provides security.
+>
+> All - please note that the bug is likely present in many other syslog
+> services.  It likely dates back all the way to Eric Allman's syslog,
+> although I have not checked to make sure yet.
+>
+> pri-vuln.txt in the tarball attached to Rainer's message specifically
+> mentions sysklogd as "mildly affected":
+>
+> | Affected
+> | --------
+> | - rsyslog, most probably all versions (checked 5.8.6+)
+> | - sysklogd (checked most recent versions)
+> | - potentially others (see root cause)
+>
+> [...]
+>
+> | sysklogd
+> | ~~~~~~~~
+> | Sysklogd is mildly affected. Having a quick look at the current git
+> master
+> | branch, the wrong action may be applied to messages with invalid
+> facility.
+> |
+> | A segfault seems unlikely, as the maximum misadressing is 104 bytes of
+> the
+> | f_pmask table, which is always within properly allocated memory (albeit
+> to
+> | wrong data items). This can lead to triggering invalid selector lines and
+> | thus wrongly writing to files or wrongly forwarding to other hosts.
+>
+>
+I also wouldn't outrule that other *applications* fell into the the same
+trap of the delta between the defines for NFACILITIES and the facility
+mask. If an app processes syslog messages based on facility/severity
+values, it probably is a good idea to check how it does that.
 
-Regards,
-  Michael
+Thanks for the follow-up and cc'ing!
+Rainer
 
