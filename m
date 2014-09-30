@@ -1,86 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/9
-Message-Id: <DEDBA200-FFCC-40D3-88B4-44F70A192B53@netherlabs.nl>
-Date: Fri, 12 Dec 2014 15:33:57 +0100
-From: Peter van Dijk <peter.van.dijk@...herlabs.nl>
-To: pdns-announce@...lman.powerdns.com, pdns-dev@...lman.powerdns.com, pdns-users Users <pdns-users@...lman.powerdns.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: PowerDNS Security Advisory 2014-02
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/13
+Message-ID: <542A7CEB.103@mittwald.de>
+Date: Tue, 30 Sep 2014 11:50:35 +0200
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-Hi everybody,
 
-today, ANSSI has released their report on the issue. You can find it at http://www.ssi.gouv.fr/en/the-anssi/events/vulnerabilty-disclosure-the-infinitely-delegating-name-servers-idns-attack.html
 
-Based on this, we realise our original announcement was missing one detail. The following text has been added to it:
+On 30/09/14 11:12, Mark R Bannister wrote:
+> In fact, it only guarantees isolation from the Apache web server attack
+> vector, but provides no guarantees from anything else we have not yet
+> discovered that accepts arbitrarily named environment vairiables
+> (I wonder what CVE-2014-6278 is all about, no technical details made
+public yet ...).
 
-=======
-Note that in addition to providing bad service, this issue can be abused to send unwanted traffic to an unwilling third party. Please see ANSSI's report for more information.
-=======
+Well Mr. Wheeler wrote:
 
-So, please update your Recursors, even if you only have a limited set of users - your machines may still be abused to DDoS unwilling third parties.
+On 29/09/14 20:50, David A. Wheeler wrote:
+> I agree. If an adversary can arbitrary control the environment, it
+> is definitely game over.
+> What's more, this has been true for decades and this is *clearly*
+> documented all over the place.
+> If some program allows an untrusted user to control the content in
+> arbitrary environment variables,
+> that would be a security vulnerability in that other program, not in
+> bash.
 
-Kind regards,
+While I somehow agree with the above (this sure is a vuln in 3rd party
+programs) I also still think bash should fix this by making it harder
+to pass malicious content (e.g. switch an option like "yes-I-know-this
+is-totally-insecure" to "on" ), even if it breaks
+"backward-compatibility" and "workflows".
+
+This reminds me of this:
+
+https://xkcd.com/1172/
+
+bottom line: "Every change breaks someones workflow" - so this is no
+excuse at all.
+
+After all we're in the 21st century and programs need to become more
+secure by orders of magnitude, compared to bad practices in the past.
+
+This is a simple tradeoff:
+making people fix their programs by a backward incompatible change
+(in a new release) or allowing insecure stuff (just big projects
+with security in mind will change their program)
+
+as always: not to upgrade/ not to change things is no option at all
+
 -- 
-Peter van Dijk
-Netherlabs Computer Consulting BV - http://www.netherlabs.nl/
+Mit freundlichen Grüßen / Regards
 
-On 08 Dec 2014, at 17:00 , Peter van Dijk <peter.van.dijk@...herlabs.nl> wrote:
+Sven Kieske
 
-> Hi everybody,
-> 
-> Please be aware of PowerDNS Security Advisory 2014-02
-> (http://doc.powerdns.com/md/security/powerdns-advisory-2014-02/), which you
-> can also find below.  The good news is that the currently released version of the
-> PowerDNS Recursor is safe.  The bad news is that users of older versions
-> will have to upgrade.
-> 
-> PowerDNS Recursor 3.6.2, released late October, is in wide production use
-> and has been working well for our users.  If however you have reasons not to
-> upgrade, the advisory below contains a link to a patch which applies to
-> older versions.
-> 
-> Finally, if you have problems upgrading, please either contact us on our
-> mailing lists, or privately via powerdns.support@...erdns.com (should you
-> wish to make use of our SLA-backed support program).
-> 
-> We want to thank Florian Maury of French government information security
-> agency ANSSI for bringing this issue to our attention and coordinating the
-> security release with us and other nameserver vendors.
-> 
-> ## PowerDNS Security Advisory 2014-02: PowerDNS Recursor 3.6.1 and earlier can be made to provide bad service
-> 
-> * CVE: CVE-2014-8601
-> * Date: 8th of December 2014
-> * Credit: Florian Maury ([ANSSI](http://www.ssi.gouv.fr/en/))
-> * Affects: PowerDNS Recursor versions 3.6.1 and earlier
-> * Not affected: PowerDNS Recursor 3.6.2; no versions of PowerDNS Authoritative Server
-> * Severity: High
-> * Impact: Degraded service
-> * Exploit: This problem can be triggered by sending queries for specifically configured domains
-> * Risk of system compromise: No
-> * Solution: Upgrade to PowerDNS Recursor 3.6.2
-> * Workaround: None known. Exposure can be limited by configuring the **allow-from** setting so only trusted users can query your nameserver.
-> 
-> Recently we released PowerDNS Recursor 3.6.2 with a new feature that
-> strictly limits the amount of work we'll perform to resolve a single query.
-> This feature was inspired by performance degradations noted when resolving
-> domains hosted by 'ezdns.it', which can require thousands of queries to
-> resolve.
-> 
-> During the 3.6.2 release process, we were contacted by a government security
-> agency with news that they had found that all major caching nameservers,
-> including PowerDNS, could be negatively impacted by specially configured,
-> hard to resolve domain names. With their permission, we continued the 3.6.2
-> release process with the fix for the issue already in there.
-> 
-> We recommend that all users upgrade to 3.6.2 if at all possible. Alternatively,
-> if you want to apply a minimal fix to your own tree, it can be found
-> [here](https://downloads.powerdns.com/patches/2014-02/), including patches for older versions.
-> 
-> As for workarounds, only clients in allow-from are able to trigger the
-> degraded service, so this should be limited to your userbase.
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
