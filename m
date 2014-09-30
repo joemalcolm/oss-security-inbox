@@ -1,41 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/13
-Message-ID: <5482D0CB.80903@gmail.com>
-Date: Sat, 06 Dec 2014 10:47:55 +0100
-From: lazytyped <lazytyped@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/20
+Message-ID: <4E87864C-D4B8-4A4F-9AFB-513B1629ACEA@akamai.com>
+Date: Tue, 30 Sep 2014 08:41:24 -0500
+From: "Kobrin, Eric" <ekobrin@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-On 06/12/2014 08:22, Shawn wrote:
-> Hi guys,
-> 
-> As you know Hector Marco disclosured a new attack targeting the
-> GNU/Linux mitigation defensive technology earlier this week:
-> http://www.openwall.com/lists/oss-security/2014/12/04/19
-> http://cybersecurity.upv.es/attacks/offset2lib/offset2lib.html
-[...]
-> It seems ASLRv3 is the best option we have? Or anything else?
+> "innocuous looking setuid program" made my day ;)
 
-I think there is quite a bit of sweating on very little.
+> We should take care not to blame all and everything to bash.
 
-This attack assumes that the attacker is capable of guessing the load
-address of the PIE binary. It basically already bypassed ASLR. It then
-"notices" that the PIE .text segment is loaded at a fixed offset from
-the shared libraries (BTW: shared libraries are loaded at fixed offsets
-among each others) and mounts a ROP attack using the shared library gadgets.
-
-This "fixed offset" is IMHO very unlikely to be a security issue, since
-in the vast majority of real life cases, the PIE .text itself will
-already contain enough gadgets to mount the attack.
-
-In other words, one may decide to separate the PIE .text from the rest
-of the libraries .text, but I don't really see much of a security win there.
-
-TL;DR: ASLR is a mitigation, if you have a chance to bruteforce or
-infoleak -one- address from it, the mitigation is gone. Separating the
-PIE .text or even libraries .text between each other won't buy you much.
-
-
-      -  Enrico
-
+I don't find that blame is a useful tool for fixing security problems. What's more interesting to me is: what system components are in a position to help. If a change in bash can make a bunch of "innocuous looking setuid programs" not be  vectors for the import of malicious functions, let's do it.
