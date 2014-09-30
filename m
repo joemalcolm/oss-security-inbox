@@ -1,64 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/10
-Message-Id: <201401291350.s0TDo8hw020342@linus.mitre.org>
-Date: Wed, 29 Jan 2014 08:50:08 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: OpenSSH J-PAKE vulnerability (no cause for panic! remain calm!)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/18
+Message-ID: <1E0569A4-053E-4892-9BCD-21F10ABF969B@akamai.com>
+Date: Tue, 30 Sep 2014 07:50:44 -0500
+From: "Kobrin, Eric" <ekobrin@...mai.com>
+To: Michal Zalewski <lcamtuf@...edump.cx>
+CC: "chet.ramey@...e.edu" <chet.ramey@...e.edu>, "dwheeler@...eeler.com" <dwheeler@...eeler.com>, oss-security <oss-security@...ts.openwall.com>, solar <solar@...nwall.com>, fweimer <fweimer@...hat.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Use CVE-2014-1692. The CVE description will indicate that the issue
-requires an unusual installation.
+On Sep 29, 2014, at 11:44 PM, Michal Zalewski <lcamtuf@...edump.cx> wrote:
+> 
+> But if the prefix approach works fine, and nobody can come up with any
+> compelling security-relevant reasons why it's a bad outcome... then
+> what's the point of breaking existing scripts?
+> 
+> I mean, all the arguments against the prefix approach boil down to
+> "but if the attacker can set arbitrarily named variables to arbitrary
+> values, then..." - and if that's something you allow across a security
+> boundary, you're almost certainly in trouble no matter what.
+> 
 
-> As I understand it this can be enabled via code edit/gcc command line
-> options, so not sure if this qualified for a CVE or not (vuln in code,
-> yes, is code reachable? not under any default setup, and even on
-> non-default you have to go pretty far off to enable it).
+It's a question of how far from the edge you like to live. How many different things must go wrong before we're back in shellshock land?
 
-An impact on the default installation isn't necessary. Vulnerabilities
-that occur only after the user modifies code aren't eligible for a
-CVE. However, if there's some type of "installation option" mentioned
-by the vendor, someone may have chosen that option, and it may be
-worthwhile to track the issue with a CVE. The nature of an
-"installation option" obviously varies widely across both open-source
-and closed-source products.
+For example, Apache allows adversaries to choose environment variable suffixes. Imagine instead that a piece of software allows the adversary to choose prefixes instead (e.g. foo_HTTP instead of HTTP_foo). What if that adversary controlled input is "BASH_FUNC_foo%%\0" and that software uses c-strings?
 
-In this case, there's:
+We should take steps to make systems (even flawed systems) that depend on bash less prone to cause adversary-supplied code to run.
 
-> http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/Makefile.inc
+What advice do you give the author of a program[A] which will be invoked by software[B] that cedes too much control of the environment to the "user" if program[A] wants to invoke bash safely? Strip environment variables ending in "%%" ? Apple's patch didn't keep that suffix, plus this strategy requires a loop.
 
-> Add support for an experimental zero-knowledge password authentication
-> method using the J-PAKE protocol ...
 
-> This is experimental, work-in-progress code and is presently
-> compiled-time disabled (turn on -DJPAKE in Makefile.inc).
+How can we help other software avoid enabling adversary access to the function-import pitfall? Here are some options, depending on the final design:
 
-> http://www.openbsd.org/cgi-bin/cvsweb/~checkout~/src/usr.bin/ssh/Makefile.inc?rev=1.41;content-type=text%2Fplain
 
-> #CFLAGS+=	-DJPAKE
+1. Create an environment variable which, if set, disables function import. Then calling programs can just set that value and know that if they invoke bash, any evil functions they inherited will be neutered.
 
-This is close to the edge of what "installation option" means, but our
-feeling is that the vendor wouldn't have provided that #CFLAGS line at
-all unless it were expected that an end user might want to make the
-one-character change.
+2. Create an environment variable which contains the list of functions to import. Calling programs can then reduce this set to functions they wish to export or empty the variable to prevent import.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+3. Store all functions in a single variable, in parsed form. Calling programs can empty this variable to disable function export.
 
-iQEcBAEBAgAGBQJS6QaDAAoJEKllVAevmvmsKSMIAMCigEPGWSSC3EZgYQvK1o7g
-Gs5QBsUAyQBtCZShsSW6rgF4Fu5V/FMOMQLW2Fdjyyq+kY7oubR/TRkOCLcB3TUj
-bdTtnbJ6cOHO9q9nLlxg39gjz4zsJeuE6tvZ05sxlpI9RQmVeWnhi6xo7+r4sZ50
-T6zg0Im4b+LYOmpK5FwEsWjxoB5kaovWAyLmDqQyDZxGIagq1QPhel/rUMWI+Gds
-wXgyOvw+8ARp2nHUaGcxZ3zmlweooneO1SCLfHdU8iVohdtBGOLBYyXy624ty9gf
-6y3/wBnzAuzT7ToNc6ijaUlS2tO9Wc0b5QsirxVnOC7Se/0+LH1kT+Fmp4j4XKk=
-=Br7x
------END PGP SIGNATURE-----
+
+The third option has the benefit that adversaries able to choose function names and values may find that other restrictions (character set, stricter re-parsing of this variable, etc.) make it hard to form an executable input. It's not a strong protection by itself but it can be implemented in a way that fails to expose parser infelicities, which could have prevented this issue in the first place.
+
+-- Eric Kobrin
