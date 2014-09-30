@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/32
-Message-ID: <20140924232709.75fa4ad1@pc>
-Date: Wed, 24 Sep 2014 23:27:09 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/19
+Message-ID: <20140930131023.GA27220@suse.de>
+Date: Tue, 30 Sep 2014 15:10:23 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-Tavis Ormandy just tweetet this:
-https://twitter.com/taviso/status/514887394294652929
+On Tue, Sep 30, 2014 at 01:50:40PM +0100, Mark R Bannister wrote:
+> > I discuss the setuid/setgid vulnerability at the following site,> including demonstrating how Florian's prefix/suffix patch provides
+> > no protection:>
+> > http://technicalprose.blogspot.co.uk/2014/09/shellshock-bug-third-vulnerability.html
+> 
+> Please can we have a separate CVE for the setuid/setgid bash exploit?  I think this attack vector deserves to be tracked properly, and we need to be clear on when and if someone chooses to provide a fix for it.
+> 
 
-The bash patch seems incomplete to me, function parsing is still
-brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
+"innocuous looking setuid program" made my day ;)
 
+We should take care not to blame all and everything to bash.
+
+Sebastian
 
 -- 
-Hanno Böck
-http://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
