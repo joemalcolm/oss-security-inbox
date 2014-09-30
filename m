@@ -1,46 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/13
-Message-ID: <54254F01.3050502@redhat.com>
-Date: Fri, 26 Sep 2014 13:33:21 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/29
+Message-ID: <20140930162803.GA12700@openwall.com>
+Date: Tue, 30 Sep 2014 20:28:03 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+Cc: Rainer Gerhards <rgerhards@...adiscon.com>
+Subject: Re: vulnerability in rsyslog
 Content-Type: text/plain; charset=utf-8
 
-On 09/26/2014 10:54 AM, Mark R Bannister wrote:
-> Testing patch 25 and 26 from Chet, it looks to me like this is still an incomplete fix.  The third vulnerability I'd like to report is the feature itself in bash that allows functions to be passed in the environment, e.g.
-> $ env ls='() { echo vulnerable; }' bash -c ls
->
-> This allows an attacker to replace a command used by a bash script with arbitrary code.  It is then down to an attacker to find a suitable command that the bash script (or any child shells) might call without a path component.
->
-> I can't see this being a problem for Apache custom headers (the variable name is turned to uppercase and prefixed by HTTP_), nor sudo commands if env_reset is on (the default), but this continues to be a major vulnerability for setuid/setgid scripts (S_ISUID or S_ISGID) where the environment is preserved.
+On Tue, Sep 30, 2014 at 01:55:12PM +0200, Sven Kieske wrote:
+> I don't understand the following statement in the
+> pri-vuln.txt in section "Patches":
+> 
+> "Version 7.4.6, while no longer being project
+> supported received a patch and is also not vulnerable."
+> 
+> What was patched when this version is not vulnerable?
+> Or do you mean it is not vulnerable after the patch got applied?
 
-I agree this looks scary at first glance, but we discussed this 
-previously, see for example:
+I think Rainer is not subscribed to oss-security.  I've just added him
+to CC on this reply.  Rainer - please address Sven's questions above.
 
-   <http://www.openwall.com/lists/oss-security/2014/09/24/20>
+All - please note that the bug is likely present in many other syslog
+services.  It likely dates back all the way to Eric Allman's syslog,
+although I have not checked to make sure yet.
 
-Shell scripts derive part of their power and flexibility from their 
-openness to the execution environment.  You can tweak PATH, BASH_ENV (or 
-ENV for other Bourne-like shells), IFS, HOME, and many other variables 
-to change behavior.  There are even more knobs to affect the behavior of 
-the external commands almost all shell scripts call when they run.
+pri-vuln.txt in the tarball attached to Rainer's message specifically
+mentions sysklogd as "mildly affected":
 
-This makes them not suitable at all for writing SUID programs or other 
-code that runs in untrusted environments.  This is well-documented, and 
-given the amount of shell scripts out there which rely on these aspects 
-of the UNIX shell design, it's not something we can change, particularly 
-not as part of a security update which system administrators are more or 
-less forced to install.
+| Affected
+| --------
+| - rsyslog, most probably all versions (checked 5.8.6+)
+| - sysklogd (checked most recent versions)
+| - potentially others (see root cause)
 
-In your specific example, you can achieve the same effect by setting 
-PATH to a directory with a customer ls program, or by setting BASH_ENV 
-to a file which contains a definition of a function called ls.
+[...]
 
-Overriding external programs with shell functions in such a way has to 
-be supported.  Otherwise, scripts which define shell functions would 
-break if the system administrator installs new software which happens to 
-include a program of the same name of the shell function.
+| sysklogd
+| ~~~~~~~~
+| Sysklogd is mildly affected. Having a quick look at the current git master
+| branch, the wrong action may be applied to messages with invalid facility.
+| 
+| A segfault seems unlikely, as the maximum misadressing is 104 bytes of the
+| f_pmask table, which is always within properly allocated memory (albeit to
+| wrong data items). This can lead to triggering invalid selector lines and
+| thus wrongly writing to files or wrongly forwarding to other hosts.
 
--- 
-Florian Weimer / Red Hat Product Security
+Alexander
