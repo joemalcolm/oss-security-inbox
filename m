@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/7
-Message-ID: <504ACB59-093F-4240-896A-3FEEA2F1CE78@redhat.com>
-Date: Wed, 03 Sep 2014 10:40:00 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request for nodejs/v8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/6
+Message-ID: <20140930031109.GA14626@gremlin.ru>
+Date: Tue, 30 Sep 2014 07:11:09 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-On 09/03/2014, at 10:32 AM, Vincent Danen wrote:
+On 29-Sep-2014 22:34:20 -0400, Chet Ramey wrote:
 
-> I don't see a CVE mentioned for this issue anywhere.  Can one be assigned if it has not already been?
->
-> Described on the nodejs blog as:
->
-> A memory corruption vulnerability, which results in a denial-of-service, was identified in the versions of V8 that ship with Node.js 0.8 and 0.10. In certain circumstances, a particularly deep recursive workload that may trigger a GC and receive an interrupt may overflow the stack and result in a segmentation fault. For instance, if your work load involves successive JSON.parse calls and the parsed objects are significantly deep, you may experience the process aborting while parsing.
->
-> This issue was identified by Tom Steele of ^Lift Security and Fedor Indunty, Node.js Core Team member worked closely with the V8 team to find our resolution.
->
->
-> https://codereview.chromium.org/339883002
-> http://blog.nodejs.org/2014/07/31/v8-memory-corruption-stack-overflow/
-> https://github.com/joyent/node/commit/530af9cb8e700e7596b3ec812bad123c9fa06356
-> https://bugzilla.redhat.com/show_bug.cgi?id=1125464
+ >> What is the motivation to not store executable code (functions)
+ >> differently from standard variables?
 
-Sorry, just realized that Tomas asked the same question a few hours ago:
+ > What would you use for such a store, considering the environment
+ > is the only portable way to pass this information from one process
+ > to another in the general case, and support the current set of
+ > use cases?
 
-"CVE request: V8 Memory Corruption and Stack Overflow"
+C.O. to the rescue: temporary file.
 
-They're the same thing.
+If one shell instance needs to pass some functions to another, it
+could dump those functions to a temporary file and pass the --load
+(or, better, --load-functions) options with a filename parameter.
+
+The functions file name may also be passed through environment, but
+that could open another set of security holes (like reading files).
+
 
 -- 
-Vincent Danen / Red Hat Product Security
-
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
