@@ -1,45 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/3
-Message-ID: <54784C77.6000704@oracle.com>
-Date: Fri, 28 Nov 2014 10:20:39 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com
-CC: xi@...olvent.net, ingy@...n.org
-Subject: Re: libyaml / YAML-LibYAML DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/2
+Message-ID: <542A0F1F.5050503@case.edu>
+Date: Mon, 29 Sep 2014 22:02:07 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: "Kobrin, Eric" <ekobrin@...mai.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: chet.ramey@...e.edu
+Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
 Content-Type: text/plain; charset=utf-8
 
-On 28/11/14 05:57, Jonathan Gray wrote:
-> libyaml and the perl YAML-LibYAML (aka YAML-XS) module based
-> on the same code have an "impossible" assert that can be
-> triggered with the following yaml.  This is a reduced testcase
-> of a crash found with the afl fuzzer.
+On 9/29/14, 11:42 AM, Kobrin, Eric wrote:
+> On Sep 29, 2014, at 10:33 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
+>> If that is the command you ran, this doesn't show any vulnerability. 
 > 
->       a: " 
-> "     b: true
+> I've seen quite a few examples like this which don't do precisely what the submitter thought.
 > 
-> In other words a crash/denial of service with untrusted yaml input.
-> The libyaml author was contacted on the 21st and 27th of November.
-> No response has been received but the issue has independently been
-> reported publically since:
-> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
+> I hope this isn't another such example:
 > 
-> [1] Parsing 'test.yaml': assertion "parser->simple_key_allowed || !required" failed: file "scanner.c", line 1113, function "yaml_parser_save_simple_key"
+> $ env $'BASH_FUNC_\nfoo%%=() { echo 123\n }' ./bash -c 'foo'
+> ./bash: error importing function definition for `
+> foo'
+> 123
 > 
-> assert(parser->simple_key_allowed || !required);    /* Impossible. */
+> This doesn't seem like desired behavior.
 
-For what it's worth PyYAML 3.10 and 3.11 have exactly the same assertion:
+It's not desired behavior, but it's not exactly a security problem either.
+I have a fix.
 
->>> import yaml
->>> yaml.load("""
-... abc:
-...     def: 'xxx
-... '   ghi: 'yyy'
-... """)
-Traceback (most recent call last):
+Chet
 
-[...]
-
-    assert self.allow_simple_key or not required
-AssertionError
-
-jch
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
