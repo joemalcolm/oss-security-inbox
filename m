@@ -1,26 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/5
-Message-ID: <20140206095207.05d3d868@hboeck.de>
-Date: Thu, 6 Feb 2014 09:52:07 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/7
+Message-ID: <8BA522FD-61AB-4A69-B80B-B3F4B705372E@akamai.com>
+Date: Mon, 29 Sep 2014 22:26:33 -0500
+From: "Kobrin, Eric" <ekobrin@...mai.com>
+To: "chet.ramey@...e.edu" <chet.ramey@...e.edu>
+CC: "dwheeler@...eeler.com" <dwheeler@...eeler.com>, oss-security <oss-security@...ts.openwall.com>, solar <solar@...nwall.com>, lcamtuf <lcamtuf@...edump.cx>, fweimer <fweimer@...hat.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-Upstream has now released 0.3.6:
-Fixed  Issue #98 : Rectified problems with earlier fix for shell
-injection.
-https://code.google.com/p/python-gnupg/
+On Sep 29, 2014, at 10:34 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
 
-CVE request is still pending. I think we now need two:
-1. Shell injection partly fixed in 0.3.5.
-2. Incomplete fix for shell injection fixed in 0.3.6.
+> On 9/29/14, 6:06 PM, Kobrin, Eric wrote:
+> 
+>> What is the motivation to not store executable code (functions) differently from standard variables?
+> 
+> What would you use for such a store, considering the environment is the
+> only portable way to pass this information from one process to another in
+> the general case, and support the current set of use cases?
 
--- 
-Hanno Böck
-http://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+The most portable transmission method is the environment. I'm
+interested in thinking through scenarios where it is not deemed
+necessary to have one environment variable per function, to store
+functions text, to support all environment variable manipulations on
+functions, or to support easy creation of functions in non-bash
+processes.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+What are the current set of use cases? I can think of a few, but I'm
+not sure they are all required; some may be accidental but still
+widely used, others may be unused and undesired. Here's the list so
+far, posed as questions:
+
+1. Is it necessary that functions exported in one version of bash be
+   imported into other versions?
+
+2. Is it necessary for exported functions to be able to transition
+   through other processes and back into bash, or is function export
+   intended to support bash-invoked-from-bash only?
+
+3. Is it necessary for non-bash processes to be able to define
+   functions for a bash child?
+
+4. Is it necessary for non-bash processes to be able to import
+   functions from a bash parent?
+
+5. Once a function is defined or imported, is it important that we be
+   able to reproduce byte-for-byte the input that was used to define
+   it?
+
+6. Is it important that bash be required to import every function
+   defined in the parent process?
+
+7. Is it important to signal function import failure at startup time,
+   or is it ok to defer parsing until the first attempt to invoke the
+   function?
+
+Does anyone have further use cases to discuss?
+
+-- Eric Kobrin
