@@ -1,69 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/10
-Message-Id: <201402112150.s1BLo3wg006708@sirius.blue.cert.org>
-Date: Tue, 11 Feb 2014 16:37:21 -0500
-From: "CERT(R) Coordination Center" <cert@...t.org>
-To: oss-security@...ts.openwall.com
-CC: "CERT(R) Coordination Center" <cert@...t.org>
-Subject: Vendor adoption of PIE INFO#934476 oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/10
+Message-Id: <20140930045342.46A38C50174@smtptsrv1.mitre.org>
+Date: Tue, 30 Sep 2014 00:53:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: pabs3@...edaddy.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: various NodeJS module vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hi folks,
+> qs Denial-of-Service Memory Exhaustion
+> https://nodesecurity.io/advisories/qs_dos_memory_exhaustion
 
-We had originally notified Linux vendors individually through our
-normal channels, but it has come to our attention that this could
-perhaps be a better forum to have a discussion about the topic.
-
-We recently published a blog post about the state of ASLR/PIE on Linux
-compared to how it is on Windows:
-<https://www.cert.org/blogs/certcc/post.cfm?EntryID=191>
-
-tl;dr: On x86 Linux, there's a significant performance impact to PIE,
-however on the x86_64 platform it's not so clear whether the
-performance impact is significant enough to stop widespread use of
-PIE.
-
-This is where we are looking for input from the Linux vendors.  It has
-been reported <http://nebelwelt.net/publications/12TRpie/gccPIE-TR120614.pdf>:
-2.4 PIE and x64
-<snip>  
-... "A quick evaluation for x64 reports an average overhead of 3.61%
-and a geometric mean of 2.34% for an -O3 optimization level on the
-same system using the "test" dataset of SPEC CPU2006."
-
-For those environments that put a high value on security, it would
-seem that a 2-3% overhead might be acceptable.  Though being a
-compile-time option, it would seem that the "faster" vs. "more secure"
-decision would need to be made ahead of time by the vendor.  And
-obviously, one size does not fit all.
-
-Thoughts?  What is stopping you from enabling PIE for everything, at
-least on the x86_64 platform?
+The description seems to suggest that there should be an arbitrary
+limit on the index value. That, by itself, might not be considered a
+vulnerability report; however, omitting the call to the compact
+function can probably be considered a security problem. Use
+CVE-2014-7191 for the
+https://github.com/raymondfeng/node-querystring/commit/43a604b7847e56bba49d0ce3e222fe89569354d8
+commit.
 
 
-Thank you,
-   Will Dormann
+> qs Denial-of-Service Extended Event Loop Blocking
+> https://nodesecurity.io/advisories/qs_dos_extended_event_loop_blocking
 
-=============================
-Vulnerability Analyst
-CERT Coordination Center
-4500 Fifth Ave.
-Pittsburgh, PA 15213
-1-412-268-7090
-=============================
+This has no references to the specific code changes, and the
+discussion suggests that this is a security enhancement -- adding new
+resource-limit functionality that hadn't existed before 1.0.0 -- not a
+fix to the implementation of existing functionality. Accordingly, no
+CVE ID is currently being assigned.
 
 
+> syntax-error potential for script injection
+> https://nodesecurity.io/advisories/syntax-error-potential-script-injection
+
+This seems to have multiple possible interpretations of where the
+vulnerability is.
+
+"In node 0.10, Function() seems to be implemented in terms of eval(),
+so malicious code can execute even if the function returned by
+Function() was never called" doesn't seem to be a statement of an eval
+injection vulnerability affecting all 0.10.x versions. Instead,
+https://nodesecurity.io/advisories/syntax-error-potential-script-injection
+seems to be only about the
+https://github.com/substack/node-syntax-error/commit/9aa4e66eb90ec595d2dba55e6f9c2dd9a668b309
+commit. The affected product is only the syntax-error package from the
+http://www.npmjs.org/package/syntax-error web site.
+
+Use CVE-2014-7192.
+
+
+> send Directory Traversal
+> https://nodesecurity.io/advisories/send-directory-traversal
+
+The CVE ID is already listed on that web page.
+
+
+> Crumb CORS Token Disclosure
+> https://nodesecurity.io/advisories/crumb_cors_token_disclosure
+
+Use CVE-2014-7193.
+
+
+> Arbitrary JavaScript Execution in Bassmaster
+> https://nodesecurity.io/advisories/bassmaster_js_injection
+
+Use CVE-2014-7205.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iQEVAwUBUvqa/0FiFe3xVPtiAQKUWggAkQwJLYVuQAS0AWJzTLQzdIswqdsujP5C
-oqrF9N+aNWv1PNRjHbHBbGT5eDhepjkau9z90KHhHhYke5X17V47aEFb7HV5M3xN
-2KmJkOAYr870S1xD1swL80lryc0w3QqHuCHDfoJ5n316zx87wk/wVF0uYUwtufVY
-qeBv8ZXAlfX1hjEat5yRutEb+/ryNr6uzQkLgW9bzZcVsndDLDxzpqxO1k+Rv6mp
-X/12Vi0bE2/tZUv7MIaXzG5bpqU1wWqHXXzqzvdYVY4R6tUdvRTCPM6qjHdm63nE
-eEHFRj426tGNAnZtKMBzW52Mtloc2IFRTO6guvSBcn+ueLFZYVmXow==
-=SNne
+iQEcBAEBAgAGBQJUKjayAAoJEKllVAevmvmsyGUIAIn3usYJEiGNn1bV2MKMLViU
+SPZjEGB94Uq3CbJHnAFXUGveRwANkdaePoyBDGB8xWDGcPsCBsBIcxD1W31LCNOf
+x4R7hEB/+AmGtiZI+AiwxMlOzG508ymEygK/YgP3RUT8HwJhDmfT9Gs9S1hC83XN
+5BcmBojhEZuESm5w7V/jV+xTUgb9KEEDNldiNRpyn/iFy++5TArtiYF6ldfllpFL
+VQBiC3npo+eJUABFkFWZxm9e7GcI8asYpVdhXE1z5lvc2/4x43auKUcDLOXZJP6h
+O7liLJ44g/phRRhal53FUxG8rO1mzP8zcmHKVKnm1lnNSFBwRbMA/nG16gKUhh8=
+=oKCI
 -----END PGP SIGNATURE-----
