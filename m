@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/04/1
-Message-ID: <20140804173249.GL24041@dhcp-25-225.brq.redhat.com>
-Date: Mon, 4 Aug 2014 19:32:50 +0200
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: aliguori@...zon.com, mst@...hat.com, Amit Shah <amit.shah@...hat.com>, Laszlo Ersek <lersek@...hat.com>
-Subject: CVE Request --  qemu: missing field list terminator in vmstate_xhci_event
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/1
+Message-ID: <CALx_OUCv6bfPd_r3fNAJC=gjvNp0kt0H9RBp3o9tN0ZShBNh4Q@mail.gmail.com>
+Date: Tue, 30 Sep 2014 16:59:56 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-It was found that vmstate_xhci_event field list was missing
-VMSTATE_END_OF_LIST() terminator and traversing through this list
-would result in out-of-bounds access during vm state saving and
-loading.
+> Finally: *PLEASE* let me know if you have any good ideas on how to find vulnerabilities like this ahead-of-time. My article "How to Prevent the Next Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a number of ways that Heartbleed-like vulnerabilities could have been detected ahead-of-time, in ways that are general enough to be useful.  I'd like to do the same with Shellshock, so we can quickly eliminate a whole class of problems.
 
-Depending on how vmstate_xhci_event is placed in the qemu binary,
-this issue can range from non-issue, infinite loop to (potentially)
-privilege escalation in case the we end up with fields that have info
-and/or field_exist members initialized in a way that is useful for
-exploitation (most probably unlikely).
+Well, hindsight is always 20/20. Manual audits and fuzzing would have
+had a good likelihood of spotting the bash flaw. In fact, I used a
+fairly generic fuzzer to quickly hit three of the four previously
+disclosed issues and identify two more. The syntax is terse and the
+parser is laid back, which helps. The fault conditions are generic and
+intuitive, too - creation of a file, execution of a child process, or
+a crash.
 
-In the worst case, attacker able to alter the migration data could
-use this flaw to to corrupt QEMU process memory.
+But really - all it would have taken is just somebody with un*x
+security background reading a book on bash that mentions function
+exports (I'm sure there are some); it wouldn't be hard to connect the
+dots.
 
-Upstream commit:
-http://git.qemu.org/?p=qemu.git;a=commit;h=3afca1d6d413592c2b78cf28f52fa24a586d8f56
+The main problem is that for a very long time, we apparently had no
+overlap between these groups. At the face of it, it seemed like
+there's absolutely no reason for bash to try to parse generic env
+variables. With no convincing reason to study or test the code, nobody
+did.
 
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=1126543
-
-Thanks,
--- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+/mz
