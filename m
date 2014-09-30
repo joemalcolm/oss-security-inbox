@@ -1,23 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/2
-Message-ID: <CABbbngBKrnexH_auEvO8zoe1J8FUar31b1xF11PmSrVGigiwCA@mail.gmail.com>
-Date: Wed, 30 Jul 2014 20:40:51 -0700
-From: Forest Monsen <forest.monsen@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: Mitre CVE assign department <cve-assign@...re.org>
-Subject: CVE request for Drupal contributed modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/31
+Message-ID: <20140930200435.GB14626@gremlin.ru>
+Date: Wed, 1 Oct 2014 00:04:35 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-Hello there,
+On 30-Sep-2014 11:30:52 +0200, Florian Weimer wrote:
 
-We'd like to request CVE identifiers for:
+ >>>> What is the motivation to not store executable code (functions)
+ >>>> differently from standard variables?
 
-SA-CONTRIB-2014-073- Date - Cross Site Scripting (XSS)
-https://www.drupal.org/node/2312609
+ >>> What would you use for such a store, considering the environment
+ >>> is the only portable way to pass this information from one
+ >>> process to another in the general case, and support the current
+ >>> set of use cases?
 
-SA-CONTRIB-2014-074 - Storage API - Code execution
-https://www.drupal.org/node/2312769
+ >> C.O. to the rescue: temporary file.
 
-Regards,
-Forest Monsen, on behalf of the Drupal Security Team
+ > You cannot use a named temporary file because the creator does
+ > not know its required lifetime. That's a challenge all solutions
+ > not based on the process environment will face.
 
+Creator doesn't, but (grand)*child does: open it, unlink it, read it,
+close it. Once the shell needs to run something, it can create a new
+file with exported stuff. Garbage collection should be thought of,
+but it's out-of-scope for this discussion.
+
+ > Theoretically, you could pass an unnamed temporary file via a file
+ > descriptor, and communicate the descriptor number in some safe way
+ > (but what's that, if you don't trust the environment?).
+
+Generally, the environment is unsafe because it may be filled by any
+(grand)*parent process.
+
+ > But that's going to be far less interoperable than what we currently
+ > have, and barely more secure.
+
+If the attacker needs to create the file AND to fill the environment
+variable to succeed, that more likely is more secure. Or am I missing
+something?
+
+ >> If one shell instance needs to pass some functions to another,
+ >> it could dump those functions to a temporary file and pass the
+ >> --load (or, better, --load-functions) options with a filename
+ >> parameter.
+ > We need to keep support exporting functions to grandchildren
+ > through non-bash processes (that is, bash - some-other-program
+ > - bash).
+
+Hmmm... Well, requiring both a file and an environment variable may
+be a good solution. Or not.
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
