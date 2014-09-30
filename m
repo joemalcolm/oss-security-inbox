@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/16
-Message-ID: <20141127124339.GB2131@rene-engelhard.de>
-Date: Thu, 27 Nov 2014 13:43:39 +0100
-From: Rene Engelhard <rene@...ian.org>
-To: Alexander Cherepanov <cherepan@...me.ru>
-Cc: oss-security@...ts.openwall.com, officesecurity@...ts.freedesktop.org, Michael Meeks <michael.meeks@...labora.com>, Miklos Vajna <vmiklos@...e.cz>, Moritz Muehlenhoff <jmm@...ian.org>, cve-assign@...re.org
-Subject: Re: [Officesecurity] CVE Request: LibreOffice -- several issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/33
+Message-ID: <1412114038.5404.57.camel@juliet.mcarpenter.org>
+Date: Tue, 30 Sep 2014 23:53:58 +0200
+From: Martin Carpenter <martin.carpenter@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, 2014-09-30 at 08:08 -0700, Tavis Ormandy wrote:
+> > system("date");
+> 
+> Keep going, eventually you're going to have to stop blacklisting
+> variables and use execve ;-)
 
-On Thu, Nov 27, 2014 at 03:58:42AM +0300, Alexander Cherepanov wrote:
-> issues is just the tip of the iceberg. Assuming that many security
-> bugs were fixed in current versions of LO the fact that LO in Debian
-> Stable isn't updated for a long time probably means that security
-> fixes are not marked as such and hence are not backported. Please
-> correct me if I'm wrong.
+... and beware what you whitelist:
 
-Correct.
+OpenSolaris/on-src/usr/src/cmd/date/date.c:
+295     /* correct the kernel's "gmt_lag" and the PC's RTC */
+296     (void) system("/usr/sbin/rtc -c > /dev/null 2>&1");
 
-Now in the CVE-2014-9093 case (where I got https://bugs.debian.org/771163, sigh,
-in addition to your all-in-one and thus bogus in any case
-bugs.debian.org/770166) the code is even so much different that I will even succeed backporting
-it...
+[wryly noticed some time in the last week]
 
-3.x is totally obsolete.
-I'd assume anyone who really cares about doing stuff with LO uses wheezy-backpots
-(which has a 4.3.3)
 
-Regards,
-
-Rene
