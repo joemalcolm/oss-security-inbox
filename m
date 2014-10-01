@@ -1,35 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/5
-Message-ID: <CABniQZOm+UmavomKw3iWDw5faqoE9xOgDMpVxHMRXAbngciqDw@mail.gmail.com>
-Date: Fri, 5 Dec 2014 19:58:43 +0800
-From: Shawn <citypw@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/14
+Message-ID: <20141001155535.GB7115@kroah.com>
+Date: Wed, 1 Oct 2014 08:55:35 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: Hector Marco <hecmargi@....es>, full-disclosure@...ts.grok.org.uk,  fulldisclosure@...lists.org, bugtraq@...urityfocus.com,  bugs@...uritytracker.com, submissions@...ketstormsecurity.org
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-Hi Agostino,
+On Wed, Oct 01, 2014 at 07:15:56AM -0400, Jason Cooper wrote:
+> On Wed, Oct 01, 2014 at 01:08:09PM +0200, Hanno Böck wrote:
+> > Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
+> > schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
+> > 
+> > > Finally: *PLEASE* let me know if you have any good ideas on how to
+> > > find vulnerabilities like this ahead-of-time. My article "How to
+> > > Prevent the Next
+> > > Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a
+> > > number of ways that Heartbleed-like vulnerabilities could have been
+> > > detected ahead-of-time, in ways that are general enough to be
+> > > useful.  I'd like to do the same with Shellshock, so we can quickly
+> > > eliminate a whole class of problems.
+> > 
+> > The "class of problems" here is imho that we have a bunch of tools that
+> > get rare attention from anyone, are run by few volunteers, but they're
+> > an essential part in running the Internet.
+> > 
+> > Just think about busybox, curl, wget, coreutils, gettext, gzip, ... - a
+> > vuln in any of these could have severe consequences.
+> > 
+> > Maybe the topic here should be: "How can we get the (whitehat) IT
+> > seucrity community to have a deeper look at neglected but important
+> > opensource projects."
+> 
+> The LF has the Core Infrastructure Initiative:
+> 
+>   http://www.linuxfoundation.org/programs/core-infrastructure-initiative/faq
 
-I don't think this issue impact on Grsecurity/PaX, which
-Hardened-Gentoo is using PaX.
+Yes, that's exactly what that group is doing, and they have a huge list
+of these types of projects that they are looking into funding to help
+prevent this type of thing from happening again.  I'll go add bash to
+the list there as I don't think it is currently on it at the moment.
 
-On Fri, Dec 5, 2014 at 7:10 PM, Agostino Sarubbo <ago@...too.org> wrote:
-> On Gentoo (Hardened) I always get form
-> ./get_offset2lib:
->
-> Offset2lib (libc): 0x0
->
->
-> --
-> Agostino Sarubbo
-> Gentoo Linux Developer
+thanks,
 
-
-
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
-
-regards
-Shawn
+greg k-h
