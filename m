@@ -1,45 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/36
-Message-ID: <543434D1.3080801@FreeBSD.org>
-Date: Tue, 07 Oct 2014 13:45:37 -0500
-From: Bryan Drewery <bdrewery@...eBSD.org>
-To: Kohsuke Kawaguchi <kk@...suke.org>
-CC: oss-security@...ts.openwall.com
-Subject: Re: Security advisory in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/7
+Message-ID: <20141001112452.GB5304@suse.de>
+Date: Wed, 1 Oct 2014 13:24:52 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: mbriza@...hat.com
+Subject: various sddm vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 10/3/2014 4:44 PM, Kohsuke Kawaguchi wrote:
-> We are still learning how we should handle vulnerabilities, so I'm sure
-> there's room for improvements.
-> 
-> We have multiple release lines to which the fixes have to be released
-> simultaneously, and overall this overhead is significant. That's why we did
-> one massive release that contains all the fixes.
-> 
-> Wrt CVE-2013-2186, a week ago we got a report from somebody that he did a
-> security scan and found that we are still using a vulnerable version of the
-> library to which CVE-2013-2186 is assigned. In this release we use a newer
-> version of the library that addresses the problem, and I thought it'd be
-> appropriate to raise a flag to the users that if they continue to use older
-> versions, they'd remain vulnerable to CVE-2013-2186. That's why it's in the
-> advisory. It is not because we sat on a report for more than a year.
-> 
-> When you say the timeframe is especially concerning, perhaps you mean you
-> are concerned that we fail to notice this vulnerability in our library for
-> more than a year, and if so, you are of course right. Jenkins project has
-> gotten a long list of library dependencies, and I haven't found any
-> practical means to get notified when vulnerabilities are found in any one
-> of them.
-> 
+Hi
 
-I understand. Is there any practical way you could not bundle
-dependencies? Then it would not be a problem. I don't know enough about
-Java's build system to know if this is possible.
+During review we found several issues in the sddm
+display manager which allow local users to obtain
+root privileges. More on this is here:
 
+https://bugzilla.suse.com/show_bug.cgi?id=897788
+
+Sebastian
 
 -- 
-Regards,
-Bryan Drewery
 
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
