@@ -1,47 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/29/5
-Message-ID: <m5cv0h$jsm$1@ger.gmane.org>
-Date: Sat, 29 Nov 2014 18:16:01 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/11
+Message-ID: <20141001133858.GA17354@openwall.com>
+Date: Wed, 1 Oct 2014 17:38:58 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: DB credentials disclosure in MantisBT's unattended upgrade script
+Subject: how to unsubscribe (Re: binary-patching bash)
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+On Wed, Oct 01, 2014 at 08:17:52PM +0900, jihyun.jang wrote:
+> Could you remove me in this mail list ? oss-security
 
-Kindly assign a CVE ID for the following issue.
+A moderator approved the above posting in error.  Normally, we just
+unsubscribe people who happen to ask for that in an attempted posting
+(instead of unsubscribing themselves via the list robot), and then we
+reject messages like the above.  There are not a lot of requests like
+this, but it does happen once in a while.
 
+However, let me use this opportunity to inform any others wishing to
+unsubscribe that we have instructions on doing so here:
 
-Description:
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security/unsubscribe
 
-The unattended upgrade script retrieved DB connection settings from POST 
-parameters, allowing an attacker to get the script to connect to their 
-host with the current DB config credentials.
+And in case anyone reads this in the list archives on the web and wants
+to subscribe, those instructions are here:
 
-As per installation instructions [1], the admin/ directory (which 
-contains the vulnerable script) should be deleted in a Production instance.
+http://oss-security.openwall.org/subscribe
 
-Affected versions:
- >= 1.1.0a3, <= 1.2.17
+Actually, we simply run ezmlm-idx, so its usual commands work, and
+instructions are also included in the "welcome" message that the list
+sends when one subscribes.  The web pages above are just extras.
 
-Fixed in versions:
-1.2.18 (not yet released)
-
-Patch:
-See Github [2]
-
-Credit:
-Issue was reported by Mathias Karlsson (http://mathiaskarlsson.me) as 
-part of Offensive Security's bug bounty program [3].
-It was fixed by Paul Richards.
-
-References:
-Further details available in our issue tracker [4]
-
-
-[1] 
-https://mantisbt.org/docs/master-1.2.x/en/administration_guide/admin.install.postcommon.html
-[2] http://github.com/mantisbt/mantisbt/commit/0826cef8
-[3] http://www.offensive-security.com/bug-bounty-program/
-[4] http://www.mantisbt.org/bugs/view.php?id=17877
-
+Alexander
