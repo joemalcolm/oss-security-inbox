@@ -1,17 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/15/1
-Message-ID: <87ha80pcqw.fsf@mid.deneb.enyo.de>
-Date: Sat, 15 Feb 2014 17:22:15 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Bug#738855: initscripts: Skip killing root-owned process starting with @
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/25
+Message-ID: <542C6D5A.7080206@case.edu>
+Date: Wed, 01 Oct 2014 17:08:42 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Shawn <citypw@...il.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-* Helmut Grohne:
+On 10/1/14, 5:04 PM, Shawn wrote:
+> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
 
-> In this context allowing user processes to not be killed merely by
-> changing their name could cause data loss during shutdown by
-> blocking umount.
+Nope, this one fixes 7168/7169.  It's the equivalent of the
+`parser-oob' patch.
 
-Does that actually work?  If so, it's a funcitonality bug that should
-be fixed.
+I have patches that fix 6277/6278 that are in the pipeline.
+
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
