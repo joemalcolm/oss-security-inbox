@@ -1,66 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/17
-Message-ID: <542564CD.9090205@debian.org>
-Date: Fri, 26 Sep 2014 14:06:21 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/12
+Message-ID: <alpine.LRH.2.11.1410010002020.2887@fairfax.gathman.org>
+Date: Wed, 1 Oct 2014 00:03:21 -0400 (EDT)
+From: "Stuart D. Gathman" <stuart@...hman.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-On 26/09/14 09:54, Mark R Bannister wrote:
-> Patch every OS to clear the environment on setuid/setgid and live
-> with a few other programs that might break?
+On Tue, 30 Sep 2014, Michal Zalewski wrote:
 
-Apache suexec, among other things, can't work if the environment is
-cleared. It needs to pass the CGI environment variables through, and is
-setuid itself.
+> You're describing taint tracking, which is actually a pretty hard
+> problem when you realize that data isn't an abstract, immutable
+> entity, but rather something that is used as input for arithmetics,
+> conditional branches, etc (is a byte set as a result of a tainted
+> conditional also tainted? for far-reaching should this effect be?).
+>
+> But more fundamentally, in your example, what does it prove? In
+> practical settings, privileged programs will routinely have data from
+> lower (or at least other) privilege levels in memory, but that doesn't
+> indicate a security problem. In particular, both the fixed and the
+> vulnerable versions of bash will have that property when invoked via a servlet.
 
-Properly-written setuid components are often a necessary part of letting
-unprivileged components benefit from privilege-separation (e.g. CGI
-scripts running with less privilege than the web server, with neither
-running as root). The problem is that not all setuid components are
-properly-written.
-
-> Tell everyone to stop using setuid/setgid now and forever?
-
-Minimizing use of setuid/setgid, and making sure the setuid/setgid
-things are suitably hardened, is a good idea. However, tools for
-controlled privilege escalation (sudo, pkexec, Apache suexec) rely on
-setuid in order to work. There's a reason the feature exists at all.
-
-I still think a large part of the answer is "consider it to be a serious
-bug when a setuid/setgid tool does non-trivial things without first
-filtering its attacker-controlled environment through a whitelist".
-
-If it needs to pass environment variables through to a child, this
-pseudocode is a good pattern (AIUI, sudo does this):
-
-        let saved_environ = copy of environ
-        let environ = empty
-
-        setenv(PATH = "/usr/bin:/bin")  # or some other safe value
-        setenv(HOME = "/")
-        # ... and repeat for a few other well-known variables that are
-        # often relied on
-
-        if saved_environ["LANG"] has a safe value {
-                setenv(LANG = saved_environ["LANG"])
-                # ... and repeat for a few other well-known variables
-                # that can safely be passed-through if their values are
-                # suitably constrained
-        }
-
-        parse options
-        decide what to do
-        do PAM authentication/authorization etc.
-        drop privileges / set up privileges as necessary
-
-        if configured to pass environment through {
-                copy some or all of saved_environ back into environ
-        }
-
-        exec(child, child_args)
-
-Regards,
-    S
-
+It doesn't "prove" anything, but I thought it could maybe narrow down the
+code to audit carefully.  I figured it had already been done.
