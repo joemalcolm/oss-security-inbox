@@ -1,39 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/18/3
-Message-ID: <20140518114318.GC1028@frohike.xs4all.nl>
-Date: Sun, 18 May 2014 13:43:18 +0200
-From: Peter Bex <Peter.Bex@...all.nl>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request for buffer overrun in CHICKEN Scheme
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/5
+Message-ID: <20141001130809.1d1401a0@hboeck.de>
+Date: Wed, 1 Oct 2014 13:08:09 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
+schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
 
-I would like to request a CVE for a buffer overrun bug in CHICKEN Scheme
-which is very similar to CVE-2013-4385.  It affects a very particular,
-not very common use of the read-u8vector! procedure.  If given a buffer
-and #f (the Scheme value for "false") as the buffer's size (which should
-trigger automatic size detection but doesn't), it will read beyond the
-buffer, until the input port (file, socket, etc) is exhausted.  This may
-result in the typical potential remote code execution or denial of
-service; in CHICKEN, these buffers are initially allocated on the stack
-and moved to the heap upon GC.
+> Finally: *PLEASE* let me know if you have any good ideas on how to
+> find vulnerabilities like this ahead-of-time. My article "How to
+> Prevent the Next
+> Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a
+> number of ways that Heartbleed-like vulnerabilities could have been
+> detected ahead-of-time, in ways that are general enough to be
+> useful.  I'd like to do the same with Shellshock, so we can quickly
+> eliminate a whole class of problems.
 
-In normal usage, users would usually pass in the buffer's size.  This
-is also the workaround for this bug.
+The "class of problems" here is imho that we have a bunch of tools that
+get rare attention from anyone, are run by few volunteers, but they're
+an essential part in running the Internet.
 
-For the official announcement, see
-http://lists.gnu.org/archive/html/chicken-announce/2014-05/msg00001.html
+Just think about busybox, curl, wget, coreutils, gettext, gzip, ... - a
+vuln in any of these could have severe consequences.
 
-The patch on the discussion list is
-http://lists.gnu.org/archive/html/chicken-hackers/2014-05/msg00032.html
-and it got applied as
-http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=1d06ce7e21c7e903ca5dca11fda6fcf2cc52de5e
+Maybe the topic here should be: "How can we get the (whitehat) IT
+seucrity community to have a deeper look at neglected but important
+opensource projects."
 
-All versions of CHICKEN prior to 4.9.0 (soon to be released) and 4.8.0.7
-(not yet(?) released) are affected.
-
-Cheers,
-Peter Bex
 -- 
-http://www.more-magic.net
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
