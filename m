@@ -1,39 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/4
-Message-ID: <5361B859.1010905@redhat.com>
-Date: Wed, 30 Apr 2014 20:58:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: *REJECT* CVE-2013-4121
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/22
+Message-ID: <bacd566d-55ad-483f-8e4e-9b09497f302d@email.android.com>
+Date: Wed, 01 Oct 2014 16:36:32 -0400
+From: Colin Mahns <goatman93@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I'd love it if more companies dedicated back money or time to FLOSS projects they benefit from, but it might be a hard sell. Not every company has the same mentality that they need to give back to stay successful. Others might think "giving back" entails to things they might receive tax breaks on too, rather than something that keeps them from wasting time and money in the future...
 
-CVE-2013-4121 was incorrectly assigned to a software issue that was
-only present in OpenShift Online (our service), it was not present in
-OpenShift Enterprise or OpenShift Origin (upstream), I initially
-assumed (yeah bad idea, I know) that it was, but it wasn't, so please
-REJECT this CVE due to the fact it only affected an online service,
-and not any released code.
+On October 1, 2014 3:53:52 PM EDT, Loganaden Velvindron <loganaden@...il.com> wrote:
+>On Wed, Oct 1, 2014 at 8:14 PM, Greg KH <greg@...ah.com> wrote:
+>> On Wed, Oct 01, 2014 at 12:08:15PM -0400, Jason Cooper wrote:
+>>> On Wed, Oct 01, 2014 at 08:55:35AM -0700, Greg KH wrote:
+>>> > On Wed, Oct 01, 2014 at 07:15:56AM -0400, Jason Cooper wrote:
+>>> > > On Wed, Oct 01, 2014 at 01:08:09PM +0200, Hanno Böck wrote:
+>>> > > > Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
+>>> > > > schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
+>>> > > >
+>>> > > > > Finally: *PLEASE* let me know if you have any good ideas on
+>how to
+>>> > > > > find vulnerabilities like this ahead-of-time. My article
+>"How to
+>>> > > > > Prevent the Next
+>>> > > > > Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html)
+>lists a
+>>> > > > > number of ways that Heartbleed-like vulnerabilities could
+>have been
+>>> > > > > detected ahead-of-time, in ways that are general enough to
+>be
+>>> > > > > useful.  I'd like to do the same with Shellshock, so we can
+>quickly
+>>> > > > > eliminate a whole class of problems.
+>>> > > >
+>>> > > > The "class of problems" here is imho that we have a bunch of
+>tools that
+>>> > > > get rare attention from anyone, are run by few volunteers, but
+>they're
+>>> > > > an essential part in running the Internet.
+>>> > > >
+>>> > > > Just think about busybox, curl, wget, coreutils, gettext,
+>gzip, ... - a
+>>> > > > vuln in any of these could have severe consequences.
+>>> > > >
+>>> > > > Maybe the topic here should be: "How can we get the (whitehat)
+>IT
+>>> > > > seucrity community to have a deeper look at neglected but
+>important
+>>> > > > opensource projects."
+>>> > >
+>>> > > The LF has the Core Infrastructure Initiative:
+>>> > >
+>>> > >  
+>http://www.linuxfoundation.org/programs/core-infrastructure-initiative/faq
+>>> >
+>>> > Yes, that's exactly what that group is doing, and they have a huge
+>list
+>>> > of these types of projects that they are looking into funding to
+>help
+>>> > prevent this type of thing from happening again.  I'll go add bash
+>to
+>>> > the list there as I don't think it is currently on it at the
+>moment.
+>>>
+>>> Could we also update the FAQ to include "How to recommend a
+>project?"?
+>>> A few days ago I tried to recommend bash.  I dug around, and finally
+>>> just sent an email to Ted.  Which I don't think is the correct
+>answer
+>>> ;-)
+>>
+>> It isn't, but Ted is a good contact for it :)
+>>
+>> Fixing the FAQ is on the list of things to do that was discussed at
+>the
+>> last meeting, hopefully it will be done soon.
+>>
+>> thanks,
+>>
+>> greg k-h
+>
+>I believe that small companies can benefit from committing engineering
+>efforts to audit Open Source software that they all rely heavily upon.
+>
+>I keep arguing and try to talk to managers that they need to become
+>more active in Open Source, as they would also benefit in terms of
+>less downtime, and better vulnerability management. Having a good Open
+>Source strategy helps IT managers have better control of their IT
+>infrastructure. On top of training IT staff, maybe it's a good time to
+>introduce the idea of "Strong Open Source rating", and committing 10%
+>of their IT employees working hours to improve relevant Open Source
+>projects.
+>
+>-- 
+>This message is strictly personal and the opinions expressed do not
+>represent those of my employers, either past or present.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJTYbhZAAoJEBYNRVNeJnmTveYP/2uz6LffW1G/f1b/5XE+wLSH
-KB+dOw1RS+rSz7B+vQLOgxYS/6KTMz/SrPVc2s8rWtvo7HqKqC8mKDxSCh8bySaF
-aufIhKQ6qAm/TH4QDjZs5XvjCs8SBXo6zJW39rCujeOAfir/tVSfLa2QIQvdz3jo
-+CFfEd5BUJnWtE+xE+p2iZb8qDxKGDqdDyt0yogqMN0wTZS91zEV8KKD7H/AKpU9
-zHZRpmRRRF0jt05daXJbbmkUB5LALJZbmCuw8sEIwVmJRWhCWbf2x6CGGWja1KZS
-cECfqACXWU6TBcIRZCfbfjzWB+3ReL9xDXPbvN7wvroeNrULGEuphMAXSuJTTVx2
-TPFMZeVL4EozhcFhB9g82RQMLQC9eW/Xvf4qCbvWzUURXb5dKcJagSheg1NTXWTQ
-Ax20dwSDDW2VVg44yQl1xjmSLvzqTRrmcG5Rjmh/OD+nQR3qr7zWvjigOBi8VmkY
-Xvu1u1tH8jvwE+JAiICsCjKIm3HtbeAOOfxdei/WRP+CFPRcenTTAb31HzkzOSW/
-w+FDlBJNOv2QjXOTmueSyCqesMIuSNRhqjovN8aG7eKaWBcgUE3yfT4uu/s0ajsF
-W3u9orhGZ4KFaVpka2XoXTMi0R0O4/lyjbXAWD9nN6L6hWsKJA5ivYgQ2lLoEXdi
-NNSZR7uwEu+7cUVQsnvu
-=X7a2
------END PGP SIGNATURE-----
+-- 
+Sent from my Android device with K-9 Mail. Please excuse my brevity.
