@@ -1,49 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/7
-Message-ID: <Pine.LNX.4.64.1412111137240.4468@beijing.mitre.org>
-Date: Thu, 11 Dec 2014 11:39:31 -0500 (EST)
-From: cve-assign@...re.org
-To: Alex Gaynor <alex.gaynor@...il.com>
-cc: cve-assign@...re.org, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Python, standard library HTTP clients
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/24
+Message-ID: <CABniQZNf+kZcaXGkq8tvEGjCSsCEn=V=RwdiFyPBcDJoy1GN6Q@mail.gmail.com>
+Date: Thu, 2 Oct 2014 05:04:16 +0800
+From: Shawn <citypw@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
+http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Oct 2, 2014 at 2:20 AM, Hanno Böck <hanno@...eck.de> wrote:
+> Haven't seen it here yet. lcamtuf now disclosed details of the two
+> further parser bugs he found:
+> http://lcamtuf.blogspot.de/2014/10/bash-bug-how-we-finally-cracked.html
+>
+> Basically if anyone hasn't applied one of the prefix patches yet now's
+> the time to do so.
+>
+> While prefixing should shield against them they should still be fixed
+> for good.
+>
+> CVE-2014-6277 can still be triggered to segfault a fully patched bash:
+> bash -c "f(){ x(){ _;}; x(){ _;}<<a;}"
+>
+> Second issue PoC on fully patched system:
+> env BASH_FUNC_x%%='() { _;}>_[$($())] { echo vuln;}' bash -c :
+>
+> (both likely not exploitable due to prefix shielding, but should be
+> fixed anyway)
+>
+> --
+> Hanno Böck
+> http://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
 
-> When Python's standard library HTTP clients (httplib, urllib, urllib2,
-> xmlrpclib) are used to access resources with HTTPS, by default the
-> certificate
-> is not checked against any trust store, nor is the hostname in the
-> certificate
-> checked against the requested host. It was possible to configure a trust
-> root
-> to be checked against, however there were no faculties for hostname
-> checking.
-> 
-> This made MITM attacks against the HTTP clients trivial, and violated RFC
-> 2818
-> (http://tools.ietf.org/html/rfc2818#section-3).
-> 
-> Python 2.7.9 has been issued to resolve this issue. It is also resolved in
-> 3.4.3, which has not yet been released.
 
-Use CVE-2014-9365.
 
-- ---
+-- 
+GNU powered it...
+GPL protect it...
+God blessing it...
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEVAwUBVInIiKllVAevmvmsAQKUEAf9FEfp7oNywlU7NaOfSjaMVJi5B3wApMO4
-STpRGPKPa7NjJOF1FapTBMhODnRcViP7yvrVvBgapAQosnsE4nZq9Q5ccZQNvx3n
-IUAJm61K1CqPAW/YuzrCRQzrZZpDxrNTnSGV4y2ml2zCOUtTcVBqnYUAW2DjgOEs
-qs0kH8PlDfN7qhpUWVbD3Ix65WTyJKd5kwzp23SO50p/ZqlbAGSN2BJ5d2rRP7wE
-o5N06E/7ALziQg+4lTPtdBC380BaU/RS5tBjvw1XpKiqDKGQFTZvqxdC9maxR3dD
-vnOM/YrCW6GQKwWv5KE8zEHsRsu4NKCns6c/B3mM8+eEIZqbDleA1w==
-=GCa6
------END PGP SIGNATURE-----
+regards
+Shawn
