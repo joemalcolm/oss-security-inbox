@@ -1,38 +1,10 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/01/1
-Message-ID: <20140701154458.GC4636@suse.de>
-Date: Tue, 1 Jul 2014 17:44:58 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: default cipher suites in curl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/21
+Message-ID: <COL130-W19EDBC21EB508DC4BFC65BB9B80@phx.gbl>
+Date: Wed, 1 Oct 2014 15:27:32 -0400
+From: Hua Q <hqusa1999@...mail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Any patch fixe CVE-2014-7186 and CVE-2014-7187 on Bash 3.2‏‏ 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-libcurl up to early this year did not have default SSL ciphers
-when openssl was in use.
-
-Clients using the library could however set ciphers via 
-an option, but as it would work without, they might not have.
-
-
-This was fixed in curl 7.35.0:
-
-Daniel Stenberg (12 Jan 2014)
-- OpenSSL: deselect weak ciphers by default
-  
-  By default even recent versions of OpenSSL support and accept both
-  "export strength" ciphers, small-bitsize ciphers as well as downright
-  deprecated ones.
-  
-  This change sets a default cipher set that avoids the worst ciphers, and
-  subsequently makes https://www.howsmyssl.com/a/check no longer grade
-  curl/OpenSSL connects as 'Bad'.
-  
-  Bug: http://curl.haxx.se/bug/view.cgi?id=1323
-  Reported-by: Jeff Hodges
-
-
-Should it get a CVE?
-
-Ciao, Marcus
+The recent bash patcheshttp://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-054http://ftp.gnu.org/gnu/bash/bash-3.2-patches/bash32-055have not fixed  CVE-2014-7186 and CVE-2014-7187Will be another patch out?Thanks a lot! 		 	   		  
