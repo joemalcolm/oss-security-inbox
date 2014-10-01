@@ -1,82 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/10
-Message-Id: <E1WrnlP-0000qv-HL@xenbits.xen.org>
-Date: Tue, 03 Jun 2014 12:24:23 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/8
+Message-Id: <E1XZIcT-0004aF-1v@xenbits.xen.org>
+Date: Wed, 01 Oct 2014 12:02:57 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 54 (CVE-2013-2078) - Hypervisor crash due to missing exception recovery on XSETBV
+Subject: Xen Security Advisory 108 (CVE-2014-7188) - Improper MSR range used for x2APIC emulation
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-	     Xen Security Advisory CVE-2013-2078 / XSA-54
-                            version 4
+              Xen Security Advisory CVE-2014-7188 / XSA-108
+                              version 4
 
-       Hypervisor crash due to missing exception recovery on XSETBV
+              Improper MSR range used for x2APIC emulation
 
 UPDATES IN VERSION 4
 ====================
 
-Reduce vulnerable range of versions to 4.1 and onwards.
+Public release.
 
 ISSUE DESCRIPTION
 =================
 
-Processors do certain validity checks on the register values passed to
-XSETBV.  For the PV emulation path for that instruction the hypervisor
-code didn't check for certain invalid bit combinations, thus exposing
-itself to a fault occurring when invoking that instruction on behalf
-of the guest.
+The MSR range specified for APIC use in the x2APIC access model spans
+256 MSRs. Hypervisor code emulating read and write accesses to these
+MSRs erroneously covered 1024 MSRs. While the write emulation path is
+written such that accesses to the extra MSRs would not have any bad
+effect (they end up being no-ops), the read path would (attempt to)
+access memory beyond the single page set up for APIC emulation.
 
 IMPACT
 ======
 
-Malicious or buggy unprivileged user space can cause the entire host
-to crash.
+A buggy or malicious HVM guest can crash the host or read data
+relating to other guests or the hypervisor itself.
 
 VULNERABLE SYSTEMS
 ==================
 
-Xen 4.1 and onwards are vulnerable when run on systems with processors
-supporting XSAVE.  Only PV guests can exploit the vulnerability.
+Xen 4.1 and onward are vulnerable.
 
-In Xen 4.1 XSAVE support is disabled by default; therefore systems
-running these versions are not vulnerable unless support is explicitly
-enabled using the "xsave" hypervisor command line option.
-
-Systems using processors not supporting XSAVE are not vulnerable.
-
-Xen 3.x and earlier are not vulnerable. In particular, Xen 4.0.x is not
-vulnerable because XSAVE support there covers only HVM guests.
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
 
 MITIGATION
 ==========
 
-Turning off XSAVE support via the "no-xsave" hypervisor command line
-option will avoid the vulnerability.
+Running only PV guests will avoid this vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered Jan Beulich at SUSE.
 
 RESOLUTION
 ==========
 
 Applying the attached patch resolves this issue.
 
-xsa54.patch                 Xen 4.1.x, Xen 4.2.x, xen-unstable
+xsa108.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
 
-$ sha256sum xsa54-*.patch
-5d94946b3c9cba52aae2bffd4b0ebb11d09181650b5322a3c85170674a05f6b7  xsa54.patch
+$ sha256sum xsa108*.patch
+cf7ecf4b4680c09e8b1f03980d8350a0e1e7eb03060031788f972e0d4d47203e  xsa108.patch
 $
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJTjb4yAAoJEIP+FMlX6CvZTvcIAJW1kkoJDpYy3m2CUFux5FeN
-rft9S+iPrh45/B67VuHOnaEfpcBQ/71+jKEjJQ8kJdJnWmP6i+kAuoVKma/PkY9x
-VkeNM//9gM1UKp581p0yQp61Yw46hiREWDkue+VsnMIl88w/EV2Yv5R2LQaPMinZ
-TM08EdK/lgERYQ2LSdkc55kE/jHoenBMBYjnCJPBYJY1jPdgJo488ZTpol/opqaM
-o99/ziUPfa30KXHFtgq1iQs7qu+boMEv/QfRSC3xQS1tTSaXqnuPVDlz6tXBkrW9
-AI5Mx1cJMSrd02KBMsaZvjQVaDjVO3L1svfEXvjeUmbGuE+hx0jvglblS6+i2Z4=
-=SnXC
+iQEcBAEBAgAGBQJUK+1fAAoJEIP+FMlX6CvZ6cwH+wdcnTCTdyAMc8bmQv+IxrMN
+ue5rBYdX0b7CnnC2uCrwPssygna2cxTcVhJsU0eZk5OVrIU5rQ3PKtmFtxMwa3WS
+my/vtyftTmoxAzftUKgpDFeicmZXlot3aowfRIiIc+GFZ59zAjDL2yQ0xMR1mJio
+7SXl+dkcUPj5nXaeK1gFozJ8XNF+wArNQUPv0xUBIg4NSjQyqa7CMCZ5Q3IuJ53S
+hKY37/MSoOViDORDPkeVr3BoSb7atYZSPwibqEUjeL5f+eXyVkbD0MkLQgu1ERtZ
+p+dc+DTaRYm77LrDM+npZ+j1uSoVqdVzXtNYe6GZmbNRVXjbhJ+gJyJBcpy/a5Q=
+=m0tK
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa54.patch" of type "application/octet-stream" (972 bytes)
+Download attachment "xsa108.patch" of type "application/octet-stream" (1420 bytes)
