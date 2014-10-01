@@ -1,49 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/4
-Message-Id: <201405050340.s453elQ8000683@linus.mitre.org>
-Date: Sun, 4 May 2014 23:40:47 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: ldns-keygen creates private key world readable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/26
+Message-ID: <CABniQZM0f2_T-DBSxL6v_c2uxWmMuJbz_FhmFeV3UEYNPpH=uQ@mail.gmail.com>
+Date: Thu, 2 Oct 2014 05:11:53 +0800
+From: Shawn <citypw@...il.com>
+To: Chet Ramey <chet.ramey@...e.edu>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Oct 2, 2014 at 5:08 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
+> On 10/1/14, 5:04 PM, Shawn wrote:
+>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+>
+> Nope, this one fixes 7168/7169.  It's the equivalent of the
+> `parser-oob' patch.
+>
+> I have patches that fix 6277/6278 that are in the pipeline.
+>
+oh, s0rry for the mistake...that'd be great if we can get the patch as
+quickly as possible. Thanks.
 
-> ldns-keygen creates private key world readable
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746758
-> 
-> https://www.nlnetlabs.nl/bugs-script/show_bug.cgi?id=573
+> --
+> ``The lyf so short, the craft so long to lerne.'' - Chaucer
+>                  ``Ars longa, vita brevis'' - Hippocrates
+> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
 
-Comment 1 in 573 says "Willem Toorop ... Good catch! ... a patch would
-be apprectiated." Willem Toorop would be considered the "vendor"
-according to the http://git.nlnetlabs.nl/ldns/tree/README and
-http://www.oscon.com/oscon2014/public/schedule/speaker/173326 pages.
 
-Use CVE-2014-3209.
 
-> Same argument as GPG I suppose, so probably deserves a CVE.
+-- 
+GNU powered it...
+GPL protect it...
+God blessing it...
 
-A user may have no choice other than to run GPG on a multi-user system
-that always has untrusted users logged in. The documentation might
-imply that ldns-keygen is typically run on a DNS server. The vendor
-could have decided to assert that the permissions were intentional.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTZwgHAAoJEKllVAevmvmsIEcIALy9LDQ3PWHSWgtXqljeLAFA
-EOm+nv2e5Payp2YNVRRsQEMyoQyNNIv2ao95n9Ya28FXI3LL+YEpWv8caDWOZe2B
-zkgtMIyxn0YZYSrHLuuv/73kVlWSecn1UlqACJmAVKbNpFAmnJoKwBHTNhIOI07Y
-6TKdEKk0j8jCAZarBedDZHjJ9f1CHwNMOgFRq9oRL54MY1SWnQWoMZcdpg8WmbIN
-aco6ZHvyOOoECxnBhIBmazYg/fV+fA1slveOgpPLS1h635DgExRd8DR+6sfwiHe6
-P++/8u8NHGfFMUfvrqfa0z4Y7FQE5tcb7jPZD3Zdl+InkqxBi46piGL7+rw5sEM=
-=0FSX
------END PGP SIGNATURE-----
+regards
+Shawn
