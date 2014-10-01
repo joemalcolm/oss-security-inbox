@@ -1,50 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/15/3
-Message-Id: <201404151636.s3FGa4IS008880@linus.mitre.org>
-Date: Tue, 15 Apr 2014 12:36:04 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: cross-site scripting issue fixed in CUPS 1.7.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/30
+Message-ID: <1412203009320.74129@cari.net>
+Date: Wed, 1 Oct 2014 22:32:35 +0000
+From: Zach Wikholm <zwikholm@...i.net>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "Chet Ramey" <chet.ramey@...e.edu>
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>>Really!? Honestly!? "as quickly as possible"
 
-> CUPS 1.7.2 ... fixes a cross-site scripting issue
+>>Man, we really should rally together and at least send Chet a recovery
+>>beer basket or something.
 
-> http://www.cups.org/str.php?L4356
-> http://www.cups.org/strfiles.php/3268/str4356.patch
-> http://www.cups.org/blog.php?L717
-> https://bugs.mageia.org/show_bug.cgi?id=13196
+I think everybody owes Chet at least two beers.
 
-> the patch may not be sufficient to cover all different encodings,
-> other special characters of interest etc.
+Zach W.
+________________________________________
+From: Ed Prevost <me@...ardprevost.info>
+Sent: Wednesday, October 1, 2014 2:45 PM
+To: oss-security@...ts.openwall.com; Chet Ramey
+Subject: Re: [oss-security] more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 
-> The attached patch updates is_absolute_path() to check for < and quotes
+On 10/1/2014 2:11 PM, Shawn wrote:
+> On Thu, Oct 2, 2014 at 5:08 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
+>> On 10/1/14, 5:04 PM, Shawn wrote:
+>>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+>> Nope, this one fixes 7168/7169.  It's the equivalent of the
+>> `parser-oob' patch.
+>>
+>> I have patches that fix 6277/6278 that are in the pipeline.
+>>
+> oh, s0rry for the mistake...that'd be great if we can get the patch as
+> quickly as possible. Thanks.
+>
+>> --
+>> ``The lyf so short, the craft so long to lerne.'' - Chaucer
+>>                  ``Ars longa, vita brevis'' - Hippocrates
+>> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+>
+>
+Really!? Honestly!? "as quickly as possible"
 
-> if (strchr(path, '<') != NULL || strchr(path, '\"') != NULL || strchr(path, '\'') != NULL)
+Man, we really should rally together and at least send Chet a recovery
+beer basket or something.
 
-A CVE can be assigned because the patch above does block some XSS
-attack vectors. Use CVE-2014-2856 for what is addressed by this patch.
-There weren't any immediate followups here or in L4356 demonstrating
-how to exploit the patched scheduler/client.c code in a specific test
-environment. It is quite possible that other CVE assignments will be
-made later.
+--Ed
+Application & Network Security, Research Scientist
+http://EdwardPrevost.info
+https://twitter.com/@EdwardPrevost
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTTV86AAoJEKllVAevmvmsoW0H/ijg+KOyofQ2y8V2/AY5amFQ
-4+bVg9KcPtyeC6oEMjgx0NAl0UUM3CMQf5q9cWTxA1mkWiFxrfmfavKDwoymxcfl
-AlMMOibPCBh+moV4jliWY47eiSolTDF4Bv8spOzbFqkcORUnpcNQwwrD6Q+VUOKn
-DuxZUjvStHJhXa2nStIIqThT24B5KQIcRAxUBLKPPuunmhylUi8/UxRxjX6NdPlN
-2EL62B3j4VjusYBxOTeq6glNZaeBCoVc3KG7Mvkm5JC0AVH9vcHejQpG35HGnDvX
-rD5Q3sbdfhrhJhOEsuYiEAV8e3rHBDxwVYagopf/amaWGOl6/AiwiUIq5mxvIyk=
-=bcw3
------END PGP SIGNATURE-----
