@@ -1,20 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/7
-Message-ID: <1074bc0ba3cc4b133532e2101c17886f@tribut.de>
-Date: Mon, 03 Nov 2014 11:33:21 +0100
-From: Felix Eckhofer <felix@...but.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/13
+Message-ID: <542C0F62.3040208@redhat.com>
+Date: Wed, 01 Oct 2014 16:27:46 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: unzip -l crasher
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-Hey.
+On 10/01/2014 03:32 PM, Tomas Hoger wrote:
+> On Tue, 30 Sep 2014 19:19:55 -0400 (EDT) David A. Wheeler wrote:
+>
+>> * Approach 1: Florian Weimer's approach.  Bash functions to be
+>> exported have a prefix ("BASH_FUNC_") and suffix added.  Then, ONLY
+>> environment variables with that prefix and suffix are interpreted
+>> specially.  This approach is used by Red Hat, CentOS, Debian, Ubuntu,
+>> and Cygwin (at least), and was later accepted into bash upstream.
+>> The original approach used "()" as the suffix; bash upstream took
+>> this but switched to the "%%" suffix instead, which is a nice
+>> improvement (since "%" is not a shell metacharacter this is less
+>> likely to trigger OTHER problems).  I know Cygwin is using the bash
+>> upstream '%%' suffix.
+>
+> The following indicates there is other prefix and suffix used, that
+> makes these incompatibility issues worse:
+>
+>    http://support.apple.com/kb/HT6495
+>
+>    The names of all environment variables that introduce function
+>    definitions are required to have a prefix "__BASH_FUNC<" and suffix
+>    ">()" to prevent unintended function passing via HTTP headers.
 
-Am 03.11.2014 11:25, schrieb Martin Carpenter:
-> "ERROR: Spammer stay away!"
+I initially dismissed this as a presentation artifact in the web page, 
+but it's true, there are additional <> characters in the mangled name. 
+I wonder what breaks as a result.  At least () and %% are somewhat 
+benign in their effect if they are used unquoted in the relevant places 
+(error, not accidental file creation).
 
-Forwarded your mail using the form ("Bug report mailed to Info-ZIP"). 
-Apparently I am not a spammer.
+(To be absolute clear, I do not see any security issues with Apple's 
+choice of mangling.)
 
-
-
-felix
+-- 
+Florian Weimer / Red Hat Product Security
