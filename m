@@ -1,47 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/3
-Message-Id: <201406240551.s5O5pXSB026078@linus.mitre.org>
-Date: Tue, 24 Jun 2014 01:51:33 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: piwigo before 2.6.3 sql injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/32
+Message-ID: <CAN4CQ4y5s=wdw5aPP+wy+Uaon_AGACdBz04VDPRWte+b1x_Hrw@mail.gmail.com>
+Date: Wed, 1 Oct 2014 16:25:08 -0700
+From: Kohsuke Kawaguchi <kk@...suke.org>
+To: oss-security@...ts.openwall.com
+Subject: Security advisory in Jenkins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-> The Piwigo image gallery contains an sql injection before versions
-> 2.6.3 and 2.7.0_beta2
-> http://piwigo.org/bugs/view.php?id=3089
-> http://piwigo.org/dev/changeset/28678
-> http://piwigo.org/forum/viewtopic.php?id=24009
+I just wanted to share that the Jenkins project issued a security advisory
+today. These issues are independently found and we've aggregated into a
+single release.
 
-Are you sure about this? Changeset 28678 doesn't seem to have been
-implemented in the
-http://piwigo.org/download/dlcounter.php?code=26xto263 file that's
-recommended in the 2.6.3 Release Notes. Also,
-http://piwigo.org/bugs/changelog_page.php suggests that 3089 was fixed
-only in 2.7.0beta2, not in 2.6.3.
+The relevant CVE IDs, our bug tracking IDs are available here
+<https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01>
+.
 
-http://piwigo.org/releases/2.6.3 says "[security] security failure
-reported and fixed by Christopher Chrapka, ojezu.org." Is this instead
-perhaps an unspecified vulnerability that is unrelated to the fix for
-bug 3089?
+The new versions can be downloaded from here
+<http://mirrors.jenkins-ci.org/>.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+(This is the first time I do this, so my apologies in advance for probably
+failing to follow the expected format.)
+-- 
+Kohsuke Kawaguchi
 
-iQEcBAEBAgAGBQJTqRGSAAoJEKllVAevmvmsHlcIAMDmhzYQds1t5ZkPQomsaHsp
-ohF0honGOLkkbpYL2/OPf+7vpTeRE3TJk9UeNH0KIOhYLsPGFNd1bnJLwxCHjoBN
-sk1ALJ4lKhf58QI6d9GRRKJ9dfpaMSBrYm5L7D76Jaftet7pdFu1UKO3n4gVqqAo
-dQ7db3sQffxc3Geh1QTMAF7PCt8XYgFuR/lQ6KCKsKcYn/e/12qGS+PXI4FDDlxA
-xXIorMmRqTTWQjYXxQ/WyAXgKhs8Qm1hxwJ3HHtlMtBN98WXOOl/3na4pGMKB7OE
-CEYXuMCHJ8ua/208zPO4Re4Zz1ijLwarRj2ND2wV0TL+AY5p13WXEs3v2Q74LLc=
-=JMVl
------END PGP SIGNATURE-----
