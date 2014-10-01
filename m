@@ -1,39 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/6
-Message-Id: <20141229163650.D031A42E0F8@smtpvbsrv1.mitre.org>
-Date: Mon, 29 Dec 2014 11:36:50 -0500 (EST)
-From: cve-assign@...re.org
-To: oss@...ernot.info
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Double Free in PHP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/15
+Message-ID: <20141001160815.GC11247@titan.lakedaemon.net>
+Date: Wed, 1 Oct 2014 12:08:15 -0400
+From: Jason Cooper <osssecurity@...edaemon.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> I found a double-free in PHP: https://bugs.php.net/bug.php?id=68676
+On Wed, Oct 01, 2014 at 08:55:35AM -0700, Greg KH wrote:
+> On Wed, Oct 01, 2014 at 07:15:56AM -0400, Jason Cooper wrote:
+> > On Wed, Oct 01, 2014 at 01:08:09PM +0200, Hanno Böck wrote:
+> > > Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
+> > > schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
+> > > 
+> > > > Finally: *PLEASE* let me know if you have any good ideas on how to
+> > > > find vulnerabilities like this ahead-of-time. My article "How to
+> > > > Prevent the Next
+> > > > Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a
+> > > > number of ways that Heartbleed-like vulnerabilities could have been
+> > > > detected ahead-of-time, in ways that are general enough to be
+> > > > useful.  I'd like to do the same with Shellshock, so we can quickly
+> > > > eliminate a whole class of problems.
+> > > 
+> > > The "class of problems" here is imho that we have a bunch of tools that
+> > > get rare attention from anyone, are run by few volunteers, but they're
+> > > an essential part in running the Internet.
+> > > 
+> > > Just think about busybox, curl, wget, coreutils, gettext, gzip, ... - a
+> > > vuln in any of these could have severe consequences.
+> > > 
+> > > Maybe the topic here should be: "How can we get the (whitehat) IT
+> > > seucrity community to have a deeper look at neglected but important
+> > > opensource projects."
+> > 
+> > The LF has the Core Infrastructure Initiative:
+> > 
+> >   http://www.linuxfoundation.org/programs/core-infrastructure-initiative/faq
 > 
-> And it has been patched in the following commits:
-> 
-> http://git.php.net/?p=php-src.git;a=commit;h=2bcf69d073190e4f032d883f3416dea1b027a39e
-> http://git.php.net/?p=php-src.git;a=commit;h=24125f0f26f3787c006e4a51611ba33ee3b841cb
-> http://git.php.net/?p=php-src.git;a=commit;h=fbf3a6bc1abcc8a5b5226b0ad9464c37f11ddbd6
+> Yes, that's exactly what that group is doing, and they have a huge list
+> of these types of projects that they are looking into funding to help
+> prevent this type of thing from happening again.  I'll go add bash to
+> the list there as I don't think it is currently on it at the moment.
 
-Use CVE-2014-9425.
+Could we also update the FAQ to include "How to recommend a project?"?
+A few days ago I tried to recommend bash.  I dug around, and finally
+just sent an email to Ted.  Which I don't think is the correct answer
+;-)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+thx,
 
-iQEcBAEBAgAGBQJUoXefAAoJEKllVAevmvmsXI4H/0k6+BX4bpsDNmmM3Q+2NO31
-cMsOpowphFFaTMQH0gZkSGlpphigpcRfGIBhxCXKore+zUE8C3y/S0iBgwOJX9vU
-cRGAl2mkjT2rvvbTXHMEkN7X51gRVF8lW33koyUTX8U/k7vvTWM2M3J4GsYwhB61
-9XYgtkXSU7cA1IPqur34zT0JFOwqcrNce9Z8SzWCr1QMNkMEDZXE8t/CKX+dmVSm
-3+FdqtWRd6+oS4JlRs4RSI9rlxcrFfBbPAtV35oGSyXxDnwjwczkcE6a5iKyeEGq
-OYFc5Z+M/d1gL+UsHksWegdG/X6rG+izK/6W/v7U2Cf/h/2KVAAa8/Do1mpRfXU=
-=jhgX
------END PGP SIGNATURE-----
+Jason.
