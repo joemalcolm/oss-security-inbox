@@ -1,81 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/5
-Message-ID: <1539838005.2146753.1401943385107.JavaMail.root@vmware.com>
-Date: Wed, 4 Jun 2014 21:43:05 -0700 (PDT)
-From: Ramon de C Valle <rdecvalle@...are.com>
-To: kseifried@...hat.com
-Cc: oss-security@...ts.openwall.com, Monty Ijzerman <mijzerman@...are.com>
-Subject: Re: Request for linux-distros subscription
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/23
+Message-Id: <1412197254.2525278.174089561.7978AE3E@webmail.messagingengine.com>
+Date: Wed, 01 Oct 2014 23:00:54 +0200
+From: Hannes Frederic Sowa <hannes@...essinduktion.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: linux kernel net_get_random_once bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hello,
 
-Hi Kurt,
+On Wed, Oct 1, 2014, at 20:04, Andrew Tappert wrote:
+> My colleague Tom O'Connor and I have identified a security bug in the
+> Linux kernel that results in drastically degraded randomness of IP IDs,
+> TCP sequence numbers, and ephemeral port numbers on affected systems.
+> The bug existed in kernel versions 3.13 and 3.14.  We are posting here
+> rather than to the private "distros" list because the bug has already
+> been fixed.  However, we don't think that the security implications of
+> the bug have been acknowledged anywhere, and we think it needs a CVE.  A
+> full write-up on the bug is posted at
+> http://secondlookforensics.com/ngro-linux-kernel-bug/.
 
-- - ----- Original Message -----
-> From: "Kurt Seifried" <kseifried@...hat.com>
-> To: oss-security@...ts.openwall.com, "Monty Ijzerman" <mijzerman@...are.com>
-> Cc: "Ramon de C Valle" <rdecvalle@...are.com>
-> Sent: Thursday, June 5, 2014 12:24:03 AM
-> Subject: Re: [oss-security] Request for linux-distros subscription
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> On 06/04/2014 02:41 PM, Raphael Geissert wrote:
-> > On Wednesday 04 June 2014 12:33:13 Ramon de C Valle wrote:
-> >> I'd also appreciate comments by others active in this community
-> >> and would be happy  to answer any questions anyone might have.
-> > 
-> > Other than earlier product re-qualification I don't see how you
-> > could justify joining the list, am I missing something? If that's
-> > the only reason, I guess a question that should be asked is: is
-> > exposing the details to more people actually worth the extra time?
-> > 
-> > (speaking for myself here)
-> > 
-> > Cheers,
-> > 
-> 
-> It sounds like adding VMware is not warranted, they don't ship "a
-> Linux[1]", so I see no compelling reason for them to be added. For the
-> few Open Source  projects they are involved in, those upstreams are
-> notified as part of the process of bringing things to the distros list
-> so that should suffice.
-It seems you didn't understand my reasoning.
+I totally agree that this needs a CVE and I thought it was already taken
+care of by the people on security@...nel.org. I am sorry to not have
+checked for a CVE request afterwards.
 
-> 
-> [1] if they are added then by that logic we need to add every product
-> which has virtualization support or a ported environment that can run
-> Linux (busybox anyone?) which is basically crazy.
-This statement just enforces what I said above. There are so many problems in this statement that I don't even know where to start. It is my understanding that you're comparing ESXi with BusyBox, although they're different things and ESXi uses BusyBox (which you probably didn't know).
+The corresponding fix is here:
+<https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3d4405226d27b3a215e4d03cfa51f536244e5de7>
 
-If we enter in the merit of virtualization products (and cloud services), you may or may not have noticed but the majority of them are already subscribed (albeit indirectly) but VMware. Amazon, Canonical, Oracle, Red Hat, are all present. Let's assume, for example, that a critical vulnerability in a critical OSS that affects not only the Linux distributions but also the virtualization products (and cloud services) of any of the companies mentioned above is disclosed on the list. We both know that this information will be used not only to fix the vulnerability in the Linux distributions but also in all the other products and services of these companies in advance. Don't you think it's a bit unfair? I could easily assume that you are biased towards VMware not being subscribed to the list. But we aren't going to enter in that merit, are we?
-
-So far I have explained many reasons why we should be subscribed to the list, yet you haven't explained any why we shouldn't (despite the "you're not a Linux distribution" above, which I have said myself in my very first post).
-
-> 
-> - --
-> Kurt Seifried - Red Hat - Product Security - Cloud stuff and such
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-- - --
-Ramon de C Valle
-VMware Product Security Engineering
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
-
-iQIcBAEBCgAGBQJTj/UwAAoJEMHrzpMNBOIMsdAP/2zRByj9YaSA8iDLSXxRD+rx
-yxj7AbYXeXiXV8G/HkrtuSn4FxDGll5QjO12SyRXSm5EoPaC6NQZQLNwSfxFHgWI
-HRNjFil+cZOUIQQzyjdHxs8WOCk5/aRrZ9FSGrdYvn1RvxgSpKUNnudIVYUIGkAu
-NqdEX4FzPo6wy2eiv8LFUjZmsJ1v1o1xren6h1E8dcOXzWW8toZVch8Gq77Lsrzm
-Js0v14WdXWAzBjg4jU8TNXY2vNIoGZpv457xSFMSZP5Xap/Wfy+g1SEOpF/8qLrH
-hP4eOgYmpRnCxJpFk7y+BUR9Lz88FaiwjyUwPUo47rLTpYvYuwyK4TSAnxCgi8s2
-S2HWzc5K+K4isu4bByWIiQm6MgMIBR+ryxOnIHHt1LJnJIzXr0l5mxB7ieEpJEr9
-WVSf/PN5vI52GqNHS91L8tOtlkLIV6nCQsPnG3LBiJmfp3xJTgfWMhyC16pxFxgx
-gFxrGoJPM3IA/NK23VWoNuMM2VyUWfMPIrzpfkO79vbm3oOLEbDbfmm5R+DVZrZX
-mgydRhIixbAykT2tJgeXMZp6jYzK49hoNGcsmdOCKmjTdKO6SPdHOjFqq3NyW44r
-KPp07ZWzlK87l5mB7a/zmTAm2F/Fpy6vQBhRwCrRFyMAiXD49aJvxmrj1CvgFyGl
-G1K8GS4A7HpryndsbPcP
-=I3TM
------END PGP SIGNATURE-----
+Thanks a lot,
+Hannes
