@@ -1,53 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/26
-Message-ID: <20140808194040.GC8896@kroah.com>
-Date: Fri, 8 Aug 2014 12:40:40 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/4
+Message-ID: <20141001064415.GA18948@frohike.xs4all.nl>
+Date: Wed, 1 Oct 2014 08:44:15 +0200
+From: Peter Bex <Peter.Bex@...all.nl>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 08, 2014 at 10:27:16PM +0400, (GalaxyMaster) wrote:
-> Alexey,
+On Wed, Oct 01, 2014 at 12:18:48AM +0000, Zach Wikholm wrote:
+> >The main problem is that for a very long time, we apparently had no
+> overlap between these groups. At the face of it, it seemed like
+> there's absolutely no reason for bash to try to parse generic env
+> variables. With no convincing reason to study or test the code, nobody
+> did.
 > 
-> On Fri, Aug 08, 2014 at 09:57:49PM +0400, gremlin@...mlin.ru wrote:
-> > On 08-Aug-2014 09:21:02 -0700, Greg KH wrote:
-> >  > That doesn't prevent any other USB HID device from being plugged
-> >  > in and instantly working. Which again, you can prevent if you
-> >  > want to, but no one seems to do that...
-> > 
-> > Hmmm... To avoid possible confusion: that was CONFIG_USB_KBD - 
-> > "USB HIDBP Keyboard (simple Boot) support", and CONFIG_USB_HID
-> > was turned off.
+> There really isn't any overlap anymore. Another issue I think (though I do not believe that this is the case here) is that vulnerabilities announcements are becoming more and more about marketing. Heartbleed brought in a new era in vulnerability releases. But that's another topic for another day...
 > 
-> I think Greg was referring to kernel's feature of controlling power on
-> USB ports (e.g. you can just switch of power for a port and nothing you
-> insert there will have a chance to work until you instruct the kernel to
-> switch the port back on).
+> This feels like time for a new mailing list. I'm sure that there are many other things just like this, and now everybody will be looking for the next "shellshock" in places where nobody has looked before. It's very difficult sometimes to know who to reach to. As far as I can tell oss-security is really more focused on how to get found vulnerabilities to the world in some sort of organized fashion, which is it does well (please correct me if I'm wrong here) but it seems very easy to stray off topic. 
 
-No, that is one option (note, it doesn't work for all hardware.)  I was
-referring to the "authorized_default" option the USB core provides.  You
-can set it to be:
-	 0 - all devices plugged in are not authorized
-	 1 - all devices are plugged in are automatically authorized
-	-1 - all devices are plugged in are automatically authorized,
-	     except for wireless USB devices, which have to be
-	     explicitly authorized.
+As far as I can tell, oss-security has turned out to be a focal point for
+requesting CVE identifiers, but AFAIK the topic is broader than that;
+anything regarding security in open source software is on-topic.  See
+the description: http://oss-security.openwall.org/wiki/mailing-lists/oss-security
 
--1 is the default value.
-
-If you set it to 0, you can look at the device, but no driver can bind
-to it until you authorize it (through a sysfs file) and then it can work
-properly.
-
-Paranoid systems should set the default to 0.
-
-The option can be changed while the kernel runs, good idea to use -1 as
-a default, boot up, all needed devices are found, then set it to 0 so no
-new device can be plugged in (watch out, if you unplug and then plug, it
-will not work, so power spikes that cause devices to drop off the bus
-and come back can be a pain.)
-
-thanks,
-
-greg k-h
+Cheers,
+Peter
+-- 
+http://www.more-magic.net
