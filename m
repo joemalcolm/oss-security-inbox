@@ -1,47 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/30/4
-Message-ID: <66D70536-77E8-4F75-B382-A88E757BAD1E@redhat.com>
-Date: Mon, 30 Jun 2014 07:43:37 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, jamie@...onical.com
-Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/31
+Message-ID: <8E89095AEEE73C4A94D5DDD2B92DEF722C1EB125@810-EXCHANGE03.cbb.local>
+Date: Wed, 1 Oct 2014 21:51:25 +0000
+From: "Henry, Bobby" <Bobby.Henry@...edient.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "Chet Ramey" <chet.ramey@...e.edu>
+Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-On 06/27/2014, at 21:23 PM, cve-assign@...re.org wrote:
+I agree, there's gotta be something we can send him for all the hard work.
+- Bobby
 
-> You quoted two paragraphs on the topic of whether system-integration
-> issues are covered by CVE and CWE, and then wrote "shouldn't the same
-> be true of the HttpOnly flag?" It's unclear how to answer except by
-> saying: a decision to use or not use the HttpOnly flag isn't a
-> system-integration issue.
+-----Original Message-----
+From: Ed Prevost [mailto:me@...ardprevost.info] 
+Sent: Wednesday, October 01, 2014 5:46 PM
+To: oss-security@...ts.openwall.com; Chet Ramey
+Subject: Re: [oss-security] more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+
+On 10/1/2014 2:11 PM, Shawn wrote:
+> On Thu, Oct 2, 2014 at 5:08 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
+>> On 10/1/14, 5:04 PM, Shawn wrote:
+>>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+>> Nope, this one fixes 7168/7169.  It's the equivalent of the 
+>> `parser-oob' patch.
+>>
+>> I have patches that fix 6277/6278 that are in the pipeline.
+>>
+> oh, s0rry for the mistake...that'd be great if we can get the patch as 
+> quickly as possible. Thanks.
 >
-> You then mentioned 'if setting this flag "fixes" all XSS issues.' It
-> seems that a reasonable response here is: an XSS attack can have a
-> severe impact even if it's not designed to steal any cookies. (The
-> non-cookie-stealing severity varies, in part, based on the types of
-> input that are common for the web application in question.) The
-> HttpOnly flag is specific to cookies.
+>> --
+>> ``The lyf so short, the craft so long to lerne.'' - Chaucer
+>>                  ``Ars longa, vita brevis'' - Hippocrates
+>> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
 >
-> Finally, you mentioned "They can't _both_ get CVEs" - a question that
-> seems to be about a superfluous CVE assignment in a case where the
-> only goal of an XSS attack is to steal a cookie, and the attack relies
-> on an XSS vulnerability in a certain web application that doesn't set
-> the HttpOnly flag. A response here is: there could be a scenario that
-> ended up with a single CVE assignment for a composite of one specific
-> instance of incorrect input validation and an incorrect cookie
-> restriction. This scenario seems rare. It would require that neither
-> issue was dangerous except in the presence of the other issue. For
-> example, it would require that the only possible impact of the
-> incorrect input validation was to pass JavaScript code that could
-> steal cookies (any other malicious JavaScript code would be blocked).
-> In most practical cases, two CVE assignments would often be possible
-> if someone happened to request two.
+>
+Really!? Honestly!? "as quickly as possible"
 
-Ahhh... ok, this makes more sense.  Thank you!
+Man, we really should rally together and at least send Chet a recovery beer basket or something.
 
+--Ed
+Application & Network Security, Research Scientist http://EdwardPrevost.info https://twitter.com/@EdwardPrevost
 
-
--- 
-Vincent Danen / Red Hat Product Security
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
