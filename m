@@ -1,42 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/9
-Message-ID: <54117573.50701@oracle.com>
-Date: Thu, 11 Sep 2014 11:12:03 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/16
+Message-ID: <20141001161439.GA7831@kroah.com>
+Date: Wed, 1 Oct 2014 09:14:39 -0700
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: pinocchio tmp vuln
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-On 09/09/14 20:14, Mikko Korpela wrote:
-> "And we will need that because there are so many
-> devices hitting the streets with so many noob vulns that it's only a
-> matter of time before someone is killed."
+On Wed, Oct 01, 2014 at 12:08:15PM -0400, Jason Cooper wrote:
+> On Wed, Oct 01, 2014 at 08:55:35AM -0700, Greg KH wrote:
+> > On Wed, Oct 01, 2014 at 07:15:56AM -0400, Jason Cooper wrote:
+> > > On Wed, Oct 01, 2014 at 01:08:09PM +0200, Hanno Böck wrote:
+> > > > Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
+> > > > schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
+> > > > 
+> > > > > Finally: *PLEASE* let me know if you have any good ideas on how to
+> > > > > find vulnerabilities like this ahead-of-time. My article "How to
+> > > > > Prevent the Next
+> > > > > Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a
+> > > > > number of ways that Heartbleed-like vulnerabilities could have been
+> > > > > detected ahead-of-time, in ways that are general enough to be
+> > > > > useful.  I'd like to do the same with Shellshock, so we can quickly
+> > > > > eliminate a whole class of problems.
+> > > > 
+> > > > The "class of problems" here is imho that we have a bunch of tools that
+> > > > get rare attention from anyone, are run by few volunteers, but they're
+> > > > an essential part in running the Internet.
+> > > > 
+> > > > Just think about busybox, curl, wget, coreutils, gettext, gzip, ... - a
+> > > > vuln in any of these could have severe consequences.
+> > > > 
+> > > > Maybe the topic here should be: "How can we get the (whitehat) IT
+> > > > seucrity community to have a deeper look at neglected but important
+> > > > opensource projects."
+> > > 
+> > > The LF has the Core Infrastructure Initiative:
+> > > 
+> > >   http://www.linuxfoundation.org/programs/core-infrastructure-initiative/faq
+> > 
+> > Yes, that's exactly what that group is doing, and they have a huge list
+> > of these types of projects that they are looking into funding to help
+> > prevent this type of thing from happening again.  I'll go add bash to
+> > the list there as I don't think it is currently on it at the moment.
 > 
-> So umm.. Your saying that you guys are saving the world by finding out
-> random packages that use easily g
+> Could we also update the FAQ to include "How to recommend a project?"?
+> A few days ago I tried to recommend bash.  I dug around, and finally
+> just sent an email to Ted.  Which I don't think is the correct answer
+> ;-)
 
-No.
+It isn't, but Ted is a good contact for it :)
 
-That is a little out of context.   The problem is that there are a lot
-of naïve developers who have little idea about security issues.  The
-more we (any of us can do) to highlight the problems anywhere means that
-there are better chances of those same developers becoming aware of the
-issues.
+Fixing the FAQ is on the list of things to do that was discussed at the
+last meeting, hopefully it will be done soon.
 
-The fatality bit is perhaps a little over the top, but not much.   I
-recall a couple of problems from comparatively recent times that caused
-physical destruction of hardware: one was a (CRT) monitor, the other a
-printer.  I think the printer was potentially connected to the Internet.
- In older times, we had disk packs coming out of a drive like a huge
-multi-layered frisbee (someone had the bright idea of double the spin
-but the bearings for the disk weren't up to it) or the chain in a chain
-printer breaking and finding a letter "p" embedded in the wall months later.
+thanks,
 
-Imagine an internet-connected TV that has the potential to overheat and
-catch fire due to some bug.   Some script-kiddie thinks that it would be
-fun to use one of the other vulns to break in and cause the TV to catch
-fire.  At night.  When the owners are asleep ...
-
-Security education is important.
-
-jch
+greg k-h
