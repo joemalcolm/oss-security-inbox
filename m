@@ -1,15 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/33
-Message-ID: <546E1F00.3000407@internot.info>
-Date: Fri, 21 Nov 2014 04:04:00 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Location of OS security audit reports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/3
+Message-ID: <1412122980416.20468@cari.net>
+Date: Wed, 1 Oct 2014 00:18:48 +0000
+From: Zach Wikholm <zwikholm@...i.net>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-On 21/11/14 04:00, M.T. Roebuck wrote:
-> Writing code is more fun than documenting code?
-this should be the signature of most coding companies
+>The main problem is that for a very long time, we apparently had no
+overlap between these groups. At the face of it, it seemed like
+there's absolutely no reason for bash to try to parse generic env
+variables. With no convincing reason to study or test the code, nobody
+did.
 
--- 
--- Joshua Rogers <https://internot.info/>
+There really isn't any overlap anymore. Another issue I think (though I do not believe that this is the case here) is that vulnerabilities announcements are becoming more and more about marketing. Heartbleed brought in a new era in vulnerability releases. But that's another topic for another day...
+
+This feels like time for a new mailing list. I'm sure that there are many other things just like this, and now everybody will be looking for the next "shellshock" in places where nobody has looked before. It's very difficult sometimes to know who to reach to. As far as I can tell oss-security is really more focused on how to get found vulnerabilities to the world in some sort of organized fashion, which is it does well (please correct me if I'm wrong here) but it seems very easy to stray off topic. 
+
+Thoughts?
+
+Zach W. 
+________________________________________
+From: Michal Zalewski <lcamtuf@...edump.cx>
+Sent: Tuesday, September 30, 2014 4:59 PM
+To: oss-security
+Subject: Re: [oss-security] Healing the bash fork
+
+> Finally: *PLEASE* let me know if you have any good ideas on how to find vulnerabilities like this ahead-of-time. My article "How to Prevent the Next Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a number of ways that Heartbleed-like vulnerabilities could have been detected ahead-of-time, in ways that are general enough to be useful.  I'd like to do the same with Shellshock, so we can quickly eliminate a whole class of problems.
+
+Well, hindsight is always 20/20. Manual audits and fuzzing would have
+had a good likelihood of spotting the bash flaw. In fact, I used a
+fairly generic fuzzer to quickly hit three of the four previously
+disclosed issues and identify two more. The syntax is terse and the
+parser is laid back, which helps. The fault conditions are generic and
+intuitive, too - creation of a file, execution of a child process, or
+a crash.
+
+But really - all it would have taken is just somebody with un*x
+security background reading a book on bash that mentions function
+exports (I'm sure there are some); it wouldn't be hard to connect the
+dots.
+
+The main problem is that for a very long time, we apparently had no
+overlap between these groups. At the face of it, it seemed like
+there's absolutely no reason for bash to try to parse generic env
+variables. With no convincing reason to study or test the code, nobody
+did.
+
+/mz
