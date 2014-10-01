@@ -1,49 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/17
-Message-ID: <5475FA16.6030705@fifthhorseman.net>
-Date: Wed, 26 Nov 2014 11:04:38 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/6
+Message-ID: <20141001111556.GQ23926@titan.lakedaemon.net>
+Date: Wed, 1 Oct 2014 07:15:56 -0400
+From: Jason Cooper <osssecurity@...edaemon.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: AW: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-On 11/26/2014 10:28 AM, Fiedler Roman wrote:
->> Von: Eric Blake [mailto:eblake@...hat.com]
->> But if it succeeds, and did NOT create a directory, then it is in
->> violation of POSIX.
+On Wed, Oct 01, 2014 at 01:08:09PM +0200, Hanno Böck wrote:
+> Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
+> schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
 > 
-> Thanks for the pointer to the POSIX documentation. So it seems to be a 
-> POSIX-violation, at least on "Linux version 3.2.0-69-generic".
+> > Finally: *PLEASE* let me know if you have any good ideas on how to
+> > find vulnerabilities like this ahead-of-time. My article "How to
+> > Prevent the Next
+> > Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a
+> > number of ways that Heartbleed-like vulnerabilities could have been
+> > detected ahead-of-time, in ways that are general enough to be
+> > useful.  I'd like to do the same with Shellshock, so we can quickly
+> > eliminate a whole class of problems.
 > 
-> My test program was:
+> The "class of problems" here is imho that we have a bunch of tools that
+> get rare attention from anyone, are run by few volunteers, but they're
+> an essential part in running the Internet.
 > 
-> #include <fcntl.h>
-> #include <stdio.h>
-> #include <sys/stat.h>
+> Just think about busybox, curl, wget, coreutils, gettext, gzip, ... - a
+> vuln in any of these could have severe consequences.
 > 
-> int main(int argc, char **argv) {
->   int fd;
->   struct stat statBuf;
->   int result;
-> 
->   fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
->   result=fstat(fd, &statBuf);
->   if(result) {
->     fprintf(stderr, "Stat failed\n");
->     return(1);
->   }
->   fprintf(stderr, "New element type is %d\n", S_ISDIR(fd));
->   return(0);
-> }
+> Maybe the topic here should be: "How can we get the (whitehat) IT
+> seucrity community to have a deeper look at neglected but important
+> opensource projects."
 
-I just tried the above on debian's 3.17-1-amd64 (3.17-1~exp1, and it
-produces:
+The LF has the Core Infrastructure Initiative:
 
-New element type is 0
+  http://www.linuxfoundation.org/programs/core-infrastructure-initiative/faq
 
-So if it's a violation, it hasn't been fixed between 3.2 and 3.17.
+thx,
 
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+Jason.
