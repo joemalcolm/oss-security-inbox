@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/24
-Message-ID: <CA+rthh8y6eDxPJLvjeVokgjV36AL+LcVd9WT0vYJWhvaG6Xb=Q@mail.gmail.com>
-Date: Tue, 9 Dec 2014 20:38:08 +0100
-From: Mathias Krause <minipli@...glemail.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: PIE bypass using VDSO ASLR weakness
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/2
+Message-ID: <CALx_OUB=_Hpo1F_rcWAzUKfKnQL1wtcHP20oVPooQLOxs9XKmA@mail.gmail.com>
+Date: Tue, 30 Sep 2014 17:04:31 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-On 9 December 2014 at 16:33, Reno Robert <renorobert@...il.com> wrote:
-> Hi Daniel, COMPAT_VDSO is not enabled. Just that randomization is 20 bits
-> and same values are generated on repeated execution.
->
-> On Tue, Dec 9, 2014 at 2:08 PM, Daniel Micay <danielmicay@...il.com> wrote:
->> On 09/12/14 03:05 AM, Reno Robert wrote:
->> > Do we need better ASLR for VDSO to make PIE more effective?
->>
->> You must have COMPAT_VDSO enabled. It's randomized fine with a sane
->> kernel configuration.
->>
+> I don't know if this can be made efficient enought to be practical, but
+> imagine a virtual machine where every byte of memory is tagged with the
+> security domain.  When a byte is copied, the tag is copied also.  (It is not
+> possible in general to distinguish copies from writes, but at least when
+> copying between domains via system calls, this is detectable.) Then, when a
+> privileged program is running, its memory can be scanned for data from a
+> lower privilege domain.
 
-minipli@jig:~/tmp$ echo 'int main(){}' | gcc -pie -std=c99 -xc - -o pie
-minipli@jig:~/tmp$ for i in $(seq 10000); do ldd ./pie; done | grep
-vdso | sort | uniq  | wc -l
-10000
-minipli@jig:~/tmp$ uname -rm
-3.17.3-grsec+ x86_64
+You're describing taint tracking, which is actually a pretty hard
+problem when you realize that data isn't an abstract, immutable
+entity, but rather something that is used as input for arithmetics,
+conditional branches, etc (is a byte set as a result of a tainted
+conditional also tainted? for far-reaching should this effect be?).
 
-So Daniel's advice seems legit to me. However, sane in this context
-would mean CONFIG_PAX_RANDMMAP=y ;)
+But more fundamentally, in your example, what does it prove? In
+practical settings, privileged programs will routinely have data from
+lower (or at least other) privilege levels in memory, but that doesn't
+indicate a security problem. In particular, both the fixed and the
+vulnerable versions of bash will have that property when invoked via a servlet.
 
-
-Regards,
-Mathias
+/mz
