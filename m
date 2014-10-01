@@ -1,44 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/7
-Message-ID: <1396022172.18257.15.camel@neutron.trustmatta.com>
-Date: Fri, 28 Mar 2014 15:56:12 +0000
-From: Florent Daigniere <florent.daigniere@...stmatta.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/29
+Message-Id: <1412201145.2542960.174109065.62846747@webmail.messagingengine.com>
+Date: Thu, 02 Oct 2014 00:05:45 +0200
+From: Hannes Frederic Sowa <hannes@...essinduktion.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
+Subject: xfs directory hash ordering bug
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 2014-03-28 at 08:33 -0700, Chris Steipp wrote:
-> On Mar 28, 2014 7:54 AM, "Florent Daigniere" <
-> florent.daigniere@...stmatta.com> wrote:
-> >
-> > Sorry to be thick here but it still doesn't make any sense to me...
-> >
-> > The session-id should be renewed upon login AND any credential/privilege
-> > change (that includes password changes). This protects against session
-> > fixation attacks (where the attacker coerce a user into using a session
-> > he controls).
-> >
-> > On these pages, there's usually no need for anti-CSRF protection as they
-> > tend to require credentials (something the attacker, by definition,
-> > doesn't have).
-> 
-> Slightly different attack. The attacker (who knows their own password and
-> chooses the reset-to password) was able to cause a logged out user (victim)
-> to login with the attacker's account via the change password form.
-> 
+Hello!
 
-That is the textbook example of a session-fixation attack. The "end
-state" is that the victim uses a session the attacker can control.
+Another kernel bug which did not get a CVE yet, but should be considered
+to get one (sorry for the late notification):
 
-> This attack is somewhat specific to mediawiki since we allow users to
-> define JavaScript that will be loaded on pages they visit while logged
-> in... So the victim in this case would run the attacker's personal
-> JavaScript.
-> 
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c88547a8119e3b581318ab65e9b72f27f23e641d
 
-It still doesn't make sense. Anti-CSRF tokens are only useful if the
-"malicious script" is not running with the same origin!
+Basically it allows a local user to corrupt a xfs filesystem by just
+creating directories. Depending on whether it is the root filesystem or
+not the kernel panics or just oopses and forcefully disconnects the
+filesystem.
 
-Florent
+The commit states that xfs_repair repairs the filesystem but IIRC
+further access to that directory would still cause the kernel to either
+oops or panic. So xfs_repair could not correctly fix the filesystem in
+all situations. But I am not sure anymore and didn't follow up on this
+(I had a relocation coming up).
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+My initial report here:
+http://marc.info/?l=linux-xfs&m=139590613002926&w=2
+
+Reproducer:
+http://oss.sgi.com/cgi-bin/gitweb.cgi?p=xfs/cmds/xfstests.git;a=commitdiff;h=947ee8bd4b59770534297572b14c695e9c6e001e
+
+Thanks,
+Hannes
