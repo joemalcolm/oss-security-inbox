@@ -1,33 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/11/6
-Message-ID: <20141111200239.GA1785@steve.org.uk>
-Date: Tue, 11 Nov 2014 20:02:40 +0000
-From: Steve Kemp <steve@...ve.org.uk>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request - dns-sync node module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/18
+Message-ID: <542C47AA.60909@case.edu>
+Date: Wed, 01 Oct 2014 14:27:54 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Hanno Böck <hanno@...eck.de>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-  The dns-sync library for node.js allows resolving hostnames in
- a synchronous fashion
+On 10/1/14, 2:20 PM, Hanno Böck wrote:
+> Haven't seen it here yet. lcamtuf now disclosed details of the two
+> further parser bugs he found:
+> http://lcamtuf.blogspot.de/2014/10/bash-bug-how-we-finally-cracked.html
+> 
+> Basically if anyone hasn't applied one of the prefix patches yet now's
+> the time to do so.
+> 
+> While prefixing should shield against them they should still be fixed
+> for good.
+> 
+> CVE-2014-6277 can still be triggered to segfault a fully patched bash:
+> bash -c "f(){ x(){ _;}; x(){ _;}<<a;}"
+> 
+> Second issue PoC on fully patched system:
+> env BASH_FUNC_x%%='() { _;}>_[$($())] { echo vuln;}' bash -c :
+> 
+> (both likely not exploitable due to prefix shielding, but should be
+> fixed anyway)
 
-  All versions of dns-sync prior to the release 0.1.1 were
- vulnerable to arbitrary command execution via maliciously
- formed hostnames.  For example:
+I have patches for these, and they are in the pipeline.
 
-    var dnsSync = require('dns-sync');
-    console.log(dnsSync.resolve('$(id > /tmp/foo)'));
+Chet
 
-  This is caused by the hostname being passed through a shell
- as part of a command execution.
+- -- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.11 (Darwin)
 
-  I disclosed/reported this here:
-
-        https://github.com/skoranga/node-dns-sync/issues/1
-
-  The following commit resolves the bug:
-
-        https://github.com/skoranga/node-dns-sync/commit/d9abaae384b198db1095735ad9c1c73d7b890a0d
-
-Steve
--- 
+iEYEARECAAYFAlQsR6oACgkQu1hp8GTqdKtxOQCdGtpKc/kiYnypk44IlIp3y1C2
+3MAAnRiNiAdo8SAHubCwKlrHGU4hnHXa
+=wGXW
+-----END PGP SIGNATURE-----
