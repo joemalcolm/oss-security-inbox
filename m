@@ -1,50 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/17
-Message-ID: <54402FA3.2090905@redhat.com>
-Date: Thu, 16 Oct 2014 14:50:43 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: attacking hsts through ntp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/20
+Message-ID: <CAOp4FwRKzeBw+9ZhiEkj0bCBMuLGyExuRG5AXSKJtkUYd=tvnA@mail.gmail.com>
+Date: Wed, 1 Oct 2014 23:53:52 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Oct 1, 2014 at 8:14 PM, Greg KH <greg@...ah.com> wrote:
+> On Wed, Oct 01, 2014 at 12:08:15PM -0400, Jason Cooper wrote:
+>> On Wed, Oct 01, 2014 at 08:55:35AM -0700, Greg KH wrote:
+>> > On Wed, Oct 01, 2014 at 07:15:56AM -0400, Jason Cooper wrote:
+>> > > On Wed, Oct 01, 2014 at 01:08:09PM +0200, Hanno Böck wrote:
+>> > > > Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
+>> > > > schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
+>> > > >
+>> > > > > Finally: *PLEASE* let me know if you have any good ideas on how to
+>> > > > > find vulnerabilities like this ahead-of-time. My article "How to
+>> > > > > Prevent the Next
+>> > > > > Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a
+>> > > > > number of ways that Heartbleed-like vulnerabilities could have been
+>> > > > > detected ahead-of-time, in ways that are general enough to be
+>> > > > > useful.  I'd like to do the same with Shellshock, so we can quickly
+>> > > > > eliminate a whole class of problems.
+>> > > >
+>> > > > The "class of problems" here is imho that we have a bunch of tools that
+>> > > > get rare attention from anyone, are run by few volunteers, but they're
+>> > > > an essential part in running the Internet.
+>> > > >
+>> > > > Just think about busybox, curl, wget, coreutils, gettext, gzip, ... - a
+>> > > > vuln in any of these could have severe consequences.
+>> > > >
+>> > > > Maybe the topic here should be: "How can we get the (whitehat) IT
+>> > > > seucrity community to have a deeper look at neglected but important
+>> > > > opensource projects."
+>> > >
+>> > > The LF has the Core Infrastructure Initiative:
+>> > >
+>> > >   http://www.linuxfoundation.org/programs/core-infrastructure-initiative/faq
+>> >
+>> > Yes, that's exactly what that group is doing, and they have a huge list
+>> > of these types of projects that they are looking into funding to help
+>> > prevent this type of thing from happening again.  I'll go add bash to
+>> > the list there as I don't think it is currently on it at the moment.
+>>
+>> Could we also update the FAQ to include "How to recommend a project?"?
+>> A few days ago I tried to recommend bash.  I dug around, and finally
+>> just sent an email to Ted.  Which I don't think is the correct answer
+>> ;-)
+>
+> It isn't, but Ted is a good contact for it :)
+>
+> Fixing the FAQ is on the list of things to do that was discussed at the
+> last meeting, hopefully it will be done soon.
+>
+> thanks,
+>
+> greg k-h
 
+I believe that small companies can benefit from committing engineering
+efforts to audit Open Source software that they all rely heavily upon.
 
-On 16/10/14 02:38 PM, Hanno Böck wrote:
-> Am Thu, 16 Oct 2014 14:34:25 -0600
-> schrieb Kurt Seifried <kseifried@...hat.com>:
-> 
->> I did not know that. One concern I have is also HSTS has no tools to
->> manage them in browsers, at least when I last checked, has that
->> changed? There is some room for DoS due to this on the client side.
-> 
-> chrome://net-internals/#hsts
-> 
-> Not pretty or easy to use, but helps debugging stuff (especially with
-> HPKP which is quite picky when you do it wrong). I don't know about
-> Firefox or others.
-
-There is still no way to get a list of domains is there, due to the one
-way hash chrome uses to store them? I had previously created a script
-that created a webpage with links to a thousand or whatever subdomains
-(e.g. 1x1 pixels) with hsts headers, and a reload to a new url, so
-basically:
-
-www.example.com loads page with 1000 images at [sha256 random
-domain].images.example.com and then redirects to www2.example.com and so
-on, it eats up a few tens of kilobytes per second, can happily sit in
-the background. because chrome uses that oen way hash I can't find a way
-to delete say all the hsts for *.exmaple.org.
-
-Not sure if this deserves a CVE, it's a slow dos, but there's no way to
-deal with it short of wiping the hsts data file entirely. It would be
-nice to have some better tools to manage hsts like we do for cookies,
-but the use of the one way hash (which saves on space) trades one dos
-(super long domain names) for another (can't link hsts records to
-domains easily).
+I keep arguing and try to talk to managers that they need to become
+more active in Open Source, as they would also benefit in terms of
+less downtime, and better vulnerability management. Having a good Open
+Source strategy helps IT managers have better control of their IT
+infrastructure. On top of training IT staff, maybe it's a good time to
+introduce the idea of "Strong Open Source rating", and committing 10%
+of their IT employees working hours to improve relevant Open Source
+projects.
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
