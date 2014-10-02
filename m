@@ -1,52 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/34
-Message-Id: <20140929175703.5DD5572E0FE@smtpvbsrv1.mitre.org>
-Date: Mon, 29 Sep 2014 13:57:03 -0400 (EDT)
-From: cve-assign@...re.org
-To: echain.tw@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: QNAP QTS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/38
+Message-ID: <542D8C9E.6000904@fifthhorseman.net>
+Date: Thu, 02 Oct 2014 13:34:22 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org
+Subject: Re: Re: gnome-shell lockscreen bypass with printscreen key
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 10/02/2014 12:33 PM, cve-assign@...re.org wrote:
+>> https://bugzilla.gnome.org/show_bug.cgi?id=737456
+> 
+> Clearly, something is wrong, but the CVE ID or IDs need to apply to a
+> specific aspect of the problem.
+> 
+> Our understanding from
+> https://bugzilla.gnome.org/show_bug.cgi?id=737456#c10 is that "the
+> prtsc key is not disabled when the screen is locked" is intentional
+> behavior. Thus, that's not the root cause. 
 
-> QNAP QTS employ Bash as the default shell and we discover an arbitrary
-> code execution flaw with UID=0
+I think i agree with this analysis.  I only discovered this problem
+because i was trying to take a screenshot of the lockscreen to report a
+different (non-security) bug in the lockscreen.
 
-As far as we can tell, the
-http://www.qnap.com/useng/index.php?lang=en-us&sn=885&c=3036&sc=&n=22457
-reference suggests that the code execution for that PoC occurs because
-the QNAP Bash build has the CVE-2014-6271 vulnerability. In that case,
-the applicable CVE ID is CVE-2014-6271, not a separate CVE ID specific
-to QNAP's build.
+I did not expect to be able to use the printscreen key combination to do
+that, but the fact that i could do so was useful.
 
-If you mean something else -- for example, if another reference states
-that the implementation language of restore_config.cgi is not sh and
-that the design of restore_config.cgi was supposed to drop privileges
-immediately, but there's an implementation flaw in which Bash is
-launched before privileges are dropped -- then there could conceivably
-be a separate CVE ID for that restore_config.cgi issue. Similarly, if
-you're referring to an authentication bypass -- for example, if the
-implementation language of restore_config.cgi is not sh and the design
-of restore_config.cgi was supposed to exit immediately for
-unauthenticated requests, but there's an implementation flaw in which
-Bash is launched before missing authentication is detected, then there
-could conceivably be a separate CVE ID.
+However, the screencapture (video) feature *is* disabled during
+lockscreen for precisely the reasons i expected printscreen to be
+disabled.  I'm not sure what to make of that pair of decisions.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+> It might be reasonable to
+> argue that, as a consequence, anyone with physical access to that key
+> is implicitly allowed to consume memory and disk space. In many
+> environments, anyone with physical access to that key also happens to
+> be able to turn off the computer.
 
-iQEcBAEBAgAGBQJUKZzGAAoJEKllVAevmvmsYVkIAL4Y1FNV4YcHY8r2jIHfg1Ez
-zLtThhTE6s3CMPfmDJPnjCm9uwTNvT9QLSJ9v6eZhoaXvutCqdKNqjfcdabZhikr
-7JRHJcg4jTOcrang/w9+9SL8dJ3C/JUFfJZyUKfA2d19vCCuXwpnOZKq/70C2Pl1
-tU8U1VONrZCuSImAIWpy/aoFtc5GeSGxkblb6StMteZIXbDM+PsAyrtY0yRX9UuG
-VIpeX0aVVH6XW8+1L1jVYolYDdN3M8pZWBJYArFxgg+A/vSu7Vk5ZsGO/vY8y7jv
-x1h76ah6I7cw3GSUt9fujizBEi+ekAWaGXqB6pOG3/HUO1xI9BJofuDQSg+ZtIE=
-=kin/
------END PGP SIGNATURE-----
+Turning off the computer is a very different attack from filling up
+someone's home directory.  You recover from a turned-off computer by
+turning it back on.  If your home directory is full, you have to figure
+out what is taking up the storage space, which is not something all
+users are familiar with.
+
+If your home directory uses metered storage (i.e. you pay by the MiB) or
+is backed up to a service that is itself metered, then filling up the
+home directory is actually a direct financial cost to the end user in a
+way that turning off the computer does not.
+
+> There could be a CVE assignment for
+> https://bugzilla.gnome.org/show_bug.cgi?id=737456#c20 - "for that
+> short period of time those windows are not only shown (which is a bad
+> enough privacy issue on it's own), but also accept input (which makes
+> the already-bad issue even worse)." However, the bug discussion
+> doesn't suggest that there's a reasonable way to solve this within
+> gnome-shell itself. In other words, gnome-shell doesn't have any
+> direct or immediate ability to control the screen when it's not
+> running.
+
+I see how this is difficult to assign as a specific problem.
+Alternately, one can argue that *any* crashing bug in a program designed
+to lock the screen is by definition a security flaw.  If gnome-shell
+wants to provide lock-screen capability, then any crashing bug in
+gnome-shell that can be triggered while the screen is locked is a
+security vulnerability.
+
+Any crash in xscreensaver, for example, is a security flaw.
+
+> Possibly we're left with the following, which is unusual for a CVE but
+> still valid: "PrtSc is an unauthenticated request that's available to
+> untrusted parties. It's also a very expensive request. The combination
+> of this PrtSc behavior and the existence of the oom-killer allows
+> authentication bypass for command execution. Therefore, PrtSc must be
+> rate limited, and the lack of rate limiting is a vulnerability."
+> Unless there's a better alternative, the CVE ID will be assigned for
+> that vulnerability characterization.
+
+
+The above sounds about right to me.  another way to look at it is:
+
+ * gnome-shell is supposed to lock the screen.
+ * when it is doing this, it must not crash.
+ * gnome-shell has a short-term memory leak via prtsc
+ * prtsc can be triggered while locked.
+ * the short-term memory leak is bad enough to cause a crash.
+ * when locked, gnome-shell *must* police its own internal resource
+usage to avoid crashing.
+ * rate-limiting is one way of policing this resource usage.
+
+However, this still leaves gnome-shell users vulnerable to the next
+gnome-shell crash while locked.  it's fixing one crashing problem, but
+not fixing the larger problem that a screenlocking program effectively
+fails open when it fails.
+
+Is there a way to make a screenlocking program that is designed to fail
+closed instead?
+
+fwiw, https://bugzilla.gnome.org/show_bug.cgi?id=737456#c5 raises an
+interesting alternate approach to resolving the underlying problem:
+
+    Not sure what crazy side effects that might have if any but ...
+    Jasper can we simply unmap all windows when we lock and map them on
+    unlock?
+
+I don't know enough about X11 to know if this proposal is sufficient to
+protect the user from command execution after a gnome-shell crash, or
+what the side effects would be.
+
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
