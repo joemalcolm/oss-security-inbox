@@ -1,28 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/38
-Message-ID: <54245D00.4030809@case.edu>
-Date: Thu, 25 Sep 2014 14:20:48 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Michal Zalewski <lcamtuf@...edump.cx>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/27
+Message-ID: <20141002072210.GA29659@openwall.com>
+Date: Thu, 2 Oct 2014 11:22:10 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Sona Sarmadi <sona.sarmadi@...a.com>, oss-security@...ts.openwall.com
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-On 9/25/14, 2:09 PM, Michal Zalewski wrote:
->>> Have these been reported upstream?
->> Nope, but i just cced Chet on it now :)
-> 
-> I think that Chet was cc:ed on the original report from Todd last
-> night (as was I).
-> 
-> /mz
+Sona - Chet is not on oss-security, we should be CC'ing him on relevant
+messages.  I've just added the CC on this one.
 
-I saw it.  I'm looking at the more serious parsing one first.  (The one
-you sent to oss-security -- please remember I'm not on that list and
-continue to cc me on these.)
-
-Chet
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+On Thu, Oct 02, 2014 at 06:48:54AM +0000, Sona Sarmadi wrote:
+> > On 10/1/14, 5:04 PM, Shawn wrote:
+> > > http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+> > 
+> > Nope, this one fixes 7168/7169.  It's the equivalent of the `parser-oob' patch.
+> 
+> Chet is 7168 new vulnerability or is a typo and should be CVE-2014-7186?
+> Doesn't bash43-026  fix CVE-2014-7169?
+> 
+> 
+> Is this summary correct?
+> 1) CVE-2014-6271 (Initial vulnerability, Bash Code Injection Vulnerability via Specially Crafted Environment Variables): GNU fix bash43-025  & bash32-052 
+> 
+> 
+> 2) CVE-2014-7169 (Further parser error,  this was assigned to cover incomplete fix for CVE-2014-6271): GNU fix bash43-026  & bash32-053
+> 
+> 
+> 3) CVE-2014-6277 (this is the hardening patch which adds function name mangling, it makes exploitation over the network impossible): Florian's patch /GNU fix bash43-027 & bash32-054
+> 
+> 
+> 4) CVE-2014-6278 (bash: code execution via specially crafted environment): Florian's patch /GNU fix bash43-027 & bash32-054
+> 
+> 
+> 5) CVE-2014-7186 (Out of bound memory read error in redir_stack): GNU fix bash43-028 ??
+> 
+> 
+> 6) CVE-2014-7187 (Off-by-one error in nested loops): No upstream patch available yet ?
+> 
+> 
+> Thanks 
+> -- Sona
