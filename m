@@ -1,82 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/12
-Message-ID: <53618227.4070805@amacapital.net>
-Date: Wed, 30 Apr 2014 16:07:19 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com, solar@...nwall.com
-Subject: Re: local privilege escalation due to capng_lock as used in seunshare
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/28
+Message-ID: <CALx_OUB=wGZKyubn--Qv8i_ysjFmn8TJgzKJZ_5M5ajOA_yOdw@mail.gmail.com>
+Date: Thu, 2 Oct 2014 01:15:51 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Shawn <citypw@...il.com>
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-On 04/30/2014 08:55 AM, Steve Grubb wrote:
-> On Wednesday, April 30, 2014 02:35:52 AM Solar Designer wrote:
->> On Tue, Apr 29, 2014 at 06:18:58PM -0400, Steve Grubb wrote:
->>> On Wednesday, April 30, 2014 02:12:22 AM Solar Designer wrote:
->>>> On Tue, Apr 29, 2014 at 05:49:04PM -0400, Steve Grubb wrote:
->>>>> On Tuesday, April 29, 2014 02:20:47 PM Andy Lutomirski wrote:
->>>>>>   if (setuid(getuid()) != 0)
->>>>>>   
->>>>>>     err(1, "setuid(getuid())");
->>>>>
->>>>> If you do not want the saved uid to be available, you need to use
->>>>> setresuid. That removes it. I would classify this as a bug in the test
->>>>> program.
->>>>
->>>> Not quite.
->>>
->>> If the program was amended to use setresuid(), does the bug still exist?
->>
->> Yes, because it affects other similar correct programs that haven't yet
->> been amended to work safely on your non-Unix system. ;-)  Alternatively,
->> you may declare that your system is deliberately incapable of running
->> programs written for traditional Unix safely, and will stay that way.
->> That will be a reason for people to prefer other Linux distros over Red
->> Hat's, but at least it'd be fair. ;-(
->>
->> To paraphrase your question, since sendmail got a workaround for the old
->> capabilities bug in the Linux kernel, does the bug in those old kernel
->> versions still exist?  The answer is also yes, it does, potentially
->> affecting other programs running on those vulnerable kernels.(*)  The
->> bug needed to be fixed in the kernel, and it was (for later versions).
->>
->> (*) Of course, most people should not actually run those old kernels
->> because of other vulnerabilities that have been found and fixed since,
->> but that's a separate matter.
->>
->> I hope you don't mind the rhetoric.  I mean it to be friendly.  I hope
->> it serves to deliver the message well.
-> 
-> No problem. I chatted with Petr Matousek about this and I think we understand 
-> the issue now.
-> 
-> In my opinion, the issue is that I think SECURE_NOROOT doesn't get its 
-> semantics right as is. I'm thinking if noroot is set and cap_setuid is set, 
-> suid should be as normal but with no capabilities. If noroot is set and 
-> cap_setuid is unset, no transition of any uid should occur. If noroot is 
-> unset, then works as normal.
-> 
-> If this was not the intention, then SECURE_NOSUID should have been created at 
-> the same time the other SECUREBITS options were created so that each part of 
-> credential change could be completely controlled. Not designing the ability to 
-> control all parts is what creates this hole...for years I might add.
-> 
-> So, I wonder if SECURE_NOROOT should be fixed or if ancient kernels need to 
-> suddenly backport PR_SET_NO_NEW_PRIVS?
+Nope. There are no CVEs assigned for general hardening (e.g.,
+Florian's patch) and the ordering of CVE IDs isn't necessarily
+chronological (because larger vendors get their own ranges to allocate
+without consulting any central authority).
 
-I suspect that fixing SECURE_NOROOT will be basically impossible.  I'm
-not sure that anyone knows what it's supposed to do, and there is an
-amazing amount of inertia preventing any changes to Linux's capability
-system.
+In true chronological order, it went like this:
 
-I'd support an effort to kill securebits, but that might also be impossible.
+* CVE-2014-6271 - original RCE found by Stephane. Fixed by bash43-025
+and corresponding Sep 24 entries for other versions.
 
-Backporting PR_SET_NO_NEW_PRIVS would be easy, but I don't know how many
-people are still supporting kernels that don't have it.  IIRC it was
-added in Linux 3.5.  I guess RHEL5 and RHEL6 could be candidates.  TBH
-it might actually be safer to turn off securebits entirely in capng_lock
--- I suspect that the class of attacks enabled by setting securebits is
-larger than the class that is mitigated.
+* CVE-2014-7169 - file creation / token consumption bug found by
+Tavis. Fixed by bash43-026 & co (Sep 26)
 
-For distros that are affected (SUSE/OpenSUSE?), the latest upstream
-cap-ng is now patched to use PR_SET_NO_NEW_PRIVS.
+* CVE-2014-7186 - a probably no-sec-risk 10+ here-doc crash found by
+Florian and Todd. Fixed by bash43-028 & co (Oct 1).
 
---Andy
+* CVE-2014-7187 - a non-crashing, probably no-sec-risk off-by-one
+found by Florian.  Fixed by bash43-028 & co (Oct 1).
+
+* CVE-2014-6277 - uninitialized memory issue, almost certainly RCE
+found by me. No specific patch yet.
+
+* CVE-2014-6278 - command injection RCE found by me. No specific patch yet.
+
+*All* of these are mitigated by Florian's unofficial patch
+(http://www.openwall.com/lists/oss-security/2014/09/25/13) or its
+upstream version (bash43-027 & co, released on Sep 27). If you have
+that patch, there's no point in obsessing about the status of
+individual bugs, because they should no longer pose a security risk.
+
+And you don't have it, patch your system now instead of waiting for
+any additional patches for '77 and '78 =)
+
+/mz
