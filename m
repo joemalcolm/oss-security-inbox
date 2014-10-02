@@ -1,33 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/32
-Message-ID: <CA+YQQ6XvvScCsvtCp5iHfrBUY6ENEqxW1MHyOxoFHGk8hp_JWw@mail.gmail.com>
-Date: Mon, 29 Sep 2014 10:49:22 -0700
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: "Kobrin, Eric" <ekobrin@...mai.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Florian Weimer <fweimer@...hat.com>,  "chet.ramey@...e.edu" <chet.ramey@...e.edu>, Michal Zalewski <lcamtuf@...edump.cx>,  Solar Designer <solar@...nwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/5
+Message-ID: <20141002012140.GA24898@openwall.com>
+Date: Thu, 2 Oct 2014 05:21:40 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: More parser odities
 Content-Type: text/plain; charset=utf-8
 
-On 29 September 2014 10:39, Kobrin, Eric <ekobrin@...mai.com> wrote:
-> On Sep 29, 2014, at 11:59 AM, Eric Blake <eblake@...hat.com> wrote:
->
->> But I see no reason to move away from %% suffixing.
->
-> The suffix fixes the obvious CGI hole, but it leaves exposed programs in which the adversary gets to choose the variable name as well.
->
-> env $'BASH_FUNC_foo%%=() { echo 123\n }' bash -c "foo"
->
-> I think that a more robust solution, such using a separate store for functions, is needed if function import is to survive as a feature.
->
-> -- Eric Kobrin
+On Wed, Oct 01, 2014 at 05:53:45PM -0700, Tavis Ormandy wrote:
+> Eric - the prefix you're specifying _is_ the long-term solution, it
+> may be a bug, but it's a non-security bug.
 
-If an adversary can choose the variable name, it's game over by
-definition. He can choose LD_PRELOAD, SHELLOPTS='xtrace' PS4='$(foo)',
-LD_DEBUG_OUTPUT, PYTHONINSPECT, etc, etc.
+I fully agree with Tavis and Michal on this.  The only reason I brought
+this to Chet's attention is that Chet appears to want to take this
+opportunity to make the parser more robust in general (great!), beyond
+fixing the security problems.
 
-This general solution is robust, now we're just hammering out the details.
+Unfortunately, a lot of people are confused.
 
--- 
--------------------------------------
-taviso@...xchg8b.com | pgp encrypted mail preferred
--------------------------------------------------------
+Some people want urgent fixes for each and every new parser bug.  They
+don't actually need those fixes much!  These are not security issues
+anymore, as long as a variation of the prefix/suffix patch is applied -
+and this patch is now available upstream (for several days already).
+It's the only patch people need (or alternatively a patch disabling
+function imports altogether, for the same security effect).  Even the
+original CVE-2014-6271 fix becomes unimportant with the prefix/suffix
+patch in place.
+
+In that sense, it's a pity we have several CVEs assigned to issues the
+patches for which are relatively unimportant to have, whereas we can't
+get a CVE assigned that would somehow correspond to the only important
+fix (removing the parser from being exposed via arbitrarily-named env
+vars), because it's not strictly fixing a vulnerability - it "just"
+hardens the code so greatly that multiple separately patched
+vulnerabilities stop being such.  I guess this could fall under some CWE
+rather than a CVE... or maybe we can in fact get a CVE assigned to "bash
+exposes its code parser, which is unprepared to handling untrusted code
+fragments, to untrusted input via arbitrarily-named env vars"?  Like I
+just said, we already have a fix for this upstream.  Maybe it's just the
+right opportunity to do that, instead of assigning yet another CVE to
+Michal's latest finding?  Oh, I think Michal's latest already got a CVE
+too?  Does this once again render the (previously) exposed parser not
+CVE-worthy? ;-(
+
+Then, some people somehow think that bash sort-of trusting BASH_FUNC_*
+env vars is somehow a security problem or that it somehow leaves much
+room for security hardening, even though bash and dynamic linker and
+libc also trust many other fixed-name env vars.  I think this is just
+another kind of confusion.  Several of us said so before, but I felt I
+needed to add my +1 here: not a security problem.
+
+Alexander
