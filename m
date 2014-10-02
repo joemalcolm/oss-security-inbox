@@ -1,35 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/23
-Message-ID: <54823520.7040609@fifthhorseman.net>
-Date: Fri, 05 Dec 2014 17:43:44 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/13
+Message-ID: <CABniQZP6mYhmDwS9KzFh4wWCad=9DN8WWNpqQR-svnZgmrntPw@mail.gmail.com>
+Date: Thu, 2 Oct 2014 10:57:57 +0800
+From: Shawn <citypw@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-On 12/05/2014 05:15 PM, Reed Loden wrote:
-> On Fri, Dec 5, 2014 at 7:09 AM, Daniel Micay <danielmicay@...il.com> wrote:
-> 
+On Thu, Oct 2, 2014 at 5:45 AM, Ed Prevost <me@...ardprevost.info> wrote:
+> On 10/1/2014 2:11 PM, Shawn wrote:
+>> On Thu, Oct 2, 2014 at 5:08 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
+>>> On 10/1/14, 5:04 PM, Shawn wrote:
+>>>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+>>> Nope, this one fixes 7168/7169.  It's the equivalent of the
+>>> `parser-oob' patch.
+>>>
+>>> I have patches that fix 6277/6278 that are in the pipeline.
+>>>
+>> oh, s0rry for the mistake...that'd be great if we can get the patch as
+>> quickly as possible. Thanks.
 >>
->> Mozilla has no excuse for not enabling PIE for Firefox, because 99% of
->> the code is in dynamic libraries already. It has no performance impact.
+>>> --
+>>> ``The lyf so short, the craft so long to lerne.'' - Chaucer
+>>>                  ``Ars longa, vita brevis'' - Hippocrates
+>>> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
 >>
-> 
-> For the record, Mozilla tried it several months ago and had to back it out.
-> 
-> "Nautilus (the file manager) can't open PIE executables, which makes
-> distributing PIE executable essentially impossible."
-> 
-> https://bugzilla.mozilla.org/show_bug.cgi?id=857628#c6 (which caused
-> https://bugzilla.mozilla.org/show_bug.cgi?id=1076892)
+>>
+> Really!? Honestly!? "as quickly as possible"
+>
+What else could I say? A POC already released and a bunch of
+customer's machines are waiting...even the only mitigation is in
+GCC-lvl, which compile bash with ASLR/NX/PIE/CANARY.....too bad this
+time.
+
+> Man, we really should rally together and at least send Chet a recovery
+> beer basket or something.
+>
+that's for sure...no problem with beer. I'll try to catch up with Chet
+in whatever random conferences;-) maybe two dozen beers
+
+> --Ed
+> Application & Network Security, Research Scientist
+> http://EdwardPrevost.info
+> https://twitter.com/@EdwardPrevost
+>
 
 
-i couldn't find a reference to this in the nautilus bugtracker, so i
-just posted:
 
- https://bugzilla.gnome.org/show_bug.cgi?id=741183
+-- 
+GNU powered it...
+GPL protect it...
+God blessing it...
 
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+regards
+Shawn
