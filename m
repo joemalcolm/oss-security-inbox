@@ -1,56 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/11
-Message-ID: <20141218140630.GY32428@core.inversepath.com>
-Date: Thu, 18 Dec 2014 15:06:30 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2014-012] JasPer input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/37
+Message-Id: <20141002170830.8D1577BC01E@smtpvmsrv1.mitre.org>
+Date: Thu,  2 Oct 2014 13:08:30 -0400 (EDT)
+From: cve-assign@...re.org
+To: djorm@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Remote code execution via XSL extensions in SpagoBI
 Content-Type: text/plain; charset=utf-8
 
-#2014-012 JasPer input sanitization errors
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
+> https://www.spagoworld.org/jira/browse/SPAGOBI-1885
+> 1) FEATURE_SECURE_PROCESSING is not set. This means an attacker can
+> provide an XSL document with embedded Java code, which will be executed
+> on the server.
 
-The JasPer project is an open source implementation for the JPEG-2000 codec.
+Use CVE-2014-7296.
 
-The library is affected by a double-free vulnerability in function
-jas_iccattrval_destroy() as well as a heap-based buffer overflow in function
-jp2_decode().
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-A specially crafted jp2 file, can be used to trigger the vulnerabilities.
-
-Affected version:
-
-JasPer <= 1.900.1
-
-Fixed version:
-
-JasPer, N/A
-
-Credit: vulnerability report received from the Google Security Team.
-
-CVE: CVE-2014-8137 (double-free), CVE-2014-8138 (heap overflow)
-
-Timeline:
-
-2014-12-10: vulnerability report received
-2014-12-10: contacted affected vendors
-2014-12-10: assigned CVEs
-2014-12-18: patch contributed by Tomas Hoger from Red Hat Product Security
-2014-12-18: advisory release
-
-References:
-http://www.ece.uvic.ca/~frodo/jasper
-https://bugzilla.redhat.com/show_bug.cgi?id=1173157
-https://bugzilla.redhat.com/show_bug.cgi?id=1173162
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2014-012.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+iQEcBAEBAgAGBQJULYYgAAoJEKllVAevmvmsMRYH/2icsp5j32o0DkGbe1veePbE
+5nN/OXV6xjXXjaiP9wi7zDO5f73cp68j9VBHv5EmNprMQIPdYR0h9FEjcC4bkORc
+QP01QFEZ0J8Gnkf8MxqyhlUfdVtb3xlEZEf3rfQHF5kWa+MulwJNkvILEiwDAMtQ
+T8gg+/2DcXD6pPWVHv5p5PgxfEGIjlB35Un0ZNHgkdgHCTE+pFpUSfxMd4XkPab3
+r4WWWXcwtcA5QsXq/038DL1LpP2ddRDBGumka9e5K9d+/7hvf175Jw7k3YrjPWI4
+bUKZgVvFuQq5yodc+NhgdoUITeUJKLEN3567e8JgF7yDaJjKGYZZHt51Xjo34wI=
+=jKBL
+-----END PGP SIGNATURE-----
