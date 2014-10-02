@@ -1,39 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/5
-Message-ID: <3a953db3ca5b4361b04de7d848ef367d@tedunangst.com>
-Date: Mon, 29 Dec 2014 09:05:29 -0500
-From: Ted Unangst <tedu@...unangst.com>
-To: Florian Weimer <fw@...eb.enyo.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: OpenBSD signify and "fingerprint"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/17
+Message-Id: <20141002032907.5FAE2C509AB@smtptsrv1.mitre.org>
+Date: Wed,  1 Oct 2014 23:29:07 -0400 (EDT)
+From: cve-assign@...re.org
+To: andrew@...ewerks.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, toconnor@...ewerks.com
+Subject: Re: CVE Request: linux kernel net_get_random_once bug
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 29, 2014 at 14:09, Florian Weimer wrote:
-> This is just a warning that what OpenBSD's signify tool calls a
-> “fingerprint” is very different from the concept of a fingerprint in
-> OpenPGP.  It is just a random 64-bit blob with no relationship to the
-> raw public key used for signing.  Conceptually, it is similar to the
-> OpenPGP key ID (it is used as a quick check that public key and
-> signature match), except that it is even more trivial to forge.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> My colleague Tom O'Connor and I have identified a security bug in the
+> Linux kernel that results in drastically degraded randomness ...
+> existed in kernel versions 3.13 and 3.14
 > 
-> Fortunately, typical usage patterns of the signify tool do not expose
-> the fingerprint to the user, so there is no immediate temptation to
-> use it for validating a key (which is the primary use case for
-> fingerprints in OpenPGP).  It is also short (64 bits) and thus not
-> very secure to the initiated, no matter how it is computed, but I'm
-> not fully convinced that this is a sufficient deterrent.
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3d4405226d27b3a215e4d03cfa51f536244e5de7
+> http://secondlookforensics.com/ngro-linux-kernel-bug/
+> 
+>   Part of the explanation ... is ... "this call-site will
+>   get patched up at boot". But actually, it is not always
+>   true that this patching occurs as expected. On affected
+>   systems, the slow path (where initialization of random
+>   seeds occurs) is never taken.
 
-Yes. The user isn't supposed to believe anything a key says about its
-own identity. I tried to make it hard for the user to do that.
+Use CVE-2014-7284.
 
-I was about to reply that signify doesn't even print the fingerprint,
-but unfortunately I see the option to do that is still there. That was
-actually supposed to be used for debugging only. That at least is
-easily removed.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-> Maybe a different term instead of “fingerprint” could be used to
-> reduce the potential for confusion.  Something like “key number” or
-> “key slot” might be appropriate (because these terms do not confer any
-> identifying property).
-
-Thanks. I'll think about it for a bit.
+iQEcBAEBAgAGBQJULMYEAAoJEKllVAevmvmshOwH/1wt7JjopbcMeZumZ6U3kx4J
+B4y/v1qxJYqTyhLBUzL6vKlJ2cPyRxZsPJGQi60o1YDgPNP+wFgiryugbpmLf2Yw
+CW6xR5ORsrMYxnOTwYX9no7e80i7zDBh0PhYw8y+fCsXFaPJOMH9DtRYcVLhQGpm
+XByWCaPgDiCBcSpei1k6wLmKqjNJI9lFavI99B6aH9SQ8c0yCgA5tvbR/e9PAflQ
+JRsDjeE0QND8WAaT2HfsrYjw5yxiPmHKzWMs89q4um1aFEUYSp1ye9PNr8vUlrPG
+dS6JE5kcagkPhIFoH6Hb85hTTqXmor8R8JPRsrR0IsvQKFB49qPo5CJbhsEzBD0=
+=pG+m
+-----END PGP SIGNATURE-----
