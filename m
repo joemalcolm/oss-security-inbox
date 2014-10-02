@@ -1,47 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/11/11
-Message-ID: <CACYkhxh3X6bLGr61eqY78+C_da3u-=zD_FPp667ghzQU5CcGKQ@mail.gmail.com>
-Date: Wed, 12 Feb 2014 10:13:57 +1100
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/12
+Message-ID: <CALx_OUDPKtyyb=cyKjqVw9hR8Z5o_BGzbA_SUE5r_+BoQp6U9Q@mail.gmail.com>
+Date: Wed, 1 Oct 2014 19:44:38 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: More parser odities
 Content-Type: text/plain; charset=utf-8
 
-On 12 February 2014 00:05, P J P <ppandit@...hat.com> wrote:
+> Maybe it's just the right opportunity to do that, instead of assigning
+> yet another CVE to Michal's latest finding?  Oh, I think Michal's
+> latest already got a CVE too?  Does this once again render the
+> (previously) exposed parser not CVE-worthy? ;-(
 
-> | The security flaw is in the DNS protocol, and (apart from protocol
-> upgrade
-> | fantasies) the only practical way to mitigate this is to have a pool of
-> IP
-> | addresses to initiate recursive requests from.
->
->   That is accept requests from predefined networks? djbdns/ndjbdns already
-> does
-> that. Still, that network could be very large. There are also open
-> resolvers.
+Whoa :-) So to be clear, I felt that it makes sense to ask for CVEs
+and report these externally because up until that point, we had no
+conclusive evidence that the original patch is truly inadequate, and
+that Florian's patch is anything more than a nice-to-have that several
+people on oss-security are fond of. Tavis' EOL find was troubling, but
+fixed upstream with a one-liner in bash43-026, not with Florian's
+patch.
 
+(In fact, Florian's patch wasn't upstreamed when I started fuzzing the
+parser and hit the bugs.)
 
-That helps too (assuming no malware outbreak), but I was referring to
-having a pool
-of IP addresses attached to the DNS server for the purpose of sending
-outbound
-requests, in order to multiply the number of available address+port+ID sets.
+Anyway, I think that the confusion stemmed mostly from fairly
+inaccurate "vanity" pages, news articles, and "vulnerability checkers"
+that pulled off stuff like this
+(https://shellshocker.net/shellshock_test.sh):
 
+-- snip! --
+# CVE-2014-7186
+CVE20147186=$((bash -c 'true <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF
+<<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF' 2>/dev/null || echo
+"vulnerable") | grep 'vulnerable' | wc -l)
 
->   Hmmn..true; DNS is suppose to recycle cached records. But does that mean
-> all
-> DNS implementations are vulnerable to cache poisoning? (given enough
-> efforts)
+echo -n "CVE-2014-7186 (redir_stack bug): "
+if [ $CVE20147186 -gt 0 ]; then
+        echo -e "\033[91mVULNERABLE\033[39m"
+else
+        echo -e "\033[92mnot vulnerable\033[39m"
+fi
+-- snip! --
 
+Assigning CVEs + maximum CVSS scores to the two probably non-risk
+one-off bugs probably didn't help.
 
-Yes.  That effort isn't necessarily trivial, but as bandwidth and CPU
-resources
-increase, these attacks become easier and less overt.  If the attacker is
-able to sniff
-the DNS traffic before it reaches the target server, it's game over no
-matter how big
-a space of ports/IDs you have.
+At this point, it definitely makes no sense to keep assigning CVEs to
+additional prefix-requiring problems in the parser at this point,
+since hopefully everybody got the message to upgrade.
 
-Regards,
-  Michael
-
+/mz
