@@ -1,51 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/9
-Message-ID: <20141125182613.GA14879@eldamar.local>
-Date: Tue, 25 Nov 2014 19:26:13 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE request: teeworlds: security issues fixed in 0.6.3 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/20
+Message-Id: <20141002034026.BF29A72E0A0@smtpvbsrv1.mitre.org>
+Date: Wed,  1 Oct 2014 23:40:26 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2014-7224 - Android accessibility and accessibilityTraversal vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-teeworlds's upstream mentioned the following regardin the 0.6.3 release[1]:
+CVE-2014-7224 has been assigned to the issue mentioned in
 
-> 0.6.3 released - security fix
-> 
-> As a result of a recently reported security vulnerability in the server,
-> this release contains little updates. In particular it's only the
-> following changes:
-> 
-> Bugfixes:
-> 
->  * Fix the above-mentioned security vulnerability (Memory reads,
->    Segmentation Fault) in all 0.6.x servers.
-> 
->  * Fix server crash in the console code.
-> 
->  * Fix master server lookup for servers.
-> 
->  * Fix scripts/make_release.py script.
-> 
->  * Fix client crash when opening a map with an invalid version.
-> 
-> As a result, server owners are urged to upgrade ASAP, you're running an
-> exploitable server right now.
-> 
-> Client updates however, are not as urgent as the server updates, because
-> the only fix is an editor crash.
+  https://daoyuan14.github.io/news/newattackvector.html
 
-I'm not sure if (and how many) CVEs might be assigned. The server
-crash was fixed with commit in [2].
+that affects Android devices when using a non-default configuration
+in which an accessibility feature is enabled.
 
-References:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
- [1] https://www.teeworlds.com/?page=news&id=11200
- [2] https://github.com/teeworlds/teeworlds/commit/a766cb44bcffcdb0b88e776d01c5ee1323d44f85
- [3] https://bugs.debian.org/770514
- [4] https://bugzilla.redhat.com/show_bug.cgi?id=1167167
-
-Regards,
-Salvatore
+iQEcBAEBAgAGBQJULMgvAAoJEKllVAevmvmsfrcH/3YbumH+fpcGPuY0GH01zX/7
+qCCl3cMtHZtBEqXorGsHlZ6zJNSz0cpVWGo2R46lyNm0UXOXzI10ihBM0/8k/jl9
+QqoV7bEmKcA/cM9eodNgj0+LVItzdFJ+hzlXBeVLrU/wnahFwlZscdZm3eajZKQP
+pHUInwXwgaN8dJ7eU+BYirgn8LDhO4Vdi7xuSTKY2nGXHT96uh5bAYszTltKA+oy
+zJpcIkk0OdVp3sRjjMyKOYUTSpGvTFn4ZDuTHQWZI9Jk8Ch7GsFTm99ZOM6aGLZl
+KtiISfM7rsMgKOny4qlFeWjlTH+8mfNT9FacHwLaTLfGmxDDd2N6raYM38LN9NM=
+=2UIN
+-----END PGP SIGNATURE-----
