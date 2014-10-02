@@ -1,82 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/31/1
-Message-Id: <20141031055718.EBA296C005C@smtpvmsrv1.mitre.org>
-Date: Fri, 31 Oct 2014 01:57:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/47
+Message-ID: <542DDB36.2000006@enovance.com>
+Date: Thu, 02 Oct 2014 19:09:42 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2014-033] Cinder-volume host data leak to vm instance (CVE-2014-3641)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+OpenStack Security Advisory: 2014-033
+CVE: CVE-2014-3641
+Date: October 02, 2014
+Title: Cinder-volume host data leak to vm instance
+Reporter: Duncan Thomas (HP)
+Products: Cinder
+Versions: up to 2014.1.2
 
-> a crasher in the PE parser, I don't know if this is the same one, but
-> I reported it upstream:
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17512
-> 
-> As this is a write to uninitialized memory it seems to me a CVE is
-> deserved.
-> 
-> https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=7e1e19887abd24aeb15066b141cdff5541e0ec8e
+Description:
+Duncan Thomas from Hewlett Packard reported a vulnerability in Cinder
+GlusterFS and Linux Smbfs drivers. By overwriting a volume from within
+an instance with a malicious qcow2 header, an authenticated user may be
+able to clone and attach that corrupted volume resulting in affected
+drivers leaking an arbitrary file from the Cinder-volume host to the
+virtual instance. Note that the host file must be readable by the Cinder
+context to be exposed. Only Cinder setups using GlusterFS volume driver
+configured with glusterfs_qcow2_volumes=False (which is the default) or
+Cinder setups using Smbfs volume driver configured with
+smbfs_default_volume_format=raw (which is not the default) are affected.
 
-Use CVE-2014-8501 for the 7e1e19887abd24aeb15066b141cdff5541e0ec8e
-issue.
+Juno (development branch) fix:
+https://review.openstack.org/125671
 
+Icehouse fix:
+https://review.openstack.org/125710
 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17512#c16
-> 
-> Seems to be different from the previous crasher.
-> 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17512#c17
-> 
-> objdump-pe-crasher2 gives a heap overflow
+Notes:
+This fix will be included in the Juno release 2014.2 and in
+the upcoming 2014.1.3 release.
 
-Use CVE-2014-8502 for the objdump-pe-crasher2 issue.
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3641
+https://launchpad.net/bugs/1350504
 
-
-[ The http://openwall.com/lists/oss-security/2014/10/27/2 post
-suggests that there isn't a known way to exploit objdump-elf-crasher
-or objdump-pe-crasher for code execution. There are currently no CVE
-IDs associated with objdump-elf-crasher or objdump-pe-crasher. ]
-
-
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17512#c33
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17512#c34
-
-Use CVE-2014-8503 for this ihex parser issue.
-
-
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17512#c28
-> Fixes another memory corruption bug introduced by patches for PR 17512.
->     
->	* elf.c (bfd_section_from_shdr): Fix heap use after free memory
->	leak.
-
-There is no CVE ID for this issue that apparently does not affect the
-2.24 release.
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
-> http://openwall.com/lists/oss-security/2014/10/27/4
-> http://openwall.com/lists/oss-security/2014/10/27/5
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17510#c7
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17510#c8
-
-Use CVE-2014-8504 for this srec_scan issue.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUUyRLAAoJEKllVAevmvmsIbsIAIJDFE1pSNpFW3UyTJ7uSD26
-e1vrHDZ+YefWDseQdoXpMoerpD2xvRJ4PBPUMuQhpaBbPTOTaSAb3IjBsJvs3KDs
-14iGXCybHv9aiqmrcPVfu08dhplrVkS32W8TswSI4/w2on3BSMV15zqMg+RQssyp
-3t1VNcPViYefBYpUlw/MiG5Eqbhld7vXbCFz+QkRxnJ99GJjlhEA+lmjjTVdcSwS
-Qtd7/ZwjMKxaf9vUnPNiLpqSYihlNNpIYLa61FIhy0AzKKs2mfny5Qf3InCnnIgV
-RIDg61rCsixvEoHZTyk7yrrk1+XIKPoEJv5KgXMloyi4zQ70LJrLhI935bATU4E=
-=8LMX
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
