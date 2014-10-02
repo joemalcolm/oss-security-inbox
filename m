@@ -1,24 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/3
-Message-ID: <20141114123745.GG32335@suse.de>
-Date: Fri, 14 Nov 2014 13:37:45 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: Linux kernel: ttusb-dec: overflow by descriptor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/45
+Message-ID: <20141002213854.GA778@openwall.com>
+Date: Fri, 3 Oct 2014 01:38:54 +0400
+From: Solar Designer <solar@...nwall.com>
+To: Chad Vizino <cvizino@...ptivecomputing.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: tm_adopt() vulnerability in TORQUE Resource Manager
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Oct 02, 2014 at 03:26:21PM -0600, Chad Vizino wrote:
+> Within a TORQUE Resource Manager job, the tm_adopt() TORQUE library call
+> enables a user-built executable calling tm_adopt() to adopt any session id
+> (and its child processes) regardless of the session id owner on any node
+> within a job. When a job that includes the executable calling tm_adopt()
+> exits, the adopted processes are killed along with the job processes during
+> normal job cleanup. This can enable a non-root user to kill processes
+> he/she doesn't own including root-owned ones on any node in a job.
 
-Overflow in a DVB-T usb driver, it overflows into a small size stack array.
+Chad - thank you for posting this!
 
-Ciao, Marcus
+All - Chad had brought this issue to the distros list yesterday (not
+realizing that public issues like it should go to oss-security right
+away, which we've explained), and it was assigned CVE-2014-3684.
 
-http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=f2e323ec96077642d397bb1c355def536d489d16
+> The issue has been fixed in the following commit numbers for the listed
+> TORQUE Resource Manager versions:
+> 
+> 4.2-dev
+> 967cdc80150690459a47a35a658abeee0ca6e5cb
+> f2f4c950f3d461a249111c8826da3beaafccace9
+> 
+> 4.5-dev
+> 6c4a57b2d7a56b5bda1c57e2af425ff517ffe331
+> 
+> 5.0-dev
+> e2b6253b62fe7e59c5852e2b914b71a095328558
+> 
+> develop
+> dd7f729eedead89c9253707f85572706077ff1d3
 
-commit f2e323ec96077642d397bb1c355def536d489d16
-Author: Dan Carpenter <dan.carpenter@...cle.com>
-Date:   Fri Sep 5 09:09:28 2014 -0300
+These commits can be seen at:
 
-    [media] ttusb-dec: buffer overflow in ioctl
-        
-    We need to add a limit check here so we don't overflow the buffer.
+https://github.com/adaptivecomputing/torque
+
+Alexander
