@@ -1,61 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/44
-Message-ID: <546E55C6.3090502@gmail.com>
-Date: Thu, 20 Nov 2014 21:57:42 +0100
-From: Sven Kieske <svenkieske@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/25
+Message-ID: <542CF50E.7060001@redhat.com>
+Date: Thu, 02 Oct 2014 00:47:42 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: [langsec-discuss] 2nd LangSec workshop at IEEE S&P CFP and website
+Subject: Re: CVE request: Remote code execution via XSL extensions in SpagoBI
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Just to confirm this isn't a troll ;) despite a scary sounding
+contributor agreement SpagoBI is Open Source:
 
-Hi, maybe someone from this list is interested
-in this workshop.
+http://www.spagoworld.org/xwiki/bin/view/SpagoBI/OpenSource
 
-kind regards
+On 02/10/14 12:40 AM, David Jorm wrote:
+> Hi All
+> 
+> Can a CVE ID please be assigned for part 1) of this issue:
+> 
+> https://www.spagoworld.org/jira/browse/SPAGOBI-1885
+> 
+> Anyone who has permission to define a document that uses the
+> accessibility engine can supply an XSL file that will be used to
+> transform the data in the presentation view. SpagoBI is using Xalan to
+> perform the transformation, and there's two problems:
+> 
+> 1) FEATURE_SECURE_PROCESSING is not set. This means an attacker can
+> provide an XSL document with embedded Java code, which will be executed
+> on the server.
+> 
+> 2) SpagoBI is using Xalan 2.6.0. A flaw in this version means that if
+> with FEATURE_SECURE_PROCESSING set, an attacker can bypass the
+> restrictions, and provide XSL documents with embedded Java code. To
+> address this, you need to upgrade to >= 2.7.2:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-0107
+> 
+> I have provided a reproducer to the developers via email.
+> 
+> Thanks
+> -- 
+> David Jorm / Red Hat Product Security
 
-Sven
-- -------- Forwarded Message --------
-Subject: [langsec-discuss] 2nd LangSec workshop at IEEE S&P CFP and
-website
-Date: Mon, 17 Nov 2014 00:31:05 -0500 (EST)
-From: Sergey Bratus <sergey@...dartmouth.edu>
-To: LangSec Discuss <langsec-discuss@...l.langsec.org>
-
-Dear all,
-
-We are about to start advertising the second LangSec workshop at the IEEE
-Security & Privacy Symposium, to be held on Thursday May 21st 2015 in San
-Jose.
-
-The website and CFP are at  http://spw15.langsec.org/  (the submission
-link is not active yet).
-
-Please help spread the word to potential attendees and submitters!
-
-Thank you very much,
-
-- --Sergey
-
-P.S. If you notice any issues with the website, please let me know!
-_______________________________________________
-langsec-discuss mailing list
-langsec-discuss@...l.langsec.org
-https://mail.langsec.org/cgi-bin/mailman/listinfo/langsec-discuss
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQGcBAEBAgAGBQJUblXGAAoJEAq0kGAWDrqlD5gMAIKeqo35pOuM9Mf+SYgqyFqt
-uTCBfMJa2zp7Jp4KItI5HF/VvSuoINg7nms4yBrrVIgTCmuhNIXxymk6i+9AVYir
-SQRI7kc2A6L0yYcg4GEtLVijEVThzNBP802lEJ3pCHPlRZOlxGXif9BPkEgubXFF
-UmQlc32E7kqlfmCqVJQNon0N9W2kNqGAyBJrL9ByI5SmZnQHjpQMAENKiBhe2h6j
-Oix3SLvicvyGqru1CRL+kvIIYWaOLeXg8RaA2bcuSQRj72yLT8MlCK6GQ7PpDLs8
-Rw2V7/oGQLth0MH9JfQnRkk4DPuAYpLRYVRGys3SQc1wf4H8xKA9kEMvHk+6cmol
-+P0ResWWyLRHEYGJvv1uLDCXEoUp7qZqakE7DWD+mX4++h7FCI3GVYmeFjfHI2ut
-0nOLNObdUC3w2VsgdplQ7oCh8UTFnDb+eeJi4TAl9BR8vTEG3dFPGpiE+b8hiymp
-+t8PzewUWLYVeccmZPmF9qPyQvUC4hj7/GLuiZKYMg==
-=dy6G
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
