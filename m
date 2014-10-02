@@ -1,82 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/7
-Message-Id: <201402081401.s18E1p2I003994@linus.mitre.org>
-Date: Sat, 8 Feb 2014 09:01:51 -0500 (EST)
-From: cve-assign@...re.org
-To: abn@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Multiple security issues in Android Debug Bridge (Android SDK Tools)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/18
+Message-ID: <20141002032943.GA27000@openwall.com>
+Date: Thu, 2 Oct 2014 07:29:44 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: More parser odities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> http://www.droidsec.org/advisories/2014/02/04/two-security-issues-found-in-the-android-sdk-tools.html
-
-> First, the integer "n" is signed. Second, the "strtoul" function
-> allows specifying whether or not the number is negative
-
-> results in a vanilla stack buffer overflow.
-
-Use CVE-2014-1909 for this issue with incorrect use of an integer
-value.
-
-
-> no authentication is required between the Client and Server
+On Wed, Oct 01, 2014 at 07:44:38PM -0700, Michal Zalewski wrote:
+> > Maybe it's just the right opportunity to do that, instead of assigning
+> > yet another CVE to Michal's latest finding?  Oh, I think Michal's
+> > latest already got a CVE too?  Does this once again render the
+> > (previously) exposed parser not CVE-worthy? ;-(
 > 
-> 2.The ADB Server ... Among other things, it implements port forwarding
-> and maintaining a persistent connection to devices connected to the
-> host computer.
+> Whoa :-) So to be clear, I felt that it makes sense to ask for CVEs
+> and report these externally because up until that point, we had no
+> conclusive evidence that the original patch is truly inadequate, and
+> that Florian's patch is anything more than a nice-to-have that several
+> people on oss-security are fond of. Tavis' EOL find was troubling, but
+> fixed upstream with a one-liner in bash43-026, not with Florian's
+> patch.
 > 
-> these design decisions leave much to be desired.
+> (In fact, Florian's patch wasn't upstreamed when I started fuzzing the
+> parser and hit the bugs.)
 
-There is no CVE assignment for this. Here, "no authentication is
-required" is probably best considered an opportunity for security
-enhancement. (For example, there are many other applications that
-provide other types of port forwarding in other contexts, and don't
-implement authentication.)
+Sure.  I absolutely didn't imply that you did anything wrong.  You have
+helped a lot!
 
+I had at least as much opportunity to insist on a different approach
+early on, including to CVE assignments (and I regret I did not; to me,
+those CVEs don't matter much, but clearly they do to a lot of people).
 
-> Issue #2 - Lack of hardening when compiling for a host
-> 
-> When investigating whether or not this particular issue was
-> exploitable, it was determined that the "adb" binary supplied by
-> Google does not contain two crucial modern protection mechanisms.
-> Those are: non-executable stack protection and binary base
-> randomization (PIE). Since these two protections are absent,
-> exploiting this issue is trivial. A patch that adds these protections
-> when compiling host binaries is included, though its is not well
-> tested.
-> 
-> It should also be noted that host compilation also seems to
-> intentionally opt out of the FORTIFY_SOURCE protections. It's not
-> clear why this is the case since the comment near this line of code
-> references an internal only bug number.
+What I meant is that with hindsight maybe we could have done better, by
+using whichever parser bug as an opportunity to request a CVE ID for the
+parser being exposed instead.  A lot of people primarily look at CVEs,
+and might miss the most important patch when it's not associated with
+any CVE ID.
 
-There is currently no CVE assignment for this. Absense of these types
-of protection mechanisms can have a CVE ID in some cases, but the CVE
-project typically proceeds only in instances where an upstream vendor
-chooses to make an announcement that this was a software mistake. An
-example is CVE-2013-5057. A third-party report could be used in a
-limited set of scenarios, e.g., a build process that has a list of
-files requiring safe compilation options, with a typo in one of the
-filenames. Similarly, if the available information is that the vendor
-intentionally disabled this type of a protection mechanism, a CVE
-assignment can't be made.
+Maybe you fuzz yet another RCE bug, and we request a CVE ID for the
+parser being exposed then? ;-)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Or maybe the CVE powers that be will find the parser being exposed
+CVE-worthy without yet another PoC, especially given that upstream
+already has a fix issued?  If such a CVE is issued, I'd happily refer
+primarily to it instead of to all the other recent bash CVEs.
 
-iQEcBAEBAgAGBQJS9jfCAAoJEKllVAevmvmsiqUIAMUIIWCkDc4ECZB7Ic2AM6VB
-TKRl+AB5ZwBxvJzdr1IOvx1yg0dVdwHq6A/Fe+MGFr/SlVTGHOu4tIbBYCAmFlkM
-QCtSEuIwLYaIo63Qw/SM7HDIcvmPDlcY9hqcH5g3GOHTA6s0j/nNG/w7N9uGjZrK
-kw9CqjniX32cTUJdL2X1wrLlbc+BJlply5HkTMFseCRCd9WT4RBsENhPgBPOB64p
-LZ0MzOTOD+l8uN6CDblURnP5uq7eZ8dyOJm3PVNA/xdyMe4i0wj7BaL83zHrCrya
-JxKtEKTbNzt7SE++VXhv0HpZuy4BvH3A9QlWpJcbBg2mB3BCsp/kSzbr1fDLYbw=
-=Nfx1
------END PGP SIGNATURE-----
+> Anyway, I think that the confusion stemmed mostly from fairly
+> inaccurate "vanity" pages, news articles, and "vulnerability checkers"
+
+Perhaps, but (in hindsight) we should have expected that and maybe we
+could have worked around it.  Maybe a lesson for next time when a
+combination of important potential "hardening" change and "unimportant"
+individual bug fixes comes up, in any software project.
+
+> At this point, it definitely makes no sense to keep assigning CVEs to
+> additional prefix-requiring problems in the parser at this point,
+
+Right.
+
+> since hopefully everybody got the message to upgrade.
+
+Yeah, I hope no one installing a newer CVE-assigned parser bug upstream
+patch will happen to skip the prefix/suffix upstream patch.  The fact
+that these patches are numbered helps a lot here.  And I hope distros
+got the message, and will include a prefix/suffix patch too (many
+already did).
+
+Yet a CVE ID for the parser previously having been exposed still makes
+sense to me.
+
+Alexander
