@@ -1,64 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/3
-Message-ID: <CAMPTd_DSNpeUt0vPhX-hgvWkRgR8O1NPMu98a95s4_WwyJ0Fow@mail.gmail.com>
-Date: Tue, 14 Oct 2014 22:48:00 -0700
-From: Walter Parker <walterp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/4
+Message-ID: <CAJ_zFkJ7EcbxyuNjJ8C24aukguQ1=9nyj5vtHJJywAqqY5F-ew@mail.gmail.com>
+Date: Wed, 1 Oct 2014 17:53:45 -0700
+From: Tavis Ormandy <taviso@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: More parser odities
 Content-Type: text/plain; charset=utf-8
 
-Yea, reposting a link to an Internationally read news site doesn't seem
-like much of an issue.
-
-Posting the exploit code a week ahead of time, maybe, but reposting that
-there is a problem in a 15 year protocol that uses parts with known
-weaknesses, which was to be released less than 12 hours later, doesn't look
-like a problem.
-
-What is this list's policy on Full Disclosure?
-
-What is this list's policy on sourced/unsourced security rumors?
-
-Why do people on lists like this seem to think that censoring themselves
-and others will actually do any good. That somehow the oss-security post
-will be the straw that broke the camel's back and not the Internationally
-read news site (or all the black hat/pirate sites)? How many posts to
-oss-security are patient zero for embargo breaking? What about just
-responsible for any cracking happening in the real world?
-
-
-On Tue, Oct 14, 2014 at 10:28 PM, Sona Sarmadi <sona.sarmadi@...a.com>
-wrote:
-
-> Thanks Hanno,
+On Wed, Oct 1, 2014 at 5:36 PM, Solar Designer <solar@...nwall.com> wrote:
+> Eric - you probably want to CC: Chet on your new findings.  Added the CC.
 >
-> A reflection: Maybe we shouldn't post  information like this here or
-> somewhere else which is not published yet even if the information has leak
-> out? Although all members here are reliable but it is still an open mailing
-> list and we should be careful and act more responsible.
->
-> Cheers
-> Sona
->
-> > It's out:
-> >
-> > https://www.openssl.org/~bodo/ssl-poodle.pdf
-> > http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
-> > exploiting-ssl-30.html
-> >
-> > My conclusion stays the same: Disable SSLv3.
-> >
-> > --
-> > Hanno Böck
-> > http://hboeck.de/
-> >
-> > mail/jabber: hanno@...eck.de
-> > GPG: BBB51E42
->
+> On Wed, Oct 01, 2014 at 07:16:40PM -0500, Kobrin, Eric wrote:
+>> This oddity also allows bypass of the absolute_program protection added in the recent patches:
+>>
+>>
+>> $ env $'BASH_FUNC_#badname%%'=$'() { :; }\n/bin/ls () { echo wrongfunc; }  ' ./bash -c '/bin/ls'
+>> fbash: error importing function definition for `#badname'
+>> wrongfunc
+>>
+>>
+>>
+>>
+>> I really do think it is time to take a different approach for a long-term solution.
+>>
 
+Eric - the prefix you're specifying _is_ the long-term solution, it
+may be a bug, but it's a non-security bug.
 
+An attacker cannot set the _names_ of the variables across any
+reasonable privilege boundary. The reason this was an issue recently
+was because the name was irrelevant.
 
--- 
-The greatest dangers to liberty lurk in insidious encroachment by men of
-zeal, well-meaning but without understanding.   -- Justice Louis D. Brandeis
+If you have some situation where an attacker can invoke bash *across a
+privilege boundary* with arbitrary environment variable *names*, then
+that is a bug in the program invoking bash - *not* a bug in bash.
+Nothing bash can do can save you in that case, it is the
+responsibility of that program to invoke bash safely.
 
+This is like complaining that if you give someone your username and
+password, bash lets you remove files. That's not bash's fault, it's
+your fault for giving the attacker your username and password.
+
+If you let an attacker specify arbitrary variable *names* across a
+privilege boundary, that's *your* fault not bash's.
+
+Tavis.
