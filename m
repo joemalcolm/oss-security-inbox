@@ -1,108 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/11
-Message-ID: <610a57106617b76f305ce8e6fd6c6d6f.45614.60140@wordpress.org>
-Date: Tue, 16 Dec 2014 17:36:09 +0000
-From: "Ipstenu (Mika Epstein)" <plugins@...dpress.org>
-To: ryandewhurst@...il.com
-Cc: oss-security@...ts.openwall.com, "\"WordPress.org\"" <plugins@...dpress.org>
-Subject: Re: Re: CVE-2014-9119: DB Backup plugin for WordPress download.php file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/29
+Message-ID: <20141002103205.5633843c@hboeck.de>
+Date: Thu, 2 Oct 2014 10:32:05 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Mediawiki before 1.19.20, 1.22.12, 1.23.5 XSS through CSS
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
-Thanks, we handled this 11 days ago.
+Another mediawiki XSS though CSS (different from CVE-2014-7199).
 
-> https://wpvulndb.com/vulnerabilities/7726 thanks!
-> 
-> On Tue, Dec 16, 2014 at 5:51 PM, Henri Salo <henri@...v.fi> wrote:
-> 
-> > -----BEGIN PGP SIGNED MESSAGE-----
-> > Hash: SHA1
-> >
-> > Product: WordPress plugin db-backup
-> > Plugin page: https://wordpress.org/plugins/db-backup/
-> > Developer: Syed Amir Hussain "syedamirhussain91"
-> > Vulnerability Type: Remote Path Traversal File Access
-> > CWE-23: Relative Path Traversal
-> > Vulnerable Versions: 4.5 and earlier
-> > Fixed Version: N/A
-> > Vendor Notification: 2014-11-27
-> > Public Disclosure: 2014-12-16
-> > CVE Reference: CVE-2014-9119
-> > Criticality: High
-> >
-> > Vulnerability details:
-> >
-> > DB Backup plugin for WordPress contains a flaw that allows traversing
-> > outside of
-> > a restricted path. The issue is due to the download.php script not
-> properly
-> > sanitizing user input, specifically path traversal style attacks (e.g.
-> > '../').
-> > With a specially crafted request, a remote attacker can gain read access
-> to
-> > arbitrary files, limited by system operational access control. This
-> > vulnerability can be used to get WordPress authentication keys and
-> salts,
-> > database address and credentials, which can be used in certain
-> > environments to
-> > elevate privileges and execute malicious PHP code.
-> >
-> > Root cause:
-> >
-> > Unsanitized user input to readfile() function.
-> >
-> > Proof-of-concept:
-> >
-> > /wp-content/plugins/db-backup/download.php?file=../../../wp-config.php
-> >
-> > Timeline:
-> >
-> > 2014-11-27: Reported to developer and WordPress plugins team.
-> > 2014-11-27: CVE assigned and reported to developer.
-> > 2014-11-28: Communication with developer and he said this will be fixed.
-> > 2014-12-02: Asked status from developer.
-> > 2014-12-03: Developer says this will be fixed by 7th.
-> > 2014-12-07: Asked status from developer.
-> > 2014-12-08: Developer responds.
-> > 2014-12-09: Asked more details from developer.
-> > 2014-12-10: More discussion about the solution and new disclosure date
-> set.
-> > 2014-12-16: Agreed disclosure date was 15th, I don't understand issue
-> with
-> > patching so public disclosure. Please note that there are hundreds of
-> > backup
-> > plugins in WordPress Plugin Directory.
-> >
-> > Notes:
-> >
-> > - - Remove plugin "db-backup" as deactivation does not fix the issue.
-> > - - Use another plugin until patch is available and new version is
-> > published.
-> > - - Sites I know using this plugin will be notified via abuse emails
-> today.
-> >
-> > References:
-> > http://cwe.mitre.org/data/definitions/23.html
-> > https://scapsync.com/cwe/CWE-23
-> > https://www.owasp.org/index.php/Path_Traversal
-> >
-> >
-> https://www.owasp.org/index.php/Testing_for_Path_Traversal_%28OTG-AUTHZ-001%29
-> >
-> > - --
-> > Henri Salo
-> > -----BEGIN PGP SIGNATURE-----
-> > Version: GnuPG v1.4.12 (GNU/Linux)
-> >
-> > iEYEARECAAYFAlSQYwcACgkQXf6hBi6kbk8uHwCeJfQd1Vjc2Rr6kzyFxF8rC4NW
-> > zbMAoKG4tidQkLM5qrnyIfHTVZPXbOdk
-> > =5Nmf
-> > -----END PGP SIGNATURE-----
-> >
+Upstream release announcement
+https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-October/000163.html
+* (bug 70672) SECURITY: OutputPage: Remove separation of css and js
+module allowance.
 
+Bug report:
+https://bugzilla.wikimedia.org/show_bug.cgi?id=70672
 
+Code commit:
+https://gerrit.wikimedia.org/r/#/c/164271/
 
+Please assign CVE.
+
+(At some point mediawiki managed to get CVEs prior to releases which I
+think is more convenient. There are mediawiki devs on this list, maybe
+it could be coordinated with them and mitre that this could happen
+again in the future.)
+
+cu,
 -- 
-Ipstenu (Mika Epstein)
+Hanno Böck
+http://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
