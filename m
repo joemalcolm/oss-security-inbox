@@ -1,38 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/8
-Message-ID: <54412F9A.9050304@redhat.com>
-Date: Fri, 17 Oct 2014 17:02:50 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Connected UDP sockets and kernel queuing (CVE-2014-6512)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/8
+Message-ID: <542CAF39.90603@case.edu>
+Date: Wed, 01 Oct 2014 21:49:45 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Ed Prevost <me@...ardprevost.info>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-I noticed a potential issue with connected UDP sockets and the kernel 
-kernel per-socket packet queue, potentially leading to IP spoofing 
-vulnerabilities in the sense that the application thinks the packet came 
-from host A, but it really came from host B:
+On 10/1/14, 5:45 PM, Ed Prevost wrote:
 
-   <https://bugzilla.redhat.com/show_bug.cgi?id=1071210>
+>>> I have patches that fix 6277/6278 that are in the pipeline.
+>>>
+>> oh, s0rry for the mistake...that'd be great if we can get the patch as
+>> quickly as possible. Thanks.
+>>
+>>> --
+>>> ``The lyf so short, the craft so long to lerne.'' - Chaucer
+>>>                  ``Ars longa, vita brevis'' - Hippocrates
+>>> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+>>
+>>
+> Really!? Honestly!? "as quickly as possible"
+> 
+> Man, we really should rally together and at least send Chet a recovery
+> beer basket or something.
 
-OpenJDK is particularly exposed because DatagramSocket.disconnect() 
-calls connect(2) with AF_UNSPEC (or a NULL socket address on some 
-systems) to disconnect sockets, which is a rarely used feature of the 
-BSD sockets API.  OpenJDK ensures that these disconnected sockets remain 
-bound to a port, so it was possible to enqueue packets whose source 
-address will not be checked, without even having a tight race to win.
-
-We thought briefly about fixing this in the kernel, but thought better 
-of it because of backwards compatibility concerns (and we would have to 
-patch OpenJDK nevertheless).  The OpenJDK fix simply checks the source 
-address of incoming packets.  Oracle's fix has an optimization that 
-drops this additional filter after the maximum amount of pending packets 
-has been consumed from the socket; my patch moved the filter to native 
-code instead and applied it to every packet on a connected socket.  I 
-think both approaches are valid.
-
-I'm sharing this with a wider audience because in theory, other 
-UDP-based services could be affected, although I didn't spot any when I 
-looked at this prior to disclosure.
+Good IPAs are always welcome; the hoppier the better. :-)
 
 -- 
-Florian Weimer / Red Hat Product Security
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
