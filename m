@@ -1,28 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/1
-Message-ID: <536196CF.2010204@redhat.com>
-Date: Thu, 01 May 2014 10:35:27 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/24
+Message-ID: <542CF359.1030902@redhat.com>
+Date: Thu, 02 Oct 2014 16:40:25 +1000
+From: David Jorm <djorm@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: possible miniupnpc buffer overflow
+Subject: CVE request: Remote code execution via XSL extensions in SpagoBI
 Content-Type: text/plain; charset=utf-8
 
-> On a related note, I'm not sure if there are other issues close by. For
-> example, in version 1.9, miniwget.c:
->
-> 172                         /* copy the remaining of the received data
-> back to buf */
-> 173                         n = header_buf_used - endofheaders;
-> 174                         memcpy(buf, header_buf + endofheaders, n);
->
-> n and endofheaders are signed ints, and header_buf_used is unsigned.
-> Mixing the types together (and the signed int in the memcpy) may warrant
-> further investigation.
+Hi All
 
-Upstream investigated this and found it to be safe.
+Can a CVE ID please be assigned for part 1) of this issue:
 
-Cheers,
+https://www.spagoworld.org/jira/browse/SPAGOBI-1885
 
+Anyone who has permission to define a document that uses the 
+accessibility engine can supply an XSL file that will be used to 
+transform the data in the presentation view. SpagoBI is using Xalan to 
+perform the transformation, and there's two problems:
+
+1) FEATURE_SECURE_PROCESSING is not set. This means an attacker can 
+provide an XSL document with embedded Java code, which will be executed 
+on the server.
+
+2) SpagoBI is using Xalan 2.6.0. A flaw in this version means that if 
+with FEATURE_SECURE_PROCESSING set, an attacker can bypass the 
+restrictions, and provide XSL documents with embedded Java code. To 
+address this, you need to upgrade to >= 2.7.2:
+
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-0107
+
+I have provided a reproducer to the developers via email.
+
+Thanks
 --
-
-Murray McAllister / Red Hat Security Response Team
+David Jorm / Red Hat Product Security
