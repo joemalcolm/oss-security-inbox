@@ -1,46 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/8
-Message-ID: <53916CE6.9090308@redhat.com>
-Date: Fri, 06 Jun 2014 17:25:26 +1000
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/15
+Message-ID: <CABniQZMZzs0hfTDg3LmQNthzYPz-ZfUafE2-g_6k501iGsoohQ@mail.gmail.com>
+Date: Thu, 2 Oct 2014 11:02:53 +0800
+From: Shawn <citypw@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-On 06/04/2014 01:37 AM, Tim wrote:
-> Hi David,
+On Thu, Oct 2, 2014 at 11:00 AM, Michal Zalewski <lcamtuf@...edump.cx> wrote:
+>> What else could I say? A POC already released and a bunch of
+>> customer's machines are waiting...
 >
->> Sorry for the absurdly late reply to this thread. I finally found time to do
->> some testing on OpenJDK 1.7.0_45. I can confirm Tomas' assessment that
->> setExpandEntityReferences() and
->> setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true) have no bearing on
->> whether or not entity references are expanded, nor do they purport
->> to.
-> Yeah, you gotta love FEATURE_SECURE_PROCESSING.  It's just like
-> calling a website "secure" because it uses SSL.
+> You should install Florian's patch / bash43-027.
 >
-> I agree that these features don't purport to turn off certain
-> dangerous features, but to a developer who doesn't know what parameter
-> entities are, they could very easily assume they are safe with
-> setExpandEntityReferences(false).
->
->
->> Applications that process attacker-supplied XML using Xerces are vulnerable
->> to SSRF attacks unless they use both
->> setFeature("http://xml.org/sax/features/external-parameter-entities", false)
->> and setFeature("http://xml.org/sax/features/external-general-entities",
->> false).
->>
->> The OWASP XXE document should be updated to mention
->> external-parameter-entities. I will do this as soon as my OWASP wiki account
->> is approved.
-> Feel free to use this as a reference for other thoughts on what
-> developers should be wary of:
->    http://vsecurity.com/download/papers/XMLDTDEntityAttacks.pdf
+I've read your blog and started doing this. Thanks.
 
-This is a fantastic paper, I have no edits to propose. I read through it 
-today, and I have already found one rather interesting flaw related to 
-the attack detailed on page 11. I'll be sure to reference this paper in 
-the relevant advisory.
+> /mz
 
-David
+
+
+-- 
+GNU powered it...
+GPL protect it...
+God blessing it...
+
+regards
+Shawn
