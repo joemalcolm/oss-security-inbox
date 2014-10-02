@@ -1,56 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/24/3
-Message-ID: <20140824165705.GA9782@kludge.henri.nerv.fi>
-Date: Sun, 24 Aug 2014 19:57:05 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-5443: Seafile local horizontal privilege escalation vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/9
+Message-ID: <542CB32F.6030309@case.edu>
+Date: Wed, 01 Oct 2014 22:06:39 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: "Kobrin, Eric" <ekobrin@...mai.com>
+CC: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: More parser odities
 Content-Type: text/plain; charset=utf-8
 
-Product: Seafile server for Linux
-Vendor: Seafile Ltd. http://seafile.com/
-Affected versions: 3.1.1, 3.0.4 and probably prior
-Fixed in version: 3.1.2
-Founder of this vulnerability: Kimmo Huoman
-Vendor notification: 2014-08-05
-Solution date: 2014-08-07
-CVE reference: CVE-2014-5443
+On 10/1/14, 8:36 PM, Solar Designer wrote:
+> Eric - you probably want to CC: Chet on your new findings.  Added the CC.
+> 
+> On Wed, Oct 01, 2014 at 07:16:40PM -0500, Kobrin, Eric wrote:
+>> This oddity also allows bypass of the absolute_program protection added in the recent patches:
+>>
+>>
+>> $ env $'BASH_FUNC_#badname%%'=$'() { :; }\n/bin/ls () { echo wrongfunc; }  ' ./bash -c '/bin/ls'
+>> fbash: error importing function definition for `#badname'
+>> wrongfunc
+>>
+>>
+>>
+>>
+>> I really do think it is time to take a different approach for a long-term solution.
+>>
+>>
+>> -- Eric Kobrin
+>>
+>>
+>> On Oct 1, 2014, at 5:35 PM, "Kobrin, Eric" <ekobrin@...mai.com> wrote:
+>>
+>>
+>>> Using bash from the GNU git, subsequently patched to level 28:
+>>>
+>>> $ env $'BASH_FUNC_#badname%%'=$'() { :; }\nfoo () { echo wrongfunc; } ' ./bash -c 'foo'
+>>> ./bash: error importing function definition for `#badname'
+>>> wrongfunc
 
-Description:
+Two things.
 
-Local horizontal privilege escalation
+First, there is already a fix for this in the patch pipeline.
 
-Steps to reproduce:
+Second, given the existence of the bash-4.3.27 and vendor and previous
+version equivalents, this is not a security problem.  What we are coming
+up with is more and more esoteric ways to execute commands bash allows
+you to execute directly.  There isn't a local privilege escalation issue,
+and the game is already over if you allow someone to specify arbitrary
+environment variable names and values.
 
-1. Install seafile for user1 (using the defaults)
-2. Start seafile for user1 (./seafile.sh start; ./seahub.start) [ to create
-admin account ]
-3. Install seafile for user2 (no need to change any of the defaults, this won't
-be run at all)
-4. Change user2 password with command-line tool (./reset-admin.sh)
-5. Login to user1 installation as admin with the login information created in
-previous step
-6. Check user1 email address and change password for that account with CLI
-7. Login to UI with new information and browse files...
+Please keep the reports coming.  They're valuable in making bash better;
+they're just not security problems or vulnerabilities.
 
-Provided that the user hasn't logged out, he won't even notice the password
-change. Files keep on syncing etc also. Also all the files removed from the
-libraries (don't delete the library itself, just the files) are removed from the
-synced clients.
-
-The issue seems to be related to ccnet handling user accounts instead of Django,
-which allows password changing through the daemon running (be default) at port
-13418. If I change port in ccnet.conf to another, the client can't connect and
-password can't be changed (before changing the ccnet.conf for other account to
-correspond).
-
-Changelog says:
-
-Use unix domain socket in ccnet to listen for local connections. This isolates
-the access to ccnet daemon for different users. Thanks to Kimmo Huoman and Henri
-Salo for reporting this issue.
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
