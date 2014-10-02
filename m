@@ -1,39 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/12
-Message-ID: <87oawxuh79.fsf@mid.deneb.enyo.de>
-Date: Thu, 10 Jul 2014 21:50:02 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/36
+Message-Id: <20141002170513.E6BBD7BC01A@smtpvmsrv1.mitre.org>
+Date: Thu,  2 Oct 2014 13:05:13 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Mediawiki before 1.19.20, 1.22.12, 1.23.5 XSS through CSS
 Content-Type: text/plain; charset=utf-8
 
-* Solar Designer:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> The default sshd_config found in openssh-6.6p1.tar.gz does not list
-> AcceptEnv, so presumably by default OpenSSH portable does not accept any
-> environment variables.
+> https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-October/000163.html
+> https://bugzilla.wikimedia.org/show_bug.cgi?id=70672
+> (bug 70672) SECURITY: OutputPage: Remove separation of css and js module allowance.
+> https://gerrit.wikimedia.org/r/#/c/164271/
 
-I expected it to accept TERM, which is sort of unavoidable.
+> No longer segment module origin allowance
 
-> However, apparently some distros override this safe default:
+It seems best to assign only one CVE ID for the availability of CSS
+in an apparently unintended context, with resultant impacts of both
+XSS and UI redressing. Use CVE-2014-7295.
 
-Yes, indeed.  There is clear user demand for this, especially from
-organizations like Debian which have users in many different locales.
 
-> Is there a supported way for distros to configure OpenSSH such that
-> a number of environment variables would be accepted by default, but
-> only as long as no command is forced?  This could be an acceptable
-> tradeoff.
+> While at it, also remove the ability to set the module allowance directly.
 
-It is already possible to emulate this behavior with Match directives,
-so this is probably not sufficient reason for OpenSSH changes.
+This change seems to be about eliminating unused and possibly
+confusing functionality, not a separate vulnerability fix.
 
-However, on systems which follow POSIX strictly and do not share the
-historic glibc bug, the glibc fix is does not apply, so some OpenSSH
-changes to better support them might be necessary.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-On the other hand, as long as you use a general-purpose, shell-backed
-SSH implementation such as OpenSSH, it is difficult to completely rule
-out code execution by proper configuration.  But the library-based SSH
-implementations are likely less mature protocol-wise than OpenSSH,
-unfortunately.
+iQEcBAEBAgAGBQJULYVrAAoJEKllVAevmvms9wMH/0z2JxQOGiKWh6m7opKgeBEK
+Z/9hLV0dmmLdXGnBo2o3HK/J0h1bYklT6+TEdQ1ESJ4EIHlejB7WsUnQY4XlSlzA
+LtqFxRIBhbwVOdv+UGgdZXfNGaPoMflZqa1KSYa6vb9rIxoc3CPglM/59qSc6XCN
+3Xr3mu8E9fbNT7YsZeatVhzxUh6QYHJ5JpOx7z/xiwGNqZfDqqb/eh4p70FcVPY6
+bsykRXmmOwLIujsn47gSCW+g383F4vTFj7AyhIDahZXOWbm4hwJJWG6mi/MWsd3L
+/nIfzN6UQfSu6EFuMLDg1+/qfJPWi9kzal/XtTG3zu54DKRqedn5UZ/EdxzrbGE=
+=iYhQ
+-----END PGP SIGNATURE-----
