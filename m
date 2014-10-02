@@ -1,37 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/14/1
-Message-ID: <534B424A.7000900@redhat.com>
-Date: Sun, 13 Apr 2014 20:04:58 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: two more interesting notes on heartbleed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/10
+Message-ID: <20141002021127.GA25320@openwall.com>
+Date: Thu, 2 Oct 2014 06:11:27 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Kohsuke Kawaguchi <kk@...suke.org>
+Subject: Re: Security advisory in Jenkins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Bryan - I think Kohsuke is not subscribed.  I've added CC.
 
-http://www.nytimes.com/2014/04/13/us/politics/obama-lets-nsa-exploit-some-internet-flaws-officials-say.html
+On Wed, Oct 01, 2014 at 08:36:59PM -0500, Bryan Drewery wrote:
+> On 10/1/2014 6:25 PM, Kohsuke Kawaguchi wrote:
+> > I just wanted to share that the Jenkins project issued a security advisory
+> > today. These issues are independently found and we've aggregated into a
+> > single release.
+> > 
+> > The relevant CVE IDs, our bug tracking IDs are available here
+> > <https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01>
+> > .
+> > 
+> > The new versions can be downloaded from here
+> > <http://mirrors.jenkins-ci.org/>.
+> > 
+> > (This is the first time I do this, so my apologies in advance for probably
+> > failing to follow the expected format.)
+> 
+> Kudos to all for finding and fixing these issues. It was quite a
+> surprising list though. Were these fixes kept from release for an
+> extended time? The timeframe for CVE-2013-2186 is especially concerning.
 
+Many of these issues were brought to the distros list on Fri Sep 26
+17:10:16 2014 UTC, and got their CVE IDs assigned there.  However,
+CVE-2013-2186 was not among those.  I don't know why the old CVE ID,
+nor how that issue was handled.
 
-http://www.cbc.ca/news/business/government-agencies-expect-online-services-to-resume-soon-1.2608215
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJTS0JKAAoJEBYNRVNeJnmTRXkP/2zrs3HxGbPRILQXuPa0CqtC
-aSCP0mVk1LrI6UsChnN9XEaVxZgK0QOM4PtP8UBh7nOg8uGs/CGuDE6w3EULeHye
-18Fu02VTp9UAubDtG09UO5FgzHVcKNkycjocsSQyG3v9Nqy4mUgKkv0B5JthHCp8
-Gx6kzAz6PIsfim89z+hgujVSdEap+4DyVFtYG8epkL8IId/euxzWjVN1PZu+/Tjl
-KPhypexyjQwmAYCDYoAmyxEBckJLAaHuzXGSIH9BM6PTqU3fEbIeUc6sVG0lNl2p
-OZKzI4n7KZhCPtopt3Luud0iHGlHGv0GoUWZiUtTOQ2cdoFHIwZTe7ztmRk++EQY
-hqTJeeE3oM3h1+VhMSf9yE/UzU13adAu4Tdt4OHt4PpUTcryyxpH3TU6ZQwBbwKR
-FB0MBfuHlMEGeRRQRvJ3BZVBzw2ueag+C1n6Rir8U/9V9rJsZo3cYAyvkWkzv8Fs
-IUaylyDmkKePM1w8Bt1VT1nIQTCYD8vd7X7LVVyGgMnGfAgu90/cA2BRlFAby2VA
-sN3kh72lStcrmGv9gtFKuD0Z/O7cBJWigfXoB66sajlsPT4uHNBDqV+Sxo/WxRh6
-w4eOpmV74l48L9uPw/9TDqPV+RGdyP9rUqhnHR2qdBUM43IJ4rv7cFu7JEGi2RUn
-w61K90Hy07VonIg4UK14
-=ins+
------END PGP SIGNATURE-----
+Alexander
