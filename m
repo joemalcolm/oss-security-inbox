@@ -1,14 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/8
-Message-ID: <CALx_OUCfjqTbtmDsg00RSQEJ_qj4yHv92C-j6Pg8=5WvzeEyZA@mail.gmail.com>
-Date: Wed, 3 Dec 2014 08:57:54 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/46
+Message-Id: <E1XZpRF-0002mT-KO@rmm6prod02.runbox.com>
+Date: Thu, 02 Oct 2014 19:05:33 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+CC: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
->> https://bugzilla.redhat.com/show_bug.cgi?id=1170233>
-> You mixed up Michal and me :-)
+> On 10/01/2014 03:32 PM, Tomas Hoger wrote:
+> > The following indicates there is other prefix and suffix used, that
+> > makes these incompatibility issues worse:
+> >    http://support.apple.com/kb/HT6495
+> >    The names of all environment variables that introduce function
+> >    definitions are required to have a prefix "__BASH_FUNC<" and suffix
+> >    ">()" to prevent unintended function passing via HTTP headers.
 
-Possibly in reference to:
-https://lists.gnu.org/archive/html/bug-unrtf/2014-11/msg00001.html
+On Wed, 01 Oct 2014 16:27:46 +0200, Florian Weimer <fweimer@...hat.com> replied:
+> I initially dismissed this as a presentation artifact in the web page, 
+> but it's true, there are additional <> characters in the mangled name. 
+> I wonder what breaks as a result.  At least () and %% are somewhat 
+> benign in their effect if they are used unquoted in the relevant places 
+> (error, not accidental file creation).
+> 
+> (To be absolute clear, I do not see any security issues with Apple's 
+> choice of mangling.)
+
+I *do* worry a little about Apple's choice here.
+
+The "%%" suffix chosen by the
+official bash release is not a sequence of shell metacharacters,
+so if the variable name is passed unquoted it is unlikely to cause problems.
+In contrast, "<" and ">" chosen by Apple *ARE* shell metacharacters.  If they get passed
+to a shell unquoted (say as a dump of the environment), there's a risk
+that the result might be turned into an exploit.  Yes, people should be quoting
+it anyway, but the need to quote environment variable *names* is not as obvious
+to some people as the need to quote variable *data*.
+
+Apple's rationale seems dubious, too.
+The claimed purpose of the angle brackets is to
+"to prevent unintended function passing via HTTP headers", but this is odd.
+HTTP header field values absolutely can contain less than and greater than;
+RFC 7230 section 3.2.6 simply says that they are not allowed in tokens,
+and thus can serve as delimiters http://tools.ietf.org/html/rfc7230
+Angle brackets have special meaning in HTML, of course, but that's different.
+
+--- David A. Wheeler
