@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/8
-Message-ID: <20141014073818.6d24e484.reed@reedloden.com>
-Date: Tue, 14 Oct 2014 07:38:18 -0700
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/26
+Message-ID: <3230301C09DEF9499B442BBE162C5E48257556A4@SESTOEX04.enea.se>
+Date: Thu, 2 Oct 2014 06:48:54 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: Shawn <citypw@...il.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-On Tue, 14 Oct 2014 13:15:41 +0200
-Hanno Böck <hanno@...eck.de> wrote:
+> On 10/1/14, 5:04 PM, Shawn wrote:
+> > http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+> 
+> Nope, this one fixes 7168/7169.  It's the equivalent of the `parser-oob' patch.
 
-> A number of people already recommend disabling SSLv3, e.g. the Qualys
-> configuration guide. Disable it now - no matter if the rumors about a
-> serious vuln are true, you'll be safe.
+Chet is 7168 new vulnerability or is a typo and should be CVE-2014-7186?
+Doesn't bash43-026  fix CVE-2014-7169?
 
-https://wiki.mozilla.org/Security/Server_Side_TLS has some great info
-on configuring your web servers and load balancers to have the best
-possible SSL/TLS settings, including specific example configs to help
-you out.
+Is this summary correct?
+1) CVE-2014-6271 (Initial vulnerability, Bash Code Injection Vulnerability via Specially Crafted Environment Variables): GNU fix bash43-025  & bash32-052 
 
-~reed
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+2) CVE-2014-7169 (Further parser error,  this was assigned to cover incomplete fix for CVE-2014-6271): GNU fix bash43-026  & bash32-053
 
-iKYEARECAGYFAlQ9NV5fFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3Bl
-bnBncC5maWZ0aGhvcnNlbWFuLm5ldDZCNTZGOUFDMDdCNjg1RDdEQzQ1NjBEQTZC
-QTIyMjI2RjNDMzNENUEACgkQa6IiJvPDPVpviQCgkXv+V3uzoLKuNAITQt33kSn5
-upwAn0TxonRRgEPZYyqUaTIsRlgKkqm7
-=fmf8
------END PGP SIGNATURE-----
+3) CVE-2014-6277 (this is the hardening patch which adds function name mangling, it makes exploitation over the network impossible): Florian's patch /GNU fix bash43-027 & bash32-054
+
+4) CVE-2014-6278 (bash: code execution via specially crafted environment): Florian's patch /GNU fix bash43-027 & bash32-054
+
+5) CVE-2014-7186 (Out of bound memory read error in redir_stack): GNU fix bash43-028 ??
+
+6) CVE-2014-7187 (Off-by-one error in nested loops): No upstream patch available yet ?
+
+Thanks 
+-- Sona
