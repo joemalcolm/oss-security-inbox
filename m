@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/15
-Message-ID: <20140409113029.04f68d73@hboeck.de>
-Date: Wed, 9 Apr 2014 11:30:29 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Heartbleed, clients and Android
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/40
+Message-ID: <op.xm34y9patrc8xl@dhcp-4-217.brq.redhat.com>
+Date: Thu, 02 Oct 2014 19:17:23 +0200
+From: Martin Bříza <mbriza@...hat.com>
+To: oss-security@...ts.openwall.com, "Sebastian Krahmer" <krahmer@...e.de>
+Cc: "David Edmundson" <david@...idedmundson.co.uk>
+Subject: Re: various sddm vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 01 Oct 2014 13:24:52 +0200, Sebastian Krahmer <krahmer@...e.de>  
+wrote:
+
+> Hi
+>
+> During review we found several issues in the sddm
+> display manager which allow local users to obtain
+> root privileges. More on this is here:
+>
+> https://bugzilla.suse.com/show_bug.cgi?id=897788
+>
+> Sebastian
+>
+
 Hi,
+first, please let me thank you for your very valuable input, Sebastian.
 
-I was asking myself some questions and I think others with more insight
-into what heartbleed means may be able to answer quickly:
-How does this affect client software? The PoCs we see send some
-malicous payload to servers and get some memory dumps. That doesn't
-affect clients?
+We (me and d_ed, David Edmundson) took a look at this. Although we don't  
+believe any of the issues you reported could lead to a privilege  
+escalation (as some of the resulting bugreports suggest), we consider them  
+to be security issues.
+Currently, there are two pull requests open [1] [2] potentionally fixing  
+all mentioned issues. We're waiting for peer review from the other  
+developers and possibly yours, too.
 
-Is this vulnerability exploitable by a Man-in-the-Middle in any way?
-Can someone send a package with a wrong authentication block inside an
-existing connection and therefore dump any memory from a client?
+Cheers,
+Martin
 
-I think it's a very obvious question to be asked if we need to push all
-server users of openssl or ALL users of openssl. Because the latter
-would include Android. We are all pretty aware that android updates are
-in large parts nonexistent.
-
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+[1] https://github.com/sddm/sddm/pull/279
+[2] https://github.com/sddm/sddm/pull/280
