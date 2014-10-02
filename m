@@ -1,52 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/25
-Message-ID: <54231788.1040901@case.edu>
-Date: Wed, 24 Sep 2014 15:12:08 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Michal Zalewski <lcamtuf@...edump.cx>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/44
+Message-ID: <CANtRZwKtLcj3g579bxQ1akWH9bi3MfFELZBpXntA7dLkzpYDRg@mail.gmail.com>
+Date: Thu, 2 Oct 2014 15:26:21 -0600
+From: Chad Vizino <cvizino@...ptivecomputing.com>
+To: oss-security@...ts.openwall.com
+Subject: tm_adopt() vulnerability in TORQUE Resource Manager
 Content-Type: text/plain; charset=utf-8
 
-On 9/24/14, 2:54 PM, Michal Zalewski wrote:
->> My main concern with the current patch is that still exposes the bash parser
->> and function definition printer to attacks from the network. Bugs in those
->> fairly large components could cause another critical issue.
-> 
-> Yup, that surprised me when testing the patch, too - I can still get a
-> function called HTTP_COOKIE, for example. I worry about potential side
-> effects of parsing even in absence of parser bugs. In most
-> object-oriented languages, such side effects are practically
-> guaranteed. Bash may be saved by simplicity, but not sure how robust
-> that assumption is.
+Within a TORQUE Resource Manager job, the tm_adopt() TORQUE library call
+enables a user-built executable calling tm_adopt() to adopt any session id
+(and its child processes) regardless of the session id owner on any node
+within a job. When a job that includes the executable calling tm_adopt()
+exits, the adopted processes are killed along with the job processes during
+normal job cleanup. This can enable a non-root user to kill processes
+he/she doesn't own including root-owned ones on any node in a job.
 
-Lots of code out there uses exported functions.
+The issue has been fixed in the following commit numbers for the listed
+TORQUE Resource Manager versions:
 
-> I've written more code in bash than I should have and never used
-> function exports, or even realized that they exist. I wonder if they
-> can be made optional (e.g., gated by a flag on the subprocess) without
-> breakage.
-> 
-> Another option may be to export them through specially prefixed
-> variables, which should be transparent but minimize the risk of
-> interfering with web servers and such.
+4.2-dev
+967cdc80150690459a47a35a658abeee0ca6e5cb
+f2f4c950f3d461a249111c8826da3beaafccace9
 
-There are several options for making shell functions inherited via the
-environment more robust, none of them backwards compatible.  I will
-choose one and implement it for a future bash version.
+4.5-dev
+6c4a57b2d7a56b5bda1c57e2af425ff517ffe331
 
-The leading candidates both raise the bar by requiring a potential
-attacker to be able to create arbitrarily-named environment variables as
-well as environment variables with specific values.
+5.0-dev
+e2b6253b62fe7e59c5852e2b914b71a095328558
 
-I considered (and implemented) a blacklist approach that would have
-protected against a set of commonly-named variables (HTTP_*, CGI_*,
-SSH_*, LC_*, and so on), but the consensus was that that was too easily
-circumvented.  I removed it from the distributed patches.
+develop
+dd7f729eedead89c9253707f85572706077ff1d3
 
-Chet
+--
+Chad Vizino
+Adaptive Computing
 
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
