@@ -1,20 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/02/3
-Message-ID: <alpine.BSF.2.00.1411030607510.1220@aneurin.horsfall.org>
-Date: Mon, 3 Nov 2014 06:10:25 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: unzip -t crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/32
+Message-ID: <542D6813.8080305@case.edu>
+Date: Thu, 02 Oct 2014 10:58:27 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Sona Sarmadi <sona.sarmadi@...a.com>, oss-security@...ts.openwall.com
+CC: Solar Designer <solar@...nwall.com>, chet.ramey@...e.edu
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 2 Nov 2014, Jakub Wilk wrote:
+On 10/2/14, 3:22 AM, Solar Designer wrote:
+> Sona - Chet is not on oss-security, we should be CC'ing him on relevant
+> messages.  I've just added the CC on this one.
+> 
+> On Thu, Oct 02, 2014 at 06:48:54AM +0000, Sona Sarmadi wrote:
+>>> On 10/1/14, 5:04 PM, Shawn wrote:
+>>>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+>>>
+>>> Nope, this one fixes 7168/7169.  It's the equivalent of the `parser-oob' patch.
 
-> Latest American fuzzy lop[0] tarball[1] contains a zip file that crashes 
-> unzip -t:
+My mistake, it's 7186/7187.  There are fixes for both in one patch.  The
+fix for the off-by-one error is not obvious, but it's in there in the
+third chunk.
 
-That brings back memories of "unzip bombs" in the MS-DOS days, where it 
-would try to expand to a terabyte or so...  And ANSI bombs :-)
+Chet
 
 -- 
-Dave Horsfall (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
-http://www.horsfall.org/spam.html (and check the home page whilst you're there)
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
