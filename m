@@ -1,33 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/13
-Message-ID: <20140304160548.6be3f152@hboeck.de>
-Date: Tue, 4 Mar 2014 16:05:48 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/19
+Message-ID: <20141002033305.GA27130@openwall.com>
+Date: Thu, 2 Oct 2014 07:33:05 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: More parser odities
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 4 Mar 2014 11:12:57 +0000
-John Haxby <john.haxby@...cle.com> wrote:
+Michal,
 
-> I suspect that this problem is fairly wide-ranging.   Apple’s Safari
-> also permits the link.   Google Chrome doesn’t permit the link
-> though, it just crashes :)
+On Thu, Oct 02, 2014 at 07:29:44AM +0400, Solar Designer wrote:
+> Maybe you fuzz yet another RCE bug, and we request a CVE ID for the
+> parser being exposed then? ;-)
 
-I added this to the chromium bug tracker:
-https://code.google.com/p/chromium/issues/detail?id=348987
+Oh, of course I meant would-have-been-RCE-before-the-prefix-patch, and
+the parser previously being exposed.
 
-There's however something interesting: I couldn't reproduce the crash
-setup. I created my own test server with a 16 bit exchange and it
-doesn't crash. I haven't found out yet what the difference is that's
-causing this.
-https://dh16.dosdriver.de
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Alexander
