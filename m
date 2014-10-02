@@ -1,28 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/13/7
-Message-ID: <15524688.y9mmZntoOB@devil>
-Date: Thu, 13 Mar 2014 23:16:07 +0100
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, meissner@...e.de
-Subject: Re: Re: CVE request for icinga 1 byte \0 overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/35
+Message-Id: <20141002163354.0A7AD6C0119@smtpvmsrv1.mitre.org>
+Date: Thu,  2 Oct 2014 12:33:54 -0400 (EDT)
+From: cve-assign@...re.org
+To: dkg@...thhorseman.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: gnome-shell lockscreen bypass with printscreen key
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 13 March 2014 15:30:31 cve-assign@...re.org wrote:
-> > The icinga team silently fixed some single byte \0 overflows.
-> > 
-> > https://git.icinga.org/?p=icinga-core.git;a=commitdiff;h=73285093b71a5551a
-> > bdaab0a042d3d6bae093b0d
-> > 
-> > (also the non public
-> > https://dev.icinga.org/issues/5663
-> > is referenced by commit above)
-> 
-> Use CVE-2014-2386.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We tracked a lot of similar issues:
-https://bugs.gentoo.org/show_bug.cgi?id=fortify-source
+> https://bugzilla.gnome.org/show_bug.cgi?id=737456
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Clearly, something is wrong, but the CVE ID or IDs need to apply to a
+specific aspect of the problem.
+
+Our understanding from
+https://bugzilla.gnome.org/show_bug.cgi?id=737456#c10 is that "the
+prtsc key is not disabled when the screen is locked" is intentional
+behavior. Thus, that's not the root cause. It might be reasonable to
+argue that, as a consequence, anyone with physical access to that key
+is implicitly allowed to consume memory and disk space. In many
+environments, anyone with physical access to that key also happens to
+be able to turn off the computer.
+
+There could be a CVE assignment for
+https://bugzilla.gnome.org/show_bug.cgi?id=737456#c20 - "for that
+short period of time those windows are not only shown (which is a bad
+enough privacy issue on it's own), but also accept input (which makes
+the already-bad issue even worse)." However, the bug discussion
+doesn't suggest that there's a reasonable way to solve this within
+gnome-shell itself. In other words, gnome-shell doesn't have any
+direct or immediate ability to control the screen when it's not
+running.
+
+Possibly we're left with the following, which is unusual for a CVE but
+still valid: "PrtSc is an unauthenticated request that's available to
+untrusted parties. It's also a very expensive request. The combination
+of this PrtSc behavior and the existence of the oom-killer allows
+authentication bypass for command execution. Therefore, PrtSc must be
+rate limited, and the lack of rate limiting is a vulnerability."
+Unless there's a better alternative, the CVE ID will be assigned for
+that vulnerability characterization.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJULX3fAAoJEKllVAevmvmsKH4H/2mB7o9lrspTzY+R09IViS00
+m5b+RYKpKE9qJamASkm5CXETQ2xzGHk6iYl+sk+FXQ1K5QfwDMwBPhFxAmcG/I0M
+s3xPlKjrE0l5u1GcZF9N1p9pWyLd1NUgjyL5gXX6O5JKApyITkilI+aAdVRqYskZ
+dlZsHalhdFc3v/yQzthDCiNKYpOqtWy7+uOXHLFrKaeDdLU1z6lRWmmxm3OWSrTv
+f/DKQ57K/DbMERPidFPuUdHn4QoJTjhw3YgKqnfKQ5JdfESrFCKobaFZiffN86ba
+cf/kioXH2r904m0L75N3kvaJ8iC0GDMzSOdf1PNer3qsxDnjWJmZnQ7hP4YVaGQ=
+=QrXH
+-----END PGP SIGNATURE-----
