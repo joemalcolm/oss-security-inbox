@@ -1,59 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/11
-Message-ID: <CAP145phaiadcmPLpeFMS6Gs5iWKXex1iM0qKamrVEWs0oNaTpw@mail.gmail.com>
-Date: Thu, 6 Nov 2014 23:50:44 +0100
-From: Robert Święcki <robert@...ecki.net>
-To: oss-security@...ts.openwall.com
-Subject: Exploitable issues in Linux perf/ftrace subsystems
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/16
+Message-Id: <20141002032525.DE79CC50991@smtptsrv1.mitre.org>
+Date: Wed,  1 Oct 2014 23:25:25 -0400 (EDT)
+From: cve-assign@...re.org
+To: hannes@...essinduktion.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: xfs directory hash ordering bug / Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-1. Perf subsystem oob read in supervisor mode (local DoS) - CVE-2014-7825
-=====================================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The syscall_nr variable is not verified against the upper limit
-(NR_syscalls) in the  perf_syscall_enter()/perf_syscall_exit()
-functions, making it possible for the subsequent test_bit() function
-to fail when trying to access non-present memory pages.
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=c88547a8119e3b581318ab65e9b72f27f23e641d
+> http://marc.info/?l=linux-xfs&m=139590613002926&w=2
+> http://oss.sgi.com/cgi-bin/gitweb.cgi?p=xfs/cmds/xfstests.git;a=commitdiff;h=947ee8bd4b59770534297572b14c695e9c6e001e
+> 
+> Basically it allows a local user to corrupt a xfs filesystem by just
+> creating directories. Depending on whether it is the root filesystem or
+> not the kernel panics or just oopses
 
-http://lxr.free-electrons.com/source/kernel/trace/trace_syscalls.c?v=3.16#L569
+Use CVE-2014-7283.
 
-The impact of this bug depends on the value of kernel.panic_on_oops
-sysctl. When equal to 1, it becomes local DoS. For other values it can
-still aid an attacker with mapping the kernel address space layout
-under systems with kASLR enabled.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-This issue has been fixed with in the kernel's mainline tree with:
-
- https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/kernel/trace/trace_syscalls.c?id=086ba77a6db00ed858ff07451bedee197df868c9
- Author: Rabin Vincent <rabin@....in>
- Date:   Wed Oct 29 23:06:58 2014 +0100
-
-
- 2. Ftrace subsystem supervisor mode code execution - CVE-2014-7826
-=====================================================================
-
-As a precondition this attack scenario requires system administrators
-to enable ftrace-level system tracing (e.g. with 'trace-cmd record -e
-syscalls:sys_enter_write' command) on the local system, at the time of
-attack taking place. Likewise, the problem stems from an incorrect
-upper boundary check of the syscall_nr variable inside
-ftrace_syscall_enter()/ftrace_syscall_exit() functions. However,
-unlike with CVE-2014-7825, here a user-controlled pointer inside the
-'struct ftrace_event_file' structure can be called through the
-ftrace_trigger_soft_disabled() -> event_triggers_call() function
-call-chain (http://lxr.free-electrons.com/source/kernel/trace/trace_events_trigger.c#L77)
- leading to supervisor mode code execution of user-controlled code
-(under systems w/o SMEP/SMAP-type protections enabled).
-
-This issue has been fixed with the same patch:
-
- https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/kernel/trace/trace_syscalls.c?id=086ba77a6db00ed858ff07451bedee197df868c9
- Author: Rabin Vincent <rabin@....in>
- Date:   Wed Oct 29 23:06:58 2014 +0100
-
-
-3. Misc
-=====================================================================
-These issues were independetly discovered by Rabin Vincent and Robert
-Swiecki, and the exploitation scenarios were independently developed
-by Russell King and Robert Swiecki
+iQEcBAEBAgAGBQJULMUnAAoJEKllVAevmvmsiX8IALazBQ0FNLaT54gkqx8N9BSx
+aR22Kja/EDenK39O6LBg2Cf98XXmvGaiGmsQZbFkcdTt5iuQG5SnUE4Y1zyP6PDC
+rLiuzPTqyuAXvtn80qOigPDJWG4P/TZICckpQIix1Tiu2OFNcqJggOT6quuJ53ci
+3YjSJyEv+T0AuaBxKxyFnBMyH8r/3IvEU8uNZlYK3+mxuPmGqLj2iZaDKK3XX+iy
+QcokNsyOaS9UIDdf06zdWQGO3hXz+Md2D4JZ57myZQJOTFh/6FtPpn3jcgNP7i6c
+RIVfFfaLh5j58VOXOeL3qrvoiw00o9IZfsKYKZl9UqTAHOxNzrJ3qrK9j/xlPgY=
+=M1u6
+-----END PGP SIGNATURE-----
