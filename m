@@ -1,54 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/15
-Message-ID: <54771465.4080807@sysdream.com>
-Date: Thu, 27 Nov 2014 13:09:09 +0100
-From: Damien Cauquil <d.cauquil@...dream.com>
-To: Henri Salo <henri@...v.fi>
-CC: n.chatelain@...dream.com, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Multiple vulnerabilities in Centreon <= 2.5.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/6
+Message-ID: <542CAC3B.7070307@FreeBSD.org>
+Date: Wed, 01 Oct 2014 20:36:59 -0500
+From: Bryan Drewery <bdrewery@...eBSD.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Security advisory in Jenkins
 Content-Type: text/plain; charset=utf-8
 
+On 10/1/2014 6:25 PM, Kohsuke Kawaguchi wrote:
+> Hello,
+> 
+> I just wanted to share that the Jenkins project issued a security advisory
+> today. These issues are independently found and we've aggregated into a
+> single release.
+> 
+> The relevant CVE IDs, our bug tracking IDs are available here
+> <https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01>
+> .
+> 
+> The new versions can be downloaded from here
+> <http://mirrors.jenkins-ci.org/>.
+> 
+> (This is the first time I do this, so my apologies in advance for probably
+> failing to follow the expected format.)
+> 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Kudos to all for finding and fixing these issues. It was quite a
+surprising list though. Were these fixes kept from release for an
+extended time? The timeframe for CVE-2013-2186 is especially concerning.
 
-My bad, here are the related commits for the unauthenticated remote
-command execution
-
-- -
-https://forge.centreon.com/projects/centreon/repository/revisions/015e875482d7ff6016edcca27bffe765c2bd77c1
-
-- -
-https://forge.centreon.com/projects/centreon/repository/revisions/d00f3e015d6cf64e45822629b00068116e90ae4d
-
-Another commit is pending, related to the information disclosure
-vulnerability.
+-- 
+Regards,
+Bryan Drewery
 
 
-Le 27/11/2014 13:03, Henri Salo a écrit :
-> On Thu, Nov 27, 2014 at 12:53:46PM +0100, Damien Cauquil wrote:
-> > We found two vulnerabilities in Centreon <= 2.5.3:
->
-> For public CVE request you need to include at least one of:
-> - Link to vulnerable source code or fix
-> - Link to source code change log
-> - Link to security advisory
-> - Link to bug entry
->
-> If you are unwilling or unable to share this information then please
-contact
-> MITRE at cve-assign@...re.org for CVE-ID, thank you.
->
-> For detailed information please see:
-> https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
->
-> ---
-> Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iF4EAREIAAYFAlR3FGUACgkQem0Y8idpWLxcVwEAhDa+HvScE/cPMzK+6JuQGqIV
-Cj6aWLOQWqiM89o/unkA/R9cFzQwD0HxywlQ0R0ksVDFaCwrQ1wLY6rVJty2VRQJ
-=vtB7
------END PGP SIGNATURE-----
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
