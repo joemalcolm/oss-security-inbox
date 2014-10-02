@@ -1,34 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/9
-Message-ID: <20140925024718.GA30787@openwall.com>
-Date: Thu, 25 Sep 2014 06:47:18 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Chet Ramey <chet.ramey@...e.edu>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/31
+Message-ID: <542D6758.5020304@case.edu>
+Date: Thu, 02 Oct 2014 10:55:20 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Shawn <citypw@...il.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 24, 2014 at 03:12:08PM -0400, Chet Ramey wrote:
-> There are several options for making shell functions inherited via the
-> environment more robust, none of them backwards compatible.  I will
-> choose one and implement it for a future bash version.
+On 10/1/14, 10:57 PM, Shawn wrote:
+> On Thu, Oct 2, 2014 at 5:45 AM, Ed Prevost <me@...ardprevost.info> wrote:
+>> On 10/1/2014 2:11 PM, Shawn wrote:
+>>> On Thu, Oct 2, 2014 at 5:08 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
+>>>> On 10/1/14, 5:04 PM, Shawn wrote:
+>>>>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+>>>> Nope, this one fixes 7168/7169.  It's the equivalent of the
+>>>> `parser-oob' patch.
+>>>>
+>>>> I have patches that fix 6277/6278 that are in the pipeline.
+>>>>
+>>> oh, s0rry for the mistake...that'd be great if we can get the patch as
+>>> quickly as possible. Thanks.
+>>>
+>>>
+>> Really!? Honestly!? "as quickly as possible"
+>>
+> What else could I say? A POC already released and a bunch of
+> customer's machines are waiting...even the only mitigation is in
+> GCC-lvl, which compile bash with ASLR/NX/PIE/CANARY.....too bad this
+> time.
 
-While we're at it, I think it's preferable not to output error messages
-triggerable by untrusted input, e.g.:
+The real mitigation is to install bash43-027 or vendor or previous
+version equivalent.
 
-$ ssh -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id' 
-bash: warning: SSH_ORIGINAL_COMMAND: ignoring function definition attempt
-bash: error importing function definition for `SSH_ORIGINAL_COMMAND'
-
-(as seen with the current bash patches).  This might be unnecessarily
-revealing or/and it might confuse whatever other program was invoking
-something via bash, resulting in attacker-triggerable unintended
-behavior in that caller program.  Yes, there are numerous other error
-conditions anyway - such as running out of memory - which may result in
-messages printed to stderr.  Yet we might want to avoid printing error
-messages for environment variable value parsing errors (ideally, we'd
-avoid the parsing itself as well), unless a debugging or a verbose mode
-is enabled locally (in a way that can't realistically be triggered via
-an unsuspecting network service).
-
-Alexander
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
