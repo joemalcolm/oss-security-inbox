@@ -1,61 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/15
-Message-ID: <OFFE39D0DA.437BB5E8-ON85257D69.00426946-85257D69.0044BD33@us.ibm.com>
-Date: Mon, 6 Oct 2014 08:30:48 -0400
-From: Peter G Spera <spera@...ibm.com>
-To: Jose R R <Jose.r.r@...ztli-it.com>, oss-security@...ts.openwall.com
-Cc: 
-Subject: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/22
+Message-ID: <542CD868.7020705@edwardprevost.info>
+Date: Wed, 01 Oct 2014 21:45:28 -0700
+From: Ed Prevost <me@...ardprevost.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-
-Jose,
-It is important to note that the BASH running on z/OS was a proof of
-concept from 2001-2002. It was part of a Redbook project and is not part of
-any supported IBM z/OS product. IBM suggests that customers keep current
-with the latest version of BASH, downloading the source from GNU or working
-with vendors like Rocket Software to get a supported version.
-
-Regards,
-    Peter
-Peter Spera, IBM System z Security, System Integrity Center, Mail:
-spera@...ibm.com, IBM STG, Poughkeepsie, NY
------------------------------------
-From:	Jose R R <Jose.r.r@...ztli-it.com>
-To:	oss-security@...ts.openwall.com
-Date:	10/05/2014 02:49 AM
-Subject:	[oss-security] Shellshocker - Repository of "Shellshock" Proof
-            of Concept Code
-Sent by:	jose.r.r@...ztli.com
-
-
-
-Niltze!
-
-Of possible interest:
-
-< https://github.com/mubix/shellshocker-pocs >
-
-I was surprised a (vulnerable) bash has been ported to IBM z/OS
-
-<
-http://mainframed767.tumblr.com/post/98446455927/bad-news-is-it-totally-works-in-bash-on-z-os-and
-
+On 10/1/2014 6:49 PM, Chet Ramey wrote:
+> On 10/1/14, 5:45 PM, Ed Prevost wrote:
 >
+>>>> I have patches that fix 6277/6278 that are in the pipeline.
+>>>>
+>>> oh, s0rry for the mistake...that'd be great if we can get the patch as
+>>> quickly as possible. Thanks.
+>>>
+>>>> --
+>>>> ``The lyf so short, the craft so long to lerne.'' - Chaucer
+>>>>                  ``Ars longa, vita brevis'' - Hippocrates
+>>>> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+>>>
+>> Really!? Honestly!? "as quickly as possible"
+>>
+>> Man, we really should rally together and at least send Chet a recovery
+>> beer basket or something.
+> Good IPAs are always welcome; the hoppier the better. :-)
+>
+How would you like this? Do you want to share an address? Not sure how
+the university would take a ton of IPAs being delivered. lol
 
-
-Best Professional Regards.
-
---
-Jose R R
-http://www.metztli-it.com
----------------------------------------------------------------------------------------------
-
-NEW Apache OpenOffice 4.1.1! Download for GNU/Linux, Mac OS, Windows.
----------------------------------------------------------------------------------------------
-
-Daylight Saving Time in USA & Canada ends: Sunday, November 02, 2014
----------------------------------------------------------------------------------------------
-
-
+--Ed
+Application & Network Security, Research Scientist
+http://EdwardPrevost.info
+https://twitter.com/@EdwardPrevost
 
