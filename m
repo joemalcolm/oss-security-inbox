@@ -1,37 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/01/5
-Message-ID: <21228.64763.42882.936524@gargle.gargle.HOWL>
-Date: Sat, 1 Feb 2014 14:56:11 +0100
-From: rf@...eap.de
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/41
+Message-ID: <127C3BAFC01B4F4AA1B07F6D89FF8A1612F4F4BF@G6W2502.americas.hpqcorp.net>
+Date: Thu, 2 Oct 2014 17:30:13 +0000
+From: "Menkhus, Mark (Global Cyber Security SSRT)" <mark.menkhus@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Sona Sarmadi <sona.sarmadi@...a.com>
+CC: Solar Designer <solar@...nwall.com>
+Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
->>>>> "AC" == Alexander Cherepanov <cherepan@...me.ru> writes:
-    >>>>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
+Hi,
 
-    SD> For example, how do I find your most recent security updates in
-    SD> that tree, for these two advisories? -
+What URL do I point to see the security bugs listed by CVE for CVE for bash43-25 through -28?
 
-    SD> https://qlustar.com/news/qsa-0131141-linux-kernel-vulnerabilities
-    SD> https://qlustar.com/news/qsa-0131142-security-bundle
+I didn't see it in the patches themselves - ftp://ftp.cwru.edu/pub/bash/bash-4.3-patches 
 
-    AC> The advisories don't mention the release of Qlustar which they
-    AC> apply to but it seems to be Qlustar 8.1. Then, I think, you look
-    AC> into
+Sorry, I am new to bash culture,
+Mark Menkhus
+Hewlett Packard
 
-    AC> http://repo.qlustar.com/repo/ubuntu/dists/8.1-precise/main/binary-amd64/Packages.gz
-    AC> http://repo.qlustar.com/repo/ubuntu/dists/8.1-precise-proposed-updates/main/binary-amd64/Packages.gz
+-----Original Message-----
+From: Chet Ramey [mailto:chet.ramey@...e.edu] 
+Sent: Thursday, October 02, 2014 8:58 AM
+To: Sona Sarmadi; oss-security@...ts.openwall.com
+Cc: Solar Designer; chet.ramey@...e.edu
+Subject: Re: [oss-security] more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 
-    AC> and locate the interesting files. Here they are:
+On 10/2/14, 3:22 AM, Solar Designer wrote:
+> Sona - Chet is not on oss-security, we should be CC'ing him on 
+> relevant messages.  I've just added the CC on this one.
+> 
+> On Thu, Oct 02, 2014 at 06:48:54AM +0000, Sona Sarmadi wrote:
+>>> On 10/1/14, 5:04 PM, Shawn wrote:
+>>>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+>>>
+>>> Nope, this one fixes 7168/7169.  It's the equivalent of the `parser-oob' patch.
 
-    AC> $ curl -I
-    AC> http://repo.qlustar.com/repo/ubuntu/pool/main/q/qlustar-kernel/linux-image-ql-generic_3.12.9-ql-generic-18_amd64.deb ...
+My mistake, it's 7186/7187.  There are fixes for both in one patch.  The fix for the off-by-one error is not obvious, but it's in there in the third chunk.
 
-Absolutely correct. Thanks for stepping in and explaining :)
-Of course on an installed system apt is taking care of this. See our
-update guide [1] for Qlustar specifics.
+Chet
 
-Roland
-
-[1] https://qlustar.com/book/docs/qlustar-update-procedure
+--
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
