@@ -1,58 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/10
-Message-ID: <5404E592.2020802@sumptuouscapital.com>
-Date: Mon, 01 Sep 2014 23:30:58 +0200
-From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/23
+Message-ID: <20141002074304.0d2e65f4@hboeck.de>
+Date: Thu, 2 Oct 2014 07:43:04 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE assignment for c-icap Server
+Subject: Re: More parser odities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Am Wed, 1 Oct 2014 19:44:38 -0700
+schrieb Michal Zalewski <lcamtuf@...edump.cx>:
 
-Hi,
+> Anyway, I think that the confusion stemmed mostly from fairly
+> inaccurate "vanity" pages, news articles, and "vulnerability checkers"
+> that pulled off stuff like this
+> (https://shellshocker.net/shellshock_test.sh):
 
-[0] lists a vulnerability for c-icap Server as:  "contains a flaw in
-the parse_request() function of request.c that may allow a remote
-denial of service. The issue is triggered when the buffer fails to
-contain a ' ' or '?' symbol, which will cause the end pointer to
-increase and surpass allocated memory. With a specially crafted
-request (e.g. via the OPTIONS method), a remote attacker can cause a
-loss of availability for the program." as described in [1]. From what
-I can see this was fixed in [2].
+I feel somewhat guilty here because I wrote one of the more popular
+scripts out there [1]. It has been referenced in a number of somewhat
+incorrect reportings about the apple update.
 
-Has a CVE been assigned to this issue already? if not I request that
-one is assigned.
+I'll add some clarification to the docs and will change the script in a
+way that the output is less scary if the prefix-patch is installed.
 
-References:
-[0] http://www.osvdb.org/show/osvdb/89304
-[1] http://osvdb.org/ref/89/c-icap.txt
-[2] http://sourceforge.net/p/c-icap/code/1018/
+[1] https://github.com/hannob/bashcheck
 
-- -- 
-- ----------------------------
-Kristian Fiskerstrand
-Blog: http://blog.sumptuouscapital.com
-Twitter: @krifisk
-- ----------------------------
-Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-- ----------------------------
-Veni vidi visa
-I came, I saw, I bought
------BEGIN PGP SIGNATURE-----
+-- 
+Hanno Böck
+http://hboeck.de/
 
-iQIcBAEBCgAGBQJUBOWQAAoJEPw7F94F4TagjwUQAKFjqW2KCIrw9gI7aZrwBn9Z
-z+jCml/7AjUeqsVeLVkDi1FX+SN53bxgL8g7T+PmqKUS4esZ875RVXnz4Jviivhm
-WD7p1cDOojVHB/MVO5CRvbkNwSn92rLixcvtE6+O6d/OZcjz5bUwXxQvgznKPCRr
-oZoLl54izPuwuHbkj4bvzU2b0FLZA4Vsj75LxDyJDWaI2f+hD09iMO+T/25qQ7vK
-B8NYToE2W/X9VVeWL5kx8HrRX2cgYy8jI5yGxphIscsoaBx0wD3JcV4FG9YUy+zm
-Jk3RPY00PEyGt1SNf8LVLEE5uQoT/SbOhVc5Ofhru9JdZQDj2jqzZXmPjWYldfeR
-yabp6qphxZvIo3j07avAzdZlatQ/9TwBH7MbALf23k1P0rOlBe1Es+UsjrMSSLs1
-fuJdv1s/ctC4hlF7RwBCBL8gnQz3eSYwAukYXs9ehF+JtSQGXu/rJMid97774kRs
-8zB8pLbzmdLgJVnCrC+Mdd8HEXv2TviLyNMWVPAOyX2jesRUByWFv65MsxXlgmL6
-v2xFEg8prXxgmwM67MiyS3Gxn+LkR2KkBpOQMySlxyyEuCLzjTUa3rOEjzYBiHgJ
-gkeM8qevyZxFqRT8ycw8Xy/cdtYtgqI2WyxapsKCwzl5mP++PKp4tntx4aY3TrXc
-lfbxFKuRgQ1ZFgzBFaT2
-=UoU4
------END PGP SIGNATURE-----
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
