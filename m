@@ -1,40 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/43
-Message-ID: <127C3BAFC01B4F4AA1B07F6D89FF8A1612F50728@G6W2502.americas.hpqcorp.net>
-Date: Thu, 2 Oct 2014 18:45:10 +0000
-From: "Menkhus, Mark (Global Cyber Security SSRT)" <mark.menkhus@...com>
-To: Sona Sarmadi <sona.sarmadi@...a.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Solar Designer <solar@...nwall.com>
-Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/11
+Message-ID: <20141002022052.GA25523@openwall.com>
+Date: Thu, 2 Oct 2014 06:20:52 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Kohsuke Kawaguchi <kk@...suke.org>
+Subject: Re: Security advisory in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-Thanks, 
+On Thu, Oct 02, 2014 at 06:11:27AM +0400, Solar Designer wrote:
+> Many of these issues were brought to the distros list on Fri Sep 26
+> 17:10:16 2014 UTC, and got their CVE IDs assigned there.  However,
+> CVE-2013-2186 was not among those.  I don't know why the old CVE ID,
+> nor how that issue was handled.
 
-I was reading the list, but missed this one.  I shared it with a lot of my friends at HP!
+Looks like it was already public in 2013:
 
-Mark
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-2186
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-2186
 
------Original Message-----
-From: Sona Sarmadi [mailto:sona.sarmadi@...a.com] 
-Sent: Thursday, October 02, 2014 12:35 PM
-To: Menkhus, Mark (Global Cyber Security SSRT); oss-security@...ts.openwall.com
-Cc: Solar Designer
-Subject: RE: [oss-security] more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+(and in many other places).  I guess it was just not mentioned in an
+upstream advisory before, hence the mention now?
 
-
-> What URL do I point to see the security bugs listed by CVE for CVE for 
-> bash43-
-> 25 through -28?
-> 
-> I didn't see it in the patches themselves - 
-> ftp://ftp.cwru.edu/pub/bash/bash-4.3-patches
-> 
-> Sorry, I am new to bash culture,
-> Mark Menkhus
-> Hewlett Packard
-
-Mark
-Look here (from Michal 's post) for a summary of each CVE and corresponding upstream patches (GNU patches): 
-http://www.openwall.com/lists/oss-security/2014/10/02/28 
-
-/Sona
+Alexander
