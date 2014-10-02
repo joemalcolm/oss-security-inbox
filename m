@@ -1,80 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/11/3
-Message-Id: <201403110615.s2B6FPYi016489@linus.mitre.org>
-Date: Tue, 11 Mar 2014 02:15:25 -0400 (EDT)
-From: cve-assign@...re.org
-To: snackypants@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: When is broken crypto a vulnerability?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/43
+Message-ID: <127C3BAFC01B4F4AA1B07F6D89FF8A1612F50728@G6W2502.americas.hpqcorp.net>
+Date: Thu, 2 Oct 2014 18:45:10 +0000
+From: "Menkhus, Mark (Global Cyber Security SSRT)" <mark.menkhus@...com>
+To: Sona Sarmadi <sona.sarmadi@...a.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Solar Designer <solar@...nwall.com>
+Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Thanks, 
 
-> We know that people want (at least) data confidentiality when they opt
-> to use an "encryption" feature.
+I was reading the list, but missed this one.  I shared it with a lot of my friends at HP!
 
-Actually, there are multiple contexts in which people use the ZIP
-encryption feature when they're not looking for confidentiality.
-Here's a sample help page from a university IT department:
+Mark
 
-  https://wiki.csuchico.edu/confluence/display/help/Blocked+E-mail+Attachments+File+Types
+-----Original Message-----
+From: Sona Sarmadi [mailto:sona.sarmadi@...a.com] 
+Sent: Thursday, October 02, 2014 12:35 PM
+To: Menkhus, Mark (Global Cyber Security SSRT); oss-security@...ts.openwall.com
+Cc: Solar Designer
+Subject: RE: [oss-security] more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 
-  Our filters are unable to scan files within a password
-  protected .zip archive. When the filters encounter a protected
-  .zip file, a warning message is appended to the original
-  message and is passed through with the attachment in tact. If
-  you need to send or receive a file type on the blocked list,
-  you can protect the .zip file with a password and supply the
-  password in your message in order for your recipient to open
-  the file. If you need to receive one of these files, you can
-  forward instructions for your sender to do the same.
 
-Because the password is included in the message, this is obviously not
-a solution to address confidentiality. (In general, some mail systems
-intentionally allow encrypted ZIP files for this functionality reason.
-Some mail systems intentionally block encrypted ZIP files because they
-are, on the whole, more likely to be malicious than unencrypted ones.)
+> What URL do I point to see the security bugs listed by CVE for CVE for 
+> bash43-
+> 25 through -28?
+> 
+> I didn't see it in the patches themselves - 
+> ftp://ftp.cwru.edu/pub/bash/bash-4.3-patches
+> 
+> Sorry, I am new to bash culture,
+> Mark Menkhus
+> Hewlett Packard
 
-Other references about essentially the same approach:
+Mark
+Look here (from Michal 's post) for a summary of each CVE and corresponding upstream patches (GNU patches): 
+http://www.openwall.com/lists/oss-security/2014/10/02/28 
 
-  http://support.liquidfiles.net/entries/24165389-Frequent-Responses-after-security-reviews
-  "If you block say .exe files ... if someone really wants to send the
-   file, they can in almost all cases just zip the file instead in an
-   encrypted zip file we couldn't scan"
-
-  http://www.zimbra.com/forums/administrators/42794-solved-allow-banned-content-encrypted-zip.html
-  "Our organization needs to be able to send and receive otherwise
-   banned content (exe,bat,dll, etc...) via a password encrypted ZIP
-   archive."
-
-We previously mentioned the use case of sending virus samples to
-anti-virus vendors. This still occurs and was discussed in some blogs
-last month:
-
-  http://www.ghettoforensics.com/2014/02/google-actively-scanning-malware-emails.html
-  http://grahamcluley.com/2014/02/shouldnt-gmail-zip-files-password-infected/
-
-Again, the password is well known, and thus the goal isn't
-confidentiality. Some major vendors recommend or support this, e.g.,
-
-  http://www.mcafee.com/us/threat-center/resources/how-to-submit-sample.aspx
-  http://forum.kaspersky.com/lofiversion/index.php/t280764.html
-  https://ers.trendmicro.com/guide/en_us/AG/Help/Sending_Suspicious_Files_to_Trend_Micro.htm
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTHqkWAAoJEKllVAevmvmswRIIALJd/mBpEKMQ9vCetaKfDNTC
-kqRgUTSTW0ACQRCVROrlW2An18yU3u4qkRUl6IFCE8qFb95db06WyVdTlpvlY7CJ
-HeXRT9NL5N2+coaOZoPIx2PzZ4qB5M+7oaWXNk7NesQW9k3ysjiy7rmN2K7gzsB3
-2z6FD0nEgnMqjuMv2kEgq6Xv0Fme2W3T37A9HLTy7O5XTh2Tn3NHLCX28pzQ0mDl
-Xd9C9YZRojCvQC69Xv7opdh9cOxJgybu89KMTctFdvyPJj8rGAZrLrq95ou/vWzx
-Ps0A9LUTDL+Za2+GDAdWRVZ2m/tQUUnQ/j49+iJH4KUh4hEEknAQUtrJBpArvrk=
-=NYwQ
------END PGP SIGNATURE-----
+/Sona
