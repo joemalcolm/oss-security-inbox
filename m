@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/6
-Message-ID: <20140922160021.GA8492@inutil.org>
-Date: Mon, 22 Sep 2014 18:00:21 +0200
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Steve French <sfrench@...ba.org>
-Subject: Re: CVE request: [CIFS] Possible null ptr deref in SMB2_tcon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/30
+Message-ID: <3230301C09DEF9499B442BBE162C5E4825755BC7@SESTOEX04.enea.se>
+Date: Thu, 2 Oct 2014 10:38:54 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Shawn <citypw@...il.com>
+Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 22, 2014 at 06:43:19PM +0530, P J P wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
->    Hello Raphael,
-> 
-> +-- On Wed, 17 Sep 2014, Raphael Geissert wrote --+
-> | Commit 18f39e7b[1] of the linux kernel repository fixes a remote null
-> | pointer dereference on the client when it resolves DFS referrals but
-> | the server deletes the IPC$ share.
-> 
->   IIUC, this would occur while mounting a remote share, right? mount(2) would 
-> be a privileged operation on the client.
+Thanks Michal,
 
-True, but on Debian and derivatives like Ubuntu mount.cifs is usually setuid root.
+> * CVE-2014-6277 - uninitialized memory issue, almost certainly RCE found by
+> me. No specific patch yet.
 
-Cheers,
-        Moritz
+According to shellshock  test (https://shellshocker.net/shellshock_test.sh) 
+Florian's patch (Gnu patch bash43-027)  and all other GNU patches (bash43-025 , 
+bash43-026   & bash43-027 ) seems to have solved all so far known shellshock  
+vulnerabilities.  
+
+root@...uarm:~# ./shellshock_test.sh
+CVE-2014-6271 (original shellshock): not vulnerable bash: shellshocker: command not found
+CVE-2014-6278 (Florian's patch): not vulnerable
+CVE-2014-7169 (taviso bug): not vulnerable
+CVE-2014-//// (exploit 3 on http://shellshocker.net/): not vulnerable
+CVE-2014-7186 (redir_stack bug): not vulnerable
+CVE-2014-7187 (nested loops off by one): not vulnerable
+
+I guess CVE-2014-//// in the "shellshock_test.sh" should be CVE-2014-6277, right?
+
+Thanks
+/Sona
