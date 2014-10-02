@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/9
-Message-ID: <CACYkhxibD6Biiv+zYyNuFzDgsaLV956F48skN2Qf7MVJvwxw9w@mail.gmail.com>
-Date: Sun, 28 Sep 2014 21:13:22 +1000
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Cc: Chester Ramey <chet.ramey@...e.edu>
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/7
+Message-ID: <542CAEFD.3080802@case.edu>
+Date: Wed, 01 Oct 2014 21:48:45 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: Shawn <citypw@...il.com>
+CC: chet.ramey@...e.edu, oss-security@...ts.openwall.com
+Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-On 28 September 2014 01:06, Solar Designer <solar@...nwall.com> wrote:
-> This also means that we should treat any programs that generate bash
-> scripts with (sanitized) untrusted input in them as unsafe, and patch
-> those to use safer mechanisms to pass (sanitized) inputs to scripts
-> (preferably use env vars with fixed names).
+On 10/1/14, 5:11 PM, Shawn wrote:
+> On Thu, Oct 2, 2014 at 5:08 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
+>> On 10/1/14, 5:04 PM, Shawn wrote:
+>>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+>>
+>> Nope, this one fixes 7168/7169.  It's the equivalent of the
+>> `parser-oob' patch.
+>>
+>> I have patches that fix 6277/6278 that are in the pipeline.
+>>
+> oh, s0rry for the mistake...that'd be great if we can get the patch as
+> quickly as possible. Thanks.
 
-The problem with this approach is that a sh is useful for both system(3)
-and wrapping things like java.
+I hope to have them by the end of the week.  It's a backporting issue:
+the fix I have for 6278 uses capabilities not in previous versions of bash.
+There's a very simple fix that can be used in a pinch, but it doesn't
+prevent the function from being defined.
 
-This problem came up because bash was parsing environment variables
-even when the script wasn't referencing them.  I don't think anyone lets
-network users set completely arbitrary environment variable names.
+Chet
 
-I think Debian's approach of dash as /bin/sh, and bash as an interactive
-shell is the right balance.
-
-I switched a Fedora box to using dash as /bin/sh, and so far have only
-logged one bug for something that broke, and it pretty much deserved
-to break (BZ #1146733).
-
-Regards,
-  Michael
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
