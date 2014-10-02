@@ -1,33 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/10
-Message-ID: <20141001153228.58d6e6ff@redhat.com>
-Date: Wed, 1 Oct 2014 15:32:28 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/3
+Message-ID: <20141002003612.GA24703@openwall.com>
+Date: Thu, 2 Oct 2014 04:36:12 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Cc: Chet Ramey <chet.ramey@...e.edu>
+Subject: Re: More parser odities
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 30 Sep 2014 19:19:55 -0400 (EDT) David A. Wheeler wrote:
+Eric - you probably want to CC: Chet on your new findings.  Added the CC.
 
-> * Approach 1: Florian Weimer's approach.  Bash functions to be
-> exported have a prefix ("BASH_FUNC_") and suffix added.  Then, ONLY
-> environment variables with that prefix and suffix are interpreted
-> specially.  This approach is used by Red Hat, CentOS, Debian, Ubuntu,
-> and Cygwin (at least), and was later accepted into bash upstream.
-> The original approach used "()" as the suffix; bash upstream took
-> this but switched to the "%%" suffix instead, which is a nice
-> improvement (since "%" is not a shell metacharacter this is less
-> likely to trigger OTHER problems).  I know Cygwin is using the bash
-> upstream '%%' suffix.
-
-The following indicates there is other prefix and suffix used, that
-makes these incompatibility issues worse:
-
-  http://support.apple.com/kb/HT6495
-
-  The names of all environment variables that introduce function
-  definitions are required to have a prefix "__BASH_FUNC<" and suffix
-  ">()" to prevent unintended function passing via HTTP headers.
-
--- 
-Tomas Hoger / Red Hat Product Security
+On Wed, Oct 01, 2014 at 07:16:40PM -0500, Kobrin, Eric wrote:
+> This oddity also allows bypass of the absolute_program protection added in the recent patches:
+> 
+> 
+> $ env $'BASH_FUNC_#badname%%'=$'() { :; }\n/bin/ls () { echo wrongfunc; }  ' ./bash -c '/bin/ls'
+> fbash: error importing function definition for `#badname'
+> wrongfunc
+> 
+> 
+> 
+> 
+> I really do think it is time to take a different approach for a long-term solution.
+> 
+> 
+> -- Eric Kobrin
+> 
+> 
+> On Oct 1, 2014, at 5:35 PM, "Kobrin, Eric" <ekobrin@...mai.com> wrote:
+> 
+> 
+> > Using bash from the GNU git, subsequently patched to level 28:
+> > 
+> > $ env $'BASH_FUNC_#badname%%'=$'() { :; }\nfoo () { echo wrongfunc; } ' ./bash -c 'foo'
+> > ./bash: error importing function definition for `#badname'
+> > wrongfunc
+> > 
+> > 
+> > This is an artifact of the name and value being passed directly to parse_and_execute, separated by a space. Structures started in the name such as comments, quoted strings, etc. are allowed to continue into the body. Some of the existing safety checks stop the obvious attacks, but things like this can still get through.
+> > 
+> > 
+> > I don't know of a safe way to pass the contents of an environment variable to parse_and_execute. Has anyone worked on a simplified grammar which could be more rigorously checked?
+> > 
+> > If there were one, with a parser called bash-simple-parse in following example, this problem would be easier to manage.
+> > 
+> > This way `function f() {...}' can be parsed, but `export -f f' could store a version of the function readable by bash-simple-parse. The function importer can then call bash-simple-parse and extract a function definition, knowing that nothing other than a function definition (not even the name) will be returned. That result can then be bound to the name provided, directly in the variable setup function without ever invoking the general parser.
+> > 
+> > Thoughts?
+> > 
+> > -- Eric Kobrin
