@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/24/1
-Message-ID: <532FC077.60108@redhat.com>
-Date: Mon, 24 Mar 2014 16:19:51 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/18
+Message-ID: <542F1EE0.2040301@redhat.com>
+Date: Fri, 03 Oct 2014 16:10:40 -0600
+From: Eric Blake <eblake@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: possible CVE request: smb4k credentials cache leak
+Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 10/03/2014 01:28 PM, David A. Wheeler wrote:
+> FYI, I've created a timeline of major Shellshock events here:
+> 
+>   http://www.dwheeler.com/essays/shellshock.html#timeline
+> 
+> If anyone has corrections or key additions, let me know.
 
-https://bugs.gentoo.org/show_bug.cgi?id=505376 notes that smb4k (an 
-SMB/CIFS share browser for KDE) version 1.1.1 fixes a potential security 
-issue:
+In the timeline, it might be worth linking to all of the bash patches:
 
-"Fixed potential security issue reported by Heiner Markert. Do not allow 
-the cruid option to be entered via the "Additional options" line edit. 
-Also, implement a check in Smb4KMountJob::createMountAction() that 
-removes the cruid option from the custom options returned by 
-Smb4KSettings::customCIFSOptions()."
+Patch 25 (CVE-2014-6271) 24 Sep 2014 10:27:10 -0400
+https://lists.gnu.org/archive/html/bug-bash/2014-09/msg00081.html
 
-http://sourceforge.net/projects/smb4k/files/Smb4K%20%28stable%20releases%29/1.1.1/
+Patch 26 (CVE-2014-7169) 26 Sep 2014 17:17:09 -0400
+https://lists.gnu.org/archive/html/bug-bash/2014-09/msg00224.html
 
-Does it need a CVE? I do not have further details, sorry.
+Patch 27 (no CVE, but the most important) [already in the timeline] 27
+Sep 2014 22:50:07 -0400
+https://lists.gnu.org/archive/html/bug-bash/2014-09/msg00278.html
 
---
-Murray McAllister / Red Hat Security Response Team
+Patch 28 (CVE-2014-7186, CVE-2014-7187) 1 Oct 2014 10:47:47 -0400
+https://lists.gnu.org/archive/html/bug-bash/2014-10/msg00000.html
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1079819
+Patch 29 (CVE-2014-6277) 2 Oct 2014 22:42:53 -0400
+https://lists.gnu.org/archive/html/bug-bash/2014-10/msg00020.html
+
+Patch 30 (CVE-2014-6278) TBD
+
+-- 
+Eric Blake   eblake redhat com    +1-919-301-3266
+Libvirt virtualization library http://libvirt.org
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
