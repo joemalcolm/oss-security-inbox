@@ -1,34 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/10
-Message-ID: <CAC9YFzfc1OXzZa-m+3nKtb-bjRPPxi1Xd64XR0LYjB=nC-nCEA@mail.gmail.com>
-Date: Wed, 2 Jul 2014 16:54:51 -0300
-From: Rafael Mendonça França <rafaelmfranca@...il.com>
-To: rubyonrails-security@...glegroups.com, ruby-security-ann@...glegroups.com,  oss-security@...ts.openwall.com
-Subject: Amended Patches for CVE-2014-3483 for Rails 4.x
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/17
+Message-ID: <CAN4CQ4yniUOBXACwXo1iQ3=0E6UeSvky_5vCkTUNLFA7W=DL6w@mail.gmail.com>
+Date: Fri, 3 Oct 2014 14:44:00 -0700
+From: Kohsuke Kawaguchi <kk@...suke.org>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Security advisory in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-The original patches introduced a regression on the PostgreSQL Range
-feature. This regression was only introduced to Rails 4.x. Rails 3.2 users
-are not impacted.
+We are still learning how we should handle vulnerabilities, so I'm sure
+there's room for improvements.
 
-I'm including a new version of the patches and an incremental version that
-can be applied atop the previous patches.
+We have multiple release lines to which the fixes have to be released
+simultaneously, and overall this overhead is significant. That's why we did
+one massive release that contains all the fixes.
 
-* 4-1-postgres-sqli-amended.patch - Amended Patch for 4.1.2.
-* 4-0-postgres-sqli-amended.patch - Amended Patch for 4.0.6.
-* 4-1-postgres-sqli-incremental.patch - Incremental Patch for 4.1.3.
-* 4-0-postgres-sqli-incremental.patch - Incremental Patch for 4.0.7.
+Wrt CVE-2013-2186, a week ago we got a report from somebody that he did a
+security scan and found that we are still using a vulnerable version of the
+library to which CVE-2013-2186 is assigned. In this release we use a newer
+version of the library that addresses the problem, and I thought it'd be
+appropriate to raise a flag to the users that if they continue to use older
+versions, they'd remain vulnerable to CVE-2013-2186. That's why it's in the
+advisory. It is not because we sat on a report for more than a year.
 
-Rafael Mendonça França
-http://twitter.com/rafaelfranca
-https://github.com/rafaelfranca
+When you say the timeframe is especially concerning, perhaps you mean you
+are concerned that we fail to notice this vulnerability in our library for
+more than a year, and if so, you are of course right. Jenkins project has
+gotten a long list of library dependencies, and I haven't found any
+practical means to get notified when vulnerabilities are found in any one
+of them.
 
-Content of type "text/html" skipped
+2014-10-01 19:11 GMT-07:00 Solar Designer <solar@...nwall.com>:
 
-Download attachment "4-0-postgres-sqli-amended.patch" of type "application/octet-stream" (4367 bytes)
+> Bryan - I think Kohsuke is not subscribed.  I've added CC.
+>
+> On Wed, Oct 01, 2014 at 08:36:59PM -0500, Bryan Drewery wrote:
+> > On 10/1/2014 6:25 PM, Kohsuke Kawaguchi wrote:
+> > > I just wanted to share that the Jenkins project issued a security
+> advisory
+> > > today. These issues are independently found and we've aggregated into a
+> > > single release.
+> > >
+> > > The relevant CVE IDs, our bug tracking IDs are available here
+> > > <
+> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01
+> >
+> > > .
+> > >
+> > > The new versions can be downloaded from here
+> > > <http://mirrors.jenkins-ci.org/>.
+> > >
+> > > (This is the first time I do this, so my apologies in advance for
+> probably
+> > > failing to follow the expected format.)
+> >
+> > Kudos to all for finding and fixing these issues. It was quite a
+> > surprising list though. Were these fixes kept from release for an
+> > extended time? The timeframe for CVE-2013-2186 is especially concerning.
+>
+> Many of these issues were brought to the distros list on Fri Sep 26
+> 17:10:16 2014 UTC, and got their CVE IDs assigned there.  However,
+> CVE-2013-2186 was not among those.  I don't know why the old CVE ID,
+> nor how that issue was handled.
+>
+> Alexander
+>
 
-Download attachment "4-1-postgres-sqli-amended.patch" of type "application/octet-stream" (4556 bytes)
 
-Download attachment "4-0-postgres-sqli-incremental.patch" of type "application/octet-stream" (3031 bytes)
 
-Download attachment "4-1-postgres-sqli-incremental.patch" of type "application/octet-stream" (3078 bytes)
+-- 
+Kohsuke Kawaguchi
+
