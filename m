@@ -1,50 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/18/2
-Message-Id: <20140918064927.BCB0F6C0031@smtpvmsrv1.mitre.org>
-Date: Thu, 18 Sep 2014 02:49:27 -0400 (EDT)
-From: cve-assign@...re.org
-To: alan.coopersmith@...cle.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Confusion around gksu & CVE-2014-2943
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/9
+Message-ID: <CADk+mPAagQ77ZTrbk9GgC4y=rbSUtKo_jvVq_=uE4X+DfX0JZA@mail.gmail.com>
+Date: Fri, 3 Oct 2014 17:16:31 +0200
+From: Rainer Gerhards <rgerhards@...adiscon.com>
+To: mancha <mancha1@...o.com>
+Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: sysklogd vulnerability (CVE-2014-3634)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Today is Germany's national holiday.  IIRC it was with 3500000000 or
+350000001. I probably can't check today. I think it was on ubuntu 12.04lts
+fully patched.
 
-> Several sites identify CVE-2014-2943 as being a vulnerability in gksu:
-> 
-> https://community.rapid7.com/community/metasploit/blog/2014/07/07/virtualbox-filename-command-execution-via-gksu
-> http://www.securityfocus.com/bid/68427
-> 
-> But the Mitre & NVD databases use that CVE id for a different issue:
-> 
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-2943
-> https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-2943
+Sorry i have no better answer at the moment.
 
-> Anyone know what the right CVE is for the gksu bug?
+Rainer
+Sent from phone, thus brief.
+Am 03.10.2014 17:01 schrieb "mancha" <mancha1@...o.com>:
 
-The right CVE for the gksu bug is CVE-2014-2886.
+> On Fri, Oct 03, 2014 at 01:53:02PM +0200, Rainer Gerhards wrote:
+> > I didn't try out sysklogd as I was busy enough with rsyslog BUT I can
+> > crash unpatched rsyslog v3 and the code path in question is extremely
+> > similar in those two.
+>
+> OK, I just graduated from my crash-course on setting up an unpatched
+> rsyslog 3.22.3 daemon.
+>
+> I've hit it with lots of pri "vals" including: x112,
+> 80000000000000000000000000000000, my lottery numbers, and the magical
+> 3500000000 but am unable to crash it.
+>
+> printline()'s are very similar like you say so it would be worthwhile if
+> we could dig a little.
+>
+> Rainer, would you be able to provide a backtrace? or be more specific
+> about the steps you took to crash it?
+>
+> --mancha
+>
+> PS I've taken Joey off the CC list because he's not expressed any
+> interest in this and is probably busy adding to his spamassassin
+> rulesets.
+>
 
-(The right CVE for the Cobham Aviator PIN algorithm issue, also
-formerly known as CVE-2014-2943, is now CVE-2014-2942. The MITRE
-CVE web site and NVD web site will have these changes in the
-coming days. The entry currently at
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-2943
-will be replaced with an explanation of the two correct CVE IDs.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUGnzrAAoJEKllVAevmvms74MH/2OpvkjxIkmiDEIL4PHt55BU
-YhmcrKpJjZWB9TdMLAF2V3ZFh8vAOkIALqex7JDzZn994MmOHxXyqSE4NzzQ2Siw
-XADaGAYCXYE+0fd6zQlNn9XHNX+zt8U4j1GYnjEegoz1FwOE/6GMBp+K9X3Lqvr9
-h9DnYWlULD22GaBQn4/YZq6niVe1KTsonB3INxUVO6L0dahY27zM9EikCT1y7XOz
-ZHoxPom8EzFP6L0Yo/VSz/q+i3EOioRXzLhCcCWQWcPzOl1aRMvzkRvDV4rqtGEz
-cJuzzrH+m5ghKEkVSNhoL9NlZlICKwE9A3pKCoBtyAF3Yq0/oOyUbBdFs5Cd6kw=
-=iqNx
------END PGP SIGNATURE-----
