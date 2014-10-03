@@ -1,50 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/7
-Message-ID: <53B444AA.3060909@enovance.com>
-Date: Wed, 02 Jul 2014 13:43:06 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/4
+Message-ID: <20141003112443.GA13394@zoho.com>
+Date: Fri, 3 Oct 2014 11:24:43 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-022] Keystone V2 trusts privilege escalation through user supplied project id (CVE-2014-3520)
+Subject: Re: sysklogd vulnerability (CVE-2014-3634)
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-022
-CVE: CVE-2014-3520
-Date: July 02, 2014
-Title: Keystone V2 trusts privilege escalation through user supplied
-       project id
-Reporter: Jamie Lennox (Red Hat)
-Products: Keystone
-Versions: up to 2013.2.3, and 2014.1 to 2014.1.1
+On Fri, Oct 03, 2014 at 09:12:28AM +0000, mancha wrote:
+> In sysklogd's syslogd, invalid priority values between 192 and 1023
+> (directly or arrived at via overflow wraparound) can propagate through
+> code causing out-of-bounds access to the f_pmask array within the
+> 'filed' structure by up to 104 bytes past its end. Though most likely
+> insufficient to reach unallocated memory because there are around 544
+> bytes past f_pmask in 'filed' (mod packing and other differences),
+> incorrect access of fields at higher positions of the 'filed'
+> structure definition can cause unexpected behavior including message
+> mis-classification, forwarding issues, message loss, or other.
 
-Description:
-Jamie Lennox from Red Hat reported a vulnerability in Keystone trusts.
-By using an out of scope project id, a trustee may gain unauthorized
-access if the trustor has the required roles in the requested project
-id. All Keystone deployments configured to enable trusts and V2 API are
-affected.
+To expand on the above, because the out-of-bounds access is limited to
+the filed structure, the effect on message handling, etc. appears
+limited to the would-be attacker's own message. Unlike the more serious
+impact seen in rsyslog, my limited testing and code review suggests the
+flaw, while there, has no real security impact. Nevertheless, my patch
+fixes the handling of malformed PRI parts.
 
-Juno (development branch) fix:
-https://review.openstack.org/104216
+--mancha
 
-Icehouse fix:
-https://review.openstack.org/104217
-
-Havana fix:
-https://review.openstack.org/104218
-
-Notes:
-This fix will be included in the Juno-2 development milestone and in
-future 2013.2.4 and 2014.1.2 releases.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3520
-https://launchpad.net/bugs/1331912
-
---·
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+Content of type "application/pgp-signature" skipped
