@@ -1,21 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/4
-Message-ID: <20140329140407.GC2473@sivokote.iziade.m$>
-Date: Sat, 29 Mar 2014 16:04:07 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Adventure with Stack Smashing Protector (SSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/6
+Message-ID: <CADk+mPC1BwyYo-_r=SfjcBWZXnnuhwN_vNsZrW-Z6YmYoXG74w@mail.gmail.com>
+Date: Fri, 3 Oct 2014 13:53:02 +0200
+From: Rainer Gerhards <rgerhards@...adiscon.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: Martin Schulze <joey@...odrom.org>, oss-security@...ts.openwall.com
+Subject: Re: sysklogd vulnerability (CVE-2014-3634)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 28, 2014 at 11:04:08PM +0400, Solar Designer wrote:
-> Oh, and yes I've updated the archive at Openwall to receive/archive
-> mail from the rebooted list, just like Fyodor did for his archive.
-> 
+Sent from phone, thus brief.
+Am 03.10.2014 13:26 schrieb "Solar Designer" <solar@...nwall.com>:
+>
+> On Fri, Oct 03, 2014 at 11:24:43AM +0000, mancha wrote:
+> > On Fri, Oct 03, 2014 at 09:12:28AM +0000, mancha wrote:
+> > > In sysklogd's syslogd, invalid priority values between 192 and 1023
+> > > (directly or arrived at via overflow wraparound) can propagate through
+> > > code causing out-of-bounds access to the f_pmask array within the
+> > > 'filed' structure by up to 104 bytes past its end. Though most likely
+> > > insufficient to reach unallocated memory because there are around 544
+> > > bytes past f_pmask in 'filed' (mod packing and other differences),
+> > > incorrect access of fields at higher positions of the 'filed'
+> > > structure definition can cause unexpected behavior including message
+> > > mis-classification, forwarding issues, message loss, or other.
+> >
+> > To expand on the above, because the out-of-bounds access is limited to
+> > the filed structure, the effect on message handling, etc. appears
+> > limited to the would-be attacker's own message. Unlike the more serious
+> > impact seen in rsyslog, my limited testing and code review suggests the
+> > flaw, while there, has no real security impact. Nevertheless, my patch
+> > fixes the handling of malformed PRI parts.
+>
+> What about the DoS impact claimed here, though? -
+>
+> http://www.rsyslog.com/remote-syslog-pri-vulnerability-cve-2014-3683/
+>
+>  sysklogd
+>  ~~~~~~~~
+>  A segfault seems possible in sysklogd if a negative facility value (due
+to
+>  integer overrun in facility parsing) is used. This could be used to
+>  carry out a remote DoS.
+>
+> If this can be used to crash syslogd, it's "real security impact", even
+> if rather limited.
+>
+> Have you tried triggering this condition (getting syslogd to crash)?
+
+I didn't try out sysklogd as I was busy enough with rsyslog BUT I can crash
+unpatched rsyslog v3 and the code path in question is extremely similar in
+those two.
+
+Note that a carefully crafted overflow pri may lead to a 2gb misadressing
+below f_pmask,  which most probably is outside of the address space. I
+haven't checked, though, if i can craft such a pri. But you have around
+1000 digits for trying, so I think its possible.
+
+Mancha may have more concrete information.
+
+Rainer
+>
 > Alexander
 
-If you ask me merging two entirely different lists
-into one archive is a mistake. It distorts history.
-For an unexperienced observer it might appear
-Fydor ran the old FD too.
-For first time subscribers too.
-Not that I care.
