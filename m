@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/20
-Message-ID: <20141120144325.GE4503@mail.corp.redhat.com>
-Date: Thu, 20 Nov 2014 15:43:25 +0100
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/8
+Message-ID: <20141003150112.GA6786@zoho.com>
+Date: Fri, 3 Oct 2014 15:01:12 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: heap buffer overflow in PCRE
+Cc: Solar Designer <solar@...nwall.com>, rgerhards@...adiscon.com
+Subject: Re: sysklogd vulnerability (CVE-2014-3634)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, Oct 03, 2014 at 01:53:02PM +0200, Rainer Gerhards wrote:
+> I didn't try out sysklogd as I was busy enough with rsyslog BUT I can
+> crash unpatched rsyslog v3 and the code path in question is extremely
+> similar in those two.
 
-Heap buffer overflow issue was reported [1] in PCRE when processing a
-specially crafted regular expression.
+OK, I just graduated from my crash-course on setting up an unpatched
+rsyslog 3.22.3 daemon.
 
-Upstream patch for this:
-http://www.exim.org/viewvc/pcre2?view=rev&revision=154
-The next upstream release that will contain the above fix is likely to
-be around Feb/Mar next year (2015).
+I've hit it with lots of pri "vals" including: x112,
+80000000000000000000000000000000, my lottery numbers, and the magical
+3500000000 but am unable to crash it.
 
-Additional references:
-[1]: http://bugs.exim.org/show_bug.cgi?id=1546
-[2]: https://bugzilla.redhat.com/show_bug.cgi?id=1166147
+printline()'s are very similar like you say so it would be worthwhile if
+we could dig a little.
 
-Can a CVE be assigned to this please?
+Rainer, would you be able to provide a backtrace? or be more specific
+about the steps you took to crash it?
 
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+--mancha
+
+PS I've taken Joey off the CC list because he's not expressed any
+interest in this and is probably busy adding to his spamassassin
+rulesets.
 
 Content of type "application/pgp-signature" skipped
