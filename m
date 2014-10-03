@@ -1,74 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/11
-Message-ID: <5475C613.1010701@tao.at>
-Date: Wed, 26 Nov 2014 13:22:43 +0100
-From: Sven Schwedas <sven.schwedas@....at>
-To: 767227@...s.debian.org
-CC: Ángel González <angel@...its.net>,  oss-security@...ts.openwall.com, mmcallis@...hat.com,  cve-assign@...re.org, axkibe@...il.com
-Subject: Re: Re: CVE request: lsyncd command injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/1
+Message-ID: <20141003091228.GA11505@zoho.com>
+Date: Fri, 3 Oct 2014 09:12:28 +0000
+From: mancha <mancha1@...o.com>
+To: oss-security@...ts.openwall.com
+Cc: rgerhards@...adiscon.com, joey@...odrom.org
+Subject: sysklogd vulnerability (CVE-2014-3634)
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-26 00:18, Ángel González wrote:
-> On 20-11-2014 Mitre wrote:
->>> There is a command injection flaw in lsyncd, a file change monitoring
->>> and synchronization daemon:
->>>
->>> https://github.com/axkibe/lsyncd/issues/220
->>>
->>> https://github.com/creshal/lsyncd/commit/18f02ad013b41a72753912155ae2ba72f2a53e52
->>>
->>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=767227
->>
->> Use CVE-2014-8990. The scope of this CVE ID includes both:
->>
->>   1. code execution with ` characters or other characters that are
->>      special to a shell
->>   2. denial of service scenarios in which a user with write access
->>      to a local directory uses special characters to make
->>      synchronization fail (might have security relevance in some
->>      scenarios)
->>
->> The MITRE CVE team does not have a Lua expert. The code change adds:
->>
->>   local path1 = event.path:gsub ('"', '\\"'):gsub ('`', '\\`'):gsub ('%$','\\%$')
->>   local path2 = event2.path:gsub ('"', '\\"'):gsub ('`', '\\`'):gsub ('%$','\\%$')
->>
->> This does not seem to be the typical fix approach for unsafe input to
->> a shell. Has anyone concluded that this is an incomplete fix that ought
->> to be modified before the 2.1.6 release?
-> 
-> 
-> It is indeed an incomplete fix:
-> 
-> * The gsub ('%$','\\%$') works in lua5.1, but under lua5.2 the second %
-> character makes lsyncd fail with the error "stdin:1: invalid use of '%'
-> in replacement string". Thus allowing a complete denial of service
-> 
-> 
-> * Not all metacharacters are filtered, so command execution is still
-> present. In particular, the escaped characters can be prefixed with a
-> backslash to bypass the filter.
-> 
-> 
-> The attached patch should hopefully solve these issues.
+Vendors et al.
 
-Thank you. I've tested the patch locally and it appears to be working
-correctly (mine was more a quick hack to get our own lsyncd instances
-running again).
-It also has been merged upstream:
+Many thanks to Rainer Gerhards, rsyslog project lead, for identifying a
+problem with how rsyslog's rsyslogd and sysklogd's syslogd check for
+invalid priority values (CVE-2014-3634). For details please refer to
+Rainer's well-written issue description. [1]
 
-> https://github.com/axkibe/lsyncd/commit/e9ffda07f0145f50f2756f8ee3fb0775b455122b
+In sysklogd's syslogd, invalid priority values between 192 and 1023
+(directly or arrived at via overflow wraparound) can propagate through
+code causing out-of-bounds access to the f_pmask array within the
+'filed' structure by up to 104 bytes past its end. Though most likely
+insufficient to reach unallocated memory because there are around 544
+bytes past f_pmask in 'filed' (mod packing and other differences),
+incorrect access of fields at higher positions of the 'filed' structure
+definition can cause unexpected behavior including message
+mis-classification, forwarding issues, message loss, or other.
 
-Attached is the patch adapted for Wheezy's lsyncd 2.0.7-3.
+I've been unable to contact sysklogd's maintainer (the project is no
+longer active) but, given some vendors ship sysklogd as their system
+logging daemon, it was important to share a fix.
 
--- 
-Mit freundlichen Grüßen, / Best Regards,
-Sven Schwedas
-Systemadministrator
-TAO Beratungs- und Management GmbH | Lendplatz 45 | A - 8020 Graz
-Mail/XMPP: sven.schwedas@....at | +43 (0)680 301 7167
-http://software.tao.at
+Fix for sysklogd 1.5 is available at:
+http://sf.net/projects/mancha/files/sec/sysklogd-1.5_CVE-2014-3634.diff
 
-View attachment "0001-Properly-sanitize-mv-parameters-CVE-2014-8990.patch" of type "text/x-patch" (1695 bytes)
+Note: publication of this patch was intentionally delayed to afford the
+rsyslog project time to correct their initial fix set which was
+vulnerable to integer overflows (CVE-2014-3683). [2]
 
-Download attachment "signature.asc" of type "application/pgp-signature" (649 bytes)
+--mancha
+
+===
+[1] http://www.rsyslog.com/remote-syslog-pri-vulnerability/
+[2] http://www.rsyslog.com/remote-syslog-pri-vulnerability-cve-2014-3683/
+
+Content of type "application/pgp-signature" skipped
