@@ -1,54 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/4
-Message-ID: <20140319133130.GA8267@openwall.com>
-Date: Wed, 19 Mar 2014 17:31:30 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/10
+Message-ID: <20141003153907.GA6960@zoho.com>
+Date: Fri, 3 Oct 2014 15:39:07 +0000
+From: mancha <mancha1@...o.com>
+To: Rainer Gerhards <rgerhards@...adiscon.com>
+Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: sysklogd vulnerability (CVE-2014-3634)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
-> Apologies for posting on list mainly dedicated to CVE's.
-
-I guess you're (partially) kidding.  This list is not meant to be
-"mainly dedicated to CVE's", it just happened to be that way.  Other
-on-topic postings are very welcome, and I find postings about other
-related mailing lists (dis)appearing to be on topic, in part because it
-affects what topics we choose to discuss in here (and what topics to
-discuss in other places).
-
-> The Full Disclosure mailing list died today:
-> http://lists.grok.org.uk/
-> http://seclists.org/fulldisclosure/2014/Mar/332
+On Fri, Oct 03, 2014 at 05:16:31PM +0200, Rainer Gerhards wrote:
+> Today is Germany's national holiday.  IIRC it was with 3500000000 or
+> 350000001. I probably can't check today. I think it was on ubuntu 12.04lts
+> fully patched.
 > 
-> I suppose it is time for a new list.
-> 
-> Any ideas?
+> Sorry i have no better answer at the moment.
 
-Arrigo Triulzi and I just had this conversation on Twitter:
+In that case, Schönen Feiertag.
 
-<solardiz> Hosting unofficial Full-Disclosure archive http://lists.openwall.net/full-disclosure/ we received few message removal requests and no threats that I recall
-<@cynicalsecurity> @solardiz shall we reboot FD?
-<@solardiz> @cynicalsecurity Maybe, but I don't intend to be involved. I wasn't even subscribed except hosting this archive and sometimes looking at it.
-<@cynicalsecurity> @solardiz perhaps we need a different FD, without the automated security bulletins and the trolls. FD with kickbans?
-<@solardiz> @cynicalsecurity With "unmoderated" "full disclosure" list, it's tricky to draw the trolling vs. free speech line. I'll let others do it.
-<@cynicalsecurity> @solardiz yes, agreed.
+Maybe when you have some time you can provide a bit more particulars. On
+sysklogd, I'm not seeing it. But, the flaw does exist and there is OOB
+access so there's no reason not to apply the fix.
 
-So I think someone else should setup the new FD, somewhere.  Openwall
-might host an unofficial archive of it again (with no promises of it
-staying up), and that's it.
+--mancha
 
-I just recalled another way in which I found FD useful: as a moderator
-for oss-security, I sometimes rejected off-topic yet not totally crappy
-postings with a comment suggesting that the person posts to FD instead.
-We won't be able to continue doing that.  In some cases (mostly for bugs
-in proprietary software) we'll be able to continue to redirect people to
-Bugtraq, but there are in fact not totally crappy postings that I think
-aren't appropriate for either oss-security or Bugtraq - e.g., someone
-wanted to conduct a research survey in the security community recently,
-and I redirected them to FD (I don't know if they posted, nor if their
-posting to FD was approved).  I felt that a posting like that would be
-"too crappy" for Bugtraq (although that sentiment is in part based on
-"the old Bugtraq" of 1990s), but OK given the overall low SNR on FD.
-
-Alexander
+Content of type "application/pgp-signature" skipped
