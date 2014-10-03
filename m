@@ -1,39 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/17/3
-Message-ID: <20140317102041.GB9207@suse.de>
-Date: Mon, 17 Mar 2014 11:20:41 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: netfilter: remote memory corruption in nf_conntrack_proto_dccp.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/14
+Message-ID: <20141003211600.GA4115@chaz.gmail.com>
+Date: Fri, 3 Oct 2014 22:16:00 +0100
+From: Stephane Chazelas <stephane.chazelas@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Shellshock timeline
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+2014-10-03 15:28:31 -0400, David A. Wheeler:
+> FYI, I've created a timeline of major Shellshock events here:
+> 
+>   http://www.dwheeler.com/essays/shellshock.html#timeline
+> 
+> If anyone has corrections or key additions, let me know.
+[...]
 
-via twitter/grsecurity, needs a CVE I guess.
+About the discovery.
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/netfilter/nf_conntrack_proto_dccp.c?id=b22f5126a24b3b2f15448c3f2a254fc10cbc2b92
+I discovered it in the morning (UK) of 2014-09-12 and reported
+it at Fri, 12 Sep 2014 16:10:35 +0100 to Chet, and the security
+contacts of Debian, Red Hat, Ubuntu and Mandriva (SUSE added
+later) including details of the bug and the SSH and HTTP (Apache
+header) vectors and mitigation and a bit fat warning that it was
+very serious and not to be disclosed.
 
-commit b22f5126a24b3b2f15448c3f2a254fc10cbc2b92
-Author: Daniel Borkmann <dborkman@...hat.com>
-Date:   Mon Jan 6 00:57:54 2014 +0100
+First patch by Chet at 2014-09-12 16:32:17 -0400, but was easily
+bypassed. Ensued a discussion on that original list, several
+patch iterations, whether or not to harden at this point and how,
+whether or not to output error messages on parsing error,
+additional vectors, scope, detection methods (IDS...), other
+affected shells, local privilege escalation?, whether
+localisation can bypass the fix, the impact of two env vars with
+the same name, backward compatibility, who to contact early...
+Of course, I have no visibility of what was discussed internally
+at Red Hat/Ubuntu/Mandriva...
 
-    netfilter: nf_conntrack_dccp: fix skb_header_pointer API usages
-    
-    Some occurences in the netfilter tree use skb_header_pointer() in
-    the following way ...
-    
-      struct dccp_hdr _dh, *dh;
-      ...
-      skb_header_pointer(skb, dataoff, sizeof(_dh), &dh);
-    
-    ... where dh itself is a pointer that is being passed as the copy
-    buffer. Instead, we need to use &_dh as the forth argument so that
-    we're copying the data into an actual buffer that sits on the stack.
-    
-    Currently, we probably could overwrite memory on the stack (e.g.
-    with a possibly mal-formed DCCP packet), but unintentionally, as
-    we only want the buffer to be placed into _dh variable.
+I suggested the name "bashdoor" on that list on Sun, 14 Sep 2014
+14:29:48 +0100.
 
-is already in original commit on March 20, 2008, in 2.6.25.
+A release schedule with public disclosure on the 24th at
+14:00 UTC and early notification to other unix and linux
+vendors on the 22nd and select infrastructure provider
+notification (such as CDNs including Microsoft) on the 23rd
+proposed on the 16th by Florian.
 
-Ciao, Marcus
+Chet had patches for the final (before disclosure) fix for the
+current and all past versions of bash up to 3.0 by 2014-09-16
+22:00:02 -0400  (from diff dates)
+
+I was out of the loop after the 19th
+
+bashdoor.com was registered (not by me) with a creation date of
+2014-09-24 13:59 UTC sometime before 2014-09-24 06:59:10Z
+according to whois. Florian also said here that someone brought
+the early notification sent to vendors/infrastructure to the
+press, so someone obviously intended to take it to the press. I
+don't know whom.
+
+To answer the other post. The feature was definitely not in 1.05
+nor 1.12 (the source of which can be found on the web), but was
+in 1.13.5. Chet confirmed (to me and news outlets) that it was
+added in 1.13.
+
+Cheers,
+Stephane
+
