@@ -1,19 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/07/3
-Message-ID: <20140407214346.61e73dde@redhat.com>
-Date: Mon, 7 Apr 2014 21:43:46 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/7
+Message-ID: <20141003120312.GB13394@zoho.com>
+Date: Fri, 3 Oct 2014 12:03:12 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+Subject: Re: sysklogd vulnerability (CVE-2014-3634)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Fri, Oct 03, 2014 at 03:26:09PM +0400, Solar Designer wrote:
+> 
+> What about the DoS impact claimed here, though? -
+> 
+> http://www.rsyslog.com/remote-syslog-pri-vulnerability-cve-2014-3683/
+> 
+>  sysklogd ~~~~~~~~ A segfault seems possible in sysklogd if a negative
+>  facility value (due to integer overrun in facility parsing) is used.
+>  This could be used to carry out a remote DoS.
+> 
+> If this can be used to crash syslogd, it's "real security impact",
+> even if rather limited.
+> 
+> Have you tried triggering this condition (getting syslogd to crash)?
+> 
+> Alexander
 
-There's a new OpenSSL release 1.0.1g that fixes information leak issue:
+The potential for large negative offsets due to integer overflows was
+introduced to rsyslog via their first set of patches meant to fix
+CVE-2014-3634. This has since been corrected and assigned CVE-2014-3683.  
 
-http://www.openssl.org/news/secadv_20140407.txt
-http://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=96db902
-http://heartbleed.com/
+In sysklogd's case, the priority is masked by (LOG_FACMASK|LOG_PRIMASK)
+which means the possible range for priorities is 0-1023 (192-1023 being
+invalid). So, that overflow vector doesn't exist in sysklogd (which
+never adapted rsyslog's first fix). At most you get a facility of 127
+while f_pmask has size 25, ergo OOB access.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+I have done enough testing that I am relatively confident no security
+impact exists other than the aforementioned message-processing issues
+which would apply to the would-be attacker's own message. That said,
+applying the fix eliminates all doubt.  
+
+--mancha
+
+Content of type "application/pgp-signature" skipped
