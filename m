@@ -1,53 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/1
-Message-ID: <5316B8F3.60706@redhat.com>
-Date: Wed, 05 Mar 2014 11:11:07 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: libssh and stunnel PRNG flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/3
+Message-ID: <3230301C09DEF9499B442BBE162C5E48257575E2@SESTOEX04.enea.se>
+Date: Fri, 3 Oct 2014 10:28:24 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
 
-Aris Adamantiadis reported the following to us:
+ 
+> So there isn't still any specific patch for CVE-2014-6277 and CVE-2014-6278
+> according to your post   (http://www.openwall.com/lists/oss-
+> security/2014/10/02/28)?
+> 
+> > * CVE-2014-6277 - uninitialized memory issue, almost certainly RCE
+> > found by me. No specific patch yet.
+> 
+> > * CVE-2014-6278 - command injection RCE found by me. No specific patch
+> yet.
+> 
+> But Florian's unofficial patch or its upstream version (bash43-027 & co)
+> mitigates *ALL* these six so far known CVE, right?
 
-I have found a vulnerability in stunnel (fork mode) and libssh server
-(if implemented with fork) that is similar to problems found in
-postgresql [1]. When accepting a new connection, the server forks and
-the child process handles the request. The RAND_bytes() function of
-openssl doesn't reset its state after the fork, but simply adds the
-current process id (getpid) to the PRNG state, which is not guaranteed
-to be unique.
-
-stunnel uses libssl, which also seeds the PRNG with the output of
-time(NULL), which means that vulnerability has to be exploited under a
-second. I have exploit code that can reproduce the issue on OpenBSD 5.4
-(thanks to random PIDs) but I think it may be exploitable on other unix
-systems as well.
-
-The following CVEs have been assigned:
-
-CVE-2014-0016 stunnel PRNG vulnerability
-CVE-2014-0017 libssh PRNG vulnerability
-
-Mitigations implemented into openssl-0.9.8j (2009) makes the
-vulnerability not exploitable in stock openssl. The signing code for
-ECDSA and DSA explicitly seeds the pool with the digest to sign.
-
-
-References:
-
-libssh:
-https://bugzilla.redhat.com/show_bug.cgi?id=1072191
-http://www.libssh.org/2014/03/04/libssh-0-6-3-security-release/
-http://git.libssh.org/projects/libssh.git/commit/?id=e99246246b4061f7e71463f8806b9dcad65affa0
-
-stunnel:
-https://bugzilla.redhat.com/show_bug.cgi?id=1072180
-There is no upstream patch yet
-
-
-Regards,
-
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+I found some good answer here, thanks Michal :)
+http://lcamtuf.blogspot.se/2014/10/bash-bug-how-we-finally-cracked.html
