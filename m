@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/17
-Message-ID: <542973CB.4010605@fifthhorseman.net>
-Date: Mon, 29 Sep 2014 10:59:23 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/20
+Message-ID: <542F2082.6020502@redhat.com>
+Date: Fri, 03 Oct 2014 16:17:38 -0600
+From: Eric Blake <eblake@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: gnome-shell lockscreen bypass with printscreen key
+Subject: Re: Shellshock timeline
 Content-Type: text/plain; charset=utf-8
 
-hi OSS-security folks--
+On 10/03/2014 04:10 PM, Eric Blake wrote:
+> On 10/03/2014 01:28 PM, David A. Wheeler wrote:
+>> FYI, I've created a timeline of major Shellshock events here:
+>>
+>>   http://www.dwheeler.com/essays/shellshock.html#timeline
+>>
+>> If anyone has corrections or key additions, let me know.
 
-gnome-shell currently handles the lockscreen for modern versions of gnome.
+In section 1.2, you mention that Florian suggested suffix additions; but
+he was not alone in the suggestion; I also independently came up with
+the idea (primarily because patch 25 included a change to a comment line
+that mentioned the past attempt to use a suffix):
 
-gnome-shell also handles the "take a screenshot" action, which is mapped
-by default to the prtsc key.
+https://lists.gnu.org/archive/html/bug-bash/2014-09/msg00094.html 24 Sep
+2014 15:38:31 -0600
 
-the prtsc key is not disabled when the screen is locked.
+My arguments at the time were based more on namespace pollution
+considerations (what happens when a function name and variable name
+collide), and it wasn't until later that I learned that the oss-security
+list was discussing ramifications of the fact that ANY parser bug is a
+major hole if untrusted user data is unconditionally presented to the
+parser, without regards to namespace pollution.
 
-taking a bunch of screenshots at once bloats gnome-shell to the point
-where it's pretty easy to get it targeted by the kernel's oom-killer.
-
-This means that anyone with access to the keyboard of a locked GNOME
-session can (briefly) disable the lockscreen, which lets them see and
-interact with the running gnome session:
-
-  https://bugzilla.gnome.org/show_bug.cgi?id=737456
-
-It looks like fixes are targeted for GNOME 3.14.1.
-
-Regards,
-
-	--dkg
+-- 
+Eric Blake   eblake redhat com    +1-919-301-3266
+Libvirt virtualization library http://libvirt.org
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
