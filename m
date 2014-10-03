@@ -1,64 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/2
-Message-ID: <20140204100401.GA27676@kludge.henri.nerv.fi>
-Date: Tue, 4 Feb 2014 12:04:01 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/15
+Message-ID: <20141003213059.GB4115@chaz.gmail.com>
+Date: Fri, 3 Oct 2014 22:30:59 +0100
+From: Stephane Chazelas <stephane.chazelas@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
+Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 04, 2014 at 10:35:46AM +0100, Hanno Böck wrote:
-> python-gnupg 0.3.5 lists in the changelog:
-> "Added improved shell quoting to guard against shell injection."
-> 
-> Sounds like a severe security issue, but further info is lacking.
+2014-10-03 14:48:19 -0500, Kobrin, Eric:
+> I've found the shellshock vulnerable code in archives claiming to contain bash 1.05, which also claim to be from 1990 or 1989.
+> I was unable to find the source for anything claiming older than 1.05.
+[...]
 
-Diff attached. New function shell_quote() seems to represent major changes to
-shell input quoting against unsafe input.
+Sorry, I said in the other email that it was not in 1.12. That's
+my memory failing. I remember checking that it was not in 1.05
+and it was, which is even more than my memory failing. Chet did
+tell me that it was added in 1.13 though. I've now found 1.12
+(ftp://ftp.it.xemacs.org/%7BD/unix/packages/NCSA/DEC_Alpha/bash-1.12.tar.Z)
 
-+# We use the test below because it works for Jython as well as CPython
-+if os.path.__name__ == 'ntpath':
-+    # On Windows, we don't need shell quoting, other than worrying about
-+    # paths with spaces in them.
-+    def shell_quote(s):
-+        return '"%s"' % s
-+else:
-+    # Section copied from sarge
-+
-+    # This regex determines which shell input needs quoting
-+    # because it may be unsafe
-+    UNSAFE = re.compile(r'[^\w%+,./:=@-]')
-+
-+    def shell_quote(s):
-+        """
-+        Quote text so that it is safe for Posix command shells.
-+
-+        For example, "*.py" would be converted to "'*.py'". If the text is
-+        considered safe it is returned unquoted.
-+
-+        :param s: The value to quote
-+        :type s: str (or unicode on 2.x)
-+        :return: A safe version of the input, from the point of view of Posix
-+                 command shells
-+        :rtype: The passed-in type
-+        """
-+        if not isinstance(s, string_types):
-+            raise TypeError('Expected string type, got %s' % type(s))
-+        if not s:
-+            result = "''"
-+        elif len(s) >= 2 and (s[0], s[-1]) == ("'", "'"):
-+            result = '"%s"' % s.replace('"', r'\"')
-+        elif not UNSAFE.search(s):
-+            result = s
-+        else:
-+            result = "'%s'" % s.replace("'", "'\"'\"'")
-+        return result
-+
-+    # end of sarge code
+and it was there indeed and the ChangeLog also in 1.05 has:
 
----
-Henri Salo
+Sat Aug  5 08:32:05 1989  Brian Fox  (bfox at aurel)
 
-View attachment "python-gnupg.diff" of type "text/x-diff" (17476 bytes)
+        * variables.c: make_var_array (), initialize_shell_variables ()
+          Added exporting of functions.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+
+And:
+
+Fri Sep  1 18:52:08 1989  Brian Fox  (bfox at aurel)
+[...]
+        * I update this too irregularly.
+          Released 1.03.
+
+
+So the feature has indeed been there for over a quarter of a
+century since 1.03, and Chet and I have spread misconceptions by
+saying that it was added circa 1993.
+
+-- 
+Stephane
+
