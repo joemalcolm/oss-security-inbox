@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/7
-Message-ID: <20141015061325.GB5980@zoho.com>
-Date: Wed, 15 Oct 2014 06:13:26 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/19
+Message-ID: <5545E337-DFCF-4382-9974-4B2E0AF0AFE7@akamai.com>
+Date: Fri, 3 Oct 2014 17:17:20 -0500
+From: "Kobrin, Eric" <ekobrin@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 15, 2014 at 05:28:34AM +0000, Sona Sarmadi wrote:
+On Oct 3, 2014, at 5:30 PM, Stephane Chazelas <stephane.chazelas@...il.com> wrote:
 
-Hanno was sharing already-public information.
+> Sorry, I said in the other email that it was not in 1.12. That's
+> my memory failing. I remember checking that it was not in 1.05
+> and it was, which is even more than my memory failing. Chet did
+> tell me that it was added in 1.13 though. I've now found 1.12
+> (ftp://ftp.it.xemacs.org/%7BD/unix/packages/NCSA/DEC_Alpha/bash-1.12.tar.Z)
 
-Adam Langley tweeted it at Tue Oct 14 22:28:32 UTC 2014 [1] and Hanno
-emailed the news to oss-sec 12 minutes and change later. I didn't check
-to see if there were even earlier public disclosures than agl's.
+No worries.
 
-Someone is owed an apology.
+The version I used was at: http://www.oldlinux.org/Linux.old/bin/old/bash-1.05/variables.c
+Full tar: http://www.oldlinux.org/Linux.old/bin/old/bash-1.05.tar
 
---mancha
+Brian Fox even wrote a UseNet post advertising the feature on September 8th, 1989 -- just over 25 years before you showed the rest of us that it was a vulnerability in disguise:
 
-[1] https://twitter.com/agl__/status/522151998502617088
+https://groups.google.com/d/msg/gnu.bash.bug/72jXoIWYsfE/jJqC-fjSh0wJ
 
-PS Ugh, top-posting.
+If anyone has a copy of bash-1.02 or bash-1.03, I'd love to see it. It should be floating around some of the old NeXT archives.
 
-> Thanks Hanno,
-> 
-> A reflection: Maybe we shouldn't post  information like this here or
-> somewhere else which is not published yet even if the information has
-> leak out? Although all members here are reliable but it is still an
-> open mailing list and we should be careful and act more responsible. 
-> 
-> Cheers Sona
-> 
-> > It's out:
-> > 
-> > https://www.openssl.org/~bodo/ssl-poodle.pdf
-> > http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
-> > exploiting-ssl-30.html
-> > 
-> > My conclusion stays the same: Disable SSLv3.
-> > 
-> > -- Hanno Böck http://hboeck.de/
-> > 
-> > mail/jabber: hanno@...eck.de GPG: BBB51E42
+-- Eric Kobrin
 
-Content of type "application/pgp-signature" skipped
+
