@@ -1,28 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/1
-Message-ID: <CACYkhxgfcOr=sXxUmsT8VctvHHqN-tJnxa4cKrV9nS0OrccZ0A@mail.gmail.com>
-Date: Wed, 9 Jul 2014 10:41:35 +1000
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/04/1
+Message-ID: <CAFThDPGGtcAQHxy84Vg5JrF7KoTtcaMG8mE4DZbcq-cDcydXAQ@mail.gmail.com>
+Date: Fri, 3 Oct 2014 15:21:36 -0700
+From: Luca Carettoni <luca.carettoni@...isoft.com>
 To: oss-security@...ts.openwall.com
-Cc: phk@....freebsd.dk
-Subject: Re: Re: Varnish - no CVE == bug regression
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: Security advisory in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-So just to clarify:
+Ironically, you could use OWASP Dependency-Check Jenkins plugin
+https://wiki.jenkins-ci.org/display/JENKINS/OWASP+Dependency-Check+Plugin
 
-On 9 July 2014 05:55, Poul-Henning Kamp <phk@....freebsd.dk> wrote:
->         param.show auto_restart
->         200 132
->         auto_restart
->                 Value is: on [bool] (default)
->                 Default is: on
+As it uses NVD, CVE-2013-2186 is tracked.
+
+Cheers,
+Luca
+
+On Fri, Oct 3, 2014 at 2:44 PM, Kohsuke Kawaguchi <kk@...suke.org> wrote:
+
+> We are still learning how we should handle vulnerabilities, so I'm sure
+> there's room for improvements.
 >
->                 Restart child process automatically if it dies.
+> We have multiple release lines to which the fixes have to be released
+> simultaneously, and overall this overhead is significant. That's why we did
+> one massive release that contains all the fixes.
+>
+> Wrt CVE-2013-2186, a week ago we got a report from somebody that he did a
+> security scan and found that we are still using a vulnerable version of the
+> library to which CVE-2013-2186 is assigned. In this release we use a newer
+> version of the library that addresses the problem, and I thought it'd be
+> appropriate to raise a flag to the users that if they continue to use older
+> versions, they'd remain vulnerable to CVE-2013-2186. That's why it's in the
+> advisory. It is not because we sat on a report for more than a year.
+>
+> When you say the timeframe is especially concerning, perhaps you mean you
+> are concerned that we fail to notice this vulnerability in our library for
+> more than a year, and if so, you are of course right. Jenkins project has
+> gotten a long list of library dependencies, and I haven't found any
+> practical means to get notified when vulnerabilities are found in any one
+> of them.
+>
+> 2014-10-01 19:11 GMT-07:00 Solar Designer <solar@...nwall.com>:
+>
+> > Bryan - I think Kohsuke is not subscribed.  I've added CC.
+> >
+> > On Wed, Oct 01, 2014 at 08:36:59PM -0500, Bryan Drewery wrote:
+> > > On 10/1/2014 6:25 PM, Kohsuke Kawaguchi wrote:
+> > > > I just wanted to share that the Jenkins project issued a security
+> > advisory
+> > > > today. These issues are independently found and we've aggregated
+> into a
+> > > > single release.
+> > > >
+> > > > The relevant CVE IDs, our bug tracking IDs are available here
+> > > > <
+> >
+> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01
+> > >
+> > > > .
+> > > >
+> > > > The new versions can be downloaded from here
+> > > > <http://mirrors.jenkins-ci.org/>.
+> > > >
+> > > > (This is the first time I do this, so my apologies in advance for
+> > probably
+> > > > failing to follow the expected format.)
+> > >
+> > > Kudos to all for finding and fixing these issues. It was quite a
+> > > surprising list though. Were these fixes kept from release for an
+> > > extended time? The timeframe for CVE-2013-2186 is especially
+> concerning.
+> >
+> > Many of these issues were brought to the distros list on Fri Sep 26
+> > 17:10:16 2014 UTC, and got their CVE IDs assigned there.  However,
+> > CVE-2013-2186 was not among those.  I don't know why the old CVE ID,
+> > nor how that issue was handled.
+> >
+> > Alexander
+> >
+>
+>
+>
+> --
+> Kohsuke Kawaguchi
 
-Does this mean that the parent holds the accept() socket open, so if a worker
-dies (eg. due to the client injecting a header into it's own
-connection) only that
-connection is affected?
-
-Regards,
-  Michael
