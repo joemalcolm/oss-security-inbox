@@ -1,71 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/30/1
-Message-ID: <1630076.ngDAalSBKu@devil>
-Date: Sun, 30 Mar 2014 14:03:36 +0200
-From: Agostino Sarubbo <ago@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request: Linux Kernel, two security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/04/7
+Message-ID: <543032BD.90409@redhat.com>
+Date: Sat, 04 Oct 2014 11:47:41 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, dkg@...thhorseman.net
+CC: cve-assign@...re.org
+Subject: Re: Re: gnome-shell lockscreen bypass with printscreen key
 Content-Type: text/plain; charset=utf-8
 
-I don't see a cve assigned for the following:
+Also note it can use up your disk quota as well. On Fedora 20 I tried
+it, held the key down, it continues taking screen shots for some time
+after I let go, what was interesting is the screenshot files started out
+full size but then got smaller, then full size again, then smaller, so
+even on an SSD it appears that it's taking the screenshot, writing it to
+disk, but getting interrupted, I never got it to OOM.
 
-1) https://secunia.com/advisories/57468/ :
-
-A vulnerability has been reported in Linux Kernel, which can be exploited by 
-malicious people to cause a DoS (Denial of Service).
-
-The vulnerability is caused due to a race condition error in the 
-"ath_tx_aggr_sleep()" function (drivers/net/wireless/ath/ath9k/xmit.c), which 
-can be exploited to cause a crash.
-
-The vulnerability is reported in versions prior to 3.12.15 and prior to 
-3.13.7.
-
-
-Solution:
-Update to version 3.12.15 or 3.13.7.
-
-Provided and/or discovered by:
-Max Sydorenko within a bug report.
-
-Original Advisory:
-Kernel:
-https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.12.15
-https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.13.7
-
-Max Sydorenko:
-https://bugzilla.kernel.org/show_bug.cgi?id=70551
-
-
-
-
-2) https://secunia.com/advisories/57436/ :
-
-Description
-
-A vulnerability has been reported in Linux Kernel, which can be exploited by 
-malicious, local users to cause a DoS (Denial of Service).
-
-The vulnerability is caused due to an error in the "arch_dup_task_struct()" 
-function (arch/powerpc/kernel/process.c) and can be exploited to cause a crash 
-via a specially crafted instruction sequence.
-
-Note: This only affects systems running on PowerPC.
-
-The vulnerability is reported in versions prior to 3.12.15 and 3.13.7.
-
-
-Solution:
-Update to version 3.12.15 or 3.13.7.
-
-Provided and/or discovered by:
-The vendor credits Adhemerval Zanella Neto.
-
-Original Advisory:
-https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.12.15
-https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.13.7
+On 03/10/14 02:08 PM, cve-assign@...re.org wrote:
+>> another way to look at it is
+> 
+> OK, we'll incorporate your suggestion and assign CVE-2014-7300 for:
+> 
+> "PrtSc is an unauthenticated request that's available to untrusted
+> parties. A series of requests can consume a large amount of memory.
+> The combination of this PrtSc behavior and the existence of the
+> oom-killer allows authentication bypass for command execution.
+> Therefore, the product must limit the aggregate memory consumption of
+> all active requests, and the lack of this limit is a vulnerability."
+> 
+> [ the rest of this message has no more CVE assignments ]
+> 
+> 
+>> https://bugzilla.gnome.org/show_bug.cgi?id=737456#c34
+> 
+>> We agreed on IRC that the best compromise here is to simply only allow
+>> screenshots to be saved to the clipboard while the screen is locked.
+>> That way taking screenshots is not impossible but someone with access
+>> to the machine can't simply abuse it to fill the disk.
+> 
+> It appears that discussion of this might still be ongoing (e.g., "Can
+> an unauthenticated person inject anything else into the clipboard
+> while the screen is locked?" "Yes." etc.). However, a second CVE ID
+> probably isn't needed. A decision to store PrtSc data in memory,
+> rather than on disk, is a solution for the original issue (the
+> ultimate cause of the excessive memory consumption is that the system
+> can't write PrtSc data to disk as fast as a person can request more
+> PrtSc data). This new solution happens to address a second issue: a
+> system administrator might want to ensure that an unauthenticated
+> person, after going to a locked screen, can't write even one PrtSc
+> worth of data to disk. This seems to be essentially a policy change,
+> not a fix for behavior that everyone always would've considered wrong.
+> 
+>> the screencapture (video) feature *is* disabled during lockscreen for
+>> precisely the reasons i expected printscreen to be disabled. I'm not
+>> sure what to make of that pair of decisions.
+> 
+> This seems unrelated to the question of CVE assignments, but one
+> possibility is that triggering of a video from the locked screen might
+> be much less acceptable to customers. For example, there might be high
+> support costs or other expenses whenever a legitimate user presses
+> Control+Shift+Alt+R once to start a screencast recording, is somehow
+> distracted (arguably easier when they can't see the screen), and lets
+> the recording continue for a very long time.
+> 
+>> Turning off the computer is a very different attack from filling up
+>> someone's home directory.
+> 
+> Right. However, unauthenticated triggering of the oom-killer isn't, by
+> itself, typically worse than unauthenticated powering off. In the
+> former case, the user loses data in one process; in the latter, the
+> user loses data in all processes. In other words, unauthenticated
+> memory exhaustion wasn't the essence of the original issue. The issue
+> required the "special" nature of screen-locking processes, i.e., the
+> unusually severe impact when a process dies.
+> 
+>> Is there a way to make a screenlocking program that is designed to fail
+>> closed
+> 
+> Alan Coopersmith commented on this separately. All we can add is there
+> currently isn't a CVE ID for the fail-open behavior of the screen-lock
+> functionality in gnome-shell. The design wasn't intended to be a
+> fail-closed design. Also, selecting a fail-closed design would've
+> required additional research that apparently has never been completed.
+> We normally don't have CVE IDs of the form "this product doesn't
+> properly address unsolved research problems."
+> 
+> 
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
