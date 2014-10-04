@@ -1,28 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/6
-Message-ID: <20140304110013.GN12584@dhcp-25-225.brq.redhat.com>
-Date: Tue, 4 Mar 2014 12:00:13 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/04/9
+Message-ID: <CAFhaWrW=Y5ZsbpCQCErw=Jh4GqLK=h1JDypS37=wRXrDokdyXQ@mail.gmail.com>
+Date: Sat, 4 Oct 2014 21:31:00 +0100
+From: Lance Davis <lancex3@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0101 -- Linux kernel: net: sctp: null pointer dereference when processing authenticated cookie_echo chunk
+Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way Linux kernel processed authenticated
-COOKIE_ECHO chunks.
+On Sat, Oct 4, 2014 at 12:19 AM, Riot <rain.backnet@...il.com> wrote:
 
-A remote attacker could use this flaw to crash the system by sending a
-maliciously prepared SCTP handshake in order to trigger a NULL pointer
-dereference on the server.
+>
+> If anyone has a way of contacting Brian Fox, he might just have an old
+> archive of ancient versions of bash banging around which could put the
+> question to rest once and for all - at which point exactly was shellshock
+> introduced.
 
-Introduced by:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=bbd0d59809f9
 
-Upstream patch submission:
-http://patchwork.ozlabs.org/patch/325898/
+https://www.linkedin.com/pub/brian-fox/0/74/480
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1070705
+Regards
+Lance
 
--- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
