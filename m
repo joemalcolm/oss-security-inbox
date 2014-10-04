@@ -1,82 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/24/4
-Message-Id: <E1W6f8L-0004Sl-QT@xenbits.xen.org>
-Date: Fri, 24 Jan 2014 11:41:14 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 87 - PHYSDEVOP_{prepare,release}_msix exposed to unprivileged guests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/04/8
+Message-ID: <CADBjfCHo1EJPwd51g6V5aHAHdQ3M9Z7j0VxUwZPaZSb=S-EWnw@mail.gmail.com>
+Date: Sat, 4 Oct 2014 20:34:21 +0100
+From: Riot <rain.backnet@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Absolutely.
 
-                   Xen Security Advisory XSA-87
+Bash versions back to 1.13 are all available on ftp.gnu, so not going to
+list explicit links for those.
 
-     PHYSDEVOP_{prepare,release}_msix exposed to unprivileged guests
+Bash 1.12 came from an this old slackware mirror:
+http://mirrors.dotsrc.org/slackware/slackware-2.0.1/slacksrc/a/bash/bash-1.12.tar.gz
 
-ISSUE DESCRIPTION
-=================
+Other old slackware and debian releases from the era:
+http://www.nielshorn.net/slackware/slack_old.php and
+http://archive.debian.org/debian/dists/Debian-1.1/main/disks-i386/1996_6_16/
 
-The PHYSDEVOP_{prepare,release}_msix operations are supposed to be available
-to privileged guests (domain 0 in non-disaggregated setups) only, but the
-necessary privilege check was missing.
+The atari bash 1.08 binary we used came from
+http://www.umich.edu/~archive/atari/Gnustuff/Tos/Bash/Bash-108/  and was
+tested in the steem engine emulator: https://code.google.com/p/steem-engine/
 
-IMPACT
-======
+The Human68k bash came from
+http://nfggames.com/x68000/Mirrors/Groundzero%20Organization/x68tools/gnu/bash/1.05/
+and was tested using the XM6 Pro emulator:
+http://mijet.eludevisibility.org/XM6%20Pro-68k/XM6%20Pro-68k.html with this
+disk image to boot:
+http://www.retropc.net/x68000/software/sharp/human302/index.htm
 
-Malicious or misbehaving unprivileged guests can cause the host or other
-guests to malfunction. This can result in host-wide denial of service.
-Privilege escalation, while seeming to be unlikely, cannot be excluded.
 
-VULNERABLE SYSTEMS
-==================
+Regards,
+Riot
 
-Xen 4.1.5 and 4.1.6.1 as well as 4.2.2 and later are vulnerable.
-Xen 4.2.1 and 4.2.0 as well as 4.1.4 and earlier are not vulnerable.
+On 4 October 2014 14:22, Hanno Böck <hanno@...eck.de> wrote:
 
-Only PV guests can take advantage of this vulnerability.
+> Am Sat, 4 Oct 2014 00:19:06 +0100
+> schrieb Riot <rain.backnet@...il.com>:
+>
+> > We then worked further back in time, unearthing bash 1.08.2 on an
+> > ancient 1991 Atari ST image:
+> > http://images.rymate.co.uk/images/iwaSGPo.png  This was also
+> > vulnerable.  This version is relevant because the first version of
+> > bash ported to linux was bash 1.08 - here's the original post by
+> > Linus at the tender age of  advertising his first build of linux on
+> > the minix newsgroup in 1991, explicitly mentioning bash 1.08.  This
+> > datum told us that shellshock is older than all of linux, which makes
+> > for a nice soundbite for the press.
+> >
+> > Going back further proved very difficult because few archives
+> > including these early versions exist anywhere, and by all accounts
+> > the early releases were buggy and not particularly portable.  We
+> > eventually managed to locate an image for an obscure Japanese
+> > Human68k containing bash 1.05.  Here it identifies itself as bash
+> > 1.05 X6_19: http://images.rymate.co.uk/images/kH8VnTo.png  The file
+> > is dated 12/08/1991... and of course it's vulnerable:
+> > http://images.rymate.co.uk/images/zTYm05I.png
+>
+>
+> Can you post the relevant download links to the atari st / 68k images
+> and other possibly interesting stuff? Or where they from private
+> archives?
+>
+> I think independently of current events this might be interesting for
+> people digging in IT history, so having them somewhere easy to find
+> would be nice.
+>
+> --
+> Hanno Böck
+> http://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
+>
 
-MITIGATION
-==========
-
-Running only HVM guests will avoid this issue.
-
-There is no mitigation available for PV guests.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was disclosed publicly on the xen-devel mailing list.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa87-unstable-4.3.patch    xen-unstable, Xen 4.3.x
-xsa87-4.2.patch             Xen 4.2.x
-xsa87-4.1.patch             Xen 4.1.x
-
-$ sha256sum xsa87*.patch
-45e5cc892626293067cc088a671a6bbdc18b018f54ff09b6a1cbb1fabbdf114d  xsa87-4.1.patch
-df9c1507d7bb0e5266a2fadd992d1e6ed0f7bf5be7466b8a93ed3bd8e3ab8e8d  xsa87-4.2.patch
-a13ce270b177d33537d627b85471abaa01215cd458541f4c6524914d7c81eb38  xsa87-unstable-4.3.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJS4TtaAAoJEIP+FMlX6CvZd+IH/i2WTmxuMRe4znSrGg2JJE1L
-Wx3ioEKGnU/+5n2T94radln7lA85QvQJpIhwK6aA+BrPYhbtLKI5cq+d5LQ+RLmM
-4YUvKZuoolyaHUZSs6XZCopExCz537CCW+rAPhUEGYgP6sLr5aGEG0x8AQimDAJX
-YwlF1MqhfxYyWWI6xplzBo3ZoKlMQNikGOQN9isBF5J6ygQZYBgyfeK/M8C7PZlp
-GAtVfLNYhbMuZLCJpUcrei7QXSERKf++Li7Vfc6WOZ4OzqPysNrJmMVlPwe/k9RZ
-ldNznuYNsTV6WNl/SB4u6W1iygvYhXk4t1xyzIDlmVP+GwsHtuFW9IFiV2aZohc=
-=ekUq
------END PGP SIGNATURE-----
-
-Download attachment "xsa87-4.1.patch" of type "application/octet-stream" (598 bytes)
-
-Download attachment "xsa87-4.2.patch" of type "application/octet-stream" (616 bytes)
-
-Download attachment "xsa87-unstable-4.3.patch" of type "application/octet-stream" (916 bytes)
