@@ -1,78 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/1
-Message-Id: <20140731000845.B0635C50501@smtptsrv1.mitre.org>
-Date: Wed, 30 Jul 2014 20:08:45 -0400 (EDT)
-From: cve-assign@...re.org
-To: stu@...cehopper.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, hanno@...eck.de
-Subject: Re: CVE request: libressl before 2.0.2 under linux PRNG failure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/04/4
+Message-ID: <20141004081907.GA3834@chaz.gmail.com>
+Date: Sat, 4 Oct 2014 09:19:07 +0100
+From: Stephane Chazelas <stephane.chazelas@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The ChangeLog
+(http://www.oldlinux.org/Linux.old/bin/old/bash-1.05/ChangeLog)
+and the usenet discussion that Eric unearthed
+(https://groups.google.com/d/msg/gnu.bash.bug/72jXoIWYsfE/jJqC-fjSh0wJ)
+and
+https://groups.google.com/d/msg/comp.unix.questions/LwsdchovzFY/qokUr2mfCboJ
 
->> I see a number of web pages relating to this issue are mentioning that
->> it has already been assigned CVE-2014-2970, can anyone throw light on this?
+Remove any doubt as to when the bug was introduced (August 1989,
+released in 1.03) and how it was implemented from the start. The
+code is very simple, it just replaces the = with a space in the
+environment entry and interprets it.
 
-> At MITRE, we (obviously) know where CVE-2014-2970 came from, and we'll
-> send information here about the resolution as soon as it happens.
+See also
+http://unix.stackexchange.com/questions/157381/when-was-the-shellshock-cve-2014-6271-7169-bug-introduced-and-what-is-the-pat/157495#157495
 
-We've since learned that nobody ever assigned CVE-2014-2970 to that
-LibreSSL issue, and apparently every appearance of CVE-2014-2970 in "a
-number of web pages" was ultimately the result of a miscommunication
-outside of MITRE.
+-- 
+Stephane
 
-A complication is that CVE-2014-2970 had been assigned to a different
-issue, and that issue isn't yet public. What you should do is:
-
-  - if you're part of the embargo audience that has been using
-    CVE-2014-2970 for a private vulnerability, use CVE-2014-5139
-    instead
-
-  - if you're not part of that embargo audience, all we can suggest is
-    that it's very likely that you'll see a public disclosure of
-    CVE-2014-5139 in the future
-
-Also:
-
-  - MITRE is not part of the embargo audience and does not know what
-    the CVE-2014-5139 vulnerability is
-
-  - MITRE has separately communicated the CVE ID change to the
-    organization that originally assigned CVE-2014-2970
-
-Soon, the MITRE CVE web site will have this for CVE-2014-2970:
-
-  ** REJECT **
-
-  DO NOT USE THIS CANDIDATE NUMBER.  ConsultIDs: CVE-2014-5139.  Reason:
-  This candidate is a duplicate of CVE-2014-5139, and has also been used
-  to refer to an unrelated topic that is currently outside the scope of
-  CVE.  This unrelated topic is a LibreSSL code change adding
-  functionality for certain process-bifurcation use cases that might
-  arise in future LibreSSL-based applications.  There is no CVE ID
-  associated with this LibreSSL code change.  As of 20140730,
-  CVE-2014-5139 is an undisclosed vulnerability in a different product,
-  with ongoing vulnerability coordination that had previously used the
-  CVE-2014-2970 ID.
-
-
-The MITRE CVE web site entry for CVE-2014-5139 will have the details
-of the issue after the public disclosure happens.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT2YhdAAoJEKllVAevmvms8ucH/RR5XB+vo3gsdgZttTYTxC9G
-jYODUmi6BBg3FwQSPiqny8DWbvSvZhZaNoDKrf8EdfJthc9dSlJ1hoFogblqj79U
-meYqvTWFdaVkGPiBFbX293g7J/VDQVpcXxYI24Kc+MR8OAfu4jV9imeZZ62iouuk
-4BbhvtUD2yFqag5S3YUqhFfo3FIOQVYyh+M52927HzQSTDheUWCapHZfUP7lOYAL
-vQeyDSayP5QNcLpjeKhshS5/L1aTDOMY4KreYDSvs/0+wgvE+FexqyjwzeoSpyGr
-HHkrIyuIIHPT3aTbSvaxAgso51fPRKCEZsR7eh2XFnePEi+Cq6KysTQhASC1iWM=
-=3pTv
------END PGP SIGNATURE-----
