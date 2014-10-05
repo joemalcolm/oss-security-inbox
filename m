@@ -1,41 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/14
-Message-ID: <Pine.LNX.4.64.1412041329560.1687@beijing.mitre.org>
-Date: Thu, 4 Dec 2014 13:30:33 -0500 (EST)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-cc: cve-assign@...re.org
-Subject: Re: CVE request: missing checks for small-sized files in hivex
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/11
+Message-ID: <CADk+mPAVSiiK7EPMPUFPS_pbkRs1DpzK5dtAfgny1N8dyJQBTg@mail.gmail.com>
+Date: Sun, 5 Oct 2014 17:01:48 +0200
+From: Rainer Gerhards <rgerhards@...adiscon.com>
+To: mancha <mancha1@...o.com>
+Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
+Subject: Re: sysklogd vulnerability (CVE-2014-3634)
 Content-Type: text/plain; charset=utf-8
 
+2014-10-03 17:39 GMT+02:00 mancha <mancha1@...o.com>:
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> On Fri, Oct 03, 2014 at 05:16:31PM +0200, Rainer Gerhards wrote:
+> > Today is Germany's national holiday.  IIRC it was with 3500000000 or
+> > 350000001. I probably can't check today. I think it was on ubuntu
+> 12.04lts
+> > fully patched.
+> >
+> > Sorry i have no better answer at the moment.
+>
+> In that case, Schönen Feiertag.
+>
+>
+Danke!
 
-> It was reported that hivex [1], a library that can read and write
-> hive files (undocumented binary files that Windows uses to store the
-> Windows Registry on disk), did not properly handle small-sized hive
-> files. An attacker able to supply a hive file of a small size to an
-> application using the hivex library could use this flaw to read, and
-> possibly write, up to 4095 bytes beyond the end of the allocated
-> buffer, potentially resulting in arbitrary code execution with the
-> with the privileges of the user running that application.
 
-Use CVE-2014-9273.
+> Maybe when you have some time you can provide a bit more particulars. On
+> sysklogd, I'm not seeing it. But, the flaw does exist and there is OOB
+> access so there's no reason not to apply the fix.
+>
+>
 
-- ---
+I have had a pretty deep look at it. Bottom line is that I couldn't
+reproduce it manually either. So I checked the test environment. As it
+turns out, the root cause for my ability to crash was that the test scripts
+did not setup things properly for v3 ... some v5 binary modules kept be
+used. Digging deeper in the old code, a crash seems as unlikely as said in
+the initial report. The reason is that some masking happens, which in turn
+prevents most problems with the negative PRIs. I'll update the advisory
+soon. Sorry for the noise and thanks for keeping this straight.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Rainer
 
-iQEVAwUBVICnuallVAevmvmsAQJmtQgAvdc858QDSe7VoTfgyMo/qZa/9sVMs0UF
-aKFwc+aZfVrRQDX71kGudujqZE2V/CorB6R0NUYQ6icC9ho41wlEp9tuMLcsnwB1
-wslzcbRZht16Zg0wWmQnhyY9ZFrPfYLW2gBrWf3wERrpDbLGleS43/B0O87qI35m
-rr7EUSSbkr/P81PcvsVe8mqblpkm9jK0IDUuB8SC141btnCOTL1Wgn/H1/kVgGSZ
-QOjk/E2OPF3olNo23yWpADi7U4GW3KLypJ08vpCwR/hsvD2vJ0oSTFpLm/K515Lb
-tD3D53+boUNlOLN7rnIWYoCMNu72iwLPRh6vJO9WklSx0W1hCl6MKw==
-=+uEe
------END PGP SIGNATURE-----
