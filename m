@@ -1,165 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/3
-Message-ID: <54928F33.2070309@yahoo.fr>
-Date: Thu, 18 Dec 2014 09:24:19 +0100
-From: Lionel Debroux <lionel_debroux@...oo.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/15
+Message-ID: <20141005165414.GA23489@openwall.com>
+Date: Sun, 5 Oct 2014 20:54:14 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-Hello Greg,
+Sona,
 
-Before someone (whoever he/she is) spends time on something that might,
-from the beginning, have no chance of getting integrated into mainline,
-I'd like your input on three questions I asked over a week ago, at the
-end of an all too lengthy e-mail :)
-Thanks in advance.
+Oh, I didn't realize you actually are with a distro vendor:
 
+"Enea Linux is a Yocto-based Linux distribution targeted for
+communication and networking solutions."
 
-Reposting here, so that you don't have to dig, with added "=" lines:
+Then you do in fact have a valid reason to test for and patch the
+individual bugs even when they're no longer security relevant.  My
+advice is that if you feel you're a "non-expert" in bash bugs, you
+simply apply all bash upstream's patches, and keep adding them to your
+package of bash as more upstream patches become available.  You do not
+need to issue security advisories (or whatever you normally do when
+fixing security vulnerabilities) each time: it's sufficient to do that
+once, when you've just included the prefix/suffix patch (bash43-027 or
+equivalent).  Once you have bash43-027, further patches to bash are no
+different than e.g. the many patches that are issued for VIM (a project
+that tends to release hundreds of post-release patches, most of them
+non-security).
 
-> > If the latter, I think it wouldn't be good to see another
-> > half-measure integrated to mainline, until the next mainline ASLR
-> > defeat against which PaX has protected for over a decade. Just
-> > my 2 cents.
->
-> The reason PaX isn't in the main kernel tree is that no one has
-> spent the time and effort to actually submit it in a mergable form.
-> So please, do so if you think this is something that is needed.
-In 2010(-2011 ?), I pushed some bits of constification work from PaX to
-mainline, nothing complicated.
-Pushing from PaX to mainline some of the more useful bits that I listed
-in a previous e-mail is a very different matter... well beyond the
-amount of time I could devote to it - and beyond my technical abilities,
-too.
+I hope this helps.
 
-However, pointing and pushing patches of lower complexity, why not.
-For instance:
-==============================
-1) do you consider that using
-static inline bool check_heap_stack_gap(const struct vm_area_struct
-*vma, unsigned long addr, unsigned long len) {
-return (!vma || addr + len <= vma->vm_start);
-}
-defined in include/linux/sched.h (where PaX defines that prototype, and
-where most functions using it are defined) to replace 20- open-coded
-(!vma || addr + len <= vma->vm_start) checks is a worthwhile, though
-obviously no-op, cleanup in its own right ?
-==============================
+Alexander
 
-==============================
-2) do you consider that, even before the integration of PaX's refcount
-protection to mainline (which is there, like most of PaX, for security
-reasons, there have been refcount-related holes in the past...),
-switching to atomic_t for fs_struct.users,
-pipe_inode_info.{readers,writers,files,waiting_writers},
-kmem_cache.refcount (for SLAB and SLUB), tty_port.count,
-tty_ldisc_ops.refcount is worthwhile ?
-Most such refcounts at other places are already atomic, after all.
-==============================
-
-==============================
-3) I see a patch in USB core, which looks like it's written to avoid
-some potential integer overflows.
---- linux-3.17.4/drivers/usb/core/devio.c
-+++ linux-3.17.4-pax/drivers/usb/core/devio.c
-@@ -187,7 +187,7 @@ static ssize_t usbdev_read(struct file *
-    struct usb_dev_state *ps = file->private_data;
-    struct usb_device *dev = ps->dev;
-    ssize_t ret = 0;
--    unsigned len;
-+    size_t len;
-    loff_t pos;
-    int i;
-
-@@ -229,22 +229,22 @@ static ssize_t usbdev_read(struct file *
-    for (i = 0; nbytes && i < dev->descriptor.bNumConfigurations; i++){
-        struct usb_config_descriptor *config =
-          (struct usb_config_descriptor *)dev->rawdescriptors[i];
--        unsigned int length = le16_to_cpu(config->wTotalLength);
-+        size_t length = le16_to_cpu(config->wTotalLength);
-
-        if (*ppos < pos + length) {
-
-        /* The descriptor may claim to be longer than it
-        * really is.  Here is the actual allocated length. */
--            unsigned alloclen =
-+            size_t alloclen =
-                le16_to_cpu(dev->config[i].desc.wTotalLength);
-
--            len = length - (*ppos - pos);
-+            len = length + pos - *ppos;
-            if (len > nbytes)
-                len = nbytes;
-
-            /* Simply don't write (skip over) unallocated parts */
-            if (alloclen > (*ppos - pos)) {
--                alloclen -= (*ppos - pos);
-+                alloclen = alloclen + pos - *ppos;
-                if (copy_to_user(buf,
-                    dev->rawdescriptors[i] + (*ppos - pos),
-                    min(len, alloclen))) {
-Does that make sense ?
-==============================
-
-
-
-
-In addition to what I wrote earlier: PaX contains several hundreds of
-lines of hunks dealing with local variables needlessly made static:
-==============================
---- linux-3.17.6/drivers/mfd/max8925-i2c.c
-+++ linux-3.17.6-pax/drivers/mfd/max8925-i2c.c
-@@ -152,7 +152,7 @@ static int max8925_probe(struct i2c_clie
-const struct i2c_device_id *id)
-{
-     struct max8925_platform_data *pdata = dev_get_platdata(&client->dev);
--    static struct max8925_chip *chip;
-+    struct max8925_chip *chip;
-     struct device_node *node = client->dev.of_node;
-
-if (node && !pdata) {
-
-(the first reference to the "chip" variable in that function is an
-unconditional devm_kzalloc)
-==============================
-or local structs which are not meant to be modified and should therefore
-probably be made static / static const (mainline doesn't use the GCC
-plugin for constification):
-==============================
---- linux-3.17.6/arch/arm/mach-omap2/wd_timer.c
-+++ linux-3.17.6-pax/arch/arm/mach-omap2/wd_timer.c
-@@ -110,7 +110,9 @@ static int __init omap_init_wdt(void)
-    struct omap_hwmod *oh;
-    char *oh_name = "wd_timer2";
-    char *dev_name = "omap_wdt";
--    struct omap_wd_timer_platform_data pdata;
-+    static struct omap_wd_timer_platform_data pdata = {
-+        .read_reset_sources = prm_read_reset_sources
-+    };
-
-    if (!cpu_class_is_omap2() || of_have_populated_dt())
-        return 0;
-@@ -121,8 +123,6 @@ static int __init omap_init_wdt(void)
-    return -EINVAL;
-}
-
--    pdata.read_reset_sources = prm_read_reset_sources;
--
-    pdev = omap_device_build(dev_name, id, oh, &pdata,
-sizeof(struct omap_wd_timer_platform_data));
-    WARN(IS_ERR(pdev), "Can't build omap_device for %s:%s.\n",
-==============================
-
-
-A tiny subset of the bits which have been in PaX/grsec for a while
-slowly migrate to mainline, though the mainline patches are certainly
-independent reimplementations, given that many people don't know the
-breadth of changes PaX/grsec contains...
-For instance, PaX/grsec has been using ARMv7's PXN bit for two years.
-There are also e.g. changes related to ACCESS_ONCE, though those did not
-aim at solving problems with some compilers / platforms.
-
-
-Regards,
-Lionel.
+On Sun, Oct 05, 2014 at 05:44:15PM +0400, Solar Designer wrote:
+> On Sun, Oct 05, 2014 at 10:22:06AM +0000, Sona Sarmadi wrote:
+> > I think what most (non-expert) people need is an explanation for each CVE
+> 
+> No.  Most non-expert people only need to know that they need either the
+> prefix/suffix patch included or function imports disabled, preferably in
+> a security update from their distro vendor.  This makes the individual
+> parser bugs, which got CVEs assigned, irrelevant.
+[...]
+> > 2) Do we need to apply *all* of these individual bash patches (i.e. bash43-025 through bash43-029)? Even  bash43-027 which is not solving any specific CVE?  Or should we apply 27 or all the others?
+> 
+> If you choose to build bash from source (why?) rather than simply use
+> your distro's security update, [...]
+[...]
+> > 3) Do you have a script or summary of all tests in one place like  http://en.wikipedia.org/wiki/Shellshock_%28software_bug%29 or https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck ? Or maybe these are good enough & reliable? 
+> 
+> You only need the one-liner test above.  Running tests for the various
+> CVEs is a distraction (it's moderately useful e.g. for a distro vendor,
+> to see what non-security bugs may need to be patched, but mostly not for
+> an end-user or sysadmin).
+> 
+> Alexander
