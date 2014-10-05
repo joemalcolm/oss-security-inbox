@@ -1,38 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/21
-Message-Id: <20141120144817.6CC7572E0B5@smtpvbsrv1.mitre.org>
-Date: Thu, 20 Nov 2014 09:48:17 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...pal.org, gwolf@...lf.org, team@...urity.debian.org
-Subject: Re: Pending CVE assignments for SA-CORE-2014-006?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/4
+Message-ID: <20141005125124.70d9231e@hboeck.de>
+Date: Sun, 5 Oct 2014 12:51:24 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Am Sun, 5 Oct 2014 10:22:06 +0000
+schrieb Sona Sarmadi <sona.sarmadi@...a.com>:
 
-> Session hijacking (Drupal 6 and 7)
+> 3) Do you have a script or summary of all tests in one place like
+> http://en.wikipedia.org/wiki/Shellshock_%28software_bug%29 or
+> https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck ?
+> Or maybe these are good enough & reliable? 
 
-Use CVE-2014-9015.
+This is my script and I think what it does in the current version is
+the reasonable thing to do:
+It will first test if function importing old style is enabled and if
+yes it will warn about that, if it is disabled or any of the prefixing
+solutions is enabled then it will say so.
+
+All further test outputs for all 6 CVEs depends on that. If the old
+function import is enabled warnings will be shown in red, because then
+people are in real danger. If function importing is disabled or
+prefixed the warnings will look less scary and clearly state
+"non-explitable".
+
+I think this is reasonable. I regret that previous versions of my
+script showed a  more scary output even if people weren't really in any
+danger because prefixing was already enabled.It was even
+referenced in a number of inaccurate media reports.
 
 
-> Denial of service (Drupal 7 only)
 
-Use CVE-2014-9016.
+-- 
+Hanno Böck
+http://hboeck.de/
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-iQEcBAEBAgAGBQJUbf58AAoJEKllVAevmvms2qcIAItiBrXYCr3qbvFieEgqWdZT
-UX/Z+6TcS65VB2JrLKXDgMLArWIXRQWVT/1dORotEabeEhtgGbaBljyH4KsHDp8W
-cwxcbmB6hgUpbWax4Kgo5a0JMBshWYUKU8cxQVmLWuVjBzhgcveNfcBYKd66hLP4
-iLroECbXKmn27/LCrlumwskxIOmjBLkecCH4cu3UXZdK46GpuxMxbSWlSSdBC0XF
-E3Svx0GxpwZIRDAA8bUXgwnMUgJkeiER+vbmD7l0Ool2/961SIhHWDfbfFClW4Xv
-lFW0qqRJtT6JXcoi9NSZiMRRDawVwXHqmUqTA9Es3OBULJEzh6N2gehNt8fSPqg=
-=olvS
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
