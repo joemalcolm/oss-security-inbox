@@ -1,66 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/16/3
-Message-Id: <201401161252.s0GCqO0M006542@linus.mitre.org>
-Date: Thu, 16 Jan 2014 07:52:24 -0500 (EST)
-From: cve-assign@...re.org
-To: ratulg@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: drupal: multiple vulnerabilities corrected in 6.30 and 7.26 (SA-CORE-2014-001)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/10
+Message-Id: <E1XanDO-0007o1-1k@rmm6prod02.runbox.com>
+Date: Sun, 05 Oct 2014 10:55:14 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+CC: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> 1) Impersonation (OpenID module - Drupal 6 and 7 - Highly critical)
-
-Use CVE-2014-1475.
-
-
-> 2) Access bypass (Taxonomy module - Drupal 7 - Moderately critical)
+On Sun, 5 Oct 2014 17:44:15 +0400, Solar Designer <solar@...nwall.com> wrote:
+> .... Most non-expert people only need to know that they need either the
+> prefix/suffix patch included or function imports disabled, preferably in
+> a security update from their distro vendor.  This makes the individual
+> parser bugs, which got CVEs assigned, irrelevant.
 > 
-> The Taxonomy module provides various listing pages which display content 
-> tagged with a particular taxonomy term. Custom or contributed modules 
-> may also provide similar lists. Under certain circumstances, unpublished 
-> content can appear on these pages and will be visible to users who 
-> should not have permission to see it.
+> Here's the relevant test:
+> testfunc='() { echo bad; }' bash -c testfunc
 
-Use CVE-2014-1476 for the vulnerability in the Taxonomy module. The
-other information seems to have at least two possible interpretations.
-One interpretation is that this vulnerability in the Taxonomy module
-affects whether it is safe for other modules to have these "similar
-lists." A second interpretation is that "tagged with a particular
-taxonomy term" means that the attack involves a crafted taxonomy term.
-In this second interpretation, a custom or contributed module may
-require its own vulnerability fix to block the crafted taxonomy term.
-In that situation, each contributed module may require its own CVE ID,
-because those issues would not be within the scope of CVE-2014-1476.
+This is a MUCH better test for most people.  Hanno's test script is great for detail, but most people don't need the detail.
 
- 
-> 3) Security hardening (Form API - Drupal 7 - Not critical)
-> To facilitate this, a new, optional 
-> $form_state['programmed_bypass_access_check'] element has been added
+I'm putting that email in my timeline at http://www.dwheeler.com/essays/shellshock.html#timeline - this is an EASY test people can directly use.
 
-There is no CVE for the action of adding this functionality to Drupal core.
+---  David A. Wheeler
 
-> provides a method for custom or contributed code to fix security 
-> issues that would be difficult or impossible to fix otherwise.
-
-If contributed code uses this element to address a vulnerability, each
-such vulnerability may be eligible for a CVE ID.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS19SWAAoJEKllVAevmvmsCG4IAJ9J9l6zio9tZzXZamxuGS6O
-EeTkI+u4GIYZPNgDO/SLdlws6OuAG11lvbt0IcQWF9ngYqAtgfcazoOUpenOPXJj
-6Vs5x4p29QutF6fv25zvQWzu/CCxLTDLIBJJkE2huMthSbq4/wKEG7Qp4sYvUJ/Z
-6Em5aLP/J2VSvVQnUbDFv181kl1XyadRnKw8pCSXoPvGWGm2apWSjanTmT+2kYY3
-uBBC1OqktbjIJJULZgYQ3x94JKixG5B/cMxZKA8Z2D95toE1D6xPPhetp5B5QuBC
-PH484Hh+pAq3/r0e6f8UUgUifhPSLakuWSKbfLyo4t5dmnvTIKfZ3C7XBuxcOEM=
-=1RjG
------END PGP SIGNATURE-----
