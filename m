@@ -1,19 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/2
-Message-ID: <CAMp7mVvCh2_Zx_7N0sxVnyB_2m1k9HpWR4cdT4GPtjfXz6QrSQ@mail.gmail.com>
-Date: Sun, 15 Jun 2014 11:18:16 +0100
-From: Richard Moore <rich@....org>
-To: oss-security@...ts.openwall.com
-Cc: "security@...project.org" <security@...project.org>
-Subject: CVE Request for KIO/kmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/2
+Message-ID: <CALx_OUDULLHLLVkm6nUTujcn0Gm56YoLdV_KOPhPi-byrnZa0w@mail.gmail.com>
+Date: Sun, 5 Oct 2014 00:33:40 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> < https://github.com/mubix/shellshocker-pocs >
 
-I'd like to request a CVE for a vulnerability in KIO that causes a security
-issue in kmail.
+I mentioned this earlier on another thread, but I would really warn
+people about relying on this unless they really understand what's
+going on.
 
-Regards
+At a quick glance, CVE-2014-6271 and CVE-2014-7169 test cases will
+stop working with Florian's patch (probably fine, since even if you
+don't have patches for these bugs, you're at almost no risk). At the
+same time, the test case for CVE-2014-7186 will claim that you're
+vulnerable even with Florian's patch. Next, the test case for and
+CVE-2014-7187 will probably always claim that you're vulnerable, even
+if you have the patch installed (haven't tested, but looks that way).
+And finally, the test cases for CVE-2014-6277 and CVE-2014-6278 are
+incomplete and won't work if pasted as-is - you'll just get a syntax
+error.
 
-Rich.
-
+/mz
