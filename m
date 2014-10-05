@@ -1,43 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/5
-Message-ID: <20141009005516.GG12633@sentinelchicken.org>
-Date: Wed, 8 Oct 2014 17:55:16 -0700
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/3
+Message-ID: <3230301C09DEF9499B442BBE162C5E48257593DB@SESTOEX04.enea.se>
+Date: Sun, 5 Oct 2014 10:22:06 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 08, 2014 at 08:20:04PM -0400, David A. Wheeler wrote:
-> On Wed, 8 Oct 2014 15:48:10 -0700, Tim <tim-security@...tinelchicken.org> wrote:
-> > To me, it's not about anticipating the next bug, it is about providing
-> > guidance to developers who care only so much about security so that we
-> > can avoid some bugs that we didn't anticipate.
+ 
+> > < https://github.com/mubix/shellshocker-pocs >
 > 
-> Agree!
+> I mentioned this earlier on another thread, but I would really warn people
+> about relying on this unless they really understand what's going on.
 > 
-> > PS- I'm of two minds on this.  More recently I've decided that educating
-> >     developers isn't nearly as effective as providing developers APIs and
-> >     development environments that make it unlikely they will shoot
-> >     themselves in the foot.  It's not that developers can't be trained,
-> >     it is that they will probably only be developers for a handful of 
-> >     years and move on to other roles later, with a whole new batch of
-> >     green coders coming in to fill their positions.  Anyway...
-> 
-> I don't think there's an either/or here.  Yes, if you *can* change the
-> tools/libraries/development environments to prevent attacks, or reduce
-> their effectiveness, you *should*.
-> 
-> That said, a fool with a tool is still a fool.  There's no way to create
-> a development environment that can't be misused.  Thus, you'll always need
-> to educate and train developers for situations the system cannot prevent.
-> In the long term I think this will be easier, because novice developers will be able
-> to learn from the many experts around them.  Today, the number of
-> developers who understand security issues is a vanishingly small percentage
-> of the total, so the novice has no one to learn from.
+> /mz
+
+Thanks Michal, 
+
+I agree that everyone using bash needs to understand what is going on,  but I think what most (non-expert) people need is an explanation for each CVE, a set of test case from some reliable source (preferably a script that runs all test cases and shows vulnerable/not-vulnerable status) and a set of patches. So that they can apply the patches, run the tests and assert that their systems are not vulnerable to shellshock anymore.
+
+Maybe we should update your summary like this:
+
+    CVE-2014-6271 - original RCE found by Stephane. Fixed by bash43-025 and corresponding Sep 24 entries for other versions.
+    CVE-2014-7169 - file creation / token consumption bug found by Tavis. Fixed by bash43-026 & co (Sep 26)
+    CVE-2014-7186 - a probably no-sec-risk 10+ here-doc crash found by Florian and Todd. Fixed by bash43-028 & co (Oct 1).
+    CVE-2014-7187 - a non-crashing, probably no-sec-risk off-by-one found by Florian. Fixed by bash43-028 & co (Oct 1).
+    CVE-2014-6277 - uninitialized memory issue, almost certainly RCE found by me. Fixed by bash43-029 & co (Oct 2).
+    CVE-2014-6278 - command injection RCE found by me. (No specific patch yet, maybe bash43-30 ??).
 
 
-No, I agree it's not an either/or.  I'm just beginning to think it is
-more cost-effective to fix APIs and platforms than try to educate the
-ever-shifting armies of developers.
+Some questions:
+ 1) bash43-027   patch  exported function namespace change,  Florian's mitigation patch that shields the parser from untrusted inputs". This does not solve any specific CVE, but mitigates all CVEs, is this correct?
 
-tim
+2) Do we need to apply *all* of these individual bash patches (i.e. bash43-025 through bash43-029)? Even  bash43-027 which is not solving any specific CVE?  Or should we apply 27 or all the others?
+
+3) Do you have a script or summary of all tests in one place like  http://en.wikipedia.org/wiki/Shellshock_%28software_bug%29 or https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck ? Or maybe these are good enough & reliable? 
+
+Thanks
+/Sona
