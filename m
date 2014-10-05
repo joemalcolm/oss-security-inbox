@@ -1,67 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/6
-Message-Id: <201402271307.s1RD7L6H017030@linus.mitre.org>
-Date: Thu, 27 Feb 2014 08:07:21 -0500 (EST)
-From: cve-assign@...re.org
-To: d.cauquil@...dream.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: PLOGGER 1.0RC1 multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/1
+Message-ID: <CAM12Q5QqWcdj6qRhpH1XcEHYMigHjZ27ZAFPjzVaHW5JUeUr=g@mail.gmail.com>
+Date: Sat, 4 Oct 2014 23:22:29 -0700
+From: Jose R R <Jose.r.r@...ztli-it.com>
+To: oss-security@...ts.openwall.com
+Subject: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Niltze!
 
-> We found two vulnerabilities in PLOGGER version 1.0RC1, including:
+Of possible interest:
 
+< https://github.com/mubix/shellshocker-pocs >
 
-> 1. Authenticated Arbitrary file upload vulnerability affecting PLOGGER
-> version 1.0RC1
-> 
-> This vulnerability allows an authenticated user to upload an arbitrary
-> PHP file on the remote web server in an accessible path, by sending a
-> specifically crafted zip file.
+I was surprised a (vulnerable) bash has been ported to IBM z/OS
 
-> session.post('http://' + HOST + "/plog-admin/plog-upload.php",
-
-> ## Add true image file to block the race condition (mandatory not
-> null)
-
-Use CVE-2014-2223.
-
-Can you explain the race condition? For example: without the true
-image file, would the product extract the .php file but then delete it
-very soon afterward?
+< http://mainframed767.tumblr.com/post/98446455927/bad-news-is-it-totally-works-in-bash-on-z-os-and
+>
 
 
+Best Professional Regards.
 
-> 2. CAPTCHA bypass vulnerability
-> 
-> A theme called "Lucid" provided in PLOGGER version 1.0RC1 implements a
-> weak CAPTCHA prone to a replay attack. By abusing this vulnerability,
-> an unauthenticated user may be able to post a huge number of comments.
-
-> The script generating the CAPTCHA image inserts a code in the current
-> user session, but this value is not unset while processing the form,
-> thus allowing an attacker to submit multiple times the form with
-> always the same captcha and associated code.
-
-> The vulnerable code is located in plog-comment.php, line 106.
-
-Use CVE-2014-2224.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTDzfpAAoJEKllVAevmvmsVc8H/j06CzXpU0k8lHndLB4b18Dm
-G52S617mi8nRVmx9ksLjSMuWNpFBUqTqoAAQLsnYZsoeOuQH+ijhByQ9AGkHmx3O
-kxfIoEAY8Dj2zulPAg62UiI8XkyWbAZwRR+pMzKEb0Ch8IHCm3P0wZBOWIxd1gWB
-wUhxkKp4KgZGGW9eX420vOQMMZuSMkr/KfiM+2y+RibMG3twQJn64rcFxtYTwx3V
-KrosI7vSdb0YLEvP/QpAtqB7Am+IHUTcNEa0dFqvV/iVZjyQ7Frb/8RPf1u8acKC
-XSZAYYWzZOqoqGypccKFCv36GF2y5OYctrqdY1OUz5x1zQ9pSHdGsdiSlkHbkDg=
-=VRHX
------END PGP SIGNATURE-----
+-- 
+Jose R R
+http://www.metztli-it.com
+---------------------------------------------------------------------------------------------
+NEW Apache OpenOffice 4.1.1! Download for GNU/Linux, Mac OS, Windows.
+---------------------------------------------------------------------------------------------
+Daylight Saving Time in USA & Canada ends: Sunday, November 02, 2014
+---------------------------------------------------------------------------------------------
