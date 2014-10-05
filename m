@@ -1,68 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/9
-Message-ID: <CAJVRA1RyW1NTzRqtRupYHFo9E9cfcN1YcnNVAfsJJ70ZB=aVXA@mail.gmail.com>
-Date: Thu, 20 Mar 2014 07:22:04 -0700
-From: coderman <coderman@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/7
+Message-ID: <20141005134415.GA22543@openwall.com>
+Date: Sun, 5 Oct 2014 17:44:15 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: FD mailing list died. Time for new one (or something better!)
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-Q: "Onions are fragile and sporadically un-available."
+On Sun, Oct 05, 2014 at 10:22:06AM +0000, Sona Sarmadi wrote:
+> I think what most (non-expert) people need is an explanation for each CVE
 
- A: that's not a question ;)  see also <lots of Tor trac numbers here>
+No.  Most non-expert people only need to know that they need either the
+prefix/suffix patch included or function imports disabled, preferably in
+a security update from their distro vendor.  This makes the individual
+parser bugs, which got CVEs assigned, irrelevant.
 
+Here's the relevant test:
 
+testfunc='() { echo bad; }' bash -c testfunc
 
-Q: ".. How do faster soliderer onions?"
+Here's how it works on a patched system:
 
- A: glad you asked, earth human!
-    for a limited time only!!
-        [ ... shipping and handling not included, ... ]
-   + with consensus, namecoin to a set of consistent or rotating onion URIs
-   + concurrent hidden service endpoints to map addresses aggressively
-   + concurrent ipv4 or ipv6 addrspaces to hidden web services on TCP/DNS
-   + including those discussed built on multi-homed stream transports
-to the mapped endpoints
+$ testfunc='() { echo bad; }' bash -c testfunc
+bash: testfunc: command not found
 
+and on a (most likely) vulnerable system:
 
+$ testfunc='() { echo bad; }' bash -c testfunc
+bad
 
-Q: "How do you trust shady ipv4, ipv6, openssl, zlib, libevent, http,
-smtp, wtfp web attack surface?"
+(I wrote "most likely" because with all CVEs patched the latter system
+is not actually vulnerable to the currently known parser bugs, but you
+should want to protect its parser anyway.  So such systems need to be
+updated regardless of whether they're vulnerable to any of the currently
+assigned CVEs or not.)
 
- A: clearly you should not.
-    a legit op accrues pwn pot as show of good faith...
-     [swelling pool of shadydogecoins for great justice!]
+> Some questions:
+>  1) bash43-027   patch  exported function namespace change,  Florian's mitigation patch that shields the parser from untrusted inputs". This does not solve any specific CVE, but mitigates all CVEs, is this correct?
 
+Yes.  It's the most important one of the recent upstream bash patches.
 
+> 2) Do we need to apply *all* of these individual bash patches (i.e. bash43-025 through bash43-029)? Even  bash43-027 which is not solving any specific CVE?  Or should we apply 27 or all the others?
 
-Q: "Where is it?"
+If you choose to build bash from source (why?) rather than simply use
+your distro's security update, then it's best to apply all of the
+upstream patches (currently, bash43-001 through bash43-029).  bash43-027
+is the most important one, but these patches are intended to be applied
+one after another, so skipping any of the lower-numbered patches is
+unsafe (may result in a patch failing to apply or applying or working
+improperly), and there's no good reason for you to skip any upstream
+patches anyway.
 
- A: ,, hah! almost got me!  .. i know nothing.
-   [ i hear the gruqq awaits to check your opsec at the subscreen? i
-was hallucinating.
-      there were squirrels... ]
+> 3) Do you have a script or summary of all tests in one place like  http://en.wikipedia.org/wiki/Shellshock_%28software_bug%29 or https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck ? Or maybe these are good enough & reliable? 
 
+You only need the one-liner test above.  Running tests for the various
+CVEs is a distraction (it's moderately useful e.g. for a distro vendor,
+to see what non-security bugs may need to be patched, but mostly not for
+an end-user or sysadmin).
 
-
-Q: "Can this veer any further off-topic?"
-
- A: you're no exile from zeroed list, are you  :P
-
-  PS: the sooner someone leaks the bootstrap to hidden fuller
-disclosure the sooner i can take this tangent back apropos *grin*
-
-
-
-Q: "If I show you my digests will you show me yours teehee?"
-
- A: sure; builds ~200-500min - afford your patience accordingly.
-(builders shamelessly solicited)
-
-
-
----
-
-
-> a modest and proportionate proposal,
->
-> fuller-disclosure:...
+Alexander
