@@ -1,20 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/11/1
-Message-ID: <531E5A9E.7050806@redhat.com>
-Date: Tue, 11 Mar 2014 11:36:46 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: Re: Re: possible CVE requests: perltidy insecure temporary file usage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/16
+Message-ID: <3230301C09DEF9499B442BBE162C5E4825759A0A@SESTOEX04.enea.se>
+Date: Sun, 5 Oct 2014 19:48:24 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-> This question might be relatively unimportant because O_EXCL|O_CREAT
-> was only used in the IO::File->new call for choosing a filename.
-> O_EXCL|O_CREAT wasn't used in IO::File->new call that came immediately
-> after the make_temporary_filename call. This, for example, doesn't
-> cover the case of a mode 0777 current working directory.
 
-Thanks for explaining this, I had misunderstood that part.
+> Sona,
+> 
+> Oh, I didn't realize you actually are with a distro vendor:
+> 
+> "Enea Linux is a Yocto-based Linux distribution targeted for communication
+> and networking solutions."
+> 
+> Then you do in fact have a valid reason to test for and patch the individual
+> bugs even when they're no longer security relevant.  My advice is that if you
+> feel you're a "non-expert" in bash bugs, you simply apply all bash upstream's
+> patches, and keep adding them to your package of bash as more upstream
+> patches become available.  You do not need to issue security advisories (or
+> whatever you normally do when fixing security vulnerabilities) each time: it's
+> sufficient to do that once, when you've just included the prefix/suffix patch
+> (bash43-027 or equivalent).  Once you have bash43-027, further patches to
+> bash are no different than e.g. the many patches that are issued for VIM (a
+> project that tends to release hundreds of post-release patches, most of
+> them non-security).
+> 
+> I hope this helps.
+> 
+> Alexander
 
---
-Murray McAllister / Red Hat Security Response Team
+Thanks Alexander, 
+
+Yes you are right, I am one of the distro vendors which is unfortunately not on the closed list so we only found out about this vulnerability when it became public. We are trying to provide correct patches and advisories to our affected customers as soon as possible. We have time pressure on us, we need to act quickly, we appreciate all the help we get from the community. We also try to contribute to Open Embedded(OE) and Yocto.  We have applied all these patches as soon as they became available, tested them and sent updates to our customers.  I am now trying to upstream the patches to OE/Yocto.  I am in the process of validating these fixes for different architectures. I want to be sure about each patch and test case before sending to OE. I think it is good that someone applies these patches into OE/yocto recipes so that all Yocto users can get the corrections automatically instead of having to perform all the manual work themselves.
+
+A while ago I sent a membership request to the closed vendor list and was denied by you & Kurt :) which was understandable since we were not ready at that time. After that we have worked hard to create a security team and build in-house security competence. We have been looking at security tests and tools, define a security incident management processes, create security checklist, we have been tracking all security vulnerabilities. As part of our security process we have insured that our bug tracking system has in-built security so sensitive/embargoed information can be kept confidential.
+
+ For an overview please see our security web page: http://www.enea.com/solutions/Enea-Linux/Security/  and  wiki-vendor list: http://oss-security.openwall.org/wiki/vendors.
+ 
+I have been in the oss-security list for more than one year and have been reading all posts there, I see that you guys are doing an amazing work. I want to take this opportunity and thank you for your hard work.
+ 
+Unfortunately we haven't been able to help this community/list so far since we have been very busy building our own in-house security but hopefully we will get the opportunity in the future. Right now I am trying to bring security to the Yocto community so we can work together and secure Yocto Linux and other open source products used in the Yocto project.
+
+When do you think we (Enea) are ready for membership on the closed vendor list? What else do you think we need to do?
+
+Best Regards
+Sona 
+-----
+ESRT  (Enea Security Response Team) 
+
