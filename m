@@ -1,41 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/19
-Message-ID: <OF8244F721.E59AF2BF-ON87257CEC.005264E6-85257CEC.0053A72F@us.ibm.com>
-Date: Tue, 3 Jun 2014 09:13:41 -0600
-From: Lisa Bradley <lbradley@...ibm.com>
-To: oss-security@...ts.openwall.com
-Subject: Operating system distribution security contact lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/5
+Message-ID: <3230301C09DEF9499B442BBE162C5E48257594A2@SESTOEX04.enea.se>
+Date: Sun, 5 Oct 2014 11:38:51 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
+> I think this is reasonable. I regret that previous versions of my script showed
+> a  more scary output even if people weren't really in any danger because
+> prefixing was already enabled.It was even referenced in a number of
+> inaccurate media reports.
+> 
 
+Thanks a lot Hanno.  
 
-Hi
+Cheers
+/Sona
 
-I would like to request membership to the closed "Operating system
-distribution security contact lists" mailing list on behalf of the IBM
-Product Security Incident Response Team (PSIRT). I am part of the PSIRT
-team where I help manage the receipt, investigation and internal
-coordination of security vulnerability information related to IBM
-offerings. You can read more about PSIRT here:
-http://www-03.ibm.com/security/secure-engineering/process.html.  I am the
-main coordinator of Open Source vulnerabilities that affect IBM products.
-We have products that utilize Open Source software, so being part of this
-list will be beneficial. I do not plan on posting any IBM product specific
-issues as we do that through Security Bulletins (see
-http://www-03.ibm.com/security/secure-engineering/bulletins.html).
-
-You can verify that I am part of the PSIRT team by emailing PSIRT directly
-at IBM PSIRT<slash>Somers<slash>IBM or psirt<at>us<dot>ibm<dot>com.
-
-Here is my Personal PGP key: (See attached file: Lisa
-Bradley_PublicKey.asc)
-
-Thanks for your consideration,
-Lisa
-
-Lisa Marie Wood Bradley, PhD
-Product Security Incident Response Team (PSIRT), SWG Master Inventor
-lbradley<at>us<dot>ibm<dot>com
-Content of type "text/html" skipped
-
-Download attachment "Lisa Bradley_PublicKey.asc" of type "application/octet-stream" (4514 bytes)
