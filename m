@@ -1,123 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/9
-Message-ID: <04fd01cfdd69$57b26f50$07174df0$@jang@lge.com>
-Date: Wed, 1 Oct 2014 20:17:52 +0900
-From: "jihyun.jang" <jihyun.jang@....com>
-To: <oss-security@...ts.openwall.com>
-Subject: RE: binary-patching bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/8
+Message-ID: <20141005140216.GA22646@openwall.com>
+Date: Sun, 5 Oct 2014 18:02:16 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-Could you remove me in this mail list ? oss-security
-
-
------Original Message-----
-From: Solar Designer [mailto:solar@...nwall.com] 
-Sent: Monday, September 29, 2014 5:41 PM
-To: oss-security@...ts.openwall.com
-Cc: Chester Ramey; Antti Louko
-Subject: Re: [oss-security] binary-patching bash
-
-On Mon, Sep 29, 2014 at 04:44:05AM +0400, Solar Designer wrote:
-> I've just tweeted some crazy stuff, and it is even crazier to talk about
-> this on a mailing list focused on Open Source, but ...
+On Sun, Oct 05, 2014 at 04:38:15AM -0700, Jose R R wrote:
+> Hanno,
 > 
-> <solardiz> cp -ip bash{,~} && env - perl -pe 's/\((\) {\0)/\0\1/g' bash >
-bash~ && test `cmp -l bash{,~} | wc -l` = 1 && ln bash{,-} && mv -v bash{~,}
-
-I just did a Google web search for "bash binary patch" and found (on
-page 2 of search results) that this very approach had been suggested
-before, by Antti Louko:
-
-https://www.schneier.com/blog/archives/2014/09/nasty_vulnerabi.html#c6679473
-
-| alo  September 25, 2014 5:41 PM 
-| 
-| It is actually quite easy to binary patch bash. Open bash with eg. emacs
-| and search for string "() {" and replace "(" with a null character. This
-| disables the horrible "function definition from the environment" feature
-| altogether.
-
-https://www.schneier.com/blog/archives/2014/09/nasty_vulnerabi.html#c6679613
-
-| alo  September 27, 2014 7:06 AM 
-| 
-| As I wrote earlier, simple binary patch removes whole "automagic
-| function definitions from the environment". I made a simple Python
-| script to make the patch. It simply finds null-ending string "() {" and
-| writes null over first "(".
-| 
-| The script assumes that the first occurrence is the correct one. At
-| least bash shells I have, that is the only and correct one. This can be
-| also used to disable the feature in already patched vendor supplied bash
-| binaries.
-
-No analysis as to why this patch works was included in the comments,
-though.  Also, patching the first occurrence is riskier than making sure
-there's exactly one occurrence, as my one-liner does.  (For extra
-safety, my one-liner can be further improved to check the actual output
-from "cmp -l" with e.g. "egrep -c ' 50[[:space:]]+0$'" in place of
-"wc -l", but that didn't fit in the tweet and is less portable.)
-
-The Python script is:
-
-http://alo.fi/bash/Patch-bash.py
-
-SHA-256 of Patch-bash.py above as of the time of this writing:
-
-4de321a4fb8c1787f983b754d434c1dde6fe58e3c76f2f6b3b77f10a3d0ea171
-Patch-bash.py
-
-Antti, you could want to enhance the Python script with an "exactly one
-match" check, and post the new SHA-256 in here.  While not tweetable, I
-do see some advantage in this being written in just one language, as
-opposed to my mix of shell and Perl.
-
-I thought of doing the same in Perl or sed alone, and it'd fit in a
-tweet easily (e.g., using "perl -pi.orig -e"), but not with the kind of
-safety I wanted to include - the "exactly one match" check, and creating
-a backup and updating bash atomically ("perl -i" unfortunately writes
-over the file, so it'd bump into "Text file busy" or have bash broken
-for new invocations for a while, and would keep bash broken if patching
-fails).  Hence the mix.
-
-> <solardiz> Previous tweet disables function imports in bash due to
-strncmp(..., 4). Tested on some Linux & FreeBSD, from bash & csh. At your
-own risk.
-> <solardiz> perl -pe 's/\(\) {\0/(){\0\0/g' followed by an "exactly one
-match" check may be safer e.g. for an Internet-wide scan^Wpatch. ;-)
-#shellshock
-> <solardiz> bash 1.14.7 and bash 4.3 (and all inbetween?) use STREQN ("()
-{", string, 4) and define STREQN via strncmp(). Allows portable binary
-patch.
+> < https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck >
 > 
-> The idea is that the length 4 STREQN() aka !strncmp() when invoked on a
-> shorter constant string will require that the entire env var value be
-> that string - that is, either empty (in my first tweet above) or a
-> 3-char string (in my third tweet above).  Neither case leaves any room
-> for an attacker to provide arbitrary input to the parser via the former
-> function imports feature.
+> I've downloaded your bash test script and executed it against a Debian
+> 7 (Wheezy) -patched system (upper image)
 > 
-> This dirty hack may be handy for patching otherwise unmaintained systems.
+> as well as a local Debian Sid (unstable) build of bash where I applied
+> the October 02, 2014, bash43-029 (Bottom image)
 > 
-> The primary risk I see here is that some build of bash might include
-> custom patches where this check had been changed to use something other
-> than (an equivalent of) strncmp().  I am not aware of any such cases.
-> 
-> Here's how to test that the feature is indeed disabled (or at least
-> broken, although that is an insufficient test for security).  Before the
-> binary patch:
-> 
-> $ testfunc() { echo test; }
-> $ export -f testfunc
-> $ bash -c testfunc
-> test
-> 
-> After the binary patch (first tweet):
-> 
-> $ testfunc() { echo test; }
-> $ export -f testfunc
-> $ bash -c testfunc
-> bash: testfunc: command not found
+> < https://pbs.twimg.com/media/BzLfeIICQAA30vb.png:large >
+
+This shows that your two systems are not vulnerable.
+
+A "vulnerable but non-exploitable" condition doesn't actually exist.
+It only means there's a non-security bug that would have been a security
+bug under different circumstances (which is why it got a CVE ID).
+
+> Thus agreeing with Sona:
+
+This shows the widespread confusion.
+
+> "but I think what most (non-expert) people
+> need is an explanation for each CVE, a set of test case from some
+> reliable source (preferably a script that runs all test cases and
+> shows vulnerable/not-vulnerable status) and a set of patches. So that
+> they can apply the patches, run the tests and assert that their
+> systems are not vulnerable to shellshock anymore."
+
+You only need the one-liner test from my reply to Sona:
+
+http://www.openwall.com/lists/oss-security/2014/10/05/7
+
+testfunc='() { echo bad; }' bash -c testfunc
+
+(Besides, tests for some of those CVEs can't be made reliable anyway.)
 
 Alexander
-
