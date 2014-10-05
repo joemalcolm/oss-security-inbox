@@ -1,64 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/6
-Message-ID: <20141106144201.GA565@mails.so.argh.org>
-Date: Thu, 6 Nov 2014 15:47:49 +0100
-From: Andreas Barth <aba@...us.org>
-To: oss-security@...ts.openwall.com
-Cc: 742140@...s.debian.org
-Subject: Re: Bug#742140: libpam-oath: PAM module does not check whether strdup allocations succeeded
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/9
+Message-Id: <E1XamWy-00028z-9B@rmm6prod02.runbox.com>
+Date: Sun, 05 Oct 2014 10:11:24 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Everyone: Thank you VERY MUCH for your timeline corrections and additions on shellshock.
 
-we have the following debian bug report about an security isuse in
-libpam-oath (source oath-toolkit, upstream web page
-http://www.nongnu.org/oath-toolkit/ ).
+My updated document is here:
+  http://www.dwheeler.com/essays/shellshock.html
+The updated timeline is here:
+  http://www.dwheeler.com/essays/shellshock.html#timeline
 
-What is the appropriate process to get an CVE number on it? This issue
-is already public, as it is documented in the debian bug tracking
-system.
+It also includes references to:
+1. the *much* simpler vulnerability test posted by Solar Designer http://seclists.org/oss-sec/2014/q4/114
+2. the more detailed test at https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck
 
-
-Andi
-
-* Eero Häkkinen (eero17@...foot.com) [141106 14:31]:
-> Package: libpam-oath
-> Version: 2.0.2-2
-> Severity: grave
-> Tags: security upstream patch
-> 
-> The OATH Toolkit PAM module does not check whether strdup allocations 
-> succeeded. This may result in null pointer dereference and application 
-> crash.
-> 
-> Depending on the use of the PAM module, this may be remotely exploitable.
-
-> diff --git a/pam_oath/pam_oath.c b/pam_oath/pam_oath.c
-> index 8379358..e2d3363 100644
-> --- a/pam_oath/pam_oath.c
-> +++ b/pam_oath/pam_oath.c
-> @@ -146,6 +146,12 @@ pam_sm_authenticate (pam_handle_t * pamh,
->    char *query_prompt = NULL;
->    char *onlypasswd = strdup ("");	/* empty passwords never match */
->  
-> +  if (!onlypasswd)
-> +    {
-> +      retval = PAM_BUF_ERR;
-> +      goto done;
-> +    }
-> +
->    parse_cfg (flags, argc, argv, &cfg);
->  
->    retval = pam_get_user (pamh, &user, NULL);
-> @@ -265,6 +271,11 @@ pam_sm_authenticate (pam_handle_t * pamh,
->      {
->        free (onlypasswd);
->        onlypasswd = strdup (password);
-> +      if (!onlypasswd)
-> +        {
-> +          retval = PAM_BUF_ERR;
-> +          goto done;
-> +        }
->  
->        /* user entered their system password followed by generated OTP? */
->  
+--- David A. Wheeler
