@@ -1,35 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/16
-Message-ID: <546A249B.5010509@mccme.ru>
-Date: Mon, 17 Nov 2014 19:38:51 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/12
+Message-ID: <CAP-=ew0CMq-eo9uXEWP8whquXwiePruzpKhjj640PyWh8t8CuQ@mail.gmail.com>
+Date: Sun, 5 Oct 2014 11:25:37 -0400
+From: Rob Fuller <jd.mubix@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-17 16:52, Jakub Wilk wrote:
-> * Hanno Böck <hanno@...eck.de>, 2014-11-17, 13:33:
->> I wasn't able to fuzz a crash out of 7z, arj, msgunfmt (gettext),
+Ladies and Gents, I'm the owner of the repo in question and would love
+to fix any misgivings you have with the list. But as you are the
+experts it would be awesome if you could help me understand which
+parts exactly are incorrect, or what you think should be added to help
+people better understand. I'll try to consolidate the statements in
+this thread, but would greatly appreciate any pull requests or issues
+posted to https://github.com/mubix/shellshocker-pocs/issues that could
+help me with that process.
+
+
+Thanks,
+
+--
+Rob Fuller | Mubix
+Certified Checkbox Unchecker
+Room362.com | Hak5.org
+
+
+On Sun, Oct 5, 2014 at 10:55 AM, David A. Wheeler <dwheeler@...eeler.com> wrote:
+> On Sun, 5 Oct 2014 17:44:15 +0400, Solar Designer <solar@...nwall.com> wrote:
+>> .... Most non-expert people only need to know that they need either the
+>> prefix/suffix patch included or function imports disabled, preferably in
+>> a security update from their distro vendor.  This makes the individual
+>> parser bugs, which got CVEs assigned, irrelevant.
+>>
+>> Here's the relevant test:
+>> testfunc='() { echo bad; }' bash -c testfunc
 >
-> https://bugs.debian.org/763820
-> https://bugs.debian.org/769901
+> This is a MUCH better test for most people.  Hanno's test script is great for detail, but most people don't need the detail.
 >
-> I don't remember the exact details, but I'm pretty sure it took at most
-> a few hours of afl-fuzzing to find these crashers.
-
-Everybody wants to play with a shiny new toys but old ones are also good 
-sometimes:
-
-$ printf 'msgid "a"\nmsgstr "b"' > test.po
-$ msgfmt test.po -o test.mo
-$ time zzuf -qcs: msgunfmt test.mo
-zzuf[s=93318,r=0.004]: signal 11 (SIGSEGV)
-
-real	6m30.636s
-user	0m1.212s
-sys	0m14.853s
-
-Actually, afl-fuzz found a crash in it in 1 min 33 sec.
-
--- 
-Alexander Cherepanov
+> I'm putting that email in my timeline at http://www.dwheeler.com/essays/shellshock.html#timeline - this is an EASY test people can directly use.
+>
+> ---  David A. Wheeler
+>
