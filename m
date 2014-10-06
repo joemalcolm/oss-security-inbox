@@ -1,78 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/1
-Message-ID: <20140722013637.GG17656@core.inversepath.com>
-Date: Tue, 22 Jul 2014 03:36:37 +0200
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2014-004] Ansible input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/14
+Message-ID: <54327617.2090606@oracle.com>
+Date: Mon, 06 Oct 2014 11:59:35 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com, Simon McVittie <smcv@...ian.org>
+Subject: Re: vulnerability in rsyslog
 Content-Type: text/plain; charset=utf-8
 
+On 06/10/14 11:46, Rainer Gerhards wrote:
+> - for v7 and v8 no specific patch files exist because we have released new
+> stable versions. Nobody should ever use an old stable version, because the
+> difference to the current stable is missing bugfixes.
 
-#2014-004 Ansible input sanitization errors
+For what it's worth: RHEL6 is on 5.8.10; Rasbian is on 5.8.11 (both with
+patches).
 
-Description:
+jch
 
-The Ansible project is an open source configuration management platform.
-
-The Ansible platform suffers from input sanitization errors that allow
-arbitrary code execution as well as information leak, in case an attacker is
-able to control certain playbook variables.
-
-The first vulnerability involves the escalation of a local permission access
-level into arbitrary code execution. The code execution can be triggered by
-interpolation of file names maliciously crafted as lookup plugin commands, in
-combination with its pipe feature.
-
-The second vulnerability concerns the unsafe parsing of action arguments in
-the face of an attacker controlling variable data (whether fact data,
-with_fileglob data, or other sources), allowing an attacker to supply their
-own options to an action. The impact of this is dependent on the action
-module the attacker targets. For example, an attacker controlling variables
-passed to the copy or template actions would be able to trigger arbitrary
-code execution (in addition to simple information leakage) via the validate
-option's acceptance of arbitrary shell code.
-
-Affected version:
-
-Ansible <= 1.6.6
-
-Fixed version:
-
-Ansible >= 1.6.7
-
-Credit: vulnerability report received from Brian Harring <ferringb AT
-        gmail.com>.
-
-CVE: CVE-2014-4966 (lookup function), CVE-2014-4967 (action arguments)
-
-Timeline:
-
-2014-07-01: vulnerability report received
-2014-07-02: contacted Ansible maintainers
-2014-07-02: disclosure coordinated on 2014-07-17
-2014-07-15: assigned CVEs
-2014-07-06: maintainer provides patch for review
-2014-07-17: maintainer provides updated patch based on reporter's feedback
-2014-07-17: embargo date lifted due to ongoing evaluations of patch
-            effectiveness and additional reporter feedback
-2014-07-17: maintainer provides updated patch which provides solutions for
-            additional findings
-2014-07-18: disclosure date updated to 2014-07-21
-2014-07-18: maintainer provides updated patch for review
-2014-07-20: maintainer provides updated patch indicating all reported
-            issues as closed
-2014-07-21: advisory release
-
-References:
-http://www.ansible.com
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2014-004.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
