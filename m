@@ -1,17 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/16
-Message-ID: <CALx_OUD7VZGQvxbJzaymG6o4sFSEiw0Rq6zybojUGX1idKfNYQ@mail.gmail.com>
-Date: Thu, 9 Oct 2014 01:24:11 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/12
+Message-ID: <543270BD.4010602@debian.org>
+Date: Mon, 06 Oct 2014 11:36:45 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com, rgerhards@...adiscon.com
+Subject: Re: vulnerability in rsyslog
 Content-Type: text/plain; charset=utf-8
 
-> vendors are not liable, not even for the most serious
-> software bugs. so there is no incentive for them to make
-> better software.
+On 06/10/14 08:34, Rainer Gerhards wrote:
+> Sorry, it looks like I don't understand your question.
 
-On the flip side, would it have been better if, say, Chet could be
-sued for millions in damages for the bug in bash?
+I think the clarification Sven is asking for is a statement like this
+(I'm deliberately using imaginary version numbers which do not resemble
+rsyslog's actual 7.x versions, to make it clear that I'm not making a
+statement about this particular rsyslog vuln):
 
-/mz
+"""
+Releases 1.2.x < 1.2.4, 1.3.x < 1.3.7 and 1.4.x < 1.4.1 are vulnerable
+unless the vendor-supplied patch is applied. Releases < 1.2, >= 1.2.4,
+>= 1.3.7 and >= 1.4.1 are not vulnerable.
+"""
+
+In most projects' version numbering practices:
+
+* a version (release) is a fixed point that can never change (so if
+  1.2.3 is vulnerable to CVE-1066-1234 it will always be vulnerable
+  to CVE-1066-1234)
+
+* a stable release series or stable branch can have later versions that
+  are intended to supersede an earlier version completely, while having
+  minimal changes to fix serious bugs (so the upstream project can
+  address CVE-1066-1234 by releasing 1.2.3.1 or 1.2.4)
+
+* alternatively, the upstream project can release recommended patches
+  to be applied by sysadmins or vendors, which might be labelled
+  "1.2.3 patch 1" or something if the project is particularly formal,
+  or might just be identified by git/svn/etc. commit ID
+
+* even if 1.2.3 is vulnerable and always will be, a downstream vendor
+  like Debian or Red Hat might release a derived version like
+  1.2.3-4+deb7u5 which incorporates the recommended patch from the
+  upstream project, or a patch from the vendor or a third party, and so
+  is not vulnerable
+
+Regards,
+    S
+
