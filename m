@@ -1,42 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/8
-Message-ID: <op.xi85tggsaaa6dx@otcain>
-Date: Sat, 19 Jul 2014 19:09:06 +0300
-From: "Dolev Farhi" <dolevf@...oo.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/39
+Message-ID: <1412634940.4672.0@ssh>
+Date: Mon, 06 Oct 2014 23:35:40 +0100
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE's for intersection vulnerabilities
+Subject: Re: OpenSSL RSA 1024 bits implementation broken?
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 19 Jul 2014 14:32:50 +0300, intrigeri <intrigeri@...m.org> wrote:
 
-> Hi,
->
-> Kurt Seifried wrote (19 Jul 2014 00:33:38 GMT) :
->> So long story short: we have a program called sosreport that is used
->> to send system information back to Red Hat so we can help customers
->> troubleshoot their problems. It would appear we have three main
->> classes of (potential) security vulnerabilities:
->
-> The severity of these potential vulnerabilities may partly depend on
-> how well sosreport authenticates the server it sends information to.
->
-> Cheers,
-> --
-> intrigeri
+  Looks like this was admitted as a hoax:
 
+    https://twitter.com/camicelli/status/519231503260467200
+    https://twitter.com/camicelli/status/519231538589085696
 
-Just wanna mention that sosreport is used by many companies other than red  
-hat (e.g. a company may ask for an sosreport from their customers), i know  
-that we use it to get environment data from customers.
+    https://twitter.com/julianor/status/519230526029570048
 
+  Intent seems to have been to build a list of all 512 primes..
 
+Steve
 -- 
-
-
-
-/df
-
----
-This email is free from viruses and malware because avast! Antivirus protection is active.
-http://www.avast.com
+http://www.steve.org.uk/
 
