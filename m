@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/27
-Message-ID: <CAFJ0LnEmzwJeKJgKbJsV9Fx_t8N4U-ep+tHWJQWcX=BqVFvw1A@mail.gmail.com>
-Date: Wed, 9 Apr 2014 13:01:54 -0700
-From: Nick Kralevich <nnk@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/36
+Message-ID: <543314F7.4040002@edwardprevost.info>
+Date: Mon, 06 Oct 2014 15:17:27 -0700
+From: Ed Prevost <me@...ardprevost.info>
 To: oss-security@...ts.openwall.com
-Cc: Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: Heartbleed, clients and Android
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 9, 2014 at 3:21 AM, Hanno Böck <hanno@...eck.de> wrote:
-
-> > > Because the latter
-> > > would include Android. We are all pretty aware that android updates
-> > > are in large parts nonexistent.
-> >
-> > I don't have much clue about Android, but I think I heard heartbeat
-> > was disabled in Android, but I don't have a link right now. Also, I'm
-> > unsure what actually use libssl in Android and what uses NSS.
+On 10/6/2014 3:12 PM, Larry W. Cashdollar wrote:
+> I thought it was https://twitter.com/ErrataRob
 >
-> Seems Android disabled Heartbeat in 2012:
+> On Oct 6, 2014, at 5:04 PM, Michal Zalewski <lcamtuf@...edump.cx> wrote:
 >
-> https://android.googlesource.com/platform/external/openssl.git/+/android-4.1.2_r1
+>> I don't think it happened on Twitter - using advanced search with date
+>> ranges, I don't see any mentions that would predate this article,
+>> which already seems to be using the term:
+>>
+>> http://www.csoonline.com/article/2687265/application-security/remote-exploit-in-bash-cve-2014-6271.html
+>>
+>> It's odd that an article posted at 8 AM on Sept 24 would have any idea
+>> of how the bug is already being called by the security community,
+>> especially ahead of any Twitter buzz. But both Stephane and Florian
+>> implied that some of the pre-notified parties apparently started
+>> leaking details to the press and were getting ready to make a splash
+>> the moment it goes public, so maybe that's the explanation.
+>>
+>> /mz
 >
-> Still leaves some android versions as potentially vulnerable.
 >
-
-All versions of Android are immune to CVE-2014-0160, with the limited
-exception of Android 4.1.1. See also:
-http://googleonlinesecurity.blogspot.com/2014/04/google-services-updated-to-address.html
-
+I'm still calling it BASHINGA! :0)
