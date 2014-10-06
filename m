@@ -1,39 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/10
-Message-ID: <20141006090834.GD24136@zoho.com>
-Date: Mon, 6 Oct 2014 09:08:34 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/28
+Message-ID: <20141006184705.GA25256@zoho.com>
+Date: Mon, 6 Oct 2014 18:47:05 +0000
 From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request(s): Getmail 4
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request(s): Getmail 4
 Content-Type: text/plain; charset=utf-8
 
-Hello.
+On Mon, Oct 06, 2014 at 11:45:27AM -0400, cve-assign@...re.org wrote:
+> > http://pyropus.ca/software/getmail/CHANGELOG
+>
+> > Getmail 4.45.0 added IMAP4-over-SSL certificate hostname validation.
+> > POP3-over-SSL remained vulnerable to MITM attacks.
+>
+> The CHANGELOG says:
+>
+>   Version 4.46.0
+>
+>       -add missing support for SSL certificate checking in POP3 which
+>       broke POP retrieval in v4.45.0.  Requires Python 2.6 or newer.
+>       Thanks: "mancha".
+>
+> This depends on the interpretation of "broke POP retrieval."
+>
+> Do you mean that, in version 4.45.0, the client sent credentials over
+> a POP3-over-SSL connection, and actual POP3 mail retrieval failed
+> after credentials had already been sent? That behavior could have a
+> CVE ID.
+>
+> Or do you mean that, in version 4.45.0, the POP3-over-SSL connection
+> was never fully established, and the client would not have sent
+> credentials? In other words, a MITM attack could succeed but there
+> would be no security impact? That behavior would not have a CVE ID.
 
-Getmail 4.0.0 introduced support for secure mail retrieval
-(IMAP4-over-SSL and POP3-over-SSL). However, it lacked certificate
-verification which rendered SSL/TLS transport entirely vulnerable to
-MITM attacks. [*]
+It's closer to the 2nd than the first. POP3-over-SSL stopped working
+altogether and credentials were not sent over the wire:
 
-Getmail 4.44.0 added IMAP4-over-SSL certificate verification against
-trusted root stores and/or SHA-256 digests. However, it lacked
-certificate hostname validation such that adversaries in possesion of
-arbitrary certificates signed by trusted root certificates could still
-level MITM attacks. POP3-over-SSL remained vulnerable to MITM attacks.
-[*]
+Getmail 4.45.0:
 
-Getmail 4.45.0 added IMAP4-over-SSL certificate hostname validation.
-POP3-over-SSL remained vulnerable to MITM attacks. [*]
+  *Includes support for certificate hostname validation to be used 
+   with IMAP4-over-SSL only. [1]
 
-Getmail 4.46.0 added POP3-over-SSL certificate verification against
-trusted root stores and/or SHA-256 digests as well as certificate
-hostname validation. [*]
+  *A regression was introduced because ssl_match_hostname() calls
+   (for immediate use with IMAP4-over-SSL and future use with
+   POP3-over-SSL) and related code were prematurely added to the
+   POP3-over-SSL retrievers. [2]
 
-Please allocate CVE ID(s) for the above issues, as needed.
+Getmail 4.46.0:
 
-Thanks.
+  *Includes POP3-over-SSL support for: a) certificate verification
+   against a root store; b) certificate validation against an anchor
+   fingerprint; c) certificate hostname match validation. [3]
+
+In sum, the regression in 4.45.0 has no security impact and is
+orthogonal to the CVE request. Hope this clarifies (below matrix might
+help further).
 
 --mancha
 
-[*] http://pyropus.ca/software/getmail/CHANGELOG
+[1] http://article.gmane.org/gmane.mail.getmail.user/5124
+[2] http://article.gmane.org/gmane.mail.getmail.user/5150
+[3] http://article.gmane.org/gmane.mail.getmail.user/5147
+
+====
+
+                      SSL Support Matrix
+
+Version       IMAP4-over-SSL             POP3-over-SSL
+
+4.0.0-4.43.0  No cert validation         No cert validation
+4.44.0        Partial cert validation(a) No cert validation
+4.45.0        Full cert validation       No cert validation(b)
+4.46.0        Full cert validation       Full cert validation
+
+(a) lacking certificate hostname checks
+(b) still lacking cert validation infrastructure though a
+    regression broke these retrievers entirely
 
 Content of type "application/pgp-signature" skipped
