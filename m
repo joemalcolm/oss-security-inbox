@@ -1,102 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/09/1
-Message-Id: <201403090316.s293G8gL026877@linus.mitre.org>
-Date: Sat, 8 Mar 2014 22:16:08 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 740670@...s.debian.org
-Subject: Re: possible CVE requests: perltidy insecure temporary file usage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/1
+Message-ID: <5431FD11.4040908@redhat.com>
+Date: Sun, 05 Oct 2014 20:23:13 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-Use CVE-2014-2277 for the issue in which, on all platforms, the
-filename string returned by make_temporary_filename might be used for
-an attacker's symlink before that filename is used by the perltidy
-code to write lines into a file.
-
-> $^O =~ /win32|dos/i || $^O eq 'VMS' || $^O eq 'MacOs'
-> Would this be a separate issue on those platforms
-
-We typically don't assign separate CVE IDs in cases where, for the
-same version of the software, the vulnerability details are similar
-but non-identical on different operating systems.
 
 
-> Regarding the use of tmpnam, is it safe/not an issue if you open the 
-> resulting filename with O_CREAT and O_EXCL (as perltidy does)?
+On 05/10/14 01:48 PM, Sona Sarmadi wrote:
+> A while ago I sent a membership request to the closed vendor list and was denied by you & Kurt :) which was understandable since we were not ready at that time. After that we have worked hard to create a security team and build in-house security competence. We have been looking at security tests and tools, define a security incident management processes, create security checklist, we have been tracking all security vulnerabilities. As part of our security process we have insured that our bug tracking system has in-built security so sensitive/embargoed information can be kept confidential.
 
-Possibly it depends on the version of Perl or the operating system's
-libraries. Maybe someone else knows the precise details. The
-http://archives.neohapsis.com/archives/bugtraq/2000-02/0018.html post
-claims 'because a symlink can point to nowhere, the O_EXCL|O_CREAT
-test does not suffice: you might still end up making a "new" file,
-even one that you own, that's somewhere else than you think it is.' On
-at least some recent Linux platforms, that behavior apparently does
-not occur. Specifically, if the first argument to IO::File->new is a
-symlink, and the target of the symlink is a nonexistent file like
-/home/victim/.forward, and O_EXCL|O_CREAT is used, then
-/home/victim/.forward is not created.
+To be clear I'm not a list admin or in control of it in any way shape or
+form (at least that I'm aware of, Solar if I am in charge you should
+probably let me know ;). I simply voiced concerns (e.g. lack of security
+advisories/etc.
 
-This question might be relatively unimportant because O_EXCL|O_CREAT
-was only used in the IO::File->new call for choosing a filename.
-O_EXCL|O_CREAT wasn't used in IO::File->new call that came immediately
-after the make_temporary_filename call. This, for example, doesn't
-cover the case of a mode 0777 current working directory.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> 1) perltidy creating a temporary file with default permissions instead of 0600
 
-We're not sure that this should be a vulnerability with a CVE
-assignment, even though it is a violation of development standards in
-some parts of the community. For example:
-
-  http://cwe.mitre.org/data/definitions/378.html
-
-says "Potential Mitigations ... Temporary files should be writable and
-readable only by the process which own the file."
-
-(Obviously, "own" is a typo of "owns" there. MITRE will probably fix
-that later.)
-
-It looks like the most common use case is for perltidy to read a .pl
-file in the current working directory, and then create a
-corresponding .pl.tdy output file in the current working directory,
-with the default permissions. In this specific scenario, using default
-permissions for the temporary file in the current working directory
-might not be considered a security problem. Apparently there are other
-use cases in which an attacker might have read access to the temporary
-file but lack read access to the .tdy file. It's not clear whether
-addressing that had been a perltidy design goal.
-
-(The general counterargument to the "always mode 600" principle is
-that it had been historically common to have a multi-person
-development effort with a strict policy that all files must always be
-group-readable. If something goes wrong when one developer is working,
-and it's the responsibility of a second developer to clean up at a
-time when the first developer isn't available, then one might really
-want all relevant information -- including any possible left-over
-temporary files -- to be accessible to the second developer.)
-
-> Is the POSIX module a core part of Perl, as in, the "return $name" part 
-> will never be called?
-
-It's conceivable that that depends on the version of Perl, but in any
-case the answer doesn't affect how many CVE IDs are needed.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTG9yVAAoJEKllVAevmvms884IALYMJ4O0dcep0uIKRR84BIRZ
-153u8FdoqUOSYQqQyowraXdpHYgSqkXjv2Rr/ATCIx//EehZU4nTRyBJ9Y5VtwCF
-pncZZBz4cOzoKv2Q+7BjsIuU8PDz8wRR+1kXr1/lnyvtMRqUO49y2pzGbdSDGZs6
-+TZ5/KjBiDMHGFUOV+wd9sWE1S4dV9h3CiipyL8WxAaaeAl95zZbEfSSDcXoWqI8
-2CkXB03o4lUSvjvDkt07+zZn4R9a0BuFIM626spRlMO9H132KhCpF2Hc73px4sWl
-xGjYfN1IE53JnhrMgKrzwcSzQXBXiCEPk+gMdTjqR+frcF4+RC29fwnjp1g7Afo=
-=EM42
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
