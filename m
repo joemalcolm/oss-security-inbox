@@ -1,21 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/3
-Message-ID: <54741669.5030909@internot.info>
-Date: Tue, 25 Nov 2014 16:40:57 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Graphviz format string vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/8
+Message-ID: <20141006080113.GA24136@zoho.com>
+Date: Mon, 6 Oct 2014 08:02:08 +0000
+From: mancha <mancha1@...o.com>
+To: Rainer Gerhards <rgerhards@...adiscon.com>
+Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, joey@...odrom.org
+Subject: Re: sysklogd vulnerability (CVE-2014-3634)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+By way of update, the sysklogd maintainer (Joey) has been in touch with
+me and let me know sysklogd 1.5.1 which fixes the PRI/OOB issue is
+forthcoming.
 
-A format string vulnerability has been found in `graphviz'.
-The fix commit is here:
-https://github.com/ellson/graphviz/commit/99eda421f7ddc27b14e4ac1d2126e5fe41719081
+On Sun, Oct 05, 2014 at 05:01:48PM +0200, Rainer Gerhards wrote:
+> I have had a pretty deep look at it. Bottom line is that I couldn't
+> reproduce it manually either. So I checked the test environment. As it
+> turns out, the root cause for my ability to crash was that the test
+> scripts did not setup things properly for v3 ... some v5 binary
+> modules kept be used. Digging deeper in the old code, a crash seems as
+> unlikely as said in the initial report. The reason is that some
+> masking happens, which in turn prevents most problems with the
+> negative PRIs. I'll update the advisory soon. Sorry for the noise and
+> thanks for keeping this straight.
+> 
+> Rainer
 
-Could I get a CVE-ID for this?
+Many thanks Rainer for re-doing your tests on rsyslog v3. They're
+consistent with my own findings on sysklogd as well as my limited
+testing on rsyslog 3.22.3 (after my brief $ModLoad learning curve).
 
+--mancha
 
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
+Content of type "application/pgp-signature" skipped
