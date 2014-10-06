@@ -1,55 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/16
-Message-ID: <20140409095458.GB5507@scapa.corsac.net>
-Date: Wed, 9 Apr 2014 11:54:58 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: Hanno Böck <hanno@...eck.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Heartbleed, clients and Android
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/34
+Message-ID: <CALx_OUDFPL69_96Rb0Z2O81pLngfUDmCzYd9htoKWaZN5-zzmg@mail.gmail.com>
+Date: Mon, 6 Oct 2014 14:04:42 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 09, 2014 at 11:30:29AM +0200, Hanno Böck wrote:
-> Hi,
-> 
-> I was asking myself some questions and I think others with more insight
-> into what heartbleed means may be able to answer quickly:
-> How does this affect client software? The PoCs we see send some
-> malicous payload to servers and get some memory dumps. That doesn't
-> affect clients?
+I don't think it happened on Twitter - using advanced search with date
+ranges, I don't see any mentions that would predate this article,
+which already seems to be using the term:
 
-Yes, it does affect clients.
-> 
-> Is this vulnerability exploitable by a Man-in-the-Middle in any way?
-> Can someone send a package with a wrong authentication block inside an
-> existing connection and therefore dump any memory from a client?
+http://www.csoonline.com/article/2687265/application-security/remote-exploit-in-bash-cve-2014-6271.html
 
-Yeah, anyone connecting to any TLS server using a libssl client is
-affected. Most web browsers actually don't use OpenSSL but rather nss,
-but other clients (like, for example, svn/git/etc., wget/curl etc.) are
-affected if they are linked against OpenSSL.
+It's odd that an article posted at 8 AM on Sept 24 would have any idea
+of how the bug is already being called by the security community,
+especially ahead of any Twitter buzz. But both Stephane and Florian
+implied that some of the pre-notified parties apparently started
+leaking details to the press and were getting ready to make a splash
+the moment it goes public, so maybe that's the explanation.
 
-> I think it's a very obvious question to be asked if we need to push all
-> server users of openssl or ALL users of openssl.
-
-All users, obviously.
-
-People insist on server because that's the urgent problem. If NSS was
-vulnerable, it'd be really bad because it's pretty easy to trick any
-browser to open a connection to a random TLS website which would try to
-steal stuff from the browser memory (although sandboxing might help).
-For libssl clients though, I'm not sure it's that easy, but it's still
-possible.
-
-> Because the latter
-> would include Android. We are all pretty aware that android updates are
-> in large parts nonexistent.
-
-I don't have much clue about Android, but I think I heard heartbeat was
-disabled in Android, but I don't have a link right now. Also, I'm unsure
-what actually use libssl in Android and what uses NSS.
-
-Regards,
--- 
-Yves-Alexis Perez
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+/mz
