@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/19
-Message-ID: <53ADE628.8040403@zytor.com>
-Date: Fri, 27 Jun 2014 14:46:16 -0700
-From: "H. Peter Anvin" <hpa@...or.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/16
+Message-ID: <543294EF.4070107@enovance.com>
+Date: Mon, 06 Oct 2014 09:11:11 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-CC: Yves-Alexis Perez <corsac@...ian.org>
-Subject: Re: LMS-2014-06-16-1: Oberhumer LZO
+CC: cve-assign@...re.org
+Subject: Re: Re: CVE request for vulnerability in OpenStack Cinder, Nova and Trove
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 29/09/14 10:39 PM, cve-assign@...re.org wrote:
+> Is this a remaining vulnerability in Cinder 2013.2.4 and
+> possibly other products? If so, then we will assign another CVE ID.
 
-On 06/26/2014 02:21 PM, Yves-Alexis Perez wrote:
-> - syslinux [5] seems to embeds lzo but I'm unsure if the vulnerable
-> code is really present, I can't find lzo1x_decompress_safe() code
+The ssh_execute method is indeed prone to password leak if:
+- passwords are used on the command line
+- execution fail
+- calling code catch and log the exception
 
-For the record, I just upgraded Syslinux to LZO 2.07.  The only code
-that ends up in the Syslinux build at all changed only in comments and
-in #if'd out code.  The only use of LZO is in the Syslinux core, which
-uses the assembly LZO implementation, which seems to have been unaffected.
+So far investigations shows that ssh_execute usage does not contain any
+passwords but we can't guarantee Cinder and Nova 2013.2.4 releases are
+not affected as the vulnerable code is still there so it may be safer to
+considered these releases affected.
 
-Syslinux does not use LZO on arbitrary data.
+Apologizes for the confusion,
 
-	-hpa
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJTreYYAAoJEL2gYIVJO6zkF90P/RTyWaLtMMe24o1MfjgHOKsT
-bIypKYFGN3y0eU0I0ciMOiyuhLSLN7en/y8M558RjoKStriJ6yfQLiMJF4cxGBPJ
-J9GYoX9xT6/luBqefssCPB4uFeD+h/qYOlHxykq81I+c0bWsaunkHBAEmXlSihXe
-/Fu2dzDEm2bP7kYKx//t4tS2blU9papnFxMsQfc2NZV/U3xenhbHigOaibl5M4lv
-6zpH/J6qT5kB5PdAWJBr9OqU6DrcSdUXYIC5YObUHtdoCiUeTjVJinQPoeghvhlY
-VCj3Q/t7/w2E7r5aQ8IHBan58vIK173F6+cOwdLQtfkQZT1Fqm71sXOx81dT/LcQ
-FYiofMtCyMar4d0JWKVlXzHy7U5sZ9/WmFJX6l2nyd56TQsCBBFJjml5n9O/KNqb
-AEJgsqIaTUTjzobECuQdfS8B/8PwUDcVq1uga3r8HawXeWa4NnBP0nFgLY+gD0b+
-HD32+A80vc6YurQMvBVBlPwbFfbhcRsNLksKJdnOcE+hE9CgwsWsvSpS4B7NWsq4
-QOSOgPkzjpztHJKV5TLuN9x02Cn1uRMFDL1Dv/v0ql5qlLDF6YrrLb7rQPoveDSx
-8nvslwm3aHk1z2YOG9A2YQnI6qV4RCNkh3Y1wPz5jiqq5sadRKxg03xJQASFPHVM
-6tSmhFkxfgIE7MFttcxV
-=AiFW
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
