@@ -1,34 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/11
-Message-Id: <201402121602.s1CG2PjU013315@linus.mitre.org>
-Date: Wed, 12 Feb 2014 11:02:25 -0500 (EST)
-From: cve-assign@...re.org
-To: clemens@...oworld.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: cinnamon-screensaver lock bypass (tested on Fedora 20)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/9
+Message-ID: <CAM12Q5TLgvvGkzF-EMOsDD=wn742s-rQSmx-eeRMuuv+m4dWAw@mail.gmail.com>
+Date: Mon, 6 Oct 2014 01:06:23 -0700
+From: Jose R R <jose.r.r@...ztli.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> This shows that your two systems are not vulnerable.
 
-> It is possible to circumvent the screen lock on a cinnamon session under Fedora
-> 20 using the 'Menu' key
+> A "vulnerable but non-exploitable" condition doesn't actually exist.
+> It only means there's a non-security bug that would have been a security
+> bug under different circumstances (which is why it got a CVE ID).
 
-Use CVE-2014-1949.
+Indeed, Solar, input appreciated.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+*all* the bash patches, including the latest ones (bash43-030 released
+on Oct. 05, 2014, in this particular instance <
+http://ftp.gnu.org/gnu/bash/bash-4.3-patches/ >) are included in a:
 
-iQEcBAEBAgAGBQJS+5q1AAoJEKllVAevmvmsVGUIALdtgDq8spjuu2nLMXsiGFqE
-G5fAZ0LQLQq2iRr+t1z23tmrp8L3qdAVD0cMp1AIdgfQ7PlNckV77OgP0UmTnqzn
-0VmmW9rB0h0gGuuXPzDh5v0wmaeL75Osqtjyg4RRSt33dzv25JiqpSF6dspZ2LA1
-uNeZRa0fFZLnOwTI2cQBe4CaZDX+/jEuXWQVYBe8rrNakqLwqsjKmUf8YKiIL/Q8
-SjbmjoGjgUPhQt9y2UfV3n+RaOnrdz1FDbnYK9rwa1vv/M6zELHyUKP5kRszl0zH
-eFHTHKC8deRchSVHpLBtk3Lhzfw2hRLALKElP/uLum90tuo6o02dRsnG7j56b/A=
-=EpAV
------END PGP SIGNATURE-----
+git clone git://git.savannah.gnu.org/bash.git
+
+And then proceeding to build bash locally...
+
+>> Thus agreeing with Sona:
+
+> This shows the widespread confusion.
+
+There is no more confusion. Snapshot below shows local build of bash
+with your one-liner test at the end:
+
+https://pbs.twimg.com/media/BzP42tHCcAEEvHP.png:large
+
+On Sun, Oct 5, 2014 at 7:02 AM, Solar Designer <solar@...nwall.com> wrote:
+> On Sun, Oct 05, 2014 at 04:38:15AM -0700, Jose R R wrote:
+>> Hanno,
+>>
+>> < https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck >
+>>
+>> I've downloaded your bash test script and executed it against a Debian
+>> 7 (Wheezy) -patched system (upper image)
+>>
+>> as well as a local Debian Sid (unstable) build of bash where I applied
+>> the October 02, 2014, bash43-029 (Bottom image)
+>>
+>> < https://pbs.twimg.com/media/BzLfeIICQAA30vb.png:large >
+>
+> This shows that your two systems are not vulnerable.
+>
+> A "vulnerable but non-exploitable" condition doesn't actually exist.
+> It only means there's a non-security bug that would have been a security
+> bug under different circumstances (which is why it got a CVE ID).
+>
+>> Thus agreeing with Sona:
+>
+> This shows the widespread confusion.
+>
+>> "but I think what most (non-expert) people
+>> need is an explanation for each CVE, a set of test case from some
+>> reliable source (preferably a script that runs all test cases and
+>> shows vulnerable/not-vulnerable status) and a set of patches. So that
+>> they can apply the patches, run the tests and assert that their
+>> systems are not vulnerable to shellshock anymore."
+>
+> You only need the one-liner test from my reply to Sona:
+>
+> http://www.openwall.com/lists/oss-security/2014/10/05/7
+>
+> testfunc='() { echo bad; }' bash -c testfunc
+>
+> (Besides, tests for some of those CVEs can't be made reliable anyway.)
+>
+> Alexander
+
+Best Professional Regards
+
+-- 
+Jose R R
+http://www.metztli-it.com
+---------------------------------------------------------------------------------------------
+NEW Apache OpenOffice 4.1.1! Download for GNU/Linux, Mac OS, Windows.
+---------------------------------------------------------------------------------------------
+Daylight Saving Time in USA & Canada ends: Sunday, November 02, 2014
+---------------------------------------------------------------------------------------------
