@@ -1,181 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/22/14
-Message-ID: <CAFkuX4tpmEfSo8q1Usj4SHrpCXASFVht_zyj=U_rkG=H++hY-g@mail.gmail.com>
-Date: Tue, 22 Jul 2014 16:27:16 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: LMS-2014-06-16-3: Libav LZO
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/11
+Message-ID: <543261CF.6040806@reactos.org>
+Date: Mon, 06 Oct 2014 11:33:03 +0200
+From: Pierre Schweitzer <pierre@...ctos.org>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: OpenSSL RSA 1024 bits implementation broken?
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-For fun, Lab Mouse has released a web application that allows users to
-encode their own videos with an LZO exploit payload. Upload the video file
-and shellcode of your choice to the app, choose the target, and it will
-auto-encode your shellcode into the exploit video. Videos are then
-presented for download within a zip file.
+Dear all,
 
-Source code for the payload generator and the ROP chains is included on the
-site.
+There appear to have some noise on the Internet regarding a possible
+flaw in the 1024 bits RSA implementation in OpenSSL which would allow
+bruteforcing the private key in ~20 minutes.
 
-https://lzo.securitymouse.com/lzo
+Does anyone has any information about this? The associated pastebin to
+the said information is: http://pastebin.com/D8itq6Ff
+Is this serious?
 
+Cheers,
+- -- 
+Pierre Schweitzer <pierre@...ctos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Don A. Bailey
-Founder / CEO
-Lab Mouse Security
-@InfoSecMouse <https://twitter.com/InfoSecMouse>
-https://www.securitymouse.com/
-
-
-
-On Thu, Jun 26, 2014 at 12:54 PM, Don A. Bailey <donb@...uritymouse.com>
-wrote:
-
-> Hello All,
->
-> A vulnerability has been identified in the Libav LZO implementation.
-> Please find the bug report attached inline.
->
-> Best,
-> Don A. Bailey
-> Founder / CEO
-> Lab Mouse Security
-> https://www.securitymouse.com/
->
-> #############################################################################
-> #
-> # Lab Mouse Security Report
-> # LMS-2014-06-16-3
-> #
->
-> Report ID: LMS-2014-06-16-3
->
-> CVE ID: CVE-2014-4609
->
-> Researcher Name: Don A. Bailey
-> Researcher Organization: Lab Mouse Security
-> Researcher Email: donb at securitymouse.com
-> Researcher Website: www.securitymouse.com
->
-> Vulnerability Status: Patched
-> Vulnerability Embargo: Broken
->
-> Vulnerability Class: Integer Overflow
-> Vulnerability Effect: Memory Corruption
-> Vulnerability Impact: DoS, OOW, RCE
-> Vulnerability DoS Practicality: Practical
-> Vulnerability OOW Practicality: Practical
-> Vulnerability RCE Practicality: Practical
-> Vulnerability Criticality: Critical
->
-> Vulnerability Scope:
-> All versions of libav are affected.
-> All architectures supported by libav are affected.
->
-> Vulnerability Tested:
-> Yes. RCE proven on 10 separate platforms including but not limited to:
->  - Ubuntu and Mint x86, x86_64
->  - Debian x86_64, x86
->  - FreeBSD x86_64, x86
->
-> Functions Affected:
-> 	libavutil/lzo.c:av_lzo1x_decode
->
-> Criticality Reasoning
-> ---------------------
-> This vulnerability can be triggered through a compression payload embedded
-> in a video file. Due to the nature of this memory corruption vulnerability,
-> exploitation of the bug can be seamless and work in the background during
-> normal video playback. A user will never notice that playback has been
-> compromised.
->
-> Testing was successfully performed on all variants of mplayer2, including
-> gecko-mplayer2 embedded in Firefox, Iceweasel, Opera, Chromium, and Konqueror
-> on Linux.
->
-> Ease of compromise is partly due to libav's use of tmalloc, which places
-> a header containing function pointers at the beginning of allocated heap
-> regions. Exploitation of the compression vulnerability overwrites these
-> function pointers, which then point to ROP payloads that allow for the
-> bypassing of ASLR and NX security enhancements.
->
-> Vulnerability Description
-> -------------------------
-> An integer overflow can occur when processing any variant of a "literal run"
-> in the av_lzo1x_decode function. Each of these three locations is
-> subject to an integer overflow when processing zero bytes. The following code
-> depicts how the size of the literal array is generated:
-> static inline int get_len(LZOContext *c, int x, int mask)
-> {
->     int cnt = x & mask;
->     if (!cnt) {
->         while (!(x = get_byte(c)))
->             cnt += 255;
->         cnt += mask + x;
->     }
->     return cnt;
-> }
->
-> As long as a zero byte (0x00) is encountered, the variable 'cnt' will be
-> incremented by 255. Using approximately sixteen megabytes of zeros, 'cnt' will
-> accumulate to a maximum unsigned integer value in the 32bit variable.
->
-> Therefore, get_len() will return a negative 'cnt' value to its caller. The
-> checks in copy_backptr() will fail to properly test for negative 'cnt' values
-> resulting in the following test never catching an error:
->     if (cnt > c->out_end - dst) {
->         cnt       = FFMAX(c->out_end - dst, 0);
->         c->error |= AV_LZO_OUTPUT_FULL;
->     }
->
-> av_memcpy_backptr does not check for negative 'cnt' values, which results in
-> a copy of one byte from 'src' to 'dst', evading a crash do to excessive
-> copying.
->
-> Finally, the copy function will never crash by calling memcpy with a negative
-> value because it only calls memcpy when the signed 'cnt' variable is greater
-> than zero. However, the pointers 'c->in' and 'c->out' will still be adjusted
-> by a negative value, causing 'c->out' to point to an area of memory prior to
-> the actual output buffer. This is how Lab Mouse Security was able to
-> instrument this vulnerability to overwrite tmalloc function pointers with
-> ROP payloads.
->
-> It is notable that since the count value 'cnt' is passed around as an 'int',
-> it will always be interpreted as a signed 32bit integer regardless of the
-> underlying architecture. This means that this vulnerability affects all
-> platforms and architectures regardless of whether they are 32bit or 64bit
-> in nature.
->
-> Vulnerability Resolution
-> ------------------------
-> Resolving this issue requires several separate fixes.
->
-> 1) lzo.c:get_len()
-> The return value of get_len must be evaluated for negative count values.
-> A negative value should never be allowed in this context. Always error
-> when a negative or zero value is returned.
->
-> 2) lzo.c:copy()
-> A negative value should not be allowed as a parameter to copy(). In
-> addition, the pointers 'c->in' and 'c->out' should be tested after they
-> are changed by the count value. Verify that the new offset does not land
-> outside of the bounds of the 'out' buffer.
->
-> 3) lzo:copy_backptr()
-> Do not allow a negative 'cnt' value to be passed to copy_backptr. Augment
-> the test cases to ensure that a negative value cannot be used to adjust
-> the 'c->out' pointer.
->
-> 4) libavutil/mem.c:av_memcpy_backptr
-> Return an error value.
-> Do not allow a negative 'cnt' or 'back' value to be used.
->
-> 5) Always use a size_t for any size variable.
-> Size variables should always represent the underlying architecture's largest
-> natural unsigned integer. Use size_t, or a variant, to automatically scale
-> the value to the underlying architecture.
->
->
->
-
+iQIcBAEBAgAGBQJUMmHPAAoJEHVFVWw9WFsLrg0P/1ka7bz16HGh/4GKU6DzY3WM
+Y+bDARcGPo0aEIL7pDqNmjbhaTQnnVYNHFoEhYzxmvgGnMPeMCtOOp+m/esviuBD
+3IdGIkWNE/i6tDnBQzMyW97Da3QlGedcyverTI5DJ0HhDq7vONR2wpEsEWGhRelI
+pZxDJbL50SFQ9ajoTTcBZZTOxI5Iq5eDBdGlwHbNUVDNH+9q556e26PEZdNWkpUM
+2qixEsVdO036Dva3o75wLFkLkgV9xrnBSeaMEdcnOW0tCkxsob1LTvIrjO6eAwDJ
+TEUn2SOHbdSwlSyNbzUVAJPlcOCv+hBrAGOQq+u0KiyLoYk2qbaaY8FkDKiHnb4R
+kmlIWz2D95DJwsq2QLGeFi6jIM2aDH6/ZtILKUvgbuzrgYD8i44jzEhgQ7TDLb7V
+NP0HUNDYlbG+RUbsVPjnZHF63tXcMfOCurb8m+vPouOIwiowyXoOZ06Ew7FuYPCD
+wlwzy02CxDVhT0w/BjHq6qGJyREW7cfuR2p7O29DJ5HTyf7aL/AqKIPsBoa4x1iM
+ZfGu03C6q/QHn7Bc7/nvehiCr7k6+xoa5/naT7933WKbpADtCQEteooc/RQMVhop
+oDaJiGuKHXU1HfIRERkXPyFAhzSy0g9Q+EzWBxdRXLg9wjxhB0IbSCWAT+YiDVZj
+G2bUwNI4T1SMRRwPtTQc
+=0EPA
+-----END PGP SIGNATURE-----
