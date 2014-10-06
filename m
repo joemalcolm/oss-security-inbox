@@ -1,73 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/13/4
-Message-ID: <20141013124951.GA5763@suse.de>
-Date: Mon, 13 Oct 2014 14:49:51 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/22
+Message-ID: <5432CA24.4060005@redhat.com>
+Date: Mon, 06 Oct 2014 18:58:12 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: shim RCE
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 09/30/2014 05:02 PM, Mark R Bannister wrote:
+> Glad my over-simplified example has raised a few smirks.  Now for a slightly less simplified version:
+>
+> putenv("PATH=/bin:/usr/bin");
+> setreuid(0, 0);
+> system("date");
+>
+> But the point is I've tried to boil down a relatively complex program by studying endless strace outputs to attempt to demonstrate a real world exploit.  It wasn't actually "date" that was being called, but you get the point.
+>
+> In the past, i.e. pre-Shellshock, the above code may have raised eyebrows, but as PATH was sanitised it would have passed numerous security audits.
 
-As per policy-request, here is the oss-posting of what has
-formerly been negotiated on distros@. Initial CRD was Oct 6th
-but has been shellshokshifted to today upon request.
-
---
-
-We reviewed some parts of the shim trusted bootloader.
-Shim is responsible for verifying of - and chaining into - a
-next level bootloader. Shim itself is signed by MS so it can
-be loaded by UEFI secure boot aware boards.
-These vulnerabilities could be exploited to bypass
-"secure boot" with leverage up to OS level.
-
-We found three issues that should be fixed:
-
-1. OOB read access when parsing DHCPv6 packets (remote DoS).
-   The severity is low. (CVE-2014-3675)
-2. Heap overflow when parsing IPv6 addresses provided by tftp:// DHCPv6
-   boot option (RCE).
-   The severity is low to medium, as secure boot via PXE6 should
-   rarely be seen ITW. Furthermore UEFI firmware seems to fail
-   to properly verify provided PXE images at the first place. (CVE-2014-3676)
-
-For both issues above there is a patch proposal:
-
-http://suse.com/~krahmer/priv/shim1.diff
-
-3. Memory corruption when processing user provided MOK lists.
-   Its unclear whether this could lead to a code execution in
-   the secure boot path. (CVE-2014-3677)
-
-For this issue there is also a patch proposal:
-
-http://suse.com/~krahmer/priv/shim2.diff
-
-All three issues should receive a CVE each. We ask for a CRD
-of Oct 6th. 2014.
-
-When updating, vendors should also take care to include
-git commit 45ab8962ae7c8e860a45d195cfe8a3f4d8aec4c7 since this
-already fixes another overflow (different from 2.) when parsing
-DHCPv6 packets.
-
-We did _not_ conduct a full code review of shim. In particular
-PE header parsing and relocating of PE EFI images is left untouched.
-
-Upstream maintainers have been informed already, as well as MS
-to initiate the signing process of a patched shim.
-
-It's unfortunate for Open Source vendors to rely on a third party
-being a milestone in an update process since its adds hereto
-a lot of complexity in the coordination and updating process.
-
-
-Sebastian
+I doubt that (or more realistically, I hope it's not true).  Even the 
+1996 edition of “Practical UNIX and Internet Security” mentions that you 
+have to reset IFS as well (a significant omission if “at” does something 
+even if it hasn't received any parameters).  The authors also point out 
+that putenv and setenv may only replace the first occurrence of an 
+environment variable in the environ array, while the system shell could 
+well pick up the last occurrence.
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+Florian Weimer / Red Hat Product Security
