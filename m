@@ -1,62 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/22
-Message-ID: <53B5E597.5060308@redhat.com>
-Date: Thu, 03 Jul 2014 17:21:59 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: Varnish - no CVE == bug regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/26
+Message-ID: <alpine.BSF.2.00.1410070434460.13577@aneurin.horsfall.org>
+Date: Tue, 7 Oct 2014 04:36:20 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: automated phishing email
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, 6 Oct 2014, Mason Loring Bliss wrote:
 
-
-
-On 03/07/14 02:17 PM, Stefan Bühler wrote:
-> On Thu, 03 Jul 2014 13:41:58 -0600 Kurt Seifried
-> <kseifried@...hat.com> wrote:
-
->> That also sounds like it needs a CVE then. You should not be able
->> to trivially DoS stuff, especially OOM, things should protect
->> themselves from OOM'ing especially if they accept user controlled
->> input from the network.
+> A co-worker suggested that this might have been aimed at procmail.
 > 
-> And again "user controlled input"... a root shell also uses "user 
-> controlled input".
+>     https://bpaste.net/show/41323f7d9b35
+> 
+> I'm curious if anyone has thoughts about what the target might have been for
+> this attempt.
 
-No because there is no trust boundary violation. If the root user is
-logged in at a terminal executing command as root, that's fine. If a
-non root user who is not authorized (e.g. via sudo or a setuid
-program) is logged in and executing stuff as root, that's a trust
-boundary violation.
+Pardon me for being new here, but that looks suspiciously like a 
+Shellshock type of attack.  Is Procmail also vulnerable to that sort of 
+thing?
 
-In this case it's pretty simple: the back end web servers are NOT
-supposed to be able to shut down the varnish cache server (if this was
-supposed to happen you'd have built a proper channel to do so). That
-they can do so means it is a denial of service, and therefore a trust
-boundary violation. Ergo it needs a CVE.
-
-> regards, Stefan
-
-
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJTteWXAAoJEBYNRVNeJnmTS70QAMqiFuTWJOPQOl+xJwT9nYrO
-cI+E4/9X+wAfDePlEAPklYSh5m6afTT8xlx1IvpZXRWB7aYnjAc2+0n720gBPpUL
-6GOtDiPrw2A5Gm8U/DC6DOm1xB13E33Ua1xQCCeHbbwJzsqhUXS7pheiu/MvYW7a
-G1ve4vi1g+9IvvgjcibqfIrrAVBLknAqyPE+sJqrDtD51xo+mvFfhjXRUkscr1sr
-PRw/ZA9/o76Q/mAnHVrPZt+H1ezjUaRjv/HR434vKKsB6uptp6FqXLdcYKV3DNGC
-wVdGzPxFKPMV0w561ty7uiZbYorAXRJ5fHm8cURpNXSlHIJgsm5wC9h9znPWSczt
-BsN6YJMQLoFVh8CsccZvhXEQ2QRb9q04zcjyhWKKl75cKcxc2wsSZuAPFf8l4Ou4
-10JkCyIvsuRsqeLKaEbPKjKHvrQUvFy5YBgWDqvr3e22nwYTQsPLn4HZa1SwaJ0z
-CHGxPTXfmZ8xhsRcEoZy/h/NBMF8oRhLMPnxuZZvo5vBnxtw9TaAtZ7I2WgbLRU0
-EiB31mbVaiJkRsaSMLxgll/6YBP3j8Roib3oYGrcBIWHXnd5cX5mNdWC3KfeCF3k
-Z1eJ/n2969Rp2kOuDWlWNuuRJ9xMyoET0shu8KkUibY1WjAE10c47dMNJFuwNKMw
-di7pCcftSgS3tR2mHbRH
-=qhco
------END PGP SIGNATURE-----
+-- Dave
