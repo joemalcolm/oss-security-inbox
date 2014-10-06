@@ -1,25 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/20/2
-Message-ID: <20141220114341.GV1260@betterave.cristau.org>
-Date: Sat, 20 Dec 2014 12:43:41 +0100
-From: Julien Cristau <jcristau@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/38
+Message-ID: <54331702.9070503@kohsuke.org>
+Date: Mon, 06 Oct 2014 15:26:10 -0700
+From: Kohsuke Kawaguchi <kk@...suke.org>
 To: oss-security@...ts.openwall.com
-Cc: Kurt Seifried <kseifried@...hat.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: request for CVEs for git clients
+Subject: Re: Security advisory in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 18, 2014 at 16:34:22 -0800, Russ Allbery wrote:
 
-> Kurt Seifried <kseifried@...hat.com> writes:
-> 
-> > Ah my bad, I saw the blog entry, didn't read the git announcement -
-> > CVE-2014-9390
-> 
-> My understanding is that this bug also affects Mercurial.  I'm not sure if
-> it should get its own separate CVE (or possibly already has).
-> 
-http://mercurial.selenic.com/wiki/WhatsNew#Mercurial_3.2.3_.282014-12-18.29
-uses that same CVE-2014-9390 id.
+I have another newbie question.
 
-Cheers,
-Julien
+Someone told me that CVE website still shows these vulnerabilities as 
+"reserved", such as
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3666
+
+What do I need to do to get that status updated? I checked FAQ 
+<http://cve.mitre.org/about/faqs.html> but didn't find any insights.
+
+
+On 10/01/2014 04:25 PM, Kohsuke Kawaguchi wrote:
+> Hello,
+>
+> I just wanted to share that the Jenkins project issued a security
+> advisory today. These issues are independently found and we've
+> aggregated into a single release.
+>
+> The relevant CVE IDs, our bug tracking IDs are available here
+> <https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01>.
+>
+> The new versions can be downloaded from here
+> <http://mirrors.jenkins-ci.org/>.
+>
+> (This is the first time I do this, so my apologies in advance for
+> probably failing to follow the expected format.)
+> --
+> Kohsuke Kawaguchi
+
+
+-- 
+Kohsuke Kawaguchi                          http://kohsuke.org/
