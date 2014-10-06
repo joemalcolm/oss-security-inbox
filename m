@@ -1,38 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/8
-Message-ID: <54115D25.8060302@mittwald.de>
-Date: Thu, 11 Sep 2014 10:28:21 +0200
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/29
+Message-Id: <E1XbDjv-0004ED-Lq@rmm6prod02.runbox.com>
+Date: Mon, 06 Oct 2014 15:14:35 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Healing the bash fork
 Content-Type: text/plain; charset=utf-8
 
+On 09/30/2014 05:02 PM, Mark R Bannister wrote:
+> > Glad my over-simplified example has raised a few smirks.  Now for a slightly less simplified version:
+> > putenv("PATH=/bin:/usr/bin");
+> > setreuid(0, 0);
+> > system("date");
+> > But the point is I've tried to boil down a relatively complex program by studying endless strace outputs to attempt to demonstrate a real world exploit.  It wasn't actually "date" that was being called, but you get the point.
+> > In the past, i.e. pre-Shellshock, the above code may have raised eyebrows, but as PATH was sanitised it would have passed numerous security audits.
 
+People do all sorts of things they shouldn't.  But it's been well-publicized that they should NOT just set an environment variable when crossing a trust boundary (e.g., setuid/setgid).  I'll note that my freely-available book, which has been available for years, says:
+"For secure setuid/setgid programs, the short list of environment variables needed as input (if any) should be carefully extracted. Then the entire environment should be erased, followed by resetting a small set of necessary environment variables to safe values."
+  http://www.dwheeler.com/secure-class/Secure-Programs-HOWTO/environment-variables.html
 
-On 10/09/14 18:00, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
-> the following issue, which could be exploited by a local user to run
-> arbitrary code in context of the mysqld server.
+The problem with shellshock is that bash would respond to *any* environment variable.  Attacker-supplied data *has* to sendable to a program that checks it (e.g., for CGI). What's more, no trust boundary had to be crossed in this case.  Thus, extract-and-erase made no sense in that context.
 
-While I'm investigating this:
-Does someone happen to know in which version this vuln got introduced?
-
-Thanks!
-
--- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+--- David A. Wheeler
