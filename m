@@ -1,82 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/7
-Message-Id: <201407191657.s6JGvmBm006264@linus.mitre.org>
-Date: Sat, 19 Jul 2014 12:57:48 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Good news and bad news on Python sockets and pickle
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/41
+Message-id: <AB82DAA0-8E9E-4987-B448-A5E8AB7A71D0@me.com>
+Date: Mon, 06 Oct 2014 18:41:42 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+turns out to be https://twitter.com/addelindh
 
-> here is my question, is all pickle.loads from things like memcached
-> (which has no auth) generally CVE worthy?
+On Oct 6, 2014, at 6:12 PM, Larry W. Cashdollar <larry0@...com> wrote:
 
-The short answer is "not always" because sometimes there are
-product-specific privilege boundaries.
-
-> we do have this one in the past:
+> I thought it was https://twitter.com/ErrataRob
 > 
-> CVE-2012-4406   OpenStack Object Storage (swift) before 1.7.0 uses the
-> loads function in the pickle Python module unsafely when storing and
-> loading metadata in memcached, which allows remote attackers to
-> execute arbitrary code via a crafted pickle object.
+> On Oct 6, 2014, at 5:04 PM, Michal Zalewski <lcamtuf@...edump.cx> wrote:
+> 
+>> I don't think it happened on Twitter - using advanced search with date
+>> ranges, I don't see any mentions that would predate this article,
+>> which already seems to be using the term:
+>> 
+>> http://www.csoonline.com/article/2687265/application-security/remote-exploit-in-bash-cve-2014-6271.html
+>> 
+>> It's odd that an article posted at 8 AM on Sept 24 would have any idea
+>> of how the bug is already being called by the security community,
+>> especially ahead of any Twitter buzz. But both Stephane and Florian
+>> implied that some of the pre-notified parties apparently started
+>> leaking details to the press and were getting ready to make a splash
+>> the moment it goes public, so maybe that's the explanation.
+>> 
+>> /mz
+> 
 
-The zeroth-order reason for why this exists is that you assigned a CVE
-ID (http://openwall.com/lists/oss-security/2012/09/05/16) and we were
-trying to cover all of those. This was not a CVE requested by the
-OpenStack Vulnerability Management Team.
-
-A relevant question is: what are the circumstances in which the data
-obtained from memcached is considered 100% trusted data because
-memcached is inside the privilege boundary of the machine making
-pickle.loads calls, and all data had been validated before it was
-stored by memcached. One case might be the "appliance" model. In other
-words, the customer buys a box having those properties, the customer
-has no ability to change the network architecture inside the box, and
-thus pickle.loads is defined to be safe. In other words, either the
-entire appliance is compromised, or it isn't.
-
-Going up one level, there can be a situation where the documentation
-says to deploy memcached on a trusted network, but a customer might
-not accomplish this. This is the harder question of whether a CVE
-inclusion decision can be affected by a product-specific privilege
-boundary. It's essentially the same question that came up after the
-http://openwall.com/lists/oss-security/2014/07/08/13 post, where a CVE
-ID was intentionally not assigned. Here,
-https://bugs.launchpad.net/swift/+bug/1006414/comments/19 might have
-been interpreted in a similar way.
-
-Finally, there may be cases in which the only reasonable conclusion is
-that the data obtained from memcached is untrusted data. For example,
-maybe a documented use case involves access to a memcached that is
-intentionally, or at least practically, controlled by an arbitrary
-third party. Maybe a cleaner example is: suppose a Red Hat product
-looks for pickled data within the http://en.wikipedia.org/wiki/Red_Hat
-article and calls pickle.loads on whatever it finds. Furthermore, the
-documentation says that the http://en.wikipedia.org/wiki/Red_Hat
-article is intentionally inside of the product's privilege boundary.
-The outcome here is that a CVE ID can be assigned anyway because Red
-Hat is simply not allowed to make that choice of a product-specific
-privilege boundary. In general, maybe it depends on whether the
-product-specific privilege boundary is one that customers could accept
-as realistic.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTyqK+AAoJEKllVAevmvmszakH/AjsOpWKubbJ1wqresPkYm2B
-oFWKhyZs2IW72meH/Kevs/qMbyrZCh3JSl0UojXf9sZEr4Mp1zLEriUqMY5yTFM6
-8oK20sg4FwArOxmJwgMqYmPL1VlrXbvH9FPoXrulrIQZ64EmDbDJ3TlWanWq6qhZ
-18sSi2qHX+5AAhVy2j9VGxuOkPGHDEhzubjpWvJ3vLybp5IWSZJ4eLuzEysL7huJ
-H01d+IseVykI1Pp+knsUk5uSrvKOILWzxoY10bnAb/zeznQC5uGN6GURFL+ef9IR
-/qJFGo0bhth48pmMk1bmTmEf+kZOWOPh7uYRy9yXWq/dJQItzWAfTqOiKI8OdiQ=
-=3NzC
------END PGP SIGNATURE-----
