@@ -1,37 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/10
-Message-ID: <20140409073235.GB26700@scapa.corsac.net>
-Date: Wed, 9 Apr 2014 09:32:36 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/25
+Message-ID: <20141006192608.652f6395@hboeck.de>
+Date: Mon, 6 Oct 2014 19:26:08 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+Subject: Re: automated phishing email
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 09, 2014 at 12:02:09PM +0530, Huzaifa Sidhpurwala wrote:
-> On 04/09/2014 01:07 AM, Yves-Alexis Perez wrote:
+Am Mon, 6 Oct 2014 13:12:39 -0400
+schrieb Mason Loring Bliss <mason@...sses.org>:
+
+> A co-worker suggested that this might have been aimed at procmail.
 > 
-> > Mon, 07 Apr 2014 06:10 : Huzaifa Sidhpurwala sends a mail to distros
-> >                          list with no details but an offer to request
-> >                          them privately
+>     https://bpaste.net/show/41323f7d9b35
 > 
-> 
-> After i sent a mail to distros, i was contacted by security engineers
-> from most major distributions. I answered most of the them as soon as i
-> could with complete details including the upstream patch.
+> I'm curious if anyone has thoughts about what the target might have
+> been for this attempt.
 
-I'm not sure who are “most major distributions”. We failed to reply in a
-timely fashion to that mail (but that's on us), but apparently so did
-Ubuntu, Suse sent a mail but got apparently no reply.
+qmail is vulnerable:
+http://marc.info/?l=qmail&m=141183309314366&w=2
 
-In any case, two days notice is a bit out of our comfort zone for
-preparing updates, but I think we would have managed to handle it
-properly if the embargo didn't break.
+However I think this is probably not aimed at something. It's likely
+just "try if we find something vulnerable, we don't care what it is".
 
-So again thanks Red Hat for notification/coordination job, but I'm still
-puzzled at what happened earlier, before Red Hat was informed.
+Btw: at least one of the exploit scripts is still online. This is one
+of the issues that comes with this event: There are *many* hosts out
+there that have a very bad abuse handling. These things stay online
+far too long.
 
-Regards,
 -- 
-Yves-Alexis Perez
+Hanno Böck
+http://hboeck.de/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
