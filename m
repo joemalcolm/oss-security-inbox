@@ -1,18 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/5
-Message-ID: <CABoG-=Wueo5-F+JA1CFsXuqWEiKx37J9mQMNDLDy85NZg5vTOw@mail.gmail.com>
-Date: Fri, 17 Oct 2014 10:17:21 +0000
-From: Stephen Röttger <stephen.roettger@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/18
+Message-ID: <5432A875.1000103@reactos.org>
+Date: Mon, 06 Oct 2014 16:34:29 +0200
+From: Pierre Schweitzer <pierre@...ctos.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+Subject: Re: OpenSSL RSA 1024 bits implementation broken?
 Content-Type: text/plain; charset=utf-8
 
-> The solution would be to have a more reliable PC time. How do we do
-that?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We're currently working on an IETF draft to bring authentication to NTP:
-https://tools.ietf.org/html/draft-ietf-ntp-network-time-security-04 and
-would be happy for people to take a look and give feedback.
-If you don't want to read the draft, let me know and I will outline the
-protocol for you.
+Following the information on that ML it appears not to be true.
+Or at least, there's no obvious evidence it happened. And lack of
+appropriate communication from reporter doesn't help getting rid of
+doubts.
+Unless I missed something from the thread you pointed?
 
+On 10/06/2014 03:39 PM, Jeremy Stanley wrote:
+> On 2014-10-06 11:33:03 +0200 (+0200), Pierre Schweitzer wrote:
+>> There appear to have some noise on the Internet regarding a
+>> possible flaw in the 1024 bits RSA implementation in OpenSSL
+>> which would allow bruteforcing the private key in ~20 minutes.
+>> 
+>> Does anyone has any information about this? The associated
+>> pastebin to the said information is:
+>> http://pastebin.com/D8itq6Ff Is this serious?
+> 
+> It's been picked apart somewhat in a thread[1] on Perry Metzger's 
+> moderated cryptography mailing list.
+> 
+> [1]
+> http://www.metzdowd.com/pipermail/cryptography/2014-October/023142.html
+>
+> 
+- -- 
+Pierre Schweitzer <pierre@...ctos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJUMqh1AAoJEHVFVWw9WFsLDm4P+wU+Wqd6BXENzOJWz/GVqVH1
+3qwriMXMGz11LJEhK+/jVD0bUbMTrq1dTWcmSpAL4/jYgrkGDMBwwCp/ZtqtneJW
+0Sax+5nbw/kYkxVHa4WqEizGatp9Ls2TeutLl/Jz0fzb7AN6X2Mxvi3d5CWrm6b1
+8wP0LwYZOA8E+sIwqcp6JhEqbJO4VLT9AcN7JLtgPtQfU2YThp8KZZqtx1vYvSdk
+F4qxTznICt1aM6UvxeaW/2KC9IMAw4Jn4fyW765O3vbHh67mL9+jshlDQO4a/S6Q
+2UV9txnnuEoQhLPDGLzBx7VqsqAFh+v9gxwFLSBij9TpKWIZCVR+5URVJITzPlDW
+DQWZHbdHUGNnRwsbNVnk5akwtj+nzN7Wp2/MAa5c+L6u0c3jsgAm7pkPF5WLJ6bC
+8OtEdGeWJWFWl4vJtWnGk2Qx5dXONuTykhZaAPDo+JS9WmgiLCy2uycdNhyyeAft
+gT0N0ZkcM5y7wKY0+tPAVQPzsR6NSDuuB1pPVb4RCxwjAA6S9Sneu+kBPrCOXG2a
+5/UXGGcixxxOgoQ72d+Gd4MvuwEMcQnAWmyNcfiD5Yk7vdDGBi3jlM70Glz3a2iE
+2hzqMQSq9ClFX1b8wYonUzaf1T33ocl5oo4yNbMK3E5Xe+R38jhWJWFNxmyk54RW
+3KONSEmc7ytm2KPzWnTR
+=6AHt
+-----END PGP SIGNATURE-----
