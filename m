@@ -1,40 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/17/3
-Message-ID: <20140917113530.GA13643@lappy.redhat.com>
-Date: Wed, 17 Sep 2014 21:35:31 +1000
-From: Grant Murphy <gmurphy@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack keystonemiddleware
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/4
+Message-Id: <20141006064318.4D8B7C5057B@smtptsrv1.mitre.org>
+Date: Mon,  6 Oct 2014 02:43:18 -0400 (EDT)
+From: cve-assign@...re.org
+To: krahmer@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, mbriza@...hat.com
+Subject: Re: various sddm vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although an
-advisory was not sent yet.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Title: TLS cert verification option not honoured in paste configs
-Reporter: Qin Zhao (IBM)
-Products: keystonemiddleware, python-keystoneclient
-Versions: versions up to 1.1.1 (keystonemiddleware), versions up to 0.10.1
-(python-keystoneclient)
+> From: mbriza@...hat.com
 
-Description:
-Qin Zhao from IBM reported a vulnerability in keystonemiddleware (formerly
-shipped as python-keystoneclient). When the 'insecure' SSL option is set in 
-a paste configuration file it is effectively ignored, regardless of its 
-value.  As a result certificate verification will be disabled, leaving TLS
-connections open to MITM attacks. All versions of keystonemiddleware with
-TLS settings configured via a paste.ini file are affected by this flaw.
+> Although we don't believe any of the issues you reported could lead to
+> a privilege escalation (as some of the resulting bugreports suggest),
+> we consider them to be security issues.
 
-References:
-http://launchpad.net/bugs/1353315
+> https://github.com/sddm/sddm/pull/279
+
+> https://bugzilla.suse.com/show_bug.cgi?id=897788#c6
+> sddm user is not available for choosing in the first place
+
+As far as we can tell, the vendor considers it a vulnerability for
+unauthenticated logins as sddm to succeed, so we'll assign
+CVE-2014-7271. The conditions under which this can happen are not
+clear; maybe one or more of these is true:
+
+  - sddm is a regular user account, not a uid-below-1000 account, on
+    some systems because a Linux distribution is allowed to customize
+    the sddm account name in its own sddm package
+
+  - sddm is a regular user account, not a uid-below-1000 account, on
+    some systems because that username was in use before sddm was
+    installed
+
+  - there's a way to choose to login as sddm even if sddm isn't on the
+    list of users
 
 
-Thanks in advance,
+> https://bugzilla.suse.com/show_bug.cgi?id=897788#c7
+> https://bugzilla.suse.com/show_bug.cgi?id=897788#c8
+> https://bugzilla.suse.com/show_bug.cgi?id=897788#c9
+> https://github.com/sddm/sddm/pull/280
 
---
-Grant Murphy
-OpenStack Vulnerability Management Team
+Apparently the primary problem is unsafe write operations into a
+directory that's completely controlled by a unprivileged user. (The
+chown is, in some sense, a write operation on security-relevant file
+metadata.) Use CVE-2014-7272 for all of these three.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJUMjmKAAoJEKllVAevmvmsyBcH/RNiNIUywq9yYODGZ1/2bPWU
+acu4SMFvHtZ0eP26c1KYq5R7WJG/3TQwCz9OdA1SjfxcIwnBGNFOd+f85SA95v/t
+QVS7kLmGZQ74Z+zd+WQBDd5HNIQRpz3hJM1ppIMDwQY3xgulRN71GUKI/IRNVAL/
+cxIxHnhqPWoO7Uc0+3IRZkp7fJ07+NQZreaUMxBZWYe/hE5tJXxhQIM+wuFJ0XEs
+DMjs2gRspQQiv2TRQX1S09vg7oVdrgTIkJPJsVPqqzMBjq6mMYIIj/yuKiU8pel+
+EMBZtSedbJESOawciOKsrFLJ1ZaYGydOhKFBhu4DHAf1FXl7Ii+h8QDeOOSF+5M=
+=GZYa
+-----END PGP SIGNATURE-----
