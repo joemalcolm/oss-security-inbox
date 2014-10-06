@@ -1,62 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/04/1
-Message-Id: <201401040140.s041eItI005121@linus.mitre.org>
-Date: Fri, 3 Jan 2014 20:40:18 -0500 (EST)
-From: cve-assign@...re.org
-To: dkg@...thhorseman.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: kwallet crypto misuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/23
+Message-ID: <alpine.BSF.2.00.1410070224500.13577@aneurin.horsfall.org>
+Date: Tue, 7 Oct 2014 02:30:22 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Re: OpenSSL RSA 1024 bits implementation broken?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, 6 Oct 2014, Pierre Schweitzer wrote:
 
-> > ECB, which is bad at hiding patterns in data. For instance, if a
-> > password is stored more than once, an attacker can determine that this
-> > is likely to have been done, by noticing the corresponding pattern in
-> > the output. As far as I can see, this is now CVE-2013-7252.
+> There appear to have some noise on the Internet regarding a possible 
+> flaw in the 1024 bits RSA implementation in OpenSSL which would allow 
+> bruteforcing the private key in ~20 minutes.
 > 
-> yep, agreed.
+> Does anyone has any information about this? The associated pastebin to 
+> the said information is: http://pastebin.com/D8itq6Ff Is this serious?
 
-The short answer is that CVE-2013-7252 was assigned because of the
-sentence "It is quite obvious that this is a programming error" in the
-http://security.stackexchange.com/a/44010/32167 post. The motivation
-for the CVE assignment isn't that the end result is ECB.
+On the moderated crypto list where I hang out, it's receiving much 
+attention.  The consensus is that it's likely a buggy compiler or 
+optimiser that rounded integer division upwards instead of truncating it 
+as required by the C standard, and that the "discoverer", by refusing to 
+provide further details, is full of it.
 
-To try to make this slightly more general, we'll mention two scenarios
-in which a vendor writes some code, and the code has a certain
-characteristic for which the outcome is weaker security.
+You may be able to search the archives at cryptography@...zdowd.com; as I 
+said it's a moderated list, but full of techie people who really know 
+their onions.
 
-Scenario A:
-Based on analysis of the code itself, one can reasonably conclude that
-the vendor WAS NOT trying to have that characteristic.
-
-Scenario B:
-Based on analysis of subject-matter references, one can reasonably
-conclude that the vendor SHOULD NOT HAVE BEEN trying to have that
-characteristic.
-
-We've written longer explanations here in the past, but: to a
-first-order approximation, CVE assignment is MOSTLY about Scenario A.
-
-Flippant example of Scenario B: the code calls ROT13 once.
-
-Flippant example of Scenario A: because of a logic error, the code
-calls ROT13 twice.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSx2TEAAoJEKllVAevmvmsgbwIAIhNUKwcOestofrbZDiTtET6
-7QIG3rQ1vCzz7MoTQNuWc+pN3haZ0c4V777PclZLwkyOVcp28ALpSXbD/Q8phxO/
-quH54HJ7r1gFbLTl2fK1kKopvrjzj8/9Q8yQUwzZNTHYErSjKNpkhvqKG/313x6t
-jbR/9HHwQGnQVYNvrr3VH81dxKCvc82C351dfktNy8GnX7aypF6KcJWCvWKh1u/V
-bc3Ttia+xT+rhh5Qo6PYsR/PBwnDszty7JDiCzh/RK8ksooIbYEOkAOcirM1YCu8
-tE+JAZIZ+SVupHkrDGrQjdqqMMSby3k1bz34/oTToiZlaO0M0XNJc2l0StLD8HI=
-=GxjR
------END PGP SIGNATURE-----
+-- Dave
