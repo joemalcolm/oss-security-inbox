@@ -1,48 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/24
-Message-ID: <CABniQZNf+kZcaXGkq8tvEGjCSsCEn=V=RwdiFyPBcDJoy1GN6Q@mail.gmail.com>
-Date: Thu, 2 Oct 2014 05:04:16 +0800
-From: Shawn <citypw@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Chet Ramey <chet.ramey@...e.edu>
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/31
+Message-Id: <E1XbF7r-0007UA-6l@rmm6prod02.runbox.com>
+Date: Mon, 06 Oct 2014 16:43:23 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
-http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+Who created the name "shellshock"?  And when?
 
-On Thu, Oct 2, 2014 at 2:20 AM, Hanno Böck <hanno@...eck.de> wrote:
-> Haven't seen it here yet. lcamtuf now disclosed details of the two
-> further parser bugs he found:
-> http://lcamtuf.blogspot.de/2014/10/bash-bug-how-we-finally-cracked.html
->
-> Basically if anyone hasn't applied one of the prefix patches yet now's
-> the time to do so.
->
-> While prefixing should shield against them they should still be fixed
-> for good.
->
-> CVE-2014-6277 can still be triggered to segfault a fully patched bash:
-> bash -c "f(){ x(){ _;}; x(){ _;}<<a;}"
->
-> Second issue PoC on fully patched system:
-> env BASH_FUNC_x%%='() { _;}>_[$($())] { echo vuln;}' bash -c :
->
-> (both likely not exploitable due to prefix shielding, but should be
-> fixed anyway)
->
-> --
-> Hanno Böck
-> http://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
+I can't seem to find anything:
+* Stéphane Chazelas proposed "bashdoor" on 2014-09-14 14:29:48 +0100, but this did not catch on. (http://seclists.org/oss-sec/2014/q4/92).
+* Robert Graham (Errata Softwre) posted "Update: I think people are calling this the "shellshock" bug. Still looking for official logo" ( http://blog.erratasec.com/2014/09/bash-bug-as-big-as-heartbleed.html ).  This wording suggests that is reporting what OTHERS call it, and not a name he gave himself.
+* Andreas Lindh tweeted a proposed image for "shellshock, but this was in response to Robert Graham's "official logo" request - so this is DEFINITELY not the source of the name. (Tweet at: https://twitter.com/addelindh/status/514840916692324352 )
 
+Suggestions?
 
-
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
-
-regards
-Shawn
+--- David A. Wheeler
