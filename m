@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/8
-Message-ID: <CAFsGsxLyEzK1QqLwyRoFcqsbOWOUPJNeLAXfSaCEK7jO_+Py0A@mail.gmail.com>
-Date: Thu, 15 May 2014 20:35:51 +0200
-From: Marcin Owsiany <porridge@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: libgadu vulnerability: possible memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/6
+Message-ID: <3230301C09DEF9499B442BBE162C5E482575A066@SESTOEX04.enea.se>
+Date: Mon, 6 Oct 2014 07:15:22 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-I'd like to request a CVE ID for the following issue:
+> To be clear I'm not a list admin or in control of it in any way shape or form (at
+> least that I'm aware of, Solar if I am in charge you should probably let me
+> know ;). I simply voiced concerns (e.g. lack of security advisories/etc.
 
-A crafted message from the file relay server may cause memory to
-beoverwritten. The memory is not overwritten with data sent directly by the
-server, but security implications cannot be ruled out.
+Kurt,
 
-The bug is public:
-http://lists.ziew.org/pipermail/libgadu-devel/2014-May/001171.html
-http://lists.ziew.org/pipermail/libgadu-devel/2014-May/001180.html
+I am not  criticizing or blaming  anyone, I think your concern was very good :) I realize now that at that time we were not ready, today I would definitively do the same if I was in your situation. 
 
-Marcin
+Cheers
+Sona
+ 
 
