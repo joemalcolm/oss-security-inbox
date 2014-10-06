@@ -1,45 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/31/8
-Message-Id: <20140731154509.2B8ED6C0262@smtpvmsrv1.mitre.org>
-Date: Thu, 31 Jul 2014 11:45:09 -0400 (EDT)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: WordPress plugin wppageflip index.php pageflipbook_language parameter traversal local file inclusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/32
+Message-ID: <54330024.4010608@reactos.org>
+Date: Mon, 06 Oct 2014 22:48:36 +0200
+From: Pierre Schweitzer <pierre@...ctos.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL RSA 1024 bits implementation broken?
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Can I get 2012 CVE for following vulnerability in A Page Flip Book plugin for
-> WordPress (wppageflip)
-> 
-> http://wordpress.org/support/topic/pageflipbook-pageflipbook_language-parameter-local-file-inclusion
-> http://ceriksen.com/2012/07/10/wordpress-a-page-flip-book-plugin-local-file-inclusion-vulnerability/
-> 
-> input passed to the wp-content/plugins/wppageflip/pageflipbook.php script from
-> index.php is not properly sanitizing user input, specifically directory
-> traversal style attacks (e.g., ../../) supplied to the 'pageflipbook_language'
-> parameter
+Thanks for your feedback Dave.
+Then, some naive question: are we sure that OpenSSL as shipped in
+distributions is tested against such regressions (if such test
+actually exists)? It's indeed something that a compiler might break
+(be it due to a bug or due to an optimization).
+He might be using OpenSSL as shipped in his distribution. This would
+be quite damaging.
 
-The wording seems a bit garbled ("is not properly sanitizing user input" should
-probably be "is not properly sanitized") but it's fairly obvious what is meant.
+Reproducibility in behavior is kinda critical here to make sure we're
+always cryptosecure.
 
-Use CVE-2012-6652.
+On 06/10/2014 17:30, Dave Horsfall wrote:
+> On Mon, 6 Oct 2014, Pierre Schweitzer wrote:
+> 
+>> There appear to have some noise on the Internet regarding a
+>> possible flaw in the 1024 bits RSA implementation in OpenSSL
+>> which would allow bruteforcing the private key in ~20 minutes.
+>> 
+>> Does anyone has any information about this? The associated
+>> pastebin to the said information is: http://pastebin.com/D8itq6Ff
+>> Is this serious?
+> 
+> On the moderated crypto list where I hang out, it's receiving much
+>  attention.  The consensus is that it's likely a buggy compiler or
+>  optimiser that rounded integer division upwards instead of
+> truncating it as required by the C standard, and that the
+> "discoverer", by refusing to provide further details, is full of
+> it.
+> 
+> You may be able to search the archives at
+> cryptography@...zdowd.com; as I said it's a moderated list, but
+> full of techie people who really know their onions.
+> 
+> -- Dave
+> 
+
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Pierre Schweitzer <pierre at reactos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJT2mO5AAoJEKllVAevmvmsGCwH/iYX5kdurISZLd3nYpBiGhHG
-ITPJbO7rTWqm7VcalPBUKSYkdzZcav5flA/zxm79A/v4uC+rgr7+tPbCjCQaVcHF
-4RwOt/T9EClb5sDSBh3d308byiTavEqO1iIONsirQriJLzOvXZJsIAzdVv2EGnFD
-eEUNueyu6izaFTW4uYIkfwSZCoJw9Kbkdb0Jo8e16KJdFHtzkolEwQdSk/9Jzk51
-yVrQrAOmVHizdeuR471/Zm8g1GXsIYGf96HfM5J5s7vEdk1rEwPHICMH/EU9Hpjg
-LjleUoNYyVv+Lz0sDZNZjwvG6sPGeX8J98PHLSrFf2SFrPCf+V5CthjVQslMROA=
-=EuG/
+iQIcBAEBAgAGBQJUMwAkAAoJEHVFVWw9WFsLlxYQAJTvHKnVPcLzs8LPHwmn68oV
+lpLeHfMXLICAO8z/xRURIi9VFryg6uMyzRwBfVVvCYxsfMy1y1TxDZR+txxV3bl4
+GICcrggLj8w0xy9m81mBcy8mTH3GRGzY4rOZT/+cUr6vx9Ab0ISzkvBLZge9ashh
+3jSFBu9lXKUWk3oswZiVmGCIEJOYLvGYTEY8vA3OnIv6Cu0DSufTFP44a7r63LTz
+7XRPS+4JjD3YTJu3iZZqvKzHXM3rZ4fK6qXbzzokBudLGaXO8WkKbMmOjTKl1Rep
+eujZ8CBvlbv29/z07ziiQ2/dlZGsYhEvn7+qhIY9gWwcKgndQcw+ERzOroUQvONP
+URbPn52+b2vwrM0hFhah7N0iCvWsLsWqH8M38EMK4HS/wMGqBVI+nWIW+gdKM40/
+stK2eVXwKofyGagEXiPkCeqTxCvU5Rte41skXyWAKrRZQOBI/i7LP309pV+/e1V+
+jRsbtTHsMRvWEYRr2zTiKmtRPOriTZ9HBcguYDUXAV5seDDLIkWfVIEpH7AmPW23
+j4eQib+gmS2Og0RxNFv46mj7KG1NVcnLOSRcScXAyctNBE/HPyqdbzyyDxGK5mfU
+9nIf2mAR4jcW2+iBbS7xQVs0OOEY7HO5dJRRD5MKUdUGcR+HZKu/TwJcswEDTDG9
+ZRjrlEpGLcrB2qBdXCUW
+=ABev
 -----END PGP SIGNATURE-----
