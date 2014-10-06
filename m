@@ -1,62 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/6
-Message-ID: <53EE2DEE.1030305@enovance.com>
-Date: Fri, 15 Aug 2014 11:57:34 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-026] Multiple vulnerabilities in Keystone revocation events (CVE-2014-5251, CVE-2014-5252, CVE-2014-5253)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/13
+Message-ID: <CADk+mPC3wRy_ud4W1ktbCbUR3zfv=9adJYB3=NyK2BKzHwz6OA@mail.gmail.com>
+Date: Mon, 6 Oct 2014 12:46:38 +0200
+From: Rainer Gerhards <rgerhards@...adiscon.com>
+To: Simon McVittie <smcv@...ian.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: vulnerability in rsyslog
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-026
-CVE: CVE-2014-5251, CVE-2014-5252, CVE-2014-5253
-Date: August 15, 2014
-Title: Multiple vulnerabilities in Keystone revocation events
-Reporter: Lance Bragstad (Rackspace) - CVE-2014-5252
-          Brant Knudson (IBM)        - CVE-2014-5251, CVE-2014-5253
-Products: Keystone
-Versions: 2014.1 versions up to 2014.1.1
+2014-10-06 12:36 GMT+02:00 Simon McVittie <smcv@...ian.org>:
 
-Description:
-Lance Bragstad from Rackspace and Brant Knudson from IBM reported 3
-vulnerabilities in Keystone revocation events. Lance Bragstad discovered
-that UUID v2 tokens processed by the V3 API are incorrectly updated and
-get their "issued_at" time regenerated (CVE-2014-5252). Brant Knudson
-discovered that the MySQL token driver stores expiration dates
-incorrectly which prevents manual revocation (CVE-2014-5251) and that
-domain-scoped tokens don't get revoked when the domain is disabled
-(CVE-2014-5253). Tokens impacted by one of these bugs may allow a user
-to evade token revocation. Only Keystone setups configured to use
-revocation events are affected.
-
-Juno (development branch) fix:
-https://review.openstack.org/111106
-https://review.openstack.org/109747
-https://review.openstack.org/109819
-https://review.openstack.org/109820
-
-Icehouse fix:
-https://review.openstack.org/112087
-https://review.openstack.org/111772
-https://review.openstack.org/112083
-https://review.openstack.org/112084
-
-Notes:
-These fixes will be included in the Juno-3 development milestone and are
-already included in the 2014.1.2.1 release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-5251
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-5252
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-5253
-https://launchpad.net/bugs/1347961
-https://launchpad.net/bugs/1348820
-https://launchpad.net/bugs/1349597
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+> On 06/10/14 08:34, Rainer Gerhards wrote:
+> > Sorry, it looks like I don't understand your question.
+>
+> I think the clarification Sven is asking for is a statement like this
+> (I'm deliberately using imaginary version numbers which do not resemble
+> rsyslog's actual 7.x versions, to make it clear that I'm not making a
+> statement about this particular rsyslog vuln):
+>
+> """
+> Releases 1.2.x < 1.2.4, 1.3.x < 1.3.7 and 1.4.x < 1.4.1 are vulnerable
+> unless the vendor-supplied patch is applied. Releases < 1.2, >= 1.2.4,
+> >= 1.3.7 and >= 1.4.1 are not vulnerable.
+> """
+>
+> In most projects' version numbering practices:
+>
+> * a version (release) is a fixed point that can never change (so if
+>   1.2.3 is vulnerable to CVE-1066-1234 it will always be vulnerable
+>   to CVE-1066-1234)
+>
+>
+same with rsyslog
 
 
+> * a stable release series or stable branch can have later versions that
+>   are intended to supersede an earlier version completely, while having
+>   minimal changes to fix serious bugs (so the upstream project can
+>   address CVE-1066-1234 by releasing 1.2.3.1 or 1.2.4)
+>
+>
+same with rsyslog
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+> * alternatively, the upstream project can release recommended patches
+>   to be applied by sysadmins or vendors, which might be labelled
+>   "1.2.3 patch 1" or something if the project is particularly formal,
+>   or might just be identified by git/svn/etc. commit ID
+>
+>
+we usually do not do that. The patch set I mentioned (here on list and in
+the advisory) contains patches for versions we will never touch.
+
+
+> * even if 1.2.3 is vulnerable and always will be, a downstream vendor
+>   like Debian or Red Hat might release a derived version like
+>   1.2.3-4+deb7u5 which incorporates the recommended patch from the
+>   upstream project, or a patch from the vendor or a third party, and so
+>   is not vulnerable
+>
+>
+same here
+
+Yeah, so to solve the obviously vague wording:
+
+- 7.6.7 is not vulnerable, all previous v7 are.
+- 8.4.2 is not vulnerable, all previous v8 are.
+- all older ("totally dead") versions are vulnerable to the extend as
+described in the advisory and patches as linked to in the advisory can be
+used to solve the issue for some of these versions.
+- for v7 and v8 no specific patch files exist because we have released new
+stable versions. Nobody should ever use an old stable version, because the
+difference to the current stable is missing bugfixes.
+
+Thanks,
+Rainer
+
