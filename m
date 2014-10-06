@@ -1,44 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/7
-Message-ID: <20141125134233.GA26826@lorien.valinor.li>
-Date: Tue, 25 Nov 2014 14:42:33 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: buffer overflow in ksba_oid_to_str in Libksba
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/3
+Message-ID: <CADk+mPA4-fZNgp6qxOa4cY+jS9oSs=OLsjQ7bYunY0twPkggaw@mail.gmail.com>
+Date: Mon, 6 Oct 2014 08:40:07 +0200
+From: Rainer Gerhards <rgerhards@...adiscon.com>
+To: Sven Kieske <s.kieske@...twald.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: vulnerability in rsyslog
 Content-Type: text/plain; charset=utf-8
 
-Hi
+2014-10-06 8:31 GMT+02:00 Sven Kieske <s.kieske@...twald.de>:
 
-Today a new upstream version for Libksba (1.3.2) was announced. The
-upstream advisory mention following impact:
+>
+>
+> On 30/09/14 18:41, Rainer Gerhards wrote:
+> > 2014-09-30 18:28 GMT+02:00 Solar Designer <solar@...nwall.com>:
+> >
+> >> On Tue, Sep 30, 2014 at 01:55:12PM +0200, Sven Kieske wrote:
+> >>> I don't understand the following statement in the
+> >>> pri-vuln.txt in section "Patches":
+> >>>
+> >>> "Version 7.4.6, while no longer being project
+> >>> supported received a patch and is also not vulnerable."
+> >>>
+> >>> What was patched when this version is not vulnerable?
+> >>> Or do you mean it is not vulnerable after the patch got applied?
+> >>
+> >>
+> > My apologies, this is a type that skipped past all proof-reading. It
+> should
+> > say "7.6.6", which is the v7 version released today. v7.4.x is not only
+> > non-project supported, it's also heavily outdated and missing many other
+> > patches as well (just to point this out).
+>
+> This still does not answer the above questions, it just changes the
+> version number in your statement which led to my question.
+>
+>
+you can view the complete patch set here:
 
-> Impact of the security bug
-> ==========================
-> 
-> By using special crafted S/MIME messages or ECC based OpenPGP data, it
-> is possible to create a buffer overflow.  The bug is not easy to exploit
-> because there only 80 possible values which can be used to overwrite
-> memory.  However, a denial of service is possible and someone may come
-> up with other clever attacks.  Thus this should be fix.
-> 
-> Affected versions: All Libksba versions < 1.3.2
-> 
-> Background: Yesterday Hanno Böck found an invalid memory access in the
-> 2.1 branch of GnuPG by conveying a malformed OID as part of an ECC key.
-> It turned out that this bug has also been in libksba ever since and
-> affects at least gpgsm and dirmngr.  The code to convert an OID to its
-> string representation has an obvious error of not considering an invalid
-> encoding for arc-2.  A first byte of 0x80 can be used to make a value of
-> less then 80 and we then subtract 80 from it as required by the OID
-> encoding rules.  Due to the use of an unsigned integer this results in a
-> pretty long value which won't fit anymore into the allocated buffer.
-> The actual fix for lib Libksba is commit f715b9e.
+https://github.com/rsyslog/rsyslog/commits/v7-stable
 
-Announce: http://lists.gnupg.org/pipermail/gnupg-announce/2014q4/000359.html
-Upstream fix: http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=f715b9e156dfa99ae829fc694e5a0abd23ef97d7
+Rainer
 
-Can a CVE be assigned for this issue in libksba (if not already requested).
-
-Regards,
-Salvatore
