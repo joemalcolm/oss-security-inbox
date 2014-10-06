@@ -1,53 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/5
-Message-ID: <20140619053841.GA4689@gremlin.ru>
-Date: Thu, 19 Jun 2014 09:38:41 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/17
+Message-ID: <20141006133945.GG9817@openstack.org>
+Date: Mon, 6 Oct 2014 13:39:45 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: docker VMM breakout
+Subject: Re: OpenSSL RSA 1024 bits implementation broken?
 Content-Type: text/plain; charset=utf-8
 
-On 18-Jun-2014 10:05:35 -0400, Daniel J Walsh wrote:
+On 2014-10-06 11:33:03 +0200 (+0200), Pierre Schweitzer wrote:
+> There appear to have some noise on the Internet regarding a possible
+> flaw in the 1024 bits RSA implementation in OpenSSL which would allow
+> bruteforcing the private key in ~20 minutes.
+> 
+> Does anyone has any information about this? The associated pastebin to
+> the said information is: http://pastebin.com/D8itq6Ff
+> Is this serious?
 
- > CONTAINERS DO NOT CONTAIN. Root inside the container == Root
- > outside the container.
+It's been picked apart somewhat in a thread[1] on Perry Metzger's
+moderated cryptography mailing list.
 
-Really? :-)
-
- > This is true in both libvirt-sandbox/libvirt-lxc and docker.
-
-Have you checked that for anything else?
-
- > We have a long way to go before we can run anything within a
- > container without this rule. User Namespace, SELinux or other
- > MAC are all required to get us near the point where Container
- > Contain.
-
-Have you ever seen OpenVZ?
-
- > People who run services within a container should continue to
- > drop privs in the services and run them as UID!=0
-
-Look at this trivial code example...
-
-Classic kernel:
-
-if (!uid)
-{
-	// perform privileged operation here
-}
-
-Containers-enabled kernel:
-
-if ( !uid && !container_id )	// container_id: 0 for host
-{
-	// perform privileged operation here
-}
-
-How would you bypass this check to get privileged access to anything
-outside the container?
-
-
+[1] http://www.metzdowd.com/pipermail/cryptography/2014-October/023142.html
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Jeremy Stanley
