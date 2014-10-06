@@ -1,34 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/21
-Message-Id: <2284CB6C-0F7C-4837-B993-921C89775ECD@stufft.io>
-Date: Mon, 17 Nov 2014 15:29:42 -0500
-From: Donald Stufft <donald@...fft.io>
-To: oss-security@...ts.openwall.com
-Subject: Requesting a CVE for pip - Local DoS with predictable temp directory names
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/2
+Message-ID: <5432372A.7050801@mittwald.de>
+Date: Mon, 6 Oct 2014 08:31:06 +0200
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+CC: <rgerhards@...adiscon.com>
+Subject: Re: vulnerability in rsyslog
 Content-Type: text/plain; charset=utf-8
 
-I'd like to request a CVE for pip[1][2] and I am a core developer for that
-project.
 
-There is a local DoS in pip 1.3, 1.3.1, 1.4, 1.4.1, 1.5, 1.5.1, 1.5.2, 1.5.3,
-1.5.4, 1.5.5, and 1.5.6. In an attempt to fix CVE-2013-1888 pip modified it's
-build directories from pip-build to pip-build-<username> and added in checks
-that would ensure that only a directory owned by the current user would be
-used. However because the build directory is predictable a local DoS is
-possible simply by creating a /tmp/pip-build-<username>/ directory owned by
-someone other than the defined user. This issue has also been reported to the
-Debian bug tracker as https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725847.
 
-This has been fixed[3] in the develop branch of pip which will be released as
-pip 6.0. 
+On 30/09/14 18:41, Rainer Gerhards wrote:
+> 2014-09-30 18:28 GMT+02:00 Solar Designer <solar@...nwall.com>:
+> 
+>> On Tue, Sep 30, 2014 at 01:55:12PM +0200, Sven Kieske wrote:
+>>> I don't understand the following statement in the
+>>> pri-vuln.txt in section "Patches":
+>>>
+>>> "Version 7.4.6, while no longer being project
+>>> supported received a patch and is also not vulnerable."
+>>>
+>>> What was patched when this version is not vulnerable?
+>>> Or do you mean it is not vulnerable after the patch got applied?
+>>
+>>
+> My apologies, this is a type that skipped past all proof-reading. It should
+> say "7.6.6", which is the v7 version released today. v7.4.x is not only
+> non-project supported, it's also heavily outdated and missing many other
+> patches as well (just to point this out).
 
-I am not aware of any previous CVE for this issue.
+This still does not answer the above questions, it just changes the
+version number in your statement which led to my question.
 
-[1] https://pip.pypa.io/
-[2] https://pypi.python.org/pypi
-[3] https://github.com/pypa/pip/pull/2122
+-- 
+Mit freundlichen Grüßen / Regards
 
----
-Donald Stufft
-PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+Sven Kieske
 
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
