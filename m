@@ -1,44 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/4
-Message-ID: <20141005125124.70d9231e@hboeck.de>
-Date: Sun, 5 Oct 2014 12:51:24 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/20
+Message-ID: <5432AF52.1050207@redhat.com>
+Date: Mon, 06 Oct 2014 09:03:46 -0600
+From: Eric Blake <eblake@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
 Content-Type: text/plain; charset=utf-8
 
-Am Sun, 5 Oct 2014 10:22:06 +0000
-schrieb Sona Sarmadi <sona.sarmadi@...a.com>:
+On 10/05/2014 08:11 AM, David A. Wheeler wrote:
+> Everyone: Thank you VERY MUCH for your timeline corrections and additions on shellshock.
+> 
+> My updated document is here:
+>   http://www.dwheeler.com/essays/shellshock.html
+> The updated timeline is here:
+>   http://www.dwheeler.com/essays/shellshock.html#timeline
 
-> 3) Do you have a script or summary of all tests in one place like
-> http://en.wikipedia.org/wiki/Shellshock_%28software_bug%29 or
-> https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck ?
-> Or maybe these are good enough & reliable? 
+You list the release of bash43-026 twice, ten hours apart.
 
-This is my script and I think what it does in the current version is
-the reasonable thing to do:
-It will first test if function importing old style is enabled and if
-yes it will warn about that, if it is disabled or any of the prefixing
-solutions is enabled then it will say so.
+You should add the recent release of bash43-030 for CVE-2014-6278:
 
-All further test outputs for all 6 CVEs depends on that. If the old
-function import is enabled warnings will be shown in red, because then
-people are in real danger. If function importing is disabled or
-prefixed the warnings will look less scary and clearly state
-"non-explitable".
-
-I think this is reasonable. I regret that previous versions of my
-script showed a  more scary output even if people weren't really in any
-danger because prefixing was already enabled.It was even
-referenced in a number of inaccurate media reports.
-
-
+https://lists.gnu.org/archive/html/bug-bash/2014-10/msg00040.html
+5 Oct 2014 19:06:06 -0400
 
 -- 
-Hanno Böck
-http://hboeck.de/
+Eric Blake   eblake redhat com    +1-919-301-3266
+Libvirt virtualization library http://libvirt.org
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
