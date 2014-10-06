@@ -1,21 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/9
-Message-ID: <20140626073846.GA10043@kludge.henri.nerv.fi>
-Date: Thu, 26 Jun 2014 10:38:46 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/30
+Message-ID: <CAAWYm=tnJaV03oKNbecerd6XWbxBgfb6SfCvQC6XouyrBTV-Pw@mail.gmail.com>
+Date: Mon, 6 Oct 2014 12:06:55 -0400
+From: David White <dmwhite823@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
+Subject: Re: OpenSSL RSA 1024 bits implementation broken?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 26, 2014 at 05:30:46PM +1000, Murray McAllister wrote:
-> But websites set lots of cookies, which if stolen, have no relevance
-> to being able to access the user's session, or do much of anything
-> useful with anyway. I believe a lot of the "this cookie does not
-> have HTTPOnly" issues are non-issues.
+I also perused the discussion at
+http://www.reddit.com/r/crypto/comments/2i9qke/openssl_bug_allows_rsa_1024_key_factorization_in/,
+which I found by googling this email subject.
 
-Those CVEs should be REJECTED. Can you provide list of non-issues with CVE?
+Most folks there are saying that this isn't true.
 
----
-Henri Salo
+On Mon, Oct 6, 2014 at 10:38 AM, Jeremy Stanley <fungi@...goth.org> wrote:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+> On 2014-10-06 16:34:29 +0200 (+0200), Pierre Schweitzer wrote:
+> > Following the information on that ML it appears not to be true. Or
+> > at least, there's no obvious evidence it happened. And lack of
+> > appropriate communication from reporter doesn't help getting rid
+> > of doubts. Unless I missed something from the thread you pointed?
+>
+> That's been the impression I got so far, but I have a reply on the
+> thread pending moderator approval linking to the blog post (which
+> seems not to have been mentioned there yet).
+> --
+> Jeremy Stanley
+>
+
+
+
+-- 
+David White
+Founder & CEO
+
+*Develop CENTS *
+Computing, Equipping, Networking, Training & Supporting
+Organizations Worldwide
+http://developcents.com
+
