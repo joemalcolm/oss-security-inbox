@@ -1,62 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/7
-Message-Id: <201404171859.s3HIxi2p000049@linus.mitre.org>
-Date: Thu, 17 Apr 2014 14:59:44 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/21
+Message-Id: <20141006154527.030F73AE06A@smtpvbsrv1.mitre.org>
+Date: Mon,  6 Oct 2014 11:45:27 -0400 (EDT)
 From: cve-assign@...re.org
-To: kseifried@...hat.com
+To: mancha1@...o.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: TrueCrypt audit report
+Subject: Re: CVE Request(s): Getmail 4
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-This report points out a number of issues that are certainly
-worthwhile to fix (or, in some cases, "improve" rather than "fix")
-within a product of this type. Not all of these issues would be
-considered vulnerabilities in the classic sense. As far as we can tell,
-the scope of the threat model or models was not explicitly defined
-within the report document, and the report instead is described as
-covering "issues that could lead to information disclosure, elevation
-of privilege, or similar concerns." It's unclear why findings such as
-the ability of an administrator to cause a BSOD are considered
-"similar." Also, the report identifies some issues that are apparently
-outside the intended security properties as described at:
+> http://pyropus.ca/software/getmail/CHANGELOG
 
-  http://www.truecrypt.org/docs/security-model
-  http://www.truecrypt.org/docs/physical-security
-  http://www.truecrypt.org/docs/non-admin-users
-  
-In other cases, the report identifies behavior that is wrong, but does
-not clarify whether there is a security impact or only a usability
-impact. In addition, we are unaware of whether a vendor response
-exists or is anticipated.
+> Getmail 4.45.0 added IMAP4-over-SSL certificate hostname validation.
+> POP3-over-SSL remained vulnerable to MITM attacks.
 
-These are the three issues that, based on the information directly
-contained in the report, would fall within the scope of CVE regardless
-of the vendor response:
+The CHANGELOG says:
 
-> TC_IOCTL_OPEN_TEST and TC_IOCTL_GET_SYSTEM_DRIVE_CONFIG: an attacker
-> can
-> 
->   -- Deduce the presence of files they do not have access to
->   -- Deduce if said files are smaller than TC_MAX_VOLUME_SECTOR_SIZE
->   -- Deduce if said files start with the string "TrueCrypt" or one of four magic markers
+  Version 4.46.0
 
-Use CVE-2014-2884.
+      -add missing support for SSL certificate checking in POP3 which broke
+      POP retrieval in v4.45.0.  Requires Python 2.6 or newer.  Thanks: "mancha".
 
+This depends on the interpretation of "broke POP retrieval."
 
-> integer overflow in the MainThreadProc function in
-> EncryptedIoQueue.c ... could result in information disclosure.
-> 
-> integer overflow in the ProcessVolumeDeviceControlIrp function in
-> Ntdriver.c ... can result in Denial of Service (starve the kernel of
-> memory)
+Do you mean that, in version 4.45.0, the client sent credentials over
+a POP3-over-SSL connection, and actual POP3 mail retrieval failed
+after credentials had already been sent? That behavior could have a
+CVE ID.
 
-Use CVE-2014-2885.
-
-
-(i.e., three distinct issues but two CVE IDs)
+Or do you mean that, in version 4.45.0, the POP3-over-SSL connection
+was never fully established, and the client would not have sent
+credentials? In other words, a MITM attack could succeed but there
+would be no security impact? That behavior would not have a CVE ID.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -66,11 +43,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTUCRUAAoJEKllVAevmvmssIgIALDlarnSEWz7t+TCc/sqj6bB
-v13XUmfCEP2s++SI7WjsJQEq+NDMXFNbNrydSiCtiIA3qnx+iJImwsYXM2MwWFX6
-1B7/JOcJW8ncU8/X3ikJ5vETtSViQO6FLjh+yjYMgCK/okQ4AXDero2K/VAfqD3M
-/Ns1ZDW3Jt60wzM3tjIxJcckMVLjd7VibYT/otH5tupRM8ytFzgvKtYQ3E/6X/IR
-el0bEaSFysOY7s5QzZfQ68Vbwr+4Vx2WpcrclsAviyGiQs+klotRYRQRdYQfLOSW
-9WO6T1DLtVG/8VaaHcLzV5EWXfCH88LotLximAtKONTwHjX94OUe4b/S4p9npaE=
-=INWV
+iQEcBAEBAgAGBQJUMrhZAAoJEKllVAevmvmstp0IAID4JjHJCsog98/a4SFblxRN
+0pC7f/DpX/5izj2i1kBdRU1u+wgrmoikbXeyck50coamD5e+xD94/P2I+aEhO90R
+9Xp3GWaLvghmdAjAXpA9KqHgrKU9F2PVHZW6j1eAalc4qCM6b6Dgi1bERLcJRPAI
+oKZ4U/nb72HnS2y3U3GeVOvH6DnXaahvlGT06cSrTFQwoN6r5Azr037xygxMvDKk
+ch4viXJ7S4Rm/vKntjb0XHdBO6oRP5qFDIHY73TBpcuAesmkrYmL1rFgDkWa3lXq
+fyktjdFfuQlDkzZL9hQo4HHvZey2kgSQPK1ZninGO/Yj1KvAHG/1VrIJzxhbPmY=
+=8/LZ
 -----END PGP SIGNATURE-----
