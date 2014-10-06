@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/10
-Message-ID: <53CFC94C.8040506@parallels.com>
-Date: Wed, 23 Jul 2014 18:40:12 +0400
-From: Vasily Averin <vvs@...allels.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/24
+Message-ID: <20141006171239.GC17130@blisses.org>
+Date: Mon, 6 Oct 2014 13:12:39 -0400
+From: Mason Loring Bliss <mason@...sses.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: kernel: vfs: refcount issues during unmount on symlink
+Subject: automated phishing email
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1122472
-"
-A flaw was found in the way reference counting was handled in the Linux kernel's
-VFS subsystem when unmount on symlink was performed.
+A co-worker suggested that this might have been aimed at procmail.
 
-On Red Hat Enterprise Linux 6 an unprivileged local user could use this flaw to
-cause OOM conditions leading to denial of service or, potentially, trigger
-use-after-free error.
+    https://bpaste.net/show/41323f7d9b35
 
-On Red Hat Enterprise Linux 7 a privileged local user with CAP_SYS_ADMIN
-capability (also in a container) could use this flaw to cause OOM conditions
-leading to denial of service or, potentially, trigger use-after-free error.
+I'm curious if anyone has thoughts about what the target might have been for
+this attempt.
 
-Acknowledgements:
-Red Hat would like to thank Vasily Averin of Parallels for reporting this issue.
-"
-https://lkml.org/lkml/2014/7/21/98
-
-Problem was fixed in OpenVZ kernel 2.6.32-042stab092.3
-https://openvz.org/Download/kernel/rhel6/042stab092.3/changes
-
-Also I would like to add that KernelCare project (http://kernelcare.com) have released
-a live hot update for this issue, both for affected OpenVZ and RHEL6 kernels.
-http://www.cloudlinux.com/blog/clnews/kernelcare-update-for-openvz-pcs-and-centosrhel-6-kernels-psbm28104.php
-
-Thank you,
-	Vasily Averin
+-- 
+Mason Loring Bliss             mason@...sses.org            Ewige Blumenkraft!
+(if awake 'sleep (aref #(sleep dream) (random 2))) -- Hamlet, Act III, Scene I
