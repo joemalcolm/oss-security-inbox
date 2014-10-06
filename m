@@ -1,81 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/5
-Message-ID: <538D6D56.9060108@redhat.com>
-Date: Tue, 03 Jun 2014 16:38:14 +1000
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/35
+Message-id: <AD0BF880-4721-4893-9B30-AB2D98E0E1F6@me.com>
+Date: Mon, 06 Oct 2014 18:12:04 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
 To: oss-security@...ts.openwall.com
-CC: tim-security@...tinelchicken.org, nicolas.gregoire@...rri.fr
-Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
-On 05/13/2014 02:58 AM, Tomas Hoger wrote:
-> Hi!
->
-> I can hardly call myself familiar with Java XML parsers, but here's my
-> 2c form a quick search around this that may be wrong.  Please correct
-> my mistakes.
->
-> On Thu, 8 May 2014 14:55:36 -0700 Timoth D. Morgan wrote:
->
->> That is, if you use DocumentBuilderFactory's setExpandEntityReferences
->> method and supply "false", then it has a very similar behavior.  I'm
->> about to release a comprehensive XXE paper, and here's a preview of
->> what I have written about it:
-> As far as I can see setExpandEntityReferences() controls what value is
-> set for the create-entity-ref-nodes DOM parser feature:
->
-> http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/jaxp/DocumentBuilderImpl.java#l158
-> http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/jaxp/DocumentBuilderImpl.java#l74
-> http://hg.openjdk.java.net/jdk7u/jdk7u/jaxp/file/cae04d181428/src/com/sun/org/apache/xerces/internal/impl/Constants.java#l427
->
-> The description in Java API docs is rather brief, xerces docs have more
-> details:
->
-> http://xerces.apache.org/xerces-j/features.html#create-entity-ref-nodes
-> http://xerces.apache.org/xerces2-j/features.html#dom.create-entity-ref-nodes
->
-> AFAICS, the feature does not aim to control if entity references are
-> expanded, but only how exactly they appear in the resulting DOM tree.
->
->> "Java developers who use the default parser (or a newer version of
->> Xerces-J) need to change one or more settings to make Xerces
->> reasonably safe when processing untrusted XML.  One behavior to be
->> aware of is the fact that the DocumentBuilderFactory's
->> setExpandEntityReferences method does not provide protection as one
->> might expect.  Calling this method with a "false" argument causes the
->> parser to omit external entity data in the document when referenced,
->> but it does not prevent definitions of external entities.  This means
->> the parser will still fetch external URLs, which could obviously be
->> used for blind SSRF attacks (even if the content isn't used later in
->> the document).   Worse still, this setting does not prevent full use
->> of external parameter entities, which would likely allow an attacker
->> to conduct all of the same attacks that are possible with regular
->> external entities."
-> Maybe your paper should rather mention parser features as
-> external-general-entities and external-parameter-entities:
->
-> http://docs.oracle.com/javase/7/docs/api/org/xml/sax/package-summary.html#package_description
->
-> OWASP XXE document covers some of this, but actually mentions only one
-> of the two features...
->
-> https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing#Java
->
+I thought it was https://twitter.com/ErrataRob
 
-Sorry for the absurdly late reply to this thread. I finally found time 
-to do some testing on OpenJDK 1.7.0_45. I can confirm Tomas' assessment 
-that setExpandEntityReferences() and 
-setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true) have no bearing 
-on whether or not entity references are expanded, nor do they purport 
-to. Applications that process attacker-supplied XML using Xerces are 
-vulnerable to SSRF attacks unless they use both 
-setFeature("http://xml.org/sax/features/external-parameter-entities", 
-false) and 
-setFeature("http://xml.org/sax/features/external-general-entities", false).
+On Oct 6, 2014, at 5:04 PM, Michal Zalewski <lcamtuf@...edump.cx> wrote:
 
-The OWASP XXE document should be updated to mention 
-external-parameter-entities. I will do this as soon as my OWASP wiki 
-account is approved.
+> I don't think it happened on Twitter - using advanced search with date
+> ranges, I don't see any mentions that would predate this article,
+> which already seems to be using the term:
+> 
+> http://www.csoonline.com/article/2687265/application-security/remote-exploit-in-bash-cve-2014-6271.html
+> 
+> It's odd that an article posted at 8 AM on Sept 24 would have any idea
+> of how the bug is already being called by the security community,
+> especially ahead of any Twitter buzz. But both Stephane and Florian
+> implied that some of the pre-notified parties apparently started
+> leaking details to the press and were getting ready to make a splash
+> the moment it goes public, so maybe that's the explanation.
+> 
+> /mz
 
-Thanks
-David
