@@ -1,88 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/24/6
-Message-Id: <E1W6ipm-0003Y2-D5@xenbits.xen.org>
-Date: Fri, 24 Jan 2014 15:38:18 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 87 (CVE-2014-1666) - PHYSDEVOP_{prepare,release}_msix exposed to unprivileged guests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/15
+Message-ID: <OFFE39D0DA.437BB5E8-ON85257D69.00426946-85257D69.0044BD33@us.ibm.com>
+Date: Mon, 6 Oct 2014 08:30:48 -0400
+From: Peter G Spera <spera@...ibm.com>
+To: Jose R R <Jose.r.r@...ztli-it.com>, oss-security@...ts.openwall.com
+Cc: 
+Subject: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-             Xen Security Advisory CVE-2014-1666 / XSA-87
-                              version 2
+Jose,
+It is important to note that the BASH running on z/OS was a proof of
+concept from 2001-2002. It was part of a Redbook project and is not part of
+any supported IBM z/OS product. IBM suggests that customers keep current
+with the latest version of BASH, downloading the source from GNU or working
+with vendors like Rocket Software to get a supported version.
 
-     PHYSDEVOP_{prepare,release}_msix exposed to unprivileged guests
+Regards,
+    Peter
+Peter Spera, IBM System z Security, System Integrity Center, Mail:
+spera@...ibm.com, IBM STG, Poughkeepsie, NY
+-----------------------------------
+From:	Jose R R <Jose.r.r@...ztli-it.com>
+To:	oss-security@...ts.openwall.com
+Date:	10/05/2014 02:49 AM
+Subject:	[oss-security] Shellshocker - Repository of "Shellshock" Proof
+            of Concept Code
+Sent by:	jose.r.r@...ztli.com
 
-UPDATES IN VERSION 2
-====================
 
-CVE assigned.
 
-ISSUE DESCRIPTION
-=================
+Niltze!
 
-The PHYSDEVOP_{prepare,release}_msix operations are supposed to be available
-to privileged guests (domain 0 in non-disaggregated setups) only, but the
-necessary privilege check was missing.
+Of possible interest:
 
-IMPACT
-======
+< https://github.com/mubix/shellshocker-pocs >
 
-Malicious or misbehaving unprivileged guests can cause the host or other
-guests to malfunction. This can result in host-wide denial of service.
-Privilege escalation, while seeming to be unlikely, cannot be excluded.
+I was surprised a (vulnerable) bash has been ported to IBM z/OS
 
-VULNERABLE SYSTEMS
-==================
+<
+http://mainframed767.tumblr.com/post/98446455927/bad-news-is-it-totally-works-in-bash-on-z-os-and
 
-Xen 4.1.5 and 4.1.6.1 as well as 4.2.2 and later are vulnerable.
-Xen 4.2.1 and 4.2.0 as well as 4.1.4 and earlier are not vulnerable.
+>
 
-Only PV guests can take advantage of this vulnerability.
 
-MITIGATION
-==========
+Best Professional Regards.
 
-Running only HVM guests will avoid this issue.
+--
+Jose R R
+http://www.metztli-it.com
+---------------------------------------------------------------------------------------------
 
-There is no mitigation available for PV guests.
+NEW Apache OpenOffice 4.1.1! Download for GNU/Linux, Mac OS, Windows.
+---------------------------------------------------------------------------------------------
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
+Daylight Saving Time in USA & Canada ends: Sunday, November 02, 2014
+---------------------------------------------------------------------------------------------
 
-This issue was disclosed publicly on the xen-devel mailing list.
 
-RESOLUTION
-==========
 
-Applying the appropriate attached patch resolves this issue.
-
-xsa87-unstable-4.3.patch    xen-unstable, Xen 4.3.x
-xsa87-4.2.patch             Xen 4.2.x
-xsa87-4.1.patch             Xen 4.1.x
-
-$ sha256sum xsa87*.patch
-45e5cc892626293067cc088a671a6bbdc18b018f54ff09b6a1cbb1fabbdf114d  xsa87-4.1.patch
-df9c1507d7bb0e5266a2fadd992d1e6ed0f7bf5be7466b8a93ed3bd8e3ab8e8d  xsa87-4.2.patch
-a13ce270b177d33537d627b85471abaa01215cd458541f4c6524914d7c81eb38  xsa87-unstable-4.3.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJS4ojJAAoJEIP+FMlX6CvZKpsH/3lVDKRMvFVkaHVPt1uRhqQo
-HxBDflm//lR5M8j8364rRSknSv8X2m/JfKJ7DCbX0WQWPrIU/i8MzTHM9fQqLvAR
-QYEhXYZC+ctkqk/sUvQaxOkyu8bNszuIOlWM9GuH2OnFN68zSl7kXiX7KZ5dHoYQ
-eNAjQeCXNaXTiSo3X3ZIFwZOlpkUj+NxJnZlZx5Hb/m5WH86FeqBNMi/jZB/i53F
-LFu7rhJ4rq25jbfuLp1ISBs5GA+71pNRvhukHijQHks1fApKhqmUiDhrBYX21l/Y
-5GJLG6L3sYdScjoeHu+QH0akwTC5L+BauMLMWljJOTKvL0p2yU/vDc2JMjXXnzk=
-=morx
------END PGP SIGNATURE-----
-
-Download attachment "xsa87-4.1.patch" of type "application/octet-stream" (598 bytes)
-
-Download attachment "xsa87-4.2.patch" of type "application/octet-stream" (616 bytes)
-
-Download attachment "xsa87-unstable-4.3.patch" of type "application/octet-stream" (916 bytes)
