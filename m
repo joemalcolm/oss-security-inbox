@@ -1,35 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/15
-Message-ID: <54296FE3.6030903@redhat.com>
-Date: Mon, 29 Sep 2014 16:42:43 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
-Subject: Array importing in bash 4.3 (was: Re: Fwd: Non-upstream patches for bash)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/40
+Message-ID: <20141006153807.78aedd9d.reed@reedloden.com>
+Date: Mon, 6 Oct 2014 15:38:07 -0700
+From: Reed Loden <reed@...dloden.com>
+To: Kohsuke Kawaguchi <kk@...suke.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: Security advisory in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-> From: Florian Weimer <fweimer@...hat.com>
->
-> Note that if you ship 4.3, you might want to reevaluate a decision to
-> enable array variable import from the environment.
+You wait and just generally not worry about it... MITRE will slowly
+update them at some future point based on information they collect.
 
-I changed the subject because I'm sure this parenthetical comment got lost.
+~reed
 
-Fortunately, in bash 4.3 (patchlevel 25), you cannot just -DARRAY_EXPORT 
-and get array variable import/export.  The code doesn't compile, and if 
-you fix that, it does not link, and if you fix that, well, you end up 
-with the following issue.  But I doubt anybody has done this, so it's 
-not a vulnerability (yet) and does not need CVE assignment etc.
+On Mon, 06 Oct 2014 15:26:10 -0700
+Kohsuke Kawaguchi <kk@...suke.org> wrote:
 
-The array import/export feature allows one to export and import 
-variables while preserving their array status.  Unfortunately, it 
-enables this:
-
-$ env -i 'FOO=([$(echo broken > /dev/tty)]=a)' ./bash -c true
-broken
-./bash: []=a: bad array subscript
-
-As I said, it is currently not an issue, but it's probably best not to 
-enable this in the future at all, or use it with another form of mangling.
-
--- 
-Florian Weimer / Red Hat Product Security
+> 
+> I have another newbie question.
+> 
+> Someone told me that CVE website still shows these vulnerabilities as 
+> "reserved", such as
+> http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3666
+> 
+> What do I need to do to get that status updated? I checked FAQ 
+> <http://cve.mitre.org/about/faqs.html> but didn't find any insights.
+> 
+> 
+> On 10/01/2014 04:25 PM, Kohsuke Kawaguchi wrote:
+> > Hello,
+> >
+> > I just wanted to share that the Jenkins project issued a security
+> > advisory today. These issues are independently found and we've
+> > aggregated into a single release.
+> >
+> > The relevant CVE IDs, our bug tracking IDs are available here
+> > <https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01>.
+> >
+> > The new versions can be downloaded from here
+> > <http://mirrors.jenkins-ci.org/>.
+> >
+> > (This is the first time I do this, so my apologies in advance for
+> > probably failing to follow the expected format.)
+> > --
+> > Kohsuke Kawaguchi
+> 
+> 
+> -- 
+> Kohsuke Kawaguchi                          http://kohsuke.org/
