@@ -1,18 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/19/3
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF4C5E963D@IMCMBX01.MITRE.ORG>
-Date: Fri, 19 Dec 2014 18:19:10 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: Reed Loden <reed@...dloden.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: RE: request for CVEs for git clients
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/33
+Message-ID: <CADtDDqKbbTZrdj8BFAXNfSDC8841PsDh6myVwzLrRQn3iZ=qUA@mail.gmail.com>
+Date: Mon, 6 Oct 2014 16:02:07 -0500
+From: Jen Savage <savagejen@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
-Just a quick note, since there has been some confusion or question about whether additional identifiers are necessary for other git clients.
+twitter groupthink created it
 
-If a client uses an "official" git library and inherits the vulnerability from that code, then CVE-2014-9390 is appropriate based on shared libraries / codebases.
+On Mon, Oct 6, 2014 at 3:43 PM, David A. Wheeler <dwheeler@...eeler.com>
+wrote:
 
-If there are other git clients that work with the git "protocol" but contain independently-written code (i.e. a separate implementation), and those clients are vulnerable, then each implementation should receive its own ID.
-
-- Steve
+> Who created the name "shellshock"?  And when?
+>
+> I can't seem to find anything:
+> * Stéphane Chazelas proposed "bashdoor" on 2014-09-14 14:29:48 +0100, but
+> this did not catch on. (http://seclists.org/oss-sec/2014/q4/92).
+> * Robert Graham (Errata Softwre) posted "Update: I think people are
+> calling this the "shellshock" bug. Still looking for official logo" (
+> http://blog.erratasec.com/2014/09/bash-bug-as-big-as-heartbleed.html ).
+> This wording suggests that is reporting what OTHERS call it, and not a name
+> he gave himself.
+> * Andreas Lindh tweeted a proposed image for "shellshock, but this was in
+> response to Robert Graham's "official logo" request - so this is DEFINITELY
+> not the source of the name. (Tweet at:
+> https://twitter.com/addelindh/status/514840916692324352 )
+>
+> Suggestions?
+>
+> --- David A. Wheeler
+>
 
