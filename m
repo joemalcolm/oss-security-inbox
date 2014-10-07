@@ -1,35 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/1
-Message-Id: <20141113074550.38EB01BE1C8@smtpvbsrv1.mitre.org>
-Date: Thu, 13 Nov 2014 02:45:50 -0500 (EST)
-From: cve-assign@...re.org
-To: cherepan@...me.ru
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: binutils -- directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/1
+Message-ID: <8E89095AEEE73C4A94D5DDD2B92DEF722C1EE0F8@810-EXCHANGE03.cbb.local>
+Date: Tue, 7 Oct 2014 01:34:53 +0000
+From: "Henry, Bobby" <Bobby.Henry@...edient.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I forgot who said it, but we really missed the opportunity to call it
+'Bashed'.
 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17552#c4
-> https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=dd9b91de2149ee81d47f708e7b0bbf57da10ad42
-> Prevent archive memebers with illegal pathnames from being extracted from an archive.
+On 10/06/2014 06:42 PM, Larry W. Cashdollar wrote:
+> turns out to be https://twitter.com/addelindh
+>
+> On Oct 6, 2014, at 6:12 PM, Larry W. Cashdollar <larry0@...com> wrote:
+>
+>> I thought it was https://twitter.com/ErrataRob
+>>
+>> On Oct 6, 2014, at 5:04 PM, Michal Zalewski <lcamtuf@...edump.cx> wrote:
+>>
+>>> I don't think it happened on Twitter - using advanced search with date
+>>> ranges, I don't see any mentions that would predate this article,
+>>> which already seems to be using the term:
+>>>
+>>> http://www.csoonline.com/article/2687265/application-security/remote-exploit-in-bash-cve-2014-6271.html
+>>>
+>>> It's odd that an article posted at 8 AM on Sept 24 would have any idea
+>>> of how the bug is already being called by the security community,
+>>> especially ahead of any Twitter buzz. But both Stephane and Florian
+>>> implied that some of the pre-notified parties apparently started
+>>> leaking details to the press and were getting ready to make a splash
+>>> the moment it goes public, so maybe that's the explanation.
+>>>
+>>> /mz
+>
 
-Use CVE-2014-8737.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUZGDMAAoJEKllVAevmvmsZo8H/AgXv8w/1w6B2mFs4CM549rZ
-rK/sAPxlI/oryjsLyVqPH5P349xNK+xVq3lXzDwQ1A1Ge2Ht1cP2pMuirlScMBu8
-t22oRqb5IoddSPlva1ydBip8kq4Q5Grx+Vjl42HF9RDT7JHz75MuVDM7p9zbOAEA
-vO07ld8cpPBkxJp9uHvjDTCxCdhsYWdk45t0eb5Ze3r0IpNNPxxtdJNm4uGKV45h
-cRFBVHAH1N4pq1XECBAtnogV4mrlHFJF2tYXoEGT3vmmJCEa9T5m1gkT2TVZmsr0
-o8gjiJ7qzoIUkSxvub9/s16lx/9Qi6EFiivzwN2pXpLrRB3+j9BTbS3dDnMqsqY=
-=+Ecv
------END PGP SIGNATURE-----
