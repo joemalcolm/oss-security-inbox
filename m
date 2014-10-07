@@ -1,42 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/15
-Message-ID: <20141117172107.5fab0d21@pc>
-Date: Mon, 17 Nov 2014 17:21:07 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: Jakub Wilk <jwilk@...lk.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/18
+Message-ID: <3230301C09DEF9499B442BBE162C5E482575DA92@SESTOEX04.enea.se>
+Date: Tue, 7 Oct 2014 10:23:07 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-Am Mon, 17 Nov 2014 14:52:22 +0100
-schrieb Jakub Wilk <jwilk@...lk.net>:
-
-> * Hanno Böck <hanno@...eck.de>, 2014-11-17, 13:33:
-> >I wasn't able to fuzz a crash out of 7z, arj, msgunfmt (gettext),
+> Unfortunately, there are currently several pending requests that I feel fall in
+> the gray area (some are in here, and some off-list, which I surely would
+> require bringing to oss-security before they may possibly be satisfied), and
+> this bothers me.  Arguably, this indicates that we're beyond the (very
+> limited) time period where I could reasonably host a vendor-sec replacement
+> list without it becoming too controversial.  So I think that we'll need to discuss
+> several other requests before we approach yours, and I just fail to find time
+> to get into that lately.
 > 
-> https://bugs.debian.org/763820
-> https://bugs.debian.org/769901
+> That said, the first link from:
 > 
-> I don't remember the exact details, but I'm pretty sure it took at
-> most a few hours of afl-fuzzing to find these crashers.
+> http://oss-security.openwall.org/wiki/vendors#enea
+> 
+> currently leads to:
+> 
+> http://mail.lists.enea.com/pipermail/security-announce/
+> 
+> and this shows:
+> 
+> "The Security-announce Archives
+> 
+> No messages have been posted to this list yet, so the archives are currently
+> empty."
+> 
+> Why is that?  We'd need some way to see that you're actually issuing security
+> updates, and how promptly you do that.
+> 
 
-I'd consider "few hours of afl-fuzzing" not to be low hanging fruit,
-but opinions may differ on that (I'm currently only focusing on
-software where I get the crashers within minutes).
+Alexander,
 
-But appart from that: The first bug is marked as fixed but no
-indication is given whether the fix went upstream. Did you do that or
-should it be reported to gettext?
+We have actually sent advisories to this list! There must be some misconfiguration in the mailing list archive server, I have put an IT guy on it. "I can provide you  "Security Notification" we sent on Sep 25 or any other" if you want.
 
-(Actually that's also a thing I also see far too often - bugs get
-reported somehow in public, but the reports don't arrive at the
-appropriate upstreams)
+This list is mainly for critical vulnerabilities (such as Heartbleed & Shellshock.. ) which we encourage Enea Linux users to update security patches immediately.
 
--- 
-Hanno Böck
-http://hboeck.de/
+Some of our customers are using Enea products in deeply embedded products, and thus are not exposed to the outside world (Internet). They don't want to get security or other updates frequently. The other customers who are affected and want security updates, normally they have special desire/requirements (for instance some customers want monthly updates, some want the fixes in their specific branch directly etc.. ) So we provide security and other updates to customers based on our agreements with the customers through their contact channels and not via ESRT team. We don't send security advisories for these kind of updates. 
+ 
+Our security strategy is to help Open Embedded, Yocto & vendor-kernels to backport security patches from mainline/ stable k.org/ upstream project as soon as possible so that not only Enea customers but all yocto users can get updates from yocto. We save time and also contribute back to the community. 
+ 
+I believe that those vendors who are using Open Source products, they get more benefits if they collaborate with community rather than work isolated in their own world.   
+ 
+Regarding letting some security researchers who are not employed with any specific distro onto the list: I am not in the position to decide this (I am not myself in :) ) but my personal opinion is that if a researcher is reliable and known and burns for security, why not. Most of the time this kind of persons help more because of their passion and desire :) they are normally not paid but they put their soul into detecting and solving security vulnerabilities. I just wish that there could be something that the distros could do for these people. If they are freelance, maybe the distros could give them different commitment/project, so they could get paid for their hard work :)
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Cheers
+/Sona
