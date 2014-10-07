@@ -1,29 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/16/9
-Message-ID: <CAFJ0LnE6f_qVvBdV9jWJOJ3jsce=1-_zKuzUHiGjbXuM-14ZeQ@mail.gmail.com>
-Date: Sun, 16 Feb 2014 12:19:23 -0800
-From: Nick Kralevich <nnk@...gle.com>
-To: oss-security@...ts.openwall.com
-Cc: "CERT(R) Coordination Center" <cert@...t.org>
-Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/23
+Message-ID: <5433E180.4060507@mittwald.de>
+Date: Tue, 7 Oct 2014 14:50:08 +0200
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+CC: <langsec-discuss@...l.langsec.org>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 16, 2014 at 11:54 AM, Nick Kralevich <nnk@...gle.com> wrote:
-> Statically linked executables with PIE are
-> not supported today [4], although I'd love to see it in the future.
->
-> [4] http://comments.gmane.org/gmane.comp.gnu.binutils/56324
 
-Expanding on what I wrote earlier...
 
-The Google security patch rewards program [5] rewards security
-improvements in open source projects, such as GCC, llvm, and Android.
-While I can't speak for the committee which approves these rewards,
-I'd be happy to support and recommend rewards to any security
-researcher who implements statically linked PIE support. In my mind,
-there are three possible rewards here, one for GCC, llvm, and Android.
+On 07/10/14 13:59, David A. Wheeler wrote:
+> I am still struggling with this one.  I am trying to create that list here:
+> http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
+> 
+> But to be honest, that list is pretty pathetic. This is a challenging class of vulnerability to detect or prevent ahead of time. Ideas would be very welcome.
 
-[5] https://www.google.com/about/appsecurity/patch-rewards/
+Well I think the core issue was:
+
+A parser, which was written to just run trusted input
+was exposed years later via third party configuration
+( e.g. /bin/sh == bash & cgi using /bin/sh) to untrusted
+input.
+
+I guess to avoid such cases in the future, you must be explicit
+from which sources you accept input.
+This whitelist should not contain arbitrary content like "stdin"
+or any input source which itself has no strict whitelist on input
+it accepts.
+
+So in short: you need to design and implement interfaces
+for every program which enforce explicit security boundaries.
+
+Example: why should I be able to feed audio files
+into graphics processing programs?
+
+This is a lot about parser and language safety imho.
+So I can't mention langsec.org enough.
+
+Go there, read the papers, look up the videos from
+their talks.
+
+I know this means re-implementing almost all code out there.
+
+But if you can proof that the input for program A
+constructs a turing complete grammar you have already lost.
+You can not "fix" these bugs, as there is an infinite number of them.
+You need to fix the parsers and the languages first.
 
 -- 
-Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
