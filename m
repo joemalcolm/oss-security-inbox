@@ -1,78 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/14/1
-Message-ID: <mpro.n8oiuc0ushvds06jd.taviso@cmpxchg8b.com>
-Date: Sun, 13 Jul 2014 18:59:01 -0700
-From: Tavis Ormandy <taviso@...xchg8b.com>
-To: oss-security@...ts.openwall.com
-Subject: glibc locale issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/36
+Message-ID: <543434D1.3080801@FreeBSD.org>
+Date: Tue, 07 Oct 2014 13:45:37 -0500
+From: Bryan Drewery <bdrewery@...eBSD.org>
+To: Kohsuke Kawaguchi <kk@...suke.org>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Security advisory in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-I just remembered another charset issues I had looked into but abandoned.
+On 10/3/2014 4:44 PM, Kohsuke Kawaguchi wrote:
+> We are still learning how we should handle vulnerabilities, so I'm sure
+> there's room for improvements.
+> 
+> We have multiple release lines to which the fixes have to be released
+> simultaneously, and overall this overhead is significant. That's why we did
+> one massive release that contains all the fixes.
+> 
+> Wrt CVE-2013-2186, a week ago we got a report from somebody that he did a
+> security scan and found that we are still using a vulnerable version of the
+> library to which CVE-2013-2186 is assigned. In this release we use a newer
+> version of the library that addresses the problem, and I thought it'd be
+> appropriate to raise a flag to the users that if they continue to use older
+> versions, they'd remain vulnerable to CVE-2013-2186. That's why it's in the
+> advisory. It is not because we sat on a report for more than a year.
+> 
+> When you say the timeframe is especially concerning, perhaps you mean you
+> are concerned that we fail to notice this vulnerability in our library for
+> more than a year, and if so, you are of course right. Jenkins project has
+> gotten a long list of library dependencies, and I haven't found any
+> practical means to get notified when vulnerabilities are found in any one
+> of them.
+> 
 
-First of all, I think the need_so logic in gconv_trans is broken, but even
-if it worked there is an off by one error in __gconv_translit_find() (it
-does + 3 instead of + 3 + 1 in the allocation. 
-
-Proof:
-
-$ CHARSET=//ABCDE pkexec 
-*** Error in `pkexec': malloc(): memory corruption: 0x00007f15bc0732d0 ***
-*** Error in `pkexec': malloc(): memory corruption: 0x00007f15bc0732d0 ***
-$ cp $(which pkexec) .
-$ CHARSET=//ABCDE valgrind --quiet ./pkexec 
-==23804== Invalid write of size 4
-==23804==    at 0x5A2D34B: __gconv_translit_find (gconv_trans.c:392)
-==23804==    by 0x5A24B1B: __gconv_open (gconv_open.c:182)
-==23804==    by 0x5A24671: iconv_open (iconv_open.c:71)
-==23804==    by 0x54E5298: try_conversion (gconvert.c:199)
-==23804==    by 0x54E583C: g_iconv_open (gconvert.c:251)
-==23804==    by 0x54E58F5: open_converter (gconvert.c:338)
-==23804==    by 0x54E5D17: g_convert (gconvert.c:575)
-==23804==    by 0x54E5EC6: g_convert_with_fallback (gconvert.c:671)
-==23804==    by 0x5508BDD: strdup_convert (gmessages.c:688)
-==23804==    by 0x5509EBC: g_printerr (gmessages.c:1542)
-==23804==    by 0x10A55C: main (pkexec.c:515)
-==23804==  Address 0x7ca8cf5 is 117 bytes inside a block of size 120 alloc'd
-==23804==    at 0x4A0645D: malloc (in
-/usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so)
-==23804==    by 0x5A2D268: __gconv_translit_find (gconv_trans.c:369)
-==23804==    by 0x5A24B1B: __gconv_open (gconv_open.c:182)
-==23804==    by 0x5A24671: iconv_open (iconv_open.c:71)
-==23804==    by 0x54E5298: try_conversion (gconvert.c:199)
-==23804==    by 0x54E583C: g_iconv_open (gconvert.c:251)
-==23804==    by 0x54E58F5: open_converter (gconvert.c:338)
-==23804==    by 0x54E5D17: g_convert (gconvert.c:575)
-==23804==    by 0x54E5EC6: g_convert_with_fallback (gconvert.c:671)
-==23804==    by 0x5508BDD: strdup_convert (gmessages.c:688)
-==23804==    by 0x5509EBC: g_printerr (gmessages.c:1542)
-==23804==    by 0x10A55C: main (pkexec.c:515)
-==23804== 
-
-I think this //foo syntax is supposed to allow you to open converters in
-/usr/lib/gconv, but because the need_so logic is broken it doesn't work. If
-it did, there would be another bug but I can't reach it right now.
-
-Unrelated to glibc, but because pkexec links to glib, the built-in
-iconv/gconv conversion stuff is used by default. This allows you to setup
-aliases, which are of the form "charset <arbitrary alias>", for example:
+I understand. Is there any practical way you could not bundle
+dependencies? Then it would not be a problem. I don't know enough about
+Java's build system to know if this is possible.
 
 
-$ echo "UTF-7 ThisIsAnAlias" > charset.alias
-$ CHARSET=ThisIsAnAlias CHARSETALIASDIR=$(pwd) pkexec 
-pkexec --version +AHw
-       --help +AHw
-       --disable-internal-agent +AHw
-       +AFs---user username+AF0 PROGRAM +AFs-ARGUMENTS...+AF0
+-- 
+Regards,
+Bryan Drewery
 
-(Notice the output is in UTF-7). I guess you can use this to figure out the
-contents of root owned files (via hard links or symlinks), but it has to be
-in the right format, and you have to guess the contents. Even then, you will
-just receive confirmation if you guess right.
 
-This seems like a pretty minor flaw that I wouldn't normally bother
-mentioning, but as I'm tacking it onto a more serious bug and we're all
-discussing the LC_ALL thing anyway I don't mind so much ;-) Maybe someone
-can figure out how to turn this into something scary.
-
-Tavis.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
