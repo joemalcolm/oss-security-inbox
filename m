@@ -1,37 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/7
-Message-Id: <20141114193936.6B3FE6C0B4C@smtpvmsrv1.mitre.org>
-Date: Fri, 14 Nov 2014 14:39:36 -0500 (EST)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel: ttusb-dec: overflow by descriptor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/21
+Message-ID: <89A5CF7D-85F3-4904-807C-71D718E70C65@dwheeler.com>
+Date: Tue, 07 Oct 2014 07:59:05 -0400
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: oss-security@...ts.openwall.com,Hanno Böck <hanno@...eck.de>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> * Heartbleed is an out of bounds memory read. Well understood and yes,
+  it should be possible to implement mitigations against these kinds of
+  things.
 
-> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=f2e323ec96077642d397bb1c355def536d489d16
+It is not only possible, I have already posted a list of ways to find Heartbleed:
+http://www.dwheeler.com/essays/heartbleed.html
 
-> Overflow in a DVB-T usb driver, it overflows into a small size stack array.
+I think identifying specific ways to counter classes of vulnerabilities is really important.
 
-> [media] ttusb-dec: buffer overflow in ioctl
+> What class of bug is Shellshock? "Weird feature invented in
+  pre-Internet era"? How do you conquer this class of bugs?
 
-Use CVE-2014-8884.
+I am still struggling with this one.  I am trying to create that list here:
+http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+But to be honest, that list is pretty pathetic. This is a challenging class of vulnerability to detect or prevent ahead of time. Ideas would be very welcome.
 
-iQEcBAEBAgAGBQJUZlmRAAoJEKllVAevmvmsx+kH/00r2lYdj5luNKxhBW/XrpDB
-wS/sDHVLArGoecbzBvIKwiJAicUw6cxjKEqI+VViFETVOhlKxxPPesGWw9k/dFfC
-htTig68vLPght7O2nxMHwzrs8QSE7WywpBaSLSiMmo+0uMA/2roJDcvM0Lb1Z9ky
-PIzEdXrvntmfX+mIsp8Tp6O6GOw00ND50TUQzPjuHHVT6JGN2n2wmOhDRCU5+0YU
-+HofmbpC9y6AI2azg4SjvqVO5lISGdLLXzFBo+lGx/uuxJZpdrAEbPyp1Ah1b2Ys
-GEfpG6cFpEHTMXdls3bkKoSDyEzfHfpKiRVaavM0WyorivIn3RxaI2ICw6WjrVk=
-=KA62
------END PGP SIGNATURE-----
+--- David A.Wheeler
