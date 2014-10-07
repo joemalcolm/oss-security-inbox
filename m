@@ -1,67 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/14/3
-Message-ID: <20140414055944.GA5226@suse.de>
-Date: Mon, 14 Apr 2014 07:59:44 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: pam_cifscreds stack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/4
+Message-ID: <CALx_OUCUryCh+OkwH5gZ2hGVOGOsfgZzYnbALOX-X3m=a=g7bA@mail.gmail.com>
+Date: Mon, 6 Oct 2014 20:39:49 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> The bashdoor.com thing sounds a bit damning (doesn't sound like
+> something that would be in the notifications to CDNs & co?).
 
-About the patch: I was asked by upstream for a re-spin,
-as they dont want the strlen() but have the snprintf()
-return value checked. Previous patch is correct in my eyes,
-but to let you know that there might be a different patch
-upstream soon.
+(And it's not a pun that immediately comes to mind when thinking about an
+RCE in bash, I think, given that it's not a backdoor.)
 
-Sebastian
-
-On Fri, Apr 11, 2014 at 02:13:42AM -0400, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> > We are tracking a patch at:
-> > 
-> > https://bugzilla.novell.com/show_bug.cgi?id=870168
-> > 
-> > Fixing buffer overflow in cifskey, maybe also used in samba itself?
-> 
-> Use CVE-2014-2830 for any product that is exploitable because of
-> the use of sprintf as shown in:
-> 
->   http://bugzillafiles.novell.org/attachment.cgi?id=585460
-> 
-> Apparently one exploitable case is the pam_cifscreds product. We do not
-> know whether there is an exploitable case in the cifs-utils package
-> because of the:
-> 
->   https://git.samba.org/?p=cifs-utils.git;a=blob;f=cifskey.c
-> 
-> code. There might be other products using an essentially identical
-> cifskey.c file.
-> 
-> - -- 
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
-> 
-> iQEcBAEBAgAGBQJTR4e+AAoJEKllVAevmvmsXnkIAK1AI1cXGWICxk/efLoDVCTH
-> hkyy/hFYpPa5/qsGoH9sbnHTCtFcHA/rwm2NLLuDCVNzw9C50e/w9mDWI21M4uN3
-> ogRjeghZjz1ut1TpH6JFD9dnpcUI/JSdFl7vgWlWwmyNcYQowWlUMX/dR5lLnj14
-> GMUZrHJXuutLUxnsGxX6MOStWRcC3QkOJZREJAdTsru9blhKYZHDsCtdaGQJpnIh
-> ivAEOeYpKY5f+9lfEBbfelNh/G6p6gKjZtPMO0HXdfLXB5iUxLpx8gKNiRrRmzZw
-> EM+s/XfzTnS+3OOy7iQyE1kLN44jPh0S85UuDZ9xxdkEQdEeUszr7TrLgF9s0cA=
-> =5G8d
-> -----END PGP SIGNATURE-----
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+/mz
