@@ -1,26 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/4
-Message-ID: <CACYkhxj6Lzg2izRTP4P3bbjLVKtpJRJZiU1vD+ffVN8gzJZUsw@mail.gmail.com>
-Date: Mon, 31 Mar 2014 20:31:18 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/15
+Message-ID: <CAOp4FwQ6g4x7YxDmrub5hTtMb9U4YcktUkrjcj_E22SxHMysFQ@mail.gmail.com>
+Date: Tue, 7 Oct 2014 13:31:09 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVEs, Crypto and "vulnerabilities"
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On 31 March 2014 17:26, Kurt Seifried <kseifried@...hat.com> wrote:
-> So the line in the sand is moving currently, I think this issue is
-> another good example of something that may qualify for a CVE, or maybe
-> not, depends where we draw the line.
+On Tue, Oct 7, 2014 at 1:11 PM, Hanno Böck <hanno@...eck.de> wrote:
+> Hi,
 >
-> https://github.com/opencart/opencart/issues/1279
+> Yesterday I wrote down some thoughts on Shellshock, Heartbleed and the
+> whole issue of free software security:
+> https://blog.hboeck.de/archives/857-How-to-stop-Bleeding-Hearts-and-Shocking-Shells.html
 >
-> So if someone has strong opinions either way please speak up.
+> Basically my key point is: These events caused interest in the sec
+> community and people had a look - and found further issues.
+>
+> My question would be: Can we get that attention somehow *before* an
+> event like shellshock happens? We probably all could name products that
+> could have sec bugs with similar severity.
+>
+> I outlined a vague idea: Would it work if we'd say we make a "sec
+> people, please have a look at software XY"-day? Would people do that?
+>
+> Heartbleed and Shellshock give me the feeling that there probably are,
+> right now, security bugs with simliar severity active on our systems.
+> Let's have a discussion how we can find them.
+>
 
-This looks like an easily exploitable bug.  What possible reason could there
-be for it not qualifying?
+OpenBSD has been pretty successful at building a secure Operating
+System. I think that their approach works pretty well. By looking at
+what they are doing, this might give insight on how to increase
+interest in doing code audits in other Open Source projects.
 
-If somebody wrote an exploit would it be disqualified just because the author
-doesn't understand?
 
-Regards,
-  Michael
+
+> cu,
+> --
+> Hanno Böck
+> http://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
+
+
+
+-- 
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
