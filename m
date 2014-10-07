@@ -1,47 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/16/3
-Message-ID: <CAOp4FwTAFW816AHSE8xZHvVXTYEtArDTNPzTiU+5sOYdEw4efA@mail.gmail.com>
-Date: Tue, 16 Sep 2014 10:32:40 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/22
+Message-ID: <CAOp4FwTepLbfUKKZz3HScCxmrbA1choW1g_4NBPwDi6RpYQuhA@mail.gmail.com>
+Date: Tue, 7 Oct 2014 16:33:23 +0400
 From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [CVE Requests] rsync and librsync collisions
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 16, 2014 at 9:47 AM, Michael Samuel <mik@...net.net> wrote:
-> On 13 September 2014 04:39,  <cve-assign@...re.org> wrote:
->> The short answer is that we neither agree nor disagree at present; we
->> think that either any required CVE assignment can be made by us after
->> a full public disclosure, or any required CVE assignment can be made
->> by a different CNA now.
+On Tue, Oct 7, 2014 at 3:59 PM, David A. Wheeler <dwheeler@...eeler.com> wrote:
+>> * Heartbleed is an out of bounds memory read. Well understood and yes,
+>   it should be possible to implement mitigations against these kinds of
+>   things.
 >
-> The bug is publicly disclosed.  The exploit isn't (and I believe list rules
-> dictate that I can't post exploits here).
+> It is not only possible, I have already posted a list of ways to find Heartbleed:
+> http://www.dwheeler.com/essays/heartbleed.html
 >
->> MITRE is not currently interested in receiving an advance copy of the
->> full public disclosure or any related PoC information from anyone.
->> We'll see whether the CNA process above can work.
+> I think identifying specific ways to counter classes of vulnerabilities is really important.
 >
-> I don't care who assigns the CVE, but it would be nice to be able to link
-> the tickets for this together somehow.
+>> What class of bug is Shellshock? "Weird feature invented in
+>   pre-Internet era"? How do you conquer this class of bugs?
 >
-> An experimental branch of librsync that uses blake2 is available here:
-> https://github.com/therealmik/librsync/tree/blake2
+> I am still struggling with this one.  I am trying to create that list here:
+> http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
 >
-> Dropbox have responded that they have fixed this bug independently, but
-> have not pushed anything out to their forked librsync github repo.
+> But to be honest, that list is pretty pathetic. This is a challenging class of vulnerability to detect or prevent ahead of time. Ideas would be very welcome.
 
-Has Dropbox made a public statement regarding this ?
+I've noticed that OpenBSD developers tend to be very careful when
+introducing new features. Typically, a commit for a new feature is
+reviewed by a senior developer for possible security problems.
+
+Before code is committed, it is posted on a public mailing list where
+the diff is peer-reviewed. IMHO, this is what makes OpenBSD stand out
+from other projects: systematic peer-review of patches by people who
+analyse it from the security angle, and a developer tree that always
+compile.
+
+
 
 >
-> I have not heard further from the rsync maintainer.  I will publicly release
-> colliding blocks and construction details soon, so if you use rsync on
-> untrusted files, consider using the -W option to avoid a DoS.
->
-
-Has the rsync maintainer acknowledged the issue publicly ?
-
-> Regards,
->   Michael
+> --- David A.Wheeler
 
 
 
