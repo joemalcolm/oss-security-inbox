@@ -1,34 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/24/5
-Message-Id: <201401241358.s0ODvu4D024909@linus.mitre.org>
-Date: Fri, 24 Jan 2014 08:57:56 -0500 (EST)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 87 - PHYSDEVOP_{prepare,release}_msix exposed to unprivileged guests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/10
+Message-ID: <874mvgfhva.fsf@mid.deneb.enyo.de>
+Date: Tue, 07 Oct 2014 09:39:53 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Michal Zalewski:
 
-> Xen Security Advisory XSA-87
-> the necessary privilege check was missing
+> It's odd that an article posted at 8 AM on Sept 24 would have any idea
+> of how the bug is already being called by the security community,
+> especially ahead of any Twitter buzz.
 
-Use CVE-2014-1666.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEbBAEBAgAGBQJS4nDBAAoJEKllVAevmvmsaNgH+ISA3OKriLrIaJjbF9LrOvra
-biDtJXr9nyPC6nLIOc1uLb2BRsbYEmQJEKGCf8LkahxX5shwlELazi0zTRER+NCT
-fNi0TshG27+It5Msij/AqJLyTbGBhz8evVH71/CsdhuPZ4ldUcrpgF25wzE6Oi9z
-32G1F/iCSyqrAhc+pCGqrA3fFnpZOn4HmhMDG7AEEn5b1+rGh0pNzRpQzUouf++e
-5/U/Mp/sTRaifwpy6tJJDn/35pPKs4dCYmorn1CnRFjWXDsBgXxfaSe1RCCWnO8/
-u0WDxBI8RkqR+wPgGM5yjLf5Bxb/9M22gMOKxfDGLQBQ/EI9QN0U3Vztm72GjQ==
-=J/zq
------END PGP SIGNATURE-----
+The posting date of the article was not adjusted after edits were
+made.  I don't think the name was part of the initial version.
