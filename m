@@ -1,54 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/37
-Message-ID: <CANae7MioQ6mPCwb_ggXVo7SnVoOyufyHqyaQBqzfOr+D5UkDxw@mail.gmail.com>
-Date: Thu, 20 Nov 2014 11:30:05 -0500
-From: Peter Wolanin <pwolanin@...il.com>
-To: Security Team <security@...pal.org>
-Cc: carnil@...ian.org, oss-security@...ts.openwall.com, gwolf@...lf.org,  team@...urity.debian.org, cve-assign@...re.org
-Subject: Re: [security] Pending CVE assignments for SA-CORE-2014-006?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/35
+Message-ID: <543431EA.70805@redhat.com>
+Date: Tue, 07 Oct 2014 12:33:14 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Discussion: information leakage from server and client software - CVE/hardening/other?
 Content-Type: text/plain; charset=utf-8
 
-re: https://www.drupal.org/node/2378367
+So I was looking at Firefox and noticed on Fedora it has the Health
+check and crash reporter enabled by default, meaning that if Fedora
+crashes a bunch of information gets sent back to Mozilla (I assume), I
+don't know if the UI/etc pops up and lets you see what is being sent and
+so on, on RHEL the crash reporter appears to be disabled by default.
 
-The phpass module for Drupal 6 contains the backport from Drupal 7 of
-the code related to the DoS, CVE-2014-9016
+Also having looked at spamassassin (which has a component to retrieve
+and update rules) and clamav (which has freshclam to update the AV DB)
+both of these explicitly disable the updates, you must manually enable them.
 
-Since it's identical code, should I use the same CVE number, or since
-it's a contributed project, there will be a distinct one issued?
+Then I see this:
+http://boingboing.net/2014/10/07/adobe-ebook-drm-secretly-build.html
+which is rather timely.
 
-Thanks,
+So we have a continuum, at one end we have programs that explicitly make
+you configure them before they'll connect out, and on the other end we
+have apps that connect out whether or not you want them to (and being
+closed source on locked down hardware you probably have little to no
+choice in the matter).
 
-Peter Wolanin
+Additionally we have the type of information and expectations, e.g. if I
+enable ntp or chrony I expect it to make outgoing connections to the NTP
+servers, which may be semi random if using the ntp.org pool servers. If
+I fire up a web browser and point it at openwall.com I expect traffic to
+go there and any ad networks/etc, I may not be expecting it to send
+random health reports somewhere.
 
-On Thu, Nov 20, 2014 at 9:48 AM,  <cve-assign@...re.org> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> Session hijacking (Drupal 6 and 7)
->
-> Use CVE-2014-9015.
->
->
->> Denial of service (Drupal 7 only)
->
-> Use CVE-2014-9016.
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
->
-> iQEcBAEBAgAGBQJUbf58AAoJEKllVAevmvms2qcIAItiBrXYCr3qbvFieEgqWdZT
-> UX/Z+6TcS65VB2JrLKXDgMLArWIXRQWVT/1dORotEabeEhtgGbaBljyH4KsHDp8W
-> cwxcbmB6hgUpbWax4Kgo5a0JMBshWYUKU8cxQVmLWuVjBzhgcveNfcBYKd66hLP4
-> iLroECbXKmn27/LCrlumwskxIOmjBLkecCH4cu3UXZdK46GpuxMxbSWlSSdBC0XF
-> E3Svx0GxpwZIRDAA8bUXgwnMUgJkeiER+vbmD7l0Ool2/961SIhHWDfbfFClW4Xv
-> lFW0qqRJtT6JXcoi9NSZiMRRDawVwXHqmUqTA9Es3OBULJEzh6N2gehNt8fSPqg=
-> =olvS
-> -----END PGP SIGNATURE-----
-> --
-> [ Security | https://lists.drupal.org/mailman/listinfo/security ]
-> [Security team mailing list management and scheduling is documented here | https://security.drupal.org/handling-list-emails]
+So my question is basically this: where on this grey scale does it go
+from mildly annoying to security vulnerability (and CVE worthy), the
+main things being:
+
+-what kind of information is leaked (e.g. PII? system config? just the
+fact that you're asking what time it is?)
+-assuming it makes these outgoing connections by default, how informed
+are users, e.g. in firefox you get a brief one time warning you can look
+at or does it maybe warnt he user, show them the info and then require
+them to confirm sending it (e.g. sosreport).
+
+Thanks in advance.
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
