@@ -1,123 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/12
-Message-ID: <CAKcmtDzeepFGS-_yfvA0FLpsC22923rsLXhLR_nD4zULJ8rHBg@mail.gmail.com>
-Date: Fri, 28 Mar 2014 12:01:56 -0700
-From: Chris Steipp <csteipp@...imedia.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/8
+Message-ID: <20141007064622.GB25530@zoho.com>
+Date: Tue, 7 Oct 2014 06:46:22 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
+Cc: chet.ramey@...e.edu
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 28, 2014 at 11:13 AM, Florent Daigniere <
-florent.daigniere@...stmatta.com> wrote:
+On Tue, Oct 07, 2014 at 09:51:50AM +0400, Solar Designer wrote:
+> Shellshock is actually an example of "selective disclosure" (as Ted
+> Unangst calls it) arguably not working well enough to be worthwhile.
+> In this case, it was because the right ones (as it turned out) of the
+> "many eyeballs" - Tavis and Michal - were not party to the "selective
+> disclosure".  Florian was, but I am guessing that without finding more
+> parser bugs convincing Chet and distros to remove exposure of the
+> parser so urgently would have been difficult.  Arguably, this suggests
+> that we should expand the distros list membership with security
+> researchers who are capable, willing, and have (paid?) time to review
+> upcoming security patches and the software being patched for possible
+> other flaws closely related to those being patched.
 
-> On Fri, 2014-03-28 at 10:25 -0700, Chris Steipp wrote:
-> > On Fri, Mar 28, 2014 at 8:56 AM, Florent Daigniere <
-> > florent.daigniere@...stmatta.com> wrote:
-> >
-> > > On Fri, 2014-03-28 at 08:33 -0700, Chris Steipp wrote:
-> > > > On Mar 28, 2014 7:54 AM, "Florent Daigniere" <
-> > > > florent.daigniere@...stmatta.com> wrote:
-> > > > >
-> > > > > Sorry to be thick here but it still doesn't make any sense to me...
-> > > > >
-> > > > > The session-id should be renewed upon login AND any
-> > > credential/privilege
-> > > > > change (that includes password changes). This protects against
-> session
-> > > > > fixation attacks (where the attacker coerce a user into using a
-> session
-> > > > > he controls).
-> > > > >
-> > > > > On these pages, there's usually no need for anti-CSRF protection as
-> > > they
-> > > > > tend to require credentials (something the attacker, by definition,
-> > > > > doesn't have).
-> > > >
-> > > > Slightly different attack. The attacker (who knows their own
-> password and
-> > > > chooses the reset-to password) was able to cause a logged out user
-> > > (victim)
-> > > > to login with the attacker's account via the change password form.
-> > > >
-> > >
-> > > That is the textbook example of a session-fixation attack. The "end
-> > > state" is that the victim uses a session the attacker can control.
-> > >
-> >
-> > Except that it has very little to do with the user's session. We can (and
-> > do) refresh the user's session id as part of the login process. We could
-> > refresh the user's session every time the user visits that form, and the
-> > PoC on the bug would still work.
-> >
-> > The PoC on the bug shows that a non mediawiki domain can make a POST to
-> the
-> > mediawiki domain to login an anonymous user as the attacker.  Using the
-> > definition from owasp, "CSRF is an attack which forces an end user to
-> > execute unwanted actions on a web application in which he/she is
-> currently
-> > authenticated" this satisfies the part that an attacker is taking
-> unwanted
-> > action on behalf of the victim. If you want to argue that "logging in" is
-> > inherently an action by an unauthenticated user and so it doesn't meet
-> they
-> > "in which he/she is currently authenticated" then I'm happy to not call
-> > this CSRF. However we did call the same attack a "login CSRF" for the
-> > nearly identical issue CVE-2010-1150 and a very similar CVE-2012-5394.
-> >
->
-> Well, it's not because mistakes were made in the past that we should use
-> them to justify perpetrating them.
->
+I've been thinking about this for the past week and agree with your
+problem identification. However, the lesson I rescue is diametrically
+opposed to the one you arrived at.
 
-No, I'm not saying we should. I was merely pointing out that is how this
-issue was classified in the past, in case the explanation for those
-assignments was more clear than I'm presenting it. If those are wrong, they
-should be fixed.
+An effect few mention is how dramatically things changed post-embargo.
+Sure, Chet's been burning the midnight oil (many thanks, Chet; you're
+owed many beers) but on some level, or maybe only after the dust
+settles, he'll be very appreciative of the way the community rallied in
+a highly dynamic way to ultimately help make Bash a better product.
 
+From the identification of key breach points (thanks Stephane, Tavis,
+and Michal) to the development of critical hardening (thanks Florian),
+the level of engagement has been, and continues to be, extraordinary.
 
->
-> Why do you call that a vulnerability again?
->
-> The attacker forfeits his credentials; the target ends up logged in as
-> the attacker with a session the attacker has no control over... and the
-> user is made aware (through the UI) that he's logged in as someone else.
->
-> No trust boundary breached -> no vulnerability.
->
-> After "forced logouts" welcome "forced logins" ;)
->
+I don't know how long the initial report was embargo'd but I'm pretty
+sure the process became infinitely more productive after the veil of
+semi-secrecy was lifted (be it in metrics like LoC/hour or reports/day).
 
-Right, this goes back to my example of user-supplied javascript executing
-when that user logs in, so for MediaWiki, I would argue this is a
-vulnerability. However, I'm more than happy to say this is specific to
-MediaWiki (and many sites do implement anti-csrf tokens on their login
-forms), so if it's not considered an issue, then no cve needs to be
-assigned.
+It's amazing how productive people can be when incentives are properly
+aligned.
 
+Your solution is to add Tavis and Michal to distros@. What about the
+next flaw when the two researchers who turn out to be key are Bob and
+Fred? Add them next? You'll be playing catch-up.
 
+I think the overarching lesson here is there are costs to the embargo
+paradigm some have grown to love and over-use. Few consider the negative
+effects that removing one aspect of "open" from open source can have and
+how energetic the process can become once it's reintroduced.
 
->
-> > >
-> > > > This attack is somewhat specific to mediawiki since we allow users to
-> > > > define JavaScript that will be loaded on pages they visit while
-> logged
-> > > > in... So the victim in this case would run the attacker's personal
-> > > > JavaScript.
-> > > >
-> > >
-> > > It still doesn't make sense. Anti-CSRF tokens are only useful if the
-> > > "malicious script" is not running with the same origin!
-> > >
-> >
-> > I think I threw you off here-- this is just one reason why an attacker
-> > might want to do this. It's tangential to the actual flaw we fixed.
->
-> If mediawiki really allows users to define javascript that will be
-> loaded on pages they visit, that's a vulnerability... There's no way to
-> do that securely if the "content" and "application" data are served from
-> the same FQDN.
->
-> Regards,
->         Florent
->
+--mancha
 
+Content of type "application/pgp-signature" skipped
