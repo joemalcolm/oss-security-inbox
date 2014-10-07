@@ -1,128 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/29/3
-Message-ID: <20141129014438.GA31235@carla.jsg.id.au>
-Date: Sat, 29 Nov 2014 12:44:38 +1100
-From: Jonathan Gray <jsg@....id.au>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: libyaml / YAML-LibYAML DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/37
+Message-Id: <20141007203500.EC183C50B42@smtptsrv1.mitre.org>
+Date: Tue,  7 Oct 2014 16:35:00 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Discussion: information leakage from server and client software - CVE/hardening/other?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 28, 2014 at 03:04:11PM -0500, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> > a crash/denial of service with untrusted yaml input.
-> 
-> > https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
-> 
-> > https://github.com/yaml/libyaml/commit/e6aa721cc0e5a48f408c52355559fd36780ba32a
-> 
-> Use CVE-2014-9130 for this Reachable Assertion issue in the libyaml
-> scanner.c file.
-> 
-> Our understanding is that YAML-XS is a Perl wrapper module for the
-> libyaml C library, and that there isn't separate Perl code in
-> question. The rest of this message is a discussion of Python that
-> does not affect the Jonathan Gray CVE request.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-YAML-XS is not a direct wrapper it includes a version of the scanner.c
-code in question along with other parts of the libyaml code.
+The main cases in which a CVE could exist are:
 
-That is why YAML-XS had to be patched seperately for
-CVE-2014-2525 and CVE-2013-6393.
+1. The author of the software states that the information-leakage
+behavior was a violation of the product's security policy.
 
-It should be noted that the libyaml author has made a commit
-to remove the assertion but has not yet made a new release:
-https://bitbucket.org/xi/libyaml/commits/2b9156756423e967cfd09a61d125d883fca6f4f2
+2. The information-leakage behavior directly contradicts the product's
+documentation stating that the specific information leakage doesn't
+occur.
 
-> 
-> 
-> > Date: Fri, 28 Nov 2014 10:20:39 +0000
-> > From: John Haxby <john.haxby@...cle.com>
-> > For what it's worth PyYAML 3.10 and 3.11 have exactly the same assertion:
-> 
-> For PyYAML, however, it appears that the report is about the
-> scanner.py file, e.g.,
-> 
->   def save_possible_simple_key(self):
->   ...
->       # A simple key is required only if it is the first token in the current
->       # line. Therefore it is always allowed.
->       assert self.allow_simple_key or not required
-> 
-> This Python code is apparently intended to correspond directly to the
-> yaml_parser_save_simple_key C code. However, because it's in a
-> different programming language, we would typically consider it a
-> separate codebase, eligible for its own CVE IDs. Here, "assert
-> self.allow_simple_key or not required" is not within the scope of
-> CVE-2014-9130.
-> 
-> One question is whether identifying a security-relevant DoS caused by
-> an assert in C code means that there is also a security-relevant DoS
-> caused by an assert in corresponding Python code. In other words,
-> should the threat model be considered the same: the assert within
-> scanner.c might cause an outage of a C application that was intended
-> to remain available for processing YAML from other clients, and the
-> assert within scanner.py might cause an outage of a Python application
-> that was intended to remain available for processing YAML from other
-> clients? Or should the latter be considered much less plausible? If
-> the threat model is largely the same, we will assign a second CVE ID
-> for the scanner.py issue.
-> 
-> A second question is whether a Reachable Assertion in Python should be
-> considered substantially different from a Reachable Assertion in C,
-> because Python is a scripting language that potentially makes it much
-> easier to ignore assert statements. (This question might not affect
-> the current CVE assignments.)
-> 
-> In other words, for a product written in C, the author could argue (or
-> even document) that an assert line is supposed to be there, and the
-> end user is not supposed to be compiling the program with NDEBUG.
-> Similarly, the product can be shipped with specific build scripts that
-> do not use NDEBUG. However, for a Python script, is the end user
-> typically considered free to use -O if desired? The -O documentation
-> at https://docs.python.org/3/using/cmdline.html says "-O Turn on basic
-> optimizations" but the assert documentation at
-> https://docs.python.org/3/reference/simple_stmts.html says "(command
-> line option -O). The current code generator emits no code for an
-> assert statement when optimization is requested at compile time." It's
-> perhaps unclear whether ignoring assert statements is something that
-> would obviously be part of "basic optimizations." (This issue doesn't
-> apply to cases where there's a specific build process for .pyc files
-> or the end user is supposed to install shipped .pyc files.)
-> 
-> To give two specific examples:
-> 
->   1. A C program's author uses assert to prevent reaching code that,
->      in cases where the assert expression is false, has a remote code
->      execution vulnerability. The author documents that aborting the
->      program is the intended behavior, and the author provides a
->      specific build/installation process without NDEBUG.
-> 
->   2. A Python script's author uses assert to prevent reaching code
->      that, in cases where the assert expression is false, has a remote
->      code execution vulnerability. Because Python is a scripting
->      language, the end user doesn't separately need to build anything.
->      The end user looks at the cmdline.html documentation, chooses to
->      enable optimization with -O, and therefore the assert statement
->      is ignored.
-> 
-> Is it fair to conclude that example 2 has a vulnerability but example
-> 1 does not?
-> 
-> - -- 
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
-> 
-> iQEcBAEBAgAGBQJUeNRWAAoJEKllVAevmvms1g4IALrWfsOh7UkxQHxP28RBQgu0
-> Jb7PdteW7250OH3DXb+WPkE90co+IOMoql3HrQoEy3+izwqaUBrDuR0yZVxlej6Q
-> 6EmcJ6Da1qjL2kXjJOYRrGsz9VJvQTRVrXhgQ3xvCWYw6mLxoTmztQ2UNNJ3DR12
-> NVbMUFTmVtqyufvFl1ilOkxtt8cb8pqufYM5491M4Jp1EgLiqi7ztj91SUwUe0+w
-> rE2H/wXJKP0JSAuQUOl7sGC7R6LD7s7dp8eoa+0RPdUuvvtCq8/L+1xbzEkWo8LW
-> pxLCqHonpo0XnEMGMQRkSfkkyoFperqLpeBLR+ZNlSNYNzZlkhBuvTpGA5NyNIc=
-> =hUlY
-> -----END PGP SIGNATURE-----
+3. The author of the software makes no statement, but all (or nearly
+all) similar products follow a standard practice in which the
+information-leakage behavior doesn't occur. For example: common web
+browsers don't send a file: URL in a Referer header.
+
+4. The author of the software makes no statement, and disclosing the
+information results in no benefit to the user, and the information
+would not be useful to the vendor in further developing the product or
+complying with restrictions on the data that the vendor offers in
+conjunction with the product.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUNE1sAAoJEKllVAevmvmsfGwIAK3AZYGPKsOQhdaAorKi8Bly
+SFuaSXCjmhkswmH74fN11UCmU4OWwV+3Vv66iE/YGpZDk4j1yFJR3fYLTeTcYCuH
+xTPyAbsBI4UcrcNtay9iujUgcXe7lRxc8b8E2l962dEm3Xw1FzzFUUtC+kVUCoyR
+4qHWsS+1eUIZ7+q6L5ITG12K4hvYHwGRDzr08+IvESfmvskgc3tCEgV/eHa009Rs
+rM/M6o9EE0CEyDCyhFk4LiZgSq8UjG5lJCMP4aeA8t43eSNGeWSSXnaZIwOiPwsC
+UNl4GDN3Ro1+WPumX6fiJmXVq/h5B7S5oCBjPyjUOsz2ZI9Kce+T9Dug3l/PtU0=
+=wGXw
+-----END PGP SIGNATURE-----
