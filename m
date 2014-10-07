@@ -1,62 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/29
-Message-ID: <54876680.6090203@oracle.com>
-Date: Tue, 09 Dec 2014 13:15:44 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/38
+Message-ID: <54345F12.3050503@redhat.com>
+Date: Tue, 07 Oct 2014 15:45:54 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Ilja Van Sprundel <ivansprundel@...ctive.com>, "X.Org Security Team" <xorg-security@...ts.x.org>
-Subject: Re: Fwd: [ANNOUNCE] X.Org Security Advisory: Protocol handling issues in X servers
+CC: cve-assign@...re.org
+Subject: Re: Re: Discussion: information leakage from server and client software - CVE/hardening/other?
 Content-Type: text/plain; charset=utf-8
 
-On 12/ 9/14 08:04 AM, Alan Coopersmith wrote:
-> Fixes
-> =====
->
-> Fixes are available in git commits and patches which will be listed
-> on http://www.x.org/wiki/Development/Security/Advisory-2014-12-09
-> when this advisory is released.
->
-> Fixes are also planned to be included in the xorg-server-1.17.0 and
-> xorg-server-1.16.3 releases
 
-Fixes are now available in the X.Org master git repositories for the Xserver
-1.17 development branch ("master") & 1.16 stable branch ("server-1.16-branch").
 
-Additionally they are included in today's release of xorg-server 1.16.2.901
-(Release Candidate 1 for 1.16.3):
-    http://lists.x.org/archives/xorg-announce/2014-December/002501.html
+On 07/10/14 02:35 PM, cve-assign@...re.org wrote:
+> The main cases in which a CVE could exist are:
+> 
+> 1. The author of the software states that the information-leakage
+> behavior was a violation of the product's security policy.
+> 
+> 2. The information-leakage behavior directly contradicts the product's
+> documentation stating that the specific information leakage doesn't
+> occur.
+> 
+> 3. The author of the software makes no statement, but all (or nearly
+> all) similar products follow a standard practice in which the
+> information-leakage behavior doesn't occur. For example: common web
+> browsers don't send a file: URL in a Referer header.
+> 
+> 4. The author of the software makes no statement, and disclosing the
+> information results in no benefit to the user, and the information
+> would not be useful to the vendor in further developing the product or
+> complying with restrictions on the data that the vendor offers in
+> conjunction with the product.
 
-For those who either used the patches mailed to the distros list during embargo
-or pulled changes from my personal git repository earlier today, please note
-there are some additional changes that were made due to issues raised when the
-patches were on final approach this morning.  These fixes mostly silence
-compiler warnings, but also fix at least one bug in calculating buffer sizes
-that could result in false failures or allowing overflows.  These added patches
-are:
+So for example the
+http://boingboing.net/2014/10/07/adobe-ebook-drm-secretly-build.html
+article would indicate to me that this is CVE worthy under #4 for
+example. I also assume that "makes no statement" means the company
+actually has to make it easily viewed/available, e.g. not buried in some
+huge 60 screen long EULA/TOS, or in some random source code file ("# and
+here is where we send information back").
 
-dbe: Call to DDX SwapBuffers requires address of int, not unsigned int 
-[CVE-2014-8097 pt. 2]
-http://cgit.freedesktop.org/xorg/xserver/commit/?id=b20912c3d45cbbde3c443e6c3d9e189092fe65e1
-
-glx: Can't mix declarations and code in X.org sources [CVE-2014-8098 pt. 9]
-http://cgit.freedesktop.org/xorg/xserver/commit/?id=61b17c0f10307e25e51e30e6fb1d3e3127f82d86
-
-Missing parens in REQUEST_FIXED_SIZE macro [CVE-2014-8092 pt. 5]
-http://cgit.freedesktop.org/xorg/xserver/commit/?id=9802a0162f738de03585ca3f3b8a8266494f7d45
-
-dix: GetHosts bounds check using wrong pointer value [CVE-2014-8092 pt. 6]
-http://cgit.freedesktop.org/xorg/xserver/commit/?id=1559a94395258fd73e369f1a2c98a44bfe21a486
-
-They are also included with all the earlier patches in the list now posted to:
-
-http://www.x.org/wiki/Development/Security/Advisory-2014-12-09
-
-Since these additional commits went into the X.Org master repo as part of the
-same pull request as the earlier fixes, X.Org considers them to be part of the
-fix for the CVE's in this advisory and does not believe new CVE id's are
-warranted as X.Org distributed no version of its code in which only part of
-these fixes were present.
 
 -- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
