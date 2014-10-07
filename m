@@ -1,60 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/1
-Message-ID: <CAFRnB2X_nUngh6gXyKmE=1jYo1uv9b2vTyw3jah2bjBJu44ZrA@mail.gmail.com>
-Date: Thu, 11 Dec 2014 02:26:50 +0000
-From: Alex Gaynor <alex.gaynor@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE request: Python, standard library HTTP clients
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/33
+Message-Id: <20141007174525.EABCF6FC005@smtpvmsrv1.mitre.org>
+Date: Tue,  7 Oct 2014 13:45:25 -0400 (EDT)
+From: cve-assign@...re.org
+To: mancha1@...o.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request(s): Getmail 4
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Hello all,
+> http://pyropus.ca/software/getmail/CHANGELOG
 
-I'm request a CVE for CPython (sometimes Python), for failure to validate
-certificates in the HTTP client with TLS.
+> Getmail 4.0.0 through 4.43.0 allows IMAP MITM with an arbitrary
+> certificate
 
-Title: Python standard HTTP libraries fail to validate TLS certificates for
-HTTPS
-Products: CPython, all 2.x versions prior to 2.7.9, 3.x versions prior to
-3.4.3
-Description:
+Use CVE-2014-7273.
 
-When Python's standard library HTTP clients (httplib, urllib, urllib2,
-xmlrpclib) are used to access resources with HTTPS, by default the
-certificate
-is not checked against any trust store, nor is the hostname in the
-certificate
-checked against the requested host. It was possible to configure a trust
-root
-to be checked against, however there were no faculties for hostname
-checking.
 
-This made MITM attacks against the HTTP clients trivial, and violated RFC
-2818
-(http://tools.ietf.org/html/rfc2818#section-3).
+> Getmail 4.44.0 allows IMAP MITM with a valid/recognized certificate
+> for an arbitrary hostname
 
-Python 2.7.9 has been issued to resolve this issue. It is also resolved in
-3.4.3, which has not yet been released.
+Use CVE-2014-7274.
 
-Thanks,
-Alex
+
+> Getmail 4.0.0 through 4.44.0 allows POP MITM with an arbitrary
+> certificate
+
+Use CVE-2014-7275.
+
+
+4.45.0: not vulnerable, although for multiple reasons
+
+4.46.0: not vulnerable; all issues fixed
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJUiQDDAAoJEBJfXGff6UCEAAkP+gOsOCZW2BHtZcUq+zuzNh8/
-lZZZDJeyXGnaneTAI3PcaV6ep4F//N+kYbpnKNKFvj7xs6VI5w/8935Uj9LRKs3Q
-cGqJfZlBOZnPrsm/T9AnCkOSoiyCXr38zVi2VJi0G3i/iyUm0pGExffjH2ra0P2w
-HjHUl/6+WuzS1JTVkxrKQilv/gG+OC8H7uTpCWLbo6bt/mWG2AB33uI67CHwD12H
-puah4NfeGGMw1WNhZ1pe0RGdZ6jyiMJv7dMbNDlVyqqTuCC27mzrVCq3NpCWGgRj
-xjdgKSg4NoS8v4yct5Wi3depDksFx8mQmuGO/5K6UIzYKR2AhFtx/tSLnrig4rPR
-9qoz9qVhOWjBPI0N80I1OxYhRXdbugIInQH2Otd0H+zQksZs2I549UFpFEz3yDrP
-NwHOOxnxf8blJKwkY3eoyKd5ZoPozIsfqyv5MZxPkRmV5pUZW2RpHxfSD+m9S5Ug
-iUDJido94swWHW2fXhZXChjWYJzPyFxyvKILegQrSbmyG3N/OlusF5IM9AXgrr09
-2n48O6JfOzetg+5aOEAn9nv52xxuqRInJjyKPNyR2mSjyrREGOGvjCDfmMJYp3Ba
-2J8lZEQZYhavnM3xM6ZsogV20QrqWK+jOl8afKctyae9uwRJu71CRaRbKvJd7Qtd
-DzUVQo9UJnNanbKFsz5T
-=dPDp
+iQEcBAEBAgAGBQJUNCZjAAoJEKllVAevmvmsaDoH/A6P+zvtqi/6ZUudBSYLYCju
+K1N9DmsfwjdPYbcnPqJfuZSfUpAlCTKa70NnsxSrP7Ud8nsEZgPRPsgJZ5Lg5fZC
+nU1A+GKKQzU1SGnhksdpwSEywz6qOEhLkDBIWw3Wzqg8oeTp2IziM0BN4WJQMfuQ
+hxZlQt20GucAzjBEyoAsuKdOL7s24XpitxJEUfex0rWUFxZrv347285O2aPSmJui
+k2P5koio6d4ty4e37aBD0a1EWS12bPrEs8k6XQQBlRWJTrVIupRlNpxDPxsNxtFk
+7PPkxEJJfVC2XkA5PqBtzwaNeBB7HXT5Fzp5ngQdjntXKmMRqtpb/rRApxL1Y9Y=
+=wSw8
 -----END PGP SIGNATURE-----
-
