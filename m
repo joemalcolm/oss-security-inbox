@@ -1,122 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/21
-Message-ID: <53E50BA2.2070302@ehuk.net>
-Date: Fri, 08 Aug 2014 18:40:50 +0100
-From: Eddie Chapman <eddie@...k.net>
-To: Greg KH <greg@...ah.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/20
+Message-ID: <20141007111351.GA7104@openwall.com>
+Date: Tue, 7 Oct 2014 15:13:51 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: "New Class of Vulnerability in Perl Web Applications"
 Content-Type: text/plain; charset=utf-8
 
-On 08/08/14 17:17, Greg KH wrote:
-> On Fri, Aug 08, 2014 at 04:47:45PM +0100, Eddie Chapman wrote:
->>> Firmware can't be sent to a device unless it is enumerated by the kernel
->>> USB subsystem, and that is usually visable to the kernel by default.
->>>
->>> Sending firmware to a device is the least of your worries, see above for
->>> the real problems that you can try to exploit.
->>
->> That's good to know. Not sure about the least of worries, the overwriting of
->> firmware seems to be the crux of what people are worried about, isn't it?
->
-> I don't know, is that something that people really care about?  And if
-> so, why?  What can you do with a device that you can rewrite the
-> firmware to that you can't do with any other USB device that you are
-> intentionally making "malicious"?  (i.e. USB Rubber Ducky and friends)
->
->> But I see your point, we don't need to worry since you're saying firmware
->> cannot be written unless it's initiated by the kernel.
->
-> Or userspace, but the kernel is involved here in sending the data to the
-> device, it has to.
->
->> But a lot of the discussion I've read on this issue seems to assume
->> that a "clean" USB device can have it's firmware replaced by the bad
->> guys with malware almost without the OS having a say in the matter.
->
-> Not true, the OS has to be involved in order to rewrite the firmware.
-> It is the thing that is sending the "bad" packets to the USB device on
-> behalf of the userspace program that is asking to rewrite the firmware
-> on the device.
->
->> e.g. USB stick with evil firmware infects USB controller,
->
-> The USB host controller, no, that's not possible that I have ever heard
-> of, or seen before.  But pointers to the details would be appreciated if
-> somehow you think this is the case.
+Hi,
 
-Excellent, thanks for clarifying that. This is the kind of hard detail 
-and fact which you don't find in much of the discussion out there about 
-this issue. I've seen people arguing that something like this is 
-possible, but of course if you dig more deeply there is no evidence 
-behind these assumptions.
+I feel this is worth bringing in here (and I wish someone wrote a proper
+mailing list posting with this info, to have it properly archived):
 
->> which in turn infects other USB sticks subsequently plugged in.
->
-> Unless the program to rewrite other USB devices was downloaded and run
-> from the "evil" device, no, the OS knows all about this.
->
-> Now if the OS can actually do anything about it or not is a different
-> story, again, if you allow user space programs the ability to write to
-> random USB devices, well, you get what you deserve here...
+New Class of Vulnerability in Perl Web Applications
+http://blog.gerv.net/2014/10/new-class-of-vulnerability-in-perl-web-applications/
 
-Right, so ultimately userspace and/or the kernel has to be involved in 
-some way. Again, thanks for clarifying that, you might call this stuff 
-USB 101, but I'm not sure you'd find many people outside of kernel 
-development who know this kind of detail about low level interactions 
-between USB hardware.
+"While perl may have a particularly subtle manifestation, this is not Perl-specific."
+http://www.reddit.com/r/netsec/comments/2ihen0/new_class_of_vulnerability_in_perl_web/
 
->> Although I've seen people involved in USB hardware manufacture argue
->> this is nowhere near as easy as some of the hysteria surrounding this
->> suggests.
->
-> There is a USB firmware download spec, which is quite easy to use, if
-> manufacturers actually followed it (side note, I was one of the authors
-> of that spec...)  And if USB device manufacturers actually required
-> signed firmware to run in their devices, that would solve this issue
-> instantly as long as the signing keys don't leak.
->
->> But, theoretically, isn't it is possible for device and controller to do
->> their own thing between each other without the OS knowing anything?
->
-> There are some "basic" housekeeping functions that the USB host
-> controller and device do in their handshaking and keep-alive and the
-> like that the OS doesn't "know" about, because if the OS did know about
-> it, the whole thing would just take too long and waste too much CPU
-> time.  But sending random data?  No that's not possible.
+Bugzilla 4.0.14, 4.2.10, 4.4.5, and 4.5.5 Security Advisory
+http://www.bugzilla.org/security/4.0.14/
 
->> After all, the OS controls the USB controller, but the controller is
->> in control of the device? Or does the kernel's control extend to the
->> device?
->
-> Think of a USB host controller as a "dumb" ethernet controller.  It has
-> a big ring-buffer of data that it sends to a device when asked to.  It
-> also listens for data from a device, when asked, and puts that in a
-> buffer for the kernel to do something with.  There is no "mixing" of the
-> data, and a USB device can not talk to any other USB device on the
-> system, without the kernel giving the data to the other device.
->
-> So the kernel "controls" a device only by sending it data, receiving
-> data from it, and by virtue of some of that data being "special",
-> telling the device to do some things (send configuration information, go
-> toggle a serial port pin, etc.)  That data can only come from the
-> kernel, to the USB host controller, and then to the device.
->
-> Again, over simplification, as there are some commands that the host
-> controller handles on its own by virtue of "housekeeping" and
-> enumeration, and other basic things, none of which should ever be an
-> attack vector to the device, unless you have a really broken device.
->
-> Does that help?
+Bug 1074812 - (CVE-2014-1572) [SECURITY] The 'realname' parameter is not correctly filtered on user account creation, leading to user data override
+https://bugzilla.mozilla.org/show_bug.cgi?id=1074812
 
-Yes, immensely. It's clear to me now that being able to re-programme a 
-USB device firmware is not quite as easy and straightforward as is being 
-made out to be in certain quarters. That's not to say that the research 
-being discussed hasn't thrown up some very interesting issues around 
-hardware and trust.
+http://www.opennet.ru/opennews/art.shtml?num=40766 (Russian)
 
-Eddie
-
->
-> greg "usb-101 is now over" k-h
->
+Alexander
