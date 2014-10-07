@@ -1,44 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/17
-Message-Id: <69E0999E-9C6E-4EE1-BA81-DB9D751D8919@stufft.io>
-Date: Wed, 19 Nov 2014 14:15:56 -0500
-From: Donald Stufft <donald@...fft.io>
-To: oss-security@...ts.openwall.com
-Subject: Re: Requesting a CVE for pip - Local DoS with predictable temp directory names
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/40
+Message-Id: <20141007215642.E464E6C003C@smtpvmsrv1.mitre.org>
+Date: Tue,  7 Oct 2014 17:56:42 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Discussion: information leakage from server and client software - CVE/hardening/other?
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On Nov 17, 2014, at 3:29 PM, Donald Stufft <donald@...fft.io> wrote:
-> 
-> I'd like to request a CVE for pip[1][2] and I am a core developer for that
-> project.
-> 
-> There is a local DoS in pip 1.3, 1.3.1, 1.4, 1.4.1, 1.5, 1.5.1, 1.5.2, 1.5.3,
-> 1.5.4, 1.5.5, and 1.5.6. In an attempt to fix CVE-2013-1888 pip modified it's
-> build directories from pip-build to pip-build-<username> and added in checks
-> that would ensure that only a directory owned by the current user would be
-> used. However because the build directory is predictable a local DoS is
-> possible simply by creating a /tmp/pip-build-<username>/ directory owned by
-> someone other than the defined user. This issue has also been reported to the
-> Debian bug tracker as https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725847.
-> 
-> This has been fixed[3] in the develop branch of pip which will be released as
-> pip 6.0. 
-> 
-> I am not aware of any previous CVE for this issue.
-> 
-> [1] https://pip.pypa.io/
-> [2] https://pypi.python.org/pypi
-> [3] https://github.com/pypa/pip/pull/2122
-> 
-> ---
-> Donald Stufft
-> PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
-> 
+> So for example the
+> http://boingboing.net/2014/10/07/adobe-ebook-drm-secretly-build.html
+> article would indicate to me that this is CVE worthy under #4 
 
-ping?
+Currently not; Adobe has a statement quoted at:
 
----
-Donald Stufft
-PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+  http://arstechnica.com/security/2014/10/adobes-e-book-reader-sends-your-reading-logs-back-to-adobe-in-plain-text/
 
+indicating that the information disclosure is intentional, and is
+(from their point of view) useful to them. This is just an example of
+a behavior that might also occur in an open-source product. The Adobe
+issue itself is off-topic for this list.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUNGE1AAoJEKllVAevmvmsPGoH/iEVan/w5VupVHcepPvXtMPU
+aBsC1Zf5wJP9THQDZebMPafZihh15VZdV5jTwcg3uJYYVSA3l/oLNVk6JYFlxfAu
+ma8UDNiny/lArA28pGi4Ktu+/3bG6tlr/q6jb4OdjZlmdSFOtiLx0r87jrO8RG78
+YdvK97pdM19HghlQtc8iDGrkLn2sfROI8VxvnNt0KncVICJGKgZSy1rI7nRK+Yri
+NSO26F7PDOBW5ZCXaY8WxdeJka95AWH2ILQ+X4KHxkDvY5d6NOSVOjpf19oB5x02
+PkdLwCUoBNrndpvRses2evgdm0Qr7Vg3/MSw6I11AxKEHI8JDIMMdIVWznTZp0Q=
+=9O10
+-----END PGP SIGNATURE-----
