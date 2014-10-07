@@ -1,27 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/21
-Message-ID: <A9DC0B5B-6E71-4A9D-A45E-69D6127AF0D6@akamai.com>
-Date: Mon, 29 Sep 2014 10:42:28 -0500
-From: "Kobrin, Eric" <ekobrin@...mai.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/32
+Message-ID: <371E240E6FC1D44DA5E51EE9DCDCB784EC3C1DC3@NA-MBX-01.mgc.mentorg.com>
+Date: Tue, 7 Oct 2014 16:40:22 +0000
+From: "Mehaffey, John" <John_Mehaffey@...tor.com>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "chet.ramey@...e.edu" <chet.ramey@...e.edu>
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+CC: "dwheeler@...eeler.com" <dwheeler@...eeler.com>
+Subject: Separating code and data
 Content-Type: text/plain; charset=utf-8
 
-On Sep 29, 2014, at 10:33 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
-> If that is the command you ran, this doesn't show any vulnerability. 
+> From: Tim [tim-security@...tinelchicken.org]
+> Sent: Tuesday, October 07, 2014 8:23 AM
+> To: oss-security@...ts.openwall.com
+> Cc: Hanno Böck
+> Subject: Re: [oss-security] Thoughts on Shellshock and beyond
+> 
+> > > What class of bug is Shellshock? "Weird feature invented in
+> >   pre-Internet era"? How do you conquer this class of bugs?
+> >
+> > I am still struggling with this one.  I am trying to create that list here:
+> > http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
+> >
+> > But to be honest, that list is pretty pathetic. This is a challenging class of vulnerability to detect or prevent ahead of time. Ideas would be very welcome.
+> 
+> 
+> I wouldn't go so far as to say shellshock has a well-defined "class"
+> of vulnerability or bucket that we can stick it in, but it does
+> violate one of my own personal (and I think, the most important)
+> _principles_ of secure software design:  don't mix code and data.
+> 
+> What do I mean by that?  Concrete examples of failures:
+>   * word docs with macros
+>   * document markup with embedded script (yes: HTML/JS)
+>   * OGNL expressions in Struts URL parameters
+> 
+> Any time you design a system to accept executable code as well as data
+> in the same format/context/whatever, you invite a huge number of
+> possible attacks.  These attacks may not manifest themselves
+> immediately or obviously.  It may require a change in the way the
+> software is used, or implementation bugs to expose the risk, but it
+> is a highly risky design approach.
+> 
+> 
+> People expect office documents to be data, but in fact they can
+> include a limited form of code as well.  In the case of word docs and
+> macros, the risk was exposed by implementation bugs and the difficulty
+> of keeping the language sandboxed.
+> 
+> In the case of HTML/JS, the risk came from the way JS is embedded
+> inline in so many locations people can't safely allow HTML (a data
+> markup format) without allowing JS as well.  (If JS were only allowed
+> as external resources and not as, say, events embedded in attributes,
+> it would be less mixed and easier to make safe).
+> 
+> In Apache Struts, OGNL is used are used to parse the entire POST body,
+> variable names and values.  However, OGNL expressions are executable
+> code, which breaks the whole assumption that POST variables are data.
+> So the Struts team is now playing whack-a-mole with blacklist blocking
+> of specific attack vectors.
+> 
+> In the case of shellshock, the "mixing" of code and data came about
+> because environment variables, normally used to carry data, were
+> overloaded and used to carry code.  This is very similar to the Struts
+> case.
+> 
+> 
+> David: your item "Create namespaces where practicable" is effectively
+> an implementation of what I'm talking about here.  By creating
+> namespaces, you're creating a partition between code and data.  But
+> the underlying principle is just to keep these two things separate and
+> *well defined* as separate via whatever mechanism makes the most sense.
+> 
+> 
+> Cheers,
+> tim
 
-I've seen quite a few examples like this which don't do precisely what the submitter thought.
+I think that separating code and data belongs on David's list of "Most Important
+Software Innovations" (www.dwheeler.com/innovation/innovation.html), although
+arguably the "Separating Text Content from Format" innovation is an example 
+of the class.
 
-I hope this isn't another such example:
+>From allowing better cache locality (modern architectures now have both an
+i-cache and a d-cache) to the security improvements mentioned above, it is a 
+software concept that has paid many dividends over the years.
 
-$ env $'BASH_FUNC_\nfoo%%=() { echo 123\n }' ./bash -c 'foo'
-./bash: error importing function definition for `
-foo'
-123
-
-This doesn't seem like desired behavior.
-
-In the version before the recent patches, adding unexpected characters could cause segfaults.
-
--- Eric
+Sincerely,
+John Mehaffey
+Linux System Architect
+Mentor Graphics
