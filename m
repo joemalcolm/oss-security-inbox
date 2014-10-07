@@ -1,45 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/9
-Message-ID: <CADk+mPAagQ77ZTrbk9GgC4y=rbSUtKo_jvVq_=uE4X+DfX0JZA@mail.gmail.com>
-Date: Fri, 3 Oct 2014 17:16:31 +0200
-From: Rainer Gerhards <rgerhards@...adiscon.com>
-To: mancha <mancha1@...o.com>
-Cc: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: sysklogd vulnerability (CVE-2014-3634)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/41
+Message-ID: <54347DE5.9040008@redhat.com>
+Date: Tue, 07 Oct 2014 17:57:25 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: Re: Discussion: information leakage from server and client software - CVE/hardening/other?
 Content-Type: text/plain; charset=utf-8
 
-Today is Germany's national holiday.  IIRC it was with 3500000000 or
-350000001. I probably can't check today. I think it was on ubuntu 12.04lts
-fully patched.
 
-Sorry i have no better answer at the moment.
 
-Rainer
-Sent from phone, thus brief.
-Am 03.10.2014 17:01 schrieb "mancha" <mancha1@...o.com>:
+On 07/10/14 03:56 PM, cve-assign@...re.org wrote:
+>> So for example the
+>> http://boingboing.net/2014/10/07/adobe-ebook-drm-secretly-build.html
+>> article would indicate to me that this is CVE worthy under #4
+> 
+> Currently not; Adobe has a statement quoted at:
+> 
+>   http://arstechnica.com/security/2014/10/adobes-e-book-reader-sends-your-reading-logs-back-to-adobe-in-plain-text/
+> 
+> indicating that the information disclosure is intentional, and is
+> (from their point of view) useful to them. This is just an example of
+> a behavior that might also occur in an open-source product. The Adobe
+> issue itself is off-topic for this list.
 
-> On Fri, Oct 03, 2014 at 01:53:02PM +0200, Rainer Gerhards wrote:
-> > I didn't try out sysklogd as I was busy enough with rsyslog BUT I can
-> > crash unpatched rsyslog v3 and the code path in question is extremely
-> > similar in those two.
->
-> OK, I just graduated from my crash-course on setting up an unpatched
-> rsyslog 3.22.3 daemon.
->
-> I've hit it with lots of pri "vals" including: x112,
-> 80000000000000000000000000000000, my lottery numbers, and the magical
-> 3500000000 but am unable to crash it.
->
-> printline()'s are very similar like you say so it would be worthwhile if
-> we could dig a little.
->
-> Rainer, would you be able to provide a backtrace? or be more specific
-> about the steps you took to crash it?
->
-> --mancha
->
-> PS I've taken Joey off the CC list because he's not expressed any
-> interest in this and is probably busy adding to his spamassassin
-> rulesets.
->
+Then by that measure we could for example have challenged CVE-2011-4083
+for example saying that it is useful to us. The same would go for any
+"unsanitized" log file submissions. I fear this is a slippery slope
+where vendors can effectively game their CVE numbers with "oh we meant
+to do that" which makes CVE much less useful =(
 
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
