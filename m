@@ -1,80 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/2
-Message-ID: <54114B74.8050005@redhat.com>
-Date: Thu, 11 Sep 2014 01:12:52 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: pscripts tmp vuln leading to possible code exec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/5
+Message-ID: <20141007035532.GA2905@openwall.com>
+Date: Tue, 7 Oct 2014 07:55:32 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
-https://pypi.python.org/pypi/pscripts
-pscripts-0.1.160/pscripts/external_ip_address.py
+On Mon, Oct 06, 2014 at 08:33:44PM -0700, Michal Zalewski wrote:
+> This is the bit from Stephane:
+> 
+> http://www.openwall.com/lists/oss-security/2014/10/03/14
+> 
+> -- snip! --
+> A release schedule with public disclosure on the 24th at
+> 14:00 UTC and early notification to other unix and linux
+> vendors on the 22nd and select infrastructure provider
+> notification (such as CDNs including Microsoft) on the 23rd
+> proposed on the 16th by Florian.
+> 
+> [...]
+> 
+> bashdoor.com was registered (not by me) with a creation date of
+> 2014-09-24 13:59 UTC sometime before 2014-09-24 06:59:10Z
+> according to whois. Florian also said here that someone brought
+> the early notification sent to vendors/infrastructure to the
+> press, so someone obviously intended to take it to the press. I
+> don't know whom.
+> -- snip! --
 
+Thanks!
 
-##########################################
-# Settings
-#--------------
-ip_cache_file = '/tmp/.current_external_ip'
+> The bashdoor.com thing sounds a bit damning (doesn't sound like
+> something that would be in the notifications to CDNs & co?).
 
+This certainly sounds bad, but what matters most is whether any info on
+the bug got to an unintended party before 2014-09-24 14:00 UTC or not.
+The name bashdoor.com itself does not leak any vulnerability details,
+nor that there was in fact a bash vulnerability coming.  This does
+suggest that someone wasn't 100% busy using the then non-public info for
+its intended purpose, but it does not indicate they violated the trust
+of whoever disclosed the info to them (except possibly by cybersquatting
+the domain), nor put bash users at any additional risk.
 
-def save_ip_addy(new_ip, domain):
-    ip_updates = shelve.open(ip_cache_file)
-    ip_updates[domain] = new_ip
-    log.debug("Caching IP address: {}, under domain: {}".format(new_ip,
-domain))
-    ip_updates.close
-
-def read_ip_addy(domain):
-    ip_updates = shelve.open(ip_cache_file)
-    if ip_updates:
-        if not domain in ip_updates:
-            return None
-        else:
-            ip = ip_updates[domain]
-            log.debug("Cached IP address: {} retrieved for domain:
-{}".format(ip, domain))
-            return ip
-
-			
-#################################
-# ENTRY POINT
-def
-update_ddns_server(updater_urls="/etc/external_ip_updater/urls.yaml",
-update=True, manual_force_update=False):
-    try:
-        external_ip = get_ip()
-        if external_ip == None:
-            log.warn("Unable to determine external IP.  This may be
-temporary or not.  Verify this warning doesn't persist.")
-            return
-        log.debug("External IP address {}".format(str(external_ip)))
-        ddns_urls = read_yaml_update_urls(updater_urls)
-        for domain, update_url in ddns_urls.items():
-            log.debug("For domain: {}, the update url is:
-{}".format(domain,update_url))
-            prev_ext_ip = read_ip_addy(domain)
-            changed = ip_addy_changed(external_ip, prev_ext_ip)
-            if changed or manual_force_update or periodic_force_update():
-                log.debug("IP changed or forcing update.")
-                if update or manual_force_update:
-                    log.info("Updating domain: {} with IP:
-{}".format(domain, external_ip))
-                    touch_ddns_server(update_url)
-                    save_ip_addy(external_ip,domain)
-
-Then later on:
-					
-def test_update_ip():
-    updater_urls = "/etc/external_ip_updater/urls.yaml"
-    update_ddns_server(updater_urls, force_update=True)
-
-So it looks like you might be able to write to the cache and then do a
-man in the middle attack against the updater which I'm guessing == code
-exec.
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Alexander
