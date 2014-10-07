@@ -1,73 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/3
-Message-Id: <201406190421.s5J4Lef8004481@linus.mitre.org>
-Date: Thu, 19 Jun 2014 00:21:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: david@...temoverlord.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Parameter Injection in jCryption 3.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/26
+Message-ID: <CALx_OUCF4cCU0fPaf-sZ2OW0SWb_9VV=+c=oQnPvjUYOaocWNg@mail.gmail.com>
+Date: Tue, 7 Oct 2014 08:32:24 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+In my view, "Heartbleed and Shellshock" is a weird way to frame the discussion.
 
-> jCryption 3.0 suffers from a parameter injection vulnerability due to
-> passing an attacker-controlled string to PHP's proc_open function. Though
-> the PHP code is not distributed as a library, it is presented as a
-> copy-and-paste server side implementation to match the jQuery module, and
-> sites that have done so, or have left the jcryption.php file on their
-> server, are vulnerable.
+The OpenSSL heartbeat issue was, in many regards, a bug like many
+others; it is arguably eclipsed by hundreds of RCE / info leak bugs
+that crop up in browsers and in web app frameworks every year. It has
+gained prominence for a couple of reasons:
 
-> https://systemoverlord.com/blog/2014/06/18/parameter-injection-in-jcryption/
+- It came out with a sleek logo and a press package,
 
-> jCryption comes with PHP and perl code demonstrating the decryption
-> server-side, and while not packaged as ready-to-use libraries, it is
-> likely that most users used the sample code for the server-side
-> implementation.
+- It affected a security-related library, making it sound a lot more
+worrying / bad than a bug "just" affecting IIS or Firefox,
 
-> http://www.jcryption.org/
-> https://github.com/HazAT/jCryption/commit/bb6d788f8845223964a1743f9a43a4e92775cad8
+- It came on the heels of Snowden leaks and some vague concerns about
+Dual_EC_DRBG, so a lot of pundits started to arbitrarily imply that
+the NSA must have known (or must have planted the bug).
 
-> I've released jCryption 3.0.1 with a critical security bugfix for the
-> PHP example. Everyone who uses jCryption and just copy/pasted the
-> example provided in the repo should immediately update their code.
-> Credits goes to David Tomaschik of the Google Security Team for
-> pointing that out.
+Now, I give you that the bash bug was fairly unique and almost
+hilariously bad - but also a bit intractable. It dates back to the
+80s, cropped up in a place where I certainly wouldn't think to look,
+and if there's one thing it proves is that... um, I guess, security
+people don't read books, since I bet that the feature must have been
+mentioned in at least some shell programming manuals?
 
-As in the recent http://openwall.com/lists/oss-security/2014/06/17/5
-case, the CVE project typically can't assign CVE IDs for example code
-of this type, unless an inherent part of a supported installation
-process has the effect of installing/exposing the example code. Here,
-as far as we can tell, the documentation at
-http://www.jcryption.org/#whattodo just says "You can find a sample
-PHP implementation in the repo" -- we don't feel that this really
-implies a recommended installation process of using the sample as-is.
+Before this finding, it genuinely wouldn't have occurred to most
+people that auditing bash is a good use of their time and money, not
+any more than it's a good use of your time to audit /bin/uname.
 
-So, yes, actual people most likely have installed jcryption.php, and
-the fix and announcement are almost certainly important. We don't want
-to discourage security hardening of example code. However, we would
-typically consider installing jcryption.php (or copying/pasting parts
-of jcryption.php) to be a site-specific action, and this (by itself)
-isn't enough for a CVE ID.
+...
 
-If anyone distributes a product based on jCryption in which
-jcryption.php (or a derivative work that also uses $key without
-escapeshellarg) would obviously be considered an installed web
-application, then they could request a CVE ID for their product.
+The latter part of your article pivots to a more general question of
+"why bugs happen and how we fix it", and I think that's a good thing
+to ponder, although certainly one where it's difficult to come up with
+fresh ideas :-( The article pinpoints several factors, the first of
+which is lack of funding.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+This is actually probably a lot more significant for libraries that
+don't perform security tasks, but may be exposed in even more profound
+ways (e.g., how much money goes to libpng, ffmpeg, imagemagick?). But
+the argument for non-targeted funding is somewhat undermined by the
+fact that well-funded software seems to be about as likely to have
+bugs; if anything, funding speeds up the introduction of new features,
+and that's closely linked to the likelihood of vulns. All mainstream
+browsers have piles of cash thrown at them. Most of closed-source
+software is well-funded, too.
 
-iQEcBAEBAgAGBQJTomRpAAoJEKllVAevmvmsODgH/2zGxCODM2iTsi6Hg18zevDs
-u4OiXNSb3J2UVw3loDfteg4G9u7cOiYUJ+dukfYy+ekxzGOnqVygs4K1usMBmKeh
-Gw9H9kZ4wH/GPZxzein27M6DJ0nQhLoHv0cc3kqci25+g1Jar5jPYHR72Q8AEbTn
-1my6maxMAG8F0NEA6clYf5AyFSGqyFJgz09S3LNMhLHDG8DvUO9HTTdlj3+bcjKm
-SSGMrj36A1X7x/2TV7piLdp0bHGglL2Saa3rcYXvNCDTbzkXXTFWwfit7dkYJewr
-VLR5Gbcttz7Antj2k0vB7HRiUKT6QzMgOH9rmFHojwxOllcm5gU5PxilCohqDzk=
-=qaZe
------END PGP SIGNATURE-----
+( More targeted funding may be more viable - say, rewarding specific
+security improvements or security audits. Say, we're doing
+https://www.google.com/about/appsecurity/patch-rewards/. But it's a
+tricky thing. )
+
+Later in the article, you ask, "why doesn't every large IT company
+have a Project Zero?"; I think that the answer to that is usually
+pretty simple. Some of them may have not thought about it or didn't
+think it's cost-efficient, but most simply lack the in-house expertise
+to pull it off. There is a great shortage of skilled infosec talent -
+and in many companies, there is a strong emphasis on compliance and
+policy work, with technical stuff being an afterthought or something
+you outsource to a pentesting consultancy.
+
+It's also fair to ask if discrete security bugs are the most
+significant exposure we have to worry about. Both targeted and
+non-targeted attacks rely on simple phishing or non-0day bugs to
+compromise people; the bash bug is flashy, but most of the large
+breaches in 2015 will be probably attributable not to that, but to Bob
+in accounting clicking on dancing_hamsters.exe. How much money should
+we be throwing at fixing these problems? And how do we pull it off?
+
+/mz
