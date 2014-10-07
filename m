@@ -1,24 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/2
-Message-ID: <20140604054231.GA12571@openwall.com>
-Date: Wed, 4 Jun 2014 09:42:31 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/12
+Message-ID: <20141007075850.GA6308@openwall.com>
+Date: Tue, 7 Oct 2014 11:58:50 +0400
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: FreeBSD Security Advisory FreeBSD-SA-14:13.pam
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 04, 2014 at 04:51:56AM +0000, FreeBSD Security Advisories wrote:
-> FreeBSD-SA-14:13.pam                                        Security Advisory
+On Tue, Oct 07, 2014 at 09:47:28AM +0200, Florian Weimer wrote:
+> * Solar Designer:
+> 
+> > It is insufficient that "it was an honest mistake" and that "apologies
+> > were made and accepted."
+> 
+> Why?
 
-FreeBSD had reported this OpenPAM issue to the distros list because of
-more likely than average relevance to other distros, and the FreeBSD
-advisory is posted to oss-security for the same reason as well as to
-meet distros list policy.
+In my opinion, it was important for this community to know whether or
+not the information leaked to someone unintended prior to the CRD.  Your
+previous messages did not specifically address this question, hence my
+insistence on a reply.
 
-I mention this so that people are not confused why this one advisory is
-posted in here, even though we had decided that vendor-specific
-advisories are normally not to be posted to oss-security.  There's no
-change in that preference, but there may be exceptions to it like this
-time (for good reasons).
+> Who determines what is appropriate in such cases, anyway?
+
+Everyone determines for themselves.  I felt I was in a position where
+this community would reasonably expect me to ask you this inconvenient
+question.  So I did.
+
+> > The article has "Sep 24, 2014 8:35 AM PT" on it, which is 15:35 UTC.
+> > Did the article's author receive the information before or after 14:00,
+> > and when exactly?
+> 
+> The author does not work for the news organization in question, and he
+> had legitimate and need-to-know access to the information as part of
+> his regular employment.  I hope this clarifies things.
+
+Yes, it does.  Thank you!
+
+To summarize, this article does not indicate any leak, given the
+clarification you provided.
 
 Alexander
