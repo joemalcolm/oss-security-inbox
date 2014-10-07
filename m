@@ -1,44 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/1
-Message-ID: <20141206014431.618d92df@pc>
-Date: Sat, 6 Dec 2014 01:44:31 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/9
+Message-ID: <20141007073541.GA5023@openwall.com>
+Date: Tue, 7 Oct 2014 11:35:41 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+Cc: chet.ramey@...e.edu
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 05 Dec 2014 17:43:44 -0500
-Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
-
-> i couldn't find a reference to this in the nautilus bugtracker, so i
-> just posted:
+On Tue, Oct 07, 2014 at 06:46:22AM +0000, mancha wrote:
+> On Tue, Oct 07, 2014 at 09:51:50AM +0400, Solar Designer wrote:
+> > Shellshock is actually an example of "selective disclosure" (as Ted
+> > Unangst calls it) arguably not working well enough to be worthwhile.
+> > In this case, it was because the right ones (as it turned out) of the
+> > "many eyeballs" - Tavis and Michal - were not party to the "selective
+> > disclosure".  Florian was, but I am guessing that without finding more
+> > parser bugs convincing Chet and distros to remove exposure of the
+> > parser so urgently would have been difficult.  Arguably, this suggests
+> > that we should expand the distros list membership with security
+> > researchers who are capable, willing, and have (paid?) time to review
+> > upcoming security patches and the software being patched for possible
+> > other flaws closely related to those being patched.
 > 
->  https://bugzilla.gnome.org/show_bug.cgi?id=741183
+> I've been thinking about this for the past week and agree with your
+> problem identification. However, the lesson I rescue is diametrically
+> opposed to the one you arrived at.
 
-I tried to dig into this a bit. I'm not really sure, but based on the
-output I assume nautilus is relying on file or libmagic to assess the
-file type.
+I am not saying I arrived at the above lesson.  Notice the word
+"arguably".  No change to distros list membership is being proposed.
 
-And that's what fails:
-$ file --mime-type pie
-pie: application/x-sharedlib
+Also, you're quoting only part of the context.  More context for Chet:
+http://www.openwall.com/lists/oss-security/2014/10/07/7
 
+I also mention the "diametrically opposed" reasoning in the very posting
+you replied to.
 
-It seems there is no really easy way to separate executables from
-shared libraries and whether this should be considered a bug in
-file/libmagic. The only thing I quickly found that would be possible is
-searching if a SONAME is present. libmagic uses some "magic" file
-format to parse files, I don't know if that's capable of such complex
-parsing.
+> I don't know how long the initial report was embargo'd
 
-(oh, btw, this is one more reason to wipe out potential security bugs
-in file...)
+Why, here's the timeline:
 
--- 
-Hanno Böck
-http://hboeck.de/
+http://www.dwheeler.com/essays/shellshock.html#timeline
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+> but I'm pretty
+> sure the process became infinitely more productive after the veil of
+> semi-secrecy was lifted (be it in metrics like LoC/hour or reports/day).
 
-Content of type "application/pgp-signature" skipped
+Of course.
+
+> It's amazing how productive people can be when incentives are properly
+> aligned.
+
+Unfortunately, those same people were also less productive than usual at
+their other duties (including security-related) during this time period.
+
+> Your solution is to add Tavis and Michal to distros@.
+
+No, it is not "my solution".
+
+> What about the
+> next flaw when the two researchers who turn out to be key are Bob and
+> Fred? Add them next? You'll be playing catch-up.
+
+I hope this concern is well understood by all of us.
+
+That said, Tavis actually was on the old vendor-sec, and I think it's
+not a mere coincidence.  I just had to ask myself a "what if" question:
+what if I kept the original vendor-sec membership intact, including the
+security researchers?  So I did consider this question now, in public.
+
+Perhaps more importantly, it wouldn't necessarily have taken a specific
+lucky person to find and insist that the parser needed to be removed
+from exposure, nor to find any additional parser bug.  All it would have
+taken is someone capable actually tasked with reviewing the related
+functionality in bash for potential further issues.  So maybe having
+this responsibility assigned to some particular people would be of help.
+Not a complete solution indeed, but it might work better than what we
+have now.  I am just thinking aloud here.
+
+> I think the overarching lesson here is there are costs to the embargo
+> paradigm some have grown to love and over-use. Few consider the negative
+> effects that removing one aspect of "open" from open source can have and
+> how energetic the process can become once it's reintroduced.
+
+I think I brought up the same concerns in the message you replied to.
+
+It sounds like it's obvious to you that we've seen a case of "over-use"
+of embargo and that "few" people "consider the negative effects".
+
+Like I wrote in the previous message, and putting it into different
+words now, I find that it is possible that embargo was over-used in this
+case, but this is far from obvious to me.  I notice both negative and
+positive effects that it had.  The fast-paced post-initial-disclosure
+patching of further issues would likely not have been as fast without
+upstream and distros having already started working together under the
+embargo.  For example, for some distros, it is quicker to merge another
+patch and rebuild a package when the same package has already been
+updated just days ago, and with a patch in a similar area, than when it
+hasn't been updated in months or years (especially for old yet still
+maintained branches of the distro).
+
+I think many people consider negative effects of embargoes, and my
+message was aimed at those aspects too.
+
+Whenever I am asked for advice on whether to report an issue to the
+distros list (not often, but there were a few occasions where people
+asked me first), I usually direct the reporter to post to oss-security
+right away instead.  I host the distros list primarily because embargoes
+exist anyway, like e.g. in the Shellshock case the issue was being
+handled under an embargo for 10 days before it reached distros (for 2
+days more).  I think the distros list role in this was mildly positive.
+
+Alexander
