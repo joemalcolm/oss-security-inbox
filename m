@@ -1,39 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/13/3
-Message-ID: <52FC6299.6090700@redhat.com>
-Date: Thu, 13 Feb 2014 17:13:45 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/13
+Message-ID: <20141007090540.GC25530@zoho.com>
+Date: Tue, 7 Oct 2014 09:05:40 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: cinnamon-screensaver lock bypass (tested on Fedora 20)
+Cc: chet.ramey@...e.edu
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-On 02/12/2014 08:48 PM, Clemens Fries wrote:
-> Hello,
->
-> It is possible to circumvent the screen lock on a cinnamon session under Fedora
-> 20 using the 'Menu' key on a keyboard. I'm posting this here, because I assume
-> that this is not limited to the version shipped with Fedora.
->
-> Steps to reproduce:
->
-> * Start cinnamon session
-> * Lock the screen (Ctrl+Alt+L)
-> * Press the 'Menu' key on the keyboard
-> * A menu appears for a brief moment
-> * Press 'Escape'
-> * Focus is now beneath the screensaver
-> * Press Alt+F2
-> * Start 'gnome-terminal'
-> * Type 'killall cinnamon-screensaver'
->
-> Seen on a fully patched Fedora 20 (February 12th, 2014). I had a brief look at
-> bugzilla.redhat.com, but it seems this has not been reported. I also tested
-> this on a second machine with the same outcome.
+On Tue, Oct 07, 2014 at 11:35:41AM +0400, Solar Designer wrote:
 
-Thanks for report and testing! Filed 
-https://bugzilla.redhat.com/show_bug.cgi?id=1064695 for this issue.
+I'll reply to the more salient points.
 
-Cheers,
+> I am not saying I arrived at the above lesson.  Notice the word
+> "arguably".  No change to distros list membership is being proposed.
 
---
-Murray McAllister / Red Hat Security Response Team
+OK. given these two comments:
+
+> > In this case, it was because the right ones (as it turned out) of
+> > the "many eyeballs" - Tavis and Michal - were not party to the
+> > "selective disclosure"...Arguably, this suggests that we should
+> > expand the distros list membership with security researchers who are
+> > capable, willing, and have (paid?) time to review upcoming security
+> > patches and the software being patched for possible other flaws
+> > closely related to those being patched.
+
+and 
+
+> > Would immediate full disclosure of Shellshock have helped?  I doubt
+> > it.
+
+I assumed you leaned towards steps like expanding private lists versus
+more rapid engagement of the broader community. As you say, you use
+"arguably" so it would help if you'd clarify your position more
+explicitely.
+
+> Unfortunately, those same people were also less productive than usual
+> at their other duties (including security-related) during this time
+> period.
+
+That's a fact of life: resources are constrained. The question isn't
+whether there are 24 hours in the day but whether the overall good was
+being maximized in an embargo framework or not.
+
+> It sounds like it's obvious to you that we've seen a case of
+> "over-use" of embargo and that "few" people "consider the negative
+> effects".
+
+In this case was embargo under-used? over-used? just right? I don't know
+but one way to arrive at an answer is to consider things empirically.
+How did the process evolve in practice? Did things improve (by various
+metrics) post disclosure, or not, etc.
+
+> Also, you're quoting only part of the context.  More context for Chet:
+> http://www.openwall.com/lists/oss-security/2014/10/07/7
+
+I added Chet because I was thanking him for his efforts and because he
+has a unique perspective: how was working with the community and how did
+things change for him, as upstream, pre and post disclosure. Thanks for
+adding the link to the full message but I wasn't intentionally trying to
+filter context.
+
+--mancha
+
+Content of type "application/pgp-signature" skipped
