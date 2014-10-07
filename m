@@ -1,41 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/9
-Message-ID: <5375482C.7020501@gmail.com>
-Date: Fri, 16 May 2014 01:05:16 +0200
-From: Frédéric Basse <basse.frederic@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/19
+Message-ID: <20141007104342.GA6808@openwall.com>
+Date: Tue, 7 Oct 2014 14:43:43 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2014-2977] DirectFB integer signedness vulnerability
+Cc: chet.ramey@...e.edu
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-[CVE-2014-2977] DirectFB integer signedness vulnerability
-________________________________________________________________________
-Summary:
-DirectFB is prone to an integer signedness vulnerability since
-version 1.4.13.
+On Tue, Oct 07, 2014 at 09:05:40AM +0000, mancha wrote:
+> it would help if you'd clarify your position more explicitely.
 
-The vulnerability can be triggered remotely without authentication
-through Voodoo interface (network layer of DirectFB).
-________________________________________________________________________
-Details:
- This integer coercion error may lead to a stack overflow.
-________________________________________________________________________
-CVSS Version 2 Metrics:
-Access Vector: Network exploitable
-Access Complexity: Low
-Authentication: None
-Confidentiality Impact: Complete
-Integrity Impact: Complete
-Availability Impact: Complete
-________________________________________________________________________
-Disclosure Timeline:
-2014-03-27 Developer notified
-2014-04-21 CVE-2014-2977 assigned
-2014-05-16 Public advisory
-________________________________________________________________________
-References:
-http://www.directfb.org/
-http://mail.directfb.org/pipermail/directfb-dev/2014-March/006805.html
-________________________________________________________________________
+I recognize that embargoes are not necessarily beneficial overall and
+they have clear drawbacks and may be unfair to some (hence my easy
+adoption of the opponents' term "selective disclosure" despite of its
+negative connotation), yet I think that sometimes they are in fact
+beneficial overall, and I have little or no control over whether they
+are imposed by the reporter of an issue.
 
+For now, I intend to continue hosting the distros list as a tool to
+facilitate safer handling and discussion of embargoed issues between
+representatives of the (selected) distros.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (535 bytes)
+I suggest and ask that existing members of the distros list try to
+volunteer extra time to review proposed patches and the software being
+patched for possible related flaws.  I doubt that this suggestion and
+request will change things much, but it "costs" nothing in terms of
+extra risks or slippery slopes (which would be a concern if we start
+adding non-distro security researchers to the list), so we have nothing
+to lose by asking.
+
+In case of Shellshock, there wasn't a clear enough opportunity for
+distros list members to change how the vulnerability would be fixed
+pre-disclosure, but I mean the above in general.
+
+A related aspect is that the distros list is currently specified as
+being intended for medium overall severity issues.  The rationale behind
+this is that low severity issues don't need embargoes, and high severity
+issues are worthy of special handling where they are to be disclosed to
+affected distros only rather than to all at once.  I think it's the
+latter aspect which correctly prompted Florian to post just a heads-up
+to the distros list, requiring that affected distros who actually intend
+to work on the issue within the allotted 2 days actively request the
+information.  Unfortunately, this approach, while safer against leaks,
+precludes pre-disclosure reviews by distros who do not feel they require
+to patch the issue for themselves before it becomes public.  Maybe this
+implies that those distros' representatives would not care to review the
+patch anyway, or maybe not.  Possibly more importantly, it precludes
+discussion of high severity issues between distros on the distros list,
+if those issues were (correctly) only announced in the form of heads-up
+messages requiring direct contact for detail.  I think an exception
+needs to be made to encourage discussion of high severity issues taking
+advantage of the distros list PGP-re-encryption when that is expected
+to be beneficial, although unfortunately that is hard to know in advance.
+
+Alexander
