@@ -1,31 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/5
-Message-ID: <20141029210518.26fc9808@pc>
-Date: Wed, 29 Oct 2014 21:05:18 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/6
+Message-ID: <54336631.70900@edwardprevost.info>
+Date: Mon, 06 Oct 2014 21:04:01 -0700
+From: Ed Prevost <me@...ardprevost.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: Request cve for imagemagick security problem (DOS)
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
-Am Wed, 29 Oct 2014 16:17:09 +0100
-schrieb Bastien ROUCARIES <roucaries.bastien@...il.com>:
-
-> Version 6.8.9.9 and more recent are fixed.
-
-This imagemagick release fixes also three issues I detected via
-zzuf+asan.
-
-I haven't found the time yet to write proper disclosures yet:
-Out-of-bound memory error in resize code is CVE-2014-8354
-Out-of-bound memory error in PCX decoder is CVE-2014-8355
-Out-of-bound memory error in DCM decode has no CVE yet (if CVE
-assigners read this they may assign one).
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+On 10/6/2014 8:55 PM, Solar Designer wrote:
+> On Mon, Oct 06, 2014 at 08:33:44PM -0700, Michal Zalewski wrote:
+>> This is the bit from Stephane:
+>>
+>> http://www.openwall.com/lists/oss-security/2014/10/03/14
+>>
+>> -- snip! --
+>> A release schedule with public disclosure on the 24th at
+>> 14:00 UTC and early notification to other unix and linux
+>> vendors on the 22nd and select infrastructure provider
+>> notification (such as CDNs including Microsoft) on the 23rd
+>> proposed on the 16th by Florian.
+>>
+>> [...]
+>>
+>> bashdoor.com was registered (not by me) with a creation date of
+>> 2014-09-24 13:59 UTC sometime before 2014-09-24 06:59:10Z
+>> according to whois. Florian also said here that someone brought
+>> the early notification sent to vendors/infrastructure to the
+>> press, so someone obviously intended to take it to the press. I
+>> don't know whom.
+>> -- snip! --
+> Thanks!
+>
+>> The bashdoor.com thing sounds a bit damning (doesn't sound like
+>> something that would be in the notifications to CDNs & co?).
+> This certainly sounds bad, but what matters most is whether any info on
+> the bug got to an unintended party before 2014-09-24 14:00 UTC or not.
+> The name bashdoor.com itself does not leak any vulnerability details,
+> nor that there was in fact a bash vulnerability coming.  This does
+> suggest that someone wasn't 100% busy using the then non-public info for
+> its intended purpose, but it does not indicate they violated the trust
+> of whoever disclosed the info to them (except possibly by cybersquatting
+> the domain), nor put bash users at any additional risk.
+>
+> Alexander
+>
+>
+I'd say it still has a sleazy feel to it. lol
