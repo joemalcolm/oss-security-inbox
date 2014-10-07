@@ -1,96 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/3
-Message-ID: <20141104023010.GA1097@zoho.com>
-Date: Tue, 4 Nov 2014 02:30:10 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/7
+Message-ID: <20141007055150.GC4279@openwall.com>
+Date: Tue, 7 Oct 2014 09:51:50 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: Re: strings / libbfd crasher
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 03, 2014 at 05:07:52PM -0800, Michal Zalewski wrote:
-> Well, I think that for most part, they are just trying to do their
-> best based on the limited information and limited time they can spend
-> on every report.
+On Sun, Oct 05, 2014 at 07:48:24PM +0000, Sona Sarmadi wrote:
+> Yes you are right, I am one of the distro vendors which is unfortunately not on the closed list so we only found out about this vulnerability when it became public.
 
-You're preaching to the choir; I highly value the good work they do. And
-I am sensitive to the fact that assignments are sometimes made with
-imperfect/incomplete information with time and other resource
-constraints limiting the amount of analysis that can go into any given
-report.  
+"Luckily", being on the closed list wouldn't be of much help in this
+case: at best, you'd learn of "some" bash vulnerability to be disclosed
+in 2 days, would have actually requested the detail, then would have
+learned of the initial CVE-2014-6271 bug, and would have prepared bash
+updates fixing this one bug - all within those 2 days or less.  And then
+you'd need to rush further fixes (hopefully, merging the prefix/suffix
+patch soon after Florian posted it) just like you could without being on
+the closed list.
 
-> If you care about CVEs being assigned only for meaningful security
-> issues, it's good to research practical exploitability first, or help
-> them evaluate other public reports if they seem unclear. If you don't
-> care about it... well, that's a perfectly valid stance :-)
+Shellshock is actually an example of "selective disclosure" (as Ted
+Unangst calls it) arguably not working well enough to be worthwhile.
+In this case, it was because the right ones (as it turned out) of the
+"many eyeballs" - Tavis and Michal - were not party to the "selective
+disclosure".  Florian was, but I am guessing that without finding more
+parser bugs convincing Chet and distros to remove exposure of the parser
+so urgently would have been difficult.  Arguably, this suggests that we
+should expand the distros list membership with security researchers who
+are capable, willing, and have (paid?) time to review upcoming security
+patches and the software being patched for possible other flaws closely
+related to those being patched.  Currently, such reviews sometimes
+happen (to some extent) due to people who are with distros' security
+teams.  On the old vendor-sec, we did have some security researchers who
+were not with any specific distro, and this was of some help, but it was
+unclear where to draw the line on who to accept (even more so than with
+accepting distros), hence I did not continue this practice when setting
+up the distros list.  Would a security researcher on distros list
+actively request detailed info from Florian based on the vague message
+that Florian did send to the list?  I doubt it.  But then, if we did
+have such an arrangement in place, maybe Florian would have worded the
+message differently, specifically asking for more eyeballs.  There's so
+much uncertainty here.
 
-I used Alexander's post as a springboard for a follow-up question. The
-case of libbfd, because of the variation in the issues, can be
-illuminating as to CVE allocation - broadly speaking.
+http://www.tedunangst.com/flak/post/responsible-disclosure
 
-But, my take differs from Alexander's. He seemed to be questioning the
-justification of some of the libbfd CVE assignments. My preference, on
-the other hand, is a more liberal approach to allocation when dealing
-with libraries. My earlier email explains why.
+I don't know for sure, but I guess Ted intentionally alluded to the
+negative meaning "selective disclosure" has in financial markets:
 
-Your reply made me worry my email came across as some kind of rebuke.
-So let me go on record by saying that though not taxonomic by design,
-the CVE project is an extremely valuable vulnerability tracking tool and
-MITRE should be commended for their leadership in this area.  
+http://en.wikipedia.org/wiki/Selective_disclosure
 
-> There's a bit of weirdness around assigning CVEs to groups of issues
-> ("multiple crashes with evidence of memory corruption"), not assigning
-> them to proactive security improvements (e.g., the Shellshock thing);
-> but ultimately, they are just a tool (mostly for looking up original
-> patches and advisories later in the game), and most of the situations
-> where they are relied on for something more (e.g., comparing the
-> security of competing software) are misguided.
+I don't mind, and the irony is not lost on me (as someone hosting the
+distros list - a place for such controversial activities).
+
+Would immediate full disclosure of Shellshock have helped?  I doubt it.
+Perhaps advance analysis of impact and advance preparation of patches
+and of some distro updates, even if just for the worst parser bug rather
+than for removing exposure of the parser, had some positive effect on
+security of the Internet at large.  It got the affected parties
+(upstream, distros) working together, which likely resulted in quicker
+response to further discoveries.
+
+> A while ago I sent a membership request to the closed vendor list and was denied by you & Kurt :) which was understandable since we were not ready at that time.
+
+Oh, I didn't recall.  (Kurt couldn't have literally "denied" you
+membership - he could merely bring up concerns and reasons, and could
+have voiced an opinion, like anyone else in here.)
+
+I found this thread now:
+
+http://www.openwall.com/lists/oss-security/2013/07/01/4
+
+> After that we have worked hard to create a security team and build in-house security competence. We have been looking at security tests and tools, define a security incident management processes, create security checklist, we have been tracking all security vulnerabilities. As part of our security process we have insured that our bug tracking system has in-built security so sensitive/embargoed information can be kept confidential.
 > 
-> On Mon, Nov 3, 2014 at 1:52 PM, mancha <mancha1@...o.com> wrote:
-> > On Mon, Nov 03, 2014 at 01:43:54AM +0300, Alexander Cherepanov
-> > wrote:
-> >> On 2014-10-31 08:57, cve-assign@...re.org wrote:
-> >>
-> >> Thanks for assigning CVEs for these issues but I have a couple of
-> >> questions regarding CVE-worthiness of various things. And some
-> >> questions for the community.
-> >>
-> >> >Use CVE-2014-8502 for the objdump-pe-crasher2 issue.
-> >>
-> >> Here, AddressSanitizer said "heap-buffer-overflow" and then "READ
-> >> of size 1".
-> >>
-> >> Why this crasher is judged as CVE worthy? Is it oversight or are
-> >> invalid reads assumed to be exploitable by default?
-> >>
-> >> Another possibility is to treat all crashes in all libraries as CVE
-> >> worthy.  We don't know how these libraries are used ITW and any
-> >> crash in any of them could potentially lead to data loss in some
-> >> application. But...
-> >>
-> >> ...it seems libbfd is not treated as a library any crash in which
-> >> is CVE worthy.
-> >>
-> >> >Use CVE-2014-8503 for this ihex parser issue.
-> >>
-> >> Again "READ of size 1".
-> >
-> > Thanks for your post. I would also find it instructive if MITRE shed
-> > light on its CVE assignation heuristics for libbsd. Response to
-> > libbfd issues can be particularly enlightening because the issues
-> > vary largely in scope & type.
-> >
-> > In the past, I've noticed a liberal approach to CVE allocation when
-> > dealing with libraries due to what you said: it is often difficult
-> > to assess the security impact of flaws because they ultimately
-> > depend on the context of applications using the library. As case in
-> > point, the NULL pointer dereference crasher (zero-size S-record)
-> > DoS'es manchabfd 0.42a1 (small network daemon I just wrote). That
-> > flaw didn't receive a CVE.
-> >
-> > --mancha
-> >
-> > unedited post:
-> > http://www.openwall.com/lists/oss-security/2014/11/02/4
+>  For an overview please see our security web page: http://www.enea.com/solutions/Enea-Linux/Security/  and  wiki-vendor list: http://oss-security.openwall.org/wiki/vendors.
 
-Content of type "application/pgp-signature" skipped
+This sounds mostly good.  A "bug tracking system" with "in-built
+security" does not make me confident, although I realize that vendors
+like Red Hat are using setups that would be described similarly.
+ 
+> When do you think we (Enea) are ready for membership on the closed vendor list? What else do you think we need to do?
+
+I think you may be in the gray area now, as opposed to clearly not
+eligible for distros list membership like you were last year.
+
+Unfortunately, there are currently several pending requests that I feel
+fall in the gray area (some are in here, and some off-list, which I
+surely would require bringing to oss-security before they may possibly
+be satisfied), and this bothers me.  Arguably, this indicates that we're
+beyond the (very limited) time period where I could reasonably host a
+vendor-sec replacement list without it becoming too controversial.  So I
+think that we'll need to discuss several other requests before we
+approach yours, and I just fail to find time to get into that lately.
+
+That said, the first link from:
+
+http://oss-security.openwall.org/wiki/vendors#enea
+
+currently leads to:
+
+http://mail.lists.enea.com/pipermail/security-announce/
+
+and this shows:
+
+"The Security-announce Archives 
+
+No messages have been posted to this list yet, so the archives are
+currently empty."
+
+Why is that?  We'd need some way to see that you're actually issuing
+security updates, and how promptly you do that.
+
+Alexander
