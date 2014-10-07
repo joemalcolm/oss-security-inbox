@@ -1,33 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/20
-Message-ID: <21391.17325.593589.765688@mariner.uk.xensource.com>
-Date: Wed, 4 Jun 2014 17:05:01 +0100
-From: Ian Jackson <Ian.Jackson@...citrix.com>
-To: <cve-assign@...re.org>
-CC: <security@....org>, <oss-security@...ts.openwall.com>
-Subject: Re: Xen Security Advisory 98 - insufficient permissions checks accessing guest memory on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/31
+Message-ID: <543412D2.7080106@oracle.com>
+Date: Tue, 07 Oct 2014 17:20:34 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-cve-assign@...re.org writes ("Re: Xen Security Advisory 98 - insufficient permissions checks accessing guest memory on ARM"):
-...
-> > When accessing guest memory Xen does not correctly perform permissions
-> > checks on the (possibly guest provided) virtual address ... This
-> > allows a guest to write to memory which it should only be able to
-> > read.
+On 07/10/14 16:45, Michal Zalewski wrote:
+>>>    What class of bug is Shellshock? "Weird feature invented in
+>>> >>    pre-Internet era"? How do you conquer this class of bugs?
+>> >
+>> > There are two bugs: Calling “eval” on untrusted input (a relatively common
+>> > issue), and the fact that this particular code path should never have been
+>> > exposed to the network at all.  The second part is not strictly a bash bug,
+>> > even if we addressed that with a change in bash. If this issue had been
+>> > discovered when the first CGI-enabled web server was implemented, maybe it
+>> > would not have been called a bash bug, but a bug in how CGI used environment
+>> > variables.
+> Possibly, but it probably wouldn't have stayed that way for long. Even
+> though the bug was introduced long before the arrival of Apache, I
+> would guess that it had affected Sendmail from day one.
 > 
-> > In the event that a guest executes code from a page which has been
-> > shared read-only with another guest it would be possible to mount a
-> > take over attack on that guest.
-> 
-> Use CVE-2014-3969.
+> In practice, it's usually counterproductive to try to precisely pin
+> the blame; bash is the place where we can fix it more easily and
+> produce more intuitive behavior with one less things for other
+> developers to worry about it.
 
-Thanks.  I have sent out updated versions of XSA-96 and -98.
+In the particular case of shellshock, "everyone knows" that calling eval
+on untrusted input is a really bad idea.   It's bad in anything that has
+an eval mechanism.   The problem, still, with bash is that happens
+without you having any control over it.
 
-> Our understanding is that "executes code from a page which has been
-> shared read-only" depends on the permissions issue (lack of a check
-> for execute permission), and is not an independent problem.
+For example,
 
-That is correct.
+   env 'BASH_FUNC_ls()=() { echo hi there; }' bash -c ls
 
-Thanks,
-Ian.
+Obviously that's artificial and the Florian's fix ensures that it's
+difficult to trigger remotely.   This doesn't mean that the eval over
+which you have no control is a good idea.
+
+In this particular case you could argue that any application that could
+possibly exec a shell or possibly cross a trust boundary should clean
+its environment: we even have a nice easy to recognise pattern (anything
+that begins BASH_FUNC_ which also happens to strip out the other two
+implementations of the wrapper).
+
+However, I deliberately included "possibly" twice to encompass
+practically all non-trivial applications.  If you're going to try to pin
+a class of bug on shellshock then it's something like "uncontrollable
+eval on untrusted input" and bash is still doing this. it's not been
+fixed (excepting NetBSD and FreeBSD).
+
+jch
