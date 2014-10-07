@@ -1,35 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/9
-Message-ID: <871tovvxgl.fsf@hope.eyrie.org>
-Date: Sat, 22 Nov 2014 11:36:58 -0800
-From: Russ Allbery <eagle@...ie.org>
-To: Marc Chadwick <marc@...dwick.net>
-Cc: oss-security@...ts.openwall.com,  Tim Brown <tmb@...35.com>
-Subject: Re: Running Java across a privilege boundry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/11
+Message-ID: <8738b0fhin.fsf@mid.deneb.enyo.de>
+Date: Tue, 07 Oct 2014 09:47:28 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
-Marc Chadwick <marc@...dwick.net> writes:
+* Solar Designer:
 
-> I thought tomcat 6 used authbind in its init script, but I could be
-> wrong.  If that's the case, authbind is written in C, so I'm not sure
-> that's what Tim has in mind. Similarly, jsvc is written in C. Maybe the
-> tabuki wrapper service?
+> It is insufficient that "it was an honest mistake" and that "apologies
+> were made and accepted."
 
-Ah, I see what you're getting at.  I don't think I've ever used authbind
-with Tomcat (no need -- I never use privileged ports with it), but (since
-I use Debian) it gets spawned through start-stop-daemon, which is also
-written in C.  You're saying that the running of the Java program has to
-be done *directly* by sudo for some reason?
+Why?  Who determines what is appropriate in such cases, anyway?
 
-The initial question was a little obscure to me.  I'm not sure what
-security problem the original poster is worried about.  Starting Tomcat
-via sudo with that init script is indeed crossing a privilege boundary to
-run a Java program, but there are several layers of indirection there.
+> The article has "Sep 24, 2014 8:35 AM PT" on it, which is 15:35 UTC.
+> Did the article's author receive the information before or after 14:00,
+> and when exactly?
 
-Anyway, I have certainly worked with systems with command-line utilities
-written directly in Java that are run via sudo or other similar tools.
-The one that comes to mind (Zimbra) isn't open source, but I'm sure there
-are plenty of others.
-
--- 
-Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
+The author does not work for the news organization in question, and he
+had legitimate and need-to-know access to the information as part of
+his regular employment.  I hope this clarifies things.
