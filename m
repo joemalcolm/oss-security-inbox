@@ -1,23 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/10/4
-Message-ID: <CALCETrVEzabwQmi26MSYg_KDHmcNP0rjWPkPG9YBURox65UXsg@mail.gmail.com>
-Date: Tue, 10 Jun 2014 14:49:03 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-4014: Linux kernel user namespace bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/34
+Message-ID: <54342DBC.8040600@case.edu>
+Date: Tue, 07 Oct 2014 14:15:24 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: mancha <mancha1@...o.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
 Content-Type: text/plain; charset=utf-8
 
-The internal function inode_capable was used inappropriately.
-Depending on configuration, this may be usable to escalate privileges.
-A cursory inspection of my Fedora box suggests that it is not
-vulnerable to the obvious way to exploit this bug.
+On 10/7/14, 2:46 AM, mancha wrote:
 
-The fix should appear in Linus' -master shortly, and it's tagged for
-stable.  In the mean time, I've attached it here.
+Please take my comments as the perspective of someone who only interacts
+with this group peripherally.  That may or may not give them value.
 
-I'll follow up in a day or two with a description of the actual bug,
-or one of you can try to beat me to it.
+> An effect few mention is how dramatically things changed post-embargo.
+> Sure, Chet's been burning the midnight oil (many thanks, Chet; you're
+> owed many beers) but on some level, or maybe only after the dust
+> settles, he'll be very appreciative of the way the community rallied in
+> a highly dynamic way to ultimately help make Bash a better product.
 
---Andy
+Don't get me wrong: while I was working on the bash patches I
+appreciated -- and I still appreciate -- this community's contributions.
+I think the additional eyes, and additional tools, this group brought to
+the effort played a large part in making it, in my mind, successful.
 
-View attachment "0001-fs-userns-Change-inode_capable-to-capable_wrt_inode_.patch" of type "text/x-diff" (7387 bytes)
+> From the identification of key breach points (thanks Stephane, Tavis,
+> and Michal) to the development of critical hardening (thanks Florian),
+> the level of engagement has been, and continues to be, extraordinary.
+
+Agreed.  While there are remaining technical issues with how the situation
+sorted itself out that I will have to deal with, for example
+
+http://lists.gnu.org/archive/html/bug-bash/2014-10/msg00050.html
+
+they were the result of uncoordinated work, not the amount of work.
+
+The signal/noise ratio of this community's contributions was extraordinary.
+
+> I don't know how long the initial report was embargo'd but I'm pretty
+> sure the process became infinitely more productive after the veil of
+> semi-secrecy was lifted (be it in metrics like LoC/hour or reports/day).
+
+It was almost two weeks.  I figured out the initial fix within hours, and
+as far as I know, the rest of the embargo time was spent preparing vendor
+patches and deciding on the logistics of notification.  From my
+perspective, that process was opaque, including the set of vendors that
+was notified.
+
+I guess whether or not the process `became more productive' is debatable.
+Again from my perspective, it became clear that Florian's function name
+mangling approach was the way to go once Tavis reported the second parser
+problem.  However, since I don't do this work for a living, I had to wait
+until the weekend to do it.  There's nothing about the process that would
+have improved that.
+
+If you assume that `infinitely more productive' means that there were more
+bug reports against the parser and other code, then sure, there were more
+bug reports after the initial disclosure.
+
+You can, and should, ignore LoC as a metric.  None of these fixes took more
+than a couple of dozen lines of code.  The longest by far was the function
+name mangling patch, and that didn't directly address a vulnerability.
+
+Frankly, if you want to improve the process, we should all get better at
+defining the boundary between CVE-worthy incidents and bugs.  Once the
+function name mangling patch was released, which was by the third day
+after the initial disclosure, everything that followed was a shell bug.
+Without remote exploit possibility or local privilege escalation, you're
+just left with bugs. You can use CVE IDs as an incentive to get vendors to
+release patches and users to install them, and that's fine, but be
+transparent that that's what you're doing.
+
+> It's amazing how productive people can be when incentives are properly
+> aligned.
+> 
+> Your solution is to add Tavis and Michal to distros@. What about the
+> next flaw when the two researchers who turn out to be key are Bob and
+> Fred? Add them next? You'll be playing catch-up.
+
+Isn't it generals who are always fighting the last war?
+
+It depends on what kind of community you're trying to build, and the form
+you want it to take.  It's equally valid to say that researchers who have
+already done good work are likely to do more in the future.
+
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
