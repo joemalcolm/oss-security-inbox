@@ -1,45 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/3
-Message-ID: <CALx_OUA=uwij3Z8Wa0Xj4YenAFCVzLpSD7+xaXDOcQg91OaeLA@mail.gmail.com>
-Date: Wed, 8 Oct 2014 17:30:41 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/2
+Message-ID: <20141007022828.GA2200@openwall.com>
+Date: Tue, 7 Oct 2014 06:28:28 +0400
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Who named shellshock?
 Content-Type: text/plain; charset=utf-8
 
->> Well, in the specific context of bash, where it's being singled out as
->> a major contributing factor to the bug: how would you establish an
->> out-of-band channel for exporting functions that keeps them separate
->> from "pure" data? As far as I can tell, there is no trivial and
->> portable way.
->
-> Well, I think we can all think of a few options, some more portable
-> than others.  The current namespace change is one option, obviously,
+Florian,
 
-But that's not really separating code and data, right? It doesn't feel
-like it follows the spirit of this phrasing:
+On Mon, Oct 06, 2014 at 02:04:42PM -0700, Michal Zalewski wrote:
+> I don't think it happened on Twitter - using advanced search with date
+> ranges, I don't see any mentions that would predate this article,
+> which already seems to be using the term:
+> 
+> http://www.csoonline.com/article/2687265/application-security/remote-exploit-in-bash-cve-2014-6271.html
+> 
+> It's odd that an article posted at 8 AM on Sept 24 would have any idea
+> of how the bug is already being called by the security community,
+> especially ahead of any Twitter buzz. But both Stephane and Florian
+> implied that some of the pre-notified parties apparently started
+> leaking details to the press and were getting ready to make a splash
+> the moment it goes public, so maybe that's the explanation.
 
-"When an existing construct in a system is widely expected to be used
-for storing data, avoid overloading it for use of storing code."
+I don't know who coined the Shellshock name, but I'd like us to know
+whether there was in fact a leak, and when.  (Luckily, I know it
+couldn't have been from the distros list, because no detail was posted
+to the distros list, thanks!)  I had raised this concern here:
 
-...because it very much overloads the syntax to store code alongside
-with the data, in a way that theoretically shouldn't but in practice
-may collide. It's not a whole lot better than the "separation" of CSS
-and JS in HTML, in the sense that both of them are sort of guarded by
-delineated by specific syntax structures.
+http://www.openwall.com/lists/oss-security/2014/09/24/36
 
-> 1) A single dedicated environment variable for all function exports.
-> e.g.:
+It is insufficient that "it was an honest mistake" and that "apologies
+were made and accepted."
 
-Ditto?
+I have no intent to place blame, but at least the general public needs
+to know whether the information got to the press before or after the
+scheduled coordinated public disclosure date/time ("Wednesday,
+2014-09-24 14:00 UTC").  If it's before, then this qualifies as a leak.
+If it's after, then it does not.
 
-> 2) A bash-specific file handle.  Before forking, bash sets up a pipe
-> to share with it's child.
+The article has "Sep 24, 2014 8:35 AM PT" on it, which is 15:35 UTC.
+Did the article's author receive the information before or after 14:00,
+and when exactly?
 
-What it's the 'exec' built-in, and the parent shell terminates before
-the new one gets a chance to run?
+NB: Please do not provide any information on this to me in private.
+If you're able to address my question, please do so on the list.
 
-What if control passes through an intermediate program that isn't bash?
+Thanks,
 
-Cheers,
-/mz
+Alexander
