@@ -1,25 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/5
-Message-ID: <20141113151952.GR5570@dhcp-25-225.brq.redhat.com>
-Date: Thu, 13 Nov 2014 16:19:52 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/11
+Message-ID: <20141008135150.GA3882@chaz.gmail.com>
+Date: Wed, 8 Oct 2014 14:51:50 +0100
+From: Stephane Chazelas <stephane.chazelas@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-7843 Linux kernel: aarch64: copying from /dev/zero causes local DoS
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-It was found that a read of n*PAGE_SIZE+1 from /dev/zero
-will cause the kernel to panic due to an unhandled exception since it's
-not handling the single byte case with a fixup (anything larger than a
-single byte will properly fault.)
+2014-10-07 21:06:14 -0700, Michal Zalewski:
+[...]
+> 4) Following the original find but before the end of the embargo,
+> there was no immediate realization that the underlying parser is
+> complex and likely not designed with security in mind, and therefore,
+> that it will very likely follow a well-established pattern and come
+> apart under closer scrutiny. I'm not sure if this is an argument for
+> not having embargoes (perhaps) or for sanctioning more thoughtful
+> reviews of the proposed fixes. Or perhaps it's just a fluke.
+[...]
 
-A local, unprivileged user could use this flaw to crash the system.
+That's not totally true. Florian's (Debian/Red Hat security)
+initial reply the day after the report already brought up
+possible hardening solution (delay parsing until the function is
+called (like in rc)), prefix, require newline in the value, list
+the functions to import in a fixed env var...) to avoid exposing
+the parser. The fact that it was wrong not to use the BASH_
+prefix/namespace was also brought up.
 
-Upstream patch proposal:
-https://lkml.org/lkml/2014/11/12/584
+There were some voices against those, like it was not
+necessarily needed, that it could break compatibility,
+functionality, that doing it properly was possibly going to take
+a long time, that such a radical change was not for a patch
+release, some misunderstanding as well, and after a few patch
+iterations and some review of the parser code (not by me, not
+that I would have been able to assess if it was safe enough or
+not), no compelling reason to say that the stopping from
+interpreting past the function definition (and before which the
+fix addresses) wasn't enough.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1163744
+Everyone was also in agreement that we shouldn't sit on it too
+long for fear of a leak (one of the mistakes on my part was that
+I put PoC code in the subject of the email for instance, and it
+was sent to quite a large party).
+
+It was quite obvious that the interpreting past the function
+definition was a bug and needed fixed asap given what it
+allowed and more importantly there was no doubt on how it should
+be fixed (though the simple fix did break backward
+compatibility) not so much for the exposing of the parser and
+how to address it for which it would have taken longer to reach
+an agreement.
+
+So more than a misunderstanding, I'd say that was a rushed bad
+decision (to address the obvious immediate issue now, and harden
+(the "right" way) later, assuming (wrongly) that the parser
+would hold).
+
+Note that the hardening fix that was provided in a rush
+post-disclosure is not the best one. It addresses the security
+concern, but it cripples the feature and clutters the
+environment.
+
+It breaks backward compatibility because it restricts which
+functions can be exported. For instance, you can't export a
+/bin/rm function anymore (was useful as a debugging tool).
+
+Some tools (like pdksh/mksh) don't propagate env vars with `()`
+or `%%` in their name, so you can no longer export functions
+accross them (POSIX also leaves the behaviour there undefined
+which means there's a portability dimension, bash is ported to
+almost everything out there).
+
+The solution I was in favour of was a:
+
+BASH_FUNCDEFS='f() { f-function; }
+g() { g-function; }...'
+
+That also stops exposing the parser, that's *one* env var (no
+cluttering, easy to understand the implications or blacklist it
+as it's the same as BASH_ENV or BASHOPTS, PS4, PATH... that are
+equally dangerous).
+
+With
+
+BASH_FUNCDEFS='() {(format=4.4)}
+f() { f-function; }
+g() { g-function; }...'
+
+That would even be one-way compatible with an older bash
+(actually exploiting the bug), and updating sudo's blacklist
+would not have been necessary (because the "()" prefix is kept)..
+
+Another thing that was mentionned is that bash is not consistent
+in what name it allows for function names (and that's also
+locale-dependant), so ideally, that should be fixed as well.
+
+Now all of that would have been a bigger change that would have
+taken more than the 2 week embargo to write, test and release
+and is not the kind of thing you ship with a patch release.
 
 -- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Stephane
+
