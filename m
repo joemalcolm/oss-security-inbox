@@ -1,42 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/5
-Message-ID: <20141024113050.GA27768@zoho.com>
-Date: Fri, 24 Oct 2014 11:30:50 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Cc: lcamtuf@...edump.cx
-Subject: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/7
+Message-Id: <20141008085252.6B6BC72E013@smtpvbsrv1.mitre.org>
+Date: Wed,  8 Oct 2014 04:52:52 -0400 (EDT)
+From: cve-assign@...re.org
+To: jeremy@...nstack.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Swift
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 23, 2014 at 06:55:17PM +0000, mancha wrote:
-> On Thu, Oct 23, 2014 at 08:24:00AM -0700, Michal Zalewski wrote:
-> > > http://lcamtuf.coredump.cx/stringme
-> > 
-> > The immediate cause is due to srec_scan() in srec.c decreasing
-> > 'bytes' without range checking until it wraps around. The
-> > already-bad value of 'bytes' is assigned to 'sec->size' few lines
-> > before the crash, so perhaps there would be potential for
-> > exploitability later down the line; but the code ends up crashing
-> > soon thereafter in a 'while (bytes
-> > > 0)' loop that has no other exit conditions. That loop would need
-> > > to
-> > go over the entire address space without SEGV to avoid the crash.
-> 
-> I'm no leporidae but I agree srec_scan needs tlc.
-> 
-> Fun-with-NULL:
-> 
-> http://sf.net/projects/mancha/files/rnd/stringmetoo
-> 
-> --mancha
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-To clarify...
+> Versions: up to 2.1.0
 
-While my sample input to strings (or objdump, etc.) also gets bytes to
-wraparound, the nature of the crash is different that that of Michal's
-sample. My input triggers a NULL pointer dereference and further
-demonstrates the need to tighten up the codebase. 
+> a vulnerability in Swift enforcement of metadata contraints. By adding
+> metadata in several separate calls, an authenticated attacker can
+> bypass the max_meta_count constraint, potentially resulting in the
+> storage of more metadata than allowed in configuration.
 
+> https://launchpad.net/bugs/1365350
 
-Content of type "application/pgp-signature" skipped
+> If we pass more than 90 metadata in one request, it fails. But if we
+> pass 50 in one request and 50 in another request, the request is
+> successfully processed which is against documentation.
+
+> The above case occurs in account and container only. While in object
+> case, the metadata is overwritten with new request's metadata.
+
+Use CVE-2014-7960.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUNPrtAAoJEKllVAevmvmsMCYH/Rh+WJrLAUS9X4WQoP0amenB
+1ABykY/srIZTQqTF45CFWV2eN/9XUgqCNA5RvhtsIBDrMsA4kTUax2k3rCNewucX
+YaprOeZtmtZz+pkRH1CANN/E152+NKAiYAdZ6hq5fyFprU5VY9L2fosUqW4S2B0u
+Klc1mQsE1lSCpFVbvSalgv+xwiGPi439G1QfPIz2Tpq6s33eWnl7YQXSFapGDc7M
+Axk/mf0HND8Vpcn9DE/eo06yA7bYNJfA3OKflKwmVIO/CabJ+mNGUYuOts1hF22A
+xE5wtAlZAx1I6FmWOgU11Y2dDqK1p/DjlHLwvn+qHEA/acTyMkachc+imR88fX4=
+=mGg8
+-----END PGP SIGNATURE-----
