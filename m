@@ -1,55 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/2
-Message-ID: <20140509071330.GA5688@suse.de>
-Date: Fri, 9 May 2014 09:13:30 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Cc: mattd@...fuzz.com
-Subject: Linux kernel floppy ioctl kernel code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/10
+Message-ID: <5435050C.1050008@mittwald.de>
+Date: Wed, 8 Oct 2014 11:34:04 +0200
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+CC: <wmealing@...hat.com>, <kseifried@...hat.com>
+Subject: Re: CVE request  for VDSM denial of service
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-As this was posted to linux-distros, and was supposed to be made public
-earlier this week, but so far wasn't published on oss-sec ...
 
-Reported by Matthew Daley to security@...nel.org.
+On 08/10/14 09:34, Wade Mealing wrote:
+> Gday,
+> 
+> The issue (outlined here https://bugzilla.redhat.com/show_bug.cgi?id=1148688 ) allows
+> an attacker to hold open an ssl connection effectively denying new connections the
+> ability to complete any new ssl connections.
+> 
+> I would like a CVE number to assign to this issue.  Please assign me one.
 
-There apparently exists a proof of concept root exploit, that allows
-local users with access to a floppy device to execute code in the linux
-kernel.
+Doesn't RH assign it's own CVEs anymore?
 
-(I think this needs a floppy driver to actually allow access to a floppy
- device. My machine only says "floppy0: no floppy controllers found" today.)
+I also wonder why this bug wasn't reported to upstream
+(wrong BZ "Product" at least it should get cloned to ovirt).
 
-Linux Kernel Mainline commits:
+-- 
+Mit freundlichen Grüßen / Regards
 
-2145e15e0557a01b9195d1c7199a1b92cb9be81f
-Author: Matthew Daley <mattd@...fuzz.com>
-Date:   Mon Apr 28 19:05:21 2014 +1200
+Sven Kieske
 
-    floppy: don't write kernel-only members to FDRAWCMD ioctl output
-
-    Do not leak kernel-only floppy_raw_cmd structure members to userspace.
-    This includes the linked-list pointer and the pointer to the allocated
-    DMA space.
-
-    Signed-off-by: Matthew Daley <mattd@...fuzz.com>
-    References: CVE-2014-1738
-    Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
-
-commit ef87dbe7614341c2e7bfe8d32fcb7028cc97442c
-Author: Matthew Daley <mattd@...fuzz.com>
-Date:   Mon Apr 28 19:05:20 2014 +1200
-
-    floppy: ignore kernel-only members in FDRAWCMD ioctl input
-
-    Always clear out these floppy_raw_cmd struct members after copying the
-    entire structure from userspace so that the in-kernel version is always
-    valid and never left in an interdeterminate state.
-
-    Signed-off-by: Matthew Daley <mattd@...fuzz.com>
-    References: CVE-2014-1737
-    Signed-off-by: Linus Torvalds <torvalds@...ux-foundation.org>
-
-Ciao, Marcus
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
