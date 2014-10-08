@@ -1,92 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/23/2
-Message-Id: <E1XWOzA-0000vf-7e@xenbits.xen.org>
-Date: Tue, 23 Sep 2014 12:14:24 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 104 - Race condition in HVMOP_track_dirty_vram
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/17
+Message-ID: <20141008151122.GB3882@chaz.gmail.com>
+Date: Wed, 8 Oct 2014 16:11:22 +0100
+From: "stephane.chazelas" <stephane.chazelas@...il.com>
+To: "David A. Wheeler" <dwheeler@...eeler.com>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Stéphane Chazelas: How *DID* you find Shellshock?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+2014-10-08 10:26:21 -0400, David A. Wheeler:
+> This is a question for Stéphane Chazelas, but I'm "cc"ing
+> oss-security because I think many of us want to know the
+> answer.
+> 
+> Stéphane: How *DID* you find Shellshock, in as much detail as you can recall?
+> 
+> I'm told you found the bug after "reflecting on an earlier
+> bug" you found in bash "a few months earlier."
+> (http://www.smh.com.au/it-pro/security-it/stephane-chazelas-the-man-who-found-the-webs-most-dangerous-internet-security-bug-20140927-10mixr.html)
+> 
+> What I'm hoping is that we can learn some lessons and re-apply
+> them elsewhere.
+[...]
 
-                    Xen Security Advisory XSA-104
-                              version 2
+That's something I've been asked often and all the journalists
+have transformed what I said.
 
-               Race condition in HVMOP_track_dirty_vram
+In any case, I didn't find the bug by observing exploits, I have
+no reason to beleive it's been exploited before being disclosed
+(though of course I can't rule it out). I did not find it by
+looking at bash's code either.
 
-UPDATES IN VERSION 2
-====================
+some copy-pasting of what I've said to others:
 
-Public Release.
+In July, I had found a vulnerability in the GNU libc (not bash)
+related to environment variables (CVE-2014-0475). It could be
+network exploitable with one particular vector: the bypass of
+OpenSSH's ForceCommand (used for instance in git servers or
+poor-man's VPNs). And it was agravated by a poor design choice
+of bash [(actually two: the parsing of .bashrc over ssh and the
+locale dependant parsing (that latter one not specific to
+bash))] which again could cause arbitrary command execution if
+enough conditions were met (a very narrow attack surface
+compared to shellshock).
 
-ISSUE DESCRIPTION
-=================
+Again, that was not following any observation of an exploit
+attempt, just a reflection on a mechanism I knew about.
 
-The routine controlling the setup of dirty video RAM tracking latches
-the value of a pointer before taking the respective guarding lock, thus
-making it possible for a stale pointer to be used by the time the lock
-got acquired and the pointer gets dereferenced.
+I put that attack vector in context with that little known
+feature of bash, the exporting/importing of functions for which
+I already knew part of the mechanism. Started to think of the
+possible way it was implemented, thought that it could very well
+be the very simplest way, in which case that was a big security
+hole.
 
-The hypercall providing access to the affected function is available to
-the domain controlling HVM guests.
+More details at
 
-IMPACT
-======
+http://thread.gmane.org/gmane.comp.shells.bash.bugs/22367
+Which I've just posted.
 
-Malicious or buggy stub domain kernels or tool stacks otherwise living
-outside of Domain0 can mount a denial of service attack which, if
-successful, can affect the whole system.
+and:
 
-Only domains controlling HVM guests can exploit this vulnerability.
-(This includes domains providing hardware emulation services to HVM
-guests.)
+http://thread.gmane.org/gmane.comp.shells.bash.bugs/22096
 
-VULNERABLE SYSTEMS
-==================
-
-Xen versions from 4.0.0 onwards are vulnerable.
-
-This vulnerability is only applicable to Xen systems using stub
-domains or other forms of disaggregation of control domains for HVM
-guests.
-
-MITIGATION
-==========
-
-There is no mitigation available for this issue.
-
-(The security of a Xen system using stub domains is still better than
-with a qemu-dm running as an unrestricted dom0 process.  Therefore
-users with these configurations should not switch to an unrestricted
-dom0 qemu-dm.)
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper at Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa104.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa104*.patch
-fc02f6365ca79a6ef386c882b57fab8b56aa12b54fc9b05054552f0f25e32047  xsa104.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJUIWPgAAoJEIP+FMlX6CvZoIYH/3HEaknB8j0LpU/OQzO/zhLV
-EJzzXY4kzsabm3HP0bisTMpa8oMdFCnedcGzegqt/Ig+9CRwtbAijD/IokoODhAC
-GPYDxZag52l/7PT/qG9WtbGX8CYEHFYLsHZc0Xi3Jo/3cRfdZ8F38UlvjPJVDyXO
-s3CAHEoPGcgUgCf0kKVADDta80k8USz6ptugqnkagHByF6TK+Fl/EfGpUpx36RWF
-6Sl0rtZeKdlqM9uZdf71EKJD1T8/F8CW2h7aKgRYD3IJb/yFpcbYVy+ePtl/XBT+
-TDo7ZeqCcuNcge8fiWngD5MvjfDygkkgL7FzNAzGVQcK8NND3NSlctu9Qe8CqJA=
-=+BMV
------END PGP SIGNATURE-----
-
-Download attachment "xsa104.patch" of type "application/octet-stream" (1651 bytes)
+-- 
+Stephane
