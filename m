@@ -1,49 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/7
-Message-ID: <20140331105711.GB8904@suse.de>
-Date: Mon, 31 Mar 2014 12:57:11 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/20
+Message-ID: <1605488435.60443819.1412796743037.JavaMail.zimbra@redhat.com>
+Date: Wed, 8 Oct 2014 15:32:23 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: pam_timestamp internals
+Subject: Re: openssh on linux rce in sftp-only mode
 Content-Type: text/plain; charset=utf-8
 
-Hi
-
-
-On Mon, Mar 31, 2014 at 02:32:09PM +0400, Dmitry V. Levin wrote:
-> Hi,
 > 
-> On Mon, Mar 24, 2014 at 01:46:43PM +0100, Sebastian Krahmer wrote:
-> > When playing with some PAM modules for my own projects, I came
-> > across some implications of pam_timestamp (which is part of
-> > upstream linux-pam) that should probably be addressed.
-> > 
-> > Most importantly, there seems to be a path traversal issue:
+> I reported this to the OpenSSH developers, and although they included my
+> patch as a mitigation, they did not treat it as a vuln in OpenSSH.
 > 
-> Thanks, Sebastian!  The issue has been fixed in upstream linux-pam by commit
-> https://git.fedorahosted.org/cgit/linux-pam.git/commit/?id=Linux-PAM-1_1_8-32-g9dcead8
+> I believe that treating this as a hardening patch makes sense. The SFTP
+> server behaves exactly as documented, it allows access to the whole
+> filesystem. And on Linux, that happens to equal write access to the
+> process RAM, so you should never give that access to someone who
+> shouldn't be able to run arbitrary code.
+> 
 
-Thanks for taking care. I was about to write a patch on my own, but seems
-not necessary anymore.
+I think one has to assume if a user has unrestricted sftp access, they can
+figure out how to do most anything. Even with the upstream hardening patch,
+it really only protects the sftpd process. Any other processes the user may
+own could be modified.
 
-However, I think that
-
-+	if (!strlen(tty) || !strcmp(tty, ".") || !strcmp(tty, "..")) {
-
-could be insufficient. Any occurence of "." inside tty name
-should be evil. Above strcmp() matches exactly "." or "..",
-but you also want "../../" etc which should pass above check.
-
-For the ruser check, the strchr(ruser, '/') safes this, but
-".." occurence may also be treatened appropriately.
-
-Sebastian
-
-
+I would hesitate to call this a security issue, if we do I think we open a
+can of worms.
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+    JB
