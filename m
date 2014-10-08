@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/4
-Message-ID: <20140120150846.GA19365@eldamar.local>
-Date: Mon, 20 Jan 2014 16:08:46 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: David Prévot <taffit@...ian.org>
-Subject: CVE request: spip: cross-site scripting vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/31
+Message-ID: <CALx_OUC=PfeXR=tHomUOtQ9zJY3tzBueaG1J_TVaWSeGC8Yrog@mail.gmail.com>
+Date: Wed, 8 Oct 2014 16:05:45 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-Hi
+> Well, I guess, but the way you're interpreting this separation of
+> code/data and the way that I am is clearly different.
+> There are clearly cases where separation is  practical,
+> non-destructive, and beneficial for security.
 
-I would like to request a CVE for the following cross-site scripting
-vulnerability in spip: authors could inject code via their name, which
-is displayed in the signature of their articles and author page.
+Well, in the specific context of bash, where it's being singled out as
+a major contributing factor to the bug: how would you establish an
+out-of-band channel for exporting functions that keeps them separate
+from "pure" data? As far as I can tell, there is no trivial and
+portable way.
 
-Upstream fixed this issue in 3.0.13[1,2,3] and also for the 2.1 branch
-in [4,5].
+Or, in a slightly broader context: would a shell environment that
+enforces strict and unconditional separation between any and all data
+variables (even of the trusted kind - keep in mind that the author of
+this code clearly assumed that the environment is trusted) and the
+stuff that ever gets executed would be easy to construct, useful, or
+would ever have a chance of gaining comparable popularity?
 
- [1] http://www.spip.net/fr_article5648.html
- [2] http://core.spip.org/projects/spip/repository/revisions/20902
- [3] http://zone.spip.org/trac/spip-zone/changeset/77768
- [4] http://core.spip.org/projects/spip/repository/revisions/20972
- [5] http://www.spip.net/fr_article5665.html
+I think that instinctively shouting "code and data should be
+separated" in this context, if we don't have good answers to these
+questions, is just... well, kinda counter-productive =)
 
-Could a CVE be assigned for this issue? (unfortunately the changes
-entries are only in french)
+> To me, it's not about anticipating the next bug, it is about providing
+> guidance to developers who care only so much about security so that we
+> can avoid some bugs that we didn't anticipate.
 
-Regards,
-Salvatore
+Sure. So what specific implementation advice in the spirit of
+"separate code and data" should have been provided for bash that would
+have prevented a developer who assumed that the environment is trusted
+from making this mistake, while still getting exports to work on
+everything from Cygwin to AmigaOS?
+
+/mz
