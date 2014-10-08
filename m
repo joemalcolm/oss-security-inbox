@@ -1,25 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/4
-Message-ID: <543775D5.2090001@redhat.com>
-Date: Fri, 10 Oct 2014 11:29:49 +0530
-From: Siddharth Sharma <siddharth@...hat.com>
-To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Subject: Request for CVE assignment for tigervnc affected by similar flaws as in CVE-2014-6051 and CVE-2014-6052 of libvncserver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/22
+Message-ID: <CALCETrXDNiGfvSiRLR_nomXMY8EujAaUC3vzSrf2KXaO-8u+gw@mail.gmail.com>
+Date: Wed, 8 Oct 2014 12:54:15 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-7975: 0-day umount denial of service
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I just screwed up and typoed my git send-email command, so there's now
+a publicly available exploit for a new umount bug.
 
-I would want to get different CVE's assigned for tigervnc as it is
-affected by similar flaws of libvncserver ( CVE-2014-6051 and
-CVE-2014-6052 ).
+Fortunately this one isn't terribly serious, but it might be usable
+for more than just DoS if some daemon reacts poorly to being unable to
+write to the filesystem.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1151307
-https://bugzilla.redhat.com/show_bug.cgi?id=1151312
+http://thread.gmane.org/gmane.linux.kernel.stable/109312
 
-Thanks,
--- 
-Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A
-Fingerprint :  0x6F04C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
+Sorry!
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+--Andy
