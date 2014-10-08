@@ -1,111 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/12
-Message-ID: <CANtF8NCm9y9HVLm7-7t-2Rn0CQBbqyZc+jq-F9QLXfoqbsCG+w@mail.gmail.com>
-Date: Wed, 17 Dec 2014 14:24:11 -0600
-From: Grandma Eubanks <tborland1@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/19
+Message-ID: <20141008183712.GA3400@zoho.com>
+Date: Wed, 8 Oct 2014 18:37:12 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: What is the "Grinch" polkit/wheel group issue?
+Cc: chet.ramey@...e.edu
+Subject: Re: Aftershock (was: Shellshocker - Repository of "Shellshock" Proof of Concept Code)
 Content-Type: text/plain; charset=utf-8
 
-The reason this was not reported was because this was expected behavior. I
-didn't feel it needed to be reported because of this and that it is really
-a surface opening stager and by itself nothing much. The example posed that
-I tried to stress was tended towards home users, not servers. However,
-words have been said and 'definitions' needed to be made and it snowballed
-into something crazy. An example of how I've been using this:
+On Tue, Oct 07, 2014 at 02:15:24PM -0400, Chet Ramey wrote:
+> On 10/7/14, 2:46 AM, mancha wrote:
+> 
+> Please take my comments as the perspective of someone who only
+> interacts with this group peripherally.  That may or may not give them
+> value.
 
-User is compromised via client-side exploit such as browser, flash, mail
-client, etc.
-User is running up to date kernel and you don't want to rely on tricks like
-.bashrc to trick the user into giving password.
-You have access to a new surface area of any package in their repo to
-install and exploit to escalate privileges. Of course, you can also install
-a package for a new vulnerability released. Especially for people with only
-stable repos as it takes a bit for those updates to come across.
+Hi Chet.
 
-**This was important to me because I kept finding vulns in packages no one
-is using, but this opened up potentiality for a lot of useless stuff I've
-been keeping. I wrote this mainly for them if they're in the same position.
+Many thanks for your thoughtful response. Any discussion about
+shellshock lessons learned would be incomplete without your input.
 
-This was the scenario I have been using this for before an article was even
-drafted. Most of the other operations require giving a password, like
-removing packages, but installing packages does not require anything but to
-be in the proper group.
-I don't think it requires a CVE, again why I didn't report it, I do however
-think it should at least require authentication like every other operation
-requires.
+> > I don't know how long the initial report was embargo'd but I'm
+> > pretty sure the process became infinitely more productive after the
+> > veil of semi-secrecy was lifted (be it in metrics like LoC/hour or
+> > reports/day).
+> 
+> It was almost two weeks.  I figured out the initial fix within hours,
+> and as far as I know, the rest of the embargo time was spent preparing
+> vendor patches and deciding on the logistics of notification.  From my
+> perspective, that process was opaque, including the set of vendors
+> that was notified.
 
+Taking "within hours" to mean 4 for argument's sake, gives about a 1.2%
+to 98.8% breakdown of embargo time spent developing a fix versus all
+else. Striking.
 
-Now, the confusion that it was reported is coming from something else
-that's I'm going to talk about in January. Something that, again, I'm not
-sure is CVE worthy, but could be debatable:
-https://bugzilla.redhat.com/show_bug.cgi?id=1128400
-
-On Wed, Dec 17, 2014 at 12:38 PM, Dean Pierce <pierce403@...il.com> wrote:
+> I guess whether or not the process `became more productive' is
+> debatable.  Again from my perspective, it became clear that Florian's
+> function name mangling approach was the way to go once Tavis reported
+> the second parser problem.  However, since I don't do this work for a
+> living, I had to wait until the weekend to do it.  There's nothing
+> about the process that would have improved that.
+> 
+> If you assume that `infinitely more productive' means that there were
+> more bug reports against the parser and other code, then sure, there
+> were more bug reports after the initial disclosure.
+> 
+> You can, and should, ignore LoC as a metric.  None of these fixes took
+> more than a couple of dozen lines of code.  The longest by far was the
+> function name mangling patch, and that didn't directly address a
+> vulnerability.
 >
-> The key here is the line:
->
-> "In order to exploit this, all we need is a single vulnerability in
-> any package in a repo. There are tons to choose from. If we type
-> ‘PKCon’ or simply ‘man PKCon,’ we can find a list of repos in use and
-> then pull a list of all bins and version numbers. I won’t provide one
-> here because you don’t want everything handed to you."
->
-> Had they actually found a package they could leverage to get root,
-> then this would absolutely be a vulnerability, but they didn't.  While
-> configuring pkcon to allow admins to install packages without typing
-> in a password *is* something that might be unexpected for people
-> unfamiliar with polkit, that is the exact type of use case it was
-> built for.
->
->   - DEAN
->
-> On Wed, Dec 17, 2014 at 10:24 AM, Kurt Seifried <kseifried@...hat.com>
-> wrote:
-> > On 17/12/14 10:00 AM, Marcus Meissner wrote:
-> >> Hi,
-> >>
-> >> This probably needs a CVE too, or does it have one?
-> >>
-> >> https://www.alertlogic.com/blog/dont-let-grinch-steal-christmas/
-> >>
-> http://www.pcworld.com/article/2860032/this-linux-grinch-could-put-a-hole-in-your-security-stocking.html
-> >>
-> >> Although it seems that the user is in the "wheel" group for this to be
-> exploitable
-> >> and is hard to specify what actions should be safed by another query or
-> which should not.
-> >>
-> >> Ciao, Marcus
-> >
-> > Yeah I looked into this (the article/etc was completely confusing and
-> > took some time to parse):
-> >
-> > 1) the article states they contacted red hat, we were unable to find
-> > any inbound email or bugzilla entry pertaining to this issue, as always
-> > if you have an issue you wish to report please contact
-> secalert@...hat.com
-> >
-> > 2) this is expected behaviour, admin users can install software (do I
-> > have to say this? really? yes. I was told I should say this).
-> >
-> > 3) don't run web apps as admin users (do I have to say this? really?
-> > yes. I was told I should say this).
-> >
-> > 4) if you feel the need to run a web app as an admin user restrict what
-> > they can do via SELinux, and  don't let them install software (do I have
-> > to say this? really? yes. I was told I should say this).
-> >
-> > So TL;DR: it's not a security vulnerability, and it will NOT be getting
-> > a CVE.
-> >
-> > I can only assume this article/vuln is perhaps referring to something
-> > like Cpanel and other control panels that people sometimes install
-> > insecurely/improperly and then never update. Or something. Who knows.
-> >
-> > --
-> > Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> >
->
+> Frankly, if you want to improve the process, we should all get better
+> at defining the boundary between CVE-worthy incidents and bugs.  Once
+> the function name mangling patch was released, which was by the third
+> day after the initial disclosure, everything that followed was a shell
+> bug.  Without remote exploit possibility or local privilege
+> escalation, you're just left with bugs. You can use CVE IDs as an
+> incentive to get vendors to release patches and users to install them,
+> and that's fine, but be transparent that that's what you're doing.
 
+Maybe LoC is a poor metric but I don't want that to obscure the real
+message: the process's high dynamism post-disclosure. As you correctly
+point out, many recent parser flaws don't rise to the level of security
+concerns primarily because of the prefix/suffix barrier.
+
+However, it's important to point out that critical piece of hardening
+was a post-disclosure innovation and, more importantly, was triggered by
+post-disclosure findings and interaction.
+
+I've not given the CVE allocation process much thought but it has been
+discussed a bit in http://seclists.org/oss-sec/2014/q4/26.
+
+> > Your solution is to add Tavis and Michal to distros@. What about the
+> > next flaw when the two researchers who turn out to be key are Bob
+> > and Fred? Add them next? You'll be playing catch-up.
+> 
+> Isn't it generals who are always fighting the last war?
+>
+> It depends on what kind of community you're trying to build, and the
+> form you want it to take.  It's equally valid to say that researchers
+> who have already done good work are likely to do more in the future.
+
+I certainly agree it's reasonable to expect researchers like Stephane,
+Tavis, and Michal, who've been instrumental in the analysis & response
+of shellshock writ large, to prove valuable in future TBD security
+scenarios as well.
+
+My response was about how best to secure their (and others') involvement
+in a way that maximizes benefits.
+
+I perceived Alexander to be suggesting the answer is enlisting them
+pre-disclosure by adding them to a closed list. Maybe so.
+
+But, after having observed important dots only get connected
+post-disclosure, I see strong arguments in favor of earlier engagement
+of the broader security community. As happened with shellshock, this can
+unleash unanticipated synergies and provide an extensive and important
+sounding board.  
+
+Once again, thanks for all your efforts.
+
+$ env BASH_FUNC_x%%='() { echo "--mancha"; }' bash -c 'x;'
+
+
+Content of type "application/pgp-signature" skipped
