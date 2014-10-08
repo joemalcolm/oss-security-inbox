@@ -1,57 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/13
-Message-ID: <CABniQZP6mYhmDwS9KzFh4wWCad=9DN8WWNpqQR-svnZgmrntPw@mail.gmail.com>
-Date: Thu, 2 Oct 2014 10:57:57 +0800
-From: Shawn <citypw@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/14
+Message-ID: <5435C41F.3080600@gmail.com>
+Date: Thu, 09 Oct 2014 01:09:19 +0200
+From: Sven Kieske <svenkieske@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Chet Ramey <chet.ramey@...e.edu>
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 2, 2014 at 5:45 AM, Ed Prevost <me@...ardprevost.info> wrote:
-> On 10/1/2014 2:11 PM, Shawn wrote:
->> On Thu, Oct 2, 2014 at 5:08 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
->>> On 10/1/14, 5:04 PM, Shawn wrote:
->>>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
->>> Nope, this one fixes 7168/7169.  It's the equivalent of the
->>> `parser-oob' patch.
->>>
->>> I have patches that fix 6277/6278 that are in the pipeline.
->>>
->> oh, s0rry for the mistake...that'd be great if we can get the patch as
->> quickly as possible. Thanks.
->>
->>> --
->>> ``The lyf so short, the craft so long to lerne.'' - Chaucer
->>>                  ``Ars longa, vita brevis'' - Hippocrates
->>> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
->>
->>
-> Really!? Honestly!? "as quickly as possible"
->
-What else could I say? A POC already released and a bunch of
-customer's machines are waiting...even the only mitigation is in
-GCC-lvl, which compile bash with ASLR/NX/PIE/CANARY.....too bad this
-time.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Man, we really should rally together and at least send Chet a recovery
-> beer basket or something.
->
-that's for sure...no problem with beer. I'll try to catch up with Chet
-in whatever random conferences;-) maybe two dozen beers
-
-> --Ed
-> Application & Network Security, Research Scientist
-> http://EdwardPrevost.info
-> https://twitter.com/@EdwardPrevost
->
+On 08.10.2014 23:53, Tracy Reed wrote:
+> While it is too late for our hardware etc. perhaps strong type
+> systems such as found in Haskell can help here? It is known to be
+> very good at avoiding undefined or unexpected runtime behavior. Too
+> late also for current languages to have this bolted on but if
+> anyone wanted to write "secure" software I'd be looking at
+> languages which provide some more guarantees. Too late for bash 
+> also, of course which I suppose points us back at the original
+> problem.
 
 
+Well, for web frameworks, just take yesod (http://www.yesodweb.com/
+written in haskell) as an example. to quote their site:
+"Turn runtime bugs into compile-time errors"
 
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
+I still think, this is the right direction, yes it's painful.
+But it's a real solution to a real (huge) fraction of the problem.
+
+Imho of course, please enlighten me with some counter arguments.
+Oh, here is one from myself:
+
+vendors are not liable, not even for the most serious
+software bugs. so there is no incentive for them to make
+better software.
+
+the software industry is afaik the only one which is not liable
+if they fuck their very own products up.
+
+do this if you're building skyscrapers, cars, medical
+equipment, anything, and you go to jail.
+
+the funny part is, these businesses do rely on software
+today, so if there's a bug, let's say in some construction
+software and no one notices, the skyscraper architect might
+get sued and go to jail, but not the programmer/vendor
+who wrote that shitty code.
+
+Software is too important to not have any rules in place.
+This was okay until the 90s (maybe), but not in the 21st
+century.
 
 regards
-Shawn
+
+Sven
+
+PS: fun fact, the only thing you _will_ get sued for are:
+software patents
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQGcBAEBAgAGBQJUNcQfAAoJEAq0kGAWDrqlKuQL/28ye2bJ8Ry9anTpfptPr8yL
+mSHDcQHnuKFJtVkg6bJJb0SQURJNM2djUYSUZoKCvYpyssE4B+vCgHXqN3Kf0ehz
+iv0Q3LPgSHAk7a+Yj+QR3uW7r+CvH7I4BI28+OYpOe5SOzSlcMG/Lulmez18mJ5K
+G7iOc0EB6RTT4EUrGrpAd9cSjgBgFupkvl1bgaL0UVkPqw3qpXBaWf3LULjQ60z8
+qmcW9yihMSr3rT7LCtO3RYDgzFK3GSltTMYDe1jVzlbtYl6FJNZnSzssSV6OfhFG
+vqbmPxwtf3AXZrRTLMF+HXYr5YZiQa0jYo41E2h/tKBTNty7C5cw7PMmQVFPY9QR
+HfNBhWNj2fz8wLSPGcnFXw9Raz6616Z5gcaZVDwrbkWe7O8AOkiunJd91FRbnK1X
+V4bV/gOlfAVmOXegHdcWlUJYPNHQIHD3DU895A5OAGLuptipAvKiNagNahHonw+S
+SVoJvE5nrmPCoIjo3Z0ovLieSKa0+61G9cFu955fpQ==
+=/D4K
+-----END PGP SIGNATURE-----
