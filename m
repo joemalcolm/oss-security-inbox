@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/8
-Message-Id: <20140819155002.2F34C72E002@smtpvbsrv1.mitre.org>
-Date: Tue, 19 Aug 2014 11:50:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: mattd@...fuzz.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, eduardo@...key.io
-Subject: Re: CVE request / advisory: Monkey web server <= v1.5.2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/30
+Message-ID: <20141008230523.GJ6890@pc.thejh.net>
+Date: Thu, 9 Oct 2014 01:05:23 +0200
+From: Jann Horn <jann@...jh.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: openssh on linux rce in sftp-only mode
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> https://github.com/monkey/monkey/commit/b2d0e6f92310bb14a15aa2f8e96e1fb5379776dd
-> http://monkey-project.com/Announcements/v1.5.3
+On Wed, Oct 08, 2014 at 06:44:32PM -0400, Josh Bressers wrote:
+> > > 
+> > > I think one has to assume if a user has unrestricted sftp access, they can
+> > > figure out how to do most anything. Even with the upstream hardening patch,
+> > > it really only protects the sftpd process. Any other processes the user may
+> > > own could be modified.
+> > 
+> > Not that easily - /proc/$pid/mem requires you to either be the same process
+> > or be attached to it via ptrace, I think.
+> > 
 > 
-> simple denial-of-service
-> 
-> any HTTP requests that result in a custom error message being returned
-> cause a file descriptor ... to be leaked
+> I can't speak for other systems (I don't understand the details), but I can
+> read arbitrary process memory for processes I own in Fedora 20.
 
-Use CVE-2014-5336.
+Hmm, just tried it on Debian Testing, I can reproduce that.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJT83F0AAoJEKllVAevmvms8N0H/jUJyJCQI6zg5JD0y6ZaCG5o
-jrTFWNLM6T+7PeLVyYMnuhAxcI7pLh0UqPbpYAZTiAULCFo+WtrD5qXEUaIiu/9L
-STRuUsoLwwBBjZY0LJJ6t2tCJ2p+YFw3dq9lDJOHydcJ6rKzZcmwApgyYb+Azpvo
-VCSjtEZj5jbh73WpRbevxoRr4lmvyZ8J0i9321sHvqVAGZVZl0cuDiXb3qP++v8E
-FjgCMhCzQr/IP17iigov5mOXNPg6z4K4z0EyrTolsa3T7Azo9WvciZG/bfJfVWuA
-oH2jmUruCA+qREVcpqThxaX3Fbda8SLV/vvGvSa8My64Jwh8iwpP8v7hdGkri/Y=
-=pDlF
------END PGP SIGNATURE-----
+> Does someone know what the typical default is?
+
+I looked through the git history of fs/proc/base.c now, looks like commit
+e268337dfe26dfc7efd422a804dbb27977a3cccc ("proc: clean up and fix
+/proc/<pid>/mem handling") changed the behavior to be more permissive. That commit
+is between kernel 3.2 and 3.3. Meh. :(
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
