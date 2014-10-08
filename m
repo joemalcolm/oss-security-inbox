@@ -1,66 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/8
-Message-Id: <20141114214750.858F76DC01A@smtpvmsrv1.mitre.org>
-Date: Fri, 14 Nov 2014 16:47:50 -0500 (EST)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: old CVE assignments for JQuery 1.10.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/5
+Message-ID: <CALx_OUB1M5AByht4cAw5sx=6KZS-y0WCC9+Um-xSPDTDskCmcQ@mail.gmail.com>
+Date: Tue, 7 Oct 2014 21:06:14 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>,  "David A. Wheeler" <dwheeler@...eeler.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I feel that to some extent, "separation of code and data" is an
+overused, overly simplistic, and arbitrarily applied mantra; it is
+also the antithesis of interpreted scripting (and a good chunk of
+other stuff in computing), for mostly valid reasons.
 
-We're not sure why you listed Ticket #6016 twice, but here are the CVE
-IDs for these http://jqueryui.com/changelog/1.10.0/ XSS issues:
+Heck, did you know that web fonts loaded and displayed by your browser
+come with an embedded hinting bytecode that gets executed in a
+miniature VM? And while this is kind of crazy, it's there because...
+well, there aren't that many sane alternatives.
 
-> Title, reported by shadowman131
-> http://bugs.jqueryui.com/ticket/6016
-> https://github.com/jquery/jquery-ui/commit/7e9060c109b928769a664dbcc2c17bd21231b6f3
+(Some 15 years ago, I would have given you a different answer - I even
+had a pet project of a brand new operating system that would solve all
+of world's ills. Today, I sort of accept that we're stuck with Unix
+and that there's plenty of usability-security trade-offs that exist
+for a reason, not just because other people are clueless ;-).
 
-Use CVE-2010-5312.
+If I really had to pinpoint the causes (and that feels a bit like a
+function-fitting exercise), I'd say that four things went
+maybe-kinda-preventably wrong:
 
+1) The feature was clearly added with no basic consideration for the
+possibility of ever seeing untrusted data in the value of an
+environmental variable. This lack of a threat model seems to be the
+core issue, essentially precluding the discussion of potential "best
+practices" such as namespaces, magical out-of-band function passing,
+etc.
 
-> combobox demo, reported by DJtomy
-> http://bugs.jqueryui.com/ticket/8859
-> https://github.com/jquery/jquery-ui/commit/5fee6fd5000072ff32f2d65b6451f39af9e0e39e
+Ideally, post Morris worm, this assumption should have raised some
+eyebrows. On the flip side, the code predated much of the modern
+infosec practice, and it's unlikely that any security engineers
+monitor bash development even today - so while it's easy to prescribe
+solutions in retrospect, not sure how credible they can be...
 
-> default content - 8859 follow-on work by scott.gonzalez
-> http://bugs.jqueryui.com/ticket/8861
-> https://github.com/jquery/jquery-ui/commit/f2854408cce7e4b7fc6bf8676761904af9c96bde
+2) The mechanism wasn't well-documented *and* just as importantly, has
+fallen into near complete obscurity, largely precluding security
+researchers from bumping into it by accident. The "not falling into
+obscurity" part is not solvable, although it's a pattern that also
+haunts the browser world, and may be an argument for aggressively
+sunsetting features that do not catch on - something currently not
+mentioned on your list.
 
-As far as we can tell, 5fee6fd5000072ff32f2d65b6451f39af9e0e39e
-doesn't fix anything in the jQuery library, and it is reverted in
-f2854408cce7e4b7fc6bf8676761904af9c96bde. We're not sure about
-conventions for changelogs, but it seems potentially misleading to
-just include "Fixed: XSS in combobox demo. (#8859, 5fee6fd)" in the
-1.10.0 changelog anyway.
+The detailed documentation part is perhaps easier to tackle. The
+security properties of shells are generally under-documented and
+counterintuitivie, as evidenced in some of the followup discussions
+where somebody was showing off a "safe" use of system() supposedly
+rendered unsafe by Florian's patch. Decent security-centric docs,
+authored or even merely just reviewed by the maintainers, would have
+helped highlight the risk.
 
-A side issue is that 5fee6fd5000072ff32f2d65b6451f39af9e0e39e, by
-itself, only modified the demos/autocomplete/combobox.html file. We
-realize that the demos are shipped in the jquery-ui distribution.
-However, the demos typically wouldn't be part of the deployed product,
-so there's a question of whether combobox.html could have its own
-CVEs. In this case, the question seems largely irrelevant because
-changing the combobox.html code wasn't a useful way to address a
-vulnerability.
+3) Apparently, for 20+ years, nobody in the security community has
+ever read a book on shell programming that mentioned this feature, and
+has never ventured deep enough into the man page, to have a "hmm, I
+wonder how that works" moment when seeing a vague mention of the
+feature.
 
-Use CVE-2012-6662 for the issue fixed in
-f2854408cce7e4b7fc6bf8676761904af9c96bde.
+I don't think that's easily fixable; as mentioned earlier, you sort of
+start with certain assumptions on what may be a good use of your time,
+and a behavior like this would be completely off the radar. You
+wouldn't reasonably expect /bin/uname to phone home to a server in
+Russia, so you don't check manually and it probably doesn't cross your
+mind to create some sort of an automated validation model that
+verifies the same. The infosec community is small, and there's plenty
+of bugs to find, so we have to prioritize pretty heavily.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+4) Following the original find but before the end of the embargo,
+there was no immediate realization that the underlying parser is
+complex and likely not designed with security in mind, and therefore,
+that it will very likely follow a well-established pattern and come
+apart under closer scrutiny. I'm not sure if this is an argument for
+not having embargoes (perhaps) or for sanctioning more thoughtful
+reviews of the proposed fixes. Or perhaps it's just a fluke.
 
-iQEcBAEBAgAGBQJUZnfKAAoJEKllVAevmvmscLYH/0EyGlrnj/nUyFM+RzuWzBsk
-iziDAeXEyC4/5zgc38/j38eKIshmdUg7Wp49rRUXj9z88zfihZowExE+ojVZFdtC
-EjK4+SZPjdb7dTdSVkeNnS4Dv6a8u6Kq2XGuV7FZ9Tx1Qs7kIscn7N2uixR8o8Tz
-KatmHEksbC1phQq8QdMb+Xw/Juc3cc7aB7/vuYfkiAvEOtWfs2+EtEMnT/Y3kfVj
-otiwMGAvGrCHQN9W5Vr1MNEp/rhnEsdbH7YYZMHrF3QlPN4UDlq+rk+Oooo+0nxp
-aEpyLQ8VibM3nV/JUCnUCpNFt9cGlAORYOdSC8YvPlrTQ5ihHj8YVjcx+BzQo7Y=
-=X1NZ
------END PGP SIGNATURE-----
+/mz
+
+On Tue, Oct 7, 2014 at 7:47 PM, David A. Wheeler <dwheeler@...eeler.com> wrote:
+> All:
+>
+> Given the feedback here and elsewhere, I've tried to distill how to detect or prevent shellshock-like things ahead-of-time.  My current try is here:
+>
+>    http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
+>
+> More ideas and refinements would be welcome.  I've also made a number of refinements (e.g., the timeline has more info, where the name came from has been identified, etc.).
+>
+> Thanks again!
+>
+> --- David A.Wheeler
+>
