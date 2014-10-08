@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/1
-Message-Id: <201402070437.s174bQ3W028329@linus.mitre.org>
-Date: Thu, 6 Feb 2014 23:37:26 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, jwilk@...ian.org, 737835@...s.debian.org
-Subject: Re: CVE Request: Capture::Tiny: insecure use of /tmp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/8
+Message-ID: <20141008110759.68af90b7@pc>
+Date: Wed, 8 Oct 2014 11:07:59 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: openssh on linux rce in sftp-only mode
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+This seems CVE-worthy:
+http://seclists.org/fulldisclosure/2014/Oct/35
 
-> open("/tmp/5KKGPDNyy0", O_WRONLY|O_CREAT|O_TRUNC|O_LARGEFILE,
+Quote:
+"OpenSSH lets you grant SFTP access to users without allowing full
+command execution using "ForceCommand internal-sftp". However, if you
+misconfigure the server and don't use ChrootDirectory, the user will be
+able to access all parts of the filesystem that he has access to -
+including procfs. On modern Linux kernels (>=2.6.39, I
+think), /proc/self/maps reveals the memory layout and /proc/self/mem
+lets you write to arbitrary memory positions. Combine those and you get
+easy RCE."
 
-Use CVE-2014-1875.
+It involves a number of issues coming together, however in the end it
+is an RCE with a legit configuration.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Changelog:
+http://www.openssh.com/txt/release-6.7
+ * sftp-server(8): On platforms that support it, use prctl() to
+   prevent sftp-server from accessing /proc/self/{mem,maps}
 
-iQEcBAEBAgAGBQJS9GHnAAoJEKllVAevmvms3t0IAKqhldJQYiAv3EwHVYI5hL7b
-CaIDJ4wIQXfSoqs9ewV1phqNVSnKsgYS6WOp5AjqZZ3+CqSDLS2Jz7kThx7g7mo4
-fOFcftX4tjrVrZ4dyoiKuCCGL8R/4Mo3ObmomZ1SbaVb4jtFVqxCOc4Kh52Ca/88
-C9peyeQqpWV3kzM9+1sEgQatNTVNIonJiTg23XGSAY3wzLMiGP+teVfygZOO6Xxj
-4S4IAx1PNg8GFR/qOEywPE3baWNttTL2RejwoqxUZn908+GXfWZdlCJn+Ku5xOeO
-Wwawwv4lRRgrPGCPil5rhSdlIeSs08HCoEbcrOLMb5RFsI9FceOpCv7QUt5/gog=
-=5gFh
------END PGP SIGNATURE-----
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
