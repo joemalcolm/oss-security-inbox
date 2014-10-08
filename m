@@ -1,65 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/6
-Message-Id: <20141127041032.C88816C004F@smtpvmsrv1.mitre.org>
-Date: Wed, 26 Nov 2014 23:10:32 -0500 (EST)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Canto Feed URL Parsing Command Line Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/25
+Message-ID: <20141008215343.GZ22696@tracyreed.org>
+Date: Wed, 8 Oct 2014 14:53:44 -0700
+From: Tracy Reed <treed@...raviolet.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, Oct 08, 2014 at 02:39:23PM PDT, David A. Wheeler spake thusly:
+> If there was some ironclad rule that "data and code must be totally isolated
+> at all times" then I agree it's absurdly impractical.  Compilers
 
-> Can I get 2013 CVE for Canto feed URL parsing command line injection
-> vulnerability
-> 
-> Affected versions: All versions prior to v0.9.0
-> 
-> https://github.com/themoken/canto-curses/commit/2817869f98c54975f31e2dd674c1aefa70749cca
-> https://bugs.debian.org/731582
+While it is too late for our hardware etc. perhaps strong type systems such as
+found in Haskell can help here? It is known to be very good at avoiding
+undefined or unexpected runtime behavior. Too late also for current languages
+to have this bolted on but if anyone wanted to write "secure" software I'd be
+looking at languages which provide some more guarantees. Too late for bash
+also, of course which I suppose points us back at the original problem.
 
->> If a user starts canto and chooses to go to one URL from one feed,
->> canto constructs a sh command line to visit the URL, but it doesn't
->> remove metachars.
+-- 
+Tracy Reed
 
-Use CVE-2013-7416.
-
-One might also argue that the underlying problem is that
-doc/configuration in the Canto distribution tells users to enter
-link_handler lines with " quoting, e.g.,
-
-  link_handler("elinks \"%u\"", text=True)
-
-within the user's ~/.canto/conf.py file. This perhaps could have been
-addressed either by making the %u value safe before conf.py is
-executed, or by telling the user to add other Python code to conf.py
-for correct quoting.
-
-In other words, 731582 is a valid vulnerability report because the
-reporter is using a quoting approach that exactly matches the vendor's
-recommendation. This is not a site-specific report about an error in
-one user's ~/.canto/conf.py file.
-
-2817869f98c54975f31e2dd674c1aefa70749cca adds an shlex.quote call --
-shlex.quote is found in
-https://hg.python.org/cpython/file/tip/Lib/shlex.py and has:
-
-   return "'" + s.replace("'", "'\"'\"'") + "'"
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUdqKMAAoJEKllVAevmvms5vgH/jHWLqrfRdv2IO5lgR+MN7sg
-95/nlpMv1zQrWFhSExCAIJLVJy4bIAF8SpxjQnTdcJQQlB2ffdni4LK0sD4q2amW
-H3xBz5Gf41uNuieZI+PclDSkNr7u1ZsL+4MM5Ye2I5t04Wdm4u2XjQL3Ct5WAvUM
-h7yMuQXmdKti9NDIDDf1PXQvmDGlNDoidvZC8v/M1oPsHOuWNfYM6euFC4repFc6
-d3IBPb8tPAi8ZxZoSMMEbxDcX5OAzmCxjeaFt3JJy8lB1s4lYoS2YLlSkUI5f2kq
-jgCkxYNnSKO4HCXpl4aioG11PG1vLVsbwzZ141y+8vQygIIGz+4KBmSt/E+GzrM=
-=mC0o
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
