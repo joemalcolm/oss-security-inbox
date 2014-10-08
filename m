@@ -1,43 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/10
-Message-ID: <21329.17824.558757.392520@gargle.gargle.HOWL>
-Date: Fri, 18 Apr 2014 17:32:48 +0200
-From: rf@...eap.de
-To: oss-security@...ts.openwall.com
-Subject: Re: Request for linux-distros list membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/24
+Message-Id: <E1Xbyx9-0007kA-0X@rmm6prod02.runbox.com>
+Date: Wed, 08 Oct 2014 17:39:23 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
->>>>> "Anthony" == Anthony Liguori <aliguori@...zon.com> writes:
+On Wed, 8 Oct 2014 13:50:17 -0700, Michal Zalewski <lcamtuf@...edump.cx> wrote:
+> I don't really want to get in the super-existential debate about code
+> vs data; I fully recognize that I'm gonna be in the minority on the
+> list, and maybe even in the wrong, but I just can't get too passionate
+> about this "best practice", having seen how few systems are (or can
+> be) designed with it in mind; and how little of a difference it makes
+> to them in the end.
+> 
+> In a pragmatic sense, it's just that almost *everything* violates it.
+> The CPUs we use, the memory allocators we have running on them, all
+> the popular progamming languages and web frameworks. We still need to
+> secure these systems, rather than saying "oh well, you should have
+> done it differently from the start" =)
 
-    Anthony> On 04/09/14 23:25, Solar Designer wrote:
-    >> On Wed, Apr 09, 2014 at 11:57:33PM -0600, Kurt Seifried wrote:
-    >>> So first off I'm inclined to have Amazon on the distros list
-    >>> (same reasons as Oracle basically).
-    >>>
-    >>> My only concern is are you the correct person, I have no clue
-    >>> who is on the Amazon security team for their Linux distribution,
-    >>> I've never seen you post anything anywhere.
-    >>>
-    >>> Your search - site:aws.amazon.com Anthony Liguori - did not
-    >>> match any documents.
-    >>>
-    >>> Your search - site:aws.amazon.com aliguori@...zon.com - did not
-    >>> match any documents.
-    >>>
-    >>> Can we somehow get confirmation from Amazon that this is the
-    >>> right person to have on distros? Thanks.
-    >>
-    >> Yes, we need this sort of confirmation.  My other concerns are:
+If there was some ironclad rule that "data and code must be totally isolated
+at all times" then I agree it's absurdly impractical.  Compilers
+(including those in JIT systems) take data and generate code,
+so if you can't mix them, then you can't run compiler-generated code.
+Scripting languages wouldn't work.  And so on.
 
-    Anthony> Ping.  Apologies if this is being discussed in private but
-    Anthony> I just wanted to make sure it wasn't forgotten.  I believe
-    Anthony> we have provided all of the information requested.
+But there's no reason to go that far.  Just treat it as a
+"rule of thumb" - a guide towards "safer practices"
+that help people stay out of trouble.  If you cannot apply the guideline,
+life does not end, but then you *know* you're doing something more dangerous,
+and that you'll need to take other (additional) precautions.
+You don't have to make it ironclad, just a *move* in that ideal direction
+can eliminate many problems.
 
-Just a remark from somebody who's request for linux-distros membership
-was turned down: I think in case the AMI membership will be granted, you
-need to provide a clear explanation why Qlustar's wasn't. Better: Setup
-some clear criteria for when membership is possible and when not.
+> > It was certainly hard for the original developer to anticipate how
+> > this would become a problem, given the time and place.  But I think we
+> > can try to learn from this and similar issues and hopefully make fewer
+> > of these mistakes in the future.
+> 
+> Sure. I'm not entirely convinced what the lessons are, though. I mean,
+> you expect the next big issue in OpenSSL or Apache. You can probably
+> even guess what it may be. You can maybe even make an intelligent
+> guess about the language features or coding patterns that will
+> contribute to it, or to learn from past bugs. With the bash bug... hm.
 
-Roland
--------
-http://www.q-leap.com / http://qlustar.com
+Hm is right.  But I'm trying to make a crack at it, and I'm open to suggestions.
+
+We as a software development community need to try to keep
+learning from past mistakes.  Our future mistakes should be NEW mistakes :-).
+
+> I have no
+> doubt that if the () { thing was mentioned in README.security, it
+> would not have taken 20+ years to spot the bug.
+
+I agree.  And that, I think, is actually a countermeasure.  Simply
+documenting (specifically) the external interface, and then asking
+"is that okay for security?", could go a long way.
+
+I now have more content here:
+  http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
+Hopefully it's a start at something worthwhile.
+
+--- David A. Wheeler
