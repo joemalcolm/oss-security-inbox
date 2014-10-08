@@ -1,50 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/5
-Message-Id: <201402081217.32134.geissert@debian.org>
-Date: Sat, 8 Feb 2014 12:17:31 +0100
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/14
+Message-ID: <20141008151129.GQ23797@oevtugenva.nrevsny.pk>
+Date: Wed, 8 Oct 2014 11:11:29 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Cc: Vulnerability Information Managers <vim@...rition.org>
-Subject: Fwd: Old CVE ids, public, but still "RESERVED"
+Cc: cve-assign@...re.org
+Subject: Re: Re: Discussion: information leakage from server and client software - CVE/hardening/other?
 Content-Type: text/plain; charset=utf-8
 
-Sending a copy to oss-sec, in case there are people interested in this kind 
-of information.
+On Tue, Oct 07, 2014 at 05:57:25PM -0600, Kurt Seifried wrote:
+> 
+> 
+> On 07/10/14 03:56 PM, cve-assign@...re.org wrote:
+> >> So for example the
+> >> http://boingboing.net/2014/10/07/adobe-ebook-drm-secretly-build.html
+> >> article would indicate to me that this is CVE worthy under #4
+> > 
+> > Currently not; Adobe has a statement quoted at:
+> > 
+> >   http://arstechnica.com/security/2014/10/adobes-e-book-reader-sends-your-reading-logs-back-to-adobe-in-plain-text/
+> > 
+> > indicating that the information disclosure is intentional, and is
+> > (from their point of view) useful to them. This is just an example of
+> > a behavior that might also occur in an open-source product. The Adobe
+> > issue itself is off-topic for this list.
+> 
+> Then by that measure we could for example have challenged CVE-2011-4083
+> for example saying that it is useful to us. The same would go for any
+> "unsanitized" log file submissions. I fear this is a slippery slope
+> where vendors can effectively game their CVE numbers with "oh we meant
+> to do that" which makes CVE much less useful =(
 
-----------  Forwarded Message  ----------
+I agree with Kurt. I think there should be something along the lines
+of "reasonable expectation of privacy" here. I admit that this is
+subjective, but cases like the Adobe one are pretty clear. Even if
+it's not 100% clear whether the vendor has a legitimate need for the
+data (I would say they don't, but this is not the point right now),
+random third parties with the ability to intercept unencrypted network
+traffic certainly do not have a legitimate need for it. So at the very
+least, I think any transmission of data where the user might have a
+reasonable expectation that the data is "private", if it takes place
+over a non-encrypted channel, is CVE-worthy.
 
-Subject: Old CVE ids, public, but still "RESERVED"
-Date: Friday 24 January 2014
-From: Raphael Geissert <geissert@...ian.org>
-To: Vulnerability Information Managers <vim@...rition.org>
-
-Hi,
-
-Attached are a list of CVE ids which are still marked as RESERVED
-(i.e. no description/links/etc have been set) yet our security tracker
-knows about them. The tracker only containing public data, it means
-that the ids are not embargoed.
-
-Hopefully these lists can be useful to MITRE to catch up on those, or
-to anyone else.
-I can generate these and other reports regularly if desired.
-
-Notes:
-* The year in the file name corresponds to the year in the CVE id, not
-necessarily the year of assignment.
-* The lists only contain the CVE id, probably a short description, and
-one line of data from our tracker. The full data can be obtained
-either by going to
-https://security-tracker.debian.org/tracker/CVE-YYYY-XXXX or by
-looking up on our text database.
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
-
-View attachment "still-reserved-2011-CVEs.txt" of type "text/plain" (14368 bytes)
-
-View attachment "still-reserved-2012-CVEs.txt" of type "text/plain" (18434 bytes)
-
-View attachment "still-reserved-2013-CVEs.txt" of type "text/plain" (34008 bytes)
+Rich
