@@ -1,35 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/04/2
-Message-ID: <20140804213843.60c89e4f@redhat.com>
-Date: Mon, 4 Aug 2014 21:38:43 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Ben Reser <ben@...er.org>
-Cc: Marcus Meissner <meissner@...e.de>, OSS Security List <oss-security@...ts.openwall.com>
-Subject: Re: Re: Possible CVE request: subversion MD5 collision authentication leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/2
+Message-ID: <54348CE5.3060007@kohsuke.org>
+Date: Tue, 07 Oct 2014 18:01:25 -0700
+From: Kohsuke Kawaguchi <kk@...suke.org>
+To: Bryan Drewery <bdrewery@...eBSD.org>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Security advisory in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 01 Aug 2014 07:47:53 -0700 Ben Reser wrote:
+On 10/07/2014 11:45 AM, Bryan Drewery wrote:
+> On 10/3/2014 4:44 PM, Kohsuke Kawaguchi wrote:
+>> We are still learning how we should handle vulnerabilities, so I'm sure
+>> there's room for improvements.
+>>
+>> We have multiple release lines to which the fixes have to be released
+>> simultaneously, and overall this overhead is significant. That's why we did
+>> one massive release that contains all the fixes.
+>>
+>> Wrt CVE-2013-2186, a week ago we got a report from somebody that he did a
+>> security scan and found that we are still using a vulnerable version of the
+>> library to which CVE-2013-2186 is assigned. In this release we use a newer
+>> version of the library that addresses the problem, and I thought it'd be
+>> appropriate to raise a flag to the users that if they continue to use older
+>> versions, they'd remain vulnerable to CVE-2013-2186. That's why it's in the
+>> advisory. It is not because we sat on a report for more than a year.
+>>
+>> When you say the timeframe is especially concerning, perhaps you mean you
+>> are concerned that we fail to notice this vulnerability in our library for
+>> more than a year, and if so, you are of course right. Jenkins project has
+>> gotten a long list of library dependencies, and I haven't found any
+>> practical means to get notified when vulnerabilities are found in any one
+>> of them.
+>>
+>
+> I understand. Is there any practical way you could not bundle
+> dependencies? Then it would not be a problem. I don't know enough about
+> Java's build system to know if this is possible.
 
-> On 8/1/14 3:12 AM, Marcus Meissner wrote:
-> > The subversion list has fixed a md5 collision attack possibility.
-> > 
-> > http://mail-archives.apache.org/mod_mbox/subversion-dev/201407.mbox/%3C53DAB4A7.8030004%40reser.org%3E
-> > 
-> > http://svn.apache.org/r1550691
-> > http://svn.apache.org/r1550772
-> > 
-> > The referenced E-Mail speaks about CVE request, so not sure who
-> > will assign one.
-> 
-> Already got one (the request was directed at security@...che.org who
-> hand them out to us): CVE-2014-3528.
+A part of the problem is that Jenkins core is too big a piece that can 
+be decomposed further down into smaller plugins. We've been doing that 
+to chip away some of the dependencies, and plugins are somewhat easier 
+to update than the core. So that's a progress.
 
-I believe the attack here is supposed to create a collision against MD5
-sums used as names of files under ~/.subversion/auth/svn.simple/.
-However, as attacker does not control realm strings for any of the
-trusted repositories, that would require preimage attack.  The lack of
-(publicly) known efficient preimage attacks against MD5 should imply
-such attack is still only theoretical.
+But beyond that, the packaging and distribution model in Java is that 
+each application brings the complete dependencies with it. Some other 
+platforms do not do that (say Linux C ecosystem), but many others do 
+(.NET, Ruby, Node.js, ...) This is not so much a problem of a build tool 
+but more due to the user expectation (and perhaps lack of runtime 
+package managers and stronger coupling between libraries?).
+
+As such, I don't think this is changing any time soon, for better or worse.
+
+
 
 -- 
-Tomas Hoger / Red Hat Product Security
+Kohsuke Kawaguchi                          http://kohsuke.org/
