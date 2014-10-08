@@ -1,30 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/14
-Message-ID: <20140319182402.2bba7883@redhat.com>
-Date: Wed, 19 Mar 2014 18:24:02 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: TigerVNC 1.3.1 fixes ZRLE decoding bounds checking issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/3
+Message-Id: <E1XbhBX-0002tA-9n@rmm6prod02.runbox.com>
+Date: Tue, 07 Oct 2014 22:41:03 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Separating code and data
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Tue, 7 Oct 2014 16:40:22 +0000, "Mehaffey, John" <John_Mehaffey@...tor.com> wrote:
+> I think that separating code and data belongs on David's list of "Most Important
+> Software Innovations" (www.dwheeler.com/innovation/innovation.html), although
+> arguably the "Separating Text Content from Format" innovation is an example 
+> of the class.
 
-New release of TigerVNC fixes an issue with boundary checks in the ZRLE
-decoding.  Boundary checks existed in the code in form of assert()s,
-which were removed in builds with NDEBUG defined.  That is default for
-release builds done by cmake, which is used by TigerVNC.  This could
-possibly allow malicious server to compromise vncviewer.
+Ah!  Thanks for remembering my page!!  
 
-The same problem may affect related *VNC implementations if built with
-NDEBUG.
+It's certainly true that there are real security advantages to separating code and data.  This topic brings up the old Harvard architecture vs. Von Neumann architecture discussion.  However, I think that the idea of having separate code and data streams is actually much older than digital computers.  The Jacquard loom separated code and data, and that dates to 1801.  The innovation was actually probably the other way, Von Neumann's allowing their *combination* ("Baby" is usually considered the first working example).
 
-CVE-2014-0011 was assigned to the issue.
-
-References:
-http://sourceforge.net/p/tigervnc/mailman/message/32120476/
-http://sourceforge.net/p/tigervnc/code/5163
-http://sourceforge.net/p/tigervnc/code/5164
-https://bugzilla.redhat.com/show_bug.cgi?id=1050928
-
--- 
-Tomas Hoger / Red Hat Security Response Team
+--- David A. Wheeler
