@@ -1,71 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/32
-Message-ID: <54330024.4010608@reactos.org>
-Date: Mon, 06 Oct 2014 22:48:36 +0200
-From: Pierre Schweitzer <pierre@...ctos.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/28
+Message-ID: <20141008224810.GC12633@sentinelchicken.org>
+Date: Wed, 8 Oct 2014 15:48:10 -0700
+From: Tim <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL RSA 1024 bits implementation broken?
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Thanks for your feedback Dave.
-Then, some naive question: are we sure that OpenSSL as shipped in
-distributions is tested against such regressions (if such test
-actually exists)? It's indeed something that a compiler might break
-(be it due to a bug or due to an optimization).
-He might be using OpenSSL as shipped in his distribution. This would
-be quite damaging.
+> I don't really want to get in the super-existential debate about code
+> vs data; I fully recognize that I'm gonna be in the minority on the
+> list, and maybe even in the wrong, but I just can't get too passionate
+> about this "best practice", having seen how few systems are (or can
+> be) designed with it in mind; and how little of a difference it makes
+> to them in the end.
 
-Reproducibility in behavior is kinda critical here to make sure we're
-always cryptosecure.
-
-On 06/10/2014 17:30, Dave Horsfall wrote:
-> On Mon, 6 Oct 2014, Pierre Schweitzer wrote:
-> 
->> There appear to have some noise on the Internet regarding a
->> possible flaw in the 1024 bits RSA implementation in OpenSSL
->> which would allow bruteforcing the private key in ~20 minutes.
->> 
->> Does anyone has any information about this? The associated
->> pastebin to the said information is: http://pastebin.com/D8itq6Ff
->> Is this serious?
-> 
-> On the moderated crypto list where I hang out, it's receiving much
->  attention.  The consensus is that it's likely a buggy compiler or
->  optimiser that rounded integer division upwards instead of
-> truncating it as required by the C standard, and that the
-> "discoverer", by refusing to provide further details, is full of
-> it.
-> 
-> You may be able to search the archives at
-> cryptography@...zdowd.com; as I said it's a moderated list, but
-> full of techie people who really know their onions.
-> 
-> -- Dave
-> 
+I don't want a big debate either.  We're all busy.  We work in
+security, afterall.
 
 
-- -- 
-Pierre Schweitzer <pierre at reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> In a pragmatic sense, it's just that almost *everything* violates it.
+> The CPUs we use, the memory allocators we have running on them, all
+> the popular progamming languages and web frameworks. We still need to
+> secure these systems, rather than saying "oh well, you should have
+> done it differently from the start" =)
 
-iQIcBAEBAgAGBQJUMwAkAAoJEHVFVWw9WFsLlxYQAJTvHKnVPcLzs8LPHwmn68oV
-lpLeHfMXLICAO8z/xRURIi9VFryg6uMyzRwBfVVvCYxsfMy1y1TxDZR+txxV3bl4
-GICcrggLj8w0xy9m81mBcy8mTH3GRGzY4rOZT/+cUr6vx9Ab0ISzkvBLZge9ashh
-3jSFBu9lXKUWk3oswZiVmGCIEJOYLvGYTEY8vA3OnIv6Cu0DSufTFP44a7r63LTz
-7XRPS+4JjD3YTJu3iZZqvKzHXM3rZ4fK6qXbzzokBudLGaXO8WkKbMmOjTKl1Rep
-eujZ8CBvlbv29/z07ziiQ2/dlZGsYhEvn7+qhIY9gWwcKgndQcw+ERzOroUQvONP
-URbPn52+b2vwrM0hFhah7N0iCvWsLsWqH8M38EMK4HS/wMGqBVI+nWIW+gdKM40/
-stK2eVXwKofyGagEXiPkCeqTxCvU5Rte41skXyWAKrRZQOBI/i7LP309pV+/e1V+
-jRsbtTHsMRvWEYRr2zTiKmtRPOriTZ9HBcguYDUXAV5seDDLIkWfVIEpH7AmPW23
-j4eQib+gmS2Og0RxNFv46mj7KG1NVcnLOSRcScXAyctNBE/HPyqdbzyyDxGK5mfU
-9nIf2mAR4jcW2+iBbS7xQVs0OOEY7HO5dJRRD5MKUdUGcR+HZKu/TwJcswEDTDG9
-ZRjrlEpGLcrB2qBdXCUW
-=ABev
------END PGP SIGNATURE-----
+Well, I guess, but the way you're interpreting this separation of
+code/data and the way that I am is clearly different.  Which means we
+should perhaps refine how such a broad concept is stated.  There are
+clearly cases where separation is  practical, non-destructive, and
+beneficial for security.  There are cases that are grey area.  And
+there are cases where there's no way around mixing, because
+computation is computation.
+
+For the naive developer, how would you characterize this in a
+nutshell? 
+
+
+> Sure. I'm not entirely convinced what the lessons are, though. I mean,
+> you expect the next big issue in OpenSSL or Apache. You can probably
+> even guess what it may be. You can maybe even make an intelligent
+> guess about the language features or coding patterns that will
+> contribute to it, or to learn from past bugs. With the bash bug... hm.
+
+To me, it's not about anticipating the next bug, it is about providing
+guidance to developers who care only so much about security so that we
+can avoid some bugs that we didn't anticipate. 
+
+
+Best,
+tim
+
+
+PS- I'm of two minds on this.  More recently I've decided that educating
+    developers isn't nearly as effective as providing developers APIs and
+    development environments that make it unlikely they will shoot
+    themselves in the foot.  It's not that developers can't be trained,
+    it is that they will probably only be developers for a handful of 
+    years and move on to other roles later, with a whole new batch of
+    green coders coming in to fill their positions.  Anyway...
