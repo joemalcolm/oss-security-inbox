@@ -1,36 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/23
-Message-Id: <20140909184124.279656C00FB@smtpvmsrv1.mitre.org>
-Date: Tue,  9 Sep 2014 14:41:24 -0400 (EDT)
-From: cve-assign@...re.org
-To: w@....eu
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: haproxy read out of bounds
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/6
+Message-ID: <535981270.36709296.1412753682161.JavaMail.zimbra@redhat.com>
+Date: Wed, 8 Oct 2014 03:34:42 -0400 (EDT)
+From: Wade Mealing <wmealing@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Cc: cve-assign@...re.org
+Subject: CVE request  for VDSM denial of service
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Gday,
 
-> a user can cause HAProxy to parse contents out of a buffer by sending
-> multiple gigs ... the process may crash
-> 
-> http://git.haproxy.org/?p=haproxy-1.5.git;a=commit;h=b4d05093bc89f71377230228007e69a1434c1a0c
+The issue (outlined here https://bugzilla.redhat.com/show_bug.cgi?id=1148688 ) allows
+an attacker to hold open an ssl connection effectively denying new connections the
+ability to complete any new ssl connections.
 
-Use CVE-2014-6269.
+I would like a CVE number to assign to this issue.  Please assign me one.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Thanks,
 
-iQEcBAEBAgAGBQJUD0lwAAoJEKllVAevmvmsB2cIAMFXyJjzBM0J890ehRHZVCgD
-Krbcspy9byhWaCUM/cPk3Wtus3Fo+wvg19o6AxF2ZeGBkrp7Lp3VMZlJ/gVCBrz4
-x0u+ByufUiK50hADy/FRNixqamrimEtygkrtjThieGNHLO5LwowfCYBx2L1XKcXN
-hDEeB9Wsy/rqkQSgiuu46PvNGsqYz/CRY41Y8GQrc4qoHoMJmIC3E97ITM0q6FyZ
-qURS5z7T+gIFctWju+XKNJXmhx4ufDfynUri+/gM80p7d+eWmhw2kOcFTqHg+naC
-p2KAzZ94N9LjiKL7TDGyPqFqJLLb5cIyRj3OHfWlwW5sOVfKW9+vlDW6fljMQEI=
-=ea4U
------END PGP SIGNATURE-----
+Wade Mealing
