@@ -1,44 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/20
-Message-ID: <542436C9.1080502@case.edu>
-Date: Thu, 25 Sep 2014 11:37:45 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Solar Designer <solar@...nwall.com>
-CC: chet.ramey@...e.edu, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/13
+Message-ID: <CALx_OUAdMG689eHBe54FvXLmcL6mYugy81wEhh3pfrwunfdqqA@mail.gmail.com>
+Date: Wed, 8 Oct 2014 07:26:25 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On 9/24/14, 10:47 PM, Solar Designer wrote:
-> On Wed, Sep 24, 2014 at 03:12:08PM -0400, Chet Ramey wrote:
->> There are several options for making shell functions inherited via the
->> environment more robust, none of them backwards compatible.  I will
->> choose one and implement it for a future bash version.
-> 
-> While we're at it, I think it's preferable not to output error messages
-> triggerable by untrusted input, e.g.:
-> 
-> $ ssh -o 'rsaauthentication yes' 0 '() { ignored; }; /usr/bin/id' 
-> bash: warning: SSH_ORIGINAL_COMMAND: ignoring function definition attempt
-> bash: error importing function definition for `SSH_ORIGINAL_COMMAND'
-> 
-> (as seen with the current bash patches).  This might be unnecessarily
-> revealing or/and it might confuse whatever other program was invoking
-> something via bash, resulting in attacker-triggerable unintended
-> behavior in that caller program.  Yes, there are numerous other error
-> conditions anyway - such as running out of memory - which may result in
-> messages printed to stderr.  Yet we might want to avoid printing error
-> messages for environment variable value parsing errors (ideally, we'd
-> avoid the parsing itself as well), unless a debugging or a verbose mode
-> is enabled locally (in a way that can't realistically be triggered via
-> an unsuspecting network service).
+> Note that the hardening fix that was provided in a rush
+> post-disclosure is not the best one. [...]
+> It breaks backward compatibility because it restricts which
+> functions can be exported. For instance, you can't export a
+> /bin/rm function anymore (was useful as a debugging tool).
 
-I disagree.  It's important for a program -- not just the shell -- to tell
-the user when it attempts to do something on his behalf and is unable to
-do it.
+Hmm, wasn't that breakage actually caused by the first (original)
+patch, which added a call to legal_identifier()? We had problems with
+the patch specifically because it managed to break several instances
+where people were trying to export "fake object-oriented" function
+names such as foo::bar.
 
-Chet
-
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+/mz
