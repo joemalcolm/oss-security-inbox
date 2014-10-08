@@ -1,42 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/28/9
-Message-ID: <CALCETrVS_MS7jGFv1hGmus6VKnju58gz6stwrj3gcYX3kSv3WQ@mail.gmail.com>
-Date: Wed, 28 May 2014 15:30:04 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: Greg KH <greg@...ah.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel DoS with syscall auditing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/12
+Message-Id: <E1XbsC5-0000nw-Rz@rmm6prod02.runbox.com>
+Date: Wed, 08 Oct 2014 10:26:21 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "stephane.chazelas" <stephane.chazelas@...il.com>
+CC: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Stéphane Chazelas: How *DID* you find Shellshock?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 28, 2014 at 3:03 PM, Greg KH <greg@...ah.com> wrote:
-> On Wed, May 28, 2014 at 02:51:16PM -0700, Andy Lutomirski wrote:
->> On Wed, May 28, 2014 at 2:53 PM, Greg KH <greg@...ah.com> wrote:
->> > On Wed, May 28, 2014 at 02:45:59PM -0700, Andy Lutomirski wrote:
->> >> Issuing a system call with a random large number will OOPS, depending
->> >> on configuration.  A configuration that will enable this bug is:
->> >>
->> >> # auditctl -a exit,always -S open
->> >>
->> >> No privilege whatsoever is required to trigger the OOPS.
->> >>
->> >> It's possible that this can be extended to more than just a DoS --
->> >> with some care and willingness to exploit timing attacks, this is a
->> >> read of arbitrary single bits in kernel memory.
->> >
->> > Is there a kernel fix for this anywhere?
->>
->> No, but there will be soon.
->
-> Great, I see the thread on lkml now, thanks for the heads up.
->
->> The correct fix is, IMO, CONFIG_AUDITSYSCALL=n.  That code is garbage.
->
-> No argument from me there...
+This is a question for Stéphane Chazelas, but I'm "cc"ing oss-security because I think many of us want to know the answer.
 
-Patch here:
+Stéphane: How *DID* you find Shellshock, in as much detail as you can recall?
 
-https://lkml.kernel.org/g/<833bd6cb411ad1d4e293629c6c34c4abca27a840.1401315521.git.luto@...capital.net>
+I'm told you found the bug after "reflecting on an earlier bug" you found in bash "a few months earlier." (http://www.smh.com.au/it-pro/security-it/stephane-chazelas-the-man-who-found-the-webs-most-dangerous-internet-security-bug-20140927-10mixr.html)
 
-it's not the best-tested thing in the world.
+What I'm hoping is that we can learn some lessons and re-apply them elsewhere.
 
---Andy
+--- David A. Wheeler
+
