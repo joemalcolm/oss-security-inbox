@@ -1,69 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/7
-Message-Id: <201403051707.s25H7Pve014007@linus.mitre.org>
-Date: Wed, 5 Mar 2014 12:07:25 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: file: crashes when checking softmagic for some corrupt PE executables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/4
+Message-Id: <E1XbhHr-0003nw-K3@rmm6prod02.runbox.com>
+Date: Tue, 07 Oct 2014 22:47:35 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+All:
 
-> file can be made to crash when checking some corrupt PE executables,
-> and so could be used to mount a denial of service for file, or an
-> application using file/libmagic.
+Given the feedback here and elsewhere, I've tried to distill how to detect or prevent shellshock-like things ahead-of-time.  My current try is here:
 
-> http://bugs.gw.com/view.php?id=313
+   http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
 
-> https://github.com/glensc/file/commit/447558595a3650db2886cd2f416ad0beba965801
+More ideas and refinements would be welcome.  I've also made a number of refinements (e.g., the timeline has more info, where the name came from has been identified, etc.).
 
-Use CVE-2014-2270.
+Thanks again!
 
-A CVE ID seems worthwhile because of possible libmagic use cases.
+--- David A.Wheeler
 
-"file can be made to crash" is typically not security-relevant on its
-own (a user can recover from this by not continuing to run file on the
-same crafted file). We're not sure whether any distribution has
-packages that rely on server-side use of libmagic, or whether it's
-common to have long-running processes that use libmagic with untrusted
-input.
-
-"apt-rdepends --reverse file" gave some hints that resulted in these
-possibilities, but the actual use of file (or libmagic) within these
-packages was not investigated:
-
-  https://packages.debian.org/wheezy/bacula-director-sqlite3
-
-  network backup service - SQLite 3 storage for Director
-
-  The Bacula Director service supervises all the backup, restore,
-  verify, and archive operations. It can run as a daemon
-
-  dep: file
-
-
-  https://packages.debian.org/wheezy/guestfsd
-
-  This package contains a standalone version the back-end daemon that
-  carries out file system access on behalf of libguestfs applications.
-
-  dep: file
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTF1kXAAoJEKllVAevmvmscocH/RQlnUoI+5ycxSb4/Y9iqkwq
-Fn4zG/6pMR5kcoJPI4e45kkKRlMcJgrYI+2toaye9+/zcRrzY7XKKMVp6uFWM1Hp
-FiE2Kui3jP1gXrX2vahpZ9eSSpg16cTrXUux6H8iZPsButaLP6+2gx8UhUTYcTkB
-KCmF04sfozVhU8rruJP8gOK/VzF9rAgc1bnQMJCEsWsrAGCdNcIVVLLD/SxrWA62
-Visc8xH4ChW0jxDvVr7Y07aVmG2ncfKYoc7wR6KKyfeksBEIK1Evl6uGai4yZHf1
-VU81TnGwpSqFZ1L5+XChPPQP9Z+pjnuy1c0qXdy7/1Ml4ioTn5LknI8+yGJ5syE=
-=a0pY
------END PGP SIGNATURE-----
