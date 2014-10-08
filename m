@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/2
-Message-ID: <540E7816.90001@redhat.com>
-Date: Tue, 09 Sep 2014 13:46:30 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/9
+Message-ID: <20141008092305.GC6890@pc.thejh.net>
+Date: Wed, 8 Oct 2014 11:23:05 +0200
+From: Jann Horn <jann@...jh.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE Requests] rsync and librsync collisions
+Cc: Damien Miller <djm@...drot.org>
+Subject: Re: openssh on linux rce in sftp-only mode
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+On Wed, Oct 08, 2014 at 11:07:59AM +0200, Hanno Böck wrote:
+> This seems CVE-worthy:
+> http://seclists.org/fulldisclosure/2014/Oct/35
+> 
+> Quote:
+> "OpenSSH lets you grant SFTP access to users without allowing full
+> command execution using "ForceCommand internal-sftp". However, if you
+> misconfigure the server and don't use ChrootDirectory, the user will be
+> able to access all parts of the filesystem that he has access to -
+> including procfs. On modern Linux kernels (>=2.6.39, I
+> think), /proc/self/maps reveals the memory layout and /proc/self/mem
+> lets you write to arbitrary memory positions. Combine those and you get
+> easy RCE."
+> 
+> It involves a number of issues coming together, however in the end it
+> is an RCE with a legit configuration.
 
-The below still require a CVE or two (unless MITRE disagrees).
+I reported this to the OpenSSH developers, and although they included my
+patch as a mitigation, they did not treat it as a vuln in OpenSSH.
 
-Cheers,
+I believe that treating this as a hardening patch makes sense. The SFTP
+server behaves exactly as documented, it allows access to the whole
+filesystem. And on Linux, that happens to equal write access to the
+process RAM, so you should never give that access to someone who
+shouldn't be able to run arbitrary code.
 
---
-Murray McAllister / Red Hat Product Security
-
-On 08/05/2014 04:03 PM, Michael Samuel wrote:
-> Hi,
->
-> I think there should be CVEs assigned for this:
->
-> rsync: MD5 collision DoS attack or limited file corruption
-> librsync: MD4 collision file corruption
->
-> Note: librsync is not the same code, protocol or maintainer as rsync.
->
-> The librsync attack is far easier to perform, since there's no
-> whole-file checksum and it will simply copy the first instance of a
-> collision into any place where the second collision is.
->
-> The rdiff utility that ships with librsync truncates hashes to 8
-> bytes, allowing a very fast and efficient birthday attack - so even if
-> MD4 was replaced attacks would still be possible while the hash is
-> truncted.  This also affects duplicity - they both use
-> RS_DEFAULT_STRONG_LEN - so the _librsyncmodule that ships with
-> duplicity will need recompiling after the fix ships.
->
-> Previous posting for context:
-> http://www.openwall.com/lists/oss-security/2014/07/28/1
->
-> Regards,
->    Michael
->
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
