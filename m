@@ -1,39 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/13/4
-Message-Id: <201403131930.s2DJUVI0020124@linus.mitre.org>
-Date: Thu, 13 Mar 2014 15:30:31 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for icinga 1 byte \0 overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/27
+Message-ID: <2122975425.60510606.1412808272904.JavaMail.zimbra@redhat.com>
+Date: Wed, 8 Oct 2014 18:44:32 -0400 (EDT)
+From: Josh Bressers <bressers@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: openssh on linux rce in sftp-only mode
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> The icinga team silently fixed some single byte \0 overflows.
+> > 
+> > I think one has to assume if a user has unrestricted sftp access, they can
+> > figure out how to do most anything. Even with the upstream hardening patch,
+> > it really only protects the sftpd process. Any other processes the user may
+> > own could be modified.
 > 
-> https://git.icinga.org/?p=icinga-core.git;a=commitdiff;h=73285093b71a5551abdaab0a042d3d6bae093b0d
+> Not that easily - /proc/$pid/mem requires you to either be the same process
+> or be attached to it via ptrace, I think.
 > 
-> (also the non public
-> https://dev.icinga.org/issues/5663
-> is referenced by commit above)
 
-Use CVE-2014-2386.
+I can't speak for other systems (I don't understand the details), but I can
+read arbitrary process memory for processes I own in Fedora 20.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Does someone know what the typical default is?
 
-iQEcBAEBAgAGBQJTIga3AAoJEKllVAevmvms9xkH/idZYMX13l5zMSYZ5TbqTAtS
-IXxLqf7wUb1Y/GDophOF4SXYRpy0LiCEpsDi9W3fcGmpQMHno1+s2RJzF2fjYgv5
-pzCnMgqFvFj3p/2PvwC1i/tuhsKFKR6VzGI0LA9mvtHbNBl5ECibu4kqQ3+Mj/tX
-plWcekwnhVQLzLYF5q84QWHFOmvBL6JdMlzB5WsUhHusxyKyoQhrJ5KYpjhQ+EmS
-tEVOMr3wionOT/pvNxxl+VGTqpS+oRQzpjDB7BDeIxWbGXiiFrYLOFF6S6VxvVXt
-AYnyfdBU1EVivxiH/IG82lsyRM0AlOXHu20uYpUeciwu04uW9w010IpWIXFA7CA=
-=VAd6
------END PGP SIGNATURE-----
+Thanks.
+
+-- 
+    JB
