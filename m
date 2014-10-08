@@ -1,19 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/7
-Message-ID: <20140929103757.GA4688@jwilk.net>
-Date: Mon, 29 Sep 2014 12:37:57 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/1
+Message-Id: <20141008002937.F352BC5059A@smtptsrv1.mitre.org>
+Date: Tue,  7 Oct 2014 20:29:37 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Discussion: information leakage from server and client software - CVE/hardening/other?
 Content-Type: text/plain; charset=utf-8
 
-* Solar Designer <solar@...nwall.com>, 2014-09-27, 19:06:
->Has anyone started reviewing bash for possible other code paths where 
->untrusted input may hit the parser?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I haven't look at the code, but what makes me nervous is that the parser 
-is not locale-agnostic. Here's an example how it can be exploited:
-http://bugs.python.org/issue22187
+> we could for example have challenged CVE-2011-4083 for example saying
+> that it is useful to us
 
--- 
-Jakub Wilk
+Our perspective is that, on balance, that's a preferable way to
+proceed. Probably very few people outside of Red Hat would understand
+whether "private entitlement keys" tend to cause problems for
+customers. If you had a situation where:
+
+  - disclosure of an entitlement key didn't matter much
+    because the key is node-locked to the hardware of
+    a specific customer
+
+  and
+
+  - bugs sometimes caused customers to have a wrong key
+
+then you probably wouldn't want a third party obtaining a CVE ID based
+on a guess that "entitlement key" seems roughly the same as sending
+the full contents of the /root/.ssh directory.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUNITCAAoJEKllVAevmvms/R0IAJuCOq/RlCFALooKjS9t8NsQ
+o4anQNsySmh3YYB8yW8siqf2j0oOgL/yv2JIuz0YlMRO9wG58jz7Ef5mt3CHbNDf
+jiaMca2237fcpWa1DWTYeYX9p3yNuiV+LulSNlT4HjF+1SCrprFbaciGACjgFrnk
+74X0HNzai8I3TLZyKwo9Phy4hIfrC9j+j6TS0d84QjxpiM4rRmbm0ss1UaUlR918
+a5Kk2oefMF/uD3w5HgOTcAd4QmpHpXS701a7ebDbOcasUTC0jIJEp886S07ZFZa6
+SOvp8VCF6dEzPsqLlG/PHcOyRzbt0pkDyDz+H4IenxgJjFmnfLQyjSgnWSfpZNA=
+=KayV
+-----END PGP SIGNATURE-----
