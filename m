@@ -1,56 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/1
-Message-ID: <5424BC3B.9080906@case.edu>
-Date: Thu, 25 Sep 2014 21:07:07 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/16
+Message-ID: <5435670C.5080305@redhat.com>
+Date: Wed, 08 Oct 2014 10:32:12 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>, chet.ramey@...e.edu, Tavis Ormandy <taviso@...xchg8b.com>, lcamtuf@...edump.cx
-Subject: Re: CVE-2014-6271: remote code execution through bash
+CC: wmealing@...hat.com
+Subject: Re: CVE request  for VDSM denial of service
 Content-Type: text/plain; charset=utf-8
 
-On 9/24/14, 9:30 PM, Solar Designer wrote:
-> On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
->> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
->>> On 9/24/14, 5:32 PM, Solar Designer wrote:
->>>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
->>>>> Tavis Ormandy just tweetet this:
->>>>> https://twitter.com/taviso/status/514887394294652929
->>>>>
->>>>> The bash patch seems incomplete to me, function parsing is still
->>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
->>>>
->>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
->>>> Tavis on this "reply".
->>>
->>> I have a fix for this.
+On 08/10/14 03:34 AM, Sven Kieske wrote:
+> 
+> 
+> On 08/10/14 09:34, Wade Mealing wrote:
+>> Gday,
 >>
->> Can you provide a pointer to the patch?  I put together a patch that
->> changed the report_error() to fatal_error() as I wasn't able to see
->> how to reset the parser state.  Was just about to send it out...
+>> The issue (outlined here https://bugzilla.redhat.com/show_bug.cgi?id=1148688 ) allows
+>> an attacker to hold open an ssl connection effectively denying new connections the
+>> ability to complete any new ssl connections.
+>>
+>> I would like a CVE number to assign to this issue.  Please assign me one.
+> 
+> Doesn't RH assign it's own CVEs anymore?
 
-I have positive confirmation that this patch works, so here are patches for
-bash versions bash-2.05b to bash-4.3.
+We do, but for public issues we prefer to ask here sometimes so as to
+prevent duplicate assignments (e.g. it is possible for a race condition
+to occur, Red Hat and Mitre both see something new, we see no CVE for it
+so we both assign one).
 
-I will probably push these out tomorrow.
+I believe this one is
+https://www.mail-archive.com/vdsm-patches@lists.fedorahosted.org/msg68420.html
+(but don't quote me, wmealing is in .au and asleep so I can't confirm).
 
-Chet
+> I also wonder why this bug wasn't reported to upstream
+> (wrong BZ "Product" at least it should get cloned to ovirt).
+
+Because we learned about it from an upstream source.
+
+
+
 -- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-View attachment "bash205b-009" of type "text/plain" (1013 bytes)
 
-View attachment "bash30-018" of type "text/plain" (1414 bytes)
-
-View attachment "bash31-019" of type "text/plain" (1413 bytes)
-
-View attachment "bash32-053" of type "text/plain" (1413 bytes)
-
-View attachment "bash40-040" of type "text/plain" (1566 bytes)
-
-View attachment "bash41-013" of type "text/plain" (1492 bytes)
-
-View attachment "bash42-049" of type "text/plain" (1561 bytes)
-
-View attachment "bash43-026" of type "text/plain" (1576 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
