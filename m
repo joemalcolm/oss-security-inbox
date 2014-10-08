@@ -1,24 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/6
-Message-ID: <CAHmME9rcy+G+p=T8RfBAWYT-TMaMTCs1te-5UZ2zJr0xDKJF5g@mail.gmail.com>
-Date: Fri, 7 Nov 2014 02:59:15 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: cve-assign@...re.org
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Qt Creator fails to verify SSH host key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/29
+Message-ID: <20141008225517.GD12633@sentinelchicken.org>
+Date: Wed, 8 Oct 2014 15:55:17 -0700
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 7, 2014 at 2:58 AM, Jason A. Donenfeld <Jason@...c4.com> wrote:
 
->
-> On Fri, Nov 7, 2014 at 12:24 AM, Michael Samuel <mik@...net.net> wrote:
->>
->> This is a serious bug (it certainly circumvents the security of
->> OpenSSH),
->
->
-> My opinion too (obviously).
->
+> While it is too late for our hardware etc. perhaps strong type systems such as
+> found in Haskell can help here? It is known to be very good at avoiding
+> undefined or unexpected runtime behavior. Too late also for current languages
+> to have this bolted on but if anyone wanted to write "secure" software I'd be
+> looking at languages which provide some more guarantees. Too late for bash
+> also, of course which I suppose points us back at the original problem.
 
-Could we get a CVE assigned to track the progress of this bug?
+
+I agree significant security benefit can be gained from these kinds of
+approaches.  The trick is, convincing people to use such a language.  
+
+Things like JavaScript and PHP are wildly popular because they are so
+easy to get started with.  Minimal learning curve counts for a lot.
+That, and rapid development of new functionality is king in business.
+How can strongly typed functional language compete?
+
+tim
+
+
 
