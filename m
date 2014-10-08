@@ -1,22 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/5
-Message-ID: <CADvE9N=Yj5P=fsw1ZgqGfy6TnGVahZmb+BPxO-_rb_zYZ2TM2Q@mail.gmail.com>
-Date: Mon, 21 Jul 2014 08:29:22 +0000
-From: "Jorge Manuel B. S. Vicetto" <jmbsvicetto@...il.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE Request for Drupal Core
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/13
+Message-ID: <CAO-2N4LF5OuEUJijYZcXnN24tT5QUH4Yo==Aia0kvQpgdDg+2w@mail.gmail.com>
+Date: Wed, 8 Oct 2014 23:13:30 +0100
+From: Vitor Ventura <ventura.vitor@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: openssh on linux rce in sftp-only mode
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+Yes you do need to connect to it via ptrace, in order to read the mem.
+Em 08/10/2014 22:58, "Jann Horn" <jann@...jh.net> escreveu:
 
-Has a CVE request been made for the following Drupal Security Advisory?
+> On Wed, Oct 08, 2014 at 03:32:23PM -0400, Josh Bressers wrote:
+> > >
+> > > I reported this to the OpenSSH developers, and although they included
+> my
+> > > patch as a mitigation, they did not treat it as a vuln in OpenSSH.
+> > >
+> > > I believe that treating this as a hardening patch makes sense. The SFTP
+> > > server behaves exactly as documented, it allows access to the whole
+> > > filesystem. And on Linux, that happens to equal write access to the
+> > > process RAM, so you should never give that access to someone who
+> > > shouldn't be able to run arbitrary code.
+> > >
+> >
+> > I think one has to assume if a user has unrestricted sftp access, they
+> can
+> > figure out how to do most anything. Even with the upstream hardening
+> patch,
+> > it really only protects the sftpd process. Any other processes the user
+> may
+> > own could be modified.
+>
+> Not that easily - /proc/$pid/mem requires you to either be the same process
+> or be attached to it via ptrace, I think.
+>
 
-SA-CORE-2014-003 - Drupal core - Multiple vulnerabilities
-https://www.drupal.org/SA-CORE-2014-003
-
-Regards,
-
-Jorge Manuel B. S. Vicetto
-Gentoo Developer
-
-https://bugs.gentoo.org/show_bug.cgi?id=517364
