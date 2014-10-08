@@ -1,43 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/7
-Message-ID: <5423784C.6010608@redhat.com>
-Date: Thu, 25 Sep 2014 07:35:00 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/23
+Message-ID: <CALx_OUAAO5sOs2iZ1cXbvZiKkz8ektkNDcaYenGD=hr-=-AMtQ@mail.gmail.com>
+Date: Wed, 8 Oct 2014 13:50:17 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On 09/25/2014 07:07 AM, Chet Ramey wrote:
-> On 9/24/14, 9:30 PM, Solar Designer wrote:
->> On Wed, Sep 24, 2014 at 06:26:53PM -0700, Anthony Liguori wrote:
->>> On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
->>>> On 9/24/14, 5:32 PM, Solar Designer wrote:
->>>>> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
->>>>>> Tavis Ormandy just tweetet this:
->>>>>> https://twitter.com/taviso/status/514887394294652929
->>>>>>
->>>>>> The bash patch seems incomplete to me, function parsing is still
->>>>>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
->>>>>
->>>>> Thanks for bringing this to oss-security.  I've added CC to Chet and
->>>>> Tavis on this "reply".
->>>>
->>>> I have a fix for this.
->>>
->>> Can you provide a pointer to the patch?  I put together a patch that
->>> changed the report_error() to fatal_error() as I wasn't able to see
->>> how to reset the parser state.  Was just about to send it out...
->>
->> I think Chet is not on oss-security - we should be CC'ing him where
->> appropriate.  (I've added the CC on this reply.)
-> 
-> I haven't sent the patch out.  It's not related to this problem -- this
-> is just the easiest way to get to that code path -- and I still have
-> some investigating to do.
-> 
+I don't really want to get in the super-existential debate about code
+vs data; I fully recognize that I'm gonna be in the minority on the
+list, and maybe even in the wrong, but I just can't get too passionate
+about this "best practice", having seen how few systems are (or can
+be) designed with it in mind; and how little of a difference it makes
+to them in the end.
 
-Please note, We have assigned CVE-2014-3659 to this issue.
+In a pragmatic sense, it's just that almost *everything* violates it.
+The CPUs we use, the memory allocators we have running on them, all
+the popular progamming languages and web frameworks. We still need to
+secure these systems, rather than saying "oh well, you should have
+done it differently from the start" =)
 
+> It was certainly hard for the original developer to anticipate how
+> this would become a problem, given the time and place.  But I think we
+> can try to learn from this and similar issues and hopefully make fewer
+> of these mistakes in the future.
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+Sure. I'm not entirely convinced what the lessons are, though. I mean,
+you expect the next big issue in OpenSSL or Apache. You can probably
+even guess what it may be. You can maybe even make an intelligent
+guess about the language features or coding patterns that will
+contribute to it, or to learn from past bugs. With the bash bug... hm.
+
+> So yes, documentation is important for setting expectations.  But no
+> one reads the manual, either.
+
+It's not necessarily about every user reading the doc; just about
+making sure that at least the infosec community understands the
+exposure, which would mean that problems could be audited for,
+workarounds could be implemented, or semantics changed. I have no
+doubt that if the () { thing was mentioned in README.security, it
+would not have taken 20+ years to spot the bug.
+
+Cheers,
+/mz
