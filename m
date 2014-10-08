@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/8
-Message-ID: <20140520194816.GA25294@hunt>
-Date: Tue, 20 May 2014 12:48:16 -0700
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Yves-Alexis Perez <corsac@...ian.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request: dovecot denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/21
+Message-ID: <CALCETrWqBf-qMXZj4uEhL7oqwyOn42X1dgCFkWF3Me2d9OTrYw@mail.gmail.com>
+Date: Wed, 8 Oct 2014 12:48:19 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-7970: Linux VFS denial of service
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 20, 2014 at 09:32:54PM +0200, Yves-Alexis Perez wrote:
-> Hi,
-> 
-> we were made aware of a recently fixed DoS vulnerability in Dovecot,
-> which doesn't seem to have a CVE id assigned:
-> 
-> http://dovecot.org/list/dovecot-news/2014-May/000273.html
-> 
-> states:
-> 
-> * Fixed a DoS attack against imap/pop3-login processes. If SSL/TLS
->   handshake was started but wasn't finished, the login process
->   attempted to eventually forcibly disconnect the client, but failed
->   to do it correctly. This could have left the connections hanging
->   arond for a long time. (Affected Dovecot v1.1+)
-> 
-> Could a CVE be assigned for this vulnerability?
+pivot_root has a bug.  Exploiting it at all is tricky, but it can be
+done.  I'm reasonably confident that this is just denial of service.
+(There's also probably an information disclosure in there, but I think
+that it's only available to root, so it's not a big deal.)
 
-CVE-2014-3430 was assigned for this issue:
+I'm posting this a little bit early, since a patch is publicly
+available, the impact is low, and hitting the bad code path at all is
+quite tedious.  I'll send a proof of concept later on.
 
-http://www.openwall.com/lists/oss-security/2014/05/09/8
+Distros: if you need a test case to validate the fix, let me know.
+Although, for validation, it should be sufficient to just chroot
+somewhere as root, escape the chroot (while still chrooted), and then
+pivot_root(".", ".") on a mountpoint.
 
-Thanks
+Candidate patch here:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+http://news.gmane.org/find-root.php?message_id=87bnpmihks.fsf%40x220.int.ebiederm.org
+
+-- 
+Andy Lutomirski
+AMA Capital Management, LLC
