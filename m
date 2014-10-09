@@ -1,68 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/8
-Message-id: <FF318777-14EB-4D37-95EE-A4ECB959BAE0@me.com>
-Date: Mon, 20 Oct 2014 14:56:49 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: Vulnerabilities in WordPress Database Manager v2.7.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/3
+Message-ID: <CALx_OUA=uwij3Z8Wa0Xj4YenAFCVzLpSD7+xaXDOcQg91OaeLA@mail.gmail.com>
+Date: Wed, 8 Oct 2014 17:30:41 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+>> Well, in the specific context of bash, where it's being singled out as
+>> a major contributing factor to the bug: how would you establish an
+>> out-of-band channel for exporting functions that keeps them separate
+>> from "pure" data? As far as I can tell, there is no trivial and
+>> portable way.
+>
+> Well, I think we can all think of a few options, some more portable
+> than others.  The current namespace change is one option, obviously,
 
-My comments are below.
+But that's not really separating code and data, right? It doesn't feel
+like it follows the spirit of this phrasing:
 
-On Oct 20, 2014, at 1:48 PM, cve-assign@...re.org wrote:
-> 
-> 
-> > only a few queries are allowed (Use Only INSERT, UPDATE, REPLACE,
-> > DELETE, CREATE and ALTER statements.) but these are sufficient to
-> > download sensitive system files:
-> 
-> > INSERT into password (passwords) VALUES(LOAD_FILE("/etc/passwd"));
-> 
-> This report seems related to:
-> 
->   if ( preg_match( "/LOAD_FILE/i", $sql_query ) ) {
-> 
-> in the
-> 
->   https://github.com/lesterchan/wp-dbmanager/commit/7037fa8f61644098044379190d1d4bf1883b8e4a
-> 
-> commit. Our question here is whether this is best categorized as a
-> WP-DBManager vulnerability fix, or a workaround for a MySQL
-> misconfiguration. It seems that, ideally, if WP-DBManager is not
-> supposed to be able to use MySQL to read arbitrary files, then this
-> would have been addressed with the configuration of the FILE privilege
-> or the secure_file_priv variable.
-> 
-> Presumably there are other products in which users are intended to be
-> able to use INSERT, but are not intended to be able to use LOAD_FILE.
-> It's not clear that, for every such product, doing preg_match for
-> /LOAD_FILE/i is the recommended approach, and absence of this approach
-> means that a CVE ID is assigned.
-> 
-> Also, in the WP-DBManager case, CREATE is allowed, and this could
-> conceivably mean that CREATE FUNCTION is available (again, depending
-> on the MySQL privilege configuration), possibly resulting in the user
-> gaining unintended access to the server machine and its local
-> filesystem.
-> 
-> Should there be one CVE ID now for "attempts to offer a subset of
-> MySQL statements without considering the possible MySQL privilege
-> configurations" as applied to the LOAD_FILE attack, and then other
-> "incomplete fix" CVE IDs later if a new attack against 2.7.2/2.7.3 is
-> disclosed?
+"When an existing construct in a system is widely expected to be used
+for storing data, avoid overloading it for use of storing code."
 
-It seems to me this would be the best approach. I hadn’t considered it originally, but it 
-makes the most sense.
+...because it very much overloads the syntax to store code alongside
+with the data, in a way that theoretically shouldn't but in practice
+may collide. It's not a whole lot better than the "separation" of CSS
+and JS in HTML, in the sense that both of them are sort of guarded by
+delineated by specific syntax structures.
 
+> 1) A single dedicated environment variable for all function exports.
+> e.g.:
 
-> 
-> --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> 
+Ditto?
 
+> 2) A bash-specific file handle.  Before forking, bash sets up a pipe
+> to share with it's child.
+
+What it's the 'exec' built-in, and the parent shell terminates before
+the new one gets a chance to run?
+
+What if control passes through an intermediate program that isn't bash?
+
+Cheers,
+/mz
