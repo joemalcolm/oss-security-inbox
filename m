@@ -1,23 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/5
-Message-ID: <20140305163022.GC27746@inutil.org>
-Date: Wed, 5 Mar 2014 17:30:22 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/7
+Message-ID: <CAHG8knDD7DXRF_-fhy6ePx=H6yPhZbzEOrX_dpAEp6XUOPONcQ@mail.gmail.com>
+Date: Wed, 8 Oct 2014 20:03:37 -0700
+From: ArkanoiD <ark@...ex.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 05, 2014 at 08:23:53AM +0100, Salva Peiró wrote:
-> Hi,
-> 
-> I've found a vulnerability in the staging kernel tree,
-> Can anyone assign a CVE ID for this?
-> 
-> - staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
-> https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?h=staging-linus&id=084b6e7765b9554699afa23a50e702a3d0ae4b24
+I think there was one and simple way to prevent heartbleed, renegotiation
+bugs etc altogether: STOP inventing and enabling by default useless "cool"
+features. Leave TLS functionality alone, it is overengineered enough
+already. If you think it would be "cool" to teach it a few new tricks, make
+it disabled by default for users who never need it.
 
-I don't think CVE IDs should be assigned for vulnerabilities
-in the staging tree. 
-
-Cheers,
-        Moritz
