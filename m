@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/04/1
-Message-ID: <20140404100758.19f40b20@hboeck.de>
-Date: Fri, 4 Apr 2014 10:07:58 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/19
+Message-ID: <21558.27674.92777.315506@gargle.gargle.HOWL>
+Date: Thu, 9 Oct 2014 13:06:02 +0200
+From: rf@...eap.de
 To: oss-security@...ts.openwall.com
-Subject: Lots of CVEs ahead in TLS implementations
+Subject: Re: CVE-2014-7975: 0-day umount denial of service
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+>>>>> "Andy" == Andy Lutomirski <luto@...capital.net> writes:
 
-There is a pretty interesting new research paper that tries to find all
-kinds of vulnerabilities in TLS implementations regarding certificate
-validation:
-https://www.cs.utexas.edu/~shmat/shmat_oak14.pdf
+    Andy> I just screwed up and typoed my git send-email command, so
+    Andy> there's now a publicly available exploit for a new umount bug.
 
-They found a whole bunch of issues in various open source ssl
-implementations
+    Andy> Fortunately this one isn't terribly serious, but it might be
+    Andy> usable for more than just DoS if some daemon reacts poorly to
+    Andy> being unable to write to the filesystem.
 
-Maybe we can start some collaborative effort to dig through them and
-assign CVEs. Some seem to have already been handled, e.g. one of the
-most sever issues found is CVE-2014-1959 in gnutls (already fixed
-upstream). However, others seem unhandled.
+    Andy> http://thread.gmane.org/gmane.linux.kernel.stable/109312
 
-Beside: It's well worth reading the paper if you're into that stuff.
+Hmm, what damage is this supposed to do? I get (3.12.29):
 
-cu,
+ql-front-t:/dev/pts# /root/remount-exploit /dev
+remount_ro, a DoS by Andy Lutomirski
+remount-exploit: umount: Device or resource busy
+
+Maybe you should specify what versions are supposed to be vulnerable
+
 -- 
-Hanno Böck
-http://hboeck.de/
+Roland
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+-------
+http://www.q-leap.com / http://qlustar.com
+          --- HPC / Storage / Cloud Linux Cluster OS ---
