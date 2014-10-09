@@ -1,10 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/5
-Message-ID: <etPan.53f51ace.6b8b4567.a293@cro-mbp.local>
-Date: Wed, 20 Aug 2014 16:01:50 -0600
-From: "C. R. Oldham" <cr@...tstack.com>
-To: oss-security@...ts.openwall.com
-Subject: SaltStack 2014.1.10 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/31
+Message-Id: <E1XcJJc-0008Hw-2U@rmm6prod02.runbox.com>
+Date: Thu, 09 Oct 2014 15:23:56 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-Download attachment "signature.asc" of type "application/pgp-signature" (719 bytes)
+On Wed, 8 Oct 2014 21:31:37 -0700, Michal Zalewski <lcamtuf@...edump.cx> wrote:
+> Sure, agreed. I don't think the code / data catchphrase accurately
+> conveys this principle to developers, though =)
+
+I've expanded the detection or prevention section of my paper in general:
+  http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
+
+In particular, I've given more information on separating code/data here,
+in a way that I hope captures the point for developers:
+ http://www.dwheeler.com/essays/shellshock.html#separate-code-data
+
+--- David A. Wheeler
