@@ -1,42 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/16
-Message-ID: <20141126002805.7166f8b2@pc>
-Date: Wed, 26 Nov 2014 00:28:05 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Cc: Tobias Stoeckmann <tobias@...eckmann.org>
-Subject: OpenBSD patch issue also affects GNU patch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/16
+Message-ID: <CALx_OUD7VZGQvxbJzaymG6o4sFSEiw0Rq6zybojUGX1idKfNYQ@mail.gmail.com>
+Date: Thu, 9 Oct 2014 01:24:11 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> vendors are not liable, not even for the most serious
+> software bugs. so there is no incentive for them to make
+> better software.
 
-I saw this
-http://marc.info/?l=openbsd-tech&m=141693055412785&w=2
+On the flip side, would it have been better if, say, Chet could be
+sued for millions in damages for the bug in bash?
 
-And thought "let's try this on GNU patch on my linux sys".
-
-And bang... segfault.
-
-I don't know if this is a random coincidence or if gnu patch and
-openbsd patch share some common ancestor code (haven't checked details).
-
-valgrind output indicates this is an oob write issue:
-==22957== Invalid write of size 1
-==22957==    at 0x40904A: another_hunk (pch.c:1902)
-==22957==    by 0x40304E: main (patch.c:366)
-==22957==  Address 0x80000000051d3b82 is not stack'd, malloc'd or
-(recently) free'd
-
-
-Reported upstream:
-https://savannah.gnu.org/bugs/?43700
-
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+/mz
