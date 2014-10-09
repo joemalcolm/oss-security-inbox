@@ -1,49 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/07/6
-Message-ID: <alpine.DEB.2.10.1406080014220.3830@nanos>
-Date: Sun, 8 Jun 2014 00:16:17 +0200 (CEST)
-From: Thomas Gleixner <tglx@...utronix.de>
-To: rf@...eap.de
-cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/30
+Message-Id: <531C60E7-D4B1-464A-9FB7-0178CCD72380@matasano.com>
+Date: Thu, 9 Oct 2014 14:14:39 -0500
+From: Tomek Rabczak <tomek@...asano.com>
+To: oss-security@...ts.openwall.com
+Subject: Authentication Bypass in ROR Ecommerce
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 6 Jun 2014, rf@...eap.de wrote:
-> >>>>> "Thomas" == Thomas Gleixner <tglx@...utronix.de> writes:
-> 
-> Hi Thomas,
-> 
->     >> On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
->     >> > On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
->     >> > > I've attached patches by Thomas Gleixner (four e-mails, in
->     >> > > mbox format), as well as back-ports of those by John Johansen
->     >> > > of Canonical, who wrote:
->     >> >
->     >> > Maybe I'm missing something, but I can't find any statement of
->     >> > what version these patches are intended to apply cleanly
->     >> > to. They don't apply to latest stable.
->     >>
->     >> Thomas - can you answer Rich's question?  This is about patches
->     >> you sent on June 3 to linux-distros, which Kees then saved into
->     >> an mbox file.
-> 
->     Thomas> They should apply cleanly, if all stable tagged futex
->     Thomas> patches before that are applied.
-> 
-> could you please clarify whether
-> 
-> f0d71b3dcb8332f7971b5f2363632573e6d9486a futex: Prevent attaching to kernel threads
-> 866293ee54227584ffcb4a42f69c1f365974ba7f futex: Add another early deadlock detection check
-> 
-> absolutely have to be applied as well for the CVE's to be fixed and
-> functionality being OK otherwise? I need to backport to 3.12.x. The patches
-> for 3.13 sent by Alexander applied cleanly to latest 3.12.
+Hello all,
 
-I really recommend f0d71b3dcb8332f7971b5f2363632573e6d9486a.
+I’ve worked with David Henner, the Ruby on Rails Ecommerce owner to fix a security issue in the password reset functionality of the ROR Ecommerce application. When a user is created in the ROR Ecommerce application, a perishable_token is generated for that user. This perishable token is then used for password resets. Note that a password reset request never needs to be initiated as this token is immediately available.
 
-866293ee54227584ffcb4a42f69c1f365974ba7f is made obsolete by the 4
-real fixes, but applying it first gets rid of the rejects.
+Due to the way MySQL handles typecasting, it is possible to send a token value of the integer 0 which will then match the first perishable token in the database. The way the application is first initialized and setup, the administrative user is the first user to be created. This can be seen in the Getting Started section: https://github.com/drhenner/ror_ecommerce#getting-started. As a result, the integer 0 passed to the application will match the administrator’s account. The application then logs the matched user in and allows them to change the password.
+
+
+This bug is the same as joernchen’s example in his MySQL madness and Rails post.
+
+http://www.phenoelit.org/blog/archives/2013/02/05/mysql_madness_and_rails/
+
+The fix is simple and can be found in this commit: https://github.com/drhenner/ror_ecommerce/commit/25fe5ebb2f193978e9f9967c9dfe6be5716e8650
+
+Would it be possible to get a CVE assigned to this?
 
 Thanks,
+Tomek
 
-	tglx
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (497 bytes)
