@@ -1,35 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/29/3
-Message-ID: <540070FA.8020402@redhat.com>
-Date: Fri, 29 Aug 2014 14:24:26 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: glibc character set conversion from IBM code pages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/27
+Message-Id: <E1XcIwW-0005Js-Lx@rmm6prod02.runbox.com>
+Date: Thu, 09 Oct 2014 15:00:04 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-In 2012, a crasher in IBM930 decoding was reported and fixed:
+On Thu, 9 Oct 2014 10:34:49 -0700, Tracy Reed <treed@...raviolet.org> wrote:
+> Sure, but at least with Haskell (and the like) you have to make it very
+> explicit that this is what you want to do.
 
-<https://sourceware.org/bugzilla/show_bug.cgi?id=14134>
-<https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=6e230d11837f3a>
+Not in this case.  A Haskell implementation of the POSIX "sh" specification,
+that then added function imports, could have made the same mistake
+just as easily.
 
-This change went into glibc 2.16.
+> Educating developers will be equally hard as switching to safer languages but
+> at least it is something people will stomache getting started on.
 
-Today, Adhemerval Zanella Netto reported in additional code page 
-decoding functions (IBM933, IBM935, IBM937, IBM939, IBM1364):
+I'm all for switching to safer languages where it makes sense; many
+problems are completely prevented by them.  Heartbleed, for example,
+would have been prevented in almost all languages *except* C and C++,
+as I have already publicly noted here:
+ http://www.dwheeler.com/essays/heartbleed.html#safe-language
 
-<https://sourceware.org/bugzilla/show_bug.cgi?id=17325>
-<https://sourceware.org/ml/libc-alpha/2014-08/msg00473.html>
+But let's not oversell the tools.  Shellshock was the running of data
+as a command in program whose *purpose* was to be a command interpreter.
+A rewritten Haskell version (for example) could do it just as easily.
 
-Upstream commit is still pending.
+Also, I think you're underestimating the cost of language switching.
+It is a *big* deal to switch languages in an existing code base.
+Educating developers is less risky, way faster, and costs less too.
 
-These crashers are out-of-bounds reads at a fixed offset relative to the 
-data segment of a DSO, and in all cases I've seen, they were right in 
-the middle of an unmapped segment of the same DSO.  This means that 
-these bugs are just crashers, but they can still result in 
-denial-of-service conditions.
-
-Since the affected version ranges are not identical, this needs two 
-separate CVE identifiers, probably one from 2012 and one from 2014.
-
--- 
-Florian Weimer / Red Hat Product Security
+--- David A. Wheeler
