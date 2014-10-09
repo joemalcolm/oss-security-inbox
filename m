@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/9
-Message-ID: <52C6F70A.5090100@fifthhorseman.net>
-Date: Fri, 03 Jan 2014 12:44:42 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-CC: gremlin@...mlin.ru
-Subject: Re: kwallet crypto misuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/29
+Message-Id: <E1XcJF9-0007dc-DU@rmm6prod02.runbox.com>
+Date: Thu, 09 Oct 2014 15:19:19 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On 01/03/2014 02:27 AM, gremlin@...mlin.ru wrote:
-> On 02-Jan-2014 09:15:15 +0100, Florian Weimer wrote:
-> 
->  > I just noticed this is now public:
->  > http://gaganpreet.in/blog/2013/07/24/kwallet-security-analysis/
->  > Short summary: kwallet uses Blowfish to encrypt its password
->  > store, and despite an attempt at implementing CBC mode (in a
->  > file called cbc.cc no less), it's actually ECB mode.
-> 
-> That's unpleasant, but not really a fatal issue...
-> 
->  > UTF-16 encoding combined with Blowfish's 64 bit block size means
->  > there are just four password characters per block.
-> 
-> But this is: any and all passwords, being used for encryption key
-> generation, must be hashed, then salted, then hashed again. SHA-256
-> may be a good choice for generating Blowfish 256-bit key this way.
+On Thu, 9 Oct 2014 08:28:23 -0700, Tim <tim-security@...tinelchicken.org> wrote:
+> Seriously though, I agree with you that some form of liability ought
+> to be introduced in order to create the business incentive to change
+> development practices.  However, the devil is in the details, and as
+> Michal pointed out, you don't want to squash open source innovation.
 
-what kind of hashing and salting are you talking about?  i don't think
-hashing and salting makes sense in the context that you were quoting
-above.  Are you aware that kwallet stores a database of passwords that
-need to be able to be produced back for the user (or the user's
-applications) in the clear?
+I am more skeptical, because unless you get the details right for liability,
+the cure is worse than the disease.  One problem is that there needs to
+be broad agreement on "what is not acceptable and thus is okay to sue for".
+Without that, liability is just a system for enriching lawyers.
 
-	--dkg
+This has been challenging to do in software; process standards typically fail to keep up,
+and we don't know how to ensure that product standards are met ahead-of-time.
 
+Those interested in software liability should read
+"Cybersecurity as Realpolitik" by Dan Geer (Black Hat USA 2014) at
+http://geer.tinho.net/geer.blackhat.6viii14.txt
+https://www.youtube.com/watch?v=nT-TGvYOBpI
+He proposes:
+0. Consult criminal code to see if damage caused was due to intent
+   or willfulness.
+1. If you deliver your software with complete and buildable source
+   code and a license that allows disabling any functionality or
+   code the licensee decides, your liability is limited to a refund.
+2. In any other case, you are liable for whatever damage your
+   software causes when it is used normally.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+I'm skeptical of this specific list, to be honest.  It's very difficult to
+identify a liability scheme that would make sense.  On the other hand,
+clearly the current system could stand improvement :-).
+
+--- David A. Wheeler
