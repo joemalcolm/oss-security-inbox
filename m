@@ -1,23 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/2
-Message-ID: <20140319130519.GH21050@suse.de>
-Date: Wed, 19 Mar 2014 14:05:19 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: rack-ssl rubygem: XSS in error page
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/21
+Message-ID: <0623B177-1579-44FA-B3D2-11D7E1E3B099@akamai.com>
+Date: Thu, 9 Oct 2014 10:02:16 -0500
+From: "Kobrin, Eric" <ekobrin@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Oct 8, 2014, at 7:53 PM, Tim <tim-security@...tinelchicken.org> wrote:
 
-The latest version of rack-ssl rubygem (1.4.0) contains a commit that fixes a
-XSS vulnerability in the error page.
+> 
+> 1) A single dedicated environment variable for all function exports.
+> e.g.:
+> 
+> BASH_FUNCTIONS='f() { ... }
+> g() { ... }
+> ...
+> '
+> 
+> It can be easier to defend a single environment variable than
+> multiple, and something like "BASH_FUNCTIONS" would become much more
+> like LD_PRELOAD from a threat perspective.
+> 
 
-https://github.com/josh/rack-ssl/commit/9d7d7300b907e496db68d89d07fbc2e0df0b487b
+I submitted a patch along these lines last week. It leaves the code in the disparate (still namespaced) variables, but lists the function names to import in a single variable. The patched bash iterates over the names in that variable and then looks for the functions to import.
 
-"Some adapters (i.e. jruby-rack) will pass through bad URIs, then display
-the resulting exception. This creates an attack vector for XSS attacks.
-"
+This was done with the goal of allowing programs to filter the exported function list without having to contain a bash parser. It also means that the security flaw in the calling program must be larger before it would translate into the ability to inject functions into the shell.
 
-Needs a CVE I think.
+In an unconstrained world, I'd rather alter print_cmd to emit a different, easier to validate syntax for exported functions. This would allow a safer parser that *could not* accidentally execute code. Lacking the time to build and test that, I put together this patch instead.
 
-Ciao, Marcus
+Here are some bits from the patch description (quoting myself):
+
+> The school of security thinking to which I subscribe emphasizes distance from hazards.
+> The currently released bash variants create an environment (no pun intended) in which a small fault in another program can result in RCE. An adversary only needs the power to, for example, insert a single character into a variable name and append to that variable's value to bypass all of the current checks. A defensive program must conversely, do a lot of work to sanitize the environment before it can know that no grand*child bash will execute malicious code from an environment variable.
+> 
+> My patch changes the nature of function import and raises the required power bar, it makes it so that the proximate fault must be much larger before the RCE occurs. It also provides an explicit defense for any program which wishes to break the import chain. 
+
+...
+
+> In this version of bash, it uses a second variable (BASH_IMPORT_FUNC) to export the function name list. It no longer examines the environment until it finds "() {" Instead, it starts with a list of desired imports and checks to make sure they start with "() {". It also applies the existing safety checks, and a few new ones, before taking action.
+> 
+> Programs which wish to block exported functions (as I imagine apache would) can simply delete BASH_IMPORT_FUNC from the environment and no functions will be imported should that program (even transitively) invoke bash. It allows even finer grained control than that. The variable holds a delimited list of function names (sans BASHFUNC prefix/suffix) and can be edited to alter which functions are imported. The importer defends against potentially harmful manipulations of this variable. The delimiter ')' was chosen because it cannot appear in function names.
+
+-- Eric Kobrin
