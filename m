@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/07/3
-Message-ID: <20140307085615.GA23180@openwall.com>
-Date: Fri, 7 Mar 2014 12:56:15 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/26
+Message-ID: <20141009173449.GB22696@tracyreed.org>
+Date: Thu, 9 Oct 2014 10:34:49 -0700
+From: Tracy Reed <treed@...raviolet.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: IMAP STARTTLS sniff tool
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Oct 08, 2014 at 05:11:43PM PDT, David A. Wheeler spake thusly:
+> It's trivial to implement a language (say Lisp) inside Haskell,
+> and then hand data to that implementation to be executed.
 
-On Fri, Mar 07, 2014 at 09:37:01AM +0100, Bob Ezrin wrote:
-> Hi all. We managed succesfully to sniff inside POP3S, SMTPS, IMAPS & HTTPS tunnels using arpspoof, iptables & sslsplit to make MITM. Now we want to sniff inside STARTTLS tunnels (specifically IMAP) but unfortunately sslsplit doesn't supports STARTTLS. Is there/do you know another SSL/TLS tool supporting IMAP over STARTTLS to make MITM? Many thanks B.
+Sure, but at least with Haskell (and the like) you have to make it very
+explicit that this is what you want to do. A lot of our problems seem to come
+from the mixing happening by accident.
 
-Sorry for not addressing your (mostly off-topic) question directly (I
-don't know the answer), but it got me wondering what the most
-appropriate mailing list would be for this sort of topics.  We mostly
-haven't been using the oss-security list for such topics so far, and it
-is unclear whether such broader scope is desirable or not.  In part,
-this might depend on whether there exists a more suitable list or not.
+> But mixing code with data is probably an *overused* approach,
+> given the risks that come with it.
 
-I'd think that maybe the Penetration Testing list could be it:
+Right. Which is why it should be a little more work to do and require that it
+be made explicit that the mixing is what is intended.
 
-http://www.securityfocus.com/archive/101/description
-http://seclists.org/pen-test/
+> We need to help developers know what is safe, and what is less safe.
+> Then they can avoid easily-avoided problems, and know when they have
+> extra work to do.
 
-but it appears rather inactive lately.  Yet I think it's worth posting
-the question in there, at least to see if the list is currently usable
-(would anyone reply?)  Bob, can you try that?
+Educating developers will be equally hard as switching to safer languages but
+at least it is something people will stomache getting started on.
 
-Opinions?
+-- 
+Tracy Reed, RHCE     Digital signature attached for your safety.
+Copilotco            PCI/HIPAA/SOX Compliant Secure Hosting
+866-MY-COPILOT x101  http://copilotco.com
 
-Alexander
+Content of type "application/pgp-signature" skipped
