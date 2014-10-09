@@ -1,25 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/29/1
-Message-ID: <20140729093053.GB22781@suse.de>
-Date: Tue, 29 Jul 2014 11:30:53 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: tboot failing to measure commandline parameters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/20
+Message-ID: <54368341.5010609@openstack.org>
+Date: Thu, 09 Oct 2014 14:44:49 +0200
+From: Thierry Carrez <thierry@...nstack.org>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2014-034] Swift metadata constraints are not correctly enforced (CVE-2014-7960)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+OpenStack Security Advisory: 2014-034
+CVE: CVE-2014-7960
+Date: October 09, 2014
+Title: Swift metadata constraints are not correctly enforced
+Reporter: Rajaneesh Singh
+Products: Swift
+Versions: up to 2.1.0
 
-The trusted boot loader module "tboot" did not measure all commandline parameters,
-which made it possible to pretend a measured boot while there was workaround
-possibility (breaking the measured boot chain).
+Description:
+Rajaneesh Singh reported a vulnerability in the way Swift enforces
+metadata constraints. By adding metadata in several separate calls, an
+authenticated attacker can bypass the max_meta_count constraint,
+potentially resulting in the storage of more metadata than allowed in
+configuration.
 
-All previous tboot versions < 1.8.2 are affected.
+Juno (development branch) fix:
+https://review.openstack.org/125360
 
-http://sourceforge.net/p/tboot/code/ci/0efdaf7c5348701484d24562e6e5323d85bb94d3/
+Icehouse fix:
+https://review.openstack.org/126645
 
-http://sourceforge.net/p/tboot/mailman/message/32655538/
-http://sourceforge.net/p/tboot/mailman/message/32659733/
+Notes:
+This fix will be included in the upcoming 2.2.0 Juno release.
 
-A CVE is needed I think.
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7960
+https://launchpad.net/bugs/1365350
 
-Ciao, Marcus
+--
+Thierry Carrez
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
