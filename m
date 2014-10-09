@@ -1,60 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/8
-Message-ID: <CAKTMEKPzaHnFMCoZqK7rOH6dHs8NufPPr8i7zD1=9UaQz+NdSg@mail.gmail.com>
-Date: Tue, 14 Oct 2014 23:05:15 -0700
-From: Krassimir Tzvetanov <maillists@...ssi.biz>
-To: oss-security@...ts.openwall.com
-Subject: Re: SSL POODLE (Truly scary SSL 3.0 vuln)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/8
+Message-ID: <0B2F4D3E-2256-4D67-81AF-224667C569CE@dwheeler.com>
+Date: Thu, 09 Oct 2014 00:03:13 -0400
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: oss-security@...ts.openwall.com,Michal Zalewski <lcamtuf@...edump.cx>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-Agreed: just I think you meant "1": security.tls.version.min == 1 (not 3)...
+I would take a functional approach to this: is there a way an attacker could send data that would be misinterpreted as code? If so, could that harm anything?
 
-from: http://kb.mozillazine.org/Security.tls.version.*
----
-1
+It is obviously much better if the communication does not use shared resources (like the environment). But this is all logical - in the end all of this is in the same memory. The goal is to maximize the separation enough so that attackers cannot misuse it.  The better the separation, the less risk later.
+ 
 
-TLS 1.0 is the minimum required / maximum supported encryption protocol.
-(This is the current default for the maximum supported version.)
----
-
-
-Best,
-
-Krassi
-
-
-
-On Tue, Oct 14, 2014 at 10:58 PM, <gremlin@...mlin.ru> wrote:
-
-> On 15-Oct-2014 05:28:34 +0000, Sona Sarmadi wrote:
->
->  > A reflection: Maybe we shouldn't post information like this
->  > here or somewhere else which is not published yet even if
->  > the information has leak out? Although all members here are
->  > reliable but it is still an open mailing list and we should
->  > be careful and act more responsible.
->
-> Why? Old ciphers are well known as totally insecure (generally
-> speaking, even some "new" are insecure as well), so the POODLE
-> description does nothing but shows one more attack vector.
->
-> The protection against the POODLE is quite simple:
->
-> 1. For servers: disable weak encryption (in assumption they are
-> updated on a regular basis).
->
-> 2. For users: update old software. Alas, fully disabling weak
-> encryption (e.g. set security.tls.version.min == 3 in Firefox)
-> isn't what we can demand, but that leaves the user personally
-> responsible for any and all data leaks.
->
->  >> It's out:
->
-> TP detected...
->
->
-> --
-> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-> GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
->
-
+--- David A.Wheeler
