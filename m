@@ -1,52 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/08/1
-Message-Id: <201403080023.s280NK6C011315@linus.mitre.org>
-Date: Fri, 7 Mar 2014 19:23:20 -0500 (EST)
-From: cve-assign@...re.org
-To: sd@...asysnail.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, hannes@...essinduktion.org
-Subject: Re: CVE Request: Linux kernel: IPv6: crash due to router advertisement flooding
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/24
+Message-ID: <5436B03D.4060008@gmail.com>
+Date: Thu, 09 Oct 2014 17:56:45 +0200
+From: Sven Kieske <svenkieske@...il.com>
+To: Dave Rutherford <dave@...lpettingzoo.com>
+CC: oss-security@...ts.openwall.com
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> The Linux kernel is vulnerable to a crash on hosts that accept router
-> advertisements. An unlimited number of routes can be created from
-> router advertisements.
-> 
-> A remote attacker in the same layer 2 segment can cause a crash from
-> memory exhaustion by flooding router advertisements to a target
-> machine.
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=c88507fbad8055297c1d1e21e599f46960cbee39
-> 
-> http://patchwork.ozlabs.org/patch/327515/
+On 09.10.2014 17:34, Dave Rutherford wrote:
+> Who in the financial services industry went to jail for designing 
+> and selling derivatives based on subprime mortgages? Crashing not
+> just a server but the whole world economy? Oh that's right, no
+> one.
+That's not right,
+a french trader went to jail for taking to high risks
+and loosing some billions at the market:
 
-Use CVE-2014-2309.
+http://www.dailymail.co.uk/news/article-2747667/French-rogue-trader-cost-bank-4-9bn-euros-freed-four-months-jail.html
 
-As a side note, this is possibly related to "it seems that Linux is
-not affected, you might want to test though as I have only tested this
-with a 2.6.x kernel" in the
-http://www.openwall.com/lists/oss-security/2012/10/10/8 post. (By
-mentioning this, we do not mean that CVE-2014-2309 is a duplicate of a
-CVE assignment from October 2012. We only mean that this
-c88507fbad8055297c1d1e21e599f46960cbee39 issue in the Linux kernel 3.x
-might have been suggested but not tested in 2012.)
+(okay it turns out he did get out, but needs to
+wear some electronic tag still).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Also:
+
+Even if you would be right and there would be no rules
+in the financial sector I would argue that this is no counter
+argument at all to not make new rules.
+I would argue those rules should also applie to financial
+sectors as well.
+
+kind regards
+
+Sven
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v2
 
-iQEcBAEBAgAGBQJTGmF9AAoJEKllVAevmvms3SEH/1o5RaRem6lv7ee3SLdXL5br
-oW9Ze4kXzWweXE3MqHNZk0J4AOPbn5/NbcFN+PJPQeY9ocTUOKqHogWLXXyZAFpf
-bLAAOc7TDti0D9gy6JdPlg/hdPeo/65yZG20xrnJlHNMjvsQhOd3Hw+ib/9QSW8p
-tnJK3iAfVvfWNZeby/1efxWSfEqKAhD3SCAhIIOK1UCBOPhsqcKt0s6UM7+/CTQI
-cJxX58mDD/h4waE3yejrGioP30sYXzvg3V7CO6r+OJEiz7rtfHUVKjaHR1Yy0ZX9
-b75QApdmGWrArhrsJo0Gomn0spIXHvBZjuuC6wpj8K6G6/eeSBZk3CUHAo5jfdM=
-=rnx+
+iQGcBAEBAgAGBQJUNrA8AAoJEAq0kGAWDrql44kMAIxqlpjVkVyLmYCWSox4VGuq
+/d0adZw0Ln83GwVNhlb5r9iFHkcRyQaFnuVCoR+KJ1AscKYfe3ETa81IjSbn+PSu
+Vb0MOHy5QRk/NHcsfpSCNYfcIChFG2T+kV0TDmMwhh5uAyIwTmCJG476uWSXMiGG
+XfI2UBjcLZxjU7VEc6JkeP8oJtmwzi5vAoNoaXvaOvkH2w6jyTBTmQdz4bJcVYyD
+YeqJ2KCmrV1Are84etyyRliOuAdrjvGNaEUrfP5KzaoC0zYucc8xy59lLc1fMipZ
+pOO7/B50vY2vy3Sd1StjdAN7wzlfsaJuGbigWu3x0P5Xy3qKjYtNxkqi1apZ+p1r
+zLoOPrgdaqC9E9zu/wg6kXAwWGyp3wauR5vtcAgkV9jJDNvuXkABDvE+3BRU2TXy
+6YroF63LCq/q5gJZ57MEL1Rj0ysQMqtZnpuHuIK2v1i3Mce6Jkju6j3BQ0lntG33
+F26E0FC/SAUTeiG77DhiXkwWjPIqvq1ZrutQTewb/A==
+=ch9P
 -----END PGP SIGNATURE-----
