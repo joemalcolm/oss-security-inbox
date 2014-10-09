@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/5
-Message-ID: <CALx_OUDAbpdg=8_1gR_6fD98W=QOazF43KHkYtwa=cNw3jSM=g@mail.gmail.com>
-Date: Tue, 4 Nov 2014 18:25:02 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/22
+Message-ID: <20141009152823.GI12633@sentinelchicken.org>
+Date: Thu, 9 Oct 2014 08:28:23 -0700
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-> Thanks a lot for your explanation! The data for most things that you
-> describe seems to be available from valgrind so it could be scripted.
+> PS: fun fact, the only thing you _will_ get sued for are:
+> software patents
 
-Sort of. Microsoft actually had a triage tool along these lines
-("!exploitable" or something like that). It's always pretty coarse in
-the end, though.
+Perhaps we should patent the implementation of vulnerabilities in
+software.  Then go trolling. ;-)
 
-This reminds me... Mateusz Jurczyk and Gynvael Coldwind were fuzzing
-ffmpeg on several thousand cores for a while and bumped into something
-around 1k seemingly distinctive crashes:
 
-http://googleonlinesecurity.blogspot.com/2014/01/ffmpeg-and-thousand-fixes.html
+Seriously though, I agree with you that some form of liability ought
+to be introduced in order to create the business incentive to change
+development practices.  However, the devil is in the details, and as
+Michal pointed out, you don't want to squash open source innovation.
 
-I can imagine that their initial enthusiasm has quickly waned when
-they realized how much effort it's going to take to triage all that
-and get it fixed. In this case, I think they had a pretty good
-relationship with the maintainers, which probably helped a lot =)
+So how do you introduce liability for software defects while allowing
+innovation to continue?  Initially, perhaps you could limit liability
+to the cost of the software.  This protects open source projects while
+creating a modest incentive for larger software companies to do
+better.  But then you have cases like Adobe Flash/PDF/etc where they
+don't charge and yet have created a huge problem in the industry.  How
+do you address that?  Plus, if you did it this way, people might start
+to assume all open source software is insecure just because there is
+no liability.  
 
-> That's after deduping by a call stack as available in valgrind output:-(
+I don't know, I've thought a fair amount about this, and it isn't easy
+to implement.  It would probably require multiple separate ways to
+create incentives for quality.
 
-The codebase is kind of bad, but I'd imagine that there aren't
-hundreds of fundamentally distinctive bugs in libbfd that can be
-reached via strings or equivalent (unless the library is configured
-with all the exotic binary formats that are normally off).
-
-There are definitely many instances where the same bad coding pattern
-is copied and pasted into several dozen places, though. For example,
-the srec bugs I initially bumped were essentially widespread
-throughout the entire file, with something like a dozen possible crash
-locations.
-
-/mz
+tim
