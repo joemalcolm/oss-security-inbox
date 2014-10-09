@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/20/5
-Message-ID: <5495B637.7080305@cock.li>
-Date: Sat, 20 Dec 2014 09:47:35 -0800
-From: "ncl@...k.li" <ncl@...k.li>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/5
+Message-ID: <20141009005516.GG12633@sentinelchicken.org>
+Date: Wed, 8 Oct 2014 17:55:16 -0700
+From: Tim <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On 20/12/14 03:27, Hanno Böck wrote:
-> A strange discussion. Because ntp is insecure by design. It is an
-> unauthenticated, insecure protocol that is suspectible to
-> man-in-the-middle-attacks. Frankly, I don't care which implementation
-> of an insecure protocol has less buffer overflows.
+On Wed, Oct 08, 2014 at 08:20:04PM -0400, David A. Wheeler wrote:
+> On Wed, 8 Oct 2014 15:48:10 -0700, Tim <tim-security@...tinelchicken.org> wrote:
+> > To me, it's not about anticipating the next bug, it is about providing
+> > guidance to developers who care only so much about security so that we
+> > can avoid some bugs that we didn't anticipate.
+> 
+> Agree!
+> 
+> > PS- I'm of two minds on this.  More recently I've decided that educating
+> >     developers isn't nearly as effective as providing developers APIs and
+> >     development environments that make it unlikely they will shoot
+> >     themselves in the foot.  It's not that developers can't be trained,
+> >     it is that they will probably only be developers for a handful of 
+> >     years and move on to other roles later, with a whole new batch of
+> >     green coders coming in to fill their positions.  Anyway...
+> 
+> I don't think there's an either/or here.  Yes, if you *can* change the
+> tools/libraries/development environments to prevent attacks, or reduce
+> their effectiveness, you *should*.
+> 
+> That said, a fool with a tool is still a fool.  There's no way to create
+> a development environment that can't be misused.  Thus, you'll always need
+> to educate and train developers for situations the system cannot prevent.
+> In the long term I think this will be easier, because novice developers will be able
+> to learn from the many experts around them.  Today, the number of
+> developers who understand security issues is a vanishingly small percentage
+> of the total, so the novice has no one to learn from.
 
-How broken are the authentication methods already present in ntpd?[1]
-So far there appears to be only DES/MD5 keys, and with autokey, RSA/DH
-(but apparently autokey doesn't work behind NAT?)
-As far as I know, distros don't typically set these up, would it be
-worth it to enable and improve on these, or just make something new?
 
-Considering OSes already set up their own ntp pools[2], they could also
-provide their own trusted keys in their ntpd packages.
+No, I agree it's not an either/or.  I'm just beginning to think it is
+more cost-effective to fix APIs and platforms than try to educate the
+ever-shifting armies of developers.
 
-
-[1] http://www.ntp.org/ntpfaq/NTP-s-config-adv.htm#AEN3143
-[2] (ubuntu|openbsd|debian|netbsd|fedora).pool.ntp.org
+tim
