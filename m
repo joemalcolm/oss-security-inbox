@@ -1,57 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/12
-Message-ID: <CAHJtQJ7W8kgJ20s_uwt6TfGYprRr4rfM-i3CeM1FqedQXoYO7w@mail.gmail.com>
-Date: Fri, 28 Nov 2014 07:45:50 -0800
-From: Ingy dot Net <ingy@...y.net>
-To: John Haxby <john.haxby@...cle.com>
-Cc: oss-security@...ts.openwall.com, Kirill Simonov <xi@...olvent.net>,  Ingy döt Net <ingy@...n.org>
-Subject: Re: libyaml / YAML-LibYAML DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/1
+Message-Id: <E1Xc1KZ-0001rU-NF@rmm6prod02.runbox.com>
+Date: Wed, 08 Oct 2014 20:11:43 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-Taking a look at this now. Please let me know if you've already found a
-patch.
+On Wed, 8 Oct 2014 14:53:44 -0700, Tracy Reed <treed@...raviolet.org> wrote:
+> While it is too late for our hardware etc. perhaps strong type systems such as
+> found in Haskell can help here?
 
-Ingy
+No.  At least not in the sense of totally separating data and code.
+It's trivial to implement a language (say Lisp) inside Haskell,
+and then hand data to that implementation to be executed.
 
-On Fri, Nov 28, 2014 at 2:20 AM, John Haxby <john.haxby@...cle.com> wrote:
+That does not make Haskell *bad*; you can implement an interpreter
+in any Turing-complete language.  And it's absurd to say "NEVER
+mix data and code" - it's sometimes the right approach to use.
+But mixing code with data is probably an *overused* approach,
+given the risks that come with it.
 
-> On 28/11/14 05:57, Jonathan Gray wrote:
-> > libyaml and the perl YAML-LibYAML (aka YAML-XS) module based
-> > on the same code have an "impossible" assert that can be
-> > triggered with the following yaml.  This is a reduced testcase
-> > of a crash found with the afl fuzzer.
-> >
-> >       a: "
-> > "     b: true
-> >
-> > In other words a crash/denial of service with untrusted yaml input.
-> > The libyaml author was contacted on the 21st and 27th of November.
-> > No response has been received but the issue has independently been
-> > reported publically since:
-> >
-> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
-> >
-> > [1] Parsing 'test.yaml': assertion "parser->simple_key_allowed ||
-> !required" failed: file "scanner.c", line 1113, function
-> "yaml_parser_save_simple_key"
-> >
-> > assert(parser->simple_key_allowed || !required);    /* Impossible. */
->
-> For what it's worth PyYAML 3.10 and 3.11 have exactly the same assertion:
->
-> >>> import yaml
-> >>> yaml.load("""
-> ... abc:
-> ...     def: 'xxx
-> ... '   ghi: 'yyy'
-> ... """)
-> Traceback (most recent call last):
->
-> [...]
->
->     assert self.allow_simple_key or not required
-> AssertionError
->
-> jch
->
+We need to help developers know what is safe, and what is less safe.
+Then they can avoid easily-avoided problems, and know when they have
+extra work to do.
 
+--- David A. Wheeler
