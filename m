@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/27/4
-Message-ID: <53343D02.7080904@enovance.com>
-Date: Thu, 27 Mar 2014 16:00:18 +0100
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/18
+Message-ID: <54366135.50301@oracle.com>
+Date: Thu, 09 Oct 2014 11:19:33 +0100
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-007] Potential context confusion in Keystone middleware (CVE-2014-0105)
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-007
-CVE: CVE-2014-0105
-Date: March 27, 2014
-Title: Potential context confusion in Keystone middleware
-Reporter: Kieran Spear (University of Melbourne)
-Products: python-keystoneclient
-Versions: All versions up to 0.6.0
+On 09/10/14 00:53, Tim wrote:
+> Well, I think we can all think of a few options, some more portable
+> than others.  The current namespace change is one option, obviously,
+> but one might go a different route with more time to design it
+> initially.  Other ideas:
+> 
+> 1) A single dedicated environment variable for all function exports.
+> e.g.:
+> 
+> BASH_FUNCTIONS='f() { ... }
+> g() { ... }
+> ...
+> '
 
-Description:
-Kieran Spear from the University of Melbourne reported a vulnerability
-in Keystone auth_token middleware (shipped in python-keystoneclient). By
-doing repeated requests, with sufficient load on the target system, an
-authenticated user may in certain situations assume another
-authenticated user's complete identity and multi-tenant authorizations,
-potentially resulting in a privilege escalation. Note that it is related
-to a bad interaction between eventlet and python-memcached that should
-be avoided if the calling process already monkey-patches "thread" to use
-eventlet. Only keystone middleware setups using auth_token with memcache
-are vulnerable.
+You don't need export -f for that either and you don't need anything
+special in the child:  just do «eval "$BASH_FUNCTIONS"» which also has
+the benefit of making it quite plain that you're living dangerously.
 
-python-keystoneclient fix (included in 0.7.0 release):
-https://review.openstack.org/81078
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0105
-https://bugs.launchpad.net/bugs/1282865
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+jch
