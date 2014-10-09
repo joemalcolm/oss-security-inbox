@@ -1,44 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/28/8
-Message-ID: <C95DE2B5-A1D4-4075-B3AB-6C63DC7FA055@redhat.com>
-Date: Tue, 28 Jan 2014 16:23:30 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: CVE request: temporary file issue in Passenger rubygem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/28
+Message-ID: <20141009190907.GC29399@w1.fi>
+Date: Thu, 9 Oct 2014 22:09:07 +0300
+From: Jouni Malinen <j@...fi>
+To: oss-security@...ts.openwall.com
+Subject: wpa_cli and hostapd_cli action script execution vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Can a CVE be assigned to the following issue?
-
-Phusion Passenger creates a "server instance directory" in /tmp during startup,
-which is a temporary directory that Phusion Passenger uses to store working files.
-This directory is deleted after Phusion Passenger exits. For various technical
-reasons, this directory must have a semi-predictable filename. If a local attacker
-can predict this filename, and precreates a symlink with the same filename that
-points to an arbitrary directory with mode 755, owner root and group root, then
-the attacker will succeed in making Phusion Passenger write files and create
-subdirectories inside that target directory. The following files/subdirectories
-are created:
-
-* control_process.pid
-* generation-X, where X is a number.
-
-If you happen to have a file inside the target directory called `control_process.pid`,
-then that file's contents are overwritten.
-
-These files and directories are deleted during Phusion Passenger exit. The target
-directory itself is not deleted, nor are any other contents inside the target
-directory, although the symlink is.
+Published: October 9, 2014
+Identifier: CVE-2014-3686
+Latest version available from: http://w1.fi/security/2014-1/
 
 
-It is fixed in upstream version 4.0.33.
+Vulnerability
+
+A vulnerability was found in the mechanism wpa_cli and hostapd_cli use
+for executing action scripts. An unsanitized string received from a
+remote device can be passed to a system() call resulting in arbitrary
+command execution under the privileges of the wpa_cli/hostapd_cli
+process (which may be root or at least network admin in common use
+cases).
 
 
-References:
+Vulnerable versions/configurations
 
-https://github.com/phusion/passenger/commit/34b1087870c2
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=736958
-https://bugzilla.redhat.com/show_bug.cgi?id=1058992
+wpa_cli is a component distributed with wpa_supplicant and hostapd_cli
+is a component distributed with hostapd. The vulnerability affects only
+cases where wpa_cli or hostapd_cli is used to run action scripts (-a
+command line option) and one (or more) of the following build
+combinations for wpa_supplicant/hostapd is used:
+
+wpa_supplicant v1.0-v2.2 with CONFIG_P2P build option enabled and
+connecting to a P2P group
+
+wpa_supplicant v2.1-v2.2 with CONFIG_WNM build option enabled
+
+wpa_supplicant v2.2 with CONFIG_HS20 build option enabled
+
+wpa_supplicant v0.7.2-v2.2 with CONFIG_WPS build option enabled and
+operating as WPS Registrar
+
+hostapd v0.7.2-v2.2 with CONFIG_WPS build option enabled and WPS enabled
+in runtime configuration
+
+wpa_supplicant and hostapd processes are not directly affected, i.e.,
+the vulnerability occurs in the wpa_cli/hostapd process based on
+information received from wpa_supplicant/hostapd.
+
+Attacker (or a system controlled by the attacker) needs to be within
+radio range of the vulnerable system to send a frame that triggers a
+suitable formatted event message to allow full control on command
+execution.
+
+
+Possible mitigation steps
+
+- Update to wpa_cli/hostapd_cli from wpa_supplicant/hostapd v2.3
+
+- Merge the following commits to an older version of wpa_cli/hostapd_cli
+  and rebuild it:
+
+  Add os_exec() helper to run external programs
+  wpa_cli: Use os_exec() for action script execution
+  hostapd_cli: Use more robust mechanism for action script execution
+
+  These patches are available from http://w1.fi/security/2014-1/
+
+- Disable use of wpa_cli/hostapd_cli command to run action scripts
+  (this may prevent functionality)
 
 -- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Jouni Malinen                                            PGP id EFC895FA
