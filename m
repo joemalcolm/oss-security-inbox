@@ -1,40 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/3
-Message-ID: <3230301C09DEF9499B442BBE162C5E48257593DB@SESTOEX04.enea.se>
-Date: Sun, 5 Oct 2014 10:22:06 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/23
+Message-ID: <5436B024.3020309@amacapital.net>
+Date: Thu, 09 Oct 2014 08:56:20 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-7975: 0-day umount denial of service
 Content-Type: text/plain; charset=utf-8
 
- 
-> > < https://github.com/mubix/shellshocker-pocs >
+On 10/09/2014 04:06 AM, rf-PKu+Ek1N2UGzQB+pC5nmwQ@...lic.gmane.org wrote:
+>>>>>> "Andy" == Andy Lutomirski <luto-kltTT9wpgjJwATOyAt5JVQ@...lic.gmane.org> writes:
 > 
-> I mentioned this earlier on another thread, but I would really warn people
-> about relying on this unless they really understand what's going on.
+>     Andy> I just screwed up and typoed my git send-email command, so
+>     Andy> there's now a publicly available exploit for a new umount bug.
 > 
-> /mz
+>     Andy> Fortunately this one isn't terribly serious, but it might be
+>     Andy> usable for more than just DoS if some daemon reacts poorly to
+>     Andy> being unable to write to the filesystem.
+> 
+>     Andy> http://thread.gmane.org/gmane.linux.kernel.stable/109312
+> 
+> Hmm, what damage is this supposed to do? I get (3.12.29):
+> 
+> ql-front-t:/dev/pts# /root/remount-exploit /dev
+> remount_ro, a DoS by Andy Lutomirski
+> remount-exploit: umount: Device or resource busy
+> 
+> Maybe you should specify what versions are supposed to be vulnerable
+> 
 
-Thanks Michal, 
+The PoC does pretty much the same thing as
 
-I agree that everyone using bash needs to understand what is going on,  but I think what most (non-expert) people need is an explanation for each CVE, a set of test case from some reliable source (preferably a script that runs all test cases and shows vulnerable/not-vulnerable status) and a set of patches. So that they can apply the patches, run the tests and assert that their systems are not vulnerable to shellshock anymore.
+# mount -o remount,ro TARGET
 
-Maybe we should update your summary like this:
+but it doesn't require privilege to run.
 
-    CVE-2014-6271 - original RCE found by Stephane. Fixed by bash43-025 and corresponding Sep 24 entries for other versions.
-    CVE-2014-7169 - file creation / token consumption bug found by Tavis. Fixed by bash43-026 & co (Sep 26)
-    CVE-2014-7186 - a probably no-sec-risk 10+ here-doc crash found by Florian and Todd. Fixed by bash43-028 & co (Oct 1).
-    CVE-2014-7187 - a non-crashing, probably no-sec-risk off-by-one found by Florian. Fixed by bash43-028 & co (Oct 1).
-    CVE-2014-6277 - uninitialized memory issue, almost certainly RCE found by me. Fixed by bash43-029 & co (Oct 2).
-    CVE-2014-6278 - command injection RCE found by me. (No specific patch yet, maybe bash43-30 ??).
+Due to the way that Linux handles filesystem business, it is unlikely to
+work on filesystems that have anything open for writing.  (It works on
+my Fedora system targetting /dev.)  The upshot is that it may be
+difficult to exploit in any meaningful way on some systems.
 
+It may also work more reliably against network filesystems.  I'm not
+really sure.
 
-Some questions:
- 1) bash43-027   patch  exported function namespace change,  Florian's mitigation patch that shields the parser from untrusted inputs". This does not solve any specific CVE, but mitigates all CVEs, is this correct?
+That output means that you're vulnerable.  You would have gotten
+something like "Permission denied" if you weren't vulnerable.
 
-2) Do we need to apply *all* of these individual bash patches (i.e. bash43-025 through bash43-029)? Even  bash43-027 which is not solving any specific CVE?  Or should we apply 27 or all the others?
-
-3) Do you have a script or summary of all tests in one place like  http://en.wikipedia.org/wiki/Shellshock_%28software_bug%29 or https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck ? Or maybe these are good enough & reliable? 
-
-Thanks
-/Sona
+--Andy
