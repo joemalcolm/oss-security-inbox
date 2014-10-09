@@ -1,59 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/2
-Message-Id: <201407021449.s62En2KN028569@linus.mitre.org>
-Date: Wed, 2 Jul 2014 10:49:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: fweimer@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, misc@...b.org
-Subject: Re: Ansible CVE requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/17
+Message-ID: <54365146.1090802@mittwald.de>
+Date: Thu, 9 Oct 2014 11:11:34 +0200
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> It turns out that the fix was incomplete.
 
-> I think this warrants a separate CVE ID.
+On 09/10/14 10:24, Michal Zalewski wrote:
+>> vendors are not liable, not even for the most serious
+>> software bugs. so there is no incentive for them to make
+>> better software.
+> 
+> On the flip side, would it have been better if, say, Chet could be
+> sued for millions in damages for the bug in bash?
 
-Use CVE-2014-4678 for the
-https://github.com/ansible/ansible/commit/5429b85b9f6c2e640074176f36ff05fd5e4d1916
-fix that was announced in the 2014-06-25 ansible-announce "Ansible
-1.6.4 update - security release" message at
-https://groups.google.com/forum/message/raw?msg=ansible-announce/ieV1vZvcTXU/5Q93ThkY9rIJ
+No, imho you can not blame a single person, but you can blame
+huge multi billion dollar companies who incorporate software and
+benefit from it, but don't want anything to do with fixing or
+improving it.
 
-(CVE-2014-4678 exists because of an incomplete fix for CVE-2014-4657.)
+If GM buys some breaks from $random_guy (hey, he even
+gives them away for FREE!) they are still liable if these
+breaks don't work in their cars.
 
-Additional CVE IDs (at least two) will be assigned for:
+so at least when you're making money of software you should
+be responsible for this software.
 
-A. The 2014-06-25 ansible-announce "Ansible 1.6.5 - updated security
-fix" message at
-https://groups.google.com/forum/message/raw?msg=ansible-announce/A1px5egCnGQ/jH6f5HM7kpkJ
+that's also not just my opinion (and I didn't invent these
+thoughts), some credit has to go out to mr Schneier who
+you might happen to know ;)
 
-B. The 2014-07-01 ansible-announce "Ansible 1.6.6 - refinements to
-previous security fixes" message at
-https://groups.google.com/forum/message/raw?msg=ansible-announce/WKL7BY3qddo/JkJiNrZzy3AJ
+see:
 
-(At least for item B, there may have been distinct problems reported
-by distinct discoverers, and per-discoverer CVE assignments may be
-best if that information is available. It seems likely that that
-information won't be available at the time when the CVEs are needed --
-and probably individual independent researchers won't be publishing
-separate advisories about subsets of the safe_eval problem -- so one
-CVE ID for A and one CVE ID for B is a realistic outcome.)
+https://www.schneier.com/essays/archives/2003/11/liability_changes_ev.html
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTtBt6AAoJEKllVAevmvmsSLgIAKiP7W7Zu3c0u52+cim/ZY0c
-q6tjLtdGtkIGt6o1Y5MzLmmSXBSxKeTIiADRj4apRD8iUGLMz8KidsuWb+AgKvZC
-g+yxAqPwiGdyLshLKyegaUwDSZE2qdvYxDB2evTd8NPXyWpauyx4xBSgsFtuIehc
-aijeIQtcPok6sm4oPBFzymBGjb1PlufTOfAzciUQBs96IFnD3BsTEejCo6lBwM1X
-u8FOkMC4sIp98riL1r2eJhJ1ayX7/eFX2cW58VnQTCjL9SWcNE8WPWwcJJ+d5kpE
-zhUQM4jsJ+9uape9wYNcncyrnEYfC9KwVr2cdjzEGmtFG2t556cpx5TBbhBbo00=
-=OI7a
------END PGP SIGNATURE-----
+-- 
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
