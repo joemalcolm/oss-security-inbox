@@ -1,34 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/21
-Message-ID: <21541.28197.731713.679550@gargle.gargle.HOWL>
-Date: Fri, 26 Sep 2014 15:46:13 +0200
-From: rf@...eap.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/15
+Message-ID: <1412840978.16319.3.camel@debian.org>
+Date: Thu, 09 Oct 2014 09:49:38 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-CC: zeromq-dev@...ts.zeromq.org
-Subject: CVE request: zeromq
+Subject: Re: openssh on linux rce in sftp-only mode
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On jeu., 2014-10-09 at 01:05 +0200, Jann Horn wrote:
+> On Wed, Oct 08, 2014 at 06:44:32PM -0400, Josh Bressers wrote:
+> > > > 
+> > > > I think one has to assume if a user has unrestricted sftp access, they can
+> > > > figure out how to do most anything. Even with the upstream hardening patch,
+> > > > it really only protects the sftpd process. Any other processes the user may
+> > > > own could be modified.
+> > > 
+> > > Not that easily - /proc/$pid/mem requires you to either be the same process
+> > > or be attached to it via ptrace, I think.
+> > > 
+> > 
+> > I can't speak for other systems (I don't understand the details), but I can
+> > read arbitrary process memory for processes I own in Fedora 20.
+> 
+> Hmm, just tried it on Debian Testing, I can reproduce that.
+> 
+> 
+> > Does someone know what the typical default is?
+> 
+> I looked through the git history of fs/proc/base.c now, looks like commit
+> e268337dfe26dfc7efd422a804dbb27977a3cccc ("proc: clean up and fix
+> /proc/<pid>/mem handling") changed the behavior to be more permissive. That commit
+> is between kernel 3.2 and 3.3. Meh. :(
 
-I've taken over CVE handling for zeromq. There were two issues fixed
-recently. Could you please assign a CVE to them?
+Note that you can somehow restrict ptrace using Yama with
+kernel.yama.ptrace_scope (see
+https://www.kernel.org/doc/Documentation/security/Yama.txt)
 
-Matthew Hawn found that libzmq (ZeroMQ/C++) did not validate the other
-party's security handshake properly, allowing a man-in-the-middle
-downgrade attack. 
-Code commit: https://github.com/zeromq/libzmq/issues/1190
+If would like to restrict sftp users on a somehow hardened box, it might
+make sense to set ptrace_scope to 1+.
 
-Matthew Hawn found that libzmq (ZeroMQ/C++) did not implement a
-uniqueness check on connection nonces, and the CurveZMQ RFC was
-ambiguous about nonce validation. This allowed replay attacks.
-Code commit: https://github.com/zeromq/libzmq/issues/1191
+Regards,
+-- 
+Yves-Alexis
 
-Only ZMQ versions 4.0.x with x < 5 are affected. 4.0.5 is about to be released.
-
-Thanks,
-
-Roland
-
--------
-http://www.q-leap.com / http://qlustar.com
-          --- HPC / Storage / Cloud Linux Cluster OS ---
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
