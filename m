@@ -1,38 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/11
-Message-Id: <201404302023.s3UKMrEx008342@linus.mitre.org>
-Date: Wed, 30 Apr 2014 16:22:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 91 - Hardware timer context is not properly context switched on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/33
+Message-ID: <alpine.BSF.2.00.1410100744160.31844@aneurin.horsfall.org>
+Date: Fri, 10 Oct 2014 07:51:11 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Of Shellshock and logfiles
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I don't *think* I've seen this mentioned here (and apologies if so), but 
+somebody posited on another list that Shellshock attempts in one's Apache 
+logs are not directed against PHP or its scripts, but rather against those 
+Bash scripts that analyse the Apache logs in turn...  I've heard of 
+similar things in mail logs, which *could* be the result of attempting to 
+target either Procmail or logfile analysers.
 
-> XSA-91
+Then again, maybe the spammers really are that desperate that they'll try 
+anything that they think might work.
 
-> Xen was not context switching the CNTKCTL_EL1 register ... This meant
-> that any guest can reconfigure these settings for the entire system
-> ... may lead to a kernel crash ... also be able to read the current
-> timestamp value for the domain perhaps leaking information
-
-Use CVE-2014-3125.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTYVs9AAoJEKllVAevmvmsoN4IAImkrYCRsGux5OqDa7FzzBP3
-1EfhhgbtpzLIFT1I7wKUFc+PDuUGGp7cO88sJkNuaMpRTYtRRyZBIIs7hNxlAi/p
-yumEmhPE6lWy879xCB9zDqXNaJneIm/iGZwm2H583xuZNhx/iuNxHOuxVCOaZo8x
-mehNxUVAu0U3aKogN+Z3/AMyx6ffh0o7ASK21tO5JYOEGzv9iUW1tBLOiKI3bGJE
-Yv62vJ+iu60tIoLw+80o08fjT7cGQ+Dl8XOh2r5bwMscNWYE90xrJ2tKYkGDpfrS
-GXsEm5BKNuscE9OyLqjl/bEjf0/RxWeuILHfit9Qr8KXwypS4WXbPhbWXJWceeU=
-=JCXD
------END PGP SIGNATURE-----
+-- Dave
