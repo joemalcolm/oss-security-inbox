@@ -1,42 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/17
-Message-Id: <201406172218.s5HMI3HP000860@linus.mitre.org>
-Date: Tue, 17 Jun 2014 18:18:03 -0400 (EDT)
-From: cve-assign@...re.org
-To: corsac@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, ben@...adent.org.uk, team@...urity.debian.org, 751417@...s.debian.org
-Subject: Re: (Linux kernel) Bug#751417: linux-image-3.2.0-4-5kc-malta: no SIGKILL after prctl(PR_SET_SECCOMP, 1, ...) on MIPS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/2
+Message-Id: <E1Xc1Se-0002pz-Ie@rmm6prod02.runbox.com>
+Date: Wed, 08 Oct 2014 20:20:04 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 8 Oct 2014 15:48:10 -0700, Tim <tim-security@...tinelchicken.org> wrote:
+> To me, it's not about anticipating the next bug, it is about providing
+> guidance to developers who care only so much about security so that we
+> can avoid some bugs that we didn't anticipate.
 
-> According to the manual page, after calling it with 1 as a second
-> argument, any consecutive system calls other than read(), write(),
-> _exit() and sigreturn() should result in the delivery of SIGKILL.
-> However, under MIPS any consecutive system call behaves as if
-> prctl(PR_SET_SECCOMP, 1, ...) was never called.
+Agree!
 
-> I see no check for seccomp on the MIPS syscall 'fast path'. The
-> seccomp check appears to be done on the 'slow path' which is used only
-> if tracing or audit is also enabled for the task. If I run the above
-> program under strace, it is killed as expected.
+> PS- I'm of two minds on this.  More recently I've decided that educating
+>     developers isn't nearly as effective as providing developers APIs and
+>     development environments that make it unlikely they will shoot
+>     themselves in the foot.  It's not that developers can't be trained,
+>     it is that they will probably only be developers for a handful of 
+>     years and move on to other roles later, with a whole new batch of
+>     green coders coming in to fill their positions.  Anyway...
 
-Use CVE-2014-4157.
+I don't think there's an either/or here.  Yes, if you *can* change the
+tools/libraries/development environments to prevent attacks, or reduce
+their effectiveness, you *should*.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+That said, a fool with a tool is still a fool.  There's no way to create
+a development environment that can't be misused.  Thus, you'll always need
+to educate and train developers for situations the system cannot prevent.
+In the long term I think this will be easier, because novice developers will be able
+to learn from the many experts around them.  Today, the number of
+developers who understand security issues is a vanishingly small percentage
+of the total, so the novice has no one to learn from.
 
-iQEcBAEBAgAGBQJToL2jAAoJEKllVAevmvmswgUIAJbfESCClCJ35JPb7mukT3nC
-VFCIPzdiVqXNB/3OvC3hRUqY2J5TffMwYNnTiUJ3MtRcbbJXHf24lK3IM3H8/b7A
-7ZpxBh7cZSeEX+d2+uOZqVW1DDJQ0BmmYHV0tlRI0jry2GAPvGdrBpVAKmxe+fvg
-6qnceILeat1/1M4fbIabw683gjwZktF0S11LvSvn0OCSPM/sPK0cKMO5m0NEQzwI
-2NZWljHvNpQ851Lpe7ICvDVr1v9PmgnsA+oHvqzZ46gXocrBcwMvlyP1xIFm/Ajk
-UZoE5jpP/dpXMS4/aTO+ucivLNKNjav741lKRg8MIBK274iKaWcUPv15aDdoYBw=
-=ycHE
------END PGP SIGNATURE-----
+--- David A. Wheeler
