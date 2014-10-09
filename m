@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/5
-Message-ID: <546EB423.3080605@redhat.com>
-Date: Fri, 21 Nov 2014 14:40:19 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/4
+Message-ID: <20141009005417.GF12633@sentinelchicken.org>
+Date: Wed, 8 Oct 2014 17:54:17 -0700
+From: Tim <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: heap buffer overflow in PCRE
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On 11/21/2014 01:43 AM, Vasyl Kaigorodov wrote:
-> Hello,
->
-> Heap buffer overflow issue was reported [1] in PCRE when processing a
-> specially crafted regular expression.
->
-> Upstream patch for this:
-> http://www.exim.org/viewvc/pcre2?view=rev&revision=154
-> The next upstream release that will contain the above fix is likely to
-> be around Feb/Mar next year (2015).
->
-> Additional references:
-> [1]: http://bugs.exim.org/show_bug.cgi?id=1546
-> [2]: https://bugzilla.redhat.com/show_bug.cgi?id=1166147
->
-> Can a CVE be assigned to this please?
->
-> Thanks.
->
+> > Well, I think we can all think of a few options, some more portable
+> > than others.  The current namespace change is one option, obviously,
+> 
+> But that's not really separating code and data, right? It doesn't feel
+> like it follows the spirit of this phrasing:
+> 
+> "When an existing construct in a system is widely expected to be used
+> for storing data, avoid overloading it for use of storing code."
+> 
+> ...because it very much overloads the syntax to store code alongside
+> with the data, in a way that theoretically shouldn't but in practice
+> may collide. It's not a whole lot better than the "separation" of CSS
+> and JS in HTML, in the sense that both of them are sort of guarded by
+> delineated by specific syntax structures.
 
-Morning,
+I think you're taking on a too rigid mindset here.  Taking the
+phrasing too literally.
 
-If it was not already seen, http://bugs.exim.org/show_bug.cgi?id=1546#c8 
-has "If you can, please reference CVE-2014-8964 as a CVE for this 
-potential security
-vulnerability."
 
-I do not know who assigned it.
+All code *is* data.  Machine code is bytes in memory, which is data.
+Therefore code is a subset of data.  No matter where you put it, it's
+mixed in that highly abstract sense.  In hardware architectures we
+designate certain pieces of memory to store code and others to store
+things that aren't instructions.  This is fine.  It is mostly well
+defined and people have reasonable expectations about this
+designation.  Same thing with environment variables that have
+designated purposes/namespaces/whatever.  The problem comes about when
+you have no designation and no expectation of which is which.
 
-Cheers,
 
---
-Murray McAllister / Red Hat Product Security
+tim
