@@ -1,33 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/9
-Message-ID: <53A87FAB.80501@mit.edu>
-Date: Mon, 23 Jun 2014 12:27:39 -0700
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/12
+Message-ID: <54362BD8.3080008@redhat.com>
+Date: Thu, 09 Oct 2014 17:31:52 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4014: Linux kernel user namespace bug
+Subject: CVE-2014-3691, foreman-proxy: failure to verify SSL certificates
 Content-Type: text/plain; charset=utf-8
 
-On 06/18/2014 12:16 AM, Sven Kieske wrote:
-> Am 17.06.2014 23:47, schrieb Andy Lutomirski:
->> On Tue, Jun 10, 2014 at 2:49 PM, Andy Lutomirski <luto@...capital.net> wrote:
->>> The internal function inode_capable was used inappropriately.
->>> Depending on configuration, this may be usable to escalate privileges.
->>> A cursory inspection of my Fedora box suggests that it is not
->>> vulnerable to the obvious way to exploit this bug.
->>>
->>> The fix should appear in Linus' -master shortly, and it's tagged for
->>> stable.  In the mean time, I've attached it here.
->>>
->>
->> The commit that fixes this is:
->>
->> 23adbe12ef7d3d4195e80800ab36b37bee28cd03
-> 
-> Do you happen to know in which kernel version
-> this bug got introduced?
+It was discovered that Foreman Smart Proxy failed to verify SSL 
+certificates. As noted in the upstream bug, "This permits any client 
+with access to the API to make requests and perform actions (permitting 
+control of Puppet CA, DHCP, DNS etc.)". (CVE-2014-3691)
 
-I don't know, but I wouldn't be surprised if it's been there since user
-namespaces were introduced.  I think that user namespace-enabled kernels
-are unlikely to be found in the wild before 3.12 or so.
+A mitigation is available from the following:
 
---Andy
+https://groups.google.com/forum/#!topic/foreman-announce/jXC5ixybjqo
+
+References:
+
+http://projects.theforeman.org/issues/7822
+https://bugzilla.redhat.com/show_bug.cgi?id=1150879
+
+Cheers,
+
+--
+Murray McAllister / Red Hat Product Security
