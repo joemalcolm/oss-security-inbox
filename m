@@ -1,72 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/7
-Message-ID: <CADk+mPDAUu+eX3Ovw0w1bP+ZYHQ26BtPc4E8oOxGD3aqnDaHTw@mail.gmail.com>
-Date: Mon, 6 Oct 2014 09:34:39 +0200
-From: Rainer Gerhards <rgerhards@...adiscon.com>
-To: Sven Kieske <s.kieske@...twald.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: vulnerability in rsyslog
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/14
+Message-ID: <54380B48.9060501@fifthhorseman.net>
+Date: Fri, 10 Oct 2014 12:37:28 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: David Leon Gil <coruus@...il.com>, kristian.fiskerstrand@...ptuouscapital.com
+CC: oss-security@...ts.openwall.com, "gnupg-devel@...pg.org" <gnupg-devel@...pg.org>, Werner Koch <wk@...pg.org>, thijs@...ian.org
+Subject: Re: Re: 0xdeadbeef comes of age: making keysteak with GnuPG
 Content-Type: text/plain; charset=utf-8
 
-2014-10-06 9:12 GMT+02:00 Sven Kieske <s.kieske@...twald.de>:
+On 10/10/2014 12:23 PM, Daniel Kahn Gillmor wrote:
+> On 10/10/2014 12:01 PM, David Leon Gil wrote:
+>> > (While I know that if a root CA were caught intentionally issuing an
+>> > MitM cert for keybase.io or pgp.mit.edu would face likely
+>> > delisting/bankruptcy.)
+> I'd like to believe that also, but i think that some of the members of
+> the CA cartel might be "too big to fail" in the current infrastructure.
+>  There's no chance that the CA will go bankrupt if they aren't delisted
+> (since the CA market is a lemon market), and every web site certified by
+> the bigger CAs has an incentive to argue against that CAs' delisting
+> (because it will break their web site).
 
->
->
-> On 06/10/14 08:40, Rainer Gerhards wrote:
-> > 2014-10-06 8:31 GMT+02:00 Sven Kieske <s.kieske@...twald.de>:
-> >
-> >>
-> >>
-> >> On 30/09/14 18:41, Rainer Gerhards wrote:
-> >>> 2014-09-30 18:28 GMT+02:00 Solar Designer <solar@...nwall.com>:
-> >>>
-> >>>> On Tue, Sep 30, 2014 at 01:55:12PM +0200, Sven Kieske wrote:
-> >>>>> I don't understand the following statement in the
-> >>>>> pri-vuln.txt in section "Patches":
-> >>>>>
-> >>>>> "Version 7.4.6, while no longer being project
-> >>>>> supported received a patch and is also not vulnerable."
-> >>>>>
-> >>>>> What was patched when this version is not vulnerable?
-> >>>>> Or do you mean it is not vulnerable after the patch got applied?
-> >>>>
-> >>>>
-> >>> My apologies, this is a type that skipped past all proof-reading. It
-> >> should
-> >>> say "7.6.6", which is the v7 version released today. v7.4.x is not only
-> >>> non-project supported, it's also heavily outdated and missing many
-> other
-> >>> patches as well (just to point this out).
-> >>
-> >> This still does not answer the above questions, it just changes the
-> >> version number in your statement which led to my question.
-> >>
-> >>
-> > you can view the complete patch set here:
-> >
-> > https://github.com/rsyslog/rsyslog/commits/v7-stable
->
-> This web page does list all commits to v7-stable.
-> So I think you want me to dig through the code to find the answer to my
-> question?
-> I knew I could answer my question by going through the code, but I
-> figured it would be easier to ask someone who is already familiar with it.
->
-> It turned out I was wrong.
->
+And, even when we can burn a small CA, the larger organization often
+carries on unharmed:
 
-Sorry, it looks like I don't understand your question. 7.6.6 (7.6.7 today)
-has no special patch file, because the version itself did receive the
-necessary patches. If you'd like to see exactly which code was changed you
-can also look at the totally-dead-version patches available here:
-http://www.rsyslog.com/files/download/rsyslog/CVE-2014-3683-pri-vuln.tar.gz
+  http://www.links.org/?p=1268
 
-If you prefer, I can also do a
+	--dkg
 
-$ git diff v7.6.5 v7.6.6
 
-for you and post the result.
-
-HTH
-Rainer
-
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
