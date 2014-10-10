@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/13
-Message-ID: <5abe3d0eae67015fea3d3674277b45e7@tribut.de>
-Date: Wed, 09 Apr 2014 10:57:16 +0200
-From: Felix Eckhofer <felix@...but.de>
-To: oss-security@...ts.openwall.com
-Subject: Session IP check bypass in Roundcube 1.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/4
+Message-ID: <543775D5.2090001@redhat.com>
+Date: Fri, 10 Oct 2014 11:29:49 +0530
+From: Siddharth Sharma <siddharth@...hat.com>
+To: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: Request for CVE assignment for tigervnc affected by similar flaws as in CVE-2014-6051 and CVE-2014-6052 of libvncserver
 Content-Type: text/plain; charset=utf-8
 
-Hi.
+Hi,
 
-Roundcube 1.0-beta added support for the the X-Forwarded-For and 
-X-Real-IP HTTP headers when the check_ip configuration option is set. 
-This effectively allows the attacker to bypass the session IP check 
-completely by setting one of these headers to the victim's IP address.
+I would want to get different CVE's assigned for tigervnc as it is
+affected by similar flaws of libvncserver ( CVE-2014-6051 and
+CVE-2014-6052 ).
 
-The problem is still present in the latest version (1.0).
-Bug is being tracked here: http://trac.roundcube.net/ticket/1489729
+https://bugzilla.redhat.com/show_bug.cgi?id=1151307
+https://bugzilla.redhat.com/show_bug.cgi?id=1151312
+
+Thanks,
+-- 
+Siddharth Sharma / Red Hat Product Security / Key ID : 0xD9F6489A
+Fingerprint :  0x6F04C684 A49C E4CE 8148 E841 CD6F 8E55 D9F6 489A
 
 
-Regards
-felix
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
