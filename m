@@ -1,46 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/14/6
-Message-ID: <20140714180742.GR179@oevtugenva.nrevsny.pk>
-Date: Mon, 14 Jul 2014 14:07:42 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/15
+Message-ID: <54380F7D.1020100@redhat.com>
+Date: Fri, 10 Oct 2014 10:55:25 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, David Leon Gil <coruus@...il.com>, kristian.fiskerstrand@...ptuouscapital.com
+CC: "gnupg-devel@...pg.org" <gnupg-devel@...pg.org>, Werner Koch <wk@...pg.org>, thijs@...ian.org
+Subject: Re: Re: 0xdeadbeef comes of age: making keysteak with GnuPG
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 14, 2014 at 11:57:04AM +0200, Florian Weimer wrote:
-> On 07/12/2014 05:54 PM, Rich Felker wrote:
-> >>Bug report: https://sourceware.org/bugzilla/show_bug.cgi?id=17137
-> >
-> >On further review, I question whether this is actually a valid
-> >vulnerability. The ability to use absolute pathnames as locale strings
-> >is a documented feature in both POSIX and glibc, and even after the
-> >patch, absolute pathnames are still accepted for locales in
-> >non-suid[-like] programs, meaning that bypass of ForceCommand is still
-> >possible as long as AcceptEnv is accepting LC_*.
+On 10/10/14 10:37 AM, Daniel Kahn Gillmor wrote:
+> On 10/10/2014 12:23 PM, Daniel Kahn Gillmor wrote:
+>> On 10/10/2014 12:01 PM, David Leon Gil wrote:
+>>>> (While I know that if a root CA were caught intentionally issuing an
+>>>> MitM cert for keybase.io or pgp.mit.edu would face likely
+>>>> delisting/bankruptcy.)
+>> I'd like to believe that also, but i think that some of the members of
+>> the CA cartel might be "too big to fail" in the current infrastructure.
+>>  There's no chance that the CA will go bankrupt if they aren't delisted
+>> (since the CA market is a lemon market), and every web site certified by
+>> the bigger CAs has an incentive to argue against that CAs' delisting
+>> (because it will break their web site).
 > 
-> This is not correct, glibc never accepted absolute pathnames in the
-> sense that they were resolved as absolute path names.  They were
-> always resolved relative to LOCPATH, with or without a leading
-> slash.
+> And, even when we can burn a small CA, the larger organization often
+> carries on unharmed:
 > 
-> When the lack of conformance was reported as a glibc bug a couple of
-> years ago, the bug report was labeled as invalid:
+>   http://www.links.org/?p=1268
 > 
->   https://sourceware.org/bugzilla/show_bug.cgi?id=11635
-> 
-> We didn't want to break backwards compatibility here, so we
-> documented the existing behavior and just prohibited ".." pathname
-> components. This allowed us to treat this as a glibc vulnerability,
-> with a fairly simple and isolated fix (although the gettext part is
-> still pending).
+> 	--dkg
 
-Thanks for the explanation. This makes sense, and contrary to the
-claims in the bug report, I believe it's possible to claim this
-behavior is conforming, but only if you don't advertise localedef
-support.
+More to the point what happened to the auditors (PWC) that signed off on
+them being ok to operate as a CA? Nothing.
 
-I tend to agree that it's the most reasonable choice from a security
-standpoint, and necessary if you want to support configurations where
-the choice of locale is coming from a different privilege domain.
+https://groups.google.com/forum/#!topic/mozilla.dev.security.policy/_y1L50SdUQs
 
-Rich
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
