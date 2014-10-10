@@ -1,30 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/2
-Message-ID: <CALx_OUB=_Hpo1F_rcWAzUKfKnQL1wtcHP20oVPooQLOxs9XKmA@mail.gmail.com>
-Date: Tue, 30 Sep 2014 17:04:31 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/21
+Message-ID: <CAA7UWsW7jo9fE3NTv7QbRLHt33BpBPyuwX_b_2fU2P+Ce+P5ZQ@mail.gmail.com>
+Date: Fri, 10 Oct 2014 15:15:46 -0400
+From: David Leon Gil <coruus@...il.com>
+To: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
+Cc: Daniel Kahn Gillmor <dkg@...thhorseman.net>, oss-security@...ts.openwall.com,  "gnupg-devel@...pg.org" <gnupg-devel@...pg.org>, Werner Koch <wk@...pg.org>, thijs@...ian.org
+Subject: Re: HKPS [was 0xdeadbeef]
 Content-Type: text/plain; charset=utf-8
 
-> I don't know if this can be made efficient enought to be practical, but
-> imagine a virtual machine where every byte of memory is tagged with the
-> security domain.  When a byte is copied, the tag is copied also.  (It is not
-> possible in general to distinguish copies from writes, but at least when
-> copying between domains via system calls, this is detectable.) Then, when a
-> privileged program is running, its memory can be scanned for data from a
-> lower privilege domain.
+So this doesn't get lost: I'm convinced by dkg and Kristian's
+arguments: Use hkps with hkps.pool.sks-keyservers.net
 
-You're describing taint tracking, which is actually a pretty hard
-problem when you realize that data isn't an abstract, immutable
-entity, but rather something that is used as input for arithmetics,
-conditional branches, etc (is a byte set as a result of a tainted
-conditional also tainted? for far-reaching should this effect be?).
+GnuPG 2.1 will ship with hkps enabled by default, I believe, and
+Kristian's CA. (I don't think 2.0 does yet.)
 
-But more fundamentally, in your example, what does it prove? In
-practical settings, privileged programs will routinely have data from
-lower (or at least other) privilege levels in memory, but that doesn't
-indicate a security problem. In particular, both the fixed and the
-vulnerable versions of bash will have that property when invoked via a servlet.
+On Fri, Oct 10, 2014 at 12:27 PM, Kristian Fiskerstrand
+<kristian.fiskerstrand@...ptuouscapital.com> wrote:
+> You are quite correct that I probably wouldn't, and my primary income
+> is from another industry, but at the same time that does bring a
+> protection as I wouldn't be discouraged to fight any oppression.
 
-/mz
+I do agree about that.
+
+And, in fact: I failed to thank you! I've used the SKS pool you
+operate for many years. You provide a critical public service.
+
+> Although for the root
+> CAs the major problem is simply the amount of CAs accepted by standard
+> implementations, several of which are run by various governments. In
+> the end it comes down to what the threat model is and whom you're
+> protecting yourself from.
+
+Very much agreed; my particular threat model for this *isn't*
+protection against the NSA. (Aside from perhaps protection from
+traffic analysis.) It's protection against much weaker threats.
+
+> Currently the only criteria for whether someone gets a certificate for
+> a server in the pool is based on technical merits . . .
+
+One thing that one can do (which I do when I don't have a copy of a
+key in one of my local keydumps) is use the strategy of Tor's
+"tlsdate": use a set of servers which are unlikely to be controlled by
+the same adversary.
