@@ -1,41 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/2
-Message-ID: <20141230042538.GA26543@eldamar.local>
-Date: Tue, 30 Dec 2014 05:25:38 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/7
+Message-ID: <54379B5A.8070009@redhat.com>
+Date: Fri, 10 Oct 2014 10:39:54 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: Mediawiki security releases 1.24.1, 1.23.8, 1.22.15 and 1.19.23
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 10/09/2014 10:56 PM, Pavel Labushev wrote:
+> On Thu, 09 Oct 2014 15:00:04 -0400 (EDT)
+> "David A. Wheeler" <dwheeler@...eeler.com> wrote:
+>
+>> On Thu, 9 Oct 2014 10:34:49 -0700, Tracy Reed <treed@...raviolet.org> wrote:
+>>> Sure, but at least with Haskell (and the like) you have to make it very
+>>> explicit that this is what you want to do.
+>>
+>> Not in this case.  A Haskell implementation of the POSIX "sh" specification,
+>> that then added function imports, could have made the same mistake
+>> just as easily.
+>
+> Just as easily? Might be, but that's a totally unjustified conclusion.
 
-On Sun, Dec 21, 2014 at 01:39:50PM +0100, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> New security releases for Mediawiki (1.24.1, 1.23.8, 1.22.15 and 1.19.23) were
-> announced:
-> 
-> https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-December/000173.html
-> 
-> > == Security fixes in 1.24.1, 1.23.8, 1.22.15 and 1.19.23 ==
-> > * (bug T76686) [SECURITY] thumb.php outputs wikitext message as raw HTML,
-> >   which could lead to xss. Permission to edit MediaWiki namespace is required
-> >   to exploit this.
-> > * (bug T77028) [SECURITY] Malicious site can bypass CORS restrictions in
-> >   $wgCrossSiteAJAXdomains in API calls if it only included an allowed domain as
-> >   part of its name.
-> 
-> Could CVE's be assigned for these two issues?
-> 
-> References:
-> 
->  * https://phabricator.wikimedia.org/T76686 (not accessible atm)
->  * https://phabricator.wikimedia.org/T77028 (seem to be only affecting
->    1.20 and above)
->  * https://bugzilla.redhat.com/show_bug.cgi?id=1175828
+You need to put labels on shell variables.  The SELinux folks did not do 
+it, but maybe they considered it.  It seems unlikely that a shell 
+rewrite came up with this concept on its own.  None of the Bourne-like 
+shells we have implement anything like that, after all.
 
-Could CVEs be assigned to reference these mediawiki issues?
+Not using a parser generator, but a manually written recursive descent 
+parser might have helped because you could have called the function 
+corresponding to the function definition production directly.  (However, 
+there would still have been parser exposure to the network.)
 
-Regards,
-Salvatore
+> First of all, *if* a programmer wants to express higher level concepts
+> (such as "untrusted data" and how it may and may not be manipulated) in
+> languages like Haskell, he doesn't resort to some sort of manual labour
+> of maintaining a masochistic discipline of performing tedious repetitive
+> tasks in the context of ubiquitous uncertainty and fuzzy reasoning, no.
+> He expresses himself in a much more concise and abstract way, and places
+> much of the burden of reasoning and proving on the machine.
+
+The Haskell standard library does not even distinguish between a read 
+error and an end-of-stream condition.  You can't build reliable software 
+on top of that.
+
+Some of the incomplete state reset issues might have been more obvious 
+with Haskell (but you can easily thread a state variable incorrectly, in 
+effect discarding intended updates).  But in any language, not using 
+global variables for parser state (and building the state from scratch 
+each time before calling the parser) would avoid those in a fairly 
+reliable way.
+
+-- 
+Florian Weimer / Red Hat Product Security
