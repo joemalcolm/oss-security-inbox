@@ -1,126 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/14
-Message-Id: <201407161732.s6GHW2eO018214@linus.mitre.org>
-Date: Wed, 16 Jul 2014 13:32:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: libressl before 2.0.2 under linux PRNG failure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/16
+Message-ID: <874mvb230s.fsf@vigenere.g10code.de>
+Date: Fri, 10 Oct 2014 20:28:03 +0200
+From: Werner Koch <wk@...pg.org>
+To: David Leon Gil <coruus@...il.com>
+Cc: Daniel Kahn Gillmor <dkg@...thhorseman.net>,  kristian.fiskerstrand@...ptuouscapital.com,  oss-security@...ts.openwall.com,  "gnupg-devel\@gnupg.org" <gnupg-devel@...pg.org>,  thijs@...ian.org
+Subject: Re: 0xdeadbeef comes of age: making keysteak with GnuPG
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, 10 Oct 2014 18:01, coruus@...il.com said:
 
-> https://www.agwa.name/blog/post/libressls_prng_is_unsafe_on_linux
+> My problem with the HKPS pool is that I don't know Kristian.[1] And I
+> don't have any reason to believe that he'd suffer serious financial
 
-> forking a process can create repeated random numbers
+X.509 is entirely broken and we can't do anything about it.  However, it
+gives you some assurance that it is harder to read the requests.  But it
+is not really hard, they just need to compromise a few well known
+keyservers.  Let's use hkps to raise the surveilance costs - that is
+worth the little trouble.
 
-> Please assign CVE.
+But do not trust any keyserver!  Use your own way to validate the key.
 
-The existence of a popular blog post discussing a number of
-interrelated LibreSSL and OpenSSL issues doesn't mean that we have a
-good way to proceed by assigning a single CVE ID.
+> [2] This is different from saying that I think he *would
+> intentionally* sign a malicious cert, which I don't. I just have no
+> idea how secure the private key for that CA is. And I know that a
+> fully isolated, physically secure facility, and a good HSM are really
+> expensive. (But maybe he is doing this?)
 
-It's not yet clear whether zero or more CVE IDs are needed. Here's a
-series of quotes from the blog post and its comments, with some
-initial thoughts about why we didn't immediately assign a CVE ID.
+Why attacking a certain "high-security" CA if you can easily convice
+another of the 1300 (?) primary root CAs to issue a certifciate to your
+needs.
 
-"OpenSSL faces the same issue [...] The difference is that OpenSSL
-provides a way to explicitly reseed the PRNG"
+BTW: Using a pool with 2.1 will be more reliable because 2.1 tracks
+failures of the current server and switches to another one in that
+case.  Thus you do not need to rely on the DNS round-robin.
 
-It's possible that some people accept a security principle roughly
-like "the design of code surrounding a PRNG must anticipate that any
-number of fork calls may occur, and must (without requiring any extra
-step within an application) guarantee that the random-number stream
-isn't duplicated." If this is the security principle, then maybe there
-should be separate CVE IDs for OpenSSL (requires an extra step) and
-LibreSSL before 2.0.2 (cannot guarantee this at all).
 
-"LibreSSL aims to be a drop-in replacement for OpenSSL"
+Salam-Shalom,
 
-We didn't immediately find any statement on www.libressl.org or in a
-libressl-2.0.x.tar.gz README stating that the useful functionality of
-LibreSSL is supposed to exactly match OpenSSL. One could assert that
-the above security principle is false, and instead accept a security
-principle of "the best behavior of a random-number stream after a fork
-is undefined; different choices might be preferred by different
-applications." In other words, a behavior that is surprising to former
-OpenSSL users isn't inherently wrong unless the LibreSSL documentation
-ruled out any surprises.
+   Werner
 
-Also, for example, a CVE ID probably can't be assigned for the general
-concept of "unfortunately, has turned RAND_poll into a no-op"
-(especially because the blog post suggests that this no-op change was
-intentional and will remain in place).
 
-More generally, both of these:
+-- 
+Die Gedanken sind frei.  Ausnahmen regelt ein Bundesgesetz.
 
-"OpenSSL is safer for two reasons ... 1. If OpenSSL can't open
-/dev/urandom, RAND_bytes returns an error code."
-
-"OpenSSL is safer for two reasons ... 2. OpenSSL allows you to
-explicitly seed the PRNG by calling RAND_poll."
-
-are apparently closer to the level of a "possibly controversial design
-decision" than an "implementation error."
-
-Possibly the combination of
-
-"Their fix is to use pthread_atfork to register a callback that
-reseeds the PRNG when fork() is called."
-
-and
-
-"The fix is a huge step in the right direction but is not perfect - a
-program that invokes the clone syscall directly will bypass the atfork
-handlers."
-
-would require two CVE IDs, if the vendor decided to describe their
-code change specifically as a vulnerability fix, and then an
-incomplete fix was asserted because of this clone scenario.
-
-"Comment 23634 ... a very common privilege separation technique is
-[...] OpenSSL has the API to make this work (as do other crypto
-libraries such as libsodium); LibreSSL does not."
-
-In most cases, a missing API does not qualify for a CVE ID.
-
-"LibreSSL provides no good way to use the PRNG from a process running
-inside a chroot jail. ... Unfortunately, /dev/urandom usually doesn't
-exist inside chroot jails."
-
-and
-
-"I see no reason why /dev/urandom cannot be made available inside
-containers: ... If it is not there, the container is likely
-misconfigured."
-
-This one seems to be different perspectives about what Linux
-configurations are common or correct, and what Linux configurations
-are uncommon or incorrect.
-
-"it falls back to a truly scary-looking function (lines 306-517) that
-attempts to get entropy from sketchy sources such as the PID, time of
-day, memory addresses, and other properties of the running process."
-
-This may be another example of a design tradeoff. Some applications
-might prefer "sketchy sources" as an alternative to reporting an error
-about lack of good sources. Other applications definitely would not
-prefer this.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTxrZPAAoJEKllVAevmvmspQYIAKFg+GDqTZpNVec2aLARp0aa
-YM8VjTaA1XMKlkcOGNoc+Qx7RBC9qtRX0MQqUbl5bW/8taktcTlsNs7J+FEKR11b
-2hT2u5IRmr55ghznoRDadffptAxhqSL1eeWlAg5OJjvtqvJBvbD2GXTSDol2dqtJ
-5Eav8hAsQx7pnWxtYuuL7mDQwgCobB/jgaEu2QJFMK0KyLsCOo80cQSvxsx/tbvw
-OHnvO8OeqOXjVnaK0zs0LeWq1gyQMdwDwNQ9sjFaPnvvPIjXPJQKDQJWiAnOnV4T
-JFhSzMbWrm8XochCS8ql2nmcZ6X5XzocWehd7DuM3R18F3LPu+oxwB+8mS319SM=
-=1h5L
------END PGP SIGNATURE-----
