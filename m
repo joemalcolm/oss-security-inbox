@@ -1,28 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/3
-Message-ID: <20141017095329.62bf0cc4@pc>
-Date: Fri, 17 Oct 2014 09:53:29 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/10
+Message-ID: <5438081D.1080606@fifthhorseman.net>
+Date: Fri, 10 Oct 2014 12:23:57 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: David Leon Gil <coruus@...il.com>, kristian.fiskerstrand@...ptuouscapital.com
+CC: oss-security@...ts.openwall.com, "gnupg-devel@...pg.org" <gnupg-devel@...pg.org>, Werner Koch <wk@...pg.org>, thijs@...ian.org
+Subject: Re: 0xdeadbeef comes of age: making keysteak with GnuPG
 Content-Type: text/plain; charset=utf-8
 
-Am Thu, 16 Oct 2014 18:45:18 -0600
-schrieb Kurt Seifried <kseifried@...hat.com>:
+On 10/10/2014 12:01 PM, David Leon Gil wrote:
+> (While I know that if a root CA were caught intentionally issuing an
+> MitM cert for keybase.io or pgp.mit.edu would face likely
+> delisting/bankruptcy.)
 
-> You can't trust remote servers you're getting the content from... what
-> if I send wonky times to try and screw with your browser? Or header
-> injection attacks? No thanks.
+I'd like to believe that also, but i think that some of the members of
+the CA cartel might be "too big to fail" in the current infrastructure.
+ There's no chance that the CA will go bankrupt if they aren't delisted
+(since the CA market is a lemon market), and every web site certified by
+the bigger CAs has an incentive to argue against that CAs' delisting
+(because it will break their web site).
 
-It's not entirely a bad idea. You could say "if http header time and
-system time differ severely (> 1 week or something) then don't connect
-to hsts sites".
+And you're still relying on the targeted keyserver operators themselves
+to resist malicious intrusions on their keyservers (whether via legal or
+financial or technical coercion).
 
--- 
-Hanno Böck
-http://hboeck.de/
+Furthermore, pointing everyone at one or two servers which may not have
+the capacity to withstand heavy load (or reliable uptime) runs the risk
+of DoS of all those users, and increases the likelihood that OpenPGP
+certificates simply won't get updated when those heavily-targeted
+machines go down.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+For years, a lot of people suggested pgp.mit.edu because it was
+well-known, short, and easy to transmit.  in practice, pgp.mit.edu was
+often bogged down, and wasn't even brought up to a recent version of the
+modern keyserver implementation (sks) until sometime last year, i think.
+ (many thanks to the current pgp.mit.edu admins, btw, who appear to be
+currently doing a great job and providing an often-unappreciated public
+service!)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
