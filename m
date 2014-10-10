@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/12
-Message-ID: <20140227173054.GO21958@suse.de>
-Date: Thu, 27 Feb 2014 18:30:54 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request?: konqueror - https uses all ciphers, even weak ones
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/18
+Message-ID: <20141010194348.GQ6890@pc.thejh.net>
+Date: Fri, 10 Oct 2014 21:43:48 +0200
+From: Jann Horn <jann@...jh.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: What does this PHP exploit do?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-I am wondering a bit ...
-
-We received this bugreport for the KDE default webbrowser Konqueror:
-https://bugzilla.novell.com/show_bug.cgi?id=865241
-
-Basically https://www.howsmyssl.com reports that even the weak
-EXPORT ciphera are in use by konqueror.
-
-And yes, it is right...
-DES40, RC2, DES_CBC  (single DES) ... should definitely not be used these days anymore.
+On Sat, Oct 11, 2014 at 06:28:04AM +1100, Dave Horsfall wrote:
+> I'm trying to figure out what this exploit does; it started around the 
+> time that Shellshock did, but I don't think that they're related.
 
 
-Do you think use of export ciphers should get CVEs these days?
+> The hex-encoded stuff in the script below decodes to 
+> 
+>     "-d+allow_url_include=on+-d+safe_mode=off+-d+suhosin.simulation=on+-d+disable_functions=""+-d+open_basedir=none+-d+auto_prepend_file=php://input+-d+cgi.force_redirect=0+-d+cgi.redirect_status_env=0+-n" 
+> 
+> but my PHP-fu doesn't quite extend that far (and that "safe_mode=off" 
+> looks a bit suss).
 
-It does not seem intentional, konqueror just uses everything openssl has without
-explicit filtering by default.
+Looks like CVE-2012-1823 to me:
+http://eindbazen.net/2012/05/php-cgi-advisory-cve-2012-1823/
 
-I also failed to find a module to configure the ciphers in the KDE configuration
-module jungle.
-
-Ciao, Marcus
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
