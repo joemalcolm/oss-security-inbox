@@ -1,56 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/13/4
-Message-ID: <CAHmME9qFxSkLYp1w2FUPU5rELJCbAacWGRdV2VPRMxE3w890HA@mail.gmail.com>
-Date: Thu, 13 Feb 2014 16:48:07 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: weechat-dev@...gnu.org
-Subject: Possible CVE Request for Weechat -- Mutex potentially not held for random number generation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/8
+Message-ID: <21559.47377.365845.827926@gargle.gargle.HOWL>
+Date: Fri, 10 Oct 2014 12:46:41 +0200
+From: rf@...eap.de
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-7975: 0-day umount denial of service
 Content-Type: text/plain; charset=utf-8
 
-Hey folks,
+>>>>> "Andy" == Andy Lutomirski <luto@...capital.net> writes:
 
-I've just fixed a bit of an odd bug in Weechat, that may or may not be
-security-related in certain circumstances, and I was hoping to have
-some other eyeballs take a poke at it. The patch for it is here [1]
-and my original gentoo bug report is here [2].
+    >> Andy> I just screwed up and typoed my git send-email command, so
+    >> Andy> there's now a publicly available exploit for a new umount bug.
 
-The basic problem is that Weechat did not link against libpthread on
-Linux. However, gnutls uses libpthread. The glibc developers were
-clever and set things up such that if you don't explicitly link
-against libpthread, and library code still uses the functions from it,
-you'll instead wind up using functions that all return 0. This is so
-that single-threaded programs aren't burdened with the overhead of
-mutexes and such, when they aren't needed. So when weechat was loaded,
-it would also load gnutls. Gnutls would then make several calls to
-pthread_mutex_init. Since libpthread wasn't loaded, this function
-would be hitting the code inside libc, which would simply return 0. So
-the mutex would never be initialized and instead it would contain
-uninitialized junk from malloc(). This was fine, since all the other
-pthread functions that libc implements do the same - return 0 - so
-nothing bad happens since that data is never touched. However, later
-in the weechat initialization, the various plugins are loaded. Some
-plugins directly or indirectly link the proper libpthread. This means
-that after this point, all function calls to pthread_mutex_lock and
-pthread_mutex_unlock are hitting the real pthread code, that actually
-works with the data and does a lot more than simply return 0. But
-because these mutexes were not initialized before with the
-zero-returning pthread_mutex_init, the lock and unlock functions are
-dealing with uninitialized random malloc() data. And so, in lots of
-cases, we crash, or abort().
+    >> Andy> Fortunately this one isn't terribly serious, but it might be
+    >> Andy> usable for more than just DoS if some daemon reacts poorly to
+    >> Andy> being unable to write to the filesystem.
 
-So I guess there could be an issue in cases in which this doesn't
-crash -- when malloc() returns zeros; this seems to be happening on
-some machines. In that case, weechat runs fine, but if any other
-threads use gnutls, a mutex isn't kept for the random number
-generator. I haven't had time to analyze lib/nettle/rnd.c -- this is
-what I was hoping to receive some help with -- but I suppose there's
-potential for the lack of a working mutex to result in degraded random
-number generation security. But maybe not. I'm not sure.
+    >> Andy> http://thread.gmane.org/gmane.linux.kernel.stable/109312
 
-Thanks,
-Jason
+    >> Hmm, what damage is this supposed to do? I get (3.12.29):
 
+    >> ql-front-t:/dev/pts# /root/remount-exploit /dev
+    >> remount_ro, a DoS by Andy Lutomirski
+    >> remount-exploit: umount: Device or resource busy
 
-[1] http://git.savannah.gnu.org/gitweb/?p=weechat.git;a=commitdiff;h=c324610226cef15ecfb1235113c8243b068084c8;hp=f821a94cc412bc4afc7fc751cf040e88603c6b98#patch3
-[2] https://bugs.gentoo.org/show_bug.cgi?id=501078
+    >> Maybe you should specify what versions are supposed to be
+    >> vulnerable
+
+    Andy> The PoC does pretty much the same thing as
+
+    Andy> # mount -o remount,ro TARGET
+
+    Andy> but it doesn't require privilege to run.
+
+    Andy> Due to the way that Linux handles filesystem business, it is
+    Andy> unlikely to work on filesystems that have anything open for
+    Andy> writing.  (It works on my Fedora system targetting /dev.)  The
+    Andy> upshot is that it may be difficult to exploit in any
+    Andy> meaningful way on some systems.
+
+    Andy> It may also work more reliably against network filesystems.
+    Andy> I'm not really sure.
+
+    Andy> That output means that you're vulnerable.  You would have
+    Andy> gotten something like "Permission denied" if you weren't
+    Andy> vulnerable.
+
+Thanks for clarifying.
+
+-- 
+Roland
+
+-------
+http://www.q-leap.com / http://qlustar.com
+          --- HPC / Storage / Cloud Linux Cluster OS ---
