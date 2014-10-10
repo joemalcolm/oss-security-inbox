@@ -1,51 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/14
-Message-Id: <E1WNq7J-0004Lk-Tq@ssh.steve.org.uk>
-Date: Wed, 12 Mar 2014 20:47:48 +0000
-From: Steve Kemp <steve@...ve.org.uk>
-To: oss-security@...ts.openwall.com
-Subject: CVE-Request - pen issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/9
+Message-ID: <5437FF90.7030404@fifthhorseman.net>
+Date: Fri, 10 Oct 2014 11:47:28 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: David Leon Gil <coruus@...il.com>, oss-security@...ts.openwall.com
+CC: "gnupg-devel@...pg.org" <gnupg-devel@...pg.org>, Werner Koch <wk@...pg.org>, thijs@...ian.org
+Subject: Re: 0xdeadbeef comes of age: making keysteak with GnuPG
 Content-Type: text/plain; charset=utf-8
 
-  There are some minor issues reported in the pen-load-balancer,
- which could use CVE Identifiers:
+On 10/10/2014 11:06 AM, David Leon Gil wrote:
+> (In summary: If you don't use the WoT, get OpenPGP keys via HTTPS.
+> E.g.: keybase.io or pgp.mit.edu (the latter thanks to Yan Zhu's
+> lobbying).)
 
-        https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=741370
+If we're going to advocate for accessing keyservers via https (which i
+think is a lovely idea, even if it doesn't mitigate all possible
+attacks), it's worth advocating for the well-curated
+hkps.pool.sks-keyservers.net [0], rather than encouraging everyone to
+flood either https://keybase.io or https://pgp.mit.edu with traffic.
 
-  1.  Insecure use of temporary files when requesting
-     websteats:
+I agree with David and Thijs that OpenPGP v3 keys are long overdue for
+the chopping block.
 
-        } else if (!strcmp(p, "status")) {
-                p = webfile;
-                webfile = "/tmp/webfile.html";
-                webstats();
-        ...
+	--dkg
 
-
-   2.  Insecure use of temporary files when invoking
-      the penctl command in the supplied CGI script:
-
-PENCTL=penctl
-...
-        $PENCTL $SERVER:$PORT status 2> /tmp/penctl.cgi
-..
+[0] https://sks-keyservers.net/overview-of-pools.php#pool_hkps
 
 
-    3.  When a control-socket is configured (via "-C ip:port" added
-       to the pen command line) a user who can connect to that port
-       can overwrite arbitrary files as the user pen is launched as:
-
-shelob ~ $ sudo pen 4444 localhost:9000 -C 127.0.0.1:5043
-shelob ~ $ penctl 127.0.0.1:5043 write /tmp/meow
-shelob ~ $ penctl 127.0.0.1:5043 write /etc/owned
-shelob ~ $ ls -l /etc/owned /tmp/meow
--rw-r--r-- 1 root root 1187 Mar 11 18:35 /etc/owned
--rw-r--r-- 1 root root 1186 Mar 11 18:35 /tmp/meow
-
-  Please feel free to ask for details if they can be helpful,
- versions are unknown, but the current version is v0.18.0
-
-Steve
--- 
-http://www.steve.org.uk/
-
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
