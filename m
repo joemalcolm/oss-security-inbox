@@ -1,22 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/13
-Message-ID: <DUB404-EAS412CA306AED466651B3EE51B9760@phx.gbl>
-Date: Thu, 20 Nov 2014 14:28:03 +0300
-From: Mark Kipyegon <mkipyegon@...look.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Re: Location of OS security audit reports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/13
+Message-ID: <CAA7UWsXsgRg7tODj4AZddz38hnQcNTwPu5PV0oX77GZ1K1RY0g@mail.gmail.com>
+Date: Fri, 10 Oct 2014 12:01:52 -0400
+From: David Leon Gil <coruus@...il.com>
+To: Daniel Kahn Gillmor <dkg@...thhorseman.net>, kristian.fiskerstrand@...ptuouscapital.com
+Cc: oss-security@...ts.openwall.com,  "gnupg-devel@...pg.org" <gnupg-devel@...pg.org>, Werner Koch <wk@...pg.org>, thijs@...ian.org
+Subject: Re: 0xdeadbeef comes of age: making keysteak with GnuPG
 Content-Type: text/plain; charset=utf-8
 
-Apologies if my question is off topic. Wouldn't an OS targeting a specific group have the risk of fragmenting globally accepted standards?
+On Fri, Oct 10, 2014 at 11:47 AM, Daniel Kahn Gillmor
+<dkg@...thhorseman.net> wrote:
+> If we're going to advocate for accessing keyservers via https (which i
+> think is a lovely idea, even if it doesn't mitigate all possible
+> attacks), it's worth advocating for the well-curated
+> hkps.pool.sks-keyservers.net [0], rather than encouraging everyone to
+> flood either https://keybase.io or https://pgp.mit.edu with traffic.
 
-On 20 Nov 2014, at 14:14, "Niklas Kielblock" <niklas@...derschwe.in> wrote:
+My problem with the HKPS pool is that I don't know Kristian.[1] And I
+don't have any reason to believe that he'd suffer serious financial
+damage if the private key for the "sks-keyservers.net CA" got used
+maliciously.[2]
 
-> The Chinese government publishes its own Linux distribution and there are many others making distributions targeting specific cultural groups, but I'm not aware of any greater efforts to build unique national operating systems.
-> 
-> On 19/11/2014 18:54, M.T. Roebuck wrote:
->> I see you're in Vietnam is there anything at all like a non-western
->> OS in use there? Or anywhere in that part of the world? I must be
->> naive but I thought I was just lacking information. It doesn't
->> seem possible that there are only "western" OSs on the entire
->> planet. Although my problem might just be that my definition of
->> OS is all wrong.
+(While I know that if a root CA were caught intentionally issuing an
+MitM cert for keybase.io or pgp.mit.edu would face likely
+delisting/bankruptcy.)
+
+I'd be really happy if Kristian published a GPG-signed log of every
+valid certificate for servers in the HKPS pool; then it would be
+possible for the distrustful -- or targeted -- to, say, query multiple
+HKPS keyservers. This is even better than trusting Root CAs +
+Kristian.[3])
+
+[1] Most hkps.pool.sks-keyservers.net don't have an alternative trust
+path to a standard root CA.
+
+[2] This is different from saying that I think he *would
+intentionally* sign a malicious cert, which I don't. I just have no
+idea how secure the private key for that CA is. And I know that a
+fully isolated, physically secure facility, and a good HSM are really
+expensive. (But maybe he is doing this?)
+
+[3] If this is already available somewhere, apologies; I haven't
+managed to find anything like it.
