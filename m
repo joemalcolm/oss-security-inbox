@@ -1,31 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/24/5
-Message-ID: <549B434D.8080804@mccme.ru>
-Date: Thu, 25 Dec 2014 01:50:53 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/3
+Message-ID: <54375F28.70900@redhat.com>
+Date: Thu, 09 Oct 2014 22:23:04 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Imagemagick fuzzing bug
+Subject: Re: Of Shellshock and logfiles
 Content-Type: text/plain; charset=utf-8
 
-On 2014-12-25 00:32, Gynvael Coldwind wrote:
->> You are aware that there is graphicsmagick which shares lots of code
->> with im (it's an early fork)? It'd be nice to also report these issues
->> to them if they apply. (I also reported a couple of issues in both
->> im/gm lately and devs were always quick to fix things)
->>
->
-> Do you know if either im or gm backport fixes from each other?
-> I fuzzed only im, so I've reported to im. I don't mind reporting to both in
-> the future, but if they DO backport fixes, that would lead into collisions
-> (i.e. two different fixes for one bug, makes merging harder).
+Red Hat posted some mod_security rules as a workaround/hardening that
+will block a lot of the shellshock web based shenanigans, a public
+article with them is available here:
 
-I don't know about security fixes specifically but they have this in the 
-FAQ:
+https://access.redhat.com/articles/1212303
 
-http://www.graphicsmagick.org/FAQ.html#how-often-does-graphicsmagick-pick-up-new-code-from-imagemagick
+please note the rules should be updated to use @contains instead of the
+way I originally wrote them (I'm still getting the hang of
+mod_security). Also note the rule ID's are correct and do not need
+changing to avoid conflicts, we now have a vendor ID block for
+mod_security rules.
 
-GraphicsMagick never picks up new code from ImageMagick as distributed 
-by ImageMagick Studio LLC. [...]
+
+On 09/10/14 02:51 PM, Dave Horsfall wrote:
+> I don't *think* I've seen this mentioned here (and apologies if so), but 
+> somebody posited on another list that Shellshock attempts in one's Apache 
+> logs are not directed against PHP or its scripts, but rather against those 
+> Bash scripts that analyse the Apache logs in turn...  I've heard of 
+> similar things in mail logs, which *could* be the result of attempting to 
+> target either Procmail or logfile analysers.
+> 
+> Then again, maybe the spammers really are that desperate that they'll try 
+> anything that they think might work.
+> 
+> -- Dave
+> 
 
 -- 
-Alexander Cherepanov
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
