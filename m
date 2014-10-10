@@ -1,57 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/21/2
-Message-Id: <20141021162823.1C00FC5092C@smtptsrv1.mitre.org>
-Date: Tue, 21 Oct 2014 12:28:23 -0400 (EDT)
-From: cve-assign@...re.org
-To: tristan.cacqueray@...vance.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Nova
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/11
+Message-ID: <CAA7UWsWGJtQ111BJECd9fhdYp3drPU62c89c7S6tUSJs4gjDqg@mail.gmail.com>
+Date: Fri, 10 Oct 2014 11:06:07 -0400
+From: David Leon Gil <coruus@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: thijs@...ian.org, "gnupg-devel@...pg.org" <gnupg-devel@...pg.org>, Werner Koch <wk@...pg.org>
+Subject: 0xdeadbeef comes of age: making keysteak with GnuPG
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Replying a little late to Thijs's message to oss-security. First:
 
-> Products: Nova
-> Versions: up to 2014.1.3
-> 
-> Zhu Zhu from IBM reported a vulnerability in Nova VMware driver. If an
-> authenticated user deletes an instance while it is in resize state, it
-> will cause the original instance to not be deleted. An attacker can use
-> this to launch a denial of service attack. All Nova VMware setups are
-> affected.
-> 
-> https://launchpad.net/bugs/1359138
-> https://review.openstack.org/125492
+"keysteak", a PoC keyserver-in-the-middle that generates fake V3
+public keys with the same long keyid as V4 public keys requested from
+a keyserver. It uses the classic 0xdeadbeef attack and a (novel?) V3
+key/V4 signature  crossgrade.*) Available at:
+https://github.com/coruus/cooperpair/tree/master/keysteak
 
-> the problem is as follows: When a resize is done a new VM is
-> created on the back end. So prior to the resize you would have
-> a instance called uuid. When a resize takes place there will
-> be a cloned VM called uuid-orig. Hence the additional delete
-> that needs to take place.
+As an example, a spoofed key for a Linux distro is attached. You can
+confirm that the spoofed key is *not* the real key (which is available
+at https://tails.boum.org/tails-signing.key) by doing either
+       gpg2 --list-packets spoofed_tails.asc
+or,
+       mkdir test; chmod go-rwx test
+       gpg2 --home ./test --import spoofed_tails.asc
+       gpg2 --home ./test -k --fingerprint
 
-> during the window for resize step migration_disk_and_poweroff after
-> disassociate VM(rename) or new VM clone but before migration status to
-> be finished, the deletion of VM will not delete those uuid-orig VMs.
+* V3 signatures are not accepted without an explicit option in 2.1;
+they produce a warning in 2.0 (and maybe recent 1.x as well).
 
-> looks like a DoS attack by using up capacity without being charged for
-> it.
+(In summary: If you don't use the WoT, get OpenPGP keys via HTTPS.
+E.g.: keybase.io or pgp.mit.edu (the latter thanks to Yan Zhu's
+lobbying).)
 
-Use CVE-2014-8333 for this virt/vmwareapi/vmops.py race condition that
-results in inadvertent preservation of the -orig instance.
+Some details/comments:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Date: Mon, 1 Sep 2014 20:33:20 +0200
+From: Thijs Kinkhorst <thijs@...ian.org>
+Subject: gpg blindly imports keys from keyserver responses
 
-iQEcBAEBAgAGBQJURoh1AAoJEKllVAevmvmsuycIALoSRHTtUV3Kk+XzgQm3Cl9c
-qNFi+n2AQTeGqtefqZBgdKJ7iNY29g5hMMT9eGKyalPw4zxv2vxKKHsMGSyyZYDY
-PvaHUJ7hOUxO5k22m++cHAdEgZjSVjTEFYSfbjBK6GqSY7Lqq4d9dqW4WBNYR4cH
-tyX7FvEK7yPA4gEywLxa8KVUBWskj+uDZvFg9mYUzOFd0u+WANFffdo7lVAvyMvc
-8DO+vA8Q/H26Bvf7q3Lebs2CNoTwOfUrCnG1RcO0WkcJ0N+DAAWAjOvn+2IxbEd4
-fYavN9bdncevvHwOSLl/V+ikjSnv39S/whcKkxj3Xh9X6thp+62dkr0j2p4F/P4=
-=o9fR
------END PGP SIGNATURE-----
+> It is however argued that . . . specifying the full fingerprint is a safe way to retreive
+> a key for a known-good fingerprint. But this argument is again somewhat countered
+> by an attack on V3 [fingerprints] making such a request dubious again.
+
+This isn't quite right.
+
+- V3 fingerprints are 16 bytes (32 hex digits) long; they're an MD5
+digest of the RSA modulus.
+- V4 fingerprints are 20 bytes (40 hex digits) long; they're an SHA1
+digest of the public key packet (kind of).
+
+So: V3 and V4 fingerprints are easily distinguishable. Long keyids aren't:
+
+- V3 long keyids are 8 bytes long. They're the low 8 bytes of the RSA modulus.
+- V4 long keyids are 8 bytes long. They're the low 8 bytes of the V4
+fingerprint.
+
+As Greg Rose demonstrated (and Paul Leyland had earlier noted)[1],
+this makes it trivial to forge long V3 keyids: You can control up to
+about half the bits of an RSA modulus without affecting the strength
+of the resulting key.
+
+Note: Once you have a key with a given 64-bit keyid in your keychain,
+GnuPG will not import any other key with the same 64-bit keyid.[2]
+Even if you specify the new key by fingerprint.
+
+It's been 18 years since the 0xdeadbeef attack. Maybe it's time to
+deprecate V3 OpenPGP keys?
+
+(There's a discussion on gnupg-devel on this presently; I am hopeful...)
+
+[1] Raph Levien's excellent explanation of the history and math of the
+0xdeadbeef attack:
+https://groups.google.com/forum/#!topic/sci.crypt/JSSM6NbfweQ
+
+[2] Thus the spoofed key and the real key are a "cooper pair".
+
+View attachment "spoofed_tails.asc" of type "text/plain" (1653 bytes)
