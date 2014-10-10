@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/9
-Message-ID: <20140512191650.GA14852@openwall.com>
-Date: Mon, 12 May 2014 23:16:50 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Andy Lutomirski <luto@...capital.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: seunshare and setexeccon issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/1
+Message-ID: <543723EB.5070506@case.edu>
+Date: Thu, 09 Oct 2014 20:10:19 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: mancha <mancha1@...o.com>, oss-security@...ts.openwall.com
+CC: chet.ramey@...e.edu
+Subject: Re: Aftershock
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 12, 2014 at 10:34:00AM -0700, Andy Lutomirski wrote:
-> I'm not sure how many CVE numbers should be assigned here.  As far as
-> I know, none have been assigned so far.
+On 10/8/14, 2:37 PM, mancha wrote:
 
-I think you missed this:
+> Maybe LoC is a poor metric but I don't want that to obscure the real
+> message: the process's high dynamism post-disclosure. As you correctly
+> point out, many recent parser flaws don't rise to the level of security
+> concerns primarily because of the prefix/suffix barrier.
+> 
+> However, it's important to point out that critical piece of hardening
+> was a post-disclosure innovation and, more importantly, was triggered by
+> post-disclosure findings and interaction.
 
-http://www.openwall.com/lists/oss-security/2014/05/08/1
+I absolutely agree, and think it's equally important to point out that
+Florian came up with it, not me.  There were other suggestions, some maybe
+better, but that was the one we coalesced around.
 
-in which CVE-2014-3215 was assigned.
-
-Alexander
+Chet
+-- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
