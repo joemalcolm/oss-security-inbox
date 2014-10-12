@@ -1,27 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/02/3
-Message-ID: <547DD30E.5050200@redhat.com>
-Date: Tue, 02 Dec 2014 15:56:14 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE request: OpenSSH ~/.k5users patch (Fedora and downstreams)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/12/6
+Message-Id: <20141012210908.2F67F42E01B@smtpvbsrv1.mitre.org>
+Date: Sun, 12 Oct 2014 17:09:08 -0400 (EDT)
+From: cve-assign@...re.org
+To: kseifried@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: perl-Razor-Agent logs to /razor-agent.log by default
 Content-Type: text/plain; charset=utf-8
 
-In a Kerberos environment, the Fedora and Red Hat Enterprise Linux 7 
-version of the OpenSSH server allows remote, authenticated users to log 
-in as another user if they are listed in a ~/.k5users file of that other 
-user.  This unexpectedly alters the system security policy, as expressed 
-through the ~/.k5users file, because previously, users would have to log 
-in locally, potentially requiring different forms of authentication, 
-before they could use the ksu command to switch users.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Red Hat Bugzilla:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1058772
+> https://bugzilla.redhat.com/show_bug.cgi?id=514979
 
-   <https://bugzilla.redhat.com/show_bug.cgi?id=1169843>
+> I'm inclined to not call this a DoS ... I can see situations where
+> this could be a problem.
 
-Patch in upstream bug tracker:
+Maybe a CVE is needed for Red Hat's SELinux configuration - see below.
 
-   <https://bugzilla.mindrot.org/show_bug.cgi?id=1867>
+As far as we can tell, this may be intentional behavior from the
+perspective of the upstream code. If the razorhome setting has a ""
+value, then the product doesn't use full directory paths and instead
+defaults to the current working directory (the / directory here):
 
--- 
-Florian Weimer / Red Hat Product Security
+  sub read_conf {
+  ...
+  # add full path to all config values that need them
+  if ($self->{razorhome}) {
+  foreach (qw( logfile ...
+
+
+Here, $self->{razorhome} has a value of "" because /root/.razor
+doesn't exist (SELinux had previously prevented its creation):
+
+  sub find_home {
+  ...
+      my $dotrazor = '.razor';
+  ...
+      $rhome = File::Spec->catdir("$ENV{HOME}", "$dotrazor");
+  ...
+      if (-d $rhome) {
+  ...
+        $self->{razorhome} = $rhome;
+        return 1;
+    }
+  ...
+    $self->{razorhome} = "";
+
+Are you interested in having a CVE assignment because this is a
+vulnerability in the default SELinux policy in various RHEL and Fedora
+versions? This seems to be an unusual situation in which denying write
+access to /root/.razor is what causes the vulnerability to exist.
+
+In other words, what is Red Hat's position on customer expectations
+for packages that function in an different/vulnerable way in SELinux
+Enforcing mode? Is it something like:
+
+  - when Red Hat created the package, Red Hat was supposed to either
+    ensure that the default SELinux policy was compatible with the
+    filesystem access required by the package, or else develop a Red
+    Hat custom patch to use a different part of the filesystem (e.g.,
+    maybe something under /var instead of /root/.razor in this case)
+
+Or is it something like:
+
+  - every user is on their own to read setroubleshoot reports,
+    determine why SELinux Enforcing mode results in vulnerable
+    behavior for a package shipped by Red Hat, and then use semanage
+    commands to get the behavior that they want
+
+? Also, if it's undesirable for a mail-handling daemon to write to the
+top-level / directory, shouldn't the default SELinux policy have
+prevented that? Is it possible to construct a policy to express a
+position such as "new top-level files aren't ever allowed; every new
+file must be at least one level below the / level"?
+
+> it doesn't appear that the attacker can trigger faster growth
+
+Of course, there can't be a CVE assignment unless an attacker can
+trigger faster growth. (Unexpected resource consumption caused solely
+by the administrator's decision to install perl-Razor-Agent doesn't
+qualify for a CVE; that doesn't cross privilege boundaries.)
+
+It looks like attackers were supposed to be able to trigger faster
+growth simply by sending more mail, e.g.,
+
+    my $defaults = {
+        debuglevel         => "3",
+
+   $self->log (3,"ignoring mail $obj->{id}, whitelisted by rule: $sh: $address");
+
+   $self->log (3,"mail $obj->{id} is ". ($obj->{spam} ? '' : 'not ') ."known spam.");
+
+Is this even possible, or does SELinux Enforcing mode disrupt normal
+operation enough that the code never reaches "$self->log (3" lines?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUOuziAAoJEKllVAevmvmsO/EIAKdSDaxll2KUh6I2MCM/cIYA
+K2R9LYksx/7gmKWXbFIvcEMeB5rTtA1A3a8lxZnI6ZnC14GTM+wL8nBJ5jrhVF6B
+xo4LXqOUUl5glx4Kd3JK44r6/viffTLtHdCwO3xNPN7HlRT6JlPFqK3ORecqYxnF
+F21rm4QxFoJqz37aFqJcTqjycjW/hwWaLyY+rpAAEZHfDtSVxP639UTucJ8xlYLg
+bJJ/bCKQh9rpafA8XsdxvX081fQYPiwEkvHvlCeN7U5G9+8yv4fcjHHlWN7IYlyL
+Kkq8NPRxaVhnv5U/frVOYDtyZPjn4B1eViSaLcAZVevzJHwUgLjPKnNUhNhP+KE=
+=H3rG
+-----END PGP SIGNATURE-----
