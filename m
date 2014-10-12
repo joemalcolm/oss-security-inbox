@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/1
-Message-ID: <543723EB.5070506@case.edu>
-Date: Thu, 09 Oct 2014 20:10:19 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: mancha <mancha1@...o.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: Aftershock
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/12/5
+Message-ID: <543AAA1C.5030800@redhat.com>
+Date: Sun, 12 Oct 2014 10:19:40 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: perl-Razor-Agent logs to /razor-agent.log by default
 Content-Type: text/plain; charset=utf-8
 
-On 10/8/14, 2:37 PM, mancha wrote:
+So today I was logged into some mail servers and ls -la / and had a
+minor panic:
 
-> Maybe LoC is a poor metric but I don't want that to obscure the real
-> message: the process's high dynamism post-disclosure. As you correctly
-> point out, many recent parser flaws don't rise to the level of security
-> concerns primarily because of the prefix/suffix barrier.
-> 
-> However, it's important to point out that critical piece of hardening
-> was a post-disclosure innovation and, more importantly, was triggered by
-> post-disclosure findings and interaction.
+-rw-r--r--.  1 root root  2275 Oct 12 04:15 razor-agent.log
 
-I absolutely agree, and think it's equally important to point out that
-Florian came up with it, not me.  There were other suggestions, some maybe
-better, but that was the one we coalesced around.
+Generally speaking I'm not expecting log files in / unless it's some
+sort of malware. A brief investigation and no panic, it's the
+perl-Razor-Agent, which on RHEL/Fedora is supposed to log to
+/var/log/razor-agent.log but doesn't due to some HOME shenanigans:
 
-Chet
+https://bugzilla.redhat.com/show_bug.cgi?id=1058772
+
+This log file grows slowly, basically one entry per day/reboot:
+
+Oct 12 16:13:17.347744 check[835]: [ 2] [bootup] Logging initiated
+LogDebugLevel=3 to file:razor-agent.log
+
+but it won't ever get logrotated, and on a system with a very tight /,
+e.g. a cloud system maybe using immutable images that only have a few
+spare k on / (and /var/log/ on another partition or whatever) this could
+be an issue.
+
+I'm inclined to not call this a DoS as even over a year it'll only be a
+few tens of kb, and it doesn't appear that the attacker can trigger
+faster growth, but I can see situations where this could be a problem.
+
+
 -- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
