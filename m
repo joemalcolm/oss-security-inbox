@@ -1,38 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/26
-Message-ID: <20140131230232.GA22758@openwall.com>
-Date: Sat, 1 Feb 2014 03:02:32 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/12/1
+Message-ID: <5439E3BB.2060603@redhat.com>
+Date: Sat, 11 Oct 2014 20:13:15 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: PaX Team <pageexec@...email.hu>
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+CC: cve-assign@...re.org
+Subject: Re: Re: Request for CVE assignment for tigervnc affected by similar flaws as in CVE-2014-6051 and CVE-2014-6052 of libvncserver
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Feb 01, 2014 at 11:24:37AM +1300, Matthew Daley wrote:
-> > Reported by pageexec at
-> > https://code.google.com/p/chromium/issues/detail?id=338594, which is
-> > restricted, so here's the full report:
-> 
-> Was this was reported to the Chromium bugtracker in the first
-> instance? If so, why? I can't see what the relation between Chromium
-> and Linux kernel issues would be, unless I suppose it was found
-> through work on sandboxing/NaCl/seccomp.
-> 
-> (Not assuming or implying anything at all, I'm just confused!)
+On 11/10/14 03:59 PM, cve-assign@...re.org wrote:
+> First, in general, when asking for a CVE assignment for an issue
+> "similar" to an existing CVE, it is very useful to provide an
+> additional statement or reference indicating why the issue should not
+> be mapped to the existing CVE. A difference in the product name does
+> not always require a separate CVE.
 
-Google is offering bounties for responsible disclosure of bugs in
-Google's software, and I guess this includes use of Linux kernel by
-Chromium OS.  (I don't know if this specific vulnerability was relevant
-to Google's products, but I wouldn't be surprised if Google is generous
-enough to pay a bounty anyway.)
+Agreed. One pain point i have encountered with CVE SPLIT/MERGE is the
+"when is a code fork a fork, or just a normal fork?" E.g. sometimes it's
+easy: like one week after the MariaDB fork from MySQL it's obvious that
+any flaw affecting one will affect the other and they're basically the
+same code, but as time goes on MariaDB is diverging. One thing that
+would be hugely useful here to solve the CVE MERGE problem, and to let
+people know what related software packages they should look at would be
+a database of code considered "equivalent" by Mitre for the purposes of
+CVE MERGE and also for people to check if other things are affected by
+the same flaw.
 
-On a related note, Google is also offering bounties for security
-enhancements to some Open Source projects once such enhancements are
-accepted upstream.  This includes Linux kernel and many more:
+I suspect there aren't actually that many entries, and populating it as
+they come up would be pretty simple, especially if there's an easy way
+to submit entries (just send an email?).  Would this be something Mitre
+can do perhaps?
 
-http://googleonlinesecurity.blogspot.com/2013/10/going-beyond-vulnerability-rewards.html
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-... but finding a vulnerability would probably not fall under the latter
-program.
 
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
