@@ -1,38 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/27
-Message-ID: <20140926175541.GS23797@oevtugenva.nrevsny.pk>
-Date: Fri, 26 Sep 2014 13:55:41 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/12/7
+Message-ID: <543B0FF4.9080305@redhat.com>
+Date: Sun, 12 Oct 2014 17:34:12 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+CC: cve-assign@...re.org
+Subject: Re: Re: perl-Razor-Agent logs to /razor-agent.log by default
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 26, 2014 at 01:41:45PM +0100, Mark R Bannister wrote:
-> Arguments that people shouldn't have setuid shell scripts don't
-> stack up, because even if you write your setuid program in some
-> other language, you might unwittingly exec something written in
-> bash.
-> As /bin/sh is symlinked to /bin/bash in RHEL, the moment you call
-> out to the system to do a piece of work for you, you're at risk of
-> invoking bash and thereby being vulnerable to a root exploit. For
-> example:
+On 12/10/14 03:09 PM, cve-assign@...re.org wrote:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1058772
+>> https://bugzilla.redhat.com/show_bug.cgi?id=514979
 > 
-> $ env bzip2='() { echo vulnerable >&2; }' /usr/bin/bzdiff /tmp/file1.bz /tmp/file2.bz
+>> I'm inclined to not call this a DoS ... I can see situations where
+>> this could be a problem.
 > 
-> $ env test='() { echo vulnerable >&2; }' /usr/bin/ldd /usr/bin/gcc
+> Maybe a CVE is needed for Red Hat's SELinux configuration - see below.
 > 
-> So this is not about whether or not someone has written a setuid
-> shell script. This has uncovered a potential new exploit for any
-> setuid program. Indeed the very first setuid program that I
-> discovered this exploit with was a binary (compiled C program) that
-> happened to exec ldd while it was running.
+> As far as we can tell, this may be intentional behavior from the
+> perspective of the upstream code. If the razorhome setting has a ""
+> value, then the product doesn't use full directory paths and instead
+> defaults to the current working directory (the / directory here):
 > 
-> I don't think this issue can be swept under the carpet.
+>   sub read_conf {
+>   ...
+>   # add full path to all config values that need them
+>   if ($self->{razorhome}) {
+>   foreach (qw( logfile ...
+> 
+> 
+> Here, $self->{razorhome} has a value of "" because /root/.razor
+> doesn't exist (SELinux had previously prevented its creation):
+> 
+>   sub find_home {
+>   ...
+>       my $dotrazor = '.razor';
+>   ...
+>       $rhome = File::Spec->catdir("$ENV{HOME}", "$dotrazor");
+>   ...
+>       if (-d $rhome) {
+>   ...
+>         $self->{razorhome} = $rhome;
+>         return 1;
+>     }
+>   ...
+>     $self->{razorhome} = "";
+> 
+> Are you interested in having a CVE assignment because this is a
+> vulnerability in the default SELinux policy in various RHEL and Fedora
+> versions? This seems to be an unusual situation in which denying write
+> access to /root/.razor is what causes the vulnerability to exist.
 
-Any setuid program that's execing an external program that was not
-also designed to be run setuid, without scrubbing the environment and
-other environmental state (rlimits, inherited file descriptors, ...),
-or else fully dropping privileges to the original invoking user, is a
-gaping security hole already. This has nothing to do with bash.
+In that case I would argue SELinux is doing its job as expressed by
+policy, and that the flaw still lies in Razor not having a sane fallback
+(like syslog, I mean WTF?). I think dropping files into / definitely
+violates the principle of least surprise. There's also other reasons the
+logging can fail, not just SELinux (apparmour, permissions, etc.).
 
-Rich
+> In other words, what is Red Hat's position on customer expectations
+> for packages that function in an different/vulnerable way in SELinux
+> Enforcing mode? Is it something like:
+> 
+>   - when Red Hat created the package, Red Hat was supposed to either
+>     ensure that the default SELinux policy was compatible with the
+>     filesystem access required by the package, or else develop a Red
+>     Hat custom patch to use a different part of the filesystem (e.g.,
+>     maybe something under /var instead of /root/.razor in this case)
+> 
+> Or is it something like:
+> 
+>   - every user is on their own to read setroubleshoot reports,
+>     determine why SELinux Enforcing mode results in vulnerable
+>     behavior for a package shipped by Red Hat, and then use semanage
+>     commands to get the behavior that they want
+> 
+> ? Also, if it's undesirable for a mail-handling daemon to write to the
+> top-level / directory, shouldn't the default SELinux policy have
+> prevented that? Is it possible to construct a policy to express a
+> position such as "new top-level files aren't ever allowed; every new
+> file must be at least one level below the / level"?
+
+Ah so one note: we (as in RHT corporate) didn't create this package.
+It's part of Fedora/EPEL (the community), it's not shipped as part of
+RHEL or any of our products. I can assure had this been a corp package
+we would have caught this flaw in regular testing (insert sad comment
+about people setenforce'ing 0 killing a puppy/etc). Also it's been
+static since 2010, everything past that is just mass rebuilds for F15+
+and so on.
+
+>> it doesn't appear that the attacker can trigger faster growth
+> 
+> Of course, there can't be a CVE assignment unless an attacker can
+> trigger faster growth. (Unexpected resource consumption caused solely
+> by the administrator's decision to install perl-Razor-Agent doesn't
+> qualify for a CVE; that doesn't cross privilege boundaries.)
+> 
+> It looks like attackers were supposed to be able to trigger faster
+> growth simply by sending more mail, e.g.,
+> 
+>     my $defaults = {
+>         debuglevel         => "3",
+> 
+>    $self->log (3,"ignoring mail $obj->{id}, whitelisted by rule: $sh: $address");
+> 
+>    $self->log (3,"mail $obj->{id} is ". ($obj->{spam} ? '' : 'not ') ."known spam.");
+> 
+> Is this even possible, or does SELinux Enforcing mode disrupt normal
+> operation enough that the code never reaches "$self->log (3" lines?
+
+Dunno, I haven't investigated this, I'm trying to eat turkey
+(thanksgiving =).
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
