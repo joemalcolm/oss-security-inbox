@@ -1,46 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/2
-Message-ID: <20140903155905.21358f55@redhat.com>
-Date: Wed, 3 Sep 2014 15:59:05 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/12/3
+Message-ID: <87bnphcyzp.fsf@mid.deneb.enyo.de>
+Date: Sun, 12 Oct 2014 13:24:10 +0200
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Open Source only?
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 28 Aug 2014 03:04:02 +0400 Solar Designer wrote:
+* Pavel Labushev:
 
-> I've just rejected a posting giving the following reason:
-> 
-> Message lacks Subject, and the software appears to be non Open Source:
-> partial(?) source code is available, but under a EULA that doesn't
-> appear to meet OSI definition.
-> 
-> The message was CC'ed to full-disclosure, so it will probably appear
-> there.
-> 
-> While message lacking Subject is a technicality, which the sender may
-> address (and resend the message), the issue of software that comes
-> with source code, but isn't under an Open Source license is one we
-> might want to decide on, if we haven't already (I think we have,
-> which is why I mentioned it as one of two reasons to reject that
-> posting).  Also, it may at times be tricky (and unreliable and
-> time-consuming) for list moderators to determine whether a license is
-> Open Source or not, as well as whether the software is possibly
-> dual-licensed.  Should we perhaps err on the side of approving
-> postings whenever in doubt?
+>> it, but maybe they considered it.  It seems unlikely that a shell 
+>> rewrite came up with this concept on its own.  None of the Bourne-like 
+>> shells we have implement anything like that, after all.
+>
+> We ain't living in a parallel universe where "Haskell" is a mainstream
+> technology. So we don't have e.g. an "army" of people unconstrained
+> enough intellectually and practically so they could start thinking
+> about the useful complex properties they actually can prove, what
+> formal models are more suitable for building the software in that
+> context, etc. Instead of trying to "write it in C in Haskell", which
+> looks like what you have in mind.
 
-Investigating license status to decide whether some post should be
-approved sounds like a very bad use of your time.  List charter already
-says Open Source software issues only are expected to be posted here.
-If post is related to something that is obviously closed source, it
-should be rejected.  If it's something which has source available,
-allow it in without investigating if it has OSI approved license, or is
-properly licensed at all.
+Haskell programmers typically do not have a background in formal
+semantics and proof automation.  Like with any language with a
+significant following, a fairly large portion of the practitioners
+follows a "whatever works" approach.
 
-The above can be re-visited if there is actually a relevant number of
-abuses.
+For example, there is no guarantee that a programmer in a type-rich
+language who implements web templating will give types to the
+templates (which can help to decouple coding an design work), or will
+implement auto-escaping functionality (which helps to prevent
+cross-site scripting vulnerabilities).  In fact, if the goal is to
+produce a provably correct templating library, it is likely that both
+features are left out because they are much more difficult to verify.
+(Especially auto-escaping requires extensive domain knowledge which
+most web templating library authors lack.)
 
-Just my 2c.
+>> Not using a parser generator, but a manually written recursive descent 
+>> parser might have helped because you could have called the function 
+>> corresponding to the function definition production directly.  (However, 
+>> there would still have been parser exposure to the network.)
+>
+> What's the conclusion?
 
--- 
-Tomas Hoger / Red Hat Product Security
+I don't have any.  A decade ago, I wanted to rewrite everything in
+Ada, but that feeling has passed.
+
+>> The Haskell standard library does not even distinguish between a read 
+>> error and an end-of-stream condition.  You can't build reliable software 
+>> on top of that.
+>
+> Sounds like a weak excuse for not using it. Like it's impossible to
+> write a decent library or fix the existing one. Besides, the absence
+> of a decent standard library doesn't prevent anyone from using "Haskell"
+> as a meta-language right now, and that's how most people use it for
+> systems programming and similar stuff.
+
+Certainly there are Haskell libraries which do not have this problem.
+However, the related language features could have long fallen into
+obscurity, but this is not what happened.  There are quite a number of
+Haskell programmers who like these features, much like there are
+defenders of arcane shell features.  This affects how the Haskell code
+out there is being written.
+
+I don't think Haskell is a magic bullet.  I do think type-rich
+languages (and languages with memory safety) have a lot to offer, but
+writing secure software in them is still hard.
