@@ -1,67 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/7
-Message-Id: <201401031703.s03H2ulO024236@linus.mitre.org>
-Date: Fri, 3 Jan 2014 12:02:56 -0500 (EST)
-From: cve-assign@...re.org
-To: geissert@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, huzaifas@...hat.com
-Subject: Re: CVE for freerdp int overflow?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/12/4
+Message-Id: <E59B77C5-F493-4C25-9D99-296215454856@oracle.com>
+Date: Sun, 12 Oct 2014 14:21:14 +0100
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=998941
-> This is from libfreerdp-core/license_read_scope_list():
+On 12 Oct 2014, at 12:24, Florian Weimer <fw@...eb.enyo.de> wrote:
 
-> From: Huzaifa Sidhpurwala 
+> I don't think Haskell is a magic bullet.  I do think type-rich
+> languages (and languages with memory safety) have a lot to offer, but
+> writing secure software in them is still hard.
 
-> No CVE has been assigned yet. The crash seems to be non-exploitable and
-> I am not really sure if only the client and/or server are affected.
+I’d definitely agree with that.
 
-The function in question is in the client code for the Remote Desktop
-Protocol Licensing Extension described on the
-http://msdn.microsoft.com/en-us/library/cc241880.aspx web page. The
-code is part of the reading of a Server License Request packet. The
-integer overflow affects a malloc argument. After this, the client
-would normally make separate malloc calls and write (a potentially
-very large amount of) data from the server into that separately
-malloced memory. Effects depend on the malloc implementation and the
-architecture. Even if code execution were essentially impossible,
-other conceivable security impacts exist. For example, the client
-might later send unintended private information (license data for a
-different server?) over the connection to the current server.
+Recently I was dealing with a problem where a developer had gone to a lot of trouble to design and implement an insecure authentication mechanism.   He thought he was doing the right thing but he just couldn’t see the flaws in what he’d done.  
 
-http://en.wikipedia.org/wiki/Comparison_of_remote_desktop_software
-says "Multiple sessions ... Yes" but we don't know whether that refers
-to FreeRDP 1.x or FreeRDP 0.x (which is a different codebase and
-allowed the user to start multiple sessions with a single command as
-described in the
-http://sourceforge.net/mailarchive/message.php?msg_id=24558104 post).
-If one server can send a crafted Server License Request packet that
-causes memory corruption and leads to a crash of multiple sessions, a
-CVE ID can be assigned. (The crash could perhaps not happen
-immediately, and instead happen after the user established important
-state in a session to a non-malicious server.)
+The problem wasn’t the choice of programming language (python, as it happens) it was simply that getting the design and implementation right hard even though it looks easy.   Haskell (or Ada or CLU) would not have helped; a mathematically rigorous approach to the problem would have helped a lot, but it would not have made it easy.  To paraphrase Gödel somewhat: any non-trivial system has is not provably secure.
 
-Even without that, a CVE ID seems probably worthwhile for the largely
-unpredictable client behavior after the erroneous malloc call.
-
-Use CVE-2014-0791.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSxu0XAAoJEKllVAevmvms6hQH/Rgejpz5x4evfagXceQAx/61
-pNWtFgeWt/DG6OT+yoggf5F/skn80FduXZ8IYP47ssBP6gDgyGnPsaq5/eYjyL9G
-R5ruNaw5Zeq1GCoyHJEXyK7FZtCME2wvsGjwyZ60EZg/wLiEhU3EX8at+6s8h6Ya
-wHI60o7oqB01xenPe/huGb5RbtBPZ5L7dhe8euHF1JO7UijPwsY6+mO+x/R/Eef0
-09TNi9h9sJOinGXR9yh2a0Lt6sXYfJRY2R3nqC2tlN/frjsV9OQ7fNuKtCBmMRgk
-8ewuZYy+hLIenNDS89UHOzjTMT+8EtfDRycLP73JXNEQC7+0FBTvp/H4HziLGd4=
-=8WuC
------END PGP SIGNATURE-----
+jch
