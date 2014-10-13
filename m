@@ -1,42 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/30/4
-Message-Id: <20140730180553.84A2A6C025F@smtpvmsrv1.mitre.org>
-Date: Wed, 30 Jul 2014 14:05:53 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: tboot failing to measure commandline parameters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/13/6
+Message-ID: <20141013191112.GA9817@openstack.org>
+Date: Mon, 13 Oct 2014 19:11:13 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request for vulnerability in OpenStack Nova
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public,
+although an advisory was not sent yet.
 
-> The trusted boot loader module "tboot" did not measure all commandline parameters,
-> which made it possible to pretend a measured boot while there was workaround
-> possibility (breaking the measured boot chain).
-> 
-> All previous tboot versions < 1.8.2 are affected.
-> 
-> Security Fix: TBOOT Argument Measurement Vulnerability for GRUB2 + ELF Kernels
-> http://sourceforge.net/p/tboot/code/ci/0efdaf7c5348701484d24562e6e5323d85bb94d3/
-> http://sourceforge.net/p/tboot/mailman/message/32655538/
-> http://sourceforge.net/p/tboot/mailman/message/32659733/
+Title: Nova VMware driver may connect VNC to another tenant's console
+Reporter: Marcio Roberto Starke
+Products: Nova
+Versions: up to 2014.1.3
 
-Use CVE-2014-5118.
+Description:
+Marcio Roberto Starke reported a vulnerability in the Nova VMware
+driver. A race condition in its VNC port allocation may cause it to
+connect the wrong console if instances are created concurrently. By
+repeatedly spawning new instances, an authenticated user may be able
+to gain unauthorized console access to instances belonging to other
+tenants. Only Nova setups using the VMware driver and the VNC proxy
+service are affected.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+References:
+https://launchpad.net/bugs/1357372
 
-iQEcBAEBAgAGBQJT2TMTAAoJEKllVAevmvmsqIUIAJSv0E/CR8Qi9UOJ/DlI/uzk
-9Ylv1vjg7upZDDXZxQKVEugNSgUfOFMIzYOrI896E9tPJlDQEYq9ZSA/Q8NAFco4
-smjcW0+ggZRxZRssw0LHLUakmPL+Wr3R9yKppe87J+ceL6e4Levsa4xIg1EQ7y+2
-chV61RYY4Fy9Mf2dRJzMYukInOmaQf+JGuRjwkLObG1iRTbzECNRheMk6Y36cRNb
-N6tzbYoCZPf5aeWUOpZBHy+YhukHVIWxbBZyqfbESsrXg7NPMshJ6y7cz9d4Dlnf
-d0yAhc+9lYsejr/QNNzC06yo5hPck9T1dnISo5mwXlA+580guRy3aDf57K5GO4k=
-=xlz4
------END PGP SIGNATURE-----
+Thanks in advance,
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
