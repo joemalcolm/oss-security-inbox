@@ -1,38 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/9
-Message-Id: <201401091844.s09Iin0k018319@linus.mitre.org>
-Date: Thu, 9 Jan 2014 13:44:49 -0500 (EST)
-From: cve-assign@...re.org
-To: fweimer@...hat.com, guido+openwall.com@...hoerster.name
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: tmux local denial of service (2009)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/13/5
+Message-ID: <20141013150930.74c3fb31@pc>
+Date: Mon, 13 Oct 2014 15:09:30 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: ejabberd compression allows cirucumvention of encryption despite starttls_required
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I think this deserves a CVE:
+http://mail.jabber.org/pipermail/operators/2014-October/002438.html
 
-> allows users to override the socket path using the -S command line option.
 
-We'd like to consider this ineligible for a CVE unless there's new
-information. In many cases, "ability to cause an inconvenience" is not
-sufficient for a CVE assignment. The nature of the application
-apparently makes it unlikely that this would, for example, disrupt
-unattended root-executed scripts that have a hardcoded tmux command
-line.
+Patch/Fix:
+https://github.com/processone/ejabberd/commit/7bdc1151b
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+-- 
+Hanno Böck
+http://hboeck.de/
 
-iQEcBAEBAgAGBQJSzu1/AAoJEKllVAevmvmskekH/2A4wotaBeyRrTUT99tKnoCd
-DOizyyQys3yF+1+UnV95nuaa6JKChsZvK96Q5U3fhJ94Sqw4Cq04q2Kac5MBTHub
-E/R8/gNru8TlDKq3IGwBmigQYjXO56p3nps/a6b/NcZ0DhT2JBm+VTCUgJMtTs2Z
-hAEhNr5fvihRUdlpfyGNT2PXdGqcHZZSdEqB1oMkNAAEKGSNNOlKK+lzQhi6SBIp
-TPOVizxKKjG0xBXxlCfkla+uJnOYHWaVYTGR+3rfCe71ZKJdpx3mbBDCEu76+ojh
-xCUkruwZhtw9XtcSp9OzZEJKhm6gN4QXeSq3ifzZ3v0+f66UrBSjf04ewD9RSkM=
-=M+g3
------END PGP SIGNATURE-----
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
