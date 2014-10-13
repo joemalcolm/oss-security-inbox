@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/02/1
-Message-ID: <20140802053430.GA25642@eldamar.local>
-Date: Sat, 2 Aug 2014 07:34:30 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/13/3
+Message-ID: <87eguc2m1l.fsf@redhat.com>
+Date: Mon, 13 Oct 2014 14:26:14 +0200
+From: Martin Prpic <mprpic@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: XML-DT: Insecure use of temporary files
+Subject: CVE request: various security flaws in dokuwiki
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi, could CVEs please be assigned to the following issues?
 
-On Thu, Jul 31, 2014 at 07:12:28AM +0200, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> Steve Kemp reported to to the Debian BTS in [1] that the XML-DT Perl
-> module distribution contains mkdtskel and mkxmltype using insecurely
-> temporary files using the pid of the process in the temporary file
-> name.
-> 
->  [1] https://bugs.debian.org/756566
-> 
-> Could a CVE be assigned for this issue?
+The following security-related flaws have been fixed in the 2014-05-05 and 2014-09-29 releases of dokuwiki:
 
-For the record: Ths was fixed in XML-DT 0.65 upstream, see
+* Security Hotfix 2014-05-05a for Issue 765:
 
-https://metacpan.org/diff/file?target=AMBS/XML-DT-0.65/&source=AMBS/XML-DT-0.63/
+https://github.com/splitbrain/dokuwiki/issues/765
 
-Regards,
-Salvatore
+* Security Hotfix 2014-05-05b for AD/LDAP auth plugin related problem
+  Security fix for AD/LDAP auth plugin related problem:
+
+http://www.freelists.org/post/dokuwiki/Fwd-Dokuwiki-maybe-security-issue-Null-byte-poisoning-in-LDAP-authentication
+
+Red Hat Bugzilla bug: https://bugzilla.redhat.com/show_bug.cgi?id=1150131
+
+-- 
+Martin Prpič / Red Hat Product Security
