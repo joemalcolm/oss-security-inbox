@@ -1,45 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/08/4
-Message-ID: <536BE5D8.7070907@redhat.com>
-Date: Thu, 08 May 2014 14:15:20 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/13/4
+Message-ID: <20141013124951.GA5763@suse.de>
+Date: Mon, 13 Oct 2014 14:49:51 +0200
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: Re: CVE Request: OpenSSL NULL pointer dereference in do_ssl3_write
+Subject: shim RCE
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-Just to confirm what Mitre said, also in general the only time I will
-be assigning CVE's on oss-security in the future is for anything time
-sensitive, the main reason I did CVE-2014-0198 was also due to the
-potential for a blow up (since you know, the week before we'd had a
-full on OpenSSL fire drill). One thing  I will ensure in future is to
-CC cve-assign@ to minimize the chanc of a duplicate.
+As per policy-request, here is the oss-posting of what has
+formerly been negotiated on distros@. Initial CRD was Oct 6th
+but has been shellshokshifted to today upon request.
 
-Also as usual if you want to make a private request information on how
-to do so is available here:
+--
 
-http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+We reviewed some parts of the shim trusted bootloader.
+Shim is responsible for verifying of - and chaining into - a
+next level bootloader. Shim itself is signed by MS so it can
+be loaded by UEFI secure boot aware boards.
+These vulnerabilities could be exploited to bypass
+"secure boot" with leverage up to OS level.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+We found three issues that should be fixed:
 
-iQIcBAEBAgAGBQJTa+XYAAoJEBYNRVNeJnmTH+wQAL3BStUXwH7NJK3VZJ8oD1Dn
-vHOLjYE94iz+5EfqDDddkVQDIKIJIc4wipr0qRStYExcLWIknZaPDFGHMTeJ8Uhi
-WnsP/EFPbtmvgejz6ShNI61TdGAoKLzqirG1dvETgW4pIh16y+5wLcqY9YvA8LEj
-5AODKOrDaHcRzrHIkLzlw1h+UBbHeoZn4FflL9HpAPpj+VUuKBrS939ZkAKN9pP2
-KkPPWoAlwjhNp5cv18++Uuon+Tq6NGCHUFmBeldSKOkzmngY6Ye9ZWzRwNPfNo4x
-fC3FL80X+foM4BEhAzzFh/jagSQRRNZRkAnFZpFrQpnihMaMISFkhBLl8jwyeOHB
-XAnL+gvaI77D00MVspeE62ePz9kbLfWlKstsBl250Um7qivTcOMhjTiT+3F33kMV
-qRp5vK2yfx8goakVEgJIAjgh0mGhZYC2k1Mvj/MFF5kxC7nk4mtaxagqMD1GG+Vh
-1Ztd+ERZJ09jJ40gkhuW3uutvimy2TDvXmOBp9goYK3j+cOR9eMQeXs6KtN+Es1m
-mrbcwBtgcqRd0ZAsGMTHBhBTZQs5wiguQBBF5aIqobl2zL3nSos3iCKs0U+4uQ1q
-VbOzuORuZUTYuU8Sp0/+7Hr3ZdyoT3ljZSbbtWzx0dRxfGTuMtc4uQyKOM17QZ4N
-6XPFH79m5O5eFmebl4el
-=OJo4
------END PGP SIGNATURE-----
+1. OOB read access when parsing DHCPv6 packets (remote DoS).
+   The severity is low. (CVE-2014-3675)
+2. Heap overflow when parsing IPv6 addresses provided by tftp:// DHCPv6
+   boot option (RCE).
+   The severity is low to medium, as secure boot via PXE6 should
+   rarely be seen ITW. Furthermore UEFI firmware seems to fail
+   to properly verify provided PXE images at the first place. (CVE-2014-3676)
+
+For both issues above there is a patch proposal:
+
+http://suse.com/~krahmer/priv/shim1.diff
+
+3. Memory corruption when processing user provided MOK lists.
+   Its unclear whether this could lead to a code execution in
+   the secure boot path. (CVE-2014-3677)
+
+For this issue there is also a patch proposal:
+
+http://suse.com/~krahmer/priv/shim2.diff
+
+All three issues should receive a CVE each. We ask for a CRD
+of Oct 6th. 2014.
+
+When updating, vendors should also take care to include
+git commit 45ab8962ae7c8e860a45d195cfe8a3f4d8aec4c7 since this
+already fixes another overflow (different from 2.) when parsing
+DHCPv6 packets.
+
+We did _not_ conduct a full code review of shim. In particular
+PE header parsing and relocating of PE EFI images is left untouched.
+
+Upstream maintainers have been informed already, as well as MS
+to initiate the signing process of a patched shim.
+
+It's unfortunate for Open Source vendors to rely on a third party
+being a milestone in an update process since its adds hereto
+a lot of complexity in the coordination and updating process.
+
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
