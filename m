@@ -1,37 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/15
-Message-ID: <20140529132746.37d7f6e9.reed@reedloden.com>
-Date: Thu, 29 May 2014 13:27:46 -0700
-From: Reed Loden <reed@...dloden.com>
-To: Jacob Kaplan-Moss <jacob@...oku.com>
-Cc: oss-security@...ts.openwall.com, Rafael Mendonça França <rafaelmfranca@...il.com>, "security@...oku.com" <security@...oku.com>
-Subject: Re: [AMENDED] [CVE-2014-0130] Ruby on Rails: Directory Traversal Vulnerability With Certain Route Configurations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/1
+Message-ID: <CAJeQoQdP0VzvWTSzYYjtqnGKyJ0ZgJR0w3Bi7GHPAGP4uMGU-w@mail.gmail.com>
+Date: Mon, 13 Oct 2014 21:20:24 +0200
+From: Egidio Romano <n0b0d13s@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Rejection Request: CVE-2014-7983 Joomla com_contact Persistent XSS
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 7 May 2014 11:53:12 -0500
-Jacob Kaplan-Moss <jacob@...oku.com> wrote:
+Hello,
 
-> Can you clarify what these "additional attack vectors" are? We've been
-> looking at this closely here at Heroku, and as far as we can tell it's only
-> the original vector (*action/:action). What are we missing here?
+I believe this CVE [1] should be rejected for the following reason: the
+vulnerable parameter (jform[contact_email]) [2] is "persistent" only within
+a session variable, which happens within the ContactControllerContact::submit()
+method, where the data submitted to the contact form is stored inside the
+"com_contact.contact.data" session variable [3] through the
+JApplication::setUserState() method [4]. This means that a potential
+attacker can be able to execute evil JavaScript/HTML code only within its
+own session, not affecting the security of other Joomla! users or website
+visitors. Even though the same "issue" might be exploited as a reflected
+XSS vulnerability, in my view it still cannot be considered a security
+threat because, in order to do that, the attacker needs to know the session
+token of the victim user, since the ContactControllerContact::submit()
+method calls the JSession::checkToken() method [5] to prevent cross-site
+request forgeries (CSRF).
 
-...
+Please let me know if you believe I'm wrong or I'm missing something. Thank
+you.
 
-> We'd like to be better able to evaluate if we're vulnerable -- and, more
-> importantly, we'd like to understand if this is a big enough deal for us to
-> notify our customers and directly encourage them to upgrade (a step we've
-> taken in the past). However, without more details about these "additional
-> vectors" we're kinda shooting in the dark. Can you share more details?
+References:
+[1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7983
+[2]
+http://hauntit.blogspot.it/2014/03/en-joomla-322-pre-auth-persistent-xss.html
+[3]
+https://github.com/joomla/joomla-cms/blob/3.2.2/components/com_contact/controllers/contact.php#L86
+[4] http://docs.joomla.org/How_to_use_user_state_variables
+[5]
+https://github.com/joomla/joomla-cms/blob/3.2.2/components/com_contact/controllers/contact.php#L26
 
-Matasano just released a paper on this particular vulnerability that
-you might want to check out.
+Best regards,
+Egidio
 
-"Jeff Jarmoc explains why the recent Ruby on Rails
-'implicit render' vulnerability (CVE-2014-0130) is more serious than
-many have been lead to believe. In this paper he shows how to go from
-an arbitrary file read under highly unusual configurations to RCE in
-more common setups."
-
-http://matasano.com/research/AnatomyOfRailsVuln-CVE-2014-0130.pdf
-
-~reed
