@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/25/4
-Message-Id: <20141225162404.0491D6C0003@smtpvmsrv1.mitre.org>
-Date: Thu, 25 Dec 2014 11:24:04 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/13/2
+Message-Id: <20141013035054.5EA24C50646@smtptsrv1.mitre.org>
+Date: Sun, 12 Oct 2014 23:50:54 -0400 (EDT)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
+To: mbp@...rcefrog.net
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request Linux kernel: fs: isofs: infinite loop in CE records
+Subject: Re: [CVE Requests] rsync and librsync collisions
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> Linux kernel built with the iso9660 file system(CONFIG_ISO9660_FS) support is
-> vulnerable to an infinite recursion loop flaw, which could lead to a crash or
-> render a system unresponsive/unusable after a while. This occurs while
-> mounting an iso9660 image.
-> 
-> An unprivileged user/process could use this flaw to crash the system resulting
-> in DoS.
+> I'm the librsync (not rsync) maintainer. I can confirm this is a real bug,
+> and I would like a CVE assigned.
 
-> https://git.kernel.org/linus/f54e18f1b831c92f6512d2eedb224cd63d607d3d
-
-Use CVE-2014-9420.
+Use CVE-2014-8242 for this vulnerability in librsync; this CVE ID does
+not apply to rsync.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -31,11 +25,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUnDnFAAoJEKllVAevmvmsEvsIALrkYpdxnWpQpj4KUUDOYXhN
-7atB6dJ2d+JxbvpeMXTBHZAWeFSq/DQewsW2g0u8231EDQMeeRjuL3h4JD6Zs71r
-OgbJEzjX3BfyKKCFP6q0NxPNxHbIFdhnqSTLueNv/RkbBpyuL1NfpCPkDSeYVgo8
-eYCpRZkLGdkDxvzpxkC0OMO8M2Xz2CwK/DPgxijUSzyA/ygC9szu5HQc5BsWNkpl
-aqXjJK/qVu6ZGWZLbpTIWXPuKrQ3cK+yac7F12btDOPgV2Ctuk8SYJrsLP8MzuPl
-5WItMshRBAsSqtntjIOef1xHo0oR/rB8dZNgjixNanFBmOl/Zr5uUFFb15NDTlg=
-=CFil
+iQEcBAEBAgAGBQJUO0tyAAoJEKllVAevmvmsr8sH/RizGPMxY73myaYYd1ujyHWb
+IZyrCA/olPuY0VM6hJYoL/erit6zil8cilSNSXWgLD3rK4oxIGtm9o+7aa5LDGao
+Pmjd8MoIA6aWIR0k+ZzZ2eEKaVtZmoznlONdD7iCJ/xCnhioieViSTbFX6RnxDZ7
+3EOT4mSe2guPBAmkR08ATykQW8HiG7HE6pOWgLtJOkRM+gpKlDT7TNeFu+8PoHbN
+Uuza+ND+zKxmH+CZcsZ+5d26g6hGr8msmYdpHTg3zoCobLXlnuZUBiHz9WCKh04w
+hq1EvcWSCgM6esUtPRRpRsdZ62sJ+sN0kwzQW+7uY4fRC7N9hRiFpICMW7y6atk=
+=Q9OR
 -----END PGP SIGNATURE-----
