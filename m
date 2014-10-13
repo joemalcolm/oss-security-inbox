@@ -1,55 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/8
-Message-ID: <CAAA_pzeZmXqcaBa1Db4XVRsMmd+3ESBg_5i_R5hEjbR81gPwQg@mail.gmail.com>
-Date: Mon, 19 May 2014 10:42:58 -0500
-From: Kent Baxley <kent.baxley@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/13/1
+Message-ID: <loom.20141013T051234-220@post.gmane.org>
+Date: Mon, 13 Oct 2014 03:16:40 +0000 (UTC)
+From: Martin Pool <mbp@...rcefrog.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request, multiple vulnerabilities in openwsman
+Subject: Re: [CVE Requests] rsync and librsync collisions
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-A recent security code review was performed on openwsman version 2.4.3
-and several issues were identified and fixed in version 2.4.4.
+I'm the librsync (not rsync) maintainer. I can confirm this is a real bug, 
+and I would like a CVE assigned.
 
-Can we please get CVEs assigned to them?
+I appreciate Mik reporting this.
 
-The full list is here, in the section dated February 27, 2014:
+Since it's now been discussed in public I don't see any point treating this 
+as embargoed.
 
-https://github.com/Openwsman/openwsman/commits/638b9c8acfa6ded84c94c01e137c61c29d65d62e/src
+I'm working on his patch adding BLAKE2 (eg making it pass tests, having an 
+option for back-compatibility) so that it can be released. 
 
-I have broken each one down by commit here:
+-m
 
-ws_xml_make_default_prefix() can overflow buf parameter via sprintf()
-https://github.com/Openwsman/openwsman/commit/1c21816f1d2cc63eee6326d0f1340d3341694e60
-
-wsmc_create_request() potential buf[20] overflow via WSMAN_ACTION_RENEW
-https://github.com/Openwsman/openwsman/commit/a61b2074a90c9fb3019f49b6b347ad651a3f80af
-
-LocalSubscriptionOpUpdate() unchecked fopen()
-https://github.com/Openwsman/openwsman/commit/09c3fcf4d209f6890eb9cb9e554bff637eae73b5
-
-Incorrect order of sanity guards in wsman_get_fault_status_from_doc()
-https://github.com/Openwsman/openwsman/commit/ca68ddd7c24b238cbb94bc97ffac349ff25f07bf
-
-Unchecked memory allocation in wsman_init_plugins(), p->ifc
-https://github.com/Openwsman/openwsman/commit/d51551bf791083c00105e5d8ef0b3bc24e5bb4b5
-
-Unchecked memory allocation in mem_double(), newptr
-https://github.com/Openwsman/openwsman/commit/89dabd4582e3fbb88328dd780e89baf6efb4ad3f
-
-Unchecked memory allocation in dictionary_new(), d, d->val, d->key, d->hash
-https://github.com/Openwsman/openwsman/commit/638abcbf5faa97ccb2c3ab15faeb2f2cc9363b56
-
-Unchecked memory allocation in u_error_new(), *error
-https://github.com/Openwsman/openwsman/commit/d9b48a472819b258a34746a07256516653d5a141
-
-Remove (unsafe) debug() call from sighup_handler
-https://github.com/Openwsman/openwsman/commit/2cd98b07fa6930727a35da2b7409610b74535cae
-
-Thanks!
-
--- 
-Kent Baxley
-Field Engineer, Canonical
-kent.baxley@...onical.com
