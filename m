@@ -1,53 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/5
-Message-Id: <20141010063340.53767C504E0@smtptsrv1.mitre.org>
-Date: Fri, 10 Oct 2014 02:33:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Zend Framework ZF2014-05 and ZF2014-06
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/5
+Message-ID: <20141014131541.090af81a@pc>
+Date: Tue, 14 Oct 2014 13:15:41 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Am Tue, 14 Oct 2014 10:41:40 +0000
+schrieb Sona Sarmadi <sona.sarmadi@...a.com>:
 
-> http://framework.zend.com/security/advisory/ZF2014-05
+> This is probably something under embargo which somehow has leaked
+> out ...
+> 
+> http://www.theregister.co.uk/2014/10/14/nasty_ssl_30_vulnerability_to_drop_tomorrow/
 
-Use CVE-2014-8088 (for the issue in both Zend Framework 1.x and
-Zend Framework 2.x).
+Whether it's scary or not I have an advice for you: Disable SSLv3.
 
+It causes a lot of headache already. I once had to debug a rather
+subtle issue in combination with SNI.
+The problem: Browsers downgrade out of protocol to SSLv3 if they can't
+connect via TLS. They do this in order to support broken server
+implementations. However this downgrade can also be triggered by bad or
+slow internet connections - and then you'll loose SNI. So sometimes
+your visitors will get the wrong certificate presented.
+I solved this for my servers by disabling SSLv3. It was a minor problem
+when I did this but it is almost no problem today.
 
-> http://framework.zend.com/security/advisory/ZF2014-06
+You will lock out IE6 users on Windows XP. However even people who use
+Windows XP+IE and installed their updates have TLS 1.0 support.
+I also encountered a small number of people who had manually disabled
+TLS 1.0 in firefox for unknown reasons. However this was a few years
+ago. Current Firefox versions make it harder to do this. I assume the
+reason was that they thought "v3 sound newer than v1.0".
 
-Use CVE-2014-8089 (for the issue in both Zend Framework 1.x and
-Zend Framework 2.x).
+A number of people already recommend disabling SSLv3, e.g. the Qualys
+configuration guide. Disable it now - no matter if the rumors about a
+serious vuln are true, you'll be safe.
 
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
 
-> (For the ZF2014-05 advisory, the discussion in
-> http://www.openwall.com/lists/oss-security/2014/06/09/2 may be helpful
-> if needed.)
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Our understanding is that ZF2014-05 is not closely related to the
-http://www.openwall.com/lists/oss-security/2014/06/09/2 topic. That
-June post is about incorrect use of the "empty" PHP library function,
-an implementation error that (as far as we know) occurred only in
-Horde. ZF2014-05 is about \0 characters, an implementation error that
-occurred in Zend Framework and also in, for example, MantisBT (see the
-http://openwall.com/lists/oss-security/2014/09/12/14 post).
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUN3z9AAoJEKllVAevmvmsfhQIAMiuq6nl6+Xcr+o4xN3wL4Qi
-fM9K5qyEAcIlrW8Q3F7Ec49wHkEsiCxD/cu3QRyyiY8R1kvm9rYt4paCyThSh+qU
-2VRNnJdwMsZ8aXfJQVOE1fZvCmzay4vIlQdarTGhG7DhqEIaNehx+3QoueJEJ9qR
-5AWEybnQdo5pTS9rqowTja2jy/9/QlAETk5Q7ASlcWGQx+JHVsNjtWn6N8rhb0eq
-4iQfCDzijH2MfaeX/ydNl0CULmuWIzvYvsJ1kx3V3PH1fZZzF/PQLU1meDVqCg+z
-p3xAP6+uwyOUZEdRQKsP+a0XkcTfd0sa5QaTkoGJIIjgUvywsR1bsC5/NUxa94Q=
-=PYAP
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
