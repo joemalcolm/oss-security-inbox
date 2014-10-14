@@ -1,58 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/8
-Message-ID: <CALx_OUByTQw6hY11fyPTL4EpD=JL=TeU2O6vMj8qdU+n0=gUcA@mail.gmail.com>
-Date: Sat, 15 Nov 2014 12:17:49 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/7
+Message-ID: <2ECE9D9EEF1F524185270138AE23265947D16793@S0MSMAIL111.arc.local>
+Date: Tue, 14 Oct 2014 14:31:01 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Multiple disputed issues in util-vserver
 Content-Type: text/plain; charset=utf-8
 
-> OTOH the "most" part in "most compression utilities" is somewhat
-> questionable. There are quite a number of them. E.g. File Roller supports
-> arj, lha, zoo...
+Hi,
 
-Sure, I mean, the stuff people normally download and click on without
-hesitation (tar, gz, zip, xz, 7z). There are hundreds of less common
-tools and libraries that are probably awful.
+While fixing a bug, I noticed some strange behavior in linux vserver
+virtualization, that I would call a security problems, but project
+developers see it differently. Since the util-vserver packages and patched
+kernel were or are included in some Linux distros, I would be interested in
+the communities' opinion on that.
 
->> The default operation of
->> /usr/bin/strings and the way many people ended up using it arguably
->> violates that assumption in a particularly pronounced way. Tools such
->> as objdump are a bit of a grey area, too.
->
-> Why is that? I think using objdump to analyze malware is quite common.
+Issue 1: When calling util-vserver tool on the host to execute a job within
+the guest, e.g. to install updates, the host process (in host PID ns) might
+end up being the child of a guest process (with PID only in guest ns), thus
+the parent PID of the host process pointing to a guest ns PID. If the host
+process wants to signal the parent process or some other tool operates using
+the ppid, a host process might interact with another arbitrary host process
+on error (see [1]). Compared to issue 2-3, I'm not sure for myself if it is
+really a bug and what the correct behavior of kernel with pid namespaces
+would be. At least it breaks bash process handling (gets stuck) when calling
+"vserver exec" in a certain way, start-stop-daemon or upstart might not like
+it also.
 
-Oh, I meant that it's still a bit sketchy (maybe less than 'strings'
-because the untrusted input use case is a lot more specialized and
-fewer people are at risk).
+Issue 2: When entering the container from the host or executing commands
+within the container, e.g. to perform common administrative tasks, a
+malicious login shell inside the container might overwrite the
+/usr/sbin/vcontext on the host, thus allowing on to execute arbitrary code
+on the host with root privileges next time vcontext is invoked. See [3].
+Feedback from developer: " Yes, vlogin is known to have several security
+issues. It's a maintenance backdoor, much like the iLO or iDRAC on hardware.
+If you can find ways to improve it, patches would be accepted, but I doubt
+it will ever be possible to do what it does securely." Project documentation
+does not strike out those restrictions (or at least I did not find that or
+the list of "several known security issues" online), other sources, e.g.
+container vs system virtualization comparison strike out the importance of
+the feature to enter a guest from the host easily for maintenance, so I
+guess that those tools were not useful just for me alone. This issue I would
+rate a killer for production use, e.g. for mass hosting.
 
->> [...tcpdump...]
->
-> Not good. Haven't you looked into it -- are these crashes due to malformed
-> pcap format or due to malformed traffic?
+Issue 3: It seems that handling of open tty FDs on enter, that allows to
+inject arbitrary keyboard input to be read by the parent process, also
+affects the tool to start the guest container. This seems to be the same
+issue with "vserver start" as reported in [2] for vserver enter, which was
+classified as less relevant back than. My rating would be little lower than
+2 but still quite high for mass hosting: manual restart, e.g. during
+maintenance, seems quite common to me.
 
-Both, IIRC. There are some test cases that come with afl-fuzz.
+>From my point of view, those issues might be expected behavior as claimed by
+the developers, but if so it should be at least stated more clearly in
+documentation:
 
-> BTW any crash in imagemagick during image processing is regarded as a
-> security issue? Probably a grateful target for fuzzing.
+a) never use any tools except vserver stop (to terminate the container) to
+interact with a running and possibly compromised container from the host
+b) only use network/socket-based tools to connect to processes inside a
+possibly compromised guest, e.g. SSH. 
+c) never start a possibly compromised container from interactive shell to
+avoid injection of shell commands
 
-Well... probably? For example, some sites use ImageMagick to convert /
-resize user-uploaded images. One would hope that they check file
-headers and only accept JPEG / GIF / PNG or so, but that's probably
-not universally true.
+Regarding documentation I would even vote for a solution d), that all those
+tools get a mandatory argument like
+'--i-know-entering-insecure-container-may-kill-my-host' so that it is not
+very likely, that someone will use those tools for something else then
+testing or nice-world administration.
 
->> Now, the quality of the *average* OSS project is probably comparable
->> to libbfd, but the average OSS project is probably less likely to be
->> exposed to untrusted inputs under normal operating conditions.
->
-> Sorry, I don't understand your stance. There is a whole world of desktop
-> tools and applications -- from `file` and `strings` to LibreOffice and
-> Blender. And most of them process files received from untrusted sources.
+Opinions to issues 1-3?
 
-I wouldn't describe LibreOffice as a typical example. It's obviously
-security-critical. What I mean is that, across all the packages
-installed on your system, most bugs are fairly irrelevant from the
-security perspective - i.e., it probably doesn't matter if you can
-crash uname or ps by passing AAAAAAA... in the command line.
+What about solutions?
 
-/mz
+Kind regards,
+Roman
+
+[1]
+http://list.linux-vserver.org/archive?mss:6788:201410:moeiomapkoefmmdnmcji
+[2] http://www.openwall.com/lists/oss-security/2012/11/05/8
+[3] Guest -> Host escape POC: C-code to be put as /bin/bash replacement in
+guest, will overwrite /usr/sbin/vcontext on host. Available on request
+
+
+DI Roman Fiedler
+Scientist
+Safety & Security Department
+Assistive Healthcare Information Technology
+
+AIT Austrian Institute of Technology GmbH
+Reininghausstraße 13/1  |  8020 Graz  |  Austria
+T +43(0) 50550 2957  |  M +43(0) 664 8561599  |  F +43(0) 50550 2950
+roman.fiedler@....ac.at | http://www.ait.ac.at/
+
+FN: 115980 i HG Wien  |  UID: ATU14703506
+http://www.ait.ac.at/Email-Disclaimer
+
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
