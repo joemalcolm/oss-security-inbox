@@ -1,23 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/39
-Message-ID: <1412634940.4672.0@ssh>
-Date: Mon, 06 Oct 2014 23:35:40 +0100
-From: Steve Kemp <steve@...ve.org.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/14
+Message-ID: <20141015004106.30466d03@pc>
+Date: Wed, 15 Oct 2014 00:41:06 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL RSA 1024 bits implementation broken?
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
+It's out:
 
-  Looks like this was admitted as a hoax:
+https://www.openssl.org/~bodo/ssl-poodle.pdf
+http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-exploiting-ssl-30.html
 
-    https://twitter.com/camicelli/status/519231503260467200
-    https://twitter.com/camicelli/status/519231538589085696
+My conclusion stays the same: Disable SSLv3.
 
-    https://twitter.com/julianor/status/519230526029570048
-
-  Intent seems to have been to build a list of all 512 primes..
-
-Steve
 -- 
-http://www.steve.org.uk/
+Hanno Böck
+http://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
