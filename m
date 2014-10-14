@@ -1,37 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/02/2
-Message-ID: <540613D4.5030901@redhat.com>
-Date: Tue, 02 Sep 2014 13:00:36 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, Martin Schwidefsky <schwidefsky@...ibm.com>
-Subject: Re: Subscribtion request to linux-distros
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/13
+Message-Id: <E1Xe9uI-0003qA-6x@rmm6prod02.runbox.com>
+Date: Tue, 14 Oct 2014 17:45:26 -0400 (EDT)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-Thread bump =) One question, when you say "my role as maintainer for
-Linux on System z" is that mostly kernel, user space as well, or?
+On Wed, 15 Oct 2014 02:10:41 +0800, Pavel Labushev <pavel.labushev@...box.no> wrote:
+> By "Haskell" I mean any technology, its scientific basis and the
+> other aspects altogether, that I think have the potential of
+> significantly shifting the paradigm.
 
-On 29/07/14 05:26 PM, Solar Designer wrote:
-> On Tue, Jul 29, 2014 at 05:03:38PM +0200, Martin Schwidefsky wrote:
->> our friends from SuSE suggested that it might make sense that
->> I in my role as maintainer for Linux on System z (alias s390)
->> get added to the linux-distros mailing list.
->> If you agree that this indeed makes sense could you subscribe
->> me please?
-> 
-> I've been meaning to post a follow-up on the other request by IBM to
-> join (linux-)distros.  Unfortunately, I am in too bad a lack of time
-> right now.  So no changes in subscriber lists in August.  I intend to
-> revisit this topic in September.
-> 
-> I do feel that IBM joining one of these lists makes sense, but this and
-> the details need to be discussed.
-> 
-> Alexander
-> 
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+A rose by any other name will smell as sweet, but calling it a
+"pig" inhibits communication. If you mean
+"significantly better tools", just say that.  Or create a new name and define it.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+> I know that many would disagree and say that the devil is in the details.
+
+I'm one of those who disagrees.  The devil, as well as the rest of the universe,
+*is* in the details.  In particular, I think a lot of tools are hideously oversold,
+leading to serious problems.  All tools have limitations; knowing those limitations
+is key to developing (more) secure software.
+
+That said, tools that make it *easy* to write secure code (or at least
+eliminate certain mistakes) often produce more secure code, simply because
+developers are people who make mistakes.
+
+
+> Imagine you're writing a shell and decide to introduce the high level
+> distinguished concepts of code, data, data source, and derive the
+> concepts of trusted|untrusted data|code [source].
+
+That might help, though that's simply *one* approach
+(among many) for stronger separation of code and data.
+What we need are examples of such approaches, and experimental data
+to show that they're really better.
+
+> > I don't think Haskell is a magic bullet.  I do think type-rich
+> > languages (and languages with memory safety) have a lot to offer, but
+> > writing secure software in them is still hard.
+> 
+> And I'm convinced that "Haskell", in a broader sense and together with
+> the other factors, is a part of a solution, capable of making a
+> qualitative change.
+
+I agree that better tools can be part of a solution, and in some cases
+(especially together) could produce a qualitative change.
+
+The most obvious example of an underused tool is memory-safe languages.
+Shellshock would not have been countered by them,
+but Heartbleed (and many others) *would* have been countered.
+But many people are not willing to pay the runtime costs, and the
+developer-retooling effort, to switch to a memory-safe language for
+low-level components like operating systems, runtimes, crypto libraries,
+image processing libraries, and the like.  We *have* languages like Ada
+which run at the same speed as C, and other languages are relatively close
+(e.g., D, Go, Rust, Nimrod), but as yet there has
+been no big switch.  For a variety of reasons, it's hard to change.
+
+--- David A. Wheeler
