@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/30
-Message-Id: <531C60E7-D4B1-464A-9FB7-0178CCD72380@matasano.com>
-Date: Thu, 9 Oct 2014 14:14:39 -0500
-From: Tomek Rabczak <tomek@...asano.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/6
+Message-ID: <20141014092138.47641ff3@pc>
+Date: Tue, 14 Oct 2014 09:21:38 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Authentication Bypass in ROR Ecommerce
+Subject: Re: CVE request: ejabberd compression allows cirucumvention of encryption despite starttls_required
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Am Tue, 14 Oct 2014 12:39:48 +1100
+schrieb Michael Samuel <mik@...net.net>:
 
-I’ve worked with David Henner, the Ruby on Rails Ecommerce owner to fix a security issue in the password reset functionality of the ROR Ecommerce application. When a user is created in the ROR Ecommerce application, a perishable_token is generated for that user. This perishable token is then used for password resets. Note that a password reset request never needs to be initiated as this token is immediately available.
+> On 14 October 2014 00:09, Hanno Böck <hanno@...eck.de> wrote:
+> > I think this deserves a CVE:
+> > http://mail.jabber.org/pipermail/operators/2014-October/002438.html
+> 
+> If a client is willing to do that, then an attacker can simply force
+> downgrade the client and connect to the server using TLS. (Assuming
+> client certificates aren't in use)
 
-Due to the way MySQL handles typecasting, it is possible to send a token value of the integer 0 which will then match the first perishable token in the database. The way the application is first initialized and setup, the administrative user is the first user to be created. This can be seen in the Getting Started section: https://github.com/drhenner/ror_ecommerce#getting-started. As a result, the integer 0 passed to the application will match the administrator’s account. The application then logs the matched user in and allows them to change the password.
+Basically these things often work under a more or less
+"trust-on-first-use"-assumption.
 
+E.g. the client will check the server config on the first connection
+and use that settings in the future.
 
-This bug is the same as joernchen’s example in his MySQL madness and Rails post.
+So there is a scenario where this leads to unintended unencrypted
+connections.
 
-http://www.phenoelit.org/blog/archives/2013/02/05/mysql_madness_and_rails/
+-- 
+Hanno Böck
+http://hboeck.de/
 
-The fix is simple and can be found in this commit: https://github.com/drhenner/ror_ecommerce/commit/25fe5ebb2f193978e9f9967c9dfe6be5716e8650
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Would it be possible to get a CVE assigned to this?
-
-Thanks,
-Tomek
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (497 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
