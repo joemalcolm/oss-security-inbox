@@ -1,27 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/8
-Message-ID: <20141204131437.GB2219@dhcp-25-225.brq.redhat.com>
-Date: Thu, 4 Dec 2014 14:14:38 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-8106 qemu: cirrus: insufficient blit region checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/3
+Message-Id: <20141014050153.40A61C50618@smtptsrv1.mitre.org>
+Date: Tue, 14 Oct 2014 01:01:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: jeremy@...nstack.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Nova
 Content-Type: text/plain; charset=utf-8
 
-It was found that the Cirrus blit region checks were insufficient.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Cirrus is the default graphical adapter for x86 in qemu in any released
-version, and it's also used for vnc (spice uses qxl).
+> Title: Nova VMware driver may connect VNC to another tenant's console
+> Products: Nova
+> Versions: up to 2014.1.3
+> 
+> Marcio Roberto Starke reported a vulnerability in the Nova VMware
+> driver. A race condition in its VNC port allocation may cause it to
+> connect the wrong console if instances are created concurrently. By
+> repeatedly spawning new instances, an authenticated user may be able
+> to gain unauthorized console access to instances belonging to other
+> tenants. Only Nova setups using the VMware driver and the VNC proxy
+> service are affected.
+> 
+> References:
+> https://launchpad.net/bugs/1357372
 
-A privileged guest user could use this flaw to to write outside of vram
-allocated buffer boundaries in the host's qemu process with attacker
-provided data.
 
-Upstream patch submission:
-http://lists.gnu.org/archive/html/qemu-devel/2014-12/msg00508.html
+> When spawning some instances, nova VMware driver could have a race
+> condition in VNC port allocation. Although the get_vnc_port function
+> has a lock it not guarantee that the whole vnc port allocation process
+> is locked, so another instance could receive the same port if it
+> requests the VNC port before nova has finished the vnc port allocation
+> to another VM.
+> 
+> If the instances with the same VNC port are allocated in same host it
+> could lead to a improper access to the instance console.
+> 
+> Reproduce the problem: Launch two or more instances at same time. In
+> some cases one instance could execute the get_vnc_port and pick a port
+> but before this instance has finished the _set_vnc_config another
+> instance could execute get_vnc_port and pick the same port.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1169454
 
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+> it looks like something an attacker could probably leverage repetition
+> to eventually exploit
+
+Use CVE-2014-8750.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUPK2FAAoJEKllVAevmvmsOTUH/isfHZzy4mfdTu7EE01YniVy
++b0iupyj0AG/bx7c1lhoBhLYaPnY2wvBscVG7tBnkTUzpT0RJgluX2PG81eKqYoU
+e/SXRWWzkHupSKY5G8ipmfUFPzKikjmVHXgXmdd91zx5RIsrbnxH8YQAJX3rdHJA
+r7RY6Ah5oK7lEw2aLAvv2vCL0BsInTJMTGRDNXJElCukOJoA3rSlHsGoO1Ri+Bcw
+trOKC40cIVmlU7BlpJzXTYsA6th2rOZmhj/5oKY38N3HVB+O0n85a+fhudJhgHQH
+oApL8mqeg9yYveJr1dPNf7/+gvKNkQL9SHkeJ53kSupAHJTced8/JWfYLoc+DLk=
+=2d5e
+-----END PGP SIGNATURE-----
