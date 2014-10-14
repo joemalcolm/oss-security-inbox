@@ -1,34 +1,12 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/27/2
-Message-ID: <CALx_OUA6+kRBCB+JMjzogVvoABqhtpFX4RZkQT5=HbT8WmxDeg@mail.gmail.com>
-Date: Sun, 26 Oct 2014 18:35:59 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/4
+Message-ID: <3230301C09DEF9499B442BBE162C5E48257669F3@SESTOEX04.enea.se>
+Date: Tue, 14 Oct 2014 10:41:40 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Truly scary SSL 3.0 vuln to be revealed soon: 
 Content-Type: text/plain; charset=utf-8
 
-> I don't know whether it's the same crash or not but I've dug results of my
-> older experiments with zzuf. Attached are two crasher for `objdump -x` --
-> one pe and one elf. elf also crashes `strings`. Sorry, not researched.
+This is probably something under embargo which somehow has leaked out ...
 
-objdump-elf-crasher looks like a stack exhaustion with
-/usr/bin/strings, so probably not a big deal.
-
-objdump-pe-crasher doesn't affect strings, but if you do run objdump
--x, it looks like an attempt to do fprintf() with a bogus pointer,
-called from pe_print_edata(). Specifically, there's a line that goes
-like this:
-
-  fprintf (file,
-           " %s\n", data + edt.name - adj);
-
-...and edt.name, looks like, comes from:
-
-  edt.name           = bfd_get_32 (abfd, data + 12);
-
-...and the value is completely off-charts. So, probably another
-instance of essentially no range checking, although this particular
-crash may be not exploitable at a very quick glance, unless something
-interesting happened beforehand.
-
-/mz
+http://www.theregister.co.uk/2014/10/14/nasty_ssl_30_vulnerability_to_drop_tomorrow/
