@@ -1,84 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/5
-Message-ID: <CAC9YFzfDP3rQObMs0ZpU3vMsV4z+grdwK4XPRQ4Y1XBc1vHitA@mail.gmail.com>
-Date: Wed, 2 Jul 2014 14:11:30 -0300
-From: Rafael Mendonça França <rafaelmfranca@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/10
+Message-ID: <CAFRnB2VrQnYDPHBmLC8RKgobva3iROB8SjmXhw6D2Utmk-Tgtw@mail.gmail.com>
+Date: Tue, 14 Oct 2014 08:23:23 -0700
+From: Alex Gaynor <alex.gaynor@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2014-3482] [CVE-2014-3483] Ruby on Rails: Two Active Record SQL Injection Vulnerabilities Affecting PostgreSQL
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
-There are two distinct but related vulnerabilities in PostgreSQL
-adapter for Active Record. These vulnerabilities have been assigned
-the CVE identifiers CVE-2014-3482 and CVE-2014-3483.
+At what point are we going to decide that it's absurd for every single TLS
+deployment to need to reconfigure everything in order to achieve strong
+security, and say that OpenSSL (or even Apache/Nginx/HAProxy/etc.) should
+just configure things reasonably out of the box?
 
-Versions Affected:  All Versions > 2.0
-Not affected:       Databases other than PostgreSQL
-Fixed Versions:     3.2.19, 4.0.7 & 4.1.3
+Alex
 
-Impact
-------
-PostgreSQL supports a number of unique data types which are not
-present in other supported databases.  A bug in the SQL quoting code
-in ActiveRecord can allow an attacker to inject arbitrary SQL using
-carefully crafted values.
+On Tue, Oct 14, 2014 at 7:38 AM, Reed Loden <reed@...dloden.com> wrote:
 
-Only applications which query against either bitstring or range types
-are vulnerable. The particular data types affected depend on the
-version of Rails you're using, but the vulnerable code will look the
-same.  Vulnerable code will take either take the form of:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> On Tue, 14 Oct 2014 13:15:41 +0200
+> Hanno Böck <hanno@...eck.de> wrote:
+>
+> > A number of people already recommend disabling SSLv3, e.g. the Qualys
+> > configuration guide. Disable it now - no matter if the rumors about a
+> > serious vuln are true, you'll be safe.
+>
+> https://wiki.mozilla.org/Security/Server_Side_TLS has some great info
+> on configuring your web servers and load balancers to have the best
+> possible SSL/TLS settings, including specific example configs to help
+> you out.
+>
+> ~reed
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v2.0.22 (GNU/Linux)
+>
+> iKYEARECAGYFAlQ9NV5fFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3Bl
+> bnBncC5maWZ0aGhvcnNlbWFuLm5ldDZCNTZGOUFDMDdCNjg1RDdEQzQ1NjBEQTZC
+> QTIyMjI2RjNDMzNENUEACgkQa6IiJvPDPVpviQCgkXv+V3uzoLKuNAITQt33kSn5
+> upwAn0TxonRRgEPZYyqUaTIsRlgKkqm7
+> =fmf8
+> -----END PGP SIGNATURE-----
+>
 
-  Model.where(bitstring: params[:some_value])
-  Model.where(range: params[:from]..params[:to])
 
-The specific versions affected is included below, however all users
-running an affected release should upgrade immediately.
 
-SQL Injection Vulnerability in 'bitstring' quoting
-==================================================
-Versions Affected: 2.0.0-3.2.18
-Not Affected: 4.0 and Later
-Identifier: CVE-2014-3482
-
-SQL Injection Vulnerability in 'range' quoting
-==============================================
-Versions Affected: 4.0.0-4.1.2
-Not Affected: All versions prior to 4.0.0
-Identifier: CVE-2014-3483
-
-Releases
---------
-The 3.2.19, 4.0.7 & 4.1.3 releases are available at the normal locations.
-
-Workarounds
------------
-The only feasible workaround for this issue is to not allow user
-controlled values to be used in queries with the affected data types.
-Given the difficulty of ensuring this, upgrading is strongly advised.
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided
-patches for the two supported release series and the last major
-release series.  They are in git-am format and consist of a single
-changeset.
-
-* 4-1-postgres-sqli.patch - Patch for 4.1 series
-* 4-0-postgres-sqli.patch - Patch for 4.0 series
-* 3-2-postgres-sqli.patch - Patch for 3.2 series
-
-Please note that only the 4.0.x and 4.1.x series receive regular
-security updates at present.  Users of earlier unsupported releases
-are advised to upgrade as soon as possible as we cannot guarantee the
-continued availability of security fixes for earlier releases.
-
-Credits
--------
-
-Thanks to Sean Griffin of thoughtbot for reporting the vulnerability
-to us, and to Jeff Jarmoc of Matasano and Charlie Somerville of GitHub
-for working with us to review the patches and advisories.
-
-Rafael Mendonça França
-http://twitter.com/rafaelfranca
-https://github.com/rafaelfranca
+-- 
+"I disapprove of what you say, but I will defend to the death your right to
+say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
+"The people's good is the highest law." -- Cicero
+GPG Key fingerprint: 125F 5C67 DFE9 4084
 
