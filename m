@@ -1,31 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/18/1
-Message-ID: <20140318103904.GJ18088@dhcp-25-225.brq.redhat.com>
-Date: Tue, 18 Mar 2014 11:39:08 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/9
+Message-ID: <20141014145008.GD9817@openstack.org>
+Date: Tue, 14 Oct 2014 14:50:08 +0000
+From: Jeremy Stanley <jeremy@...nstack.org>
 To: oss-security@...ts.openwall.com
-Cc: libvirt-security@...hat.com, Eric Blake <eblake@...hat.com>, Daniel Berrange <berrange@...hat.com>
-Subject: CVE request -- libvirt: unprivileged user can crash libvirtd during spice migration
+Subject: [OSSA 2014-035] Nova VMware driver may connect VNC to another tenant's console (CVE-2014-8750)
 Content-Type: text/plain; charset=utf-8
 
-(this issue was reported to libvirt-security mailing list in the year
-2k13 so might need 2k13 CVE)
+OpenStack Security Advisory: 2014-035
+CVE: CVE-2014-8750
+Date: October 14, 2014
+Title: Nova VMware driver may connect VNC to another tenant's console
+Reporter: Marcio Roberto Starke
+Products: Nova
+Versions: up to 2014.1.3
 
-Description of the problem:
+Description:
+Marcio Roberto Starke reported a vulnerability in the Nova VMware
+driver. A race condition in its VNC port allocation may cause it to
+connect the wrong console if instances are created concurrently. By
+repeatedly spawning new instances, an authenticated user may be able
+to gain unauthorized console access to instances belonging to other
+tenants. Only Nova setups using the VMware driver and the VNC proxy
+service are affected.
 
-Domblkstat is possible even with read-only connection, so whenever
-migration with spice is done and domblkstat gets called at the same time
-as qemuMonitorGetSpiceMigrationStatus(), there is certain possibility
-that the daemon crashes (null pointer dereference).
+Juno (development branch) fix:
+https://review.openstack.org/114548
 
-An unprivileged user able to issue commands to running libvirtd could
-use this flaw to crash libvirtd and prevent more privileged clients
-from working correctly.
+Icehouse fix:
+https://review.openstack.org/126425
 
-Upstream fix:
-http://libvirt.org/git/?p=libvirt.git;a=commit;h=484cc321
+Notes:
+This fix was included in the 2014.2rc1 release candidate and will
+appear in a future 2014.1.4 stable point release.
 
-Thanks,
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8750
+https://launchpad.net/bugs/1357372
+
 -- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
