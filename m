@@ -1,35 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/27
-Message-Id: <E1XcIwW-0005Js-Lx@rmm6prod02.runbox.com>
-Date: Thu, 09 Oct 2014 15:00:04 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/2
+Message-ID: <CACYkhxgk6oKOxoYR2DRp1BE5yd5oCAcPyvbL9tTqzQ-eTL4mxQ@mail.gmail.com>
+Date: Tue, 14 Oct 2014 12:39:48 +1100
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: ejabberd compression allows cirucumvention of encryption despite starttls_required
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 9 Oct 2014 10:34:49 -0700, Tracy Reed <treed@...raviolet.org> wrote:
-> Sure, but at least with Haskell (and the like) you have to make it very
-> explicit that this is what you want to do.
+On 14 October 2014 00:09, Hanno Böck <hanno@...eck.de> wrote:
+> I think this deserves a CVE:
+> http://mail.jabber.org/pipermail/operators/2014-October/002438.html
 
-Not in this case.  A Haskell implementation of the POSIX "sh" specification,
-that then added function imports, could have made the same mistake
-just as easily.
+If a client is willing to do that, then an attacker can simply force downgrade
+the client and connect to the server using TLS. (Assuming client
+certificates aren't in use)
 
-> Educating developers will be equally hard as switching to safer languages but
-> at least it is something people will stomache getting started on.
-
-I'm all for switching to safer languages where it makes sense; many
-problems are completely prevented by them.  Heartbleed, for example,
-would have been prevented in almost all languages *except* C and C++,
-as I have already publicly noted here:
- http://www.dwheeler.com/essays/heartbleed.html#safe-language
-
-But let's not oversell the tools.  Shellshock was the running of data
-as a command in program whose *purpose* was to be a command interpreter.
-A rewritten Haskell version (for example) could do it just as easily.
-
-Also, I think you're underestimating the cost of language switching.
-It is a *big* deal to switch languages in an existing code base.
-Educating developers is less risky, way faster, and costs less too.
-
---- David A. Wheeler
+Regards,
+  Michael
