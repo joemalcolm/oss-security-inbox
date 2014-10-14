@@ -1,22 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/31
-Message-ID: <1407533226.29725.33.camel@scapa>
-Date: Fri, 08 Aug 2014 23:27:06 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/8
+Message-ID: <20141014073818.6d24e484.reed@reedloden.com>
+Date: Tue, 14 Oct 2014 07:38:18 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2014-08-08 at 14:20 -0700, Greg KH wrote:
-> > Actually, since it's a module parameter, it doesn't seem possible to
-> > toggle it without reloading the module (or rebooting if it's
-> builtin).
-> > So it might not be that easy to do the locking part.
-> 
-> echo "0" > /sys/module/usbcore/parameters/authorized_default
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I did that, but unplugging/replugging my mouse still works after that.
--- 
-Yves-Alexis
+On Tue, 14 Oct 2014 13:15:41 +0200
+Hanno Böck <hanno@...eck.de> wrote:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+> A number of people already recommend disabling SSLv3, e.g. the Qualys
+> configuration guide. Disable it now - no matter if the rumors about a
+> serious vuln are true, you'll be safe.
+
+https://wiki.mozilla.org/Security/Server_Side_TLS has some great info
+on configuring your web servers and load balancers to have the best
+possible SSL/TLS settings, including specific example configs to help
+you out.
+
+~reed
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iKYEARECAGYFAlQ9NV5fFIAAAAAALgAoaXNzdWVyLWZwckBub3RhdGlvbnMub3Bl
+bnBncC5maWZ0aGhvcnNlbWFuLm5ldDZCNTZGOUFDMDdCNjg1RDdEQzQ1NjBEQTZC
+QTIyMjI2RjNDMzNENUEACgkQa6IiJvPDPVpviQCgkXv+V3uzoLKuNAITQt33kSn5
+upwAn0TxonRRgEPZYyqUaTIsRlgKkqm7
+=fmf8
+-----END PGP SIGNATURE-----
