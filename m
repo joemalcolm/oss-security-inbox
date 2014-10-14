@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/16
-Message-ID: <CALx_OUDWD2FoneQ6hwGG5cjaN+jHFNPgW2xeZ47OrBzVT3MT+Q@mail.gmail.com>
-Date: Mon, 29 Sep 2014 07:45:22 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/11
+Message-ID: <20141014083643.1e0ab89e.reed@reedloden.com>
+Date: Tue, 14 Oct 2014 08:36:43 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: Chester Ramey <chet.ramey@...e.edu>
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
-> Am I the only one who is wondering: Who is paying Chet to do this?
+On Tue, 14 Oct 2014 08:23:23 -0700
+Alex Gaynor <alex.gaynor@...il.com> wrote:
 
-Chet probably had a busy couple of weeks because of a piece of code
-that went unnoticed for longer than the age of some people posting to
-this list. As soon as additional problems with the original fix
-cropped up, he also worked pretty hard to adopt a more robust prefix
-approach, which shipped upstream about a day ago.
+> At what point are we going to decide that it's absurd for every single TLS
+> deployment to need to reconfigure everything in order to achieve strong
+> security, and say that OpenSSL (or even Apache/Nginx/HAProxy/etc.) should
+> just configure things reasonably out of the box?
 
-While I'd be the first to line up and just get rid of the affected
-functionality, the worries about compatibility with existing code are
-pretty valid. Heck, we unexpectedly bumped into issues with that when
-fixing the bug at Google. We were surprised to notice that some people
-do use function exports in their code, and then, that some of them use
-mock object-oriented notation like function foo::bar { ... } - which
-actually malfunctioned after the first patch.
+I agree, but the OpenSSL folks have always been fairly resistant to
+changing things that might "break compatibility", or at least it seems
+that way.
 
-So, I don't think there's a lot of value in making random accusations.
+This same type of argument came up when trying to get Ruby to use
+better OpenSSL settings by default
+(https://bugs.ruby-lang.org/issues/9424). Everybody wants to blame
+somebody else. Nobody wants to possibly be on the hook when things
+break.
 
-/mz
+~reed
