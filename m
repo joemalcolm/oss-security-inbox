@@ -1,29 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/19
-Message-ID: <20140930131023.GA27220@suse.de>
-Date: Tue, 30 Sep 2014 15:10:23 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/19
+Message-ID: <DA3D0190-CFCA-4184-9EC6-76E129EDCCE1@dwheeler.com>
+Date: Wed, 15 Oct 2014 07:49:10 -0400
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: oss-security@...ts.openwall.com,Florian Weimer <fweimer@...hat.com>
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 30, 2014 at 01:50:40PM +0100, Mark R Bannister wrote:
-> > I discuss the setuid/setgid vulnerability at the following site,> including demonstrating how Florian's prefix/suffix patch provides
-> > no protection:>
-> > http://technicalprose.blogspot.co.uk/2014/09/shellshock-bug-third-vulnerability.html
-> 
-> Please can we have a separate CVE for the setuid/setgid bash exploit?  I think this attack vector deserves to be tracked properly, and we need to be clear on when and if someone chooses to provide a fix for it.
-> 
+> Buffer reuse is common in languages with memory safety (so that I/O 
+throughput is not bounded by garbage collector throughput).  The impact 
+is reduced (you only leak prior buffer contents, whatever that might be, 
+not anything which happens to be in the vicinity on the heap).  But I 
+don't think it's true that memory safety prevents such information leaks
 
-"innocuous looking setuid program" made my day ;)
+Heartbleed definitely would have been countered by memory-safe languages.  NIST even demonstrated that address sanitizer countered it, which is direct experimental proof.  More info at http://www.dwheeler.com/essays/heartbleed.html
 
-We should take care not to blame all and everything to bash.
 
-Sebastian
 
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+--- David A.Wheeler
