@@ -1,73 +1,158 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/17
-Message-ID: <CAN4CQ4yniUOBXACwXo1iQ3=0E6UeSvky_5vCkTUNLFA7W=DL6w@mail.gmail.com>
-Date: Fri, 3 Oct 2014 14:44:00 -0700
-From: Kohsuke Kawaguchi <kk@...suke.org>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Security advisory in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/1
+Message-ID: <CAOfWR+G6j3ki4q1SfFSMRm1OLWaOevqGcRiRobWa6dpgSXjPHg@mail.gmail.com>
+Date: Tue, 14 Oct 2014 20:21:09 -0400
+From: Robert Watson <robertcwatson1@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-We are still learning how we should handle vulnerabilities, so I'm sure
-there's room for improvements.
+My first post so I'll keep it short...
 
-We have multiple release lines to which the fixes have to be released
-simultaneously, and overall this overhead is significant. That's why we did
-one massive release that contains all the fixes.
+I think dwheeler is right. Secure systems require secure practices, which
+can be done in most any language. Some are just easier than others.
 
-Wrt CVE-2013-2186, a week ago we got a report from somebody that he did a
-security scan and found that we are still using a vulnerable version of the
-library to which CVE-2013-2186 is assigned. In this release we use a newer
-version of the library that addresses the problem, and I thought it'd be
-appropriate to raise a flag to the users that if they continue to use older
-versions, they'd remain vulnerable to CVE-2013-2186. That's why it's in the
-advisory. It is not because we sat on a report for more than a year.
+Having programmed on Unix/Linux since the mid-80s with everything from
+COBOL to C, I have to say that most of it has been in shells like bash.
 
-When you say the timeframe is especially concerning, perhaps you mean you
-are concerned that we fail to notice this vulnerability in our library for
-more than a year, and if so, you are of course right. Jenkins project has
-gotten a long list of library dependencies, and I haven't found any
-practical means to get notified when vulnerabilities are found in any one
-of them.
+We haven't seen the last of shellshock. What created the vulnerability is
+inappropriate use of a design pattern that has been a staple of Unix/Linux
+"gurus" since the early days... writing programs that write programs.
 
-2014-10-01 19:11 GMT-07:00 Solar Designer <solar@...nwall.com>:
+Most awk programming is done this way. Awk is a Turing-complete interpreted
+language that's exceptionally fast at pattern-matching. But usually, shell
+scripts just feed it snippets of code for things where the scripting
+language would be too slow.
 
-> Bryan - I think Kohsuke is not subscribed.  I've added CC.
+Another example:  As an Oracle DBA, most of my time was spent writing shell
+scripts that generated extensive sqlplus (Oracle's commandline interpreter)
+SQL scripts.
+
+A DBA often needs to make changes like adding a timestamp field to every
+table in a 400-table database on a system where, legally, downtime is not
+an option. Too error-prone to do manually.
+
+Every change was scripted and examined by several sets of eyes. It was
+tested numerous times on a testing database. Only when perfected, was it
+allowed to run on production.
+
+Easily passing data from one program to become the code of another is a
+required part of managing complex installations. Using C or some other
+"formal" language is much more cumbersome and time-consuming.. Have done
+that too...
+
+Even after Y2K, we still ran a mainframe for certain legacy
+functionalities. Changes there had to be coded in COBOL. Why do you think
+it takes so many COBOL programmers to do anything? (there's got to be a
+joke in there somewhere :-)
+
+There are two main problems that led to shellshock...
+
+1. Web developers thinking that the system would not allow users to do
+anything except what there was explicit programming for.
+
+Security in any Unix/Linux system (or derivatives) is not in any way
+enforced by code. Security is enforced by ownership, groups, permissions
+and optionally, by ACLs like SELinux or AppArmor.
+
+It is not actually bash's job to limit access. That's the job of the
+program that establishes the session, such as telnet, login, ssh, ftp and
+... the program that manages http connections: the web server.
+
+2. Misunderstanding the "flexible syntax" of bash. The PoC code line that
+is now burned into our brains is not interpreted as a lot of people expect
+it to be. The variable X is being set to a string containing 2 or more
+distinct commands separated by semicolons which is then being executed...
+just as it is supposed to be.
+
+The documentation for this functionality is there, but you have to mentally
+put together statements made in several different, unobvious places.(Not
+good.)
+
+The first command is the function definition, which deviates from expected
+context due to the "clever hack" of creating a function from the variable
+name. Subsequent commands follow the semicolon after the the function.
+
+The subsequent commands are NOT executed by the function in the subshell
+(bash -c ...). They are executed by the calling process (also bash in this
+case).
+
+Depending on race-conditions, complexity of the command and other factors,
+their output may actually FOLLOW the output of the executing function.
+
+( It's taken a good bit of experimentation and some involved bash coding to
+verify this much. Still trying to find a practical technique to close the
+vulnerability though. Maybe this tidbit will help someone more skilled than
+I fashion a permanent solution for shellshock and the many other
+code-injection vulnerabilities like it out there. )
+
+("... keep it short": Oh well. Forget that. Sorry for being long winded.
+Thoughtful disagreement enthusiastically invited.)
+
+​Robert​
+*Trust in truth keeps hope alive*
+*​ <http://www.nationalpartnership.org/issues/health/HIT/>*
+On Tue, Oct 14, 2014 at 5:45 PM, David A. Wheeler <dwheeler@...eeler.com>
+wrote:
+
+> On Wed, 15 Oct 2014 02:10:41 +0800, Pavel Labushev <
+> pavel.labushev@...box.no> wrote:
+> > By "Haskell" I mean any technology, its scientific basis and the
+> > other aspects altogether, that I think have the potential of
+> > significantly shifting the paradigm.
 >
-> On Wed, Oct 01, 2014 at 08:36:59PM -0500, Bryan Drewery wrote:
-> > On 10/1/2014 6:25 PM, Kohsuke Kawaguchi wrote:
-> > > I just wanted to share that the Jenkins project issued a security
-> advisory
-> > > today. These issues are independently found and we've aggregated into a
-> > > single release.
-> > >
-> > > The relevant CVE IDs, our bug tracking IDs are available here
-> > > <
-> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01
+> A rose by any other name will smell as sweet, but calling it a
+> "pig" inhibits communication. If you mean
+> "significantly better tools", just say that.  Or create a new name and
+> define it.
+>
+>
+> > I know that many would disagree and say that the devil is in the details.
+>
+> I'm one of those who disagrees.  The devil, as well as the rest of the
+> universe,
+> *is* in the details.  In particular, I think a lot of tools are hideously
+> oversold,
+> leading to serious problems.  All tools have limitations; knowing those
+> limitations
+> is key to developing (more) secure software.
+>
+> That said, tools that make it *easy* to write secure code (or at least
+> eliminate certain mistakes) often produce more secure code, simply because
+> developers are people who make mistakes.
+>
+>
+> > Imagine you're writing a shell and decide to introduce the high level
+> > distinguished concepts of code, data, data source, and derive the
+> > concepts of trusted|untrusted data|code [source].
+>
+> That might help, though that's simply *one* approach
+> (among many) for stronger separation of code and data.
+> What we need are examples of such approaches, and experimental data
+> to show that they're really better.
+>
+> > > I don't think Haskell is a magic bullet.  I do think type-rich
+> > > languages (and languages with memory safety) have a lot to offer, but
+> > > writing secure software in them is still hard.
 > >
-> > > .
-> > >
-> > > The new versions can be downloaded from here
-> > > <http://mirrors.jenkins-ci.org/>.
-> > >
-> > > (This is the first time I do this, so my apologies in advance for
-> probably
-> > > failing to follow the expected format.)
-> >
-> > Kudos to all for finding and fixing these issues. It was quite a
-> > surprising list though. Were these fixes kept from release for an
-> > extended time? The timeframe for CVE-2013-2186 is especially concerning.
+> > And I'm convinced that "Haskell", in a broader sense and together with
+> > the other factors, is a part of a solution, capable of making a
+> > qualitative change.
 >
-> Many of these issues were brought to the distros list on Fri Sep 26
-> 17:10:16 2014 UTC, and got their CVE IDs assigned there.  However,
-> CVE-2013-2186 was not among those.  I don't know why the old CVE ID,
-> nor how that issue was handled.
+> I agree that better tools can be part of a solution, and in some cases
+> (especially together) could produce a qualitative change.
 >
-> Alexander
+> The most obvious example of an underused tool is memory-safe languages.
+> Shellshock would not have been countered by them,
+> but Heartbleed (and many others) *would* have been countered.
+> But many people are not willing to pay the runtime costs, and the
+> developer-retooling effort, to switch to a memory-safe language for
+> low-level components like operating systems, runtimes, crypto libraries,
+> image processing libraries, and the like.  We *have* languages like Ada
+> which run at the same speed as C, and other languages are relatively close
+> (e.g., D, Go, Rust, Nimrod), but as yet there has
+> been no big switch.  For a variety of reasons, it's hard to change.
 >
-
-
-
--- 
-Kohsuke Kawaguchi
+> --- David A. Wheeler
+>
 
