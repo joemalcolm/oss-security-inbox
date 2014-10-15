@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/17/6
-Message-Id: <201403171525.s2HFOvfQ006743@linus.mitre.org>
-Date: Mon, 17 Mar 2014 11:24:57 -0400 (EDT)
-From: cve-assign@...re.org
-To: steve@...ve.org.uk
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Insecure usage of temporary files in GNU Readline
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/18
+Message-ID: <543E5BB8.8040601@beneaththewaves.net>
+Date: Wed, 15 Oct 2014 04:34:16 -0700
+From: "Ben Lincoln (0E1C7DBB - OSS)" <0E1C7DBB@...eaththewaves.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2014-10-15 02:13, Pierre Schweitzer wrote:
+> I've a naive question regarding the vulnerability, actually.
+>
+> It says you can recover plain text of ciphered text, using a specific
+> method.
+> But, in the end it means you'll have plain text + ciphered text of the
+> same text. Does that mean you can easily bruteforce the key that was
+> used? So that you can actually, if you logged the complete session,
+> decipher the whole session of the user? And not only the cookie?
+> Or breaking the key would be too complex yet?
 
->   sprintf (fnbuf, "/var/tmp/rltrace.%ld", getpid());
->   unlink(fnbuf);
->   _rl_tracefp = fopen (fnbuf, "w+");
+Hi Pierre.
 
-Use CVE-2014-2524.
+For modern block ciphers (e.g. AES, or even 3DES), known-plaintext 
+attacks still generally require the entire keyspace to be brute-forced, 
+which is not practical using the technology available today.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Think about the Adobe credential breach. There are many thousands of 
+known plaintext + ciphertext pairs there (the same 3DES key was used to 
+encrypt all of the passwords, and the passwords for many users were able 
+to be recovered based on a combination of ECB-mode encryption + 
+plaintext password hints), but the actual key was never recovered even 
+with all of that data to work with.
 
-iQEcBAEBAgAGBQJTJxJmAAoJEKllVAevmvmstlAIAIi0AcMJbpsK49FJhP6m9qob
-ej4X6ASQtA+naA9HyFZBlvZboJYS1WMoMyts69F1yMOMLzxwXCxazZbX/0+gMKj/
-sVjmIQeAB6QQJkFESlzdD4j1kG81qfcC4E5rPVse9lzpstP9j9IkpefpfzcGAwg2
-wrDO11+9kyzJKD5DVfZWoX+fGhwp0ebzZrRf4jeQ6nHMN5pvYPk36g0Uqo8nDof7
-vwu2lNTF9PHNrzt3U+xF2CR4sJsmcrkzuh9XwEtIpEi/za4bL8Too6ITfRcdnbAz
-IEn/lORGcUuAQyWdPoTxcMb5Ge/4iCWx0zAlB7j6VGB1NZ4VgkK2tnDd2vh8jBM=
-=Cd3q
------END PGP SIGNATURE-----
+- Ben
