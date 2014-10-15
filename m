@@ -1,45 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/5
-Message-ID: <alpine.LFD.2.10.1409221838500.4095@javelin.pnq.redhat.com>
-Date: Mon, 22 Sep 2014 18:43:19 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-cc: Steve French <sfrench@...ba.org>
-Subject: Re: CVE request: [CIFS] Possible null ptr deref in SMB2_tcon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/15
+Message-ID: <543E3AC1.90605@reactos.org>
+Date: Wed, 15 Oct 2014 11:13:37 +0200
+From: Pierre Schweitzer <pierre@...ctos.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-   Hello Raphael,
+I've a naive question regarding the vulnerability, actually.
 
-+-- On Wed, 17 Sep 2014, Raphael Geissert wrote --+
-| Commit 18f39e7b[1] of the linux kernel repository fixes a remote null
-| pointer dereference on the client when it resolves DFS referrals but
-| the server deletes the IPC$ share.
+It says you can recover plain text of ciphered text, using a specific
+method.
+But, in the end it means you'll have plain text + ciphered text of the
+same text. Does that mean you can easily bruteforce the key that was
+used? So that you can actually, if you logged the complete session,
+decipher the whole session of the user? And not only the cookie?
+Or breaking the key would be too complex yet?
 
-  IIUC, this would occur while mounting a remote share, right? mount(2) would 
-be a privileged operation on the client.
+Cheers,
 
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+On 10/15/2014 12:41 AM, Hanno Böck wrote:
+> It's out:
+> 
+> https://www.openssl.org/~bodo/ssl-poodle.pdf 
+> http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-exploiting-ssl-30.html
+>
+>  My conclusion stays the same: Disable SSLv3.
+> 
 
+
+- -- 
+Pierre Schweitzer <pierre@...ctos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQIcBAEBAgAGBQJUICBvAAoJEN0TPTL+WwQfkeoP/0S5bandiEWUbwjosPyXPhip
-oHlYjjKztzTpQ6fQC0+nkppZdLSF9O5gkwXjy0qqgOt6woTuMbJLz2hD1Ea/rRAC
-JHoKZDbE97+mc6biauq+Is12h0wbSyhCS+McX2i3ftVg9Qwr2Hv/dV3POveRk3/f
-emXTbdQbDAOxqqsX7QqtlRDIv1m071wtKcE+sOYrlS+X75f3L94PEz8OJMzM+f/Y
-CvZd1HB0ml9VVTFbmI640yBTF9zApVJbzYdKoVNNkh0RKD4awmHQWxCZSuJQn7Aq
-KWCye+eJEJXeeBm3CKYHFtjeXPrhQx0a35c1yGPma7Hf+NzVk4J1S/qdZYGnRM8y
-oyaPkbNrnpDZu4SlvKOXJCvd52Xzg50qr9tzgfv/NPtkezliKDswcNdVOtEA+gOp
-40dbBBT5o9lbQ/Wbj+QnCy+9lW+RqTg9pezS9cD0zsI7iIlnU47SYtSQZoKLjG9w
-Tpicr/pXS3n7Bfa2+bGZUGohcjluNub8GkQMfXidYEyhABFxViugEOf3PVrA0KcB
-jR6d2D/Skl0+gnr2RDAQcJle7AclPDxOYgOwAnUihn0xCohwAgWzMHkhxH5eXxfq
-9gE6PM/ewASR+aDlafUEQcukKixQFp/sSi4+/eHbKbTjAP+mJpeE3rX2OSgKCDJH
-Kfg9bJ75KJ5Zal1/aAr8
-=w6WX
+iQIcBAEBAgAGBQJUPjrBAAoJEHVFVWw9WFsL1lsP/jp1l1qTBChu7rC4Z/JJovdb
+RTER+6C7RpwYB9krldhBtlqvcQoyDTr/XPaOaBgBaG311Ue3NnRjaG5iuskn5sSx
+Ej+uZj5Eet269AlW9MzldXCFMkI5C0cnhtBypd8QGXC1h79GZlnvp4aa22kVzovd
+hmzv9IgU+GYpdgFMFNsBCOAUPpBTTEbGCjXD3/T9h0nmKfJq1CFY4ztbN9s2q54z
+CJh6m3zKKqQHAOtxKCbHuxO70D+A7N/BHh8NmkiKvAdqn+9ohscf06oGnm8Zo1PS
+uOAP+R1IFbpJa5oPjKN3pKTrfR3Yj0hoImaYyXXyyuhH1LvAZmDqHjTh24hfoLIa
+PIE/eAckNx4YuxuYiO8n58b2sIdwPQgh9P8JKTwbE+H6wApF8O+5PYtSc8wWeOhn
+kM3wcefkQ/TZzGC8kcc34knbOhQmWUHQ2kXb0g8QMKPJl+DhOeDYkM/QLeYiXVey
+AFwnPcywC9QBY+uF3hlTFEjZ+j+u9IvpbWIb9g7fs7Q96l1hp2p998nuVmwfTvxZ
+yYIBbCrC0XNKN5GQtYhSjtXQZ2ynNw6Etgiysmty4mYfuIZDLIspw9e2oCErfle+
+MxmLpjbR+UhA/oaagD8hqs720Er0SMVa1RbJwZeu+JjPm1JOetToFszaNrmXuR4Y
+xqAJzpkSdPNx0ehpr8rw
+=+gFQ
 -----END PGP SIGNATURE-----
