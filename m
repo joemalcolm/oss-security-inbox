@@ -1,47 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/7
-Message-ID: <53CCFF43.8030209@enovance.com>
-Date: Mon, 21 Jul 2014 07:53:39 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-025] Denial of Service in Neutron allowed address pair (CVE-2014-3555)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/2
+Message-ID: <3230301C09DEF9499B442BBE162C5E4825768692@SESTOEX04.enea.se>
+Date: Wed, 15 Oct 2014 05:28:34 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-025
-CVE: CVE-2014-3555
-Date: July 17, 2014
-Title: Denial of Service in Neutron allowed address pair
-Reporter: Liping Mao (Cisco)
-Products: Neutron
-Versions: up to 2013.2.3, and 2014.1 versions up to 2014.1.1
+Thanks Hanno,
 
-Description:
-Liping Mao from Cisco reported a denial of service vulnerability in
-Neutron's handling of allowed address pair. By creating a large number
-of allowed address pairs, an authenticated user may overwhelm neutron
-firewall rules and render compute nodes unusable. All Neutron setups are
-affected.
+A reflection: Maybe we shouldn't post  information like this here or somewhere else which is not published yet even if the information has leak out? Although all members here are reliable but it is still an open mailing list and we should be careful and act more responsible. 
 
-Juno (development branch) fix:
-https://review.openstack.org/107734
+Cheers
+Sona
 
-Icehouse fix:
-https://review.openstack.org/107733
-
-Havana fix:
-https://review.openstack.org/107731
-
-Notes:
-This fix will be included in the Juno-2 development milestone and in
-future 2013.2.4 and 2014.1.2 releases.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3555
-https://launchpad.net/bugs/1336207
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+> It's out:
+> 
+> https://www.openssl.org/~bodo/ssl-poodle.pdf
+> http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
+> exploiting-ssl-30.html
+> 
+> My conclusion stays the same: Disable SSLv3.
+> 
+> --
+> Hanno Böck
+> http://hboeck.de/
+> 
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
