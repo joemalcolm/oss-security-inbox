@@ -1,45 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/3
-Message-ID: <20140723064325.GB5885@suse.de>
-Date: Wed, 23 Jul 2014 08:43:25 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/16
+Message-ID: <543E3EA0.9070306@redhat.com>
+Date: Wed, 15 Oct 2014 11:30:08 +0200
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Linux peer_cred Mischmasch
+Subject: Re: Thoughts on Shellshock and beyond
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 22, 2014 at 12:22:30PM -0700, Andy Lutomirski wrote:
-> On 07/22/2014 04:17 AM, Florian Weimer wrote:
-> > On 07/22/2014 12:15 PM, Sebastian Krahmer wrote:
-> >> While maybe_add_creds() (via SOCK_PASSCRED) and scm_send()
-> >> (via unix_{stream,dgram}_sendmsg()) use the real UID,
-> >>
-> >> cred_to_ucred() (via SO_PEERCRED) passes the EUID (this time
-> >> also kuid_munged()).
-> > 
-> > There should also be a discrepancy regarding when the credentials are
-> > captured (time of send for SOCK_PASSCRED, time of socket creation for
-> > SO_PEERCRED).  The latter is required because privileged processes
-> > assume that they can safely write to stderr, so picking the current
-> > process credentials may well introduce vulnerabilities.
+On 10/14/2014 11:45 PM, David A. Wheeler wrote:
+> The most obvious example of an underused tool is memory-safe languages.
+> Shellshock would not have been countered by them,
+> but Heartbleed (and many others) *would* have been countered.
 
-It does, and that should be ok.
-
-> > 
-> 
-> Indeed.  IMO both of these interfaces are flawed, but PASSCRED is
-> terminally broken and should never be used.  See, for example,
-> CVE-2013-1979, which is the immediate cause of the ruid thing.
-
-Thats what I was wondering whether CVE-2013-1979 only fixed SCM_CREDENTIALS
-case and missed to fix SO_PEERCRED.
-I am not fully convinced thats OK to get one time the euid and another time
-the uid (even though I liked the spy example:)
-
-Sebastian
+Buffer reuse is common in languages with memory safety (so that I/O 
+throughput is not bounded by garbage collector throughput).  The impact 
+is reduced (you only leak prior buffer contents, whatever that might be, 
+not anything which happens to be in the vicinity on the heap).  But I 
+don't think it's true that memory safety prevents such information leaks.
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
-
+Florian Weimer / Red Hat Product Security
