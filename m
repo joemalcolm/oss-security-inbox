@@ -1,103 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/25/4
-Message-ID: <20140525115633.GA29699@gaara.hadrons.org>
-Date: Sun, 25 May 2014 13:56:33 +0200
-From: Guillem Jover <guillem@...ian.org>
-To: Raphael Geissert <geissert@...ian.org>
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: directory traversal in DSA-2915-1-patched dpkg in Debian squeeze
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/12
+Message-ID: <3230301C09DEF9499B442BBE162C5E48257688B7@SESTOEX04.enea.se>
+Date: Wed, 15 Oct 2014 07:22:17 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
-Hi!
-
-On Sun, 2014-05-25 at 11:17:52 +0200, Raphael Geissert wrote:
-> On Thursday 01 May 2014 20:52:37 cve-assign@...re.org wrote:
-> [...]
-> > However, there is another question that could possibly result in a
-> > second CVE ID. On wheezy, there's apparently a security problem in, at
-> > least, these two cases:
-> > 
-> >   1. the installed patch program is an older version of patch that's
-> >      identical to squeeze's supported version of patch. Possibly, this
-> >      can happen on a correctly maintained/supported Debian system
-> >      because sometimes a system is in a partially upgraded state. In
-> >      particular, the vulnerability affects root's use of dpkg, which
-> >      may be a completely expected activity because the administrator
-> >      might want to unpack a source package even though an upgrade is
-> >      unfinished.
-> > 
-> >   2. the patch program in root's path is not something obtained from
-> >      Debian, e.g., the administrator intentionally decided to install
-> >      a non-GNU patch program
-
-Actually, dpkg-source relies pretty much on the patch program being
-GNU patch, or at least an implementation with a compatible command line
-interface, which I don't know exists. Still, yes, the patch program
-could be locally installed say directly into /usr/local, or from a
-local binary package.
-
-> > We're not sure what can be done about case 1. The general issue is
-> > that, when doing an upgrade of an arbitrary OS, the system might
-> > intermittently be in a state in which incompatibility of
-> > old-OS-version programs and new-OS-version programs has a major
-> > security risk. Maybe the right answer is a policy that nobody is
-> > allowed to do anything while an upgrade is in progress. In other
-> > words, regular users may not be logged in, and root should only be
-> > running the upgrade program and nothing else. ("nothing else" is
-> > impractical; realistically, risk is reduced by running as little else
-> > as possible.)
-
-In the end I fixed the subsequent issue by outright rejecting C-style
-formatted pathnames, which covers all cases and any combination of patch
-program versions. I guess it could be considered that this was supposed
-to be the proper fix from the start, and the intial one was just a
-partial fix. So I'm not sure if this then merits a CVE id though.
-
-> > Case 2 possibly violates the expectations of the concept of a Linux
-> > distribution OS or other OS. In other words, the dpkg program requires
-> > the patch program, and therefore the administrator must ensure that
-> > the patch program (at least, in root's path) is the one provided by
-> > the OS vendor. If the administrator decided to install any other patch
-> > program, the resulting security problem would typically be considered
-> > a site-specific problem and thus outside the scope of CVE.
-
-Rigth, from the Debian prespective, I guess this could easily be
-considered unsupported. Not from dpkg upstream PoV though, as it is
-also used on other distributions or could be built from source, with
-unknown combinations of other component versions installed.
-
-> > However, a
-> > CVE ID could be assigned of any of these is true:
-> > 
-> >   - on wheezy, dpkg doesn't have any explicit requirements about the
-> >     patch program
-
-Yes, dpkg does not impose any kind of versioned dependency on neither
-squeeze or wheezy. So it is susceptible to at least the problem on partial
-upgrades, which the distribution tends to support.
-
-> >   - the dpkg documentation states that a non-GNU patch program can be
-> >     used if desired
-
-It's not stated, and I doubt that would work, but from dpkg PoV, it
-should be considered supported as long as the command line is GNU
-patch compatible, and the patch program can be invoked without error.
-
-> >   - Debian has a general policy that a supported program (such as
-> >     dpkg) must be robust in the face of non-standard but reasonable
-> >     site-specific software changes. In other words, if Debian program
-> >     1 allows arbitrary code execution in situations where the
-> >     administrator replaces Debian program 2 with an
-> >     often-considered-equivalent non-Debian program, this is supposed
-> >     to be treated as a vulnerability in Debian program 1.
+> > A reflection: Maybe we shouldn't post  information like this here or
+> > somewhere else which is not published yet even if the information has
+> > leak out? Although all members here are reliable but it is still an
+> > open mailing list and we should be careful and act more responsible.
 > 
-> Debian doesn't have a policy such as the one in the third point. I'm CC'ing 
-> the dpkg maintainer to allow him to answer from his POV.
+> Are you saying that as a reflection on your part?
 
-Rigth, not Debian, but I'd consider that a supported setup from dpkg
-PoV, with the aforementioned caveats of GNU patch compatibility.
 
-Hope that clarifies.
+Yes, it was only a reflection on my part/post. Hanno's reply included a good background which was publically know and a workaround for the vulnerability: Disable SSLv3.
 
-Thanks,
-Guillem
+I was just thinking we who are responsible for security in the open source products, should act more responsible and be careful. 
+
+Thanks for all your comments on this.
+
+-- Sona
+
