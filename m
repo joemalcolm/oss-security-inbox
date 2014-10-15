@@ -1,40 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/5
-Message-Id: <201404180657.s3I6vI8i024490@linus.mitre.org>
-Date: Fri, 18 Apr 2014 02:57:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request Qemu: out of bounds buffer access, guest triggerable via IDE SMART
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/9
+Message-ID: <CAKTMEKMadJcmiY-ar=6S3OLXysKcFu=vcrC-xytXCai7MecDjQ@mail.gmail.com>
+Date: Tue, 14 Oct 2014 23:32:20 -0700
+From: Krassimir Tzvetanov <maillists@...ssi.biz>
+To: oss-security@...ts.openwall.com
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+If I have to complain about something (and this is a general concern not
+poodle-centric) it would be that I will be good to get heads up on
+vulnerable versions.
+Even if no details are released at that time it would be good to have 4
+hours heads up. In most circumstances this is not sufficient time to
+reverse and start exploiting but would allow responders to enumerate the
+products/systems affected and contact the owners.
 
-> An out of bounds memory access flaw was found in Qemu's IDE device model. It
-> leads to Qemu's memory corruption via buffer overwrite(4 bytes). It occurs
-> while executing IDE SMART commands.
-> 
-> A guest's user could use this flaw to corrupt Qemu process's memory on the
-> host.
-> 
-> https://lists.nongnu.org/archive/html/qemu-devel/2014-04/msg02016.html
+In a production environment this might mean cancelling planned change
+requests and in development environments this might mean preparing the
+necessary engineering teams and test environments.
 
-Use CVE-2014-2894.
+In some cases this will also make it easy for people from other time zones
+to have the proper incident managers engaged (provided they have less
+senior stuff or automation monitoring this list).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+So if you are working with embargoed info consider encouraging the owners
+to disclose affected versions prior to the full report.
 
-iQEcBAEBAgAGBQJTUMuTAAoJEKllVAevmvmsXfsH+wfnzHlKRV9fAWjgGXj1lmCL
-jjjS9vPHJgDGstCzDsq0fVDilwye2+1zWmHKJ1J56fWgOhwQJqvLelSL6teLNW44
-4He7QyA0FynTTuv1G7sFqlEzF9PpnpwBPbIVmZgWy4pSFehz1BSps3YajStquCA1
-4qiDddNKmeu3qMfBin5V+KZjVZLRc8Whg0k3JHhVu4Ua77lx+l4V4VworNQtxPOI
-ixxGQeHMi/tWY3fUcPfaA6fOrpYT/f+bmNGpE1IvPtevAeA6xHO1JaXb0ykVKCT+
-i0B0OayXm7yGZRDbqGFWlPX2l/EtZXE+5ymSgPf5iaIWcqS2dDdeeaQZ6UBAqNE=
-=BERj
------END PGP SIGNATURE-----
+Best,
+Krassimir
+
+
+On Tue, Oct 14, 2014 at 11:13 PM, mancha <mancha1@...o.com> wrote:
+
+> On Wed, Oct 15, 2014 at 05:28:34AM +0000, Sona Sarmadi wrote:
+>
+> Hanno was sharing already-public information.
+>
+> Adam Langley tweeted it at Tue Oct 14 22:28:32 UTC 2014 [1] and Hanno
+> emailed the news to oss-sec 12 minutes and change later. I didn't check
+> to see if there were even earlier public disclosures than agl's.
+>
+> Someone is owed an apology.
+>
+> --mancha
+>
+> [1] https://twitter.com/agl__/status/522151998502617088
+>
+> PS Ugh, top-posting.
+>
+> > Thanks Hanno,
+> >
+> > A reflection: Maybe we shouldn't post  information like this here or
+> > somewhere else which is not published yet even if the information has
+> > leak out? Although all members here are reliable but it is still an
+> > open mailing list and we should be careful and act more responsible.
+> >
+> > Cheers Sona
+> >
+> > > It's out:
+> > >
+> > > https://www.openssl.org/~bodo/ssl-poodle.pdf
+> > > http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
+> > > exploiting-ssl-30.html
+> > >
+> > > My conclusion stays the same: Disable SSLv3.
+> > >
+> > > -- Hanno Böck http://hboeck.de/
+> > >
+> > > mail/jabber: hanno@...eck.de GPG: BBB51E42
+>
+
