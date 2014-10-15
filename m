@@ -1,46 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/4
-Message-ID: <alpine.LFD.2.10.1406231834330.29086@javelin.pnq.redhat.com>
-Date: Mon, 23 Jun 2014 18:36:11 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2014-3471 Qemu: hw: pci: use after free triggered via guest
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/4
+Message-ID: <20141015055844.GA2572@gremlin.ru>
+Date: Wed, 15 Oct 2014 09:58:44 +0400
+From: gremlin@...mlin.ru
+To: oss-security@...ts.openwall.com
+Subject: Re: SSL POODLE (Truly scary SSL 3.0 vuln)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 15-Oct-2014 05:28:34 +0000, Sona Sarmadi wrote:
 
-    Hello,
+ > A reflection: Maybe we shouldn't post information like this
+ > here or somewhere else which is not published yet even if
+ > the information has leak out? Although all members here are
+ > reliable but it is still an open mailing list and we should
+ > be careful and act more responsible.
 
-Qemu PCIe bus support is vulnerable to a use-after-free flaw. It could occur
-via guest, when it tries to hotplug/hotunplug devices on the guest.
+Why? Old ciphers are well known as totally insecure (generally
+speaking, even some "new" are insecure as well), so the POODLE
+description does nothing but shows one more attack vector.
 
-A user able to add & delete Virtio block devices on a guest could use this
-flaw to crash the Qemu instance resulting in DoS.
+The protection against the POODLE is quite simple:
 
-Upstream fix:
-- -------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2014-06/msg05283.html
+1. For servers: disable weak encryption (in assumption they are
+updated on a regular basis).
 
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+2. For users: update old software. Alas, fully disabling weak
+encryption (e.g. set security.tls.version.min == 3 in Firefox)
+isn't what we can demand, but that leaves the user personally
+responsible for any and all data leaks.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+ >> It's out:
 
-iQIcBAEBAgAGBQJTqCZDAAoJEN0TPTL+WwQf6ooP/04A9RjbsqIomiYV5XaVQCU4
-BRf3YUoxcwxm9RvnJbdteEfjNCbsjtVDZ07u9JOr06zlgI7CiO+Mgv9NtQUHeZAb
-JafpFbBMKfTykjyWyvubVihfugYHAZwY5UdHXdfazeZuZrnSVA7b98szBGrwe075
-yPUTVf5G49F1Y8z4TvRFiG6rYj19cQihoKwzboJ+LJjNTVk5stBEUxEXwFYcIPIw
-BHdiy/Uqq9HzmUlimOgEZ7ixlDWC92zlln0CWgaKK5KugEwiyOtmA6n4B6BbQbo5
-0e0XimJ67dC6nNfRn9+PDx3IQsJYGJ405mkheL5lDj43hauGDO/by3Oy/Rqns/Nm
-+5eycIAy5oD+PCKCv5NynaHS9OG/WjRwbYEQZfGtaLLGQxSR4terQMV2ZBPT92Mt
-U6295bR4q56VFpEBqNpSqPs97775kKv717FGZ72y5Hmu2mY3XdEXhLSPqYvwoE0M
-azgBGb4s2mc0DZvKz1Yhy8Q7Z0fWRIXyzsZyyzLjfZgEDvgvHUo+Fh7wmfc7hsYx
-qlrIocGCad7lTkQGXlC0E8elD5Vfc9FB1g0VK5JRP6EtAez4c+o/KYBEZR6L+vpZ
-Q12EHAp/qcQjupDhrjqta7TB+kxTKcHjQ7w81j2JAZhR6XW1FAFrmYVZklqMLgU7
-lpULw4V70H6kAXnl87m3
-=jtkJ
------END PGP SIGNATURE-----
+TP detected...
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
