@@ -1,72 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/9
-Message-ID: <CAKTMEKMadJcmiY-ar=6S3OLXysKcFu=vcrC-xytXCai7MecDjQ@mail.gmail.com>
-Date: Tue, 14 Oct 2014 23:32:20 -0700
-From: Krassimir Tzvetanov <maillists@...ssi.biz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/14
+Message-ID: <20141015083042.GA26797@openwall.com>
+Date: Wed, 15 Oct 2014 12:30:42 +0400
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
+Subject: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
 Content-Type: text/plain; charset=utf-8
 
-If I have to complain about something (and this is a general concern not
-poodle-centric) it would be that I will be good to get heads up on
-vulnerable versions.
-Even if no details are released at that time it would be good to have 4
-hours heads up. In most circumstances this is not sufficient time to
-reverse and start exploiting but would allow responders to enumerate the
-products/systems affected and contact the owners.
+Looks like I need to comment on the specific questions on list policy:
 
-In a production environment this might mean cancelling planned change
-requests and in development environments this might mean preparing the
-necessary engineering teams and test environments.
+On Tue, Oct 14, 2014 at 10:48:00PM -0700, Walter Parker wrote:
+> What is this list's policy on Full Disclosure?
 
-In some cases this will also make it easy for people from other time zones
-to have the proper incident managers engaged (provided they have less
-senior stuff or automation monitoring this list).
+Whatever is sent to the list, if on-topic and otherwise appropriate
+(e.g., not some non-English HTML-only message), is posted with no
+artificial delay.  In this respect, the only difference from the
+Full-Disclosure mailing list (as far as I understand how it's run) is
+that oss-security is limited to / focused on Open Source.
 
-So if you are working with embargoed info consider encouraging the owners
-to disclose affected versions prior to the full report.
+While the charter does discourage some kinds of postings, this is only
+being enforced for off-topic or technically inappropriate postings.
 
-Best,
-Krassimir
+http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
+Specifically, this says (among other things):
 
-On Tue, Oct 14, 2014 at 11:13 PM, mancha <mancha1@...o.com> wrote:
+- Public security issues only please.  What you say here is public for
+the world to see - keep that in mind.  Some kinds of embargoed
+information (intended for public disclosure in at most 2 weeks) may be
+disclosed to distros.
 
-> On Wed, Oct 15, 2014 at 05:28:34AM +0000, Sona Sarmadi wrote:
->
-> Hanno was sharing already-public information.
->
-> Adam Langley tweeted it at Tue Oct 14 22:28:32 UTC 2014 [1] and Hanno
-> emailed the news to oss-sec 12 minutes and change later. I didn't check
-> to see if there were even earlier public disclosures than agl's.
->
-> Someone is owed an apology.
->
-> --mancha
->
-> [1] https://twitter.com/agl__/status/522151998502617088
->
-> PS Ugh, top-posting.
->
-> > Thanks Hanno,
-> >
+- Please don't send fully working exploits (but testcases that exercise
+the flaw are welcome)
+
+FWIW, I've always been tempted to remove the latter guideline, but as
+you can see I left it around for now.  (Someone else in this community
+wrote it.)
+
+Like I said, these two guidelines above are not actually being enforced
+during message moderation.  They're merely polite requests/reminders.
+
+> What is this list's policy on sourced/unsourced security rumors?
+
+No specific policy - I don't think it's ever been discussed so far.
+Personally, I'd like on-topic rumors to be posted in here, with due
+warnings on how unreliable the information might be.
+
+> Why do people on lists like this seem to think that censoring themselves
+> and others will actually do any good.
+
+There are a lot of people in here (as well as "on lists like this"),
+with different opinions.  In this thread, we've only seen one person
+suggest anything like you describe.
+
+> On Tue, Oct 14, 2014 at 10:28 PM, Sona Sarmadi <sona.sarmadi@...a.com> wrote:
 > > A reflection: Maybe we shouldn't post  information like this here or
-> > somewhere else which is not published yet even if the information has
-> > leak out? Although all members here are reliable but it is still an
-> > open mailing list and we should be careful and act more responsible.
-> >
-> > Cheers Sona
-> >
-> > > It's out:
-> > >
-> > > https://www.openssl.org/~bodo/ssl-poodle.pdf
-> > > http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
-> > > exploiting-ssl-30.html
-> > >
-> > > My conclusion stays the same: Disable SSLv3.
-> > >
-> > > -- Hanno Böck http://hboeck.de/
-> > >
-> > > mail/jabber: hanno@...eck.de GPG: BBB51E42
->
+> > somewhere else which is not published yet even if the information has leak
+> > out? Although all members here are reliable but it is still an open mailing
+> > list and we should be careful and act more responsible.
 
+Personally, I find this ridiculous, as do many others.  (No offense
+intended.)  Just off Twitter:
+
+<i0n1c> Seriously? People are discussing on OSS if it is irresponsible to discuss SSL3 vulnerability while someone kept it under embargo.
+
+Of course, even having this sort of discussion makes us look ridiculous.
+Yet if a list member wanted to post this "reflection", it should have
+been posted, and it was.
+
+Alexander
