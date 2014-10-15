@@ -1,34 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/16
-Message-ID: <54870EB4.1070005@internot.info>
-Date: Wed, 10 Dec 2014 02:01:08 +1100
-From: Joshua Rogers <oss@...ernot.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/8
+Message-ID: <CAKTMEKPzaHnFMCoZqK7rOH6dHs8NufPPr8i7zD1=9UaQz+NdSg@mail.gmail.com>
+Date: Tue, 14 Oct 2014 23:05:15 -0700
+From: Krassimir Tzvetanov <maillists@...ssi.biz>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: Graphviz format string vuln
+Subject: Re: SSL POODLE (Truly scary SSL 3.0 vuln)
 Content-Type: text/plain; charset=utf-8
 
-Just for reference, this was found by me, using afl-fuzz.
+Agreed: just I think you meant "1": security.tls.version.min == 1 (not 3)...
+
+from: http://kb.mozillazine.org/Security.tls.version.*
+---
+1
+
+TLS 1.0 is the minimum required / maximum supported encryption protocol.
+(This is the current default for the maximum supported version.)
+---
 
 
-Thanks,
-On 02/12/14 05:04, Steven M. Christey wrote:
+Best,
+
+Krassi
+
+
+
+On Tue, Oct 14, 2014 at 10:58 PM, <gremlin@...mlin.ru> wrote:
+
+> On 15-Oct-2014 05:28:34 +0000, Sona Sarmadi wrote:
 >
-> On Sun, 30 Nov 2014, Joshua Rogers wrote:
+>  > A reflection: Maybe we shouldn't post information like this
+>  > here or somewhere else which is not published yet even if
+>  > the information has leak out? Although all members here are
+>  > reliable but it is still an open mailing list and we should
+>  > be careful and act more responsible.
 >
->> On 25/11/14 16:40, Joshua Rogers wrote:
->>> Hi,
->>>
->>> A format string vulnerability has been found in `graphviz'.
->>> The fix commit is here:
->>> https://github.com/ellson/graphviz/commit/99eda421f7ddc27b14e4ac1d2126e5fe41719081
->>>
->>>
->>> Could I get a CVE-ID for this?
+> Why? Old ciphers are well known as totally insecure (generally
+> speaking, even some "new" are insecure as well), so the POODLE
+> description does nothing but shows one more attack vector.
 >
-> Use CVE-2014-9157.
+> The protection against the POODLE is quite simple:
 >
-> - Steve
+> 1. For servers: disable weak encryption (in assumption they are
+> updated on a regular basis).
+>
+> 2. For users: update old software. Alas, fully disabling weak
+> encryption (e.g. set security.tls.version.min == 3 in Firefox)
+> isn't what we can demand, but that leaves the user personally
+> responsible for any and all data leaks.
+>
+>  >> It's out:
+>
+> TP detected...
+>
+>
+> --
+> Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+> GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
 >
 
--- 
--- Joshua Rogers <https://internot.info/>
