@@ -1,41 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/30/1
-Message-ID: <20140530032029.GA8738@zoho.com>
-Date: Fri, 30 May 2014 03:20:29 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/11
+Message-ID: <20141015092018.560b01cc@pc>
+Date: Wed, 15 Oct 2014 09:20:18 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: info@...uxfoundation.org, admin@...ncryptoaudit.org
-Subject: Linux Foundation OpenSSL audit
+Subject: Re: SSL POODLE
 Content-Type: text/plain; charset=utf-8
 
-The Linux Foundation's Core Infratructure Initiative (CII), born during
-the aftermath of Heartbleed, has announced five new corporate sponsors
-as well as its immediate plans to support the NTP, OpenSSH, and OpenSSL
-projects. [1]
+Am Wed, 15 Oct 2014 09:10:24 +0200
+schrieb Florian Weimer <fweimer@...hat.com>:
 
-I applaud both the Linux Foundation and all its corporate sponsors for
-their inspiring leadership and vision.
+> As far as I can tell, the TLS downgrade protecton mechanism
+> work. However, browsers have an out-of-protocol, unprotected
+> downgrade mechanism to SSL 3.0.  (The Firefox function is called 
+> “retryDueToTLSIntolerance”.)  I think we would be better off
+> disabling *that* mechanism (for which configuration knob seems to
+> exist, alas), instead of disabling SSL 3.0 or adding a different
+> protocol version probing mechanism.
 
-In the case of OpenSSL, some of the funding will be channeled through
-the Open Crypto Audit Project (OCAP) which is being charged with its
-security audit.
++1
 
-OCAP can benefit greatly from reviewing OpenBSD's ongoing OpenSSL
-audit/review process which was the genesis for LibreSSL. I am cc'ing
-OCAP so they might comment on how the LibreSSL effort will factor into
-their workplan.
+I've argued for that since... 2008!
+https://bugzilla.mozilla.org/show_bug.cgi?id=450280
 
-Further, I am aware the OpenBSD Foundation has reached out to CII to
-request LibreSSL funding support. Given OpenBSD's solid track record and
-the leadership and initiative they've demonstrated through LibreSSL, I
-would appreciate if CII (also cc'd) would comment on that outstanding
-request.
+Basically that's one of the scary parts of this:
+1. We have an in-protocol downgrade mechanism
+2. People develop broken SSL implementations that don't work with that
+3. Browsers have a non-protocol workaround that allows out-of-protocol
+downgrades
+4. These downgrades cause compatibility issues
+5. People put more duct tape around this workaround (that's not part of
+the protocol) by inventing a new protocol (SCSV) that adds more
+complexity to TLS
+6. These downgrades cause security issues (NOT the first time!
+One of the Blackhat Virtual Host Confusion attacks also relied on these
+downgrades)
 
-Many thanks.
+Basically I'd group POODLE together with BERserk as the "we could've
+avoided it"-vulnerabilities in SSL/TLS.
 
---mancha
+-- 
+Hanno Böck
+http://hboeck.de/
 
-[1] http://www.linuxfoundation.org/news-media/announcements/2014/05/core-infrastructure-initiative-announces-new-backers
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
