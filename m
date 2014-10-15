@@ -1,88 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/14
-Message-Id: <E1XtxsT-0000TV-4i@xenbits.xen.org>
-Date: Thu, 27 Nov 2014 12:08:53 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 112 (CVE-2014-8867) - Insufficient bounding of "REP MOVS" to MMIO emulated inside the hypervisor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/10
+Message-ID: <543E1DE0.7020102@redhat.com>
+Date: Wed, 15 Oct 2014 09:10:24 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: SSL POODLE
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 10/15/2014 08:05 AM, Krassimir Tzvetanov wrote:
+> Agreed: just I think you meant "1": security.tls.version.min == 1 (not 3)...
+>
+> from: http://kb.mozillazine.org/Security.tls.version.*
+> ---
+> 1
+>
+> TLS 1.0 is the minimum required / maximum supported encryption protocol.
+> (This is the current default for the maximum supported version.)
+> ---
 
-            Xen Security Advisory CVE-2014-8867 / XSA-112
-                              version 5
+What seems to get lost is this part of Mozilla's announcement:
 
-  Insufficient bounding of "REP MOVS" to MMIO emulated inside the hypervisor
+“This relies on a behavior of browsers called insecure fallback, where 
+browsers attempt to negotiate lower versions of TLS or SSL when 
+connections fail.”
 
-UPDATES IN VERSION 5
-====================
+<https://blog.mozilla.org/security/2014/10/14/the-poodle-attack-and-the-end-of-ssl-3-0/>
 
-Public release.
+As far as I can tell, the TLS downgrade protection mechanism work. 
+However, browsers have an out-of-protocol, unprotected downgrade 
+mechanism to SSL 3.0.  (The Firefox function is called 
+“retryDueToTLSIntolerance”.)  I think we would be better off disabling 
+*that* mechanism (for which configuration knob seems to exist, alas), 
+instead of disabling SSL 3.0 or adding a different protocol version 
+probing mechanism.
 
-ISSUE DESCRIPTION
-=================
+ From what I can tell, applications which simply use one the usual TLS 
+implementations and do not implement their own protocol downgrade are 
+still secure even if both ends implement SSL 3.0 support because the 
+version numbers are protected by the handshake hash and the TLS 
+implementation will never negotiate use of the SSL 3.0 protocol version.
 
-Acceleration support for the "REP MOVS" instruction, when the first
-iteration accesses memory mapped I/O emulated internally in the
-hypervisor, incorrectly assumes that the whole range accessed is
-handled by the same hypervisor sub-component.
-
-IMPACT
-======
-
-A buggy or malicious HVM guest can crash the host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions from at least 3.2.x onwards are vulnerable on x86 systems.
-Older versions have not been inspected.  ARM systems are not vulnerable.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-There is no mitigation available for HVM guests.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa112-unstable.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x
-xsa112-4.2.patch             Xen 4.2.x
-
-$ sha256sum xsa112*.patch
-cf01a1acd258e7cbb3586e543ba3668c1ee7fb05cba19b8b5369a3e101a2288f  xsa112-4.2.patch
-cc39a4cdcb52929ed36ab696807d2405aa552177a6f029d8a1a52041ca1ed519  xsa112.patch
-$
-
-We have been told that this patch is not sufficient on Xen 3.3.x and
-earlier without also backporting b1b6362f (git commit id).
-
-Note that while we are happy to share information we receive about
-earlier Xen versions, the earliest Xen branch for which the Xen
-Project offers security support is 4.2.x.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJUdwoNAAoJEIP+FMlX6CvZfekIAMBq3ynRyuyqvukMhSBaFj2O
-SBX747HJPKRmoODGZGe9EJ0pAJhckQ00RaKFulxSLzFeu4Oi6M3GrvNCvST0sR54
-bLTmeNeBOhLef4ylDqAWOSY4C7AJW/jC1ngtSy3wd6zuwFD0bzPYb7nk94PD32ie
-9LYTt+FSkoo/3j3IviCqNVXTlMmhmdjP0U3+xXgxQZ9y47zTT8gsX4KoplC/i1Wq
-uhla/ZYI+Ro/ejYVHsKDDhfA1mgAGDoOLhmNEBLHPzTyGs4VOSaXzX7wce8JWpBi
-oXdnN5HW80mmkZ6qI42/bnvpSHTqm+QVFD0v1Uz0cSrBYJGq6LULBAmaJHGldDA=
-=8eF1
------END PGP SIGNATURE-----
-
-Download attachment "xsa112-4.2.patch" of type "application/octet-stream" (3319 bytes)
-
-Download attachment "xsa112.patch" of type "application/octet-stream" (3315 bytes)
+-- 
+Florian Weimer / Red Hat Product Security
