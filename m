@@ -1,67 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/10
-Message-ID: <53A95BEE.4050104@ssi.gouv.fr>
-Date: Tue, 24 Jun 2014 13:07:26 +0200
-From: Olivier Levillain <olivier.levillain@....gouv.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/3
+Message-ID: <CAMPTd_DSNpeUt0vPhX-hgvWkRgR8O1NPMu98a95s4_WwyJ0Fow@mail.gmail.com>
+Date: Tue, 14 Oct 2014 22:48:00 -0700
+From: Walter Parker <walterp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: GnuPG-1
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
+Yea, reposting a link to an Internationally read news site doesn't seem
+like much of an issue.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Posting the exploit code a week ahead of time, maybe, but reposting that
+there is a problem in a 15 year protocol that uses parts with known
+weaknesses, which was to be released less than 12 hours later, doesn't look
+like a problem.
 
-Hi list,
+What is this list's policy on Full Disclosure?
 
-Thank you for asking for a CVE.
+What is this list's policy on sourced/unsourced security rumors?
 
-Could you please also mention Jean-René Reinhard, who discovered the
-flaw Florian and I reported ?
+Why do people on lists like this seem to think that censoring themselves
+and others will actually do any good. That somehow the oss-security post
+will be the straw that broke the camel's back and not the Internationally
+read news site (or all the black hat/pirate sites)? How many posts to
+oss-security are patient zero for embargo breaking? What about just
+responsible for any cracking happening in the real world?
 
-Best regards,
-Olivier Levillain
 
+On Tue, Oct 14, 2014 at 10:28 PM, Sona Sarmadi <sona.sarmadi@...a.com>
+wrote:
 
-Le 24/06/2014 07:53, mancha a écrit :
-> On Tue, Jun 24, 2014 at 05:36:15AM +0000, mancha wrote:
->> GnuPG 1.4.17 released on 20140623 [1] fixes a security flaw, reported by
->> Olivier Levillain and Florian Maury, that can be exploited via crafted
->> input to cause a denial of service by triggering an infinite loop [2].
->>
->> Please allocate a CVE identifier for this issue.
->>
->> Many thanks.
->>
->> --mancha
->>
->> [1] http://lists.gnupg.org/pipermail/gnupg-announce/2014q2/000344.html
->> [2]
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commitdiff;h=11fdfcf82bd8
+> Thanks Hanno,
 >
-> This issue has also been corrected in the GnuPG-2 branch [3] though
-> there is not yet a point release which includes the fix. Contrary to my
-> subject line, the CVE request is for both GnuPG 1 & 2.
+> A reflection: Maybe we shouldn't post  information like this here or
+> somewhere else which is not published yet even if the information has leak
+> out? Although all members here are reliable but it is still an open mailing
+> list and we should be careful and act more responsible.
 >
-> [3]
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commitdiff;h=014b2103fcb1
+> Cheers
+> Sona
+>
+> > It's out:
+> >
+> > https://www.openssl.org/~bodo/ssl-poodle.pdf
+> > http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
+> > exploiting-ssl-30.html
+> >
+> > My conclusion stays the same: Disable SSLv3.
+> >
+> > --
+> > Hanno Böck
+> > http://hboeck.de/
+> >
+> > mail/jabber: hanno@...eck.de
+> > GPG: BBB51E42
 >
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJTqVvuAAoJEACa4ygttUrs19EQAJq3FaIBuczcE0qL3DIh6S0t
-MVBCLItOBfK+Ov5rZJqxE4tZQaVC3HIA76DnuxxyD0YGeSoxqnSLXlfANpc4E/vT
-Si8m9hVo8/O7crWrXWCMiuAkIgQBY7dsij9pAPezqnWRak28yl9+jFmciQ/XIP5k
-S/2Ut07JdZxBoPGe/vd1o3M0FcOitFtk6KfjhQs3bo+ko4pO5k+mfon4qhzL31AV
-oaxRctWyy4jBF5AiPI5u9Pe99G3EaZEnc4GogjaIO+WsVolbHqz9/lGtwJnPe4wC
-lUxJOG9wzHdyrZeHW/Up5R4UNW+C4Xy6jZ8K4OvmsDbTcMJ6nppjWEf7DUVSv6UJ
-fFW8CtuFsdPmwHMLG79J2tyrnLV5V99rxVDGOIO9buBnwd17tC+Oo2jtOsWv7BHS
-c53j++wzEcPOuaWogaw9USNK/Twd5bJAqVnv3GgaEwClgbORZuILSmfFWEiajDfb
-+8vqtobtLlTOhS4B9LgmmNVlocx5GKxHzYG0TlTuLWtdV0YQb8sCdgkXNQCr+8qP
-ts7tU58qAz6VNdOK4YLp/rCIuHFvIiroIdN/6JPsSQjD1yk6cm93/Gc4Rx+i1WVW
-wLTuffOtKmf5PU5+GVah33+Ylkrp7lyLZyDm08ouo1MY0CcrczM4GsTtjv2hX9xk
-Rej60LwtFS5rS9+3n21f
-=JQvu
------END PGP SIGNATURE-----
+
+-- 
+The greatest dangers to liberty lurk in insidious encroachment by men of
+zeal, well-meaning but without understanding.   -- Justice Louis D. Brandeis
 
