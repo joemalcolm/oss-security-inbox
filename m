@@ -1,38 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/8
-Message-ID: <20140514132616.GB21632@dhcp-25-225.brq.redhat.com>
-Date: Wed, 14 May 2014 15:26:17 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/21
+Message-ID: <543E6482.80404@redhat.com>
+Date: Wed, 15 Oct 2014 14:11:46 +0200
+From: Jan Rusnacko <jrusnack@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request Linux kernel: forbid uaddr == uaddr2 in futex_wait_requeue_pi() to avoid null dereference
+Subject: Re: CVE assignment for POODLE
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 14, 2014 at 03:19:42PM +0200, Greg KH wrote:
-> On Wed, May 14, 2014 at 06:41:14PM +0530, P J P wrote:
-> >     Hello,
-> > 
-> > Linux kernel built with the fast userspace mutexes(CONFIG_FUTEX) support is 
-> > vulnerable to a NULL pointer dereference flaw. It could occur when a waiting 
-> > task requests wait to be re-queued from non-PI futex to a PI-aware futex via 
-> > FUTEX_WAIT_REQUEUE_PI operation.
-> > 
-> > An unprivileged user/program could use this flaw to crash the system kernel 
-> > resulting in DoS.
-> > 
-> > Upstream fix:
-> > -------------
-> >    -> https://git.kernel.org/linus/6f7b0a2a5c0fb03be7c25bd1745baa50582348ef
-> > 
-> > Introduced in:
-> > --------------
-> >    -> https://git.kernel.org/linus/52400ba946759af28442dee6265c5c0180ac7122
+On 15.10.2014 11:48, Florian Weimer wrote:
+> CVE-2014-3566 is currently assigned to an SSL 3.0 protocol vulnerability:
 > 
-> Why are we asking for CVEs for patches that were written 2 years ago?
+> “The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other products, uses nondeterministic CBC padding, which makes it easier for man-in-the-middle attackers to obtain cleartext data via a padding-oracle attack, aka the "POODLE" issue.”
+> 
+> What we seem to be lacking is a CVE assignment for the protocol downgrade “dance” implemented by some browsers, explicitly designed to negate the effect of the downgrade protection in the TLS protocol (the protocol upgrade to TLS 1.0 and beyond is arguably the “fix” for CVE-2014-3566 as it is described above).
+There already might be a confusion from how this is presented in relation to Poodle, e.g (http://marc.info/?l=openssl-dev&m=141333049205629&w=2):
+"Here's a patch for the OpenSSL 1.0.1 branch that adds support for
+TLS_FALLBACK_SCSV, which can be used to counter the POODLE attack"
 
-It is a security issue and some vendors might not have backported this
-patch to their kernels. In this case it's us. For tracking purposes we
-asked for CVE assignment.
-
+when in fact TLS_FALLBACK_SCSV is a fix for downgrade dance. Additional CVE will help tracking these two issues and their fixes separately.
 -- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Jan Rusnacko, Red Hat Product Security
