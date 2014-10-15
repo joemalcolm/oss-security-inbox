@@ -1,22 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/22
-Message-ID: <CALx_OUCwUaQP6cxOt_9KkRSNPERdmv4NZ81Rn7BNa_=By_AXkQ@mail.gmail.com>
-Date: Tue, 30 Sep 2014 07:27:48 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/22
+Message-ID: <543EB79F.8080703@enovance.com>
+Date: Wed, 15 Oct 2014 14:06:23 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Subject: [OSSA 2014-036] Potential leak of passwords into log files (CVE-2014-7230, CVE-2014-7231)
 Content-Type: text/plain; charset=utf-8
 
-> Florian's prefix/suffix patch is not going to protect against the setuid/setgid exploit that I reported to this list last week.
->
-> I discuss the setuid/setgid vulnerability at the following site, including demonstrating how Florian's prefix/suffix patch provides no protection:
->
-> http://technicalprose.blogspot.co.uk/2014/09/shellshock-bug-third-vulnerability.html
+OpenStack Security Advisory: 2014-036
+CVE: CVE-2014-7230, CVE-2014-7231
+Date: October 15, 2014
+Title: Potential leak of passwords into log files
+Reporter: Amrith Kumar (Tesora)
+Products: Cinder and Nova (versions up to 2014.1.3)
+                    Trove (versions up to 2014.1.2)
 
-You do realize that your setuid program is patently unsafe, right? Say:
+Description:
+Amrith Kumar from Tesora reported two vulnerabilities in the
+processutils.execute() and strutils.mask_password() functions available
+from oslo-incubator that are copied into each project's code. An
+attacker with read access to the services' logs may obtain passwords
+used as a parameter of a command that has failed (CVE-2014-7230) or when
+mask_password did not mask passwords properly (CVE-2014-7231). All
+Cinder, Nova and Trove setups are affected.
 
-$ echo -e '#!/bin/sh\necho pwn3d' >date;chmod 755 date;PATH=.:$PWD
-./setuid_program
-pwn3d
+Kilo (development branch) fixes:
+https://review.openstack.org/116927 (Cinder)
+https://review.openstack.org/126052 (Cinder ssh_execute)
+https://review.openstack.org/116982 (Nova)
+https://review.openstack.org/126047 (Nova   ssh_execute)
+https://review.openstack.org/121417 (Trove)
 
-/mz
+Juno (proposed branch) fixes:
+https://review.openstack.org/126594 (Nova   ssh_execute)
+https://review.openstack.org/126592 (Cinder ssh_execute)
+
+Icehouse fixes:
+https://review.openstack.org/121382 (Cinder)
+https://review.openstack.org/126665 (Cinder ssh_execute)
+https://review.openstack.org/121096 (Nova)
+https://review.openstack.org/126699 (Nova   ssh_execute)
+https://review.openstack.org/121416 (Trove)
+
+Notes:
+The former patch did not cover the ssh_execute method used in Nova and
+Cinder, thus two more patches are required for these projects.
+Nova and Cinder fixes are included in the 2014.2rc2 release candidate
+and will appear in a future 2014.1.4 release.
+Trove fix was included in the 2014.2rc1 release candidate and 2014.1.3
+release.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7230
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7231
+https://launchpad.net/bugs/1377981
+https://launchpad.net/bugs/1343604
+https://launchpad.net/bugs/1345233
+
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
