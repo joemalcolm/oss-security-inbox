@@ -1,50 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/02/6
-Message-ID: <52C594A8.9090008@fifthhorseman.net>
-Date: Thu, 02 Jan 2014 11:32:40 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com, fweimer@...hat.com
-CC: cve-assign@...re.org
-Subject: Re: Re: kwallet crypto misuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/20
+Message-ID: <20141015135519.39227154@pc.my-domain>
+Date: Wed, 15 Oct 2014 13:55:19 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
-On 01/02/2014 08:03 AM, cve-assign@...re.org wrote:
->> http://gaganpreet.in/blog/2013/07/24/kwallet-security-analysis/
-> 
->> KWallet uses QDataStream, which encodes QString objects (used in
->> KWallet maps) as UTF-16. So, the string "abcd" will be stored as
->> "\0a\0b\0c\0d", which gives four bytes of information per block.
-> 
-> Does anyone know whether the KWallet user interface could make it
-> possible to enter passwords containing 16-bit characters (i.e.,
-> characters that cannot be represented using 8 bits)? If that would not
-> be possible, then this issue could potentially qualify for an
-> additional CVE assignment.
+Am Wed, 15 Oct 2014 11:13:37 +0200
+schrieb Pierre Schweitzer <pierre@...ctos.org>:
 
-according to its man page, kwalletcli itself assumes strings are input
-at UTF-8.  This is not exactly "16-bit characters", but it's certainly
-possible to input characters that are beyond unicode codepoint U+7f (or
-U+ff if you prefer that limit).
+> It says you can recover plain text of ciphered text, using a specific
+> method.
+> But, in the end it means you'll have plain text + ciphered text of the
+> same text. Does that mean you can easily bruteforce the key that was
+> used? So that you can actually, if you logged the complete session,
+> decipher the whole session of the user? And not only the cookie?
 
-kwalletaskpass also uses whatever keyboard entry mechanism your X11
-session is configured for, and can easily accept whatever characters you
-can generate with your keyboard -- much of the world uses keyboards
-where at least some key combinations (e.g. €, which is U+20AC) generate
-characters outside of the standard 7-bit ASCII range.  I had no trouble
-entering a passphrase with ♥ (U+2665) just now.
+No.
+If you could brute force the key then this would indicate a completely
+broken ciphersuite.
+We're usually talking about AES or 3DES here. These are considered
+reasonably safe.
 
-Of course, none of this suggests that the cleartext of these strings is
-evenly distributed bitwise (or byte-wise).  It clearly isn't.  That
-said, very little cleartext *is* high-entropy in this way.  Do you think
-MITRE or other folks should be recommending pre-whitening the strings
-before encrypting them (e.g. by compressing them before encrypting)?
-compressing before encryption smells like a possible gateway to
-something like a CRIME attack in some circumstances, so i think this
-proposal in general might be riskier than we'd like.
+You only get the cookie. The reason this matters is that cookies often
+contain a secure token that is used to indicate the session. So you can
+takeover a session e.g. for a mailaccount.
 
-Regards,
+-- 
+Hanno Böck
+http://hboeck.de/
 
-	--dkg
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (1028 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
