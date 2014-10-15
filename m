@@ -1,54 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/1
-Message-ID: <542766C7.2030902@case.edu>
-Date: Sat, 27 Sep 2014 21:39:19 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>
-CC: chet.ramey@...e.edu, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, Eric Blake <eblake@...hat.com>
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/6
+Message-ID: <543E1046.5010508@reactos.org>
+Date: Wed, 15 Oct 2014 08:12:22 +0200
+From: Pierre Schweitzer <pierre@...ctos.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
-On 9/27/14, 2:17 PM, Chet Ramey wrote:
-> On 9/27/14, 10:28 AM, Tavis Ormandy wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hi,
+
+For "standard" IT people, this was kind of a good thing actually.
+Without knowing anything about the vulnerability itself, you were at
+least aware that something totally wrong was coming with SSLv3. So, it
+was letting a few hours to disable (for instance) SSLv3 on the
+infrastructure (or to check it had been properly done a while ago)
+before the issue comes out publicly with all the details and
+eventually PoC to exploit it.
+That's kind of great opportunity to make sure we're safe before it
+gets wrong.
+
+Just my 2 cents.
+
+On 10/15/2014 07:28 AM, Sona Sarmadi wrote:
+> Thanks Hanno,
 > 
->> It does look bad, but are you sold on the prefix/suffix solution Chet?
->> That will at least mean these are not security issues.
+> A reflection: Maybe we shouldn't post  information like this here
+> or somewhere else which is not published yet even if the
+> information has leak out? Although all members here are reliable
+> but it is still an open mailing list and we should be careful and
+> act more responsible.
 > 
-> Yes.  I have no problems worth mentioning with the exported function
-> encoding approach.  I have attached patches implementing it that can
-> be applied to bash versions from bash-2.05b to bash-4.3.  Please take
-> a look, make sure they can be applied cleanly, and so on.
+> Cheers Sona
 > 
-> There is another discussion worth having before officially releasing
-> these, which I will do later today.
+>> It's out:
+>> 
+>> https://www.openssl.org/~bodo/ssl-poodle.pdf 
+>> http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
+>>
+>> 
+exploiting-ssl-30.html
+>> 
+>> My conclusion stays the same: Disable SSLv3.
+>> 
+>> -- Hanno Böck http://hboeck.de/
+>> 
+>> mail/jabber: hanno@...eck.de GPG: BBB51E42
 
-OK, here are the more-or-less final versions of the patches for bash-2.05b
-through bash-4.3.  I made two changes from earlier today: the function
-export suffix is now `%%', which is not part of a the set of valid variable
-name characters but avoids any potential problems with including
-shell metacharacters in the name; and this version refuses to import shell
-functions whose name contains a slash, for reasons I discussed earlier.
 
-Please let me know if you have any issues with these.
+- -- 
+Pierre Schweitzer <pierre@...ctos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Chet
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
-
-View attachment "funcexport-encode-2.05b.patch" of type "text/x-patch" (5818 bytes)
-
-View attachment "funcexport-encode-3.0.patch" of type "text/x-patch" (5822 bytes)
-
-View attachment "funcexport-encode-3.1.patch" of type "text/x-patch" (5764 bytes)
-
-View attachment "funcexport-encode-3.2.patch" of type "text/x-patch" (5764 bytes)
-
-View attachment "funcexport-encode-4.0.patch" of type "text/x-patch" (5764 bytes)
-
-View attachment "funcexport-encode-4.1.patch" of type "text/x-patch" (5764 bytes)
-
-View attachment "funcexport-encode-4.2.patch" of type "text/x-patch" (5764 bytes)
-
-View attachment "funcexport-encode-4.3.patch" of type "text/x-patch" (5990 bytes)
+iQIcBAEBAgAGBQJUPhBBAAoJEHVFVWw9WFsLG5AQAIRUEYp0f9Wt73J4YjhzPweB
+9CEfmF6GN4Tp8GgH35dRCU2cQrh28CEuQPjFC/ay3CkcjBnmtc0n69BjwFP6m8bc
+sW9XzLifQQ85UiMA5Zyr1C94TAlso+c77xk0EVh7hu8B5iwXwYwRFD4+BKMumDXx
+nQOKJzq0EbSswDngZqP+54sO4pafytI8XfcGWhmIvC7oSwIxacY8O1UBrwVYWTca
+s4ukOpZB5eZtVzCjWaKojzd01/dsLYHXny6aUOzV4/+I/z77WymbCaUZxjGLg7Om
+ej26rAZeDRLjCu8uusK5ejJYvpMKs0E7c/xzCMHgzlXiZNHulVo213wD1NKdA4MY
+Rw7tA3jo1WqOw8/j9XRhtHpUGhGnYERtWV1+4rAPjJ6cZinz5ooinR6hNCbAXKz/
+wxhgRhauxjgM2vCE2hd0T/PBjY6mP6IKYUquIsSYRan26XnbRp5Na184q9V92CPw
+EYgBdSfiuxmF1GT4a2U5OEWeWqEetQtIoLdp/7Ch4nZ7bhkNnGxnVGSEqLZRLd7s
+zgMyVgDC2L6NnwUd7YyVDE5DR6pgsflp/dnGvwScKfjtbtNV/jASNLKoO5BjOnn/
+IOa1fsgdBL5NDw5RFOnSi2ifsY9/7+xCa7VUWKMT5W/XbsABRusgnyJxEKgM5n+B
+3S85hEbRiamLnLCbV59A
+=4kV1
+-----END PGP SIGNATURE-----
