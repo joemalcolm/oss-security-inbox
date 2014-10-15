@@ -1,42 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/17/5
-Message-ID: <486220758.7797712.1392628327179.JavaMail.zimbra@redhat.com>
-Date: Mon, 17 Feb 2014 04:12:07 -0500 (EST)
-From: Arun Neelicattu <abn@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/5
+Message-ID: <20141014230948.0eb7b11f.reed@reedloden.com>
+Date: Tue, 14 Oct 2014 23:09:48 -0700
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Split: CVE-2014-0050 Apache Commons FileUpload and Apache Tomcat DoS
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, 15 Oct 2014 05:28:34 +0000
+Sona Sarmadi <sona.sarmadi@...a.com> wrote:
 
-Checking to see if there has been a decision regarding this? Will there be a split?
+> A reflection: Maybe we shouldn't post  information like this here or
+> somewhere else which is not published yet even if the information has
+> leak out? Although all members here are reliable but it is still an
+> open mailing list and we should be careful and act more responsible. 
 
--arun
+Are you saying that as a reflection on your part?
 
------ Original Message -----
-> From: "Arun Neelicattu" <abn@...hat.com>
-> To: oss-security@...ts.openwall.com
-> Cc: cve-assign@...re.org
-> Sent: Friday, February 7, 2014 11:09:49 AM
-> Subject: [oss-security] CVE Split: CVE-2014-0050 Apache Commons FileUpload and Apache Tomcat DoS
-> 
-> Hi,
-> 
-> CVE-2014-0050 was assigned to a flaw that affects both Apache Commons
-> FileUpload and Apache Tomcat DoS [1].
-> 
-> Although Commons FileUpload and Tomcat are affected by this flaw and the
-> vulnerable classes share the same ancestry, the code bases for them have
-> been maintained in separate source trees for a long while now.
-> 
-> Can this CVE be split?
-> 
-> -arun
-> 
-> [1] http://seclists.org/fulldisclosure/2014/Feb/41
-> 
-> --
-> Arun Neelicattu / Red Hat Security Response Team
-> PGP: 0xC244393B 5229 F596 474F 00A1 E416  CF8B 36F5 5054 C244 393B
-> 
+By the time you posted this morning, Twitter was already aflame with
+rumors and news orgs were already starting to post them (again, all
+unproven at the time), so I think it's perfectly reasonable to post here
+to see what others have heard (if they aren't embargoed).
+
+If you're talking about Hanno's reply, then by the time he posted, the
+embargo was already lifted, and those were the official links to the
+issue and to the associated paper.
+
+~reed
