@@ -1,29 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/1
-Message-ID: <20140623134406.47e01332@hboeck.de>
-Date: Mon, 23 Jun 2014 13:44:06 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/7
+Message-ID: <20141015061325.GB5980@zoho.com>
+Date: Wed, 15 Oct 2014 06:13:26 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request: XSS in coppermine gallery before 1.5.28
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
-Coppermine Gallery before 1.5.28 contains a Cross Site Scripting
-vulnerability in the file keywordmgr.php.
+On Wed, Oct 15, 2014 at 05:28:34AM +0000, Sona Sarmadi wrote:
 
-Release notes:
-http://forum.coppermine-gallery.net/index.php/topic,77376.0.html
+Hanno was sharing already-public information.
 
-Subversion commit:
-http://sourceforge.net/p/coppermine/code/8674/
+Adam Langley tweeted it at Tue Oct 14 22:28:32 UTC 2014 [1] and Hanno
+emailed the news to oss-sec 12 minutes and change later. I didn't check
+to see if there were even earlier public disclosures than agl's.
 
-Please assign CVE.
+Someone is owed an apology.
 
--- 
-Hanno Böck
-http://hboeck.de/
+--mancha
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+[1] https://twitter.com/agl__/status/522151998502617088
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+PS Ugh, top-posting.
+
+> Thanks Hanno,
+> 
+> A reflection: Maybe we shouldn't post  information like this here or
+> somewhere else which is not published yet even if the information has
+> leak out? Although all members here are reliable but it is still an
+> open mailing list and we should be careful and act more responsible. 
+> 
+> Cheers Sona
+> 
+> > It's out:
+> > 
+> > https://www.openssl.org/~bodo/ssl-poodle.pdf
+> > http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
+> > exploiting-ssl-30.html
+> > 
+> > My conclusion stays the same: Disable SSLv3.
+> > 
+> > -- Hanno Böck http://hboeck.de/
+> > 
+> > mail/jabber: hanno@...eck.de GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
