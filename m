@@ -1,52 +1,150 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/19
-Message-ID: <6CD0E58F-3A90-47CA-9EDF-D8B745B587C4@redhat.com>
-Date: Tue, 24 Jun 2014 15:01:58 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: Re: possible CVE request: rb_libtorrent opens UPNP port 0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/23
+Message-Id: <E9284BD7-088B-4A33-AE48-D7D639004362@sektioneins.de>
+Date: Wed, 15 Oct 2014 21:21:33 +0200
+From: Stefan Horst <stefan.horst@...tioneins.de>
+To: oss-security@...ts.openwall.com
+Subject: Advisory 01/2014: Drupal7 - pre Auth SQL Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 06/24/2014, at 8:18 AM, Vincent Danen wrote:
+                        SektionEins GmbH
+                       www.sektioneins.de
 
-> It was brought to my attention today that a potential flaw in rb_libtorrent exists where it will open UPNP port 0, which (by the description of the issue) opens all ports to the system running rb_libtorrent via the given firewall (so even if you had, say, only port 22 open to the machine to start, fire up an application using rb_libtorrent such as qbittorrent, and all ports are forwarding to that machine).
->
-> I can't find any references on whether or not this is part of the UPNP spec or known behaviour, however.  Either way, I suppose that anyone running such a bittorrent client isn't expecting that all ports start forwarding (but, as a result, I'm not sure if this is malfunctioning firewall which is where knowing whether or not this is according to spec would be good).
->
-> So I'm not just asking for a CVE, but whether or not it's a flaw (I don't know enough about UPNP to hazard a guess).
->
-> Here's some references:
->
-> https://github.com/qbittorrent/qBittorrent/issues/1758
-> https://lists.fedoraproject.org/pipermail/package-announce/2014-June/134652.html
-> https://bugs.mageia.org/show_bug.cgi?id=13582
+                    -= Security  Advisory =-
 
-It was pointed out that according to http://upnp.org/specs/gw/UPnP-gw-WANIPConnection-v1-Service.pdf UDP port 0 is meant to do this:
+Advisory: Drupal - pre-auth SQL Injection Vulnerability
+Release Date: 2014/10/15
+Last Modified: 2014/10/15
+Author: Stefan Horst [stefan.horst[at]sektioneins.de]
+Application: Drupal >= 7.0 <= 7.31
+Severity: Full SQL injection, which results in total control and code execution of Website.
+Risk: Highly Critical
+Vendor Status: Drupal 7.32 fixed this bug
+Reference: http://www.sektioneins.com/en/advisories/advisory-012014-drupal-pre-auth-sql-injection-vulnerability.html
 
-"
-2.2.16. ExternalPort 
+Overview:
+ Quote from http://www.drupal.org
+    "Come for the software, stay for the community
+    Drupal is an open source content management platform powering millions
+    of websites and applications. It’s built, used, and supported by an
+    active and diverse community of people around the world."
 
-This variable represents the external port that the NAT gateway would “listen” on for connection 
+ During a code audit of Drupal extensions for a customer an SQL Injection
+   was found in the way the Drupal core handles prepared statements.
 
-requests to a corresponding InternalPort on an InternalClient.. Inbound packets to this 
+ A malicious user can inject arbitrary SQL queries. And thereby
+   control the complete Drupal site. This leads to a code execution as well.
 
-external port on the WAN interface of the gateway should be forwarded to InternalClient on 
+ This vulnerability can be exploited by remote attackers without any
+   kind of authentication required.
 
-the InternalPort on which the message was received. If this value is specified as a wildcard 
+Details:
+ Drupal uses prepared statements in all its SQL queries. To handle IN
+ statements there is an expandArguments function to expand arrays.
 
-(i.e. 0), connection request on all external ports (that are not otherwise mapped) will be forwarded 
+ protected function expandArguments(&$query, &$args) {
+    $modified = FALSE;
 
-to InternalClient. In the wildcard case, the value(s) of InternalPort on 
+    // If the placeholder value to insert is an array, assume that we need
+    // to expand it out into a comma-delimited set of placeholders.
+    foreach (array_filter($args, 'is_array') as $key => $data) {
+       $new_keys = array();
+       foreach ($data as $i => $value) {
+          // This assumes that there are no other placeholders that use the same
+          // name.  For example, if the array placeholder is defined as :example
+          // and there is already an :example_2 placeholder, this will generate
+          // a duplicate key.  We do not account for that as the calling code
+          // is already broken if that happens.
+          $new_keys[$key . '_' . $i] = $value;
+       }
 
-InternalClient are ignored by the IGD for those connections that are forwarded to 
+       // Update the query with the new placeholders.
+       // preg_replace is necessary to ensure the replacement does not affect
+       // placeholders that start with the same exact text. For example, if the
+       // query contains the placeholders :foo and :foobar, and :foo has an
+       // array of values, using str_replace would affect both placeholders,
+       // but using the following preg_replace would only affect :foo because
+       // it is followed by a non-word character.
+       $query = preg_replace('#' . $key . '\b#', implode(', ', array_keys($new_keys)), $query);
 
-InternalClient. Obviously only one such entry can exist in the NAT at any time and conflicts 
+       // Update the args array with the new placeholders.
+       unset($args[$key]);
+       $args += $new_keys;
 
-are handled with a “first write wins” behavior
-"
+       $modified = TRUE;
+     }
 
-Seems to be a newer addition to the spec though, as it also indicates that not all NAT implementations will support it.  In light of this, I suspect a CVE is warranted here.
+     return $modified;
+   }
 
--- 
-Vincent Danen / Red Hat Product Security
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+ The function assumes that it is called with an array which has no keys. Example:
+
+   db_query("SELECT * FROM {users} where name IN (:name)", array(':name'=>array('user1','user2')));
+
+ Which results in this SQL Statement
+
+   SELECT * from users where name IN (:name_0, :name_1)
+
+ with the parameters name_0 = user1 and name_1 = user2.
+
+ The Problem occurs, if the array has keys, which are no integers. Example:
+
+   db_query("SELECT * FROM {users} where name IN (:name)", array(':name'=>array('test -- ' => 'user1','test' => 'user2')));
+
+ this results in an exploitable SQL query:
+
+    SELECT * FROM users WHERE name = :name_test -- , :name_test AND status = 1
+
+ with parameters :name_test = user2.
+
+ Since Drupal uses PDO, multi-queries are allowed. So this SQL Injection can
+   be used to insert arbitrary data in the database, dump or modify existing data
+   or drop the whole database.
+
+ With the possibility to INSERT arbitrary data into the database an
+ attacker can execute any PHP code through Drupal features with callbacks.
+
+Patch:
+
+   $new_keys = array();
+   foreach (array_values($data) as $i => $value) {
+     // This assumes that there are no other placeholders that use the same
+     // name.  For example, if the array placeholder is defined as :example
+     // and there is already an :example_2 placeholder, this will generate
+     // a duplicate key.  We do not account for that as the calling code
+     // is already broken if that happens.
+     $new_keys[$key . '_' . $i] = $value;
+   }
+
+Proof of Concept:
+
+ SektionEins GmbH has developed a proof of concept, but was asked by
+ Drupal to postpone the release.
+
+Disclosure Timeline:
+
+ 16. Sep.  2014 - Notified the Drupal devs via security contact form
+ 15. Okt.  2014 - Relase of Bugfix by Drupal core Developers
+
+Recommendation:
+
+ It is recommended to upgrade to the latest version of Drupal.
+
+ Grab your copy at:
+ https://www.drupal.org/project/drupal
+
+CVE Information:
+
+ The Common Vulnerabilities and Exposures project (cve.mitre.org) has
+ assigned the name CVE-2014-3704 to this vulnerability.
+
+GPG-Key:
+
+ pub  2048D/7830F25D 2014-08-12 Stefan Horst
+ Key fingerprint = 380D 2FEE 62E6 83AE 6A5C  7267 6AE5 40BE 7830 F25D
+
+Copyright 2014 SektionEins GmbH. All rights reserved.
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (237 bytes)
