@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/39
-Message-ID: <3230301C09DEF9499B442BBE162C5E482575655E@SESTOEX04.enea.se>
-Date: Thu, 2 Oct 2014 18:34:37 +0000
-From: Sona Sarmadi <sona.sarmadi@...a.com>
-To: "Menkhus, Mark (Global Cyber Security SSRT)" <mark.menkhus@...com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Solar Designer <solar@...nwall.com>
-Subject: RE: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/8
+Message-ID: <543FEA96.4070205@redhat.com>
+Date: Thu, 16 Oct 2014 09:56:06 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
-
-> What URL do I point to see the security bugs listed by CVE for CVE for bash43-
-> 25 through -28?
+On 16/10/14 06:03 AM, Hanno Böck wrote:
+> it's a pretty neat and simple idea:
+> Kill HSTS through NTP by sending victims PC into the future.
+> https://www.blackhat.com/docs/eu-14/materials/eu-14-Selvi-Bypassing-HTTP-Strict-Transport-Security-wp.pdf
 > 
-> I didn't see it in the patches themselves -
-> ftp://ftp.cwru.edu/pub/bash/bash-4.3-patches
-> 
-> Sorry, I am new to bash culture,
-> Mark Menkhus
-> Hewlett Packard
+> Same should work for HPKP. The idea of setting some security feature
+> through a header needs a revisit.
+> The solution would be to have a more reliable PC time. How do we do
+> that?
 
-Mark
-Look here (from Michal 's post) for a summary of each CVE and corresponding upstream patches (GNU patches): 
-http://www.openwall.com/lists/oss-security/2014/10/02/28 
+The obvious solution being to whitelist your site (in the chrome/firefox
+source code)if you truly care:
 
-/Sona
+email agm@...omium.org asking to be added to the whitelist, from the
+domain you want white listed (otherwise they tend to ignore it). Usually
+within a few business days they'll add it to the source code, and then
+in the next browser update they will update the list and you will now be
+white listed.
+
+https://chromium.googlesource.com/chromium/chromium/+/trunk/net/http/transport_security_state_static.json
+
+I've done this for my domains, you should too!
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
