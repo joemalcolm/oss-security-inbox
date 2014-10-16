@@ -1,51 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/6
-Message-ID: <54825C4F.3090300@gmail.com>
-Date: Fri, 05 Dec 2014 20:30:55 -0500
-From: Daniel Micay <danielmicay@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/12
+Message-ID: <20141016214534.547e3f97@pc.quadriga-www.com>
+Date: Thu, 16 Oct 2014 21:45:34 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
-On 05/12/14 08:18 PM, Andy Lutomirski wrote:
-> On 12/05/2014 04:44 PM, Hanno Böck wrote:
->> On Fri, 05 Dec 2014 17:43:44 -0500
->> Daniel Kahn Gillmor <dkg-QLrU/DhXBlmnlhUoGqYIEF6hYfS7NtTn@...lic.gmane.org> wrote:
->>
->>> i couldn't find a reference to this in the nautilus bugtracker, so i
->>> just posted:
->>>
->>>  https://bugzilla.gnome.org/show_bug.cgi?id=741183
->>
->> I tried to dig into this a bit. I'm not really sure, but based on the
->> output I assume nautilus is relying on file or libmagic to assess the
->> file type.
->>
->> And that's what fails:
->> $ file --mime-type pie
->> pie: application/x-sharedlib
->>
->>
->> It seems there is no really easy way to separate executables from
->> shared libraries and whether this should be considered a bug in
->> file/libmagic. The only thing I quickly found that would be possible is
->> searching if a SONAME is present. libmagic uses some "magic" file
->> format to parse files, I don't know if that's capable of such complex
->> parsing.
->>
-> 
-> Why does gcc and/or ld write a non-zero entry point?  If they didn't,
-> that would be an easy way to check.
-> 
-> --Andy
+Am Thu, 16 Oct 2014 09:56:06 -0600
+schrieb Kurt Seifried <kseifried@...hat.com>:
 
-There are some libraries like glibc's /usr/lib/libc.so.6 with valid
-entry points, so file would still have trouble disambiguating that way.
+> The obvious solution being to whitelist your site (in the
+> chrome/firefox source code)if you truly care:
 
-I don't really think this is a problem for libmagic/file to solve, if
-it's really a problem at all. Nautilus could just remove support for
-executing traditional executables too... using CLI utilities that way
-isn't going to work out and GUI ones have desktop files.
+No.
 
+While this is neat (and I already did this for my most important
+domains) this won't help.
+
+The reason: HSTS preloaded sites are handled exactly the same way as
+normal HSTS sites - they can expire. Chrome sets a maximum timeout for
+HSTS of 1000 days for preloaded sites. That was elaborated in the talk
+today. He demonstrated the attack on google mail which is in this
+whitelist. Set clock 3 years into the future and youre done.
+
+It could be argued that it is wrong to expire preloaded HSTS sites. But
+the very same attack applies to HPKP which basically has to expire,
+because you don't want to use keys forever.
+
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
 Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
