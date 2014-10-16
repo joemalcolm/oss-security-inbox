@@ -1,51 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/30/5
-Message-Id: <201403302143.s2ULgqpe017721@linus.mitre.org>
-Date: Sun, 30 Mar 2014 17:42:52 -0400 (EDT)
-From: cve-assign@...re.org
-To: ago@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux Kernel, two security issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/5
+Message-ID: <86wq80mk8k.fsf@nine.des.no>
+Date: Thu, 16 Oct 2014 11:34:03 +0200
+From: Dag-Erling Smørgrav <des@....no>
+To: oss-security@...ts.openwall.com
+Subject: Re: Abusing TZ for fun (and little profit)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Dave Horsfall <dave@...sfall.org> writes:
+> Perhaps I've missed something here, but surely if you have "sudo"
+> privileges then you can read the file for yourself?
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=21f8aaee0c62708654988ce092838aa7df4d25d8
-> 
-> The vulnerability is caused due to a race condition error in the 
-> "ath_tx_aggr_sleep()" function (drivers/net/wireless/ath/ath9k/xmit.c), which 
-> can be exploited to cause a crash.
-> https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.12.15
-> https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.13.7
-> https://bugzilla.kernel.org/show_bug.cgi?id=70551
+Not necessarily; sudo can be used to grant users or groups of users
+permission to run a specific command, which would not necessarily allow
+them to read arbitrary files.
 
-Use CVE-2014-2672.
+> And if you're trying to trace a set-uid program then it won't work
+> anyway?  Neither my Mac nor my FreeBSD box have "strace", and my
+> Penguin is dead, so I cannot verify this.
 
+FreeBSD has ktrace instead, which is far more capable.
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=621b5060e823301d0cba4cb52a7ee3491922d291
-> 
-> The vulnerability is caused due to an error in the "arch_dup_task_struct()" 
-> function (arch/powerpc/kernel/process.c) and can be exploited to cause a crash 
-> via a specially crafted instruction sequence.
-> https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.12.15
-> https://www.kernel.org/pub/linux/kernel/v3.x/ChangeLog-3.13.7
-
-Use CVE-2014-2673.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTOI7zAAoJEKllVAevmvms9PUH/RULhJe3bklgTpY8XhcpOd6E
-uZ6tD+Co1iBb0VvR/OrNLMUgbLcBg92E0sF9HAgfGBKpgnT8WFYbv5tLNtWVQGw8
-TX4rIJRMdNoMRrDY84YhUaLHl3EUjxlZXuvNEbUMvleNjkP5VyxZlbUSozagxea8
-untvzcFZFNg12dpDprvZvZSK/Y1vLBNmXEYdrl6GlsBIjwVbMA/JjyjyNdIssgtb
-074q0NYXs+heIrflCPekX+FE4O14Qe20AxFJaw9P8pn80hdczj6smPSbVvUXic4i
-9///osAZuMWccxbZFBp3Ha6MRscF6vtIn41xgDB3flW5iBiyFxlqgoYuyZLWtXk=
-=al+h
------END PGP SIGNATURE-----
+DES
+-- 
+Dag-Erling Smørgrav - des@....no
