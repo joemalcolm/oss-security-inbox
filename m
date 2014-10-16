@@ -1,32 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/12
-Message-ID: <CACYkhxjnwt4Q4VVcHa90hQ4LkZTHmUeKTqVBg-59ryxSQTC5Qw@mail.gmail.com>
-Date: Fri, 7 Nov 2014 10:24:26 +1100
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Qt Creator fails to verify SSH host key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/3
+Message-ID: <alpine.BSF.2.00.1410161645540.1909@aneurin.horsfall.org>
+Date: Thu, 16 Oct 2014 16:47:28 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: What does this PHP exploit do?
 Content-Type: text/plain; charset=utf-8
 
-On 7 November 2014 00:04, Jason A. Donenfeld <Jason@...c4.com> wrote:
-> I reported this bug to the development team, alongside another bug
-> involving cipher-suite compatibility with OpenSSH 6.7 (no CTR modes). They
-> marked the latter as priority 1, and fixed it within 24 hours. The former,
-> however, has received a bit more of a hesitant reaction. The most recent
-> vendor feedback seems to indicate they're not super interested in
-> implementing this.
+Thanks, one and all; it was most illuminating.  Quite a clever little 
+script, and it's a shame to see such talent wasted...
 
-This is a serious bug (it certainly circumvents the security of
-OpenSSH), but I think
-the proposed fix doesn't fit.
-
-What might be a better solution is to store the public key for all
-devices, and accept
-if it matches any device you've talked to before.  On discovering a
-new device, it shows
-the fingerprint and prompts for a name/description.
-
-Then you can revoke devices in some other part of the UI when you need
-to clean up.
-
-Regards,
-  Michael
+-- 
+Dave Horsfall (VK2KFU)
+http://www.horsfall.org/spam.html
