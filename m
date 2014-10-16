@@ -1,28 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/8
-Message-Id: <201405010341.s413fNEL021638@linus.mitre.org>
-Date: Wed, 30 Apr 2014 23:41:23 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/9
+Message-Id: <20141016160742.CE78D6C0025@smtpvmsrv1.mitre.org>
+Date: Thu, 16 Oct 2014 12:07:42 -0400 (EDT)
 From: cve-assign@...re.org
-To: mr.spuratic@...il.com
+To: mprpic@...hat.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: rxvt-unicode user-assisted arbitrary commands execution
+Subject: Re: CVE request: various security flaws in dokuwiki
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> rxvt-unicode-9.20 (aka urxvt) includes a security update to address a
-> user-assisted arbitrary commands execution issue. This can be
-> exploited by the unprocessed display of certain escape sequences in a
-> crafted text file or program output.
+> The following security-related flaws have been fixed in the
+> 2014-05-05 and 2014-09-29 releases of dokuwiki:
+
+> https://github.com/splitbrain/dokuwiki/issues/765
+
+There are two CVE IDs for 765 because there are apparently two
+different types of problems.
+
+> I can simply open an image I have no permission for in the media
+> manager, I get a permission denied message in the media details tab
+> and when I click on the detail tabs they load via ajax with the real
+> content.
+
+This issue appears to be about incorrect authorization logic in the
+inc/template.php file. Use CVE-2014-8761.
+
+
+> The media diff ajax call is a bit more difficult to test as the ns
+> parameter (but only that one) is a post parameter, but after changing
+> the code to accept a get parameter as well I can clearly see that it
+> uses the ns parameter for the permission check (and nothing else).
+
+Here, within the ajax_mediadiff function, the ns parameter is
+untrusted input, so this is an instance of CWE-807. Use CVE-2014-8762.
+
+
+There was also a third report in 765:
+
+> https://github.com/splitbrain/dokuwiki/issues/765#issuecomment-47109046
 > 
-> arbitrary command sequences can be constructed using this, and
-> unintentionally executed if used in conjunction with various other
-> escape sequences.
+> I noticed this same issue with media manager & acl just today, but
+> from the other way around. When a user has full access to a namespace
+> but no access to the parent namespace. The media manager shows the
+> images but gives a denied access message when viewing details.
 
-> http://dist.schmorp.de/rxvt-unicode/Changes
+We think this might not be a vulnerability, if the user in this
+scenario was supposed to be able to view details, and "a denied access
+message" suggests that the authorization check was incorrect only
+because it was too strict. There is currently no CVE ID for this.
 
-Use CVE-2014-3121.
+
+> http://www.freelists.org/post/dokuwiki/Fwd-Dokuwiki-maybe-security-issue-Null-byte-poisoning-in-LDAP-authentication
+
+The first issue is about a valid username, and a non-empty password
+that begins with a \0 character. It is analogous to CVE-2014-8088 in
+the http://openwall.com/lists/oss-security/2014/10/10/5 post and
+CVE-2014-6387 in the
+http://openwall.com/lists/oss-security/2014/09/12/14 post. Use
+CVE-2014-8763 for the occurrence of this mistake within DokuWiki.
+
+
+> In addition, I have just found that Dokuwiki is also vulnerable to
+> null-byte-forced anonymous binds (as opposed to just unauthenticated
+> binds):
+> 
+> With a Dokuwiki instance using Active Directory for LDAP
+> authentication (as described earlier), one can log in using a username
+> that has a null byte as the first character and with a password that
+> similarly has a null byte as the first character. This will result in
+> an anonymous bind being performed by Dokuwiki, and hence the log in
+> will always succeed, regardless of the whether the username exists or
+> not in the LDAP directory.
+
+Use CVE-2014-8764 for this additional issue. (Within an application
+that uses LDAP, input validation related to the possibility of an
+empty or invalid username, and input validation related to the
+possibility of an empty or invalid password, are relevant for
+different reasons.)
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -32,11 +88,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTYcHgAAoJEKllVAevmvmsKpoIAKMpm+B8q61J3eNZNVrdQ6Hy
-IZlBiJAu0qWTb9xDZFz1BLtz7WrljVem+/aBM+L2e14sXncNLFlYk+Zg0azyhnXW
-rEV+2cArAu+GLMB4C0Q4g0GdhNcDe41Q3smcCUbpRQQFpkU6e/R2NxH2nQjNAX9E
-acRDB7DiNgXJ6iZ02F+N++6+AQhc3VuV09jSeizimcbjNuzQVopCxdq3hOEkDO2W
-9eyy8Krx2nUHABdRRRUkl8NmWXsP8fbjD+ZuASYIfPRNM/HZLmEvQeZIA4BO5Dvl
-Z4ybucja+bKcjb8D3jHijTrubG3Yyskwkc8J5WwYuIebAWNAag1EB676SHW95zA=
-=1utq
+iQEcBAEBAgAGBQJUP+w5AAoJEKllVAevmvmsfjMH/i2Lg02JfsecntpuGpfn7yE3
+32WhweD8x/LFg/aTgd7HfXVcPyr9g6ZXsUyS1xKrhgCvOFMgNNE3M+ii+YvLXWqJ
+Wr/mOXmdYTy7+mY+EwZ6iQItzqKPpZKZNuEtz2RijA7gp02Xp9b1d440DQ1W+add
+1WMoGMuSslaOKQNbsLgHzNyDUlzw/+Bshle56KuenNRhn4jHt2hGel/MnNvsgYc5
+It6Mv5xO3pZxDFnw+Al62iMJXGqVJQmMjTOxOW4nCUbxcIO9NAbnQQIWHilH29cS
+3etv4DY4/Bq/wApiveOJt6lAHrVtyQkig5lyjYZjJXcgxmpOp/h+BZNnaM44+kA=
+=UoQp
 -----END PGP SIGNATURE-----
