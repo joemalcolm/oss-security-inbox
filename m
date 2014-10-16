@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/02/1
-Message-ID: <87tx2hyfuu.fsf@mid.deneb.enyo.de>
-Date: Sun, 02 Nov 2014 12:57:45 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/11
+Message-Id: <180AD1FA-D35F-48F8-BE23-0B8096D6A5B8@statuscode.ch>
+Date: Thu, 16 Oct 2014 21:31:53 +0200
+From: Lukas Reschke <lukas@...tuscode.ch>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-7207 assignment: Debian-specific Linux 3.2 backport issue
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
-Debian has assigned CVE-2014-7207 to the following issue:
 
-    Several Debian developers reported an issue in the IPv6 networking
-    subsystem. A local user with access to tun or macvtap devices, or
-    a virtual machine connected to such a device, can cause a denial
-    of service (system crash).
+> On 16 Oct 2014, at 17:56, Kurt Seifried <kseifried@...hat.com> wrote:
+> email agm@...omium.org asking to be added to the whitelist, from the
+> domain you want white listed (otherwise they tend to ignore it). Usually
+> within a few business days they'll add it to the source code, and then
+> in the next browser update they will update the list and you will now be
+> white listed.
 
-    This update includes a bug fix related to CVE-2014-7207 that
-    disables UFO (UDP Fragmentation Offload) in the macvtap, tun, and
-    virtio_net drivers. This will cause migration of a running VM from
-    a host running an earlier kernel version to a host running this
-    kernel version to fail, if the VM has been assigned a virtio
-    network device. In order to migrate such a VM, it must be shut
-    down first.
-
-The bug report with a few more details is here:
-
-  <https://bugs.debian.org/766195>
-
-We believe this is specific to Debian's Linux 3.2-based backport
-series.
+There is a fancy new way via web to submit domains: https://hstspreload.appspot.com/
+(link can also be found at http://www.chromium.org/sts)
