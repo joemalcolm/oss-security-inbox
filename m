@@ -1,46 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/11
-Message-Id: <201411222154.18944.tmb@65535.com>
-Date: Sat, 22 Nov 2014 21:54:18 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/14
+Message-ID: <54402BD1.50307@redhat.com>
+Date: Thu, 16 Oct 2014 14:34:25 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: Running Java across a privilege boundry
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
-On Saturday 22 November 2014 19:36:58 Russ Allbery wrote:
-> Marc Chadwick <marc@...dwick.net> writes:
-> > I thought tomcat 6 used authbind in its init script, but I could be
-> > wrong.  If that's the case, authbind is written in C, so I'm not sure
-> > that's what Tim has in mind. Similarly, jsvc is written in C. Maybe the
-> > tabuki wrapper service?
-> 
-> Ah, I see what you're getting at.  I don't think I've ever used authbind
-> with Tomcat (no need -- I never use privileged ports with it), but (since
-> I use Debian) it gets spawned through start-stop-daemon, which is also
-> written in C.  You're saying that the running of the Java program has to
-> be done *directly* by sudo for some reason?
-> 
-> The initial question was a little obscure to me.  I'm not sure what
-> security problem the original poster is worried about.  Starting Tomcat
-> via sudo with that init script is indeed crossing a privilege boundary to
-> run a Java program, but there are several layers of indirection there.
-> 
-> Anyway, I have certainly worked with systems with command-line utilities
-> written directly in Java that are run via sudo or other similar tools.
-> The one that comes to mind (Zimbra) isn't open source, but I'm sure there
-> are plenty of others.
 
-Trying to work out if a "potential" security flaw in Java has a real world 
-misuse case that can be exploited. I think the answer is "yes" but thought I'd 
-ask the question before I took it any further.
 
-I've sent a follow up to distros, which I hope Alexander will approve, to 
-allow the discussion to continue.
+On 16/10/14 01:45 PM, Hanno Böck wrote:
+> Am Thu, 16 Oct 2014 09:56:06 -0600
+> schrieb Kurt Seifried <kseifried@...hat.com>:
+> 
+>> The obvious solution being to whitelist your site (in the
+>> chrome/firefox source code)if you truly care:
+> 
+> No.
+> 
+> While this is neat (and I already did this for my most important
+> domains) this won't help.
+> 
+> The reason: HSTS preloaded sites are handled exactly the same way as
+> normal HSTS sites - they can expire. Chrome sets a maximum timeout for
+> HSTS of 1000 days for preloaded sites. That was elaborated in the talk
+> today. He demonstrated the attack on google mail which is in this
+> whitelist. Set clock 3 years into the future and youre done.
 
-Tim
+I did not know that. One concern I have is also HSTS has no tools to
+manage them in browsers, at least when I last checked, has that changed?
+There is some room for DoS due to this on the client side.
+
+> It could be argued that it is wrong to expire preloaded HSTS sites. But
+> the very same attack applies to HPKP which basically has to expire,
+> because you don't want to use keys forever.
+
+If people say "I use HSTS, so much so that I want you to whitelist it IN
+the source code forever" I'm pretty sure they never want it to expire
+(at least that was my thought when I got my domains whitelisted).
+
 -- 
-Tim Brown
-<mailto:tmb@...35.com>
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
