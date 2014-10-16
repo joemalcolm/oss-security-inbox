@@ -1,41 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/4
-Message-ID: <52CCDB4E.2040300@redhat.com>
-Date: Tue, 07 Jan 2014 21:59:58 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: https://updateframework.com/ down for a few days now
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/16
+Message-ID: <CALx_OUBPhMpba+TA_7qpQt+s=NY99z5iGx091je-R4WEX+TYUQ@mail.gmail.com>
+Date: Thu, 16 Oct 2014 13:45:16 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> The reason: HSTS preloaded sites are handled exactly the same way as
+> normal HSTS sites - they can expire.
 
-and I'm not sure how to contact them, as the website is down  and no
-contact info can be found easily =).
+I haven't looked at the actual code, but Adam Langley said this on
+another mailing list:
 
-project: Error
-(The Trac Environment needs to be upgraded. Run "trac-admin
-/var/data/projects/trac/project upgrade")
+---------- Forwarded message ----------
+From: Adam Langley <agl@...gle.com>
+Date: Thu, Oct 16, 2014 at 9:01 AM
+Subject: Re: NTP vs. HSTS
+To: Anne van Kesteren <annevk@...evk.nl>
+Cc: John Kemp <john@...mp.net>, "public-webappsec@...org"
+<public-webappsec@...org>
 
-I figure someone on here know how to contact them.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+On Thu, Oct 16, 2014 at 8:11 AM, Anne van Kesteren <annevk@...evk.nl> wrote:
+> On Thu, Oct 16, 2014 at 5:01 PM, John Kemp <john@...mp.net> wrote:
+>> https://www.blackhat.com/docs/eu-14/materials/eu-14-Selvi-Bypassing-HTTP-Strict-Transport-Security-wp.pdf
+>
+> So the problem is that time synchronization does not happen over TLS.
+> That seems like a pretty big flaw in OSs. Hopefully someone audits any
+> other unauthenticated channels they may have.
 
-iQIcBAEBAgAGBQJSzNtNAAoJEBYNRVNeJnmTQxEP/2pqkLA1BpaBw3zW3/Fdxzmm
-4NRN7ru+qRmOy1yNUoI4559lyhnaD1e8l4Ml6pMlDlGsXL8c+HOl9syfQY/QbNl5
-ecfwpqvUxAFft3QYFvmvzO791q7DkQhWLczh8khbbO3pTfv0Ez/zQ/1YXULrHlD0
-9jumx1v7YAgIWwYhphi7eT07Rc4I2FsTs0LRy7Onuk9OBmoQvecilAFXkGl2oBmF
-m6v6r9rsphqGjiymD08tI/IsELQ/Ofs54/tRxRRP/8s+SDN/e/lNqcgCt+GIcWyC
-YI5tEXUTWLwGq/x33e4YTzmg1L+ReTs1lrZ0Cai1KcQmJOcLITIrEORotG7Ozpdt
-mWIti4RBzdda+ZqrmZ/5/Fcav8M4PeLZriddNKnFYbI5D+RVbMFkrRaWqvGpzrHe
-5+0HPMuEWAf/7wahg7AN4B0AApbMv51QKE8p+aMhpwXFOi0BjSNo9tsXNHcHC+ti
-Fkygd9OCnqsJ6S0gs6qQVHUh3wR0Eqis2fwt+RC71cZWwPvhxdPSIbfysMF8h3Vj
-n94lUmVBvqXEbq0ui5qhqMNjsUNzseT1W0qO1VNoIO8BR0B2ciJP3E7Qkbv6O9f2
-qXXwKYULw4fjfNIFOKgTj55CXOSIH1j/chewObhonU40AueAxzLRlCMoV48BFgqF
-G2JzNC5uPsRGAlFSX/gp
-=12Ia
------END PGP SIGNATURE-----
+This is the motivation for things like tlsdate
+(https://github.com/ioerror/tlsdate) as used in parts of ChromeOS.
+
+However, in section seven, where the author claims that preloaded
+entries are added for 1000 days, that's only via the net-internals
+debugging interface. (The code screenshot shown is also of code for
+that debugging interface.) I believe that preloaded entries in Chrome
+will always be enforced, no matter what the system time is.
+
+
+Cheers
+
+AGL
