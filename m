@@ -1,40 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/1
-Message-ID: <20141230002340.GA9277@pisco.westfalen.local>
-Date: Tue, 30 Dec 2014 01:23:40 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: Vasyl Kaigorodov <vkaigoro@...hat.com>, cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, 772008@...s.debian.org
-Subject: Re: CVE request:  mpfr: buffer overflow in mpfr_strtofr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/10
+Message-ID: <3230301C09DEF9499B442BBE162C5E482576AE5E@SESTOEX04.enea.se>
+Date: Thu, 16 Oct 2014 16:42:10 +0000
+From: Sona Sarmadi <sona.sarmadi@...a.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 08, 2014 at 01:45:12PM +0100, Vasyl Kaigorodov wrote:
-> Hello,
-> 
-> A buffer overflow was reported [1] in mpfr.
-> This is due to incorrect GMP documentation for mpn_set_str about the
-> size of a buffer (discussion is at [1]; first fix in the GMP
-> documentation is at [2]). This bug is present in the MPFR versions
-> from 2.1.0 (adding mpfr_strtofr) to this one, and can be detected by
-> running "make check" in a 32-bit ABI under GNU/Linux with alloca
-> disabled (this is currently possible by using the --with-gmp-build
-> configure option where alloca has been disabled in the GMP build). It
-> is fixed by the strtofr patch [3].
-> Corresponding changeset in the 3.1 branch: 9110 [4].
-> 
-> [1]: https://gmplib.org/list-archives/gmp-bugs/2013-December/003267.html
-> [2]: https://gmplib.org/repo/gmp-5.1/raw-rev/d19172622a74
-> [3]: http://www.mpfr.org/mpfr-3.1.2/patch11
-> [4]: https://gforge.inria.fr/scm/viewvc.php?view=rev&root=mpfr&revision=9110
-> 
-> References:
-> - https://bugzilla.redhat.com/show_bug.cgi?id=1171701
-> - https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772008
-> 
-> Can a CVE be assigned to this please?
+> Hanno Böck wrote:
+> > It's out:
+> >
+> > https://www.openssl.org/~bodo/ssl-poodle.pdf
+> > http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
+> exploiting-ssl-30.html
+> >
 
-This seems to have fallen through the cracks, adding cve-assign@...re.org
-to CC.
+OpenSSL has patches for this and 3 other vulnerabilities: 
 
-Cheers,
-        Moritz
+   https://www.openssl.org/news/secadv_20141015.txt
+
+GnuTLS also implements the SSLv3 protocol, does anyone know if there are any  patches for GnuTLS for the SSL 3.0 protocol vulnerability? 
+
+-- Sona
+
+
