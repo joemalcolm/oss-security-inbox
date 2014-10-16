@@ -1,70 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/6
-Message-ID: <5404D177.9020200@sumptuouscapital.com>
-Date: Mon, 01 Sep 2014 22:05:11 +0200
-From: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: gpg blindly imports keys from keyserver responses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/7
+Message-Id: <20141016141606.1253F6C0129@smtpvmsrv1.mitre.org>
+Date: Thu, 16 Oct 2014 10:16:06 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: ejabberd compression allows cirucumvention of encryption despite starttls_required
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Hash: SHA1
 
-On 09/01/2014 09:43 PM, mancha wrote:
-> On Mon, Sep 01, 2014 at 08:41:10PM +0200, Kristian Fiskerstrand
-> wrote:
->> 
->> My personal opinion is this is expected behavior as the
->> keyservers are not trusted, and as you point out above, there are
->> proper measures that should be used that invalidate this as an
->> attack vector, i.e. by performing proper key verification.
+> http://mail.jabber.org/pipermail/operators/2014-October/002438.html
+> https://github.com/processone/ejabberd/commit/7bdc1151b11d26d33649c5cce2817b74a4f231a8
 > 
-> Hi.
+> Basically these things often work under a more or less
+> "trust-on-first-use"-assumption.
 > 
-> Isn't it the opposite? Were key servers fully trusted I'd agree 
-> "expected behavior" would be to blindly import the server's reply.
+> E.g. the client will check the server config on the first connection
+> and use that settings in the future.
 > 
-> However, the lack of trustworthiness of keyservers is precisely why
-> the check is relevant.
+> So there is a scenario where this leads to unintended unencrypted
+> connections.
 
-I'd consider it security hardening and not a vulnerability.
-
-...
-
-> 
-> --mancha
-> 
-> PS Thijs' email signature verified for me using mutt. What is your
-> email client-side configuration?
-> 
-
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101
-Thunderbird/31.0 with Enigmail version 1.7 (20140809-1935)
+Use CVE-2014-8760.
 
 - -- 
-- ----------------------------
-Kristian Fiskerstrand
-Blog: http://blog.sumptuouscapital.com
-Twitter: @krifisk
-- ----------------------------
-Public OpenPGP key 0xE3EDFAE3 at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-- ----------------------------
-Adde parvum parvo magnus acervus erit
-Add little to little and there will be a big pile
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBCgAGBQJUBNF1AAoJEPw7F94F4TagHIMQAKkKfG7ZVn5WMh8dj1sBtl4U
-fLdRywFyDV6swGPv/pHpsQuW7+vb3lHTAD4AyYlfmcOwaAVhtEBrwlBWqX3FotJJ
-Mtkb4SxErqWmlPHYI9fgOXoYMSrJ4PDoRSuSOxvLJ48qnvDwJTExDHqvAo7du8v4
-/v4gvjwj/NQMF2In0N8BYchEEE8QH7p3zeMTWC1jo1kgbwX82GyHecREIQYWofhS
-/2QWj1rxr3arVi5DH4Irkn27bnIAw50jmoaFM1Wn3gJKQL+F/txJw6FwaXoSeAqK
-zx63DcptNueO9nXV0xmxvr3SK8l5exHqsW61pIr4AUFoJmj9a7A+9xUlioYOX2BK
-Uqv9cJBYPtPxkY7pcT5p6Ew/007h0K5Ddrt3Kq75ucGMPP6fyN+x7ObLcMffOdqg
-9//jtqyW49IMDelCoyl/3PNc8A8KkCZuZ1kglNh34x/1QCdaSJ6HFuf5dsBOFSYp
-Ejr+oKugHPDv03zgbwGRTDM+fyG+btsRpOaeFwYnhVQNjsLXf331J+/BdZ6KfSib
-zXZgDaa0yRTw2nzjO3yvxEP+Gtf/ffCrd3ALf38a+3m58ILJVRFQYC81okvECBOJ
-cKbU7gYPnYdXGsyxIlPC10tGCQlkvhIvXPH3AtzSrLgOLzwsRDAy03RUpHvM4XWO
-H99NRHXyiGGDhTc2LzRr
-=T0fO
+iQEcBAEBAgAGBQJUP9KSAAoJEKllVAevmvms3HIH+wYbM86VpoBrkJEaSlOpw5CI
+krwSBSzRhDqw8uXeV6FeGKI7Cy5vmaUDTXoj0z/jVmAjaJB2MCVXYzdeiywA1pcQ
+/LCROcb2O80DIC6pHK0VoWPa+4lWpoxYwtVQxexcA7mHL+bym3pjt5Jf/ZmP7Uqe
+tPumOEL9xMdL97CAYTeptTLXlxQ1uipQOYIARnxtQ9neWDMxQPV1JQdAQDjJxZoY
+ZdjJB2/MNzcARkiHc+njEebIDvnn39yoiGo/5Wlo7N+mJ6oIRn9ritm4aQRkLE71
+D+1g3HkjelxXlqMkmXOCimh5r7Euupeyi0L40aLY1ft4Da3sJx/to9eteRzEzJo=
+=RSsh
 -----END PGP SIGNATURE-----
