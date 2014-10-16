@@ -1,73 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/10/5
-Message-ID: <54108A55.30000@oracle.com>
-Date: Wed, 10 Sep 2014 10:28:53 -0700
-From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/6
+Message-ID: <20141016140357.46e6ebd2@pc>
+Date: Thu, 16 Oct 2014 14:03:57 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-CC: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+Subject: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+it's a pretty neat and simple idea:
+Kill HSTS through NTP by sending victims PC into the future.
+https://www.blackhat.com/docs/eu-14/materials/eu-14-Selvi-Bypassing-HTTP-Strict-Transport-Security-wp.pdf
 
-Please use CVE-2014-4274 for this issue.
+Same should work for HPKP. The idea of setting some security feature
+through a header needs a revisit.
+The solution would be to have a more reliable PC time. How do we do
+that?
 
-Please send an email to secalert_us@...cle.com to contact Oracle for any
-security vulnerability related issues. More information is available at -
-http://www.oracle.com/us/support/assurance/vulnerability-remediation/reporting-security-vulnerabilities/index.html
+-- 
+Hanno Böck
+http://hboeck.de/
 
-Thanks,
-- -Ritwik
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-On 9/10/2014 10:15 AM, Ritwik Ghoshal wrote:
-> 
-> I'll look into this and get back to you shortly.
-> 
-> Thanks,
-> -Ritwik
-> 
-> 
-> On 9/10/2014 9:29 AM, Kurt Seifried wrote:
->> Technically speaking Oracle is a CNA and should be handling this, I have
->> no idea how to contact them though, Mitre, can you guys reach out to
->> them? Also does this affect MariaDB?
-> 
->> On 10/09/14 10:00 AM, Salvatore Bonaccorso wrote:
->>> Hi
->>>
->>> The changes for MySQL 5.5.39[1] and 5.6.20[2] contain a reference to
->>> the following issue, which could be exploited by a local user to run
->>> arbitrary code in context of the mysqld server.
->>>
->>> MyISAM temporary files could be used to mount a code-execution attack.
->>> (Bug #18045646).
->>>
->>> This is also tracked in[3] and [4] mentioning as relevant fix [5].
->>>
->>> Was a CVE already requested for this issue? If not, could one be
->>> assigned?
->>>
->>> Regards,
->>> Salvatore
->>>
->>>  [1] https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-39.html
->>>  [2] https://dev.mysql.com/doc/relnotes/mysql/5.6/en/news-5-6-20.html
->>>  [3] https://bugzilla.redhat.com/show_bug.cgi?id=1126271
->>>  [4] https://bugs.gentoo.org/show_bug.cgi?id=518718
->>>  [5] https://bazaar.launchpad.net/~mysql/mysql-server/5.5/revision/4638
->>>
-> 
-> 
-> 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-
-iQEcBAEBAgAGBQJUEIpRAAoJEB1zxS9196oudt4IAKDHu+phcRPSlXzXgjRMm5Tp
-Viv7ejTo2wANPK6hAD7/7aBjb2qAMvtY2HXUtm8spqA5199pV2mGSS7ItuQFBOCc
-FE0AKnPg6CoDZKe1hVhjOHveZiBJkKpGYOs74bxwhu1acPlF/oq38CWAV7yb8pjo
-74Nuc+JErZGCIEVNJXpgrQMfHJ1OS8VbWCEtOkgLpU8fNBlwR9jMQQtlOqAv+PEB
-OA3nE5guX6CtHGCKa4YaMVmWh0au/q72R3fONP1WwAYrXjlBznovCdE9sZjzw1Np
-01/51rso0ranMYN76h6DCztD6bQKVWJaDSOoGOJyD234EcF4DUb642ch9OAp+3A=
-=Qule
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
