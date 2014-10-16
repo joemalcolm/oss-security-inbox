@@ -1,67 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/7
-Message-ID: <CALCETrW6LF=n0HD2vSZuo7FXM6oh_t1HyoRxEUoE+dg8HGjB8A@mail.gmail.com>
-Date: Tue, 29 Apr 2014 14:20:47 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: local privilege escalation due to capng_lock as used in seunshare
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/19
+Message-ID: <CAL9PXLwK-4t5mRd4KA_Db=QzOgRz5SbAXAO-xcvhGhdc7ah6qA@mail.gmail.com>
+Date: Thu, 16 Oct 2014 14:27:11 -0700
+From: Adam Langley <agl@...gle.com>
+To: Hanno Böck <hanno@...eck.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
-cap-ng's capng_lock function is insecure, seunshare uses it, and
-seunshare is installed setuid root.
+On Thu, Oct 16, 2014 at 2:07 PM, Hanno Böck <hanno@...eck.de> wrote:
+>> However, in section seven, where the author claims that preloaded
+>> entries are added for 1000 days, that's only via the net-internals
+>> debugging interface. (The code screenshot shown is also of code for
+>> that debugging interface.) I believe that preloaded entries in Chrome
+>> will always be enforced, no matter what the system time is.
+>
+> Something can't be correct here. In the talk the attack was presented
+> directly with chrome + google mail (which is one of the preloaded
+> entries). Either he cheatet or the 1000 days limit applies to them, too
+> (haven't done any tests myself).
 
-This results in a setuid program like this:
+Ah, so the author really is mistaken by the 1000 days bit in
+net-internals. However, we do have a timeout for HSTS preloads which
+git blame says that I added, although I don't remember it. The timeout
+is the same as our pinning timeout, which is 10 weeks from the build
+timestamp.
 
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <err.h>
+There are other tricks that can be played with the system time: roll
+the time back and use an "expired" certificate which has been pruned
+from the CRLs for one. I'm sure that there are others.
 
-int main()
-{
-  if (setuid(getuid()) != 0)
-    err(1, "setuid(getuid())");
+That's why we have tlsdate in ChromeOS. It does, indeed, use the
+timestamp from a TLS handshake. In the case of ChromeOS we depend on
+the timestamp from Google, which makes sense for a ChromeOS device
+that already trusts Google. If one was to design a secure timestamp
+system one could do much better (Ed25519 signatures, batching of
+requests into a single signature etc). But we already have TLS running
+which means that there's no incremental operational overhead, which is
+very attractive.
 
-  printf("Dropped privs; real uid is %lu and effective uid is %lu\n",
-     (unsigned long)getuid(), (unsigned long)geteuid());
 
-  seteuid(0);
+Cheers
 
-  /* Do something that risks executing untrusted code here */
-
-  if (geteuid() == 0) {
-    printf("It's baaaack!\n");
-  } else {
-    printf("Phew, safe.\n");
-  }
-
-  return 0;
-}
-
-behaving like this:
-
-$ ./sesploit
-Dropped privs; real uid is 1000 and effective uid is 1000
-Phew, safe.
-
-This is okay until an attacker does:
-
-$ seunshare -t . `realpath ./sesploit`
-Dropped privs; real uid is 1000 and effective uid is 1000
-It's baaaack!
-
-newrole may have the same issue.
-
-This was described recently here:
-http://seclists.org/fulldisclosure/2014/Apr/262
-
-and has been publicly disclosed in Red Hat's bugzilla for quite some time:
-https://bugzilla.redhat.com/show_bug.cgi?id=1035427
-https://bugzilla.redhat.com/show_bug.cgi?id=885288
-
-I believe that there is at least one setuid program that can be used
-as a vector and is widely installed.
-
-There's a patch here:
-
-https://bugzilla.redhat.com/attachment.cgi?id=829864
+AGL
