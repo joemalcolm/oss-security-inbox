@@ -1,70 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/19/1
-Message-ID: <53C9BCE2.2030305@redhat.com>
-Date: Fri, 18 Jul 2014 18:33:38 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE's for intersection vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/18
+Message-ID: <20141016230713.5d301b31@pc.quadriga-www.com>
+Date: Thu, 16 Oct 2014 23:07:13 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com, agl@...gle.com
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I'm CC-ing Adam Langley, don't know if he is on this list.
 
-So long story short: we have a program called sosreport that is used
-to send system information back to Red Hat so we can help customers
-troubleshoot their problems. It would appear we have three main
-classes of (potential) security vulnerabilities:
+Am Thu, 16 Oct 2014 13:45:16 -0700
+schrieb Michal Zalewski <lcamtuf@...edump.cx>:
 
-1) sosreport collects sensitive information that is unexpected/should
-not be included, e.g. potentially it could grab configuration files
-with credentials for third party systems/etc. My take on this is this
-type of data should only be included if explicitly added/requested by
-the end user (it should default to safe for well known sensitive files
-in other words).
+> However, in section seven, where the author claims that preloaded
+> entries are added for 1000 days, that's only via the net-internals
+> debugging interface. (The code screenshot shown is also of code for
+> that debugging interface.) I believe that preloaded entries in Chrome
+> will always be enforced, no matter what the system time is.
 
-2) sosreport collects sensitive information that would be "normal",
-e.g. HTTP logs with GET requests, or usernames used to log into
-services. My take on this is that we should document this behaviour
-and provide options for the users to review/sanitize data prior to it
-being sent to Red Hat, but that this is security hardening and not a
-vulnerability, so no CVE.
+Something can't be correct here. In the talk the attack was presented
+directly with chrome + google mail (which is one of the preloaded
+entries). Either he cheatet or the 1000 days limit applies to them, too
+(haven't done any tests myself).
 
-3) sosreport unintentionally collects sensitive information, e.g. a
-service mistakenly logs username/password to a world readable log
-file, which sosreport then includes. My take on this would be that a
-CVE is deserved for the program logging the sensitive information
-(which normally it would get in any event), but that no CVE should be
-assigned for sosreport (since #1 the flaw isn't in sosreport, and
-ideally with #2 the user sees it and sanitizes it any ways).
+But basically, it may be debatable if browsers should consider
+preloaded entries as "forever". Independent of that I think the
+quesiton how date/time can be made more secure is worth investigation.
+tlsdate etc. certainly seem like a good idea to me. The OS default
+should be a secure timesetting method.
 
-But then we have #4:
+If I understand it correct tlsdate uses the timestamp field of normal
+tls connections while ntp is a timesetting protocol on its own. I'm not
+into that stuff, can ntp be retrofittet with tls? Is that a good idea?
+Has it advantages/disadvantages compared to tlsdate?
 
-4) sosreport unintentionally collects sensitive information, e.g. a
-service mistakenly logs username/password to a secured log file. Now
-normally this would not get a CVE since the logfile has secure
-permissions, however we have a situation where sosreport is
-potentially exposing the information. So do we assign a CVE for this
-intersection vulnerability?
+Still open is obviously the question: Who do you trust with your time?
+If your timeserver is compromised you still have an attack vector.
 
+-- 
+Hanno Böck
+http://hboeck.de/
 
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-iQIcBAEBAgAGBQJTybziAAoJEBYNRVNeJnmT/ugQAI1JZ4ytuOT2kAlAdAkAFIb2
-Cggz2KKkS+KKJDwc4hTN8SR1BBlNQGimc7CUPSoex4UnBxk8MBfXjYX+6NEkxVav
-OSJNm5UKkNgj4f/8Eagqvjhr5SDnBX2upYb4FzmyViF/kUw4mihJnhADE9MdJpHp
-0RLMBgQnkUrpB/wQu4ESPzZGf7MdoB3+3vRLQ2viYMT3MY3kf9iusYA4YNvXzaMo
-fcT6yV/fJDVqjEem7yGGJKOzSgPf5IrY25iNtMS1LiEn0PgDBeVV7gG77ee2vWEP
-2G3naLZwVQNTVpNJk2ahdI9TV4quv5Sv65F/xYYzesZQccd/ZRMAMLgn0KgP9WHz
-eUjb1dNyQPK3AYJAhbdUr1H+AWrJSQ45IVoIUYdFTHoEGfogmvg4pvXtAi7gugK4
-m/2MUYkw6sl2F4SuwQJeSbeLe/zDpR4ThXuhoghQ2kazsKWsOYZ918qeR3gUFKQF
-g8p3dbknBDao7yBg+1UPqJskgAGnGYQsbC0fqPwRSAtyodpaHrxQSqOPrpwkNcTx
-vMly1vH8mLg+qbhds+CdvWD/0/cj+pWg69l3Z2AbYQW6GvwIIYXRxgsqOk75wPqt
-xdY67JuxA01IhOCavwc1sNfeWssLJZzN6YTb+NwwTjqLx4SXDVyiF1NHczPn+F1t
-iF1QKZLIimXfxBcceBxN
-=PIbq
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
