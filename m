@@ -1,55 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/10/10
-Message-ID: <20140710194150.GA7128@openwall.com>
-Date: Thu, 10 Jul 2014 23:41:50 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/15
+Message-ID: <20141016223833.4ba7fffa@pc.quadriga-www.com>
+Date: Thu, 16 Oct 2014 22:38:33 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 10, 2014 at 09:23:48PM +0200, Florian Weimer wrote:
-> * Rich Felker:
-> 
-> > Am I correct in assuming this affects most typical git setups (e.g.
-> > gitolite) using ssh authorized_keys files with forced commands, where
-> > the malicious file could simply be created as part of the git
-> > repository?
-> 
-> Probably, especially if there is a checkout of the repository in the
-> file system under a predictable path.  (I expect that most hosted
-> repositories use the bare format.)  I don't know how common this is
-> with the existing Git hosting frameworks.  Some of them don't use
-> OpenSSH and may not implement environment variable processing at all.
-> 
-> > Or are these usually setup to filter the environment?
-> 
-> It seems fairly likely because unexpected, but benign locale settings
-> would interfere with the hook script processing (which likely assume
-> U.S. date formats and UTF-8).
+Am Thu, 16 Oct 2014 14:34:25 -0600
+schrieb Kurt Seifried <kseifried@...hat.com>:
 
-The man page for sshd_config(5) says this about AcceptEnv:
+> I did not know that. One concern I have is also HSTS has no tools to
+> manage them in browsers, at least when I last checked, has that
+> changed? There is some room for DoS due to this on the client side.
 
-"The default is not to accept any environment variables."
+chrome://net-internals/#hsts
 
-The default sshd_config found in openssh-6.6p1.tar.gz does not list
-AcceptEnv, so presumably by default OpenSSH portable does not accept any
-environment variables.
+Not pretty or easy to use, but helps debugging stuff (especially with
+HPKP which is quite picky when you do it wrong). I don't know about
+Firefox or others.
 
-However, apparently some distros override this safe default:
+-- 
+Hanno Böck
+http://hboeck.de/
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1077843#c6
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-| Huzaifa S. Sidhpurwala  2014-03-21 02:31:29 EDT 
-| 
-| The sshd_config file by default contain the following AcceptEnv directives.
-| 
-| AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
-| AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
-| AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
-| AcceptEnv XMODIFIERS
-
-Is there a supported way for distros to configure OpenSSH such that a
-number of environment variables would be accepted by default, but only
-as long as no command is forced?  This could be an acceptable tradeoff.
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
