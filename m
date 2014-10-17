@@ -1,97 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/10
-Message-ID: <CAEDdjHc5JrTuCtSP3f=fZV22siGMec+8u=cSoD6KCo0yHxsbWA@mail.gmail.com>
-Date: Wed, 19 Feb 2014 22:17:00 +0000
-From: Pedro Ribeiro <pedrib@...il.com>
-To: Ralf Becker <rb@...lite.de>
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com,  Egidio Romano <n0b0d13s@...il.com>
-Subject: Re: CVE request: remote code execution in egroupware <= 1.8.005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/9
+Message-ID: <20141017155057.GK1844@sentinelchicken.org>
+Date: Fri, 17 Oct 2014 08:50:57 -0700
+From: Tim <tim-security@...tinelchicken.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
-On 19 February 2014 18:10, Ralf Becker <rb@...lite.de> wrote:
-> Hi,
->
-> my remarks to your questions as developer of EGroupware and the fixes
-> included in 1.8.006:
->
-> Am 19.02.14 16:41, schrieb cve-assign@...re.org:
->>> I have discovered a remote code execution via php unserialize in egroupware
->>> <= 1.8.005.
->>
->> Use CVE-2014-2027.
->>
->>> https://github.com/pedrib/PoC/raw/master/egroupware-1.8.005.txt
->>> http://www.egroupware.org/changelog
->>
->>> Security: fixed arbitrary file overwrite and remote code execution
->>> reported by Pedro Ribeiro (pedrib@...il.com) of Agile Information
->>> Security
->>
->> We could not immediately determine whether the egroupware-1.8.005.txt
->> disclosure means that:
->>
->>   Arbitrary file overwrite in __destruct:
->>
->>   Remote code execution in __destruct:
->>
->> are both exploitable only as a consequence of unsafe unserialize use.
->
-> Removing PHP unserialization removes the thread, as all these values got
-> not stored. So passing PHP serialized data to 1.8.006 code only gives an
-> error, as json_unserialize does not understand it.
->
->> If eliminating the unsafe unserialize use would not completely address
->> those issues, additional CVE IDs may be needed.
->>
->> There are no new CVE assignments yet for possible other issues in the
->> 1.8.006.20140217 changelog entry, such as:
->>
->>   CalDAV/Calendar: fixed permanent auth request in iCal, if
->>   accountselection is set to "selectbox with groupmembers" and rights
->>   granted from group without being a member
->
-> This is NOT security relevant, server-side errors / exceptions cause
-> basic auth requests as a means to show to user something went wrong.
->
->>   SiteMgr: fixed not working anonymous user and using now a random
->>   password
->
-> This is a hardening included in 1.8.005 by no longer using a static
-> password for anonymous user, but setting up a random one during
-> installation time.
->
-> So I dont think further CVE's are needed.
->
-> Ralf
-> --
-> Ralf Becker
-> Director Software Development
->
-> Stylite AG
->
-> Morschheimer Strasse 15 | Tel. +49 6352 70629 0
-> D-67292 Kirchheimbolanden | Fax. +49 6352 70629 30
->
-> Email: rb@...lite.de
->
-> www.stylite.de | www.egroupware.org
->
-> Managing Directors: Andre Keller | Ralf Becker | Gudrun Mueller
-> Chairman of the supervisory board: Prof. Dr. Birger Leon Kropshofer
->
-> VAT DE214280951 | Registered HRB 31158 Kaiserslautern Germany
->
+> It's not entirely a bad idea. You could say "if http header time and
+> system time differ severely (> 1 week or something) then don't connect
+> to hsts sites".
 
-As a further comment on this, Egidio Romano has pointed out that the
-code execution example is not exploitable. However the file deletion
-issue still is fully exploitable.
-Egroupware contains lots of classes with magic methods, some of which
-might be exploitable (I haven't tested them all). Therefore I am
-changing this to a POSSIBLE remote code execution instead of a
-definite code execution.
 
-Thanks to Egidio for pointing it out and validating my advisory. I've
-updated the advisory in the repository.
+Well, the premise here is that the attacker has the ability to modify
+plaintext traffic between you and your server AND has some way to
+perform an HTTPS->HTTP downgrade attack.  That's what HSTS is for,
+right?  So if you receive an HSTS header at some point, then an
+attacker uses NTP to change your system time, then before you even
+connect to the server, you no longer require HTTPS.  So, the attacker
+can perform that downgrade attack, at which point any Date header
+can't be trusted.  So I don't think a Date header would help at all.
 
-Regards,
-Pedro
+It seems to be a better place to put HSTS-like information is the DNS.
+If we ever got to the point where DNSSEC were actually deployed and
+not downgradable, then a record of some kind indicating which services
+should be "secure" could solve this.  Even when records expire, they
+wouldn't be MitM-able since there should be a full chain of trust from
+the root servers.  The same problem exists for a variety of protocols,
+including all STARTTLS ones, which are often trivially downgradable in
+practice.
+
+tim
