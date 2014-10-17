@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/13
-Message-ID: <alpine.BSF.2.11.1412230500200.87591@aneurin.horsfall.org>
-Date: Tue, 23 Dec 2014 05:18:20 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/7
+Message-ID: <bc0bf2afd6874a1a13b371e5d013c958.squirrel@aphrodite.kinkhorst.nl>
+Date: Fri, 17 Oct 2014 16:09:36 +0200
+From: "Thijs Kinkhorst" <thijs@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+Subject: libxml2 issue: billioun laughs variant (CVE-2014-3660)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 22 Dec 2014, Hanno Böck wrote:
+Hi,
 
-> I perfectly understand that some people need more accuracy than tlsdate 
-> can give. However it's probably rare, right? I don't see any reason why 
-> average consumer hardware (Desktop, smartphone etc.) would have any 
-> problem with the 1-2 sec max inaccuracy of tlsdate.
+The Netherlands Cyber Security Center found a libxml2 issue, similar to
+the original 'billion laughs' entity expansion attack. Upstream pushed out
+a fix immediately (to much regret of the NCSC that wanted to do a
+coordinated disclosure).
+https://www.ncsc.nl/actueel/nieuwsberichten/kwetsbaarheid-ontdekt-in-libxml2.html
 
-Speaking as one who had to feed and water an OpenLDAP system that was 
-replicating all over the world, I really cared whether *this* event 
-happened before or after *that* event, but yeah, most users don't need to 
-do that.
+>From the git logs, it seems it has been fixed in libxml2 2.9.2 and is
+known as CVE-2014-3660:
+https://git.gnome.org/browse/libxml2/commit/?id=be2a7edaf289c5da74a4f9ed3a0b6c733e775230
 
-You haven't lived until you've debugged a replication problem; "Boss, are 
-both these systems running NTP?"  "Yes, Dave."  "Right, in that case, I've 
-found another obscure bug in OpenLDAP."  When you've got more than one 
-person updating the same object at around the same time, it was really 
-helpful, in an LDAP sense, to know the precise order of events, as the 
-whole concept of replication depends upon it.
 
-I suspect that we humans, the geekier we become, the more precise are our 
-perceived needs; just listen to any time announcement over the telephone: 
-"At the third stroke, it will be six o'clock precisely" (with the precise 
-bit happening at the start of the third beep, and I was fanatic over 
-that).
+Kind regards,
 
--- 
-Dave Horsfall DTM (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
-http://www.horsfall.org/spam.html (and check the home page whilst you're there)
+Thijs Kinkhorst
+Debian Security Team
