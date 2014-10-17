@@ -1,20 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/1
-Message-ID: <548EB12E.7080900@redhat.com>
-Date: Mon, 15 Dec 2014 11:00:14 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE request: glibc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/11
+Message-Id: <20141017191053.42C5FC50084@smtptsrv1.mitre.org>
+Date: Fri, 17 Oct 2014 15:10:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: TYPO3-EXT-SA-2014-013
 Content-Type: text/plain; charset=utf-8
 
-The getnetbyname function in glibc 2.21 in earlier will enter an 
-infinite loop if the DNS backend is activated in the system Name Service 
-Switch configuration, and the DNS resolver receives a positive answer 
-while processing the network name.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Upstream reference:
+> Can I get one 2014 CVE for following TYPO3 extension issue
+> 
+> It has been discovered that the extension "Calendar Base" (cal) is
+> susceptible to Denial of Service.
+> 
+> Affected Versions: all versions of 0.x.x, 1.0.x, 1.1.x, 1.2.x, 1.3.x, 1.4.x;
+> 1.5.8 and below of 1.5.x; 1.6.0
+> 
+> Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:N/I:N/A:C/E:POC/RL:OF/RC:C
+> 
+> User input is passed to PHP's PCRE library without validating it
+> beforehand. Depending on user input this may consume a tremendous
+> amount of system resources.
 
-   <https://sourceware.org/bugzilla/show_bug.cgi?id=17630>
+Use CVE-2014-8325.
 
--- 
-Florian Weimer / Red Hat Product Security
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUQWlKAAoJEKllVAevmvmsrtcH/Rs3NVD3MTD/Ze4pOYtV//TR
+VdmlhkerVpCCXeUslctYqZJGrbawXjFXsBSx8V/WC4pipZjBG3fcLCZK0w33AdVo
+oM7voFeCoC4FXAz37+WxqPxan0nqL8qeD7vQuAfPxhZye2iKoF2Gvis1AmQl/i7C
+Nsrun0Q0obhEir4r7X0Tapzo6wNBHvw3GSllOHA38Z6rRqV4oDU4b0Tb0FMR15do
+JEqwvvd6/HRLPsEt/UxpRJm8gissMCk1v6EGQItFSMAWF749/heLaqBHYTiJCwDm
+CH7kb6fqNibex3fmhZNOdbV/7WAsYqpDiBlIyWwjVOdD4k44/hqpi27shIkkWHA=
+=yE62
+-----END PGP SIGNATURE-----
