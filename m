@@ -1,76 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/11
-Message-ID: <20141009061748.GA5352@chaz.gmail.com>
-Date: Thu, 9 Oct 2014 07:17:48 +0100
-From: Stephane Chazelas <stephane.chazelas@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/13
+Message-ID: <20141017225846.GA25470@zoho.com>
+Date: Fri, 17 Oct 2014 22:58:46 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+Cc: Nikos Mavrogiannopoulos <nmav@...tls.org>, dkg@...thhorseman.net
+Subject: neuter the poodle (was: Re: Truly scary SSL 3.0 vuln to be revealed soon:)
 Content-Type: text/plain; charset=utf-8
 
-2014-10-08 16:05:45 -0700, Michal Zalewski:
-> > Well, I guess, but the way you're interpreting this separation of
-> > code/data and the way that I am is clearly different.
-> > There are clearly cases where separation is  practical,
-> > non-destructive, and beneficial for security.
+On Fri, Oct 17, 2014 at 03:40:31PM -0400, Daniel Kahn Gillmor wrote:
+> Please see: http://www.gnutls.org/security.html#GNUTLS-SA-2014-4
 > 
-> Well, in the specific context of bash, where it's being singled out as
-> a major contributing factor to the bug: how would you establish an
-> out-of-band channel for exporting functions that keeps them separate
-> from "pure" data? As far as I can tell, there is no trivial and
-> portable way.
-[...]
+> and Nikos' writeup here:
+> 
+>  http://nmav.gnutls.org/2014/10/what-about-poodle.html
+> 
+> From the latter link:
+> 
+> >>> The good news is, that only browsers use this construct, and no
+> >>> other applications should be affected.
+> 
+> Nikos (or anyone else on OSS-security), are you sure that only
+> browsers do this?  what about mail clients like Thunderbird or
+> Mail.app making IMAPS or POPS or submission connections?
 
-Just to give the discussion a bit more of perspective, here is
-some info on how similar things are done in other shells:
+SSLv3 is vulnerable to padding oracle attacks on CBC-mode ciphers. This
+vulnerability, tagged CVE-2014-3566, exists independently of types of
+clients, servers, or protocols being layered over SSL/TLS.
 
-In rc (the plan9, Research Unix v10 shell), all functions are
-exported in "fn_funcname" variables that are evaluated on the
-first call. rc authors considered it was a mistake of the Bourne
-shell not to export all its variables to the environment. It
-probably made sense for them to say that at the time. In case
-you don't know of that shell, rc is the shell with the
-cleanest design. It never picked up because it arrived too late
-when the Bourne and C shell were predominant (like Plan9 vs
-Unix). http://www.in-ulm.de/~mascheck/bourne/unix-faq.shell.rc
-http://doc.cat-v.org/plan_9/4th_edition/papers/rc
+POODLE is a specific attack vector that leverages "protocol fallback" in
+order to exploit CVE-2014-3566.
 
-In the Almquist shell (still in dash and some BSD sh), $PATH
-entries that are suffixed with
-%func are looked for files with function definitions.
-If you have a ~/fun/ls, and PATH=~/fun%func:/bin, and call ls,
-~/fun/ls is evaluated and the ls function called instead of the
-ls in /bin.
+Notwithstanding reports like "The good news is, that only browsers use
+this construct, and no other applications should be affected." [1] and
+"Currently, only HTTPs clients perform out-of-band protocol fallback."
+[2], I can confirm what you're hinting at.
 
-POSIX shells (features comes from ksh) have the ENV variable
-which after evaluation (so yes, the parser is invoked on that
-variable content) resolves to the path of a file where you can
-put function definitions (or anything else). Most shells only do
-that when non-interactive though (IIRC that changed because the
-feature was abused). bash has BASH_ENV (even for non interactive
-shells, but only when invoked as bash, not sh).
+Browsers are not the only client-side applications that implement
+"protocol fallback". The below transcript shows an MITM-triggered
+Thunderbird 24.7.0 IMAPS protocol downgrade to SSLv3 even though both
+peers speak TLSv1.
 
-You could add a eval "$MY_FUNCTIONS" in there and do export
-MY_FUNCTIONS="$(typeset -f myfunctiontoexport)" (I don't know
-that it be common practice though).
+--mancha
 
-All csh/tcsh invocations, except when passed the -f option read
-the ~/.(t)cshrc. So you could put your alias (csh has no
-functions) definitions in there (or source another file
-specified in an env var or eval a $MY_ALIASES).
+[1] http://nmav.gnutls.org/2014/10/what-about-poodle.html
+[2] https://access.redhat.com/node/1232123
 
-Similarly, zsh has ~/.zshenv (not to be confused with ~/.zshrc),
-and $ZDOTDIR to specify where to look for .z*. Again you can
-do eval $MY_FUNCTIONS in there.
+========= transcript ============
+Setting up mancha-in-the-middle...
 
-ksh has $FPATH. like in ash, that's where to look for function
-definition files. However, the functions don't take precedence
-over  commands unless you add an "autoload thefunction" to your
-script.
+127.0.0.1:44366 -> 127.0.0.1:993
+handshake               [tls1.0]        (client_hello)
 
-zsh has a similar feature but the "autoload" is always required
-and the files are meant to contain the function body (instead of
-the full function definition among other things in ash/ksh).
+Start protocol downgrade attack...
 
--- 
-Stephane
+127.0.0.1:44371 -> 127.0.0.1:993
+handshake               [ssl3.0]        (client_hello)
 
+127.0.0.1:993 -> 127.0.0.1:44371
+handshake               [ssl3.0]        (server_hello)
+handshake               [ssl3.0]        (certificate)
+handshake               [ssl3.0]        (server_key_exchange)
+handshake               [ssl3.0]        (server_hello_done)
+
+127.0.0.1:44371 -> 127.0.0.1:993
+handshake               [ssl3.0]        (client_key_exchange)
+change_cipher_spec      [ssl3.0]
+handshake               [ssl3.0]        (encrypted)
+
+127.0.0.1:993 -> 127.0.0.1:44371
+change_cipher_spec      [ssl3.0]
+handshake               [ssl3.0]        (encrypted)
+
+127.0.0.1:993 -> 127.0.0.1:44371
+application_data        [ssl3.0]
+application_data        [ssl3.0]
+=================================
+
+
+Content of type "application/pgp-signature" skipped
