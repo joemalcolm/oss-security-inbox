@@ -1,83 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/2
-Message-Id: <201403060329.s263TAGK004652@core.courtesan.com>
-Date: Wed, 05 Mar 2014 20:29:10 -0700
-From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/6
+Message-ID: <20141017103006.GC27687@kludge.henri.nerv.fi>
+Date: Fri, 17 Oct 2014 13:30:06 +0300
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: sudo: security policy bypass when env_reset is disabled
+Cc: TYPO3 Security Team <security@...o3.org>
+Subject: CVE request: TYPO3-EXT-SA-2014-013
 Content-Type: text/plain; charset=utf-8
 
-Summary:
-    If the env_reset option is disabled in the sudoers file, a
-    malicious user with sudo permissions may be able to run arbitrary
-    commands with elevated privileges by manipulating the environment
-    of a command the user is legitimately allowed to run.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Sudo versions affected:
-    Sudo 1.6.9 through 1.8.4p5 inclusive.  Sudo 1.8.5 and higher
-    are not affected.
+Can I get one 2014 CVE for following TYPO3 extension issue, thank you.
 
-CVE ID:
-    This vulnerability has been assigned CVE-2014-0106 in the Common
-    Vulnerabilities and Exposures database.
+It has been discovered that the extension "Calendar Base" (cal) is susceptible
+to Denial of Service.
 
-Details:
-    Sudo has two methods of constructing the environment that the
-    command run by it will use.  The default method (since sudo
-    1.6.9) is to execute the command with a new, minimal environment.
-    The new environment contains the TERM, PATH, HOME, MAIL, SHELL,
-    LOGNAME, USER, USERNAME, SUDO_COMMAND, SUDO_USER, SUDO_UID and
-    SUDO_GID variables in addition to variables from the invoking
-    process permitted by the env_check and env_keep options.  This
-    is effectively a whitelist for environment variables.
+Release Date: October 17, 2014
+Affected Versions: all versions of 0.x.x, 1.0.x, 1.1.x, 1.2.x, 1.3.x, 1.4.x;
+1.5.8 and below of 1.5.x; 1.6.0
 
-    If, however, the env_reset option is disabled, any variables
-    not explicitly denied by the env_check and env_delete options
-    are inherited from the invoking process.  In this case, env_check
-    and env_delete behave like a blacklist.  Since it is not possible
-    to blacklist all potentially dangerous environment variables,
-    use of the default env_reset behavior is encouraged.
+Vulnerability Type: Denial of Service
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:N/I:N/A:C/E:POC/RL:OF/RC:C
 
-    Beginning with sudo 1.6.9, it is also possible to specify extra
-    environment variables on the command line.  These variables are
-    supposed to be subject to the same restrictions as the invoking
-    user's environment, unless the user is allowed to set arbitrary
-    variables either via the SETENV attribute or by virtue of having
-    sudo "ALL".
+Problem Description: User input is passed to PHP's PCRE library without
+validating it beforehand. Depending on user input this may consume a tremendous
+amount of system resources.
 
-    Due to a logic bug in the validate_env_vars() function, if the
-    env_reset option is disabled, environment variables specified
-    on the command line are permitted when they should not be (and
-    vice versa).  This can be used by a malicious user to run
-    arbitrary programs by manipulating the environment of a command
-    the user is legitimately allowed to run.  For example, on many
-    systems the LD_PRELOAD environment variable is used to load a
-    dynamic shared object before any shared libraries are loaded.
-    By either replacing a library function called by the program,
-    or by including an _init() function in the shared object, the
-    user can execute arbitrary commands with elevated privileges.
+Solution: Updated versions 1.5.9 (for TYPO3 CMS 4.5.5 - 6.0.99) and 1.6.1 (for
+TYPO3 CMS 6.1.0 - 6.2.99) are available from the TYPO3 extension manager and at
+http://typo3.org/extensions/repository/download/cal/1.6.1/t3x/ and
+http://typo3.org/extensions/repository/download/cal/1.5.9/t3x/. Users of the
+extension are advised to update the extension as soon as possible.
 
-    The code that contains the bug was rewritten for sudo 1.8.5,
-    which does not suffer from the same security issue.
+Credits: Credits go to Daniel Hahler and Bernd Schuhmacher who discovered and
+reported the issue.
 
-Impact:
-    For sudo versions prior to 1.8.5, if the env_reset option is
-    explicitly disabled in the sudoers file, a malicious user with
-    sudo permissions may be able to run arbitrary commands with
-    elevated privileges.  There is no impact for sudo 1.8.5 and
-    higher, or when the sudoers file does not disable env_reset.
+- ---
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Fix:
-    A fix for the sudo 1.7.x branch is included in sudo 1.7.10p8.
-    The actual fix is a single line change to env.c:
-	http://www.sudo.ws/repos/sudo/rev/748cefb49422
-    Sudo versions 1.8.5 and higher are not vulnerable.
-
-Workaround:
-    Only systems with sudoers files that explicitly disable env_reset
-    are affected.  As such, a simple workaround is to simply not
-    disable env_reset, which is the default behavior.
-
-Credit:
-    I'd like to thank Sebastien Macke for reporting this bug and
-    providing a fix.
+iEYEARECAAYFAlRA764ACgkQXf6hBi6kbk8GfwCeKDJx4lm7rAXgrtnC8wHV4H7G
+qSwAoMa4zQF02P3BBT0t7GqlN5ZYJjJS
+=6CEb
+-----END PGP SIGNATURE-----
