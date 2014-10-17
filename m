@@ -1,56 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/9
-Message-Id: <201403051908.s25J8Vm0002159@linus.mitre.org>
-Date: Wed, 5 Mar 2014 14:08:31 -0500 (EST)
-From: cve-assign@...re.org
-To: huzaifas@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for two net-snmp remote DoS flaws
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/12
+Message-ID: <544170AF.604@fifthhorseman.net>
+Date: Fri, 17 Oct 2014 15:40:31 -0400
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com, Nikos Mavrogiannopoulos <nmav@...tls.org>
+Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 10/16/2014 12:42 PM, Sona Sarmadi wrote:
+>> Hanno Böck wrote:
+>>> It's out:
+>>>
+>>> https://www.openssl.org/~bodo/ssl-poodle.pdf
+>>> http://googleonlinesecurity.blogspot.de/2014/10/this-poodle-bites-
+>> exploiting-ssl-30.html
+> 
+> OpenSSL has patches for this and 3 other vulnerabilities: 
+> 
+>    https://www.openssl.org/news/secadv_20141015.txt
+> 
+> GnuTLS also implements the SSLv3 protocol, does anyone know if there are any  patches for GnuTLS for the SSL 3.0 protocol vulnerability? 
 
-> 1. net-snmp: denial of service flaw in Linux implementation of ICMP-MIB
+Please see: http://www.gnutls.org/security.html#GNUTLS-SA-2014-4
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1070396
-> http://sourceforge.net/p/net-snmp/code/ci/a1fd64716f6794c55c34d77e618210238a73bfa1/
+and Nikos' writeup here:
 
-A first look at the patch suggests that it's about missing input
-validation, and not also about independently exploitable off-by-one
-errors in the sizes of data structures. In other words, although
-something like:
+ http://nmav.gnutls.org/2014/10/what-about-poodle.html
 
-  - struct icmp_msg_mib vals[255];
-  + struct icmp_msg_mib vals[256];
+From the latter link:
 
-would often be an independent security fix (255 is an unusual size),
-here it's not a security fix relative to the original code. If other
-analysis shows that that's incorrect, we'll add another CVE ID.
+>>> The good news is, that only browsers use this construct, and no
+>>> other applications should be affected.
 
-Use CVE-2014-2284 for the missing input validation.
+Nikos (or anyone else on OSS-security), are you sure that only browsers
+do this?  what about mail clients like Thunderbird or Mail.app making
+IMAPS or POPS or submission connections?
+
+	--dkg
 
 
-> 2. net-snmp: snmptrapd crash when using a trap with empty community string
-> https://bugzilla.redhat.com/show_bug.cgi?id=1072778
-> https://bugzilla.redhat.com/show_bug.cgi?id=1072044
-> http://sourceforge.net/p/net-snmp/patches/1275/
-
-Use CVE-2014-2285.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTF3S0AAoJEKllVAevmvms15wH/A2vbg+phBFo/ChivsN7fVRJ
-iVCRCFG7b81xVeZmnMPE0EM1YXaGefG9cYdKmRtnaCO5p2anuuJgzpjB+rE37C7a
-T2+rZIrhmkyOYmxUoebGrzwAqU7l0IqLfP5GOZJ8vbuaVyMWd8VJ6nlzmq8kF1yZ
-fGToucAz2jsDKOctGs6R8GGkKjNI5WdpgxkgQ6rrEdW0VfQzW7uz0AcgdXtmHjx1
-DerxDuhQxTGGrT+salAa3n8eNV7kBmfsroR72gv7agdW2hZ7E74c5CZG8hfwmNgN
-qcijF53zMJ46+u5nbm84ic7Rtopms/edABSd/DmZVHRGEs+ZILpvcWX47nX3wAM=
-=BxeE
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
