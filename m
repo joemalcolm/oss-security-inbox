@@ -1,18 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/5
-Message-ID: <5466FC66.9010706@internot.info>
-Date: Sat, 15 Nov 2014 18:10:30 +1100
-From: Joshua Roers <honey@...ernot.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/3
+Message-ID: <20141017095329.62bf0cc4@pc>
+Date: Fri, 17 Oct 2014 09:53:29 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: dpkg handling of 'control' and warnings format string vulnerability
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
-On 06/11/14 17:07, Joshua Rogers wrote:
-> The vulnerable function, warningv([..]), is called in many other places,
-> and is not limited to '-i'.
-Just for reference: the vulnerable function is actually
-parse_error_msg([..]), not warningv([..]).
+Am Thu, 16 Oct 2014 18:45:18 -0600
+schrieb Kurt Seifried <kseifried@...hat.com>:
 
-Thanks,
+> You can't trust remote servers you're getting the content from... what
+> if I send wonky times to try and screw with your browser? Or header
+> injection attacks? No thanks.
+
+It's not entirely a bad idea. You could say "if http header time and
+system time differ severely (> 1 week or something) then don't connect
+to hsts sites".
+
 -- 
--- Joshua Rogers <https://internot.info/>
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
