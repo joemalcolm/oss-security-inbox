@@ -1,77 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/6
-Message-ID: <20140410062554.GA10788@openwall.com>
-Date: Thu, 10 Apr 2014 10:25:54 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/15
+Message-ID: <20141017234133.GM1844@sentinelchicken.org>
+Date: Fri, 17 Oct 2014 16:41:33 -0700
+From: Tim <tim-security@...tinelchicken.org>
 To: oss-security@...ts.openwall.com
-Cc: Matt Wilson <msw@...zon.com>, Max Spevack <spevack@...zon.com>, Anthony Liguori <aliguori@...zon.com>
-Subject: Re: Request for linux-distros list membership
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 09, 2014 at 11:57:33PM -0600, Kurt Seifried wrote:
-> So first off I'm inclined to have Amazon on the distros list (same
-> reasons as Oracle basically).
+Hi Phil,
+
+> That's called "DANE" and it uses TLSA records in DNS.  It's slowly
+> bootstrapping into use in SMTP and server-server XMPP as an
+> opportunistic TLS latch, providing the correct trust anchors too.
 > 
-> My only concern is are you the correct person, I have no clue who is
-> on the Amazon security team for their Linux distribution, I've never
-> seen you post anything anywhere.
+> Various feature-request bugs against browsers have eventually gotten
+> closed as will-not-fix or equivalent, because verified DNSSEC is not
+> seen as something which is likely to be widely deployed in clients;
+> there's a chicken/egg problem here.
 > 
-> Your search - site:aws.amazon.com Anthony Liguori - did not match any
-> documents.
+> By contrast, servers are more likely to be placed with care and
+> attention to DNS resolution, so someone running an SMTP or XMPP server
+> who wants to use DANE can fix their DNS setup, once.  So it's seeing
+> more use there.  Postfix has DANE support; Exim has it as an
+> experimental feature (which just means that the API might change); the
+> Prosody XMPP client can be set up to use DANE.
 > 
-> Your search - site:aws.amazon.com aliguori@...zon.com - did not match
-> any documents.
-> 
-> Can we somehow get confirmation from Amazon that this is the right
-> person to have on distros? Thanks.
+> (For clarity: the server/receiver side of any connection requires no
+> code changes to support DANE, although having SNI support probably
+> helps; the initiator which verifies the peer is the only one which needs
+> changes, but they're currently ugly ones).
 
-Yes, we need this sort of confirmation.  My other concerns are:
+Sure, I read up on this a while ago, but wasn't sure if it was
+catching on.  Thanks for the update.
 
-I think Amazon has never participated in discussions on oss-security.
-Searching:
 
-site:openwall.com "amazon.com"
+> You're ignoring the attack vectors against DNSSEC.
 
-finds only Anthony's request for distros list membership and some
-irrelevant pages outside of the oss-security archive.  It doesn't find
-any oss-security postings from any Amazon person (although checking the
-subscriber list I see that some were subscribed, at various times).
+Yes, true, but this is no different than the current situation with
+TLS.  Why bother subverting DNSSEC in order to remove HSTS-like
+controls, and then downgrade from HTTPS->HTTP in order to get at the
+traffic, when you can just get at the TLS traffic directly by
+subverting that PKI?
 
-As I said in:
+In order to address the nation-state scenario, I think we need the
+ability to apply multiple signatures to the same server key.  If a CA
+in Israel and a CA in Iran both signed the same key, what are the
+chances of collusion?  One way to achieve multiple signatures would be
+to leverage DNSSEC and stuff fingerprints in signed DNS records,
+leveraging two separate PKIs for the same TLS keys.  I'd be interested
+to know if you know of any attempts to do this already.
 
-http://www.openwall.com/lists/oss-security/2014/01/22/1
-
-"Asking to join linux-distros before you've been on oss-security for a
-while (and preferably, having contributed to the discussions in here) is
-putting the cart before the horse."
-
-The distros and linux-distros lists exist as an addition to
-oss-security.  It is pointless for a distro to be on
-distros/linux-distros while not also being on oss-security.  Granted,
-Anthony has just joined oss-security (welcome!), yet the sudden interest
-in advance notification while apparently not caring about timely
-notification (on just-made-public issues) just a week ago is suspicious.
-
-Where's the info on Amazon Linux AMI security updates?  How timely were
-they, historically?  (In other words, does a few days of advance notice
-really make a difference?)  How are users being notified of them?  How
-are users supposed to install them?
-
-I notice that Amazon was added to
-http://oss-security.openwall.org/wiki/vendors in 2012.  That's good,
-indicating some past interest in security notifications.
-
-https://aws.amazon.com/amazon-linux-ami/security-bulletins/ lists
-security bulletins, including already on Heartbleed.
-
-This addresses some of my questions above, yet I'd appreciate direct
-answers from Anthony as well.
-
-We were not convinced about Qlustar being on linux-distros being worth
-the risk, so we never satisfied Roland's request.  If we're to satisfy
-Anthony's request and add Amazon to linux-distros, we need to clearly
-show how it meets a higher threshold.
-
-Thanks,
-
-Alexander
+cheers,
+tim
