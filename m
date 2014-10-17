@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/19
-Message-ID: <20141120131450.GA545@gwolf.org>
-Date: Thu, 20 Nov 2014 07:14:50 -0600
-From: Gunnar Wolf <gwolf@...lf.org>
-To: Salvatore Bonaccorso <carnil@...ian.org>
-Cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, security@...pal.org, cve-assign@...re.org, team@...urity.debian.org
-Subject: Re: Pending CVE assignments for SA-CORE-2014-006?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/4
+Message-ID: <20141017093252.GA4040@balvenie>
+Date: Fri, 17 Oct 2014 11:32:53 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
-Salvatore Bonaccorso dijo [Thu, Nov 20, 2014 at 07:10:28AM +0100]:
-> Hi
+On Fri, Oct 17, 2014 at 09:53:29AM +0200, Hanno Böck wrote:
+> Am Thu, 16 Oct 2014 18:45:18 -0600
+> schrieb Kurt Seifried <kseifried@...hat.com>:
 > 
-> I just wanted to ask back if the CVEs for SA-CORE-2014-006[1] were
-> already requested (the advisory mention that they will be requested
-> and added to the advisory). If so this will ease tracking the two
-> issues. For reference they are:
+> > You can't trust remote servers you're getting the content from... what
+> > if I send wonky times to try and screw with your browser? Or header
+> > injection attacks? No thanks.
+> 
+> It's not entirely a bad idea. You could say "if http header time and
+> system time differ severely (> 1 week or something) then don't connect
+> to hsts sites".
 
-The Drupal advisory page for this release¹ mentions only that "A CVE
-identifier will be requested, and added upon issuance, in accordance
-with Drupal Security Team processes".
+Sounds a bit like kerberos
+-- 
+Yves-Alexis
 
-¹ https://www.drupal.org/SA-CORE-2014-006
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
