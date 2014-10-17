@@ -1,56 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/05/1
-Message-ID: <52F1EE61.2020105@redhat.com>
-Date: Wed, 05 Feb 2014 18:55:13 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/1
+Message-ID: <CACYkhxjdLEP1rXxuzNt5VVS=DBWpZw7+3bdhcreYKPjQUx2RmQ@mail.gmail.com>
+Date: Fri, 17 Oct 2014 11:32:01 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, 737385@...s.debian.org
-Subject: Re: Re: CVE request: a2ps insecure temporary file use
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
-On 02/05/2014 01:40 AM, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> https://bugzilla.redhat.com/show_bug.cgi?id=1060630#c5
->>
->> * Fri Jan 05 2001 Preston Brown <pbrown@...hat.com>
->> - security patch for tmpfile creation from Olaf Kirch <okir@....de>
->>
->> followed the next month by a fix to that patch:
->>
->> * Mon Feb 12 2001 Tim Waugh <twaugh@...hat.com>
->> - Fix tmpfile security patch so that it actually _works_ (bug #27155).
->
-> Does anyone have information indicating that two CVE-2001-#### IDs are
-> needed to cover the discoveries by Olaf Kirch and Tim Waugh 13 years
-> ago? This would be the case if, for example, there was a January 2001
-> a2ps package that fixed part of the problem with temporary files.
-> Admittedly, the practical value of two CVE-2001-#### IDs at present
-> may be extremely small.
->
-> The information does not seem to be in a2ps.git because data before
-> 2004 is unavailable, e.g.,
->
->    http://pkgs.fedoraproject.org/cgit/a2ps.git/log/?ofs=100
->
-> Also:
->
->    https://bugzilla.redhat.com/show_bug.cgi?id=27155
->    You are not authorized to access bug #27155.
->
-> If (as we would expect) nobody is interested in checking that, we will
-> assign one CVE-2001-#### ID.
+On 16 October 2014 23:03, Hanno Böck <hanno@...eck.de> wrote:
+> Same should work for HPKP. The idea of setting some security feature
+> through a header needs a revisit.
+> The solution would be to have a more reliable PC time. How do we do
+> that?
 
-Hello,
-
-I spent a little time looking but could not determine if a release was 
-made to fix only part of the problem. So one ID is fine by us.
-
-bug #27155 just contains some gdb output. Therefore I assumed it was 
-public and didn't check before sending it here.
-
-Thanks for looking at this.
-
---
-Murray McAllister / Red Hat Security Response Team
+A Date: header?
