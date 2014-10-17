@@ -1,34 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/11
-Message-ID: <5344F9FD.1000104@redhat.com>
-Date: Wed, 09 Apr 2014 13:12:53 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/10
+Message-ID: <CAO-2N4Jho6tFYc=B_0AjpxPVUVPCaM1nLm8+EN16H9rD9Qp1TQ@mail.gmail.com>
+Date: Fri, 17 Oct 2014 17:28:56 +0100
+From: Vitor Ventura <ventura.vitor@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+Subject: Re: Connected UDP sockets and kernel queuing (CVE-2014-6512)
 Content-Type: text/plain; charset=utf-8
 
-On 04/09/2014 01:02 PM, Yves-Alexis Perez wrote:
-> On Wed, Apr 09, 2014 at 12:02:09PM +0530, Huzaifa Sidhpurwala wrote:
->> On 04/09/2014 01:07 AM, Yves-Alexis Perez wrote:
->>
->>> Mon, 07 Apr 2014 06:10 : Huzaifa Sidhpurwala sends a mail to distros
->>>                          list with no details but an offer to request
->>>                          them privately
->>
->>
->> After i sent a mail to distros, i was contacted by security engineers
->> from most major distributions. I answered most of the them as soon as i
->> could with complete details including the upstream patch.
-> 
-> I'm not sure who are “most major distributions”. We failed to reply in a
-> timely fashion to that mail (but that's on us), but apparently so did
-> Ubuntu, Suse sent a mail but got apparently no reply.
-> 
+Hello,
 
-I have a list of people who asked and whom i answered, but i want to
-restraint going into it now.
+  I was thinking if this might open a door for a reflected amplification
+attack. By your description this shouldn't be possible because the
+application shouldn't be waiting for any packets after the close of he
+socket, nevertheless a possible vector of attack seems to be open.
+The attack vector could be achieved by the creation of a "connection" and
+closure by a side channel and then exploit the time window created. These
+side channels are common on gaming servers and streaming.
 
-Suse was replied to via security@...e.de :)
+  I will try to test it.
+Em 17/10/2014 16:03, "Florian Weimer" <fweimer@...hat.com> escreveu:
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+> I noticed a potential issue with connected UDP sockets and the kernel
+> kernel per-socket packet queue, potentially leading to IP spoofing
+> vulnerabilities in the sense that the application thinks the packet came
+> from host A, but it really came from host B:
+>
+>   <https://bugzilla.redhat.com/show_bug.cgi?id=1071210>
+>
+> OpenJDK is particularly exposed because DatagramSocket.disconnect() calls
+> connect(2) with AF_UNSPEC (or a NULL socket address on some systems) to
+> disconnect sockets, which is a rarely used feature of the BSD sockets API.
+> OpenJDK ensures that these disconnected sockets remain bound to a port, so
+> it was possible to enqueue packets whose source address will not be
+> checked, without even having a tight race to win.
+>
+> We thought briefly about fixing this in the kernel, but thought better of
+> it because of backwards compatibility concerns (and we would have to patch
+> OpenJDK nevertheless).  The OpenJDK fix simply checks the source address of
+> incoming packets.  Oracle's fix has an optimization that drops this
+> additional filter after the maximum amount of pending packets has been
+> consumed from the socket; my patch moved the filter to native code instead
+> and applied it to every packet on a connected socket.  I think both
+> approaches are valid.
+>
+> I'm sharing this with a wider audience because in theory, other UDP-based
+> services could be affected, although I didn't spot any when I looked at
+> this prior to disclosure.
+>
+> --
+> Florian Weimer / Red Hat Product Security
+>
+
