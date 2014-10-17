@@ -1,45 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/1
-Message-ID: <20141003091228.GA11505@zoho.com>
-Date: Fri, 3 Oct 2014 09:12:28 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/2
+Message-ID: <5440669E.1070601@redhat.com>
+Date: Thu, 16 Oct 2014 18:45:18 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: rgerhards@...adiscon.com, joey@...odrom.org
-Subject: sysklogd vulnerability (CVE-2014-3634)
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
-Vendors et al.
 
-Many thanks to Rainer Gerhards, rsyslog project lead, for identifying a
-problem with how rsyslog's rsyslogd and sysklogd's syslogd check for
-invalid priority values (CVE-2014-3634). For details please refer to
-Rainer's well-written issue description. [1]
 
-In sysklogd's syslogd, invalid priority values between 192 and 1023
-(directly or arrived at via overflow wraparound) can propagate through
-code causing out-of-bounds access to the f_pmask array within the
-'filed' structure by up to 104 bytes past its end. Though most likely
-insufficient to reach unallocated memory because there are around 544
-bytes past f_pmask in 'filed' (mod packing and other differences),
-incorrect access of fields at higher positions of the 'filed' structure
-definition can cause unexpected behavior including message
-mis-classification, forwarding issues, message loss, or other.
+On 16/10/14 06:32 PM, Michael Samuel wrote:
+> On 16 October 2014 23:03, Hanno Böck <hanno@...eck.de> wrote:
+>> Same should work for HPKP. The idea of setting some security feature
+>> through a header needs a revisit.
+>> The solution would be to have a more reliable PC time. How do we do
+>> that?
+> 
+> A Date: header?
+> 
 
-I've been unable to contact sysklogd's maintainer (the project is no
-longer active) but, given some vendors ship sysklogd as their system
-logging daemon, it was important to share a fix.
+You can't trust remote servers you're getting the content from... what
+if I send wonky times to try and screw with your browser? Or header
+injection attacks? No thanks.
 
-Fix for sysklogd 1.5 is available at:
-http://sf.net/projects/mancha/files/sec/sysklogd-1.5_CVE-2014-3634.diff
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Note: publication of this patch was intentionally delayed to afford the
-rsyslog project time to correct their initial fix set which was
-vulnerable to integer overflows (CVE-2014-3683). [2]
 
---mancha
-
-===
-[1] http://www.rsyslog.com/remote-syslog-pri-vulnerability/
-[2] http://www.rsyslog.com/remote-syslog-pri-vulnerability-cve-2014-3683/
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
