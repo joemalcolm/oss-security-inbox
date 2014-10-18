@@ -1,45 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/4
-Message-Id: <201402241403.s1OE2wHl015606@linus.mitre.org>
-Date: Mon, 24 Feb 2014 09:02:58 -0500 (EST)
-From: cve-assign@...re.org
-To: mhall@...omputing.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Fwd: temporary file creation vulnerability in Redis
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/7
+Message-ID: <20141018084806.GE1105@kludge.henri.nerv.fi>
+Date: Sat, 18 Oct 2014 11:48:06 +0300
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: TYPO3 Security Team <security@...o3.org>
+Subject: CVE request: TYPO3-EXT-SA-2014-014 and TYPO3-EXT-SA-2014-015
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> I can understand and accept this view even though I might see it a
-> differently.
+Hi,
 
-We recognize that there's a significant number of issues that fall
-into the general category of "it could be useful to draw attention to
-this aspect of a security model, because the documentation is arguably
-inconsistent or obscure, and this may result in risks to end users."
-Currently, the scope of CVE identifiers doesn't really extend to these
-types of "useful to draw attention" identifiers.
+Can I get two 2014 CVEs for following TYPO3 extension vulnerabilities, thank you.
 
-What we can do is assign a CVE ID if any vendor bundles a copy of
-Redis with a default directory of /tmp, and decides to make a security
-announcement about that. We feel there's a distinction between
-"there's nothing stopping an end user from choosing a world-writable
-dataset directory" and "it ships world-writable."
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-014/
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+It has been discovered that the extension "fal_sftp" (fal_sftp) is susceptible to
+Improper Access Control.
+
+Release Date: October 17, 2014
+Affected Versions: 0.2.4, 0.2.5
+Vulnerability Type: Improper Access Control
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:P/I:N/A:N/E:POC/RL:OF/RC:C
+
+Problem Description: Configured permissions of newly created files and folders
+for the sFTP driver are set incorrectly.
+
+Solution: Updated version 0.2.6 is available from the TYPO3 extension manager
+and at http://typo3.org/extensions/repository/download/fal_sftp/0.2.6/t3x/.
+Please check your existing setup and fix permission if needed! Users of the
+extension are advised to update the extension as soon as possible.
+
+Credits: Credits go to Jost Baron who discovered and reported the issue.
+
+- -
+
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-015/
+
+It has been discovered that the extension "Dynamic Content Elements" (dce) is
+susceptible to Information Disclosure.
+
+Release Date: October 17, 2014
+Affected Versions: all versions of 0.7.x, 0.8.x, 0.9.x, 0.10.x, 0.11.4 and below
+of 0.11.x
+
+Vulnerability Type: Information Disclosure
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:L/Au:S/C:P/I:N/A:N/E:H/RL:OF/RC:C
+
+Problem Description: The extension provides a functionality to check for
+extension updates. Along with this functionality, installation environment data
+is automatically reported to the infrastructure of the extension author without
+user interaction.
+
+Solution: Updated version 0.11.5 is available from the TYPO3 extension manager
+and at http://typo3.org/extensions/repository/download/dce/0.11.5/t3x/. The new
+extension version provides a configuration option to enable the described
+behaviour.
+
+Credits: Credits go to Georg Ringer who discovered and reported the issue and
+Armin Vieweg who quickly responded & resolved this issue. 
+
+- ---
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJTC0+NAAoJEKllVAevmvmsMqwH/j7Kwt5y6kN92u2JFeb/irRH
-NLXMhSMS+tLwrFlOdHDT+6P/pz7MqR+3qH5aSQoV38F92UvMD5VsSjYufczFJjBv
-8uerZbJRZ3pE+07zgAoqI0DmWGqbCEHRDjCwuWiOh7Mc1Ww9Uvvz9Ubrze5QKB2t
-6TlAMWuWkfqAlJDCjXjhN+vXhAyfpjl4HHlIYSJj0VQhC0gr14Ygp0FQWR/e75/h
-mzrOi3/9YKJIodN3T9kDk3BoSBBXhXmWxpXIOjGahEAZteWAiPmHZkYTXiJWhSRo
-EhTqrItQyJk8AxNXrojhnPQaFe3b04UPH+fs85FLCfRkH6orWTBfYVgYo6qXf30=
-=Gvye
+iEYEARECAAYFAlRCKUYACgkQXf6hBi6kbk8NiQCfThDCmISqf0/wZtvAnnNfpnkU
+8gQAn08njOk/+4STMSkpvkn9KZo9mUI4
+=SKx5
 -----END PGP SIGNATURE-----
