@@ -1,19 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/04/6
-Message-ID: <20140204135030.GC27676@kludge.henri.nerv.fi>
-Date: Tue, 4 Feb 2014 15:50:30 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: Matthew Daley <mattd@...fuzz.com>, Florian Weimer <fweimer@...hat.com>
-Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/2
+Message-Id: <20141018031328.A66DC7BC002@smtpvmsrv1.mitre.org>
+Date: Fri, 17 Oct 2014 23:13:28 -0400 (EDT)
+From: cve-assign@...re.org
+To: luto@...capital.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-7970: Linux VFS denial of service
 Content-Type: text/plain; charset=utf-8
 
-Upstream has made new version for testing. Please do comment if you have time. I
-will also test that later and maybe provide more unit tests.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://code.google.com/p/python-gnupg/issues/detail?id=98#c4
+> if either argument to pivot_root referred to a directory outside of
+> the calling processes's chroot, then pivot_root would malfunction,
+> corrupting the mount tree.
 
----
-Henri Salo
+> The mitre.org description is:
+[...]
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+We will update this based on today's disclosure of yours. The existing
+text was intended to correlate with
+http://www.openwall.com/lists/oss-security/2014/10/08/21 and not
+necessarily specify the attack in the most general way.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUQdoMAAoJEKllVAevmvmsjYEH/iv8nuYfAzVNLVYew3BwmzNQ
+3QvS/u5U7+1hIHYBjotQ6lPOIGDu6+WgM3AYsIvvoHoC20sbkgeQfKFa1Ki8XdRg
+qbTC9f4wT/1XrkrBs9N/Hj6EHJoQaqBKsA7G+EFAzkOFtRg+c3pWzW76uZzKVHhy
+vIaUxL9Rof6zqORhVslK2FahfY662Sbx00K+JNRgmlnPRrJHny8zHMjnxKYkxD0l
+FJUnDmm58logvlvqxs4Chx1FJJVxgCOg2TSgDMR5nd3tLp+YYmwe+BHCXHoBED51
++QVlJXHGKI5QaaNTh4nC4pJotsY7ZedLxoJlnc35oenjHw+0tXzax0Ser39iErA=
+=211E
+-----END PGP SIGNATURE-----
