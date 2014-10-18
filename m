@@ -1,28 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/2
-Message-ID: <52DCFAB7.4070208@gentoo.org>
-Date: Mon, 20 Jan 2014 14:30:15 +0400
-From: Sergey Popov <pinkbyte@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/1
+Message-ID: <5441B50D.2070708@amacapital.net>
+Date: Fri, 17 Oct 2014 17:32:13 -0700
+From: Andy Lutomirski <luto@...capital.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Cantata vulnerability
+Subject: Re: CVE-2014-7970: Linux VFS denial of service
 Content-Type: text/plain; charset=utf-8
 
-I would like to request CVE for vulnerability in Cantata[1], which
-allows attacker to steal valuable information from user's home directory
-via internal HTTP server, that are not properly handled requests and
-allows to download every file it has access to from host, where it runs.
+On 10/08/2014 12:48 PM, Andy Lutomirski wrote:
+> pivot_root has a bug.  Exploiting it at all is tricky, but it can be
+> done.  I'm reasonably confident that this is just denial of service.
+> (There's also probably an information disclosure in there, but I think
+> that it's only available to root, so it's not a big deal.)
+> 
+> I'm posting this a little bit early, since a patch is publicly
+> available, the impact is low, and hitting the bad code path at all is
+> quite tedious.  I'll send a proof of concept later on.
+> 
+> Distros: if you need a test case to validate the fix, let me know.
+> Although, for validation, it should be sufficient to just chroot
+> somewhere as root, escape the chroot (while still chrooted), and then
+> pivot_root(".", ".") on a mountpoint.
+> 
+> Candidate patch here:
+> 
+> http://news.gmane.org/find-root.php?message_id=87bnpmihks.fsf%40x220.int.ebiederm.org
+> 
 
-More details can be acquired from upstream bugreport[2].
+The mitre.org description is:
 
-[1] - https://code.google.com/p/cantata/
-[2] - https://code.google.com/p/cantata/issues/detail?id=356
+The pivot_root implementation in fs/namespace.c in the Linux kernel
+through 3.17 does not properly interact with certain locations of a
+chroot directory, which allows local users to cause a denial of service
+(mount-tree loop) via . (dot) values in both arguments to the pivot_root
+system call.
 
--- 
-Best regards, Sergey Popov
-Gentoo developer
-Gentoo Desktop Effects project lead
-Gentoo Qt project lead
-Gentoo Proxy maintainers project lead
+This is a bit misleading.  Passing "." to both arguments of the
+pivot_root system call is a perfectly fine (albeit brain-bending) thing
+to do.
 
+The bug was that, if either argument to pivot_root referred to a
+directory outside of the calling processes's chroot, then pivot_root
+would malfunction, corrupting the mount tree.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+--Andy
