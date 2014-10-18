@@ -1,68 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/21
-Message-ID: <974391772.1583311.1401910393436.JavaMail.root@vmware.com>
-Date: Wed, 4 Jun 2014 12:33:13 -0700 (PDT)
-From: Ramon de C Valle <rdecvalle@...are.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com,  VMware Security Response Center <security@...are.com>,  Monty Ijzerman <mijzerman@...are.com>
-Subject: Re: Request for linux-distros subscription
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/11
+Message-ID: <1353327014.45829916.1413657848837.JavaMail.zimbra@t3sec.info>
+Date: Sat, 18 Oct 2014 20:44:08 +0200 (CEST)
+From: Marcus Krause <marcus@...ec.info>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE request: TYPO3-EXT-SA-2014-014 and TYPO3-EXT-SA-2014-015
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Dears,
 
-Hi Alexander,
+some information for clarification:
 
-> On Tue, Jun 03, 2014 at 01:16:47PM -0700, Ramon de C Valle wrote:
-> > I can attest that Monty is my colleague and the Manager of VMware Security
-> > Response Center. As a former colleague of you (Kurt) and also former
-> > linux-distros subscriber, I would like to ask for your consideration for
-> > subscribing Monty (or myself) to linux-distros on behalf of VMware.
-> > Although ESXi isn't a Linux distribution, it implements Linux-compatible
-> > system calls and provides a GNU/Linux -like ecosystem that allows many
-> > applications that are compiled on/for Linux operating systems to run
-> > seamlessly. This ecosystem includes OSS that should be supported in timely
-> > fashion pretty much like like any other Linux distribution on the list. It
-> > also implements a Linux kernel module interface and uses many Linux device
-> > drivers and kernel modules that also should be supported. In addition,
-> > ESXi is the base layer that many of the Linux distributions on the list
-> > rely upon and run atop of in many datacenters around the world.
+----- Original Message -----
+> > TYPO3-EXT-SA-2014-015
+> > [...]
 > 
-> Thank you, Ramon.  This is pretty good rationale, but I feel that
-> getting VMware onto linux-distros for the reasons given above would be a
-> (possibly desirable) change in who the list is for.  So far, it's been
-> for Linux distros, and I deliberately chose the linux-distros name for
-> it.  Now a non-Linux-distro wants to be specifically on linux-distros
-> (not just on distros), and be exposed to Linux-specific vulnerability
-> details (albeit for good reasons).  I'd appreciate comments by others
-> active in this community.
-I'm afraid I can't comment on Greg's comments due to my lack of legal understanding. However, in addition to the reasons explained above and also Alan's comments (which, IMO, also add to our reasons), I'd also appreciate comments by others active in this community and would be happy to answer any questions anyone might have.
+> Use CVE-2014-8328.
+> [...]
+> This is within the scope of CVE because TYPO3 has published a Security
+> Bulletin indicating that it's a vulnerability from their perspective.
+> [...]
+> As always, a vendor is allowed to announce this type of previously
+> default intentional behavior as a vulnerability; it's just somewhat
+> unusual to do so.
 
-> 
-> Does VMware have OSS products?
-We have some (minor) open source software and libraries at http://github.com/vmware, and also others hosted at SourceForge, such as http://vmware-svga.sourceforge.net. (Not sure if these are significant for this request, though.)
+TYPO3 CMS Core already provides such update check. This is either triggered
+manually or automatically on regular bases (cron like).
 
-  Would it be reasonable to include VMware
-> security advisory/contact details on our wiki?
-I've added our security advisory/contact details to the wiki.
+This works by retrieving a complete dataset of available third-party plugins
+and their versions from typo3.org infrastructure. Then a TYPO3 CMS installation
+on its own determines whether an update is available. So the only information
+is the request for such dataset file (exposing remote IP address).
 
-- --
-Ramon de C Valle
-VMware Product Security Engineering
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
+An update check in an extension is unnecessary and not an expected behaviour;
+especially when it reports additional environment data and communicates with 
+third-party infrastructure.
 
-iQIcBAEBCgAGBQJTj3RTAAoJEMHrzpMNBOIM8xcP/R2W/ZKbBMcQjvlqtzgNKV3L
-6QSkmn5ajBD4CxdfrZMukyj5aSZgfwtSfYs7gJhLzraOqiW6jRMyqz+bMFk6yE+V
-y646vPkF6QlTnOHnDohlgoYbDnjuEqbIHkxGC9vXfqpXRmTN180q7BKdSu1C6lkK
-AxZTZG5IW0Eww7MygoiaAUUnKKwh5Xde78YmF+jA4deqvZrDsIxL8SyP/T9BXhwV
-rZh9WtLkbWKzO1tDjwML/3b8nN3BdZYSzyW6ydnq5IH0F6sqoqQo40+nIKR7glft
-DEPbLdwVERfYYqvx376n7OGQKrAR6jXjFOPn49ICse658Me1dq4XiPX0QDc60fxb
-jseVrnc8qRIEPvoJDi+loS6oYZDzCKygivlu+6Aa5gn4+JJlsulFCE1DcBbeYbze
-4fHQKnwf/FQtWGBgeo3IL4TZk6UdJA1ZSK6/LJxVNkx97Taht56SwnrX3iPK9bFq
-GQ59V7N+aTNTPjJCWhnbkJUBvS6CW9/8v9q1gVZYxGbkbGnWfDDRdNIunnsyYt/M
-bDDY40JjuGMi9qm1u+6/8+uQ8YctDmbUeZwhu53pOvF2JPK5mtDxGWdqsinoEUsp
-S1rR4nZ6tA1hHXBLQ3iHBcNNAgbMS7T44kOyqoHHEH/0B0B2d60AZwme3kF54Olm
-66YP/tGc8jhX6WxXgwzU
-=Pcv+
------END PGP SIGNATURE-----
+
+Regards,
+Marcus Krause.
+
+-- 
+Member TYPO3 Security Team
