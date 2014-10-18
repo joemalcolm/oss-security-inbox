@@ -1,29 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/1
-Message-ID: <Pine.LNX.4.64.1412171939560.31164@beijing.mitre.org>
-Date: Wed, 17 Dec 2014 19:40:52 -0500 (EST)
-From: cve-assign@...re.org
-To: Florian Weimer <fweimer@...hat.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: glibc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/8
+Message-ID: <20141018115921.34d5ad31@pc>
+Date: Sat, 18 Oct 2014 11:59:21 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
+Am Fri, 17 Oct 2014 08:50:57 -0700
+schrieb Tim <tim-security@...tinelchicken.org>:
 
-On Mon, 15 Dec 2014, Florian Weimer wrote:
+> It seems to be a better place to put HSTS-like information is the DNS.
 
-> The getnetbyname function in glibc 2.21 in earlier will enter an infinite 
-> loop if the DNS backend is activated in the system Name Service Switch 
-> configuration, and the DNS resolver receives a positive answer while 
-> processing the network name.
->
-> Upstream reference:
->
->  <https://sourceware.org/bugzilla/show_bug.cgi?id=17630>
+I hear this "we need to fix TLS/HTTPS with DNSSEC" a lot.
 
-Use CVE-2014-9402.
+There are a couple of difficulties with that:
+1. DNSSEC is currently mostly vapoware. At least since the kaminsky DNS
+attacks (2008!) I'm hearing "DNSSEC is coming". The reality is: it's
+not. Adoption is very rare today. This may change, but I don't see
+anyone rushing to DNSSEC.
+2. Even if DNSSEC would work: How exactly do you want a browser to
+check dnssec records? Should it have its own dns server? Because right
+now the usual setup is:
+* Provider runs DNS server
+* (sometimes) router is running a DNS server which is basically
+  forwarding requests to the provider DNS
+* Client has no own DNS, just queries router or provider DNS
 
----
+Basically, the current situation doesn't really consider having DNSSEC
+verified on the client. This could of course be fixed by either having
+a local DNS resolver running or having the browsers ship their own DNS
+resolver. However that's a rather huge change and it will likely have
+some other implications (portal pages come to mind) - and I don't see
+anybody working on this.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+That said: I wouldn't entirely throw the idea away of using dnssec to
+increase tls security. But it's not something we can do today or any
+time soon.
+
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
