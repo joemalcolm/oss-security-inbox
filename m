@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/31
-Message-Id: <20140925173451.5DAB417FDA3@rebar.astron.com>
-Date: Thu, 25 Sep 2014 13:34:51 -0400
-From: christos@...las.com (Christos Zoulas)
-To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/6
+Message-ID: <5c7a8a0a-c788-48b1-b0a8-b0dea5ad6af8@email.android.com>
+Date: Sat, 18 Oct 2014 09:39:52 +0200
+From: Nikos Mavrogiannopoulos <n.mavrogiannopoulos@...il.com>
+To: mancha <mancha1@...o.com>,oss-security@...ts.openwall.com
+CC: Nikos Mavrogiannopoulos <nmav@...tls.org>,dkg@...thhorseman.net
+Subject: Re: Re: neuter the poodle
 Content-Type: text/plain; charset=utf-8
 
-On Sep 25,  8:15pm, solar@...nwall.com (Solar Designer) wrote:
--- Subject: Re: [oss-security] CVE-2014-6271: remote code execution through b
+Ok indeed, there is nothing restricting it to browsers.  It is just that these were known to be the major users of the insecure negotiation.  If any other application is using it too it will be vulnerable too.
 
-| There's obviously a trade-off here.  I agree that keeping the error
-| messages is the right thing if we can keep them contained to local usage
-| (and local attack) scenarios under typical setups.  I think applying
-| Florian's prefix-suffix patch will achieve that (besides its main goal
-| of actually mitigating most attacks).
-| 
-| What do you think of distros' going with Florian's prefix-suffix patch
-| right now?  I think it breaks function imports/exports between
-| pre-patch and post-patch bash versions, but keeps them intact for
-| patched versions.  Right?  If so, this sounds acceptable for immediate
-| use by distros.  Do you agree?
+On 18 October 2014 09:25:06 CEST, mancha <mancha1@...o.com> wrote:
+>On Sat, Oct 18, 2014 at 09:01:55AM +0200, Nikos Mavrogiannopoulos
+>wrote:
+>> Hi, The attack that you describe below is not an attack on tls
+>> negotiation. If you would be using the gnutls api as documented it
+>> wouldn't work. It is an attack on the insecure negotiation used by
+>> firefox, which as it seems it shares code with thunderbird. The text
+>> in my description is accurate, the attack affects mostly browsers,
+>and
+>> if you are using the tls protocol negotiation you are safe.
+>
+>Hi.
+>
+>I don't think DKG was suggesting the GnuTLS API is vulnerable to
+>protocol downgrade attacks if used according to guidelines (I know I
+>wasn't).
+>
+>His question relates to your "only browsers" comment, which as my
+>attack
+>against Thunderbird+IMAPS shows, is inaccurate. My second link contains
+>a similar mistake by Red Hat.  
+>
+>--mancha
 
-I think that at this point the only salvation is to disable function
-import by default and provide a command line flag and a "set" flag
-to explicitly enable it (so that scripts that depend on it can
-easily be fixed). It is not a widely used feature, and both subshells
-and sourced scripts don't need it or use it. It might have seemed
-like a good idea a couple of decades ago, but it needs to go.
-
-christos
+-- 
+Sent fron my mobile. Please excuse my brevity.
