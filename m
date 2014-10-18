@@ -1,77 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/25/4
-Message-Id: <201402251819.s1PIIxBp014045@linus.mitre.org>
-Date: Tue, 25 Feb 2014 13:18:59 -0500 (EST)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for catfish program
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/9
+Message-ID: <1413635222.6447.65.camel@debian.org>
+Date: Sat, 18 Oct 2014 14:27:02 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On ven., 2014-10-17 at 10:17 +0000, Stephen Röttger wrote:
+> > The solution would be to have a more reliable PC time. How do we do
+> that?
+> 
+> We're currently working on an IETF draft to bring authentication to NTP:
+> https://tools.ietf.org/html/draft-ietf-ntp-network-time-security-04 and
+> would be happy for people to take a look and give feedback.
+> If you don't want to read the draft, let me know and I will outline the
+> protocol for you.
 
-> I was looking at the installed script on a Fedora 19 box
+What about RFC 5906 and the current authentication schemes
+(http://www.eecis.udel.edu/~mills/ntp/html/authentic.html) ?
 
-Apparently the situation is that the Fedora catfish.spec file
-generates the duplicate checks for $APPNAME.py. It's uncommon to have
-different CVE mappings for Fedora-shipped versions versus upstream
-versions, but in this case we'll proceed to do that because the CVE
-abstraction was already stated that way, and the attack vectors are
-actually different.
+I'm unsure they really used (usable) in a non-controlled environment but
+at least there's already something in place.
 
-catfish.py in the current working directory - Use CVE-2014-2093.
+Regards,
+-- 
+Yves-Alexis
 
-catfish.pyc in the current working directory - Use CVE-2014-2094.
-
-bin/catfish.pyc under the current working directory - Use
-CVE-2014-2095.
-
-bin/catfish.py under the current working directory - Use
-CVE-2014-2096.
-
-If someone installs the upstream version of either catfish 0.4.0.2 or
-catfish 0.8.2, they get a script that unsafely looks for both
-catfish.pyc and catfish.py.
-
-If someone installs either the Fedora 19 catfish-0.4.0.2-2 package or
-the Fedora 20 catfish-0.8.2-1 package, they get a script that unsafely
-looks for only catfish.py (twice).
-
-This apparently occurs because of:
-
-[Fedora 19 catfish.spec]
-%{__sed} -i.byte \
-        -e 's|pyc|py|' \
-        %{name}.in
-
-[Fedora 20 catfish.spec]
-%{__sed} -i.byte \
-        -e 's|pyc|py|' \
-        bin/%{name}.in.in
-
-We don't know why that was done. (Maybe Fedora has a policy against
-certain uses of .pyc files, and this policy is implemented in
-the .spec files of various packages?)
-
-This specific case isn't very interesting because every one of the
-mentioned versions of catfish on every platform is actually
-vulnerable. However, probably no Fedora advisory should map to either
-CVE-2014-2094 or CVE-2014-2095.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTDN2+AAoJEKllVAevmvmsPDcIAKLt8d3r+Olt8pIdmwopfY02
-DwiRNxpYjheWVGboN9z5daSaCFkVjAT6SRFrXJKF4l/mQF1RtBSk2LpRgs7v4x9B
-4ttIx3/agJO5nPXLrHW4BNNrcjni42GInvUQa29YyZbFN19Z2YjQJbMeFDEjqE1F
-cY8sR0ZEQKPhrb60Njk+QY7ATe25eMHMOm9KyrEvggj/EvPthq24nbf3uhvfB60A
-oQByal7gfCy0oOaOdoAB2ub9b2Gz0n2PfOKeoCFqgHgvlBzVRkM+EKNsYGbLBq28
-xaBrzf0byXKOGlL1FPYt9TyHsXRqGuRXsrxihpxiygOffJT+3a7TN+p3lnsMa1k=
-=3v2f
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
