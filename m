@@ -1,81 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/28
-Message-ID: <20141006184705.GA25256@zoho.com>
-Date: Mon, 6 Oct 2014 18:47:05 +0000
-From: mancha <mancha1@...o.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request(s): Getmail 4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/10
+Message-Id: <20141018181648.B32BB6C001A@smtpvmsrv1.mitre.org>
+Date: Sat, 18 Oct 2014 14:16:48 -0400 (EDT)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: TYPO3-EXT-SA-2014-014 and TYPO3-EXT-SA-2014-015
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 06, 2014 at 11:45:27AM -0400, cve-assign@...re.org wrote:
-> > http://pyropus.ca/software/getmail/CHANGELOG
->
-> > Getmail 4.45.0 added IMAP4-over-SSL certificate hostname validation.
-> > POP3-over-SSL remained vulnerable to MITM attacks.
->
-> The CHANGELOG says:
->
->   Version 4.46.0
->
->       -add missing support for SSL certificate checking in POP3 which
->       broke POP retrieval in v4.45.0.  Requires Python 2.6 or newer.
->       Thanks: "mancha".
->
-> This depends on the interpretation of "broke POP retrieval."
->
-> Do you mean that, in version 4.45.0, the client sent credentials over
-> a POP3-over-SSL connection, and actual POP3 mail retrieval failed
-> after credentials had already been sent? That behavior could have a
-> CVE ID.
->
-> Or do you mean that, in version 4.45.0, the POP3-over-SSL connection
-> was never fully established, and the client would not have sent
-> credentials? In other words, a MITM attack could succeed but there
-> would be no security impact? That behavior would not have a CVE ID.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It's closer to the 2nd than the first. POP3-over-SSL stopped working
-altogether and credentials were not sent over the wire:
+> http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-014/
+> 
+> It has been discovered that the extension "fal_sftp" (fal_sftp) is
+> susceptible to Improper Access Control.
+> 
+> AV:N/AC:L/Au:S/C:P/I:N/A:N/E:POC/RL:OF/RC:C
+> 
+> Configured permissions of newly created files and folders for the sFTP
+> driver are set incorrectly.
 
-Getmail 4.45.0:
+Use CVE-2014-8327.
 
-  *Includes support for certificate hostname validation to be used 
-   with IMAP4-over-SSL only. [1]
 
-  *A regression was introduced because ssl_match_hostname() calls
-   (for immediate use with IMAP4-over-SSL and future use with
-   POP3-over-SSL) and related code were prematurely added to the
-   POP3-over-SSL retrievers. [2]
+> http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-015/
+> 
+> It has been discovered that the extension "Dynamic Content Elements"
+> (dce) is susceptible to Information Disclosure.
+> 
+> AV:N/AC:L/Au:S/C:P/I:N/A:N/E:H/RL:OF/RC:C
+> 
+> The extension provides a functionality to check for extension updates.
+> Along with this functionality, installation environment data is
+> automatically reported to the infrastructure of the extension author
+> without user interaction.
 
-Getmail 4.46.0:
+Use CVE-2014-8328.
 
-  *Includes POP3-over-SSL support for: a) certificate verification
-   against a root store; b) certificate validation against an anchor
-   fingerprint; c) certificate hostname match validation. [3]
+This is within the scope of CVE because TYPO3 has published a Security
+Bulletin indicating that it's a vulnerability from their perspective.
+The Credits section says "Credits go to Georg Ringer who discovered
+and reported the issue and Armin Vieweg who quickly responded &
+resolved this issue," where Armin Vieweg is apparently the author of
+the extension:
 
-In sum, the regression in 4.45.0 has no security impact and is
-orthogonal to the CVE request. Hope this clarifies (below matrix might
-help further).
+  http://typo3.org/extensions/repository/view/dce
 
---mancha
+  Last upload comment: Changed new option disableUpdateCheck to
+  enableUpdateCheck and disables it by default.
 
-[1] http://article.gmane.org/gmane.mail.getmail.user/5124
-[2] http://article.gmane.org/gmane.mail.getmail.user/5150
-[3] http://article.gmane.org/gmane.mail.getmail.user/5147
+  Author: Armin Ruediger Vieweg
 
-====
+This might imply a security policy of "'installation environment data
+is ... reported to the infrastructure of the extension author' was
+intentional behavior, and can remain the intentional behavior of an
+apparently useful update feature; however, it must not be the
+default."
 
-                      SSL Support Matrix
+Documentation/PrivacyPolicy/Index.rst has:
 
-Version       IMAP4-over-SSL             POP3-over-SSL
+  The backend module of DCE may contain an image which is located on my
+  server. It shows the user if there is a new DCE version available.
 
-4.0.0-4.43.0  No cert validation         No cert validation
-4.44.0        Partial cert validation(a) No cert validation
-4.45.0        Full cert validation       No cert validation(b)
-4.46.0        Full cert validation       Full cert validation
+  It passes:
 
-(a) lacking certificate hostname checks
-(b) still lacking cert validation infrastructure though a
-    regression broke these retrievers entirely
+  - the TYPO3 version
+  - the DCE version
+  - and the backend language
 
-Content of type "application/pgp-signature" skipped
+  Based on these informations I'm able to say: "Yes, a new version is
+  available, but not for your TYPO3 version.". These values are passed
+  completely anonymously and help me to improve the extension.
+
+  Because I have the data I am also able to get statistics. Like: Which
+  TYPO3 version is used most often? I'm going to publish some
+  interesting graphs based on these data on the `Facebook page`_ of DCE
+  extension.
+
+with Resources/Private/Templates/DceModule/Index.html rendering the
+following in the (currently) non-default configuration:
+
+  <a href="http://dce.v.ieweg.de/versioncheck/update" target="_blank">
+  <img src="http://dce.v.ieweg.de/versioncheck?t3=
+  {dce:be.currentTypo3Version()}&amp;dce={dce:be.currentDceVersion()}&amp;l={dce:be.currentLanguage()}"
+  alt="" /></a>
+
+As always, a vendor is allowed to announce this type of previously
+default intentional behavior as a vulnerability; it's just somewhat
+unusual to do so.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUQq3bAAoJEKllVAevmvmsqz0H/AitsWMA1w0jmrQDVw3kGeoQ
+8uzdDN2Bu7Qi3KQEGvyQGb8H+X42hdeJoWkdyBdDPVVwWMjJDOnuk0+TkaTphQwp
+pSrl8H38FkfH725aVy7Mv/TPjv5FzvmXVpTAJiUFe+uf1tJyWyDmmIqgJ6TMF2+f
+5NfUnY7VS9lk1f+3zFnTXlQH/j7Oa8ktqYKmAlRcyt5M1cF6dQA0smPxwvMjjAtD
+iMfwBvG1DnM+EdpVXtQnua1vTtZoDOfMlp3ztwMu896dhC8iDva3Dsq488JxtXXt
+jbyJvk2S0OQhv5uyppYB4rf+JW9DddmeWp5USduNmiPojilj/B4oiyCp6u4jr+g=
+=qsCz
+-----END PGP SIGNATURE-----
