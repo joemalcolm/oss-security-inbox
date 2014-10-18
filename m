@@ -1,40 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/10
-Message-ID: <20141206034103.GA25116@hunt>
-Date: Fri, 5 Dec 2014 19:41:04 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/5
+Message-ID: <20141018072441.GA10734@zoho.com>
+Date: Sat, 18 Oct 2014 07:25:06 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+Cc: Nikos Mavrogiannopoulos <nmav@...tls.org>, dkg@...thhorseman.net
+Subject: Re: Re: neuter the poodle
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Dec 06, 2014 at 01:44:31AM +0100, Hanno Böck wrote:
-> >  https://bugzilla.gnome.org/show_bug.cgi?id=741183
-> 
-> I tried to dig into this a bit. I'm not really sure, but based on the
-> output I assume nautilus is relying on file or libmagic to assess the
-> file type.
-> 
-> And that's what fails:
-> $ file --mime-type pie
-> pie: application/x-sharedlib
-> 
-> 
-> It seems there is no really easy way to separate executables from
-> shared libraries and whether this should be considered a bug in
-> file/libmagic. The only thing I quickly found that would be possible is
-> searching if a SONAME is present. libmagic uses some "magic" file
-> format to parse files, I don't know if that's capable of such complex
-> parsing.
+On Sat, Oct 18, 2014 at 09:01:55AM +0200, Nikos Mavrogiannopoulos wrote:
+> Hi, The attack that you describe below is not an attack on tls
+> negotiation. If you would be using the gnutls api as documented it
+> wouldn't work. It is an attack on the insecure negotiation used by
+> firefox, which as it seems it shares code with thunderbird. The text
+> in my description is accurate, the attack affects mostly browsers, and
+> if you are using the tls protocol negotiation you are safe.
 
-A far better mechanism in Nautilus would be to use execve(2) on the
-pathname and see if it executes. Nautilus will never be good at guessing
-which files are actually executable on a given system and it is ridiculous
-for it to try to guess. It should just execute the selected file and if
-that fails, report the failure to the user.
+Hi.
 
-One goofy filemanager doing something silly ought not stop Mozilla from
-shipping a safer Firefox.
+I don't think DKG was suggesting the GnuTLS API is vulnerable to
+protocol downgrade attacks if used according to guidelines (I know I
+wasn't).
 
-Thanks
+His question relates to your "only browsers" comment, which as my attack
+against Thunderbird+IMAPS shows, is inaccurate. My second link contains
+a similar mistake by Red Hat.  
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+--mancha
+
+Content of type "application/pgp-signature" skipped
