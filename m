@@ -1,108 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/10
-Message-Id: <20141018181648.B32BB6C001A@smtpvmsrv1.mitre.org>
-Date: Sat, 18 Oct 2014 14:16:48 -0400 (EDT)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: TYPO3-EXT-SA-2014-014 and TYPO3-EXT-SA-2014-015
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/4
+Message-ID: <f378e837-0173-4113-ac0f-e5bb5bcb527f@email.android.com>
+Date: Sat, 18 Oct 2014 09:01:55 +0200
+From: Nikos Mavrogiannopoulos <n.mavrogiannopoulos@...il.com>
+To: mancha <mancha1@...o.com>,oss-security@...ts.openwall.com
+CC: Nikos Mavrogiannopoulos <nmav@...tls.org>,dkg@...thhorseman.net
+Subject: Re: neuter the poodle (was: Re: Truly scary SSL 3.0 vuln to be revealed soon:)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+The attack that you describe below is not an attack on tls negotiation. If you would be using the gnutls api as documented it wouldn't work. It is an attack on the insecure negotiation used by firefox, which as it seems it shares code with thunderbird. The text in my description is accurate, the attack affects mostly browsers, and if you are using the tls protocol negotiation you are safe.
 
-> http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-014/
-> 
-> It has been discovered that the extension "fal_sftp" (fal_sftp) is
-> susceptible to Improper Access Control.
-> 
-> AV:N/AC:L/Au:S/C:P/I:N/A:N/E:POC/RL:OF/RC:C
-> 
-> Configured permissions of newly created files and folders for the sFTP
-> driver are set incorrectly.
+On 18 October 2014 00:58:46 CEST, mancha <mancha1@...o.com> wrote:
+>On Fri, Oct 17, 2014 at 03:40:31PM -0400, Daniel Kahn Gillmor wrote:
+>> Please see: http://www.gnutls.org/security.html#GNUTLS-SA-2014-4
+>> 
+>> and Nikos' writeup here:
+>> 
+>>  http://nmav.gnutls.org/2014/10/what-about-poodle.html
+>> 
+>> From the latter link:
+>> 
+>> >>> The good news is, that only browsers use this construct, and no
+>> >>> other applications should be affected.
+>> 
+>> Nikos (or anyone else on OSS-security), are you sure that only
+>> browsers do this?  what about mail clients like Thunderbird or
+>> Mail.app making IMAPS or POPS or submission connections?
+>
+>SSLv3 is vulnerable to padding oracle attacks on CBC-mode ciphers. This
+>vulnerability, tagged CVE-2014-3566, exists independently of types of
+>clients, servers, or protocols being layered over SSL/TLS.
+>
+>POODLE is a specific attack vector that leverages "protocol fallback"
+>in
+>order to exploit CVE-2014-3566.
+>
+>Notwithstanding reports like "The good news is, that only browsers use
+>this construct, and no other applications should be affected." [1] and
+>"Currently, only HTTPs clients perform out-of-band protocol fallback."
+>[2], I can confirm what you're hinting at.
+>
+>Browsers are not the only client-side applications that implement
+>"protocol fallback". The below transcript shows an MITM-triggered
+>Thunderbird 24.7.0 IMAPS protocol downgrade to SSLv3 even though both
+>peers speak TLSv1.
+>
+>--mancha
+>
+>[1] http://nmav.gnutls.org/2014/10/what-about-poodle.html
+>[2] https://access.redhat.com/node/1232123
+>
+>========= transcript ============
+>Setting up mancha-in-the-middle...
+>
+>127.0.0.1:44366 -> 127.0.0.1:993
+>handshake               [tls1.0]        (client_hello)
+>
+>Start protocol downgrade attack...
+>
+>127.0.0.1:44371 -> 127.0.0.1:993
+>handshake               [ssl3.0]        (client_hello)
+>
+>127.0.0.1:993 -> 127.0.0.1:44371
+>handshake               [ssl3.0]        (server_hello)
+>handshake               [ssl3.0]        (certificate)
+>handshake               [ssl3.0]        (server_key_exchange)
+>handshake               [ssl3.0]        (server_hello_done)
+>
+>127.0.0.1:44371 -> 127.0.0.1:993
+>handshake               [ssl3.0]        (client_key_exchange)
+>change_cipher_spec      [ssl3.0]
+>handshake               [ssl3.0]        (encrypted)
+>
+>127.0.0.1:993 -> 127.0.0.1:44371
+>change_cipher_spec      [ssl3.0]
+>handshake               [ssl3.0]        (encrypted)
+>
+>127.0.0.1:993 -> 127.0.0.1:44371
+>application_data        [ssl3.0]
+>application_data        [ssl3.0]
+>=================================
 
-Use CVE-2014-8327.
-
-
-> http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-015/
-> 
-> It has been discovered that the extension "Dynamic Content Elements"
-> (dce) is susceptible to Information Disclosure.
-> 
-> AV:N/AC:L/Au:S/C:P/I:N/A:N/E:H/RL:OF/RC:C
-> 
-> The extension provides a functionality to check for extension updates.
-> Along with this functionality, installation environment data is
-> automatically reported to the infrastructure of the extension author
-> without user interaction.
-
-Use CVE-2014-8328.
-
-This is within the scope of CVE because TYPO3 has published a Security
-Bulletin indicating that it's a vulnerability from their perspective.
-The Credits section says "Credits go to Georg Ringer who discovered
-and reported the issue and Armin Vieweg who quickly responded &
-resolved this issue," where Armin Vieweg is apparently the author of
-the extension:
-
-  http://typo3.org/extensions/repository/view/dce
-
-  Last upload comment: Changed new option disableUpdateCheck to
-  enableUpdateCheck and disables it by default.
-
-  Author: Armin Ruediger Vieweg
-
-This might imply a security policy of "'installation environment data
-is ... reported to the infrastructure of the extension author' was
-intentional behavior, and can remain the intentional behavior of an
-apparently useful update feature; however, it must not be the
-default."
-
-Documentation/PrivacyPolicy/Index.rst has:
-
-  The backend module of DCE may contain an image which is located on my
-  server. It shows the user if there is a new DCE version available.
-
-  It passes:
-
-  - the TYPO3 version
-  - the DCE version
-  - and the backend language
-
-  Based on these informations I'm able to say: "Yes, a new version is
-  available, but not for your TYPO3 version.". These values are passed
-  completely anonymously and help me to improve the extension.
-
-  Because I have the data I am also able to get statistics. Like: Which
-  TYPO3 version is used most often? I'm going to publish some
-  interesting graphs based on these data on the `Facebook page`_ of DCE
-  extension.
-
-with Resources/Private/Templates/DceModule/Index.html rendering the
-following in the (currently) non-default configuration:
-
-  <a href="http://dce.v.ieweg.de/versioncheck/update" target="_blank">
-  <img src="http://dce.v.ieweg.de/versioncheck?t3=
-  {dce:be.currentTypo3Version()}&amp;dce={dce:be.currentDceVersion()}&amp;l={dce:be.currentLanguage()}"
-  alt="" /></a>
-
-As always, a vendor is allowed to announce this type of previously
-default intentional behavior as a vulnerability; it's just somewhat
-unusual to do so.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUQq3bAAoJEKllVAevmvmsqz0H/AitsWMA1w0jmrQDVw3kGeoQ
-8uzdDN2Bu7Qi3KQEGvyQGb8H+X42hdeJoWkdyBdDPVVwWMjJDOnuk0+TkaTphQwp
-pSrl8H38FkfH725aVy7Mv/TPjv5FzvmXVpTAJiUFe+uf1tJyWyDmmIqgJ6TMF2+f
-5NfUnY7VS9lk1f+3zFnTXlQH/j7Oa8ktqYKmAlRcyt5M1cF6dQA0smPxwvMjjAtD
-iMfwBvG1DnM+EdpVXtQnua1vTtZoDOfMlp3ztwMu896dhC8iDva3Dsq488JxtXXt
-jbyJvk2S0OQhv5uyppYB4rf+JW9DddmeWp5USduNmiPojilj/B4oiyCp6u4jr+g=
-=qsCz
------END PGP SIGNATURE-----
+-- 
+Sent fron my mobile. Please excuse my brevity.
