@@ -1,24 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/23
-Message-ID: <54123519.1020709@oracle.com>
-Date: Thu, 11 Sep 2014 16:49:45 -0700
-From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
-To: Tomas Hoger <thoger@...hat.com>
-CC: oss-security@...ts.openwall.com, CVE Assignments MITRE <cve-assign@...re.org>, secalert_us@...cle.com
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/19/5
+Message-ID: <54442E56.9070701@case.edu>
+Date: Sun, 19 Oct 2014 17:34:14 -0400
+From: Chet Ramey <chet.ramey@...e.edu>
+To: cve-assign@...re.org, jwilk@...lk.net
+CC: chet.ramey@...e.edu, oss-security@...ts.openwall.com
+Subject: Re: Fwd: Non-upstream patches for bash
 Content-Type: text/plain; charset=utf-8
 
-On 9/11/2014 7:39 AM, Tomas Hoger wrote:
-> April CPU mentions client issue CVE-2014-2440.  Is it the same issue
-> that got CVE-2014-0001 publicly assigned before?  The versions that
-> fixed CVE-2014-2440 are the same that got CVE-2014-0001 fix, and there's
-> no mention of the CVE-2014-0001 in April CPU.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+On 9/29/14 11:44 AM, cve-assign@...re.org wrote:
+>> the parser is not locale-agnostic. Here's an example how it can be
+>> exploited:
+>> http://bugs.python.org/issue22187
 
-Yes, CVE-2014-2440 is same as CVE-2014-0001. We have updated our CPU
-April, 14 advisory with a note under MySQL risk matrix that states the
-same. Please see -
-http://www.oracle.com/technetwork/topics/security/cpuapr2014-1972952.html
+That's not actually an exploit, or even a bug.
 
-Thanks,
--Ritwik
+> The discussion in Issue22187 is about changing code in Python 2.x to
+> work around this. However, is it useful to assign one new
+> CVE-2014-#### ID for Bash, on the expectation that Bash was intended
+> to recognize valid characters in zh_CN.GBK, but instead is identifying
+> part of a two-byte character as a \ character, and this has security
+> implications for products that attempt to do otherwise-correct quoting
+> of untrusted strings for use in sh commands?
+
+This is exactly the opposite of what is happening.  The test in the link
+(message 226439) shows that bash and ksh are properly reading valid
+multibyte characters in the input and not treating backslashes that are the
+second byte of a multibyte character as escape characters.  The other
+shells, presumably not multibyte-character-aware at all, incorrectly allow
+that backslash to escape the closing double quote.
+
+Posix is very careful to specify that the shell reads characters, and
+uses characters when deciding how to tokenize the input, instead of bytes.
+If those characters are multibyte, the shell is expected to read multiple
+bytes.  Are you proposing that a multibyte character whose second byte
+happens to be a `|' should start a pipeline?
+
+Chet
+- -- 
+``The lyf so short, the craft so long to lerne.'' - Chaucer
+		 ``Ars longa, vita brevis'' - Hippocrates
+Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (Darwin)
+Comment: GPGTools - http://gpgtools.org
+
+iEYEARECAAYFAlRELlYACgkQu1hp8GTqdKtEsACfYyDVqQoaC2gTjQZhHTXWlSV3
+iAsAn3EQrDeHo3ldByfbYgrGixYgZL+B
+=kgf1
+-----END PGP SIGNATURE-----
