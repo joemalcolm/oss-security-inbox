@@ -1,18 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/2
-Message-ID: <53E4BB51.4090103@redhat.com>
-Date: Fri, 08 Aug 2014 13:58:09 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/19/2
+Message-ID: <CAGGN9eceQ2wZhA5OskNJowcrECe6zOmtS6WG6WfetRMXxENUWA@mail.gmail.com>
+Date: Sun, 19 Oct 2014 19:26:02 +1000
+From: Lord Tuskington <l.tuskington@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: CVE request: Cyanogenmod MITM
 Content-Type: text/plain; charset=utf-8
 
-On 08/08/2014 01:20 PM, Dan Carpenter wrote:
-> We could put a popup if there is a second keyboard attached to check
-> that the person controlling the existing keyboard is aware of the second
-> one.
+After reading el reg's article regarding a cyanogenmod MITM flaw, I started
+looking through the code to see if I could find it. It didn't take long.
+This finding was not what users are led to believe by cyanogenmod's blog
+post. I reported the issue to cyanogenmod, but got a rather unsatisfactory
+reply. They didn't seem willing to modify the blog post to more accurately
+reflect the problem. Below is my email exchange with cyanogenmod's security
+address:
 
-Wouldn't this make using Yubikeys quite inconvenient?
+ Lord Tuskington,
 
--- 
-Florian Weimer / Red Hat Product Security
+ Thank your for your response. Truth is we assumed as much, but the lack of
+meaningful information in the Register's sensational article didn't leave
+us much room to interpret it besides what it presented at face value.
+
+ As you noted, this has already been addressed in our shipping code branch
+(cm-11), prior to the article's publishing. This was the net result of the
+messaging provided in the blog post, with CM 11 being 'safe' from this
+issue.
+
+ We normally do not patch non-shipping code (in this case 10.2 and prior),
+though we may in this case.
+
+ We do not expect to make a advisory on the 10.2 item at this time.
+
+ Thank you,
+Abhisek Devkota
+
+  On Oct 17, 2014 8:50 PM, "Lord Tuskington" <l.tuskington@...il.com> wrote:
+  Hello from Greenland!
+
+I think you may be confused about the issue discussed here:
+http://www.cyanogenmod.org/blog/in-response-to-the-register-mitm-article
+
+If I understand correctly, the original reporter may have been referring to
+a vulnerability fixed by this commit, which was merged 20 days ago:
+
+https://github.com/CyanogenMod/android_external_apache-http/commit/f925f10b1feba92868fd4e8966592ec1bf755d67
+
+The vulnerable code is still present in the cm-10.2 branch:
+
+https://github.com/CyanogenMod/android_external_apache-http/blob/cm-10.2/src/org/apache/http/conn/ssl/AbstractVerifier.java#L228-244
+If you release an advisory, please credit "Lord Tuskington of TuskCorp" for
+reporting this vulnerability responsibly.
+Regards
+
+Lord Tuskington
+Chief Financial Pinniped
+TuskCorp
+
