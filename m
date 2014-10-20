@@ -1,43 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/10
-Message-ID: <5428009D.6040909@redhat.com>
-Date: Sun, 28 Sep 2014 06:35:41 -0600
-From: Eric Blake <eblake@...hat.com>
-To: Hanno Böck <hanno@...eck.de>, Chet Ramey <chet.ramey@...e.edu>
-CC: Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/9
+Message-ID: <54456183.7030800@igalia.com>
+Date: Mon, 20 Oct 2014 21:24:51 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: Fiedler Roman <Roman.Fiedler@....ac.at>
+CC: 766073@...s.debian.org, vserver@...t.linux-vserver.org, me@...fdog.net, oss-security@...ts.openwall.com
+Subject: Re: Multiple disputed issues in util-vserver
 Content-Type: text/plain; charset=utf-8
 
-On 09/27/2014 11:22 PM, Hanno Böck wrote:
-> On Sat, 27 Sep 2014 21:39:19 -0400
-> Chet Ramey <chet.ramey@...e.edu> wrote:
+On 14/10/14 16:31, Fiedler Roman wrote:
+> Hi,
 > 
->> OK, here are the more-or-less final versions of the patches for
->> bash-2.05b through bash-4.3.  I made two changes from earlier today:
->> the function export suffix is now `%%', which is not part of a the
->> set of valid variable name characters but avoids any potential
->> problems with including shell metacharacters in the name; and this
->> version refuses to import shell functions whose name contains a
->> slash, for reasons I discussed earlier.
+> While fixing a bug, I noticed some strange behavior in linux vserver
+> virtualization, that I would call a security problems, but project
+> developers see it differently. Since the util-vserver packages and patched
+> kernel were or are included in some Linux distros, I would be interested in
+> the communities' opinion on that.
 > 
-> From what I can see your official patches still don't contain the
-> out-of-bound memory fixes.
-
-Correct, because those patches aren't official yet.  But at the same
-time, the out-of-bounds bugs can no longer be used as a remote exploit
-vehicle, because the official patch 4.3.27 (and friends) guarantee that
-arbitrary values no longer call into the parser.
-
+> Issue 1: When calling util-vserver tool on the host to execute a job within
+> the guest, e.g. to install updates, the host process (in host PID ns) might
+> end up being the child of a guest process (with PID only in guest ns), thus
+> the parent PID of the host process pointing to a guest ns PID. If the host
+> process wants to signal the parent process or some other tool operates using
+> the ppid, a host process might interact with another arbitrary host process
+> on error (see [1]). Compared to issue 2-3, I'm not sure for myself if it is
+> really a bug and what the correct behavior of kernel with pid namespaces
+> would be. At least it breaks bash process handling (gets stuck) when calling
+> "vserver exec" in a certain way, start-stop-daemon or upstart might not like
+> it also.
 > 
-> While not exposing the parser to random variables should shield that
-> somewhat and reduce impact, they still should be fixed and the redhat
-> patch looks pretty straightforward.
 
-I'm sure Chet has plans to post more official patches in the coming week.
+Is there any (practical) scenario in which an attacker that has
+compromised an vserver guest could use this behavior to compromise or
+execute code on the host (master)?
 
--- 
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
+> Issue 2: When entering the container from the host or executing commands
+> within the container, e.g. to perform common administrative tasks, a
+> malicious login shell inside the container might overwrite the
+> /usr/sbin/vcontext on the host, thus allowing on to execute arbitrary code
+> on the host with root privileges next time vcontext is invoked. See [3].
+> Feedback from developer: " Yes, vlogin is known to have several security
+> issues. It's a maintenance backdoor, much like the iLO or iDRAC on hardware.
+> If you can find ways to improve it, patches would be accepted, but I doubt
+> it will ever be possible to do what it does securely." Project documentation
+> does not strike out those restrictions (or at least I did not find that or
+> the list of "several known security issues" online), other sources, e.g.
+> container vs system virtualization comparison strike out the importance of
+> the feature to enter a guest from the host easily for maintenance, so I
+> guess that those tools were not useful just for me alone. This issue I would
+> rate a killer for production use, e.g. for mass hosting.
+> 
+
+Can you please send me the PoC for this issue ?
+
+> Issue 3: It seems that handling of open tty FDs on enter, that allows to
+> inject arbitrary keyboard input to be read by the parent process, also
+> affects the tool to start the guest container. This seems to be the same
+> issue with "vserver start" as reported in [2] for vserver enter, which was
+> classified as less relevant back than. My rating would be little lower than
+> 2 but still quite high for mass hosting: manual restart, e.g. during
+> maintenance, seems quite common to me.
+> 
+
+If I understand correctly, this (and the previous one) are
+CVE-2005-4890, isn't it?.
+
+http://www.halfdog.net/Security/2012/TtyPushbackPrivilegeEscalation
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
+> From my point of view, those issues might be expected behavior as claimed by
+> the developers, but if so it should be at least stated more clearly in
+> documentation:
+> 
+> a) never use any tools except vserver stop (to terminate the container) to
+> interact with a running and possibly compromised container from the host
+> b) only use network/socket-based tools to connect to processes inside a
+> possibly compromised guest, e.g. SSH. 
+> c) never start a possibly compromised container from interactive shell to
+> avoid injection of shell commands
+> 
+> Regarding documentation I would even vote for a solution d), that all those
+> tools get a mandatory argument like
+> '--i-know-entering-insecure-container-may-kill-my-host' so that it is not
+> very likely, that someone will use those tools for something else then
+> testing or nice-world administration.
+> 
+> Opinions to issues 1-3?
+> 
+> What about solutions?
+> 
+
+Halfdog (CC'ed) already suggested some possible solutions:
+http://www.paul.sladen.org/vserver/archives/201211/0011.html
+
+> Kind regards,
+> Roman
+> 
+> [1]
+> http://list.linux-vserver.org/archive?mss:6788:201410:moeiomapkoefmmdnmcji
+> [2] http://www.openwall.com/lists/oss-security/2012/11/05/8
+> [3] Guest -> Host escape POC: C-code to be put as /bin/bash replacement in
+> guest, will overwrite /usr/sbin/vcontext on host. Available on request
+> 
+> 
+> DI Roman Fiedler
+> Scientist
+> Safety & Security Department
+> Assistive Healthcare Information Technology
+> 
+> AIT Austrian Institute of Technology GmbH
+> Reininghausstraße 13/1  |  8020 Graz  |  Austria
+> T +43(0) 50550 2957  |  M +43(0) 664 8561599  |  F +43(0) 50550 2950
+> roman.fiedler@....ac.at | http://www.ait.ac.at/
+> 
+> FN: 115980 i HG Wien  |  UID: ATU14703506
+> http://www.ait.ac.at/Email-Disclaimer
+> 
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
