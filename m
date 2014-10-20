@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/1
-Message-ID: <5490D1DD.6070405@mccme.ru>
-Date: Wed, 17 Dec 2014 03:44:13 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/5
+Message-ID: <544518A0.90000@enovance.com>
+Date: Mon, 20 Oct 2014 14:13:52 +0000
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: CVE request: file(1) DoS
+Subject: CVE request for vulnerability in OpenStack Nova
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although
+an advisory was not sent yet.
 
-There are two more DoSes fixed in ELF parser of file(1), similar to the 
-recent CVE-2014-8116.
+Title: Nova VMware instance in resize state may leak
+Reporter: Zhu Zhu (IBM)
+Products: Nova
+Versions: up to 2014.1.3
 
-1. Limit the number of ELF notes processed
-Report: http://mx.gw.com/pipermail/file/2014/001653.html
-Fix: 
-https://github.com/file/file/commit/ce90e05774dd77d86cfc8dfa6da57b32816841c4
+Description:
+Zhu Zhu from IBM reported a vulnerability in Nova VMware driver. If an
+authenticated user deletes an instance while it is in resize state, it
+will cause the original instance to not be deleted. An attacker can use
+this to launch a denial of service attack. All Nova VMware setups are
+affected.
 
-2. Limit string printing to 100 chars
-Report: http://mx.gw.com/pipermail/file/2014/001654.html
-Fix: 
-https://github.com/file/file/commit/65437cee25199dbd385fb35901bc0011e164276c
+References:
+https://launchpad.net/bugs/1359138
 
-Both problems amplified by the fact that the same section in ELF file 
-can be referenced and processed by file(1) multiple times. This is also 
-fixed in the first commit linked above.
-
-Could CVE(s) please be assigned?
+Thanks in advance,
 
 -- 
-Alexander Cherepanov
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
