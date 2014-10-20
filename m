@@ -1,56 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/27/1
-Message-Id: <20140827051235.3A34D6C0006@smtpvmsrv1.mitre.org>
-Date: Wed, 27 Aug 2014 01:12:35 -0400 (EDT)
-From: cve-assign@...re.org
-To: meissner@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux Kernel unbound recursion in ISOFS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/4
+Message-ID: <C281A17C31CFD745B242416D0E96EC6371806DA5@ONWVEXCHMB04.ciena.com>
+Date: Mon, 20 Oct 2014 09:04:57 -0400
+From: "Bendler, Ehren" <ebendler@...na.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The symmetric schemes do work, but due to data structure sizing only MD5 and SHA-1 hashed PSKs are supported:
+http://bugs.ntp.org/show_bug.cgi?id=2039
 
-> https://code.google.com/p/google-security-research/issues/detail?id=88
-
-> - recurse.iso: crashes / reboots a kernel due to kernel stack overflow / corruption.
-
-Use CVE-2014-5471.
+They imply in the comments that it will take a new version of the NTP RFCs to get support for stronger hashing schemes.
 
 
-> - deadlock.iso: causes a deadlock in the mount process in "inode_wait"
+-----Original Message-----
+From: Stephen Röttger [mailto:stephen.roettger@...il.com] 
+Sent: Monday, October 20, 2014 5:17 AM
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] attacking hsts through ntp
 
-Use CVE-2014-5472.
+>What about RFC 5906 and the current authentication schemes
+> (http://www.eecis.udel.edu/~mills/ntp/html/authentic.html) ?
 
+The protocol from RFC 5906 is completely broken:
+  http://www.eecis.udel.edu/~mills/security.html
+  http://zero-entropy.de/autokey_analysis.pdf
 
-> https://github.com/torvalds/linux/commit/410dd3cf4c9b36f27ed4542ee18b1af5e68645a4
-
-> We did not check relocated directory in any way when processing Rock
-> Ridge 'CL' tag.
-
-There are the two CVE IDs above, instead of one CVE ID for "did not
-check ... in any way."
-
-CVE-2014-5471 is about the need for code to prevent unchecked
-recursion (CWE-674), whereas CVE-2014-5472 is not about CWE-674. On
-some systems, CVE-2014-5472 might have only a minor security impact by
-enabling a user to start an unkillable process (i.e., it would be
-minor if there were a low limit on the number of processes the user is
-allowed to start).
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT/WhZAAoJEKllVAevmvmskWYH/2YTlXYpcG5AgNusDLxCEdqs
-r+1qOetYYD2VhLr3LqcI0gDAU26V2sNcCej1h4wiVx4q83yN95ZleCYOEEzy99OG
-vjQQp/bnhcL1++UJEZvnxvSXbUw8sOcLky60GEHQ6F+MICZcCAUKShtOn0meeQgr
-Cke9dXw8pcXFmt7N8R+ztdpot4pxPKUVNmiNNhKC6q9yIQQ+rDVnYD+81+l5vMD3
-fpFunsqUclRczEBoh5ptyZ89mNFUytlz1R1gFxN/3fkseFfxybVpBKL3XW364USj
-ett5kJxt/jI2yam7rP/eAV166EtjenBNgS6q6boFO8GiyM6OsUYVsYBIUEhuB24=
-=R3U4
------END PGP SIGNATURE-----
+The symmetric schemes are probably fine but hard to set up. But it looks like the NIST provides authenticated NTP:
+http://www.nist.gov/pml/div688/grp40/auth-ntp.cfm
