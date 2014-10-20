@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/8
-Message-ID: <542CAF39.90603@case.edu>
-Date: Wed, 01 Oct 2014 21:49:45 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Ed Prevost <me@...ardprevost.info>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/6
+Message-ID: <CAJB2JzuT73pYyZXS8tZQgV5FjDBsqWk3_ZjqawvRDPD+Jcd+EQ@mail.gmail.com>
+Date: Mon, 20 Oct 2014 16:40:05 +0200
+From: Mario Vilas <mvilas@...il.com>
+To: Grond <grond66@...il.com>
+Cc: Nick Kralevich <nnk@...gle.com>, oss-security@...ts.openwall.com,  fulldisclosure <fulldisclosure@...lists.org>
+Subject: Re: [FD] CVE request: remote code execution in Android CTS
 Content-Type: text/plain; charset=utf-8
 
-On 10/1/14, 5:45 PM, Ed Prevost wrote:
+On Mon, Oct 20, 2014 at 4:27 AM, Grond <grond66@...il.com> wrote:
 
->>> I have patches that fix 6277/6278 that are in the pipeline.
->>>
->> oh, s0rry for the mistake...that'd be great if we can get the patch as
->> quickly as possible. Thanks.
->>
->>> --
->>> ``The lyf so short, the craft so long to lerne.'' - Chaucer
->>>                  ``Ars longa, vita brevis'' - Hippocrates
->>> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
->>
->>
-> Really!? Honestly!? "as quickly as possible"
-> 
-> Man, we really should rally together and at least send Chet a recovery
-> beer basket or something.
+> Is this kind of file ever *intended* to be used as an executable script?
+> If the answer is "no"; then you should apply fixes.
+>
 
-Good IPAs are always welcome; the hoppier the better. :-)
+Seems to me like it was. Also, wouldn't a user who can edit those files
+also be able to, for example, patch the executable files as well? I haven't
+actually checked the file permissions but it seems like a reasonable
+assumption.
+
 
 -- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+“There's a reason we separate military and the police: one fights the enemy
+of the state, the other serves and protects the people. When the military
+becomes both, then the enemies of the state tend to become the people.”
+
