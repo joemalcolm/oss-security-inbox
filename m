@@ -1,107 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/23
-Message-ID: <53921F93.4000104@redhat.com>
-Date: Fri, 06 Jun 2014 16:07:47 -0400
-From: Stephen Gallagher <sgallagh@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/2
+Message-ID: <20141020035905.GA24459@sisay.ephaone.org>
+Date: Mon, 20 Oct 2014 05:59:05 +0200
+From: Michael Scherer <misc@...b.org>
 To: oss-security@...ts.openwall.com
-Subject: Requesting CVEs issued for two XSS vulnerabilities in Djblets (a set of Django helpers)
+Subject: CVEs request: Incorrect temporary file handling && silent code execution in Tomb, a commandline tool to easily operate encryption of secret data
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-== XSS Vulnerability in Djblets json_dumps() ==
-Description of problem:
+While looking around, I stumbled accross this :
 
-Django's JSON serialization does not handle escaping of any characters
-to make them safe for injecting into HTML. This allows an attacker who
-can provide part of a JSON-serializable object to craft a string that
-can break out of a <script> tag and create its own, injecting a custom
-script.
+https://github.com/dyne/Tomb/blob/master/tomb#L153
+https://github.com/dyne/Tomb/blob/master/tomb#L59
 
-To fix this, we escape '<', '>', and '&' characters in the resulting
-string, preventing a </script> from executing.
+so the tool is using a predictible filename in /tmp ( albeit not easy to predict ),
+and it is used without verification if the file exist already.
 
-Version-Release number of selected component (if applicable):
-python-djblets-0.8.2-1.fc21
-python-djblets-0.7.29-1.fc20
+So a attacker could pre-create the file with proper r/w acl for his own user,
+and then wait until the script use the file. Since the code is run as root
+to mount and operate the file like :
 
-How reproducible:
-Every time
+https://github.com/dyne/Tomb/blob/master/tomb#L2465
+( check_priv running the script as root with sudo )
 
+The tmp_create function will always succeed to change uid and change permissions.
+And even if it doesn't, there is no return code verification anyway...
 
-Steps to Reproduce:
-1. User can change their display name to "</script><script>
-alert(1)</script>"
-2. Browse a page where this user was the submitter
+So if a file already exist with suitable name ( which can statistically happen, especially
+since the pid is likely predictible ) and suitable permission, a attacker with access
+to the system could steal temporary file. One of those file is the temporary key to encrypt
+the tomb.
 
-Actual results:
-Script is executed
-
-Expected results:
-User's name should be sanitized
-
-Additional info:
-Issue is public, due to it having been reported on upstream's public
-bug tracker.
-
-Upstream bug report:
-https://code.google.com/p/reviewboard/issues/detail?id=3406
-
-Upstream patch:
-Djblets 0.7.x: https://reviews.reviewboard.org/r/5944/diff
-Djblets 0.8.x: https://reviews.reviewboard.org/r/5945/diff
-
-I do not yet have the real name of the reporter to credit.
+Ironically, a fix for this would be to use /run/user for temporary file but the author 
+seems to not like systemd from what I gathered.
 
 
 
+A second issue is that the tool is running a script coming from the encrypted filesystem
+on open without any option to avoid it, nor any documentation about it :
 
-== XSS Vulnerability in Djblets gravatar templates ==
-Description of problem:
-The generated gravatar HTML wasn't handling escaping of the display name
-of the user, allowing an attacker to choose a name that would close out
-the <img> tag and inject a <script> tag.
+https://github.com/dyne/Tomb/blob/master/tomb#L1718
 
-By switching to Django's format_html(), we can guarantee safe escaping
-of content.
+So a attacker could give a key and the file to a victim that would run it without
+being able to confirm it need to be run. Since the tool can be used with multiple
+users ( as seen by a feature logging the last user access in the tomb ), this can be used
+to execute code as another user.
 
-Version-Release number of selected component (if applicable):
-python-djblets-0.8.2-1.fc21
-python-djblets-0.7.29-1.fc20
+The documentation explictely say this is safe to do
+https://github.com/dyne/Tomb/blob/master/doc/Tomb_User_Manual.org
 
-How reproducible:
-Every time
+And totally ignore to mention that feature.
 
-Steps to Reproduce:
-1. User can change their display name to "</script><script>
-alert(1)</script>"
-2. Configure this user for a Gravatar image
-3. Browse to any page displaying the gravatar image
 
-Actual results:
-The script executes
+Can 2 differents CVE be assigned for this, I will take care of contacting upstream via
+github tracker ?
 
-Expected results:
-The username should be properly sanitized and prevent XSS execution.
-
-Additional info:
-Issue is public now as the fix has now been committed to upstream git.
-
-Credit for the discovery of this vulnerability should be given to
-Christian Hammond of Bean Bag, Inc. (author of Review Board).
-
-This issue is present in the python-djblets package on Fedora 19, 20,
-Rawhide and EPEL 6 (EPEL 7 has not yet had a successful build).
-
-Upstream patch:
-Djblets 0.7.x: https://reviews.reviewboard.org/r/5947/diff/
-Djblets 0.8.x: https://reviews.reviewboard.org/r/5946/diff/
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iEYEARECAAYFAlOSH5MACgkQeiVVYja6o6MN/gCfQKsY5cvuApPtGhX1BomvapN3
-UEEAoJ3a1r3Q+uQnMXid/E/+0LeHN9uX
-=c6fl
------END PGP SIGNATURE-----
+-- 
+Michael Scherer
