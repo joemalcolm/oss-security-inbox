@@ -1,35 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/22
-Message-Id: <20140909183612.91C8C33201F@smtpvbsrv1.mitre.org>
-Date: Tue,  9 Sep 2014 14:36:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 107 - Mishandling of uninitialised FIFO-based event channel control blocks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/3
+Message-ID: <CABoG-=WFe8UUEBsC6cOXwMmWGWoi3ZpyyVifn1afRgdPKo9YZw@mail.gmail.com>
+Date: Mon, 20 Oct 2014 09:17:20 +0000
+From: Stephen Röttger <stephen.roettger@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: attacking hsts through ntp
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>What about RFC 5906 and the current authentication schemes
+> (http://www.eecis.udel.edu/~mills/ntp/html/authentic.html) ?
 
-> When using the FIFO-based event channels, there are no checks for the
-> existence of a control block when binding an event or moving it to a
-> different VCPU.
+The protocol from RFC 5906 is completely broken:
+  http://www.eecis.udel.edu/~mills/security.html
+  http://zero-entropy.de/autokey_analysis.pdf
 
-Use CVE-2014-6268.
+The symmetric schemes are probably fine but hard to set up. But it looks
+like the NIST provides authenticated NTP:
+http://www.nist.gov/pml/div688/grp40/auth-ntp.cfm
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUD0hFAAoJEKllVAevmvmsaTwH/jjeQlCo0oa2qzpYvOanqz6n
-oYo75vg9bEM05FVa765NLDc9CwerQLJZQ0AVW2D8FbP7PyLGQyAXeXDImezzqfKX
-2WxX3/igtVK+6wR3DanTpK3YZNWXNkGeWVw/5yxW6rEaSgBBNetHnwAnhETJaPrK
-kwJj1r28KbFvZchhANo3lirzNHgRTIYfB0QeTwMJUYkn5ac1BS8znC329loBfuVb
-sHrXRu8cQfJTcDdAndiwPK+1uUcLrkpH1wDXWhKO0ZMQWDJUjX+bxQ3ukdSnHvcr
-U2v4yAUAe3nAKbVzslTPbsg+xCu39QJZySTEM6Rr+FNKEdXdmD2JilYSL1KlbM4=
-=MMmc
------END PGP SIGNATURE-----
