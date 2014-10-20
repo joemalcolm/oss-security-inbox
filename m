@@ -1,39 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/1
-Message-ID: <1411532432.17652.15.camel@bonedaddy.net>
-Date: Wed, 24 Sep 2014 12:20:32 +0800
-From: Paul Wise <pabs3@...edaddy.net>
-To: oss-security@...ts.openwall.com, contact@...tsecurity.io
-Subject: CVE request: various NodeJS module vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/8
+Message-id: <FF318777-14EB-4D37-95EE-A4ECB959BAE0@me.com>
+Date: Mon, 20 Oct 2014 14:56:49 -0400
+From: "Larry W. Cashdollar" <larry0@...com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: Re: Vulnerabilities in WordPress Database Manager v2.7.1
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello,
 
-This is a request for CVEs for the following vulnerabilities discovered
-by the Node Security Project. I left out their advisories where I could
-find an assigned CVE.
+My comments are below.
 
-https://nodesecurity.io/advisories
+On Oct 20, 2014, at 1:48 PM, cve-assign@...re.org wrote:
+> 
+> 
+> > only a few queries are allowed (Use Only INSERT, UPDATE, REPLACE,
+> > DELETE, CREATE and ALTER statements.) but these are sufficient to
+> > download sensitive system files:
+> 
+> > INSERT into password (passwords) VALUES(LOAD_FILE("/etc/passwd"));
+> 
+> This report seems related to:
+> 
+>   if ( preg_match( "/LOAD_FILE/i", $sql_query ) ) {
+> 
+> in the
+> 
+>   https://github.com/lesterchan/wp-dbmanager/commit/7037fa8f61644098044379190d1d4bf1883b8e4a
+> 
+> commit. Our question here is whether this is best categorized as a
+> WP-DBManager vulnerability fix, or a workaround for a MySQL
+> misconfiguration. It seems that, ideally, if WP-DBManager is not
+> supposed to be able to use MySQL to read arbitrary files, then this
+> would have been addressed with the configuration of the FILE privilege
+> or the secure_file_priv variable.
+> 
+> Presumably there are other products in which users are intended to be
+> able to use INSERT, but are not intended to be able to use LOAD_FILE.
+> It's not clear that, for every such product, doing preg_match for
+> /LOAD_FILE/i is the recommended approach, and absence of this approach
+> means that a CVE ID is assigned.
+> 
+> Also, in the WP-DBManager case, CREATE is allowed, and this could
+> conceivably mean that CREATE FUNCTION is available (again, depending
+> on the MySQL privilege configuration), possibly resulting in the user
+> gaining unintended access to the server machine and its local
+> filesystem.
+> 
+> Should there be one CVE ID now for "attempts to offer a subset of
+> MySQL statements without considering the possible MySQL privilege
+> configurations" as applied to the LOAD_FILE attack, and then other
+> "incomplete fix" CVE IDs later if a new attack against 2.7.2/2.7.3 is
+> disclosed?
 
-qs Denial-of-Service Memory Exhaustion
-https://nodesecurity.io/advisories/qs_dos_memory_exhaustion
+It seems to me this would be the best approach. I hadn’t considered it originally, but it 
+makes the most sense.
 
-qs Denial-of-Service Extended Event Loop Blocking
-https://nodesecurity.io/advisories/qs_dos_extended_event_loop_blocking
 
-syntax-error potential for script injection
-https://nodesecurity.io/advisories/syntax-error-potential-script-injection
+> 
+> --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> 
 
-send Directory Traversal
-https://nodesecurity.io/advisories/send-directory-traversal
-
-Crumb CORS Token Disclosure
-https://nodesecurity.io/advisories/crumb_cors_token_disclosure
-
--- 
-bye,
-pabs
-
-http://bonedaddy.net/pabs3/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
