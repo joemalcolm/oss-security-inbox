@@ -1,19 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/28/3
-Message-ID: <87tx4xfaz9.fsf@mid.deneb.enyo.de>
-Date: Thu, 28 Aug 2014 07:18:34 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0485: unsafe Python pickle in s3ql
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/21/3
+Message-Id: <20141021163449.C2FAFB2E127@smtpvbsrv1.mitre.org>
+Date: Tue, 21 Oct 2014 12:34:49 -0400 (EDT)
+From: cve-assign@...re.org
+To: larry0@...com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Vulnerabilities in WordPress Database Manager v2.7.1
 Content-Type: text/plain; charset=utf-8
 
-Nikolaus Rath discovered a vulnerability in s3ql which can result in
-remote code execution, caused by the unsafe use of Python's pickle
-serialization library.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The upstream commit is here:
+>>> INSERT into password (passwords) VALUES(LOAD_FILE("/etc/passwd"));
 
-  <https://bitbucket.org/nikratio/s3ql/commits/091ac263809b4e8>
+>> This report seems related to:
+>> 
+>>   if ( preg_match( "/LOAD_FILE/i", $sql_query ) ) {
+>> 
+>> in the
+>> 
+>>   https://github.com/lesterchan/wp-dbmanager/commit/7037fa8f61644098044379190d1d4bf1883b8e4a
+ 
+>> one CVE ID now for "attempts to offer a subset of
+>> MySQL statements without considering the possible MySQL privilege
+>> configurations" as applied to the LOAD_FILE attack
 
-(This issue was reported privately to Debian, the distros list was
-notified, and this is the public heads-up required by list policy.)
+> It seems to me this would be the best approach. I hadn't considered it
+> originally, but it makes the most sense.
+
+Use CVE-2014-8336.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJURoocAAoJEKllVAevmvms8ZcH/1PDEog9U/osvzNql17RlucO
+5ZOKgAYHonD/LGaed0Jq8YLjy9kc73umA0Z3qQTdiRYdU06bEGL+FHgB873qHE5F
+kZwTCknzd993AjhRXlfPN6wMrYibJ8owP6Zi6yakX2g2sNvJL9FLW4x3gUEjAwHX
+BxttkvCrng+r23X3d/1Ywv0fd1RGlZ0WRsxDKLpW2vLW8KP7IXSq4iOLdLsYFWjq
+8CSLS5Md3siIc80HY440s5uHWtImxMS5ZQjA2dCmMywTComtTaLxI1YyuMybdUHp
+F+Fspm7A+s/NXKBw2pPyhxT1Z6UB7FBT3/j3ll7PbAl5+bhLg7rDxsPRIxsClnQ=
+=noo2
+-----END PGP SIGNATURE-----
