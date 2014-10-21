@@ -1,41 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/6
-Message-ID: <20140507210912.7e5cb4f4@hboeck.de>
-Date: Wed, 7 May 2014 21:09:12 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/21/5
+Message-ID: <5446D1DD.6040805@enovance.com>
+Date: Tue, 21 Oct 2014 17:36:29 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: A note on DBus and the Hash DOS
+Subject: [OSSA 2014-037] Nova VMware instance in resize state may leak (CVE-2014-8333)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 07 May 2014 12:30:41 -0600
-Kurt Seifried <kseifried@...hat.com> wrote:
+OpenStack Security Advisory: 2014-037
+CVE: CVE-2014-8333
+Date: October 21, 2014
+Title: Nova VMware instance in resize state may leak
+Reporter: Zhu Zhu (IBM)
+Products: Nova
+Versions: up to 2014.1.3
 
-> So many years ago some hash dos stuff happened. I checked into a
-> variety of programs using embedded copies of various things like
-> XML/etc. Also other programs that use hashing for stuff, one of which
-> is DBus.
-> 
-> The bad news: DBus has a vulnerable hash implementation
-> 
-> The good news: there doesn't appear to be many (any?) ways to inject
-> data easily to trigger this vulnerability.
+Description:
+Zhu Zhu from IBM reported a vulnerability in Nova VMware driver. If an
+authenticated user deletes an instance while it is in resize state, it
+will cause the original instance to not be deleted. An attacker can use
+this to launch a denial of service attack. All Nova VMware setups are
+affected.
 
-I don't know how others feel about this, but I'd be more careful with
-such cases.
+Juno fix:
+https://review.openstack.org/118595
 
-Basically this sounds to me like a "we don't know if it is a
-vulnerability, but it could be". And there I'd say "in doubt be on the
-safe side".
+Icehouse fix:
+https://review.openstack.org/125492
 
-Rate them as "very low impact", don't treat them with any urgency, but
-I think such issues should be fixed and should be called
-vulnerabilities nevertheless.
+Notes:
+This fix was included in the 2014.2 release and will appear in a future
+2014.1.4 stable point release.
 
--- 
-Hanno Böck
-http://hboeck.de/
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8333
+https://launchpad.net/bugs/1359138
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
