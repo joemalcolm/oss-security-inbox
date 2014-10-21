@@ -1,64 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/18
-Message-ID: <53BC763E.8050004@redhat.com>
-Date: Tue, 08 Jul 2014 16:52:46 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org, zf-security@...d.com
-Subject: Zend Framework CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/21/2
+Message-Id: <20141021162823.1C00FC5092C@smtptsrv1.mitre.org>
+Date: Tue, 21 Oct 2014 12:28:23 -0400 (EDT)
+From: cve-assign@...re.org
+To: tristan.cacqueray@...vance.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for vulnerability in OpenStack Nova
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-As I understand Zend it's a BSD style license, so Open Source, so
-posting here, CC'ing upstream and Mitre. Can we please get CVE's for:
+> Products: Nova
+> Versions: up to 2014.1.3
+> 
+> Zhu Zhu from IBM reported a vulnerability in Nova VMware driver. If an
+> authenticated user deletes an instance while it is in resize state, it
+> will cause the original instance to not be deleted. An attacker can use
+> this to launch a denial of service attack. All Nova VMware setups are
+> affected.
+> 
+> https://launchpad.net/bugs/1359138
+> https://review.openstack.org/125492
 
-http://framework.zend.com/security/advisory/ZF2014-04
-ZF2014-04: Potential SQL injection in the ORDER implementation of
-Zend_Db_Select
+> the problem is as follows: When a resize is done a new VM is
+> created on the back end. So prior to the resize you would have
+> a instance called uuid. When a resize takes place there will
+> be a cloned VM called uuid-orig. Hence the additional delete
+> that needs to take place.
 
-http://framework.zend.com/security/advisory/ZF2014-03
-ZF2014-03: Potential XSS vector in multiple view helpers
+> during the window for resize step migration_disk_and_poweroff after
+> disassociate VM(rename) or new VM clone but before migration status to
+> be finished, the deletion of VM will not delete those uuid-orig VMs.
 
-http://framework.zend.com/security/advisory/ZF2014-02
-ZF2014-02: Potential security issue in login mechanism of ZendOpenId
-and Zend_OpenId consumer
+> looks like a DoS attack by using up capacity without being charged for
+> it.
 
-http://framework.zend.com/security/advisory/ZF2014-01
-ZF2014-01: Potential XXE/XEE attacks using PHP functions:
-simplexml_load_*, DOMDocument::loadXML, and xml_parse
-
-===
-
-There are some CVE's for 2013 Zend issues, I haven't checked the
-mapping to/from the Zend advisories.
-
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=zend
-
-http://framework.zend.com/security/advisory/ZF2013-01
-http://framework.zend.com/security/advisory/ZF2013-02
-http://framework.zend.com/security/advisory/ZF2013-03
-http://framework.zend.com/security/advisory/ZF2013-04
-
+Use CVE-2014-8333 for this virt/vmwareapi/vmops.py race condition that
+results in inadvertent preservation of the -orig instance.
 
 - -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJTvHY+AAoJEBYNRVNeJnmTkNUQAMdyWWFujlInezhKS/WVmnyn
-MOlCXikvO0x/cveqKcb1cBYaaWwSWjEw9Q2Yd19+VyV+FZ4Sk8F3v+FllRIq8Yxt
-88K44XLKOjFhjzwqIKEsaqzNPfQckjoJ51ekEdiD6GlQ3MAtjuRGIRryVqOF3Je3
-ir5qfyQNp9dHjU67HsJ2p2LBk6LvwSe/QSMIYmkhvReEQcuL5F5nhk53IjvYZbCO
-uupZmjOZnjFoZ/XnKTnDdWeJ4hRcuYZd9edjbbCcPU8j7lw/w4D6p6AMq12+JQFY
-V4vReQh31Y38MpewlaTi84fWb6eR3M3g4aPk8YSTzN8hL1tkjmEe2ayNPQDpgV0q
-1Uf8+KTFK6JSDCKzVEZNr540V1rFh2WfPBzMbO5Qvqj9MFV9Dw6PylgTnX/LH6IT
-A3pfYszDb4TRwb7tp+Imdqz+I9odAg+N4q7WxFlBk+EbOEM8scd2jIvgvqDixh2T
-KWyZPU7Mveqzf/0+BwDmoG6tpeGBADJyiY2ZwFSMr55B0v72nVraDeCDM1l4p/QY
-mXjPa3dGGSJCfn5BaJoZ6wt1DRsDE7ZcON0RrCi4lr3Hb/RoXbLHNroqZYKghrBH
-lIz7cc6k3WQZGg+L9foMvv02nfG9VYlO3k2D1XcSkx+mBKIcVwhkb/lxxg8qPy42
-MVs/F3unXP4Ir5ST6Y2K
-=Xsd6
+iQEcBAEBAgAGBQJURoh1AAoJEKllVAevmvmsuycIALoSRHTtUV3Kk+XzgQm3Cl9c
+qNFi+n2AQTeGqtefqZBgdKJ7iNY29g5hMMT9eGKyalPw4zxv2vxKKHsMGSyyZYDY
+PvaHUJ7hOUxO5k22m++cHAdEgZjSVjTEFYSfbjBK6GqSY7Lqq4d9dqW4WBNYR4cH
+tyX7FvEK7yPA4gEywLxa8KVUBWskj+uDZvFg9mYUzOFd0u+WANFffdo7lVAvyMvc
+8DO+vA8Q/H26Bvf7q3Lebs2CNoTwOfUrCnG1RcO0WkcJ0N+DAAWAjOvn+2IxbEd4
+fYavN9bdncevvHwOSLl/V+ikjSnv39S/whcKkxj3Xh9X6thp+62dkr0j2p4F/P4=
+=o9fR
 -----END PGP SIGNATURE-----
