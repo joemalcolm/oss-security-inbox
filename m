@@ -1,40 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/01/4
-Message-ID: <20140201092747.GC30729@scapa.corsac.net>
-Date: Sat, 1 Feb 2014 10:27:47 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/21/4
+Message-ID: <CALCETrXLM_-4g3SzJd5kcMuHji5j3WLmybMiOxLaH87WL=zRTA@mail.gmail.com>
+Date: Tue, 21 Oct 2014 13:48:03 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com, Petr Matousek <pmatouse@...hat.com>
+Subject: CVE-2014-3690: KVM DoS triggerable by malicious host userspace
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+[sorry for somewhat late notice -- I didn't notice that the patch was
+public until just now]
 
-On Sat, Feb 01, 2014 at 03:45:14AM +0100, PaX Team wrote:
-> > http://googleonlinesecurity.blogspot.com/2013/10/going-beyond-vulnerability-rewards.html
-> > 
-> > ... but finding a vulnerability would probably not fall under the latter
-> > program.
-> 
-> yes, that's a somewhat different kettle of fish though bugfixes may
-> be eligible if it's about fixing or mitigating entire classes (not
-> the case here obviously).
+KVM has a bug that allows malicious host user code that can open the
+/dev/kvm device on a VMX (Intel) machine to DoS the system.  (In my
+proof of concept, the DoS is a rather spectacular failure of the whole
+system, although I haven't checked whether the kernel panics.  A more
+refined exploit *might* be able to kill targetted user processes, but
+it would be tricky and is subject to possibly unavoidable races that
+are likely to take down the whole system.)
 
-But I'm pretty sure one of your “pet projet” would qualify (multiple
-time), should you want to go that road :)
+This is *not* triggerable by a guest, although a guest that can
+compromise its host QEMU could use this bug to take down everything
+else running on the host.
 
-Regards,
-- -- 
-Yves-Alexis Perez
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+I would guess that all kernels that support VMX are vulnerable, but I
+haven't tested old kernels.
 
-iQEcBAEBCgAGBQJS7L4QAAoJEG3bU/KmdcCldt4H/RuMevjw5wglr83nfTkxNGio
-boepSFmDfycX2jk+sBrPb1jFpY1xLW+KRTzsvedKb1CTCSmKLvnhHeU9ZC5FdTao
-7AxoJq3C7JQuelB9eElmHAtzgTynF3nvKaKYqWJVHg1Htjs4FpH1gCvRz3iv1VpI
-gJ7sPdeiCxc7GM8VCA5yX593avCMIaYm1O3wdfMwSOv7fE+hbCs0U+3y/+9THmIT
-uLGUf0AjWLFH0z3NhUrx5yaNO+R9+0hEnk8Nlq1l1PEOI+5sH5hk7OwBEyD6EVYd
-E4X4s82/JEcDbKNV0HAUUX/hR7VrWmGkMA6E0BEMOLhQLdTeyIxGplSIiCDF3PY=
-=6PpH
------END PGP SIGNATURE-----
+The fix is here:
+
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=d974baa398f34393db76be45f7d4d04fbdbb4a0a
+
+PoC available upon request, and I'll post it publicly in a few days,
+because it's kind of fun to watch the fireworks.
+
+--Andy
