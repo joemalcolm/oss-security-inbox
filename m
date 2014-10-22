@@ -1,38 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/5
-Message-Id: <201405290659.s4T6xX2n021329@linus.mitre.org>
-Date: Thu, 29 May 2014 02:59:33 -0400 (EDT)
-From: cve-assign@...re.org
-To: luto@...capital.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel DoS with syscall auditing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/22/2
+Message-ID: <5447E185.2030303@redhat.com>
+Date: Wed, 22 Oct 2014 10:55:33 -0600
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2014-3712 Katello: user parameters passed to to_sym
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Jan Rusnacko of Red Hat reports:
 
-Use CVE-2014-3917 for the specific issue that would be fixed by the
-http://article.gmane.org/gmane.linux.kernel/1713179 patch. We realize
-that the eventual code changes might not include something exactly
-equivalent to this. At least at the moment, there are no CVE IDs for
-other issues listed in the
-http://article.gmane.org/gmane.linux.kernel/1713180 post. Similarly,
-there is no CVE ID for the higher-level concept that "config
-AUDITSYSCALL" existed but was not marked BROKEN.
+Katello code exposes potential to_sym Denial of Service attack vector
+from user input parameters. The two places identified are:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+https://github.com/Katello/katello/blob/9231e24f93fa804e557fc95637cfa2c5bb92f6a7/app/controllers/katello/content_search_controller.rb#L617
 
-iQEcBAEBAgAGBQJThtj0AAoJEKllVAevmvmstBkIAKgjg+yIdWyduj6vqZfTs77L
-PgviyMmvZN/SWLmcJa3qXrNhsQVC8sk1jSYX5BLeXuu1YjJM7kkUJHpfmTn4HcfK
-YINrXyqEAC5O7jLAnsuPfKOWFPUZRFTqs1t/X8NfqfEvawCMw8kgr8O1Vs7ynkyu
-dEOnIMuPGSW/b6CIHlD10mLpdoJNy6mmBLQU6XOZajfYhXScdGKJNpMyIrjW1J34
-GUt8qFHwyCgpTQbX1YeVgevSJvjQVjdsrUNWqmmalbAUyU5lS85Uq4kL3IdtsMFO
-zDMsgfo+YJFsxwrHtu9EYCXQBiLcpJPS3ZxgcGgureSM8/CrnF02dJ3C7XBtD6A=
-=ewfF
------END PGP SIGNATURE-----
+https://github.com/Katello/katello/blob/9231e24f93fa804e557fc95637cfa2c5bb92f6a7/app/controllers/katello/api/api_controller.rb#L87
+
+This type of attack is documented here -
+http://docs.fedoraproject.org/en-US/Fedora_Security_Team/1/html/Secure_Ruby_Development_Guide/RubySymbols.html
+
+This has been confirmed in testing by Eric Helms of Red Hat.
+
+cvss2=3.5/AV:N/AC:M/Au:S/C:N/I:N/A:P
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
