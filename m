@@ -1,62 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/13/2
-Message-Id: <201406130544.s5D5ijqx015839@linus.mitre.org>
-Date: Fri, 13 Jun 2014 01:44:45 -0400 (EDT)
-From: cve-assign@...re.org
-To: alex.gaynor@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: glibc - CVE for library bug that requires application participation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/9
+Message-ID: <20141023220441.GA485@hurricane.linuxnetz.de>
+Date: Fri, 24 Oct 2014 00:04:41 +0200
+From: Robert Scheck <robert@...oraproject.org>
+To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
+Subject: Zarafa WebAccess >= 6.40.4 affected by CVE-2013-2205, CVE-2013-2205 and CVE-2012-3414
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Good evening,
 
-In this type of situation, the requirement for "application
-participation" does not affect whether a CVE ID can be assigned.
+I discovered that Zarafa WebAccess >= 6.40.4 is affected by CVE-2013-2205,
+CVE-2013-2205 and CVE-2012-3414 as it bundles the vulnerable SWFUpload from
+http://code.google.com/p/swfupload/. Zarafa has been already notified.
 
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17048
-> posix_spawn_file_actions_addopen fails to copy the path argument ...
-> Per the specification ... it is supposed to.
+[root@tux ~]# rpm -q zarafa-webaccess
+zarafa-webaccess-7.1.11-46050
+[root@tux ~]# 
 
-> http://pubs.opengroup.org/onlinepubs/000095399/functions/posix_spawn_file_actions_addclose.html
-> http://pubs.opengroup.org/onlinepubs/9699919799/functions/posix_spawn_file_actions_addopen.html
+[root@tux ~]# rpm -ql zarafa-webaccess | grep swfupload.swf | xargs md5sum
+3a1c6cc728dddc258091a601f28a9c12 /usr/share/zarafa-webaccess/client/widgets/swfupload/swfupload.swf
+[root@tux ~]# 
 
-> IEEE PASC Interpretation 1003.1 #105 is applied, adding a note to the
-> DESCRIPTION that the string pointed to by path is copied by the
-> posix_spawn_file_actions_addopen() function.
+Given that some distributions/downstreams are shipping that vulnerable .swf
+file this is just meant as a simple "heads up". There are two solutions:
 
-> http://standards.ieee.org/findstds/interps/1003-1-90_int/pasc-1003.1d-105.html
-> Finalized interpretation: 29 August 2000
+a) Replace the bundled swfupload.swf by the fork maintained by WordPress
+   from https://github.com/wordpress/secure-swfupload (upstream will likely
+   do the same for a future release of Zarafa) or
+b) Remove the vulnerable SWFUpload e.g. at packaging time (this is what I
+   did for Fedora because I never managed it to build the .swf file from
+   source code to satisfy our Fedora Packaging Guidelines). Copy & paste
+   example from .spec file for removal:
 
-> http://www.gnu.org/software/libc/libc.html
-> The GNU C Library ... follows all relevant standards including
-> POSIX.1-2008
+--- snipp ---
+%if 0%{?no_multiupload}
+sed '148,155d' $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/webaccess/config.php > \
+    $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/webaccess/config.php.new
+touch -c -r $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/webaccess/config.php{,.new}
+mv -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/webaccess/config.php{.new,}
+rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}-webaccess/client/widgets/swfupload/
+%endif
+--- snapp ---
 
-Without researching the POSIX standards process in detail, it seems
-likely that a 29 August 2000 interpretation can reasonably be
-considered required behavior for a library claiming to follow
-POSIX.1-2008.
 
-Use CVE-2014-4043.
+With kind regards
 
-(If it were the case that the relevant POSIX interpretation happened
-last month, and a new glibc release implementing that interpretation
-simply wasn't ready yet, then probably a CVE ID couldn't be assigned.
-But this seems like almost 14 years.)
+Robert Scheck
+-- 
+Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTmo73AAoJEKllVAevmvmsKL0H/2U08DxCZqL22H6nZaAyDlhF
-wYIokK8r1ucQGaDzXA5j32w+S4RoT8ALsxbwqjCFYEg6cFsjE+ojPWS0V0uIvdsI
-TAUjAY7+HEci8V/u0Ii2G9BDs5AWdIWlTtjLOG+o+PqRvGQKatlGyzr2LY+9jbXl
-Ys9VnQQL+1U5uTfke2Sj3rfhFdgsTGGtwHf/NZP6nU3mYgUpe99g7GteOxiYO5+f
-i81mnE2rvgjwiAShpOtooOHElBRsK82icowO6tVW1TjRM3yqaFBWF588Blhkress
-vmrmT/K2+XY5h2FlTPaezUmmVcOEPwxiIwJ21L8T4RWXEv7i8LAwShS6SFwIB5o=
-=tUte
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
