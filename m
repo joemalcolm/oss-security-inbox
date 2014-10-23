@@ -1,62 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/8
-Message-Id: <201402081408.s18E8IFH004046@linus.mitre.org>
-Date: Sat, 8 Feb 2014 09:08:18 -0500 (EST)
-From: cve-assign@...re.org
-To: oss-sec-addjsif@...p.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, djorm@...hat.com
-Subject: Re: CVEs for Android addJavascriptInterface issues (was: multiple issues in Apache Cordova/PhoneGap)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/6
+Message-ID: <CADNa6_2dXMqh_WbQwEtLBKG2cWEYJp3ic3CYWemm_iTUxR1LSQ@mail.gmail.com>
+Date: Thu, 23 Oct 2014 12:23:14 -0400
+From: Dave Rutherford <dave@...lpettingzoo.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Oct 23, 2014 at 11:24 AM, Michal Zalewski <lcamtuf@...edump.cx> wrote:
+>> http://lcamtuf.coredump.cx/stringme
 
-> Is the intent here to assign CVE-2012-6636 to all issues rooted in
-> reliance on an incorrectly exposed Javascript bridge?
-> 
-> If so, please keep in mind that this issue is not as simple as
-> pointing at Android itself.
-
-The scope of CVE-2012-6636 is the following description of a specific
-change made by a vendor in response to a vulnerability:
-
-  On Android prior to API level 17, these interfaces are
-  generically insecure. Malicious JavaScript executing inside
-  WebView can use the Java reflection API to invoke any method
-  of any Java object exposed via 'addJavascriptInterface' and
-  take control over the local side of the application.
-  Starting from Android API level 17, only the methods explicitly
-  annotated with @JavascriptInterface are visible in the Java
-  objects exposed to WebView via 'addJavascriptInterface'.
-
-Our expectation is that a number of issues "rooted in
-reliance on an incorrectly exposed Javascript bridge" could
-have their own separate CVEs.
-
-> You may have seen recently released Metasploit module that allows a
-> remote compromise of the Google Glass browser using an incorrectly
-> exposed Javascript bridge ...
-> 
-> If this issue should have the same CVE assignment, please ack.
-> Otherwise, please assign a new CVE.
-
-We'll send a separate message soon about this Google Glass CVE
-request. We don't want to have CVE assignments for separately reported
-issues in this thread.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS9jexAAoJEKllVAevmvmsFuYIAMBZyO761Rr1k6Euyxm2/fPJ
-FJ+N4kB9GEh4v+1y3RPxejhGct2g9FN5X57z67OB2jyvQu/GcdyZqU4bw1v5X8zn
-UAEehDJeHWQtqFTO+BWuCFiO4gi4eHO+DHpgKWTo42FWQQxvKoYeY9I8rPYloZve
-ij4pWEuWhU4Mh/iZICqk3JNcdxrrKws1/2IAMVACb9z9g//ZDL8uhbR7rSJEomFJ
-eXGQSl9ye6/fcN6sECvUvfmXko7dalGd3rFXy9RDRQg1t5PxDi1h74xya+jdIpl6
-aWHOEhYLNvtCvnAIUpzDymUDqKZzOZ749h4EH2pxLTCTqUiqT297zrFsI3NrhlI=
-=STCe
------END PGP SIGNATURE-----
+Clicking 'Save Link As...' in Chromium 37.0.2062.120 Ubuntu 14.04 (281580)
+crashes the browser, though chromium does not seem to link against libbfd.
+Firefox does not appear to be vulnerable.
