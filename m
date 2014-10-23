@@ -1,54 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/18
-Message-ID: <20140926131159.GA29528@hal.lan>
-Date: Fri, 26 Sep 2014 15:11:59 +0200
-From: Guido Berhoerster <gber@...nsuse.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/1
+Message-Id: <20141023043008.5B737C50B61@smtptsrv1.mitre.org>
+Date: Thu, 23 Oct 2014 00:30:08 -0400 (EDT)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: smarty: secure mode bypass
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer <fweimer@...hat.com> [2014-09-26 13:33]:
-> On 09/26/2014 10:54 AM, Mark R Bannister wrote:
-> I agree this looks scary at first glance, but we discussed this
-> previously, see for example:
-> 
->   <http://www.openwall.com/lists/oss-security/2014/09/24/20>
-> 
-> Shell scripts derive part of their power and flexibility from their
-> openness to the execution environment.  You can tweak PATH, BASH_ENV
-> (or ENV for other Bourne-like shells), IFS, HOME, and many other
-> variables to change behavior.  There are even more knobs to affect
-> the behavior of the external commands almost all shell scripts call
-> when they run.
-> 
-> This makes them not suitable at all for writing SUID programs or
-> other code that runs in untrusted environments.  This is
-> well-documented, and given the amount of shell scripts out there
-> which rely on these aspects of the UNIX shell design, it's not
-> something we can change, particularly not as part of a security
-> update which system administrators are more or less forced to
-> install.
-> 
-> In your specific example, you can achieve the same effect by setting
-> PATH to a directory with a customer ls program, or by setting
-> BASH_ENV to a file which contains a definition of a function called
-> ls.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I strong disagree that, there is a big difference in that a
-script can (and should) be able to obtain a sane environment by
-resetting stuff like PATH, BASH_ENV, IFS.  The issue is also not
-about flexibility to override commands with functions or the
-ability to export them, rather it is the apparently undocumented
-implementation mixing data and code by storing the functions in
-the environment which is total and utter crap even by the
-standards of 20 years ago and it is just a matter of time until
-the next parser bug comes up.
+> Can a CVE be assigned for the following smarty issue: upstream
+> released new version 3.1.21:
+> 
+> > Smarty 3.1.21 Released Oct 18, 2014
+> > Smarty 3.1.21 minor bug fixes and improvements. Also following up a
+> > security bug fix where <script language="php"> tags still worked in
+> > secure mode. To note, this only affects users using Smarty in secure
+> > mode and exposing templates to untrusted third parties.
+> 
+> https://code.google.com/p/smarty-php/source/browse/trunk/distribution/change_log.txt?r=4902
+> https://bugs.debian.org/765920
+> 
+> {literal}<{/literal}script language=php>echo 1+1;</script>
 
-> Overriding external programs with shell functions in such a way has
-> to be supported.  Otherwise, scripts which define shell functions
-> would break if the system administrator installs new software which
-> happens to include a program of the same name of the shell function.
+Use CVE-2014-8350.
 
-That is orthogonal to the implementation of exported functions.
--- 
-Guido Berhoerster
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUSINZAAoJEKllVAevmvmsUZMH/jStJjghvRVAX4RijuoQ5Tuk
+ar0fNY4h8A8x/wb/Q7yfA06//uvPJeeUz6B1kptYnq6H+quBMm4JuWZSs1dRrjDi
+TJVmoNx4+bPPCfbaEsZfbX59HaDLf5rtDfeq1XeV+mHX7FgmuDcImDSsAjlra+Ko
+2ixpC6NZG8ii58mikQial1wWlbvguCqkZPvV4KdkXbly+CEiA4/y4AIXEbAmSZyB
+oyDNkZdpOHrF5FoHWIqsTOysTvQaaC0jnJbuC9wvyPaOLJS39ZgRi7pVvz7UYv/r
+HvLTwoPJB9UmS/DeKV2nstkk+BpRJy+JqXITvwRGNl8FAIvxfxiRJAzLAQFNzzE=
+=3ELY
+-----END PGP SIGNATURE-----
