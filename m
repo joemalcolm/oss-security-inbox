@@ -1,35 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/5
-Message-ID: <20140331094212.GD6862@suse.de>
-Date: Mon, 31 Mar 2014 11:42:12 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVEs, Crypto and "vulnerabilities"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/2
+Message-Id: <20141023043436.A353BC50B89@smtptsrv1.mitre.org>
+Date: Thu, 23 Oct 2014 00:34:36 -0400 (EDT)
+From: cve-assign@...re.org
+To: marc.deslauriers@...onical.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: systemd-shim DoS issue
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 31, 2014 at 08:31:18PM +1100, Michael Samuel wrote:
-> On 31 March 2014 17:26, Kurt Seifried <kseifried@...hat.com> wrote:
-> > So the line in the sand is moving currently, I think this issue is
-> > another good example of something that may qualify for a CVE, or maybe
-> > not, depends where we draw the line.
-> >
-> > https://github.com/opencart/opencart/issues/1279
-> >
-> > So if someone has strong opinions either way please speak up.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+> systemd-shim version 8 shipped with a debugging clause enabled that may result
+> in a denial of service attack by local users.
 > 
-> This looks like an easily exploitable bug.  What possible reason could there
-> be for it not qualifying?
+> Fixed by:
+> https://github.com/desrt/systemd-shim/commit/d2e91c118f6128875274a638007702d1cc665893
+
+> security policy: remove clause for Abandon call
 > 
-> If somebody wrote an exploit would it be disqualified just because the author
-> doesn't understand?
+> data/org.freedesktop.systemd1.conf
+> 
+> -   <allow send_destination="org.freedesktop.systemd1"
+> -          send_interface="org.freedesktop.systemd1.Scope"
+> -          send_member="Abandon"/>
 
-I understand CVE guidance as "security issue in CVE sense, when
-assumptions for code are not met by the implementation"
+Use CVE-2014-8399.
 
-It is not clear what the assumption is here, what should be the result of the encryption
-and where should it be stored?
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Is it mostly obfuscation? Or secure storage of content?
-
-
-Ciao, Marcus
+iQEcBAEBAgAGBQJUSITjAAoJEKllVAevmvmsp28H/1jazEFzftrgXgNHADRlLnjj
+Ww6cuRaSwdF+1OGLnZiMFc/FOdmtVLOQMCRYuwqXYFpiPNQ7idAN4BYwgkRtAdRI
+dpzy82ZZNHaR7B5nv59oQv8KdnuZsZXLKy1VOF6sCC8PXjIxsr4LVMAAdv8NioU3
+KopfLgxK/T/rRsDQH5ra3zRHgOHKhiGuvtTW5HujoGuXchFECOAQesEHdU9NXxRK
+YTMMhZJcutu3Cz+CP8KRDRqfyz9uipQIgyC4OmS+SQYsW3CrdY5RkQ+Ad5rCexNU
+jfTe+gXsojXHB1AkBB0TiwR8anl/L1GPcIwa0gDqBKLyQve/ITwlX3Mam9sqWHA=
+=TQVz
+-----END PGP SIGNATURE-----
