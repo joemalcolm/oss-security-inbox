@@ -1,53 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/5
-Message-Id: <20141126074215.3B34D13A7EE@smtpvmsrv1.mitre.org>
-Date: Wed, 26 Nov 2014 02:42:15 -0500 (EST)
-From: cve-assign@...re.org
-To: luto@...capital.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel LDT handling bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/7
+Message-ID: <CALCETrWij0bqmnuboyo7OOjfbdnnzj0ii_mAvqwytvT3WD-+MA@mail.gmail.com>
+Date: Thu, 23 Oct 2014 10:44:42 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Cc: Paolo Bonzini <pbonzini@...hat.com>, Nadav Amit <nadav.amit@...il.com>
+Subject: CVE Request: Linux 3.17 guest-triggerable KVM OOPS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Linux 3.17, a KVM guest can trigger a NULL pointer dereference by
+forcing the host to emulate certain well-formed RIP-relative
+instructions or certain types of corrupt or page-straddling
+instructions.  This is almost certainly just a DoS -- there is a
+single read-modify-write to the NULL pointer, and no kernel code will
+consume data loaded from the NULL pointer if something is mapped
+there.
 
-> 1. espfix64 is designed to double-fault and recover on failures. This
-> worked great for #GP and #NP, but it didn't work for #SS.
+The bugs, or at least dangerous code, arguably existed in much older
+kernels, but the NULL pointer dereference was introduced in
+41061cdb98a0bec464278b4db8e894a3121671f5, which is only present in
+3.17.
 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6f442be2fb22be02cafa606f1769fa1e6f894441
+To fix it, you can either revert the broken patch or you can apply
+both patches here as well as the attached patch:
+http://thread.gmane.org/gmane.comp.emulators.kvm.devel/128427
+(NB: I'm not sure whether "Emulator does not decode clflush well" is necessary.)
 
-Use CVE-2014-9090.
+Details:
 
+Depending on your point of view, there are either one or two bugs
+here.  Nadav Amit discovered an error in the instruction decoder that
+would cause certain RIP-relative instructions to OOPS the decoder.
+Specifically, rather than adding RIP to the operand address, RIP would
+be added to *0 from the host's perspective.
 
-> 2. When trying and failing to return directly to userspace from IST
-> context
+I wrote an ugly proof-of-concept to trigger it (kvm_clflush_oops.c,
+although I've cleaned it up somewhat since I originally wrote it).
+That PoC only works on an SMP guest, and only when run as root.
 
-> I'm not sure that this one is even worthy of a CVE.
+I also discovered that Nadav's fix was incomplete (or that there was
+another bug, depending on your perspective).  Certain invalid
+instructions (due to multiple error cases, including a failure to
+fetch part of the instruction or due to the instruction being too
+long) could trigger the same NULL pointer dereference.
 
-There is currently no CVE ID for finding 2.
+Nadav wrote an extremely elegant PoC that exploits this buggy error
+handling, reproduced with permission below.  This PoC doesn't require
+SMP or privilege; it's just crashes the host directly.  Figuring out
+how it works is left as an exercise to the reader (hint: it might not
+work on Atom hosts).
 
+Please assign one or two CVEs as appropriate.  (And, if you're hosting
+untrusted code on a Linux 3.17 host, patch your system!)
 
-> 3. When the kernel tried and failed to return directly to userspace
-> from IST context and espfix64 was *not* involved
+#include <sys/mman.h>
+#include <stdlib.h>
+#include <string.h>
 
-> It's also harmless unless an attacker can persuade the kernel to
-> corrupt its stack, and that is unlikely to happen by itself.
+int main()
+{
+        void *mem = mmap(NULL, 8192, PROT_EXEC | PROT_READ | PROT_WRITE,
+                        MAP_ANON | MAP_PRIVATE | MAP_POPULATE, -1, 0);
+        memcpy((char*)mem + 0xff3,
+            "\xf0\x65\x65\x65\x65\x65\x65\x0f\x38\xf1"
+            "\x05\x00\x00\x00\x00\x00", 15);
+        asm volatile(“jmp *%0\n\t” : : "r" (mem+0xff3));
+        return 0;
+}
 
-There is currently no CVE ID for finding 3.
+--Andy
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+View attachment "kvm_fix.patch" of type "text/x-patch" (1150 bytes)
 
-iQEcBAEBAgAGBQJUdYDIAAoJEKllVAevmvms0TIH/its/p32/ROv6gtP0xdrtKkO
-cDWFeEZyBcGKeIHjccURiRZZXMwAgAuVvY+FmScPw+Dg0YrMcU4G7rAD/3USDo5v
-RN8V+RRPzwfawdVPMery46H4JbWZm1KCujXN8r4RtbAfrWnq/KnyaT0PNMFuFcat
-u/YCZpKacaDH1hBMKgoVaWgJzmIwZSDdDdE0HvN25/A7lTWg3Bm1SQPUxxdhduup
-EkO6aE2JKwexS5hQi+Nr+2djtt8DMbsWKVGmxXTZ0UY3jOcyS/o6g6cCpPD1G8Nx
-jNiNUznCdL9kqiARlNYwwHp5DczswjVAoLKh/pRJL7HvN6pjqdhYjCZUc/VG7G8=
-=OQfC
------END PGP SIGNATURE-----
+View attachment "kvm_clflush_oops.c" of type "text/x-csrc" (766 bytes)
