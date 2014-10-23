@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/11/2
-Message-Id: <201406111921.s5BJLoUs013014@linus.mitre.org>
-Date: Wed, 11 Jun 2014 15:21:50 -0400 (EDT)
-From: cve-assign@...re.org
-To: patrick@...emark.co.uk
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Request for CVE: Bytemark Symbiosis
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/23/8
+Message-ID: <20141023185517.GA16513@zoho.com>
+Date: Thu, 23 Oct 2014 18:55:17 +0000
+From: mancha <mancha1@...o.com>
+To: oss-security@...ts.openwall.com
+Cc: lcamtuf@...edump.cx
+Subject: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> Attackers could arbitrarily blacklist individual IP addresses in the
-> firewall using specially crafted usernames, providing a vector for
-> denial of service attacks.
->
-> This flaw was fixed with the following commit:
+On Thu, Oct 23, 2014 at 08:24:00AM -0700, Michal Zalewski wrote:
+> > http://lcamtuf.coredump.cx/stringme
 > 
-> https://projects.bytemark.co.uk/projects/symbiosis/repository/diff?rev_to=733b0e33f60b&rev=cbb56af035bb
+> The immediate cause is due to srec_scan() in srec.c decreasing 'bytes'
+> without range checking until it wraps around. The already-bad value of
+> 'bytes' is assigned to 'sec->size' few lines before the crash, so
+> perhaps there would be potential for exploitability later down the
+> line; but the code ends up crashing soon thereafter in a 'while (bytes
+> > 0)' loop that has no other exit conditions. That loop would need to
+> go over the entire address space without SEGV to avoid the crash.
 
-This has been assigned CVE-2014-3979.
+I'm no leporidae but I agree srec_scan needs tlc.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Fun-with-NULL:
 
-iQEcBAEBAgAGBQJTmKwJAAoJEKllVAevmvmsV5wH/igqc57Bz6/bf0RpZMm8v5u+
-pEjB5CjMWAFOzuERa6fJKm/plAwrvR6o3MyAifq2XBuBZnAHa5kVAYMp3/i/1z2l
-iE+TnHhbAfgH3/+/5QlUuXoe/4SI1A+pISdhH44MUexLmmSqZOJpRhF3DxKgzBkC
-/4vK+eCGLHb+6zfxpWvrdwOfplc5511STk+Te3YndG5eVcNhxbxKu1KpdBKEtjYt
-vk+gur2nL4STFbkjx7mb12g8xvXITiYAnkVN5tUjsDpU05L7WHeGUFV4aVrVMQzI
-fyV1vKyRPxn96jPD8oINv9VnruEbwJeAehIDeIv8pw9UVcVnGnOQX6CxgV74H00=
-=RgZa
------END PGP SIGNATURE-----
+http://sf.net/projects/mancha/files/rnd/stringmetoo
+
+--mancha
+
+
+Content of type "application/pgp-signature" skipped
