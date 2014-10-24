@@ -1,55 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/1
-Message-ID: <CAEDdjHeGavmJFGhHTPqX0MXMoYornLRpBiixKWAA_yoyB-3rqA@mail.gmail.com>
-Date: Mon, 3 Feb 2014 00:19:47 +0000
-From: Pedro Ribeiro <pedrib@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com,  ImpressCMS Security <security@...resscms.org>, Steve Kenow <skenow@...resscms.org>
-Subject: Re: CVE request: impressCMS 1.3.5 arbitrary file deletion and XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/7
+Message-Id: <20141024175808.0588DB2F139@smtpvbsrv1.mitre.org>
+Date: Fri, 24 Oct 2014 13:58:08 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2014-8369 - Linux kernel iommu.c excessive unpinning
 Content-Type: text/plain; charset=utf-8
 
-On 31 January 2014 15:14,  <cve-assign@...re.org> wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> https://github.com/pedrib/PoC/blob/master/ImpressCMS/impresscms-1.3.5.txt
->> ImpressCMS 1.3.5 vulnerabilities
->
->> Vulnerability: Deletion of arbitrary files in the system
->> File(line): /impresscms/htdocs/libraries/image-editor/image-edit.php(62)
->>    if (file_exists ( $image_path )) {
->>       @unlink ( $image_path );
->> 192.168.56.101/impresscms/htdocs/libraries/image-editor/image-edit.php?op=cancel&image_path=/path
->
-> Use CVE-2014-1836 for this deletion issue.
->
-> CVE assignment for the XSS issues requires that there is a possible
-> configuration in which the issues are exploitable. (If they are not
-> exploitable, but the vendor made applicable code changes anyway for
-> security hardening, a CVE assignment won't be made.)
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
->
-> iQEcBAEBAgAGBQJS67y5AAoJEKllVAevmvmszHUH/21NY3Vv27aVdUxIxy9H7gV5
-> f/nTg+D/exE7PX1Z7WHnt+cQNDCPDcMUZJcNTa9ZWHHrBNHOGjbKHDczPmPhcxs/
-> WhDlgrWOgJJ/DXWg49MSXOWPHD3NlBzvrd/XthjncgQbj0xZ4wHlQ/8JNKklppHU
-> v8OH1KoaVeX2SwDIIpe/kZWYatxRKWZ2m8I7JrPKmCkJVx1ksoqW3Q1p5s2PXmoP
-> FW5FAiGMlu1kansIQxiJXIMswZbzULD76l2dp4cSYls9EYMrptrrbxlWD8zqwPHA
-> jou3xOS8UoDDxUB7hil/lR4vXwpF5O/PIGqmAd3Ie4vPCSnUunNNnYprmnGwafU=
-> =YGh+
-> -----END PGP SIGNATURE-----
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+CVE-2014-8369 has been assigned to this virt/kvm/iommu.c issue:
 
-Thank you.
+  https://lkml.org/lkml/2014/10/24/460
 
-If anyone cares, the advisory is now at
-https://github.com/pedrib/PoC/blob/master/impresscms-1.3.5.txt.
+(This vulnerability exists because of an incorrect fix for
+CVE-2014-3601.)
 
-Regards,
-Pedro
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUSpKZAAoJEKllVAevmvms6bgH/jGbLiyAAxVs35tRXURnhdfi
+e8wwsGwPcVJAvLpexccJvQ2w/VePXEUoF28bFPAQ8dCi5IN6GL0Er5L/kwrKLQ5w
+6OFGvi/ixb6wvYq7d0Kw5f4g3SzeGMP6E36hNdWAMiOUasX6AYCrEAzVMQRsf6rd
+cOh+D9qkQwA8RcZPExpopuRrWQkXT5JzazrTsKfdz8sk6XIkAPXWPwdJBSKkHlW8
+9Jz7z0GnvQjYZY3EDAN56/VqkDEVQEF6fbjhlJOBUenqe+lyD/INovNm4ITzUdj9
+j3wSeHXTyWaI5nhlxab7x+fvav/MfQMYIsaxaTzJER8S0qfoZj2yPN1Auj26WFI=
+=P7ZC
+-----END PGP SIGNATURE-----
