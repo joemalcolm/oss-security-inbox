@@ -1,49 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/2
-Message-ID: <5344C5A5.6090402@redhat.com>
-Date: Tue, 08 Apr 2014 21:59:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Other instances of CVE-2014-0160 - mod_spdy from Google
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/15
+Message-ID: <20141024223832.GA29046@zoho.com>
+Date: Fri, 24 Oct 2014 22:38:32 +0000
+From: mancha <mancha1@...o.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, Oct 24, 2014 at 12:10:31PM -0700, Michal Zalewski wrote:
+> I do have a bunch more that seem exploitable, though - for example:
+> 
+> http://lcamtuf.coredump.cx/strings-bfd-badfree - does this repro for
+> people (I tried with binutils 2.24)?
 
-So it appears there are projects that statically compile OpenSSL into
-their software, one example:
+Yes.
 
-https://code.google.com/p/mod-spdy/
+> I think that given the expectations people have around what strings
+> does and whether it's safe to run on untrusted binaries, I'd seriously
+> question the wisdom of making it use libbfd, at least by default;
+> perhaps distros want to consider non-upstream patches that default to
+> the -a mode, instead?
 
-SECURITY UPDATE (8 Apr 2014): All mod_spdy users should upgrade to
-mod_spdy 0.9.4.2 immediately to fix the heartbleed bug in mod_spdy's
-linked version of OpenSSL. See
-https://code.google.com/p/mod-spdy/issues/detail?id=85  for details.
+Unfortunately, the buggy code can be arrived at via multiple entry
+points (e.g. objdump -p or nm on stringme, stringmetoo, and
+strings-bfd-badfree). Those are also commonly used on untrusted binaries
+(e.g. forensics). Fixing the core issues seems the way to go.
 
-./src/build_modssl_with_npn.sh:OPENSSL_SRC_TGZ_URL="https://www.openssl.org/source/openssl-1.0.1g.tar.gz"
+--mancha
 
-I have to assume there are more. So if you know of any please post
-them to OSS-Security (and Full-Disclosure) so people can find out (and
-hopefully all the security scanners/etc. add them to their checks).
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJTRMWkAAoJEBYNRVNeJnmTHeYP/2YybedrcK44gVPbufMylfX5
-Z7pFPssxxTOC7yhiYC3u5GrTT3HOPXSt6AGKBPLPF/ZE+XZZVHXU9L2Xjhj/2f+y
-5UICiVDQRmeSwV3E0bA87nw/TB9ofA5yVy5xmJLwBpHi9sH5BNC0Kh/8rDNGBv0b
-j9+MkPYHDMgHr+GoXKS9UbGP+GXcbOy3zY+/HJwKgZe1TGK4u3nm2Vb6gNAkebjy
-W8AWGhAsH5AV2RxZGLYV8UZPKWEi4qSbABNR75slMhEucr3dwyJswPdOkppbi9Sh
-VBEOHM69VWANKFKYB0bxrEcOqch5V1LYJZY/tlkJdZj43YyJAB6Jmz4xDQ3UvZyU
-/lVpkU/k3OHksSKa0Xx85YJIyhGMs2NTKJBg6hN0TJrXn84/MgQlVRQp1GfiW9sy
-g83IMzkmCznP1uIEv5vHrIP9Nq2IcefoCS1PTNNm36g2hJXEECcI+EaCt214fHcd
-XyUdqQM9q60BSSfPSwxrcz4HtL9CceOqGaBSPEuST7BRh4TqpxvULDFKPL4friEM
-GvsoNvj33bc1aBBQcFi7R9SfUFSIHcMAo293oMTXctuDi1HPQ8+vIuD5InWEQ4u7
-/ZY0ukrlvKJiIW6wTrsRdkANAPl8j1fhQz8cFjeKA/m2Yq/yUKmqQKs4xy9CEFsy
-PBrE3ZVLzBOiIS9idhXn
-=hQHV
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
