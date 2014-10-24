@@ -1,45 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/17/2
-Message-ID: <20140717083635.GA9631@lappy.redhat.com>
-Date: Thu, 17 Jul 2014 18:36:47 +1000
-From: Grant Murphy <gmurphy@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/5
+Message-ID: <20141024113050.GA27768@zoho.com>
+Date: Fri, 24 Oct 2014 11:30:50 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-024] Use of non-constant time comparison operation (CVE-2014-3517)
+Cc: lcamtuf@...edump.cx
+Subject: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-024
-CVE: CVE-2014-3517
-Date: July 17, 2014
-Title: Use of non-constant time comparison operation
-Reporter: Alex Gaynor (Rackspace)
-Products: Nova
-Versions: Up to 2013.2.3, and 2014.1 to 2014.1.1
+On Thu, Oct 23, 2014 at 06:55:17PM +0000, mancha wrote:
+> On Thu, Oct 23, 2014 at 08:24:00AM -0700, Michal Zalewski wrote:
+> > > http://lcamtuf.coredump.cx/stringme
+> > 
+> > The immediate cause is due to srec_scan() in srec.c decreasing
+> > 'bytes' without range checking until it wraps around. The
+> > already-bad value of 'bytes' is assigned to 'sec->size' few lines
+> > before the crash, so perhaps there would be potential for
+> > exploitability later down the line; but the code ends up crashing
+> > soon thereafter in a 'while (bytes
+> > > 0)' loop that has no other exit conditions. That loop would need
+> > > to
+> > go over the entire address space without SEGV to avoid the crash.
+> 
+> I'm no leporidae but I agree srec_scan needs tlc.
+> 
+> Fun-with-NULL:
+> 
+> http://sf.net/projects/mancha/files/rnd/stringmetoo
+> 
+> --mancha
+> 
 
-Alex Gaynor from Rackspace reported a timing attack vulnerability in Nova.  
-By analyzing response times to requests for instance metadata, an attacker 
-may be able to guess a valid instance ID signature. This could allow access 
-to important configuration details of another instance. Only setups 
-configured to proxy metadata requests via Neutron are affected.
+To clarify...
 
-Juno (development branch) fix:
-https://review.openstack.org/107396
+While my sample input to strings (or objdump, etc.) also gets bytes to
+wraparound, the nature of the crash is different that that of Michal's
+sample. My input triggers a NULL pointer dereference and further
+demonstrates the need to tighten up the codebase. 
 
-Icehouse
-https://review.openstack.org/107397
-
-Havana
-https://review.openstack.org/107398
-
-Notes:
-This fix will be included in the Juno-2 development milestone and in future 
-2013.2.4 and 2014.1.2 releases
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3517
-https://launchpad.net/bugs/1325128
-
--- 
-Grant Murphy
-OpenStack Vulnerability Management Team
 
 Content of type "application/pgp-signature" skipped
