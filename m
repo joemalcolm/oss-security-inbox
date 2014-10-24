@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/19
-Message-ID: <20141209160755.GA13257@ypig.lip.ens-lyon.fr>
-Date: Tue, 9 Dec 2014 17:07:55 +0100
-From: Vincent Lefevre <vincent@...c17.net>
-To: Vasyl Kaigorodov <vkaigoro@...hat.com>, 772008@...s.debian.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Bug#772008: CVE request:  mpfr: buffer overflow in mpfr_strtofr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/8
+Message-ID: <CAB8XdGBbcewZfGkXUmT3-qtXTYZ3Dr9uVYgfmArOy8Sk2aSdkw@mail.gmail.com>
+Date: Fri, 24 Oct 2014 19:10:21 +0100
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: "users@....apache.org" <users@....apache.org>, "dev@....apache.org" <dev@....apache.org>,  Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: New security advisories released for Apache CXF
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Two new security advisories have been released for Apache CXF:
 
-On 2014-12-08 13:45:12 +0100, Vasyl Kaigorodov wrote:
-> Hello,
-> 
-> A buffer overflow was reported [1] in mpfr.
-> This is due to incorrect GMP documentation for mpn_set_str about the
-> size of a buffer (discussion is at [1]; first fix in the GMP
-> documentation is at [2]). This bug is present in the MPFR versions
-> from 2.1.0 (adding mpfr_strtofr) to this one, and can be detected by
-> running "make check" in a 32-bit ABI under GNU/Linux with alloca
-> disabled (this is currently possible by using the --with-gmp-build
-> configure option where alloca has been disabled in the GMP build). It
-> is fixed by the strtofr patch [3].
-> Corresponding changeset in the 3.1 branch: 9110 [4].
-> 
-> [1]: https://gmplib.org/list-archives/gmp-bugs/2013-December/003267.html
-> [2]: https://gmplib.org/repo/gmp-5.1/raw-rev/d19172622a74
-> [3]: http://www.mpfr.org/mpfr-3.1.2/patch11
-> [4]: https://gforge.inria.fr/scm/viewvc.php?view=rev&root=mpfr&revision=9110
+ - CVE-2014-3623: Apache CXF does not properly enforce the security
+semantics of SAML SubjectConfirmation methods when used with the
+TransportBinding
 
-The corresponding changeset is 9243, with URL:
+ - CVE-2014-3584: Apache CXF JAX-RS SAML handling is vulnerable to a Denial
+of Service (DoS) attack
 
-  https://gforge.inria.fr/scm/viewvc.php?view=rev&root=mpfr&revision=9243
+Advisories attached to this mail + also available via the CXF security
+advisories page:
 
-Regards,
+http://cxf.apache.org/security-advisories.html
+
+Colm.
 
 -- 
-Vincent Lefèvre <vincent@...c17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
+Colm O hEigeartaigh
+
+Talend Community Coder
+http://coders.talend.com
+
+Content of type "text/html" skipped
+
+View attachment "CVE-2014-3584.txt.asc" of type "text/plain" (1613 bytes)
+
+View attachment "CVE-2014-3623.txt.asc" of type "text/plain" (1653 bytes)
