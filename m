@@ -1,43 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/15
-Message-ID: <20141205205916.37658ede@pc>
-Date: Fri, 5 Dec 2014 20:59:16 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/25/1
+Message-ID: <CA+YQQ6WcX+v1WUe4fVNpvogiaptSf7YYZK9YRw64vqPyw=qrnQ@mail.gmail.com>
+Date: Fri, 24 Oct 2014 16:56:11 -0700
+From: Tavis Ormandy <taviso@...xchg8b.com>
+To: Michal Zalewski <lcamtuf@...edump.cx>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-Okay, I'm surprised to see that while everyone seems to claim
-performance reasons are why we don't use fpic/pie by default I can't
-find anyone actually benchmarking it.
+On 24 October 2014 13:31, Michal Zalewski <lcamtuf@...edump.cx> wrote:
+> [+Tavis]
+>
+>>> I don't understand the user benefit of extracting strings only from
+>>> certain sections of executables, and I almost feel like it's a side
+>>> effect of strings being a part of binutils more than anything else.
+>>
+>> I fully agree. I wasn't aware strings does any kind of executable
+>> parsing and I was very surprised that there is any attack vector at all
+>> against it at all.
+>
+> Tavis mentioned to me some time ago that he made that suggestion
+> upstream when he bumped into other issues many years ago; he can
+> probably comment on how that went, but more generally, distro vendors
+> have some latitude to apply non-upstream patches to change the default
+> behavior... maybe that's the way to go.
+>
+> /mz
 
-*disclaimer: benchmarking is tricky business, I don't know if I messed
-something up. If you feel this is a completely wrong way to benchmark
-this I'm open to suggestions. *
+Yeah, `strings -a` is closer to what people expect by default - most
+people find the section parsing a surprise. I found this one 10 years
+ago https://bugs.gentoo.org/show_bug.cgi?id=91398, and suggested at
+the time that maybe `strings -a` should be the default mode, enabling
+bfd parsing only when requested.
 
-I decided a reasonable target would be a static compile of ffmpeg,
-because it does some complicated stuff.
-I compiled two copies mostly identical with the difference that for one
-I passed CFLAGS="-O2" LDFLAGS="" while for the other I passed
-CFLAGS="-O2 -fpic" LDFLAGS="-pie".
+This was dismissed by upstream, but I still think it's a good idea...
 
-I then converted a h264 video to mpeg4.
+Tavis.
 
-This is what I got:
-no pie/pic: 14.664, 14.606, 14.685, 14.719, 14.69, average: 14.6728
-pie/pic: 14.776, 14.951, 14.947, 14.798, 14.898, average: 14.874
-
-So it seems the difference is at least measurable (around 1,4%) but not
-big.
-
-I haven't benchmarked with the patches Florian referred to, they
-involve patching gold and gcc (the above is done with classic ld).
 
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+-------------------------------------
+taviso@...xchg8b.com | pgp encrypted mail preferred
+-------------------------------------------------------
