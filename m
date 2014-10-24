@@ -1,75 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/11/1
-Message-ID: <CAHmME9pnkeW8uaSDUhcir5q55JJPcT2F8ceQVXfPwVuMTzkWWw@mail.gmail.com>
-Date: Tue, 11 Nov 2014 02:38:09 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Qt Creator fails to verify SSH host key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/4
+Message-ID: <CAMoU6uaDgHzwY=uc+eGC7OA6FOHqB7jHHaee4+rq22-Mz1j+uw@mail.gmail.com>
+Date: Fri, 24 Oct 2014 12:41:42 +0200
+From: Bas Pape <baspape@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vulnerability fixed in Quassel?
 Content-Type: text/plain; charset=utf-8
 
-Seems reasonable enough to me. I'll encourage the vendor to change
-practices, or to document that a generally expected practice is
-intentionally different for their use case.
-On Nov 10, 2014 7:14 PM, <cve-assign@...re.org> wrote:
+> Should a CVE be assigned, note that Quassel took the code (cipher.cpp)
+> from Konversation, and the same issue has been reported there [1].
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> > they don't check host keys when connecting, which makes a
-> > man-in-the-middle attack trivial.
->
-> > // TODO: Mechanism for checking the host key. First connection to host:
-> save, later: compare
->
-> > has received a bit more of a hesitant reaction. The most recent
-> > vendor feedback seems to indicate they're not super interested in
-> > implementing this.
->
-> We don't feel that this is a fair characterization of the (public)
-> vendor response. There is a vendor response of:
->
->    This was never considered much of an issue due to the scope
->    of our SSH support. The main use case is developers
->    communicating with their embedded devices that are locally
->    connected, typically via USB. Host key checking is of
->    limited value there, also because the same IP address is
->    often used for different devices. So the anticipated first
->    reaction from users would be "How do I turn it off?".
->
-> This indicates that the current behavior is intentional behavior. The
-> vendor has made a tradeoff between what they perceive as a security
-> benefit and what they perceive as a support cost. We do not assign CVE
-> IDs based on third-party reports that a vendor should have made a
-> different tradeoff. Admittedly, the vendor might decide to change
-> their tradeoff later (e.g., if they obtain data indicating that USB
-> is actually not a prevalent use case).
->
-> We agree that it would be nice to have a central place to track
-> findings such as "the SSH security expectations for this product are
-> different from the SSH security expectations for essentially every
-> other product." CVE is not that place.
->
-> Similarly, there is an opportunity for security improvement if the
-> vendor were to implement key checking, even if the vendor insisted
-> that this would not be enabled by default. This type of opportunity
-> for security improvement cannot have a CVE assignment.
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
->
-> iQEcBAEBAgAGBQJUYP/lAAoJEKllVAevmvmsZIgH/1AjdVpx/gIRO5y0xTo76NQs
-> Kb+hC7AAXlBT/ySTfmsWOmTxBE9L77sze2vdt1mOZOLeFCkOmxIQDkBmkP3tlx4o
-> TawvLaebWa7e+RG15xLRhXcbUdXa9Fi4oBAMWNL7p+WN1VClh/wTl92EcyELrhp/
-> iC22Wg9MaJKY7OGm4FuOghkwsM0L13tfoYvGNNsVOty2aWDopoMSzGU9mbvda/OB
-> FwW5KGzBRSD38HTBmwG8eaHWWTWmnHAiT/n4zL7jO7YG6L+ZoYhpUS3Mh/qStlWr
-> bgoXn7P6rlU+u+wPA/ZvSk3wWuLSh7623T+3dADJzeS4Ls1CG3bwi6u5kL8HyBA=
-> =lZ3n
-> -----END PGP SIGNATURE-----
->
-
+Sorry, forgot to actually paste the link. The konversation bug can be found at
+https://bugs.kde.org/show_bug.cgi?id=210792
