@@ -1,48 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/4
-Message-ID: <20140218123633.GC21825@suse.de>
-Date: Tue, 18 Feb 2014 13:36:33 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: Percona Toolkit automatic version check - remote code execution / information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/14
+Message-ID: <CALx_OUDCV098HO+KFJrLuMtBomAUw2PdY-ikCbnmkGp=1NmyaQ@mail.gmail.com>
+Date: Fri, 24 Oct 2014 13:31:28 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>, Tavis Ormandy <taviso@...xchg8b.com>
+Subject: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+[+Tavis]
 
-https://bugs.launchpad.net/percona-toolkit/+bug/1279502
-https://bugzilla.novell.com/show_bug.cgi?id=864194
+>> I don't understand the user benefit of extracting strings only from
+>> certain sections of executables, and I almost feel like it's a side
+>> effect of strings being a part of binutils more than anything else.
+>
+> I fully agree. I wasn't aware strings does any kind of executable
+> parsing and I was very surprised that there is any attack vector at all
+> against it at all.
 
-Quoting launchpad we have this gem:
--------------------------------------------------------------------------------
-Percona Toolkit 2.1 introduced --version-check to warn user about
-known vulnerabilities in the local MySQL instance and to check for PT
-updates. When this option is enabled - and it is enabled by default(!) -
-various information about local MySQL as well as other system binaries and
-packages are submitted to Percona along with the server's IP address. This
-not only exposes possibly sensitive information, but also does so without
-bringing it to user's attention or asking for their consent.
+Tavis mentioned to me some time ago that he made that suggestion
+upstream when he bumped into other issues many years ago; he can
+probably comment on how that went, but more generally, distro vendors
+have some latitude to apply non-upstream patches to change the default
+behavior... maybe that's the way to go.
 
-It gets worse. The configuration for what information PT tools should
-collect is not hardcoded in the scripts. Instead, every time it's
-downloaded from http://v.percona.com/. One of the possible parameters
-is a binary file name to be executed, i.e. Percona can remotely execute
-arbitrary command - again, without making user aware of what or when
-is being executed. To be fair, the ability to run commands is limited
-to running "command -v", however that's only under the assumption that
-the command filters will always work. The configuration can also ask
-for any MySQL variable - not just the version string.
-
-In my opinion --version-check should never be enabled by default and
-if user wants to keep it enabled, the configuration (i.e. the list of
-checks) should be hardcoded and explicitly listed, and not downloaded
-from a remote location.
-
-Current workaround: To avoid confidential information being exposed,
-always use --no-version-check with every PT tool that includes
-'version-check' feature (e.g. pt-query-digest, pt-diskstats).
--------------------------------------------------------------------------------
-
-Basically it is not just information leakage, but remote code execution if
-you can overtake the v.percona.com host or just be man in the middle.
-
-Ciao, Marcus
+/mz
