@@ -1,36 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/3
-Message-ID: <20140304100301.7d7fa1a8@hboeck.de>
-Date: Tue, 4 Mar 2014 10:03:01 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request: konqueror not providing any protection against clickjacking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/1
+Message-Id: <20141024074832.3DE7E6C0003@smtpvmsrv1.mitre.org>
+Date: Fri, 24 Oct 2014 03:48:32 -0400 (EDT)
+From: cve-assign@...re.org
+To: luto@...capital.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, pbonzini@...hat.com, nadav.amit@...il.com
+Subject: Re: CVE Request: Linux 3.17 guest-triggerable KVM OOPS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It may be debatable if that's a CVE issue, because it's basically a
-"there's a general vulnerability in the way HTML/JS is done, there's a
-protection mechanism and product X doesn't have it". I think it
-deserves one and as recently Konqueror issues popped up here I thought
-it might deserve a CVE:
-https://bugs.kde.org/show_bug.cgi?id=259070
+> Nadav Amit discovered an error in the instruction decoder that
+> would cause certain RIP-relative instructions to OOPS the decoder.
+> Specifically, rather than adding RIP to the operand address, RIP would
+> be added to *0 from the host's perspective.
 
-Basically, pretty much all mainstream browsers support the
-X-Frame-Options header to allow web developers to secure their apps
-from clickjacking attacks. Konqueror doesn't support it.
+Use CVE-2014-8480.
 
-Please assign CVE.
 
-(and if curious: I've setup a test for X-FRAME-OPTIONS header
-functionality a while ago http://int21.de/frametest/ )
+> I also discovered that Nadav's fix was incomplete (or that there was
+> another bug, depending on your perspective).  Certain invalid
+> instructions (due to multiple error cases, including a failure to
+> fetch part of the instruction or due to the instruction being too
+> long) could trigger the same NULL pointer dereference.
 
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
+Use CVE-2014-8481.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+iQEcBAEBAgAGBQJUSgPZAAoJEKllVAevmvmspakH/06k2WAHqG90ZGTkg90CP/+Z
+qO+Wlc1VorlncDDDCGphA4PyRcA66y/o3gcTfWm0EntrLwxP7U3acpk2AJWm+QE5
+Ak06BW/bdLT/C6acvtIpsG2E6HdcWXZtI5AsNzT+FMmajyfHlzIoRrh+fdV2Ix+w
+iF2FLlhYl65pW9j1I+Zq7hP8HusrRxVvBsPzMEu+ETKkywXvnQ8LG5tUuHGA2RDV
+R5CVXX0LilC0B6OY3DkAJoXAWWHi+afO53XWjCeWAIvlO0GlZtZFQnHY8LUhttf0
+8tQahl5zkREK4czACJNieUuMZF6oH358m1HgJamWKc2ZXYn1DzqztYEUfMtdnWY=
+=ciPH
+-----END PGP SIGNATURE-----
