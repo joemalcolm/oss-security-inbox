@@ -1,82 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/6
-Message-ID: <CALCETrUwr9y6X=5q9mtH5=1SDQQVf-oO10d7aw8eLY0f0djXAg@mail.gmail.com>
-Date: Mon, 15 Dec 2014 10:01:19 -0800
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/13
+Message-ID: <20141024221850.708a7244@pc>
+Date: Fri, 24 Oct 2014 22:18:50 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Borislav Petkov <bp@...en8.de>
-Subject: Linux kernel: multiple x86_64 vulnerabilities
+Subject: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-CVE-2014-9322: local privilege escalation, all kernel versions
+I've checked the upstream patch they pointed me to:
+https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=bd25671c6f202c4a5108883caa2adb24ff6f361f
 
-Any kernel that is not patched against CVE-2014-9090 is vulnerable to
-privilege escalation due to incorrect handling of a #SS fault caused
-by an IRET instruction.  In particular, if IRET executes on a
-writeable kernel stack (this was always the case before 3.16 and is
-sometimes the case on 3.16 and newer), the assembly function
-general_protection will execute with the user's gsbase and the
-kernel's gsbase swapped.
+Unfortunately this mixes in another change that is a revert, so it
+doesn't apply cleanly to the current release (2.24), if anyone needs it
+I've re-diffed it:
+https://files.hboeck.de/binutils-2.24-fix-crash.diff
 
-This is likely to be easy to exploit for privilege escalation, except
-on systems with SMAP or UDEREF.  On those systems, assuming that the
-mitigation works correctly, the impact of this bug may be limited to
-massive memory corruption and an eventual crash or reboot.
+This fixes the original stringme and strinmetoo from mancha, but not
+the latest sample von Michal:
 
-As with CVE-2014-9090, this is fixed by:
+Am Fri, 24 Oct 2014 12:10:31 -0700
+schrieb Michal Zalewski <lcamtuf@...edump.cx>:
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86/kernel/entry_64.S?id=6f442be2fb22be02cafa606f1769fa1e6f894441
+> I do have a bunch more that seem exploitable, though - for example:
+> 
+> http://lcamtuf.coredump.cx/strings-bfd-badfree - does this repro for
+> people (I tried with binutils 2.24)?
 
-The related fix to remove bad_iret is also an effective mitigation to
-prevent a bug like this from being reintroduced:
+I checked with the upstream patch and this seems still vulnerable.
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86/kernel/entry_64.S?id=b645af2d5905c4e32399005b867987919cbfc3ae
+> I don't understand the user benefit of extracting strings only from
+> certain sections of executables, and I almost feel like it's a side
+> effect of strings being a part of binutils more than anything else.
 
-Partial credit for this bug goes to Borislav Petkov, who asked pointed
-questions about CVE-2014-9090, causing me to realize that there were
-two separate bugs in #SS handling.  The first bug (CVE-2014-9090)
-caused a fatal double fault, masking the second bug that caused the
-gsbase issue.
-
-----------
-
-The next two bugs are related to espfix.  The IRET instruction has IMO
-a blatant design flaw: IRET to a 16-bit user stack segment will leak
-bits 31:16 of the kernel stack pointer.  This flaw exists on 32-bit
-and 64-bit systems.  32-bit Linux kernels have mitigated this leak for
-a long time, and 64-bit Linux kernels have mitigated this leak since
-3.16.  The mitigation is called espfix.
-
-CVE-2014-8133: espfix bypass using set_thread_area
-
-On all kernels, a valid 16-bit stack segment can be created using
-set_thread_area.  Arranging to return to such a stack segment will
-bypass espfix, leaking bits 31:16 of the kernel stack pointer.  Fixed
-by:
-
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86?id=41bdc78544b8a93a9c6814b8bbbfef966272abbe
-
-CVE-2014-8134: espfix was broken on 32-bit KVM paravirt guests
-
-espfix was completely broken on 32-bit Linux KVM guests with
-CONFIG_KVM_GUEST=y.  Fixed by:
-
-https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?h=linux-next&id=29fa6825463c97e5157284db80107d1bfac5d77b
-
-This commit hasn't made it to Linus' tree yet.
-
-----------
-
-CVE-2014-9090 (previously announced), CVE-2014-9322, CVE-2014-8133,
-and CVE-2014-8134 can be tested by sigreturn_32, available here:
-
-https://gitorious.org/linux-test-utils/linux-clock-tests/source/10b9a7d317f6d8ae5f32bcb4bbbb186acdd6b89a
-
-Save your data before running this on a production system.  If you a
-vulnerable to CVE-2014-9090 or CVE-2014-9322, the test will crash your
-system.  The espfix issues will cause warnings and failures that
-mention register mismatches.
+I fully agree. I wasn't aware strings does any kind of executable
+parsing and I was very surprised that there is any attack vector at all
+against it at all.
 
 -- 
-Andy Lutomirski
-AMA Capital Management, LLC
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
