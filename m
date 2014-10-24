@@ -1,36 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/14
-Message-ID: <20140409092751.GE5410@suse.de>
-Date: Wed, 9 Apr 2014 11:27:51 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/9
+Message-ID: <20141024184936.GN10820@dhcp-25-225.brq.redhat.com>
+Date: Fri, 24 Oct 2014 20:49:37 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+Subject: kvm issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 09, 2014 at 01:12:53PM +0530, Huzaifa Sidhpurwala wrote:
-> On 04/09/2014 01:02 PM, Yves-Alexis Perez wrote:
-> > On Wed, Apr 09, 2014 at 12:02:09PM +0530, Huzaifa Sidhpurwala wrote:
-> >> On 04/09/2014 01:07 AM, Yves-Alexis Perez wrote:
-> >>
-> >>> Mon, 07 Apr 2014 06:10 : Huzaifa Sidhpurwala sends a mail to distros
-> >>>                          list with no details but an offer to request
-> >>>                          them privately
-> >>
-> >>
-> >> After i sent a mail to distros, i was contacted by security engineers
-> >> from most major distributions. I answered most of the them as soon as i
-> >> could with complete details including the upstream patch.
-> > 
-> > I'm not sure who are “most major distributions”. We failed to reply in a
-> > timely fashion to that mail (but that's on us), but apparently so did
-> > Ubuntu, Suse sent a mail but got apparently no reply.
-> > 
-> 
-> I have a list of people who asked and whom i answered, but i want to
-> restraint going into it now.
-> 
-> Suse was replied to via security@...e.de :)
+Hi,
 
-We did receive a reply, yes.
+a number of kvm issues were disclosed today, here's the list.
 
-Ciao, Marcus
+CVE-2014-3610
+  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=854e8bb1aa06c578c2c9145fa6bfe3680ef63b23
+  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=8b3c3104c3f4f706e99365c3e0d2aa61b95f969f
+
+CVE-2014-3611
+  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=2febc839133280d5a5e8e1179c94ea674489dae2
+
+CVE-2014-3646
+  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=a642fc305053cc1c6e47e4f4df327895747ab485
+
+CVE-2014-3645
+  inadvertently fixed via
+  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=bfd0a56b90005f8c8a004baf407ad90045c2b11e
+
+CVE-2014-3647
+  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=234f3ce485d54017f15cf5e0699cff4100121601
+  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=d1442d85cc30ea75f7d399474ca738e0bc96f715
+
+CVE-2014-8369
+  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=3d32e4dbe71374a6780eaf51d719d76f9a9bf22f
+
+CVE-2014-8480
+  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=3f6f1480d86bf9fc16c160d803ab1d006e3058d5
+
+CVE-2014-8481
+  https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?id=a430c9166312e1aa3d80bce32374233bdbfeba32
+
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
