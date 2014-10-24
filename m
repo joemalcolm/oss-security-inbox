@@ -1,33 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/4
-Message-ID: <m47u3q$edk$1@ger.gmane.org>
-Date: Sat, 15 Nov 2014 17:13:46 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/2
+Message-ID: <544A2892.3070203@reactos.org>
+Date: Fri, 24 Oct 2014 12:23:14 +0200
+From: Pierre Schweitzer <pierre@...ctos.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
+Subject: Vulnerability fixed in Quassel?
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-15 16:30, Paul Richards wrote:
-> However, I believe the fix for first issue to be incorrect (hence helping
-> me misunderstanding the initial issue):
->
-> The initial fix adds a string_display_line call to an <input> box. Given
-> that this processes the string for display in html, and there is a
-> string_attribute api call for handling data for display in a text box, I
-> believe that the fix for the other  issue is incorrect and
-> that string_attribute should be used instead of string_display_line (which
-> may do other formatting to the string which may be undesirable when editing
-> configuration values).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thanks for catching this mistake Paul. I have:
+Dear all,
 
-- reverted the original fix commit with incorrect string_display_line()
-   https://github.com/mantisbt/mantisbt/commit/1bdc16e5
+I'm looking for opinions regarding the commit 8b5ecd2:
+https://github.com/quassel/quassel/commit/8b5ecd226f9208af3074b33d3b7cf5e14f55b138
+It fixes the issue 1314: http://bugs.quassel-irc.org/issues/1314
 
-- pushed a new fix with string_attribute()
-   https://github.com/mantisbt/mantisbt/commit/49c3d089
+It appears to me that this is a vulnerability in the Quassel-core
+which allows clients to remotely crash the core and thus cause a
+denial of service using ill-formed messages.
 
-@CVE assign authority - please let me know the ID for this issue, and 
-update the data from my initial request accordingly.
+Would it deserve a CVE and/or fixes in distributions which ship it?
+I'm not affiliated in any kind with that project, so I might not have
+ enough information regarding this fix, nor legitimity to request a
+CVE for this.
 
+Looking for your comments.
 
+With my best regards,
+P. Schweitzer
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJUSiiHAAoJEHVFVWw9WFsLkDIQALFJJOqVFLgu87vBCAKSjHaC
+a2pyYox8jICsS8zwfJV0LuWx4KCBJK26Y0EtDtnZp6cRhqQRJEC8S/BJ1uZwG5ND
+xH60+t2ntbTa+Nw/zHpOd+0NnqUKicSLpp94KsulBv+OWmpXr+Vez6oQnG+6oUfW
+Z/P8KDbMwarkcros6abqOcnukcauM9A4IOdki1CD+qaHkun+6zVnTlR/pY9jtPN5
+TJHcLtmJpGDMmpocCCHroJasOGxHJq2TPTTdcRMEV6ckfg6RDN8EmaUwFLFrpVEu
+Yirt7kzwgDCvTd81OwlLUxPXMG/OYM8oDXPouk95NomG4C5oG4lDC+EdwuBRcaxw
+JNXK81RwVlY0p9d1rSo67pJRJuCsDChIxQJM8eXAehxtzjmWNfbmvHDMl6SGlyxN
+ObSkC/dTMCREhQKrGqDoF54i6Q5SQpLRYkMsBr4da65NTFLCU6kFiJSKJQ7GTSEu
+AY9kAhWdH2pd7sZ9YHiZf5s4oJ9STg9SO1PVtfVOAR3Jvc2yTzacurLRr2n7oWKu
+M3gPnarZIoAppW/DrdJ7TnuWiZDH6NQRwAszQQZNkE97BDJieQSSC9itWQOA1n/0
+ZCeNR04CzDeJsL+vfQffvKDNhlWwtcSAh/B/UfHhEo04rAIdIvJEuB3jZP3vFySR
+qE9oLrDGadXbQvgraaLt
+=mCbF
+-----END PGP SIGNATURE-----
