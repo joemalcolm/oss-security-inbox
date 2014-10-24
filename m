@@ -1,63 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/11
-Message-ID: <CAEZyo3D_yax0DSei2DjC9FwMitCaMQ6uxVvwk+YKz7wOeYMsWQ@mail.gmail.com>
-Date: Tue, 9 Sep 2014 11:16:44 +0300
-From: Mikko Korpela <mikko.korpela@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: pinocchio tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/12
+Message-Id: <20141024200253.5C55B6C0023@smtpvmsrv1.mitre.org>
+Date: Fri, 24 Oct 2014 16:02:53 -0400 (EDT)
+From: cve-assign@...re.org
+To: abn@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Duplicate Request: CVE-2013-4444 as a duplicate of CVE-2013-2185
 Content-Type: text/plain; charset=utf-8
 
-This pinocchio sounds like a cool testing tool.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I have to say I don't understand at all why someone would be going
-through random packages from PyPi (especially test automation related)
-and searching for possible security issues.
-Could someone explain why this kind of security issues (malicious user
-making a symlink to some random file that is used during testing)
-should be in the scope of test automation tools?
+> Red Hat Product Security handled this issue as CVE-2013-2185
 
+In cases of disputes about the validity of a vulnerability with
+respect to a specific threat model, it's sometimes possible to have
+multiple CVEs.
 
-2014-09-09 9:26 GMT+03:00 David Jorm <djorm@...hat.com>:
-> On 09/09/2014 04:21 PM, Kurt Seifried wrote:
->>
->> https://pypi.python.org/pypi/pinocchio/
->>
->> pinocchio       stopwatch       --with-stopwatch        Select tests based
->> on execution time
->>
->> pinocchio-0.4.1/pinocchio/stopwatch.py
->>
->>      def finalize(self, result):
->>          """
->>          Save the recorded times, OR dump them into /tmp if the file
->>          open fails.
->>          """
->>          try:
->>              fp = open(self.stopwatch_file, 'w')
->>          except (IOError, OSError):
->>              t = int(time.time())
->>              filename = '/tmp/nose-stopwatch-%s.pickle' % (t,)
->>
->> int(time.time) is easily guessed, create a few thousand and you're
->> covered for the next few hours and can stop anyone from using stopwatch,
->> or you can just blow away files as usual =).
->>
->>              fp = open(filename, 'w')
->>              log.warning('WARNING: stopwatch cannot write to "%s"' %
->> (self.stopwatch_file))
->>              log.warning('WARNING: stopwatch is using "%s" to save times'
->> % (filename,))
->>
->>          dump(self.times, fp)
->>          fp.close()
->>
->>
->>
->>
->
-> You're a troll :)
+https://bugzilla.redhat.com/CVE-2013-2185 says:
 
+> A remote attacker able to supply a serialized instance of the
+> DiskFileItem class, which will be deserialized on a server, could use
+> this flaw to write arbitrary content ...
+> 
+> The Apache Tomcat team does not agree that this is a valid security
+> flaw; they contend that an application performing untrusted
+> deserialization is inherently insecure.
 
+This suggests a completely general case in which the serialized
+instance could come from an arbitrary untrusted source in an
+application-specific way. Apparently, from the perspective of the
+Apache Tomcat maintainer, they are not interested in recognizing the
+completely general case as a vulnerability. Thus, from their
+perspective, there are no affected versions.
 
--- 
-Mikko Korpela
+The CVE-2013-4444 section of http://tomcat.apache.org/security-7.html
+discusses a much more specific threat model. From the perspective of
+the Apache Tomcat maintainer, this is recognized as a vulnerability
+with the affected versions of 7.0.0 through 7.0.39.
+
+Both parties apparently agree that changes such as:
+
+ -public interface FileItem extends Serializable, FileItemHeadersSupport {
+ +public interface FileItem extends FileItemHeadersSupport {
+
+should have occurred. However, there isn't agreement on exactly what
+is the motivation for making the change.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUSq9bAAoJEKllVAevmvmssaIIAKSliCKYS2sZMg5uANDmdCPs
+Hz4lJ1iI6+NLWLrkd5Gu6AKVWCbLLRYHLj8H6hNMNEcw3qUqiT9PGP4NygsHJe4h
+aqvV6WG6pMGxNn/NMOn+7Jn0NgjeeAcjmTEwxy45Qo7T/7Aw0znd3eKn6/kgkUPu
+LzNvwW9SdqhqjBVVTsE0mIp+zeDoTUnQcYn8Fsu/lqqsyFga6+2YoOQKySpDH5sT
+0QMivZVYHPr94ucQ4Ihafmt/bKzrCLfLymZfbQP991nfWyXMA0bjIHA32gHySJSg
+gANZ3RGsFSR0Ftg4IudjPnPrQmh0f8tozfZmIJHFdJHA8A6C5suDtjhyn53iGfc=
+=Ts5Q
+-----END PGP SIGNATURE-----
