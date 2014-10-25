@@ -1,28 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/11
-Message-ID: <20141014083643.1e0ab89e.reed@reedloden.com>
-Date: Tue, 14 Oct 2014 08:36:43 -0700
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/25/3
+Message-ID: <544BFA4C.8060301@reactos.org>
+Date: Sat, 25 Oct 2014 21:30:20 +0200
+From: Pierre Schweitzer <pierre@...ctos.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
+CC: cve-assign@...re.org
+Subject: Re: Vulnerability fixed in Quassel?
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 14 Oct 2014 08:23:23 -0700
-Alex Gaynor <alex.gaynor@...il.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> At what point are we going to decide that it's absurd for every single TLS
-> deployment to need to reconfigure everything in order to achieve strong
-> security, and say that OpenSSL (or even Apache/Nginx/HAProxy/etc.) should
-> just configure things reasonably out of the box?
+On 24/10/2014 12:41, Bas Pape wrote:
+>> Should a CVE be assigned, note that Quassel took the code
+>> (cipher.cpp) from Konversation, and the same issue has been
+>> reported there [1].
+> 
+> Sorry, forgot to actually paste the link. The konversation bug can
+> be found at https://bugs.kde.org/show_bug.cgi?id=210792
+> 
 
-I agree, but the OpenSSL folks have always been fairly resistant to
-changing things that might "break compatibility", or at least it seems
-that way.
+Was a CVE ID assigned for the Konversation bug?
 
-This same type of argument came up when trying to get Ruby to use
-better OpenSSL settings by default
-(https://bugs.ruby-lang.org/issues/9424). Everybody wants to blame
-somebody else. Nobody wants to possibly be on the hook when things
-break.
+In any case, it's way worse than my understanding (thanks for the
+clarifications!).
 
-~reed
+So I believe a CVE should be assigned to that commit for Quassel. Do
+we need the project owners to ask for it? Or MITRE can just assign it?
+
+Cheers,
+- -- 
+Pierre Schweitzer <pierre at reactos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJUS/pHAAoJEHVFVWw9WFsLxXsP/0y1psVaN43frKtTyYCyZXNk
+MrAtV34l0Iyv+zz00UWntVT/od6zwS9qLi++3lHaSdF3SkB1wjARW7tkDmDVUHMZ
+HFuCn0nBJE62sUiRMzRwOyd7gSmiFAUr4XvWZq+8/bd3LZD//15WDMLlw5ZoL5b8
++qZVqq+SH7dPvQwksUeTonZvoMv6L1UJXmWAEkzPmMZoYL/C2l2/EeO5rWQRH751
+4BFjK654VixbEIfQ9rzCBntPXA3YDZsUFMgdO6ZPoL6znNRhSFpMeE2GZlYEeQN4
+jVxN9e4J0N40VgorGWr6AIBzhdwsv9bQaK4U8LIXTa2oBRDIVOeub6Idcoh5SXXF
+EQNafshYmLi+kc9BWW4IiDezZ1iW3xVcakjjaUk40wfurfnASb0GlxYbaHGEMP2L
+tSV0rW7y7C25P8BbSxn4NxeG0DFh7iaBVWfRZCO2harUO+XiSW8eQyMGZIijN4f9
+zal6LIuObqllUuqfbQbhK1ZRlfDQbcNs18UO6oydyIV9c68EEb6KxTm2u5BujS/T
+KXqMh12w7ifqVfnp0FQ0BTnHzb6XKXSvDqYQHySWLp52vWSr/1dVUuPdzTAJ81Va
+rMBIAd9QEJdOUyU333xW2u9nJx1rBl9pxV0xBoIfPD8nop5Z/BS28YrxTVuY+TSR
+GSaGhsPu/W/BNijoH+Xb
+=LIKv
+-----END PGP SIGNATURE-----
