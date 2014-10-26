@@ -1,103 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/10
-Message-ID: <20141211184911.GA16521@kludge.henri.nerv.fi>
-Date: Thu, 11 Dec 2014 20:49:11 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/26/3
+Message-ID: <20141026234449.7dfa16c7@pc>
+Date: Sun, 26 Oct 2014 23:44:49 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: TYPO3 Security Team <security@...o3.org>
-Subject: CVE request: TYPO3-CORE-SA-2014-003
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Am Sun, 26 Oct 2014 18:05:01 -0400 (EDT)
+schrieb cve-assign@...re.org:
 
-Hi MITRE,
+> There is currently no CVE ID for the
+> psa-dont-run-strings-on-untrusted-files.html "0xdeadbabe October 25,
+> 2014 7:20 PM" comment about "another one related with PE file headers
+> parsing." In general, a separate discovery that's potentially
+> exploitable for code execution could have its own CVE ID. Does anyone
+> want a CVE ID for that?
 
-Can we get CVE for Link spoofing and cache poisoning vulnerabilities in TYPO3
-CMS, thank you.
+The information in the comment is a bit scarce, it seems he hasn't
+published his sample (?).
+Anyway I checked the radare2-testsuite he was pointing to and found a
+crasher in the PE parser, I don't know if this is the same one, but I
+reported it upstream:
+https://sourceware.org/bugzilla/show_bug.cgi?id=17512
 
-http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2014-003/
+As this is a write to uninitialized memory it seems to me a CVE is
+deserved.
 
-Copy paste from advisory below:
+-- 
+Hanno Böck
+http://hboeck.de/
 
-Vulnerability Type: Link Spoofing
-Affected Versions: Versions 4.5.0 to 4.5.38, 4.6.0 to 4.6.18, 4.7.0 to 4.7.20,
-6.0.0 to 6.0.14, 6.1.0 to 6.1.12 and 6.2.0 to 6.2.8, 7.0.0 to 7.0.1
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Severity: Medium
-Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:P/I:P/A:N/E:F/RL:OF/RC:C
-
-Problem Description: An attacker could forge a request, which modifies anchor
-only links on the homepage of a TYPO3 installation in a way that they point to
-arbitrary domains, if the configuration option config.prefixLocalAnchors is used
-with any possible value. TYPO3 versions 4.6.x and higher are only affected if
-the homepage is not a shortcut to a different page. AS an additional
-pre-condition URL rewriting must be enabled in the web server, which typically
-is, when using extensions like realurl or cooluri.
-
-Installation where config.absRefPrefix is additionally set to any value are not
-affected by this vulnerability.
-
-Example of affected configuration:
-
-TypoScript:
-
-config.absRefPrefix =
-config.prefixLocalAnchors = all 
-page = PAGE 
-page.10 = TEXT 
-page.10.value = <a href="#skiplinks">Skiplinks</a> 
-
-.htaccess:
-
-RewriteCond %{REQUEST_FILENAME} !-f 
-RewriteCond %{REQUEST_FILENAME} !-d 
-RewriteCond %{REQUEST_FILENAME} !-l 
-RewriteRule .* index.php [L] 
-
-Solution: Set config.absRefPrefix to a value fitting your installation
-
-or
-
-Solution: Update to TYPO3 versions 4.5.39, 6.2.9 or 7.0.2 that fix the problem
-described.
-
-Important Note: Since the changes provided with the TYPO3 update change the way
-the prefix for local anchors is generated, there might be cases where the update
-breaks functionality. The impact of the breakage is that the page is reloaded in
-the browser when a user follows a link where previously the browser only jumped
-to a certain section of the current page.
-
-Credits: Thanks to Gernot Leitgab who discovered and reported the vulnerability.
-
-
-Vulnerability Type: Cache Poisoning
-Affected Versions: Versions 4.5.0 to 4.5.38, 4.6.0 to 4.6.18, 4.7.0 to 4.7.20,
-6.0.0 to 6.0.14, 6.1.0 to 6.1.12 and 6.2.0 to 6.2.8, 7.0.0 to 7.0.1
-
-Severity: Low
-Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:N/I:P/A:N/E:F/RL:OF/RC:C
-
-Problem Description: A request URL with arbitrary arguments, but still pointing
-to the home page of  a TYPO3 installation can be cached if the configuration
-option config.prefixLocalAnchors is used with the values "all" or "cached". The
-impact of this vulnerability is that unfamiliar looking links to the home page
-can end up in the cache, which leads to a reload of the page in the browser when
-section links are followed by web page visitors, instead of just directly
-jumping to the requested section of the page. TYPO3 versions 4.6.x and higher
-are only affected if the homepage is not a shortcut to a different page.
-
-Solution: Removing the configuration options config.prefixLocalAnchors (and
-optionally also config.baseUrl) in favor of config.absRefPrefix
-
-Credits: Thanks to Gernot Leitgab who discovered and reported the vulnerability. 
-
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlSJ5ycACgkQXf6hBi6kbk91AACgq2InRYd9nD3PFD58Sel1UXV1
-sisAoM8krOev+0f/Og0u43sFuTMZsffI
-=oa+e
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
