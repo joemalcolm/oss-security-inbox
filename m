@@ -1,40 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/8
-Message-ID: <87vbp7m5ph.fsf@vigenere.g10code.de>
-Date: Mon, 01 Sep 2014 22:44:10 +0200
-From: Werner Koch <wk@...pg.org>
-To: Kristian Fiskerstrand <kristian.fiskerstrand@...ptuouscapital.com>
-Cc: oss-security@...ts.openwall.com,  pkg-gnupg-maint@...ts.alioth.debian.org
-Subject: Re: gpg blindly imports keys from keyserver responses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/26/2
+Message-Id: <20141026220501.33E638BC018@smtpvmsrv1.mitre.org>
+Date: Sun, 26 Oct 2014 18:05:01 -0400 (EDT)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-On Mon,  1 Sep 2014 20:41, kristian.fiskerstrand@...ptuouscapital.com
-said:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> My personal opinion is this is expected behavior as the keyservers are
-> not trusted, and as you point out above, there are proper measures
+> http://lcamtuf.blogspot.com/2014/10/psa-dont-run-strings-on-untrusted-files.html
 
-I fully agree with your opinion.  If we would have rejected the patch we
-would not have run into this mess.  I agreed to add the patch because it
-won't harm and had to find out that it costed me about 3 days to get the
-regressions fixed :-(.  And now theses funny complaints that it is
-unsafe to import arbitrary keys.
+First, here are the two current CVE assignments for libbfd in GNU
+binutils. More CVE assignments may occur later (in particular, see
+below about versados.c). Affected programs apparently include strings
+(on some but not all platforms) as well as objdump and nm. The readelf
+program is not affected.
 
-I recall mail clients which always imported attached keys - not a bad
-thing.  S/MIME works the same.  One could debate whether such
-automatically imported keys may eventuallt expire from the keyring but
-this is orthogonal to the issues at hand.
+CVE-2014-8484 is for the incorrect decrements in cases of S-records
+that are too short. References are:
 
-*gpgv* is the tool to verify signatures using a well defined set of
-keys.  It has been written exactly for that purpose.  *gpg* requires
-that you use one of the available trust models - presence of a key in
-the keyring is not such a model.
+  https://sourceware.org/bugzilla/show_bug.cgi?id=17509
+  http://openwall.com/lists/oss-security/2014/10/23/5
+    
+The available information at the moment is that this is fixed in
+binutils 2.25 (not yet available on the
+http://ftp.gnu.org/gnu/binutils/ site), whereas new discoveries in
+October 2014 might not all be fixed in 2.25. Regardless of the actual
+content of 2.25, CVE-2014-8484 will remain a separate CVE.
+
+http://openwall.com/lists/oss-security/2014/10/23/8 (i.e., the
+five-byte S100\n file) is not, by itself, an attack that crosses
+privilege boundaries in realistic circumstances, so this report is not
+currently part of any CVE.
 
 
-Shalom-Salam,
+CVE-2014-8485 is for the current
+https://sourceware.org/bugzilla/show_bug.cgi?id=17510 content, i.e.,
+incorrect "--n_elt / ++idx" code that makes the attachment 7846 and
+attachment 7848 attacks possible.
 
-   Werner
 
--- 
-Die Gedanken sind frei.  Ausnahmen regelt ein Bundesgesetz.
+The much earlier research by Tavis Ormandy is already covered by
+CVE-2005-1704. There is also CVE-2006-2362, which is an unrelated
+discovery.
 
+There is currently no CVE ID for the
+psa-dont-run-strings-on-untrusted-files.html "0xdeadbabe October 25,
+2014 7:20 PM" comment about "another one related with PE file headers
+parsing." In general, a separate discovery that's potentially
+exploitable for code execution could have its own CVE ID. Does anyone
+want a CVE ID for that?
+
+Similarly, there are currently no CVE IDs for the
+https://sourceware.org/bugzilla/show_bug.cgi?id=16825 versados.c
+report. Does anyone want that report covered in CVE? Depending on
+exploitability, it would have approximately two CVE IDs.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUTW9VAAoJEKllVAevmvmswQ8IAIylWSMBjluWJVfD3DJtR8cf
+ij8mT0ODIzBlX/Nki29QcaRP20iUChqk+TMh7xHCFUe2p3gHm3dY+AilQSJk7hCh
+JYDC4yhKMe9bjA9YSnD8A9yUtDPww81wdOmdLHbKd31pN46pM3T6Bgu/IZv3zDbl
+UcEtBH7kYTK5SbZalDccMLTnkoT+SrGkvfOwoyyp2yoHFJt2KNPaipza/BKLyARl
+I4wVa/sv83FihpQy8Th7lEVXfltKISUU2rSCd7YZNRaxZeuUKEwni3eJkwzE7oDX
+oyPVXd+uLoyh2GPO75qro9ZP3vd3hq5diyjZVP4loPhJNcEO88v+Xlw3mjEZgH0=
+=+vIX
+-----END PGP SIGNATURE-----
