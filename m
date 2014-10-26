@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/7
-Message-ID: <20141003120312.GB13394@zoho.com>
-Date: Fri, 3 Oct 2014 12:03:12 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: sysklogd vulnerability (CVE-2014-3634)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/26/1
+Message-Id: <20141026175041.2836C8BC004@smtpvmsrv1.mitre.org>
+Date: Sun, 26 Oct 2014 13:50:41 -0400 (EDT)
+From: cve-assign@...re.org
+To: pierre@...ctos.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, baspape@...il.com
+Subject: Re: Vulnerability fixed in Quassel?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 03, 2014 at 03:26:09PM +0400, Solar Designer wrote:
-> 
-> What about the DoS impact claimed here, though? -
-> 
-> http://www.rsyslog.com/remote-syslog-pri-vulnerability-cve-2014-3683/
-> 
->  sysklogd ~~~~~~~~ A segfault seems possible in sysklogd if a negative
->  facility value (due to integer overrun in facility parsing) is used.
->  This could be used to carry out a remote DoS.
-> 
-> If this can be used to crash syslogd, it's "real security impact",
-> even if rather limited.
-> 
-> Have you tried triggering this condition (getting syslogd to crash)?
-> 
-> Alexander
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The potential for large negative offsets due to integer overflows was
-introduced to rsyslog via their first set of patches meant to fix
-CVE-2014-3634. This has since been corrected and assigned CVE-2014-3683.  
+> https://projects.kde.org/projects/extragear/network/konversation/repository/revisions/1f55cee8b3d0956adc98834f7b5832e48e077ed7
+> https://bugs.kde.org/show_bug.cgi?id=210792
 
-In sysklogd's case, the priority is masked by (LOG_FACMASK|LOG_PRIMASK)
-which means the possible range for priorities is 0-1023 (192-1023 being
-invalid). So, that overflow vector doesn't exist in sysklogd (which
-never adapted rsyslog's first fix). At most you get a facility of 127
-while f_pmask has size 25, ergo OOB access.
+> https://github.com/quassel/quassel/commit/8b5ecd226f9208af3074b33d3b7cf5e14f55b138
+> http://bugs.quassel-irc.org/issues/1314
 
-I have done enough testing that I am relatively confident no security
-impact exists other than the aforementioned message-processing issues
-which would apply to the would-be attacker's own message. That said,
-applying the fix eliminates all doubt.  
+Use CVE-2014-8483 for this out-of-bounds read issue, which can have an
+impact of either denial of service or disclosure of information from
+process memory.
 
---mancha
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJUTTP0AAoJEKllVAevmvmsSzIH+QHR+7d5VT2alOdllmuUk2Wq
+wDCZKhMM74Moyg4JcWsYbnJtk+rlqMS4FEBNVMJdyk2wX8D4/Pm9Y7V1IikejOAk
+/Dj2uF+V8iAvOha+SU9GDteUJtIujYMqZ/sOFHXNuXGCw/X+8k5WcMRVOGOIEmDU
+Q/b9GEdg0ai8YLAwoQEJlcXk1hg3k9YIq5y6ckJHhSBDdxTKC2Q29LMXJzpzCNg+
+w4EivSLUYuoUNRKa5jaPT2D60X293nAw683bCjb4VQc+eiSeSo4zZwCZvUEqatWp
+20t7WRmb8l9uEgkYpP70tSI3Hgro+kTDmmlsDGd1DHIzz9pHw8pzBccbirqt/7E=
+=AAg1
+-----END PGP SIGNATURE-----
