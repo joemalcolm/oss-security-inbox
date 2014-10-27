@@ -1,63 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/9
-Message-ID: <CAF=DYSLMQW=Oq=XKdx3KnV-kbd8dvC1UUo1cUd+RWRz2s_Pvxg@mail.gmail.com>
-Date: Wed, 8 Jan 2014 11:13:26 -0500
-From: Chris Sandulow <security@...godb.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: MongoDB memory over-read via incorrect BSON object length (was: [HITB-Announce] HITB Magazine Issue 10 Out Now)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/27/3
+Message-ID: <20141027111211.GS10820@dhcp-25-225.brq.redhat.com>
+Date: Mon, 27 Oct 2014 12:12:12 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Giuseppe Scrivano <gscrivan@...hat.com>
+Subject: CVE-2014-4877 wget: FTP symlink arbitrary filesystem access
 Content-Type: text/plain; charset=utf-8
 
-The issue described in
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6619 was originally
-reported to MongoDB by Positive Technologies (ptsecurity.ru) in November
-2012, with credit listed to Mikhail Firstov of Positive Research Center
-(Positive Technologies Company).  See
-https://jira.mongodb.org/browse/SERVER-7769 for more details.  The issue
-had also been identified earlier as a potential denial of service condition.
+It was found that wget was susceptible to a symlink attack which could
+create arbitrary files, directories or symbolic links and set their
+permissions when retrieving a directory recursively through FTP.
 
-The issue was resolved in December 2012 in MongoDB 2.3.2 when strict BSON
-object checking was enabled by default.  In earlier versions this check
-needs to be explicitly enabled with the --objcheck argument to the server,
-which prevents insertion of records which could trigger the issue.
+Upstream fix:
+http://git.savannah.gnu.org/cgit/wget.git/commit/?id=18b0979357ed7dc4e11d4f2b1d7e0f5932d82aa7
 
-Thanks,
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1139181
 
-
-
-On Tue, Jan 7, 2014 at 6:58 PM, Solar Designer <solar@...nwall.com> wrote:
-
-> On Tue, Jan 07, 2014 at 05:15:11PM -0500, cve-assign@...re.org wrote:
-> > >There is a memory over-read bug that can be used by an authenticated
-> > >user (if applicable) to obtain raw MongoDB server process memory
-> > >contents via incorrect BSON object length.  I guess that under most
-> > >deployments this does not cross a security boundary, but for some it
-> > >could (differently-privileged MongoDB users, data already deleted from
-> > >the DB yet staying in process memory, or/and metadata that is not
-> > >normally retrievable).
-> >
-> > Use CVE-2012-6619.
->
-> Thanks!  To make sure MongoDB developers are aware of this, I am CC'ing
-> this reply to security@...godb.com as specified here:
->
-> http://docs.mongodb.org/manual/tutorial/create-a-vulnerability-report/
->
-> Past MongoDB security issues are listed here:
->
-> http://www.mongodb.org/about/alerts/#security-related
->
-> and they don't appear to include this "new" issue yet.
->
-> I've just added these two links to:
->
-> http://oss-security.openwall.org/wiki/software#mongodb
->
-> MongoDB - here's some more context regarding the specific vulnerability
-> (now known as CVE-2012-6619, as per the assignment above):
->
-> http://www.openwall.com/lists/oss-security/2014/01/07/2
->
-> Alexander
->
-
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
