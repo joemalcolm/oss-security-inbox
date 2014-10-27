@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/02/6
-Message-Id: <201404022018.s32KIBDv006160@linus.mitre.org>
-Date: Wed, 2 Apr 2014 16:18:11 -0400 (EDT)
-From: cve-assign@...re.org
-To: krahmer@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: cups-browsed remote exploit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/27/2
+Message-ID: <CALx_OUA6+kRBCB+JMjzogVvoABqhtpFX4RZkQT5=HbT8WmxDeg@mail.gmail.com>
+Date: Sun, 26 Oct 2014 18:35:59 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> I don't know whether it's the same crash or not but I've dug results of my
+> older experiments with zzuf. Attached are two crasher for `objdump -x` --
+> one pe and one elf. elf also crashes `strings`. Sorry, not researched.
 
-> For this it creates a filter-script
-> 
-> snprintf
-> 
-> "%s/filter/pdftoippprinter \"$1\" \"$2\" \"$3\" \"$4\" \"$5 $extra_options\"\n",
-> p->name, pdl, make_model, cups_serverbin);
-> 
-> its easy to inject code to the script e.g. via model name or pdl key
-> which is taken from the LAN packets.
+objdump-elf-crasher looks like a stack exhaustion with
+/usr/bin/strings, so probably not a big deal.
 
-Use CVE-2014-2707.
+objdump-pe-crasher doesn't affect strings, but if you do run objdump
+-x, it looks like an attempt to do fprintf() with a bogus pointer,
+called from pe_print_edata(). Specifically, there's a line that goes
+like this:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+  fprintf (file,
+           " %s\n", data + edt.name - adj);
 
-iQEcBAEBAgAGBQJTPG+wAAoJEKllVAevmvmsURkIAKl8pUwj4b/v8yc/DeRw+Hp+
-lc+eaJ6SN2qsZXK3thqK1Ail6oMIQTzlR/sfzhDnTYXHAK6d1p/HZXz6ZcqsJ8Fa
-RvsXTlMhGj+VeKWkYMUeVGi4I1O2I33+i/mnwysYaX0XlC09axg+jou3AM4bZWzM
-vr6OxhZwhJpjI0EXJVjTZDQP+7sO6fUe20ZVuL+IUTcUzKrpqyJ2cNaz6ZgX7JpG
-+Kj7OFTOSYu1mNJfq2oKVTRqtA9oXB+7kF3KZjfDGtSzuaMwyjvs6I2hJZw+FbUQ
-FJKR+Qlo3dCQRfjz/KTe8sEhouZtukN/HsZv/cSmiTNbukw5PNzcJGDkwp+2IgU=
-=znhE
------END PGP SIGNATURE-----
+...and edt.name, looks like, comes from:
+
+  edt.name           = bfd_get_32 (abfd, data + 12);
+
+...and the value is completely off-charts. So, probably another
+instance of essentially no range checking, although this particular
+crash may be not exploitable at a very quick glance, unless something
+interesting happened beforehand.
+
+/mz
