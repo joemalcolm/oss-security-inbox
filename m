@@ -1,52 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/2
-Message-ID: <53F592AA.6090503@redhat.com>
-Date: Thu, 21 Aug 2014 16:33:14 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/27/5
+Message-ID: <20141027191800.GA660@jwilk.net>
+Date: Mon, 27 Oct 2014 20:18:00 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: possible overflow in vararg functions
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-Additionally, Fedora has 5.2.2, but it does not have the fix, so even if 
-shipping 5.2.2 it may be worth checking...
+* Michal Zalewski <lcamtuf@...edump.cx>, 2014-10-27, 11:59:
+>Well, there's also a trivial stack buffer overflow in srec.c near line 
+>254:
+>
+>      char buf[10];
+>...
+>        sprintf (buf, "\\%03o", (unsigned int) c);
+>
+>But with this test case, c will be -44, or "\1777777777777777777724",
 
-On 08/21/2014 04:31 PM, Murray McAllister wrote:
-> Good morning,
->
-> An overflow was reported to have been fixed in Lua 5.2.2. A reproducer
-> and patch are available from:
->
-> http://www.lua.org/bugs.html#5.2.2-1
->
-> The reproducer affects older versions too (such as 5.1.4). One way an
-> attacker could trigger this issue is if they can control parameters to a
-> loadstring call (an eval in Lua, http://en.wikipedia.org/wiki/Eval#Lua).
->
-> Could a CVE please be assigned if one has not been already?
->
-> Some notes:
->
-> valgrind shows this crashes with invalid writes, but I am not sure if
-> this is really a stack or heap overflow but something else. In
-> luaD_precall():
->
-> 330       for (; n < p->numparams; n++)
-> 331         setnilvalue(L->top++);  /* complete missing arguments */
->
-> This goes through 49 times with the reproducer (?possibly lifting what
-> Lua thinks is the stack into the heap area?).
->
-> After that finishes:
->
-> 333       ci = next_ci(L);
->
-> Results in a call to luaE_extendCI(), where the issue is triggered while
-> attempting to call luaM_new() (I did not get further than this yet).
->
-> Thanks,
->
-> --
-> Murray McAllister / Red Hat Product Security
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1132304
+More likely "\37777777724"...
 
+>which sounds a lot longer than 9 characters.
+
+...which is still longer than 9.
+
+-- 
+Jakub Wilk
