@@ -1,64 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/30/7
-Message-Id: <201406302121.s5ULLCv0020434@linus.mitre.org>
-Date: Mon, 30 Jun 2014 17:21:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: changing CVE ID for RH Bugzilla 1098222 (from CVE-2014-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/27/1
+Message-ID: <544D96D6.2050006@mccme.ru>
+Date: Mon, 27 Oct 2014 03:50:30 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2014-10-27 01:05, cve-assign@...re.org wrote:
+> There is currently no CVE ID for the
+> psa-dont-run-strings-on-untrusted-files.html "0xdeadbabe October 25,
+> 2014 7:20 PM" comment about "another one related with PE file headers
+> parsing." In general, a separate discovery that's potentially
+> exploitable for code execution could have its own CVE ID. Does anyone
+> want a CVE ID for that?
 
-CVE-2014-0235 should have been a completely valid CVE assignment from
-Red Hat, but it would be extremely problematic to keep it because that
-ID was accidentally used by Microsoft (typo of CVE-2014-0325) and is
-in very widespread use for the wrong issue.
+I don't know whether it's the same crash or not but I've dug results of 
+my older experiments with zzuf. Attached are two crasher for `objdump 
+-x` -- one pe and one elf. elf also crashes `strings`. Sorry, not 
+researched.
 
-Can you assign one or more new CVE IDs for Red Hat Bugzilla 1098222
-and send the CVE mapping here?
+-- 
+Alexander Cherepanov
 
-We're not sure how many vulnerabilities Red Hat is announcing in
-1098222. Was the intention to have only one vulnerability and one CVE
-for "the code before upstream version 5.19 tried to do regex matches
-against an arbitrarily large amount of file content"?
+Download attachment "objdump-pe-crasher.xz" of type "application/x-xz" (336 bytes)
 
-We realize that https://bugzilla.redhat.com/show_bug.cgi?id=1098222#c5
-mentions "This fix is also insufficient" but it appears that all of
-the discussion of incompleteness of a new fix occurred when 1098222
-was embargoed, and also the upstream commit message didn't refer to
-that first fix as security-related (the upstream commit message was
-"further optimize awk by not looking for the BEGIN regex ..."). So,
-this ordinarily wouldn't lead to any extra CVEs.
-
-However, we don't know whether Red Hat is announcing any part of
-
-  https://github.com/file/file/commit/4a284c89d6ef11aca34da65da7d673050a5ea320
-
-as an additional vulnerability that was also fixed in 5.19.
-
-If your intention was that everything related to regex matches is a
-single vulnerability, then only one CVE ID is needed to replace
-CVE-2014-0235.
-
-In a "REJECT" message for CVE-2014-0235, we can indicate the correct
-per-product CVE IDs for the Internet Explorer and file/CPU-consumption
-issues.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTsdOYAAoJEKllVAevmvmszXMH/j+hUEgUzlKkiEYn4rzI46P6
-+yO/ycoLkPLHwwya9Q5cTA82J9eDz3kbP4sbMfRe8lkE2alU35/YQ7prs4X8dSTJ
-vlCFxzkQ5Uev4hNcqgZY/tMzhSD6b7WUAZSJo8H9Oaq1MIHiXVWkPmpKk81pjLAb
-GaWfxA8AIRgQynVbReOBJ9FC9K37kzFGFI90/mcvfBlzs1s7v/Ttax6nuN3TU3Fs
-C47gTKsKgbYzdTw3+8aZ3ofVULgtB1eN4VlDLqm6gmtHLBJZjGAxetGERhU/W2lN
-b056qsCtGtW2SZ1JBpXH5MMnzv8cxeR+1G9RXlJ/TeY3V3QxmWwxm8uzJ+jI5j0=
-=oqaA
------END PGP SIGNATURE-----
+Download attachment "objdump-elf-crasher.xz" of type "application/x-xz" (1552 bytes)
