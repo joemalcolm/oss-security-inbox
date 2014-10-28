@@ -1,46 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/15
-Message-ID: <1418925051.5935.33.camel@juliet.mcarpenter.org>
-Date: Thu, 18 Dec 2014 18:50:51 +0100
-From: Martin Carpenter <mcarpenter@...e.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/28/2
+Message-ID: <544F9E56.3070102@mccme.ru>
+Date: Tue, 28 Oct 2014 16:47:02 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: Running Java across a privilege boundry
+Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2014-12-18 at 15:46 +0100, Jakub Wilk wrote:
+On 2014-10-15 12:30, Solar Designer wrote:
+> - Please don't send fully working exploits (but testcases that exercise
+> the flaw are welcome)
+>
+> FWIW, I've always been tempted to remove the latter guideline,
 
-> Absolutely. Lintian has a check for RPATH (but not for RUNPATH, AFAICT); 
-> alas, it doesn't distinguish between security and non-security problems:
-> https://lintian.debian.org/tags/binary-or-shlib-defines-rpath.html
+Then perhaps just remove it? It always seemed to me a strange 
+restriction. Other guidelines are either technical in nature or they are 
+intended to reduce the amount of noise. This restriction seems to be 
+neither.
 
-Aha, thanks. Security vs. non-security is perhaps not a disaster:
-"serious, certain" would already be an improvement over not flagging
-this at all.
+Of you can replace it with something like this:
+- Please only send fully working exploits which themselves are open-source.
 
-
-> I requested a separate tag for relative RPATH a while ago:
-> https://bugs.debian.org/732682
-> Now we "only" need someone to write the code. :-)
-
-Great! Is that all we need? The tests reference the Debian policy manual
-(package debian-policy):
-
-https://www.debian.org/doc/debian-policy/ch-sharedlibs.html
-
-(for completeness: also sections 10.2, 10.3).
-
-This references neither RPATH nor RUNPATH. Perhaps we need to fix that
-first?
-
-Suggested addition:
-
-8.7 RUNPATH and RPATH
-Libraries that define RPATH or RUNPATH should ensure that this does not
-contain relative paths. This is to prevent an executable from loading a
-library from an untrusted location. (This should include the corner
-cases whereby the path starts or ends with a colon, or includes two
-consecutive colons).
-
-
-Did I miss anything?
-
+-- 
+Alexander Cherepanov
