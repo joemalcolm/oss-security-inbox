@@ -1,29 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/6
-Message-ID: <20140705185159.GA6953@openwall.com>
-Date: Sat, 5 Jul 2014 22:51:59 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/28/5
+Message-ID: <20141028193442.GC32688@symphytum.spacehopper.org>
+Date: Tue, 28 Oct 2014 19:34:42 +0000
+From: Stuart Henderson <sthen@...nbsd.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+Subject: Re: ftp(1) can be made execute arbitrary commands by malicious webserver
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 05, 2014 at 08:41:20PM +0200, Yves-Alexis Perez wrote:
-> On sam., 2014-07-05 at 22:25 +0400, Solar Designer wrote:
-> > So far, we're aware that the problem is definitely triggerable on recent
-> > kernels (at least mainline and recent Ubuntu) running on Intel CPUs
-> > (including in guest kernels in some VMs that run on Intel CPU hosts).
-> 
-> For what it's worth, we managed to reproduce the crash on Debian 3.14.9-1
-> kernel (from sid), but not on the stable 3.2.57-3+deb7u2 (there's a
-> double faute but no panic), on Intel CPUs.
+On 2014/10/28 17:50, Alistair Crooks wrote:
+>    The FTP client will follow HTTP redirects, and uses the part of the
+>    path after the last / from the last resource it accesses as the output
+>    filename (as long as -o is not specified).
 
-Maybe it's just me, but I find the above ambiguous.
+BTW, I changed OpenBSD's ftp(1) a while ago to just use the "filename"
+part of the original request, rather than taking a name from the
+redirection target (this also matches what curl -O does) - it's a bit
+less convenient in some cases, but it felt like a bad idea to allow the
+output filename to be under control of the remote host (though I was
+more thinking of the situation where someone might run it from their
+home directory and write to something like .profile).
 
-What exactly do you mean by "crash" and "panic" above?  How do you know
-it's a double fault?  What appears in dmesg on the first system, and
-what on the second system?  What's the value of the kernel.panic_on_oops
-sysctl, and is it the same on both systems?
-
-Thanks,
-
-Alexander
