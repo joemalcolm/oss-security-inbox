@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/21
-Message-ID: <540F2D48.80707@oracle.com>
-Date: Tue, 09 Sep 2014 17:39:36 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/28/6
+Message-ID: <54502AF8.4040608@redhat.com>
+Date: Tue, 28 Oct 2014 17:47:04 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: pinocchio tmp vuln
+Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
 Content-Type: text/plain; charset=utf-8
 
-On 09/09/14 09:34, Steve Kemp wrote:
->                                          I'm sure lots of
->  modules exist created by inexperienced developers who haven't
->  considered the implications of posting new code libraries.
+Will someone/people vet the exploits to make sure they are not trojan
+horses/self harming (e.g. the rm -rf * embedded in it somewhere?).
+Strikes me as a heck of a watering hole attack potentially (and yes,
+list members should know better, but ... yeah).
 
-We see lots of people making the same mistakes over and over again.
+On 28/10/14 07:47 AM, Alexander Cherepanov wrote:
+> On 2014-10-15 12:30, Solar Designer wrote:
+>> - Please don't send fully working exploits (but testcases that exercise
+>> the flaw are welcome)
+>>
+>> FWIW, I've always been tempted to remove the latter guideline,
+> 
+> Then perhaps just remove it? It always seemed to me a strange
+> restriction. Other guidelines are either technical in nature or they are
+> intended to reduce the amount of noise. This restriction seems to be
+> neither.
+> 
+> Of you can replace it with something like this:
+> - Please only send fully working exploits which themselves are open-source.
+> 
 
-Apart from the obvious newbie mistakes of failing to create proper
-temporary directories, we also get things like the slightly more subtle
-shipping a "secure" web server with a fixed self-signed cert.   Or
-copying a user-supplied string into a MAXPATH+1 buffer because that's
-long enough for any pathname.   Or ...
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-I don't need to go on, we've all seen them and Kurt highlighting
-problems is all goodness because at least it gets people thinking a bit
-more about security.  And we will need that because there are so many
-devices hitting the streets with so many noob vulns that it's only a
-matter of time before someone is killed.
 
-jch
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
