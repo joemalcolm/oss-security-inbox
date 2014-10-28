@@ -1,30 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/21
-Message-ID: <CALCETrWqBf-qMXZj4uEhL7oqwyOn42X1dgCFkWF3Me2d9OTrYw@mail.gmail.com>
-Date: Wed, 8 Oct 2014 12:48:19 -0700
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/28/3
+Message-ID: <544FC08F.5080309@enovance.com>
+Date: Tue, 28 Oct 2014 12:13:03 -0400
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-7970: Linux VFS denial of service
+Subject: [OSSA 2014-038] Nova network DoS through API filtering (CVE-2014-3708)
 Content-Type: text/plain; charset=utf-8
 
-pivot_root has a bug.  Exploiting it at all is tricky, but it can be
-done.  I'm reasonably confident that this is just denial of service.
-(There's also probably an information disclosure in there, but I think
-that it's only available to root, so it's not a big deal.)
+OpenStack Security Advisory: 2014-038
+CVE: CVE-2014-3708
+Date: October 28, 2014
+Title: Nova network DoS through API filtering
+Reporter: Mohammed Naser (Vexxhost)
+Products: Nova
+Versions: up to 2014.1.3, and 2014.2
 
-I'm posting this a little bit early, since a patch is publicly
-available, the impact is low, and hitting the bad code path at all is
-quite tedious.  I'll send a proof of concept later on.
+Description:
+Mohammed Naser from Vexxhost reported a vulnerability in Nova API
+filters. By listing active servers using an ip filter, an authenticated
+user may overload nova-network or neutron-server process, resulting in a
+denial of services. All Nova setups are affected.
 
-Distros: if you need a test case to validate the fix, let me know.
-Although, for validation, it should be sufficient to just chroot
-somewhere as root, escape the chroot (while still chrooted), and then
-pivot_root(".", ".") on a mountpoint.
+Kilo (development branch) fix:
+https://review.openstack.org/131460
 
-Candidate patch here:
+Juno fix:
+https://review.openstack.org/131462
 
-http://news.gmane.org/find-root.php?message_id=87bnpmihks.fsf%40x220.int.ebiederm.org
+Icehouse fix:
+https://review.openstack.org/131461
 
--- 
-Andy Lutomirski
-AMA Capital Management, LLC
+Notes:
+This fix will be included in future 2014.1.4 and 2014.2.1 releases.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3708
+https://launchpad.net/bugs/1358583
+
+--·
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
