@@ -1,47 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/11
-Message-Id: <20140901214340.A7848332024@smtpvbsrv1.mitre.org>
-Date: Mon,  1 Sep 2014 17:43:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: roy@...ples.name
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: dhcpcd DoS attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/6
+Message-ID: <CALx_OUD8-NzvT4bQXkHJcaxCGd8h3WjmLEkQ=sngciyosmNA9A@mail.gmail.com>
+Date: Wed, 29 Oct 2014 14:56:57 -0700
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Or just require an accompanying explanation. But FD is as much of a
+watering hole and has a long history of fake exploits being posted...
+I think we could survive.
 
-> http://roy.marples.name/projects/dhcpcd/ci/1d2b93aa5ce25a8a710082fe2d36a6bf7f5794d5?sbs=0
+(BUGTRAQ, too, although that list seems to be in a pretty bad shape
+these days and perhaps its days are numbered).
 
-> In function get_option, the DHO_OPTIONSOVERLOADED option checks if there
-> are overloaded options, like bootfile or servername.  It tries to make
-> sure that it's called only once, BUT overwrites that information after
-> receiving a DHO_END.  A malicious server could set the option
-> DHO_OPTIONSOVERLOADED yet another time in the bootfile or servername
-> section, which will result in another jump -- maybe into the same area.
-
-> dhcpcd-4.0.0 though to dhcpcd.6.4.2 are vulnerable
-
-> dhcpcd-6.4.3 has been released with the above fix.
-
-Use CVE-2014-6060. Presumably this crosses privilege boundaries. (The
-type of DoS impact is not stated, and the server is implicitly allowed
-to conduct some types of DoS attacks against the client -- for
-example, by refusing to allocate an IP address.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUBOgTAAoJEKllVAevmvmswEUIAMkBxocvxtTziw5PJQrUr6y9
-Im6hdAVOVs8PSNHMvrUPqlB1xer5CNj+GvZ1eSyuavzikxPfBmekiTn9PMilEXRV
-OczR9FyjZnTgRD1CtBzaMO8KQ7V3ojiF3NSQyQV+cBZVyLpxvPeXDq8Uw9qIwmMJ
-eyM8LpmY1XCQ1/vXu8lsDYOeKp3JRvZmjVXfwpXWmLVuVnsfoTGp0Sln+B3VbCQg
-jMbeiEkaScXCbh4zKVtFYwR8a3mDhOiD0sSVQdl7jE/wZP+7K8QodGLJTp7KjTOO
-AoLUshwGfK0ACyWbEiG4MdW8ouIiLoTxKV1+F3r0McMoMGO3nAkVrNPXDeNXQZM=
-=uS8R
------END PGP SIGNATURE-----
+On Tue, Oct 28, 2014 at 6:26 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 28/10/14 06:48 PM, Alexander Cherepanov wrote:
+>> On 2014-10-29 02:47, Kurt Seifried wrote:
+>>> On 28/10/14 07:47 AM, Alexander Cherepanov wrote:
+>>>> On 2014-10-15 12:30, Solar Designer wrote:
+>>>>> - Please don't send fully working exploits (but testcases that exercise
+>>>>> the flaw are welcome)
+>>>>>
+>>>>> FWIW, I've always been tempted to remove the latter guideline,
+>>>>
+>>>> Then perhaps just remove it? It always seemed to me a strange
+>>>> restriction. Other guidelines are either technical in nature or they are
+>>>> intended to reduce the amount of noise. This restriction seems to be
+>>>> neither.
+>>>>
+>>>> Of you can replace it with something like this:
+>>>> - Please only send fully working exploits which themselves are
+>>>> open-source.
+>>>>
+>>> Will someone/people vet the exploits to make sure they are not trojan
+>>> horses/self harming (e.g. the rm -rf * embedded in it somewhere?).
+>>> Strikes me as a heck of a watering hole attack potentially (and yes,
+>>> list members should know better, but ... yeah).
+>>
+>> This is an interesting question but how "fully working exploits" differ
+>> from "testcases that exercise the flaw" in this regard?
+>
+> For example using something like metasploit the code would (in theory)
+> be more radable and anything hidden/obfuscated would stick out. My vote
+> would be to require well written nmap scripts or metasploit modules that
+> don't contain obfuscated code/etc. This would also make getting them to
+> work simpler (no use of weird one off CPAN modules or specific versions
+> of some obscure python thing, etc.).
+>
+>
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
