@@ -1,72 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/25
-Message-ID: <CAFkuX4vwpDMqX9wbbpzuoxGfKck6sfjNj4o37OEbwjXfUrTGng@mail.gmail.com>
-Date: Thu, 26 Jun 2014 12:58:37 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/1
+Message-ID: <54503953.9070105@mccme.ru>
+Date: Wed, 29 Oct 2014 03:48:19 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: LMS-2014-06-16-6: LZ4 Core
+Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+On 2014-10-29 02:47, Kurt Seifried wrote:
+> On 28/10/14 07:47 AM, Alexander Cherepanov wrote:
+>> On 2014-10-15 12:30, Solar Designer wrote:
+>>> - Please don't send fully working exploits (but testcases that exercise
+>>> the flaw are welcome)
+>>>
+>>> FWIW, I've always been tempted to remove the latter guideline,
+>>
+>> Then perhaps just remove it? It always seemed to me a strange
+>> restriction. Other guidelines are either technical in nature or they are
+>> intended to reduce the amount of noise. This restriction seems to be
+>> neither.
+>>
+>> Of you can replace it with something like this:
+>> - Please only send fully working exploits which themselves are open-source.
+>>
+> Will someone/people vet the exploits to make sure they are not trojan
+> horses/self harming (e.g. the rm -rf * embedded in it somewhere?).
+> Strikes me as a heck of a watering hole attack potentially (and yes,
+> list members should know better, but ... yeah).
 
-A vulnerability has been identified in the LZ4 core implementation. Please
-review the bug report attached inline.
+This is an interesting question but how "fully working exploits" differ 
+from "testcases that exercise the flaw" in this regard?
 
-Best,
-Don A. Bailey
-Founder / CEO
-Lab Mouse Security
-https://www.securitymouse.com/
-
-#############################################################################
-#
-# Lab Mouse Security Report
-# LMS-2014-06-16-6
-#
-
-Report ID: LMS-2014-06-16-6
-
-CVE ID: CVE-2014-4611
-
-Researcher Name: Don A. Bailey
-Researcher Organization: Lab Mouse Security
-Researcher Email: donb at securitymouse.com
-Researcher Website: www.securitymouse.com
-
-Vulnerability Status: Reported / No response
-Vulnerability Embargo: Broken
-
-Vulnerability Class: Integer Overflow
-Vulnerability Effect: Memory Corruption
-Vulnerability Impact: DoS, OOW, RCE
-Vulnerability DoS Practicality: Practical
-Vulnerability OOW Practicality: Practical
-Vulnerability RCE Practicality: Untested
-Vulnerability Criticality: High
-
-Vulnerability Scope:
-All versions of the LZ4 software:https://code.google.com/p/lz4
-
-Functions Affected:
-	lz4.c:LZ4_decompress_generic
-
-Criticality Reasoning
----------------------
-Due to the design of the algorithm, an attacker can specify any desired
-offset to a write pointer. The attacker can instrument the write in such
-a way as to only write four bytes at a specified offset. Subsequent code
-will allow the attacker to escape from the decompression algorithm without
-further memory corruption. This may allow the attacker to overwrite
-critical structures in memory that affect flow of execution. White DoS
-and OOW are obvious side effects of this flaw, RCE with respect to this
-flaw is untested.
-
-Vulnerability Description
--------------------------
-An integer overflow can occur when processing any variant of a "literal run"
-in the affected function.
-
-Vulnerability Resolution
-------------------------
-Pending.
-
+-- 
+Alexander Cherepanov
