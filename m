@@ -1,37 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/17/5
-Message-Id: <201403171523.s2HFMpFm006702@linus.mitre.org>
-Date: Mon, 17 Mar 2014 11:22:51 -0400 (EDT)
-From: cve-assign@...re.org
-To: daniel@...x.se
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: flaw in curl's Windows SSL backend
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/7
+Message-ID: <545177FF.4050901@amacapital.net>
+Date: Wed, 29 Oct 2014 16:27:59 -0700
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-3690: KVM DoS triggerable by malicious host userspace
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 10/21/2014 01:48 PM, Andy Lutomirski wrote:
+> [sorry for somewhat late notice -- I didn't notice that the patch was
+> public until just now]
+> 
+> KVM has a bug that allows malicious host user code that can open the
+> /dev/kvm device on a VMX (Intel) machine to DoS the system.  (In my
+> proof of concept, the DoS is a rather spectacular failure of the whole
+> system, although I haven't checked whether the kernel panics.  A more
+> refined exploit *might* be able to kill targetted user processes, but
+> it would be tricky and is subject to possibly unavoidable races that
+> are likely to take down the whole system.)
+> 
+> This is *not* triggerable by a guest, although a guest that can
+> compromise its host QEMU could use this bug to take down everything
+> else running on the host.
+> 
+> I would guess that all kernels that support VMX are vulnerable, but I
+> haven't tested old kernels.
+> 
+> The fix is here:
+> 
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=d974baa398f34393db76be45f7d4d04fbdbb4a0a
+> 
+> PoC available upon request, and I'll post it publicly in a few days,
+> because it's kind of fun to watch the fireworks.
+> 
+> --Andy
+> 
 
-> a newly discovered problem in curl's functionality that verifies
-> server certificates. The problem is present in code only runnning on
-> Windows when using the schannel SSL backend. It is very similar to the
-> Mac-specific curl problem Apple registered CVE-2014-1263 for, but for
-> another backend and platform.
+As promised, here's the exploit.
 
-Use CVE-2014-2522.
+I didn't really feel like writing a self-contained test case to
+initialize a KVM vCPU, so I turned QEMU into an exploit instead.  Apply
+the attached patch to QEMU, build it, and run it (qemu-system-x86_64
+-machine accel=kvm).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+--Andy
 
-iQEcBAEBAgAGBQJTJxJ+AAoJEKllVAevmvmsNzcIALV0S04tu4VASIySHAdGUoWb
-hmHcwe1w/hFboGv9G01PGJUbnI5M/rHbT+yD+MN0mL0OYEqFJ6n1iaCVC9VkgEYL
-qvhzSjkTWYtN7Zdhbvilf1inoR3koz3eIqF7HfZbUQhhTZAL8XOsv4P3xbZdpQsT
-p3u9XmIILiQQKYEH/mSOpIzKCUPySDuXTCO1Rr7ZCr94CcepOTGgEBgCXYBsOFER
-rODxwPn+0BecrmVBrWv26f2FsJo/3Pcd1/4O8q9ld5wccPGqaxGCA7GodWTgaVok
-OSMysos4QRtE9wFsNXUan2qFfO22OwtSA1Hj4v1GnsB9KCoOvLBniqtw46lDPOA=
-=OznQ
------END PGP SIGNATURE-----
+View attachment "0001-Evil-QEMU-hack-to-exploit-a-KVM-CR4-bug.patch" of type "text/x-patch" (1792 bytes)
