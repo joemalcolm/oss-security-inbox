@@ -1,16 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/7
-Message-ID: <5476A460.5090005@redhat.com>
-Date: Thu, 27 Nov 2014 15:11:12 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: 771125@...s.debian.org
-Subject: Re: CVE request: mutt: heap-based buffer overflow in mutt_substrdup()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/3
+Message-Id: <20141029014732.5F6EEABC080@smtpvmsrv1.mitre.org>
+Date: Tue, 28 Oct 2014 21:47:32 -0400 (EDT)
+From: cve-assign@...re.org
+To: agc@...bsd.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security-officer@...bsd.org
+Subject: Re: ftp(1) can be made execute arbitrary commands by malicious webserver
 Content-Type: text/plain; charset=utf-8
 
-> I did have to put "set weed=off" in .muttrc for the issue to present.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Sorry, that should be "no" not "off".
+> tnftp(1) is quite widely used
 
-Cheers
+> fixes were committed to the NetBSD repo
 
+> src/usr.bin/ftp: fetch.c
+
+> don't pay attention to special characters if they don't come from the
+> command line
+
+> FreeBSD and Dragonfly have been informed, as has Apple, and I have
+> received a boilerplate reply from Apple. The issue is present in
+> 10.10 (Yosemite).
+
+> the ftp program can be tricked into executing arbitrary commands
+
+> The FTP client will follow HTTP redirects
+
+> Location: http://192.168.2.19/cgi-bin/|uname%20-a
+
+Use CVE-2014-8517.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUUEZbAAoJEKllVAevmvmsFqkH/0l318cymZYupoZxrqFIuODh
+GTbK/XCDv5ZSyUHseRVh2iGQb9dXnBO+tgS//3MnAxFSd2+GpD5Fltd8oPf1WNw2
+0vcmjo8onqMtX9CU5ssh6qftOhR+VAYnf4fIybl9x1WZIV2aEJL1xnhbfeoXnbSr
+VMG+6MGDKvUA+2GTnBfuW/jvsuMuX0drAzY7YExDXnxNA9Ef/ovD0mf4jJUjikL1
+9fLgDgAgFXd4oQpRSuEGrsBMwLsKwwkUfWidnrI9nyEMOVI/U6ElU+Sl185uiAYl
+WW/eHNkCiYhJXwbZDz9Tv4QmN2S1/w/ZZreplNzS3w+eHBh/asHx5+7MAni2Q8Q=
+=Ef6C
+-----END PGP SIGNATURE-----
