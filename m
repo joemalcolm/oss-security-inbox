@@ -1,34 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/5
-Message-ID: <CACYkhxidkdspBMgaV+o5r_k8UTdLBsQy57Yso298PVQUoR3+0w@mail.gmail.com>
-Date: Tue, 5 Aug 2014 16:03:29 +1000
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/2
+Message-ID: <5450422D.1020303@redhat.com>
+Date: Tue, 28 Oct 2014 19:26:05 -0600
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE Requests] rsync and librsync collisions
+Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 28/10/14 06:48 PM, Alexander Cherepanov wrote:
+> On 2014-10-29 02:47, Kurt Seifried wrote:
+>> On 28/10/14 07:47 AM, Alexander Cherepanov wrote:
+>>> On 2014-10-15 12:30, Solar Designer wrote:
+>>>> - Please don't send fully working exploits (but testcases that exercise
+>>>> the flaw are welcome)
+>>>>
+>>>> FWIW, I've always been tempted to remove the latter guideline,
+>>>
+>>> Then perhaps just remove it? It always seemed to me a strange
+>>> restriction. Other guidelines are either technical in nature or they are
+>>> intended to reduce the amount of noise. This restriction seems to be
+>>> neither.
+>>>
+>>> Of you can replace it with something like this:
+>>> - Please only send fully working exploits which themselves are
+>>> open-source.
+>>>
+>> Will someone/people vet the exploits to make sure they are not trojan
+>> horses/self harming (e.g. the rm -rf * embedded in it somewhere?).
+>> Strikes me as a heck of a watering hole attack potentially (and yes,
+>> list members should know better, but ... yeah).
+> 
+> This is an interesting question but how "fully working exploits" differ
+> from "testcases that exercise the flaw" in this regard?
 
-I think there should be CVEs assigned for this:
+For example using something like metasploit the code would (in theory)
+be more radable and anything hidden/obfuscated would stick out. My vote
+would be to require well written nmap scripts or metasploit modules that
+don't contain obfuscated code/etc. This would also make getting them to
+work simpler (no use of weird one off CPAN modules or specific versions
+of some obscure python thing, etc.).
 
-rsync: MD5 collision DoS attack or limited file corruption
-librsync: MD4 collision file corruption
 
-Note: librsync is not the same code, protocol or maintainer as rsync.
 
-The librsync attack is far easier to perform, since there's no
-whole-file checksum and it will simply copy the first instance of a
-collision into any place where the second collision is.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-The rdiff utility that ships with librsync truncates hashes to 8
-bytes, allowing a very fast and efficient birthday attack - so even if
-MD4 was replaced attacks would still be possible while the hash is
-truncted.  This also affects duplicity - they both use
-RS_DEFAULT_STRONG_LEN - so the _librsyncmodule that ships with
-duplicity will need recompiling after the fix ships.
 
-Previous posting for context:
-http://www.openwall.com/lists/oss-security/2014/07/28/1
-
-Regards,
-  Michael
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
