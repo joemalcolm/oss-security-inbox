@@ -1,62 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/7
-Message-ID: <53441325.9080208@ficora.fi>
-Date: Tue, 08 Apr 2014 18:17:57 +0300
-From: Jussi Eronen <juhani.eronen@...ora.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/8
+Message-ID: <alpine.BSF.2.00.1410301023410.57132@aneurin.horsfall.org>
+Date: Thu, 30 Oct 2014 10:32:39 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 29 Oct 2014, Michal Zalewski wrote:
 
-Hello,
+> (BUGTRAQ, too, although that list seems to be in a pretty bad shape 
+> these days and perhaps its days are numbered).
 
-On 04/08/2014 01:05 AM, Yves-Alexis Perez wrote:
-> On Mon, Apr 07, 2014 at 01:56:27PM -0700, Reed Loden wrote:
->> Was this not coordinated with the distros at all? If not, that
->> seems like major fail on the reporters and NCSC-FI's part. :/
-> 
-> There was a mail from Red Hat on monday morning (CEST) with no
-> detail and a CRD to april 9th. It seems OpenSSL advisory came a
-> bit uncoordinated, actually, which (it seems) triggered the release
-> of the heartbeat and cloudfare posts, as well as the Red Hat one
-> here.
+It could be because they're hosted at Security Focus, whose mailserver 
+could best be described as erratic.  It doesn't like long banners or greet 
+pauses (both anti-spammer defences) and retries frequently, as if that 
+will make any difference.  I'm told that this is a "feature" of Qmail 
+(along with its other antisocial habits).
 
-We reported the issue to OpenSSL a couple of hours before the advisory
-was published. Our plan was to start notifications to distros and
-other vendors after discussing with OpenSSL. Codenomicon did mention
-us as the coordinator in the original text of heartbleed.com, but the
-current text reflects the situation quite well:
+Oddly enough, I do receive the occasional BugTraq message, so sometimes it 
+works, hence my description of them being erratic.  For example, this one 
+worked:
 
-"""
-Who coordinates response to this vulnerability?
+Received: from sf01smtp2.securityfocus.com (smtp.securityfocus.com [143.127.139.113])
 
-NCSC-FI took up the task of reaching out to the authors of OpenSSL,
-software, operating system and appliance vendors, which were
-potentially affected. However, this vulnerability was found and
-details released independently by others before this work was
-completed. Vendors should be notifying their users and service
-providers. Internet service providers should be notifying their end
-users where and when potential action is required.
-"""
+yet these failed miserably:
 
-- -Jussi / NCSC-FI (formerly known as CERT-FI)
+Oct 30 09:46:20 aneurin sm-mta[79426]: s9TMhmHs079426: smtp.securityfocus.com [143.127.139.113] did not issue MAIL/EXPN/VRFY/ETRN during connection to IPv4
+Oct 30 09:46:30 aneurin sm-mta[79427]: s9TMhv1H079427: smtp.securityfocus.com [143.127.139.113] did not issue MAIL/EXPN/VRFY/ETRN during connection to IPv4
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
+Feedback to list owner, abuse, and postmaster go implacably unanswered.
 
-iQIcBAEBAgAGBQJTRBMSAAoJELribKLoD5cx9RUP/0P0RSoXel4HvfWxUhGZfnsy
-q8yNYzOPMO8fIXxKg5W7CfSr4zy05gZSBIKDdETOtEcDFIDN4+4fZPvxMguF74Qe
-EKfUoyaXvK3JbQ/E1aw1CvYxLSPGRw3AcwkeTYtMZLzNqLwN6zBYvVjkr4GvGWG4
-30m1CmDWsR0MYrMrO04j6aSc1ykDg33avw+/Fs5TXOkoJCbzbjKgZ/QFU0C9KLU0
-VklrToFsupU722bQ11i8RlGXcA+0BNMFBabEVRW8jqym0cYVSsoIr6GrCMLeqOkq
-WmnxsSnNkZg4mjwwYLZS+Bl70veSvyBrIcyke2V74wgnDR9j0on/v6mK3p4Cu9bF
-3EH+2GI43o0sOsmHl7uMhvL4JbJOAcxsfYLsULoHCWTx0qzYtqquanjOyk72bxWk
-lZG0hfYQIonPX505riLGDN0DUHkoEq8JyQU4hFwDrI6Fxk6i783GVA4eqJdXHTM3
-qisH4T7elh8xQAqJYT7gIe3oRsZo2Kj4SProuGT3usqJgwl0wEch4JjZyx70Ren9
-E3DSPRvZKB7zHqbL0f0UbvpGtcsNrGBhayMcoZXmjCEODsJTwJZ0OFyMae+Z7gxP
-+QugddtuM2S898DFrgrFKVtnTLDABe/UQ3z0wzczN4ZHlz6g/9rzHV4NW6BHe1f2
-M+QZTIHz+8FfV7mnAHsa
-=Ukts
------END PGP SIGNATURE-----
+-- 
+Dave Horsfall (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
+http://www.horsfall.org/spam.html (and check the home page whilst you're there)
