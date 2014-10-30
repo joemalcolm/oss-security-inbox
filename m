@@ -1,128 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/4
-Message-Id: <201405290656.s4T6ugIj021318@linus.mitre.org>
-Date: Thu, 29 May 2014 02:56:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0234 Installer: OpenShift Enterprise: openshift.sh default password creation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/8
+Message-ID: <20141030202905.GE71386@TC.local>
+Date: Thu, 30 Oct 2014 13:29:05 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [AMENDED] [CVE-2014-7819] Arbitrary file existence disclosure in Sprockets
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I've updated this advisory to include the correct version numbers in the
+"Fixed Versions" section.
 
-> This is to notify the community that Red Hat has fixed  CVE-2014-0234
-> Installer: OpenShift Enterprise: openshift.sh default password creation.
+Arbitrary file existence disclosure in Sprockets
 
-Can you clarify the scope of this CVE?
+There is an information leak vulnerability in Sprockets. This vulnerability
+has been assigned the CVE identifier CVE-2014-7819.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1097008 says:
+Versions Affected:  ALL
+Not affected:       NONE
+Fixed Versions:     3.0.0.beta.3, 2.12.3, 2.11.3, 2.10.2, 2.9.4, 2.8.3, 2.7.1, 2.5.1, 2.4.6, 2.3.3, 2.2.3, 2.1.4, 2.0.5
 
-  CVE-2014-0234 OpenShift Enterprise openshift-origin-broker: default password creation
+Impact
+------
+Specially crafted requests can be used to determine whether a file exists on
+the filesystem that is outside an application's root directory.  The files will not be served, but attackers can determine whether or not the file exists.
 
-  The OpenShift Enterprise openshift-origin-broker configures a default password:
+All users running an affected release should either upgrade or use one of the work arounds immediately.
 
-  /etc/openshift/broker.conf:MONGO_PASSWORD="mooo"
-  /etc/openshift/broker.conf:MONGO_PASSWORD="mongopass"
+Releases 
+-------- 
+The 2.12.X releases are available at the normal locations. 
 
-  Please note that the optional installer also did this previously:
+Workarounds 
+----------- 
+In Rails applications, work around this issue, set config.serve_static_assets = false in an initializer.  This work around will not be possible in all hosting environments and upgrading is advised.
 
-  https://github.com/openshift/openshift-extras/blob/enterprise-2.0/enterprise/install-scripts/generic/openshift.sh
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
 
+* 2-12-sec-static-files.patch - Patch for the 2.12.x release series
 
-For the openshift.sh script, we think you might mean something like
-(this isn't really the right branch):
+Credits 
+------- 
 
-  https://github.com/openshift/openshift-extras/commit/4339020c62e43fa16f2145d46636f7dc0e26327f
+This vulnerability was reported by multiple researchers working independently.  Thanks to each of them for reporting the issue to us and verifying the fixes.
 
-in which, possibly, the scope of the CVE is both:
+* Eaden McKee
+* Dennis Hackethal & Christian Hansen of Crowdcurity
+* Juan C. Müller & Mike McClurg of Greenhouse.io 
+* Alex Ianus of Coinbase
 
-   enterprise/install-scripts/generic/openshift.sh
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
 
-and
-
-   enterprise/install-scripts/openshift.ks
-
-but not
-
-    enterprise/install-scripts/amazon/openshift-amz.sh
-
-which has a different type of issue?
-
-Possibly a more important question is the status of
-MONGO_PASSWORD="mooo" - there's no "mooo" anywhere in
-4339020c62e43fa16f2145d46636f7dc0e26327f. Instead, "mooo" apparently
-comes from:
-
-  https://github.com/openshift/origin-server/blob/master/broker/conf/broker.conf
-
-and is not yet fixed in that github.com copy of the code.
-
-So, we could potentially model this as:
-
-  1. "different affected versions" in the sense that if someone wasn't
-     using Red Hat's RPMs and instead updated everything from
-     github.com after seeing RHSA-2014:0487-1, they would have the
-     4339020c62e43fa16f2145d46636f7dc0e26327f patches but would still
-     have "mooo"
-
-or
-
-  2. "different affected products" in the sense that "mooo" is a
-     vulnerability affecting the OpenShift Enterprise product (or
-     specifically the openshift/origin-server package), whereas
-     4339020c62e43fa16f2145d46636f7dc0e26327f is a non-identical
-     vulnerability in the openshift/openshift-extras package
-
-In other words, we don't know the interpretation in which "mooo" and
-4339020c62e43fa16f2145d46636f7dc0e26327f end up with the same CVE ID.
-
-(We didn't try to determine why your quoted broker.conf has two
-MONGO_PASSWORD= lines, but
-https://github.com/openshift/origin-server/blob/master/broker/conf/broker.conf
-has only one MONGO_PASSWORD= line.)
-
-
-> I also wanted to open up a discussion as well, what counts as shipped
-> software, e.g. more and more projects have a bash script linked off
-> the front page/install page, my take on this is if it's "officially"
-> endorsed by the project and prominent it should probably count as
-> "shipped" software and get a CVE (assuming it has a security flaw),
-> but we shouldn't assign CVE's to every instance of install scripts
-
-The pre-4339020c62e43fa16f2145d46636f7dc0e26327f unpatched code such as
-https://github.com/openshift/openshift-extras/blob/9ecba01d34d7231cc05f04710217ddcee53202ad/enterprise/install-scripts/generic/openshift.sh
-contained this comment:
-
-  # While this script serves as a good example script for installing a
-  # single host, it is not comprehensive nor robust enough to be considered
-  # a proper enterprise installer on its own. Production installations will
-  # typically require significant adaptations or an entirely different
-  # method of installation. Please adapt it to your needs.
-
-Typically, if a piece of code is simply not intended to be used as-is,
-it can't have CVE assignments for its vulnerabilities. The situation
-would be different if (for example) any Linux distribution shipped
-openshift.sh with conflicting documentation, or executed openshift.sh
-automatically.
-
-This might mean that the best scope of CVE-2014-0234 is only the
-default broker.conf file (because that issue is known to actually
-affect the Red Hat OpenShift Enterprise 2 product).
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJThthaAAoJEKllVAevmvms0xwH/28iARTXGytwn4Ee39iWWGK1
-IAU3ofRZe/yxNLxlyBFZcCUJf6qVZaBszEolXn5BW4rRfeVLQwXR7Mt4RYJlhl6i
-WCiJloGWuOyAi45fHGFwB7uq+6f0UfuCANW+zgmxmh4oxoJranCaD9Q/L2eMlg60
-N4bJkGqLCsN1srVCtboTZlPX8PedxokcLzwTWw8nboruQf5p0dVAXZmbmUETfUHq
-mVDNdods1k6N/AtGdHfu4wCEZpDDgQrdcCel2IKI2ftitmaLqCXfQ8cCMMXEHakJ
-F4MQ2KKL96v+W3sK/qQsciQ6UtNBAgC06zE60E/FF8EQPOrpfpKXoC4M9R8W2B4=
-=1753
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
