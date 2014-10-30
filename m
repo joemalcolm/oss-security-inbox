@@ -1,43 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/13
-Message-Id: <201404181908.s3IJ82pg015778@linus.mitre.org>
-Date: Fri, 18 Apr 2014 15:08:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: adam@...mcaudill.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - XXS in phpMyID (openid_error)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/6
+Message-ID: <20141030185256.GC71386@TC.local>
+Date: Thu, 30 Oct 2014 11:52:56 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, secalert@...hat.com
+Subject: Arbitrary file existence disclosure in Sprockets (CVE-2014-7819)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Arbitrary file existence disclosure in Sprockets
 
-> There is a XXS vulnerability in phpMyID v0.9
-> 
-> /MyID.config.php?openid.mode=error&openid_error=[XSS]
-> 
-> Here is the code at fault:
-> MyID.php
-> 
-> Project Page: http://siege.org/phpmyid
-> Code: https://www.siege.org/oss/phpMyID/trunk/MyID.php
-> 
-> The author has stated that the project is no longer maintained
+There is an information leak vulnerability in Sprockets. This vulnerability
+has been assigned the CVE identifier CVE-2014-7819.
 
-Use CVE-2014-2890.
+Versions Affected:  ALL
+Not affected:       NONE
+Fixed Versions:     2.12.X
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Impact
+------
+Specially crafted requests can be used to determine whether a file exists on
+the filesystem that is outside an application's root directory.  The files will not be served, but attackers can determine whether or not the file exists.
 
-iQEcBAEBAgAGBQJTUXeZAAoJEKllVAevmvmsTqUH/0lj63Sm9zLIwh4tfTh7kqW0
-95p3b2lMyPIPaDWTxeaXkth30vJ7CHrfHMSKg5rgN2Un1KzKQ91YYT77X63hn/fZ
-1r6N8OOVAdqgDi2T0GzLO6i0flomBwyLhjeSyUSdCXDHWo2UCOKJjwXuCR85eOAq
-2raBampv/yoWr/bgQ5FLmWS2ksqF5+Dcr0DqyF05H/uvMgzudB093id9S+buHuTT
-Yc7+bds48Ep4HTt3wRfAt9wHOAkIMV1yuesJ+SuUWo4rx2Y/QPA+PJ9VpyycgIBL
-PdWJ+UzoED3Rdiah/jOPwOfLoaWqwZnhkDKhNvFPt1byxG6GJBlj88MJbFjK634=
-=Uo8b
------END PGP SIGNATURE-----
+All users running an affected release should either upgrade or use one of the work arounds immediately.
+
+Releases 
+-------- 
+The 2.12.X releases are available at the normal locations. 
+
+Workarounds 
+----------- 
+In Rails applications, work around this issue, set config.serve_static_assets = false in an initializer.  This work around will not be possible in all hosting environments and upgrading is advised.
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 2-12-sec-static-files.patch - Patch for the 2.12.x release series
+
+Credits 
+------- 
+
+This vulnerability was reported by multiple researchers working independently.  Thanks to each of them for reporting the issue to us and verifying the fixes.
+
+* Eaden McKee
+* Dennis Hackethal & Christian Hansen of Crowdcurity
+* Juan C. Müller & Mike McClurg of Greenhouse.io 
+* Alex Ianus of Coinbase
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "2-12-sec-static-files.patch" of type "text/plain" (3026 bytes)
+
+Content of type "application/pgp-signature" skipped
