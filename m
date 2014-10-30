@@ -1,32 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/16
-Message-ID: <543294EF.4070107@enovance.com>
-Date: Mon, 06 Oct 2014 09:11:11 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: Re: CVE request for vulnerability in OpenStack Cinder, Nova and Trove
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/3
+Message-ID: <alpine.BSF.2.00.1410310520030.57132@aneurin.horsfall.org>
+Date: Fri, 31 Oct 2014 05:30:46 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Some weird Apache redirection exploit?
 Content-Type: text/plain; charset=utf-8
 
-On 29/09/14 10:39 PM, cve-assign@...re.org wrote:
-> Is this a remaining vulnerability in Cinder 2013.2.4 and
-> possibly other products? If so, then we will assign another CVE ID.
+May not be Apache-specfic, but as it's the most popular server out 
+there...
 
-The ssh_execute method is indeed prone to password leak if:
-- passwords are used on the command line
-- execution fail
-- calling code catch and log the exception
+What is it trying to do?  I've never seen it in my logs before.
 
-So far investigations shows that ssh_execute usage does not contain any
-passwords but we can't guarantee Cinder and Nova 2013.2.4 releases are
-not affected as the vulnerable code is still there so it may be safer to
-considered these releases affected.
+117.27.254.25 - - [31/Oct/2014:05:16:15 +1100] "GET ?redirect:${%23w%3d%23context.get('com.opensymphony.xwork2.dispatcher.HttpServletResponse').getWriter(),%23w.println('[/ok-helo.wang]'),%23w.flush(),%23w.close()} HTTP/1.1" 200 7543 "-" "Python-urllib/2.6"
 
-Apologizes for the confusion,
+The perp (or rather, the 0wn3d box) is somewhere in China.  When decoded, it
+comes out as
 
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+GET ?redirect:${#w=#context.get('com.opensymphony.xwork2.dispatcher.HttpServletResponse').getWriter(),#w.println('[/ok-helo.wang]'),#w.flush(),#w.close()}
 
+but I'm none the wiser.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+-- 
+Dave Horsfall (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
+http://www.horsfall.org/spam.html (and check the home page whilst you're there)
