@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/26
-Message-ID: <20141009173449.GB22696@tracyreed.org>
-Date: Thu, 9 Oct 2014 10:34:49 -0700
-From: Tracy Reed <treed@...raviolet.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/2
+Message-ID: <CAK=zUS19TkgSMoRv_ucqmHmwyWeiE0AUetmbMRxQNeejPahCFg@mail.gmail.com>
+Date: Thu, 30 Oct 2014 17:41:02 +0200
+From: Valery Sizov <valery@...lab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+Subject: CVE request for GitLab groups API
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 08, 2014 at 05:11:43PM PDT, David A. Wheeler spake thusly:
-> It's trivial to implement a language (say Lisp) inside Haskell,
-> and then hand data to that implementation to be executed.
+Hello,
+I would like to request a CVE identifier for a vulnerability in the groups
+API of GitLab.
 
-Sure, but at least with Haskell (and the like) you have to make it very
-explicit that this is what you want to do. A lot of our problems seem to come
-from the mixing happening by accident.
+Affected versions:
+The groups API vulnerability affects GitLab 6.0 and up.
 
-> But mixing code with data is probably an *overused* approach,
-> given the risks that come with it.
+Impact:
+The vulnerability patched by this release allows a guest user to delete the
+owner of a group and to assign any other member as owner through the groups
+API.
 
-Right. Which is why it should be a little more work to do and require that it
-be made explicit that the mixing is what is intended.
+You can read more details here
+https://about.gitlab.com/2014/10/30/gitlab-7-4-3-released/
 
-> We need to help developers know what is safe, and what is less safe.
-> Then they can avoid easily-avoided problems, and know when they have
-> extra work to do.
-
-Educating developers will be equally hard as switching to safer languages but
-at least it is something people will stomache getting started on.
-
--- 
-Tracy Reed, RHCE     Digital signature attached for your safety.
-Copilotco            PCI/HIPAA/SOX Compliant Secure Hosting
-866-MY-COPILOT x101  http://copilotco.com
-
-Content of type "application/pgp-signature" skipped
