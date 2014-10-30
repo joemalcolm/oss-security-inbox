@@ -1,61 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/4
-Message-Id: <201405150317.s4F3HMtH025047@linus.mitre.org>
-Date: Wed, 14 May 2014 23:17:22 -0400 (EDT)
-From: cve-assign@...re.org
-To: mikkel@...utz.dk
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Mumble 1.2.6: Mumble-SA-2014-005 and Mumble-SA-2014-006
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/10
+Message-ID: <000c01cff485$82f86ba0$88e942e0$@mantisforge.org>
+Date: Thu, 30 Oct 2014 21:07:27 -0000
+From: "P Richards" <paul@...tisforge.org>
+To: <oss-security@...ts.openwall.com>
+Subject: RE: SQL injection vulnerability in MantisBT SOAP API
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
->   Mumble-SA-2014-005  [http://mumble.info/security/Mumble-SA-2014-005.txt]
->     - SVG images with local file references could trigger client DoS
-
->     Qt's QSvg module's SVG renderer will follow file references
->     found in SVG's image tag and XML stylesheet references.
-> 
->     For image tags, Qt tries to load the referenced file using
->     QImage's constructor that takes a file path. Further processing
->     is then delegated to an image format plugin.
-> 
->     For XML stylsheets, Qt will attempt to open the referenced
->     file using QFile followed by a call to the readAll(), which
->     will read the file until EOF.
-> 
->     These two possibilities makes it easy to cause a Mumble client
->     to hang
-
-Use CVE-2014-3755.
+CVE-2014-8554 is already assigned to this issue...
 
 
->   Mumble-SA-2014-006  [http://mumble.info/security/Mumble-SA-2014-006.txt]
->     - The Mumble client did not properly HTML-escape some external strings
->        before using them in a rich-text (HTML) context.
+-----Original Message-----
+From: dregad@...il.com [mailto:dregad@...il.com] On Behalf Of Damien Regad
+Sent: 30 October 2014 20:55
+To: oss-security@...ts.openwall.com
+Subject: [oss-security] SQL injection vulnerability in MantisBT SOAP API
 
->        By default, many Qt widgets sniff their text content to
->        determine whether or not to use to render the text as HTML.
->        However, in some places, the Mumble client neglected to
->        properly escape external strings when used rich-text enabled
->        Qt widgets.
+Description:
 
-Use CVE-2014-3756.
+Several SQL injection vulnerabilities were identified in CVE-2014-1609, and subsequently fixed in MantisBT release 1.2.16 [1].
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+However, it was recently discovered that the patch did not fully address the original problem in the SOAP API. Research demonstrates that using a specially crafted 'project id' parameter when calling mc_project_get_attachments(), an attacker could still perform an SQL injection.
 
-iQEcBAEBAgAGBQJTdDFtAAoJEKllVAevmvmsEJkIAIU2hoalUJixp8Wmpyqg0SvI
-t12IioHB0evU+BbyuOVDFdIUDD4KMo8OuKtMZGlvX1SWdgTUbhQo0wZ/3potGmjs
-c7Df8+RZD3Zp8Ajn550vv/3mG1kQc+TPDOoBiiaDDpIErH39SPL1rHzUTIMm7GXD
-BH3iOdsmS8PgO76pM3RLwAo07hlvvkPdXl4C0BqL7Ng6vJ2bCgdYLcYRQaVrPsbb
-ZrZR4SUxAQ0U+/9zOz7LMMZB3oAwfTaqviqONMWZuxdENlNgzlESr3Y5lFtgkwVT
-l3dHzZvcODnZcgbj7aCGAAh7gbaE4NmqiZkQA7q9xeVopl+8zg5eTZq6bNF+4zk=
-=8lvm
------END PGP SIGNATURE-----
+Affected versions:
+MantisBT >= 1.1.0a4, <= 1.2.17
+
+Fixed in versions:
+1.2.18 (not yet released)
+
+Credit:
+Issue was discovered by
+- Edwin Gozeling and Wim Visser from ITsec Security Services BV
+(http://www.itsec.nl)
+- Paul Richards (former MantisBT developer)
+
+References:
+- further details, including patch available in our issue tracker [2] (
+
+Please assign a CVE ID for this issue, which is a follow-up on
+CVE-2014-1609 (the released fix of which was incomplete).
+
+[1] http://www.mantisbt.org/bugs/view.php?id=16880
+[2] http://www.mantisbt.org/bugs/view.php?id=17812
+
