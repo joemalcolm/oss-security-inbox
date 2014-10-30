@@ -1,56 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/9
-Message-ID: <20141222140938.GB32428@core.inversepath.com>
-Date: Mon, 22 Dec 2014 15:09:38 +0100
-From: Andrea Barisani <lcars@...rt.org>
-To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
-Subject: [oCERT-2014-010] SoX input sanitization errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/7
+Message-Id: <20141030185919.39D226DC007@smtpvmsrv1.mitre.org>
+Date: Thu, 30 Oct 2014 14:59:19 -0400 (EDT)
+From: cve-assign@...re.org
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2014-8559 - Linux kernel fs/dcache.c incorrect use of rename_lock
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-#2014-010 SoX input sanitization errors
+CVE-2014-8559 has been assigned to this fs/dcache.c issue that
+leads to a deadlock:
 
-Description:
+  https://lkml.org/lkml/2014/10/25/171
+  https://lkml.org/lkml/2014/10/25/179
+  https://lkml.org/lkml/2014/10/25/180
+  https://lkml.org/lkml/2014/10/26/101
+  https://lkml.org/lkml/2014/10/26/116
+  https://lkml.org/lkml/2014/10/26/129
 
-The SoX project is an open source tool for sound processing.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-The sox command line tool is affected by two heap-based buffer overflows,
-respectively located in functions start_read() and AdpcmReadBlock().
-
-A specially crafted wav file can be used to trigger the vulnerabilities.
-
-Affected version:
-
-SoX <= 14.4.1
-
-Fixed version:
-
-SoX > 14.4.1
-
-Credit: vulnerability report received from the Google Security Team.
-
-CVE: CVE-2014-8145
-
-Timeline:
-
-2014-11-20: vulnerability report received
-2014-12-02: contacted maintainer
-2014-12-13: patch provided by maintainer
-2014-12-14: reporter confirms patch
-2014-12-15: contacted affected vendors
-2014-12-18: assigned CVE
-2014-12-22: advisory release
-
-References:
-http://sox.sourceforge.net
-
-Permalink:
-http://www.ocert.org/advisories/ocert-2014-010.html
-
--- 
-Andrea Barisani |                Founder & Project Coordinator
-          oCERT | OSS Computer Security Incident Response Team
-
-<lcars@...rt.org>                         http://www.ocert.org
- 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
-        "Pluralitas non est ponenda sine necessitate"
+iQEcBAEBAgAGBQJUUojNAAoJEKllVAevmvmsqoEIAKSXqMNzSCPjGLcXMH3zsW4/
+APu98J660O2vsKmXy9W2Di9oe5XeugTCr7RJzP2hDUMmBhWiLZ49GbY9R62SMVPG
+Vi1h9KetJa7u/SDlHoie6YpwSqkYUHysCStgj+aDOe/0yDlUVxk6Z1D01qUDCKy1
+pMD+nX56iwfYOShz0n9IxWqpPt0GZxdbZikGLvOx1YESIT2rs4TT1DLSuptwF+sw
+fGykrsvH5SKjfsVslIe4Hj2VclqQvty14Xkl7ND9Lomr2O1fFts60Ge+sN4Peq/6
+WTdc6uEO+666abSGBQON4o2LOBhQ3sFonugBxdoibSfGbhnktrQcx7TZHtLp/lY=
+=jXFQ
+-----END PGP SIGNATURE-----
