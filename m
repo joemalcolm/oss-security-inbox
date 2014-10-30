@@ -1,36 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/4
-Message-Id: <20140922061940.5FCA8C508C8@smtptsrv1.mitre.org>
-Date: Mon, 22 Sep 2014 02:19:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: geissert@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, sfrench@...ba.org
-Subject: Re: CVE request: [CIFS] Possible null ptr deref in SMB2_tcon / Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/11
+Message-ID: <000d01cff486$02a50d40$07ef27c0$@mantisforge.org>
+Date: Thu, 30 Oct 2014 21:11:01 -0000
+From: "P Richards" <paul@...tisforge.org>
+To: <oss-security@...ts.openwall.com>
+Subject: RE: SQL injection vulnerability in MantisBT SOAP API
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+In addition, it was requested to reference http://www.issue-track.org when acknowledging myself for the issue.
 
-> https://github.com/torvalds/linux/commit/18f39e7be0121317550d03e267e3ebd4dbfbb3ce
+Paul
 
-> a remote null pointer dereference on the client when it resolves DFS
-> referrals but the server deletes the IPC$ share
+-----Original Message-----
+From: dregad@...il.com [mailto:dregad@...il.com] On Behalf Of Damien Regad
+Sent: 30 October 2014 20:55
+To: oss-security@...ts.openwall.com
+Subject: [oss-security] SQL injection vulnerability in MantisBT SOAP API
 
-Use CVE-2014-7145.
+Description:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Several SQL injection vulnerabilities were identified in CVE-2014-1609, and subsequently fixed in MantisBT release 1.2.16 [1].
 
-iQEcBAEBAgAGBQJUH770AAoJEKllVAevmvmsiL4IAJ9aj8yfekGtS4Kyt2dRLnly
-av6SgC6boqceDNhRzBSQ+c4l1u64ve8oaLz64AaEgwnbZmtRZSygUc/6vgs83oGu
-DvZ5Pmdz9pSP60hU+z6RQtSHcOdyHEhxU/wgBbRorVIM10heuBr+yVPyC9lYdGzP
-nsQgISYRwI+GsPb4HRGUCKaNR2q2LzYVveSB40Iulzql8P8YEK3rAj7z/iBaVRBR
-CYeYtWg/LTc1EKdPCJrxPgbfqEZ6dIdgWLLTOH7LbQcY6mv8LpvjdwJ9aHzqFu2Y
-UvFTqjsQjm4u0WlMZkjBKNOnjFkf7CSAdDgut7mrgOyxAjtc75Quh+WSaWzxeis=
-=U4yc
------END PGP SIGNATURE-----
+However, it was recently discovered that the patch did not fully address the original problem in the SOAP API. Research demonstrates that using a specially crafted 'project id' parameter when calling mc_project_get_attachments(), an attacker could still perform an SQL injection.
+
+Affected versions:
+MantisBT >= 1.1.0a4, <= 1.2.17
+
+Fixed in versions:
+1.2.18 (not yet released)
+
+Credit:
+Issue was discovered by
+- Edwin Gozeling and Wim Visser from ITsec Security Services BV
+(http://www.itsec.nl)
+- Paul Richards (former MantisBT developer)
+
+References:
+- further details, including patch available in our issue tracker [2] (
+
+Please assign a CVE ID for this issue, which is a follow-up on
+CVE-2014-1609 (the released fix of which was incomplete).
+
+[1] http://www.mantisbt.org/bugs/view.php?id=16880
+[2] http://www.mantisbt.org/bugs/view.php?id=17812
+
