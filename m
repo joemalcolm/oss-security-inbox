@@ -1,36 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/29/4
-Message-ID: <20140729221437.3a1f69ac@redhat.com>
-Date: Tue, 29 Jul 2014 22:14:37 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Additional information on CVE-2014-2469?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/12
+Message-ID: <m2ubg1$6og$1@ger.gmane.org>
+Date: Thu, 30 Oct 2014 22:44:32 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: SQL injection vulnerability in MantisBT SOAP API
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 21 Jul 2014 11:19:21 -0700 Ritwik Ghoshal wrote:
+On 30.10.2014 22:07, P Richards wrote:
+> CVE-2014-8554 is already assigned to this issue...
 
-> > Is there anyone from Oracle on the list? Does anyone have further
-> > information on CVE-2014-2469?
-> > https://blogs.oracle.com/sunsecurity/entry/cve_2014_2469_denial_of
+Sorry for the confusion here - Paul and I were actually both working on
+the same issue simultaneously and without knowing it, and we both came
+up with a patch and a CVE request...
+
+So please disregard my earlier request, and let's use CVE-2014-8554
+moving forward.
+
+That said, it would be useful indeed if someone could update
+CVE-2014-8554 with the data below, as this will become the "official"
+reference for the issue and the fix.
+
+> -----Original Message-----
+> From: dregad@...il.com [mailto:dregad@...il.com] On Behalf Of Damien Regad
+> Sent: 30 October 2014 20:55
+> To: oss-security@...ts.openwall.com
+> Subject: [oss-security] SQL injection vulnerability in MantisBT SOAP API
 > 
-> As far as we know CVE-2014-2469 affects lighttpd in Solaris only. I
-> have fixed the typo in our advisory. Thank you for pointing it out.
+> Description:
+> 
+> Several SQL injection vulnerabilities were identified in CVE-2014-1609, and subsequently fixed in MantisBT release 1.2.16 [1].
+> 
+> However, it was recently discovered that the patch did not fully address the original problem in the SOAP API. Research demonstrates that using a specially crafted 'project id' parameter when calling mc_project_get_attachments(), an attacker could still perform an SQL injection.
+> 
+> Affected versions:
+> MantisBT >= 1.1.0a4, <= 1.2.17
+> 
+> Fixed in versions:
+> 1.2.18 (not yet released)
+> 
+> Credit:
+> Issue was discovered by
+> - Edwin Gozeling and Wim Visser from ITsec Security Services BV
+> (http://www.itsec.nl)
+> - Paul Richards (former MantisBT developer)
+> 
+> References:
+> - further details, including patch available in our issue tracker [2] (
+> 
+> Please assign a CVE ID for this issue, which is a follow-up on
+> CVE-2014-1609 (the released fix of which was incomplete).
+> 
+> [1] http://www.mantisbt.org/bugs/view.php?id=16880
+> [2] http://www.mantisbt.org/bugs/view.php?id=17812
+> 
+> 
 
-Is there a good reason to not provide any actionable details?  Flaw
-details and/or patch link (I'm assuming this got corrected upstream
-too).  It's not uncommon for vendors fixing a vendor-specific issue to
-send a heads-up here and to upstream rather than letting everyone else
-using affected component to struggle trying to find any details.  In
-this case, you don't even seem to know if it actually was vendor
-specific.
 
-Can Oracle ensure that actionable details are provided for any Oracle
-assigned CVEs for open-source components?  Regardless of who the
-upstream is.  MySQL is a good example - there were previous requests to
-provide at least minimal details to unambiguously map assigned CVEs to
-specific issues, all refused or ignored.  This is a good place to share
-such information.
+---
+This email is free from viruses and malware because avast! Antivirus protection is active.
+http://www.avast.com
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+
