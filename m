@@ -1,44 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/30/2
-Message-Id: <201401300454.s0U4sMLc002888@linus.mitre.org>
-Date: Wed, 29 Jan 2014 23:54:22 -0500 (EST)
-From: cve-assign@...re.org
-To: puneethis021@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE: Request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/5
+Message-ID: <20141030184739.GB71386@TC.local>
+Date: Thu, 30 Oct 2014 11:47:39 -0700
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, secalert@...hat.com
+Subject: Arbitrary file existence disclosure in Action Pack (CVE-2014-7818)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Arbitrary file existence disclosure in Action Pack
 
-> I have reported cross site scripting(xss) in Nokia Maps & Places(v:1.6.6)
-> wordpress plugin.
+There is an information leak vulnerability in Action Pack. This vulnerability
+has been assigned the CVE identifier CVE-2014-7818.
 
-> Issue Fixed on : 20/01/2014
+Versions Affected:  >= 3.0.0
+Not affected:       <= 3.0.0
+Fixed Versions:     3.2.20, 4.0.11, 4.1.7, 4.2.0.beta3
 
-> https://plugins.trac.wordpress.org/changeset?new=842384%40nokia-mapsplaces%2Ftrunk%2Fnokia-mapsplaces.php&old=802499%40nokia-mapsplaces%2Ftrunk%2Fnokia-mapsplaces.php
+Impact
+------
+Specially crafted requests can be used to determine whether a file exists on the filesystem that is outside the Rails application's root directory.  The files will not be served, but attackers can determine whether or not the file exists.
 
-> https://plugins.trac.wordpress.org/browser/nokia-mapsplaces/trunk/nokia-mapsplaces.php?rev=841883
-> fixing href sec. issue. Place is is extracted instead of passing the full url which can be compromised
+This only impacts Rails applications that enable static file serving at
+runtime.  For example, the application's production configuration will say:
 
-> https://plugins.trac.wordpress.org/browser/nokia-mapsplaces/trunk/nokia-mapsplaces.php?rev=842384
-> adding context to placeid when stored, removing href to prevent url injection
+  config.serve_static_assets = true
 
-Use CVE-2014-1750.
+All users running an affected release should either upgrade or use one of the work arounds immediately.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Releases 
+-------- 
+The 3.2.20, 4.0.11, 4.1.7 & 4.2.0.beta3 releases are available at the normal locations. 
 
-iQEcBAEBAgAGBQJS6dgPAAoJEKllVAevmvms2RUIALgdXfCiG7qNw9vDGay7u6fK
-k00XiXVomz74EZ5NcFQhowXeDD7w/3SB/b1184DSxeAyV8OgzbNNZIM2eebb3n/7
-ZeoVni1mifs9SreoQj1mp8bzSr/IDCUgjU58qAHYC7Bekqw1Sy/nSvWFfEGxxxJ3
-paccCGcfJqcJyoIVuAKJre0avFB7fXXsFwovOjgto/K4TqDGa2wabrYF9lcx6kew
-3uu3D4gyBdCbioZRhoe0F5R32XQrlHep9OX9wIhveIKUV/JqHxROxO+3oZmjDpr4
-qU5qVvG1eLy7ZOM3bl/rQWnEE6opoNLJ/HonQxN2d9rXXwlnh+tLl5m3AjM46jU=
-=oS6K
------END PGP SIGNATURE-----
+Workarounds 
+----------- 
+To work around this issue, set config.serve_static_assets = false in an initializer.  This work around will not be possible in all hosting environments and upgrading is advised.
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 3-1-sec-static-files.patch - Patch for the 3.1.x release series
+* 3-2-sec-static-files.patch - Patch for the 3.2.x release series
+* 4-0-sec-static-files.patch - Patch for the 4.0.x release series
+* 4-1-sec-static-files.patch - Patch for the 4.1.x release series
+
+Please note that only the 3.2.x, 4.0.x & 4.1.x  series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+------- 
+
+This vulnerability was reported by multiple researchers working independently.  Thanks to each of them for reporting the issue to us and verifying the fixes.
+
+* Eaden McKee
+* Dennis Hackethal & Christian Hansen of Crowdcurity
+* Juan C. Müller & Mike McClurg of Greenhouse.io 
+* Alex Ianus of Coinbase
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-1-sec-static-files.patch" of type "text/plain" (3046 bytes)
+
+View attachment "3-2-sec-static-files.patch" of type "text/plain" (3086 bytes)
+
+View attachment "4-0-sec-static-files.patch" of type "text/plain" (3342 bytes)
+
+View attachment "4-1-sec-static-files.patch" of type "text/plain" (3343 bytes)
+
+Content of type "application/pgp-signature" skipped
