@@ -1,40 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/5
-Message-Id: <201406040625.s546OuBx028744@linus.mitre.org>
-Date: Wed, 4 Jun 2014 02:24:56 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/31/2
+Message-Id: <20141031060940.33B4542E031@smtpvbsrv1.mitre.org>
+Date: Fri, 31 Oct 2014 02:09:40 -0400 (EDT)
 From: cve-assign@...re.org
-To: delphij@...phij.net
+To: valery@...lab.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: sendmail close-on-exec issue -- CVE assigned?
+Subject: Re: CVE request for GitLab groups API
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> (Quote from ftp://ftp.sendmail.org/pub/sendmail/RELEASE_NOTES )
+> The groups API vulnerability affects GitLab 6.0 and up.
 > 
-> 8.14.9/8.14.9   2014/05/21
->         SECURITY: Properly set the close-on-exec flag for file
->                 descriptors (except stdin, stdout, and stderr) before
->                 executing mailers.
+> The vulnerability patched by this release allows a guest user to delete the
+> owner of a group and to assign any other member as owner through the groups
+> API.
+> 
+> You can read more details here
+> https://about.gitlab.com/2014/10/30/gitlab-7-4-3-released/
 
-> http://www.sendmail.com/sm/open_source/download/8.14.9/
-
-Use CVE-2014-3956.
-
-Note that the unpatched code (in, for example, 8.14.8) has this in
-conf.c:
-
-  **      Parameters:
-  **              lowest -- first fd to arrange to be closed
-  **              highest -- last fd + 1 to arrange to be closed
-
-  void sm_close_on_exec(highest, lowest)
-
-but callers use arguments of highest=STDERR_FILENO+1 and
-lowest=DtableSize, apparently a CWE-683 issue.
-
-8.14.9 has "void sm_close_on_exec(lowest, highest)" instead.
+Use CVE-2014-8540.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -44,11 +30,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTjrthAAoJEKllVAevmvmsm2gIAL6fzTGr2K76MASMo2sqE+97
-F8eJOcdo1pbaBmENvrBYp1VEdy44xA3su6L7jYpQDeuh8J1dOfn9JmtItCuwQHco
-HTf87fdJoUiHWSPt7VpuISRoCu/BdOJulyhivJuN5aaNK8elpBTZC62Fn2xN4zdp
-W1E6AEeePK83jMJuf+pK8WR5WJLnoBQPs33FrFXiJGskoa54FOSgUvpMa6b0cGIe
-UDT3tWhNb6UFQ82zQHNAsx6cmtJuG83wNfTkFdUm6HFs4EbsBSz+AvN8ILJoRJhU
-rShAOQeXwbWkOwhbQqehq+MBZFdvB6k3zRcjr4LZziVg9swdlr96WcbhLOJj7Ek=
-=EjVD
+iQEcBAEBAgAGBQJUUybcAAoJEKllVAevmvmsuhEIAKKDP7Kmi/4quOx8ZVRTinSP
+WJDNozG2D8ivcPhb5N7tWn/uqXZKa3KJp84JYRbKsF0DXeghfJc8/ODoZcAxpb06
+5k1POZQ0Id4/3lvcYPZjM6rZXEod2PrcNsNU1KzU1IdubkxONieVKZUSgsWTEGrQ
+qRuUZ6nCxTy810x72IJb/z6dRemIykMyEY3qu5sOrn19DHozFnuJCZ79h9K9+d2K
+inqsOLS40toauo+/KpmqBsU+n2fKXC86QCYR7znczLn8iqPuZjXfULiXlboWWhaS
+c9AzX7gQysIFrJeLvt3j5AKiycGK15GLEK7tuDG65756ef8oW7/auuC8hkUxZ/4=
+=Ghwv
 -----END PGP SIGNATURE-----
