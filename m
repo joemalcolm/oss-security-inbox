@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/1
-Message-Id: <201402100030.s1A0UB78002182@linus.mitre.org>
-Date: Sun, 9 Feb 2014 19:30:11 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/31/3
+Message-Id: <20141031061424.7ACF642E031@smtpvbsrv1.mitre.org>
+Date: Fri, 31 Oct 2014 02:14:24 -0400 (EDT)
 From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 736969@...s.debian.org
-Subject: Re: (possible) CVE request: suPHP 0.7.2 release fixed a possible arbitrary code execution
+To: roucaries.bastien@...il.com, hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Request cve for imagemagick security problem
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> suPHP 0.7.2 has been released.
-> This release fixes a security issue that was introduced with the 0.7.0
-> release. This issue affected the source-highlighting feature and could
-> only be exploited, if the suPHP_PHPPath option was set. In this case
-> local users which could create or edit .htaccess files could possibly
-> execute arbitrary code with the privileges of the user the webserver
-> was running as.
+> Removing profile from jpg image create infinite loop with at least
+> 6.8.9.6 version.
+> More information https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764872
+> and fix is
+> http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26399#p116146
 
-Use CVE-2014-1867. A commit reference isn't strictly necessary, but
-without one we sometimes wait a short time for further information
-before sending a CVE assignment, in case the issue (for example)
-actually had multiple vulnerability types.
+Use CVE-2014-8561.
+
+
+> Out-of-bound memory error in DCM decode has no CVE yet (if CVE
+> assigners read this they may assign one).
+
+Use CVE-2014-8562.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -32,11 +33,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJS+BvwAAoJEKllVAevmvmsl7QH/jw1FQDZ72Y6+iFXRxoNH/zF
-vFWiTpi7G6TG9vM9H25iPn8tqwhWZLvHRrxmdjQ3E95PaRE7kNgNTs0ju9HuCein
-1+JZ+PGZvCuTcKQgesW2/0XgEIX1OK0eTXsvS4joZ1FS2m4ODzZ7eoEX02fn5rqB
-VWiV+X80MAv0HO/SAcf4mhuAz6iofEjVbEL+1+/QCMpO12CGFCIZRF0nXoFvjdRh
-gWNIhVn88IifPP4Vvo3sfIinAMEcN/7CeMiRZ2nf4hkuTQlIaKD6SEfKFQK+T20c
-9mBKxA0Mj0P4fDkqm7EZk612OP9pi2cox0V3+GaIzbQQpaP3RAEpkmyJZNY9zSU=
-=IuVz
+iQEcBAEBAgAGBQJUUygXAAoJEKllVAevmvmsQAgIALg2fB1M8QuGDrhzs0NRcc/v
+5EqEX0SGyXi6TFyd/bAG8O4c6sp0SIPgd7RWZ00XKpS26NzubmFwGUgL2TQPNxvn
+7BEIKzg8ZcMOQdXXddXFvCua+52YbysQteIqAsDTCESmZXshBPpDpdxfbMozpd9m
+LGCIDv1ATF/8LE9R/zBSjmpnLk+Trp8RQwQTTsh0YRumGUCmW03MnCBFe9J+2gnj
+8UecMPoj/IkBFL2GbUeM51d/Lk8cR4WeCGLtxCPZ//gIGOZHnQIF6L+oKg+5SgwD
+Pnr9oIaA/vEM0BEtQrISrektYqXHyc+DjuqsCoUiSU8HmAM07eLcgGqQnucC3hc=
+=xQpo
 -----END PGP SIGNATURE-----
