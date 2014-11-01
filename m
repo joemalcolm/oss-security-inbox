@@ -1,47 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/7
-Message-ID: <CAHgqqbRXpcutr4b2d3nrYk9Md0Wa539dzKO2gJwRzHgmdDBF3g@mail.gmail.com>
-Date: Thu, 15 May 2014 18:56:02 +0300
-From: Dolev Farhi <dolevf87@...il.com>
-To: cve-assign <cve-assign@...re.org>, oss-security <oss-security@...ts.openwall.com>
-Subject: OpenFiler - Arbitrary Code Execution & Stored XSS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/01/1
+Message-ID: <20141101021336.GT18340@mewburn.net>
+Date: Sat, 1 Nov 2014 13:13:36 +1100
+From: Luke Mewburn <lukem@...BSD.org>
+To: oss-security@...ts.openwall.com
+Cc: Luke Mewburn <lukem@...BSD.org>
+Subject: tnftp 20141031 released to resolve CVE-2014-8517.
 Content-Type: text/plain; charset=utf-8
 
-hi,
+Hi,
 
-Multiple vulnerabilities were discovered in the latest version of OpenFiler
-appliance, 2.99.1 as reported
-here<https://forums.openfiler.com/index.php?/topic/6720-arbitrary-code-execution-stored-xss-vulnerability-in-openfiler-latest-version-2991/>,
-here <http://www.exploit-db.com/exploits/33247> and
-here<http://www.exploit-db.com/exploits/33248>
-OpenFiler is a FreeNAS appliance equivalent.
+Alistair Crooks (NetBSD Security Office) suggested that I notify this list.
 
+I've released an update of tnftp which contains NetBSD's fix
+to the recent CVS-2014-8517.
 
-- Vulnerability 1
-OpenFiler is vulnerable to an arbitrary code execution attack by not
-validating the hostname input, this vulnerability allows an attacker to
-execute any system shell command with the root user privileges.
+tnftp is the portable version of NetBSD's ftp, and various
+distros use it.
 
-- Proof of concept:
-i.  Login with any available user
-ii. Change the hostname value to `cat /etc/passwd`
-iii. Submit
+The release may be found at:
+	ftp://ftp.netbsd.org/pub/NetBSD/misc/tnftp/tnftp-20141031.tar.gz
+and detached signature.
+	ftp://ftp.netbsd.org/pub/NetBSD/misc/tnftp/tnftp-20141031.tar.gz.asc
 
-* Refreshing the screen / Reloading the page results with passwd content in
-the OpenFiler system hostname value.
+The relevant entries from the NEWS file are:
 
-- Vulnerability 2
-Multiple Stored XSS were found in OpenFiler, by creating a volume group or
-a network access configuration with malicious code e.g.
-<script>alert("css")</script> any user attempt to create, view or modify
-volume shares executes the attack.
+===
+Changes in tnftp from 20130505 to 20141031:
 
-Proof of concept vids
-1. Link 1 <http://research.openflare.org/poc/openfiler/codexec.mp4>
-2. Link 2 <http://research.openflare.org/poc/openfiler/xss.mp4>
+        Ignore special character behaviour in filenames not provided
+	by the user.
+	Fixes CVE-2014-8517.
+
+	Fix timeout on HTTP fetches.
+===
 
 
-Can CVEs please be assigned to these issues?
+regards,
+Luke.
 
-Tx
-
+Content of type "application/pgp-signature" skipped
