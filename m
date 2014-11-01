@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/15
-Message-ID: <CADk+mPAEBYgJapiyLRYhrLiBLRhmuvPd1fh_SfkOghxTsbm0qw@mail.gmail.com>
-Date: Tue, 30 Sep 2014 12:49:23 +0200
-From: Rainer Gerhards <rgerhards@...adiscon.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/01/3
+Message-ID: <m33rhm$9cf$1@ger.gmane.org>
+Date: Sun, 02 Nov 2014 00:49:11 +0100
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: vulnerability in rsyslog
+Subject: Re: SQL injection vulnerability in MantisBT SOAP API [CVE-2014-8554]
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
+Following up on earlier messages about this issue, please note that I 
+just pushed a patch to our official repository on Github [1].
 
-attached find a tarball with the advisory ("pri-vuln.txt") and patches for
-important versions. The 7.6.6 and 8.4.1 versions released today are fully
-patched.
+We plan to release MantisBT 1.2.18 in the next few days, as we're 
+finalizing fixes for a few additional issues. I'll post back here when 
+the new version goes live.
 
-Best regards,
-Rainer Gerhards
-rsyslog development lead
+Damien
 
-Content of type "text/html" skipped
 
-Download attachment "pri-vuln.tar.gz" of type "application/x-gzip" (14087 bytes)
+[1] http://github.com/mantisbt/mantisbt/commit/99ffb0af (1.2.x branch)
+     http://github.com/mantisbt/mantisbt/commit/5faf97ab (master)
+
+
