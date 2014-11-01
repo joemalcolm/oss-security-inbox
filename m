@@ -1,34 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/17/4
-Message-ID: <20140217085857.GF23689@dhcp-25-225.brq.redhat.com>
-Date: Mon, 17 Feb 2014 09:58:58 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/01/2
+Message-ID: <alpine.BSF.2.00.1411020435250.84102@aneurin.horsfall.org>
+Date: Sun, 2 Nov 2014 04:40:54 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0069 -- kernel: cifs: incorrect handling of bogus user pointers during uncached writes
+Subject: Re: Some weird Apache redirection exploit?
 Content-Type: text/plain; charset=utf-8
 
-A flaw was found in the way cifs handled iovecs with bogus pointers
-userland passed down via writev() during uncached writes.
+On Thu, 30 Oct 2014, Tim wrote:
 
-An unprivileged local user with access to cifs share could use this flaw
-to crash the system or leak kernel memory. Privilege escalation cannot
-be ruled out (since memory corruption is involved), but is unlikely.
+> > 117.27.254.25 - - [31/Oct/2014:05:16:15 +1100] "GET ?redirect:${%23w%3d%23context.get('com.opensymphony.xwork2.dispatcher.HttpServletResponse').getWriter(),%23w.println('[/ok-helo.wang]'),%23w.flush(),%23w.close()} HTTP/1.1" 200 7543 "-" "Python-urllib/2.6"
+> 
+> An exploit for one of the many Apache Struts vulnerabilities.
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-0069
+Thanks; I'm just getting back into the web game after a hiatus, and things 
+have, err, changed...
 
-Upstream patch:
+On the bright side, at least I know where *not* to put my PHP scripts for 
+example, any more than I would park SSHD on port 22.
 
-Patches have been reported to the linux-cifs mailing list:
-
-http://article.gmane.org/gmane.linux.kernel.cifs/9401
-http://article.gmane.org/gmane.linux.kernel.cifs/9402
-
-Only the first patch is required to fix the flaw.  The second patch is
-to ensure that this does not get hit again in the future by adding
-extra protection. 
-
-Thanks,
 -- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Dave Horsfall (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
+http://www.horsfall.org/spam.html (and check the home page whilst you're there)
