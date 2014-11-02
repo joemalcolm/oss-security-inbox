@@ -1,85 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/6
-Message-ID: <52D566D4.802@redhat.com>
-Date: Tue, 14 Jan 2014 09:33:24 -0700
-From: Eric Blake <eblake@...hat.com>
-To: cve-assign@...re.org, pmatouse@...hat.com
-CC: oss-security@...ts.openwall.com, libvirt-security@...hat.com, jdenemar@...hat.com
-Subject: Re: CVE Request -- libvirt: denial of service with keepalive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/02/5
+Message-ID: <20141103002034.1ef5a1c7@pc>
+Date: Mon, 3 Nov 2014 00:20:34 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+Thanks for bringing this up, I wanted to ask the basically
+the same questions. I think your list gives some indication what we're
+talking about.
 
-On 01/14/2014 09:25 AM, cve-assign@...re.org wrote:
->> https://bugzilla.redhat.com/show_bug.cgi?id=1047577
-> 
->> This is now fixed upstream by v1.2.1-rc1-33-g173c291:
-> 
->> To avoid the crash, virNetServerClientStartKeepAlive needs to check if
->> the connection is still open before starting keep-alive protocol.
-> 
-> Use CVE-2014-1447 for this issue in which the product does not check
-> whether the connection is still open. This corresponds to
-> 173c2914734eb5c32df6d35a82bf503e12261bcf, which apparently would be of
-> some value in some attack scenarios.
-> 
-> 
->> And really fixed by v1.2.1-rc1-37-g066c8ef:
-> 
->> it is possible to hit a window when client->keepalive is NULL while
->> client->sock is not NULL. I was thinking client->sock == NULL was a
->> better check for a closed connection but apparently we have to go with
->> client->keepalive == NULL to actually fix the crash.
-> 
-> Use CVE-2014-1448 for this issue in which the product does not
-> properly check whether the connection is still open. This corresponds
-> to 066c8ef6c18bc1faf8b3e10787b39796a7a06cc0, which apparently is of
-> value in additional attack scenarios.
-> 
-> In deciding to SPLIT, all of these factors were considered but we
-> don't want to try to precisely specify whether any one factor would be
-> sufficient on its own:
+I did quite a lot of fuzzing tests recently and have a bunch of issues
+pending. Basically "all bugs should be fixed" so I'm reporting them to
+the upstreams no matter what, but it's certainly worth a discussion if
+every out of bounds read (or write) should be considered a sec issue
+and have its own CVE.
 
-The libvirt team thinks the decision to SPLIT was overkill, and that a
-single CVE would have been sufficient.
+In the past my stance on this was that every potential sec
+vuln deserves a CVE. However given that sometimes CVEs were rejected
+because they were not shown to be exploitable I feel this is currently
+not shared by mitre.
 
-> 
-> 1. There seem to be two distinct version-like identifiers,
-> v1.2.1-rc1-33-g173c291 and v1.2.1-rc1-37-g066c8ef, which can be
-> interpreted as different affected versions.
+I'd apprechiate if we had some clear guidelines that we could stick to
+when requesting CVEs for these kinds of issues.
 
-Neither of those versions is released.  The only released version is 1.2.1.
+For the binutils case we could probably have some grouping CVEs or
+just one for all the remaining ones (e.g. "multiple memory corruption
+issues in binary parsers of libbfd" or something alike).
+But this is also a generic question. E.g. I have two issues in
+different gimp plugins pending - should they receive their own cve
+because they affect different fileformats or just one? (or none because
+both are only oob read)
 
-> 
-> 2. The first patch alone was accepted in the
-> https://www.redhat.com/archives/libvir-list/2014-January/msg00532.html
-> and
-> https://www.redhat.com/archives/libvir-list/2014-January/msg00554.html
-> messages.
-
-Yes, it took two patches to fully fix the issue.  But the symptoms of
-the issue are identical (you either have the connection issue, or you
-don't, and it wasn't until the second patch that you get rid of the
-connection issue).  But this is no different to other cases of fixing
-bugs in unreleased code.
-
-> 
-> 3. http://libvirt.org/downloads.html says "Once an hour, an automated
-> snapshot is made from the git server source tree. These snapshots
-> should be usable." This suggests that a "version" with only the first
-> patch was, in some realistic sense, "packaged for distribution," and
-> could conceivably be in use somewhere.
-
-No, the hourly builds are NOT supported releases; we can update the
-downloads.html page to explicitly mention that they are to be used at
-own risk.
-
-However, since you have already assigned both numbers, we can go ahead
-and use them :(
-
+cu,
 -- 
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
+Hanno Böck
+http://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Download attachment "signature.asc" of type "application/pgp-signature" (605 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
