@@ -1,27 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/6
-Message-ID: <20141113152056.GS5570@dhcp-25-225.brq.redhat.com>
-Date: Thu, 13 Nov 2014 16:20:56 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/02/1
+Message-ID: <87tx2hyfuu.fsf@mid.deneb.enyo.de>
+Date: Sun, 02 Nov 2014 12:57:45 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-7841 Linux kernel: net: sctp: NULL pointer dereference in af->from_addr_param on malformed packet
+Subject: CVE-2014-7207 assignment: Debian-specific Linux 3.2 backport issue
 Content-Type: text/plain; charset=utf-8
 
-An SCTP server doing ASCONF will panic on malformed INIT ping-of-death
-in the form of:
+Debian has assigned CVE-2014-7207 to the following issue:
 
- ------------ INIT[PARAM: SET_PRIMARY_IP] ------------>
+    Several Debian developers reported an issue in the IPv6 networking
+    subsystem. A local user with access to tun or macvtap devices, or
+    a virtual machine connected to such a device, can cause a denial
+    of service (system crash).
 
-A remote attacker could use this flaw to crash the system by sending a
-maliciously prepared SCTP packet in order to trigger a NULL pointer
-dereference on the server.
+    This update includes a bug fix related to CVE-2014-7207 that
+    disables UFO (UDP Fragmentation Offload) in the macvtap, tun, and
+    virtio_net drivers. This will cause migration of a running VM from
+    a host running an earlier kernel version to a host running this
+    kernel version to fail, if the VM has been assigned a virtio
+    network device. In order to migrate such a VM, it must be shut
+    down first.
 
-Upstream patch:
-https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=e40607cbe270a9e8360907cb1e62ddf0736e4864
+The bug report with a few more details is here:
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1163087
+  <https://bugs.debian.org/766195>
 
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+We believe this is specific to Debian's Linux 3.2-based backport
+series.
