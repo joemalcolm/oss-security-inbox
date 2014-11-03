@@ -1,25 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/1
-Message-ID: <5431FD11.4040908@redhat.com>
-Date: Sun, 05 Oct 2014 20:23:13 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/2
+Message-ID: <20141103012316.GN5077@pc.thejh.net>
+Date: Mon, 3 Nov 2014 02:23:17 +0100
+From: Jann Horn <jann@...jh.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
+On Sun, Nov 02, 2014 at 04:57:23PM -0800, Michal Zalewski wrote:
+> Call stack exhaustion is generally non-exploitable
+> in itself.
 
-
-On 05/10/14 01:48 PM, Sona Sarmadi wrote:
-> A while ago I sent a membership request to the closed vendor list and was denied by you & Kurt :) which was understandable since we were not ready at that time. After that we have worked hard to create a security team and build in-house security competence. We have been looking at security tests and tools, define a security incident management processes, create security checklist, we have been tracking all security vulnerabilities. As part of our security process we have insured that our bug tracking system has in-built security so sensitive/embargoed information can be kept confidential.
-
-To be clear I'm not a list admin or in control of it in any way shape or
-form (at least that I'm aware of, Solar if I am in charge you should
-probably let me know ;). I simply voiced concerns (e.g. lack of security
-advisories/etc.
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
+It can be exploitable in multithreaded programs though if there is
+an unused stack allocation of at least one page further down in the
+stack.
 
 Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
