@@ -1,28 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/8
-Message-ID: <20141117141040.7ee7eab5@pc>
-Date: Mon, 17 Nov 2014 14:10:40 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/17
+Message-ID: <20141103215630.4b2f1389@pc>
+Date: Mon, 3 Nov 2014 21:56:30 +0100
 From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+Subject: Re: RE: strings /libbfd crash
 Content-Type: text/plain; charset=utf-8
 
-Am Mon, 17 Nov 2014 13:48:39 +0100
-schrieb Raphael Geissert <geissert@...ian.org>:
+Am Tue, 04 Nov 2014 05:21:42 +1100
+schrieb Joshua Rogers <oss@...ernot.info>:
 
-> > c) fuzz all the tools in there and report at least the
-> > low-hanging-fruit-bugs? (and then maybe try to replace the
-> > "they-don't-fix-bugs-or-don't-have-a-dev-any-more"-tools with more
-> > secure ones)
+> I'd like to expand on this:
+> http://openwall.com/lists/oss-security/2014/10/27/4
+> and mention that 'ihex.c' is also vulnerable to the same thing, as
+> they share the same code.
 > 
-> d) acknowledge the fact that most tools were not "designed for
-> security" and that we should talk about mitigation. It's about risk
-> analysis.
+> > :10010000214601360121470136007EFE09D2190140
+> > :100110002146017E17C0001FF5F16002148011928
+> > :10012000194E79234623965778239EDA3F01B2CAA7
+> > :100130003F0156702B5E712B722B732146013421C7
+> > :00000001Ff
+> 
+> is an example of code that will crash it.
 
-Fair point, however it doesn't exclude doing c) as well. (however it
-was my understanding that all widely deployed memory corruption
-mitigation methods are mostly incomplete and can usually be circumvented
-by tricky enough exploits - but I'm no expert on this)
+I can't reproduce that, I just get
+BFD: test1.ihex:2: unexpected character `s' in Intel Hex file
+
+Can you upload the raw file somewhereß
 
 -- 
 Hanno Böck
