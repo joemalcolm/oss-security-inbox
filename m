@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/26
-Message-ID: <CABniQZM0f2_T-DBSxL6v_c2uxWmMuJbz_FhmFeV3UEYNPpH=uQ@mail.gmail.com>
-Date: Thu, 2 Oct 2014 05:11:53 +0800
-From: Shawn <citypw@...il.com>
-To: Chet Ramey <chet.ramey@...e.edu>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/3
+Message-ID: <5456F860.5030909@redhat.com>
+Date: Mon, 03 Nov 2014 14:37:04 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: unzip -t crasher
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 2, 2014 at 5:08 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
-> On 10/1/14, 5:04 PM, Shawn wrote:
->> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
+On 11/03/2014 05:06 AM, Jakub Wilk wrote:
+> Latest American fuzzy lop[0] tarball[1] contains a zip file that crashes
+> unzip -t:
 >
-> Nope, this one fixes 7168/7169.  It's the equivalent of the
-> `parser-oob' patch.
+> $ unzip -qt afl-0.43b/docs/samples/unzip_t_malloc.zip
+> foo/:  mismatching "local" filename (™/UT),
+>          continuing with "central" filename version
+> *** Error in `unzip': free(): corrupted unsorted chunks:
+> 0x00000000015d0170 ***
 >
-> I have patches that fix 6277/6278 that are in the pipeline.
+> I'm not sure if inclusion of said zip file was intentional, but since
+> the cat is already out of the bag, I thought I'll let you know.
 >
-oh, s0rry for the mistake...that'd be great if we can get the patch as
-quickly as possible. Thanks.
+> [0] https://code.google.com/p/american-fuzzy-lop/
+> [1] http://lcamtuf.coredump.cx/afl.tgz
+>
 
-> --
-> ``The lyf so short, the craft so long to lerne.'' - Chaucer
->                  ``Ars longa, vita brevis'' - Hippocrates
-> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+Hi,
 
+I had a quick look at unzip-6.0-12.fc20. It did not crash there for me 
+but there are invalid reads and an invalid write.
 
+For the invalid write, the problem may manifest here in memextract():
 
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
+2282             memcpy((char *)tgt, (char *)G.inptr, (extent)G.incnt);
 
-regards
-Shawn
+On my system, G.incnt was 52729.
+
+Cheers,
+
+--
+Murray McAllister / Red Hat Product Security
