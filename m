@@ -1,18 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/46
-Message-ID: <CALx_OUDxmuso3cVpcM9dUKobjQxiZFLC72d0py_4xbPuccsTuQ@mail.gmail.com>
-Date: Thu, 25 Sep 2014 12:53:35 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/7
+Message-ID: <1074bc0ba3cc4b133532e2101c17886f@tribut.de>
+Date: Mon, 03 Nov 2014 11:33:21 +0100
+From: Felix Eckhofer <felix@...but.de>
 To: oss-security@...ts.openwall.com
-Cc: Tavis Ormandy <taviso@...gle.com>, Chester Ramey <chet.ramey@...e.edu>,  Solar Designer <solar@...nwall.com>
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: Re: unzip -l crasher
 Content-Type: text/plain; charset=utf-8
 
-> Yeah, that general approach is probably the best.  I was just wondering.
-> I don't really see the need to use a prefix and a suffix, though.
+Hey.
 
-Prefix is definitely more valuable, because specific prefixes are
-enforced by Apache and its ilk, but the suffix for the HTTP header ->
-shell variable propagation is within attacker's control.
+Am 03.11.2014 11:25, schrieb Martin Carpenter:
+> "ERROR: Spammer stay away!"
 
-/mz
+Forwarded your mail using the form ("Bug report mailed to Info-ZIP"). 
+Apparently I am not a spammer.
+
+
+
+felix
