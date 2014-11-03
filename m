@@ -1,39 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/32
-Message-ID: <5425AFBD.7020009@redhat.com>
-Date: Fri, 26 Sep 2014 12:26:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/1
+Message-ID: <CALx_OUCG9nbwZJcdAzSyL=_JQhEiv045Vjo-2d+=AZTOqB41_w@mail.gmail.com>
+Date: Sun, 2 Nov 2014 16:57:23 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-On 26/09/14 12:12 PM, Rich Felker wrote:
-> On Fri, Sep 26, 2014 at 02:06:21PM +0100, Simon McVittie wrote:
->>> Tell everyone to stop using setuid/setgid now and forever?
-> 
-> Yes!
-> 
->> Minimizing use of setuid/setgid, and making sure the setuid/setgid
->> things are suitably hardened, is a good idea. However, tools for
->> controlled privilege escalation (sudo, pkexec, Apache suexec) rely on
->> setuid in order to work. There's a reason the feature exists at all.
-> 
-> These could all be done by having the process with root privileges
-> inherit them from a daemon parent that already has root, rather than
-> requiring the kernel to elevate the privileges of a process via the
-> setuid bit. This inherently eliminates all attacker control of the
-> process's initial state and limits the input/attack surface to the
-> communication channel clients have with the daemon (e.g. a single unix
-> socket).
+> BTW is there a method to quickly sort out crashes (or other bad behavior)
+> into potentially exploitable and presumably non-exploitable, i.e. separate
+> security issues from non-security ones?
 
-setuid/setgid is not just for root. For example the Postfix server makes
-use of various groups and setuid/setgid binaries and directories so that
-there are well defined interfaces between Postfix components that run
-with different privilege levels.
+Nah, not really. You just sort of need to have a look.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+For very quick and error-prone triage, it's probably fair to say with
+out-of-bound writes that are far away from 0x0 *and* are not stack
+exhaustion, you can presume exploitability. That presumption gets
+stronger if the address is close to existing memory mappings or if it
+changes from one test case to another. It's possibly a bit weaker if
+it's only caught by Valgrind or so, because not all off-by-one issues
+are necessarily a problem under normal circumstances, due to things
+such as alignment padding or non-essential variables; when it's bad
+enough to crash under normal operating conditions, the evidence of
+exploitability is stronger.
 
+For derefs in the fixed vicinity of 0x0, you can probably assume
+non-exploitability except for certain specific circumstances (e.g.,
+kernel bugs, use of uninitialized memory whose content you feel you
+could influence). Call stack exhaustion is generally non-exploitable
+in itself.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+For read derefs, non-exploitability can be a weak initial assumption,
+too, but this can change easily (e.g., if the next thing the program
+would do with the data it tries to read is use it to write to the read
+address, or something of that sort). Read derefs in places such as
+free(), malloc(), sprintf(), strcpy(), etc, are probably exploitable.
+
+> Simple fuzzing of objdump with zzuf (not even afl) quickly gives out tens
+> and hundreds of different cases of mentioned errors (mostly from the first
+> group:-). Now what?
+
+Well, deduping is important. If you're running without ASLR, you can
+get reasonably good results by grouping problems by %eip / %rip where
+the crash occurred. Looking at the call stack is good, too. But some
+memory corruption issues will have latent effects. With these, ASAN /
+Valgrind / debugging allocator can help.
+
+/mz
