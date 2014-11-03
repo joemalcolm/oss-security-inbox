@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/11
-Message-ID: <CACckxB0DXw0R-CNGzG-oG=1_ej=UQ=r2WvFezM6235y-F48KoQ@mail.gmail.com>
-Date: Sat, 15 Nov 2014 23:04:14 +0000
-From: Soroush Dalili <sd.bugreport@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/18
+Message-ID: <20141103210515.GB5775@zoho.com>
+Date: Mon, 3 Nov 2014 21:05:15 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: "Reflected Cross-Site Scripting (XSS) in Flash Version of Flowplayer"
+Subject: Re: RE: strings /libbfd crash
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-Please can you assign a CVE ID for the following issue:
+On Mon, Nov 03, 2014 at 09:56:30PM +0100, Hanno Böck wrote:
+> Am Tue, 04 Nov 2014 05:21:42 +1100 schrieb Joshua Rogers
+> <oss@...ernot.info>:
+> 
+> > I'd like to expand on this:
+> > http://openwall.com/lists/oss-security/2014/10/27/4 and mention that
+> > 'ihex.c' is also vulnerable to the same thing, as they share the
+> > same code.
+> > 
+> > > :10010000214601360121470136007EFE09D2190140
+> > > :100110002146017E17C0001FF5F16002148011928
+> > > :10012000194E79234623965778239EDA3F01B2CAA7
+> > > :100130003F0156702B5E712B722B732146013421C7 :00000001Ff
+> > 
+> > is an example of code that will crash it.
+> 
+> I can't reproduce that, I just get BFD: test1.ihex:2: unexpected
+> character `s' in Intel Hex file
+> 
+> Can you upload the raw file somewhereß
 
--Description:
-The flash version of FlowPlayer is vulnerable to reflected cross-site
-scripting (XSS).
-A demo version of this player can be seen here:
-http://flash.flowplayer.org/demos/
+The printable chars are all that's needed. There appears to be a stack
+overflow in ihex_scan() but you might need an intrumented binary to see
+it.
 
--Affected versions:
-<= 3.2.18
+--mancha
 
--Fixed in versions:
-Not available yet. See https://github.com/flowplayer/flash/issues/263
-
--Patch:
-Not available yet. See https://github.com/flowplayer/flash/issues/263
-
--Credit:
-Issue was discovered by Soroush Dalili (@irsdl)
-
--References:
-https://github.com/flowplayer/flash/issues/263
-
-
-Thanks,
-Soroush
-
+Content of type "application/pgp-signature" skipped
