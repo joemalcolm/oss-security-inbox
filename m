@@ -1,42 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/18/13
-Message-ID: <53A1971F.6010302@mittwald.de>
-Date: Wed, 18 Jun 2014 13:39:49 +0000
-From: Sven Kieske <S.Kieske@...twald.de>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: docker VMM breakout
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/9
+Message-ID: <alpine.BSF.2.00.1411032144400.1220@aneurin.horsfall.org>
+Date: Mon, 3 Nov 2014 21:46:35 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: unzip -l crasher
 Content-Type: text/plain; charset=utf-8
 
+On Mon, 3 Nov 2014, Martin Carpenter wrote:
 
-Am 18.06.2014 12:15, schrieb David Jorm:
-> I tested libvirt via virsh and by default both CAP_DAC_READ_SEARCH and
-> CAP_DAC_OVERRIDE are available (and thus the PoC does run). However,
-> this default is well documented as is the general insecurity of libvirt
-> in regards to DAC, so I don't think a CVE ID is required for libvirt.
+> > I'll drop a line to the InfoZip guys via their web interface so that 
+> > they see these two conversations.
+> 
+> "ERROR: Spammer stay away!"
 
-I fail to see why this should be true.
-On most distributions libvirt spawned vms do not run as root but as user
-qemu or similar.
-according to the documentation at:
-http://libvirt.org/drvqemu.html#securitycap
-
-this should imply that libvirt drops these capabilities.
-
-Please correct me if I'm wrong.
-
+If you were posting from free.fr then be aware that freemail ISPs have a 
+poor reputation...
 
 -- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+Dave Horsfall (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
+http://www.horsfall.org/spam.html (and check the home page whilst you're there)
