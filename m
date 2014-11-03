@@ -1,84 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/7
-Message-ID: <5304F37E.3030404@stylite.de>
-Date: Wed, 19 Feb 2014 19:10:06 +0100
-From: Ralf Becker <rb@...lite.de>
-To: cve-assign@...re.org, pedrib@...il.com
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: remote code execution in egroupware <= 1.8.005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/4
+Message-ID: <20141103074206.GA26935@zoho.com>
+Date: Mon, 3 Nov 2014 07:42:06 +0000
+From: mancha <mancha1@...o.com>
+To: oss-security@...ts.openwall.com
+Cc: Zip-Bugs@...ts.wku.edu, Christian.Spieler@...nline.de
+Subject: Re: unzip -t crasher
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-my remarks to your questions as developer of EGroupware and the fixes
-included in 1.8.006:
-
-Am 19.02.14 16:41, schrieb cve-assign@...re.org:
->> I have discovered a remote code execution via php unserialize in egroupware
->> <= 1.8.005.
+On Sun, Nov 02, 2014 at 07:06:40PM +0100, Jakub Wilk wrote:
+> Latest American fuzzy lop[0] tarball[1] contains a zip file that
+> crashes unzip -t:
 > 
-> Use CVE-2014-2027.
+> $ unzip -qt afl-0.43b/docs/samples/unzip_t_malloc.zip foo/:
+> mismatching "local" filename (/UT), continuing with "central"
+> filename version *** Error in `unzip': free(): corrupted unsorted
+> chunks: 0x00000000015d0170 ***
 > 
->> https://github.com/pedrib/PoC/raw/master/egroupware-1.8.005.txt
->> http://www.egroupware.org/changelog
-> 
->> Security: fixed arbitrary file overwrite and remote code execution
->> reported by Pedro Ribeiro (pedrib@...il.com) of Agile Information
->> Security
-> 
-> We could not immediately determine whether the egroupware-1.8.005.txt
-> disclosure means that:
-> 
->   Arbitrary file overwrite in __destruct:
-> 
->   Remote code execution in __destruct:
-> 
-> are both exploitable only as a consequence of unsafe unserialize use.
+> I'm not sure if inclusion of said zip file was intentional, but since
+> the cat is already out of the bag, I thought I'll let you know.
 
-Removing PHP unserialization removes the thread, as all these values got
-not stored. So passing PHP serialized data to 1.8.006 code only gives an
-error, as json_unserialize does not understand it.
+Cats shouldn't be in bags, anyways.
 
-> If eliminating the unsafe unserialize use would not completely address
-> those issues, additional CVE IDs may be needed.
-> 
-> There are no new CVE assignments yet for possible other issues in the
-> 1.8.006.20140217 changelog entry, such as:
-> 
->   CalDAV/Calendar: fixed permanent auth request in iCal, if
->   accountselection is set to "selectbox with groupmembers" and rights
->   granted from group without being a member
+The crasher has an OS/2 extra field that claims to have a compressed
+block size of 52735 bytes and an uncompressed block size of 127 bytes.
 
-This is NOT security relevant, server-side errors / exceptions cause
-basic auth requests as a means to show to user something went wrong.
+The attached patch against UnZip 6.0 ensures, within extra fields, 
+size(compressed) <= size(uncompressed) and should fix this issue.
 
->   SiteMgr: fixed not working anonymous user and using now a random
->   password
+--mancha
 
-This is a hardening included in 1.8.005 by no longer using a static
-password for anonymous user, but setting up a random one during
-installation time.
-
-So I dont think further CVE's are needed.
-
-Ralf
--- 
-Ralf Becker
-Director Software Development
-
-Stylite AG
-
-Morschheimer Strasse 15 | Tel. +49 6352 70629 0
-D-67292 Kirchheimbolanden | Fax. +49 6352 70629 30
-
-Email: rb@...lite.de
-
-www.stylite.de | www.egroupware.org
-
-Managing Directors: Andre Keller | Ralf Becker | Gudrun Mueller
-Chairman of the supervisory board: Prof. Dr. Birger Leon Kropshofer
-
-VAT DE214280951 | Registered HRB 31158 Kaiserslautern Germany
+PS If the attachment gets mangled, it's also at:
+http://sf.net/projects/mancha/files/sec/unzip-6.0_overflow.diff
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (899 bytes)
+View attachment "unzip-6.0_overflow.diff" of type "text/plain" (1048 bytes)
+
+Content of type "application/pgp-signature" skipped
