@@ -1,39 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/28/1
-Message-ID: <544F9505.1090609@mccme.ru>
-Date: Tue, 28 Oct 2014 16:07:17 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/19
+Message-ID: <20141103215227.GA6000@zoho.com>
+Date: Mon, 3 Nov 2014 21:52:27 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
 Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-On 2014-10-27 04:35, Michal Zalewski wrote:
->> I don't know whether it's the same crash or not but I've dug results of my
->> older experiments with zzuf. Attached are two crasher for `objdump -x` --
->> one pe and one elf. elf also crashes `strings`. Sorry, not researched.
->
-> objdump-elf-crasher looks like a stack exhaustion with
-> /usr/bin/strings, so probably not a big deal.
->
-> objdump-pe-crasher doesn't affect strings, but if you do run objdump
-> -x, it looks like an attempt to do fprintf() with a bogus pointer,
-> called from pe_print_edata(). Specifically, there's a line that goes
-> like this:
->
->    fprintf (file,
->             " %s\n", data + edt.name - adj);
->
-> ...and edt.name, looks like, comes from:
->
->    edt.name           = bfd_get_32 (abfd, data + 12);
->
-> ...and the value is completely off-charts. So, probably another
-> instance of essentially no range checking, although this particular
-> crash may be not exploitable at a very quick glance, unless something
-> interesting happened beforehand.
+On Mon, Nov 03, 2014 at 01:43:54AM +0300, Alexander Cherepanov wrote:
+> On 2014-10-31 08:57, cve-assign@...re.org wrote:
+> 
+> Thanks for assigning CVEs for these issues but I have a couple of
+> questions regarding CVE-worthiness of various things. And some
+> questions for the community.
+> 
+> >Use CVE-2014-8502 for the objdump-pe-crasher2 issue.
+> 
+> Here, AddressSanitizer said "heap-buffer-overflow" and then "READ of
+> size 1".
+> 
+> Why this crasher is judged as CVE worthy? Is it oversight or are
+> invalid reads assumed to be exploitable by default?
+> 
+> Another possibility is to treat all crashes in all libraries as CVE
+> worthy.  We don't know how these libraries are used ITW and any crash
+> in any of them could potentially lead to data loss in some
+> application. But...
+> 
+> ...it seems libbfd is not treated as a library any crash in which is
+> CVE worthy.
+> 
+> >Use CVE-2014-8503 for this ihex parser issue.
+> 
+> Again "READ of size 1".
 
-Michal, thanks for the analysis! And thanks, Hanno, for uploading them 
-to binutils bugtracker.
+Thanks for your post. I would also find it instructive if MITRE shed
+light on its CVE assignation heuristics for libbsd. Response to libbfd
+issues can be particularly enlightening because the issues vary largely
+in scope & type.
 
--- 
-Alexander Cherepanov
+In the past, I've noticed a liberal approach to CVE allocation when
+dealing with libraries due to what you said: it is often difficult to
+assess the security impact of flaws because they ultimately depend on
+the context of applications using the library. As case in point, the
+NULL pointer dereference crasher (zero-size S-record) DoS'es manchabfd
+0.42a1 (small network daemon I just wrote). That flaw didn't receive a
+CVE.
+
+--mancha
+
+unedited post: http://www.openwall.com/lists/oss-security/2014/11/02/4
+
+Content of type "application/pgp-signature" skipped
