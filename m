@@ -1,65 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/12
-Message-ID: <20141118213209.GB8434@hunt>
-Date: Tue, 18 Nov 2014 13:32:09 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/16
+Message-ID: <5457C7B6.7050205@internot.info>
+Date: Tue, 04 Nov 2014 05:21:42 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+Subject: RE: strings /libbfd crash
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 18, 2014 at 03:10:58PM +0000, Radzykewycz, T (Radzy) wrote:
-> There's no guarantee about anything being "bug free".  Even
-> certification by NIAP doesn't guarantee that it's bug free.  Nor that
-> it's secure.  But it does make it relatively more likely to have fewer
-> bugs and be more secure.  Same with OSS tool fuzzing and some kind of
-> database indicating the level of fuzzing that has happened on them.
-> 
-> If I were a Linux distro maintainer, looking at packages to include, I
-> would appreciate this information.  (For that matter, I'd appreciate it
-> for my own use, though that's less relevant.)
-> 
-> If there is a distro maintainer on this list, please chime in.
+I'd like to expand on this:
+http://openwall.com/lists/oss-security/2014/10/27/4
+and mention that 'ihex.c' is also vulnerable to the same thing, as they
+share the same code.
 
-Part of my job at Canonical is reviewing packages before the Ubuntu
-security team commits to supporting the packages. (Ubuntu "main" receives
-official security support; "universe" receives community support.)
+> :10010000214601360121470136007EFE09D2190140
+> :100110002146017E17C0001FF5F16002148011928
+> :10012000194E79234623965778239EDA3F01B2CAA7
+> :100130003F0156702B5E712B722B732146013421C7
+> :00000001Ff
 
-The reviews are very short; typically they take me a day to read the code
-and an hour or so to provide a report for context for the decision. More
-complicated projects may take a bit longer and only the smallest of
-projects can be done in an hour or two.
+is an example of code that will crash it.
 
-Because there's so little time for each one, automated assistance is
-wonderful. I look for compiler warnings, run some static analysis checks,
-and use a large pile of greps that help find difficult or troublesome
-pieces of code. I'd like to have more automated assistence.
 
-We're not looking for bug-free software -- that's unlikely -- so we're
-looking for software that's professionally developed and feels like it
-won't be an undue maintenance burden.
-
-Adding a fuzzer or two to the process might be worthwhile; the downside is
-that most fuzzers seem to require a certain amount of preperation work
-before they start giving good results, and depending upon the program, a
-fuzzer may not reliably represent the attack surfaces available. (Consider
-trying to fuzz e.g. openssh or nginx.) I don't think it'd be easy to
-automate.
-
-Getting AFL to work with every package suggested for Ubuntu main is
-probably too much work. Getting zzuf to work might be easier but may not
-provide as comprehensive results. zzuf would at least help on projects
-written in languages where static analysis tools are lacking or not yet
-in our auditing framework.
-
-The results of a fuzzing project would not greatly influence our
-decision to support a package. I don't believe surviving a fuzzer is the
-best proxy for code quality, though it would be nice to have more
-information when making a decision to support a package.
-
-Of course, if someone were to run a fuzzing project, the results would
-doubtless be valuable for everyone, assuming you could get buy-in from
-upstreams to help prepare patches or at least accept them.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
