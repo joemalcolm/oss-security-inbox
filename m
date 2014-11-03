@@ -1,22 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/01/1
-Message-ID: <20140301184516.GA29128@kludge.henri.nerv.fi>
-Date: Sat, 1 Mar 2014 20:45:16 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/15
+Message-ID: <20141103202428.GA5775@zoho.com>
+Date: Mon, 3 Nov 2014 20:24:28 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: CMS Made Simple SQL injection fixed in 1.11.10
+Cc: Christian.Spieler@...nline.de
+Subject: Re: unzip -t crasher
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Mon, Nov 03, 2014 at 11:05:43AM +0000, mancha wrote:
+> This buggy code path is traversed when a ZIP archive has <<extra
+> fields>> with blocks that are uncompressed (i.e. using the STORED
+> method). A better solution than my last patch or malloc'ing max(),
+> is returning an invalid compressed data error when size(compressed)!=
+> size(uncompressed) for these cases. The attached patch does just that.
+> Comments welcome.
+> 
+> Cheers.
+> 
+> --mancha
+> 
+> PS I have been CC'ing Christian Spieler via the only email I could find
+> online. I've not gotten bounces so it might still be active.
 
-Can I get 2014 CVE for CMS Made Simple News sortby Parameter SQL injection vulnerability.
+By the way, I've removed the original patch (unzip-6.0_overflow.diff)
+from SF. Folks should use unzip-6.0_overflow2.diff instead:
 
-http://www.cmsmadesimple.org/2014/02/Announcing-CMSMS-1-11-10-Pinzon/
-http://dev.cmsmadesimple.org/project/changelog/4602
-http://osvdb.org/103854
-Fixed in latest stable: 1.11.10
+http://sf.net/projects/mancha/files/sec/unzip-6.0_overflow2.diff
 
----
-Henri Salo
+--mancha
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Content of type "application/pgp-signature" skipped
