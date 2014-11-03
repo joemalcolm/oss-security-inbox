@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/07/11
-Message-ID: <20140207204559.4e4ddd82@redhat.com>
-Date: Fri, 7 Feb 2014 20:45:59 +0100
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/14
+Message-ID: <alpine.BSF.2.00.1411040505080.1220@aneurin.horsfall.org>
+Date: Tue, 4 Nov 2014 05:11:05 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
 To: OSS Security <oss-security@...ts.openwall.com>
-Subject: IcedTea-Web insecure temporary directory use - CVE-2013-6493
+Subject: Re: unzip -l crasher
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+On Mon, 3 Nov 2014, Martin Carpenter wrote:
 
-IcedTea-Web version 1.4.2 released earlier this week fixes an issue
-related to handling of the directory that is used to store sockets for
-communication between in browser plugin, and JVM running applets.  The
-directory was usually created in /tmp, using predictable name, and its
-ownership and permissions were not checked.  This issue was reported by
-Michael Scherer of Red Hat and was assigned CVE-2013-6493.
+> > If you were posting from free.fr then be aware that freemail ISPs have 
+> > a poor reputation...
+> 
+> I also tried gmail.com, same result, so who knows.
 
-References:
-http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2014-February/026192.html
-http://icedtea.classpath.org/hg/icedtea-web/rev/228e3652214a
-http://icedtea.classpath.org/hg/icedtea-web/rev/1e0507976663
-https://bugzilla.redhat.com/show_bug.cgi?id=1010958
+Err, I know... Gmail has an equally poor reputation.  I don't block them 
+specifically, but many of their servers are listed on a lot of lists in 
+common use, precisely for hosting spammers and not taking any action over 
+them.
+
+Ditto Hotmail, Yahoo, etc.  You might want to check the URL below.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Dave Horsfall (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
+http://www.horsfall.org/spam.html (and check the home page whilst you're there)
