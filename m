@@ -1,19 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/2
-Message-ID: <CACYkhxgk6oKOxoYR2DRp1BE5yd5oCAcPyvbL9tTqzQ-eTL4mxQ@mail.gmail.com>
-Date: Tue, 14 Oct 2014 12:39:48 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/13
+Message-ID: <1415018494.3552.46.camel@juliet.mcarpenter.org>
+Date: Mon, 03 Nov 2014 13:41:34 +0100
+From: Martin Carpenter <mcarpenter@...e.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ejabberd compression allows cirucumvention of encryption despite starttls_required
+Subject: Re: unzip -l crasher
 Content-Type: text/plain; charset=utf-8
 
-On 14 October 2014 00:09, Hanno Böck <hanno@...eck.de> wrote:
-> I think this deserves a CVE:
-> http://mail.jabber.org/pipermail/operators/2014-October/002438.html
+On Mon, 2014-11-03 at 21:46 +1100, Dave Horsfall wrote:
+> If you were posting from free.fr then be aware that freemail ISPs have
+> a poor reputation...
 
-If a client is willing to do that, then an attacker can simply force downgrade
-the client and connect to the server using TLS. (Assuming client
-certificates aren't in use)
+I also tried gmail.com, same result, so who knows.
 
-Regards,
-  Michael
+Thanks Felix & Hanno for re-posting for me.
+
