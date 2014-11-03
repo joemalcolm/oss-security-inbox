@@ -1,48 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/17
-Message-ID: <20140603153726.GU23760@sentinelchicken.org>
-Date: Tue, 3 Jun 2014 08:37:26 -0700
-From: Tim <tim-security@...tinelchicken.org>
-To: David Jorm <djorm@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/12
+Message-ID: <54577687.2040306@mccme.ru>
+Date: Mon, 03 Nov 2014 15:35:19 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+Subject: Re: more unzip issues
 Content-Type: text/plain; charset=utf-8
 
+On 2014-11-03 14:14, Hanno Böck wrote:
+> Surfing the upstream forum I saw that there are two further buffer
+> overflows which didn't get a release yet:
+> http://www.info-zip.org/phpBB3/viewtopic.php?f=7&t=437
+> http://www.info-zip.org/phpBB3/viewtopic.php?f=7&t=267
+> (these two seem to refer to the same issue)
+> Also here:
+> https://bugzilla.redhat.com/show_bug.cgi?id=532380
+> http://bugs.debian.org/744212
+>
+> And this one:
+> http://www.info-zip.org/phpBB3/viewtopic.php?f=7&t=432
+>
+>
+> Should they get CVEs?
+>
+> (I was kind of surprised that on my Gentoo system the samples crashed
+> although these issues were several months old)
 
-Hi David,
+https://bugzilla.redhat.com/show_bug.cgi?id=532380 is from 2009.
 
-> Sorry for the absurdly late reply to this thread. I finally found time to do
-> some testing on OpenJDK 1.7.0_45. I can confirm Tomas' assessment that
-> setExpandEntityReferences() and
-> setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true) have no bearing on
-> whether or not entity references are expanded, nor do they purport
-> to.
-
-Yeah, you gotta love FEATURE_SECURE_PROCESSING.  It's just like
-calling a website "secure" because it uses SSL.
-
-I agree that these features don't purport to turn off certain
-dangerous features, but to a developer who doesn't know what parameter
-entities are, they could very easily assume they are safe with
-setExpandEntityReferences(false).
-
-
-> Applications that process attacker-supplied XML using Xerces are vulnerable
-> to SSRF attacks unless they use both
-> setFeature("http://xml.org/sax/features/external-parameter-entities", false)
-> and setFeature("http://xml.org/sax/features/external-general-entities",
-> false).
-> 
-> The OWASP XXE document should be updated to mention
-> external-parameter-entities. I will do this as soon as my OWASP wiki account
-> is approved.
-
-Feel free to use this as a reference for other thoughts on what
-developers should be wary of:
-  http://vsecurity.com/download/papers/XMLDTDEntityAttacks.pdf
-
-I would also be interested to hear if you think anything I mention in
-there is inaccurate.
-
-Cheers,
-tim
+-- 
+Alexander Cherepanov
