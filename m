@@ -1,77 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/4
-Message-ID: <5489746F.9030707@upv.es>
-Date: Thu, 11 Dec 2014 11:39:43 +0100
-From: Hector Marco <hecmargi@....es>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/10
+Message-ID: <20141103110543.GB26935@zoho.com>
+Date: Mon, 3 Nov 2014 11:05:43 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+Cc: Christian.Spieler@...nline.de
+Subject: Re: unzip -t crasher
 Content-Type: text/plain; charset=utf-8
 
-Hi Mike,
+On Mon, Nov 03, 2014 at 07:42:06AM +0000, mancha wrote:
+> On Sun, Nov 02, 2014 at 07:06:40PM +0100, Jakub Wilk wrote:
+> > Latest American fuzzy lop[0] tarball[1] contains a zip file that
+> > crashes unzip -t:
+> > 
+> > $ unzip -qt afl-0.43b/docs/samples/unzip_t_malloc.zip foo/:
+> > mismatching "local" filename (/UT), continuing with "central"
+> > filename version *** Error in `unzip': free(): corrupted unsorted
+> > chunks: 0x00000000015d0170 ***
+> > 
+> > I'm not sure if inclusion of said zip file was intentional, but since
+> > the cat is already out of the bag, I thought I'll let you know.
+> 
+> Cats shouldn't be in bags, anyways.
+> 
+> The crasher has an OS/2 extra field that claims to have a compressed
+> block size of 52735 bytes and an uncompressed block size of 127 bytes.
+> 
+> The attached patch against UnZip 6.0 ensures, within extra fields, 
+> size(compressed) <= size(uncompressed) and should fix this issue.
+> 
+> --mancha
+> 
+> PS If the attachment gets mangled, it's also at:
+> http://sf.net/projects/mancha/files/sec/unzip-6.0_overflow.diff
+
+This buggy code path is traversed when a ZIP archive has <<extra
+fields>> with blocks that are uncompressed (i.e. using the STORED
+method). A better solution than my last patch or malloc'ing max(),
+is returning an invalid compressed data error when size(compressed)!=
+size(uncompressed) for these cases. The attached patch does just that.
+Comments welcome.
+
+Cheers.
+
+--mancha
+
+PS I have been CC'ing Christian Spieler via the only email I could find
+online. I've not gotten bounces so it might still be active.
 
 
-El 09/12/14 a las 02:04, Mike Hommey escribió:
->> Hi,
->>
->> This is a disclosure of a weakness of the ASLR Linux implementation.
->> The problem appears when the executable is PIE compiled and it has an
->> address leak belonging to the executable. We named this weakness:
->> offset2lib.
->>
->> In this scenario, an attacker is able to de-randomize all mmapped
->> areas (libraries, mapped files, etc.) by knowing only an address
->> belonging to the application and the offset2lib value.
->>
->> We have built a PoC which bypasses on a 64 bit Linux system, the three
->> most widely adopted and effective protection techniques: No-eXecutable
->> bit (NX), address space layout randomization (ASLR) and stack smashing
->> protector (SSP). The exploit obtains a remote shell in less than one
->> second.
->>
->> We have proposed the ASLRv3 which is a small Linux patch which removes
->> the offset2lib weakness.
->>
->> Details of the weakness, steps to exploit the offset2lib weakness, a
->> working proof of concept exploit, recommendations and a demonstrative
->> video has been publish at:
->> http://cybersecurity.upv.es/attacks/offset2lib/offset2lib.html
->
-> If you have the base address of the executable and are able to read any
-> byte in the process address space, as my reading of the paper suggests,
-> then you don't even need offsetlib, and no amount of ASLR can save you.
+View attachment "unzip-6.0_overflow2.diff" of type "text/plain" (1475 bytes)
 
-Maybe you misunderstand our paper, we do not rely on been able to read
-any byte of the process. Actually, our PoC works by writing bytes on
-the stack to de-randomize the PIE executable. This is not new at all,
-Packet Storm Security published a paper about how to do it:
-http://www.intelligentexploit.com/articles/Smashing-the-stack,-an-example-from-2013.pdf 
-(August 2013), One year later, almost the same
-technique was published (as new?) in a paper called "Hacking Blind":
-http://www.scs.stanford.edu/brop/bittau-brop.pdf (May 1014).
-
-The conclusion of the Packet Storm paper was that even de-randomizing 
-the process you can do nothing. This is because you can only redirect 
-the control flow and that time they didn't know where to jump.
-
-The Offset2lib is a step forward which enables to use (jump to)
-the libraries without reading any other data from the executable
-as "Hacking Blind" requires. By using the offset2lib to bypass the ASLR, 
-the Hacking Blind will be deprecated until offset2lib is fixed.
-
->
-> Just read the ELF program headers that you can find at the base address
-> of the executable to find the PT_DYNAMIC segment. In that segment, find
-> the DT_DEBUG entry, which will give you a pointer to a r_debug struct,
-> which definition you can find in /usr/include/link.h.
->
-> That struct has a r_map member that gives you a linked list of libraries
-> the dynamic linker (ld.so) loaded, with the base address for each of
-> them.
->
-> Those data structures are used by gdb, so removing the DT_DEBUG pointer
-> would break debugging with gdb.
->
-> Mike
->
-
-Hector Marco.
+Content of type "application/pgp-signature" skipped
