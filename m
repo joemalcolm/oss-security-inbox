@@ -1,32 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/21
-Message-ID: <20140304165955.GT12584@dhcp-25-225.brq.redhat.com>
-Date: Tue, 4 Mar 2014 17:59:56 +0100
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/5
+Message-ID: <1415009028.3552.40.camel@juliet.mcarpenter.org>
+Date: Mon, 03 Nov 2014 11:03:48 +0100
+From: Martin Carpenter <mcarpenter@...e.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0102 -- Linux kernel: security: keyring cycle detector DoS
+Subject: unzip -l crasher
 Content-Type: text/plain; charset=utf-8
 
-The problem is that search_nested_keyrings() sees two keyrings that have
-matching type and description, so keyring_compare_object() returns true.
-s_n_k() then passes the key to the iterator function -
-keyring_detect_cycle_iterator() - which *should* check to see whether
-this is
-the keyring of interest, not just one with the same name and, leads to
-BUG_ON.
+[For symmetry with Jakub's post; NB not the same flag]
 
-An unprivileged local user could use this flaw to crash the system. 
+There is a BO in "unzip -l" via list_files() in list.c:
 
-Introduced by:
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b2a4df200d570b2c33a57e1ebfa5896e4bc81b69
+342                 sprintf(&methbuf[4], "%03u",
+G.crec.compression_method);
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1072419
-https://lkml.org/lkml/2014/2/27/507
+("apt-get source unzip" on Ubuntu 14.04).
 
-Upstream patch:
-http://www.kernelhub.org/?msg=425013&p=2
+methbuf is an auto 8 char array:
 
--- 
-Petr Matousek / Red Hat Security Response Team
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+118     min_info info;
+119     char methbuf[8];
+120     static ZCONST char dtype[]="NXFS";  /* see zi_short() */
+
+*printf() field-width format specifiers don't restrict the length of the
+output so you can probably affect other local variables with this.
+min_info's first field is "offset" which sounds promising modulo
+compiler choices/stack ordering/..., and max [probably] 6 bytes (length
+of MAX_INT - 4) in just 0x30..0x39 available. I have a few reproducer
+zips but I have not looked further at exploiting this. Fortify catches
+this crash on both Red Hat and Ubuntu.
+
+Although this is in the same area (compression) as the "unzip -t" thread
+I don't think they are directly related: mancha's patch doesn't solve
+this problem and "unzip -l unzip_t_malloc.zip" doesn't crash.
+
+I'll drop a line to the InfoZip guys via their web interface so that
+they see these two conversations.
+
+
+Martin.
+
+ps. found by "collateral damage" fuzzing dash(1) post shellshock :-7
+
+
