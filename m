@@ -1,47 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/51
-Message-ID: <20140925223044.GB26480@lappy.bne.redhat.com>
-Date: Fri, 26 Sep 2014 08:30:45 +1000
-From: Grant Murphy <gmurphy@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/8
+Message-ID: <20141103113734.0d5d3005@pc>
+Date: Mon, 3 Nov 2014 11:37:34 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-030] TLS cert verification option not honoured in paste configs (CVE-2014-7144)
+Subject: Re: unzip -l crasher
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-030
-CVE: CVE-2014-7144
-Date: September 25, 2014
+Am Mon, 03 Nov 2014 11:25:00 +0100
+schrieb Martin Carpenter <mcarpenter@...e.fr>:
 
-Title: TLS cert verification option not honoured in paste configs
-Reporter: Qin Zhao (IBM)
-Products: keystonemiddleware, python-keystoneclient
-Versions: versions up to 1.1.1 (keystonemiddleware),
-          versions up to 0.10.1 (python-keystoneclient)
+> "ERROR: Spammer stay away!"
+> 
+> Does anyone have an upstream contact?
 
-Description:
-Qin Zhao from IBM reported a vulnerability in keystonemiddleware
-(formerly shipped as python-keystoneclient). When the 'insecure' option
-is set in a paste configuration file it is effectively ignored,
-regardless of its value. As a result certificate verification will be
-disabled, leaving TLS connections open to MITM attacks. All versions of
-keystonemiddleware with TLS settings configured via a paste.ini file are
-affected by this flaw.
+They have a public forum and last time I posted there I got a reply
+from the main author.
 
-keystonemiddleware fix:
-https://review.openstack.org/113191
+As this is already public I just posted a message there (Unzip Bugs
+subforum) but it needs moderator approval before it will appear:
+http://www.info-zip.org/phpBB3/viewforum.php?f=7
 
-python-keystoneclient fix:
-https://review.openstack.org/112232
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
 
-Notes:
-These fixes are included in the keystonemiddleware 1.2.0 release
-and in the python-keystoneclient 0.11.0 release.
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7144
-https://launchpad.net/bugs/1353315
-
---
-Grant Murphy
-OpenStack Vulnerability Management Team
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
