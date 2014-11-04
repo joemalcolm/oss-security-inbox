@@ -1,84 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/6
-Message-ID: <20140604065432.GB12796@openwall.com>
-Date: Wed, 4 Jun 2014 10:54:32 +0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/4
+Message-ID: <20141104032842.GA29210@openwall.com>
+Date: Tue, 4 Nov 2014 06:28:42 +0300
 From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Operating system distribution security contact lists
+Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
 Content-Type: text/plain; charset=utf-8
 
-Hi Lisa,
-
-On Tue, Jun 03, 2014 at 09:13:41AM -0600, Lisa Bradley wrote:
-> I would like to request membership to the closed "Operating system
-> distribution security contact lists" mailing list on behalf of the IBM
-> Product Security Incident Response Team (PSIRT). I am part of the PSIRT
-> team where I help manage the receipt, investigation and internal
-> coordination of security vulnerability information related to IBM
-> offerings. You can read more about PSIRT here:
-> http://www-03.ibm.com/security/secure-engineering/process.html.  I am the
-> main coordinator of Open Source vulnerabilities that affect IBM products.
-> We have products that utilize Open Source software, so being part of this
-> list will be beneficial. I do not plan on posting any IBM product specific
-> issues as we do that through Security Bulletins (see
-> http://www-03.ibm.com/security/secure-engineering/bulletins.html).
+On Tue, Oct 28, 2014 at 04:47:02PM +0300, Alexander Cherepanov wrote:
+> On 2014-10-15 12:30, Solar Designer wrote:
+> >- Please don't send fully working exploits (but testcases that exercise
+> >the flaw are welcome)
+> >
+> >FWIW, I've always been tempted to remove the latter guideline,
 > 
-> You can verify that I am part of the PSIRT team by emailing PSIRT directly
-> at IBM PSIRT<slash>Somers<slash>IBM or psirt<at>us<dot>ibm<dot>com.
+> Then perhaps just remove it?
 
-Thank you for bringing this to oss-security.  Besides the above, if this
-community says that IBM should be on the distros list, we'll need
-someone already active on oss-security to vouch for you - or I think it
-could be Troy Bollinger, who was active on Bugtraq.  Per LinkedIn, he
-left IBM when you were already at IBM (for some years), so possibly he
-could vouch for you?  Your LinkedIn profile, if I found the right one,
-does not mention security, though, so I don't know if you were in
-contact with Troy back then or not.
+Removed.
 
-Would it be reasonable to include IBM security advisory/contact details
-on our wiki?
-
-http://oss-security.openwall.org/wiki/vendors
-
-If there are specific OSS products with their own advisory/contact
-details (different from IBM PSIRT's catch-all), they may be added to:
-
-http://oss-security.openwall.org/wiki/software
-
-(Yes, this is the same suggestion I just made to VMware.)
-
-Anyone can register for an account and edit the wiki, so please do if
-you find this desirable.
-
-What do others in this community think?  To remind, on vendor-sec we had
-representatives from Apple and SGI.  We "lost" them when, after
-vendor-sec ceased to exist, I setup only a linux-distros list initially.
-At a later time, we also got the distros list, to which Apple and SGI
-would probably be welcome again - but that issue was not brought up
-again at that time.
-
-Both the Apple folks and the vendor-sec member from SGI were helpful to
-the rest of the community on vendor-sec, so it was not one-way
-communication.  IIRC, Red Hat folks actually said that I was wrong in
-limiting the initial membership to Linux distros only, leaving Apple out
-despite of their valuable contributions to vendor-sec and them having
-some Open Source products (they're upstream for CUPS, etc.)  Perhaps we
-should have explicitly invited Apple and SGI folks to join distros when
-that list was finally setup.  Perhaps it's not too late to do that now.
-
-I'd appreciate comments from the community.  I have no strong feelings
-for, nor against, expanding the distros list membership to include
-(mostly/partially) closed-source vendors.
-
-As yet another option, if the community wants that, I may setup an
-open-distros list that would include Linux and Open Source *BSDs
-(initially just the current members of distros), but not the
-(mostly/partially) closed-source vendors (who would be on distros only).
-That way, any folks who are possibly uncomfortable about notifying
-closed-source vendors would have the option to still use our PGP
-re-encrypting setup to notify just the Open Source distro vendors.
-Or maybe I am imagining that a significant number of people reporting
-vulnerabilities would be uncomfortable providing advance notification to
-closed-source vendors?
+This removal isn't meant to actively encourage posting of "weaponized"
+exploits, but it merely means we don't feel we currently need to include
+a guideline on this.  In other words, this guideline was trying to
+address a problem we didn't have, and I hope its removal won't create a
+problem.
 
 Alexander
