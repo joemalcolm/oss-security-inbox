@@ -1,30 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/7
-Message-ID: <20140312110519.131780@gmx.com>
-Date: Wed, 12 Mar 2014 12:05:19 +0100
-From: "Bob Ezrin" <bezrin@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/9
+Message-ID: <CAGeFrHDQZsrxnECxFkuJ0Q5t4X5c0dQrq-YfV-9wt07g+fRLww@mail.gmail.com>
+Date: Tue, 4 Nov 2014 15:12:25 +0100
+From: David Edmundson <davidedmundson@....org>
 To: oss-security@...ts.openwall.com
-Subject: Fw: Re: IMAP STARTTLS sniff tool
+Subject: Privilege Escalation via KDE Clock KCM polkit helper
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
-we solved the problem with https://github.com/ipopov/starttls-mitm.
+Hello, I found a security issue in KDE which under Ubuntu and some other
+distros allows a program to run arbitrary processes as root from an admin
+user without any prompts.
 
-B.
------ Original Message -----
-From: Bob Ezrin
-Sent: 03/07/14 10:07 AM
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] IMAP STARTTLS sniff tool
+I need a CVE number.  I understand you are an authority that can provide
+this.
 
-Many thanks, I will try it!!!
+Let me know if I can help provide anything else.
 
-B.
------ Original Message -----
-From: Solar Designer
-Sent: 03/07/14 09:56 AM
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] IMAP STARTTLS sniff tool
 
-Hi, On Fri, Mar 07, 2014 at 09:37:01AM +0100, Bob Ezrin wrote: > Hi all. We managed succesfully to sniff inside POP3S, SMTPS, IMAPS & HTTPS tunnels using arpspoof, iptables & sslsplit to make MITM. Now we want to sniff inside STARTTLS tunnels (specifically IMAP) but unfortunately sslsplit doesn't supports STARTTLS. Is there/do you know another SSL/TLS tool supporting IMAP over STARTTLS to make MITM? Many thanks B. Sorry for not addressing your (mostly off-topic) question directly (I don't know the answer), but it got me wondering what the most appropriate mailing list would be for this sort of topics. We mostly haven't been using the oss-security list for such topics so far, and it is unclear whether such broader scope is desirable or not. In part, this might depend on whether there exists a more suitable list or not. I'd think that maybe the Penetration Testing list could be it: http://www.securityfocus.com/archive/101/description http://seclists.org/pen-test/ but it appears rather inactive lately. Yet I think it's worth posting the question in there, at least to see if the list is currently usable (would anyone reply?) Bob, can you try that? Opinions? Alexander
+KDE Project Security Advisory
+=============================
+
+Title:          kde-workspace:
+Risk Rating:    Medium (??)
+CVE: ???
+Platforms:      All
+Versions:       kde-workspace < 4.14.3
+Author:         David Edmundson <davidedmundson@....org>
+Date:           4 November 2014
+
+Overview
+========
+
+KDE workspace configuration module for setting the date and time has a
+helper program
+which runs as root for performing actions. This is secured with polkit.
+
+This helper takes the name of the ntp utility to run as an argument. This
+allows a hacker
+to run any arbitrary command as root under the guise of updating the time.
+
+Impact
+======
+
+An application can gain root priveledges from an admin user with either
+misleading information
+or no interaction.
+
+On some systems the user will be shown a prompt to change the time.
+However, if the system has
+policykit-desktop-privileges installed, the datetime helper will be invoked
+by an admin user
+without any prompts.
+
+
+Workaround
+==========
+
+Add a polkit rule to disable the org.kde.kcontrol.kcmclock.save action
+
+Solution
+========
+
+Upgrade kde-desktop to 4.14.3 once released or apply the following patch:
+https://git.reviewboard.kde.org/r/120977/
+
+
+Credits
+=======
+
+Thanks to David Edmundson for finding and fixing the issue
 
