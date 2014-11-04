@@ -1,42 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/8
-Message-ID: <5315B7EF.4040305@fifthhorseman.net>
-Date: Tue, 04 Mar 2014 11:24:31 +0000
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request?: konqueror - https uses all ciphers, even weak ones
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/6
+Message-ID: <20141104070610.GA17145@suse.de>
+Date: Tue, 4 Nov 2014 08:06:10 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: polarssl
 Content-Type: text/plain; charset=utf-8
 
-On 03/04/2014 11:12 AM, John Haxby wrote:
-> 
-> On 4 Mar 2014, at 11:01, Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
-> 
->> Here is another situation where konqueror successfully indicates a
->> "secure" connection to a server that has a known-insecure configuration:
->> point konqueror at: https://demo.cmrg.net/ -- you'll see a successful
->> connection, though that server only offers DHE over a
->> trivially-crackable 16-bit group.
-> 
-> I suspect that this problem is fairly wide-ranging.
+Hi,
 
-Perhaps this needs more than one RFC, then?
+https://polarssl.org/tech-updates/releases/polarssl-1.2.12-released
 
->   Apple’s Safari also permits the link.
+and
 
-I consider this a flaw in Safari.  These connections are trivially
-decryptable by any passive eavesdropper.  An active attacker can tamper
-with the content of the session.
+https://polarssl.org/tech-updates/releases/polarssl-1.3.9-released
 
->  Google Chrome doesn’t permit the link though, it just crashes :)
+have some security issues worth CVEs.
 
-On what platform?  Is this for any connection, or just for a primary
-connection?  That is, can any web site can crash google chrome with <img
-src="https://demo.cmrg.net/" /> ?
+"On the security front this release fixes a mistake in the negotiation
+introduced in PolarSSL 1.3.8. The mistake resulted in servers
+negotiating a weaker signature algorithm than available. In addition
+two remotely-triggerable memory leaks were found by the Codenomicon
+Defensics tool and fixed in this release."
 
-(sorry, i don't have either chrome or safari handy to test it myself
-right now)
-
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (1011 bytes)
+Ciao, Marcus
