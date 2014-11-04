@@ -1,40 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/1
-Message-Id: <B9EF2AC5-DED5-4758-AEFB-FFC880D264F6@apache.org>
-Date: Tue, 19 Aug 2014 10:06:08 +0200
-From: Jacopo Cappellato <jacopoc@...che.org>
-To: "user@...iz.apache.org ML" <user@...iz.apache.org>, dev@...iz.apache.org, security Team <security@...che.org>, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, gregory draperi <gregory.draperi@...il.com>
-Subject: [CVE-2014-0232] Apache OFBiz Cross-site scripting (XSS) vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/2
+Message-ID: <CAN-Kwu21zU-U51B-_fM21MnOEPc6Ssh9wmjRTGS-Bth_SpAJtQ@mail.gmail.com>
+Date: Tue, 4 Nov 2014 12:20:02 -0600
+From: Ian Cordasco <graffatcolmingov@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request for requests-kerberos
 Content-Type: text/plain; charset=utf-8
 
-CVE-2014-0232: Apache OFBiz Cross-site scripting (XSS) vulnerability
+Hello all,
 
-Severity: Important
+A fix was merged and released today for the package which performs
+kerberos authentication when using python-requests. Prior to this,
+every version of the package did not properly handle mutual
+authentication which means that the client did not verify that the
+user was communicating with a trusted server. The version which
+contains the fix is 0.6 and all prior versions are considered
+vulnerable.
 
-Vendor:
-The Apache Software Foundation
+Please assign a CVE to this issue.
 
-Versions Affected:
-Apache OFBiz 11.04.01 to 11.04.04
-Apache OFBiz 12.04.01 to 11.04.03
-The unsupported Apache OFBiz 09.04.x, 10.04.x versions may be also affected
-
-
-Description:
-Result and error messages returned by some OFBiz services could be a vector for XSS attacks.
-
-Mitigation:
-11.04.x users should upgrade to 11.04.05
-12.04.x users should upgrade to 12.04.04
-
-http://svn.apache.org/r1608698
-
-Credit:
-This issue was discovered by ﻿Gregory Draperi.
-
-References:
-
-http://ofbiz.apache.org/download.html#vulnerabilities
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+Cheers,
+Ian
