@@ -1,24 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/39
-Message-ID: <20140924222706.GA972@openwall.com>
-Date: Thu, 25 Sep 2014 02:27:06 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Chet Ramey <chet.ramey@...e.edu>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/8
+Message-Id: <20141104103847.8C02D336006@smtpvbsrv1.mitre.org>
+Date: Tue,  4 Nov 2014 05:38:47 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: mod_wsgi group privilege dropping [was Re: Security release for mod_wsgi (version 3.5)]
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 24, 2014 at 12:08:46PM -0400, Chet Ramey wrote:
-> On 9/24/14, 11:16 AM, Solar Designer wrote:
-> 
-> > I see no good workaround. 
-> 
-> You're correct; there is not a good workaround.  Since there are publicly
-> available patches for all bash versions back 15 years or so, though, the
-> best path forward is to apply those as quickly as possible.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Thank You for providing those patches!  It is rare for an upstream
-author to provide security fix backports going this far back, and it is
-really helpful in this case.
+> https://github.com/GrahamDumpleton/mod_wsgi/commit/545354a80b9cc20d8b6916ca30542eab36c3b8bd
 
-Alexander
+> When there is any sort of error in setting up daemon process group,
+> kill the process rather than risk running in an unexpected state.
+
+Use CVE-2014-8583.
+
+
+> https://github.com/GrahamDumpleton/mod_wsgi/commit/a8ac5027f1a887cd41e80616b8a80a442a7e0bc7
+
+> Fix one off error when checking limit on the number of supplementary
+> groups for the daemon process group.
+
+This doesn't seem to cross privilege boundaries; there's no way for
+untrusted users to specify the supplementary groups.
+
+Incidentally, when there's a statement such as "I am not familiar
+enough to know whether any privilege boundaries are crossed here, or
+if a user can influence anything" in a CVE request message, it's
+probably useful to be even more explicit about what parts of the
+message that statement applies to.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUWKvqAAoJEKllVAevmvmsziQH/RNG4k2x6qRK4bvS2TU4AQj+
+GkRIIvHxIV3TOnkPiP1B+c46LetJBz5H1wGU8MVGMVdLgddEJGzA8CNzY/qycQRo
+wdUNpuO73gnqbpjsOVKnY1NWK0efnmBF0ZKUdGksJBzmuAmxMPF+VrTPbcK82dce
+biwnD/wFdbNQM5FSBmQuhZTM85s3EmatxY+hp84FtLhB2IC/k2/6dki21dAOIdjq
+HYEMktmitpDq5fpWJoi9Xs7iXMiTwBzXlVJu2Q09fVR1AdUjbsIYn7xG+jVVji4b
+SrSiTThI1HvKHgbnYr5OjoMQe1ksRL3H1QRwgpXT8nlmsX+eyi9Ea6wa4Em+IXY=
+=T37i
+-----END PGP SIGNATURE-----
