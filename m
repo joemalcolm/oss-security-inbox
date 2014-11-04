@@ -1,47 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/10
-Message-ID: <20140926124151.670c9f3b@pc>
-Date: Fri, 26 Sep 2014 12:41:51 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/2
+Message-ID: <545831A7.3040402@redhat.com>
+Date: Tue, 04 Nov 2014 12:53:43 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+CC: olav.morken@...nett.no
+Subject: CVE-2014-8566 and CVE-2014-8567: mod_auth_mellon issues affecting users of 0.8.0
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 26 Sep 2014 09:54:40 +0100
-"Mark R Bannister" <mark@...seconsulting.co.uk> wrote:
+Good morning,
 
-> I can't see this being a problem for Apache custom headers (the
-> variable name is turned to uppercase and prefixed by HTTP_), nor sudo
-> commands if env_reset is on (the default), but this continues to be a
-> major vulnerability for setuid/setgid scripts (S_ISUID or S_ISGID)
-> where the environment is preserved.
+mod_auth_mellon provides a SAML 2.0 authentication module for the Apache 
+HTTP Server.
 
-scripts don't allow setuid. for a reason. It'd open a whole bunch of
-security issues.
+The below issues were fixed in the 0.9.0 and
+0.9.1 releases, but not marked as security issues at the time. (An 0.8.1 
+security update has been released too, 
+<https://github.com/UNINETT/mod_auth_mellon/releases/tag/v0.8.1>)
 
-This could be an issue if you have a suid binary calling a script.
-There are even people writing howtos to do that to circumvent unix
-security measures. [1]
+While Red Hat ship version 0.8.0, it is expected that very few others 
+would have been using this version (if any).
 
-I don't know (and haven't tested) if this preserves env, but the point
-is: suid binaries shouldn't do stupid things. If they do that's their
-fault. There should be extra many security conscious eyes on setuid
-bins (we recently saw a memleak in a setuid bin causing trouble
-elsewhere [2]).
+ From 
+<https://postlister.uninett.no/sympa/arc/modmellon/2014-11/msg00000.html>:
 
-If you can pass any env var to a suid script and it executes
-something else you have a problem no matter what. LD_PRELOAD etc.
+""
+It turned out that session overflow bugs fixes in version 0.9.0 and
+0.9.1 can lead to information disclosure, where data from one session
+is leaked to another session. Depending on how this data is used by the
+web application, this may lead to data from one session being disclosed
+to an user in a different session. (CVE-2014-8566)
 
-[1] http://www.tuxation.com/setuid-on-shell-scripts.html
-[2]
-http://googleprojectzero.blogspot.de/2014/08/the-poisoned-nul-byte-2014-edition.html
+In addition to the information disclosure, this release contains some
+fixes for logout processing, where logout requests would crash the
+Apache web server. (CVE-2014-8567)
+""
 
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
+You may also come across 
+<https://bugzilla.redhat.com/show_bug.cgi?id=1157955>. I originally 
+thought 
+<https://github.com/UNINETT/mod_auth_mellon/commit/47a767d5f37d1d3a1c004abbf8bb80d1b7eab328>/<http://jbp.io/2014/01/16/openssl-rand-api/#recommendations-and-patches> 
+could lead to a predictable session cookie being returned, but it turns 
+out that is not the case (and MITRE did not assign a CVE for this change).
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+Cheers,
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+--
+Murray McAllister / Red Hat Product Security
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1157281
+https://bugzilla.redhat.com/show_bug.cgi?id=1157954
