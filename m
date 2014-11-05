@@ -1,45 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/16
-Message-ID: <Pine.LNX.4.64.1412041333000.1687@beijing.mitre.org>
-Date: Thu, 4 Dec 2014 13:33:38 -0500 (EST)
-From: cve-assign@...re.org
-To: Chris Steipp <csteipp@...imedia.org>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: MediaWiki security release - 1.23.7
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/9
+Message-ID: <CACYkhxivV_Uob6B0AfTL07g=kFmQK0t7Uky0O7Z6-ZjbKpw+pw@mail.gmail.com>
+Date: Wed, 5 Nov 2014 15:41:51 +1100
+From: Michael Samuel <mik@...net.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: is MD5 finally dead?
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> Hi, we fixed a few security bugs in last week's MediaWiki release [1].
+On 5 November 2014 15:21, Kurt Seifried <kseifried@...hat.com> wrote:
+> http://natmchugh.blogspot.co.uk/2014/10/how-i-created-two-images-with-same-md5.html
 >
-> * bug 71111 / T73111 - A missing csrf check could allow reflected xss
-> on wikis that allow raw html
-> (https://phabricator.wikimedia.org/T73111)
+> It seems like MD5 should probably be classed with DES as instant CVE
+> win, either now, or pretty soon....
 
-Use CVE-2014-9276.
+This is the same chosen-prefix attack that was used to forge
+certificates.  Using md5 in
+a collision-hostile environment is definitely CVE worthy, and has been
+for a while. (BTW,
+no CVE for rsync yet)
 
-> * bug 71478 / T73478 - MediaWiki's <cross-domain-policy> mangling
-> could allow an article editor to inject code into api consumers that
-> blindly unserialize php representations of the page from the api
-> (https://phabricator.wikimedia.org/T73478)
+In the case of an unknown-prefix, HMAC[1] or anything requiring a preimage, it's
+just hardening to use swap out MD5 (and SHA-1).
 
-Use CVE-2014-9277.
-
-- ---
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEVAwUBVICnwqllVAevmvmsAQIqtAgApS0KfcaLFw9TND3VT6vWwKePvaR0kGee
-n4N+/vUh9XsX9vgASKh+o4rcmZW0Pw67GI0C1RKGPSTITzFgIhwDpG3tCBAVKtUz
-VSL2dWHP5PC3OOsRUF2kD6oVctE/y7w9FADRLccBqf7DAYK1CTJ+1I1ZNKQBaePs
-1Z3CrDPW9QAQSjzSfWFrvxz5ivnkiz2S9bhU/B2y7MKriU41uXRDclnHOqVX9+9C
-cp8ymBSKeiaohgro5awR29pf87HZTbYbGJE+PL66URBWsPA6VsFN1PD2gkuKH9mj
-KKmizDImU2RjXNpNIASnOQNnIt6omJBajlahU5SsNBpxz+O6+GRkSQ==
-=nB+O
------END PGP SIGNATURE-----
+[1] Unless you accidentally swap the key and data fields!
