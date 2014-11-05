@@ -1,37 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/10
-Message-ID: <CALx_OUA6eCOBBhsNTH-GNEA6OfGpg2pA+hbnp7rJq5c+fqnS3g@mail.gmail.com>
-Date: Fri, 24 Oct 2014 12:10:31 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/14
+Message-ID: <20141105161401.4dd89654@redhat.com>
+Date: Wed, 5 Nov 2014 16:14:01 +0100
+From: Tomas Hoger <thoger@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: PHP xmlrpc date_from_ISO8601() buffer overflow (in php < 5.2.7)
 Content-Type: text/plain; charset=utf-8
 
-I do have a bunch more that seem exploitable, though - for example:
+Hi!
 
-http://lcamtuf.coredump.cx/strings-bfd-badfree - does this repro for
-people (I tried with binutils 2.24)?
+While looking at the recent PHP CVE-2014-3668, a worse problem was
+spotted in the same code that affected older PHP versions.  The
+date_from_ISO8601() function optionally copied input to a fixed size
+local buffer without performing any bounds checks:
 
-I think that given the expectations people have around what strings
-does and whether it's safe to run on untrusted binaries, I'd seriously
-question the wisdom of making it use libbfd, at least by default;
-perhaps distros want to consider non-upstream patches that default to
-the -a mode, instead?
+http://git.php.net/?p=php-src.git;a=blob;f=ext/xmlrpc/libxmlrpc/xmlrpc.c;h=d82f270#l168
 
-I don't understand the user benefit of extracting strings only from
-certain sections of executables, and I almost feel like it's a side
-effect of strings being a part of binutils more than anything else.
+The issue was reported and corrected via:
 
+https://bugs.php.net/bug.php?id=45226
+http://git.php.net/?p=php-src.git;a=commitdiff;h=c818d0d
 
-On Fri, Oct 24, 2014 at 5:00 AM, Hanno Böck <hanno@...eck.de> wrote:
-> I've now put this in upstream's bugtracker:
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17509
->
-> Hope noone else has already done this.
->
-> --
-> Hanno Böck
-> http://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
+The fix was included in PHP 5.2.7:
+
+http://php.net/ChangeLog-5.php#5.2.7
+
+  Fixed bugs #45226, #18916 (xmlrpc_set_type() segfaults and wrong behavior
+  with valid ISO8601 date string). (Jeff Lawsons)
+
+It wasn't flagged as security fix, which seems incorrect to me.  This
+overflow can be triggered by a malicious XML passed to xmlrpc_decode*
+PHP functions.
+
+Can a CVE be assigned?  I'm not sure if this needs 2008 or 2014 id.
+
+-- 
+Tomas Hoger / Red Hat Product Security
