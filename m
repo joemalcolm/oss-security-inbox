@@ -1,41 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/10
-Message-ID: <5375490B.8020007@gmail.com>
-Date: Fri, 16 May 2014 01:08:59 +0200
-From: Frédéric Basse <basse.frederic@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/7
+Message-ID: <54598E88.5060700@mccme.ru>
+Date: Wed, 05 Nov 2014 05:42:16 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2014-2978] DirectFB remote out-of-bounds write vulnerability
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-[CVE-2014-2978] DirectFB remote out-of-bounds write vulnerability
-________________________________________________________________________
-Summary:
-DirectFB is prone to an out-of-bound write vulnerability since version
-1.4.4.
+On 2014-11-03 01:43, Alexander Cherepanov wrote:
+> https://sourceware.org/bugzilla/show_bug.cgi?id=17533
+>
+> $ printf '!<arch>\n//%48d%8s`\n' -2 '' > test.a
+> $ objdump -x test.a
+> Segmentation fault
+>
+> At least 2.22, 2.24 and head are affected. ar, size, strip etc. are also
+> affected.
+>
+> valgrind on head shows:
+>
+> ==14181== Invalid write of size 8
+> ==14181==    at 0x4C2E467: memset (vg_replace_strmem.c:1094)
+> ==14181==    by 0x448AD2: bfd_zalloc (opncls.c:1011)
+> ==14181==    by 0x43F08A: _bfd_slurp_extended_name_table (archive.c:1298)
+> ==14181==    by 0x43E89B: bfd_generic_archive_p (archive.c:831)
+> ==14181==    by 0x4466A6: bfd_check_format_matches (format.c:305)
+> ==14181==    by 0x407DCD: display_any_bfd (objdump.c:3356)
+> ==14181==    by 0x409F52: display_file (objdump.c:3410)
+> ==14181==    by 0x4048F9: main (objdump.c:3692)
+> ==14181==  Address 0x55fb9a0 is 0 bytes after a block of size 4,064 alloc'd
+> ==14181==    at 0x4C27C20: malloc (vg_replace_malloc.c:296)
+> ==14181==    by 0x4D51DC: objalloc_create (objalloc.c:95)
+> ==14181==    by 0x448177: _bfd_new_bfd (opncls.c:73)
+> ==14181==    by 0x448307: bfd_fopen (opncls.c:197)
+> ==14181==    by 0x409F40: display_file (objdump.c:3403)
+> ==14181==    by 0x4048F9: main (objdump.c:3692)
+>
+> This is "Invalid write", hence potentially exploitable? Is further
+> analysis required before deciding if this is a security issue? Or, more
+> strictly, is further analysis required before deciding if this issue is
+> CVE worthy?
 
-The vulnerability can be triggered remotely without authentication
-through Voodoo interface (network layer of DirectFB).
-________________________________________________________________________
-Details:
-An attacker can choose to overflow in the heap or the stack.
-________________________________________________________________________
-CVSS Version 2 Metrics:
-Access Vector: Network exploitable
-Access Complexity: Low
-Authentication: None
-Confidentiality Impact: Complete
-Integrity Impact: Complete
-Availability Impact: Complete
-________________________________________________________________________
-Disclosure Timeline:
-2014-03-27 Developer notified
-2014-04-21 CVE-2014-2978 assigned
-2014-05-16 Public advisory
-________________________________________________________________________
-References:
-http://www.directfb.org/
-http://mail.directfb.org/pipermail/directfb-dev/2014-March/006805.html
-________________________________________________________________________
+This is fixed now:
 
+https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=bb0d867169d7e9743d229804106a8fbcab7f3b3f
 
-Download attachment "signature.asc" of type "application/pgp-signature" (535 bytes)
+-- 
+Alexander Cherepanov
