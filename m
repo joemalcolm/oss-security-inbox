@@ -1,52 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/6
-Message-ID: <547EFE5D.4060402@42com.com>
-Date: Wed, 03 Dec 2014 13:13:17 +0100
-From: Max Mühlbronner <mm@...om.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/1
+Message-ID: <54596ABE.2000400@mccme.ru>
+Date: Wed, 05 Nov 2014 03:09:34 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-
-just imagine a malicious user: signing up for e.g. anonymous VPN service 
-and crashing the whole openVPN process, which would be affecting other 
-users too. I would definitely consider this to be a critical issue.
-
-
-Max M.
-
-On 03.12.2014 11:11, Nicolas Gaudin wrote:
-> Hi,
-> Is this vulnerability really 'critical' if we consider that a malicious user
-> needs to be authenticated to crash the gateway?
-> I understand that the vulnerability is exploitable if a client is
-> compromised (certificate stolen).
-> In such a case (client compromised), the risk is greater as confidentiality
-> is breached.
+On 2014-11-03 03:57, Michal Zalewski wrote:
+>> BTW is there a method to quickly sort out crashes (or other bad behavior)
+>> into potentially exploitable and presumably non-exploitable, i.e. separate
+>> security issues from non-security ones?
 >
-> Nicolas
->
-> -----Message d'origine-----
-> De : David White [mailto:dmwhite823@...il.com]
-> Envoyé : mercredi 3 décembre 2014 10:24
-> À : oss-security@...ts.openwall.com
-> Objet : [oss-security] CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
->
-> I saw an email come through the pfSense list yesterday, but haven't seen
-> anything about it discussed here. So I'm bringing it to this list's
-> attention.
->
-> https://community.openvpn.net/openvpn/wiki/SecurityAnnouncement-97597e732b
->
-> [ As a side note, I mistakenly thought the OP on the pfSense list mistakenly
-> posted his link to a forum post on OpenVPN that was written in 2010, when in
-> fact, that user had joined in 2010 but posted to the pfSense forum
-> recently - https://forums.openvpn.net/topic17625.html ]
->
->
-> --
-> David
+> Nah, not really.  You just sort of need to have a look.
 
+What a pity!:-)
 
+> For very quick and error-prone triage, it's probably fair to say with
+> out-of-bound writes that are far away from 0x0 *and* are not stack
+> exhaustion, you can presume exploitability. That presumption gets
+> stronger if the address is close to existing memory mappings or if it
+> changes from one test case to another. It's possibly a bit weaker if
+> it's only caught by Valgrind or so, because not all off-by-one issues
+> are necessarily a problem under normal circumstances, due to things
+> such as alignment padding or non-essential variables; when it's bad
+> enough to crash under normal operating conditions, the evidence of
+> exploitability is stronger.
+>
+> For derefs in the fixed vicinity of 0x0, you can probably assume
+> non-exploitability except for certain specific circumstances (e.g.,
+> kernel bugs, use of uninitialized memory whose content you feel you
+> could influence). Call stack exhaustion is generally non-exploitable
+> in itself.
+>
+> For read derefs, non-exploitability can be a weak initial assumption,
+> too, but this can change easily (e.g., if the next thing the program
+> would do with the data it tries to read is use it to write to the read
+> address, or something of that sort). Read derefs in places such as
+> free(), malloc(), sprintf(), strcpy(), etc, are probably exploitable.
+
+Thanks a lot for your explanation! The data for most things that you 
+describe seems to be available from valgrind so it could be scripted.
+
+>> Simple fuzzing of objdump with zzuf (not even afl) quickly gives out tens
+>> and hundreds of different cases of mentioned errors (mostly from the first
+>> group:-). Now what?
+>
+> Well, deduping is important.
+
+That's after deduping by a call stack as available in valgrind output:-(
+That is, for those thousands of samples which were run through it. 
+Unfortunately valgrind is not very fast and millions of other crashes 
+were not analyzed.
+
+Well, after the first bunch of crashes will be fixed I can simply rerun 
+zzuf and see which crashes are left.
+
+> If you're running without ASLR, you can
+> get reasonably good results by grouping problems by %eip / %rip where
+> the crash occurred. Looking at the call stack is good, too.
+
+Indeed. And both things are easy to get with gdb. And it's much faster 
+than valgrind.
+
+> But some
+> memory corruption issues will have latent effects. With these, ASAN /
+> Valgrind / debugging allocator can help.
+
+Indeed.
+
+Thanks again.
+
+-- 
+Alexander Cherepanov
