@@ -1,48 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/21/3
-Message-Id: <20141021163449.C2FAFB2E127@smtpvbsrv1.mitre.org>
-Date: Tue, 21 Oct 2014 12:34:49 -0400 (EDT)
-From: cve-assign@...re.org
-To: larry0@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Vulnerabilities in WordPress Database Manager v2.7.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/15
+Message-ID: <57A89B78-F96E-4E49-9AAC-034AB2BA25B0@redhat.com>
+Date: Wed, 05 Nov 2014 13:51:25 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: CVE-2014-7828 FreeIPA 4.0/4.1 does not require password when OTP used
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Just a heads-up that FreeIPA 4.0 and 4.1 (_not_ earlier versions), when 
+OTP is used, did not requite the password (or second factor of 2FA) to 
+login.
 
->>> INSERT into password (passwords) VALUES(LOAD_FILE("/etc/passwd"));
+https://fedorahosted.org/freeipa/ticket/4690
+https://bugzilla.redhat.com/show_bug.cgi?id=1160871
+This was assigned CVE-2014-7828.  A patch to fix it is available:
 
->> This report seems related to:
->> 
->>   if ( preg_match( "/LOAD_FILE/i", $sql_query ) ) {
->> 
->> in the
->> 
->>   https://github.com/lesterchan/wp-dbmanager/commit/7037fa8f61644098044379190d1d4bf1883b8e4a
- 
->> one CVE ID now for "attempts to offer a subset of
->> MySQL statements without considering the possible MySQL privilege
->> configurations" as applied to the LOAD_FILE attack
+https://www.redhat.com/archives/freeipa-devel/2014-November/msg00068.html
 
-> It seems to me this would be the best approach. I hadn't considered it
-> originally, but it makes the most sense.
+Upstream is recommending users disable 2FA until they can get a fix out 
+tomorrow:
 
-Use CVE-2014-8336.
+https://www.redhat.com/archives/freeipa-users/2014-November/msg00077.html
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJURoocAAoJEKllVAevmvms8ZcH/1PDEog9U/osvzNql17RlucO
-5ZOKgAYHonD/LGaed0Jq8YLjy9kc73umA0Z3qQTdiRYdU06bEGL+FHgB873qHE5F
-kZwTCknzd993AjhRXlfPN6wMrYibJ8owP6Zi6yakX2g2sNvJL9FLW4x3gUEjAwHX
-BxttkvCrng+r23X3d/1Ywv0fd1RGlZ0WRsxDKLpW2vLW8KP7IXSq4iOLdLsYFWjq
-8CSLS5Md3siIc80HY440s5uHWtImxMS5ZQjA2dCmMywTComtTaLxI1YyuMybdUHp
-F+Fspm7A+s/NXKBw2pPyhxT1Z6UB7FBT3/j3ll7PbAl5+bhLg7rDxsPRIxsClnQ=
-=noo2
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Product Security
