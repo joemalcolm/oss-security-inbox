@@ -1,61 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/28
-Message-ID: <20141008224810.GC12633@sentinelchicken.org>
-Date: Wed, 8 Oct 2014 15:48:10 -0700
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/11
+Message-ID: <CACYkhxjwW_gRbh-DP+CayrH8RynVxqE_rJouynAzAVfkdcQ6PQ@mail.gmail.com>
+Date: Wed, 5 Nov 2014 16:03:44 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+Subject: Re: is MD5 finally dead?
 Content-Type: text/plain; charset=utf-8
 
+On 5 November 2014 15:45, Alex Gaynor <alex.gaynor@...il.com> wrote:
+> As far as I can tell, HMAC doesn't actually require pre-image resistance,
+> it requires that the compression function used by the has be a PRF -- or at
+> least that's what the HMAC paper says. Are these two formulations
+> equivalent?
 
-> I don't really want to get in the super-existential debate about code
-> vs data; I fully recognize that I'm gonna be in the minority on the
-> list, and maybe even in the wrong, but I just can't get too passionate
-> about this "best practice", having seen how few systems are (or can
-> be) designed with it in mind; and how little of a difference it makes
-> to them in the end.
+HMAC fits in the unknown-prefix category when used correctly.
 
-I don't want a big debate either.  We're all busy.  We work in
-security, afterall.
+Not sure about general proofs, but the current collision attacks on MD5 won't
+work without knowing the IHV ahead of time, and if you know the HMAC key
+you don't need collisions.
 
+>> In the case of an unknown-prefix, HMAC[1] or anything requiring a
+>> preimage, it's
+>> just hardening to use swap out MD5 (and SHA-1).
+>>
+>> [1] Unless you accidentally swap the key and data fields!
 
-> In a pragmatic sense, it's just that almost *everything* violates it.
-> The CPUs we use, the memory allocators we have running on them, all
-> the popular progamming languages and web frameworks. We still need to
-> secure these systems, rather than saying "oh well, you should have
-> done it differently from the start" =)
-
-Well, I guess, but the way you're interpreting this separation of
-code/data and the way that I am is clearly different.  Which means we
-should perhaps refine how such a broad concept is stated.  There are
-clearly cases where separation is  practical, non-destructive, and
-beneficial for security.  There are cases that are grey area.  And
-there are cases where there's no way around mixing, because
-computation is computation.
-
-For the naive developer, how would you characterize this in a
-nutshell? 
-
-
-> Sure. I'm not entirely convinced what the lessons are, though. I mean,
-> you expect the next big issue in OpenSSL or Apache. You can probably
-> even guess what it may be. You can maybe even make an intelligent
-> guess about the language features or coding patterns that will
-> contribute to it, or to learn from past bugs. With the bash bug... hm.
-
-To me, it's not about anticipating the next bug, it is about providing
-guidance to developers who care only so much about security so that we
-can avoid some bugs that we didn't anticipate. 
-
-
-Best,
-tim
-
-
-PS- I'm of two minds on this.  More recently I've decided that educating
-    developers isn't nearly as effective as providing developers APIs and
-    development environments that make it unlikely they will shoot
-    themselves in the foot.  It's not that developers can't be trained,
-    it is that they will probably only be developers for a handful of 
-    years and move on to other roles later, with a whole new batch of
-    green coders coming in to fill their positions.  Anyway...
+And to elaborate - if you swap the key and data fields, you can use a normal
+md5 collision, then XOR against opad.
