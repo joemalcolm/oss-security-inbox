@@ -1,36 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/08/11
-Message-Id: <201401081756.s08HuBZJ014313@linus.mitre.org>
-Date: Wed, 8 Jan 2014 12:56:11 -0500 (EST)
-From: cve-assign@...re.org
-To: larry0@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: paratrooper-pingdom-1.0.0 ruby gem exposes API login credentials
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/10
+Message-ID: <CAFRnB2VZkhKRJK7iKaGPA6hk8SVuqxt9KWGmjmL2xs66wZa6qA@mail.gmail.com>
+Date: Wed, 05 Nov 2014 04:45:46 +0000
+From: Alex Gaynor <alex.gaynor@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: is MD5 finally dead?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+As far as I can tell, HMAC doesn't actually require pre-image resistance,
+it requires that the compression function used by the has be a PRF -- or at
+least that's what the HMAC paper says. Are these two formulations
+equivalent?
 
-> curl ... -H "App-Key: {app_key}" -u " {username}:#{password}"
-> 
-> A malicious user could monitor the process tree to steal the API key,
-> username and password for the API login.
+Alex
 
-Use CVE-2014-1233.
+On Wed Nov 05 2014 at 8:42:59 PM Michael Samuel <mik@...net.net> wrote:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+> Hi,
+>
+> On 5 November 2014 15:21, Kurt Seifried <kseifried@...hat.com> wrote:
+> > http://natmchugh.blogspot.co.uk/2014/10/how-i-created-two-
+> images-with-same-md5.html
+> >
+> > It seems like MD5 should probably be classed with DES as instant CVE
+> > win, either now, or pretty soon....
+>
+> This is the same chosen-prefix attack that was used to forge
+> certificates.  Using md5 in
+> a collision-hostile environment is definitely CVE worthy, and has been
+> for a while. (BTW,
+> no CVE for rsync yet)
+>
+> In the case of an unknown-prefix, HMAC[1] or anything requiring a
+> preimage, it's
+> just hardening to use swap out MD5 (and SHA-1).
+>
+> [1] Unless you accidentally swap the key and data fields!
+>
 
-iQEcBAEBAgAGBQJSzZDoAAoJEKllVAevmvmsY4cH/Rr4UkVUc8uqZQ/zAhlT76DX
-+bbmSJRrdZbZR1MaRPao16EWuLKeC4eSQRl6UADX9pC0rxh6Wq3+aaZK66T8pwTp
-Qgk8fn8nxZ9SJpTheYjDJkIbpQ2SmzMNd+DUUXxNQ/HrXO6wv/gDMK2Z1hOBYk6f
-45ue9WAmwXjBnVbnizIs4okC3ZcSE1+H4Djpq+c0EKacan9IxEMVACB95Op0049V
-B33cWdUrvKxTjaELtS/oRgOUuaTx+093wqMP3PuDSSHhZ51DiqGQ7+qLAVjEJTvb
-ri/fQECLxyWSyIoiEDnpFCAdTaGVpuJEq+lVgqYsphBwAlvt29USM0LXH7HoMtw=
-=79GU
------END PGP SIGNATURE-----
