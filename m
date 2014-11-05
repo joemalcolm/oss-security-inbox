@@ -1,25 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/24/4
-Message-ID: <20141124141921.GB16881@mail.corp.redhat.com>
-Date: Mon, 24 Nov 2014 15:19:21 +0100
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: firefox: integer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/13
+Message-ID: <CAJVRA1Q8t46KVm8_5RZn6E858ME2pUbgb2BhK8p6txVyYjFRnA@mail.gmail.com>
+Date: Tue, 4 Nov 2014 20:36:39 -0800
+From: coderman <coderman@...il.com>
+To: oss-security@...ts.openwall.com, kseifried <kseifried@...hat.com>
+Subject: Re: is MD5 finally dead?
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 11/4/14, Kurt Seifried <kseifried@...hat.com> wrote:
+> ...
+> It seems like MD5 should probably be classed with DES as instant CVE
+> win, either now, or pretty soon....
 
-And integer overflow was discovered in Firefox when processing a
-crafted webm files [1].
-Upstream commits are in [1] as well.
 
-[1]: https://bugzilla.mozilla.org/show_bug.cgi?id=1090405
+waiting for an HMAC-MD5 break before putting a fork in it.
 
-Can a CVE be assigned to this issue please?
-
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
-
-Content of type "application/pgp-signature" skipped
+best regards,
