@@ -1,39 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/10
-Message-Id: <201406201517.s5KFHQOY005907@linus.mitre.org>
-Date: Fri, 20 Jun 2014 11:17:26 -0400 (EDT)
-From: cve-assign@...re.org
-To: luto@...capital.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Another Linux syscall auditing bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/3
+Message-ID: <54596D9B.8090409@redhat.com>
+Date: Tue, 04 Nov 2014 17:21:47 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request for requests-kerberos
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 04/11/14 11:20 AM, Ian Cordasco wrote:
+> Hello all,
+> 
+> A fix was merged and released today for the package which performs
+> kerberos authentication when using python-requests. Prior to this,
+> every version of the package did not properly handle mutual
+> authentication which means that the client did not verify that the
+> user was communicating with a trusted server. The version which
+> contains the fix is 0.6 and all prior versions are considered
+> vulnerable.
 
-> On a 32-bit x86 kernel with syscall auditing enabled, syscall(1000)
-> will cause an OOPS.
+Can you please provide a link to said package/release/commit/etc? Thanks.
 
-> http://article.gmane.org/gmane.linux.kernel/1726110
+> Please assign a CVE to this issue.
+> 
+> Cheers,
+> Ian
+> 
 
-> It appears that entry_32.S is missing any call to the audit exit hook
-> on the badsys path.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-Use CVE-2014-4508.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTpFAnAAoJEKllVAevmvmscoMH/jDdyfavkCGKGQG5PVlzlQwa
-GkWdq8b4gHOVWSTonKZ9LqRA/NJmDwC7whOsPUX+aALF0jgmcvLAex2YTsscuXOX
-6oE9XbFQ7spvV3mYcxammKu8NnxBc0n4JHpjR7Plhmus9dODnHHCWOMg4G+kwIo9
-/GSzyuj9h/P/p37/01QmFqharNEPbzPyJ3JSoI8xgcRBe7Jwv8oaYn4XS8tmF8P/
-xNGy5t6MXzGGL3ASfNFIzj3ZfcRz8BF7Vp/vJ76lWo0PrIz5jE0GnntgZiJ4mndA
-JV0aqkpfKhfb5xbfVCdkfIzMBkY4bcVWwy33Qx8b74D4w3sOp9e6jNA3F5xYEZg=
-=yLEq
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
