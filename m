@@ -1,32 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/5
-Message-ID: <20140107104731.GA12082@hal.lan>
-Date: Tue, 7 Jan 2014 11:47:31 +0100
-From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/12
+Message-ID: <20141105050900.GA2055@openwall.com>
+Date: Wed, 5 Nov 2014 08:09:00 +0300
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: lightdm-gtk-greeter - local DOS due to NULL pointer dereference
+Subject: Re: is MD5 finally dead?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Nov 04, 2014 at 09:21:49PM -0700, Kurt Seifried wrote:
+> http://natmchugh.blogspot.co.uk/2014/10/how-i-created-two-images-with-same-md5.html
+> 
+> 
+> It seems like MD5 should probably be classed with DES as instant CVE
+> win, either now, or pretty soon....
 
-an openSUSE user discovered that it is trivial to crash
-lightdm-gtk-greeter by entering an empty username due to a NULL
-pointer dereference. When a greeter crashes the lightdm daemon
-exits.
-This constitutes a local denial of service which can be triggered
-by any unprivileged attacker requiring the intervention of an
-administrator to restart lightdm. It affects all versions of
-lightdm-gtk-greeter.
+Depends on use case, like before.
 
-The initial downstream report is at
-https://bugzilla.novell.com/show_bug.cgi?id=857303, the bug has
-been reported upstream at
-https://bugs.launchpad.net/lightdm-gtk-greeter/+bug/1266449 and
-fixes for the 1.1 and 1.3 series are available at
-https://build.opensuse.org/package/view_file/home:gberh:branches:OBS_Maintained:lightdm-gtk-greeter/lightdm-gtk-greeter.openSUSE_12.2_Update/lightdm-gtk-greeter-handle-invalid-user.patch?expand=1
-and
-https://build.opensuse.org/package/view_file/home:gberh:branches:OBS_Maintained:lightdm-gtk-greeter/lightdm-gtk-greeter.openSUSE_13.1_Update/lightdm-gtk-greeter-handle-invalid-user.patch?expand=1
+Surely there are uses of both MD5 and DES where the choice of these
+primitives is not a vulnerability.  For example, md5crypt is not
+affected by MD5 collisions.  (It's EOL'ed by the author for other
+reasons, though.)  Similarly, the use of DES in BSDI/FreeSec extended
+crypt() is not a vulnerability (it's 64-bit hash space is a bit too
+small, etc., but that's another matter).  And 3DES is still OK.
 
-Could a CVE be assigned to this issue please?
--- 
-Guido Berhoerster
+For yet another example, while HMAC-MD5 shouldn't be used for new
+designs, there's no known realistic attack on it yet:
+
+New Proofs for NMAC and HMAC - Cryptology ePrint Archive
+https://eprint.iacr.org/2006/043.pdf
+
+New Proofs for NMAC and HMAC: Security without Collision-Resistance
+http://cseweb.ucsd.edu/~mihir/papers/hmac-new.html
+
+http://crypto.stackexchange.com/questions/9336/is-hmac-md5-considered-secure
+
+https://tools.ietf.org/html/rfc6151
+
+"  Therefore, it may not be urgent to remove HMAC-MD5 from the existing
+   protocols.  However, since MD5 must not be used for digital
+   signatures, for a new protocol design, a ciphersuite with HMAC-MD5
+   should not be included."
+
+Curious comments by Thomas Pornin and Dmitry Khovratovich on whether
+e.g. MD5's compression function may be a PRF or not (and thus whether
+the HMAC proof fully applies or not) despite of its insufficient
+collision resistance:
+
+http://crypto.stackexchange.com/questions/268/security-of-n-bit-hmac
+
+Alexander
