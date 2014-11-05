@@ -1,36 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/8
-Message-Id: <20140305182922.CCF6920106@smtp.hushmail.com>
-Date: Wed, 05 Mar 2014 18:29:22 +0000
-From: "mancha" <mancha1@...h.com>
-To: carnil@...ian.org, cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: file: crashes when checking softmagic for some corrupt PE executables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/4
+Message-ID: <CAN-Kwu1Quk6N5fa39Gf1q75YPKD-dDZB=hXbaw8RTkgE5eKEHg@mail.gmail.com>
+Date: Tue, 4 Nov 2014 18:30:30 -0600
+From: Ian Cordasco <graffatcolmingov@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request for requests-kerberos
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 05 Mar 2014 17:08:17 +0000 cve-assign@...re.org wrote:
->> file can be made to crash when checking some corrupt PE 
->> executables, and so could be used to mount a denial of service
->>for file, or an application using file/libmagic.
+On Tue, Nov 4, 2014 at 6:21 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 04/11/14 11:20 AM, Ian Cordasco wrote:
+>> Hello all,
 >>
->> http://bugs.gw.com/view.php?id=313
->> https://github.com/glensc/file/commit/447558595a3650db2886cd
+>> A fix was merged and released today for the package which performs
+>> kerberos authentication when using python-requests. Prior to this,
+>> every version of the package did not properly handle mutual
+>> authentication which means that the client did not verify that the
+>> user was communicating with a trusted server. The version which
+>> contains the fix is 0.6 and all prior versions are considered
+>> vulnerable.
 >
->Use CVE-2014-2270.
+> Can you please provide a link to said package/release/commit/etc? Thanks.
+>
+>> Please assign a CVE to this issue.
+>>
+>> Cheers,
+>> Ian
+>>
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 >
 
-CVE Assignment Team, et al. -
+Sure,
 
-The initial fix for this problem [1] had an off-by-one flaw
-that has since been corrected [2].
-
-I am unsure of the policy regarding the issuance of new CVE 
-identifiers associated with incomplete/flawed fixes associated
-with previously allocated CVEs. But, in this particular case
-file 5.17 shipped with [1] and not [2].
-
---mancha
-
-[1] https://github.com/file/file/commit/447558595a36
-[2] https://github.com/file/file/commit/70c65d2e1841
-
+https://github.com/requests/requests-kerberos/pull/36 is the pull
+request adding https://github.com/mkomitee/requests-kerberos/commit/9c1e08cc17bb6950455a85d33d391ecd2bce6eb6.
+This is released in https://pypi.python.org/pypi/requests-kerberos
