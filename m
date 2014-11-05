@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/21/8
-Message-ID: <20140821164419.GA24894@gremlin.ru>
-Date: Thu, 21 Aug 2014 20:44:19 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/16
+Message-ID: <20141105213111.GA21924@zoho.com>
+Date: Wed, 5 Nov 2014 21:31:11 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: SaltStack 2014.1.10 released
+Cc: cve-assign@...re.org
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-On 21-Aug-2014 10:37:10 -0600, Kurt Seifried wrote:
+On Tue, Nov 04, 2014 at 04:39:09AM -0500, cve-assign@...re.org wrote:
+> Four of the main factors that affect libbfd CVE assignments are:
+> 
+>   1. existence of a "multi-session" use case
+>   2. discussion of exploitability of a specific attack vector
+>   3. likelihood of exploitability of classes of observed behavior
+>   4. actual or expected volume of distinct discoveries
+> 
+> We'll try to give an example of each of these.
 
- > Did anyone else have this message fail to render in their email
- > client (I get a blank panel with the .sig attachment at the bottom
- > using Thunderbird/Enigmail/Fedora).
+[SNIP]
 
-I use mutt, and it tells me everything is ok:
-http://pics.rsh.ru/img/kurt_signature_in_mutt_bgxvgqe3.png
+Very interesting read. Thank you for taking the time to write it up.
 
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+--mancha
 
 Content of type "application/pgp-signature" skipped
