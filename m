@@ -1,52 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/9
-Message-ID: <530F447D.9070708@sysdream.com>
-Date: Thu, 27 Feb 2014 14:58:21 +0100
-From: Damien Cauquil <d.cauquil@...dream.com>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE request: PLOGGER 1.0RC1 multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/7
+Message-ID: <20141106163335.GI24397@suse.de>
+Date: Thu, 6 Nov 2014 17:33:35 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Linux kernel mac80211 plain text leak
 Content-Type: text/plain; charset=utf-8
 
-I think there is a mistake from our part about the "race condition".
-After a quick review, there is no "race condition" but simply some
-requirements about the zip file and a cleaning step that should not be
-be performed by the application in order to keep all the files on the
-server.
+Hi,
 
-Here are the steps to follow to exploit this vulnerability:
+While searching for another kernel issue I found this gem which apparently has no CVE yet:
 
-1. create a zip file containing at least one non-empty image file with a
-valid extension (such as .jpg)
-2. upload the file through the upload form, the application will unzip
-it in a standard location and will tell the user about the image files
-found. If we go on at this step, all the extracted images will be
-processed and all the extracted files then deleted. So we just stop
-right here, and
-3. access the php file extracted by the application
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=338f977f4eb441e69bb9a46eaa0ac715c931a67f
 
-I don't know if I'm really clear about what happens,
+I think it needs a CVE.
 
-Le 27/02/2014 14:29, cve-assign@...re.org a écrit :
->> The zip file must at least contains a non-empty image file with a name
->> including a valid extension, and of course the exploit php file.
-> 
-> Maybe your reply means that if this "must at least" requirement is not
-> satisfied, then a race condition occurs. But what is the race condition:
-> what action is in a race against what other action?
-> 
-> 
+Ciao, Marcus
 
--- 
-Damien Cauquil
-Directeur Recherche & Développement
-CHFI | CEH | ECSA | CEI
+commit 338f977f4eb441e69bb9a46eaa0ac715c931a67f
+Author: Johannes Berg <johannes.berg@...el.com>
+Date:   Sat Feb 1 00:16:23 2014 +0100
 
-Sysdream
-108 avenue Gabriel Péri
-93400 Saint Ouen
-Tel: +33 (0) 1 78 76 58 21
-www.sysdream.com
+    mac80211: fix fragmentation code, particularly for encryption
 
+    The "new" fragmentation code (since my rewrite almost 5 years ago)
+    erroneously sets skb->len rather than using skb_trim() to adjust
+    the length of the first fragment after copying out all the others.
+    This leaves the skb tail pointer pointing to after where the data
+    originally ended, and thus causes the encryption MIC to be written
+    at that point, rather than where it belongs: immediately after the
+    data.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (279 bytes)
+    The impact of this is that if software encryption is done, then
+     a) encryption doesn't work for the first fragment, the connection
+        becomes unusable as the first fragment will never be properly
+        verified at the receiver, the MIC is practically guaranteed to
+        be wrong
+     b) we leak up to 8 bytes of plaintext (!) of the packet out into
+        the air
+
+    This is only mitigated by the fact that many devices are capable
+    of doing encryption in hardware, in which case this can't happen
+    as the tail pointer is irrelevant in that case. Additionally,
+    fragmentation is not used very frequently and would normally have
+    to be configured manually.
+
+    Fix this by using skb_trim() properly.
+
+    Cc: stable@...r.kernel.org
+    Fixes: 2de8e0d999b8 ("mac80211: rewrite fragmentation")
+    Reported-by: Jouni Malinen <j@...fi>
+    Signed-off-by: Johannes Berg <johannes.berg@...el.com>
+
