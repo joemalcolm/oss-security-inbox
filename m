@@ -1,31 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/7
-Message-ID: <CALPTtNVBHYvoWcs_07X=toVFCiPB=+rgspEN4Kc5DMaPZv+ygg@mail.gmail.com>
-Date: Fri, 5 Dec 2014 18:23:09 -0800
-From: Reed Loden <reed@...dloden.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/4
+Message-Id: <20141106113944.E0DDD6C0013@smtpvmsrv1.mitre.org>
+Date: Thu,  6 Nov 2014 06:39:44 -0500 (EST)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: polarssl
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 5, 2014 at 4:59 PM, Daniel Micay <danielmicay@...il.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
->
-> I don't really see how this would prevent Mozilla from shipping a
-> browser with ASLR. The Tor browser has been shipping a fork of Firefox
-> built as a position independent executable for ages. It doesn't impact
-> users because they're either starting it via a .desktop file or the
-> command-line.
->
-> The support for desktop icons in Nautilus is deprecated / disabled by
-> default with only a hidden dconf preference to enable it. If you really
-> want to support the workflow of opening up the file manager, navigating
-> to the binary and double-clicking it then using a wrapper script is a
-> quite obvious solution.
->
+> https://polarssl.org/tech-updates/releases/polarssl-1.3.9-released
 
-Obviously, some users are running into it (
-https://bugzilla.mozilla.org/show_bug.cgi?id=1076892), or it wouldn't have
-had to be backed out.
+> this release fixes a mistake in the negotiation introduced in PolarSSL
+> 1.3.8. The mistake resulted in servers negotiating a weaker signature
+> algorithm than available.
 
-~reed
+Use CVE-2014-8627.
 
+
+> two remotely-triggerable memory leaks were found by the Codenomicon
+> Defensics tool and fixed in this release.
+
+Use CVE-2014-8628.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUW12QAAoJEKllVAevmvmsyoEIALzE4hgA/mL0iKq08PbTAby1
+Y0Jl//Dv3Zs7YnaTBtK9STSWg1Rh7dpKYN0+mJCMvhboQGgUSdE/XdQt2aHHg1oi
+MVJ7YFGsawZ6MjhsMbHTqcbyHH/ESVp7i4O2nBejVVRdYurocEaKS8BpVIFj1r3h
+ayDSAlDux4B1H3jWpuIYwv9zcb1HfscnhTNC/vjcJLFzrQCdA+eQhV221tCnS5Jt
+8goNPdUCMDQ1+pbTZDenoWutVLZq3hqXKkNaGJqUiitCXdnQxq/kmYfNeLBCJ6r7
+ezZLL+Fcjm2pP+z9NeqHj/JmA6//Vz/fpHVZzZSWUrfJvydXgMHnlMJQKz+8xBc=
+=sZJ1
+-----END PGP SIGNATURE-----
