@@ -1,27 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/3
-Message-ID: <CAEDdjHfq=SfTVzaeqpKSCeF-NWpv-K08qzNnYSWOA6GPOQcO7w@mail.gmail.com>
-Date: Wed, 19 Feb 2014 10:08:37 +0000
-From: Pedro Ribeiro <pedrib@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Ralf Becker <rb@...lite.de>
-Subject: CVE request: remote code execution in egroupware <= 1.8.005
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/5
+Message-ID: <CAHmME9qAQf2OBkBeAe3CUqfveS0FPG6H1CgzxLyBYtZ-4NFbvQ@mail.gmail.com>
+Date: Thu, 6 Nov 2014 14:04:47 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE Request: Qt Creator fails to verify SSH host key
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi folks,
 
-I have discovered a remote code execution via php unserialize in egroupware
-<= 1.8.005.
-Can you please assign a CVE for this vulnerability?
+Qt Creator contains a hand-rolled SSH client, for remote debugging and
+deployment onto mobile devices and small Linux computers. In my experience
+with it, it's quite a slick library, actually. Unfortunately, they don't
+check host keys when connecting, which makes a man-in-the-middle attack
+trivial.
 
-The full report can be obtained from my repo in
-https://github.com/pedrib/PoC/raw/master/egroupware-1.8.005.txt
+It looks like this is something that occurred to them during development,
+but it was never written on time and the code has shipped without it:
 
-The changelog can be seen at http://www.egroupware.org/changelog and new
-versions can be obtained from http://www.egroupware.org/download
+src/libs/ssh/sshconnection.cpp:
+    // TODO: Mechanism for checking the host key. First connection to host:
+save, later: compare
+src/libs/ssh/sshexception_p.h:
+    SSH_DISCONNECT_HOST_KEY_NOT_VERIFIABLE = 9,
 
-Thanks in advance.
 
-Regards
-Pedro
+I reported this bug to the development team, alongside another bug
+involving cipher-suite compatibility with OpenSSH 6.7 (no CTR modes). They
+marked the latter as priority 1, and fixed it within 24 hours. The former,
+however, has received a bit more of a hesitant reaction. The most recent
+vendor feedback seems to indicate they're not super interested in
+implementing this.
+
+The bug report can be found here:
+https://bugreports.qt-project.org/browse/QTCREATORBUG-13339
+
+So, I'm reporting it to this list, on the off-chance that I'm right and
+this should be considered a security vulnerability, in which case a CVE can
+track the status of the vendor response. Or, if the list decides this is
+actually no big deal, and host key checking isn't such an essential thing
+(?!), I'll close the bug report.
+
+Thanks,
+Jason
 
