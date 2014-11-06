@@ -1,75 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/30
-Message-ID: <CADk+mPDpm2MaV4pfo7sBGoYpS2q+zCfNxjaOu78nvQgkABJ-yg@mail.gmail.com>
-Date: Tue, 30 Sep 2014 18:41:17 +0200
-From: Rainer Gerhards <rgerhards@...adiscon.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: vulnerability in rsyslog
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/8
+Message-ID: <CABBygYrKpXWwRHHryM1HLqtxHFTx14SRg7dqcDkJVkP_W35Uzg@mail.gmail.com>
+Date: Thu, 6 Nov 2014 17:22:34 +0100
+From: Javier Nieto <jnietotn@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request for Apache Traffic Server
 Content-Type: text/plain; charset=utf-8
 
-2014-09-30 18:28 GMT+02:00 Solar Designer <solar@...nwall.com>:
+ Versions Affected:  v4.0.2 to 4.1.2
+Not affected: >= 4.2.0
 
-> On Tue, Sep 30, 2014 at 01:55:12PM +0200, Sven Kieske wrote:
-> > I don't understand the following statement in the
-> > pri-vuln.txt in section "Patches":
-> >
-> > "Version 7.4.6, while no longer being project
-> > supported received a patch and is also not vulnerable."
-> >
-> > What was patched when this version is not vulnerable?
-> > Or do you mean it is not vulnerable after the patch got applied?
->
->
-My apologies, this is a type that skipped past all proof-reading. It should
-say "7.6.6", which is the v7 version released today. v7.4.x is not only
-non-project supported, it's also heavily outdated and missing many other
-patches as well (just to point this out).
+The vulnerability is due to unescaped hostnames. If we change the hostname
+in the HTTP header by HTML code, Apache Traffic Server does not properly
+filter HTML code from user-supplied input before displaying the input. A
+remote user can cause arbitrary scripting code to be executed by the target
+user's browser. The code will originate from the site running the Apache
+software and will run in the security context of that site. As a result,
+the code will be able to access the target user's cookies (including
+authentication cookies), if any, associated with the site, access data
+recently submitted by the target user via web form to the site, or take
+actions on the site acting as the target user. I
 
+I believe it is similar to CVE-2012-3499.
 
-> I think Rainer is not subscribed to oss-security.  I've just added him
-> to CC on this reply.  Rainer - please address Sven's questions above.
->
+I did several tests and I was able to get the user cookies by changing the
+hostname (in the HTTP header) to this code <img src=x
+onerror=alert(document.cookie)>
+https://issues.apache.org/jira/browse/TS-3095S
 
-yes, not subscribed, please CC me for follow-up questions.
+Should this issue have a CVE assigned?
 
-
->
-> All - please note that the bug is likely present in many other syslog
-> services.  It likely dates back all the way to Eric Allman's syslog,
-> although I have not checked to make sure yet.
->
-> pri-vuln.txt in the tarball attached to Rainer's message specifically
-> mentions sysklogd as "mildly affected":
->
-> | Affected
-> | --------
-> | - rsyslog, most probably all versions (checked 5.8.6+)
-> | - sysklogd (checked most recent versions)
-> | - potentially others (see root cause)
->
-> [...]
->
-> | sysklogd
-> | ~~~~~~~~
-> | Sysklogd is mildly affected. Having a quick look at the current git
-> master
-> | branch, the wrong action may be applied to messages with invalid
-> facility.
-> |
-> | A segfault seems unlikely, as the maximum misadressing is 104 bytes of
-> the
-> | f_pmask table, which is always within properly allocated memory (albeit
-> to
-> | wrong data items). This can lead to triggering invalid selector lines and
-> | thus wrongly writing to files or wrongly forwarding to other hosts.
->
->
-I also wouldn't outrule that other *applications* fell into the the same
-trap of the delta between the defines for NFACILITIES and the facility
-mask. If an app processes syslog messages based on facility/severity
-values, it probably is a good idea to check how it does that.
-
-Thanks for the follow-up and cc'ing!
-Rainer
+Regards
+--
+Javier Nieto
 
