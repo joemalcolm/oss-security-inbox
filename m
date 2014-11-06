@@ -1,63 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/2
-Message-ID: <20140312095628.GC22894@suse.de>
-Date: Wed, 12 Mar 2014 10:56:28 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: claws-mail vcalendar plugin stores user/password in cleartext
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/3
+Message-Id: <20141106113538.812C56C0054@smtpvmsrv1.mitre.org>
+Date: Thu,  6 Nov 2014 06:35:38 -0500 (EST)
+From: cve-assign@...re.org
+To: thoger@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: PHP xmlrpc date_from_ISO8601() buffer overflow (in php < 5.2.7)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 12, 2014 at 08:33:45AM +0000, Paul wrote:
-> On Mon, 10 Mar 2014 14:31:34 -0600
-> "Vincent Danen" <vdanen@...hat.com> wrote: 
-> 
-> > Subject pretty much says it all.  It's not a very exciting flaw but
-> > was brought to our attention.
-> > 
-> > References:
-> > 
-> > http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3099
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1074683
-> 
-> I believe that a CVE request for this is probably overkill.
-> 
-> The vCalendar plugin does not support login credentials when
-> subscribing to a WebCal.
-> 
-> The user can work around this missing feature by adding their username
-> and password to the URI, e.g.
-> https://USERNAME:MYPASSWORD@...lserver/home/USERNAME/Calendar
-> 
-> The URI is stored in clear text, hence if the user chooses to work
-> around the missing feature their un/pw will be stored in clear text.
-> 
-> Similar behaviour can be witnessed in a number of other apps. For
-> example, if I bookmark
-> https://USERNAME:MYPASSWORD@...lserver/home/USERNAME/Calendar in
-> firefox, it will save the credentials in clear text.
-> 
-> There are some apps that will store what the user enters in a
-> password field as clear text, however Claws Mail is not one of them.
-> 
-> Therefore, on the Claws Mail bug tracker, this is marked as a feature
-> request and not as a security issue.
-> 
-> with regards
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-FWIW, the calendar plugin does not do SSL safely anyway, which I would
-worry more about:
-http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3105
+> While looking at the recent PHP CVE-2014-3668, a worse problem was
+> spotted in the same code that affected older PHP versions.  The
+> date_from_ISO8601() function optionally copied input to a fixed size
+> local buffer without performing any bounds checks:
+> 
+> http://git.php.net/?p=php-src.git;a=blob;f=ext/xmlrpc/libxmlrpc/xmlrpc.c;h=d82f270#l168
+> 
+> The issue was reported and corrected via:
+> 
+> https://bugs.php.net/bug.php?id=45226
+> http://git.php.net/?p=php-src.git;a=commit;h=c818d0d01341907fee82bdb81cab07b7d93bb9db
+> 
+> The fix was included in PHP 5.2.7:
+> 
+> http://php.net/ChangeLog-5.php#5.2.7
+> 
+>   Fixed bugs #45226, #18916 (xmlrpc_set_type() segfaults and wrong behavior
+>   with valid ISO8601 date string). (Jeff Lawsons)
+> 
+> It wasn't flagged as security fix, which seems incorrect to me.  This
+> overflow can be triggered by a malicious XML passed to xmlrpc_decode*
+> PHP functions.
 
-Also the rssly plugin has the same issue
-www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3106
+Use CVE-2014-8626.
 
-Note comment by author(?):
-"However, while I agree that CURLOPT_SSL_VERIFYHOST should probably be
-enabled, I do not see any usefulness in enabling CURLOPT_SSL_VERIFYPEER. I
-do not really buy into the extortion racket that certificate authority
-companies run."
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-(The main claws-mail has different and very extensive ssl / certificate
- handling, a bit large to review quickly for me right now.)
-
-Ciao, Marcus
+iQEcBAEBAgAGBQJUW1xjAAoJEKllVAevmvmsOowIAIsXbqHmKb2XiWPEulUL+DS8
+rokejI8IfqNaRYwlAs8LPOkzB5zsKnbSHtFgVhOCaOXgfASPSU5IuL2yyxami2rW
+WuNmzW3vU8U5lBkVe11km8OqO2Db9z9KtDyuBOVG1hCFbzNTTljwwzri4lTpGzxN
+vUTLzaBBW3DCFp0ADEET2ua54HJLbzRxDRHbK9L4HuHfKao/PzuAZz02+xv6LYgU
+u+oq+CKHYnqfOMUomaOy1KPeYEEL1UGhCoCqmdR7geKE/KoEDVI+ueTwM+mZKo9Z
+0IaE+Wh4gZV88/TkthzRcnLdqqSdCKpJCEEoUrvPTr+rpKXRp+rvhVOwx0+dKtg=
+=mwMi
+-----END PGP SIGNATURE-----
