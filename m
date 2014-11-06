@@ -1,45 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/19
-Message-ID: <CAL9PXLwK-4t5mRd4KA_Db=QzOgRz5SbAXAO-xcvhGhdc7ah6qA@mail.gmail.com>
-Date: Thu, 16 Oct 2014 14:27:11 -0700
-From: Adam Langley <agl@...gle.com>
-To: Hanno Böck <hanno@...eck.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/2
+Message-ID: <545B100B.4090601@internot.info>
+Date: Thu, 06 Nov 2014 17:07:07 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: CVE-Request: dpkg handling of 'control' and warnings format string vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 16, 2014 at 2:07 PM, Hanno Böck <hanno@...eck.de> wrote:
->> However, in section seven, where the author claims that preloaded
->> entries are added for 1000 days, that's only via the net-internals
->> debugging interface. (The code screenshot shown is also of code for
->> that debugging interface.) I believe that preloaded entries in Chrome
->> will always be enforced, no matter what the system time is.
+A format string vulnerability vuln has been found in the latest version
+of dpkg.
+https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135
+
+An example is: https://internot.info/docs/dpkg_fstring.deb
+
+> dpkg -i --dry-run
+> '/home/www/www.internot.info/htdocs/docs/dpkg_fstring.deb'
+> dpkg: warning: parsing file '/tmp/dpkg.heOSnC/control' near line 2
+> package 'backup:01f15700.00431828.00000001.00000001.0000001a':
+>  '%08x.%08x.%08x.%08x.%08x
+> Description: Stuff
+> maintainer: Joshua Rogers
+> version: 1
+> ' is not a valid architecture name: escription: Stuff
+> maintainer: Joshua Rogers
+> version: 1
 >
-> Something can't be correct here. In the talk the attack was presented
-> directly with chrome + google mail (which is one of the preloaded
-> entries). Either he cheatet or the 1000 days limit applies to them, too
-> (haven't done any tests myself).
 
-Ah, so the author really is mistaken by the 1000 days bit in
-net-internals. However, we do have a timeout for HSTS preloads which
-git blame says that I added, although I don't remember it. The timeout
-is the same as our pinning timeout, which is 10 weeks from the build
-timestamp.
+The vulnerable function, warningv([..]), is called in many other places,
+and is not limited to '-i'.
 
-There are other tricks that can be played with the system time: roll
-the time back and use an "expired" certificate which has been pruned
-from the CRLs for one. I'm sure that there are others.
+Could I get a CVE-ID for this?
 
-That's why we have tlsdate in ChromeOS. It does, indeed, use the
-timestamp from a TLS handshake. In the case of ChromeOS we depend on
-the timestamp from Google, which makes sense for a ChromeOS device
-that already trusts Google. If one was to design a secure timestamp
-system one could do much better (Ed25519 signatures, batching of
-requests into a single signature etc). But we already have TLS running
-which means that there's no incremental operational overhead, which is
-very attractive.
-
-
-Cheers
-
-AGL
+Thanks
+-- 
+-- Joshua Rogers <https://internot.info/>
