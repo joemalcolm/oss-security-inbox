@@ -1,22 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/15
-Message-ID: <87vbujcyuh.fsf@mid.deneb.enyo.de>
-Date: Tue, 08 Apr 2014 23:09:42 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/12
+Message-ID: <CACYkhxjnwt4Q4VVcHa90hQ4LkZTHmUeKTqVBg-59ryxSQTC5Qw@mail.gmail.com>
+Date: Fri, 7 Nov 2014 10:24:26 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL 1.0.1 TLS/DTLS hearbeat information disclosure CVE-2014-0160
+Subject: Re: CVE Request: Qt Creator fails to verify SSH host key
 Content-Type: text/plain; charset=utf-8
 
-* Vincent Danen:
+On 7 November 2014 00:04, Jason A. Donenfeld <Jason@...c4.com> wrote:
+> I reported this bug to the development team, alongside another bug
+> involving cipher-suite compatibility with OpenSSH 6.7 (no CTR modes). They
+> marked the latter as priority 1, and fixed it within 24 hours. The former,
+> however, has received a bit more of a hesitant reaction. The most recent
+> vendor feedback seems to indicate they're not super interested in
+> implementing this.
 
->> Mon, 07 Apr 2014 16:53 : Fix is committed to OpenSSL git (not sure if it
->>                       was public or private at that point)
->
-> At this point it was private.
+This is a serious bug (it certainly circumvents the security of
+OpenSSH), but I think
+the proposed fix doesn't fit.
 
-Indeed.  The first public commit notificcation went out around 17:27
-UTC.  Ugh, looks like the clock on my mail relay is somewhat off.
+What might be a better solution is to store the public key for all
+devices, and accept
+if it matches any device you've talked to before.  On discovering a
+new device, it shows
+the fingerprint and prompts for a name/description.
 
-(I wonder if the Google folks spotted it on their networks because
-someone among the original group tested it against Google
-infrastructure. :-)
+Then you can revoke devices in some other part of the UI when you need
+to clean up.
+
+Regards,
+  Michael
