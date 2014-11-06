@@ -1,30 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/1
-Message-ID: <20140905004630.GA19445@oevtugenva.nrevsny.pk>
-Date: Thu, 4 Sep 2014 20:46:30 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/9
+Message-ID: <CAE2SPAYY6crbkOPomtg5c14bEO9TsPHvRm0GR+Tkn-g7ajshvA@mail.gmail.com>
+Date: Thu, 6 Nov 2014 22:27:01 +0100
+From: Bastien ROUCARIES <roucaries.bastien@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: heap overflow in procmail
+Subject: Stack smashing in libjpeg-turbo
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 03, 2014 at 09:44:12PM -0700, Tavis Ormandy wrote:
-> Rich Felker <dalias@...c.org> wrote:
-> > 
-> > Unless I'm misunderstanding your report, the problem is in the formail
-> > utility which comes with procmail, not procmail itself. This should be
-> > clarified in the title of the vuln, perhaps as "heap overflow in
-> > procmail's formail utility" rather than "heap overflow in procmail".
-> 
-> I'm not sure what "title" you mean, are you referring to my email subject?
-> If you are, I think "<problem> in <package>" is pretty reasonable, but
-> perhaps this is subjective (hah!).
+Hi,
 
-Yes, the email subject. "<problem> in <package>" seems reasonable,
-but when <package> is also the name of the main program in <package>,
-and the actual vuln is in a secondary program included with it, I
-think it's confusing. I'm not sure what percentage of procmail users
-also use formail along with it, but in general, there will be cases
-where <package> is extremely widely used but the program with the
-actual vulnerability of is obscure and mostly unused.
+Passing special crafted jpeg file to imagemagick (convert -rotate 270
+003632r270.jpg junk.jpg) could lead to stack smashing in libjpeg.so.62
+(libjpeg-turbo).
 
-Rich
+This bug is triggered  by setting the optimize coding member of the
+JPEG initialization structure to TRUE. If this flag set it to FALSE,
+ImageMagick completes without complaint.
+
+Wokarround could consist to turn off compression optimization in
+imagemagick to prevent the stack smash.
+
+Please assing me CVE and make a cc to  768369@...s.debian.org.
+
+
+Bastien
