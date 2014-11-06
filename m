@@ -1,44 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/6
-Message-ID: <20141118111956.620a5ab2@pc>
-Date: Tue, 18 Nov 2014 11:19:56 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/6
+Message-ID: <20141106144201.GA565@mails.so.argh.org>
+Date: Thu, 6 Nov 2014 15:47:49 +0100
+From: Andreas Barth <aba@...us.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+Cc: 742140@...s.debian.org
+Subject: Re: Bug#742140: libpam-oath: PAM module does not check whether strdup allocations succeeded
 Content-Type: text/plain; charset=utf-8
 
-Am Mon, 17 Nov 2014 22:39:29 -0500
-schrieb Robert Watson <robertcwatson1@...il.com>:
+Hi,
 
-> What about using fuzzing to find those tools withOUT vulnerabilities
-> and "certifying them" in some way as safe for all inputs?
+we have the following debian bug report about an security isuse in
+libpam-oath (source oath-toolkit, upstream web page
+http://www.nongnu.org/oath-toolkit/ ).
 
-I had something alike this already in mind.
-I thought about some "mapping" of open source tools parsing fileformats.
+What is the appropriate process to get an CVE number on it? This issue
+is already public, as it is documented in the debian bug tracking
+system.
 
-They would roughly fall into four categories:
-1. ok
-extensive fuzzing has been done and all known memory corruption issues
-are fixed (this would probably apply to well-proven libs like zlib,
-libpng etc.)
-2. work in progress
-fuzzing has revealed issues but the devs are actively working on fixing
-them in a timely manner (binutils/libbfd would fall into this category)
-3. unfixed
-Known memory corruption issues exist and there is no upstream developer
-available fixing them (abandoned software) or the upstream developer is
-not willing to fix issues / thinks the tool is not suitable for
-untrusted input.
-4. unknown
-No extensive fuzzing done.
 
-I will probably come up with some project like this.
+Andi
 
--- 
-Hanno Böck
-http://hboeck.de/
+* Eero Häkkinen (eero17@...foot.com) [141106 14:31]:
+> Package: libpam-oath
+> Version: 2.0.2-2
+> Severity: grave
+> Tags: security upstream patch
+> 
+> The OATH Toolkit PAM module does not check whether strdup allocations 
+> succeeded. This may result in null pointer dereference and application 
+> crash.
+> 
+> Depending on the use of the PAM module, this may be remotely exploitable.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+> diff --git a/pam_oath/pam_oath.c b/pam_oath/pam_oath.c
+> index 8379358..e2d3363 100644
+> --- a/pam_oath/pam_oath.c
+> +++ b/pam_oath/pam_oath.c
+> @@ -146,6 +146,12 @@ pam_sm_authenticate (pam_handle_t * pamh,
+>    char *query_prompt = NULL;
+>    char *onlypasswd = strdup ("");	/* empty passwords never match */
+>  
+> +  if (!onlypasswd)
+> +    {
+> +      retval = PAM_BUF_ERR;
+> +      goto done;
+> +    }
+> +
+>    parse_cfg (flags, argc, argv, &cfg);
+>  
+>    retval = pam_get_user (pamh, &user, NULL);
+> @@ -265,6 +271,11 @@ pam_sm_authenticate (pam_handle_t * pamh,
+>      {
+>        free (onlypasswd);
+>        onlypasswd = strdup (password);
+> +      if (!onlypasswd)
+> +        {
+> +          retval = PAM_BUF_ERR;
+> +          goto done;
+> +        }
+>  
+>        /* user entered their system password followed by generated OTP? */
+>  
