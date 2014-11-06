@@ -1,31 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/6
-Message-ID: <1e3694f2.116ced03@fabiankeil.de>
-Date: Fri, 5 Dec 2014 13:02:40 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/11
+Message-ID: <CAP145phaiadcmPLpeFMS6Gs5iWKXex1iM0qKamrVEWs0oNaTpw@mail.gmail.com>
+Date: Thu, 6 Nov 2014 23:50:44 +0100
+From: Robert Święcki <robert@...ecki.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
+Subject: Exploitable issues in Linux perf/ftrace subsystems
 Content-Type: text/plain; charset=utf-8
 
-Hanno Böck <hanno@...eck.de> wrote:
+1. Perf subsystem oob read in supervisor mode (local DoS) - CVE-2014-7825
+=====================================================================
 
-> On Thu, 4 Dec 2014 20:32:25 +0100
-> Fabian Keil <freebsd-listen@...iankeil.de> wrote:
-> 
-> > Potential fixes:
-> > http://www.fabiankeil.de/sourcecode/unrtf-0.21.5-various-fixes.diff
-> 
-> Thanks, it's just that it doesn't help much (see attachment, all
-> crashes with your patch applied).
+The syscall_nr variable is not verified against the upper limit
+(NR_syscalls) in the  perf_syscall_enter()/perf_syscall_exit()
+functions, making it possible for the subsequent test_bit() function
+to fail when trying to access non-present memory pages.
 
-Thanks for testing the patches.
+http://lxr.free-electrons.com/source/kernel/trace/trace_syscalls.c?v=3.16#L569
 
-I added another patch to the set that seems to fix the crashes
-with your attached files when executed through afl-showmap.
+The impact of this bug depends on the value of kernel.panic_on_oops
+sysctl. When equal to 1, it becomes local DoS. For other values it can
+still aid an attacker with mapping the kernel address space layout
+under systems with kASLR enabled.
 
-At least the first 300k afl-fuzz execs (355 total paths)
-seem to be crash free now.
+This issue has been fixed with in the kernel's mainline tree with:
 
-Fabian
+ https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/kernel/trace/trace_syscalls.c?id=086ba77a6db00ed858ff07451bedee197df868c9
+ Author: Rabin Vincent <rabin@....in>
+ Date:   Wed Oct 29 23:06:58 2014 +0100
 
-Content of type "application/pgp-signature" skipped
+
+ 2. Ftrace subsystem supervisor mode code execution - CVE-2014-7826
+=====================================================================
+
+As a precondition this attack scenario requires system administrators
+to enable ftrace-level system tracing (e.g. with 'trace-cmd record -e
+syscalls:sys_enter_write' command) on the local system, at the time of
+attack taking place. Likewise, the problem stems from an incorrect
+upper boundary check of the syscall_nr variable inside
+ftrace_syscall_enter()/ftrace_syscall_exit() functions. However,
+unlike with CVE-2014-7825, here a user-controlled pointer inside the
+'struct ftrace_event_file' structure can be called through the
+ftrace_trigger_soft_disabled() -> event_triggers_call() function
+call-chain (http://lxr.free-electrons.com/source/kernel/trace/trace_events_trigger.c#L77)
+ leading to supervisor mode code execution of user-controlled code
+(under systems w/o SMEP/SMAP-type protections enabled).
+
+This issue has been fixed with the same patch:
+
+ https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/kernel/trace/trace_syscalls.c?id=086ba77a6db00ed858ff07451bedee197df868c9
+ Author: Rabin Vincent <rabin@....in>
+ Date:   Wed Oct 29 23:06:58 2014 +0100
+
+
+3. Misc
+=====================================================================
+These issues were independetly discovered by Rabin Vincent and Robert
+Swiecki, and the exploitation scenarios were independently developed
+by Russell King and Robert Swiecki
