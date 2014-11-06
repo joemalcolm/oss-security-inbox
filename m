@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/22
-Message-ID: <20140604195157.GA24469@eldamar.local>
-Date: Wed, 4 Jun 2014 21:51:57 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE Request: Horde_Ldap: Stricter parameter check in bind() to detect empty passwords
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/06/10
+Message-ID: <CALx_OUBbfQp+z+M0XiQU3a8s5CjGzfY+ZowFy+W6cYCtHJZyOQ@mail.gmail.com>
+Date: Thu, 6 Nov 2014 14:25:04 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Stack smashing in libjpeg-turbo
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Is this a bug in libjpeg-turbo or in ImageMagick? I can't really repro
+this with up-to-date versions:
 
-Horde_Ldap released an update fixing a security issue mentioned in the
-changes:
+[lcamtuf@...coon libjpeg-turbo-1.3.1]$ ./djpeg 003632r270.jpg
+Corrupt JPEG data: 1056 extraneous bytes before marker 0xd8
+Invalid JPEG file structure: two SOI markers
+[lcamtuf@...coon libjpeg-turbo-1.3.1]$
 
-> [jan] SECURITY: Stricter parameter check in bind() to detect empty
-> passwords.
+[lcamtuf@...coon ImageMagick-6.8.9-9]$ utilities/convert -rotate 270
+003632r270.jpg foo.jpg
+[lcamtuf@...coon ImageMagick-6.8.9-9]$
 
-https://github.com/horde/horde/commit/8f719b53b0ee2d4b8a40a770430683c98fb5f2fd
-
-fixed in 2.0.6 with commit:
-
-https://github.com/horde/horde/commit/4c3e18f1724ab39bfef10c189a5b52036a744d55
-
-Could a CVE be assigned for this issue?
-
-Regards,
-Salvatore
+On Thu, Nov 6, 2014 at 1:27 PM, Bastien ROUCARIES
+<roucaries.bastien@...il.com> wrote:
+> Hi,
+>
+> Passing special crafted jpeg file to imagemagick (convert -rotate 270
+> 003632r270.jpg junk.jpg) could lead to stack smashing in libjpeg.so.62
+> (libjpeg-turbo).
+>
+> This bug is triggered  by setting the optimize coding member of the
+> JPEG initialization structure to TRUE. If this flag set it to FALSE,
+> ImageMagick completes without complaint.
+>
+> Wokarround could consist to turn off compression optimization in
+> imagemagick to prevent the stack smash.
+>
+> Please assing me CVE and make a cc to  768369@...s.debian.org.
+>
+>
+> Bastien
