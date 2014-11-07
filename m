@@ -1,11 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/6
-Message-ID: <537235A1.6050503@oracle.com>
-Date: Tue, 13 May 2014 08:09:21 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/4
+Message-ID: <20141107012728.GB3872@hunt>
+Date: Thu, 6 Nov 2014 17:27:28 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: [ANNOUNCE] X.Org Security Advisory: Multiple issues in libXfont
+Subject: Re: Re: CVE-Request: dpkg handling of 'control' and warnings format string vulnerability
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Nov 06, 2014 at 08:00:33PM -0500, cve-assign@...re.org wrote:
+> > A format string vulnerability vuln has been found in the latest version
+> > of dpkg.
+> > https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135
 
-Download attachment "[ANNOUNCE] X_Org Security Advisory: Multiple issues in libXfont.eml" of type "message/rfc822" (9760 bytes)
+> Use CVE-2014-8625. We're aware of "does not show evidence of allowing
+> attackers to cross privilege boundaries" in
+> https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135/comments/2 --
+> we'll certainly look for any discussion on this list that disputes the
+> CVE.
+
+The build recipes in Debian packaging are all-powerful; they run
+arbitrary commands and executables with full privileges of the user
+building the package.
+
+The maintainer scripts in Debian binary packages are all-powerful;
+they run arbitrary commands and executables with root privileges when
+packages are installed.
+
+There is no need to resort to format string vulnerabilities in control
+files to execute malicious code in an untrusted package. It would be
+easier and more reliable to simply put malicious code directly in the
+debian/rules file or postinst scripts.
+
+It is not safe to build packages from untrusted sources.
+It is not safe to install packages from untrusted sources.
+
+This is why we did not assign a CVE from Ubuntu's CVE pool.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
