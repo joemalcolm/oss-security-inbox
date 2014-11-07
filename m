@@ -1,53 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/12/1
-Message-Id: <20140912003139.372F06C0026@smtpvmsrv1.mitre.org>
-Date: Thu, 11 Sep 2014 20:31:39 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: vos tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/22
+Message-ID: <loom.20141107T214651-542@post.gmane.org>
+Date: Fri, 7 Nov 2014 20:49:28 +0000 (UTC)
+From: jb <jb.1234abcd@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: random number generators - rand(), random(), etc
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+could you please take a look at this ?
+https://sourceware.org/ml/libc-alpha/2014-11/msg00143.html
 
-> vos-1.10.4/vos/md5_cache.py
->    def __init__(self, cache_db="/tmp/#vos_cached.db#"):
+jb
 
-Nothing in your message shows that the MD5_Cache class is ever used
-with that /tmp pathname. Also, your message doesn't show whether or
-not the ultimate open call for that pathname uses O_EXCL|O_CREAT. The
-following might possibly be relevant to this missing information:
 
-  - the "md5Cache = md5_cache.MD5_Cache()" line in scripts/vsync
-
-  - https://github.com/python/cpython/blob/master/Modules/_sqlite/connection.c
-
-Those two items may be enough to show that a symlink attack can occur,
-but we'll let you fill in the details.
-
-For CVE assignments, it's not enough to show that the code contains a
-/tmp pathname that is apparently used for write access. In a typical
-case, it's also necessary to show that the piece of code is actually
-executed during use of the product, the /tmp pathname is actually
-used, and the specific open operation is unsafe in the presence of a
-symlink. All of this can be straightforward for a self-contained sh or
-possibly Perl script, but is often much less straightforward for
-Python.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUEj37AAoJEKllVAevmvmsqMsH/iOBf4ACYyNyc97bTf0upT+s
-V5KYwtG8UpXk7rwwbiELUFt3N7Y07NBbKDwnvKCRnZflRytCEdn1S9qrsQ5pOO/p
-VDJlX9xFEjqJhYjRpqcXT81p2OaHiv3s0sdfHhPdcubXDuax+EqNgRVmOPmxSQo3
-0x4/dK7ZDPXhF16oZXy/K7ETsrBoxztVRv1D13V+fI81ghJe9JYcKdlQX3j911U2
-5rnepL3WxNHQu0KhGvMEIsLkfR5X0eM6JGrXFXYxOJ7sZd3ba0cmjgLzJsDnTvxW
-TF9yNFok0CkQEAt4m0FD8ioRKLE8ep0giKZd1aix6twGpgkapgmoTEFKRV0lmrQ=
-=+bTm
------END PGP SIGNATURE-----
