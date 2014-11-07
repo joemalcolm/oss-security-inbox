@@ -1,45 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/2
-Message-ID: <54702CF0.6010907@internot.info>
-Date: Sat, 22 Nov 2014 17:28:00 +1100
-From: Joshua Roers <honey@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: Off-by-one question
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/1
+Message-Id: <20141107005330.BF36C42E020@smtpvbsrv1.mitre.org>
+Date: Thu,  6 Nov 2014 19:53:30 -0500 (EST)
+From: cve-assign@...re.org
+To: graffatcolmingov@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request for requests-kerberos
 Content-Type: text/plain; charset=utf-8
 
-Hi guys,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I'm just wondering, is it possible to use strncpy to overwrite memory
-addresses?
+> https://github.com/requests/requests-kerberos/pull/36
+> https://github.com/mkomitee/requests-kerberos/commit/9c1e08cc17bb6950455a85d33d391ecd2bce6eb6
+> https://pypi.python.org/pypi/requests-kerberos
 
-i.e:
+> A fix was merged and released today for the package which performs
+> kerberos authentication when using python-requests. Prior to this,
+> every version of the package did not properly handle mutual
+> authentication which means that the client did not verify that the
+> user was communicating with a trusted server. The version which
+> contains the fix is 0.6 and all prior versions are considered
+> vulnerable.
 
-> char buf[4];
-> strncpy(buf, "Four", sizeof(buf));
-> buf[sizeof(buf)-1] = '\0';
-> printf("%s\n", buf);
+> This bug, however, prevented the mutual authentication code from being
+> executed, so it's possible that users think they're talking to a
+> trusted server, but they're not.
 
-Since
-> strncpy(buf, "Four", sizeof(buf)); 
-is not
-> strncpy(buf, "Four", sizeof(buf)-1); 
-will strncpy write beyond the memory of 'buf', and set it to NUL?
+> requests_kerberos/kerberos_.py
 
+> Make certain that responses always pass through handle_other() to provide mutual
+> authentication before returning them to the user.
 
->From my understanding from
-http://cwe.mitre.org/data/definitions/193.html, it would.
-".. creating a buffer overflow that may cause a memory address to be
-overwritten .."
+> 0.6: 2014-11-04
+> Handle mutual authentication (see pull request 36)
 
+Use CVE-2014-8650.
 
-But actually RTFM, strncpy will not write, even the NUL, past the size.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-So it looks like I'm either reading mitre wrong, or it may be outdated.
-
-
-Any opinions on this?
-
-
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
+iQEcBAEBAgAGBQJUXBeLAAoJEKllVAevmvmssi4IAIuPRLXq+cRuy9kVNZMey5hd
+GVJKAZA4ZBqPHa147iuEpHLiNQx/aKTCTWoXZBeqnFdZKZFi/Uq5BLws4nWKDhfj
+JW5VCfUR6nf0uiglbmQwFX9eswGlLo/73V8NWReymrv9ENc709BNcSVErw76qElh
+p6zBrdRsGqIG1MfeKF8xt0Gn63e55k/qE4t4TeGybeQyLxtGfF+Potyxx9RYtlIr
+MrrXJIIQKry8DcRTHWfuEx1nJ65dOXJETnEBiAQTaQJ9y3NPEylbL6g83ykRGENl
+QWYZNI/hZ6ZVg8Wub6h2YHp52UqLz7I/rwJN47N3uNebElbgLqNwz1BOHS+WKdc=
+=5P3v
+-----END PGP SIGNATURE-----
