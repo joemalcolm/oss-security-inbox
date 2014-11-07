@@ -1,11 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/07/2
-Message-ID: <20140307083701.305490@gmx.com>
-Date: Fri, 07 Mar 2014 09:37:01 +0100
-From: "Bob Ezrin" <bezrin@....com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/12
+Message-ID: <20141107115906.7140b89d@pc>
+Date: Fri, 7 Nov 2014 11:59:06 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: IMAP STARTTLS sniff tool
+Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
 Content-Type: text/plain; charset=utf-8
 
-Hi all. We managed succesfully to sniff inside POP3S, SMTPS, IMAPS & HTTPS tunnels using arpspoof, iptables & sslsplit to make MITM. Now we want to sniff inside STARTTLS tunnels (specifically IMAP) but unfortunately sslsplit doesn't supports STARTTLS. Is there/do you know another SSL/TLS tool supporting IMAP over STARTTLS to make MITM? Many thanks B.
+Am Fri, 07 Nov 2014 13:08:09 +0300
+schrieb Yury Gribov <y.gribov@...sung.com>:
 
+> This looks rather impressive.  Have you considered automatically 
+> detecting duplicates by e.g. analyzing stacktraces?
+
+american-fuzzy-lop kind of does that. It creates a hash among the code
+path and groups fuzzing samples by that. That's quite convenient.
+
+I am currently playing a lot with this. afl is in a somewhat
+experimental state and you'll run into more problems trying to get it
+running, but if it runs it is much more convenient than zzuf.
+Disadvantage is you need to recompile stuff to work with it and that
+sometimes fails, esp. when assembler is involved.
+
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
