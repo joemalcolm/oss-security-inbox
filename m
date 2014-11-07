@@ -1,43 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/9
-Message-ID: <5344EAB8.6080107@redhat.com>
-Date: Wed, 09 Apr 2014 12:07:44 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Two security flaws with json-c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/5
+Message-ID: <CAHmME9pK-o3O4_89sPZ0du1z4Z+doNtL-_gnWR9oG9792EiDuQ@mail.gmail.com>
+Date: Fri, 7 Nov 2014 02:58:09 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Qt Creator fails to verify SSH host key
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
-
-Florian Weimer of the Red Hat Product Security Team discovered two flaws
-in json-c, details as follows:
-
-1.  CVE-2013-6371 json-c: hash collision DoS
-
-The hash function in the json-c library was weak, and that parsing
-smallish JSON strings showed quadratic timing behaviour.  This could
-cause an application linked to the json-c library, and that processes
-some specially-crafted JSON data, to use excessive amounts of CPU.
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=1032311
-
-2. CVE-2013-6370 json-c: buffer overflow if size_t is larger than int
-
-The printbuf APIs used in the json-c library used ints for counting
-buffer lengths, which is inappropriate for 32bit architectures.  These
-functions need to be changed to using size_t if possible for sizes, or
-to be hardened against negative values if not.  This could be used to
-cause a denial of service in an application linked to the json-c library.
-
-Reference:
-https://bugzilla.redhat.com/show_bug.cgi?id=1032322
+On Fri, Nov 7, 2014 at 12:24 AM, Michael Samuel <mik@...net.net> wrote:
+>
+> This is a serious bug (it certainly circumvents the security of
+> OpenSSH),
 
 
-Both these issues are fixed via the following upstream commit:
-https://github.com/json-c/json-c/commit/64e36901a0614bf64a19bc3396469c66dcd0b015
+My opinion too (obviously).
 
 
+> but I think
+> the proposed fix doesn't fit.
+>
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+The patch on there most certainly won't be accepted -- it's just something
+I hacked together in 5 minutes to use on my own project, and I figured the
+Qt devs might get some inspiration to do it themselves, after seeing the
+guts aren't really that hard.
+
+
+>
+> What might be a better solution is to store the public key for all
+> devices, and accept
+> if it matches any device you've talked to before.  On discovering a
+> new device, it shows
+> the fingerprint and prompts for a name/description.
+>
+> Then you can revoke devices in some other part of the UI when you need
+> to clean up.
+>
+
+That actually seems like a decent compromise.  Though, it does mean if you
+compromise one device that's ever been trusted, you compromise all others
+by extension. But maybe that's okay for the use here.
+
