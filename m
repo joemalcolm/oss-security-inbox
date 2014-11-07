@@ -1,56 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/8
-Message-ID: <20140331113702.GA15459@altlinux.org>
-Date: Mon, 31 Mar 2014 15:37:02 +0400
-From: "Dmitry V. Levin" <ldv@...linux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/26
+Message-ID: <545D3985.4040401@redhat.com>
+Date: Fri, 07 Nov 2014 22:28:37 +0100
+From: Eric Blake <eblake@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: pam_timestamp internals
+Subject: Re: Re: random number generators - rand(), random(), etc
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 31, 2014 at 12:57:11PM +0200, Sebastian Krahmer wrote:
-> On Mon, Mar 31, 2014 at 02:32:09PM +0400, Dmitry V. Levin wrote:
-> > On Mon, Mar 24, 2014 at 01:46:43PM +0100, Sebastian Krahmer wrote:
-> > > When playing with some PAM modules for my own projects, I came
-> > > across some implications of pam_timestamp (which is part of
-> > > upstream linux-pam) that should probably be addressed.
-> > > 
-> > > Most importantly, there seems to be a path traversal issue:
-> > 
-> > Thanks, Sebastian!  The issue has been fixed in upstream linux-pam by commit
-> > https://git.fedorahosted.org/cgit/linux-pam.git/commit/?id=Linux-PAM-1_1_8-32-g9dcead8
+On 11/07/2014 10:21 PM, jb wrote:
+
+>>> https://sourceware.org/ml/libc-alpha/2014-11/msg00143.html
+>>
+>> In general, rand() and random() are not backed by cryptosafe PRNGs and
+>> should not be used for security purposes.
+>>
+>> /mz
+>>
+>>
 > 
-> Thanks for taking care. I was about to write a patch on my own, but seems
-> not necessary anymore.
+> Well, rand() in Linux and ISO C standard are not threadsafe, but random(),
+> srandom(), etc in Linux are claimed to be threadsafe:
 > 
-> However, I think that
+> - pthread(7) - the function random() is listed as threadsafe
+> - random(3)
+>   Multithreading (see pthreads(7))
+>        The random(), srandom(),  initstate(),  and  setstate()  functions  are
+>        thread-safe.
 > 
-> +	if (!strlen(tty) || !strcmp(tty, ".") || !strcmp(tty, "..")) {
+> But apparently they are not.
 > 
-> could be insufficient.
+> A problem ?
 
-There is a code in check_tty() that handles '/':
-	if (strchr(tty, '/') != NULL) {
-		...
-		tty = strrchr(tty, '/') + 1;
-	}
-
-> Any occurence of "." inside tty name should be evil.
-
-Strange - yes, but why evil?
-
-> Above strcmp() matches exactly "." or "..",
-> but you also want "../../" etc which should pass above check.
-
-After commit 9dcead8, check_tty() handles all such cases.
-
-> For the ruser check, the strchr(ruser, '/') safes this, but
-> ".." occurence may also be treatened appropriately.
-
-Commit 9dcead8 also makes get_ruser() reject "." and ".." as invalid
-ruser values.
-
+Maybe.  But not a security problem, because no security-conscious
+program should be using random().  Therefore, I repeat my question -
+what do you want this list to do about it?  You're not reaching the
+right target audience.
 
 -- 
-ldv
+Eric Blake   eblake redhat com    +1-919-301-3266
+Libvirt virtualization library http://libvirt.org
 
-Content of type "application/pgp-signature" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
