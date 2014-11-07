@@ -1,20 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/11
-Message-id: <545C9A09.7030007@samsung.com>
-Date: Fri, 07 Nov 2014 13:08:09 +0300
-From: Yury Gribov <y.gribov@...sung.com>
-To: Alexander Cherepanov <cherepan@...me.ru>, binutils@...rceware.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/25
+Message-ID: <loom.20141107T221529-292@post.gmane.org>
+Date: Fri, 7 Nov 2014 21:21:52 +0000 (UTC)
+From: jb <jb.1234abcd@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: random number generators - rand(), random(), etc
 Content-Type: text/plain; charset=utf-8
 
-On 11/07/2014 07:43 AM, Alexander Cherepanov wrote:
-> Longer version: I started with the most simple approach I could get
-> results with and improved it only a little bit so far. There was just no
-> need for improvements -- until recently I was getting more crashes than
-> I can analyze (i.e. run through valgrind:-).
+Michal Zalewski <lcamtuf@...> writes:
 
-This looks rather impressive.  Have you considered automatically 
-detecting duplicates by e.g. analyzing stacktraces?
+> 
+> > https://sourceware.org/ml/libc-alpha/2014-11/msg00143.html
+> 
+> In general, rand() and random() are not backed by cryptosafe PRNGs and
+> should not be used for security purposes.
+> 
+> /mz
+> 
+> 
 
--Y
+Well, rand() in Linux and ISO C standard are not threadsafe, but random(),
+srandom(), etc in Linux are claimed to be threadsafe:
+
+- pthread(7) - the function random() is listed as threadsafe
+- random(3)
+  Multithreading (see pthreads(7))
+       The random(), srandom(),  initstate(),  and  setstate()  functions  are
+       thread-safe.
+
+But apparently they are not.
+
+A problem ?
+
+jb
+
+
