@@ -1,54 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/7
-Message-ID: <20141230182351.GA5687@zoho.com>
-Date: Tue, 30 Dec 2014 18:23:51 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/20
+Message-ID: <CAE2SPAZB28DQA-Z87pF2qypXOOF9cf1bqZy8AMDmNfep960uxQ@mail.gmail.com>
+Date: Fri, 7 Nov 2014 20:41:00 +0100
+From: Bastien ROUCARIES <roucaries.bastien@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: tedu@...unangst.com
-Subject: Re: OpenBSD signify and "fingerprint"
+Subject: Asking for CVE for imagemagick
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 29, 2014 at 02:09:20PM +0100, Florian Weimer wrote:
-> This is just a warning that what OpenBSD's signify tool calls a
-> “fingerprint” is very different from the concept of a fingerprint in
-> OpenPGP.  It is just a random 64-bit blob with no relationship to the
-> raw public key used for signing.  Conceptually, it is similar to the
-> OpenPGP key ID (it is used as a quick check that public key and
-> signature match), except that it is even more trivial to forge.
-> 
-> Fortunately, typical usage patterns of the signify tool do not expose
-> the fingerprint to the user, so there is no immediate temptation to
-> use it for validating a key (which is the primary use case for
-> fingerprints in OpenPGP).  It is also short (64 bits) and thus not
-> very secure to the initiated, no matter how it is computed, but I'm
-> not fully convinced that this is a sufficient deterrent.
-> 
-> Maybe a different term instead of “fingerprint” could be used to
-> reduce the potential for confusion.  Something like “key number” or
-> “key slot” might be appropriate (because these terms do not confer any
-> identifying property).
+Hi,
 
-To echo what Ted said, the signify trust model never encompassed key
-metadata (including the "fingerprint"). Nonetheless, I found
-fingerprints helpful with organizing my own keys so it's a bit
-disappointing to see the inspect feature go the way of the dodo.
+I am asking for two CVE for imagemagick (two DOS):
+- Converting some specially crafted jpeg could lead to a dos (see
+http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26456)
+- Converting some dcm file could lead to crash then DOS:
+Fix last value in dicom_info and added missing != NULL check.
 
-In retrospect, there's no reason the "fingerprint" (or whatever label)
-couldn't have been tied to the key itself (e.g. lowest X bits of
-pubkey.pubkey or sha256({pubkey.pubkey, time(NULL)}) rather than 8
-random bytes. This probably would have been more useful and more aligned
-with OpenPGP.
+Fix a buffer overflow in dcm reader by checking the dcm file.
+This problem was discovered by fuzzing some dcm file.
 
-Unfortunately, key/signature structure members have fixed lengths so
-there's no way clean way to make that simple change without breaking
-backwards compat unless signify sticks to 64 bits.
+Thanks
 
-Regardless, for those using my *nix signify port
-(http://sf.net/projects/slackdepot/files/signify/), the latest tarball
-"signify-portable-20141230.tar.bz2" incorporates OpenBSD's most recent
-changes (i.e. removal of inspect feature and renaming of fingerprint to
-keynum).
-
---mancha
-
-Content of type "application/pgp-signature" skipped
+Bastien
