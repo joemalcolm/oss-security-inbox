@@ -1,19 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/26/2
-Message-ID: <alpine.LFD.2.10.1412261313280.19448@javelin.pnq.redhat.com>
-Date: Fri, 26 Dec 2014 13:17:25 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request Linux kernel: fs: isofs: infinite loop in CE records
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/28
+Message-ID: <m3jjf5$ooe$2@ger.gmane.org>
+Date: Sat, 08 Nov 2014 00:09:26 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-8598: MantisBT XML Import/Export plugin unrestricted access
 Content-Type: text/plain; charset=utf-8
 
-+-- On Fri, 26 Dec 2014, Lukas Odzioba wrote --+
-| if (++rs->cont_loops > RR_MAX_CE_ENTRIES)
-| Shouldn't it be like this, instead of >=?
+Mitre assigned CVE-2014-8598 to this issue.
 
-  IIUC, cont_loops ranges from 0 to 31, and at 32 it goes to 'out' and 
-returns.
+Description:
 
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+The XML Import/Export "official" plugin (i.e. bundled with MantisBT 
+releases) currently does not perform any access level checks in the 
+import and export pages. This leads to the following vulnerabilities:
+
+1) import
+
+Any user of a MantisBT instance with the XML plugin enabled and knowing 
+the URL to the plugin's import page could upload an XML file and insert 
+data without restriction, regardless of their access level.
+
+This vulnerability is particularly dangerous when used in combination 
+with the one described in issue #17725 [1] (CVE-2014-7146) as it makes 
+for a very simple and easily accessible vector for PHP code injection 
+attacks.
+
+2) export
+
+There was also no access check when exporting data, which could allow an 
+attacker to gain access to confidential information (disclosure of all 
+bug-related data, including usernames).
+
+Systems where the patch described below cannot be applied are strongly 
+advised to uninstall the plugin.
+
+
+Affected versions:
+>= 1.2.0a3, <= 1.2.17
+
+Fixed in versions:
+1.2.18 (not yet released)
+
+Patch:
+See Github [3]
+
+Credit:
+Issue was discovered and fixed by Damien Regad (MantisBT Developer)
+
+References:
+Further details available in our issue tracker [2]
+
+
+[1] http://www.mantisbt.org/bugs/view.php?id=17725
+[2] http://www.mantisbt.org/bugs/view.php?id=17780
+[3] https://github.com/mantisbt/mantisbt/commit/80a15487
+
