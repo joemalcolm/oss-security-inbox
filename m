@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/4
-Message-ID: <lcn3bt$6t7$4@ger.gmane.org>
-Date: Mon, 3 Feb 2014 03:45:02 +0000 (UTC)
-From: mancha <mancha1@...h.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/18
+Message-ID: <CAP145pgQknbGUsMSSyp-ZJLOhdPKfLhRg6vPY4xbyA86AdfCcQ@mail.gmail.com>
+Date: Fri, 7 Nov 2014 16:58:44 +0100
+From: Robert Święcki <robert@...ecki.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+Cc: Alexander Cherepanov <cherepan@...me.ru>, binutils@...rceware.org
+Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 03 Feb 2014 03:16:13 +0000, mancha wrote:
-> On Sun, 02 Feb 2014 08:14:44 +0400, Solar Designer wrote:
-> 
-[SNIP]
-> 
-> The exploit by Rebel works as advertised. I've confirmed on a non-Ubuntu box 
-> after making some changes.
-> 
-> Attached find a kernel module I've authored that protects from the attack.
-> 
-> I'm sharing it for folks currently on vulnerable systems still waiting on
-> patches from their upstream.
-> 
->  # make
->  # insmod nox32recvmmsg.ko
-> 
-> note: rmmod'ing restores original (vulnerable) state.
-> 
-> --mancha
+2014-11-07 11:08 GMT+01:00 Yury Gribov <y.gribov@...sung.com>:
+> On 11/07/2014 07:43 AM, Alexander Cherepanov wrote:
+>>
+>> Longer version: I started with the most simple approach I could get
+>> results with and improved it only a little bit so far. There was just no
+>> need for improvements -- until recently I was getting more crashes than
+>> I can analyze (i.e. run through valgrind:-).
+>
+>
+> This looks rather impressive.  Have you considered automatically detecting
+> duplicates by e.g. analyzing stacktraces?
 
-Having issues attaching via this client. So, posted kernel module here:
+Feel free to take a look at honggfuzz - https://code.google.com/p/honggfuzz/
 
-http://sf.net/projects/mancha/files/sec/nox32recvmmsg.tar.bz2
+It provides a crude version of unification on the basis of offending
+program counter (as well as simple disassembly of the offending
+instruction). It also disables address randomization to get repeatable
+crashes. Example output (from testing strings-multiarch):
+http://alt.swiecki.net/.t/strings-multiarch.txt
 
+Usage:
+honggfuzz -f in/ -r 0.1 -q -- /usr/bin/strings ___FILE___
 
+-- 
+Robert Święcki
