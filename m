@@ -1,54 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/7
-Message-Id: <201312180104.rBI14VPX000859@linus.mitre.org>
-Date: Tue, 17 Dec 2013 20:04:31 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...fee.int, cve-assign@...fee.int, oss-security@...fee.int,  cm@...fee.int, 732283@...fee.int
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, cm@...etec.at, 732283@...s.debian.org
-Subject: Bug#732283: CVE Request: Proc::Daemon writes pidfile with mode 666
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/27
+Message-ID: <545D5097.9000407@mantisbt.org>
+Date: Sat, 08 Nov 2014 00:07:03 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Cc: Egidio Romano <n0b0d13s@...il.com>
+Subject: CVE-2014-7146: MantisBT XmlImportExport plugin PHP Code Injection Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Egidio "EgiX" Romano discovered a vulnerability in the MantisBT XML 
+import plugin, and reserved CVE-2014-7146 for it.
 
-> christian mock <cm@...etec.at> has reported[1] that Proc::Daemon, when
-> instructed to write a pid file, does that with a umask set to 0, so
-> the pid file ends up with world-writable permissions.
-> 
-> Upstream bugreport is at [2].
-> 
->  [1] http://bugs.debian.org/732283
->  [2] https://rt.cpan.org/Ticket/Display.html?id=91450
->  
-> Axel Beckert has commited a patch to the Debian packaging[3] and
-> forwarded it to upstream.
-> 
->  [3] http://anonscm.debian.org/gitweb/?p=pkg-perl/packages/libproc-daemon-perl.git;a=blob;f=debian/patches/pid.patch
-> 
-> Could a CVE be assigend for this issue?
+This message provides details on the issue, including resolution. Kindly 
+update the CVE database accordingly.
 
-Use CVE-2013-7135.
+Description:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+When importing data with the plugin, user input passed through the 
+"description" field (and the "issuelink" attribute) of the uploaded XML 
+file isn't properly sanitized before being used in a call to the 
+preg_replace() function which uses the 'e' modifier. This can be 
+exploited to inject and execute arbitrary PHP code when the 
+Import/Export plugin is installed.
 
-iQEcBAEBAgAGBQJSsPPCAAoJEKllVAevmvmsDjkH/0ArQqMr437ZRT3i8pvsAP+6
-Wc39qGXxcEZCPxSHGv9HdoeGrYBWBwLLWKjtPV+iSKE67BtBV1YS+j1ISI9ST6cz
-93dhjxnN2n9VyvXStRTo3nj20wRkbWEyBWN1hUaR3niDb7bd+QqRd7m79MGY6VkG
-uAkXP5pJacezleLBM1900W3rvppbdU/tCe4Oc5pMSRUZU9V2XWB8Y9yrCOztYVH4
-2sojMuUv9kMdeHRM9iskOw1oGPX4GK5eKj0c/unJ1w82zF/56hM5Rw+yqYIY0mcH
-er0Cl1N7TFPfQEVPhYg2s2kZUVOjA4UuHEWuArY3hv4m8XFC+GlBtkm36/7wfv0=
-=jG8p
------END PGP SIGNATURE-----
+The XML Import/Export "official" plugin comes bundled with MantisBT 
+releases.
 
 
--- 
-To UNSUBSCRIBE, email to debian-bugs-dist-REQUEST@...ts.debian.org
-with a subject of "unsubscribe". Trouble? Contact listmaster@...ts.debian.org
+Affected versions:
+>= 1.2.0a3, <= 1.2.17
 
+Fixed in versions:
+1.2.18 (not yet released)
+
+Patch:
+See Github [4]
+
+This fix is a backport of an existing commit [1] from master branch, 
+which has been confirmed as addressing the issue.
+
+Credit:
+Issue was discovered by Egidio Romano (http://karmainsecurity.com/)
+Original fix (master branch) by Dominik Blunk
+Backporting fix to 1.2.x branch by Damien Regad (MantisBT Developer)
+
+References:
+Further details available in our issue tracker [2]
+See also related issue/vulnerability [3] (CVE-2014-8598)
+
+
+[1] https://github.com/mantisbt/mantisbt/commit/84017535
+[2] http://www.mantisbt.org/bugs/view.php?id=17725
+[3] http://www.mantisbt.org/bugs/view.php?id=17780
+[4] https://github.com/mantisbt/mantisbt/commit/bed19db9
 
