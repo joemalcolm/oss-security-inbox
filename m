@@ -1,47 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/14
-Message-ID: <54402BD1.50307@redhat.com>
-Date: Thu, 16 Oct 2014 14:34:25 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/23
+Message-ID: <CALx_OUAnZoME3gb8KD_XmiM9m+NssgV7wjcV8Oc9orNfoxsPng@mail.gmail.com>
+Date: Fri, 7 Nov 2014 13:11:59 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: random number generators - rand(), random(), etc
 Content-Type: text/plain; charset=utf-8
 
+> https://sourceware.org/ml/libc-alpha/2014-11/msg00143.html
 
+In general, rand() and random() are not backed by cryptosafe PRNGs and
+should not be used for security purposes.
 
-On 16/10/14 01:45 PM, Hanno Böck wrote:
-> Am Thu, 16 Oct 2014 09:56:06 -0600
-> schrieb Kurt Seifried <kseifried@...hat.com>:
-> 
->> The obvious solution being to whitelist your site (in the
->> chrome/firefox source code)if you truly care:
-> 
-> No.
-> 
-> While this is neat (and I already did this for my most important
-> domains) this won't help.
-> 
-> The reason: HSTS preloaded sites are handled exactly the same way as
-> normal HSTS sites - they can expire. Chrome sets a maximum timeout for
-> HSTS of 1000 days for preloaded sites. That was elaborated in the talk
-> today. He demonstrated the attack on google mail which is in this
-> whitelist. Set clock 3 years into the future and youre done.
-
-I did not know that. One concern I have is also HSTS has no tools to
-manage them in browsers, at least when I last checked, has that changed?
-There is some room for DoS due to this on the client side.
-
-> It could be argued that it is wrong to expire preloaded HSTS sites. But
-> the very same attack applies to HPKP which basically has to expire,
-> because you don't want to use keys forever.
-
-If people say "I use HSTS, so much so that I want you to whitelist it IN
-the source code forever" I'm pretty sure they never want it to expire
-(at least that was my thought when I got my domains whitelisted).
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+/mz
