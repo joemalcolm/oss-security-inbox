@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/01/3
-Message-Id: <201403011953.s21JqqPe008633@linus.mitre.org>
-Date: Sat, 1 Mar 2014 14:52:52 -0500 (EST)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: CMS Made Simple SQL injection fixed in 1.11.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/24
+Message-ID: <545D366F.9050703@redhat.com>
+Date: Fri, 07 Nov 2014 22:15:27 +0100
+From: Eric Blake <eblake@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: random number generators - rand(), random(), etc
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 11/07/2014 09:49 PM, jb wrote:
+> Hi,
+> could you please take a look at this ?
+> https://sourceware.org/ml/libc-alpha/2014-11/msg00143.html
 
-> Can I get 2014 CVE for CMS Made Simple News sortby Parameter SQL
-> injection vulnerability.
-> 
-> http://www.cmsmadesimple.org/2014/02/Announcing-CMSMS-1-11-10-Pinzon/
-> http://dev.cmsmadesimple.org/project/changelog/4602
+Anything in particular we're supposed to look at?  Besides the obvious
+fact that anyone using rand() or random() in a security-conscious
+program should be shot, and therefore, any possible bug in the
+implementation of these notoriously weak functions shouldn't have any
+implication on programs that use secure random number sources?
 
-Use CVE-2014-2245.
+-- 
+Eric Blake   eblake redhat com    +1-919-301-3266
+Libvirt virtualization library http://libvirt.org
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEbBAEBAgAGBQJTEjnnAAoJEKllVAevmvmsmP4H+NcDLAzkxhCwnmOy255sv9a9
-cYc0/cfT45GJgaDWiRJ65d8zqVVjeLCSFQM/JwX8PI0uTvqvrIM/uGqvZwB+My6a
-swjCDjF/UKgJxsJrl84OJNhsZJ5ZXUeLYmVL0g7WibWn7GULKwsxwZQ4FCeHQWuQ
-kgNb14BJ5xSAWNttaafdY9j3JR68vr0md2lUthNI9baSSJrNwLltTQIx6MHeTfD6
-WyRNsMf6L9b1lJ+an8qKlQgzVLtPVLNFW+LCLzBB8fBSHv1eh8zlS1v54q3WXwTQ
-qYHs2tFXJ2s+14bHwvDC/AAYfkF0wLsB5cnH5BzW0UXlcTUdNx0vrRWm6uBPwA==
-=JpoX
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
