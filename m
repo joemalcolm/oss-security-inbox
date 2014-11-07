@@ -1,19 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/9
-Message-ID: <20141216172628.GA20957@openwall.com>
-Date: Tue, 16 Dec 2014 20:26:28 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Ryan Dewhurst <ryandewhurst@...il.com>
-Cc: oss-security@...ts.openwall.com, wpscanteam@...il.com
-Subject: Re: CVE-2014-9119: DB Backup plugin for WordPress download.php file Parameter Remote Path Traversal File Access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/6
+Message-ID: <CAHmME9rcy+G+p=T8RfBAWYT-TMaMTCs1te-5UZ2zJr0xDKJF5g@mail.gmail.com>
+Date: Fri, 7 Nov 2014 02:59:15 +0100
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: cve-assign@...re.org
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Qt Creator fails to verify SSH host key
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 16, 2014 at 06:00:49PM +0100, Ryan Dewhurst wrote:
-> https://wpvulndb.com/vulnerabilities/7726 thanks!
+On Fri, Nov 7, 2014 at 2:58 AM, Jason A. Donenfeld <Jason@...c4.com> wrote:
 
-Ryan, I've reluctantly approved your posting this one time, just to let
-oss-security subscribers know what's coming our way and that your
-WordPress vuln db exists, but please don't send these to oss-security
-going forward.  Thanks!
+>
+> On Fri, Nov 7, 2014 at 12:24 AM, Michael Samuel <mik@...net.net> wrote:
+>>
+>> This is a serious bug (it certainly circumvents the security of
+>> OpenSSH),
+>
+>
+> My opinion too (obviously).
+>
 
-Alexander
+Could we get a CVE assigned to track the progress of this bug?
+
