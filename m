@@ -1,118 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/11
-Message-ID: <20140624115154.GC26703@suse.de>
-Date: Tue, 24 Jun 2014 13:51:54 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: Linux kernel ALSA core control API vulnerabilities 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/16
+Message-ID: <545CC5D0.4030309@mittwald.de>
+Date: Fri, 7 Nov 2014 14:14:56 +0100
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Re: CVE-Request: dpkg handling of 'control' and warnings format string vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Several ALSA fixes have been committed to the Linux kernel git that fix several
-use-after-free and out-of-bounds memory access vulnerabilities in the Linux kernel.
 
-These will need CVEs.
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/sound/core/control.c?id=07f4d9d74a04aa7c72c5dae0ef97565f28f17b92
+On 07/11/14 02:27, Seth Arnold wrote:
+> On Thu, Nov 06, 2014 at 08:00:33PM -0500, cve-assign@...re.org
+> wrote:
+>>> A format string vulnerability vuln has been found in the latest
+>>> version of dpkg. 
+>>> https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135
+> 
+>> Use CVE-2014-8625. We're aware of "does not show evidence of
+>> allowing attackers to cross privilege boundaries" in 
+>> https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135/comments/2
+>> -- we'll certainly look for any discussion on this list that
+>> disputes the CVE.
+> 
+> The build recipes in Debian packaging are all-powerful; they run 
+> arbitrary commands and executables with full privileges of the
+> user building the package.
+> 
+> The maintainer scripts in Debian binary packages are all-powerful; 
+> they run arbitrary commands and executables with root privileges
+> when packages are installed.
+> 
+> There is no need to resort to format string vulnerabilities in
+> control files to execute malicious code in an untrusted package. It
+> would be easier and more reliable to simply put malicious code
+> directly in the debian/rules file or postinst scripts.
+> 
+> It is not safe to build packages from untrusted sources. It is not
+> safe to install packages from untrusted sources.
+> 
+> This is why we did not assign a CVE from Ubuntu's CVE pool.
 
-Author: Lars-Peter Clausen <lars@...afoo.de>
-Date:   Wed Jun 18 13:32:31 2014 +0200
+to quote the man page of dpkg:
 
-    ALSA: control: Protect user controls against concurrent access
-    
-    The user-control put and get handlers as well as the tlv do not protect against
-    concurrent access from multiple threads. Since the state of the control is not
-    updated atomically it is possible that either two write operations or a write
-    and a read operation race against each other. Both can lead to arbitrary memory
-    disclosure. This patch introduces a new lock that protects user-controls from
-    concurrent access. Since applications typically access controls sequentially
-    than in parallel a single lock per card should be fine.
-    
-(memory information disclosure or even overwrite)
+> --no-act, --dry-run, --simulate Do everything which is supposed to
+> be done, but don't write any changes. This is used to see what
+> would happen with the specified action, without actually modifying
+> anything.
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/sound/core/control.c?id=82262a46627bebb0febcc26664746c25cef08563
-commit 82262a46627bebb0febcc26664746c25cef08563
-Author: Lars-Peter Clausen <lars@...afoo.de>
-Date:   Wed Jun 18 13:32:32 2014 +0200
+So the users assumes this does not "modify anything"
+and if I understood this bug correct this gives at least
+access to the stack and allows to write/read memory.
 
-    ALSA: control: Fix replacing user controls
-    
-    There are two issues with the current implementation for replacing user
-    controls. The first is that the code does not check if the control is actually a
-    user control and neither does it check if the control is owned by the process
-    that tries to remove it. That allows userspace applications to remove arbitrary
-    controls, which can cause a user after free if a for example a driver does not
-    expect a control to be removed from under its feed.
-    
-    The second issue is that on one hand when a control is replaced the
-    user_ctl_count limit is not checked and on the other hand the user_ctl_count is
-    increased (even though the number of user controls does not change). This allows
-    userspace, once the user_ctl_count limit as been reached, to repeatedly replace
-    a control until user_ctl_count overflows. Once that happens new controls can be
-    added effectively bypassing the user_ctl_count limit.
-    
-    Both issues can be fixed by instead of open-coding the removal of the control
-    that is to be replaced to use snd_ctl_remove_user_ctl(). This function does
-    proper permission checks as well as decrements user_ctl_count after the control
-    has been removed.
-    
-    Note that by using snd_ctl_remove_user_ctl() the check which returns -EBUSY at
-    beginning of the function if the control already exists is removed. This is not
-    a problem though since the check is quite useless, because the lock that is
-    protecting the control list is released between the check and before adding the
-    new control to the list, which means that it is possible that a different
-    control with the same settings is added to the list after the check. Luckily
-    there is another check that is done while holding the lock in snd_ctl_add(), so
-    we'll rely on that to make sure that the same control is not added twice.
+So this is against the defined/intended behaviour, imho
+and should thus get a CVE?
 
-(user after free)
+- -- 
+Mit freundlichen Grüßen / Regards
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/sound/core/control.c?id=fd9f26e4eca5d08a27d12c0933fceef76ed9663d
-commit fd9f26e4eca5d08a27d12c0933fceef76ed9663d
-Author: Lars-Peter Clausen <lars@...afoo.de>
-Date:   Wed Jun 18 13:32:33 2014 +0200
+Sven Kieske
 
-    ALSA: control: Don't access controls outside of protected regions
-    
-    A control that is visible on the card->controls list can be freed at any time.
-    This means we must not access any of its memory while not holding the
-    controls_rw_lock. Otherwise we risk a use after free access.
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad
+Oeynhausen
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
 
-(use after free)
-
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/sound/core/control.c?id=ac902c112d90a89e59916f751c2745f4dbdbb4bd
-ac902c112d90a89e59916f751c2745f4dbdbb4bd
-Author: Lars-Peter Clausen <lars@...afoo.de>
-Date:   Wed Jun 18 13:32:34 2014 +0200
-
-    ALSA: control: Handle numid overflow
-    
-    Each control gets automatically assigned its numids when the control is created.
-    The allocation is done by incrementing the numid by the amount of allocated
-    numids per allocation. This means that excessive creation and destruction of
-    controls (e.g. via SNDRV_CTL_IOCTL_ELEM_ADD/REMOVE) can cause the id to
-    eventually overflow. Currently when this happens for the control that caused the
-    overflow kctl->id.numid + kctl->count will also over flow causing it to be
-    smaller than kctl->id.numid. Most of the code assumes that this is something
-    that can not happen, so we need to make sure that it won't happen
-
-(unknown breakage?)
-    
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/sound/core/control.c?id=883a1d49f0d77d30012f114b2e19fc141beb3e8e
-commit 883a1d49f0d77d30012f114b2e19fc141beb3e8e
-Author: Lars-Peter Clausen <lars@...afoo.de>
-Date:   Wed Jun 18 13:32:35 2014 +0200
-
-    ALSA: control: Make sure that id->index does not overflow
-
-    The ALSA control code expects that the range of assigned indices to a control is
-    continuous and does not overflow. Currently there are no checks to enforce this.
-    If a control with a overflowing index range is created that control becomes
-    effectively inaccessible and unremovable since snd_ctl_find_id() will not be
-    able to find it. This patch adds a check that makes sure that controls with a
-    overflowing index range can not be created.
-
-(denial of service/memory leak?)
-
-Ciao, Marcus
+iQIcBAEBAgAGBQJUXMXQAAoJEC5d3lL7/I9zbN0QAIWfKkzOCT4pbm9rFhUXclXx
+edHlyS/bcnd1i5TB9pPgXv13F37bDzz9B59YDoYtVheo0EoSHPx2Bt3Tnaacg4jt
+8I508UjSrPX56gsoaye7dgCZr6ivAYvFFkmPKMUfj87xJHDXTYfSj//HFPRt4uZa
+PnqBbAYdt/WH4bdpZqLN8aRie2LUwTXFGxYNfVUq2bN4cIdkyoSckQ2OpL7fuU3C
+G5PiK0tg4ySKQ6BP+GYkRwsCvkyFrDvqiRChU8seN5S/cEmpfeBmF/8PMDeALoPQ
+8bgMm3DsBRt2EQfvacYnFXC4oNLeYCoqGCTDPd0tDA17inHfYRs7XypVp+WmKVZw
+8OOfudS00l25FWiRG3EF+EbM5U8ibZ+UPzR+YKSUMC6UTTNjJli74B8d5NULYTxI
+zEKZWmcJdezbS56OIkd56m5sVnYfCDKvbUCCy0wPYE+EeKtszHuIXiy0eeDj9Fze
+iCL39IdNWzjBjxeBWEUp7QrYbfLlM5Q1/mic6woc7CIekw9blniuypvkaVkZ7Smb
+apWjplMIUdwmAJlRA1POW0FzuCScWGbMcdlwm2jmcZGxqP+T5p6IOKw6NLUJfRfP
+a3tPsgCBLJ8zu5Bs/suDgCLkMdu5biuwj1P5YrcbxhjkwtSA1prUazIJ/g+4eX5l
+7UeZKbfh5uyfP5zOuvCB
+=7KnX
+-----END PGP SIGNATURE-----
