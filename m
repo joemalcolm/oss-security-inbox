@@ -1,37 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/28
-Message-ID: <542C7601.10506@edwardprevost.info>
-Date: Wed, 01 Oct 2014 14:45:37 -0700
-From: Ed Prevost <me@...ardprevost.info>
-To: oss-security@...ts.openwall.com, Chet Ramey <chet.ramey@...e.edu>
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/14
+Message-ID: <545CB690.6000209@mccme.ru>
+Date: Fri, 07 Nov 2014 15:09:52 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+CC: binutils@...rceware.org
+Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
 Content-Type: text/plain; charset=utf-8
 
-On 10/1/2014 2:11 PM, Shawn wrote:
-> On Thu, Oct 2, 2014 at 5:08 AM, Chet Ramey <chet.ramey@...e.edu> wrote:
->> On 10/1/14, 5:04 PM, Shawn wrote:
->>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
->> Nope, this one fixes 7168/7169.  It's the equivalent of the
->> `parser-oob' patch.
+On 2014-11-07 14:43, Yury Gribov wrote:
+> On 11/07/2014 01:59 PM, Hanno Böck wrote:
+>> Am Fri, 07 Nov 2014 13:08:09 +0300
+>> schrieb Yury Gribov <y.gribov@...sung.com>:
 >>
->> I have patches that fix 6277/6278 that are in the pipeline.
->>
-> oh, s0rry for the mistake...that'd be great if we can get the patch as
-> quickly as possible. Thanks.
->
->> --
->> ``The lyf so short, the craft so long to lerne.'' - Chaucer
->>                  ``Ars longa, vita brevis'' - Hippocrates
->> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
->
->
-Really!? Honestly!? "as quickly as possible"
+>>> This looks rather impressive.  Have you considered automatically
+>>> detecting duplicates by e.g. analyzing stacktraces?
 
-Man, we really should rally together and at least send Chet a recovery
-beer basket or something.
+I do it based on the output of valgrind.
 
---Ed
-Application & Network Security, Research Scientist
-http://EdwardPrevost.info
-https://twitter.com/@EdwardPrevost
+>> american-fuzzy-lop kind of does that. It creates a hash among the code
+>> path and groups fuzzing samples by that. That's quite convenient.
+>
+> [Cc-ing Binutils ML back again]
+>
+> Yeah, I think there was even an article in one of recent PLDIs which
+> discussed different approaches to filtering duplicates arising in
+> compiler fuzz testing (they did various combinations of stacktraces,
+> Valgrind output, program coverage, etc.).  I was just curious how well
+> this works for real world tasks like objdump crashes.
 
+You can see for yourself. My recent (since 2014-11-03 21:17:35 UTC) 
+attachments in the mentioned PRs are tarballs containing a file list.txt 
+which lists various errors from valgrind (with distinct backtraces) and 
+one sample hitting it for every error.
+
+Later I started to include short statistics in a comment. My last 
+attachment to PR 17512 lists the following errors for `objdump -x`:
+
+Files: 11
+Errors:
+       1 Argument 'size' of function malloc has a fishy (possibly 
+negative) value: ...
+      63 Conditional jump or move depends on uninitialised value(s)
+      16 Invalid read of size ...
+       2 Invalid write of size ...
+       1 Syscall param write(buf) contains uninitialised byte(s)
+      17 Use of uninitialised value of size ...
+
+oss-security, please note invalid writes and fishy arguments for malloc.
+
+Back to real world deduping. IMHO it's not ideal but works quite well, 
+e.g. you can get 10 files out of thousands. If you have hundreds of 
+thousands or millions of crashers (which was trivial with objdump in the 
+beginning) valgrind is too slow. Replacing it with gdb improve the 
+situation (we loose full analysis but get the stacktrace for the crash 
+faster).
+
+-- 
+Alexander Cherepanov
