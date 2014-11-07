@@ -1,38 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/15
-Message-ID: <20140909094635.GC1829@kludge.henri.nerv.fi>
-Date: Tue, 9 Sep 2014 12:46:35 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: pinocchio tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/11
+Message-id: <545C9A09.7030007@samsung.com>
+Date: Fri, 07 Nov 2014 13:08:09 +0300
+From: Yury Gribov <y.gribov@...sung.com>
+To: Alexander Cherepanov <cherepan@...me.ru>, binutils@...rceware.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 11/07/2014 07:43 AM, Alexander Cherepanov wrote:
+> Longer version: I started with the most simple approach I could get
+> results with and improved it only a little bit so far. There was just no
+> need for improvements -- until recently I was getting more crashes than
+> I can analyze (i.e. run through valgrind:-).
 
-On Tue, Sep 09, 2014 at 11:57:11AM +0300, Mikko Korpela wrote:
-> Test automation on the other hand IMHO requires that we are working in
-> a secure sand box. If there is a malicious user on the same machine
-> then I bet things have already gone very wrong somewhere else.
-> 
-> Ystävällisin terveisin ;) ,
-> Mikko
+This looks rather impressive.  Have you considered automatically 
+detecting duplicates by e.g. analyzing stacktraces?
 
-Many times these tools are executed in normal shell environments with lots of
-users and not in safe/clean server (even robotfw). In my opinion these issues
-should be fixed in code and get CVE assigned even the risk is minimal. 
-
-Code audits for PyPi packages are more than welcome thought some level of
-coordination is required to avoid confusion. These are often easy to report and
-fix, but I understand if reporter has lack of time. Kurt if you need
-coordination help you can contact me off-list.
-
-Ystävällisin terveisin ;),
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlQOzHsACgkQXf6hBi6kbk/qJACfciJ1RPqjM11kWF150v16GOGj
-91YAoIn1EiKD2eYNnB6YSS0cFAz2Io1h
-=uljW
------END PGP SIGNATURE-----
+-Y
