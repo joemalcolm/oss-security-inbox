@@ -1,31 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/24
-Message-ID: <CALx_OUB7AjH3tcwRytNKfEjCpjm968AGvhdDdt5AZQ7Q7UxHsA@mail.gmail.com>
-Date: Wed, 24 Sep 2014 11:54:18 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/8
+Message-ID: <CALx_OUAZMCov46vSeksuMz7skN3+rC2SQaHraWfWFOyjakp16w@mail.gmail.com>
+Date: Thu, 6 Nov 2014 19:30:09 -0800
 From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security@...ts.openwall.com
-Cc: Chester Ramey <chet.ramey@...e.edu>
-Subject: Re: CVE-2014-6271: remote code execution through bash
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Stack smashing in libjpeg-turbo
 Content-Type: text/plain; charset=utf-8
 
-> My main concern with the current patch is that still exposes the bash parser
-> and function definition printer to attacks from the network. Bugs in those
-> fairly large components could cause another critical issue.
+A-ha, I was able to repro with ImageMagick + libjpeg-turbo 1.2.1.
 
-Yup, that surprised me when testing the patch, too - I can still get a
-function called HTTP_COOKIE, for example. I worry about potential side
-effects of parsing even in absence of parser bugs. In most
-object-oriented languages, such side effects are practically
-guaranteed. Bash may be saved by simplicity, but not sure how robust
-that assumption is.
+Versions of libjpeg-turbo prior to 1.3.1 accept the file, while 1.3.1
+rejects it outright due to duplicate SOI markers. This is probably
+attributable to this change:
 
-I've written more code in bash than I should have and never used
-function exports, or even realized that they exist. I wonder if they
-can be made optional (e.g., gated by a flag on the subprocess) without
-breakage.
+[4] Fixed a couple of issues whereby malformed JPEG images would cause
+libjpeg-turbo to use uninitialized memory during decompression.
 
-Another option may be to export them through specially prefixed
-variables, which should be transparent but minimize the risk of
-interfering with web servers and such.
+...which I think is related to CVE-2013-6629 and CVE-2013-6630. But I
+haven't spent much time on it, so I'm not sure if that actually fixed
+the underlying issue, or just made the file invalid for some unrelated
+reason.
+
+The fault is in:
+
+...
+#6  0x0066e504 in __stack_chk_fail_local () from /usr/lib/libjpeg.so.62
+#7  0x0063f9c7 in encode_mcu_huff (cinfo=0xbfffbbf0,
+MCU_data=0xb49043f8) at jchuff.c:642 <- boop
+#8  0x0063323f in compress_output (cinfo=0xbfffbbf0, input_buf=0x0) at
+jccoefct.c:381
+#9  0x00632b37 in jpeg_finish_compress (cinfo=0xbfffbbf0) at jcapimin.c:183
+#10 0x08319773 in WriteJPEGImage ()
+#11 0x0839c8aa in WriteImage ()
+#12 0x0839d5f3 in WriteImages ()
+
+FWIW, Debian bug is here:
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=768369
+
+Which points to:
+http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26482&sid=81658bc2f51a8d9893279cd01e83783f
+
+The test case is at:
+http://tapani.tarvainen.info/linux/convertbug/r270/003632r270.jpg
 
 /mz
