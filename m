@@ -1,125 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/7
-Message-Id: <201405071936.s47JZuXo000377@linus.mitre.org>
-Date: Wed, 7 May 2014 15:35:56 -0400 (EDT)
-From: cve-assign@...re.org
-To: steve@...ve.org.uk
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - Predictable temporary filenames in GNU Emacs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/10
+Message-ID: <545C4DEF.5030600@mccme.ru>
+Date: Fri, 07 Nov 2014 07:43:27 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: binutils@...rceware.org
+CC: oss-security@...ts.openwall.com
+Subject: Fuzzing objdump (PR 17512) and readelf (PR 17531)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi!
 
-> http://debbugs.gnu.org/cgi/bugreport.cgi?bug=17428#8
+I was privately asked how I fuzzed objdump in PR 17512 and I figured it 
+could be interesting to others too. So here it is.
 
-The reports are about unrelated Emacs Lisp files that are bundled with
-GNU Emacs. In situations such as this, the various files with
-vulnerable code were, almost certainly, first introduced in different
-GNU Emacs versions. Thus, the issues in each file have separate CVE
-IDs based on the different earliest version of GNU Emacs that is
-affected. We don't necessarily provide details of what these versions
-are as part of the CVE assignment process or even the CVE publication
-process. However, for example,
-http://cvs.savannah.gnu.org/viewvc/emacs/emacs/lisp/gnus/gnus-fun.el
-says "file gnus-fun.el was initially added on branch gnus-5_10-branch"
-suggesting early 2000s, whereas the Mosaic support in browse-url.el is
-obviously from the 1990s.
+Short version: I used the most naive way.
 
-All of the files allow symlink attacks, and that is the scope of each
-Emacs CVE assignment. If anyone was interested in CVE IDs for
-unrelated Emacs vulnerabilities (e.g., if the find-gc.el "horrific
-invocations" problem allows injection of commands into csh command
-lines), those IDs would need to be assigned separately, even if the
-issues were fixed as a side effect of the current patch.
+Longer version: I started with the most simple approach I could get 
+results with and improved it only a little bit so far. There was just no 
+need for improvements -- until recently I was getting more crashes than 
+I can analyze (i.e. run through valgrind:-). Thanks to the excellent 
+work of Nick Clifton, crashes are harder to get now. But there is a long 
+way to go.
 
+Hardware resources: one several years old desktop. Previous batches of 
+crashes required from minutes to half an hour to get. The last one is 
+the result of one night.
 
->> lisp/gnus/gnus-fun.el:
->>   In the function `gnus-grab-cam-face` the file "/tmp/gnus.face.ppm" is
->>  used, blindly allowing the existing file to be truncated, and symlinks
->>  followed.
+binutils was built like `./configure && make`. Using address-sanitizer 
+would probably improve the process.
 
-> http://lists.gnu.org/archive/html/emacs-diffs/2014-05/msg00055.html
+Commands fuzzed: `objdump -x $file` in PR 17512[1] and `readelf -a 
+$file` in PR 17531. Someone more familiar with binutils could choose a 
+command involving more parsing and hence improve code coverage.
 
-Use CVE-2014-3421.
+[1] https://sourceware.org/bugzilla/show_bug.cgi?id=17512
+[2] https://sourceware.org/bugzilla/show_bug.cgi?id=17531
 
+Fuzzer: zzuf with more-or-less default options. It was used like this:
 
->> lisp/emacs-lisp/find-gc.el:
->>   In the function `trace-call-tree` there are some horrific invocations
->>  of the csh, which manipulate the directory and symlinks beneath "/tmp/esrc".
+   zzuf -s 0:1000000 -c -C 0 -q -T 5 -M 100 -j 4 objdump -x "$file" 2> log
 
-> http://lists.gnu.org/archive/html/emacs-diffs/2014-05/msg00056.html
+Options:
 
-Use CVE-2014-3422.
+   -s 0:1000000 -- seeds to try, change as you wish
+   -c           -- only fuzz files specified in command line (just in case)
+   -C 0         -- don't stop after the first crash
+   -q           -- suppress output from objdump
+   -T 5         -- limit cputime to not hang on infinite loops
+   -M 100       -- limit memory to not eat all of it
+   -j 4         -- number of simultaneous jobs
 
+Another option of interest is -r -- ratio of changed bits.
 
->> lisp/net/browse-url.el
->>   In the function `browse-url-mosaic` the file "/tmp/Mosaic.$PID" is blindly
->>  overwritten.  Suspect this whole function is obsolete though :)
+After you get a crash like this:
 
-> Not an (Emacs) bug.
+   zzuf[s=1448,r=0.004]: signal 11 (SIGSEGV)
 
-> http://lists.gnu.org/archive/html/emacs-diffs/2014-05/msg00057.html
+you can get a fuzzed sample with the following command:
 
-> +         ;; This is a predictable temp-file name, which is bad,
-> +         ;; but it is what Mosaic uses/used.
-> +         ;; So it's not Emacs's problem.  http://bugs.debian.org/747100
+   zzuf -s 1448 -r 0.004 < "$file" > fuzzed-file
 
-We didn't quite understand the reasoning here. Mosaic reads the
-/tmp/Mosaic.##### file. This doesn't seem to imply that Emacs is
-entitled to write "newwin" and "goto" records into that file without
-considering that it might be a symlink. Even if not all symlink
-attacks could be prevented, one might want a countermeasure against
-the easiest attacks. Alternatively, writing to /tmp/Mosaic.##### could
-perhaps just be removed, on the basis that the threat is more
-realistic than is actual use of Mosaic. (The threat model is that
-someone's home directory has a .mosaicpid file left over from the
-1990s, and that PID happens to be in use.)
+In fact, I run zzuf from a script against different samples in batches 
+of 10K seeds, then run random selection from found crashes under 
+valgrind and collect unique errors. When crashes are rare it's possible 
+to run all of them through valgrind. This part of the process is also 
+quite naive but it you are fixing crashes as you find them it's not 
+needed at all.
 
-Use CVE-2014-3423 for the Emacs vulnerability associated with a
-symlink attack against a /tmp/Mosaic.##### file (this is similar to
-CVE-2008-4994).
+Samples: I started with clam.exe from ClamAV, then used 'main() { return 
+0; }' compiled in different ways and then switched to samples from 
+https://github.com/radare/radare2-regressions . Looking at code coverage 
+and optimizing the set of samples could improve the process. My uploaded 
+samples named as (\d+)-(0.004) are clam.exe zzufed with seed $1 and 
+ratio $2, samples named as (\d+)-(\d+)-(0.004) are from 
+radare2-regressions zzufed in the same way. If someone is interested I 
+can provide a precise list.
 
-CVE IDs for Mosaic are presumably not too useful at this point, but it
-seems best to assign the most obvious ones, so that we are not blaming
-Emacs for the entirety of the problem. From the Mosaic CHANGES file:
+License -- short version: AFAICT clam.exe is under GPLv2 and "was 
+entirely written by hand using HIEW"[1], radare2-regressions is under 
+GPLv3+. Feel free to use in testsuites etc.
 
-   From 2.0 to 2.1
-   Remote control users and script writers take note: control filename
-   changed from /tmp/xmosaic.pid to /tmp/Mosaic.pid. This
-   is the final such change, forever.
+[1] http://lurker.clamav.net/message/20071225.173819.0255a1c0.en.html
 
-CVE-2014-3425: Mosaic 2.0 allows local users to cause a denial of
-service ("remote control" outage) by creating a /tmp/xmosaic.pid file
-for every possible PID.
-
-CVE-2014-3426: Mosaic 2.1 allows local users to cause a denial of
-service ("remote control" outage) by creating a /tmp/Mosaic.pid file
-for every possible PID.
-
-
->> lisp/net/tramp.el
->>   The function `tramp-uudecode`, a fallback if a real uudecoding binary
->>  is not present, blindly uses "/tmp/tramp.$PID", truncating and removing
->>  the file.
-
-> http://lists.gnu.org/archive/html/emacs-diffs/2014-05/msg00060.html
-
-Use CVE-2014-3424.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTaopdAAoJEKllVAevmvmsZQcIALFr9HW1w7EilWkopoNA/zf0
-un2ayYlwdtm3LXJVitmfubYobJsoL+U7XogBAkLxo8XgQEBG47lD2k0jIwKJmJeU
-26vsmE47OKmT4uTG8DTB5q6mK3+OoZ5s+ysLEfC7vj4wqfoEF2TVhZvYH6EkA17f
-V4SdYU9GkRUNT/yL854+LehOZEg9fuSjpRPHsdUOkz/WLei7HUynoV+QANO+Tb/c
-C3dvPTjtp07zhHQd+CdKKilYQttDBlwgIalt1oflvJ0Nc7ve77dnbkfnuFJbrcyl
-yJnecaewhd9RvP2cnvVh4lBl04ols6NrrQbVtlQ4DQsW2+VRDD8E5lrSAuoFAbI=
-=9lO/
------END PGP SIGNATURE-----
+-- 
+Alexander Cherepanov
