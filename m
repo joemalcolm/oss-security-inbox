@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/07/5
-Message-ID: <4A77F227-42E4-4734-89BC-219656AA6A09@redhat.com>
-Date: Thu, 07 Aug 2014 12:12:27 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: CVE-2014-3562: Vulnerability in 389-ds
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/7
+Message-ID: <545C38AF.5070004@internot.info>
+Date: Fri, 07 Nov 2014 14:12:47 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-Request: dpkg handling of 'control' and warnings format string vulnerability
 Content-Type: text/plain; charset=utf-8
 
-This was initially sent to the distros list on August 5th:
+On 07/11/14 12:27, Seth Arnold wrote:
+> It is not safe to build packages from untrusted sources.
+> It is not safe to install packages from untrusted sources.
+I agree.
+But, if you are analyzing a .deb file to see what it contains, etc., you
+are not necessarily installing it.(e.g. dry-run)
+And what about programs that use dpkg to list the details of the package?
 
-It was found that when replication was enabled for each attribute in Red
-Hat Directory Server / 389 Directory Server, which is the default
-configuration, the server returned replicated metadata when the
-directory was searched while debugging was enabled. A remote attacker
-could use this flaw to disclose potentially sensitive information.
 
-
-Acknowledgements:
-
-This issue was discovered by Ludwig Krispenz of Red Hat.
-
-Further details can be found here: https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-3562
-
+Thanks
 -- 
-Vincent Danen / Red Hat Product Security
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+-- Joshua Rogers <https://internot.info/>
