@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/5
-Message-ID: <52C663A7.2050602@redhat.com>
-Date: Fri, 03 Jan 2014 00:15:51 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: AMD Security contact
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/13
+Message-id: <545CB06B.8010302@samsung.com>
+Date: Fri, 07 Nov 2014 14:43:39 +0300
+From: Yury Gribov <y.gribov@...sung.com>
+To: oss-security@...ts.openwall.com
+Cc: binutils@...rceware.org, cherepan@...me.ru
+Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 11/07/2014 01:59 PM, Hanno Böck wrote:
+> Am Fri, 07 Nov 2014 13:08:09 +0300
+> schrieb Yury Gribov <y.gribov@...sung.com>:
+>
+>> This looks rather impressive.  Have you considered automatically
+>> detecting duplicates by e.g. analyzing stacktraces?
+>
+> american-fuzzy-lop kind of does that. It creates a hash among the code
+> path and groups fuzzing samples by that. That's quite convenient.
 
-BTW with respect to
+[Cc-ing Binutils ML back again]
 
+Yeah, I think there was even an article in one of recent PLDIs which 
+discussed different approaches to filtering duplicates arising in 
+compiler fuzz testing (they did various combinations of stacktraces, 
+Valgrind output, program coverage, etc.).  I was just curious how well 
+this works for real world tasks like objdump crashes.
 
-I tried to find an AMD security contact, couldn't find one. Emailed
-several email addresses, no luck:
-
-security@....com
-The server has tried to deliver this message, without success, and has
-stopped trying. Please try sending this message again. If the problem
-continues, contact your helpdesk.
-
-If anyone knows how to get ahold of them please add it to the OSVDB
-vendor database. This is with respect to
-http://seclists.org/oss-sec/2013/q4/416 if anyone is wondering. not
-something new.
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJSxmOnAAoJEBYNRVNeJnmTWQwQAMZ8FwWm74o81zN0GuiYNeWA
-jO7l0N9mbHl6YrZDRelcwpNuQ0TouKev+BcOYnPljEyeAPiKW2MBrM02riRo/ir0
-e3Yq7O9smU/Q/lSMtCAxcKtiiXuflNQw0R2H+dbQBia78Pr1fV2tEqChTSdk6w7Y
-xiM7HbWoZrKUWuSMwMYnWxD6cSOE43ysokL+bQ3R4f4MqPB5ifUVsyrPhVqu/s6M
-9vUdU3pA7OyCIGLxxM/XqwzVJdpUpFtnLMMNpb96/MdOJErH8LOgOuvx99njbW0M
-AMXSS6IsGsvbeKw3i5xCMNUm90q0YZuOah4pPdKL74ZtteOJtjz2sSBUdt2SvBWj
-zAWw/UBPVFPwmY0B5IccViBD3sqvjkXIXMbPZsikPS3YJv8qaTLi0AFNIAfyrMxL
-3N2ZFeCR+oNNSg2zDNhl5GTcvval7fLCnpm1mXKxGf7SA9QNaqgpHuP6MMEKuG4l
-m71qh35T6lGjqjzFZBBTkh/aUVySCGqyQ3lWZDcloZdC8nh0AoKrFGdWD3Tr6Izd
-D9h4YFhD3erP6XhXZOyxOMEam65LougqQRM1LsW4nfsZpufhCtL3xePaktCYyW5T
-BpMFYOJqLKBT7uh4SrM42/1lsS6QMlMAzjZryvKIi6DynYAn8K4HDdp469ImyfAf
-/cJpjMXnMgsxUbWZOtuQ
-=eUU8
------END PGP SIGNATURE-----
+-Y
