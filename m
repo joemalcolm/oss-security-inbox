@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/2
-Message-ID: <534FB184.4090103@redhat.com>
-Date: Thu, 17 Apr 2014 12:48:36 +0200
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/21
+Message-ID: <CAE2SPAYOhhb95+8wygCE4bXvcCujVEV+LpZgXz-r6v66+0HcPQ@mail.gmail.com>
+Date: Fri, 7 Nov 2014 20:59:37 +0100
+From: Bastien ROUCARIES <roucaries.bastien@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: openssl: missing critical flag for extended key usage not always detected in time-stamp verification
+Subject: Re: Asking for CVE for imagemagick
 Content-Type: text/plain; charset=utf-8
 
-On 04/16/2014 10:10 PM, Raphael Geissert wrote:
+On Fri, Nov 7, 2014 at 8:41 PM, Bastien ROUCARIES
+<roucaries.bastien@...il.com> wrote:
 > Hi,
 >
-> Quoting from [0]:
->> "check_purpose_timestamp_sign()" in source file v3_purp.c [...] fails to
->> detect a missing critical flag if the extensions of the TSA certificate
->> are arranged in a specific order.
+> I am asking for two CVE for imagemagick (two DOS):
+> - Converting some specially crafted jpeg could lead to a dos (see
+> http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26456)
+> - Converting some dcm file could lead to crash then DOS:
+> Fix last value in dicom_info and added missing != NULL check.
 >
-> Could a CVE id be assigned for this?
+> Fix a buffer overflow in dcm reader by checking the dcm file.
+> This problem was discovered by fuzzing some dcm file.
 
-As described, this isn't a security issue, but the actual commit
+Sorry the DCM problem was CVE-2014-8562 ImageMagick: out-of-bounds
+memory error in DCM decode
 
-<http://git.openssl.org/gitweb/?p=openssl.git;a=commitdiff;h=300b9f0b704048f60776881f1d378c74d9c32fbd>
+The jpeg one is new.
 
-might constitute a security fix if this applies not just to extensions 
-on TSA certificates.
-
--- 
-Florian Weimer / Red Hat Product Security Team
+Bastien
+> Thanks
+>
+> Bastien
