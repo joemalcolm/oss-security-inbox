@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/5
-Message-ID: <alpine.LFD.2.10.1402121202230.10524@javelin.pnq.redhat.com>
-Date: Wed, 12 Feb 2014 12:04:21 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/15
+Message-ID: <545CB8C4.4080101@mccme.ru>
+Date: Fri, 07 Nov 2014 15:19:16 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+CC: binutils@...rceware.org
+Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
 Content-Type: text/plain; charset=utf-8
 
-+-- On Wed, 12 Feb 2014, Michael Samuel wrote --+
-| >  -> http://www.openwall.com/lists/oss-security/2014/02/11/7
-| The same issue, different result.
+On 2014-11-07 15:09, Alexander Cherepanov wrote:
+>> I was just curious how well
+>> this works for real world tasks like objdump crashes.
+>
+> Back to real world deduping. IMHO it's not ideal but works quite well,
 
-  Yes, true. Thank you for confirming.
- 
-| The described issue would result in expiring attacker-specified (but
-| not more) cache entries at approximately the same CPU cost.  So
-| this is something else.
+Ah, I forgot to add that to really know the quality of the results of 
+this approach we have to ask Nick Clifton which actually worked with the 
+resulted crashers. I mostly didn't look into the sources and just run 
+the script which in the end prepares a tarball for uploading (modulo 
+manually filtering out some garbage which I didn't yet manage to 
+blacklist in the script).
 
-  Agreed.
+Nick, any feedback appreciated.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+-- 
+Alexander Cherepanov
