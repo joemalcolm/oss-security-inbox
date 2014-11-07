@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/18
-Message-ID: <1417020530.20127.42.camel@vain.rhgalway>
-Date: Wed, 26 Nov 2014 16:48:50 +0000
-From: Caolán McNamara <caolanm@...hat.com>
-To: Alexander Cherepanov <cherepan@...me.ru>
-Cc: oss-security@...ts.openwall.com, cve-assign@...re.org, officesecurity@...ts.freedesktop.org, Michael Meeks <michael.meeks@...labora.com>, Miklos Vajna <vmiklos@...e.cz>, Moritz Muehlenhoff <jmm@...ian.org>
-Subject: Re: [Officesecurity] Re: CVE Request: LibreOffice -- several issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/17
+Message-ID: <545CC7EB.4000903@internot.info>
+Date: Sat, 08 Nov 2014 00:23:55 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-Request: dpkg handling of 'control' and warnings format string vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2014-11-26 at 18:43 +0300, Alexander Cherepanov wrote:
-> https://www.libreoffice.org/about-us/security/advisories/ , which
-> happily lists several DoS issues: CVE-2012-4233, CVE-2013-4156. IMHO
-> this reaffrims the default security policy.
+On 08/11/14 00:14, Sven Kieske wrote:
+> to quote the man page of dpkg:
+>
+>> --no-act, --dry-run, --simulate Do everything which is supposed to
+>> be done, but don't write any changes. This is used to see what
+>> would happen with the specified action, without actually modifying
+>> anything.
+> So the users assumes this does not "modify anything"
+> and if I understood this bug correct this gives at least
+> access to the stack and allows to write/read memory.
+Yes, you understood the bug correctly.
 
->From our side, the page is generally intended to just list all resolved
-CVEs which were opened wrt LibreOffice (and a few which were opened
-against libraries bundled into upstream provided LibreOffice builds).
-There's no filtering out of any CVEs logged about LibreOffice that might
-be considered not significant.
+In reality, the vuln/bug is not a huge one. People _normally_ download
+.deb files to install them.
+But in some cases, that isn't always true.
+If the bug was triggered before apt's signature handling, then it could
+be a huge one. But it isn't(I'm guessing...)
 
-Again, from our side, when presented with DoS documents we do tend to
-push back against granting them security bug status. Not that we don't
-think they are serious, just that we think they don't merit extra
-special (time expensive) security level handing. I *think* 2012-4233 was
-issued/requested directly by the discoverer high-tech bridge security
-research. Maybe it initially looked a bit more serious than it turned
-out.
+And as I said, what if another program that, for example, integrates
+with a browser, uses dpkg to analyze the .deb file.
 
-In other cases e.g. 2012-4156 the affected application is really Apache
-OpenOffice not LibreOffice but the same document that corrupts AOO
-causes us to deref a NULL and fall over so it got listed there because
-we people asked about it, given our shared code base origin. (maybe
-something similar was also the case for 2012-4233, I forget, it was
-years ago)
+The bug itself isn't confined to the -i flag either. It's in the
+handling of the warnings. i.e very easy to trigger.
 
-C.
+I'm taking a guess here, and going to say that there are other ways of
+passing  arbitrary strings to the warning function. I may be wrong though.
+
+
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
 
