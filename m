@@ -1,71 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/8
-Message-Id: <20141112173308.4543E6C0100@smtpvmsrv1.mitre.org>
-Date: Wed, 12 Nov 2014 12:33:08 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/2
+Message-Id: <20141107010033.3B1586C0029@smtpvmsrv1.mitre.org>
+Date: Thu,  6 Nov 2014 20:00:33 -0500 (EST)
 From: cve-assign@...re.org
-To: krahmer@...e.de
+To: oss@...ernot.info
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-request: systemd-resolved DNS cache poisoning
+Subject: Re: CVE-Request: dpkg handling of 'control' and warnings format string vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> systemd-resolved contains a caching resolver ... does not implement
-> any of the hardening recommendations of rfc5452.
+> A format string vulnerability vuln has been found in the latest version
+> of dpkg.
+> https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135
 
-We have several comments about this. First, systemd-resolved is
-apparently advertised as a stub resolver (e.g., see the
-http://www.freedesktop.org/software/systemd/man/systemd-resolved.service.html
-man page). RFC 5452 is about requirements for a resolver (defined in
-section 2.1) and -- at least in our interpretation -- specifically
-does not set any requirements for a stub resolver.
+>> package 'backup:01f15700.00431828.00000001.00000001.0000001a':
+>>  '%08x.%08x.%08x.%08x.%08x
 
-Documentation for some other stub resolvers makes explicit statements
-about security expectations, e.g.,
+> The vulnerable function, warningv([..]), is called in many other places,
+> and is not limited to '-i'.
 
-  http://www.gnu.org/software/adns/
-  http://www.chiark.greenend.org.uk/ucgi/~ianmdlvl/git?p=adns.git;a=blob;f=INSTALL
-
-  adns is a `stub resolver' ... no defence against bad nameservers or
-  fake packets which appear to come from your real nameservers. You MUST
-  use a firewall or other means to block packets which appear to come
-  from these nameservers, but which were actually sent by other,
-  untrusted, entities.
-
-See also CVE-2008-4100. The systemd-resolved documentation is
-apparently less explicit.
-
-Is your message attempting to assert that EVERY implementation of a
-stub resolver must satisfy RFC 5452 requirements, in order to account
-for the possibility that the configured recursive name servers have
-security problems, and the possibility that an attacker can
-communicate directly with the stub resolver? Or does your message mean
-that there's something unusual about the environments in which
-systemd-resolved is deployed, such that one or more RFC 5452
-requirements become applicable?
-
-We're not aware of any standard reference that describes required
-security properties of a stub resolver. There isn't much in RFC 1123
-6.1.3.1(B). RFC 4033 mentions the concept of a security-oblivious stub
-resolver, suggesting that this is acceptable.
-
-Is RFC 5452 section 3 item 3 "The response comes from the same network
-address to which the question was sent" the single implied requirement
-of a stub resolver? In other words, a minimally acceptable stub
-resolver can blindly trust its configured recursive name servers by IP
-address, but still must discard responses (or document mandatory
-firewalling to discard responses) from any other source IP addresses?
-Note that this question is only about a requirement, not about what
-types of security hardening would be ideally present.
-
-It's conceivable that upstream may decide to announce that one or more
-behaviors were vulnerabilities. CVE assignments may be possible then.
-This especially applies to the case of implementation errors. We don't
-currently see a way to do any CVE assignments until after an
-announcement from upstream. We typically would not have an overarching
-CVE such as "does not follow RFC 5452 recommendations" even if the
-product were advertised as a full-service resolver.
+Use CVE-2014-8625. We're aware of "does not show evidence of allowing
+attackers to cross privilege boundaries" in
+https://bugs.launchpad.net/ubuntu/+source/dpkg/+bug/1389135/comments/2 --
+we'll certainly look for any discussion on this list that disputes the
+CVE.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -75,11 +35,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUY5kdAAoJEKllVAevmvmsWOUH/3GcpvpJ1vHFoiwqYzNGj1O6
-fYJWbv9hvaDvgpQLBB+Nertc3i5p/uTGXQqBZWUZ5EdZsjUM6Dj0DdIYWAGK59bQ
-Xut25F3/xL3JPxlshQW4gY3Yc3FIVw+w3C6+dWZqFAQZ/kFB/IMhBSpb3t0OIXZk
-3zW1gT6HtnhZ368NaXnNN3Bdtc/Hnf4RAVnzYjf8BnyqHuMQPGH7OnxzR2eId1Bi
-Y2EYSvtdvDU5CDkx+ataME1spuJMLOjMHjeeFUe+VNuiqa6/DIcmhXMFgM8CnYb3
-kttu7Xqydf6pi9hGDsbrVIUJiNiChyoxTeE1I3Grp+sd3CiDGhlosZ5DVpLBDS4=
-=o1Tu
+iQEcBAEBAgAGBQJUXBjtAAoJEKllVAevmvmsQ0sH/19C6CPOWWM6y6vWaomyuflF
+qyYSj/6bfNCzlruNKgD+WvHehhNd1L3VgmWHzjGAmOAvBAlyLHvUVRaFaQ7idk4B
++D42vblcsM4vHg8tSg3RLyDjEU9ptn0VbYPZJdOW54ByOhhadIMtj2r5MW/vgdDq
+2FIeezr1WGENliUMxGCakYeReGh5LOL/djG6ZIXjOjazkjzyWXkuSU48jysQRu43
+gBo5jv6GFPHIknNvhrCTOFApfc2eh6WcAPkwaivywzCc0its52wrxFopphp0KPFl
+bN69HEKAcJ/dNBEeQLry4Bpe1XD2CrVVv64zKRCPPf3ZLxZ/pIHjhWQgO04I7No=
+=AzqO
 -----END PGP SIGNATURE-----
