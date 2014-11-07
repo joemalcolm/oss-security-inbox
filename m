@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/19/1
-Message-ID: <20140919201001.GA8261@jwilk.net>
-Date: Fri, 19 Sep 2014 22:10:01 +0200
-From: Jakub Wilk <jwilk@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: python-requests: CVE-2014-1829, CVE-2014-1830: password disclosure on redirect
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/9
+Message-ID: <87oasj4raq.fsf@hope.eyrie.org>
+Date: Thu, 06 Nov 2014 19:34:37 -0800
+From: Russ Allbery <eagle@...ie.org>
+To: Andreas Barth <aba@...us.org>
+Cc: oss-security@...ts.openwall.com,  742140@...s.debian.org
+Subject: Re: Re: Bug#742140: libpam-oath: PAM module does not check whether strdup allocations succeeded
 Content-Type: text/plain; charset=utf-8
 
-FYI: a while ago python-requests 2.3.0 was released, with the following 
-bugfix:
+Andreas Barth <aba@...us.org> writes:
 
-* No longer expose Authorization or Proxy-Authorization headers on 
-redirect. Fix CVE-2014-1829 and CVE-2014-1830 respectively.
+> we have the following debian bug report about an security isuse in
+> libpam-oath (source oath-toolkit, upstream web page
+> http://www.nongnu.org/oath-toolkit/ ).
 
+> What is the appropriate process to get an CVE number on it? This issue
+> is already public, as it is documented in the debian bug tracking
+> system.
 
-References:
-https://bugs.debian.org/733108
-https://github.com/kennethreitz/requests/issues/1885
-https://bugzilla.redhat.com/show_bug.cgi?id=1046626
+Is not checking memory allocations for failure in this fashion considered
+CVE-worthy?  I'm probably missing something, but this seems difficult to
+exploit: the first strdup is only trying to allocate a byte of memory, and
+the second will not allocate more than MAX_OTP_LEN memory due to an
+earlier check.  This means the attacker would have to have essentially
+exhausted system memory already to force strdup to return NULL.
+
+And, even if that happens, strdup returns NULL, which leads immediately to
+a NULL pointer dereference and presumably a process crash.  But to create
+this situation, the attacker has to nearly exhaust all process memory, and
+could just go a step farther and exhaust all memory, which would almost
+certainly result in a process crash anyway, or an OOM kill.
+
+Am I overlooking something?
 
 -- 
-Jakub Wilk
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
