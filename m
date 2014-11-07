@@ -1,43 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/14
-Message-Id: <201404181917.s3IJHh2n015880@linus.mitre.org>
-Date: Fri, 18 Apr 2014 15:17:43 -0400 (EDT)
-From: cve-assign@...re.org
-To: gauri@....by
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: libmms heap-based buffer overflow fix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/19
+Message-ID: <CALx_OUDMcAEj=vTjPr8FGBhAeeaY1hYEbHrJ5PSanRrVdHCJHA@mail.gmail.com>
+Date: Fri, 7 Nov 2014 08:54:21 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> I am currently playing a lot with this. afl is in a somewhat
+> experimental state and you'll run into more problems trying to get it
+> running, but if it runs it is much more convenient than zzuf.
 
-> It seems libmms has fixed a buffer overflow in a recent 0.6.4 version
-> with the following commit.
-> 
-> http://sourceforge.net/p/libmms/code/ci/03bcfccc22919c72742b7338d02859962861e0e8
-> 
-> This may be triggered via an overly long line of a MMSH (MMS over
-> HTTP) server response, effectively overflowing the buffer which has a
-> static size (defined as BUF_SIZE
+The current versions should be pretty stable, but if you bump into any
+problems, please just poke me!=)
 
-> src/mmsh.c
-> Fix a possible heap memory overrun in get_answer().
+Afl is kind of cool for tools like binutils or fileutils because it
+can synthesize many formats or format variations on its own, e.g.:
 
-Use CVE-2014-2892.
+http://lcamtuf.blogspot.com/2014/11/pulling-jpegs-out-of-thin-air.html
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+But yeah, there's plenty of low-hanging fruit in libbfd right now, so
+non-instrumented fuzzing will get you pretty damn far, too.
 
-iQEcBAEBAgAGBQJTUXoSAAoJEKllVAevmvmss0gH/0vYli0OTHfn5+VRZ1jCCrTB
-gHiUolfzOBtGGahIBycVR5Su4CTnoyy7/UgzU4xADoqD7cnVFyXN81oCvVg/ZVga
-BkuUG3mDFfzVqWvqapBqWvG2U5dQyr4+mObhUexu0L+qUgYbdBXbbTtYFBgmHZKT
-mlnRzxcQUzvK3lwtF5oPNgtBIhCsXIfSxmuFyQXVRLDUAJpnggTigE1khT7MAE54
-IxJvx5/t+FfxJ5d3Fe6UZPj1+TtOKRTj2KFZ09E90svsoFzFYg97qODvYEvhx3l4
-n/a3CkE0YDl70Ap+D+jd2bX8bbIKn+SOoWcBVNVrqrsYMFnv+ExN6SQRDlcXlDE=
-=ImP2
------END PGP SIGNATURE-----
+/mz
