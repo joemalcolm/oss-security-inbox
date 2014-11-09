@@ -1,44 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/21/2
-Message-Id: <201403210539.s2L5dVdR027393@linus.mitre.org>
-Date: Fri, 21 Mar 2014 01:39:31 -0400 (EDT)
-From: cve-assign@...re.org
-To: gmurphy@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Nova
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/10/1
+Message-ID: <CADi5LzzaG=G4wPpcO0ws5YOw9XZWjxufcBGKUBRza9poVRihBg@mail.gmail.com>
+Date: Sun, 9 Nov 2014 15:37:03 -0800
+From: Karthik Rangarajan <rangarajan.karthik@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Multiple Vulnerabilities - XSS/Remote Code Injection in MODX
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-> A vulnerability was discovered in OpenStack
-> 
-> Title: Nova VMWare driver leaks rescued images
-> Products: Nova
-> Versions: 2013.2 to 2013.2.2
-> 
-> By requesting Nova place an image into rescue, then deleting the
-> image, an authenticated user my exceed their quota. This can result in
-> a denial of service via excessive resource consumption. Only setups
-> using the Nova VMWare driver are affected.
-> 
-> https://bugs.launchpad.net/nova/+bug/1269418
+MODX has released a security advisory for MODX Evolution <=1.0.14. The
+version is affected by multiple XSS vulnerabilities as well as a
+command injection vulnerability. Please find the advisory below:
 
-Use CVE-2014-2573.
+http://forums.modx.com/thread/94952/multiple-vulnerabilities-xss-remote-command-injection
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Can a CVE please be assigned for these vulnerabilities?
 
-iQEcBAEBAgAGBQJTK8/gAAoJEKllVAevmvmsiu4H/AhIpSex25e5aIFfRXAeYlAa
-R0KMYye5byjbegThQCx0bzMPCrBS7tj9olEyqrr6BwjsDpVZBPG6LhsCXZzfWqed
-ps/gcbGDLuQwUzD+XsmYYKgDi2kmKDmRCgWjlPLel6kUDAIFW1cy9gTYKinJ94e1
-SA0zcFTEUh8lCMp9PqeFaqW7qJ7PhvhPi6fGd3Fpxzdd1GPchOnNwBB5XmTQqLW0
-MGptSnR6cnJtwfYJfdI73VGCglfr0yW26IoIP9n55FLXTu6meFm8WuCIVXa84Xeh
-rSHLdO0ptX9YkJX+2pHepdx/kLH1w/8Yz1++EZZ7bViYXvh2E6Fgb5f44lhXajM=
-=CeDI
------END PGP SIGNATURE-----
+Thanks,
+Karthik
+
+-- 
+Regards,
+Karthik Rangarajan
