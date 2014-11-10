@@ -1,36 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/14
-Message-Id: <201402192345.s1JNjawL029606@linus.mitre.org>
-Date: Wed, 19 Feb 2014 18:45:36 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/10/3
+Message-Id: <20141110181405.98BC46C004F@smtpvmsrv1.mitre.org>
+Date: Mon, 10 Nov 2014 13:14:05 -0500 (EST)
 From: cve-assign@...re.org
-To: meissner@...e.de
+To: Jason@...c4.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Percona Toolkit automatic version check - remote code execution / information leak
+Subject: Re: CVE Request: Qt Creator fails to verify SSH host key
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> The configuration for what information PT tools should collect is not
-> hardcoded in the scripts. Instead, every time it's downloaded from
-> http://v.percona.com/. One of the possible parameters is a binary file
-> name to be executed ... The configuration can also ask for any MySQL
-> variable - not just the version string.
+> they don't check host keys when connecting, which makes a
+> man-in-the-middle attack trivial.
 
-Use CVE-2014-2029 for this issue in which a plain HTTP session is
-used, and a man-in-the-middle attack can lead to remote code execution
-(or retrieving sensitive configuration information).
+> // TODO: Mechanism for checking the host key. First connection to host: save, later: compare
 
+> has received a bit more of a hesitant reaction. The most recent
+> vendor feedback seems to indicate they're not super interested in
+> implementing this.
 
-> When this option is enabled - and it is enabled by default(!) -
-> various information ... are submitted to Percona along with the
-> server's IP address ... without bringing it to user's attention or
-> asking for their consent.
+We don't feel that this is a fair characterization of the (public)
+vendor response. There is a vendor response of:
 
-There is no CVE assignment specifically for the transmission of data
-to Percona without user confirmation. This is potentially unwanted
-behavior, but it does not seem that this a mistake (in the sense that
-a developer was trying to implement a different behavior).
+   This was never considered much of an issue due to the scope
+   of our SSH support. The main use case is developers
+   communicating with their embedded devices that are locally
+   connected, typically via USB. Host key checking is of
+   limited value there, also because the same IP address is
+   often used for different devices. So the anticipated first
+   reaction from users would be "How do I turn it off?".
+
+This indicates that the current behavior is intentional behavior. The
+vendor has made a tradeoff between what they perceive as a security
+benefit and what they perceive as a support cost. We do not assign CVE
+IDs based on third-party reports that a vendor should have made a
+different tradeoff. Admittedly, the vendor might decide to change
+their tradeoff later (e.g., if they obtain data indicating that USB
+is actually not a prevalent use case).
+
+We agree that it would be nice to have a central place to track
+findings such as "the SSH security expectations for this product are
+different from the SSH security expectations for essentially every
+other product." CVE is not that place.
+
+Similarly, there is an opportunity for security improvement if the
+vendor were to implement key checking, even if the vendor insisted
+that this would not be enabled by default. This type of opportunity
+for security improvement cannot have a CVE assignment.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -40,11 +57,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTBUGWAAoJEKllVAevmvmsrgwH/1J2KvABlDmoC71Zz6KALdgc
-/L/F6c8GpAR8A8tBlPf+J/O3vZfZMMZ7ey3sId5Ht8HvRxRiGoA/6mAE7/FCCd1y
-pVq9ndmK5zUQ0VLeuHXXxDusyXdBB3PEcGefSMS5ZdzKv6ESQ7FgxoMX8IuvFF0p
-sGZyJQUl/ZECzzHU4qxksAnuqatSlcfKVY4sGUP1j7DXhv6GLzlHPJke+6aRsIuU
-Wrbh6/uL/8tDxctJCx0dn/7iSIjlV5XkgbLbR6aNiGrxIOmPNTqDLcJq8xzX5/+G
-arXEuopxCc5O3pfix0PrnvzxjwfnFLNpoMop9hPVhsww9t2HimIj2YcCRZ/aQ2Q=
-=s5z5
+iQEcBAEBAgAGBQJUYP/lAAoJEKllVAevmvmsZIgH/1AjdVpx/gIRO5y0xTo76NQs
+Kb+hC7AAXlBT/ySTfmsWOmTxBE9L77sze2vdt1mOZOLeFCkOmxIQDkBmkP3tlx4o
+TawvLaebWa7e+RG15xLRhXcbUdXa9Fi4oBAMWNL7p+WN1VClh/wTl92EcyELrhp/
+iC22Wg9MaJKY7OGm4FuOghkwsM0L13tfoYvGNNsVOty2aWDopoMSzGU9mbvda/OB
+FwW5KGzBRSD38HTBmwG8eaHWWTWmnHAiT/n4zL7jO7YG6L+ZoYhpUS3Mh/qStlWr
+bgoXn7P6rlU+u+wPA/ZvSk3wWuLSh7623T+3dADJzeS4Ls1CG3bwi6u5kL8HyBA=
+=lZ3n
 -----END PGP SIGNATURE-----
