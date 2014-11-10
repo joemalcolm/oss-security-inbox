@@ -1,83 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/09/2
-Message-ID: <CAD3Canc44M6cvjVvyJDzPGwRCbbzHkdht_x3sKJuLsiDjLmp6w@mail.gmail.com>
-Date: Mon, 9 Jun 2014 21:03:15 +1200
-From: Matthew Daley <mattd@...fuzz.com>
-To: Murray McAllister <mmcallis@...hat.com>
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, carnil@...ian.org
-Subject: Re: CVE Request: Horde_Ldap: Stricter parameter check in bind() to detect empty passwords
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/10/2
+Message-ID: <5460E62D.6030801@collabora.co.uk>
+Date: Mon, 10 Nov 2014 16:22:05 +0000
+From: Simon McVittie <simon.mcvittie@...labora.co.uk>
+To: "dbus@...ts.freedesktop.org" <dbus@...ts.freedesktop.org>,  oss-security@...ts.openwall.com
+Subject: CVE-2014-7824: D-Bus denial of service via incomplete fix for CVE-2014-3636
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 5, 2014 at 6:01 PM, Murray McAllister <mmcallis@...hat.com> wrote:
-> On 06/05/2014 05:51 AM, Salvatore Bonaccorso wrote:
->>
->> Hi,
->>
->> Horde_Ldap released an update fixing a security issue mentioned in the
->> changes:
->>
->>> [jan] SECURITY: Stricter parameter check in bind() to detect empty
->>> passwords.
->>
->>
->>
->> https://github.com/horde/horde/commit/8f719b53b0ee2d4b8a40a770430683c98fb5f2fd
->>
->> fixed in 2.0.6 with commit:
->>
->>
->> https://github.com/horde/horde/commit/4c3e18f1724ab39bfef10c189a5b52036a744d55
->>
->> Could a CVE be assigned for this issue?
->>
->> Regards,
->> Salvatore
->>
->
-> Thanks for pointing this one out. FWIW, I discussed this issue with Kurt
-> Seifried and we believe it would be hardening fix, not a CVE-named issue.
->
-> It seems this flaw could let you accidentally connect to an LDAP server
-> without a password, but the flaw in this scenario is in the LDAP server, and
-> this fix helps prevent you from doing that.
->
-> Some further explanations about this are available in
-> http://securitysynapse.blogspot.ca/2013/09/dangers-of-ldap-null-base-and-bind.html
+CVE: CVE-2014-7824
+Tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=85105
+Impact: local denial of service
+Access required: local
+Versions believed to be vulnerable: dbus >= 1.3.0
+Fixed in: dbus 1.6.x >= 1.6.26, 1.8.x >= 1.8.10, all versions >= 1.9.2
+Credit: discovered by Simon McVittie at Collabora Ltd.
 
-Hi Murray et al.,
+D-Bus <http://www.freedesktop.org/wiki/Software/dbus/> is an
+asynchronous inter-process communication system, commonly used
+for system services or within a desktop session on Linux and other
+operating systems.
 
-I originally reported this bug to Horde and - as you may guess - I
-respectfully disagree with this assessment :)
+The patch issued by the D-Bus maintainers for CVE-2014-3636 was based on
+incorrect reasoning, and does not fully prevent the attack described as
+"CVE-2014-3636 part A", which is repeated below. Preventing that attack
+requires raising the system dbus-daemon's RLIMIT_NOFILE (ulimit -n) to a
+higher value. CVE-2014-7824 has been allocated for this vulnerability.
 
-The issue *sounds* like the usual unauthenticated bind issue, but
-isn't; indeed the vulnerability still manifests when Horde is using
-OpenLDAP (which explicitly denies such binds by default).
+To avoid propagating that higher limit to activatable system services,
+it is desirable to start the system dbus-daemon as root so it can store
+its previous limit, raise its limit, drop root privileges (which its
+default configuration will do automatically), and restore the previous
+limit before launching activatable services. Some operating system
+distributions, such as anything using the upstream-supplied systemd
+units, start the system dbus-daemon as root already; others, such as
+Debian 7, currently start the system dbus-daemon under its less
+privileged uid and will need minor modifications to their init scripts.
 
-Horde has a simple function wrapper, Horde_Ldap::bind, around PHP's
-ldap_bind function. This function takes a DN and password as
-arguments, both with default values of null. If either of these
-arguments is empty() (as in, the PHP standard library function
-empty()), the LDAP bind user DN or password from Horde configuration
-is passed to ldap_bind instead.
+This is fixed in dbus 1.6.26, 1.8.10 and 1.9.2, released today. The
+patch used in 1.8.x and 1.9.x is attached; it applies to 1.6.x with
+trivial adjustments. Older versions are no longer security-supported by
+the D-Bus maintainers, but any distributions needing those versions are
+invited to share backported security fixes in the appropriate upstream
+branches (dbus-1.4, etc.).
 
-I'm guessing the intent is that the function can be used to easily
-(re-)bind as the bind user by calling it with no arguments (making
-them default to null and therefore passing the empty check).
+Attack details (repeating CVE-2014-3636 part A):
 
-The issue is that empty() returns true not just for null values but
-also - amongst other things - for empty strings. Hence, a user can
-simply provide an empty password when logging in and the function will
-default it to the bind user's password. All the user then needs to
-guess is the same bind user's DN (ie. username, so probably something
-like 'horde' or 'admin') and they can log in.
+By queuing up the maximum allowed number of fds, a malicious sender
+could reach the system dbus-daemon's RLIMIT_NOFILE (ulimit -n, typically
+1024 on Linux). This would act as a denial of service in two ways:
 
-(Note that IIRC you can't provide an empty username to get that to
-default as well; Horde checks for a non-empty username but not an
-non-empty password.)
+* new clients would be unable to connect to the dbus-daemon
+* when receiving a subsequent message from a non-malicious client that
+  contained a fd, dbus-daemon would receive the MSG_CTRUNC flag,
+  indicating that the list of fds was truncated; kernel fd-passing APIs
+  do not provide any way to recover from that, so dbus-daemon responds
+  to MSG_CTRUNC by disconnecting the sender, causing denial of service
+  to that sender
 
-So, this issue was actually Horde-specific and not a generic LDAP
-server configuration issue, which I think qualifies for a CVE, FWIW.
+-- 
+Simon McVittie, Collabora Ltd.
+for the D-Bus maintainers
 
-Cheers,
 
-- Matthew Daley
+View attachment "0001-CVE-2014-7824-set-fd-rlimit-to-64k-for-the-system-db.patch" of type "text/x-patch" (13021 bytes)
