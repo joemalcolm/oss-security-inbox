@@ -1,84 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/20/5
-Message-ID: <op.xjaivivdaaa6dx@otcain>
-Date: Sun, 20 Jul 2014 12:48:44 +0300
-From: "Dolev Farhi" <dolevf@...oo.com>
-To: oss-security@...ts.openwall.com, "Kurt Seifried" <kseifried@...hat.com>
-Subject: Re: CVE's for intersection vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/11/5
+Message-ID: <20141111185108.GA28844@kludge.henri.nerv.fi>
+Date: Tue, 11 Nov 2014 20:51:08 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Joomla component com_sexycontactform and WordPress plugin sexy-contact-form unrestricted file upload
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 20 Jul 2014 12:03:00 +0300, Kurt Seifried <kseifried@...hat.com>  
-wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> On 19/07/14 10:09 AM, Dolev Farhi wrote:
->> On Sat, 19 Jul 2014 14:32:50 +0300, intrigeri <intrigeri@...m.org>
->> wrote:
->>
->>> Hi,
->>>
->>> Kurt Seifried wrote (19 Jul 2014 00:33:38 GMT) :
->>>> So long story short: we have a program called sosreport that is
->>>> used to send system information back to Red Hat so we can help
->>>> customers troubleshoot their problems. It would appear we have
->>>> three main classes of (potential) security vulnerabilities:
->>>
->>> The severity of these potential vulnerabilities may partly depend
->>> on how well sosreport authenticates the server it sends
->>> information to.
->>>
->>> Cheers, -- intrigeri
->>
->>
->> Just wanna mention that sosreport is used by many companies other
->> than red hat (e.g. a company may ask for an sosreport from their
->> customers), i know that we use it to get environment data from
->> customers.
->
-> Well... fiddlesticks.
->
-> That is outside of my responsibility, and indeed outside of what I'm
-> even aware of (if you use sosreport and do so in an insecure manner
-> please report to oss-security for uhmm.. re-education? Heck of I know
-> what to do/say.).
->
-> - --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
-> Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
->
-> iQIcBAEBAgAGBQJTy4XEAAoJEBYNRVNeJnmTQIgQAJMzCeC49n6KTjC04yKgChb6
-> pi2lkJZqG1gb4Ze8bNOuagdqLSEdFIS21EYIeOpeLKkQ+wXylSFumN1M0P+kBYh0
-> n3YVzVqHgJ8DPlhLR7pPOcx2M60HMi12PvYDsqGdHaPdrgj0kknH+9340+4dkEhj
-> lWEeKmzgZtMigOQIFn4cLtG1f55CfTD8odO7HdMu0mXhIUJ7DUDjCXiWVswjHjL4
-> tyKplqaAHOS0cForSVviUkkEWyRSY/Ylb/JFtr0sM19cUbDlelLwH8NHyuHs4/71
-> 9EMiRQMGNLDOmov0jbjInS2A775SjtnvyUCvgvEyglHR3iWQ4YPQG627+A7HJZky
-> K09TNd0JhB+CufgDuIBCOytNKaPnlEA9wYWShUPB8x/0nWvsvBWB2WeK61bgo9W3
-> zfuH4SYXOL0CPGt3pCKNpZ5PqoPcRSLgCLqyhsHTZAkAe0dvgY24lP8HWve9h2at
-> aq6UKajnXz7we2IxkjVxZfuxoIwi8SdhjBDMBr+P+sEfdGeKyI37x9iGnSoWD3zX
-> vRgjsYF745Kb5ruCKvhOy5VF9GsA70uX51+YiZVib0661OZAJZfaYWoypTsuyAt4
-> 68zUr2KkIqSzl31Fx8Ak20NqHJRYsnU/j0vdxInLqpvTrodrPuPQyFPW+/U8keFG
-> at2j4IX/ezuZdi5yRQ4e
-> =9hGj
-> -----END PGP SIGNATURE-----
+References for the issue:
+- - http://www.exploit-db.com/exploits/35057/
+- - http://osvdb.org/113669
+- - http://packetstormsecurity.com/files/128822/WordPress-Joomla-Creative-Contact-Form-0.9.7-Shell-Upload.html
 
-well, of course it is not in your responsibility.
+Exploit-DB says "Vulnerability discovered by Gianni Angelozzi" and it is dated
+2014-10-25, but from log files I can see that the attacks started 2014-10-02 in
+one of the sites I investigated.
 
-but it is red hat responsibility to reduce the chances of it collecting  
-key configuration files containing possible credentials, which is what  
-they appear to do.
+- ---
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-
-
--- 
-
-/df
-
----
-This email is free from viruses and malware because avast! Antivirus protection is active.
-http://www.avast.com
-
+iEYEARECAAYFAlRiWpwACgkQXf6hBi6kbk/HoQCeM/9NtPVP7ZY0x3Lg99WkK89u
+YFQAn3UnPpUI9ZRlNqsniLz8twANb/qz
+=nQsK
+-----END PGP SIGNATURE-----
