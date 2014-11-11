@@ -1,52 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/23
-Message-ID: <54243BDC.30704@oracle.com>
-Date: Thu, 25 Sep 2014 16:59:24 +0100
-From: John Haxby <john.haxby@...cle.com>
-To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/11/6
+Message-ID: <20141111200239.GA1785@steve.org.uk>
+Date: Tue, 11 Nov 2014 20:02:40 +0000
+From: Steve Kemp <steve@...ve.org.uk>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request - dns-sync node module
 Content-Type: text/plain; charset=utf-8
 
-On 25/09/14 16:31, Simon McVittie wrote:
-> The particularly nasty thing about CVE-2014-6271 is that the name of the
-> variable is not relevant when exploiting that vulnerability, only the
-> value, which means it will bypass many whitelists of safe variable
-> names. I don't think that reduces the value of filtering
-> attacker-supplied environments through a whitelist when not using a
-> version of bash that is vulnerable.
 
-(Added Chet back),
+  The dns-sync library for node.js allows resolving hostnames in
+ a synchronous fashion
 
-Indeed, and Michal Zalewski makes a similar point in
-http://lcamtuf.blogspot.com/2014/09/quick-notes-about-bash-bug-its-impact.html
+  All versions of dns-sync prior to the release 0.1.1 were
+ vulnerable to arbitrary command execution via maliciously
+ formed hostnames.  For example:
 
-I also said:
-> I worry that simply fixing CVE-2014-6271 and CVE-2014-7129 is just
-> setting the scene for the next parser problem.
+    var dnsSync = require('dns-sync');
+    console.log(dnsSync.resolve('$(id > /tmp/foo)'));
 
-Whitelisting won't protect you against the next parser bug and, anyway,
-not everything has a blacklist, let alone a whitelist (su, I'm looking
-at you).
+  This is caused by the hostname being passed through a shell
+ as part of a command execution.
 
-I'm sure that there are going to be chains of exploits where each
-program in the chain doesn't believe that it needs a whitelist.
+  I disclosed/reported this here:
 
-For example, suid program A doesn't need a whitelist because it doesn't
-go anywhere near a shell, the closest it gets is exec'ing one of a
-well-defined set of programs ...
+        https://github.com/skoranga/node-dns-sync/issues/1
 
-... one of which is written in python (say) and was recently modified to
-exec a shell script for some perfectly innocent reason.
+  The following commit resolves the bug:
 
-There are lots of things one could do to eliminate that risk, of course,
-but step back and what are we arguing for?
+        https://github.com/skoranga/node-dns-sync/commit/d9abaae384b198db1095735ad9c1c73d7b890a0d
 
-I've seen several seasoned shell script writers, me included, who were
-unaware of this feature in bash.   Both problems arose because of the
-uncontrolled nature of function importing: you have no choice.
-
-I /think/ Michal is arguing for making the import explicit.  I certainly am.
-
-I'm equally certain Chet will do the right thing.
-
-jch
+Steve
+-- 
