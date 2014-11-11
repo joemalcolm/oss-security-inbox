@@ -1,68 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/14
-Message-ID: <2ECE9D9EEF1F524185270138AE23265947D48770@S0MSMAIL112.arc.local>
-Date: Wed, 26 Nov 2014 15:28:02 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: Eric Blake <eblake@...hat.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: AW: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/11/3
+Message-ID: <54623D8D.6040207@redhat.com>
+Date: Tue, 11 Nov 2014 16:47:09 +0000
+From: Nicholas Clifton <nickc@...hat.com>
+To: Alexander Cherepanov <cherepan@...me.ru>, oss-security@...ts.openwall.com
+CC: binutils@...rceware.org
+Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
 Content-Type: text/plain; charset=utf-8
 
-> Von: Eric Blake [mailto:eblake@...hat.com]
+Hi Guys,
+
+>>> I was just curious how well
+>>> this works for real world tasks like objdump crashes.
+>>
+>> Back to real world deduping. IMHO it's not ideal but works quite well,
 >
-> On 11/26/2014 06:45 AM, Fiedler Roman wrote:
-> > Hello,
-> >
-> > While trying to write a small python helper library for secure opening of
-> > files, I found behaviour of following call unexpected because it created a
-> > file instead of creating/failing in opening a directory:
-> >
-> > open("xxx", O_RDONLY|O_CREAT|O_DIRECTORY, 0600) = 3
->
-> What does fstat say about the file type of the just-created fd 3?
+> Ah, I forgot to add that to really know the quality of the results of
+> this approach we have to ask Nick Clifton which actually worked with the
+> resulted crashers.
 
-Fstat is also saying "file", same as "ls xxx" afterwards.
+Many of the problems uncovered by Alexander and Hanno stem from the fact 
+that the BFD library was never written with security in mind,  It was 
+intended to be portable and functional, but handling corrupt files was 
+never a priority.  Of course that is no excuse and so that is why I am 
+trying to make up for lost time and fix these problems as fast as they 
+are reported.
 
-> Here's what POSIX has to say about the matter:
-> http://austingroupbugs.net/view.php?id=847
->
-> If the combination is supported, it MUST create a directory.  This is
-> actually a nice extension if it is provided, as there is no other
-> standard interface that can atomically create AND open a directory;
-> remember, there is a minor TOCTTOU race between mkdir()/open(), although
-> the effects of that race are not too horrible (it is sufficient to use
-> O_DIRECTORY during the open as well as a quick readdir to confirm that
-> the just-opened directory is still empty, to be reasonably sure that the
-> race was not won by someone replacing the directory with something
-> unintended).  On the other hand, the behavior is an extension, and
-> historical implementations would fail (probably with EINVAL for invalid
-> flag combination), so portable applications cannot rely on it working.
->
-> But if it succeeds, and did NOT create a directory, then it is in
-> violation of POSIX.
+Another problem is that the file formats themselves (PE, COFF, ELF, etc) 
+are designed with efficiency in mind, rather than security.  So a lot of 
+extra work needs to be done when decoding them in order to make sure 
+that out of bounds reads and writes do not occur.
 
-Thanks for the pointer to the POSIX documentation. So it seems to be a 
-POSIX-violation, at least on "Linux version 3.2.0-69-generic".
+My gut feeling at the moment is that readelf is probably pretty good 
+now.  It has a lot of range checking in place and it should be fairly 
+robust.  If you are looking for places to check though I would look at 
+dynamic symbol tables and unwind tables for various different architectures.
 
-My test program was:
+The BFD library is probably less robust than readelf.  Especially when 
+it comes to non-ELF file formats.  Resource sections for PE files for 
+example could be a fertile area to explore.  Oh, and archives (or 
+libraries if you prefer), probably need to be tested as well.
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <sys/stat.h>
+Cheers
+   Nick
 
-int main(int argc, char **argv) {
-  int fd;
-  struct stat statBuf;
-  int result;
 
-  fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
-  result=fstat(fd, &statBuf);
-  if(result) {
-    fprintf(stderr, "Stat failed\n");
-    return(1);
-  }
-  fprintf(stderr, "New element type is %d\n", S_ISDIR(fd));
-  return(0);
-}
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
