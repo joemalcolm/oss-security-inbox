@@ -1,45 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/5
-Message-Id: <20140911073317.B5D0BC50159@smtptsrv1.mitre.org>
-Date: Thu, 11 Sep 2014 03:33:17 -0400 (EDT)
-From: cve-assign@...re.org
-To: helmut@...divi.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: /tmp file vulnerability in ace
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/11/4
+Message-ID: <20141111180200.GB27805@kludge.henri.nerv.fi>
+Date: Tue, 11 Nov 2014 20:02:00 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: Joomla component com_sexycontactform and WordPress plugin sexy-contact-form unrestricted file upload
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> bin/generate_doxygen.pl line 177
-> "/tmp/".$i.".".$$.".doxygen";
-> This path is later opened for writing.
-> http://bugs.debian.org/760709
+Can I get 2014 CVE ID for unrestricted file upload vulnerability in Sexy Contact
+Form, thanks. This is currently exploited in the wild.
 
-Use CVE-2014-6311.
+Plugin has later changed name to Creative Contact Form:
+http://extensions.joomla.org/extensions/contacts-and-feedback/contact-forms/23646
+https://wordpress.org/plugins/sexy-contact-form/
 
+Affected:
+- - Joomla component com_sexycontactform 2.0.0 and below in
+  "components/com_sexycontactform/fileupload/UploadHandler.php". Version 2.0.1
+  contains fix.
+- - WordPress plugin "includes/fileupload/UploadHandler.php" r780722 / 0.9.7
+  and below. Changelog says that version 1.0.0 27/10/2014 contains the fix.
 
-> An interesting find is bin/g++-dep line 63:
-> > TMP=/tmp/g++dep$$
-> This path is also used for writing.
+Fix is empty file so possibly removing the feature completely. There is also a
+proprietary version of this plugin available, but the codebase is nearly the
+same as far as I can tell.
 
-As far as we can tell, there is no bin/g++-dep in the
-download.dre.vanderbilt.edu upstream distribution. The bin/g++-dep
-issue, if confirmed, would not be within the scope of CVE-2014-6311.
+UploadHandler.php is "jQuery File Upload Plugin PHP Class 6.4.4" in both
+plugins. I have submitted all malicious uploaded files to several AV vendors.
+- From log files I'm able to tell that these are automated attacks. Attacker tried
+to exploit several Linux local exploit, sent emails and executed DoS attacks. I
+have also reported affected installations via email to abuse@ addresses and
+CERT.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+I can investigate more if you have questions.
+
+- ---
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJUEU9/AAoJEKllVAevmvmsTgcIAJAqv12JKagw5jgNdo2m2bPE
-X5fM+YJxkNevkEaA0XEwlaXTC3ZnMMoZ/LG589AUJPvP7TWW8iyhD+k0k5AC6Tr8
-sEtgOaXoP47vzY2ZxBM5CWzBrkpdd0lmccRgiVnDJ/LUQQybszdN/yAW/rAnDPwn
-PNIfReANHYqLjNIPHzYZW7vhRh/9kppvQ6vQpvQ3wMlUbnWomVLEkGakeDuNHsiy
-USdap+bIb1Dg+1LKbWe+Nu+TqfPyZ/A8jwnT7l0LawPhw/8iOgIyf0UvRfkXUhGK
-v+sU81J2/nABk8ni38v4ZTnziS69zpajzZmvjz30J0Jf8OiXp91rLVobvFSWuEA=
-=+tJB
+iEYEARECAAYFAlRiTxgACgkQXf6hBi6kbk/v+ACgxc/fCjN8mAGhTFWsnVKbHggo
+4GoAn1jWlJmXxHP/J47sSTsmB7uPK526
+=sUX3
 -----END PGP SIGNATURE-----
