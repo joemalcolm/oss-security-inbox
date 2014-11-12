@@ -1,31 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/10/14
-Message-ID: <54380B48.9060501@fifthhorseman.net>
-Date: Fri, 10 Oct 2014 12:37:28 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: David Leon Gil <coruus@...il.com>, kristian.fiskerstrand@...ptuouscapital.com
-CC: oss-security@...ts.openwall.com, "gnupg-devel@...pg.org" <gnupg-devel@...pg.org>, Werner Koch <wk@...pg.org>, thijs@...ian.org
-Subject: Re: Re: 0xdeadbeef comes of age: making keysteak with GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/7
+Message-ID: <20141112124829.GC4976@suse.de>
+Date: Wed, 12 Nov 2014 13:48:29 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-request: systemd-resolved DNS cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-On 10/10/2014 12:23 PM, Daniel Kahn Gillmor wrote:
-> On 10/10/2014 12:01 PM, David Leon Gil wrote:
->> > (While I know that if a root CA were caught intentionally issuing an
->> > MitM cert for keybase.io or pgp.mit.edu would face likely
->> > delisting/bankruptcy.)
-> I'd like to believe that also, but i think that some of the members of
-> the CA cartel might be "too big to fail" in the current infrastructure.
->  There's no chance that the CA will go bankrupt if they aren't delisted
-> (since the CA market is a lemon market), and every web site certified by
-> the bigger CAs has an incentive to argue against that CAs' delisting
-> (because it will break their web site).
+On Wed, Nov 12, 2014 at 01:35:43PM +0100, Florian Weimer wrote:
+> On 11/12/2014 12:15 PM, Sebastian Krahmer wrote:
+>> At its simplest, an attacker triggers a query to a domain he controls
+>> via SMTP or SSH-login. Upon receipt of the question, he can just add
+>> any answer he wants to have cached to the legit answer he provides
+>> for the query, e.g. providing two anser RR's: One for the question asked
+>> and one for a question that has never been asked - even if the DNS server
+>> is not authoritative for this domain.
+>
+> BIND 9 is supposed to filter such garbage from upstream answers, but there 
+> are other resolvers out there which will pass through such answers 
+> unchanged, so this is very much CVE-worthy.
 
-And, even when we can burn a small CA, the larger organization often
-carries on unharmed:
+You may answer to the resolver directly, bypassing any filtering.
+Even behind a NAT this may work (depending on your
+DNS setup if theres no intermediate DNS server). In the mail-server example the
+local UDP port should be reachable directly, so you can spoof
+to be the legit DNS upstream and do not even are on race,
+since upstream DNS will wait for your legit answer
+while you are enumerating the XIDs through systemd (constant src port).
 
-  http://www.links.org/?p=1268
-
-	--dkg
+Sebastian
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
