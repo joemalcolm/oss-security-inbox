@@ -1,27 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/13/2
-Message-ID: <20140313112433.GO10305@symphytum.spacehopper.org>
-Date: Thu, 13 Mar 2014 11:24:33 +0000
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/6
+Message-ID: <5463541F.1030304@redhat.com>
+Date: Wed, 12 Nov 2014 13:35:43 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: file: crashes when checking softmagic for some corrupt PE executables
+Subject: Re: CVE-request: systemd-resolved DNS cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-On 2014/03/05 12:07, cve-assign@...re.org wrote:
-> Use CVE-2014-2270.
-> 
-> A CVE ID seems worthwhile because of possible libmagic use cases.
-> 
-> "file can be made to crash" is typically not security-relevant on its
-> own (a user can recover from this by not continuing to run file on the
-> same crafted file). We're not sure whether any distribution has
-> packages that rely on server-side use of libmagic, or whether it's
-> common to have long-running processes that use libmagic with untrusted
-> input.
+On 11/12/2014 12:15 PM, Sebastian Krahmer wrote:
+> At its simplest, an attacker triggers a query to a domain he controls
+> via SMTP or SSH-login. Upon receipt of the question, he can just add
+> any answer he wants to have cached to the legit answer he provides
+> for the query, e.g. providing two anser RR's: One for the question asked
+> and one for a question that has never been asked - even if the DNS server
+> is not authoritative for this domain.
 
-file(1)/libmagic certainly have a security impact, for example they
-are used by various mail anti-virus checkers like MailScanner and
-amavisd-new, also some IDS/honeypot software (Bro, Nepenthes), all
-of which are expected to handle at best untrustworthy, at worst
-downright malicious input.
+BIND 9 is supposed to filter such garbage from upstream answers, but 
+there are other resolvers out there which will pass through such answers 
+unchanged, so this is very much CVE-worthy.
 
+(This systemd component is optional, I strongly recommend not to ship 
+it.  It's not even possible right now to dump the cache contents to 
+debug such issues.)
+
+-- 
+Florian Weimer / Red Hat Product Security
