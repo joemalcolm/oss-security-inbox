@@ -1,51 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/8
-Message-Id: <20141104103847.8C02D336006@smtpvbsrv1.mitre.org>
-Date: Tue,  4 Nov 2014 05:38:47 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: mod_wsgi group privilege dropping [was Re: Security release for mod_wsgi (version 3.5)]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/5
+Message-ID: <20141112111556.GB4976@suse.de>
+Date: Wed, 12 Nov 2014 12:15:56 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-request: systemd-resolved DNS cache poisoning
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-> https://github.com/GrahamDumpleton/mod_wsgi/commit/545354a80b9cc20d8b6916ca30542eab36c3b8bd
+systemd-resolved contains a caching resolver, which has to be enabled via
+/etc/nsswitch.conf in order to be integrated.
 
-> When there is any sort of error in setting up daemon process group,
-> kill the process rather than risk running in an unexpected state.
+Any local name resolvings via getaddrinfo() etc. are then routed via DBUS
+to systemd-resolved which resolves the name and caches it according
+to TTL from the answer.
 
-Use CVE-2014-8583.
+However, systemd-resolved does not implement any of the hardening
+recommendations of rfc5452.
 
+At its simplest, an attacker triggers a query to a domain he controls
+via SMTP or SSH-login. Upon receipt of the question, he can just add
+any answer he wants to have cached to the legit answer he provides
+for the query, e.g. providing two anser RR's: One for the question asked
+and one for a question that has never been asked - even if the DNS server
+is not authoritative for this domain.
 
-> https://github.com/GrahamDumpleton/mod_wsgi/commit/a8ac5027f1a887cd41e80616b8a80a442a7e0bc7
+The attacker would need to guess the source port of the origin since he only
+sees the query from victims upstream DNS, but since systemd-resolved also uses fix
+source ports, thats easy.
+systemd-resolved creates cache entries soley from what is provided in
+the DNS replies.
 
-> Fix one off error when checking limit on the number of supplementary
-> groups for the daemon process group.
+This issue has already been reported to upstream.
 
-This doesn't seem to cross privilege boundaries; there's no way for
-untrusted users to specify the supplementary groups.
+Thanks to Santa L. Helper for private discussion. 
 
-Incidentally, when there's a statement such as "I am not familiar
-enough to know whether any privilege boundaries are crossed here, or
-if a user can influence anything" in a CVE request message, it's
-probably useful to be even more explicit about what parts of the
-message that statement applies to.
+Sebastian
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+-- 
 
-iQEcBAEBAgAGBQJUWKvqAAoJEKllVAevmvmsziQH/RNG4k2x6qRK4bvS2TU4AQj+
-GkRIIvHxIV3TOnkPiP1B+c46LetJBz5H1wGU8MVGMVdLgddEJGzA8CNzY/qycQRo
-wdUNpuO73gnqbpjsOVKnY1NWK0efnmBF0ZKUdGksJBzmuAmxMPF+VrTPbcK82dce
-biwnD/wFdbNQM5FSBmQuhZTM85s3EmatxY+hp84FtLhB2IC/k2/6dki21dAOIdjq
-HYEMktmitpDq5fpWJoi9Xs7iXMiTwBzXlVJu2Q09fVR1AdUjbsIYn7xG+jVVji4b
-SrSiTThI1HvKHgbnYr5OjoMQe1ksRL3H1QRwgpXT8nlmsX+eyi9Ea6wa4Em+IXY=
-=T37i
------END PGP SIGNATURE-----
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
