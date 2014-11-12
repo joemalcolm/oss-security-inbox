@@ -1,44 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/02/3
-Message-ID: <20140802170723.GA29958@gremlin.ru>
-Date: Sat, 2 Aug 2014 21:07:23 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/9
+Message-ID: <87sihocg6d.fsf@mid.deneb.enyo.de>
+Date: Wed, 12 Nov 2014 21:33:30 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Enforce use of HTTPS for MathJax in IPython
+Subject: Additional authority files
 Content-Type: text/plain; charset=utf-8
 
-On 31-Jul-2014 23:23:18 -0500, Kyle Kelley wrote:
+I noticed that for two high-profile bugs this year, we hit a
+limitation with the CVE authority file:
 
- > Summary: When using the IPython notebook without encryption
- > (i.e. running the server on HTTP instead of HTTPS), mathjax is
- > loaded over HTTP. An attacker with fortuitous network position
- > could execute code on a local IPython notebook by modifying the
- > mathjax javascript.
+We had no proper way to refer to the prefix/suffix patch for bash
+because it does not address a specific vulnerability. All the
+individual vulnerabilities received separate CVE entries, and none was
+left we could associate with the prefix/suffix patch.
 
-HTTPS wouldn't help much: the attackers (most of which are known to
-use 3-letter names) can (and they really do) issue a fake certificate
-for their decoy servers.
+For POODLE, we did not have CVE identifiers associated for the
+fallback behavior because it was not considered a vulnerability.  We
+do not have ways to refer to specific client behavioral changes (even
+where this is appropriate, such as sending TLS_FALLBACK_SCSV during
+fallback).  We did not have a way to refer to TLS_FALLBACK_SCSV
+support in server code, either.
 
-In general, nothing received from the Net could be trusted. And the
-HTTPS doesn't guarantee anything beyond "this certificate was signed
-by this CA" - was that voluntary or forced.
+(In the POODLE case, we also saw that putting the year into the name
+can be quite misleading—the vulnerability which was considered
+CVE-worthy was disclosed around 2002, discussed in an OpenSSL advisory
+in 2003, and should have been associated with that timeframe, and not
+the year 2014.)
 
-Enforcing HTTPS for the whole site is even more stupid: normally only
-user-specific data (login procedure, personal settings for registered
-users, etc) should be forced to go through HTTPS; everything else
-should normally be left up to the users' wish.
+Recent discussions about issues brought to this list suggest to me
+that the reluctance to label things as a vulnerability continues.  (I
+won't speculate about the reasons.)  Unfortunately, it happens too
+often that people operate systems well outside their documented
+security margins—which allows vendors disclaim any security
+vulnerability, but these misguided practices still can cause
+operational issues which cannot be ignored, require mitigations, and
+discussions would benefit from the clarity only an authority file can
+bring.
 
-But the terminal state of mental disability is... yes, using scripts
-from outer sources: intercepting one popular source like
-https://ajax.googleapis.com/ajax/libs/jquery/*/jquery.min.js will
-allow the attacker to not bother of intercepting other sites directly.
+Consequently, I wonder if we need separate authority files for
+Potentially Unwanted Behaviors (comparable to Potentually Unwanted
+Applications, avoiding the vulnerability stigma just as PUAs avoid the
+“malware” label) and Recommended Behavioral Changes (same thing, but
+on the fixes side).  This would help us to make sure we talk about the
+same things, just as CVE does now for vulnerabilities.
 
- > This issue was fixed in the git master branch (development branch
- > for upcoming v. 2.2) with commit cf793ebc4, on 7/31/2014:
-
-Not a vulnerability, not a fix.
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Thoughts?
