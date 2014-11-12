@@ -1,49 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/5
-Message-ID: <20141014131541.090af81a@pc>
-Date: Tue, 14 Oct 2014 13:15:41 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/4
+Message-Id: <20141112062241.0A780B2E26A@smtpvbsrv1.mitre.org>
+Date: Wed, 12 Nov 2014 01:22:41 -0500 (EST)
+From: cve-assign@...re.org
+To: roucaries.bastien@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Asking for CVE for imagemagick
 Content-Type: text/plain; charset=utf-8
 
-Am Tue, 14 Oct 2014 10:41:40 +0000
-schrieb Sona Sarmadi <sona.sarmadi@...a.com>:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> This is probably something under embargo which somehow has leaked
-> out ...
-> 
-> http://www.theregister.co.uk/2014/10/14/nasty_ssl_30_vulnerability_to_drop_tomorrow/
+> http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26456
 
-Whether it's scary or not I have an advice for you: Disable SSLv3.
+Use CVE-2014-8716 for this issue related to:
 
-It causes a lot of headache already. I once had to debug a rather
-subtle issue in combination with SNI.
-The problem: Browsers downgrade out of protocol to SSLv3 if they can't
-connect via TLS. They do this in order to support broken server
-implementations. However this downgrade can also be triggered by bad or
-slow internet connections - and then you'll loose SNI. So sometimes
-your visitors will get the wrong certificate presented.
-I solved this for my servers by disabling SSLv3. It was a minor problem
-when I did this but it is almost no problem today.
+  - the example command line of: convert $filename png:/dev/null
 
-You will lock out IE6 users on Windows XP. However even people who use
-Windows XP+IE and installed their updates have TLS 1.0 support.
-I also encountered a small number of people who had manually disabled
-TLS 1.0 in firefox for unknown reasons. However this was a few years
-ago. Current Firefox versions make it harder to do this. I assume the
-reason was that they thought "v3 sound newer than v1.0".
+  - the fix involving a test of "(offset < 0) || (size_t) offset >= length"
+    in property.c
 
-A number of people already recommend disabling SSLv3, e.g. the Qualys
-configuration guide. Disable it now - no matter if the rumors about a
-serious vuln are true, you'll be safe.
+  - the fixed version of 6.8.9-10 Beta
 
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+[ Note that this CVE ID is NOT for the recently discussed
+"convert -rotate 270" issue. For that issue, the primary affected
+product is apparently still unknown; see the
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=768369#57 message. ]
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUYvueAAoJEKllVAevmvmsxCcH/2/TSIqvO+kkKuSoBmR4uC8h
+bSojneYCqybk0TVruQncWBwVBTaqj9xPiIScse+A2S61B8rvWjiA97fflMRowN9E
+p9wg2L5M+bw6S/ziiDZvDVeZIcIspqUODYGJhYN3jyXAq635hS0Ios6FAH9C1xs7
+L/9DgFhzaqEJSYiNdZ+BUOkT/Vzzn5UxQ7YroMkcLyDY6NYUGTfJPCGP++I534aJ
+zYx5LBQg6ZpYJzKgbBw/HAFD51N1cIqYecYemETSTGYXvd6hwKe2LhYmMRgkxO1i
+YafJbIoGOit+9lcHyB4YHZk8RsxlhQ3YVz2YkCcqIdyaLpB6g/SLQLZtSzAza7Y=
+=Sl2h
+-----END PGP SIGNATURE-----
