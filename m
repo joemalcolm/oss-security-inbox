@@ -1,41 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/3
-Message-ID: <53BCD41E.4080705@redhat.com>
-Date: Wed, 09 Jul 2014 15:33:18 +1000
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, zf-security@...d.com, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: Zend Framework CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/10
+Message-ID: <33006C99F5A5194A9B7A7715DFA3E383B5E0E3B0@ALA-MBB.corp.ad.wrs.com>
+Date: Wed, 12 Nov 2014 20:56:35 +0000
+From: "Radzykewycz, T (Radzy)" <radzy@...driver.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: [security-vendor] Additional authority files
 Content-Type: text/plain; charset=utf-8
 
-On 07/09/2014 08:52 AM, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> As I understand Zend it's a BSD style license, so Open Source, so
-> posting here, CC'ing upstream and Mitre. Can we please get CVE's for:
->
-> http://framework.zend.com/security/advisory/ZF2014-04
-> ZF2014-04: Potential SQL injection in the ORDER implementation of
-> Zend_Db_Select
->
-> http://framework.zend.com/security/advisory/ZF2014-03
-> ZF2014-03: Potential XSS vector in multiple view helpers
->
-> http://framework.zend.com/security/advisory/ZF2014-02
-> ZF2014-02: Potential security issue in login mechanism of ZendOpenId
-> and Zend_OpenId consumer
->
-> http://framework.zend.com/security/advisory/ZF2014-01
-> ZF2014-01: Potential XXE/XEE attacks using PHP functions:
-> simplexml_load_*, DOMDocument::loadXML, and xml_parse
+> (In the POODLE case, we also saw that putting the year into
+> the name can be quite misleading—the vulnerability which was
+> considered CVE-worthy was disclosed around 2002, discussed in an
+> OpenSSL advisory in 2003, and should have been associated with
+> that timeframe, and not the year 2014.)
 
-Good morning,
+In my opinion, the year should be the year that the CVE number 
+is assigned.  This won't change and is not subject to revision
+after new information comes to light.
 
-For the ZF2014-01 and ZF2014-02 assignments, refer to 
-http://www.openwall.com/lists/oss-security/2014/04/01/1
+The time that the issue was first noticed and/or discussed seems
+less likely to be stable.  If someone reports a bug in 2015,
+knowing that it was discussed in 2014 but not knowing that it 
+was discussed in 2009, then a 2014 year might be assigned to it.
+But later on, people would assume that it was first discussed 
+in 2014 and not known until then.  So the net result would be
+some desire to re-name some vulnerabilities as well as overall
+confusion.
 
-Cheers,
+________________________________________
+From: Florian Weimer [fw@...eb.enyo.de]
+Sent: Wednesday, November 12, 2014 12:33 PM
+To: oss-security@...ts.openwall.com
+Subject: [security-vendor] [oss-security] Additional authority files
 
---
-Murray McAllister / Red Hat Product Security
+I noticed that for two high-profile bugs this year, we hit a
+limitation with the CVE authority file:
+
+We had no proper way to refer to the prefix/suffix patch for bash
+because it does not address a specific vulnerability. All the
+individual vulnerabilities received separate CVE entries, and none was
+left we could associate with the prefix/suffix patch.
+
+For POODLE, we did not have CVE identifiers associated for the
+fallback behavior because it was not considered a vulnerability.  We
+do not have ways to refer to specific client behavioral changes (even
+where this is appropriate, such as sending TLS_FALLBACK_SCSV during
+fallback).  We did not have a way to refer to TLS_FALLBACK_SCSV
+support in server code, either.
+
+(In the POODLE case, we also saw that putting the year into the name
+can be quite misleading—the vulnerability which was considered
+CVE-worthy was disclosed around 2002, discussed in an OpenSSL advisory
+in 2003, and should have been associated with that timeframe, and not
+the year 2014.)
+
+Recent discussions about issues brought to this list suggest to me
+that the reluctance to label things as a vulnerability continues.  (I
+won't speculate about the reasons.)  Unfortunately, it happens too
+often that people operate systems well outside their documented
+security margins—which allows vendors disclaim any security
+vulnerability, but these misguided practices still can cause
+operational issues which cannot be ignored, require mitigations, and
+discussions would benefit from the clarity only an authority file can
+bring.
+
+Consequently, I wonder if we need separate authority files for
+Potentially Unwanted Behaviors (comparable to Potentually Unwanted
+Applications, avoiding the vulnerability stigma just as PUAs avoid the
+“malware” label) and Recommended Behavioral Changes (same thing, but
+on the fixes side).  This would help us to make sure we talk about the
+same things, just as CVE does now for vulnerabilities.
+
+Thoughts?
+
