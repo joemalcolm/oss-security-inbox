@@ -1,50 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/9
-Message-Id: <201403062032.s26KWO2n024018@linus.mitre.org>
-Date: Thu, 6 Mar 2014 15:32:24 -0500 (EST)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: konqueror not providing any protection against clickjacking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/2
+Message-ID: <CALx_OUC39KE3RSC8xic41Dh4URWfaLDq9hDbpgJLS8qZQTaP0A@mail.gmail.com>
+Date: Tue, 11 Nov 2014 18:01:13 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> Is codebase generally much better? You aim at "the more difficult or
+> better-fuzzed targets" but what about other software? Or put it another way:
+> how big portion of widely used software you consider "the more difficult or
+> better-fuzzed targets"?
 
-> It may be debatable if that's a CVE issue, because it's basically a
-> "there's a general vulnerability in the way HTML/JS is done, there's a
-> protection mechanism and product X doesn't have it".
+Most of the open-source libraries used in browsers (libpng,
+libjpeg-turbo, zlib, etc), as well as most of the mature and popular
+network daemons (Apache, OpenSSH, etc) and other components
+well-understood to be critical to security (e.g., most setuids, most
+compression utilities) are comparatively better. They are not perfect,
+but it is widely accepted that you'd need a lot of effort and luck to
+find bugs in them.
 
-Comprehensively tracking the introduction of new protection mechanisms
-and new security features across all browsers is not directly in the
-scope of CVE. There are a number of cases described either in older
-documents such as http://code.google.com/p/browsersec or newer
-documents such as
-http://www.strews.eu/results/5-web-platform-security-guide in which
-some browsers have chosen to block a type of attack whereas others
-have not. At the moment, these types of "competitive analysis" CVE
-requests may be deferred. In other words, CVE isn't really "about" a
-product suddenly transitioning from non-vulnerable to vulnerable
-solely because its development effort has lagged behind its
-competitors in a sufficiently important way for a sufficiently long
-period of time. The author of a product is free to announce software
-mistakes, and there may be opportunities for CVE assignments in cases
-of new codebases lacking a security feature that was already
-more-or-less ubiquitous before the software was written.
+The problem with libbfd is that it had genuinely very little range
+checking in place, probably because it wasn't designed to be ever run
+on binaries you do not intend to execute. The default operation of
+/usr/bin/strings and the way many people ended up using it arguably
+violates that assumption in a particularly pronounced way. Tools such
+as objdump are a bit of a grey area, too.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+There are several other libraries and tools that are probably a bit
+wonky when you factor way their popularity (e.g., tcpdump probably
+leaves something to be desired - it's fairly easy to hit crashes when
+fuzzing pcaps; ImageMagick used to be relatively bad, too, although it
+probably have improved in recent years; ffmpeg and poppler are other
+examples of things you should probably vaguely worry about; font
+parsers and GL drivers, as exposed through the browser, are another
+interesting risk).
 
-iQEcBAEBAgAGBQJTGNq6AAoJEKllVAevmvmshoIH/A6sHp+gzIB2HxknclfLVEgr
-CbNFRRAykrxCthQbAM8IzET941ZdxT0vFu8ctT95o/+aT3R0pXVsGckjdqFqUwzf
-UEXmrtXYjCGY9RJBs+M20R3ZCWHrx9HCJ88MOEGc8G/JQy/mcumETn3XZ0+PixQA
-KOqbHLsD5T8HwFM2K2qP3gYefAc/PUYumcFmxfbw9k+MP/vvmCNsFRXlUnJJkIWX
-thdCpz9WTK9ihuJY99EUCAdAkWJHyrlz9px5j5lojHfC4ZY1gLUc2+fYJSPJbqMX
-Qc4UMTvuomelxl9hJZh1PTKvPVu+gK+xQXe1/kqXNex3zHM0rx+ueXgk6W4QEkM=
-=1SBL
------END PGP SIGNATURE-----
+There is also plenty of emerging projects, especially on the cloud /
+web front, that have received minimal scrutiny.
+
+Now, the quality of the *average* OSS project is probably comparable
+to libbfd, but the average OSS project is probably less likely to be
+exposed to untrusted inputs under normal operating conditions.
+
+> This leads to a question: how to deal with it.
+
+Well, hard to say. The simplest option is to dump all the test cases
+or the fuzzer onto the maintainer. Some will get busy troubleshooting
+the issues or will even set up their own fuzzing jobs, some will give
+you funny looks.
+
+When that happens, you can either try to research and prioritize the
+test cases, or make everything public and hope that others will sort
+it out. But it may very well be that if you do that without
+researching exploitability, people won't notice or care, unless you
+have a good publicist or do a really catchy conference presentation.
+
+Even with a lot of PR, success isn't necessarily guaranteed. The
+Mayhem fuzzing effort (http://forallsecure.com/mayhem.html) comes to
+mind as a fairly prominent example of a high-profile PR event coupled
+with dumping an immense amount of almost universally non-security bugs
+into the Debian tracker; but more than a year later, something like
+800 of them are still open, so ultimately, the results are somewhat
+inconclusive.
+
+In the end, unless you can make a plausible argument that something is
+probably a security risk, you don't have a lot of ground to stand on.
+Can be a bad thing, can be a good one =)
+
+>> [...multiple instances of the same coding pattern...]
+> So, can such cases be deduped automatically? Or should they? Or you mean
+> that they are easy to analyze manually?
+
+I don't know of a way to de-dupe that manually. Even if the coding
+pattern is conceptually the same, the compiler may output different
+code for each location, etc.
+
+/mz
