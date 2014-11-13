@@ -1,53 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/40
-Message-Id: <20140929200114.8E576C504C4@smtptsrv1.mitre.org>
-Date: Mon, 29 Sep 2014 16:01:14 -0400 (EDT)
-From: cve-assign@...re.org
-To: cjwatson@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: exuberant-ctags: CPU/disk DoS on minified JavaScript file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/6
+Message-ID: <20141113152056.GS5570@dhcp-25-225.brq.redhat.com>
+Date: Thu, 13 Nov 2014 16:20:56 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-7841 Linux kernel: net: sctp: NULL pointer dereference in af->from_addr_param on malformed packet
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+An SCTP server doing ASCONF will panic on malformed INIT ping-of-death
+in the form of:
 
-> https://bugs.debian.org/742605 was reported some time ago against the
-> Debian package of Exuberant Ctags (http://ctags.sourceforge.net/); it's
-> a CPU/disk denial of service that results from attempting to run ctags
-> over large volumes of public source code.
+ ------------ INIT[PARAM: SET_PRIMARY_IP] ------------>
 
-> Not affected: 5.6
-> Affected: 5.8 (the latest release)
+A remote attacker could use this flaw to crash the system by sending a
+maliciously prepared SCTP packet in order to trigger a NULL pointer
+dereference on the server.
 
-> Upstream fix, determined by bisection:
->   http://sourceforge.net/p/ctags/code/791/
-> 
-> As far as I know this was not identified as a security problem upstream,
-> just fixed as a normal bug in the course of development.
+Upstream patch:
+https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=e40607cbe270a9e8360907cb1e62ddf0736e4864
 
-It seems unlikely that there's an alternate perspective in which it's
-not an upstream vulnerability. Untrusted .js input seems to be a
-common use case, and the impact is an infinite loop (or similar).
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1163087
 
-> The sources.debian.net use case turns it into a DoS ... Since we'd
-> like to issue patches for this bug as security updates, please could I
-> have a CVE identifier for this?
-
-Use CVE-2014-7204.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUKboyAAoJEKllVAevmvmsWkoH/0PjJDl0EV42AF4FG71fP8Nr
-6c16Ieb/JoJjZGC5idn/20+j+yczi7vmoHfV6OUchEFjGlICAv1bMBsCQf/vl35k
-VO6T2360SOXaxM2TV4B57INLkP+W90vDPG5ipSYNJibbP7cAeJs9xzME4frKH1Ah
-Bz6dAQtGBOAmBOKVcmqWnugaJxuSezAnegeGHox8OOSQUASoyY1A/syNP8oC5Gql
-ty9aigFS0lLq1cQdHPvHkK6Wce5iSlvlIzxCgCfsFfrDKCceH+lWJjJlalEZprtz
-lwexkSXHEJCe9kxeV8EyC/xykhAQUyNZz10qWX68YKakUeU4qZcG0KSDHbQjX3E=
-=e/jY
------END PGP SIGNATURE-----
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
