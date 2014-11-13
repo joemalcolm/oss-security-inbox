@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/4
-Message-ID: <20141003112443.GA13394@zoho.com>
-Date: Fri, 3 Oct 2014 11:24:43 +0000
-From: mancha <mancha1@...o.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: sysklogd vulnerability (CVE-2014-3634)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/3
+Message-Id: <20141113074828.D88466C0030@smtpvmsrv1.mitre.org>
+Date: Thu, 13 Nov 2014 02:48:28 -0500 (EST)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Joomla component com_sexycontactform and WordPress plugin sexy-contact-form unrestricted file upload
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 03, 2014 at 09:12:28AM +0000, mancha wrote:
-> In sysklogd's syslogd, invalid priority values between 192 and 1023
-> (directly or arrived at via overflow wraparound) can propagate through
-> code causing out-of-bounds access to the f_pmask array within the
-> 'filed' structure by up to 104 bytes past its end. Though most likely
-> insufficient to reach unallocated memory because there are around 544
-> bytes past f_pmask in 'filed' (mod packing and other differences),
-> incorrect access of fields at higher positions of the 'filed'
-> structure definition can cause unexpected behavior including message
-> mis-classification, forwarding issues, message loss, or other.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-To expand on the above, because the out-of-bounds access is limited to
-the filed structure, the effect on message handling, etc. appears
-limited to the would-be attacker's own message. Unlike the more serious
-impact seen in rsyslog, my limited testing and code review suggests the
-flaw, while there, has no real security impact. Nevertheless, my patch
-fixes the handling of malformed PRI parts.
+> Can I get 2014 CVE ID for unrestricted file upload vulnerability
 
---mancha
+Use CVE-2014-8739.
 
-Content of type "application/pgp-signature" skipped
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUZGDCAAoJEKllVAevmvmsMi4IAKz0CPfUgGdfYabYlHrmRD1t
+wZnR4UPERRea4tIBA7PEivMmW2FPMDxQVx0r6+Xch6dRfMyjfTwSP1sMz4W/iDrX
+1Wzo3NUr+KnTqulnb339YxUkVkOEIJko70oJPhhXDozzDis2zhFONvu8W3IAaaKT
+2pERXwKmooc4/ukPcqa1yN1zEFPXfvPqgsoM2u3T6DPFnGvwN6rToaTh/U3xyjp3
+BF3HQGsws2ohFQts0VcLy5toTHLnc2/yCegI8veWvYxSpYxx33X3tPFyPmF2sydu
+ijXwt4q8CVv0BJyoGUtSo0oqQZ/6Nm/4IRGpK3Pwg3XplujGaCErN5XbqmSBQSQ=
+=1xNu
+-----END PGP SIGNATURE-----
