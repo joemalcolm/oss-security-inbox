@@ -1,46 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/22/1
-Message-Id: <201403220136.s2M1ZrGd002347@linus.mitre.org>
-Date: Fri, 21 Mar 2014 21:35:53 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/1
+Message-Id: <20141113074550.38EB01BE1C8@smtpvbsrv1.mitre.org>
+Date: Thu, 13 Nov 2014 02:45:50 -0500 (EST)
 From: cve-assign@...re.org
-To: michaeld@...dle.com
+To: cherepan@...me.ru
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Moodle security notifications public
+Subject: Re: CVE Request: binutils -- directory traversal
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> MSA-14-0004: Incorrect filtering in Quiz
-> CVE identifier:    Pending
+> https://sourceware.org/bugzilla/show_bug.cgi?id=17552#c4
+> https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=dd9b91de2149ee81d47f708e7b0bbf57da10ad42
+> Prevent archive memebers with illegal pathnames from being extracted from an archive.
 
-This is assigned CVE-2014-2571.
-
-
-> MSA-14-0008: Cross site scripting potential in Flowplayer
-> CVE identifier:    Pending
-
-This is assigned CVE-2013-7341. As far as we know, the relevant
-Flowplayer upstream references are:
-
-  http://flash.flowplayer.org/documentation/version-history.html
-  https://github.com/flowplayer/flash/issues/121
-
-and the first fixed upstream version was 3.2.17 (but 3.2.18 is
-preferable for usability reasons).
-
-
-> MSA-14-0013: Unfiltered data used in Assignment web services
-> CVE identifier:    Pending
-
-This is assigned CVE-2014-2572.
-
-
-These should be available soon:
-
-  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-2571
-  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-7341
-  http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-2572
+Use CVE-2014-8737.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -50,11 +25,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTLOdPAAoJEKllVAevmvmsLzUH/0BgYc8195oRg/NfrunnGcMw
-j0eXA0uBDry3Brhj2j4yExP2DdpAyEs9x3/sLGH9PgdxCmsx4UeICoW9q5S7YhY6
-mC018aqO/IXm56vrBg1YYF9FWE6A6vUQKLZ6uvBwKaz9/8v3OMpRizCxYO429t9W
-Qa2JxllxCoerY15OIRZ9evvG502XM7luXZ+EIhybqRRI7lCDkKeNFK6Ix7dZxttE
-4PuxiB/MUGxYLlwl4OORvrqPlMQpv3+j7MPRVh+5YvRel+pGSSj3wQc5fFxdp0ZX
-5howdAY1E2Oes4R5K0yPYi2bZTiLbzR30KlPuPK9LeeAbI255PwaHw5u6CP2Nvw=
-=1vea
+iQEcBAEBAgAGBQJUZGDMAAoJEKllVAevmvmsZo8H/AgXv8w/1w6B2mFs4CM549rZ
+rK/sAPxlI/oryjsLyVqPH5P349xNK+xVq3lXzDwQ1A1Ge2Ht1cP2pMuirlScMBu8
+t22oRqb5IoddSPlva1ydBip8kq4Q5Grx+Vjl42HF9RDT7JHz75MuVDM7p9zbOAEA
+vO07ld8cpPBkxJp9uHvjDTCxCdhsYWdk45t0eb5Ze3r0IpNNPxxtdJNm4uGKV45h
+cRFBVHAH1N4pq1XECBAtnogV4mrlHFJF2tYXoEGT3vmmJCEa9T5m1gkT2TVZmsr0
+o8gjiJ7qzoIUkSxvub9/s16lx/9Qi6EFiivzwN2pXpLrRB3+j9BTbS3dDnMqsqY=
+=+Ecv
 -----END PGP SIGNATURE-----
