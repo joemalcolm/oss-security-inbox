@@ -1,53 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/26/1
-Message-ID: <530DE614.7070403@sysdream.com>
-Date: Wed, 26 Feb 2014 14:03:16 +0100
-From: Damien Cauquil <d.cauquil@...dream.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/8
+Message-ID: <20141113164023.GW5570@dhcp-25-225.brq.redhat.com>
+Date: Thu, 13 Nov 2014 17:40:24 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: POSH multiple vulnerabilities
+Subject: Linux kernel: SCTP issues
 Content-Type: text/plain; charset=utf-8
 
-We recently found four vulnerabilities in POSH web application, including:
+Hi,
 
-1. Unauthenticated SQL injection vulnerability affecting all POSH 3.X
-versions prior to 3.3.0
+CVE-2014-3673
+  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9de7922bc709eee2f609cd01d98aaedc4cf5ea74
 
-An unauthenticated SQL injection is present and can be exploited to
-extract data stored in database.
+CVE-2014-3687
+  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b69040d8e39f20d5215a03502a8e8b4c6ab78395
 
-
-2. Design vulnerability affecting all POSH 3.X versions (no fix yet)
-
-There is a design vulnerability in the way POSH stores users credentials
-in the browser's cookie (POSH stores every user's password md5 hash
-inside an unsecure cookie)
-
-3. Arbitrary url redirection affecting all POSH 3.X versions (no fix yet)
-
-This vulnerability is hardly exploitable but shows a lack of user input
-validation.
-
-4. Cross-Site scripting vulnerability affecting all POSH 3.X versions
-(no fix yet)
-
+CVE-2014-3688
+  http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=26b87c7881006311828bb0ab271a551a62dcceb4
 
 References:
+https://bugzilla.redhat.com/show_bug.cgi?id=<CVE>
 
-* advisory: http://www.sysdream.com/system/files/POSH-3.2.1-advisory.pdf
-* POSH 3.3.0 release:
-http://sourceforge.net/projects/posh/files/Posh%20portal/posh%203.3.0/
-* svn commit url: http://sourceforge.net/p/posh/svn/3540/
-
-
-We would like to request 4 CVEs for these vulnerabilities.
-
+Thanks,
 -- 
-Damien Cauquil
-R&D Director
-CHFI | CEH | ECSA | CEI
-
-Sysdream
-108 avenue Gabriel Péri
-93400 Saint Ouen
-Tel: +33 (0) 1 78 76 58 21
-www.sysdream.com
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
