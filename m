@@ -1,49 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/25
-Message-ID: <CAJ_zFk+r0tEFnASgV2mbzewCz4SW7JvP0UrYiBU=X284Gw8EYQ@mail.gmail.com>
-Date: Tue, 30 Sep 2014 08:08:05 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/5
+Message-ID: <20141113151952.GR5570@dhcp-25-225.brq.redhat.com>
+Date: Thu, 13 Nov 2014 16:19:52 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Subject: CVE-2014-7843 Linux kernel: aarch64: copying from /dev/zero causes local DoS
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 30, 2014 at 8:02 AM, Mark R Bannister
-<mark@...seconsulting.co.uk> wrote:
->> > Florian's prefix/suffix patch is not going to protect against the setuid/setgid exploit that I reported to this list last week.> >
->> > I discuss the setuid/setgid vulnerability at the following site, including demonstrating how Florian's prefix/suffix patch provides no protection:
->> >
->> > http://technicalprose.blogspot.co.uk/2014/09/shellshock-bug-third-vulnerability.html
->>
->> You do realize that your setuid program is patently unsafe, right? Say:
->>
->> $ echo -e '#!/bin/sh\necho pwn3d' >date;chmod 755 date;PATH=.:$PWD
->> ../setuid_program
->> pwn3d
->
-> Glad my over-simplified example has raised a few smirks.  Now for a slightly less simplified version:
->
-> putenv("PATH=/bin:/usr/bin");
-> setreuid(0, 0);
-> system("date");
+It was found that a read of n*PAGE_SIZE+1 from /dev/zero
+will cause the kernel to panic due to an unhandled exception since it's
+not handling the single byte case with a fixup (anything larger than a
+single byte will properly fault.)
 
-Keep going, eventually you're going to have to stop blacklisting
-variables and use execve ;-)
+A local, unprivileged user could use this flaw to crash the system.
 
-$ env SHELLOPTS=xtrace PS4='$(id)' ./foo
+Upstream patch proposal:
+https://lkml.org/lkml/2014/11/12/584
 
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1163744
 
->
-> But the point is I've tried to boil down a relatively complex program by studying endless strace outputs to attempt to demonstrate a real world exploit.  It wasn't actually "date" that was being called, but you get the point.
-
-Yes, but it's not safe to use system() or popen() from setuid
-programs, no bash patch is going to change that. In fact, bash already
-does more than most other shells by dropping privileges if euid !=
-uid, i.e. "privileged mode".
-
->
-> In the past, i.e. pre-Shellshock, the above code may have raised eyebrows, but as PATH was sanitised it would have passed numerous security audits.
->
-
-No, it's not safe to use system() or popen() in this context.
-
-Tavis.
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
