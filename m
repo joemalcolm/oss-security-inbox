@@ -1,38 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/16
-Message-ID: <20140328232137.GB10345@debjann.fritz.box>
-Date: Sat, 29 Mar 2014 00:21:37 +0100
-From: Jann Horn <jann@...jh.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: MediaWiki 1.22.5 login csrf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/4
+Message-ID: <5464C69C.3060102@redhat.com>
+Date: Thu, 13 Nov 2014 15:56:28 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, krahmer@...e.de
+CC: cve-assign@...re.org
+Subject: Re: Re: CVE-request: systemd-resolved DNS cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 28, 2014 at 06:13:49PM +0000, Florent Daigniere wrote:
-> > > > This attack is somewhat specific to mediawiki since we allow users to
-> > > > define JavaScript that will be loaded on pages they visit while logged
-> > > > in... So the victim in this case would run the attacker's personal
-> > > > JavaScript.
-> > > >
-> > >
-> > > It still doesn't make sense. Anti-CSRF tokens are only useful if the
-> > > "malicious script" is not running with the same origin!
-> > >
-> > 
-> > I think I threw you off here-- this is just one reason why an attacker
-> > might want to do this. It's tangential to the actual flaw we fixed.
-> 
-> If mediawiki really allows users to define javascript that will be
-> loaded on pages they visit, that's a vulnerability... There's no way to
-> do that securely if the "content" and "application" data are served from
-> the same FQDN.
+On 11/12/2014 06:33 PM, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> systemd-resolved contains a caching resolver ... does not implement
+>> any of the hardening recommendations of rfc5452.
+>
+> We have several comments about this. First, systemd-resolved is
+> apparently advertised as a stub resolver (e.g., see the
+> http://www.freedesktop.org/software/systemd/man/systemd-resolved.service.html
+> man page). RFC 5452 is about requirements for a resolver (defined in
+> section 2.1) and -- at least in our interpretation -- specifically
+> does not set any requirements for a stub resolver.
 
-MediaWiki allows users to define Javascript that will be loaded on pages they
-visit, *but only for themselves*. If I can inject JS into the pages I view,
-that is not a vuln, just like it isn't a vuln that a user can execute JS in
-the context of any website by pasting it into a debug console in his browser.
+I asked Bert to be sure, and he says that it was his intent that the 
+advice applied to non-recursive resolvers as well.  (Note that 
+systemd-resolved is more than a minimal stub because it has a cache.)
 
-However, this means that Login CSRF becomes a big security issue because it
-would allow me to add evil JS to my account and then force the browser of
-someone else to execute it in the context of the MediaWiki server's domain.
+> Is your message attempting to assert that EVERY implementation of a
+> stub resolver must satisfy RFC 5452 requirements, in order to account
+> for the possibility that the configured recursive name servers have
+> security problems, and the possibility that an attacker can
+> communicate directly with the stub resolver?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+The DNS specification does not require rewriting of upstream responses 
+to filter out parts for which the queried server is not authoritative. 
+This means that a downstream caching resolver will tend to poison its 
+cache if it adds data from such responses that are not directly in 
+response to the QNAME.  I believe this is still a real-world issue (in 
+the sense that this is triggered accidentally, not through attacks).
+
+
+-- 
+Florian Weimer / Red Hat Product Security
