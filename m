@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/6
-Message-ID: <53A3D172.3040707@redhat.com>
-Date: Fri, 20 Jun 2014 16:15:14 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/7
+Message-ID: <20141113152209.GT5570@dhcp-25-225.brq.redhat.com>
+Date: Thu, 13 Nov 2014 16:22:09 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-CC: 752092@...s.debian.org, carnil@...ian.org
-Subject: Re: CVE request: softhsm, softhsm-keyconv tool creates world-readable files
+Subject: CVE-2014-7842 Linux kernel: kvm: reporting emulation failures to userspace
 Content-Type: text/plain; charset=utf-8
 
-On 06/20/2014 04:02 PM, Salvatore Bonaccorso wrote:
-> Hello Murray,
-> 
-> (keeping the Cc on the bureport to answer this also there):
-> 
-> On Fri, Jun 20, 2014 at 03:46:30PM +1000, Murray McAllister wrote:
-> [...]
->> The Debian bug also notes a similar issue was fixed in ldns - I've
->> asked for more details about that in the bug).
-> 
-> This should be CVE-2014-3209 (dns-keygen generates keys with world
-> readable permissions ).
-> 
-> Regards,
-> Salvatore
-> 
+It was found that reporting emulation failures to user space can lead to
+either local or L2->L1 DoS.
 
-Thanks!
+In the case of local DoS attacker needs access to MMIO area or be able
+to generate port access. Note that on certain systems HPET is mapped
+to userspace as part of vdso (vvar) and thus an unprivileged user may
+generate MMIO transactions (and enter the emulator) this way.
 
-Regarding the rndc impact I noted, it seems the softhsm-keyconv is
-dnssec related, not the type of keys you would use in a rndc.key file...
+Upstream patches:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=fc3a9157d314
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=a2b9e6c1a35a
 
---
-Murray McAllister / Red Hat Product Security
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1163762
+
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
