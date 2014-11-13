@@ -1,53 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/3
-Message-ID: <CAOp4FwTbrELvh2vzw_TQZWN1TQWwmGfycEdkW2cjREzq18e9NA@mail.gmail.com>
-Date: Tue, 9 Sep 2014 09:06:52 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [CVE Requests] rsync and librsync collisions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/9
+Message-ID: <5464F278.9050702@fifthhorseman.net>
+Date: Thu, 13 Nov 2014 08:03:36 -1000
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com, krahmer@...e.de
+CC: cve-assign@...re.org
+Subject: Re: Re: CVE-request: systemd-resolved DNS cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-On Sep 9, 2014 7:47 AM, "Murray McAllister" <mmcallis@...hat.com> wrote:
->
-> Good morning,
->
-> The below still require a CVE or two (unless MITRE disagrees).
->
+On 11/13/2014 04:56 AM, Florian Weimer wrote:
+> 
+> I asked Bert to be sure, and he says that it was his intent that the
+> advice applied to non-recursive resolvers as well.  (Note that
+> systemd-resolved is more than a minimal stub because it has a cache.)
 
-Have the details been made public yet ?
-> Cheers,
->
-> --
-> Murray McAllister / Red Hat Product Security
->
->
-> On 08/05/2014 04:03 PM, Michael Samuel wrote:
->>
->> Hi,
->>
->> I think there should be CVEs assigned for this:
->>
->> rsync: MD5 collision DoS attack or limited file corruption
->> librsync: MD4 collision file corruption
->>
->> Note: librsync is not the same code, protocol or maintainer as rsync.
->>
->> The librsync attack is far easier to perform, since there's no
->> whole-file checksum and it will simply copy the first instance of a
->> collision into any place where the second collision is.
->>
->> The rdiff utility that ships with librsync truncates hashes to 8
->> bytes, allowing a very fast and efficient birthday attack - so even if
->> MD4 was replaced attacks would still be possible while the hash is
->> truncted.  This also affects duplicity - they both use
->> RS_DEFAULT_STRONG_LEN - so the _librsyncmodule that ships with
->> duplicity will need recompiling after the fix ships.
->>
->> Previous posting for context:
->> http://www.openwall.com/lists/oss-security/2014/07/28/1
->>
->> Regards,
->>    Michael
->>
->
+I have to agree with Florian here.
 
+It's possible that rfc5452 was the wrong citation, since it seems to be
+devoted mainly to making sure that you don't accept packets from remote
+DNS servers you didn't request them from.
+
+the problem with systemd-resolved as i understand it not that it's
+accepting packets from DNS servers it didn't request from, but that it's
+caching unrelated responses in those records.
+
+This isn't typically an issue for cache-less stub resolvers, because
+they're being invoked by things like gethostbyname(), which might
+receive the extra information but won't actually process it, cache it,
+or do anything with it.
+
+It sounds like a vulnerability to me, and i hope that MITRE will
+reconsider its decision here.
+
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
