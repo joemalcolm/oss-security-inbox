@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/8
-Message-ID: <20141208163633.2afe33d0@pc>
-Date: Mon, 8 Dec 2014 16:36:33 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/2
+Message-Id: <20141113074657.8E3E11BE1B2@smtpvbsrv1.mitre.org>
+Date: Thu, 13 Nov 2014 02:46:57 -0500 (EST)
+From: cve-assign@...re.org
+To: cherepan@...me.ru
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-Just to keep people updated on this:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Jean-Francois Dockes replied to my bug reports, he's one of the last
-people who did work on unrtf and he's in contact with the maintainer.
-They'll work on fixing all the issues reported. I also pointed them to
-Fabian's patch.
+> https://sourceware.org/bugzilla/show_bug.cgi?id=17533#c0
+> https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=bb0d867169d7e9743d229804106a8fbcab7f3b3f
+> 
+> printf '!<arch>\n//%48d%8s`\n' -2 '' > test.a
+> objdump -x test.a
+> 
+> ==14181== Invalid write of size 8
+>
+> archive.c (_bfd_slurp_extended_name_table): Handle archives with corrupt extended name tables.
 
-This sounds good, hopefully we'll get a new unrtf release with fixes
-for all the known issues soon (now we just have to find someone to
-maintain and fix catdoc and antiword).
+Use CVE-2014-8738.
 
--- 
-Hanno Böck
-http://hboeck.de/
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+iQEcBAEBAgAGBQJUZGDUAAoJEKllVAevmvmsXAQH/2QrS1TXDfKsTTi05CibQ/++
+8O2JRClUGSHKFskId1JMHvogl2kTJ801tcbtU59R/DDlQ6ps3wQHnwvNDn+iPgoM
+ovoX5poC3ZdUajI0frxe9Z5CY3I++57YSaCfic0NT9HaUYKXduj/aYBfv+ytESql
+3iEifgn360acVgsUi1bx5kXiIQBQ58EWX/N4uHsATU6XPfQxXsXtfbJMif4punL5
+Ck5FB2u2OymUg/qJruq4Tes6v0srlNDvM5Zn8Iy+gxGNUQ3wpVa3RHv/czxl7oHN
+ArnFqna6Uu9EZx9cFFX4G9tSFuWMvOkMucoWG3dsvoaROCuMnPwjVb8PI+0/yxw=
+=459F
+-----END PGP SIGNATURE-----
