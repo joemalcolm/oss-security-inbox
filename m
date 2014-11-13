@@ -1,43 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/5
-Message-Id: <201406240554.s5O5sle0026103@linus.mitre.org>
-Date: Tue, 24 Jun 2014 01:54:47 -0400 (EDT)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Piwigo before 2.6.2 ws.php Arbitrary User Creation CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/10
+Message-ID: <20141113210240.GL2497@yuggoth.org>
+Date: Thu, 13 Nov 2014 21:02:40 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-request: systemd-resolved DNS cache poisoning
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2014-11-13 08:03:36 -1000 (-1000), Daniel Kahn Gillmor wrote:
+[...]
+> the problem with systemd-resolved as i understand it not that it's
+> accepting packets from DNS servers it didn't request from, but
+> that it's caching unrelated responses in those records.
+[...]
 
-This apparently has two discoverers who worked on different dates, so
-it has two CVEs:
-
-> http://packetstormsecurity.com/files/125438/Piwigo-2.6.1-Cross-Site-Request-Forgery.html
-
-Use CVE-2014-4613 for the pwg.users.add vector.
-
-
-> http://piwigo.org/bugs/view.php?id=0003055
-
-Use CVE-2014-4614 for the pwg.groups.addUser, pwg.groups.deleteUser,
-pwg.groups.setInfo, pwg.users.setInfo, pwg.permissions.add, and
-pwg.permissions.remove vectors.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTqRJmAAoJEKllVAevmvmsfRcH/1zYKcPXm6bAaiNk1e84w9wt
-QgeFxGikYxQnxZlf7gED+QPno7KLGgqtWiJMzwTEJLga8SjqqGU+lVlJ7V2mly1m
-uGC/R4+E1Jamajql2I+KnlvGelfHhB3e1ICpssqc5+EWzV60akelfqnNwSe8/VN6
-ZVJ1GTOTz30Q32YRH6IJJ4xhL6gZN57SkDRk4ApB24+ALzECSDhxr5S1OqWHruKR
-Y+KbfU+peIZi0Nfy8huFA5hHTUqYP+A74iKiFQTDIDgY3VQiJjmexEmDDb7PzCgf
-yMzYcHjF6KZlSqltez0wjirx11z7UmzQDwO6Sjpr+jtCaSsQrstfoLhHgmUskvk=
-=xJzF
------END PGP SIGNATURE-----
+This sounds at least superficially similar to BIND CVE-2009-4022.
+-- 
+Jeremy Stanley
