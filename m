@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/8
-Message-ID: <52EB1CBB.8020100@redhat.com>
-Date: Fri, 31 Jan 2014 14:47:07 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE needed for libotr's support for OTR v1?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/7
+Message-Id: <20141114193936.6B3FE6C0B4C@smtpvmsrv1.mitre.org>
+Date: Fri, 14 Nov 2014 14:39:36 -0500 (EST)
+From: cve-assign@...re.org
+To: meissner@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux kernel: ttusb-dec: overflow by descriptor
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Is a CVE needed for versions of libotr that support OTR v1? Quoting the 
-Debian bug[1]:
+> http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=f2e323ec96077642d397bb1c355def536d489d16
 
-""
-as you are surely aware of, it's been known [1] since 2006 that
-clients supporting both OTRv1 and v2 (such as libotr 3.x) are subject
-to protocol downgrade attacks clients. It's also been known for
-a while that OTRv1 has serious security issues (that were the main
-reason for a v2, actually). In short, support v2 only is the only safe
-way to go these days.
+> Overflow in a DVB-T usb driver, it overflows into a small size stack array.
 
-[1] http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.165.7945
-""
+> [media] ttusb-dec: buffer overflow in ioctl
 
-Ubuntu advisory: http://www.ubuntu.com/usn/usn-2091-1/
-Launchpad bug: https://bugs.launchpad.net/ubuntu/+source/libotr/+bug/1266016
+Use CVE-2014-8884.
 
-Thanks,
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
---
-Murray McAllister / Red Hat Security Response Team
-
-[1] http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725779
+iQEcBAEBAgAGBQJUZlmRAAoJEKllVAevmvmsx+kH/00r2lYdj5luNKxhBW/XrpDB
+wS/sDHVLArGoecbzBvIKwiJAicUw6cxjKEqI+VViFETVOhlKxxPPesGWw9k/dFfC
+htTig68vLPght7O2nxMHwzrs8QSE7WywpBaSLSiMmo+0uMA/2roJDcvM0Lb1Z9ky
+PIzEdXrvntmfX+mIsp8Tp6O6GOw00ND50TUQzPjuHHVT6JGN2n2wmOhDRCU5+0YU
++HofmbpC9y6AI2azg4SjvqVO5lISGdLLXzFBo+lGx/uuxJZpdrAEbPyp1Ah1b2Ys
+GEfpG6cFpEHTMXdls3bkKoSDyEzfHfpKiRVaavM0WyorivIn3RxaI2ICw6WjrVk=
+=KA62
+-----END PGP SIGNATURE-----
