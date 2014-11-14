@@ -1,34 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/24/7
-Message-ID: <20140324141745.GB2561@sivokote.iziade.m$>
-Date: Mon, 24 Mar 2014 16:17:45 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/8
+Message-Id: <20141114214750.858F76DC01A@smtpvmsrv1.mitre.org>
+Date: Fri, 14 Nov 2014 16:47:50 -0500 (EST)
+From: cve-assign@...re.org
+To: vdanen@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: old CVE assignments for JQuery 1.10.0
 Content-Type: text/plain; charset=utf-8
 
-For a start I started a forum:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://j.ludost.net/ss/
+We're not sure why you listed Ticket #6016 twice, but here are the CVE
+IDs for these http://jqueryui.com/changelog/1.10.0/ XSS issues:
 
-Supports RSS.
+> Title, reported by shadowman131
+> http://bugs.jqueryui.com/ticket/6016
+> https://github.com/jquery/jquery-ui/commit/7e9060c109b928769a664dbcc2c17bd21231b6f3
 
-(it is likely I get banned from here,
-though announcing alternatives is 
-good idea).
+Use CVE-2010-5312.
 
 
-On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
-> Apologies for posting on list mainly dedicated
-> to CVE's.
-> 
-> The Full Disclosure mailing list died today:
-> http://lists.grok.org.uk/
-> http://seclists.org/fulldisclosure/2014/Mar/332
-> 
-> I suppose it is time for a new list.
-> 
-> Any ideas?
-> 
-> -- 
-> guninski
+> combobox demo, reported by DJtomy
+> http://bugs.jqueryui.com/ticket/8859
+> https://github.com/jquery/jquery-ui/commit/5fee6fd5000072ff32f2d65b6451f39af9e0e39e
+
+> default content - 8859 follow-on work by scott.gonzalez
+> http://bugs.jqueryui.com/ticket/8861
+> https://github.com/jquery/jquery-ui/commit/f2854408cce7e4b7fc6bf8676761904af9c96bde
+
+As far as we can tell, 5fee6fd5000072ff32f2d65b6451f39af9e0e39e
+doesn't fix anything in the jQuery library, and it is reverted in
+f2854408cce7e4b7fc6bf8676761904af9c96bde. We're not sure about
+conventions for changelogs, but it seems potentially misleading to
+just include "Fixed: XSS in combobox demo. (#8859, 5fee6fd)" in the
+1.10.0 changelog anyway.
+
+A side issue is that 5fee6fd5000072ff32f2d65b6451f39af9e0e39e, by
+itself, only modified the demos/autocomplete/combobox.html file. We
+realize that the demos are shipped in the jquery-ui distribution.
+However, the demos typically wouldn't be part of the deployed product,
+so there's a question of whether combobox.html could have its own
+CVEs. In this case, the question seems largely irrelevant because
+changing the combobox.html code wasn't a useful way to address a
+vulnerability.
+
+Use CVE-2012-6662 for the issue fixed in
+f2854408cce7e4b7fc6bf8676761904af9c96bde.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUZnfKAAoJEKllVAevmvmscLYH/0EyGlrnj/nUyFM+RzuWzBsk
+iziDAeXEyC4/5zgc38/j38eKIshmdUg7Wp49rRUXj9z88zfihZowExE+ojVZFdtC
+EjK4+SZPjdb7dTdSVkeNnS4Dv6a8u6Kq2XGuV7FZ9Tx1Qs7kIscn7N2uixR8o8Tz
+KatmHEksbC1phQq8QdMb+Xw/Juc3cc7aB7/vuYfkiAvEOtWfs2+EtEMnT/Y3kfVj
+otiwMGAvGrCHQN9W5Vr1MNEp/rhnEsdbH7YYZMHrF3QlPN4UDlq+rk+Oooo+0nxp
+aEpyLQ8VibM3nV/JUCnUCpNFt9cGlAORYOdSC8YvPlrTQ5ihHj8YVjcx+BzQo7Y=
+=X1NZ
+-----END PGP SIGNATURE-----
