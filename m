@@ -1,23 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/16
-Message-ID: <5422EC8E.1050003@case.edu>
-Date: Wed, 24 Sep 2014 12:08:46 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/2
+Message-ID: <20141114130429.54877952@pc>
+Date: Fri, 14 Nov 2014 13:04:29 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: Damien Regad <dregad@...tisbt.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-8598: MantisBT XML Import/Export plugin unrestricted access
 Content-Type: text/plain; charset=utf-8
 
-On 9/24/14, 11:16 AM, Solar Designer wrote:
+Hi,
 
-> I see no good workaround. 
+What's holding this up?
 
-You're correct; there is not a good workaround.  Since there are publicly
-available patches for all bash versions back 15 years or so, though, the
-best path forward is to apply those as quickly as possible.
+As far as I read the oss-sec archive there are three unfixed mantis
+vulnerabilities, one of them an sql injection, and the release supposed
+to fix them is still not there (it's been two weeks since the first
+issue hit oss-security).
 
-Chet
+Makes me feel mantis isn't really handling security issues in a
+responsible way :-(
+
+cu,
 -- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
