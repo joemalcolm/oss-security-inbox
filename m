@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/11
-Message-ID: <B6D0ABD4-726C-4036-AECD-D723454609C6@redhat.com>
-Date: Thu, 04 Dec 2014 07:40:25 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/5
+Message-ID: <6AC1B82F-6F47-4D95-8445-3FA01268B520@redhat.com>
+Date: Fri, 14 Nov 2014 08:29:42 -0700
 From: "Vincent Danen" <vdanen@...hat.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: old CVE assignments for JQuery 1.10.0
 Content-Type: text/plain; charset=utf-8
 
-On 12/03/2014, at 9:57 AM, Michal Zalewski wrote:
+A title XSS was fixed in JQuery 1.10.0 back in November 2012 (with the 
+release of 1.10.0 in January 2013):
 
->>> https://bugzilla.redhat.com/show_bug.cgi?id=1170233>
->> You mixed up Michal and me :-)
->
-> Possibly in reference to:
-> https://lists.gnu.org/archive/html/bug-unrtf/2014-11/msg00001.html
+http://bugs.jqueryui.com/ticket/6016
+https://github.com/jquery/jquery-ui/commit/7e9060c109b928769a664dbcc2c17bd21231b6f3
+http://jqueryui.com/changelog/1.10.0/
 
-Wow, I was more tired than I thought.  I did take the wrong reference 
-and was indeed referring to Michal's mail.
+Looking at the changelog it also seems like there are others:
 
-I've updated our bug to to note both even though it may require more 
-than one CVE.  It seems like quite the mess for an unmaintained package.
+* Fixed: XSS in combobox demo. (#8859, 5fee6fd)
+* Fixed: Title XSS Vulnerability. (#6016, 7e9060c)
+* Fixed: XSS vulnerability in default content. (#8861, f285440)
 
-Thanks for pointing the errors out.
-
+I don't believe CVEs were assigned to any of these as far as I can tell.
 
 -- 
 Vincent Danen / Red Hat Product Security
