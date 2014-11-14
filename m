@@ -1,38 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/26
-Message-ID: <CABJ8ys9uiHp0tRXyR9UEVwNCjXhEqCzHZ7z0AoR8Lowui9KtMw@mail.gmail.com>
-Date: Mon, 29 Sep 2014 21:01:47 +0800
-From: Osmond Sun <osmond.sun@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/1
+Message-ID: <20141114084213.GA27773@suse.de>
+Date: Fri, 14 Nov 2014 09:42:13 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
+To: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-request: systemd-resolved DNS cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-I found the function parsing is still imperfect.
-e.g. $env x="() { :;}; `touch vulnerablefile`" bash -c "echo this is a test "
+On Thu, Nov 13, 2014 at 08:03:36AM -1000, Daniel Kahn Gillmor wrote:
+> On 11/13/2014 04:56 AM, Florian Weimer wrote:
+> >
+> > I asked Bert to be sure, and he says that it was his intent that the
+> > advice applied to non-recursive resolvers as well.  (Note that
+> > systemd-resolved is more than a minimal stub because it has a cache.)
+>
+> I have to agree with Florian here.
+>
+> It's possible that rfc5452 was the wrong citation, since it seems to be
+> devoted mainly to making sure that you don't accept packets from remote
+> DNS servers you didn't request them from.
 
-2014-09-29 20:55 GMT+08:00 Giles Coochey <giles@...chey.net>:
-> On 29/09/2014 12:17, Loganaden Velvindron wrote:
->>
->> HI Chet, As you are aware, a sixth security issue has been discovered.
->> Due to the nature of the vulnerability, I believe that it's best to
->> break backward compatibility as done by FreeBSD and NetBSD until a
->> proper patch is developed. We are lucky to have security researchers
->> reporting their findings publicly. What about others that don't ? I
->> strongly believe that it's much safer to have it disabled, and have a
->> complete and comprehensive audit of the source code, and then
->> re-enable it.
+I named rfc5452 since it pretty much enumerates best DNS security
+practises of the last 20 years. systemd never states to implement
+rfc5452 and so everyone can sleep well and hide behind the word 'stub'.
+
+But in fact systemd's aim is to replace core system components like
+the system-resolver. What other reason could exist, that the proper nsswitch
+modules are provided as well or that the project itself exists at all?
+
+So replacing core DNS components of Linux in mass setups shows
+up on the horizon; at least it is attempted. Thats enough reason for
+us to look at the code.
+
+Even when I agree that DNSSEC should be used to address all the
+shortcomings, its not acceptable to throw away last 20 years of DNS security
+evolution en passant.
+
+
 >
->
-> Am I the only one who is wondering: Who is paying Chet to do this?
->
-> --
-> Regards,
->
-> Giles Coochey, CCNP, CCNA, CCNAS
-> NetSecSpec Ltd
-> +44 (0) 8444 780677
-> +44 (0) 7584 634135
-> http://www.netsecspec.co.uk
-> giles.coochey@...secspec.co.uk
->
+> the problem with systemd-resolved as i understand it not that it's
+> accepting packets from DNS servers it didn't request from, but that it's
+> caching unrelated responses in those records.
+
+Exactly. Now one can argue that an upstream DNS will filter such (well formed)
+garbage. But how many desktop users set up their own filtering bind9 on
+127.0.0.1 or on a dedicated host (properly shielded by ingress filtering,
+otherwise its useless)? I bet _a lot_ will just use 8.8.8.8 or its v6 alternative,
+also because systemd-resolved comes with these DNS servers pre-configured (!).
+
+How easy do we want to make it to the agency to twist the MX records
+on SMTP servers??
+
+I'd be happy with no CVE being assigned. At the end I just want to
+have the cache hardened.
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
