@@ -1,41 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/15
-Message-Id: <201402192350.s1JNo5vG029674@linus.mitre.org>
-Date: Wed, 19 Feb 2014 18:50:05 -0500 (EST)
-From: cve-assign@...re.org
-To: mprpic@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: MaraDNS DoS due to incorrect bounds checking on certain strings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/3
+Message-ID: <20141114123745.GG32335@suse.de>
+Date: Fri, 14 Nov 2014 13:37:45 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Linux kernel: ttusb-dec: overflow by descriptor
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-There are two CVEs because of the distinct types of issues.
+Overflow in a DVB-T usb driver, it overflows into a small size stack array.
 
-> https://github.com/samboy/MaraDNS/commit/f015495d221f1c2b2f10db38e87cecf3839d6093
+Ciao, Marcus
 
-This is a logic error. It makes no sense to add begin and obj->len.
-Use CVE-2014-2031.
+http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=f2e323ec96077642d397bb1c355def536d489d16
 
+commit f2e323ec96077642d397bb1c355def536d489d16
+Author: Dan Carpenter <dan.carpenter@...cle.com>
+Date:   Fri Sep 5 09:09:28 2014 -0300
 
-> https://github.com/samboy/MaraDNS/commit/2cfcd2397cb8168d4aa4594839fabe88420d03c3
-
-This is missing input validation. Use CVE-2014-2032.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTBULYAAoJEKllVAevmvmsPIEH/2mlAM6SDBhBwxNCHbaCcPw3
-bowmbkIuYTEO8prVC6tmcXrrvgnHYZMv5yjdLRCQHHEGnhxWt5OVS7uR8TQV1JBT
-k4AcjmaabxZ9HNTQyWKbzUWH+Q9kzlhD13isvi456yRjulIPXKBZ3AeYOUVZ3lto
-IcvukQYqEBVpwLol9PaYyjzj013lFd0XKeduEX8Yx9OTz8WA6+2idrE7B7sP2Qts
-45nFYGZyIlyb6YbW7+e4tYFwMI9NykmCnOoKacyXpPE4XKi1bk4tZ4XuUXVDX12R
-K3EKLtOuQyfMlVAM928o9+DROAkfJxwzOC/mQQL2lZGJfzytzmwHkY/aHzp0cXY=
-=kqvj
------END PGP SIGNATURE-----
+    [media] ttusb-dec: buffer overflow in ioctl
+        
+    We need to add a limit check here so we don't overflow the buffer.
