@@ -1,36 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/7
-Message-ID: <20140928072214.2536853a@pc>
-Date: Sun, 28 Sep 2014 07:22:14 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: Chet Ramey <chet.ramey@...e.edu>
-Cc: Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, Eric Blake <eblake@...hat.com>
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/9
+Message-ID: <m45vp2$5a9$1@ger.gmane.org>
+Date: Fri, 14 Nov 2014 23:29:53 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: XSS vulnerability in MantisBT 1.2.13
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 27 Sep 2014 21:39:19 -0400
-Chet Ramey <chet.ramey@...e.edu> wrote:
+Please assign a CVE ID for the following issue.
 
-> OK, here are the more-or-less final versions of the patches for
-> bash-2.05b through bash-4.3.  I made two changes from earlier today:
-> the function export suffix is now `%%', which is not part of a the
-> set of valid variable name characters but avoids any potential
-> problems with including shell metacharacters in the name; and this
-> version refuses to import shell functions whose name contains a
-> slash, for reasons I discussed earlier.
+Description:
 
-From what I can see your official patches still don't contain the
-out-of-bound memory fixes.
+The MantisBT Configuration Report page (adm_config_report.php) did not 
+escape a parameter before displaying it on the page, allowing an 
+attacker to execute arbitrary JavaScript code.
 
-While not exposing the parser to random variables should shield that
-somewhat and reduce impact, they still should be fixed and the redhat
-patch looks pretty straightforward.
+The severity of this issue is mitigated by the need to have a 
+high-privileged account (by default, administrator) to access the 
+configuration report page.
 
--- 
-Hanno Böck
-http://hboeck.de/
+Affected versions:
+ >= 1.2.13, <= 1.2.17
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
+Fixed in versions:
+1.2.18 (not yet released)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Patch:
+See Github [1]
+
+Credit:
+Issue was discovered by Alejo Popovici and fixed by Damien Regad 
+(MantisBT Developer)
+
+References:
+Further details available in our issue tracker [2]
+
+
+D. Regad
+MantisBT Developer
+http://www.mantisbt.org
+
+
+[1] http://github.com/mantisbt/mantisbt/commit/ee8100d6
+[2] http://www.mantisbt.org/bugs/view.php?id=17870
+
+
