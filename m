@@ -1,36 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/13/2
-Message-ID: <20140413064454.GA21481@openwall.com>
-Date: Sun, 13 Apr 2014 10:44:54 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/4
+Message-ID: <loom.20141114T142435-20@post.gmane.org>
+Date: Fri, 14 Nov 2014 13:36:11 +0000 (UTC)
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Use-after-free race condition,in OpenSSL's read buffer
+Subject: Re: CVE-2014-8598: MantisBT XML Import/Export plugin unrestricted access
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 12, 2014 at 09:47:49PM -0600, Scotty Bauer wrote:
-> Patch is available at:
-> http://ftp.openbsd.org/pub/OpenBSD/patches/5.4/common/008_openssl.patch
+Hanno Böck <hanno@...> writes:
+> What's holding this up?
 
-Some context to this:
+Just me doing this in my spare time, and not having much of that at the
+moment, sorry...
 
-http://www.tedunangst.com/flak/post/analysis-of-openssl-freelist-reuse
+> Makes me feel mantis isn't really handling security issues in a
+> responsible way 
 
-This specific patch is found in Benson Kwok's bug report:
+I resent your comment. We have released patches to the public for all
+identified vulnerabilities, so from my perspective it's not like we're
+leaving the community without a solution for known issues. 
 
-https://rt.openssl.org/Ticket/Display.html?id=2167&user=guest&pass=guest
+I personally believe it's better (i.e. more "responsible") to disclose an
+issue with a fix for it, thus allowing admins to patch their systems, rather
+than hide the problem until we're ready to go live with a new release.
 
-Benson writes:
+If you can't wait for 1.2.18 to come out, you are welcome to patch your
+system manually. With regards to the XML plugin issues, you can also simply
+deactivate it.
 
-"The issue is when the buffer is released by ssl3_release_read_buffer(),
-there may still be data left in the buffer (s->s3->rbuf.left != 0). With
-single threading, when another read occurs, the same buffer is reused
-during a call to ssl3_setup_read_buffer() so the data is still there and
-can be read and processed so it works fine. When running with multiple
-threads, the buffer is shared in a pool and another thread may have gotten
-that buffer already. If the call to ssl3_setup_read_buffer() returns a new
-buffer, it assume the data is still there but will run into parsing error
-with the record."
+Best regards
 
-(Of course, "parsing error" isn't necessarily the worst outcome.)
+D. Regad
+MantisBT Developer
 
-Alexander
+
