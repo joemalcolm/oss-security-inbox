@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/53
-Message-ID: <5424A88D.3010805@case.edu>
-Date: Thu, 25 Sep 2014 19:43:09 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Simon McVittie <smcv@...ian.org>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/6
+Message-ID: <m483v4$7pt$1@ger.gmane.org>
+Date: Sat, 15 Nov 2014 18:53:41 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: information disclosure in MantisBT attachments
 Content-Type: text/plain; charset=utf-8
 
-On 9/25/14, 12:20 PM, Simon McVittie wrote:
-> On 25/09/14 16:59, John Haxby wrote:
+Please assign a CVE ID for the following issue.
 
->> There are lots of things one could do to eliminate that risk, of course,
->> but step back and what are we arguing for?
-> 
-> I'm arguing that privilege boundaries should take responsibility for
-> their nature as a privilege boundary, and not pass the buck to the code
-> that they call into.
 
-It doesn't help if some process sets ruid = euid and execs bash, but bash
-doesn't import functions from the environment if ruid != euid.
+Description:
 
-Chet
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+MantisBT issue attachments can be downloaded without permission.
+
+Due to an incorrect access check, by guessing the download URL 
+correctly, unprivileged users can download files from a private project 
+with restricted access to attachments, i.e. where 
+$g_download_attachments_threshold /
+$g_view_attachments_threshold are set e.g. to 55 (developer), if another 
+project to which they have access does not restrict attachments download.
+
+Affected versions:
+<= 1.2.17
+
+Fixed in versions:
+1.2.18 (not yet released)
+
+Patch:
+See Github [1]
+
+Credit:
+Issue was discovered by Florian Fuchs and fixed by Paul Richards (former 
+MantisBT developer)
+
+References:
+Further details available in our issue tracker [2]
+
+
+D. Regad
+MantisBT Developer
+http://www.mantisbt.org
+
+
+[1] http://github.com/mantisbt/mantisbt/commit/5f0b150b
+[2] http://www.mantisbt.org/bugs/view.php?id=17742
+
+
