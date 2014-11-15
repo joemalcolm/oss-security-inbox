@@ -1,43 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/28/2
-Message-ID: <184BB78B-1CDF-4A69-9C2A-2630D1C1144E@redhat.com>
-Date: Fri, 27 Jun 2014 19:09:03 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com, jamie@...onical.com
-Subject: Re: Question regarding CVE applicability of missing HttpOnly flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/10
+Message-ID: <5467D237.1090604@mccme.ru>
+Date: Sun, 16 Nov 2014 01:22:47 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-On 06/27/2014, at 14:03 PM, cve-assign@...re.org wrote:
-
->> I suppose maybe there is a CWE for not having a virus scanner, which
->> makes sense as that could be considered an overall system weakness.
+On 2014-11-15 23:17, Michal Zalewski wrote:
+>> OTOH the "most" part in "most compression utilities" is somewhat
+>> questionable. There are quite a number of them. E.g. File Roller supports
+>> arj, lha, zoo...
 >
-> Neither CVE nor CWE attempts to cover the general topic of system
-> integration, i.e., questions such as "given the composition and role
-> of this entire system, is it unreasonable to omit a virus scanner?" In
-> practice, both CVE and CWE often tend to be about questions that may
-> come up when considering somewhere around one line of code or one file
-> of code. (This is just an observational statement, not an attempt to
-> redefine why CVE and CWE exist.) Typical audiences may include (among
-> others) developers who need to write a line of code safely or system
-> administrators who need to patch a faulty line of code.
+> Sure, I mean, the stuff people normally download and click on without
+> hesitation (tar, gz, zip, xz, 7z). There are hundreds of less common
+> tools and libraries that are probably awful.
+
+I think many people have arj installed and click .arj files without 
+hesitation too. According to Debian popcon ( 
+http://popcon.debian.org/by_vote ) arj is at the 2266th place, only 4 
+places behind wireshark and 6 places ahead of acroread.
+
+>>> The default operation of
+>>> /usr/bin/strings and the way many people ended up using it arguably
+>>> violates that assumption in a particularly pronounced way. Tools such
+>>> as objdump are a bit of a grey area, too.
+>>
+>> Why is that? I think using objdump to analyze malware is quite common.
 >
-> This doesn't mean that there's any objection to someone taking the
-> position that lack of a virus scanner is the most serious security
-> concern that they see in an entire system. This is a valid perspective
-> but is outside of the problem spaces in which CVE and CWE have been
-> operating. Even if everyone were looking at "whether or not a flaw is
-> a flaw" decisions in precisely the same way, a conclusion of "yes,
-> this system would really benefit from a virus scanner" leaves open the
-> question of the best place to capture that information.
+> Oh, I meant that it's still a bit sketchy (maybe less than 'strings'
+> because the untrusted input use case is a lot more specialized and
+> fewer people are at risk).
 
-Then shouldn't be the same be true of the HttpOnly flag?  That line of thought is pretty much what I think in regards to that flag.
+Sorry, I still don't understand what you mean (perhaps my English is 
+just lacking). Both `strings` and `objdump` are using libbfd (unlike 
+readelf), both are used against untrusted input.
 
-I don't know if you missed my comment in an earlier message, so I'll note it below because I think this is the real point:
+>>> [...tcpdump...]
+>>
+>> Not good. Haven't you looked into it -- are these crashes due to malformed
+>> pcap format or due to malformed traffic?
+>
+> Both, IIRC. There are some test cases that come with afl-fuzz.
 
-"Kurt's argument about everything having an XSS makes it sound like, and the reasoning provided here as well, that we should no longer consider XSS a security flaw, but the absence of HttpOnly the security flaw.  I mean, if setting this flag "fixes" all XSS issues, then we should no longer be assigning CVEs to XSS issues, only to web servers/services that do not set HttpOnly or browsers that do not respect/handle it properly.  They can't _both_ get CVEs or be considered flaws, can they?"
+Oh...
+
+>> BTW any crash in imagemagick during image processing is regarded as a
+>> security issue? Probably a grateful target for fuzzing.
+>
+> Well... probably? For example, some sites use ImageMagick to convert /
+> resize user-uploaded images. One would hope that they check file
+> headers and only accept JPEG / GIF / PNG or so, but that's probably
+> not universally true.
+
+Or they can look at the extension and use something like `convert 
+png:input.png ...`
+
+>>> Now, the quality of the *average* OSS project is probably comparable
+>>> to libbfd, but the average OSS project is probably less likely to be
+>>> exposed to untrusted inputs under normal operating conditions.
+>>
+>> Sorry, I don't understand your stance. There is a whole world of desktop
+>> tools and applications -- from `file` and `strings` to LibreOffice and
+>> Blender. And most of them process files received from untrusted sources.
+>
+> I wouldn't describe LibreOffice as a typical example. It's obviously
+> security-critical.
+
+Nevertheless taking one simple .doc and zzuf I get an infinite loop(?) 
+at seed 58 (IIUC it's classified as DoS in LO) and SIGSEGV at seed 91. 
+Hm, abiword also crashes on this case.
+
+Well, crashing at seed 91 is not that bad -- catdoc crashes right at 
+seed 0 :-(
+
+> What I mean is that, across all the packages
+> installed on your system, most bugs are fairly irrelevant from the
+> security perspective - i.e., it probably doesn't matter if you can
+> crash uname or ps by passing AAAAAAA... in the command line.
+
+Sure but there are enough apps which process various files -- at opening 
+downloads from browsers, clicking attachments from emails or just 
+clicking files in a file manager. And there are many command line tools 
+which should be safe to use against untrusted files (like `strings`).
+
+And most such programs are easy to crash. And when I say 'easy to crash' 
+it means from instantly to a couple of minutes under zzuf, not a couple 
+of days under afl.
+
+Too much low hanging fruits, too little time...
 
 -- 
-Vincent Danen / Red Hat Product Security
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Alexander Cherepanov
