@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/7
-Message-ID: <1400614374.9030.1.camel@scapa>
-Date: Tue, 20 May 2014 21:32:54 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/11
+Message-ID: <CACckxB0DXw0R-CNGzG-oG=1_ej=UQ=r2WvFezM6235y-F48KoQ@mail.gmail.com>
+Date: Sat, 15 Nov 2014 23:04:14 +0000
+From: Soroush Dalili <sd.bugreport@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: dovecot denial of service
+Subject: CVE Request: "Reflected Cross-Site Scripting (XSS) in Flash Version of Flowplayer"
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
+Please can you assign a CVE ID for the following issue:
 
-we were made aware of a recently fixed DoS vulnerability in Dovecot,
-which doesn't seem to have a CVE id assigned:
+-Description:
+The flash version of FlowPlayer is vulnerable to reflected cross-site
+scripting (XSS).
+A demo version of this player can be seen here:
+http://flash.flowplayer.org/demos/
 
-http://dovecot.org/list/dovecot-news/2014-May/000273.html
+-Affected versions:
+<= 3.2.18
 
-states:
+-Fixed in versions:
+Not available yet. See https://github.com/flowplayer/flash/issues/263
 
-* Fixed a DoS attack against imap/pop3-login processes. If SSL/TLS
-  handshake was started but wasn't finished, the login process
-  attempted to eventually forcibly disconnect the client, but failed
-  to do it correctly. This could have left the connections hanging
-  arond for a long time. (Affected Dovecot v1.1+)
+-Patch:
+Not available yet. See https://github.com/flowplayer/flash/issues/263
 
-Could a CVE be assigned for this vulnerability?
+-Credit:
+Issue was discovered by Soroush Dalili (@irsdl)
+
+-References:
+https://github.com/flowplayer/flash/issues/263
+
 
 Thanks,
--- 
-Yves-Alexis Perez - Debian Security
+Soroush
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (491 bytes)
