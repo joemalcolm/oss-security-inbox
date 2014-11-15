@@ -1,73 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/24
-Message-ID: <20141120154457.GB43437@TC.local>
-Date: Thu, 20 Nov 2014 07:44:57 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [AMENDED] [CVE-2014-7829] Arbitrary file existence disclosure in Action Pack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/1
+Message-ID: <003201d00073$35566d80$a0034880$@mantisforge.org>
+Date: Sat, 15 Nov 2014 01:26:39 -0000
+From: "P Richards" <paul@...tisforge.org>
+To: <oss-security@...ts.openwall.com>, "'Damien Regad'" <dregad@...tisbt.org>
+Cc: <cve-assign@...re.org>
+Subject: RE: CVE Request: XSS vulnerability in MantisBT 1.2.13
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Damien,
 
-The credits section was missing a name in the previous announcement, so
-please see the credits section here.  Thanks!
+Please can you ensure that you appropriate proper credit for security issues - we identified this issue in Master back in May and this was due to be backported to be 1.2.18 release:
 
-----
+The adm_config_report.php displays a dropdown list of configuration values, but does not check that the config value is valid - therefore someone could change the post/get request to modify the value to pass XSS onto the page. 
 
-Arbitrary file existence disclosure in Action Pack
+We fixed this issue in Master with the following commit https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40, and I believe I requested this to be back-ported at the time. You modified the code not to trigger an error with the commit https://github.com/mantisbt/mantisbt/commit/3d0625d84d5d08a998673713df1711e1d46b0b86 and to fall back to the default of no value selected.
 
-There is an information leak vulnerability in Action Pack. This vulnerability
-has been assigned the CVE identifier CVE-2014-7829.
+I don't believe it is correct to state that an issue was discovered in November that we had already discovered, fixed and were planning on backporting to the 1.2.18 release in May, and not credit the people who discovered and fixed the original issue.
 
-Versions Affected:  >= 3.0.0
-Not affected:       < 3.0.0, 4.2.0.beta4
-Fixed Versions:     3.2.21, 4.0.12, 4.1.8
+Paul
 
-Impact
-------
-Specially crafted requests can be used to determine whether a file exists on
-the filesystem that is outside the Rails application's root directory.  The
-files will not be served, but attackers can determine whether or not the file
-exists.  This vulnerability is very similar to CVE-2014-7818, but the
-specially crafted string is slightly different.
+-----Original Message-----
+From: Damien Regad [mailto:dregad@...tisbt.org] 
+Sent: 14 November 2014 22:30
+To: oss-security@...ts.openwall.com
+Subject: [oss-security] CVE Request: XSS vulnerability in MantisBT 1.2.13
 
-This only impacts Rails applications that enable static file serving at
-runtime.  For example, the application's production configuration will say:
+Please assign a CVE ID for the following issue.
 
-  config.serve_static_assets = true
+Description:
 
-All users running an affected configuration should either upgrade or use one of the work arounds immediately.
+The MantisBT Configuration Report page (adm_config_report.php) did not escape a parameter before displaying it on the page, allowing an attacker to execute arbitrary JavaScript code.
 
-Releases 
--------- 
-The 3.2.21, 4.0.12 & 4.1.8 releases are available at the normal locations. 
+The severity of this issue is mitigated by the need to have a high-privileged account (by default, administrator) to access the configuration report page.
 
-Workarounds 
------------ 
-To work around this issue, set config.serve_static_assets = false in an initializer.  This work around will not be possible in all hosting environments and upgrading is advised.
+Affected versions:
+ >= 1.2.13, <= 1.2.17
 
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+Fixed in versions:
+1.2.18 (not yet released)
 
-* 3-1-sec-static-files.patch - Patch for the 3.1.x release series
-* 3-2-sec-static-files.patch - Patch for the 3.2.x release series
-* 4-0-sec-static-files.patch - Patch for the 4.0.x release series
-* 4-1-sec-static-files.patch - Patch for the 4.1.x release series
+Patch:
+See Github [1]
 
-Please note that only the 3.2.x, 4.0.x & 4.1.x  series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+Credit:
+Issue was discovered by Alejo Popovici and fixed by Damien Regad (MantisBT Developer)
 
-Credits 
-------- 
+References:
+Further details available in our issue tracker [2]
 
-This vulnerability was reported by multiple researchers working independently.  Thanks to each of them for reporting the issue to us and verifying the fixes.
 
-* Behrouz Sadeghipour
-* Patrick Toomey of GitHub
-* Remon Oldenbeuving of hackerone
+D. Regad
+MantisBT Developer
+http://www.mantisbt.org
 
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
 
-Content of type "application/pgp-signature" skipped
+[1] http://github.com/mantisbt/mantisbt/commit/ee8100d6
+[2] http://www.mantisbt.org/bugs/view.php?id=17870
+
+
+
