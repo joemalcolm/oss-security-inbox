@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/1
-Message-ID: <547FA641.8080306@fixme.fi>
-Date: Thu, 04 Dec 2014 02:09:37 +0200
-From: Tero Marttila <terom@...me.fi>
-To: "Joshua J. Drake" <oss-sec-pmgetbl@...p.org>,  oss-security@...ts.openwall.com
-CC: Santiago Vila <sanvila@...ian.org>
-Subject: Re: CVE request: procmail heap overflow in getlline()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/4
+Message-ID: <m47u3q$edk$1@ger.gmane.org>
+Date: Sat, 15 Nov 2014 17:13:46 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
 Content-Type: text/plain; charset=utf-8
 
-FWIW I don't have a specific PoC/scenario to supply for this case that 
-serves as an exploit with untrusted input, but I am not familar enough 
-with procmail and how it is used to make a judgement on if some related 
-code-path/scenario could be exploitable.
-
-I reported this as a security bug due to the implied high risk level of 
-procmail being suid-root on Debian, and thus deserving of more detailed 
-inspection. But that's a distribution issue.
-
-  -- Tero Marttila
-
-On 04/12/14 01:30, Joshua J. Drake wrote:
-> Is it possible to trigger this issue with untrusted input or only
-> trusted input from procmailrc?
+On 2014-11-15 16:30, Paul Richards wrote:
+> However, I believe the fix for first issue to be incorrect (hence helping
+> me misunderstanding the initial issue):
 >
-> Joshua
->
-> On Wed, Dec 03, 2014 at 11:31:20PM +0200, Henri Salo wrote:
->> Please assign 2014 CVE for procmail heap overflow in getlline() as described in
->> following Debian BTS item <https://bugs.debian.org/771958> reported by Tero
->> Marttila. Please comment if you need more information about the issue.
->>
->> ---
->> Henri Salo
+> The initial fix adds a string_display_line call to an <input> box. Given
+> that this processes the string for display in html, and there is a
+> string_attribute api call for handling data for display in a text box, I
+> believe that the fix for the other  issue is incorrect and
+> that string_attribute should be used instead of string_display_line (which
+> may do other formatting to the string which may be undesirable when editing
+> configuration values).
+
+Thanks for catching this mistake Paul. I have:
+
+- reverted the original fix commit with incorrect string_display_line()
+   https://github.com/mantisbt/mantisbt/commit/1bdc16e5
+
+- pushed a new fix with string_attribute()
+   https://github.com/mantisbt/mantisbt/commit/49c3d089
+
+@CVE assign authority - please let me know the ID for this issue, and 
+update the data from my initial request accordingly.
+
+
