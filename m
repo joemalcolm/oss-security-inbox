@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/7
-Message-ID: <20140924105753.GA12516@mail.corp.redhat.com>
-Date: Wed, 24 Sep 2014 12:57:53 +0200
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/2
+Message-ID: <m47nbn$8a7$1@ger.gmane.org>
+Date: Sat, 15 Nov 2014 15:18:31 +0100
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: multiple issues in libupnp
+Subject: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
 Content-Type: text/plain; charset=utf-8
 
-libupnp (aka Portable UPnP SDK) has received some security fixes
-involving string handling and additionally some fixes for bugs created
-by a previous botched attempt to fix insecure string handling.
-The previous fixes actually broke UPnP clients using libupnp (most notably VideoLan's VLC).
+On 2014-11-15 02:26, P Richards wrote:
+> We fixed this issue in Master with the following commit
+ > 
+https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40, 
 
-http://sourceforge.net/p/pupnp/bugs/122/
-https://sourceforge.net/p/pupnp/mailman/message/32290824/
+ > and I believe I requested this to be back-ported at the time. You
+ > modified the code not to trigger an error with the commit
+ > 
+https://github.com/mantisbt/mantisbt/commit/3d0625d84d5d08a998673713df1711e1d46b0b86 
 
-http://sourceforge.net/p/pupnp/code/commit_browser
+ > and to fall back to the default of no value selected.
 
-The commits [0398b1] [814d15] are specifically security related.
+I don't think we're talking about the same issue here. The one you 
+describe was about the selection list in the filters, this one is in the 
+"set configuration" box.
 
-Can CVE(s) be assigned to these?
 
-Thanks.
--- 
-Vasyl Kaigorodov | Red Hat Product Security
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
-
-Content of type "application/pgp-signature" skipped
