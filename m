@@ -1,66 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/18/11
-Message-Id: <201402181925.s1IJP8IE007255@linus.mitre.org>
-Date: Tue, 18 Feb 2014 14:25:08 -0500 (EST)
-From: cve-assign@...re.org
-To: nnk@...gle.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, oss-sec-addjsif@...p.org
-Subject: Re: CVE-2014-1939 searchBoxJavaBridge_ in Android Jelly Bean
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/8
+Message-ID: <CALx_OUByTQw6hY11fyPTL4EpD=JL=TeU2O6vMj8qdU+n0=gUcA@mail.gmail.com>
+Date: Sat, 15 Nov 2014 12:17:49 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> OTOH the "most" part in "most compression utilities" is somewhat
+> questionable. There are quite a number of them. E.g. File Roller supports
+> arj, lha, zoo...
 
-> This particular issue was previously assigned a CVE by JPCERT,
-> specifically, CVE-2013-4710. See
-> https://jvn.jp/en/jp/JVN53768697/index.html for additional
-> information.
-> 
-> CVE-2014-1939 should be marked as a DUPLICATE of CVE-2013-4710.
+Sure, I mean, the stuff people normally download and click on without
+hesitation (tar, gz, zip, xz, 7z). There are hundreds of less common
+tools and libraries that are probably awful.
 
-Thanks for sending this note. To provide an initial response to this:
-MITRE will look into the relationships among CVE-2013-4710,
-CVE-2012-6636, and CVE-2014-1939, but at this point has not accepted
-the statement that CVE-2014-1939 must be marked as a duplicate.
+>> The default operation of
+>> /usr/bin/strings and the way many people ended up using it arguably
+>> violates that assumption in a particularly pronounced way. Tools such
+>> as objdump are a bit of a grey area, too.
+>
+> Why is that? I think using objdump to analyze malware is quite common.
 
-Again, from:
+Oh, I meant that it's still a bit sketchy (maybe less than 'strings'
+because the untrusted input use case is a lot more specialized and
+fewer people are at risk).
 
-  http://openwall.com/lists/oss-security/2014/02/08/8
-  http://www.cs.utexas.edu/~shmat/shmat_ndss14nofrak.pdf
+>> [...tcpdump...]
+>
+> Not good. Haven't you looked into it -- are these crashes due to malformed
+> pcap format or due to malformed traffic?
 
-The scope of CVE-2012-6636 is the following description of a specific
-change made by a vendor in response to a vulnerability:
+Both, IIRC. There are some test cases that come with afl-fuzz.
 
-  On Android prior to API level 17, these interfaces are
-  generically insecure. Malicious JavaScript executing inside
-  WebView can use the Java reflection API to invoke any method
-  of any Java object exposed via 'addJavascriptInterface' and
-  take control over the local side of the application.
-  Starting from Android API level 17, only the methods explicitly
-  annotated with @JavascriptInterface are visible in the Java
-  objects exposed to WebView via 'addJavascriptInterface'.
+> BTW any crash in imagemagick during image processing is regarded as a
+> security issue? Probably a grateful target for fuzzing.
 
-The scope of CVE-2014-1939 is only the role of the
-searchBoxJavaBridge_ object as a specific attackable object.
+Well... probably? For example, some sites use ImageMagick to convert /
+resize user-uploaded images. One would hope that they check file
+headers and only accept JPEG / GIF / PNG or so, but that's probably
+not universally true.
 
-The outcome with respect to CVE-2013-4710 will depend on several
-factors, including MITRE's assessment of whether the wider community
-has been using CVE-2013-4710 for purposes other than tracking updates
-offered by Japanese handset manufacturers.
+>> Now, the quality of the *average* OSS project is probably comparable
+>> to libbfd, but the average OSS project is probably less likely to be
+>> exposed to untrusted inputs under normal operating conditions.
+>
+> Sorry, I don't understand your stance. There is a whole world of desktop
+> tools and applications -- from `file` and `strings` to LibreOffice and
+> Blender. And most of them process files received from untrusted sources.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+I wouldn't describe LibreOffice as a typical example. It's obviously
+security-critical. What I mean is that, across all the packages
+installed on your system, most bugs are fairly irrelevant from the
+security perspective - i.e., it probably doesn't matter if you can
+crash uname or ps by passing AAAAAAA... in the command line.
 
-iQEcBAEBAgAGBQJTA7LvAAoJEKllVAevmvmsoXcIAJNmDl9GfZdeidK/dIFPNxe3
-UP3W5zlu1oOWTf9/zqNc+VHFQiTAcKNwLQ4Ri35Y7ZEX33QUX4+YPsjWxMJKZGbG
-Sp+yRK6JZD4uA5JrlBH12RwGuus+O8Kx1fAvED2pbHxQqiqiISWdxhwtFh6y86G5
-91GWmD8Y2QLlRE5jSG8eZXf8QsiLrLGsAohgQBmAeFMNk7zfiZUXI9xF5Hq0n8Xq
-l/JVti84lMyR8dFwTbg99+ZjrVJA2f29q7ZUt1k9vfDCtg7Meo/X9GcenKzvG8tr
-970AHWZMb9cxEf+7fvprRJ/wXIaAri4wJyqc58/jT0cb972u7iTt2Lvq9/axOYc=
-=TFYk
------END PGP SIGNATURE-----
+/mz
