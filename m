@@ -1,34 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/11
-Message-ID: <20140808151611.GB9141@gremlin.ru>
-Date: Fri, 8 Aug 2014 19:16:11 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/3
+Message-ID: <CAA2mj=dxZUY0N=pEfQ-Yk+Vtbzo7dhpvMSf7X0pAwecym6Vtnw@mail.gmail.com>
+Date: Sat, 15 Nov 2014 15:30:49 +0000
+From: Paul Richards <paul@...tisforge.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: Re: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
 Content-Type: text/plain; charset=utf-8
 
-On 08-Aug-2014 09:56:34 -0400, Daniel Kahn Gillmor wrote:
+On Sat, Nov 15, 2014 at 2:18 PM, Damien Regad <dregad@...tisbt.org> wrote:
 
- > The same thing goes, of course, for PCI devices, disks, CPUs,
- > expressCards (or whatever they're called today), firewire, RAM,
- > etc. all of which are becoming more hot-pluggable on modern
- > hardware.
+> On 2014-11-15 02:26, P Richards wrote:
+>
+>> We fixed this issue in Master with the following commit
+>>
+> > https://github.com/mantisbt/mantisbt/commit/
+> cabacdc291c251bfde0dc2a2c945c02cef41bf40,
+> > and I believe I requested this to be back-ported at the time. You
+> > modified the code not to trigger an error with the commit
+> > https://github.com/mantisbt/mantisbt/commit/
+> 3d0625d84d5d08a998673713df1711e1d46b0b86
+> > and to fall back to the default of no value selected.
+>
+> I don't think we're talking about the same issue here. The one you
+> describe was about the selection list in the filters, this one is in the
+> "set configuration" box.
+>
+>
+Ok - having looked further - I agree that this is two separate issues - so
+can we have a CVE for both issues separately.
 
-PCI and firewire seem to be most dangerous, as they have full
-memory access simply by design.
+However, I believe the fix for first issue to be incorrect (hence helping
+me misunderstanding the initial issue):
 
-I have such PCI "debug board", and making one for PCI-e is on my
-agenda.
+The initial fix adds a string_display_line call to an <input> box. Given
+that this processes the string for display in html, and there is a
+string_attribute api call for handling data for display in a text box, I
+believe that the fix for the other  issue is incorrect and
+that string_attribute should be used instead of string_display_line (which
+may do other formatting to the string which may be undesirable when editing
+configuration values).
 
- > A well-thought-out system-wide policy of what to do on device
- > hotplug might be useful, with a set of standard profiles
- > (single-seat personal desktop (laptop), server, multi-seat
- > desktop) to encourage sane behavior by default.
- > I have no idea what form such a policy might take, though.
+Paul
 
-I possibly have some ideas, but they have to be thought a lot.
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
