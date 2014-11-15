@@ -1,64 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/23
-Message-ID: <20140605152430.GA24637@openwall.com>
-Date: Thu, 5 Jun 2014 19:24:30 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Greg KH <greg@...ah.com>, Thomas Gleixner <tglx@...utronix.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/7
+Message-ID: <54679E9B.3000405@mccme.ru>
+Date: Sat, 15 Nov 2014 21:42:35 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: strings / libbfd crasher
 Content-Type: text/plain; charset=utf-8
 
-Greg, Thomas -
+On 2014-11-12 05:01, Michal Zalewski wrote:
+>> Is codebase generally much better? You aim at "the more difficult or
+>> better-fuzzed targets" but what about other software? Or put it another way:
+>> how big portion of widely used software you consider "the more difficult or
+>> better-fuzzed targets"?
+>
+> Most of the open-source libraries used in browsers (libpng,
+> libjpeg-turbo, zlib, etc), as well as most of the mature and popular
+> network daemons (Apache, OpenSSH, etc) and other components
+> well-understood to be critical to security (e.g., most setuids, most
+> compression utilities) are comparatively better. They are not perfect,
+> but it is widely accepted that you'd need a lot of effort and luck to
+> find bugs in them.
 
-On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
-> This was handled via linux-distros, hence the mandatory oss-security
-> posting.  The issue was made public earlier today, and is included in
-> this Debian advisory:
-> 
-> https://lists.debian.org/debian-security-announce/2014/msg00130.html
-> 
-> ---
-> CVE-2014-3153
-> 
->     Pinkie Pie discovered an issue in the futex subsystem that allows a
->     local user to gain ring 0 control via the futex syscall. An
->     unprivileged user could use this flaw to crash the kernel (resulting
->     in denial of service) or for privilege escalation.
-> ---
-> 
-> I've attached patches by Thomas Gleixner (four e-mails, in mbox format),
+Ok, this reflects a quite traditional approach to prioritization of 
+targets for audit, e.g., https://www.debian.org/security/audit/packages
+(but with a natural twist regarding browsers:-)
 
-Can you comment on how the four patches:
+OTOH the "most" part in "most compression utilities" is somewhat 
+questionable. There are quite a number of them. E.g. File Roller 
+supports arj, lha, zoo...
 
-Subject: [patch 1/4] futex-prevent-requeue-pi-on-same-futex.patch
-Subject: [patch 2/4] futex: Validate atomic acquisition in
-Subject: [patch 3/4] futex: Always cleanup owner tid in unlock_pi
-Subject: [patch 4/4] futex: Make lookup_pi_state more robust
+> The problem with libbfd is that it had genuinely very little range
+> checking in place, probably because it wasn't designed to be ever run
+> on binaries you do not intend to execute.
 
-relate to these two on LKML:
+Yes, and the one of the main reasons for this is probably that it is 
+from the era of non-hostile environment. There are many other programs 
+from that era and I understand how, e.g., zoo can retain the status quo 
+but I'm not sure how such active projects as binutils can. Perhaps the 
+culture of nineties poison new developers as they join:-)
 
-Subject: [PATCH 3.14 001/228] futex: Add another early deadlock detection check
-Subject: [PATCH 3.14 002/228] futex: Prevent attaching to kernel threads
+> The default operation of
+> /usr/bin/strings and the way many people ended up using it arguably
+> violates that assumption in a particularly pronounced way. Tools such
+> as objdump are a bit of a grey area, too.
 
-http://lists.openwall.net/linux-kernel/2014/06/05/179
-http://lists.openwall.net/linux-kernel/2014/06/05/176
+Why is that? I think using objdump to analyze malware is quite common.
 
-3.10:
-http://lists.openwall.net/linux-kernel/2014/06/04/894
-http://lists.openwall.net/linux-kernel/2014/06/04/893
+> There are several other libraries and tools that are probably a bit
+> wonky when you factor way their popularity (e.g., tcpdump probably
+> leaves something to be desired - it's fairly easy to hit crashes when
+> fuzzing pcaps;
 
-3.4:
-http://lists.openwall.net/linux-kernel/2014/06/05/437
-http://lists.openwall.net/linux-kernel/2014/06/05/436
+Not good. Haven't you looked into it -- are these crashes due to 
+malformed pcap format or due to malformed traffic?
 
-It appears that "futex: Add another early deadlock detection check" is
-assumed to have been applied, and is being revised further by "futex:
-Make lookup_pi_state more robust", but "futex: Prevent attaching to
-kernel threads" is a patch on its own, not touched by the four patches.
-Correct?  Should distros be applying "futex: Prevent attaching to kernel
-threads" as well (back-porting it as necessary)?  Does it have security
-impact (it appears so)?
+> ImageMagick used to be relatively bad, too, although it
+> probably have improved in recent years;
 
-Thanks, and sorry for my confusion.
+Hm, now, it took me more time to find out how to get a list of supported 
+formats from it than to wait for a crash. Tools from the bundle accepts 
+all supported formats as input (unlike netpbm). Very convenient:-)
 
-Alexander
+BTW any crash in imagemagick during image processing is regarded as a 
+security issue? Probably a grateful target for fuzzing.
+	
+> ffmpeg and poppler are other
+> examples of things you should probably vaguely worry about; font
+> parsers and GL drivers, as exposed through the browser, are another
+> interesting risk).
+
+I started (or stopped, depending on the POV:-) to worry when I found out 
+that `file` is easy to crash with .doc files and elfs. It probably also 
+have improved in recent years but it have got more then 10 CVEs during 
+this year only.
+
+> There is also plenty of emerging projects, especially on the cloud /
+> web front, that have received minimal scrutiny.
+>
+> Now, the quality of the *average* OSS project is probably comparable
+> to libbfd, but the average OSS project is probably less likely to be
+> exposed to untrusted inputs under normal operating conditions.
+
+Sorry, I don't understand your stance. There is a whole world of desktop 
+tools and applications -- from `file` and `strings` to LibreOffice and 
+Blender. And most of them process files received from untrusted sources. 
+And desktop apps are used in attacks (e.g. against Tibetan activists). 
+Is there a program to view .doc files which doesn't have the quality 
+comparable (or worse) to libbfd? I doubt it but I would be glad to be 
+proved wrong.
+
+In some sense these programs are indeed less likely to be exposed to 
+untrusted inputs comparing to browsers but is the difference really 
+discernible?
+
+>> This leads to a question: how to deal with it.
+>
+> Well, hard to say. The simplest option is to dump all the test cases
+> or the fuzzer onto the maintainer. Some will get busy troubleshooting
+> the issues or will even set up their own fuzzing jobs, some will give
+> you funny looks.
+>
+> When that happens, you can either try to research and prioritize the
+> test cases, or make everything public and hope that others will sort
+> it out. But it may very well be that if you do that without
+> researching exploitability, people won't notice or care, unless you
+> have a good publicist or do a really catchy conference presentation.
+>
+> Even with a lot of PR, success isn't necessarily guaranteed. The
+> Mayhem fuzzing effort (http://forallsecure.com/mayhem.html) comes to
+> mind as a fairly prominent example of a high-profile PR event coupled
+> with dumping an immense amount of almost universally non-security bugs
+> into the Debian tracker; but more than a year later, something like
+> 800 of them are still open, so ultimately, the results are somewhat
+> inconclusive.
+
+Yeah, I remember reading about it but I don't remember seeing any 
+follow-ups.
+
+And I remember media player debacles -- 
+http://caca.zoy.org/wiki/zzuf/bugs and e.g. 
+https://blog.hboeck.de/archives/578-How-long-does-it-take-to-fix-a-crash-bug.html 
+.
+
+> In the end, unless you can make a plausible argument that something is
+> probably a security risk, you don't have a lot of ground to stand on.
+> Can be a bad thing, can be a good one =)
+
+Sure. I was hoping that it's possible to have quick-and-dirty but widely 
+acceptable way to assess the level of security risk.
+
+-- 
+Alexander Cherepanov
