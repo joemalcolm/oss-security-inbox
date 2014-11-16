@@ -1,78 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/05/8
-Message-ID: <20140505210051.0d42d057@redhat.com>
-Date: Mon, 5 May 2014 21:00:51 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/16/6
+Message-ID: <CAP145pif89wuDOcLS9DUzyyTcwT+XEtEoxv_bxUYqO64nArvfA@mail.gmail.com>
+Date: Mon, 17 Nov 2014 00:10:47 +0100
+From: Robert Święcki <robert@...ecki.net>
 To: oss-security@...ts.openwall.com
-Cc: nicolas.gregoire@...rri.fr
-Subject: Re: CVE Request: libxml2 external parsed entities issue
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 28 Oct 2013 19:17:51 +0100 Nicolas Grégoire wrote:
+2014-11-16 21:43 GMT+01:00 Michal Zalewski <lcamtuf@...edump.cx>:
+>> However, even if tools like file/ndisasm/gimp/readelf can be used by
+>> many (w/o strong system isolation boundaries) to analyze untrusted
+>> inputs (for reverse engineering, malware analysis and similar
+>> purposes) - I'd simply put a blame on those users
+>
+> Well, it's always the easy option, but keep in mind that there are
+> countless tutorials that tell people to use 'file' or 'strings' to
+> examine sketchy file, or use tools such as objdump to do hobby
+> forensics.
+>
+> We can blame the authors of the tutorials - but it goes back to a
+> fairly fundamental problem: the use cases aren't completely crazy
+> (nothing *fundamentally* wrong in using 'strings' on a file you don't
+> trust, right?), and their unsafe design is a fairly counterintuitive
+> property to laypeople and many experts alike [*].
+>
+> So, for high-profile tools used in ways that are sort of plausible and
+> probably common, we may just need to try & make them robust.
 
-> It's still unclear to me what exactly CVE-2013-0339 covers.
+Agreed.
 
-I agree that this CVE still remains rather unclear.  The original
-assignment that is limited to:
+> (But of
+> course, I'd be pragmatic in drawing the line: the Mayhem fuzzing thing
+> went completely overboard.)
 
-  CVE-2013-0338 - libxml2 internal entity expansion
-  CVE-2013-0339 - libxml2 external entities expansion
-
-does not really help clarify what was the original intention of the
-CVE, and its current use does not seem consistent with what I believe
-the intention was.
-
-> Patch for the entity expansion DoS:
-> https://git.gnome.org/browse/libxml2/commit/?id=23f05e0c33987d6605387b300c4be5da2120a7ab
-
-That commit is referenced by CVE-2013-0338, which currently has a
-sufficiently clear description of being a XEE DoS issue, really a
-billion laughs variant, or even a CVE-2003-1564 incomplete fix.
-
-> Patch for not expanding external entities by default:
-> https://git.gnome.org/browse/libxml2/commit/?id=4629ee02ac649c27f9c0cf98ba017c6b5526070f
-
-That commit is indeed listed as reference for CVE-2013-0339.  Note that
-it's not about expanding, but about (not) loading and parsing external
-entities when entity expansion is disabled.
-
-The initial assignment just says "libxml2 external entities expansion"
-with no other details, which I tend to read as "libxml2 performs
-expansion of external entities by default, which leads to the usual XXE
-issues".
-
-Such assignment seems incorrect, as libxml2 does not expand entities
-(internal or external) by default, it only does so when entity
-substitution is requested using XML_PARSE_NOENT parser option.
-
-Current CVE description "libxml2 through 2.9.1 does not properly handle
-external entities expansion unless an application developer uses the
-xmlSAX2ResolveEntity or xmlSetExternalEntityLoader function, ...",
-which may mean "when libxml2 is instructed to perform entity expansion,
-there's no easy way to make it only expand internal entities and avoid
-external entities to avoid XXE issues".
-
-That seems correct, as there is no option to make libxml2 only process
-internal entities and raise error when external entity is encountered.
-It provides XML_PARSE_NONET parser option to avoid using remote
-external entities, but nothing similar to block local external entities
-(i.e. issues with reading /etc/passwd, huge file, or fifo file).
-
-However, the above commit does not make a difference here.  It does not
-prevent fetching of external entities when parsing with NOENT.  It is
-not a fix for the CVE if defined this way.
-
-AFAICS, CVE-2013-0339 description should either be updated to correctly
-describe how the id was used (correctly or not) for issue fixed via
-4629ee0 commit, or a new id is required for 4629ee0.
-
-> Are both patches covered? The second one is quite important as it
-> kills the classic XXE vector <!ENTITY foo SYSTEM "/etc/passwd">
-
-I don't believe 4629ee0 actually makes a difference for this specific
-case.  When parsing without NOENT, /etc/passwd was loaded, but foo
-entity references were not replaced by the passwd file content.  When
-parsing with NOENT, 4629ee0 does not change libxml2 behavior.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Robert Święcki
