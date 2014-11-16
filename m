@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/3
-Message-ID: <CA+aC4kvt85eV1pGP6ofsgndBwzv17LFLC12WytDj2EYLjT02Mw@mail.gmail.com>
-Date: Wed, 24 Sep 2014 18:26:53 -0700
-From: Anthony Liguori <anthony@...emonkey.ws>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/16/3
+Message-ID: <CALx_OUD5qWHCdAa6XCLU+7qquNhb92wa84R5U9t+uVobkD3QDw@mail.gmail.com>
+Date: Sun, 16 Nov 2014 12:43:10 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 24, 2014 at 6:23 PM, Chet Ramey <chet.ramey@...e.edu> wrote:
-> On 9/24/14, 5:32 PM, Solar Designer wrote:
->> On Wed, Sep 24, 2014 at 11:27:09PM +0200, Hanno B??ck wrote:
->>> Tavis Ormandy just tweetet this:
->>> https://twitter.com/taviso/status/514887394294652929
->>>
->>> The bash patch seems incomplete to me, function parsing is still
->>> brittle. e.g. $ env X='() { (a)=>\' sh -c "echo date"; cat echo
->>
->> Thanks for bringing this to oss-security.  I've added CC to Chet and
->> Tavis on this "reply".
->
-> I have a fix for this.
+> However, even if tools like file/ndisasm/gimp/readelf can be used by
+> many (w/o strong system isolation boundaries) to analyze untrusted
+> inputs (for reverse engineering, malware analysis and similar
+> purposes) - I'd simply put a blame on those users
 
-Can you provide a pointer to the patch?  I put together a patch that
-changed the report_error() to fatal_error() as I wasn't able to see
-how to reset the parser state.  Was just about to send it out...
+Well, it's always the easy option, but keep in mind that there are
+countless tutorials that tell people to use 'file' or 'strings' to
+examine sketchy file, or use tools such as objdump to do hobby
+forensics.
 
-> Chet
-> --
-> ``The lyf so short, the craft so long to lerne.'' - Chaucer
->                  ``Ars longa, vita brevis'' - Hippocrates
-> Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+We can blame the authors of the tutorials - but it goes back to a
+fairly fundamental problem: the use cases aren't completely crazy
+(nothing *fundamentally* wrong in using 'strings' on a file you don't
+trust, right?), and their unsafe design is a fairly counterintuitive
+property to laypeople and many experts alike [*].
+
+So, for high-profile tools used in ways that are sort of plausible and
+probably common, we may just need to try & make them robust. (But of
+course, I'd be pragmatic in drawing the line: the Mayhem fuzzing thing
+went completely overboard.)
+
+/mz
+
+[*] Fun fact: I don't think I have ever gotten as much shocked
+feedback from the security community as after posting
+http://lcamtuf.blogspot.com/2014/10/psa-dont-run-strings-on-untrusted-files.html
