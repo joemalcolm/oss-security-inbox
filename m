@@ -1,38 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/14
-Message-ID: <20141007111117.7cd4dca6@hboeck.de>
-Date: Tue, 7 Oct 2014 11:11:17 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/16/4
+Message-ID: <54691022.1070406@internot.info>
+Date: Mon, 17 Nov 2014 07:59:14 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Subject: Thoughts on Shellshock and beyond
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 17/11/14 07:43, Michal Zalewski wrote:
+>> However, even if tools like file/ndisasm/gimp/readelf can be used by
+>> > many (w/o strong system isolation boundaries) to analyze untrusted
+>> > inputs (for reverse engineering, malware analysis and similar
+>> > purposes) - I'd simply put a blame on those users
+> Well, it's always the easy option, but keep in mind that there are
+> countless tutorials that tell people to use 'file' or 'strings' to
+> examine sketchy file, or use tools such as objdump to do hobby
+> forensics.
+I agree with Michal on this.
+It's like saying Ritchie's fault for the fact that C does not have
+inbuilt bound checking, allowing for buffer overflows...
 
-Yesterday I wrote down some thoughts on Shellshock, Heartbleed and the
-whole issue of free software security:
-https://blog.hboeck.de/archives/857-How-to-stop-Bleeding-Hearts-and-Shocking-Shells.html
+I won't really expand on this, but my opinion is that _any_ program that
+is 'trusted', such as `file' and `strings', that contains a flaw in it
+that could pwn the running user, is a security risk.
 
-Basically my key point is: These events caused interest in the sec
-community and people had a look - and found further issues.
+I'll also add, from the `file' manpage:
+>   There has been a file command in every UNIX since at least Research
+> Version 4 (man page dated November, 1973).  The System V version intro‐
+>      duced one significant major change: the external list of magic
+> types.  This slowed the program down slightly but made it a lot more
+> flexible.
+`file' is also used by internals of most programs that handle any input
+too. Or some variant of it(probably libmagic).
 
-My question would be: Can we get that attention somehow *before* an
-event like shellshock happens? We probably all could name products that
-could have sec bugs with similar severity.
 
-I outlined a vague idea: Would it work if we'd say we make a "sec
-people, please have a look at software XY"-day? Would people do that?
+And one last point.. `vlc' is used with untrusted input(i.e .mp4s, avis,
+mp3s, etc.). If somebody gets pwned because they try to watch a video
+they download, is it their fault?..
 
-Heartbleed and Shellshock give me the feeling that there probably are,
-right now, security bugs with simliar severity active on our systems.
-Let's have a discussion how we can find them.
-
-cu,
+Thanks,
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+-- Joshua Rogers <https://internot.info/>
