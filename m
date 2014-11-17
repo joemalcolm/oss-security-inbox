@@ -1,122 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/7
-Message-ID: <20140905085939.GA18039@kludge.henri.nerv.fi>
-Date: Fri, 5 Sep 2014 11:59:39 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/6
+Message-ID: <20141117133357.05947fa0@pc>
+Date: Mon, 17 Nov 2014 13:33:57 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: TYPO3 Security Team <security@...o3.org>
-Subject: CVE request: TYPO3-EXT-SA-2014-002
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Am Sun, 16 Nov 2014 18:15:57 +0100
+schrieb Robert Święcki <robert@...ecki.net>:
 
-Can I get six 2014 CVEs for following vulnerabilities listed in
-TYPO3-EXT-SA-2014-002, thanks. Note that PHPIDS issue in this advisory already
-has CVE.
+> However, even if tools like file/ndisasm/gimp/readelf can be used by
+> many (w/o strong system isolation boundaries) to analyze untrusted
+> inputs (for reverse engineering, malware analysis and similar
+> purposes) - I'd simply put a blame on those users when if they get
+> pwnd - as they're depending on tools, which hadn't been properly
+> evaluated for the purpose (by efforts of those users, or by their
+> contractors or by the community at large) and the likelihood that
+> we'll start accepting those tools as good enough for said purposes in
+> the coming years is seriously low.
 
-http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-002/
-http://osvdb.org/103323
-http://osvdb.org/103324
-http://osvdb.org/103325
-http://osvdb.org/103326
-http://osvdb.org/103327
-http://osvdb.org/103328
-http://osvdb.org/103329
+I feel you're trying to define security issues away, I can't follow.
 
-Extension: Alphabetic Sitemap (alpha_sitemap)
-Affected Versions: 0.0.3 and all versions below
-Vulnerability Type: Cross-Site Scripting
-Severity: Medium
-Suggested CVSS v2.0:  AV:N/AC:L/Au:N/C:P/I:P/A:N/E:P/RL:U/RC:C
-Solution: Versions of this extension that are known to be vulnerable will no
-longer be available for download from the TYPO3 Extension Repository. The
-extension author failed in providing a security fix for the reported
-vulnerability in a decent amount of time. Please uninstall and delete the
-extension folder from your installation.
+Let's for a quick moment not talk about the security aware researcher
+that does malware analysis. Let's talk about the "average user". And
+let's take GIMP as an example: Isn't it a completely legit use of GIMP
+to download an image from the internet (maybe one with a
+creative commons license that allows changing it) and edit it?
 
-Credits: Credits go to Wouter Wolters who discovered and reported the issue.
+Michal already made the important point with strings: The tool is not
+doing what most people expect it to do. And basically almost nobody
+knew that (me included) before he pointed it out.
 
-- ---
-Extension: femanager (femanager)
-Affected Versions: 1.0.8 and all versions below
-Vulnerability Type: Privilege Escalation
-Severity: High
-Suggested CVSS v2.0:  AV:N/AC:L/Au:S/C:P/I:C/A:N/E:F/RL:O/RC:C
-Problem Description: Failing to properly check access rights, the extension is
-susceptible to privilege escalation, making it possible for a logged in frontend
-user to modify or delete other frontend user records.
+Or let's take "less": A pretty basic tool to "view files".
+Most linux distributions have something called "lesspipe" which is a
+script that tries to determine the content of a less'ed file and pipe
+it through an appropriate tool. readelf is amongst them (this is
+distribution specific, but at least on my system). catdoc, antiword,
+lha, ...
+I didn't know that until solar designer and kenn white discussed it on
+twitter.
 
-Solution: An updated version 1.0.9 is available from the TYPO3 extension manager
-and at http://typo3.org/extensions/repository/download/femanager/1.0.9/t3x/.
-Users of the extension are advised to update the extension as soon as possible.
+What should we do with that?
+a) is it an unappropriate use of less to view untrusted files and we
+should teach users so? (I seriously never would've thought of that - and
+which average "just learned how to use the shell" user would've?)
+b) tell linux distros that lesspipe is insecure and shouldn't be
+enabled?
+c) fuzz all the tools in there and report at least the
+low-hanging-fruit-bugs? (and then maybe try to replace the
+"they-don't-fix-bugs-or-don't-have-a-dev-any-more"-tools with more
+secure ones)
 
-- ---
-Extension: Statistics (ke_stats)
-Affected Versions: 1.1.1 and all versions below
-Vulnerability Type: SQL Injection
-Severity: Critical
-Suggested CVSS v2.0:  AV:N/AC:L/Au:N/C:C/I:P/A:N/E:F/RL:O/RC:C
-Solution: An updated version 1.1.2 is available from the TYPO3 extension manager
-and at http://typo3.org/extensions/repository/download/ke_stats/1.1.2/t3x/.
-Users of the extension are advised to update the extension as soon as possible.
+I feel a) is certainly neither working nor appropriate, I'm unsure
+about b), I feel c) is something we can at least try.
 
-Note: This vulnerability is known to be exploited in the wild.
-Credits: Credits go to Extension Author Christian Bülter who discovered and
-reported the issue.
+One more thing I find worth mentioning in this whole effort: I find the
+tools that expose their bugs pretty easily, but I also find the tools
+that seem quite solid where I hadn't expected it. I wasn't able to fuzz
+a crash out of 7z, arj, msgunfmt (gettext), the common linux archiving
+tools (tar/gzip/bzip2/xz), ...
 
-- ---
-Extension: External links click statistics (outstats)
-Affected Versions: 0.0.3 and all versions below
-Vulnerability Type: Cross-Site Scripting
-Severity: Medium
-Suggested CVSS v2.0:  AV:N/AC:L/Au:N/C:P/I:P/A:N/E:P/RL:U/RC:C
-Solution: Versions of this extension that are known to be vulnerable will no
-longer be available for download from the TYPO3 Extension Repository. The
-extension author failed in providing a security fix for the reported
-vulnerability in a decent amount of time. Please uninstall and delete the
-extension folder from your installation.
+That doesn't mean they're safe and fuzzing them with afl for two days
+wouldn't expose bugs. And of course there may be all the subtle bugs
+that cannot be found via fuzzing but only via cautious reading of the
+source code. But the point is: They're obvisouly at least much safer
+than objdump or imagemagick. (and for the record: We're not done with
+libbfd yet, but Nick did a marvellous job in fixing issues and 
+the next binutils release will be much safer for sure)
 
-Credits: Credits go to TYPO3 Security Team Member Franz G. Jahn who discovered
-and reported the issue.
+My message here is: This can be done. I am aware that C code is
+usually an awfull mess of insecurities and we won't be able to fix that
+thoroughly (and if anyone wants to rewrite any of these tools: don't do
+it in C). But we should at least try to get the low-hanging-fruits
+fixed.
 
-- ---
-Extension: smarty (smarty)
-Affected Versions: 1.13.3 and all versions below
-Vulnerability Type: Arbitrary php include via template source file
-Severity: Medium
-Suggested CVSS v2.0:  AV:N/AC:H/Au:S/C:C/I:C/A:P/E:P/RL:O/RC:C
-Problem Description: The extension smarty bundles the template engine smarty.
-Old versions of this library are known to be vulnerable to arbitrary php file
-include via template source file.
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
 
-Solution: An updated version 1.13.4 is available from the TYPO3 extension
-manager and at
-http://typo3.org/extensions/repository/download/smarty/1.13.4/t3x/. Users of the
-extension are advised to update the extension as soon as possible.
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Credits: Credits go to Extension Author Simon Tuck who discovered and reported
-the issue.
-
-- ---
-Extension: WEC Map (wec_map)
-Affected Versions: 3.0.2 and all versions below
-Vulnerability Type: SQL Injection and Cross-Site Scripting
-Severity: Medium
-Suggested CVSS v2.0:  AV:N/AC:M/Au:N/C:C/I:P/A:N/E:P/RL:O/RC:C
-Solution: An updated version 3.0.3 is available from the TYPO3 extension manager
-and at http://typo3.org/extensions/repository/download/wec_map/3.0.3/t3x/. Users
-of the extension are advised to update the extension as soon as possible.
-
-Credits: Credits go to Extension Author Jan Bartels who discovered and reported
-the issue.
-
-- ---
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlQJe3sACgkQXf6hBi6kbk/FVgCgpT9LQeDY3wR/D/Eqx3Qoyi7H
-FOIAn0WAmWaxgB4e+SR/CdvnP+FchzjJ
-=WELV
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
