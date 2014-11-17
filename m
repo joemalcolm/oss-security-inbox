@@ -1,31 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/29
-Message-ID: <1407531838.29725.31.camel@scapa>
-Date: Fri, 08 Aug 2014 23:03:58 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/12
+Message-ID: <CAP145ph3E=6sxGHxktOd2H8DvKGOWO4kYR2pwx_kCsCDRtZD5Q@mail.gmail.com>
+Date: Mon, 17 Nov 2014 16:17:33 +0100
+From: Robert Święcki <robert@...ecki.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-On ven., 2014-08-08 at 22:41 +0200, Yves-Alexis Perez wrote:
-> > 
-> > Then do just that, Linux has allowed you to do this for years, again,
-> > but very few people take advantage of it.
-> 
-> Reading that thread, that's exactly what I thought about that. I guess
-> it could be a good idea to set usbcore.authorized_default to 0 when the
-> systems is locked (logind could provide that information). There's still
-> the issue that it's then not possible to unlock the system in some
-> situation (for example because you had to unplug the keyboard while
-> logged out, or stuff like that). But at least that would be a
-> possibility.
+2014-11-17 14:10 GMT+01:00 Hanno Böck <hanno@...eck.de>:
+> Am Mon, 17 Nov 2014 13:48:39 +0100
+> schrieb Raphael Geissert <geissert@...ian.org>:
+>
+>> > c) fuzz all the tools in there and report at least the
+>> > low-hanging-fruit-bugs? (and then maybe try to replace the
+>> > "they-don't-fix-bugs-or-don't-have-a-dev-any-more"-tools with more
+>> > secure ones)
+>>
+>> d) acknowledge the fact that most tools were not "designed for
+>> security" and that we should talk about mitigation. It's about risk
+>> analysis.
+>
+> Fair point, however it doesn't exclude doing c) as well. (however it
+> was my understanding that all widely deployed memory corruption
+> mitigation methods are mostly incomplete and can usually be circumvented
+> by tricky enough exploits - but I'm no expert on this)
 
-Actually, since it's a module parameter, it doesn't seem possible to
-toggle it without reloading the module (or rebooting if it's builtin).
-So it might not be that easy to do the locking part.
+We'll probably never (in a foreseeable future) get to a point in which
+gimp/vlc etc. will be safe (to a reasonable degree) to use with
+arbitrary files just by the means of fuzzing (or for that matter, by
+manual code review, which with such large code-base seems just
+unfeasible). The main point of fuzzing seems to be to minimize
+existing attack surface before applying decent mitigation techniques
+(syscall sandboxes, fault isolation containers etc.)
 
-Regards,
+The reasons for that are:
+
+a). it's a moving target - new code for new and existing media types
+is being added every month
+b). even if we start fuzzing it now, it seems to me like a temporary
+effort (but I can accept that I'm wrong on that)
+c). there are too many "this-type-of-tools" to be taken care of with
+sufficient attention (file archivers, media players, image converters,
+hundreds of file parsers, ...)
+d). fuzzing is able to discover only subset of bugs
+
+So, even if after such fuzzing round we ended up with such tools in a
+better condition, ergo fewer users will get pwned (which is definitely
+a good thing), this by no means should be enough to just use stock vlc
+with untrusted media files (if one cares about security of her/his OS)
+w/o good evaluation of the risks involved.
+
+I know that this sounds awfully impractical (at least for the time
+being, because the landscape here is changing pretty rapidly), but
+some would say that the best advice they can give to "average users"
+now is to watch "untrusted" movies with web browsers which are
+employing well-reviewed and tested sandboxing technologies and their
+media decoders are well tested (also: fuzzed). I guess "regular" media
+players will follow with this approach in some time.
+
+By no means I want to discourage the effort, just trying discuss its
+goals (less avg users pwnd - vs - it's safe to use vlc with everything
+now).
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Robert Święcki
