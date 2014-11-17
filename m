@@ -1,58 +1,274 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/05/4
-Message-ID: <20140905070242.GA17069@kludge.henri.nerv.fi>
-Date: Fri, 5 Sep 2014 10:02:42 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/11
+Message-ID: <CAG_z0FR8DsngjL_jZuy6wgGqU1JLhOQC9-UWfjHt01qGZCFO+Q@mail.gmail.com>
+Date: Mon, 17 Nov 2014 15:13:22 +0800
+From: Marina Glancy <marina@...dle.com>
 To: oss-security@...ts.openwall.com
-Cc: TYPO3 Security Team <security@...o3.org>
-Subject: CVE request: TYPO3-EXT-SA-2014-005
+Subject: Moodle security issues are now public
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The following security notifications have now been made public. Thanks
+to OSS members for their cooperation.
 
-Can I get 2014 CVE for TYPO3-EXT-SA-2014-005, thanks. If I am correct one CVEs
-is enough as both issues are about same Ajax dispatcher.
+Sincerely,
+Marina Glancy
+Development Process Manager
+Moodle HQ
 
-http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-005/
-http://osvdb.org/103259
-http://osvdb.org/103260
 
-Release Date: February 12, 2014
-Affected Versions: yag: Version 3.0.0 and below, pt_extbase: Version 1.5.0 and below
-Vulnerability Type: Access Bypass
-Severity: High
-Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:C/I:P/A:N/E:F/RL:O/RC:C
+==============================================================================
+MSA-14-0035: Headers not added to some AJAX scripts
 
-Problem Description: The extension pt_extbase comes with an Ajax dispatcher for
-Extbase. Using this dispatcher it is possible to call every action in every
-controller of every Extbase extension installed on the system. The dispatcher
-failes to do access checks, thus it is possible to bypass access checks for
-Extbase Backend Modules like the backend user administration module. The
-extension yag also delivered an Ajax dispatcher, which was unused but
-vulnerable.
+Description:       Without forcing encoding, it was possible that UTF7
+                   characters could be used to force cross-site scripts to
+                   AJAX scripts (although this is unlikely on modern browsers
+                   and on most Moodle pages).
+Issue summary:     Some ajax scripts and hand crafted pages do not send proper
+                   encoding header
+Severity/Risk:     Minor
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5, 2.5 to 2.5.8 and earlier
+                   unsupported versions
+Versions fixed:    2.8, 2.7.3, 2.6.6 and 2.5.9
+Reported by:       Petr Skoda
+Issue no.:         MDL-47966
+CVE identifier:    -
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47966
 
-Important Note: The unused Ajax Dispatcher code in extension yag has been
-removed. If any other installed extensions made use of this dispatcher, it will
-stop working. Additionally the Ajax dispatcher in pt_extbase was modified to do
-access checks. Third party extensions using this dispatcher need to be added to
-the list of allowed actions.
+==============================================================================
+MSA-14-0036: XSS in mapcourse script in Feedback module
 
-Solution: Updated versions 3.0.1 and 1.5.1 are available from the TYPO3
-extension manager and at
-http://typo3.org/extensions/repository/download/yag/3.0.1/t3x/ and
-http://typo3.org/extensions/repository/download/pt_extbase/1.5.1/t3x/. Users of
-the extension are advised to update the extension as soon as possible.
+Description:       Last search string in Feedback module was not escaped in
+                   the search input field.
+Issue summary:     XSS through $searchcourse in mod/feedback/mapcourse.php
+Severity/Risk:     Serious
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5, 2.5 to 2.5.8 and earlier
+                   unsupported versions
+Versions fixed:    2.8, 2.7.3, 2.6.6 and 2.5.9
+Reported by:       Petr Skoda
+Issue no.:         MDL-47865
+Workaround:        Disable feedback module or remove
+                   mod/feedback:mapcourse capability from users
+CVE identifier:    CVE-2014-7830
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47865
 
-Credits: Credits go to Andrea Schmuttermair who discovered and reported this
-issue.
+==============================================================================
+MSA-14-0037: Weak temporary password generation
 
-- ---
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Description:       The word list for temporary password generation was short
+                   meaning the pool of possible passwords was not big enough.
+Issue summary:     generate_password() is insecure and in use
+Severity/Risk:     Minor
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5, 2.5 to 2.5.8 and earlier
+                   unsupported versions
+Versions fixed:    2.8, 2.7.3, 2.6.6 and 2.5.9
+Reported by:       Aaron Barnes
+Issue no.:         MDL-47050
+Workaround:        Enable password policy
+CVE identifier:    CVE-2014-7845
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47050
 
-iEYEARECAAYFAlQJYBIACgkQXf6hBi6kbk/80QCg0vRIZzIqXrCu78OhArS6oBFG
-2wIAoMBuWqqmvBha7wf/y9f/VHXSxg/i
-=lMT7
------END PGP SIGNATURE-----
+==============================================================================
+MSA-14-0038: Hidden grade information exposed by web services
+
+Description:       User without capability to view hidden grades could
+                   retrieve grades using web services.
+Issue summary:     get_grades webservice exposes hidden grades to students
+Severity/Risk:     Serious
+Versions affected: 2.7 and 2.7.2
+Versions fixed:    2.8, 2.7.3
+Reported by:       Damyon Wiese
+Issue no.:         MDL-47766
+Workaround:        Do not enable core_grades_get_grades in web services
+CVE identifier:    CVE-2014-7831
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47766
+
+==============================================================================
+MSA-14-0039: Insufficient access check in LTI module
+
+Description:       Capability checks in the LTI module only checked access to
+                   the course and not to the activity.
+Issue summary:     mod/lti/launch.php lacks access control
+Severity/Risk:     Serious
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5, 2.5 to 2.5.8 and earlier
+                   unsupported versions
+Versions fixed:    2.8, 2.7.3, 2.6.6 and 2.5.9
+Reported by:       Petr Skoda
+Issue no.:         MDL-47921
+CVE identifier:    CVE-2014-7832
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47921
+
+==============================================================================
+MSA-14-0040: Information leak in Database activity module
+
+Description:       Group-level entries in Database activity module became
+                   visible to users in other groups after being edited by
+                   a teacher.
+Issue summary:     Group ID of Database record overwritten by 0
+Severity/Risk:     Minor
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5, 2.5 to 2.5.8 and earlier
+                   unsupported versions
+Versions fixed:    2.8, 2.7.3, 2.6.6 and 2.5.9
+Reported by:       Pamela Verret
+Issue no.:         MDL-47697
+CVE identifier:    CVE-2014-7833
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47697
+
+==============================================================================
+MSA-14-0041: Lack of capability check in tags list access
+
+Description:       Unprivileged users could access the list of available tags
+                   in the system.
+Issue summary:     Tag autocomplete AJAX page lacks capability check
+Severity/Risk:     Serious
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5, 2.5 to 2.5.8 and earlier
+                   unsupported versions
+Versions fixed:    2.8, 2.7.3, 2.6.6 and 2.5.9
+Reported by:       Frédéric Massart
+Issue no.:         MDL-47965
+CVE identifier:    CVE-2014-7846
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47965
+
+==============================================================================
+MSA-14-0042: Lack of access check in IP lookup functionality
+
+Description:       The script used to geo-map IP addresses was available to
+                   unauthenticated users increasing server load when used by
+                   other parties.
+Issue summary:     iplookup is available to unauthenticated guests
+Severity/Risk:     Minor
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5, 2.5 to 2.5.8 and earlier
+                   unsupported versions
+Versions fixed:    2.8, 2.7.3, 2.6.6 and 2.5.9
+Reported by:       Dan Poltawski
+Issue no.:         MDL-47321
+CVE identifier:    CVE-2014-7847
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47321
+
+==============================================================================
+MSA-14-0043: Lack of group check in web service for Forum
+
+Description:       When using the web service function  for Forum discussions,
+                   group permissions were not checked.
+Issue summary:     forum_get_discussions web service misses group
+                   permissions check
+Severity/Risk:     Minor
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5
+Versions fixed:    2.8, 2.7.3 and 2.6.6
+Reported by:       Petr Skoda
+Issue no.:         MDL-45303
+Workaround:        Do not enable web service function
+                   mod_forum_get_discussions
+CVE identifier:    CVE-2014-7834
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45303
+
+==============================================================================
+MSA-14-0044: Hardware path disclosed in the error message
+
+Description:       By directly accessing an internal file, an unauthenticated
+                   user can be shown an error message containing the file system
+                   path of the Moodle install.
+Issue summary:     PHPunit: lib/phpunit/bootstrap.php leaks system info
+Severity/Risk:     Minor
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5
+Versions fixed:    2.8, 2.7.3 and 2.6.6
+Reported by:       Sam Marshall
+Issue no.:         MDL-47287
+Workaround:        Prevent web access to this file in web server directives
+CVE identifier:    CVE-2014-7848
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47287
+
+==============================================================================
+MSA-14-0045: XSS file upload possible through web service
+
+Description:       If web service with file upload function was available,
+                   user could upload XSS file to his profile picture
+                   area.
+Issue summary:     XSS through WS user file upload
+Severity/Risk:     Serious
+Versions affected: 2.7 to 2.7.2 and 2.6 to 2.6.5
+Versions fixed:    2.8, 2.7.3 and 2.6.6
+Reported by:       Petr Skoda
+Issue no.:         MDL-47868
+Workaround:        Do not enable "Can upload files" in web services
+                   especially to untrusted users
+CVE identifier:    CVE-2014-7835
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47868
+
+==============================================================================
+MSA-14-0046: CSRF in LTI module
+
+Description:       Two files in the LTI module lacked a session key check
+                   potentially allowing cross-site request forgery.
+Issue summary:     CSRF in mod/lti/request_tool.php and
+                   mod/lti/instructor_edit_tool_type.php
+Severity/Risk:     Serious
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5, 2.5 to 2.5.8 and earlier
+                   unsupported versions
+Versions fixed:    2.8, 2.7.3, 2.6.6 and 2.5.9
+Reported by:       Petr Skoda
+Issue no.:         MDL-47924
+CVE identifier:    CVE-2014-7836
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47924
+==============================================================================
+MSA-14-0047: Possible data loss in Wiki activity
+
+Description:       By tweaking URLs, users who were able to delete pages in at
+                   least one Wiki activity in the course were able to delete
+                   pages in other Wiki pages in the same course.
+Issue summary:     unvalidated parameters in mod/wiki/admin.php
+Severity/Risk:     Minor
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5, 2.5 to 2.5.8 and earlier
+                   unsupported versions
+Versions fixed:    2.8, 2.7.3, 2.6.6 and 2.5.9
+Reported by:       Petr Skoda
+Issue no.:         MDL-47949
+CVE identifier:    CVE-2014-7837
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47949
+
+==============================================================================
+MSA-14-0048: CSRF in forum tracking toggle
+
+Description:       Set tracking script in the Forum module lacked a session
+                   key check potentially allowing cross-site request forgery.
+Issue summary:     CSRF in mod/forum/settracking.php
+Severity/Risk:     Minor
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5, 2.5 to 2.5.8 and earlier
+                   unsupported versions
+Versions fixed:    2.8, 2.7.3, 2.6.6 and 2.5.9
+Reported by:       Petr Skoda
+Issue no.:         MDL-48019
+CVE identifier:    CVE-2014-7838
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48019
+
+==============================================================================
+MSA-14-0049: Possible to print arbitrary message to user by modifying URL
+
+Description:       Session key check was missing on return page in module LTI
+                   allowing attacker to include arbitrary message in URL
+                   query string
+Issue summary:     mod/lti/return.php allows attacker to print arbitrary message
+Severity/Risk:     Minor
+Versions affected: 2.7 to 2.7.2, 2.6 to 2.6.5, 2.5 to 2.5.8 and earlier
+                   unsupported versions
+Versions fixed:    2.8, 2.7.3, 2.6.6 and 2.5.9
+Reported by:       Petr Skoda
+Issue no.:         MDL-47927
+CVE identifier:    -
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47927
+
+==============================================================================
