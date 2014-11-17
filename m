@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/25/2
-Message-ID: <549BE09C.6020801@internot.info>
-Date: Thu, 25 Dec 2014 21:02:04 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: libsndfile buffer overread
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/17
+Message-ID: <CAA7hUgFY6NCT5mZTp7MUD8fWnxpWqVgjfpd40z3odSOxOAug4Q@mail.gmail.com>
+Date: Mon, 17 Nov 2014 17:49:42 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 17 November 2014 16:17, Robert Święcki <robert@...ecki.net> wrote:
+[...]
+> I know that this sounds awfully impractical (at least for the time
+> being, because the landscape here is changing pretty rapidly), but
+> some would say that the best advice they can give to "average users"
+> now is to watch "untrusted" movies with web browsers which are
+> employing well-reviewed and tested sandboxing technologies and their
+> media decoders are well tested (also: fuzzed). I guess "regular" media
+> players will follow with this approach in some time.
 
-A buffer overread was found in libsndfile by me, in the latest version.
-Fix commit here:
-https://github.com/erikd/libsndfile/commit/dbe14f00030af5d3577f4cabbf9861db59e9c378
+It all comes down to code, whether out of the browser, in it, written
+in javascript, or a pure C implementation. So I disagree.
 
-Could I get a CVE-ID for it?
+Just to give an example of an in-browser crash, the other day I opened
+a 4-years old pdf of a random company and it made chromium's pdf
+plugin crash.
+No problem opening it with pdf.js under firefox or poppler.
 
-
-Thanks,
+Cheers,
 -- 
--- Joshua Rogers <https://internot.info/>
-
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
