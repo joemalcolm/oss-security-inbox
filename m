@@ -1,58 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/25
-Message-ID: <20140808185059.GB12127@gremlin.ru>
-Date: Fri, 8 Aug 2014 22:50:59 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/5
+Message-ID: <CAOfWR+GBcDEr_MNTKGhGQXdSzePRVKvLH0PihSfX6ZPuqPc5gg@mail.gmail.com>
+Date: Mon, 17 Nov 2014 02:44:27 -0500
+From: Robert Watson <robertcwatson1@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-On 08-Aug-2014 22:27:16 +0400, (GalaxyMaster) wrote:
+30+ years of programming Unix/Linux systems has taught me that old tools
+(like old cars) usually work very well for the intended purpose,​ but are
+far from as safe to use as we expect nowadays.
 
- > Alexey,
+All of these tools were written years ago for use in an environment where
+there was no such thing as "anonymous access." Yes, bad practices like
+shared logins were common. But there was still always someone to hold
+responsible.
 
-Aye, Dmitry? :-)
+Most of the authors of these tools are long since retired and/or deceased.
+Thus, someone new must be found with sufficient interest to learn the
+software and correct these fuzzing-uncovered problems.
 
- >>> That doesn't prevent any other USB HID device from being plugged
- >>> in and instantly working. Which again, you can prevent if you
- >>> want to, but no one seems to do that...
- >> Hmmm... To avoid possible confusion: that was CONFIG_USB_KBD -
- >> "USB HIDBP Keyboard (simple Boot) support", and CONFIG_USB_HID
- >> was turned off.
- > I think Greg was referring to kernel's feature of controlling
- > power on USB ports (e.g. you can just switch of power for a port
- > and nothing you insert there will have a chance to work until
- > you instruct the kernel to switch the port back on).
+It would be far more beneficial to "adopt" one of these "orphaned" tools
+that you'd like use. Then fork a new version, or an entirely new tool for
+the intended function, that incorporates the safety standards we expect.
 
-That may be good for servers, but almost unusable on worstations:
-people tend to charge mobile devices while they work.
+If every car on the road had to be kept upgraded to current safety
+standards, only the well-off would own cars.
 
-Personally I'd like to be able to shorten D+ and D- lines for all
-unused ports and keep them in "charge-only" state. However, that'll
-require disconnecting them from the socket to get this scheme:
+*Trust in truth keeps hope alive*
 
-Host                       Device
+*     iCare for AffordableCare
+<http://www.nationalpartnership.org/issues/health/HIT/>*
 
-VCC    ----------------    VCC
+*robertcwatson1@...il.com <robertcwatson1@...il.com>*
 
-D-     ---+        +---    D-
-          |        |
-D+     ---+        +---    D+
+*www.docsalvage.info <http://www.docsalvage.info/>*
+*www.softwarerevisions.net <http://www.softwarerevisions.net/>*
+*www.CivicChorale.org <http://www.civicchorale.org/>*
 
-GND    ----------------    GND
-
-It is possible, but adding even a single component to a system
-board causes a marketoids' butthurt.
-
- >> Bus 002 Device 064: ID 046d:c016 Logitech, Inc. Optical Wheel
- >> Mouse
- >> Device IDs tell us the hub was reset several times :-)
- > ... or somebody insanely was plugging mouse in and out in a
- > cycle :)
-
-That device wasn't a mouse, but I really appreciate your idea :-)
+<http://www.charliecrist.com/> <https://www.healthcare.gov/>
+<http://www.wunderground.com/cgi-bin/findweather/getForecast?query=Tallahassee,%20FL>
 
 
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+On Sun, Nov 16, 2014 at 6:10 PM, Robert Święcki <robert@...ecki.net> wrote:
+
+> 2014-11-16 21:43 GMT+01:00 Michal Zalewski <lcamtuf@...edump.cx>:
+> >> However, even if tools like file/ndisasm/gimp/readelf can be used by
+> >> many (w/o strong system isolation boundaries) to analyze untrusted
+> >> inputs (for reverse engineering, malware analysis and similar
+> >> purposes) - I'd simply put a blame on those users
+> >
+> > Well, it's always the easy option, but keep in mind that there are
+> > countless tutorials that tell people to use 'file' or 'strings' to
+> > examine sketchy file, or use tools such as objdump to do hobby
+> > forensics.
+> >
+> > We can blame the authors of the tutorials - but it goes back to a
+> > fairly fundamental problem: the use cases aren't completely crazy
+> > (nothing *fundamentally* wrong in using 'strings' on a file you don't
+> > trust, right?), and their unsafe design is a fairly counterintuitive
+> > property to laypeople and many experts alike [*].
+> >
+> > So, for high-profile tools used in ways that are sort of plausible and
+> > probably common, we may just need to try & make them robust.
+>
+> Agreed.
+>
+> > (But of
+> > course, I'd be pragmatic in drawing the line: the Mayhem fuzzing thing
+> > went completely overboard.)
+>
+>
+> --
+> Robert Święcki
+>
+
