@@ -1,116 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/8
-Message-Id: <E1WCp3H-0004it-7u@xenbits.xen.org>
-Date: Mon, 10 Feb 2014 11:29:27 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 84 (CVE-2014-1891,CVE-2014-1892,CVE-2014-1893,CVE-2014-1894) - integer overflow in several XSM/Flask hypercalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/13
+Message-ID: <CALx_OUDCb-ho1P4dR-ABeRBBBWT=LxXSWMK6yjLP1qsty98UOA@mail.gmail.com>
+Date: Mon, 17 Nov 2014 07:54:54 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> I know that this sounds awfully impractical (at least for the time
+> being, because the landscape here is changing pretty rapidly), but
+> some would say that the best advice they can give to "average users"
+> now is to watch "untrusted" movies with web browsers which are
+> employing well-reviewed and tested sandboxing technologies and their
+> media decoders are well tested (also: fuzzed). I guess "regular" media
+> players will follow with this approach in some time.
 
- Xen Security Advisory CVE-2014-1891,CVE-2014-1892,CVE-2014-1893,CVE-2014-1894 / XSA-84
-                              version 3
+Well, but that's a tough argument.
 
-           integer overflow in several XSM/Flask hypercalls
+First, as you note, the primary way that things like ffmpeg have
+improved is fuzzing. In fact, if anything, ffmpeg has been
+*exceptionally* bad before that, would definitely fail the "designed
+for security" test, and by that criteria, should not have been used in
+any browser to begin with. So, it's probably not a very good argument
+against fuzzing bad software =)
 
-UPDATES IN VERSION 3
-====================
+Secondly - as most people on this list know, sandboxing is a tricky
+beast. Firefox doesn't have it. Safari and Opera don't have it (that I
+know of). MSIE has a fairly limited one. Chrome has a good sandbox on
+most platforms, but today, it is certainly far from being a silver
+bullet - an RCE in a sandboxed renderer still gives access to many of
+your online assets (doubly so if you advise people to conduct their
+business in browser-accessible VMs, cloud services, or so).
 
-CVE numbers have been assigned.
+They are working on something better, but the difficulty of making
+that happen for a fairly specific use case certainly emphasizes how
+tricky sandboxing can be with today's monolithic, multi-purpose apps.
+People have been talking about lightweight, dynamic
+compartmentalization-on-the-fly for other tools for a very long time,
+but not much has gained widespread acceptance so far. Most OSes ship
+with a dizzying array of containment mechanisms, most of which are
+completely unused spare for a handful binaries built by teams
+passionate about infosec. I'm not sure if we have the power to change
+that.
 
-ISSUE DESCRIPTION
-=================
-
-The FLASK_{GET,SET}BOOL, FLASK_USER and FLASK_CONTEXT_TO_SID
-suboperations of the flask hypercall are vulnerable to an integer
-overflow on the input size. The hypercalls attempt to allocate a
-buffer which is 1 larger than this size and is therefore vulnerable to
-integer overflow and an attempt to allocate then access a zero byte
-buffer.  (CVE-2014-1891)
-
-Xen 3.3 through 4.1, while not affected by the above overflow, have a
-different overflow issue on FLASK_{GET,SET}BOOL (CVE-2014-1893) and
-expose unreasonably large memory allocation to aribitrary guests
-(CVE-2014-1892).
-
-Xen 3.2 (and presumably earlier) exhibit both problems with the
-overflow issue being present for more than just the suboperations
-listed above.  (CVE-2014-1894 for the subops not covered above.)
-
-The FLASK_GETBOOL op is available to all domains.
-
-The FLASK_SETBOOL op is only available to domains which are granted
-access via the Flask policy.  However the permissions check is
-performed only after running the vulnerable code and the vulnerability
-via this subop is exposed to all domains.
-
-The FLASK_USER and FLASK_CONTEXT_TO_SID ops are only available to
-domains which are granted access via the Flask policy.
-
-IMPACT
-======
-
-Attempting to access the result of a zero byte allocation results in
-a processor fault leading to a denial of service.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions back to at least 3.2 are vulnerable to this issue when
-built with XSM/Flask support. XSM support is disabled by default and is
-enabled by building with XSM_ENABLE=y.
-
-We have not checked earlier versions of Xen, but it is likely that
-they are vulnerable to this or related vulnerabilities.
-
-All Xen versions built with XSM_ENABLE=y are vulnerable.
-
-MITIGATION
-==========
-
-There is no useful mitigation available in installations where XSM
-support is actually in use.
-
-In other systems, compiling it out (with XSM_ENABLE=n) will avoid the
-vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Matthew Daley.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa84-unstable-4.3.patch        xen-unstable,Xen 4.3.x
-xsa84-4.2.patch                 Xen 4.2.x
-xsa84-4.1.patch                 Xen 4.1.x
-
-
-$ sha256sum xsa84*.patch
-e33dd94499959363ad01bebefda9733683c49fd42a9641cf2d7edcd87f853d55  xsa84-4.1.patch
-433f3c8a202482c51a48dc0e9e47ac8751d1c0d0759b7bcd22804e1856279a89  xsa84-4.2.patch
-64ae433eb606c5446184c08e6fceb9f660ed9a9c28ec112c8cc529251b3b49fb  xsa84-unstable-4.3.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJS+LgGAAoJEIP+FMlX6CvZH1MH/00JKMYdEyaSA3oVGRTeV3Wk
-/ZgZl0dTuEBYLWTh/sE8txPGVb7jOvc4pzuhZ8Z0rvh4J10EKjqIUutSs0QR6m3U
-+3H+C/eHW98oselKT1csUoIZuf+3oTkZeryVeTyUi7g04xoYHpljT/u+gku8Twuz
-G8D3ckchHx5Zi40u0hQWAIOyJxwlpXD74mv2hnHa7X30anpLgGhsBxGLoghJSJwd
-x+i82krxbs0Ac7zKQBeVpPhVHE7QHR5Em1BqkxxtT8c93aujeD0Lkdw2H2ki1uOc
-+XOEwl/kT9TqiiHy+D+wZwY08xwijC4MZrxvVW35M6DupAG/4i9mv/ICs1GGfK8=
-=GrAi
------END PGP SIGNATURE-----
-
-Download attachment "xsa84-4.1.patch" of type "application/octet-stream" (2943 bytes)
-
-Download attachment "xsa84-4.2.patch" of type "application/octet-stream" (4943 bytes)
-
-Download attachment "xsa84-unstable-4.3.patch" of type "application/octet-stream" (4955 bytes)
+/mz
