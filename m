@@ -1,48 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/4
-Message-ID: <CAJ_zFkJ7EcbxyuNjJ8C24aukguQ1=9nyj5vtHJJywAqqY5F-ew@mail.gmail.com>
-Date: Wed, 1 Oct 2014 17:53:45 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/1
+Message-ID: <54694F77.9000106@mccme.ru>
+Date: Mon, 17 Nov 2014 04:29:27 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Cc: Chet Ramey <chet.ramey@...e.edu>
-Subject: Re: More parser odities
+Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 1, 2014 at 5:36 PM, Solar Designer <solar@...nwall.com> wrote:
-> Eric - you probably want to CC: Chet on your new findings.  Added the CC.
+On 2014-11-07 18:58, Robert Święcki wrote:
+> 2014-11-07 11:08 GMT+01:00 Yury Gribov <y.gribov@...sung.com>:
+>> On 11/07/2014 07:43 AM, Alexander Cherepanov wrote:
+>>>
+>>> Longer version: I started with the most simple approach I could get
+>>> results with and improved it only a little bit so far. There was just no
+>>> need for improvements -- until recently I was getting more crashes than
+>>> I can analyze (i.e. run through valgrind:-).
+>>
+>>
+>> This looks rather impressive.  Have you considered automatically detecting
+>> duplicates by e.g. analyzing stacktraces?
 >
-> On Wed, Oct 01, 2014 at 07:16:40PM -0500, Kobrin, Eric wrote:
->> This oddity also allows bypass of the absolute_program protection added in the recent patches:
->>
->>
->> $ env $'BASH_FUNC_#badname%%'=$'() { :; }\n/bin/ls () { echo wrongfunc; }  ' ./bash -c '/bin/ls'
->> fbash: error importing function definition for `#badname'
->> wrongfunc
->>
->>
->>
->>
->> I really do think it is time to take a different approach for a long-term solution.
->>
+> Feel free to take a look at honggfuzz - https://code.google.com/p/honggfuzz/
+>
+> It provides a crude version of unification on the basis of offending
+> program counter (as well as simple disassembly of the offending
+> instruction).
 
-Eric - the prefix you're specifying _is_ the long-term solution, it
-may be a bug, but it's a non-security bug.
+Is it really interesting? For objdump many crashes are in quite generic 
+functions like bfd_getl16 and PC will not differentiate between them. 
+Using full stacktrace is probably too much but using only PC seems to be 
+too coarse.
 
-An attacker cannot set the _names_ of the variables across any
-reasonable privilege boundary. The reason this was an issue recently
-was because the name was irrelevant.
+> It also disables address randomization to get repeatable
+> crashes. Example output (from testing strings-multiarch):
 
-If you have some situation where an attacker can invoke bash *across a
-privilege boundary* with arbitrary environment variable *names*, then
-that is a bug in the program invoking bash - *not* a bug in bash.
-Nothing bash can do can save you in that case, it is the
-responsibility of that program to invoke bash safely.
+BTW is there a publicly available corpus of binaries from various 
+architectures?
 
-This is like complaining that if you give someone your username and
-password, bash lets you remove files. That's not bash's fault, it's
-your fault for giving the attacker your username and password.
+> http://alt.swiecki.net/.t/strings-multiarch.txt
+>
+> Usage:
+> honggfuzz -f in/ -r 0.1 -q -- /usr/bin/strings ___FILE___
 
-If you let an attacker specify arbitrary variable *names* across a
-privilege boundary, that's *your* fault not bash's.
-
-Tavis.
+-- 
+Alexander Cherepanov
