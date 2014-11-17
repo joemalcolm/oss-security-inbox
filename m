@@ -1,39 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/11
-Message-Id: <201401311417.s0VEHcqF006390@linus.mitre.org>
-Date: Fri, 31 Jan 2014 09:17:38 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, carnil@...ian.org
-Subject: Re: CVE request: uupdate (devscripts) directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/2
+Message-ID: <CAP145pgToR-KYaq=4sUwLDV6XAL70aieziK1jZ4NL-9TTgseVA@mail.gmail.com>
+Date: Mon, 17 Nov 2014 02:49:37 +0100
+From: Robert Święcki <robert@...ecki.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>>> This looks rather impressive.  Have you considered automatically
+>>> detecting
+>>> duplicates by e.g. analyzing stacktraces?
+>>
+>>
+>> Feel free to take a look at honggfuzz -
+>> https://code.google.com/p/honggfuzz/
+>>
+>> It provides a crude version of unification on the basis of offending
+>> program counter (as well as simple disassembly of the offending
+>> instruction).
+>
+>
+> Is it really interesting? For objdump many crashes are in quite generic
+> functions like bfd_getl16 and PC will not differentiate between them. Using
+> full stacktrace is probably too much but using only PC seems to be too
+> coarse.
 
-> Package: devscripts
+It's actually a combination of signal/PC/fault_address/orig_file and
+"code value", which is very specific to Linux/arch, but under x86 it
+can quickly indicate you what kind of fault it was (execution of
+non-executable page, read, write etc.). It also disassembles the
+faulting instruction, so it's easy to quickly estimate severity.
 
-> trick uupdate into patching files outside the source package directory
+>From personal experience - and for limited fuzzing (i.e. less than
+dozen or so of machines) where one needs to sort through the output
+manually anyway - very useful - e.g. (example output file from a
+non-related to libbdf fuzzing)
 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737160
+SIGSEGV.PC.0x2e5458.CODE.-6.ADDR.0x2e5458.INSTR.[NOT_MMAPED].ppc32.mv.fuzz
 
-> A malicious .orig.tar file
+...looks very promising (PC was set to a non-mapped page, if that
+address is controlled then it's an instant *win*:), as opposed to..
 
-Use CVE-2014-1833.
+SIGSEGV.PC.0xf7ea7109.CODE.1.ADDR.0x8.INSTR.mov_edx,_[rax+0x8].5858.fuzz
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+...which is just a nul-ptr read.
 
-iQEcBAEBAgAGBQJS663SAAoJEKllVAevmvmsoqwH/RYO4Vt7CVu16EsoW4lWB5Eb
-QLkswQy/7qfpL2YU25AAnZMUNK/TCVA/jvIIjaEPalAKCORykmE41RE5xgkIHPhU
-ZgvaRQMEAA/A/Nab+bDs+zO/wUXtkO+i0BWtNSVz/gzlYRkoNom/7WRUMazmtJwP
-zLZwpwZAVyfd4fyxYAnRAfrMGLrU3NCk8won7yGNZXZ3ykX+BIZZM3dEFpZH41qv
-TfbTTFvgzZDEgT+kt6J8AIYTjoG/euJBrOElrV7pPJEInOMZnXvSFU3FaYiPikJY
-wODTfX34zLklU+IQ5+z++SAPg8DgpUHilrLvmCevxHeeeE8g3K6xNbkdlH6sqzo=
-=GIZQ
------END PGP SIGNATURE-----
+As mentioned above - for fuzzing on one or one couple of PCs it's just
+fine. For cluster fuzzing, indeed a more specialized (in many aspects)
+fuzzer is needed.
+
+>> It also disables address randomization to get repeatable
+>> crashes. Example output (from testing strings-multiarch):
+>
+>
+> BTW is there a publicly available corpus of binaries from various
+> architectures?
+
+I don't think so - I'd start with rpm/deb search engines and extract
+ELFs for interesting architectures, then would use a search engine to
+find other remaining file formats. Also, objcopy converts between some
+of those formats (esp. when compiled with multiarch support).
+
+-- 
+Robert Święcki
