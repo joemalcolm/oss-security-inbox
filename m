@@ -1,47 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/14
-Message-Id: <201403281918.s2SJIGe9011855@linus.mitre.org>
-Date: Fri, 28 Mar 2014 15:18:16 -0400 (EDT)
-From: cve-assign@...re.org
-To: abn@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Split: CVE-2014-0050 Apache Commons FileUpload and Apache Tomcat DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/23
+Message-id: <59FCC113-F663-467A-800C-28DD34804A99@me.com>
+Date: Mon, 17 Nov 2014 18:30:11 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Wordpress WP-DB-Backup v2.2.4 Plugin Remote Database Backup Download Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello List,
 
-> Although Commons FileUpload and Tomcat are affected by this flaw and
-> the vulnerable classes share the same ancestry, the code bases for
-> them have been maintained in separate source trees for a long while
-> now.
-> 
-> Can this CVE be split?
+So I had been tinkering with the WP-DB-Backup v2.2.4 plugin that uses security through obscurity to hide the location of the wordpress database backups it creates.  The advisory with PoC I had been working on is here: 
 
-The existence of separate source trees does not affect the number of
-CVE IDs.
+http://www.vapid.dhs.org/advisories/wordpress/plugins/wp-db-backup-v2.2.4/
 
-> http://seclists.org/fulldisclosure/2014/Feb/41
+I contacted the plugin author with my advisory and my proposed fix. The author acknowledged my work, but I never heard from him again.
 
-"Apache Tomcat 7 and Apache Tomcat 8 use a packaged renamed copy of
-Apache Commons FileUpload" in that reference is sufficient for us to
-use only one CVE ID. We do not rely on factors such as whether the
-code has become non-identical or whether different persons are
-maintaining the two copies of the code.
+Turns out Matthew Bryant had already covered everything I had but a few months ago here:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+http://thehackerblog.com/auditing-wp-db-backup-wordpress-plugin-why-using-the-database-password-for-entropy-is-a-bad-idea/
 
-iQEcBAEBAgAGBQJTNcoqAAoJEKllVAevmvmsSDMH/3G6KpgE8KkqoeA0G90Dussz
-EEwfBy1qxm7s6DMZNn+gmHi2v0cvH6WzbHAcMc01X8noQsFYMkK93ir7Gp1PMFSN
-5AdepR+RedtZKKYKOmjCvkOYG0LFH+lUDn+jcsPuqcFZ4zi8jVAP4Q2RHXTpg9VI
-xm+gDGkKi3LegOygKkjVnXsr6PHxz7Z7Pzd27KhrK+Qk3wQmTkvAqotXTRJzXFj4
-eC6tfwUHoTCO0QZ24RYk+oJaOmk1WlWtLZnsIlzB7rba8Vsb18f0LlT3Eqozz+ha
-t5q2veIYA/CDawuPzcvAfSXbqfVtws9HgXs+pJti7CNi4+LQnxCvhbu2mKqhsNQ=
-=mlQ2
------END PGP SIGNATURE-----
+We aren’t sure if this is CVE worthy, it seems since the database is exposed one only needs to guess the database name in order to succeed besides a bunch of brute forcing stuff. :-)  I thought I would see what you folks had to say.
+
+
+Thanks
+Larry
