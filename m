@@ -1,43 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/5
-Message-ID: <CAHmME9pK-o3O4_89sPZ0du1z4Z+doNtL-_gnWR9oG9792EiDuQ@mail.gmail.com>
-Date: Fri, 7 Nov 2014 02:58:09 +0100
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: Qt Creator fails to verify SSH host key
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/3
+Message-ID: <20141116191712.6bd930f7@127>
+Date: Sun, 16 Nov 2014 19:17:12 -0800
+From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
+To: oss-security@...ts.openwall.com
+Subject: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 7, 2014 at 12:24 AM, Michael Samuel <mik@...net.net> wrote:
->
-> This is a serious bug (it certainly circumvents the security of
-> OpenSSH),
+Hello,
 
+I haven't had any success yet in finding security audit reports for
+any *nix OS (I haven't looked for them for MS/Apple products).
 
-My opinion too (obviously).
+Can you tell me where to find them? I thought that I'm not
+using the right word or word combination. This list seemed to be
+a good target as most here are in the security milieu.
 
+I'm looking for complete and comprehensive reports from an
+extensive and exhaustive security audit of the entire OS.
 
-> but I think
-> the proposed fix doesn't fit.
->
+But if my goal of extensive and exhaustive is too lofty then
+something less so might at least help.
 
-The patch on there most certainly won't be accepted -- it's just something
-I hacked together in 5 minutes to use on my own project, and I figured the
-Qt devs might get some inspiration to do it themselves, after seeing the
-guts aren't really that hard.
+Also I am interested in OSs that are not *nix or MS/Apple.
+I know of Haiku OS but are there any others? Does China
+or Japan or any other country have their own OSs?
 
+Is the world really limited to just a few?
 
->
-> What might be a better solution is to store the public key for all
-> devices, and accept
-> if it matches any device you've talked to before.  On discovering a
-> new device, it shows
-> the fingerprint and prompts for a name/description.
->
-> Then you can revoke devices in some other part of the UI when you need
-> to clean up.
->
+-- 
 
-That actually seems like a decent compromise.  Though, it does mean if you
-compromise one device that's ever been trusted, you compromise all others
-by extension. But maybe that's okay for the use here.
 
