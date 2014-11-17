@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/11/2
-Message-ID: <20140811183822.GA5736@eldamar.local>
-Date: Mon, 11 Aug 2014 20:38:22 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: Plack::App::File does not prune trailing slashes: possible code exposure / information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/20
+Message-ID: <546A425A.1090409@redhat.com>
+Date: Mon, 17 Nov 2014 19:45:46 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-request: systemd-resolved DNS cache poisoning
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 11/14/2014 05:58 PM, Greg KH wrote:
+> On Fri, Nov 14, 2014 at 09:42:13AM +0100, Sebastian Krahmer wrote:
+>> I'd be happy with no CVE being assigned. At the end I just want to
+>> have the cache hardened.
+>
+> Which is a fair thing to ask for.  Is that work happening upstream in
+> the systemd repo?  I haven't seen this issue brought up on the systemd
+> mailing list, but I might just have missed it.
 
-Plack 1.0031 contains the following Changes entry[1]:
+Fair enough, I posted a pointer:
 
-    [SECURITY]
-        - Plack::App::File would previously strip trailing slashes off
-          provided paths. This in combination with the common pattern
-          of serving files with Plack::Middleware::Static could allow
-          an attacker to bypass a whitelist of generated files (avar) #446
+ 
+<http://lists.freedesktop.org/archives/systemd-devel/2014-November/025276.html>
 
-See [2,3] for more details about this issue, which might lead to
-information disclosure.
-
- [1] http://api.metacpan.org/source/MIYAGAWA/Plack-1.0031/Changes
- [2] https://github.com/plack/Plack/issues/405
- [3] https://github.com/plack/Plack/pull/446
-
-Can a CVE be assigned for this isssue (as an example, CVE-2013-7329
-was previously also assigned for CGI::Application).
-
-Regards,
-Salvatore
+-- 
+Florian Weimer / Red Hat Product Security
