@@ -1,67 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/4
-Message-Id: <20141006064318.4D8B7C5057B@smtptsrv1.mitre.org>
-Date: Mon,  6 Oct 2014 02:43:18 -0400 (EDT)
-From: cve-assign@...re.org
-To: krahmer@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, mbriza@...hat.com
-Subject: Re: various sddm vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/8
+Message-ID: <20141117141040.7ee7eab5@pc>
+Date: Mon, 17 Nov 2014 14:10:40 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Am Mon, 17 Nov 2014 13:48:39 +0100
+schrieb Raphael Geissert <geissert@...ian.org>:
 
-> From: mbriza@...hat.com
+> > c) fuzz all the tools in there and report at least the
+> > low-hanging-fruit-bugs? (and then maybe try to replace the
+> > "they-don't-fix-bugs-or-don't-have-a-dev-any-more"-tools with more
+> > secure ones)
+> 
+> d) acknowledge the fact that most tools were not "designed for
+> security" and that we should talk about mitigation. It's about risk
+> analysis.
 
-> Although we don't believe any of the issues you reported could lead to
-> a privilege escalation (as some of the resulting bugreports suggest),
-> we consider them to be security issues.
+Fair point, however it doesn't exclude doing c) as well. (however it
+was my understanding that all widely deployed memory corruption
+mitigation methods are mostly incomplete and can usually be circumvented
+by tricky enough exploits - but I'm no expert on this)
 
-> https://github.com/sddm/sddm/pull/279
+-- 
+Hanno Böck
+http://hboeck.de/
 
-> https://bugzilla.suse.com/show_bug.cgi?id=897788#c6
-> sddm user is not available for choosing in the first place
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-As far as we can tell, the vendor considers it a vulnerability for
-unauthenticated logins as sddm to succeed, so we'll assign
-CVE-2014-7271. The conditions under which this can happen are not
-clear; maybe one or more of these is true:
-
-  - sddm is a regular user account, not a uid-below-1000 account, on
-    some systems because a Linux distribution is allowed to customize
-    the sddm account name in its own sddm package
-
-  - sddm is a regular user account, not a uid-below-1000 account, on
-    some systems because that username was in use before sddm was
-    installed
-
-  - there's a way to choose to login as sddm even if sddm isn't on the
-    list of users
-
-
-> https://bugzilla.suse.com/show_bug.cgi?id=897788#c7
-> https://bugzilla.suse.com/show_bug.cgi?id=897788#c8
-> https://bugzilla.suse.com/show_bug.cgi?id=897788#c9
-> https://github.com/sddm/sddm/pull/280
-
-Apparently the primary problem is unsafe write operations into a
-directory that's completely controlled by a unprivileged user. (The
-chown is, in some sense, a write operation on security-relevant file
-metadata.) Use CVE-2014-7272 for all of these three.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUMjmKAAoJEKllVAevmvmsyBcH/RNiNIUywq9yYODGZ1/2bPWU
-acu4SMFvHtZ0eP26c1KYq5R7WJG/3TQwCz9OdA1SjfxcIwnBGNFOd+f85SA95v/t
-QVS7kLmGZQ74Z+zd+WQBDd5HNIQRpz3hJM1ppIMDwQY3xgulRN71GUKI/IRNVAL/
-cxIxHnhqPWoO7Uc0+3IRZkp7fJ07+NQZreaUMxBZWYe/hE5tJXxhQIM+wuFJ0XEs
-DMjs2gRspQQiv2TRQX1S09vg7oVdrgTIkJPJsVPqqzMBjq6mMYIIj/yuKiU8pel+
-EMBZtSedbJESOawciOKsrFLJ1ZaYGydOhKFBhu4DHAf1FXl7Ii+h8QDeOOSF+5M=
-=GZYa
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
