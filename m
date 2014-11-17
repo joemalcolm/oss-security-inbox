@@ -1,66 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/2
-Message-ID: <535F9A59.3060107@canonical.com>
-Date: Tue, 29 Apr 2014 08:26:01 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/4
+Message-ID: <54698A5F.4030207@internot.info>
+Date: Mon, 17 Nov 2014 16:40:47 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: Ubuntu 14.04: security problem in the lock screen
+Subject: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On 14-04-26 11:06 AM, Kurt Seifried wrote:
-> https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1308572
-> 
-> Probably needs a CVE.
-> 
-
-While that particular bug was fixed before 14.04 was released, it's probably
-worth assigning a CVE to it anyway for tracking purposes, since I have now
-published a security update that corrects two more lock screen bugs.
-
-Here's a summary:
-
-Issue #1 (Before 14.04 came out):
-
-Marco Agnese discovered that Unity 7.2.0 incorrectly handled entry activation on
-the lock screen, resulting in the lock screen crashing and the session becoming
-unlocked.
-
-Reference:
-https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1308572
-http://bazaar.launchpad.net/~unity-team/unity/trunk/revision/3787
-
-Issue #2:
-
-Giovanni Mellini discovered that Unity 7.2.0 could display the Dash in certain
-conditions when the screen was locked. A local attacker could possibly use
-this issue to run commands, and unlock the current session.
-
-Reference:
-https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1308850
-http://bazaar.launchpad.net/~unity-team/unity/trunk/revision/3789
-http://www.ubuntu.com/usn/usn-2184-1/
-
-Issue #3:
-
-Frédéric Bardy discovered that Unity 7.2.0 incorrectly filtered keyboard
-shortcuts when the screen was locked. A local attacker could possibly use
-this issue to run commands, and unlock the current session.
-
-Reference:
-https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1313885
-https://code.launchpad.net/~3v1n0/unity/lockscreen-keys-disable/+merge/217528
-http://www.ubuntu.com/usn/usn-2184-1/
-
-
-Could CVEs please be assigned to these three issues?
-
-Thanks!
-
-Marc.
+Not an OS, but TrueCrypt is here:
+https://opencryptoaudit.org/reports/iSec_Final_Open_Crypto_Audit_Project_TrueCrypt_Security_Assessment.pdf
+On 17/11/14 14:17, M.T. Roebuck wrote:
+> Hello,
+>
+> I haven't had any success yet in finding security audit reports for
+> any *nix OS (I haven't looked for them for MS/Apple products).
+>
+> Can you tell me where to find them? I thought that I'm not
+> using the right word or word combination. This list seemed to be
+> a good target as most here are in the security milieu.
+>
+> I'm looking for complete and comprehensive reports from an
+> extensive and exhaustive security audit of the entire OS.
+>
+> But if my goal of extensive and exhaustive is too lofty then
+> something less so might at least help.
+>
+> Also I am interested in OSs that are not *nix or MS/Apple.
+> I know of Haiku OS but are there any others? Does China
+> or Japan or any other country have their own OSs?
+>
+> Is the world really limited to just a few?
+>
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+-- Joshua Rogers <https://internot.info/>
