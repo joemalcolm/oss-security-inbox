@@ -1,24 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/9
-Message-ID: <52F668EB.5020608@oracle.com>
-Date: Sat, 08 Feb 2014 09:27:07 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/21
+Message-Id: <2284CB6C-0F7C-4837-B993-921C89775ECD@stufft.io>
+Date: Mon, 17 Nov 2014 15:29:42 -0500
+From: Donald Stufft <donald@...fft.io>
 To: oss-security@...ts.openwall.com
-CC: Raphael Geissert <geissert@...ian.org>, Vulnerability Information Managers <vim@...rition.org>
-Subject: Re: Fwd: Old CVE ids, public, but still "RESERVED"
+Subject: Requesting a CVE for pip - Local DoS with predictable temp directory names
 Content-Type: text/plain; charset=utf-8
 
-On 02/ 8/14 03:17 AM, Raphael Geissert wrote:
-> CVE-2012-0064 [xorg screen lockers bypassed via key combo]
-> 	- xorg-server 2:1.11.3.901-2 (high; bug #656410)
+I'd like to request a CVE for pip[1][2] and I am a core developer for that
+project.
 
-If it helps anyone cleaning these up, I can confirm on behalf of X.Org that
-we've published this one - it's on http://www.x.org/wiki/Development/Security/
-but we may have missed mailing it to oss-security.  It appears the person who
-found it took care of that though:
-http://www.openwall.com/lists/oss-security/2012/01/19/6
+There is a local DoS in pip 1.3, 1.3.1, 1.4, 1.4.1, 1.5, 1.5.1, 1.5.2, 1.5.3,
+1.5.4, 1.5.5, and 1.5.6. In an attempt to fix CVE-2013-1888 pip modified it's
+build directories from pip-build to pip-build-<username> and added in checks
+that would ensure that only a directory owned by the current user would be
+used. However because the build directory is predictable a local DoS is
+possible simply by creating a /tmp/pip-build-<username>/ directory owned by
+someone other than the defined user. This issue has also been reported to the
+Debian bug tracker as https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725847.
 
--- 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	  X.Org Security Response Team - xorg-security@...ts.x.org
+This has been fixed[3] in the develop branch of pip which will be released as
+pip 6.0. 
+
+I am not aware of any previous CVE for this issue.
+
+[1] https://pip.pypa.io/
+[2] https://pypi.python.org/pypi
+[3] https://github.com/pypa/pip/pull/2122
+
+---
+Donald Stufft
+PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
