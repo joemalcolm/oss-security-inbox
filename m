@@ -1,55 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/14
-Message-ID: <CAPu-DQo0_KKub-yU-4waAQ=ezHEcjnDkAN2XiZAreQ_3mLN3yA@mail.gmail.com>
-Date: Tue, 30 Sep 2014 12:37:34 +0100
-From: Gennady Kupava <gennady.kupava@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/9
+Message-ID: <20141117135222.GA949@jwilk.net>
+Date: Mon, 17 Nov 2014 14:52:22 +0100
+From: Jakub Wilk <jwilk@...lk.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-> We need to keep support exporting functions to grandchildren through
-non-bash processes (that is, bash -> some-other-program -> bash)
+* Hanno Böck <hanno@...eck.de>, 2014-11-17, 13:33:
+>I wasn't able to fuzz a crash out of 7z, arj, msgunfmt (gettext),
 
-But the way bash does such export right now is undefined behavior according
-to UNIX definitions. If you export some function and the variable with same
-name you will get two environment variables with same name, isn't this kind
-of bad design in any case?
+https://bugs.debian.org/763820
+https://bugs.debian.org/769901
 
-2014-09-30 10:30 GMT+01:00 Florian Weimer <fweimer@...hat.com>:
+I don't remember the exact details, but I'm pretty sure it took at most 
+a few hours of afl-fuzzing to find these crashers.
 
-> On 09/30/2014 05:11 AM, gremlin@...mlin.ru wrote:
->
->> On 29-Sep-2014 22:34:20 -0400, Chet Ramey wrote:
->>
->>   >> What is the motivation to not store executable code (functions)
->>   >> differently from standard variables?
->>
->>   > What would you use for such a store, considering the environment
->>   > is the only portable way to pass this information from one process
->>   > to another in the general case, and support the current set of
->>   > use cases?
->>
->> C.O. to the rescue: temporary file.
->>
->
-> You cannot use a named temporary file because the creator does not know
-> its required lifetime.  That's a challenge all solutions not based on the
-> process environment will face.
->
-> Theoretically, you could pass an unnamed temporary file via a file
-> descriptor, and communicate the descriptor number in some safe way (but
-> what's that, if you don't trust the environment?).  But that's going to be
-> far less interoperable than what we currently have, and barely more secure.
->
->  If one shell instance needs to pass some functions to another, it
->> could dump those functions to a temporary file and pass the --load
->> (or, better, --load-functions) options with a filename parameter.
->>
->
-> We need to keep support exporting functions to grandchildren through
-> non-bash processes (that is, bash -> some-other-program -> bash).
->
-> --
-> Florian Weimer / Red Hat Product Security
->
-
+-- 
+Jakub Wilk
