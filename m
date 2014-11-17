@@ -1,28 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/3
-Message-ID: <87oaqmmwlb.fsf@mid.deneb.enyo.de>
-Date: Mon, 29 Dec 2014 14:09:20 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
-To: oss-security@...ts.openwall.com
-Cc: tedu@...unangst.com
-Subject: OpenBSD signify and "fingerprint"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/14
+Message-ID: <20141117161010.GA25029@TC.local>
+Date: Mon, 17 Nov 2014 08:10:10 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [CVE-2014-7829] Arbitrary file existence disclosure in Action Pack
 Content-Type: text/plain; charset=utf-8
 
-This is just a warning that what OpenBSD's signify tool calls a
-“fingerprint” is very different from the concept of a fingerprint in
-OpenPGP.  It is just a random 64-bit blob with no relationship to the
-raw public key used for signing.  Conceptually, it is similar to the
-OpenPGP key ID (it is used as a quick check that public key and
-signature match), except that it is even more trivial to forge.
+Arbitrary file existence disclosure in Action Pack
 
-Fortunately, typical usage patterns of the signify tool do not expose
-the fingerprint to the user, so there is no immediate temptation to
-use it for validating a key (which is the primary use case for
-fingerprints in OpenPGP).  It is also short (64 bits) and thus not
-very secure to the initiated, no matter how it is computed, but I'm
-not fully convinced that this is a sufficient deterrent.
+There is an information leak vulnerability in Action Pack. This vulnerability
+has been assigned the CVE identifier CVE-2014-7829.
 
-Maybe a different term instead of “fingerprint” could be used to
-reduce the potential for confusion.  Something like “key number” or
-“key slot” might be appropriate (because these terms do not confer any
-identifying property).
+Versions Affected:  >= 3.0.0
+Not affected:       < 3.0.0, 4.2.0.beta4
+Fixed Versions:     3.2.21, 4.0.12, 4.1.8
+
+Impact
+------
+Specially crafted requests can be used to determine whether a file exists on
+the filesystem that is outside the Rails application's root directory.  The
+files will not be served, but attackers can determine whether or not the file
+exists.  This vulnerability is very similar to CVE-2014-7818, but the
+specially crafted string is slightly different.
+
+This only impacts Rails applications that enable static file serving at
+runtime.  For example, the application's production configuration will say:
+
+  config.serve_static_assets = true
+
+All users running an affected configuration should either upgrade or use one of the work arounds immediately.
+
+Releases 
+-------- 
+The 3.2.21, 4.0.12 & 4.1.8 releases are available at the normal locations. 
+
+Workarounds 
+----------- 
+To work around this issue, set config.serve_static_assets = false in an initializer.  This work around will not be possible in all hosting environments and upgrading is advised.
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 3-1-sec-static-files.patch - Patch for the 3.1.x release series
+* 3-2-sec-static-files.patch - Patch for the 3.2.x release series
+* 4-0-sec-static-files.patch - Patch for the 4.0.x release series
+* 4-1-sec-static-files.patch - Patch for the 4.1.x release series
+
+Please note that only the 3.2.x, 4.0.x & 4.1.x  series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
+
+Credits 
+------- 
+
+This vulnerability was reported by multiple researchers working independently.  Thanks to each of them for reporting the issue to us and verifying the fixes.
+
+* Patrick Toomey of GitHub
+* Remon Oldenbeuving of hackerone
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+View attachment "3-1-sec-static-files.patch" of type "text/plain" (3548 bytes)
+
+View attachment "3-2-sec-static-files.patch" of type "text/plain" (3473 bytes)
+
+View attachment "4-0-sec-static-files.patch" of type "text/plain" (3058 bytes)
+
+View attachment "4-1-sec-static-files.patch" of type "text/plain" (3059 bytes)
+
+Content of type "application/pgp-signature" skipped
