@@ -1,49 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/7
-Message-ID: <E0289DFF-3DE5-47A8-B060-B69FCEA22B78@redhat.com>
-Date: Mon, 24 Feb 2014 15:44:24 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: CVE request for catfish program
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/13
+Message-ID: <20141119002129.4f88e733@pc>
+Date: Wed, 19 Nov 2014 00:21:29 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-Just copying and pasting from our bug.  Could a CVE be assigned to this please?
+Am Tue, 18 Nov 2014 13:32:09 -0800
+schrieb Seth Arnold <seth.arnold@...onical.com>:
 
-A Debian bug report indicated that catfish suffers from some bad logic when loading the catfish.py script from the /usr/bin/catfish script.  This script intentionally looks to load catfish.py in the current working directory.  If a user were to run catfish in an untrusted directory that contained a malicious catfish.py, that script would be executed with the privileges of the user running catfish.
+> Adding a fuzzer or two to the process might be worthwhile; the
+> downside is that most fuzzers seem to require a certain amount of
+> preperation work before they start giving good results, and depending
+> upon the program, a fuzzer may not reliably represent the attack
+> surfaces available. (Consider trying to fuzz e.g. openssh or nginx.)
+> I don't think it'd be easy to automate.
 
-This script:
+It'd already be a good start to do this for format-parsing tools. So
+stuff that runs on files. Everything else is more complicated, fuzzing
+file formats is the easiest.
 
-#!/usr/bin/env bash
+> Getting AFL to work with every package suggested for Ubuntu main is
+> probably too much work.
 
-APPNAME=catfish
+You may overestimate the complexity of afl. Once you get used to it it
+basically takes minutes to start a fuzzing job.
+And Michal is very open to suggestions to improve it (and it is
+improving on a daily basis right now).
 
-if [ -e $APPNAME.py ]
-    then python $APPNAME.py "$@"
-    else
-        if [ -e $APPNAME.py ]
-            then python $APPNAME.py "$@"
-            else
-                cd /usr/share/$APPNAME
-                if [ -e $APPNAME.py ]
-                    then python $APPNAME.py "$@"
-                    else
-                        python $APPNAME.py "$@"
-                fi
-        fi
-    fi
+A bit sad is that afl+asan is somewhat tricky business, because that'd
+be the ultimate combo.
 
-should probably be:
+> The results of a fuzzing project would not greatly influence our
+> decision to support a package. I don't believe surviving a fuzzer is
+> the best proxy for code quality, though it would be nice to have more
+> information when making a decision to support a package.
 
-#!/bin/sh
-python /usr/share/catfish.py "$@"
+I agree that it's not the best proxy for code quality. But for me what
+is a good proxy for *project* quality is how they handle the bugs that
+result from fuzzing.
+While libbfd was in a terrible state, Nick did a marvellous job in
+fixing everythin we reported in a timely manner.
+Whilst for others you simply don't get a reply (or there is noone to
+report to).
 
-The rest is just development fluff and very poorly written.
+That's the difference between a healthy and an unhealthy project.
 
-
-References:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739958
-https://bugzilla.redhat.com/show_bug.cgi?id=1069396
 
 -- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
