@@ -1,177 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/18/2
-Message-ID: <CAD3Canf5xcRtcV=SJHhSxuchxmHatyQG+b+k7UeK6w45fMpyRw@mail.gmail.com>
-Date: Sun, 18 May 2014 15:12:35 +1200
-From: Matthew Daley <mattd@...fuzz.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/3
+Message-ID: <CAOfWR+HQm9ijdK+op=83e3br7EKo-0nr3_xxO+BGOQ663ojA8w@mail.gmail.com>
+Date: Mon, 17 Nov 2014 22:39:29 -0500
+From: Robert Watson <robertcwatson1@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE requests / advisory: TeamPass <= 2.1.19
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Solutions to the most difficult problems are often found by approaching it
+from the opposite direction...
 
-I'd like to request CVE IDs for these issues. They were found in
-TeamPass (www.teampass.net), an open-source collaborative password
-manager.
+What about using fuzzing to find those tools withOUT vulnerabilities and
+"certifying them" in some way as safe for all inputs?
 
-This is the first such request and the issues are now public; this
-message serves as an advisory as well.
+If a tool has too many problems or no champion to fix them, then there lies
+a need to be filled for a programmer to produce a better tool.
 
-All the issues are found in TeamPass versions <= 2.1.19, and all were
-reported by myself. The fixes are in the project's 2.1.20 git branch
-and not master (which is where users are directed to download the
-project from on the project's homepage.)
+On passing audit, the new tool would become the preferred tool for new
+distro releases, especially for systems running websites.
 
+Robert "DocSalvager" Watson
 
-Issue #1: File execution protection bypass via language path injection
+(sorry... forgot to eliminate signature. please delete prior message. -
+docsalvager)
 
-Numerous TeamPass PHP files check for the existence and the setting of
-a $_SESSION value, "CPM", in order to prevent them from being
-requested by users and executed directly without going through
-index.php as actually intended.
+On Mon, Nov 17, 2014 at 10:37 PM, Robert Watson <robertcwatson1@...il.com>
+wrote:
 
-However, index.php (and sources/main.queries.php with the
-"change_user_language" request) allows users to set their language by
-passing it in via a POST variable. It is not checked for validity;
-FILTER_SANITIZE_STRING is not sufficient. A user can set their
-language so that the attempt by index.php to require_once a language
-file actually leads to loading one of the aforementioned
-execution-protected files. At this point, index.php has already set
-the CPM session variable and hence the protection is bypassed.
+> Solutions to the most difficult problems are often found by approaching it
+> from the opposite direction...
+>
+> What about using fuzzing to find those tools withOUT vulnerabilities and
+> "certifying them" in some way as safe for all inputs?
+>
+> If a tool has too many problems or no champion to fix them, then there
+> lies a need to be filled for a programmer to produce a better tool.
+>
+> On passing audit, the new tool would become the preferred tool for new
+> distro releases, especially for systems running websites.
+>
+> Robert "DocSalvager" Watson
+>
+>
+> *Trust in truth keeps hope alive*
+>
+> *     iCare for AffordableCare
+> <http://www.nationalpartnership.org/issues/health/HIT/>*
+>
+> *robertcwatson1@...il.com <robertcwatson1@...il.com>*
+>
+> *www.docsalvage.info <http://www.docsalvage.info/>*
+> *www.softwarerevisions.net <http://www.softwarerevisions.net/>*
+> *www.CivicChorale.org <http://www.civicchorale.org/>*
+>
+> <http://www.charliecrist.com/> <https://www.healthcare.gov/>
+> <http://www.wunderground.com/cgi-bin/findweather/getForecast?query=Tallahassee,%20FL>
+>
+>
+> On Mon, Nov 17, 2014 at 4:30 PM, Daniel Kahn Gillmor <
+> dkg@...thhorseman.net> wrote:
+>
+>> On 11/16/2014 07:15 AM, Robert Święcki wrote:
+>> > To sum up: If somebody uses 'file' in an unconstrained OS environment
+>> > on untrusted inputs, and he gets pwnd in the result, then it's not a
+>> > security problem, it's an incompetence problem - and IMO it should be
+>> > discussed elsewhere.
+>>
+>> I think other people have made good points already that tools like
+>> "file" and "strings" are routinely used on untrusted input, and so
+>> deserve to be treated as part of the attack surface in a normal free
+>> software operating system (and therefore vulnerabilities in them warrant
+>> mention here on oss-security).
+>>
+>> I'd like to present one other argument against the kind of distinction
+>> that Robert suggests making here, though.
+>>
+>> If "file" or "strings" (or libmagic or libbfd, respectively) are
+>> considered as "private" tools that should only be run on trusted inputs,
+>> then we are effectively creating an entirely new class of
+>> vulnerabilities that we need to report and fix, which may not have any
+>> resolution.  In particular, we would need to report vulnerabilities in
+>> tools that use these "private" tools on public data.
+>>
+>> For example:
+>>
+>>  * roundcube (a webmail client) relies on libmagic1
+>>
+>>  * rox-filer (a graphical filesystem browser) relies on /usr/bin/file
+>>
+>>  * rkhunter (a tool for scanning potentially-malicious files for
+>> rootkits) relies on /usr/bin/file.
+>>
+>> The composable nature of unix-style tools means that a bug in one
+>> component is very likely to be a security vulnerability.
+>>
+>> And if our interest is in not overwhelming the list with vulnerability
+>> assignments, then declaring certain tools "off-limits" or "only to be
+>> run on trusted inputs" is actually likely to *increase* instead of
+>> decrease the total number of vulnerability counts (since we would now
+>> need to report vulnerabilities in packages like roundcube and rkhunter
+>> and rox-filer for exposing file and libmagic to untrusted input), while
+>> still not leaving our users any safer.
+>>
+>>         --dkg
+>>
+>>
+>
 
-For example, using this vulnerability, an unauthenticated user can
-cause the administrator settings page to be rendered. They can then
-change any admin settings as if they were logged in as the
-administrator. Interesting settings to change include: the ldap
-settings, so as to point to an attacker-controlled LDAP server to
-allow login to the TeamPass instance; the custom login text, which is
-shown unescaped at the login prompt, for a stored-XSS attack to
-retrieve users' credentials; or the filesystem path settings, to
-divert execution to other locations.
-
-This issue is exploitable by remote unauthenticated users with a wide
-impact depending on the pages/settings accessed (login bypass, remote
-code execution (see example in next issue), ...).
-
-Fix: https://github.com/nilsteampassnet/TeamPass/commit/fd549b245c0f639a8d47bf4f74f92c37c053706f
-
-
-Issue #2: File execution protection bypass via incorrect use of
-session variables
-
-This relates to the same $_SESSION-based "CPM" checks that certain
-files make in order to prevent their direct execution by users.
-
-There is another bypass; it is simpler but allows the execution of
-slightly fewer execution-protected files.
-
-index.php sets the session CPM variable to 1 at the start of its
-execution. Hence, by simply requesting index.php, a user is able to
-then directly execute some of the other execution-protected files. The
-files affected are limited to the ones that call session_start before
-checking the CPM protection key. If they do not, then the CPM key is
-obviously unset and hence the protection still works correctly.
-
-For example:
-$ curl -b /tmp/cookies -c /tmp/cookies
-'http://192.168.1.73/TeamPass/sources/upload/upload.files.php?PHPSESSID=';
-echo
-Hacking attempt...
-$ curl -b /tmp/cookies -c /tmp/cookies
-'http://192.168.1.73/TeamPass/index.php' &> /dev/null
-$ curl -b /tmp/cookies -c /tmp/cookies
-'http://192.168.1.73/TeamPass/sources/upload/upload.files.php?PHPSESSID=';
-echo
-{"jsonrpc" : "2.0", "result" : null, "id" : "id"}
-
-Observe that after requesting index.php, we have access to TeamPass's
-file upload facility, obviously a sensitive component. I have tested
-that file upload is indeed possible this way.
-
-This issue is exploitable by remote unauthenticated users and
-similarly has a wide impact depending on the pages/settings accessed
-(login bypass, remote code execution...).
-
-Fix: https://github.com/nilsteampassnet/TeamPass/commit/7715512f2bd5659cc69e063a1c513c19e384340f
-
-
-Issue #3: Multiple SQL injection vectors in sources/main.queries.php
-
-There are two SQL injection vectors in this file.
-
-The first is in the handling of the "send_pw_by_email" request, namely
-in the "login" POST variable. This is interpolated, unescaped, in the
-SQL query that checks whether there is already a password reset
-request key in the database.
-
-The second is in the handling of the "generate_new_password" request,
-namely in the "login" POST variable again. This is interpolated,
-unescaped, in the SQL query that retrieves the password reset request
-key from the database.
-
-These vectors are accessible by remote unauthenticated users by
-exploiting the first two issues, or to authenticated users directly. I
-have tested each unique type of injection with sqlmap and have
-confirmed that they allow the complete dump of the database,
-modification of its data, remote SQL/OS shell execution, etc.
-
-Fix: https://github.com/nilsteampassnet/TeamPass/commit/7715512f2bd5659cc69e063a1c513c19e384340f
-
-
-Issue #4: Multiple SQL injection vectors in sources/datatable/*; and
-datatable.logs.php (in the root directory, *not* in sources/datatable
-directory)
-
-There are numerous copy-pasted SQL injections in each of these files.
-I'll describe the common element of each instead of splitting them
-across each of the five files.
-
-The first and second are in the "iDisplayStart" and "iDisplayLength"
-GET variables. These are used to build a SQL query LIMIT fragment.
-They are interpolated, unescaped, into this fragment.
-
-These are repeated per-action in each of the five files, giving rise
-to a total of 2 * (1 + 6 + 1 + 1 + 5) = 28 SQL injection vectors.
-
-The third is in the "sSortDir_..." GET variable(s). This *is*
-mysql_real_escape_string'd before interpolation into a SQL query ORDER
-BY fragment, but it is not surrounded by apostrophes in the fragment.
-It is therefore still open to exploitation by using injections that do
-not involve any characters that are escaped.
-
-These are repeated per-action in each of the five files, giving rise
-to a total of 1 * (1 + 6 + 1 + 1 + 5) = 14 SQL injection vectors.
-
-These vectors are accessible by remote unauthenticated users by
-exploiting the first two issues, or to authenticated users directly. I
-have tested each unique type of injection with sqlmap and have
-confirmed that they allow the complete dump of the database,
-modification of its data, remote SQL/OS shell execution, etc.
-
-Fix: https://github.com/nilsteampassnet/TeamPass/commit/7715512f2bd5659cc69e063a1c513c19e384340f
-and https://github.com/nilsteampassnet/TeamPass/commit/8820c8934d9ba0508ac345e73ad0be29049ec6de
-
-
-Issue #5: Multiple XSS vectors in items.php
-
-There are four locations where user-provided input is echoed back into
-the generated page without escaping in this file:
-
-- Three locations with the "group" GET parameter when outputting the
-"hid_cat" and "open_folder" form input HTML elements
-- One location with the "id" GET parameter when outputting the
-"open_id" form input HTML element.
-
-A remote unauthenticated attacker can, with limited victim input,
-navigate a logged-in TeamPass user with a crafted URL and perform an
-XSS attack, allowing ie. the exfiltration of the user's cookies so as
-to allow the attacker to authenticate as the victim.
-
-Fix: https://github.com/nilsteampassnet/TeamPass/commit/fd549b245c0f639a8d47bf4f74f92c37c053706f
-and https://github.com/nilsteampassnet/TeamPass/commit/8820c8934d9ba0508ac345e73ad0be29049ec6de
-
-
-Please let me know if you need any further information.
-
-Thanks,
-
-- Matthew Daley
