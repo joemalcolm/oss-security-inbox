@@ -1,77 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/4
-Message-ID: <alpine.LFD.2.10.1401071251580.18916@javelin.pnq.redhat.com>
-Date: Tue, 7 Jan 2014 13:04:29 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: cve@...re.org
-Subject: CVE split and a missed file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/2
+Message-ID: <CAOfWR+Fq0BZ96Qq3tzsjMvdRAC_EfJ8Jyk3xdxk_NayxCmLs4A@mail.gmail.com>
+Date: Mon, 17 Nov 2014 22:37:27 -0500
+From: Robert Watson <robertcwatson1@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+Solutions to the most difficult problems are often found by approaching it
+from the opposite direction...
 
-Recently Mitre split up a cve 'CVE-2013-6405' into 3 separate CVEs. Each for 
-subset of files touched by a commit 'bceaa90240'.
+What about using fuzzing to find those tools withOUT vulnerabilities and
+"certifying them" in some way as safe for all inputs?
 
-  -> https://git.kernel.org/linus/bceaa90240b6019ed73b49965eac7d167610be69
+If a tool has too many problems or no champion to fix them, then there lies
+a need to be filled for a programmer to produce a better tool.
 
-But the 3 new CVEs do not seem to cover patch to a file
+On passing audit, the new tool would become the preferred tool for new
+distro releases, especially for systems running websites.
 
-   -> net/ieee802154/dgram.c.
-
-Is that intentional or a miss. (just checking)
-
-===
-Name: CVE-2013-6405
-Status: Candidate
-URL: http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-6405 [Open URL]
-Final-Decision:
-Interim-Decision:
-Modified:
-Proposed:
-Assigned: 20131104
-Category:
-
-** REJECT **
-
-DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: CVE-2013-7263,
-CVE-2013-7264, CVE-2013-7265. Reason: This candidate is a duplicate
-of CVE-2013-7263, CVE-2013-7264, and CVE-2013-7265. Notes: All CVE
-users should reference CVE-2013-7263, CVE-2013-7264, and/or
-CVE-2013-7265 instead of this candidate. All references and
-descriptions in this candidate have been removed to prevent accidental
-usage.
-
---
-CVE-2013-7263
-
-The Linux kernel before 3.12.4 updates certain length values before
-ensuring that associated data structures have been initialized, which
-allows local users to obtain sensitive information from kernel stack
-memory via a (1) recvfrom, (2) recvmmsg, or (3) recvmsg system call,
-related to net/ipv4/ping.c, net/ipv4/raw.c, net/ipv4/udp.c,
-net/ipv6/raw.c, and net/ipv6/udp.c.
-
---
-CVE-2013-7264
-
-The l2tp_ip_recvmsg function in net/l2tp/l2tp_ip.c in the Linux kernel
-before 3.12.4 updates a certain length value before ensuring that an
-associated data structure has been initialized, which allows local
-users to obtain sensitive information from kernel stack memory via a
-(1) recvfrom, (2) recvmmsg, or (3) recvmsg system call.
-
---
-CVE-2013-7265
-
-The pn_recvmsg function in net/phonet/datagram.c in the Linux kernel
-before 3.12.4 updates a certain length value before ensuring that an
-associated data structure has been initialized, which allows local
-users to obtain sensitive information from kernel stack memory via a
-(1) recvfrom, (2) recvmmsg, or (3) recvmsg system call.
-===
+Robert "DocSalvager" Watson
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+*Trust in truth keeps hope alive*
+
+*     iCare for AffordableCare
+<http://www.nationalpartnership.org/issues/health/HIT/>*
+
+*robertcwatson1@...il.com <robertcwatson1@...il.com>*
+
+*www.docsalvage.info <http://www.docsalvage.info/>*
+*www.softwarerevisions.net <http://www.softwarerevisions.net/>*
+*www.CivicChorale.org <http://www.civicchorale.org/>*
+
+<http://www.charliecrist.com/> <https://www.healthcare.gov/>
+<http://www.wunderground.com/cgi-bin/findweather/getForecast?query=Tallahassee,%20FL>
+
+
+On Mon, Nov 17, 2014 at 4:30 PM, Daniel Kahn Gillmor <dkg@...thhorseman.net>
+wrote:
+
+> On 11/16/2014 07:15 AM, Robert Święcki wrote:
+> > To sum up: If somebody uses 'file' in an unconstrained OS environment
+> > on untrusted inputs, and he gets pwnd in the result, then it's not a
+> > security problem, it's an incompetence problem - and IMO it should be
+> > discussed elsewhere.
+>
+> I think other people have made good points already that tools like
+> "file" and "strings" are routinely used on untrusted input, and so
+> deserve to be treated as part of the attack surface in a normal free
+> software operating system (and therefore vulnerabilities in them warrant
+> mention here on oss-security).
+>
+> I'd like to present one other argument against the kind of distinction
+> that Robert suggests making here, though.
+>
+> If "file" or "strings" (or libmagic or libbfd, respectively) are
+> considered as "private" tools that should only be run on trusted inputs,
+> then we are effectively creating an entirely new class of
+> vulnerabilities that we need to report and fix, which may not have any
+> resolution.  In particular, we would need to report vulnerabilities in
+> tools that use these "private" tools on public data.
+>
+> For example:
+>
+>  * roundcube (a webmail client) relies on libmagic1
+>
+>  * rox-filer (a graphical filesystem browser) relies on /usr/bin/file
+>
+>  * rkhunter (a tool for scanning potentially-malicious files for
+> rootkits) relies on /usr/bin/file.
+>
+> The composable nature of unix-style tools means that a bug in one
+> component is very likely to be a security vulnerability.
+>
+> And if our interest is in not overwhelming the list with vulnerability
+> assignments, then declaring certain tools "off-limits" or "only to be
+> run on trusted inputs" is actually likely to *increase* instead of
+> decrease the total number of vulnerability counts (since we would now
+> need to report vulnerabilities in packages like roundcube and rkhunter
+> and rox-filer for exposing file and libmagic to untrusted input), while
+> still not leaving our users any safer.
+>
+>         --dkg
+>
+>
+
