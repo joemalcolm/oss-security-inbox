@@ -1,32 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/12
-Message-ID: <alpine.LFD.2.10.1402062311540.15326@javelin.pnq.redhat.com>
-Date: Thu, 6 Feb 2014 23:14:23 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE Request: Linux kernel: SELinux local DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/14
+Message-ID: <20141118235011.GA9324@hunt>
+Date: Tue, 18 Nov 2014 15:50:11 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+On Wed, Nov 19, 2014 at 12:21:29AM +0100, Hanno Böck wrote:
+> It'd already be a good start to do this for format-parsing tools. So
+> stuff that runs on files. Everything else is more complicated, fuzzing
+> file formats is the easiest.
 
-Linux kernel built with the NSA SELinux Support(CONFIG_SECURITY_SELINUX) is 
-vulnerable to a crash caused by an empty SELinux security context. When a file 
-has an empty security context, listing it via 'ls(1)' could trigger this 
-crash. Only user/processes with CAP_MAC_ADMIN privileges are allowed to set 
-the SELinux security context of a file.
+You'd be surprised how infrequently file formats come up.. :)
 
-A user/process with CAP_MAC_ADMIN privileges could use this flaw to crash the 
-kernel, resulting in a DoS.
+> > Getting AFL to work with every package suggested for Ubuntu main is
+> > probably too much work.
+> 
+> You may overestimate the complexity of afl. Once you get used to it it
+> basically takes minutes to start a fuzzing job.
+> And Michal is very open to suggestions to improve it (and it is
+> improving on a daily basis right now).
 
-Upstream fix:
--------------
-   -> http://marc.info/?l=selinux&m=139110025203759&w=2
+Oh, AFL itself looks pretty blindingly easy to use: CC=... CXX=...  and go
+with it. It's our packaging and building infrastracture that I think would
+make it more complicated: they're designed to make repeatable builds
+easy, not necessarily to allow arbitrary changes to the compiler. And,
+AFL only works for C/C++.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1062356
+> A bit sad is that afl+asan is somewhat tricky business, because that'd
+> be the ultimate combo.
 
+That does sound nice, not every Bad Thing is necessarily visible to the
+fuzzer, but asan is more likely to recognize Bad Things.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+> I agree that it's not the best proxy for code quality. But for me what
+> is a good proxy for *project* quality is how they handle the bugs that
+> result from fuzzing.
+> While libbfd was in a terrible state, Nick did a marvellous job in
+> fixing everythin we reported in a timely manner.
+> Whilst for others you simply don't get a reply (or there is noone to
+> report to).
+> 
+> That's the difference between a healthy and an unhealthy project.
+
+Oh my yes; having a contact readily visible, having someone respond
+quickly, both are very strong indicators of quality.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
