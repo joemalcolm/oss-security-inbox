@@ -1,45 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/22
-Message-ID: <549365E3.1050402@redhat.com>
-Date: Thu, 18 Dec 2014 16:40:19 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: request for CVEs for git clients
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/4
+Message-ID: <CALx_OUDAPhs70ViC8J-MD0rPsWPS_UrW7NPbaRgecNtbhtABow@mail.gmail.com>
+Date: Mon, 17 Nov 2014 19:56:37 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-Ah my bad, I saw the blog entry, didn't read the git announcement -
-CVE-2014-9390
+> What about using fuzzing to find those tools withOUT vulnerabilities and
+> "certifying them" in some way as safe for all inputs?
 
-I assume the other clients also got CVE's?
+Certainly a good starting point. The main problem is that there are
+hundreds of thousands developer cranking out OSS code every day, and
+perhaps several dozen skilled security researchers who would want to
+play that game.
 
-On 18/12/14 04:38 PM, Kurt Seifried wrote:
-> Can we please get CVEs for
-> https://github.com/blog/1938-vulnerability-announced-update-your-git-clients
-> 
-> In addition, the following updated versions of Git address this
-> vulnerability:
-> 
-> The Git core team has announced maintenance releases for all current
-> versions of Git (v1.8.5.6, v1.9.5, v2.0.5, v2.1.4, and v2.2.1).
-> 
-> Git for Windows (also known as MSysGit) has released maintenance version
-> 1.9.5.
-> 
-> The two major Git libraries, libgit2 and JGit, have released maintenance
-> versions with the fix. Third party software using these libraries is
-> strongly encouraged to update.
-> 
-> ====
-> 
-> looks like most Linux users are ok though "The vulnerability concerns
-> Git and Git-compatible clients that access Git repositories in a
-> case-insensitive or case-normalizing filesystem."
-> 
-> 
+One could delegate the fuzzing to developers, but if they do not
+particularly care about getting it right, and just want a "seal of
+approval" on their website, it would probably become meaningless. It's
+fairly hard to select, configure, and run fuzzers, especially on more
+verbose or strict data formats (say, XML).
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Now, fuzzing coverage measurements - of the traditional gcov sort -
+are actually probably a decent proxy for how much effort the team is
+putting into getting it right. It still needs some interpretation -
+how much of that code is security-relevant to begin with, and how much
+coverage does that get?
 
+Ultimately, though, you need compelling incentives. Perhaps spare for
+OpenBSD or Openwall, I doubt that security factors into the decisions
+to add or promote a particular package. Users won't visit a website to
+make sure the program has been fuzzed before running it, too.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+/mz
