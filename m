@@ -1,88 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/32
-Message-ID: <53E5441D.5040503@ehuk.net>
-Date: Fri, 08 Aug 2014 22:41:49 +0100
-From: Eddie Chapman <eddie@...k.net>
-To: Greg KH <greg@...ah.com>
-CC: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/1
+Message-ID: <546A9155.7090507@internot.info>
+Date: Tue, 18 Nov 2014 11:22:45 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: Wordpress WP-DB-Backup v2.2.4 Plugin Remote Database Backup Download Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 08/08/14 20:46, Greg KH wrote:
-> On Fri, Aug 08, 2014 at 06:40:50PM +0100, Eddie Chapman wrote:
->> Yes, immensely. It's clear to me now that being able to re-programme a USB
->> device firmware is not quite as easy and straightforward as is being made
->> out to be in certain quarters.
+On 18/11/14 10:30, Larry W. Cashdollar wrote:
+> Turns out Matthew Bryant had already covered everything I had but a few months ago here:
 >
-> On the contrary, it's trivial to do on a whole bunch of USB devices as
-> that is how they were _designed_ to work.  So much so that there is a
-> whole USB spec on exactly how to do this in a way that will work across
-> all different operating systems:
-> 	http://www.usb.org/developers/docs/devclass_docs/DFU_1.1.pdf
-> I don't remember when the 1.0 version of this spec was published, I
-> think around 1995 or so.
->
-> So I really don't see how this ability is anything "shocking" to anyone.
+> http://thehackerblog.com/auditing-wp-db-backup-wordpress-plugin-why-using-the-database-password-for-entropy-is-a-bad-idea/
+On that blog..
+> So we have to bruteforce these five hexadecimal digits – what’s the
+> math on that? Since our keyspace is any hex character and we have a
+> total of five digits we have 16^5 possibilities or 1,048,576
+> permutations. 
+Using birthday problem maths..
+1048576! / ((1048576-1205)! * 1048576^1205) =
+0.500538915
 
-Yes, I knew about that, but what I meant was that, in practise, in the 
-real world, for an attacker to achieve this in any sort of effective way 
-across large numbers of targets is quite difficult. I found this comment 
-from the ars article the OP linked an interesting argument:
+1-0.500538915=
+.499461085
 
-"I can't believe we're this far into the comment chain and there's still 
-a belief that simple USB devices with updateable firmware are anything 
-but exceedingly rare, let alone common or the norm.
+aka. after 1,205 attempts, you'd have a 50% chance of hitting the
+correct location..
 
-Yes, there's a DFU standard, but next to nobody implements it, and 
-certainly the number of implementations for USB drives is vanishingly 
-small. The margin for a thumb drive is basically zero already, and 
-that's with small, cheap roms; why would any sane manufacturer add the 
-cost of end-user modifiable firmware? At the factory, the rom gets 
-written (and verified) on a burner and assembled later -- you'd have an 
-expensive line for sure if you waited 'til after assembly to verify (let 
-alone program) your firmware. Yield issues at the burner are cheap -- 
-yield issues after assembly are not. Mass storage (and HID, for that 
-matter) devices are well-known entities with fairly fixed 
-implementations -- they just don't need updates, and the cost to enable 
-them is prohibitive.
+Just something to consider.
 
-Now, a WiFi or 3G dongle or something else complex and dynamic could 
-certainly be updated in the field (and many absolutely are), but thumb 
-drives are not likely. Not impossible, of course, but unlikely.
-
-Fixed-function is cheaper. Field upgrades are expensive. Thumb drive 
-margins are razor-thin."
-
-( 
-http://arstechnica.com/security/2014/07/this-thumbdrive-hacks-computers-badusb-exploit-makes-devices-turn-evil/?comments=1&post=27317503#comment-27317503 
-)
-
-I don't know how much of what is said there is accurate, but it sounds 
-plausible and makes sense. Without a survey of a large sample of devices 
-I suppose we'll never know for sure what % implement the DFU standard, 
-but I'd be willing to bet it is small.
-
-Another person just a couple of comments later argues:
-
-"Even in the cases where a drive is conceptually upgradeable, there's 
-still the question of what the malicious payload would actually be, 
-since there is a lot more variability in the embedded space in terms of 
-chips and implementation than on the desktop. What's the MCU? 8051 (and 
-pals)? ColdFire? Something from STMicro? Which instruction set? Memory 
-map? Is there even room in the existing eeprom or flash for the 
-composite device function (since it's the existing function plus the 
-malicious new function)?"
-
-I think that observation is probably accurate. Thus, it seems to me that 
-criminals will look at this and conclude it is much easier and 
-profitable to continue infecting machines in traditional ways.
-
-Eddie
-
->> That's not to say that the research being discussed hasn't thrown up
->> some very interesting issues around hardware and trust.
->
-> Never trust hardware.  Until you have to.  :)
->
-> greg k-h
->
+-- 
+-- Joshua Rogers <https://internot.info/>
