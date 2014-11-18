@@ -1,76 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/9
-Message-ID: <CALCETrWqYzZJ5EB4enoQPP6GR-iKqJRwUPQQiZN+G2TQ+VkkYw@mail.gmail.com>
-Date: Wed, 30 Apr 2014 21:23:11 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: Solar Designer <solar@...nwall.com>
-Cc: Steve Grubb <sgrubb@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: local privilege escalation due to capng_lock as used in seunshare
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/9
+Message-Id: <E1XqhpC-0003RN-5U@xenbits.xen.org>
+Date: Tue, 18 Nov 2014 12:24:02 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 109 (CVE-2014-8594) - Insufficient restrictions on certain MMU update hypercalls
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 30, 2014 at 8:06 PM, Solar Designer <solar@...nwall.com> wrote:
-> On Thu, May 01, 2014 at 06:43:10AM +0400, Solar Designer wrote:
->> On Wed, Apr 30, 2014 at 09:27:10PM -0400, Steve Grubb wrote:
->> > And switching to NO_NEW_PRIVS broke the sandbox:
->> > https://bugzilla.redhat.com/show_bug.cgi?id=1091761
->> >
->> > So, perhaps fixing SECURE_NOROOT is the safest bet? Are there any other
->> > opinions on this?
->>
->> If SECURE_NOROOT is meant to be usable to run entire Linux distros
->> (whether "on host" or/and "in containers"),
->
-> Actually, I think it won't work well for that unless the distro in
-> question doesn't use any SUID root programs that need capabilities,
-> because SECURE_NOROOT breaks the raising of capabilities for SUID root
-> exec (on purpose).  So generic implementations of containers capable of
-> running arbitrary Linux distro userlands are probably not making use of
-> SECURE_NOROOT.
->
->> then it must not have an
->> effect of excluding UID 0 from "appropriate privileges" for setuid(2).
->>
->> Do we know reliably that in this case excluding UID 0 from "appropriate
->> privileges" for setuid(2) was an effect specifically of SECURE_NOROOT?
->
-> Per my quick greps, this does not appear to be the case.  The only
-> checks for SECURE_NOROOT that I could find are in cap_bprm_set_creds(),
-> so SECURE_NOROOT should affect execve(2), but not setuid(2).
->
-> Why are we talking about it in this context, then?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I think that SECURE_NO_SETUID_FIXUP is actually at fault here.  And I
-don't see how changing its semantics would help -- it's not safe to
-run setuid programs without granting them capabilities, and it's not
-really safe to grant them capabilities without setting euid == 0, and
-it seems like it's unsafe to grant capabilities and euid == 0.
+             Xen Security Advisory CVE-2014-8594 / XSA-109
+                               version 3
 
-This leaves granting no extra privileges at all to setuid programs,
-which is exactly what no_new_privs does.  seunshare sets up a weird
-mount namespace, and anyone can use it and *configure* things about
-that namespace.  no_new_privs blocks anything that causes execve to
-grant new privileges, so the whole point is that it's safe to do
-non-posixy things that are inherited by children as long as
-no_new_privs is set.
+        Insufficient restrictions on certain MMU update hypercalls
 
-I think I correctly analyzed exactly how no_new_privs broke sandbox in
-the rhbz bug:
+UPDATES IN VERSION 3
+====================
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1091761
+Public release.
 
-The short answer is that selinux doesn't currently distinguish whether
-labels on executables are granting or removing privilege, and selinux
-also fails to distinguish between the right to change labels on
-request and the right to change labels because the policy said so [1],
-so no_new_privs takes the conservative approach and blocks the whole
-transition-on-exec mechanism.  And sandbox fails.  I suspect that
-sandbox is already broken in the case where the program being
-sandboxed is on a nosuid mount, because selinux's nosuid behavior is
-weird.
+ISSUE DESCRIPTION
+=================
 
-In any event, I think that seunshare can be fixed by using dyntransition. Ugh.
+MMU update operations targeting page tables are intended to be used on
+PV guests only. The lack of a respective check made it possible for
+such operations to access certain function pointers which remain NULL
+when the target guest is using Hardware Assisted Paging (HAP).
 
-A better fix might be to rewrite seunshare to use user namespaces
-instead of requiring permissions.  This won't fly on RHEL5/6, though.
+IMPACT
+======
 
---Andy
+Malicious or buggy stub domain kernels or tool stacks otherwise living
+outside of Domain0 can mount a denial of service attack which, if
+successful, can affect the whole system.
+
+Only PV domains with privilege over other guests can exploit this
+vulnerability; and only when those other guests are HVM using HAP, or
+PVH.  The vulnerability is therefore exposed to PV domains providing
+hardware emulation services to HVM guests.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.0 and onward are vulnerable.
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+The vulnerability is only exposed to PV service domains for HVM or
+PVH guests which have privilege over the guest.  In a usual
+configuration that means only device model emulators (qemu-dm).
+
+In the case of HVM guests whose device model is running in an
+unrestricted dom0 process, qemu-dm already has the ability to cause
+problems for the whole system.  So in that case the vulnerability is
+not applicable.
+
+The situation is more subtle for an HVM guest with a stub qemu-dm.
+That is, where the device model runs in a separate domain (in the case
+of xl, as requested by "device_model_stubdomain_override=1" in the xl
+domain configuration file).  The same applies with a qemu-dm in a dom0
+process subjected to some kind kernel-based process privilege
+limitation (eg the chroot technique as found in some versions of
+XCP/XenServer).
+
+In those latter situations this issue means that the extra isolation
+does not provide as good a defence (against denial of service) as
+intended.  That is the essence of this vulnerability.
+
+However, the security is still better than with a qemu-dm running as
+an unrestricted dom0 process.  Therefore users with these
+configurations should not switch to an unrestricted dom0 qemu-dm.
+
+Finally, in a radically disaggregated system: where the HVM or PVH
+service domain software (probably, the device model domain image in the
+HVM case) is not always supplied by the host administrator, a malicious
+service domain administrator can exercise this vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests or HVM guests with shadow paging enabled will
+avoid this issue.
+
+In a radically disaggregated system, restricting HVM service domains
+to software images approved by the host administrator will avoid the
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Roger Pau Monné of Citrix and Jan Beulich
+of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa109.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x
+xsa109-4.2.patch    Xen 4.2.x
+
+$ sha256sum xsa109*.patch
+759d1b8cb8c17e53d17ad045ab89c5aaf52cb85fd93eef07e7acbe230365c56d  xsa109-4.2.patch
+729b87c2b9979fbda47c96e934db6fcfaeb10e07b4cfd66bb1e9f746a908576b  xsa109.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUazogAAoJEIP+FMlX6CvZ5NQH/25lTqtBGu5Xt0JwHnLenfv0
+z0gVJ5o8YB6aqzV+GHWei0QV/PtCLteykm/K8LJK4my9OtDqI/WPzusyrGB6aNhD
+xCQUhRF5/j2c++u4UCBitibttSwKK/CCrswBMWZYqEI/1fJazVw3huyyFv56Wt+K
+32geEcIUnWs6lJD+z97W8LPPNLoaF/m6uSh4I2LrT3uBnvEFq5oGgzdWNtEKkSGC
+fAuga2m1NhfbCsMD6JSv9/EDSKHTiByZ5Z/zicWrButHfRp4fmGO/pPMwPFkERs1
+T/FX/UAfnvisS1SjgMwqufWlzIka5JDzi/Nc5Utgcvo9+9EsI1PCJDzYTJpOSa8=
+=yb1z
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa109-4.2.patch" of type "application/octet-stream" (786 bytes)
+
+Download attachment "xsa109.patch" of type "application/octet-stream" (790 bytes)
