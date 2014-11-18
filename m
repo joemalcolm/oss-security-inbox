@@ -1,37 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/17
-Message-ID: <CALCETrWRW665iFtiJqt2heb4cBwa7JwmNp03H90jiA=6JPsAdA@mail.gmail.com>
-Date: Thu, 18 Dec 2014 11:35:01 -0800
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Linux x86_64 userspace address leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/8
+Message-Id: <E1XqhpL-0003SX-7Z@xenbits.xen.org>
+Date: Tue, 18 Nov 2014 12:24:11 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 110 (CVE-2014-8595) - Missing privilege level checks in x86 emulation of far branches
 Content-Type: text/plain; charset=utf-8
 
-On all* Linux x86_64 kernels, malicious user programs can learn the
-TLS base addresses of threads** that they preempt.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-In principle, this bug will allow programs to partially bypass ASLR
-when attacking other user programs.  Figuring out how to adapt the
-test code to do that is left as an exercise to the reader.
+            Xen Security Advisory CVE-2014-8595 / XSA-110
+                              version 3
 
-The bug is fixed here:
+    Missing privilege level checks in x86 emulation of far branches
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86?id=f647d7c155f069c1a068030255c300663516420e
+UPDATES IN VERSION 3
+====================
 
-There's a test case in the patch description.
+Public release.
 
-Note: the patch description mentions another unfixed but and has a
-test for that bug as well.  As far as I can tell, the other bug has no
-security implications -- it merely allows a program to cause the
-kernel to replace its segment bases with predictable values during the
-next context switch.
+ISSUE DESCRIPTION
+=================
 
-* It's possible that I missed something and this bug was introduced
-more recently.
+The emulation of far branch instructions (CALL, JMP, and RETF in Intel
+assembly syntax, LCALL, LJMP, and LRET in AT&T assembly syntax)
+incompletely performs privilege checks.
 
-** The attack won't work against 64-bit threads with TLS bases > 4GB,
-but AFAIK that's unusual.  It also won't work against the small number
-of programs using obsolete threading libraries that point their TLS
-segments into the LDT.
+However these instructions are not usually handled by the emulator.
+Exceptions to this are
+- - when a memory operand lives in (emulated or passed through) memory
+  mapped IO space,
+- - in the case of guests running in 32-bit PAE mode, when such an
+  instruction is (in execution flow) within four instructions of one
+  doing a page table update,
+- - when an Invalid Opcode exception gets raised by a guest instruction,
+  and the guest then (likely maliciously) alters the instruction to
+  become one of the affected ones,
+- - when the guest is in real mode (in which case there are no privilege
+  checks anyway).
 
---Andy
+IMPACT
+======
+
+Malicious HVM guest user mode code may be able to elevate its
+privileges to guest supervisor mode, or to crash the guest.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 3.2.1 and onward are vulnerable on x86 systems.
+
+ARM systems are not vulnerable.
+
+Only user processes in x86 HVM guests can take advantage of this
+vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+There is no mitigation available for HVM guests.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa110-unstable.patch        xen-unstable, Xen 4.4.x
+xsa110-4.3-and-4.2.patch     Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa110*.patch
+a114ba586d18125b368112527a077abfe309826ad47aca8cc80ba4549c5f9ae2  xsa110-4.3-and-4.2.patch
+eac4691848dcd093903e0a0f5fd7ab15be15d0f10b98575379911e91e5dcbd70  xsa110.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUazojAAoJEIP+FMlX6CvZF18H/1/G49MGk6/Fq6CtpvoEvQsl
+u7Q0UHoMuwqN119fRKJOorAh+MPKWDaPBjZoNmfJxIKEHD5tpA1Kr97y67Ye/dtz
+UfXxQPiIYpOe/Z59E3erKGDyzC5TLlPfa7fZBvZdeStIWsC+d2pUWDTRBioDHBGZ
+IeNnXkrLuhLrjGOs9a4ZNdP/jTFkJQ7vKJXF8nFhcEpK8XZx9D8e2xExTWZ2BJ/N
+u6KbWgMAf01M10hcQze99Wm3Fuva/HkVhiza8Rj5cgsV9SD4ZrQMhH9Mm86/YG52
+AEwT6j8KWd83zZz8WZjFS30edZ4/eIXW+2e3KuaUFKBiei88tlF6CYWq6upS/5U=
+=u7Zi
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa110-4.3-and-4.2.patch" of type "application/octet-stream" (6028 bytes)
+
+Download attachment "xsa110.patch" of type "application/octet-stream" (6028 bytes)
