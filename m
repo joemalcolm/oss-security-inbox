@@ -1,34 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/24
-Message-ID: <542956A7.6020904@netsecspec.co.uk>
-Date: Mon, 29 Sep 2014 13:55:03 +0100
-From: Giles Coochey <giles.coochey@...secspec.co.uk>
-To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/10
+Message-ID: <33006C99F5A5194A9B7A7715DFA3E383B5E402B7@ALA-MBA.corp.ad.wrs.com>
+Date: Tue, 18 Nov 2014 15:10:58 +0000
+From: "Radzykewycz, T (Radzy)" <radzy@...driver.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-On 29/09/2014 12:17, Loganaden Velvindron wrote:
-> HI Chet, As you are aware, a sixth security issue has been discovered. 
-> Due to the nature of the vulnerability, I believe that it's best to 
-> break backward compatibility as done by FreeBSD and NetBSD until a 
-> proper patch is developed. We are lucky to have security researchers 
-> reporting their findings publicly. What about others that don't ? I 
-> strongly believe that it's much safer to have it disabled, and have a 
-> complete and comprehensive audit of the source code, and then 
-> re-enable it.
+There's no guarantee about anything being "bug free".  Even certification by NIAP doesn't guarantee that it's bug free.  Nor that it's secure.  But it does make it relatively more likely to have fewer bugs and be more secure.  Same with OSS tool fuzzing and some kind of database indicating the level of fuzzing that has happened on them.
 
-Am I the only one who is wondering: Who is paying Chet to do this?
+If I were a Linux distro maintainer, looking at packages to include, I would appreciate this information.  (For that matter, I'd appreciate it for my own use, though that's less relevant.)
 
--- 
-Regards,
-
-Giles Coochey, CCNP, CCNA, CCNAS
-NetSecSpec Ltd
-+44 (0) 8444 780677
-+44 (0) 7584 634135
-http://www.netsecspec.co.uk
-giles.coochey@...secspec.co.uk
+If there is a distro maintainer on this list, please chime in.
 
 
+________________________________________
+From: Źmicier Januszkiewicz [gauri@....by]
+Sent: Tuesday, November 18, 2014 3:17 AM
+To: oss-security@...ts.openwall.com
+Subject: [security-vendor] Re: [oss-security] Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6493 bytes)
+2014-11-18 4:37 GMT+01:00 Robert Watson <robertcwatson1@...il.com>:
+
+> What about using fuzzing to find those tools withOUT vulnerabilities and
+> "certifying them" in some way as safe for all inputs?
+
+I think the main issue with this approach would be that one cannot
+prove that something DOES NOT exist. One can easily prove that
+something DOES exist by producing evidence: you can prove a bug exists
+by providing reproduction steps or a proof-of-concept file that
+triggers the issue. On the other hand, it would be very problematic to
+prove a program is bug-free -- what evidence can you bring to support
+that? Since one can theoretically produce an infinite amount of test
+cases given e.g. a grammar, how would you test a program against "all
+inputs"? If it's via fuzzing, who can "certify" that a fuzzer you used
+indeed produced "all inputs"? Would we need fuzzer certifications,
+then?
+
+I think every time after a product passes an audit, a certification,
+or whatever, another guy comes about and spots a security issue nobody
+else has spotted before. Is the product still secure? Does that kind
+of certification actually mean anything with respect to "having no
+bugs"? I strongly doubt that.
+
+Cheers,
+Z.
