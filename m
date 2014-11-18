@@ -1,51 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/22/8
-Message-ID: <53566B57.6050005@enovance.com>
-Date: Tue, 22 Apr 2014 15:15:03 +0200
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/6
+Message-ID: <20141118111956.620a5ab2@pc>
+Date: Tue, 18 Nov 2014 11:19:56 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-014] Neutron security groups bypass through invalid CIDR (CVE-2014-0187)
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-014
-CVE: CVE-2014-0187
-Date: April 22, 2014
-Title: Neutron security groups bypass through invalid CIDR
-Reporters: Stephen Ma (HP) and Christoph Thiel (Deutsche Telekom)
-Products: Neutron
-Versions: 2013.1 to 2013.2.3, and 2014.1
+Am Mon, 17 Nov 2014 22:39:29 -0500
+schrieb Robert Watson <robertcwatson1@...il.com>:
 
-Description:
-Stephen Ma from Hewlett Packard and Christoph Thiel from Deutsche
-Telekom reported a vulnerability in Neutron security groups. By creating
-a security group rule with an invalid CIDR, an authenticated user may
-break openvswitch-agent process, preventing further rules from being
-applied on the host. Note: removal of the faulty rule is not enough, the
-openvswitch-agent must be restarted. All Neutron setups using Open
-vSwitch are affected.
+> What about using fuzzing to find those tools withOUT vulnerabilities
+> and "certifying them" in some way as safe for all inputs?
 
-Juno (development branch) fix:
-https://review.openstack.org/59212
+I had something alike this already in mind.
+I thought about some "mapping" of open source tools parsing fileformats.
 
-Icehouse fix:
-https://review.openstack.org/88674
+They would roughly fall into four categories:
+1. ok
+extensive fuzzing has been done and all known memory corruption issues
+are fixed (this would probably apply to well-proven libs like zlib,
+libpng etc.)
+2. work in progress
+fuzzing has revealed issues but the devs are actively working on fixing
+them in a timely manner (binutils/libbfd would fall into this category)
+3. unfixed
+Known memory corruption issues exist and there is no upstream developer
+available fixing them (abandoned software) or the upstream developer is
+not willing to fix issues / thinks the tool is not suitable for
+untrusted input.
+4. unknown
+No extensive fuzzing done.
 
-Havana fix:
-https://review.openstack.org/88057
-
-Notes:
-This fix will be included in the juno-1 development milestone and in
-future 2013.2.4 and 2014.1.1 releases.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0187
-https://launchpad.net/bugs/1300785
+I will probably come up with some project like this.
 
 -- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Hanno Böck
+http://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
