@@ -1,45 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/02/5
-Message-Id: <201406022323.s52NNJLx024941@linus.mitre.org>
-Date: Mon, 2 Jun 2014 19:23:19 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/7
+Message-ID: <CAH72vigDpcFLGufy3KSWJrRrqKypTcR3M_-aV7Br9vr2dVy6TQ@mail.gmail.com>
+Date: Tue, 18 Nov 2014 12:17:12 +0100
+From: Źmicier Januszkiewicz <gauri@....by>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2014-3940 - Linux kernel - missing check during hugepage migration
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+2014-11-18 4:37 GMT+01:00 Robert Watson <robertcwatson1@...il.com>:
 
-The scope of CVE-2014-3940 is the https://lkml.org/lkml/2014/3/18/784
-post, i.e., "[PATCH RESEND -mm 1/2] mm: add !pte_present() check on
-existing hugetlb_entry callbacks" on 18 March.
+> What about using fuzzing to find those tools withOUT vulnerabilities and
+> "certifying them" in some way as safe for all inputs?
 
-Two notes about this:
+I think the main issue with this approach would be that one cannot
+prove that something DOES NOT exist. One can easily prove that
+something DOES exist by producing evidence: you can prove a bug exists
+by providing reproduction steps or a proof-of-concept file that
+triggers the issue. On the other hand, it would be very problematic to
+prove a program is bug-free -- what evidence can you bring to support
+that? Since one can theoretically produce an infinite amount of test
+cases given e.g. a grammar, how would you test a program against "all
+inputs"? If it's via fuzzing, who can "certify" that a fuzzer you used
+indeed produced "all inputs"? Would we need fuzzer certifications,
+then?
 
-  - Applying the https://lkml.org/lkml/2014/3/18/784 patch to, for
-    example, the 3.14.5 release would involve changing the
-    queue_pages_hugetlb_pmd_range function instead of the
-    queue_pages_hugetlb function.
+I think every time after a product passes an audit, a certification,
+or whatever, another guy comes about and spots a security issue nobody
+else has spotted before. Is the product still secure? Does that kind
+of certification actually mean anything with respect to "having no
+bugs"? I strongly doubt that.
 
-  - The scope of CVE-2014-3940 does not include the related "2/2"
-    message in the https://lkml.org/lkml/2014/3/18/769 post. The issue
-    there is not fully investigated, and may be a bug that doesn't
-    affect any stable kernel release.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTjQX5AAoJEKllVAevmvmsf/IH/R/0yPoIowUFpeCJ1kQiPojD
-KexPi5c8hne6z2jfmHARzjmBQS7IvHn/FcrBONF7WIcDnFZq4CgVHhIcGuJjiOI2
-uQKXx6JUX6bHahGMdNs2ow2SQzCLy1xj0FcHQBAg/RZVk4jBAQIWkvbkeE52tWaK
-IpICuE3Sderg7rtucHqpbMjlD76rr/PqiANYT2xgip7ZnpKvoicrXBy2SV3WhD3G
-qOK6Qrb+aPC+qsU3OIjp7JsRf7IuHaQ10yfn+oZJeEoayf+ka7rzsVy6QpKVkiuK
-FLw31hMlS7ZPxHrpZX6xaQ1rr7mQY1qk/KY+zUv2uod9GPx7foljWNQNAMdeDKU=
-=D5Cw
------END PGP SIGNATURE-----
+Cheers,
+Z.
