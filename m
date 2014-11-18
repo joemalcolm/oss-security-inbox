@@ -1,35 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/11
-Message-ID: <54A1C15E.5030008@internot.info>
-Date: Tue, 30 Dec 2014 08:02:22 +1100
-From: Joshua Rogers <oss@...ernot.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/2
+Message-ID: <CAH-jhOBVmFiE5WhQXWm1XqDB4szKMuJ3dr-VKdKQKmoJ0u=SyQ@mail.gmail.com>
+Date: Tue, 18 Nov 2014 18:11:29 -0500
+From: Steven Morgan <smorgan@...rcefire.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request(s): libgcrypt
+Cc: kseifried@...hat.com
+Subject: Fwd: [Clamav-devel] ClamAV(R) blog: ClamAV 0.98.5 has been released!
 Content-Type: text/plain; charset=utf-8
 
-On 30/12/14 07:46, Florian Weimer wrote:
-> The patch seems incorrect because the copy of the pointer in the
-> caller is not updated when first free happens.
->
-> The error can only happen on a path with an allocation failure, right?
-Yes, when the allocation fails.
-_gcry_hmac256_finalize frees 'hd' before it returns NULL, then frees it
-again.
-Actually, the patch is incorrect. There is no 'if' hd is freed on the
-return of NULL, as it is always freed upon the return of NULL.
+FYI:
 
->> off-by-one out-of-bounds read:
->> http://lists.gnupg.org/pipermail/gcrypt-devel/2014-December/003299.html
-> This doesn't look like a security issue because the callers all use
-> in-range values.
->
-I was actually unsure of this one. I'm waiting for a libgcrypt developer
-to comment on it.
+---------- Forwarded message ----------
+From: Joel Esler (jesler) <jesler@...co.com>
+Date: Tue, Nov 18, 2014 at 5:11 PM
+Subject: [Clamav-devel] ClamAV® blog: ClamAV 0.98.5 has been released!
+To: ClamAV Development <clamav-devel@...ts.clamav.net>, ClamAV users ML <
+clamav-users@...ts.clamav.net>, "clamav-announce@...ts.clamav.net" <
+clamav-announce@...ts.clamav.net>
 
 
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+http://blog.clamav.net/2014/11/clamav-0985-has-been-released.html
+
+ClamAV 0.98.5 has been released!
+
+Welcome to ClamAV 0.98.5! ClamAV 0.98.5 includes important new features
+for collecting and analyzing file properties. Software developers and
+analysts may collect file property meta data using the ClamAV API for
+subsequent analysis by ClamAV bytecode programs. Using these features
+will require that libjson-c is installed, but otherwise libjson-c is not
+needed.
+
+Look for our upcoming series of blog posts to learn more about using the
+ClamAV API and bytecode facilities for collecting and analyzing file
+properties.
+
+ClamAV 0.98.5 also includes these new features and bug fixes:
+
+
+• Support for the XDP file format and extracting, decoding, and scanning
+PDF files within XDP files. Addition of shared library support for LLVM
+versions 3.1 - 3.5 for the purpose of just-in-time(JIT) compilation of
+ClamAV bytecode signatures. Andreas Cadhalpun submitted the patch
+implementing this support.
+• Enhancements to the clambc command line utility to assist ClamAV bytecode
+signature authors by providing introspection into compiled bytecode
+programs.
+• Resolution of many of the warning messages from ClamAV compilation.
+• Improved detection of malicious PE files.
+• Security fix for ClamAV crash when using 'clamscan -a'. This issue was
+identified by Kurt Siefried of Red Hat.
+• Security fix for ClamAV crash when scanning maliciously crafted yoda's
+crypter files. This issue, as well as several other bugs fixed in this
+release, were identified by Damien Millescamp of Oppida.
+• ClamAV 0.98.5 now works with OpenSSL in FIPS compliant mode. Thanks to
+Reinhard Max for supplying the patch.
+• Bug fixes and other feature enhancements. See Changelog or git log for
+details.
+
+
+Thanks to the following ClamAV community members for code submissions
+and bug reporting included in ClamAV 0.98.5:
+
+Andreas Cadhalpun
+Sebastian Andrzej Siewior
+Damien Millescamp
+Reinhard Max
+Kurt Seifried
+
+Please download the latest release of ClamAV from 0.98.5 from our download
+page.
+_______________________________________________
+http://lurker.clamav.net/list/clamav-devel.html
+Please submit your patches to our Bugzilla: http://bugs.clamav.net
+
+http://www.clamav.net/contact.html#ml
+
