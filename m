@@ -1,41 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/19/16
-Message-ID: <CAKcmtDzgKqeaB4xNbigJstxU1iLwEgg1DUBJzDkNUTtTyfvF=Q@mail.gmail.com>
-Date: Wed, 19 Mar 2014 10:44:09 -0700
-From: Chris Steipp <csteipp@...imedia.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/11
+Message-id: <3BFF7C5B-3CD6-4162-9479-0F63A7E54C2B@me.com>
+Date: Tue, 18 Nov 2014 14:17:09 -0500
+From: Larry Cashdollar <larry0@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Wordpress WP-DB-Backup v2.2.4 Plugin Remote Database Backup Download Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-It would be great to know something about what it took to host the old
-list, if anyone knows. There are certainly existing organizations who run
-large mailing lists, have lawyers to deal with takedowns, and believe in
-free access to knowledge.
 
-Or if anyone has seen another place where this is being discussed by the FD
-community, I'd welcome a pointer.
+> On Nov 17, 2014, at 7:22 PM, Joshua Rogers <oss@...ernot.info> wrote:
+> 
+>> On 18/11/14 10:30, Larry W. Cashdollar wrote:
+>> Turns out Matthew Bryant had already covered everything I had but a few months ago here:
+>> 
+>> http://thehackerblog.com/auditing-wp-db-backup-wordpress-plugin-why-using-the-database-password-for-entropy-is-a-bad-idea/
+> On that blog..
+>> So we have to bruteforce these five hexadecimal digits – what’s the
+>> math on that? Since our keyspace is any hex character and we have a
+>> total of five digits we have 16^5 possibilities or 1,048,576
+>> permutations.
+> Using birthday problem maths..
+> 1048576! / ((1048576-1205)! * 1048576^1205) =
+> 0.500538915
+> 
+> 1-0.500538915=
+> .499461085
+> 
+> aka. after 1,205 attempts, you'd have a 50% chance of hitting the
+> correct location..
+> 
+> Just something to consider.
+> 
+Plus I have a working PoC.  I would imagine many sites using Wordpress database names that could be guessed.
 
 
-On Wed, Mar 19, 2014 at 9:14 AM, Georgi Guninski <guninski@...inski.com>wrote:
-
-> What is the number of email addresses who
-> posted on FD?
->
-> (to roughly estimate cost of hosting)
->
-> On Wed, Mar 19, 2014 at 02:58:23PM +0200, Georgi Guninski wrote:
-> > Apologies for posting on list mainly dedicated
-> > to CVE's.
-> >
-> > The Full Disclosure mailing list died today:
-> > http://lists.grok.org.uk/
-> > http://seclists.org/fulldisclosure/2014/Mar/332
-> >
-> > I suppose it is time for a new list.
-> >
-> > Any ideas?
-> >
-> > --
-> > guninski
->
-
+> -- 
+> -- Joshua Rogers <https://internot.info/>
