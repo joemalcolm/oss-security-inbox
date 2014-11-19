@@ -1,32 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/16/4
-Message-ID: <21207.54896.884404.459550@gargle.gargle.HOWL>
-Date: Thu, 16 Jan 2014 13:54:08 +0100
-From: rf@...eap.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/19
+Message-ID: <546D15B7.8090107@enovance.com>
+Date: Wed, 19 Nov 2014 23:12:07 +0100
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership
+Subject: [OSSA 2014-039] Neutron DoS through invalid DNS configuration (CVE-2014-7821)
 Content-Type: text/plain; charset=utf-8
 
-Hi Yves,
+OpenStack Security Advisory: 2014-039
+CVE: CVE-2014-7821
+Date: November 19, 2014
+Title: Neutron DoS through invalid DNS configuration
+Reporter: Henry Yamauchi, Charles Neill and Michael Xin (Rackspace)
+Products: Neutron
+Versions: up to 2014.1.3 and 2014.2
 
- >> I hope this is the right place to ask for inclusion of a Qlustar contact
- >> in the linux-distros list.
- >> 
- >> Qlustar is a Ubuntu/Debian based distro targeted at HPC/Storage/Cloud
- >> clusters. We use our own kernels (typically based on vanilla) since many
- >> years, but have the need to supply timely security fixes to our users. So
- >> far we have to wait for other distros to come out with their
- >> announcements and then start analyzing the fixes they have done. This
- >> leaves us/our users with a vulnerability window that is way too large,
+Description:
+Henry Yamauchi, Charles Neill and Michael Xin from Rackspace reported
+a vulnerability in Neutron. By configuring a maliciously crafted
+dns_nameservers an authenticated user may crash Neutron service
+resulting in a denial of service attack. All Neutron setups are affected.
 
-> I can't speak for Ubuntu, but you're welcome to participate in the
-> Debian security effort.
+Kilo (development branch) fix:
+https://review.openstack.org/135616
 
-thanks a lot for your offer. Could you explain a little more what
-participation in the Debian security effort would mean? Note that the issue I
-currently have is mostly about kernel fixes and we don't use Debian nor
-Ubuntu kernels.
+Juno fix:
+https://review.openstack.org/135623
 
-Cheers,
+Icehouse fix:
+https://review.openstack.org/135624
 
-Roland
+Notes:
+This fix will be included in future 2014.1.4 and 2014.2.1 releases.
+
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-7821
+https://launchpad.net/bugs/1378450
+
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
