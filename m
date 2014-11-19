@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/04/5
-Message-ID: <20140704213328.GA2058@openwall.com>
-Date: Sat, 5 Jul 2014 01:33:28 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/16
+Message-ID: <546CE8B2.5060605@internot.info>
+Date: Thu, 20 Nov 2014 06:00:02 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-Thanks for posting this, Andy!
 
-On Fri, Jul 04, 2014 at 02:05:08PM -0700, Andy Lutomirski wrote:
-> Upstream commit b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a fixes a
-> ptrace bug.
+On 19/11/14 18:19, Gynvael Coldwind wrote:
+> We fuzzed clamav in 2012 or so and reported some bugs. Definitely a good
+> target.
+>
+> To be honest I would love to see all AV security tested, not just the open
+> source one. If they claim they make people more secure, it would be great
+> to know that that is backed by e.g. fuzzing and bug bounty programs.
+That reminds me of this..
+http://an7isec.blogspot.com.au/2014/04/pown-noobs-acunetix-0day.html
 
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b9cd18de4db3c9ffa7e17b0dc0ca99ed5aa4d43a
+Funny stuff.
 
-> The exact scope of the bug is somewhat unclear right now.
-
-It's clear that this problem is specific to x86_64, though, and I think
-you omitted this detail inadvertently (it is clear from the commit).
-
-> I see no reason why the bug should not be present as far back as Linux
-> 2.6.17, but it seems to be difficult to reproduce on old kernels.
-> 
-> There is some ongoing discussion on linux-distros about the impact and
-> applicability of this bug.
-> 
-> More details and a PoC to follow some time next week.
-
-I think it's OK to hold the PoC, but most discussion of the bug should
-move in here.
-
-Thanks again,
-
-Alexander
+-- 
+-- Joshua Rogers <https://internot.info/>
