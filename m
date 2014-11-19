@@ -1,42 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/18
-Message-ID: <542F1EE0.2040301@redhat.com>
-Date: Fri, 03 Oct 2014 16:10:40 -0600
-From: Eric Blake <eblake@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/11
+Message-ID: <546CDAE1.9050909@spiderschwe.in>
+Date: Wed, 19 Nov 2014 19:01:05 +0100
+From: Niklas Kielblock <niklas@...derschwe.in>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
+Subject: Re: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
-On 10/03/2014 01:28 PM, David A. Wheeler wrote:
-> FYI, I've created a timeline of major Shellshock events here:
-> 
->   http://www.dwheeler.com/essays/shellshock.html#timeline
-> 
-> If anyone has corrections or key additions, let me know.
+The Chinese government publishes its own Linux distribution and there 
+are many others making distributions targeting specific cultural groups, 
+but I'm not aware of any greater efforts to build unique national 
+operating systems.
 
-In the timeline, it might be worth linking to all of the bash patches:
-
-Patch 25 (CVE-2014-6271) 24 Sep 2014 10:27:10 -0400
-https://lists.gnu.org/archive/html/bug-bash/2014-09/msg00081.html
-
-Patch 26 (CVE-2014-7169) 26 Sep 2014 17:17:09 -0400
-https://lists.gnu.org/archive/html/bug-bash/2014-09/msg00224.html
-
-Patch 27 (no CVE, but the most important) [already in the timeline] 27
-Sep 2014 22:50:07 -0400
-https://lists.gnu.org/archive/html/bug-bash/2014-09/msg00278.html
-
-Patch 28 (CVE-2014-7186, CVE-2014-7187) 1 Oct 2014 10:47:47 -0400
-https://lists.gnu.org/archive/html/bug-bash/2014-10/msg00000.html
-
-Patch 29 (CVE-2014-6277) 2 Oct 2014 22:42:53 -0400
-https://lists.gnu.org/archive/html/bug-bash/2014-10/msg00020.html
-
-Patch 30 (CVE-2014-6278) TBD
-
--- 
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
+On 19/11/2014 18:54, M.T. Roebuck wrote:
+> I see you're in Vietnam is there anything at all like a non-western
+> OS in use there? Or anywhere in that part of the world? I must be
+> naive but I thought I was just lacking information. It doesn't
+> seem possible that there are only "western" OSs on the entire
+> planet. Although my problem might just be that my definition of
+> OS is all wrong.
