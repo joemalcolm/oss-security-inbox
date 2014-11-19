@@ -1,22 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/37
-Message-Id: <20141002170830.8D1577BC01E@smtpvmsrv1.mitre.org>
-Date: Thu,  2 Oct 2014 13:08:30 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/22
+Message-Id: <20141119231410.AC71A72E057@smtpvbsrv1.mitre.org>
+Date: Wed, 19 Nov 2014 18:14:10 -0500 (EST)
 From: cve-assign@...re.org
-To: djorm@...hat.com
+To: dregad@...tisbt.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Remote code execution via XSL extensions in SpagoBI
+Subject: Re: CVE Request: information disclosure in MantisBT attachments
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://www.spagoworld.org/jira/browse/SPAGOBI-1885
-> 1) FEATURE_SECURE_PROCESSING is not set. This means an attacker can
-> provide an XSL document with embedded Java code, which will be executed
-> on the server.
+> MantisBT issue attachments can be downloaded without permission.
+> 
+> Due to an incorrect access check, by guessing the download URL
+> correctly, unprivileged users can download files from a private project
+> with restricted access to attachments, i.e. where
+> $g_download_attachments_threshold /
+> $g_view_attachments_threshold are set e.g. to 55 (developer), if another
+> project to which they have access does not restrict attachments download.
+> 
+> http://github.com/mantisbt/mantisbt/commit/5f0b150b79868ea9d791e2c46b45b3f41b410e50
+> http://www.mantisbt.org/bugs/view.php?id=17742
 
-Use CVE-2014-7296.
+Use CVE-2014-8988.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -26,11 +33,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJULYYgAAoJEKllVAevmvmsMRYH/2icsp5j32o0DkGbe1veePbE
-5nN/OXV6xjXXjaiP9wi7zDO5f73cp68j9VBHv5EmNprMQIPdYR0h9FEjcC4bkORc
-QP01QFEZ0J8Gnkf8MxqyhlUfdVtb3xlEZEf3rfQHF5kWa+MulwJNkvILEiwDAMtQ
-T8gg+/2DcXD6pPWVHv5p5PgxfEGIjlB35Un0ZNHgkdgHCTE+pFpUSfxMd4XkPab3
-r4WWWXcwtcA5QsXq/038DL1LpP2ddRDBGumka9e5K9d+/7hvf175Jw7k3YrjPWI4
-bUKZgVvFuQq5yodc+NhgdoUITeUJKLEN3567e8JgF7yDaJjKGYZZHt51Xjo34wI=
-=jKBL
+iQEcBAEBAgAGBQJUbSKQAAoJEKllVAevmvmsYkoH/RBI5X7xjf89SuLHRtWnKEim
+2lWoyMDGZYmfCVTobud4K+zsAAnXE3t5MVQBXHbjxP2rgKSFtMl6P1c6nsf9plrI
+YqudUDmQfYyeq5mbOp2gSRRwyYYbO8Rvr3lvtHcG6jMnD2Jb41sv0FZZ2NusdXKd
+DabAkXlR/ZaGsRwKOdFmRLLQRBdbQT2sZVYme3Nm3GWLSjdwOKhQlUrw0x8uauVN
+DnucD61jd5qMPglVFV30aWuR42N39LNZ8w29VbTDXJIxxUCItBupj3IarRuvvrkd
+sPhp0ur2GgPawkmeYoFAko4ZLpBtybBisTQwh3odoeRYGbZmIPF4lEsS4wk364c=
+=Fq7Y
 -----END PGP SIGNATURE-----
