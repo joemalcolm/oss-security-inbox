@@ -1,68 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/12/3
-Message-ID: <87bnphcyzp.fsf@mid.deneb.enyo.de>
-Date: Sun, 12 Oct 2014 13:24:10 +0200
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/15
+Message-ID: <20141119182633.GF23193@tracyreed.org>
+Date: Wed, 19 Nov 2014 10:26:33 -0800
+From: Tracy Reed <treed@...raviolet.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+Subject: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
-* Pavel Labushev:
+On Sun, Nov 16, 2014 at 07:17:12PM PST, M.T. Roebuck spake thusly:
+> I haven't had any success yet in finding security audit reports for
+> any *nix OS (I haven't looked for them for MS/Apple products).
 
->> it, but maybe they considered it.  It seems unlikely that a shell 
->> rewrite came up with this concept on its own.  None of the Bourne-like 
->> shells we have implement anything like that, after all.
->
-> We ain't living in a parallel universe where "Haskell" is a mainstream
-> technology. So we don't have e.g. an "army" of people unconstrained
-> enough intellectually and practically so they could start thinking
-> about the useful complex properties they actually can prove, what
-> formal models are more suitable for building the software in that
-> context, etc. Instead of trying to "write it in C in Haskell", which
-> looks like what you have in mind.
+Security audits depend greatly on the configuration and use of the machine.
+Having a generic security audit is practically useless.
 
-Haskell programmers typically do not have a background in formal
-semantics and proof automation.  Like with any language with a
-significant following, a fairly large portion of the practitioners
-follows a "whatever works" approach.
+A company would usually pay to have a security audit produced (either via
+internal or external auditors) and contains very specific details about their
+particular installation. These audits are regarded as sensitive and proprietary
+information and not publically distributed.
 
-For example, there is no guarantee that a programmer in a type-rich
-language who implements web templating will give types to the
-templates (which can help to decouple coding an design work), or will
-implement auto-escaping functionality (which helps to prevent
-cross-site scripting vulnerabilities).  In fact, if the goal is to
-produce a provably correct templating library, it is likely that both
-features are left out because they are much more difficult to verify.
-(Especially auto-escaping requires extensive domain knowledge which
-most web templating library authors lack.)
+Nobody has an incentive to produce generic security audits of out of the box OS
+distributions and then make them publically available.
 
->> Not using a parser generator, but a manually written recursive descent 
->> parser might have helped because you could have called the function 
->> corresponding to the function definition production directly.  (However, 
->> there would still have been parser exposure to the network.)
->
-> What's the conclusion?
+What is the problem you are trying to solve?
 
-I don't have any.  A decade ago, I wanted to rewrite everything in
-Ada, but that feeling has passed.
+-- 
+Tracy Reed
 
->> The Haskell standard library does not even distinguish between a read 
->> error and an end-of-stream condition.  You can't build reliable software 
->> on top of that.
->
-> Sounds like a weak excuse for not using it. Like it's impossible to
-> write a decent library or fix the existing one. Besides, the absence
-> of a decent standard library doesn't prevent anyone from using "Haskell"
-> as a meta-language right now, and that's how most people use it for
-> systems programming and similar stuff.
-
-Certainly there are Haskell libraries which do not have this problem.
-However, the related language features could have long fallen into
-obscurity, but this is not what happened.  There are quite a number of
-Haskell programmers who like these features, much like there are
-defenders of arcane shell features.  This affects how the Haskell code
-out there is being written.
-
-I don't think Haskell is a magic bullet.  I do think type-rich
-languages (and languages with memory safety) have a lot to offer, but
-writing secure software in them is still hard.
+Content of type "application/pgp-signature" skipped
