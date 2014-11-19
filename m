@@ -1,53 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/6
-Message-Id: <037768D3-D8B8-4809-913B-CCE9C2EB96E2@wolfssl.com>
-Date: Thu, 17 Apr 2014 09:51:19 -0700
-From: Todd A Ouska <todd@...fssl.com>
-To: Raphael Geissert <geissert@...ian.org>
-Cc: Open Source Security <oss-security@...ts.openwall.com>, cve-assign@...re.org, ifsecure@...il.com, info@...fssl.com
-Subject: Re: CVE ids for CyaSSL 2.9.4?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/8
+Message-ID: <546C4850.4010309@reactos.org>
+Date: Wed, 19 Nov 2014 08:35:44 +0100
+From: Pierre Schweitzer <pierre@...ctos.org>
+To: OSS Security List <oss-security@...ts.openwall.com>,  cve-assign@...re.org
+Subject: CVE request for check_diskio nagios/icinga plugin
 Content-Type: text/plain; charset=utf-8
 
-Hi Raphael,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We've requested CVE ids for these issues.  To my knowledge they have not been assigned ids yet.  We will certainly update our advisory when they are.  Thanks for checking.
+Dear all,
 
-Regards,
-Todd
+The check_diskio plugin for nagios/icinga from Matteo Corti
+(https://svn.id.ethz.ch/nagios_plugins/check_diskio/) is subject to a
+/tmp symlink race attack in its latest version (and versions before as
+well).
 
-Todd Ouska
-www.wolfssl.com
-todd@...fssl.com
-Skype: toddouska
+This plugin is used to monitor the I/Os on device on Linux systems. To
+be able to make a diff between two calls, it keeps the latest readings
+into a fixed pattern file name: /tmp/check_diskio_status-$user-$device
 
-On Apr 17, 2014, at 5:13 AM, Raphael Geissert <geissert@...ian.org> wrote:
+It does not check for the file being a symlink (à la PEAR) or whatever
+when opening it.
 
-> Hi,
-> 
-> [CC'ing Ivan Fratric and one of the many @wolfssl addresses I found]
-> 
-> CyaSSL 2.9.4 fixes a number of security issues.
-> 
-> From [3]:
->> Issue #1 (Memory  Corruption)
->> Issue #2 (Out of bounds read)
->> Issue #3 (Dangerous Default Behavior, out of bounds read)
->> Issue #4 (NULL pointer dereference)
->> Issue #5 (Unknown Critical Certificate Extension Allowed)
-> 
-> Have CVE ids been assigned already? if not, could they be assigned?
-> 
-> Thanks in advance.
-> 
-> References:
-> [0]http://www.wolfssl.com/yaSSL/Docs-cyassl-changelog.html
-> [1]http://www.yassl.com/forums/topic539-cyassl-294-released.html
-> [2]http://www.yassl.com/yaSSL/Blog/Entries/2014/4/9_CyaSSL_2.9.4_Released.html
-> [3]http://www.yassl.com/yaSSL/Blog/Entries/2014/4/11_wolfSSL_Security_Advisory__April_9%2C_2014.html
-> 
-> Cheers,
-> -- 
-> Raphael Geissert - Debian Developer
-> www.debian.org - get.debian.net
-> 
+Could a CVE be assigned to this?
+The author has been contacted. I'll make him know the ID.
 
+Cheers,
+- -- 
+Pierre Schweitzer <pierre@...ctos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJUbEhQAAoJEHVFVWw9WFsLbKsQAINUKwP3oPVMs+126LhWsHsC
+6ln86rxgRzRi/zQwreIrmH2DNSY7qaMUKH461Q5Z1FXeREo87hALwRqgFUk3fMXW
+c9aRPUO1QKQWeeaaa3LQfQoJHSxSaLPDt/v+ieWRuoiP6urZLoGaEP32DtRjUXLG
+bIRFfORmMqh5PgdnsbVwcQb8ydjreFEEOzxghwzxwbPCczo97JCtXmtCxkMewVH/
+OtHUugknvTMIxpddpokUs6O68WBnvG5jNKXqRl/dYLQKgpRwkpecQEZbtdzH4xP7
+7JyNCh/9UacuMYpWWiApeULJsvQe9Uqu9ofll2DERuYASVadsLsEzvGi3IqEyrRV
+Oi79NsyxWVINV7bLh1pbwYlFJwp2ZARLyoF8HYPW9s3ZOx0tSXTLjc0NLLhHFAAH
+La7rl3asWBptjcrpOJMjGQbMhV1KwTBv3HS26YTWzYRHRiDiywTSQoOFvEiUFMYy
+1chTOOnKzKQRRXjMquhCkX86zP2JkY54N5QcLKiE83f8Q3I/3e/rh8N7WmtJd5Oq
+XCxn0CRCe+nyI+Iel0FVkHZhi5UKFmYrBnXw5njdtwX/hQLrZaF+JllFOpxtvuot
+BnwQYF10yKsLl3W4nX6euY4WFRayQxbHKG5WKZOsw2iPMjaYxuNp/XhMRaTVgRpU
+rPJO//rlwEHJK1KhIg6f
+=aF5C
+-----END PGP SIGNATURE-----
