@@ -1,43 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/14/7
-Message-ID: <20140314191724.GB19956@suse.de>
-Date: Fri, 14 Mar 2014 20:17:24 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/4
+Message-ID: <546C07B1.5020100@mccme.ru>
+Date: Wed, 19 Nov 2014 06:00:01 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for a bug in gnu coreutils 8.22
+Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2014-11-19 02:50, Seth Arnold wrote:
+> On Wed, Nov 19, 2014 at 12:21:29AM +0100, Hanno Böck wrote:
+>> It'd already be a good start to do this for format-parsing tools. So
+>> stuff that runs on files. Everything else is more complicated, fuzzing
+>> file formats is the easiest.
+>
+> You'd be surprised how infrequently file formats come up.. :)
 
-Can this be used in any form where people will put in untrusted data?
+zzuf can fuzz network too.
 
-In my feeling ... not really.
+>>> Getting AFL to work with every package suggested for Ubuntu main is
+>>> probably too much work.
+>>
+>> You may overestimate the complexity of afl. Once you get used to it it
+>> basically takes minutes to start a fuzzing job.
+>> And Michal is very open to suggestions to improve it (and it is
+>> improving on a daily basis right now).
+>
+> Oh, AFL itself looks pretty blindingly easy to use: CC=... CXX=...  and go
+> with it. It's our packaging and building infrastracture that I think would
+> make it more complicated: they're designed to make repeatable builds
+> easy, not necessarily to allow arbitrary changes to the compiler. And,
+> AFL only works for C/C++.
 
-Ciao, Marcus
-On Fri, Mar 14, 2014 at 11:35:40PM +0800, Qixue Xiao wrote:
-> I am not sure whether this needs a CVE.
-> 
-> 
-> this bug will result an illegal memory access, which may be leak
-> information without authority.
-> 
-> and the author had fixed it after my report.
-> 
-> please see:
-> http://debbugs.gnu.org/cgi/bugreport.cgi?bug=16855
-> 
-> 
-> ### Bug overview
-> 
->     shuf -er or shuf -eer [ segment fault]
->     impact [coreutils 8.22 ]
-> 
-> ```
-> [15:03:59]xqx <at> server:~/data/xqx/projects/coreutils-8.22$
-> ./obj-gcov/src/shuf -er
-> Segmentation fault (core dumped)
-> 
-> ```
-> 
-> thanks
-> .
+That's an advanced mode of AFL. Too advanced for many things, I would 
+say. Use afl-fuzz -dn or zzuf. You need just a sample (or several) for a 
+format you are interested in.
+
+-- 
+Alexander Cherepanov
