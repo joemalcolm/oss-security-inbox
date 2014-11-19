@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/9
-Message-ID: <546DAC0A.7010508@mittwald.de>
-Date: Thu, 20 Nov 2014 09:53:30 +0100
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/1
+Message-ID: <546BE0C0.2050908@redhat.com>
+Date: Wed, 19 Nov 2014 11:13:52 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+CC: 767227@...s.debian.org
+Subject: CVE request: lsyncd command injection
 Content-Type: text/plain; charset=utf-8
 
+Good morning,
 
+There is a command injection flaw in lsyncd, a file change monitoring 
+and synchronization daemon:
 
-On 19/11/14 08:19, Gynvael Coldwind wrote:
-> To be honest I would love to see all AV security tested, not just the open
-> source one. If they claim they make people more secure, it would be great
-> to know that that is backed by e.g. fuzzing and bug bounty programs.
+https://github.com/axkibe/lsyncd/issues/220
 
-Well in case you missed it: breaking antivirus software
-from the syscan360 conference:
-http://www.syscan360.org/slides/2014_EN_BreakingAVSoftware_JoxeanKoret.pdf
+https://github.com/creshal/lsyncd/commit/18f02ad013b41a72753912155ae2ba72f2a53e52
 
-He searched in 17 AV programs and found
-critical exploits in 14.
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=767227
 
-very interesting read.
+Could a CVE please be assigned?
 
--- 
-Mit freundlichen Grüßen / Regards
+Thanks,
 
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+--
+Murray McAllister / Red Hat Product Security
