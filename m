@@ -1,49 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/24/4
-Message-ID: <20140724093423.GB27882@kludge.henri.nerv.fi>
-Date: Thu, 24 Jul 2014 12:34:23 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/14
+Message-ID: <20141119182257.GE23193@tracyreed.org>
+Date: Wed, 19 Nov 2014 10:22:57 -0800
+From: Tracy Reed <treed@...raviolet.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Mailpoet (wordpress-plugin) remote file upload exploited in the wild
+Subject: Re: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jul 24, 2014 at 11:26:08AM +0200, Hanno Böck wrote:
-> Hi,
-> 
-> A remote file upload in the wordpress plugin Mailpoet is currently
-> widely exploited:
-> http://blog.sucuri.net/2014/07/remote-file-upload-vulnerability-on-mailpoet-wysija-newsletters.html
-> http://blog.sucuri.net/2014/07/mailpoet-vulnerability-exploited-in-the-wild-breaking-thousands-of-wordpress-sites.html
-> 
-> It is fixed in the version 2.6.7. Upstream changelog:
-> http://wordpress.org/plugins/wysija-newsletters/changelog/
-> Fixed security issue reported by Sucuri
-> 
-> 
-> The changelog lists also another security issue, fixed in version 2.6.8,
-> however without any details:
-> Fixed security issue reported by our dear Dominic. Thank you sir!
-> 
-> I know that CVE requests without details aren't liked much here,
-> however at the moment I don't have the time to digg into version diffs.
-> 
-> 
-> Please assign CVE for the first and proceed how you think appropriate
-> for the second.
-> 
-> 
-> -- 
-> Hanno Böck
-> http://hboeck.de/
-> 
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
+On Wed, Nov 19, 2014 at 09:54:09AM PST, M.T. Roebuck spake thusly:
+> I see you're in Vietnam is there anything at all like a non-western
+> OS in use there? Or anywhere in that part of the world? I must be
 
-Already assigned. Please see
-http://www.openwall.com/lists/oss-security/2014/07/02/1 thanks. Top 379 plugin
-in http://seclists.org/nmap-dev/2011/q2/352 by the way.
+I am not Vietnamese but I have spent a lot of time in Vietnam and occasionally
+do business there.
 
----
-Henri Salo
+No, there are no non-western OS in use there. It is pretty much all pirated
+Windows. The hacker culture there is very small, nearly non-existent, although
+the Saigon Linux User Group are very bright and capable albeit only maybe 4
+regulars:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+https://saigonlug.org/
+
+I am not aware of any non-western operating systems in use anywhere in the
+world. Even China cribbed Linux for their "Red Flag" (now defunct,
+surprisingly) OS:
+
+http://www.redflag-linux.com/en/
+
+https://en.wikipedia.org/wiki/Red_Flag_Linux
+
+-- 
+Tracy Reed
+
+Content of type "application/pgp-signature" skipped
