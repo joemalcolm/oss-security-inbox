@@ -1,37 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/8
-Message-ID: <20140312115010.GA21476@openwall.com>
-Date: Wed, 12 Mar 2014 15:50:10 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/9
+Message-ID: <CAAnPYQ5bzv_v5mu6GTQr6EYyDq+3gW+_OpsbRVqkY_VDiLxW4w@mail.gmail.com>
+Date: Wed, 19 Nov 2014 08:19:19 +0100
+From: Gynvael Coldwind <gynvael@...dwind.pl>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fw: Re: IMAP STARTTLS sniff tool
+Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-Hi Bob,
+On Wed, Nov 19, 2014 at 7:41 AM, Michal Zalewski <lcamtuf@...edump.cx>
+wrote:
+>
+> Tavis looked at several commercial AV engines some time ago, I think
+> it wasn't pretty. I suspect that clamav may be very much worth fuzzing
+> or auditing.
+>
+> /mz
+>
 
-On Wed, Mar 12, 2014 at 12:05:19PM +0100, Bob Ezrin wrote:
-> we solved the problem with https://github.com/ipopov/starttls-mitm.
+We fuzzed clamav in 2012 or so and reported some bugs. Definitely a good
+target.
 
-Thanks for letting the list know.  As far as I can see, you tried
-posting to the Penetration Testing list, but got no replies:
+To be honest I would love to see all AV security tested, not just the open
+source one. If they claim they make people more secure, it would be great
+to know that that is backed by e.g. fuzzing and bug bounty programs.
 
-http://seclists.org/pen-test/2014/Mar/index.html
-http://www.securityfocus.com/archive/101
+Cheers,
+-- 
+Gynvael Coldwind
 
-I'm not sure what this means: too little demand for a list with such
-focus, or specifically the Penetration Testing list being non-working.
-
-Either way, I'm also not sure if we want to expand the scope on
-oss-security to cover topics like this.  Probably not.
-
-Bob, it's not great that you posted this follow-up as a forward rather
-than as a reply to the same thread and with proper quoting.  This makes
-the follow-up appear as a new thread in the archives of oss-security,
-whereas the thread that you started before does not contain this
-additional follow-up.  Please be more careful with _how_ you post to
-mailing lists.
-
-http://www.complang.tuwien.ac.at/anton/mail-news-errors.html
-http://www.netmeister.org/news/learn2quote.html
-
-Alexander
