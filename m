@@ -1,40 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/07/1
-Message-ID: <5319545E.5090502@redhat.com>
-Date: Fri, 07 Mar 2014 10:38:46 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: net-snmp agentx incorrect handling of multi-object requests DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/20
+Message-Id: <20141119231133.1B6CB6C0038@smtpvmsrv1.mitre.org>
+Date: Wed, 19 Nov 2014 18:11:33 -0500 (EST)
+From: cve-assign@...re.org
+To: paul@...tisforge.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
 Content-Type: text/plain; charset=utf-8
 
-On 03/06/2014 07:52 PM, Raphael Geissert wrote:
-> Hi,
-> 
-> It was found that the AgentX subagent of net-snmp can be stalled when
-> a manager sends a multi-object request with a different number of
-> subids. From the Debian bug report:
-> 
->> This happens if one of the requested OID is larger than the previous one:
->>
->> agentx/master: request for variable (iso.3.6.1.2.1.2.2.1.7.7)
->> agentx/master: request for variable (iso.3.6.1.2.1.2.2.1.2.10)
->> agentx/master: request for variable (iso.3.6.1.2.1.2.2.1.8.7)
->> agentx/master: request for variable (iso.3.6.1.3.53.5.5.2.1.3.101)
->>
->> First three OID contain 11 subid while the next one has 12 subid.
-> 
-> Resulting error message from the subagent:
->> agentx: Oversized Object ID
-> 
-> The bug is fixed upstream for the 5.4 branch in 5.4.4. From the
-> upstream bug report this was also fixed in the 5.3 branch but I don't
-> know on what specific version.
-> 
-> Could a CVE id be assigned?
-> 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Isnt this same as:
-https://bugzilla.redhat.com/show_bug.cgi?id=1038007 ?
+> https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40
+> the selection list in the filters
 
--- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+Use CVE-2014-8986.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUbSJ9AAoJEKllVAevmvmsLLwIAJ3a8SSjNYCt954ecBzKk9VJ
+jxl/jrdNyhbkgYwU/akTTVmxW8y6ruOXkjoP1hq9cDsHuRBb9IA8iag4sDYz0k1s
+BdTD435iPb6jpjEr3cFnTtfDgyEpo8Y9uzawNFB4GDkIf9/cMMtrSUr0BlLhGssm
+O0L5KD+UzcEOFNoEr6w+QJtl2YNlRQT/T7t5ifbeHvWPSsdCiRsHEwau46dqLLez
+4COYKrERQADqtulZcHufuQydRy0JW5nQ3HNbRW84FmnuX99zFq8V+29whn3aH507
+RChuqMkYf65gBmvq6gg5wABiPLerivvCGXTqxBeYDf5WGlR2SkyIARvIE2FFnS8=
+=irjR
+-----END PGP SIGNATURE-----
