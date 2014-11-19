@@ -1,42 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/7
-Message-Id: <20141120065824.D49DA6DC008@smtpvmsrv1.mitre.org>
-Date: Thu, 20 Nov 2014 01:58:24 -0500 (EST)
-From: cve-assign@...re.org
-To: pierre@...ctos.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for check_diskio nagios/icinga plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/17
+Message-Id: <69E0999E-9C6E-4EE1-BA81-DB9D751D8919@stufft.io>
+Date: Wed, 19 Nov 2014 14:15:56 -0500
+From: Donald Stufft <donald@...fft.io>
+To: oss-security@...ts.openwall.com
+Subject: Re: Requesting a CVE for pip - Local DoS with predictable temp directory names
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> The check_diskio plugin for nagios/icinga from Matteo Corti
-> (https://svn.id.ethz.ch/nagios_plugins/check_diskio/) is subject to a
-> /tmp symlink race attack in its latest version (and versions before as
-> well).
+> On Nov 17, 2014, at 3:29 PM, Donald Stufft <donald@...fft.io> wrote:
 > 
-> This plugin is used to monitor the I/Os on device on Linux systems. To
-> be able to make a diff between two calls, it keeps the latest readings
-> into a fixed pattern file name: /tmp/check_diskio_status-$user-$device
+> I'd like to request a CVE for pip[1][2] and I am a core developer for that
+> project.
 > 
-> It does not check for the file being a symlink
+> There is a local DoS in pip 1.3, 1.3.1, 1.4, 1.4.1, 1.5, 1.5.1, 1.5.2, 1.5.3,
+> 1.5.4, 1.5.5, and 1.5.6. In an attempt to fix CVE-2013-1888 pip modified it's
+> build directories from pip-build to pip-build-<username> and added in checks
+> that would ensure that only a directory owned by the current user would be
+> used. However because the build directory is predictable a local DoS is
+> possible simply by creating a /tmp/pip-build-<username>/ directory owned by
+> someone other than the defined user. This issue has also been reported to the
+> Debian bug tracker as https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725847.
+> 
+> This has been fixed[3] in the develop branch of pip which will be released as
+> pip 6.0. 
+> 
+> I am not aware of any previous CVE for this issue.
+> 
+> [1] https://pip.pypa.io/
+> [2] https://pypi.python.org/pypi
+> [3] https://github.com/pypa/pip/pull/2122
+> 
+> ---
+> Donald Stufft
+> PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+> 
 
-Use CVE-2014-8994.
+ping?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+---
+Donald Stufft
+PGP: 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
 
-iQEcBAEBAgAGBQJUbY8NAAoJEKllVAevmvmszgQH/imVOlij54rUVoIVU/0Pkly0
-S05eWBaL9eiiPkbUbngSeuLSNITWeEn7sPExLdfEe8XiNzY5TCU4/IaUSc4cpJps
-aXCMqNqliBTfvLlT3L9CZbmknL4rOaDyUIyQcXNuFN1EdfiJDLSGEMc2KlmEegNU
-a/VFLK6c386fJ3yz/o0kKem4OA3SRcDnblccg5b8z0cnfgnWvz7jXaKZgzR+L8/3
-irJN2VZKcZwdkSVL2mKCx4aKW5y57x9MyDzs0kJ5B35TuiAbfY6dQEFEpFicvNuK
-zRocsKcC6mnIFEU4vEDLbVZn7l4WoD4+nvgLs7FoIdGLz6S2VtuSrURueqPGKao=
-=ohA9
------END PGP SIGNATURE-----
