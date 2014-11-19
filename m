@@ -1,88 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/28/6
-Message-ID: <CAKcmtDwvTw9NvttPtfimS5=15HiphGuLnq0ejddB1juLVGmhBg@mail.gmail.com>
-Date: Fri, 28 Feb 2014 11:46:24 -0800
-From: Chris Steipp <csteipp@...imedia.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/3
+Message-ID: <546BF2C0.6060000@mccme.ru>
+Date: Wed, 19 Nov 2014 04:30:40 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, mmcallis@...hat.com,  Markus Glaser <glaser@...lowelt.biz>
-Subject: Re: CVE requests: MediaWiki 1.22.3, 1.21.6 and 1.19.12 release
+Subject: CVE Request: LibreOffice -- several issues
 Content-Type: text/plain; charset=utf-8
 
-I'm from the foundation, and I'm on the list. Let me try to answer.
+Hi!
 
-On Feb 28, 2014 10:55 AM, "Vincent Danen" <vdanen@...hat.com> wrote:
->
-> Seems odd to be asking these questions without asking someone from the
-MediaWiki team involved (I doubt they are subscribed to oss-sec).  Given
-that Murray just posting what was written by upstream and even asked "if
-CVE worthy" I doubt he has the answers you're looking for.  =)
->
-> I've cc'd Markus Glaser to this as he sent out the notification to the
-mediawiki-announce list so he may have the insight you're looking for.
->
->
-> On 02/28/2014, at 11:26 AM, cve-assign@...re.org wrote:
->
-> > Some of this seems straightforward and we will send CVE assignments a
-> > little later. Our first question is about the UploadBase.php diff in:
-> >
-> >
-https://gerrit.wikimedia.org/r/#/q/7d923a6b53f7fbcb0cbc3a19797d741bf6f440eb,n,z
-> >
-> > Our first thought is that it might be best to have separate CVEs for
-> > "Disallow uploading non-whitelisted namespaces" and "disallow iframe
-> > elements" because they are distinct types of problems. The first one
-> > seems similar to what is discussed in:
-> >
-> > http://en.wikipedia.org/wiki/User:Aarchiba/SVG_sanitize of
-> >
-> > The first CVE would, roughly, have a root cause of "does not recognize
-> > that a trust relationship with a specific external site is reasonably
-> > required for use of a namespace." The second CVE would, roughly, have
-> > a root cause of "does not block IFRAME elements."
+Could CVEs please be assigned to the following issues?
 
-With the whitelisted set of namespaces, iirc, iframe doesn't have a valid
-definition. It was the combination of the iframe and the namespace that
-allowed the js to execute.
+https://bugs.freedesktop.org/show_bug.cgi?id=86446
+Crashes importing malformed .doc -- DoS
 
-> >
-> > Does anyone have an opposing view: for example, that adding the
-> > hardcoded $validNamespaces list can't be interpreted as a "normal"
-> > vulnerability fix? Across all products, adding a list of off-site URLs
-> > maintained by various third parties is rarely the essence of a
-> > security patch.
-> >
-> > (As a side issue, SVG_sanitizer allows
-> > http://www.w3.org/XML/1998/namespace but the patched UploadBase.php
-> > does not.)
-> >
-> >
-> > Our second question is about
-> > https://bugzilla.wikimedia.org/show_bug.cgi?id=61346 Comment 9. Do all
-> > valid tokens have the same length, and thus an attacker (if he looked
-> > at the source code) would already know that the wrong-length attempts
-> > would always fail?
+https://bugs.freedesktop.org/show_bug.cgi?id=86447
+Crashes importing malformed .ppt -- DoS
 
-Yes, the token length has been defined by a constant in the code
-(USER_TOKEN_LENGTH) for as far back as I've traced it (Tim's 2004 commit).
+https://bugs.freedesktop.org/show_bug.cgi?id=86448
+Crashes importing malformed .rtf -- DoS
 
-> >
-> > If not, a separate CVE would be needed on the basis of different
-> > affected versions.
-> >
-> > (This question is only about MediaWiki as shipped. If a system
-> > administrator would need to modify the source code to use a different
-> > length, and an attacker could detect that more easily because of
-> > 'strlen( $answer ) !== strlen( $test )' tests, that doesn't qualify
-> > for a CVE.)
-> >
-> > - --
-> > CVE assignment team, MITRE CVE Numbering Authority
-> > M/S M300
-> > 202 Burlington Road, Bedford, MA 01730 USA
-> > [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
->
->
-> --
-> Vincent Danen / Red Hat Security Response Team
+https://bugs.freedesktop.org/show_bug.cgi?id=86449
+Crash importing malformed .rtf -- potentially exploitable for RCE
 
+https://bugs.freedesktop.org/show_bug.cgi?id=86451
+Crashes importing malformed .rtf
+
+Tested with LibreOffice 3.5.4 on Debian Stable (amd64).
+
+Found during one evening with zzuf.
+
+IIUC any crasher (or 100% cpu usage) in LO is a security issue because 
+it takes down all other windows with it. But Michael Meeks from 
+officesecurity@...ts.freedesktop.org indicated that they are not 
+interested in CVEs for DoS-only crashers (I haven't asked about RCE) 
+because they still have 180 crashers in their own testing. All info 
+about their testing is regularly posted to LO devel mailing list.
+
+-- 
+Alexander Cherepanov
