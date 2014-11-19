@@ -1,29 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/5
-Message-ID: <20141014230948.0eb7b11f.reed@reedloden.com>
-Date: Tue, 14 Oct 2014 23:09:48 -0700
-From: Reed Loden <reed@...dloden.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Truly scary SSL 3.0 vuln to be revealed soon:
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/21
+Message-Id: <20141119231301.AB2EC52E012@smtpvbsrv1.mitre.org>
+Date: Wed, 19 Nov 2014 18:13:01 -0500 (EST)
+From: cve-assign@...re.org
+To: dregad@...tisbt.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 15 Oct 2014 05:28:34 +0000
-Sona Sarmadi <sona.sarmadi@...a.com> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> A reflection: Maybe we shouldn't post  information like this here or
-> somewhere else which is not published yet even if the information has
-> leak out? Although all members here are reliable but it is still an
-> open mailing list and we should be careful and act more responsible. 
+> The MantisBT Configuration Report page (adm_config_report.php) did not
+> escape a parameter before displaying it on the page, allowing an
+> attacker to execute arbitrary JavaScript code.
+> 
+> The severity of this issue is mitigated by the need to have a
+> high-privileged account (by default, administrator) to access the
+> configuration report page.
+> 
+> in the "set configuration" box
+> 
+> https://github.com/mantisbt/mantisbt/commit/49c3d0893091fb1bb6b92639e59a72203be0bc4a
+> http://www.mantisbt.org/bugs/view.php?id=17870
 
-Are you saying that as a reflection on your part?
+Use CVE-2014-8987.
 
-By the time you posted this morning, Twitter was already aflame with
-rumors and news orgs were already starting to post them (again, all
-unproven at the time), so I think it's perfectly reasonable to post here
-to see what others have heard (if they aren't embargoed).
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-If you're talking about Hanno's reply, then by the time he posted, the
-embargo was already lifted, and those were the official links to the
-issue and to the associated paper.
-
-~reed
+iQEcBAEBAgAGBQJUbSKHAAoJEKllVAevmvms+KIH/jStXq5SSAuLwLaKcxVCcl/i
+VHzHofuXLVYbOdh68T/f0Y4xtIQl99xecXM1EbCLQ7qkIrsnqCodNCZ7KI2T78AQ
+01xqYno3adOlqyg6A5rpiXWuQk60j7yWucM90lDKpA1HgbJd5qpCcF4gVnyXaVp2
+kgP+DnWfDYx51jrRiqsdLe3rg7qucmxcBOpB2jq7ErGacuKkKQLoOyOOFmwSVgpW
+uR5UztEfkNNRD600SRDDa8RpWxvLpeNK0KTe482wEDUl4wfNevOKbdp5R8NV1Gdo
+gKV6BcN1Dc7Nt47A8iYzD3zJTs6xxnt943C4ygNdwLkwzaZs3DmUOyr7IBHKSV4=
+=Jj13
+-----END PGP SIGNATURE-----
