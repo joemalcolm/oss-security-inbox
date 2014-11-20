@@ -1,70 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/2
-Message-Id: <201402270538.s1R5busf001393@linus.mitre.org>
-Date: Thu, 27 Feb 2014 00:37:56 -0500 (EST)
-From: cve-assign@...re.org
-To: thoger@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request - GnuTLS corrects flaw in certificate verification (3.1.x/3.2.x)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/15
+Message-ID: <546DDBF3.90506@mccme.ru>
+Date: Thu, 20 Nov 2014 15:17:55 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+Subject: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2014-11-17 06:17, M.T. Roebuck wrote:
+> I haven't had any success yet in finding security audit reports for
+> any *nix OS
 
-Use CVE-2009-5138 for the
+It seems such info was supposed to be linked from here:
 
-  https://gitorious.org/gnutls/gnutls/commit/c8dcbedd1fdc312f5b1a70fcfbc1afe235d800cd
+http://oss-security.openwall.org/wiki/code-reviews
 
-issue. This says "Initialy reported by Daniel Kahn Gillmor on 9/1/2008" but
-that seems to be a typo of 9/1/2009 (aka 2009-01-09), because the actual
-report was in:
+But there is not much data there.
 
-  http://lists.gnutls.org/pipermail/gnutls-devel/2009-January/002888.html
-
-
-> https://bugzilla.redhat.com/show_bug.cgi?id=1069301
-
-> This did not affect applications that used
-> GNUTLS_VERIFY_ALLOW_X509_V1_CA_CRT verification flag, which instructs
-> GnuTLS to allow root CA certificates to be version 1 certificates.
-> This was set by e.g. gnutls-cli client application in GnuTLS versions
-> affected by this bug.
-
-Is this setting in gnutls-cli itself a vulnerability, because
-GNUTLS_VERIFY_ALLOW_X509_V1_CA_CRT is an unsafe flag for any general-purpose
-application? For example,
-
-  http://lists.gnutls.org/pipermail/gnutls-devel/2009-January/002892.html
-
-says:
-
-  GNUTLS_VERIFY_ALLOW_ANY_X509_V1_CA_CRT
-
-  This one is quite dangerous. It allows any intermediate V1 certificate
-  to be used as a signer. This means that if I manage to get a CA to give
-  me a V1 personal certificate, I can act as a CA if this flag is set.
-
-
-(In other words, all three CVEs would have the same impact -- something
-roughly like "allows remote attackers to have an unintended ability
-to issue new certificates by using an arbitrary X.509 V1 certificate --
-but two of the CVEs [CVE-2014-1959, CVE-2009-5138] have a root cause
-of logic errors in flag operations, whereas the proposed third CVE has a
-root cause of a hardcoded unsafe configuration choice in gnutls-cli.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTDs4QAAoJEKllVAevmvms6CMH/0tir5Aw5SnbdXqGgY02Nstv
-40x7v2MOmjWGnt1Z7RYVs6oCK4Cht9TH+CPA2sHX59z3WqplP2cW4y65tOmBJoe6
-va9yITRxP+U8qittNOjcRC3wmIrHG0DxqX9qMdmc88rx9aVryWq5aEz5VGtk1E1k
-r/L8eF/fAL+Bl67/Vp0xthsciRcSJvuoAyUXnlzhvdRxCtgwG1v1yh5POpHZz5qR
-8m3/4hN05xhVQjYrTzCc5NuoCyYm7gcQ57UjuIF5zwAcsrfnHEsGKotBfw/dEgc9
-8z3le9HqAvQ/mGd782sikVSsZdkclzRHIfAScQ6Gplv7fgwsItu9/esJMl1EjT4=
-=a0uN
------END PGP SIGNATURE-----
+-- 
+Alexander Cherepanov
