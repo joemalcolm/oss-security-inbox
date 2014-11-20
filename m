@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/15
-Message-Id: <201407161744.s6GHhwHo018365@linus.mitre.org>
-Date: Wed, 16 Jul 2014 13:43:58 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/6
+Message-Id: <20141120065652.889366FC001@smtpvmsrv1.mitre.org>
+Date: Thu, 20 Nov 2014 01:56:52 -0500 (EST)
 From: cve-assign@...re.org
-To: vkaigoro@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 754899@...s.debian.org
-Subject: Re: CVE request: rawstudio: Insecure use of temporary file
+To: donald@...fft.io
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 725847@...s.debian.org
+Subject: Re: Requesting a CVE for pip - Local DoS with predictable temp directory names
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> rs_filter_graph in librawstudio/rs-filter.c
+> because the build directory is predictable a local DoS is possible
+> simply by creating a /tmp/pip-build-<username>/ directory owned by
+> someone other than the defined user
 > 
-> /tmp/rs-filter-graph
-> /tmp/rs-filter-graph.png
-> 
-> This allows the truncation of arbitrary files
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725847
+> https://github.com/pypa/pip/pull/2122
 
-Use CVE-2014-4978.
+Use CVE-2014-8991.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -28,11 +28,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTxrkkAAoJEKllVAevmvms1ZQH/1CXZsXAyu4nHm/i3NhxkYFy
-XGaEFEWDLOzv1u6FhR1l74NjnPJYus7LyAlFFsicxclDVBUklZMsDfgAjPv0HBOO
-akcZOMrTZIhUfZJSHSaB5ps0ocdSy/dHtK0jn3b1p4hOgCqcR9SFvYSykSyLbz7z
-tVn4KJq7RWb99rBrOVhqEahzI+uZCeCvSM+PGSMS4bCo7dnJ++nL8WmWCQzmOYs5
-jN/4BrUGd+w1m74jJAzm0Fu8M8NKcctcmE+64GuOoXrib+kph0PLkH5ouhcjW1I0
-8/UpGBl5xkM14yqCfG3ZegeKJGBdNLAzb+3wEl0ftcPPsz7qCSrvhJ4A562u6GI=
-=Er9a
+iQEcBAEBAgAGBQJUbY7BAAoJEKllVAevmvms8tIH/i8+HMV/TYDQcbr1CZfhfUne
+3IPnX17hHUKObil3ryDSzm0aFAWNWz0hxHslJecSKNi0iBmLLR/1ItCbIDCZQ18Y
+n8Q9ygJiXYTO5AIA3/UU40G8jQ4PE/lS/jXBlGYEvrUFz1gBhylVe5sX5EdxU5su
+97Tk6p/f4FhlOE5abrXLG1Ec9jZdkARlW9EnbmInrjXpIppgZFZQp0EVo+BUP9Ea
+h5slMIppNkXIAXhqoT+lIOM/A9l5rBP+GQ5YlxaQY8UsGuOfi5coXvbp/iL8ZB7X
+nZD1Xy2aTFFNt1YTmBBMJEr2H06Lrd1+F/xSCTiIgMuCG3Fpy9Wg80TxoOuxQ+0=
+=rTeG
 -----END PGP SIGNATURE-----
