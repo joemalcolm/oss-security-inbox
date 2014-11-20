@@ -1,38 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/15
-Message-ID: <53BC6D93.4070109@amacapital.net>
-Date: Tue, 08 Jul 2014 15:15:47 -0700
-From: Andy Lutomirski <luto@...capital.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/2
+Message-ID: <546D46C3.6080503@toshiba-tsdv.com>
+Date: Thu, 20 Nov 2014 08:41:23 +0700
+From: Nguyen Cong <cong.nguyenthe@...hiba-tsdv.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+Subject: Re: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
-On 07/05/2014 12:35 PM, Solar Designer wrote:
-> Andy, all -
-> 
-> On Sat, Jul 05, 2014 at 10:25:47PM +0400, Solar Designer wrote:
->> "x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
-> [...]
->> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
-> 
-> BTW, I'm not convinced it's such a good idea to allow setting RIP to
-> exactly TASK_SIZE_MAX just because user code could run to that address
-> (this was Andy's rationale).  Imagine that TASK_SIZE_MAX is ever set
-> such that it's the very first non-canonical address.  If user code
-> simply runs to that address, it gets a user mode fault.  However, if the
-> kernel tries to set user RIP to that address via SYSRET, it'll get #GP
-> while still in kernel mode - exactly the problem we're trying to fix.
-> 
-> So when fixing the problem in this way, or when including this as a
-> hardening measure along with forcing the IRET path as well, I'd prefer
-> to allow only "< TASK_SIZE_MAX", not "<= TASK_SIZE_MAX".
+> Interesting and sort-of but no not really, but I appreciate the
+> pointer and thank you.
+Sorry if my pointer is not meaningful enough to you, maybe
+I miss-understand your request.
+> I see you're in Vietnam is there anything at all like a non-western
+> OS in use there? Or anywhere in that part of the world? I must be
+> naive but I thought I was just lacking information. It doesn't
+> seem possible that there are only "western" OSs on the entire
+> planet. Although my problem might just be that my definition of
+> OS is all wrong.
+I don't really know the meaning of western OSs that you mentioned.
+But we do have OSs for our own. Thank you for questioning but
+this might a little bit off the topic, and we should not spam the list.
 
-In the event that anyone changes TASK_SIZE_MAX to equal the first
-non-canonical address, then this is the least of your worries: someone
-can put a syscall instruction at the very last canonical address, and
-game over.
-
-This bug affected a lot of operating systems a few years ago, but AFAIK
-Linux was never vulnerable.
-
---Andy
+Thanks and best regards
+CongNT
+On 20/11/2014 00:54, M.T. Roebuck wrote:
+> On Mon, 17 Nov 2014 10:52:29 +0700
+> Nguyen Cong <cong.nguyenthe@...hiba-tsdv.com> wrote:
+>
+>> Is this what you want?
+>> http://www.cvedetails.com/top-50-vendors.php
+> Interesting and sort-of but no not really, but I appreciate the
+> pointer and thank you.
+>
+> I see you're in Vietnam is there anything at all like a non-western
+> OS in use there? Or anywhere in that part of the world? I must be
+> naive but I thought I was just lacking information. It doesn't
+> seem possible that there are only "western" OSs on the entire
+> planet. Although my problem might just be that my definition of
+> OS is all wrong.
+>
+>
+>
+>
+>
