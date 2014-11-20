@@ -1,73 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/3
-Message-Id: <20140813054741.0C8C41F026F@smtpksrv1.mitre.org>
-Date: Wed, 13 Aug 2014 01:47:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: nacin@...dpress.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: WordPress 3.9.2 release - needs CVE's
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/27
+Message-Id: <E1XrUZC-0008CI-Rd@xenbits.xen.org>
+Date: Thu, 20 Nov 2014 16:26:46 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 113 - Guest effectable page reference leak in MMU_MACHPHYS_UPDATE handling
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
->> -Fixes a possible but unlikely code execution when processing widgets
->> (WordPress is not affected by default), discovered by Alex Concha of
->> the WordPress security team.
+                    Xen Security Advisory XSA-113
 
-> This is an unsafe serialization vulnerability. Affected versions 3.9 and
-> 3.9.1.
-> 
-> https://core.trac.wordpress.org/changeset/29389
+  Guest effectable page reference leak in MMU_MACHPHYS_UPDATE handling
 
-Use CVE-2014-5203.
+ISSUE DESCRIPTION
+=================
 
+An error handling path in the processing of MMU_MACHPHYS_UPDATE failed
+to drop a page reference which was acquired in an earlier processing
+step.
 
->> -Adds protections against brute attacks against CSRF tokens, reported
->> by David Tomaschik of the Google Security Team.
+IMPACT
+======
 
-> Same reporter, same same line of code, but two separate issues here. One,
-> when building CSRF tokens, the individual pieces were not separated by
-> delimiter, so $action + $user_id could have been post_1 + user 23 or post
-> 12 + user 3. Second issue: Nonces were not being compared in a
-> time-constant manner. Neither are easy to exploit.
-> 
-> Affected WordPress versions 2.0.3 - 3.9.1 (except 3.7.4 / 3.8.4)
+Malicious or buggy stub domain kernels or tool stacks otherwise living
+outside of Domain0 can mount a denial of service attack which, if
+successful, can affect the whole system.
 
-> https://core.trac.wordpress.org/changeset/29384
+Only domains controlling HVM guests can exploit this vulnerability.
+(This includes domains providing hardware emulation services to HVM
+guests.)
 
-Use CVE-2014-5204.
+VULNERABLE SYSTEMS
+==================
 
+Xen versions from at least 3.2.x onwards are vulnerable on x86 systems.
+Older versions have not been inspected.  ARM systems are not vulnerable.
 
-> https://core.trac.wordpress.org/changeset/29408
+This vulnerability is only applicable to Xen systems using stub domains
+or other forms of disaggregation of control domains for HVM guests.
 
-Use CVE-2014-5205.
+MITIGATION
+==========
 
+Running only PV guests will avoid this issue.
 
->> -Contains some additional security hardening, like preventing
->> cross-site scripting that could be triggered only by administrators.
->>
->
-> XSS: https://core.trac.wordpress.org/changeset/29398
+(The security of a Xen system using stub domains is still better than
+with a qemu-dm running as an unrestricted dom0 process.  Therefore
+users with these configurations should not switch to an unrestricted
+dom0 qemu-dm.)
 
-We think this can have a CVE ID only if it allows privilege escalation
-from Administrator to Super Admin in a Multisite installation. Does
-it? (On other installations, Administrator has the unfiltered_html
-capability.)
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+A draft of this advisory was mistakenly sent to xen-devel.  The Xen
+Project Security Team apologises for this error.  We are working to
+share best working practices amongst the team to reduce the risks of
+recurrance.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa113.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa113*.patch
+a0f2b792a6b4648151f85fe13961b0bf309a568ed03e1b1d4ea01e4eabf1b18e  xsa113.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJT6vtbAAoJEKllVAevmvmsj50H/0KjAlZw8T7hQEiNypBwZ0Am
-9CwHU6rwG2LrsPExN94huJNzTduUoGdb80EyQaYZFjRXhwV0gJbT7/JuvVTgPosk
-EOy5inmeyD49fQc2XoZmJtj+Fvq2nT6Eahl7CIeKi6TkmfnAYx56mBCEgQDOTwNE
-3ProL0arbJoW/h52i0VaRihnvbH8fu417+mGaRy9yCNK96O7tHnbH769WNsqww4k
-TnAcd9pc0eOU1BT0FUM/mt7/sTtCuTmaLo8z8JdKFsGogrp21CoR8LEWK1qaRwGk
-t8DXL0kug8qZosFu8CRsPtp9Sytt4ea/P1v+cZNFG5mc0T7pZLCzwQZqWong1kY=
-=75KS
+iQEcBAEBAgAGBQJUbhNoAAoJEIP+FMlX6CvZ5v8H/0cwnDOmSUZQ5Wm6ULUQH0w+
+Jbsf6JPBRyDch1nCv/d8X27vSfmB8JH0m+LclEH0F1XSUiu5p4y46ZKk7Zfm4+gD
+xq6/eKyXKwCXinAwEcLtvfONrajQQvzk2y4XZpE+g9U00AwvsBXM3AdqPup8cyQl
+OLQO9Oq+xiqusCXIQeCb/KnoVUGS9PqlG/RT3rKKorYzuQjG7VURU3uKA1Vju7oD
+ITzbNCjTjnA7cFVSk6g9ZG6k40nGkVKIv+pPFfZAE6/UqiCF91oNzVAYVnA0X0oL
+YoAFxvVFOHp78192jW/7S8uacG+bskJNAr+NYIuaBlykka6Vbef6esWOW3UZEhA=
+=LDjw
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa113.patch" of type "application/octet-stream" (1281 bytes)
