@@ -1,70 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/19/5
-Message-ID: <20141219221153.GA16721@kroah.com>
-Date: Fri, 19 Dec 2014 14:11:53 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/35
+Message-ID: <20141120090840.48aa528b@127>
+Date: Thu, 20 Nov 2014 09:08:40 -0800
+From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
 To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+Subject: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 19, 2014 at 10:41:28PM +0100, Mathias Krause wrote:
-> On 18 December 2014 at 22:50, Greg KH <greg@...ah.com> wrote:
-> > On Thu, Dec 18, 2014 at 11:36:03AM +0100, Mathias Krause wrote:
-> >> On 18 December 2014 at 10:35, Amos Jeffries <squid3@...enet.co.nz> wrote:
-> >> > On 18/12/2014 9:24 p.m., Lionel Debroux wrote:
-> >> All wrong. As Lionel wrote, the code assigns the variable before
-> >> reading it. So no data is meant to persist between multiple calls to
-> >> this function. However, if max8925_probe() gets called concurrently,
-> >> the 'chip' pointer may change beneath one of the threads -- not good.
-> >> So this is clearly a fix.
-> >
-> > But that function can not be called concurrently, so this doesn't
-> > matter.
-> 
-> Thanks for clarifying this. Still, it's worth to fix this, no? Even if
-> this is not a bug in a sense that it would be exploitable in any way,
-> it's obfuscating things.
+On Thu, 20 Nov 2014 08:41:23 +0700
+Nguyen Cong <cong.nguyenthe@...hiba-tsdv.com> wrote:
 
-I agree.
+> Sorry if my pointer is not meaningful enough to you, maybe
+> I miss-understand your request.
 
-> >> >  People using PaX code are trusting that they have done the analysis,
-> >>
-> >> Obviously they did.
-> >
-> > Someone got it wrong :)
-> 
-> Fixing obfuscated code is wrong -- got it.
+It was good but not a security code audit. I appreciate the link.
 
-Um, no, this was supposed to be a "security" fix, and it wasn't, it's
-just a code cleanup.  A very valid code cleanup that we take all the
-time in the kernel tree, but the analysis seems to have been wrong as
-you have pointed out :)
 
-> >> > but that very code not being in mainline means there is possibly no
-> >> > hard proof of that.
-> >>
-> >> You're wrong, again. No-one submitted the fix to LKML, that's the reason.
-> >
-> > And if they did, they would have gotten the review I just gave.
-> 
-> So you advocate for leaving the 'static' in place just because "it's
-> not a bug"? That's ridiculous!
-> Can you please point me to the part in Documentation/CodingStyle were
-> it says obfuscated code is the preferred kernel coding style? Thanks.
+> > I see you're in Vietnam is there anything at all like a non-western
+> > OS in use there? Or anywhere in that part of the world? I must be
+> > naive but I thought I was just lacking information. It doesn't
+> > seem possible that there are only "western" OSs on the entire
+> > planet. Although my problem might just be that my definition of
+> > OS is all wrong.
+> I don't really know the meaning of western OSs that you mentioned.
 
-The code isn't "obfuscated" at all, it's obvious what it does.  It's not
-obvious why the structure is static, and it doesn't have to be, but
-that's not obscure at all.
+Western OS == Windows, OSX, FreeBSD, Solaris, SUSE, etc., etc.
 
-It's something to clean up, great, submit it, we take this stuff all the
-time.  But trying to make a big deal out of it seems silly, when there
-is no bug being fixed.
+> But we do have OSs for our own. Thank you for questioning but
+> this might a little bit off the topic, and we should not spam the
+> list.
 
-> It looks like none of the 5000 kernel developers has a strong interest
-> in security.
+Agreed, can you email me an example of "OSs of our own"?
 
-I love hyperbole, don't you?
 
-bah humbug,
-
-greg k-h
