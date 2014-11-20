@@ -1,37 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/25
-Message-ID: <20141120165021.5dfdcde1@pc>
-Date: Thu, 20 Nov 2014 16:50:21 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/20
+Message-ID: <20141120144325.GE4503@mail.corp.redhat.com>
+Date: Thu, 20 Nov 2014 15:43:25 +0100
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing project brainstorming
+Subject: CVE request: heap buffer overflow in PCRE
 Content-Type: text/plain; charset=utf-8
 
-Am Thu, 20 Nov 2014 08:38:38 -0700
-schrieb Kurt Seifried <kseifried@...hat.com>:
+Hello,
 
-> The most important part of all: who's going to interpret the fuzzing
-> results and then co-ordinate with upstreams to make source code fixes?
+Heap buffer overflow issue was reported [1] in PCRE when processing a
+specially crafted regular expression.
 
-Well, the answer to that is: the people who do the fuzzing.
+Upstream patch for this:
+http://www.exim.org/viewvc/pcre2?view=rev&revision=154
+The next upstream release that will contain the above fix is likely to
+be around Feb/Mar next year (2015).
 
-My main aim is to make more transparent what's already going on. That's
-not going to change who does the fuzzing and how it gets reported.
+Additional references:
+[1]: http://bugs.exim.org/show_bug.cgi?id=1546
+[2]: https://bugzilla.redhat.com/show_bug.cgi?id=1166147
 
-There lays deeper a question that I asked myself already: What's an
-"okay" way of reporting these things?
-Basically what I usually did is just sending crash samples to upstream
-devs and add some valgrind/asan output. One could argue that I'm
-offloading the real work to the upstream devs, however I feel they know
-their code better than I do (and often I'm just not qualified to create
-the fix). Until now I feel most upstreams were okay with that.
+Can a CVE be assigned to this please?
 
-
+Thanks.
 -- 
-Hanno Böck
-http://hboeck.de/
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Content of type "application/pgp-signature" skipped
