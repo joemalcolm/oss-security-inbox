@@ -1,35 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/4
-Message-ID: <CACYkhxjv+J3KCceP-EFfV0T7DpAwLvcHDhgoiBT_hzLWYY1cVA@mail.gmail.com>
-Date: Tue, 9 Sep 2014 15:22:36 +1000
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: [CVE Requests] rsync and librsync collisions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/10
+Message-ID: <546DB556.90402@mittwald.de>
+Date: Thu, 20 Nov 2014 10:33:10 +0100
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
-[ A reminder - librsync is a different codebase and protocol to rsync ]
 
-On 9 September 2014 15:06, Loganaden Velvindron <loganaden@...il.com> wrote:
-> Have the details been made public yet ?
 
-The exploit code and example colliding blocks are not public, but I
-don't believe it
-would be hard to attempt your own exploit, especially against librsync
-with default
-parameters (a birthday attack is trivial).
+On 17/11/14 04:17, M.T. Roebuck wrote:
+> Also I am interested in OSs that are not *nix or MS/Apple.
+> I know of Haiku OS but are there any others? Does China
+> or Japan or any other country have their own OSs?
+> 
+> Is the world really limited to just a few?
 
-There's an experimental patch for librsync:
-https://github.com/therealmik/librsync/tree/blake2
+Of course it is not.
 
-Some review (especially by upstream) is required, and some agreement among users
-on details is required.  See
-https://github.com/librsync/librsync/issues/5 if you maintain
-a downstream project (such as Duplicity).
 
-I don't know what's happening with rsync upstream, there hasn't been much
-communication.  I attempted a patch, but it got a bit hairy due to
-hard-coded details in
-the code (such as hash output length).
+Take the l4 family for example
+seL4 is open source:
 
-Regards,
-  Michael
+https://github.com/seL4
+
+the implementation was proofed
+to fulfill the specification, read more at:
+
+http://sel4.systems/
+
+many other systems are at least certified
+for common criteria EL4+
+
+HTH
+-- 
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
