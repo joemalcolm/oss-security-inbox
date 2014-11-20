@@ -1,36 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/8
-Message-Id: <201402271329.s1RDTjeO017468@linus.mitre.org>
-Date: Thu, 27 Feb 2014 08:29:45 -0500 (EST)
-From: cve-assign@...re.org
-To: d.cauquil@...dream.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: PLOGGER 1.0RC1 multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/33
+Message-ID: <546E1F00.3000407@internot.info>
+Date: Fri, 21 Nov 2014 04:04:00 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 21/11/14 04:00, M.T. Roebuck wrote:
+> Writing code is more fun than documenting code?
+this should be the signature of most coding companies
 
-> The zip file must at least contains a non-empty image file with a name
-> including a valid extension, and of course the exploit php file.
-
-Maybe your reply means that if this "must at least" requirement is not
-satisfied, then a race condition occurs. But what is the race condition:
-what action is in a race against what other action?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTDzzMAAoJEKllVAevmvmshhsH/0fHaA/VLUW0vW5KOfCBSn3W
-znt6hvEGyLxmDndY2HYO2VaCju3IPH40ZWcPT+52aNqWWcmC/CiKc1M+f7WLryMy
-2cUFy31uTrwEqP2KsTNxT5zk8lmsXbQVw18rpZsos5UwOy4VVx7NnzrpUDd9oedz
-o8z958N4LCgtapXN7DUgohtFCBWIEqCkXI/zsPMxAuYe0NMrG8tq0N6j+NAYkRec
-29mUoq/XAc2PWYK2chAQhNwduN1bj3k3W2feyeiVH0TuLlE9sSDKBQJDojxxP0CU
-Ws8uySHoorgzAUcHVK6VzWBtq0G8VLHWaAcuxYMtrHe6naA2xKhSwDPmpi9IaRU=
-=eaNy
------END PGP SIGNATURE-----
+-- 
+-- Joshua Rogers <https://internot.info/>
