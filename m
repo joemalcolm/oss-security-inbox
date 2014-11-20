@@ -1,96 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/5
-Message-ID: <CALx_OUB1M5AByht4cAw5sx=6KZS-y0WCC9+Um-xSPDTDskCmcQ@mail.gmail.com>
-Date: Tue, 7 Oct 2014 21:06:14 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>,  "David A. Wheeler" <dwheeler@...eeler.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/18
+Message-ID: <20141120135537.7ffabfe5@pc>
+Date: Thu, 20 Nov 2014 13:55:37 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-I feel that to some extent, "separation of code and data" is an
-overused, overly simplistic, and arbitrarily applied mantra; it is
-also the antithesis of interpreted scripting (and a good chunk of
-other stuff in computing), for mostly valid reasons.
+Am Thu, 20 Nov 2014 15:43:15 +0300
+schrieb Alexander Cherepanov <cherepan@...me.ru>:
 
-Heck, did you know that web fonts loaded and displayed by your browser
-come with an embedded hinting bytecode that gets executed in a
-miniature VM? And while this is kind of crazy, it's there because...
-well, there aren't that many sane alternatives.
+> less crashed or imagemagick called from lesspipe?
 
-(Some 15 years ago, I would have given you a different answer - I even
-had a pet project of a brand new operating system that would solve all
-of world's ills. Today, I sort of accept that we're stuck with Unix
-and that there's plenty of usability-security trade-offs that exist
-for a reason, not just because other people are clueless ;-).
+less itself. I tried with disabled lesspipe. Seems to be some kind of
+unicode multibyte char decoding issue. Probably unrelated to gif.
+It's only exposed with asan or valgrind.
 
-If I really had to pinpoint the causes (and that feels a bit like a
-function-fitting exercise), I'd say that four things went
-maybe-kinda-preventably wrong:
+Interesting: With all its power afl wasn't able to find this issue.
 
-1) The feature was clearly added with no basic consideration for the
-possibility of ever seeing untrusted data in the value of an
-environmental variable. This lack of a threat model seems to be the
-core issue, essentially precluding the discussion of potential "best
-practices" such as namespaces, magical out-of-band function passing,
-etc.
+-- 
+Hanno Böck
+http://hboeck.de/
 
-Ideally, post Morris worm, this assumption should have raised some
-eyebrows. On the flip side, the code predated much of the modern
-infosec practice, and it's unlikely that any security engineers
-monitor bash development even today - so while it's easy to prescribe
-solutions in retrospect, not sure how credible they can be...
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-2) The mechanism wasn't well-documented *and* just as importantly, has
-fallen into near complete obscurity, largely precluding security
-researchers from bumping into it by accident. The "not falling into
-obscurity" part is not solvable, although it's a pattern that also
-haunts the browser world, and may be an argument for aggressively
-sunsetting features that do not catch on - something currently not
-mentioned on your list.
-
-The detailed documentation part is perhaps easier to tackle. The
-security properties of shells are generally under-documented and
-counterintuitivie, as evidenced in some of the followup discussions
-where somebody was showing off a "safe" use of system() supposedly
-rendered unsafe by Florian's patch. Decent security-centric docs,
-authored or even merely just reviewed by the maintainers, would have
-helped highlight the risk.
-
-3) Apparently, for 20+ years, nobody in the security community has
-ever read a book on shell programming that mentioned this feature, and
-has never ventured deep enough into the man page, to have a "hmm, I
-wonder how that works" moment when seeing a vague mention of the
-feature.
-
-I don't think that's easily fixable; as mentioned earlier, you sort of
-start with certain assumptions on what may be a good use of your time,
-and a behavior like this would be completely off the radar. You
-wouldn't reasonably expect /bin/uname to phone home to a server in
-Russia, so you don't check manually and it probably doesn't cross your
-mind to create some sort of an automated validation model that
-verifies the same. The infosec community is small, and there's plenty
-of bugs to find, so we have to prioritize pretty heavily.
-
-4) Following the original find but before the end of the embargo,
-there was no immediate realization that the underlying parser is
-complex and likely not designed with security in mind, and therefore,
-that it will very likely follow a well-established pattern and come
-apart under closer scrutiny. I'm not sure if this is an argument for
-not having embargoes (perhaps) or for sanctioning more thoughtful
-reviews of the proposed fixes. Or perhaps it's just a fluke.
-
-/mz
-
-On Tue, Oct 7, 2014 at 7:47 PM, David A. Wheeler <dwheeler@...eeler.com> wrote:
-> All:
->
-> Given the feedback here and elsewhere, I've tried to distill how to detect or prevent shellshock-like things ahead-of-time.  My current try is here:
->
->    http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
->
-> More ideas and refinements would be welcome.  I've also made a number of refinements (e.g., the timeline has more info, where the name came from has been identified, etc.).
->
-> Thanks again!
->
-> --- David A.Wheeler
->
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
