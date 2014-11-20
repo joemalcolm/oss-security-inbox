@@ -1,46 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/4
-Message-Id: <20141112062241.0A780B2E26A@smtpvbsrv1.mitre.org>
-Date: Wed, 12 Nov 2014 01:22:41 -0500 (EST)
-From: cve-assign@...re.org
-To: roucaries.bastien@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Asking for CVE for imagemagick
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/23
+Message-ID: <546E0AFE.1040801@redhat.com>
+Date: Thu, 20 Nov 2014 08:38:38 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+The most important part of all: who's going to interpret the fuzzing
+results and then co-ordinate with upstreams to make source code fixes?
+Fuzzing is the easy part, fixing the code... not so much. It's not that
+the devs don't feel this is important, but that they have a million
+other things to do, plus personal lives/etc.
 
-> http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=26456
+If this was easy we wouldn't have any tmp vulns, witness the push back
+on something as simple as "please just use mkstemp!" from various devs.
 
-Use CVE-2014-8716 for this issue related to:
+On 20/11/14 05:34 AM, Hanno Böck wrote:
+> Hi,
+> 
+> Following the discussions here I feel this whole fuzzing thing could
+> need a project to coordinate efforts and I will probably start
+> something within the following days.
+> 
+> I wanted to lay out my rough plans / brainstorming and welcome any
+> feedback and especially if people have worries about such a project.
+> 
+> * The core of the project will be a list of free software projects that
+>   in one way or another parse fileformats (I'll leave fuzzing network
+>   and other input out for now). It should have rough categories (ok =
+>   fuzzed and no unfixed issues in latest release, wip: fuzzed and issues
+>   are being worked on or already fixed in source repo, stale: fuzzed and
+>   issues don't seem to be worked on, unavalable = project with no
+>   developers to contact, wontfix = developers don't feel memory access
+>   issues and crashes need to be fixed / declare their product
+>   unsuitable for untrusted input, unknown = no known fuzzing efforts)
+>   I feel that it's important to make the limitation of this info
+>   transparent (e.g. about to change rapidly, always further /different
+>   fuzzing strategies that might turn up more issues, fuzzing is not a
+>   good indicator for overall security etc.).
+> * A sharing place for stuff that might be useful for fuzzing, I think
+>   especially about patches that disable sanity checks (CRCs etc.) that
+>   make fuzzing harder. And maybe file collections with small example
+>   files for various file formats.
+> * Some introduction tutorials that should give people with no fuzzing
+>   experience a starter. Preferrably so easy that everyone with some
+>   basic linux/unix knowledge can follow them. Explain zzuf, asan, afl.
+> * All kinds of pointers/links to further information.
+> 
+> Data and things like file archive should preferrably be public domain
+> / cc0 to make data sharing as easy as possible.
+> 
+> I welcome your feedback. I also welcome all reports (preferrably with
+> links to public sources where this is documented - bugtrackers, mailing
+> list archives etc.) of fuzzing. The good ("I fuzzed this for so long
+> and it seems just nothing turned up") and the bad ("I found 10.000
+> unique crashers and reported them all upstream, nobody cares").
+> 
+> cu,
+> 
 
-  - the example command line of: convert $filename png:/dev/null
-
-  - the fix involving a test of "(offset < 0) || (size_t) offset >= length"
-    in property.c
-
-  - the fixed version of 6.8.9-10 Beta
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
 
-[ Note that this CVE ID is NOT for the recently discussed
-"convert -rotate 270" issue. For that issue, the primary affected
-product is apparently still unknown; see the
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=768369#57 message. ]
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUYvueAAoJEKllVAevmvmsxCcH/2/TSIqvO+kkKuSoBmR4uC8h
-bSojneYCqybk0TVruQncWBwVBTaqj9xPiIScse+A2S61B8rvWjiA97fflMRowN9E
-p9wg2L5M+bw6S/ziiDZvDVeZIcIspqUODYGJhYN3jyXAq635hS0Ios6FAH9C1xs7
-L/9DgFhzaqEJSYiNdZ+BUOkT/Vzzn5UxQ7YroMkcLyDY6NYUGTfJPCGP++I534aJ
-zYx5LBQg6ZpYJzKgbBw/HAFD51N1cIqYecYemETSTGYXvd6hwKe2LhYmMRgkxO1i
-YafJbIoGOit+9lcHyB4YHZk8RsxlhQ3YVz2YkCcqIdyaLpB6g/SLQLZtSzAza7Y=
-=Sl2h
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
