@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/7
-Message-ID: <alpine.LFD.2.10.1404302011540.24075@javelin.pnq.redhat.com>
-Date: Wed, 30 Apr 2014 20:14:04 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request Linux kernel: mm: try_to_unmap_cluster() should lock_page() before mlocking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/34
+Message-ID: <20141120090130.5eaaf7ff@127>
+Date: Thu, 20 Nov 2014 09:01:30 -0800
+From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
+To: oss-security@...ts.openwall.com
+Subject: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+On Thu, 20 Nov 2014 10:33:10 +0100
+Sven Kieske <s.kieske@...twald.de> wrote:
 
-Linux kernel kernel's Memory Management Unit(MMU) is vulnerable to a crash
-caused by unlocked memory pages. It could occur during the memory page
-migration or while cleaning the swap cache pages.
+> 
+> 
+> On 17/11/14 04:17, M.T. Roebuck wrote:
+> > Also I am interested in OSs that are not *nix or MS/Apple.
+> > I know of Haiku OS but are there any others? Does China
+> > or Japan or any other country have their own OSs?
+> > 
+> > Is the world really limited to just a few?
+> 
+> Of course it is not.
+> 
+> 
+> Take the l4 family for example
+> seL4 is open source:
+> 
+> https://github.com/seL4
+> 
+> the implementation was proofed
+> to fulfill the specification, read more at:
+> 
+> http://sel4.systems/
+> 
+> many other systems are at least certified
+> for common criteria EL4+
+> 
+> HTH
 
-An unprivileged user/program could use this flaw to crash the system kernel,
-resulting in DoS.
-
-Upstream fix:
--------------
-   -> https://git.kernel.org/linus/57e68e9cd65b4b8eb4045a1e0d0746458502554c
-
-Introduced in:
---------------
-   -> https://git.kernel.org/linus/b291f000393f5a0b679012b39d79fbc85c018233
+Thank you, will make time to look at this.
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
