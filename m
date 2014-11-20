@@ -1,153 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/21
-Message-ID: <CAFkuX4v_w4Q-VDhu=qm2XVfWJLKsZopNajPu3TwGM8qH5is+6A@mail.gmail.com>
-Date: Thu, 26 Jun 2014 12:53:18 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
-To: oss-security@...ts.openwall.com
-Subject: LMS-2014-06-16-2: Linux Kernel LZO
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/24
+Message-ID: <20141120154457.GB43437@TC.local>
+Date: Thu, 20 Nov 2014 07:44:57 -0800
+From: Aaron Patterson <tenderlove@...y-lang.org>
+To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
+Subject: [AMENDED] [CVE-2014-7829] Arbitrary file existence disclosure in Action Pack
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+Hi,
 
-A vulnerability has been identified in the Linux kernel implementation of
-the LZO algorithm. Please find the bug report inline.
+The credits section was missing a name in the previous announcement, so
+please see the credits section here.  Thanks!
 
-Best,
-Don A. Bailey
-Founder / CEO
-Lab Mouse Security
-https://www.securitymouse.com/
+----
 
-#############################################################################
-#
-# Lab Mouse Security Report
-# LMS-2014-06-16-2
-#
+Arbitrary file existence disclosure in Action Pack
 
-Report ID: LMS-2014-06-16-2
+There is an information leak vulnerability in Action Pack. This vulnerability
+has been assigned the CVE identifier CVE-2014-7829.
 
-CVE ID: CVE-2014-4608
+Versions Affected:  >= 3.0.0
+Not affected:       < 3.0.0, 4.2.0.beta4
+Fixed Versions:     3.2.21, 4.0.12, 4.1.8
 
-Researcher Name: Don A. Bailey
-Researcher Organization: Lab Mouse Security
-Researcher Email: donb at securitymouse.com
-Researcher Website: www.securitymouse.com
+Impact
+------
+Specially crafted requests can be used to determine whether a file exists on
+the filesystem that is outside the Rails application's root directory.  The
+files will not be served, but attackers can determine whether or not the file
+exists.  This vulnerability is very similar to CVE-2014-7818, but the
+specially crafted string is slightly different.
 
-Vulnerability Status: Patched
-Vulnerability Embargo: Broken
+This only impacts Rails applications that enable static file serving at
+runtime.  For example, the application's production configuration will say:
 
-Vulnerability Class: Integer Overflow
-Vulnerability Effect: Memory Corruption
-Vulnerability Impact: DoS, OOW
-Vulnerability DoS Practicality: Practical
-Vulnerability OOW Practicality: Impractical
-Vulnerability Criticality: Moderate
+  config.serve_static_assets = true
 
-Vulnerability Scope:
-All versions of the Linux kernel (3x/2x) with LZO support (lib/lzo) that
-set the HAVE_EFFICIENT_UNALIGNED_ACCESS configuration option. Currently,
-this seems to include PowerPC and i386.
+All users running an affected configuration should either upgrade or use one of the work arounds immediately.
 
-Vulnerability Tested:
-	- Via btrfs
-	- Stand alone
+Releases 
+-------- 
+The 3.2.21, 4.0.12 & 4.1.8 releases are available at the normal locations. 
 
-Functions Affected:
-	lib/lzo/lzo1x_decompress_safe.c:lzo1x_decompress_safe
+Workarounds 
+----------- 
+To work around this issue, set config.serve_static_assets = false in an initializer.  This work around will not be possible in all hosting environments and upgrading is advised.
 
-Criticality Reasoning
----------------------
-While some variants of this LZO algorithm flaw result in Remote Code
-Execution (RCE), it is unlikely that the Linux kernel variant can. This is
-due to the fact that control of the memory region that is overwritten can
-not be controlled in a fashion that will result in the overwrite of objects
-critical to the flow of execution.
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
 
-However, it may be possible to overwrite "business logic" data in certain
-circumstances, by corrupting adjacent objects in memory. Linux's guard pages
-should mitigate this, however.
+* 3-1-sec-static-files.patch - Patch for the 3.1.x release series
+* 3-2-sec-static-files.patch - Patch for the 3.2.x release series
+* 4-0-sec-static-files.patch - Patch for the 4.0.x release series
+* 4-1-sec-static-files.patch - Patch for the 4.1.x release series
 
-Because RCE is impractical, Object Over Write (OOM) is only practical in
-constrained scenarios (read: impractical), and DoS is practical, the
-criticality level of this issue should be defined as Moderate.
+Please note that only the 3.2.x, 4.0.x & 4.1.x  series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
 
-Furthermore, a Moderate definition is needed because of the use of LZO in
-btrfs, and the potential use of LZO in networking, opening up the potential
-for remote instrumentation of this vulnerability. It is notable that SuSE
-recently reported that they will start using btrfs by default later this
-year.
+Credits 
+------- 
 
-Lastly, only certain platforms are affected, decreasing impact.
+This vulnerability was reported by multiple researchers working independently.  Thanks to each of them for reporting the issue to us and verifying the fixes.
 
-Vulnerability Description
--------------------------
-An integer overflow can occur when processing any variant of a "literal run"
-in the lzo1x_decompress_safe function. Each of these three locations is
-subject to an integer overflow when processing zero bytes. The following code
-depicts how the size of the literal array is generated:
-                        if (likely(state == 0)) {
-                                if (unlikely(t == 0)) {
-                                        while (unlikely(*ip == 0)) {
-                                                t += 255;
-                                                ip++;
-                                                NEED_IP(1);
-                                        }
-                                        t += 15 + *ip++;
-                                }
-                                t += 3;
+* Behrouz Sadeghipour
+* Patrick Toomey of GitHub
+* Remon Oldenbeuving of hackerone
 
-As long as a zero byte (0x00) is encountered, the variable 't' will be
-incremented by 255. Using approximately sixteen megabytes of zeros, 't' will
-accumulate to a maximum unsigned integer value on a 32bit architecture. In
-combination with the following code, the value of 't' will overflow:
-copy_literal_run:
-#if defined(CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS)
-                                if (likely(HAVE_IP(t + 15) &&
-HAVE_OP(t + 15))) {
-                                        const unsigned char *ie = ip + t;
-                                        unsigned char *oe = op + t;
-                                        do {
-                                                COPY8(op, ip);
-                                                op += 8;
-                                                ip += 8;
-                                                COPY8(op, ip);
-                                                op += 8;
-                                                ip += 8;
-                                        } while (ip < ie);
-                                        ip = ie;
-                                        op = oe;
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
 
-The HAVE_OP() check will always pass in this case, because the size check
-within the macro will evaluate based on the overflown integer, not the value
-of 't'.
-
-This exposes the code that copies literals to memory corruption. An
-interesting side effect of the vulnerable code shown above is that the
-value of 'op' can point to a region of memory just before the start of 'out'.
-
-It should be noted that the following code unintentionally saves all other
-architectures from exposure:
-#endif
-                                {
-                                        NEED_OP(t);
-                                        NEED_IP(t + 3);
-                                        do {
-                                                *op++ = *ip++;
-                                        } while (--t > 0);
-                                }
-
-NEED_OP() correctly tests the value of 't' here, disallowing the potential
-for overflow.
-
-It should be noted that if 't' is a 64bit integer, the overflow is still
-possible, but impractical. An overflow would require so much input data that
-an attack would obviously be infeasible even on modern computers.
-
-Vulnerability Resolution
-------------------------
-To resolve this issue, the HAVE_OP and HAVE_IP macros should be enhanced to
-detect for integer overflow. This is the most reasonable and efficient
-location for catching corrupted or instrumented payloads. By testing for
-overflow here, an attacker is simply wasting time by forcing the function
-to process a large amount of zero bytes.
-
+Content of type "application/pgp-signature" skipped
