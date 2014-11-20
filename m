@@ -1,30 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/1
-Message-ID: <CALCETrVE3Lb3Vrhqp6ejO_oLrskFKkvRriQOxupS1vPFQQ74Sg@mail.gmail.com>
-Date: Tue, 12 Aug 2014 22:04:28 -0700
-From: Andy Lutomirski <luto@...capital.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: ro bind mount bypass using user namespaces
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/4
+Message-Id: <20141120065323.C06716DC006@smtpvmsrv1.mitre.org>
+Date: Thu, 20 Nov 2014 01:53:23 -0500 (EST)
+From: cve-assign@...re.org
+To: luto@...capital.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: Linux user namespaces can bypass group-based restrictions - Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 12, 2014 at 4:54 PM, Andy Lutomirski <luto@...capital.net> wrote:
-> On 08/12/2014 02:48 PM, Kenton Varda wrote:
->> Due to a bug in the Linux kernel's implementation of remount, on systems
->> with unprivileged user namespaces enabled, it is possible for an
->> unprivileged user to gain write access to any visible read-only bind mount.
->> It is also possible to bypass flags like nodev, nosuid, and noexec.
->>
->> This problem affects sandboxing / containerization systems that do not
->> expose the regular filesystem to the sandboxed process, but do expose a
->> bind-mounted view of that filesystem using these flags to enforce security.
->> This bug may enable a sandbox break-out. Sandboxes which have used
->> seccomp-bpf to disable the "mount" system call or to disable user
->> namespaces are likely safe.
->
-> nosuid/nodev failures are probably exploitable for full root in many
-> common configurations.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Yup.  I have a fairly reliable exploit now.  Will post the code in a
-couple of weeks.
+> On Linux, if you can unshare your user namespace (which is the case on
+> many distributions), then you can map your fsuid and fsgid into the
+> new namespace and, inside that namespace, drop all of your other
+> groups.
+> 
+> This may allow you to access files protected by POSIX ACLs as "other",
+> even if the ACL should have prohibited it based on one of your
+> supplementary group IDs.
 
---Andy
+> http://thread.gmane.org/gmane.linux.man/7385/
+
+> defeats POSIX ACLs with a group entry that is more restrictive than
+> the other entry
+
+> Fedora and Ubuntu are likely to be affected in their default
+> configurations.
+
+Use CVE-2014-8989.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUbY4WAAoJEKllVAevmvmsxoQH/2Kvrfax13v8YJR4subYdAgS
+bpVEB+DDGIWrM5UQbGPXNW8yNi1QlodQ7SKWIn0hiJjD81D3+Wepfr7Vsz4Ar3sQ
+505IUjDs5DtsRHozSRDmuGvqHKL45XTxO+NDGbi9wTCU5U7soNi6DO4G2+Wd8xJv
+/c9OYIdBZC149dE3flAdJa0NrFMdiG5aq1qKznk7SG1JhlNWeoXWjP1J95TTUmW7
+vKTbuV6YkkUnBawunazPfWHMVXi9i41xCVVjsqnvt2U6SFFAgfgnlgQ3RPJkwJPt
+lpR66qhe6zqfehmdYk//iB8p1EqcSSvC00npG0zHT3jcFLv93ajdEj2T0MWFT0c=
+=uITp
+-----END PGP SIGNATURE-----
