@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/8
-Message-ID: <20141216172339.GB31409@kludge.henri.nerv.fi>
-Date: Tue, 16 Dec 2014 19:23:39 +0200
-From: Henri Salo <henri@...v.fi>
-To: "Larry W. Cashdollar" <larry0@...com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-9119: DB Backup plugin for WordPress download.php file Parameter Remote Path Traversal File Access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/21
+Message-Id: <20141120144817.6CC7572E0B5@smtpvbsrv1.mitre.org>
+Date: Thu, 20 Nov 2014 09:48:17 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...pal.org, gwolf@...lf.org, team@...urity.debian.org
+Subject: Re: Pending CVE assignments for SA-CORE-2014-006?
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On Tue, Dec 16, 2014 at 12:20:43PM -0500, Larry W. Cashdollar wrote:
-> When going to this plugin page (https://wordpress.org/plugins/db-backup/) I get :
-> 
-> Whoops!
-> 
-> We couldn't find that plugin. Maybe you were looking for one of these?
+> Session hijacking (Drupal 6 and 7)
 
-Yes. This means that WordPress plugins team has disabled the plugin in WordPress
-Plugin Directory. Downloads are also disabled from WordPress admin panel for
-safety. You can still of course install the plugin from SVN.
+Use CVE-2014-9015.
 
-http://plugins.svn.wordpress.org/db-backup/trunk/
 
-- --
-Henri Salo
+> Denial of service (Drupal 7 only)
+
+Use CVE-2014-9016.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+Version: GnuPG v1.4.14 (SunOS)
 
-iEYEARECAAYFAlSQapsACgkQXf6hBi6kbk8jfQCgkaJf9gwoL/P7CLIgp2ucuExf
-PzwAoManG8mJaMiTOryjFetzyZ+lKa5e
-=WGsS
+iQEcBAEBAgAGBQJUbf58AAoJEKllVAevmvms2qcIAItiBrXYCr3qbvFieEgqWdZT
+UX/Z+6TcS65VB2JrLKXDgMLArWIXRQWVT/1dORotEabeEhtgGbaBljyH4KsHDp8W
+cwxcbmB6hgUpbWax4Kgo5a0JMBshWYUKU8cxQVmLWuVjBzhgcveNfcBYKd66hLP4
+iLroECbXKmn27/LCrlumwskxIOmjBLkecCH4cu3UXZdK46GpuxMxbSWlSSdBC0XF
+E3Svx0GxpwZIRDAA8bUXgwnMUgJkeiER+vbmD7l0Ool2/961SIhHWDfbfFClW4Xv
+lFW0qqRJtT6JXcoi9NSZiMRRDawVwXHqmUqTA9Es3OBULJEzh6N2gehNt8fSPqg=
+=olvS
 -----END PGP SIGNATURE-----
