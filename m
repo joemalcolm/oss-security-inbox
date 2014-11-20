@@ -1,98 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/8
-Message-Id: <E1XqhpL-0003SX-7Z@xenbits.xen.org>
-Date: Tue, 18 Nov 2014 12:24:11 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 110 (CVE-2014-8595) - Missing privilege level checks in x86 emulation of far branches
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/14
+Message-ID: <20141120114509.GA14894@openwall.com>
+Date: Thu, 20 Nov 2014 14:45:10 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Nov 20, 2014 at 02:28:03PM +0300, Mark Kipyegon wrote:
+> Apologies if my question is off topic. Wouldn't an OS targeting a specific group have the risk of fragmenting globally accepted standards?
 
-            Xen Security Advisory CVE-2014-8595 / XSA-110
-                              version 3
+Thank you for mentioning this may be off-topic.  I think yes, this
+discussion thread got off-topic.  Can we please wrap it up, unless
+someone has something on-topic to add.  What the Subject says is
+on-topic, but content of the messages no longer reflects that. :-(
 
-    Missing privilege level checks in x86 emulation of far branches
-
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The emulation of far branch instructions (CALL, JMP, and RETF in Intel
-assembly syntax, LCALL, LJMP, and LRET in AT&T assembly syntax)
-incompletely performs privilege checks.
-
-However these instructions are not usually handled by the emulator.
-Exceptions to this are
-- - when a memory operand lives in (emulated or passed through) memory
-  mapped IO space,
-- - in the case of guests running in 32-bit PAE mode, when such an
-  instruction is (in execution flow) within four instructions of one
-  doing a page table update,
-- - when an Invalid Opcode exception gets raised by a guest instruction,
-  and the guest then (likely maliciously) alters the instruction to
-  become one of the affected ones,
-- - when the guest is in real mode (in which case there are no privilege
-  checks anyway).
-
-IMPACT
-======
-
-Malicious HVM guest user mode code may be able to elevate its
-privileges to guest supervisor mode, or to crash the guest.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 3.2.1 and onward are vulnerable on x86 systems.
-
-ARM systems are not vulnerable.
-
-Only user processes in x86 HVM guests can take advantage of this
-vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-There is no mitigation available for HVM guests.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa110-unstable.patch        xen-unstable, Xen 4.4.x
-xsa110-4.3-and-4.2.patch     Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa110*.patch
-a114ba586d18125b368112527a077abfe309826ad47aca8cc80ba4549c5f9ae2  xsa110-4.3-and-4.2.patch
-eac4691848dcd093903e0a0f5fd7ab15be15d0f10b98575379911e91e5dcbd70  xsa110.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJUazojAAoJEIP+FMlX6CvZF18H/1/G49MGk6/Fq6CtpvoEvQsl
-u7Q0UHoMuwqN119fRKJOorAh+MPKWDaPBjZoNmfJxIKEHD5tpA1Kr97y67Ye/dtz
-UfXxQPiIYpOe/Z59E3erKGDyzC5TLlPfa7fZBvZdeStIWsC+d2pUWDTRBioDHBGZ
-IeNnXkrLuhLrjGOs9a4ZNdP/jTFkJQ7vKJXF8nFhcEpK8XZx9D8e2xExTWZ2BJ/N
-u6KbWgMAf01M10hcQze99Wm3Fuva/HkVhiza8Rj5cgsV9SD4ZrQMhH9Mm86/YG52
-AEwT6j8KWd83zZz8WZjFS30edZ4/eIXW+2e3KuaUFKBiei88tlF6CYWq6upS/5U=
-=u7Zi
------END PGP SIGNATURE-----
-
-Download attachment "xsa110-4.3-and-4.2.patch" of type "application/octet-stream" (6028 bytes)
-
-Download attachment "xsa110.patch" of type "application/octet-stream" (6028 bytes)
+Alexander
