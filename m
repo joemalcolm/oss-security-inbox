@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/3
-Message-ID: <54596D9B.8090409@redhat.com>
-Date: Tue, 04 Nov 2014 17:21:47 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/43
+Message-ID: <20141120204709.GA20963@kludge.henri.nerv.fi>
+Date: Thu, 20 Nov 2014 22:47:09 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for requests-kerberos
+Subject: WordPress 4.0.1 Security Release
 Content-Type: text/plain; charset=utf-8
 
-On 04/11/14 11:20 AM, Ian Cordasco wrote:
-> Hello all,
-> 
-> A fix was merged and released today for the package which performs
-> kerberos authentication when using python-requests. Prior to this,
-> every version of the package did not properly handle mutual
-> authentication which means that the client did not verify that the
-> user was communicating with a trusted server. The version which
-> contains the fix is 0.6 and all prior versions are considered
-> vulnerable.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Can you please provide a link to said package/release/commit/etc? Thanks.
+https://wordpress.org/news/2014/11/wordpress-4-0-1/
 
-> Please assign a CVE to this issue.
-> 
-> Cheers,
-> Ian
-> 
+WordPress 4.0.1 is now available. This is a critical security release for all
+previous versions and we strongly encourage you to update your sites
+immediately.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Can I get CVEs for vulnerabilities fixed in this release, thank you. I am not
+sure if some or any of these has been requested already.
 
+- ---
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iEYEARECAAYFAlRuU00ACgkQXf6hBi6kbk9MSQCeJRvE3tM2WimZQRnieLE9sghw
++/sAn05t1pIstiyak4tGZBDrySEMqnt8
+=LQyo
+-----END PGP SIGNATURE-----
