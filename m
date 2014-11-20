@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/21/6
-Message-ID: <87tx0ok7zt.fsf@mid.deneb.enyo.de>
-Date: Sun, 21 Dec 2014 22:28:38 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/30
+Message-ID: <CAAnPYQ7NcW7PGAuiX6LSiUAbD9LPhwhXWypjGmWYG3FnGz4R4A@mail.gmail.com>
+Date: Thu, 20 Nov 2014 17:54:20 +0100
+From: Gynvael Coldwind <gynvael@...dwind.pl>
 To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+Subject: Re: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
-* Dave Horsfall:
-
-> On Sun, 21 Dec 2014, Florian Weimer wrote:
 >
->> [...] but I have the impression that the correct clock changes every 
->> couple of years.
->
-> This sounds like you're referring to leap seconds,
+> Since they are coming from fuzzing a copy of the exact input which led
+> to it is also valuable. There is nothing worse than having to guess at
+> what might have led to a crash when the input could literally have
+> been anything at all.
 
-No, I meant the recommend time to use in this context.  If
-clock_gettime(CLOCK_MONOTONIC) is the right choice, that's good,
-because it has vdso accelleration (but I don't know how effective that
-is in practice).  On some systems, obtaining time is really painfully
-slow. [*]
 
-> where due to the 
-> Earth's rotation slowing down (as determined by the International Earth 
-> Rotation Service), an extra second is inserted every so often, typically 
-> in July; it's quite fun watching it on a GPS receiver (assuming that it 
-> even survives the event, as I've seen a few cheaper ones lose the plot).
+I would argue that "is also valuable" is underplaying it a little ;)
+IMO having the input (and information on how was it loaded in some cases)
+is much more valuable than having anything else (be it stack traces or
+whatever) as it allows devs to actually look at the crashing app in using
+any tool they like to use (be it gdb, valgrind, windbg, or what not), which
+speeds things up.
 
-GPS time does not have leap seconds.
+If it came from a mutation-based fuzzer, the original (not-mutated) sample
+can be useful too.
 
-[*] If you upgrade OpenSSL and RAND_bytes is suddenly so much slower,
-that's the place to look—upstream mixes not just the PID, but also the
-current time into the pool to achieve more complete fork protection.
+In most* cases the above is enough for the devs to reproduce the problem
+even without a detailed report.
+* - in case of weird environment/context setting sometimes a report is a
+must
+
+So, personally I would phrase it like this "crashing sample is a must;
+everything else is good to have".
+
+ym2c :)
+--
+Gynvael Coldwind
+
