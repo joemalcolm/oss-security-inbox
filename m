@@ -1,73 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/6
-Message-ID: <CAM12Q5T3+sxXaoO0siMYfMroZUcWLQEzb4N0NwcUA6UVLEkCow@mail.gmail.com>
-Date: Sun, 5 Oct 2014 04:38:15 -0700
-From: Jose R R <Jose.r.r@...ztli-it.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/3
+Message-ID: <20141120061028.GA4428@elende.valinor.li>
+Date: Thu, 20 Nov 2014 07:10:28 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: security@...pal.org, Gunnar Wolf <gwolf@...lf.org>, cve-assign@...re.org, team@...urity.debian.org
+Subject: Pending CVE assignments for SA-CORE-2014-006?
 Content-Type: text/plain; charset=utf-8
 
-Hanno,
+Hi
 
-< https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck >
+I just wanted to ask back if the CVEs for SA-CORE-2014-006[1] were
+already requested (the advisory mention that they will be requested
+and added to the advisory). If so this will ease tracking the two
+issues. For reference they are:
 
-I've downloaded your bash test script and executed it against a Debian
-7 (Wheezy) -patched system (upper image)
+> Session hijacking (Drupal 6 and 7)
+> 
+> A specially crafted request can give a user access to another user's
+> session, allowing an attacker to hijack a random session.
+> 
+> This attack is known to be possible on certain Drupal 7 sites which
+> serve both HTTP and HTTPS content ("mixed-mode"), but it is possible
+> there are other attack vectors for both Drupal 6 and Drupal 7.
+>
+> Denial of service (Drupal 7 only)
+> 
+> Drupal 7 includes a password hashing API to ensure that user
+> supplied passwords are not stored in plain text.
+> 
+> A vulnerability in this API allows an attacker to send specially
+> crafted requests resulting in CPU and memory exhaustion. This may
+> lead to the site becoming unavailable or unresponsive (denial of
+> service).
+> 
+> This vulnerability can be exploited by anonymous users.
 
-as well as a local Debian Sid (unstable) build of bash where I applied
-the October 02, 2014, bash43-029 (Bottom image)
+They are fixed in Drupal7 7.34 and Drupal6 6.34.
 
-< https://pbs.twimg.com/media/BzLfeIICQAA30vb.png:large >
+ [1] https://www.drupal.org/SA-CORE-2014-006
 
-Thus agreeing with Sona: "but I think what most (non-expert) people
-need is an explanation for each CVE, a set of test case from some
-reliable source (preferably a script that runs all test cases and
-shows vulnerable/not-vulnerable status) and a set of patches. So that
-they can apply the patches, run the tests and assert that their
-systems are not vulnerable to shellshock anymore."
-
-On Sun, Oct 5, 2014 at 3:51 AM, Hanno Böck <hanno@...eck.de> wrote:
-> Am Sun, 5 Oct 2014 10:22:06 +0000
-> schrieb Sona Sarmadi <sona.sarmadi@...a.com>:
->
->> 3) Do you have a script or summary of all tests in one place like
->> http://en.wikipedia.org/wiki/Shellshock_%28software_bug%29 or
->> https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck ?
->> Or maybe these are good enough & reliable?
->
-> This is my script and I think what it does in the current version is
-> the reasonable thing to do:
-> It will first test if function importing old style is enabled and if
-> yes it will warn about that, if it is disabled or any of the prefixing
-> solutions is enabled then it will say so.
->
-> All further test outputs for all 6 CVEs depends on that. If the old
-> function import is enabled warnings will be shown in red, because then
-> people are in real danger. If function importing is disabled or
-> prefixed the warnings will look less scary and clearly state
-> "non-explitable".
->
-> I think this is reasonable. I regret that previous versions of my
-> script showed a  more scary output even if people weren't really in any
-> danger because prefixing was already enabled.It was even
-> referenced in a number of inaccurate media reports.
->
->
->
-> --
-> Hanno Böck
-> http://hboeck.de/
->
-> mail/jabber: hanno@...eck.de
-> GPG: BBB51E42
-
-Best Professional Regards.
-
--- 
-Jose R R
-http://www.metztli-it.com
----------------------------------------------------------------------------------------------
-NEW Apache OpenOffice 4.1.1! Download for GNU/Linux, Mac OS, Windows.
----------------------------------------------------------------------------------------------
-Daylight Saving Time in USA & Canada ends: Sunday, November 02, 2014
----------------------------------------------------------------------------------------------
+ Regards,
+ Salvatore
