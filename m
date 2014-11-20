@@ -1,97 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/19
-Message-Id: <201406261818.s5QII2KW003843@linus.mitre.org>
-Date: Thu, 26 Jun 2014 14:18:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: misc@...b.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Ansible CVE requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/26
+Message-ID: <546E1482.2080700@mittwald.de>
+Date: Thu, 20 Nov 2014 17:19:14 +0100
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://lwn.net/Articles/603205/
+On 20/11/14 16:50, Hanno Böck wrote:
+> There lays deeper a question that I asked myself already: What's
+> an "okay" way of reporting these things? Basically what I usually
+> did is just sending crash samples to upstream devs and add some
+> valgrind/asan output. One could argue that I'm offloading the real
+> work to the upstream devs, however I feel they know their code
+> better than I do (and often I'm just not qualified to create the
+> fix). Until now I feel most upstreams were okay with that.
 
-> https://bugs.mageia.org/show_bug.cgi?id=13278#c2
+Maybe it would be worth it to contact the "hydra" devs about this
+as they provided also reproducing test-cases for the crashes, when
+reporting to debian?
 
-> just in case, seems that it is this patch for "Security fix for safe_eval" :
-> https://github.com/ansible/ansible/commit/998793fd0ab55705d57527a38cee5e83f535974c
-
-> and for Security fix for vault :
-> https://github.com/ansible/ansible/commit/a0e027fe362fbc209dbeff2f72d6e95f39885c69
-
-> and for apt :
-> https://github.com/ansible/ansible/commit/c4b5e46054c74176b2446c82d4df1a2610eddc08
-
-(Note that 603205 isn't a complete list of the upstream Ansible
-vulnerabilities because Mageia is shipping a 1.4.x version and
-therefore wasn't interested in
-a0e027fe362fbc209dbeff2f72d6e95f39885c69.)
-
-We think 998793fd0ab55705d57527a38cee5e83f535974c is about fixing one
-type of issue, but feel free to identify any additional types of
-issues that are also fixed. Use CVE-2014-4657 for the general topic of
-"the product intentionally allows code execution of code with limited
-capabilities, but the code restrictions are insufficient."
-https://github.com/ansible/ansible/blob/release1.5.5/CHANGELOG.md
-suggests that this was fixed in 1.5.4.
-
-
-a0e027fe362fbc209dbeff2f72d6e95f39885c69 seems to be a
-straightforward case of "the product creates files that normally
-contain secret values, but does not ensure appropriate permissions."
-Use CVE-2014-4658.
-https://github.com/ansible/ansible/blob/release1.5.5/CHANGELOG.md
-suggests that this was fixed in 1.5.5.
-
-
-c4b5e46054c74176b2446c82d4df1a2610eddc08 is about multiple types of
-issues.
-https://github.com/ansible/ansible/blob/release1.5.5/CHANGELOG.md
-suggests that these were fixed in 1.5.5. One issue is doing an
-unconditional "chmod 0644" on a file that may have required stronger
-permissions for a site-specific reason. Use CVE-2014-4659.
-
-
-Also, the changes related to _strip_username_password apparently mean
-that the product might encounter an /etc/apt/sources.list line
-starting with:
-
-  deb http://user:pass@...ver:port/
-
-and would then construct a filename containing the user and pass
-fields, leaking credentials in a way that potentially crosses
-privilege boundaries. Use CVE-2014-4660.
-
-
-Does anyone want a CVE ID for this third potential
-c4b5e46054c74176b2446c82d4df1a2610eddc08 issue?
-
-The changes related to check_mode apparently mean that
-http://docs.ansible.com/developing_modules.html#check-mode wasn't
-properly implemented, and an administrator might unintentionally
-perform dangerous actions. CVE assignments for this type of problem
-seem uncommon, although that might be because the class of issues is
-underreported. (The bug here seems to be a case of "doesn't even
-notice whether check_mode is active" rather than "notices that
-check_mode is active but proceeds unsafely." See also the
-http://blog.afistfulofservers.net/post/2012/12/21/promises-lies-and-dryrun-mode/
-blog post.)
+sadly hydra is not open source.
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Mit freundlichen Grüßen / Regards
 
-iQEcBAEBAgAGBQJTrGNaAAoJEKllVAevmvmsVEoIAIXaQOpESycBDcQCewvsFxEr
-/YTSassxW+SyyWtlL7TqVTBC6K+1B6ry+dQRA/pRbbECV1iUUOLwrsuD23kLTZG4
-idP6YM3AXJw8Qm69nAmiMsGBYubl/97V92DY5AwQMnXXASDEfrT2A+Ei6w8zrCCC
-VdJ50jus0Ttq0mch9QasGhzPm7w4Np4m2WF9Wpau1N0ZZTWvgf9srNmjHVQW1SS3
-5Ait3ALjn15AfLPmZZ9Z059xqjnaVZwBcOHrDpApmctngF3Axej5JXIGNQEfkGtU
-Z0Z8sTKbPEJ4GUo0KykJTuJcGMBpgZ+ad2gv5+vCy8ufdpHoLHyKf1aEo39gekc=
-=evpQ
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad
+Oeynhausen
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJUbhSCAAoJEC5d3lL7/I9ze6AP/0d+zGjckKfIrldv8czlMgvZ
+bqA6lCrtlz+2GIqXWSIgQVU8miyEB/rPUJTPQQ+upiR9f1Rx3Tym0/w0iKiuhKDm
+Xh3GJqcrmlYut6HEPz4Mg81HfD6Qr2Yrvzot/GXepDvxBI13HFbu7YGpi4era3bR
+qJDRjcTaBZnxPPHZpO+49Ih1G8616N1bTjJS4EIU7XlHJIOQygJQtwWx7AVe1CCo
+ZEBR4jG65C5ulvrBNKc9GT+8SOy6F8JSOg7SevXr7SJBnvDRVtkqNDFTq84M1XCL
+xGgZTKNdQ9GJIexlVCAoGwpHtMTZ3+dToxolxLlL2ixlyb7vV8UgYtSe1EvdbfMq
+xvL6Il27lfdYIwQZrK+1C56EugeopXi2b/GLalU71PGXeIIHUws7djpHAjkOj59F
+yNT8svwkajnSRzkoMwkATu3+eHkvSNhZTZKRYz6RgkovyMS8AOraqDmJCLqfni3l
+tEzrBUAlmtghAKUWzPpDsoeZ7I96z2zYgdJamSGMdYf81vbDUU202BejpF1gKMTx
+XM2nS2MS8PNaF7y2w7Nc9FYlo+vM2VaT9hoGbTTo2NjIdrpkyHwmpoI7oZ/n1/kN
+QF+cjkAu3+lUuMYw2vKvXSUmiuGIpXpwfKti6y7CwyMaYTeuHHgyCU2YVbIqgVNe
+c1g4fDtUHktAsAHIR56c
+=Joj1
 -----END PGP SIGNATURE-----
