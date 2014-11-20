@@ -1,18 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/7
-Message-ID: <CABLZJby4k9SFawqFtVMCChVXV3TQAxOmO4Aob8=SA9kn3fjZEA@mail.gmail.com>
-Date: Tue, 14 Jan 2014 18:54:55 +0100
-From: Maksymilian A <max@...t.cx>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Apache Archiva Remote Command Execution 0day
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/22
+Message-Id: <20141120145244.142E652E0E5@smtpvbsrv1.mitre.org>
+Date: Thu, 20 Nov 2014 09:52:44 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 770222@...s.debian.org
+Subject: Re: CVE request: icecast: possible leak of on-connect scripts
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please assign CVE for Apache Archiva 0day
+> It was reported that Icecast could possibly leak the contents of
+> on-connect scripts to clients, which may contain sensitive information.
+> This issue has been fixed in the 2.4.1 release:
 
-http://cxsecurity.com/issue/WLB-2014010087
+> "Fix on-connect and on-disconnect script STDIN/STDOUT/STDERR corruption
+> due to shared file descriptors."
 
-Maksymilian Arciemowicz
-http://cxsecurity.com/
+> Information contained can include passwords
 
+> http://icecast.org/news/icecast-release-2_4_1/
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=770222
+> https://trac.xiph.org/ticket/2089
+> https://trac.xiph.org/ticket/2087
+> https://trac.xiph.org/changeset/19308
+
+Use CVE-2014-9018.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUbf+QAAoJEKllVAevmvmsB/QH/iv2tkycZVO3mWFqsEkkNWSj
+v9B9xhVZzCGKnL3WU/89w6jszoCZfoJXA/kUPwnOzIyl2OpJNvHAKyRcONTo8gu8
+rBpYYl2id90Xf4DEJucKjJFeMzo6q1BIxQAtOPro5VMBYZ+EC7Ups9AO0iMxzwr+
+g9lusgsVy6jOEb+aeng3SX2GCgnwAv+SZ78wipPuBnxyO6Ec8W++lHOdB+7SDY/J
+6A38oMJstLVy4PUSiHfNjK71Ej7m1Hx++mk3cMPXEINJh1dV9LcJEeAoANAePMma
+gRwboepBmq5FDDsV099VPfqMB4XQli3svZEjdkUCbPhjl1D4dj8s74i0uF9GGyI=
+=EjxT
+-----END PGP SIGNATURE-----
