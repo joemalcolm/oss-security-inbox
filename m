@@ -1,41 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/18/6
-Message-Id: <201407182212.s6IMC5JT004797@linus.mitre.org>
-Date: Fri, 18 Jul 2014 18:12:05 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: bozohttpd: basic http authentication bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/9
+Message-ID: <546DAC0A.7010508@mittwald.de>
+Date: Thu, 20 Nov 2014 09:53:30 +0100
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> http://ftp.netbsd.org/pub/NetBSD/security/advisories/NetBSD-SA2014-007.txt.asc
 
-> Remote user may access protected files
+On 19/11/14 08:19, Gynvael Coldwind wrote:
+> To be honest I would love to see all AV security tested, not just the open
+> source one. If they claim they make people more secure, it would be great
+> to know that that is backed by e.g. fuzzing and bug bounty programs.
 
-> A call to snprintf() was not properly checking for truncation of
-> a provided user path, allowing a later concatenation of the
-> ".htpasswd" file name to exceed the maximum pathname length.  This
-> stops the check for .htpasswd file from working correctly, bypassing
-> the basic HTTP authentication scheme.
+Well in case you missed it: breaking antivirus software
+from the syscan360 conference:
+http://www.syscan360.org/slides/2014_EN_BreakingAVSoftware_JoxeanKoret.pdf
 
-Use CVE-2014-5015.
+He searched in 17 AV programs and found
+critical exploits in 14.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+very interesting read.
 
-iQEcBAEBAgAGBQJTyZtdAAoJEKllVAevmvmsRZcH/0TkprRLpsVED9cIjQuujlih
-vFHenTAkkk1oJFcu7w3jYFjEddGLXq64t7YYYAs/ElC4c95pZ3rLGnW+XxHqMU6c
-ucpYSG7WgyFEHKQeCZOx1Qicm5xxe3kgtpmJwMBz8EiPagWBOIYShpas7qWjeIPE
-onsrZ32uBN7ziwQpIIxpxphb/2x1nO8ACN4frgR1BcrMYBuIxxAFEJp86H7jaJND
-Aya8y0phZfAEBtS5qpUiVzD9W8bXAxxtXF4+3SAKlNAsziok7SdQv2Ka+2y9nZPh
-HX7ZY2KjBifat7hNEtZoNz7P92IqQdIugAJXrDXDTuFJGhSOATgcgDs43//cp7A=
-=OARR
------END PGP SIGNATURE-----
+-- 
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
