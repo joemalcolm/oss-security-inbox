@@ -1,46 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/14
-Message-ID: <20141001155535.GB7115@kroah.com>
-Date: Wed, 1 Oct 2014 08:55:35 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/29
+Message-ID: <20141120085215.3f2b2cb4@127>
+Date: Thu, 20 Nov 2014 08:52:15 -0800
+From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Subject: Re: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 01, 2014 at 07:15:56AM -0400, Jason Cooper wrote:
-> On Wed, Oct 01, 2014 at 01:08:09PM +0200, Hanno Böck wrote:
-> > Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
-> > schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
-> > 
-> > > Finally: *PLEASE* let me know if you have any good ideas on how to
-> > > find vulnerabilities like this ahead-of-time. My article "How to
-> > > Prevent the Next
-> > > Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a
-> > > number of ways that Heartbleed-like vulnerabilities could have been
-> > > detected ahead-of-time, in ways that are general enough to be
-> > > useful.  I'd like to do the same with Shellshock, so we can quickly
-> > > eliminate a whole class of problems.
-> > 
-> > The "class of problems" here is imho that we have a bunch of tools that
-> > get rare attention from anyone, are run by few volunteers, but they're
-> > an essential part in running the Internet.
-> > 
-> > Just think about busybox, curl, wget, coreutils, gettext, gzip, ... - a
-> > vuln in any of these could have severe consequences.
-> > 
-> > Maybe the topic here should be: "How can we get the (whitehat) IT
-> > seucrity community to have a deeper look at neglected but important
-> > opensource projects."
+On Thu, 20 Nov 2014 13:34:31 +0100
+Hanno Böck <hanno@...eck.de> wrote:
+
+> Hi,
 > 
-> The LF has the Core Infrastructure Initiative:
+> Following the discussions here I feel this whole fuzzing thing could
+> need a project to coordinate efforts and I will probably start
+> something within the following days.
 > 
->   http://www.linuxfoundation.org/programs/core-infrastructure-initiative/faq
+> I wanted to lay out my rough plans / brainstorming and welcome any
+> feedback and especially if people have worries about such a project.
 
-Yes, that's exactly what that group is doing, and they have a huge list
-of these types of projects that they are looking into funding to help
-prevent this type of thing from happening again.  I'll go add bash to
-the list there as I don't think it is currently on it at the moment.
+From a naive perspective. I don't mean to diminish your
+idea/contribution. I like the ideas you've put forth but I'm not
+qualified to address them technically. But what I read from this
+is a real need to start something completely new from the ground
+up. In other words replace the system that's in place. Starting
+from scratch. Perhaps it's already being worked on but is only
+a seed. Like Linus' work as a student those years ago.
 
-thanks,
+Maybe my problem is that your proposal seems herculean to me but
+can't help to think it's a reminder or sign that we need to think
+past the current state of things.
 
-greg k-h
+I look forward to the section on how to "get fuzzing for beginners"
+and best of luck to you all on this idea/project.
+
+
+
