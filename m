@@ -1,49 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/08/3
-Message-Id: <201402080206.s18260Gd005187@linus.mitre.org>
-Date: Fri, 7 Feb 2014 21:06:00 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 737778@...s.debian.org
-Subject: Re: CVE request: f2py insecure temporary file use
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/32
+Message-ID: <20141120090010.18d6c6b2@127>
+Date: Thu, 20 Nov 2014 09:00:10 -0800
+From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
+To: oss-security@...ts.openwall.com
+Subject: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, 20 Nov 2014 15:17:55 +0300
+Alexander Cherepanov <cherepan@...me.ru> wrote:
 
-> Jakub Wilk reported insecure temporary file use in f2py.
+> On 2014-11-17 06:17, M.T. Roebuck wrote:
+> > I haven't had any success yet in finding security audit reports for
+> > any *nix OS
 > 
-> numpy/f2py/__init__.py contains this code:
+> It seems such info was supposed to be linked from here:
 > 
->           fname = os.path.join(tempfile.mktemp()+'.f')
+> http://oss-security.openwall.org/wiki/code-reviews
 > 
->       f = open(fname,'w')
-> 
-> Can a CVE please be assigned if one hasn't been already?
-> 
-> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737778
-> https://bugzilla.redhat.com/show_bug.cgi?id=1062009
+> But there is not much data there.
 
-Use CVE-2014-1858 only for the issue in the __init__.py file.
+Writing code is more fun than documenting code?
 
-Use CVE-2014-1859 for the other temporary-file issues fixed by the
-vendor in the
-https://github.com/numpy/numpy/commit/0bb46c1448b0d3f5453d5182a17ea7ac5854ee15
-commit.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS9Y9iAAoJEKllVAevmvmsmUgH/jW37Wa7Wp52niRfZ+5B3IR+
-emZwCRGRhJKZVZKB3yWDPOLv7WPGsXMQUgRzNLI81U2ukGX5+ZDQCAvm2o5fed25
-z90k82ER5lwmbosp87p/kKNtCTuLegijDczduBIV73fO3PwC1d+/JM5I4/DnTSM6
-OWLRquY7giwDPiF5NvBrmDR6JocWOPVlbAHoIvLuxRFcYdFbqDaJe8Bt8hf2saQB
-Phw/nIaladkNJOKR5sZM9+E3tVdP1MPCjmiMdASWktTP0fNrGMoBS24zTAQY5hgT
-ApAW+6Y88igBbZ/aci5kvIo7ocdmw+ld7YNK46PMX8Cr4MsTJZX0X6V85HCzAJM=
-=XwId
------END PGP SIGNATURE-----
