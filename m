@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/26
-Message-ID: <20141008215824.GG6890@pc.thejh.net>
-Date: Wed, 8 Oct 2014 23:58:24 +0200
-From: Jann Horn <jann@...jh.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/12
+Message-ID: <546DD2F9.6050603@debian.org>
+Date: Thu, 20 Nov 2014 11:39:37 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: openssh on linux rce in sftp-only mode
+Subject: Re: Re: Linux user namespaces can bypass group-based restrictions
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 08, 2014 at 03:32:23PM -0400, Josh Bressers wrote:
-> > 
-> > I reported this to the OpenSSH developers, and although they included my
-> > patch as a mitigation, they did not treat it as a vuln in OpenSSH.
-> > 
-> > I believe that treating this as a hardening patch makes sense. The SFTP
-> > server behaves exactly as documented, it allows access to the whole
-> > filesystem. And on Linux, that happens to equal write access to the
-> > process RAM, so you should never give that access to someone who
-> > shouldn't be able to run arbitrary code.
-> > 
-> 
-> I think one has to assume if a user has unrestricted sftp access, they can
-> figure out how to do most anything. Even with the upstream hardening patch,
-> it really only protects the sftpd process. Any other processes the user may
-> own could be modified.
+On 20/11/14 08:49, Vitor Ventura wrote:
+> I was wondering if this might pose a problem to android's application file
+> sandboxing. If an application can run a native lib that could exploits this
+> it might have access to other aplication files.
 
-Not that easily - /proc/$pid/mem requires you to either be the same process
-or be attached to it via ptrace, I think.
+Only if Android has groups that act as "anti-capabilities", i.e. members
+of the group are less privileged than non-members. For instance, if I
+remember correctly, the grsecurity patchset has (or used to have) the
+ability to deny networking to members of a designated group while
+allowing it for everyone else.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+I don't know of any groups in Android that are anti-capabilities, and
+nothing in
+<http://osxr.org/android/source/system/core/include/private/android_filesystem_config.h>
+looks like an obvious anti-capability. Do you know of any?
+
+    S
+
