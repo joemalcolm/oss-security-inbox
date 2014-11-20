@@ -1,90 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/41
-Message-Id: <20140929200545.916746C000C@smtpvmsrv1.mitre.org>
-Date: Mon, 29 Sep 2014 16:05:45 -0400 (EDT)
-From: cve-assign@...re.org
-To: jwilk@...lk.net
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Pylint checks not as static as one would think
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/31
+Message-ID: <20141120085747.0bb20b42@127>
+Date: Thu, 20 Nov 2014 08:57:47 -0800
+From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
+To: oss-security@...ts.openwall.com
+Subject: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 19 Nov 2014 10:26:33 -0800
+Tracy Reed <treed@...raviolet.org> wrote:
 
-> Pylint is advertised as "a static code checker, meaning it can
-> analyse your code without actually running it"[1] and that it "does
-> not import live modules"[1].
+> On Sun, Nov 16, 2014 at 07:17:12PM PST, M.T. Roebuck spake thusly:
+> > I haven't had any success yet in finding security audit reports for
+> > any *nix OS (I haven't looked for them for MS/Apple products).
 > 
-> This is, unfortunately, far from reality. Here's a PoC:
-> 
-> $ cat moo.py
-> from _moo import *
-> 
-> $ cat moo.c
-> #include <stdio.h>
-> #include <signal.h>
-> void __attribute__((constructor)) moo() {
->         printf("moo!\n");
->         kill(0, SIGSEGV);
-> }
-> 
-> $ gcc -Wall -shared -fPIC moo.c -o _moo.so
-> 
-> $ pylint moo.py
-> No config file found, using default configuration
-> moo!
-> 
-> My understanding is that upstream Pylint maintainers consider this 
-> behavior intentional[2]. But even then, I think it's a serious 
-> documentation flaw.
-> 
-> [1] http://docs.pylint.org/faq.html#about-pylint
-> [2] https://bugs.debian.org/591676#28
+> Security audits depend greatly on the configuration and use of the
+> machine. Having a generic security audit is practically useless.
 
-We think there's a valid alternate interpretation of the
-documentation:
+Pardon me, I meant audits of the code that makes up the OS.
 
-> it can analyse your code without actually running it
+Hmm, separately though I wonder if any licensing issues arise when one
+derives a code audit from <some license> code. 
 
-This describes the general functionality of the product, without
-commenting on whether code might be run in some circumstances. If the
-user provides exclusively Python source code, and doesn't provide
-mixed input containing both Python source code and potentially
-malicious .so files, then the situation is different.
-
-> There are a few other differences, such as the fact that Pylint does
-> not import live modules while Pychecker does
-
-This can be interpreted to mean "if you want a product with an
-explicit strategy of importing live modules in order to find a wider
-class of problems, then choose Pychecker instead of Pylint." A brief
-statement that contrasts major features, in general terms, is not
-equivalent to something like:
-
-  [hypothetical] 6.x Is import of live modules always prevented?
-  Yes, this is an explicit security constraint in our design.
-
-We agree that it would be a significant security improvement to have
-clearer documentation, e.g.,
-
-  [hypothetical] 6.y Is import of live modules always prevented?
-  No, astng does import live modules when source is unavailable.
-
-but we feel there is no vulnerability and thus no CVE.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUKbs7AAoJEKllVAevmvms5FYIAKJKORvzuEeNWW/AzAxQE3ZY
-E9sffj45bqmuZ9vEPiOG21GvyvHr21WJ3JwVM4dcipuCBL+j3PvjwPuYB0JESkrr
-AjOBh+Wa5vFwG1Vb+YoSeNYH50zS1RFpLFVFGXMrN+P6JcEfwNirZcbuzXDK4DCN
-1XdgNNdBcLEYr5sR3KLJtGD97uJKDKoaJv/S9qTdUS+cMnlcgdhJmY+XQbgDp4Cf
-950axM4DMXQWjg5ki8FSBZHOfYIDKUmJp2OE7i7OqDimsFKPQ5p/EKfz+B/yH+6R
-UkiCOC/5Odr/uOwMg9qY9zN0DHhwGKkQvAUHfNrb3jExr/S805mO7azVyL3mr50=
-=xUZH
------END PGP SIGNATURE-----
