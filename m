@@ -1,27 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/4
-Message-ID: <20141104032842.GA29210@openwall.com>
-Date: Tue, 4 Nov 2014 06:28:42 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/13
+Message-ID: <DUB404-EAS412CA306AED466651B3EE51B9760@phx.gbl>
+Date: Thu, 20 Nov 2014 14:28:03 +0300
+From: Mark Kipyegon <mkipyegon@...look.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Re: Location of OS security audit reports
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 28, 2014 at 04:47:02PM +0300, Alexander Cherepanov wrote:
-> On 2014-10-15 12:30, Solar Designer wrote:
-> >- Please don't send fully working exploits (but testcases that exercise
-> >the flaw are welcome)
-> >
-> >FWIW, I've always been tempted to remove the latter guideline,
+Apologies if my question is off topic. Wouldn't an OS targeting a specific group have the risk of fragmenting globally accepted standards?
+
+On 20 Nov 2014, at 14:14, "Niklas Kielblock" <niklas@...derschwe.in> wrote:
+
+> The Chinese government publishes its own Linux distribution and there are many others making distributions targeting specific cultural groups, but I'm not aware of any greater efforts to build unique national operating systems.
 > 
-> Then perhaps just remove it?
-
-Removed.
-
-This removal isn't meant to actively encourage posting of "weaponized"
-exploits, but it merely means we don't feel we currently need to include
-a guideline on this.  In other words, this guideline was trying to
-address a problem we didn't have, and I hope its removal won't create a
-problem.
-
-Alexander
+> On 19/11/2014 18:54, M.T. Roebuck wrote:
+>> I see you're in Vietnam is there anything at all like a non-western
+>> OS in use there? Or anywhere in that part of the world? I must be
+>> naive but I thought I was just lacking information. It doesn't
+>> seem possible that there are only "western" OSs on the entire
+>> planet. Although my problem might just be that my definition of
+>> OS is all wrong.
