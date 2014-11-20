@@ -1,117 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/8
-Message-Id: <20141128200411.70A406C0018@smtpvmsrv1.mitre.org>
-Date: Fri, 28 Nov 2014 15:04:11 -0500 (EST)
-From: cve-assign@...re.org
-To: jsg@....id.au
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: libyaml / YAML-LibYAML DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/44
+Message-ID: <546E55C6.3090502@gmail.com>
+Date: Thu, 20 Nov 2014 21:57:42 +0100
+From: Sven Kieske <svenkieske@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: [langsec-discuss] 2nd LangSec workshop at IEEE S&P CFP and website
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> a crash/denial of service with untrusted yaml input.
+Hi, maybe someone from this list is interested
+in this workshop.
 
-> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
+kind regards
 
-> https://github.com/yaml/libyaml/commit/e6aa721cc0e5a48f408c52355559fd36780ba32a
+Sven
+- -------- Forwarded Message --------
+Subject: [langsec-discuss] 2nd LangSec workshop at IEEE S&P CFP and
+website
+Date: Mon, 17 Nov 2014 00:31:05 -0500 (EST)
+From: Sergey Bratus <sergey@...dartmouth.edu>
+To: LangSec Discuss <langsec-discuss@...l.langsec.org>
 
-Use CVE-2014-9130 for this Reachable Assertion issue in the libyaml
-scanner.c file.
+Dear all,
 
-Our understanding is that YAML-XS is a Perl wrapper module for the
-libyaml C library, and that there isn't separate Perl code in
-question. The rest of this message is a discussion of Python that
-does not affect the Jonathan Gray CVE request.
+We are about to start advertising the second LangSec workshop at the IEEE
+Security & Privacy Symposium, to be held on Thursday May 21st 2015 in San
+Jose.
+
+The website and CFP are at  http://spw15.langsec.org/  (the submission
+link is not active yet).
+
+Please help spread the word to potential attendees and submitters!
+
+Thank you very much,
+
+- --Sergey
+
+P.S. If you notice any issues with the website, please let me know!
+_______________________________________________
+langsec-discuss mailing list
+langsec-discuss@...l.langsec.org
+https://mail.langsec.org/cgi-bin/mailman/listinfo/langsec-discuss
 
 
-> Date: Fri, 28 Nov 2014 10:20:39 +0000
-> From: John Haxby <john.haxby@...cle.com>
-> For what it's worth PyYAML 3.10 and 3.11 have exactly the same assertion:
-
-For PyYAML, however, it appears that the report is about the
-scanner.py file, e.g.,
-
-  def save_possible_simple_key(self):
-  ...
-      # A simple key is required only if it is the first token in the current
-      # line. Therefore it is always allowed.
-      assert self.allow_simple_key or not required
-
-This Python code is apparently intended to correspond directly to the
-yaml_parser_save_simple_key C code. However, because it's in a
-different programming language, we would typically consider it a
-separate codebase, eligible for its own CVE IDs. Here, "assert
-self.allow_simple_key or not required" is not within the scope of
-CVE-2014-9130.
-
-One question is whether identifying a security-relevant DoS caused by
-an assert in C code means that there is also a security-relevant DoS
-caused by an assert in corresponding Python code. In other words,
-should the threat model be considered the same: the assert within
-scanner.c might cause an outage of a C application that was intended
-to remain available for processing YAML from other clients, and the
-assert within scanner.py might cause an outage of a Python application
-that was intended to remain available for processing YAML from other
-clients? Or should the latter be considered much less plausible? If
-the threat model is largely the same, we will assign a second CVE ID
-for the scanner.py issue.
-
-A second question is whether a Reachable Assertion in Python should be
-considered substantially different from a Reachable Assertion in C,
-because Python is a scripting language that potentially makes it much
-easier to ignore assert statements. (This question might not affect
-the current CVE assignments.)
-
-In other words, for a product written in C, the author could argue (or
-even document) that an assert line is supposed to be there, and the
-end user is not supposed to be compiling the program with NDEBUG.
-Similarly, the product can be shipped with specific build scripts that
-do not use NDEBUG. However, for a Python script, is the end user
-typically considered free to use -O if desired? The -O documentation
-at https://docs.python.org/3/using/cmdline.html says "-O Turn on basic
-optimizations" but the assert documentation at
-https://docs.python.org/3/reference/simple_stmts.html says "(command
-line option -O). The current code generator emits no code for an
-assert statement when optimization is requested at compile time." It's
-perhaps unclear whether ignoring assert statements is something that
-would obviously be part of "basic optimizations." (This issue doesn't
-apply to cases where there's a specific build process for .pyc files
-or the end user is supposed to install shipped .pyc files.)
-
-To give two specific examples:
-
-  1. A C program's author uses assert to prevent reaching code that,
-     in cases where the assert expression is false, has a remote code
-     execution vulnerability. The author documents that aborting the
-     program is the intended behavior, and the author provides a
-     specific build/installation process without NDEBUG.
-
-  2. A Python script's author uses assert to prevent reaching code
-     that, in cases where the assert expression is false, has a remote
-     code execution vulnerability. Because Python is a scripting
-     language, the end user doesn't separately need to build anything.
-     The end user looks at the cmdline.html documentation, chooses to
-     enable optimization with -O, and therefore the assert statement
-     is ignored.
-
-Is it fair to conclude that example 2 has a vulnerability but example
-1 does not?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v2
 
-iQEcBAEBAgAGBQJUeNRWAAoJEKllVAevmvms1g4IALrWfsOh7UkxQHxP28RBQgu0
-Jb7PdteW7250OH3DXb+WPkE90co+IOMoql3HrQoEy3+izwqaUBrDuR0yZVxlej6Q
-6EmcJ6Da1qjL2kXjJOYRrGsz9VJvQTRVrXhgQ3xvCWYw6mLxoTmztQ2UNNJ3DR12
-NVbMUFTmVtqyufvFl1ilOkxtt8cb8pqufYM5491M4Jp1EgLiqi7ztj91SUwUe0+w
-rE2H/wXJKP0JSAuQUOl7sGC7R6LD7s7dp8eoa+0RPdUuvvtCq8/L+1xbzEkWo8LW
-pxLCqHonpo0XnEMGMQRkSfkkyoFperqLpeBLR+ZNlSNYNzZlkhBuvTpGA5NyNIc=
-=hUlY
+iQGcBAEBAgAGBQJUblXGAAoJEAq0kGAWDrqlD5gMAIKeqo35pOuM9Mf+SYgqyFqt
+uTCBfMJa2zp7Jp4KItI5HF/VvSuoINg7nms4yBrrVIgTCmuhNIXxymk6i+9AVYir
+SQRI7kc2A6L0yYcg4GEtLVijEVThzNBP802lEJ3pCHPlRZOlxGXif9BPkEgubXFF
+UmQlc32E7kqlfmCqVJQNon0N9W2kNqGAyBJrL9ByI5SmZnQHjpQMAENKiBhe2h6j
+Oix3SLvicvyGqru1CRL+kvIIYWaOLeXg8RaA2bcuSQRj72yLT8MlCK6GQ7PpDLs8
+Rw2V7/oGQLth0MH9JfQnRkk4DPuAYpLRYVRGys3SQc1wf4H8xKA9kEMvHk+6cmol
++P0ResWWyLRHEYGJvv1uLDCXEoUp7qZqakE7DWD+mX4++h7FCI3GVYmeFjfHI2ut
+0nOLNObdUC3w2VsgdplQ7oCh8UTFnDb+eeJi4TAl9BR8vTEG3dFPGpiE+b8hiymp
++t8PzewUWLYVeccmZPmF9qPyQvUC4hj7/GLuiZKYMg==
+=dy6G
 -----END PGP SIGNATURE-----
