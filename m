@@ -1,55 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/33
-Message-ID: <CALx_OUBmeDQS7i8BZYQoRO+TyhTWZhYDa0EXtrNbPoUQvNHQSg@mail.gmail.com>
-Date: Thu, 2 Oct 2014 08:04:24 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: Shawn <citypw@...il.com>
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/7
+Message-Id: <20141120065824.D49DA6DC008@smtpvmsrv1.mitre.org>
+Date: Thu, 20 Nov 2014 01:58:24 -0500 (EST)
+From: cve-assign@...re.org
+To: pierre@...ctos.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request for check_diskio nagios/icinga plugin
 Content-Type: text/plain; charset=utf-8
 
-> According to shellshock  test (https://shellshocker.net/shellshock_test.sh)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-That script is a weird mixture of tests that implicitly pay no
-attention to Florian's patch, and therefore do not really demonstrate
-any security risk:
+> The check_diskio plugin for nagios/icinga from Matteo Corti
+> (https://svn.id.ethz.ch/nagios_plugins/check_diskio/) is subject to a
+> /tmp symlink race attack in its latest version (and versions before as
+> well).
+> 
+> This plugin is used to monitor the I/Os on device on Linux systems. To
+> be able to make a diff between two calls, it keeps the latest readings
+> into a fixed pattern file name: /tmp/check_diskio_status-$user-$device
+> 
+> It does not check for the file being a symlink
 
-CVE20147186=$((bash -c 'true <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF
-<<EOF <<EOF <<EOF <<EOF <<EOF <<EOF <<EOF' 2>/dev/null || echo
-"vulnerable") | grep 'vulnerable' | wc -l)
+Use CVE-2014-8994.
 
-...ones that explicitly try to circumvent it in a way that makes them
-uninteresting from the security perspective:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-CVE20146271=$(env 'x=() { :;}; echo vulnerable' 'BASH_FUNC_x()=() {
-:;}; echo vulnerable' bash -c "echo test" 2>&1 | grep 'vulnerable' |
-wc -l)
-
-...and ones that will fail with Florian's patch:
-
-CVE20147169=$((cd /tmp; rm -f /tmp/echo; env X='() { (a)=>\' bash -c
-"echo echo nonvuln" 2>/dev/null; [[ "$(cat echo 2> /dev/null)" ==
-"nonvuln" ]] && echo "vulnerable" 2> /dev/null) | grep 'vulnerable' |
-wc -l)
-
-There are also some weird / duplicat entries and general confusion
-about which CVE stands for what, e.g.:
-
-CVE2014=$(env X=' () { }; echo hello' bash -c 'date' | grep 'hello' | wc -l)
-echo -n "CVE-2014-//// (exploit 3 on http://shellshocker.net/): "
-
-Really, just install the patch. The reasons for this, and a good test
-case to check if you're covered, are discussed here:
-
-http://lcamtuf.blogspot.com/2014/09/bash-bug-apply-unofficial-patch-now.html
-
-If you want to learn a bit more about what these test cases are doing
-and why it matters, I have an earlier post here:
-
-http://lcamtuf.blogspot.com/2014/09/quick-notes-about-bash-bug-its-impact.html
-
-...and last but not least, the details for the last two bugs are here:
-
-http://lcamtuf.blogspot.com/2014/10/bash-bug-how-we-finally-cracked.html
-
-/mz
+iQEcBAEBAgAGBQJUbY8NAAoJEKllVAevmvmszgQH/imVOlij54rUVoIVU/0Pkly0
+S05eWBaL9eiiPkbUbngSeuLSNITWeEn7sPExLdfEe8XiNzY5TCU4/IaUSc4cpJps
+aXCMqNqliBTfvLlT3L9CZbmknL4rOaDyUIyQcXNuFN1EdfiJDLSGEMc2KlmEegNU
+a/VFLK6c386fJ3yz/o0kKem4OA3SRcDnblccg5b8z0cnfgnWvz7jXaKZgzR+L8/3
+irJN2VZKcZwdkSVL2mKCx4aKW5y57x9MyDzs0kJ5B35TuiAbfY6dQEFEpFicvNuK
+zRocsKcC6mnIFEU4vEDLbVZn7l4WoD4+nvgLs7FoIdGLz6S2VtuSrURueqPGKao=
+=ohA9
+-----END PGP SIGNATURE-----
