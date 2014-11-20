@@ -1,21 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/1
-Message-ID: <CAKcmtDwm9Kt6eHrKX1UY2bqc26VFwpESZq2Ui5TtZxMuTgbhww@mail.gmail.com>
-Date: Thu, 27 Mar 2014 18:37:56 -0700
-From: Chris Steipp <csteipp@...imedia.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/42
+Message-ID: <546E41A7.1070402@fifthhorseman.net>
+Date: Thu, 20 Nov 2014 14:31:51 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: MediaWiki 1.22.5 login csrf
+Subject: Re: Re: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
-Hi, we just patched a login CSRF in MediaWiki today. An attacker could
-login a victim as the attacker. Can we get a cve assigned for this?
+On 11/20/2014 02:23 PM, Hanno Böck wrote:
+> On Thu, 20 Nov 2014 08:52:15 -0800
+> "M.T. Roebuck" <marvint.roebuck@...ox.lv> wrote:
+> 
+>> Maybe my problem is that your proposal seems herculean to me but
+>> can't help to think it's a reminder or sign that we need to think
+>> past the current state of things.
+> 
+> Compared to "starting from scratch" starting such a fuzzing project is
+> not herculean, it's more like grabbing the low hanging fruit.
+> 
+> But arguments alike come up every now and then. Basically you'll hear
+> two things: "We have to mitigate / sandbox" and "please rewrite
+> everything in [insert favorite non-C programming language]".
+> 
+> I don't want to downplay either of these approaches. It's just that you
+> have to be realistic. Nobody will rewrite everything from scratch in
+> rust/go/haskell/whatever any time soon. There are a few interesting
+> projects that try to rewrite key sofware in safer languages (mitls and
+> servo come to mind), but they are few and none of them is in a
+> production state.
+> 
+> Our systems we have today - the ones we use to have this discussion,
+> manage our bank accounts and surf the web - have imperfect software
+> written mostly in unsafe languages. I feel fuzzing can improve the
+> state of things a lot.
 
-Patch:
-https://gerrit.wikimedia.org/r/#/c/121517/1/includes/specials/SpecialChangePassword.php
+I agree with this sentiment.  I also think this is likely to be a
+herculean effort, and hopefully not quite a sisyphean one (the boulder
+should be able to move up the hill a little bit each time).
 
-Release announcement:
-http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-March/000145.html
+I'm really happy that you're pushing on this, Hanno.
 
-Wikimedia bug:
-https://bugzilla.wikimedia.org/show_bug.cgi?id=62497
+even if the only thing that comes out of it is a classification of which
+projects/libraries insist on "trusted input" that would be a very useful
+outcome.
 
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
