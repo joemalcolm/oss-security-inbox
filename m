@@ -1,23 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/15
-Message-ID: <CACYkhxieqKahOoBNSsSQ43x-WJScATie79RFrE1rKXnOp81VXA@mail.gmail.com>
-Date: Wed, 15 Oct 2014 09:55:07 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/36
+Message-ID: <513800080.2059602.1416501500596.JavaMail.zimbra@redhat.com>
+Date: Thu, 20 Nov 2014 11:38:20 -0500 (EST)
+From: Francisco Alonso <falonsoe@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: ejabberd compression allows cirucumvention of encryption despite starttls_required
+Subject: CVE-2014-7817 glibc: command execution in wordexp() with WRDE_NOCMD specified
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-On 14 October 2014 18:21, Hanno Böck <hanno@...eck.de> wrote:
-> E.g. the client will check the server config on the first connection
-> and use that settings in the future.
->
-> So there is a scenario where this leads to unintended unencrypted
-> connections.
+It was discovered that the wordexp() function could ignore the WRDE_NOCMD flag under certain input conditions resulting in the execution 
+of a shell for command substitution when the applicaiton did not request it. 
 
-Ok, I agree - this allows non-broken clients to have an insecure
-configuration, when the expectation is that they wouldn't.
+Bug report:
+https://sourceware.org/bugzilla/show_bug.cgi?id=CVE-2014-7817
 
-Regards,
-  Michael
+Git commit:
+https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=a39208bd7fb76c1b01c127b4c61f9bfd915bfe7c
+
+References:
+https://bugzilla.redhat.com/show_bug.cgi?id=1157689
+https://sourceware.org/ml/libc-alpha/2014-11/msg00519.html
+
+Francisco Alonso / Red Hat Product Security
+PGP: 0xA026440E 0825 020C 7A5A 4F86 9038  B1C8 5562 688F A026 440E
