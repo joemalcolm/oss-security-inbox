@@ -1,126 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/20
-Message-ID: <loom.20140203T214939-590@post.gmane.org>
-Date: Mon, 3 Feb 2014 20:55:35 +0000 (UTC)
-From: mancha <mancha1@...h.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/28
+Message-ID: <546E172C.5080108@treenet.co.nz>
+Date: Fri, 21 Nov 2014 05:30:36 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+Subject: Re: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
-mancha <mancha1@...> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 21/11/2014 4:50 a.m., Hanno Böck wrote:
+> Am Thu, 20 Nov 2014 08:38:38 -0700 schrieb Kurt Seifried:
 > 
-[SNIP]
-> I made a change to the kernel module to minimize the amount of time
-> things are rw. Please use this version (not the one attached in my
-> first post).
+>> The most important part of all: who's going to interpret the
+>> fuzzing results and then co-ordinate with upstreams to make
+>> source code fixes?
 > 
-> New version also uploaded to:
-> http://sf.net/projects/mancha/file/sec/nox32recvmmsg.tar.bz2.
+> Well, the answer to that is: the people who do the fuzzing.
 > 
-> --mancha
+> My main aim is to make more transparent what's already going on.
+> That's not going to change who does the fuzzing and how it gets
+> reported.
 > 
+> There lays deeper a question that I asked myself already: What's
+> an "okay" way of reporting these things? Basically what I usually
+> did is just sending crash samples to upstream devs and add some
+> valgrind/asan output. One could argue that I'm offloading the real
+> work to the upstream devs, however I feel they know their code
+> better than I do (and often I'm just not qualified to create the
+> fix). Until now I feel most upstreams were okay with that.
 
-I made one more change so it works with protected-mode enabled
-procs.
+Speaking as an upstream maintainer...
 
-SourceForge tarball also updated. Check against this hash:
+So long as the report has a full crash trace with symbols and values
+they are usually easy enough for someone upstream to fix or at least
+understand what is the underlying problem to be worked on.
 
-SHA256(nox32recvmmsg.tar.bz2)=
-8c822d55a0a45f0fa994c73921701e2bb035bdaeb169c2355ed8d767414c4f73
+The biggest problems we (upstreams) have with trace reports is often
+submissions are made with just long lists of raw memory address
+references for functions on the stack/heap, critical variable symbols
+and values optimized away by the compiler etc. Traces like that are
+pretty much wasted reports of "it crashes" ... um.
 
-========= nox32recvmmsg.c =========
-#define _GNU_SOURCE
-#include <linux/init.h>
-#include <linux/socket.h>
-#include <linux/module.h>
-#include <linux/kernel.h> 
-#include <linux/errno.h> 
-#include <linux/types.h>
-#include <linux/unistd.h>
-#include <asm/cacheflush.h>  
-#include <asm/page.h>  
-#include <asm/current.h>
-#include <linux/sched.h>
-#include <linux/kallsyms.h>
-#include <linux/syscalls.h>
-#include <asm/string.h>
+- From a security perspective, if you are going to push these traces
+upstream as a vulnerability (or not) then there had better have been
+some triage to see if it actually is one. That analysis will give you
+some more details to add to the report in the way of ideas about what
+should be expected to happen instead of crash. Anything like that
+which can save upstream time is useful.
 
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("mancha <mancha1@...h.com>");
-MODULE_DESCRIPTION("disable x32 recvmmsg()");
+Since they are coming from fuzzing a copy of the exact input which led
+to it is also valuable. There is nothing worse than having to guess at
+what might have led to a crash when the input could literally have
+been anything at all.
 
-unsigned long **syscall_table;
+HTH
+AYJ
 
-#define __NR_x32_recvmmsg 537
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
 
-asmlinkage int (*orig_recvmmsg)(int sockfd, struct mmsghdr *msgvec, unsigned
-int vlen, unsigned int flags, struct timespec *timeout);
-
-static unsigned long **aquire_syscall_table(void)
-{
-  unsigned long int offset = PAGE_OFFSET;
-  unsigned long **sct;
-
-  while (offset < ULLONG_MAX) {
-    sct = (unsigned long **)offset;
-    if (sct[__NR_close] == (unsigned long *) sys_close) 
-      return sct;
-    offset += sizeof(void *);
-  }
-  printk(KERN_ALERT "Unable to get syscall table\n");
-  return NULL;
-}
-
-void set_addr_rw(long unsigned int _addr)
-{
-    unsigned int level;
-    pte_t *pte = lookup_address(_addr, &level);
-    if (pte->pte &~ _PAGE_RW) pte->pte |= _PAGE_RW;
-    write_cr0(read_cr0() & (~ 0x10000));
-}
-
-void set_addr_ro(long unsigned int _addr)
-{
-    unsigned int level;
-    pte_t *pte = lookup_address(_addr, &level);
-    pte->pte = pte->pte &~_PAGE_RW;
-    write_cr0(read_cr0() | 0x10000);
-}
-
-asmlinkage int norecvmmsg(int sockfd, struct mmsghdr *msgvec, unsigned int
-vlen, unsigned int flags, struct timespec *timeout) {
-
-    printk(KERN_ALERT "x32 recvmmsg call intercepted\n");
-    return -1;
-}
-
-static int __init init_recvmmsg(void) {
-
-    if(!(syscall_table = aquire_syscall_table())) {
-      printk(KERN_INFO "Unable to acquire syscall table\n");
-      return -1;
-    }
-    printk(KERN_ALERT "x32 recvmmsg disabled\n");
-    set_addr_rw((unsigned long)syscall_table);
-    orig_recvmmsg = (void*)syscall_table[__NR_x32_recvmmsg];
-    syscall_table[__NR_x32_recvmmsg] = (unsigned long*)norecvmmsg;  
-    set_addr_ro((unsigned long)syscall_table);
-    return 0;
-}
-
-static void __exit exit_recvmmsg(void) {
-
-    set_addr_rw((unsigned long)syscall_table);
-    syscall_table[__NR_x32_recvmmsg] = (unsigned long*)orig_recvmmsg;  
-    set_addr_ro((unsigned long)syscall_table);
-    printk(KERN_ALERT "x32 recvmmsg restored\n");
-}
-
-module_init(init_recvmmsg);
-module_exit(exit_recvmmsg);
-=================================== 
-
-
-
-
-
+iQEcBAEBAgAGBQJUbhcsAAoJELJo5wb/XPRjZgcIAKrX9zOPTyQ47E2afbj+02IB
+B5NFHOjKQ1gJEz/9bVD31h7OBIiOjrjKy5JDGmuKKn+SeST64SxgE89bcpriBCeg
+wbAzZ427D1yHss+K1BbnXi8+qqSxY//iZLGu2zQ/USF2b5spt9TRKt+HiCaWhXRW
+hoWkmv+1ntkCuffjJ1oWrSRiqpbEsL3+dki+kN9/2Nvm99s/i2jRTg9X/jhs25Gz
+sVgpyACJDAboBKxZH8BJbMb7cm1wG/KVfm831qnjOOTlXaUqLJ0Ghii56WeVzMgX
+8gPU1WHVM6kGGkMZ9qQYibYk6x82y+vZNRoxs5o4jJ/x+yf8kmpFM3OnktbINdo=
+=GY/m
+-----END PGP SIGNATURE-----
