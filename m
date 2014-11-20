@@ -1,73 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/18
-Message-ID: <20141002032943.GA27000@openwall.com>
-Date: Thu, 2 Oct 2014 07:29:44 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Chet Ramey <chet.ramey@...e.edu>
-Subject: Re: More parser odities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/45
+Message-ID: <CALx_OUA0B_jkcj8_d_Dgic1iN7BSOJocUOFW45oNbXZ9hWm8gQ@mail.gmail.com>
+Date: Thu, 20 Nov 2014 13:26:11 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 01, 2014 at 07:44:38PM -0700, Michal Zalewski wrote:
-> > Maybe it's just the right opportunity to do that, instead of assigning
-> > yet another CVE to Michal's latest finding?  Oh, I think Michal's
-> > latest already got a CVE too?  Does this once again render the
-> > (previously) exposed parser not CVE-worthy? ;-(
-> 
-> Whoa :-) So to be clear, I felt that it makes sense to ask for CVEs
-> and report these externally because up until that point, we had no
-> conclusive evidence that the original patch is truly inadequate, and
-> that Florian's patch is anything more than a nice-to-have that several
-> people on oss-security are fond of. Tavis' EOL find was troubling, but
-> fixed upstream with a one-liner in bash43-026, not with Florian's
-> patch.
-> 
-> (In fact, Florian's patch wasn't upstreamed when I started fuzzing the
-> parser and hit the bugs.)
+There are many complexities around the general idea - as Kurt
+mentions, sometimes, fixing is a lot harder than bumping into a SEGV;
+other times, the software may not even have a proper maintainer
+anymore. It's doubly tricky if the discoverer doesn't put effort into
+evaluating the security impact and prioritizing the bug. Yet another
+problem is that it's hard to figure out how fuzzing efforts compare to
+each other - if I set up my job poorly, it doesn't matter that I
+fuzzed something for 10 cumulative CPU years, and if you mark the
+package as clean, you may end up misleading potential users.
 
-Sure.  I absolutely didn't imply that you did anything wrong.  You have
-helped a lot!
+But I don't think that these are arguments against trying :-)
 
-I had at least as much opportunity to insist on a different approach
-early on, including to CVE assignments (and I regret I did not; to me,
-those CVEs don't matter much, but clearly they do to a lot of people).
+I think that the world would benefit in several ways from having a
+good, published list of security-critical software that holds up
+during intensive fuzz testing; today, this is a bit of "arcane
+knowledge" that the select few security experts will have, but others
+will have no idea how one parsing library compares to another, etc.
+Few days ago, there was a front-page thread on HN steering people
+toward a new PNG parsing library, lodepng. Plug it into any fuzzer or
+look at the source code and see it yourself...
 
-What I meant is that with hindsight maybe we could have done better, by
-using whichever parser bug as an opportunity to request a CVE ID for the
-parser being exposed instead.  A lot of people primarily look at CVEs,
-and might miss the most important patch when it's not associated with
-any CVE ID.
+It would be equally good to maintain a list of high-risk /
+high-exposure software that probably hasn't gotten enough fuzzing
+cycles - say, Open Office / Libre Office, various document converters,
+things like tcpdump, etc. Perhaps a prioritized list of high-risk
+software is a good starting point.
 
-Maybe you fuzz yet another RCE bug, and we request a CVE ID for the
-parser being exposed then? ;-)
+Network services have gotten a bit less relevant, but I wouldn't put
+them completely out of scope. Fuzzing DHCP, NTP, SMTP, TCP/IP network
+stacks, and browser & server HTTP / SSL implementations, SSH, etc,
+seems like a good thing, and doesn't require a lot of work.
 
-Or maybe the CVE powers that be will find the parser being exposed
-CVE-worthy without yet another PoC, especially given that upstream
-already has a fix issued?  If such a CVE is issued, I'd happily refer
-primarily to it instead of to all the other recent bash CVEs.
+The somewhat harder things to fuzz are physical link protocols (USB,
+eth, etc), firmware, and kernel drivers, so that's probably a topic
+for another time.
 
-> Anyway, I think that the confusion stemmed mostly from fairly
-> inaccurate "vanity" pages, news articles, and "vulnerability checkers"
+/mz
 
-Perhaps, but (in hindsight) we should have expected that and maybe we
-could have worked around it.  Maybe a lesson for next time when a
-combination of important potential "hardening" change and "unimportant"
-individual bug fixes comes up, in any software project.
 
-> At this point, it definitely makes no sense to keep assigning CVEs to
-> additional prefix-requiring problems in the parser at this point,
-
-Right.
-
-> since hopefully everybody got the message to upgrade.
-
-Yeah, I hope no one installing a newer CVE-assigned parser bug upstream
-patch will happen to skip the prefix/suffix upstream patch.  The fact
-that these patches are numbered helps a lot here.  And I hope distros
-got the message, and will include a prefix/suffix patch too (many
-already did).
-
-Yet a CVE ID for the parser previously having been exposed still makes
-sense to me.
-
-Alexander
+On Thu, Nov 20, 2014 at 4:34 AM, Hanno Böck <hanno@...eck.de> wrote:
+> Hi,
+>
+> Following the discussions here I feel this whole fuzzing thing could
+> need a project to coordinate efforts and I will probably start
+> something within the following days.
+>
+> I wanted to lay out my rough plans / brainstorming and welcome any
+> feedback and especially if people have worries about such a project.
+>
+> * The core of the project will be a list of free software projects that
+>   in one way or another parse fileformats (I'll leave fuzzing network
+>   and other input out for now). It should have rough categories (ok =
+>   fuzzed and no unfixed issues in latest release, wip: fuzzed and issues
+>   are being worked on or already fixed in source repo, stale: fuzzed and
+>   issues don't seem to be worked on, unavalable = project with no
+>   developers to contact, wontfix = developers don't feel memory access
+>   issues and crashes need to be fixed / declare their product
+>   unsuitable for untrusted input, unknown = no known fuzzing efforts)
+>   I feel that it's important to make the limitation of this info
+>   transparent (e.g. about to change rapidly, always further /different
+>   fuzzing strategies that might turn up more issues, fuzzing is not a
+>   good indicator for overall security etc.).
+> * A sharing place for stuff that might be useful for fuzzing, I think
+>   especially about patches that disable sanity checks (CRCs etc.) that
+>   make fuzzing harder. And maybe file collections with small example
+>   files for various file formats.
+> * Some introduction tutorials that should give people with no fuzzing
+>   experience a starter. Preferrably so easy that everyone with some
+>   basic linux/unix knowledge can follow them. Explain zzuf, asan, afl.
+> * All kinds of pointers/links to further information.
+>
+> Data and things like file archive should preferrably be public domain
+> / cc0 to make data sharing as easy as possible.
+>
+> I welcome your feedback. I also welcome all reports (preferrably with
+> links to public sources where this is documented - bugtrackers, mailing
+> list archives etc.) of fuzzing. The good ("I fuzzed this for so long
+> and it seems just nothing turned up") and the bad ("I found 10.000
+> unique crashers and reported them all upstream, nobody cares").
+>
+> cu,
+> --
+> Hanno Böck
+> http://hboeck.de/
+>
+> mail/jabber: hanno@...eck.de
+> GPG: BBB51E42
