@@ -1,66 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/24/1
-Message-ID: <53F9529F.4070808@kenwilliams.us>
-Date: Sat, 23 Aug 2014 21:49:03 -0500
-From: ken <ken@...williams.us>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/39
+Message-ID: <20141120191722.GA25167@zoho.com>
+Date: Thu, 20 Nov 2014 19:17:22 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: FYI, change to Secunia vuln db EULA
+Cc: falonsoe@...hat.com
+Subject: Re: CVE-2014-7817 glibc: command execution in wordexp() with WRDE_NOCMD specified
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Nov 20, 2014 at 11:38:20AM -0500, Francisco Alonso wrote:
+> Hello,
+> 
+> It was discovered that the wordexp() function could ignore the WRDE_NOCMD flag under certain input conditions resulting in the execution 
+> of a shell for command substitution when the applicaiton did not request it. 
+> 
+> Bug report:
+> https://sourceware.org/bugzilla/show_bug.cgi?id=CVE-2014-7817
+> 
+> Git commit:
+> https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=a39208bd7fb76c1b01c127b4c61f9bfd915bfe7c
+> 
+> References:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1157689
+> https://sourceware.org/ml/libc-alpha/2014-11/msg00519.html
 
-I feel a need to clarify my previous email ...
+Francisco, thanks for the post.
 
-Secunia obviously has an extremely useful and comprehensive
-vulnerability database.  All of their vulnerability mgmt, patch mgmt,
-and scanning products are excellent too.  The IT industry needs high
-quality vuln and patch mgmt solutions like this, and Secunia needs
-revenue so they can maintain and improve their products/solutions,
-conduct research, build new products, make a profit, etc.
+After a lightning review of one of my systems, I found the following use
+glibc's wordexp: adobe's flash plugin, ardour2, mailx, enca. I've not
+looked into which input is under a would-be-attacker's control.
 
-There are some potentially adverse consequences to their decision to
-close their vulnerability database:
+--mancha
 
-1) All direct links to Secunia vuln db entries are effectively dead
-ends now ... unless the link clicker is a student, press, private
-person, hobby/non-commercial security researcher and gets "community"
-(free) access, OR is a non-profit organization, private company, or
-public authority/entity who has paid the annual fee[1] for the VIM
-product.  I imagine most people reading this email fall into the
-latter group, do not have access, and will need to pay for access.
-
-2) Vendors can apparently no longer review the Secunia vuln db so they
-can submit updates and corrections (unless the vendor has purchased
-the VIM product?).  Will this result in Secunia vuln db info becoming
-less accurate and up-to-date?
-
-3) If you maintain a public or private vulnerability database, or
-vulnerability website, you will no longer be able to effectively
-reference or cross-reference the Secunia vuln db, unless you pay for
-access.  How will this impact OSVDB, NVD, CVE, IAVM, PacketStorm, etc?
-
-Depending on your interests in vulnerabilities and role(s) in the
-security industry, you may see other consequences.
-
-
-Bottom line for me is that I had been using the public, freely
-available Secunia vuln info every day for over 10 years, and I had
-been regularly submitting vuln info/updates/corrections.  I'm
-currently not using it at all (in compliance with their EULA).  If
-the VIM cost fits into my budget, then I'll definitely purchase it.
-
-Maybe this is a necessary and/or business-savvy decision for Secunia.
-I don't know, and it's not my place to guess or judge.  I simply
-consider it unfortunate that a once publicly accessible and invaluable
-vuln db is now closed to many/most of us.
-
-
-Regards,
-Ken
-
-The opinions and statements in this email are my own and do not
-necessarily reflect the opinions or policies of my employer.
-
-
-[1] $28,400/year as of Feb 2013.  May not fit into budget for some
-non-profits, govt agencies, smaller businesses.
-Reference: http://goo.gl/N2DikW
+Content of type "application/pgp-signature" skipped
