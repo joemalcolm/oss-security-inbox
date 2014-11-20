@@ -1,20 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/8
-Message-ID: <9d86537e-0595-42fa-a760-82fec368d3af@email.android.com>
-Date: Thu, 20 Mar 2014 13:25:10 +0000
-From: Simon Ward <simon+oss-sec@...ah.co.uk>
-To: oss-security@...ts.openwall.com,Georgi Guninski <guninski@...inski.com>
-Subject: Re: Re: FD mailing list died. Time for new one (or something better!)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/25
+Message-ID: <20141120165021.5dfdcde1@pc>
+Date: Thu, 20 Nov 2014 16:50:21 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
-Georgi Guninski <guninski@...inski.com> wrote:
->So far several alternatives are:
->
->1. Public service mailing list (easy)
->2. Standard mailing list (legal issues)
->3. coderman's solution
->4. forum or Question&Answers site (might support email)
+Am Thu, 20 Nov 2014 08:38:38 -0700
+schrieb Kurt Seifried <kseifried@...hat.com>:
 
-Every so often on full-disclosure someone would bring up the topic of moving to Usenet. I'm surprised no one has! (Or I just haven't seen it.)
+> The most important part of all: who's going to interpret the fuzzing
+> results and then co-ordinate with upstreams to make source code fixes?
 
-Simon
+Well, the answer to that is: the people who do the fuzzing.
+
+My main aim is to make more transparent what's already going on. That's
+not going to change who does the fuzzing and how it gets reported.
+
+There lays deeper a question that I asked myself already: What's an
+"okay" way of reporting these things?
+Basically what I usually did is just sending crash samples to upstream
+devs and add some valgrind/asan output. One could argue that I'm
+offloading the real work to the upstream devs, however I feel they know
+their code better than I do (and often I'm just not qualified to create
+the fix). Until now I feel most upstreams were okay with that.
+
+
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
