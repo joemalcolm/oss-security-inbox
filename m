@@ -1,36 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/4
-Message-Id: <201407230645.s6N6jecX019944@linus.mitre.org>
-Date: Wed, 23 Jul 2014 02:45:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: krahmer@...e.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: KAuth authentication bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/16
+Message-ID: <20141120133431.04cf30e6@pc>
+Date: Thu, 20 Nov 2014 13:34:31 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
->> https://bugzilla.novell.com/show_bug.cgi?id=864716
+Following the discussions here I feel this whole fuzzing thing could
+need a project to coordinate efforts and I will probably start
+something within the following days.
 
-> Yes indeed. Its the KDE KAuth code using the wrong kind of subject
-> for authentication.
+I wanted to lay out my rough plans / brainstorming and welcome any
+feedback and especially if people have worries about such a project.
 
-Use CVE-2014-5033.
+* The core of the project will be a list of free software projects that
+  in one way or another parse fileformats (I'll leave fuzzing network
+  and other input out for now). It should have rough categories (ok =
+  fuzzed and no unfixed issues in latest release, wip: fuzzed and issues
+  are being worked on or already fixed in source repo, stale: fuzzed and
+  issues don't seem to be worked on, unavalable = project with no
+  developers to contact, wontfix = developers don't feel memory access
+  issues and crashes need to be fixed / declare their product
+  unsuitable for untrusted input, unknown = no known fuzzing efforts)
+  I feel that it's important to make the limitation of this info
+  transparent (e.g. about to change rapidly, always further /different
+  fuzzing strategies that might turn up more issues, fuzzing is not a
+  good indicator for overall security etc.).
+* A sharing place for stuff that might be useful for fuzzing, I think
+  especially about patches that disable sanity checks (CRCs etc.) that
+  make fuzzing harder. And maybe file collections with small example
+  files for various file formats.
+* Some introduction tutorials that should give people with no fuzzing
+  experience a starter. Preferrably so easy that everyone with some
+  basic linux/unix knowledge can follow them. Explain zzuf, asan, afl.
+* All kinds of pointers/links to further information.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Data and things like file archive should preferrably be public domain
+/ cc0 to make data sharing as easy as possible.
 
-iQEcBAEBAgAGBQJTz1lXAAoJEKllVAevmvmsw6gH/0X45jv78r/o1z2vkF/fepoP
-zIxaGdT4/55xhaK5Lsm4GYpBpJJ8FvJZk6C3/WKSJEiAVw15qSnx2c3GYf7aMdtF
-eKdBsu3IWbq0sTnDVJMsY7442RGANfFBSl89TfArhyk5Nk04RbNs1lK3FgfZbY4a
-g7iWHKm8fD403QushPk0JETlW3hThdz02t4SBOh+bz+PBKN9e/vjYW9j9F6nbbSq
-+PeXyapiUrWWpuLgNSM31lUm2zjd7gPhYmYybviNrz81b3uEwvbMYdLBz4sNecwL
-0lplt6D2l6XQ5288OVkoxzjD27Egls7pMpuCMY4dcJM5idsxv6g9wqJqEqCCeZ8=
-=VVsd
------END PGP SIGNATURE-----
+I welcome your feedback. I also welcome all reports (preferrably with
+links to public sources where this is documented - bugtrackers, mailing
+list archives etc.) of fuzzing. The good ("I fuzzed this for so long
+and it seems just nothing turned up") and the bad ("I found 10.000
+unique crashers and reported them all upstream, nobody cares").
+
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
