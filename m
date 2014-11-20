@@ -1,28 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/6
-Message-ID: <20140512113228.GA11121@openwall.com>
-Date: Mon, 12 May 2014 15:32:28 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Savio Bot <54v330@...il.com>
-Cc: Matthew Daley <mattd@...fuzz.com>, fulldisclosure@...lists.org, oss-security@...ts.openwall.com
-Subject: Re: [FD] CVE-2014-0196: Linux kernel pty layer race condition memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/17
+Message-ID: <546DE1E3.3060200@mccme.ru>
+Date: Thu, 20 Nov 2014 15:43:15 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 12, 2014 at 04:03:10PM +0530, Savio Bot wrote:
-> So is this bug also present in 2.6?
+On 2014-11-16 17:10, Hanno Böck wrote:
+> less:
+> Out of bounds read, upstream doesn't answer and doesn't have a public
+> bug tracker. This wasn't really found by fuzzing but by running less on
+> a likely malwared gif, I reduced it to a smaller testcase:
+> http://int21.de/cve/less-oob
 
-Yes, 2.6.31-rc3 and newer:
+less crashed or imagemagick called from lesspipe?
 
-http://www.openwall.com/lists/oss-security/2014/05/05/6
-
-Luckily, apparently the bug was not backported to RHEL5:
-
-https://access.redhat.com/security/cve/CVE-2014-0196
-
-"This issue does not affect the versions of the kernel package as
-shipped with Red Hat Enterprise Linux 5.
-
-Future kernel updates for Red Hat Enterprise Linux 6 and Red Hat
-Enterprise MRG 2 may address this issue."
-
-Alexander
+-- 
+Alexander Cherepanov
