@@ -1,41 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/1
-Message-ID: <54A36AAE.5080702@redhat.com>
-Date: Tue, 30 Dec 2014 20:17:02 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: CVE request for emacs possibly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/37
+Message-ID: <CANae7MioQ6mPCwb_ggXVo7SnVoOyufyHqyaQBqzfOr+D5UkDxw@mail.gmail.com>
+Date: Thu, 20 Nov 2014 11:30:05 -0500
+From: Peter Wolanin <pwolanin@...il.com>
+To: Security Team <security@...pal.org>
+Cc: carnil@...ian.org, oss-security@...ts.openwall.com, gwolf@...lf.org,  team@...urity.debian.org, cve-assign@...re.org
+Subject: Re: [security] Pending CVE assignments for SA-CORE-2014-006?
 Content-Type: text/plain; charset=utf-8
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774090
+re: https://www.drupal.org/node/2378367
 
-From: Vincent Lefevre <vincent@...c17.net>
-To: 774090@...s.debian.org
-Subject: Re: emacs24: a left-click in Emacs sometimes modifies the
-PRIMARY selection
-Date: Mon, 29 Dec 2014 18:58:55 +0100
-Control: tags -1 security
+The phpass module for Drupal 6 contains the backport from Drupal 7 of
+the code related to the DoS, CVE-2014-9016
 
-On 2014-12-28 16:29:12 +0100, Vincent Lefevre wrote:
-> Note: This bug occurs very often and is very annoying, as one needs
-> to reselect what was selected (sometimes hardly possible). Moreover
-> the wrongly pasted text is similar to the correct text[*], meaning
-> that if one doesn't pay attention, one gets a file with permanently
-> incorrect data!
+Since it's identical code, should I use the same CVE number, or since
+it's a contributed project, there will be a distinct one issued?
 
-Grrr... That's also a security problem. Due to this bug, a paste with
-a middle click in a web browser can end up in pasting private data!
-And Javascript can provide the pasted text to the web site immediately
-(Facebook does that), before the user can notice the problem.
+Thanks,
 
--- 
-Vincent Lefèvre <vincent@...c17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
+Peter Wolanin
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+On Thu, Nov 20, 2014 at 9:48 AM,  <cve-assign@...re.org> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> Session hijacking (Drupal 6 and 7)
+>
+> Use CVE-2014-9015.
+>
+>
+>> Denial of service (Drupal 7 only)
+>
+> Use CVE-2014-9016.
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJUbf58AAoJEKllVAevmvms2qcIAItiBrXYCr3qbvFieEgqWdZT
+> UX/Z+6TcS65VB2JrLKXDgMLArWIXRQWVT/1dORotEabeEhtgGbaBljyH4KsHDp8W
+> cwxcbmB6hgUpbWax4Kgo5a0JMBshWYUKU8cxQVmLWuVjBzhgcveNfcBYKd66hLP4
+> iLroECbXKmn27/LCrlumwskxIOmjBLkecCH4cu3UXZdK46GpuxMxbSWlSSdBC0XF
+> E3Svx0GxpwZIRDAA8bUXgwnMUgJkeiER+vbmD7l0Ool2/961SIhHWDfbfFClW4Xv
+> lFW0qqRJtT6JXcoi9NSZiMRRDawVwXHqmUqTA9Es3OBULJEzh6N2gehNt8fSPqg=
+> =olvS
+> -----END PGP SIGNATURE-----
+> --
+> [ Security | https://lists.drupal.org/mailman/listinfo/security ]
+> [Security team mailing list management and scheduling is documented here | https://security.drupal.org/handling-list-emails]
