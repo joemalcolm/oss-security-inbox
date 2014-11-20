@@ -1,29 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/12/2
-Message-ID: <53993350.3030309@redhat.com>
-Date: Thu, 12 Jun 2014 14:57:52 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/8
+Message-ID: <CAO-2N4+pKL5XC3uVZPjUf82uZuSUgonj6A-fjWL5XcYGSVMV-A@mail.gmail.com>
+Date: Thu, 20 Nov 2014 08:49:23 +0000
+From: Vitor Ventura <ventura.vitor@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: PHP heap-based buffer overflow in DNS TXT record parsing
+Subject: Re: Re: Linux user namespaces can bypass group-based restrictions
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+I was wondering if this might pose a problem to android's application file
+sandboxing. If an application can run a native lib that could exploits this
+it might have access to other aplication files.
 
-Stefan Esser pointed out that the following commit fixes a heap-based 
-buffer overflow in DNS TXT record parsing:
+A 0h24 qui, 20 de Nov de 2014, Andy Lutomirski <luto@...capital.net>
+escreveu:
 
-https://github.com/php/php-src/commit/b34d7849ed90ced9345f8ea1c59bc8d101c18468
+> On 11/17/2014 10:43 AM, Andy Lutomirski wrote:
+> > This is a heads-up, as there is no fix right now.
+> >
+> > On Linux, if you can unshare your user namespace (which is the case on
+> > many distributions), then you can map your fsuid and fsgid into the
+> > new namespace and, inside that namespace, drop all of your other
+> > groups.
+> >
+> > This may allow you to access files protected by POSIX ACLs as "other",
+> > even if the ACL should have prohibited it based on one of your
+> > supplementary group IDs.
+> >
+> > This does not appear to allow you to violate negative sudoers
+> > group entries and the like, since sudo(8) would be confined to the
+> > user namespace as well and will therefore not gain privilege.
+> >
+> > To those who care about credit: this was discovered by some
+> > combination of me, Theodore Ts'o, Eric Biederman, Alan Cox, and Casey
+> > Schaufler.
+> >
+> > See here for some more discussion:
+> > http://thread.gmane.org/gmane.linux.man/7385/
+> >
+> > Disabling CONFIG_USER_NS works around this issue.
+>
+> Does this need a CVE?  Fedora and Ubuntu are likely to be affected in
+> their default configurations.  I don't know about the other distributions.
+>
+> --Andy
+>
+> >
+> > --Andy
+> >
+>
+>
 
-A malicious server or man-in-the-middle attacker could possibly use this 
-flaw to execute arbitrary code as the PHP interpreter if a PHP 
-application uses dns_get_record() to perform a DNS query.
-
-Can a CVE please be assigned if one has not been already?
-
-(Red Hat bug with no further details: 
-https://bugzilla.redhat.com/show_bug.cgi?id=1108447)
-
-Cheers,
-
---
-Murray McAllister / Red Hat Product Security
