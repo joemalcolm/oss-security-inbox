@@ -1,64 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/4
-Message-ID: <20140605040929.GA10051@kroah.com>
-Date: Wed, 4 Jun 2014 21:09:29 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/41
+Message-ID: <20141120202309.59390173@pc>
+Date: Thu, 20 Nov 2014 20:23:09 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, VMware Security Response Center <security@...are.com>, Monty Ijzerman <mijzerman@...are.com>
-Subject: Re: Request for linux-distros subscription
+Subject: Re: Re: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 04, 2014 at 12:33:13PM -0700, Ramon de C Valle wrote:
-> Hi Alexander,
-> 
-> > On Tue, Jun 03, 2014 at 01:16:47PM -0700, Ramon de C Valle wrote:
-> > > I can attest that Monty is my colleague and the Manager of VMware Security
-> > > Response Center. As a former colleague of you (Kurt) and also former
-> > > linux-distros subscriber, I would like to ask for your consideration for
-> > > subscribing Monty (or myself) to linux-distros on behalf of VMware.
-> > > Although ESXi isn't a Linux distribution, it implements Linux-compatible
-> > > system calls and provides a GNU/Linux -like ecosystem that allows many
-> > > applications that are compiled on/for Linux operating systems to run
-> > > seamlessly. This ecosystem includes OSS that should be supported in timely
-> > > fashion pretty much like like any other Linux distribution on the list. It
-> > > also implements a Linux kernel module interface and uses many Linux device
-> > > drivers and kernel modules that also should be supported. In addition,
-> > > ESXi is the base layer that many of the Linux distributions on the list
-> > > rely upon and run atop of in many datacenters around the world.
-> > 
-> > Thank you, Ramon.  This is pretty good rationale, but I feel that
-> > getting VMware onto linux-distros for the reasons given above would be a
-> > (possibly desirable) change in who the list is for.  So far, it's been
-> > for Linux distros, and I deliberately chose the linux-distros name for
-> > it.  Now a non-Linux-distro wants to be specifically on linux-distros
-> > (not just on distros), and be exposed to Linux-specific vulnerability
-> > details (albeit for good reasons).  I'd appreciate comments by others
-> > active in this community.
-> I'm afraid I can't comment on Greg's comments due to my lack of legal
-> understanding. However, in addition to the reasons explained above and
-> also Alan's comments (which, IMO, also add to our reasons), I'd also
-> appreciate comments by others active in this community and would be
-> happy to answer any questions anyone might have.
+On Thu, 20 Nov 2014 08:52:15 -0800
+"M.T. Roebuck" <marvint.roebuck@...ox.lv> wrote:
 
-Ok, let's keep this on a purely community basis, no legal issues
-involved (to quell the tide of private emails about this as well.)
+> Maybe my problem is that your proposal seems herculean to me but
+> can't help to think it's a reminder or sign that we need to think
+> past the current state of things.
 
-Your company takes the Linux kernel drivers (a large majority of the
-Linux kernel source tree) and builds a product around it, while refusing
-to contribute back to those drivers.  What you are doing has been
-explicitly stated as something you should not be doing by a number of
-community members.  Somehow you feel that your tiny "core" of a custom
-kernel is more important than the larger body of community work you are
-relying on in order for that core to work properly.
+Compared to "starting from scratch" starting such a fuzzing project is
+not herculean, it's more like grabbing the low hanging fruit.
 
-Because of this reliance on that large body of code, you are now asking
-to be notified ahead of time about vulnerabilities in that code base by
-the same community members you are ignoring in the first place.
+But arguments alike come up every now and then. Basically you'll hear
+two things: "We have to mitigate / sandbox" and "please rewrite
+everything in [insert favorite non-C programming language]".
 
-Does that seem like a fair thing to be asking for?
+I don't want to downplay either of these approaches. It's just that you
+have to be realistic. Nobody will rewrite everything from scratch in
+rust/go/haskell/whatever any time soon. There are a few interesting
+projects that try to rewrite key sofware in safer languages (mitls and
+servo come to mind), but they are few and none of them is in a
+production state.
 
-To me it does not, but feel free to persuade me otherwise.
+Our systems we have today - the ones we use to have this discussion,
+manage our bank accounts and surf the web - have imperfect software
+written mostly in unsafe languages. I feel fuzzing can improve the
+state of things a lot.
 
-thanks,
 
-greg k-h
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
