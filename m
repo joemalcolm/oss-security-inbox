@@ -1,47 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/27/5
-Message-ID: <1395935336.3723.23.camel@lappy>
-Date: Fri, 28 Mar 2014 01:48:56 +1000
-From: Grant Murphy <gmurphy@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-008]  Routers can be cross plugged by other tenants (CVE-2014-0056)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/46
+Message-ID: <371E240E6FC1D44DA5E51EE9DCDCB7840105C6A5BF@NA-MBX-01.mgc.mentorg.com>
+Date: Thu, 20 Nov 2014 21:35:02 +0000
+From: "Mehaffey, John" <John_Mehaffey@...tor.com>
+To: mancha <mancha1@...o.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "falonsoe@...hat.com" <falonsoe@...hat.com>
+Subject: RE: CVE-2014-7817 glibc: command execution in wordexp() with WRDE_NOCMD specified
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-008
-CVE: CVE-2014-0056
-Date: March 27, 2014
-Title: Routers can be cross plugged by other tenants
-Reporter: Aaron Rosen (VMWare)
-Products: Neutron
-Affects: 2012.2 versions up to 2013.2.2
+> From: mancha [mancha1@...o.com]
+> Sent: Thursday, November 20, 2014 11:17 AM
+> To: oss-security@...ts.openwall.com
+> Cc: falonsoe@...hat.com
+> Subject: Re: [oss-security] CVE-2014-7817 glibc: command execution in wordexp() with WRDE_NOCMD specified
+> 
+> On Thu, Nov 20, 2014 at 11:38:20AM -0500, Francisco Alonso wrote:
+> > Hello,
+> >
+> > It was discovered that the wordexp() function could ignore the WRDE_NOCMD flag under certain input conditions resulting in the execution
+> > of a shell for command substitution when the applicaiton did not request it.
+> >
+> > Bug report:
+> > https://sourceware.org/bugzilla/show_bug.cgi?id=CVE-2014-7817
+> >
+> > Git commit:
+> > https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=a39208bd7fb76c1b01c127b4c61f9bfd915bfe7c
+> >
+> > References:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=1157689
+> > https://sourceware.org/ml/libc-alpha/2014-11/msg00519.html
+> 
+> Francisco, thanks for the post.
+> 
+> After a lightning review of one of my systems, I found the following use
+> glibc's wordexp: adobe's flash plugin, ardour2, mailx, enca. I've not
+> looked into which input is under a would-be-attacker's control.
+> 
+> --mancha
 
-Description:
-Aaron Rosen from VMWare reported a vulnerability where Neutron fails to
-perform proper authorization checks when creating ports. By choosing a
-device id of a router from a different tenant when creating a port, an
-authenticated user can access the network of other tenants. This affects
-deployments of Neutron using plugins relying on the l3-agent.
+alsa-lib is also affected.
 
-Icehouse (development branch) fix: 
-https://review.openstack.org/83391
-
-
-Havana fix: 
-https://review.openstack.org/83393
-
-
-Notes: 
-One should perform and audit of the ports that are already attached to
-routers after applying this patch and remove ports that a tenant may
-have cross plugged.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0056
-https://bugs.launchpad.net/bugs/1243327
-
-
--- 
-Grant Murphy
-OpenStack Vulnerability Management Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (231 bytes)
+-mehaf
