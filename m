@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/5
-Message-ID: <20140708142342.GA10522@openwall.com>
-Date: Tue, 8 Jul 2014 18:23:42 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/1
+Message-Id: <20141121002225.5A1DB52E0ED@smtpvbsrv1.mitre.org>
+Date: Thu, 20 Nov 2014 19:22:25 -0500 (EST)
+From: cve-assign@...re.org
+To: pwolanin@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...pal.org, gwolf@...lf.org, team@...urity.debian.org, carnil@...ian.org
+Subject: Re: [security] Pending CVE assignments for SA-CORE-2014-006?
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 05, 2014 at 10:25:47PM +0400, Solar Designer wrote:
-> Here are some distro vendor status pages on this bug:
-> 
-> "x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX (CVE-2014-4699)"
-> https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1337339
-> 
-> Ubuntu has just sent out 7 update announcements (for different of their
-> supported distros/kernels), USN-2266-1 through USN-2272-1.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-and USN-2274-1
+> Since it's identical code, should I use the same CVE number, or since
+> it's a contributed project, there will be a distinct one issued?
 
-> "ptrace,x86: force IRET path after a ptrace_stop()"
-> http://kernel.opensuse.org/cgit/kernel/commit/?h=openSUSE-13.1&id=d1f26676dad578a65c94782f0c2bd00b7aa68f1b
-> 
-> "CVE-2014-4699 Kernel: x86_64,ptrace: Enforce RIP <= TASK_SIZE_MAX"
-> https://bugzilla.redhat.com/show_bug.cgi?id=1115927
+The former. In other words, the CVE-2014-9016 ID originally assigned
+for the second issue in SA-CORE-2014-006 should also be used for
+SA-CONTRIB-2014-113 (i.e., the https://www.drupal.org/node/2378367
+report).
 
-Some more:
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-"FS#41115 - [linux] [linux-lts] CVE-2014-4699 ptrace vulnerability"
-https://bugs.archlinux.org/task/41115?project=1
-
-"CVE-2014-4699"
-https://security-tracker.debian.org/tracker/CVE-2014-4699
-
-"KernelCare update for local privilege escalation CVE-2014-4699"
-http://www.cloudlinux.com/blog/clnews/kernelcare-update-for-local-privilege-escalation-cve20144699.php
-
-"CentOS 6, RHEL 6, CL 6 & OpenVZ can now be patched against
-CVE-2014-4699. The patched kernels are yet to be available from the
-vendors. Yet, due to the nature of the issue, we wanted to release the
-patch as soon as possible"
-
-Just tracking how quickly distros patch a critical issue for which
-there's no published exploit yet.
-
-Alexander
+iQEcBAEBAgAGBQJUboU1AAoJEKllVAevmvms/DAIAKE/ID/3JcqO6Ks2Q0tjXV8G
+PtWg/ZiiCsaPejCkx1GmTd+2mxOezYWtwoxzSfYS29XMvj4RbdHUNWXrkihzY1EA
+BgFC2Uc9reqF+BqlQIQng52lJGQBPf6VV/mejtBfYHv+WOFogQPGqPFgZLTGxLvf
+Yd2Am8yiArTOoZNJxmkDju2L4Z7EWtGdMh3md4jgKB4A1eFjgmIl7be0vktAC1QI
+f9pg1lqMlIYrlgNlIKap8kf0F45wpLJxru7DNJgpNDoDHtFkcFa8i3/iVwjlzq26
++PyQe1iF3IxCtlxZ6fFF6ObnBxrrv2iKjcebyVfYqdTK6Sbr959tXeCruNAUW7k=
+=CbgI
+-----END PGP SIGNATURE-----
