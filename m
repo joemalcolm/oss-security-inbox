@@ -1,24 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/13/1
-Message-ID: <loom.20141013T051234-220@post.gmane.org>
-Date: Mon, 13 Oct 2014 03:16:40 +0000 (UTC)
-From: Martin Pool <mbp@...rcefrog.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/4
+Message-ID: <546E942F.6000903@mccme.ru>
+Date: Fri, 21 Nov 2014 04:23:59 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE Requests] rsync and librsync collisions
+Subject: Re: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2014-11-20 19:54, Gynvael Coldwind wrote:
+> I would argue that "is also valuable" is underplaying it a little ;)
+> IMO having the input (and information on how was it loaded in some cases)
 
-I'm the librsync (not rsync) maintainer. I can confirm this is a real bug, 
-and I would like a CVE assigned.
+Yes, sometimes a crash is only happens under valgrind or with specific 
+ulimit etc.
 
-I appreciate Mik reporting this.
+> If it came from a mutation-based fuzzer, the original (not-mutated) sample
+> can be useful too.
 
-Since it's now been discussed in public I don't see any point treating this 
-as embargoed.
+You mean the closest non-crashing parent (in case there is a chain of 
+samples as in AFL)?
 
-I'm working on his patch adding BLAKE2 (eg making it pass tests, having an 
-option for back-compatibility) so that it can be released. 
+And while we are at it, would you mind describing your experience in 
+case of ffmpeg. Your blogpost -- http://gynvael.coldwind.pl/?id=524 -- 
+gives only high level review of the work. The fuzzer and specific 
+methods of fuzzing seems to be proprietary. That's fine. But perhaps you 
+can describe other sides of the work:
+- how did you deduplicate crashes (full stacktrace, some frames only or 
+some other way);
+- how did you decide which issues are security-sensitive and which are not;
+- how did you requested CVEs (for which issues, which info was required);
+- (if you know) how security fixes were released by ffmpeg.
+This kind of questions.
 
--m
+Given the sheer number of findings you probably did everything 
+automatically?
 
+-- 
+Alexander Cherepanov
