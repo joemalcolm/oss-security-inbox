@@ -1,39 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/5
-Message-Id: <20140925013647.858A2C5082A@smtptsrv1.mitre.org>
-Date: Wed, 24 Sep 2014 21:36:47 -0400 (EDT)
-From: cve-assign@...re.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/5
+Message-ID: <546EB423.3080605@redhat.com>
+Date: Fri, 21 Nov 2014 14:40:19 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE-2014-6271: remote code execution through bash
+Subject: Re: CVE request: heap buffer overflow in PCRE
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 11/21/2014 01:43 AM, Vasyl Kaigorodov wrote:
+> Hello,
+>
+> Heap buffer overflow issue was reported [1] in PCRE when processing a
+> specially crafted regular expression.
+>
+> Upstream patch for this:
+> http://www.exim.org/viewvc/pcre2?view=rev&revision=154
+> The next upstream release that will contain the above fix is likely to
+> be around Feb/Mar next year (2015).
+>
+> Additional references:
+> [1]: http://bugs.exim.org/show_bug.cgi?id=1546
+> [2]: https://bugzilla.redhat.com/show_bug.cgi?id=1166147
+>
+> Can a CVE be assigned to this please?
+>
+> Thanks.
+>
 
-MITRE is currently using CVE-2014-7169 to track the report of the
-incomplete patch, i.e., incorrect function parsing that's present in
-builds that are up-to-date with the
-http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-025 changes. We
-realize that other people may be releasing further information about
-the technical details and implications later. CVE-2014-7169 expresses
-the affected upstream versions as "GNU Bash through 4.3 bash43-025" --
-in general, this would include distribution packages released earlier
-today (2014-09-24).
+Morning,
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+If it was not already seen, http://bugs.exim.org/show_bug.cgi?id=1546#c8 
+has "If you can, please reference CVE-2014-8964 as a CVE for this 
+potential security
+vulnerability."
 
-iQEcBAEBAgAGBQJUI3DaAAoJEKllVAevmvms+/kH/32ZGjC+BSqKoz6ZBUCMLnQ2
-+Li91/GvD0Rs8bqKPDsz30spiJR57ZluKMrlxJrlIffiHqAFiYkQ3+JXmnK/HAnA
-OtgToNtZ+1BV2jPrjXhuy2h+E5paTXMhM0T12xaUo89vtE7oer4Pld4JDqreXSSk
-1Nfu5AaGcvbBmwaNRn1qw+nARw0CFPmMRa169jQAesAAcyNx8V7IPgFpPj4K4S8c
-0zKXVdhIZxXvPcdZ5QzXKhcluOyOl1dJsjXR1qXT03QJsvhRighqb/3dZy+4mLyl
-JWhDfs7l8XXGCzbF8eSg2CNBpTGy1d/32F7YqaKj53xWFWyktHtbk4nJ5hlPlKU=
-=E9tp
------END PGP SIGNATURE-----
+I do not know who assigned it.
+
+Cheers,
+
+--
+Murray McAllister / Red Hat Product Security
