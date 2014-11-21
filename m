@@ -1,81 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/22/4
-Message-ID: <CACYkhxj=X2ruNshELiTHS_paRfn2q40cBZkBUybscWhZbQDGvQ@mail.gmail.com>
-Date: Sat, 22 Mar 2014 21:28:11 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/15
+Message-ID: <546F4E34.80806@mccme.ru>
+Date: Fri, 21 Nov 2014 17:37:40 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: claws-mail vcalendar plugin stores user/password in cleartext
+Subject: Re: cve request: libbfd?
 Content-Type: text/plain; charset=utf-8
 
-Ok, I'm going to disagree with each of your points individually:
+On 21.11.2014 16:15, Vasyl Kaigorodov wrote:
+> Has anyone from MITRE had a chance to look into it yet?
 
-On 22 March 2014 15:46, <cve-assign@...re.org> wrote:
+They were assigned in other threads, see below.
 
-> Enabling CURLOPT_SSL_VERIFYHOST but not CURLOPT_SSL_VERIFYPEER has
-> valid but perhaps very unusual use cases. It might be appropriate for
-> a product that has these expectations for a user:
->
->   -- An SSL connection is not used for anything important.
->
+> On Tue, 11 Nov 2014, Vasyl Kaigorodov wrote:
+>> >Directory traversal vulnerability allowing random files deleteion/creation
+>> >Upstream tracker:https://sourceware.org/bugzilla/show_bug.cgi?id=17552
+>> >Upstream patch:https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=dd9b91de2149ee81d47f708e7b0bbf57da10ad42
 
-  -- The user needs SSL anyway (e.g., the other endpoint can only
->      communicate over SSL, or the user has a requirement that
->      cleartext cannot be sent directly).
+There were two variants of this vulnerability -- file creation with ar 
+and file deletion with strip/objcopy. Both are fixed with the commit you 
+linked to above.
 
+MITRE assigned CVE-2014-8737 to it here:
+http://www.openwall.com/lists/oss-security/2014/11/13/1
 
-If I enable SSL/TLS support in software, I expect a secure connection.
-Doing this by
-default (or worse - without an option to enable proper SSL/TLS) is a
-vulnerability. If it's
-deliberately that way it's a backdoor.
+>> >Out-of-bounds memory write while processing a crafted "ar" archive
+>> >Upstream tracker:https://sourceware.org/bugzilla/show_bug.cgi?id=17533
+>> >Upstream patch:https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=bb0d867169d7e9743d229804106a8fbcab7f3b3f
 
-  -- The user is typically in network environments in which an HTTPS
->      proxy exists that is arguably legitimate but outside of the
->      user's control. For example, these may be typical enterprise
->      environments in which the HTTPS proxy has a certificate resigner.
->      From an intranet user's perspective, arbitrary external web sites
->      seem to have certificates that are issued to one host, and are
->      signed by the enterprise CA.
->
->   -- The user is freely allowed access to these intranets but has no
->      way to bypass their HTTPS proxies.
->
->   -- The user travels to many such network environments and does not
->      have the time to configure his laptop to recognize all of these
->      enterprise CAs as each one is encountered.
->
+MITRE assigned CVE-2014-8738 to it here:
+http://www.openwall.com/lists/oss-security/2014/11/13/2
 
-So you don't want to trust the enterprise CA, so instead you just trust
-anything at
-all?
-
-(For example, a salesman visits many companies to do online demos, and
-> uses the product to transmit a photo of each company's reception desk
-> for his blog about reception desks.)
->
-
-The salesperson will have to either use mobile internet or wait until they
-have a
-safe connection.
-
-
-> What is typically less productive
-> is to assign a CVE name for what a vendor has established as
-> intentional behavior, and hope that this somehow fixes a problem. We
-> realize that some CVE consumers could look at those types of CVEs as
-> part of their decision about whether to start or stop using the
-> product. In practice, this is not a CVE use case that we regularly
-> encounter.
->
-
-The vulnerability is still there.  Distributions might choose to ignore
-upstream and
-apply their own patch (in which case coordination via a third-party is
-useful).  In any
-case (as you mentioned) it's useful information when researching software. I
-regularly search for "product CVE" before even bothering to download/test
-software.
-
-Regards,
-  Michael
-
+-- 
+Alexander Cherepanov
