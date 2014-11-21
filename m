@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/20
-Message-ID: <20141007111351.GA7104@openwall.com>
-Date: Tue, 7 Oct 2014 15:13:51 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/9
+Message-ID: <20141121092736.GA22086@mail.corp.redhat.com>
+Date: Fri, 21 Nov 2014 10:27:37 +0100
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: "New Class of Vulnerability in Perl Web Applications"
+Subject: Re: CVE-2014-7817 glibc: command execution in wordexp() with WRDE_NOCMD specified
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> > After a lightning review of one of my systems, I found the following use
+> > glibc's wordexp: adobe's flash plugin, ardour2, mailx, enca. I've not
+> > looked into which input is under a would-be-attacker's control.
+> > 
+> > --mancha
+> 
+> alsa-lib is also affected.
 
-I feel this is worth bringing in here (and I wish someone wrote a proper
-mailing list posting with this info, to have it properly archived):
+During internal discussions of this we found that alsa-lib is affected - but
+with CVE-2014-7817 fix applied it's not.
+mailx though is affected even with CVE-2014-7817 applied, I will post
+a separate CVE request for this to oss-sec shortly (since
+CVE-2014-7817 is public - someone will find out about mailx anyways,
+so see no reason keeping this private anymore).
 
-New Class of Vulnerability in Perl Web Applications
-http://blog.gerv.net/2014/10/new-class-of-vulnerability-in-perl-web-applications/
+Thanks.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
 
-"While perl may have a particularly subtle manifestation, this is not Perl-specific."
-http://www.reddit.com/r/netsec/comments/2ihen0/new_class_of_vulnerability_in_perl_web/
-
-Bugzilla 4.0.14, 4.2.10, 4.4.5, and 4.5.5 Security Advisory
-http://www.bugzilla.org/security/4.0.14/
-
-Bug 1074812 - (CVE-2014-1572) [SECURITY] The 'realname' parameter is not correctly filtered on user account creation, leading to user data override
-https://bugzilla.mozilla.org/show_bug.cgi?id=1074812
-
-http://www.opennet.ru/opennews/art.shtml?num=40766 (Russian)
-
-Alexander
+Content of type "application/pgp-signature" skipped
