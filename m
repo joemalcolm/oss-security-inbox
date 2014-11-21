@@ -1,34 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/19/3
-Message-ID: <52DC605D.8090900@redhat.com>
-Date: Mon, 20 Jan 2014 10:31:41 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: Reed Loden <reed@...dloden.com>, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: CVE-2013-6488: Jenkins fails to sanitize input before adding it to the page
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/6
+Message-Id: <20141121050014.B82D46C0086@smtpvmsrv1.mitre.org>
+Date: Fri, 21 Nov 2014 00:00:14 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: heap buffer overflow in PCRE
 Content-Type: text/plain; charset=utf-8
 
-On 01/17/2014 05:39 PM, Reed Loden wrote:
-> On Fri, 17 Jan 2014 13:02:03 +1100
-> Murray McAllister <mmcallis@...hat.com> wrote:
->
->> We recently received a report from Teguh P. Alko about an issue
->> affecting Jenkins. Input was not sanitized before adding it to the page.
->> The fix is public here since the start of 2013:
->>
->> https://github.com/jenkinsci/jenkins/commit/f8d2a0ba6c2e261f48287bdd95bd7a2d7a8d2d0e
->
-> https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16
-> is the security advisory that includes the above fix.
->
->> This could be used for copy and paste attacks, with the end result being
->> similar to that of cross-site scripting attacks. It has been assigned
->> CVE-2013-6488.
->
-> Fairly sure that's just a dupe of CVE-2013-0328. See
-> http://seclists.org/oss-sec/2013/q1/368.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It is a dupe :( Thanks for pointing this out.
+>> [1]: http://bugs.exim.org/show_bug.cgi?id=1546
 
---
-Murray McAllister / Red Hat Security Response Team
+> http://bugs.exim.org/show_bug.cgi?id=1546#c8 has "If you can, please
+> reference CVE-2014-8964 ...
+
+CVE-2014-8964 is the correct CVE ID from MITRE. At the time of
+assignment, we did not know whether the existence of the bug (without
+a packaged release fixing it) was already widely public.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUbsZbAAoJEKllVAevmvmsrwUIAKWAo/lg9GmAr2BvQQqvAYY/
+PBrmUCDHB7CMERgWnt277PFiwkhfPByT8cp6sbp9TnWtmKsFycTeVTOGOdfK0NPW
+V5Pv8CzwghJ+NMaGJ/xIesMi/h/DXqv0e42t7SHgp4f6IJ57E/R+6DGHFluVtlJE
+8P+DVenlVDPYxluDGr5iqWAh8LX1HpUG7upHKjOQ4FcRSoWOgKws0uL/HxPIPq7R
+5zZo/na+cZaFPjfydgfOJeSywm8stwNpJ0TFuuFZp3TTGnPSw450dBX2ElWfS8/D
+eL6mT+MILZD4TXFzxAGS65w9VYY4h4glAZd8iXwly90v7ZTO+iqoa1YHHcQs0Hg=
+=kpvf
+-----END PGP SIGNATURE-----
