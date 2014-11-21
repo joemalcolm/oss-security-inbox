@@ -1,30 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/32
-Message-ID: <542D6813.8080305@case.edu>
-Date: Thu, 02 Oct 2014 10:58:27 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Sona Sarmadi <sona.sarmadi@...a.com>, oss-security@...ts.openwall.com
-CC: Solar Designer <solar@...nwall.com>, chet.ramey@...e.edu
-Subject: Re: more bash parser bugs (CVE-2014-6277, CVE-2014-6278)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/2
+Message-ID: <546E90BB.90303@redhat.com>
+Date: Thu, 20 Nov 2014 18:09:15 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, nacin@...dpress.org
+Subject: Re: WordPress 4.0.1 Security Release
 Content-Type: text/plain; charset=utf-8
 
-On 10/2/14, 3:22 AM, Solar Designer wrote:
-> Sona - Chet is not on oss-security, we should be CC'ing him on relevant
-> messages.  I've just added the CC on this one.
+I'm not aware of any being assigned. Andrew?
+
+On 20/11/14 01:47 PM, Henri Salo wrote:
+> https://wordpress.org/news/2014/11/wordpress-4-0-1/
 > 
-> On Thu, Oct 02, 2014 at 06:48:54AM +0000, Sona Sarmadi wrote:
->>> On 10/1/14, 5:04 PM, Shawn wrote:
->>>> http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-028
->>>
->>> Nope, this one fixes 7168/7169.  It's the equivalent of the `parser-oob' patch.
-
-My mistake, it's 7186/7187.  There are fixes for both in one patch.  The
-fix for the off-by-one error is not obvious, but it's in there in the
-third chunk.
-
-Chet
+> WordPress 4.0.1 is now available. This is a critical security release for all
+> previous versions and we strongly encourage you to update your sites
+> immediately.
+> 
+> Can I get CVEs for vulnerabilities fixed in this release, thank you. I am not
+> sure if some or any of these has been requested already.
+> 
+> ---
+> Henri Salo
+> 
 
 -- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
