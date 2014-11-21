@@ -1,55 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/10
-Message-ID: <2ECE9D9EEF1F524185270138AE23265947D4866C@S0MSMAIL112.arc.local>
-Date: Wed, 26 Nov 2014 13:45:42 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/8
+Message-ID: <CAAnPYQ6KeJmEZ4=8rGi1mf5VXtJ8CrAmOkyARPzSTHvd3KA0rQ@mail.gmail.com>
+Date: Fri, 21 Nov 2014 08:27:14 +0100
+From: Gynvael Coldwind <gynvael@...dwind.pl>
+To: oss-security@...ts.openwall.com
+Cc: Mateusz Jurczyk <j00ru.vx@...il.com>
+Subject: Re: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+> > If it came from a mutation-based fuzzer, the original (not-mutated) sample
+> > can be useful too.
+> You mean the closest non-crashing parent (in case there is a chain of samples as in AFL)?
+Generally yes, but I guess in cases where the bug was caused by
+multiple changes (vs a fully properly formatted base sample) in
+different areas and different generations both the base sample and
+previous-generation sample would be useful to have (as well as the
+crashing sample ofc).
 
-While trying to write a small python helper library for secure opening of
-files, I found behaviour of following call unexpected because it created a
-file instead of creating/failing in opening a directory:
+> And while we are at it, would you mind describing your experience in case of ffmpeg.
+> Your blogpost -- http://gynvael.coldwind.pl/?id=524 -- gives only high level review of the
+> work. The fuzzer and specific methods of fuzzing seems to be proprietary. That's fine.
+> But perhaps you can describe other sides of the work:
+(+j00ru as he might have additional insight or patches to the text I'm
+about to write)
 
-open("xxx", O_RDONLY|O_CREAT|O_DIRECTORY, 0600) = 3
+Well, the fuzzing/mutation methods were pretty much described in the blogpost:
+"simple algorithms (such as bitflipping, swapping bytes, truncating
+the files and so forth)"
+Later in the process we got to some more interesting stuff, though not
+super magical either.
 
-I call it unexpected, because man-page mentioned:
+> - how did you deduplicate crashes (full stacktrace, some frames only or some other way);
+We used de-ASLRed call stack traces as keys. It wasn't perfect, but we
+did a lot of iterations so even if we missed something because of that
+we would still find it in the next iteration (hehe OK, I realize
+that's not totally true; it's like saying "oh, we forgot to claim the
+prize from this lottery ticket; no matter, we'll just win the lottery
+again next week", but it was "good enough" I would say).
 
-       O_DIRECTORY
-              If pathname is not a directory, cause the open  to  fail.
-This
-              flag is Linux-specific, and was added in kernel version
-2.1.126,
-              to avoid denial-of-service problems if opendir(3) is called on
-a
-              FIFO or tape device.
+> - how did you decide which issues are security-sensitive and which are not;
+We didn't, mostly due to the sheer amount of the unique (deduplicated)
+crashes we were getting. In ffmpeg case (as well as other cases that
+were/are getting tons of unique crashes) we kinda delegate this to the
+teams that are maintaining the project - I know it's far from perfect
+from the maintainers point of view, but we just didn't have the
+manpower to analyze everything, especially that ffmpeg isn't the only
+thing we're fuzzing.
+So, generally in this case the ffmpeg team has done all the work in
+this area (though we might occasionally say 'this looks bad' and 'this
+look meh').
 
-The only topic I found dealing with such issue was [1].
+> - how did you requested CVEs (for which issues, which info was required);
+No magic here either - the issue selection for CVEs was done by ffmpeg
+maintainers as well (I believe in some minor cases we might also point
+out crashes that looked bad and would probably need a CVE). So
+basically after the fixes were done (and ffmpeg team has always fixed
+stuff super fast - we were always really amazed by their dedication to
+this, just wow! I wish some commercial vendors would be as fast) the
+ones that looked exploitable (as in "exploitable into RCE", not just
+"triggerable" / "DoS") from the "fix perspective" got a CVE.
+As for info required, it's best to ask the MITRE guys, but afair the
+information we sent them consisted of a link to the commit/patch that
+also had some very brief text describing the bug.
 
-Is the man page just wrong or what would be the correct behaviour of that
-call? Is it likely, that some other tool could also end up with that,
-illogic combination of flags, thus creating a file instead of opening a
-directory?
+> - (if you know) how security fixes were released by ffmpeg.
+You would have to ask the maintainers for details about it, but afair
+there is no special release process (please correct me if I'm wrong).
+The fixes are committed to the repository and later get a CVE. This
+doesn't sound perfect, but please note that in our blog post we did
+mention that the recommendation for ffmpeg is a privilege-separated
+(sandbox) environment anyway. TBH my personal opinion is that this
+applies to any media player with C/C++ parsing code out there - I'm
+yet to spot one that has no bugs.
 
-Or perhaps to use it to escape syscall auditing if creation of files with
-special flags would be monitored but directory creation is not?
+> This kind of questions.
+> Given the sheer number of findings you probably did everything automatically?
+On our side most of the stuff (fuzzing, deduplication, reproduction,
+initially also crash report generation) was done automatically (we
+used 2,000 cores or so for this).
+The manual part was coding the fuzzing system / mutators / etc of course ;)
 
-[1] https://lkml.org/lkml/2005/9/23/166
-
-DI Roman Fiedler
-Scientist
-Safety & Security Department
-Assistive Healthcare Information Technology
-
-AIT Austrian Institute of Technology GmbH
-Reininghausstraße 13/1 | 8020 Graz | Austria
-T +43(0) 50550 2957 | M +43(0) 664 8561599 | F +43(0) 50550 2950
-roman.fiedler@....ac.at | http://www.ait.ac.at/
-
-FN: 115980 i HG Wien  |  UID: ATU14703506
-http://www.ait.ac.at/Email-Disclaimer
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
+Cheers,
+-- 
+Gynvael Coldwind
