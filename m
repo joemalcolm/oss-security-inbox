@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/23/6
-Message-ID: <20140123214203.GA13344@pisco.westfalen.local>
-Date: Thu, 23 Jan 2014 22:42:03 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/11
+Message-ID: <CACYkhxh=mO-+zNm4CGErzfNPuTxw1ohsRFJTQH4VxrXhTVvBXQ@mail.gmail.com>
+Date: Fri, 21 Nov 2014 22:24:21 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Cc: rf@...eap.de
-Subject: Re: linux-distros membership
+Cc: cve-assign@...re.org, 767227@...s.debian.org
+Subject: Re: Re: CVE request: lsyncd command injection
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 22, 2014 at 04:29:13AM +0400, Solar Designer wrote:
-> As to "the details of the process", we don't currently have it fully
-> formalized.  We did have a simple process for accepting a subset of
-> old vendor-sec members into the distros and linux-distros lists, but
-> after that point I'm afraid we never arrived at a decision on whether we
-> should introduce a voting/vouching process like vendor-sec had.
-> Instead, we had a few discussions in here, like the one we're having now
-> due to your request.  There were several membership requests that I
-> think fell in the grey area, and I think yours does too: it's not
-> unreasonable, but it fails to convince me that Qlustar being on
-> linux-distros would likely significantly benefit the users of your
-> distro.  Is anyone else in here convinced?  (Genuine question.)
+On 20 November 2014 17:55,  <cve-assign@...re.org> wrote:
+> Use CVE-2014-8990. The scope of this CVE ID includes both:
+>   2. denial of service scenarios in which a user with write access
+>      to a local directory uses special characters to make
+>      synchronization fail (might have security relevance in some
+>      scenarios)
 
-I'm not convinced. There's a three digit number of Debian-derived distros 
-and many of them come and go. The oldest Qlustar advisory is less than 
-a year old and there's no visible participation in any security processes.
+Note that you can still make synchronization fail, because it calls
+rsync to perform the synchronization.
 
-We maintain the http://anonscm.debian.org/viewvc/kernel-sec/ repository
-which tracks all kernel vulnerabilities as soon as they're public. That's
-a good base for every Debian-derived distro with a modified kernel.
+See https://github.com/therealmik/rsync-collision for some precomputed blocks
 
-Cheers,
-        Moritz
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
+Regards,
+  Michael
