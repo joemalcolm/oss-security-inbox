@@ -1,23 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/14
-Message-ID: <CALx_OUCaGM+OF_SjQR0Eoqpv+KSf_eB524P1HCqJG8Jz6faExg@mail.gmail.com>
-Date: Sat, 27 Sep 2014 12:39:57 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: Chester Ramey <chet.ramey@...e.edu>
-Cc: Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>,  Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/3
+Message-ID: <CABRvpqCOFA+etze+LPjy4mzYWCTqQWgv9sdzTweSzCS=PG8iew@mail.gmail.com>
+Date: Thu, 20 Nov 2014 20:17:39 -0500
+From: Andrew Nacin <nacin@...dpress.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: WordPress 4.0.1 Security Release
 Content-Type: text/plain; charset=utf-8
 
-> STD::what::does::this::do
+Nothing yet. I have a request drafted and I'll follow up with it soon. It
+has the proper details / affected versions etc.
+On Nov 20, 2014 8:09 PM, "Kurt Seifried" <kseifried@...hat.com> wrote:
 
-We ran into this problem with the original patch at Google, but TBH,
-we've just bitten the bullet.
+> I'm not aware of any being assigned. Andrew?
+>
+> On 20/11/14 01:47 PM, Henri Salo wrote:
+> > https://wordpress.org/news/2014/11/wordpress-4-0-1/
+> >
+> > WordPress 4.0.1 is now available. This is a critical security release
+> for all
+> > previous versions and we strongly encourage you to update your sites
+> > immediately.
+> >
+> > Can I get CVEs for vulnerabilities fixed in this release, thank you. I
+> am not
+> > sure if some or any of these has been requested already.
+> >
+> > ---
+> > Henri Salo
+> >
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+>
 
-I'm not sure how hard we should try to accommodate outliers like this
-specifically for functions - as far as I can tell, you can't really
-get away with meaningfully using colons in variable names, right? But
-if you just want to minimize breakage without getting into existential
-discussions, wouldn't wihtelisting : and perhaps periods and - going
-out on a limb - brackets be good enough?
-
-/mz
