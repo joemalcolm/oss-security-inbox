@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/5
-Message-Id: <201401201605.s0KG5iI2015317@linus.mitre.org>
-Date: Mon, 20 Jan 2014 11:05:44 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/7
+Message-Id: <20141121054023.B080B6C0046@smtpvmsrv1.mitre.org>
+Date: Fri, 21 Nov 2014 00:40:23 -0500 (EST)
 From: cve-assign@...re.org
-To: pinkbyte@...too.org
+To: security@....org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Cantata vulnerability
+Subject: Re: Xen Security Advisory 113 - Guest effectable page reference leak in MMU_MACHPHYS_UPDATE handling
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://code.google.com/p/cantata/issues/detail?id=356
+> XSA-113
+> 
+> An error handling path in the processing of MMU_MACHPHYS_UPDATE failed
+> to drop a page reference which was acquired in an earlier processing
+> step.
 
-Use CVE-2013-7300 for the lack of restrictions on the set of files
-available through the web server, i.e., an absolute path traversal
-vulnerability.
-
-Use CVE-2013-7301 for the default configuration in which the external
-network interface is used with no access control for reading queued
-music files.
-
-These could have been fixed independently. For example, fixing only
-CVE-2013-7300 means that a remote attacker could read "private" song
-data (but that might be irrelevant in some situations on a network
-within a home). Fixing only CVE-2013-7301 means that local users could
-read arbitrary files (but that might be irrelevant on a single-user
-system).
-
-The other issues mentioned in id=356 are probably best considered
-suggestions for security improvement (e.g., availability of an HTTP
-service in fewer circumstances, defaulting to the lo interface, better
-access control, additional build options, etc.).
+Use CVE-2014-9030.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -41,11 +27,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJS3UglAAoJEKllVAevmvmslR4IALRpqiR6R6K8mUuqeEDhnzKV
-TY4cY6E5sRbpM4jCLKKSlTX6eLFuOEP0yXJfnyAr5opGTslmecfCTVuvTxa9u7E5
-KHviH9Qlinzt31BnxNvXJPntIRHr87YVPYPvHNeBMVcVyl3Z9tRMBngGn7pXfPh3
-3ILDISHeKtbGrSO/7PycIxqEJuNgaU0sckcp2NGYkMDNF6fjLdKak+nGHSA8tvML
-ssvGayQ2EUcfSEWUdltDR8omDcTKEAR8w86Bpu1usf0mOczh15bn9rJNb/BjLQIH
-Wx2EyVeuDVrOftmdK4IzqchfrEsvKmJOKA8ZiyG1XY9n7n7T8iKjjeCvHwOQM6o=
-=Arrv
+iQEcBAEBAgAGBQJUbs+jAAoJEKllVAevmvmsUO4H/RXLBvibHcX1015JXXmDDbrY
+VzS2/OpFz5eS/L9DBOqan2NNCXJ3yNH0gvWtZgSj6jWL499ixh3Tn9LgoBesqJu5
+KvKgky/RiY50WPN8EgQJ+BRXsyjXr37YbefnOgipx2ep9mqivwZirru/hygMRY1j
+ImaNwAUdNHV0W01um4Mvev7OQ4dRuI3Rk2HotBuRUkUS/K0bUR6a5dKkP1W8K3at
+X1Z26NIFF2B50lFFMYFdLQ7+l0Wl4GLe3fmMf6lqIYO35OHdMCtnvmO2c8quWysl
+VRKXwjI6OY80JM+BYIA/XY/qkTPn1QriXkIMq410gqZqODmxYQ2UUo4lxkSTv1Q=
+=Ff2Q
 -----END PGP SIGNATURE-----
