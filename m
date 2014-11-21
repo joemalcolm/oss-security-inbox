@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/2
-Message-Id: <201402100034.s1A0Ylq1002226@linus.mitre.org>
-Date: Sun, 9 Feb 2014 19:34:47 -0500 (EST)
-From: cve-assign@...re.org
-To: fw@...eb.enyo.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: oath-toolkit PAM module OTP token invalidation issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/12
+Message-ID: <546F721194C2784A97981FD35526BB191F500E88@SRVEXCH>
+Date: Fri, 21 Nov 2014 11:04:10 +0000
+From: Damien Millescamps <Damien.Millescamps@...ida.fr>
+To: "'oss-security@...ts.openwall.com'" <oss-security@...ts.openwall.com>
+Subject: CVE request: heap buffer overflow in ClamAV
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> http://lists.nongnu.org/archive/html/oath-toolkit-help/2013-12/msg00000.html
+A heap buffer overflow was reported in [1] in ClamAV when scanning a specially crafted y0da Crypter obfuscated PE file.
+Note that this is remotely exploitable when ClamAV is used as a mail gateway scanner.
 
-> There is a test file with comments in the distribution, so I believe
-> this is an actual bug with security implications
+Upstream fix is available here: [2].
+ClamAV 0.98.5 contains the above fix.
 
-> leaving it vulnerable to replay of OTPs
+Additional references:
+[1] https://bugzilla.clamav.net/show_bug.cgi?id=11155
+[2] https://github.com/vrtadmin/clamav-devel/commit/fc3794a54d2affe5770c1f876484a871c783e91e
 
-> It will keep on updating the commented-out entry, whilst leaving the
-> entry for secret "efgh" untouched.
+Can a CVE be assigned to this, please ?
 
-> because skipped_users wasn't incremented, writes the update to the
-> commented out line.
+Thanks,
+--
+Damien Millescamps | Oppida
 
-Use CVE-2013-7322.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS+B46AAoJEKllVAevmvmsO2YIAJSIxibnCt7XB5FsnFJcBuF9
-7annA5UGUk75GAEo9t4aSZ/DwbFpnEdlhLmxkOB4GZev2qtHCcue3K5q/eFxVn4M
-oivsISYzL+9rt0w1uEADIsxBb47cEXckEYSOQDOsHB5nO0CXo2+iNzkrqf5Z0oCo
-BhiVM2rxX14QH69L0u1NxFJELgZRixEv13VdJwLuIblkElYqASK9G+rjQeYGpQta
-7PA6+7uQQILZ6NmRE/Ypd97XE6/5LREizbFBso/ww1CfTwfCDkANDdNLNaz13Io8
-2ZPIt6WNJQ1ToR5E+BE7tuyIvIkrRhZNLyqX0aXXBZyYMeTDOozRuNouXx0ucr8=
-=NIuV
------END PGP SIGNATURE-----
