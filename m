@@ -1,75 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/13
-Message-ID: <CADzFZPu1JdVbCmbBbib8Y0s4Drpt9cRuqkcQTDazhfRweHS=jg@mail.gmail.com>
-Date: Tue, 17 Jun 2014 06:50:01 -0700
-From: Andres Lagar Cavilla <andres@...arcavilla.org>
-To: Ian Campbell <Ian.Campbell@...rix.com>
-Cc: xen-devel@...ts.xen.org, security@....org, xen-announce@...ts.xen.org,  oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 99 - unexpected pitfall in xenaccess API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/13
+Message-Id: <E1XrnHp-00011b-Fj@xenbits.xen.org>
+Date: Fri, 21 Nov 2014 12:26:05 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 113 (CVE-2014-9030) - Guest effectable page reference leak in MMU_MACHPHYS_UPDATE handling
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 17, 2014 at 6:36 AM, Ian Campbell <Ian.Campbell@...rix.com>
-wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> On Tue, 2014-06-17 at 06:13 -0700, Andres Lagar Cavilla wrote:
->
-> > But fundamentally, how is this a vulnerability? Since the dawn of time
-> > guests can poke at the qemu and PV frontend rings. So self DoS, check.
-> > But, privilege escalation?
->
-> PV frontend rings have an endpoint in the guest, but by contrast the
-> xenaccess ring is supposed to have its endpoint in Xen, having a guest
-> able to poke at it therefore requires additional consideration and
-> thought.
->
-> > Is this predicated on the potential (lack of) software quality of the
-> > xenaccess backends? That's a fair argument, but a different story.
->
-> An attacker who can poke at this particular ring can cause the xenaccess
-> backend's view of the world to become different from the actual state of
-> things within Xen, by virtue of injecting events for which Xen has not
-> made the appropriate state change.
->
-Correct. So (1) Xen's handling of events won't change (2) the dom0 helper's
-view will.
+            Xen Security Advisory CVE-2014-9030 / XSA-113
+                              version 2
 
-So the bottomline question is how can a guest inject an event for a dom0
-helper which will cause privilege escalation.
+  Guest effectable page reference leak in MMU_MACHPHYS_UPDATE handling
 
-Such a helper would be (1) terribly designed (2) unduly powerful.
+UPDATES IN VERSION 2
+====================
 
->
-> For instance imagine a xenaccess who was trying to enforce W^X but was
-> being fed false information by the guest about writing/executing pages
-> which did not correspond to actual changes being made in the p2m.
->
-W^X is enforced by Xen and it won't be swayed by guest ring manipulation.
+CVE assigned.
 
-The helper would have been thrown off balance, and failed to audit
-something at worst. Maybe this means a security problem down the line for
-that helper toolchain, but outside the purview of the hypervisor.
+ISSUE DESCRIPTION
+=================
 
-One path that is not obvious is how would Xen react if the guest corrupts
-the ring in a way that makes it look full. The intended behavior is for Xen
-to put the guest vcpu in a wait/queue (or kill the guest). So that the
-damage at most might be self-DoS.
+An error handling path in the processing of MMU_MACHPHYS_UPDATE failed
+to drop a page reference which was acquired in an earlier processing
+step.
 
-I see how helpers may be thrown totally off balance. I see self-DoS, but
-still do not see privilege escalation happening.
+IMPACT
+======
 
->
-> For qemu there is no Xen side state, so all a guest can do with ring
-> access here is to perform emulated I/O which it could otherwise have
-> achieved by doing the I/O.
->
-Correct, my bad.
+Malicious or buggy stub domain kernels or tool stacks otherwise living
+outside of Domain0 can mount a denial of service attack which, if
+successful, can affect the whole system.
 
-Thanks
-Andres
+Only domains controlling HVM guests can exploit this vulnerability.
+(This includes domains providing hardware emulation services to HVM
+guests.)
 
->
-> Ian.
->
->
->
+VULNERABLE SYSTEMS
+==================
 
+Xen versions from at least 3.2.x onwards are vulnerable on x86 systems.
+Older versions have not been inspected.  ARM systems are not vulnerable.
+
+This vulnerability is only applicable to Xen systems using stub domains
+or other forms of disaggregation of control domains for HVM guests.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+(The security of a Xen system using stub domains is still better than
+with a qemu-dm running as an unrestricted dom0 process.  Therefore
+users with these configurations should not switch to an unrestricted
+dom0 qemu-dm.)
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+A draft of this advisory was mistakenly sent to xen-devel.  The Xen
+Project Security Team apologises for this error.  We are working to
+share best working practices amongst the team to reduce the risks of
+recurrance.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa113.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa113*.patch
+a0f2b792a6b4648151f85fe13961b0bf309a568ed03e1b1d4ea01e4eabf1b18e  xsa113.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUby8sAAoJEIP+FMlX6CvZgTMH+gJVBouqw0FL2njjs3SCvAeh
+ntGmK31VE5a0dt98UCI6oPXpHJAN40M4Ib2dsubpGpyeA/bpakfu2RUnZhzvVuah
+7d5pXt08HiZHOeDfBdrcnZ8rFS77w50ZBY9R6jpF6h/ABBKtVobT6jTxmh2xoGFw
+YqzsDxaA2bgytyDCNcAcYGWQYFy06tmzuaMX9h1Ozxt/YTxxhkNTPTJNVoUQppMc
+zD/BixwfYLe7o0jo+/3k12e1/tXEvtyW/r9uyvhhE+HgRT68JA3tluqlsd1IbYhP
+C2u7C9z/Mlf2fe2ONyEqEBXofikV5oahmMKWxkKNQ2Y6i9LJaLuoz1SBX1m8OKg=
+=BwdT
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa113.patch" of type "application/octet-stream" (1281 bytes)
