@@ -1,40 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/18/4
-Message-Id: <201404180656.s3I6ttj0024460@linus.mitre.org>
-Date: Fri, 18 Apr 2014 02:55:55 -0400 (EDT)
-From: cve-assign@...re.org
-To: larry0@...com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Remote Command Injection in Ruby Gem sfpagent 0.4.14
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/14
+Message-ID: <20141121131545.GD22086@mail.corp.redhat.com>
+Date: Fri, 21 Nov 2014 14:15:45 +0100
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: cve request: libbfd?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Has anyone from MITRE had a chance to look into it yet?
 
-> http://www.vapid.dhs.org/advisories/spfagent-remotecmd.html
+-- 
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+On Tue, 11 Nov 2014, Vasyl Kaigorodov wrote:
+
+> Hello,
 > 
-> Version 0.4.15 fixes this issue.
+> In addition to the above, I'd like to request a CVE(s) for the below
+> issues:
 > 
-> The list variable generated from the user supplied JSON[body] input is
-> passed directly to the system() shell on line 649. If a user supplies a
-> module name with shell metacharacters like ; they might be able to
-> execute shell commands
+> Directory traversal vulnerability allowing random files deleteion/creation
+> Upstream tracker: https://sourceware.org/bugzilla/show_bug.cgi?id=17552
+> Upstream patch:   https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=dd9b91de2149ee81d47f708e7b0bbf57da10ad42
+> 
+> Out-of-bounds memory write while processing a crafted "ar" archive
+> Upstream tracker: https://sourceware.org/bugzilla/show_bug.cgi?id=17533
+> Upstream patch:   https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=bb0d867169d7e9743d229804106a8fbcab7f3b3f
+> 
+> Thanks.
+> -- 
+> Vasyl Kaigorodov | Red Hat Product Security
+> PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+> On Sat, 25 Oct 2014, Michal Zalewski wrote:
+> 
+> > Hey,
+> > 
+> > You may want to assign something to:
+> > 
+> > http://lcamtuf.blogspot.com/2014/10/psa-dont-run-strings-on-untrusted-files.html
+> > http://sourceware.org/bugzilla/show_bug.cgi?id=17510
+> > 
+> > This is slightly complicated by the fact that libbfd is just bad in
+> > general and there likely are dozens of individual bugs, but the
+> > write-to-arbitrary-pointer issues with ELF section parsing in elf.c
+> > sort of stand out.
+> > 
+> > /mz
 
-Use CVE-2014-2888.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTUMrDAAoJEKllVAevmvmsMA4H/0WXlMYwKrXkdr2124LOXXMg
-F4iC48iX0Nz+AxOtjM4jqgmPYhbq5Dvlw7MMZn0chCaB1o419Q1rb8kQ4OOBLXhC
-ief+wCLEgjARpfEGxp+m9RQFR9YRyDIYrVNGqB4VfiPiG3HpkVX6WIKDXst56/fq
-a0haXFLV5nm7sIHjc0Q+/LIJYEgiaQDWIKgBo3S/X1S0+uAY+M0Tt84XcPT4cyU7
-qXoDWxPDqhlNangZyz/k8bka5BcFfM50pTVsd/xVTDjP7zWcot+6rhrwu5DNzGOv
-f1BRsTBjH1+QeFOGiHabxe3O18QGt0FWFCaR0MEseEScNRIYbxImxfn9Ki4rcec=
-=Y1KO
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
