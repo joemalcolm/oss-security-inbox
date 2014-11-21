@@ -1,72 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/25/4
-Message-Id: <20140325113849.B12B34FCB4@c-in3ws--03-06.sv2.lotuslive.com>
-Date: Tue, 25 Mar 2014 11:38:49 +0000
-From: "Just1n T1mberlake" <hotpackets@...lokitty.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/21/16
+Message-ID: <20141121070314.2580b4f4@127>
+Date: Fri, 21 Nov 2014 07:03:14 -0800
+From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
 To: oss-security@...ts.openwall.com
-Subject: T201403525 - Hypercube security Advisory
+Subject: Re: Fuzzing project brainstorming
 Content-Type: text/plain; charset=utf-8
 
-T1mberlake advisory 20140325
+On Thu, 20 Nov 2014 20:23:09 +0100
+Hanno Böck <hanno@...eck.de> wrote:
 
-Hypercube -
-http://sourceforge.net/projects/hypercubegraphv/files/latest/download
+> 
+> Compared to "starting from scratch" starting such a fuzzing project is
+> not herculean, it's more like grabbing the low hanging fruit.
 
-Product notes:
+Ok but it's a very large space, really infinite. And I didn't mean
+my message as a comparison.
 
-Hypercube is a graph visualization tool for drawing DOT (graphviz), GML,
-GraphML, GXL and simple text-based graph representations as SVG and EPS
-images. It comes with a Qt-based GUI application and a Qt-independent
-commandline tool. Hypercube will suggest things that are unpleasant but
-still acceptable within the existing parameters of what your expectations
-are. Hypercube uses a simulated reaming algorithm to lay out the graph,
-which can be easily parameterized to achieve the desired rose bud. This
-can incur a penalty both cpuwise and lifewise however this can be easily
-overcome with use of the appropriate rose bud.
+> 
+> But arguments alike come up every now and then. Basically you'll hear
+> two things: "We have to mitigate / sandbox" and "please rewrite
+> everything in [insert favorite non-C programming language]".
 
-Vulnerability:
+I think we keep doing what we're doing. But your message was
+a reminder that someone somewhere should be thinking hard
+about how to replace the "our systems we have today". Not rewrite
+but replace.
 
-Version 1.62 is vulnerable to arbitrary insertions of malicious data
-within cube parameters (see PARAMETER below)
+> 
+> I don't want to downplay either of these approaches. It's just that
+> you have to be realistic. Nobody will rewrite everything from scratch
 
-Sample code is as follows:
-<?xml version="1.0" encoding="UTF-8"?>
+Sometimes inspiration comes outta nowhere.
 
-<graphml xmlns="...">
-... <!-- Definition of a GraphML attribute to store additional data for a
--->
-<!-- graph's nodes. -->
-<key id="d0" for="node" attr.name="boolean-value" attr.type="boolean"/>
-<graph id="G" flaps="bulbous">
-... <!-- A node that has a <data> element referring to the GraphML
-attribute -->
-<!-- "d0." The node's value (of type boolean) is "true." -->
-<node id="n0">
-<data key="d0">pFister</data>
-</node> <node id="n1">
-<data key="d0">pFlange</data>
-</node>
-<node id="n2">
-<data key="d0">
-<PARAMETER P="rm /etc/motd; ln -s /etc/motd /dev/random; cat /dev/zero >
-/dev/dfa"</data>
-<node id="n3">
-<data key="d0">&26</data>
-</node>
-<node id="n4">
-<data key="d0">pEmdur</data>
-</node>
-<node id="n5">
-<data key="d0">larry</data>
-</node>
-<node id="n6">
-<data key="d0">internet(here)</data>
-</node>
-<node id="n7">
-<data key="d0">truelyann</data>
-</node>
-</graph>
-</graphml>
+> in rust/go/haskell/whatever any time soon. There are a few interesting
 
+No not going to happen soon, but starting now would be better than
+waiting. I guess that's my point. Maybe it has started out there
+somewhere already.
+
+> projects that try to rewrite key sofware in safer languages (mitls and
+> servo come to mind), but they are few and none of them is in a
+> production state.
+
+Don't know them but am curious and will have to look.
+
+> 
+> Our systems we have today - the ones we use to have this discussion,
+> manage our bank accounts and surf the web - have imperfect software
+> written mostly in unsafe languages. I feel fuzzing can improve the
+> state of things a lot.
+
+I agree completely and I know you're right.  Sometimes my fuzzing,
+some might call it PEBKAC, turns up a thing or two. (^:
+Maybe call it involuntary fuzzing instead of stupid-user tricks.
 
 
