@@ -1,42 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/2
-Message-Id: <E1XytwD-0004Je-Oj@rmm6prod02.runbox.com>
-Date: Wed, 10 Dec 2014 21:57:09 -0500 (EST)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Python, standard library HTTP clients
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/10
+Message-ID: <CAE2SPAYAbaidpPa65861pQjaEERgdrcXC+WttHE67FSLpWB=Mg@mail.gmail.com>
+Date: Sat, 22 Nov 2014 21:15:21 +0100
+From: Bastien ROUCARIES <roucaries.bastien@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Stack smashing in libjpeg-turbo
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 11 Dec 2014 02:26:50 +0000, Alex Gaynor <alex.gaynor@...il.com> wrote:
-> I'm request a CVE for CPython (sometimes Python), for failure to validate
-> certificates in the HTTP client with TLS.
-> 
-> Title: Python standard HTTP libraries fail to validate TLS certificates for HTTPS
-> Products: CPython, all 2.x versions prior to 2.7.9, 3.x versions prior to 3.4.3
-> Description:
-> 
-> When Python's standard library HTTP clients (httplib, urllib, urllib2,
-> xmlrpclib) are used to access resources with HTTPS, by default the certificate
-> is not checked against any trust store, nor is the hostname in the certificate
-> checked against the requested host. It was possible to configure a trust
-> root to be checked against, however there were no faculties for hostname
-> checking.
-...
-> Python 2.7.9 has been issued to resolve this issue. It is also resolved in
-> 3.4.3, which has not yet been released.
+On Thu, Nov 6, 2014 at 10:27 PM, Bastien ROUCARIES
+<roucaries.bastien@...il.com> wrote:
+> Hi,
+>
+> Passing special crafted jpeg file to imagemagick (convert -rotate 270
+> 003632r270.jpg junk.jpg) could lead to stack smashing in libjpeg.so.62
+> (libjpeg-turbo).
+>
+> This bug is triggered  by setting the optimize coding member of the
+> JPEG initialization structure to TRUE. If this flag set it to FALSE,
+> ImageMagick completes without complaint.
+>
+> Wokarround could consist to turn off compression optimization in
+> imagemagick to prevent the stack smash.
+>
+> Please assing me CVE and make a cc to  768369@...s.debian.org.
 
-Awesome!! I am *DELIGHTED* that this serious problem is finally getting fixed.
-Thank you for your effort!  For those curious about this,
-more information about this is in PEP 0476:
-  http://legacy.python.org/dev/peps/pep-0476/
-and these articles:
-  https://lwn.net/Articles/582065/
-  https://lwn.net/Articles/611243/
+We get a reduced test case that does not need imagemagick. The bug lie
+in libjpeg-turbo. Upstream is investigating
 
-This has been the underlying cause of numerous CVEs going back to at least 2010, e.g.:
-  https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4340
-but the CVEs have always been assigned (to my knowledge) to the applications
-using Python, and never the library that didn't provide the functionality that developers
-often expected.  I expect a lot of silent vulnerabilities will be removed by this change.
-
---- David A. Wheeler
+>
+> Bastien
