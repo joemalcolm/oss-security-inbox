@@ -1,29 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/26
-Message-ID: <20140605221854.GC3683@dirac.q-ix.net>
-Date: Fri, 6 Jun 2014 00:18:54 +0200
-From: Leon Weber <leon@...nweber.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/3
+Message-ID: <54705A39.6020000@debian.org>
+Date: Sat, 22 Nov 2014 09:41:13 +0000
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: OpenSSL NULL pointer dereference in do_ssl3_write
+Subject: Re: Off-by-one question
 Content-Type: text/plain; charset=utf-8
 
-On 02.05.2014 14:33:12, Theo de Raadt wrote:
-> On 02.05.2014 12:17:57, Kurt Seifried wrote:
-> > Also cc'ing Theo so OpenBSD gets notified for sure. Speaking of
-> > which Theo: should we get you or an OpenBSD deputy (Bob Beck?) onto
-> > distros@?
->
-> […]
-> 
-> We don't get paid.  And therefore, I don't know where I should find
-> the time to be on another mailing list.  It is not like I would have
-> sent a mail to anyone.  In general our processes are simply commit &
-> publish.  So I'll decline.
+On 22/11/14 06:28, Joshua Roers wrote:
+> I'm just wondering, is it possible to use strncpy to overwrite memory
+> addresses?
 
-This seems noteworthy, regarding 
-<http://marc.info/?l=openbsd-misc&m=140199376121636&w=2>.
+It is possible to use anything that writes through a pointer to
+overwrite memory addresses, if you use it incorrectly.
 
-    -- Leon.
+>> char buf[4];
+>> strncpy(buf, "Four", sizeof(buf));
 
+buf = { 'F', 'o', 'u', 'r' }
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+There is no write overflow into the next thing on the stack after buf,
+unless I'm missing something important, because "The strncpy() function
+shall copy not more than n bytes" (strncpy(3posix), derived from
+POSIX.1-2001).
+
+However, buf is not 0-terminated yet, so printf("%s\n", buf) at this
+point would output arbitrary memory contents from buf until the next 0
+byte - a read overflow.
+
+>> buf[sizeof(buf)-1] = '\0';
+
+buf = { 'F', 'o', 'u', '\0' }
+
+>> printf("%s\n", buf);
+
+outputs "Fou" with no read or write overflow
+
+> will strncpy write beyond the memory of 'buf', and set it to NUL?
+
+"If there is no null byte in the first n bytes of the array pointed to
+by s2, the result is not null-terminated." -strncpy(3posix) again
+
+> From my understanding from
+> http://cwe.mitre.org/data/definitions/193.html, it would.
+
+I think the statement "the strncpy will add a null terminator to each
+character array" in Example 2 is incorrect, unless there is an
+implementation of strncpy() on some platform with behaviour other than
+what POSIX says (I haven't checked the original specification of
+strncpy(), which is ISO C).
+
+However, "if the character arrays are output to the user through the
+printf method the memory addresses at the overflow location may be
+output to the user" is correct.
+
+In Example 3, unlike Example 2, I think there is really a memory write
+vulnerability: "The code does not account for the null character that is
+added by the second strncat function call". strncat() is not like
+strncpy(): it can write at most n+1 bytes.
+
+The devil is in the details with this stuff. Prefer to use your
+favourite runtime library's automatically-sized-string-buffer class
+instead of ISO C string manipulation where possible.
+
+    S
+
