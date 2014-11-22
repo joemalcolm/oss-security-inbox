@@ -1,44 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/14
-Message-ID: <20140606140513.GA12114@kroah.com>
-Date: Fri, 6 Jun 2014 07:05:13 -0700
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Cc: Thomas Gleixner <tglx@...utronix.de>
-Subject: Re: Linux kernel futex local privilege escalation (CVE-2014-3153)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/7
+Message-ID: <87lhn3w3jo.fsf@hope.eyrie.org>
+Date: Sat, 22 Nov 2014 09:25:31 -0800
+From: Russ Allbery <eagle@...ie.org>
+To: Tim Brown <tmb@...35.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 06, 2014 at 11:11:42AM +0200, rf@...eap.de wrote:
-> >>>>> "Thomas" == Thomas Gleixner <tglx@...utronix.de> writes:
-> 
-> Hi Thomas,
-> 
->     >> On Thu, Jun 05, 2014 at 11:38:27PM -0400, Rich Felker wrote:
->     >> > On Thu, Jun 05, 2014 at 06:45:45PM +0400, Solar Designer wrote:
->     >> > > I've attached patches by Thomas Gleixner (four e-mails, in
->     >> > > mbox format), as well as back-ports of those by John Johansen
->     >> > > of Canonical, who wrote:
->     >> >
->     >> > Maybe I'm missing something, but I can't find any statement of
->     >> > what version these patches are intended to apply cleanly
->     >> > to. They don't apply to latest stable.
->     >>
->     >> Thomas - can you answer Rich's question?  This is about patches
->     >> you sent on June 3 to linux-distros, which Kees then saved into
->     >> an mbox file.
-> 
->     Thomas> They should apply cleanly, if all stable tagged futex
->     Thomas> patches before that are applied.
-> 
-> could you please clarify whether
-> 
-> f0d71b3dcb8332f7971b5f2363632573e6d9486a futex: Prevent attaching to kernel threads
-> 866293ee54227584ffcb4a42f69c1f365974ba7f futex: Add another early deadlock detection check
+Tim Brown <tmb@...35.com> writes:
 
-As people keep asking me this, I'll respond with, "why wouldn't you
-apply them"?
+> Does anyone know of any obvious cases where Java is executed across a
+> privilege boundary? I'm specifically thinking of cases where it might be
+> executed via sudo, via another set[ug]id binary or where it gets called
+> from an untrusted working directory i.e. one not owned by the calling
+> user?
 
-They are going to be in the next kernel stable releases, along with the
-other 4 patches, so I recommend them for your custom kernels as well.
+"sudo service tomcat6 restart" would be a pretty obvious example that I
+suspect is not uncommon in server environments.
 
-greg k-h
+In general, Java is a general-purpose programming language, so I think
+there are plenty of examples of this just like there are with any other
+programming language.  Any large system written in Java probably has a few
+Java command-line tools or ways to spawn Java daemons, and in the normal
+course of setting up a system, it's likely that someone is granting access
+to run those tools via sudo.
+
+-- 
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
