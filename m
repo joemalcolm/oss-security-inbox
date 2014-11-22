@@ -1,73 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/14
-Message-ID: <5435C41F.3080600@gmail.com>
-Date: Thu, 09 Oct 2014 01:09:19 +0200
-From: Sven Kieske <svenkieske@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/5
+Message-Id: <201411221706.19838.tmb@65535.com>
+Date: Sat, 22 Nov 2014 17:06:02 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+Subject: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+All,
 
-On 08.10.2014 23:53, Tracy Reed wrote:
-> While it is too late for our hardware etc. perhaps strong type
-> systems such as found in Haskell can help here? It is known to be
-> very good at avoiding undefined or unexpected runtime behavior. Too
-> late also for current languages to have this bolted on but if
-> anyone wanted to write "secure" software I'd be looking at
-> languages which provide some more guarantees. Too late for bash 
-> also, of course which I suppose points us back at the original
-> problem.
+Does anyone know of any obvious cases where Java is executed across a 
+privilege boundary? I'm specifically thinking of cases where it might be 
+executed via sudo, via another set[ug]id binary or where it gets called from 
+an untrusted working directory i.e. one not owned by the calling user? FWIW, 
+I'm looking at openjdk as it is distributed by various F/OSS distros which is 
+why I'm emailing this list in particular.
 
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
 
-Well, for web frameworks, just take yesod (http://www.yesodweb.com/
-written in haskell) as an example. to quote their site:
-"Turn runtime bugs into compile-time errors"
-
-I still think, this is the right direction, yes it's painful.
-But it's a real solution to a real (huge) fraction of the problem.
-
-Imho of course, please enlighten me with some counter arguments.
-Oh, here is one from myself:
-
-vendors are not liable, not even for the most serious
-software bugs. so there is no incentive for them to make
-better software.
-
-the software industry is afaik the only one which is not liable
-if they fuck their very own products up.
-
-do this if you're building skyscrapers, cars, medical
-equipment, anything, and you go to jail.
-
-the funny part is, these businesses do rely on software
-today, so if there's a bug, let's say in some construction
-software and no one notices, the skyscraper architect might
-get sued and go to jail, but not the programmer/vendor
-who wrote that shitty code.
-
-Software is too important to not have any rules in place.
-This was okay until the 90s (maybe), but not in the 21st
-century.
-
-regards
-
-Sven
-
-PS: fun fact, the only thing you _will_ get sued for are:
-software patents
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQGcBAEBAgAGBQJUNcQfAAoJEAq0kGAWDrqlKuQL/28ye2bJ8Ry9anTpfptPr8yL
-mSHDcQHnuKFJtVkg6bJJb0SQURJNM2djUYSUZoKCvYpyssE4B+vCgHXqN3Kf0ehz
-iv0Q3LPgSHAk7a+Yj+QR3uW7r+CvH7I4BI28+OYpOe5SOzSlcMG/Lulmez18mJ5K
-G7iOc0EB6RTT4EUrGrpAd9cSjgBgFupkvl1bgaL0UVkPqw3qpXBaWf3LULjQ60z8
-qmcW9yihMSr3rT7LCtO3RYDgzFK3GSltTMYDe1jVzlbtYl6FJNZnSzssSV6OfhFG
-vqbmPxwtf3AXZrRTLMF+HXYr5YZiQa0jYo41E2h/tKBTNty7C5cw7PMmQVFPY9QR
-HfNBhWNj2fz8wLSPGcnFXw9Raz6616Z5gcaZVDwrbkWe7O8AOkiunJd91FRbnK1X
-V4bV/gOlfAVmOXegHdcWlUJYPNHQIHD3DU895A5OAGLuptipAvKiNagNahHonw+S
-SVoJvE5nrmPCoIjo3Z0ovLieSKa0+61G9cFu955fpQ==
-=/D4K
------END PGP SIGNATURE-----
+Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
