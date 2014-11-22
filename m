@@ -1,25 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/10
-Message-ID: <1418910816.5935.15.camel@juliet.mcarpenter.org>
-Date: Thu, 18 Dec 2014 14:53:36 +0100
-From: Martin Carpenter <mcarpenter@...e.fr>
-To: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/9
+Message-ID: <871tovvxgl.fsf@hope.eyrie.org>
+Date: Sat, 22 Nov 2014 11:36:58 -0800
+From: Russ Allbery <eagle@...ie.org>
+To: Marc Chadwick <marc@...dwick.net>
+Cc: oss-security@...ts.openwall.com,  Tim Brown <tmb@...35.com>
 Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 2014-12-18 at 10:45 +0100, Jakub Wilk wrote:
+Marc Chadwick <marc@...dwick.net> writes:
 
-> https://bugs.debian.org/754278
+> I thought tomcat 6 used authbind in its init script, but I could be
+> wrong.  If that's the case, authbind is written in C, so I'm not sure
+> that's what Tim has in mind. Similarly, jsvc is written in C. Maybe the
+> tabuki wrapper service?
 
-Could this have been caught in package QA with an automated check on
-R(UN)PATH? 
+Ah, I see what you're getting at.  I don't think I've ever used authbind
+with Tomcat (no need -- I never use privileged ports with it), but (since
+I use Debian) it gets spawned through start-stop-daemon, which is also
+written in C.  You're saying that the running of the Java program has to
+be done *directly* by sudo for some reason?
 
-(If that exists, how did it get missed? If not, could it be added?
-Where? https://wiki.debian.org/qa.debian.org).
+The initial question was a little obscure to me.  I'm not sure what
+security problem the original poster is worried about.  Starting Tomcat
+via sudo with that init script is indeed crossing a privilege boundary to
+run a Java program, but there are several layers of indirection there.
 
+Anyway, I have certainly worked with systems with command-line utilities
+written directly in Java that are run via sudo or other similar tools.
+The one that comes to mind (Zimbra) isn't open source, but I'm sure there
+are plenty of others.
 
-Alternatively: is there ever a good argument for truly relative (ie not
-"relative to $ORIGIN") R(UN)PATH? What would break if runtime linkers
-did not accept relative R(UN)PATHs?
-
-
+-- 
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
