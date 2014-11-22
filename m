@@ -1,72 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/2
-Message-ID: <538FE794.4080307@redhat.com>
-Date: Wed, 04 Jun 2014 21:44:20 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: Re: CVE-2014-0234 Installer: OpenShift Enterprise: openshift.sh default password creation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/1
+Message-Id: <20141122054534.D2012B2E39A@smtpvbsrv1.mitre.org>
+Date: Sat, 22 Nov 2014 00:45:34 -0500 (EST)
+From: cve-assign@...re.org
+To: Damien.Millescamps@...ida.fr
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: heap buffer overflow in ClamAV
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-On 06/03/2014 12:35 PM, cve-assign@...re.org wrote:
-> Are there any additional thoughts about CVE-2014-0234 before we 
-> cover it on the cve.mitre.org web site? See:
-> 
-> http://openwall.com/lists/oss-security/2014/05/29/4
-> 
-> We had planned to proceed with this viewpoint:
-> 
-> 1. If Red Hat shipped Red Hat OpenShift Enterprise 2 with a 
-> publicly known password in broker.conf, Red Hat is allowed to 
-> categorize that as a vulnerability and assign a CVE ID.
+> https://bugzilla.clamav.net/show_bug.cgi?id=11155
 
-This would depend on how you installed it, e.g. as an upgrade?a new
-install? If new then manually? from the script? In this case it was
-that specific install script which was also documented as a possible
-install method, thus I felt it deserved a CVE.
+This is apparently not a public bug report at the moment.
 
-> 2. There was also an issue in an example script. The script in 
-> question had comments of "not comprehensive nor robust enough ... 
-> require significant adaptations ... Please adapt it." Nonetheless, 
-> this is a script authored by Red Hat, and Red Hat might have been 
-> treating it as a supported part of a software product. If so, then 
-> Red Hat is allowed to categorize a script issue as a vulnerability 
-> and assign a CVE ID. Unless Red Hat chooses to take that position, 
-> the default decision for that type of disclaimed example code is 
-> that a CVE ID assignment isn't made.
+> https://github.com/vrtadmin/clamav-devel/commit/fc3794a54d2affe5770c1f876484a871c783e91e
 
-Correct, however in this case we document it as an install method, so
-I felt it deserved a CVE, had it not been documented/mentioned I would
-have not assigned a CVE at all since it would have been "example code"
-for lack of a better term.
+It seems possible that this fixed other issues apart from the y0da
+Crypter heap-based buffer overflow.
 
-> 3. The CVE IDs in 1 and 2 can't be the same.
+> A heap buffer overflow was reported in ClamAV when scanning a
+> specially crafted y0da Crypter obfuscated PE file.
 
-?
+Use CVE-2014-9050 only for this specific buffer overflow. If any other
+vulnerability was fixed in fc3794a54d2affe5770c1f876484a871c783e91e, it
+would have a different CVE ID.
 
 - -- 
-Kurt Seifried - Red Hat - Product Security - Cloud stuff and such
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJTj+eUAAoJEBYNRVNeJnmToVYP/0CXLxTfu+eLfI2b4vmihx9B
-caK4FOaLX9Wvu5hBFubn0XvI5kNHnCbXaADvA7F/ANihkOjipglnkgPfOlUANMx7
-qSBuDGoimjdIa6bbkVTlTZJybBN3B5tDVOzZvnfMMIrlER1t+7JuKTluyRzjPqgB
-okkY/L3KtTg9hmna9xUMQjCqDU/R+B3qr0jLVj1N8bUCD+mW3TtQag7GrERKOTcN
-97M+QOt/4AbQehbQldt8s3CuF5P53S31bR7d76fe5twfynicqH3nrBnNQvZ5ZcR4
-d5mxpknZkf2LyTSMq99S5Hh/sNKko4ZqEXUh/g3ha73TmCTYFfZTGPWp4Pp9TRGa
-eDXn5j+qMarwOi1MnnxKtW3ekGCSxBg18S6ULoWljedenm/R83zFCysBDtkb1QA/
-BGPM0RepMcR2qGQrXQqR9louk0HBvGd0QcpZYdgeLYj3jcuWjgpLzu+iLjxSxCrz
-hA7q8BbVKGmIP0z2oSJxZCFwefTiWnkEZIhkfb0DmFbb5+W2Ydtu4o6EdiYkEs5j
-loOt9chquCrr1QAGW4r29fKGfi0Ttqun46silQldS1PKdVk0sg4/bwJt64mDNLWf
-mNjaVD1lNIIMJOQ286397NoZv0GVVuvX7i3A22C23UUZH7eUqeaXXeomoBM4GNU7
-yDDtJkq6+YTrqF44cLoH
-=/kfN
+iQEcBAEBAgAGBQJUcCKOAAoJEKllVAevmvms5ZwIAL1Azwt2oleqjIProgVYER41
+22eCopXXb77Pk+3mk5BQtf/B6VumKxLtWJVB6AeQW+AwHOXOmRRdDpC6UoqJtvHZ
+UaPy0v5vRSoyWLverIiajD+wvRZb2ukj08dZq7AzNusnQUfhFl/BML0LrUYwZIT7
+Qe/+RFnmpqbPiZ+rsXyMGH25agXX0Lj4gfU0dKwc/Gkqin7+3ukXfOFLxQVjWzUR
+8yBojJav/hHEcblGHMvxU4YUSFP6GdZGRKzrK9Qb3iDhR2r8HuKKfI2AUqeqyWG4
+gjZKBSNtHwNtgoC4J7Q6chtil8tuwRFBqE3xtMIuo0QG5BO9dxRwYK2TvIt0a0U=
+=jlDq
 -----END PGP SIGNATURE-----
