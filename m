@@ -1,55 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/4
-Message-ID: <53B42D80.1000306@collabora.co.uk>
-Date: Wed, 02 Jul 2014 17:04:16 +0100
-From: Simon McVittie <simon.mcvittie@...labora.co.uk>
-To: oss-security@...ts.openwall.com,  "dbus@...ts.freedesktop.org" <dbus@...ts.freedesktop.org>
-CC: Alban Créquy <alban.crequy@...labora.co.uk>,  Colin Walters <walters@...bum.org>, Thiago Macieira <thiago@....org>
-Subject: CVE-2014-3532, -3533: two local DoS vulnerabilities in dbus-daemon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/4
+Message-ID: <m4qchh$gtc$1@ger.gmane.org>
+Date: Sat, 22 Nov 2014 17:10:28 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
 Content-Type: text/plain; charset=utf-8
 
-Impact: denial of service (force system services to exit)
-Access required: local
-Versions affected by CVE-2014-3532: dbus >= 1.3.0 on Linux >= 2.6.37-rc4
-Versions affected by CVE-2014-3533: dbus >= 1.3.0 on all Unix platforms
+On 2014-11-20 00:11, cve-assign@...re.org 
+wrote:
+>> https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02cef41bf40
+>> the selection list in the filters
+>
+> Use CVE-2014-8986.
 
-Alban Crequy at Collabora Ltd. discovered a bug in dbus-daemon's support
-for file descriptor passing. A malicious process could force system
-services or user applications to be disconnected from the D-Bus system
-bus by sending them a message containing a file descriptor, then causing
-that file descriptor to exceed the kernel's maximum recursion depth
-(itself introduced to fix a DoS) before dbus-daemon forwards the message
-to the victim process. Most services and applications exit when
-disconnected from the system bus, leading to a denial of service. This
-is tracked as fd.o#80163 and CVE-2014-3532.
+Thanks.
 
-Additionally, Alban discovered that bug fd.o#79694, a bug previously
-reported by Alejandro Martínez Suárez which was not believed to be a
-security flaw, could be used for a similar denial of service, by causing
-dbus-daemon to attempt to forward invalid file descriptors to a victim
-process when file descriptors become associated with the wrong message.
-Its security implications are tracked as fd.o#80469 and CVE-2014-3533.
+Here's some additional information to document this CVE.
 
-For the 1.8.x stable branch, these vulnerabilities are fixed in version
-1.8.6. For the 1.6.x old-stable branch, these vulnerabilities are fixed
-in version 1.6.22.
 
-All earlier versions of dbus with the file descriptor passing feature
-(1.3.0 and up) are believed to be vulnerable. Distributions that
-backport security fixes should backport git commits
-07f4c12efe3b9bd45d109bc5fbaf6d9dbf69d78e and
-9ca90648fc870c24d852ce6d7ce9387a9fc9a94a, attached.
+Description:
+
+The MantisBT Configuration Report page (adm_config_report.php) did not 
+check that the config value retrieved from the cookie was valid, 
+allowing XSS attacks.
+
+The severity of this issue is mitigated by the need to have a 
+high-privileged account (by default, administrator) to access the 
+configuration report page.
+
+Affected versions:
+ >= 1.2.13, <= 1.2.17
+
+Fixed in versions:
+1.2.18 (not yet released)
+
+Patch:
+See Github [1]
+
+Credit:
+Issue was discovered by Paul Richards, and jointly fixed by Paul 
+Richards & Damien Regad (MantisBT Developer)
 
 References:
-
-[fd.o#79694] https://bugs.freedesktop.org/show_bug.cgi?id=79694
-[fd.o#80469] https://bugs.freedesktop.org/show_bug.cgi?id=80469
-[fd.o#80163] https://bugs.freedesktop.org/show_bug.cgi?id=80163
-
-Regards,
-    S
+Further details available in our issue tracker [2]
 
 
-View attachment "0001-If-loader-contains-two-messages-with-fds-don-t-corru.patch" of type "text/x-patch" (1687 bytes)
+D. Regad
+MantisBT Developer
+http://www.mantisbt.org
 
-View attachment "0002-Handle-ETOOMANYREFS-when-sending-recursive-fds-SCM_R.patch" of type "text/x-patch" (4657 bytes)
+
+[1] http://github.com/mantisbt/mantisbt/commit/e326b73a
+[2] http://www.mantisbt.org/bugs/view.php?id=17889
+
+
+
