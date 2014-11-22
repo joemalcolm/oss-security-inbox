@@ -1,31 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/13
-Message-Id: <assp.014874dd79.828D4D77-DE9E-4ED1-93EB-865FC09A65B7@trwilliams.me.uk>
-Date: Wed, 12 Mar 2014 20:46:14 +0000
-From: Thomas Williams <thomas@...illiams.me.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/11
+Message-Id: <201411222154.18944.tmb@65535.com>
+Date: Sat, 22 Nov 2014 21:54:18 +0000
+From: Tim Brown <tmb@...35.com>
 To: oss-security@...ts.openwall.com
-Subject: Cookie Reuse
+Cc: Solar Designer <solar@...nwall.com>
+Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
-Hey guys
+On Saturday 22 November 2014 19:36:58 Russ Allbery wrote:
+> Marc Chadwick <marc@...dwick.net> writes:
+> > I thought tomcat 6 used authbind in its init script, but I could be
+> > wrong.  If that's the case, authbind is written in C, so I'm not sure
+> > that's what Tim has in mind. Similarly, jsvc is written in C. Maybe the
+> > tabuki wrapper service?
+> 
+> Ah, I see what you're getting at.  I don't think I've ever used authbind
+> with Tomcat (no need -- I never use privileged ports with it), but (since
+> I use Debian) it gets spawned through start-stop-daemon, which is also
+> written in C.  You're saying that the running of the Java program has to
+> be done *directly* by sudo for some reason?
+> 
+> The initial question was a little obscure to me.  I'm not sure what
+> security problem the original poster is worried about.  Starting Tomcat
+> via sudo with that init script is indeed crossing a privilege boundary to
+> run a Java program, but there are several layers of indirection there.
+> 
+> Anyway, I have certainly worked with systems with command-line utilities
+> written directly in Java that are run via sudo or other similar tools.
+> The one that comes to mind (Zimbra) isn't open source, but I'm sure there
+> are plenty of others.
 
-Would you consider the following scenario a security flaw:
+Trying to work out if a "potential" security flaw in Java has a real world 
+misuse case that can be exploited. I think the answer is "yes" but thought I'd 
+ask the question before I took it any further.
 
-- User can login to an authenticated system
-- User copies the cookies that are set after they are authenticated
-- User logs out and the cookies are therefore deleted from their system
-- User can paste the previously copied cookies allowing them to re-auth without re-entering credentials
+I've sent a follow up to distros, which I hope Alexander will approve, to 
+allow the discussion to continue.
 
-Personally, I would feel that given the user has logged out, their expectation is that not only should the cookies be removed from their end, but essentially those cookies should no longer be accepted by the server at a later stage to re-authenticate.
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
 
-If you would feel this is a vulnerability, can anyone recommend the best way to disclose this to the developer?
-
-Kind regards,
-Thomas
-
-Email scanned and verified safe. 
-
-
-Content of type "text/html" skipped
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (2294 bytes)
+Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
