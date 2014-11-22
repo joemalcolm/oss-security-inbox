@@ -1,94 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/15/1
-Message-Id: <201407150509.s6F59ftP010060@linus.mitre.org>
-Date: Tue, 15 Jul 2014 01:09:41 -0400 (EDT)
-From: cve-assign@...re.org
-To: rdecvalle@...are.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, thoger@...hat.com, mmcallis@...hat.com
-Subject: Re: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/8
+Message-ID: <CAPFpk5eTOGmrLDj4Mv=_5avNp4rNtdjSr4CGjJ2pT-M+8jOx0Q@mail.gmail.com>
+Date: Sat, 22 Nov 2014 14:11:14 -0500
+From: Marc Chadwick <marc@...dwick.net>
+To: oss-security@...ts.openwall.com
+Cc: Tim Brown <tmb@...35.com>
+Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Nov 22, 2014 11:26 AM, "Russ Allbery" <eagle@...ie.org> wrote:
+>
+> Tim Brown <tmb@...35.com> writes:
+>
+> > Does anyone know of any obvious cases where Java is executed across a
+> > privilege boundary? I'm specifically thinking of cases where it might be
+> > executed via sudo, via another set[ug]id binary or where it gets called
+> > from an untrusted working directory i.e. one not owned by the calling
+> > user?
+>
+> "sudo service tomcat6 restart" would be a pretty obvious example that I
+> suspect is not uncommon in server environments.
+>
+> In general, Java is a general-purpose programming language, so I think
+> there are plenty of examples of this just like there are with any other
+> programming language.  Any large system written in Java probably has a few
+> Java command-line tools or ways to spawn Java daemons, and in the normal
+> course of setting up a system, it's likely that someone is granting access
+> to run those tools via sudo.
+>
+> --
+> Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
 
-> Is MITRE or Red Hat going to assign a CVE for it?
+I thought tomcat 6 used authbind in its init script, but I could be wrong.
+If that's the case, authbind is written in C, so I'm not sure that's what
+Tim has in mind. Similarly, jsvc is written in C. Maybe the tabuki wrapper
+service?
 
-We haven't yet been able to determine whether the discussion is about
-two separate vulnerabilities.
-
-http://openwall.com/lists/oss-security/2014/07/09/13 says:
-
-  ruby -v: ruby 2.1.2p168 (2014-07-06 revision 46721) [i386-mingw32]
-
-  ...
-
-  While working with an AWS sample I hit a segmentation fault. The
-  same sample works under 1.9.3.
-
-First, we don't know what "The same sample works under 1.9.3" means.
-It might mean "The same AWS sample is also a working vulnerability
-reproducer when using Ruby 1.9.3." It might instead mean "With this
-AWS sample, my program works normally when using Ruby 1.9.3; in other
-words, no vulnerability is observed."
-
-http://openwall.com/lists/oss-security/2014/07/10/15 says:
-
-  Anyway, whatever the reporter is referring to, he mentions it
-  doesn't occur in 1.9.3, and looking at 1.9.3, the only related
-  differences I immediately noticed are the absence of the check at
-  https://github.com/ruby/ruby/blob/trunk/pack.c#L829 in pack_pack
-  function and padding being an int (instead of char) in the encodes
-  function.
-
-These differences in pack.c obviously aren't the same as (and
-aren't expected to be the same as) the pack.c code changes in
-Revision 46778 (aka the
-https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/46778/diff/pack.c
-changes).
-
-(We realize that 1.9.3 is of interest because it is the "Old stable"
-distribution advertised on the
-https://www.ruby-lang.org/en/downloads/ page.)
-
-Is one of these scenarios the correct interpretation?
-
-  1. There is only one vulnerability. Version 2.1.2 is an example of
-     an affected version. Version 1.9.3 is an example of a
-     non-affected version.
-
-  2. There is only one vulnerability. Version 2.1.2 is an example of
-     an affected version. Version 1.9.3 is also an example of an
-     affected version.
-
-  3. A vulnerability in pack.c was fixed during Ruby 1.x development,
-     but then a regression occurred during Ruby 2.x development, and
-     the vulnerability is present in, for example, version 2.1.2.
-     (A regression would generally mean that two CVE IDs are
-     required.)
-
-  4. The Ruby 1.x pack.c and the Ruby 2.x pack.c are vulnerable in
-     substantially different ways, requiring different fixes.
-     (Again, this would generally mean that two CVE IDs are
-     required.)
-
-We don't require that the set of affected versions is precisely
-determined before a CVE assignment. Narrowing it down to one of the
-above scenarios is probably required because otherwise the correct
-number of CVE IDs isn't known.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTxLXwAAoJEKllVAevmvmsQvMIAL9+jrIe5n2thqScfEOiJOZY
-cmbCkJO32ZorlxWK99duvvOY3XNx/TXO2lQ55/pzYz9VbF/7VmqWOX9vRtf+9qOy
-gkGFSwDzwyRKxRKZ3GqCyeNvleAl3pMdu9Yo/fqGTVRmYPqT6Xhd4wXzye+jdnlU
-Fkh1OEfm9dEBEgECAUeslBkkSx1aQBFM6ZNHVPE7bSBhAtMbw5u3Bi0DLnq5lxLf
-/yvPWAZQ/uEJFJoFBeODPHTQyvTmbeakmePJceyKyWqyVshaK1BqAxwf/fM+aX0J
-byakIe2rtSvsYdstn4Plnh6tHBNYDfTLgsNt5JtEnnv4HQgD3dktgd/gsB56HO4=
-=wul9
------END PGP SIGNATURE-----
