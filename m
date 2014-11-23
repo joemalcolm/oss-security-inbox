@@ -1,29 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/2
-Message-ID: <CAA7hUgGcqQ30xJ_u5LadTO-Z=3nh1dbyDRUq5xS5fo3R7naoVQ@mail.gmail.com>
-Date: Mon, 10 Mar 2014 16:31:33 +0100
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/9
+Message-ID: <547245B7.4010802@yahoo.fr>
+Date: Sun, 23 Nov 2014 21:38:15 +0100
+From: Lionel Debroux <lionel_debroux@...oo.fr>
 To: oss-security@...ts.openwall.com
-Subject: Two stack-based issues in freetype [NOT a request]
+Subject: Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I hope that no distro is configured to let lesspipe call programs which
+parse Berkeley DBs, because that's not robust either:
 
-Just a heads up as I've not seen this issue anywhere. There is an
-"Out-of-bounds stack-based read/write in cf2_hintmap_build" in freetype
+1) I've just experienced corruption of the database used by the "moc"
+ncurses-based console audio player, certainly after I used the power
+button on my computer without being able to sync first.
+Now, as long as that corrupt database is in ~/.moc/cache/tags.db, even
+with any corresponding DB log file, moc hangs on startup, pegging one
+core at 100% for minutes (that is, until I run `killall -9 mocp`).
+Attaching to the process through GDB and peeking through backtraces
+every few seconds always shows something below __bam_search -> __db_lget
+-> __lock_vec.
 
-If I understood things correctly, CVE-2014-2240 is:
-https://savannah.nongnu.org/bugs/?41697#comment0
-http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=0eae6eb0645264c98812f0095e0f5df4541830e6
+However:
+* db5.3_verify prints several error messages and exits with a status
+code of 1, as it should;
+* db5.3_dump -d a is happy as well with that file, exiting with a status
+code of 0.
+The only thing wrong with that database seems to be a fully zero-ed page.
 
-While CVE-2014-2241is:
-https://savannah.nongnu.org/bugs/?41697#comment2
-http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=135c3faebb96f8f550bd4f318716f2e1e095a969
+2) that gave me the idea to fuzz db5.3_verify on Debian sid amd64, using
+a trivial test database:
+$ rm -f test.db
+$ echo -e "test\ntest" | db5.3_load -T -t hash test.db
+$ zzuf -qcs0:200 -U 10 -C 10 db5.3_verify test.db
+zzuf[s=1,r=0.004]: signal 9 (memory exceeded?)
+zzuf[s=12,r=0.004]: signal 9 (memory exceeded?)
+zzuf[s=64,r=0.004]: signal 9 (memory exceeded?)
+zzuf[s=66,r=0.004]: signal 9 (memory exceeded?)
+zzuf[s=110,r=0.004]: signal 8 (SIGFPE)
+zzuf[s=188,r=0.004]: signal 9 (memory exceeded?)
+$ zzuf -qcs0:2000 -C 10 db5.3_dump -d a test.db
+zzuf[s=110,r=0.004]: signal 8 (SIGFPE)
+zzuf[s=290,r=0.004]: signal 8 (SIGFPE)
+zzuf[s=445,r=0.004]: signal 8 (SIGFPE)
+zzuf[s=893,r=0.004]: signal 8 (SIGFPE)
+zzuf[s=1407,r=0.004]: signal 8 (SIGFPE)
+zzuf[s=1540,r=0.004]: signal 8 (SIGFPE)
+zzuf[s=1695,r=0.004]: signal 8 (SIGFPE)
+zzuf[s=1736,r=0.004]: signal 8 (SIGFPE)
 
-Release notes:
-http://sourceforge.net/projects/freetype/files/freetype2/2.5.3/
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Lionel.
