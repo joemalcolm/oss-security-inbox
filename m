@@ -1,40 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/11
-Message-ID: <CAFCb7uimoqYU0hCXi0xPs80X+PptkGY9C05WH=qt-M0anScN+A@mail.gmail.com>
-Date: Mon, 22 Dec 2014 07:35:30 -0900
-From: "J. Tozo" <juniorbsd@...il.com>
-To: fulldisclosure@...lists.org, bugtraq <bugtraq@...urityfocus.com>,  oss-security@...ts.openwall.com
-Subject: Graylog2-Web LDAP Injection - CVE-2014-9217
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/7
+Message-ID: <20141123214942.204a552b@pc>
+Date: Sun, 23 Nov 2014 21:49:42 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: The Fuzzing Project
 Content-Type: text/plain; charset=utf-8
 
-=====[Alligator Security Team - Security Advisory]========
-- Graylog2-Web LDAP Injection - CVE-2014-9217 - Author: José Tozo <
-juniorbsd () gmail com > =====[Table of
-Contents]================================== 1. Background 2. Detailed
-description 3. Other contexts & solutions 4. Timeline 5. References
-=====[1. Background]====================================== Graylog2 is a
-free and open source system that allows you to centralize, analyze and
-real-time process terabytes of log messages. =====[2. Detailed
-description]============================ Graylog2-web is prone to a LDAP
-Injection in its username field, which in special scenarios could lead an
-attacker to inject commands in the backend. The vulnerability described in
-this document can be validated using the following example:
-A valid username and password required.
-Given a username johndoe and a password superpass, you can sucessfull
-achieve login by using:
+Hi,
 
-username: *oe password: superpass
-If the bind search returns one valid member, the login will be sucessfull.
+As already mentioned in various threads I hereby announce the Fuzzing
+Project:
+https://fuzzing-project.org/
 
-=====[3. Other contexts & solutions]====================== In Graylog2-Web
-v0.92, The Login screen has been improved so it is not vulnerable to this
-kind of attack. To have the fix applied, you need to update your software
-to at least the aforementioned version. But we encourage the users to use
-the most recent version available in the vendor's website [1]. =====[4.
-Timeline]======================================== 26/11/14 Vendor
-notification. 01/12/14 Vendor rolled out a fix.[2] 02/12/14 Mitre assigned
-CVE-2014-9217. 23/12/14 Disclosure date. =====[5.
-Reference]=======================================
-1 - https://www.graylog2.org 2 -
-https://www.graylog2.org/news/post/0010-graylog2-v0-92
+This is still a lot of work in progress. I welcome all feedback,
+contributions and especially links to your reports of the bugs you
+fuzzed.
 
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
