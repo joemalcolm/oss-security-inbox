@@ -1,77 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/28/3
-Message-ID: <CAD3Caney1k9wZq_6iFiDOQdHxuKtSZmO96WY77kSEsfUu_vyMg@mail.gmail.com>
-Date: Sat, 28 Jun 2014 15:15:58 +1200
-From: Matthew Daley <mattd@...fuzz.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request / advisory: Cherokee
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/5
+Message-ID: <20141123145941.GA6273@openwall.com>
+Date: Sun, 23 Nov 2014 17:59:42 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Tim Brown <tmb@...35.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Tim, all -
 
-I'd like to request a CVE ID for this issue. It was found in Cherokee
-(<http://cherokee-project.com>), an open-source webserver.
+On Sat, Nov 22, 2014 at 09:54:18PM +0000, Tim Brown wrote:
+> I've sent a follow up to distros, which I hope Alexander will approve, to 
+> allow the discussion to continue.
 
-This is the first such request (albeit a late one); this message
-serves as an advisory as well.
+It's not like I'm literally "approving" (or not) postings to distros.
+Yours got to distros list members right after it was received by the
+server.  However, I think it's better discussed on oss-security right
+away, without use of the distros list.  The distros list is for issues
+where distros are expected to prepare updates during the not-too-long
+embargo period, and the "instant" availability of updates when the issue
+is finally made public benefits the end-users in a significant way.
+I doubt that the issue at hand fits this description.  I think almost
+all of the (relatively few?) systems where this issue matters (where it
+lets an attacker bypass a privilege boundary, yet no other at least
+similarly easy and obvious bypass exists and is likely known to the
+attacker) would probably be slow to update anyway.
 
-Affected software: Cherokee
-Description: Cherokee supports authenticating users via LDAP. It does
-not ensure that users provide a non-empty password when doing so. If
-the underlying LDAP server allows unauthenticated binds (see RFC 4513,
-section 5.1.2: <http://tools.ietf.org/html/rfc4513#section-5.1.2>), an
-unauthenticated bind will be performed and not the name/password-based
-authenticated bind that Cherokee is expecting. This success of this
-bind will cause Cherokee to authenticate the user. This allows an
-attacker to authenticate as a user for which they only know the
-username and not the password.
-Affected versions: current releases (<= 1.2.103)
-Fix: https://github.com/cherokee/webserver/commit/fbda667221c51f0aa476a02366e0cf66cb012f88
-Reported by: Matthew Daley
+So far no distro has expressed any interest in having this embargoed.
 
---
+Distros list members: please speak up (here or on the distros list, with
+Tim CC'ed) if you'd like this embargoed.
 
-I am aware that the CVE eligibility for an issue like this is
-sometimes questioned, and so I would like to offer my opinion:
-
-Having unauthenticated binds enabled on an LDAP server is indeed
-dangerous because of the possibility of security issues like this one
-arising. OpenLDAP denies them by default for this very reason (see
-section 14.3.1 of the OpenLDAP server administrators' guide,
-<http://www.openldap.org/doc/admin24/security.html#Authentication%20Methods>),
-but other servers such as Microsoft's Active Directory and Novell's
-eDirectory have them enabled by default.
-
-However, the fault lies with the client application that is using the
-LDAP server to authenticate and not with the server or its
-configuration itself. Providing an empty password is the RFC-specified
-way to perform an unauthenticated bind. It is up to clients themselves
-to ensure that if they want an authenticated bind performed, and not
-an unauthenticated one, that the password they provide is indeed
-non-empty. When an application is binding in order to use the
-resulting success/failure of the bind to decide whether to
-authenticate an external user, and not in order to access privileged
-LDAP directory information, this is always the case.
-
-RFC 4513 agrees, see section 6.3.1
-(<http://tools.ietf.org/html/rfc4513#section-6.3.1>).
-
-Section 5.1.2 (<http://tools.ietf.org/html/rfc4513#section-5.1.2>)
-recommends that servers default to disabling unauthenticated binds as
-well. However, if an administrator needs or wants to enable
-unauthenticated binds on a server, doing so should not cause other
-applications' authentication routines to become vulnerable to bypass
-in this way.
-
-In the past, CVEs have been assigned for this issue in other
-applications, such as Apache Shiro (CVE-2014-0074), JBoss
-(CVE-2012-5629), Spring Security (CVE-2014-0097) and PacketFence
-(CVE-2011-4068).
-
---
-
-Please let me know if you need any further information.
+Tim: if until Tuesday no distro says they want this embargoed, please go
+ahead and make the issue fully public.  (On a related note, I hate it
+when an issue is sort of "semi-public".  It's the worst possible case.
+When this happens, it's a reason to opt for a shorter embargo period, or
+for none at all indeed.)  If an embargo is requested, please make sure
+there's an exact date and time for the planned public disclosure.
 
 Thanks,
 
-- Matthew Daley
+Alexander
