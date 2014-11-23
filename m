@@ -1,42 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/3
-Message-ID: <53E4C454.6060901@oracle.com>
-Date: Fri, 08 Aug 2014 13:36:36 +0100
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/3
+Message-ID: <20141123105219.72265811@pc>
+Date: Sun, 23 Nov 2014 10:52:19 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+Subject: Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)
 Content-Type: text/plain; charset=utf-8
 
-On 08/08/14 12:20, Dan Carpenter wrote:
-> The attack looks like someone who says, "Can you copy some files from
-> my USB flash drive which?" (not knowing it is infected) and then there
-> is a popup, "This newly inserted USB device is trying to type commands,
-> is that ok?  y/N?".
+On Sun, 23 Nov 2014 01:24:11 -0800
+Michal Zalewski <lcamtuf@...edump.cx> wrote:
 
-That's all very well, but:
+> WDYT?
 
-> One of the attacks involves a USB stick that acts as three separate
-> devices -- two thumb drives and a keyboard. When the device is first
-> plugged into a computer and is detected by the OS, it acts as a regular
-> storage device. However, when the computer is restarted and the device
-> detects that it's talking to the BIOS, it switches on the hidden storage
-> device and also emulates the keyboard, Nohl said.
-> 
-> Acting as a keyboard, the device sends the necessary button presses
-> to bring up the boot menu and boots a minimal Linux system from the
-> hidden thumb drive. The Linux system then infects the bootloader of the
-> computer's hard disk drive, essentially acting like a boot virus, he said.
+lesspipe is a tough one.
+
+First of all let me remind that I recently found an out of bounds
+access in less's unicode decoding itself. Upstream is not responsing
+atm. It's only a read error, but it was not even fuzzing, it was an
+accidental finding, I'd expect that further analysis might yield to
+more.
 
 
-From
-http://www.infoworld.com/d/security/most-usb-thumb-drives-can-be-reprogrammed-infect-computers-247489
-via http://catless.ncl.ac.uk/Risks/28.14.html#subj6.1 (which seems to be
-down at the moment).
+Now lesspipe: I didn't know that this thing exists until very
+recently but I was aware that less did some kind of parsing and e.g. I
+quite liked the idea that you can "less" gz/bzip2 files.
 
-The vulnerabilities aren't restricted to thumb drives.  If there's room
-for a 1-wire chip in an Apple Lightning connector
-(http://www.chipworks.com/en/technical-competitive-analysis/resources/blog/inside-the-apple-lightning-cable/)
-then there's room for a lot more in the USB connector.  Borrowing a
-cable to charge your mobile phone could become a risky business.
+Actually leaving security asside I quite like the idea of lesspipe, so
+I'm reluctant to say "lesspipe scripts have gotta die / be disabled".
 
-jch
+That said the alternative is a tough one. It would be something
+like this:
+* Fuzz all the things in lesspipe
+* Report what you find
+* Kill the tools that have unsatisfying upstream reactions and replace
+  them with more secure ones.
+And even after doing this this probably wouldn't count as a high
+security solution.
+
+I'm aware this feels like a huge effort, but actually it fits very
+well in the project I'm about to start anyway. And lesspipe gives a good
+starting point to what tools might deserve some more fuzzing.
+
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
