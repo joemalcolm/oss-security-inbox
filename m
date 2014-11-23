@@ -1,33 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/12
-Message-Id: <201402121607.s1CG7A0x013384@linus.mitre.org>
-Date: Wed, 12 Feb 2014 11:07:10 -0500 (EST)
-From: cve-assign@...re.org
-To: jeremy@...nstack.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Glance
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/8
+Message-ID: <54724BC4.50206@internot.info>
+Date: Mon, 24 Nov 2014 08:04:04 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: The Fuzzing Project
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> The password for the Swift store backend is logged at WARNING level
-
-Use CVE-2014-1948.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS+5u+AAoJEKllVAevmvms05QIAJ66dN7jStKOCx62CzcGsVkA
-fVQdKRiyf/NHo5aGeOpvc6aKge37z8SgDCyeiaVZNq00pkmGqY/l6wDvDey7K5ig
-sw/73fG7tfpFj/rYDPSdQgrdotLpy+qOuJHuGm90Wv21nQZ+vQP0D+lsjM+sXOZ+
-T+sLdJEi24fNcHOwWxQ/ZJumcPDCqIf74P51OinzTL3f6c3FfSzOfZrCJXyKhVhA
-nMxg6l/q6OkocYNIBxkMUMKe0r1nCeupnbXAInoc7Yy1+dh829xtoZatho3y8f4N
-6yXARrWBQ1M0e4Mb48hh9zqqY5sAaMWlXKkCJUxewuJmcG4S9D2N2CoXKd5On18=
-=XsiR
------END PGP SIGNATURE-----
+On 24/11/14 07:49, Hanno Böck wrote:
+> Hi,
+>
+> As already mentioned in various threads I hereby announce the Fuzzing
+> Project:
+> https://fuzzing-project.org/
+>
+> This is still a lot of work in progress. I welcome all feedback,
+> contributions and especially links to your reports of the bugs you
+> fuzzed.
+>
+> cu,
+I recommend adding "AddType text/plain .patch" to mime.conf in
+Apache(assuming)
+-- 
+-- Joshua Rogers <https://internot.info/>
