@@ -1,48 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/11/3
-Message-ID: <54623D8D.6040207@redhat.com>
-Date: Tue, 11 Nov 2014 16:47:09 +0000
-From: Nicholas Clifton <nickc@...hat.com>
-To: Alexander Cherepanov <cherepan@...me.ru>, oss-security@...ts.openwall.com
-CC: binutils@...rceware.org
-Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/2
+Message-ID: <CALx_OUABuGi8e1Dp2bFknTv33pnuBsD8paHYtNCYSPoV8+4TKg@mail.gmail.com>
+Date: Sun, 23 Nov 2014 01:24:11 -0800
+From: Michal Zalewski <lcamtuf@...edump.cx>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)
 Content-Type: text/plain; charset=utf-8
 
-Hi Guys,
+There have been some low-key discussions about this in the past, but...
 
->>> I was just curious how well
->>> this works for real world tasks like objdump crashes.
->>
->> Back to real world deduping. IMHO it's not ideal but works quite well,
->
-> Ah, I forgot to add that to really know the quality of the results of
-> this approach we have to ask Nick Clifton which actually worked with the
-> resulted crashers.
+In short, many Linux distributions ship with the 'less' command
+automagically interfaced to 'lesspipe'-type scripts, usually invoked
+via LESSOPEN. This is certainly the case for CentOS and Ubuntu.
 
-Many of the problems uncovered by Alexander and Hanno stem from the fact 
-that the BFD library was never written with security in mind,  It was 
-intended to be portable and functional, but handling corrupt files was 
-never a priority.  Of course that is no excuse and so that is why I am 
-trying to make up for lost time and fix these problems as fast as they 
-are reported.
+Unfortunately, many of these scripts appear to call a rather large
+number of third-party tools that likely have not been designed with
+malicious inputs in mind. On CentOS, lesspipe appears to include
+things such as groff + troff + grotty, man, and cpio. On Ubuntu,
+there's isoinfo (?!), ar from binutils, and so on. Ancient and obscure
+compression utilities and doc converters crop up, too.
 
-Another problem is that the file formats themselves (PE, COFF, ELF, etc) 
-are designed with efficiency in mind, rather than security.  So a lot of 
-extra work needs to be done when decoding them in order to make sure 
-that out of bounds reads and writes do not occur.
+Even grabbing something as seemingly innocuous as cpio, a short spin
+with afl-fuzz (or, probably, anything else) will immediately yield
+this:
 
-My gut feeling at the moment is that readelf is probably pretty good 
-now.  It has a lot of range checking in place and it should be fairly 
-robust.  If you are looking for places to check though I would look at 
-dynamic symbol tables and unwind tables for various different architectures.
+http://lcamtuf.coredump.cx/afl/vulns/lesspipe-cpio-bad-write.cpio
 
-The BFD library is probably less robust than readelf.  Especially when 
-it comes to non-ELF file formats.  Resource sections for PE files for 
-example could be a fertile area to explore.  Oh, and archives (or 
-libraries if you prefer), probably need to be tested as well.
+It's a file with declared block length of 0xffffffff. That gets us
+here, with the value populated to c_filesize (copyin.c, list_file()):
 
-Cheers
-   Nick
+  link_name = (char *) xmalloc ((unsigned int) file_hdr->c_filesize + 1);
+  link_name[file_hdr->c_filesize] = '\0';
 
+...where we end up allocating a zero-byte buffer and then promptly
+writing out of bounds (just under the buffer on 32-bit systems or
+somewhere above it on 64-bit).
 
+While it's a single bug in cpio, I have no doubt that many of the
+other lesspipe programs are equally problematic or worse. The saving
+grace is that lesspipe scripts make most of their routing decisions
+based on file extensions. Alas, many of these extensions will be
+completely alien and meaningless to all but the most seasoned users
+(.cpi, .raw, .r42, .ear, .zoo, .a). And there are some instances of
+utilities being called on * (e.g., iconv, fileutils).
 
+Ultimately, I think that there's an expectation that running less on a
+downloaded file won't lead to RCE, and the lesspipe behavior in many
+distros is almost certainly violating that. I'm also not sure if the
+automation actually scratches any real itch - I doubt that people try
+to run 'less' on CD images or ar archives when knowingly working with
+files of that sort.
+
+WDYT?
+
+/mz
