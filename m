@@ -1,39 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/03/16
-Message-ID: <20141003213257.GC4115@chaz.gmail.com>
-Date: Fri, 3 Oct 2014 22:32:57 +0100
-From: Stephane Chazelas <stephane.chazelas@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/1
+Message-ID: <54717EBF.2020100@internot.info>
+Date: Sun, 23 Nov 2014 17:29:19 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshock timeline
+Subject: Re: Off-by-one question
 Content-Type: text/plain; charset=utf-8
 
-2014-10-03 22:16:00 +0100, Stephane Chazelas:
-[...]
-> To answer the other post. The feature was definitely not in 1.05
-> nor 1.12 (the source of which can be found on the web), but was
-> in 1.13.5. Chet confirmed (to me and news outlets) that it was
-> added in 1.13.
-[...]
+On 23/11/14 03:47, Stuart Gathman wrote:
+>>
+> The snippet will print Fou.  The contract for strncpy is:
+>
+>        The strncpy() function is similar, except that at most n bytes 
+> of  src
+>        are  copied.  Warning: If there is no null byte among the first
+> n bytes
+>        of src, the string placed in dest will not be null terminated.
+>
+> So you are correct.  Unless strncpy is broken.
+That's what I thought.
 
-Sorry, my bad, see the other post, it was added in 1.03 in
-August 1989. From the changelog in 1.05:
+I wonder why MITRE says otherwise.
 
-
-Fri Sep  1 18:52:08 1989  Brian Fox  (bfox at aurel)
-
-        * readline.c: rl_insert ().  Optimized for large amounts
-          of typeahead.  Insert all insertable characters at once.
-
-        * I update this too irregularly.
-          Released 1.03.
-[...]
-Sat Aug  5 08:32:05 1989  Brian Fox  (bfox at aurel)
-
-        * variables.c: make_var_array (), initialize_shell_variables ()
-          Added exporting of functions.
-
+Thanks Stuart and Simon.
 -- 
-Stephane
-
-
-
+-- Joshua Rogers <https://internot.info/>
