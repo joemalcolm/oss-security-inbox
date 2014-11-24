@@ -1,70 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/9
-Message-ID: <20140619140853.45fd2de1@redhat.com>
-Date: Thu, 19 Jun 2014 14:08:53 +0200
-From: Tomas Hoger <thoger@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/24/5
+Message-ID: <CAFmghwz_PYOz8YPcAMH32m6-moAGuZR8jvkD=VDCCH5j6Pd07Q@mail.gmail.com>
+Date: Mon, 24 Nov 2014 16:23:48 -0500
+From: Eric Windisch <eric.windisch@...ker.com>
 To: oss-security@...ts.openwall.com
-Cc: jamie@...onical.com, cve-assign@...re.org
-Subject: Re: Re: cups-browsed remote exploit
+Subject: Docker 1.3.2 - Security Advisory [24 Nov 2014]
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Today, we are releasing Docker 1.3.2 in order to address two critical
+security issues. This release also includes several bugfixes, including
+changes to the insecure-registry option. Below are CVE descriptions for the
+vulnerabilities addressed in this release.
 
-It seems this CVE request slipped through the cracks.
+Docker 1.3.2 is available immediately for all supported platforms:
+https://docs.docker.com/installation/
 
 
-On Fri, 25 Apr 2014 15:24:15 -0500 Jamie Strandboge wrote:
+Docker Security Advisory [24 Nov 2014]
+=================================================================
 
-> On 04/02/2014 03:18 PM, cve-assign@...re.org wrote:
-> >> For this it creates a filter-script
-> > 
-> >> snprintf
-> > 
-> >> "%s/filter/pdftoippprinter \"$1\" \"$2\" \"$3\" \"$4\" \"$5
-> >> $extra_options\"\n", p->name, pdl, make_model, cups_serverbin);
-> > 
-> >> its easy to inject code to the script e.g. via model name or pdl
-> >> key which is taken from the LAN packets.
-> > 
-> > Use CVE-2014-2707.
-> 
-> This issue was reported as fixed in 1.0.51:
-> http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7188
-> 
-> but it was found that the fix was incomplete with the full fix in
-> 1.0.53:
-> http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7194
-> 
-> Should this get a second CVE or should we continue to use
-> CVE-2014-2707?
+=====================================================
+[CVE-2014-6407] Archive extraction allowing host privilege escalation
+=====================================================
+Severity: Critical
+Affects: Docker up to 1.3.1
 
-Note that there is another CVE needed for that commit, more specifically
-for the "In addition, some fixes against OOB access are done." part.
-That issue affects versions before 1.0.41 (which is the first version
-affected by CVE-2014-2707) and can be used to crash cups-browsed
-remotely.
+The Docker engine, up to and including version 1.3.1, was vulnerable to
+extracting files to arbitrary paths on the host during ‘docker pull’ and
+‘docker load’ operations. This was caused by symlink and hardlink
+traversals present in Docker's image extraction. This vulnerability could
+be leveraged to perform remote code execution and privilege escalation.
 
-> Furthermore, another security issue was also fixed in 1.0.53:
-> http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7195
-> 
-> "
-> - cups-browsed: SECURITY FIX: Fix on usage of the
->   "BrowseAllow" directive in cups-browsed.conf. Before, if the
->   argument of a "BrowseAllow" directive is not understood it
->   is treated as the directive not having been there, allowing
->   any host if this was the only "BrowseAllow" directive. Now
->   we treat this as a directive which no host can fulfill, not
->   allowing any host if it was the only one. No "BrowseAllow"
->   directive means access for all, as before (Bug #1204).
-> "
-> 
-> I believe this should receive a CVE.
-> 
-> Thanks
-> 
-> References:
-> https://bugzilla.novell.com/show_bug.cgi?id=871327
-> https://bugs.linuxfoundation.org/show_bug.cgi?id=1204
+Docker 1.3.2 remedies this vulnerability. Additional checks have been added
+to pkg/archive and image extraction is now performed in a chroot. No
+remediation is available for older versions of Docker and users are advised
+to upgrade.
 
--- 
-Tomas Hoger / Red Hat Security Response Team
+Related vulnerabilities discovered by Florian Weimer of Red Hat Product
+Security and independent researcher, Tõnis Tiigi.
+
+=================================================================
+[CVE-2014-6408] Security options applied to image could lead to container
+escalation
+=================================================================
+Severity: Critical
+Affects: Docker 1.3.0-1.3.1
+
+Docker versions 1.3.0 through 1.3.1 allowed security options to be applied
+to images, allowing images to modify the default run profile of containers
+executing these images. This vulnerability could allow a malicious image
+creator to loosen the restrictions applied to a container’s processes,
+potentially facilitating a break-out.
+
+Docker 1.3.2 remedies this vulnerability. Security options applied to
+images are no longer consumed by the Docker engine and will be ignored.
+Users are advised to upgrade.
+
+=================================================================
+Other changes:
+=================================================================
+
+Besides the above CVEs, the 1.3.2 release allows administrators to pass a
+CIDR-formatted range of addresses for '—insecure-registry'. In addition,
+allowing a cleartext registry to exist on localhost is now default
+behavior. This change was made due to user feedback following the changes
+made in 1.3.1 to resolve CVE-2014-5277.
+
