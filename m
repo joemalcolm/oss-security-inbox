@@ -1,52 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/22/8
-Message-ID: <54207EB0.6030806@reactos.org>
-Date: Mon, 22 Sep 2014 21:55:28 +0200
-From: Pierre Schweitzer <pierre@...ctos.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/24/2
+Message-ID: <CACYkhxiG76ZGeQKkWpXohKMCdcF7YHWHFT3dSDRfxPvEo9F6aQ@mail.gmail.com>
+Date: Mon, 24 Nov 2014 11:25:34 +1100
+From: Michael Samuel <mik@...net.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Full disclosure: denial of service in srvx
+Subject: Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)
 Content-Type: text/plain; charset=utf-8
 
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-On 30/08/2014 03:27, cve-assign@...re.org wrote:
-> > Putting an extremely high value to these parameters, such as
-> > 184467440723049 will lead to an integer overflow. When attempting to
-> > queue the function execution, srvx will add it in the past, will attempt
-> > to execute it immediately and thus will loop forever on this, and will
-> > finally crash due to memory exhaustion.
+On 23 November 2014 at 20:24, Michal Zalewski <lcamtuf@...edump.cx> wrote:
+> Ultimately, I think that there's an expectation that running less on a
+> downloaded file won't lead to RCE, and the lesspipe behavior in many
+> distros is almost certainly violating that. I'm also not sure if the
+> automation actually scratches any real itch - I doubt that people try
+> to run 'less' on CD images or ar archives when knowingly working with
+> files of that sort.
 >
-> Use CVE-2014-5508 for the integer overflow.
+> WDYT?
 
-Thanks. This has been used for the pull request upstream, which has
-finally been merged to their trunk.
-So, it's fixed in development trunk.
+It's distros that are shipping the lesspipe defaults (AFAIK), and
+at-least the ones you
+mentioned have "sandbox" capabilities.  I think it's reasonable on
+Ubuntu and RHEL
+to use AppArmor/SELinux to be paranoid in a lesspipe context (eg. not
+allow access
+to private files etc - it pipes right?).
 
-See:
-https://github.com/GameSurge/srvx/commit/1c24a6f22c2782fb072239246f868515dbca7459
-
-- -- 
-Pierre Schweitzer <pierre at reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJUIH6wAAoJEHVFVWw9WFsLyLgP/A/1oVUobq/vc7zGnPYg/eQi
-KkkC165VMsNamjhBIx5M4CZGa7Lndhxhojr5HvnjlAY+rYlS3RkMMlxVsR6QZ85q
-X3/Ilhs9Zrw2wKjqwhh0yoCSzHz/H9w4pEdMsSqQhUy6H2ETEFFHHMoUDIvzR4ad
-YPbmUfEhtRsFR5FPvdvMG5nEj7J244vQXUB6M4FnYtsc8ujtaRmc8/6FB+SWk8Dg
-xpdGj42mmmYVklB5kg5pef5BQ7q+Fhe4ode9BlCIG3SLasBecBi5wmvJtaLTN2hZ
-ZukejPPfp4KpZSCeoUd1JCqG5k0muSBJBNMiCbOcu/1lE0PCj6I6Esi21MbQB1oE
-gXMgZqzXKhS6P4eB8sq4s/t1hVQduSTKf1sf8JcQ8TipcQYm0MXcP6j7Ztck8Akk
-/bxlsabGl4wV9+v0PlZej+Q3OQV16ErG6LxDBSBCy7dnPFAVqB0o/1Xl7taezsyp
-prKGQJmr5JIlvvJyHetTEYX5ENSfcnr1zXDXgYZk9ubwJEncyqpfPg/t1+ozI3rt
-xKyfRB5Ej7G/bAANXdbqL9UyljBltrFbRxWcpPyHQ8ocy9NsRJxmFX+4P68aFCXF
-nsLpWWN95T22o8mz+n1aeXszzcfPommzzudAs6NDOjxSubu8/WapV89gz+DhqerZ
-jkGkRna/d2M9sdEIvddm
-=3ZYr
------END PGP SIGNATURE-----
-
+Regards,
+  Michael
