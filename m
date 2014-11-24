@@ -1,72 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/23/2
-Message-ID: <20140723063207.GA5885@suse.de>
-Date: Wed, 23 Jul 2014 08:32:07 +0200
-From: Sebastian Krahmer <krahmer@...e.de>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request: KAuth authentication bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/24/3
+Message-ID: <5472E0A9.30708@mittwald.de>
+Date: Mon, 24 Nov 2014 08:39:21 +0100
+From: Sven Kieske <s.kieske@...twald.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: The Fuzzing Project
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 22, 2014 at 05:00:06PM -0400, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> > https://bugzilla.novell.com/show_bug.cgi?id=864716
-> 
-> This was previously discussed in, for example:
-> 
->   http://openwall.com/lists/oss-security/2014/04/03/1
-> 
-> but apparently nobody responded to our question then. It would have
-> been useful for your new CVE request to have included a pointer back
-> to the earlier discussion here about exactly the same
-> bugzilla.novell.com bug number.
-> 
-> We understand that a patch now exists (one did not exist at the time
-> of the previous discussion).
-> 
-> We also understand that org.kde.fontinst.service and
-> org.kde.kcontrol.kcmclock.service have been mentioned as examples of
-> services that can be attacked on systems without the patch.
-> 
-> 
-> Can you confirm that you are asking for a CVE ID for the KAuth
-> product, not the "PolicyKit Library Qt Bindings" product?
-
-Yes indeed. Its the KDE KAuth code using the wrong kind of subject
-for authentication.
-
-> 
-> Should there also be a separate CVE ID for
-> 
->   https://bugzilla.novell.com/show_bug.cgi?id=864716#c25
-> 
->   "The deprecated polkit method in polkit-qt5 bindings has been
->    updated to polkit_unix_process_new_for_owner."
-> 
-> ?
-
-No, it was a patch proposal for above mentioned bug and it was wrong.
-
-> 
-> Should there also be a separate CVE ID for
-> 
->   https://bugzilla.novell.com/show_bug.cgi?id=864716#c37
-> 
->   "Qt, since 5.3, aborts action if the Q*Application is SUID."
-> 
-> ?
-
-Thats up to the Qt developers to request a CVE for this; if its needed.
-I did not analyze this potential issue as its not related to the KAuth bug in any way.
-
-Sebastian
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
 
--- 
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@...e.de - SuSE Security Team
+On 23/11/14 21:49, Hanno Böck wrote:
+> Hi,
+> 
+> As already mentioned in various threads I hereby announce the
+> Fuzzing Project: https://fuzzing-project.org/
+> 
+> This is still a lot of work in progress. I welcome all feedback, 
+> contributions and especially links to your reports of the bugs you 
+> fuzzed.
+> 
+> cu,
+> 
 
+Hi, cool to see this kicking off :)
+
+Maybe you want to add keepassx to the site, as it's a program
+for security sensitive data, but it's also full of segfaults, e.g.:
+https://bugzilla.redhat.com/show_bug.cgi?id=1036214
+
+The worst part: they don't get fixed. I don't know if the project is
+dead?
+On this[1] site it claims:
+"KeePassX 0.4.3 is no longer maintained."
+However version 2.0 is still alpha, so maybe the safest way for a local
+open source password manager is to use the original keepass
+from https://www.keepass.info/
+
+I'll report some private fuzzing results, hopefully later this week.
+
+[1]https://www.keepassx.org/bug-reports/
+
+- -- 
+Mit freundlichen Grüßen / Regards
+
+Sven Kieske
+
+Systemadministrator
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 6
+32339 Espelkamp
+T: +49-5772-293-100
+F: +49-5772-293-333
+https://www.mittwald.de
+Geschäftsführer: Robert Meyer
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad
+Oeynhausen
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIcBAEBAgAGBQJUcuCpAAoJEC5d3lL7/I9z16wQALDD6pA+C/J7xCE1RJKT5pLQ
+vIeBe+bbilm4k2GTE356gnB5ZSwbzyRPhxEQ92nx2ps+OB5nOeR82yV/AtIxPr0A
+D70B/wdFJInBBdfEqe9Z5HDOiGZ7ctgd8olr025rDQeEKmH32APpLfPYn8QErE0o
+ek0IKuoz/ixJqoaxUcHwmDEzzdxmOn/d8L8DbgSoVEjVLk1cFkeyp+FdOwtPbgZW
+/pZl3+Uomi3ljUyevbbeF24dhT/HzkCJa7sI1NQ5LPxtba3+hnFnPt7fzy+yBA7a
+wuhAUXuHOWGrsZy33gtHH/VCWmKLPDatqO96zyXCxD0QtVIYDQujMV+RGsGAgAAd
+HzRpxInZRikbUId8+fLDjolcC00u5pk2bOBvd17os6d1+SRzr+3A0pDOvravpVw4
+CQBMB/d+QvOGsbys5TrhyF/BYaMza8802EeNTC4+uu26OfOVrhXrBBBM3APcUiUX
+Ne0DacyVrT2bbIg8VBUh36dYF0NcHnZPdo2cv5AekQurwct+iyU6GRAE/NT3zGlO
+ohLlATHH35WUTpr8nb/6oaqJFw9qpQ9Sqohowp00DUI8zMGe96fVdb/mRn26qyOE
+MQdsgCJEQe19UlOxUxlIVrGcgl1pVnb/C6aA2jtzUoWO382JF+LMOV02EwJLe70o
+1AKskz3Px7RBBl2+jTe0
+=OfY0
+-----END PGP SIGNATURE-----
