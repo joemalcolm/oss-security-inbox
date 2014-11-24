@@ -1,56 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/13/9
-Message-ID: <CALCETrW=hBTZM0=6PB1ALe8EUZiBEM26JjCTbMFvVfGsVPZGyA@mail.gmail.com>
-Date: Wed, 13 Aug 2014 09:47:25 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/24/1
+Message-ID: <CALCETrU6z+vE=+xr20B+WefrvshpRJLzra+tEdxOFw-gKad==g@mail.gmail.com>
+Date: Sun, 23 Nov 2014 16:18:16 -0800
 From: Andy Lutomirski <luto@...capital.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: ro bind mount bypass using user namespaces
+Subject: CVE Request: Linux kernel LDT handling bugs
 Content-Type: text/plain; charset=utf-8
 
-[sorry for awkward threading]
+Unsurprisingly, x86_64 Linux has some bugs in the way it handles
+failures to return from the kernel into userspace when the userspace
+state has segmentation problems.
 
-On Tue, Aug 12, 2014 at 4:54 PM, Andy Lutomirski <luto@...capital.net> wrote:
-> On 08/12/2014 02:48 PM, Kenton Varda wrote:
->> Due to a bug in the Linux kernel's implementation of remount, on systems
->> with unprivileged user namespaces enabled, it is possible for an
->> unprivileged user to gain write access to any visible read-only bind mount.
->> It is also possible to bypass flags like nodev, nosuid, and noexec.
->>
->> This problem affects sandboxing / containerization systems that do not
->> expose the regular filesystem to the sandboxed process, but do expose a
->> bind-mounted view of that filesystem using these flags to enforce security.
->> This bug may enable a sandbox break-out. Sandboxes which have used
->> seccomp-bpf to disable the "mount" system call or to disable user
->> namespaces are likely safe.
->
-> nosuid/nodev failures are probably exploitable for full root in many
-> common configurations.
-
-These vulnerabilities only exist if you can unshare your user
-namespace, which, as a practical matter, requires a 3.12-ish or newer
-kernel.  (I think the option was available earlier, but I don't think
-any distros enabled it.)  You need CONFIG_USER_NS=y and, if you have
-some patch that lets you turn off user namespaces (is that what
-kernel.unpriv_user_ns or whatever is?  it's not there on my system),
-then you *may* be safe.
-
-Note that, even if only root can unshare user namespaces, it's still
-plausible that code in a userns sandbox could use these bugs to root
-the host.
-
-I've attached a test case for CVE-2014-5207.  This test demonstrates
-the problem, but it shouldn't be able to harm the system it runs on.
-You can run it as root or as an unprivileged user.
-
-Note that, if you're using whatever patch adds that sysfs entry, it's
-probably worth running the test case as root, but it may still fail.
-If it doesn't explicitly report that you're safe, then you shouldn't
-take its output to mean that you're safe; the hardening patch may
-interfere with this particular test, even if it wouldn't prevent an
+tl;dr: Recent kernels can be paniced by modify_ldt and have a couple
+of other bugs that look like they'll be very difficult to usefully
 exploit.
 
-Kenton, want to post your test for the -5206 issue?
+Two bugs only exist on kernels that support espfix64 (IIRC 3.16 and
+newer, but I think that espfix64 was backported to a bunch of stable
+kernels):
+
+1. espfix64 is designed to double-fault and recover on failures.  This
+worked great for #GP and #NP, but it didn't work for #SS.  The result
+is an unrecovered double-fault and panic.  You can test by building
+this:
+
+https://gitorious.org/linux-test-utils/linux-clock-tests/source/92ab0e82faa75814f28f2a184a8fa6f3b6f5158a:
+
+and running sigreturn_32.  (Don't use sigreturn_64 -- there are
+non-security-related kernel bugs that prevent the 64-bit build of the
+test from working.)
+
+There should be four possible outcomes from sigreturn_32.  It can pass
+all tests (on a fully patched kernel), it can refuse to run at all
+(kernels with 16-bit support disabled), it can fail lots of tests
+(non-espfix64 kernels), or it can panic (buggy espfix64 kernels).  If
+you see behavior that isn't those categories, please let me know.
+
+This is an easy DoS (just run the test case).  I think that it's
+unlikely that this can be used for anything other than DoS.
+
+The fix is:
+
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6f442be2fb22be02cafa606f1769fa1e6f894441
+
+2. When trying and failing to return directly to userspace from IST
+context (NMI, MCE, int3, breakpoints, or #SS) when the userspace SS
+references the LDT, the kernel would end up accidentally switching to
+an uninitialized stack.  Importantly, this does *not* happen during
+scheduling or signal delivery, which substantially reduces the ease of
+exploiting it.
+
+Triggering this at all isn't so easy, and getting the uninitialized
+part of the stack to contain anything other than a stale but
+nontheless valid user context is even harder.  Nonetheless, I *think*
+that this could be exploited as a kASLR bypass or even privilege
+escalation by a sufficiently determined (and sufficiently patient, and
+sufficiently willing to endure accidental crashes) attacker.
+
+Fixed by:
+
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=af726f21ed8af2cdaa4e93098dc211521218ae65
+
+I'm not sure that this one is even worthy of a CVE.  I can trigger it
+harmlessly in a debugger, but that's as far as I got.  But maybe
+someone here will take this as a challenge.
+
+There's also a fix to a really old bug in this series:
+
+3. When the kernel tried and failed to return directly to userspace
+from IST context and espfix64 was *not* involved, it would handle the
+failure by faking a general protection fault.  Unfortunately, that
+fake general protection fault executed on the IST stack as well, but
+the GPF handler is not designed to run on an IST stack.  This exposed
+the handler to being overwritten if it inadvertently recursed onto the
+same stack, and it could also lead to scheduling or signal delivery on
+the IST stack.
+
+Successful exploitation will result in confused signal delivery or
+kernel stack corruption.
+
+All kernels are affected, I think.
+
+Like #2, triggering this bug is tricky, because it cannot be triggered
+by ptrace or during signal delivery.  It's also harmless unless an
+attacker can persuade the kernel to corrupt its stack, and that is
+unlikely to happen by itself.
+
+This one is unusual, though, in that it requires no system calls at
+all to trigger, which may make it interesting as a seccomp bypass.
+Again, consider this a challenge -- I do not even have a proof of
+concept.
+
+Fixed in:
+
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=b645af2d5905c4e32399005b867987919cbfc3ae
+
+
+This whole series of fixes was merged in this branch:
+
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=00c89b2f1111b61e924f49fc79b7d9851fce249d
+
+
+Finally, there are more bugs, I think, although the remaining ones are
+probably even more difficult to trigger.
 
 --Andy
-
-View attachment "check_CVE-2014-5207.c" of type "text/x-csrc" (2508 bytes)
