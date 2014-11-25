@@ -1,81 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/13/1
-Message-ID: <20140213023337.GA11142@hurricane.linuxnetz.de>
-Date: Thu, 13 Feb 2014 03:33:37 +0100
-From: Robert Scheck <robert@...oraproject.org>
-To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
-Cc: Red Hat Security Response Team <secalert@...hat.com>
-Subject: CVE-2014-0079: Unauthenticated remote denial of service flaw in Zarafa
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/14
+Message-ID: <m532eu$ruj$1@ger.gmane.org>
+Date: Wed, 26 Nov 2014 00:13:34 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: MantisBT SQL injection in view_all_set.php
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Description:
 
-I discovered a flaw (CVE-2014-0079) in Zarafa that allows a remote
-unauthenticated attacker to crash the zarafa-server daemon with a
-segmentation fault, preventing access to any other legitimate Zarafa
-users.
+Both the 'sort' and 'dir' parameters to view_all_set.php are 
+insufficiently validated before they are used in queries by 
+view_all_bug_page.php.
 
-This flaw is not to be confused with CVE-2014-0037 from 2014-01-31.
+Both parameters are split into chunks on ','. After splitting, only the 
+first two values are validated. By supplying a third value, SQL 
+injection can be performed.
 
-Affected product: Zarafa Collaboration Platform <= 7.1.8
+Affected versions:
+<= 1.2.17
 
-Access Vector: Network
-Access Complexity: Low
-Authentication: None
-Confidentiality Impact: None
-Integrity Impact: None
-Availability Impact: Complete
+Fixed in versions:
+1.2.18 (not yet released)
 
-The interesting thing is that the official RPM/DEB packages provided
-by Zarafa are not affected, however all community/self-build binaries
-seem to be affected (such as shipped e.g. in Fedora and Fedora EPEL).
+Patch:
+See Github [1]
 
-As I don't know the build environment at Zarafa, I tried to do binary
-analysis with the following results: Binaries built by Zarafa contain
-the objects GLIBC_2.3.4 and GLIBCXX_3.4.11 while Fedora EPEL binaries
-have the objects GLIBC_2.4 and GLIBCXX_3.4.11 (this example is based
-on RHEL/CentOS 6).
+Credit:
+Issue was discovered by Edwin Gozeling from ITsec Security Services 
+(http://www.itsec.nl/), and fixed by Victor Boctor (MantisBT Developer)
 
-This leads me to the conclusion that at least GLIBC < 2.4 is used in
-Zarafa's build environment. However I unfortunately can not exclude
-that Zarafa also uses different build-time flags having some impact,
-too. Finally all Zarafa binary packages in Fedora and Fedora EPEL are
-affected where RHEL/CentOS 5 (with the oldest software) ships GLIBC
-2.5 and Fedora Rawhide ships GLIBC 2.18.90 (currently as the latest).
-
-As Zarafa has not released any update so far, downstreams should use
-the following patch (which has been proposed to upstream already):
-
---- snip ---
---- zarafa-7.1.8/provider/libserver/ECSession.cpp        2014-01-21 15:38:53.000000000 +0100
-+++ zarafa-7.1.8/provider/libserver/ECSession.cpp.rdos   2014-01-29 01:26:49.000000000 +0100
-@@ -865,10 +865,10 @@
- {
- 	ECRESULT er = erSuccess;
- 
--    if (!lpszName)
-+    if (!lpszName || !lpszPassword)
-     {
-         // Commandment 2: Thou shalt not follow the NULL pointer, for chaos and madness await thee at its end.
--		m_lpSessionManager->GetLogger()->Log(EC_LOGLEVEL_FATAL, "Invalid argument lpszName in call to ECAuthSession::ValidateUserLogon()");
-+		m_lpSessionManager->GetLogger()->Log(EC_LOGLEVEL_FATAL, "Invalid argument %s in call to ECAuthSession::ValidateUserLogon()", (!lpszName) ? "lpszName" : "lpszPassword");
- 		er = ZARAFA_E_INVALID_PARAMETER;
- 		goto exit;
-     }
---- snap ---
-
-See also: https://bugzilla.redhat.com/show_bug.cgi?id=1059903 - thanks
-to the Red Hat Security Response Team, specifically to Vincent Danen.
-
-I finally would like to thank my employer, the ETES GmbH (www.etes.de),
-who allowed me to spend time to research this issue and thus to provide
-a patch to upstream.
+References:
+Further details available in our issue tracker [2]
 
 
-With kind regards
+D. Regad
+MantisBT Developer
+http://www.mantisbt.org
 
-Robert Scheck
--- 
-Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
 
-Content of type "application/pgp-signature" skipped
+[1] http://github.com/mantisbt/mantisbt/commit/b0021673
+[2] https://www.mantisbt.org/bugs/view.php?id=17841
+
