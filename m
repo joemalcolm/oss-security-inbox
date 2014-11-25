@@ -1,49 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/2
-Message-ID: <548AE5ED.2090704@reactos.org>
-Date: Fri, 12 Dec 2014 13:56:13 +0100
-From: Pierre Schweitzer <pierre@...ctos.org>
-To: OSS Security List <oss-security@...ts.openwall.com>
-CC: cve-assign@...re.org
-Subject: CVE request: denial of service in suricata
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/16
+Message-ID: <20141126002805.7166f8b2@pc>
+Date: Wed, 26 Nov 2014 00:28:05 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Cc: Tobias Stoeckmann <tobias@...eckmann.org>
+Subject: OpenBSD patch issue also affects GNU patch
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-Dear all,
+I saw this
+http://marc.info/?l=openbsd-tech&m=141693055412785&w=2
 
-It appears, looking at bug #1272 [1] in Suricata, that it was possible
-to crash Suricata with specific packets due to a bug in the libhtp
-(which got fixed with libhtp 0.5.16).
+And thought "let's try this on GNU patch on my linux sys".
 
-It got fixed with the release 2.0.5 from Suricata.
+And bang... segfault.
 
-Was a CVE already assigned to this issue? Otherwise can a CVE be assigned?
+I don't know if this is a random coincidence or if gnu patch and
+openbsd patch share some common ancestor code (haven't checked details).
 
-With my best regards,
+valgrind output indicates this is an oob write issue:
+==22957== Invalid write of size 1
+==22957==    at 0x40904A: another_hunk (pch.c:1902)
+==22957==    by 0x40304E: main (patch.c:366)
+==22957==  Address 0x80000000051d3b82 is not stack'd, malloc'd or
+(recently) free'd
 
-[1]: https://redmine.openinfosecfoundation.org/issues/1272
 
-- -- 
-Pierre Schweitzer <pierre@...ctos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Reported upstream:
+https://savannah.gnu.org/bugs/?43700
 
-iQIcBAEBAgAGBQJUiuXtAAoJEHVFVWw9WFsL8a0QAKpH57yNCdnjHcHm3xxyNk5R
-cwgMtmIBOqntLcK1NUg4pFXChIFFzH/4Alj/KyHFO8l3rHdgYyY1c3ZQJMirQ+dL
-h6HIr2UJy6rM7H+n2Q1d1owonJWkSDZP8xygxwRDRBy6gvL5Bd5i2Kr0xttxvfz4
-QN+HzeFvdo3DUO1lXhdBihDkhksYCaCJoO0zw2QKo6roLSLFTyqNXVZav9wza4Kq
-0iNsrlV1hpRmYiSRMPvYrSwxqOWBTkZeXfS8QI+TCbVEFiHsOZtSFf8knIuvuFN+
-+wsqpSkCpPXL3CTTAXwkjnn2iAmd82hI7OmhiCOkRSU/YQCeG/KZhUkGm8HjazcI
-t4pJUe9VB233atkhQ7kqkM1pH1K6t7ssAALFMwxSyCgdYlU6WaTJy++NMCMoS3ZM
-WSVzDATOEp+RATJt6FAvPvsLuVLZehUa/hRnjWN9rdB+e8tV7eeJ8oIUf8JrzesY
-bU8vDGaIog8u8J9VJVjrgS6zZ9RLOAqFlc4fWTTe+6H727GOLuT/agkV2ulIOP07
-JGfBIOKCFmJ5yVDSMYY0+2u6n+XoEiua03GcEbZzZb8NPA+8O1CUhqtRZadJtGLQ
-57QXS91fq2/NGBqQz5Rm11E1VaPJBGSue1pKNY/shkLCnFMcUK6ww8YjhJl3HQc7
-I+ANlGpK4EZZ3Ehq4/Nx
-=w1nx
------END PGP SIGNATURE-----
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
