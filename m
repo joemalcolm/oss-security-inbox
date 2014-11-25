@@ -1,94 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/9
-Message-id: <52A48E3E-65AB-4D17-889F-4773B68486BB@me.com>
-Date: Wed, 16 Jul 2014 06:43:38 -0400
-From: Larry Cashdollar <larry0@...com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Re: Vulnerability Report for Ruby Gem kompanee-recipes-0.1.4
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/3
+Message-ID: <54741669.5030909@internot.info>
+Date: Tue, 25 Nov 2014 16:40:57 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: Graphviz format string vuln
 Content-Type: text/plain; charset=utf-8
 
+Hi,
+
+A format string vulnerability has been found in `graphviz'.
+The fix commit is here:
+https://github.com/ellson/graphviz/commit/99eda421f7ddc27b14e4ac1d2126e5fe41719081
+
+Could I get a CVE-ID for this?
 
 
-> On Jul 16, 2014, at 2:12 AM, cve-assign@...re.org wrote:
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
->> is it possible that this Gem wasn't ever intended to be used in the
->> context of a Rails application?
-> 
-That is possible yes.
-
-
-> We haven't seen any response to this yet. (At least from our
-> perspective, this is completely fine -- sending a message here
-> containing "CVE:Please Assign" doesn't mean that the person is
-> required to respond to questions from us.)
-> 
-Sorry I must have missed this in the previous message.  My apologies.
-
-
-
-> Just to clarify: we are aware of the full set of messages:
-> 
->  Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
->  Vulnerability Report for Ruby Gem cap-strap-0.1.5
->  Vulnerability Report for Ruby Gem codders-dataset-1.3.2.1
->  Vulnerability Report for Ruby Gem backup-agoddard-3.0.28
->  Vulnerability Report for Ruby Gem backup_checksum-3.0.23
->  Vulnerability Report for Ruby Gem gyazo-1.0.0
->  Vulnerability Report for Ruby Gem VladTheEnterprising-0.2
->  Vulnerability Report for Ruby Gem gnms-2.1.1
->  Vulnerability Report for Ruby Gem point-cli-0.0.1
->  Vulnerability Report for Ruby Gem kompanee-recipes-0.1.4
->  Vulnerability Report for Ruby Gem lean-ruport-0.3.8
->  Vulnerability Report for Ruby Gem kajam-1.0.3.rc2
->  Vulnerability Report for Ruby Gem lawn-login-0.0.7
->  Vulnerability Report for Ruby Gem kcapifony-2.1.6
->  Vulnerability Report for Ruby Gem karo-2.3.8
->  Vulnerability Report for Ruby Gem lynx-0.2.0
->  Vulnerability Report for Ruby Gem ciborg-3.0.0
->  Vulnerabilities in Ruby Gem brbackup-0.1.1
-> 
-> and we have not yet assigned any CVE IDs. What we think might be the
-> best option is to disregard any vulnerability-related observations
-> that are qualified with a phrase such as "if this gem is used in the
-> context of a rails application." As far as we know, existence of a Gem
-> only implies a choice of a packaging mechanism for a piece of Ruby
-> code. Existence of a Gem doesn't, as far as we know, imply that the
-> author is claiming that the code will operate safely in cases where
-> its input arrives from an untrusted source in a way that crosses
-> privilege boundaries. This option would result in approximately 20
-> CVEs for other types of issues such as:
->  - "expose the password to the process table" (e.g., an attacker can
->     obtain sensitive information by running the ps program at the
->     right time)
-> 
->  - symlink attacks
-> 
-> but no CVEs for issues involving shell metacharacters in variable
-> names. The shell-metacharacter CVE IDs could be assigned later if
-> anyone identifies a product that actually uses one of the applicable
-> Gems unsafely within a Rails application.
-> 
-
-I understand, this makes sense to me thank you!
-
--larry
-
-> - -- 
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
-> 
-> iQEcBAEBAgAGBQJTxhclAAoJEKllVAevmvmscfgH/0QiThSi/wjrMepw3hpuFF/K
-> 8+2nHFlPfVEt3AIoATECqshGYIbft3JDMsFgi545jdQ2uzVsETABA+IyhYAoqwmD
-> twRLhcCOzQVs9KP4/omdKlOV33m4Xf/blRqSUD6luDSJDdvQtSeQZGDwvkPGmqzb
-> eO4JoeF19MZhF5jnDt8F5mukf0TbW4859GtFbEd3jU7dYMEMWCL0UCy71SU/rfoU
-> cEuNPp83O1EIJ8bcTS9tz8nILrMEf7n6zbJmtM3cdyD0pHxaiei9gdWZ74XWALcp
-> AAsn+SHOSsffZ5htsFJZSqlsyD2dTm3zaEdhzAKn9lqZuPQE0TJ2/5AtNsI0/m8=
-> =3GVP
-> -----END PGP SIGNATURE-----
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
