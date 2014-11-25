@@ -1,38 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/6
-Message-Id: <201402241407.s1OE7hu4016236@linus.mitre.org>
-Date: Mon, 24 Feb 2014 09:07:43 -0500 (EST)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS in MODX Revolution before 2.2.11
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/10
+Message-ID: <CABRvpqA7ZkDVhH3E1B3iubJWzNnMpcXPQmZ34QJAWtC+_V2cjw@mail.gmail.com>
+Date: Tue, 25 Nov 2014 13:32:58 -0500
+From: Andrew Nacin <nacin@...dpress.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: WordPress 4.0.1 Security Release
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+CVE request for 9 vulnerabilities fixed in the WordPress security releases
+on November 20:
 
-> MODX Revolution 2.2.11 release announcement:
-> http://modx.com/blog/2014/01/21/revolution-2.2.11%E2%80%94security-fixes-and-prevent-change-loss/
-> says
-> "Prevent XSS on actionVar in header.tpl in the Manager"
-> 
-> https://github.com/modxcms/revolution/commit/77463eb6a8090f474b04fdc1b72225cb93c558ea
+ * XSS in wptexturize() via comments or posts. Unauthnticated. Affected
+versions <= 3.9.2 (except >= 3.8.5 / 3.7.5). Discovered by Jouko Pynnonen.
 
-Use CVE-2014-2080.
+ * XSS in media playlists. Affected versions 3.9, 3.9.1, 3.9.2, 4.0.
+Reported by Jon Cave.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+ * CSRF in the password reset process. Affected versions 4.0, 3.9.2, 3.8.4,
+3.7.4.
 
-iQEcBAEBAgAGBQJTC1A6AAoJEKllVAevmvmsxM0H/jAfv9SsQmSQYpihJ+ONHjuZ
-7nbiaPaNZ8yTY4gnlXQD7r8aV8CT3k/tQ36jPd7zOWzuadszTWlYe6BjHDPXO9F9
-qI4fMQal3w1piqa3q8dpQFgAOjBNXdwmMlKZ+oALrJ4iu5456HQexNRzmGyLJXdy
-pe0BfHAnGCv1mzXhFqaP4Txqq2uI/1DchVoS9Poz+b7CboTz20UbvOOe9PnpLhju
-+eKhz33rD8neS/u/OS+O8RbAVOVSZIl2Fbl+bXmjfhLT5xdyJQW49sSMNe0FIMjn
-JzvbkGJhvVL5+SMoJIdJMTvqnSzTvzMExvnSBTa2KVgvDXcRl7CdYPTOwany0xU=
-=wOIY
------END PGP SIGNATURE-----
+ * Denial of service for giant passwords. This is the same issue as
+CVE-2014-9016
+in Drupal, and was reported by the same individuals to both projects. The
+phpass library by Solar Designer was used in both projects without setting
+a maximum password length, which can lead to CPU exhaustion upon hashing.
+Reported by Javier Nieto Arevalo and Andres Rojas Guerrero.
+
+ * XSS in Press This. Affected versions <= 4.0 (except >= 3.8.5 / 3.7.5 /
+3.9.3). Reported by John Blackbourn.
+
+ * XSS in HTML filtering of CSS in posts. Affected versions <= 4.0 (except
+>= 3.8.5 / 3.7.5 / 3.9.3). Reported by Robert Chapin.
+
+ * Hash comparison vulnerability in old-style MD5-stored
+passwords. Affected versions <= 4.0 (except >= 3.8.5 / 3.7.5 / 3.9.3). The
+WordPress install have once run WordPress < 2.5 (March 29, 2008), the user
+must not have logged in since the install was updated to >= 2.5, and the
+user needed to have a password for which the md5 hash was something that
+could be collided with due to PHP dynamic type comparisons (something like
+1 in 170 million). Reported by David Anderson.
+
+ * SSRF: Safe HTTP requests did not sufficiently block the loopback IP
+address space. Affected versions <= 4.0 (except >= 3.8.5 / 3.7.5 / 3.9.3).
+Reported by Ben Bidner.
+
+ *  Previously an email address change would not invalidate a previous
+password reset email.  Affected versions <= 4.0 (except >= 3.8.5 / 3.7.5 /
+3.9.3). WordPress now invalidates this if the user remembers their
+password, logs in, and changes their email address. Affected
+
+Andrew Nacin
+WordPress
+
+On Thu, Nov 20, 2014 at 8:17 PM, Andrew Nacin <nacin@...dpress.org> wrote:
+
+> Nothing yet. I have a request drafted and I'll follow up with it soon. It
+> has the proper details / affected versions etc.
+> On Nov 20, 2014 8:09 PM, "Kurt Seifried" <kseifried@...hat.com> wrote:
+>
+>> I'm not aware of any being assigned. Andrew?
+>>
+>> On 20/11/14 01:47 PM, Henri Salo wrote:
+>> > https://wordpress.org/news/2014/11/wordpress-4-0-1/
+>> >
+>> > WordPress 4.0.1 is now available. This is a critical security release
+>> for all
+>> > previous versions and we strongly encourage you to update your sites
+>> > immediately.
+>> >
+>> > Can I get CVEs for vulnerabilities fixed in this release, thank you. I
+>> am not
+>> > sure if some or any of these has been requested already.
+>> >
+>> > ---
+>> > Henri Salo
+>> >
+>>
+>> --
+>> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+>> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>>
+>>
+
