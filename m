@@ -1,50 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/23/2
-Message-ID: <20141223152622.GC657@hp.com>
-Date: Tue, 23 Dec 2014 07:26:22 -0800
-From: Grant Murphy <grant.murphy@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/2
+Message-ID: <547414DD.7020307@redhat.com>
+Date: Tue, 25 Nov 2014 16:34:21 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2014-041] Glance v2 API unrestricted path traversal
+Subject: CVE request: cpio heap-based buffer overflow [was Re:  so, can we do something about lesspipe? (+ a cpio bug to back up the argument)]
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-041 
-CVE: Requested
-Date: December 23, 2014
-Title: Glance v2 API unrestricted path traversal
-Reporter: Masahito Muroi (NTT)
-Products: Glance
-Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
+On 11/23/2014 08:24 PM, Michal Zalewski wrote:
 
-Description:
-Masahito Muroi from NTT reported a vulnerability in Glance. By setting 
-a malicious image location an authenticated user can download or delete
-any file on the Glance server for which the Glance process user has 
-access to. Only setups using the Glance V2 API are affected by this flaw.
+...
 
-Kilo (development branch) fix:
-https://review.openstack.org/141706
+> Even grabbing something as seemingly innocuous as cpio, a short spin
+> with afl-fuzz (or, probably, anything else) will immediately yield
+> this:
+>
+> http://lcamtuf.coredump.cx/afl/vulns/lesspipe-cpio-bad-write.cpio
+>
+> It's a file with declared block length of 0xffffffff. That gets us
+> here, with the value populated to c_filesize (copyin.c, list_file()):
+>
+>    link_name = (char *) xmalloc ((unsigned int) file_hdr->c_filesize + 1);
+>    link_name[file_hdr->c_filesize] = '\0';
+>
+> ...where we end up allocating a zero-byte buffer and then promptly
+> writing out of bounds (just under the buffer on 32-bit systems or
+> somewhere above it on 64-bit).
+>
+> While it's a single bug in cpio, I have no doubt that many of the
 
-Juno fix:
-https://review.openstack.org/142373
+...
 
-Icehouse fix:
-https://review.openstack.org/142788
+Could a CVE please be assigned to the above issue in cpio?
 
-Notes:
- * This fix was included in the kilo-1 development milestone and will be included
-   in future 2014.2.2 (juno) and 2014.1.4 (icehouse) releases.
+Cheers,
 
- * The OpenStack VMT recommends revoking all credentials stored in files
-   accessible by Glance as a precautionary measure. 
-
- * A CVE has been requested for this issue, the OpenStack VMT will issue an 
-   errata with the correct CVE number assigned once this information is available.
-
-References:
-https://launchpad.net/bugs/1400966
-
--- 
-Grant Murphy
-OpenStack Vulnerability Management Team
-
-Content of type "application/pgp-signature" skipped
+--
+Murray McAllister / Red Hat Product Security
