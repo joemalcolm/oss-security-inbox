@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/20/4
-Message-ID: <C281A17C31CFD745B242416D0E96EC6371806DA5@ONWVEXCHMB04.ciena.com>
-Date: Mon, 20 Oct 2014 09:04:57 -0400
-From: "Bendler, Ehren" <ebendler@...na.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: attacking hsts through ntp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/13
+Message-ID: <20141125211306.GA8685@pisco.westfalen.local>
+Date: Tue, 25 Nov 2014 22:13:06 +0100
+From: jmm@...ian.org
+To: oss-security@...ts.openwall.com
+Cc: mmcallis@...hat.com, cve-assign@...re.org
+Subject: Re: Re: CVE request: icecast: possible leak of on-connect scripts
 Content-Type: text/plain; charset=utf-8
 
-The symmetric schemes do work, but due to data structure sizing only MD5 and SHA-1 hashed PSKs are supported:
-http://bugs.ntp.org/show_bug.cgi?id=2039
+On Thu, Nov 20, 2014 at 09:52:44AM -0500, cve-assign@...re.org wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> > It was reported that Icecast could possibly leak the contents of
+> > on-connect scripts to clients, which may contain sensitive information.
+> > This issue has been fixed in the 2.4.1 release:
+> 
+> > "Fix on-connect and on-disconnect script STDIN/STDOUT/STDERR corruption
+> > due to shared file descriptors."
+> 
+> > Information contained can include passwords
+> 
+> > http://icecast.org/news/icecast-release-2_4_1/
+> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=770222
+> > https://trac.xiph.org/ticket/2089
+> > https://trac.xiph.org/ticket/2087
+> > https://trac.xiph.org/changeset/19308
+> 
+> Use CVE-2014-9018.
 
-They imply in the comments that it will take a new version of the NTP RFCs to get support for stronger hashing schemes.
+I think this icecast2 issue should also receive a CVE ID:
+https://trac.xiph.org/changeset/19137/
 
-
------Original Message-----
-From: Stephen Röttger [mailto:stephen.roettger@...il.com] 
-Sent: Monday, October 20, 2014 5:17 AM
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] attacking hsts through ntp
-
->What about RFC 5906 and the current authentication schemes
-> (http://www.eecis.udel.edu/~mills/ntp/html/authentic.html) ?
-
-The protocol from RFC 5906 is completely broken:
-  http://www.eecis.udel.edu/~mills/security.html
-  http://zero-entropy.de/autokey_analysis.pdf
-
-The symmetric schemes are probably fine but hard to set up. But it looks like the NIST provides authenticated NTP:
-http://www.nist.gov/pml/div688/grp40/auth-ntp.cfm
+Cheers,
+        Moritz
