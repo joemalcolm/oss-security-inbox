@@ -1,123 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/16/2
-Message-ID: <CAP145ph+faduYyE=df_+cHjuBxCQO3WpsRBbWA_A5RuxnK8XsA@mail.gmail.com>
-Date: Sun, 16 Nov 2014 18:15:57 +0100
-From: Robert Święcki <robert@...ecki.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/6
+Message-ID: <87y4qzmqkq.fsf@redhat.com>
+Date: Tue, 25 Nov 2014 13:07:17 +0100
+From: Martin Prpic <mprpic@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+Subject: CVE request: missing checks for small-sized files in hivex
 Content-Type: text/plain; charset=utf-8
 
-2014-11-16 15:10 GMT+01:00 Hanno Böck <hanno@...eck.de>:
-> Hi,
->
-> I wanted to share a couple of issues I recently found via zzuf and afl
-> fuzzing. It's a telling story about the state of some of the free
-> software projects involved and I can only encourage others to join the
-> effort to find bugs via fuzzing. Some of them are really low hanging
-> fruit.
-> I'm cc-ing cve-assigners, I leave it up to you to decide which you
-> assign CVEs. If you want / need more info on details please ask.
->
->
-> Imagemagick:
-> Multiple issues in PCX, DCM parser and generic issue in resize code
-> http://www.imagemagick.org/script/changelog.php
-> These already got CVEs:
-> http://int21.de/cve/CVE-2014-8354-ImageMagick-oob-heap-overflow.html
-> http://int21.de/cve/CVE-2014-8355-ImageMagick-pcx-oob-heap-overflow.html
-> http://int21.de/cve/CVE-2014-8562-ImageMagick-dcm-oob-heap-overflow.html
->
-> GraphicsMagick:
-> Fork of Imagemagick, so some of the above also affect it, tests with
-> the same fuzzed sample set turned out one independent other issue:
-> http://sourceforge.net/p/graphicsmagick/code/ci/37ab9576dbdfeecd8bbc0a312a49b362846016c1/
-> Heap Overflow / oob read
-> One more issue with PNGs that turned out to be weird, it caused an
-> error message to overflow:
-> http://sourceforge.net/p/graphicsmagick/code/ci/0dc6e1d3119f1dda668b0f2d1464459a06767879/
->
-> elfutils:
-> Checks done with the set of files that crashed binutils turned out one
-> issue:
-> https://lists.fedorahosted.org/pipermail/elfutils-devel/2014-October/004215.html
-> Invalid read
-> american fuzzy lop found a couple more:
-> https://lists.fedorahosted.org/pipermail/elfutils-devel/2014-November/004230.html
-> and more:
-> https://lists.fedorahosted.org/pipermail/elfutils-devel/2014-November/004249.html
->
-> GIMP:
-> Invalid reads in import plugins for fli and tga.
-> https://bugzilla.gnome.org/show_bug.cgi?id=739133
-> https://bugzilla.gnome.org/show_bug.cgi?id=739134
->
-> claws-mail / gdk-pixbuf
-> Assert in gdk-pixbuf when trying to load a malformed file as an
-> animation. This was an accidental discovery when I clicked on a
-> malformed PNG I send while reporting another issue (in graphicsmagick)
-> in my mail client (and it crashed with an assert).
-> https://bugzilla.gnome.org/show_bug.cgi?id=739785
-> http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=3322
->
-> file/libmagic:
-> out of bounds read when parsing JPG header
-> http://bugs.gw.com/view.php?id=398
-> https://github.com/file/file/commit/59e63838913eee47f5c120a6c53d4565af638158
->
-> ndisasm:
-> Actually I found this by running ndisasm on /dev/urandom - no joke!
-> Crash / oob read:
-> http://bugzilla.nasm.us/show_bug.cgi?id=3392289
->
-> less:
-> Out of bounds read, upstream doesn't answer and doesn't have a public
-> bug tracker. This wasn't really found by fuzzing but by running less on
-> a likely malwared gif, I reduced it to a smaller testcase:
-> http://int21.de/cve/less-oob
+Hello,
 
-Really nice job!
+Can a CVE please be assigned to the following issue?
 
-Just to reiterate what others in previous "fuzzing" threads had already said.
+It was reported that hivex [1], a library that can read and write hive files (undocumented binary files that Windows uses to store the Windows Registry on disk), did not properly handle small-sized hive files. An attacker able to supply a hive file of a small size to an application using the hivex library could use this flaw to read, and possibly write, up to 4095 bytes beyond the end of the allocated buffer, potentially resulting in arbitrary code execution with the with the privileges of the user running that application.
 
-A given bugs is a security where given set of code is by design (and
-after a solid security review process) supposed to be exposed to
-untrusted inputs.
+This issue has been fixed in upstream version 1.3.11 of hivex. Upstream patches are available at:
 
-I can easily see that certain libs you're fuzzing (imagemagick et al)
-are widely used to parse untrusted inputs (image conversion pipelines
-and such esp. in the web software) and by discovering bugs in them
-you're doing a great job preventing some web servers and a couple of
-users from being pwnd.
+https://github.com/libguestfs/hivex/commit/357f26fa64fd1d9ccac2331fe174a8ee9c607adb
+https://github.com/libguestfs/hivex/commit/4bbdf555f88baeae0fa804a369a81a83908bd705
 
-However, even if tools like file/ndisasm/gimp/readelf can be used by
-many (w/o strong system isolation boundaries) to analyze untrusted
-inputs (for reverse engineering, malware analysis and similar
-purposes) - I'd simply put a blame on those users when if they get
-pwnd - as they're depending on tools, which hadn't been properly
-evaluated for the purpose (by efforts of those users, or by their
-contractors or by the community at large) and the likelihood that
-we'll start accepting those tools as good enough for said purposes in
-the coming years is seriously low.
+References:
 
-There are thousands of software packages available under a typical
-Linux distro. And a serious share of it will fail when dealing with
-untrusted inputs. So, maybe instead of fuzzing everything what is
-available from the command-line - we should rather draw a line between
-software which is designed and tested for the said purpose (web
-browsers, kernel networking stacks, network services) and software
-which is not. The alternative is that we'll spend a lot of time in the
-next year(s) discussing seemingly non-security bugs on security lists.
+[1] https://www.redhat.com/archives/libguestfs/2014-October/msg00235.html
+[2] https://bugzilla.redhat.com/show_bug.cgi?id=1167756
 
-To sum up: If somebody uses 'file' in an unconstrained OS environment
-on untrusted inputs, and he gets pwnd in the result, then it's not a
-security problem, it's an incompetence problem - and IMO it should be
-discussed elsewhere.
+Thanks,
 
-I appreciate your enthusiasm to fuzz every OSS project out there - I
-just wanted to ask you (and others who might join this effort) to
-apply a well-thought-out set of criteria when categorizing your
-findings (security bug, usability bugs). And good luck with your
-fuzzing!
-
--- 
-Robert Święcki
+--
+Martin Prpič / Red Hat Product Security
