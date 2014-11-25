@@ -1,33 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/11
-Message-ID: <20141001133858.GA17354@openwall.com>
-Date: Wed, 1 Oct 2014 17:38:58 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/15
+Message-ID: <1416957493.1286.14.camel@16bits.net>
+Date: Wed, 26 Nov 2014 00:18:13 +0100
+From: Ángel González <angel@...its.net>
 To: oss-security@...ts.openwall.com
-Subject: how to unsubscribe (Re: binary-patching bash)
+Cc: mmcallis@...hat.com, cve-assign@...re.org, 767227@...s.debian.org,  sven.schwedas@....at, axkibe@...il.com
+Subject: Re: Re: CVE request: lsyncd command injection
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 01, 2014 at 08:17:52PM +0900, jihyun.jang wrote:
-> Could you remove me in this mail list ? oss-security
+On 20-11-2014 Mitre wrote:
+> > There is a command injection flaw in lsyncd, a file change monitoring
+> > and synchronization daemon:
+> > 
+> > https://github.com/axkibe/lsyncd/issues/220
+> > 
+> > https://github.com/creshal/lsyncd/commit/18f02ad013b41a72753912155ae2ba72f2a53e52
+> > 
+> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=767227
+> 
+> Use CVE-2014-8990. The scope of this CVE ID includes both:
+> 
+>   1. code execution with ` characters or other characters that are
+>      special to a shell
+>   2. denial of service scenarios in which a user with write access
+>      to a local directory uses special characters to make
+>      synchronization fail (might have security relevance in some
+>      scenarios)
+> 
+> The MITRE CVE team does not have a Lua expert. The code change adds:
+> 
+>   local path1 = event.path:gsub ('"', '\\"'):gsub ('`', '\\`'):gsub ('%$','\\%$')
+>   local path2 = event2.path:gsub ('"', '\\"'):gsub ('`', '\\`'):gsub ('%$','\\%$')
+> 
+> This does not seem to be the typical fix approach for unsafe input to
+> a shell. Has anyone concluded that this is an incomplete fix that ought
+> to be modified before the 2.1.6 release?
 
-A moderator approved the above posting in error.  Normally, we just
-unsubscribe people who happen to ask for that in an attempted posting
-(instead of unsubscribing themselves via the list robot), and then we
-reject messages like the above.  There are not a lot of requests like
-this, but it does happen once in a while.
 
-However, let me use this opportunity to inform any others wishing to
-unsubscribe that we have instructions on doing so here:
+It is indeed an incomplete fix:
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security/unsubscribe
+* The gsub ('%$','\\%$') works in lua5.1, but under lua5.2 the second %
+character makes lsyncd fail with the error "stdin:1: invalid use of '%'
+in replacement string". Thus allowing a complete denial of service
 
-And in case anyone reads this in the list archives on the web and wants
-to subscribe, those instructions are here:
 
-http://oss-security.openwall.org/subscribe
+* Not all metacharacters are filtered, so command execution is still
+present. In particular, the escaped characters can be prefixed with a
+backslash to bypass the filter.
 
-Actually, we simply run ezmlm-idx, so its usual commands work, and
-instructions are also included in the "welcome" message that the list
-sends when one subscribes.  The web pages above are just extras.
 
-Alexander
+The attached patch should hopefully solve these issues.
+
+
+View attachment "0001-Properly-sanitize-mv-parameters-CVE-2014-8990.patch" of type "text/x-patch" (1694 bytes)
