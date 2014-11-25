@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/14/4
-Message-ID: <21205.19539.255512.431236@gargle.gargle.HOWL>
-Date: Tue, 14 Jan 2014 15:40:19 +0100
-From: rf@...eap.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/1
+Message-ID: <20141125024724.GB9341@hunt>
+Date: Mon, 24 Nov 2014 18:47:24 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: linux-distros membership
+Cc: Fiedler Roman <Roman.Fiedler@....ac.at>, security@...ntu.com
+Subject: parse_datetime() bug in coreutils
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-I hope this is the right place to ask for inclusion of a Qlustar contact
-in the linux-distros list.
+Fiedler Roman discovered that coreutils' parse_datetime() function
+has some flaws that may be exploitable if the date(1), touch(1),
+or potentially other programs, accept untrusted input for certain
+parameters. While researching this issue, he discovered that it
+was independantly discovered by Bertrand Jacquin and reported at
+http://debbugs.gnu.org/cgi/bugreport.cgi?bug=16872
 
-Qlustar is a Ubuntu/Debian based distro targeted at HPC/Storage/Cloud
-clusters. We use our own kernels (typically based on vanilla) since many
-years, but have the need to supply timely security fixes to our users. So
-far we have to wait for other distros to come out with their
-announcements and then start analyzing the fixes they have done. This
-leaves us/our users with a vulnerability window that is way too large,
+$ touch '--date=TZ="123"345" @1'
+Segmentation fault (core dumped)
+$ date '--date=TZ="123"345" @1'
+*** Error in `date': double free or corruption (out): 0x00007fffc9866c20 ***
+Aborted (core dumped)
+$
 
-Please let me know what are the requirements to be included in the list.
+The GNU bugtracker has this patch to fix the problem:
+http://debbugs.gnu.org/cgi/bugreport.cgi?msg=11;filename=date-tz-crash.patch;att=1;bug=16872
+and this patch to include the fix in coreutils and a small test case:
+http://debbugs.gnu.org/cgi/bugreport.cgi?msg=19;filename=coreutils-date-crash.patch;att=1;bug=16872
 
-Thanks,
+Can a CVE please be assigned for this issue.
 
-Roland
+(Incidentally, that's some hairy-looking code; someone with time and an
+inclination to join Hanno's fuzzing project might find it a fruitful
+starting point.)
 
-----
-Roland Fehrenbacher, PhD
-Founder/CEO
-Q-Leap Networks GmbH
-Tel. : +49(0)7034/277620
-EMail: rf@...eap.com
-http://www.q-leap.com / http://qlustar.com
+Thanks
 
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
