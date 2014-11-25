@@ -1,63 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/4
-Message-ID: <548254F7.20707@gmail.com>
-Date: Fri, 05 Dec 2014 19:59:35 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/5
+Message-ID: <20141125091218.GF5485@core.inversepath.com>
+Date: Tue, 25 Nov 2014 10:12:18 +0100
+From: Daniele Bianco <danbia@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT 2014-008] libFLAC multiple issues
 Content-Type: text/plain; charset=utf-8
 
-On 05/12/14 05:15 PM, Reed Loden wrote:
-> On Fri, Dec 5, 2014 at 7:09 AM, Daniel Micay <danielmicay@...il.com> wrote:
-> 
->>
->> Mozilla has no excuse for not enabling PIE for Firefox, because 99% of
->> the code is in dynamic libraries already. It has no performance impact.
->>
-> 
-> For the record, Mozilla tried it several months ago and had to back it out.
-> 
-> "Nautilus (the file manager) can't open PIE executables, which makes
-> distributing PIE executable essentially impossible."
-> 
-> https://bugzilla.mozilla.org/show_bug.cgi?id=857628#c6 (which caused
-> https://bugzilla.mozilla.org/show_bug.cgi?id=1076892)
-> 
-> ~reed
 
-I don't really see how this would prevent Mozilla from shipping a
-browser with ASLR. The Tor browser has been shipping a fork of Firefox
-built as a position independent executable for ages. It doesn't impact
-users because they're either starting it via a .desktop file or the
-command-line.
+Description:
 
-The support for desktop icons in Nautilus is deprecated / disabled by
-default with only a hidden dconf preference to enable it. If you really
-want to support the workflow of opening up the file manager, navigating
-to the binary and double-clicking it then using a wrapper script is a
-quite obvious solution.
+FLAC is an open source lossless audio codec supported by several software
+and music players.
 
-The issue was already reported earlier by Mozilla, and the claim that
-it's a blocking issue didn't make sense then either:
+The libFLAC project, an open source library implementing reference
+encoders and decoders for native FLAC and Ogg FLAC audio content,
+suffers from multiple implementation issues.
 
-https://bugzilla.gnome.org/show_bug.cgi?id=737849
+In particular, a stack overflow and a heap overflow condition, which may
+result in arbitrary code execution, can be triggered by passing a maliciously
+crafted .flac file to the libFLAC decoder.
 
-Chromium has used features like PIE, SSP and full RELRO for years while
-Firefox doesn't enable any of it. I don't see it as much different from
-how Chromium ships with an industry leading sandbox + features like JIT
-hardening while Firefox doesn't have any of it. Even Internet Explorer
-and Safari are shipping with decent sandboxing.
+Affected version:
 
-There are multiple cases of remote code execution discovered in every 6
-week cycle and no industry standard exploit mitigations in place. It's
-too bad that this doesn't least lead to any civil / criminal liability
-due to negligence, especially when it's advertised as being more secure
-/ private than competitors.
+libFLAC <= 1.3.0
 
-I find it hard to believe that there's any attention to security when
-even the tiny amount of effort involved in enabling year / decade old
-exploit mitigations is too much. Every project shipping a network-facing
-or setuid binary without PIE has some explaining to do.
+The following packages were identified as affected as they statically
+include libFLAC in their own packages.
 
+Max <= 0.9.1
+Cog <= 0.07
+cinelerra <= 4.6
+JUCE <= 3.1.0 (juce_audio_formats module)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Fixed version:
+
+libFLAC >= 1.3.1
+
+Max N/A
+Cog N/A
+cinelerra N/A
+JUCE N/A
+
+Credit: vulnerability report from Michele Spagnuolo of Google Security Team <mikispag AT google.com>
+
+CVE:
+
+CVE-2014-8962 (stack overflow)
+CVE-2014-9028 (heap overflow)
+
+Timeline:
+
+2014-11-12: heap overflow report received
+2014-11-12: contacted maintainer
+2014-11-14: patch provided by maintainer
+2014-11-17: reporter confirms patch
+2014-11-20: stack overflow vulnerability reported
+2014-11-21: assigned CVE (heap overflow)
+2014-11-22: contacted affected vendors
+2014-11-23: contacted additional affected vendors
+2014-11-25: advisory release
+
+References:
+
+https://git.xiph.org/?p=flac.git;a=commit;h=5b3033a2b355068c11fe637e14ac742d273f076e
+https://git.xiph.org/?p=flac.git;a=commit;h=fcf0ba06ae12ccd7c67cee3c8d948df15f946b85
+
+Permalink:
+
+http://www.ocert.org/advisories/ocert-2014-008.html
+
+--
+  Daniele Bianco      Open Source Computer Security Incident Response Team
+  <danbia@...rt.org>                                  http://www.ocert.org
+
+  GPG Key 0x9544A497
+  GPG Key fingerprint = 88A7 43F4 F28F 1B9D 6F2D  4AC5 AE75 822E 9544 A497
