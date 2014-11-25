@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/04/12
-Message-ID: <5315E723.9060904@redhat.com>
-Date: Tue, 04 Mar 2014 15:45:55 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: XML entity processing hardening
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/4
+Message-ID: <2ECE9D9EEF1F524185270138AE23265947D4731D@S0MSMAIL112.arc.local>
+Date: Tue, 25 Nov 2014 09:09:14 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "security@...ntu.com" <security@...ntu.com>, Seth Arnold <seth.arnold@...onical.com>
+Subject: AW: parse_datetime() bug in coreutils
 Content-Type: text/plain; charset=utf-8
 
-I'm in contact with an upstream for an XML processing library who do not 
-want to disable entity processing for the embedded DTD subset.
+> Von: Seth Arnold [mailto:seth.arnold@...onical.com]
+> 
+> Hello,
+> 
+> Fiedler Roman discovered that coreutils' parse_datetime() function
+> has some flaws that may be exploitable if the date(1), touch(1),
+> or potentially other programs, accept untrusted input for certain
+> parameters.
 
-What are recommended practices if you have to do full entity processing, 
-but still want to avoid DoS (CPU and memory issues)?
+As some people won't have a hard time to correlate this: the issue was
+discovered fixing the php session cleanup code running with root privileges,
+which, apart from the symlink issues, could to my opinion also allow to pass
+a single but arbitrary parameters to touch, see [1]
 
-Here's what I came up with:
+> [Snip]
 
-CPU and memory are separate concerns because depending on the 
-implementation, empty entity references may not result in memory 
-consumption, but they may still need impossible large amounts of CPU 
-time to process.  However, I think it is possible to address the CPU 
-aspect purely with memory accounting if we pretend that every entity 
-reference expands to at least one character, even if it is empty.
+[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=766147
 
-Apart from that, I think it is sufficient to approximate the character 
-count in fully-expanded serialized XML content.  This "memory cost" 
-would have to memoized for each entity, and counted during entity 
-expansion itself and eventual document generation.  During parsing, the 
-cost encountered is compared against a pre-computed limit.
-
-The upper cost limit I suggest is 10 times the document size (perhaps 
-including the content of external entities, if enabled and parsed, not 
-entirely sure about that), plus a fixed baseline of (say) 1 MiB.  These 
-numbers are obviously totally arbitrary, but hopefully, they grant 
-sufficient flexibility.
-
--- 
-Florian Weimer / Red Hat Product Security Team
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
