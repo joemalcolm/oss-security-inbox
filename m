@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/14/6
-Message-Id: <201404141527.s3EFRLaN018736@linus.mitre.org>
-Date: Mon, 14 Apr 2014 11:27:21 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/3
+Message-Id: <20141126073850.6DAEF336009@smtpvbsrv1.mitre.org>
+Date: Wed, 26 Nov 2014 02:38:50 -0500 (EST)
 From: cve-assign@...re.org
-To: sbauer@....utah.edu
+To: carnil@...ian.org
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Use-after-free race condition,in OpenSSL's read buffer
+Subject: Re: CVE Request: buffer overflow in ksba_oid_to_str in Libksba
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://www.openbsd.org/errata55.html#004_openssl
-> http://ftp.openbsd.org/pub/OpenBSD/patches/5.5/common/004_openssl.patch.sig
-> http://svnweb.freebsd.org/ports/head/security/openssl/files/patch-ssl-s3_pkt.c?revision=351191&view=markup
-> http://www.tedunangst.com/flak/post/analysis-of-openssl-freelist-reuse
-> https://rt.openssl.org/Ticket/Display.html?id=2167&user=guest&pass=guest
-> https://rt.openssl.org/Ticket/Display.html?id=3265&user=guest&pass=guest
-> 
-> (not yet available at
-> http://git.openssl.org/gitweb/?p=openssl.git;a=blob;f=ssl/s3_pkt.c;hb=701134320a94908d8c0ac513741cab41e215a7b5
-> line 1337)
+>> By using special crafted S/MIME messages or ECC based OpenPGP data, it
+>> is possible to create a buffer overflow.
 
-Use CVE-2010-5298.
+> Announce: http://lists.gnupg.org/pipermail/gnupg-announce/2014q4/000359.html
+> Upstream fix: http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=f715b9e156dfa99ae829fc694e5a0abd23ef97d7
+
+> Due to the unsigned integer this results in a pretty long value which
+> won't fit anymore into the allocated buffer.
+
+Use CVE-2014-9087.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -32,11 +30,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTS/3RAAoJEKllVAevmvmsSDcH/0yHd90E4aJfKbtlsIBfOi8p
-+XIdUtbWsYhFu97QjjubRkRO4KnRRmZJrygLcFN1XGJW80px8JZBqT1OW/vHSAwh
-rHaBLqEjl8z5MU41rlqSwnzjA17kG3pPvltOu8kYqiBEKn32YSMwU4ZCIYpa6+Sb
-LCiOM8iu5DX3VZrIjk4U/iStgOlxNs4i8Jv2xHy3oPSTspaO46LeeygTz6k9hlGr
-qk1Aek9gxr+FNk7MJ1kHsct3IUFq67TIBSgc3H7k/ucwOxh1VxfxVxsHgrgj0+N5
-4/8b3ZoLsNN1UY91KW/qcRJfCsC9XEI7NqDF/uTJKJX74DRBqMeOYG4YtAXECLs=
-=mxUa
+iQEcBAEBAgAGBQJUdYKjAAoJEKllVAevmvmsW0MIAK0AXXRqyrQZdqRfd+EXeJze
+HyXqqJVngMbdgwZwaGjhFVRBneCDn1GQVQ3zfFaqqREtl+8ult/QYKNKjl+525Gl
+AYtTWH1uxlf69RPxpkJN4wtgEEsky1+Z+FZx7EyVzg7PB4sImsixZDiveHl0tOdi
++Ga9tie2aGZNEdWi+L2YmI80rg7pblg6v9eKLx/nd0dAKbi6zR/+rz1hNreOl13z
+TfN9cY2fEL0I2adKcH84Gm/JXoYX594hNqwUploDk1vgjfdXeqxVpPIDWhUeEs/S
+5Jg/FnSa66fbDNrkXv561fAo7wafeS02bn+2pg+bdxLSbPxEPYQQ1qbB7prK3Ro=
+=Biqr
 -----END PGP SIGNATURE-----
