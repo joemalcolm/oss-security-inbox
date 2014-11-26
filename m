@@ -1,24 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/06/13
-Message-ID: <52F3D571.6080806@redhat.com>
-Date: Thu, 06 Feb 2014 19:33:21 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/16
+Message-ID: <5475F56B.30203@mccme.ru>
+Date: Wed, 26 Nov 2014 18:44:43 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel: SELinux local DoS
+Subject: Re: CVE Request: LibreOffice -- several issues
 Content-Type: text/plain; charset=utf-8
 
-On 02/06/2014 06:44 PM, P J P wrote:
+On 19.11.2014 23:05, timo.warns@...il.com wrote:
+> On 2014-11-19, Alexander Cherepanov wrote:
+>> [...]
+>>
+>> IIUC any crasher (or 100% cpu usage) in LO is a security issue
+>> because it takes down all other windows with it. But Michael Meeks
+>> from officesecurity@...ts.freedesktop.org indicated that they are
+>> not interested in CVEs for DoS-only crashers [...]
+>
+> This was (briefly) discussed already on this list (see
+> http://www.openwall.com/lists/oss-security/2012/04/19/18).
 
-> Linux kernel built with the NSA SELinux Support(CONFIG_SECURITY_SELINUX)
-> is vulnerable to a crash caused by an empty SELinux security context.
-> When a file has an empty security context, listing it via 'ls(1)' could
-> trigger this crash. Only user/processes with CAP_MAC_ADMIN privileges
-> are allowed to set the SELinux security context of a file.
-
-Note that this also affects systems providing facilities which allow 
-unprivileged users to mount crafted file systems.  Some of these 
-services do not require physical access to the machine to trigger file 
-system mounting.
+Thanks for the link! It seems I overlooked it at the time.
 
 -- 
-Florian Weimer / Red Hat Product Security Team
+Alexander Cherepanov
