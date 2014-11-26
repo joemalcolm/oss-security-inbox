@@ -1,46 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/4
-Message-ID: <53B5070F.1010501@redhat.com>
-Date: Thu, 03 Jul 2014 01:32:31 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE-2014-0235 cleanup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/8
+Message-Id: <20141126074814.2114433600F@smtpvbsrv1.mitre.org>
+Date: Wed, 26 Nov 2014 02:48:14 -0500 (EST)
+From: cve-assign@...re.org
+To: roucaries.bastien@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 768369@...s.debian.org
+Subject: Re: Stack smashing in libjpeg-turbo
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-Sorry deleted the original email.
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=768369#114
+> 
+> I created a minimal test case in around 200 lines.
+> 
+> It uses a file with the intercepted scanlines of the calls to jpeg_write_scanlines.
+> 
+> Also the Exif marker is read from such a file.
+> (And without this Exif marker the stack smash does not happen...)
 
-> CVE-2014-0235 should have been a completely valid CVE assignment
-> from Red Hat, but it would be extremely problematic to keep it
-> because that ID was accidentally used by Microsoft (typo of
-> CVE-2014-0325) and is in very widespread use for the wrong issue.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1098222 is for a single
-issue, an incomplete fix for CVE-2013-7345.
-
-Please use CVE-2014-3538 for
-https://bugzilla.redhat.com/show_bug.cgi?id=1098222
+Use CVE-2014-9092.
 
 - -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJTtQcPAAoJEBYNRVNeJnmTIdsQAM/2mjNs64W3DU814yXfLA+J
-zVGWMDhwVnuiXFkLy/ustTpSXT73YhutjGnSdUZzVZ1Ua8X6XLEsIIuIo9fjClna
-EjLnX99yW/a0YnISYnz/rznotALZbhbsoyV1LqmM/dKncSRM1J4oW/xeR/ZAQf8n
-Oo6fCgJIdO42YkaeF0S5w2JpShq9cImlwqsjmheBtr3Y0ne2/EEgsyN+8PChPcUZ
-+iFCdR4rgAYKCgqOPMLjct/zmC2fVq4d2nhlQ//IXx4u2/Qs8wN2EXJ1eKS23Cc0
-QY/y35OEfH2p8Vc9JcxyX2qRebAcZ2Eb6BjkYolsL2l6R9L4XzgWwqsVG02rgC7x
-36n+ymb8RUytBrJOuOlO0uJM8lbUm9t3NvqTDFXxmt2GFUV87Yr1aUjnUwL++Hsp
-OA+2NW+vaFdCig9XV4D8Qg0KRk7rqAnbQXn4nrp+Ajv41jlHf+NGnmMYBW4tMLf2
-iC4L+LUFo52j368Bom/Jol/vM41cDDX9eXvxqzA+Zdg7iyMN2qpV39EXzwrHtB3y
-mjgWnCes8UYZGMCddfeGged3hNMHSGuGUvRE0gORFcyihXmwbG2crxJaHRvjNQLD
-3LeBx9taHQDc8j/EkIHjN/Wcr48JjFrmvibcCCwKR9kUIdbn2Bq5/GKu46/Bw+TQ
-WQ14w7Gqmze5Zs3kLjC9
-=Hd07
+iQEcBAEBAgAGBQJUdYGqAAoJEKllVAevmvmsA7QH/ijNNlUkWF2Vst56xw9AZNUN
+dYdTRNXISkzOotHcglCpOomIzjbTWy4ablsLxryr0kUc4ZjIc5RlZuCTKAaVJ+EC
+RgphhkmFHkKNqPSVMLtIOpP4ZX/0uPSKAMlzoXsRzRgmEBG6pnYnokJTa47sit26
+iSpvAqXUNwJ/ZA14eUFMDdP6FbpOB4wmHS9h5nnUO7lzhmM/93XasD6WluBB0EBo
+F9xZ/a0pCfEV+9RwKMiGsr2w+nPYDzUWlnrNbVnw8ou9msI/tolGadUbbwCM1NY9
+FiemAFw4ZRExQIjDKaubApDlNuYzckmDNvBWJkwdVIJvBvQqNPVmUMP4MefDGhw=
+=F4GF
 -----END PGP SIGNATURE-----
