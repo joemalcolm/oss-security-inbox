@@ -1,55 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/5
-Message-ID: <53E4D712.4040205@fifthhorseman.net>
-Date: Fri, 08 Aug 2014 09:56:34 -0400
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/6
+Message-Id: <20141126074416.A89BF13A7F3@smtpvmsrv1.mitre.org>
+Date: Wed, 26 Nov 2014 02:44:16 -0500 (EST)
+From: cve-assign@...re.org
+To: dregad@...tisbt.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: MantisBT SQL injection in view_all_set.php
 Content-Type: text/plain; charset=utf-8
 
-On 08/08/2014 07:58 AM, Florian Weimer wrote:
-> On 08/08/2014 01:20 PM, Dan Carpenter wrote:
->> We could put a popup if there is a second keyboard attached to check
->> that the person controlling the existing keyboard is aware of the second
->> one.
-> 
-> Wouldn't this make using Yubikeys quite inconvenient?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It sure would.
+> https://github.com/mantisbt/mantisbt/commit/b0021673ab23249244119bde3c7fcecd4daa4e7f
+> https://www.mantisbt.org/bugs/view.php?id=17841
 
-And if the popup were modal/blocking (i.e. if it refused to connect the
-new device until the user agreed to it), which is the safest approach on
-a single-seat system, it causes another issue: if the user's HID devices
-are failing, and they're plugging in a new keyboard specifically to work
-around their failed hardware, there would be no way to dismiss the
-popup/grant permissions on the new device.
+Use CVE-2014-9089.
 
-You could have a more nuanced approach, though, to improve things at
-least for a machine used regularly.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-For example, you could register keyboards by serial number with the
-system, and have an allowlist that wouldn't cause modal blocking.  This
-would handle the yubikey case, and potentially also the failing HID
-case, if the user had cleared the secondary kbd before the primary failed.
-
-You could also avoid the popup if the system doesn't detect *any* actual
-HID device plugged in, to solve the problem of a machine that booted
-with no devices available.
-
-But please remember that a second keyboard is only one vector of attack.
- There are other user-interface devices and other system hardware that
-can be emulated by a sufficiently devious USB device.
-
-The same thing goes, of course, for PCI devices, disks, CPUs,
-expressCards (or whatever they're called today), firewire, RAM, etc. all
-of which are becoming more hot-pluggable on modern hardware.
-
-A well-thought-out system-wide policy of what to do on device hotplug
-might be useful, with a set of standard profiles (single-seat personal
-desktop (laptop), server, multi-seat desktop) to encourage sane behavior
-by default.  I have no idea what form such a policy might take, though.
-
-	--dkg
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+iQEcBAEBAgAGBQJUdYJTAAoJEKllVAevmvmsPXsIAL7o5j32aESsYx4kms0DsWr3
+u0x2zeI/gGwsy8L2dmbjhHVre1yKlEn+wwo6bQ+lKPfEi4FxKgXtYPaUVF0qim36
+m8fZvCcaUPodVIbBDLRD/TO+0C3SzvDw/E8+o469UMLQWxiNLX0TMIngyz6NGXH/
+TA5tpyKJq9DC/BmYpVfUFTTMFWJTAsQQY2MlBVbkchojHtyqaOCCCgFWg0r4Nyuo
+dYzK6XerjJTeD94liiDm0R2QmaR8SP0yPPa/5To3O0d1STx2UchAxkiE8U9kU/gd
+bLEo+hZjEQH7dLXN7mcnEIOoFjg5gu8vI644BsrGlVj30yCmM5QY2VH4aCqP7VQ=
+=yBkS
+-----END PGP SIGNATURE-----
