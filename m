@@ -1,48 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/12
-Message-ID: <543270BD.4010602@debian.org>
-Date: Mon, 06 Oct 2014 11:36:45 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com, rgerhards@...adiscon.com
-Subject: Re: vulnerability in rsyslog
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/5
+Message-Id: <20141126074215.3B34D13A7EE@smtpvmsrv1.mitre.org>
+Date: Wed, 26 Nov 2014 02:42:15 -0500 (EST)
+From: cve-assign@...re.org
+To: luto@...capital.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux kernel LDT handling bugs
 Content-Type: text/plain; charset=utf-8
 
-On 06/10/14 08:34, Rainer Gerhards wrote:
-> Sorry, it looks like I don't understand your question.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I think the clarification Sven is asking for is a statement like this
-(I'm deliberately using imaginary version numbers which do not resemble
-rsyslog's actual 7.x versions, to make it clear that I'm not making a
-statement about this particular rsyslog vuln):
+> 1. espfix64 is designed to double-fault and recover on failures. This
+> worked great for #GP and #NP, but it didn't work for #SS.
 
-"""
-Releases 1.2.x < 1.2.4, 1.3.x < 1.3.7 and 1.4.x < 1.4.1 are vulnerable
-unless the vendor-supplied patch is applied. Releases < 1.2, >= 1.2.4,
->= 1.3.7 and >= 1.4.1 are not vulnerable.
-"""
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=6f442be2fb22be02cafa606f1769fa1e6f894441
 
-In most projects' version numbering practices:
+Use CVE-2014-9090.
 
-* a version (release) is a fixed point that can never change (so if
-  1.2.3 is vulnerable to CVE-1066-1234 it will always be vulnerable
-  to CVE-1066-1234)
 
-* a stable release series or stable branch can have later versions that
-  are intended to supersede an earlier version completely, while having
-  minimal changes to fix serious bugs (so the upstream project can
-  address CVE-1066-1234 by releasing 1.2.3.1 or 1.2.4)
+> 2. When trying and failing to return directly to userspace from IST
+> context
 
-* alternatively, the upstream project can release recommended patches
-  to be applied by sysadmins or vendors, which might be labelled
-  "1.2.3 patch 1" or something if the project is particularly formal,
-  or might just be identified by git/svn/etc. commit ID
+> I'm not sure that this one is even worthy of a CVE.
 
-* even if 1.2.3 is vulnerable and always will be, a downstream vendor
-  like Debian or Red Hat might release a derived version like
-  1.2.3-4+deb7u5 which incorporates the recommended patch from the
-  upstream project, or a patch from the vendor or a third party, and so
-  is not vulnerable
+There is currently no CVE ID for finding 2.
 
-Regards,
-    S
 
+> 3. When the kernel tried and failed to return directly to userspace
+> from IST context and espfix64 was *not* involved
+
+> It's also harmless unless an attacker can persuade the kernel to
+> corrupt its stack, and that is unlikely to happen by itself.
+
+There is currently no CVE ID for finding 3.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUdYDIAAoJEKllVAevmvms0TIH/its/p32/ROv6gtP0xdrtKkO
+cDWFeEZyBcGKeIHjccURiRZZXMwAgAuVvY+FmScPw+Dg0YrMcU4G7rAD/3USDo5v
+RN8V+RRPzwfawdVPMery46H4JbWZm1KCujXN8r4RtbAfrWnq/KnyaT0PNMFuFcat
+u/YCZpKacaDH1hBMKgoVaWgJzmIwZSDdDdE0HvN25/A7lTWg3Bm1SQPUxxdhduup
+EkO6aE2JKwexS5hQi+Nr+2djtt8DMbsWKVGmxXTZ0UY3jOcyS/o6g6cCpPD1G8Nx
+jNiNUznCdL9kqiARlNYwwHp5DczswjVAoLKh/pRJL7HvN6pjqdhYjCZUc/VG7G8=
+=OQfC
+-----END PGP SIGNATURE-----
