@@ -1,47 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/6
-Message-ID: <20140623140208.GB16963@mail.corp.redhat.com>
-Date: Mon, 23 Jun 2014 16:02:08 +0200
-From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/13
+Message-ID: <20141126152525.GB20045@suse.de>
+Date: Wed, 26 Nov 2014 16:25:25 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: 752395@...s.debian.org
-Subject: CVE request: python: _json module is vulnerable to arbitrary process memory read
+Subject: blkid command injection
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi
 
-It was reported [1] that Python built-in _json module have a flaw
-(insufficient bounds checking), which allows a local user to read
-current process' arbitrary memory.
-From initial bug report [1]:
-...
-The sole prerequisites of this attack are that the attacker is able to
-control or influence the two parameters of the default scanstring
-function: the string to be decoded and the index.
+There is a command injection inside blkid. It uses caching
+files (/dev/.blkid.tab or /run/blkid/blkid.tab) to store info about the
+UUID, LABEL etc it finds on certain devices.
 
-The bug is caused by allowing the user to supply a negative index
-value. The index value is then used directly as an index to an array
-in the C code; internally the address of the array and its index are
-added to each other in order to yield the address of the value that is
-desired. However, by supplying a negative index value and adding this
-to the address of the array, the processor's register value wraps
-around and the calculated value will point to a position in memory
-which isn't within the bounds of the supplied string, causing the
-function to access other parts of the process memory.
-...
+However, it does not strip " character, so it can be confused to
+build variable names containing embedded shell metas, which it would usually
+encode inside the value.
 
-Can a CVE ID be assigned to this issue please?
-Also CC'ing the Debian bugreport here.
+Given an USB stick with /dev/sdb1 you can:
+
+# mkfs.ext4 -L 'X"`/tmp/foo` "' /dev/sdb1
+# blkid -o udev /dev/sdb1
+ID_FS_LABEL=X__/tmp/foo___
+[...]
+
+Seems to be OK, but invoking blkid a second time, taking the cache in effect:
+
+# blkid -o udev /dev/sdb1
+ID_FS_LABEL=X
+ID_FS_LABEL_ENC=X
+ID_FS_`/tmp/foo` "" UUID=...
+[...]
 
 
-References:
-[1] Upstream bug report with additional technical details: http://bugs.python.org/issue21529
-[2] Debian bug tracker: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752395
-[3] RedHat bug tracker: https://bugzilla.redhat.com/show_bug.cgi?id=1112285
+"blkid -o udev" is often used in root context via udev or in automounters
+(uam-pmount) to construct key=value environment variables inside shell scripts
+which are then evaluated.
+Might be possible to construct an embedded LD_PRELOAD= as well for the binary
+case.
 
-Thanks.
+By injecting > character one can probably construct whole fake cache entries.
+
+Sebastian
+
+
+
+
 -- 
-Vasyl Kaigorodov | Red Hat Product Security Team
-PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
 
-Content of type "application/pgp-signature" skipped
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
