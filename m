@@ -1,18 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/7
-Message-ID: <5492A3E6.4020705@redhat.com>
-Date: Thu, 18 Dec 2014 10:52:38 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Embargoes for secondary issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/18
+Message-ID: <1417020530.20127.42.camel@vain.rhgalway>
+Date: Wed, 26 Nov 2014 16:48:50 +0000
+From: Caolán McNamara <caolanm@...hat.com>
+To: Alexander Cherepanov <cherepan@...me.ru>
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org, officesecurity@...ts.freedesktop.org, Michael Meeks <michael.meeks@...labora.com>, Miklos Vajna <vmiklos@...e.cz>, Moritz Muehlenhoff <jmm@...ian.org>
+Subject: Re: [Officesecurity] Re: CVE Request: LibreOffice -- several issues
 Content-Type: text/plain; charset=utf-8
 
-Suppose we have an unfixed, public issue, and while working on a fix, 
-other issues in the same code are discovered which are different flaws, 
-but have similar impact than the original issue.
+On Wed, 2014-11-26 at 18:43 +0300, Alexander Cherepanov wrote:
+> https://www.libreoffice.org/about-us/security/advisories/ , which
+> happily lists several DoS issues: CVE-2012-4233, CVE-2013-4156. IMHO
+> this reaffrims the default security policy.
 
-Do we need an embargo for the secondary issues, or can we just make them 
-public immediately?  I would strongly prefer the latter.
+>From our side, the page is generally intended to just list all resolved
+CVEs which were opened wrt LibreOffice (and a few which were opened
+against libraries bundled into upstream provided LibreOffice builds).
+There's no filtering out of any CVEs logged about LibreOffice that might
+be considered not significant.
 
--- 
-Florian Weimer / Red Hat Product Security
+Again, from our side, when presented with DoS documents we do tend to
+push back against granting them security bug status. Not that we don't
+think they are serious, just that we think they don't merit extra
+special (time expensive) security level handing. I *think* 2012-4233 was
+issued/requested directly by the discoverer high-tech bridge security
+research. Maybe it initially looked a bit more serious than it turned
+out.
+
+In other cases e.g. 2012-4156 the affected application is really Apache
+OpenOffice not LibreOffice but the same document that corrupts AOO
+causes us to deref a NULL and fall over so it got listed there because
+we people asked about it, given our shared code base origin. (maybe
+something similar was also the case for 2012-4233, I forget, it was
+years ago)
+
+C.
+
