@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/3
-Message-ID: <CACYkhxjkgmUZtcvNWFeoccdLcFwtxo+EFR5fwB+TwYCR3yCxtA@mail.gmail.com>
-Date: Tue, 5 Aug 2014 14:38:05 +1000
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: Possible CVE request: subversion MD5 collision authentication leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/9
+Message-ID: <20141126091333.GA26566@localhost>
+Date: Wed, 26 Nov 2014 10:13:33 +0100
+From: Tobias Stoeckmann <tobias@...eckmann.org>
+To: Alan Coopersmith <alan.coopersmith@...cle.com>
+Cc: oss-security@...ts.openwall.com, Hanno Böck <hanno@...eck.de>
+Subject: Re: OpenBSD patch issue also affects GNU patch
 Content-Type: text/plain; charset=utf-8
 
-On 5 August 2014 08:32, Ben Reser <ben@...er.org> wrote:
-> I think your understanding of the current state of MD5 collision attacks is out
-> of date.  Chosen prefix attacks are possible.  See:
-> http://www.win.tue.nl/hashclash/ChosenPrefixCollisions/
->
-> The MD5 hash is created off the data in the following format:
-> <$URL> $REALM
->
-> An attacker trying to take advantage of this only needs the $URL portion to
-> match their server.  The $REALM can then be whatever data is required to make
-> the MD5 hash match the system they are trying to attack.
+On Tue, Nov 25, 2014 at 03:37:59PM -0800, Alan Coopersmith wrote:
+> On 11/25/14 03:28 PM, Hanno Böck wrote:
+> >I don't know if this is a random coincidence or if gnu patch and
+> >openbsd patch share some common ancestor code (haven't checked details).
+> 
+> I believe both descended from Larry Wall's original patch program.
+> https://en.wikipedia.org/wiki/Patch_%28Unix%29
 
-Just to clarify - does the attacker have control of both $REALM parameters?
+Correct, the BSD patch programs (which mostly derived from OpenBSD
+these days) are siblings to GNU patch, therefore the basic fundamentals
+are equal, yet they differ among their functionality.  In this regard,
+GNU patch is definitely leading.
 
-A chosen prefix collision still requires the attacker provide both
-inputs (or at-least
-the suffix to both inputs).
+After creating a patch for OpenBSD, I have also created a bug report
+through bug-patch@, here:
+https://lists.gnu.org/archive/html/bug-patch/2014-11/msg00007.html
 
-Regards,
-  Michael
+So by now, there are two reports.  Good to see that this was discovered
+on an OpenBSD mailing list and reported to other software projects, too!
+
+
+Tobias
