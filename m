@@ -1,33 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/7
-Message-Id: <BB5C6DCB-689F-434F-97CC-5AE4EBCB67AF@omniti.com>
-Date: Tue, 9 Dec 2014 01:43:51 -0500
-From: Dan McDonald <danmcd@...iti.com>
-To: oss-security@...ts.openwall.com
-Cc: Dan McDonald <danmcd@...iti.com>
-Subject: CVE Request for illumos distributions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/20
+Message-Id: <20141126171457.702D9B2E0C2@smtpvbsrv1.mitre.org>
+Date: Wed, 26 Nov 2014 12:14:57 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: cpio heap-based buffer overflow [was Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)]
 Content-Type: text/plain; charset=utf-8
 
-I believe this will be the first time the illumos project (http://www.illumos.org/) has requested a CVE number.  I apologize for any newbie mistakes.  PLEASE NOTE:  We are the open-source inheritor of what was once OpenSolaris's OS/Net consolidation (i.e. the kernel, system libraries, and system commands).  WE ARE NOT RELATED TO ORACLE or ORACLE SOLARIS.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Illumos bug #5421 - http://illumos.org/issues/5421  which is now fixed in the upstream illumos-gate, is an innocuous fix to a serious problem that allows an arbitrary user in the global zone (non-global zones are not able to panic the machine) to panic the machine.
+>> http://seclists.org/fulldisclosure/2014/Nov/74
 
-Illumos has various distributions from various parties.  These include, but are not limited to:
+>> Even grabbing something as seemingly innocuous as cpio, a short spin
+>> with afl-fuzz (or, probably, anything else) will immediately yield
+>> this:
+>>
+>> http://lcamtuf.coredump.cx/afl/vulns/lesspipe-cpio-bad-write.cpio
+>>
+>> It's a file with declared block length of 0xffffffff. That gets us
+>> here, with the value populated to c_filesize (copyin.c, list_file()):
+>>
+>>    link_name = (char *) xmalloc ((unsigned int) file_hdr->c_filesize + 1);
+>>    link_name[file_hdr->c_filesize] = '\0';
+>>
+>> ...where we end up allocating a zero-byte buffer and then promptly
+>> writing out of bounds (just under the buffer on 32-bit systems or
+>> somewhere above it on 64-bit).
 
-	OmniOS from OmniTI
-	SmartOS from Joyent
-	NexentaStor from Nexenta
-	The OpenIndiana project
-	Coraid
+> Could a CVE please be assigned to the above issue in cpio?
 
-Because SmartOS presents non-global zones to its non-administrative users, it is not a high-priority for them.  For OmniOS and OpenIndiana, it is more critical.
+Use CVE-2014-9112.
 
-OmniOS has updated its packaging servers for all supported releases:  r151006/LTS, r151010/old-Stable, r151012/current-stable, and bloody.  Merely issuing "pkg update" and rebooting will fix the problem.  Users still on r151008 should upgrade to r151012 ASAP.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-SmartOS has standard upgrade procedures.
-
-Other distros' contacts are Bcc:ed here.  They will contact me if they have updates.
-
-Thank you!
-Daniel L. McDonald -- Illumos RTI Advocate, and unofficial Security Coordinator
-
+iQEcBAEBAgAGBQJUdgnBAAoJEKllVAevmvmsp80H/3Fh+1yfg7i8W9O9Y/ghfCAz
+Bin+VrfprdyXE49ggXWFGu0/RapPaDu5SVZBlvpCYQhcA1/UFuAvI5etL1mjPYVi
+XrM2pO4u80TW2GdDe24ChhGj7wmlWoUz6/VSc3Zk/kXTF6aD8tDG7vxkIkvvldrq
+muFNoZBf8cZZTHzrr5uHs+8PIJ/XfKw87k504SbCdNrgaXSsrSa0D2L8u9nEfIW2
+VZt0SiwGyScbtW0MYSUqRg8Zby4H+2XLtgM1jfqczakHey0Jri84JJ5J5QJxEMBG
+dHV53iuCNTNjtF6vi8asT3ifpsvv29uNN53T5Rx2csYa5elozeshgu+mE0fUURE=
+=nhR6
+-----END PGP SIGNATURE-----
