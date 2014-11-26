@@ -1,23 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/21/3
-Message-ID: <CAA7hUgGR-=M_QkOyO4PFXciF=veQfeNLQBv8vbELpSLmS7=BOg@mail.gmail.com>
-Date: Fri, 21 Feb 2014 09:45:01 +0100
-From: Raphael Geissert <geissert@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Request regarding posts to the lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/21
+Message-Id: <20141126171655.7F01052E0C8@smtpvbsrv1.mitre.org>
+Date: Wed, 26 Nov 2014 12:16:55 -0500 (EST)
+From: cve-assign@...re.org
+To: krahmer@...e.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: blkid command injection
 Content-Type: text/plain; charset=utf-8
 
-On 20 February 2014 23:10, Solar Designer <solar@...nwall.com> wrote:
-[...]
-> I find no other examples of this problem "in the past few days",
-> although of course we've seen it numerous times before.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There was also this one from me, but that was an oversight when
-writing the subject.
+> There is a command injection inside blkid.
+> 
+> Given an USB stick with /dev/sdb1 you can: ...
+> 
+> ID_FS_`/tmp/foo` "" UUID=...
+> 
+> "blkid -o udev" is often used in root context via udev or in automounters
+> (uam-pmount) to construct key=value environment variables inside shell scripts
+> which are then evaluated.
 
-http://openwall.com/lists/oss-security/2014/02/07/13
+Use CVE-2014-9114.
 
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+It seems fairly clear that "blkid -o udev" is attempting to create
+lines that are safe sh input. Or, more specifically, the expectation
+is that the lines would be directly usable. We currently don't see a
+reasonable alternative interpretation that blkid is simply attempting
+to provide output lines that accurately reflect strings found on
+device media, and is expecting that other components will make a
+security determination about each line, before using that line as sh
+input. Also, the blkid maintainer has apparently made other changes
+relating to quoting of strings found on device media:
+
+  http://git.kernel.org/cgit/utils/util-linux/util-linux.git/commit/?id=1c9885cde853a458b5abe5ce0804abc27caf4fd4
+
+(we understand that it's not completely analogous). Finally,
+http://git.kernel.org/cgit/utils/util-linux/util-linux.git/tree/misc-utils/blkid.8
+says 'print key="value" pairs for easy import into the udev
+environment' and those security determinations would probably not be
+considered "easy import."
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUdgo0AAoJEKllVAevmvms/vEH/Rt5DBzngbJz8CFPoomJbQyv
+NSK59hcK0iWcvEf62RVRfD3S1jvqSUGZeFIILujK0vOrEMbiuyyqgKUjqnarcF8W
+ofwEonzPQofKjaT5TmrlGjuhSCJcyM8VrD4yg4ctGfIWcr4MID6BoPUC4T2wLxq6
+8z4T2dfa8FhOlCDO7WcjQGX0N72tbc9ptD5ISCo7QiPJdkX8mdlABariB5u9FTap
+/FoBfwlx+/R64grEqvHB7SM4DKqJLE/6OBOVuESIDeh32uIPtZ69Y+gM7t5h6H2E
+Tq232BVj9+uvdJsFouWxDMi/GXWeCqrcrTIa6EvuepKJ5a7LcWi/UJvswzQvsy8=
+=1Rws
+-----END PGP SIGNATURE-----
