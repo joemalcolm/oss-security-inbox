@@ -1,36 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/20
-Message-Id: <20141002034026.BF29A72E0A0@smtpvbsrv1.mitre.org>
-Date: Wed,  1 Oct 2014 23:40:26 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2014-7224 - Android accessibility and accessibilityTraversal vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/11
+Message-ID: <5475C613.1010701@tao.at>
+Date: Wed, 26 Nov 2014 13:22:43 +0100
+From: Sven Schwedas <sven.schwedas@....at>
+To: 767227@...s.debian.org
+CC: Ángel González <angel@...its.net>,  oss-security@...ts.openwall.com, mmcallis@...hat.com,  cve-assign@...re.org, axkibe@...il.com
+Subject: Re: Re: CVE request: lsyncd command injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2014-11-26 00:18, Ángel González wrote:
+> On 20-11-2014 Mitre wrote:
+>>> There is a command injection flaw in lsyncd, a file change monitoring
+>>> and synchronization daemon:
+>>>
+>>> https://github.com/axkibe/lsyncd/issues/220
+>>>
+>>> https://github.com/creshal/lsyncd/commit/18f02ad013b41a72753912155ae2ba72f2a53e52
+>>>
+>>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=767227
+>>
+>> Use CVE-2014-8990. The scope of this CVE ID includes both:
+>>
+>>   1. code execution with ` characters or other characters that are
+>>      special to a shell
+>>   2. denial of service scenarios in which a user with write access
+>>      to a local directory uses special characters to make
+>>      synchronization fail (might have security relevance in some
+>>      scenarios)
+>>
+>> The MITRE CVE team does not have a Lua expert. The code change adds:
+>>
+>>   local path1 = event.path:gsub ('"', '\\"'):gsub ('`', '\\`'):gsub ('%$','\\%$')
+>>   local path2 = event2.path:gsub ('"', '\\"'):gsub ('`', '\\`'):gsub ('%$','\\%$')
+>>
+>> This does not seem to be the typical fix approach for unsafe input to
+>> a shell. Has anyone concluded that this is an incomplete fix that ought
+>> to be modified before the 2.1.6 release?
+> 
+> 
+> It is indeed an incomplete fix:
+> 
+> * The gsub ('%$','\\%$') works in lua5.1, but under lua5.2 the second %
+> character makes lsyncd fail with the error "stdin:1: invalid use of '%'
+> in replacement string". Thus allowing a complete denial of service
+> 
+> 
+> * Not all metacharacters are filtered, so command execution is still
+> present. In particular, the escaped characters can be prefixed with a
+> backslash to bypass the filter.
+> 
+> 
+> The attached patch should hopefully solve these issues.
 
-CVE-2014-7224 has been assigned to the issue mentioned in
+Thank you. I've tested the patch locally and it appears to be working
+correctly (mine was more a quick hack to get our own lsyncd instances
+running again).
+It also has been merged upstream:
 
-  https://daoyuan14.github.io/news/newattackvector.html
+> https://github.com/axkibe/lsyncd/commit/e9ffda07f0145f50f2756f8ee3fb0775b455122b
 
-that affects Android devices when using a non-default configuration
-in which an accessibility feature is enabled.
+Attached is the patch adapted for Wheezy's lsyncd 2.0.7-3.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+-- 
+Mit freundlichen Grüßen, / Best Regards,
+Sven Schwedas
+Systemadministrator
+TAO Beratungs- und Management GmbH | Lendplatz 45 | A - 8020 Graz
+Mail/XMPP: sven.schwedas@....at | +43 (0)680 301 7167
+http://software.tao.at
 
-iQEcBAEBAgAGBQJULMgvAAoJEKllVAevmvmsfrcH/3YbumH+fpcGPuY0GH01zX/7
-qCCl3cMtHZtBEqXorGsHlZ6zJNSz0cpVWGo2R46lyNm0UXOXzI10ihBM0/8k/jl9
-QqoV7bEmKcA/cM9eodNgj0+LVItzdFJ+hzlXBeVLrU/wnahFwlZscdZm3eajZKQP
-pHUInwXwgaN8dJ7eU+BYirgn8LDhO4Vdi7xuSTKY2nGXHT96uh5bAYszTltKA+oy
-zJpcIkk0OdVp3sRjjMyKOYUTSpGvTFn4ZDuTHQWZI9Jk8Ch7GsFTm99ZOM6aGLZl
-KtiISfM7rsMgKOny4qlFeWjlTH+8mfNT9FacHwLaTLfGmxDDd2N6raYM38LN9NM=
-=2UIN
------END PGP SIGNATURE-----
+View attachment "0001-Properly-sanitize-mv-parameters-CVE-2014-8990.patch" of type "text/x-patch" (1695 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (649 bytes)
