@@ -1,40 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/5
-Message-ID: <85138.1404886418@critter.freebsd.dk>
-Date: Wed, 09 Jul 2014 06:13:38 +0000
-From: "Poul-Henning Kamp" <phk@....freebsd.dk>
-To: Michael Samuel <mik@...net.net>
-cc: oss-security@...ts.openwall.com
-Subject: Re: Re: Varnish - no CVE == bug regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/19
+Message-ID: <m550rn$ukk$1@ger.gmane.org>
+Date: Wed, 26 Nov 2014 17:58:31 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: CAPTCHA bypass in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-In message <CACYkhxgfcOr=sXxUmsT8VctvHHqN-tJnxa4cKrV9nS0OrccZ0A@...l.gmail.com>, Michael Samuel w
-rites:
->So just to clarify:
->
->On 9 July 2014 05:55, Poul-Henning Kamp <phk@....freebsd.dk> wrote:
->>         param.show auto_restart
->>         200 132
->>         auto_restart
->>                 Value is: on [bool] (default)
->>                 Default is: on
->>
->>                 Restart child process automatically if it dies.
->
->Does this mean that the parent holds the accept() socket open, so if a worker
->dies (eg. due to the client injecting a header into it's own
->connection) only that
->connection is affected?
+Description:
 
-No, a restart shuts all connections.
+There is a weakness on the CAPTCHA system that is used upon registration 
+of a new user that could allow a malicious individual to perform a 
+denial of service attack by indiscriminately creating new accounts, thus 
+generating a high load on the server.
 
-The master process' job is to hold the configured stated and start/stop
-the worker process.  As part of the startup the socket is opened & bound,
-but the master does not have anything to do with client sockets.  This
-is mainly a security decision:  The master must be involatile.
 
--- 
-Poul-Henning Kamp       | UNIX since Zilog Zeus 3.20
-phk@...eBSD.ORG         | TCP/IP since RFC 956
-FreeBSD committer       | BSD since 4.3-tahoe    
-Never attribute to malice what can adequately be explained by incompetence.
+Affected versions:
+<= 1.2.17
+
+Fixed in versions:
+1.2.18 (not yet released)
+
+Patch:
+See Github [1]
+
+Credit:
+Issue was discovered by Alejo Popovici and fixed by Victor Boctor 
+(MantisBT Developer)
+
+References:
+Further details available in our issue tracker [2]
+
+
+D. Regad
+MantisBT Developer
+http://www.mantisbt.org
+
+
+[1] http://github.com/mantisbt/mantisbt/commit/7bb78e45
+[2] https://www.mantisbt.org/bugs/view.php?id=17811
+
