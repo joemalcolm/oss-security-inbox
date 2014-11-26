@@ -1,19 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/11
-Message-ID: <CAK+cssKTma3Hw_Fv==odPQC0TJAO6Vtrws7GoDSveSFdb8S+Hg@mail.gmail.com>
-Date: Sat, 27 Sep 2014 13:07:40 -0500
-From: Mark Knight <mknight.tag@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: A Digital Random Bit Generator
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/4
+Message-Id: <20141126074035.BD3AC13A7EE@smtpvmsrv1.mitre.org>
+Date: Wed, 26 Nov 2014 02:40:35 -0500 (EST)
+From: cve-assign@...re.org
+To: jmm@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: icecast: possible leak of on-connect scripts
 Content-Type: text/plain; charset=utf-8
 
-An RBG implemented in POSIX C has been placed on GitHub:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://github.com/mknight-tag/MKRAND
+> I think this icecast2 issue should also receive a CVE ID:
+> https://trac.xiph.org/changeset/19137/
 
-It has been under test since late 2013 but we would like feedback from the
-wider community. Please use the issue tracker for your feedback.
+> UID and GID were changed, supplementary groups were left in place.
 
-At this time the code quality can be considered alpha, but is stable enough
-to be evaluated as a possible candidate for replacement of previous RBGs.
+Use CVE-2014-9091.
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUdYIDAAoJEKllVAevmvmsC/MH/2bPkBub0Um+UZSla/T0vSB+
+fD/5NleDQKP2Hc46QdpD0R8IO1ueTm2hW1U9iAUAUTxhjc86MAuB3qdJ/a87kSbS
+Z3hdHo3qEKBzSCKEyPpS3UdDe/F6TbtthoWnbzGTUVXPu7sqmTwQMvwnJQ+AHGUV
+vPxfCUn7WPitBSgEak6lVltZzEW7nraidE+dFUEvLfKDvpDil2tH78QV56Gtu/Cz
+Kxm8J+Awn3Ep+YfP6TdExGDCFNjF9Bos9ozFxQ2f1aI36zOlWbXuzLgwSOgCOhsa
+vzaMBkDAPEqDIjA+k7zQ1riOpBBa7X4LEncHDQmgwtvbBLCwl/lw2Ih7jJbyD0c=
+=EQrU
+-----END PGP SIGNATURE-----
