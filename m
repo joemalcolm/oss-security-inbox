@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/15
-Message-Id: <201402121621.s1CGLIwL013645@linus.mitre.org>
-Date: Wed, 12 Feb 2014 11:21:18 -0500 (EST)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/22
+Message-Id: <E1XtgTn-0003zj-K6@rmm6prod02.runbox.com>
+Date: Wed, 26 Nov 2014 12:34:15 -0500 (EST)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Apple goto fail - lessons that should be learned
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I recently looked at Apple's "goto fail" vulnerability
+revealed back in February this year, to see what could or should have
+been done to find the vulnerability BEFORE the code was released to users.
+You can see the result here:
 
-> Second, 0.3.5 and 0.3.6 have a series of differences in handling of
-> command-line arguments. This seems to be most likely a reaction to
-> Florian Weimer's observation of "you need to make sure that you
-> prevent option injection through positional arguments." Does anyone
-> believe that option injection was impossible in 0.3.5? If not, we will
-> make a fourth CVE assignment.
+http://www.dwheeler.com/essays/apple-goto-fail.html
 
-Use CVE-2014-1929.
+As always, if there are additional measures, let me know.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+I've previously done this exercise with:
+* Heartbleed: http://www.dwheeler.com/essays/heartbleed.html
+* Shellshock: http://www.dwheeler.com/essays/shellshock.html
+* POODLE: http://www.dwheeler.com/essays/poodle-sslv3.html
 
-iQEcBAEBAgAGBQJS+57hAAoJEKllVAevmvmshgoH/i9CI0xncK8FfQE2t8dA96Cc
-3u94LLYzD+hqLMKSuNdArk7ekx00M/53p6ntFqff+neZWGLqVteo4ZPUFspWIv0W
-P7u1GWAMZl75KamqgRXrcp5mPbE5axe7FrEW0Z3Wd0PdT4xWMa9GUALypqGrOYNr
-zHehk+eLhqqapD4Z2xBFDjMEAzHobTeOHXP7tOL7e7+ut3UMmGAlG/i6FIBn3XKq
-/X2mHQ8EykDyb09oyih20NuttOtNr9aOkTJyODJK6Yqdr7gPu3tD3TVogqYvYNRm
-qwPZZLfEqvH4rlMsua/exySvQSMp+eOl+NJ720YRU8XPRzZGzxqZguaayAryT+U=
-=Pt+A
------END PGP SIGNATURE-----
+My hope is that everyone involved in software development and/or
+security analysis will get better at countering or detecting
+vulnerabilities *before* they get out to users.  Learning from the past
+seems like a way to help get there.
+
+--- David A. Wheeler
