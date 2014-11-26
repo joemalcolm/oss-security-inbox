@@ -1,95 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/30/5
-Message-Id: <E1WfTQw-0003kR-8R@xenbits.xen.org>
-Date: Wed, 30 Apr 2014 12:16:18 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 91 - Hardware timer context is not properly context switched on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/28
+Message-ID: <20141126222509.GA29773@kludge.henri.nerv.fi>
+Date: Thu, 27 Nov 2014 00:25:09 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: jack@...ezen.org
+Subject: CVE request: Canto Feed URL Parsing Command Line Injection 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Can I get 2013 CVE for Canto feed URL parsing command line injection
+vulnerability, thanks.
 
-                     Xen Security Advisory XSA-91
-                               version 2
+Project website: http://codezen.org/canto-ng/
+Affected versions: All versions prior to v0.9.0
+Debian version affected: 0.7.10-4
+Canto was later removed from Debian. Versions 0.7.10-4 (wheezy) and 0.7.9-1
+(squeeze) are not affected with this payload.
+Upstream fix:
+https://github.com/themoken/canto-curses/commit/2817869f98c54975f31e2dd674c1aefa70749cca
+PoCs attached from the original advisory email.
+OSVDB: http://osvdb.org/101335
 
-    Hardware timer context is not properly context switched on ARM
+Reported in Debian BTS https://bugs.debian.org/731582 by
+<the_walrus_88@...lymail.net>. Quoting the mail:
 
-UPDATES IN VERSION 2
-====================
+"""
+I have just found a command line injection security vuln in
+canto. The program fetches feeds from configured sites, and the
+feeds contain URLs that people may want to visit. If a user
+starts canto and chooses to go to one URL from one feed, canto
+constructs a sh command line to visit the URL, but it doesn't
+remove metachars. Therefore a malicious feed (owner turned bad,
+man in the middle attack if fetched with http) can put in bad
+data in all link and guid elements of the feed and use this to
+hack the user when they visit some of the URLs. Not good. See my
+conf.py and evil.rss files for an example. Sorry for my English!
+"""
 
-Public release.
+In case someone finds more issues you can contact developer via:
+http://codezen.org/canto-ng/contact-bugs/
 
-ISSUE DESCRIPTION
-=================
+---
+Henri Salo
 
-When running on an ARM platform Xen was not context switching the
-CNTKCTL_EL1 register, which is used by the guest kernel to control
-access by userspace processes to the hardware timers. This meant that
-any guest can reconfigure these settings for the entire system.
+Download attachment "evil.rss" of type "application/x-rss+xml" (1526 bytes)
 
-IMPACT
-======
+View attachment "conf.py" of type "text/x-python" (75 bytes)
 
-A malicious guest kernel can reconfigure CNTKCTL_EL1 to block
-userspace access to the timer hardware for all domains, including
-control domains. Depending on the other guest kernels in use this may
-cause an unexpected exception in those guests which may lead to a
-kernel crash and therefore a denial of service.
-
-64-bit ARM Linux is known to be susceptible to crashing in this way.
-
-A malicious guest kernel can also enable userspace access to the timer
-control registers, which may not be expected by kernels running in
-other domains. This can allow user processes to reprogram timer
-interrupts and therefore lead to unexpected behaviour, potentially up
-to and including crashing the guest. Userspace processes will also be
-able to read the current timestamp value for the domain perhaps
-leaking information to those processes.
-
-VULNERABLE SYSTEMS
-==================
-
-Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onwards.
-
-x86 systems are not vulnerable.
-
-MITIGATION
-==========
-
-None.
-
-CREDITS
-=======
-
-Chen Baozi discovered this issue as a bug which was then diagnosed by
-Julien Grall.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa91-unstable.patch                  xen-unstable
-xsa91-4.4.patch                       Xen 4.4.x
-
-$ sha256sum xsa91*.patch
-8a3dc1f001274550acfe929a0a443b09f8164001f6eea76821bd87292b8732e0  xsa91-4.4.patch
-327ccd88f2d9bc21daf51f3e5c81cbae2e779a6f997715d9d0d95285c509ecbd  xsa91-unstable.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTYMejAAoJEIP+FMlX6CvZ3oMH/j+7Ln89gf0rvyvwUAwK7EUj
-AD2fR/OSXQJVs4g0fZDSft4wgsIpbnbvcCl06tK98XAZH8Cyr0burQV4rXgQbM9e
-rWYRpfy4mWt7RNvwdgeBYecuEYvFIULmMC1hI+eJRtJTrB8UnpCvXLPbFktp2zXP
-Z+pPjck/dAjS8HKJZckL5ciy9ctTr1R50NmpqvW9FfeZAVhahmbmMiz3A5izQEQ0
-BppXWdRad2J5vcR2u8k3uxweUfWM1Yg/eQAmMVvWPS45ceH+UHgqaGngBzWlM9oV
-SwqCDl0/8DjcQziFnKx5cdYcXfFbTzqV7SP5OzcV2BRoSvGZOVDowaXsqvt1jME=
-=LkmE
------END PGP SIGNATURE-----
-
-Download attachment "xsa91-4.4.patch" of type "application/octet-stream" (2714 bytes)
-
-Download attachment "xsa91-unstable.patch" of type "application/octet-stream" (2715 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
