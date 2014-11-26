@@ -1,30 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/8
-Message-ID: <20140328155615.GC2550@sivokote.iziade.m$>
-Date: Fri, 28 Mar 2014 17:56:15 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: OT What are the delays in delivery of Fyodor's Full Disclosure list?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/2
+Message-ID: <20141126035448.GA27437@openwall.com>
+Date: Wed, 26 Nov 2014 06:54:48 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Tim Brown <tmb@...35.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
-Sorry for offtopic.
+On Sun, Nov 23, 2014 at 05:59:41PM +0300, Solar Designer wrote:
+> So far no distro has expressed any interest in having this embargoed.
+> 
+> Distros list members: please speak up (here or on the distros list, with
+> Tim CC'ed) if you'd like this embargoed.
+> 
+> Tim: if until Tuesday no distro says they want this embargoed, please go
+> ahead and make the issue fully public.  (On a related note, I hate it
+> when an issue is sort of "semi-public".  It's the worst possible case.
+> When this happens, it's a reason to opt for a shorter embargo period, or
+> for none at all indeed.)  If an embargo is requested, please make sure
+> there's an exact date and time for the planned public disclosure.
 
-What are the delays in the delivery in 
-Fyodor's Full Disclosure list?
+So far no distro has expressed any interest in having this embargoed,
+and no specific coordinated disclosure date has been proposed by anyone.
+Tim, please make the issue public now by posting it in here.  Thanks!
 
-On several occasions I noticed significant
-delays in delivery of my emails, including
-on the mirror.
-
-Today at  17:06:09 +0200 I tried to post 
-to fulldisclosure@...lists.org,
-now is 17:53:51 EET 2014 and neither I
-received the message nor it is on the mirror.
-
-On the old FD it was very fast for me.
-
-"lightly moderated" is not far away from
-"lightly pregnant" IMHO.
-
-10x.
-
+Alexander
