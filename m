@@ -1,38 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/34
-Message-ID: <20140925000321.7bbdaf04@pc>
-Date: Thu, 25 Sep 2014 00:03:21 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/12
+Message-ID: <5475ED36.3090503@redhat.com>
+Date: Wed, 26 Nov 2014 08:09:42 -0700
+From: Eric Blake <eblake@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: nss RSA forgery (CVE-2014-1568)
+Subject: Re: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
 Content-Type: text/plain; charset=utf-8
 
-One serious vuln per day isn't enough, so nss decided to bring us
-another one.
+On 11/26/2014 06:45 AM, Fiedler Roman wrote:
+> Hello,
+> 
+> While trying to write a small python helper library for secure opening of
+> files, I found behaviour of following call unexpected because it created a
+> file instead of creating/failing in opening a directory:
+> 
+> open("xxx", O_RDONLY|O_CREAT|O_DIRECTORY, 0600) = 3
 
-Mozilla reports this:
-https://www.mozilla.org/security/announce/2014/mfsa2014-73.html
-Bugtracker entry still private, so hard to judge about details.
-Interesting: Two independent discoveries (we had the same with
-heartbleed and I couldn't believe this was coincidence).
+What does fstat say about the file type of the just-created fd 3?
 
-This is what mcaffee has to say:
-http://blogs.mcafee.com/executive-perspectives/need-know-berserk-mozilla
+Here's what POSIX has to say about the matter:
+http://austingroupbugs.net/view.php?id=847
 
-They say its related to BER/ASN1-parsing, but adam langley disagrees:
-https://twitter.com/agl__/status/514881918110683136
+If the combination is supported, it MUST create a directory.  This is
+actually a nice extension if it is provided, as there is no other
+standard interface that can atomically create AND open a directory;
+remember, there is a minor TOCTTOU race between mkdir()/open(), although
+the effects of that race are not too horrible (it is sufficient to use
+O_DIRECTORY during the open as well as a quick readdir to confirm that
+the just-opened directory is still empty, to be reasonably sure that the
+race was not won by someone replacing the directory with something
+unintended).  On the other hand, the behavior is an extension, and
+historical implementations would fail (probably with EINVAL for invalid
+flag combination), so portable applications cannot rely on it working.
 
-
-And it seems cyassl had something similar, also found by intel:
-http://www.yassl.com/yaSSL/Blog/Entries/2014/9/12_CyaSSL_3.2.0_Released.html
-
-No real details yet and information seems confusing.
+But if it succeeds, and did NOT create a directory, then it is in
+violation of POSIX.
 
 -- 
-Hanno Böck
-http://hboeck.de/
+Eric Blake   eblake redhat com    +1-919-301-3266
+Libvirt virtualization library http://libvirt.org
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
