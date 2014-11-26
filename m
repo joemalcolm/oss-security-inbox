@@ -1,51 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/12
-Message-ID: <20141105050900.GA2055@openwall.com>
-Date: Wed, 5 Nov 2014 08:09:00 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/17
+Message-ID: <5475FA16.6030705@fifthhorseman.net>
+Date: Wed, 26 Nov 2014 11:04:38 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: is MD5 finally dead?
+Subject: Re: AW: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 04, 2014 at 09:21:49PM -0700, Kurt Seifried wrote:
-> http://natmchugh.blogspot.co.uk/2014/10/how-i-created-two-images-with-same-md5.html
+On 11/26/2014 10:28 AM, Fiedler Roman wrote:
+>> Von: Eric Blake [mailto:eblake@...hat.com]
+>> But if it succeeds, and did NOT create a directory, then it is in
+>> violation of POSIX.
 > 
+> Thanks for the pointer to the POSIX documentation. So it seems to be a 
+> POSIX-violation, at least on "Linux version 3.2.0-69-generic".
 > 
-> It seems like MD5 should probably be classed with DES as instant CVE
-> win, either now, or pretty soon....
+> My test program was:
+> 
+> #include <fcntl.h>
+> #include <stdio.h>
+> #include <sys/stat.h>
+> 
+> int main(int argc, char **argv) {
+>   int fd;
+>   struct stat statBuf;
+>   int result;
+> 
+>   fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
+>   result=fstat(fd, &statBuf);
+>   if(result) {
+>     fprintf(stderr, "Stat failed\n");
+>     return(1);
+>   }
+>   fprintf(stderr, "New element type is %d\n", S_ISDIR(fd));
+>   return(0);
+> }
 
-Depends on use case, like before.
+I just tried the above on debian's 3.17-1-amd64 (3.17-1~exp1, and it
+produces:
 
-Surely there are uses of both MD5 and DES where the choice of these
-primitives is not a vulnerability.  For example, md5crypt is not
-affected by MD5 collisions.  (It's EOL'ed by the author for other
-reasons, though.)  Similarly, the use of DES in BSDI/FreeSec extended
-crypt() is not a vulnerability (it's 64-bit hash space is a bit too
-small, etc., but that's another matter).  And 3DES is still OK.
+New element type is 0
 
-For yet another example, while HMAC-MD5 shouldn't be used for new
-designs, there's no known realistic attack on it yet:
+So if it's a violation, it hasn't been fixed between 3.2 and 3.17.
 
-New Proofs for NMAC and HMAC - Cryptology ePrint Archive
-https://eprint.iacr.org/2006/043.pdf
+	--dkg
 
-New Proofs for NMAC and HMAC: Security without Collision-Resistance
-http://cseweb.ucsd.edu/~mihir/papers/hmac-new.html
 
-http://crypto.stackexchange.com/questions/9336/is-hmac-md5-considered-secure
-
-https://tools.ietf.org/html/rfc6151
-
-"  Therefore, it may not be urgent to remove HMAC-MD5 from the existing
-   protocols.  However, since MD5 must not be used for digital
-   signatures, for a new protocol design, a ciphersuite with HMAC-MD5
-   should not be included."
-
-Curious comments by Thomas Pornin and Dmitry Khovratovich on whether
-e.g. MD5's compression function may be a PRF or not (and thus whether
-the HMAC proof fully applies or not) despite of its insufficient
-collision resistance:
-
-http://crypto.stackexchange.com/questions/268/security-of-n-bit-hmac
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
