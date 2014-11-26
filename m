@@ -1,91 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/5
-Message-Id: <E1XWjq4-00054B-SR@xenbits.xen.org>
-Date: Wed, 24 Sep 2014 10:30:24 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 106 (CVE-2014-7156) - Missing privilege level checks in x86 emulation of software interrupts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/26
+Message-ID: <20141126210109.2978acc6@pc>
+Date: Wed, 26 Nov 2014 21:01:09 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Apple goto fail - lessons that should be learned
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wed, 26 Nov 2014 12:34:15 -0500 (EST)
+"David A. Wheeler" <dwheeler@...eeler.com> wrote:
 
-            Xen Security Advisory CVE-2014-7156 / XSA-106
-                              version 3
+> I've previously done this exercise with:
+> * Heartbleed: http://www.dwheeler.com/essays/heartbleed.html
+> * Shellshock: http://www.dwheeler.com/essays/shellshock.html
+> * POODLE: http://www.dwheeler.com/essays/poodle-sslv3.html
 
-    Missing privilege level checks in x86 emulation of software interrupts
+I've written something similar on POODLE (and BERserk), not sure if I
+posted this here before:
+https://blog.hboeck.de/archives/858-Dancing-protocols,-POODLEs-and-other-tales-from-TLS.html
 
-UPDATES IN VERSION 3
-====================
+Not surprisingly I come to somewhat similar conclusions (protocol
+downgrade protection, encrypt-then-mac etc.)
+BERserk has somewhat similar problems, e.g. it's basically also a "we
+don't deprecate weak/old crypto" (PKCS #1 1.5 and RSA with e=3).
 
-This issue has been assigned CVE-2014-7156.
+But the most important conclusion from POODLE is imho: Be very careful
+with implementing workarounds for broken hard/software - and don't do
+them if they compromise security.
 
-ISSUE DESCRIPTION
-=================
 
-The emulation of instructions which generate software interrupts fails
-to perform supervisor mode permission checks.
+-- 
+Hanno Böck
+http://hboeck.de/
 
-However these instructions are not usually handled by the emulator.
-Exceptions to this are
-- - when a memory operand (implicit for the affected instructions) lives
-  in (emulated or passed through) memory mapped IO space,
-- - in the case of guests running in 32-bit PAE mode, when such an
-  instruction is (in execution flow) within four instructions of one
-  doing a page table update,
-- - when an Invalid Opcode exception gets raised by a guest instruction,
-  and the guest then (likely maliciously) alters the instruction to
-  become one of the affected ones,
-- - when the guest is in real mode (in which case there are no privilege
-  checks anyway).
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-IMPACT
-======
-
-Malicious HVM guest user mode code may be able to crash the guest.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions from 3.3 onwards are vulnerable.
-
-Only user processes in HVM guests can take advantage of this
-vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-There is no mitigation available for HVM guests.
-
-CREDITS
-=======
-
-This issue was discovered Andrei Lutas at BitDefender and analyzed by
-Andrew Cooper at Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa106.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa106*.patch
-301060f801ab39c15ac773e1bcc250f0e6bf30d748007a96173459b83afc9270  xsa106.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJUIpznAAoJEIP+FMlX6CvZNzsH/2EiupxpKxmHXoWxZAqlDz5E
-+cdmv5axHGO74bU8xGe/WFcfOCjx8LaPifWd/g6AMlSa7BHe1i1sPmOifr6jhRlz
-xfJonBcXl6/Z7LpfaYdu2M+6mDXoO2Ov5yKEYDNPyzwfmRH+bLBBGrGTzJvyaEj2
-PS2JgtIzIVRFHdmYh7zJeS9isKt9+/lKplAIluKUUUhnX1pMUaTV9Ax67MUs7BdJ
-SHh37YoMIZAxAkRl80nT7gBdohLUmQJZm3CVFFjk71hSFlvdRJNZuVJnxMyXXBA3
-awQlxUAhUQmP8ls1JTK0EMVe9EAPvyqgPlk/2Ch8UBtpg0MeGzBs9UJwjYeP47Y=
-=c9bK
------END PGP SIGNATURE-----
-
-Download attachment "xsa106.patch" of type "application/octet-stream" (922 bytes)
+Content of type "application/pgp-signature" skipped
