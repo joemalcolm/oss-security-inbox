@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/23/5
-Message-ID: <20141123145941.GA6273@openwall.com>
-Date: Sun, 23 Nov 2014 17:59:42 +0300
-From: Solar Designer <solar@...nwall.com>
-To: Tim Brown <tmb@...35.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Running Java across a privilege boundry
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/27
+Message-Id: <E1Xtkoj-0006C0-49@rmm6prod02.runbox.com>
+Date: Wed, 26 Nov 2014 17:12:09 -0500 (EST)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: Apple goto fail - lessons that should be learned
 Content-Type: text/plain; charset=utf-8
 
-Tim, all -
+On Wed, 26 Nov 2014 21:01:09 +0100, Hanno Böck <hanno@...eck.de> wrote:
+> I've written something similar on POODLE (and BERserk), not sure if I
+> posted this here before:
+> https://blog.hboeck.de/archives/858-Dancing-protocols,-POODLEs-and-other-tales-from-TLS.html
+> 
+> Not surprisingly I come to somewhat similar conclusions (protocol
+> downgrade protection, encrypt-then-mac etc.)
 
-On Sat, Nov 22, 2014 at 09:54:18PM +0000, Tim Brown wrote:
-> I've sent a follow up to distros, which I hope Alexander will approve, to 
-> allow the discussion to continue.
+Excellent!  I've added a citation from my POODLE paper to your post.
 
-It's not like I'm literally "approving" (or not) postings to distros.
-Yours got to distros list members right after it was received by the
-server.  However, I think it's better discussed on oss-security right
-away, without use of the distros list.  The distros list is for issues
-where distros are expected to prepare updates during the not-too-long
-embargo period, and the "instant" availability of updates when the issue
-is finally made public benefits the end-users in a significant way.
-I doubt that the issue at hand fits this description.  I think almost
-all of the (relatively few?) systems where this issue matters (where it
-lets an attacker bypass a privilege boundary, yet no other at least
-similarly easy and obvious bypass exists and is likely known to the
-attacker) would probably be slow to update anyway.
+> But the most important conclusion from POODLE is imho: Be very careful
+> with implementing workarounds for broken hard/software - and don't do
+> them if they compromise security.
 
-So far no distro has expressed any interest in having this embargoed.
+Agreed.  It's going to be hard to do that in practice, I fear.
+Thankfully, it looks like SSLv3 will disappear, reducing the pressure to do that
+for TLS.  That will help.
 
-Distros list members: please speak up (here or on the distros list, with
-Tim CC'ed) if you'd like this embargoed.
-
-Tim: if until Tuesday no distro says they want this embargoed, please go
-ahead and make the issue fully public.  (On a related note, I hate it
-when an issue is sort of "semi-public".  It's the worst possible case.
-When this happens, it's a reason to opt for a shorter embargo period, or
-for none at all indeed.)  If an embargo is requested, please make sure
-there's an exact date and time for the planned public disclosure.
-
-Thanks,
-
-Alexander
+--- David A. Wheeler
