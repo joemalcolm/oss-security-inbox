@@ -1,26 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/3
-Message-ID: <alpine.BSF.2.00.1410310520030.57132@aneurin.horsfall.org>
-Date: Fri, 31 Oct 2014 05:30:46 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Some weird Apache redirection exploit?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/7
+Message-Id: <20141126074624.DB5BE336017@smtpvbsrv1.mitre.org>
+Date: Wed, 26 Nov 2014 02:46:24 -0500 (EST)
+From: cve-assign@...re.org
+To: cherepan@...me.ru
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: LibreOffice -- several issues
 Content-Type: text/plain; charset=utf-8
 
-May not be Apache-specfic, but as it's the most popular server out 
-there...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-What is it trying to do?  I've never seen it in my logs before.
+> https://bugs.freedesktop.org/show_bug.cgi?id=86449
+> Crash importing malformed .rtf -- potentially exploitable for RCE
 
-117.27.254.25 - - [31/Oct/2014:05:16:15 +1100] "GET ?redirect:${%23w%3d%23context.get('com.opensymphony.xwork2.dispatcher.HttpServletResponse').getWriter(),%23w.println('[/ok-helo.wang]'),%23w.flush(),%23w.close()} HTTP/1.1" 200 7543 "-" "Python-urllib/2.6"
+Use CVE-2014-9093 for bug 86449.
 
-The perp (or rather, the 0wn3d box) is somewhere in China.  When decoded, it
-comes out as
+(For reference, http://openwall.com/lists/oss-security/2014/11/19/3 is
+about finding a series of bugs in version 3.5.4 on Debian stable -- in
+other words, a version based on a mid-2012 codebase -- and reporting
+them directly upstream without commenting on 4.2.x or 4.3.x.)
 
-GET ?redirect:${#w=#context.get('com.opensymphony.xwork2.dispatcher.HttpServletResponse').getWriter(),#w.println('[/ok-helo.wang]'),#w.flush(),#w.close()}
+For the others, in addition to the
+http://openwall.com/lists/oss-security/2014/11/19/18 post, "Michael
+Meeks from officesecurity@...ts.freedesktop.org indicated that they
+are not interested in CVEs for DoS-only crashers" is also relevant.
+This has multiple possible interpretations, e.g., "not interested"
+because their security team won't track the issues using CVEs, or "not
+interested" because they are not vulnerabilities. The "is a security
+issue because it takes down all other windows with it" is often
+relevant to CVE because it represents a default security policy if
+there is no information from a vendor about their security policy.
+However, a vendor is free to establish a security policy such as "if
+you are working with a potentially untrusted file, you MUST NOT have
+any other windows open in which you are maintaining state about your
+other editing work." In other words, they can define all DoS-only
+crashers to be applicable only in unsupported use cases.
 
-but I'm none the wiser.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
--- 
-Dave Horsfall (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
-http://www.horsfall.org/spam.html (and check the home page whilst you're there)
+iQEcBAEBAgAGBQJUdYFGAAoJEKllVAevmvmsaSUH/3uQpWpaK6vMVpN3BrWaj/uS
+IqjmfqeeyHpUtrOC+zYmFI+1gMXwj4jQvmWz9RB2LFWLWbsn9gLt5xG+0D8CTX6m
+VWk9PnNnIbfKToWfEu1m0JsvZNolihIiGMwITx8YeSEF4s1DfwkSZIwCx/WBm1/m
+yRRSJPmyrYlMKA9985c6FphnTQ/+6IteypvdwdX5gfs0L1OEB0UeDbQCqe+0SY3N
+rnkSZAPLtUDIjUplAI1UlVeh35dCJ1nWuBG+1yUmzJlaz+QSaMR6iUQWcYbpdNfy
+tBPr+Fhh1ep8SyrLVhjEGGU+sFKJCEUD0iN0J0AC1iRklYOqKOtI4T8VNh2UCOY=
+=dyEX
+-----END PGP SIGNATURE-----
