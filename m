@@ -1,40 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/6
-Message-ID: <20140120161848.GB18661@kludge.henri.nerv.fi>
-Date: Mon, 20 Jan 2014 18:18:48 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/23
+Message-ID: <547615CE.4000008@mozilla.com>
+Date: Wed, 26 Nov 2014 10:02:54 -0800
+From: Daniel Veditz <dveditz@...illa.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request for Drupal contributed modules
+Subject: Re: CVE request: firefox: integer overflow
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 20, 2014 at 03:30:34AM -0800, Forest Monsen wrote:
-> Hi there, I'd like to request CVE identifiers for:
+On 11/24/2014 6:19 AM, Vasyl Kaigorodov wrote:
+> And integer overflow was discovered in Firefox when processing a
+> crafted webm files [1].
+> Upstream commits are in [1] as well.
 > 
-> SA-CONTRIB-2013-098 - Ubercart - Session Fixation Vulnerability
-> https://drupal.org/node/2158651
+> [1]: https://bugzilla.mozilla.org/show_bug.cgi?id=1090405
 > 
-> SA-CONTRIB-2014-001 - Entity API - Access Bypass
-> https://drupal.org/node/2169595
-> 
-> SA-CONTRIB-2014-002 - Anonymous Posting - Cross Site Scripting (XSS)
-> https://drupal.org/node/2173321
-> 
-> Thanks!
-> 
-> Best,
-> Forest
+> Can a CVE be assigned to this issue please?
 
-https://drupal.org/node/2169595 already has CVEs:
+Mozilla does not believe this is an exploitable security issue.
 
-CVE-2014-1398 (Comment, User and Node Statistics property access bypass)
-CVE-2014-1399 (Entity list property access bypass)
-CVE-2014-1400 (Unpublished comments access bypass)
+-Dan Veditz
 
-As far as I know SA-CONTRIB-2013-098 and SA-CONTRIB-2014-002 are still missing
-CVEs.
-
----
-Henri Salo
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
