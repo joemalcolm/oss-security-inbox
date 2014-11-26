@@ -1,115 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/8
-Message-ID: <alpine.DEB.2.02.1409271820580.15050@motsugo.ucc.gu.uwa.edu.au>
-Date: Sun, 28 Sep 2014 16:21:31 +0800 (WST)
-From: David Adam <zanchey@....gu.uwa.edu.au>
-To: oss-security@...ts.openwall.com
-cc: Bartlomiej Piotrowski <b@...otrowski.pl>, kov@...ian.org, luto@....edu,  nemysis@...eBSD.org, ridiculous_fish <corydoras@...iculousfish.com>
-Subject: Security release of fish shell 2.1.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/10
+Message-ID: <2ECE9D9EEF1F524185270138AE23265947D4866C@S0MSMAIL112.arc.local>
+Date: Wed, 26 Nov 2014 13:45:42 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-Hi all,
+While trying to write a small python helper library for secure opening of
+files, I found behaviour of following call unexpected because it created a
+file instead of creating/failing in opening a directory:
 
-It's been some months, but it seems like a good time to be announcing
-security releases of shells!
+open("xxx", O_RDONLY|O_CREAT|O_DIRECTORY, 0600) = 3
 
-fish (the friendly interactive shell) is a smart and user-friendly command
-line shell for OS X, Linux, and the rest of the family.
+I call it unexpected, because man-page mentioned:
 
-fish 2.1.1 has been released as source and binary packages at
-http://fishshell.com/.
+       O_DIRECTORY
+              If pathname is not a directory, cause the open  to  fail.
+This
+              flag is Linux-specific, and was added in kernel version
+2.1.126,
+              to avoid denial-of-service problems if opendir(3) is called on
+a
+              FIFO or tape device.
 
-This release fixes a number of local privilege escalation vulnerability
-and one remote code execution vulnerability, as follows:
+The only topic I found dealing with such issue was [1].
 
-CVE-2014-2905: fish universal variable socket vulnerable to permission 
-bypass leading to privilege escalation
+Is the man page just wrong or what would be the correct behaviour of that
+call? Is it likely, that some other tool could also end up with that,
+illogic combination of flags, thus creating a file instead of opening a
+directory?
 
-  fish, from at least version 1.16.0 to version 2.1.0 (inclusive), does not
-  check the credentials of processes communicating over the fishd universal
-  variable server UNIX domain socket. This allows a local attacker to 
-  elevate their privileges to those of a target user running fish, including 
-  root.
+Or perhaps to use it to escape syscall auditing if creation of files with
+special flags would be monitored but directory creation is not?
 
-  fish version 2.1.1 is not vulnerable.
+[1] https://lkml.org/lkml/2005/9/23/166
 
-  No workaround is currently available for earlier versions of fish.
+DI Roman Fiedler
+Scientist
+Safety & Security Department
+Assistive Healthcare Information Technology
 
-  https://github.com/fish-shell/fish-shell/issues/1436
+AIT Austrian Institute of Technology GmbH
+Reininghausstraße 13/1 | 8020 Graz | Austria
+T +43(0) 50550 2957 | M +43(0) 664 8561599 | F +43(0) 50550 2950
+roman.fiedler@....ac.at | http://www.ait.ac.at/
 
-CVE-2014-2906 and CVE-2014-3856: fish temporary file creation vulnerable to 
-race condition leading to privilege escalation
+FN: 115980 i HG Wien  |  UID: ATU14703506
+http://www.ait.ac.at/Email-Disclaimer
 
-  fish, from at least version 1.16.0 to version 2.1.0 (inclusive), creates
-  temporary files in an insecure manner.
 
-  Versions 1.23.0 to 2.1.0 (inclusive) execute code via `funced` from these
-  temporary files, allowing privilege escalation to those of any user 
-  running fish, including root. (CVE-2014-3856)
-
-  Additionally, from at least version 1.16.0 to version 2.1.0 (inclusive),
-  fish will read data using the psub function from these temporary files,
-  meaning that the input of commands used with the psub function is under 
-  the control of the attacker. (CVE-2014-2906)
-
-  fish version 2.1.1 is not vulnerable.
-
-  No workaround is currently available for earlier versions of fish.
-
-  https://github.com/fish-shell/fish-shell/issues/1437
-
-CVE-2014-2914: fish web interface does not restrict access leading to remote
-code execution
-
-  fish, from version 2.0.0 to version 2.1.0 (inclusive), fails to restrict
-  connections to the Web-based configuration service (fish_config). This
-  allows remote attackers to execute arbitrary code in the context of the 
-  user running fish_config.
-
-  The service is generally only running for short periods of time.
-
-  fish version 2.1.1 is not vulnerable.
-
-  No workaround is currently available for earlier versions of fish, 
-  although the use of the fish_config tool is optional as other interfaces 
-  to fish configuration are available.
-
-  https://github.com/fish-shell/fish-shell/issues/1438
-
-CVE-2014-3219: fish temporary file access leading to privilege escalation
-
-  fish, from at least version 1.16.0 to version 2.1.0 (inclusive), uses
-  temporary files in an insecure manner.
-
-  fish will read and write completions from these temporary files without
-  checking for ownership or symbolic links, allowing data corruption.
-
-  fish version 2.1.1 is not vulnerable.
-
-  No workaround is currently available for earlier versions of fish.
-
-  https://github.com/fish-shell/fish-shell/issues/1440
-
-David Adam
-fish committer
-zanchey@....gu.uwa.edu.au
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJUJpCYAAoJEMC5abKXToiOaH4P+wc6jU3vgo8y4CEjsYFwqFFl
-rK1c3ivAoy1DnJ4hB2jpANL+TrpfsRAmzcN1SdEj10SZVXz0MhyD+iX2ny3ZelS3
-dL70Z+0aA6ry91esudMjPG5RrrOH0atJc1guLpw3Qhxnf+FBMFGOODq5dcT0uccT
-yVB6K1GJRkCUeS9+bJExSoSJ/tBRZbockmUUEs2DifQAAyQVY91kt6UNdEtuK+rt
-CB9G5DNwLEyL0He/TN66VVU1l6amGVCrxR5bW+y4aigYI1Jx51PC700rR2I61V+g
-ESSTsvNgh4URdL/XmEkiuPrAUJhdV4J+QXNEwj0qlHRpXA0Em8Y4yfQUXgfgIiZ8
-zbBvAZLxZm3UcPFbcrteI5N2mMbAPGJJTFRPTQO9Pcc5SJzCL3WIR/0zAxruQ1x9
-IlpgCD+lQA4EKVvFo0E9oWYfRe5NXHNiFjb0khjxBeWrKGMdhrFgagfZfCAdSYas
-Cb+1CcTKcT2V5RGCrS8dAAgCxznL93DMvveQUZt0oE3OYdjJsWYjITYx+V+xyiHv
-RUFmvOckPUMIVzMVoKppyrss7USqaie5REyG0nxSwujgzPL/lAWJlBTVI61JVWSy
-Yn2A5yVaXeqLAodg/bGivURGgyeFPbDE51xXqaGGlm8gr8+WbmiDqMKA/jIMvce3
-sxlSlL9fpNwODfinFi2M
-=ICJE
------END PGP SIGNATURE-----
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
