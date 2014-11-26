@@ -1,30 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/28/2
-Message-ID: <alpine.LFD.2.10.1401281857490.9872@javelin.pnq.redhat.com>
-Date: Tue, 28 Jan 2014 19:00:06 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE request Linux kernel: netfilter: nf_nat: leakage of uninitialized buffer in IRC NAT helper 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/14
+Message-ID: <2ECE9D9EEF1F524185270138AE23265947D48770@S0MSMAIL112.arc.local>
+Date: Wed, 26 Nov 2014 15:28:02 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: Eric Blake <eblake@...hat.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: AW: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+> Von: Eric Blake [mailto:eblake@...hat.com]
+>
+> On 11/26/2014 06:45 AM, Fiedler Roman wrote:
+> > Hello,
+> >
+> > While trying to write a small python helper library for secure opening of
+> > files, I found behaviour of following call unexpected because it created a
+> > file instead of creating/failing in opening a directory:
+> >
+> > open("xxx", O_RDONLY|O_CREAT|O_DIRECTORY, 0600) = 3
+>
+> What does fstat say about the file type of the just-created fd 3?
 
-Linux kernel built with the NetFilter Connection Tracking(NF_CONNTRACK)
-support for IRC protocol(NF_NAT_IRC), is vulnerable to an information leakage
-flaw. It could occur when communicating over direct client-to-client IRC
-connection(/dcc) via a NAT-ed network. Kernel attempts to mangle IRC TCP
-packet's content, wherein an uninitialised 'buffer' object is copied to a
-socket buffer and sent over to the other end of a connection.
+Fstat is also saying "file", same as "ls xxx" afterwards.
 
-Upstream fix:
--------------
-   -> https://git.kernel.org/linus/2690d97ade05c5325cbf7c72b94b90d265659886
+> Here's what POSIX has to say about the matter:
+> http://austingroupbugs.net/view.php?id=847
+>
+> If the combination is supported, it MUST create a directory.  This is
+> actually a nice extension if it is provided, as there is no other
+> standard interface that can atomically create AND open a directory;
+> remember, there is a minor TOCTTOU race between mkdir()/open(), although
+> the effects of that race are not too horrible (it is sufficient to use
+> O_DIRECTORY during the open as well as a quick readdir to confirm that
+> the just-opened directory is still empty, to be reasonably sure that the
+> race was not won by someone replacing the directory with something
+> unintended).  On the other hand, the behavior is an extension, and
+> historical implementations would fail (probably with EINVAL for invalid
+> flag combination), so portable applications cannot rely on it working.
+>
+> But if it succeeds, and did NOT create a directory, then it is in
+> violation of POSIX.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1058748
+Thanks for the pointer to the POSIX documentation. So it seems to be a 
+POSIX-violation, at least on "Linux version 3.2.0-69-generic".
 
+My test program was:
 
-Thank you
---
-Prasad J Pandit / Red Hat Security Response Team
+#include <fcntl.h>
+#include <stdio.h>
+#include <sys/stat.h>
+
+int main(int argc, char **argv) {
+  int fd;
+  struct stat statBuf;
+  int result;
+
+  fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
+  result=fstat(fd, &statBuf);
+  if(result) {
+    fprintf(stderr, "Stat failed\n");
+    return(1);
+  }
+  fprintf(stderr, "New element type is %d\n", S_ISDIR(fd));
+  return(0);
+}
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
