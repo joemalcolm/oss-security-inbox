@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/16/2
-Message-ID: <534E065E.8000606@redhat.com>
-Date: Wed, 16 Apr 2014 14:26:06 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/18
+Message-ID: <handler.771125.B771125.141706147830602.ackinfo@bugs.debian.org>
+Date: Thu, 27 Nov 2014 04:15:10 +0000
+From: owner@...s.debian.org (Debian Bug Tracking System)
 To: oss-security@...ts.openwall.com
-CC: 744817@...s.debian.org
-Subject: CVE request: insecure temporary file handling in clang's scan-build utility
+Subject: Bug#771125: Info received (CVE request: mutt: heap-based buffer overflow in mutt_substrdup())
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Thank you for the additional information you have supplied regarding
+this Bug report.
 
-Jakub Wilk discovered that clang's scan-build utility insecurely handled 
-temporary files. Full details in his report:
+This is an automatically generated reply to let you know your message
+has been received.
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=744817
+Your message is being forwarded to the package maintainers and other
+interested parties for their attention; they will reply in due course.
 
-Can a CVE please be assigned?
+Your message has been sent to the package maintainer(s):
+ Antonio Radici <antonio@...e.org>
 
-Cheers,
+If you wish to submit further information on this problem, please
+send it to 771125@...s.debian.org.
 
---
-Murray McAllister / Red Hat Security Response Team
+Please do not send mail to owner@...s.debian.org unless you wish
+to report a problem with the Bug-tracking system.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1088105
+-- 
+771125: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=771125
+Debian Bug Tracking System
+Contact owner@...s.debian.org with problems
