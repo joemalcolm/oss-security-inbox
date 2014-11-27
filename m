@@ -1,79 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/30/2
-Message-ID: <20140330164122.GG2570@sivokote.iziade.m$>
-Date: Sun, 30 Mar 2014 19:41:22 +0300
-From: Georgi Guninski <guninski@...inski.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/1
+Message-ID: <20141127001227.GB29773@kludge.henri.nerv.fi>
+Date: Thu, 27 Nov 2014 02:12:27 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Cc: solar@...nwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+Cc: ryan@...hurstsecurity.com, hugo.s@...uxmail.org
+Subject: Please reject CVE-2014-8585
 Content-Type: text/plain; charset=utf-8
 
-Not subscribed to oss-security.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Just for the record of the old FD,
-i posted there anonymously and
-even killed at least one bug in 
-widely used open source warez in
-un-orthodoxal way.
+Hi Mitre,
 
-The CVE servants got the bug
-significantly later after the
-announcement :)
+Please REJECT CVE-2014-8585, thanks.
 
-maybe solardiz is using the
-mainstream patch i suspect.
+Directory traversal vulnerability in the WordPress Download Manager plugin for
+WordPress allows remote attackers to read arbitrary files via a .. (dot dot) in
+the fname parameter to (1) views/file_download.php or (2) file_download.php.
 
+File file_download.php is not available in any version of WordPress plugin
+"download-manager" checked SVN and latest 2.7.4 version from
+https://wordpress.org/plugins/download-manager/
 
--- 
-guninski
+PoC refers to random WordPress installation with plugin named
+"document_manager", which is indeed vulnerable. I sent abuse emails to few
+affected targets. Plugin "document_manager" is custom and not available in WP
+plugin repository.
 
-On Sat, Mar 29, 2014 at 10:08:02PM +0400, Solar Designer wrote:
-> On Mon, Mar 24, 2014 at 04:17:45PM +0200, Georgi Guninski wrote:
-> > it is likely I get banned from here,
-> 
-> Georgi surely worked hard towards achieving this goal, in other threads
-> in here as well.  While I have no intent to ban anyone, especially not
-> someone like Georgi who has made valuable contributions to this
-> community (I am referring e.g. to the qmail integer overflow bug, which
-> I personally think Georgi deserved the bounty for), I will be revoking
-> moderation bypass "privilege" from people abusing such "privilege".
-> 
-> In general, when a new member joins oss-security they do not have
-> moderation bypass "privilege", regardless of who they are.  As soon as
-> they've made one or a few approved posting(s) with no postings rejected
-> (like Georgi did when bringing up the FD list topic initially), they're
-> typically granted such "privilege", in good faith, because this helps
-> reduce delays in discussions and reduces load on the moderators.
-> However, as easily as this is granted, it may be revoked - again,
-> regardless of who the person is and how valuable a community member
-> they are in other aspects (as well as e.g. whether they're a friend of
-> mine or not).  Neither action should be taken personal.  Moderation
-> bypass "privilege" is not endorsement, and revoking it is not banning.
-> This is merely a tool I use to help run this list smoothly and with less
-> effort.  This is why I put this word in quotes.
-> 
-> So, Georgi, you're still not banned, and I have no such plans, but
-> please do not be surprised that further messages from you will incur
-> delays and some might be rejected.  I and other moderators are going to
-> judge on which messages to approve based on the content of those
-> messages, as usual.  If you (or anyone) post something reasonably
-> valuable to be worth distributing to list members, it will be approved
-> (and please don't mind the delays).  A few of your recent messages were
-> below this threshold, in my opinion.
-> 
-> I hope that Fyodor will be approving all of your messages on FD.  If I
-> were running FD, I'd setup/keep the moderation bypass for you on that
-> list.  After all, FD is all about noise, right? ;-)  And what can be
-> better than noise from a(n otherwise) respected community member? ;-)
-> 
-> oss-security is not FD.  We don't tolerate noise as much.  Noise goes to
-> FD, please.
-> 
-> Now, surely any mention of CVE is worse than noise to you, but that's
-> another (non-)issue.  I think most people care about the actual vuln
-> descriptions and such regardless of whether CVEs are being assigned.
-> That said, this is yet another reason why FD is a better fit for you.
-> 
-> Thanks,
-> 
-> Alexander
+This was noticed during http://www.wpscan.org/ development.
+
+If I am correct OSVDB item refers to issue listed in vexatioustendencies.com,
+which has different attack scenario and payloads. 
+
+References:
+- - http://osvdb.org/111215
+- - http://secunia.com/advisories/59925/
+- - http://packetstormsecurity.com/files/128852/WordPress-Download-Manager-Arbitrary-File-Download.html
+- - https://vexatioustendencies.com/wordpress-plugin-vulnerability-dump-part-2/
+
+- ---
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iEYEARECAAYFAlR2bGsACgkQXf6hBi6kbk/6tgCeL3A5Wuw10z9lth01PfcZ73XX
+MBUAn2RBTmkJAJuwPS/hvaZxg2ycxcVA
+=upSJ
+-----END PGP SIGNATURE-----
