@@ -1,39 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/4
-Message-ID: <CAN-Kwu1Quk6N5fa39Gf1q75YPKD-dDZB=hXbaw8RTkgE5eKEHg@mail.gmail.com>
-Date: Tue, 4 Nov 2014 18:30:30 -0600
-From: Ian Cordasco <graffatcolmingov@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request for requests-kerberos
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/10
+Message-Id: <20141127041559.68B37B2E0FA@smtpvbsrv1.mitre.org>
+Date: Wed, 26 Nov 2014 23:15:59 -0500 (EST)
+From: cve-assign@...re.org
+To: hanno@...eck.de
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: buffer overflow in ksba_oid_to_str in Libksba
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 4, 2014 at 6:21 PM, Kurt Seifried <kseifried@...hat.com> wrote:
-> On 04/11/14 11:20 AM, Ian Cordasco wrote:
->> Hello all,
->>
->> A fix was merged and released today for the package which performs
->> kerberos authentication when using python-requests. Prior to this,
->> every version of the package did not properly handle mutual
->> authentication which means that the client did not verify that the
->> user was communicating with a trusted server. The version which
->> contains the fix is 0.6 and all prior versions are considered
->> vulnerable.
->
-> Can you please provide a link to said package/release/commit/etc? Thanks.
->
->> Please assign a CVE to this issue.
->>
->> Cheers,
->> Ian
->>
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Sure,
+> Please note that this affects both libksba and gnupg (only version
+> 2.1.0 and betas).
+> 
+> They share the code, but it's in different products, I don't know if
+> this means 2 CVEs should be assigned.
 
-https://github.com/requests/requests-kerberos/pull/36 is the pull
-request adding https://github.com/mkomitee/requests-kerberos/commit/9c1e08cc17bb6950455a85d33d391ecd2bce6eb6.
-This is released in https://pypi.python.org/pypi/requests-kerberos
+The single CVE-2014-9087 number applies to both Libksba and GnuPG.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUdqPAAAoJEKllVAevmvmsSt8IAKQgKRBCtuWWfg1VKPDy0mQI
+7vMDUbJmPHehnU7xev27k+M491R210piHoQw2EmZ091/RBrnLjz0Mamudsj9T0+Y
+HJcqoz0rO9pjPhFH7seexaJt30NOQgbeSia//ugdRZ2Qh+tRj+cqxBCcrRMrTbMK
+Rb1vq2j+ol8ZKsfDsFFCWtrjOBtWTytvZJpM63SmLOSyyMqmSbPLs9RzbDGUKJfJ
+TXOh8+M6XYvQ5bGic/3kPDNY9ta16B8xF7C+wlUgJanGm3ZtbubXjxVRWt0sgxf3
+VWado8TJxc0m9nHFnw1P3k5xIGXVgLkZWPWM02qZNeK86e31NsDtCKGdcPfoaOU=
+=E7Bu
+-----END PGP SIGNATURE-----
