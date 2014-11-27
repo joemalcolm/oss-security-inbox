@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/17/2
-Message-ID: <alpine.LFD.2.10.1402171402380.21151@javelin.pnq.redhat.com>
-Date: Mon, 17 Feb 2014 14:03:49 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/20
+Message-ID: <20141127151918.GA2837@openwall.com>
+Date: Thu, 27 Nov 2014 18:19:18 +0300
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: CC'ing external lists/bugs (Re: Bug#771125: Info received (CVE request: mutt: heap-based buffer overflow in mutt_substrdup()))
 Content-Type: text/plain; charset=utf-8
 
-  Hello,
+On Thu, Nov 27, 2014 at 04:15:10AM +0000, Debian Bug Tracking System wrote:
+> Thank you for the additional information you have supplied regarding
+> this Bug report.
+[...]
+> Please do not send mail to owner@...s.debian.org unless you wish
+> to report a problem with the Bug-tracking system.
 
-+-- On Wed, 12 Feb 2014, P J P wrote --+
-| +-- On Wed, 12 Feb 2014, Michael Samuel wrote --+
-| | >  -> http://www.openwall.com/lists/oss-security/2014/02/11/7
-| | The same issue, different result.
-| 
-|   Yes, true. Thank you for confirming.
+We have this problem when someone CC's a Debian bug on oss-security
+postings.  (But somehow not all the time?  Perhaps the Debian bug
+tracker has some rules for when not to notify of "the additional
+information"?  Or was Reply-To or whatever set differently this time?)
 
-  So, does this qualify for a CVE?
+Neither approving nor rejecting these messages feels right.  Rejecting
+currently means a message would be sent to owner@...s.debian.org, and
+also the thread might be broken in mailing list archives.  Doing nothing
+means that a message to that extent would be sent a few days later.
+I can SSH in to the server and manually remove the message from the
+moderation queue to avoid that, but this also feels weird.  Well, or I
+can update the spam filter to catch and drop these before they get to
+the mailing list manager (and hence before moderation) - maybe I should.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+Besides, any CC's to other lists tend to result in some "noise" being
+sent to oss-security (some messages that would be appropriate for the
+other instance of the thread, but not so much for oss-security).
+
+So I am posting this for three reasons:
+
+1. To ask that we please cut down on use of CC's to external lists.
+
+2. To point out and ask about the issue with Debian bugs specifically -
+how do we handle it best going forward?  Any suggestions?
+
+3. To explain why this undesirable message appeared in here.
+
+Alexander
