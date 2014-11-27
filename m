@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/26/2
-Message-ID: <53D37103.1020301@redhat.com>
-Date: Sat, 26 Jul 2014 11:12:35 +0200
-From: Daniel Borkmann <dborkman@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org, ppandit@...hat.com
-Subject: Re: Re: CVE request Linux Kernel: net: SCTP: NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/9
+Message-Id: <20141127041417.288006C0062@smtpvmsrv1.mitre.org>
+Date: Wed, 26 Nov 2014 23:14:17 -0500 (EST)
+From: cve-assign@...re.org
+To: mmcallis@...hat.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 771125@...s.debian.org
+Subject: Re: CVE request: mutt: heap-based buffer overflow in mutt_substrdup()
 Content-Type: text/plain; charset=utf-8
 
-On 07/26/2014 04:21 AM, cve-assign@...re.org wrote:
-...
-> Use CVE-2014-5077 for this issue in the sctp_assoc_update function in
-> net/sctp/associola.c (not yet patched at
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/net/sctp/associola.c).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-It's currently in the -net tree [1], I expect a pull request for
-mainline to happen quite soon.
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=771125
 
-Cheers,
+> mutt segfaults when trying to show the attached message. (You might need
+> to disable header weeding to trigger the crash.)
 
-Daniel
+Use CVE-2014-9116.
 
-   [1] http://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=1be9a950c646c9092fb3618197f7b6bfb50e82aa
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUdqNtAAoJEKllVAevmvmscpAH/jk/zrAJ6CLbMJFLajS5yni6
+f71G0MEEcxN8cz0uf/POKU/h/Qc9C9icE72y6yJigqdsPiCuR2+FLb3Y1xnXXVRX
+2OwWidx1wU7ZKXOr0pB3qVipJHKd2iWVAfFtFu0Bh045GMqikGXUOEaAYeMVrxTk
+hPOXUnPhHcWmERU+5t+hMhvrBCJFj22vKFX4pTGJhhAvRVFy89hVsG18Nq8EckzC
+at5yxo5s0o/iGZtEv5kIdXGq6aOIdfxBfgV4lFjIYrSgJmiBUxlQdQ7usTJrgV7x
+KzYGepBbJ6VuUuninBlhBbllryFlccXyytAtN20r3XKOjm7H7H2BsS8FfPY+c2Q=
+=u27J
+-----END PGP SIGNATURE-----
