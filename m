@@ -1,80 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/19/4
-Message-ID: <20140619043536.GA18629@sherlock>
-Date: Wed, 18 Jun 2014 21:35:37 -0700
-From: Andrew Gaul <gaul@...che.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: TMP flaw in rackspace jclouds?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/16
+Message-ID: <20141127124339.GB2131@rene-engelhard.de>
+Date: Thu, 27 Nov 2014 13:43:39 +0100
+From: Rene Engelhard <rene@...ian.org>
+To: Alexander Cherepanov <cherepan@...me.ru>
+Cc: oss-security@...ts.openwall.com, officesecurity@...ts.freedesktop.org, Michael Meeks <michael.meeks@...labora.com>, Miklos Vajna <vmiklos@...e.cz>, Moritz Muehlenhoff <jmm@...ian.org>, cve-assign@...re.org
+Subject: Re: [Officesecurity] CVE Request: LibreOffice -- several issues
 Content-Type: text/plain; charset=utf-8
 
-Kurt, thank you for bringing this flaw to my attention and I will
-address it tomorrow.  I do not have a security background; can you
-estimate the severity and whether we can continue discussion on the
-public bug tracker?  For now I have bcc the Apache jclouds private
-mailing list.  Also note that jclouds is an Apache project not a
-Rackspace project and the canonical URLs are:
+Hi,
 
-https://github.com/jclouds/jclouds
-https://issues.apache.org/jira/browse/JCLOUDS
+On Thu, Nov 27, 2014 at 03:58:42AM +0300, Alexander Cherepanov wrote:
+> issues is just the tip of the iceberg. Assuming that many security
+> bugs were fixed in current versions of LO the fact that LO in Debian
+> Stable isn't updated for a long time probably means that security
+> fixes are not marked as such and hence are not backported. Please
+> correct me if I'm wrong.
 
-On Wed, Jun 18, 2014 at 08:52:59PM -0600, Kurt Seifried wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> https://github.com/rackspace/jclouds/
-> 
-> So CC'ing Andrew, he's a consistent contributor, I can't file an issue
-> in Github (no link to it) so posting here and CC'ing him.
-> 
-> https://github.com/rackspace/jclouds/blob/master/scriptbuilder/src/main/java/org/jclouds/scriptbuilder/domain/Statements.java
-> 
->   public static Statement extractTargzAndFlattenIntoDirectory(URI tgz,
-> String dest) {
->       return new StatementList(ImmutableSet.<Statement> builder()
->             .add(exec("mkdir /tmp/$$"))
->             .add(extractTargzIntoDirectory(tgz, "/tmp/$$"))
->             .add(exec("mkdir -p " + dest))
->             .add(exec("mv /tmp/$$/*/* " + dest))
->             .add(exec("rm -rf /tmp/$$")).build());
->    }
-> 
-> 
-> This is insecure, $$ == PID == predictable
-> 
-> http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
-> 
-> use java.io.File.createTempFile() ? some interesting info at
-> http://www.veracode.com/blog/2009/01/how-boring-flaws-become-interesting/
-> 
-> for directories there is a helpful posting at
-> http://stackoverflow.com/questions/617414/create-a-temporary-directory-in-java
-> 
-> Thanks.
-> 
-> 
-> - -- 
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
-> Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-> 
-> iQIcBAEBAgAGBQJTolCLAAoJEBYNRVNeJnmTrVYQAJ5glkD/0Ha5+F99Qj9ioNmm
-> ZnO4G6TqKctfiqW/X02wMocKLMRV8q5WI/nvs71hCoK5HaVmbtNrV71wE0omHLjB
-> smzFz6d8qZaTcOHdvgbSlWEGPjcVnESo0F3K0vgK2L/LtB5mgny6pHDn+c/cqrgt
-> Er4n+U3oXlkon/ksW+drWpKOpmGOhn7c4fbE45ci6KnzDbbGpGHF0fZL3lSEfJR0
-> 0D/HQzKIAJpI7VvZU8+/d/MHasndgJoAHmUCkTBYU55Vf5eYsm+xWZ1Mt46IyAap
-> crMTCHHE1GVUAexYbMxy+lohHbpl+pB/d////LzesJjByRSv87r+1oLhdwank3P9
-> Fz1h3sq57JyLFQIcpm4TS7xh3TaByFGCiA5G/mR+CkuS6sZEapSkviu/x7ygmOdG
-> cJKM+5CogeE1P1PWsoQ41JcSwfuWAfc5IODvkjLb3MfyoXJRaKcBVdVcdHBUK4BA
-> 7xcD9SbDsujxHOJLknFaO22uTtlrDS4yXJaNal6L9P7DCsSSrxG1PmmE+t5qrtYw
-> HQoz+RuOMhY/2FWJqOxa7ru99rIQmxxpWgoknUlT+yYJRfoub0kpibyJLBLy2SEx
-> xmdqe/i9nHCsGAworK4bEL2vLvsNBiJgdSHlzg7E5POI1tbveE12fIUmSgrgV+zO
-> WjPZ/O4oOj0FVWoeyQUN
-> =SUf5
-> -----END PGP SIGNATURE-----
+Correct.
 
--- 
-Andrew Gaul
-http://gaul.org/
+Now in the CVE-2014-9093 case (where I got https://bugs.debian.org/771163, sigh,
+in addition to your all-in-one and thus bogus in any case
+bugs.debian.org/770166) the code is even so much different that I will even succeed backporting
+it...
+
+3.x is totally obsolete.
+I'd assume anyone who really cares about doing stuff with LO uses wheezy-backpots
+(which has a 4.3.3)
+
+Regards,
+
+Rene
