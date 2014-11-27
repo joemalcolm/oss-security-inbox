@@ -1,27 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/1
-Message-ID: <540D194B.60609@redhat.com>
-Date: Sun, 07 Sep 2014 20:49:47 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Python robotframework - tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/12
+Message-ID: <20141127120335.GA1189@kludge.henri.nerv.fi>
+Date: Thu, 27 Nov 2014 14:03:35 +0200
+From: Henri Salo <henri@...v.fi>
+To: Damien Cauquil <d.cauquil@...dream.com>
+Cc: n.chatelain@...dream.com, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Multiple vulnerabilities in Centreon <= 2.5.3
 Content-Type: text/plain; charset=utf-8
 
-This is the first of many, only looking at programs with >5000 downloads
-in the last month.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://pypi.python.org/pypi/robotframework-pabot/
+On Thu, Nov 27, 2014 at 12:53:46PM +0100, Damien Cauquil wrote:
+> We found two vulnerabilities in Centreon <= 2.5.3:
 
-robotframework-pabot-0.8/pabot/result_merger.py
+For public CVE request you need to include at least one of:
+- - Link to vulnerable source code or fix
+- - Link to source code change log
+- - Link to security advisory
+- - Link to bug entry
 
-if __name__ == '__main__':
-    merge('../tmp/passing.xml',
-'../tmp/failing.xml').save('../tmp/merged.xml')
+If you are unwilling or unable to share this information then please contact
+MITRE at cve-assign@...re.org for CVE-ID, thank you.
 
+For detailed information please see:
+https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+- ---
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iEYEARECAAYFAlR3ExcACgkQXf6hBi6kbk+OBQCfeSB1HSwH/vuYaoOShpM7534F
+4cQAnjVUaD0+y+Wc7UnozGBS1+HPB36H
+=QYvy
+-----END PGP SIGNATURE-----
