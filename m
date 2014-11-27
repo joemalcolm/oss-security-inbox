@@ -1,38 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/4
-Message-Id: <20140924060426.8C75172E064@smtpvbsrv1.mitre.org>
-Date: Wed, 24 Sep 2014 02:04:26 -0400 (EDT)
-From: cve-assign@...re.org
-To: security@....org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 105 - Missing privilege level checks in x86 HLT, LGDT, LIDT, and LMSW emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/15
+Message-ID: <54771465.4080807@sysdream.com>
+Date: Thu, 27 Nov 2014 13:09:09 +0100
+From: Damien Cauquil <d.cauquil@...dream.com>
+To: Henri Salo <henri@...v.fi>
+CC: n.chatelain@...dream.com, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Multiple vulnerabilities in Centreon <= 2.5.3
 Content-Type: text/plain; charset=utf-8
 
+
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-> Xen Security Advisory XSA-105
-> 
-> The emulation of the instructions HLT, LGDT, LIDT, and LMSW fails to
-> perform supervisor mode permission checks.
-> 
-> Xen versions from at least 3.2.x onwards are vulnerable.
+My bad, here are the related commits for the unauthenticated remote
+command execution
 
-Use CVE-2014-7155.
+- -
+https://forge.centreon.com/projects/centreon/repository/revisions/015e875482d7ff6016edcca27bffe765c2bd77c1
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+- -
+https://forge.centreon.com/projects/centreon/repository/revisions/d00f3e015d6cf64e45822629b00068116e90ae4d
+
+Another commit is pending, related to the information disclosure
+vulnerability.
+
+
+Le 27/11/2014 13:03, Henri Salo a écrit :
+> On Thu, Nov 27, 2014 at 12:53:46PM +0100, Damien Cauquil wrote:
+> > We found two vulnerabilities in Centreon <= 2.5.3:
+>
+> For public CVE request you need to include at least one of:
+> - Link to vulnerable source code or fix
+> - Link to source code change log
+> - Link to security advisory
+> - Link to bug entry
+>
+> If you are unwilling or unable to share this information then please
+contact
+> MITRE at cve-assign@...re.org for CVE-ID, thank you.
+>
+> For detailed information please see:
+> https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
+>
+> ---
+> Henri Salo
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1
 
-iQEcBAEBAgAGBQJUIl3/AAoJEKllVAevmvmsLGoH/2hnJ2Gn+MqmDKeoaG5qsoLb
-GE8IOEnUiDkB6ahlL+PwoWgiC5d/W554W31xId0eqZleoFnCtRHHULfy0rC7bbMd
-MbYa47QOF+dImT8cRHads23oc7OlwBwPbaDhUr9Ez6g1a5hLt8CaE9K8g4xILx5u
-oMsN/+tjFbPzbex2pgtL5ZJW7RXzUlT7UGCr8fBnw0O916OHZzhctAekrsYWjVqu
-0KUMRiO/oAgb9Xyzlmkr+DDFcq5VEHegHqDQjNoVodW9dwylP7t9mGZbGO4t1myY
-foklnZiKpYwYBSOQK92s1xWvWaiOCUcgPJTxF4F7ruSfIoKBxSNjivKZn7DlTBU=
-=5UGs
+iF4EAREIAAYFAlR3FGUACgkQem0Y8idpWLxcVwEAhDa+HvScE/cPMzK+6JuQGqIV
+Cj6aWLOQWqiM89o/unkA/R9cFzQwD0HxywlQ0R0ksVDFaCwrQ1wLY6rVJty2VRQJ
+=vtB7
 -----END PGP SIGNATURE-----
+
