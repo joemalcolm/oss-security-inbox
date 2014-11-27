@@ -1,60 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/21
-Message-ID: <548721F3.9090206@tillo.ch>
-Date: Tue, 09 Dec 2014 17:23:15 +0100
-From: Martino Dell'Ambrogio <tillo@...lo.ch>
-To: oss-security@...ts.openwall.com
-Subject: Re: PIE bypass using VDSO ASLR weakness
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/6
+Message-Id: <20141127041032.C88816C004F@smtpvmsrv1.mitre.org>
+Date: Wed, 26 Nov 2014 23:10:32 -0500 (EST)
+From: cve-assign@...re.org
+To: henri@...v.fi
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE request: Canto Feed URL Parsing Command Line Injection
 Content-Type: text/plain; charset=utf-8
 
-On 12/09/2014 04:33 PM, Reno Robert wrote:
-> Hi Daniel, COMPAT_VDSO is not enabled. Just that randomization is 20 bits
-> and same values are generated on repeated execution.
-I don't have the same behavior on a default linux-image-3.2.0-31-generic 
-3.2.0-31.50 (COMPAT_VDSO not set).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I generated some values and, while distribution is not perfect, it feels 
-fairly unpredictable :
+> Can I get 2013 CVE for Canto feed URL parsing command line injection
+> vulnerability
+> 
+> Affected versions: All versions prior to v0.9.0
+> 
+> https://github.com/themoken/canto-curses/commit/2817869f98c54975f31e2dd674c1aefa70749cca
+> https://bugs.debian.org/731582
 
-$ wc -l VDSO-ASLR.lst; cat VDSO-ASLR.lst |sort |uniq -c |sort -n -r 
-|head; sort -u VDSO-ASLR.lst |wc -l
-15798 VDSO-ASLR.lst
-      12 (0x00007fff4cdff000)
-      11 (0x00007fffd09ff000)
-      11 (0x00007fffc2bff000)
-      11 (0x00007fffa0dff000)
-      11 (0x00007fff4d7ff000)
-      11 (0x00007fff1d3ff000)
-      11 (0x00007fff1a1ff000)
-      11 (0x00007fff14dff000)
-      11 (0x00007fff0e9ff000)
-      10 (0x00007fffe1dff000)
-9869
+>> If a user starts canto and chooses to go to one URL from one feed,
+>> canto constructs a sh command line to visit the URL, but it doesn't
+>> remove metachars.
 
-This is 9869 different results over 15798 samples, with a very light 
-shift toward the shown addresses.
+Use CVE-2013-7416.
 
-What's weird, though, is that a run of the same set through Burp Suite 
-analysis tells me that there are at best 8 estimated bits of effective 
-entropy.
-This suggests, if my interpretation is correct, that there may be some 
-weakness (by calculating adjacent and/or subsequent values) allowing to 
-find a valid combination under 256 tries.
+One might also argue that the underlying problem is that
+doc/configuration in the Canto distribution tells users to enter
+link_handler lines with " quoting, e.g.,
 
+  link_handler("elinks \"%u\"", text=True)
 
+within the user's ~/.canto/conf.py file. This perhaps could have been
+addressed either by making the %u value safe before conf.py is
+executed, or by telling the user to add other Python code to conf.py
+for correct quoting.
 
-I'm not a cryptologist so I may be missing a point here, but I think 
-it's worth discussing.
+In other words, 731582 is a valid vulnerability report because the
+reporter is using a quoting approach that exactly matches the vendor's
+recommendation. This is not a site-specific report about an error in
+one user's ~/.canto/conf.py file.
 
+2817869f98c54975f31e2dd674c1aefa70749cca adds an shlex.quote call --
+shlex.quote is found in
+https://hg.python.org/cpython/file/tip/Lib/shlex.py and has:
 
-Martino Dell'Ambrogio
-Security Auditor
-Web: http://www.tillo.ch/
-Email: tillo@...lo.ch
+   return "'" + s.replace("'", "'\"'\"'") + "'"
 
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Content of type "text/html" skipped
-
-Download attachment "egbicfje.png" of type "image/png" (27918 bytes)
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4234 bytes)
+iQEcBAEBAgAGBQJUdqKMAAoJEKllVAevmvms5vgH/jHWLqrfRdv2IO5lgR+MN7sg
+95/nlpMv1zQrWFhSExCAIJLVJy4bIAF8SpxjQnTdcJQQlB2ffdni4LK0sD4q2amW
+H3xBz5Gf41uNuieZI+PclDSkNr7u1ZsL+4MM5Ye2I5t04Wdm4u2XjQL3Ct5WAvUM
+h7yMuQXmdKti9NDIDDf1PXQvmDGlNDoidvZC8v/M1oPsHOuWNfYM6euFC4repFc6
+d3IBPb8tPAi8ZxZoSMMEbxDcX5OAzmCxjeaFt3JJy8lB1s4lYoS2YLlSkUI5f2kq
+jgCkxYNnSKO4HCXpl4aioG11PG1vLVsbwzZ141y+8vQygIIGz+4KBmSt/E+GzrM=
+=mC0o
+-----END PGP SIGNATURE-----
