@@ -1,44 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/4
-Message-Id: <201405190701.s4J71A9T026244@linus.mitre.org>
-Date: Mon, 19 May 2014 03:01:10 -0400 (EDT)
-From: cve-assign@...re.org
-To: creffett@...too.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: X2Go Server privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/2
+Message-ID: <54767742.207@mccme.ru>
+Date: Thu, 27 Nov 2014 03:58:42 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org, officesecurity@...ts.freedesktop.org,  Michael Meeks <michael.meeks@...labora.com>, Miklos Vajna <vmiklos@...e.cz>, Moritz Muehlenhoff <jmm@...ian.org>
+Subject: CVE Request: LibreOffice -- several issues
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 2014-11-26 19:48, Caolán McNamara wrote:
+> On Wed, 2014-11-26 at 18:43 +0300, Alexander Cherepanov wrote:
+>> https://www.libreoffice.org/about-us/security/advisories/ , which
+>> happily lists several DoS issues: CVE-2012-4233, CVE-2013-4156. IMHO
+>> this reaffrims the default security policy.
+>
+>>>From our side, the page is generally intended to just list all resolved
+> CVEs which were opened wrt LibreOffice (and a few which were opened
+> against libraries bundled into upstream provided LibreOffice builds).
+> There's no filtering out of any CVEs logged about LibreOffice that might
+> be considered not significant.
+>
+> Again, from our side, when presented with DoS documents we do tend to
+> push back against granting them security bug status. Not that we don't
+> think they are serious, just that we think they don't merit extra
+> special (time expensive) security level handing. I *think* 2012-4233 was
+> issued/requested directly by the discoverer high-tech bridge security
+> research. Maybe it initially looked a bit more serious than it turned
+> out.
+>
+> In other cases e.g. 2012-4156 the affected application is really Apache
+> OpenOffice not LibreOffice but the same document that corrupts AOO
+> causes us to deref a NULL and fall over so it got listed there because
+> we people asked about it, given our shared code base origin. (maybe
+> something similar was also the case for 2012-4233, I forget, it was
+> years ago)
 
-> I don't see a CVE assigned for the vulnerability announced here:
-> http://permalink.gmane.org/gmane.linux.terminal-server.x2go.announce/83
-> It appears that this is a privilege escalation through injecting
-> backticks, but I'm not absolutely sure. It is fixed as of versions
-> 4.0.1.10/4.0.0.8 in the following commits:
-> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=5a2aa0c36ef7a57d87e3bb6f7c6b2558ed5430f7
-> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=5a2aa0c36ef7a57d87e3bb6f7c6b2558ed5430f7
-> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=8347d3fef0e5cbabe4aa48f503612fa7b9d078f8
-> http://code.x2go.org/gitweb?p=x2goserver.git;a=commit;h=bf44925ecccda436caa1cfc34f89eced9c1bd104
+1. Thanks for the info, it's interesting and explains a bit of history. 
+OTOH I didn't imply that you somehow filtered the page or something. 
+(The list of CVEs indeed looks suspicious -- such a large project cannot 
+have so little CVES. But that's another question.) Nevertheless the pair 
+of pages (.../security/ and .../security/advisories/) looks misleading.
 
-Use CVE-2013-7383.
+2. In fact, I don't care too much if you treat DoS documents as security 
+issues or if CVEs are assigned for them. I don't yet have a strong 
+opinion about it. What bothers me is the disconnect between an assumed 
+and a real security (and security process) of LO. If you have a security 
+policy which is not default I think it should be clearly communicated to 
+an end user.
 
-Please clarify whether there is a fourth required commit. (The
-first commit was listed twice in your original message.)
+3. IMHO the usual use-case for LO is to open untrusted files in various 
+formats and I thought that security of LO would be akin to the one of 
+browsers. For comparison, I was aware that `strings` has some problems 
+but the situation with LO took me by surprise. Perhaps it's just me (I 
+don't use LO actively). Actually, hints are there: LO in Debian Stable 
+is last updated 1.5 years ago and a list of CVEs for LO is ridiculously 
+short.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+All this leads to the thought that non-security treatment of DoS issues 
+is just the tip of the iceberg. Assuming that many security bugs were 
+fixed in current versions of LO the fact that LO in Debian Stable isn't 
+updated for a long time probably means that security fixes are not 
+marked as such and hence are not backported. Please correct me if I'm wrong.
 
-iQEcBAEBAgAGBQJTeaveAAoJEKllVAevmvms3f0H/2vioN2ivFWUf99AA22so7h3
-JbDuMMthrw6Kb/pwFzQjrCYhgZ6alTLt2GN1xG8e5A6jUHpO5asRlicqYGHhVe3s
-B+R+yEHyF1xoA/e1ocWaub25zKHd8vcVENRvy1l2F4UC+b+645NJI/ftjU8za3Xa
-0HTyiROryqhX/8pMfprX/yS0WtJK59m8d9GSsCm5jbseg8rkQJPR2F8yFSUiL49c
-C6v5mMw0qbqaxOuMWlZY9mKaBfcUwgRMIdeeZ0nz/y8vi5TX6liDdblLrzMVjbBz
-brYy7Fw50nhqytZQVDFnnkcNw/jlIMCXjsH5hS1is2dcXlPa6VlSIo/cOo35Umc=
-=rVsD
------END PGP SIGNATURE-----
+-- 
+Alexander Cherepanov
