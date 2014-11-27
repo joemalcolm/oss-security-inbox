@@ -1,29 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/3
-Message-ID: <CAH4rwT+ggCpPTqAOJgdm7LbiETMYuufvGXNLZh7VGooF-RLmrw@mail.gmail.com>
-Date: Thu, 11 Dec 2014 11:15:44 +0530
-From: Reno Robert <renorobert@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/3
+Message-ID: <20141127020825.11783b95@pc>
+Date: Thu, 27 Nov 2014 02:08:25 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: PIE bypass using VDSO ASLR weakness
+Subject: Re: Re: CVE Request: buffer overflow in ksba_oid_to_str in Libksba
 Content-Type: text/plain; charset=utf-8
 
-Given that ASLR is not effective in VDSO and comes down to 11 quality bits
-as per pax test making return-to-vdso feasible even for PIE binary, whether
-this should be considered as a bug and CVE be assigned?
+On Wed, 26 Nov 2014 02:38:50 -0500 (EST)
+cve-assign@...re.org wrote:
 
-On Wed, Dec 10, 2014 at 2:25 AM, Daniel Micay <danielmicay@...il.com> wrote:
+> > Due to the unsigned integer this results in a pretty long value
+> > which won't fit anymore into the allocated buffer.
+> 
+> Use CVE-2014-9087.
 
-> On 09/12/14 10:33 AM, Reno Robert wrote:
-> > Hi Daniel, COMPAT_VDSO is not enabled. Just that randomization is 20 bits
-> > and same values are generated on repeated execution.
->
-> Ah, I was testing against PaX ASLR :). Sorry for the noise.
->
->
+Please note that this affects both libksba and gnupg (only version
+2.1.0 and betas).
 
+They share the code, but it's in different products, I don't know if
+this means 2 CVEs should be assigned.
 
 -- 
-Regards,
-Reno Robert
-http://v0ids3curity.blogspot.in/
+Hanno Böck
+http://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
