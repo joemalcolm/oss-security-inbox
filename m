@@ -1,140 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/23
-Message-ID: <CAFkuX4uK6p8qzCgrJSUMY+6UaKw0dQN1PSC0zLrFD6N3ki7F9A@mail.gmail.com>
-Date: Thu, 26 Jun 2014 12:55:58 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/5
+Message-ID: <54769F47.9060208@redhat.com>
+Date: Thu, 27 Nov 2014 14:49:27 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: LMS-2014-06-16-4: FFmpeg LZO
+CC: 771125@...s.debian.org
+Subject: CVE request: mutt: heap-based buffer overflow in mutt_substrdup()
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+Good morning,
 
-A vulnerability has been identified in the FFmpeg LZO implementation.
-Please find the bug report attached inline.
+Jakub Wilk reported a crash in mutt:
 
-Best,
-Don A. Bailey
-Founder / CEO
-Lab Mouse Security
-https://www.securitymouse.com/
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=771125
 
-#############################################################################
-#
-# Lab Mouse Security Report
-# LMS-2014-06-16-4
-#
+Looking in mutt-1.5.23-2.fc20.x86_64:
 
-Report ID: LMS-2014-06-16-4
-CVE ID: CVE-2014-4610
-
-Researcher Name: Don A. Bailey
-Researcher Organization: Lab Mouse Security
-Researcher Email: donb at securitymouse.com
-Researcher Website: www.securitymouse.com
-
-Vulnerability Status: Patched
-Vulnerability Embargo: Broken
-
-Vulnerability Class: Integer Overflow
-Vulnerability Effect: Memory Corruption
-Vulnerability Impact: DoS, OOW, RCE
-Vulnerability DoS Practicality: Practical
-Vulnerability OOW Practicality: Practical
-Vulnerability RCE Practicality: Practical
-Vulnerability Criticality: Critical
-
-Vulnerability Scope:
-All versions of libav are affected.
-All architectures supported by libav are affected.
-
-Vulnerability Tested:
-Yes. RCE proven on 10 separate platforms including but not limited to:
- - Ubuntu and Mint x86, x86_64
- - Debian x86_64, x86
- - FreeBSD x86_64, x86
-
-Functions Affected:
-	libavutil/lzo.c:av_lzo1x_decode
-
-Criticality Reasoning
----------------------
-This vulnerability can be triggered through a compression payload embedded
-in a video file. Due to the nature of this memory corruption vulnerability,
-exploitation of the bug can be seamless and work in the background during
-normal video playback. A user will never notice that playback has been
-compromised.
-
-Vulnerability Description
--------------------------
-An integer overflow can occur when processing any variant of a "literal run"
-in the av_lzo1x_decode function. Each of these three locations is
-subject to an integer overflow when processing zero bytes. The following code
-depicts how the size of the literal array is generated:
-static inline int get_len(LZOContext *c, int x, int mask)
+char *mutt_substrdup (const char *begin, const char *end)
 {
-    int cnt = x & mask;
-    if (!cnt) {
-        while (!(x = get_byte(c)))
-            cnt += 255;
-        cnt += mask + x;
-    }
-    return cnt;
+   size_t len;
+   char *p;
+
+   if (end)
+     len = end - begin;
+   else
+     len = strlen (begin);
+
+   p = safe_malloc (len + 1);
+   memcpy (p, begin, len);
+   p[len] = 0;
+   return p;
 }
 
-As long as a zero byte (0x00) is encountered, the variable 'cnt' will be
-incremented by 255. Using approximately sixteen megabytes of zeros, 'cnt' will
-accumulate to a maximum unsigned integer value in the 32bit variable.
+"end" can be less than "begin", and in this case -1 tries to be stored 
+in the unsigned int len. The safe_malloc will therefore be called with 
+"0" (due to the +1), and then the following memcpy will use the huge len.
 
-Therefore, get_len() will return a negative 'cnt' value to its caller. The
-checks in copy_backptr() will fail to properly test for negative 'cnt' values
-resulting in the following test never catching an error:
-    if (cnt > c->out_end - dst) {
-        cnt       = FFMAX(c->out_end - dst, 0);
-        c->error |= AV_LZO_OUTPUT_FULL;
-    }
+(gdb) b mutt_substrdup
+Breakpoint 1 at 0x46daf0: file lib.c, line 814.
+(gdb) c
+Continuing.
 
-av_memcpy_backptr does not check for negative 'cnt' values, which results in
-a copy of one byte from 'src' to 'dst', evading a crash do to excessive
-copying.
+Breakpoint 1, mutt_substrdup (
+     begin=begin@...ry=0xe4b630 "From jwilk@...lk.net Wed Nov 26 
+18:01:22 2014\nFrom:\n\rI\n",
+     end=end@...ry=0xe4b65e "From:\n\rI\n") at lib.c:814
+814     {
+(gdb) c
+Continuing.
 
-Finally, the copy function will never crash by calling memcpy with a negative
-value because it only calls memcpy when the signed 'cnt' variable is greater
-than zero. However, the pointers 'c->in' and 'c->out' will still be adjusted
-by a negative value, causing 'c->out' to point to an area of memory prior to
-the actual output buffer.
+Breakpoint 1, mutt_substrdup (begin=begin@...ry=0xe4b65e "From:\n\rI\n",
+     end=end@...ry=0xe4b662 ":\n\rI\n") at lib.c:814
+814     {
+(gdb) c
+Continuing.
 
-It is notable that since the count value 'cnt' is passed around as an 'int',
-it will always be interpreted as a signed 32bit integer regardless of the
-underlying architecture. This means that this vulnerability affects all
-platforms and architectures regardless of whether they are 32bit or 64bit
-in nature.
+Breakpoint 1, mutt_substrdup (begin=0xe4b665 "I\n", 
+end=end@...ry=0xe4b664 "\rI\n") at lib.c:814
+814     {
+(gdb) x/s begin
+0xe4b665:       "I\n"
+(gdb) x/s end
+0xe4b664:       "\rI\n"
+(gdb) n
+818       if (end)
+(gdb) n
+819         len = end - begin;
+(gdb) n
+823       p = safe_malloc (len + 1);
+(gdb) p len
+$1 = 18446744073709551615
+(gdb) p len + 1
+$2 = 0
 
-Vulnerability Resolution
-------------------------
-Resolving this issue requires several separate fixes.
+We haven't looked yet where the overlap occurs, nor have a patch yet.
 
-1) lzo.c:get_len()
-The return value of get_len must be evaluated for negative count values.
-A negative value should never be allowed in this context. Always error
-when a negative or zero value is returned.
+I did have to put "set weed=off" in .muttrc for the issue to present.
 
-2) lzo.c:copy()
-A negative value should not be allowed as a parameter to copy(). In
-addition, the pointers 'c->in' and 'c->out' should be tested after they
-are changed by the count value. Verify that the new offset does not land
-outside of the bounds of the 'out' buffer.
+Cheers,
 
-3) lzo:copy_backptr()
-Do not allow a negative 'cnt' value to be passed to copy_backptr. Augment
-the test cases to ensure that a negative value cannot be used to adjust
-the 'c->out' pointer.
-
-4) libavutil/mem.c:av_memcpy_backptr
-Return an error value.
-Do not allow a negative 'cnt' or 'back' value to be used.
-
-5) Always use a size_t for any size variable.
-Size variables should always represent the underlying architecture's largest
-natural unsigned integer. Use size_t, or a variant, to automatically scale
-the value to the underlying architecture.
-
+--
+Murray McAllister / Red Hat Product Security
