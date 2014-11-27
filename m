@@ -1,45 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/31/3
-Message-Id: <789CC1B7-3B4F-456D-B90D-39AB11B012EB@stufft.io>
-Date: Mon, 31 Mar 2014 03:07:45 -0400
-From: Donald Stufft <donald@...fft.io>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: CVEs, Crypto and "vulnerabilities"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/4
+Message-ID: <802517388.4086538.1417050942849.JavaMail.zimbra@redhat.com>
+Date: Wed, 26 Nov 2014 20:15:42 -0500 (EST)
+From: Arun Babu Neelicattu <abn@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-7816 Undertow (on Windows): Information disclosure via directory traversal
 Content-Type: text/plain; charset=utf-8
 
-I definitely think bad choices of algorithms, modes, and constructions should qualify. 
+CVE-2014-7816 was assigned to a vulnerability in JBoss Undertow [1]. This flaw was reported by Roberto Soares of Conviso Application Security.
 
-> On Mar 31, 2014, at 2:26 AM, Kurt Seifried <kseifried@...hat.com> wrote:
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> So the line in the sand is moving currently, I think this issue is
-> another good example of something that may qualify for a CVE, or maybe
-> not, depends where we draw the line.
-> 
-> https://github.com/opencart/opencart/issues/1279
-> 
-> So if someone has strong opinions either way please speak up.
-> 
-> - -- 
-> Kurt Seifried Red Hat Security Response Team (SRT)
-> PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
-> 
-> iQIcBAEBAgAGBQJTOQqkAAoJEBYNRVNeJnmTrNAP/3SI4itDSx80AewQ9TlgDqEG
-> r9K8Zt+XfXrez3nyGmopiQ1vHfwqCB3fU5gjzzUyVgc18i0Wq7E0bBGhz+zdtpx5
-> 5JsvC0zf4sWNr3yd12ZX+bU1uOHp2zjM+b3ZKqrrLV5pAk3c3Ut8DGwS4lg+nGzZ
-> fyTsRACcZ6xoBfZVlCQgRuG88bdd2hRyQRlYQcXDrxrO7IjM3QMLA2TKrbyWMbd3
-> KAtMcsPtYfG17X8L4nC8oykOuuNhYF+7M4aG8HOpHq9rTjK/M8Vobtsr/q2omlB6
-> kfQ4d4yeP7wQWI8Y0vw5IqQOv6KLhFQUTXN88c/7/ZwqmAjDc4kpUeBuq/LBt6gV
-> 3FsQQeVhWaVJt19XWhmtJkipqjARRB+JgBcaeat2FWXtyKrXD8OifesvzxT76f68
-> /lGYJg3hBuYhdPTHTfK/X9s/5GfQudd13tgW1L3gCFrH6a2ihj7KAzRaefoGEZ1D
-> lkjHXTxas4KFQplBuougpfhpa0lgUaTazvlWFfXFjcG0wWZOVcv5W4Ab1qBsJiNk
-> OC5vX/dXQ0KYChaaOFfub+dTyHstHgkYr3hGqeAfOnUv8nozC1PMUeOc8FeSU97v
-> Tu9p4NivDuIririkyFR9P5KFIeus6+WHwMxJdZ65wu9lyNfG/dLc5qBqLEAtjo9F
-> WbaS0jWRgMKBrBEBjYyf
-> =csSm
-> -----END PGP SIGNATURE-----
+Issue Description:
+
+It was discovered that Undertow, when running on Microsoft Windows, is vulnerable to a directory traversal flaw. A remote attacker could use this flaw to read arbitrary files that are accessible to the user running the Java process.
+
+Fixed Version(s):
+
+undertow 1.0.17.Final, undertow 1.2.0.Beta3, undertow 1.1.0.CR5
+
+Victims Record:
+
+https://github.com/victims/victims-cve-db/blob/master/database/java/2014/7816.yaml
+
+References:
+
+https://issues.jboss.org/browse/UNDERTOW-338
+https://issues.jboss.org/browse/WFLY-4020
+https://bugzilla.redhat.com/CVE-2014-7816
+https://access.redhat.com/security/cve/CVE-2014-7816
+
+-- 
+Arun Neelicattu / Red Hat Product Security
+PGP: 0xC244393B 5229 F596 474F 00A1 E416  CF8B 36F5 5054 C244 393B
