@@ -1,48 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/11
-Message-ID: <5488908C.3090406@gmail.com>
-Date: Wed, 10 Dec 2014 13:27:24 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: Steve Grubb <sgrubb@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/17
+Message-ID: <54772464.1040008@redhat.com>
+Date: Fri, 28 Nov 2014 00:17:24 +1100
+From: Murray McAllister <mmcallis@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: blkid command injection
 Content-Type: text/plain; charset=utf-8
 
-On 10/12/14 11:11 AM, Steve Grubb wrote:
-> On Tuesday, December 09, 2014 03:24:39 PM Daniel Micay wrote:
->>> I studied this area 2 years ago for a gray hat talk and in preparation to
->>> help  set the policy going forward for Fedora and RHEL. The general
->>> reason I've heard mentioned about why its not used as fully as possible
->>> is that it adds memory pages that can't be coalesced or consolidated
->>> because they are not the same.
->>
->> AFAIK, it doesn't cause a significant increase in memory usage. The
->> whole point of position independent code is that it can be reused across
->> processes. Dynamic libraries are already fully position independent.
-> 
-> This was the issue as I remember it, when you use PIE, it introduces a 
-> writable memory segment for the indirection that is filled in lazily. Because 
-> this is writeable it is per process. It is also per DSO. With desktop apps 
-> linking against a 60 or so libraries and an average of 150 apps running at any 
-> time, the memory used starts to really add up. Server workloads tend to have 
-> apps with less libraries linked in but many more processes active.
-> 
-> Of course today systems are starting to ship with 16GB standard, but now we 
-> add virtualization work loads and you have dozens more of the above. I think 
-> this institutional memory of the old days kind of hinders any movement. We had 
-> an internal debate of this on bz 786915 (which is not 100% open). The start up 
-> performance never really a factor in the discussions. It was purely about 
-> "wasted" memory.
+On 11/27/2014 02:25 AM, Sebastian Krahmer wrote:
+> Hi
+>
+> There is a command injection inside blkid. It uses caching
+> files (/dev/.blkid.tab or /run/blkid/blkid.tab) to store info about the
+> UUID, LABEL etc it finds on certain devices.
+>
+> However, it does not strip " character, so it can be confused to
+> build variable names containing embedded shell metas, which it would usually
+> encode inside the value.
+>
+> Given an USB stick with /dev/sdb1 you can:
+>
+> # mkfs.ext4 -L 'X"`/tmp/foo` "' /dev/sdb1
+> # blkid -o udev /dev/sdb1
+> ID_FS_LABEL=X__/tmp/foo___
+> [...]
+>
+> Seems to be OK, but invoking blkid a second time, taking the cache in effect:
+>
+> # blkid -o udev /dev/sdb1
+> ID_FS_LABEL=X
+> ID_FS_LABEL_ENC=X
+> ID_FS_`/tmp/foo` "" UUID=...
+> [...]
+>
+>
+> "blkid -o udev" is often used in root context via udev or in automounters
+> (uam-pmount) to construct key=value environment variables inside shell scripts
+> which are then evaluated.
+> Might be possible to construct an embedded LD_PRELOAD= as well for the binary
+> case.
+>
+> By injecting > character one can probably construct whole fake cache entries.
+>
+> Sebastian
+>
+>
+>
+>
 
-The GOT/PLT is still there without PIE. You can blame features like
-LD_PRELOAD for this, not ASLR. Every library is already paying the costs
-of PIE and more (-fpie / -fPIE is a subset of -fpic / -fPIC).
+Karel Zak has committed a patch:
 
-http://www.macieira.org/blog/2012/01/sorry-state-of-dynamic-libraries-on-linux/
+https://github.com/karelzak/util-linux/commit/89e90ae7b2826110ea28c1c0eb8e7c56c3907bdc
 
-Before the recent GCC / binutils improvements, PIE would result in GOT
-usage for every global just like PIC. The changes eliminate the need for
-that so past measurements (which usually indicate a 0-3% perf hit) won't
-be valid anymore.
+Cheers,
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+--
+Murray McAllister / Red Hat Product Security
