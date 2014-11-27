@@ -1,23 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/1
-Message-ID: <CALx_OUC8g9FFWuuu-mNtU3HXbsP_7tj+80GAYGddjDTvZePGow@mail.gmail.com>
-Date: Wed, 29 Oct 2014 17:07:33 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/8
+Message-Id: <20141127041225.35689ABC008@smtpvmsrv1.mitre.org>
+Date: Wed, 26 Nov 2014 23:12:25 -0500 (EST)
+From: cve-assign@...re.org
+To: dregad@...tisbt.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: CAPTCHA bypass in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-> It could be because they're hosted at Security Focus, whose mailserver
-> could best be described as erratic.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Possibly. I've been having my posts to the list dropped for many
-months, unable to get ahold of anyone who could fix or diagnose the
-problem. I eventually figured out that cross-posting to BUGTRAQ and
-F-D causes the posts to end up in their spam folder. If that's true
-for everybody, that's hilarious.
+> http://github.com/mantisbt/mantisbt/commit/7bb78e4581ff1092c811ea96582fe602624cdcdd
+> https://www.mantisbt.org/bugs/view.php?id=17811
 
-But even if I don't cross-post, it usually takes 3+ days for things to
-go through, and the number of bounces you get in response is the worst
-I've ever seen on the list.
+> Use session rather than form key for captcha
 
-/mz
+Use CVE-2014-9117.
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUdqMOAAoJEKllVAevmvmszB4IAJoBUTi5IJUsPH65tiLEjH4k
+6YR4uZ7FJNy6lhDa5r0IwD6CfWcksgyvj3oPdI1SBp8308H8WpT+QaXzaSQxVlEy
+QOOf8AztSjIR+PHNJZmzEFxp5J3WVsKq53UbIa0u83WwhencGohGNwABujR28A/X
+2ARnctHzt8+YEUyhLTcAsYqAzgusvozVuN4sGiIdBwXRMzO6y+bbtqhe+nplBSbs
+LY0r8pfz1Zvlz2sRaq73ySBSGhWKtF2FRoirvbuEPkwg+VlUaFT//nnWm06IfOF9
+3u5F2jpRsb95OX9U6+OlPYxqZyTsI7P4840ZAarDBMgwHc1BVGTfbfprjxDKSco=
+=Tmxs
+-----END PGP SIGNATURE-----
