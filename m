@@ -1,24 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/18
-Message-Id: <20141008170149.D4428C505B7@smtptsrv1.mitre.org>
-Date: Wed,  8 Oct 2014 13:01:49 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/9
+Message-Id: <20141128203627.602386C0014@smtpvmsrv1.mitre.org>
+Date: Fri, 28 Nov 2014 15:36:27 -0500 (EST)
 From: cve-assign@...re.org
-To: wmealing@...hat.com
+To: covener@...il.com
 Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request  for VDSM denial of service / oVirt
+Subject: Re: CVE Request: "LuaAuthzProvider" in Apache HTTP Server mixes up arguments
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://gerrit.ovirt.org/33611
-> https://bugzilla.redhat.com/show_bug.cgi?id=1148688
-> https://www.mail-archive.com/vdsm-patches@lists.fedorahosted.org/msg68420.html
-> 
-> allows an attacker to hold open an ssl connection effectively denying
-> new connections the ability to complete any new ssl connections.
+> https://issues.apache.org/bugzilla/show_bug.cgi?id=57204
 
-Use CVE-2014-7968.
+We're not sure that this crosses privilege boundaries.
+http://httpd.apache.org/docs/2.4/mod/mod_lua.html#luaauthzprovider
+says
+
+  Context: server config
+
+Apparently you're trying to use it in a directory context and finding
+that it doesn't work correctly. At least in theory, this could have
+been resolved by reporting an error when LuaAuthzProvider is found in
+a directory context, rather than by using the actual
+https://issues.apache.org/bugzilla/show_bug.cgi?id=57204#c2 approach
+to add the functionality.
+
+So, it may be reasonable to interpret this as a non-security bug that
+occurs when an administrator intentionally enters httpd.conf content
+that is, according to the documentation, invalid.
+
+We notice that
+https://issues.apache.org/bugzilla/show_bug.cgi?id=57204#c4 says
+"waiting to see if a CVE should be assigned." The usual process for
+CVE assignments for Apache Software Foundation products is:
+
+  http://www.apache.org/security/committers.html
+
+Here, we realize that the issue was sent directly to the oss-security
+list, but MITRE doesn't have enough information to make a final
+decision. The Apache Software Foundation can decide whether the
+erroneous LuaAuthzProvider handling is a vulnerability from the
+perspective of their security policy.
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -28,11 +51,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUNW2cAAoJEKllVAevmvms/twIAMRUOptS5d42DuDRbIIRUw0A
-P++FXzSTRsIjG9L12Od6I2UiCGZsaAdr+0UxoGPygOCNSHJDjdv+OenX4AsJwKqc
-LxTiGjg8wNKJ5lq0kXrPYYVmzOLWPamVGk/UTxG/H/f0d1ST7gxT9vftceDOAC/b
-qAMKvgx5RWtPGjLexJ2C0YggRBZw2X70a/CNbGrmvzKLXLBJmQthDYb8BgYxa3sA
-ag8HqoslQSIicq5icoJ+rC8e9FUKdT4pudIWphFa0amCo1lgqYysThUVj2rZcEhy
-9o1chTIPgdT+QrM4Md/JnbgFAit4LJSfbD5jfjv0jPgLW7Cdx+GrbGUsij7DVvk=
-=nLxo
+iQEcBAEBAgAGBQJUeNxsAAoJEKllVAevmvmsk0EH/jbz+IQmwX2D+htr3yIdS77p
+Wk2jlSG+qjJC1it4YLlYR/lbKkRub6V4w7asFslw0oP0+Ex+PcGlO661ucTxHcIi
+CGFhiWNXXq6XhiY1027hhcEvJ2rKGWmsctmN1XmqR2OlGPtSicrKVYLuujLQOJsE
+fvFDVYbEhXQzw+PEfSgTXBBEUbqiVAJp6r6xyJKyiwd1hf3EumSI80g4x1xKPaEc
+CKYv9SmSvGs5VOTueEsZuMgQPUv0/Q7ED9FmVlNhl5sZKMA2SuWX1wzsa1zSu1eL
+6DGWoHJoP4+WFQeRxCxZa+bdskf7P3joGJ/GwrJfDYYX46x4y9wi+lTB7I1piow=
+=cmIE
 -----END PGP SIGNATURE-----
