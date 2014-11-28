@@ -1,43 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/8
-Message-Id: <12893FA0-A8CB-4396-A0BC-9F6D7222C961@netherlabs.nl>
-Date: Tue, 9 Dec 2014 08:16:20 +0100
-From: Peter van Dijk <peter.van.dijk@...herlabs.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/1
+Message-ID: <20141128055707.GA29914@carla.jsg.id.au>
+Date: Fri, 28 Nov 2014 16:57:07 +1100
+From: Jonathan Gray <jsg@....id.au>
 To: oss-security@...ts.openwall.com
-Subject: Re: PowerDNS Security Advisory 2014-02
+Cc: xi@...olvent.net, ingy@...n.org
+Subject: libyaml / YAML-LibYAML DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello Hanno,
+libyaml and the perl YAML-LibYAML (aka YAML-XS) module based
+on the same code have an "impossible" assert that can be
+triggered with the following yaml.  This is a reduced testcase
+of a crash found with the afl fuzzer.
 
-On 08 Dec 2014, at 23:26 , Hanno Böck <hanno@...eck.de> wrote:
+      a: " 
+"     b: true
 
-> Thanks for the info.
-> 
-> Right now details on this vuln seem to be scarce. I asked myself some
-> questions, but I don't know DNS internals very well.
+In other words a crash/denial of service with untrusted yaml input.
+The libyaml author was contacted on the 21st and 27th of November.
+No response has been received but the issue has independently been
+reported publically since:
+https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
 
-These two articles from NLNetlabs and ISC might help, they are more verbose than ours:
-http://www.unbound.net/downloads/CVE-2014-8602.txt
-https://kb.isc.org/article/AA-01216
+[1] Parsing 'test.yaml': assertion "parser->simple_key_allowed || !required" failed: file "scanner.c", line 1113, function "yaml_parser_save_simple_key"
 
-I’m happy to answer followup questions.
+assert(parser->simple_key_allowed || !required);    /* Impossible. */
 
-> As this affects three implementations the obvious first question would
-> be if others are affected, too. Has this been checked?
-
-Somebody asked me to (help him) check djbdns today, which we’ll do. Any other implementations you are interested in? I have a lab setup for this issue so I’m happy to check.
-
-> And is this only a DoS for the attacked server or would it also allow
-> some completely new kind of DNS reflection attack (i.e. generating a
-> loop where every loop iteration generates an UDP packet send to a
-> victim)?
-
-I’m convinced the loop could involve unwilling victims (unless they send responses that break the loop!), but I have not tried this in practice.
-
-Kind regards,
--- 
-Peter van Dijk
-Netherlabs Computer Consulting BV - http://www.netherlabs.nl/
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+Program received signal SIGABRT, Aborted.
+0x000008ab4466136a in kill () at <stdin>:2
+2       <stdin>: No such file or directory.
+        in <stdin>
+Current language:  auto; currently asm
+(gdb) bt
+#0  0x000008ab4466136a in kill () at <stdin>:2
+#1  0x000008ab446c37b9 in abort () at /usr/src/lib/libc/stdlib/abort.c:53
+#2  0x000008ab4463e254 in __assert2 (file=Variable "file" is not available.
+)
+    at /usr/src/lib/libc/gen/assert.c:52
+#3  0x000008aa98789dba in yaml_parser_save_simple_key (parser=0x7f7ffffbe940)
+    at scanner.c:1113
+#4  0x000008aa9878d6e7 in yaml_parser_fetch_plain_scalar (
+    parser=0x7f7ffffbe940) at scanner.c:1903
+#5  0x000008aa98789c14 in yaml_parser_fetch_next_token (parser=0x7f7ffffbe940)
+    at scanner.c:1039
+#6  0x000008aa98788ce6 in yaml_parser_fetch_more_tokens (parser=0x7f7ffffbe940)
+    at scanner.c:846
+#7  0x000008aa9879ef0b in yaml_parser_parse_block_mapping_key (
+    parser=0x7f7ffffbe940, event=0x7f7ffffbeb20, first=0) at parser.c:847
+#8  0x000008aa9879c641 in yaml_parser_state_machine (parser=0x7f7ffffbe940, 
+    event=0x7f7ffffbeb20) at parser.c:267
+#9  0x000008aa9879c394 in yaml_parser_parse (parser=0x7f7ffffbe940, 
+    event=0x7f7ffffbeb20) at parser.c:188
+#10 0x000008a880401294 in main (argc=2, argv=0x7f7ffffbec08) at run-parser.c:42
