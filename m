@@ -1,47 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/8
-Message-ID: <CAKZKFJBk=hhuUMw1V9HN3h=HwHBkpC0m=xX=q4zSR0AU=zNycA@mail.gmail.com>
-Date: Wed, 17 Dec 2014 12:57:44 -0500
-From: Tute Costa <tute@...ughtbot.com>
-To: oss-security@...ts.openwall.com
-Subject: CSRF vulnerability in doorkeeper OAuth provider rubygem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/8
+Message-Id: <20141128200411.70A406C0018@smtpvmsrv1.mitre.org>
+Date: Fri, 28 Nov 2014 15:04:11 -0500 (EST)
+From: cve-assign@...re.org
+To: jsg@....id.au
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: libyaml / YAML-LibYAML DoS
 Content-Type: text/plain; charset=utf-8
 
-Cross-site request forgery (CSRF) vulnerability in doorkeeper 1.4.0
-and earlier allows remote attackers to hijack the user's OAuth
-autorization code. This vulnerability has been assigned the CVE
-identifier CVE-2012-5664.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Versions Affected:  1.4.0 and below
-Fixed Versions:     1.4.1, 2.0.0
+> a crash/denial of service with untrusted yaml input.
 
-Impact
-------
+> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
 
-Doorkeeper's endpoints didn't have CSRF protection. Any HTML document
-on the Internet can then read a user's authorization code with
-arbitrary scope from any Doorkeeper-compatible Rails app you are
-logged in.
+> https://github.com/yaml/libyaml/commit/e6aa721cc0e5a48f408c52355559fd36780ba32a
 
-Releases
---------
+Use CVE-2014-9130 for this Reachable Assertion issue in the libyaml
+scanner.c file.
 
-The 1.4.1 and 2.0.0 releases are available at
-https://rubygems.org/gems/doorkeeper and
-https://github.com/doorkeeper-gem/doorkeeper.
+Our understanding is that YAML-XS is a Perl wrapper module for the
+libyaml C library, and that there isn't separate Perl code in
+question. The rest of this message is a discussion of Python that
+does not affect the Jonathan Gray CVE request.
 
-Upgrade Process
----------------
 
-Upgrade doorkeeper version at least to 1.4.1.
+> Date: Fri, 28 Nov 2014 10:20:39 +0000
+> From: John Haxby <john.haxby@...cle.com>
+> For what it's worth PyYAML 3.10 and 3.11 have exactly the same assertion:
 
-Workarounds
------------
+For PyYAML, however, it appears that the report is about the
+scanner.py file, e.g.,
 
-There are no feasible workarounds for this vulnerability.
+  def save_possible_simple_key(self):
+  ...
+      # A simple key is required only if it is the first token in the current
+      # line. Therefore it is always allowed.
+      assert self.allow_simple_key or not required
 
-Credits
--------
-Thanks to Sergey Belov of DigitalOcean for finding the vulnerability,
-Phill Baker of DigitalOcean for reporting and fixing it, and to Egor
-Homakov of Sakurity.com for raising awareness.
+This Python code is apparently intended to correspond directly to the
+yaml_parser_save_simple_key C code. However, because it's in a
+different programming language, we would typically consider it a
+separate codebase, eligible for its own CVE IDs. Here, "assert
+self.allow_simple_key or not required" is not within the scope of
+CVE-2014-9130.
+
+One question is whether identifying a security-relevant DoS caused by
+an assert in C code means that there is also a security-relevant DoS
+caused by an assert in corresponding Python code. In other words,
+should the threat model be considered the same: the assert within
+scanner.c might cause an outage of a C application that was intended
+to remain available for processing YAML from other clients, and the
+assert within scanner.py might cause an outage of a Python application
+that was intended to remain available for processing YAML from other
+clients? Or should the latter be considered much less plausible? If
+the threat model is largely the same, we will assign a second CVE ID
+for the scanner.py issue.
+
+A second question is whether a Reachable Assertion in Python should be
+considered substantially different from a Reachable Assertion in C,
+because Python is a scripting language that potentially makes it much
+easier to ignore assert statements. (This question might not affect
+the current CVE assignments.)
+
+In other words, for a product written in C, the author could argue (or
+even document) that an assert line is supposed to be there, and the
+end user is not supposed to be compiling the program with NDEBUG.
+Similarly, the product can be shipped with specific build scripts that
+do not use NDEBUG. However, for a Python script, is the end user
+typically considered free to use -O if desired? The -O documentation
+at https://docs.python.org/3/using/cmdline.html says "-O Turn on basic
+optimizations" but the assert documentation at
+https://docs.python.org/3/reference/simple_stmts.html says "(command
+line option -O). The current code generator emits no code for an
+assert statement when optimization is requested at compile time." It's
+perhaps unclear whether ignoring assert statements is something that
+would obviously be part of "basic optimizations." (This issue doesn't
+apply to cases where there's a specific build process for .pyc files
+or the end user is supposed to install shipped .pyc files.)
+
+To give two specific examples:
+
+  1. A C program's author uses assert to prevent reaching code that,
+     in cases where the assert expression is false, has a remote code
+     execution vulnerability. The author documents that aborting the
+     program is the intended behavior, and the author provides a
+     specific build/installation process without NDEBUG.
+
+  2. A Python script's author uses assert to prevent reaching code
+     that, in cases where the assert expression is false, has a remote
+     code execution vulnerability. Because Python is a scripting
+     language, the end user doesn't separately need to build anything.
+     The end user looks at the cmdline.html documentation, chooses to
+     enable optimization with -O, and therefore the assert statement
+     is ignored.
+
+Is it fair to conclude that example 2 has a vulnerability but example
+1 does not?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUeNRWAAoJEKllVAevmvms1g4IALrWfsOh7UkxQHxP28RBQgu0
+Jb7PdteW7250OH3DXb+WPkE90co+IOMoql3HrQoEy3+izwqaUBrDuR0yZVxlej6Q
+6EmcJ6Da1qjL2kXjJOYRrGsz9VJvQTRVrXhgQ3xvCWYw6mLxoTmztQ2UNNJ3DR12
+NVbMUFTmVtqyufvFl1ilOkxtt8cb8pqufYM5491M4Jp1EgLiqi7ztj91SUwUe0+w
+rE2H/wXJKP0JSAuQUOl7sGC7R6LD7s7dp8eoa+0RPdUuvvtCq8/L+1xbzEkWo8LW
+pxLCqHonpo0XnEMGMQRkSfkkyoFperqLpeBLR+ZNlSNYNzZlkhBuvTpGA5NyNIc=
+=hUlY
+-----END PGP SIGNATURE-----
