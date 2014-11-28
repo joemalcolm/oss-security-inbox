@@ -1,101 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/09/14
-Message-ID: <CAFkuX4tDJ4y6GBi-U27WL7bHRLNdzA5mcPAfSAmG+Ch2e-1C1Q@mail.gmail.com>
-Date: Wed, 9 Jul 2014 16:05:54 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
-To: oss-security@...ts.openwall.com
-Subject: LMS-2014-07-09-1: lz4-ruby Memory Corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/10
+Message-ID: <CAHJtQJ6oNBDUusGNqW+wr3gz2JkeoRwfXWE+O_KRfczdCJXvuw@mail.gmail.com>
+Date: Fri, 28 Nov 2014 13:01:59 -0800
+From: Ingy dot Net <ingy@...y.net>
+To: Ian Cordasco <graffatcolmingov@...il.com>
+Cc: oss-security@...ts.openwall.com, John Haxby <john.haxby@...cle.com>,  Kirill Simonov <xi@...olvent.net>, Ingy döt Net <ingy@...n.org>,  Aaron Patterson <aaron.patterson@...il.com>, "Clark C. Evans" <cce@...rkevans.com>,  Oren Ben-Kiki <oren@...-kiki.org>
+Subject: Re: libyaml / YAML-LibYAML DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+Hi Ian,
 
-Please find the bug report for lz4-ruby attached below. For reference,
-please visit the following blog post that will demonstrate memory
-corruption using the latest version of Ruby and the LZ4 Ruby gem.
+I was not aware that Aaron (cc'd) had taken on maintaining libyaml. I would
+be excited if that were the case. Aaron and I are neighbors, friends and
+have worked on libyaml together in the past.
 
-http://blog.securitymouse.com/2014/07/the-lz4-two-hour-challenge.html
+Last I checked, Kirill is maintaining libyaml. The canonical repo is
+https://bitbucket.org/xi/libyaml and all the commits there are from Kirill.
+I've been under the impression for some years that Kirill does not actively
+work on libyaml, but he has always applied security patches as needed.
 
-Best,
-Don A. Bailey
-Lab Mouse Security
-Founder / CEO
-@InfoSecMouse
-https://www.securitymouse.com/
+I started the GitHub 'yaml' organization a few years ago, and among other
+things it contains a git based 'mirror' of the canonical mercurial repo.
 
-#############################################################################
-#
-# Lab Mouse Security Report
-# LMS-2014-07-09-1
-#
+I'm the author/maintainer of the Perl binding to libyaml. In this case, I
+verified the issue, patched/released the Perl binding, and pushed the patch
+to the GitHub copy.
 
-Report ID: LMS-2014-07-09-1
+Going forward, I think it would be best if Aaron and I comaintained
+libyaml, but only if Kirill and Aaron want that.
 
-Researcher Name: Don A. Bailey
-Researcher Organization: Lab Mouse Security
-Researcher Email: donb@...uritymouse.com
-Researcher Website: www.securitymouse.com
+I am interested in getting libyaml up to YAML 1.2 ad continuing towards a
+YAML 2.0. I trust Aaron's skills, and am willing to work with him on (YAML)
+language guidance.
 
-Vulnerability Status: Reported through general LZ4 disclosure
-		      Reported by Yann directly to
-https://github.com/komiya-atsushi/lz4-ruby/issues/9
-Vulnerability Embargo: None
+cc'ing Oren and Clark.
 
-Vulnerability Class: Integer Overflow
-Vulnerability Effect: Memory Corruption
-Vulnerability Impact: DoS, OOW, RCE
-Vulnerability DoS Practicality: Practical
-Vulnerability OOW Practicality: Practical
-Vulnerability RCE Practicality: Practical
-Vulnerability Criticality: Critical
+Cheers, Ingy
 
-Vulnerability Scope:
-All versions of the lz4-ruby package equal or prior to 0.3.2
-32bit variants of the package are critically affected.
-64bit variants are deemed infeasible to exploit at this time.
+On Fri, Nov 28, 2014 at 9:42 AM, Ian Cordasco <graffatcolmingov@...il.com>
+wrote:
 
-Lab Mouse Security has engineered reliable mem corruption payloads for any
-application that uses lz4-ruby, regardless of where or how the app uses the
-module in its code base.
-
-ruby 2.1.2p95 was used in exploit development.
-
-Criticality Reasoning
----------------------
-The Ruby LZ4 gem uses an old version of the LZ4 base package by default.
-When built, it fetches r113 from the Google Code repository rather than
-the latest stable version.
-
-Even though the Ruby LZ4 bindings use the LZ4_decompress_safe variant of the
-decompression algorithm, it is still vulnerable to the same memory corruption
-flaw that other "unsafe" variants are subject to.
-
-This vulnerability is proven in the reference URL at the bottom of this
-report.
-
-Vulnerability Description
--------------------------
-An integer overflow can occur when processing any variant of a "literal run"
-in the affected function. When certain payloads are processed, a pointer to
-an output buffer can be set to an address outside of the output buffer. Since
-the attacker can specify exact offsets in memory, it is very easy to create
-a reliable RCE exploit.
-
-Ruby allocates a heap chunk for decompression of LZ4 payloads. While certain
-platforms do not allow for direct RCE using a heap chunk memory corruption,
-others may be susceptible to direct heap chunk instrumentation.
-
-Regardless, using memory pressure techniques or other application influence
-strategies, it may be possible to align payloads in memory in such a way that
-the business logic of an application can be corrupted. This is a standard OOW
-attack that may, in some cases, lead to RCE.
-
-At the least, this is a very reliable DoS bug, which may affect web services
-that use the LZ4 algorithm.
-
-Vulnerability Resolution
-------------------------
-Resolved.
-
-References
-----------http://blog.securitymouse.com/2014/07/the-lz4-two-hour-challenge.html
+> On Fri, Nov 28, 2014 at 11:36 AM, Ingy dot Net <ingy@...y.net> wrote:
+> > I have fixed this by commenting out the assert. This makes the parser
+> fail
+> > as it should.
+> >
+> > I've pushed the patch to the git-hub mirror of libyaml:
+> > https://github.com/yaml/libyaml
+> >
+> > I've added a test to https://metacpan.org/release/YAML-LibYAML and
+> released
+> > version 0.53.
+> >
+> > Ingy
+> >
+> > PS Here is the Perl minimum test case, with the patched behavior:
+> >
+> >  $ perl -MYAML::XS -e 'Load qq! x: "\n"x!'
+> > YAML::XS::Load Error: The problem:
+> >
+> >     did not find expected key
+> >
+> > was found at document: 1, line: 2, column: 2
+> > while parsing a block mapping at line: 1, column: 2
+> >
+> >
+> > On Fri, Nov 28, 2014 at 7:45 AM, Ingy dot Net <ingy@...y.net> wrote:
+> >
+> >> Taking a look at this now. Please let me know if you've already found a
+> >> patch.
+> >>
+> >> Ingy
+> >>
+> >> On Fri, Nov 28, 2014 at 2:20 AM, John Haxby <john.haxby@...cle.com>
+> wrote:
+> >>
+> >>> On 28/11/14 05:57, Jonathan Gray wrote:
+> >>> > libyaml and the perl YAML-LibYAML (aka YAML-XS) module based
+> >>> > on the same code have an "impossible" assert that can be
+> >>> > triggered with the following yaml.  This is a reduced testcase
+> >>> > of a crash found with the afl fuzzer.
+> >>> >
+> >>> >       a: "
+> >>> > "     b: true
+> >>> >
+> >>> > In other words a crash/denial of service with untrusted yaml input.
+> >>> > The libyaml author was contacted on the 21st and 27th of November.
+> >>> > No response has been received but the issue has independently been
+> >>> > reported publically since:
+> >>> >
+> >>>
+> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
+> >>> >
+> >>> > [1] Parsing 'test.yaml': assertion "parser->simple_key_allowed ||
+> >>> !required" failed: file "scanner.c", line 1113, function
+> >>> "yaml_parser_save_simple_key"
+> >>> >
+> >>> > assert(parser->simple_key_allowed || !required);    /* Impossible. */
+> >>>
+> >>> For what it's worth PyYAML 3.10 and 3.11 have exactly the same
+> assertion:
+> >>>
+> >>> >>> import yaml
+> >>> >>> yaml.load("""
+> >>> ... abc:
+> >>> ...     def: 'xxx
+> >>> ... '   ghi: 'yyy'
+> >>> ... """)
+> >>> Traceback (most recent call last):
+> >>>
+> >>> [...]
+> >>>
+> >>>     assert self.allow_simple_key or not required
+> >>> AssertionError
+> >>>
+> >>> jch
+> >>>
+> >>
+> >>
+>
+> I could be mistaken but I thought Aaron Patterson had taken
+> responsibility for maintaining libyaml. Did you attempt contacting
+> anyone involved in the YAML organization on GitHub?
+>
 
