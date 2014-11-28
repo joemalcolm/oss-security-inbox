@@ -1,52 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/8
-Message-ID: <546C4850.4010309@reactos.org>
-Date: Wed, 19 Nov 2014 08:35:44 +0100
-From: Pierre Schweitzer <pierre@...ctos.org>
-To: OSS Security List <oss-security@...ts.openwall.com>,  cve-assign@...re.org
-Subject: CVE request for check_diskio nagios/icinga plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/12
+Message-ID: <CAHJtQJ7W8kgJ20s_uwt6TfGYprRr4rfM-i3CeM1FqedQXoYO7w@mail.gmail.com>
+Date: Fri, 28 Nov 2014 07:45:50 -0800
+From: Ingy dot Net <ingy@...y.net>
+To: John Haxby <john.haxby@...cle.com>
+Cc: oss-security@...ts.openwall.com, Kirill Simonov <xi@...olvent.net>,  Ingy döt Net <ingy@...n.org>
+Subject: Re: libyaml / YAML-LibYAML DoS
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Taking a look at this now. Please let me know if you've already found a
+patch.
 
-Dear all,
+Ingy
 
-The check_diskio plugin for nagios/icinga from Matteo Corti
-(https://svn.id.ethz.ch/nagios_plugins/check_diskio/) is subject to a
-/tmp symlink race attack in its latest version (and versions before as
-well).
+On Fri, Nov 28, 2014 at 2:20 AM, John Haxby <john.haxby@...cle.com> wrote:
 
-This plugin is used to monitor the I/Os on device on Linux systems. To
-be able to make a diff between two calls, it keeps the latest readings
-into a fixed pattern file name: /tmp/check_diskio_status-$user-$device
+> On 28/11/14 05:57, Jonathan Gray wrote:
+> > libyaml and the perl YAML-LibYAML (aka YAML-XS) module based
+> > on the same code have an "impossible" assert that can be
+> > triggered with the following yaml.  This is a reduced testcase
+> > of a crash found with the afl fuzzer.
+> >
+> >       a: "
+> > "     b: true
+> >
+> > In other words a crash/denial of service with untrusted yaml input.
+> > The libyaml author was contacted on the 21st and 27th of November.
+> > No response has been received but the issue has independently been
+> > reported publically since:
+> >
+> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
+> >
+> > [1] Parsing 'test.yaml': assertion "parser->simple_key_allowed ||
+> !required" failed: file "scanner.c", line 1113, function
+> "yaml_parser_save_simple_key"
+> >
+> > assert(parser->simple_key_allowed || !required);    /* Impossible. */
+>
+> For what it's worth PyYAML 3.10 and 3.11 have exactly the same assertion:
+>
+> >>> import yaml
+> >>> yaml.load("""
+> ... abc:
+> ...     def: 'xxx
+> ... '   ghi: 'yyy'
+> ... """)
+> Traceback (most recent call last):
+>
+> [...]
+>
+>     assert self.allow_simple_key or not required
+> AssertionError
+>
+> jch
+>
 
-It does not check for the file being a symlink (à la PEAR) or whatever
-when opening it.
-
-Could a CVE be assigned to this?
-The author has been contacted. I'll make him know the ID.
-
-Cheers,
-- -- 
-Pierre Schweitzer <pierre@...ctos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJUbEhQAAoJEHVFVWw9WFsLbKsQAINUKwP3oPVMs+126LhWsHsC
-6ln86rxgRzRi/zQwreIrmH2DNSY7qaMUKH461Q5Z1FXeREo87hALwRqgFUk3fMXW
-c9aRPUO1QKQWeeaaa3LQfQoJHSxSaLPDt/v+ieWRuoiP6urZLoGaEP32DtRjUXLG
-bIRFfORmMqh5PgdnsbVwcQb8ydjreFEEOzxghwzxwbPCczo97JCtXmtCxkMewVH/
-OtHUugknvTMIxpddpokUs6O68WBnvG5jNKXqRl/dYLQKgpRwkpecQEZbtdzH4xP7
-7JyNCh/9UacuMYpWWiApeULJsvQe9Uqu9ofll2DERuYASVadsLsEzvGi3IqEyrRV
-Oi79NsyxWVINV7bLh1pbwYlFJwp2ZARLyoF8HYPW9s3ZOx0tSXTLjc0NLLhHFAAH
-La7rl3asWBptjcrpOJMjGQbMhV1KwTBv3HS26YTWzYRHRiDiywTSQoOFvEiUFMYy
-1chTOOnKzKQRRXjMquhCkX86zP2JkY54N5QcLKiE83f8Q3I/3e/rh8N7WmtJd5Oq
-XCxn0CRCe+nyI+Iel0FVkHZhi5UKFmYrBnXw5njdtwX/hQLrZaF+JllFOpxtvuot
-BnwQYF10yKsLl3W4nX6euY4WFRayQxbHKG5WKZOsw2iPMjaYxuNp/XhMRaTVgRpU
-rPJO//rlwEHJK1KhIg6f
-=aF5C
------END PGP SIGNATURE-----
