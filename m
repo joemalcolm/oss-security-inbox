@@ -1,66 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/18/1
-Message-ID: <53F17401.7020309@redhat.com>
-Date: Sun, 17 Aug 2014 21:33:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/7
+Message-ID: <CAN-Kwu0ASgL0dZm=VTkN6GKsKOEEFD18v_2YbjS5mNDmu=Vb3A@mail.gmail.com>
+Date: Fri, 28 Nov 2014 11:42:03 -0600
+From: Ian Cordasco <graffatcolmingov@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: FreeNAS default blank password
+Cc: John Haxby <john.haxby@...cle.com>, Kirill Simonov <xi@...olvent.net>,  Ingy döt Net <ingy@...n.org>
+Subject: Re: libyaml / YAML-LibYAML DoS
 Content-Type: text/plain; charset=utf-8
 
-It's one thing to have a default password (that's bad), but to expose it
-by default to a web interface and the entire internal network/world and
-expose it is another thing entirely. There is no way to securely setup
-FreeNAS short of doing it all offline with a laptop plugged into it
-until you have configured and secured it (which yeah... nobody is going
-to do).
+On Fri, Nov 28, 2014 at 11:36 AM, Ingy dot Net <ingy@...y.net> wrote:
+> I have fixed this by commenting out the assert. This makes the parser fail
+> as it should.
+>
+> I've pushed the patch to the git-hub mirror of libyaml:
+> https://github.com/yaml/libyaml
+>
+> I've added a test to https://metacpan.org/release/YAML-LibYAML and released
+> version 0.53.
+>
+> Ingy
+>
+> PS Here is the Perl minimum test case, with the patched behavior:
+>
+>  $ perl -MYAML::XS -e 'Load qq! x: "\n"x!'
+> YAML::XS::Load Error: The problem:
+>
+>     did not find expected key
+>
+> was found at document: 1, line: 2, column: 2
+> while parsing a block mapping at line: 1, column: 2
+>
+>
+> On Fri, Nov 28, 2014 at 7:45 AM, Ingy dot Net <ingy@...y.net> wrote:
+>
+>> Taking a look at this now. Please let me know if you've already found a
+>> patch.
+>>
+>> Ingy
+>>
+>> On Fri, Nov 28, 2014 at 2:20 AM, John Haxby <john.haxby@...cle.com> wrote:
+>>
+>>> On 28/11/14 05:57, Jonathan Gray wrote:
+>>> > libyaml and the perl YAML-LibYAML (aka YAML-XS) module based
+>>> > on the same code have an "impossible" assert that can be
+>>> > triggered with the following yaml.  This is a reduced testcase
+>>> > of a crash found with the afl fuzzer.
+>>> >
+>>> >       a: "
+>>> > "     b: true
+>>> >
+>>> > In other words a crash/denial of service with untrusted yaml input.
+>>> > The libyaml author was contacted on the 21st and 27th of November.
+>>> > No response has been received but the issue has independently been
+>>> > reported publically since:
+>>> >
+>>> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
+>>> >
+>>> > [1] Parsing 'test.yaml': assertion "parser->simple_key_allowed ||
+>>> !required" failed: file "scanner.c", line 1113, function
+>>> "yaml_parser_save_simple_key"
+>>> >
+>>> > assert(parser->simple_key_allowed || !required);    /* Impossible. */
+>>>
+>>> For what it's worth PyYAML 3.10 and 3.11 have exactly the same assertion:
+>>>
+>>> >>> import yaml
+>>> >>> yaml.load("""
+>>> ... abc:
+>>> ...     def: 'xxx
+>>> ... '   ghi: 'yyy'
+>>> ... """)
+>>> Traceback (most recent call last):
+>>>
+>>> [...]
+>>>
+>>>     assert self.allow_simple_key or not required
+>>> AssertionError
+>>>
+>>> jch
+>>>
+>>
+>>
 
-How hard would it be to not allow any remote Web GUI access until the
-user accesses the text based console and sets the admin password? sigh.
-
-On 17/08/14 01:47 AM, devzero2000 wrote:
-> Il 17/Ago/2014 04:12 "Kurt Seifried" <kseifried@...hat.com> ha scritto:
->>
->> So I installed the latest FreeNAS (9.2.1.7), install is simple, no
->> options, it just drops it onto the disk you specify, you reboot, it works.
->>
->> By default you get a text based menu with some options (setup
->> network/DNS/etc.), and one option is "Reset WebGUI Login Credentials".
->>
->> The problem is at first boot (and if you ever pick "Reset WebGUI Login
->> Credentials") the web admin has a blank password, anyone that can access
->> it can set the admin password and then use the web GUI to fire up a root
->> shell (there's a nice little web shell command line).
->>
->> So an attacker can easily race the admin to the WebGUI, set a new
->> password, login as root, setup a backdoor, then reset the WebGUI
->> password so it's blank again and the admin would be none the wiser (log
->> files won't help because the attacker has root can can easily sanitize
->> them).
->>
->> There is no way from the text GUI to set the Web GUI admin password. I
->> don't think there is even a CLI tool to set the web GUI password (I
->> can't find it easily).
->>
->> Either way, does this deserve a CVE? Forcing a user to set the admin Web
->> GUI password through the Web GUI, meaning it must be exposed to some
->> degree prior to securing it. My understanding is default/blank admin
->> credentials now == CVE. Thanks.
->>
->>
-> Many device have a "default" password on first install that everyone know.
-> For me "blank" password or "admin admin"  are equal as security risk. I
-> have missed something ?
-> 
-> Best regards
->> --
->> Kurt Seifried -- Red Hat -- Product Security -- Cloud
->> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->>
-> 
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+I could be mistaken but I thought Aaron Patterson had taken
+responsibility for maintaining libyaml. Did you attempt contacting
+anyone involved in the YAML organization on GitHub?
