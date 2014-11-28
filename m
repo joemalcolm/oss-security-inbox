@@ -1,39 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/33
-Message-ID: <5425D1F1.2030606@FreeBSD.org>
-Date: Fri, 26 Sep 2014 15:52:01 -0500
-From: Bryan Drewery <bdrewery@...eBSD.org>
-To: oss-security@...ts.openwall.com, chet.ramey@...e.edu
-CC: Christos Zoulas <christos@...las.com>
-Subject: Re: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/6
+Message-ID: <CAHJtQJ5J4vqOhHb1juebcaNf1HOybhv4zueGmEAGDYnsEbwDMQ@mail.gmail.com>
+Date: Fri, 28 Nov 2014 09:36:04 -0800
+From: Ingy dot Net <ingy@...y.net>
+To: John Haxby <john.haxby@...cle.com>
+Cc: oss-security@...ts.openwall.com, Kirill Simonov <xi@...olvent.net>,  Ingy döt Net <ingy@...n.org>
+Subject: Re: libyaml / YAML-LibYAML DoS
 Content-Type: text/plain; charset=utf-8
 
-On 9/26/2014 9:13 AM, Christos Zoulas wrote:
-> On Sep 26,  1:47pm, john.haxby@...cle.com (John Haxby) wrote:
-> -- Subject: Re: [oss-security] Re: CVE-2014-6271: remote code execution throu
-> 
-> | It's not so much the known attacks -- redefining ls, unset, command,
-> | typeset, declare, etc -- it's the future parser bugs that we don't yet
-> | know about.
-> | 
-> | A friend of mine said this could be a vulnerability gift that keeps on
-> | giving.
-> 
-> I think that at this point the conservative approach is best, so
-> until the bash author figures what the best solution is, the feature
-> is disabled by default for NetBSD. It is not wise to expose bash's
-> parser to the internet and then debug it live while being attacked.
-> 
-> christos
-> 
+I have fixed this by commenting out the assert. This makes the parser fail
+as it should.
 
-FreeBSD has taken a similar approach. We have used Christos' patch and
-disabled the feature by default.
+I've pushed the patch to the git-hub mirror of libyaml:
+https://github.com/yaml/libyaml
 
-https://svnweb.freebsd.org/changeset/ports/369341
+I've added a test to https://metacpan.org/release/YAML-LibYAML and released
+version 0.53.
 
-Regards,
-Bryan Drewery
+Ingy
+
+PS Here is the Perl minimum test case, with the patched behavior:
+
+ $ perl -MYAML::XS -e 'Load qq! x: "\n"x!'
+YAML::XS::Load Error: The problem:
+
+    did not find expected key
+
+was found at document: 1, line: 2, column: 2
+while parsing a block mapping at line: 1, column: 2
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+On Fri, Nov 28, 2014 at 7:45 AM, Ingy dot Net <ingy@...y.net> wrote:
+
+> Taking a look at this now. Please let me know if you've already found a
+> patch.
+>
+> Ingy
+>
+> On Fri, Nov 28, 2014 at 2:20 AM, John Haxby <john.haxby@...cle.com> wrote:
+>
+>> On 28/11/14 05:57, Jonathan Gray wrote:
+>> > libyaml and the perl YAML-LibYAML (aka YAML-XS) module based
+>> > on the same code have an "impossible" assert that can be
+>> > triggered with the following yaml.  This is a reduced testcase
+>> > of a crash found with the afl fuzzer.
+>> >
+>> >       a: "
+>> > "     b: true
+>> >
+>> > In other words a crash/denial of service with untrusted yaml input.
+>> > The libyaml author was contacted on the 21st and 27th of November.
+>> > No response has been received but the issue has independently been
+>> > reported publically since:
+>> >
+>> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
+>> >
+>> > [1] Parsing 'test.yaml': assertion "parser->simple_key_allowed ||
+>> !required" failed: file "scanner.c", line 1113, function
+>> "yaml_parser_save_simple_key"
+>> >
+>> > assert(parser->simple_key_allowed || !required);    /* Impossible. */
+>>
+>> For what it's worth PyYAML 3.10 and 3.11 have exactly the same assertion:
+>>
+>> >>> import yaml
+>> >>> yaml.load("""
+>> ... abc:
+>> ...     def: 'xxx
+>> ... '   ghi: 'yyy'
+>> ... """)
+>> Traceback (most recent call last):
+>>
+>> [...]
+>>
+>>     assert self.allow_simple_key or not required
+>> AssertionError
+>>
+>> jch
+>>
+>
+>
+
