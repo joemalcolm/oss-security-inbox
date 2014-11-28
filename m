@@ -1,26 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/1
-Message-ID: <20140808112021.GA4961@mwanda>
-Date: Fri, 8 Aug 2014 14:20:21 +0300
-From: Dan Carpenter <dan.carpenter@...cle.com>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/3
+Message-ID: <54784C77.6000704@oracle.com>
+Date: Fri, 28 Nov 2014 10:20:39 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: oss-security@...ts.openwall.com
+CC: xi@...olvent.net, ingy@...n.org
+Subject: Re: libyaml / YAML-LibYAML DoS
 Content-Type: text/plain; charset=utf-8
 
-I'm surprised we haven't had any discussion about the recent BadUSB
-articles.
+On 28/11/14 05:57, Jonathan Gray wrote:
+> libyaml and the perl YAML-LibYAML (aka YAML-XS) module based
+> on the same code have an "impossible" assert that can be
+> triggered with the following yaml.  This is a reduced testcase
+> of a crash found with the afl fuzzer.
+> 
+>       a: " 
+> "     b: true
+> 
+> In other words a crash/denial of service with untrusted yaml input.
+> The libyaml author was contacted on the 21st and 27th of November.
+> No response has been received but the issue has independently been
+> reported publically since:
+> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
+> 
+> [1] Parsing 'test.yaml': assertion "parser->simple_key_allowed || !required" failed: file "scanner.c", line 1113, function "yaml_parser_save_simple_key"
+> 
+> assert(parser->simple_key_allowed || !required);    /* Impossible. */
 
-http://arstechnica.com/security/2014/07/this-thumbdrive-hacks-computers-badusb-exploit-makes-devices-turn-evil/
-http://security.stackexchange.com/questions/64524/how-to-prevent-badusb-attacks-on-linux-desktop
+For what it's worth PyYAML 3.10 and 3.11 have exactly the same assertion:
 
-We could put a popup if there is a second keyboard attached to check
-that the person controlling the existing keyboard is aware of the second
-one.
+>>> import yaml
+>>> yaml.load("""
+... abc:
+...     def: 'xxx
+... '   ghi: 'yyy'
+... """)
+Traceback (most recent call last):
 
-The attack looks like someone who says, "Can you copy some files from
-my USB flash drive which?" (not knowing it is infected) and then there
-is a popup, "This newly inserted USB device is trying to type commands,
-is that ok?  y/N?".
+[...]
 
-regards,
-dan carpenter
+    assert self.allow_simple_key or not required
+AssertionError
+
+jch
