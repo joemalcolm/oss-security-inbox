@@ -1,35 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/4
-Message-ID: <CALx_OUDAPhs70ViC8J-MD0rPsWPS_UrW7NPbaRgecNtbhtABow@mail.gmail.com>
-Date: Mon, 17 Nov 2014 19:56:37 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/4
+Message-ID: <54785B1B.9030408@internot.info>
+Date: Fri, 28 Nov 2014 22:23:07 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: The Fuzzing Project
 Content-Type: text/plain; charset=utf-8
 
-> What about using fuzzing to find those tools withOUT vulnerabilities and
-> "certifying them" in some way as safe for all inputs?
+On 24/11/14 07:49, Hanno Böck wrote:
+> As already mentioned in various threads I hereby announce the Fuzzing
+> Project:
+> https://fuzzing-project.org/
+>
+> This is still a lot of work in progress. I welcome all feedback,
+> contributions and especially links to your reports of the bugs you
+> fuzzed.
+If you'd like, add 'man', 'diff', 'memcached', and 'exif'.
+I ran afl-fuzz on each of them for 24-hours, and encountered no crashes.
 
-Certainly a good starting point. The main problem is that there are
-hundreds of thousands developer cranking out OSS code every day, and
-perhaps several dozen skilled security researchers who would want to
-play that game.
-
-One could delegate the fuzzing to developers, but if they do not
-particularly care about getting it right, and just want a "seal of
-approval" on their website, it would probably become meaningless. It's
-fairly hard to select, configure, and run fuzzers, especially on more
-verbose or strict data formats (say, XML).
-
-Now, fuzzing coverage measurements - of the traditional gcov sort -
-are actually probably a decent proxy for how much effort the team is
-putting into getting it right. It still needs some interpretation -
-how much of that code is security-relevant to begin with, and how much
-coverage does that get?
-
-Ultimately, though, you need compelling incentives. Perhaps spare for
-OpenBSD or Openwall, I doubt that security factors into the decisions
-to add or promote a particular package. Users won't visit a website to
-make sure the program has been fuzzed before running it, too.
-
-/mz
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
