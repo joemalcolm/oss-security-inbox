@@ -1,27 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/4
-Message-ID: <20141231113237.GA9204@eldamar.local>
-Date: Wed, 31 Dec 2014 12:32:37 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>, Stanislav Malyshev <stas@....net>
-Subject: CVE Request: PHP: out of bounds read crashes php-cgi
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/11
+Message-ID: <CALK=YjMSs2XfXff=UB3yNwvJ-yEvXv+Ep8KiJ4R5LXj3z_POSg@mail.gmail.com>
+Date: Fri, 28 Nov 2014 17:23:24 -0500
+From: Eric Covener <covener@...il.com>
+To: cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: "LuaAuthzProvider" in Apache HTTP Server mixes up arguments
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On Fri, Nov 28, 2014 at 3:36 PM,  <cve-assign@...re.org> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>> https://issues.apache.org/bugzilla/show_bug.cgi?id=57204
+>
+> We're not sure that this crosses privilege boundaries.
+> http://httpd.apache.org/docs/2.4/mod/mod_lua.html#luaauthzprovider
+> says
+>
+>   Context: server config
+>
+> Apparently you're trying to use it in a directory context and finding
+> that it doesn't work correctly. At least in theory, this could have
+> been resolved by reporting an error when LuaAuthzProvider is found in
+> a directory context, rather than by using the actual
+> https://issues.apache.org/bugzilla/show_bug.cgi?id=57204#c2 approach
+> to add the functionality.
+>
+> So, it may be reasonable to interpret this as a non-security bug that
+> occurs when an administrator intentionally enters httpd.conf content
+> that is, according to the documentation, invalid.
 
-Could you please assign a CVE to the following issue (in case it was
-not requested to MITRE via seprate channel, thus also Cc'ing
-StanislavStanislav Malyshev). 
+No, it does not require LuaAuthzProvider in the wrong context to
+produce the vulnerability with the parameters.
 
-https://bugs.php.net/bug.php?id=68618 (out of bounds read crashes
-php-cgi).
+When LuaAuthzProvider appears only in server/vhost context it defines
+an authorization provider -- say "my-provider".
 
-PHP upstream has commited a fix for it to the VCS:
+You can then use "my-provider" wherever "Require" is valid (everywhere).
 
-http://git.php.net/?p=php-src.git;a=commit;h=f9ad3086693fce680fbe246e4a45aa92edd2ac35
+Wherever you use it with "Require my-provider", you can also pass an
+argument.  For example if your provider did the same task as
+mod_authz_goupfile you might pass the path of a group file, or the
+name of a group to lookup (or both with some delimieter).
 
-Thanks in advance.
+If you did this twice with different arguments, the script in each
+context receives the last-defined argument.
 
-Regards,
-Salvatore
+So if you configure and tested "Require my-provider admins-only", then
+configured and tested  "Require my-provider guest" in another context,
+you'd end up with mixed-up args passed to the first provider.
+
+> We notice that
+> https://issues.apache.org/bugzilla/show_bug.cgi?id=57204#c4 says
+> "waiting to see if a CVE should be assigned." The usual process for
+> CVE assignments for Apache Software Foundation products is:
+>
+>   http://www.apache.org/security/committers.html
+>
+> Here, we realize that the issue was sent directly to the oss-security
+> list, but MITRE doesn't have enough information to make a final
+> decision. The Apache Software Foundation can decide whether the
+> erroneous LuaAuthzProvider handling is a vulnerability from the
+> perspective of their security policy.
+
+It was first disclosed publicly in an online comment in the httpd
+manual. Since it did not seem very sensitive, I copied it to a public
+bugzilla before asking for a CVE privately from security@...che.org.
+Since it had already been public (twice), the security team said I
+should initiate it via oss-security@ to avoid duplicates.
+
+If you'd like security@...che.org to allocate the CVE despite it
+having been discussed publicly, please confrm here.   Thanks.
