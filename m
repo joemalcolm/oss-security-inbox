@@ -1,24 +1,139 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/02/3
-Message-ID: <20140602062520.GA19667@kludge.henri.nerv.fi>
-Date: Mon, 2 Jun 2014 09:25:20 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/29/1
+Message-ID: <CAOE4rSw+JJRE3bL-dQ2SMcz2J2CEoWv_jhEvBQG3f2R=pwohnA@mail.gmail.com>
+Date: Sat, 29 Nov 2014 02:20:48 +0200
+From: Dāvis Mosāns <davispuh@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE ID request: typo3
+Subject: Re: Re: libyaml / YAML-LibYAML DoS
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jun 02, 2014 at 08:02:52AM +0200, Moritz Muehlenhoff wrote:
-> please assign CVE IDs for
-> http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2014-001/
+Ruby is also affected. See
+https://github.com/tenderlove/psych/blob/master/ext/psych/yaml/scanner.c#L1113
 
-These two security advisories also need CVEs:
+YAML.load_file('test.yaml')
 
-http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-007/
-http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2014-008/
 
-TYPO3 team is aware of these CVE requests.
+File: ./yaml/scanner.c, Line 1113
 
----
-Henri Salo
+Expression: parser->simple_key_allowed || !required
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+This application has requested the Runtime to terminate it in an unusual
+way.
+Please contact the application's support team for more information.
+
+
+
+2014-11-28 22:04 GMT+02:00 <cve-assign@...re.org>:
+
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> > a crash/denial of service with untrusted yaml input.
+>
+> >
+> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
+>
+> >
+> https://github.com/yaml/libyaml/commit/e6aa721cc0e5a48f408c52355559fd36780ba32a
+>
+> Use CVE-2014-9130 for this Reachable Assertion issue in the libyaml
+> scanner.c file.
+>
+> Our understanding is that YAML-XS is a Perl wrapper module for the
+> libyaml C library, and that there isn't separate Perl code in
+> question. The rest of this message is a discussion of Python that
+> does not affect the Jonathan Gray CVE request.
+>
+>
+> > Date: Fri, 28 Nov 2014 10:20:39 +0000
+> > From: John Haxby <john.haxby@...cle.com>
+> > For what it's worth PyYAML 3.10 and 3.11 have exactly the same assertion:
+>
+> For PyYAML, however, it appears that the report is about the
+> scanner.py file, e.g.,
+>
+>   def save_possible_simple_key(self):
+>   ...
+>       # A simple key is required only if it is the first token in the
+> current
+>       # line. Therefore it is always allowed.
+>       assert self.allow_simple_key or not required
+>
+> This Python code is apparently intended to correspond directly to the
+> yaml_parser_save_simple_key C code. However, because it's in a
+> different programming language, we would typically consider it a
+> separate codebase, eligible for its own CVE IDs. Here, "assert
+> self.allow_simple_key or not required" is not within the scope of
+> CVE-2014-9130.
+>
+> One question is whether identifying a security-relevant DoS caused by
+> an assert in C code means that there is also a security-relevant DoS
+> caused by an assert in corresponding Python code. In other words,
+> should the threat model be considered the same: the assert within
+> scanner.c might cause an outage of a C application that was intended
+> to remain available for processing YAML from other clients, and the
+> assert within scanner.py might cause an outage of a Python application
+> that was intended to remain available for processing YAML from other
+> clients? Or should the latter be considered much less plausible? If
+> the threat model is largely the same, we will assign a second CVE ID
+> for the scanner.py issue.
+>
+> A second question is whether a Reachable Assertion in Python should be
+> considered substantially different from a Reachable Assertion in C,
+> because Python is a scripting language that potentially makes it much
+> easier to ignore assert statements. (This question might not affect
+> the current CVE assignments.)
+>
+> In other words, for a product written in C, the author could argue (or
+> even document) that an assert line is supposed to be there, and the
+> end user is not supposed to be compiling the program with NDEBUG.
+> Similarly, the product can be shipped with specific build scripts that
+> do not use NDEBUG. However, for a Python script, is the end user
+> typically considered free to use -O if desired? The -O documentation
+> at https://docs.python.org/3/using/cmdline.html says "-O Turn on basic
+> optimizations" but the assert documentation at
+> https://docs.python.org/3/reference/simple_stmts.html says "(command
+> line option -O). The current code generator emits no code for an
+> assert statement when optimization is requested at compile time." It's
+> perhaps unclear whether ignoring assert statements is something that
+> would obviously be part of "basic optimizations." (This issue doesn't
+> apply to cases where there's a specific build process for .pyc files
+> or the end user is supposed to install shipped .pyc files.)
+>
+> To give two specific examples:
+>
+>   1. A C program's author uses assert to prevent reaching code that,
+>      in cases where the assert expression is false, has a remote code
+>      execution vulnerability. The author documents that aborting the
+>      program is the intended behavior, and the author provides a
+>      specific build/installation process without NDEBUG.
+>
+>   2. A Python script's author uses assert to prevent reaching code
+>      that, in cases where the assert expression is false, has a remote
+>      code execution vulnerability. Because Python is a scripting
+>      language, the end user doesn't separately need to build anything.
+>      The end user looks at the cmdline.html documentation, chooses to
+>      enable optimization with -O, and therefore the assert statement
+>      is ignored.
+>
+> Is it fair to conclude that example 2 has a vulnerability but example
+> 1 does not?
+>
+> - --
+> CVE assignment team, MITRE CVE Numbering Authority
+> M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEcBAEBAgAGBQJUeNRWAAoJEKllVAevmvms1g4IALrWfsOh7UkxQHxP28RBQgu0
+> Jb7PdteW7250OH3DXb+WPkE90co+IOMoql3HrQoEy3+izwqaUBrDuR0yZVxlej6Q
+> 6EmcJ6Da1qjL2kXjJOYRrGsz9VJvQTRVrXhgQ3xvCWYw6mLxoTmztQ2UNNJ3DR12
+> NVbMUFTmVtqyufvFl1ilOkxtt8cb8pqufYM5491M4Jp1EgLiqi7ztj91SUwUe0+w
+> rE2H/wXJKP0JSAuQUOl7sGC7R6LD7s7dp8eoa+0RPdUuvvtCq8/L+1xbzEkWo8LW
+> pxLCqHonpo0XnEMGMQRkSfkkyoFperqLpeBLR+ZNlSNYNzZlkhBuvTpGA5NyNIc=
+> =hUlY
+> -----END PGP SIGNATURE-----
+>
+
