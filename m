@@ -1,61 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/05/7
-Message-ID: <20141005134415.GA22543@openwall.com>
-Date: Sun, 5 Oct 2014 17:44:15 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/29/6
+Message-ID: <m5di6f$ie5$1@ger.gmane.org>
+Date: Sat, 29 Nov 2014 23:43:28 +0100
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+Subject: CVE request: PHP Object Injection in MantisBT filter API
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 05, 2014 at 10:22:06AM +0000, Sona Sarmadi wrote:
-> I think what most (non-expert) people need is an explanation for each CVE
+Greetings,
 
-No.  Most non-expert people only need to know that they need either the
-prefix/suffix patch included or function imports disabled, preferably in
-a security update from their distro vendor.  This makes the individual
-parser bugs, which got CVEs assigned, irrelevant.
+Please assign a CVE ID for the following issue.
 
-Here's the relevant test:
 
-testfunc='() { echo bad; }' bash -c testfunc
+Description:
 
-Here's how it works on a patched system:
+In the function current_user_get_bug_filter(), the code loads a variable 
+from $_GET['filter']/$_POST['filter'] and if it's not numeric, feeds it 
+straight into unserialize() allowing an attacker to inject a PHP object.
 
-$ testfunc='() { echo bad; }' bash -c testfunc
-bash: testfunc: command not found
 
-and on a (most likely) vulnerable system:
+Affected versions:
+<= 1.2.17
 
-$ testfunc='() { echo bad; }' bash -c testfunc
-bad
+Fixed in versions:
+1.2.18 (not yet released)
 
-(I wrote "most likely" because with all CVEs patched the latter system
-is not actually vulnerable to the currently known parser bugs, but you
-should want to protect its parser anyway.  So such systems need to be
-updated regardless of whether they're vulnerable to any of the currently
-assigned CVEs or not.)
+Patch:
+See Github [1]
 
-> Some questions:
->  1) bash43-027   patch  exported function namespace change,  Florian's mitigation patch that shields the parser from untrusted inputs". This does not solve any specific CVE, but mitigates all CVEs, is this correct?
+Credit:
+Issue was reported by Mathias Karlsson (http://mathiaskarlsson.me) as 
+part of Offensive Security's bug bounty program [3].
+It was fixed by Paul Richards.
 
-Yes.  It's the most important one of the recent upstream bash patches.
+References:
+Further details available in our issue tracker [2]
 
-> 2) Do we need to apply *all* of these individual bash patches (i.e. bash43-025 through bash43-029)? Even  bash43-027 which is not solving any specific CVE?  Or should we apply 27 or all the others?
 
-If you choose to build bash from source (why?) rather than simply use
-your distro's security update, then it's best to apply all of the
-upstream patches (currently, bash43-001 through bash43-029).  bash43-027
-is the most important one, but these patches are intended to be applied
-one after another, so skipping any of the lower-numbered patches is
-unsafe (may result in a patch failing to apply or applying or working
-improperly), and there's no good reason for you to skip any upstream
-patches anyway.
+[1] http://github.com/mantisbt/mantisbt/commit/599364b2
+[2] http://www.mantisbt.org/bugs/view.php?id=17875
+[3] http://www.offensive-security.com/bug-bounty-program/
 
-> 3) Do you have a script or summary of all tests in one place like  http://en.wikipedia.org/wiki/Shellshock_%28software_bug%29 or https://raw.githubusercontent.com/hannob/bashcheck/master/bashcheck ? Or maybe these are good enough & reliable? 
 
-You only need the one-liner test above.  Running tests for the various
-CVEs is a distraction (it's moderately useful e.g. for a distro vendor,
-to see what non-security bugs may need to be patched, but mostly not for
-an end-user or sysadmin).
 
-Alexander
