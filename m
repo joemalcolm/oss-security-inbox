@@ -1,80 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/25/2
-Message-Id: <201402251456.s1PEu3DP013121@linus.mitre.org>
-Date: Tue, 25 Feb 2014 09:56:03 -0500 (EST)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for catfish program
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/29/5
+Message-ID: <m5cv0h$jsm$1@ger.gmane.org>
+Date: Sat, 29 Nov 2014 18:16:01 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: DB credentials disclosure in MantisBT's unattended upgrade script
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Greetings,
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739958
-> https://bugzilla.redhat.com/show_bug.cgi?id=1069396
+Kindly assign a CVE ID for the following issue.
 
-> This script intentionally looks to load catfish.py in the current
-> working directory.
 
-"intentionally" tends to be a complicating factor for a CVE
-assignment; one could possibly instead express this as: the author
-didn't consider that catfish would sometimes be executed with cwd
-outside of the user's home directory. The nature of the program
-suggests that it could be started interactively by any user at any
-time, and there's no documentation indicating that the cwd could or
-should be constrained.
+Description:
 
-We couldn't immediately figure out where your quoted source code came
-from.
+The unattended upgrade script retrieved DB connection settings from POST 
+parameters, allowing an attacker to get the script to connect to their 
+host with the current DB config credentials.
 
-http://ftp.de.debian.org/debian/pool/main/c/catfish/catfish_0.3.2.orig.tar.gz
-has a catfish.in that looks for $APPNAME.pyc before $APPNAME.py. The
-quoted code has duplicate checks for $APPNAME.py. This affects the
-number of CVEs. Apparently, "a crafted catfish.py file in the current
-working directory" is an attack vector with a certain set of affected
-versions, and "a crafted catfish.pyc file in the current working
-directory" is an attack vector with a different set of affected
-versions. Also, the Debian bug report specifically names a much later
-package (1.0.0-2) that might be considered an independent codebase,
-and at least has different attack vectors. The ChangeLog says "v0.6.0
-Complete rewrite from the ground-up." The problematic 1.0.0 code is
-distributed in bin/catfish.in.in and has attack vectors of "a crafted
-bin/catfish.pyc or bin/catfish.py file under the current working
-directory."
+As per installation instructions [1], the admin/ directory (which 
+contains the vulnerable script) should be deleted in a Production instance.
 
-The primary Red Hat bug report refers to
-https://bugzilla.redhat.com/show_bug.cgi?id=1069398 which is for
-"Product: Fedora ... Component: catfish ... Version: 20" but
-http://dl.fedoraproject.org/pub/fedora/linux/releases/20/Everything/source/SRPMS/c/catfish-0.8.2-1.fc20.src.rpm
-is essentially the same as 1.0.0: the code is found in
-bin/catfish.in.in in the distribution, and bin/catfish.pyc and
-bin/catfish.py are the attack vectors. So, apparently your quoted code
-isn't the Fedora 20 code.
+Affected versions:
+ >= 1.1.0a3, <= 1.2.17
 
-Finally, we didn't find any evidence of a case where only
-bin/catfish.py is checked within the post-complete-rewrite codebase.
+Fixed in versions:
+1.2.18 (not yet released)
 
-catfish.py in the current working directory - Use CVE-2014-2093.
+Patch:
+See Github [2]
 
-catfish.pyc in the current working directory - Use CVE-2014-2094.
+Credit:
+Issue was reported by Mathias Karlsson (http://mathiaskarlsson.me) as 
+part of Offensive Security's bug bounty program [3].
+It was fixed by Paul Richards.
 
-bin/catfish.pyc and bin/catfish.py file under the current working
-directory - Use CVE-2014-2095.
+References:
+Further details available in our issue tracker [4]
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTDK5yAAoJEKllVAevmvms33cH/AvvurPhW6Myf3IQ+l9VPGvy
-EB5Jzz1MIT3GZ5iC80Gol2zseShZzaxaVORlvpEeQNVDLH0g3XkV8QsEyFudhwcj
-YDK5FhJJWZhkefS6CoMXawKKE4QgLTnkyUsyVbtE0vQOaDGVGZM0ISu6EhHlnCBS
-3lyjkVBRHEpn0pixkiplCwYpBsyghJfLdeKsix5RxATfT+vfFcSMq73nnreDab3p
-hj1mcj1DVXQIWbuMT4LfgfCs1TeY84zt3OLopApfkR0+T6M66ZkzXVvJbI6nlLJU
-QA5KnInO3hxXwIQqgrtGpyINIqsrR9dZ2gF37t7NJzrMY3AajiUp3LsfQQTS+UM=
-=97F+
------END PGP SIGNATURE-----
+[1] 
+https://mantisbt.org/docs/master-1.2.x/en/administration_guide/admin.install.postcommon.html
+[2] http://github.com/mantisbt/mantisbt/commit/0826cef8
+[3] http://www.offensive-security.com/bug-bounty-program/
+[4] http://www.mantisbt.org/bugs/view.php?id=17877
+
