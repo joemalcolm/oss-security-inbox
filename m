@@ -1,57 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/02/8
-Message-ID: <53640609.10003@redhat.com>
-Date: Fri, 02 May 2014 14:54:33 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: Open Source Security <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Debian Bug#746579: libwww-perl: HTTPS_CA_DIR or HTTPS_CA_FILE disables peer certificate verification for IO::Socket::SSL
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/29/2
+Message-Id: <20141129010616.8151652E171@smtpvbsrv1.mitre.org>
+Date: Fri, 28 Nov 2014 20:06:16 -0500 (EST)
+From: cve-assign@...re.org
+To: covener@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: "LuaAuthzProvider" in Apache HTTP Server mixes up arguments
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746579
+The short answer is yes: we do want security@...che.org to allocate a
+CVE if they agree with you that the issue is a vulnerability. MITRE
+won't be assigning a CVE ID, and thus there won't be a duplicate.
 
-Package: libwww-perl
-Version: 6.06-1
-Tags: security
-Usertags: serious
+> No, it does not require LuaAuthzProvider in the wrong context
 
-If LWP uses IO::Socket::SSL as SSL socket class (this is the default),
-setting HTTPS_CA_DIR or HTTPS_CA_FILE environment variable disables(!)
-server cerificate verification:
+OK.
 
-...
+> If you did this twice with different arguments
 
-So the intention was to disable only hostname verification, for
-compatibility with Crypt::SSLeay (why?!), but the effect is that the
-SSL_verify_mode is set to 0.
+We don't know what "you" means here. For example, maybe "you" can only
+mean the administrator. Your first message said "in httpd.conf." Your
+second message said 'wherever "Require" is valid (everywhere).' If an
+unprivileged user can create a "Require my-provider guest" line for
+directory A within a .htaccess file, and this has the effect of
+overriding a "Require my-provider admins-only" line for directory B
+within httpd.conf, then certainly there's a vulnerability.
 
-So this probably needs a CVE. My thought being that you meant to
-disable hostname checks, and ended up disabling all verification, so I
-guess it's a fine line since disabling host name checks means an
-attacker can use any C you trust to get a cert for a hostname they
-control and mitm you, but if you are using an internal CA this would
-allow a mitm that was not possible without this flaw, so there can be
-a violation in a relatively not completely insane setup.
+If both Require lines must be entered in httpd.conf by the
+administrator, then there may or may not be a vulnerability. We think
+there's a good chance that there's a vulnerability, because ability to
+have both a "Require my-provider admins-only" line and a "Require
+my-provider guest" line is a realistic interpretation of the
+documentation. It is also an ability that administrators would want to
+have. However, LuaAuthzProvider is "Status: Experimental." A vendor
+might have a different view on what is a vulnerability in experimental
+code versus what is a vulnerability in non-experimental code. For
+example, if enabling the experimental code allows an unconditional
+code-execution attack with crafted input, that's one class of problem.
+If it happens to be very easy for the administrator to configure the
+experimental code insecurely, because the vendor hasn't tested many
+use cases beyond what is explicitly shown in the documentation,
+that's a different class of problem. We feel the LuaAuthzProvider case
+is closer to the latter. Here, the easiest and best way to resolve the
+various possibilities is for the Apache Software Foundation to confirm
+your vulnerability finding and allocate the CVE.
 
 - -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJTZAYJAAoJEBYNRVNeJnmT9JsP/0qjZzubb5c4f05KTwEIlail
-Oay7Z2eYXSipi3rg1M4JNHUXeE3M9bXp0IyUsmvfmS59EcHyC8tZN3IERLymSpvT
-gfNoLKFYipUv/Dgu0bdt5HM3tKhl/pCHsJPvfoCnZR7bh8pa17XbckpmxwIajwqh
-vZ6K6gI9SrlNycNUdo920/kstIkdc/FdpEpkRvRMOsMTD65l+3VMGKEGb55ekqqd
-2yUZnw+Qza1frhFg6cSeeP/liyDijRVH4lbCSkjXdWy8gedHLpGreNsC7jgsckRQ
-qlzKWiJbfRXSySx0OuczKFFVRWELaSmOThTEFsY1bDoM8GvPcJjbdZDVY7Yg62BX
-HtlzshpOT7es1egJP5g88XvyJdxIu9j6UgTYlhvF017ZSVb5v6YhxaPN5EUVNTOk
-EK3UobAdSokiJtLgZ4BSIQ41EdPco9BbSpd31/iPyTU733jkITSqRmMrYoCZyMnk
-eO1yNrX4QdyaIhAnbLhvCyGVOIi/ytjCIBGwjw/Prx1G2gTy67yH2eYFyIOGpTbb
-EvdVDm2tzw4l5lC4SUwKNvVWawtbtoeCp8nAI9KzTG7uL97GrLmku3WnoCe7zsKz
-BzlXHWUshR3PcaDS7PeyfWlke+pt1KeSdj97pBvLnyWbAQZE7sLHCDnuUyCtFg6K
-jPcqe01NT37NR3QOMZtY
-=APK7
+iQEcBAEBAgAGBQJUeRtYAAoJEKllVAevmvmskfoH+wdugNTBI1lWKDWYmmxXY8ui
+7aTef38WkXpoZUpci7ZEx1kaVqaz54BPwWULyYeksW/qmQ9b5GaO4UlTIRfmZT6V
+/QOVZe6fA4Dehj7GmuvpwBBQuoYkybxzP/wQX3Bl+WW8ubO4I0DHJSm54m4PtXu+
+C2Y8weSXE+oLYL1jpjryTSrAKrKNGpE6O1AujwmWrb8NJIYILSRq2bXt8hpRVmG3
+XPHvd4BuHrMXukdGy5xwL2ZPXM53C/fjAK2OVnx3rjGuyiFwAPYtVjtSN3tixAjN
+vtxljmnA+n8Afq1p/4vwCqwm9Syv7FGdlWFXbG6lS1erkVMBPMyw+I2VJkxgkGU=
+=oebP
 -----END PGP SIGNATURE-----
