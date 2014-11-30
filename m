@@ -1,52 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/11
-Message-Id: <8538jrx8vx.fsf@boum.org>
-Date: Mon, 10 Feb 2014 16:52:34 +0100
-From: intrigeri <intrigeri@...m.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/30/1
+Message-ID: <547AE470.204@internot.info>
+Date: Sun, 30 Nov 2014 20:33:36 +1100
+From: Joshua Rogers <honey@...ernot.info>
 To: oss-security@...ts.openwall.com
-Cc: Holger Levsen <holger@...er-acht.org>
-Subject: CVE request: parcimonie (0.6 to 0.8, included) possible correlation between key fetches
+Subject: Re: CVE Request: Graphviz format string vuln
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Holger Levsen <holger@...er-acht.org> discovered that parcimonie [1],
-a privacy-friendly helper to refresh a GnuPG keyring, before version
-0.8.1, is affected by a design problem that undermines the usefulness
-of this piece of software, in the intended threat model. I am upstream
-for parcimonie, and I maintain it in Debian.
-
-Type of the vulnerability: information disclosure.
-
-Description: when using parcimonie with a large keyring (1000 public
-keys or more), it would always sleep exactly 10 minutes between two
-key fetches. This is likely to be fingerprintable by an adversary who
-can watch enough key fetches, who can then correlate multiple key
-fetches with each other, which is the exact situation that parcimonie
-aims at protecting against. It happens that such an adversary is part
-of the threat model parcimonie is meant to cope with. This problem is
-slightly mitigated by the fact that most users likely use a HKP(s)
-pool as their configured GnuPG keyserver (so their successive requests
-have good chances to be sent to different keyservers), and the fact
-that each key fetch is done using a different Tor circuit.
-
-Upstream bugfix: commit 8931fdcf868c37e2e8d44324d5514d235a6d5c89 in
-git://gaffer.ptitcanardnoir.org/App-Parcimonie.git
-
-Versions affected: from parcimonie 0.6 to 0.8, included. Fixed in
-parcimonie 0.8.1.
-
-This problem was made public in Debian bug #738134 [2], and was
-described in details in the commit message for the upstream bugfix.
-
-Could you please allocated a CVE id for this?
-
-References:
-[1] http://gaffer.ptitcanardnoir.org/intrigeri/code/parcimonie/
-[2] https://bugs.debian.org/738134
-
-Cheers,
+Bump. :)
+On 25/11/14 16:40, Joshua Rogers wrote:
+> Hi,
+>
+> A format string vulnerability has been found in `graphviz'.
+> The fix commit is here:
+> https://github.com/ellson/graphviz/commit/99eda421f7ddc27b14e4ac1d2126e5fe41719081
+>
+> Could I get a CVE-ID for this?
+>
+>
+> Thanks,
+Thanks,
 -- 
-  intrigeri
-  | GnuPG key @ https://gaffer.ptitcanardnoir.org/intrigeri/intrigeri.asc
-  | OTR fingerprint @ https://gaffer.ptitcanardnoir.org/intrigeri/otr.asc
+-- Joshua Rogers <https://internot.info/>
