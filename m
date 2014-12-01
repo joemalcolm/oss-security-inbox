@@ -1,34 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/19
-Message-ID: <21558.27674.92777.315506@gargle.gargle.HOWL>
-Date: Thu, 9 Oct 2014 13:06:02 +0200
-From: rf@...eap.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/01/6
+Message-ID: <Pine.LNX.4.64.1412011303540.31165@beijing.mitre.org>
+Date: Mon, 1 Dec 2014 13:04:11 -0500 (EST)
+From: "Steven M. Christey" <coley@...re.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-7975: 0-day umount denial of service
+Subject: Re: Re: CVE Request: Graphviz format string vuln
 Content-Type: text/plain; charset=utf-8
 
->>>>> "Andy" == Andy Lutomirski <luto@...capital.net> writes:
 
-    Andy> I just screwed up and typoed my git send-email command, so
-    Andy> there's now a publicly available exploit for a new umount bug.
+On Sun, 30 Nov 2014, Joshua Rogers wrote:
 
-    Andy> Fortunately this one isn't terribly serious, but it might be
-    Andy> usable for more than just DoS if some daemon reacts poorly to
-    Andy> being unable to write to the filesystem.
+> On 25/11/14 16:40, Joshua Rogers wrote:
+>> Hi,
+>>
+>> A format string vulnerability has been found in `graphviz'.
+>> The fix commit is here:
+>> https://github.com/ellson/graphviz/commit/99eda421f7ddc27b14e4ac1d2126e5fe41719081
+>>
+>> Could I get a CVE-ID for this?
 
-    Andy> http://thread.gmane.org/gmane.linux.kernel.stable/109312
+Use CVE-2014-9157.
 
-Hmm, what damage is this supposed to do? I get (3.12.29):
-
-ql-front-t:/dev/pts# /root/remount-exploit /dev
-remount_ro, a DoS by Andy Lutomirski
-remount-exploit: umount: Device or resource busy
-
-Maybe you should specify what versions are supposed to be vulnerable
-
--- 
-Roland
-
--------
-http://www.q-leap.com / http://qlustar.com
-          --- HPC / Storage / Cloud Linux Cluster OS ---
+- Steve
