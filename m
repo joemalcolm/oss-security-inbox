@@ -1,38 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/16/1
-Message-Id: <20140816013436.CE18BC502F1@smtptsrv1.mitre.org>
-Date: Fri, 15 Aug 2014 21:34:36 -0400 (EDT)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com, aliguori@...zon.com, mst@...hat.com, amit.shah@...hat.com, lersek@...hat.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request --  qemu: missing field list terminator in vmstate_xhci_event
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/01/7
+Message-ID: <547CFEBA.1070609@amacapital.net>
+Date: Mon, 01 Dec 2014 15:50:18 -0800
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: AW: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> It was found that vmstate_xhci_event field list was missing
-> VMSTATE_END_OF_LIST() terminator and traversing through this list
-> would result in out-of-bounds access
+On 11/26/2014 11:32 AM, Fiedler Roman wrote:
+>> Von: Matthew Daley [mailto:mattd-Lyx97FHGs0pBDgjK7y7TUQ@...lic.gmane.org]
+>>
+>> On Thu, Nov 27, 2014 at 4:28 AM, Fiedler Roman <Roman.Fiedler-c/U4JCCwIJZeoWH0uzbU5w@...lic.gmane.org>
+>> wrote:
+>>> (...)
+>>> My test program was:
+>>>
+>>> #include <fcntl.h>
+>>> #include <stdio.h>
+>>> #include <sys/stat.h>
+>>>
+>>> int main(int argc, char **argv) {
+>>>   int fd;
+>>>   struct stat statBuf;
+>>>   int result;
+>>>
+>>>   fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
+>>>   result=fstat(fd, &statBuf);
+>>>   if(result) {
+>>>     fprintf(stderr, "Stat failed\n");
+>>>     return(1);
+>>>   }
+>>>   fprintf(stderr, "New element type is %d\n", S_ISDIR(fd));
+>>
+>> FWIW, this should probably be S_ISDIR(statBuf.st_mode).
 > 
-> http://git.qemu.org/?p=qemu.git;a=commit;h=3afca1d6d413592c2b78cf28f52fa24a586d8f56
-> https://bugzilla.redhat.com/show_bug.cgi?id=1126543
+> You are completely right, how stupid to miss that. I did not challenge the 
+> result, since it was the same as with "ls -al".
+> 
+> Also with S_ISDIR(statBuf.st_mode), result is the same, at least on my side.
+> 
+> 
+> 
+> #include <fcntl.h>
+> #include <stdio.h>
+> #include <sys/stat.h>
+> 
+> int main(int argc, char **argv) {
+>   int fd;
+>   struct stat statBuf;
+>   int result;
+> 
+>   fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
+>   result=fstat(fd, &statBuf);
+>   if(result) {
+>     fprintf(stderr, "Stat failed\n");
+>     return(1);
+>   }
+>   fprintf(stderr, "New element type is %d\n", S_ISDIR(statBuf.st_mode));
+>   return(0);
+> }
+> 
+> 
+> $ ./test
+> New element type is 0
+> 
 
-Use CVE-2014-5263.
+Report it to linux-fsdevel@...r.kernel.org?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT7rS1AAoJEKllVAevmvms81IIAJStFbBq3fpNs3M/E3yijako
-dlSiffBGimmv1s3oV41suqvE7WVv2zDRjfnRBAcRFFND5zj3Ga7hldP+59E2yeaG
-5X25gnsxrJDhEbGFUHLM3hUi928czOWxH/L1TRN+Vq+HvWfkd6y2qNhPTgM8Q7lb
-u92AqJwG0nI1PEjkES4Dnjv6OArHPDzTlNdVJJnizEV+Y7svYhHKb0xDnAT/DHAJ
-xO2va5qP7ukpVGClXY7Cuj6YnhCJ1Wel4NLMN6G7gBntuml2SK60XHi/OqhxucjI
-NWnRtZm9is9bqwsIlbvRF3qhZpWFXO7e8r4bHqigNQhIbQINbzGfTwhNNnkFTaQ=
-=PmsW
------END PGP SIGNATURE-----
+--Andy
