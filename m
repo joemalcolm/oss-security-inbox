@@ -1,73 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/28
-Message-ID: <20141009190907.GC29399@w1.fi>
-Date: Thu, 9 Oct 2014 22:09:07 +0300
-From: Jouni Malinen <j@...fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/01/3
+Message-ID: <87bnnn4sg2.fsf@redhat.com>
+Date: Mon, 01 Dec 2014 10:42:21 +0100
+From: Martin Prpic <mprpic@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: wpa_cli and hostapd_cli action script execution vulnerability
+Subject: Re: CVE request: missing checks for small-sized files in hivex
 Content-Type: text/plain; charset=utf-8
 
-Published: October 9, 2014
-Identifier: CVE-2014-3686
-Latest version available from: http://w1.fi/security/2014-1/
+Ping, can this please get a CVE?
 
 
-Vulnerability
+Martin Prpic writes:
 
-A vulnerability was found in the mechanism wpa_cli and hostapd_cli use
-for executing action scripts. An unsanitized string received from a
-remote device can be passed to a system() call resulting in arbitrary
-command execution under the privileges of the wpa_cli/hostapd_cli
-process (which may be root or at least network admin in common use
-cases).
-
-
-Vulnerable versions/configurations
-
-wpa_cli is a component distributed with wpa_supplicant and hostapd_cli
-is a component distributed with hostapd. The vulnerability affects only
-cases where wpa_cli or hostapd_cli is used to run action scripts (-a
-command line option) and one (or more) of the following build
-combinations for wpa_supplicant/hostapd is used:
-
-wpa_supplicant v1.0-v2.2 with CONFIG_P2P build option enabled and
-connecting to a P2P group
-
-wpa_supplicant v2.1-v2.2 with CONFIG_WNM build option enabled
-
-wpa_supplicant v2.2 with CONFIG_HS20 build option enabled
-
-wpa_supplicant v0.7.2-v2.2 with CONFIG_WPS build option enabled and
-operating as WPS Registrar
-
-hostapd v0.7.2-v2.2 with CONFIG_WPS build option enabled and WPS enabled
-in runtime configuration
-
-wpa_supplicant and hostapd processes are not directly affected, i.e.,
-the vulnerability occurs in the wpa_cli/hostapd process based on
-information received from wpa_supplicant/hostapd.
-
-Attacker (or a system controlled by the attacker) needs to be within
-radio range of the vulnerable system to send a frame that triggers a
-suitable formatted event message to allow full control on command
-execution.
-
-
-Possible mitigation steps
-
-- Update to wpa_cli/hostapd_cli from wpa_supplicant/hostapd v2.3
-
-- Merge the following commits to an older version of wpa_cli/hostapd_cli
-  and rebuild it:
-
-  Add os_exec() helper to run external programs
-  wpa_cli: Use os_exec() for action script execution
-  hostapd_cli: Use more robust mechanism for action script execution
-
-  These patches are available from http://w1.fi/security/2014-1/
-
-- Disable use of wpa_cli/hostapd_cli command to run action scripts
-  (this may prevent functionality)
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
+> Hello,
+>
+> Can a CVE please be assigned to the following issue?
+>
+> It was reported that hivex [1], a library that can read and write hive files (undocumented binary files that Windows uses to store the Windows Registry on disk), did not properly handle small-sized hive files. An attacker able to supply a hive file of a small size to an application using the hivex library could use this flaw to read, and possibly write, up to 4095 bytes beyond the end of the allocated buffer, potentially resulting in arbitrary code execution with the with the privileges of the user running that application.
+>
+> This issue has been fixed in upstream version 1.3.11 of hivex. Upstream patches are available at:
+>
+> https://github.com/libguestfs/hivex/commit/357f26fa64fd1d9ccac2331fe174a8ee9c607adb
+> https://github.com/libguestfs/hivex/commit/4bbdf555f88baeae0fa804a369a81a83908bd705
+>
+> References:
+>
+> [1] https://www.redhat.com/archives/libguestfs/2014-October/msg00235.html
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=1167756
+>
+> Thanks,
+>
+> --
+> Martin Prpič / Red Hat Product Security
