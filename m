@@ -1,37 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/5
-Message-ID: <5480302E.9070007@redhat.com>
-Date: Thu, 04 Dec 2014 10:58:06 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, "Joshua J. Drake" <oss-sec-pmgetbl@...p.org>
-CC: Tero Marttila <terom@...me.fi>
-Subject: Re: CVE request: procmail heap overflow in getlline()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/01/2
+Message-ID: <547C2A3D.1060904@reactos.org>
+Date: Mon, 01 Dec 2014 09:43:41 +0100
+From: Pierre Schweitzer <pierre@...ctos.org>
+To: cve-assign@...re.org
+CC: oss-security@...ts.openwall.com
+Subject: Re: CVE request for check_diskio nagios/icinga plugin
 Content-Type: text/plain; charset=utf-8
 
-On 12/04/2014 09:41 AM, Kurt Seifried wrote:
-> On 04/12/14 12:57 AM, Santiago Vila wrote:
->> On Wed, Dec 03, 2014 at 05:30:57PM -0600, Joshua J. Drake wrote:
->>> Is it possible to trigger this issue with untrusted input or only
->>> trusted input from procmailrc?
->>
->> This is an issue with the handling of .procmailrc file, which contains
->> the filter rules for procmail. An external attacker is not supposed to
->> provide the .procmailrc file at /home/user, only the email to be
->> filtered, so, IMHO, this is a bug but maybe not a security bug.
->>
->> Thanks.
->
-> I disagree. Many mail servers allow people to edit their .procmailrc but
-> explicitly block shell accounts. This would allow a user with a non
-> interactive shell account to execute arbitrary commands using procmailrc
-> even if they were otherwise restricted (e.g. using permissions or
-> SELinux for example).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-procmail already executes commands in lines starting with “|” (and the 
-documentation suggests it does not honor SHELL, so SHELL=/bin/false does 
-not block this).  If permissions/SELinux contain that, they will also 
-work against a procmailrc parser exploit.  In other words, I don't think 
-there's a security bug here.
+Thanks.
 
--- 
-Florian Weimer / Red Hat Product Security
+The author reported the vulnerability got fixed and a new version,
+3.2.7, including the fix has been released.
+
+Cheers,
+Pierre
+
+On 11/20/2014 07:58 AM, cve-assign@...re.org wrote:
+>> The check_diskio plugin for nagios/icinga from Matteo Corti 
+>> (https://svn.id.ethz.ch/nagios_plugins/check_diskio/) is subject
+>> to a /tmp symlink race attack in its latest version (and versions
+>> before as well).
+> 
+>> This plugin is used to monitor the I/Os on device on Linux
+>> systems. To be able to make a diff between two calls, it keeps
+>> the latest readings into a fixed pattern file name:
+>> /tmp/check_diskio_status-$user-$device
+> 
+>> It does not check for the file being a symlink
+> 
+> Use CVE-2014-8994.
+> 
+> 
+
+- -- 
+Pierre Schweitzer <pierre@...ctos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJUfCo9AAoJEHVFVWw9WFsLheQP/1k5OgIIU0wzn4t4RdKjTXWn
+XCBDofGUWL5Xt1Oa/hUEPMr0YYydlAR7Tf68bCK4L1xn0nA4uj36fWFAugxoONBd
+LjX075KP4sm3RIucRi2dwJH30zSb6SSqwF3jAAuFLugC3nnNCHjmKnyOH5ZZmncn
+IRHAR2Ztn8OaH9HRNzGzn2L30Qv1YmaMgdRHupxrMB6ohlNo0yCsdgGaXv701NxC
+mZkLuflxZKReDVS5IEAD/ZSa3i0BsJe965VypAVKQ3INZ0SDOghy3gmt9ybagmYI
+PZa6L3gudCtsnLe1JP4By+tQzJYfJtHIszvpy6qIf4ystosftVoVgpZDFp3gNSKa
+kSclXrqQLnCu1I8unl9KiwY1Za4PaJOq13Z+0Rb/gw0UsS4jBTSksQyN3uTTG8Rt
+Q+LKznvhe7AyJWU10vAMYhy6BT1PSDk1MXE3vnHz2B/d18ypNK8Hk2nN9U36V67o
+pNHSiEamE1nSy9oFBXNRtv9E3O4x5fiX1aqSzepluAC7mHzF5i2xuKzF2y7viNeM
+/RfCrcLExMAvwPMN2Qd4rJejg5zMuJJfq6KTPM/TySWn1Y7g/9LUjEn4B3ERttwf
+QWWHkp/DgFtfwGnKlP+jVfupyeUcXKa9VJskhDfb2dbnoJrts/A7eEMoCFMNEBxW
+jhzH4ozueUHbmCOyHm2Z
+=0fWY
+-----END PGP SIGNATURE-----
