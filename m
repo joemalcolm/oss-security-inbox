@@ -1,47 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/7
-Message-Id: <201406240600.s5O60lRU026649@linus.mitre.org>
-Date: Tue, 24 Jun 2014 02:00:47 -0400 (EDT)
-From: cve-assign@...re.org
-To: vkaigoro@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 752395@...s.debian.org
-Subject: Re: CVE request: python: _json module is vulnerable to arbitrary process memory read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/02/2
+Message-ID: <20141202112204.GB7532@suse.de>
+Date: Tue, 2 Dec 2014 12:22:04 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: blkid command injection
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> The bug is caused by allowing the user to supply a negative index
-> value.
+On Fri, Nov 28, 2014 at 12:17:24AM +1100, Murray McAllister wrote:
+> On 11/27/2014 02:25 AM, Sebastian Krahmer wrote:
+>> Hi
+>>
+>> There is a command injection inside blkid. It uses caching
+>> files (/dev/.blkid.tab or /run/blkid/blkid.tab) to store info about the
+>> UUID, LABEL etc it finds on certain devices.
+>>
+>> However, it does not strip " character, so it can be confused to
+>> build variable names containing embedded shell metas, which it would usually
+>> encode inside the value.
+>>
+>> Given an USB stick with /dev/sdb1 you can:
+>>
+>> # mkfs.ext4 -L 'X"`/tmp/foo` "' /dev/sdb1
+>> # blkid -o udev /dev/sdb1
+>> ID_FS_LABEL=X__/tmp/foo___
+>> [...]
+>>
+>> Seems to be OK, but invoking blkid a second time, taking the cache in effect:
+>>
+>> # blkid -o udev /dev/sdb1
+>> ID_FS_LABEL=X
+>> ID_FS_LABEL_ENC=X
+>> ID_FS_`/tmp/foo` "" UUID=...
+>> [...]
+>>
+>>
+>> "blkid -o udev" is often used in root context via udev or in automounters
+>> (uam-pmount) to construct key=value environment variables inside shell scripts
+>> which are then evaluated.
+>> Might be possible to construct an embedded LD_PRELOAD= as well for the binary
+>> case.
+>>
+>> By injecting > character one can probably construct whole fake cache entries.
+>>
+>> Sebastian
+>>
+>>
+>>
+>>
+>
+> Karel Zak has committed a patch:
+>
+> https://github.com/karelzak/util-linux/commit/89e90ae7b2826110ea28c1c0eb8e7c56c3907bdc
+>
 
-> http://bugs.python.org/issue21529
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752395
-> https://bugzilla.redhat.com/show_bug.cgi?id=1112285
-> https://hackerone.com/reports/12297
+Thanks. Patch looks good to me. I contacted upstream about additional
+fixes which you might want to include as well, so we can release it alltogether. The
+severity of command injection is probably not that high that we need
+updates immediately.
 
-Use CVE-2014-4616.
+Sebastian
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752395#5
-> Package: python2.7
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752395#19
-> It affects Python 3.x in a similar way
+-- 
 
-The same CVE ID applies to affected Python 2.x and 3.x versions.
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTqRPQAAoJEKllVAevmvmsjAkH+wSAH88T3s7cwEKRgKJRiOIY
-Gpuk14cxNukkHmA4RuaCqa8Tn/itTQIej+m4bYD6lKw8VZke3OfIK8mh8gele47w
-brEXQCO7Ie0+2ohGsAmjT5tUsOC9ZaTmj3Yg1ZqJkCcAIfGHk68m8dBlL2uqooPy
-RQ38a2dPvMw14vL9mK/OY1StiQiZRK56GpbsL5JE85n1mHft6jWLpIm8d5Pf4Toy
-+mwwpiG2FLHMb4EgzllDRw/wDMfxtsMT4UFd6gVdb7Oau2/CR10+uLZzIDbN3o4q
-Bi1ScXCizjpKUl7+Sy8ZsZj1t7VMRaDyzeGlULUAO4/E6wuDVrw0G4jaJXMEkhY=
-=i8ZP
------END PGP SIGNATURE-----
