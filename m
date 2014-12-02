@@ -1,51 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/28/11
-Message-ID: <CAJjO9Mk19ReZ0RE4PgMV+OG_4oZHqR54p3BHmSEJbO5N0r6wTA@mail.gmail.com>
-Date: Fri, 28 Mar 2014 11:09:38 -0700
-From: Fyodor <fyodor@...p.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/02/1
+Message-ID: <547D5BB8.5020906@redhat.com>
+Date: Tue, 02 Dec 2014 17:27:04 +1100
+From: Murray McAllister <mmcallis@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OT What are the delays in delivery of Fyodor's Full Disclosure list?
+Subject: Re: Buffer overflow in antiword 0.37
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 28, 2014 at 8:56 AM, Georgi Guninski <guninski@...inski.com>wrote:
-
-> Sorry for offtopic.
+On 12/02/2014 03:18 AM, Fabian Keil wrote:
+> The attached patch prevents a buffer overflow in antiword 0.37
+> (http://www.winfield.demon.nl/):
 >
-> What are the delays in the delivery in
-> Fyodor's Full Disclosure list?
+> Program received signal SIGBUS, Bus error.
+> 0x000000000044b55b in vName2String (szName=0x80140d58c "\"\037\202 \306!n\"n#n$n3", aucBytes=0x7fffffffde20 "\"", tNameSize=32767) at wordole.c:74
+> 74			*pcChar = (char)aucBytes[tIndex];
+> (gdb) f 1
+> #1  0x00000000004499f2 in bGetPPS (pFile=0x800c19190, aulRootList=0x801409060, tRootListLen=4, pPPS=0x7fffffffe3b0) at wordole.c:262
+> 262			vName2String(atPPSlist[iIndex].szName, aucBytes, tNameSize);
+> (gdb) l -
+> 257				atPPSlist = xfree(atPPSlist);
+> 258				return FALSE;
+> 259			}
+> 260			tNameSize = (size_t)usGetWord(0x40, aucBytes);
+> 261			tNameSize = (tNameSize + 1) / 2;
+> 262			vName2String(atPPSlist[iIndex].szName, aucBytes, tNameSize);
+> 263			atPPSlist[iIndex].ucType = ucGetByte(0x42, aucBytes);
+> 264			if (atPPSlist[iIndex].ucType == 5) {
+> 265				iRootIndex = iIndex;
+> 266			}
+> (gdb) p sizeof(atPPSlist[iIndex].szName)
+> $1 = 32
+> (gdb) p tNameSize
+> $2 = 32767
+> (gdb) l vName2String
+> 56	/*
+> 57	 * vName2String - turn the name into a proper string.
+> 58	 */
+> 59	static void
+> 60	vName2String(char *szName, const UCHAR *aucBytes, size_t tNameSize)
+> 61	{
+> 62		char	*pcChar;
+> 63		size_t	tIndex;
+> 64	
+> 65		fail(aucBytes == NULL || szName == NULL);
+> (gdb) l
+> 66	
+> 67		if (tNameSize < 2) {
+> 68			szName[0] = '\0';
+> 69			return;
+> 70		}
+> 71		for (tIndex = 0, pcChar = szName;
+> 72		     tIndex < 2 * tNameSize;
+> 73		     tIndex += 2, pcChar++) {
+> 74			*pcChar = (char)aucBytes[tIndex];
+> 75		}
+> (gdb)
+> 76		szName[tNameSize - 1] = '\0';
+> 77	} /* end of vName2String */
+>
+> The buffer overflow has been reported upstream and the patch was accepted,
+> but apparently there will not be an official antiword release any time soon.
+>
+> The bug was found with afl-fuzz.
+>
+> Fabian
 >
 
-It is because the list is not even three days old yet and already has more
-than 6,000 members and I'm still trying to set things up, including a team
-of list members to help moderate.  But as of now, I'm still the only
-moderator and I need to sleep sometimes.  I also have other projects to
-work on than just moderating fulldisclosure.
-
-Today at  17:06:09 +0200 I tried to post
-> to fulldisclosure@...lists.org,
-> now is 17:53:51 EET 2014 and neither I
-> received the message nor it is on the mirror.
->
-
-I'm sorry I wasn't able to get to your message in the first 47 minutes.
- But it did eventually post:
-
-http://seclists.org/fulldisclosure/2014/Mar/397
-
-"lightly moderated" is not far away from
-> "lightly pregnant" IMHO.
->
-
-John tried to run the old fulldisclosure list unmoderated at first and it
-lead to a disastrous crapflood of furry porn and other non-security junk as
-soon as the list got big enough that trolls deemed it worthy to disrupt.
- He switched to moderation many years ago.  I think he may have set
-auto-moderation for people who always post good stuff, and I hope we'll be
-able to do that too.
-
-If you want to try creating a fully unmoderated fulldisclosure list,
-nothing is stopping you, and I sincerely wish you the best.
+This issue was assigned CVE-2014-8123 on the distros list.
 
 Cheers,
-Fyodor
 
+--
+Murray McAllister / Red Hat Product Security
