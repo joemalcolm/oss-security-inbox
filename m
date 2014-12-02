@@ -1,44 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/06/1
-Message-ID: <20140106054904.GA24925@lorien.valinor.li>
-Date: Mon, 6 Jan 2014 06:49:04 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Dominic Hargreaves <dom@...th.li>
-Subject: CVE Request: cross-site scripting vulnerabilities in movable type 6.0.1, 5.2.9, and 5.161
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/02/3
+Message-ID: <547DD30E.5050200@redhat.com>
+Date: Tue, 02 Dec 2014 15:56:14 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE request: OpenSSH ~/.k5users patch (Fedora and downstreams)
 Content-Type: text/plain; charset=utf-8
 
-Hi
+In a Kerberos environment, the Fedora and Red Hat Enterprise Linux 7 
+version of the OpenSSH server allows remote, authenticated users to log 
+in as another user if they are listed in a ~/.k5users file of that other 
+user.  This unexpectedly alters the system security policy, as expressed 
+through the ~/.k5users file, because previously, users would have to log 
+in locally, potentially requiring different forms of authentication, 
+before they could use the ksu command to switch users.
 
-A movable type update to 6.0.1, 5.29 and 5.161 fixes cross-site
-scripting attacks, from the announcement:
+Red Hat Bugzilla:
 
-> The Rich Text Editor in previous versions of Movable Type 6 and
-> Movable Type 5 are susceptible to cross-site scripting (XSS) attacks.
-> A remote attacker can inject JavaScript into a page or entry in a
-> Movable Type blog or website. This JavaScript can be executed on the
-> client browser when that page or entry is subsequently displayed in
-> the Rich Text Editor.
->
-> These vulnerabilities were reported by a member of the Movable Type
-> community, and were kept confidential until the release of the updated
-> versions of Movable Type.
+   <https://bugzilla.redhat.com/show_bug.cgi?id=1169843>
 
- [0]  http://movabletype.org/news/2013/11/movable_type_601_529_and_5161_released_to_close_security_vul.html
+Patch in upstream bug tracker:
 
-Looking trough the git repository at [1], there is at least [2] which
-seems to indicate the fix for the 5.2.x branch (I cannot say tough if
-this the complete one).
+   <https://bugzilla.mindrot.org/show_bug.cgi?id=1867>
 
- [1] https://github.com/movabletype/movabletype
- [2] https://github.com/movabletype/movabletype/commit/c85903b3ee23ea2b4ddf981a75815c737f6f6040
-
-Debian Bugtracker reference is at [3].
-
- [3] http://bugs.debian.org/734304
-
-Is there enough information to identify the vulnerability and to get a
-CVE assigned for this issue?
-
-Regards,
-Salvatore
+-- 
+Florian Weimer / Red Hat Product Security
