@@ -1,27 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/7
-Message-ID: <20140109165152.GA14212@hal.lan>
-Date: Thu, 9 Jan 2014 17:51:52 +0100
-From: Guido Berhoerster <guido+openwall.com@...hoerster.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/3
+Message-ID: <be8944dc58f20fb6a038aeac7ca87a93@mail.gmail.com>
+Date: Wed, 3 Dec 2014 11:11:24 +0100
+From: Nicolas Gaudin <nicolas.gaudin@...yconseil.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: tmux local denial of service (2009)
+Subject: RE: CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-* Florian Weimer <fweimer@...hat.com> [2014-01-09 17:39]:
-> Alexander Wirt discovered that local users can block other users
-> from using tmux by creating suitably named directories in /tmp:
-> 
-> <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=529082>
-> 
-> This is a minor local denial of service issue.  This was reported
-> publicly in 2009, so it receive an ID for that year.
-> 
-> Corresponding Red Hat bug:
-> 
-> <https://bugzilla.redhat.com/show_bug.cgi?id=1036136>
+Hi,
+Is this vulnerability really 'critical' if we consider that a malicious user
+needs to be authenticated to crash the gateway?
+I understand that the vulnerability is exploitable if a client is
+compromised (certificate stolen).
+In such a case (client compromised), the risk is greater as confidentiality
+is breached.
 
-How is that a DOS? $TMPDIR/tmux-<uid> is merely a default, tmux
-allows users to override the socket path using the -S command line
-option.
--- 
-Guido Berhoerster
+Nicolas
+
+-----Message d'origine-----
+De : David White [mailto:dmwhite823@...il.com]
+Envoyé : mercredi 3 décembre 2014 10:24
+À : oss-security@...ts.openwall.com
+Objet : [oss-security] CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
+
+I saw an email come through the pfSense list yesterday, but haven't seen
+anything about it discussed here. So I'm bringing it to this list's
+attention.
+
+https://community.openvpn.net/openvpn/wiki/SecurityAnnouncement-97597e732b
+
+[ As a side note, I mistakenly thought the OP on the pfSense list mistakenly
+posted his link to a forum post on OpenVPN that was written in 2010, when in
+fact, that user had joined in 2010 but posted to the pfSense forum
+recently - https://forums.openvpn.net/topic17625.html ]
+
+
+--
+David
