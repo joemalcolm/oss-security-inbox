@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/12
-Message-ID: <546DD2F9.6050603@debian.org>
-Date: Thu, 20 Nov 2014 11:39:37 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/10
+Message-ID: <20141203213120.GI5373@kludge.henri.nerv.fi>
+Date: Wed, 3 Dec 2014 23:31:20 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: Linux user namespaces can bypass group-based restrictions
+Cc: Santiago Vila <sanvila@...ian.org>, Tero Marttila <terom@...me.fi>
+Subject: CVE request: procmail heap overflow in getlline()
 Content-Type: text/plain; charset=utf-8
 
-On 20/11/14 08:49, Vitor Ventura wrote:
-> I was wondering if this might pose a problem to android's application file
-> sandboxing. If an application can run a native lib that could exploits this
-> it might have access to other aplication files.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Only if Android has groups that act as "anti-capabilities", i.e. members
-of the group are less privileged than non-members. For instance, if I
-remember correctly, the grsecurity patchset has (or used to have) the
-ability to deny networking to members of a designated group while
-allowing it for everyone else.
+Please assign 2014 CVE for procmail heap overflow in getlline() as described in
+following Debian BTS item <https://bugs.debian.org/771958> reported by Tero
+Marttila. Please comment if you need more information about the issue.
 
-I don't know of any groups in Android that are anti-capabilities, and
-nothing in
-<http://osxr.org/android/source/system/core/include/private/android_filesystem_config.h>
-looks like an obvious anti-capability. Do you know of any?
+- ---
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-    S
-
+iEYEARECAAYFAlR/gSgACgkQXf6hBi6kbk9m1QCdHE6tWMtXRxZZuK+60p+cHXbw
+vB8AoJ9kFQ6TnjB3LA/qjTcS821pcnsJ
+=XLz0
+-----END PGP SIGNATURE-----
