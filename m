@@ -1,60 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/7
-Message-ID: <53ABBE5A.1020902@redhat.com>
-Date: Thu, 26 Jun 2014 00:31:54 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, vdanen@...hat.com
-CC: cve-assign@...re.org
-Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/2
+Message-ID: <CAAWYm=tfUhXZojO6GnJhat3sJf1yXoOrNns1c0mT-339OQ0DEw@mail.gmail.com>
+Date: Wed, 3 Dec 2014 04:24:27 -0500
+From: David White <dmwhite823@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+I saw an email come through the pfSense list yesterday, but haven't seen
+anything about it discussed here. So I'm bringing it to this list's
+attention.
 
-My thought on this: security lines move, e.g. with crypto certain
-algorithms are no longer sufficient (e.g. DES), they are essentially
-the same as no crypto when put up against modern hardware.
+https://community.openvpn.net/openvpn/wiki/SecurityAnnouncement-97597e732b
 
-So with web cookies they are often used as authentication tokens (the
-alternative is in URL which has it's own list of problems, or form
-values/etc.), I would hazard to say the vast majority of all web based
-authentication uses cookies (I've never run into widely used
-certificate based or other options). Also web sites have changed, no
-longer static sites or "simple" CGI based sites, you pretty much
-always use a framework, sometimes hosting your framework within a
-lower level framework. Or you write custom code, whatever. The point
-is this stuff has XSS flaws all over the place, it's more the rule
-then the exception.
+[ As a side note, I mistakenly thought the OP on the pfSense list
+mistakenly posted his link to a forum post on OpenVPN that was written in
+2010, when in fact, that user had joined in 2010 but posted to the pfSense
+forum recently - https://forums.openvpn.net/topic17625.html ]
 
-So with widespread XSS in mind, I think it's safe to say that
-virtually every web site (even sites that care deeply and spend
-time/money and have bug bounties) have lurking XSS flaws, which if
-HTTPOnly is not used can result in cookie theft. So in my mind
-HTTPOnly isn't an option any more, but a requirement, ergo in most
-situations no HTTPOnly = win a CVE.
 
-Evidence:
+-- 
+David
 
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=XSS
-
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQIcBAEBAgAGBQJTq75aAAoJEBYNRVNeJnmT+iIQAJAQiftwQuLzzATCDczuHnZM
-MRCoImsrdNjBFTNQ584biZn5AGmiFS5QcGHPYs7uCiCKYNOEJwekafl/kqtigcll
-wbfBt/vx2hx/bo9B/zyDS6/1F0Vn6lUxzDJpOcikpN72VI0VJCdwA454jK+KVEG2
-1ZBBGgMCH92qszG2piem4yQO2BRilEWY5Vi/Qg49vrXFr9KneFCN5FulvRG9469t
-g5qK0/uhgJvypEF51RiuCpUgnbdYH2vsJxI825tzK33iRpoIkVo9mbtpD3z+7LzY
-FJSF9XHC1LIQ3210hQoJgG5hEUJdXC8VZizcw1dr+CGSoahzpsjvA8SlQKtlWBH5
-iasgS6jbBD/0CJtO63NZ/CFdJibC/5BliFN70x+j6Y0qWCwdf3Z7MyM9uDR0/4mz
-81EMNo4r+1SF3xJX0jvKEIbFCLBA8GhTgDFmi/KaK+7Na+hL7kjyQN1FFT85+EKN
-DhjnGWu/8ns3lAz3Hw3tAI5K1O5IdjOvWIqhlevi5ml0iczcFg+tSG6xo6yxiSC5
-gOboOYjEQ+S+GnRh4UWLRB+N63Mt9RZFw1Ooza92BrzzasRXN7OQJ8DK0chTeBGi
-6y1aatKCVYtkED5BX3hBpk79h1GJLGk595n+KBkg/dn/Il/YQpbkBpfSextFRehy
-83cS60qovyFZXn26qXie
-=65A0
------END PGP SIGNATURE-----
