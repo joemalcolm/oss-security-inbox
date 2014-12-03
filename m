@@ -1,21 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/15
-Message-ID: <546DDBF3.90506@mccme.ru>
-Date: Thu, 20 Nov 2014 15:17:55 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
-To: oss-security@...ts.openwall.com
-Subject: Re: Location of OS security audit reports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/4
+Message-ID: <2285C7A7-1EA6-41DF-B9CC-4EBC8F9862E5@redhat.com>
+Date: Wed, 03 Dec 2014 07:37:54 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: "OSS Security List" <oss-security@...ts.openwall.com>
+Subject: CVE request: out-of-bounds memory access flaw in unrtf
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-17 06:17, M.T. Roebuck wrote:
-> I haven't had any success yet in finding security audit reports for
-> any *nix OS
+An out-of-bounds memory access flaw was reported in unrtf:
 
-It seems such info was supposed to be linked from here:
+https://lists.gnu.org/archive/html/bug-unrtf/2014-11/msg00000.html
+https://bugzilla.redhat.com/show_bug.cgi?id=1170233
 
-http://oss-security.openwall.org/wiki/code-reviews
+Could a CVE be assigned to this?  Thanks.
 
-But there is not much data there.
 
 -- 
-Alexander Cherepanov
+Vincent Danen / Red Hat Product Security
