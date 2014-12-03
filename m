@@ -1,55 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/1
-Message-ID: <53C5EB3D.1010909@redhat.com>
-Date: Tue, 15 Jul 2014 21:02:21 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request - Snoopy incomplete fix for CVE-2008-4796
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/9
+Message-ID: <CAKcmtDw0ddyQBazv1=k+nTA6WaEP70kd3MT8baSA5S36CdJYrg@mail.gmail.com>
+Date: Wed, 3 Dec 2014 12:57:58 -0800
+From: Chris Steipp <csteipp@...imedia.org>
+To: oss-security@...ts.openwall.com
+Subject: MediaWiki security release - 1.23.7
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi, we fixed a few security bugs in last week's MediaWiki release [1].
+Two of them I think should have CVE's:
 
-Please see: http://seclists.org/fulldisclosure/2014/Jul/16
+* bug 71111 / T73111 - A missing csrf check could allow reflected xss
+on wikis that allow raw html
+(https://phabricator.wikimedia.org/T73111)
 
-> Note, the new fix [1] referenced in the above FD posts does not
-> look to be a complete fix either and may still allow command
-> injection.
-> 
-> Snoopy upstream has been notified and a more complete fix that
-> removes curl and instead uses native php code should be available
-> shortly [2].
-> 
-> Thanks.
-> 
-> [1].
-> https://raw.githubusercontent.com/cogdog/feed2js/master/magpie 
-> /extlib/Snoopy.class.inc [2].
-> http://snoopy.cvs.sourceforge.net/viewvc/snoopy/Snoopy 
-> /Snoopy.class.php?view=log
-> 
-> -- Garth Mollett / Red Hat Product Security
+* bug 71478 / T73478 - MediaWiki's <cross-domain-policy> mangling
+could allow an article editor to inject code into api consumers that
+blindly unserialize php representations of the page from the api
+(https://phabricator.wikimedia.org/T73478)
 
-Ping, has there been any movement on this?
+Could those be assigned?
 
-- -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
 
-iQIcBAEBAgAGBQJTxes9AAoJEBYNRVNeJnmTNm0P/2R+z+MZui9DGToLzrfkLXA3
-+XrhLojAXmDU0M7qtSNPL7JfGSxBy7EILULQ5qRTSBYh1TzCxNUyL7fcteuqBzxS
-wE7WolOJ++VcLjx+Dfkh/yV7cTfcSI3od+j2iY5ROl5nQzpgpOjYGEQ2sPSazzaW
-sojbv3nNE3JXIoj41lhdqnvIO1/60TqwQakLIHOQiz+vcoCg8fmvaWgWVaveb1Zn
-tgRBHniURLhuOASGPI60pNZtks247MmNXF4kVXnH2bPnsSG8fZgXvDF8vZMGWQun
-JveKQ3PqIxqVb5CerKFswPHxXNqo+I4/dKqa+FIed865UF3oKFKXzj//0ELxZROy
-OXJxV8HACT4JdraZ8R7d+qwhMx1T/xSlGI4vsUNiV72L89zNwla1clyLVqJG/hxF
-76ArDY21/BcWW5tw8NFmpPcfJQR5wvuZtXp868zJXGerpprcY4q7ArWJHS51gsSR
-Bsk14jIN+A1nA89N3wkhToi3063JmP/cB61UI2Tb+wFizeQCEJ4B1KHVWXaCvGDO
-Q0/9UR4XC24U+gCklIscW4KlX0KS7Geoad4A77K+DFZVCxc9KxgmDKrtVVHE7Nv6
-ZKllto/QTiIZEAjd8NQDJhg89Yf0vcvVuTR+21w3oBrRqUP5arYzCk/xG03criw5
-+TZ+i01Hh+HVL64FuWH+
-=PKS/
------END PGP SIGNATURE-----
+[1] - https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-November/000170.html
