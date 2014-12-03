@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/14/2
-Message-ID: <52FD771E.9090805@redhat.com>
-Date: Fri, 14 Feb 2014 12:53:34 +1100
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/12
+Message-ID: <20141203233057.GA3959@fear.qoop.org>
+Date: Wed, 3 Dec 2014 17:30:57 -0600
+From: "Joshua J. Drake" <oss-sec-pmgetbl@...p.org>
 To: oss-security@...ts.openwall.com
-CC: 738857@...s.debian.org
-Subject: CVE request: MuPDF Stack-based Buffer Overflow in xps_parse_color()
+Cc: Santiago Vila <sanvila@...ian.org>, Tero Marttila <terom@...me.fi>
+Subject: Re: CVE request: procmail heap overflow in getlline()
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Is it possible to trigger this issue with untrusted input or only
+trusted input from procmailrc?
 
-A stack-based buffer overflow in MuPDF's xps_parse_color() function was 
-reported. Full details in http://www.hdwsec.fr/blog/mupdf.html
+Joshua
 
-Upstream bug: http://bugs.ghostscript.com/show_bug.cgi?id=694957
-Upstream fix: 
-http://git.ghostscript.com/?p=mupdf.git;a=commitdiff;h=60dabde18d7fe12b19da8b509bdfee9cc886aafc
-Red Hat bug: https://bugzilla.redhat.com/show_bug.cgi?id=1056699
+On Wed, Dec 03, 2014 at 11:31:20PM +0200, Henri Salo wrote:
+> Please assign 2014 CVE for procmail heap overflow in getlline() as described in
+> following Debian BTS item <https://bugs.debian.org/771958> reported by Tero
+> Marttila. Please comment if you need more information about the issue.
+> 
+> ---
+> Henri Salo
 
-Thanks,
-
---
-Murray McAllister / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
