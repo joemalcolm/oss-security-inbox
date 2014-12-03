@@ -1,27 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/04/4
-Message-ID: <20141004081907.GA3834@chaz.gmail.com>
-Date: Sat, 4 Oct 2014 09:19:07 +0100
-From: Stephane Chazelas <stephane.chazelas@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/11
+Message-ID: <m5o5ek$qui$1@ger.gmane.org>
+Date: Thu, 04 Dec 2014 00:13:24 +0100
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Shellshock timeline (was: CVE-2014-6271: remote code execution through bash)
+Subject: CVE-2014-6316: URL redirection issue in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-The ChangeLog
-(http://www.oldlinux.org/Linux.old/bin/old/bash-1.05/ChangeLog)
-and the usenet discussion that Eric unearthed
-(https://groups.google.com/d/msg/gnu.bash.bug/72jXoIWYsfE/jJqC-fjSh0wJ)
-and
-https://groups.google.com/d/msg/comp.unix.questions/LwsdchovzFY/qokUr2mfCboJ
+Greetings,
 
-Remove any doubt as to when the bug was introduced (August 1989,
-released in 1.03) and how it was implemented from the start. The
-code is very simple, it just replaces the = with a space in the
-environment entry and interprets it.
+Please update CVE-2014-6316 with the information below
 
-See also
-http://unix.stackexchange.com/questions/157381/when-was-the-shellshock-cve-2014-6271-7169-bug-introduced-and-what-is-the-pat/157495#157495
 
--- 
-Stephane
+Description:
+
+A bug in the URL sanitization routine allows an attacker to craft an URL 
+that can redirect outside of the MantisBT instance's domain when the 
+software is installed at the web server's root.
+
+e.g. http://example.com/login_page.php?return=http://google.com will 
+redirect to Google.
+
+Affected versions:
+=> 1.2.0a3, <= 1.2.17
+
+Fixed in versions:
+1.2.18 (not yet released)
+
+Patch:
+See Github [1]
+
+Credit:
+
+Redirection in login_page.php was first reported [3] by Mathias Karlsson 
+(http://mathiaskarlsson.me) as part of Offensive Security's bug bounty 
+program [4]; issue was also independently discovered and reported by 
+Ryan Giobbi who made the original CVE request [2], Shahee Mirza [5] and 
+Alejo Popovici [6].
+
+Paul Richards also found another redirection issue in 
+permalink_page.php, which turned out to have the same root cause.
+
+The issue was fixed by Damien Regad (MantisBT Developer).
+
+References:
+Further details available in our issue tracker [2]
+
+
+[1] http://github.com/mantisbt/mantisbt/commit/e66ecc9f
+[2] https://www.mantisbt.org/bugs/view.php?id=17648
+[3] https://www.mantisbt.org/bugs/view.php?id=17362
+[4] http://www.offensive-security.com/bug-bounty-program/
+[5] https://www.mantisbt.org/bugs/view.php?id=17698
+[6] https://www.mantisbt.org/bugs/view.php?id=17811
+
 
