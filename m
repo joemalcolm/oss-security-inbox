@@ -1,32 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/29/7
-Message-ID: <20140329171809.GD2473@sivokote.iziade.m$>
-Date: Sat, 29 Mar 2014 19:18:09 +0200
-From: Georgi Guninski <guninski@...inski.com>
-To: Julien Cristau <jcristau@...ian.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Adventure with Stack Smashing Protector (SSP)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/7
+Message-ID: <CAB9Gt0-msb4s13t-UJmH7WKb_ekUVjx8xdvB+c6Zf2tfT0SXiQ@mail.gmail.com>
+Date: Wed, 3 Dec 2014 20:47:01 +0800
+From: Matt U <matt.u@...ressvpn.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 29, 2014 at 04:10:16PM +0200, Julien Cristau wrote:
-> On Sat, Mar 29, 2014 at 16:04:07 +0200, Georgi Guninski wrote:
-> 
-> > Not that I care.
-> > 
-> Then can you stop making so much noise already?
-> 
-> Thanks,
-> Julien
+Hacking forums have been discussing exploiting this against consumer VPN
+services - In this case I would agree it's pretty critical since it'll
+likely be in Metasploit soon (if it isn't already) and from there everyone
+will want to have a shot...
 
+In any case, "critical" does seem a little subjective in any vulnerability
+less than RCE or info disclosure. I guess in this case it depends on how
+the software is being used.
 
+On Wednesday, December 3, 2014, Nicolas Gaudin <
+nicolas.gaudin@...yconseil.fr> wrote:
 
-Dear jcristau@...ian.org,
+> Hi,
+> Is this vulnerability really 'critical' if we consider that a malicious
+> user
+> needs to be authenticated to crash the gateway?
+> I understand that the vulnerability is exploitable if a client is
+> compromised (certificate stolen).
+> In such a case (client compromised), the risk is greater as confidentiality
+> is breached.
+>
+> Nicolas
+>
+> -----Message d'origine-----
+> De : David White [mailto:dmwhite823@...il.com <javascript:;>]
+> Envoyé : mercredi 3 décembre 2014 10:24
+> À : oss-security@...ts.openwall.com <javascript:;>
+> Objet : [oss-security] CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
+>
+> I saw an email come through the pfSense list yesterday, but haven't seen
+> anything about it discussed here. So I'm bringing it to this list's
+> attention.
+>
+> https://community.openvpn.net/openvpn/wiki/SecurityAnnouncement-97597e732b
+>
+> [ As a side note, I mistakenly thought the OP on the pfSense list
+> mistakenly
+> posted his link to a forum post on OpenVPN that was written in 2010, when
+> in
+> fact, that user had joined in 2010 but posted to the pfSense forum
+> recently - https://forums.openvpn.net/topic17625.html ]
+>
+>
+> --
+> David
+>
 
-If you consider this "so much noise"
-I suggest you consult something 
-better than the emacs doctor.
-
-Not that I care about you.
-
--- 
-guninski
