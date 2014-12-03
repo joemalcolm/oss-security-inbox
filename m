@@ -1,49 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/11
-Message-ID: <20141015092018.560b01cc@pc>
-Date: Wed, 15 Oct 2014 09:20:18 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/6
+Message-ID: <547EFE5D.4060402@42com.com>
+Date: Wed, 03 Dec 2014 13:13:17 +0100
+From: Max Mühlbronner <mm@...om.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: SSL POODLE
+Subject: Re: CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Am Wed, 15 Oct 2014 09:10:24 +0200
-schrieb Florian Weimer <fweimer@...hat.com>:
+Hi,
 
-> As far as I can tell, the TLS downgrade protecton mechanism
-> work. However, browsers have an out-of-protocol, unprotected
-> downgrade mechanism to SSL 3.0.  (The Firefox function is called 
-> “retryDueToTLSIntolerance”.)  I think we would be better off
-> disabling *that* mechanism (for which configuration knob seems to
-> exist, alas), instead of disabling SSL 3.0 or adding a different
-> protocol version probing mechanism.
 
-+1
+just imagine a malicious user: signing up for e.g. anonymous VPN service 
+and crashing the whole openVPN process, which would be affecting other 
+users too. I would definitely consider this to be a critical issue.
 
-I've argued for that since... 2008!
-https://bugzilla.mozilla.org/show_bug.cgi?id=450280
 
-Basically that's one of the scary parts of this:
-1. We have an in-protocol downgrade mechanism
-2. People develop broken SSL implementations that don't work with that
-3. Browsers have a non-protocol workaround that allows out-of-protocol
-downgrades
-4. These downgrades cause compatibility issues
-5. People put more duct tape around this workaround (that's not part of
-the protocol) by inventing a new protocol (SCSV) that adds more
-complexity to TLS
-6. These downgrades cause security issues (NOT the first time!
-One of the Blackhat Virtual Host Confusion attacks also relied on these
-downgrades)
+Max M.
 
-Basically I'd group POODLE together with BERserk as the "we could've
-avoided it"-vulnerabilities in SSL/TLS.
+On 03.12.2014 11:11, Nicolas Gaudin wrote:
+> Hi,
+> Is this vulnerability really 'critical' if we consider that a malicious user
+> needs to be authenticated to crash the gateway?
+> I understand that the vulnerability is exploitable if a client is
+> compromised (certificate stolen).
+> In such a case (client compromised), the risk is greater as confidentiality
+> is breached.
+>
+> Nicolas
+>
+> -----Message d'origine-----
+> De : David White [mailto:dmwhite823@...il.com]
+> Envoyé : mercredi 3 décembre 2014 10:24
+> À : oss-security@...ts.openwall.com
+> Objet : [oss-security] CVE-2014-8104 - Critical OpenVPN DoS Vulnerability
+>
+> I saw an email come through the pfSense list yesterday, but haven't seen
+> anything about it discussed here. So I'm bringing it to this list's
+> attention.
+>
+> https://community.openvpn.net/openvpn/wiki/SecurityAnnouncement-97597e732b
+>
+> [ As a side note, I mistakenly thought the OP on the pfSense list mistakenly
+> posted his link to a forum post on OpenVPN that was written in 2010, when in
+> fact, that user had joined in 2010 but posted to the pfSense forum
+> recently - https://forums.openvpn.net/topic17625.html ]
+>
+>
+> --
+> David
 
--- 
-Hanno Böck
-http://hboeck.de/
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
