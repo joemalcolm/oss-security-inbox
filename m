@@ -1,45 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/3
-Message-ID: <548AE77E.6070504@inliniac.net>
-Date: Fri, 12 Dec 2014 14:02:54 +0100
-From: Victor Julien <lists@...iniac.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/03/5
+Message-ID: <20141203154849.00e6cc66@pc>
+Date: Wed, 3 Dec 2014 15:48:49 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: denial of service in suricata
+Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
 Content-Type: text/plain; charset=utf-8
 
-On 12/12/2014 01:56 PM, Pierre Schweitzer wrote:
-> It appears, looking at bug #1272 [1] in Suricata, that it was
-> possible to crash Suricata with specific packets due to a bug in
-> the libhtp (which got fixed with libhtp 0.5.16).
-> 
-> It got fixed with the release 2.0.5 from Suricata.
-> 
-> Was a CVE already assigned to this issue? Otherwise can a CVE be
-> assigned?
-> 
-> With my best regards,
-> 
-> [1]: https://redmine.openinfosecfoundation.org/issues/1272
-> 
-> 
+On Wed, 03 Dec 2014 07:37:54 -0700
+"Vincent Danen" <vdanen@...hat.com> wrote:
 
-To our knowledge this couldn't be triggered by specific traffic
-conditions. Rather it seemed to be an issue when:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1170233
 
-- older zlib versions were used that didn't always setup properly for
-a reason unknown to us
+You mixed up Michal and me :-)
 
-OR
+But appart from that: It's really not a single issue. I just fuzzed one
+and reported it to check whether there is any reaction. But you easily
+get dozends if you run afl on it.
 
-- extreme memory pressure (malloc's failing)
+If you want to fix unrtf there's more to it than that. Basically you'd
+have to fork it and take over development. Same is true for a whole
+bunch of other tools (catdoc, antiword, latex2rtf, ...)
 
-Cheers,
-Victor
 
 -- 
----------------------------------------------
-Victor Julien
-http://www.inliniac.net/
-PGP: http://www.inliniac.net/victorjulien.asc
----------------------------------------------
+Hanno Böck
+http://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
