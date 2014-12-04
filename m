@@ -1,98 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/03/2
-Message-ID: <20140803055144.GB29958@gremlin.ru>
-Date: Sun, 3 Aug 2014 09:51:44 +0400
-From: gremlin@...mlin.ru
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Enforce use of HTTPS for MathJax in IPython
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/15
+Message-ID: <Pine.LNX.4.64.1412041331360.1687@beijing.mitre.org>
+Date: Thu, 4 Dec 2014 13:32:17 -0500 (EST)
+From: cve-assign@...re.org
+To: OSS Security List <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org
+Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
 Content-Type: text/plain; charset=utf-8
 
-On 02-Aug-2014 16:31:17 -0400, Donald Stufft wrote:
 
- >>> loaded over HTTP. An attacker with fortuitous network position
- >>> could execute code on a local IPython notebook by modifying
- >>> the mathjax javascript.
- >> HTTPS wouldn't help much: the attackers (most of which are known
- >> to use 3-letter names) can (and they really do) issue a fake
- >> certificate for their decoy servers.
- > There are attackers other than 3 letter agencies.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Those attackers don't have things like SORM-2 or Jindun Gongcheng.
+> An out-of-bounds memory access flaw was reported in unrtf:
+> 
+> https://lists.gnu.org/archive/html/bug-unrtf/2014-11/msg00000.html
+> https://bugzilla.redhat.com/show_bug.cgi?id=1170233
 
- >> In general, nothing received from the Net could be trusted. And
- >> the HTTPS doesn't guarantee anything beyond "this certificate
- >> was signed by this CA" - was that voluntary or forced.
+Use CVE-2014-9274 for the unrtf issue found by Michal Zalewski:
 
-Any objections on this point? :-)
+https://lists.gnu.org/archive/html/bug-unrtf/2014-11/msg00001.html
 
- >> Enforcing HTTPS for the whole site is even more stupid: normally
- >> only user-specific data (login procedure, personal settings for
- >> registered users, etc) should be forced to go through HTTPS;
- >> everything else should normally be left up to the users' wish.
- > This is incredibly wrong. First off if only your login procedures,
- > personal settings, etc are password protected
+Use CVE-2014-9275 for the "additional crashes" as demonstrated by
+crashers-unrtf.tar.xz.  The stack traces suggest the same type of
+issue in the same location.
 
-Why password? Use client certificates instead.
+https://lists.gnu.org/archive/html/bug-unrtf/2014-11/msg00000.html
 
- > then it's trivial for a MITM to simply strip the HTTPS from the
- > link to the login page.
+- ---
 
-At which point? Inside of my browser? Bwa-ha-ha...
-Redirect from http://example.net/login to https://example.net/login
-will perform just fine when there's a mistype.
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
- > The vast bulk of users simply won't notice that they are visiting
- > a page via HTTP instead of HTTPS.
-
-Nothing new: 95% of people are morons.
-
-But once you'll create a system which can be used even by morons,
-it will be used only by morons.
-
- > Furthermore, even if you manage to login over HTTPS, HTTP,
- > being a stateless protocol, includes authentication credentials
- > with every request. This is typically taken in the form of
- > cookies which are sent with every request.
-
-If you want to get some real security, use client certificates.
-
- > In order to protect these cookies they need to only be sent
- > over a HTTPS connection.
-
-"This is incredibly wrong." // (q) Donald Stufft, 2014-08-02
-
-Here's my cookie named "auth":
-d4791d97c2e8aebfb09b0ce1e5d5bcc998fcdc02a2d4d7a5f7669c01d28fac5b
-It is known to contain my IPv4 address (among other information)
-and be Blowfish-encrypted. You've intercepted it. Next action?
-
-Another option: I browse online shop anonymously (without logging
-in, which is wise: I don't want to see offers on things I don't
-actually need). You've intercepted my cookies. Next action?
-
- > [...]
- > So sure, this doesn't prevent a TLA with access to a root key
- > doing a targeted attack against a site, however it does prevent
- > an attacker who just happens to be on the same network (Coffeshop
- > Wifi etc) from attacking you.
-
-Unlike TLA, an attacker in the same network can only eavesdrop
-passively. So, I can either keep anonimity (without logging in) or
-switch to HTTPS intentionally. Just don't push me there unless I've
-logged in...
-
-(Normally I use secure tunnel to the trusted server when using public
-hotspots, so this is just to keep the discussion).
-
- >> But the terminal state of mental disability is... yes, using
- >> scripts from outer sources: intercepting one popular source like
- >> https://ajax.googleapis.com/ajax/libs/jquery/*/jquery.min.js
- >> will allow the attacker to not bother of intercepting other
- >> sites directly.
-
-Any comments on this?
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+iQEVAwUBVICnv6llVAevmvmsAQJI1Af/TAcQIFsv2pbjvQzDwDX+J8pTkuByT9Fz
+7CPVfQbwVU8H9tO/Z6z5hM0I0n/lIg9X2taOk+O76LO9RlHimGKlQp7vOPGifQPO
+myc5OiYMgQC3IiPoHwezYoVkRLcR57+dkFBCSyh+6n7WPD7zePpuHfBDR2p1lx5Z
+XMfeGwble7sNpYy/xlBBO2F5sv+LU8zOuvqjQrHW/G6oE0KMui4fQiQGEk61KSkE
+G7UnX5Ixyadp2Q6KQ/qeMYemxlixNOy3tTBK10CBcgJDRRytRgj+bU53xg40ZpZp
+QbPtUl/HZHstqMa4wCzHWXGjl/78Dce/0sYiPnX1EUQsSY1jIgcBSQ==
+=zsmM
+-----END PGP SIGNATURE-----
