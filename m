@@ -1,36 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/24
-Message-ID: <CAD3CancjW+4OoK728_HLfrf82gQEcgvdkQ90j5_Or7OXr0fLqQ@mail.gmail.com>
-Date: Thu, 27 Nov 2014 08:28:14 +1300
-From: Matthew Daley <mattd@...fuzz.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/22
+Message-ID: <20141204234734.GW18807@outflux.net>
+Date: Thu, 4 Dec 2014 15:47:34 -0800
+From: Kees Cook <keescook@...omium.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
+Cc: Hector Marco <hecmargi@....es>
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 27, 2014 at 4:28 AM, Fiedler Roman <Roman.Fiedler@....ac.at> wrote:
-> (...)
-> My test program was:
->
-> #include <fcntl.h>
-> #include <stdio.h>
-> #include <sys/stat.h>
->
-> int main(int argc, char **argv) {
->   int fd;
->   struct stat statBuf;
->   int result;
->
->   fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
->   result=fstat(fd, &statBuf);
->   if(result) {
->     fprintf(stderr, "Stat failed\n");
->     return(1);
->   }
->   fprintf(stderr, "New element type is %d\n", S_ISDIR(fd));
+On Thu, Dec 04, 2014 at 09:19:04PM +0100, Hector Marco wrote:
+> This is a disclosure of a weakness of the ASLR Linux implementation.
+> The problem appears when the executable is PIE compiled and it has an
+> address leak belonging to the executable. We named this weakness:
+> offset2lib.
+> 
+> In this scenario, an attacker is able to de-randomize all mmapped
+> areas (libraries, mapped files, etc.) by knowing only an address
+> belonging to the application and the offset2lib value.
+> 
+> We have built a PoC which bypasses on a 64 bit Linux system, the three
+> most widely adopted and effective protection techniques: No-eXecutable
+> bit (NX), address space layout randomization (ASLR) and stack smashing
+> protector (SSP). The exploit obtains a remote shell in less than one
+> second.
+> 
+> We have proposed the ASLRv3 which is a small Linux patch which removes
+> the offset2lib weakness.
+> 
+> Details of the weakness, steps to exploit the offset2lib weakness, a working
+> proof of concept exploit, recommendations and a demonstrative video
+> has been
+> publish at: http://cybersecurity.upv.es/attacks/offset2lib/offset2lib.html
 
-FWIW, this should probably be S_ISDIR(statBuf.st_mode).
+Thanks for the research! Following the submission guidelines[1], please
+send your ASLRv3 patch to upstream at linux-kernel@...r.kernel.org and
+CC the following people:
 
-- Matthew
+	Andrew Morton <akpm@...ux-foundation.org>
+	Thomas Gleixner <tglx@...utronix.de>
+	Ingo Molnar <mingo@...hat.com>
+	"H. Peter Anvin" <hpa@...or.com>
+	Russell King <linux@....linux.org.uk>
+	Catalin Marinas <catalin.marinas@....com>
+	Will Deacon <will.deacon@....com>
+	Oleg Nesterov <oleg@...hat.com>
+	Andy Lutomirski <luto@...capital.net>
+	Kees Cook <keescook@...omium.org>
 
->   return(0);
-> }
+I noticed in testing that this hugely reduces the available mmap space
+available to 32-bit processes. I suspect this is what this wasn't done
+before.
+
+Thanks!
+
+-Kees
+
+[1] https://www.kernel.org/doc/Documentation/SubmittingPatches
+
+-- 
+Kees Cook
+Chrome OS Security
