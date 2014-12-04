@@ -1,30 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/25/5
-Message-ID: <20140225220016.3a315054@redhat.com>
-Date: Tue, 25 Feb 2014 22:00:16 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org, mancha1@...h.com
-Subject: Re: Re: CVE Request - GnuTLS corrects flaw in certificate verification (3.1.x/3.2.x)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/5
+Message-ID: <5480302E.9070007@redhat.com>
+Date: Thu, 04 Dec 2014 10:58:06 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, "Joshua J. Drake" <oss-sec-pmgetbl@...p.org>
+CC: Tero Marttila <terom@...me.fi>
+Subject: Re: CVE request: procmail heap overflow in getlline()
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 13 Feb 2014 15:30:53 -0500 (EST) cve-assign@...re.org wrote:
+On 12/04/2014 09:41 AM, Kurt Seifried wrote:
+> On 04/12/14 12:57 AM, Santiago Vila wrote:
+>> On Wed, Dec 03, 2014 at 05:30:57PM -0600, Joshua J. Drake wrote:
+>>> Is it possible to trigger this issue with untrusted input or only
+>>> trusted input from procmailrc?
+>>
+>> This is an issue with the handling of .procmailrc file, which contains
+>> the filter rules for procmail. An external attacker is not supposed to
+>> provide the .procmailrc file at /home/user, only the email to be
+>> filtered, so, IMHO, this is a bug but maybe not a security bug.
+>>
+>> Thanks.
+>
+> I disagree. Many mail servers allow people to edit their .procmailrc but
+> explicitly block shell accounts. This would allow a user with a non
+> interactive shell account to execute arbitrary commands using procmailrc
+> even if they were otherwise restricted (e.g. using permissions or
+> SELinux for example).
 
-> > http://gnutls.org/security.html
-> > GNUTLS-SA-2014-1
-> 
-> > https://www.gitorious.org/gnutls/gnutls/commit/b1abfe3d18
-> 
-> Use CVE-2014-1959.
-
-GnuTLS versions before 2.7.6 contained different bug that caused GnuTLS
-to accept V1 intermediate CAs by default, while no V1 CAs were meant to
-be accepted unless GNUTLS_VERIFY_ALLOW_ANY_X509_V1_CA_CRT or
-GNUTLS_VERIFY_ALLOW_X509_V1_CA_CRT verification flags were used.
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1069301
-
-This should get a separate CVE.
+procmail already executes commands in lines starting with “|” (and the 
+documentation suggests it does not honor SHELL, so SHELL=/bin/false does 
+not block this).  If permissions/SELinux contain that, they will also 
+work against a procmailrc parser exploit.  In other words, I don't think 
+there's a security bug here.
 
 -- 
-Tomas Hoger / Red Hat Security Response Team
+Florian Weimer / Red Hat Product Security
