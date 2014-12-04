@@ -1,37 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/17/5
-Message-ID: <CAA7hUgHJPN1Yk=-CQ3uqdhhzKcZXC-v33PNTMkGHzudUvxJGGw@mail.gmail.com>
-Date: Thu, 17 Apr 2014 14:13:11 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>, cve-assign@...re.org
-Cc: ifsecure@...il.com, info@...fssl.com
-Subject: CVE ids for CyaSSL 2.9.4?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/17
+Message-ID: <Pine.LNX.4.64.1412041337460.1687@beijing.mitre.org>
+Date: Thu, 4 Dec 2014 13:38:42 -0500 (EST)
+From: cve-assign@...re.org
+To: Florian Weimer <fweimer@...hat.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request: OpenSSH ~/.k5users patch (Fedora and downstreams)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-[CC'ing Ivan Fratric and one of the many @wolfssl addresses I found]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-CyaSSL 2.9.4 fixes a number of security issues.
+>In a Kerberos environment, the Fedora and Red Hat Enterprise Linux 7 version
+>of the OpenSSH server allows remote, authenticated users to log in as
+>another user if they are listed in a ~/.k5users file of that other user.
+>This unexpectedly alters the system security policy, as expressed through
+>the ~/.k5users file, because previously, users would have to log in locally,
+>potentially requiring different forms of authentication, before they could
+>use the ksu command to switch users.
+>
+>Red Hat Bugzilla:
+>
+>   <https://bugzilla.redhat.com/show_bug.cgi?id=1169843>
+> 
+> Patch in upstream bug tracker:
+>
+>   <https://bugzilla.mindrot.org/show_bug.cgi?id=1867>
 
->From [3]:
-> Issue #1 (Memory  Corruption)
-> Issue #2 (Out of bounds read)
-> Issue #3 (Dangerous Default Behavior, out of bounds read)
-> Issue #4 (NULL pointer dereference)
-> Issue #5 (Unknown Critical Certificate Extension Allowed)
+Use CVE-2014-9278.
 
-Have CVE ids been assigned already? if not, could they be assigned?
+- ---
 
-Thanks in advance.
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-References:
-[0]http://www.wolfssl.com/yaSSL/Docs-cyassl-changelog.html
-[1]http://www.yassl.com/forums/topic539-cyassl-294-released.html
-[2]http://www.yassl.com/yaSSL/Blog/Entries/2014/4/9_CyaSSL_2.9.4_Released.html
-[3]http://www.yassl.com/yaSSL/Blog/Entries/2014/4/11_wolfSSL_Security_Advisory__April_9%2C_2014.html
-
-Cheers,
--- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+iQEVAwUBVICpvallVAevmvmsAQIxAAf/YmV0+A7+ebKjM1pyyDxCp9Ml2dPUATWe
+FMkw903aPqewYOlLahG4BTUw9wSak6MdNN7d6aQYuOq3IV040FOFuPmKnecHbP55
+/hfyvqFaKncAIpUNE1Us+Au4HjiJnHERTEvHP9yt54W/2dwr8QavJhyQLEphcB54
+SMknmBPpQdDfXNWMvZqwdcO4Hh9zfFg+nXnuUhNQdbCfCgP9OQaT23oomlFKZGKw
+yJnHIutgf/1wHqqd2ppDjpzdtD9aLM/rV5N66jDmSCi9ZGDF9IbqqbuDJqMEkeoF
+vQaHMF2cJG95YqRLLVRUeLl4vwtMDAoKLC4nC/x47+6l0FPfq1JBlQ==
+=cBRw
+-----END PGP SIGNATURE-----
