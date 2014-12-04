@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/08/2
-Message-ID: <540D1C7E.5050507@redhat.com>
-Date: Sun, 07 Sep 2014 21:03:26 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Python robotframework - tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/19
+Message-ID: <5480C1B8.3030305@upv.es>
+Date: Thu, 04 Dec 2014 21:19:04 +0100
+From: Hector Marco <hecmargi@....es>
+To: full-disclosure@...ts.grok.org.uk, fulldisclosure@...lists.org, bugtraq@...urityfocus.com, bugs@...uritytracker.com, submissions@...ketstormsecurity.org, oss-security@...ts.openwall.com
+Subject: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-Oh and the reason I'm not assigning CVE's for these is this is a side
-project on my own time to help push us over CVE10k but I'm too lazy to
-use my personal email account. =)
+Hi,
 
-On 07/09/14 08:49 PM, Kurt Seifried wrote:
-> This is the first of many, only looking at programs with >5000 downloads
-> in the last month.
-> 
-> https://pypi.python.org/pypi/robotframework-pabot/
-> 
-> robotframework-pabot-0.8/pabot/result_merger.py
-> 
-> if __name__ == '__main__':
->     merge('../tmp/passing.xml',
-> '../tmp/failing.xml').save('../tmp/merged.xml')
-> 
-> 
+This is a disclosure of a weakness of the ASLR Linux implementation.
+The problem appears when the executable is PIE compiled and it has an
+address leak belonging to the executable. We named this weakness:
+offset2lib.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+In this scenario, an attacker is able to de-randomize all mmapped
+areas (libraries, mapped files, etc.) by knowing only an address
+belonging to the application and the offset2lib value.
+
+We have built a PoC which bypasses on a 64 bit Linux system, the three
+most widely adopted and effective protection techniques: No-eXecutable
+bit (NX), address space layout randomization (ASLR) and stack smashing
+protector (SSP). The exploit obtains a remote shell in less than one
+second.
+
+We have proposed the ASLRv3 which is a small Linux patch which removes
+the offset2lib weakness.
+
+Details of the weakness, steps to exploit the offset2lib weakness, a working
+proof of concept exploit, recommendations and a demonstrative video has 
+been
+publish at: http://cybersecurity.upv.es/attacks/offset2lib/offset2lib.html
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Hector Marco.
+
+http://cybersecurity.upv.es
+
