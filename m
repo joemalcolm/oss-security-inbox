@@ -1,52 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/18/14
-Message-ID: <20141118235011.GA9324@hunt>
-Date: Tue, 18 Nov 2014 15:50:11 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: RE: [security-vendor] Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/1
+Message-ID: <547FA641.8080306@fixme.fi>
+Date: Thu, 04 Dec 2014 02:09:37 +0200
+From: Tero Marttila <terom@...me.fi>
+To: "Joshua J. Drake" <oss-sec-pmgetbl@...p.org>,  oss-security@...ts.openwall.com
+CC: Santiago Vila <sanvila@...ian.org>
+Subject: Re: CVE request: procmail heap overflow in getlline()
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 19, 2014 at 12:21:29AM +0100, Hanno Böck wrote:
-> It'd already be a good start to do this for format-parsing tools. So
-> stuff that runs on files. Everything else is more complicated, fuzzing
-> file formats is the easiest.
+FWIW I don't have a specific PoC/scenario to supply for this case that 
+serves as an exploit with untrusted input, but I am not familar enough 
+with procmail and how it is used to make a judgement on if some related 
+code-path/scenario could be exploitable.
 
-You'd be surprised how infrequently file formats come up.. :)
+I reported this as a security bug due to the implied high risk level of 
+procmail being suid-root on Debian, and thus deserving of more detailed 
+inspection. But that's a distribution issue.
 
-> > Getting AFL to work with every package suggested for Ubuntu main is
-> > probably too much work.
-> 
-> You may overestimate the complexity of afl. Once you get used to it it
-> basically takes minutes to start a fuzzing job.
-> And Michal is very open to suggestions to improve it (and it is
-> improving on a daily basis right now).
+  -- Tero Marttila
 
-Oh, AFL itself looks pretty blindingly easy to use: CC=... CXX=...  and go
-with it. It's our packaging and building infrastracture that I think would
-make it more complicated: they're designed to make repeatable builds
-easy, not necessarily to allow arbitrary changes to the compiler. And,
-AFL only works for C/C++.
-
-> A bit sad is that afl+asan is somewhat tricky business, because that'd
-> be the ultimate combo.
-
-That does sound nice, not every Bad Thing is necessarily visible to the
-fuzzer, but asan is more likely to recognize Bad Things.
-
-> I agree that it's not the best proxy for code quality. But for me what
-> is a good proxy for *project* quality is how they handle the bugs that
-> result from fuzzing.
-> While libbfd was in a terrible state, Nick did a marvellous job in
-> fixing everythin we reported in a timely manner.
-> Whilst for others you simply don't get a reply (or there is noone to
-> report to).
-> 
-> That's the difference between a healthy and an unhealthy project.
-
-Oh my yes; having a contact readily visible, having someone respond
-quickly, both are very strong indicators of quality.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+On 04/12/14 01:30, Joshua J. Drake wrote:
+> Is it possible to trigger this issue with untrusted input or only
+> trusted input from procmailrc?
+>
+> Joshua
+>
+> On Wed, Dec 03, 2014 at 11:31:20PM +0200, Henri Salo wrote:
+>> Please assign 2014 CVE for procmail heap overflow in getlline() as described in
+>> following Debian BTS item <https://bugs.debian.org/771958> reported by Tero
+>> Marttila. Please comment if you need more information about the issue.
+>>
+>> ---
+>> Henri Salo
