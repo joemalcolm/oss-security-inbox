@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/15/8
-Message-ID: <1402856961.30096.1.camel@scapa>
-Date: Sun, 15 Jun 2014 20:29:21 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: rich@....org
-Cc: cve-assign@...re.org, henri@...v.fi, oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request for KIO/kmail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/7
+Message-ID: <54804D3B.2090306@redhat.com>
+Date: Thu, 04 Dec 2014 13:02:03 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: procmail heap overflow in getlline()
 Content-Type: text/plain; charset=utf-8
 
-On dim., 2014-06-15 at 16:55 +0100, Richard Moore wrote:
-> In the past when I've tried to use the cve-assign address it has basically
-> been a black hole. Since then I've either asked redhat or one of the other
-> OSS vendors for a CVE. I've used the distros@...openwall.org now as a
-> fallback.
-> 
-> I'd also note as part of the meta discussion that I'm not going to release
-> details of vulnerabilities to a public list  before the fix, and just
-> because someone asks for more details doesn't mean I will provide them.
+On 12/04/2014 11:26 AM, Martino Dell'Ambrogio wrote:
+> For what is worth, I strongly believe this is a security bug for the
+> same reason.
+> As soon as there is an undocumented way to execute code, it will be
+> impossible for a .procmailrc file generator to avoid execution of code.
+> Workaround measures like security capabilities can not be taken into
+> account as they are not implicit.
 
-May I ask why you're writing to the public oss-sec list instead of the
-private distros one, then?
+There are many documented code execution opportunities (some of them 
+still rather subtle), so I find any arguments based on the existence of 
+a hypothetical secure procmailrc file generator not very convincing.
+
+:0
+|echo code execution >/dev/tty
+
+:0
+* ?echo code execution >/dev/tty
+/dev/null
+
+… and so on.
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Florian Weimer / Red Hat Product Security
