@@ -1,42 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/19
-Message-ID: <20140220221019.GA4737@openwall.com>
-Date: Fri, 21 Feb 2014 02:10:19 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/13
+Message-ID: <Pine.LNX.4.64.1412041319340.1687@beijing.mitre.org>
+Date: Thu, 4 Dec 2014 13:20:15 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: Re: Request regarding posts to the lists
+cc: cve-assign@...re.org
+Subject: Re: CVE Request: Multiple XSS vulnerabilities in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 20, 2014 at 02:38:50PM -0600, security curmudgeon wrote:
-> please clearly identify the product in the subject line.
 
-I support this request.  Luckily, most of the time this is already the case.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Just including a sub-component or vulnerable functions and/or a CVE does 
-> not tell us what software the mail is about. This has gotten out of hand 
-> and in at least one case in the past few days, the entire mail never 
-> clearly stated the software that was vulnerable. Sure, most of us know the 
-> poster and it followed other advisories, but to newcomers or anyone 
-> reaching that post via a Google search it is not very friendly.
 
-I am a bit puzzled.  Are you possibly referring to the three Ruby
-advisories posted on 2014/02/18?
+>1. XSS in extended project browser
+>
+>[1] http://github.com/mantisbt/mantisbt/commit/511564cc
+>[2] http://www.mantisbt.org/bugs/view.php?id=17890
 
-http://www.openwall.com/lists/oss-security/2014/02/18/
+Use CVE-2014-9269.
 
-If so, I doubt Aaron will notice your request - I think he's not
-subscribed.  You might want to e-mail him privately, in case he intends
-to post more advisories in the future.
+>2. XSS in projax_api.php
+>
+>[3] http://github.com/mantisbt/mantisbt/commit/0bff06ec
+>[4] http://www.mantisbt.org/bugs/view.php?id=17583
 
-Or maybe you were referring to Vincent's CVE request for
-CGI::Application, which didn't mention Perl in the Subject line (but did
-in the message body)?  This one actually looks OK with respect to your
-request, since CGI::Application appears to be a product on its own (not
-bundled with Perl).
+Use CVE-2014-9270.
 
-http://www.openwall.com/lists/oss-security/2014/02/19/11
+>3. XSS in admin panel / copy_field.php
+>
+>[5] http://github.com/mantisbt/mantisbt/commit/e5fc835a
+>[6] http://www.mantisbt.org/bugs/view.php?id=17876
 
-I find no other examples of this problem "in the past few days",
-although of course we've seen it numerous times before.
+Use CVE-2014-9271.
 
-Alexander
+Issues 3 and 5 are MERGED into the same CVE ID because they are the
+same type of issue, affecting the same versions, disclosed at the same
+time, and found by the same person.
+
+>4. XSS in string_insert_hrefs()
+>
+>[8] http://github.com/mantisbt/mantisbt/commit/05378e00
+>[9] http://www.mantisbt.org/bugs/view.php?id=17297
+
+Use CVE-2014-9272.
+
+
+>5. XSS in file uploads
+>
+>[10] http://github.com/mantisbt/mantisbt/commit/9fb8cf36f
+>[11] http://www.mantisbt.org/bugs/view.php?id=17874
+
+Use CVE-2014-9271.
+
+Issues 3 and 5 are MERGED into the same CVE ID because they are the
+same type of issue, affecting the same versions, disclosed at the same
+time, and found by the same person.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEVAwUBVICkqKllVAevmvmsAQKuBQgAxVb3LZJ82oRHEpIKAGioXOw6bm1umxAh
+CRzFnVZUrUpZFB3vIAjAcatJXXLjZmk0NSHqWeguZ08q95lS9ockXcyYaoS5UKWG
+dyqPpZVCbhsmbSc8jf88IdT3EUAScdpof8dpCnYLSzRKdmq15GIYmYlnapms3+sK
+6EhVvxwrv85Giu2b2KLAB/6cjV75ATDtBu6IFC7GJed+2kc7ef8eTmJoiGQ+mdtB
+73ZGoykBlyBN5a6PVcfqPMtn58x6I8jUn4Oug382aKttVB5udp9ciRQSD0Yqdhv6
+F9bUrVPMStuTdnk64F/JDYI9x001jjCah2DiW2IMBOodjvtUr+qgPw==
+=wjH5
+-----END PGP SIGNATURE-----
