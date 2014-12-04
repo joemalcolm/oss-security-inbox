@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/14
-Message-ID: <CAESArwmSU5Yv8K=X52UhR5gmw_ZYNakk1OSBO4soZjEBm2X4Ww@mail.gmail.com>
-Date: Thu, 25 Sep 2014 07:50:26 -0700
-From: Reed Black <reed@...afeword.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/14
+Message-ID: <Pine.LNX.4.64.1412041329560.1687@beijing.mitre.org>
+Date: Thu, 4 Dec 2014 13:30:33 -0500 (EST)
+From: cve-assign@...re.org
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-6271 first patch and remote exploit via CGI
+cc: cve-assign@...re.org
+Subject: Re: CVE request: missing checks for small-sized files in hivex
 Content-Type: text/plain; charset=utf-8
 
-In the press, there are contrary statements about the initial patches[1]
-posted by Florian Weimer. A user on Twitter posted[2] that the patch was
-incomplete. There is agreement on that much. Where I see different
-responses is on whether the first patch can still be exploited remotely via
-the CGI vector outlined in Florian's initial post, and what damage can
-still be done. I haven't seen a proof of concept yet, but I also haven't
-seen a trusted voice give a definitive statement that it can't be abused.
 
-Could anyone lay out what's still possible for a remote attacker via CGI
-with only the first patch applied?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-[1] http://seclists.org/oss-sec/2014/q3/650
-[2] http://www.openwall.com/lists/oss-security/2014/09/24/33
+> It was reported that hivex [1], a library that can read and write
+> hive files (undocumented binary files that Windows uses to store the
+> Windows Registry on disk), did not properly handle small-sized hive
+> files. An attacker able to supply a hive file of a small size to an
+> application using the hivex library could use this flaw to read, and
+> possibly write, up to 4095 bytes beyond the end of the allocated
+> buffer, potentially resulting in arbitrary code execution with the
+> with the privileges of the user running that application.
 
+Use CVE-2014-9273.
+
+- ---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEVAwUBVICnuallVAevmvmsAQJmtQgAvdc858QDSe7VoTfgyMo/qZa/9sVMs0UF
+aKFwc+aZfVrRQDX71kGudujqZE2V/CorB6R0NUYQ6icC9ho41wlEp9tuMLcsnwB1
+wslzcbRZht16Zg0wWmQnhyY9ZFrPfYLW2gBrWf3wERrpDbLGleS43/B0O87qI35m
+rr7EUSSbkr/P81PcvsVe8mqblpkm9jK0IDUuB8SC141btnCOTL1Wgn/H1/kVgGSZ
+QOjk/E2OPF3olNo23yWpADi7U4GW3KLypJ08vpCwR/hsvD2vJ0oSTFpLm/K515Lb
+tD3D53+boUNlOLN7rnIWYoCMNu72iwLPRh6vJO9WklSx0W1hCl6MKw==
+=+uEe
+-----END PGP SIGNATURE-----
