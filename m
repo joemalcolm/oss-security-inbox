@@ -1,64 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/3
-Message-ID: <20140408092512.GB11169@sivokote.iziade.m$>
-Date: Tue, 8 Apr 2014 12:25:12 +0300
-From: Georgi Guninski <guninski@...inski.com>
-To: oss-security@...ts.openwall.com
-Subject: Should openssl accept weak DSA/DH keys with g = +/- 1 ?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/3
+Message-ID: <20141204075749.GA15581@cantor.unex.es>
+Date: Thu, 4 Dec 2014 08:57:49 +0100
+From: Santiago Vila <sanvila@...x.es>
+To: "Joshua J. Drake" <oss-sec-pmgetbl@...p.org>
+Cc: oss-security@...ts.openwall.com, Tero Marttila <terom@...me.fi>
+Subject: Re: CVE request: procmail heap overflow in getlline()
 Content-Type: text/plain; charset=utf-8
 
-Not on list.
+On Wed, Dec 03, 2014 at 05:30:57PM -0600, Joshua J. Drake wrote:
+> Is it possible to trigger this issue with untrusted input or only
+> trusted input from procmailrc?
 
-I am a noob at crypto.
+This is an issue with the handling of .procmailrc file, which contains
+the filter rules for procmail. An external attacker is not supposed to
+provide the .procmailrc file at /home/user, only the email to be
+filtered, so, IMHO, this is a bug but maybe not a security bug.
 
-IIRC similar attack was used against Tor
-several years ago.
-
-In DSA it is possible to force g=1 or g \equiv -1 \mod p.
-The first is unit and the second is of multiplicative
-order 2.
-
-This are clearly weak and insane choices,
-but this might have implications to MITM
-(might be wrong on this).
-
-For DH could generate key with g=1, though
-couldn't test it.
-
-Tested both 1 and -1 cases in DSA,
-the probability of successful connection
-was about 1/4 (or maybe 1/2), errors in the
-other cases. (for $1$ I would expect probability
-$1$).
-
-Attached are cacert.pem and cacert2.pem,
-the magic word is 1234.
-
-To test:
-$ openssl s_server -accept 8888 -www -cert cacert.pem
-$ openssl s_client -connect localhost:8888 -showcerts
-
-To examine
-$openssl x509 -text -in cacert2.pem
-$openssl dhparam -text -in dHParam.pem
-
-(not sure if dHParam.pem this is usable, forged generation).
-
-Firefox refuses connections, Konqueror works
-with same probability.
-
-Suspect this might be related to EC refusing
-the point at infinity.
-
-Might have MITM implications, don't have
-working exploit (If a MITM can forge $g=1$ in DH,
-the private keys are useless).
-
-
-
-
-View attachment "cacert.pem" of type "text/plain" (1968 bytes)
-
-View attachment "cacert2.pem" of type "text/plain" (1563 bytes)
-
-View attachment "dHParam.pem" of type "text/plain" (246 bytes)
+Thanks.
