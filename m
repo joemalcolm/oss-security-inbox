@@ -1,39 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/18
-Message-Id: <20140707181449.12AC11A41139@me.com>
-Date: Mon,  7 Jul 2014 14:14:49 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem lean-ruport-0.3.8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/10
+Message-ID: <548069AE.1060407@tillo.ch>
+Date: Thu, 04 Dec 2014 15:03:26 +0100
+From: Martino Dell'Ambrogio <tillo@...lo.ch>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: procmail heap overflow in getlline()
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem lean-ruport-0.3.8
+On 12/04/2014 01:02 PM, Florian Weimer wrote:
+> On 12/04/2014 11:26 AM, Martino Dell'Ambrogio wrote:
+>> For what is worth, I strongly believe this is a security bug for the
+>> same reason.
+>> As soon as there is an undocumented way to execute code, it will be
+>> impossible for a .procmailrc file generator to avoid execution of code.
+>> Workaround measures like security capabilities can not be taken into
+>> account as they are not implicit.
+>
+> There are many documented code execution opportunities (some of them 
+> still rather subtle), so I find any arguments based on the existence 
+> of a hypothetical secure procmailrc file generator not very convincing.
 
-Author: Larry W. Cashdollar, @_larry0
+If you mean documented, then you can have a secure .procmailrc file 
+generator by taking into account each possibility.
+It's exactly what you do when you sanitize input in any software: you 
+need a structure defining contexts, and you need to know how to 
+encode/filter things to be safe and not get out of context.
 
-Date: 06/01/2014
+If you mean undocumented (the phrase makes more sense), they all have to 
+be either documented or, if they weren't the intention of the 
+developers, they should be fixed.
+In my opinion, in both cases, there is a security bug because there is 
+unexpected execution.
 
-OSVDB: 108581
-
-CVE:Please Assign
-
-Download: http://rubygems.org/gems/lean-ruport
-
-Gem Author:  james@....id.au
-
-From: ./lean-ruport-0.3.8/test/tc_database.rb
-
-Line 21 exposes the mysql password to the process table, if this Gem is used in the context of a rails application it might be possible to inject commands via the #{ user } and #{ password } variables if those are supplied by the user as they are not sanitized before being passed to the shell.
-
-018-		tmp_sql = /tmp/compare.sql
-19-		md_command =
-20-			"mysqldump -u#{ user } -p#{ password } --databases stonecodeblog"
-21:		`#{ md_command } > #{ tmp_sql }`
-22:		diff = `diff #{ orig_sql } #{ tmp_sql }`
-23-		assert( diff == , diff[0..500] ) 
-24-	end
-25-end
+>
+> :0
+> |echo code execution >/dev/tty
+>
+> :0
+> * ?echo code execution >/dev/tty
+> /dev/null
+>
+> … and so on.
+>
 
 
-Advisory: http://www.vapid.dhs.org/advisories/lean-ruport-0.3.8.html
 
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4234 bytes)
