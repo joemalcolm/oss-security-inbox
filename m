@@ -1,119 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/12/7
-Message-ID: <543B0FF4.9080305@redhat.com>
-Date: Sun, 12 Oct 2014 17:34:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: Re: perl-Razor-Agent logs to /razor-agent.log by default
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/16
+Message-ID: <Pine.LNX.4.64.1412041333000.1687@beijing.mitre.org>
+Date: Thu, 4 Dec 2014 13:33:38 -0500 (EST)
+From: cve-assign@...re.org
+To: Chris Steipp <csteipp@...imedia.org>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: MediaWiki security release - 1.23.7
 Content-Type: text/plain; charset=utf-8
 
-On 12/10/14 03:09 PM, cve-assign@...re.org wrote:
->> https://bugzilla.redhat.com/show_bug.cgi?id=1058772
->> https://bugzilla.redhat.com/show_bug.cgi?id=514979
-> 
->> I'm inclined to not call this a DoS ... I can see situations where
->> this could be a problem.
-> 
-> Maybe a CVE is needed for Red Hat's SELinux configuration - see below.
-> 
-> As far as we can tell, this may be intentional behavior from the
-> perspective of the upstream code. If the razorhome setting has a ""
-> value, then the product doesn't use full directory paths and instead
-> defaults to the current working directory (the / directory here):
-> 
->   sub read_conf {
->   ...
->   # add full path to all config values that need them
->   if ($self->{razorhome}) {
->   foreach (qw( logfile ...
-> 
-> 
-> Here, $self->{razorhome} has a value of "" because /root/.razor
-> doesn't exist (SELinux had previously prevented its creation):
-> 
->   sub find_home {
->   ...
->       my $dotrazor = '.razor';
->   ...
->       $rhome = File::Spec->catdir("$ENV{HOME}", "$dotrazor");
->   ...
->       if (-d $rhome) {
->   ...
->         $self->{razorhome} = $rhome;
->         return 1;
->     }
->   ...
->     $self->{razorhome} = "";
-> 
-> Are you interested in having a CVE assignment because this is a
-> vulnerability in the default SELinux policy in various RHEL and Fedora
-> versions? This seems to be an unusual situation in which denying write
-> access to /root/.razor is what causes the vulnerability to exist.
 
-In that case I would argue SELinux is doing its job as expressed by
-policy, and that the flaw still lies in Razor not having a sane fallback
-(like syslog, I mean WTF?). I think dropping files into / definitely
-violates the principle of least surprise. There's also other reasons the
-logging can fail, not just SELinux (apparmour, permissions, etc.).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> In other words, what is Red Hat's position on customer expectations
-> for packages that function in an different/vulnerable way in SELinux
-> Enforcing mode? Is it something like:
-> 
->   - when Red Hat created the package, Red Hat was supposed to either
->     ensure that the default SELinux policy was compatible with the
->     filesystem access required by the package, or else develop a Red
->     Hat custom patch to use a different part of the filesystem (e.g.,
->     maybe something under /var instead of /root/.razor in this case)
-> 
-> Or is it something like:
-> 
->   - every user is on their own to read setroubleshoot reports,
->     determine why SELinux Enforcing mode results in vulnerable
->     behavior for a package shipped by Red Hat, and then use semanage
->     commands to get the behavior that they want
-> 
-> ? Also, if it's undesirable for a mail-handling daemon to write to the
-> top-level / directory, shouldn't the default SELinux policy have
-> prevented that? Is it possible to construct a policy to express a
-> position such as "new top-level files aren't ever allowed; every new
-> file must be at least one level below the / level"?
+> Hi, we fixed a few security bugs in last week's MediaWiki release [1].
+>
+> * bug 71111 / T73111 - A missing csrf check could allow reflected xss
+> on wikis that allow raw html
+> (https://phabricator.wikimedia.org/T73111)
 
-Ah so one note: we (as in RHT corporate) didn't create this package.
-It's part of Fedora/EPEL (the community), it's not shipped as part of
-RHEL or any of our products. I can assure had this been a corp package
-we would have caught this flaw in regular testing (insert sad comment
-about people setenforce'ing 0 killing a puppy/etc). Also it's been
-static since 2010, everything past that is just mass rebuilds for F15+
-and so on.
+Use CVE-2014-9276.
 
->> it doesn't appear that the attacker can trigger faster growth
-> 
-> Of course, there can't be a CVE assignment unless an attacker can
-> trigger faster growth. (Unexpected resource consumption caused solely
-> by the administrator's decision to install perl-Razor-Agent doesn't
-> qualify for a CVE; that doesn't cross privilege boundaries.)
-> 
-> It looks like attackers were supposed to be able to trigger faster
-> growth simply by sending more mail, e.g.,
-> 
->     my $defaults = {
->         debuglevel         => "3",
-> 
->    $self->log (3,"ignoring mail $obj->{id}, whitelisted by rule: $sh: $address");
-> 
->    $self->log (3,"mail $obj->{id} is ". ($obj->{spam} ? '' : 'not ') ."known spam.");
-> 
-> Is this even possible, or does SELinux Enforcing mode disrupt normal
-> operation enough that the code never reaches "$self->log (3" lines?
+> * bug 71478 / T73478 - MediaWiki's <cross-domain-policy> mangling
+> could allow an article editor to inject code into api consumers that
+> blindly unserialize php representations of the page from the api
+> (https://phabricator.wikimedia.org/T73478)
 
-Dunno, I haven't investigated this, I'm trying to eat turkey
-(thanksgiving =).
+Use CVE-2014-9277.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+- ---
 
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iQEVAwUBVICnwqllVAevmvmsAQIqtAgApS0KfcaLFw9TND3VT6vWwKePvaR0kGee
+n4N+/vUh9XsX9vgASKh+o4rcmZW0Pw67GI0C1RKGPSTITzFgIhwDpG3tCBAVKtUz
+VSL2dWHP5PC3OOsRUF2kD6oVctE/y7w9FADRLccBqf7DAYK1CTJ+1I1ZNKQBaePs
+1Z3CrDPW9QAQSjzSfWFrvxz5ivnkiz2S9bhU/B2y7MKriU41uXRDclnHOqVX9+9C
+cp8ymBSKeiaohgro5awR29pf87HZTbYbGJE+PL66URBWsPA6VsFN1PD2gkuKH9mj
+KKmizDImU2RjXNpNIASnOQNnIt6omJBajlahU5SsNBpxz+O6+GRkSQ==
+=nB+O
+-----END PGP SIGNATURE-----
