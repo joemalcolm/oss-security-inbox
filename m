@@ -1,19 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/11
-Message-Id: <180AD1FA-D35F-48F8-BE23-0B8096D6A5B8@statuscode.ch>
-Date: Thu, 16 Oct 2014 21:31:53 +0200
-From: Lukas Reschke <lukas@...tuscode.ch>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/18
+Message-ID: <68c5181b.63b20bff@fabiankeil.de>
+Date: Thu, 4 Dec 2014 20:32:25 +0100
+From: Fabian Keil <freebsd-listen@...iankeil.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: attacking hsts through ntp
+Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
 Content-Type: text/plain; charset=utf-8
 
+"Vincent Danen" <vdanen@...hat.com> wrote:
 
-> On 16 Oct 2014, at 17:56, Kurt Seifried <kseifried@...hat.com> wrote:
-> email agm@...omium.org asking to be added to the whitelist, from the
-> domain you want white listed (otherwise they tend to ignore it). Usually
-> within a few business days they'll add it to the source code, and then
-> in the next browser update they will update the list and you will now be
-> white listed.
+> On 12/03/2014, at 9:57 AM, Michal Zalewski wrote:
+> 
+> >>> https://bugzilla.redhat.com/show_bug.cgi?id=1170233>
+> >> You mixed up Michal and me :-)
+> >
+> > Possibly in reference to:
+> > https://lists.gnu.org/archive/html/bug-unrtf/2014-11/msg00001.html
+> 
+> Wow, I was more tired than I thought.  I did take the wrong reference 
+> and was indeed referring to Michal's mail.
+> 
+> I've updated our bug to to note both even though it may require more 
+> than one CVE.  It seems like quite the mess for an unmaintained package.
 
-There is a fancy new way via web to submit domains: https://hstspreload.appspot.com/
-(link can also be found at http://www.chromium.org/sts)
+Potential fixes:
+http://www.fabiankeil.de/sourcecode/unrtf-0.21.5-various-fixes.diff
+
+The patch set also fixes a use-after-free issue, it probably doesn't
+need a CVE, though.
+
+Fabian
+
+Content of type "application/pgp-signature" skipped
