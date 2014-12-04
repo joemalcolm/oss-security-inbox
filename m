@@ -1,57 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/19
-Message-ID: <20141007104342.GA6808@openwall.com>
-Date: Tue, 7 Oct 2014 14:43:43 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/6
+Message-ID: <548036C9.3010000@tillo.ch>
+Date: Thu, 04 Dec 2014 11:26:17 +0100
+From: Martino Dell'Ambrogio <tillo@...lo.ch>
 To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: Shellshocker - Repository of "Shellshock" Proof of Concept Code
+Subject: Re: CVE request: procmail heap overflow in getlline()
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 07, 2014 at 09:05:40AM +0000, mancha wrote:
-> it would help if you'd clarify your position more explicitely.
+For what is worth, I strongly believe this is a security bug for the 
+same reason.
+As soon as there is an undocumented way to execute code, it will be 
+impossible for a .procmailrc file generator to avoid execution of code.
+Workaround measures like security capabilities can not be taken into 
+account as they are not implicit.
 
-I recognize that embargoes are not necessarily beneficial overall and
-they have clear drawbacks and may be unfair to some (hence my easy
-adoption of the opponents' term "selective disclosure" despite of its
-negative connotation), yet I think that sometimes they are in fact
-beneficial overall, and I have little or no control over whether they
-are imposed by the reporter of an issue.
+Martino Dell'Ambrogio
+Security Auditor
+Web: http://www.tillo.ch/
+Email: tillo@...lo.ch
 
-For now, I intend to continue hosting the distros list as a tool to
-facilitate safer handling and discussion of embargoed issues between
-representatives of the (selected) distros.
+On 12/04/2014 10:58 AM, Florian Weimer wrote:
+> On 12/04/2014 09:41 AM, Kurt Seifried wrote:
+>> On 04/12/14 12:57 AM, Santiago Vila wrote:
+>>> On Wed, Dec 03, 2014 at 05:30:57PM -0600, Joshua J. Drake wrote:
+>>>> Is it possible to trigger this issue with untrusted input or only
+>>>> trusted input from procmailrc?
+>>>
+>>> This is an issue with the handling of .procmailrc file, which contains
+>>> the filter rules for procmail. An external attacker is not supposed to
+>>> provide the .procmailrc file at /home/user, only the email to be
+>>> filtered, so, IMHO, this is a bug but maybe not a security bug.
+>>>
+>>> Thanks.
+>>
+>> I disagree. Many mail servers allow people to edit their .procmailrc but
+>> explicitly block shell accounts. This would allow a user with a non
+>> interactive shell account to execute arbitrary commands using procmailrc
+>> even if they were otherwise restricted (e.g. using permissions or
+>> SELinux for example).
+>
+> procmail already executes commands in lines starting with “|” (and the 
+> documentation suggests it does not honor SHELL, so SHELL=/bin/false 
+> does not block this).  If permissions/SELinux contain that, they will 
+> also work against a procmailrc parser exploit.  In other words, I 
+> don't think there's a security bug here.
+>
 
-I suggest and ask that existing members of the distros list try to
-volunteer extra time to review proposed patches and the software being
-patched for possible related flaws.  I doubt that this suggestion and
-request will change things much, but it "costs" nothing in terms of
-extra risks or slippery slopes (which would be a concern if we start
-adding non-distro security researchers to the list), so we have nothing
-to lose by asking.
 
-In case of Shellshock, there wasn't a clear enough opportunity for
-distros list members to change how the vulnerability would be fixed
-pre-disclosure, but I mean the above in general.
 
-A related aspect is that the distros list is currently specified as
-being intended for medium overall severity issues.  The rationale behind
-this is that low severity issues don't need embargoes, and high severity
-issues are worthy of special handling where they are to be disclosed to
-affected distros only rather than to all at once.  I think it's the
-latter aspect which correctly prompted Florian to post just a heads-up
-to the distros list, requiring that affected distros who actually intend
-to work on the issue within the allotted 2 days actively request the
-information.  Unfortunately, this approach, while safer against leaks,
-precludes pre-disclosure reviews by distros who do not feel they require
-to patch the issue for themselves before it becomes public.  Maybe this
-implies that those distros' representatives would not care to review the
-patch anyway, or maybe not.  Possibly more importantly, it precludes
-discussion of high severity issues between distros on the distros list,
-if those issues were (correctly) only announced in the form of heads-up
-messages requiring direct contact for detail.  I think an exception
-needs to be made to encourage discussion of high severity issues taking
-advantage of the distros list PGP-re-encryption when that is expected
-to be beneficial, although unfortunately that is hard to know in advance.
-
-Alexander
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4234 bytes)
