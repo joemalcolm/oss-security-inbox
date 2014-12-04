@@ -1,27 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/19/1
-Message-ID: <546BE0C0.2050908@redhat.com>
-Date: Wed, 19 Nov 2014 11:13:52 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: 767227@...s.debian.org
-Subject: CVE request: lsyncd command injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/9
+Message-ID: <20141204140011.GS26336@core.inversepath.com>
+Date: Thu, 4 Dec 2014 15:00:11 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2014-009] JasPer input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
 
-There is a command injection flaw in lsyncd, a file change monitoring 
-and synchronization daemon:
+#2014-009 JasPer input sanitization errors
 
-https://github.com/axkibe/lsyncd/issues/220
+Description:
 
-https://github.com/creshal/lsyncd/commit/18f02ad013b41a72753912155ae2ba72f2a53e52
+The JasPer project is an open source implementation for the JPEG-2000 codec.
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=767227
+The library is affected by two heap-based buffer overflows which can lead to
+arbitrary code execution. The vulnerability is present in functions
+jpc_dec_cp_setfromcox() and jpc_dec_cp_setfromrgn().
 
-Could a CVE please be assigned?
+A specially crafted jp2 file, can be used to trigger the overflows.
 
-Thanks,
+Affected version:
 
---
-Murray McAllister / Red Hat Product Security
+JasPer <= 1.900.1
+
+Fixed version:
+
+JasPer, N/A
+
+Credit: vulnerability report received from the Google Security Team.
+
+CVE: CVE-2014-9029
+
+Timeline:
+
+2014-11-19: vulnerability report received
+2014-11-20: contacted affected vendors
+2014-11-21: assigned CVE
+2014-11-27: patch contributed by Tomas Hoger from Red Hat Product Security
+2014-12-04: advisory release
+
+References:
+http://www.ece.uvic.ca/~frodo/jasper
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-9029
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2014-009.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
