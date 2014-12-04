@@ -1,22 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/15/21
-Message-ID: <543E6482.80404@redhat.com>
-Date: Wed, 15 Oct 2014 14:11:46 +0200
-From: Jan Rusnacko <jrusnack@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE assignment for POODLE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/2
+Message-ID: <CALwhT97-=jY4n7_ah0PMwD1BH0xauUSwRp71dO9rQGD0ukmj2w@mail.gmail.com>
+Date: Wed, 3 Dec 2014 17:48:28 -0800
+From: Karthik Kambatla <kasha@...udera.com>
+To: security@...che.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: Apache Hadoop 2.5.2 release to fix CVE-2014-3627
 Content-Type: text/plain; charset=utf-8
 
-On 15.10.2014 11:48, Florian Weimer wrote:
-> CVE-2014-3566 is currently assigned to an SSL 3.0 protocol vulnerability:
-> 
-> “The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other products, uses nondeterministic CBC padding, which makes it easier for man-in-the-middle attackers to obtain cleartext data via a padding-oracle attack, aka the "POODLE" issue.”
-> 
-> What we seem to be lacking is a CVE assignment for the protocol downgrade “dance” implemented by some browsers, explicitly designed to negate the effect of the downgrade protection in the TLS protocol (the protocol upgrade to TLS 1.0 and beyond is arguably the “fix” for CVE-2014-3566 as it is described above).
-There already might be a confusion from how this is presented in relation to Poodle, e.g (http://marc.info/?l=openssl-dev&m=141333049205629&w=2):
-"Here's a patch for the OpenSSL 1.0.1 branch that adds support for
-TLS_FALLBACK_SCSV, which can be used to counter the POODLE attack"
+Apologies for the delay in getting this across to you, Apache Hadoop 2.5.2
+(released on 11/19) fixes the following security issue:
 
-when in fact TLS_FALLBACK_SCSV is a fix for downgrade dance. Additional CVE will help tracking these two issues and their fixes separately.
--- 
-Jan Rusnacko, Red Hat Product Security
+--
+
+CVE-2014-3627: Apache Hadoop distributed cache vulnerability
+
+Severity: Severe
+
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+Hadoop 0.23.0 to 0.23.11
+Hadoop 2.0.0 to 2.5.1
+
+Users affected: Users running the YARN NodeManager daemon with Kerberos
+authentication
+
+Impact: Vulnerability allows a cluster user to expose private files owned
+by the user running the YARN NodeManager process.  The malicious cluster
+user can create a public tar archive containing a symlink to a local file
+on the node owned by the user running the YARN NodeManager process.  The
+permissions of the local file will be changed to be world-readable when the
+public archive is localized on the node.
+
+Mitigation: Users should upgrade to 2.5.2.
+
+Credit: This issue was discovered by Jason Lowe of Yahoo!
+
