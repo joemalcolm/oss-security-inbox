@@ -1,59 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/31
-Message-ID: <20140930200435.GB14626@gremlin.ru>
-Date: Wed, 1 Oct 2014 00:04:35 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/20
+Message-ID: <20141204212316.0eb1a6bd@pc>
+Date: Thu, 4 Dec 2014 21:23:16 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
 Content-Type: text/plain; charset=utf-8
 
-On 30-Sep-2014 11:30:52 +0200, Florian Weimer wrote:
+On Thu, 4 Dec 2014 20:32:25 +0100
+Fabian Keil <freebsd-listen@...iankeil.de> wrote:
 
- >>>> What is the motivation to not store executable code (functions)
- >>>> differently from standard variables?
+> Potential fixes:
+> http://www.fabiankeil.de/sourcecode/unrtf-0.21.5-various-fixes.diff
 
- >>> What would you use for such a store, considering the environment
- >>> is the only portable way to pass this information from one
- >>> process to another in the general case, and support the current
- >>> set of use cases?
-
- >> C.O. to the rescue: temporary file.
-
- > You cannot use a named temporary file because the creator does
- > not know its required lifetime. That's a challenge all solutions
- > not based on the process environment will face.
-
-Creator doesn't, but (grand)*child does: open it, unlink it, read it,
-close it. Once the shell needs to run something, it can create a new
-file with exported stuff. Garbage collection should be thought of,
-but it's out-of-scope for this discussion.
-
- > Theoretically, you could pass an unnamed temporary file via a file
- > descriptor, and communicate the descriptor number in some safe way
- > (but what's that, if you don't trust the environment?).
-
-Generally, the environment is unsafe because it may be filled by any
-(grand)*parent process.
-
- > But that's going to be far less interoperable than what we currently
- > have, and barely more secure.
-
-If the attacker needs to create the file AND to fill the environment
-variable to succeed, that more likely is more secure. Or am I missing
-something?
-
- >> If one shell instance needs to pass some functions to another,
- >> it could dump those functions to a temporary file and pass the
- >> --load (or, better, --load-functions) options with a filename
- >> parameter.
- > We need to keep support exporting functions to grandchildren
- > through non-bash processes (that is, bash - some-other-program
- > - bash).
-
-Hmmm... Well, requiring both a file and an environment variable may
-be a good solution. Or not.
-
+Thanks, it's just that it doesn't help much (see attachment, all
+crashes with your patch applied).
 
 -- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Download attachment "unrtf-crashes-new.tar.xz" of type "application/x-xz" (1164 bytes)
+
+Content of type "application/pgp-signature" skipped
