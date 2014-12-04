@@ -1,246 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/2
-Message-ID: <53CC779A.7010006@moodle.com>
-Date: Mon, 21 Jul 2014 10:14:50 +0800
-From: Michael de Raadt <michaeld@...dle.com>
-To: oss-security@...ts.openwall.com
-Subject: Moodle security notifications public
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/4
+Message-ID: <54801E26.2070104@redhat.com>
+Date: Thu, 04 Dec 2014 01:41:10 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, "Joshua J. Drake" <oss-sec-pmgetbl@...p.org>
+CC: Tero Marttila <terom@...me.fi>
+Subject: Re: CVE request: procmail heap overflow in getlline()
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 04/12/14 12:57 AM, Santiago Vila wrote:
+> On Wed, Dec 03, 2014 at 05:30:57PM -0600, Joshua J. Drake wrote:
+>> Is it possible to trigger this issue with untrusted input or only
+>> trusted input from procmailrc?
+> 
+> This is an issue with the handling of .procmailrc file, which contains
+> the filter rules for procmail. An external attacker is not supposed to
+> provide the .procmailrc file at /home/user, only the email to be
+> filtered, so, IMHO, this is a bug but maybe not a security bug.
+> 
+> Thanks.
 
-The following security notifications are now public after release.
-
-Thanks to OSS members for their continued cooperation.
-
-=======================================================================
-MSA-14-0020: Identity confusion in Shibboleth authentication
-
-Description:       Shibboleth was allowing empty session IDs and
-                   confusing sessions when more than one instance was
-                   associated with an empty ID.
-Issue summary:     User taking over other user's session using
-                   Shibboleth authentication plugin
-Severity/Risk:     Serious
-Versions affected: 2.5 to 2.5.6, 2.4 to 2.4.10 and earlier unsupported
-                   versions
-Versions fixed:    2.5.7 and 2.4.11
-Reported by:       Colin Campbell
-Issue no.:         MDL-45485
-CVE identifier:    CVE-2014-3552
-Changes (2.5):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=refs%2Fheads%2FMOODLE_25_STABLE&st=commit&s=MDL-45485
-
-=======================================================================
-MSA-14-0021: Code injection in Repositories
-
-Description:       Serialised data passed by repositories could
-                   potentially contain objects defined by add-ons that
-                   could include executable code.
-Issue summary:     Potential PHP Object Injection in Repositories
-Severity/Risk:     Serious
-Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
-                   earlier unsupported versions
-Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
-Reported by:       Robin Bailey
-Issue no.:         MDL-45616
-CVE identifier:    CVE-2014-3541
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45616
-
-=======================================================================
-MSA-14-0022: XML External Entity vulnerability in LTI module
-
-Description:       It was possible for manipulated XML files passed
-                   from LTI servers to be interpreted by Moodle to
-                   allow access to server-side files.
-Issue summary:     XXE attack through LTI
-Severity/Risk:     Serious
-Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
-                   earlier unsupported versions
-Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
-Reported by:       pnig0s@...ebuf
-Issue no.:         MDL-45463
-CVE identifier:    CVE-2014-3542
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45463
-
-=======================================================================
-MSA-14-0023: XML External Entity vulnerability in IMSCC and IMSCP
-
-Description:       It was possible for manipulated XML files to be
-                   uploaded to the IMSCC course format or the IMSCP
-                   resource to allow access to server-side files.
-Issue summary:     XXE Vulnerabilities in IMS CC and resource
-Severity/Risk:     Serious
-Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
-                   earlier unsupported versions
-Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
-Reported by:       pnig0s@...ebuf
-Issue no.:         MDL-45417
-CVE identifier:    CVE-2014-3543
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45417
-
-=======================================================================
-MSA-14-0024: Cross-site scripting vulnerability in profile field
-
-Description:       Filtering of the Skype profile field was not
-                   removing potentially harmful code.
-Issue summary:     Persistent XSS Found
-Severity/Risk:     Serious
-Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
-                   earlier unsupported versions
-Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
-Reported by:       Osanda Malith Jayathissa
-Issue no.:         MDL-45683
-CVE identifier:    CVE-2014-3544
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45683
-
-=======================================================================
-MSA-14-0025: Remote code execution in Quiz
-
-Description:       It was possible to inject code into Calculated
-                   questions that would be executed on the server.
-Issue summary:     Remote code execution in quiz calculated question
-Severity/Risk:     Serious
-Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
-                   earlier unsupported versions
-Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
-Reported by:       Frédéric Massart
-Issue no.:         MDL-46148
-Workaround:        Disable calculated question types.
-CVE identifier:    CVE-2014-3545
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46148
-
-=======================================================================
-MSA-14-0026: Information leak in profile and notes pages
-
-Description:       It was possible to get limited user information,
-                   such as user name and courses, by manipulating the
-                   URL of profile and notes pages.
-Issue summary:     /user/edit.php reveals account name
-Severity/Risk:     Serious
-Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
-                   earlier unsupported versions
-Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
-Reported by:       Patrick Webster
-Issue no.:         MDL-45760
-CVE identifier:    CVE-2014-3546
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45760
-
-=======================================================================
-MSA-14-0027: Forum group posting issue
-
-Description:       Forum was allowing users who were members of more
-                   than one group to post to all groups without
-                   the capability to access all groups.
-Issue summary:     Forum post to all participants in separate group
-Severity/Risk:     Minor
-Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
-                   earlier unsupported versions
-Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
-Reported by:       Jakob Ackermann
-Issue no.:         MDL-38990
-CVE identifier:    CVE-2014-3553
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-38990
-
-=======================================================================
-MSA-14-0028: Cross-site scripting possible in external badges
-
-Description:       The details of badges from external sources were not
-                   being filtered.
-Issue summary:     XSS vulnerabilities with external badges
-Severity/Risk:     Serious
-Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6
-Versions fixed:    2.7.1, 2.6.4 and 2.5.7
-Reported by:       Frédéric Massart
-Issue no.:         MDL-46042
-CVE identifier:    CVE-2014-3547
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46042
-
-=======================================================================
-MSA-14-0029: Cross-site scripting vulnerability in exception dialogues
-
-Description:       Content of exception dialogues presented from AJAX
-                   calls was not being escaped before being presented
-                   to users.
-Issue summary:     Exception dialogs do not escape the content
-Severity/Risk:     Minor
-Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
-                   earlier unsupported versions
-Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
-Reported by:       Frédéric Massart
-Issue no.:         MDL-45471
-CVE identifier:    CVE-2014-354
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45471
-
-=======================================================================
-MSA-14-0030: Cross-site scripting through logs of failed logins
-
-Description:       Log entries of failed login attempts were not
-                   filtered correctly.
-Issue summary:     XSS in 'failed login' logs
-Severity/Risk:     Serious
-Versions affected: 2.7
-Versions fixed:    2.7.1
-Reported by:       Skylar Kelty
-Issue no.:         MDL-46201
-CVE identifier:    CVE-2014-3549
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46201
-
-=======================================================================
-MSA-14-0031: Cross-site scripting though scheduled task error messages
-
-Description:       Error messages generated by scheduled tasks were
-                   being presented to admins without correct filtering.
-Issue summary:     XSS in scheduled tasks success/error message
-Severity/Risk:     Serious
-Versions affected: 2.7
-Versions fixed:    2.7.1
-Reported by:       Skylar Kelty
-Issue no.:         MDL-46227
-CVE identifier:    CVE-2014-3550
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46227
-
-=======================================================================
-MSA-14-0032: Cross-site scripting in advanced grading methods
-
-Description:       Fields in rubrics were not being correctly filtered.
-Issue summary:     XSS on the (qualification, rating) field by rubric/
-                   advanced grading
-Severity/Risk:     Serious
-Versions affected: 2.7, 2.6 to 2.6.3, 2.5 to 2.5.6, 2.4 to 2.4.10 and
-                   earlier unsupported versions
-Versions fixed:    2.7.1, 2.6.4, 2.5.7 and 2.4.11
-Reported by:       Javier E. García Prada
-Issue no.:         MDL-46223
-CVE identifier:    CVE-2014-3551
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-46223
-
-=======================================================================
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQEcBAEBAgAGBQJTzHeaAAoJECGmGwK/mszPW+IIAMsfox5NixoV6BZ8j5mcURGU
-F+I4AoyqzoJTfrpno5ASYEq/gdA2RSrQ3QMUK49qAR67YamSwg4Fabpkvef9+i02
-R0qhg4C10sf4sJl9GeWVqePYyfWLNVSizzzPhATMQqtCyxShnF9rWMZ7E7JQNoHG
-Yhhv5VSe5wHqGOt7Z2mNYv0iBYyy4nw6VwauaOJouq9pTmeaIa6uLHBrbg4Vs/Z1
-JTfUTXgw3+AC/dnT2mUPvXAgKrnVGFj3tOtZ/BjO6vXM5tlGU8eVmoASh/uLi1sQ
-umuDZUfrv+X7veiSjWE+mSEiQsA/d8bfgtyAP2GmWq6Uvu1tV6fjd4c24QmM86U=
-=3BN+
------END PGP SIGNATURE-----
+I disagree. Many mail servers allow people to edit their .procmailrc but
+explicitly block shell accounts. This would allow a user with a non
+interactive shell account to execute arbitrary commands using procmailrc
+even if they were otherwise restricted (e.g. using permissions or
+SELinux for example). I bet if gmail filters allowed code exec Google
+would seriously freak out and fix it asap =).
 
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (3748 bytes)
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
