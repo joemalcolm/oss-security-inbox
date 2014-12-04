@@ -1,35 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/7
-Message-Id: <201402201405.s1KE5klm008877@linus.mitre.org>
-Date: Thu, 20 Feb 2014 09:05:46 -0500 (EST)
-From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request New-djbdns: dnscache: possible DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/04/12
+Message-ID: <7719b136.37c1cef6@fabiankeil.de>
+Date: Thu, 4 Dec 2014 16:41:31 +0100
+From: Fabian Keil <freebsd-listen@...iankeil.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Buffer overflow in antiword 0.37
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Fabian Keil <freebsd-listen@...iankeil.de> wrote:
 
-> I don't understand why is it relevant whether it's a genuine mistake or
-> logic error or an intentional bug?
+> The attached patch prevents a buffer overflow in antiword 0.37
+> (http://www.winfield.demon.nl/):
+[...]
+> The buffer overflow has been reported upstream and the patch was accepted,
+> but apparently there will not be an official antiword release any time soon.
+> 
+> The bug was found with afl-fuzz.
 
-There would be too many CVEs if every case of "does not read data as
-fast as possible" were classified as a DoS problem.
+Apparently zzuf found it first, though:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=771768
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Fabian
 
-iQEcBAEBAgAGBQJTBgtKAAoJEKllVAevmvmsOocIAK0ZllaiL6eW4GxzxPTGZRDs
-IPfsZCButrWZxtUW1DehkFzxvlqDDF3fS6oS01Qfd/fEpji7vzew7Xv8JGHykWYA
-BMRws8zy9FRmE3/eBXpLp/gxrZ8VqtZ19qc8AdD5UyF3Tdb5YJXOOVdRiFKBFuxY
-We6MIo7hCHDC3yylgqNJpaFMv51Vro7KK/p3ylkNZmi0hwordEmL5RhGUPYWo/P1
-IvuU5n4E7bB9gSJtWnT20vsjWYj0eZNAKMPDuC+GluadC89SVlvqmBFLtDZvkOOf
-BasxTeVEXPPDIQf+7ojP+RZcCzfHOtu/auK3qijXwy8PMwa2ZjRqyFWg8xi0O4E=
-=AA8Q
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
