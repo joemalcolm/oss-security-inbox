@@ -1,44 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/5
-Message-ID: <CAA7hUgH_2zmu5FxD_oEMBqFDuDryiosJS=Ra8SJyPQCLnaHyWQ@mail.gmail.com>
-Date: Thu, 6 Mar 2014 15:22:07 +0100
-From: Raphael Geissert <geissert@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/8
+Message-ID: <5481B377.8020109@redhat.com>
+Date: Fri, 05 Dec 2014 14:30:31 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: net-snmp agentx incorrect handling of multi-object requests DoS
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 12/05/2014 01:54 PM, Hanno Böck wrote:
+> Most distros don't ship pic/pie executables by default. Why? I haven't
+> done benchmarks, the saying is that this has a notable performance hit
+> on 32 bit but almost none on 64 bit. If this is true then could we at
+> least have all major distros enable it on 64 bit?
 
-It was found that the AgentX subagent of net-snmp can be stalled when
-a manager sends a multi-object request with a different number of
-subids. From the Debian bug report:
+Copy relocations support has still be added to GCC.  For x86_64, a patch 
+exists:
 
-> This happens if one of the requested OID is larger than the previous one:
->
-> agentx/master: request for variable (iso.3.6.1.2.1.2.2.1.7.7)
-> agentx/master: request for variable (iso.3.6.1.2.1.2.2.1.2.10)
-> agentx/master: request for variable (iso.3.6.1.2.1.2.2.1.8.7)
-> agentx/master: request for variable (iso.3.6.1.3.53.5.5.2.1.3.101)
->
-> First three OID contain 11 subid while the next one has 12 subid.
+   https://gcc.gnu.org/ml/gcc-patches/2014-05/msg01215.html
 
-Resulting error message from the subagent:
-> agentx: Oversized Object ID
+Without that, there is still a performance impact.
 
-The bug is fixed upstream for the 5.4 branch in 5.4.4. From the
-upstream bug report this was also fixed in the 5.3 branch but I don't
-know on what specific version.
+> What i found notable: diff-ing two function offsets from different
+> libraries (I use printf-sin) is alway static, even on Pax. Is this by
+> design?
 
-Could a CVE id be assigned?
+Yes, the address you get is the PLT stub, not the actual implementation. 
+  The reason for this is somewhat complex, but related to the way lazy 
+binding and symbol interposition are implemented.
 
-Thanks
-
-Upstream bug report:
-http://sourceforge.net/p/net-snmp/patches/1113/
-More explicit impact:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=684388
-
-Cheers,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Florian Weimer / Red Hat Product Security
