@@ -1,43 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/4
-Message-Id: <20140927043210.3373DC5051E@smtptsrv1.mitre.org>
-Date: Sat, 27 Sep 2014 00:32:10 -0400 (EDT)
-From: cve-assign@...re.org
-To: rf@...eap.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: zeromq
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/18
+Message-ID: <20141205220702.29c91cc8@pc>
+Date: Fri, 5 Dec 2014 22:07:02 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, 05 Dec 2014 15:55:27 -0500
+Daniel Micay <danielmicay@...il.com> wrote:
 
-> did not validate the other party's security handshake properly,
-> allowing a man-in-the-middle downgrade attack.
-> https://github.com/zeromq/libzmq/issues/1190
+> The context of the architecture you're testing on is required for the
+> numbers to be meaningful. It's known to be expensive on x86 and should
+> be nearly free elsewhere if there aren't compiler / linker perf bugs.
 
-Use CVE-2014-7202.
+Of course...
+64 bit, intel i7 cpu
+gcc 4.9.2, Gentoo Linux
 
+-- 
+Hanno Böck
+http://hboeck.de/
 
-> libzmq (ZeroMQ/C++) did not implement a uniqueness check on connection
-> nonces, and the CurveZMQ RFC was ambiguous about nonce validation.
-> This allowed replay attacks.
-> https://github.com/zeromq/libzmq/issues/1191
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Use CVE-2014-7203.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUJj1gAAoJEKllVAevmvms22oIALa4cmzIr+BMlDJvOW1jqBG3
-WxIMxb3UEW58SSElxlXOaO8WniY3DepSMHqS6YfVIzpKzKtB0KTmQyurOqpNdGkH
-uVrj5UXOT+fCqySURRDAJambPw2XdqauXHxABmFGrfBR97Lx9buTIH5Q0NCW5ZD5
-T4Vkl1tTzv9IcYXhzcDeqqxLALvm4Fl7blvoxwhI5nWcPYCCzIowHz5aCqNT+Waw
-WQ6f8ba1C3mvdmEZKBUtQ+lFdvqFFIZxS4tXgoCCLkOq6nj1nTiKDyxyd1BjCJIn
-xf80XD+fEsMUUTiSL8GebqOPwzC8UD9c9RRslPqmOIP5QC81XBDXITRWx55lzWg=
-=9D3H
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
