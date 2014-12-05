@@ -1,69 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/1
-Message-ID: <20140927005553.GA418@openwall.com>
-Date: Sat, 27 Sep 2014 04:55:53 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/16
+Message-ID: <m5t4qt$dun$1@ger.gmane.org>
+Date: Fri, 05 Dec 2014 21:33:33 +0100
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Cc: Chet Ramey <chet.ramey@...e.edu>
-Subject: Re: Fwd: Non-upstream patches for bash
+Subject: Re: CVE Request: Multiple XSS vulnerabilities in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Sep 27, 2014 at 01:56:49AM +0400, Solar Designer wrote:
-> I took a look at the code in 3.1, and it looked just as vulnerable.  So
-> I tried harder, and was able to trigger both issues that you're patching
-> with parser-oob-3.2.patch on 3.1.
-> 
-> For the redir_stack issue, I had to use many more <<EOF's, and I
-> actually closed those EOF's.  In fact, I used 1000 of them (both opening
-> and closing).  This gave me a segfault.
+On 2014-12-05 16:56, cve-assign@...re.org 
+wrote:
+> Use CVE-2014-9281 [sic] for the copy_field.php issue, originally
+> incorrectly reported for test_langs.php (bug 17876).
+>
+> Continue to use CVE-2014-9271 for the file uploads issue (bug 17874).
 
-With parser-oob-3.2.patch applied to my 3.1.19 (with other patches),
-this problem is gone, and 1000 EOF's (as well as commands that follow
-the one using 1000 opening and closing EOF's) work as expected.
+The two issues in our tracker have been updated accordingly.
 
-> For the nested blocks (for loops in this case), I also used as many as
-> 1000 of them, and got this:
-> 
-> $ bash test-script.sh 
-> test-script.sh: line 909: syntax error near unexpected token `newline'
-> test-script.sh: line 909: `for x909 in ; do :'
-> 
-> And this remains exactly line 909 when I try 909, 1000, or 2000 nested
-> loops.  With "only" 908 nested loops, this symptom goes away - but I
-> guess those 908 loops are not actually processed correctly, see below.
 
-This weird behavior, including the 909 magic number, remained even with
-parser-oob-3.2.patch applied (which, as it relates to this issue,
-contains only the off-by-one one-liner).  The same 909 magic number
-works for both 32- and 64-bit builds, so it's not a memory layout thing.
-I am able to change it to 834 (and change the error message as well) by
-editing the command from:
 
-(for x in {1..2000} ; do echo "for x$x in ; do :"; done; for x in {1..2000} ; do echo done ; done) > test-script.sh
-
-to:
-
-(for x in {1..2000} ; do echo "for x$x in x; do :"; done; for x in {1..2000} ; do echo done ; done) > test-script.sh
-
-Notice the added "x" before a semicolon.  Changing the size of this
-token, or the number of values listed in that for loop (e.g., to "x y
-z") does not affect the observed behavior (it's still line 834).
-
-Specifically:
-
-$ (for x in {1..2000} ; do echo "for x$x in; do :"; done; for x in {1..2000} ; do echo done ; done) > test-script.sh; bash test-script.sh 
-test-script.sh: line 909: syntax error near unexpected token `newline'
-test-script.sh: line 909: `for x909 in; do :'
-$ (for x in {1..2000} ; do echo "for x$x in x; do :"; done; for x in {1..2000} ; do echo done ; done) > test-script.sh; bash test-script.sh 
-test-script.sh: line 834: syntax error near unexpected token `in'
-test-script.sh: line 834: `for x834 in x; do :'
-$ (for x in {1..2000} ; do echo "for x$x in more stuff here; do :"; done; for x in {1..2000} ; do echo done ; done) > test-script.sh; bash test-script.sh 
-test-script.sh: line 834: syntax error near unexpected token `in'
-test-script.sh: line 834: `for x834 in more stuff here; do :'
-
-I guess some other buffer fills up.
-
-Anyway, with (a port of) the variables-affix-3.0.patch applied as well
-(which works fine for me), I consider the above a non-security issue.
-
-Alexander
