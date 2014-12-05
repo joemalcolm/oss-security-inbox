@@ -1,55 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/35
-Message-ID: <543431EA.70805@redhat.com>
-Date: Tue, 07 Oct 2014 12:33:14 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Discussion: information leakage from server and client software - CVE/hardening/other?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/6
+Message-ID: <1e3694f2.116ced03@fabiankeil.de>
+Date: Fri, 5 Dec 2014 13:02:40 +0100
+From: Fabian Keil <freebsd-listen@...iankeil.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
 Content-Type: text/plain; charset=utf-8
 
-So I was looking at Firefox and noticed on Fedora it has the Health
-check and crash reporter enabled by default, meaning that if Fedora
-crashes a bunch of information gets sent back to Mozilla (I assume), I
-don't know if the UI/etc pops up and lets you see what is being sent and
-so on, on RHEL the crash reporter appears to be disabled by default.
+Hanno Böck <hanno@...eck.de> wrote:
 
-Also having looked at spamassassin (which has a component to retrieve
-and update rules) and clamav (which has freshclam to update the AV DB)
-both of these explicitly disable the updates, you must manually enable them.
+> On Thu, 4 Dec 2014 20:32:25 +0100
+> Fabian Keil <freebsd-listen@...iankeil.de> wrote:
+> 
+> > Potential fixes:
+> > http://www.fabiankeil.de/sourcecode/unrtf-0.21.5-various-fixes.diff
+> 
+> Thanks, it's just that it doesn't help much (see attachment, all
+> crashes with your patch applied).
 
-Then I see this:
-http://boingboing.net/2014/10/07/adobe-ebook-drm-secretly-build.html
-which is rather timely.
+Thanks for testing the patches.
 
-So we have a continuum, at one end we have programs that explicitly make
-you configure them before they'll connect out, and on the other end we
-have apps that connect out whether or not you want them to (and being
-closed source on locked down hardware you probably have little to no
-choice in the matter).
+I added another patch to the set that seems to fix the crashes
+with your attached files when executed through afl-showmap.
 
-Additionally we have the type of information and expectations, e.g. if I
-enable ntp or chrony I expect it to make outgoing connections to the NTP
-servers, which may be semi random if using the ntp.org pool servers. If
-I fire up a web browser and point it at openwall.com I expect traffic to
-go there and any ad networks/etc, I may not be expecting it to send
-random health reports somewhere.
+At least the first 300k afl-fuzz execs (355 total paths)
+seem to be crash free now.
 
-So my question is basically this: where on this grey scale does it go
-from mildly annoying to security vulnerability (and CVE worthy), the
-main things being:
+Fabian
 
--what kind of information is leaked (e.g. PII? system config? just the
-fact that you're asking what time it is?)
--assuming it makes these outgoing connections by default, how informed
-are users, e.g. in firefox you get a brief one time warning you can look
-at or does it maybe warnt he user, show them the info and then require
-them to confirm sending it (e.g. sosreport).
-
-Thanks in advance.
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Content of type "application/pgp-signature" skipped
