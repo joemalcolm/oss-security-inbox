@@ -1,25 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/10/1
-Message-ID: <CADi5LzzaG=G4wPpcO0ws5YOw9XZWjxufcBGKUBRza9poVRihBg@mail.gmail.com>
-Date: Sun, 9 Nov 2014 15:37:03 -0800
-From: Karthik Rangarajan <rangarajan.karthik@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: Multiple Vulnerabilities - XSS/Remote Code Injection in MODX
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/13
+Message-ID: <Pine.LNX.4.64.1412051055540.25424@beijing.mitre.org>
+Date: Fri, 5 Dec 2014 10:56:38 -0500 (EST)
+From: cve-assign@...re.org
+To: Paul Richards <paul@...tisforge.org>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request: Multiple XSS vulnerabilities in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-MODX has released a security advisory for MODX Evolution <=1.0.14. The
-version is affected by multiple XSS vulnerabilities as well as a
-command injection vulnerability. Please find the advisory below:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-http://forums.modx.com/thread/94952/multiple-vulnerabilities-xss-remote-command-injection
+>
+>Issue 17816 regarding copy fields -
 
-Can a CVE please be assigned for these vulnerabilities?
+We assume that you meant to say "Issue 17876" here.
 
-Thanks,
-Karthik
+>"Credit: Issue was reported by Mathias Karlsson
+>(http://mathiaskarlsson.me) as part of Offensive Security's bug bounty
+>program [7].  It was fixed by Paul Richards."
+>
+>is in correct as the issue was identified by myself initially, then
+>subsequently identified (incorrectly) in the initial bug report.
 
--- 
-Regards,
-Karthik Rangarajan
+In this case, it is acceptable to assign a different ID to reflect the
+different research organizations, since there is not a new release
+yet.
+
+Use CVE-2014-9281 [sic] for the copy_field.php issue, originally
+incorrectly reported for test_langs.php (bug 17876).
+
+Continue to use CVE-2014-9271 for the file uploads issue (bug 17874).
+
+- ---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEVAwUBVIHVWallVAevmvmsAQJ01Qf+M0C3nKgL1KoDG4+qU6MGXVKmTkS3pNX9
+aNfUp2M0gGGjfw3O+SnDMPxVtxQuIVe10HTu48i5TZXL4vKvjNyGIGeuvea3nhPN
+BPLX8AYDAEc6W6I7IcpxJzb92Ht4AzucTTPIqFQDl4570wiAUtiYsjHYXGwNUmys
+9NIYvAbRkhBd+I6geEx9kNk1zWgoGA970MDxa7IGVopS/K/eOAMOajic7ZiwXDM5
+c0JZvakbGK7lntLA6v6i3K/AF2Dc4rTIp6tinJ20WzCVESnnqQRbApICAgVOduu1
+wSfwdouDBqxYtTa/O0U0JrjLPqAnFX2HFx9y45aEMOAF6kmK58fXxw==
+=VxUZ
+-----END PGP SIGNATURE-----
