@@ -1,54 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/29/1
-Message-ID: <20140629233105.GA20494@hurricane.linuxnetz.de>
-Date: Mon, 30 Jun 2014 01:31:05 +0200
-From: Robert Scheck <robert@...oraproject.org>
-To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
-Subject: CVE-2014-0103: Zarafa WebAccess/WebApp store passwords in cleartext on server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/1
+Message-ID: <loom.20141205T090608-202@post.gmane.org>
+Date: Fri, 5 Dec 2014 08:10:00 +0000 (UTC)
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Multiple XSS vulnerabilities in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+ <cve-assign@...> writes:
 
-the Zarafa Collaboration Platform currently provides two webbased
-interfaces, the older WebAccess and the newer WebApp. The second is
-partially based on the first however it is not bundled in the same
-Zarafa tarball on the source code level (while WebAccess is); might
-be relevant to distributions and downstreams.
+> Issues 3 and 5 are MERGED into the same CVE ID because they are the
+> same type of issue, affecting the same versions, disclosed at the same
+> time, and found by the same person.
 
-Zarafa WebAccess and WebApp store session information, including
-login credentials, on-disk in PHP session files. This session file
-contains a user's username and password to the Zarafa server in
-cleartext (CVE-2014-0103). Depending on the configured user backend
-in Zarafa this might affect Zarafa internal users only or even LDAP
-user credentials used by multiple services.
+OK, noted.
 
-Affected products: Zarafa WebAccess < 7.1.10
-                   Zarafa WebApp < 1.6 beta
+Many thanks for assigning these CVEs.
 
-Access Vector: Local
-Access Complexity: Low
-Authentication: None
-Confidentiality Impact: Partial
-Integrity Impact: None
-Availability Impact: None
+Any chance that you could also assign CVE IDs to the following two issues
+(requests were sent a week ago), I'm waiting for these to release 1.2.18.
 
-The flaw is solved in Zarafa WebAccess 7.1.10 and Zarafa WebApp 1.6
-beta by using PHP's OpenSSL support, namely openssl_encrypt() and
-openssl_decrypt(). However this requires PHP >= 5.3.0 while some
-Linux distributions like RHEL/CentOS 5 or SLES 10 ship PHP < 5.3 by
-default. On such systems Zarafa remains affected by this flaw.
+- http://article.gmane.org/gmane.comp.security.oss.general/14952
+- http://article.gmane.org/gmane.comp.security.oss.general/14953
 
-As of writing there is no final release of Zarafa WebApp 1.6, thus
-installing the pre-release or backporting relevant code is required.
-
-See also: https://bugzilla.redhat.com/show_bug.cgi?id=1073618 - thanks
-to the Red Hat Security Response Team, specifically to Vincent Danen.
+Thanks in advance !
 
 
-With kind regards
-
-Robert Scheck
--- 
-Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
-
-Content of type "application/pgp-signature" skipped
