@@ -1,44 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/21/5
-Message-ID: <5446D1DD.6040805@enovance.com>
-Date: Tue, 21 Oct 2014 17:36:29 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/15
+Message-ID: <20141205205916.37658ede@pc>
+Date: Fri, 5 Dec 2014 20:59:16 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-037] Nova VMware instance in resize state may leak (CVE-2014-8333)
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-037
-CVE: CVE-2014-8333
-Date: October 21, 2014
-Title: Nova VMware instance in resize state may leak
-Reporter: Zhu Zhu (IBM)
-Products: Nova
-Versions: up to 2014.1.3
+Okay, I'm surprised to see that while everyone seems to claim
+performance reasons are why we don't use fpic/pie by default I can't
+find anyone actually benchmarking it.
 
-Description:
-Zhu Zhu from IBM reported a vulnerability in Nova VMware driver. If an
-authenticated user deletes an instance while it is in resize state, it
-will cause the original instance to not be deleted. An attacker can use
-this to launch a denial of service attack. All Nova VMware setups are
-affected.
+*disclaimer: benchmarking is tricky business, I don't know if I messed
+something up. If you feel this is a completely wrong way to benchmark
+this I'm open to suggestions. *
 
-Juno fix:
-https://review.openstack.org/118595
+I decided a reasonable target would be a static compile of ffmpeg,
+because it does some complicated stuff.
+I compiled two copies mostly identical with the difference that for one
+I passed CFLAGS="-O2" LDFLAGS="" while for the other I passed
+CFLAGS="-O2 -fpic" LDFLAGS="-pie".
 
-Icehouse fix:
-https://review.openstack.org/125492
+I then converted a h264 video to mpeg4.
 
-Notes:
-This fix was included in the 2014.2 release and will appear in a future
-2014.1.4 stable point release.
+This is what I got:
+no pie/pic: 14.664, 14.606, 14.685, 14.719, 14.69, average: 14.6728
+pie/pic: 14.776, 14.951, 14.947, 14.798, 14.898, average: 14.874
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8333
-https://launchpad.net/bugs/1359138
+So it seems the difference is at least measurable (around 1,4%) but not
+big.
 
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+I haven't benchmarked with the patches Florian referred to, they
+involve patching gold and gcc (the above is done with classic ld).
 
+-- 
+Hanno Böck
+http://hboeck.de/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
