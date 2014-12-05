@@ -1,20 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/31/22
-Message-ID: <20140131185121.GA20780@openwall.com>
-Date: Fri, 31 Jan 2014 22:51:21 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/12
+Message-ID: <Pine.LNX.4.64.1412051036470.25424@beijing.mitre.org>
+Date: Fri, 5 Dec 2014 10:37:22 -0500 (EST)
+From: cve-assign@...re.org
+To: Damien Regad <dregad@...tisbt.org>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request: PHP Object Injection in MantisBT filter API
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 22, 2014 at 11:51:39AM +0100, rf@...eap.de wrote:
-> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
->     SD> Are Qlustar's security updates (not just security advisories)
->     SD> publicly available?
-> 
-> Yes, all our packages are publicly available from our website.
 
-Where do I find them?  Somehow I only found "Qlustar Installer
-8.1.0-3/precise Size: 705MB".
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Alexander
+>In the function current_user_get_bug_filter(), the code loads a variable
+>from $_GET['filter']/$_POST['filter'] and if it's not numeric, feeds it
+>straight into unserialize() allowing an attacker to inject a PHP object.
+
+Use CVE-2014-9280.
+
+- ---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEVAwUBVIHQnallVAevmvmsAQKGJgf+OKpsaxKCv2/tLY55l9EqJWyq4XJ6w7et
+xxB8XG1nBtz87UzPqFOznjbdMn1MIQRSGAzxPaQNe8EF0fMxDErTivNeMrRcVdlP
+TEwQS6YQr0UdJpBH0ngpUrC63fBDkHX5c2mdbUE3rniSjj4pReQS4B8EcLFaTG/z
+B/ZerfEiOSI8xk3O5fnMcZ4ryDQLB6fUyLamcXDVDJi74R0Ah8God8pJiZQN4y+W
+Jsle18GcUvobf8eEO+FIbAZ6mcTtSqxESSr0e3+4rl6j8rZofMtXfP+wgm94lINJ
+asyqDE//Yg2uASsB896SGMwVE642DP1KllxHEs1zMt5Mo+12N171WA==
+=+kx+
+-----END PGP SIGNATURE-----
