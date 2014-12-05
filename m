@@ -1,30 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/13
-Message-ID: <52CF15B7.7030905@redhat.com>
-Date: Fri, 10 Jan 2014 07:33:43 +1000
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/17
+Message-ID: <54821BBF.8080103@gmail.com>
+Date: Fri, 05 Dec 2014 15:55:27 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: remote code execution via deserialization in XStream
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-Hi All
+On 05/12/14 02:59 PM, Hanno Böck wrote:
+> Okay, I'm surprised to see that while everyone seems to claim
+> performance reasons are why we don't use fpic/pie by default I can't
+> find anyone actually benchmarking it.
+> 
+> *disclaimer: benchmarking is tricky business, I don't know if I messed
+> something up. If you feel this is a completely wrong way to benchmark
+> this I'm open to suggestions. *
+> 
+> I decided a reasonable target would be a static compile of ffmpeg,
+> because it does some complicated stuff.
+> I compiled two copies mostly identical with the difference that for one
+> I passed CFLAGS="-O2" LDFLAGS="" while for the other I passed
+> CFLAGS="-O2 -fpic" LDFLAGS="-pie".
+> 
+> I then converted a h264 video to mpeg4.
+> 
+> This is what I got:
+> no pie/pic: 14.664, 14.606, 14.685, 14.719, 14.69, average: 14.6728
+> pie/pic: 14.776, 14.951, 14.947, 14.798, 14.898, average: 14.874
+> 
+> So it seems the difference is at least measurable (around 1,4%) but not
+> big.
+> 
+> I haven't benchmarked with the patches Florian referred to, they
+> involve patching gold and gcc (the above is done with classic ld).
 
-As per the following email thread on the xstream-dev list:
+The context of the architecture you're testing on is required for the
+numbers to be meaningful. It's known to be expensive on x86 and should
+be nearly free elsewhere if there aren't compiler / linker perf bugs.
 
-http://markmail.org/message/kfqoqdfj5fnup5co?q=list:org.codehaus.xstream.dev&page=3
+The cost on x86 is also quite different with Clang, and will be
+improving in the next GCC release due to register allocator improvements.
 
-Dinis Cruz et. al. have reported a remote code execution flaw in 
-XStream's XML deserialization. A PoC exploit is available here:
 
-http://blog.diniscruz.com/2013/12/xstream-remote-code-execution-exploit.html
-
-An initial patch has been committed, adding a whitelist that limits 
-deserialization to specified types:
-
-https://fisheye.codehaus.org/changelog/xstream?cs=2210
-
-Please assign a CVE ID to this issue.
-
-Thanks
---
-David Jorm / Red Hat Security Response Team
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
