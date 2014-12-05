@@ -1,32 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/25/3
-Message-ID: <20140625122337.06cacb5a@hboeck.de>
-Date: Wed, 25 Jun 2014 12:23:37 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/5
+Message-ID: <CABniQZOm+UmavomKw3iWDw5faqoE9xOgDMpVxHMRXAbngciqDw@mail.gmail.com>
+Date: Fri, 5 Dec 2014 19:58:43 +0800
+From: Shawn <citypw@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: timthumb remote code execution
+Cc: Hector Marco <hecmargi@....es>, full-disclosure@...ts.grok.org.uk,  fulldisclosure@...lists.org, bugtraq@...urityfocus.com,  bugs@...uritytracker.com, submissions@...ketstormsecurity.org
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 25 Jun 2014 11:56:55 +0200
-Hanno Böck <hanno@...eck.de> wrote:
+Hi Agostino,
 
-> The timthumb code, used by a countless number of wordpress themes, has
-> (again) a remote code execution vulnerability:
+I don't think this issue impact on Grsecurity/PaX, which
+Hardened-Gentoo is using PaX.
 
-And before people run aronud screaming and panicking (like I did this
-morning) it seems the whole thing is only vulnerable if the webshots
-feature is enabled (default is disabled).
+On Fri, Dec 5, 2014 at 7:10 PM, Agostino Sarubbo <ago@...too.org> wrote:
+> On Gentoo (Hardened) I always get form
+> ./get_offset2lib:
+>
+> Offset2lib (libc): 0x0
+>
+>
+> --
+> Agostino Sarubbo
+> Gentoo Linux Developer
 
-So most installations are probably not affected if I understand this
-right.
 
-Still worth a CVE :-)
 
 -- 
-Hanno Böck
-http://hboeck.de/
+GNU powered it...
+GPL protect it...
+God blessing it...
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+regards
+Shawn
