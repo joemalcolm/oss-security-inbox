@@ -1,32 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/16/6
-Message-ID: <20140716111344.397eae9e@pc1>
-Date: Wed, 16 Jul 2014 11:13:44 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/10
+Message-ID: <5481CA94.4030504@gmail.com>
+Date: Fri, 05 Dec 2014 10:09:08 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: libressl before 2.0.2 under linux PRNG failure
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 05/12/14 09:37 AM, Hanno Böck wrote:
+> On Fri, 05 Dec 2014 14:30:31 +0100
+> Florian Weimer <fweimer@...hat.com> wrote:
+> 
+>> On 12/05/2014 01:54 PM, Hanno Böck wrote:
+>>> Most distros don't ship pic/pie executables by default. Why? I
+>>> haven't done benchmarks, the saying is that this has a notable
+>>> performance hit on 32 bit but almost none on 64 bit. If this is
+>>> true then could we at least have all major distros enable it on 64
+>>> bit?
+>>
+>> Copy relocations support has still be added to GCC.  For x86_64, a
+>> patch exists:
+>>
+>>    https://gcc.gnu.org/ml/gcc-patches/2014-05/msg01215.html
+>>
+>> Without that, there is still a performance impact.
+> 
+> Interesting.
+> 
+> Do you know the state of this? The thread indicates that the poster
+> asked for review of his patch and never got one.
+> Any gcc people here who could comment?
+> 
+> Do you have numbers on the performance impact? Or some good ideas what
+> would be reasonable benchmarking targets?
+> As libraries are pic-compiled anyway from my limited understanding I
+> think this only affects code in the main executables.
+> I saw that chrome already ships pie-binaries, firefox doesn't.
+> (Browsers seem like performance critical, so google seems to think it's
+> no big performance deal).
 
-This has made the news lately:
-https://www.agwa.name/blog/post/libressls_prng_is_unsafe_on_linux
+The performance impact of PIE on x86_64 / ARM is usually negligible. If
+the program does lots of global accesses in performance critical areas
+then that GCC issue could have a significant impact. The issue would
+have been fixed a *long* time ago if distributions used (full) ASLR. I
+don't think performance bugs with an available fix are a compelling
+argument against it.
 
-Should get a CVE. Affected is portable libressl 2.0.0 and 2.0.1 on
-Linux. 2.0.2 has been released:
-https://marc.info/?l=openbsd-tech&m=140548206911600&w=2
+Indirection to access a global in an *external library* is rarely going
+to matter, especially considering that the libraries themselves are
+already paying for -fPIC rather than just -fPIE. LTO will already fix it
+within the application. There's also a significant performance hit for
+thread_local from -fPIC with the default thread model but that doesn't
+apply to -fPIE.
 
-Under certain conditions forking a process can create repeated random
-numbers.
+You're correct that dynamic libraries must already be built with -fPIC,
+which is a superset of the -fPIE requirements.
 
-LibreSSL 2.0.2 contains a workaround, although the reporter of this
-issue thinks this may not be the best approach.
+Fedora and Debian put a lot of effort into using dynamic libraries
+whenever possible. I haven't seen the performance issue ever come up,
+even when they're unbundling a library that's special-cased to the
+program (Firefox / cairo). It's strange to see the same people working
+on unbundling arguing against PIE from a performance POV.
 
-Please assign CVE.
+Mozilla has no excuse for not enabling PIE for Firefox, because 99% of
+the code is in dynamic libraries already. It has no performance impact.
 
-cu,
--- 
-Hanno Böck - freier Journalist		https://hboeck.de/
-E-Mail/Jabber: hanno@...eck.de		PGP-Key: BBB51E42
+The only reason that we're not shipping PIE executables across the board
+for x86_64 Arch Linux is the fact that upstream (GCC) hasn't provided a
+good way to enable PIE by default. You either have to patch the
+toolchain like Hardened Gentoo or make use of wrapper scripts.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+The Debian wrapper scripts don't handle every special case, so there are
+projects that break with them. IIRC, they don't special case -S or -E so
+it breaks an autoconf test in the Firefox build. I rolled our own
+wrapper scripts with more attention to these special cases but I still
+need to actually propose that we start using them by default...
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
