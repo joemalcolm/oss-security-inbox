@@ -1,55 +1,156 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/16
-Message-ID: <5411CE6D.1080206@redhat.com>
-Date: Thu, 11 Sep 2014 10:31:41 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: pinocchio tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/20
+Message-ID: <001c01d010d8$85ad6ca0$910845e0$@mantisforge.org>
+Date: Fri, 5 Dec 2014 22:12:12 -0000
+From: "P Richards" <paul@...tisforge.org>
+To: <oss-security@...ts.openwall.com>, <cve-assign@...re.org>, "'Damien Regad'" <dregad@...tisbt.org>
+Subject: RE: CVE-2014-6316: URL redirection issue in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-On 11/09/14 04:12 AM, John Haxby wrote:
-> Imagine an internet-connected TV that has the potential to overheat and
-> catch fire due to some bug.   Some script-kiddie thinks that it would be
-> fun to use one of the other vulns to break in and cause the TV to catch
-> fire.  At night.  When the owners are asleep ...
-> 
-> Security education is important.
-> 
-> jch
+In addition, the credit information for this report again appears to be not state the facts correctly. The issue with ?return= was something that I've previously complained about, and the development team chose not to fix at the time.
 
-There are much worse things:
+ 
 
-1) imagine internet connected ovens all with a virus that puts them into
-self cleaning mode (e.g. get as hot as you can) on Xmas day, thus
-literally millions of dinners/etc getting burnt and stinking up the house
+The CVE indicator of 2014 makes it appear that the vulnerability was first identified in 2014, but in fact, it's one that's been known about since a lot earlier - but previous developers argued not to fix I believe (I'll need to pull out a old HDD and go for chat logs to confirm).
 
-2) Imagine a network connected kettle that has a software safety to
-prevent overheat... the attacker tells it to get as hot as possible
-until it melts/catches fire. My boss has such a kettle, luckily the
-overhead is "in hardware" apparently...
+ 
 
-3) Imagine your dishwasher full of heated steam under pressure telling
-you it's ok to be opened... you get a face full of steam and burned
+For example, I have test web requests stored demonstrating this issue since at least April 2013 (http://tinypic.com/r/k0pee/8) , and I believe that actually the identification of this issue pre-dates this. 
 
-4) your Internet connected smoke alarm, which can receive software
-updates automatically (e.g. the NEST protect now owned by Google) is
-programmed to not alert on fires between say midnight and 8am while
-you're sleeping.. and your kettle is catching fire.
+ 
 
-5) self driving cars - existing car software is terrible (like all
-software): http://www.wired.com/2014/08/car-hacking-chart/
+Therefore, I don’t believe it is correct to state that the issue was first reported by “Mathias Karlsson” in May 2014, when it was identified as an issue prior to April 2013.
 
-6) all the internet connected medical devices, from Dave Dittrich's
-slides in 2003 (can't find an older copy):
-http://www.slidefinder.net/l/looking_vulnerabilities_dave_dittrich_university/vulnerabilities/29749404/p2
+ 
 
-We've already crossed the bridge of software flaws being able to kill
-people, luckily there's not much economic incentive for the bad guys to
-exploit them ... yet. Would you pay 2 bitcoins to unbrick your car?
+Equally, I don’t believe that putting in the description “Paul Richards also found another redirection issue in permalink_page.php, which turned out to have the same root cause.” is a valid indication of the issue - in terms of the ?return parameter, Mantis used the same functionality in around 4-5 pages.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+ 
+
+In addition, whilst I did state that I would leave testing of the fix to someone else, the final fix for this issue looks rather similar to the proposal fix I suggested for further testing of:
+
+ 
+
+[23:16:46] <paulr>          if ( preg_match( '@^(?P<path>' . preg_quote( $t_path, '@' ) . ')' . $t_pattern . '$@', $t_url, $t_matches ) ) {
+
+[23:16:46] <paulr>                  $t_type = 1;
+
+[23:16:46] <paulr> -        } else if ( preg_match( '@^(?P<path>' . preg_quote( $t_short_path, '@' ) . ')' . $t_pattern . '$@', $t_url, $t_matches ) ) {
+
+[23:16:46] <paulr> +        } else if ( $t_short_path != '' && ( preg_match( '@^(?P<path>' . preg_quote( $t_short_path, '@' ) . ')' . $t_pattern . '$@', $t_url, $t_matches ) ) ) {
+
+[23:16:46] <paulr>                  $t_type = 2;
+
+[23:16:46] <paulr>          } else if ( preg_match( '@^(?P<path>)' . $t_pattern . '$@', $t_url, $t_matches ) ) {
+
+[23:16:46] <paulr>                  $t_type = 3;
+
+[23:16:46] <paulr>          }
+
+[23:16:46] <paulr>  
+
+[23:16:57] <paulr> not directly related or well
+
+[23:17:07] <paulr> i'm wondering if the above would be correct or not ;p
+
+ 
+
+Paul
+
+ 
+
+ 
+
+ 
+
+-----Original Message-----
+From: Damien Regad [mailto:dregad@...tisbt.org] 
+Sent: 03 December 2014 23:13
+To: oss-security@...ts.openwall.com
+Subject: [oss-security] CVE-2014-6316: URL redirection issue in MantisBT
+
+ 
+
+Greetings,
+
+ 
+
+Please update CVE-2014-6316 with the information below
+
+ 
+
+ 
+
+Description:
+
+ 
+
+A bug in the URL sanitization routine allows an attacker to craft an URL that can redirect outside of the MantisBT instance's domain when the software is installed at the web server's root.
+
+ 
+
+e.g.  <http://example.com/login_page.php?return=http://google.com> http://example.com/login_page.php?return=http://google.com will redirect to Google.
+
+ 
+
+Affected versions:
+
+=> 1.2.0a3, <= 1.2.17
+
+ 
+
+Fixed in versions:
+
+1.2.18 (not yet released)
+
+ 
+
+Patch:
+
+See Github [1]
+
+ 
+
+Credit:
+
+ 
+
+Redirection in login_page.php was first reported [3] by Mathias Karlsson
+
+( <http://mathiaskarlsson.me> http://mathiaskarlsson.me) as part of Offensive Security's bug bounty program [4]; issue was also independently discovered and reported by Ryan Giobbi who made the original CVE request [2], Shahee Mirza [5] and Alejo Popovici [6].
+
+ 
+
+Paul Richards also found another redirection issue in permalink_page.php, which turned out to have the same root cause.
+
+ 
+
+The issue was fixed by Damien Regad (MantisBT Developer).
+
+ 
+
+References:
+
+Further details available in our issue tracker [2]
+
+ 
+
+ 
+
+[1]  <http://github.com/mantisbt/mantisbt/commit/e66ecc9f> http://github.com/mantisbt/mantisbt/commit/e66ecc9f
+
+[2]  <https://www.mantisbt.org/bugs/view.php?id=17648> https://www.mantisbt.org/bugs/view.php?id=17648
+
+[3]  <https://www.mantisbt.org/bugs/view.php?id=17362> https://www.mantisbt.org/bugs/view.php?id=17362
+
+[4]  <http://www.offensive-security.com/bug-bounty-program/> http://www.offensive-security.com/bug-bounty-program/
+
+[5]  <https://www.mantisbt.org/bugs/view.php?id=17698> https://www.mantisbt.org/bugs/view.php?id=17698
+
+[6]  <https://www.mantisbt.org/bugs/view.php?id=17811> https://www.mantisbt.org/bugs/view.php?id=17811
+
+ 
+
+ 
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
