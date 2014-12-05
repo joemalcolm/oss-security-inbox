@@ -1,51 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/08/8
-Message-ID: <534423BB.30307@enovance.com>
-Date: Tue, 08 Apr 2014 18:28:43 +0200
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/21
+Message-ID: <CALPTtNVKmLRRJWq1Bm4UDptSjGTbLwK1m7ezApeY8wg9W0g1jw@mail.gmail.com>
+Date: Fri, 5 Dec 2014 14:15:03 -0800
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-010] XSS in Horizon orchestration dashboard (CVE-2014-0157)
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-010
-CVE: CVE-2014-0157
-Date: April 08, 2014
-Title: XSS in Horizon orchestration dashboard
-Reporter: Cristian Fiorentino (Intel)
-Products: Horizon
-Versions: 2013.2 version up to 2013.2.3
+On Fri, Dec 5, 2014 at 7:09 AM, Daniel Micay <danielmicay@...il.com> wrote:
 
-Description:
-Cristian Fiorentino from Intel reported a vulnerability in Horizon
-Orchestration dashboard. By tricking a Horizon user into using a
-malicious template in the Orchestration/Stack section of Horizon, a
-remote attacker may trigger a cross-site-scripting vulnerability. It may
-result in potential assets theft (Horizon user/admin access credentials,
-tenants confidential information, etc.). Only setups exposing the
-orchestration dashboard in Horizon are affected.
+>
+> Mozilla has no excuse for not enabling PIE for Firefox, because 99% of
+> the code is in dynamic libraries already. It has no performance impact.
+>
 
-Juno (development branch) fix:
-https://review.openstack.org/86059
+For the record, Mozilla tried it several months ago and had to back it out.
 
-Icehouse (milestone-proposed branch) fix:
-https://review.openstack.org/86054
+"Nautilus (the file manager) can't open PIE executables, which makes
+distributing PIE executable essentially impossible."
 
-Havana fix:
-https://review.openstack.org/86056
+https://bugzilla.mozilla.org/show_bug.cgi?id=857628#c6 (which caused
+https://bugzilla.mozilla.org/show_bug.cgi?id=1076892)
 
-Notes:
-This fix will be included in the icehouse-rc2 development milestone and
-in a future 2013.2.4 release.
+~reed
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0157
-https://launchpad.net/bugs/1289033
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
