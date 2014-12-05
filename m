@@ -1,40 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/13
-Message-ID: <20141024221850.708a7244@pc>
-Date: Fri, 24 Oct 2014 22:18:50 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/7
+Message-ID: <20141205135435.7a5d5163@pc>
+Date: Fri, 5 Dec 2014 13:54:35 +0100
 From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: strings / libbfd crasher
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-I've checked the upstream patch they pointed me to:
-https://sourceware.org/git/?p=binutils-gdb.git;a=commit;h=bd25671c6f202c4a5108883caa2adb24ff6f361f
+On Thu, 04 Dec 2014 21:19:04 +0100
+Hector Marco <hecmargi@....es> wrote:
 
-Unfortunately this mixes in another change that is a revert, so it
-doesn't apply cleanly to the current release (2.24), if anyone needs it
-I've re-diffed it:
-https://files.hboeck.de/binutils-2.24-fix-crash.diff
+> This is a disclosure of a weakness of the ASLR Linux implementation.
+> The problem appears when the executable is PIE compiled and it has an
+> address leak belonging to the executable. We named this weakness:
+> offset2lib.
 
-This fixes the original stringme and strinmetoo from mancha, but not
-the latest sample von Michal:
+Thanks for that.
 
-Am Fri, 24 Oct 2014 12:10:31 -0700
-schrieb Michal Zalewski <lcamtuf@...edump.cx>:
+Two things on that:
 
-> I do have a bunch more that seem exploitable, though - for example:
-> 
-> http://lcamtuf.coredump.cx/strings-bfd-badfree - does this repro for
-> people (I tried with binutils 2.24)?
+Cynics might say "most linux distros aren't vulnerable to ASLR bypass
+because they don't use ASLR at all".
 
-I checked with the upstream patch and this seems still vulnerable.
+Can we please take this as an opportunity to discuss the state of ASLR
+on Linux in general? It's pretty sad, afaik Linux was one of the first
+to have ASLR (in the form of pax) back in 2001. Today everyone uses
+ASLR by default except Linux.
 
-> I don't understand the user benefit of extracting strings only from
-> certain sections of executables, and I almost feel like it's a side
-> effect of strings being a part of binutils more than anything else.
+Most distros don't ship pic/pie executables by default. Why? I haven't
+done benchmarks, the saying is that this has a notable performance hit
+on 32 bit but almost none on 64 bit. If this is true then could we at
+least have all major distros enable it on 64 bit?
 
-I fully agree. I wasn't aware strings does any kind of executable
-parsing and I was very surprised that there is any attack vector at all
-against it at all.
+
+Second:
+I wrote a small test .c to print out offset diffs. As expected
+printf-main offset is static on normal Linux with pic/pie and random
+on a pax-enabled system.
+
+What i found notable: diff-ing two function offsets from different
+libraries (I use printf-sin) is alway static, even on Pax. Is this by
+design? Can't different libraries be loaded at different offsets in ram?
 
 -- 
 Hanno Böck
@@ -43,4 +49,4 @@ http://hboeck.de/
 mail/jabber: hanno@...eck.de
 GPG: BBB51E42
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Content of type "application/pgp-signature" skipped
