@@ -1,31 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/14/2
-Message-ID: <20141114130429.54877952@pc>
-Date: Fri, 14 Nov 2014 13:04:29 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: Damien Regad <dregad@...tisbt.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-8598: MantisBT XML Import/Export plugin unrestricted access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/23
+Message-ID: <54823520.7040609@fifthhorseman.net>
+Date: Fri, 05 Dec 2014 17:43:44 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 12/05/2014 05:15 PM, Reed Loden wrote:
+> On Fri, Dec 5, 2014 at 7:09 AM, Daniel Micay <danielmicay@...il.com> wrote:
+> 
+>>
+>> Mozilla has no excuse for not enabling PIE for Firefox, because 99% of
+>> the code is in dynamic libraries already. It has no performance impact.
+>>
+> 
+> For the record, Mozilla tried it several months ago and had to back it out.
+> 
+> "Nautilus (the file manager) can't open PIE executables, which makes
+> distributing PIE executable essentially impossible."
+> 
+> https://bugzilla.mozilla.org/show_bug.cgi?id=857628#c6 (which caused
+> https://bugzilla.mozilla.org/show_bug.cgi?id=1076892)
 
-What's holding this up?
 
-As far as I read the oss-sec archive there are three unfixed mantis
-vulnerabilities, one of them an sql injection, and the release supposed
-to fix them is still not there (it's been two weeks since the first
-issue hit oss-security).
+i couldn't find a reference to this in the nautilus bugtracker, so i
+just posted:
 
-Makes me feel mantis isn't really handling security issues in a
-responsible way :-(
+ https://bugzilla.gnome.org/show_bug.cgi?id=741183
 
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
+	--dkg
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
