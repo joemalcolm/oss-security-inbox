@@ -1,93 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/14/4
-Message-Id: <E1WkXv0-0000iX-OI@xenbits.xen.org>
-Date: Wed, 14 May 2014 12:04:18 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 95 - input handling vulnerabilities loading guest kernel on ARM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/2
+Message-ID: <CAA2mj=d+qOe7x7MTM=Bs30gowWRcggx3nU1+73DH7i_-sVK4Kg@mail.gmail.com>
+Date: Fri, 5 Dec 2014 09:30:13 +0000
+From: Paul Richards <paul@...tisforge.org>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request: Multiple XSS vulnerabilities in MantisBT
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Mitre,
 
-                    Xen Security Advisory XSA-95
-                             version 2
+I believe your current analysis is incorrect, and that Damien's attribution
+is incorrect.
 
-      input handling vulnerabilities loading guest kernel on ARM
+Issue 17816 regarding copy fields -
+http://www.mantisbt.org/bugs/view.php?id=17876 is a duplicate of 17362
 
-UPDATES IN VERSION 2
-====================
+The report in issue 17362 referred to a security issue in "5. Reflected XSS
+in admin panel: PoC:
+[MantisBT]/admin/test_langs.php?dest_id=<script>alert(1)</script>"
 
-Public release.
+At that point my response was "In terms of number 5 - are you sure you
+meant test_langs.php. In 1.3-master, there's an issue within copy_field.php
+of doing something similar of:
 
-ISSUE DESCRIPTION
-=================
+admin/copy_field.php?source_id=1&dest_id="></a><script>alert()</script><b
+style="" as I was already aware of an issue within copy_field.php
 
-When loading a 32-bit ARM guest kernel the Xen tools did not correctly
-validate the length of the kernel against the actual image size.  This
-would then lead to an overrun on the input buffer when loading the
-kernel into guest RAM.
+I should be able to supply a report confirming this later on.
 
-Furthermore when checking a 32-bit guest kernel for an appended DTB,
-the Xen tools were prone to additional overruns also leading to an
-overrun on the input buffer when loading the kernel into guest RAM.
-Also, the tools would access a field in the putative DTB header
-without checking for its alignment.
+The security researcher then came back and stated that he had indeed made
+an error in his report and he did not mean test_langs.php
 
-When loading a 64-bit ARM guest kernel the tools similarly did not
-fully validate the requested load addresses, possibly leading to an
-overrun on the input buffer when loading the kernel into guest RAM.
+In this case, the line:
 
-IMPACT
-======
+"Credit:
+Issue was reported by Mathias Karlsson (http://mathiaskarlsson.me) as part
+of Offensive Security's bug bounty program [7].
+It was fixed by Paul Richards."
 
-An attacker who can control the kernel used to boot a guest can
-exploit these issues.
+is in correct as the issue was identified by myself initially, then
+subsequently identified (incorrectly) in the initial bug report.
 
-Exploiting the overflow issues allows information which follows the
-guest kernel in the toolstack address space to be copied into the
-guest's memory, constituting an information leak.
+As I need to be able to do a security bulletin regarding my find for the
+XSS within copy_field.php, can you please tell me what CVE identifier to
+use for this and  ensure proper attribution?
 
-Alternatively either the overflow or alignment issues could be used to
-crash the toolstack process, leading to a denial of service.
+Thanks in Advance
+Paul
 
-VULNERABLE SYSTEMS
-==================
+On Thu, Dec 4, 2014 at 6:20 PM, <cve-assign@...re.org> wrote:
 
-ARM systems are vulnerable from Xen 4.4 onwards.
+>
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+>
+>  1. XSS in extended project browser
+>>
+>> [1] http://github.com/mantisbt/mantisbt/commit/511564cc
+>> [2] http://www.mantisbt.org/bugs/view.php?id=17890
+>>
+>
+> Use CVE-2014-9269.
+>
+>  2. XSS in projax_api.php
+>>
+>> [3] http://github.com/mantisbt/mantisbt/commit/0bff06ec
+>> [4] http://www.mantisbt.org/bugs/view.php?id=17583
+>>
+>
+> Use CVE-2014-9270.
+>
+>  3. XSS in admin panel / copy_field.php
+>>
+>> [5] http://github.com/mantisbt/mantisbt/commit/e5fc835a
+>> [6] http://www.mantisbt.org/bugs/view.php?id=17876
+>>
+>
+> Use CVE-2014-9271.
+>
+> Issues 3 and 5 are MERGED into the same CVE ID because they are the
+> same type of issue, affecting the same versions, disclosed at the same
+> time, and found by the same person.
+>
+>  4. XSS in string_insert_hrefs()
+>>
+>> [8] http://github.com/mantisbt/mantisbt/commit/05378e00
+>> [9] http://www.mantisbt.org/bugs/view.php?id=17297
+>>
+>
+> Use CVE-2014-9272.
+>
+>
+>  5. XSS in file uploads
+>>
+>> [10] http://github.com/mantisbt/mantisbt/commit/9fb8cf36f
+>> [11] http://www.mantisbt.org/bugs/view.php?id=17874
+>>
+>
+> Use CVE-2014-9271.
+>
+> Issues 3 and 5 are MERGED into the same CVE ID because they are the
+> same type of issue, affecting the same versions, disclosed at the same
+> time, and found by the same person.
+>
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.14 (SunOS)
+>
+> iQEVAwUBVICkqKllVAevmvmsAQKuBQgAxVb3LZJ82oRHEpIKAGioXOw6bm1umxAh
+> CRzFnVZUrUpZFB3vIAjAcatJXXLjZmk0NSHqWeguZ08q95lS9ockXcyYaoS5UKWG
+> dyqPpZVCbhsmbSc8jf88IdT3EUAScdpof8dpCnYLSzRKdmq15GIYmYlnapms3+sK
+> 6EhVvxwrv85Giu2b2KLAB/6cjV75ATDtBu6IFC7GJed+2kc7ef8eTmJoiGQ+mdtB
+> 73ZGoykBlyBN5a6PVcfqPMtn58x6I8jUn4Oug382aKttVB5udp9ciRQSD0Yqdhv6
+> F9bUrVPMStuTdnk64F/JDYI9x001jjCah2DiW2IMBOodjvtUr+qgPw==
+> =wjH5
+> -----END PGP SIGNATURE-----
+>
 
-MITIGATION
-==========
-
-Ensuring that guests use only trustworthy kernels will avoid this
-problem.
-
-CREDITS
-=======
-
-This issue was discovered by Thomas Leonard.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa95.patch        xen-unstable, Xen 4.4.x
-
-$ sha256sum xsa95*.patch
-1ab63ff126b92e752e88b240838dd66b66415604eaa3e49e373cb50ad3cdd0af  xsa95.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJTc0j+AAoJEIP+FMlX6CvZAYIH/29FLbtbM/jnSuMksWvf1G6g
-OgM3BhKGWAiNpebvPhhzqsKODchxpbrtGbLEIS9YDD8Qz5pQlnrLMsSBaSnrZvAs
-5tQR5EKWpvDZry6THnxVP9OGxzR23+JEPtd1FQuNKiG68MeKmmFiAIGR1HfowSTs
-VOoAWZ1h8ep85iI4qz1U4+wbTBAhNwFpM1JH/IUmSTlWbSxXpQomX/lQqrPpiHEs
-8zVBMni8HNYlWBEeWTktpc45JXBhbbNSGaqduEO3s8WJBpJd1D+YJ8u+nz2AJVVu
-JF6AkC1EL+cR6P7FSQZ+FrA9Spj+kND/SXlPNO/KLMn8QSlItMTUO2qH6UwcPKI=
-=2MET
------END PGP SIGNATURE-----
-
-Download attachment "xsa95.patch" of type "application/octet-stream" (3213 bytes)
