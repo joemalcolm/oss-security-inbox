@@ -1,25 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/19/2
-Message-ID: <alpine.LFD.2.10.1402191227060.30795@javelin.pnq.redhat.com>
-Date: Wed, 19 Feb 2014 12:29:04 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/14
+Message-ID: <20141205160404.GA12890@steve.org.uk>
+Date: Fri, 5 Dec 2014 16:04:04 +0000
+From: Steve Kemp <steve@...ve.org.uk>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request - dns-sync node module
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
 
-+-- On Mon, 17 Feb 2014, Michael Samuel wrote --+
-| I think I've come around to a yes for this one. Pushing attacker-chosen 
-| entries out of the cache after only 100 packets is clearly not what the 
-| admin wants.  It makes a secondary attack (DNS over UDP blind cache 
-| poisoning) much more viable than it was.
-|
-| I can think of some DoS scenarios where this vector would assist another
-| attack.
+  This never did receive an allocation, did it?
 
-  Could we have a CVE for this please?
+On Tue Nov 11, 2014 at 20:02:40 +0000, Steve Kemp wrote:
+> 
+>   The dns-sync library for node.js allows resolving hostnames in
+>  a synchronous fashion
+> 
+>   All versions of dns-sync prior to the release 0.1.1 were
+>  vulnerable to arbitrary command execution via maliciously
+>  formed hostnames.  For example:
+> 
+>     var dnsSync = require('dns-sync');
+>     console.log(dnsSync.resolve('$(id > /tmp/foo)'));
+> 
+>   This is caused by the hostname being passed through a shell
+>  as part of a command execution.
+> 
+>   I disclosed/reported this here:
+> 
+>         https://github.com/skoranga/node-dns-sync/issues/1
+> 
+>   The following commit resolves the bug:
+> 
+>         https://github.com/skoranga/node-dns-sync/commit/d9abaae384b198db1095735ad9c1c73d7b890a0d
 
-Thank you.
+
+Steve
 --
-Prasad J Pandit / Red Hat Security Response Team
+Git-based DNS hosting
+https://dns-api.com/
