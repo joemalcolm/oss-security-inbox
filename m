@@ -1,35 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/27/10
-Message-ID: <20140627111545.GU19028@dhcp-25-225.brq.redhat.com>
-Date: Fri, 27 Jun 2014 13:15:45 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/5
+Message-ID: <5482596B.3030607@amacapital.net>
+Date: Fri, 05 Dec 2014 17:18:35 -0800
+From: Andy Lutomirski <luto@...capital.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE request -- Linux kernel: sctp: sk_ack_backlog wrap-around problem
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-Description of the problem:
-For a TCP-style socket, while processing the COOKIE_ECHO chunk in
-sctp_sf_do_5_1D_ce(), after it has passed a series of sanity check, a
-new association would be created in sctp_unpack_cookie(), but
-afterwards, some processing maybe failed, and sctp_association_free()
-will be called to free the previously allocated association, in
-sctp_association_free(), sk_ack_backlog value is decremented for this
-socket, since the initial value for sk_ack_backlog is 0, after
-the decrement, it will be 65535, a wrap-around problem happens, and
-if we want to establish new associations afterward in the same
-socket, ABORT would be triggered since sctp deem the accept queue as
-full.
+On 12/05/2014 04:44 PM, Hanno Böck wrote:
+> On Fri, 05 Dec 2014 17:43:44 -0500
+> Daniel Kahn Gillmor <dkg-QLrU/DhXBlmnlhUoGqYIEF6hYfS7NtTn@...lic.gmane.org> wrote:
+> 
+>> i couldn't find a reference to this in the nautilus bugtracker, so i
+>> just posted:
+>>
+>>  https://bugzilla.gnome.org/show_bug.cgi?id=741183
+> 
+> I tried to dig into this a bit. I'm not really sure, but based on the
+> output I assume nautilus is relying on file or libmagic to assess the
+> file type.
+> 
+> And that's what fails:
+> $ file --mime-type pie
+> pie: application/x-sharedlib
+> 
+> 
+> It seems there is no really easy way to separate executables from
+> shared libraries and whether this should be considered a bug in
+> file/libmagic. The only thing I quickly found that would be possible is
+> searching if a SONAME is present. libmagic uses some "magic" file
+> format to parse files, I don't know if that's capable of such complex
+> parsing.
+> 
 
-A remote attacker can block further connection to the particular sctp
-server socket by sending a specially crafted sctp packet. 
+Why does gcc and/or ld write a non-zero entry point?  If they didn't,
+that would be an easy way to check.
 
-Upstream patch:
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=d3217b15a19a4779c39b212358a5c71d725822ee
+--Andy
 
-References:
-https://bugzilla.redhat.com/show_bug.cgi?id=1113967
+> (oh, btw, this is one more reason to wipe out potential security bugs
+> in file...)
+> 
 
-Thanks,
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
