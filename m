@@ -1,201 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/19
-Message-ID: <20141218214246.GB6338@kroah.com>
-Date: Thu, 18 Dec 2014 13:42:46 -0800
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/15
+Message-ID: <1417862602.3104.1.camel@trustmatta.com>
+Date: Sat, 06 Dec 2014 11:43:22 +0100
+From: Florent Daigniere <florent.daigniere@...stmatta.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: How GNU/Linux distros deal with offset2lib attack?
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 18, 2014 at 09:24:19AM +0100, Lionel Debroux wrote:
-> Hello Greg,
+On Fri, 2014-12-05 at 14:15 -0800, Reed Loden wrote:
+> On Fri, Dec 5, 2014 at 7:09 AM, Daniel Micay <danielmicay@...il.com> wrote:
 > 
-> Before someone (whoever he/she is) spends time on something that might,
-> from the beginning, have no chance of getting integrated into mainline,
-> I'd like your input on three questions I asked over a week ago, at the
-> end of an all too lengthy e-mail :)
-
-Sorry about not getting to that email, been traveling too much :(
-
-> Reposting here, so that you don't have to dig, with added "=" lines:
-> 
-> > > If the latter, I think it wouldn't be good to see another
-> > > half-measure integrated to mainline, until the next mainline ASLR
-> > > defeat against which PaX has protected for over a decade. Just
-> > > my 2 cents.
 > >
-> > The reason PaX isn't in the main kernel tree is that no one has
-> > spent the time and effort to actually submit it in a mergable form.
-> > So please, do so if you think this is something that is needed.
-> In 2010(-2011 ?), I pushed some bits of constification work from PaX to
-> mainline, nothing complicated.
-> Pushing from PaX to mainline some of the more useful bits that I listed
-> in a previous e-mail is a very different matter... well beyond the
-> amount of time I could devote to it - and beyond my technical abilities,
-> too.
+> > Mozilla has no excuse for not enabling PIE for Firefox, because 99% of
+> > the code is in dynamic libraries already. It has no performance impact.
+> >
 > 
-> However, pointing and pushing patches of lower complexity, why not.
-> For instance:
-> ==============================
-> 1) do you consider that using
-> static inline bool check_heap_stack_gap(const struct vm_area_struct
-> *vma, unsigned long addr, unsigned long len) {
-> return (!vma || addr + len <= vma->vm_start);
-> }
-> defined in include/linux/sched.h (where PaX defines that prototype, and
-> where most functions using it are defined) to replace 20- open-coded
-> (!vma || addr + len <= vma->vm_start) checks is a worthwhile, though
-> obviously no-op, cleanup in its own right ?
-> ==============================
-
-I can't understand that at all, sorry, try making it, and all of these
-other things you mention here, into a "real" patch and submitting it.
-That way I can read it, and review it properly.
-
-> ==============================
-> 2) do you consider that, even before the integration of PaX's refcount
-> protection to mainline (which is there, like most of PaX, for security
-> reasons, there have been refcount-related holes in the past...),
-> switching to atomic_t for fs_struct.users,
-> pipe_inode_info.{readers,writers,files,waiting_writers},
-> kmem_cache.refcount (for SLAB and SLUB), tty_port.count,
-> tty_ldisc_ops.refcount is worthwhile ?
-> Most such refcounts at other places are already atomic, after all.
-> ==============================
-
-What specifically is the value added in turning those fields into atomic
-variables?  Most of them are protected by locks already, right?
-
-> ==============================
-> 3) I see a patch in USB core, which looks like it's written to avoid
-> some potential integer overflows.
-> --- linux-3.17.4/drivers/usb/core/devio.c
-> +++ linux-3.17.4-pax/drivers/usb/core/devio.c
-> @@ -187,7 +187,7 @@ static ssize_t usbdev_read(struct file *
->     struct usb_dev_state *ps = file->private_data;
->     struct usb_device *dev = ps->dev;
->     ssize_t ret = 0;
-> -    unsigned len;
-> +    size_t len;
->     loff_t pos;
->     int i;
+> For the record, Mozilla tried it several months ago and had to back it out.
 > 
-> @@ -229,22 +229,22 @@ static ssize_t usbdev_read(struct file *
->     for (i = 0; nbytes && i < dev->descriptor.bNumConfigurations; i++){
->         struct usb_config_descriptor *config =
->           (struct usb_config_descriptor *)dev->rawdescriptors[i];
-> -        unsigned int length = le16_to_cpu(config->wTotalLength);
-> +        size_t length = le16_to_cpu(config->wTotalLength);
+> "Nautilus (the file manager) can't open PIE executables, which makes
+> distributing PIE executable essentially impossible."
 > 
->         if (*ppos < pos + length) {
+> https://bugzilla.mozilla.org/show_bug.cgi?id=857628#c6 (which caused
+> https://bugzilla.mozilla.org/show_bug.cgi?id=1076892)
 > 
->         /* The descriptor may claim to be longer than it
->         * really is.  Here is the actual allocated length. */
-> -            unsigned alloclen =
-> +            size_t alloclen =
->                 le16_to_cpu(dev->config[i].desc.wTotalLength);
-> 
-> -            len = length - (*ppos - pos);
-> +            len = length + pos - *ppos;
->             if (len > nbytes)
->                 len = nbytes;
-> 
->             /* Simply don't write (skip over) unallocated parts */
->             if (alloclen > (*ppos - pos)) {
-> -                alloclen -= (*ppos - pos);
-> +                alloclen = alloclen + pos - *ppos;
->                 if (copy_to_user(buf,
->                     dev->rawdescriptors[i] + (*ppos - pos),
->                     min(len, alloclen))) {
-> Does that make sense ?
-> ==============================
-
-No, it really doesn't.  I tried reading this one from your previous
-email, and can't figure it out.
-
-Let's step through this:
-
-	unsigned int length = le16_to_cpu(config->wTotalLength);
-
-if wTotalLength is 0xffffffff (the largest illegal value it could be),
-length is now that value as well, but still positive (32 vs 16 bits).
-
-Changing:
-	len = length - (*ppos - pos)
- to:
-	len = length + pos - *ppos;
-
-is still the same logic, right?
-
-So, len could be big, but still, not negative, it's an unsigned value
-too, which is important here:
-
-	if (len > nbytes)
-		len = nbytes;
-
-ok, so len just got bounded to be nbytes, which is what was provided by
-userspace.
-
-So everything is still ok?  I must be missing something obvious here,
-what is it?
+> ~reed
 
 
-> In addition to what I wrote earlier: PaX contains several hundreds of
-> lines of hunks dealing with local variables needlessly made static:
-> ==============================
-> --- linux-3.17.6/drivers/mfd/max8925-i2c.c
-> +++ linux-3.17.6-pax/drivers/mfd/max8925-i2c.c
-> @@ -152,7 +152,7 @@ static int max8925_probe(struct i2c_clie
-> const struct i2c_device_id *id)
-> {
->      struct max8925_platform_data *pdata = dev_get_platdata(&client->dev);
-> -    static struct max8925_chip *chip;
-> +    struct max8925_chip *chip;
->      struct device_node *node = client->dev.of_node;
-> 
-> if (node && !pdata) {
-> 
-> (the first reference to the "chip" variable in that function is an
-> unconditional devm_kzalloc)
-> ==============================
+Here's one of the tickets where the information about compiler hardening
+flags is centralized... They have an endless supply of excuses not to
+enable any (not even -D_FORTIFY_SOURCE=2 or -Wformat-security)!
 
-That does seem foolish to have the variable be static, but probe
-functions can not be run in parallel, so what is the benefit of making
-it not be static other than changing the location where it is being
-stored?
+https://bugzilla.mozilla.org/show_bug.cgi?id=620058
 
-> or local structs which are not meant to be modified and should therefore
-> probably be made static / static const (mainline doesn't use the GCC
-> plugin for constification):
-> ==============================
-> --- linux-3.17.6/arch/arm/mach-omap2/wd_timer.c
-> +++ linux-3.17.6-pax/arch/arm/mach-omap2/wd_timer.c
-> @@ -110,7 +110,9 @@ static int __init omap_init_wdt(void)
->     struct omap_hwmod *oh;
->     char *oh_name = "wd_timer2";
->     char *dev_name = "omap_wdt";
-> -    struct omap_wd_timer_platform_data pdata;
-> +    static struct omap_wd_timer_platform_data pdata = {
-> +        .read_reset_sources = prm_read_reset_sources
-> +    };
-> 
->     if (!cpu_class_is_omap2() || of_have_populated_dt())
->         return 0;
-> @@ -121,8 +123,6 @@ static int __init omap_init_wdt(void)
->     return -EINVAL;
-> }
-> 
-> -    pdata.read_reset_sources = prm_read_reset_sources;
-> -
->     pdev = omap_device_build(dev_name, id, oh, &pdata,
-> sizeof(struct omap_wd_timer_platform_data));
->     WARN(IS_ERR(pdev), "Can't build omap_device for %s:%s.\n",
-> ==============================
+Florent
 
-I don't see what this changes either, other than the obvious one of
-making stack space smaller.  A nice improvement yes, but are we stack
-contrained at this point in the module init sequence?
-
-thanks,
-
-greg k-h
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
