@@ -1,57 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/05/9
-Message-ID: <20141205153732.64382590@pc>
-Date: Fri, 5 Dec 2014 15:37:32 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/3
+Message-ID: <20141206015914.48aec4c8@pc>
+Date: Sat, 6 Dec 2014 01:59:14 +0100
 From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
 Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 05 Dec 2014 14:30:31 +0100
-Florian Weimer <fweimer@...hat.com> wrote:
+On Sat, 6 Dec 2014 01:44:31 +0100
+Hanno Böck <hanno@...eck.de> wrote:
 
-> On 12/05/2014 01:54 PM, Hanno Böck wrote:
-> > Most distros don't ship pic/pie executables by default. Why? I
-> > haven't done benchmarks, the saying is that this has a notable
-> > performance hit on 32 bit but almost none on 64 bit. If this is
-> > true then could we at least have all major distros enable it on 64
-> > bit?
-> 
-> Copy relocations support has still be added to GCC.  For x86_64, a
-> patch exists:
-> 
->    https://gcc.gnu.org/ml/gcc-patches/2014-05/msg01215.html
-> 
-> Without that, there is still a performance impact.
+> And that's what fails:
+> $ file --mime-type pie
+> pie: application/x-sharedlib
 
-Interesting.
-
-Do you know the state of this? The thread indicates that the poster
-asked for review of his patch and never got one.
-Any gcc people here who could comment?
-
-Do you have numbers on the performance impact? Or some good ideas what
-would be reasonable benchmarking targets?
-As libraries are pic-compiled anyway from my limited understanding I
-think this only affects code in the main executables.
-I saw that chrome already ships pie-binaries, firefox doesn't.
-(Browsers seem like performance critical, so google seems to think it's
-no big performance deal).
-
-
-> > What i found notable: diff-ing two function offsets from different
-> > libraries (I use printf-sin) is alway static, even on Pax. Is this
-> > by design?
-> 
-> Yes, the address you get is the PLT stub, not the actual
-> implementation. The reason for this is somewhat complex, but related
-> to the way lazy binding and symbol interposition are implemented.
-
-"somewhwat complex" seems to be a reasonable description when it comes
-to this whole topic of memory exploit mitigation :-) I feel I'd like to
-know more about this but easy-to-grasp documentation / talks etc. are
-hard to find.
-
+Reported:
+http://bugs.gw.com/view.php?id=404
 
 -- 
 Hanno Böck
