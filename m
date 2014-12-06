@@ -1,49 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/05/7
-Message-ID: <54598E88.5060700@mccme.ru>
-Date: Wed, 05 Nov 2014 05:42:16 +0300
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/13
+Message-ID: <5482D0CB.80903@gmail.com>
+Date: Sat, 06 Dec 2014 10:47:55 +0100
+From: lazytyped <lazytyped@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: strings / libbfd crasher
+Subject: Re: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
-On 2014-11-03 01:43, Alexander Cherepanov wrote:
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17533
->
-> $ printf '!<arch>\n//%48d%8s`\n' -2 '' > test.a
-> $ objdump -x test.a
-> Segmentation fault
->
-> At least 2.22, 2.24 and head are affected. ar, size, strip etc. are also
-> affected.
->
-> valgrind on head shows:
->
-> ==14181== Invalid write of size 8
-> ==14181==    at 0x4C2E467: memset (vg_replace_strmem.c:1094)
-> ==14181==    by 0x448AD2: bfd_zalloc (opncls.c:1011)
-> ==14181==    by 0x43F08A: _bfd_slurp_extended_name_table (archive.c:1298)
-> ==14181==    by 0x43E89B: bfd_generic_archive_p (archive.c:831)
-> ==14181==    by 0x4466A6: bfd_check_format_matches (format.c:305)
-> ==14181==    by 0x407DCD: display_any_bfd (objdump.c:3356)
-> ==14181==    by 0x409F52: display_file (objdump.c:3410)
-> ==14181==    by 0x4048F9: main (objdump.c:3692)
-> ==14181==  Address 0x55fb9a0 is 0 bytes after a block of size 4,064 alloc'd
-> ==14181==    at 0x4C27C20: malloc (vg_replace_malloc.c:296)
-> ==14181==    by 0x4D51DC: objalloc_create (objalloc.c:95)
-> ==14181==    by 0x448177: _bfd_new_bfd (opncls.c:73)
-> ==14181==    by 0x448307: bfd_fopen (opncls.c:197)
-> ==14181==    by 0x409F40: display_file (objdump.c:3403)
-> ==14181==    by 0x4048F9: main (objdump.c:3692)
->
-> This is "Invalid write", hence potentially exploitable? Is further
-> analysis required before deciding if this is a security issue? Or, more
-> strictly, is further analysis required before deciding if this issue is
-> CVE worthy?
+On 06/12/2014 08:22, Shawn wrote:
+> Hi guys,
+> 
+> As you know Hector Marco disclosured a new attack targeting the
+> GNU/Linux mitigation defensive technology earlier this week:
+> http://www.openwall.com/lists/oss-security/2014/12/04/19
+> http://cybersecurity.upv.es/attacks/offset2lib/offset2lib.html
+[...]
+> It seems ASLRv3 is the best option we have? Or anything else?
 
-This is fixed now:
+I think there is quite a bit of sweating on very little.
 
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=bb0d867169d7e9743d229804106a8fbcab7f3b3f
+This attack assumes that the attacker is capable of guessing the load
+address of the PIE binary. It basically already bypassed ASLR. It then
+"notices" that the PIE .text segment is loaded at a fixed offset from
+the shared libraries (BTW: shared libraries are loaded at fixed offsets
+among each others) and mounts a ROP attack using the shared library gadgets.
 
--- 
-Alexander Cherepanov
+This "fixed offset" is IMHO very unlikely to be a security issue, since
+in the vast majority of real life cases, the PIE .text itself will
+already contain enough gadgets to mount the attack.
+
+In other words, one may decide to separate the PIE .text from the rest
+of the libraries .text, but I don't really see much of a security win there.
+
+TL;DR: ASLR is a mitigation, if you have a chance to bruteforce or
+infoleak -one- address from it, the mitigation is gone. Separating the
+PIE .text or even libraries .text between each other won't buy you much.
+
+
+      -  Enrico
+
