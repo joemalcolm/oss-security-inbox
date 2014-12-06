@@ -1,95 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/12/2
-Message-ID: <CAFkuX4sEip+0LFtQnERe9ts-f5M+MZi_sb09AOy2QFngmndtxA@mail.gmail.com>
-Date: Sat, 12 Jul 2014 15:43:08 -0600
-From: "Don A. Bailey" <donb@...uritymouse.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/9
+Message-ID: <54826DC2.6080104@gmail.com>
+Date: Fri, 05 Dec 2014 21:45:22 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: LMS-2014-07-10-1 - CloudFlare GoLang LZ4 Memory Corruption
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+On 05/12/14 07:55 PM, Pavel Labushev wrote:
+> On Fri, 5 Dec 2014 14:15:03 -0800
+> Reed Loden <reed@...dloden.com> wrote:
+> 
+>> For the record, Mozilla tried it several months ago and had to back it out.
+>>
+>> "Nautilus (the file manager) can't open PIE executables, which makes
+>> distributing PIE executable essentially impossible."
+> 
+> Like it's essentially impossible to invoke the target ET_DYN binary via
+> a shell script or an ET_EXEC executable wrapper.
 
-Please find the bug report attached to this email.
+Yup, it's a pretty lame excuse.
 
-Best,
-Don A. Bailey
-Founder / CEO
-Lab Mouse Security
-@InfoSecMouse
-https://www.securitymouse.com/
+Firefox is only looking at using ASLR for the first time in 2014, and it
+lost to supporting the workflow of opening Nautilus, navigating to some
+directory and double-clicking the binary (could just be a wrapper...)
+rather than using the .desktop file (or the CLI, or $LAUNCHER) or
+shipping a script for this.
 
-#############################################################################
-#
-# Lab Mouse Security Report
-# LMS-2014-07-10-1
-#
+It's sad. Even if GNOME decides to add another hack to make this work,
+it'll be 6 months to get it released and another 2-3 years before
+Mozilla considers using it.
 
-Report ID: LMS-2014-07-10-1
+Meanwhile, plenty of other corporations (Valve, Google, [...]) are
+shipping PIE binaries without trouble - their user-facing app launchers
+even have icons, i18n and more in Nautilus, because they're not raw
+binaries.
 
-Researcher Name: Don A. Bailey
-Researcher Organization: Lab Mouse Security
-Researcher Email: donb@...uritymouse.com
-Researcher Website: www.securitymouse.com
 
-Vulnerability Status: Reported
-Vulnerability Embargo: None
-
-Vulnerability Class: Integer Overflow
-Vulnerability Effect: Memory Corruption
-Vulnerability Impact: DoS, OOW, RCE
-Vulnerability DoS Practicality: Practical
-Vulnerability OOW Practicality: Practical
-Vulnerability RCE Practicality: Practical
-Vulnerability Criticality: Critical
-
-Vulnerability Scope:
-All versions of the Cloudflare golz4 package prior to commit
-199f5f7878062ca17a98e079f2dbe1205e2ed898 on github. There are no tags
-or releases for this software package, so master must be used, or
-a branch past the above commit id.
-
-32bit variants of the package are critically affected.
-64bit variants are deemed infeasible to exploit at this time, but still
-affected by the vulnerability.
-
-Lab Mouse Security has engineered reliable RCE payloads for test applications
-that use golz4, but a "one-shot" exploit against golz4 is not currently
-possible due to the memory layout of GoLang.
-
-Criticality Reasoning
----------------------
-Due to the way GoLang manages objects memory, there are multiple ways to
-craft a reliable exploit against golz4 that will allow for RCE. It is
-notable that Don A. Bailey designed his exploit to meet the following
-conditions:
- - bypasses ASLR
- - bypasses NX
- - portable to any target architecture (tested on 32bit: ARM, x86)
-
-Against applications that the user does not have the source code for, a
-corresponding memory disclosure vulnerability must be used to accurately
-craft a malicious RCE payload.
-
-DoS or OOW is always reliable with this exploit.
-
-Vulnerability Description
--------------------------
-An integer overflow can occur when processing any variant of a "literal run"
-in the affected function. When certain payloads are processed, a pointer to
-an output buffer can be set to an address outside of the output buffer. Since
-the attacker can specify exact offsets in memory, it is very easy to create
-a reliable RCE exploit.
-
-LZ4_uncompress as well as LZ4_decompress_safe are vulnerable for LZ4 Core
-releases prior to r119. LZ4_decompress_safe in releases for r119 and later
-are still vulnerable on 64bit platforms, but considered not feasible or
-practical to exploit - at this time.
-
-Vulnerability Resolution
-------------------------
-Resolved.
-
-References
-----------https://github.com/cloudflare/golz4/commit/2dcef6a6aeec3ad36816c726fb1386460d27a466https://github.com/cloudflare/golz4/commit/199f5f7878062ca17a98e079f2dbe1205e2ed898
-http://blog.securitymouse.com/2014/07/bla-bla-lz4-bla-bla-golang-or-whatever.htmlhttp://blog.securitymouse.com/2014/07/i-was-wrong-proving-lz4-exploitable.htmlhttp://blog.securitymouse.com/2014/07/the-lz4-two-hour-challenge.html
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
