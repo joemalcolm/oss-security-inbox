@@ -1,91 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/01/2
-Message-Id: <201403011944.s21Jiobo008522@linus.mitre.org>
-Date: Sat, 1 Mar 2014 14:44:50 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE requests: MediaWiki 1.22.3, 1.21.6 and 1.19.12 release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/1
+Message-ID: <20141206014431.618d92df@pc>
+Date: Sat, 6 Dec 2014 01:44:31 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, 05 Dec 2014 17:43:44 -0500
+Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
 
-> http://lists.wikimedia.org/pipermail/mediawiki-announce/2014-February/000141.html
-
-> https://bugzilla.redhat.com/show_bug.cgi?id=1071135
+> i couldn't find a reference to this in the nautilus bugtracker, so i
+> just posted:
 > 
-> * (bug 60771) SECURITY: Disallow uploading SVG files using non-whitelisted
->    namespaces.
+>  https://bugzilla.gnome.org/show_bug.cgi?id=741183
 
-> An attacker could perform cross-site scripting attacks by uploading 
-> crafted SVG images.
-> 
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=60771
-> https://gerrit.wikimedia.org/r/#/q/7d923a6b53f7fbcb0cbc3a19797d741bf6f440eb,n,z
+I tried to dig into this a bit. I'm not really sure, but based on the
+output I assume nautilus is relying on file or libmagic to assess the
+file type.
 
-Use CVE-2014-2242. The root cause is, roughly, "does not block unsafe
-namespaces such as a W3C XHTML namespace." This qualifies for a CVE
-because there is known client software that uses this namespace in a
-way that results in XSS. MediaWiki is obviously free to make an
-announcement of a security fix for this type of issue, independent of
-the question of who is at fault for the underlying problem.
-
-> Also disallow iframe elements.
-
-There is no CVE assignment for this change because there is no known
-client software that uses any of the $validNamespaces namespaces in a
-way that results in XSS. A third party who "owns" one of these
-namespaces, or anyone else, could modify its role tomorrow and (for
-example) release a browser extension that's vulnerable to this IFRAME
-XSS attack when the namespace is used. However, defending against that
-is essentially the same as defending against any other attack
-requiring not-known-to-exist client software. It can only be
-interpreted as security hardening. For example, MediaWiki conceivably
-could validate uploaded .jpg files by looking for photos of the word
-"IFRAME" because, well, you can't be too careful.
+And that's what fails:
+$ file --mime-type pie
+pie: application/x-sharedlib
 
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1071136
-> 
-> * (bug 61346) SECURITY: Make token comparison use constant time. It 
->    seems like our token comparison would be vulnerable to timing attacks.
->    This will take constant time.
-> 
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=61346
-> https://gerrit.wikimedia.org/r/#/q/I2a9e89120f7092015495e638c6fa9f67adc9b84f,n,z
+It seems there is no really easy way to separate executables from
+shared libraries and whether this should be considered a bug in
+file/libmagic. The only thing I quickly found that would be possible is
+searching if a SONAME is present. libmagic uses some "magic" file
+format to parse files, I don't know if that's capable of such complex
+parsing.
 
-Use CVE-2014-2243. Bug 61346 comments 9 and 10 are not currently being
-considered a vulnerability report -- the statements in comments 9 and
-10 are not within the scope of CVE-2014-2243, nor do they have a
-separate CVE ID.
+(oh, btw, this is one more reason to wipe out potential security bugs
+in file...)
 
+-- 
+Hanno Böck
+http://hboeck.de/
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1071139
-> 
-> * (bug 61362) SECURITY: API: Don't find links in the middle of api.php 
->   links.
-> 
-> An attacker could perform cross-site scripting attacks.
-> 
-> https://bugzilla.wikimedia.org/show_bug.cgi?id=61362
-> https://gerrit.wikimedia.org/r/#/q/Idf985e4e69c2f11778a8a90503914678441cb3fb,n,z
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Use CVE-2014-2244.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTEjfBAAoJEKllVAevmvmsgd8H+wbUsWZxxFEOD0ExHKbjjU3v
-6+iifxcMY3q3k+0xcF4gEm9kByJNefyzQu8tZnazzEZb3o8S5xZ5pSkAEOI1A2qJ
-jzChB9qhF+7mD8lOoMThtYslH+PcU0fkgwlDEGDpKTvYVXASkRNl6IEhsycYZ9n6
-S6HZLBHUBq6OOUnhuVixkB5RXUrb8iRZgapfWQ40HRZnIubxREvbIlMcjMTYiqOg
-u0iBLUa9mrDKJUqjcZVRxx8PBCvMJg9/eLV3N1E9ZyBCTXZTPV6jARrzgNyXGT/y
-HnTJGxFFYcQw6wkBHKNFzKtK4NQY9TgitnL6TggLNBeKiAM6Sle7Y6dvPwB1g6w=
-=pxGY
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
