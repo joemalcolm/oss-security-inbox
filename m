@@ -1,45 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/18/11
-Message-ID: <1353327014.45829916.1413657848837.JavaMail.zimbra@t3sec.info>
-Date: Sat, 18 Oct 2014 20:44:08 +0200 (CEST)
-From: Marcus Krause <marcus@...ec.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/8
+Message-ID: <54826CAA.6040509@gmail.com>
+Date: Fri, 05 Dec 2014 21:40:42 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE request: TYPO3-EXT-SA-2014-014 and TYPO3-EXT-SA-2014-015
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-Dears,
-
-some information for clarification:
-
------ Original Message -----
-> > TYPO3-EXT-SA-2014-015
-> > [...]
+On 05/12/14 09:23 PM, Reed Loden wrote:
+> On Fri, Dec 5, 2014 at 4:59 PM, Daniel Micay <danielmicay@...il.com> wrote:
 > 
-> Use CVE-2014-8328.
-> [...]
-> This is within the scope of CVE because TYPO3 has published a Security
-> Bulletin indicating that it's a vulnerability from their perspective.
-> [...]
-> As always, a vendor is allowed to announce this type of previously
-> default intentional behavior as a vulnerability; it's just somewhat
-> unusual to do so.
+>>
+>> I don't really see how this would prevent Mozilla from shipping a
+>> browser with ASLR. The Tor browser has been shipping a fork of Firefox
+>> built as a position independent executable for ages. It doesn't impact
+>> users because they're either starting it via a .desktop file or the
+>> command-line.
+>>
+>> The support for desktop icons in Nautilus is deprecated / disabled by
+>> default with only a hidden dconf preference to enable it. If you really
+>> want to support the workflow of opening up the file manager, navigating
+>> to the binary and double-clicking it then using a wrapper script is a
+>> quite obvious solution.
+>>
+> 
+> Obviously, some users are running into it (
+> https://bugzilla.mozilla.org/show_bug.cgi?id=1076892), or it wouldn't have
+> had to be backed out.
+> 
+> ~reed
 
-TYPO3 CMS Core already provides such update check. This is either triggered
-manually or automatically on regular bases (cron like).
+So why can't you hide away the binary and drop a script or desktop file
+in that directory instead? A desktop file would also provide a better
+user experience if unpacking it and using it directly from that
+directory via a file manager is something you want to support.
 
-This works by retrieving a complete dataset of available third-party plugins
-and their versions from typo3.org infrastructure. Then a TYPO3 CMS installation
-on its own determines whether an update is available. So the only information
-is the request for such dataset file (exposing remote IP address).
+You would be even better off making it a self-extracting archive,
+dropping itself into $XDG_DATA_HOME / ~/.local/share like Steam (which
+uses PIE...), and generating a desktop file to run it. There's no icon
+or any other GUI niceties for the raw executable.
 
-An update check in an extension is unnecessary and not an expected behaviour;
-especially when it reports additional environment data and communicates with 
-third-party infrastructure.
+It's not the usual / supported way of doing things, so it's really not
+surprising that it depends on a libmagic/file hack that doesn't work on
+any security aware native executables. There is no shortage of projects
+that have been enabling full ASLR for nearly a decade. The reason that
+this is an issue for you isn't because PIE isn't well supported.
 
 
-Regards,
-Marcus Krause.
-
--- 
-Member TYPO3 Security Team
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
