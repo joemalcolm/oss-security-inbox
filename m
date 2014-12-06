@@ -1,52 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/26
-Message-ID: <20140626202820.GA24972@openwall.com>
-Date: Fri, 27 Jun 2014 00:28:20 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/11
+Message-ID: <54827F81.9020708@gmail.com>
+Date: Fri, 05 Dec 2014 23:01:05 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: LMS-2014-06-16-1: Oberhumer LZO
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 26, 2014 at 12:51:32PM -0600, Don A. Bailey wrote:
-> This is to inform you of a security flaw in the Oberhumer LZO algorithm,
-> typically packaged as liblzo2 or lzo-2. Please read the bug report inline.
+On 05/12/14 10:41 PM, Seth Arnold wrote:
+> On Sat, Dec 06, 2014 at 01:44:31AM +0100, Hanno Böck wrote:
+>
+> A far better mechanism in Nautilus would be to use execve(2) on the
+> pathname and see if it executes. Nautilus will never be good at guessing
+> which files are actually executable on a given system and it is ridiculous
+> for it to try to guess. It should just execute the selected file and if
+> that fails, report the failure to the user.
+> 
+> One goofy filemanager doing something silly ought not stop Mozilla from
+> shipping a safer Firefox.
+> 
+> Thanks
 
-Thank you for posting this and the other 5 bug reports.  I think it's
-also helpful to link to your blog post:
+Desktop files already work fine, so why fix what's not broken? I don't
+think it should fall back to executing stuff at all. TBH, inspecting
+file content rather than the Windows / OS X method of relying on the
+file extension is quite surprising for a GUI file manager.
 
-"Raising Lazarus - The 20 Year Old Bug that Went to Mars"
-http://blog.securitymouse.com/2014/06/raising-lazarus-20-year-old-bug-that.html
+Everything is executable (by default) on FAT32/NTFS and you'll run into
+fun surprises when there aren't proper shebangs. For example, a Python
+module beginning with "import math" attempts to run the imagemagick
+import command and grabs onto your mouse cursor. I don't even want to
+begin thinking about the security implications of passing everything
+through libmagic (ugh) and then opening it in an application *based on
+the file content*, which is essentially opaque to the user.
 
-Don brought these issues to the distros list at "Mon Jun 23 16:57 UTC",
-and they were already being patched by some of the affected projects at
-the time - thus, (semi?)-public.  We argued for a while whether it's
-appropriate to wait for more of the projects to have patches ready, or
-to post to oss-security and other high-visibility places right away.
-Initially, I asked that the issues be posted at least to oss-security,
-as per distros list policy for public disclosure, within 24 hours.
-However, as we know there ended up being a 4 day delay.  While this time
-wasn't "wasted" - more patches were being produced, and Yves-Alexis
-Perez of Debian came up with a lengthy list of projects that have the
-affected code embedded - I do acknowledge that it's a violation of the
-distros list policy, and I apologize for it.
 
-I'd appreciate guidance from the oss-security community on how to deal
-with such cases going forward: the person reporting a vulnerability
-willing to wait for more projects to have it patched vs. the already
-(semi?)-public nature of the vulnerability via commits, etc. by some of
-the projects.  Is letting the vulnerability stay in the limbo for 4 days
-acceptable, or is it too much?  My initial gut feeling was "24 hours
-max", which I communicated to Don and to distros list, but as we can see
-actual disclosure occurred 4 days later.  (I did send a ping earlier
-today, but I think the disclosure would have been today anyway.)  Should
-I have pushed harder?  Should I have posted to oss-security myself (as a
-BOFH list admin enforcing a policy), overriding others' preferences and
-reasoning?
-
-Yves-Alexis, can you please post that lengthy list in here?  Having it
-available right away would be partial justification/excuse for the
-delay in disclosing these issues appropriately. ;-)
-
-Thanks,
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
