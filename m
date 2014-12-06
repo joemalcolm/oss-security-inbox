@@ -1,77 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/03/19
-Message-Id: <201402032028.s13KSO3q008461@linus.mitre.org>
-Date: Mon, 3 Feb 2014 15:28:24 -0500 (EST)
-From: cve-assign@...re.org
-To: mcarpenter@...e.fr
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: enlightenment sysactions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/12
+Message-ID: <CABniQZOSr4yQumROAoZ-4hDNhEPpYgMvwTbesrFU79rCg3RkRA@mail.gmail.com>
+Date: Sat, 6 Dec 2014 15:22:58 +0800
+From: Shawn <citypw@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi guys,
 
-> Red Hat Security suggested I request a CVE here since this potentially
-> effects multiple distros/maintainers.
+As you know Hector Marco disclosured a new attack targeting the
+GNU/Linux mitigation defensive technology earlier this week:
+http://www.openwall.com/lists/oss-security/2014/12/04/19
+http://cybersecurity.upv.es/attacks/offset2lib/offset2lib.html
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1059410
+Paper & slide:
+http://cybersecurity.upv.es/attacks/offset2lib/offset2lib-presentation.pdf
 
-> These aren't security flaws, precisely, due to some of the other
-> defaults that Fedora has that other distros/vendors may not, but
-> upstream recently did some hardening to the defaults they provide (and
-> we don't change) based on Martin Carpenter's report.
+http://cybersecurity.upv.es/attacks/offset2lib/offset2lib-paper.pdf
 
-No one from another distribution responded with specific details that were
-different from this "aren't security flaws, precisely" statement.
-So, we will make the CVE assignments on the basis of the original report.
+Hector provides 3 possible solutions:
 
-> The Enlightenment window manager (enlightenment.org) was found to ship
-> with (a) a setuid root helper that did not effectively sanitize its
-> environment and (b) a weak default configuration. Users in select
-> groups could exploit this to execute arbitrary programs as root.
+1, Use Grsecurity/PaX. Afaik, Gentoo and Debian Mempo has long-term
+maintainence for Grsecurity/PaX patch. But the Grsecurity/PaX is not
+party of linux kernel mainline that'd be a problem to the most
+distros. I think linux kernel upstream won't accept PaX patch only
+because of this *kind* of issue.
 
-> add more environment variables to nuke and add alternate envrionment
-> nuke method to raise security level.
+2, ASLRv3? Hector Marco( the dude who disclosured offset2lib attack)
+sent a patch to the upstream:
+https://lkml.org/lkml/2014/12/4/839
 
->  1. clear out environment as best is possible before executing
->     anything. especially PATH and IFS are set to minimal base defaults.
->     also use clearenv() if available and unsetenv()
+Even the upstream don't accept the patch, is this possible to backport
+it & maintain it for distro community?
 
-Use CVE-2014-1845 for this issue in which the environment isn't
-properly restricted.
+3, RenewSSP? IMOHO, this is a solution for the way of exploit like:
+http://phrack.org/archives/issues/67/13.txt
 
+It'd be workaround for another mitigation to prevent offset2lib attack
+though. But the authors of RenewSSP don't even send a patch to GCC
+community yet. At least I can't search anything about RenewSSP in GCC
+ml.
 
-> 2. remove gdb method as it's just too dangerous. run it as normal as
->    the user and if the kernel / distro dny that - then sorry. too bad.
-
-Use CVE-2014-1846 for this issue in which gdb is available unsafely in
-the unpatched codebase.
+It seems ASLRv3 is the best option we have? Or anything else?
 
 
-In this interpretation, "and (b) a weak default configuration. Users
-in select groups could exploit this to execute arbitrary programs as
-root" means that at least one not-equivalent-to-root user is able to
-execute the helper program. In other words, it is not an independent
-vulnerability.
+-- 
+GNU powered it...
+GPL protect it...
+God blessing it...
 
-A specific Linux distribution might, for example, have an
-implementation error in determining who is allowed to execute the
-helper program. If anything like that is reported, additional CVE
-assignments would be possible.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS7/sjAAoJEKllVAevmvmsEo4H/3HyolVbgVNo1tMqauZkBaNB
-lEusuivKLl1J0gn5dpWpFIur1DmQIyceg1cyCghW0IWzJRCK2y4a1OSQw3syQUie
-HUY3iHgeogwYBKwFAZfB9+Z+uIN4rgqOFIJJksQEh/02g//f7scVIuG+dY7/eW3T
-ZjyaFZzt/UeleHJXD9bXTFSHe0YkEuyGCGSrXptW+q9qZaNSfHZlJ1umH9VWMNN/
-sAr4HFQ8n1Dk+fzdYlIL1UpSFaAYq41bm0dzBJr4RNL9VO9xc8mNvwCvmBFtUvMu
-qKQ+XbxGl+8gvslLQHC1GV/YbuhzdLOj7yMAvr2aqagmHHiFbK4+tYmqlIn1BKY=
-=Ft+z
------END PGP SIGNATURE-----
+regards
+Shawn
