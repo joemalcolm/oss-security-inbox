@@ -1,46 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/20/2
-Message-ID: <53F4217A.203@redhat.com>
-Date: Wed, 20 Aug 2014 14:18:02 +1000
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/18
+Message-ID: <20141206212300.447ef496@pc>
+Date: Sat, 6 Dec 2014 21:23:00 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-3596 - Apache Axis 1 vulnerable to MITM attack
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-Hi All
+On Sat, 6 Dec 2014 01:44:31 +0100
+Hanno Böck <hanno@...eck.de> wrote:
 
-I noticed that the fix for CVE-2012-5784 was incomplete. The code added 
-to check that the server hostname matches the domain name in the 
-subject's CN field was flawed. This can be exploited by a 
-Man-in-the-middle (MITM) attack where the attacker can spoof a valid 
-certificate using a specially crafted subject.
+> On Fri, 05 Dec 2014 17:43:44 -0500
+> Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
+> 
+> > i couldn't find a reference to this in the nautilus bugtracker, so i
+> > just posted:
+> > 
+> >  https://bugzilla.gnome.org/show_bug.cgi?id=741183
 
-Note that Axis 1 is EOL upstream, and the incomplete patch for 
-CVE-2012-5784 was never merged upstream. It was, however, shipped by 
-various vendors, including Debian and Red Hat. I do not believe Axis 2 
-is affected.
+For the record:
+konqueror is affected by exactly the same issue.
 
-The incomplete patch:
+It really seems the way to fix this is to fix file/libmagic.
 
-https://issues.apache.org/jira/secure/attachment/12560257/CVE-2012-5784-2.patch
+-- 
+Hanno Böck
+http://hboeck.de/
 
-Is attached to this issue:
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-https://issues.apache.org/jira/browse/AXIS-2883
-
-The flaw exists in the getCN(String) method. An attacker could craft a 
-subject that includes a CN in a field other than the CN, and this CN 
-would be used when validating the hostname.
-
-Since Axis 1 is EOL upstream, I have assigned CVE-2014-3596 to this 
-issue from the Red Hat CNA. I have now made this issue public:
-
-https://access.redhat.com/security/cve/CVE-2014-3596
-
-An upstream bug, along with a proposed patch, is available here:
-
-https://issues.apache.org/jira/browse/AXIS-2905
-
-Thanks
---
-David Jorm / Red Hat Product Security
+Content of type "application/pgp-signature" skipped
