@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/4
-Message-ID: <20140901194358.GA17700@zoho.com>
-Date: Mon, 1 Sep 2014 19:43:58 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/16
+Message-ID: <20141206153527.GA28777@kroah.com>
+Date: Sat, 6 Dec 2014 07:35:27 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: Werner Koch <wk@...pg.org>, pkg-gnupg-maint@...ts.alioth.debian.org
-Subject: Re: gpg blindly imports keys from keyserver responses
+Subject: Re: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 01, 2014 at 08:41:10PM +0200, Kristian Fiskerstrand wrote:
+On Sat, Dec 06, 2014 at 03:22:58PM +0800, Shawn wrote:
 > 
-> My personal opinion is this is expected behavior as the keyservers are
-> not trusted, and as you point out above, there are proper measures
-> that should be used that invalidate this as an attack vector, i.e. by
-> performing proper key verification.
+> 2, ASLRv3? Hector Marco( the dude who disclosured offset2lib attack)
+> sent a patch to the upstream:
+> https://lkml.org/lkml/2014/12/4/839
+> 
+> Even the upstream don't accept the patch, is this possible to backport
+> it & maintain it for distro community?
 
-Hi.
+Upstream asked for some basic fixes to the patch (i.e. it wasn't
+submitted in the needed format) before it could accept it, so I doubt
+it's rejected yet.
 
-Isn't it the opposite? Were key servers fully trusted I'd agree
-"expected behavior" would be to blindly import the server's reply.
+And of course a distro could backport and maintain it, it's a very tiny
+patch, much smaller than what they normall backport.  Take it up with
+the distros if you want this.
 
-However, the lack of trustworthiness of keyservers is precisely why the
-check is relevant.
+thanks,
 
-Note: it is not being suggested this check be considered a replacement
-for full key verification. But, it is not unreasonable for a user to
-expect when instructing gpg to import a key with FP 0xf00 that the gpg
-binary is indeed importing a key with FP 0xf00.
-
---mancha
-
-PS Thijs' email signature verified for me using mutt. What is your email
-client-side configuration?
-
-
-Content of type "application/pgp-signature" skipped
+greg k-h
