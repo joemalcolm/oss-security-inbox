@@ -1,40 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/10
-Message-ID: <1403012214.16844.111.camel@kazak.uk.xensource.com>
-Date: Tue, 17 Jun 2014 14:36:54 +0100
-From: Ian Campbell <Ian.Campbell@...rix.com>
-To: Andres Lagar Cavilla <andres@...arcavilla.org>
-CC: <xen-devel@...ts.xen.org>, <security@....org>, <xen-announce@...ts.xen.org>, <oss-security@...ts.openwall.com>
-Subject: Re: Xen Security Advisory 99 - unexpected pitfall in xenaccess API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/6
+Message-ID: <54825C4F.3090300@gmail.com>
+Date: Fri, 05 Dec 2014 20:30:55 -0500
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2014-06-17 at 06:13 -0700, Andres Lagar Cavilla wrote:
+On 05/12/14 08:18 PM, Andy Lutomirski wrote:
+> On 12/05/2014 04:44 PM, Hanno Böck wrote:
+>> On Fri, 05 Dec 2014 17:43:44 -0500
+>> Daniel Kahn Gillmor <dkg-QLrU/DhXBlmnlhUoGqYIEF6hYfS7NtTn@...lic.gmane.org> wrote:
+>>
+>>> i couldn't find a reference to this in the nautilus bugtracker, so i
+>>> just posted:
+>>>
+>>>  https://bugzilla.gnome.org/show_bug.cgi?id=741183
+>>
+>> I tried to dig into this a bit. I'm not really sure, but based on the
+>> output I assume nautilus is relying on file or libmagic to assess the
+>> file type.
+>>
+>> And that's what fails:
+>> $ file --mime-type pie
+>> pie: application/x-sharedlib
+>>
+>>
+>> It seems there is no really easy way to separate executables from
+>> shared libraries and whether this should be considered a bug in
+>> file/libmagic. The only thing I quickly found that would be possible is
+>> searching if a SONAME is present. libmagic uses some "magic" file
+>> format to parse files, I don't know if that's capable of such complex
+>> parsing.
+>>
+> 
+> Why does gcc and/or ld write a non-zero entry point?  If they didn't,
+> that would be an easy way to check.
+> 
+> --Andy
 
-> But fundamentally, how is this a vulnerability? Since the dawn of time
-> guests can poke at the qemu and PV frontend rings. So self DoS, check.
-> But, privilege escalation?
+There are some libraries like glibc's /usr/lib/libc.so.6 with valid
+entry points, so file would still have trouble disambiguating that way.
 
-PV frontend rings have an endpoint in the guest, but by contrast the
-xenaccess ring is supposed to have its endpoint in Xen, having a guest
-able to poke at it therefore requires additional consideration and
-thought.
-
-> Is this predicated on the potential (lack of) software quality of the
-> xenaccess backends? That's a fair argument, but a different story.
-
-An attacker who can poke at this particular ring can cause the xenaccess
-backend's view of the world to become different from the actual state of
-things within Xen, by virtue of injecting events for which Xen has not
-made the appropriate state change.
-
-For instance imagine a xenaccess who was trying to enforce W^X but was
-being fed false information by the guest about writing/executing pages
-which did not correspond to actual changes being made in the p2m.
-
-For qemu there is no Xen side state, so all a guest can do with ring
-access here is to perform emulated I/O which it could otherwise have
-achieved by doing the I/O.
-
-Ian.
+I don't really think this is a problem for libmagic/file to solve, if
+it's really a problem at all. Nautilus could just remove support for
+executing traditional executables too... using CLI utilities that way
+isn't going to work out and GUI ones have desktop files.
 
 
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
