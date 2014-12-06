@@ -1,38 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/01/3
-Message-ID: <20140501024310.GB24590@openwall.com>
-Date: Thu, 1 May 2014 06:43:10 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com, Andy Lutomirski <luto@...capital.net>
-Subject: Re: local privilege escalation due to capng_lock as used in seunshare
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/10
+Message-ID: <20141206034103.GA25116@hunt>
+Date: Fri, 5 Dec 2014 19:41:04 -0800
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Apr 30, 2014 at 09:27:10PM -0400, Steve Grubb wrote:
-> And switching to NO_NEW_PRIVS broke the sandbox:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1091761
+On Sat, Dec 06, 2014 at 01:44:31AM +0100, Hanno Böck wrote:
+> >  https://bugzilla.gnome.org/show_bug.cgi?id=741183
 > 
-> So, perhaps fixing SECURE_NOROOT is the safest bet? Are there any other 
-> opinions on this?
+> I tried to dig into this a bit. I'm not really sure, but based on the
+> output I assume nautilus is relying on file or libmagic to assess the
+> file type.
+> 
+> And that's what fails:
+> $ file --mime-type pie
+> pie: application/x-sharedlib
+> 
+> 
+> It seems there is no really easy way to separate executables from
+> shared libraries and whether this should be considered a bug in
+> file/libmagic. The only thing I quickly found that would be possible is
+> searching if a SONAME is present. libmagic uses some "magic" file
+> format to parse files, I don't know if that's capable of such complex
+> parsing.
 
-If SECURE_NOROOT is meant to be usable to run entire Linux distros
-(whether "on host" or/and "in containers"), then it must not have an
-effect of excluding UID 0 from "appropriate privileges" for setuid(2).
+A far better mechanism in Nautilus would be to use execve(2) on the
+pathname and see if it executes. Nautilus will never be good at guessing
+which files are actually executable on a given system and it is ridiculous
+for it to try to guess. It should just execute the selected file and if
+that fails, report the failure to the user.
 
-Do we know reliably that in this case excluding UID 0 from "appropriate
-privileges" for setuid(2) was an effect specifically of SECURE_NOROOT?
-If so, yes, it sounds like it needs to be fixed, and this detail needs
-to be documented.
+One goofy filemanager doing something silly ought not stop Mozilla from
+shipping a safer Firefox.
 
-Do any implementations of containers, such as LXC, rely on
-SECURE_NOROOT?  If so, it sounds like they might have extra local root
-vulnerabilities (for in-container user to in-container root) as a result
-of this issue.
+Thanks
 
-I also suggest that distros don't make things like seunshare available
-to non-administrator users by default, because these expand the attack
-surface even if an attempt is made to make them safe.  Only a subset of
-systems will benefit from having this functionality exposed by default,
-whereas all systems will suffer from the expanded attack surface.
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
