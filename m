@@ -1,33 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/9
-Message-ID: <537BB187.1040606@canonical.com>
-Date: Tue, 20 May 2014 15:48:23 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/17
+Message-ID: <CAOp4FwRL3xC2O=ApGOZTEk2Cr7QGaU0ZytEupHmCgLjRo6Vf_Q@mail.gmail.com>
+Date: Sat, 6 Dec 2014 20:48:04 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: dovecot denial of service
+Subject: Re: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
-On 14-05-20 03:32 PM, Yves-Alexis Perez wrote:
-> Hi,
-> 
-> we were made aware of a recently fixed DoS vulnerability in Dovecot,
-> which doesn't seem to have a CVE id assigned:
-> 
-> http://dovecot.org/list/dovecot-news/2014-May/000273.html
-> 
-> states:
-> 
-> * Fixed a DoS attack against imap/pop3-login processes. If SSL/TLS
->   handshake was started but wasn't finished, the login process
->   attempted to eventually forcibly disconnect the client, but failed
->   to do it correctly. This could have left the connections hanging
->   arond for a long time. (Affected Dovecot v1.1+)
-> 
-> Could a CVE be assigned for this vulnerability?
-> 
+On Sat, Dec 6, 2014 at 7:35 PM, Greg KH <greg@...ah.com> wrote:
+> On Sat, Dec 06, 2014 at 03:22:58PM +0800, Shawn wrote:
+>>
+>> 2, ASLRv3? Hector Marco( the dude who disclosured offset2lib attack)
+>> sent a patch to the upstream:
+>> https://lkml.org/lkml/2014/12/4/839
+>>
+>> Even the upstream don't accept the patch, is this possible to backport
+>> it & maintain it for distro community?
+>
+> Upstream asked for some basic fixes to the patch (i.e. it wasn't
+> submitted in the needed format) before it could accept it, so I doubt
+> it's rejected yet.
+>
+> And of course a distro could backport and maintain it, it's a very tiny
+> patch, much smaller than what they normall backport.  Take it up with
+> the distros if you want this.
+>
 
-Isn't that CVE-2014-3430?
+Going through the LKML mailing discussion, it seems that there's
+interest in improving the diff according to the comment by Andy.
 
-Marc.
+There also seems to be concern with 32-bit architectures.
 
 
+
+
+> thanks,
+>
+> greg k-h
+
+
+
+-- 
+This message is strictly personal and the opinions expressed do not
+represent those of my employers, either past or present.
