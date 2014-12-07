@@ -1,51 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/12/3
-Message-ID: <5399FA3D.1050507@enovance.com>
-Date: Thu, 12 Jun 2014 15:06:37 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/7
+Message-ID: <20141207193127.GA2095@hurricane.linuxnetz.de>
+Date: Sun, 7 Dec 2014 20:31:27 +0100
+From: Robert Scheck <robert@...oraproject.org>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-018] Keystone privilege escalation through trust chained delegation (CVE-2014-3476)
+Subject: Re: postgresql: pg_dump creates world-readable dump
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-018
-CVE: CVE-2014-3476
-Date: June 12, 2014
-Title: Keystone privilege escalation through trust chained delegation
-Reporter: Steven Hardy (Red Hat)
-Products: Keystone
-Versions: up to 2013.2.3, and 2014.1 to 2014.1.1
+Hello Agostino,
 
-Description:
-Steven Hardy from Red Hat reported a vulnerability in Keystone chained
-delegation. By creating a delegation from a trust or OAuth token, a
-trustee may abuse the identity impersonation against keystone and
-circumvent the enforced scope, resulting in potential elevated
-privileges to any of the trustor's projects and or roles. All Keystone
-deployments configured to enable trusts are affected, which has been the
-default since Grizzly.
+On Sun, 07 Dec 2014, Agostino Sarubbo wrote:
+> I just discovered that pg_dump creates the database dump with world readable 
+> permission (644 to be exactly).
 
-Juno (development branch) fix:
-https://review.openstack.org/99687
+I think you got tricked by either umask or an existing file that was
+already created with other permissions before, because here it looks
+like this:
 
-Icehouse fix:
-https://review.openstack.org/99700
+$ pg_dump --version
+pg_dump (PostgreSQL) 9.3.5
+$
 
-Havana fix:
-https://review.openstack.org/99703
+$ umask 
+0022
+$ pg_dump postgres > postgres1.sql
+$ ls -l postgres1.sql
+-rw-r--r--. 1 postgres postgres 902 Dec  7 20:17 postgres1.sql
+$ 
 
-Notes:
-This fix will be included in the Juno-2 development milestone and in
-future 2013.2.4 and 2014.1.2 releases.
+$ umask 0077
+$ umask 
+0077
+$ pg_dump postgres > postgres2.sql
+$ ls -l postgres2.sql
+-rw-------. 1 postgres postgres 902 Dec  7 20:17 postgres2.sql
+$ 
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3476
-https://launchpad.net/bugs/1324592
+But: 
 
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+$ touch postgres3.sql
+$ chmod 644 postgres3.sql
+$ pg_dump postgres > postgres3.sql
+$ ls -l postgres3.sql
+-rw-r--r--. 1 postgres postgres 902 Dec  7 20:17 postgres3.sql
+$
 
+> In my opinion it deserves a cve.
 
+I do not know which behaviour you are exactly seeing (and for which
+version of PostgreSQL) but above seems absolutely fine to me.
 
+Robert
 
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+Content of type "application/pgp-signature" skipped
