@@ -1,132 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/19/1
-Message-ID: <537961D3.5010907@moodle.com>
-Date: Mon, 19 May 2014 09:43:47 +0800
-From: Michael de Raadt <michaeld@...dle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/10
+Message-ID: <20141207194455.GB27260@kroah.com>
+Date: Sun, 7 Dec 2014 11:44:55 -0800
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Moodle security notifications public
+Subject: Re: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, Dec 07, 2014 at 10:43:17PM +0800, Shawn wrote:
+> Hi Lionel,
+> 
+> Thanks for your extraordinary explanation about Grsec/PaX. I'm a big
+> fan of Grsec/PaX. But I think compare the ASLR implementation of
+> vallina kernel with Grsecurity/PaX is not fair. Linux upstream doesn't
+> hold the security-oriented philosophy, while Grsecurity/PaX community
+> are expertise of system-lvl security.
 
-The following security notifications are now public after release.
+Ok, do you seriously think this?  If so, please provide details as to
+why you feel this way.  The Linux kernel developers take security very
+seriously, otherwise no one would be using Linux for "secure" systems,
+right?
 
-Thanks to OSS members for their continued cooperation.
+> Developer/users could take bear of 5%-10% performance penalty caused
+> by new features, but I don't think most developers/users would accept
+> even 1% performance penalty caused by security defensive mitigation.
+> Personally, I hope we could see Grsecurity/PaX being part of mainline
+> linux kernel in the future.
 
-=======================================================================
-MSA-14-0014: Cross-site request forgery possible in Assignment
+Great, please do the work to split it up and submit it to be merged,
+that would be a wonderful thing for you to do if you think the features
+there are needed.
 
-Description:       Session checking was not being performed correctly
-                   in Assignment's quick-grading, allowing forged
-                   requests to be made unknowingly by authenticated
-                   users.
-Issue summary:     Cross-Site Request Forgery
-Severity/Risk:     Serious
-Versions affected: 2.6 to 2.6.2, 2.5 to 2.5.5, 2.4 to 2.4.9 and
-                   earlier unsupported versions
-Versions fixed:    2.7, 2.6.3, 2.5.6 and 2.4.10
-Reported by:       Gerry Hall
-Issue no.:         MDL-44606
-CVE identifier:    CVE-2014-0213
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-44606
+> IMOHO, offset2lib is a very critical impact to the GNU/Linux
+> mitigation. What if the bad buys already have some 0day vulns? This
+> will make their work so much easier to write massive exploit. Hope
+> upstream could patch this issue as quickly as possible. Plz don't let
+> this work to the burden of GNU/Linux distro community.
 
-=======================================================================
-MSA-14-0015: Web service token expiry issue for MoodleMobile
+What exactly do you mean here?  The fact that this option isn't enabled
+by lots of distros already means that there isn't much of an issue,
+right?
 
-Description:       MoodleMobile web service tokens were not expiring.
-Issue summary:     Tokens created automatically in login/token.php are
-                   valid forever
-Severity/Risk:     Minor
-Versions affected: 2.6 to 2.6.2, 2.5 to 2.5.5, 2.4 to 2.4.9 and
-                   earlier unsupported versions
-Versions fixed:    2.7, 2.6.3, 2.5.6 and 2.4.10
-Reported by:       Juan Leyva
-Issue no.:         MDL-43119
-CVE identifier:    CVE-2014-0214
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-43119
+thanks,
 
-=======================================================================
-MSA-14-0016: Anonymous student identity revealed in assignment
-
-Description:       Some student details were included in assignment
-                   marking pages and would have been revealed to
-                   screen readers or through code inspection.
-Issue summary:     Blind marking reveals identities to screen readers
-Severity/Risk:     Minor
-Versions affected: 2.6 to 2.6.2, 2.5 to 2.5.5, 2.4 to 2.4.9 and
-                   earlier unsupported versions
-Versions fixed:    2.7, 2.6.3, 2.5.6 and 2.4.10
-Reported by:       Damyon Wiese
-Issue no.:         MDL-44750
-CVE identifier:    CVE-2014-0215
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-44750
-
-=======================================================================
-MSA-14-0017: File access issue in HTML block
-
-Description:       Access to files linked on HTML blocks on the My home
-                   page was not being checked in the correct context
-                   allowing access to unauthenticated users.
-Issue summary:     Files linked in HTML blocks on My home are available
-                   to non authenticated users
-Severity/Risk:     Minor
-Versions affected: 2.6 to 2.6.2, 2.5 to 2.5.5, 2.4 to 2.4.9 and
-                   earlier unsupported versions
-Versions fixed:    2.7, 2.6.3, 2.5.6 and 2.4.10
-Reported by:       Mike Wilson
-Issue no.:         MDL-43877
-CVE identifier:    CVE-2014-0216
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-43877
-
-=======================================================================
-MSA-14-0018: Information leak in courses
-
-Description:       Details of hidden courses were being revealed to
-                   unauthenticated users on enrolment pages by URL
-                   manipulation.
-Issue summary:     Hidden course name and summary visible to guests
-Severity/Risk:     Minor
-Versions affected: 2.6 to 2.6.2
-Versions fixed:    2.7 and 2.6.3
-Reported by:       Marina Glancy
-Issue no.:         MDL-45126
-CVE identifier:    CVE-2014-0217
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45126
-
-=======================================================================
-MSA-14-0019: Reflected XSS in URL downloader repository
-
-Description:       There was a lack of filtering in the URL downloader
-                   repository that could have been exploited for XSS.
-Issue summary:     Reflected Cross site scripting in URL downloader
-                   repository
-Severity/Risk:     Serious
-Versions affected: 2.6 to 2.6.2, 2.5 to 2.5.5, 2.4 to 2.4.9 and
-                   earlier unsupported versions
-Versions fixed:    2.7, 2.6.3, 2.5.6 and 2.4.10
-Reported by:       Yogendra Sharma
-Issue no.:         MDL-45332
-CVE identifier:    CVE-2014-0218
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-45332
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.13 (MingW32)
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iQEcBAEBAgAGBQJTeWHTAAoJECGmGwK/mszP2NUH/RyVZBVQC5GO+3ZBGOiuBrtq
-AvHnBfiKXpk+p5RXnDicHaqtIEdYpFDK7cVdlb3k1xiGZYraNP8b9pefHBk/GZMy
-QmcKkT78pZj9b7cvs0SiGiksiIpYS3MwmZsWtOCjjH6VawQQL4kpZDoGi8ezyXpJ
-MiAQ5C069IcoEkrKuBxCsNla+ezFN9+C+PaWPzpCjjf6aHxURFVD2Mv27VNF+Tcv
-GjlslZ7s8VYmczyt0rM3ZSRQDprhzIlsXXUsEybEAxiakmmBEic0QjNw/Y6aPMHO
-JjEWDc/QAVP+5eL9HdbNWmbzqtBR9ViTUQqg4idYQK8m2Vuh9O2Yd9GrgBU7ZQM=
-=dm4s
------END PGP SIGNATURE-----
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (3748 bytes)
+greg k-h
