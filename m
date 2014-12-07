@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/07/19
-Message-ID: <CALx_OUDMcAEj=vTjPr8FGBhAeeaY1hYEbHrJ5PSanRrVdHCJHA@mail.gmail.com>
-Date: Fri, 7 Nov 2014 08:54:21 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: Fuzzing objdump (PR 17512) and readelf (PR 17531)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/11
+Message-ID: <20141207195503.GP2055@betterave.cristau.org>
+Date: Sun, 7 Dec 2014 20:55:03 +0100
+From: Julien Cristau <jcristau@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: postgresql: pg_dump creates world-readable dump
 Content-Type: text/plain; charset=utf-8
 
-> I am currently playing a lot with this. afl is in a somewhat
-> experimental state and you'll run into more problems trying to get it
-> running, but if it runs it is much more convenient than zzuf.
+On Sun, Dec  7, 2014 at 20:31:27 +0100, Robert Scheck wrote:
 
-The current versions should be pretty stable, but if you bump into any
-problems, please just poke me!=)
+> $ pg_dump postgres > postgres1.sql
+> $ pg_dump postgres > postgres2.sql
+> $ pg_dump postgres > postgres3.sql
+[...]
+> 
+> I do not know which behaviour you are exactly seeing (and for which
+> version of PostgreSQL) but above seems absolutely fine to me.
+> 
+You're not showing anything about pg_dump if you're having the shell
+open the file.
 
-Afl is kind of cool for tools like binutils or fileutils because it
-can synthesize many formats or format variations on its own, e.g.:
-
-http://lcamtuf.blogspot.com/2014/11/pulling-jpegs-out-of-thin-air.html
-
-But yeah, there's plenty of low-hanging fruit in libbfd right now, so
-non-instrumented fuzzing will get you pretty damn far, too.
-
-/mz
+Cheers,
+Julien
