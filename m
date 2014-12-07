@@ -1,49 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/20/2
-Message-ID: <20140520140702.GI1028@frohike.xs4all.nl>
-Date: Tue, 20 May 2014 16:07:02 +0200
-From: Peter Bex <Peter.Bex@...all.nl>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Incorrect SQL identifier quotation rampant among popular web frameworks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/1
+Message-ID: <54844320.6020704@yahoo.fr>
+Date: Sun, 07 Dec 2014 13:08:00 +0100
+From: Lionel Debroux <lionel_debroux@...oo.fr>
+To: oss-security@...ts.openwall.com
+Subject: Re: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+> On Sat, Dec 6, 2014 at 7:35 PM, Greg KH <greg@...ah.com> wrote:
+> > On Sat, Dec 06, 2014 at 03:22:58PM +0800, Shawn wrote:
+> > >
+> > > 2, ASLRv3? Hector Marco( the dude who disclosured offset2lib
+> > > attack) sent a patch to the upstream:
+> > > https://lkml.org/lkml/2014/12/4/839
+> > >
+> > > Even the upstream don't accept the patch, is this possible to
+> > > backport it & maintain it for distro community?
+> >
+> > Upstream asked for some basic fixes to the patch (i.e. it wasn't
+> > submitted in the needed format) before it could accept it, so I
+> > doubt it's rejected yet.
+> >
+> > And of course a distro could backport and maintain it, it's a very
+> > tiny patch, much smaller than what they normall backport.  Take it
+> > up with the distros if you want this.
+Tiny indeed. I'm surprised how few hunks it contains, given that
+PAX_ASLR involves
+$ grep CONFIG_PAX_ASLR pax-linux-3.17.4-test7.patch | wc -l
+25
+hunks.
 
-Recently I've discovered that many popular web frameworks perform
-incorrect quotation of identifiers in their query builders, leading
-to potential SQL injection bugs.  This includes Laravel, FuelPHP,
-Lithium, CodeIgniter and CakePHP and probably many others.
+Is Hector Marco's ASLRv3 submission a much simpler reinvention of PaX's
+ASLR wheel, or is it rather a smaller wheel which does less than PaX's
+improved, field-tested ASLR does ?
+If the latter, I think it wouldn't be good to see another half-measure
+integrated to mainline, until the next mainline ASLR defeat against
+which PaX has protected for over a decade. Just my 2 cents.
 
-In most cases, this is only exploitable if the programmer (framework
-user) makes the (debatable) "mistake" of querying attacker-controlled
-column names, but in Laravel's case even simple mass assignment exposes
-this vulnerability, *even* if some fields are $guarded against being
-mass-assigned.
 
-Unfortunately, most framework authors seem to dismiss this issue as
-purely a user problem and might not even bother fixing the issue or
-adding extra safeguards to the framework to achieve defense in depth.
-This attitude only contributes to the security crisis, IMHO.
+On 06/12/2014 17:48, Loganaden Velvindron wrote:
+> Going through the LKML mailing discussion, it seems that there's
+> interest in improving the diff according to the comment by Andy.
+Andy suggests "randomly-sized guard regions between all libraries".
+Is it already a side effect of PAX_RANDMMAP ?
 
-For more information, see my blog post at my employer's research blog:
-http://www.codeyellow.nl/identifier-sqli.html
+config PAX_RANDMMAP
+bool "Randomize user stack and mmap() bases"
+depends on PAX_ASLR
+select PAX_RANDUSTACK
+help
+  By saying Y here the kernel will randomize every task's userland
+  stack and use a randomized base address for mmap() requests that
+  do not specify one themselves.
 
-I don't know whether any of these deserve CVE IDs, especially
-considering the aforementioned attitude; authors believe this is not
-a bug (even in the case of Laravel).
+  The stack randomization is done in two steps where the second
+  one may apply a big amount of shift to the top of the stack and
+  cause problems for programs that want to use lots of memory (more
+  than 2.5 GB if SEGMEXEC is not active, or 1.25 GB when it is).
 
-I don't have the time, knowledge and energy to investigate every single
-framework in every single language, but I think it's a good idea if the
-community at large took a closer look at this particular class of bugs.
-So far, the only framework which seems to do it 100% correctly is Ruby
-on Rails.  But I must confess I didn't look beyond PHP, Python and Ruby.
+  As a result of mmap randomization all dynamically loaded libraries
+  will appear at random addresses and therefore be harder to exploit
+  by a technique where an attacker attempts to execute library code
+  for his purposes (e.g. spawn a shell from an exploited program that
+  is running at an elevated privilege level).
 
-In Python, the situation is a little more complicated: Django uses bad
-identifier quotation but I have been unable to create a PoC, as it
-seems to perform whitelisting everywhere on field names.  This warrants
-further investigation, IMHO.
+  Furthermore, if a program is relinked as a dynamic ELF file, its
+  base address will be randomized as well, completing the full
+  randomization of the address space layout.  Attacking such programs
+  becomes a guess game.  You can find an example of doing this at
+  http://pax.grsecurity.net/et_dyn.tar.gz and practical samples at
+  http://www.grsecurity.net/grsec-gcc-specs.tar.gz .
 
-Cheers,
-Peter Bex
--- 
-http://www.more-magic.net
+  NOTE: you can use the 'chpax' or 'paxctl' utilities to control this
+  feature on a per file basis.
+
+There's a use case for turning this feature off; perhaps relevant to
+some users on some 32-bit platforms, but probably not on 64-bit platforms.
+
+FWIW:
+$ grep CONFIG_PAX_RANDMMAP pax-linux-3.17.4-test7.patch | wc -l
+62
+$ grep CONFIG_PAX_RANDUSTACK pax-linux-3.17.4-test7.patch | wc -l
+6
+(4 of which are on the same lines as CONFIG_PAX_RANDMMAP)
+
+
+Bye,
+Lionel.
