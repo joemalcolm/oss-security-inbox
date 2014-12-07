@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/3
-Message-ID: <20141127020825.11783b95@pc>
-Date: Thu, 27 Nov 2014 02:08:25 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/5
+Message-ID: <2283446.WXyUMIYtWY@devil>
+Date: Sun, 07 Dec 2014 16:49:47 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: buffer overflow in ksba_oid_to_str in Libksba
+Cc: cve-assign@...re.org
+Subject: postgresql: pg_dump creates world-readable dump
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 26 Nov 2014 02:38:50 -0500 (EST)
-cve-assign@...re.org wrote:
+Hello,
 
-> > Due to the unsigned integer this results in a pretty long value
-> > which won't fit anymore into the allocated buffer.
-> 
-> Use CVE-2014-9087.
+I just discovered that pg_dump creates the database dump with world readable 
+permission (644 to be exactly).
 
-Please note that this affects both libksba and gnupg (only version
-2.1.0 and betas).
+I provided to inform upstream about, and this was the response:
 
-They share the code, but it's in different products, I don't know if
-this means 2 CVEs should be assigned.
+On Sunday 07 December 2014 10:34:19 Noah Misch wrote:
+> You presumably have umask 0022.  Like most programs, pg_dump does not
+> constrain modes of files it creates; adjust your umask for that.  A few
+> programs do otherwise; for example, ssh-keygen specifically constrains the
+> mode of new private key files.  A database dump is not in such a special
+> category, so pg_dump should continue to do the standard thing.
+
+A local user is able to copy it and discover sensitive data.
+
+In my opinion it deserves a cve.
 
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Agostino Sarubbo
+Gentoo Linux Developer
