@@ -1,27 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/13/5
-Message-ID: <alpine.LFD.2.10.1405131616430.7354@javelin.pnq.redhat.com>
-Date: Tue, 13 May 2014 16:18:26 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2014-0223 Qemu: qcow1: Validate image size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/3
+Message-ID: <m61omj$6g9$1@ger.gmane.org>
+Date: Sun, 07 Dec 2014 15:37:07 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Cc: 0@...ne.gmane.org,oss-security@...ts.openwall.com
+Subject: MantisBT 1.2.18 Released
 Content-Type: text/plain; charset=utf-8
 
-    Hello,
+Greetings,
 
-'CVE-2014-0223' has been assigned to this issue.
+Please see the announcement below. This release fixes a number of CVEs I 
+requested over the past few weeks (plus a few others). See the 
+announcement for further details.
 
-A huge image size could cause s->l1_size to overflow. Make sure that
-images never require a L1 table larger than what fits in s->l1_size.
+D. Regad
 
-This cannot only cause unbounded allocations, but also the allocation of
-a too small L1 table, resulting in out-of-bounds array accesses (both
-reads and writes).
 
-Upstream fix:
--------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2014-05/msg02156.html
+-------- Forwarded Message --------
+Subject: 	MantisBT 1.2.18 Released
+Date: 	Fri, 5 Dec 2014 19:50:40 -0800
+Newsgroups: 	gmane.comp.bug-tracking.mantis.devel
 
-Thank you.
---
-Prasad J Pandit / Red Hat Security Response Team
+
+
+MantisBT 1.2.18 is an important security update for the stable 1.2.x branch.
+All installations that are currently running any 1.2.x version are strongly
+advised to upgrade to this release. Download it from [2].
+
+This release resolves a total of 43 issues, including fixes for 23 security-
+related bugs and vulnerabilities:
+
+-  7 Cross-Site Scripting (XSS) issues: #17297/CVE-2014-9272,
+    #17583/CVE-2014-9270, #17870/CVE-2014-8987, #17874/CVE-2014-9271,
+    #17876/CVE-2014-9281, #17889/CVE-2014-8986, #17890/CVE-2014-9269
+
+-  2 Code injection issues: #17725/CVE-2014-7146, #17875/CVE-2014-9280
+
+-  2 SQL injection (XSS) issues: #17812/CVE-2014-8554, #17841/CVE-2014-9089
+
+-  5 Information disclosure issues: #9885, #17744, #17877/CVE-2014-9279,
+    #17742/CVE-2014-8988, #17243/CVE-2014-8553
+
+-  7 Other security issues: #10966, #17338, #17640/CVE-2014-6387,
+    #17648/CVE-2014-6316, #17780/CVE-2014-8598, #17811/CVE-2014-9117, #17878
+
+Please refer to the changelog [1] on the MantisBT web site for complete 
+details
+on each of these issues.
+
+We would like to thank the following individuals and organizations for their
+valued contribution in discovering and fixing these issues, in no particular
+order: Mati Aharoni from Offensive Security and their bug bounty program,
+Matthias Karlsson, Matthew Daley, Egidio Romano, Florian Fuchs, Shahee 
+Mirza,
+Oleg K, Alejo Popovici, Edwin Gozeling, Paul Richards, Roland Becker,
+Victor Boctor and Damien Regad.
+
+
+[1] http://www.mantisbt.org/bugs/changelog_page.php?version_id=191
+[2] http://sourceforge.net/projects/mantisbt/files/mantis-stable/
+
+Thanks,
+MantisBT Team
+
+
+
