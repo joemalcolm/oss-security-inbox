@@ -1,46 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/3
-Message-ID: <20140819094211.GB14387@kludge.henri.nerv.fi>
-Date: Tue, 19 Aug 2014 12:42:11 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/8
+Message-ID: <4713472.KTmzpNTf6I@devil>
+Date: Sun, 07 Dec 2014 20:38:39 +0100
+From: Agostino Sarubbo <ago@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: plugins@...dpress.org
-Subject: CVE request: WordPress plugin wp-source-control remote path traversal file access
+Cc: gremlin@...mlin.ru
+Subject: Re: postgresql: pg_dump creates world-readable dump
 Content-Type: text/plain; charset=utf-8
 
-Product: WordPress plugin wp-source-control
-Plugin page: https://wordpress.org/plugins/wp-source-control/
-Developer: https://profiles.wordpress.org/mmdeveloper/
+On Sunday 07 December 2014 20:26:41 gremlin@...mlin.ru wrote:
+> Only if that user is allowed to enter the directory where the dump
+> is stored, etc.
+> 
+>  > In my opinion it deserves a cve.
+> 
+> Misconfiguration != vulnerability.
 
-Vulnerability Type: Remote Path Traversal File Access
-Vulnerable Versions: All. Current is 3.0.0
-Fixed Version: N/A
+Time ago we assigned CVEs for world-readable logs produced by webservers in 
+e.g. /var/log/$webserver/file.log . 
+Nobody thought that make chmod o-r to the directory was the solution because 
+is only a workaround.
 
-Vulnerability Details:
+I think that we have a similar scenario.
 
-Wp Source Control plugin for WordPress contains a flaw that allows traversing
-outside of a restricted path. The issue is due to the downloadfiles/download.php
-script not properly sanitizing user input, specifically path traversal style
-attacks (e.g. '../'). With a specially crafted request, a remote attacker can
-gain access to arbitrary files, which can be read by web server process.
+And I think it is more logical produce a dump with mode 600 instead of force 
+million users to chmod the directory.
 
-Root cause:
-
-Unsanitized user input to file_get_contents() function.
-
-Proof-of-concept:
-
-/wp-content/plugins/wp-source-control/downloadfiles/download.php?path=../../../../wp-config.php
-
-Notes:
-
-Vendor contact details unknown.
-
-This vulnerability can be used to get WordPress database address, username and
-password, which can be used in certain environments to elevate privileges and
-execute malicious PHP code.
-
----
-Henri Salo
-
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+-- 
+Agostino Sarubbo
+Gentoo Linux Developer
