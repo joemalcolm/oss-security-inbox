@@ -1,40 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/15/5
-Message-ID: <20140915145841.GA16680@lappy.redhat.com>
-Date: Tue, 16 Sep 2014 00:58:43 +1000
-From: Grant Murphy <gmurphy@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/13
+Message-ID: <5484C9B4.6030507@gmail.com>
+Date: Sun, 07 Dec 2014 16:42:12 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Neutron
+Subject: Re: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
+> And a "well written" option will never have a CONFIG_* option within
+> the .c files, as that's not the normal way to implement features in
+> the Linux kernel.
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although an
-advisory was not sent yet.
+Needing to maintain invasive changes out-of-tree makes things different.
+It's done in way that minimizes merge conflicts.
 
-Title: Admin-only network attributes may be reset to defaults by
-non-privileged users
-Reporter: Elena Ezhova (Mirantis)
-Products: Neutron
-Versions: up to 2013.2.4 and 2014.1 versions up to 2014.1.2
+> The reason PaX isn't in the main kernel tree is that no one has spent
+> the time and effort to actually submit it in a mergable form.  So
+> please, do so if you think this is something that is needed.
 
-Description:
-Elena Ezhova from Mirantis reported a vulnerability in Neutron. By updating
-a network attribute with a default value a non-privileged user may reset
-admin-only network attributes. This may lead to unexpected behavior with
-security implications for operators with a custom policy.json, or in some
-extreme cases network outages resulting in denial of service. All
-deployments using neutron networking are affected by this flaw.
+I don't think that's an fair assessment.
+
+There's a small fraction of it that could be split up and pushed
+upstream with a large amount of effort. Lots of people have attempted to
+upstream grsecurity/PaX features in various forms, and there are success
+stories like kptr_restrict, dmesg_restrict, ptrace_scope,
+protected_symlinks and protected_hardlinks features among others.
+
+I have a lot of respect for people like Kees Cook who are willing to
+deal with the politics and endless disappointments. Most people are not
+willing to do that, especially if they aren't being paid.
+
+There was little success in upstreaming stuff like making most vtables
+constant, despite it being an obvious improvement. Some maintainers
+don't see the value, so it doesn't work out. Fixes for info leaks also
+have the same fate, and the stable kernels tend to be missing the ones
+that do land in mainline; unlike the grsec LTS kernels.
+
+Linux kernel development involves a lot of politics and compromises
+between different priorities. I don't upstreaming most of the features
+is realistic. Many of them involve ABI changes to fix age old info leaks
+and to implement aggressive userspace exploit mitigations.
+
+For example, PaX ASLR breaks code making incorrect assumptions about the
+mmap hint parameter / address space layout. There are at least a dozen
+cases of this in various official Arch Linux packages.
+
+PaX is now making heavy use of GCC plugins to alter code generation in
+order to implement many of the hardening features. Some of these also
+change the semantics of the language. I don't think that's ever going to
+be merged upstream, but those features have a high value. For example,
+KERNEXEC provides a software implementation of SMEP and enforces RO/NX
+pages across the kernel - fully eliminating RWX pages.
+
+The fact that it uses GCC plugins to deal with issues like size
+overflows and vtable constification and thanks to lack of upstream
+interest in improving security. In OpenBSD, these issues are tackled via
+extensive work to modernize the code. It's unrealistic for issues like
+this to be handled without stricter coding guidelines and a willingness
+to accept large patches introducing good practices.
+
+Submitting thousands of constification / size overflow patches and
+somehow landing even half of them is unrealistic. These patches aren't
+really welcome, and telling people that it's all they have to do is just
+setting up more drama.
 
 
-References:
-https://launchpad.net/bugs/1357379
-
-Thanks in advance,
-
---
-Grant Murphy
-OpenStack Vulnerability Management Team
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
