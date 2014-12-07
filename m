@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/23/3
-Message-ID: <20140623123934.GC29448@kludge.henri.nerv.fi>
-Date: Mon, 23 Jun 2014 15:39:34 +0300
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/6
+Message-ID: <20141207172641.GA1728@gremlin.ru>
+Date: Sun, 7 Dec 2014 20:26:41 +0300
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Piwigo before 2.6.2 ws.php Arbitrary User Creation CSRF
+Subject: Re: postgresql: pg_dump creates world-readable dump
 Content-Type: text/plain; charset=utf-8
 
-This CSRF vulnerability in Piwigo also does not have CVE yet. Fixed in 2.6.2
-version.
+On 2014-12-07 16:49:47 +0100, Agostino Sarubbo wrote:
 
-Piwigo contains a flaw as HTTP requests to ws.php do not require multiple steps,
-explicit confirmation, or a unique token when performing certain sensitive
-actions. By tricking a user into following a specially crafted link, a
-context-dependent attacker can perform a Cross-Site Request Forgery (CSRF /
-XSRF) attack causing the victim to create arbitrary users.
+ > I just discovered that pg_dump creates the database dump with
+ > world readable permission (644 to be exactly).
 
-http://osvdb.org/103774
-http://piwigo.org/releases/2.6.2
-http://packetstormsecurity.com/files/125438/Piwigo-2.6.1-Cross-Site-Request-Forgery.html
+The keyword is "creates".
 
----
-Henri Salo
+ > I provided to inform upstream about, and this was the response:
+ > On Sunday 07 December 2014 10:34:19 Noah Misch wrote:
+ >> You presumably have umask 0022. Like most programs, pg_dump
+ >> does not constrain modes of files it creates; adjust your umask
+ >> for that.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (199 bytes)
+Have you followed the advise? Did it helped?
+
+ > A local user is able to copy it and discover sensitive data.
+
+Only if that user is allowed to enter the directory where the dump
+is stored, etc.
+
+ > In my opinion it deserves a cve.
+
+Misconfiguration != vulnerability.
+
+
+-- 
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
