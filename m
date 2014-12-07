@@ -1,55 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/05/3
-Message-ID: <538FE794.6040103@redhat.com>
-Date: Wed, 04 Jun 2014 21:44:20 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: Re: CVE-2014-0234 Installer: OpenShift Enterprise: openshift.sh default password creation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/2
+Message-ID: <20141207121605.GA3994@hurricane.linuxnetz.de>
+Date: Sun, 7 Dec 2014 13:16:05 +0100
+From: Robert Scheck <robert@...oraproject.org>
+To: Open Source Security Mailing List <oss-security@...ts.openwall.com>
+Cc: Red Hat Security Response Team <secalert@...hat.com>
+Subject: CVE request: Unauthenticated remote disk space exhaustion in Zarafa WebAccess and WebApp
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Good afternoon,
 
-On 06/03/2014 12:35 PM, cve-assign@...re.org wrote:
+I discovered a flaw in Zarafa WebAccess >= 7.0.0 and Zarafa WebApp (any
+version) that could allow a remote unauthenticated attacker to exhaust the
+disk space of /tmp. Depending on the setup /tmp might be on / (e.g. RHEL).
+Zarafa WebApp is a fork and the successor of the Zarafa WebAccess.
 
+The affected files are /usr/share/zarafa-webaccess/senddocument.php as well
+as /usr/share/zarafa-webapp/senddocument.php. The default upload size is 30
+MB (via /etc/httpd/conf.d/zarafa-webaccess.conf / zarafa-webapp.conf).
 
-This would depend on how you installed it, e.g. as an upgrade?a new
-install? If new then manually? from the script? In this case it was
-that specific install script which was also documented as a possible
-install method, thus I felt it deserved a CVE.
+I do not know if $tmpname is predictable (for race conditions) but likely
+not. The 2nd parameter is only a prefix according to the PHP documentation
+of tempnam().
 
+Upstream removed the file "senddocument.php" (which is neither referenced
+nor used anywhere in the code) as solution and thus followed my suggestion
+for Zarafa WebApp 2.0 beta 3 (SVN 46848) and Zarafa WebAccess 7.2.0 beta 1
+(SVN 47004).
 
-
-Correct, however in this case we document it as an install method, so
-I felt it deserved a CVE, had it not been documented/mentioned I would
-have not assigned a CVE at all since it would have been "example code"
-for lack of a better term.
-
-
-
-?
-
-- -- 
-Kurt Seifried - Red Hat - Product Security - Cloud stuff and such
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+See https://bugzilla.redhat.com/show_bug.cgi?id=1139442 for whole history.
 
 
+With kind regards
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Robert Scheck
+-- 
+Fedora Project * Fedora Ambassador * Fedora Mentor * Fedora Packager
 
-iQIcBAEBAgAGBQJTj+eTAAoJEBYNRVNeJnmTE70P/366TGsMWoMtRFsptB+MM9qf
-LHaqFzqt2TOd5yM8G5MfIzPtpTcA2XnvOo5fZMOsBhLEx2Sa2t8fV8c346QIGSlC
-ZTZecDGEN6DSYXEatnAT3V5RMo7K5RYbUUxhMhUL5/CtZ3t+960cCSVymfoCR2Ng
-G0w9WrOadVM0PNbJfz2LCatt+FU3kVoVBToqItOQ8Kn9WPGmG+y9P//BPv/cv9JO
-vwG3TXS1DQ8Xs7ioV7llE3dc5yG/7Tn9TJxRW0RJSh078gOrap/8kgfXTVsjigVR
-aWbe6jQAhc+gn7sa06lsKYHT53znql8qbk6BSlPxSceuXz1W042/w+elPKkKqQcJ
-zZc9UGi0hQe8iuswLasEwQJbdhdf14EtTVeovLxjdaKwpOoiwMZ+WT9RNDMNrVar
-utgu8kYgIYi33cd3ygRUJijwxpWn8415SNfAkq021eeUUJD1YHHMIrAgyT97wl+m
-MOxIVNpxWk4kKPru+1ROZglTS8QYLmWQeW7Qq9dzUHlWFtXZ497kAvPWMuArhns1
-ovmqHKQvIrWoN53qztksfejzXLUfF8FqZFAQIYUSx8snfAOn7avK+H4DWTogqD//
-bsCmbuukSr3sG6ZCXRcAK0EAL02FyPoWYbFV+0NesSdn4H0Zl02DvjH6N94SHWzN
-uNPQ43oTqoJaXC8uwLz5
-=Kr7J
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
