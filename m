@@ -1,52 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/24/9
-Message-Id: <9E06B91C-A201-4D5D-BB34-59AC83CB566E@arko.net>
-Date: Wed, 24 Sep 2014 21:58:22 +0900
-From: André Arko <andre@...o.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/07/4
+Message-ID: <CABniQZOiU=N_XHj6Sx-7AJ5sJU3137Ry0csE8rPDWYp5fnSPfQ@mail.gmail.com>
+Date: Sun, 7 Dec 2014 22:43:17 +0800
+From: Shawn <citypw@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2013-0334] Ruby dependency manager Bundler may install gems from a different source than expected
+Subject: Re: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
-Bundler 1.7 is a security-only release to address CVE-2013-0334, a vulnerability where a gem might be installed from an unintended source server, particularly while using both rubygems.org and gems.github.com.
+Hi Lionel,
 
-Versions Affected: All versions < 1.7.0
-Not Affected: Any Gemfile with one or zero sources
+Thanks for your extraordinary explanation about Grsec/PaX. I'm a big
+fan of Grsec/PaX. But I think compare the ASLR implementation of
+vallina kernel with Grsecurity/PaX is not fair. Linux upstream doesn't
+hold the security-oriented philosophy, while Grsecurity/PaX community
+are expertise of system-lvl security. Developer/users could take bear
+of 5%-10% performance penalty caused by new features, but I don't
+think most developers/users would accept even 1% performance penalty
+caused by security defensive mitigation. Personally, I hope we could
+see Grsecurity/PaX being part of mainline linux kernel in the future.
 
-Fixed Versions: 1.7.0
-Releases: 1.7.0 (2014-09-14)
+IMOHO, offset2lib is a very critical impact to the GNU/Linux
+mitigation. What if the bad buys already have some 0day vulns? This
+will make their work so much easier to write massive exploit. Hope
+upstream could patch this issue as quickly as possible. Plz don't let
+this work to the burden of GNU/Linux distro community.
 
-This announcement is also posted on the Bundler website, at http://bundler.io/blog/2014/08/14/bundler-may-install-gems-from-a-different-source-than-expected-cve-2013-0334.html.
+On Sun, Dec 7, 2014 at 8:08 PM, Lionel Debroux <lionel_debroux@...oo.fr> wrote:
+>> On Sat, Dec 6, 2014 at 7:35 PM, Greg KH <greg@...ah.com> wrote:
+>> > On Sat, Dec 06, 2014 at 03:22:58PM +0800, Shawn wrote:
+>> > >
+>> > > 2, ASLRv3? Hector Marco( the dude who disclosured offset2lib
+>> > > attack) sent a patch to the upstream:
+>> > > https://lkml.org/lkml/2014/12/4/839
+>> > >
+>> > > Even the upstream don't accept the patch, is this possible to
+>> > > backport it & maintain it for distro community?
+>> >
+>> > Upstream asked for some basic fixes to the patch (i.e. it wasn't
+>> > submitted in the needed format) before it could accept it, so I
+>> > doubt it's rejected yet.
+>> >
+>> > And of course a distro could backport and maintain it, it's a very
+>> > tiny patch, much smaller than what they normall backport.  Take it
+>> > up with the distros if you want this.
+> Tiny indeed. I'm surprised how few hunks it contains, given that
+> PAX_ASLR involves
+> $ grep CONFIG_PAX_ASLR pax-linux-3.17.4-test7.patch | wc -l
+> 25
+> hunks.
+>
+> Is Hector Marco's ASLRv3 submission a much simpler reinvention of PaX's
+> ASLR wheel, or is it rather a smaller wheel which does less than PaX's
+> improved, field-tested ASLR does ?
+> If the latter, I think it wouldn't be good to see another half-measure
+> integrated to mainline, until the next mainline ASLR defeat against
+> which PaX has protected for over a decade. Just my 2 cents.
+>
+>
+> On 06/12/2014 17:48, Loganaden Velvindron wrote:
+>> Going through the LKML mailing discussion, it seems that there's
+>> interest in improving the diff according to the comment by Andy.
+> Andy suggests "randomly-sized guard regions between all libraries".
+> Is it already a side effect of PAX_RANDMMAP ?
+>
+> config PAX_RANDMMAP
+> bool "Randomize user stack and mmap() bases"
+> depends on PAX_ASLR
+> select PAX_RANDUSTACK
+> help
+>   By saying Y here the kernel will randomize every task's userland
+>   stack and use a randomized base address for mmap() requests that
+>   do not specify one themselves.
+>
+>   The stack randomization is done in two steps where the second
+>   one may apply a big amount of shift to the top of the stack and
+>   cause problems for programs that want to use lots of memory (more
+>   than 2.5 GB if SEGMEXEC is not active, or 1.25 GB when it is).
+>
+>   As a result of mmap randomization all dynamically loaded libraries
+>   will appear at random addresses and therefore be harder to exploit
+>   by a technique where an attacker attempts to execute library code
+>   for his purposes (e.g. spawn a shell from an exploited program that
+>   is running at an elevated privilege level).
+>
+>   Furthermore, if a program is relinked as a dynamic ELF file, its
+>   base address will be randomized as well, completing the full
+>   randomization of the address space layout.  Attacking such programs
+>   becomes a guess game.  You can find an example of doing this at
+>   http://pax.grsecurity.net/et_dyn.tar.gz and practical samples at
+>   http://www.grsecurity.net/grsec-gcc-specs.tar.gz .
+>
+>   NOTE: you can use the 'chpax' or 'paxctl' utilities to control this
+>   feature on a per file basis.
+>
+> There's a use case for turning this feature off; perhaps relevant to
+> some users on some 32-bit platforms, but probably not on 64-bit platforms.
+>
+> FWIW:
+> $ grep CONFIG_PAX_RANDMMAP pax-linux-3.17.4-test7.patch | wc -l
+> 62
+> $ grep CONFIG_PAX_RANDUSTACK pax-linux-3.17.4-test7.patch | wc -l
+> 6
+> (4 of which are on the same lines as CONFIG_PAX_RANDMMAP)
+>
+>
+> Bye,
+> Lionel.
 
-Impact:
-
-Any Gemfile with multiple top-level `source` lines cannot reliably control the gem server that a particular gem is fetched from. As a result, Bundler might install the wrong gem if more than one source provides a gem with the same name.
-
-This is especially possible in the case of Github's legacy gem server, hosted at gems.github.com. An attacker might create a malicious gem on Rubygems.org with the same name as a commonly-used Github gem. From that point forward, running `bundle install` might result in the malicious gem being used instead of the expected gem.
-
-To mitigate this, the Bundler and Rubygems.org teams worked together to copy almost every gem hosted on gems.github.com to rubygems.org, reducing the number of gems that can be used for such an attack.
 
 
-Resolution:
+-- 
+GNU powered it...
+GPL protect it...
+God blessing it...
 
-To resolve this issue, upgrade to Bundler 1.7 by running `gem install bundler`. The next time you run `bundle install` for any Gemfile that contains multiple sources, each gem available from multiple sources will print a warning.
-
-For every warning printed, edit the Gemfile to either specify a `:source` option for that gem, or move the `gem` line into a block that is passed to a `source` method call.
-
-For detailed information about the changes to how sources are handled in Bundler version 1.7, see http://bundler.io/v1.7/whats_new.html
-
-
-Workarounds:
-
-If you are unable to upgrade to Bundler 1.7, it is possible to work around the issue by removing all but one `source` line from your Gemfile. Gems from other sources must be installed via the `:git` option, which is not susceptible to this issue, or unpacked into the application repository and used via the `:path`option.
-
-Unfortunately, backporting a fix for this issue proved impractical, as previous versions of Bundler lacked the ability to distinguish between gem servers.
-
-
-Credits:
-
-Thanks to Andreas Loupasakis and Fotos Georgiadis for reporting this issue, James Tucker, Tony Arcieri, Eric Hodel, Michael Koziarski, and Kurt Seifried for assistance with the eventual solution, and David Radcliffe for importing legacy Github gems into Rubygems.org.
-
-André Arko (@indirect), Tim Moore (@tmoore), and the Bundler team (@bundlerio)
-team@...dler.io
-
-Download attachment "signature.asc" of type "application/pgp-signature" (794 bytes)
+regards
+Shawn
