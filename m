@@ -1,36 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/8
-Message-ID: <CAB8XdGBbcewZfGkXUmT3-qtXTYZ3Dr9uVYgfmArOy8Sk2aSdkw@mail.gmail.com>
-Date: Fri, 24 Oct 2014 19:10:21 +0100
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: "users@....apache.org" <users@....apache.org>, "dev@....apache.org" <dev@....apache.org>,  Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: New security advisories released for Apache CXF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/10
+Message-ID: <20141208232616.393d3f99@pc>
+Date: Mon, 8 Dec 2014 23:26:16 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: Peter van Dijk <peter.van.dijk@...herlabs.nl>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: PowerDNS Security Advisory 2014-02
 Content-Type: text/plain; charset=utf-8
 
-Two new security advisories have been released for Apache CXF:
+Thanks for the info.
 
- - CVE-2014-3623: Apache CXF does not properly enforce the security
-semantics of SAML SubjectConfirmation methods when used with the
-TransportBinding
+Right now details on this vuln seem to be scarce. I asked myself some
+questions, but I don't know DNS internals very well.
 
- - CVE-2014-3584: Apache CXF JAX-RS SAML handling is vulnerable to a Denial
-of Service (DoS) attack
+As this affects three implementations the obvious first question would
+be if others are affected, too. Has this been checked?
 
-Advisories attached to this mail + also available via the CXF security
-advisories page:
+And is this only a DoS for the attacked server or would it also allow
+some completely new kind of DNS reflection attack (i.e. generating a
+loop where every loop iteration generates an UDP packet send to a
+victim)?
 
-http://cxf.apache.org/security-advisories.html
-
-Colm.
 
 -- 
-Colm O hEigeartaigh
+Hanno Böck
+http://hboeck.de/
 
-Talend Community Coder
-http://coders.talend.com
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Content of type "text/html" skipped
-
-View attachment "CVE-2014-3584.txt.asc" of type "text/plain" (1613 bytes)
-
-View attachment "CVE-2014-3623.txt.asc" of type "text/plain" (1653 bytes)
+Content of type "application/pgp-signature" skipped
