@@ -1,34 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/03/14
-Message-ID: <538DD8BF.7060708@upv.es>
-Date: Tue, 03 Jun 2014 16:16:31 +0200
-From: Hector Marco <hecmargi@....es>
-To: fulldisclosure@...lists.org
-CC: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, advisories <advisories@...xperts.de>, bugs@...uritytracker.com
-Subject: Bug in bash <= 4.3 [security feature bypassed]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/9
+Message-Id: <5EFF33F9-72C8-4293-A731-33C7926ADAB1@netherlabs.nl>
+Date: Mon, 8 Dec 2014 17:00:09 +0100
+From: Peter van Dijk <peter.van.dijk@...herlabs.nl>
+To: pdns-announce@...lman.powerdns.com, pdns-dev@...lman.powerdns.com, pdns-users Users <pdns-users@...lman.powerdns.com>, oss-security@...ts.openwall.com
+Subject: PowerDNS Security Advisory 2014-02
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
+Hi everybody,
 
-Recently we discovered a bug in bash. After some time after reporting
-it to bash developers, it has not been fixed.
+Please be aware of PowerDNS Security Advisory 2014-02
+(http://doc.powerdns.com/md/security/powerdns-advisory-2014-02/), which you
+can also find below.  The good news is that the currently released version of the
+PowerDNS Recursor is safe.  The bad news is that users of older versions
+will have to upgrade.
 
-We think that this is a security issue because in some circumstances
-the bash security feature could be bypassed allowing the bash to be a
-valid target shell in an attack.
+PowerDNS Recursor 3.6.2, released late October, is in wide production use
+and has been working well for our users.  If however you have reasons not to
+upgrade, the advisory below contains a link to a patch which applies to
+older versions.
 
-We strongly recommend to patch your bash code.
+Finally, if you have problems upgrading, please either contact us on our
+mailing lists, or privately via powerdns.support@...erdns.com (should you
+wish to make use of our SLA-backed support program).
 
-Why don't fix this bug by simple adding mandatory "if" clause ?
-Any comments about this issue are welcomed.
+We want to thank Florian Maury of French government information security
+agency ANSSI for bringing this issue to our attention and coordinating the
+security release with us and other nameserver vendors.
 
+## PowerDNS Security Advisory 2014-02: PowerDNS Recursor 3.6.1 and earlier can be made to provide bad service
 
-Details at:
-http://hmarco.org/bugs/bash_4.3-setuid-bug.html
+* CVE: CVE-2014-8601
+* Date: 8th of December 2014
+* Credit: Florian Maury ([ANSSI](http://www.ssi.gouv.fr/en/))
+* Affects: PowerDNS Recursor versions 3.6.1 and earlier
+* Not affected: PowerDNS Recursor 3.6.2; no versions of PowerDNS Authoritative Server
+* Severity: High
+* Impact: Degraded service
+* Exploit: This problem can be triggered by sending queries for specifically configured domains
+* Risk of system compromise: No
+* Solution: Upgrade to PowerDNS Recursor 3.6.2
+* Workaround: None known. Exposure can be limited by configuring the **allow-from** setting so only trusted users can query your nameserver.
 
+Recently we released PowerDNS Recursor 3.6.2 with a new feature that
+strictly limits the amount of work we'll perform to resolve a single query.
+This feature was inspired by performance degradations noted when resolving
+domains hosted by 'ezdns.it', which can require thousands of queries to
+resolve.
 
+During the 3.6.2 release process, we were contacted by a government security
+agency with news that they had found that all major caching nameservers,
+including PowerDNS, could be negatively impacted by specially configured,
+hard to resolve domain names. With their permission, we continued the 3.6.2
+release process with the fix for the issue already in there.
 
-Thanks you,
+We recommend that all users upgrade to 3.6.2 if at all possible. Alternatively,
+if you want to apply a minimal fix to your own tree, it can be found
+[here](https://downloads.powerdns.com/patches/2014-02/), including patches for older versions.
 
-Hector Marco
-http://hmarco.org
+As for workarounds, only clients in allow-from are able to trigger the
+degraded service, so this should be limited to your userbase.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
