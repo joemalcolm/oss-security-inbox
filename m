@@ -1,36 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/35
-Message-Id: <201409291846.s8TIkSMv019314@core.courtesan.com>
-Date: Mon, 29 Sep 2014 12:46:28 -0600
-From: "Todd C. Miller" <Todd.Miller@...rtesan.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/6
+Message-ID: <20141208151353.GB29797@mail.corp.redhat.com>
+Date: Mon, 8 Dec 2014 16:13:53 +0100
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Florian Weimer <fweimer@...hat.com>, Tavis Ormandy <taviso@...xchg8b.com>, chet.ramey@...e.edu, Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>
-Subject: Re: Re: Healing the bash fork
+Subject: Re: MantisBT 1.2.18 Released
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 29 Sep 2014 09:59:47 -0600, Eric Blake wrote:
+Hi Damien,
 
-> 'at' is already broken, independently of bash.  For example:
-> 
-> https://lists.gnu.org/archive/html/bug-bash/2014-09/msg00300.html
-> 
-> echo pwd | env "/tmp/exploit=me" at tomorrow
-> 
-> produces a shell script with these lines:
-> 
-> #!/bin/sh
-> ...
-> /tmp/exploit=me; export /tmp/exploit
-> 
-> So even on Debian, where /bin/sh is dash, this script attempts to
-> execute the file named /tmp/exploit=me, possibly under the privileges
-> of 'at' rather than as the user that created the file.  No bash needed.
+Thanks for posting this announcement.
+Since this is public now - can we please have more information about
+#17243/CVE-2014-8553? I can't find this CVE assignment on oss-sec, and
+also the corresponding bug is marked private.
 
-At the very least, at should use the "export foo=bar" form which
-will allow it to fail closed in the presence of environment variables
-that are not valid shell identifiers.  I've just committed such a
-change to OpenBSD's at(1) which shares a common lineage.  However,
-the atrun file format should really be changed to be more robust
-and not simply be fed to /bin/sh.
+Thanks.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+On Sun, 07 Dec 2014, Damien Regad wrote:
 
- - todd
+> Greetings,
+> 
+> Please see the announcement below. This release fixes a number of CVEs I
+> requested over the past few weeks (plus a few others). See the announcement
+> for further details.
+> 
+> D. Regad
+> 
+> 
+> -------- Forwarded Message --------
+> Subject: 	MantisBT 1.2.18 Released
+> Date: 	Fri, 5 Dec 2014 19:50:40 -0800
+> Newsgroups: 	gmane.comp.bug-tracking.mantis.devel
+> 
+> 
+> 
+> MantisBT 1.2.18 is an important security update for the stable 1.2.x branch.
+> All installations that are currently running any 1.2.x version are strongly
+> advised to upgrade to this release. Download it from [2].
+> 
+> This release resolves a total of 43 issues, including fixes for 23 security-
+> related bugs and vulnerabilities:
+> 
+> -  7 Cross-Site Scripting (XSS) issues: #17297/CVE-2014-9272,
+>    #17583/CVE-2014-9270, #17870/CVE-2014-8987, #17874/CVE-2014-9271,
+>    #17876/CVE-2014-9281, #17889/CVE-2014-8986, #17890/CVE-2014-9269
+> 
+> -  2 Code injection issues: #17725/CVE-2014-7146, #17875/CVE-2014-9280
+> 
+> -  2 SQL injection (XSS) issues: #17812/CVE-2014-8554, #17841/CVE-2014-9089
+> 
+> -  5 Information disclosure issues: #9885, #17744, #17877/CVE-2014-9279,
+>    #17742/CVE-2014-8988, #17243/CVE-2014-8553
+> 
+> -  7 Other security issues: #10966, #17338, #17640/CVE-2014-6387,
+>    #17648/CVE-2014-6316, #17780/CVE-2014-8598, #17811/CVE-2014-9117, #17878
+> 
+> Please refer to the changelog [1] on the MantisBT web site for complete
+> details
+> on each of these issues.
+> 
+> We would like to thank the following individuals and organizations for their
+> valued contribution in discovering and fixing these issues, in no particular
+> order: Mati Aharoni from Offensive Security and their bug bounty program,
+> Matthias Karlsson, Matthew Daley, Egidio Romano, Florian Fuchs, Shahee
+> Mirza,
+> Oleg K, Alejo Popovici, Edwin Gozeling, Paul Richards, Roland Becker,
+> Victor Boctor and Damien Regad.
+> 
+> 
+> [1] http://www.mantisbt.org/bugs/changelog_page.php?version_id=191
+> [2] http://sourceforge.net/projects/mantisbt/files/mantis-stable/
+> 
+> Thanks,
+> MantisBT Team
+> 
+> 
+> 
+
+Content of type "application/pgp-signature" skipped
