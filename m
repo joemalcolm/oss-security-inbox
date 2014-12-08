@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/20/4
-Message-Id: <20140820081428.F36B933E001@smtpvbsrv1.mitre.org>
-Date: Wed, 20 Aug 2014 04:14:28 -0400 (EDT)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: WordPress plugin wp-source-control remote path traversal file access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/5
+Message-ID: <20141208124512.GA29797@mail.corp.redhat.com>
+Date: Mon, 8 Dec 2014 13:45:12 +0100
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: 772008@...s.debian.org
+Subject: CVE request:  mpfr: buffer overflow in mpfr_strtofr
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello,
 
-> downloadfiles/download.php?path=../../../../wp-config.php
+A buffer overflow was reported [1] in mpfr.
+This is due to incorrect GMP documentation for mpn_set_str about the
+size of a buffer (discussion is at [1]; first fix in the GMP
+documentation is at [2]). This bug is present in the MPFR versions
+from 2.1.0 (adding mpfr_strtofr) to this one, and can be detected by
+running "make check" in a 32-bit ABI under GNU/Linux with alloca
+disabled (this is currently possible by using the --with-gmp-build
+configure option where alloca has been disabled in the GMP build). It
+is fixed by the strtofr patch [3].
+Corresponding changeset in the 3.1 branch: 9110 [4].
 
-Use CVE-2014-5368.
+[1]: https://gmplib.org/list-archives/gmp-bugs/2013-December/003267.html
+[2]: https://gmplib.org/repo/gmp-5.1/raw-rev/d19172622a74
+[3]: http://www.mpfr.org/mpfr-3.1.2/patch11
+[4]: https://gforge.inria.fr/scm/viewvc.php?view=rev&root=mpfr&revision=9110
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+References:
+- https://bugzilla.redhat.com/show_bug.cgi?id=1171701
+- https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772008
 
-iQEcBAEBAgAGBQJT9FhvAAoJEKllVAevmvmsIs8IALADGGS6A9WyVihZvNDf/x41
-99l5eT+p0HQ5KryOnHPfYWsl1JR9658y7p9kHOWrbrAzUq/hYp7nNPKwIXxQWdfI
-0Z6z1pJ3CgU/23j9TPT88Dlw4zBLBsA+Kas1iJJHJj/J1eJtx9PQQLrZpo1OhfhS
-kk6zS/UdbnscyItEiUwZQ6XD8Q3FJZi9OqNMsq4rerdqHdI/b2PAjiTvk8isI8Zp
-k6U1kknZUmM7fjqqSqQU5ve/rNuKkJP3NHBDUmf6U3AgANFw2NujhGlJGITKddYl
-zcvtWcDtdNrrqw6JrEoF92KeKXxi6aPOJ7uPZYTEH7hMo4CqKEuXH7gB0f5Vmwg=
-=LaED
------END PGP SIGNATURE-----
+Can a CVE be assigned to this please?
+
+Thanks.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+
+Content of type "application/pgp-signature" skipped
