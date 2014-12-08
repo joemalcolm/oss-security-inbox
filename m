@@ -1,25 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/19/1
-Message-ID: <52DBBD7A.3080402@redhat.com>
-Date: Sun, 19 Jan 2014 12:56:42 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0021: chrony traffic amplification in cmdmon protocol
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/4
+Message-Id: <E1Xxx8D-0000BD-C9@xenbits.xen.org>
+Date: Mon, 08 Dec 2014 12:09:37 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 114 (CVE-2014-9065,CVE-2014-9066) - p2m lock starvation
 Content-Type: text/plain; charset=utf-8
 
-On 01/17/2014 11:54 PM, Vincent Danen wrote:
-> With the news about the traffic amplification issue in ntpd, one of our developers looked at chronyd and it suffers from the same flaw.
->
-> We've filed a bug [1] and it's also been brought up upstream [2].  There is currently no fix, but as the ntpd issue has been gaining some interest, I'm bringing this up here now for other who may ship chrony.  We assigned it CVE-2014-0021.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I noticed this as well when reviewing chrony quite a while ago, but I 
-did not press the issue because its restricted to localhost by default 
-and the amplification factor is low, especially in packet count terms. 
-At the time, I did not consider it comparable to the ntpd issue at all, 
-and I still don't.
+     Xen Security Advisory CVE-2014-9065,CVE-2014-9066 / XSA-114
+                              version 3
 
-Comparable levels of amplification are present in TCP itself and many 
-other UDP-based protocols.
+                       p2m lock starvation
 
--- 
-Florian Weimer / Red Hat Product Security Team
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+The current read/write lock implementation is read-biased, which allows
+a consistent stream of readers to starve writers indefinitely.  There
+are certain rwlocks where guests are capable of applying arbitrary read
+pressure.
+
+IMPACT
+======
+
+A malicious guest administrator can deny service to other tasks.  If
+the NMI watchdog is active, a timeout might be triggered, resulting in
+a host crash.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.2 and later systems are vulnerable.
+
+Xen 4.1 and earlier are not vulnerable in normal configurations.  4.1
+and earlier are vulnerable only insofar as features are used which
+have already been explicitly discounted for security support purposes
+(TMEM, see XSA-15; XSM-based radical disaggregation, see XSA-77).
+
+Only x86 systems offer avenues for attacking this vulnerability.
+ARM systems do not and are therefore not vulnerable.
+
+MITIGATION
+==========
+
+There is no mitigation available for this issue.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue in
+practice for most systems.  (CVE-2014-9065 refers to these fixed
+cases.)
+
+In some deployments, large guests (more than around 30-40 VCPUs) may
+still be able to trigger intermittent problems; a complete fix to this
+issue requires substantial structural changes and is planned for Xen
+4.6.  (CVE-2014-9066 refers to these yet-to-be-fixed cases.)
+
+xsa114.patch                 xen-unstable
+xsa114-4.4.patch             Xen 4.4.x
+xsa114-4.3.patch             Xen 4.3.x
+xsa114-4.2.patch             Xen 4.2.x
+
+$ sha256sum xsa114*.patch
+d1c1a2d5d55bfe13ba99a9cb99b367a29389aa30f13ffacc02b465a006115b45  xsa114.patch
+a7a57c49d65de7e3cd480476b0a935ddac9e9d941aa6ca65e87170411a7c1176  xsa114-4.2.patch
+ae787074b857c40ab0059802846cb0152e24c937486968c769a9bfe8cbe3d10f  xsa114-4.3.patch
+b35ed8710693163cc33772c36e4c17dc76e25a0b2025fff4a5aa3b46c459938a  xsa114-4.4.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUhZTQAAoJEIP+FMlX6CvZYUkH/A/SYzqnOXvSa0tF7penNFb9
+NFwRBjTvddaTnB72UiIL6ca/3tV1la2cNpn+p4M+cGSuCwHV9QaEoRMtc6l77Yol
+I1ApyZWHS3Qwv2zKDp5dozDcO5yiVuVj+Az1O9f3NCv6PsQvJxYugB/3JKUnhS60
+ItmlwnxAEzRd0pvoG8zb7vdLKPyfJ9gYTW3OU50F13TbJEtIJ1ifzvCTC7zPv7da
+phYy7NClS9a1QeXOnwRNyoL8hBZ6OWJYxG66+8P/s0SUtvTOuOoVJ510cAwfv4Fw
+y96Ss+vfTu9u34GBaO/rTP5FkH1x9vptFGTIgjtDPZmwf30kCo4qyq3jnjyWKmM=
+=V6/o
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa114.patch" of type "application/octet-stream" (12633 bytes)
+
+Download attachment "xsa114-4.2.patch" of type "application/octet-stream" (10533 bytes)
+
+Download attachment "xsa114-4.3.patch" of type "application/octet-stream" (12286 bytes)
+
+Download attachment "xsa114-4.4.patch" of type "application/octet-stream" (12291 bytes)
