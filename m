@@ -1,36 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/22
-Message-ID: <20141009152823.GI12633@sentinelchicken.org>
-Date: Thu, 9 Oct 2014 08:28:23 -0700
-From: Tim <tim-security@...tinelchicken.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/7
+Message-ID: <alpine.DEB.2.02.1412081628180.17512@legendary.xserve.fr>
+Date: Mon, 8 Dec 2014 16:30:15 +0100 (CET)
+From: Remi Gacogne <rgacogne-bugs@...edump.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+Subject: Re: MantisBT 1.2.18 Released
 Content-Type: text/plain; charset=utf-8
 
-> PS: fun fact, the only thing you _will_ get sued for are:
-> software patents
+On Mon, 8 Dec 2014, Vasyl Kaigorodov wrote:
 
-Perhaps we should patent the implementation of vulnerabilities in
-software.  Then go trolling. ;-)
+> Since this is public now - can we please have more information about
+> #17243/CVE-2014-8553? I can't find this CVE assignment on oss-sec, and
+> also the corresponding bug is marked private.
 
+https://github.com/mantisbt/mantisbt/commit/f779e3d4394a0638d822849863c4098421d911c5
 
-Seriously though, I agree with you that some form of liability ought
-to be introduced in order to create the business incentive to change
-development practices.  However, the devil is in the details, and as
-Michal pointed out, you don't want to squash open source innovation.
-
-So how do you introduce liability for software defects while allowing
-innovation to continue?  Initially, perhaps you could limit liability
-to the cost of the software.  This protects open source projects while
-creating a modest incentive for larger software companies to do
-better.  But then you have cases like Adobe Flash/PDF/etc where they
-don't charge and yet have created a huge problem in the industry.  How
-do you address that?  Plus, if you did it this way, people might start
-to assume all open source software is insecure just because there is
-no liability.  
-
-I don't know, I've thought a fair amount about this, and it isn't easy
-to implement.  It would probably require multiple separate ways to
-create incentives for quality.
-
-tim
+> On Sun, 07 Dec 2014, Damien Regad wrote:
+>
+> > Greetings,
+> >
+> > Please see the announcement below. This release fixes a number of CVEs I
+> > requested over the past few weeks (plus a few others). See the announcement
+> > for further details.
+> >
+> > D. Regad
+> >
+> >
+> > -------- Forwarded Message --------
+> > Subject: 	MantisBT 1.2.18 Released
+> > Date: 	Fri, 5 Dec 2014 19:50:40 -0800
+> > Newsgroups: 	gmane.comp.bug-tracking.mantis.devel
+> >
+> >
+> >
+> > MantisBT 1.2.18 is an important security update for the stable 1.2.x branch.
+> > All installations that are currently running any 1.2.x version are strongly
+> > advised to upgrade to this release. Download it from [2].
+> >
+> > This release resolves a total of 43 issues, including fixes for 23 security-
+> > related bugs and vulnerabilities:
+> >
+> > -  7 Cross-Site Scripting (XSS) issues: #17297/CVE-2014-9272,
+> >    #17583/CVE-2014-9270, #17870/CVE-2014-8987, #17874/CVE-2014-9271,
+> >    #17876/CVE-2014-9281, #17889/CVE-2014-8986, #17890/CVE-2014-9269
+> >
+> > -  2 Code injection issues: #17725/CVE-2014-7146, #17875/CVE-2014-9280
+> >
+> > -  2 SQL injection (XSS) issues: #17812/CVE-2014-8554, #17841/CVE-2014-9089
+> >
+> > -  5 Information disclosure issues: #9885, #17744, #17877/CVE-2014-9279,
+> >    #17742/CVE-2014-8988, #17243/CVE-2014-8553
+> >
+> > -  7 Other security issues: #10966, #17338, #17640/CVE-2014-6387,
+> >    #17648/CVE-2014-6316, #17780/CVE-2014-8598, #17811/CVE-2014-9117, #17878
+> >
+> > Please refer to the changelog [1] on the MantisBT web site for complete
+> > details
+> > on each of these issues.
+> >
+> > We would like to thank the following individuals and organizations for their
+> > valued contribution in discovering and fixing these issues, in no particular
+> > order: Mati Aharoni from Offensive Security and their bug bounty program,
+> > Matthias Karlsson, Matthew Daley, Egidio Romano, Florian Fuchs, Shahee
+> > Mirza,
+> > Oleg K, Alejo Popovici, Edwin Gozeling, Paul Richards, Roland Becker,
+> > Victor Boctor and Damien Regad.
+> >
+> >
+> > [1] http://www.mantisbt.org/bugs/changelog_page.php?version_id=191
+> > [2] http://sourceforge.net/projects/mantisbt/files/mantis-stable/
+> >
+> > Thanks,
+> > MantisBT Team
+> >
