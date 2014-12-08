@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/4
-Message-ID: <CAPLrYEQJdfX6REi6zdtA2JTj+BdWdphzF_LgaLDC4YzGGZc3GA@mail.gmail.com>
-Date: Wed, 5 Mar 2014 17:30:53 +0100
-From: Daniel Cegiełka <daniel.cegielka@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/1
+Message-ID: <ACC12C2223E649B69B8170CD0573BB8B@getsentry.com>
+Date: Mon, 8 Dec 2014 15:28:12 -0800
+From: David Cramer <david@...sentry.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux-PAM pam_unix/unix_chkpwd is fail-open
+Subject: CVE Request
 Content-Type: text/plain; charset=utf-8
 
-2014-03-04 21:54 GMT+01:00 Solar Designer <solar@...nwall.com>:
+(Pardon my complete lack of any clue how this process works) 
 
-> Someone might want to patch this issue in Linux-PAM.
->
-> Alexander
+Now seems like a good time to formalize our internal policy of how we do security releases, and while we might have already butchered this one, it was suggested we attempt to get a CVE assigned.
 
-Hi Alexander,
+Software name and optionally vendor name
+raven-ruby (part of Sentry)
 
-I know it's not realistic, but it may be easier to go to the OpenPAM.
-The code is much smaller and easier to audit (and tcb works with
-OpenPAM). OpenBSD is doing well with the BSD auth and gain the same as
-with PAM (plugins via /usr/libexec/auth/*). BSD auth is only three C
-core files:
+Type of vulnerability
+DoS
 
-http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/gen/auth_subr.c?rev=1.39;content-type=text%2Fplain
-http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/gen/authenticate.c?rev=1.20;content-type=text%2Fplain
-http://www.openbsd.org/cgi-bin/cvsweb/src/lib/libc/gen/login_cap.c?rev=1.29;content-type=text%2Fplain
+Link to vulnerable source code or fix
+https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Fgetsentry%2Fraven-ruby%2Fcommit%2F477ee93a3f735be33bc1e726820654cdf6e22d8f&sa=D&sntz=1&usg=AFQjCNHdtqW_RuP8AZJu6fsevXS354EhrQ
 
-So it might be a better 'patch' than bloated Linux-PAM.
+Link to security advisory
+https://groups.google.com/forum/#!topic/getsentry/Cz5bih0ZY1U
 
-btw. I'm thinking about porting BSD auth API to Linux/tcb.
+Affected version(s)
+0.6.0 and newer. Likely this translates to every single version anyone uses.
 
-Daniel
+Software version(s) fixed (if available)
+0.12.2
+
+Thanks!
