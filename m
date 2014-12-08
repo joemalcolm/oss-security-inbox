@@ -1,51 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/27/6
-Message-ID: <533460E6.6030009@enovance.com>
-Date: Thu, 27 Mar 2014 18:33:26 +0100
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/8
+Message-ID: <20141208163633.2afe33d0@pc>
+Date: Mon, 8 Dec 2014 16:36:33 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-009] Nova host data leak to vm instance in rescue mode (CVE-2014-0134)
+Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-009
-CVE: CVE-2014-0134
-Date: March 27, 2014
-Title: Nova host data leak to vm instance in rescue mode.
-Reporter: Stanislaw Pitucha (HP)
-Products: Nova
-Versions: 2013.2 versions up to 2013.2.2
+Just to keep people updated on this:
 
-Description:
-Stanislaw Pitucha from Hewlett Packard reported a vulnerability in the
-Nova instance rescue mode. By overwriting the disk inside an instance
-with a malicious image and switching the instance to rescue mode, an
-authenticated user would be able to leak an arbitrary file from the
-compute host to the virtual instance. Note that the host file must be
-readable by the libvirt/kvm context to be exposed. Only setups using
-libvirt to spawn instance, and having "use_cow_images = False" in Nova
-configuration are affected.
+Jean-Francois Dockes replied to my bug reports, he's one of the last
+people who did work on unrtf and he's in contact with the maintainer.
+They'll work on fixing all the issues reported. I also pointed them to
+Fabian's patch.
 
-Icehouse (development branch) fix:
-https://review.openstack.org/82840
-
-Havana fix:
-https://review.openstack.org/82841
-
-Notes:
-This fix will be included in the icehouse-rc1 development milestone and
-in a future 2013.2.3 release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0134
-https://launchpad.net/bugs/1221190
+This sounds good, hopefully we'll get a new unrtf release with fixes
+for all the known issues soon (now we just have to find someone to
+maintain and fix catdoc and antiword).
 
 -- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Hanno Böck
+http://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+Content of type "application/pgp-signature" skipped
