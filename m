@@ -1,76 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/13/5
-Message-Id: <201402131905.s1DJ5Brw016839@linus.mitre.org>
-Date: Thu, 13 Feb 2014 14:05:11 -0500 (EST)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: information on "ImageMagick PSD Images Processing RLE Decoding Buffer Overflow Vulnerability"
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/08/3
+Message-ID: <CABniQZOdRKismzSsAUDVf2kpN-sgJnCzm9xaHV60BPqc79g3vg@mail.gmail.com>
+Date: Mon, 8 Dec 2014 19:06:36 +0800
+From: Shawn <citypw@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Greg,
 
-> The Secunia advisory (http://secunia.com/advisories/56844/) is referring
-> to this commit:
-> 
-> http://trac.imagemagick.org/changeset/14801
-> 
-> Which as far as I know does not have a CVE yet.
+On Mon, Dec 8, 2014 at 3:44 AM, Greg KH <greg@...ah.com> wrote:
+> On Sun, Dec 07, 2014 at 10:43:17PM +0800, Shawn wrote:
+>> Hi Lionel,
+>>
+>> Thanks for your extraordinary explanation about Grsec/PaX. I'm a big
+>> fan of Grsec/PaX. But I think compare the ASLR implementation of
+>> vallina kernel with Grsecurity/PaX is not fair. Linux upstream doesn't
+>> hold the security-oriented philosophy, while Grsecurity/PaX community
+>> are expertise of system-lvl security.
+>
+> Ok, do you seriously think this?  If so, please provide details as to
+> why you feel this way.  The Linux kernel developers take security very
+> seriously, otherwise no one would be using Linux for "secure" systems,
+> right?
+>
+Like Lionel explained in last reply, the term *security* has different
+meaning in the different context. Don't give me wrong, I love
+GNU/Linux( GCC/GLIBC/KERNEL), which are fundamentals of the FOSS
+ecosystem. I've been always telling my customers/friends that
+GNU/Linux( with vanilla kernel) is more secure than M$-windows. But
+Grsecurity/PaX is the must-need stuff to those who has some digital
+assets in a critical scene.
 
-Use CVE-2014-1958 for changeset 14801.
+>> Developer/users could take bear of 5%-10% performance penalty caused
+>> by new features, but I don't think most developers/users would accept
+>> even 1% performance penalty caused by security defensive mitigation.
+>> Personally, I hope we could see Grsecurity/PaX being part of mainline
+>> linux kernel in the future.
+>
+> Great, please do the work to split it up and submit it to be merged,
+> that would be a wonderful thing for you to do if you think the features
+> there are needed.
+>
+I wish I could. Debian/Mempo or hardened-Gentoo can satisfy my daily bread.
 
-There are at least two ways to handle the CVE assignments for the
-other issues. The problem is that CVE-2014-1947 was originally bound
-to the disclosure of "that's still 4 bytes too many" (in ImageMagick
-6.5.4) but this is apparently not an accurate description of the
-problem. (Possibly "4 bytes too many" was based on an incorrect
-interpretation that "L%02ld" meant two four-byte integer values, going
-into a single four-byte buffer.)
+>> IMOHO, offset2lib is a very critical impact to the GNU/Linux
+>> mitigation. What if the bad buys already have some 0day vulns? This
+>> will make their work so much easier to write massive exploit. Hope
+>> upstream could patch this issue as quickly as possible. Plz don't let
+>> this work to the burden of GNU/Linux distro community.
+>
+> What exactly do you mean here?  The fact that this option isn't enabled
+> by lots of distros already means that there isn't much of an issue,
+> right?
+>
+Do you think the mitigations of NX+ASLR+PIE+STACK CANARY can be
+defeated in a few seconds is not a big deal? What do you mean about
+"this option isn't enabled"? The most of suid programs has been
+shipped with these mitigations: NX/ASLR/PIE/STACK
+CANARY/FORTIFY...some are compiled with RELRO. What I mean is this
+issue should be fixed by the upstream, not let distro community to
+maintain a tiny patch.
 
-Option 1:
+> thanks,
+>
+> greg k-h
 
-1a. REJECT CVE-2014-1947.
 
-1b. Assign one new CVE-2014-#### ID for the vulnerability in older
-ImageMagick versions that use the "L%02ld" string. The root cause here
-is that the code did not cover the case of more than 99 layers, which
-is apparently allowable but relatively uncommon. This has a resultant
-buffer overflow, e.g, L99\0 is safe but L100\0 is unsafe. When the
-overflow occurs, it can be described as "1 or more bytes too many."
 
-1c. Assign another new CVE-2014-#### ID for the vulnerability in newer
-ImageMagick versions that use the "L%06ld" string. The root cause here
-is that the code did not recognize the relationship between the 8 (or
-more) characters in "L%06ld" and the actual buffer size. This has a
-resultant buffer overflow of "4 or more bytes too many."
+-- 
+GNU powered it...
+GPL protect it...
+God blessing it...
 
-Option 2:
-
-2a. Keep CVE-2014-1947 for the above-mentioned vulnerability in older
-ImageMagick versions. This preserves the original meaning of
-CVE-2014-1947 as a vulnerability affecting (for example) ImageMagick
-6.5.4.
-
-2b. Assign a new CVE-2014-#### ID for the above-mentioned
-vulnerability in newer ImageMagick versions.
-
-(We will proceed with option 2 unless option 1 is substantially better
-for someone.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJS/RcdAAoJEKllVAevmvmsFEAH/R/cAm9u7IGz//9qvH9tqlJn
-KIB+95ZCz0DBJDWTlyXot3TkvEdd8dnfKNLMfSYdWnTCMMNwOKLhO+2cYd1RJ/Fp
-U8T0vgRIXywrzkXHkdMmxDOrL+5GC1WEUb2ibGlsTRpbtycQOcHyevOkr2o01HwR
-f6Imq8s15Uf/R519ZYdAvrLSfrq/i8cB9seHcXhz81ZxGBkUXiznSOCnwjg+tbLv
-HWjHl75eid5PTs2Zh1dZ9pty949Az23FqhDF1n8uFSk44FuNCpZiNCPICqO+eRrc
-8Ib6PIKfqzelHz9Q2wBQW3I2vxvKxlCm6ohf699TrhypgHjI0O0IlshnrmqntpA=
-=2sDp
------END PGP SIGNATURE-----
+regards
+Shawn
