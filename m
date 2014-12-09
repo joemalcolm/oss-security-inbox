@@ -1,78 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/28/2
-Message-ID: <54276CCE.4090508@redhat.com>
-Date: Sat, 27 Sep 2014 20:05:02 -0600
-From: Eric Blake <eblake@...hat.com>
-To: chet.ramey@...e.edu, Tavis Ormandy <taviso@...xchg8b.com>, Florian Weimer <fw@...eb.enyo.de>
-CC: Michal Zalewski <lcamtuf@...edump.cx>, Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/3
+Message-ID: <20141209020231.GA27212@openwall.com>
+Date: Tue, 9 Dec 2014 05:02:31 +0300
+From: Solar Designer <solar@...nwall.com>
+To: David Cramer <david@...sentry.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request
 Content-Type: text/plain; charset=utf-8
 
-On 09/27/2014 07:39 PM, Chet Ramey wrote:
-> On 9/27/14, 2:17 PM, Chet Ramey wrote:
->> On 9/27/14, 10:28 AM, Tavis Ormandy wrote:
->>
->>> It does look bad, but are you sold on the prefix/suffix solution Chet?
->>> That will at least mean these are not security issues.
->>
->> Yes.  I have no problems worth mentioning with the exported function
->> encoding approach.  I have attached patches implementing it that can
->> be applied to bash versions from bash-2.05b to bash-4.3.  Please take
->> a look, make sure they can be applied cleanly, and so on.
->>
->> There is another discussion worth having before officially releasing
->> these, which I will do later today.
+On Mon, Dec 08, 2014 at 03:28:12PM -0800, David Cramer wrote:
+> (Pardon my complete lack of any clue how this process works) 
 > 
-> OK, here are the more-or-less final versions of the patches for bash-2.05b
-> through bash-4.3.  I made two changes from earlier today: the function
-> export suffix is now `%%', which is not part of a the set of valid variable
-> name characters but avoids any potential problems with including
-> shell metacharacters in the name;
-
-Nice compromise.
-
-> and this version refuses to import shell
-> functions whose name contains a slash, for reasons I discussed earlier.
+> Now seems like a good time to formalize our internal policy of how we do security releases, and while we might have already butchered this one, it was suggested we attempt to get a CVE assigned.
 > 
-> Please let me know if you have any issues with these.
+> Software name and optionally vendor name
+> raven-ruby (part of Sentry)
+> 
+> Type of vulnerability
+> DoS
 
-I'm still a bit worried about the fact that people can do 'function a=b
-() { echo oops; }'; on the outgoing direction, this puts:
+I expect someone else will get back to you regarding the CVE request,
+but I'd like to ask that we please always include the affected software
+name and usually also the vulnerability type in the Subject line of
+messages posted in here.  Many of us don't care about CVEs much, but
+would like to notice information about vulnerabilities possibly relevant
+to us.  Also, having two or more mere "CVE Request" threads on the list
+almost at once is confusing.  A better Subject line would have been e.g.
+"CVE Request - raven-ruby (part of Sentry) DoS".  Thanks!
 
-BASH_FUNC_a=b%%=() { echo oops; }
-
-into the environment, and on the incoming direction that means that you
-have populated $BASH_FUNC_a as a _regular_ variable with contents "b%% {
-echo oops; }'.  The parser is not run (so we are immune to Shell Shock),
-but you are polluting the child namespace with a regular variable that
-the parent did NOT export.
-
-With your patch as-is:
-
-$ bash -c 'function a=b(){ echo oops;};export -f a=b;export
-BASH_FUNC_a=hi; bash
--c "echo \$BASH_FUNC_a"'
-b%%=() { echo oops
-}
-
-Your attempt to export an invalid function name ended up clobbering a
-regular variable.  So I highly recommend that you further tighten things
-up to reject '=' in function names.  Here's your existing tightening line:
-
-
-  	  /* Don't import function names that are invalid identifiers from the
-  	     environment. */
-! 	  if (absolute_program (tname) == 0 && (posixly_correct == 0 ||
-legal_identifier (tname)))
-! 	    parse_and_execute (temp_string, tname,
-
-where absolute_program() filters anything with '/', and the use of
-posixly_correct decides whether to further restrict to variable names.
-
-
--- 
-Eric Blake   eblake redhat com    +1-919-301-3266
-Libvirt virtualization library http://libvirt.org
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (540 bytes)
+Alexander
