@@ -1,48 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/03/8
-Message-ID: <CAJ_zFkLvkQyghiMBXd=gAMmQZWgtOW5e1LxSQQ-fYwdymwBRhA@mail.gmail.com>
-Date: Wed, 3 Sep 2014 11:52:11 -0700
-From: Tavis Ormandy <taviso@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/8
+Message-Id: <12893FA0-A8CB-4396-A0BC-9F6D7222C961@netherlabs.nl>
+Date: Tue, 9 Dec 2014 08:16:20 +0100
+From: Peter van Dijk <peter.van.dijk@...herlabs.nl>
 To: oss-security@...ts.openwall.com
-Subject: heap overflow in procmail
+Subject: Re: PowerDNS Security Advisory 2014-02
 Content-Type: text/plain; charset=utf-8
 
-I noticed a heap overflow in procmail when parsing addresses with
-unbalanced quotes. I encountered this by accident when trying to
-organize a large usenet archive, this post to rec.arts.poems causes
-formail to crash.
+Hello Hanno,
 
-https://groups.google.com/forum/message/raw?msg=alt.arts.poetry.comments/DCuLO3qzovI/CZk15MlfqNkJ
+On 08 Dec 2014, at 23:26 , Hanno Böck <hanno@...eck.de> wrote:
 
-I've attached an mbox for reference.
+> Thanks for the info.
+> 
+> Right now details on this vuln seem to be scarce. I asked myself some
+> questions, but I don't know DNS internals very well.
 
-$ formail -s < mbox > /dev/null
-*** Error in `formail': free(): invalid next size (fast): 0x00007f103784a080 ***
-Segmentation fault (core dumped)
-$ rpm -q procmail
-procmail-3.22-33.fc20.x86_64
+These two articles from NLNetlabs and ISC might help, they are more verbose than ours:
+http://www.unbound.net/downloads/CVE-2014-8602.txt
+https://kb.isc.org/article/AA-01216
 
+I’m happy to answer followup questions.
 
-It looks like the fix is
+> As this affects three implementations the obvious first question would
+> be if others are affected, too. Has this been checked?
 
---- formisc.c 2013-08-04 00:13:33.000000000 -0700
-+++ formisc.c 2014-09-03 11:42:25.986002396 -0700
-@@ -84,12 +84,11 @@
-  case '"':*target++=delim='"';start++;
-       }
-      ;{ int i;
-- do
-+ while(*start)
-    if((i= *target++= *start++)==delim) /* corresponding delimiter? */
-       break;
-    else if(i=='\\'&&*start)    /* skip quoted character */
-       *target++= *start++;
-- while(*start); /* anything? */
-       }
-      hitspc=2;
-    }
+Somebody asked me to (help him) check djbdns today, which we’ll do. Any other implementations you are interested in? I have a lab setup for this issue so I’m happy to check.
+
+> And is this only a DoS for the attacked server or would it also allow
+> some completely new kind of DNS reflection attack (i.e. generating a
+> loop where every loop iteration generates an UDP packet send to a
+> victim)?
+
+I’m convinced the loop could involve unwilling victims (unless they send responses that break the loop!), but I have not tried this in practice.
+
+Kind regards,
+-- 
+Peter van Dijk
+Netherlabs Computer Consulting BV - http://www.netherlabs.nl/
 
 
-Tavis.
-
-Download attachment "mbox" of type "application/octet-stream" (3597 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
