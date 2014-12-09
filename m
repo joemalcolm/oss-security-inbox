@@ -1,18 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/17/2
-Message-ID: <53F01006.6070006@redhat.com>
-Date: Sat, 16 Aug 2014 20:14:30 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: FreeNAS default blank password
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/19
+Message-ID: <20141209160755.GA13257@ypig.lip.ens-lyon.fr>
+Date: Tue, 9 Dec 2014 17:07:55 +0100
+From: Vincent Lefevre <vincent@...c17.net>
+To: Vasyl Kaigorodov <vkaigoro@...hat.com>, 772008@...s.debian.org
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Bug#772008: CVE request:  mpfr: buffer overflow in mpfr_strtofr
 Content-Type: text/plain; charset=utf-8
 
-Also does anyone have a security contact for FreeNAS? I searched and
-struck out, was hoping security@ would work.
+Hi,
+
+On 2014-12-08 13:45:12 +0100, Vasyl Kaigorodov wrote:
+> Hello,
+> 
+> A buffer overflow was reported [1] in mpfr.
+> This is due to incorrect GMP documentation for mpn_set_str about the
+> size of a buffer (discussion is at [1]; first fix in the GMP
+> documentation is at [2]). This bug is present in the MPFR versions
+> from 2.1.0 (adding mpfr_strtofr) to this one, and can be detected by
+> running "make check" in a 32-bit ABI under GNU/Linux with alloca
+> disabled (this is currently possible by using the --with-gmp-build
+> configure option where alloca has been disabled in the GMP build). It
+> is fixed by the strtofr patch [3].
+> Corresponding changeset in the 3.1 branch: 9110 [4].
+> 
+> [1]: https://gmplib.org/list-archives/gmp-bugs/2013-December/003267.html
+> [2]: https://gmplib.org/repo/gmp-5.1/raw-rev/d19172622a74
+> [3]: http://www.mpfr.org/mpfr-3.1.2/patch11
+> [4]: https://gforge.inria.fr/scm/viewvc.php?view=rev&root=mpfr&revision=9110
+
+The corresponding changeset is 9243, with URL:
+
+  https://gforge.inria.fr/scm/viewvc.php?view=rev&root=mpfr&revision=9243
+
+Regards,
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Vincent Lefèvre <vincent@...c17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
