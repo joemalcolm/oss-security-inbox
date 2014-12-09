@@ -1,36 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/02/3
-Message-ID: <53B42088.9090901@redhat.com>
-Date: Wed, 02 Jul 2014 17:08:56 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com, misc@...b.org
-Subject: Re: Ansible CVE requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/7
+Message-Id: <BB5C6DCB-689F-434F-97CC-5AE4EBCB67AF@omniti.com>
+Date: Tue, 9 Dec 2014 01:43:51 -0500
+From: Dan McDonald <danmcd@...iti.com>
+To: oss-security@...ts.openwall.com
+Cc: Dan McDonald <danmcd@...iti.com>
+Subject: CVE Request for illumos distributions
 Content-Type: text/plain; charset=utf-8
 
-On 07/02/2014 04:49 PM, cve-assign@...re.org wrote:
->> It turns out that the fix was incomplete.
->
->> I think this warrants a separate CVE ID.
->
-> Use CVE-2014-4678 for the
-> https://github.com/ansible/ansible/commit/5429b85b9f6c2e640074176f36ff05fd5e4d1916
-> fix that was announced in the 2014-06-25 ansible-announce "Ansible
-> 1.6.4 update - security release" message at
-> https://groups.google.com/forum/message/raw?msg=ansible-announce/ieV1vZvcTXU/5Q93ThkY9rIJ
+I believe this will be the first time the illumos project (http://www.illumos.org/) has requested a CVE number.  I apologize for any newbie mistakes.  PLEASE NOTE:  We are the open-source inheritor of what was once OpenSolaris's OS/Net consolidation (i.e. the kernel, system libraries, and system commands).  WE ARE NOT RELATED TO ORACLE or ORACLE SOLARIS.
 
-Thanks.
+Illumos bug #5421 - http://illumos.org/issues/5421  which is now fixed in the upstream illumos-gate, is an innocuous fix to a serious problem that allows an arbitrary user in the global zone (non-global zones are not able to panic the machine) to panic the machine.
 
-> Additional CVE IDs (at least two) will be assigned for:
->
-> A. The 2014-06-25 ansible-announce "Ansible 1.6.5 - updated security
-> fix" message at
-> https://groups.google.com/forum/message/raw?msg=ansible-announce/A1px5egCnGQ/jH6f5HM7kpkJ
+Illumos has various distributions from various parties.  These include, but are not limited to:
 
-I think the change in 1.6.5 was an attempt to fix a functionality 
-regression, not something that actually added restrictions to the 
-sandbox.  I am aware that this assessment is at odds with what upstream 
-has stated, so you might want to assign a CVE nevertheless.
+	OmniOS from OmniTI
+	SmartOS from Joyent
+	NexentaStor from Nexenta
+	The OpenIndiana project
+	Coraid
 
--- 
-Florian Weimer / Red Hat Product Security
+Because SmartOS presents non-global zones to its non-administrative users, it is not a high-priority for them.  For OmniOS and OpenIndiana, it is more critical.
+
+OmniOS has updated its packaging servers for all supported releases:  r151006/LTS, r151010/old-Stable, r151012/current-stable, and bloody.  Merely issuing "pkg update" and rebooting will fix the problem.  Users still on r151008 should upgrade to r151012 ASAP.
+
+SmartOS has standard upgrade procedures.
+
+Other distros' contacts are Bcc:ed here.  They will contact me if they have updates.
+
+Thank you!
+Daniel L. McDonald -- Illumos RTI Advocate, and unofficial Security Coordinator
+
