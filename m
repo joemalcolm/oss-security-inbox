@@ -1,34 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/18
-Message-ID: <20141117180601.GA9044@jwilk.net>
-Date: Mon, 17 Nov 2014 19:06:01 +0100
-From: Jakub Wilk <jwilk@...lk.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/9
+Message-Id: <4F9F4067-2AA7-48D2-93E9-ECBD0AD3CC6A@netherlabs.nl>
+Date: Tue, 9 Dec 2014 08:54:15 +0100
+From: Peter van Dijk <peter.van.dijk@...herlabs.nl>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+Subject: Re: PowerDNS Security Advisory 2014-02
 Content-Type: text/plain; charset=utf-8
 
-* Hanno Böck <hanno@...eck.de>, 2014-11-17, 17:21:
->>>I wasn't able to fuzz a crash out of 7z, arj, msgunfmt (gettext),
->>
->>https://bugs.debian.org/763820
->>https://bugs.debian.org/769901
->>
->>I don't remember the exact details, but I'm pretty sure it took at 
->>most a few hours of afl-fuzzing to find these crashers.
->
->I'd consider "few hours of afl-fuzzing" not to be low hanging fruit, 
->but opinions may differ on that (I'm currently only focusing on 
->software where I get the crashers within minutes).
+Hello,
 
-Fair enough.
+On 09 Dec 2014, at 8:16 , Peter van Dijk <peter.van.dijk@...herlabs.nl> wrote:
 
->But appart from that: The first bug is marked as fixed but no 
->indication is given whether the fix went upstream.
+> Somebody asked me to (help him) check djbdns today, which we’ll do. Any other implementations you are interested in?
 
-It's fixed upstream:
-http://git.savannah.gnu.org/cgit/gettext.git/commit/?id=28a02a6f4f41
-(But for avoidance of doubt, this is NOT a vulnerability, just poor 
-error handling.)
+Vanilla djbdns 1.05 manages a counter called ‘loop’ (look for ‘z->loop’ in the code); if this counter hits 100, it simply aborts the current query. This is similar to the fixes now present in PowerDNS, BIND and Unbound.
 
+Breakpoint 4, doit (z=0x611660 <u>, state=1) at query.c:452
+452	  if (++z->loop == 100) goto DIE;
+1: z->loop = 99
+(gdb) cont
+Continuing.
+
+It then logs 'drop 1 input/output error’ and aborts resolution of this query. Note that it actually drops the query, the client will eventually timeout; PowerDNS Recursor sends a SERVFAIL, and I presume so do BIND and Unbound.
+
+Kind regards,
 -- 
-Jakub Wilk
+Peter van Dijk
+Netherlabs Computer Consulting BV - http://www.netherlabs.nl/
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
