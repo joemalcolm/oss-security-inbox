@@ -1,107 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/19
-Message-ID: <20141008183712.GA3400@zoho.com>
-Date: Wed, 8 Oct 2014 18:37:12 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/23
+Message-ID: <54874759.9050806@enovance.com>
+Date: Tue, 09 Dec 2014 14:02:49 -0500
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Cc: chet.ramey@...e.edu
-Subject: Re: Aftershock (was: Shellshocker - Repository of "Shellshock" Proof of Concept Code)
+Subject: [OSSA 2014-040] Horizon denial of service attack through login page (CVE-2014-8124)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 07, 2014 at 02:15:24PM -0400, Chet Ramey wrote:
-> On 10/7/14, 2:46 AM, mancha wrote:
-> 
-> Please take my comments as the perspective of someone who only
-> interacts with this group peripherally.  That may or may not give them
-> value.
+OpenStack Security Advisory: 2014-040
+CVE: CVE-2014-8124
+Date: December 09, 2014
+Title: Horizon denial of service attack through login page
+Reporter: Eric Peterson (Time Warner Cable)
+Products: Horizon
+Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
 
-Hi Chet.
+Description:
+Eric Peterson from Time Warner Cable reported a vulnerability in
+Horizon. By making repeated requests to the Horizon login page a remote
+attacker may generate unwanted session records, potentially resulting in
+a denial of service. Only Horizon setups using a db or memcached session
+engine are affected.
 
-Many thanks for your thoughtful response. Any discussion about
-shellshock lessons learned would be incomplete without your input.
+Kilo (development branch) fix:
+https://review.openstack.org/140353
 
-> > I don't know how long the initial report was embargo'd but I'm
-> > pretty sure the process became infinitely more productive after the
-> > veil of semi-secrecy was lifted (be it in metrics like LoC/hour or
-> > reports/day).
-> 
-> It was almost two weeks.  I figured out the initial fix within hours,
-> and as far as I know, the rest of the embargo time was spent preparing
-> vendor patches and deciding on the logistics of notification.  From my
-> perspective, that process was opaque, including the set of vendors
-> that was notified.
+Juno fix:
+https://review.openstack.org/140358
 
-Taking "within hours" to mean 4 for argument's sake, gives about a 1.2%
-to 98.8% breakdown of embargo time spent developing a fix versus all
-else. Striking.
+Icehouse fix:
+https://review.openstack.org/140356
 
-> I guess whether or not the process `became more productive' is
-> debatable.  Again from my perspective, it became clear that Florian's
-> function name mangling approach was the way to go once Tavis reported
-> the second parser problem.  However, since I don't do this work for a
-> living, I had to wait until the weekend to do it.  There's nothing
-> about the process that would have improved that.
-> 
-> If you assume that `infinitely more productive' means that there were
-> more bug reports against the parser and other code, then sure, there
-> were more bug reports after the initial disclosure.
-> 
-> You can, and should, ignore LoC as a metric.  None of these fixes took
-> more than a couple of dozen lines of code.  The longest by far was the
-> function name mangling patch, and that didn't directly address a
-> vulnerability.
->
-> Frankly, if you want to improve the process, we should all get better
-> at defining the boundary between CVE-worthy incidents and bugs.  Once
-> the function name mangling patch was released, which was by the third
-> day after the initial disclosure, everything that followed was a shell
-> bug.  Without remote exploit possibility or local privilege
-> escalation, you're just left with bugs. You can use CVE IDs as an
-> incentive to get vendors to release patches and users to install them,
-> and that's fine, but be transparent that that's what you're doing.
+django_openstack_auth fix:
+https://review.openstack.org/140352
 
-Maybe LoC is a poor metric but I don't want that to obscure the real
-message: the process's high dynamism post-disclosure. As you correctly
-point out, many recent parser flaws don't rise to the level of security
-concerns primarily because of the prefix/suffix barrier.
+Notes:
+This fix will be included in future 2014.1.3 and 2014.2.1 releases.
+The django_openstack_auth Horizon dependency requires the additional
+patch above.
 
-However, it's important to point out that critical piece of hardening
-was a post-disclosure innovation and, more importantly, was triggered by
-post-disclosure findings and interaction.
+References:
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8124
+https://launchpad.net/bugs/1394370
 
-I've not given the CVE allocation process much thought but it has been
-discussed a bit in http://seclists.org/oss-sec/2014/q4/26.
-
-> > Your solution is to add Tavis and Michal to distros@. What about the
-> > next flaw when the two researchers who turn out to be key are Bob
-> > and Fred? Add them next? You'll be playing catch-up.
-> 
-> Isn't it generals who are always fighting the last war?
->
-> It depends on what kind of community you're trying to build, and the
-> form you want it to take.  It's equally valid to say that researchers
-> who have already done good work are likely to do more in the future.
-
-I certainly agree it's reasonable to expect researchers like Stephane,
-Tavis, and Michal, who've been instrumental in the analysis & response
-of shellshock writ large, to prove valuable in future TBD security
-scenarios as well.
-
-My response was about how best to secure their (and others') involvement
-in a way that maximizes benefits.
-
-I perceived Alexander to be suggesting the answer is enlisting them
-pre-disclosure by adding them to a closed list. Maybe so.
-
-But, after having observed important dots only get connected
-post-disclosure, I see strong arguments in favor of earlier engagement
-of the broader security community. As happened with shellshock, this can
-unleash unanticipated synergies and provide an extensive and important
-sounding board.  
-
-Once again, thanks for all your efforts.
-
-$ env BASH_FUNC_x%%='() { echo "--mancha"; }' bash -c 'x;'
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
 
 
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
