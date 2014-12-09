@@ -1,40 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/29
-Message-ID: <20141002103205.5633843c@hboeck.de>
-Date: Thu, 2 Oct 2014 10:32:05 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/21
+Message-ID: <548721F3.9090206@tillo.ch>
+Date: Tue, 09 Dec 2014 17:23:15 +0100
+From: Martino Dell'Ambrogio <tillo@...lo.ch>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Mediawiki before 1.19.20, 1.22.12, 1.23.5 XSS through CSS
+Subject: Re: PIE bypass using VDSO ASLR weakness
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 12/09/2014 04:33 PM, Reno Robert wrote:
+> Hi Daniel, COMPAT_VDSO is not enabled. Just that randomization is 20 bits
+> and same values are generated on repeated execution.
+I don't have the same behavior on a default linux-image-3.2.0-31-generic 
+3.2.0-31.50 (COMPAT_VDSO not set).
 
-Another mediawiki XSS though CSS (different from CVE-2014-7199).
+I generated some values and, while distribution is not perfect, it feels 
+fairly unpredictable :
 
-Upstream release announcement
-https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-October/000163.html
-* (bug 70672) SECURITY: OutputPage: Remove separation of css and js
-module allowance.
+$ wc -l VDSO-ASLR.lst; cat VDSO-ASLR.lst |sort |uniq -c |sort -n -r 
+|head; sort -u VDSO-ASLR.lst |wc -l
+15798 VDSO-ASLR.lst
+      12 (0x00007fff4cdff000)
+      11 (0x00007fffd09ff000)
+      11 (0x00007fffc2bff000)
+      11 (0x00007fffa0dff000)
+      11 (0x00007fff4d7ff000)
+      11 (0x00007fff1d3ff000)
+      11 (0x00007fff1a1ff000)
+      11 (0x00007fff14dff000)
+      11 (0x00007fff0e9ff000)
+      10 (0x00007fffe1dff000)
+9869
 
-Bug report:
-https://bugzilla.wikimedia.org/show_bug.cgi?id=70672
+This is 9869 different results over 15798 samples, with a very light 
+shift toward the shown addresses.
 
-Code commit:
-https://gerrit.wikimedia.org/r/#/c/164271/
+What's weird, though, is that a run of the same set through Burp Suite 
+analysis tells me that there are at best 8 estimated bits of effective 
+entropy.
+This suggests, if my interpretation is correct, that there may be some 
+weakness (by calculating adjacent and/or subsequent values) allowing to 
+find a valid combination under 256 tries.
 
-Please assign CVE.
 
-(At some point mediawiki managed to get CVEs prior to releases which I
-think is more convenient. There are mediawiki devs on this list, maybe
-it could be coordinated with them and mitre that this could happen
-again in the future.)
 
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
+I'm not a cryptologist so I may be missing a point here, but I think 
+it's worth discussing.
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Martino Dell'Ambrogio
+Security Auditor
+Web: http://www.tillo.ch/
+Email: tillo@...lo.ch
+
+
+Content of type "text/html" skipped
+
+Download attachment "egbicfje.png" of type "image/png" (27918 bytes)
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4234 bytes)
