@@ -1,23 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/06/1
-Message-ID: <5317D0DF.2000305@redhat.com>
-Date: Thu, 06 Mar 2014 12:35:27 +1100
-From: Garth Mollett <gmollett@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-0036 rubygem-rbovirt: unsafe use of rest-client
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/5
+Message-ID: <30E5315B8A67497AAD215797DDC3F4EB@getsentry.com>
+Date: Mon, 8 Dec 2014 18:11:03 -0800
+From: David Cramer <david@...sentry.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE Request
 Content-Type: text/plain; charset=utf-8
 
-Michael Samuel of Amcom discovered that the rbovirt gem used rest-client
-with SSL verification disabled. Any products making use of this gem are
-likely vulnerable to MITM attacks.
+Thanks Alexander 
 
-This is fixed in the latest upstream release:
-http://rubygems.org/gems/rbovirt/versions/0.0.24
+I was curious about that.
 
--- 
-Garth Mollett / Red Hat Security Response Team
+It might be worthwhile to update this page (which is where I came from) with more details:
+
+http://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html 
+
+On Monday, December 8, 2014 at 6:02 PM, Solar Designer wrote: 
+> On Mon, Dec 08, 2014 at 03:28:12PM -0800, David Cramer wrote:
+> > (Pardon my complete lack of any clue how this process works) 
+> > 
+> > Now seems like a good time to formalize our internal policy of how we do security releases, and while we might have already butchered this one, it was suggested we attempt to get a CVE assigned.
+> > 
+> > Software name and optionally vendor name
+> > raven-ruby (part of Sentry)
+> > 
+> > Type of vulnerability
+> > DoS
+> > 
+> 
+> 
+> I expect someone else will get back to you regarding the CVE request,
+> but I'd like to ask that we please always include the affected software
+> name and usually also the vulnerability type in the Subject line of
+> messages posted in here. Many of us don't care about CVEs much, but
+> would like to notice information about vulnerabilities possibly relevant
+> to us. Also, having two or more mere "CVE Request" threads on the list
+> almost at once is confusing. A better Subject line would have been e.g.
+> "CVE Request - raven-ruby (part of Sentry) DoS". Thanks!
+> 
+> Alexander 
 
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
