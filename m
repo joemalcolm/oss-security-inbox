@@ -1,47 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/10
-Message-ID: <546970FD.30501@toshiba-tsdv.com>
-Date: Mon, 17 Nov 2014 10:52:29 +0700
-From: Nguyen Cong <cong.nguyenthe@...hiba-tsdv.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/28
+Message-ID: <548761D2.40006@gmail.com>
+Date: Tue, 09 Dec 2014 15:55:46 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Location of OS security audit reports
+Subject: Re: PIE bypass using VDSO ASLR weakness
 Content-Type: text/plain; charset=utf-8
 
-Is this what you want?
-http://www.cvedetails.com/top-50-vendors.php
-Hope this help :D
-On 17/11/2014 10:17, M.T. Roebuck wrote:
-> Hello,
->
-> I haven't had any success yet in finding security audit reports for
-> any *nix OS (I haven't looked for them for MS/Apple products).
->
-> Can you tell me where to find them? I thought that I'm not
-> using the right word or word combination. This list seemed to be
-> a good target as most here are in the security milieu.
->
-> I'm looking for complete and comprehensive reports from an
-> extensive and exhaustive security audit of the entire OS.
->
-> But if my goal of extensive and exhaustive is too lofty then
-> something less so might at least help.
->
-> Also I am interested in OSs that are not *nix or MS/Apple.
-> I know of Haiku OS but are there any others? Does China
-> or Japan or any other country have their own OSs?
->
-> Is the world really limited to just a few?
->
+On 09/12/14 10:33 AM, Reno Robert wrote:
+> Hi Daniel, COMPAT_VDSO is not enabled. Just that randomization is 20 bits
+> and same values are generated on repeated execution.
 
--- 
-=====================================================================
-Nguyen The Cong (Mr)
-Software Engineer
-Toshiba Software Development (Vietnam) Co.,Ltd
-519 Kim Ma street, Ba Dinh District, Hanoi, Vietnam
-tel:    +84-4-2220 8801 (Ext. 208)
-e-mail: cong.nguyenthe@...hiba-tsdv.com
-=====================================================================
+Ah, I was testing against PaX ASLR :). Sorry for the noise.
 
-Note: This e-mail message may contain personal information or confidential information. If you are not the addressee of this message, please delete this message and kindly notify the sender as soon as possible - do not copy, use, or disclose this message.
 
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
