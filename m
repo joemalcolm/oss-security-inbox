@@ -1,24 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2016/12/12/6
-Message-ID: <CAH8yC8n1PaaH0Pby5NGSsXZ41g8=y_1Y_QeKTFcGyAKOh=CumQ@mail.gmail.com>
-Date: Mon, 12 Dec 2016 13:47:56 -0500
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/13
+Message-ID: <5486B508.6070107@gmail.com>
+Date: Tue, 09 Dec 2014 03:38:32 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Gergely Nagy <ngg@...sorit.com>, Tamás Koczka <koczka@...sorit.com>,  Jean-Pierre Münch <jean-pierre.muench@....de>,  Uri Blumenthal <mouse008@...il.com>
-Subject: CVE Request: Potential DoS in Crypto++ ASN.1 parser
+Subject: Re: PIE bypass using VDSO ASLR weakness
 Content-Type: text/plain; charset=utf-8
 
-Gergely Nagy and Tamás Koczka of Tresorit report a potential DoS in
-the Crypto++ ASN.1 parser. A copy of their email with the report can
-be found at https://groups.google.com/d/msg/cryptopp-users/fEQ8jWg_K8g/qOLHGIDICwAJ.
+On 09/12/14 03:05 AM, Reno Robert wrote:
+> Even in 64 bit addressing, randomization of VDSO seems to be low and the
+> base address could be bruteforced, thus allowing to use gadgets from VDSO
+> if not from executable. Though VDSO is not rich in gadgets, it has few good
+> ones to make interesting syscalls including execve(). The below blog post
+> describes the availability of gadgets and feasibility of bruteforce, which
+> could be combined for an effective payload.
+> 
+> http://v0ids3curity.blogspot.in/2014/12/return-to-vdso-using-elf-auxiliary.html
+> 
+> 
+> renorobert@...ntu:~$ readelf -h ./pie
+> ELF Header:
+>   Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
+>   Class:                             ELF64
+>   Data:                              2's complement, little endian
+>   Version:                          1 (current)
+>   OS/ABI:                          UNIX - System V
+>   ABI Version:                    0
+>   Type:                              DYN (Shared object file)
+>   Machine:                         Advanced Micro Devices X86-64
+>   Version:                          0x1
+>   Entry point address:         0x620
+> 
+> renorobert@...ntu:~$ while true; do ldd ./pie; done | grep
+> 0x00007fff969fe000
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+>         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> 
+> Do we need better ASLR for VDSO to make PIE more effective?
 
-When Crypto++ library parses an ASN.1 data value, the library
-allocates for the content octets based on the length octets. Later, if
-there's too few or too little content octets, the library throws a
-BERDecodeErr exception. The memory for the content octets will be
-zeroized (even if unused), which could take a long time on a large
-allocation.
+You must have COMPAT_VDSO enabled. It's randomized fine with a sane
+kernel configuration.
 
-Please assign a CVE for the potential issue.
 
-Thanks in advance.
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
