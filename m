@@ -1,19 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/31
-Message-Id: <E1XbF7r-0007UA-6l@rmm6prod02.runbox.com>
-Date: Mon, 06 Oct 2014 16:43:23 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Who named shellshock?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/11
+Message-ID: <20141209092228.2fdd103b@pc>
+Date: Tue, 9 Dec 2014 09:22:28 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: Peter van Dijk <peter.van.dijk@...herlabs.nl>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: PowerDNS Security Advisory 2014-02
 Content-Type: text/plain; charset=utf-8
 
-Who created the name "shellshock"?  And when?
+On Tue, 9 Dec 2014 08:16:20 +0100
+Peter van Dijk <peter.van.dijk@...herlabs.nl> wrote:
 
-I can't seem to find anything:
-* Stéphane Chazelas proposed "bashdoor" on 2014-09-14 14:29:48 +0100, but this did not catch on. (http://seclists.org/oss-sec/2014/q4/92).
-* Robert Graham (Errata Softwre) posted "Update: I think people are calling this the "shellshock" bug. Still looking for official logo" ( http://blog.erratasec.com/2014/09/bash-bug-as-big-as-heartbleed.html ).  This wording suggests that is reporting what OTHERS call it, and not a name he gave himself.
-* Andreas Lindh tweeted a proposed image for "shellshock, but this was in response to Robert Graham's "official logo" request - so this is DEFINITELY not the source of the name. (Tweet at: https://twitter.com/addelindh/status/514840916692324352 )
+> Somebody asked me to (help him) check djbdns today, which we’ll do.
+> Any other implementations you are interested in? I have a lab setup
+> for this issue so I’m happy to check.
 
-Suggestions?
+I think dnsmasq would be interesting. Don't know which servers from the
+proprietary world may be worth investigating.
 
---- David A. Wheeler
+> > And is this only a DoS for the attacked server or would it also
+> > allow some completely new kind of DNS reflection attack (i.e.
+> > generating a loop where every loop iteration generates an UDP
+> > packet send to a victim)?
+> 
+> I’m convinced the loop could involve unwilling victims (unless they
+> send responses that break the loop!), but I have not tried this in
+> practice.
+
+However that would be very interesting to know. DNS reflection attacks
+are a big thing, if they could be amplified with a loop on the resolver
+that'd almost certainly boost this issue to a whole new level.
+
+
+-- 
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
