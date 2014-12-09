@@ -1,27 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/20/18
-Message-ID: <alpine.LNX.2.00.1402201435310.2318@forced.attrition.org>
-Date: Thu, 20 Feb 2014 14:38:50 -0600 (CST)
-From: security curmudgeon <jericho@...rition.org>
-To: oss-security@...ts.openwall.com
-Subject: Request regarding posts to the lists
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/2
+Message-ID: <20141209010407.GA14610@glandium.org>
+Date: Tue, 9 Dec 2014 10:04:07 +0900
+From: Mike Hommey <mh@...ndium.org>
+To: Hector Marco <hecmargi@....es>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
+> Hi,
+> 
+> This is a disclosure of a weakness of the ASLR Linux implementation.
+> The problem appears when the executable is PIE compiled and it has an
+> address leak belonging to the executable. We named this weakness:
+> offset2lib.
+> 
+> In this scenario, an attacker is able to de-randomize all mmapped
+> areas (libraries, mapped files, etc.) by knowing only an address
+> belonging to the application and the offset2lib value.
+> 
+> We have built a PoC which bypasses on a 64 bit Linux system, the three
+> most widely adopted and effective protection techniques: No-eXecutable
+> bit (NX), address space layout randomization (ASLR) and stack smashing
+> protector (SSP). The exploit obtains a remote shell in less than one
+> second.
+> 
+> We have proposed the ASLRv3 which is a small Linux patch which removes
+> the offset2lib weakness.
+> 
+> Details of the weakness, steps to exploit the offset2lib weakness, a
+> working proof of concept exploit, recommendations and a demonstrative
+> video has been publish at:
+> http://cybersecurity.upv.es/attacks/offset2lib/offset2lib.html
 
-This mail list deals with vulnerabilities in several hundred pieces of 
-software any given month. Please remember that many subscribers to this 
-list are not part of your project or company. As such, please clearly 
-identify the product in the subject line.
+If you have the base address of the executable and are able to read any
+byte in the process address space, as my reading of the paper suggests,
+then you don't even need offsetlib, and no amount of ASLR can save you.
 
-Just including a sub-component or vulnerable functions and/or a CVE does 
-not tell us what software the mail is about. This has gotten out of hand 
-and in at least one case in the past few days, the entire mail never 
-clearly stated the software that was vulnerable. Sure, most of us know the 
-poster and it followed other advisories, but to newcomers or anyone 
-reaching that post via a Google search it is not very friendly.
+Just read the ELF program headers that you can find at the base address
+of the executable to find the PT_DYNAMIC segment. In that segment, find
+the DT_DEBUG entry, which will give you a pointer to a r_debug struct,
+which definition you can find in /usr/include/link.h.
 
-Thanks,
+That struct has a r_map member that gives you a linked list of libraries
+the dynamic linker (ld.so) loaded, with the base address for each of
+them.
 
-jericho / OSVDB.org
+Those data structures are used by gdb, so removing the DT_DEBUG pointer
+would break debugging with gdb.
 
-
+Mike
