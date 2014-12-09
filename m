@@ -1,42 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/3
-Message-Id: <201406260024.s5Q0ONr5001579@linus.mitre.org>
-Date: Wed, 25 Jun 2014 20:24:23 -0400 (EDT)
-From: cve-assign@...re.org
-To: till.maas@...team-pentesting.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE ID Request for Python CGIHTTPServer File Disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/24
+Message-ID: <CA+rthh8y6eDxPJLvjeVokgjV36AL+LcVd9WT0vYJWhvaG6Xb=Q@mail.gmail.com>
+Date: Tue, 9 Dec 2014 20:38:08 +0100
+From: Mathias Krause <minipli@...glemail.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: PIE bypass using VDSO ASLR weakness
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 9 December 2014 at 16:33, Reno Robert <renorobert@...il.com> wrote:
+> Hi Daniel, COMPAT_VDSO is not enabled. Just that randomization is 20 bits
+> and same values are generated on repeated execution.
+>
+> On Tue, Dec 9, 2014 at 2:08 PM, Daniel Micay <danielmicay@...il.com> wrote:
+>> On 09/12/14 03:05 AM, Reno Robert wrote:
+>> > Do we need better ASLR for VDSO to make PIE more effective?
+>>
+>> You must have COMPAT_VDSO enabled. It's randomized fine with a sane
+>> kernel configuration.
+>>
 
-> http://bugs.python.org/issue21766
+minipli@jig:~/tmp$ echo 'int main(){}' | gcc -pie -std=c99 -xc - -o pie
+minipli@jig:~/tmp$ for i in $(seq 10000); do ldd ./pie; done | grep
+vdso | sort | uniq  | wc -l
+10000
+minipli@jig:~/tmp$ uname -rm
+3.17.3-grsec+ x86_64
 
-Use CVE-2014-4650 for the "does not properly handle URL-encoded path
-separators in URLs" issue, with the two impacts of "gain access to the
-contents of CGI binaries or the source code of CGI scripts" and
-"execute code that was not intended to be executed."
+So Daniel's advice seems legit to me. However, sane in this context
+would mean CONFIG_PAX_RANDMMAP=y ;)
 
-This CVE request was somewhat confusing in that it only mentioned
-file disclosure, but many CVE consumers would consider the
-code execution to be more important. If there is a complication --
-for example, if the code execution CVE request was being handled
-separately -- please let us know.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTq2fSAAoJEKllVAevmvmsJ3wH/inxD0wVRzEdhXpu5Yr3kG8n
-WS4yvEjFKC+ev04Y6SM2K5JckJF3miA0VCURZ1075VRUiNESP2eseWEe6YGPC/OE
-OixE+pNfVv2Ex3HcHTkYyMRx5CJL1yCCOaeiYeqi2vIAa0fLbLbHqUiMSoSXPWfx
-IOMUF9IcMI3sovE3MQLQjhoiZnd4MErIhuEGRRdeg8P+F3mU+v67blwi7bfHqoH4
-JcaLiOCjs8HQ0zbqrOTjh6ucVNIDwThlOJnhEJBCoajOLW4Y3RR5ev4TXLyRZzgQ
-FC76zDC1xwfsVxel5Ld4kLtEvI2weUDKf4R+kp88E6ORg2hTyywM3SFfAffx01g=
-=dclN
------END PGP SIGNATURE-----
+Regards,
+Mathias
