@@ -1,69 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/21/9
-Message-ID: <20140721123647.GA28192@chaz.gmail.com>
-Date: Mon, 21 Jul 2014 13:36:47 +0100
-From: Stephane Chazelas <stephane.chazelas@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/14
+Message-ID: <5486F2E6.6020803@redhat.com>
+Date: Tue, 09 Dec 2014 18:32:30 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0475: glibc directory traversal in LC_* locale handling
+Subject: Two rpm flaws
 Content-Type: text/plain; charset=utf-8
 
-2014-07-10 15:09:30 -0400, Rich Felker:
-> On Thu, Jul 10, 2014 at 08:52:24PM +0200, Florian Weimer wrote:
-> > Stephane Chazelas discovered that directory traversal issue in locale
-> > handling in glibc.  glibc accepts relative paths with ".." components
-> > in the LC_* and LANG variables.  Together with typical OpenSSH
-> > configurations (with suitable AcceptEnv settings in sshd_config), this
-> > could conceivably be used to bypass ForceCommand restrictions (or
-> > restricted shells), assuming the attacker has sufficient level of
-> > access to a file system location on the host to create crafted locale
-> > definitions there.
-> 
-> Am I correct in assuming this affects most typical git setups (e.g.
-> gitolite) using ssh authorized_keys files with forced commands, where
-> the malicious file could simply be created as part of the git
-> repository? Or are these usually setup to filter the environment?
-[...]
+Two flaws in RPM (actually one of them is in cpio, which is embedded 
+into RPM) was found by Florian Weimer of Red Hat Product Security.
+Details as follows:
 
-It does affect git setups. You may run into the issue even
-*before* the git command is run on the server.
+CVE-2013-6435:
+It was found that RPM wrote file contents to the target installation 
+directory under a temporary name, and verified its cryptographic 
+signature only after the temporary file has been written completely. 
+Under certain conditions, the system interprets the unverified temporary 
+file contents and extracts commands from it. This could allow an 
+attacker to modify signed RPM files in such a way that they would 
+execute code chosen by the attacker during package installation.
 
-As I mentionned in my initial report, the issue is agravated by
-several misfeatures in openssh and bash.
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=1039811
 
-openssh runs the supplied forcecommand with the login shell of
-the server user instead of just "sh". So, crafted locales can be used
-to affect the processing of those shells.
+CVE-2014-8118:
+It was found that RPM could encounter an integer overflow, leading to a 
+stack-based overflow, while parsing a crafted CPIO header in the payload 
+section of an RPM file.  This could allow an attacker to modify signed 
+RPM files in such a way that they would execute code chosen by the 
+attacker during package installation.
 
-That is especially a problem with bash (the shell of the GNU
-project which is even still used as /bin/sh on some systems and
-the default shell for adduser on most GNU/Linux systems and
-others).
+Reference:
+https://bugzilla.redhat.com/show_bug.cgi?id=1168715
 
-With bash (even when not interactive and even when called as
-"sh"), LC_CTYPE is used for the parsing of the command line.
-For instance the "blank" character class is used as token
-delimiters, alnum to validate variable names...
 
-For instance, with a forcecommand=/bin/false, one can turn that
-into an "ls" by making all the "/bin/fae" characters "blank"
-characters (yash also has the problem).
-
-bash (though not when called as sh) explicitely reads ~/.bashrc
-(and /etc/bash.bashrc or equivalent) when called over ssh. With
-the typical /etc/bash.bashrc found on Debian, I could craft a
-locale that made that executes "sh" when interpreting it.
-
-gitlab allows you to upload files (attachments to comments), the
-files are stored on the server with the name provided by the
-client, and the path to those files on the server are easy to
-guess.
-
-With a gitlab user on the gitlab server with "bash" as the login
-shell, I could get a sh prompt on the server, with none of the
-gitlab code being involved.
-
-I suspect other git server implementations are affected.
-
-regards,
-Stephane
-
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
