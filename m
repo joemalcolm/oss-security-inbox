@@ -1,83 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/6
-Message-ID: <CAHJtQJ5J4vqOhHb1juebcaNf1HOybhv4zueGmEAGDYnsEbwDMQ@mail.gmail.com>
-Date: Fri, 28 Nov 2014 09:36:04 -0800
-From: Ingy dot Net <ingy@...y.net>
-To: John Haxby <john.haxby@...cle.com>
-Cc: oss-security@...ts.openwall.com, Kirill Simonov <xi@...olvent.net>,  Ingy döt Net <ingy@...n.org>
-Subject: Re: libyaml / YAML-LibYAML DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/10
+Message-ID: <CAH4rwTL-nYktGhf+npph+u_XBxWHk9J=jp2gCWpCRU1+_moosg@mail.gmail.com>
+Date: Tue, 9 Dec 2014 13:35:16 +0530
+From: Reno Robert <renorobert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: PIE bypass using VDSO ASLR weakness
 Content-Type: text/plain; charset=utf-8
 
-I have fixed this by commenting out the assert. This makes the parser fail
-as it should.
+Even in 64 bit addressing, randomization of VDSO seems to be low and the
+base address could be bruteforced, thus allowing to use gadgets from VDSO
+if not from executable. Though VDSO is not rich in gadgets, it has few good
+ones to make interesting syscalls including execve(). The below blog post
+describes the availability of gadgets and feasibility of bruteforce, which
+could be combined for an effective payload.
 
-I've pushed the patch to the git-hub mirror of libyaml:
-https://github.com/yaml/libyaml
-
-I've added a test to https://metacpan.org/release/YAML-LibYAML and released
-version 0.53.
-
-Ingy
-
-PS Here is the Perl minimum test case, with the patched behavior:
-
- $ perl -MYAML::XS -e 'Load qq! x: "\n"x!'
-YAML::XS::Load Error: The problem:
-
-    did not find expected key
-
-was found at document: 1, line: 2, column: 2
-while parsing a block mapping at line: 1, column: 2
+http://v0ids3curity.blogspot.in/2014/12/return-to-vdso-using-elf-auxiliary.html
 
 
-On Fri, Nov 28, 2014 at 7:45 AM, Ingy dot Net <ingy@...y.net> wrote:
+renorobert@...ntu:~$ readelf -h ./pie
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
+  Class:                             ELF64
+  Data:                              2's complement, little endian
+  Version:                          1 (current)
+  OS/ABI:                          UNIX - System V
+  ABI Version:                    0
+  Type:                              DYN (Shared object file)
+  Machine:                         Advanced Micro Devices X86-64
+  Version:                          0x1
+  Entry point address:         0x620
 
-> Taking a look at this now. Please let me know if you've already found a
-> patch.
->
-> Ingy
->
-> On Fri, Nov 28, 2014 at 2:20 AM, John Haxby <john.haxby@...cle.com> wrote:
->
->> On 28/11/14 05:57, Jonathan Gray wrote:
->> > libyaml and the perl YAML-LibYAML (aka YAML-XS) module based
->> > on the same code have an "impossible" assert that can be
->> > triggered with the following yaml.  This is a reduced testcase
->> > of a crash found with the afl fuzzer.
->> >
->> >       a: "
->> > "     b: true
->> >
->> > In other words a crash/denial of service with untrusted yaml input.
->> > The libyaml author was contacted on the 21st and 27th of November.
->> > No response has been received but the issue has independently been
->> > reported publically since:
->> >
->> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
->> >
->> > [1] Parsing 'test.yaml': assertion "parser->simple_key_allowed ||
->> !required" failed: file "scanner.c", line 1113, function
->> "yaml_parser_save_simple_key"
->> >
->> > assert(parser->simple_key_allowed || !required);    /* Impossible. */
->>
->> For what it's worth PyYAML 3.10 and 3.11 have exactly the same assertion:
->>
->> >>> import yaml
->> >>> yaml.load("""
->> ... abc:
->> ...     def: 'xxx
->> ... '   ghi: 'yyy'
->> ... """)
->> Traceback (most recent call last):
->>
->> [...]
->>
->>     assert self.allow_simple_key or not required
->> AssertionError
->>
->> jch
->>
->
->
+renorobert@...ntu:~$ while true; do ldd ./pie; done | grep
+0x00007fff969fe000
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+        linux-vdso.so.1 =>  (0x00007fff969fe000)
+
+Do we need better ASLR for VDSO to make PIE more effective?
+
+-- 
+Regards,
+Reno Robert
+http://v0ids3curity.blogspot.in/
 
