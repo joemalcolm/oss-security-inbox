@@ -1,49 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/2
-Message-ID: <5432372A.7050801@mittwald.de>
-Date: Mon, 6 Oct 2014 08:31:06 +0200
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-CC: <rgerhards@...adiscon.com>
-Subject: Re: vulnerability in rsyslog
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/12
+Message-Id: <CBB993FB-E658-4713-8F2A-305432D31F0A@netherlabs.nl>
+Date: Tue, 9 Dec 2014 09:30:50 +0100
+From: Peter van Dijk <peter.van.dijk@...herlabs.nl>
+To: oss-security@...ts.openwall.com
+Subject: Re: PowerDNS Security Advisory 2014-02
 Content-Type: text/plain; charset=utf-8
 
+Hello Hanno,
 
+On 09 Dec 2014, at 9:22 , Hanno Böck <hanno@...eck.de> wrote:
 
-On 30/09/14 18:41, Rainer Gerhards wrote:
-> 2014-09-30 18:28 GMT+02:00 Solar Designer <solar@...nwall.com>:
+> On Tue, 9 Dec 2014 08:16:20 +0100
+> Peter van Dijk <peter.van.dijk@...herlabs.nl> wrote:
 > 
->> On Tue, Sep 30, 2014 at 01:55:12PM +0200, Sven Kieske wrote:
->>> I don't understand the following statement in the
->>> pri-vuln.txt in section "Patches":
->>>
->>> "Version 7.4.6, while no longer being project
->>> supported received a patch and is also not vulnerable."
->>>
->>> What was patched when this version is not vulnerable?
->>> Or do you mean it is not vulnerable after the patch got applied?
->>
->>
-> My apologies, this is a type that skipped past all proof-reading. It should
-> say "7.6.6", which is the v7 version released today. v7.4.x is not only
-> non-project supported, it's also heavily outdated and missing many other
-> patches as well (just to point this out).
+>> Somebody asked me to (help him) check djbdns today, which we’ll do.
+>> Any other implementations you are interested in? I have a lab setup
+>> for this issue so I’m happy to check.
+> 
+> I think dnsmasq would be interesting. Don't know which servers from the
+> proprietary world may be worth investigating.
 
-This still does not answer the above questions, it just changes the
-version number in your statement which led to my question.
+As far as I know, dnsmasq cannot actually recurse. Please let me know if I’m wrong, and I’ll test it.
 
+>> I’m convinced the loop could involve unwilling victims (unless they
+>> send responses that break the loop!), but I have not tried this in
+>> practice.
+> 
+> However that would be very interesting to know. DNS reflection attacks
+> are a big thing, if they could be amplified with a loop on the resolver
+> that'd almost certainly boost this issue to a whole new level.
+
+ I may test this later :)
+
+Kind regards,
 -- 
-Mit freundlichen Grüßen / Regards
+Peter van Dijk
+Netherlabs Computer Consulting BV - http://www.netherlabs.nl/
 
-Sven Kieske
 
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
