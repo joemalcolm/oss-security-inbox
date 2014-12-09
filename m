@@ -1,45 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/10/8
-Message-id: <6C1F1FB3-1345-48F9-AFA6-860AC3010464@me.com>
-Date: Mon, 10 Mar 2014 16:33:12 -0400
-From: "Larry W. Cashdollar" <larry0@...com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Remote Command Injection in Arabic Prawn 0.0.1 Ruby Gem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/15
+Message-ID: <1418133852.12378.18.camel@debian.org>
+Date: Tue, 09 Dec 2014 15:04:12 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Two rpm flaws
 Content-Type: text/plain; charset=utf-8
 
-Title: Remote Command Injection in Arabic Prawn 0.0.1 Ruby Gem
+On mar., 2014-12-09 at 18:32 +0530, Huzaifa Sidhpurwala wrote:
+> CVE-2014-8118:
+> It was found that RPM could encounter an integer overflow, leading to a 
+> stack-based overflow, while parsing a crafted CPIO header in the payload 
+> section of an RPM file.  This could allow an attacker to modify signed 
+> RPM files in such a way that they would execute code chosen by the 
+> attacker during package installation.
+> 
+> Reference:
+> https://bugzilla.redhat.com/show_bug.cgi?id=1168715
 
-Author: Larry W. Cashdollar, @_larry0
+Do you know if the other CPIO implementations/parsers are affected by this?
 
-Download Site: http://rubygems.org/gems/Arabic-Prawn
+Regards,
+-- 
+Yves-Alexis
 
-Date: 12/17/2013
-
-CVE: Please assign.
-
-Vendor Notified: 3/3/2014
-
-In Arabic-Prawn-0.0.1/lib/string_utf_support.rb, the following lines pass unsanitized input to the shell.
-
-426 var = %x{ /usr/bin/curl -I -L --fail --silent --connect-timeout #{seconds} --max-time #{seconds+10} # {url}; /bin/echo -n $? }.to_i 427
-
-428             #return false unless var == 0
-429             raise "Failed to create connection to web site: #{url}  --  curl error code: #{var}  --  " unless var     == 0
-430 
-431             str = %x{ /usr/bin/curl -L --fail --silent --connect-timeout #{seconds} --max-time #{seconds+10} #{ur    l} | \
-432                       /usr/bin/grep -Eo -m 1 \"(charset|encoding)=[\\"']?[^\\"'>]+\" | /usr/bin/grep -Eo \"[^=\\"    '>]+$\" }
-
-443             %x{ /usr/bin/touch #{downloaded_file} 2>/dev/null }
-444             raise "No valid HTML download file (path) specified!" unless File.file?(downloaded_file)
-445             %x{ /usr/bin/curl -L --fail --silent --connect-timeout #{seconds} --max-time #{seconds+10} -o #{downl    oaded_file} #{url} }
-446 
-447             simple_test = %x{ /usr/bin/file -ik #{downloaded_file} }    #  cf. man file
-
-If the downloaded file name #{downloaded_file} or #{url} contains any shell meta characters like ';' a malicious user can inject shell commands.
-
-PoC
-myfile;id;.txt
-
-id would be passed to the command line and executed.
-
-Advisory: http://www.vapid.dhs.org/advisories/arabic-ruby-gem.html
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
