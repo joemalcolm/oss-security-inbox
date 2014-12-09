@@ -1,33 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/12
-Message-ID: <20140808151821.GA14066@kroah.com>
-Date: Fri, 8 Aug 2014 08:18:21 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/30
+Message-ID: <548786AF.4000302@oracle.com>
+Date: Tue, 09 Dec 2014 15:33:03 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+CC: Ilja Van Sprundel <ivansprundel@...ctive.com>
+Subject: Re: Fwd: [ANNOUNCE] X.Org Security Advisory: Protocol handling issues in X servers
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 08, 2014 at 07:00:00PM +0400, gremlin@...mlin.ru wrote:
-> That means, every device after being detected by the system must
-> be explicitly activated by some human activity. Yes, users may
-> and, most likely, will be fooled to do that (as they are fooled
-> to connect the attacker's device), but this activation will at
-> least make the use of untrusted devices more difficult.
+[This dances back and forth all over the line between on-topic and off-topic
+  for this list, apologies if it falls on the wrong side.]
 
-How can I activate a USB keyboard (the only input device attached to the
-system), with the USB keyboard that I plugged into it?
+On 12/ 9/14 08:04 AM, Alan Coopersmith wrote:
+> Other providers of Xserver or GLX implementations based on the same
+> code base (the X Consortium or X.Org Foundation X sources, or the
+> SGI GLX sources) will announce the availability of any fixes necessary
+> for their implementations.
 
-Fun times...
+One such provider who uses the permissively licensed (MIT) GLX code in
+their closed source software which is redistributed in and for a number
+of open source OS'es is NVIDIA, who has released their own advisory now:
 
-Again, fix the real problem here, if there is one, don't try to throw
-"is this device ok to use" dialogs up, they just annoy people and don't
-do anything.
+https://nvidia.custhelp.com/app/answers/detail/a_id/3610
 
-Oh, and if you want, you can disable all USB devices on your Linux
-system by default, and only "authorize" them explicitly if you
-programatically think they should be enabled.  We have had support in
-the kernel for that for years now, but very few people actually use it.
-
-So the tools to do this are already there, why aren't you using them? :)
-
-greg k-h
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
