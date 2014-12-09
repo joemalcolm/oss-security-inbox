@@ -1,36 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/10/14
-Message-Id: <201402101845.s1AIjBXQ025513@linus.mitre.org>
-Date: Mon, 10 Feb 2014 13:45:11 -0500 (EST)
-From: cve-assign@...re.org
-To: intrigeri@...m.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: parcimonie (0.6 to 0.8, included) possible correlation between key fetches
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/29
+Message-ID: <54876680.6090203@oracle.com>
+Date: Tue, 09 Dec 2014 13:15:44 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+CC: Ilja Van Sprundel <ivansprundel@...ctive.com>, "X.Org Security Team" <xorg-security@...ts.x.org>
+Subject: Re: Fwd: [ANNOUNCE] X.Org Security Advisory: Protocol handling issues in X servers
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12/ 9/14 08:04 AM, Alan Coopersmith wrote:
+> Fixes
+> =====
+>
+> Fixes are available in git commits and patches which will be listed
+> on http://www.x.org/wiki/Development/Security/Advisory-2014-12-09
+> when this advisory is released.
+>
+> Fixes are also planned to be included in the xorg-server-1.17.0 and
+> xorg-server-1.16.3 releases
 
-> problem that undermines the usefulness of this piece of software, in
-> the intended threat model
-> 
-> always sleep exactly 10 minutes
+Fixes are now available in the X.Org master git repositories for the Xserver
+1.17 development branch ("master") & 1.16 stable branch ("server-1.16-branch").
 
-Use CVE-2014-1921.
+Additionally they are included in today's release of xorg-server 1.16.2.901
+(Release Candidate 1 for 1.16.3):
+    http://lists.x.org/archives/xorg-announce/2014-December/002501.html
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+For those who either used the patches mailed to the distros list during embargo
+or pulled changes from my personal git repository earlier today, please note
+there are some additional changes that were made due to issues raised when the
+patches were on final approach this morning.  These fixes mostly silence
+compiler warnings, but also fix at least one bug in calculating buffer sizes
+that could result in false failures or allowing overflows.  These added patches
+are:
 
-iQEcBAEBAgAGBQJS+R3oAAoJEKllVAevmvmsTDwH/0QXSZYy7fT/LPjH2F3Q5FQg
-V9YrueBsmmK5tqoB63Uhjoq7Jexo9Z7eGIjKRpZHeM/H9WTPovmngGln0jBBa9qw
-cxiqHPAJ/p6PJnlxtC3e0+s6yD8PA/veCl6zQrqW11FjbXAkxD54HgAww61DTXJb
-x4c4/sBYck74kb86pN0YcbhuYiG+Dy2ChhfaiMIwElJ0cC5ocwkL9NWKD54mTugZ
-e9pi2A5I/tslFz9UFDFBofKW9TSouBlmw4wg1Qrq3ENqAz6PpjXrS7iWWMSSNpDt
-mxSIuupvOyGT341kVTrwiLRau7f+AEUsmXVgNKqBGEDU4Wi265RLHs0s8eW5l+A=
-=UGhh
------END PGP SIGNATURE-----
+dbe: Call to DDX SwapBuffers requires address of int, not unsigned int 
+[CVE-2014-8097 pt. 2]
+http://cgit.freedesktop.org/xorg/xserver/commit/?id=b20912c3d45cbbde3c443e6c3d9e189092fe65e1
+
+glx: Can't mix declarations and code in X.org sources [CVE-2014-8098 pt. 9]
+http://cgit.freedesktop.org/xorg/xserver/commit/?id=61b17c0f10307e25e51e30e6fb1d3e3127f82d86
+
+Missing parens in REQUEST_FIXED_SIZE macro [CVE-2014-8092 pt. 5]
+http://cgit.freedesktop.org/xorg/xserver/commit/?id=9802a0162f738de03585ca3f3b8a8266494f7d45
+
+dix: GetHosts bounds check using wrong pointer value [CVE-2014-8092 pt. 6]
+http://cgit.freedesktop.org/xorg/xserver/commit/?id=1559a94395258fd73e369f1a2c98a44bfe21a486
+
+They are also included with all the earlier patches in the list now posted to:
+
+http://www.x.org/wiki/Development/Security/Advisory-2014-12-09
+
+Since these additional commits went into the X.Org master repo as part of the
+same pull request as the earlier fixes, X.Org considers them to be part of the
+fix for the CVE's in this advisory and does not believe new CVE id's are
+warranted as X.Org distributed no version of its code in which only part of
+these fixes were present.
+
+-- 
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
