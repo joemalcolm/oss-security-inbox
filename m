@@ -1,28 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/13/3
-Message-ID: <20140313131919.GB32130@suse.de>
-Date: Thu, 13 Mar 2014 14:19:19 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE request for icinga 1 byte \0 overflows
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/22
+Message-ID: <54872E3F.1090905@redhat.com>
+Date: Tue, 09 Dec 2014 18:15:43 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Two rpm flaws
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 12/09/2014 03:04 PM, Yves-Alexis Perez wrote:
+> On mar., 2014-12-09 at 18:32 +0530, Huzaifa Sidhpurwala wrote:
+>> CVE-2014-8118:
+>> It was found that RPM could encounter an integer overflow, leading to a
+>> stack-based overflow, while parsing a crafted CPIO header in the payload
+>> section of an RPM file.  This could allow an attacker to modify signed
+>> RPM files in such a way that they would execute code chosen by the
+>> attacker during package installation.
+>>
+>> Reference:
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1168715
+>
+> Do you know if the other CPIO implementations/parsers are affected by this?
 
-I am not sure whether this needs a CVE...
+It's in the name length handling code.  The bug is rather similar to 
+CVE-2014-9112 in GNU cpio (which prompted me to look at RPM for a 
+similar issue).
 
-The icinga team silently fixed some single byte \0 overflows.
-
-https://git.icinga.org/?p=icinga-core.git;a=commitdiff;h=73285093b71a5551abdaab0a042d3d6bae093b0d
-
-(also the non public
-https://dev.icinga.org/issues/5663
-is referenced by commit above)
-
-
-I think they all go via strcpy() into known sized stack buffers, so should
-be caught by FORTIFY_SOURCE.
-
-Probably still needs a CVE.
-
-Ciao, Marcus
+-- 
+Florian Weimer / Red Hat Product Security
