@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/28/3
-Message-ID: <20141228212037.GC4301@kludge.henri.nerv.fi>
-Date: Sun, 28 Dec 2014 23:20:37 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: Reflected XSS in Nibbleblog <= v4.0.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/6
+Message-ID: <548694FC.9070209@redhat.com>
+Date: Tue, 09 Dec 2014 11:51:48 +0530
+From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
+Subject: CVE question: Return of POODLE
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi All,
 
-> Advisory: http://seclists.org/fulldisclosure/2014/Nov/38
-> Vendor blog post: http://blog.nibbleblog.com/post/nibbleblog-v4.0.2-coffee/
+Before i ask my question:
 
-CVE-2014-8996 has been assigned for this issue.
+It seems some TLS implementations may be vulnerable to POODLE like 
+attack if they use SSL 3.0 type padding and the padding bytes are not 
+checked by the implementation.
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
+https://www.imperialviolet.org/2014/12/08/poodleagain.html
+https://devcentral.f5.com/articles/cve-2014-8730-padding-issue-8151
 
-iEYEARECAAYFAlSgdCUACgkQXf6hBi6kbk8eoQCgl0UDgkXdPOIVKrjDKpVxbWS2
-yLYAnjXkJUaZR1e05m0iE/bX64hOXxGR
-=Qp2i
------END PGP SIGNATURE-----
+
+CVE-2014-8730 was assigned to this issue (by MITRE i suppose) and its 
+not clear if this CVE has been assigned to their code or to the protocol 
+weakness.
+
+I have not checked if any implementations are vulnerable, but could 
+MITRE please confirm if its ok to reuse this CVE if any crypto-libs are 
+found vulnerable, or if they plan to assign another CVE id?
+
+
+-- 
+Huzaifa Sidhpurwala / Red Hat Product Security Team
