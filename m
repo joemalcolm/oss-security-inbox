@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/4
-Message-ID: <52C6460D.5020701@redhat.com>
-Date: Fri, 03 Jan 2014 10:39:33 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/16
+Message-ID: <54870EB4.1070005@internot.info>
+Date: Wed, 10 Dec 2014 02:01:08 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE for freerdp int overflow?
+Subject: Re: Re: CVE Request: Graphviz format string vuln
 Content-Type: text/plain; charset=utf-8
 
-On 01/02/2014 08:01 PM, Raphael Geissert wrote:
-> Hi,
-> 
-> Has a CVE id been assigned already for the following bug?
-> https://bugzilla.redhat.com/show_bug.cgi?id=998941
-> 
+Just for reference, this was found by me, using afl-fuzz.
 
-Hi,
 
-No CVE has been assigned yet. The crash seems to be non-exploitable and
-I am not really sure if only the client and/or server are affected.
-
-If you have some spare bandwidth, feel free to investigate and let us
-all know :)
-
+Thanks,
+On 02/12/14 05:04, Steven M. Christey wrote:
+>
+> On Sun, 30 Nov 2014, Joshua Rogers wrote:
+>
+>> On 25/11/14 16:40, Joshua Rogers wrote:
+>>> Hi,
+>>>
+>>> A format string vulnerability has been found in `graphviz'.
+>>> The fix commit is here:
+>>> https://github.com/ellson/graphviz/commit/99eda421f7ddc27b14e4ac1d2126e5fe41719081
+>>>
+>>>
+>>> Could I get a CVE-ID for this?
+>
+> Use CVE-2014-9157.
+>
+> - Steve
+>
 
 -- 
-Huzaifa Sidhpurwala / Red Hat Security Response Team
+-- Joshua Rogers <https://internot.info/>
