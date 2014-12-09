@@ -1,42 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/11
-Message-ID: <20141209092228.2fdd103b@pc>
-Date: Tue, 9 Dec 2014 09:22:28 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: Peter van Dijk <peter.van.dijk@...herlabs.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/4
+Message-ID: <20141209020725.GA27278@openwall.com>
+Date: Tue, 9 Dec 2014 05:07:25 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Tim Brown <tmb@...35.com>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: PowerDNS Security Advisory 2014-02
+Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 9 Dec 2014 08:16:20 +0100
-Peter van Dijk <peter.van.dijk@...herlabs.nl> wrote:
+Distros -
 
-> Somebody asked me to (help him) check djbdns today, which we’ll do.
-> Any other implementations you are interested in? I have a lab setup
-> for this issue so I’m happy to check.
+Tim is not responding to my ping's about making the issue public. :-(
+Can someone from the distros list, preferably from a distro who actually
+bothered to handle the issue (did anyone?) make the issue public ASAP,
+by posting in here?  Please.  Thanks.
 
-I think dnsmasq would be interesting. Don't know which servers from the
-proprietary world may be worth investigating.
+Alexander
 
-> > And is this only a DoS for the attacked server or would it also
-> > allow some completely new kind of DNS reflection attack (i.e.
-> > generating a loop where every loop iteration generates an UDP
-> > packet send to a victim)?
+On Wed, Nov 26, 2014 at 06:54:48AM +0300, Solar Designer wrote:
+> On Sun, Nov 23, 2014 at 05:59:41PM +0300, Solar Designer wrote:
+> > So far no distro has expressed any interest in having this embargoed.
+> > 
+> > Distros list members: please speak up (here or on the distros list, with
+> > Tim CC'ed) if you'd like this embargoed.
+> > 
+> > Tim: if until Tuesday no distro says they want this embargoed, please go
+> > ahead and make the issue fully public.  (On a related note, I hate it
+> > when an issue is sort of "semi-public".  It's the worst possible case.
+> > When this happens, it's a reason to opt for a shorter embargo period, or
+> > for none at all indeed.)  If an embargo is requested, please make sure
+> > there's an exact date and time for the planned public disclosure.
 > 
-> I’m convinced the loop could involve unwilling victims (unless they
-> send responses that break the loop!), but I have not tried this in
-> practice.
-
-However that would be very interesting to know. DNS reflection attacks
-are a big thing, if they could be amplified with a loop on the resolver
-that'd almost certainly boost this issue to a whole new level.
-
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+> So far no distro has expressed any interest in having this embargoed,
+> and no specific coordinated disclosure date has been proposed by anyone.
+> Tim, please make the issue public now by posting it in here.  Thanks!
+> 
+> Alexander
