@@ -1,37 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/12
-Message-Id: <201401072205.s07M5ASW026523@linus.mitre.org>
-Date: Tue, 7 Jan 2014 17:05:10 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, dom@...th.li
-Subject: Re: CVE Request: cross-site scripting vulnerabilities in movable type 6.0.1, 5.2.9, and 5.161
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/27
+Message-ID: <Pine.LNX.4.64.1412091542220.20143@beijing.mitre.org>
+Date: Tue, 9 Dec 2014 15:43:37 -0500 (EST)
+From: "Steven M. Christey" <coley@...re.org>
+To: Huzaifa Sidhpurwala <huzaifas@...hat.com>
+cc: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
+Subject: Re: CVE question: Return of POODLE
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
->A movable type update to 6.0.1, 5.29 and 5.161 fixes cross-site
->scripting attacks, from the announcement:
+Huzaifa Sidhpurwal said:
+
+>It seems some TLS implementations may be vulnerable to POODLE like attack if
+>they use SSL 3.0 type padding and the padding bytes are not checked by the
+>implementation.
 >
->> The Rich Text Editor in previous versions of Movable Type 6 and
->> Movable Type 5 are susceptible to cross-site scripting (XSS) attacks.
+>https://www.imperialviolet.org/2014/12/08/poodleagain.html
+>https://devcentral.f5.com/articles/cve-2014-8730-padding-issue-8151
+>
+>CVE-2014-8730 was assigned to this issue (by MITRE i suppose) and its not
+>clear if this CVE has been assigned to their code or to the protocol
+>weakness.
 
-Use CVE-2014-0977.
+CVE-2014-8730 was reserved by F5 from the MITRE CNA, but at the time
+of assignment, we were not aware of its potential applicability to
+other designs or implementations.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+>I have not checked if any implementations are vulnerable, but could MITRE
+>please confirm if its ok to reuse this CVE if any crypto-libs are found
+>vulnerable, or if they plan to assign another CVE id?
 
-iQEcBAEBAgAGBQJSzHnQAAoJEKllVAevmvmsSxwIAK3XmQVzjWymnfgO4yOwUED4
-W36oPPz6Kz4cP6Hd/m2FrVo5HxzbONHmrovZZ4gx2QPPD2xXvXGq9u4QSsUXkeLM
-gTTC2TwWFIXpceqw8tFJbNadJNe/tce1fckoQx+ZZcbvftOk60cEe5dxH6YF90Ku
-AezYNomQ0H9ho6MvzVwuHmKt/1BTIkPUgxP87SaRvn57zVday84dz9sQxn68LgI+
-0lPRmVUmzLp1XtYaL5CuD6m/R6ilkKbpnZ69sJHw4GIIKrye9D+On/psm6IBzeml
-zpPC/bQKMVqN/UzdHN6sCRpSXBkXVc4LeWglvygi9w94HGUGfokL1hEpjUp5MGY=
-=XDcq
------END PGP SIGNATURE-----
+The short answer is that based on what I've seen, each affected 
+implementation might need its own CVE ID.
+
+If this is a fundamental design issue within TLS - that is, if any
+implementation that strictly complies with the protocol will also have
+this vulnerability - then CVE-2014-8730 is appropriate.
+
+But, if implementations can avoid this issue while also strictly
+conforming with the protocol, then separate CVEs per implementation
+would be needed.  Currently, we treat "behavior that is undefined or
+unspecified by the specification" as an implementation issue, since an
+implementation could have avoided a vulnerability while still
+complying with the specification.
+
+The ImperialViolet disclosure says: "TLS's padding is a subset of
+SSLv3's padding so, technically, you could use an SSLv3 decoding
+function with TLS and it would still work fine. It wouldn't check the
+padding bytes but that wouldn't cause any problems in normal
+operation. However, if an SSLv3 decoding function was used with TLS,
+then the POODLE attack would work, even against TLS connections."
+
+This strongly suggests an implementation issue, since it appears that a 
+TLS-compliant implementation could avoid a padding check without violating 
+the TLS spec.  Further, as described discussed in the URLs below, a TLS 
+implementation "SHOULD" check the padding bytes, but it is not required to 
+do so (i.e., there is no "MUST" requirement):
+
+https://www.ietf.org/mail-archive/web/tls/current/msg14058.html
+https://www.ietf.org/mail-archive/web/tls/current/msg14072.html
+
+So, it seems to me that separate CVE identifiers would be needed for
+such implementations.
+
+- Steve
