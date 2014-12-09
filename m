@@ -1,43 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/5
-Message-ID: <FDB32F43-A947-47FF-AD46-F3395531F5A0@redhat.com>
-Date: Fri, 15 Aug 2014 07:44:44 -0600
-From: "Vincent Danen" <vdanen@...hat.com>
-To: "OSS Security List" <oss-security@...ts.openwall.com>
-Subject: CVE request for accountsservice local encrypted password disclosure flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/26
+Message-ID: <20141209203259.GA21007@eldamar.local>
+Date: Tue, 9 Dec 2014 21:32:59 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Subject: CVE Request: MiniUPnPd: several issues
 Content-Type: text/plain; charset=utf-8
 
-The upstream bug report was opened in 2012, so this probably requires a 2012 CVE.
+Hi
 
-Just cutting-and-pasting from our bug entry:
+Quoting from the Bug in the Debian bugtracker at
+https://bugs.debian.org/772644 several issues were found in in
+MiniUPnP:
 
-It was reported that accountsservice invokes usermod with the -p parameter when calling SetPassword(), which can leak encrypted passwords locally (being that they are briefly visible via ps).
+On Tue, Dec 09, 2014 at 10:20:32PM +0800, Thomas Goirand wrote:
+> Stephen Röttger from Google did a security audit of MiniUPnPd, and found a few
+> issues, all now fixed upstream.
+> 
+> Extract from private messages who were forwarded to me (but which is fine to
+> disclose since there's already some public commits.
+> 
+> > MiniUPnP is vulnerable to DNS rebinding attacks which allows an attacker to
+> > trigger upnp actions through a malicious website. Wikipedia describes the
+> > attack quite well: http://en.wikipedia.org/wiki/DNS_rebinding.
+> > To mitigate this attack, MiniUPnP should check if the request's host header
+> > either contains an IP address or the hostname of the device.
+> > 
+> > Besides that, I found a few memory corruption vulnerabilities in the code.
+> 
+> Fixes:
+> 
+> https://github.com/miniupnp/miniupnp/commit/d00b75782e7d73e78d0b935cee6f4873bc48c9e8
+> https://github.com/miniupnp/miniupnp/commit/7c91c4e933e96b913b72685d093126d282b87db6
+> 
+> Some memory corruption fix:
+> 
+> https://github.com/miniupnp/miniupnp/commit/e6bc04aa06341fa4df3ccae87a167e9adf816911
+> 
+> A buffer overrun in ParseHttpHeaders() fix:
+> 
+> https://github.com/miniupnp/miniupnp/commit/dd39ecaa935a9c23176416b38a3b80d577f21048
+> 
+> Added check if BuildHeader_upnphttp() failed to allocate memory:
+> 
+> https://github.com/miniupnp/miniupnp/commit/ec94c5663fe80dd6ceea895c73e2be66b1ef6bf4
 
-As noted in the upstream bug:
+Can CVEs be assigned for these issues?
 
-The relevant code is in src/user.c in the user_change_password_authorized_cb() function:
-
-        argv[0] = "/usr/sbin/usermod";
-        argv[1] = "-p";
-        argv[2] = strings[0];
-        argv[3] = "--";
-        argv[4] = user->user_name;
-        argv[5] = NULL;
-
-strings[0] has been set to the crypted password in user_set_password(). The crypted password has been passed from the client (ie: gnome-control-center).
-
-This has not yet been corrected upstream.
-
-References:
-
-https://bugs.freedesktop.org/show_bug.cgi?id=55000
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=757912
-https://bugzilla.redhat.com/show_bug.cgi?id=1130538
-
-
-Thanks.
-
--- 
-Vincent Danen / Red Hat Product Security
-
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+Regards,
+Salvatore
