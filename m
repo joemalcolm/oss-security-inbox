@@ -1,42 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/12/4
-Message-Id: <201403121049.s2CAnE7Z008983@linus.mitre.org>
-Date: Wed, 12 Mar 2014 06:49:14 -0400 (EDT)
-From: cve-assign@...re.org
-To: geissert@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Two stack-based issues in freetype [NOT a request]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/17
+Message-ID: <CAH4rwTLAG5Mg1ZsDkStGs+_MitJ_4Z5FgVp=AdcDBN6Jkk44kw@mail.gmail.com>
+Date: Tue, 9 Dec 2014 21:03:51 +0530
+From: Reno Robert <renorobert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: PIE bypass using VDSO ASLR weakness
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Daniel, COMPAT_VDSO is not enabled. Just that randomization is 20 bits
+and same values are generated on repeated execution.
 
-> If I understood things correctly, CVE-2014-2240 is:
-> https://savannah.nongnu.org/bugs/?41697#comment0
-> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=0eae6eb0645264c98812f0095e0f5df4541830e6
-> 
-> While CVE-2014-2241 is:
-> https://savannah.nongnu.org/bugs/?41697#comment2
-> http://git.savannah.gnu.org/cgit/freetype/freetype2.git/commit/?id=135c3faebb96f8f550bd4f318716f2e1e095a969
+On Tue, Dec 9, 2014 at 2:08 PM, Daniel Micay <danielmicay@...il.com> wrote:
 
-Yes, those are the correct references for those two CVEs. We are not
-sure why "Two stack-based issues" was in the Subject line.
-CVE-2014-2241 is a reachable assertion (CWE-617) not a stack-based
-buffer overflow (CWE-121).
+> On 09/12/14 03:05 AM, Reno Robert wrote:
+> > Even in 64 bit addressing, randomization of VDSO seems to be low and the
+> > base address could be bruteforced, thus allowing to use gadgets from VDSO
+> > if not from executable. Though VDSO is not rich in gadgets, it has few
+> good
+> > ones to make interesting syscalls including execve(). The below blog post
+> > describes the availability of gadgets and feasibility of bruteforce,
+> which
+> > could be combined for an effective payload.
+> >
+> >
+> http://v0ids3curity.blogspot.in/2014/12/return-to-vdso-using-elf-auxiliary.html
+> >
+> >
+> > renorobert@...ntu:~$ readelf -h ./pie
+> > ELF Header:
+> >   Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
+> >   Class:                             ELF64
+> >   Data:                              2's complement, little endian
+> >   Version:                          1 (current)
+> >   OS/ABI:                          UNIX - System V
+> >   ABI Version:                    0
+> >   Type:                              DYN (Shared object file)
+> >   Machine:                         Advanced Micro Devices X86-64
+> >   Version:                          0x1
+> >   Entry point address:         0x620
+> >
+> > renorobert@...ntu:~$ while true; do ldd ./pie; done | grep
+> > 0x00007fff969fe000
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >         linux-vdso.so.1 =>  (0x00007fff969fe000)
+> >
+> > Do we need better ASLR for VDSO to make PIE more effective?
+>
+> You must have COMPAT_VDSO enabled. It's randomized fine with a sane
+> kernel configuration.
+>
+>
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJTIDslAAoJEKllVAevmvmsdH0H+wW12MbIFFNVA8zeHiz4cHQ7
-nxzuHdNkKiPPhqiber0TuBVttHzg0pCLqjYPi561QplkgKevznb+cuIyU/0gBLfg
-dDIkFwj0IZALuayjFlgzXa9NLjVXt3u1YB3NZvoonTXM1UGvYhkZiLVbQQA5ecwC
-YTEPkk6A8+2iSTtKQBbYgy8iHNmWpxjZk5+ytDDOTJpt1xKjYr7+HsHGXsyUKs+7
-GRXzQiGf4L9MlVa/C1R1YXnFtujQFdNlUqDL4W7q0lF//D5+fpTrKYyPfSPrI7ZT
-4UdDohNd2nvNgu1d/4twqo3ceYtO89+nAKaAlnVk9mSHlqndqz0ShI5ylyh12T0=
-=Fovt
------END PGP SIGNATURE-----
+-- 
+Regards,
+Reno Robert
+http://v0ids3curity.blogspot.in/
+
