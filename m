@@ -1,38 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/08/9
-Message-ID: <20140708182439.GA11179@openwall.com>
-Date: Tue, 8 Jul 2014 22:24:40 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/13
+Message-ID: <20141210185705.GK386@kludge.henri.nerv.fi>
+Date: Wed, 10 Dec 2014 20:57:05 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+Subject: CVE request: Reflected XSS in Nibbleblog <= v4.0.1
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 08, 2014 at 04:52:43PM +0400, Solar Designer wrote:
-> Anyway, let me ask: Red Hat, how do you know RHEL5 kernels are not
-> vulnerable, whereas RHEL6 are?  There must have been some analysis to
-> arrive at these conclusions.  This will be very helpful to know for
-> downstream projects (as it relates to your kernels), including OpenVZ
-> and Owl.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Petr Matousek has now clarified this as follows:
+Can I get 2014 CVE for reflected XSS in Nibbleblog <= v4.0.1, thank you.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1115927#c14
+Advisory: http://seclists.org/fulldisclosure/2014/Nov/38
+Vendor blog post: http://blog.nibbleblog.com/post/nibbleblog-v4.0.2-coffee/
 
-"Red Hat Enterprise Linux 5 uses utrace which sets TIF_SIGPENDING when
-stopping the tracee and that is why iret path is always taken on return
-to user space."
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Thanks, Petr!
-
-I think Petr is referring to kernel/utrace.c: quiesce() calling
-"set_tsk_thread_flag(target, TIF_SIGPENDING);" when it is called with
-interrupt=0, which it is from two places in utrace_set_flags().
-utrace_set_flags() is called from kernel/ptrace.c: ptrace_update() and
-ptrace_report().  There are many calls to these; I guess the relevant
-one is to ptrace_update() from ptrace_setup_finish(), which is in turn
-called from ptrace_traceme(), ptrace_attach(), and ptrace_clone_setup().
-
-I wouldn't vouch that there's no bypass, but I hope Red Hat's analysis
-is correct.
-
-Alexander
+iEYEARECAAYFAlSIl4EACgkQXf6hBi6kbk+oAgCggtvAq6A49FNWCmVipCET2I7t
+XxQAn1bVqd1AJHxukIGcaIAfmfYFkgKh
+=HvPw
+-----END PGP SIGNATURE-----
