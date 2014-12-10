@@ -1,117 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/28/4
-Message-ID: <alpine.DEB.2.02.1404281108350.7807@motsugo.ucc.gu.uwa.edu.au>
-Date: Mon, 28 Apr 2014 11:58:09 +0800 (WST)
-From: David Adam <zanchey@....gu.uwa.edu.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/7
+Message-ID: <CANJC7MHKvu=JmvERrbh7tb7gv-sQpKFDrNzgj1hWnAr0MMziKQ@mail.gmail.com>
+Date: Wed, 10 Dec 2014 14:56:29 +0100
+From: Mateusz Jurczyk <j00ru.vx@...il.com>
 To: oss-security@...ts.openwall.com
-cc: Bartlomiej Piotrowski <b@...otrowski.pl>, kov@...ian.org, luto@....edu,  nemysis@...eBSD.org, ridiculous_fish <corydoras@...iculousfish.com>
-Subject: Upcoming security release of fish 2.1.1
+Subject: Re: Possible CVE request: freetype: out-of-bounds stack-based read/write in cf2_hintmap_build() (incomplete fix for CVE-2014-2240)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hey, original finder of both vulnerabilities here. I've sent a CVE request
+to MITRE today for this and multiple other vulnerabilities fixed in 2.5.4,
+I'll update this thread once they are assigned.
 
-fish (the friendly interactive shell) is a smart and user-friendly command
-line shell for OS X, Linux, and the rest of the family.
+Cheers,
+Mateusz
 
-fish 2.1.1 will be released shortly, correcting two security vulnerabilities
-and reducing the scope of a further security vulnerability.
+2014-12-10 14:45 GMT+01:00 Vasyl Kaigorodov <vkaigoro@...hat.com>:
 
-fish 2.1.1 will be made available as source and binary packages at
-http://fishshell.com/.
+> Hello,
+>
+> Freetype version 2.5.4 fixes another out-of-bounds stack-based
+> read/write which is similar to CVE-2014-2240.
+> Does it deserve a separate CVE? If so - please assign one.
+>
+> Upstream bug: http://savannah.nongnu.org/bugs/?43661
+>
+> References:
+> http://sourceforge.net/projects/freetype/files/freetype2/2.5.4/
+> https://bugs.mageia.org/show_bug.cgi?id=14771
+> https://bugzilla.redhat.com/show_bug.cgi?id=1172633
+>
+> Thanks.
+> --
+> Vasyl Kaigorodov | Red Hat Product Security
+> PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+>
 
-The following security vulnerabilities have been identified in the fish shell:
-
-CVE-2014-2905: fish universal variable socket vulnerable to permission bypass
-leading to privilege escalation
-
-  fish, from at least version 1.16.0 to version 2.1.0 (inclusive), does not
-  check the credentials of processes communicating over the fishd universal
-  variable server UNIX domain socket. This allows a local attacker to elevate
-  their privileges to those of a target user running fish, including root.
-
-  fish version 2.1.1 is not vulnerable.
-
-  No workaround is currently available for earlier versions of fish.
-
-  https://github.com/fish-shell/fish-shell/issues/1436
-
-CVE-2014-2906: fish temporary file creation vulnerable to race condition
-leading to privilege escalation
-
-  fish, from at least version 1.16.0 to version 2.1.0 (inclusive), creates
-  temporary files in an insecure manner.
-
-  Versions 1.23.0 to 2.1.0 (inclusive) execute code from these temporary files,
-  allowing privilege escalation to those of any user running fish, including
-  root.
-
-  Additionally, from at least version 1.16.0 to version 2.1.0 (inclusive),
-  fish will read data using the psub function from these temporary files,
-  meaning that the input of commands used with the psub function is under the
-  control of the attacker.
-
-  fish version 2.1.1 is not vulnerable.
-
-  No workaround is currently available for earlier versions of fish.
-
-  https://github.com/fish-shell/fish-shell/issues/1437
-
-CVE-2014-2914: fish web interface does not restrict access leading to remote
-code execution
-
-  fish, from version 2.0.0 to version 2.1.0 (inclusive), fails to restrict
-  connections to the Web-based configuration service (fish_config). This
-  allows remote attackers to execute arbitrary code in the context of the user
-  running fish_config.
-
-  The service is generally only running for short periods of time.
-
-  fish version 2.1.1 restricts incoming connections to localhost only. At this
-  stage, users should avoid running fish_config on systems where there are
-  untrusted local users, as they are still able to connect to the fish_config
-  service and elevate their privileges to those of the user running
-  fish_config.
-
-  No workaround is currently available for earlier versions of fish, although
-  the use of the fish_config tool is optional as other interfaces to fish
-  configuration are available.
-
-  https://github.com/fish-shell/fish-shell/issues/1438
-
-The patches going into 2.1.1 can be retrieved from the Integration_2.1.1 branch
-on Github if you would like to patch your own source or packages without
-updating to 2.1.1:
-https://github.com/fish-shell/fish-shell/tree/Integration_2.1.1
-  10642a34f17ae45bd93be3ae6021ee920d3da0c2
-  8412c867a501e3a68e55fef6215e86d3ac9f617b
-  c0989dce2d882c94eb3183e7b94402ba53534abb
-
-Although at this stage we won't be issuing a 2.0.1 release, the patches have
-been backported to the 2.0.0 branch for distributions that would prefer not to
-upgrade to the 2.1 series:
-https://github.com/fish-shell/fish-shell/tree/Integration_2.0.1
-  216d32055d99fbae563ad048436830187a8bfceb
-  aea9ad4965d24ef9c4e346f906194820bac70cc9
-  55986120aa2cc8ab0809db8ca1f8116491c1fb14
-
-David Adam
-fish committer
-zanchey@....gu.uwa.edu.au
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQIcBAEBAgAGBQJTXc/pAAoJEMC5abKXToiOzscP/1o3Vwr7J+WceV9jX7Juzgl8
-aBluWvbtQwNbe6yCjt3X7VqZkSGCq9wkmh0dVgze/owb+nQ/NN1hU3Zt3mxGo8oZ
-QSYudKu9dX4wEI8Nl3fz5xWOWmTf1Z5JJ6y2MrK2JvhTVkNOvGJHHfLlrw/u3yCX
-63wOMfhg4S8vpZK/XNklsQuhBVTCcuTf27SmTqFGw5p9tQ/VLefBCmZEpEEDMmR6
-tZ9BoEQxcpUBaDooTlzGkLxRGu5oMmSBERXT/qukZOJftIX0NF6RPu40jzZXajlR
-sxmPnq9tRrg8Apx0rZimGjonIrOvVMj23QCz4dDe9p7ut1x83EkPXsUAqJ3f17CM
-+00c6xb6muhWtjbIVkWTB28JwpDitvc9XvRnwWOAsJiC7MHmy0LQo2Uoy97Ld2SF
-bUVsJjv+G/Z+adRV7dAk1jtPex9cY6RBfEkZ1ny8m7Wr4PMWXdaoC1URbAx/Q5vW
-ffF53VREZcW5MeKbLFTb0K06WnX6augm/O2zf5e4Le0dIaSAZLR+hiW/x33i1Jir
-/sfK3A7tz99ZRPDy+UkCILmrRImS91SsLvR4WUXcUMUWzjfYfobjuQxi3TSPYslP
-W0rp7fwHJR+1H4hD3d5X5IU9UefpsNig14QyGtZ+PTZ5gki54HU3DaOecEU3+QIg
-SjrPIoSCLU9p7/+qucse
-=Xi0T
------END PGP SIGNATURE-----
