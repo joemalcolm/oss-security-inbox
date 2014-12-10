@@ -1,26 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/24/14
-Message-ID: <CALx_OUDCV098HO+KFJrLuMtBomAUw2PdY-ikCbnmkGp=1NmyaQ@mail.gmail.com>
-Date: Fri, 24 Oct 2014 13:31:28 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>, Tavis Ormandy <taviso@...xchg8b.com>
-Subject: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/9
+Message-ID: <1985973.3iiugZcOjL@x2>
+Date: Wed, 10 Dec 2014 09:25:27 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-[+Tavis]
+On Tuesday, December 09, 2014 10:09:02 PM Steve Grubb wrote:
+> On Tuesday, December 09, 2014 08:03:10 PM Daniel Micay wrote:
+> > On 09/12/14 11:18 AM, Steve Grubb wrote:
+> > > 4) Then I started wondering about the heap when you use other memory
+> > > manager libraries such as jemalloc. This turned out to be interesting.
+> > > You get about 19 bits of randomness using it. Its not as bad as non-PIE
+> > > glibc but not as good as PIE glibc. You also got the same amount of
+> > > randomness whether the app was PIE or not. This is an area ripe for more
+> > > experimenting, exploiting, and patching. Supposedly some of these heap
+> > > managers use mmap as the underlying allocator. So, why aren't they
+> > > getting 29 bits, too? :-)
+> > 
+> > Your measurement of the difference is quite accurate.
+> 
+> There's other allocators, too.
+> 
+> libtalloc:
+> $ ./all-bits
+> heap       14 bits
+> pie-heap   29 bits
+> 
+> Hoard:
+> $ ./all-bits
+> heap       25 bits
+> pie-heap   25 bits
 
->> I don't understand the user benefit of extracting strings only from
->> certain sections of executables, and I almost feel like it's a side
->> effect of strings being a part of binutils more than anything else.
->
-> I fully agree. I wasn't aware strings does any kind of executable
-> parsing and I was very surprised that there is any attack vector at all
-> against it at all.
+tcmalloc:
+$ ./all-bits 
+heap       11 bits
+pie-heap   26 bits
 
-Tavis mentioned to me some time ago that he made that suggestion
-upstream when he bumped into other issues many years ago; he can
-probably comment on how that went, but more generally, distro vendors
-have some latitude to apply non-upstream patches to change the default
-behavior... maybe that's the way to go.
+and just so they are all in one place:
 
-/mz
+jemalloc:
+$ ./all-bits 
+heap       19 bits
+pie-heap   19 bits
+
+glibc:
+$ ./all-bits 
+heap       14 bits
+pie-heap   29 bits
+
+Are there any other allocators in common use?
+
+This is quite a range in heap ASLR just based on which library you link 
+against. Might be nice if some of the low performers gain some more bits of 
+randomness.
+
+-Steve
+
+> Different allocators, different strategies, different randomness. While
+> people are thinking about this, it might be a good time to check everything
+> that's popular. Hmmm...now that I think about it, I haven't looked for
+> address bias in the last samples....  :-)
+> 
+> -Steve
+> 
+> > The page multiple constraint zaps 12 potential bits of entropy, but
+> > jemalloc's 4M chunk alignment increases that to 22 bits. I'm not sure
+> > what can be done about it because there's a very strong performance case
+> > for the design.
+> > 
+> > I sent in a fix for the MALLOC_CONF part of this at least, so an
+> > attacker won't be able to reduce it further:
+> > 
+> > https://github.com/jemalloc/jemalloc/pull/174
+
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
