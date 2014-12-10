@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/14/3
-Message-ID: <53EC6619.6020800@redhat.com>
-Date: Thu, 14 Aug 2014 17:32:41 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/6
+Message-ID: <20141210134550.GE10499@mail.corp.redhat.com>
+Date: Wed, 10 Dec 2014 14:45:50 +0100
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: GetID3 CVE-2014-2053 XXE issue [was Re: WordPress 3.9.2 release - needs CVE's]
+Subject: Possible CVE request: freetype: out-of-bounds stack-based read/write in cf2_hintmap_build() (incomplete fix for CVE-2014-2240)
 Content-Type: text/plain; charset=utf-8
 
->> - -Prevents information disclosure via XML entity attacks in the
->> external GetID3 library, reported by Ivan Novikov of ONSec.
->>
->
-> This is an XXE in GetID3, http://getid3.sourceforge.net/. Upstream
-> CVE-2014-2053.
-> Affected WordPress versions 3.6 - 3.9.1 (except 3.7.4 / 3.8.4)
->
-> https://core.trac.wordpress.org/changeset/29390
+Hello,
 
-Thanks Andrew!
+Freetype version 2.5.4 fixes another out-of-bounds stack-based
+read/write which is similar to CVE-2014-2240.
+Does it deserve a separate CVE? If so - please assign one.
 
-For the separate package of GetID3, I think this is the fix:
+Upstream bug: http://savannah.nongnu.org/bugs/?43661
 
-https://github.com/JamesHeinrich/getID3/commit/dc8549079a24bb0619b6124ef2df767704f8d0bc
+References:
+http://sourceforge.net/projects/freetype/files/freetype2/2.5.4/
+https://bugs.mageia.org/show_bug.cgi?id=14771
+https://bugzilla.redhat.com/show_bug.cgi?id=1172633
 
-Making a separate mail in case anyone else missed CVE-2014-2053.
+Thanks.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
 
-Cheers,
-
---
-Murray McAllister / Red Hat Product Security
+Content of type "application/pgp-signature" skipped
