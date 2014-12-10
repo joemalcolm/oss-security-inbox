@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/11
-Message-ID: <000d01cff486$02a50d40$07ef27c0$@mantisforge.org>
-Date: Thu, 30 Oct 2014 21:11:01 -0000
-From: "P Richards" <paul@...tisforge.org>
-To: <oss-security@...ts.openwall.com>
-Subject: RE: SQL injection vulnerability in MantisBT SOAP API
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/8
+Message-ID: <1839529.gLatmdanF9@x2>
+Date: Wed, 10 Dec 2014 11:11:21 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Daniel Micay <danielmicay@...il.com>
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-In addition, it was requested to reference http://www.issue-track.org when acknowledging myself for the issue.
+On Tuesday, December 09, 2014 03:24:39 PM Daniel Micay wrote:
+> > I studied this area 2 years ago for a gray hat talk and in preparation to
+> > help  set the policy going forward for Fedora and RHEL. The general
+> > reason I've heard mentioned about why its not used as fully as possible
+> > is that it adds memory pages that can't be coalesced or consolidated
+> > because they are not the same.
+> 
+> AFAIK, it doesn't cause a significant increase in memory usage. The
+> whole point of position independent code is that it can be reused across
+> processes. Dynamic libraries are already fully position independent.
 
-Paul
+This was the issue as I remember it, when you use PIE, it introduces a 
+writable memory segment for the indirection that is filled in lazily. Because 
+this is writeable it is per process. It is also per DSO. With desktop apps 
+linking against a 60 or so libraries and an average of 150 apps running at any 
+time, the memory used starts to really add up. Server workloads tend to have 
+apps with less libraries linked in but many more processes active.
 
------Original Message-----
-From: dregad@...il.com [mailto:dregad@...il.com] On Behalf Of Damien Regad
-Sent: 30 October 2014 20:55
-To: oss-security@...ts.openwall.com
-Subject: [oss-security] SQL injection vulnerability in MantisBT SOAP API
+Of course today systems are starting to ship with 16GB standard, but now we 
+add virtualization work loads and you have dozens more of the above. I think 
+this institutional memory of the old days kind of hinders any movement. We had 
+an internal debate of this on bz 786915 (which is not 100% open). The start up 
+performance never really a factor in the discussions. It was purely about 
+"wasted" memory.
 
-Description:
-
-Several SQL injection vulnerabilities were identified in CVE-2014-1609, and subsequently fixed in MantisBT release 1.2.16 [1].
-
-However, it was recently discovered that the patch did not fully address the original problem in the SOAP API. Research demonstrates that using a specially crafted 'project id' parameter when calling mc_project_get_attachments(), an attacker could still perform an SQL injection.
-
-Affected versions:
-MantisBT >= 1.1.0a4, <= 1.2.17
-
-Fixed in versions:
-1.2.18 (not yet released)
-
-Credit:
-Issue was discovered by
-- Edwin Gozeling and Wim Visser from ITsec Security Services BV
-(http://www.itsec.nl)
-- Paul Richards (former MantisBT developer)
-
-References:
-- further details, including patch available in our issue tracker [2] (
-
-Please assign a CVE ID for this issue, which is a follow-up on
-CVE-2014-1609 (the released fix of which was incomplete).
-
-[1] http://www.mantisbt.org/bugs/view.php?id=16880
-[2] http://www.mantisbt.org/bugs/view.php?id=17812
-
+-Steve
+Download attachment "signature.asc" of type "application/pgp-signature" (182 bytes)
