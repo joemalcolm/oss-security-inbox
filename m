@@ -1,20 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/24/1
-Message-ID: <21218.17184.388742.23426@gargle.gargle.HOWL>
-Date: Fri, 24 Jan 2014 11:40:32 +0100
-From: rf@...eap.de
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/4
+Message-ID: <E3637A9E-AA30-41C9-B868-781F50A0F06B@redhat.com>
+Date: Tue, 09 Dec 2014 21:54:57 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request: denial of service flaw in firebird
 Content-Type: text/plain; charset=utf-8
 
->>>>> "MM" == Moritz Muehlenhoff <jmm@...ian.org> writes:
+I've not seen a CVE for this; could one be assigned?  Thanks.
 
-    MM> We maintain the http://anonscm.debian.org/viewvc/kernel-sec/
-    MM> repository which tracks all kernel vulnerabilities as soon as
-    MM> they're public. That's a good base for every Debian-derived
-    MM> distro with a modified kernel.
+It was found that an unauthenticated remote attacker could send a 
+malformed network packet to a firebird server, which would cause the 
+server to crash.
 
-Sounds interesting. How am I supposed to extract information from this
-page? Are there some docs about how to use it?
+http://www.firebirdsql.org/en/news/security-updates-for-v2-1-and-v2-5-series-66011/
+http://tracker.firebirdsql.org/browse/CORE-4630
+http://sourceforge.net/p/firebird/code/60331/
+https://bugs.mageia.org/show_bug.cgi?id=14726
+https://bugzilla.redhat.com/show_bug.cgi?id=1172445
 
-Roland
+
+-- 
+Vincent Danen / Red Hat Product Security
