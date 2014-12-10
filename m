@@ -1,24 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/05/10
-Message-ID: <1404591950.1720.13.camel@scapa>
-Date: Sat, 05 Jul 2014 22:25:50 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/12
+Message-ID: <54889620.5060801@gmail.com>
+Date: Wed, 10 Dec 2014 13:51:12 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-4699: Linux ptrace bug
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-On dim., 2014-07-06 at 00:20 +0400, Solar Designer wrote:
-> On Sat, Jul 05, 2014 at 09:58:15PM +0200, Yves-Alexis Perez wrote:
-> > And the system is usable after that.
-> 
-> Yet both are vulnerable, with privilege escalation likely possible.
+On 10/12/14 01:20 PM, Daniel Micay wrote:
+>
+> I expect that the same thing can be caused by making aligned
+> allocations. If you make a 4M naturally aligned allocation via an API
+> like posix_memalign, the allocator will probably mmap 4M + the maximum
+> excess. If it unmaps the excess memory at the head/tail, then it will
+> have wiped out 10 bits of entropy for future mmap allocations because
+> the tail will always be at a 4M boundary.
 
-Yes, sorry if my initial answer was suggesting the kernels were not
-vulnerable. It was just that we didn't managed to make them crash on the
-few boxes we tried on.
+(ofc this isn't limited to mmap, but it's a simple example)
 
-Regards,
--- 
-Yves-Alexis
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
