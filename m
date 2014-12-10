@@ -1,44 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/15
-Message-Id: <201406241429.s5OETXkZ008203@linus.mitre.org>
-Date: Tue, 24 Jun 2014 10:29:33 -0400 (EDT)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: piwigo before 2.6.3 sql injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/14
+Message-ID: <20141210192328.GL386@kludge.henri.nerv.fi>
+Date: Wed, 10 Dec 2014 21:23:28 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: MyBB 1.8.3 & 1.6.16 security releases
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> So the sql injection only affects the beta and we have another
-> "unclear" vulnerability and need two CVEs?
+Can I get multiple CVEs for issues fixed in MyBB 1.8.3 & 1.6.16, thank you.
 
-We will wait a short time for any other comments from anyone before
-assigning the two CVEs. One other observation is that 3089 says
-"Product Version 2.6.2" and "An admin can perform an SQL injection."
-Also, http://piwigo.org/forum/viewtopic.php?id=24009 is from
-2014-06-11 whereas http://piwigo.org/bugs/view.php?id=3089 is from
-2014-06-12.
+http://blog.mybb.com/2014/11/20/mybb-1-8-3-1-6-16-released-security-releases/
 
-So, possibly, the requirement for admin access was part of the
-motivation for not pushing out a new release immediately. And, the
-lack of the fix in 2.6.3 might be a result of the bug perhaps not
-being discovered until the day after the 2.6.3 release.
+1.8.3
+
+"""
+The vulnerabilities are:
+    High Risk: A SQL injection vulnerability in theme selection (reported by StefanT)
+    Medium Risk: A XSS vulnerability in calender.php (reported by -Acid)
+    Medium Risk: A XSS vulnerability in MyCode editor (reported by My-BB.Ir)
+    Low Risk: A XSS vulnerability related to post icons (reported by Destroy666)
+    Low Risk: unserialize may call PHP magic methods (reported by chtg)
+    Low Risk: PHP setting request_order can break register globals handling (reported by chtg)
+
+Additionally we’ve fixed an issue with the video MyCode introduced with MyBB
+1.8.2 (#1625) and revised the handling of data fetched from our website as a
+direct consequence of the compromised GitHub account (#1617). In addition to
+that, we’ve set the adminsid cookie as httpOnly (#1622). We also plan to add
+enhanced options to protect the Admin CP like two factor authentication with one
+of the next maintenance releases.
+"""
+
+1.6.16
+
+"""
+The vulnerabilities are:
+
+    Low Risk: A XSS vulnerability related to post icons (reported by Destroy666)
+    Low Risk: A XSS vulnerability in admin/modules/style/templates.php
+    Low Risk: A XSS vulnerability in admin/modules/config/languages.php
+    Low Risk: unserialize may call magic methods (reported by chtg)
+    Low Risk: request_order can break register globals handling (reported by chtg)
+
+Additionally we’ve revised the handling of data fetched from our website as a
+direct consequence of the compromised GitHub account (#1617). In addition to
+that, we’ve set the adminsid cookie as httpOnly (#1622).
+"""
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJTqYraAAoJEKllVAevmvmsIosIAKDw3uYMNhOwcPeZ/BHnRuTq
-5BTdbwu9W21c717iXIDVKWmiBZ96r7wrt3SeAUA5UidFqCYx7Qlg9+Ff58Tmw7O/
-tJ7o5dhJS09nRj1TSG5+W6KdeiitTHVDtCXYDc20xgnAQqnNotuS2O4kqhWjH20j
-xEIHCH6N1ePel+5vnaSO7vqOwJIoXUsb8VXVeLpnZUUgv2hCbLIFB2PZhmIWylll
-2eFABF4i1Uwze/gzeY7Xk7kFRn9hzCASKRZ1p8Bn5fko8FJ1CA+Rx935DoBkPt+n
-cY7vfdj2zOCJLGPKXvLAUh1GofSI++wiu6pEs4twHz2/B5MxlmE/OFooNURHzwI=
-=LH2i
+iEYEARECAAYFAlSInbAACgkQXf6hBi6kbk+HHwCgxg2yCr90kZnJRyuuEEagOJYS
+P64AnjRISYE3GfVkpHNkLpYCtwkoqB6O
+=HciC
 -----END PGP SIGNATURE-----
