@@ -1,44 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/15/3
-Message-ID: <CAA2mj=dxZUY0N=pEfQ-Yk+Vtbzo7dhpvMSf7X0pAwecym6Vtnw@mail.gmail.com>
-Date: Sat, 15 Nov 2014 15:30:49 +0000
-From: Paul Richards <paul@...tisforge.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/10/1
+Message-ID: <54879BCE.9030107@gmail.com>
+Date: Tue, 09 Dec 2014 20:03:10 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE Request: XSS vulnerability in MantisBT 1.2.13
+Subject: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Nov 15, 2014 at 2:18 PM, Damien Regad <dregad@...tisbt.org> wrote:
+On 09/12/14 11:18 AM, Steve Grubb wrote:
+> 
+> 4) Then I started wondering about the heap when you use other memory manager 
+> libraries such as jemalloc. This turned out to be interesting. You get about 
+> 19 bits of randomness using it. Its not as bad as non-PIE glibc but not as 
+> good as PIE glibc. You also got the same amount of randomness whether the app 
+> was PIE or not. This is an area ripe for more experimenting, exploiting, and 
+> patching. Supposedly some of these heap managers use mmap as the underlying 
+> allocator. So, why aren't they getting 29 bits, too? :-)
 
-> On 2014-11-15 02:26, P Richards wrote:
->
->> We fixed this issue in Master with the following commit
->>
-> > https://github.com/mantisbt/mantisbt/commit/
-> cabacdc291c251bfde0dc2a2c945c02cef41bf40,
-> > and I believe I requested this to be back-ported at the time. You
-> > modified the code not to trigger an error with the commit
-> > https://github.com/mantisbt/mantisbt/commit/
-> 3d0625d84d5d08a998673713df1711e1d46b0b86
-> > and to fall back to the default of no value selected.
->
-> I don't think we're talking about the same issue here. The one you
-> describe was about the selection list in the filters, this one is in the
-> "set configuration" box.
->
->
-Ok - having looked further - I agree that this is two separate issues - so
-can we have a CVE for both issues separately.
+Your measurement of the difference is quite accurate.
 
-However, I believe the fix for first issue to be incorrect (hence helping
-me misunderstanding the initial issue):
+The page multiple constraint zaps 12 potential bits of entropy, but
+jemalloc's 4M chunk alignment increases that to 22 bits. I'm not sure
+what can be done about it because there's a very strong performance case
+for the design.
 
-The initial fix adds a string_display_line call to an <input> box. Given
-that this processes the string for display in html, and there is a
-string_attribute api call for handling data for display in a text box, I
-believe that the fix for the other  issue is incorrect and
-that string_attribute should be used instead of string_display_line (which
-may do other formatting to the string which may be undesirable when editing
-configuration values).
+I sent in a fix for the MALLOC_CONF part of this at least, so an
+attacker won't be able to reduce it further:
 
-Paul
+https://github.com/jemalloc/jemalloc/pull/174
 
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
