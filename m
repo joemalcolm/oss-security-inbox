@@ -1,65 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/07/23
-Message-ID: <5433E180.4060507@mittwald.de>
-Date: Tue, 7 Oct 2014 14:50:08 +0200
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-CC: <langsec-discuss@...l.langsec.org>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/8
+Message-ID: <20141211182323.1b5113fb@pc>
+Date: Thu, 11 Dec 2014 18:23:23 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: PIE bypass using VDSO ASLR weakness
 Content-Type: text/plain; charset=utf-8
 
+On Thu, 11 Dec 2014 11:15:44 +0530
+Reno Robert <renorobert@...il.com> wrote:
 
+> Given that ASLR is not effective in VDSO and comes down to 11 quality
+> bits as per pax test making return-to-vdso feasible even for PIE
+> binary, whether this should be considered as a bug and CVE be
+> assigned?
 
-On 07/10/14 13:59, David A. Wheeler wrote:
-> I am still struggling with this one.  I am trying to create that list here:
-> http://www.dwheeler.com/essays/shellshock.html#detect-or-prevent
-> 
-> But to be honest, that list is pretty pathetic. This is a challenging class of vulnerability to detect or prevent ahead of time. Ideas would be very welcome.
-
-Well I think the core issue was:
-
-A parser, which was written to just run trusted input
-was exposed years later via third party configuration
-( e.g. /bin/sh == bash & cgi using /bin/sh) to untrusted
-input.
-
-I guess to avoid such cases in the future, you must be explicit
-from which sources you accept input.
-This whitelist should not contain arbitrary content like "stdin"
-or any input source which itself has no strict whitelist on input
-it accepts.
-
-So in short: you need to design and implement interfaces
-for every program which enforce explicit security boundaries.
-
-Example: why should I be able to feed audio files
-into graphics processing programs?
-
-This is a lot about parser and language safety imho.
-So I can't mention langsec.org enough.
-
-Go there, read the papers, look up the videos from
-their talks.
-
-I know this means re-implementing almost all code out there.
-
-But if you can proof that the input for program A
-constructs a turing complete grammar you have already lost.
-You can not "fix" these bugs, as there is an infinite number of them.
-You need to fix the parsers and the languages first.
+I opened a bug in the kernel's bugtracker:
+https://bugzilla.kernel.org/show_bug.cgi?id=89591
 
 -- 
-Mit freundlichen Grüßen / Regards
+Hanno Böck
+http://hboeck.de/
 
-Sven Kieske
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+Content of type "application/pgp-signature" skipped
