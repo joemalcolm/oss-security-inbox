@@ -1,39 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/2
-Message-Id: <201409012033.20783.thijs@debian.org>
-Date: Mon, 1 Sep 2014 20:33:20 +0200
-From: Thijs Kinkhorst <thijs@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: Werner Koch <wk@...pg.org>, pkg-gnupg-maint@...ts.alioth.debian.org
-Subject: gpg blindly imports keys from keyserver responses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/7
+Message-ID: <Pine.LNX.4.64.1412111137240.4468@beijing.mitre.org>
+Date: Thu, 11 Dec 2014 11:39:31 -0500 (EST)
+From: cve-assign@...re.org
+To: Alex Gaynor <alex.gaynor@...il.com>
+cc: cve-assign@...re.org, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Python, standard library HTTP clients
 Content-Type: text/plain; charset=utf-8
 
-All,
 
-Stefan Tomanek reported to Debian that GnuPG accepts any key as a response 
-from a keyserver, regardless of whether that key was actually requested:
-https://bugs.debian.org/725411
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-There's some discussion about the issue; we believe that the primary way to 
-verify key ownership is still the web of trust and manual fingerprint 
-verification. It is however argued that as a user, requesting keys based on 
-specifying the full fingerprint is a safe way to retreive a key for a known-
-good fingerprint. But this argument is again somewhat countered by an attack 
-on V3 keys which allows generating such fingerprints, making such a request 
-dubious again.
+> When Python's standard library HTTP clients (httplib, urllib, urllib2,
+> xmlrpclib) are used to access resources with HTTPS, by default the
+> certificate
+> is not checked against any trust store, nor is the hostname in the
+> certificate
+> checked against the requested host. It was possible to configure a trust
+> root
+> to be checked against, however there were no faculties for hostname
+> checking.
+> 
+> This made MITM attacks against the HTTP clients trivial, and violated RFC
+> 2818
+> (http://tools.ietf.org/html/rfc2818#section-3).
+> 
+> Python 2.7.9 has been issued to resolve this issue. It is also resolved in
+> 3.4.3, which has not yet been released.
 
-All in all, the safe choice seems to be to patch this issue, so Debian will 
-release updates for it. It has been fixed upstream in GnuPG 1.4.17 with this 
-commit:
-http://git.gnupg.org/cgi-
-bin/gitweb.cgi?p=gnupg.git;a=commit;h=5230304349490f31aa64ee2b69a8a2bc06bf7816
+Use CVE-2014-9365.
 
-I'll leave it to the numbering authorities whether this is something that 
-should get a CVE id.
+- ---
 
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Cheers,
-Thijs Kinkhorst
-Debian Security Team
-
-Download attachment "signature.asc " of type "application/pgp-signature" (474 bytes)
+iQEVAwUBVInIiKllVAevmvmsAQKUEAf9FEfp7oNywlU7NaOfSjaMVJi5B3wApMO4
+STpRGPKPa7NjJOF1FapTBMhODnRcViP7yvrVvBgapAQosnsE4nZq9Q5ccZQNvx3n
+IUAJm61K1CqPAW/YuzrCRQzrZZpDxrNTnSGV4y2ml2zCOUtTcVBqnYUAW2DjgOEs
+qs0kH8PlDfN7qhpUWVbD3Ix65WTyJKd5kwzp23SO50p/ZqlbAGSN2BJ5d2rRP7wE
+o5N06E/7ALziQg+4lTPtdBC380BaU/RS5tBjvw1XpKiqDKGQFTZvqxdC9maxR3dD
+vnOM/YrCW6GQKwWv5KE8zEHsRsu4NKCns6c/B3mM8+eEIZqbDleA1w==
+=GCa6
+-----END PGP SIGNATURE-----
