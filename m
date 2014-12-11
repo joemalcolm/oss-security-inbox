@@ -1,42 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/24/14
-Message-Id: <201406241425.s5OEPg8f008148@linus.mitre.org>
-Date: Tue, 24 Jun 2014 10:25:42 -0400 (EDT)
-From: cve-assign@...re.org
-To: mancha1@...o.com, wk@...pg.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: GnuPG-1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/10
+Message-ID: <20141211184911.GA16521@kludge.henri.nerv.fi>
+Date: Thu, 11 Dec 2014 20:49:11 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: TYPO3 Security Team <security@...o3.org>
+Subject: CVE request: TYPO3-CORE-SA-2014-003
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commit;h=014b2103fcb12f261135e3954f26e9e07b39e342
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=commit;h=11fdfcf82bd8d2b5bc38292a29876e10770f4b0a
-> http://lists.gnupg.org/pipermail/gnupg-announce/2014q2/000344.html
+Hi MITRE,
 
-> This release includes a *security fix* to stop a possible DoS using
-> garbled compressed data packets which can be used to put gpg into an
-> infinite loop.
+Can we get CVE for Link spoofing and cache poisoning vulnerabilities in TYPO3
+CMS, thank you.
 
-> A packet like (a3 01 5b ff) leads to an infinite loop.
+http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2014-003/
 
-Use CVE-2014-4617 for this issue affecting both GnuPG 1.x before
-1.4.17 and 2.x before 2.0.24.
+Copy paste from advisory below:
+
+Vulnerability Type: Link Spoofing
+Affected Versions: Versions 4.5.0 to 4.5.38, 4.6.0 to 4.6.18, 4.7.0 to 4.7.20,
+6.0.0 to 6.0.14, 6.1.0 to 6.1.12 and 6.2.0 to 6.2.8, 7.0.0 to 7.0.1
+
+Severity: Medium
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:P/I:P/A:N/E:F/RL:OF/RC:C
+
+Problem Description: An attacker could forge a request, which modifies anchor
+only links on the homepage of a TYPO3 installation in a way that they point to
+arbitrary domains, if the configuration option config.prefixLocalAnchors is used
+with any possible value. TYPO3 versions 4.6.x and higher are only affected if
+the homepage is not a shortcut to a different page. AS an additional
+pre-condition URL rewriting must be enabled in the web server, which typically
+is, when using extensions like realurl or cooluri.
+
+Installation where config.absRefPrefix is additionally set to any value are not
+affected by this vulnerability.
+
+Example of affected configuration:
+
+TypoScript:
+
+config.absRefPrefix =
+config.prefixLocalAnchors = all 
+page = PAGE 
+page.10 = TEXT 
+page.10.value = <a href="#skiplinks">Skiplinks</a> 
+
+.htaccess:
+
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d 
+RewriteCond %{REQUEST_FILENAME} !-l 
+RewriteRule .* index.php [L] 
+
+Solution: Set config.absRefPrefix to a value fitting your installation
+
+or
+
+Solution: Update to TYPO3 versions 4.5.39, 6.2.9 or 7.0.2 that fix the problem
+described.
+
+Important Note: Since the changes provided with the TYPO3 update change the way
+the prefix for local anchors is generated, there might be cases where the update
+breaks functionality. The impact of the breakage is that the page is reloaded in
+the browser when a user follows a link where previously the browser only jumped
+to a certain section of the current page.
+
+Credits: Thanks to Gernot Leitgab who discovered and reported the vulnerability.
+
+
+Vulnerability Type: Cache Poisoning
+Affected Versions: Versions 4.5.0 to 4.5.38, 4.6.0 to 4.6.18, 4.7.0 to 4.7.20,
+6.0.0 to 6.0.14, 6.1.0 to 6.1.12 and 6.2.0 to 6.2.8, 7.0.0 to 7.0.1
+
+Severity: Low
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:N/I:P/A:N/E:F/RL:OF/RC:C
+
+Problem Description: A request URL with arbitrary arguments, but still pointing
+to the home page of  a TYPO3 installation can be cached if the configuration
+option config.prefixLocalAnchors is used with the values "all" or "cached". The
+impact of this vulnerability is that unfamiliar looking links to the home page
+can end up in the cache, which leads to a reload of the page in the browser when
+section links are followed by web page visitors, instead of just directly
+jumping to the requested section of the page. TYPO3 versions 4.6.x and higher
+are only affected if the homepage is not a shortcut to a different page.
+
+Solution: Removing the configuration options config.prefixLocalAnchors (and
+optionally also config.baseUrl) in favor of config.absRefPrefix
+
+Credits: Thanks to Gernot Leitgab who discovered and reported the vulnerability. 
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJTqYoHAAoJEKllVAevmvmsQhUIAMb33SXyGjEUBXPH5DcMA6hT
-f+0xo7Hk9eHCuOo2mYuCIOba/juCIDm1ur/KCCmEShk7LyLczDwIxROOnSGmyhTG
-kss5LIAqmYcvVbFveWnVVMvPJgYXBABBnhPjs3r2hFN8dgzYYKrz8rbR+SkTFoiK
-kKRMAeYOSbpp/vIq1KvippLmCqWpk78Em8lKy5A00I8H7fUHsz1nXjVftGGYH7Og
-J0ZFFRIYQUnm0tMRXPLzIf7WCxnQB0XMyI82ag6b4JS2BE1rBAKWZ6c3W1eKeGjy
-VHvwKL3sKycKcb8Z0TOR1N0oqwtouy8pvyV6gpD7Y5xubLGZ6mdQpq6CptbQILM=
-=Ft2X
+iEYEARECAAYFAlSJ5ycACgkQXf6hBi6kbk91AACgq2InRYd9nD3PFD58Sel1UXV1
+sisAoM8krOev+0f/Og0u43sFuTMZsffI
+=oa+e
 -----END PGP SIGNATURE-----
