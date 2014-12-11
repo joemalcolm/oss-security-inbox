@@ -1,95 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/27/13
-Message-Id: <E1Xtxq3-0008Rw-1V@xenbits.xen.org>
-Date: Thu, 27 Nov 2014 12:06:23 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 111 (CVE-2014-8866) - Excessive checking in compatibility mode hypercall argument translation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/2
+Message-Id: <E1XytwD-0004Je-Oj@rmm6prod02.runbox.com>
+Date: Wed, 10 Dec 2014 21:57:09 -0500 (EST)
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: Python, standard library HTTP clients
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, 11 Dec 2014 02:26:50 +0000, Alex Gaynor <alex.gaynor@...il.com> wrote:
+> I'm request a CVE for CPython (sometimes Python), for failure to validate
+> certificates in the HTTP client with TLS.
+> 
+> Title: Python standard HTTP libraries fail to validate TLS certificates for HTTPS
+> Products: CPython, all 2.x versions prior to 2.7.9, 3.x versions prior to 3.4.3
+> Description:
+> 
+> When Python's standard library HTTP clients (httplib, urllib, urllib2,
+> xmlrpclib) are used to access resources with HTTPS, by default the certificate
+> is not checked against any trust store, nor is the hostname in the certificate
+> checked against the requested host. It was possible to configure a trust
+> root to be checked against, however there were no faculties for hostname
+> checking.
+...
+> Python 2.7.9 has been issued to resolve this issue. It is also resolved in
+> 3.4.3, which has not yet been released.
 
-            Xen Security Advisory CVE-2014-8866 / XSA-111
-                              version 3
+Awesome!! I am *DELIGHTED* that this serious problem is finally getting fixed.
+Thank you for your effort!  For those curious about this,
+more information about this is in PEP 0476:
+  http://legacy.python.org/dev/peps/pep-0476/
+and these articles:
+  https://lwn.net/Articles/582065/
+  https://lwn.net/Articles/611243/
 
-   Excessive checking in compatibility mode hypercall argument translation
+This has been the underlying cause of numerous CVEs going back to at least 2010, e.g.:
+  https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4340
+but the CVEs have always been assigned (to my knowledge) to the applications
+using Python, and never the library that didn't provide the functionality that developers
+often expected.  I expect a lot of silent vulnerabilities will be removed by this change.
 
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-The hypercall argument translation needed for 32-bit guests running on
-64-bit hypervisors performs checks on the final register state.  These
-checks cover all registers potentially holding hypercall arguments,
-not just the ones actually doing so for the hypercall being processed,
-since the code was originally intended for use only by PV guests.
-
-While this is not a problem for PV guests (as they can't enter 64-bit
-mode and hence can't alter the high halves of any of the registers),
-the subsequent reuse of the same functionality for HVM guests exposed
-those checks to values (specifically, unexpected values for the high
-halves of registers not holding hypercall arguments) controlled by
-guest software.
-
-IMPACT
-======
-
-A buggy or malicious HVM guest can crash the host.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen 3.3 and onward are vulnerable.
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-There is no mitigation available for HVM guests on any version of Xen
-so far released by xenproject.org.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa111-unstable.patch        xen-unstable, Xen 4.4.x
-xsa111-4.3.patch             Xen 4.3.x
-xsa111-4.2.patch             Xen 4.2.x
-
-$ sha256sum xsa111*.patch
-f6e1bf166ebed6235802e4e42853430d2f5b456c1837908a4f7ed6d4d150e4b4  xsa111-4.2.patch
-e9b03a4443a40142cc5c21848dc9589770620dde8924344c4a00028c4dace9f2  xsa111-4.3.patch
-3c418f065cd452c225af34c3cccf9bdbc37efb6c6a5fc5940fd83ad8620510d3  xsa111.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJUdwoTAAoJEIP+FMlX6CvZ/jIH/01d45vOe9bUokjixu+sv93n
-FPxm2XC9IZEAuDU4h4RXAkzI0L4vuCAnJq0Rr3quizukQ/oqtPPdbYGC/VgQ15LU
-0XE3J2U8BbwsweEDIADinJZ76UvvIWtT4/llQT2WCI/g7nRiW7lZAUkhR9nXL2gg
-pw48QIdBkgEGZO7JlWEmrA60OwFcAAdG66/IWNjWbUPrscr/DLG0gimrqqAtG9lY
-jTpDrOgC+xARbES9iRBt0IU4duMUiCjwy+y8jeq/Ka5d6QIrcaeTO9Y3d6jf2CCE
-Z7TC22OGO4XMg6j+abceao3geS29ezsDQttSh7rGjwqMaNqJbIiitKIq4svAtS4=
-=Gtqx
------END PGP SIGNATURE-----
-
-Download attachment "xsa111-4.2.patch" of type "application/octet-stream" (5086 bytes)
-
-Download attachment "xsa111-4.3.patch" of type "application/octet-stream" (5080 bytes)
-
-Download attachment "xsa111.patch" of type "application/octet-stream" (4754 bytes)
+--- David A. Wheeler
