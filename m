@@ -1,61 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/09/5
-Message-ID: <20140609161537.GN23760@sentinelchicken.org>
-Date: Mon, 9 Jun 2014 09:15:38 -0700
-From: Tim <tim-security@...tinelchicken.org>
-To: Tomas Hoger <thoger@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0191 libxml2: external parameter entity loaded when entity substitution is disabled
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/4
+Message-ID: <5489746F.9030707@upv.es>
+Date: Thu, 11 Dec 2014 11:39:43 +0100
+From: Hector Marco <hecmargi@....es>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: Offset2lib: bypassing full ASLR on 64bit Linux
 Content-Type: text/plain; charset=utf-8
 
+Hi Mike,
 
 
-> > I did end up releasing my paper recently, which I believe has
-> > up-to-date recommendations for Xerces:
-> >   http://vsecurity.com/download/papers/XMLDTDEntityAttacks.pdf
-> 
-> It continues to mention setExpandEntityReferences, hinting that should
-> be expected to provide security protections (text seems to imply
-> external entities are not expanded in documents, but they are still
-> defined and remote URLs fetched).  As previously mentioned, the setting
-> only changes DOM tree layout, and does not disable entity expansion.
-> 
-> E.g. parsing the following two inputs (one using internal other
-> external general entity):
-> 
-> $ cat test1.xml 
-> <?xml version="1.0"?>
-> <!DOCTYPE bleh [
-> <!ENTITY bar "BAR">
-> ]>
-> <root>foo &bar; baz</root>
-> 
-> $ cat test2.xml 
-> <?xml version="1.0"?>
-> <!DOCTYPE bleh [
-> <!ENTITY bar SYSTEM "test2-bar.txt">
-> ]>
-> <root>foo &bar; baz</root>
-> 
-> $ cat test2-bar.txt 
-> BAR
-> 
-> Setting setExpandEntityReferences to false changes the tree from:
-> 
-> - (Element) <root>
->   - (Text) foo BAR baz
-> 
-> to:
-> 
-> - (Element) <root>
->   - (Text) foo 
->   - (Entity Reference) &bar;
->   - (Text) BAR baz
-> 
-> &bar; is expanded to BAR either way.
+El 09/12/14 a las 02:04, Mike Hommey escribió:
+>> Hi,
+>>
+>> This is a disclosure of a weakness of the ASLR Linux implementation.
+>> The problem appears when the executable is PIE compiled and it has an
+>> address leak belonging to the executable. We named this weakness:
+>> offset2lib.
+>>
+>> In this scenario, an attacker is able to de-randomize all mmapped
+>> areas (libraries, mapped files, etc.) by knowing only an address
+>> belonging to the application and the offset2lib value.
+>>
+>> We have built a PoC which bypasses on a 64 bit Linux system, the three
+>> most widely adopted and effective protection techniques: No-eXecutable
+>> bit (NX), address space layout randomization (ASLR) and stack smashing
+>> protector (SSP). The exploit obtains a remote shell in less than one
+>> second.
+>>
+>> We have proposed the ASLRv3 which is a small Linux patch which removes
+>> the offset2lib weakness.
+>>
+>> Details of the weakness, steps to exploit the offset2lib weakness, a
+>> working proof of concept exploit, recommendations and a demonstrative
+>> video has been publish at:
+>> http://cybersecurity.upv.es/attacks/offset2lib/offset2lib.html
+>
+> If you have the base address of the executable and are able to read any
+> byte in the process address space, as my reading of the paper suggests,
+> then you don't even need offsetlib, and no amount of ASLR can save you.
 
+Maybe you misunderstand our paper, we do not rely on been able to read
+any byte of the process. Actually, our PoC works by writing bytes on
+the stack to de-randomize the PIE executable. This is not new at all,
+Packet Storm Security published a paper about how to do it:
+http://www.intelligentexploit.com/articles/Smashing-the-stack,-an-example-from-2013.pdf 
+(August 2013), One year later, almost the same
+technique was published (as new?) in a paper called "Hacking Blind":
+http://www.scs.stanford.edu/brop/bittau-brop.pdf (May 1014).
 
-Hmm, that's not the behavior I observed.  I'll try to find some time
-to rerun my tests and compare notes with you off list.
+The conclusion of the Packet Storm paper was that even de-randomizing 
+the process you can do nothing. This is because you can only redirect 
+the control flow and that time they didn't know where to jump.
 
-tim
+The Offset2lib is a step forward which enables to use (jump to)
+the libraries without reading any other data from the executable
+as "Hacking Blind" requires. By using the offset2lib to bypass the ASLR, 
+the Hacking Blind will be deprecated until offset2lib is fixed.
+
+>
+> Just read the ELF program headers that you can find at the base address
+> of the executable to find the PT_DYNAMIC segment. In that segment, find
+> the DT_DEBUG entry, which will give you a pointer to a r_debug struct,
+> which definition you can find in /usr/include/link.h.
+>
+> That struct has a r_map member that gives you a linked list of libraries
+> the dynamic linker (ld.so) loaded, with the base address for each of
+> them.
+>
+> Those data structures are used by gdb, so removing the DT_DEBUG pointer
+> would break debugging with gdb.
+>
+> Mike
+>
+
+Hector Marco.
