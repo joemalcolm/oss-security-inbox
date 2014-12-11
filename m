@@ -1,79 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/12/2
-Message-ID: <CALx_OUC39KE3RSC8xic41Dh4URWfaLDq9hDbpgJLS8qZQTaP0A@mail.gmail.com>
-Date: Tue, 11 Nov 2014 18:01:13 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Re: strings / libbfd crasher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/9
+Message-ID: <20141211182730.GA11928@kroah.com>
+Date: Thu, 11 Dec 2014 13:27:30 -0500
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: PIE bypass using VDSO ASLR weakness
 Content-Type: text/plain; charset=utf-8
 
-> Is codebase generally much better? You aim at "the more difficult or
-> better-fuzzed targets" but what about other software? Or put it another way:
-> how big portion of widely used software you consider "the more difficult or
-> better-fuzzed targets"?
+On Thu, Dec 11, 2014 at 06:23:23PM +0100, Hanno Böck wrote:
+> On Thu, 11 Dec 2014 11:15:44 +0530
+> Reno Robert <renorobert@...il.com> wrote:
+> 
+> > Given that ASLR is not effective in VDSO and comes down to 11 quality
+> > bits as per pax test making return-to-vdso feasible even for PIE
+> > binary, whether this should be considered as a bug and CVE be
+> > assigned?
+> 
+> I opened a bug in the kernel's bugtracker:
+> https://bugzilla.kernel.org/show_bug.cgi?id=89591
 
-Most of the open-source libraries used in browsers (libpng,
-libjpeg-turbo, zlib, etc), as well as most of the mature and popular
-network daemons (Apache, OpenSSH, etc) and other components
-well-understood to be critical to security (e.g., most setuids, most
-compression utilities) are comparatively better. They are not perfect,
-but it is widely accepted that you'd need a lot of effort and luck to
-find bugs in them.
+Don't do that, stick to the linux-kernel mailing list, cc:ing the proper
+developers involved.  I say this as most kernel subsystems do not use
+bugzilla.kernel.org (USB and Networking are two examples), while others
+use it heavily (like ACPI).
 
-The problem with libbfd is that it had genuinely very little range
-checking in place, probably because it wasn't designed to be ever run
-on binaries you do not intend to execute. The default operation of
-/usr/bin/strings and the way many people ended up using it arguably
-violates that assumption in a particularly pronounced way. Tools such
-as objdump are a bit of a grey area, too.
+For "core" issues like this, stick to the mailing lists, they work
+better.
 
-There are several other libraries and tools that are probably a bit
-wonky when you factor way their popularity (e.g., tcpdump probably
-leaves something to be desired - it's fairly easy to hit crashes when
-fuzzing pcaps; ImageMagick used to be relatively bad, too, although it
-probably have improved in recent years; ffmpeg and poppler are other
-examples of things you should probably vaguely worry about; font
-parsers and GL drivers, as exposed through the browser, are another
-interesting risk).
+Actually, for "security" stuff, use the security@...nel.org alias,
+that's the best way to get a quick response.
 
-There is also plenty of emerging projects, especially on the cloud /
-web front, that have received minimal scrutiny.
+thanks,
 
-Now, the quality of the *average* OSS project is probably comparable
-to libbfd, but the average OSS project is probably less likely to be
-exposed to untrusted inputs under normal operating conditions.
-
-> This leads to a question: how to deal with it.
-
-Well, hard to say. The simplest option is to dump all the test cases
-or the fuzzer onto the maintainer. Some will get busy troubleshooting
-the issues or will even set up their own fuzzing jobs, some will give
-you funny looks.
-
-When that happens, you can either try to research and prioritize the
-test cases, or make everything public and hope that others will sort
-it out. But it may very well be that if you do that without
-researching exploitability, people won't notice or care, unless you
-have a good publicist or do a really catchy conference presentation.
-
-Even with a lot of PR, success isn't necessarily guaranteed. The
-Mayhem fuzzing effort (http://forallsecure.com/mayhem.html) comes to
-mind as a fairly prominent example of a high-profile PR event coupled
-with dumping an immense amount of almost universally non-security bugs
-into the Debian tracker; but more than a year later, something like
-800 of them are still open, so ultimately, the results are somewhat
-inconclusive.
-
-In the end, unless you can make a plausible argument that something is
-probably a security risk, you don't have a lot of ground to stand on.
-Can be a bad thing, can be a good one =)
-
->> [...multiple instances of the same coding pattern...]
-> So, can such cases be deduped automatically? Or should they? Or you mean
-> that they are easy to analyze manually?
-
-I don't know of a way to de-dupe that manually. Even if the coding
-pattern is conceptually the same, the compiler may output different
-code for each location, etc.
-
-/mz
+greg k-h
