@@ -1,86 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/5
-Message-Id: <201406260444.s5Q4icuu012170@linus.mitre.org>
-Date: Thu, 26 Jun 2014 00:44:38 -0400 (EDT)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: TMP flaw in rackspace jclouds?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/3
+Message-ID: <CAH4rwT+ggCpPTqAOJgdm7LbiETMYuufvGXNLZh7VGooF-RLmrw@mail.gmail.com>
+Date: Thu, 11 Dec 2014 11:15:44 +0530
+From: Reno Robert <renorobert@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: PIE bypass using VDSO ASLR weakness
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Given that ASLR is not effective in VDSO and comes down to 11 quality bits
+as per pax test making return-to-vdso feasible even for PIE binary, whether
+this should be considered as a bug and CVE be assigned?
 
->             .add(exec("mkdir /tmp/$$"))
->             .add(extractTargzIntoDirectory(tgz, "/tmp/$$"))
->             .add(exec("mkdir -p " + dest))
->             .add(exec("mv /tmp/$$/*/* " + dest))
->             .add(exec("rm -rf /tmp/$$")).build());
+On Wed, Dec 10, 2014 at 2:25 AM, Daniel Micay <danielmicay@...il.com> wrote:
 
-Use CVE-2014-4651 for this vulnerability in Statements.java.
+> On 09/12/14 10:33 AM, Reno Robert wrote:
+> > Hi Daniel, COMPAT_VDSO is not enabled. Just that randomization is 20 bits
+> > and same values are generated on repeated execution.
+>
+> Ah, I was testing against PaX ASLR :). Sorry for the noise.
+>
+>
 
-Here are additional comments. A quick summary is that more CVEs might
-be required because of different discoverers (apparently one other
-person/organization made discoveries about five additional files) or
-different flaw types.
 
-1. This is a somewhat unusual case for CVE. Apparently, the issue
-isn't that Statements.java has a Symlink Following vulnerability; it's
-that Statements.java generates code that has a Symlink Following
-vulnerability. Also, the generated code is never executed on a machine
-that executes Statements.java, so there's no
-confidentiality/integrity/availability impact to that machine.
-However, similar scenarios have qualified for CVE IDs. Possibly the
-most similar scenario is toolkits for building web applications, in
-which every generated application has an XSS vulnerability.
+-- 
+Regards,
+Reno Robert
+http://v0ids3curity.blogspot.in/
 
-2. The general concepts of "generates code with flaw X" and "contains
-code with flaw X" would probably not be combined into one CVE, but we
-didn't immediately see any of the latter fixed in the
-https://github.com/andrewgaul/jclouds/commit/f371bd6afb6d64c3eb7bad0ecea396b42e23e8b2
-commit.
-
-3. We didn't immediately figure out whether any of the patched files
-with names containing "test" or "Test" are part of the installed
-product, or are only used during development.
-
-4. Possibly, some of the code runs early in the process of setting up
-a new virtual machine, e.g., initscript_with_jetty.sh contains an
-"exec 3<> /etc/ssh/sshd_config" line that might be the initial
-configuration of an sshd_config file. The details of this specific
-file are not especially relevant. The point is that, if anyone finds a
-situation where code with a Symlink Following vulnerability executes
-only during machine provisioning, before any untrusted person is able
-to login to an unprivileged account, then that Symlink Following
-vulnerability is unexploitable and shouldn't have a CVE ID assigned.
-
-5. We don't really understand why this product is retrieving .tgz
-files from http URLs with curl, extracting the archives, apparently
-not attempting to verify file integrity, and executing files. Possibly
-this is considered relatively safe because the code would normally be
-executed within a data center of a professional cloud-services
-provider, and man-in-the-middle attacks would be relatively difficult
-compared to, say, attacks against http download/extract/execute by a
-client on a Wi-Fi network. But, we're not really sure. For example,
-does
-https://github.com/jclouds/jclouds/blob/master/scriptbuilder/src/test/resources/test_install_rubygems_scriptbuilder.sh
-have an implied security policy that the sequence of steps from "GET
-http://production.cf.rubygems.org/rubygems/rubygems-1.8.10.tgz" to
-"ruby setup.rb" is "safe enough" against man-in-the-middle?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTq6RsAAoJEKllVAevmvmsk54H/01eLKWTtaR2GOrBXuTkJguY
-1DQrfk2yF6/p/aS53ZCiXYzBdKyy42o6c01vax/Q0Vt3bQ7Ek6UGIOBhHLF+ui90
-uWZbRYg9y1lekhbr/C4i+zFV6HaVXYl9njlcCeKpn4ESThx5v3RZOZO/BNJ7D4fZ
-mZnmEJK1zky8greCGlnrod2xCLMpLAIAv2LX8FJnOJef9GI6pU18Gq+XU0FJqg2g
-dIQLoNdrokclzj7n6T1cnSanQevKG96ZNRISY6DgelQ1qp1u8Gd/R9AKH5g07qfd
-In8MSw7OKtBcLLjZUxUiXaILNKFjZGxUP9+eBX1tmh/wCalNaUIjPXBq1kfjBLQ=
-=y2sL
------END PGP SIGNATURE-----
