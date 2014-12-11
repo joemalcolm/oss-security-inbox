@@ -1,53 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/07/4
-Message-ID: <53E33148.5010102@redhat.com>
-Date: Thu, 07 Aug 2014 17:56:56 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/11
+Message-ID: <5489F143.7030302@mccme.ru>
+Date: Thu, 11 Dec 2014 22:32:19 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: issues in ISO C++ 2011 regex library
+Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
 Content-Type: text/plain; charset=utf-8
 
-On 08/06/2014 04:36 AM, Rich Felker wrote:
-> On Tue, Aug 05, 2014 at 03:50:32PM +1000, Murray McAllister wrote:
->> Hello,
->>
->> Maksymilian Arciemowicz reported a number of issues in the ISO C++
->> 2011 regex libraries:
->>
->> http://seclists.org/fulldisclosure/2014/Aug/1
->>
->> Bugs:
->>
->> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61601
->>
->> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61582
->>
->> http://llvm.org/bugs/show_bug.cgi?id=20291
->>
->> For the memory corruption bug (61582), there seems to be more than
->> one issue here (at least a heap-based buffer overflow and a stack
->> overflow of some sort). Can a single CVE be assigned, or do you need
->> specific details for each issue (I don't currently have those)?
->>
->> With GCC 4.8 in Fedora, the affected program needs to be compiled
->> using the "-std=c++11" option.
+On 2014-12-08 18:36, Hanno Böck wrote:
+> Just to keep people updated on this:
+
+Thanks for this.
+
+> Jean-Francois Dockes replied to my bug reports, he's one of the last
+> people who did work on unrtf and he's in contact with the maintainer.
+> They'll work on fixing all the issues reported. I also pointed them to
+> Fabian's patch.
 >
-> I think this issue is mis-named. "The ISO C++ 2011 regex library" is a
-> specfication, not an implementation, and a vulnerability in it would
-> be a fundamental flaw in the API design (analogous to gets in C). It
-> seems like this CVE request is for one or more GCC/libstdc++ bugs, and
-> it should be identified as such.
->
-> Rich
->
+> This sounds good, hopefully we'll get a new unrtf release with fixes
+> for all the known issues soon
 
-Thanks for pointing that out, and sorry for the confusion!
+0.21.6 is out and seems to incorporate the fixes from Jean-Francois 
+Dockes (with reformatting). Expecting to find security mentioned in 
+ChangeLog or other docs is too much, I guess.
 
-There is some discussion in 
-https://bugzilla.redhat.com/show_bug.cgi?id=1126691 about why these 
-should not be treated as security issues.
+I've fuzzed unrtf with the patch from Fabian Keil a bit and I've found 8 
+crashes (with different RIP). All of them are fixed in the version by 
+Jean-Francois Dockes (and hence in the release). If someone wants to 
+take a look at them I can upload them somewhere.
 
-Cheers,
+OTOH unrtf seems to be a recursive program:
 
---
-Murray McAllister / Red Hat Product Security
+$ perl -e 'print "{" x 100000' > test.rtf
+$ unrtf-0.21.6/src/unrtf -P unrtf-0.21.6/outputs test.rtf
+Segmentation fault
+
+-- 
+Alexander Cherepanov
