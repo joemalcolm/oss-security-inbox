@@ -1,45 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/27/3
-Message-ID: <530EE0AD.30204@sysdream.com>
-Date: Thu, 27 Feb 2014 07:52:29 +0100
-From: Damien Cauquil <d.cauquil@...dream.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: PLOGGER 1.0RC1 multiple vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/11/1
+Message-ID: <CAFRnB2X_nUngh6gXyKmE=1jYo1uv9b2vTyw3jah2bjBJu44ZrA@mail.gmail.com>
+Date: Thu, 11 Dec 2014 02:26:50 +0000
+From: Alex Gaynor <alex.gaynor@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request: Python, standard library HTTP clients
 Content-Type: text/plain; charset=utf-8
 
-We found two vulnerabilities in PLOGGER version 1.0RC1, including:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-1. Authenticated Arbitrary file upload vulnerability affecting PLOGGER
-version 1.0RC1
+Hello all,
 
-This vulnerability allows an authenticated user to upload an arbitrary
-PHP file on the remote web server in an accessible path, by sending a
-specifically crafted zip file.
+I'm request a CVE for CPython (sometimes Python), for failure to validate
+certificates in the HTTP client with TLS.
 
-2. CAPTCHA bypass vulnerability
+Title: Python standard HTTP libraries fail to validate TLS certificates for
+HTTPS
+Products: CPython, all 2.x versions prior to 2.7.9, 3.x versions prior to
+3.4.3
+Description:
 
-A theme called "Lucid" provided in PLOGGER version 1.0RC1 implements a
-weak CAPTCHA prone to a replay attack. By abusing this vulnerability, an
-unauthenticated user may be able to post a huge number of comments.
+When Python's standard library HTTP clients (httplib, urllib, urllib2,
+xmlrpclib) are used to access resources with HTTPS, by default the
+certificate
+is not checked against any trust store, nor is the hostname in the
+certificate
+checked against the requested host. It was possible to configure a trust
+root
+to be checked against, however there were no faculties for hostname
+checking.
 
+This made MITM attacks against the HTTP clients trivial, and violated RFC
+2818
+(http://tools.ietf.org/html/rfc2818#section-3).
 
-Vendor was notified and answered this software is no more maintained.
+Python 2.7.9 has been issued to resolve this issue. It is also resolved in
+3.4.3, which has not yet been released.
 
+Thanks,
+Alex
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-References:
+iQIcBAEBAgAGBQJUiQDDAAoJEBJfXGff6UCEAAkP+gOsOCZW2BHtZcUq+zuzNh8/
+lZZZDJeyXGnaneTAI3PcaV6ep4F//N+kYbpnKNKFvj7xs6VI5w/8935Uj9LRKs3Q
+cGqJfZlBOZnPrsm/T9AnCkOSoiyCXr38zVi2VJi0G3i/iyUm0pGExffjH2ra0P2w
+HjHUl/6+WuzS1JTVkxrKQilv/gG+OC8H7uTpCWLbo6bt/mWG2AB33uI67CHwD12H
+puah4NfeGGMw1WNhZ1pe0RGdZ6jyiMJv7dMbNDlVyqqTuCC27mzrVCq3NpCWGgRj
+xjdgKSg4NoS8v4yct5Wi3depDksFx8mQmuGO/5K6UIzYKR2AhFtx/tSLnrig4rPR
+9qoz9qVhOWjBPI0N80I1OxYhRXdbugIInQH2Otd0H+zQksZs2I549UFpFEz3yDrP
+NwHOOxnxf8blJKwkY3eoyKd5ZoPozIsfqyv5MZxPkRmV5pUZW2RpHxfSD+m9S5Ug
+iUDJido94swWHW2fXhZXChjWYJzPyFxyvKILegQrSbmyG3N/OlusF5IM9AXgrr09
+2n48O6JfOzetg+5aOEAn9nv52xxuqRInJjyKPNyR2mSjyrREGOGvjCDfmMJYp3Ba
+2J8lZEQZYhavnM3xM6ZsogV20QrqWK+jOl8afKctyae9uwRJu71CRaRbKvJd7Qtd
+DzUVQo9UJnNanbKFsz5T
+=dPDp
+-----END PGP SIGNATURE-----
 
-* advisory: http://www.sysdream.com/system/files/PLOGGER-1.0RC1-advisory.pdf
-* PLOGGER 1.0 RC1 release: http://www.plogger.org/
-
-We would like to request 2 CVEs for these vulnerabilities.
-
--- 
-Damien Cauquil
-Directeur Recherche & Développement
-CHFI | CEH | ECSA | CEI
-
-Sysdream
-108 avenue Gabriel Péri
-93400 Saint Ouen
-Tel: +33 (0) 1 78 76 58 21
-www.sysdream.com
