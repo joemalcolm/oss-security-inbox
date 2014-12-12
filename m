@@ -1,55 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/17
-Message-ID: <54365146.1090802@mittwald.de>
-Date: Thu, 9 Oct 2014 11:11:34 +0200
-From: Sven Kieske <s.kieske@...twald.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/8
+Message-ID: <548AFCB4.4060004@reactos.org>
+Date: Fri, 12 Dec 2014 15:33:24 +0100
+From: Pierre Schweitzer <pierre@...ctos.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: denial of service in suricata
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-
-On 09/10/14 10:24, Michal Zalewski wrote:
->> vendors are not liable, not even for the most serious
->> software bugs. so there is no incentive for them to make
->> better software.
+On 12/12/2014 02:58 PM, Victor Julien wrote:
 > 
-> On the flip side, would it have been better if, say, Chet could be
-> sued for millions in damages for the bug in bash?
+> Btw, 2 other fixes directly in suri are somewhat related:
+> 
+> https://github.com/inliniac/suricata/commit/4eff27c108ecbcd4fc61453590f0a3d3bcf9105d
+>
+> 
+https://github.com/inliniac/suricata/commit/2c9ce634a9667ba89b22d953e3102d35badd1912
+> 
+> What is the policy of crashing when out of memory? On most systems
+> this will likely be an effective DoS even w/o crash. If you can
+> force your IDS to go into swap it's pretty much ineffective.
 
-No, imho you can not blame a single person, but you can blame
-huge multi billion dollar companies who incorporate software and
-benefit from it, but don't want anything to do with fixing or
-improving it.
+Not sure about that one...
 
-If GM buys some breaks from $random_guy (hey, he even
-gives them away for FREE!) they are still liable if these
-breaks don't work in their cars.
+Especially with Out-Of-Memory killer which is on most servers and that
+will actually kill your daemons before they can crash due to the lack
+of memory.
 
-so at least when you're making money of software you should
-be responsible for this software.
+Or you can even disable your server swap abilities (vm.swappiness) to
+always keep all your applications in memory, which will trigger OOM
+killer even faster.
+- -- 
+Pierre Schweitzer <pierre@...ctos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-that's also not just my opinion (and I didn't invent these
-thoughts), some credit has to go out to mr Schneier who
-you might happen to know ;)
-
-see:
-
-https://www.schneier.com/essays/archives/2003/11/liability_changes_ev.html
-
-
--- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+iQIcBAEBAgAGBQJUivy0AAoJEHVFVWw9WFsLjasP/06zTGgC6gAmfHCQJAWYV3cD
+IK5HEwbbeTR7/J/FhYF+hdKBvEJ0LJ+dUQ5VOvGbP+l2KtKQ3twPnmzdZxGbsIUQ
+5spdu1ci83QUgjvTQenYPquJW3bTI8bqytQYoMjQmtxMrYCycvduKRU9zGDItO8P
+ew4JVaJSkofLSheM7WNRmkCk/vxifrxLMh2QKsqK5kwFLZgCOUvdTDxqpE5KEDN0
+PDXngToNj5ua6oDX3TsOey7Cpp528RKj9YDiG9lnhySwvL8/TsB+deWMUOGdKs5Q
+3O+5fQCJ9loFgbYGtwndOv8ML3oRrzNmPxCLOrWekNyyfHA8njvoCXLZhRAbSp58
+qcv14HOvg4wT5ORjgMeHngrcXnl39ykHIGQTTTTbhFIfVioT4ehnoEEm+iML71H/
+G3DadE2enh4tXWH4eYAJbabUEALD9ZdtDbtUUv04jhGjaRx3CKnlZCq1t14hwfLZ
+sFgtWanbQQQooqGpXCQuXC1IgdDIljnc02rBtZsNqASKbz6fr0rP485cRQyNsHZm
+AbZUzG8SuQxDG8zM08t2T21HUOHCqFWMwM5mFfhtup8VSW4BVo/zqEJGw9DZ67EF
+/Xu1r6HoF/hkxMxVrNHNHEs1/h2prGk5b/REpNueLgVPZRKYpMQC1QnkAElmMD4X
+w9PzbIdC0i52kBvRIL7+
+=mYid
+-----END PGP SIGNATURE-----
