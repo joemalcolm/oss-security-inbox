@@ -1,35 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/20/3
-Message-ID: <53A3C917.10002@redhat.com>
-Date: Fri, 20 Jun 2014 15:39:35 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/6
+Message-ID: <548AEFF8.9020907@reactos.org>
+Date: Fri, 12 Dec 2014 14:39:04 +0100
+From: Pierre Schweitzer <pierre@...ctos.org>
 To: oss-security@...ts.openwall.com
-Subject: possible CVE request: opendnssec and softhsm permission issue
+Subject: Re: CVE request: denial of service in suricata
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Not sure if this requires a CVE. 
-https://bugzilla.redhat.com/show_bug.cgi?id=1098188 notes some 
-permission errors for files in /var/softhsm/ and /var/opendnssec/
+On 12/12/2014 02:14 PM, Victor Julien wrote:
+> On 12/12/2014 02:10 PM, Pierre Schweitzer wrote:
+>> So, here to have an attack possible, it would require to send
+>> gzipped traffic (as expressed in the bug report) and to "hope"
+>> that zlib somehow fails in the process (due to low memory
+>> situation or to old zlib) with Z_STREAM_ERROR, so that we have
+>> cascade with a NULL pointer being propagated so that there's a
+>> segfault?
+>> 
+>> Or am I wrong with my scenario?
+> 
+> No, I think this could be an attack vector indeed. Technically I
+> think this was an issue in libhtp and not suricata btw. Not sure if
+> that matters much, suri is the main user to libhtp as far as I
+> know.
 
-Two notes:
+I wondered the same actually.
+But, I just replaced the usage of Suricata. And for an attacker,
+that's a real opportunity. Take down the IDS and do your nasty work.
+So, I considered it as a security vulnerability for IDS itself.
+Especially since Suricata is shipped directly with libhtp, it's not an
+external dependency.
+For the lib, I believe it's a bit too wide.
 
-1) after installing those packages on Fedora 20, the directory 
-permissions for those directories is mode 770 root:ods, so an 
-unprivileged user cannot go in there.
+But, well, comments are welcome on this (and up to MITRE after all).
 
-2) the proposed fix in the Red Hat bug is about making certain files 
-owned by "ods" instead of "root". It does not mention removing read 
-permissions for other users.
+Just for the record, the pull request on libhtp is available here:
+https://github.com/OISF/libhtp/pull/82
 
-I do not see a leak here, but am not familiar with opendnssec and softhsm.
+Nevertheless thanks for your feedback Victor!
 
-It may have been filed as a security issue here due to 
-https://issues.opendnssec.org/browse/SUPPORT-136 (as noted in the bug). 
-I'll mail about that one shortly.
+Cheers,
+Pierre
 
-Thanks,
+> 
+> Cheers, Victor
+> 
+>> On 12/12/2014 02:02 PM, Victor Julien wrote:
+>>> On 12/12/2014 01:56 PM, Pierre Schweitzer wrote:
+>>>> It appears, looking at bug #1272 [1] in Suricata, that it
+>>>> was possible to crash Suricata with specific packets due to a
+>>>> bug in the libhtp (which got fixed with libhtp 0.5.16).
+>>>> 
+>>>> It got fixed with the release 2.0.5 from Suricata.
+>>>> 
+>>>> Was a CVE already assigned to this issue? Otherwise can a CVE
+>>>> be assigned?
+>>>> 
+>>>> With my best regards,
+>>>> 
+>>>> [1]: https://redmine.openinfosecfoundation.org/issues/1272
+>>>> 
+>>>> 
+>>> 
+>>> To our knowledge this couldn't be triggered by specific
+>>> traffic conditions. Rather it seemed to be an issue when:
+>>> 
+>>> - older zlib versions were used that didn't always setup
+>>> properly for a reason unknown to us
+>>> 
+>>> OR
+>>> 
+>>> - extreme memory pressure (malloc's failing)
+>>> 
+>>> Cheers, Victor
+>>> 
+>> 
+>> 
+> 
+> 
 
---
-Murray McAllister / Red Hat Product Security
+
+- -- 
+Pierre Schweitzer <pierre@...ctos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJUiu/4AAoJEHVFVWw9WFsLJ20P+QH9+AYBu98340Mew8U3x3f7
+w/PsCw5GlihMahZmsTXcjA2NxupOYdKu2AYBWPKuwPnAKl0BSYQFTJVRgchaS+WQ
+DeGFG2T+vXM7bjjwK+ZR+ahGipwsxk9uaJbHp/uoUPzh92+9Uuj12Bj7hMn8eT9H
+OZnso9EejGofgYZkyfubZKYZ6e6I3KW5E7L5/iG3Jq/rb1fu9lcyC0kTeQiLOWJF
+wUw2pLU1faXVr1fMls7Ny/4Cy5voSdC6GClKrji+OMMBSaRLnqjn5fMGUfDuKPuS
+lpdrGYGhZOZr/v4bLB6Y1wvYqisHe1svj4EAtBx6CbY5C9FM2/PUgU7St55v6Hjl
+UQp/eJR5epqFFUQoAROTH2dqUvgCv9YvqSg6bbzKJaqe3DZyk+bwDcwrLT3i8ERj
+Lb+ZHCaFHs9kIo1Bk+kL5pZl2edFsSCjyHDwrACyNN8IIno7/MmvVvw+EBqqxK14
+IlXOiL8kb3tJJ6aN51+ZvxnfRSYuCmfde7htWI2ZXtloFa8iY/UdaYrIkv43kiAU
+VjT9pqm6yCBOPaLsTtIKiXpOC0/XbCAF+R5KqMENHrN0aunGD29soBvW09nharK4
+9uYqejn+Pll2EJa0rD30MFh7Jp4wP7W3TcpO7/7dmO0m70F3xF3kLOXp3Ht/PuDy
+21AgwtfZ0F6SrtG2FdaI
+=gffl
+-----END PGP SIGNATURE-----
