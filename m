@@ -1,37 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/11/13
-Message-ID: <20140911155303.6b5975d0@redhat.com>
-Date: Thu, 11 Sep 2014 15:53:03 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Sven Kieske <s.kieske@...twald.de>
-Cc: <oss-security@...ts.openwall.com>
-Subject: Re: CVE Request: MySQL: MyISAM temporary file issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/5
+Message-ID: <548AEA2C.7070909@inliniac.net>
+Date: Fri, 12 Dec 2014 14:14:20 +0100
+From: Victor Julien <lists@...iniac.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: denial of service in suricata
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 11 Sep 2014 10:22:13 +0200 Sven Kieske wrote:
+On 12/12/2014 02:10 PM, Pierre Schweitzer wrote:
+> So, here to have an attack possible, it would require to send gzipped
+> traffic (as expressed in the bug report) and to "hope" that zlib somehow
+> fails in the process (due to low memory situation or to old zlib) with
+> Z_STREAM_ERROR, so that we have cascade with a NULL pointer being
+> propagated so that there's a segfault?
+> 
+> Or am I wrong with my scenario?
 
-> On 10/09/14 18:00, Salvatore Bonaccorso wrote:
->
-> > MyISAM temporary files could be used to mount a code-execution
-> > attack. (Bug #18045646).
-> 
-> Funny enough, when you search for this bug on bugs.mysql.com you get:
-> 
-> http://bugs.mysql.com/bug.php?id=18045646
-> 
-> "No such bug #18045646 or bug is referenced in the Oracle bug system."
-> 
-> Is this marked as private or something like that? Even if it's public
-> now?
+No, I think this could be an attack vector indeed. Technically I think
+this was an issue in libhtp and not suricata btw. Not sure if that
+matters much, suri is the main user to libhtp as far as I know.
 
-Too many digits for bugs.mysql.com bug ids, those tends to have no more
-than 5 digits.  As the error message you got suggests - it's likely an
-id in some internal bug tracking system.  Don't expect it to be useful
-for anything else than matching release notes entry to bzr commit.
+Cheers,
+Victor
 
-Also note that security fixes are not mentioned in release notes for
-some time - inclusion of this one is likely an omission rather than
-intention.
+> On 12/12/2014 02:02 PM, Victor Julien wrote:
+>> On 12/12/2014 01:56 PM, Pierre Schweitzer wrote:
+>>> It appears, looking at bug #1272 [1] in Suricata, that it was
+>>> possible to crash Suricata with specific packets due to a bug in
+>>> the libhtp (which got fixed with libhtp 0.5.16).
+>>>
+>>> It got fixed with the release 2.0.5 from Suricata.
+>>>
+>>> Was a CVE already assigned to this issue? Otherwise can a CVE be
+>>> assigned?
+>>>
+>>> With my best regards,
+>>>
+>>> [1]: https://redmine.openinfosecfoundation.org/issues/1272
+>>>
+>>>
+>>
+>> To our knowledge this couldn't be triggered by specific traffic
+>> conditions. Rather it seemed to be an issue when:
+>>
+>> - older zlib versions were used that didn't always setup properly for
+>> a reason unknown to us
+>>
+>> OR
+>>
+>> - extreme memory pressure (malloc's failing)
+>>
+>> Cheers,
+>> Victor
+>>
+> 
+> 
+
 
 -- 
-Tomas Hoger / Red Hat Product Security
+---------------------------------------------
+Victor Julien
+http://www.inliniac.net/
+PGP: http://www.inliniac.net/victorjulien.asc
+---------------------------------------------
+
