@@ -1,45 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/14/9
-Message-ID: <20141014145008.GD9817@openstack.org>
-Date: Tue, 14 Oct 2014 14:50:08 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-035] Nova VMware driver may connect VNC to another tenant's console (CVE-2014-8750)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/2
+Message-ID: <548AE5ED.2090704@reactos.org>
+Date: Fri, 12 Dec 2014 13:56:13 +0100
+From: Pierre Schweitzer <pierre@...ctos.org>
+To: OSS Security List <oss-security@...ts.openwall.com>
+CC: cve-assign@...re.org
+Subject: CVE request: denial of service in suricata
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-035
-CVE: CVE-2014-8750
-Date: October 14, 2014
-Title: Nova VMware driver may connect VNC to another tenant's console
-Reporter: Marcio Roberto Starke
-Products: Nova
-Versions: up to 2014.1.3
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
-Marcio Roberto Starke reported a vulnerability in the Nova VMware
-driver. A race condition in its VNC port allocation may cause it to
-connect the wrong console if instances are created concurrently. By
-repeatedly spawning new instances, an authenticated user may be able
-to gain unauthorized console access to instances belonging to other
-tenants. Only Nova setups using the VMware driver and the VNC proxy
-service are affected.
+Dear all,
 
-Juno (development branch) fix:
-https://review.openstack.org/114548
+It appears, looking at bug #1272 [1] in Suricata, that it was possible
+to crash Suricata with specific packets due to a bug in the libhtp
+(which got fixed with libhtp 0.5.16).
 
-Icehouse fix:
-https://review.openstack.org/126425
+It got fixed with the release 2.0.5 from Suricata.
 
-Notes:
-This fix was included in the 2014.2rc1 release candidate and will
-appear in a future 2014.1.4 stable point release.
+Was a CVE already assigned to this issue? Otherwise can a CVE be assigned?
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8750
-https://launchpad.net/bugs/1357372
+With my best regards,
 
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
+[1]: https://redmine.openinfosecfoundation.org/issues/1272
 
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+- -- 
+Pierre Schweitzer <pierre@...ctos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJUiuXtAAoJEHVFVWw9WFsL8a0QAKpH57yNCdnjHcHm3xxyNk5R
+cwgMtmIBOqntLcK1NUg4pFXChIFFzH/4Alj/KyHFO8l3rHdgYyY1c3ZQJMirQ+dL
+h6HIr2UJy6rM7H+n2Q1d1owonJWkSDZP8xygxwRDRBy6gvL5Bd5i2Kr0xttxvfz4
+QN+HzeFvdo3DUO1lXhdBihDkhksYCaCJoO0zw2QKo6roLSLFTyqNXVZav9wza4Kq
+0iNsrlV1hpRmYiSRMPvYrSwxqOWBTkZeXfS8QI+TCbVEFiHsOZtSFf8knIuvuFN+
++wsqpSkCpPXL3CTTAXwkjnn2iAmd82hI7OmhiCOkRSU/YQCeG/KZhUkGm8HjazcI
+t4pJUe9VB233atkhQ7kqkM1pH1K6t7ssAALFMwxSyCgdYlU6WaTJy++NMCMoS3ZM
+WSVzDATOEp+RATJt6FAvPvsLuVLZehUa/hRnjWN9rdB+e8tV7eeJ8oIUf8JrzesY
+bU8vDGaIog8u8J9VJVjrgS6zZ9RLOAqFlc4fWTTe+6H727GOLuT/agkV2ulIOP07
+JGfBIOKCFmJ5yVDSMYY0+2u6n+XoEiua03GcEbZzZb8NPA+8O1CUhqtRZadJtGLQ
+57QXS91fq2/NGBqQz5Rm11E1VaPJBGSue1pKNY/shkLCnFMcUK6ww8YjhJl3HQc7
+I+ANlGpK4EZZ3Ehq4/Nx
+=w1nx
+-----END PGP SIGNATURE-----
