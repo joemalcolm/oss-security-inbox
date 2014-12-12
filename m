@@ -1,97 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/15/3
-Message-ID: <73FD1A5A-F226-43F2-B9F0-6875CDBB252E@vmware.com>
-Date: Tue, 15 Jul 2014 15:10:05 +0000
-From: Ramon de C Valle <rdecvalle@...are.com>
-To: "cve-assign@...re.org" <cve-assign@...re.org>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "thoger@...hat.com" <thoger@...hat.com>, "mmcallis@...hat.com" <mmcallis@...hat.com>
-Subject: Re: [ruby-core:63604] [ruby-trunk - Bug #10019] [Open] segmentation fault/buffer overrun in pack.c (encodes)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/9
+Message-Id: <DEDBA200-FFCC-40D3-88B4-44F70A192B53@netherlabs.nl>
+Date: Fri, 12 Dec 2014 15:33:57 +0100
+From: Peter van Dijk <peter.van.dijk@...herlabs.nl>
+To: pdns-announce@...lman.powerdns.com, pdns-dev@...lman.powerdns.com, pdns-users Users <pdns-users@...lman.powerdns.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: PowerDNS Security Advisory 2014-02
 Content-Type: text/plain; charset=utf-8
 
+Hi everybody,
 
-On Jul 15, 2014, at 2:09 AM, cve-assign@...re.org wrote:
+today, ANSSI has released their report on the issue. You can find it at http://www.ssi.gouv.fr/en/the-anssi/events/vulnerabilty-disclosure-the-infinitely-delegating-name-servers-idns-attack.html
 
-> Signed PGP part
-> > Is MITRE or Red Hat going to assign a CVE for it?
-> 
-> We haven't yet been able to determine whether the discussion is about
-> two separate vulnerabilities.
-> 
-> http://openwall.com/lists/oss-security/2014/07/09/13 says:
-> 
->   ruby -v: ruby 2.1.2p168 (2014-07-06 revision 46721) [i386-mingw32]
-> 
->   ...
-> 
->   While working with an AWS sample I hit a segmentation fault. The
->   same sample works under 1.9.3.
-> 
-> First, we don't know what "The same sample works under 1.9.3" means.
-> It might mean "The same AWS sample is also a working vulnerability
-> reproducer when using Ruby 1.9.3." It might instead mean "With this
-> AWS sample, my program works normally when using Ruby 1.9.3; in other
-> words, no vulnerability is observed.”
-It meant that his sample worked normally when he used Ruby 1.9.3. (I assumed this because the version he specified as containing the bug in the report was Ruby 2.1, and specified Ruby 2.0 as requiring backport, but not Ruby 1.9.3.)
+Based on this, we realise our original announcement was missing one detail. The following text has been added to it:
 
-> 
-> http://openwall.com/lists/oss-security/2014/07/10/15 says:
-> 
->   Anyway, whatever the reporter is referring to, he mentions it
->   doesn't occur in 1.9.3, and looking at 1.9.3, the only related
->   differences I immediately noticed are the absence of the check at
->   https://github.com/ruby/ruby/blob/trunk/pack.c#L829 in pack_pack
->   function and padding being an int (instead of char) in the encodes
->   function.
-> 
-> These differences in pack.c obviously aren't the same as (and
-> aren't expected to be the same as) the pack.c code changes in
-> Revision 46778 (aka the
-> https://bugs.ruby-lang.org/projects/ruby-trunk/repository/revisions/46778/diff/pack.c
-> changes).
-These are the differences I noticed when comparing the related code in Ruby 1.9.3 (where his sample worked normally) with Ruby 2.0 and 2.1, but are not related to the (off-by-one) initially discussed, as it may be the case the reporter may be referring to a different issue, since Tomas analysis of aws-sdk gem and its dependencies indicates it's unlikely this issue is being caused by any of these gems.
+=======
+Note that in addition to providing bad service, this issue can be abused to send unwanted traffic to an unwilling third party. Please see ANSSI's report for more information.
+=======
 
-> 
-> (We realize that 1.9.3 is of interest because it is the "Old stable"
-> distribution advertised on the
-> https://www.ruby-lang.org/en/downloads/ page.)
-> 
-> Is one of these scenarios the correct interpretation?
-> 
->   1. There is only one vulnerability. Version 2.1.2 is an example of
->      an affected version. Version 1.9.3 is an example of a
->      non-affected version.
-> 
->   2. There is only one vulnerability. Version 2.1.2 is an example of
->      an affected version. Version 1.9.3 is also an example of an
->      affected version.
-> 
->   3. A vulnerability in pack.c was fixed during Ruby 1.x development,
->      but then a regression occurred during Ruby 2.x development, and
->      the vulnerability is present in, for example, version 2.1.2.
->      (A regression would generally mean that two CVE IDs are
->      required.)
-> 
->   4. The Ruby 1.x pack.c and the Ruby 2.x pack.c are vulnerable in
->      substantially different ways, requiring different fixes.
->      (Again, this would generally mean that two CVE IDs are
->      required.)
-> 
-> We don't require that the set of affected versions is precisely
-> determined before a CVE assignment. Narrowing it down to one of the
-> above scenarios is probably required because otherwise the correct
-> number of CVE IDs isn't known.
-Ruby 1.9.3, 2.0, and 2.1 are affected by the off-by-one. We’re still not sure about the presence of a different issue affecting Ruby 2.0 and 2.1. I left a comment on the report pointing out that 1.9.3 is also affected by the off-by-one and suggesting confirming with the reporter if he continues to observe the crash after adding the fix.
+So, please update your Recursors, even if you only have a limited set of users - your machines may still be abused to DDoS unwilling third parties.
 
+Kind regards,
+-- 
+Peter van Dijk
+Netherlabs Computer Consulting BV - http://www.netherlabs.nl/
+
+On 08 Dec 2014, at 17:00 , Peter van Dijk <peter.van.dijk@...herlabs.nl> wrote:
+
+> Hi everybody,
 > 
-> --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+> Please be aware of PowerDNS Security Advisory 2014-02
+> (http://doc.powerdns.com/md/security/powerdns-advisory-2014-02/), which you
+> can also find below.  The good news is that the currently released version of the
+> PowerDNS Recursor is safe.  The bad news is that users of older versions
+> will have to upgrade.
 > 
---
-Ramon de C Valle
-VMware Product Security Engineering
+> PowerDNS Recursor 3.6.2, released late October, is in wide production use
+> and has been working well for our users.  If however you have reasons not to
+> upgrade, the advisory below contains a link to a patch which applies to
+> older versions.
+> 
+> Finally, if you have problems upgrading, please either contact us on our
+> mailing lists, or privately via powerdns.support@...erdns.com (should you
+> wish to make use of our SLA-backed support program).
+> 
+> We want to thank Florian Maury of French government information security
+> agency ANSSI for bringing this issue to our attention and coordinating the
+> security release with us and other nameserver vendors.
+> 
+> ## PowerDNS Security Advisory 2014-02: PowerDNS Recursor 3.6.1 and earlier can be made to provide bad service
+> 
+> * CVE: CVE-2014-8601
+> * Date: 8th of December 2014
+> * Credit: Florian Maury ([ANSSI](http://www.ssi.gouv.fr/en/))
+> * Affects: PowerDNS Recursor versions 3.6.1 and earlier
+> * Not affected: PowerDNS Recursor 3.6.2; no versions of PowerDNS Authoritative Server
+> * Severity: High
+> * Impact: Degraded service
+> * Exploit: This problem can be triggered by sending queries for specifically configured domains
+> * Risk of system compromise: No
+> * Solution: Upgrade to PowerDNS Recursor 3.6.2
+> * Workaround: None known. Exposure can be limited by configuring the **allow-from** setting so only trusted users can query your nameserver.
+> 
+> Recently we released PowerDNS Recursor 3.6.2 with a new feature that
+> strictly limits the amount of work we'll perform to resolve a single query.
+> This feature was inspired by performance degradations noted when resolving
+> domains hosted by 'ezdns.it', which can require thousands of queries to
+> resolve.
+> 
+> During the 3.6.2 release process, we were contacted by a government security
+> agency with news that they had found that all major caching nameservers,
+> including PowerDNS, could be negatively impacted by specially configured,
+> hard to resolve domain names. With their permission, we continued the 3.6.2
+> release process with the fix for the issue already in there.
+> 
+> We recommend that all users upgrade to 3.6.2 if at all possible. Alternatively,
+> if you want to apply a minimal fix to your own tree, it can be found
+> [here](https://downloads.powerdns.com/patches/2014-02/), including patches for older versions.
+> 
+> As for workarounds, only clients in allow-from are able to trigger the
+> degraded service, so this should be limited to your userbase.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
