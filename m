@@ -1,31 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/11/3
-Message-ID: <CAFRnB2WzGgM0WD6iwW53oZnzw8AsWf0pft6ZapJL2jjme4vU1A@mail.gmail.com>
-Date: Wed, 11 Jun 2014 14:06:55 -0700
-From: Alex Gaynor <alex.gaynor@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/1
+Message-Id: <6B65411F-C351-4618-B76C-C73674C8EE3D@docker.com>
+Date: Thu, 11 Dec 2014 21:10:17 -0500
+From: Eric Windisch <eric.windisch@...ker.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE for library bug that requires application participation
+Subject: Docker 1.3.3 - Security Advisory [11 Dec 2014]
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Docker 1.3.3 has been released to address several vulnerabilities and is immediately available for all supported platforms: https://docs.docker.com/installation/ <https://docs.docker.com/installation/>
 
-David Reid, Glyph Lefkowitz, and myself discovered a bug in glibc (
-https://sourceware.org/bugzilla/show_bug.cgi?id=17048) which can, in
-conjunction with many common memory management techniques from an
-application (read: we hit this issue repeatedly developing our Python
-application), lead to a use after free, or other vulnerabilities.
+This release addresses vulnerabilities which could be exploited by a malicious Dockerfile, image, or registry to compromise a Docker host, modify images, or spoof official repository images. Note that today we also saw the release of Docker 1.4.0, also containing these fixes. While version 1.3.3 is a security-focused update, Docker 1.4.0 includes over 180 new commits, primarily bug fixes.
 
-Is it within policy to issue a CVE for glibc in a case like this?
+It is highly recommended that users upgrade to Docker Engine 1.3.3 or higher.
 
-Thanks to the Red Hat security team for assisting in triaging this and
-working with the Glibc maintainers.
+Please send any questions to security@...ker.com <mailto:security@...ker.com>.
 
-Thanks,
-Alex
 
--- 
-"I disapprove of what you say, but I will defend to the death your right to
-say it." -- Evelyn Beatrice Hall (summarizing Voltaire)
-"The people's good is the highest law." -- Cicero
-GPG Key fingerprint: 125F 5C67 DFE9 4084
 
+Docker Security Advisory [141211]
+----------------------------------------------------------------------------------------------------------
+
+=============================================================
+[CVE-2014-9356] Path traversal during processing of absolute symlinks
+=============================================================
+
+Path traversal attacks are possible in the processing of absolute symlinks. In checking symlinks for traversals, only relative links were considered. This allowed path traversals to exist where they should have otherwise been prevented. This was exploitable via both archive extraction and through volume mounts.
+
+This vulnerability allowed malicious images or builds from malicious Dockerfiles to write files to the host system and escape containerization, leading to privilege escalation.
+
+We are releasing Docker 1.3.3 to address this vulnerability. Users are highly encouraged to upgrade.
+
+Discovered by Tõnis Tiigi.
+
+===================================================================
+[CVE-2014-9357] Escalation of privileges during decompression of LZMA (.xz) archives
+===================================================================
+
+It has been discovered that the introduction of chroot for archive extraction in Docker 1.3.2 had introduced a privilege escalation vulnerability.  Malicious images or builds from malicious Dockerfiles could escalate privileges and execute arbitrary code as a privileged root user on the Docker host by providing a malicious ‘xz’ binary.
+
+We are releasing Docker 1.3.3 to address this vulnerability. Only Docker 1.3.2 is vulnerable. Users are highly encouraged to upgrade.
+
+Discovered by Tõnis Tiigi.
+
+=========================================================================
+[CVE-2014-9358] Path traversal and spoofing opportunities presented through image identifiers
+=========================================================================
+
+It has been discovered that Docker does not sufficiently validate Image IDs as provided either via 'docker load' or through registry communications.  This allows for path traversal attacks, causing graph corruption and manipulation by malicious images, as well as repository spoofing attacks.
+
+We are releasing Docker 1.3.3 to address this vulnerability. Users are highly encouraged to upgrade.
+
+Discovered by Eric Windisch of Docker, Inc.
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
