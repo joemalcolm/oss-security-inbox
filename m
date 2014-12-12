@@ -1,75 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/26/12
-Message-ID: <53AC07D1.3070301@canonical.com>
-Date: Thu, 26 Jun 2014 06:45:21 -0500
-From: Jamie Strandboge <jamie@...onical.com>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: Re: Re: Question regarding CVE applicability of missing HttpOnly flag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/4
+Message-ID: <548AE95E.1070109@reactos.org>
+Date: Fri, 12 Dec 2014 14:10:54 +0100
+From: Pierre Schweitzer <pierre@...ctos.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: denial of service in suricata
 Content-Type: text/plain; charset=utf-8
 
-On 06/25/2014 06:07 PM, cve-assign@...re.org wrote:
-> There admittedly isn't a precise distinction between "opportunity for
-> security improvement" (a CVE ID cannot be assigned) and "exposure" (a
-> CVE ID can be assigned in some cases).
-> 
-> In web applications that function correctly with the HTTPOnly flag for
-> a cookie, absence of this flag might be categorized as a CWE-668
-> ("Exposure of Resource to Wrong Sphere") issue. In general, factors
-> that can be considered include:
-> 
->   -- are there compatibility downsides to setting the flag? (An
->      example of a downside might be: a popular but noncompliant
->      browser completely ignores the cookie if the flag is set.)
-> 
->      [ Obviously each CVE assignment is on a per-product basis, and
->        there wouldn't be a CVE about HTTPOnly if a product's design
->        relies on script access to a cookie. ]
-> 
->   -- does the flag interfere with plausible use cases? (An example of
->      a use case might be: script code that doesn't need to know the
->      value of a cookie, but was designed to read the cookie anyway to
->      assess whether an attack involving long cookie values is
->      occurring.)
-> 
->   -- are there vendors who recommend against the flag?
-> 
->   -- compared to the development cost in arranging for the flag to be
->      set, is it possible that the real-life benefit is too small?
-> 
->   -- are there other known or potential costs to setting the flag?
->      (There might not be a good example here, e.g., there probably
->      aren't bandwidth considerations where 9 or 10 more bytes is a
->      deal breaker.)
-> 
-> If the answer to all of these questions is no, then it starts becoming
-> reasonable to argue that absence of the flag is an implementation
-> error.
-> 
->> like running SELinux (or AppArmor), running a virus scanner, and
->> having a firewall
-> 
-> All of those seem to, in practice, have a relatively much greater
-> chance of introducing new vulnerabilities because of the required
-> implementation complexity.
+So, here to have an attack possible, it would require to send gzipped
+traffic (as expressed in the bug report) and to "hope" that zlib somehow
+fails in the process (due to low memory situation or to old zlib) with
+Z_STREAM_ERROR, so that we have cascade with a NULL pointer being
+propagated so that there's a segfault?
 
-Based on this email and the one this is in response to, I find this comment
-unclear. Is MITRE saying that:
+Or am I wrong with my scenario?
 
- a) lack of implementing SELinux, AppArmor, virus scanner, firewall, <insert
-    hardening software here> does not justify a CVE because of the complexity?
- b) lack of implementing SELinux, AppArmor, virus scanner, firewall, <insert
-    hardening software here> does not justify a CVE and also cannot be
-    considered an implementation error because of the complexity?
- c) implementing SELinux, AppArmor, virus scanner, firewall, and/or <insert
-    hardening software here> is not worth it because the added complexity
-    intrinsically makes the system less secure?
- d) something else?
+On 12/12/2014 02:02 PM, Victor Julien wrote:
+> On 12/12/2014 01:56 PM, Pierre Schweitzer wrote:
+>> It appears, looking at bug #1272 [1] in Suricata, that it was
+>> possible to crash Suricata with specific packets due to a bug in
+>> the libhtp (which got fixed with libhtp 0.5.16).
+>>
+>> It got fixed with the release 2.0.5 from Suricata.
+>>
+>> Was a CVE already assigned to this issue? Otherwise can a CVE be
+>> assigned?
+>>
+>> With my best regards,
+>>
+>> [1]: https://redmine.openinfosecfoundation.org/issues/1272
+>>
+>>
+> 
+> To our knowledge this couldn't be triggered by specific traffic
+> conditions. Rather it seemed to be an issue when:
+> 
+> - older zlib versions were used that didn't always setup properly for
+> a reason unknown to us
+> 
+> OR
+> 
+> - extreme memory pressure (malloc's failing)
+> 
+> Cheers,
+> Victor
+> 
 
-Thanks
 
 -- 
-Jamie Strandboge                 http://www.ubuntu.com/
+Pierre Schweitzer <pierre@...ctos.org>
+System & Network Administrator
+Senior Kernel Developer
+ReactOS Deutschland e.V.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (885 bytes)
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4277 bytes)
