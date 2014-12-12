@@ -1,30 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/10/1
-Message-ID: <94979513.31532111.1402373162097.JavaMail.zimbra@redhat.com>
-Date: Tue, 10 Jun 2014 00:06:02 -0400 (EDT)
-From: David Jorm <djorm@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/12/7
+Message-ID: <548AF4A2.3060705@inliniac.net>
+Date: Fri, 12 Dec 2014 14:58:58 +0100
+From: Victor Julien <lists@...iniac.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0085 / Zookeeper
+Subject: Re: CVE request: denial of service in suricata
 Content-Type: text/plain; charset=utf-8
 
-> Hi,
-> could some from Red Hat please clarify on
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-0085 ?
+On 12/12/2014 02:39 PM, Pierre Schweitzer wrote:
+> On 12/12/2014 02:14 PM, Victor Julien wrote:
+>> On 12/12/2014 02:10 PM, Pierre Schweitzer wrote:
+>>> So, here to have an attack possible, it would require to send
+>>> gzipped traffic (as expressed in the bug report) and to "hope"
+>>> that zlib somehow fails in the process (due to low memory
+>>> situation or to old zlib) with Z_STREAM_ERROR, so that we have
+>>> cascade with a NULL pointer being propagated so that there's a
+>>> segfault?
+>>>
+>>> Or am I wrong with my scenario?
 > 
-> Does this affect stock releases from http://zookeeper.apache.org/ or is this
-> CVE for a combination
-> of Zookeeper and Red Hat JBoss A-MQ ?
+>> No, I think this could be an attack vector indeed. Technically I
+>> think this was an issue in libhtp and not suricata btw. Not sure if
+>> that matters much, suri is the main user to libhtp as far as I
+>> know.
+> 
+> I wondered the same actually.
+> But, I just replaced the usage of Suricata. And for an attacker,
+> that's a real opportunity. Take down the IDS and do your nasty work.
+> So, I considered it as a security vulnerability for IDS itself.
+> Especially since Suricata is shipped directly with libhtp, it's not an
+> external dependency.
+> For the lib, I believe it's a bit too wide.
+
+Btw, 2 other fixes directly in suri are somewhat related:
+
+https://github.com/inliniac/suricata/commit/4eff27c108ecbcd4fc61453590f0a3d3bcf9105d
+https://github.com/inliniac/suricata/commit/2c9ce634a9667ba89b22d953e3102d35badd1912
+
+What is the policy of crashing when out of memory? On most systems this
+will likely be an effective DoS even w/o crash. If you can force your
+IDS to go into swap it's pretty much ineffective.
+
+> But, well, comments are welcome on this (and up to MITRE after all).
+> 
+> Just for the record, the pull request on libhtp is available here:
+> https://github.com/OISF/libhtp/pull/82
+> 
+> Nevertheless thanks for your feedback Victor!
+
+No problem!
+
+Cheers,
+Victor
+
 > 
 > Cheers,
->         Moritz
+> Pierre
+> 
+> 
+>> Cheers, Victor
+> 
+>>> On 12/12/2014 02:02 PM, Victor Julien wrote:
+>>>> On 12/12/2014 01:56 PM, Pierre Schweitzer wrote:
+>>>>> It appears, looking at bug #1272 [1] in Suricata, that it
+>>>>> was possible to crash Suricata with specific packets due to a
+>>>>> bug in the libhtp (which got fixed with libhtp 0.5.16).
+>>>>>
+>>>>> It got fixed with the release 2.0.5 from Suricata.
+>>>>>
+>>>>> Was a CVE already assigned to this issue? Otherwise can a CVE
+>>>>> be assigned?
+>>>>>
+>>>>> With my best regards,
+>>>>>
+>>>>> [1]: https://redmine.openinfosecfoundation.org/issues/1272
+>>>>>
+>>>>>
+>>>>
+>>>> To our knowledge this couldn't be triggered by specific
+>>>> traffic conditions. Rather it seemed to be an issue when:
+>>>>
+>>>> - older zlib versions were used that didn't always setup
+>>>> properly for a reason unknown to us
+>>>>
+>>>> OR
+>>>>
+>>>> - extreme memory pressure (malloc's failing)
+>>>>
+>>>> Cheers, Victor
+>>>>
+>>>
+>>>
+> 
+> 
+> 
+> 
 > 
 
-Hi Moritz. My apologies for the delayed reply. This flaw only affects Apache Zookeeper used in conjunction with Fuse Fabric. I have added more details here:
-
-https://bugzilla.redhat.com/show_bug.cgi?id=1067265#c7
-
-Zookeeper seems to log all keys, which may lead to other similar flaws.
-
-Thanks
 -- 
-David Jorm / Red Hat Product Security
+---------------------------------------------
+Victor Julien
+http://www.inliniac.net/
+PGP: http://www.inliniac.net/victorjulien.asc
+---------------------------------------------
+
