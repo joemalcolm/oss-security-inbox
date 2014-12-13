@@ -1,32 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/1
-Message-ID: <ACC12C2223E649B69B8170CD0573BB8B@getsentry.com>
-Date: Mon, 8 Dec 2014 15:28:12 -0800
-From: David Cramer <david@...sentry.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/13/1
+Message-ID: <alpine.LFD.2.10.1412131724120.15060@javelin.pnq.redhat.com>
+Date: Sat, 13 Dec 2014 17:25:19 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: cve-assign@...re.org
+Subject: Re: CVE-2014-8559 - Linux kernel fs/dcache.c incorrect use of rename_lock
 Content-Type: text/plain; charset=utf-8
 
-(Pardon my complete lack of any clue how this process works) 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Now seems like a good time to formalize our internal policy of how we do security releases, and while we might have already butchered this one, it was suggested we attempt to get a CVE assigned.
++-- On Thu, 30 Oct 2014, cve-assign@...re.org wrote --+
+| CVE-2014-8559 has been assigned to this fs/dcache.c issue that
+| leads to a deadlock:
 
-Software name and optionally vendor name
-raven-ruby (part of Sentry)
+Upstream fix:
+- -------------
+  -> https://git.kernel.org/linus/ca5358ef75fc69fee5322a38a340f5739d997c10
+  -> https://git.kernel.org/linus/946e51f2bf37f1656916eb75bd0742ba33983c28
 
-Type of vulnerability
-DoS
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-Link to vulnerable source code or fix
-https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Fgetsentry%2Fraven-ruby%2Fcommit%2F477ee93a3f735be33bc1e726820654cdf6e22d8f&sa=D&sntz=1&usg=AFQjCNHdtqW_RuP8AZJu6fsevXS354EhrQ
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Link to security advisory
-https://groups.google.com/forum/#!topic/getsentry/Cz5bih0ZY1U
-
-Affected version(s)
-0.6.0 and newer. Likely this translates to every single version anyone uses.
-
-Software version(s) fixed (if available)
-0.12.2
-
-Thanks!
+iQIcBAEBAgAGBQJUjCkoAAoJEN0TPTL+WwQfUlYP/17btzXQB+AlvyeCP02uoNdo
+flDorz+myNYB6X0g70k/TcxNLbI9pJfUIsbVnF3z0Z4sPwVmKqulSa6VBbXx74mb
+7+KWfMUNxfOnwxZV9S8xOrqPh7G/J0o2/xVveQf6+HjgqyJXfwrRdPlQVc4fbM+T
+oxJtS/Z4eSv1qUfc1UI6febAIDd8maZhgSrSA1HhBx2Z7fiQ5qNnkQt2u7jwDX/2
+xdBpLG5O++2ZUP68+NbLy5QYbsZ4KiYu7AjLnDp48620cm5vGkDTGDt35AM8U0tz
+oftutfyGtf97/lBkLkiSOBhcAuht8UnYcwSfmyieD1LjfHum25V0W8IKHK2g9zOz
+Z0873Us6i56HB6AFFLk43tIPJjk5fx8wP65Vqapr8jm9kwqs52s6mTo6mMASNGL8
+vJxE0Ks2FdpL/oN22qjNS7EKCee/e+tl1a3/h7YIH7kOMjQcX97qgykZkCvFfUUs
+Wecn+dpLkAdwA2LQMSEMNkz6GbU/Mk4e3guewkCD21Bw7/QI/1AdmUF2VwwPqoe5
+478TE5HpGFxBfEC2S7Hm1X0KADT3P+VX/6D8eFbW2oWzb2VSX7+jEoAiUhejCXpo
+3Ft8diTGRNjwzGVLR3HN5a4QPZYkOUljcvh67wPMO47lYQzUxDlA51VjePRqhwCT
+cNXDXNrBTEl5no9UR908
+=cUZG
+-----END PGP SIGNATURE-----
