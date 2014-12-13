@@ -1,15 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/09/7
-Message-ID: <CAHG8knDD7DXRF_-fhy6ePx=H6yPhZbzEOrX_dpAEp6XUOPONcQ@mail.gmail.com>
-Date: Wed, 8 Oct 2014 20:03:37 -0700
-From: ArkanoiD <ark@...ex.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Thoughts on Shellshock and beyond
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/13/2
+Message-ID: <548C6259.3000100@gentoo.org>
+Date: Sat, 13 Dec 2014 10:59:21 -0500
+From: Sean Amoss <ackle@...too.org>
+To: OSS Security List <oss-security@...ts.openwall.com>
+CC: cve-assign@...re.org, security@...too.org
+Subject: CVE Request: ZNC NULL Pointer Dereference
 Content-Type: text/plain; charset=utf-8
 
-I think there was one and simple way to prevent heartbleed, renegotiation
-bugs etc altogether: STOP inventing and enabling by default useless "cool"
-features. Leave TLS functionality alone, it is overengineered enough
-already. If you think it would be "cool" to teach it a few new tricks, make
-it disabled by default for users who never need it.
+Hello,
 
+It looks like the following issue has not received a CVE identifier as
+of yet:
+
+A NULL pointer dereference has been found in the
+"CWebAdminMod::ChanPage()" function in modules/webadmin.cpp.
+
+This was reported to Gentoo [1] by means of a Secunia advisory [2],
+which in turn referenced the upstream bug request [3].
+
+
+[1] https://bugs.gentoo.org/show_bug.cgi?id=507794
+[2] https://secunia.com/advisories/57795/
+[3] https://github.com/znc/znc/issues/528
+
+
+Thanks,
+Sean
+-- 
+Sean Amoss
+Gentoo Security | GLSA Coordinator
+E-Mail : ackle@...too.org
+GnuPG FP : E58A AABD DD2D 03AF 0A7A 2F14 1877 72EC E928 357A
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (214 bytes)
