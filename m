@@ -1,29 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/03/20
-Message-ID: <20140703222715.739ef963@chromobil.localdomain>
-Date: Thu, 3 Jul 2014 22:27:15 +0200
-From: Stefan Bühler <stbuehler@...httpd.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Varnish - no CVE == bug regression
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/8
+Message-ID: <D0B461D3.AA6%grant.murphy@hp.com>
+Date: Mon, 15 Dec 2014 18:00:53 +0000
+From: "Murphy, Grant Charles" <grant.murphy@...com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE request for vulnerability in OpenStack Glance
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Thu, 3 Jul 2014 21:07:39 +0100
-Marek Kroemeke <kroemeke@...il.com> wrote:
+A vulnerability was discovered in OpenStack (see below). In order to ensure full traceability, we need a CVE number assigned that we can attach to further notifications. This issue is already public, although an advisory was not sent yet.
 
-> I doubt that CDNs like Akamai, Fastly(varnish?), Cloudflare(nginx?)
-> etc.. would agree that the fact that a core part of their
-> infrastructure could be DoSed by one of their users is not a security
-> vulnerability, but I'm happy to be in minority regarding this view.
+Title: Glance v2 API unrestricted path traversal
+Reporter: Masahito Muroi (NTT)
+Products: Glance
+Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
 
-As long as varnish has no high priority to protect itself against
-malicious backends I'd say it is not suited to be a frontend proxy in a
-CDN network (you could use a seperate varnish instance for each
-application/"trust group" though).
+Description:
+Masahito Muroi from NTT reported a vulnerability in Glance. By setting a malicious image location an authenticated user can download or delete any file on the Glance server for which the Glance process user has access to. Only setups using the Glance V2 API are affected by this flaw.
 
-Different implementations have different priorities; choose one that
-matches your requirements.
+References:
+https://launchpad.net/bugs/1400966
 
-regards,
-Stefan
+Thanks in advance,
+
+Grant Murphy
+OpenStack Vulnerability Management Team
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJUjyEvAAoJEJ3kO55VGiJS2ZwH/RmVDlq6ZycvDB+TRicOf1Ho
+kam2t/cc/4fvaZN1BYTrcjaPn+HK9ETdNdh3cHwiC6UYgtEa7Gb3IiboY4fK/7Si
+hrVdgdOWRB+I3dkGrHb+kAaWNGSKJoHahq3mQ5NuXg+oFjR42caslX3vn2f8tBnA
+Ybgqvelu5S1ht5x4XBoagmb0gSafp6a4xik4cwf0FkbkqCnO/EE5beHVSYXu4aVG
+VLGtgd3+l6EjvMoSKXkWKAGwMC1fLCV+ISr1e4CBng5EGSqFmiTYZghQ0e5mvO2q
+4QgEqAgUl1DwpRJYyNeS3dHILA32Nuu0NEKvGn61AdXzxfMZpok1GwLPTq+DWyk=
+=meRY
+-----END PGP SIGNATURE-----
+
