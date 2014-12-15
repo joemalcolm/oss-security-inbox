@@ -1,96 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/23/4
-Message-Id: <E1XWOzE-0000wc-M4@xenbits.xen.org>
-Date: Tue, 23 Sep 2014 12:14:28 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security@....org>
-Subject: Xen Security Advisory 105 - Missing privilege level checks in x86 HLT, LGDT, LIDT, and LMSW emulation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/7
+Message-ID: <2ECE9D9EEF1F524185270138AE23265947D5881D@S0MSMAIL112.arc.local>
+Date: Mon, 15 Dec 2014 18:33:12 +0000
+From: Fiedler Roman <Roman.Fiedler@....ac.at>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: AW: Re: AW: O_CREAT|O_DIRECTORY on nonexisting file expected behaviour?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+> Von: Andy Lutomirski [mailto:luto@...capital.net]
+>
+> On 11/26/2014 11:32 AM, Fiedler Roman wrote:
+> >> Von: Matthew Daley [mailto:mattd-
+> Lyx97FHGs0pBDgjK7y7TUQ@...lic.gmane.org]
+> >>
+> >> On Thu, Nov 27, 2014 at 4:28 AM, Fiedler Roman <Roman.Fiedler-
+> c/U4JCCwIJZeoWH0uzbU5w@...lic.gmane.org>
+> >> wrote:
+> >>> (...)
+> >>> My test program was:
+> >>>
+> >>> #include <fcntl.h>
+> >>> #include <stdio.h>
+> >>> #include <sys/stat.h>
+> >>>
+> >>> int main(int argc, char **argv) {
+> >>>   int fd;
+> >>>   struct stat statBuf;
+> >>>   int result;
+> >>>
+> >>>   fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
+> >>>   result=fstat(fd, &statBuf);
+> >>>   if(result) {
+> >>>     fprintf(stderr, "Stat failed\n");
+> >>>     return(1);
+> >>>   }
+> >>>   fprintf(stderr, "New element type is %d\n", S_ISDIR(fd));
+> >>
+> >> FWIW, this should probably be S_ISDIR(statBuf.st_mode).
+> >
+> > You are completely right, how stupid to miss that. I did not challenge the
+> > result, since it was the same as with "ls -al".
+> >
+> > Also with S_ISDIR(statBuf.st_mode), result is the same, at least on my
+> > side.
+> >
+> >
+> >
+> > #include <fcntl.h>
+> > #include <stdio.h>
+> > #include <sys/stat.h>
+> >
+> > int main(int argc, char **argv) {
+> >   int fd;
+> >   struct stat statBuf;
+> >   int result;
+> >
+> >   fd=open("xxx", O_RDWR|O_CREAT|O_DIRECTORY, 0600);
+> >   result=fstat(fd, &statBuf);
+> >   if(result) {
+> >     fprintf(stderr, "Stat failed\n");
+> >     return(1);
+> >   }
+> >   fprintf(stderr, "New element type is %d\n", S_ISDIR(statBuf.st_mode));
+> >   return(0);
+> > }
+> >
+> >
+> > $ ./test
+> > New element type is 0
+> >
+>
+> Report it to linux-fsdevel@...r.kernel.org?
 
-                    Xen Security Advisory XSA-105
-                              version 2
+As not regarded as security problem, I just reported it as normal bug to devs,
+see http://marc.info/?l=linux-fsdevel&m=141866588432265&w=2
 
-    Missing privilege level checks in x86 HLT, LGDT, LIDT, and LMSW emulation
 
-UPDATES IN VERSION 2
-====================
 
-Public Release.
-
-Convert patch line endings from DOS to Unix style.
-
-ISSUE DESCRIPTION
-=================
-
-The emulation of the instructions HLT, LGDT, LIDT, and LMSW fails to
-perform supervisor mode permission checks.
-
-However these instructions are not usually handled by the emulator.
-Exceptions to this are
-- - when the instruction's memory operand (if any) lives in (emulated or
-  passed through) memory mapped IO space,
-- - in the case of guests running in 32-bit PAE mode, when such an
-  instruction is (in execution flow) within four instructions of one
-  doing a page table update,
-- - when an Invalid Opcode exception gets raised by a guest instruction,
-  and the guest then (likely maliciously) alters the instruction to
-  become one of the affected ones.
-
-Malicious guest user mode code may be able to leverage this to install
-e.g. its own Interrupt Descriptor Table (IDT).
-
-IMPACT
-======
-
-Malicious HVM guest user mode code may be able to crash the guest or
-escalate its own privilege to guest kernel mode.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions from at least 3.2.x onwards are vulnerable.  Older
-versions have not been inspected.
-
-Only user processes in HVM guests can take advantage of this
-vulnerability.
-
-MITIGATION
-==========
-
-Running only PV guests will avoid this issue.
-
-There is no mitigation available for HVM guests.
-
-CREDITS
-=======
-
-This issue was discovered Andrei Lutas at BitDefender and analyzed by
-Andrew Cooper at Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa105.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x, Xen 4.2.x
-
-$ sha256sum xsa105*.patch
-dfb5ede7cc5609a812a7b1239479cefd387f9f9c8c25e11e64199bc592ad7e39  xsa105.patch
-$
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJUIWPjAAoJEIP+FMlX6CvZu8UIAIQ9G7ms9bLRy75r3tYBTaW4
-/Gwc3jYWy5rBsDF8gwtbMfVCVFqLXJbzb3RzTuQqCI/3D3F5s1VgMEm9rrG6DK+R
-e+czy4ceT1jTbWvSO1xGOY/eRHCY88PQ0BAQqBCMjurLXc25oUFiP0WogOX5Kwpu
-1ASU6nQjZYjHruohHzgY0L6GJL27Ik1/4jNG/Min52dMxzp92Kn9rRtYR2kjwNin
-20mftHsuzD3YpNIoAdcgBLx8A611ISkvia2uFXZyJEDLsDVqhdNUSGH3Qo0d1ISO
-eFVL3X6WDYPZuJhNPbPfT93GeMI73b+ryFovYggPEZ/to9D0hrf4KaQmnbbqch8=
-=OoOJ
------END PGP SIGNATURE-----
-
-Download attachment "xsa105.patch" of type "application/octet-stream" (1304 bytes)
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
