@@ -1,22 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/3
-Message-ID: <5316D109.9010600@ai2.upv.es>
-Date: Wed, 05 Mar 2014 08:23:53 +0100
-From: Salva Peiró <speiro@....upv.es>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/2
+Message-ID: <87k31t127w.fsf@redhat.com>
+Date: Mon, 15 Dec 2014 14:17:55 +0100
+From: Martin Prpic <mprpic@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
+Subject: CVE request: XSS flaw fixed in dokuwiki 2014-09-29b
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi, can a CVE please be assigned to the following issue:
 
-I've found a vulnerability in the staging kernel tree,
-Can anyone assign a CVE ID for this?
+Release 2014-09-29b "Hrun":
+ Security Hotfix 2014-09-29b: prevents XSS attack via SWF uploads
 
-- staging/cxt1e1/linux.c: Correct arbitrary memory write in c4_ioctl()
-https://git.kernel.org/cgit/linux/kernel/git/gregkh/staging.git/commit/?h=staging-linus&id=084b6e7765b9554699afa23a50e702a3d0ae4b24
+I'm assuming this was fixed via: https://github.com/splitbrain/dokuwiki/commit/778ddf6f2cd9ed38b9db2d73e823b8c21243a960
 
-Thanks!
+Thank you!
 
-Salva Peiro http://speirofr.appspot.com
-
-
+--
+Martin Prpič / Red Hat Product Security
