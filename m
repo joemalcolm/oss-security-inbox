@@ -1,17 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/20/12
-Message-ID: <20140320175156.GA15091@openwall.com>
-Date: Thu, 20 Mar 2014 21:51:56 +0400
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/3
+Message-ID: <20141215141342.GB5363@suse.de>
+Date: Mon, 15 Dec 2014 15:13:42 +0100
+From: Sebastian Krahmer <krahmer@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: FD mailing list died. Time for new one (or something better!)
+Subject: Re: blkid command injection
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 20, 2014 at 08:38:43AM -0700, coderman wrote:
->    FIN: really done on this subject.
+On Tue, Dec 02, 2014 at 12:22:04PM +0100, Sebastian Krahmer wrote:
+> 
+> On Fri, Nov 28, 2014 at 12:17:24AM +1100, Murray McAllister wrote:
+> > On 11/27/2014 02:25 AM, Sebastian Krahmer wrote:
+> >> Hi
+> >>
+> >> There is a command injection inside blkid. It uses caching
+> >> files (/dev/.blkid.tab or /run/blkid/blkid.tab) to store info about the
+> >> UUID, LABEL etc it finds on certain devices.
+> >>
+> >> However, it does not strip " character, so it can be confused to
+> >> build variable names containing embedded shell metas, which it would usually
+> >> encode inside the value.
+> >>
+> >> Given an USB stick with /dev/sdb1 you can:
+> >>
+> >> # mkfs.ext4 -L 'X"`/tmp/foo` "' /dev/sdb1
+> >> # blkid -o udev /dev/sdb1
+> >> ID_FS_LABEL=X__/tmp/foo___
+> >> [...]
+> >>
+> >> Seems to be OK, but invoking blkid a second time, taking the cache in effect:
+> >>
+> >> # blkid -o udev /dev/sdb1
+> >> ID_FS_LABEL=X
+> >> ID_FS_LABEL_ENC=X
+> >> ID_FS_`/tmp/foo` "" UUID=...
+> >> [...]
+> >>
+> >>
+> >> "blkid -o udev" is often used in root context via udev or in automounters
+> >> (uam-pmount) to construct key=value environment variables inside shell scripts
+> >> which are then evaluated.
+> >> Might be possible to construct an embedded LD_PRELOAD= as well for the binary
+> >> case.
+> >>
+> >> By injecting > character one can probably construct whole fake cache entries.
+> >>
+> >> Sebastian
+> >>
+> >>
+> >>
+> >>
+> >
+> > Karel Zak has committed a patch:
+> >
+> > https://github.com/karelzak/util-linux/commit/89e90ae7b2826110ea28c1c0eb8e7c56c3907bdc
+> >
+> 
+> Thanks. Patch looks good to me. I contacted upstream about additional
+> fixes which you might want to include as well, so we can release it alltogether. The
+> severity of command injection is probably not that high that we need
+> updates immediately.
 
-Great.  Let's end this entire thread right here, unless someone has
-something _valuable_ to add.  I'll start rejecting further noise about
-full-disclosure, if any is sent to the list despite of this request.
+FWIW, the issue in question can be found here:
 
-Alexander
+https://bugzilla.suse.com/show_bug.cgi?id=907434
+
+Interesting for 32 bit systems where size_t has 32bit and so a mult of two
+32bit words does not fit into the result. This would allow poor-man's badUSB attacks
+with lovely crafted GPT's because its probed via systemd/udev upon plugin.
+
+Thanks to Karel Zak for fixing a wrong > in the initial patch.
+
+Sebastian
+
+-- 
+
+~ perl self.pl
+~ $_='print"\$_=\47$_\47;eval"';eval
+~ krahmer@...e.de - SuSE Security Team
+
