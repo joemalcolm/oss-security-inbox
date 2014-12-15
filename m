@@ -1,19 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/38
-Message-ID: <CALx_OUAENF0rSn8be9QmWWqvF4P5B03rcv-4-9qM177kbFfTag@mail.gmail.com>
-Date: Thu, 20 Nov 2014 10:55:14 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Fuzzing project brainstorming
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/1
+Message-ID: <548EB12E.7080900@redhat.com>
+Date: Mon, 15 Dec 2014 11:00:14 +0100
+From: Florian Weimer <fweimer@...hat.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE request: glibc
 Content-Type: text/plain; charset=utf-8
 
-> If it came from a mutation-based fuzzer, the original (not-mutated) sample
-> can be useful too.
+The getnetbyname function in glibc 2.21 in earlier will enter an 
+infinite loop if the DNS backend is activated in the system Name Service 
+Switch configuration, and the DNS resolver receives a positive answer 
+while processing the network name.
 
-FWIW, in afl, crashing entries that are otherwise very distant from
-the original starting corpus can be generally linked back to the
-"parent", non-crashing synthesized test case that the fuzzer was
-working with at the time - often producing pretty small diffs. This
-can, but doesn't have to, help =)
+Upstream reference:
 
-/mz
+   <https://sourceware.org/bugzilla/show_bug.cgi?id=17630>
+
+-- 
+Florian Weimer / Red Hat Product Security
