@@ -1,58 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/01/16
-Message-ID: <20141001161439.GA7831@kroah.com>
-Date: Wed, 1 Oct 2014 09:14:39 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/6
+Message-ID: <CALCETrUwr9y6X=5q9mtH5=1SDQQVf-oO10d7aw8eLY0f0djXAg@mail.gmail.com>
+Date: Mon, 15 Dec 2014 10:01:19 -0800
+From: Andy Lutomirski <luto@...capital.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Healing the bash fork
+Cc: Borislav Petkov <bp@...en8.de>
+Subject: Linux kernel: multiple x86_64 vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 01, 2014 at 12:08:15PM -0400, Jason Cooper wrote:
-> On Wed, Oct 01, 2014 at 08:55:35AM -0700, Greg KH wrote:
-> > On Wed, Oct 01, 2014 at 07:15:56AM -0400, Jason Cooper wrote:
-> > > On Wed, Oct 01, 2014 at 01:08:09PM +0200, Hanno Böck wrote:
-> > > > Am Tue, 30 Sep 2014 19:19:55 -0400 (EDT)
-> > > > schrieb "David A. Wheeler" <dwheeler@...eeler.com>:
-> > > > 
-> > > > > Finally: *PLEASE* let me know if you have any good ideas on how to
-> > > > > find vulnerabilities like this ahead-of-time. My article "How to
-> > > > > Prevent the Next
-> > > > > Hearbleed" (http://www.dwheeler.com/essays/heartbleed.html) lists a
-> > > > > number of ways that Heartbleed-like vulnerabilities could have been
-> > > > > detected ahead-of-time, in ways that are general enough to be
-> > > > > useful.  I'd like to do the same with Shellshock, so we can quickly
-> > > > > eliminate a whole class of problems.
-> > > > 
-> > > > The "class of problems" here is imho that we have a bunch of tools that
-> > > > get rare attention from anyone, are run by few volunteers, but they're
-> > > > an essential part in running the Internet.
-> > > > 
-> > > > Just think about busybox, curl, wget, coreutils, gettext, gzip, ... - a
-> > > > vuln in any of these could have severe consequences.
-> > > > 
-> > > > Maybe the topic here should be: "How can we get the (whitehat) IT
-> > > > seucrity community to have a deeper look at neglected but important
-> > > > opensource projects."
-> > > 
-> > > The LF has the Core Infrastructure Initiative:
-> > > 
-> > >   http://www.linuxfoundation.org/programs/core-infrastructure-initiative/faq
-> > 
-> > Yes, that's exactly what that group is doing, and they have a huge list
-> > of these types of projects that they are looking into funding to help
-> > prevent this type of thing from happening again.  I'll go add bash to
-> > the list there as I don't think it is currently on it at the moment.
-> 
-> Could we also update the FAQ to include "How to recommend a project?"?
-> A few days ago I tried to recommend bash.  I dug around, and finally
-> just sent an email to Ted.  Which I don't think is the correct answer
-> ;-)
+CVE-2014-9322: local privilege escalation, all kernel versions
 
-It isn't, but Ted is a good contact for it :)
+Any kernel that is not patched against CVE-2014-9090 is vulnerable to
+privilege escalation due to incorrect handling of a #SS fault caused
+by an IRET instruction.  In particular, if IRET executes on a
+writeable kernel stack (this was always the case before 3.16 and is
+sometimes the case on 3.16 and newer), the assembly function
+general_protection will execute with the user's gsbase and the
+kernel's gsbase swapped.
 
-Fixing the FAQ is on the list of things to do that was discussed at the
-last meeting, hopefully it will be done soon.
+This is likely to be easy to exploit for privilege escalation, except
+on systems with SMAP or UDEREF.  On those systems, assuming that the
+mitigation works correctly, the impact of this bug may be limited to
+massive memory corruption and an eventual crash or reboot.
 
-thanks,
+As with CVE-2014-9090, this is fixed by:
 
-greg k-h
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86/kernel/entry_64.S?id=6f442be2fb22be02cafa606f1769fa1e6f894441
+
+The related fix to remove bad_iret is also an effective mitigation to
+prevent a bug like this from being reintroduced:
+
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86/kernel/entry_64.S?id=b645af2d5905c4e32399005b867987919cbfc3ae
+
+Partial credit for this bug goes to Borislav Petkov, who asked pointed
+questions about CVE-2014-9090, causing me to realize that there were
+two separate bugs in #SS handling.  The first bug (CVE-2014-9090)
+caused a fatal double fault, masking the second bug that caused the
+gsbase issue.
+
+----------
+
+The next two bugs are related to espfix.  The IRET instruction has IMO
+a blatant design flaw: IRET to a 16-bit user stack segment will leak
+bits 31:16 of the kernel stack pointer.  This flaw exists on 32-bit
+and 64-bit systems.  32-bit Linux kernels have mitigated this leak for
+a long time, and 64-bit Linux kernels have mitigated this leak since
+3.16.  The mitigation is called espfix.
+
+CVE-2014-8133: espfix bypass using set_thread_area
+
+On all kernels, a valid 16-bit stack segment can be created using
+set_thread_area.  Arranging to return to such a stack segment will
+bypass espfix, leaking bits 31:16 of the kernel stack pointer.  Fixed
+by:
+
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86?id=41bdc78544b8a93a9c6814b8bbbfef966272abbe
+
+CVE-2014-8134: espfix was broken on 32-bit KVM paravirt guests
+
+espfix was completely broken on 32-bit Linux KVM guests with
+CONFIG_KVM_GUEST=y.  Fixed by:
+
+https://git.kernel.org/cgit/virt/kvm/kvm.git/commit/?h=linux-next&id=29fa6825463c97e5157284db80107d1bfac5d77b
+
+This commit hasn't made it to Linus' tree yet.
+
+----------
+
+CVE-2014-9090 (previously announced), CVE-2014-9322, CVE-2014-8133,
+and CVE-2014-8134 can be tested by sigreturn_32, available here:
+
+https://gitorious.org/linux-test-utils/linux-clock-tests/source/10b9a7d317f6d8ae5f32bcb4bbbb186acdd6b89a
+
+Save your data before running this on a production system.  If you a
+vulnerable to CVE-2014-9090 or CVE-2014-9322, the test will crash your
+system.  The espfix issues will cause warnings and failures that
+mention register mismatches.
+
+-- 
+Andy Lutomirski
+AMA Capital Management, LLC
