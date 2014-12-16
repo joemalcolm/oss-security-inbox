@@ -1,37 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/08/18
-Message-ID: <20140808162102.GA21994@kroah.com>
-Date: Fri, 8 Aug 2014 09:21:02 -0700
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: BadUSB discussion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/10
+Message-ID: <CAHw3cgTm9tUY6khta=2Bw5a8J033E5Kseq38c+nQNuvd9hq+5Q@mail.gmail.com>
+Date: Tue, 16 Dec 2014 18:26:42 +0100
+From: Ryan Dewhurst <ryandewhurst@...il.com>
+To: "Larry W. Cashdollar" <larry0@...com>
+Cc: oss-security@...ts.openwall.com, "WordPress.org" <plugins@...dpress.org>,  moderators@...db.org, "wpscanteam@...il.com" <wpscanteam@...il.com>
+Subject: Re: CVE-2014-9119: DB Backup plugin for WordPress download.php file Parameter Remote Path Traversal File Access
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Aug 08, 2014 at 08:09:53PM +0400, gremlin@...mlin.ru wrote:
->  > Oh, and if you want, you can disable all USB devices on your
->  > Linux system by default, and only "authorize" them explicitly
->  > if you programatically think they should be enabled.  We have
->  > had support in the kernel for that for years now, but very few
->  > people actually use it.
-> 
-> I've faced that only once, and my solution was straightforward:
-> those two servers were running a kernel built with only basic
-> USB HID support (keyboard+mouse, IIRC) and without module load
-> support. That appeared to be quite enough.
+I suspect WordPress have removed it from their online database until there
+is a patch available. We've seen them do this quite often.
 
-That doesn't prevent any other USB HID device from being plugged in and
-instantly working.  Which again, you can prevent if you want to, but no
-one seems to do that...
+Google has a cache of the page from yesterday: 15 Dec 2014 05:11:28 GMT.
 
->  > So the tools to do this are already there, why aren't you using
->  > them? :)
-> 
-> You could guess: sometimes I'm developing USB devices and have to
-> test them. That formed a good habit of connecting my devices to a
-> hub instead of directly to BB :-)
+On Tue, Dec 16, 2014 at 6:20 PM, Larry W. Cashdollar <larry0@...com> wrote:
 
-A USB hub doesn't do anything special except slow things down and add
-complexity to the overall USB system, and does nothing for "security" at
-all.
+> When going to this plugin page (https://wordpress.org/plugins/db-backup/)
+> I get :
+>
+> Whoops!
+>
+> We couldn't find that plugin. Maybe you were looking for one of these?
+>
+>
+>
+> > On Dec 16, 2014, at 11:51 AM, Henri Salo <henri@...v.fi> wrote:
+> >
+> > -----BEGIN PGP SIGNED MESSAGE-----
+> > Hash: SHA1
+> >
+> > Product: WordPress plugin db-backup
+> > Plugin page: https://wordpress.org/plugins/db-backup/
+> > Developer: Syed Amir Hussain "syedamirhussain91"
+> > Vulnerability Type: Remote Path Traversal File Access
+> > CWE-23: Relative Path Traversal
+> > Vulnerable Versions: 4.5 and earlier
+> > Fixed Version: N/A
+> > Vendor Notification: 2014-11-27
+> > Public Disclosure: 2014-12-16
+> > CVE Reference: CVE-2014-9119
+> > Criticality: High
+> >
+> > Vulnerability details:
+> >
+> > DB Backup plugin for WordPress contains a flaw that allows traversing
+> outside of
+> > a restricted path. The issue is due to the download.php script not
+> properly
+> > sanitizing user input, specifically path traversal style attacks (e.g.
+> '../').
+> > With a specially crafted request, a remote attacker can gain read access
+> to
+> > arbitrary files, limited by system operational access control. This
+> > vulnerability can be used to get WordPress authentication keys and salts,
+> > database address and credentials, which can be used in certain
+> environments to
+> > elevate privileges and execute malicious PHP code.
+> >
+> > Root cause:
+> >
+> > Unsanitized user input to readfile() function.
+> >
+> > Proof-of-concept:
+> >
+> > /wp-content/plugins/db-backup/download.php?file=../../../wp-config.php
+> >
+> > Timeline:
+> >
+> > 2014-11-27: Reported to developer and WordPress plugins team.
+> > 2014-11-27: CVE assigned and reported to developer.
+> > 2014-11-28: Communication with developer and he said this will be fixed.
+> > 2014-12-02: Asked status from developer.
+> > 2014-12-03: Developer says this will be fixed by 7th.
+> > 2014-12-07: Asked status from developer.
+> > 2014-12-08: Developer responds.
+> > 2014-12-09: Asked more details from developer.
+> > 2014-12-10: More discussion about the solution and new disclosure date
+> set.
+> > 2014-12-16: Agreed disclosure date was 15th, I don't understand issue
+> with
+> > patching so public disclosure. Please note that there are hundreds of
+> backup
+> > plugins in WordPress Plugin Directory.
+> >
+> > Notes:
+> >
+> > - - Remove plugin "db-backup" as deactivation does not fix the issue.
+> > - - Use another plugin until patch is available and new version is
+> published.
+> > - - Sites I know using this plugin will be notified via abuse emails
+> today.
+> >
+> > References:
+> > http://cwe.mitre.org/data/definitions/23.html
+> > https://scapsync.com/cwe/CWE-23
+> > https://www.owasp.org/index.php/Path_Traversal
+> >
+> https://www.owasp.org/index.php/Testing_for_Path_Traversal_%28OTG-AUTHZ-001%29
+> >
+> > - --
+> > Henri Salo
+> > -----BEGIN PGP SIGNATURE-----
+> > Version: GnuPG v1.4.12 (GNU/Linux)
+> >
+> > iEYEARECAAYFAlSQYwcACgkQXf6hBi6kbk8uHwCeJfQd1Vjc2Rr6kzyFxF8rC4NW
+> > zbMAoKG4tidQkLM5qrnyIfHTVZPXbOdk
+> > =5Nmf
+> > -----END PGP SIGNATURE-----
+>
+>
 
-greg k-h
