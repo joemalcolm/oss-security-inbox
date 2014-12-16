@@ -1,73 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/17/14
-Message-ID: <20141117161010.GA25029@TC.local>
-Date: Mon, 17 Nov 2014 08:10:10 -0800
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: security@...e.de, rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [CVE-2014-7829] Arbitrary file existence disclosure in Action Pack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/4
+Message-ID: <874msv1rqw.fsf@redhat.com>
+Date: Tue, 16 Dec 2014 17:31:03 +0100
+From: Martin Prpic <mprpic@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: insufficient 'X-Forwarded-For' header validation in rabbitmq-server
 Content-Type: text/plain; charset=utf-8
 
-Arbitrary file existence disclosure in Action Pack
+Hi, the following issue was fixed in RabbitMQ. I don't see a CVE for to
+this anywhere; can one please be assigned?
 
-There is an information leak vulnerability in Action Pack. This vulnerability
-has been assigned the CVE identifier CVE-2014-7829.
+"""
+RabbitMQ 3.3.0 introduced a mechanism (the 'loopback_users'
+configuration item) allowing access for some users to be restricted to
+only connect via localhost. By default the "guest" user is restricted in
+this way.
 
-Versions Affected:  >= 3.0.0
-Not affected:       < 3.0.0, 4.2.0.beta4
-Fixed Versions:     3.2.21, 4.0.12, 4.1.8
+Unfortunately, the HTTP framework used by the management plugin trusts
+the easily-forged "X-Forwarded-For" header when determining the remote
+address. It is therefore possible to subvert this access control
+mechanism for the HTTP API. Attackers would still need to know or guess
+the username and password. 
+"""
 
-Impact
-------
-Specially crafted requests can be used to determine whether a file exists on
-the filesystem that is outside the Rails application's root directory.  The
-files will not be served, but attackers can determine whether or not the file
-exists.  This vulnerability is very similar to CVE-2014-7818, but the
-specially crafted string is slightly different.
+Upstream patches:
 
-This only impacts Rails applications that enable static file serving at
-runtime.  For example, the application's production configuration will say:
+http://hg.rabbitmq.com/rabbitmq-management/rev/c3c41177a11a
+http://hg.rabbitmq.com/rabbitmq-management/rev/35e916df027d
 
-  config.serve_static_assets = true
+References:
 
-All users running an affected configuration should either upgrade or use one of the work arounds immediately.
+https://groups.google.com/forum/#!topic/rabbitmq-users/DMkypbSvIyM
+http://www.rabbitmq.com/release-notes/README-3.4.0.txt
+https://bugzilla.redhat.com/show_bug.cgi?id=1174872
 
-Releases 
--------- 
-The 3.2.21, 4.0.12 & 4.1.8 releases are available at the normal locations. 
-
-Workarounds 
------------ 
-To work around this issue, set config.serve_static_assets = false in an initializer.  This work around will not be possible in all hosting environments and upgrading is advised.
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-
-* 3-1-sec-static-files.patch - Patch for the 3.1.x release series
-* 3-2-sec-static-files.patch - Patch for the 3.2.x release series
-* 4-0-sec-static-files.patch - Patch for the 4.0.x release series
-* 4-1-sec-static-files.patch - Patch for the 4.1.x release series
-
-Please note that only the 3.2.x, 4.0.x & 4.1.x  series are supported at present.  Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot guarantee the continued availability of security fixes for unsupported releases.
-
-Credits 
-------- 
-
-This vulnerability was reported by multiple researchers working independently.  Thanks to each of them for reporting the issue to us and verifying the fixes.
-
-* Patrick Toomey of GitHub
-* Remon Oldenbeuving of hackerone
+Thank you!
 
 -- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-View attachment "3-1-sec-static-files.patch" of type "text/plain" (3548 bytes)
-
-View attachment "3-2-sec-static-files.patch" of type "text/plain" (3473 bytes)
-
-View attachment "4-0-sec-static-files.patch" of type "text/plain" (3058 bytes)
-
-View attachment "4-1-sec-static-files.patch" of type "text/plain" (3059 bytes)
-
-Content of type "application/pgp-signature" skipped
+Martin Prpič / Red Hat Product Security
