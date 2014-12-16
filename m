@@ -1,18 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/36
-Message-ID: <CALx_OUATMhBsedMAMLMWrn_OVmvxPD8TXTtnvykb7xAgb_H3vQ@mail.gmail.com>
-Date: Tue, 30 Sep 2014 16:34:34 -0700
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/3
+Message-ID: <20141216170622.6fd5c627@pc>
+Date: Tue, 16 Dec 2014 17:06:22 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: file(1): multiple denial of service issues (resource consumption), CVE-2014-8116 and CVE-2014-8117
 Content-Type: text/plain; charset=utf-8
 
-> Either of these approaches completely solves the shellshock problem as currently revealed publicly.  (Some of the CVE information is still not public, so it's *possible* there is another big reveal, but I have no indication of one.)
+Don't know if this deserves a CVE, but this release also fixes this
+fuzzing-found issue:
+http://bugs.gw.com/view.php?id=398
 
-Everything should be covered by Florian's patch. More here:
+Commit:
+https://github.com/file/file/commit/59e63838913eee47f5c120a6c53d4565af638158
 
-http://lcamtuf.blogspot.com/2014/09/bash-bug-apply-unofficial-patch-now.html
 
-I'll post the technical details & PoCs tomorrow(ish).
+-- 
+Hanno Böck
+http://hboeck.de/
 
-/mz
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
