@@ -1,26 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/31
-Message-ID: <20140926181315.GX18948@frohike.xs4all.nl>
-Date: Fri, 26 Sep 2014 20:13:15 +0200
-From: Peter Bex <Peter.Bex@...all.nl>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/9
+Message-ID: <20141216172628.GA20957@openwall.com>
+Date: Tue, 16 Dec 2014 20:26:28 +0300
+From: Solar Designer <solar@...nwall.com>
+To: Ryan Dewhurst <ryandewhurst@...il.com>
+Cc: oss-security@...ts.openwall.com, wpscanteam@...il.com
+Subject: Re: CVE-2014-9119: DB Backup plugin for WordPress download.php file Parameter Remote Path Traversal File Access
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 26, 2014 at 12:07:34PM -0600, Kurt Seifried wrote:
-> This is a classic case of "yes the correct thing to do is..." but the
-> reality is "we should fix this centrally rather than try to make
-> everyone do the right thing (aka boiling the ocean)". This is like tmp
-> vulns, it's 2014, the solution for tmp vulns is polyinstantiated /tmp
-> per user, and per application /tmp dirs in addition to this. Solve it
-> once centrally (e.g. in PAM/systemd) and boom, done.
-> 
-> We should always try to do the best/safest thing because most devs are
-> going to try to do the most insanely dangerous thing.
+On Tue, Dec 16, 2014 at 06:00:49PM +0100, Ryan Dewhurst wrote:
+> https://wpvulndb.com/vulnerabilities/7726 thanks!
 
-That's the first sensible thing I've read on this whole topic :)
+Ryan, I've reluctantly approved your posting this one time, just to let
+oss-security subscribers know what's coming our way and that your
+WordPress vuln db exists, but please don't send these to oss-security
+going forward.  Thanks!
 
-Cheers,
-Peter
--- 
-http://www.more-magic.net
+Alexander
