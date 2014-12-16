@@ -1,57 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/30/8
-Message-ID: <20141030202905.GE71386@TC.local>
-Date: Thu, 30 Oct 2014 13:29:05 -0700
-From: Aaron Patterson <tenderlove@...y-lang.org>
-To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com
-Subject: [AMENDED] [CVE-2014-7819] Arbitrary file existence disclosure in Sprockets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/7
+Message-id: <B68897C3-BC25-4546-809B-8D7826718254@me.com>
+Date: Tue, 16 Dec 2014 12:20:43 -0500
+From: "Larry W. Cashdollar" <larry0@...com>
+To: oss-security@...ts.openwall.com
+Cc: plugins@...dpress.org, moderators@...db.org, wpscanteam@...il.com
+Subject: Re: CVE-2014-9119: DB Backup plugin for WordPress download.php file Parameter Remote Path Traversal File Access
 Content-Type: text/plain; charset=utf-8
 
-I've updated this advisory to include the correct version numbers in the
-"Fixed Versions" section.
+When going to this plugin page (https://wordpress.org/plugins/db-backup/) I get :
 
-Arbitrary file existence disclosure in Sprockets
+Whoops!
 
-There is an information leak vulnerability in Sprockets. This vulnerability
-has been assigned the CVE identifier CVE-2014-7819.
+We couldn't find that plugin. Maybe you were looking for one of these?
 
-Versions Affected:  ALL
-Not affected:       NONE
-Fixed Versions:     3.0.0.beta.3, 2.12.3, 2.11.3, 2.10.2, 2.9.4, 2.8.3, 2.7.1, 2.5.1, 2.4.6, 2.3.3, 2.2.3, 2.1.4, 2.0.5
 
-Impact
-------
-Specially crafted requests can be used to determine whether a file exists on
-the filesystem that is outside an application's root directory.  The files will not be served, but attackers can determine whether or not the file exists.
 
-All users running an affected release should either upgrade or use one of the work arounds immediately.
+> On Dec 16, 2014, at 11:51 AM, Henri Salo <henri@...v.fi> wrote:
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> Product: WordPress plugin db-backup
+> Plugin page: https://wordpress.org/plugins/db-backup/
+> Developer: Syed Amir Hussain "syedamirhussain91"
+> Vulnerability Type: Remote Path Traversal File Access
+> CWE-23: Relative Path Traversal
+> Vulnerable Versions: 4.5 and earlier
+> Fixed Version: N/A
+> Vendor Notification: 2014-11-27
+> Public Disclosure: 2014-12-16
+> CVE Reference: CVE-2014-9119
+> Criticality: High
+> 
+> Vulnerability details:
+> 
+> DB Backup plugin for WordPress contains a flaw that allows traversing outside of
+> a restricted path. The issue is due to the download.php script not properly
+> sanitizing user input, specifically path traversal style attacks (e.g. '../').
+> With a specially crafted request, a remote attacker can gain read access to
+> arbitrary files, limited by system operational access control. This
+> vulnerability can be used to get WordPress authentication keys and salts,
+> database address and credentials, which can be used in certain environments to
+> elevate privileges and execute malicious PHP code.
+> 
+> Root cause:
+> 
+> Unsanitized user input to readfile() function.
+> 
+> Proof-of-concept:
+> 
+> /wp-content/plugins/db-backup/download.php?file=../../../wp-config.php
+> 
+> Timeline:
+> 
+> 2014-11-27: Reported to developer and WordPress plugins team.
+> 2014-11-27: CVE assigned and reported to developer.
+> 2014-11-28: Communication with developer and he said this will be fixed.
+> 2014-12-02: Asked status from developer.
+> 2014-12-03: Developer says this will be fixed by 7th.
+> 2014-12-07: Asked status from developer.
+> 2014-12-08: Developer responds.
+> 2014-12-09: Asked more details from developer.
+> 2014-12-10: More discussion about the solution and new disclosure date set.
+> 2014-12-16: Agreed disclosure date was 15th, I don't understand issue with
+> patching so public disclosure. Please note that there are hundreds of backup
+> plugins in WordPress Plugin Directory.
+> 
+> Notes:
+> 
+> - - Remove plugin "db-backup" as deactivation does not fix the issue.
+> - - Use another plugin until patch is available and new version is published.
+> - - Sites I know using this plugin will be notified via abuse emails today.
+> 
+> References:
+> http://cwe.mitre.org/data/definitions/23.html
+> https://scapsync.com/cwe/CWE-23
+> https://www.owasp.org/index.php/Path_Traversal
+> https://www.owasp.org/index.php/Testing_for_Path_Traversal_%28OTG-AUTHZ-001%29
+> 
+> - -- 
+> Henri Salo
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+> 
+> iEYEARECAAYFAlSQYwcACgkQXf6hBi6kbk8uHwCeJfQd1Vjc2Rr6kzyFxF8rC4NW
+> zbMAoKG4tidQkLM5qrnyIfHTVZPXbOdk
+> =5Nmf
+> -----END PGP SIGNATURE-----
 
-Releases 
--------- 
-The 2.12.X releases are available at the normal locations. 
-
-Workarounds 
------------ 
-In Rails applications, work around this issue, set config.serve_static_assets = false in an initializer.  This work around will not be possible in all hosting environments and upgrading is advised.
-
-Patches 
-------- 
-To aid users who aren't able to upgrade immediately we have provided patches for the two supported release series.  They are in git-am format and consist of a single changeset. 
-
-* 2-12-sec-static-files.patch - Patch for the 2.12.x release series
-
-Credits 
-------- 
-
-This vulnerability was reported by multiple researchers working independently.  Thanks to each of them for reporting the issue to us and verifying the fixes.
-
-* Eaden McKee
-* Dennis Hackethal & Christian Hansen of Crowdcurity
-* Juan C. Müller & Mike McClurg of Greenhouse.io 
-* Alex Ianus of Coinbase
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-Content of type "application/pgp-signature" skipped
