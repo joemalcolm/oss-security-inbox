@@ -1,24 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/17/1
-Message-ID: <53015783.8030100@redhat.com>
-Date: Mon, 17 Feb 2014 11:27:47 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: "imapsync ignores the --tls switch and sends my authentication plaintext."
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/8
+Message-ID: <20141216172339.GB31409@kludge.henri.nerv.fi>
+Date: Tue, 16 Dec 2014 19:23:39 +0200
+From: Henri Salo <henri@...v.fi>
+To: "Larry W. Cashdollar" <larry0@...com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-9119: DB Backup plugin for WordPress download.php file Parameter Remote Path Traversal File Access
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-https://bugs.mageia.org/show_bug.cgi?id=12770 notes that imapsync 1.584 
-fixes a security issue, "Bug fix: Check if going to tls is ok, exit 
-otherwise with explicit error message. Thanks to Dennis Schridde for 
-reporting this ugly bug that deserves a CVE."
+On Tue, Dec 16, 2014 at 12:20:43PM -0500, Larry W. Cashdollar wrote:
+> When going to this plugin page (https://wordpress.org/plugins/db-backup/) I get :
+> 
+> Whoops!
+> 
+> We couldn't find that plugin. Maybe you were looking for one of these?
 
-Upstream bug: https://github.com/imapsync/imapsync/issues/15
+Yes. This means that WordPress plugins team has disabled the plugin in WordPress
+Plugin Directory. Downloads are also disabled from WordPress admin panel for
+safety. You can still of course install the plugin from SVN.
 
-Can a CVE please be assigned if one has not been already?
+http://plugins.svn.wordpress.org/db-backup/trunk/
 
-Thanks,
+- --
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
---
-Murray McAllister / Red Hat Security Response Team
+iEYEARECAAYFAlSQapsACgkQXf6hBi6kbk8jfQCgkaJf9gwoL/P7CLIgp2ucuExf
+PzwAoManG8mJaMiTOryjFetzyZ+lKa5e
+=WGsS
+-----END PGP SIGNATURE-----
