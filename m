@@ -1,44 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/04/4
-Message-ID: <20140604062501.GB18329@kroah.com>
-Date: Tue, 3 Jun 2014 23:25:01 -0700
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/12
+Message-ID: <CANtF8NCm9y9HVLm7-7t-2Rn0CQBbqyZc+jq-F9QLXfoqbsCG+w@mail.gmail.com>
+Date: Wed, 17 Dec 2014 14:24:11 -0600
+From: Grandma Eubanks <tborland1@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Ramon de C Valle <rdecvalle@...are.com>, VMware Security Response Center <security@...are.com>, Monty Ijzerman <mijzerman@...are.com>
-Subject: Re: Request for linux-distros subscription
+Subject: Re: What is the "Grinch" polkit/wheel group issue?
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 04, 2014 at 09:58:43AM +0400, Solar Designer wrote:
-> On Tue, Jun 03, 2014 at 01:16:47PM -0700, Ramon de C Valle wrote:
-> > I can attest that Monty is my colleague and the Manager of VMware Security Response Center. As a former colleague of you (Kurt) and also former linux-distros subscriber, I would like to ask for your consideration for subscribing Monty (or myself) to linux-distros on behalf of VMware. Although ESXi isn't a Linux distribution, it implements Linux-compatible system calls and provides a GNU/Linux -like ecosystem that allows many applications that are compiled on/for Linux operating systems to run seamlessly. This ecosystem includes OSS that should be supported in timely fashion pretty much like like any other Linux distribution on the list. It also implements a Linux kernel module interface and uses many Linux device drivers and kernel modules that also should be supported. In addition, ESXi is the base layer that many of the Linux distributions on the list rely upon and run atop of in many datacenters around the world.
-> 
-> Thank you, Ramon.  This is pretty good rationale, but I feel that
-> getting VMware onto linux-distros for the reasons given above would be a
-> (possibly desirable) change in who the list is for.  So far, it's been
-> for Linux distros, and I deliberately chose the linux-distros name for
-> it.  Now a non-Linux-distro wants to be specifically on linux-distros
-> (not just on distros), and be exposed to Linux-specific vulnerability
-> details (albeit for good reasons).  I'd appreciate comments by others
-> active in this community.
-> 
-> Does VMware have OSS products?  Would it be reasonable to include VMware
-> security advisory/contact details on our wiki?
-> 
-> http://oss-security.openwall.org/wiki/vendors
+The reason this was not reported was because this was expected behavior. I
+didn't feel it needed to be reported because of this and that it is really
+a surface opening stager and by itself nothing much. The example posed that
+I tried to stress was tended towards home users, not servers. However,
+words have been said and 'definitions' needed to be made and it snowballed
+into something crazy. An example of how I've been using this:
 
-It is alleged that VMware violates the license of some OSS products,
-like the Linux kernel for example[1], so I don't know if that counts as
-a good enough reason to accept them for the list or not.  I don't know
-of any specific OSS software of their own, except for some Linux kernel
-module code in the kernel source tree[2], which really doesn't justify
-the need to be part of linux-distros in my opinion.
+User is compromised via client-side exploit such as browser, flash, mail
+client, etc.
+User is running up to date kernel and you don't want to rely on tricks like
+.bashrc to trick the user into giving password.
+You have access to a new surface area of any package in their repo to
+install and exploit to escalate privileges. Of course, you can also install
+a package for a new vulnerability released. Especially for people with only
+stable repos as it takes a bit for those updates to come across.
 
-thanks,
+**This was important to me because I kept finding vulns in packages no one
+is using, but this opened up potentiality for a lot of useless stuff I've
+been keeping. I wrote this mainly for them if they're in the same position.
 
-greg k-h
+This was the scenario I have been using this for before an article was even
+drafted. Most of the other operations require giving a password, like
+removing packages, but installing packages does not require anything but to
+be in the proper group.
+I don't think it requires a CVE, again why I didn't report it, I do however
+think it should at least require authentication like every other operation
+requires.
 
-[1] My opinion only, not my employers.  I am not a lawyer, please
-    consult with your own before making a decision about this if you
-    should be using vmware products yourself.  Details about why I think
-    this are available on demand on an individual basis.
-[2] Nothing to do with [1], a totally different thing.
+
+Now, the confusion that it was reported is coming from something else
+that's I'm going to talk about in January. Something that, again, I'm not
+sure is CVE worthy, but could be debatable:
+https://bugzilla.redhat.com/show_bug.cgi?id=1128400
+
+On Wed, Dec 17, 2014 at 12:38 PM, Dean Pierce <pierce403@...il.com> wrote:
+>
+> The key here is the line:
+>
+> "In order to exploit this, all we need is a single vulnerability in
+> any package in a repo. There are tons to choose from. If we type
+> ‘PKCon’ or simply ‘man PKCon,’ we can find a list of repos in use and
+> then pull a list of all bins and version numbers. I won’t provide one
+> here because you don’t want everything handed to you."
+>
+> Had they actually found a package they could leverage to get root,
+> then this would absolutely be a vulnerability, but they didn't.  While
+> configuring pkcon to allow admins to install packages without typing
+> in a password *is* something that might be unexpected for people
+> unfamiliar with polkit, that is the exact type of use case it was
+> built for.
+>
+>   - DEAN
+>
+> On Wed, Dec 17, 2014 at 10:24 AM, Kurt Seifried <kseifried@...hat.com>
+> wrote:
+> > On 17/12/14 10:00 AM, Marcus Meissner wrote:
+> >> Hi,
+> >>
+> >> This probably needs a CVE too, or does it have one?
+> >>
+> >> https://www.alertlogic.com/blog/dont-let-grinch-steal-christmas/
+> >>
+> http://www.pcworld.com/article/2860032/this-linux-grinch-could-put-a-hole-in-your-security-stocking.html
+> >>
+> >> Although it seems that the user is in the "wheel" group for this to be
+> exploitable
+> >> and is hard to specify what actions should be safed by another query or
+> which should not.
+> >>
+> >> Ciao, Marcus
+> >
+> > Yeah I looked into this (the article/etc was completely confusing and
+> > took some time to parse):
+> >
+> > 1) the article states they contacted red hat, we were unable to find
+> > any inbound email or bugzilla entry pertaining to this issue, as always
+> > if you have an issue you wish to report please contact
+> secalert@...hat.com
+> >
+> > 2) this is expected behaviour, admin users can install software (do I
+> > have to say this? really? yes. I was told I should say this).
+> >
+> > 3) don't run web apps as admin users (do I have to say this? really?
+> > yes. I was told I should say this).
+> >
+> > 4) if you feel the need to run a web app as an admin user restrict what
+> > they can do via SELinux, and  don't let them install software (do I have
+> > to say this? really? yes. I was told I should say this).
+> >
+> > So TL;DR: it's not a security vulnerability, and it will NOT be getting
+> > a CVE.
+> >
+> > I can only assume this article/vuln is perhaps referring to something
+> > like Cpanel and other control panels that people sometimes install
+> > insecurely/improperly and then never update. Or something. Who knows.
+> >
+> > --
+> > Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> > PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> >
+>
+
