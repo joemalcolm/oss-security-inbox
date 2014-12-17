@@ -1,87 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/7
-Message-ID: <CAN-Kwu0ASgL0dZm=VTkN6GKsKOEEFD18v_2YbjS5mNDmu=Vb3A@mail.gmail.com>
-Date: Fri, 28 Nov 2014 11:42:03 -0600
-From: Ian Cordasco <graffatcolmingov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/10
+Message-Id: <4B148965-3272-4583-9E8E-CCD9A6E99D5D@thoughtbot.com>
+Date: Wed, 17 Dec 2014 13:29:17 -0500
+From: Tute Costa - thoughtbot <tute@...ughtbot.com>
 To: oss-security@...ts.openwall.com
-Cc: John Haxby <john.haxby@...cle.com>, Kirill Simonov <xi@...olvent.net>,  Ingy döt Net <ingy@...n.org>
-Subject: Re: libyaml / YAML-LibYAML DoS
+Subject: [CVE-2014-8144] CSRF vulnerability in doorkeeper 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 28, 2014 at 11:36 AM, Ingy dot Net <ingy@...y.net> wrote:
-> I have fixed this by commenting out the assert. This makes the parser fail
-> as it should.
->
-> I've pushed the patch to the git-hub mirror of libyaml:
-> https://github.com/yaml/libyaml
->
-> I've added a test to https://metacpan.org/release/YAML-LibYAML and released
-> version 0.53.
->
-> Ingy
->
-> PS Here is the Perl minimum test case, with the patched behavior:
->
->  $ perl -MYAML::XS -e 'Load qq! x: "\n"x!'
-> YAML::XS::Load Error: The problem:
->
->     did not find expected key
->
-> was found at document: 1, line: 2, column: 2
-> while parsing a block mapping at line: 1, column: 2
->
->
-> On Fri, Nov 28, 2014 at 7:45 AM, Ingy dot Net <ingy@...y.net> wrote:
->
->> Taking a look at this now. Please let me know if you've already found a
->> patch.
->>
->> Ingy
->>
->> On Fri, Nov 28, 2014 at 2:20 AM, John Haxby <john.haxby@...cle.com> wrote:
->>
->>> On 28/11/14 05:57, Jonathan Gray wrote:
->>> > libyaml and the perl YAML-LibYAML (aka YAML-XS) module based
->>> > on the same code have an "impossible" assert that can be
->>> > triggered with the following yaml.  This is a reduced testcase
->>> > of a crash found with the afl fuzzer.
->>> >
->>> >       a: "
->>> > "     b: true
->>> >
->>> > In other words a crash/denial of service with untrusted yaml input.
->>> > The libyaml author was contacted on the 21st and 27th of November.
->>> > No response has been received but the issue has independently been
->>> > reported publically since:
->>> >
->>> https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
->>> >
->>> > [1] Parsing 'test.yaml': assertion "parser->simple_key_allowed ||
->>> !required" failed: file "scanner.c", line 1113, function
->>> "yaml_parser_save_simple_key"
->>> >
->>> > assert(parser->simple_key_allowed || !required);    /* Impossible. */
->>>
->>> For what it's worth PyYAML 3.10 and 3.11 have exactly the same assertion:
->>>
->>> >>> import yaml
->>> >>> yaml.load("""
->>> ... abc:
->>> ...     def: 'xxx
->>> ... '   ghi: 'yyy'
->>> ... """)
->>> Traceback (most recent call last):
->>>
->>> [...]
->>>
->>>     assert self.allow_simple_key or not required
->>> AssertionError
->>>
->>> jch
->>>
->>
->>
+Cross-site request forgery (CSRF) vulnerability in doorkeeper 1.4.0
+and earlier allows remote attackers to hijack the user's OAuth
+autorization code. This vulnerability has been assigned the CVE
+identifier CVE-2014-8144.
 
-I could be mistaken but I thought Aaron Patterson had taken
-responsibility for maintaining libyaml. Did you attempt contacting
-anyone involved in the YAML organization on GitHub?
+Versions Affected:  1.4.0 and below
+Fixed Versions:     1.4.1, 2.0.0
+
+Impact
+------
+
+Doorkeeper's endpoints didn't have CSRF protection. Any HTML document
+on the Internet can then read a user's authorization code with
+arbitrary scope from any Doorkeeper-compatible Rails app you are
+logged in.
+
+Releases
+--------
+
+The 1.4.1 and 2.0.0 releases are available at
+https://rubygems.org/gems/doorkeeper and
+https://github.com/doorkeeper-gem/doorkeeper.
+
+Upgrade Process
+---------------
+
+Upgrade doorkeeper version at least to 1.4.1.
+
+Workarounds
+-----------
+
+There are no feasible workarounds for this vulnerability.
+
+Credits
+-------
+Thanks to Sergey Belov of DigitalOcean for finding the vulnerability,
+Phill Baker of DigitalOcean for reporting and fixing it, and to Egor
+Homakov of Sakurity.com for raising awareness.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
