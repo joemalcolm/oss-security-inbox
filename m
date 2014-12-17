@@ -1,50 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/26
-Message-ID: <5345912A.6000108@enovance.com>
-Date: Wed, 09 Apr 2014 20:27:54 +0200
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/13
+Message-ID: <5491FA9B.8050508@gmail.com>
+Date: Wed, 17 Dec 2014 16:50:19 -0500
+From: Daniel Micay <danielmicay@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-011] RBAC policy not properly enforced in Nova EC2 API (CVE-2014-0167)
+Subject: Re: What is the "Grinch" polkit/wheel group issue?
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-011
-CVE: CVE-2014-0167
-Date: April 09, 2014
-Title: RBAC policy not properly enforced in Nova EC2 API
-Reporter: Marc Heckmann (Ubisoft)
-Products: Nova
-Versions: from 2013.1 to 2013.2.3
+If the compromised user is an administator, an unsandboxed process
+running as that user can trivially obtain root access.
 
-Description:
-Marc Heckmann from Ubisoft reported a vulnerability in the Nova EC2 API
-security group implementation. RBAC policies are not enforced when using
-the EC2 API, in particular the add_rules, remove_rules and destroy
-methods. A restricted user may overcome his limitation by using EC2 API
-resulting in unauthorized action on security groups. Only setups using
-non-default RBAC rules for Nova may be affected.
+A small shell script or function wrapping su / sudo is all it takes to
+escalate privileges. There's no need to exploit a privesc vulnerability
+by obtaining a package with a vulnerable setuid/setgid/setcap binary or
+enabled-by-default service.
 
-Juno (development branch) fix:
-https://review.openstack.org/86358
+Any process running as that user can obtain an X11 handle and sniff the
+input events. Wayland will change that, but it's only truly valuable in
+combination with some form of process isolation.
 
-Icehouse (milestone-proposed branch) fix:
-https://review.openstack.org/86360
+There's only a strong distinction between root and the administrator's
+regular user account if they aren't a sudoer and never switch to root
+via su within their session. If root logins are only done from virtual
+consoles, then the attacker may actually need to resort to hacks like
+this - but I doubt that user would be in the wheel group...
 
-Havana fix:
-https://review.openstack.org/86361
-
-Notes:
-This fix will be included in the icehouse-rc2 development milestone and
-in a future 2013.2.4 release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0167
-https://launchpad.net/bugs/1290537
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Since the typical usage of wheel is access to sudo, I don't see any
+problem with this polkit rule. It's acknowledging that the distinction
+between root and an admin user's account (in wheel) has very little
+relevance to security, and is more about preventing accidents.
 
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
