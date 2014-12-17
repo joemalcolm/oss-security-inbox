@@ -1,24 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/6
-Message-ID: <1419922878653.12960@corp.iixpeering.net>
-Date: Tue, 30 Dec 2014 07:01:20 +0000
-From: David Jorm <djorm@...p.iixpeering.net>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: 2012 CVE request: XXE in nokogiri ruby gem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/7
+Message-ID: <5491BD02.8030904@fifthhorseman.net>
+Date: Wed, 17 Dec 2014 12:27:30 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: What is the "Grinch" polkit/wheel group issue?
 Content-Type: text/plain; charset=utf-8
 
-Hi All
+On 12/17/2014 12:00 PM, Marcus Meissner wrote:
+
+> This probably needs a CVE too, or does it have one?
+> 
+> https://www.alertlogic.com/blog/dont-let-grinch-steal-christmas/
+> http://www.pcworld.com/article/2860032/this-linux-grinch-could-put-a-hole-in-your-security-stocking.html
+> 
+> Although it seems that the user is in the "wheel" group for this to be exploitable
+> and is hard to specify what actions should be safed by another query or which should not.
+
+from your first link:
+
+>> Wheel is a special user group that controls access to the su command, 
+>> which allows a user to masquerade as another user.  When a Linux system 
+>> is built, the default user is assigned to the wheel group that allows 
+>> for administrative task execution within the system. For example, if 
+>> the file is owned by user XYZ and group wheel, it will run as 
+>> XYZ:wheel, no matter who executes the file.
+
+This paragraph suggests so many things which are simply wrong, confused,
+or irrelevant that i don't know what to make of the rest of the article.
+
+ * modern debian GNU/Linux systems do not have a wheel group at all.  No
+particular versions or flavors of "Linux system"
+
+ * on systems where members of group wheel really do have unrestricted
+access to the su command, having wheel in the first place *is* the
+vulnerability -- it is a misconfiguration to expect an account to be
+non-privileged if it is a member of wheel.
+
+ * the last sentence appears to be about setuid/setgid binaries, but
+makes no mention that the overwhelming majority of binaries are not
+setuid/setgid.
+
+Later on, the post suggests that wheel group membership is related to
+sudo privileges.
+
+It also seems to assume that polkit always permits access for members of
+group wheel.  I can find no such configuration on a modern debian system.
+
+I don't think there's anything significant in this ambiguous,
+underspecified, and confused report.
+
+	--dkg
 
 
-An XXE issue was reported and fixed in nokogiri, but as far as I can see no CVE ID was ever assigned. It appears a lot of people haven't updated their dependencies as a result, so a CVE ID would be helpful. For details, see:
-
-
-https://github.com/sparklemotion/nokogiri/issues/693#issuecomment-68334768
-
-
-Thanks
-
---
-
-David Jorm / IIX Product Security
-
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
