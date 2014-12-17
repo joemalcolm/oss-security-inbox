@@ -1,33 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/03/15
-Message-ID: <20141103202428.GA5775@zoho.com>
-Date: Mon, 3 Nov 2014 20:24:28 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/9
+Message-ID: <5491CA58.5070907@redhat.com>
+Date: Wed, 17 Dec 2014 11:24:24 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: Christian.Spieler@...nline.de
-Subject: Re: unzip -t crasher
+Subject: Re: What is the "Grinch" polkit/wheel group issue?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 03, 2014 at 11:05:43AM +0000, mancha wrote:
-> This buggy code path is traversed when a ZIP archive has <<extra
-> fields>> with blocks that are uncompressed (i.e. using the STORED
-> method). A better solution than my last patch or malloc'ing max(),
-> is returning an invalid compressed data error when size(compressed)!=
-> size(uncompressed) for these cases. The attached patch does just that.
-> Comments welcome.
+On 17/12/14 10:00 AM, Marcus Meissner wrote:
+> Hi,
 > 
-> Cheers.
+> This probably needs a CVE too, or does it have one?
 > 
-> --mancha
+> https://www.alertlogic.com/blog/dont-let-grinch-steal-christmas/
+> http://www.pcworld.com/article/2860032/this-linux-grinch-could-put-a-hole-in-your-security-stocking.html
 > 
-> PS I have been CC'ing Christian Spieler via the only email I could find
-> online. I've not gotten bounces so it might still be active.
+> Although it seems that the user is in the "wheel" group for this to be exploitable
+> and is hard to specify what actions should be safed by another query or which should not.
+> 
+> Ciao, Marcus
 
-By the way, I've removed the original patch (unzip-6.0_overflow.diff)
-from SF. Folks should use unzip-6.0_overflow2.diff instead:
+Yeah I looked into this (the article/etc was completely confusing and
+took some time to parse):
 
-http://sf.net/projects/mancha/files/sec/unzip-6.0_overflow2.diff
+1) the article states they contacted red hat, we were unable to find
+any inbound email or bugzilla entry pertaining to this issue, as always
+if you have an issue you wish to report please contact secalert@...hat.com
 
---mancha
+2) this is expected behaviour, admin users can install software (do I
+have to say this? really? yes. I was told I should say this).
 
-Content of type "application/pgp-signature" skipped
+3) don't run web apps as admin users (do I have to say this? really?
+yes. I was told I should say this).
+
+4) if you feel the need to run a web app as an admin user restrict what
+they can do via SELinux, and  don't let them install software (do I have
+to say this? really? yes. I was told I should say this).
+
+So TL;DR: it's not a security vulnerability, and it will NOT be getting
+a CVE.
+
+I can only assume this article/vuln is perhaps referring to something
+like Cpanel and other control panels that people sometimes install
+insecurely/improperly and then never update. Or something. Who knows.
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
