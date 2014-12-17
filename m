@@ -1,121 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/17/1
-Message-Id: <201406170518.s5H5HvBx024608@linus.mitre.org>
-Date: Tue, 17 Jun 2014 01:17:57 -0400 (EDT)
-From: cve-assign@...re.org
-To: vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: multiple /tmp races in ppc64-diag
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/8
+Message-ID: <CAKZKFJBk=hhuUMw1V9HN3h=HwHBkpC0m=xX=q4zSR0AU=zNycA@mail.gmail.com>
+Date: Wed, 17 Dec 2014 12:57:44 -0500
+From: Tute Costa <tute@...ughtbot.com>
+To: oss-security@...ts.openwall.com
+Subject: CSRF vulnerability in doorkeeper OAuth provider rubygem
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Cross-site request forgery (CSRF) vulnerability in doorkeeper 1.4.0
+and earlier allows remote attackers to hijack the user's OAuth
+autorization code. This vulnerability has been assigned the CVE
+identifier CVE-2012-5664.
 
-> https://bugzilla.novell.com/show_bug.cgi?id=882667
-> https://bugzilla.redhat.com/show_bug.cgi?id=1109371
+Versions Affected:  1.4.0 and below
+Fixed Versions:     1.4.1, 2.0.0
 
+Impact
+------
 
-> In the case of rtas_errd/prrn_hotplug, mktemp is used but is assumed
-> to have succeeded; there is no check for the return value.
+Doorkeeper's endpoints didn't have CSRF protection. Any HTML document
+on the Internet can then read a user's authorization code with
+arbitrary scope from any Doorkeeper-compatible Rails app you are
+logged in.
 
-Are you reporting this as a prrn_hotplug vulnerability? If it were a
-vulnerability, it would have a separate CVE ID. We didn't test the
-code, but it looks more like an opportunity for a non-security
-enhancement or maybe a bug fix. Our guess is:
+Releases
+--------
 
-  1. If the return value is nonzero, stdout is an empty string.
+The 1.4.1 and 2.0.0 releases are available at
+https://rubygems.org/gems/doorkeeper and
+https://github.com/doorkeeper-gem/doorkeeper.
 
-  2. All of the ">> $TMPFILE" will fail, and won't write anything into
-     any file.
+Upgrade Process
+---------------
 
-  3. The outcome is that /var/log/prrn_log doesn't have log
-     information about what happened. We don't know of any direct
-     security implications.
+Upgrade doorkeeper version at least to 1.4.1.
 
-  4. Possibly the code should check the return value and print
-     something like "mktemp failed - maybe you're out of /tmp disk
-     space?" but it might be better to let the rest of the script run
-     anyway (i.e., not abort after that error condition).
+Workarounds
+-----------
 
-At least for now, there is no CVE ID for prrn_hotplug.
+There are no feasible workarounds for this vulnerability.
 
-
-> I don't know if the data in /tmp/diagSEsnap is sensitive or not
-
-  mkdir "/tmp/diagSEsnap", 0775;
-  $general_eed_file = "/tmp/diagSEsnap/snapH.tar.gz";
-  system("/usr/sbin/snap -o $general_eed_file 2>/dev/null 1>&2");
-
-This seems to be similar to the CVE-2014-3925 sosreport issue.
-snapH.tar.gz apparently will include /etc/fstab and therefore might
-include a password.
-http://www.ibm.com/support/entry/portal/docdisplay?lndocid=MIGR-54819
-says "When you report a problem to IBM Technical Support, run the snap
-utility and send the ... file to them." In addition, snapH.tar.gz
-apparently will include /var/log/messages, which traditionally is not
-supposed to be a world-readable file.
-
-(snap and sosreport aren't derivatives of the same code.)
-
-Also, the question of whether "/usr/sbin/snap -o $general_eed_file" is
-exploitable may depend on the behavior of snap. Apparently, snap does
-check whether the -o output file exists but doesn't avoid TOCTOU
-problems. Arguably, snap isn't responsible for avoiding TOCTOU
-problems because it's not inherently designed for use with untrusted
-output filenames.
-
-So, three CVEs seems to be the right number here.
-
-The ppc64-diag unsafe uses of temporary directories in these three
-scenarios:
-
-  "> /tmp/get_dt_files" [ in rtas_errd/diag_support.c ]
-  
-  mkdir "/tmp/diagSEsnap", 0775;
-  $general_eed_file = "/tmp/diagSEsnap/snapH.tar.gz";
-  system("/usr/sbin/snap -o $general_eed_file 2>/dev/null 1>&2");
-  [ in scripts/ppc64_diag_mkrsrc ]
-
-  TMP_DIR="/var/tmp/ras"
-  mkdir -p $TMP_DIR
-  MESSAGE_FILE="$TMP_DIR/messages"
-  [ in lpd/test/lpd_ela_test.sh - see Novell bug 882667 ]
-
-are primarily of interest because of symlink following, and are all
-assigned CVE-2014-4038.
-
-A second CVE for the ppc64-diag product is for the choice of weak
-directory/file permissions for the snapH.tar.gz archive including data
-that is not locally world-readable (e.g., /var/log/messages). This is
-CVE-2014-4039.
-
-A third CVE, CVE-2014-4040, is assigned for snap itself. snap can be
-found at http://sourceforge.net/projects/powerpc-utils (i.e., it's not
-part of the ppc64-diag product). This CVE is the one analogous to
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3925 (i.e., it
-includes the "cleartext passwords ... lacks a warning" rationale).
-
-CVE-2014-4039 and CVE-2014-4040 are vulnerabilities in different
-products and can be addressed independently. For example, snapH.tar.gz
-could have restrictive local permissions and still be sent to a remote
-destination without review. Alternatively, snapH.tar.gz could continue
-to have weak local permissions but snap could require the user to
-acknowledge a warning about off-site distribution of an fstab
-password, etc.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTn86OAAoJEKllVAevmvmsfkwIAKlbcEZenTWaedEVBs+NtrwN
-VwvDgbTjl3fjXFVT+uSctiVwYbA4ZWQLD99SuaO+p7dGfh8/tTFap0Oo8vZ7nNgU
-8uQ9/VH3zLm3MUwrpW9GWucGN0hfY6zKZ2hDU9UTYrQGTzIiQWlUVbjsWO99HLcM
-vsk7/7nr9e/Jn4ke6/jNiTDLjnr8vENJx7oLui0kBrOZ+/PIrhtuO3A3aH/gN6cC
-EQOxSppTeHR0v+DnikTj3i87x7VNGLDAGanATXw+qomrIenzP0TiadgLhBW/0J6/
-9Y5YGlJRUs3IC2nZqb6OiOzK1T2I+wzVFo8QQGmIsNZV1LLhi78HHlrfYa36R+Y=
-=Ygvd
------END PGP SIGNATURE-----
+Credits
+-------
+Thanks to Sergey Belov of DigitalOcean for finding the vulnerability,
+Phill Baker of DigitalOcean for reporting and fixing it, and to Egor
+Homakov of Sakurity.com for raising awareness.
