@@ -1,52 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/12/4
-Message-ID: <CAD3CanfdH8xjHR0qYaoEHQ7k0VwUqG4nRMNogeM3Yz-SD_yVDQ@mail.gmail.com>
-Date: Mon, 12 May 2014 21:23:57 +1200
-From: Matthew Daley <mattd@...fuzz.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/4
+Message-ID: <CAN0s7yQTf4iP1ee54dsjbEj=B+WsiwEzJ_o89tLeq2iNpBmm1g@mail.gmail.com>
+Date: Wed, 17 Dec 2014 19:15:10 +0200
+From: Elad Alfassa <elad@...oraproject.org>
 To: oss-security@...ts.openwall.com
-Cc: fulldisclosure@...lists.org
-Subject: Re: CVE-2014-0196: Linux kernel pty layer race condition memory corruption
+Subject: Re: What is the "Grinch" polkit/wheel group issue?
 Content-Type: text/plain; charset=utf-8
 
-Sorry, forgot to mention that this targets 64-bit kernels.
+This is not a vulnerability, this is expected behaviour.
 
-On Mon, May 12, 2014 at 9:15 PM, Matthew Daley <mattd@...fuzz.com> wrote:
+On Wed, Dec 17, 2014 at 7:00 PM, Marcus Meissner <meissner@...e.de> wrote:
+>
 > Hi,
 >
-> I've written a "slightly-less-than-POC" privilege escalation exploit for
-> this vulnerability that works on newer kernels:
-> http://bugfuzz.com/stuff/cve-2014-0196-md.c (SHA1:
-> 6b1c5c651231b33a5e11b5c8c6ed07cd15f658f5)
+> This probably needs a CVE too, or does it have one?
 >
-> Note the warning mentioned in the header; run it at your own risk ;)
+> https://www.alertlogic.com/blog/dont-let-grinch-steal-christmas/
 >
-> - Matthew Daley
+> http://www.pcworld.com/article/2860032/this-linux-grinch-could-put-a-hole-in-your-security-stocking.html
 >
+> Although it seems that the user is in the "wheel" group for this to be
+> exploitable
+> and is hard to specify what actions should be safed by another query or
+> which should not.
 >
-> On Mon, May 5, 2014 at 10:08 PM, Marcus Meissner <meissner@...e.de> wrote:
->>
->> Hi,
->>
->> SUSE customer Ericsson reported a kernel crash to us which turned out
->> to be a race condition in the PTY write buffer handling.
->>
->> When two processes/threads write to the same pty, the buffer end could
->> be overwritten and so memory corruption into adjacent buffers could lead
->> to crashes / code execution.
->>
->> Jiri Slaby and Peter Hurley localized and fixed this problem.
->>
->> CVE-2014-0196 has been assigned to this issue.
->>
->> Jiri thinks this was introduced during 2.6.31 development by
->> d945cb9cce20ac7143c2de8d88b187f62db99bdc (pty: Rework the pty
->> layer to use the normal buffering logic) in 2.6.31-rc3. Until then, pty
->> was writing directly to a line discipline without using buffers.
->>
->> https://bugzilla.novell.com/show_bug.cgi?id=875690
->>
->> Patch is also attached.
->>
->> Ciao, Marcus
+> Ciao, Marcus
 >
->
+
+
+-- 
+-Elad Alfassa.
+
