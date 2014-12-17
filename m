@@ -1,20 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/10
-Message-ID: <FC72FC641B949240B947AC6F1F83FBAF33E86965@IMCMBX01.MITRE.ORG>
-Date: Thu, 9 Jan 2014 19:05:18 +0000
-From: "Christey, Steven M." <coley@...re.org>
-To: P J P <ppandit@...hat.com>, Assign a CVE Identifier <cve-assign@...re.org>
-CC: oss security list <oss-security@...ts.openwall.com>
-Subject: RE: CVE split and a missed file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/11
+Message-ID: <CAFOKM3oZua=zY=eG76aU9QLhAgn_BoR0onH5tUEJ368YECUu_g@mail.gmail.com>
+Date: Wed, 17 Dec 2014 10:38:26 -0800
+From: Dean Pierce <pierce403@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: What is the "Grinch" polkit/wheel group issue?
 Content-Type: text/plain; charset=utf-8
 
-Some people may be wondering why these CVEs were even split at all, as many of them appear to have exactly the same vulnerability type, affected version, and commit.
+The key here is the line:
 
-For example, CVE-2013-7267, CVE-2013-7268, CVE-2013-7269,  CVE-2013-7270, and CVE-2013-7271 are fixed in the same version and are the same type: "updates a certain length value without ensuring that an associated data structure has been initialized."
+"In order to exploit this, all we need is a single vulnerability in
+any package in a repo. There are tons to choose from. If we type
+‘PKCon’ or simply ‘man PKCon,’ we can find a list of repos in use and
+then pull a list of all bins and version numbers. I won’t provide one
+here because you don’t want everything handed to you."
 
-However, we had information that these files were introduced to the kernel at different times.  While we don't list a specific minimum-version in the description, it's apparent that each affects a slightly different range of kernel versions.
+Had they actually found a package they could leverage to get root,
+then this would absolutely be a vulnerability, but they didn't.  While
+configuring pkcon to allow admins to install packages without typing
+in a password *is* something that might be unexpected for people
+unfamiliar with polkit, that is the exact type of use case it was
+built for.
 
-CVE-2013-7266 also comes from the same commit, but it's a length inconsistency, so on the surface it's a different vuln type than the others, which could be characterized as a length-calculation and/or initialization error.
+  - DEAN
 
-- Steve
-
+On Wed, Dec 17, 2014 at 10:24 AM, Kurt Seifried <kseifried@...hat.com> wrote:
+> On 17/12/14 10:00 AM, Marcus Meissner wrote:
+>> Hi,
+>>
+>> This probably needs a CVE too, or does it have one?
+>>
+>> https://www.alertlogic.com/blog/dont-let-grinch-steal-christmas/
+>> http://www.pcworld.com/article/2860032/this-linux-grinch-could-put-a-hole-in-your-security-stocking.html
+>>
+>> Although it seems that the user is in the "wheel" group for this to be exploitable
+>> and is hard to specify what actions should be safed by another query or which should not.
+>>
+>> Ciao, Marcus
+>
+> Yeah I looked into this (the article/etc was completely confusing and
+> took some time to parse):
+>
+> 1) the article states they contacted red hat, we were unable to find
+> any inbound email or bugzilla entry pertaining to this issue, as always
+> if you have an issue you wish to report please contact secalert@...hat.com
+>
+> 2) this is expected behaviour, admin users can install software (do I
+> have to say this? really? yes. I was told I should say this).
+>
+> 3) don't run web apps as admin users (do I have to say this? really?
+> yes. I was told I should say this).
+>
+> 4) if you feel the need to run a web app as an admin user restrict what
+> they can do via SELinux, and  don't let them install software (do I have
+> to say this? really? yes. I was told I should say this).
+>
+> So TL;DR: it's not a security vulnerability, and it will NOT be getting
+> a CVE.
+>
+> I can only assume this article/vuln is perhaps referring to something
+> like Cpanel and other control panels that people sometimes install
+> insecurely/improperly and then never update. Or something. Who knows.
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
