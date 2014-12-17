@@ -1,52 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/27/7
-Message-ID: <53FE6F3E.1050502@redhat.com>
-Date: Wed, 27 Aug 2014 17:52:30 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/6
+Message-ID: <20141217172419.GV2293@mars-attacks.org>
+Date: Wed, 17 Dec 2014 18:24:19 +0100
+From: Nicolas Vigier <boklm@...s-attacks.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Open Source only?
+Subject: Re: What is the "Grinch" polkit/wheel group issue?
 Content-Type: text/plain; charset=utf-8
 
-On 27/08/14 05:04 PM, Solar Designer wrote:
+On Wed, 17 Dec 2014, Marcus Meissner wrote:
+
 > Hi,
 > 
-> I've just rejected a posting giving the following reason:
+> This probably needs a CVE too, or does it have one?
 > 
-> Message lacks Subject, and the software appears to be non Open Source:
-> partial(?) source code is available, but under a EULA that doesn't
-> appear to meet OSI definition.
+> https://www.alertlogic.com/blog/dont-let-grinch-steal-christmas/
+> http://www.pcworld.com/article/2860032/this-linux-grinch-could-put-a-hole-in-your-security-stocking.html
 > 
-> The message was CC'ed to full-disclosure, so it will probably appear
-> there.
-> 
-> While message lacking Subject is a technicality, which the sender may
-> address (and resend the message), the issue of software that comes with
-> source code, but isn't under an Open Source license is one we might want
-> to decide on, if we haven't already (I think we have, which is why I
-> mentioned it as one of two reasons to reject that posting).  Also, it
-> may at times be tricky (and unreliable and time-consuming) for list
-> moderators to determine whether a license is Open Source or not, as well
-> as whether the software is possibly dual-licensed.  Should we perhaps
-> err on the side of approving postings whenever in doubt?
+> Although it seems that the user is in the "wheel" group for this to be exploitable
+> and is hard to specify what actions should be safed by another query or which should not.
 
-Simple: If we go with Open Source only then "is the code available under
-an approved license"?
+This looks like expected behaviour:
 
-http://opensource.org/licenses
+https://docs.fedoraproject.org/en-US/Fedora/20/html/Installation_Guide/sn-firstboot-systemuser.html
 
-Obviously if there needs to be an exception (e.g. a closed source/poorly
-licensed source interacts significantly with something Open Source it
-might be worth discussing).
-
-The other aspect of this: in my experience the majority of closed source
-vendors just don't care about security. So discussing it, especially
-without their input/even being aware of it is quite pointless.
-
-> Alexander
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+"Check the Make this user administrator box if you would like
+administrative privileges. This will place you in the wheel group, which
+gives you access to all administrative functions, including installing
+and updating software, creating and altering configuration files, and
+administering other users."
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Content of type "application/pgp-signature" skipped
