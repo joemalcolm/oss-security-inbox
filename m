@@ -1,40 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/25/1
-Message-ID: <20141125024724.GB9341@hunt>
-Date: Mon, 24 Nov 2014 18:47:24 -0800
-From: Seth Arnold <seth.arnold@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: Fiedler Roman <Roman.Fiedler@....ac.at>, security@...ntu.com
-Subject: parse_datetime() bug in coreutils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/2
+Message-ID: <alpine.LFD.2.10.1412171629460.26456@javelin.pnq.redhat.com>
+Date: Wed, 17 Dec 2014 16:32:56 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE Request Linux kernel: fs: isofs: infinite loop in CE records
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Fiedler Roman discovered that coreutils' parse_datetime() function
-has some flaws that may be exploitable if the date(1), touch(1),
-or potentially other programs, accept untrusted input for certain
-parameters. While researching this issue, he discovered that it
-was independantly discovered by Bertrand Jacquin and reported at
-http://debbugs.gnu.org/cgi/bugreport.cgi?bug=16872
+    Hello,
 
-$ touch '--date=TZ="123"345" @1'
-Segmentation fault (core dumped)
-$ date '--date=TZ="123"345" @1'
-*** Error in `date': double free or corruption (out): 0x00007fffc9866c20 ***
-Aborted (core dumped)
-$
+Linux kernel built with the iso9660 file system(CONFIG_ISO9660_FS) support is 
+vulnerable to an infinite recursion loop flaw, which could lead to a crash or 
+render a system unresponsive/unusable after a while. This occurs while 
+mounting an iso9660 image.
 
-The GNU bugtracker has this patch to fix the problem:
-http://debbugs.gnu.org/cgi/bugreport.cgi?msg=11;filename=date-tz-crash.patch;att=1;bug=16872
-and this patch to include the fix in coreutils and a small test case:
-http://debbugs.gnu.org/cgi/bugreport.cgi?msg=19;filename=coreutils-date-crash.patch;att=1;bug=16872
+An unprivileged user/process could use this flaw to crash the system resulting 
+in DoS.
 
-Can a CVE please be assigned for this issue.
+Upstream fix:
+- -------------
+   -> https://git.kernel.org/linus/f54e18f1b831c92f6512d2eedb224cd63d607d3d
 
-(Incidentally, that's some hairy-looking code; someone with time and an
-inclination to join Hanno's fuzzing project might find it a fruitful
-starting point.)
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-Thanks
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+iQIcBAEBAgAGBQJUkWLgAAoJEN0TPTL+WwQfix4QAJRmIb2nQCwivn0N/0N8kadv
+K/Wr2pyM7FqAAvr3HvIq6ec/L3SaSIt6OyPcybI2EbfwhPdHcnDEUII6Iwui5BeU
+Uo83ulQvtmMQlpgBfDaC/gMtThAD0/PQT3ErGdyxG+oMGj2MqgOnCJ0Cc/aAxaoP
+TLACDCmZAeTnvVtE1m00gjbaq1xjkaupBHKq3W8lX25W0NeoUNMZUDk2M7BB3CdR
+5HFcPdLvWhTT7PMvxdSf0s1lNqvbNG0cWrCpjQ26ZRNc1VFNI40AjPYvgttW4fCg
+IojYQV9AIb/vmV5pMyk+Y2fO28WOdxbFlJACzWy/VUYs1Gx0o8BcR9ZllvEf7q0W
+XzIG00b+nTA6MhZ83rddpzK4CfLG3GqK2+Us/E1tl6+WuYNHH4rD8WD+1THsebdC
+9KkVb+tgvWerYfZ0U5hSKGg2xH+miqeVfvuG2EkODXrfVogGtH9a7qcd06wjo6Uh
+3x5m0CfKIUrytkQxf6Fv51nXl4fBBMQmvZ0Yj/YI/xFtYSjGPAejdz9M9GfjmIYn
+qKLaq7VC6g3h+tw6RLf7SzIJuhhuTnoKD4exiD2a3hXCnH1hJO/J2cXipNOi4EkE
+r0sVnHo5S3htNVPvwVmgu7PKdoX19wSzUs1gUJFZ2ZMozypolGhZ0n/QMSPu3C/H
+/4B7cF/dWfBaxILa6OCE
+=WHPo
+-----END PGP SIGNATURE-----
