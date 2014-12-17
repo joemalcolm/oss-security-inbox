@@ -1,19 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/11/6
-Message-ID: <53485FB5.4080809@igalia.com>
-Date: Fri, 11 Apr 2014 23:33:41 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/1
+Message-ID: <5490D1DD.6070405@mccme.ru>
+Date: Wed, 17 Dec 2014 03:44:13 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: Re: Other instances of CVE-2014-0160 - mod_spdy from Google
+CC: cve-assign@...re.org
+Subject: CVE request: file(1) DoS
 Content-Type: text/plain; charset=utf-8
 
-On 09/04/14 05:59, Kurt Seifried wrote:
-> So it appears there are projects that statically compile OpenSSL into
-> their software, one example:
+Hi!
 
-Another one is bitcoin. The distributed binaries are statically linked.
+There are two more DoSes fixed in ELF parser of file(1), similar to the 
+recent CVE-2014-8116.
 
-http://article.gmane.org/gmane.comp.bitcoin.devel/4749
+1. Limit the number of ELF notes processed
+Report: http://mx.gw.com/pipermail/file/2014/001653.html
+Fix: 
+https://github.com/file/file/commit/ce90e05774dd77d86cfc8dfa6da57b32816841c4
 
+2. Limit string printing to 100 chars
+Report: http://mx.gw.com/pipermail/file/2014/001654.html
+Fix: 
+https://github.com/file/file/commit/65437cee25199dbd385fb35901bc0011e164276c
 
-Download attachment "signature.asc" of type "application/pgp-signature" (884 bytes)
+Both problems amplified by the fact that the same section in ELF file 
+can be referenced and processed by file(1) multiple times. This is also 
+fixed in the first commit linked above.
+
+Could CVE(s) please be assigned?
+
+-- 
+Alexander Cherepanov
