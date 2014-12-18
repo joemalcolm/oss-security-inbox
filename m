@@ -1,112 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/10
-Message-ID: <CAHw3cgTm9tUY6khta=2Bw5a8J033E5Kseq38c+nQNuvd9hq+5Q@mail.gmail.com>
-Date: Tue, 16 Dec 2014 18:26:42 +0100
-From: Ryan Dewhurst <ryandewhurst@...il.com>
-To: "Larry W. Cashdollar" <larry0@...com>
-Cc: oss-security@...ts.openwall.com, "WordPress.org" <plugins@...dpress.org>,  moderators@...db.org, "wpscanteam@...il.com" <wpscanteam@...il.com>
-Subject: Re: CVE-2014-9119: DB Backup plugin for WordPress download.php file Parameter Remote Path Traversal File Access
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/11
+Message-ID: <20141218140630.GY32428@core.inversepath.com>
+Date: Thu, 18 Dec 2014 15:06:30 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2014-012] JasPer input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-I suspect WordPress have removed it from their online database until there
-is a patch available. We've seen them do this quite often.
+#2014-012 JasPer input sanitization errors
 
-Google has a cache of the page from yesterday: 15 Dec 2014 05:11:28 GMT.
+Description:
 
-On Tue, Dec 16, 2014 at 6:20 PM, Larry W. Cashdollar <larry0@...com> wrote:
+The JasPer project is an open source implementation for the JPEG-2000 codec.
 
-> When going to this plugin page (https://wordpress.org/plugins/db-backup/)
-> I get :
->
-> Whoops!
->
-> We couldn't find that plugin. Maybe you were looking for one of these?
->
->
->
-> > On Dec 16, 2014, at 11:51 AM, Henri Salo <henri@...v.fi> wrote:
-> >
-> > -----BEGIN PGP SIGNED MESSAGE-----
-> > Hash: SHA1
-> >
-> > Product: WordPress plugin db-backup
-> > Plugin page: https://wordpress.org/plugins/db-backup/
-> > Developer: Syed Amir Hussain "syedamirhussain91"
-> > Vulnerability Type: Remote Path Traversal File Access
-> > CWE-23: Relative Path Traversal
-> > Vulnerable Versions: 4.5 and earlier
-> > Fixed Version: N/A
-> > Vendor Notification: 2014-11-27
-> > Public Disclosure: 2014-12-16
-> > CVE Reference: CVE-2014-9119
-> > Criticality: High
-> >
-> > Vulnerability details:
-> >
-> > DB Backup plugin for WordPress contains a flaw that allows traversing
-> outside of
-> > a restricted path. The issue is due to the download.php script not
-> properly
-> > sanitizing user input, specifically path traversal style attacks (e.g.
-> '../').
-> > With a specially crafted request, a remote attacker can gain read access
-> to
-> > arbitrary files, limited by system operational access control. This
-> > vulnerability can be used to get WordPress authentication keys and salts,
-> > database address and credentials, which can be used in certain
-> environments to
-> > elevate privileges and execute malicious PHP code.
-> >
-> > Root cause:
-> >
-> > Unsanitized user input to readfile() function.
-> >
-> > Proof-of-concept:
-> >
-> > /wp-content/plugins/db-backup/download.php?file=../../../wp-config.php
-> >
-> > Timeline:
-> >
-> > 2014-11-27: Reported to developer and WordPress plugins team.
-> > 2014-11-27: CVE assigned and reported to developer.
-> > 2014-11-28: Communication with developer and he said this will be fixed.
-> > 2014-12-02: Asked status from developer.
-> > 2014-12-03: Developer says this will be fixed by 7th.
-> > 2014-12-07: Asked status from developer.
-> > 2014-12-08: Developer responds.
-> > 2014-12-09: Asked more details from developer.
-> > 2014-12-10: More discussion about the solution and new disclosure date
-> set.
-> > 2014-12-16: Agreed disclosure date was 15th, I don't understand issue
-> with
-> > patching so public disclosure. Please note that there are hundreds of
-> backup
-> > plugins in WordPress Plugin Directory.
-> >
-> > Notes:
-> >
-> > - - Remove plugin "db-backup" as deactivation does not fix the issue.
-> > - - Use another plugin until patch is available and new version is
-> published.
-> > - - Sites I know using this plugin will be notified via abuse emails
-> today.
-> >
-> > References:
-> > http://cwe.mitre.org/data/definitions/23.html
-> > https://scapsync.com/cwe/CWE-23
-> > https://www.owasp.org/index.php/Path_Traversal
-> >
-> https://www.owasp.org/index.php/Testing_for_Path_Traversal_%28OTG-AUTHZ-001%29
-> >
-> > - --
-> > Henri Salo
-> > -----BEGIN PGP SIGNATURE-----
-> > Version: GnuPG v1.4.12 (GNU/Linux)
-> >
-> > iEYEARECAAYFAlSQYwcACgkQXf6hBi6kbk8uHwCeJfQd1Vjc2Rr6kzyFxF8rC4NW
-> > zbMAoKG4tidQkLM5qrnyIfHTVZPXbOdk
-> > =5Nmf
-> > -----END PGP SIGNATURE-----
->
->
+The library is affected by a double-free vulnerability in function
+jas_iccattrval_destroy() as well as a heap-based buffer overflow in function
+jp2_decode().
 
+A specially crafted jp2 file, can be used to trigger the vulnerabilities.
+
+Affected version:
+
+JasPer <= 1.900.1
+
+Fixed version:
+
+JasPer, N/A
+
+Credit: vulnerability report received from the Google Security Team.
+
+CVE: CVE-2014-8137 (double-free), CVE-2014-8138 (heap overflow)
+
+Timeline:
+
+2014-12-10: vulnerability report received
+2014-12-10: contacted affected vendors
+2014-12-10: assigned CVEs
+2014-12-18: patch contributed by Tomas Hoger from Red Hat Product Security
+2014-12-18: advisory release
+
+References:
+http://www.ece.uvic.ca/~frodo/jasper
+https://bugzilla.redhat.com/show_bug.cgi?id=1173157
+https://bugzilla.redhat.com/show_bug.cgi?id=1173162
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2014-012.html
+
+-- 
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
