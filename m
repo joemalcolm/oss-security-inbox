@@ -1,40 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/19/6
-Message-ID: <53F3628B.3050505@enovance.com>
-Date: Tue, 19 Aug 2014 10:43:23 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/15
+Message-ID: <1418925051.5935.33.camel@juliet.mcarpenter.org>
+Date: Thu, 18 Dec 2014 18:50:51 +0100
+From: Martin Carpenter <mcarpenter@...e.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Glance
+Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+On Thu, 2014-12-18 at 15:46 +0100, Jakub Wilk wrote:
 
-Title: Glance store DoS through disk space exhaustion
-Reporter: Thomas Leaman (HP), Stuart McLaren (HP)
-Products: Glance
-Versions: up to 2013.2.3 and 2014.1 to 2014.1.1
+> Absolutely. Lintian has a check for RPATH (but not for RUNPATH, AFAICT); 
+> alas, it doesn't distinguish between security and non-security problems:
+> https://lintian.debian.org/tags/binary-or-shlib-defines-rpath.html
 
-Description:
-Thomas Leaman and Stuart McLaren from Hewlett Packard reported a
-vulnerability in Glance. By uploading a large enough image to a Glance
-store, an authenticated user may fill the store space because the
-image_size_cap configuration option is not honored. This may prevent
-further image upload and/or cause service disruption. Note that the
-import method is not affected. All Glance setups using API v2 are
-affected (unless you use a policy to restrict/disable image upload).
+Aha, thanks. Security vs. non-security is perhaps not a disaster:
+"serious, certain" would already be an improvement over not flagging
+this at all.
 
-References:
-https://launchpad.net/bugs/1315321
 
-Thanks in advance,
+> I requested a separate tag for relative RPATH a while ago:
+> https://bugs.debian.org/732682
+> Now we "only" need someone to write the code. :-)
 
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Great! Is that all we need? The tests reference the Debian policy manual
+(package debian-policy):
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+https://www.debian.org/doc/debian-policy/ch-sharedlibs.html
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+(for completeness: also sections 10.2, 10.3).
+
+This references neither RPATH nor RUNPATH. Perhaps we need to fix that
+first?
+
+Suggested addition:
+
+8.7 RUNPATH and RPATH
+Libraries that define RPATH or RUNPATH should ensure that this does not
+contain relative paths. This is to prevent an executable from loading a
+library from an untrusted location. (This should include the corner
+cases whereby the path starts or ends with a colon, or includes two
+consecutive colons).
+
+
+Did I miss anything?
+
