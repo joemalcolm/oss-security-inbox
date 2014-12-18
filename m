@@ -1,40 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/2
-Message-ID: <5497BA72.90302@redhat.com>
-Date: Sun, 21 Dec 2014 23:30:10 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/7
+Message-ID: <5492A3E6.4020705@redhat.com>
+Date: Thu, 18 Dec 2014 10:52:38 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: can we talk about secure time?
+Subject: Embargoes for secondary issues
 Content-Type: text/plain; charset=utf-8
 
-On 21/12/14 10:51 PM, Hanno Böck wrote:
-> On Sun, 21 Dec 2014 12:31:07 +0100
-> Florian Weimer <fw@...eb.enyo.de> wrote:
-> 
->> Some folks want to run their servers within a few milliseconds of each
->> other, and do not care so much about security or resiliency.
-> 
-> I perfectly understand that some people need more accuracy than tlsdate
-> can give. However it's probably rare, right? I don't see any reason why
-> average consumer hardware (Desktop, smartphone etc.) would have any
-> problem with the 1-2 sec max inaccuracy of tlsdate.
+Suppose we have an unfixed, public issue, and while working on a fix, 
+other issues in the same code are discovered which are different flaws, 
+but have similar impact than the original issue.
 
-Having to reconcile multiple logs/events across widely distributed
-systems, especially in high volume situations, 1-2 seconds is a deal
-breaker. Or people running SCADA systems for industrial plants. Or
-people that run financial systems. A lot of them care very much about
-security, and require accurate time, or else there's really no point to
-this all.
-
-To say nothing of a post incident forensics response, where loose time
-would make things a lot harder to figure out.
-
-So it's not an either/or situation (care about security, or have
-accurate time, sometimes we need both).
+Do we need an embargo for the secondary issues, or can we just make them 
+public immediately?  I would strongly prefer the latter.
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Florian Weimer / Red Hat Product Security
