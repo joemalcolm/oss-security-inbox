@@ -1,34 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/6
-Message-Id: <20141126074416.A89BF13A7F3@smtpvmsrv1.mitre.org>
-Date: Wed, 26 Nov 2014 02:44:16 -0500 (EST)
-From: cve-assign@...re.org
-To: dregad@...tisbt.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: MantisBT SQL injection in view_all_set.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/10
+Message-ID: <1418910816.5935.15.camel@juliet.mcarpenter.org>
+Date: Thu, 18 Dec 2014 14:53:36 +0100
+From: Martin Carpenter <mcarpenter@...e.fr>
+To: oss-security@...ts.openwall.com
+Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, 2014-12-18 at 10:45 +0100, Jakub Wilk wrote:
 
-> https://github.com/mantisbt/mantisbt/commit/b0021673ab23249244119bde3c7fcecd4daa4e7f
-> https://www.mantisbt.org/bugs/view.php?id=17841
+> https://bugs.debian.org/754278
 
-Use CVE-2014-9089.
+Could this have been caught in package QA with an automated check on
+R(UN)PATH? 
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+(If that exists, how did it get missed? If not, could it be added?
+Where? https://wiki.debian.org/qa.debian.org).
 
-iQEcBAEBAgAGBQJUdYJTAAoJEKllVAevmvmsPXsIAL7o5j32aESsYx4kms0DsWr3
-u0x2zeI/gGwsy8L2dmbjhHVre1yKlEn+wwo6bQ+lKPfEi4FxKgXtYPaUVF0qim36
-m8fZvCcaUPodVIbBDLRD/TO+0C3SzvDw/E8+o469UMLQWxiNLX0TMIngyz6NGXH/
-TA5tpyKJq9DC/BmYpVfUFTTMFWJTAsQQY2MlBVbkchojHtyqaOCCCgFWg0r4Nyuo
-dYzK6XerjJTeD94liiDm0R2QmaR8SP0yPPa/5To3O0d1STx2UchAxkiE8U9kU/gd
-bLEo+hZjEQH7dLXN7mcnEIOoFjg5gu8vI644BsrGlVj30yCmM5QY2VH4aCqP7VQ=
-=yBkS
------END PGP SIGNATURE-----
+
+Alternatively: is there ever a good argument for truly relative (ie not
+"relative to $ORIGIN") R(UN)PATH? What would break if runtime linkers
+did not accept relative R(UN)PATHs?
+
+
