@@ -1,46 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/11
-Message-ID: <20140429223552.GA16882@openwall.com>
-Date: Wed, 30 Apr 2014 02:35:52 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Steve Grubb <sgrubb@...hat.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: local privilege escalation due to capng_lock as used in seunshare
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/13
+Message-ID: <5492F801.2060102@uu.nl>
+Date: Thu, 18 Dec 2014 16:51:29 +0100
+From: Dawa Ometto <d.l.a.ometto@...nl>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: CVE request: remote code execution vulnerability in gollum < 3.1.1
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 29, 2014 at 06:18:58PM -0400, Steve Grubb wrote:
-> On Wednesday, April 30, 2014 02:12:22 AM Solar Designer wrote:
-> > On Tue, Apr 29, 2014 at 05:49:04PM -0400, Steve Grubb wrote:
-> > > On Tuesday, April 29, 2014 02:20:47 PM Andy Lutomirski wrote:
-> > > >   if (setuid(getuid()) != 0)
-> > > >     err(1, "setuid(getuid())");
-> > > 
-> > > If you do not want the saved uid to be available, you need to use
-> > > setresuid. That removes it. I would classify this as a bug in the test
-> > > program.
-> >
-> > Not quite.
-> 
-> If the program was amended to use setresuid(), does the bug still exist?
+Resubmitting this (while fixing version number typo in the subject-line)
+since it never did receive a CVE.
 
-Yes, because it affects other similar correct programs that haven't yet
-been amended to work safely on your non-Unix system. ;-)  Alternatively,
-you may declare that your system is deliberately incapable of running
-programs written for traditional Unix safely, and will stay that way.
-That will be a reason for people to prefer other Linux distros over Red
-Hat's, but at least it'd be fair. ;-(
+On 04/12/14 22:08, Dawa Ometto wrote:
+> Hi,
+>
+> I just released a fix for a remote code execution vulnerability in
+> gollum [1]. The vulnerable code was in the gollum-grit_adapter [2] ruby
+> gem dependency as of gollum v3.1.0, but the exploitable code was also
+> present before that version, in the gollum-lib [3] gem dependency (code
+> was abstracted from gollum-lib to the new dependency).
+>
+> Type of vulnerability: remote code execution
+> Attack outcome: run arbitrary commands, shell access
+> Vulnerable versions: gollum < 3.1.1, gollum-lib < 4.0.1,
+> gollum-grit_adapter < 0.1.1
+> Fix: `gem update gollum` will update the dependencies.
+> Link to vulnerability/fix diff:
+> https://github.com/gollum/grit_adapter/commit/4520d973c81fecfebbeacd2ef2f1849d763951c7
+> Link to project issue: https://github.com/gollum/gollum/issues/913
+>
+> Description: The bug exploits the fact that gollum uses the grit gem for
+> git repository access, which makes command-line calls to `git grep` to
+> search files. `git grep` has an `-O` or `--open-files-in-pager` option
+> which can spawn an arbitrary process (to act as pager). In vulnerable
+> versions of gollum, searching for the string `-O<arbitrary command>` or
+> `--open-files-in-pager <arbritary command>` in the wiki's search field
+> will execute an arbitrary shell command. However, this will only work if
+> the string "master" (or more precisely, the name of the git branch that
+> gollum is using) is found in one of the wiki's files: "master" is then
+> interpreted as the search query, `-O<arbitary code>` as a command line
+> option to `git grep`.
+>
+> The fix in the `gollum-grit_adapter` gem v.0.1.1 shell-escapes the
+> user's query and removes any -O or --open-file-in-pager option from it.
+>
+> [1] https://github.com/gollum/gollum, https://rubygems.org/gems/gollum
+> [2] https://github.com/gollum/grit_adapter
+> [3] https://github.com/gollum/gollum-lib
+>
 
-To paraphrase your question, since sendmail got a workaround for the old
-capabilities bug in the Linux kernel, does the bug in those old kernel
-versions still exist?  The answer is also yes, it does, potentially
-affecting other programs running on those vulnerable kernels.(*)  The
-bug needed to be fixed in the kernel, and it was (for later versions).
-
-(*) Of course, most people should not actually run those old kernels
-because of other vulnerabilities that have been found and fixed since,
-but that's a separate matter.
-
-I hope you don't mind the rhetoric.  I mean it to be friendly.  I hope
-it serves to deliver the message well.
-
-Alexander
