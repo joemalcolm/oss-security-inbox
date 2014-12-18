@@ -1,44 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/13/4
-Message-ID: <5464C69C.3060102@redhat.com>
-Date: Thu, 13 Nov 2014 15:56:28 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, krahmer@...e.de
-CC: cve-assign@...re.org
-Subject: Re: Re: CVE-request: systemd-resolved DNS cache poisoning
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/22
+Message-ID: <549365E3.1050402@redhat.com>
+Date: Thu, 18 Dec 2014 16:40:19 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: request for CVEs for git clients
 Content-Type: text/plain; charset=utf-8
 
-On 11/12/2014 06:33 PM, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
->> systemd-resolved contains a caching resolver ... does not implement
->> any of the hardening recommendations of rfc5452.
->
-> We have several comments about this. First, systemd-resolved is
-> apparently advertised as a stub resolver (e.g., see the
-> http://www.freedesktop.org/software/systemd/man/systemd-resolved.service.html
-> man page). RFC 5452 is about requirements for a resolver (defined in
-> section 2.1) and -- at least in our interpretation -- specifically
-> does not set any requirements for a stub resolver.
+Ah my bad, I saw the blog entry, didn't read the git announcement -
+CVE-2014-9390
 
-I asked Bert to be sure, and he says that it was his intent that the 
-advice applied to non-recursive resolvers as well.  (Note that 
-systemd-resolved is more than a minimal stub because it has a cache.)
+I assume the other clients also got CVE's?
 
-> Is your message attempting to assert that EVERY implementation of a
-> stub resolver must satisfy RFC 5452 requirements, in order to account
-> for the possibility that the configured recursive name servers have
-> security problems, and the possibility that an attacker can
-> communicate directly with the stub resolver?
-
-The DNS specification does not require rewriting of upstream responses 
-to filter out parts for which the queried server is not authoritative. 
-This means that a downstream caching resolver will tend to poison its 
-cache if it adds data from such responses that are not directly in 
-response to the QNAME.  I believe this is still a real-world issue (in 
-the sense that this is triggered accidentally, not through attacks).
-
+On 18/12/14 04:38 PM, Kurt Seifried wrote:
+> Can we please get CVEs for
+> https://github.com/blog/1938-vulnerability-announced-update-your-git-clients
+> 
+> In addition, the following updated versions of Git address this
+> vulnerability:
+> 
+> The Git core team has announced maintenance releases for all current
+> versions of Git (v1.8.5.6, v1.9.5, v2.0.5, v2.1.4, and v2.2.1).
+> 
+> Git for Windows (also known as MSysGit) has released maintenance version
+> 1.9.5.
+> 
+> The two major Git libraries, libgit2 and JGit, have released maintenance
+> versions with the fix. Third party software using these libraries is
+> strongly encouraged to update.
+> 
+> ====
+> 
+> looks like most Linux users are ok though "The vulnerability concerns
+> Git and Git-compatible clients that access Git repositories in a
+> case-insensitive or case-normalizing filesystem."
+> 
+> 
 
 -- 
-Florian Weimer / Red Hat Product Security
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
