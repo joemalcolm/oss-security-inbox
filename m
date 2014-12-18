@@ -1,51 +1,165 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/10/13
-Message-ID: <5346D2D2.9080400@enovance.com>
-Date: Thu, 10 Apr 2014 19:20:18 +0200
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/3
+Message-ID: <54928F33.2070309@yahoo.fr>
+Date: Thu, 18 Dec 2014 09:24:19 +0100
+From: Lionel Debroux <lionel_debroux@...oo.fr>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-012] Remote code execution in Glance Sheepdog backend (CVE-2014-0162)
+Subject: Re: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-012
-CVE: CVE-2014-0162
-Date: April 10, 2014
-Title: Remote code execution in Glance Sheepdog backend
-Reporter: Paul McMillan (Nebula)
-Products: Glance
-Versions: from 2013.2 to 2013.2.3
+Hello Greg,
 
-Description:
-Paul McMillan from Nebula reported a vulnerability in Glance Sheepdog
-backend. By using a specially crafted location, a user allowed to insert
-or modify Glance image metadata may trigger code execution on the Glance
-host as the user the Glance service runs under. This may result in
-Glance host unauthorized access and further compromise of the Glance
-service. All setups using Glance server with the (enabled by default)
-sheepdog backend are affected.
-
-Juno (development branch) fix:
-https://review.openstack.org/86622
-
-Icehouse (milestone-proposed branch) fix:
-https://review.openstack.org/86625
-
-Havana fix:
-https://review.openstack.org/86626
-
-Notes:
-This fix will be included in the icehouse-rc2 development milestone and
-in a future 2013.2.4 release.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0162
-https://launchpad.net/bugs/1298698
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Before someone (whoever he/she is) spends time on something that might,
+from the beginning, have no chance of getting integrated into mainline,
+I'd like your input on three questions I asked over a week ago, at the
+end of an all too lengthy e-mail :)
+Thanks in advance.
 
 
+Reposting here, so that you don't have to dig, with added "=" lines:
+
+> > If the latter, I think it wouldn't be good to see another
+> > half-measure integrated to mainline, until the next mainline ASLR
+> > defeat against which PaX has protected for over a decade. Just
+> > my 2 cents.
+>
+> The reason PaX isn't in the main kernel tree is that no one has
+> spent the time and effort to actually submit it in a mergable form.
+> So please, do so if you think this is something that is needed.
+In 2010(-2011 ?), I pushed some bits of constification work from PaX to
+mainline, nothing complicated.
+Pushing from PaX to mainline some of the more useful bits that I listed
+in a previous e-mail is a very different matter... well beyond the
+amount of time I could devote to it - and beyond my technical abilities,
+too.
+
+However, pointing and pushing patches of lower complexity, why not.
+For instance:
+==============================
+1) do you consider that using
+static inline bool check_heap_stack_gap(const struct vm_area_struct
+*vma, unsigned long addr, unsigned long len) {
+return (!vma || addr + len <= vma->vm_start);
+}
+defined in include/linux/sched.h (where PaX defines that prototype, and
+where most functions using it are defined) to replace 20- open-coded
+(!vma || addr + len <= vma->vm_start) checks is a worthwhile, though
+obviously no-op, cleanup in its own right ?
+==============================
+
+==============================
+2) do you consider that, even before the integration of PaX's refcount
+protection to mainline (which is there, like most of PaX, for security
+reasons, there have been refcount-related holes in the past...),
+switching to atomic_t for fs_struct.users,
+pipe_inode_info.{readers,writers,files,waiting_writers},
+kmem_cache.refcount (for SLAB and SLUB), tty_port.count,
+tty_ldisc_ops.refcount is worthwhile ?
+Most such refcounts at other places are already atomic, after all.
+==============================
+
+==============================
+3) I see a patch in USB core, which looks like it's written to avoid
+some potential integer overflows.
+--- linux-3.17.4/drivers/usb/core/devio.c
++++ linux-3.17.4-pax/drivers/usb/core/devio.c
+@@ -187,7 +187,7 @@ static ssize_t usbdev_read(struct file *
+    struct usb_dev_state *ps = file->private_data;
+    struct usb_device *dev = ps->dev;
+    ssize_t ret = 0;
+-    unsigned len;
++    size_t len;
+    loff_t pos;
+    int i;
+
+@@ -229,22 +229,22 @@ static ssize_t usbdev_read(struct file *
+    for (i = 0; nbytes && i < dev->descriptor.bNumConfigurations; i++){
+        struct usb_config_descriptor *config =
+          (struct usb_config_descriptor *)dev->rawdescriptors[i];
+-        unsigned int length = le16_to_cpu(config->wTotalLength);
++        size_t length = le16_to_cpu(config->wTotalLength);
+
+        if (*ppos < pos + length) {
+
+        /* The descriptor may claim to be longer than it
+        * really is.  Here is the actual allocated length. */
+-            unsigned alloclen =
++            size_t alloclen =
+                le16_to_cpu(dev->config[i].desc.wTotalLength);
+
+-            len = length - (*ppos - pos);
++            len = length + pos - *ppos;
+            if (len > nbytes)
+                len = nbytes;
+
+            /* Simply don't write (skip over) unallocated parts */
+            if (alloclen > (*ppos - pos)) {
+-                alloclen -= (*ppos - pos);
++                alloclen = alloclen + pos - *ppos;
+                if (copy_to_user(buf,
+                    dev->rawdescriptors[i] + (*ppos - pos),
+                    min(len, alloclen))) {
+Does that make sense ?
+==============================
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (556 bytes)
+
+
+In addition to what I wrote earlier: PaX contains several hundreds of
+lines of hunks dealing with local variables needlessly made static:
+==============================
+--- linux-3.17.6/drivers/mfd/max8925-i2c.c
++++ linux-3.17.6-pax/drivers/mfd/max8925-i2c.c
+@@ -152,7 +152,7 @@ static int max8925_probe(struct i2c_clie
+const struct i2c_device_id *id)
+{
+     struct max8925_platform_data *pdata = dev_get_platdata(&client->dev);
+-    static struct max8925_chip *chip;
++    struct max8925_chip *chip;
+     struct device_node *node = client->dev.of_node;
+
+if (node && !pdata) {
+
+(the first reference to the "chip" variable in that function is an
+unconditional devm_kzalloc)
+==============================
+or local structs which are not meant to be modified and should therefore
+probably be made static / static const (mainline doesn't use the GCC
+plugin for constification):
+==============================
+--- linux-3.17.6/arch/arm/mach-omap2/wd_timer.c
++++ linux-3.17.6-pax/arch/arm/mach-omap2/wd_timer.c
+@@ -110,7 +110,9 @@ static int __init omap_init_wdt(void)
+    struct omap_hwmod *oh;
+    char *oh_name = "wd_timer2";
+    char *dev_name = "omap_wdt";
+-    struct omap_wd_timer_platform_data pdata;
++    static struct omap_wd_timer_platform_data pdata = {
++        .read_reset_sources = prm_read_reset_sources
++    };
+
+    if (!cpu_class_is_omap2() || of_have_populated_dt())
+        return 0;
+@@ -121,8 +123,6 @@ static int __init omap_init_wdt(void)
+    return -EINVAL;
+}
+
+-    pdata.read_reset_sources = prm_read_reset_sources;
+-
+    pdev = omap_device_build(dev_name, id, oh, &pdata,
+sizeof(struct omap_wd_timer_platform_data));
+    WARN(IS_ERR(pdev), "Can't build omap_device for %s:%s.\n",
+==============================
+
+
+A tiny subset of the bits which have been in PaX/grsec for a while
+slowly migrate to mainline, though the mainline patches are certainly
+independent reimplementations, given that many people don't know the
+breadth of changes PaX/grsec contains...
+For instance, PaX/grsec has been using ARMv7's PXN bit for two years.
+There are also e.g. changes related to ACCESS_ONCE, though those did not
+aim at solving problems with some compilers / platforms.
+
+
+Regards,
+Lionel.
