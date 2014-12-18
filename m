@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/31
-Message-ID: <20141120085747.0bb20b42@127>
-Date: Thu, 20 Nov 2014 08:57:47 -0800
-From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
-To: oss-security@...ts.openwall.com
-Subject: Re: Location of OS security audit reports
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/9
+Message-ID: <CAA7hUgFQd8YTaQ2suEBOU5EcjxuoyaK63UMkHjabTgKG_nYs8g@mail.gmail.com>
+Date: Thu, 18 Dec 2014 11:36:28 +0100
+From: Raphael Geissert <geissert@...ian.org>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: Embargoes for secondary issues
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 19 Nov 2014 10:26:33 -0800
-Tracy Reed <treed@...raviolet.org> wrote:
+Hi,
 
-> On Sun, Nov 16, 2014 at 07:17:12PM PST, M.T. Roebuck spake thusly:
-> > I haven't had any success yet in finding security audit reports for
-> > any *nix OS (I haven't looked for them for MS/Apple products).
-> 
-> Security audits depend greatly on the configuration and use of the
-> machine. Having a generic security audit is practically useless.
+On 18 December 2014 at 10:52, Florian Weimer <fweimer@...hat.com> wrote:
+> Suppose we have an unfixed, public issue, and while working on a fix, other
+> issues in the same code are discovered which are different flaws, but have
+> similar impact than the original issue.
+>
+> Do we need an embargo for the secondary issues, or can we just make them
+> public immediately?  I would strongly prefer the latter.
 
-Pardon me, I meant audits of the code that makes up the OS.
+Based on experience, I'd say the latter is the best course of action.
+Known issues tend to attract more eyes and make the discovery of the
+secondary issues more likely.
 
-Hmm, separately though I wonder if any licensing issues arise when one
-derives a code audit from <some license> code. 
+The line is probably going to be more difficult to be drawn if the
+CVSS score of the secondary issues bump due to, say, easier
+exploitability.
 
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
