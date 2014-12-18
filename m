@@ -1,74 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/12/1
-Message-ID: <87d2eeyili.fsf@windlord.stanford.edu>
-Date: Wed, 11 Jun 2014 19:20:09 -0700
-From: Russ Allbery <eagle@...ie.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/8
+Message-ID: <CA+rthh-H5aExtSk2vf-EkPhOjA+y240rk9GKGHHK3G41Va06Ug@mail.gmail.com>
+Date: Thu, 18 Dec 2014 11:36:03 +0100
+From: Mathias Krause <minipli@...glemail.com>
 To: oss-security@...ts.openwall.com
-Cc: openafs-gatekeepers@...nafs.org
-Subject: CVE request: OpenAFS 1.6.8 TMAY fileserver crashes
+Subject: Re: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
-New code introduced in OpenAFS 1.6.8 does not properly zero fields in the
-host structure in the OpenAFS fileserver, leading to some variables in the
-host structure being left initialized from recycled heap memory.  While no
-mechanism for exploitation is currently known, the affected file server
-provides a network service and this sort of problem tends to be
-exploitable with sufficient effort.
+On 18 December 2014 at 10:35, Amos Jeffries <squid3@...enet.co.nz> wrote:
+> On 18/12/2014 9:24 p.m., Lionel Debroux wrote:
+>>
+>> In addition to what I wrote earlier: PaX contains several hundreds
+>> of lines of hunks dealing with local variables needlessly made
+>> static: ============================== ---
+>> linux-3.17.6/drivers/mfd/max8925-i2c.c +++
+>> linux-3.17.6-pax/drivers/mfd/max8925-i2c.c @@ -152,7 +152,7 @@
+>> static int max8925_probe(struct i2c_clie const struct i2c_device_id
+>> *id) { struct max8925_platform_data *pdata =
+>> dev_get_platdata(&client->dev); -    static struct max8925_chip
+>> *chip; +    struct max8925_chip *chip; struct device_node *node =
+>> client->dev.of_node;
+>>
+>> if (node && !pdata) {
+>>
+>> (the first reference to the "chip" variable in that function is an
+>> unconditional devm_kzalloc)
+>
+>
+> NP: I have not looked at either version of code outside the thread
+> here. Just responding to your statement of needless...
 
-Below is the public disclosure of this issue to one of the OpenAFS mailing
-lists.  OpenAFS 1.6.7 is not affected.  I don't believe any stable
-distribution is affected, but Debian unstable, testing, and
-wheezy-backports are affected.
+Well, you better should have. It took less time to verify the bug than
+reading your comments about it.
 
-The upstream stable fix is at:
+> The above sounds to me like the author wanted the alloc to only happen
+> once, lazily on first use and remain allocated until the kerel or
+> module was released. Or perhapse they wanted data in it to persist
+> between calls.
+>
+> Neither of those cases is necessarily needless. But its utility does
+> depend on how often the function is called. Saving a handful of rare
+> event allocations per kernel lifetime is almost needless (unless they
+> happen to all occur in a batch at some critical point). Saving
+> thousands per second is very much useful.
+>
+> In the former case security is best served by removing the static, in
+> the latter it is served by ensuring the struct content is fully
+> cleaned or revalidated before use in each call.
 
-    http://gerrit.openafs.org/#change,11283
+All wrong. As Lionel wrote, the code assigns the variable before
+reading it. So no data is meant to persist between multiple calls to
+this function. However, if max8925_probe() gets called concurrently,
+the 'chip' pointer may change beneath one of the threads -- not good.
+So this is clearly a fix.
 
-which reverts the newly-added code in its entirety.  (A more thorough fix
-that eliminates a fragile way of initializing structures is being worked
-on for the master branch.)  An OpenAFS 1.6.9 release with this fix is
-expected in the near future.
+>
+> - From my long experience lurking on some of the mainline dev lists ...
+> in order to get such "trivial" patches merged you will have to justify
+> that you at least considered and investigated which cases like the
+> above was the cause of the codes current form. And what the effect of
+> the proposed change would be in both the security and performance arenas.
 
-Could we get a CVE assigned to this problem, please?
+>  People using PaX code are trusting that they have done the analysis,
 
-Here is the original report:
+Obviously they did.
 
-| From: Andrew Deason <adeason@...enomine.net>
-| To: release-team@...nafs.org
-| Subject: [OpenAFS release-team] 1.6.8 TMAY fileserver crashes
-| Date: Wed, 11 Jun 2014 16:05:14 -0500
-| 
-| This change is broken: <http://gerrit.openafs.org/10759>
-| 
-| Briefly, 'host' structures are allocated without clearing all of the
-| contents to '0'. Only part of the structure is cleared, according to the
-| HOST_TO_ZERO macro. Unfortunately I put the new tmay_ fields right below
-| the 'index' field for some reason, so this means they aren't zeroed and
-| can contain garbage. This means we can easily segfault in the fileserver
-| when we try to access the pointers in there.
-| 
-| This makes it very easy to crash the fileserver, so it seems like we
-| may want to issue a new release quickly, or at least alert the community
-| that this issue exists and warn against using 1.6.8 fileservers. Options
-| are:
-| 
-|  (1) Fix the bug. This is easy to fix in a few ways; Mark Vitale is
-|  writing a fix right now (while I notify you guys) and should be
-|  submitting it shortly.
-| 
-|  (2) Rip out the TMAY caching stuff. It's not urgently pressing.
-| 
-| I don't know if people favor one or the other, or if this is urgent
-| enough to warrant a single-issue 1.6.9 release.
-| 
-| And lastly, of course, this was purely a mistake (my mistake) and I am
-| sorry. This didn't need to go into 1.6 so soon, or at all. (And it still
-| doesn't, if the release team feels it is better to just rip this out
-| completely.)
-| 
-| -- 
-| Andrew Deason
-| adeason@...enomine.net
+> but that very code not being in mainline means there is possibly no
+> hard proof of that.
 
--- 
-Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
+You're wrong, again. No-one submitted the fix to LKML, that's the reason.
+
+> PaX may have decided that a huge performance
+> penalty for some odd-ball drivers was worth some minor security gain
+> for everybody.
+
+PaX cares about security and security only -- not about performance in
+some odd-ball driver.
+The above change fixes a possible race that may lead to memory
+corruption (concurrent writes to the same memory location) -- stuff
+PaX cares about.
+
+>
+>> ============================== or local structs which are not meant
+>> to be modified and should therefore probably be made static /
+>> static const (mainline doesn't use the GCC plugin for
+>> constification): ============================== ---
+>> linux-3.17.6/arch/arm/mach-omap2/wd_timer.c +++
+>> linux-3.17.6-pax/arch/arm/mach-omap2/wd_timer.c @@ -110,7 +110,9 @@
+>> static int __init omap_init_wdt(void) struct omap_hwmod *oh; char
+>> *oh_name = "wd_timer2"; char *dev_name = "omap_wdt"; -    struct
+>> omap_wd_timer_platform_data pdata; +    static struct
+>> omap_wd_timer_platform_data pdata = { +        .read_reset_sources
+>> = prm_read_reset_sources +    };
+>>
+>> if (!cpu_class_is_omap2() || of_have_populated_dt()) return 0; @@
+>> -121,8 +123,6 @@ static int __init omap_init_wdt(void) return
+>> -EINVAL; }
+>>
+>> -    pdata.read_reset_sources = prm_read_reset_sources; - pdev =
+>> omap_device_build(dev_name, id, oh, &pdata, sizeof(struct
+>> omap_wd_timer_platform_data)); WARN(IS_ERR(pdev), "Can't build
+>> omap_device for %s:%s.\n", ==============================
+>>
+>
+> Now *that* does just appear to be a gratuitous cleanup / performance
+> booster. Not security related.
+
+Wrong. PaX contains a gcc plugin that does *automatic* constification
+of eligible structures (structures containing function pointers).
+That's incompatible with run-time modification of the data structures
+in question. Therefore this change fixes the incompatibility by making
+the run-time assignment a compile time constant.
+
+Making structures containing function pointers r/o actually is
+security related. Read only data structures cannot be abused by memory
+corruption bugs, e.g., like the exploit for CVE-2013-2094 which
+overwrites function pointers in ptmx_fops to get code execution. But,
+well, that's true for PaX only, as write protected kernel r/o data is
+something mainline only gets when CONFIG_DEBUG_RODATA is set -- a
+'"Kernel hacking" debug option. Tells much about the state of security
+philosophy in the mainline kernel...
+
+
+Mathias
+
+>
+> If there is a security angle to it I have an interest in learning what
+> that is exactly. Implicit NULL'ing by the compiler?
+>
+> AYJ
