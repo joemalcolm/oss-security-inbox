@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/01/1
-Message-ID: <5403C391.4020600@redhat.com>
-Date: Mon, 01 Sep 2014 10:53:37 +1000
-From: Murray McAllister <mmcallis@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/18
+Message-ID: <1418936361.5935.54.camel@juliet.mcarpenter.org>
+Date: Thu, 18 Dec 2014 21:59:21 +0100
+From: Martin Carpenter <mcarpenter@...e.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2014-3565, net-snmp: snmptrapd crash
+Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
-Good morning,
+On Thu, 2014-12-18 at 21:43 +0300, Alexander Cherepanov wrote:
+> Relative paths is not the only problem. /tmp is even worse:
+> 
+> https://bugs.debian.org/759868
 
-CVE-2014-3565 was assigned to the following:
+Nice, thanks. Revised:
 
-A remote denial-of-service flaw was found in the way snmptrapd handled
-certain SNMP traps when started with the "-OQ" option. If an attacker
-sent an SNMP trap containing a variable with a NULL type where an
-integer variable type was expected, it would cause snmptrapd to crash.
+8.7 RUNPATH and RPATH
+Libraries that define RPATH or RUNPATH should ensure that this does not
+contain relative paths or paths that traverse insecure directories
+(eg /tmp or /var/tmp). This is to prevent an executable from loading a
+library from an untrusted location. (This should include the corner
+cases whereby the path list starts or ends with a colon, or includes two
+consecutive colons).
 
-http://sourceforge.net/p/net-snmp/code/ci/7f4a7b891332899cea26e95be0337aae01648742/
-https://bugzilla.redhat.com/show_bug.cgi?id=1125155
 
-Upstream do not consider it a serious issue as very few people
-use the "-OQ" option. It should be fixed in a new release due soon.
+("insecure directories" is intentionally broad (not just "world
+writable"). Clarify?).
 
---
-Murray McAllister / Red Hat Product Security
+I'll file a bug against debian-policy in ~24h unless there are further
+edits/additions/objections.
+
+
