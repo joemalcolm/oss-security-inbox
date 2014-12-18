@@ -1,65 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/07/8
-Message-ID: <536A9405.8020806@redhat.com>
-Date: Wed, 07 May 2014 14:13:57 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/21
+Message-ID: <54936570.6070001@redhat.com>
+Date: Thu, 18 Dec 2014 16:38:24 -0700
 From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: A note on DBus and the Hash DOS
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: request for CVEs for git clients
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Can we please get CVEs for
+https://github.com/blog/1938-vulnerability-announced-update-your-git-clients
 
-On 05/07/2014 01:09 PM, Hanno Böck wrote:
-> On Wed, 07 May 2014 12:30:41 -0600 Kurt Seifried
-> <kseifried@...hat.com> wrote:
-> 
->> So many years ago some hash dos stuff happened. I checked into a 
->> variety of programs using embedded copies of various things like 
->> XML/etc. Also other programs that use hashing for stuff, one of
->> which is DBus.
->> 
->> The bad news: DBus has a vulnerable hash implementation
->> 
->> The good news: there doesn't appear to be many (any?) ways to
->> inject data easily to trigger this vulnerability.
-> 
-> I don't know how others feel about this, but I'd be more careful
-> with such cases.
-> 
-> Basically this sounds to me like a "we don't know if it is a 
-> vulnerability, but it could be". And there I'd say "in doubt be on
-> the safe side".
-> 
-> Rate them as "very low impact", don't treat them with any urgency,
-> but I think such issues should be fixed and should be called 
-> vulnerabilities nevertheless.
+In addition, the following updated versions of Git address this
+vulnerability:
 
-So this issue is security hardening, and not a security vulnerability.
-There appears to be no meaningful way to exploit this at this time.
-That could change in the future, if it's still unfixed by then, then
-it would get a CVE, so hopefully this does get hardened prior to then,
-so if it ever happens then it won't be a problem =).
+The Git core team has announced maintenance releases for all current
+versions of Git (v1.8.5.6, v1.9.5, v2.0.5, v2.1.4, and v2.2.1).
 
-Hence why I posted this =)
+Git for Windows (also known as MSysGit) has released maintenance version
+1.9.5.
 
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The two major Git libraries, libgit2 and JGit, have released maintenance
+versions with the fix. Third party software using these libraries is
+strongly encouraged to update.
 
-iQIcBAEBAgAGBQJTapQEAAoJEBYNRVNeJnmTj+4QAJwhnmeUJBvl1VvwiLfKpKIh
-saAzRz0gFCp1x0GatXKSYUVIPUnUTyOkxLjrmlx/edS2Vn+OIDNhB6Zd6dLDRuvA
-m0GnAG6c6GSlc9ZCXDCDLqialfH6dC6ScoEPZ8Fpz10pieAY3QscqMB5XMjjKhEv
-SzpQeI8i6KpJnVyN18PaPtmUufiK/IprhBCchZKh8hPudOlVBSdhIBPkp5eZkjub
-l/eeZ9bp7H3F18+iTeu1toDZdDGHLfDd9Ui3xVQoyLEgtkcOVAc+AW9bCewwZkH4
-TFgtQBRx2ZlVWAdzu1IVNsfvEyOupbktx/5ldkvJ4MLTu/QH03JEp9Uwi9MK9Mlg
-dqZPnmn1bpEHCPHUMECJ3g4KTjER7/Lr0DwRMKgICQuTnL308eMjxz5RyJ10SaZi
-Vdis68/gpQWzGxtOWV8R8b94YEUxpYc/boaCC7eJcfR/WY6IS7S/O4Gq5DlwTB9Q
-ojdV/0vAnPzNlRs1gv+va+9lFxTHW4QSjJYcCvXXd1sGb8HxSs5ndhgLZlifKtD3
-DXULtuOUsMAmpM8Z3GkFwUBh/w2daUM9Ch/++GXUlls4y9i0V5asmUzRMVA9ZQ++
-00gzHQD6maY2nrEvJaOWSHUDM0MeWRwW/pV870R06YdOurp9Zyq39EYbjpxVU4mK
-EucyqTDVZhqA1FY8Gr9u
-=Eq/d
------END PGP SIGNATURE-----
+====
+
+looks like most Linux users are ok though "The vulnerability concerns
+Git and Git-compatible clients that access Git repositories in a
+case-insensitive or case-normalizing filesystem."
+
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
