@@ -1,45 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/14
-Message-ID: <20141008151129.GQ23797@oevtugenva.nrevsny.pk>
-Date: Wed, 8 Oct 2014 11:11:29 -0400
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: Discussion: information leakage from server and client software - CVE/hardening/other?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/2
+Message-ID: <Pine.LNX.4.64.1412171944070.31164@beijing.mitre.org>
+Date: Wed, 17 Dec 2014 19:45:08 -0500 (EST)
+From: cve-assign@...re.org
+To: Sean Amoss <ackle@...too.org>
+cc: OSS Security List <oss-security@...ts.openwall.com>, cve-assign@...re.org, security@...too.org
+Subject: Re: CVE Request: ZNC NULL Pointer Dereference
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 07, 2014 at 05:57:25PM -0600, Kurt Seifried wrote:
-> 
-> 
-> On 07/10/14 03:56 PM, cve-assign@...re.org wrote:
-> >> So for example the
-> >> http://boingboing.net/2014/10/07/adobe-ebook-drm-secretly-build.html
-> >> article would indicate to me that this is CVE worthy under #4
-> > 
-> > Currently not; Adobe has a statement quoted at:
-> > 
-> >   http://arstechnica.com/security/2014/10/adobes-e-book-reader-sends-your-reading-logs-back-to-adobe-in-plain-text/
-> > 
-> > indicating that the information disclosure is intentional, and is
-> > (from their point of view) useful to them. This is just an example of
-> > a behavior that might also occur in an open-source product. The Adobe
-> > issue itself is off-topic for this list.
-> 
-> Then by that measure we could for example have challenged CVE-2011-4083
-> for example saying that it is useful to us. The same would go for any
-> "unsanitized" log file submissions. I fear this is a slippery slope
-> where vendors can effectively game their CVE numbers with "oh we meant
-> to do that" which makes CVE much less useful =(
 
-I agree with Kurt. I think there should be something along the lines
-of "reasonable expectation of privacy" here. I admit that this is
-subjective, but cases like the Adobe one are pretty clear. Even if
-it's not 100% clear whether the vendor has a legitimate need for the
-data (I would say they don't, but this is not the point right now),
-random third parties with the ability to intercept unencrypted network
-traffic certainly do not have a legitimate need for it. So at the very
-least, I think any transmission of data where the user might have a
-reasonable expectation that the data is "private", if it takes place
-over a non-encrypted channel, is CVE-worthy.
+On Sat, 13 Dec 2014, Sean Amoss wrote:
 
-Rich
+> Hello,
+>
+> It looks like the following issue has not received a CVE identifier as
+> of yet:
+>
+> A NULL pointer dereference has been found in the
+> "CWebAdminMod::ChanPage()" function in modules/webadmin.cpp.
+>
+> This was reported to Gentoo [1] by means of a Secunia advisory [2],
+> which in turn referenced the upstream bug request [3].
+>
+>
+> [1] https://bugs.gentoo.org/show_bug.cgi?id=507794
+> [2] https://secunia.com/advisories/57795/
+> [3] https://github.com/znc/znc/issues/528
+
+Yse CVE-2014-9403.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
