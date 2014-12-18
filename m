@@ -1,22 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/02/1
-Message-ID: <20140202041444.GA27556@openwall.com>
-Date: Sun, 2 Feb 2014 08:14:44 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux 3.4+: arbitrary write with CONFIG_X86_X32 (CVE-2014-0038)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/4
+Message-Id: <201412180918.26441.tmb@65535.com>
+Date: Thu, 18 Dec 2014 09:18:25 +0000
+From: Tim Brown <tmb@...35.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 31, 2014 at 04:11:16AM +0400, Solar Designer wrote:
-> <grsecurity> I would not be surprised to see an exploit for this within the next few days
+On Wednesday 26 November 2014 03:54:48 Solar Designer wrote:
+> On Sun, Nov 23, 2014 at 05:59:41PM +0300, Solar Designer wrote:
+> > So far no distro has expressed any interest in having this embargoed.
+> > 
+> > Distros list members: please speak up (here or on the distros list, with
+> > Tim CC'ed) if you'd like this embargoed.
+> > 
+> > Tim: if until Tuesday no distro says they want this embargoed, please go
+> > ahead and make the issue fully public.  (On a related note, I hate it
+> > when an issue is sort of "semi-public".  It's the worst possible case.
+> > When this happens, it's a reason to opt for a shorter embargo period, or
+> > for none at all indeed.)  If an embargo is requested, please make sure
+> > there's an exact date and time for the planned public disclosure.
+> 
+> So far no distro has expressed any interest in having this embargoed,
+> and no specific coordinated disclosure date has been proposed by anyone.
+> Tim, please make the issue public now by posting it in here.  Thanks!
 
-Just off Twitter:
+Apologies, I was locked in a server room for the last 2-3 weeks without access 
+to my Internet.
 
-<noptrix> recvmmsg.c - linux 3.4+ local root (CONFIG_X86_X32=y) expl0it - http://pastebin.com/DH3Lbg54
+The issue for anyone that was interested was as follows:
 
-SHA-256(recvmmsg.c.txt) = 4603acf96e845cecd2c5877a68fa5b5c591ba00c52859ded2a31a9daf48a457d
+> $ objdump -x /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java | grep RPATH
+> 
+>   RPATH                $ORIGIN/../lib/amd64/jli:bootstrap/jre/lib/amd64/jli:
+> $ORIGIN/../lib/amd64:bootstrap/lib/amd64:
+> $ORIGIN/../jre/lib/amd64:bootstrap/jre/lib/amd64
+> $ mkdir -p bootstrap/jre/lib/amd64/jli
+> $ touch bootstrap/jre/lib/amd64/jli/libc.so.6
+> $ sudo java
+> java: error while loading shared libraries:
+> bootstrap/jre/lib/amd64/jli/libc.so.6: file too short
+> 
+> I haven't checked if this is an upstream problem or whether just Debian is
+> affected.
+> 
+> Whilst strictly speaking, there is no security boundary offered by Java
+> itself, in the case of unsafe RPATH headers on a ELF binary, sudo can do
+> nothing to sanitise the environment. Nor indeed could an arbitrary setuid
+> which ends up calling Java with additional privileges. (Unlike say PATH
+> etc which sudo can quite happily sanitise.)
+> 
+> As such, only fixing the java binary itself will prevent library injection
+> into any Java application that is run interactively (or maybe otherwise)
+> in such a manner.
 
-for the version I just downloaded (but did not review, although it looks
-sane at first glance).  The exploit includes offsets for 3 Ubuntu kernels.
+Cheers,
+Tim
+-- 
+Tim Brown
+<mailto:tmb@...35.com>
 
-Alexander
+Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
