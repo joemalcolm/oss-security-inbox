@@ -1,27 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/15
-Message-ID: <1418133852.12378.18.camel@debian.org>
-Date: Tue, 09 Dec 2014 15:04:12 +0100
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/5
+Message-ID: <54929FE9.8060907@treenet.co.nz>
+Date: Thu, 18 Dec 2014 22:35:37 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: Re: Two rpm flaws
+Subject: Re: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
-On mar., 2014-12-09 at 18:32 +0530, Huzaifa Sidhpurwala wrote:
-> CVE-2014-8118:
-> It was found that RPM could encounter an integer overflow, leading to a 
-> stack-based overflow, while parsing a crafted CPIO header in the payload 
-> section of an RPM file.  This could allow an attacker to modify signed 
-> RPM files in such a way that they would execute code chosen by the 
-> attacker during package installation.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 18/12/2014 9:24 p.m., Lionel Debroux wrote:
 > 
-> Reference:
-> https://bugzilla.redhat.com/show_bug.cgi?id=1168715
+> In addition to what I wrote earlier: PaX contains several hundreds
+> of lines of hunks dealing with local variables needlessly made
+> static: ============================== ---
+> linux-3.17.6/drivers/mfd/max8925-i2c.c +++
+> linux-3.17.6-pax/drivers/mfd/max8925-i2c.c @@ -152,7 +152,7 @@
+> static int max8925_probe(struct i2c_clie const struct i2c_device_id
+> *id) { struct max8925_platform_data *pdata =
+> dev_get_platdata(&client->dev); -    static struct max8925_chip
+> *chip; +    struct max8925_chip *chip; struct device_node *node =
+> client->dev.of_node;
+> 
+> if (node && !pdata) {
+> 
+> (the first reference to the "chip" variable in that function is an 
+> unconditional devm_kzalloc)
 
-Do you know if the other CPIO implementations/parsers are affected by this?
 
-Regards,
--- 
-Yves-Alexis
+NP: I have not looked at either version of code outside the thread
+here. Just responding to your statement of needless...
 
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+
+The above sounds to me like the author wanted the alloc to only happen
+once, lazily on first use and remain allocated until the kerel or
+module was released. Or perhapse they wanted data in it to persist
+between calls.
+
+Neither of those cases is necessarily needless. But its utility does
+depend on how often the function is called. Saving a handful of rare
+event allocations per kernel lifetime is almost needless (unless they
+happen to all occur in a batch at some critical point). Saving
+thousands per second is very much useful.
+
+In the former case security is best served by removing the static, in
+the latter it is served by ensuring the struct content is fully
+cleaned or revalidated before use in each call.
+
+
+- From my long experience lurking on some of the mainline dev lists ...
+in order to get such "trivial" patches merged you will have to justify
+that you at least considered and investigated which cases like the
+above was the cause of the codes current form. And what the effect of
+the proposed change would be in both the security and performance arenas.
+ People using PaX code are trusting that they have done the analysis,
+but that very code not being in mainline means there is possibly no
+hard proof of that. PaX may have decided that a huge performance
+penalty for some odd-ball drivers was worth some minor security gain
+for everybody.
+
+
+> ============================== or local structs which are not meant
+> to be modified and should therefore probably be made static /
+> static const (mainline doesn't use the GCC plugin for
+> constification): ============================== ---
+> linux-3.17.6/arch/arm/mach-omap2/wd_timer.c +++
+> linux-3.17.6-pax/arch/arm/mach-omap2/wd_timer.c @@ -110,7 +110,9 @@
+> static int __init omap_init_wdt(void) struct omap_hwmod *oh; char
+> *oh_name = "wd_timer2"; char *dev_name = "omap_wdt"; -    struct
+> omap_wd_timer_platform_data pdata; +    static struct
+> omap_wd_timer_platform_data pdata = { +        .read_reset_sources
+> = prm_read_reset_sources +    };
+> 
+> if (!cpu_class_is_omap2() || of_have_populated_dt()) return 0; @@
+> -121,8 +123,6 @@ static int __init omap_init_wdt(void) return
+> -EINVAL; }
+> 
+> -    pdata.read_reset_sources = prm_read_reset_sources; - pdev =
+> omap_device_build(dev_name, id, oh, &pdata, sizeof(struct
+> omap_wd_timer_platform_data)); WARN(IS_ERR(pdev), "Can't build
+> omap_device for %s:%s.\n", ==============================
+> 
+
+Now *that* does just appear to be a gratuitous cleanup / performance
+booster. Not security related.
+
+If there is a security angle to it I have an interest in learning what
+that is exactly. Implicit NULL'ing by the compiler?
+
+AYJ
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (MingW32)
+
+iQEcBAEBAgAGBQJUkp/pAAoJELJo5wb/XPRjn6UH+gOROtCMf3KEmeI2BOwr5d+O
+aY9G49rs3BvxPFo8DkEjU4ON3QdlO+inhAFDYW/dYbjK7eJsl+OvMaDGZxZbFJMw
+BBAXf5fuS4gMLeLyTke8GEp9OfUjxWN8FAzlIFf9ueLLSZfevvJ9aHWEgu732TAf
+vu926kCnakoI4jiytAV+Tig8XRkljHTlEKhKIFknfIssLvAc5ffrQW38MmtZpj8c
+29dt1GMQ1AIVhi50FjTRMeTubjGzNNQvUsNub0G5D8Q/6yOKUYoQUxqIVUidExN6
+IlueeBS1J+ElNNtFcCV1Y9rGllL60N5kdHi9/SFS6PhE4vMkKaSC2bY7/rB8gSI=
+=FRUD
+-----END PGP SIGNATURE-----
