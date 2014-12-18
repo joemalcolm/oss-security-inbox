@@ -1,56 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/03/1
-Message-ID: <52C61B44.8010807@redhat.com>
-Date: Thu, 02 Jan 2014 19:07:00 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com, dkg@...thhorseman.net
-CC: cve-assign@...re.org, fweimer@...hat.com, "Christey, Steven M." <coley@...re.org>
-Subject: Re: Re: kwallet crypto misuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/6
+Message-ID: <20141218094545.GA5632@jwilk.net>
+Date: Thu, 18 Dec 2014 10:45:45 +0100
+From: Jakub Wilk <jwilk@...lk.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Tim Brown <tmb@...35.com>, 2014-12-18, 09:18:
+>The issue for anyone that was interested was as follows:
+>
+>>$ objdump -x /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java | grep RPATH
+>>
+>>  RPATH                $ORIGIN/../lib/amd64/jli:bootstrap/jre/lib/amd64/jli:
+>>$ORIGIN/../lib/amd64:bootstrap/lib/amd64:
+>>$ORIGIN/../jre/lib/amd64:bootstrap/jre/lib/amd64
 
-On 01/02/2014 12:45 PM, cve-assign@...re.org wrote:
-> Thanks very much for this additional information. At this point,
-> it seems very unlikely that the "\0a\0b\0c\0d" issue will have an 
-> additional CVE assignment. We were asking just because of the 
-> possibility of a clear implementation error in which security was 
-> weakened by using a "wrong" character width.
-> 
->> Do you think MITRE or other folks should be recommending
->> pre-whitening the strings before encrypting them
-> 
-> It's possible that a group elsewhere at MITRE would work on 
-> recommendations in that area or other areas. For purposes of the
-> CVE assignments in this situation, that type of opportunity for
-> security improvement wasn't being considered.
+https://bugs.debian.org/754278
 
-Hrmm, I assumed this would be handled a lot by getting things accepted
-in CWE (http://cwe.mitre.org/), and once done that means we can start
-assigning CVEs for them.
-
-Stupid question but what is the process to propose a new CWE? I poked
-around the site but can't find any hints.
-
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJSxhtEAAoJEBYNRVNeJnmTxNUP/R6MJn9vNAUxmkzm3moE/OGm
-8dE3bMwyIzrwgslG9kROTL44V1iWkHriGoV85hQsNYjzPa4+thy8fEs20aycJ/Tb
-qgmyuR7juJ84OIzy6AH1xOTMGTfW9yuJqIaY1fvajkJfUrvSuGzuONjZ1XhJFOGn
-kLUXRJotxg7cuKijyNxZlgBTzqVfJ+bxo3ZN3EtDg7RUClm7VWGMf3BaekeC3e3s
-jOU4WESxn1s+WOCNMaNuyE/KkyxIeeALLJcdJ54BxrKCdJBiqfNSwbRaOe87f2Z+
-tL5GW5KKjZ2ZblZrlrCR66kyBr6ce3j+INqXTL2AhJUBTHOAphI8X9dcb+5Q4+Db
-0f/s89HhKc1tJuNnZt0mBVsvl1K04DjLzaOixmlxHi7iNQL1D+T/T3xMEqE5fKZj
-n8D0QPNbwOhITEC4a08NytymuqX/JjXYrI1IAfC4ltt41fYmlYSB9N5BmnkZKS7M
-HZdrwyhemNwjgur2ZCnNuqzl8S4wtqy4Y61XNCYptBK6T10aprz94rGxBxbdlm5S
-zKQlNJaaobJGYsJhQp6xGXW8a5e3RVTqyAaF9Me47ODR8WcjY3j+AceYwHwcTtKt
-BsPknQ6Xp92L06x01JmgpQz3TcuJMZwce6TtGSSn0xuOT0UVRnYvVTRMI5zLxc0x
-o8lRHdYJVZaTdnbbD++h
-=z7ST
------END PGP SIGNATURE-----
+-- 
+Jakub Wilk
