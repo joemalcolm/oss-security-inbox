@@ -1,61 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/22/3
-Message-ID: <CAMp7mVussXgzDsiWun-qgwrf=QGM1R7LNNg2WbF3zCyFL0i3xQ@mail.gmail.com>
-Date: Sun, 22 Jun 2014 21:47:50 +0100
-From: Richard Moore <rich@....org>
-To: Nick Boyce <nick.boyce@...il.com>, David Faure <faure@....org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: KMail/KIO POP3 SSL MITM Flaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/18/14
+Message-ID: <5492F983.9020802@mccme.ru>
+Date: Thu, 18 Dec 2014 18:57:55 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+Subject: Re: Running Java across a privilege boundry
 Content-Type: text/plain; charset=utf-8
 
-I believe it was introduced in kdelibs 4.10.95, but David will know for
-sure.
+On 2014-12-18 12:45, Jakub Wilk wrote:
+> * Tim Brown <tmb@...35.com>, 2014-12-18, 09:18:
+>> The issue for anyone that was interested was as follows:
+>>
+>>> $ objdump -x /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java | grep RPATH
+>>>
+>>>  RPATH
+>>> $ORIGIN/../lib/amd64/jli:bootstrap/jre/lib/amd64/jli:
+>>> $ORIGIN/../lib/amd64:bootstrap/lib/amd64:
+>>> $ORIGIN/../jre/lib/amd64:bootstrap/jre/lib/amd64
+>
+> https://bugs.debian.org/754278
 
-Cheers
+Shouldn't this be tracked as a security issue? I don't see it in Debian 
+security tracker. Why didn't you request CVE for it? Just curious.
 
-Rich.
-
-
-
-On 22 June 2014 18:54, Nick Boyce <nick.boyce@...il.com> wrote:
-
-> On 18 June 2014 21:07, Richard Moore <rich@....org> wrote:
->
-> > Title:          KMail/KIO POP3 SSL MITM Flaw
-> > CVE:            CVE-2014-3494
-> > Versions:       kdelibs 4.10.95 to 4.13.2
-> [...]
-> > The POP3 kioslave used by kmail will accept invalid
-> > certificates without presenting a dialog to the user due
-> > a bug that leads to an inability to display the dialog
-> > combined with an error in the way the result is checked.
-> [...]
-> > This flaw allows an active attacker to perform MITM
-> > attacks against the ioslave which could result in the
-> > leakage of sensitive data such as the authentication
-> > details and the contents of emails.
->
-> Is there anything you can add as to how long this bug has been in the
-> codebase ?  In particular, is the Kmail in Debian 'oldstable' systems
-> affected (squeeze/kdelibs 4.4.5), or that in Debian 'stable' systems
-> (wheezy/kdelibs 4.8.4) ?
->
-> I'm not sure whether to interpret the 'Versions' line in the advisory
-> as "bug was introduced at kdelibs 4.10.95" - and there is no further
-> information on the CVE at Mitre [1], or in the Debian bug [2]; there
-> appears to be no relevant bug at bugs.kde.org (a search for the CVE,
-> or any of the keywords "kdelibs pop3 ssl kioslave" returns nothing
-> relevant).
->
-> There is an IBM ISS report [3] which implies the bug affects at least
-> kdelibs 4.6.x ....
->
-> [1] http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3494
-> [2] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=752052
-> [3] http://xforce.iss.net/xforce/xfdb/93875
->
-> Thanks,
->
-> Nick
->
-
+-- 
+Alexander Cherepanov
