@@ -1,54 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/06/12
-Message-ID: <CABniQZOSr4yQumROAoZ-4hDNhEPpYgMvwTbesrFU79rCg3RkRA@mail.gmail.com>
-Date: Sat, 6 Dec 2014 15:22:58 +0800
-From: Shawn <citypw@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/19/2
+Message-ID: <CALPTtNX_Md5=nmquZriMqhZ3AQv5pGEEikV5RbNLh7NzY=Wt8A@mail.gmail.com>
+Date: Thu, 18 Dec 2014 17:15:39 -0800
+From: Reed Loden <reed@...dloden.com>
 To: oss-security@...ts.openwall.com
-Subject: How GNU/Linux distros deal with offset2lib attack?
+Cc: Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: request for CVEs for git clients
 Content-Type: text/plain; charset=utf-8
 
-Hi guys,
+http://git-blame.blogspot.com.es/2014/12/git-1856-195-205-214-and-221-and.html
+says CVE-2014-9390 is already assigned.
 
-As you know Hector Marco disclosured a new attack targeting the
-GNU/Linux mitigation defensive technology earlier this week:
-http://www.openwall.com/lists/oss-security/2014/12/04/19
-http://cybersecurity.upv.es/attacks/offset2lib/offset2lib.html
+~reed
 
-Paper & slide:
-http://cybersecurity.upv.es/attacks/offset2lib/offset2lib-presentation.pdf
+On Thu, Dec 18, 2014 at 3:38 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+>
+> Can we please get CVEs for
+>
+> https://github.com/blog/1938-vulnerability-announced-update-your-git-clients
+>
+> In addition, the following updated versions of Git address this
+> vulnerability:
+>
+> The Git core team has announced maintenance releases for all current
+> versions of Git (v1.8.5.6, v1.9.5, v2.0.5, v2.1.4, and v2.2.1).
+>
+> Git for Windows (also known as MSysGit) has released maintenance version
+> 1.9.5.
+>
+> The two major Git libraries, libgit2 and JGit, have released maintenance
+> versions with the fix. Third party software using these libraries is
+> strongly encouraged to update.
+>
+> ====
+>
+> looks like most Linux users are ok though "The vulnerability concerns
+> Git and Git-compatible clients that access Git repositories in a
+> case-insensitive or case-normalizing filesystem."
+>
+>
+> --
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+>
+>
 
-http://cybersecurity.upv.es/attacks/offset2lib/offset2lib-paper.pdf
-
-Hector provides 3 possible solutions:
-
-1, Use Grsecurity/PaX. Afaik, Gentoo and Debian Mempo has long-term
-maintainence for Grsecurity/PaX patch. But the Grsecurity/PaX is not
-party of linux kernel mainline that'd be a problem to the most
-distros. I think linux kernel upstream won't accept PaX patch only
-because of this *kind* of issue.
-
-2, ASLRv3? Hector Marco( the dude who disclosured offset2lib attack)
-sent a patch to the upstream:
-https://lkml.org/lkml/2014/12/4/839
-
-Even the upstream don't accept the patch, is this possible to backport
-it & maintain it for distro community?
-
-3, RenewSSP? IMOHO, this is a solution for the way of exploit like:
-http://phrack.org/archives/issues/67/13.txt
-
-It'd be workaround for another mitigation to prevent offset2lib attack
-though. But the authors of RenewSSP don't even send a patch to GCC
-community yet. At least I can't search anything about RenewSSP in GCC
-ml.
-
-It seems ASLRv3 is the best option we have? Or anything else?
-
-
--- 
-GNU powered it...
-GPL protect it...
-God blessing it...
-
-regards
-Shawn
