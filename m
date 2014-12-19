@@ -1,87 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/11
-Message-ID: <CAHVLS-cg7ODiz=FYx=KAD4qS-UrX7RpqAXhRMUcCbBs-zF03ZQ@mail.gmail.com>
-Date: Thu, 29 May 2014 21:57:28 +0300
-From: Dolev Farhi <dolev@...nflare.org>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: sos: /etc/fstab collected by sosreport, possibly containing passwords
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/19/5
+Message-ID: <20141219221153.GA16721@kroah.com>
+Date: Fri, 19 Dec 2014 14:11:53 -0800
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: How GNU/Linux distros deal with offset2lib attack?
 Content-Type: text/plain; charset=utf-8
 
-I tend to agree with most of this actually, but since sosreport is there to
-collect information for troubleshooting issues only, then there is no
-actual reason not to remove the pw field of a mount in fstab, even though
-the file is world readable in the first place. I do agree that this widens
-the scope from Red Hats side especially while most of the time it would be
-close to impossible to prevent password disclosures in configuration files,
-especially when it depends on the random way a sysadmin alters config files.
-Best practice is to use the credentials option and point fstab to read the
-mount username and password from a file but there are multiple ways to
-achieve the same goal.
-I am not sure regarding the necessity of a CVE here, though I dont see much
-of a difference between this to any other password disclosures (such as
-grub.conf) discovered in sosreport in the past, except that fstab is world
-readable. On both cases the problem is that this file is handled by 3rd
-parties.
+On Fri, Dec 19, 2014 at 10:41:28PM +0100, Mathias Krause wrote:
+> On 18 December 2014 at 22:50, Greg KH <greg@...ah.com> wrote:
+> > On Thu, Dec 18, 2014 at 11:36:03AM +0100, Mathias Krause wrote:
+> >> On 18 December 2014 at 10:35, Amos Jeffries <squid3@...enet.co.nz> wrote:
+> >> > On 18/12/2014 9:24 p.m., Lionel Debroux wrote:
+> >> All wrong. As Lionel wrote, the code assigns the variable before
+> >> reading it. So no data is meant to persist between multiple calls to
+> >> this function. However, if max8925_probe() gets called concurrently,
+> >> the 'chip' pointer may change beneath one of the threads -- not good.
+> >> So this is clearly a fix.
+> >
+> > But that function can not be called concurrently, so this doesn't
+> > matter.
+> 
+> Thanks for clarifying this. Still, it's worth to fix this, no? Even if
+> this is not a bug in a sense that it would be exploitable in any way,
+> it's obfuscating things.
 
-Thanks
+I agree.
 
---
-Dolev Farhi
-On 05/29/2014, at 5:03 AM, Murray McAllister wrote:
+> >> >  People using PaX code are trusting that they have done the analysis,
+> >>
+> >> Obviously they did.
+> >
+> > Someone got it wrong :)
+> 
+> Fixing obfuscated code is wrong -- got it.
 
-> Good morning,
->
-> From <https://bugzilla.redhat.com/show_bug.cgi?id=1102633>:
->
-> It was reported that sosreport collected and stored "/etc/fstab" in the
-resulting archive of debugging information. This may contain plain text
-passwords (or a link to the file containing them), for example, credentials
-for Samba mounts. This could leak passwords to an attacker who is able to
-access the archive. Sensitive information in "/etc/fstab" should be
-sanitized before being stored by sosreport.
->
-> Note that "/etc/fstab" is world-readable, so local attackers should not
-be a concern (they can read the file anyway). This could be an issue when
-the sosreport is sent to other parties.
->
-> Acknowledgements:
->
-> Red Hat would like to thank Dolev Farhi of F5 Networks for reporting this
-issue.
->
-> I think it should have a CVE, but I am less sure due to "/etc/fstab"
-being world-readable, so I have not assigned one.
+Um, no, this was supposed to be a "security" fix, and it wasn't, it's
+just a code cleanup.  A very valid code cleanup that we take all the
+time in the kernel tree, but the analysis seems to have been wrong as
+you have pointed out :)
 
-Just going to note here what I put as a comment in the bug in case anyone
-feels differently.  I'm of the frame of mind that this shouldn't get a CVE
-for the reasons noted below:
+> >> > but that very code not being in mainline means there is possibly no
+> >> > hard proof of that.
+> >>
+> >> You're wrong, again. No-one submitted the fix to LKML, that's the reason.
+> >
+> > And if they did, they would have gotten the review I just gave.
+> 
+> So you advocate for leaving the 'static' in place just because "it's
+> not a bug"? That's ridiculous!
+> Can you please point me to the part in Documentation/CodingStyle were
+> it says obfuscated code is the preferred kernel coding style? Thanks.
 
+The code isn't "obfuscated" at all, it's obvious what it does.  It's not
+obvious why the structure is static, and it doesn't have to be, but
+that's not obscure at all.
 
-I don't think it's ever been advised to store password in /etc/fstab, so if
-you trust local users enough to view that file, then whatever sosreport
-stores in /tmp is probably just as "safe".
+It's something to clean up, great, submit it, we take this stuff all the
+time.  But trying to make a big deal out of it seems silly, when there
+is no bug being fixed.
 
-sosreport is run manually by an administrator, and the resultant archive is
-stored in /tmp (/var/tmp in Fedora), but the administrator actually has to
-send this archive to someone.  sosreport also has this warning before it
-even runs (except on Red Hat Enterprise Linux 5):
+> It looks like none of the 5000 kernel developers has a strong interest
+> in security.
 
-"The generated archive may contain data considered sensitive and its
-content should be reviewed by the originating organization before being
-passed to any third party."
+I love hyperbole, don't you?
 
-Because sosreport makes no claims to not collecting private data (and
-explicitly indicates that it might), and the point of it is to collect
-pertinent system data (excluding some obvious things like kerberos keys or
-files with known sensitive information that does not aid in diagnostic
-process), I don't know if this can actually be considered a flaw.  After
-all, random sysadmin might decide to put anything in any file that
-sosreport collects that we could never "teach" sosreport to ignore or scrub
-(you could try to do pattern-based matching on contents of files but you'll
-never catch everything).
+bah humbug,
 
-
-
---
-Vincent Danen / Red Hat Product Security
-
+greg k-h
