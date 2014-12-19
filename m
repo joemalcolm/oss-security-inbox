@@ -1,47 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/18
-Message-ID: <20141016230713.5d301b31@pc.quadriga-www.com>
-Date: Thu, 16 Oct 2014 23:07:13 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com, agl@...gle.com
-Subject: Re: attacking hsts through ntp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/19/1
+Message-ID: <87k31o5vg1.fsf@hope.eyrie.org>
+Date: Thu, 18 Dec 2014 16:34:22 -0800
+From: Russ Allbery <eagle@...ie.org>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: "oss-security\@lists.openwall.com" <oss-security@...ts.openwall.com>,  Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: request for CVEs for git clients
 Content-Type: text/plain; charset=utf-8
 
-I'm CC-ing Adam Langley, don't know if he is on this list.
+Kurt Seifried <kseifried@...hat.com> writes:
 
-Am Thu, 16 Oct 2014 13:45:16 -0700
-schrieb Michal Zalewski <lcamtuf@...edump.cx>:
+> Ah my bad, I saw the blog entry, didn't read the git announcement -
+> CVE-2014-9390
 
-> However, in section seven, where the author claims that preloaded
-> entries are added for 1000 days, that's only via the net-internals
-> debugging interface. (The code screenshot shown is also of code for
-> that debugging interface.) I believe that preloaded entries in Chrome
-> will always be enforced, no matter what the system time is.
-
-Something can't be correct here. In the talk the attack was presented
-directly with chrome + google mail (which is one of the preloaded
-entries). Either he cheatet or the 1000 days limit applies to them, too
-(haven't done any tests myself).
-
-But basically, it may be debatable if browsers should consider
-preloaded entries as "forever". Independent of that I think the
-quesiton how date/time can be made more secure is worth investigation.
-tlsdate etc. certainly seem like a good idea to me. The OS default
-should be a secure timesetting method.
-
-If I understand it correct tlsdate uses the timestamp field of normal
-tls connections while ntp is a timesetting protocol on its own. I'm not
-into that stuff, can ntp be retrofittet with tls? Is that a good idea?
-Has it advantages/disadvantages compared to tlsdate?
-
-Still open is obviously the question: Who do you trust with your time?
-If your timeserver is compromised you still have an attack vector.
+My understanding is that this bug also affects Mercurial.  I'm not sure if
+it should get its own separate CVE (or possibly already has).
 
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Russ Allbery (eagle@...ie.org)              <http://www.eyrie.org/~eagle/>
