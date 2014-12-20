@@ -1,55 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/25/6
-Message-ID: <53AB1F3E.9070202@enovance.com>
-Date: Wed, 25 Jun 2014 15:13:02 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/20/4
+Message-ID: <5495A4D2.1050700@fifthhorseman.net>
+Date: Sat, 20 Dec 2014 11:33:22 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-021] User token leak to message queue in pyCADF notifier middleware (CVE-2014-4615)
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-021
-CVE: CVE-2014-4615
-Date: June 25, 2014
-Title: User token leak to message queue in pyCADF notifier middleware
-Reporter: Zhi Kun Liu (IBM)
-Products: Neutron    (2014.1 versions up to 2014.1.1)
-          Ceilometer (2013.2 versions up to 2013.2.3,
-                      2014.1 versions up to 2014.1.1)
-          pyCADF library (all versions up to 0.5.0)
+On 12/20/2014 09:42 AM, Stuart Henderson wrote:
+> On 2014/12/20 12:27, Hanno Böck wrote:
+>> Is there any reason not to tell everyone to use tlsdate?
+>> What's the distro's take on this? afaik many ship ntp-based solutions
+>> by default.
+> 
+> That won't work well for OpenBSD; libressl uses a random value instead
+> of the timestamp.
 
-Description:
-Zhi Kun Liu from IBM reported a vulnerability in the notifier middleware
-available in the PyCADF library and formerly copied into Neutron and
-Ceilometer code. An attacker with read access to the message queue may
-obtain authentication tokens used in REST requests (X_AUTH_TOKEN) that
-goes through the notifier middleware. All services using the notifier
-middleware configured after the auth_token middleware pipeline are impacted.
+It's not just libressl, there's a general push to do this:
 
-pyCADF fix (included in 0.5.1 release):
-https://review.openstack.org/94878      (pyCADF)
+  https://tools.ietf.org/html/draft-mathewson-no-gmtunixtime-00
 
-Juno (development branch) fix:
-https://review.openstack.org/94891      (Neutron)
+and the upcoming TLS 1.3 is likely to have the timestamp removed from
+the handshake entirely:
 
-Icehouse fix:
-https://review.openstack.org/101097     (Neutron)
-https://review.openstack.org/96944      (Ceilometer)
+  https://tools.ietf.org/html/draft-ietf-tls-tls13-03#section-1.2
 
-Havana fix:
-https://review.openstack.org/101799     (Ceilometer)
+tlsdate can also fetch the Date: header from https connections, though,
+so that should make it possible to withstand the removal from the handshake.
 
-Notes:
-Ceilometer Juno (master) branch is not affected.
-Those fixes will be included in the Juno-2 development milestone and in
-future 2013.2.4 and 2014.1.2 releases.
+Even if the time were to remain in the handshake (or we're ok with using
+the HTTP Date: header), tlsdate has a chicken-and-egg problem: if you
+want to actually verify the TLS connection,  you need to validate a
+signature from a valid X.509 certificate; but knowing the validity of
+any given certificate is dependent on knowing the correct time.
 
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4615
-https://launchpad.net/bugs/1321080
+the default installation of tlsdate on debian jessie (0.0.12-1) appears
+to list 143 CAs in /etc/tlsdate/ca-roots/tlsdate-ca-roots.conf (all the
+usual suspects :/) so it doesn't appear to be using any targeted
+cryptographic keying material beyond the general public CA expectations.
 
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+if we're going to solve the network time situation with cryptographic
+mechanisms, using time-bounded certificates for validity seems problematic.
+
+That said, for systems which need only rough precision and stronger
+network security (which is most systems), tlsdate does a much better job
+at the moment compared to ntp.  (ntp offers more precision and less
+security, which seems like the wrong tradeoff for most
+internet-connected devices)
+
+	--dkg
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
