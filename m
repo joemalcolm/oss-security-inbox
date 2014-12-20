@@ -1,24 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/06/29
-Message-Id: <E1XbDjv-0004ED-Lq@rmm6prod02.runbox.com>
-Date: Mon, 06 Oct 2014 15:14:35 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Re: Healing the bash fork
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/20/5
+Message-ID: <5495B637.7080305@cock.li>
+Date: Sat, 20 Dec 2014 09:47:35 -0800
+From: "ncl@...k.li" <ncl@...k.li>
+To: oss-security@...ts.openwall.com
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
-On 09/30/2014 05:02 PM, Mark R Bannister wrote:
-> > Glad my over-simplified example has raised a few smirks.  Now for a slightly less simplified version:
-> > putenv("PATH=/bin:/usr/bin");
-> > setreuid(0, 0);
-> > system("date");
-> > But the point is I've tried to boil down a relatively complex program by studying endless strace outputs to attempt to demonstrate a real world exploit.  It wasn't actually "date" that was being called, but you get the point.
-> > In the past, i.e. pre-Shellshock, the above code may have raised eyebrows, but as PATH was sanitised it would have passed numerous security audits.
+On 20/12/14 03:27, Hanno Böck wrote:
+> A strange discussion. Because ntp is insecure by design. It is an
+> unauthenticated, insecure protocol that is suspectible to
+> man-in-the-middle-attacks. Frankly, I don't care which implementation
+> of an insecure protocol has less buffer overflows.
 
-People do all sorts of things they shouldn't.  But it's been well-publicized that they should NOT just set an environment variable when crossing a trust boundary (e.g., setuid/setgid).  I'll note that my freely-available book, which has been available for years, says:
-"For secure setuid/setgid programs, the short list of environment variables needed as input (if any) should be carefully extracted. Then the entire environment should be erased, followed by resetting a small set of necessary environment variables to safe values."
-  http://www.dwheeler.com/secure-class/Secure-Programs-HOWTO/environment-variables.html
+How broken are the authentication methods already present in ntpd?[1]
+So far there appears to be only DES/MD5 keys, and with autokey, RSA/DH
+(but apparently autokey doesn't work behind NAT?)
+As far as I know, distros don't typically set these up, would it be
+worth it to enable and improve on these, or just make something new?
 
-The problem with shellshock is that bash would respond to *any* environment variable.  Attacker-supplied data *has* to sendable to a program that checks it (e.g., for CGI). What's more, no trust boundary had to be crossed in this case.  Thus, extract-and-erase made no sense in that context.
+Considering OSes already set up their own ntp pools[2], they could also
+provide their own trusted keys in their ntpd packages.
 
---- David A. Wheeler
+
+[1] http://www.ntp.org/ntpfaq/NTP-s-config-adv.htm#AEN3143
+[2] (ubuntu|openbsd|debian|netbsd|fedora).pool.ntp.org
