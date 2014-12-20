@@ -1,58 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/9
-Message-ID: <542CB32F.6030309@case.edu>
-Date: Wed, 01 Oct 2014 22:06:39 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: "Kobrin, Eric" <ekobrin@...mai.com>
-CC: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com, Chet Ramey <chet.ramey@...e.edu>
-Subject: Re: More parser odities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/20/6
+Message-ID: <5495C5D5.2010801@gmail.com>
+Date: Sat, 20 Dec 2014 13:54:13 -0500
+From: Daniel Micay <danielmicay@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
-On 10/1/14, 8:36 PM, Solar Designer wrote:
-> Eric - you probably want to CC: Chet on your new findings.  Added the CC.
+On 20/12/14 12:47 PM, ncl@...k.li wrote:
+> On 20/12/14 03:27, Hanno Böck wrote:
+>> A strange discussion. Because ntp is insecure by design. It is an
+>> unauthenticated, insecure protocol that is suspectible to
+>> man-in-the-middle-attacks. Frankly, I don't care which implementation
+>> of an insecure protocol has less buffer overflows.
 > 
-> On Wed, Oct 01, 2014 at 07:16:40PM -0500, Kobrin, Eric wrote:
->> This oddity also allows bypass of the absolute_program protection added in the recent patches:
->>
->>
->> $ env $'BASH_FUNC_#badname%%'=$'() { :; }\n/bin/ls () { echo wrongfunc; }  ' ./bash -c '/bin/ls'
->> fbash: error importing function definition for `#badname'
->> wrongfunc
->>
->>
->>
->>
->> I really do think it is time to take a different approach for a long-term solution.
->>
->>
->> -- Eric Kobrin
->>
->>
->> On Oct 1, 2014, at 5:35 PM, "Kobrin, Eric" <ekobrin@...mai.com> wrote:
->>
->>
->>> Using bash from the GNU git, subsequently patched to level 28:
->>>
->>> $ env $'BASH_FUNC_#badname%%'=$'() { :; }\nfoo () { echo wrongfunc; } ' ./bash -c 'foo'
->>> ./bash: error importing function definition for `#badname'
->>> wrongfunc
+> How broken are the authentication methods already present in ntpd?[1]
+> So far there appears to be only DES/MD5 keys, and with autokey, RSA/DH
+> (but apparently autokey doesn't work behind NAT?)
+> As far as I know, distros don't typically set these up, would it be
+> worth it to enable and improve on these, or just make something new?
+> 
+> Considering OSes already set up their own ntp pools[2], they could also
+> provide their own trusted keys in their ntpd packages.
+> 
+> 
+> [1] http://www.ntp.org/ntpfaq/NTP-s-config-adv.htm#AEN3143
+> [2] (ubuntu|openbsd|debian|netbsd|fedora).pool.ntp.org
 
-Two things.
+Those operating systems don't actually have their own NTP pools. They
+are just vendor zones hitting the same ntp.org pool. The resources put
+into it amount it asking ntp.org for a vendor zone and they only do it
+because upstream kindly asks for it (perhaps for metrics):
 
-First, there is already a fix for this in the patch pipeline.
+http://www.pool.ntp.org/vendors.html#vendor-zone
 
-Second, given the existence of the bash-4.3.27 and vendor and previous
-version equivalents, this is not a security problem.  What we are coming
-up with is more and more esoteric ways to execute commands bash allows
-you to execute directly.  There isn't a local privilege escalation issue,
-and the game is already over if you allow someone to specify arbitrary
-environment variable names and values.
 
-Please keep the reports coming.  They're valuable in making bash better;
-they're just not security problems or vulnerabilities.
-
-Chet
--- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
