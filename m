@@ -1,57 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/11/5
-Message-ID: <5473D581-4015-4ED5-BF36-B2E036A6E3EE@redhat.com>
-Date: Sat, 11 Jan 2014 16:07:23 -0700
-From: "Vincent Danen" <vdanen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/20/3
+Message-ID: <20141220144232.GQ15831@symphytum.spacehopper.org>
+Date: Sat, 20 Dec 2014 14:42:32 +0000
+From: Stuart Henderson <stu@...cehopper.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE assignment for jinja2
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
-On 01/11/2014, at 13:58 PM, Salvatore Bonaccorso wrote:
+On 2014/12/20 12:27, Hanno Böck wrote:
+> Is there any reason not to tell everyone to use tlsdate?
+> What's the distro's take on this? afaik many ship ntp-based solutions
+> by default.
 
-> Hi Vicnent,
->
-> Disclaimer: to be taken with some caution.
->
-> On Sat, Jan 11, 2014 at 01:37:51PM -0700, Vincent Danen wrote:
->> On 01/10/2014, at 22:34 PM, Kurt Seifried wrote:
->>
->>> https://github.com/mitsuhiko/jinja2/commit/acb672b6a179567632e032f547582f30fa2f4aa7
->>>
->>> dirname = '_jinja2-cache-%d' % os.getuid()
->>>
->>> Arun Babu Neelicattu of Red Hat spotted this commit which introduces a
->>> temporary file creation vulnerability. This issue has been assigned
->>> CVE-2014-0012. For information on how to safely create temporary files
->>> please see
->>> http://kurt.seifried.org/2012/03/14/creating-temporary-files-securely/
->>>
->>> For Python simply use ?mkstemp? for files and ?mkdtemp? for
->>> directories from the ?tempfile? module.
->>
->> MITRE assigned CVE-2014-1402 to this yesterday:
->>
->> http://seclists.org/oss-sec/2014/q1/71 (the report, the followup has the CVE assignment).
->>
->> That means you'll need to reject this assignment; the commit that Arun spotted was due to the Debian bug report (which the git commit notes, and Ratul linked to in his initial CVE request to the list).
->
-> Aren't the two CVE assignments correct this way as the second
-> temporary file creation vulnerability was introduced by the mentioned
-> commit?
->
-> Initially there was assigned CVE-2014-1402 for:
->
-> http://seclists.org/oss-sec/2014/q1/71
->
-> wich is also http://bugs.debian.org/734747 and was attempted to be
-> fixed with commit
-> https://github.com/mitsuhiko/jinja2/commit/acb672b6a179567632e032f547582f30fa2f4aa7
->
-> But the above commit introduces a new temporary file creation
-> vulnerability, which then got CVE-2014-0012 assigned by Kurt.
+That won't work well for OpenBSD; libressl uses a random value instead
+of the timestamp. Using tlsdate against such a server:
 
-Yes, all correct.  Which is why I apologized in a subsequent email about the confusion.  =)
+V: In TLS response, T=978796414
+V: In TLS response, T=3901855112
+V: In TLS response, T=602561497
+V: In TLS response, T=4259017273
+V: In TLS response, T=1129774656
+V: In TLS response, T=2844925558
 
--- 
-Vincent Danen / Red Hat Security Response Team
-Download attachment "signature.asc" of type "application/pgp-signature" (711 bytes)
+There are certainly reasons you might not want to expose exact server
+time of a general purpose server, e.g. passing time(NULL) to srand
+is very common, but that's another can of worms (we also had some
+changes in that area recently)..
+
+As far as NTP goes, OpenNTP does at least send cookies in some fields
+and check returned valuess, mitigating against blind spoofing. For sure
+it's not perfect, but requires no configuration and is better than not
+doing it.
+
