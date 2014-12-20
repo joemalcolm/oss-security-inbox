@@ -1,39 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/07/15
-Message-Id: <201401072225.s07MP0rx026819@linus.mitre.org>
-Date: Tue, 7 Jan 2014 17:25:00 -0500 (EST)
-From: cve-assign@...re.org
-To: guido+openwall.com@...hoerster.name
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: lightdm-gtk-greeter - local DOS due to NULL pointer dereference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/20/2
+Message-ID: <20141220114341.GV1260@betterave.cristau.org>
+Date: Sat, 20 Dec 2014 12:43:41 +0100
+From: Julien Cristau <jcristau@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Kurt Seifried <kseifried@...hat.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: request for CVEs for git clients
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Dec 18, 2014 at 16:34:22 -0800, Russ Allbery wrote:
 
->it is trivial to crash
->lightdm-gtk-greeter by entering an empty username due to a NULL
->pointer dereference. When a greeter crashes the lightdm daemon
->exits.
->This constitutes a local denial of service which can be triggered
->by any unprivileged attacker requiring the intervention of an
->administrator to restart lightdm.
+> Kurt Seifried <kseifried@...hat.com> writes:
+> 
+> > Ah my bad, I saw the blog entry, didn't read the git announcement -
+> > CVE-2014-9390
+> 
+> My understanding is that this bug also affects Mercurial.  I'm not sure if
+> it should get its own separate CVE (or possibly already has).
+> 
+http://mercurial.selenic.com/wiki/WhatsNew#Mercurial_3.2.3_.282014-12-18.29
+uses that same CVE-2014-9390 id.
 
-Use CVE-2014-0979.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJSzH5JAAoJEKllVAevmvms9wIH/A9WdJzXAHd/GFVKWdl95xKZ
-knswD8xFptO9IIII1M8Du/eDomM0CU3fZHzgBBxtJYfCP1WZc7c7a0RG791FpWDh
-VMF7DeB8Kd18J9uqzQSBnZOaEtjpJHbAM8eRDjoG/MgUAzkYixTwg4lVk41mOl/l
-rymq3vTVgIFBHJfwQRKgxl/MlHc0qxWqC9ahw68Xg9jTsTkU1uXBVo8o3+Gr6I6b
-5F4fmtAl5c3uiX570TGj03vt8mK9NTYqwwfprin9jH+SPaQZhsBb5jUQLF+SK1qD
-KWGWNJiwg4OUHHOmAOcRBtA4LckXaxCXceUN196QjIJmlHPtoSjXZ/ZngTAGUOw=
-=x4LB
------END PGP SIGNATURE-----
+Cheers,
+Julien
