@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/29/4
-Message-ID: <CAA7hUgG74XTz6M6Vh2uMPDqPnLCHmZ+M1MQTXyLvUQoU7z3JRg@mail.gmail.com>
-Date: Tue, 29 Apr 2014 16:59:38 +0200
-From: Raphael Geissert <geissert@...ian.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: CVE request: directory traversal in DSA-2915-1-patched dpkg in Debian squeeze
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/20/1
+Message-ID: <20141220122736.771e1ccd@pc>
+Date: Sat, 20 Dec 2014 12:27:36 +0100
+From: Hanno Böck <hanno@...eck.de>
+To:  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-The recent update[1] of dpkg for CVE-2014-0471 in Debian squeeze (and
-possibly Ubuntu lucid[2]) actually introduces a vulnerability in that
-release[3], while it was not affected by the original vulnerability.
-The newly introduced vulnerability is dependent on the version of
-patch(1) that is installed on the system, so that:
+So we know now that the default ntp implementation most people use has
+some severe security vulnerabilities. And some people think we should
+either rewrite it or use the one from openbsd.
 
-updated dpkg in squeeze + patch(1) from squeeze = vulnerable
-updated dpkg in squeeze + patch(1) from wheezy = not vulnerable
-updated dpkg in wheezy + patch(1) from squeeze = vulnerable (but not confirmed)
-updated dpkg in wheezy + patch(1) from wheezy = not vulnerable
+A strange discussion. Because ntp is insecure by design. It is an
+unauthenticated, insecure protocol that is suspectible to
+man-in-the-middle-attacks. Frankly, I don't care which implementation
+of an insecure protocol has less buffer overflows.
 
-In other words, if the updated dpkg package is not installed in a
-squeeze system, this new vulnerability would only be exposed if a
-system is partially upgraded to wheezy.
+This is not a theoretical problem:
+https://www.blackhat.com/docs/eu-14/materials/eu-14-Selvi-Bypassing-HTTP-Strict-Transport-Security-wp.pdf
+https://github.com/PentesterES/Delorean
 
-Given that at least one PoC demonstrates that squeeze's updated
-package is vulnerable, while the previous dpkg in wheezy isn't (it
-refuses to unpack the package), I think this is a new vulnerability
-and should therefore receive its own CVE.
 
-If you agree, could you please assign one?
+Is there any reason not to tell everyone to use tlsdate?
+What's the distro's take on this? afaik many ship ntp-based solutions
+by default.
 
-Thanks in advance.
+Also see my comment:
+https://blog.hboeck.de/archives/863-Dont-update-NTP-stop-using-it.html
 
-[1]https://www.debian.org/security/2014/dsa-2915
-[2]http://www.ubuntu.com/usn/usn-2183-1/
-[3]https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=746306
-
-Cheers,
+cu,
 -- 
-Raphael Geissert - Debian Developer
-www.debian.org - get.debian.net
+Hanno Böck
+http://hboeck.de/
+
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
+
+Content of type "application/pgp-signature" skipped
