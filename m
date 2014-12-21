@@ -1,54 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/19/5
-Message-ID: <54442E56.9070701@case.edu>
-Date: Sun, 19 Oct 2014 17:34:14 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: cve-assign@...re.org, jwilk@...lk.net
-CC: chet.ramey@...e.edu, oss-security@...ts.openwall.com
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/21/6
+Message-ID: <87tx0ok7zt.fsf@mid.deneb.enyo.de>
+Date: Sun, 21 Dec 2014 22:28:38 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+* Dave Horsfall:
 
-On 9/29/14 11:44 AM, cve-assign@...re.org wrote:
->> the parser is not locale-agnostic. Here's an example how it can be
->> exploited:
->> http://bugs.python.org/issue22187
+> On Sun, 21 Dec 2014, Florian Weimer wrote:
+>
+>> [...] but I have the impression that the correct clock changes every 
+>> couple of years.
+>
+> This sounds like you're referring to leap seconds,
 
-That's not actually an exploit, or even a bug.
+No, I meant the recommend time to use in this context.  If
+clock_gettime(CLOCK_MONOTONIC) is the right choice, that's good,
+because it has vdso accelleration (but I don't know how effective that
+is in practice).  On some systems, obtaining time is really painfully
+slow. [*]
 
-> The discussion in Issue22187 is about changing code in Python 2.x to
-> work around this. However, is it useful to assign one new
-> CVE-2014-#### ID for Bash, on the expectation that Bash was intended
-> to recognize valid characters in zh_CN.GBK, but instead is identifying
-> part of a two-byte character as a \ character, and this has security
-> implications for products that attempt to do otherwise-correct quoting
-> of untrusted strings for use in sh commands?
+> where due to the 
+> Earth's rotation slowing down (as determined by the International Earth 
+> Rotation Service), an extra second is inserted every so often, typically 
+> in July; it's quite fun watching it on a GPS receiver (assuming that it 
+> even survives the event, as I've seen a few cheaper ones lose the plot).
 
-This is exactly the opposite of what is happening.  The test in the link
-(message 226439) shows that bash and ksh are properly reading valid
-multibyte characters in the input and not treating backslashes that are the
-second byte of a multibyte character as escape characters.  The other
-shells, presumably not multibyte-character-aware at all, incorrectly allow
-that backslash to escape the closing double quote.
+GPS time does not have leap seconds.
 
-Posix is very careful to specify that the shell reads characters, and
-uses characters when deciding how to tokenize the input, instead of bytes.
-If those characters are multibyte, the shell is expected to read multiple
-bytes.  Are you proposing that a multibyte character whose second byte
-happens to be a `|' should start a pipeline?
-
-Chet
-- -- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (Darwin)
-Comment: GPGTools - http://gpgtools.org
-
-iEYEARECAAYFAlRELlYACgkQu1hp8GTqdKtEsACfYyDVqQoaC2gTjQZhHTXWlSV3
-iAsAn3EQrDeHo3ldByfbYgrGixYgZL+B
-=kgf1
------END PGP SIGNATURE-----
+[*] If you upgrade OpenSSL and RAND_bytes is suddenly so much slower,
+that's the place to look—upstream mixes not just the PID, but also the
+current time into the pool to achieve more complete fork protection.
