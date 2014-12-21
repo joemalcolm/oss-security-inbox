@@ -1,74 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/27/12
-Message-ID: <alpine.LNX.2.02.1409271930150.11452@v8.schaltsekun.de>
-Date: Sat, 27 Sep 2014 21:15:12 +0200 (CEST)
-From: Roman Drahtmueller <draht@...altsekun.de>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-cc: Chester Ramey <chet.ramey@...e.edu>
-Subject: Re: Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/21/1
+Message-ID: <87ppbdqlxg.fsf@mid.deneb.enyo.de>
+Date: Sun, 21 Dec 2014 12:31:07 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
-> 
-> This also means that we should treat any programs that generate bash
-> scripts with (sanitized) untrusted input in them as unsafe, and patch
-> those to use safer mechanisms to pass (sanitized) inputs to scripts
-> (preferably use env vars with fixed names).
-> 
-> Comments?
+* Hanno Böck:
 
-The last 20 years were full of happiness, because people didn't know. A 
-shell would only use what it is told to use, with the exception of some 
-environment variables that are explicitly relevant for the shell and its 
-mode of execution. It wouldn't matter if the environment contained a gig 
-of stuff behind *envp, or garbage on stdin. The decision about trusting 
-the execution environment must left up to the scripter.
+> Is there any reason not to tell everyone to use tlsdate?
 
-Options for trust assumptions concerning the execution environment of a 
-shell:
-1) environment is completely untrusted.
-2) environment contains variable names that are trusted
-   - implicit: shell-relevant variables have trusted content
-3) all of the environment is trusted (not our problem today)
+Some folks want to run their servers within a few milliseconds of each
+other, and do not care so much about security or resiliency.  They may
+even use their own internal time source (either fed by the local
+standard time over NTP, or by GPS, CDMA or some other wireless time
+service such as DCF-77 in Germany).
 
-about 1): The cause of CVE-2014-6271 and CVE-2014-7169 is not a parser 
-problem, but a design problem. The fact alone that the parser runs - 
-unconditionally, on potentially untrusted input - makes it most certainly 
-not suitable for running with an untrusted environment (envp).
+Reconciling this with cryptography is certainly a challenge.  On the
+other hand, this does not have to be the default.
 
-As a consequence (SD said that already), the environment in which the 
-shell executes must contain variable names that are trusted (fixed) so 
-that no interference can happen between untrusted input and stuff 
-relevant for the shell. Those environment variables that determine 
-execution parameters of the shell are unsafe to be inherited (not to 
-mention parsed...):
---- Why do we have code that prevents inheriting IFS (20 years of silly 
-    happiness, above), but then _PARSE_ others to even overwrite 
-    $PATH-walk findings?
+> What's the distro's take on this? afaik many ship ntp-based solutions
+> by default.
 
-More? SHELLOPTS, BASH_ENV, BASH_XTRACEFD, GLOBIGNORE, FIGNORE, foo, bar...
+NTP (as in protocol), yes, ntp (as in implementation), perhaps not.
 
+I think most desktop-based distributions could get away with something
+like tlsdate.
 
-What the shell does (and how) needs to be seperate from what it deals 
-with, or we give up on expecting deterministic results from a shell.
-A trade-off could still be one (1!) variable with a static name that 
-contains all exported functions, but not arbitrary ones.
-Otherwise, go and help yourself with BASH_ENV if you need functions in 
-subshells - and forget about parsing untrusted input at all.
-
-> Alexander
-
-Btw: 
-A compatibility vs security debate is not really very productive. People 
-have realized that the cause is a design question. If something breaks 
-because broken design is flushed down the pipe, the response is much 
-better than continuing to fix effects and not causes.
-
-Roman.
-
-
-(*1) Apache's cgi interface (thoughtfully) sets variables as 
-HTTP_${headername}, not ${headername}.
-
-
--- 
-Roman Drahtmueller <draht@...altsekun.de>
+In contrast, servers with long-running connections and I/O polling
+loops often do not react gracefully to jumps in time.  (I once
+disconnected a few hundreds, if not thousands of users from an IRC
+server just by setting its time correctly.)  Sure, you can avoid that
+by using the appropriate kernel clock for timeout handling, but I have
+the impression that the correct clock changes every couple of years.
