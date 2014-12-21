@@ -1,42 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/29/7
-Message-ID: <alpine.LFD.2.10.1405291823090.18896@javelin.pnq.redhat.com>
-Date: Thu, 29 May 2014 18:34:16 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: Re: CVE request: Linux kernel DoS with syscall auditing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/21/5
+Message-ID: <54971CFE.9050808@fifthhorseman.net>
+Date: Sun, 21 Dec 2014 14:18:22 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: oss-security@...ts.openwall.com
+Subject: leap seconds and security [was: Re: can we talk about secure time?]
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 12/21/2014 01:25 PM, Dave Horsfall wrote:
+> There is a serious proposal to phase out leap seconds (no URL handy right 
+> now), 
 
-+-- On Wed, 28 May 2014, Andy Lutomirski wrote --+
-| # auditctl -a exit,always -S open
-| No privilege whatsoever is required to trigger the OOPS.
+Lots of good references on wp for those who are interested in the details:
 
-  I don't mean to nitpick but privileges would be required to add system call 
-audit rules using auditctl(8). Mentioning it here as that's a precondition to 
-trigger the said OOPS.
+https://en.wikipedia.org/wiki/Leap_second#Proposal_to_abolish_leap_seconds
 
-Thank you.
-- --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+short version: the proposal is controversial and many people seem to
+still think "further study" is needed.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+If anyone from oss-security can make a concrete argument for why leap
+seconds are a serious risk for computer security, that would probably be
+useful information to pass along:
 
-iQIcBAEBAgAGBQJThzBQAAoJEN0TPTL+WwQfM8wP/i4S9d5veuZ1n8YZDP9baTJs
-vrBRy0t82/emDthALbI0laWB1vSK2VepckMzl65fmlm9bDveKADTvjjijdEvbxoR
-KerSYoqIoMrZpbACGDyr8y0YIen39QiJhXdgHWukCJu6KxhQpgA5MlF6V4HEvYG/
-d4wllITmxhihlQmdoq9HmCSkMxrWOAWiWkHxR+5XD4pNgUGtXMMzg1oadS1WQ4UK
-t8K3ScEyo58FUsz5QiJtLcKC5X+KFlmKpf7uJgkFGWjWOiEj/O+p4n5aKyv6isBC
-Jo967Gn1sN07VCcGZB60szliT8Fr57m4SETtadzNBnaInk4EXhmglMYi0suyHgPS
-BuLVhf00zVT2QSLE1YFONQxjrZYaF2LatjKySZ0tegEYTv1LBWCpUW+5sIZQBHa/
-2pxFbPi4TpfCckW/mP2gmElopv+rYHzkI4XrAxdKo91kZlFNM192n1LpthWcCQ5V
-EPT8iUt0wHhUoC9d2PxP1oQvSPpyUGLghSupOFBOW1Tm5aBpt0dP0BzXtGZl2qHc
-c+2cwpj3INQfIKdEwQsev8YscjxDrReBRK57fyKr9xKvhkNd2uRMjeSjS30tCIEw
-obgeJbPZNts/nMiKgb7SM3vXaJpHVxvOa8yW4hl/GaRYb3Gurjv7Z27iHiQa9utb
-3/jZ68Ww1yfp/28Ng4jw
-=df0E
------END PGP SIGNATURE-----
+http://www.gps.gov/cgsic/timing/2014-resolution/
+
+	--dkg
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
