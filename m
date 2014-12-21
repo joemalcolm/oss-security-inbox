@@ -1,64 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/07/2
-Message-Id: <201406070251.s572p7r6019892@linus.mitre.org>
-Date: Fri, 6 Jun 2014 22:51:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: mmcallis@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: possible miniupnpc buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/21/4
+Message-ID: <alpine.BSF.2.11.1412220516410.87591@aneurin.horsfall.org>
+Date: Mon, 22 Dec 2014 05:25:08 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, 21 Dec 2014, Florian Weimer wrote:
 
-> It was pointed out in
-> https://bugzilla.redhat.com/show_bug.cgi?id=1085618 that miniupnpc
-> version 1.9 fixes a possible buffer overflow:
-> 
-> https://github.com/miniupnp/miniupnp/commit/3a87aa2f10bd7f1408e1849bdb59c41dd63a9fe9
+> [...] but I have the impression that the correct clock changes every 
+> couple of years.
 
-> On a related note ... in version 1.9, miniwget.c:
-> 
-> 173                         n = header_buf_used - endofheaders;
-> 174                         memcpy(buf, header_buf + endofheaders, n);
-> 
-> Mixing the types together (and the signed int in the memcpy) may warrant
-> further investigation.
+This sounds like you're referring to leap seconds, where due to the 
+Earth's rotation slowing down (as determined by the International Earth 
+Rotation Service), an extra second is inserted every so often, typically 
+in July; it's quite fun watching it on a GPS receiver (assuming that it 
+even survives the event, as I've seen a few cheaper ones lose the plot).
 
+There is a serious proposal to phase out leap seconds (no URL handy right 
+now), and I have no idea how that will affect time-based security.
 
-> From: Murray McAllister <mmcallis@...hat.com>
-> Date: Thu, 01 May 2014 10:35:27 +1000
-> Subject: Re: [oss-security] CVE request: possible miniupnpc buffer overflow
-
->> Mixing the types together (and the signed int in the memcpy) may warrant
->> further investigation.
-
-> Upstream investigated this and found it to be safe.
-
-
-Use CVE-2014-3985 for the buffer overflow.
-
-In the "investigated this and found it to be safe" sentence, "this"
-means only the second part of the original message, not the part about
-the buffer overflow. The while loop in the unpatched code before
-3a87aa2f10bd7f1408e1849bdb59c41dd63a9fe9 was not found to be safe.
-(For many people reading the second message, this may have been
-obvious because the "safe" sentence came after quoted text from only
-the second part of the original message.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTkn2vAAoJEKllVAevmvmsqxoIALD6sDb3SvERks8sXZBRxTs2
-CqC4ruw8M6zUXqaeO8U7wCr+2xQn+M+DDFmX9MmxoGVtQd0QPD+gZejXnwSIBj7v
-yCrBUAwvlU2u2hjPmOxSsXzgSSy+xdsXxiRMK4rqdN1RI5dgzTwHE5t+txwAKR0c
-Sq3Z0v63rCzb122M/diVfXYos8nCTG+2AwtIOFd1zkbCoHRFdfHdeHjXl1jbYhRU
-+WKGHudUeNjqAyxg00PDpbz5KRo8zWpEMhQF9o8q5yY1lZyeo0A7iWXweGRb4g0M
-WANluLwi+12nc24zeViNUN/9rdjO3BCXQ7hYwTQLjQKUEmpfDSInlG1giZac0Tc=
-=D1eB
------END PGP SIGNATURE-----
+-- 
+Dave Horsfall DTM (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
+http://www.horsfall.org/spam.html (and check the home page whilst you're there)
