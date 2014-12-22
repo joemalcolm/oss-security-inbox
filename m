@@ -1,48 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/29/8
-Message-ID: <1390990488.513834.821092246.4792691.27@portal.otrs.com>
-Date: Wed, 29 Jan 2014 10:14:48 +0000
-From: Jens Bothe via OTRS Security Team <security@...s.org>
-To: carnil@...ian.org
-CC: pmatthaei@...ian.org, oss-security@...ts.openwall.com
-Subject: Re: [Ticket#2014012942020471] CVE Request: otrs: CSRF issue in customer web interface
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/3
+Message-ID: <20141222073925.3ac4e58d@pc>
+Date: Mon, 22 Dec 2014 07:39:25 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-2014-01-29 10:58 (+1) - Salvatore Bonaccorso wrote: A CSRF issue in otrs was
-announced in [1]. Is a CVE for this issue
-already assigned?
- 
- 
-For the OSA-2014-01 we don't have a CVE, just the OTRS Bug report.
+On Sun, 21 Dec 2014 23:30:10 -0700
+Kurt Seifried <kseifried@...hat.com> wrote:
 
-Regards,
+> Having to reconcile multiple logs/events across widely distributed
+> systems, especially in high volume situations, 1-2 seconds is a deal
+> breaker. Or people running SCADA systems for industrial plants. Or
+> people that run financial systems.
 
-Jens Bothe
+I don't think this contradicts my statement that average consumer hw
+doesn't need the high accuracy of ntp :-)
 
--- 
-OTRS AG
-Norsk-Data-Straße 1
-61352 Bad Homburg
-T: +49 (0) 6172 681988 0
-F: +49 (0) 9421 56818 18
-E: [1]sales@...s.com
-I: [2]http://www.otrs.com/ 
+> So it's not an either/or situation (care about security, or have
+> accurate time, sometimes we need both).
 
-Business location: Bad Homburg, Country Court: Bad Homburg, HRB 10751, VAT ID:
-DE256610065
-Chairman: Burchard Steinbild, Managing Board: André Mindermann (CEO),
-Christopher Kuhn, Sabine Riedel
+Yeah, I totally agree that this would be the desired thing to have.
+However the facts are that at the moment we don't. And imho for
+consumer HW the slight inaccuracy of tlsdate doesn't matter, while the
+insecurity of ntp does (as the very practical hsts attack has shown).
 
-Easier Planning and Improved Overviews - Enhance your Service Management with
-OTRS 3.3 - [3]Download and Test the Stable Release Now!
+I read these days that the Linux foundation is sponsoring some work on
+NTP. Anyone involved in this and can comment whether secure
+authentication for NTP is something that's being looked at or if it is
+only about creating a better implementation of the ntp software?
 
 
+-- 
+Hanno Böck
+http://hboeck.de/
 
-[1] mailto:sales@...s.com
-[2] http://www.otrs.com/
-[3] https://www.otrs.com/new-in-otrs-3-3/
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Content of type "text/html" skipped
-
-Download attachment "pgp_sign.asc" of type "application/pgp-signature" (491 bytes)
+Content of type "application/pgp-signature" skipped
