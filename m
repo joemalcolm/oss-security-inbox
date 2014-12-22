@@ -1,42 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/1
-Message-ID: <5429FAAC.7020604@case.edu>
-Date: Mon, 29 Sep 2014 20:34:52 -0400
-From: Chet Ramey <chet.ramey@...e.edu>
-To: Florian Weimer <fweimer@...hat.com>, oss-security@...ts.openwall.com
-CC: chet.ramey@...e.edu
-Subject: Re: Array importing in bash 4.3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/9
+Message-ID: <20141222140938.GB32428@core.inversepath.com>
+Date: Mon, 22 Dec 2014 15:09:38 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2014-010] SoX input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-On 9/29/14, 10:42 AM, Florian Weimer wrote:
->> From: Florian Weimer <fweimer@...hat.com>
->>
->> Note that if you ship 4.3, you might want to reevaluate a decision to
->> enable array variable import from the environment.
-> 
-> I changed the subject because I'm sure this parenthetical comment got lost.
-> 
-> Fortunately, in bash 4.3 (patchlevel 25), you cannot just -DARRAY_EXPORT
-> and get array variable import/export.  The code doesn't compile, and if you
-> fix that, it does not link, and if you fix that, well, you end up with the
-> following issue.
 
-That's a ton of trouble to go through just for this.  I don't have any
-plans to enable array export.
+#2014-010 SoX input sanitization errors
 
-> The array import/export feature allows one to export and import variables
-> while preserving their array status.  Unfortunately, it enables this:
-> 
-> $ env -i 'FOO=([$(echo broken > /dev/tty)]=a)' ./bash -c true
-> broken
-> ./bash: []=a: bad array subscript
+Description:
 
-That's actually how array assignment works.  The array index is run
-through the shell word expansions, including command substitution, and
-then the arithmetic expression evaluator to get the index.
+The SoX project is an open source tool for sound processing.
 
-Chet
+The sox command line tool is affected by two heap-based buffer overflows,
+respectively located in functions start_read() and AdpcmReadBlock().
+
+A specially crafted wav file can be used to trigger the vulnerabilities.
+
+Affected version:
+
+SoX <= 14.4.1
+
+Fixed version:
+
+SoX > 14.4.1
+
+Credit: vulnerability report received from the Google Security Team.
+
+CVE: CVE-2014-8145
+
+Timeline:
+
+2014-11-20: vulnerability report received
+2014-12-02: contacted maintainer
+2014-12-13: patch provided by maintainer
+2014-12-14: reporter confirms patch
+2014-12-15: contacted affected vendors
+2014-12-18: assigned CVE
+2014-12-22: advisory release
+
+References:
+http://sox.sourceforge.net
+
+Permalink:
+http://www.ocert.org/advisories/ocert-2014-010.html
+
 -- 
-``The lyf so short, the craft so long to lerne.'' - Chaucer
-		 ``Ars longa, vita brevis'' - Hippocrates
-Chet Ramey, ITS, CWRU    chet@...e.edu    http://cnswww.cns.cwru.edu/~chet/
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
+
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
