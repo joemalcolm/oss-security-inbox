@@ -1,15 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/16/3
-Message-ID: <alpine.BSF.2.00.1410161645540.1909@aneurin.horsfall.org>
-Date: Thu, 16 Oct 2014 16:47:28 +1100 (EST)
-From: Dave Horsfall <dave@...sfall.org>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Re: What does this PHP exploit do?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/12
+Message-ID: <20141222181458.GA9357@zoho.com>
+Date: Mon, 22 Dec 2014 18:14:58 +0000
+From: mancha <mancha1@...o.com>
+To: oss-security@...ts.openwall.com
+Cc: sms@...inode.info, cve-assign@...re.org
+Subject: CVE Request: Info-ZIP unzip 6.0
 Content-Type: text/plain; charset=utf-8
 
-Thanks, one and all; it was most illuminating.  Quite a clever little 
-script, and it's a shame to see such talent wasted...
+Hello.
 
--- 
-Dave Horsfall (VK2KFU)
-http://www.horsfall.org/spam.html
+OOB access (both read and write) issues exist in test_compr_eb
+(extract.c) that can result in application crash or other unspecified
+impact.
+
+This vulnerability can be triggered via crafted zip archives with extra
+fields that advertise STORED method compression (i.e. no compression)
+and have uncompressed field sizes smaller than the corresponding
+compressed field sizes.
+
+This issue is different from CVE-2014-8140 [1].
+
+Please allocate a CVE identifier for this vulnerability.
+
+--mancha
+
+
+Timeline:
+
+2014-10-24: Crasher bundled in afl
+2014-11-02: Existence of crasher shared on OSS-SEC [2]
+2014-11-03: Crasher analyzed and fix developed [3]
+2014-11-03: Maintainer contacted [4]
+2014-12-22: CVE requested
+
+----
+[1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-8140
+[2] http://seclists.org/oss-sec/2014/q4/489
+[3] http://seclists.org/oss-sec/2014/q4/507
+[4] http://www.info-zip.org/phpBB3/viewtopic.php?f=7&t=450
+
+Content of type "application/pgp-signature" skipped
