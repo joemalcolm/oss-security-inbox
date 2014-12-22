@@ -1,74 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/30/5
-Message-Id: <20140930023940.33C5872E0FC@smtpvbsrv1.mitre.org>
-Date: Mon, 29 Sep 2014 22:39:40 -0400 (EDT)
-From: cve-assign@...re.org
-To: tristan.cacqueray@...vance.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request for vulnerability in OpenStack Cinder, Nova and Trove
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/5
+Message-ID: <CAMPTd_C5yO4b2W44AHnkx_G2uE3ishO+8_iotZMMrWhAvMhkGg@mail.gmail.com>
+Date: Sun, 21 Dec 2014 23:27:19 -0800
+From: Walter Parker <walterp@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, Dec 21, 2014 at 10:39 PM, Hanno Böck <hanno@...eck.de> wrote:
 
-> A vulnerability was discovered in OpenStack (see below). In order to
-> ensure full traceability, we need a CVE number assigned that we can
-> attach to further notifications. This issue is already public, although
-> an advisory was not sent yet.
-> 
-> Products: Cinder, Nova, Trove
-> Versions: up to 2013.2.3, 2014.1 versions up to 2014.1.2
-> 
-> Amrith Kumar from Tesora reported two vulnerabilities in the
-> processutils.execute() and strutils.mask_password() functions available
-> from oslo-incubator that are copied into each project's code. An
-> attacker with read access to the services' logs may obtain passwords
-> used as a parameter of a command that have failed or when the
-> mask_password did not mask passwords properly.
-> 
-> https://launchpad.net/bugs/1343604
-> https://launchpad.net/bugs/1345233
+> On Sun, 21 Dec 2014 23:30:10 -0700
+> Kurt Seifried <kseifried@...hat.com> wrote:
+>
+> > Having to reconcile multiple logs/events across widely distributed
+> > systems, especially in high volume situations, 1-2 seconds is a deal
+> > breaker. Or people running SCADA systems for industrial plants. Or
+> > people that run financial systems.
+>
+> I don't think this contradicts my statement that average consumer hw
+> doesn't need the high accuracy of ntp :-)
+>
+> This is something that I don't want to see in the Linux/xBSD world. A
+split made between the software that the "average consumer" uses and the
+software that prosumers and professionals use for basic system services
+like timekeeping. We should all be be using the good stuff...
 
-There are (at least) two CVE IDs needed because of the different
-vulnerability types. The older code in which processutils.execute was
-simply logging cmd directly, without any masking step, can be
-considered an instance of the
-http://cwe.mitre.org/data/definitions/532.html issue. For this, use
-CVE-2014-7230.
+>From what has been said so far, there appears to be two sides:
 
-The older code with a short _FORMAT_PATTERNS list, with a later
-replacement by longer _FORMAT_PATTERNS_1 and _FORMAT_PATTERNS_2 lists,
-can be considered an instance of the
-http://cwe.mitre.org/data/definitions/184.html issue. Bug #1343604
-mentions 'mask_password did not, for example, catch the usage ...
-/usr/sbin/mysqld --password=top-secret ... They did catch ...
-/usr/sbin/mysqld --password="top-secret" ... make the strings in
-strutils.mask_password more robust.' For this, use CVE-2014-7231.
+One that points out that security in ntp is week therefore MITM attacks can
+be done. So the idea is to remove ntp and replace it something else, which
+would be using the time field in TLS transactions. Most arguments seem to
+come from the assuming the TLS servers are secure and have the correct
+time. Nothing has be said about how well the TLS servers would work as time
+servers
 
-The additional complication is that there were apparently already
-releases with incomplete fixes for CVE-2014-7230. Separate CVE IDs are
-needed when parts of the problem were fixed in different releases. For
-example, Cinder 2013.2.4 contains a fix for the "Running cmd
-(subprocess)" logging problem but apparently does not contain a fix
-for the "Running cmd (SSH)" logging problem. The patch for the latter
-is shown in the
-https://git.openstack.org/cgit/openstack/trove/commit/?id=9672744f090d462cac5eb757ceaacd7122362708
-commit. Is this a remaining vulnerability in Cinder 2013.2.4 and
-possibly other products? If so, then we will assign another CVE ID.
+The other points out that ntp is a time protocol that specializes in
+getting and keeping time correct. It is designed to allow time to be set
+with high level of precision and accuracy (milliseconds on regular systems,
+microseconds when it really matters).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Has there been any studies on the quality of TLS for a timeserver? From
+comments, to me, it looks like the TLS side is rationalizing the 1 second
+limit on TLS because they want want to use TLS as is, without further
+researching/refining the topic.
 
-iQEcBAEBAgAGBQJUKhdhAAoJEKllVAevmvmsu4MIAKRxemkmF1byrCIXSNAR2Y7P
-p7ERBGHORZVT8O9MnJWue19sSc1LiWkmUCBLXgKaApJe3USEqFJjTKpm8GW10zmr
-hnOUBVnD8kOB4oqy8rAeEFp6+e+p5AVJY+xcJggVP5Q1KAT/it3AS3e7+YFqHVk/
-0833Y1WWmME3KW+1QVPPV//bjLl0AqbYBH5n3HV1fFnn2eo/LEaMgLKAlcUFIq3A
-onbuxpQ0lUIptpvQa7inSfi7D8kOgXjYsRrrwJKkM6nZAM2bt+68mxxiW7FUDUPp
-q0iAAKMIPg+OgEi3t+8HJZIZR6oaGgVQ7Askc9kohA4e0Az6qB7TV3rKf2g/tfw=
-=YprV
------END PGP SIGNATURE-----
+If we are going to build a secure time protocol, the timekeeping piece is
+at least as important as the security piece.
+
+
+
+> > So it's not an either/or situation (care about security, or have
+> > accurate time, sometimes we need both).
+>
+> Yeah, I totally agree that this would be the desired thing to have.
+> However the facts are that at the moment we don't. And imho for
+> consumer HW the slight inaccuracy of tlsdate doesn't matter, while the
+> insecurity of ntp does (as the very practical hsts attack has shown).
+>
+> I read these days that the Linux foundation is sponsoring some work on
+> NTP. Anyone involved in this and can comment whether secure
+> authentication for NTP is something that's being looked at or if it is
+> only about creating a better implementation of the ntp software?
+>
+>
+Given there are 100's of millions of NTP clients in the field right now,
+where would we get the trusted TLS servers to use as time servers. We can't
+trust the web server that we are trying to connect to, as if it is a MITM
+attack, it could also have bad time.
+
+
+Walter
+
+
+-- 
+The greatest dangers to liberty lurk in insidious encroachment by men of
+zeal, well-meaning but without understanding.   -- Justice Louis D. Brandeis
+
