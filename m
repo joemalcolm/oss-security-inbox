@@ -1,38 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/09/1
-Message-ID: <20140509040453.GA27044@openwall.com>
-Date: Fri, 9 May 2014 08:04:53 +0400
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Defeating memory comparison timing oracles
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/4
+Message-ID: <20141222080519.7fdd183c@pc>
+Date: Mon, 22 Dec 2014 08:05:19 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: Alexander Cherepanov <cherepan@...me.ru>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request: out-of-bounds memory access flaw in unrtf
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+An update here:
 
-Florian made this nice Red Hat security blog post a couple of days ago:
+unrtf now released 0.21.8 which should contain all the fixes for known
+crashers. They also made their project more accessible by using a
+public mercurial repository on savannah (they only had an internal
+repo before).
 
-https://securityblog.redhat.com/2014/05/07/defeating-memory-comparison-timing-oracles/
+I had reported a couple more issues that popped up with address
+sanitizer to upstream (it had invalid memory reads even with valid
+input files). The latest code didn't expose any more issues within an
+hour of running afl.
 
-The idea is to harden glibc's memcmp(3) to be partially timing-safe,
-maybe only in the -D_FORTIFY_SOURCE=2 mode.
+cu,
+-- 
+Hanno Böck
+http://hboeck.de/
 
-While I don't mind having memcmp(3) sometimes hardened, I think we
-primarily need to have an explicit timing-safe memory comparison
-function in glibc and elsewhere, and I think it'd be natural to adopt
-OpenBSD's timingsafe_bcmp() prototype and semantics:
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-http://www.openbsd.org/cgi-bin/man.cgi?query=timingsafe_bcmp
-
-People will need this very function e.g. when making LibReSSL portable:
-
-http://insanecoding.blogspot.com/2014/04/common-libressl-porting-mistakes.html
-
-Some good reading on the problem and possible solutions:
-
-http://rdist.root.org/2010/07/19/exploiting-remote-timing-attacks/
-http://rdist.root.org/2010/08/05/optimized-memcmp-leaks-useful-timing-differences/
-http://rdist.root.org/2010/11/09/blackhat-2010-video-on-remote-timing-attacks/
-
-https://www.isecpartners.com/blog/2011/february/double-hmac-verification.aspx
-
-Alexander
+Content of type "application/pgp-signature" skipped
