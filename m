@@ -1,57 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/05/9
-Message-ID: <20140805112910.GD29958@gremlin.ru>
-Date: Tue, 5 Aug 2014 15:29:10 +0400
-From: gremlin@...mlin.ru
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/23/1
+Message-ID: <CAMd2mh2=qWR5zy3kXw-Cf-jozZn1Df=R8+XskOk-O7dZc-t0QA@mail.gmail.com>
+Date: Mon, 22 Dec 2014 17:16:53 -0600
+From: endeavor <endeavor@...nbowsandpwnies.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Enforce use of HTTPS for MathJax in IPython
+Subject: CVE Request: libpng 1.6.15 Heap Overflow
 Content-Type: text/plain; charset=utf-8
 
-On 03-Aug-2014 12:19:49 -0400, Donald Stufft wrote:
+I am requesting a CVE for a heap-overflow in libpng 1.6.15. It's my
+understanding that versions 1.6.9-1.6.15 are vulnerable, and according to
+patch notes it looks like some revisions in the 1.5 branch may have been
+affected as well. However, I've only tested 1.6.15 and can only speak for
+it.
 
- >> Simple question: who do you trust more - your ISP or site owner?
- >> Or should I ask whether you trush either of them?
- > This is a nonsensical point too. I have to trust the site owners
- > to some degree. To what degree broadly depends on what the site
- > itself does however at the very least they'll be able to see
- > what account I'm attempting to use.
+Link to announcement of new version:
+http://sourceforge.net/p/png-mng/mailman/message/33173461/
 
-Or unable to see that unless _you_ deside to log in.
+Link to a description of the vulnerability:
+http://tfpwn.com/files/libpng_heap_overflow_1.6.15.txt
 
-Together with disabling cookies by default and wiping them on
-a regular basis, that may be wise (depending of the sites you
-visit, of course).
+Please let me know!
 
- > With enforced HTTPS and HSTS I don't have to trust my ISP.
+- Alex
 
-You should either trust them or avoid signing the contract :-)
-
-However, if you suspect them in something unpleasant, you may
-enforce HTTPS on _your_ side, using it everywhere (with sites
-that support it).
-
-Also, self-signed certificates (or own CA) is safer for your
-users than any third-party: when a server certificate changes
-without previous notice, user may be absolutely sure something
-went wrong.
-
- >> When a site allows anonymous access, that may be performed
- >> via HTTP. Authenticated (over HTTPS) users may (and normally
- >> should) work via HTTPS, but forcing all users to use HTTPS
- >> is "a VERY bad idea" // (q) Kurt Seifried, 2014-08-03
- > What is the downside to forcing HTTPS.
-
-Is this a question?
-
-Well, now I have a non-trivial answer to it: I've faced the error
-"ssl_error_no_cypher_overlap" several times when trying to access
-such HTTPS-only sites, and, instead of getting there "insecurely",
-I was unable to get there at all.
-
-Yes, I use modern OpenSSL version built without support for weak
-algorithms.
-
-
--- 
-Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
