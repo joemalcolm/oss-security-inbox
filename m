@@ -1,44 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/49
-Message-ID: <20140926001121.5499836a@pc>
-Date: Fri, 26 Sep 2014 00:11:21 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/6
+Message-ID: <5497EF36.6000400@oracle.com>
+Date: Mon, 22 Dec 2014 10:15:18 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: nss RSA forgery (CVE-2014-1568)
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 25 Sep 2014 23:17:58 +0200
-Hanno Böck <hanno@...eck.de> wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Some more info, but not much:
-> http://www.intelsecurity.com/advanced-threat-research/
+On 22/12/14 05:51, Hanno Böck wrote:
+> On Sun, 21 Dec 2014 12:31:07 +0100 Florian Weimer
+> <fw@...eb.enyo.de> wrote:
 > 
-> Initially I thought this is probably not such a big deal because the
-> bleichenbacher attack requires e to be very small (like e=3 or e=4)
-> and everyone uses e=65537 these days. But it seems I was wrong on
-> that, lots of CAs still with e=3.
+>>> Some folks want to run their servers within a few milliseconds
+>>> of each other, and do not care so much about security or
+>>> resiliency.
+> I perfectly understand that some people need more accuracy than
+> tlsdate can give. However it's probably rare, right? I don't see
+> any reason why average consumer hardware (Desktop, smartphone etc.)
+> would have any problem with the 1-2 sec max inaccuracy of tlsdate.
 > 
 
-Correcing me: There are not lots of, but exactly 6.
+Basically to agree with Kurt: reconciling logs across multiple systems
+often requires clocks to agree to within a few milliseconds a most.
+The log files you're trying to reconcile may be from machines on
+different continents as well which is why ntp is so useful: everyone
+has the same idea of time.  The potential for an added or removed
+second at end of of June and December can cause some excitement.
 
-Camerfirma_Chambers_of_Commerce_Root.pem: 3 (0x3)
-Camerfirma_Global_Chambersign_Root.pem: 3 (0x3)
-Digital_Signature_Trust_Co._Global_CA_1.pem: 3 (0x3)
-Digital_Signature_Trust_Co._Global_CA_3.pem: 3 (0x3)
-Go_Daddy_Class_2_CA.pem: 3 (0x3)
-Starfield_Class_2_CA.pem: 3 (0x3)
+I've also known a one or two second discrepancy break 'make'.   That
+was probably more to do with the fragility of that particular build
+system rather than a a clock synchronization issue, but the point is
+that properly accurate time is important to a lot of people.
 
+jch
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-Some background: having very small exponents for RSA isn't a problem if
-you do everything right, but it vastly increases the likelyhood of
-issues like this popping up. It'd seem like a good safeguard to get rid
-of all e=3 keys.
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iF4EAREIAAYFAlSX7y0ACgkQRQu7fpQvo8itMQD9Fbuiov2yuXo+3TOpuQxaD/if
+ZzCPwr93TbZ8PNIuYdYA/jUWPz7KyOTs6+0S8M/WP53pgJyBY77Y4ei72Txl7KrA
+=fN2l
+-----END PGP SIGNATURE-----
