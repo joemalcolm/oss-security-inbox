@@ -1,59 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/09/1
-Message-ID: <52CE42B4.2090406@redhat.com>
-Date: Thu, 09 Jan 2014 12:03:24 +0530
-From: Ratul Gupta <ratulg@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: drupal7-entity: multiple access bypass vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/8
+Message-ID: <20141222140949.GC32428@core.inversepath.com>
+Date: Mon, 22 Dec 2014 15:09:49 +0100
+From: Andrea Barisani <lcars@...rt.org>
+To: oss-security@...ts.openwall.com, ocert-announce@...ts.ocert.org, bugtraq@...urityfocus.com
+Subject: [oCERT-2014-011] UnZip input sanitization errors
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-The entity module for Drupal was recently reported to be affected by 
-multiple access bypass vulnerabilites, which could be exploited by an 
-attacker to gain unauthorized access to the data.
+#2014-011 UnZip input sanitization errors
 
-1) Comment, User and Node Statistics property access bypass
+Description:
 
-The module's entity wrapper access API doesn't sufficiently protect 
-comment, user and node statistics properties from unprivileged user access.
-This vulnerability is mitigated by the fact that a module must be 
-enabled that relies on the Entity property access API and it must be 
-configured to expose either comment, user or node statistics properties. 
-One example would be the RESTful Web Services module (RESTWS) with the 
-permission configured to access the comment, user or node resource for 
-untrusted web service consumers.
+The UnZip tool is an open source extraction utility for archives compressed in
+the zip format.
 
-2) Entity list property access bypass
+The unzip command line tool is affected by heap-based buffer overflows within
+the CRC32 verification, the test_compr_eb() and the getZip64Data() functions.
+The input errors may result in in arbitrary code execution.
 
-The module's entity wrapper access API doesn't sufficiently check entity 
-access on referenced entities such as taxonomy terms.
-This vulnerability is mitigated by the fact that a module must be 
-enabled that uses the access() method of entity metadata wrappers to 
-determine access to a property which references multiple entities to 
-which access is not granted. One example would be the RESTful Web 
-Services module (RESTWS) with respectively configured permissions on an 
-entity property or (entity reference) field, for example a list of 
-(unaccessible) referenced user entities on a node entity.
+A specially crafted zip file, passed to unzip -t, can be used to trigger the
+vulnerability.
 
-3) Unpublished comments access bypass
+Affected version:
 
-The module's entity_access() API doesn't protect unpublished comments 
-from being viewed by unprivileged users.
-This vulnerability is mitigated by the fact a module must be enabled 
-which uses the provided entity access API on comments and the comment 
-module must be enabled.
+UnZip <= 6.0
 
-The issues are said to be fixed in drupal7-entity-1.3.
+Fixed version:
+
+UnZip, N/A
+
+Credit: vulnerability report received from the Google Security Team.
+
+CVE: CVE-2014-8139 (CRC32 heap overflow), CVE-2014-8140 (test_compr_eb),
+     CVE-2014-8141 (getZip64Data)
+
+Timeline:
+
+2014-12-03: vulnerability report received
+2014-12-03: contacted maintainer
+2014-12-03: first patch provided by maintainer
+2014-12-04: report provides additional reproducers
+2014-12-03: second patch provided by maintainer
+2014-12-04: reporter confirms patch
+2014-12-10: contacted affected vendors
+2014-12-12: assigned CVEs
+2014-12-22: advisory release
 
 References:
-https://drupal.org/node/2169595
-https://bugzilla.redhat.com/show_bug.cgi?id=1050802
+http://www.info-zip.org/UnZip.html
 
-Can CVE's please be assigned to these issues?
+Permalink:
+http://www.ocert.org/advisories/ocert-2014-011.html
 
 -- 
-Regards,
+Andrea Barisani |                Founder & Project Coordinator
+          oCERT | OSS Computer Security Incident Response Team
 
-Ratul Gupta / Red Hat Security Response Team
-
+<lcars@...rt.org>                         http://www.ocert.org
+ 0x864C9B9E 0A76 074A 02CD E989 CE7F AC3F DA47 578E 864C 9B9E
+        "Pluralitas non est ponenda sine necessitate"
