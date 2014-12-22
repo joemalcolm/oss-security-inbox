@@ -1,27 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/25/1
-Message-ID: <20140625073906.GJ19028@dhcp-25-225.brq.redhat.com>
-Date: Wed, 25 Jun 2014 09:39:06 +0200
-From: Petr Matousek <pmatouse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/10
+Message-ID: <20141222152059.GA13352@hp.com>
+Date: Mon, 22 Dec 2014 07:20:59 -0800
+From: Grant Murphy <grant.murphy@...com>
 To: oss-security@...ts.openwall.com
-Cc: Mateusz Guzik <mguzik@...hat.com>
-Subject: CVE-2014-0206 -- Linux kernel: kernel memory disclosure in io_getevents()
+Subject: [grant.murphy@...com: CVE request for vulnerability in OpenStack Glance]
 Content-Type: text/plain; charset=utf-8
 
-A kernel memory disclosure was introduced in aio_read_events_ring() in
-v3.10 by commit a31ad380bed817aa25f8830ad23e1a0480fef797.  The changes
-made to aio_read_events_ring() failed to correctly limit the index into
-ctx->ring_pages[], allowing an attacker to cause the subsequent kmap()
-of an arbitrary page with a copy_to_user() to copy the contents into
-userspace.
+Just wondering if this has been missed? All changes have been merged and
+we are just waiting on a CVE id. The OpenStack VMT consider this to be a 
+critical issue.  
 
-Upstream patches:
+- Grant
 
-  https://lkml.org/lkml/2014/6/24/619
-  https://lkml.org/lkml/2014/6/24/623
 
-This issue was discovered by Mateusz Guzik of Red Hat.
+----- Forwarded message from "Murphy, Grant Charles" <grant.murphy@...com> -----
 
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+> Date: Mon, 15 Dec 2014 18:00:53 +0000
+> From: "Murphy, Grant Charles" <grant.murphy@...com>
+> To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+> Subject: [oss-security] CVE request for vulnerability in OpenStack Glance
+> 
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> A vulnerability was discovered in OpenStack (see below). In order to ensure full traceability, we need a CVE number assigned that we can attach to further notifications. This issue is already public, although an advisory was not sent yet.
+> 
+> Title: Glance v2 API unrestricted path traversal
+> Reporter: Masahito Muroi (NTT)
+> Products: Glance
+> Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
+> 
+> Description:
+> Masahito Muroi from NTT reported a vulnerability in Glance. By setting a malicious image location an authenticated user can download or delete any file on the Glance server for which the Glance process user has access to. Only setups using the Glance V2 API are affected by this flaw.
+> 
+> References:
+> https://launchpad.net/bugs/1400966
+> 
+> Thanks in advance,
+> 
+> Grant Murphy
+> OpenStack Vulnerability Management Team
+> 
+> 
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1
+> 
+> iQEcBAEBAgAGBQJUjyEvAAoJEJ3kO55VGiJS2ZwH/RmVDlq6ZycvDB+TRicOf1Ho
+> kam2t/cc/4fvaZN1BYTrcjaPn+HK9ETdNdh3cHwiC6UYgtEa7Gb3IiboY4fK/7Si
+> hrVdgdOWRB+I3dkGrHb+kAaWNGSKJoHahq3mQ5NuXg+oFjR42caslX3vn2f8tBnA
+> Ybgqvelu5S1ht5x4XBoagmb0gSafp6a4xik4cwf0FkbkqCnO/EE5beHVSYXu4aVG
+> VLGtgd3+l6EjvMoSKXkWKAGwMC1fLCV+ISr1e4CBng5EGSqFmiTYZghQ0e5mvO2q
+> 4QgEqAgUl1DwpRJYyNeS3dHILA32Nuu0NEKvGn61AdXzxfMZpok1GwLPTq+DWyk=
+> =meRY
+> -----END PGP SIGNATURE-----
+> 
+
+----- End forwarded message -----
+
+Content of type "application/pgp-signature" skipped
