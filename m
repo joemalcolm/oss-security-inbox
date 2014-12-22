@@ -1,73 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/14/6
-Message-ID: <CAJSfAy4zCgLzWn-Ka78VAPHqZO6Z+gXsRBp+OG78hwexBNaurQ@mail.gmail.com>
-Date: Fri, 14 Feb 2014 10:05:12 -0800
-From: Tom Dale <tom@...dale.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/2
+Message-ID: <5497BA72.90302@redhat.com>
+Date: Sun, 21 Dec 2014 23:30:10 -0700
+From: Kurt Seifried <kseifried@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2014-0046] XSS Vulnerability With {{link-to}} Helper in Non-block Form
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
-XSS Vulnerability With {{link-to}} Helper in Non-block Form
+On 21/12/14 10:51 PM, Hanno Böck wrote:
+> On Sun, 21 Dec 2014 12:31:07 +0100
+> Florian Weimer <fw@...eb.enyo.de> wrote:
+> 
+>> Some folks want to run their servers within a few milliseconds of each
+>> other, and do not care so much about security or resiliency.
+> 
+> I perfectly understand that some people need more accuracy than tlsdate
+> can give. However it's probably rare, right? I don't see any reason why
+> average consumer hardware (Desktop, smartphone etc.) would have any
+> problem with the 1-2 sec max inaccuracy of tlsdate.
 
-There is a vulnerability in the {{link-to}} helper in Ember.js. This
-vulnerability
-has been assigned CVE-2014-0046.
+Having to reconcile multiple logs/events across widely distributed
+systems, especially in high volume situations, 1-2 seconds is a deal
+breaker. Or people running SCADA systems for industrial plants. Or
+people that run financial systems. A lot of them care very much about
+security, and require accurate time, or else there's really no point to
+this all.
 
-Versions Affected: 1.2.0, 1.2.1, 1.3.0, 1.3.1
-Not affected: Versions prior to 1.2
-Fixed Versions: 1.2.2, 1.3.2
+To say nothing of a post incident forensics response, where loose time
+would make things a lot harder to figure out.
 
-Impact
--------
+So it's not an either/or situation (care about security, or have
+accurate time, sometimes we need both).
 
-In general, Ember.js escapes or strips any user-supplied content before
-inserting it in strings that will be sent to innerHTML.  However, a change
-made
-to the implementation of the {{link-to}} helper means that any user-supplied
-data bound to the {{link-to}} helper's title attribute will not be escaped
-correctly.
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-In applications that use the {{link-to}} helper in non-block form and bind
-the title attribute to user-supplied content, a specially-crafted payload
-could execute arbitrary JavaScript in the context of the current domain
-("XSS").
 
-All users running an affected release and binding user-supplied data to the
-{{link-to}} helper's title attribute should either upgrade or use one of the
-workarounds immediately.
-
-Releases
---------
-
-Releases are available on emberjs.com/builds/#/tagged
-
-Workarounds
------------
-
-Ensure that you escape any user-supplied value that you bind to the
-{{link-to}}
-helper's title attribute. For example, if you bind a value named userTitle:
-
- {{link-to "user" title=userTitle}}
-
-Ensure that you escape the value of userTitle using
-Ember.Handlebars.Utils.escapeExpression:
-
- var userTitle = this.get('userTitle');
- var safeUserTitle = Ember.Handlebars.Utils.escapeExpression(userTitle);
- this.set('userTitle', safeUserTitle);
-
-Patches
--------
-
-Patches are available as an attachment to the announcement on the
-emberjs-security list:
-
-https://groups.google.com/forum/#!topic/ember-security/1h6FRgr8lXQ
-
-Credits
--------
-
-This vulnerability was reported to us by Hyder Ali of Zoho. Many thanks for
-working with us on the patches and advisory.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
