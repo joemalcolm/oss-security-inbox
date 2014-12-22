@@ -1,58 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/25/7
-Message-ID: <535AC46F.3060502@canonical.com>
-Date: Fri, 25 Apr 2014 15:24:15 -0500
-From: Jamie Strandboge <jamie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/1
+Message-ID: <20141222065146.6b89a005@pc>
+Date: Mon, 22 Dec 2014 06:51:46 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: cups-browsed remote exploit
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
-On 04/02/2014 03:18 PM, cve-assign@...re.org wrote:
->> For this it creates a filter-script
+On Sun, 21 Dec 2014 12:31:07 +0100
+Florian Weimer <fw@...eb.enyo.de> wrote:
+
+> Some folks want to run their servers within a few milliseconds of each
+> other, and do not care so much about security or resiliency.
+
+I perfectly understand that some people need more accuracy than tlsdate
+can give. However it's probably rare, right? I don't see any reason why
+average consumer hardware (Desktop, smartphone etc.) would have any
+problem with the 1-2 sec max inaccuracy of tlsdate.
+
+> Reconciling this with cryptography is certainly a challenge.  On the
+> other hand, this does not have to be the default.
+
+I think it shouldn't be too hard to get both.
+You could do an asymmetric key exchange before you do any time
+transmission. Then the only thing you really need is a single
+authentication operation (HMAC or whatever). That shouldn't delay by
+any significant amount.
+
+> I think most desktop-based distributions could get away with something
+> like tlsdate.
 > 
->> snprintf
-> 
->> "%s/filter/pdftoippprinter \"$1\" \"$2\" \"$3\" \"$4\" \"$5 $extra_options\"\n",
->> p->name, pdl, make_model, cups_serverbin);
-> 
->> its easy to inject code to the script e.g. via model name or pdl key
->> which is taken from the LAN packets.
-> 
-> Use CVE-2014-2707.
-> 
+> In contrast, servers with long-running connections and I/O polling
+> loops often do not react gracefully to jumps in time.  (I once
+> disconnected a few hundreds, if not thousands of users from an IRC
+> server just by setting its time correctly.)  Sure, you can avoid that
+> by using the appropriate kernel clock for timeout handling, but I have
+> the impression that the correct clock changes every couple of years.
 
-This issue was reported as fixed in 1.0.51:
-http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7188
+tlsdate has tlsdated, I hope it acts intelligent and doesn't do time
+jumps. Haven't tested though.
 
-but it was found that the fix was incomplete with the full fix in 1.0.53:
-http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7194
-
-Should this get a second CVE or should we continue to use CVE-2014-2707?
-
-Furthermore, another security issue was also fixed in 1.0.53:
-http://bzr.linuxfoundation.org/loggerhead/openprinting/cups-filters/revision/7195
-
-"
-- cups-browsed: SECURITY FIX: Fix on usage of the
-  "BrowseAllow" directive in cups-browsed.conf. Before, if the
-  argument of a "BrowseAllow" directive is not understood it
-  is treated as the directive not having been there, allowing
-  any host if this was the only "BrowseAllow" directive. Now
-  we treat this as a directive which no host can fulfill, not
-  allowing any host if it was the only one. No "BrowseAllow"
-  directive means access for all, as before (Bug #1204).
-"
-
-I believe this should receive a CVE.
-
-Thanks
-
-References:
-https://bugzilla.novell.com/show_bug.cgi?id=871327
-https://bugs.linuxfoundation.org/show_bug.cgi?id=1204
 
 -- 
-Jamie Strandboge                 http://www.ubuntu.com/
+Hanno Böck
+http://hboeck.de/
 
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Download attachment "signature.asc" of type "application/pgp-signature" (885 bytes)
+Content of type "application/pgp-signature" skipped
