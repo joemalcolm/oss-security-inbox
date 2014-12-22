@@ -1,32 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/2
-Message-ID: <530ADB7B.6000701@redhat.com>
-Date: Mon, 24 Feb 2014 16:41:15 +1100
-From: Murray McAllister <mmcallis@...hat.com>
-To: oss-security@...ts.openwall.com
-CC: 739536@...s.debian.org
-Subject: xfe: directory masks ignored when creating new files on Samba and NFS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/22/7
+Message-ID: <CAB8XdGBm757d8SziB_s6rrhj_rURRSWnLU08MbvYLYPdV02S2A@mail.gmail.com>
+Date: Mon, 22 Dec 2014 12:00:28 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: "users@....apache.org" <users@....apache.org>, "dev@....apache.org" <dev@....apache.org>,  Apache Security Response Team <security@...che.org>, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: New SSL/TLS vulnerabilities in Apache CXF
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Two new security vulnerabilities are announced in Apache CXF that are fixed
+in the latest 3.0.3 and 2.7.14 releases:
 
-Robert Rottscholl reported that when creating a new file via X File 
-Explorer (xfe) on a Samba or NFS share, the user's mask was used for the 
-permissions instead of that specified by the Samba or NFS configuration. 
-Full details and patches are available from the following:
+a) Note on CVE-2014-3566 - SSL 3.0 support in Apache CXF, aka the "POODLE"
+attack
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=739536
+b) CVE-2014-3577: Apache CXF SSL hostname verification bypass
 
- From brief testing on Fedora with Samba and the "create mask" smb.conf 
-option, this issue only presented when running xfe as the root user. The 
-intended mask was used when running xfe as an unprivileged user. I don't 
-the equivalent NFS option.
+Both advisories are available here:
+http://cxf.apache.org/security-advisories.html
 
-Can a CVE please be assigned if one has not been already?
+Colm.
 
-Thanks,
 
---
-Murray McAllister / Red Hat Security Response Team
+-- 
+Colm O hEigeartaigh
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1069066
+Talend Community Coder
+http://coders.talend.com
+
