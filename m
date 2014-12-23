@@ -1,35 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/24/3
-Message-ID: <20140224125251.21841689@hboeck.de>
-Date: Mon, 24 Feb 2014 12:52:51 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/23/2
+Message-ID: <20141223152622.GC657@hp.com>
+Date: Tue, 23 Dec 2014 07:26:22 -0800
+From: Grant Murphy <grant.murphy@...com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE request: XSS in MODX Revolution before 2.2.11
+Subject: [OSSA-2014-041] Glance v2 API unrestricted path traversal
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+OpenStack Security Advisory: 2014-041 
+CVE: Requested
+Date: December 23, 2014
+Title: Glance v2 API unrestricted path traversal
+Reporter: Masahito Muroi (NTT)
+Products: Glance
+Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
 
-Can I get a CVE for this issue?
+Description:
+Masahito Muroi from NTT reported a vulnerability in Glance. By setting 
+a malicious image location an authenticated user can download or delete
+any file on the Glance server for which the Glance process user has 
+access to. Only setups using the Glance V2 API are affected by this flaw.
 
-MODX Revolution 2.2.11 release announcement:
-http://modx.com/blog/2014/01/21/revolution-2.2.11%E2%80%94security-fixes-and-prevent-change-loss/
-says
-"Prevent XSS on actionVar in header.tpl in the Manager"
+Kilo (development branch) fix:
+https://review.openstack.org/141706
 
-This is the git commit:
-https://github.com/modxcms/revolution/commit/77463eb6a8090f474b04fdc1b72225cb93c558ea
+Juno fix:
+https://review.openstack.org/142373
 
-I haven't found any other public sources / advisories for the XSS, so I
-assume it was detected by the MODX devs themselves.
+Icehouse fix:
+https://review.openstack.org/142788
 
+Notes:
+ * This fix was included in the kilo-1 development milestone and will be included
+   in future 2014.2.2 (juno) and 2014.1.4 (icehouse) releases.
 
-cu,
+ * The OpenStack VMT recommends revoking all credentials stored in files
+   accessible by Glance as a precautionary measure. 
+
+ * A CVE has been requested for this issue, the OpenStack VMT will issue an 
+   errata with the correct CVE number assigned once this information is available.
+
+References:
+https://launchpad.net/bugs/1400966
+
 -- 
-Hanno Böck
-http://hboeck.de/
+Grant Murphy
+OpenStack Vulnerability Management Team
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Content of type "application/pgp-signature" skipped
