@@ -1,54 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/28/1
-Message-ID: <20141128055707.GA29914@carla.jsg.id.au>
-Date: Fri, 28 Nov 2014 16:57:07 +1100
-From: Jonathan Gray <jsg@....id.au>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/24/5
+Message-ID: <549B434D.8080804@mccme.ru>
+Date: Thu, 25 Dec 2014 01:50:53 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Cc: xi@...olvent.net, ingy@...n.org
-Subject: libyaml / YAML-LibYAML DoS
+Subject: Re: Imagemagick fuzzing bug
 Content-Type: text/plain; charset=utf-8
 
-libyaml and the perl YAML-LibYAML (aka YAML-XS) module based
-on the same code have an "impossible" assert that can be
-triggered with the following yaml.  This is a reduced testcase
-of a crash found with the afl fuzzer.
+On 2014-12-25 00:32, Gynvael Coldwind wrote:
+>> You are aware that there is graphicsmagick which shares lots of code
+>> with im (it's an early fork)? It'd be nice to also report these issues
+>> to them if they apply. (I also reported a couple of issues in both
+>> im/gm lately and devs were always quick to fix things)
+>>
+>
+> Do you know if either im or gm backport fixes from each other?
+> I fuzzed only im, so I've reported to im. I don't mind reporting to both in
+> the future, but if they DO backport fixes, that would lead into collisions
+> (i.e. two different fixes for one bug, makes merging harder).
 
-      a: " 
-"     b: true
+I don't know about security fixes specifically but they have this in the 
+FAQ:
 
-In other words a crash/denial of service with untrusted yaml input.
-The libyaml author was contacted on the 21st and 27th of November.
-No response has been received but the issue has independently been
-reported publically since:
-https://bitbucket.org/xi/libyaml/issue/10/wrapped-strings-cause-assert-failure
+http://www.graphicsmagick.org/FAQ.html#how-often-does-graphicsmagick-pick-up-new-code-from-imagemagick
 
-[1] Parsing 'test.yaml': assertion "parser->simple_key_allowed || !required" failed: file "scanner.c", line 1113, function "yaml_parser_save_simple_key"
+GraphicsMagick never picks up new code from ImageMagick as distributed 
+by ImageMagick Studio LLC. [...]
 
-assert(parser->simple_key_allowed || !required);    /* Impossible. */
-
-Program received signal SIGABRT, Aborted.
-0x000008ab4466136a in kill () at <stdin>:2
-2       <stdin>: No such file or directory.
-        in <stdin>
-Current language:  auto; currently asm
-(gdb) bt
-#0  0x000008ab4466136a in kill () at <stdin>:2
-#1  0x000008ab446c37b9 in abort () at /usr/src/lib/libc/stdlib/abort.c:53
-#2  0x000008ab4463e254 in __assert2 (file=Variable "file" is not available.
-)
-    at /usr/src/lib/libc/gen/assert.c:52
-#3  0x000008aa98789dba in yaml_parser_save_simple_key (parser=0x7f7ffffbe940)
-    at scanner.c:1113
-#4  0x000008aa9878d6e7 in yaml_parser_fetch_plain_scalar (
-    parser=0x7f7ffffbe940) at scanner.c:1903
-#5  0x000008aa98789c14 in yaml_parser_fetch_next_token (parser=0x7f7ffffbe940)
-    at scanner.c:1039
-#6  0x000008aa98788ce6 in yaml_parser_fetch_more_tokens (parser=0x7f7ffffbe940)
-    at scanner.c:846
-#7  0x000008aa9879ef0b in yaml_parser_parse_block_mapping_key (
-    parser=0x7f7ffffbe940, event=0x7f7ffffbeb20, first=0) at parser.c:847
-#8  0x000008aa9879c641 in yaml_parser_state_machine (parser=0x7f7ffffbe940, 
-    event=0x7f7ffffbeb20) at parser.c:267
-#9  0x000008aa9879c394 in yaml_parser_parse (parser=0x7f7ffffbe940, 
-    event=0x7f7ffffbeb20) at parser.c:188
-#10 0x000008a880401294 in main (argc=2, argv=0x7f7ffffbec08) at run-parser.c:42
+-- 
+Alexander Cherepanov
