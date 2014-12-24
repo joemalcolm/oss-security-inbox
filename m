@@ -1,66 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/01/20/10
-Message-ID: <52DD80E3.7090602@redhat.com>
-Date: Mon, 20 Jan 2014 13:02:43 -0700
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/24/1
+Message-ID: <CAE2SPAayq=owNBYB+pbLLKebd9zy_tj=K1sssgB=HuGS_3Pgjg@mail.gmail.com>
+Date: Wed, 24 Dec 2014 12:22:22 +0100
+From: Bastien ROUCARIES <roucaries.bastien@...il.com>
 To: oss-security@...ts.openwall.com
-CC: Reed Loden <reed@...dloden.com>, Kurt Seifried <kseifrie@...hat.com>
-Subject: Re: CVE-2013-6488: Jenkins fails to sanitize input before adding it to the page
+Cc: jodie.cunningham+osssecurity@...il.com
+Subject: Imagemagick fuzzing bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-On 01/19/2014 04:31 PM, Murray McAllister wrote:
-> On 01/17/2014 05:39 PM, Reed Loden wrote:
->> On Fri, 17 Jan 2014 13:02:03 +1100 Murray McAllister
->> <mmcallis@...hat.com> wrote:
->> 
->>> We recently received a report from Teguh P. Alko about an
->>> issue affecting Jenkins. Input was not sanitized before adding
->>> it to the page. The fix is public here since the start of
->>> 2013:
->>> 
->>> https://github.com/jenkinsci/jenkins/commit/f8d2a0ba6c2e261f48287bdd95bd7a2d7a8d2d0e
->>>
->>
->>
->>> 
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2013-02-16
->> 
->> is the security advisory that includes the above fix.
->> 
->>> This could be used for copy and paste attacks, with the end
->>> result being similar to that of cross-site scripting attacks.
->>> It has been assigned CVE-2013-6488.
->> 
->> Fairly sure that's just a dupe of CVE-2013-0328. See 
->> http://seclists.org/oss-sec/2013/q1/368.
-> 
-> It is a dupe :( Thanks for pointing this out.
-> 
-> -- Murray McAllister / Red Hat Security Response Team
+during the previous month google and Jodie Cunningham.
+have done a security audit of imagemagick and found a lot of security bug:
+  * Avoid a DOS in vision.c due to an infinite loop.
+  * Avoid a SEGV due to a corrupted pnm file.
+  * Do not leak fd due to corrupted file.
+  * Fix a double free in pdb coder.
+  * Fix a SEGV due to corrupted dpc and xwd images.
+  * Fix a SEGV in dpx file handler.
+  * Fix a SEGV in malformed xwd file handler.
+  * Avoid a NULL pointer dereference in ps file handling.
+  * Fix a crash with corrupted viff file.
+  * Fix a NULL pointer dereference in wpg file handling.
+  * Do not continue on corrupted wpg file.
+  * Avoid an out of bound access in viff image.
+  * Avoid a heap buffer overflow in pdb file handling.
+  * Avoid an out of bound acess on malformed sun file.
+  * Avoid heap overflow in palm, pnm and xpm files.
+  * Fix heap overflow in quantum, palm and psd file.
+  * Fix handling of corrupted of psd, sun and xpm file.
+  * Fix corrupted (too many colors) psd file.
+  * Fix an out of bound acess in sun file.
+  * Fix handling of corrupted sun and wpg file.
+  * Fix heap overflow in pcx file, psd, pict and wpf files
+    and DOS in xpm files.
+  * Add additional PNM sanity checks.
+  * Avoid a crash to out of memory in magick/cache.c
+  * Fix a theorical out of bound access in magick/colormap-private.h
+  * Fix an out of bound access in palm file.
+  * Fixed throwing of exceptions in psd handling and fix a memory leak.
+  * Fixed boundary checks in DecodePSDPixels.
+  * Fix another out of bound problem in rle file.
+  * Fix crash due to corrupted dib file.
+  * Added checks to prevent overflow in rle file.
+  * Impose a limit of 10 million columns or rows in an input PNG
+  * Don't try to handle a "previous" image in the JNG decoder.
+  * Avoid a memory leak in quantum management.
+  * Avoid a crash in png coder.
+  * Thread limit should be at least 1 in order to be efficient.
+  * In psd file handling fixed parsing resource block and
+    avoid a crash.
+  * In cache fix usage of object after it has been destroyed.
+  * Avoid a memory leak in rle file handling.
+  * During identification of image do not fill memory
 
-Sorry, I should have been more be explicit: please REJECT
-CVE-2013-6488 as it is a duplicate of CVE-2013-6488
-
-- -- 
-Kurt Seifried Red Hat Security Response Team (SRT)
-PGP: 0x5E267993 A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJS3YDjAAoJEBYNRVNeJnmTayYQAJsCcIuDeiGmn+0lLSHAfokN
-cnz15OjOMRXUNdGk7qAzUcsBAGArN8iUyA/dGay5bv6/SmWRG8gWXgUsx3uCzDoL
-s2ZiMAXNi8qawKKuTQf3wM8YK/Q9jVI88vWDBE1ubbF9hJR+BmMVPHXTvyuoqURx
-tnwSwBf0H1Fcom0WSghMJfHZDBsMCYw9V/zWJ6X9CB/5CwPF6sBgECiS2x/cwAQh
-fV4xzybedIe62opUVblCbnw2YCu+NCCKpbRluM6NVcFL+Z4U73UPDEWzfpUtllIi
-JSas0FBsvjuh9F8svcfDn5h10mH0YtNkkCawKJlXjLjgLYXw35vVXZ+jkAYYzzDA
-4eAnJcKSRDTeATLVdYEpqgbUciq91HpH3l6ZVjbeRM8VyzhWhVAMOWHplCKTkCcC
-nTh9VQ7J1EemWCa9fH+vWqsxDLJ1quOyBiP/NC2lJxTkytAX9igZ6BdQgQQz2UhR
-ZPlil7RwdujZopU5py9TleY2n/fqZSvStLm/CwdIVM4JA/LgcksPLjuol1IiK8ee
-oc7UtHcAG0aNsulBk16xJk3LRZLRdOgm0ZqDdjDLSsTeeHm7BLnQIO07gJKqD6+l
-pVjx5jITgBJdnyWIMIZMUMs4ps0l+odVlHnOoJzvYVl7YH71VLD/CJpRET33nnQD
-3aCCYkM7RS2fsgL4EbVz
-=lWID
------END PGP SIGNATURE-----
+Patch queue is here:
+http://anonscm.debian.org/cgit/collab-maint/imagemagick.git/log/?h=debian-patches/6.8.9.9-4-for-upstream
