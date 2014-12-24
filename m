@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/13
-Message-ID: <54296A5A.3040808@coochey.net>
-Date: Mon, 29 Sep 2014 15:19:06 +0100
-From: Giles Coochey <giles@...chey.net>
-To: chet.ramey@...e.edu, oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2014-6271: remote code execution through bash (3rd vulnerability)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/24/2
+Message-ID: <20141224123049.5e047286@pc>
+Date: Wed, 24 Dec 2014 12:30:49 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: Bastien ROUCARIES <roucaries.bastien@...il.com>
+Cc: oss-security@...ts.openwall.com, jodie.cunningham+osssecurity@...il.com
+Subject: Re: Imagemagick fuzzing bug
 Content-Type: text/plain; charset=utf-8
 
-On 29/09/2014 14:07, Chet Ramey wrote:
-> On 9/29/14, 8:55 AM, Giles Coochey wrote:
->> On 29/09/2014 12:17, Loganaden Velvindron wrote:
->>> HI Chet, As you are aware, a sixth security issue has been discovered.
->>> Due to the nature of the vulnerability, I believe that it's best to break
->>> backward compatibility as done by FreeBSD and NetBSD until a proper patch
->>> is developed. We are lucky to have security researchers reporting their
->>> findings publicly. What about others that don't ? I strongly believe that
->>> it's much safer to have it disabled, and have a complete and
->>> comprehensive audit of the source code, and then re-enable it.
->> Am I the only one who is wondering: Who is paying Chet to do this?
-> Nobody is paying me to do this.
->
-So, as a note to everybody suggesting a "complete and comprehensive 
-audit of the source code", I think such suggestions be backed up with 
-some supportive technical manpower or some generous donations to Chet!!! 
-:-) ;-)
+On Wed, 24 Dec 2014 12:22:22 +0100
+Bastien ROUCARIES <roucaries.bastien@...il.com> wrote:
+
+> during the previous month google and Jodie Cunningham.
+> have done a security audit of imagemagick and found a lot of security
+> bug:
+
+Oh...
+
+You are aware that there is graphicsmagick which shares lots of code
+with im (it's an early fork)? It'd be nice to also report these issues
+to them if they apply. (I also reported a couple of issues in both
+im/gm lately and devs were always quick to fix things)
 
 -- 
-Regards,
+Hanno Böck
+http://hboeck.de/
 
-Giles Coochey, CCNP, CCNA, CCNAS
-NetSecSpec Ltd
-+44 (0) 8444 780677
-+44 (0) 7584 634135
-http://www.coochey.net
-http://www.netsecspec.co.uk
-giles@...chey.net
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6454 bytes)
+Content of type "application/pgp-signature" skipped
