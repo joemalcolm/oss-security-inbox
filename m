@@ -1,38 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/6
-Message-Id: <20141120065652.889366FC001@smtpvmsrv1.mitre.org>
-Date: Thu, 20 Nov 2014 01:56:52 -0500 (EST)
-From: cve-assign@...re.org
-To: donald@...fft.io
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, 725847@...s.debian.org
-Subject: Re: Requesting a CVE for pip - Local DoS with predictable temp directory names
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/25/5
+Message-ID: <CAAnPYQ55GEgBLTEUZLmt0tHd7R_9F3zkAKo=xeg3=kX5zUWniw@mail.gmail.com>
+Date: Thu, 25 Dec 2014 17:14:16 +0000
+From: Gynvael Coldwind <gynvael@...dwind.pl>
+To: oss-security@...ts.openwall.com
+Subject: Re: Imagemagick fuzzing bug
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Well, that clears things up. Thanks Alex!
 
-> because the build directory is predictable a local DoS is possible
-> simply by creating a /tmp/pip-build-<username>/ directory owned by
-> someone other than the defined user
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=725847
-> https://github.com/pypa/pip/pull/2122
+I'll run my samples through gm and report these as well.
 
-Use CVE-2014-8991.
+--
+Gynvael
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUbY7BAAoJEKllVAevmvms8tIH/i8+HMV/TYDQcbr1CZfhfUne
-3IPnX17hHUKObil3ryDSzm0aFAWNWz0hxHslJecSKNi0iBmLLR/1ItCbIDCZQ18Y
-n8Q9ygJiXYTO5AIA3/UU40G8jQ4PE/lS/jXBlGYEvrUFz1gBhylVe5sX5EdxU5su
-97Tk6p/f4FhlOE5abrXLG1Ec9jZdkARlW9EnbmInrjXpIppgZFZQp0EVo+BUP9Ea
-h5slMIppNkXIAXhqoT+lIOM/A9l5rBP+GQ5YlxaQY8UsGuOfi5coXvbp/iL8ZB7X
-nZD1Xy2aTFFNt1YTmBBMJEr2H06Lrd1+F/xSCTiIgMuCG3Fpy9Wg80TxoOuxQ+0=
-=rTeG
------END PGP SIGNATURE-----
