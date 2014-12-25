@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/13/6
-Message-ID: <20141013191112.GA9817@openstack.org>
-Date: Mon, 13 Oct 2014 19:11:13 +0000
-From: Jeremy Stanley <jeremy@...nstack.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Nova
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/25/1
+Message-Id: <20141225072832.4899B13A53F@smtpvmsrv1.mitre.org>
+Date: Thu, 25 Dec 2014 02:28:32 -0500 (EST)
+From: cve-assign@...re.org
+To: luto@...capital.net
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux x86_64 userspace address leak
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public,
-although an advisory was not sent yet.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Title: Nova VMware driver may connect VNC to another tenant's console
-Reporter: Marcio Roberto Starke
-Products: Nova
-Versions: up to 2014.1.3
+> On all* Linux x86_64 kernels, malicious user programs can learn the
+> TLS base addresses of threads** that they preempt.
 
-Description:
-Marcio Roberto Starke reported a vulnerability in the Nova VMware
-driver. A race condition in its VNC port allocation may cause it to
-connect the wrong console if instances are created concurrently. By
-repeatedly spawning new instances, an authenticated user may be able
-to gain unauthorized console access to instances belonging to other
-tenants. Only Nova setups using the VMware driver and the VNC proxy
-service are affected.
+> In principle, this bug will allow programs to partially bypass ASLR
 
-References:
-https://launchpad.net/bugs/1357372
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86?id=f647d7c155f069c1a068030255c300663516420e
 
-Thanks in advance,
+Use CVE-2014-9419.
 
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (950 bytes)
+iQEcBAEBAgAGBQJUm7woAAoJEKllVAevmvms++EIALuBBPWGrt7W8K5kbrMb5bzG
+Sy8JSp42fXiZ8wgenlrrhzU70VvvjjKYcwklsO3MFTQI/6PEb8297hbc/q+lL6TW
+00p6vhfwUIgFdx2QSj/hzU143mE5F7zygMDRcHe4YupTWZNRmXKIvizn/JJ94gjO
+dghgjBXqW4jh4i6StIDruwoG4gQOu8BDUQ/bmlYB4MJOBBT2OBaDZeNc2DtTJpDI
+d2Dd0PO7jFGzvXZulVXgfIkuSh51aEtXyJ0vwQQ9EtE89EFcBCHlmFFZt+N9sX0M
+U5Nz7gHGeCtakGRMHnt9+94mRaERb/91mS2U8GEBKzRM1LGKWpOnztCHaOwGxc8=
+=S2To
+-----END PGP SIGNATURE-----
