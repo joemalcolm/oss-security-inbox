@@ -1,21 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/25/34
-Message-ID: <20140925175813.GB2921@openwall.com>
-Date: Thu, 25 Sep 2014 21:58:13 +0400
-From: Solar Designer <solar@...nwall.com>
-To: Christos Zoulas <christos@...las.com>
-Cc: oss-security@...ts.openwall.com, chet.ramey@...e.edu
-Subject: Re: CVE-2014-6271: remote code execution through bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/25/3
+Message-ID: <549C1F78.3040309@river.com>
+Date: Thu, 25 Dec 2014 07:30:16 -0700
+From: Richard Johnson <rdump@...er.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: can we talk about secure time?
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 25, 2014 at 01:34:51PM -0400, Christos Zoulas wrote:
-> I think that at this point the only salvation is to disable function
-> import by default and provide a command line flag and a "set" flag
-> to explicitly enable it (so that scripts that depend on it can
-> easily be fixed). It is not a widely used feature, and both subshells
-> and sourced scripts don't need it or use it. It might have seemed
-> like a good idea a couple of decades ago, but it needs to go.
+On 2014-12-21 22:51, Hanno Böck wrote:
+> I perfectly understand that some people need more accuracy than tlsdate
+> can give. However it's probably rare, right? I don't see any reason why
+> average consumer hardware (Desktop, smartphone etc.) would have any
+> problem with the 1-2 sec max inaccuracy of tlsdate.
 
-Good idea to also add a "set" flag.  Thanks!
+It's typical to require at least 1/2 second accuracy for log correlation. 
+This is not just for some people, but (for an example) at academic 
+institutions where the staff is running average consumer hardware.
 
-Alexander
+tlsdate is certainly an OK boundary sanity check on more accurate time, or for 
+initial stepping on a new boot or new clock start.
+
+
+Richard
+
+
