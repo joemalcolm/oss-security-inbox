@@ -1,62 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/01/3
-Message-ID: <52ECB323.7080506@mccme.ru>
-Date: Sat, 01 Feb 2014 12:41:07 +0400
-From: Alexander Cherepanov <cherepan@...me.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/26/1
+Message-ID: <CABob6ir4JXq5cG+bvnepcKm-8Gx9qDZmk-gP+j9+edNKbchSNw@mail.gmail.com>
+Date: Fri, 26 Dec 2014 01:12:49 +0100
+From: Lukas Odzioba <lukas.odzioba@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership
+Subject: Re: CVE Request Linux kernel: fs: isofs: infinite loop in CE records
 Content-Type: text/plain; charset=utf-8
 
-On 2014-02-01 03:27, Solar Designer wrote:
-> On Fri, Jan 31, 2014 at 08:28:11PM +0100, rf@...eap.de wrote:
->>>>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
->>     SD> On Wed, Jan 22, 2014 at 11:51:39AM +0100, rf@...eap.de wrote:
->>     >> >>>>> "SD" == Solar Designer <solar@...nwall.com> writes:
->>     SD> Are Qlustar's security updates (not just security advisories)
->>     SD> publicly available?
->>     >>
->>     >> Yes, all our packages are publicly available from our website.
->>
->>     SD> Where do I find them?  Somehow I only found "Qlustar Installer
->>     SD> 8.1.0-3/precise Size: 705MB".
->>
->> http://repo.qlustar.com/repo/ubuntu
-> 
-> For example, how do I find your most recent security updates in that
-> tree, for these two advisories? -
-> 
-> https://qlustar.com/news/qsa-0131141-linux-kernel-vulnerabilities
-> https://qlustar.com/news/qsa-0131142-security-bundle
+2014-12-17 12:02 GMT+01:00 P J P <ppandit@...hat.com>:
+> Upstream fix:
+> - -------------
+>   -> https://git.kernel.org/linus/f54e18f1b831c92f6512d2eedb224cd63d607d3d
 
-The advisories don't mention the release of Qlustar which they apply to
-but it seems to be Qlustar 8.1. Then, I think, you look into
+if (++rs->cont_loops > RR_MAX_CE_ENTRIES)
+Shouldn't it be like this, instead of >=?
 
-http://repo.qlustar.com/repo/ubuntu/dists/8.1-precise/main/binary-amd64/Packages.gz
-http://repo.qlustar.com/repo/ubuntu/dists/8.1-precise-proposed-updates/main/binary-amd64/Packages.gz
-
-and locate the interesting files. Here they are:
-
-$ curl -I
-http://repo.qlustar.com/repo/ubuntu/pool/main/q/qlustar-kernel/linux-image-ql-generic_3.12.9-ql-generic-18_amd64.deb
-HTTP/1.1 200 OK
-Date: Sat, 01 Feb 2014 08:31:14 GMT
-Server: Apache/2.2.22 (Ubuntu)
-Last-Modified: Fri, 31 Jan 2014 14:41:32 GMT
-ETag: "5c090b-418-4f1452b84bf00"
-Accept-Ranges: bytes
-Content-Length: 1048
-Content-Type: application/x-debian-package
-
-$ curl -I
-http://repo.qlustar.com/repo/ubuntu/pool/main/i/image-generator/qlustar-module-core-precise-amd64-8.1.0_8.1.0.7-b431f855_all.deb
-HTTP/1.1 200 OK
-Date: Sat, 01 Feb 2014 08:31:27 GMT
-Server: Apache/2.2.22 (Ubuntu)
-Last-Modified: Fri, 31 Jan 2014 16:54:21 GMT
-ETag: "5e0aa8-426d9ba-4f14706820940"
-Accept-Ranges: bytes
-Content-Length: 69654970
-Content-Type: application/x-debian-package
-
--- 
-Alexander Cherepanov
+Lukas
