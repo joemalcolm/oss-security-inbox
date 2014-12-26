@@ -1,22 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/26/1
-Message-ID: <20141126015315.4e90372f@pc>
-Date: Wed, 26 Nov 2014 01:53:15 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: buffer overflow in ksba_oid_to_str in Libksba
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/26/3
+Message-ID: <alpine.LFD.2.10.1412261914220.28221@javelin.pnq.redhat.com>
+Date: Fri, 26 Dec 2014 19:19:27 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Andy Lutomirski <luto@...capital.net>
+Subject: Re: CVE Request: Linux x86_64 userspace address leak
 Content-Type: text/plain; charset=utf-8
 
-This and some other (likely minor) issues were found with american fuzzy
-lop and address sanitizer.
++-- On Thu, 18 Dec 2014, Andy Lutomirski wrote --+
+| On all* Linux x86_64 kernels, malicious user programs can learn the
+| TLS base addresses of threads** that they preempt.
+| 
+| In principle, this bug will allow programs to partially bypass ASLR
+| when attacking other user programs.  Figuring out how to adapt the
+| test code to do that is left as an exercise to the reader.
+| 
+| https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86?id=f647d7c155f069c1a068030255c300663516420e
+| 
+| ** The attack won't work against 64-bit threads with TLS bases > 4GB,
+| but AFAIK that's unusual.
 
-https://blog.fuzzing-project.org/2-Buffer-overflow-and-other-minor-issues-in-GnuPG-and-libksba-TFPA-0012014.html
+  It seems to require 32bit interfaces(CONFIG_X86_32). On x86_64 Fedora/RHEL 
+kernels, it says:
 
--- 
-Hanno Böck
-http://hboeck.de/
+===
+$ cat /etc/redhat-release 
+Fedora release 21 (Twenty One)
+$ 
+$ cc -xc -o estest estest.c 
+$ cc -xc -o gsbasetest gsbasetest.c 
+$ 
+$ ./estest 
+estest: set_thread_area: Function not implemented
+$ 
+$ ./gsbasetest 
+[OK]    ARCH_SET_GS worked
+[OK]    Writing 0 to gs worked
+[FAIL]  gsbase was corrupted
+$
+===
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
