@@ -1,65 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/26/3
-Message-ID: <20140926055447.GB21051@scapa.corsac.net>
-Date: Fri, 26 Sep 2014 07:54:48 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
-To: Marcus Meissner <meissner@...e.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: nss RSA forgery (CVE-2014-1568)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/26/2
+Message-ID: <alpine.LFD.2.10.1412261313280.19448@javelin.pnq.redhat.com>
+Date: Fri, 26 Dec 2014 13:17:25 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request Linux kernel: fs: isofs: infinite loop in CE records
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 25, 2014 at 12:10:36AM +0200, Marcus Meissner wrote:
-> On Thu, Sep 25, 2014 at 12:03:21AM +0200, Hanno Böck wrote:
-> > One serious vuln per day isn't enough, so nss decided to bring us
-> > another one.
-> > 
-> > Mozilla reports this:
-> > https://www.mozilla.org/security/announce/2014/mfsa2014-73.html
-> > Bugtracker entry still private, so hard to judge about details.
-> > Interesting: Two independent discoveries (we had the same with
-> > heartbleed and I couldn't believe this was coincidence).
-> > 
-> > This is what mcaffee has to say:
-> > http://blogs.mcafee.com/executive-perspectives/need-know-berserk-mozilla
-> > 
-> > They say its related to BER/ASN1-parsing, but adam langley disagrees:
-> > https://twitter.com/agl__/status/514881918110683136
-> > 
-> > 
-> > And it seems cyassl had something similar, also found by intel:
-> > http://www.yassl.com/yaSSL/Blog/Entries/2014/9/12_CyaSSL_3.2.0_Released.html
++-- On Fri, 26 Dec 2014, Lukas Odzioba wrote --+
+| if (++rs->cont_loops > RR_MAX_CE_ENTRIES)
+| Shouldn't it be like this, instead of >=?
 
-So, according to:
+  IIUC, cont_loops ranges from 0 to 31, and at 32 it goes to 'out' and 
+returns.
 
-http://www.intelsecurity.com/advanced-threat-research/#
-http://tif.mcafee.com/threats/12817
-
-that's indeed the same (or really close) vulnerability. Can a CVE be
-assigned?
-> > 
-> > No real details yet and information seems confusing.
-> 
-> I also see gnutls posted a new release some days, with this entry without CVE
-> 
-> http://article.gmane.org/gmane.comp.encryption.gpg.gnutls.devel/7663
-> "** libgnutls: Fixed issue with certificates being sanitized by gnutls prior
-> to signature verification. That resulted to certain non-DER compliant modifications
-> of valid certificates, being corrected by libtasn1's parser and restructured as
-> the original. Issue found and reported by Antti Karjalainen and Matti Kamunen from
-> Codenomicon."
-> 
-> which smells similar.
-> 
-When trying to test NSS updates I tried with epiphany browser, which
-uses gnutls (through libsoup and glib-networking), and it seemed indeed
-affected. It's apparently fixed in the 3.3 branch at 3.3.8:
-
-http://article.gmane.org/gmane.network.gnutls.general/3593
-
-Can a CVE be assigned too?
-
-Regards,
--- 
-Yves-Alexis Perez
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+--
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
