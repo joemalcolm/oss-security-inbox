@@ -1,31 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/11/5
-Message-ID: <CALi+ztG4iHXeUefaW7b3JWwBEUco+emA-qC3sW+WLc_cqRyFTA@mail.gmail.com>
-Date: Tue, 11 Mar 2014 09:50:45 -0700
-From: Chris Palmer <snackypants@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-0131 -- kernel: net: use-after-free during segmentation with zerocopy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/26/5
+Message-Id: <20141226160059.D5FE26C0038@smtpvmsrv1.mitre.org>
+Date: Fri, 26 Dec 2014 11:00:59 -0500 (EST)
+From: cve-assign@...re.org
+To: renorobert@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: PIE bypass using VDSO ASLR weakness
 Content-Type: text/plain; charset=utf-8
 
-It would be nice to clarify this bug description. It's a kernel memory
-disclosure bug (not a memory leak in the sense of failing to collect
-garbage). Although UAF is often worse than that, it's not in this case,
-because there's 0 chance the after-free-user of the fragment will think the
-fragment is bigger than it is and subsequently write too much data into it.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Is that right?
-On Mar 10, 2014 9:41 AM, "Petr Matousek" <pmatouse@...hat.com> wrote:
+> Given that ASLR is not effective in VDSO and comes down to 11 quality bits
+> as per pax test making return-to-vdso feasible even for PIE binary, whether
+> this should be considered as a bug and CVE be assigned?
 
-> A flaw was found in the way segmentation was performed on skbs
-> originated from vhost-net when zerocopy feature was enabled.
->
-> This flaw could be potentially used to leak kernel memory.
->
-> Upstream patch submission:
-> http://marc.info/?l=linux-netdev&m=139446896921968&w=2
->
-> --
-> Petr Matousek / Red Hat Security Response Team
-> PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
->
+Yes, we can proceed to CVE assignment. The more recent discussion
+hasn't been on oss-security with, for example:
 
+   https://git.kernel.org/cgit/linux/kernel/git/luto/linux.git/commit/?h=x86/vdso&id=bc3b94c31d65e761ddfe150d02932c65971b74e2
+   http://marc.info/?l=linux-kernel&m=141911002822659&w=2
+
+This apparently mentions both the original discovery:
+
+   The current algorithm is buggy: the vdso has about a 50%
+   probability of being at the very end of a PMD.
+
+and a second discovery that was made separately:
+
+   The current algorithm also has a decent chance of failing outright
+   due to incorrect handling of the case where the top of the stack is
+   near the top of its PMD.
+
+Here, our question, for anyone, is: is there a security impact from
+the "failing outright" outcome? Or is there only a performance impact
+(e.g., any correctly written application will continue to work, but
+will not benefit from any vDSO functionality)?
+
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUnYXEAAoJEKllVAevmvmsyc0H/ReEutiGsw2aw+sfLPmeGvTK
+pf1pWcDyVOOllHQvPD4aF5ZwIWNDIjFV17nKq9TVg6VLr509HifeCyAdgNuU7xEU
+7UWTL8JqvRmVVPz4nTqwTcF3nd4kcjdXbLvqAKah6UL2XvOikqNlJWBjqo74BRuA
+a8GcSU2UbudcOlMmc0+ryueB32YLaZ7xk1rvU+7FLIP/A+tKkY8Lt0B/cJvaLVGc
+QDokgodKmtm68BRw6T1jKhyY9BDH0t7Hk+t1rpHx4ArIRDboBT+wnY5v2r5o4YlJ
+7wa96vAslhxzU/RnQ7m3xvlYCCpNGtNF7Kb27KtuN2nZStFwSryY7ybj8YjJs2A=
+=inW/
+-----END PGP SIGNATURE-----
