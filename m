@@ -1,32 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/22/2
-Message-ID: <CACYkhxi_uwOLB-MDP4iE8LN-O5Yrc0PcV3w4c6b3gj_mqQVfzw@mail.gmail.com>
-Date: Sun, 23 Feb 2014 08:12:21 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/27/1
+Message-ID: <CA+95qVR+P4UYrBQmEoGN_j+BTSLN5YuX7N5WsQkYDrj2JLksVg@mail.gmail.com>
+Date: Sat, 27 Dec 2014 16:30:05 +1300
+From: Chris Cormack <chris@...ballofwax.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: temporary file creation vulnerability in Redis
+Subject: CVE request: XSS issues in Koha
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi All
 
-On 23 February 2014 07:35, Matthew Hall <mhall@...omputing.net> wrote:
+As a current release maintainer for Koha I would like to request a CVE
+number for an XSS vulnerability that has been address by Koha releases
+3.16.6 and 3.18.2
 
->    641      snprintf(tmpfile,256,"temp-%d.rdb", (int) getpid());
->    642      fp =3D fopen(tmpfile,"w");
-> ...
->    699      if (rename(tmpfile,filename) =3D=3D -1) {
->
->
-This looks like the standard pattern for atomic file writing.  The temp
-file would
-probably be in the same directory as the data file, since cross-device
-rename()
-doesn't work.
+The bug fixed is
+http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=13425
+There is an xss vulnerability in 3.16, 3.18 and master in the opac and
+intranet facets
 
-This class of vulnerability relies on the fact that other users have write
-access
-to the directory that the tempfile is written to.
+Thank you
 
-Regards,
-  Michael
+Chris
 
