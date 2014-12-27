@@ -1,44 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/06/06/13
-Message-ID: <5391B03D.4030601@debian.org>
-Date: Fri, 06 Jun 2014 13:12:45 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/27/2
+Message-ID: <549E36C1.5020309@internot.info>
+Date: Sat, 27 Dec 2014 15:34:09 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [FD] Bug in bash <= 4.3 [security feature bypassed]
+Subject: libbfd / bfd
 Content-Type: text/plain; charset=utf-8
 
-On 06/06/14 03:51, Jeffrey Walton wrote:
-> It looks like Rage Against The Cage has been rediscovered. Also known
-> as Android ADB Setuid bug.
+Hi,
 
-It appears to be the same class of implementation error (calling
-setuid() without checking whether it succeeded) in a different codebase
-- analogous to the way lots of codebases have an off-by-one buffer
-overflow, without off-by-one buffer overflows all being rediscoveries of
-the same bug.
+So, was it worked out where exactly bfd bugs/vulns should be reported to?
+I've got some new ones to report.
 
-If something invokes bash (e.g. via system()) with untrusted input while
-setuid, I would argue that that's a vulnerability in the invoking
-process; the fact that bash tries to drop privileges is a hardening
-measure (attempting to mitigate other projects' vulnerabilities). So I'd
-characterize this as "bash had a hardening measure that doesn't work as
-well as it was meant to". It's still a bug, and it would still be good
-if the maintainers of bash fixed it so it could mitigate future
-vulnerabilities.
 
-In my view, setuid[1] processes are the ones doing something unusual and
-risky, so the onus should be on the authors of setuid code to:
-
-* consider whether it actually needs to be setuid
-* if it does, implement it securely
-* drop privileges as soon as feasible
-* avoid using libraries that are not designed and documented to be
-  setuid-safe, at least until after privileges have been irrevocably
-  dropped
-
-(that last point is not relevant here but is relevant in general)
-
-    S
-
-[1] or setgid, or setcap +ep
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
 
