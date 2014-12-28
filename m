@@ -1,46 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/08/16
-Message-ID: <5435670C.5080305@redhat.com>
-Date: Wed, 08 Oct 2014 10:32:12 -0600
-From: Kurt Seifried <kseifried@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/28/3
+Message-ID: <20141228212037.GC4301@kludge.henri.nerv.fi>
+Date: Sun, 28 Dec 2014 23:20:37 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-CC: wmealing@...hat.com
-Subject: Re: CVE request  for VDSM denial of service
+Subject: Re: CVE request: Reflected XSS in Nibbleblog <= v4.0.1
 Content-Type: text/plain; charset=utf-8
 
-On 08/10/14 03:34 AM, Sven Kieske wrote:
-> 
-> 
-> On 08/10/14 09:34, Wade Mealing wrote:
->> Gday,
->>
->> The issue (outlined here https://bugzilla.redhat.com/show_bug.cgi?id=1148688 ) allows
->> an attacker to hold open an ssl connection effectively denying new connections the
->> ability to complete any new ssl connections.
->>
->> I would like a CVE number to assign to this issue.  Please assign me one.
-> 
-> Doesn't RH assign it's own CVEs anymore?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-We do, but for public issues we prefer to ask here sometimes so as to
-prevent duplicate assignments (e.g. it is possible for a race condition
-to occur, Red Hat and Mitre both see something new, we see no CVE for it
-so we both assign one).
+> Advisory: http://seclists.org/fulldisclosure/2014/Nov/38
+> Vendor blog post: http://blog.nibbleblog.com/post/nibbleblog-v4.0.2-coffee/
 
-I believe this one is
-https://www.mail-archive.com/vdsm-patches@lists.fedorahosted.org/msg68420.html
-(but don't quote me, wmealing is in .au and asleep so I can't confirm).
+CVE-2014-8996 has been assigned for this issue.
 
-> I also wonder why this bug wasn't reported to upstream
-> (wrong BZ "Product" at least it should get cloned to ovirt).
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Because we learned about it from an upstream source.
-
-
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+iEYEARECAAYFAlSgdCUACgkQXf6hBi6kbk8eoQCgl0UDgkXdPOIVKrjDKpVxbWS2
+yLYAnjXkJUaZR1e05m0iE/bX64hOXxGR
+=Qp2i
+-----END PGP SIGNATURE-----
