@@ -1,80 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/16/5
-Message-ID: <20141216165119.GA31409@kludge.henri.nerv.fi>
-Date: Tue, 16 Dec 2014 18:51:19 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/28/2
+Message-Id: <9A20D4C2-8A8F-4B9D-ABC6-4D489AC47258@technologysecure.com>
+Date: Sun, 28 Dec 2014 13:33:26 -0500
+From: Yury German <yury@...hnologysecure.com>
 To: oss-security@...ts.openwall.com
-Cc: plugins@...dpress.org, moderators@...db.org, wpscanteam@...il.com
-Subject: CVE-2014-9119: DB Backup plugin for WordPress download.php file Parameter Remote Path Traversal File Access
+Subject: mpg123 CVE Assignment?
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello All,
 
-Product: WordPress plugin db-backup
-Plugin page: https://wordpress.org/plugins/db-backup/
-Developer: Syed Amir Hussain "syedamirhussain91"
-Vulnerability Type: Remote Path Traversal File Access
-CWE-23: Relative Path Traversal
-Vulnerable Versions: 4.5 and earlier
-Fixed Version: N/A
-Vendor Notification: 2014-11-27
-Public Disclosure: 2014-12-16
-CVE Reference: CVE-2014-9119
-Criticality: High
+Did a CVE ever get assigned to mpg123 (Version 1.18.0) (http://mpg123.org/cgi-bin/news.cgi <http://mpg123.org/cgi-bin/news.cgi>). I have searched but can not find any, it is a regression bug, but I could not find any assigned to the original bug as well.
 
-Vulnerability details:
+http://sourceforge.net/p/mpg123/bugs/201/
 
-DB Backup plugin for WordPress contains a flaw that allows traversing outside of
-a restricted path. The issue is due to the download.php script not properly
-sanitizing user input, specifically path traversal style attacks (e.g. '../').
-With a specially crafted request, a remote attacker can gain read access to
-arbitrary files, limited by system operational access control. This
-vulnerability can be used to get WordPress authentication keys and salts,
-database address and credentials, which can be used in certain environments to
-elevate privileges and execute malicious PHP code.
+If none are assigned can we get one assigned?
 
-Root cause:
+=== Text from Site ===
+2014-01-31 Thomas: mpg123 1.18.0 fixing regressions from 1.14.x
+Regression fix: Ensure decoder reinitialization on combination of seek and resync (buffer overflow bug 201, introduced in 1.14.1).
 
-Unsanitized user input to readfile() function.
 
-Proof-of-concept:
+Thank you,
+Yury German
 
-/wp-content/plugins/db-backup/download.php?file=../../../wp-config.php
+Content of type "text/html" skipped
 
-Timeline:
-
-2014-11-27: Reported to developer and WordPress plugins team.
-2014-11-27: CVE assigned and reported to developer.
-2014-11-28: Communication with developer and he said this will be fixed.
-2014-12-02: Asked status from developer.
-2014-12-03: Developer says this will be fixed by 7th.
-2014-12-07: Asked status from developer.
-2014-12-08: Developer responds.
-2014-12-09: Asked more details from developer.
-2014-12-10: More discussion about the solution and new disclosure date set.
-2014-12-16: Agreed disclosure date was 15th, I don't understand issue with
-patching so public disclosure. Please note that there are hundreds of backup
-plugins in WordPress Plugin Directory.
-
-Notes:
-
-- - Remove plugin "db-backup" as deactivation does not fix the issue.
-- - Use another plugin until patch is available and new version is published.
-- - Sites I know using this plugin will be notified via abuse emails today.
-
-References:
-http://cwe.mitre.org/data/definitions/23.html
-https://scapsync.com/cwe/CWE-23
-https://www.owasp.org/index.php/Path_Traversal
-https://www.owasp.org/index.php/Testing_for_Path_Traversal_%28OTG-AUTHZ-001%29
-
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlSQYwcACgkQXf6hBi6kbk8uHwCeJfQd1Vjc2Rr6kzyFxF8rC4NW
-zbMAoKG4tidQkLM5qrnyIfHTVZPXbOdk
-=5Nmf
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
