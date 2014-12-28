@@ -1,59 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/15/8
-Message-Id: <20140815201012.637CB6C0046@smtpvmsrv1.mitre.org>
-Date: Fri, 15 Aug 2014 16:10:12 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, steve@...ve.org.uk, ambs@...l-hackers.net, 756566@...s.debian.org
-Subject: Re: CVE Request: XML-DT: Insecure use of temporary files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/28/1
+Message-ID: <CALCETrX_NswMdO1KBu9s0udf3Z9XLpF6xTgy6=orvLJLPGK7aQ@mail.gmail.com>
+Date: Sun, 28 Dec 2014 07:40:51 -0800
+From: Andy Lutomirski <luto@...capital.net>
+To: P J P <ppandit@...hat.com>
+Cc: oss security list <oss-security@...ts.openwall.com>
+Subject: Re: CVE Request: Linux x86_64 userspace address leak
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Dec 26, 2014 5:49 AM, "P J P" <ppandit@...hat.com> wrote:
+>
+> +-- On Thu, 18 Dec 2014, Andy Lutomirski wrote --+
+> | On all* Linux x86_64 kernels, malicious user programs can learn the
+> | TLS base addresses of threads** that they preempt.
+> |
+> | In principle, this bug will allow programs to partially bypass ASLR
+> | when attacking other user programs.  Figuring out how to adapt the
+> | test code to do that is left as an exercise to the reader.
+> |
+> |
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86?id=f647d7c155f069c1a068030255c300663516420e
+> |
+> | ** The attack won't work against 64-bit threads with TLS bases > 4GB,
+> | but AFAIK that's unusual.
+>
+>   It seems to require 32bit interfaces(CONFIG_X86_32). On x86_64
+Fedora/RHEL
+> kernels, it says:
 
-> mkdtskel and mkxmltype using insecurely temporary files using the pid
-> of the process in the temporary file name.
-> 
-> /tmp/_xml_$$
-> 
-> https://bugs.debian.org/756566
+Try building with -m32 but running on a 64-bit kernel.
 
-Use CVE-2014-5260.
+--Andy
 
+>
+> ===
+> $ cat /etc/redhat-release
+> Fedora release 21 (Twenty One)
+> $
+> $ cc -xc -o estest estest.c
+> $ cc -xc -o gsbasetest gsbasetest.c
+> $
+> $ ./estest
+> estest: set_thread_area: Function not implemented
+> $
+> $ ./gsbasetest
+> [OK]    ARCH_SET_GS worked
+> [OK]    Writing 0 to gs worked
+> [FAIL]  gsbase was corrupted
+> $
+> ===
+>
+> --
+> Prasad J Pandit / Red Hat Product Security Team
+> 47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
 
-> fixed in XML-DT 0.65 upstream, see
-> 
-> https://metacpan.org/diff/file?target=AMBS/XML-DT-0.65/&source=AMBS/XML-DT-0.63/
-
-This actually doesn't seem to be fixed. However, we don't immediately
-see a security problem in version 0.65 (only a usability problem), so
-a second CVE ID isn't assigned at this point.
-
-Specifically, the latest version has:
-
-  https://metacpan.org/source/AMBS/XML-DT-0.65/mkxmltype
-
-  system("head -$lines $fname | xmllint --recover - > $fname");
-
-which looks unintended (maybe $fname will always end up as a
-zero-length file?). 
-
-This apparently also affects libxml-dt-perl (0.65-1) from the
-https://packages.debian.org/sid/libxml-dt-perl page.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJT7mhqAAoJEKllVAevmvmsd6wH/1kq/+SPIZPj73hx7gHdF6Bs
-apbtdF7zITzl+o9sNkiq/PR8a8Hln6ZvqCuyZMinQu9xv1mfanpheSsCw810q5ou
-dP1Bhv+4zN91ukEMKnugYH3xnLn3GXnm0XXDL+mN90I4ev/CKJbKzLoeqHWxy0Ah
-k1YDC1dG5eS9EIT6OhOWAZKX1zYB5SJ8SiyIhomp94Jymtnqd6IKs7kTkinaeoJ6
-AgSEFugTT6pr46rRKf+dkZ+KhsrhTLYVUGVajwYVOSQRPKLaMdIfdAwcM99fhfrX
-k81O1GIO2CPRXslzzdqTTgoqaPjx9TqXQZdCA2CCKrDH1RHIpyPQCNrGAbTOeMk=
-=dNlw
------END PGP SIGNATURE-----
