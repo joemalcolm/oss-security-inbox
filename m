@@ -1,44 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/02/17
-Message-Id: <20141002032907.5FAE2C509AB@smtptsrv1.mitre.org>
-Date: Wed,  1 Oct 2014 23:29:07 -0400 (EDT)
-From: cve-assign@...re.org
-To: andrew@...ewerks.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, toconnor@...ewerks.com
-Subject: Re: CVE Request: linux kernel net_get_random_once bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/7
+Message-ID: <54A1ADC4.7060406@internot.info>
+Date: Tue, 30 Dec 2014 06:38:44 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE Request: Double Free in PHP
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
+On 30/12/14 03:36, cve-assign@...re.org wrote:
+>> I found a double-free in PHP: https://bugs.php.net/bug.php?id=68676
+>> > 
+>> > And it has been patched in the following commits:
+>> > 
+>> > http://git.php.net/?p=php-src.git;a=commit;h=2bcf69d073190e4f032d883f3416dea1b027a39e
+>> > http://git.php.net/?p=php-src.git;a=commit;h=24125f0f26f3787c006e4a51611ba33ee3b841cb
+>> > http://git.php.net/?p=php-src.git;a=commit;h=fbf3a6bc1abcc8a5b5226b0ad9464c37f11ddbd6
+> Use CVE-2014-9425.
+I found in total I believe 5(don't quote me on that)
+double-free's/use-after-frees/invalid-free's in PHP. Should I use the
+same CVE-ID for all of them?
 
-> My colleague Tom O'Connor and I have identified a security bug in the
-> Linux kernel that results in drastically degraded randomness ...
-> existed in kernel versions 3.13 and 3.14
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=3d4405226d27b3a215e4d03cfa51f536244e5de7
-> http://secondlookforensics.com/ngro-linux-kernel-bug/
-> 
->   Part of the explanation ... is ... "this call-site will
->   get patched up at boot". But actually, it is not always
->   true that this patching occurs as expected. On affected
->   systems, the slow path (where initialization of random
->   seeds occurs) is never taken.
 
-Use CVE-2014-7284.
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJULMYEAAoJEKllVAevmvmshOwH/1wt7JjopbcMeZumZ6U3kx4J
-B4y/v1qxJYqTyhLBUzL6vKlJ2cPyRxZsPJGQi60o1YDgPNP+wFgiryugbpmLf2Yw
-CW6xR5ORsrMYxnOTwYX9no7e80i7zDBh0PhYw8y+fCsXFaPJOMH9DtRYcVLhQGpm
-XByWCaPgDiCBcSpei1k6wLmKqjNJI9lFavI99B6aH9SQ8c0yCgA5tvbR/e9PAflQ
-JRsDjeE0QND8WAaT2HfsrYjw5yxiPmHKzWMs89q4um1aFEUYSp1ye9PNr8vUlrPG
-dS6JE5kcagkPhIFoH6Hb85hTTqXmor8R8JPRsrR0IsvQKFB49qPo5CJbhsEzBD0=
-=pG+m
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
