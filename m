@@ -1,42 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/20/34
-Message-ID: <20141120090130.5eaaf7ff@127>
-Date: Thu, 20 Nov 2014 09:01:30 -0800
-From: "M.T. Roebuck" <marvint.roebuck@...ox.lv>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/3
+Message-ID: <87oaqmmwlb.fsf@mid.deneb.enyo.de>
+Date: Mon, 29 Dec 2014 14:09:20 +0100
+From: Florian Weimer <fw@...eb.enyo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Location of OS security audit reports
+Cc: tedu@...unangst.com
+Subject: OpenBSD signify and "fingerprint"
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 20 Nov 2014 10:33:10 +0100
-Sven Kieske <s.kieske@...twald.de> wrote:
+This is just a warning that what OpenBSD's signify tool calls a
+“fingerprint” is very different from the concept of a fingerprint in
+OpenPGP.  It is just a random 64-bit blob with no relationship to the
+raw public key used for signing.  Conceptually, it is similar to the
+OpenPGP key ID (it is used as a quick check that public key and
+signature match), except that it is even more trivial to forge.
 
-> 
-> 
-> On 17/11/14 04:17, M.T. Roebuck wrote:
-> > Also I am interested in OSs that are not *nix or MS/Apple.
-> > I know of Haiku OS but are there any others? Does China
-> > or Japan or any other country have their own OSs?
-> > 
-> > Is the world really limited to just a few?
-> 
-> Of course it is not.
-> 
-> 
-> Take the l4 family for example
-> seL4 is open source:
-> 
-> https://github.com/seL4
-> 
-> the implementation was proofed
-> to fulfill the specification, read more at:
-> 
-> http://sel4.systems/
-> 
-> many other systems are at least certified
-> for common criteria EL4+
-> 
-> HTH
+Fortunately, typical usage patterns of the signify tool do not expose
+the fingerprint to the user, so there is no immediate temptation to
+use it for validating a key (which is the primary use case for
+fingerprints in OpenPGP).  It is also short (64 bits) and thus not
+very secure to the initiated, no matter how it is computed, but I'm
+not fully convinced that this is a sufficient deterrent.
 
-Thank you, will make time to look at this.
-
-
+Maybe a different term instead of “fingerprint” could be used to
+reduce the potential for confusion.  Something like “key number” or
+“key slot” might be appropriate (because these terms do not confer any
+identifying property).
