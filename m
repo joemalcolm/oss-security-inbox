@@ -1,61 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/05/15/3
-Message-Id: <201405150308.s4F382QO024922@linus.mitre.org>
-Date: Wed, 14 May 2014 23:08:02 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ngoproject.com
-Subject: Re: CVE Reuest: Django: Malformed URLs from user input incorrectly validated
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/4
+Message-ID: <54A157E5.3050901@internot.info>
+Date: Tue, 30 Dec 2014 00:32:21 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE Request: Double Free in PHP
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi,
 
-> https://www.djangoproject.com/weblog/2014/may/14/security-releases-issued/
+I found a double-free in PHP: https://bugs.php.net/bug.php?id=68676
 
-> It also fixes a second issue, for which a CVE is missing, quoting from
-> the announcement:
+And it has been patched in the following commits:
 
->> Issue: Malformed URLs from user input incorrectly validated
->> The validation for redirects did not correctly validate some malformed
->> URLs, which are accepted by some browsers. This allows a user to be
->> redirected to an unsafe URL unexpectedly.
->>
->> Django relies on user input in some cases (e.g.
->> django.contrib.auth.views.login, django.contrib.comments, and i18n) to
->> redirect the user to an "on success" URL. The security checks for
->> these redirects (namely django.util.http.is_safe_url()) did not
->> correctly validate some malformed URLs, such as
->> http:\\\djangoproject.com, which are accepted by some browsers with
->> more liberal URL parsing.
->>
->> To remedy this, the validation in is_safe_url() has been tightened to
->> be able to handle and correctly validate these malformed URLs.
+http://git.php.net/?p=php-src.git;a=commit;h=2bcf69d073190e4f032d883f3416dea1b027a39e
+http://git.php.net/?p=php-src.git;a=commit;h=24125f0f26f3787c006e4a51611ba33ee3b841cb
+http://git.php.net/?p=php-src.git;a=commit;h=fbf3a6bc1abcc8a5b5226b0ad9464c37f11ddbd6
 
-> https://github.com/django/django/commit/255449c1ee61c14778658caae8c430fa4d76afd6
+It has existed since 2002.
 
-> url = url.replace('\\', '/')
-> 
-> if url.startswith('///'):
->     return False
-> 
-> Forbid URLs like http:///example.com - with a scheme, but without a hostname.
 
-Use CVE-2014-3730.
+Could I get a CVE-ID for this?
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
 
-iQEcBAEBAgAGBQJTdC8jAAoJEKllVAevmvmsX9kIAKlhUlg8UwBHt/xmmPAwiXjs
-WrMV5kbkEvEDjfz2IWYY3We8NkGeuSLFzD27j8LaBSzeS6c6ARX57B5xfXZMLnV6
-2wmXl75mz/vZFc9+7IYtMZ53nbOE7I5occLi69zH0gX208uuW3F+hFqf6735sYgt
-FGoXIZfkfDYA+j8fyXlxkfDPMVKolsiFGfidgbmK7J3D3YPBshneI77wYq//nwlO
-ihSs55P+T9tZctlOUfdBvSWzIzbOfi3w3WcXcFPE+n61XpHpVq7bDeCB/GlpBkcA
-GiyVT9mkM9dC1CykY4WGbQUoXP9JZ4fg/eoowXnKNn8q20/e5pHCHhM2vBkYVxw=
-=LjKL
------END PGP SIGNATURE-----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
