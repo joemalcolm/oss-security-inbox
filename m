@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/17/6
-Message-ID: <CACYkhxi6-E=iUUFaT+fHbF5BKuznFjkpaKuF44vm1-yc6axEKw@mail.gmail.com>
-Date: Mon, 17 Feb 2014 21:54:02 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/11
+Message-ID: <54A1C15E.5030008@internot.info>
+Date: Tue, 30 Dec 2014 08:02:22 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+Subject: Re: CVE Request(s): libgcrypt
 Content-Type: text/plain; charset=utf-8
 
-On 17 February 2014 19:33, P J P <ppandit@...hat.com> wrote:
-
->   Hello,
+On 30/12/14 07:46, Florian Weimer wrote:
+> The patch seems incorrect because the copy of the pointer in the
+> caller is not updated when first free happens.
 >
-> +-- On Wed, 12 Feb 2014, P J P wrote --+
-> | +-- On Wed, 12 Feb 2014, Michael Samuel wrote --+
-> | | >  -> http://www.openwall.com/lists/oss-security/2014/02/11/7
-> | | The same issue, different result.
-> |
-> |   Yes, true. Thank you for confirming.
+> The error can only happen on a path with an allocation failure, right?
+Yes, when the allocation fails.
+_gcry_hmac256_finalize frees 'hd' before it returns NULL, then frees it
+again.
+Actually, the patch is incorrect. There is no 'if' hd is freed on the
+return of NULL, as it is always freed upon the return of NULL.
+
+>> off-by-one out-of-bounds read:
+>> http://lists.gnupg.org/pipermail/gcrypt-devel/2014-December/003299.html
+> This doesn't look like a security issue because the callers all use
+> in-range values.
 >
->   So, does this qualify for a CVE?
+I was actually unsure of this one. I'm waiting for a libgcrypt developer
+to comment on it.
 
 
-I think I've come around to a yes for this one. Pushing attacker-chosen
-entries
-out of the cache after only 100 packets is clearly not what the admin
-wants.  It
-makes a secondary attack (DNS over UDP blind cache poisoning) much more
-viable than it was.
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
 
-I can think of some DoS scenarios where this vector would assist another
-attack.
 
-Regards,
-  Michael
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
