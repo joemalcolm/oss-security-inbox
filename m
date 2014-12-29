@@ -1,46 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/05/10
-Message-ID: <20140305212217.GA30920@eldamar.local>
-Date: Wed, 5 Mar 2014 22:22:17 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/2
+Message-ID: <54A0A770.6070105@mccme.ru>
+Date: Mon, 29 Dec 2014 03:59:28 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: Re: CVE Request: file: crashes when checking softmagic for some corrupt PE executables
+CC: cve-assign@...re.org
+Subject: CVE request: dir traversal in elfutils
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi!
 
-On Wed, Mar 05, 2014 at 12:07:25PM -0500, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> > file can be made to crash when checking some corrupt PE executables,
-> > and so could be used to mount a denial of service for file, or an
-> > application using file/libmagic.
-> 
-> > http://bugs.gw.com/view.php?id=313
-> 
-> > https://github.com/glensc/file/commit/447558595a3650db2886cd2f416ad0beba965801
-> 
-> Use CVE-2014-2270.
-> 
-> A CVE ID seems worthwhile because of possible libmagic use cases.
-> 
-> "file can be made to crash" is typically not security-relevant on its
-> own (a user can recover from this by not continuing to run file on the
-> same crafted file). We're not sure whether any distribution has
-> packages that rely on server-side use of libmagic, or whether it's
-> common to have long-running processes that use libmagic with untrusted
-> input.
-[...]
+A dir traversal vuln is fixed in elfutils:
 
-Thanks for the CVE assignment and also for the clarification about
-when a CVE might be assigned. I do not have a concrete example of such
-an application, although php5 for example is embedding a copy of
-libmagic/file which is used.
+Initial (terse) report:
+https://lists.fedorahosted.org/pipermail/elfutils-devel/2014-December/004499.html
 
-One question about the CVE ID, as the bug was submitted on 2013-12-20
-should that have recieved a 2013 CVE?
+Fix (with analysis in commit message):
+https://git.fedorahosted.org/cgit/elfutils.git/commit/?id=147018e729e7c22eeabf15b82d26e4bf68a0d18e
 
-Regards,
-Salvatore
+At least versions 0.152 and 0.161 are affected.
+
+Could CVE please be assigned?
+
+-- 
+Alexander Cherepanov
