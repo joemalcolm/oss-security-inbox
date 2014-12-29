@@ -1,66 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/28
-Message-ID: <CANX6+4OwHnxO5pAHhYzkZrvrxLpC19yZ6e=vYaC_QawSdk0fOQ@mail.gmail.com>
-Date: Mon, 29 Sep 2014 09:41:40 -0400
-From: Paul Burchard <paulburchard@...il.com>
-To: Sven Kieske <s.kieske@...twald.de>
-Cc: langsec-discuss@...l.langsec.org, oss-security@...ts.openwall.com
-Subject: Re: [langsec-discuss] Fwd: Non-upstream patches for bash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/1
+Message-ID: <20141229000625.GD19737@pisco.westfalen.local>
+Date: Mon, 29 Dec 2014 01:06:25 +0100
+From: Moritz Mühlenhoff <jmm@...til.org>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Cc: Fiedler Roman <Roman.Fiedler@....ac.at>, security@...ntu.com
+Subject: Re: parse_datetime() bug in coreutils
 Content-Type: text/plain; charset=utf-8
 
-Even for regular languages, which are theoretically decidable, decision
-problems are exponentially costly to solve.  The main langsec approach that
-does not restrict the type of security questions that can be asked is to
-use languages with some kind of bounded recursion.
- On 27/09/14 17:06, Solar Designer wrote:
-> Of course, what input is trusted vs. not may be unclear.  Apparently, 20
-> years ago bash developers considered all env vars to be trusted input,
-> regardless of the names, which is how we got here.
+On Mon, Nov 24, 2014 at 06:47:24PM -0800, Seth Arnold wrote:
+> Hello,
+> 
+> Fiedler Roman discovered that coreutils' parse_datetime() function
+> has some flaws that may be exploitable if the date(1), touch(1),
+> or potentially other programs, accept untrusted input for certain
+> parameters. While researching this issue, he discovered that it
+> was independantly discovered by Bertrand Jacquin and reported at
+> http://debbugs.gnu.org/cgi/bugreport.cgi?bug=16872
+> 
+> $ touch '--date=TZ="123"345" @1'
+> Segmentation fault (core dumped)
+> $ date '--date=TZ="123"345" @1'
+> *** Error in `date': double free or corruption (out): 0x00007fffc9866c20 ***
+> Aborted (core dumped)
+> $
+> 
+> The GNU bugtracker has this patch to fix the problem:
+> http://debbugs.gnu.org/cgi/bugreport.cgi?msg=11;filename=date-tz-crash.patch;att=1;bug=16872
+> and this patch to include the fix in coreutils and a small test case:
+> http://debbugs.gnu.org/cgi/bugreport.cgi?msg=19;filename=coreutils-date-crash.patch;att=1;bug=16872
+> 
+> Can a CVE please be assigned for this issue.
 
-Well, from a scientific point of view, this was already
-solved, if I'm interpreting bash correctly.
+This CVE request seems to have fallen through the cracks,
+adding cve-assign@...re.org to the recipients.
 
-See page 12 in this paper:
-http://langsec.org/ShotgunParsersShmoo.pdf
-
-To quote for the lazy:
-
-'Input sanitization: “you can suppress ‘bad
-stuff’ in input+output to make it safe”
-
-Reality: Halting problem. Deal with it.'
-
-This should be true for all turing complete
-input languages (which I assume bash is capable of).
-
-So you can not "filter" turing complete input languages
-unless you restrict your language so hard that you
-in fact create another class of languages, e.g.
-just allow regex, which would create a context-free
-language[1], which would circumvent whole classes of exploits.
-
-Also cc'ing langsec-list, as they are interested
-in getting this stuff fixed in real applications.
-
-[1]https://en.wikipedia.org/wiki/Context-free_language
-
---
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-
-Systemadministrator
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 6
-32339 Espelkamp
-T: +49-5772-293-100
-F: +49-5772-293-333
-https://www.mittwald.de
-Geschäftsführer: Robert Meyer
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
-_______________________________________________
-langsec-discuss mailing list
-langsec-discuss@...l.langsec.org
-https://mail.langsec.org/cgi-bin/mailman/listinfo/langsec-discuss
-
+Cheers,
+        Moritz
