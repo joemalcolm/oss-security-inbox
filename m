@@ -1,51 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/09/23
-Message-ID: <54874759.9050806@enovance.com>
-Date: Tue, 09 Dec 2014 14:02:49 -0500
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-040] Horizon denial of service attack through login page (CVE-2014-8124)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/6
+Message-Id: <20141229163650.D031A42E0F8@smtpvbsrv1.mitre.org>
+Date: Mon, 29 Dec 2014 11:36:50 -0500 (EST)
+From: cve-assign@...re.org
+To: oss@...ernot.info
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Double Free in PHP
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-040
-CVE: CVE-2014-8124
-Date: December 09, 2014
-Title: Horizon denial of service attack through login page
-Reporter: Eric Peterson (Time Warner Cable)
-Products: Horizon
-Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Description:
-Eric Peterson from Time Warner Cable reported a vulnerability in
-Horizon. By making repeated requests to the Horizon login page a remote
-attacker may generate unwanted session records, potentially resulting in
-a denial of service. Only Horizon setups using a db or memcached session
-engine are affected.
+> I found a double-free in PHP: https://bugs.php.net/bug.php?id=68676
+> 
+> And it has been patched in the following commits:
+> 
+> http://git.php.net/?p=php-src.git;a=commit;h=2bcf69d073190e4f032d883f3416dea1b027a39e
+> http://git.php.net/?p=php-src.git;a=commit;h=24125f0f26f3787c006e4a51611ba33ee3b841cb
+> http://git.php.net/?p=php-src.git;a=commit;h=fbf3a6bc1abcc8a5b5226b0ad9464c37f11ddbd6
 
-Kilo (development branch) fix:
-https://review.openstack.org/140353
+Use CVE-2014-9425.
 
-Juno fix:
-https://review.openstack.org/140358
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
-Icehouse fix:
-https://review.openstack.org/140356
-
-django_openstack_auth fix:
-https://review.openstack.org/140352
-
-Notes:
-This fix will be included in future 2014.1.3 and 2014.2.1 releases.
-The django_openstack_auth Horizon dependency requires the additional
-patch above.
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8124
-https://launchpad.net/bugs/1394370
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (539 bytes)
+iQEcBAEBAgAGBQJUoXefAAoJEKllVAevmvmsXI4H/0k6+BX4bpsDNmmM3Q+2NO31
+cMsOpowphFFaTMQH0gZkSGlpphigpcRfGIBhxCXKore+zUE8C3y/S0iBgwOJX9vU
+cRGAl2mkjT2rvvbTXHMEkN7X51gRVF8lW33koyUTX8U/k7vvTWM2M3J4GsYwhB61
+9XYgtkXSU7cA1IPqur34zT0JFOwqcrNce9Z8SzWCr1QMNkMEDZXE8t/CKX+dmVSm
+3+FdqtWRd6+oS4JlRs4RSI9rlxcrFfBbPAtV35oGSyXxDnwjwczkcE6a5iKyeEGq
+OYFc5Z+M/d1gL+UsHksWegdG/X6rG+izK/6W/v7U2Cf/h/2KVAAa8/Do1mpRfXU=
+=jhgX
+-----END PGP SIGNATURE-----
