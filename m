@@ -1,48 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/11
-Message-Id: <20140707181355.4D8E31A41139@me.com>
-Date: Mon,  7 Jul 2014 14:13:55 -0400 (EDT)
-From: larry0@...com (Larry W. Cashdollar)
-To: <oss-security@...ts.openwall.com>
-Subject: Vulnerability Report for Ruby Gem backup-agoddard-3.0.28
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/29/5
+Message-ID: <3a953db3ca5b4361b04de7d848ef367d@tedunangst.com>
+Date: Mon, 29 Dec 2014 09:05:29 -0500
+From: Ted Unangst <tedu@...unangst.com>
+To: Florian Weimer <fw@...eb.enyo.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: OpenBSD signify and "fingerprint"
 Content-Type: text/plain; charset=utf-8
 
-Title: Vulnerability Report for Ruby Gem backup-agoddard-3.0.28
+On Mon, Dec 29, 2014 at 14:09, Florian Weimer wrote:
+> This is just a warning that what OpenBSD's signify tool calls a
+> “fingerprint” is very different from the concept of a fingerprint in
+> OpenPGP.  It is just a random 64-bit blob with no relationship to the
+> raw public key used for signing.  Conceptually, it is similar to the
+> OpenPGP key ID (it is used as a quick check that public key and
+> signature match), except that it is even more trivial to forge.
+> 
+> Fortunately, typical usage patterns of the signify tool do not expose
+> the fingerprint to the user, so there is no immediate temptation to
+> use it for validating a key (which is the primary use case for
+> fingerprints in OpenPGP).  It is also short (64 bits) and thus not
+> very secure to the initiated, no matter how it is computed, but I'm
+> not fully convinced that this is a sufficient deterrent.
 
-Author: Larry W. Cashdollar, @_larry0
+Yes. The user isn't supposed to believe anything a key says about its
+own identity. I tried to make it hard for the user to do that.
 
-Date: 06/01/2014
+I was about to reply that signify doesn't even print the fingerprint,
+but unfortunately I see the option to do that is still there. That was
+actually supposed to be used for debugging only. That at least is
+easily removed.
 
-OSVDB: 108578
+> Maybe a different term instead of “fingerprint” could be used to
+> reduce the potential for confusion.  Something like “key number” or
+> “key slot” might be appropriate (because these terms do not confer any
+> identifying property).
 
-CVE:Please Assign
-
-Download: http://rubygems.org/gems/backup-agoddard
-
-Gem Author:  anthony@...honygoddard.com
-
-From: ./backup-agoddard-3.0.28/lib/backup/cli/utility.rb
-
-Lines 178 and 180 exposed the password to the process table, they are also remote command injection points if this gem is used in the context of a rails application as the user input isn't properly sanitized.
-
-0175-          base64   = options[:base64] ? -base64 : 
-176-          password = options[:password_file].empty? ?  : "-pass file:#{options[:password_file]}"
-177-          salt     = options[:salt] ? -salt : 
-178:          %x[openssl aes-256-cbc -d #{base64} #{password} #{salt} -in #{options[:in]} -out #{options[:out]}]
-179-        when gpg
-180:          %x[gpg -o #{options[:out]} -d #{options[:in]}]
-181-        else
-182-          puts "Unknown encryptor: #{options[:encryptor]}"
-183-          puts "Use either openssl or gpg."
---
-224-          puts "Please wait..\n\n"
-226-        end
-227-
-228-        if options[:installed]
-230-        end
-231-      end
-232-
-
-
-Advisory: http://www.vapid.dhs.org/advisories/backup-agoddard-3.0.28.html
-
+Thanks. I'll think about it for a bit.
