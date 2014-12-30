@@ -1,46 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/26/3
-Message-ID: <alpine.LFD.2.10.1412261914220.28221@javelin.pnq.redhat.com>
-Date: Fri, 26 Dec 2014 19:19:27 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Andy Lutomirski <luto@...capital.net>
-Subject: Re: CVE Request: Linux x86_64 userspace address leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/3
+Message-ID: <20141230042727.GB26543@eldamar.local>
+Date: Tue, 30 Dec 2014 05:27:27 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: MiniUPnPd: several issues
 Content-Type: text/plain; charset=utf-8
 
-+-- On Thu, 18 Dec 2014, Andy Lutomirski wrote --+
-| On all* Linux x86_64 kernels, malicious user programs can learn the
-| TLS base addresses of threads** that they preempt.
-| 
-| In principle, this bug will allow programs to partially bypass ASLR
-| when attacking other user programs.  Figuring out how to adapt the
-| test code to do that is left as an exercise to the reader.
-| 
-| https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/arch/x86?id=f647d7c155f069c1a068030255c300663516420e
-| 
-| ** The attack won't work against 64-bit threads with TLS bases > 4GB,
-| but AFAIK that's unusual.
+On Tue, Dec 09, 2014 at 09:32:59PM +0100, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> Quoting from the Bug in the Debian bugtracker at
+> https://bugs.debian.org/772644 several issues were found in in
+> MiniUPnP:
+> 
+> On Tue, Dec 09, 2014 at 10:20:32PM +0800, Thomas Goirand wrote:
+> > Stephen Röttger from Google did a security audit of MiniUPnPd, and found a few
+> > issues, all now fixed upstream.
+> > 
+> > Extract from private messages who were forwarded to me (but which is fine to
+> > disclose since there's already some public commits.
+> > 
+> > > MiniUPnP is vulnerable to DNS rebinding attacks which allows an attacker to
+> > > trigger upnp actions through a malicious website. Wikipedia describes the
+> > > attack quite well: http://en.wikipedia.org/wiki/DNS_rebinding.
+> > > To mitigate this attack, MiniUPnP should check if the request's host header
+> > > either contains an IP address or the hostname of the device.
+> > > 
+> > > Besides that, I found a few memory corruption vulnerabilities in the code.
+> > 
+> > Fixes:
+> > 
+> > https://github.com/miniupnp/miniupnp/commit/d00b75782e7d73e78d0b935cee6f4873bc48c9e8
+> > https://github.com/miniupnp/miniupnp/commit/7c91c4e933e96b913b72685d093126d282b87db6
+> > 
+> > Some memory corruption fix:
+> > 
+> > https://github.com/miniupnp/miniupnp/commit/e6bc04aa06341fa4df3ccae87a167e9adf816911
+> > 
+> > A buffer overrun in ParseHttpHeaders() fix:
+> > 
+> > https://github.com/miniupnp/miniupnp/commit/dd39ecaa935a9c23176416b38a3b80d577f21048
+> > 
+> > Added check if BuildHeader_upnphttp() failed to allocate memory:
+> > 
+> > https://github.com/miniupnp/miniupnp/commit/ec94c5663fe80dd6ceea895c73e2be66b1ef6bf4
+> 
+> Can CVEs be assigned for these issues?
 
-  It seems to require 32bit interfaces(CONFIG_X86_32). On x86_64 Fedora/RHEL 
-kernels, it says:
+Adding MITRE explicitly as CC, as I forgot in my first mail for the
+CVE request.
 
-===
-$ cat /etc/redhat-release 
-Fedora release 21 (Twenty One)
-$ 
-$ cc -xc -o estest estest.c 
-$ cc -xc -o gsbasetest gsbasetest.c 
-$ 
-$ ./estest 
-estest: set_thread_area: Function not implemented
-$ 
-$ ./gsbasetest 
-[OK]    ARCH_SET_GS worked
-[OK]    Writing 0 to gs worked
-[FAIL]  gsbase was corrupted
-$
-===
-
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Regards,
+Salvatore
