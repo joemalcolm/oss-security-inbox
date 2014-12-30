@@ -1,25 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/05/2
-Message-ID: <loom.20140205T113825-589@post.gmane.org>
-Date: Wed, 5 Feb 2014 10:41:00 +0000 (UTC)
-From: Vinay Sajip <vinay_sajip@...oo.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/5
+Message-ID: <54A24291.1010809@internot.info>
+Date: Tue, 30 Dec 2014 17:13:37 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: python-gnupg before 0.3.5 shell injection
+Subject: Re: Re: CVE Request: Double Free in PHP
 Content-Type: text/plain; charset=utf-8
 
-Florian Weimer <fweimer@...> writes:
+On 30/12/14 17:02, cve-assign@...re.org wrote:
+> No, CVE-2014-9425 is only for the Zend/zend_ts_hash.c issue with:
+>
+>   142        tsrm_mutex_free(ht->mx_reader);
+>   143        tsrm_mutex_free(ht->mx_reader);
+>
+> We generally can't change the scope of a CVE ID to include additional
+> bugs after that CVE ID has been sent to oss-security. Otherwise,
+> anyone developing a remediation for a CVE would typically see their
+> remediation suddenly become incomplete because the meaning of the CVE
+> changed.
+Yes, that's my bad, sorry.
+For some reason I saw CVE-2014-9425 as the
+/ext/fileinfo/libmagic/apprentice.c CVE-ID, too, that you provided in a
+private email.(For reference on the mailing list, this bug:
+https://bugs.php.net/bug.php?id=68665)
 
-> I can't create a Google account right now.
+> Also, for example, information showing a double-free issue (aka
+> CWE-415) would not be combined with information showing a
+> use-after-free issue (aka CWE-416). That situation would have two CVE
+> IDs even if the reports were sent together and were, say, specifically
+> about PHP 5.6.4.
+OK, great.
 
-I've updated the implementation and attached gnupg.py and test_gnupg.py to 
-the ticket:
 
-https://code.google.com/p/python-gnupg/issues/detail?id=98#c7
 
-Please verify that this version deals with the issue, and if not please let 
-me know the failures so that I can add them to the tests.
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
 
-Regards,
 
-Vinay Sajip
-
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
