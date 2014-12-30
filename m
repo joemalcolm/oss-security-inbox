@@ -1,101 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/15/5
-Message-ID: <2ECE9D9EEF1F524185270138AE23265947D57FCB@S0MSMAIL112.arc.local>
-Date: Mon, 15 Dec 2014 18:00:54 +0000
-From: Fiedler Roman <Roman.Fiedler@....ac.at>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Multiple disputed issues in util-vserver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/7
+Message-ID: <20141230182351.GA5687@zoho.com>
+Date: Tue, 30 Dec 2014 18:23:51 +0000
+From: mancha <mancha1@...o.com>
+To: oss-security@...ts.openwall.com
+Cc: tedu@...unangst.com
+Subject: Re: OpenBSD signify and "fingerprint"
 Content-Type: text/plain; charset=utf-8
 
-> Von: Fiedler Roman [mailto:Roman.Fiedler@....ac.at]
+On Mon, Dec 29, 2014 at 02:09:20PM +0100, Florian Weimer wrote:
+> This is just a warning that what OpenBSD's signify tool calls a
+> “fingerprint” is very different from the concept of a fingerprint in
+> OpenPGP.  It is just a random 64-bit blob with no relationship to the
+> raw public key used for signing.  Conceptually, it is similar to the
+> OpenPGP key ID (it is used as a quick check that public key and
+> signature match), except that it is even more trivial to forge.
 > 
-> [Snip]
+> Fortunately, typical usage patterns of the signify tool do not expose
+> the fingerprint to the user, so there is no immediate temptation to
+> use it for validating a key (which is the primary use case for
+> fingerprints in OpenPGP).  It is also short (64 bits) and thus not
+> very secure to the initiated, no matter how it is computed, but I'm
+> not fully convinced that this is a sufficient deterrent.
 > 
-> > > Issue 3: It seems that handling of open tty FDs on enter, that allows
-to
-> > > inject arbitrary keyboard input to be read by the parent process, also
-> > > affects the tool to start the guest container. This seems to be the
-same
-> > > issue with "vserver start" as reported in [2] for vserver enter, which
-> > > was classified as less relevant back than. My rating would be little
-lower
-> > > than 2 but still quite high for mass hosting: manual restart, e.g.
-during
-> > > maintenance, seems quite common to me.
-> > >
-> >
-> > If I understand correctly, this (and the previous one) are
-> > CVE-2005-4890, isn't it?.
-> >
-> > http://www.halfdog.net/Security/2012/TtyPushbackPrivilegeEscalation
-> 
-> Yes, this is the stuff about the general problem, this issue is quite a
-> similar one for su. In both cases (su and vserver), a tool used to enter
-an
-> possibly compromised, lower privileged context from a higher privileged
-one
-> fail.
-> 
-> The CVE is only for su. For su it seems, that the issue is treated more a
-> bug than expected feature, but it seems, that it is still not fixed for
-> current Ubuntu release.
-> 
-> For vserver ...
-> 
-> > > From my point of view, those issues might be expected behavior as
-claimed by
-> > > the developers, ....>
-> > > this is the state of discussion, so no bug.
-> > > ... but if so it should be at least stated more clearly in
-> > > documentation:
-> > >
-> > > a) never use any tools except vserver stop (to terminate the
-container)
-> to
-> > > interact with a running and possibly compromised container from the
-host
-> > > b) only use network/socket-based tools to connect to processes inside
-a
-> > > possibly compromised guest, e.g. SSH.
-> > > c) never start a possibly compromised container from interactive shell
-> to
-> > > avoid injection of shell commands
-> > >
-> > > Regarding documentation I would even vote for a solution d), that all
-> those
-> > > tools get a mandatory argument like
-> > > '--i-know-entering-insecure-container-may-kill-my-host' so that it is
-> not
-> > > very likely, that someone will use those tools for something else then
-> > > testing or nice-world administration.
-> > >
-> > > Opinions to issues 1-3?
-> > >
-> > > What about solutions?
-> >
-> > Halfdog (CC'ed) already suggested some possible solutions:
-> > http://www.paul.sladen.org/vserver/archives/201211/0011.html
-> 
-> This should handle the pty issues. But since it requires the admin not to
-> forget to use the manual workaround EVERY TIME, therefore man page update
-> should be done in any case. Fix with pty allocation (or detaching from pty
-> for vserver start) would be best solution. Without technical fix a
-> "--do-it-insecure" parameter would make it clear on command line, that I
-> want to proceed knowing the risks.
+> Maybe a different term instead of “fingerprint” could be used to
+> reduce the potential for confusion.  Something like “key number” or
+> “key slot” might be appropriate (because these terms do not confer any
+> identifying property).
 
-As there was not really much feedback from the vserver side and as there are
-quite more issues with vserver I hoped to get rid of all those issues using
-LXC. At least issue 3 is also with lxc-attach is quite the same, but
-documentation of lxc-attach does not mention the risks either (at least on
-Ubuntu). Calling
+To echo what Ted said, the signify trust model never encompassed key
+metadata (including the "fingerprint"). Nonetheless, I found
+fingerprints helpful with organizing my own keys so it's a bit
+disappointing to see the inspect feature go the way of the dodo.
 
-# lxc-attach --name buildhost-trusty -- /bin/ls
+In retrospect, there's no reason the "fingerprint" (or whatever label)
+couldn't have been tied to the key itself (e.g. lowest X bits of
+pubkey.pubkey or sha256({pubkey.pubkey, time(NULL)}) rather than 8
+random bytes. This probably would have been more useful and more aligned
+with OpenPGP.
 
-will create file outside when e.g. /bin/ls was replaced with
+Unfortunately, key/signature structure members have fixed lengths so
+there's no way clean way to make that simple change without breaking
+backwards compat unless signify sticks to 64 bits.
 
-/root/TtyPushbackSignaling --NoSignal -- "touch /xxx"
+Regardless, for those using my *nix signify port
+(http://sf.net/projects/slackdepot/files/signify/), the latest tarball
+"signify-portable-20141230.tar.bz2" incorporates OpenBSD's most recent
+changes (i.e. removal of inspect feature and renaming of fingerprint to
+keynum).
 
-So I guess one should not use attach to run e.g. automatic updates in the
-guest or something alike.
+--mancha
 
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (6344 bytes)
+Content of type "application/pgp-signature" skipped
