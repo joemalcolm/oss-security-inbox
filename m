@@ -1,50 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/29/2
-Message-ID: <5450422D.1020303@redhat.com>
-Date: Tue, 28 Oct 2014 19:26:05 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: list policy (Re: Truly scary SSL 3.0 vuln to be revealed soon:)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/4
+Message-Id: <20141230060236.D1C1852E01B@smtpvbsrv1.mitre.org>
+Date: Tue, 30 Dec 2014 01:02:36 -0500 (EST)
+From: cve-assign@...re.org
+To: oss@...ernot.info
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Double Free in PHP
 Content-Type: text/plain; charset=utf-8
 
-On 28/10/14 06:48 PM, Alexander Cherepanov wrote:
-> On 2014-10-29 02:47, Kurt Seifried wrote:
->> On 28/10/14 07:47 AM, Alexander Cherepanov wrote:
->>> On 2014-10-15 12:30, Solar Designer wrote:
->>>> - Please don't send fully working exploits (but testcases that exercise
->>>> the flaw are welcome)
->>>>
->>>> FWIW, I've always been tempted to remove the latter guideline,
->>>
->>> Then perhaps just remove it? It always seemed to me a strange
->>> restriction. Other guidelines are either technical in nature or they are
->>> intended to reduce the amount of noise. This restriction seems to be
->>> neither.
->>>
->>> Of you can replace it with something like this:
->>> - Please only send fully working exploits which themselves are
->>> open-source.
->>>
->> Will someone/people vet the exploits to make sure they are not trojan
->> horses/self harming (e.g. the rm -rf * embedded in it somewhere?).
->> Strikes me as a heck of a watering hole attack potentially (and yes,
->> list members should know better, but ... yeah).
-> 
-> This is an interesting question but how "fully working exploits" differ
-> from "testcases that exercise the flaw" in this regard?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-For example using something like metasploit the code would (in theory)
-be more radable and anything hidden/obfuscated would stick out. My vote
-would be to require well written nmap scripts or metasploit modules that
-don't contain obfuscated code/etc. This would also make getting them to
-work simpler (no use of weird one off CPAN modules or specific versions
-of some obscure python thing, etc.).
+> I found in total I believe 5(don't quote me on that)
+> double-free's/use-after-frees/invalid-free's in PHP. Should I use the
+> same CVE-ID for all of them?
 
+No, CVE-2014-9425 is only for the Zend/zend_ts_hash.c issue with:
 
+  142        tsrm_mutex_free(ht->mx_reader);
+  143        tsrm_mutex_free(ht->mx_reader);
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+We generally can't change the scope of a CVE ID to include additional
+bugs after that CVE ID has been sent to oss-security. Otherwise,
+anyone developing a remediation for a CVE would typically see their
+remediation suddenly become incomplete because the meaning of the CVE
+changed.
 
+Also, for example, information showing a double-free issue (aka
+CWE-415) would not be combined with information showing a
+use-after-free issue (aka CWE-416). That situation would have two CVE
+IDs even if the reports were sent together and were, say, specifically
+about PHP 5.6.4.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUoj9VAAoJEKllVAevmvmsjZAIAIiB2XLN1HEx0qnqGoTTxRFe
+s1pRLB48bsLRrxixLOw4dS1ueawH2ss4t0M37IiAbEtu+OBnOrdSSVDLqtmVC7FJ
+06vFIZIs0E+CArmo7FbgwBDwf36SOkrxB4XtuBHMXoDFh1OQAhcAeaig1lQaLOmU
+OBIOoYj9FTiZF5vYcKBqoeKP6Y3B4T7AEQLgqoiSL0MHd2pZWiiTHRm2afQXf8MD
+BeGnPJvIsf1ouh3yVG+j4ON+GbtX9J1jAwS6Blf2oIsin6f7uobPq7bqr+VeFxUl
+Vg3BoWPdL1Vxsv5F2Id6R8bERh4ORqBCFksTQeC9EP3pVFftP++pHzjJxEtXa0Q=
+=J3p7
+-----END PGP SIGNATURE-----
