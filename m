@@ -1,45 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/09/7
-Message-ID: <540E9D92.7090606@redhat.com>
-Date: Tue, 09 Sep 2014 16:26:26 +1000
-From: David Jorm <djorm@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: pinocchio tmp vuln
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/6
+Message-ID: <1419922878653.12960@corp.iixpeering.net>
+Date: Tue, 30 Dec 2014 07:01:20 +0000
+From: David Jorm <djorm@...p.iixpeering.net>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: 2012 CVE request: XXE in nokogiri ruby gem
 Content-Type: text/plain; charset=utf-8
 
-On 09/09/2014 04:21 PM, Kurt Seifried wrote:
-> https://pypi.python.org/pypi/pinocchio/
->
-> pinocchio	stopwatch	--with-stopwatch	Select tests based on execution time
->
-> pinocchio-0.4.1/pinocchio/stopwatch.py
->
->      def finalize(self, result):
->          """
->          Save the recorded times, OR dump them into /tmp if the file
->          open fails.
->          """
->          try:
->              fp = open(self.stopwatch_file, 'w')
->          except (IOError, OSError):
->              t = int(time.time())
->              filename = '/tmp/nose-stopwatch-%s.pickle' % (t,)
->
-> int(time.time) is easily guessed, create a few thousand and you're
-> covered for the next few hours and can stop anyone from using stopwatch,
-> or you can just blow away files as usual =).
->
->              fp = open(filename, 'w')
->              log.warning('WARNING: stopwatch cannot write to "%s"' %
-> (self.stopwatch_file))
->              log.warning('WARNING: stopwatch is using "%s" to save times'
-> % (filename,))
->
->          dump(self.times, fp)
->          fp.close()
->
->
->
->
+Hi All
 
-You're a troll :)
+
+An XXE issue was reported and fixed in nokogiri, but as far as I can see no CVE ID was ever assigned. It appears a lot of people haven't updated their dependencies as a result, so a CVE ID would be helpful. For details, see:
+
+
+https://github.com/sparklemotion/nokogiri/issues/693#issuecomment-68334768
+
+
+Thanks
+
+--
+
+David Jorm / IIX Product Security
+
