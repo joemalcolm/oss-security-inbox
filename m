@@ -1,36 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/06/6
-Message-Id: <201407062231.s66MVKZg010895@linus.mitre.org>
-Date: Sun, 6 Jul 2014 18:31:20 -0400 (EDT)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Possible CVE request: php5: phpinfo() Type Confusion Information Leak Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/1
+Message-ID: <20141230002340.GA9277@pisco.westfalen.local>
+Date: Tue, 30 Dec 2014 01:23:40 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
+To: Vasyl Kaigorodov <vkaigoro@...hat.com>, cve-assign@...re.org
+Cc: oss-security@...ts.openwall.com, 772008@...s.debian.org
+Subject: Re: CVE request:  mpfr: buffer overflow in mpfr_strtofr
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Mon, Dec 08, 2014 at 01:45:12PM +0100, Vasyl Kaigorodov wrote:
+> Hello,
+> 
+> A buffer overflow was reported [1] in mpfr.
+> This is due to incorrect GMP documentation for mpn_set_str about the
+> size of a buffer (discussion is at [1]; first fix in the GMP
+> documentation is at [2]). This bug is present in the MPFR versions
+> from 2.1.0 (adding mpfr_strtofr) to this one, and can be detected by
+> running "make check" in a 32-bit ABI under GNU/Linux with alloca
+> disabled (this is currently possible by using the --with-gmp-build
+> configure option where alloca has been disabled in the GMP build). It
+> is fixed by the strtofr patch [3].
+> Corresponding changeset in the 3.1 branch: 9110 [4].
+> 
+> [1]: https://gmplib.org/list-archives/gmp-bugs/2013-December/003267.html
+> [2]: https://gmplib.org/repo/gmp-5.1/raw-rev/d19172622a74
+> [3]: http://www.mpfr.org/mpfr-3.1.2/patch11
+> [4]: https://gforge.inria.fr/scm/viewvc.php?view=rev&root=mpfr&revision=9110
+> 
+> References:
+> - https://bugzilla.redhat.com/show_bug.cgi?id=1171701
+> - https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772008
+> 
+> Can a CVE be assigned to this please?
 
-> https://bugs.php.net/bug.php?id=67498
+This seems to have fallen through the cracks, adding cve-assign@...re.org
+to CC.
 
-> if you are running as mod_php and there is mod_ssl this could be used
-> to steal the private SSL key from memory (if you can inject PHP code).
-
-This threat model is sufficient for CVE inclusion. Use CVE-2014-4721.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJTuc3jAAoJEKllVAevmvms5xkIAK1kzurgCWyrzFfdTXenGgdo
-Y0Cnket8pq6Mecv6EWchAoiLNFwcEAZ0im++3hx89J/nBftA+h5cSGRydcdJ+c8a
-MeImamz1IPMheTYJbpsfRL8baXKaKw27bS1aIYMbFda4Nbh0NOKForvTVxmYT6NK
-F23JHwBz1nLZTBL2SHdj68wOE4MUnVIZBzsi/aP6Cx9aHlG5/4eNd4Z1oip3EVW0
-mvREssBSOeg9Yuqi+rFx48MtcUaoF1mh65BuJxLKZB33gxFvvVzXIhrDDwRnDtFo
-2Jpu0xYMADy3m143nlf4/uAzwZLhohpHZ2zfY1BaqjvYvOQaVD61TS9ID3oATI8=
-=S1Qs
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
