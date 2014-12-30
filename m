@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/29/44
-Message-ID: <5429C972.30103@enovance.com>
-Date: Mon, 29 Sep 2014 17:04:50 -0400
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/30/2
+Message-ID: <20141230042538.GA26543@eldamar.local>
+Date: Tue, 30 Dec 2014 05:25:38 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for vulnerability in OpenStack Cinder, Nova and Trove
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: Mediawiki security releases 1.24.1, 1.23.8, 1.22.15 and 1.19.23
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was discovered in OpenStack (see below). In order to
-ensure full traceability, we need a CVE number assigned that we can
-attach to further notifications. This issue is already public, although
-an advisory was not sent yet.
+Hi,
 
-Title: Potential leak of passwords into log files
-Reporter: Amrith Kumar (Tesora)
-Products: Cinder, Nova, Trove
-Versions: up to 2013.2.3, 2014.1 versions up to 2014.1.2
+On Sun, Dec 21, 2014 at 01:39:50PM +0100, Salvatore Bonaccorso wrote:
+> Hi
+> 
+> New security releases for Mediawiki (1.24.1, 1.23.8, 1.22.15 and 1.19.23) were
+> announced:
+> 
+> https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-December/000173.html
+> 
+> > == Security fixes in 1.24.1, 1.23.8, 1.22.15 and 1.19.23 ==
+> > * (bug T76686) [SECURITY] thumb.php outputs wikitext message as raw HTML,
+> >   which could lead to xss. Permission to edit MediaWiki namespace is required
+> >   to exploit this.
+> > * (bug T77028) [SECURITY] Malicious site can bypass CORS restrictions in
+> >   $wgCrossSiteAJAXdomains in API calls if it only included an allowed domain as
+> >   part of its name.
+> 
+> Could CVE's be assigned for these two issues?
+> 
+> References:
+> 
+>  * https://phabricator.wikimedia.org/T76686 (not accessible atm)
+>  * https://phabricator.wikimedia.org/T77028 (seem to be only affecting
+>    1.20 and above)
+>  * https://bugzilla.redhat.com/show_bug.cgi?id=1175828
 
-Description:
-Amrith Kumar from Tesora reported two vulnerabilities in the
-processutils.execute() and strutils.mask_password() functions available
-from oslo-incubator that are copied into each project's code. An
-attacker with read access to the services' logs may obtain passwords
-used as a parameter of a command that have failed or when the
-mask_password did not mask passwords properly.
+Could CVEs be assigned to reference these mediawiki issues?
 
-References:
-https://launchpad.net/bugs/1343604
-https://launchpad.net/bugs/1345233
-
-Thanks in advance,
-
--- 
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
+Regards,
+Salvatore
