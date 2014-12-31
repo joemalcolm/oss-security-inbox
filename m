@@ -1,30 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/02/12/1
-Message-ID: <CACYkhxgoUzwicNm5onhV3Wscu35NzzLZzjTp7VUCp0Wa41dSyQ@mail.gmail.com>
-Date: Wed, 12 Feb 2014 11:23:54 +1100
-From: Michael Samuel <mik@...net.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/8
+Message-ID: <54A434A9.3000907@blindspotsecurity.com>
+Date: Wed, 31 Dec 2014 09:38:49 -0800
+From: "Timothy D. Morgan" <tim.advisories@...ndspotsecurity.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request New-djbdns: dnscache: potential cache poisoning
+Subject: Command Injection in mime-support/run-mailcap (CVE-2014-7209)
 Content-Type: text/plain; charset=utf-8
 
-On 12 February 2014 01:51, P J P <ppandit@...hat.com> wrote:
+Hello,
 
->   Hi,
->
->  -> http://www.openwall.com/lists/oss-security/2014/02/11/7
->
-> This looks like the same issue - predictable hash collision.
+I discovered a shell injection vulnerability in the run-mailcap script of the
+mime-support package.  This vulnerability is exploitable in a variety of very
+specific scenarios when an attacker can convince a victim to open a file with a
+malicious file name using the run-mailcap script.  Only a handful of software
+packages (such as email clients) are likely to call run-mailcap directly, but it can
+also be called by xdg-open, which is much more widely used.  However, in the xdg-open
+case, the victim must not be using one of the popular desktop environments in order
+for the issue to be triggered.  In the xdg-open case, it was possible to execute
+arbitrary code using Google Chrome/Chromium file downloads as a vector.  (Yes, this
+is a separate issue from the xdg-open shell injection vulnerability that was reported
+not long ago.)
 
+It seems that mime-support is primarily used by Debian-based Linux distributions,
+though FreeBSD does have a port for it.  I'm not sure what other distros may make it
+available.  Debian has released a security update (DSA-3114-1) for the issue.  I am
+also attaching patches which correct the flaw in the previous version.
 
-The same issue, different result.
+Thanks to Salvatore Bonaccorso and Charles Plessy for developing the patches.
 
-CVE-2013-6401 is a DoS vulnerability, which would result in excess
-CPU usage per hash lookup.
+tim
 
-The described issue would result in expiring attacker-specified (but
-not more) cache entries at approximately the same CPU cost.  So
-this is something else.
+View attachment "0001-CVE-2014-7209-Fix-shell-command-injection.patch" of type "text/x-patch" (2486 bytes)
 
-Regards,
-  Michael
-
+View attachment "0002-Resolve-file-name-to-an-absolute-path.patch" of type "text/x-patch" (1615 bytes)
