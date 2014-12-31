@@ -1,55 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/6
-Message-Id: <20150214155943.DECA2332056@smtpvbsrv1.mitre.org>
-Date: Sat, 14 Feb 2015 10:59:43 -0500 (EST)
-From: cve-assign@...re.org
-To: hanno@...eck.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Multiple issues in GnuPG found through keyring fuzzing (TFPA 001/2015)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/01/1
+Message-ID: <54A4753F.5030005@gmail.com>
+Date: Wed, 31 Dec 2014 14:14:23 -0800
+From: Stanislav Malyshev <smalyshev@...il.com>
+To: cve-assign@...re.org, carnil@...ian.org
+CC: oss-security@...ts.openwall.com, security@....net
+Subject: Re: CVE Request: PHP: out of bounds read crashes php-cgi
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi!
 
-> https://blog.fuzzing-project.org/5-Multiple-issues-in-GnuPG-found-through-keyring-fuzzing-TFPA-0012015.html
+On 12/31/14 9:30 AM, cve-assign@...re.org wrote:
+>> https://bugs.php.net/bug.php?id=68618 (out of bounds read crashes
+>> php-cgi).
+> 
+>> http://git.php.net/?p=php-src.git;a=commit;h=f9ad3086693fce680fbe246e4a45aa92edd2ac35
+> 
+> Use CVE-2014-9427.
+> 
+> Can you clarify what threat models exist that cross privilege
+> boundaries? Bug #68618 says "could disclose server memory, but anyone
 
-A build-packet.c report says "Use after free" but the listed commit
-is for an invalid memory read that was fixed in two other .c files.
+I'm not sure if it's exploitable at all. For starters, it requires
+feeding arbitrary files to PHP - which means you already have the
+equivalent of full shell access to the host in question as the user
+running PHP. In theory, it can result in memory contents disclosure -
+though since we're talking about mmap it requires the map used for this
+file to be aligned just next to another one, otherwise it'd just segfault.
 
-The keybox_search.c report says "memcpy with overlapping ranges" but
-the listed commit apparently fixes "sign extension on shift" issues.
+> that can upload php scripts can do far worse." Is the only relevant
+> scenario that the attacker uploads a crafted .php file and thereby
+> obtains read access (that would otherwise be unavailable) to memory
+> locations within a parent process?
 
-We suspect that what you mean is that the commits are directly
-applicable as listed, and the difference is that your report states
-the ultimate impact found by afl-fuzz, and your report isn't intended
-to directly show how that ultimate impact results from the code
-problem.
+The potential for reading memory is for the php-cgi process, since CGI
+is its own process. So the only data that can potentially be disclosed
+is from the CGI process itself. Also, to result in disclosure and not
+just segfault the attacker will need to somehow achieve that memory
+beyond the region to which the file is mapped would be a valid memory
+and contain something that PHP's lexer would interpret as a complete PHP
+script (otherwise it'd just keep scanning until it hits unmapped memory
+where it would segfault). I'm not saying it's not possible at all, but
+it'd probably be very non-trivial to do this if possible. I'm pretty
+sure none of it is possible without, as described above, the equivalent
+of shell access under the user running PHP. So I'm not sure if there's
+any privilege escalation anyway - maybe if PHP setup is very restricted
+so no outside file/program access is possible.
 
-With this interpretation:
+> Or is it relevant that a victim may accidentally upload an
+> incorrect .php file, and may expect that this is harmless, but the
+> actual behavior is that PHP reads and executes out-of-bounds data that
+> the victim did not wish to execute?
 
-  CVE-2015-1606 - Use after free, resulting from failure to skip
-                  invalid packets
-
-  CVE-2015-1607 - memcpy with overlapping ranges, resulting from
-                  incorrect bitwise left shifts
-
-There's currently no information suggesting that the NULL pointer
-dereference issues could have a security impact; they currently do not
-have CVE IDs.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU33B+AAoJEKllVAevmvmstiQH/2nHN4/1NUH4TO7bTBx4tOmm
-PYR2e5gl0cwCvfFHLxDYiJFFtO8KG+GW7emroo9qqCBcsZhWE95XE5VJXN7RSXXJ
-JqihRwGl8pLQ459e3ZZR3rSTixGz28Fx/QGp59G7+mfNwPuaWGh6pg7Uukd4Zr1/
-PlL4qkhXPH6auBW3pYDAqzf/s5a8O3WPOV2jUkB7x5+VYNy//tOwGbMFwlhPCgCr
-IhjLi18UpeBkp7nVEIlSqkmRL7MSHYA7ov83CMTfl0Wj6YFHSTJHwUzPMQkQNhXG
-xjllvOTZznnUW7Fs48psYRsd3iRM5XHIyYaHnHOy461yrqKrkcPtECadjIKbScA=
-=LLyD
------END PGP SIGNATURE-----
+It's impossible with "accidental" script - it has to be specially made.
+E.g. for the problem to happen the file has to start with '#' and have
+no newlines (i.e. not be an actual PHP script).
+-- 
+Stas Malyshev
+smalyshev@...il.com
