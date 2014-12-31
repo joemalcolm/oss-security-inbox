@@ -1,36 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/04/09/30
-Message-Id: <20140409224753.37B42601E7@smtp.hushmail.com>
-Date: Wed, 09 Apr 2014 22:47:48 +0000
-From: "mancha" <mancha1@...h.com>
-To: oss-security@...ts.openwall.com
-Subject: Cauterizing OpenSSL's heartbleed (the aftermath)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/7
+Message-Id: <20141231173202.7FA7142E21E@smtpvbsrv1.mitre.org>
+Date: Wed, 31 Dec 2014 12:32:02 -0500 (EST)
+From: cve-assign@...re.org
+To: carnil@...ian.org
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux: Remote crash via batman-adv module - Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-There's an important distinction between systems "never vulnerable to
-heartbleed" (for appropriate definitions of never) and those fixed in
-response to security announcements. The latter category should
-definitely be prioritizing revocation/reissuance of certificates and
-other potentially compromised credentials.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Mustafa Al-Bassam's work assists a great deal with this taxonomy. He
-ran PoC code against Alexa top 100, 1000, and 10000 sites beginning
-about 18 hours after OpenSSL's first public announcement [1].
+> linux could crash when using the batman-adv module
+> 
+> http://thread.gmane.org/gmane.linux.network/343494
+> https://bugs.debian.org/774155
+> https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2014-November/012561.html
+> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5b6698b0e4a37053de35cc24ee695b98a7eb712b
 
-Specifically, his scans began circa: 1396956600 (top 100); 1396958400
-(top 1000); and 1396972800 (top 10000). Did any major vendors deploy
-upgrades prior to this?
+Use CVE-2014-9428. The scope of this CVE ID is the problem as
+described in 5b6698b0e4a37053de35cc24ee695b98a7eb712b. The scope does
+not include other issues referenced in 343494, such as the
+"-Wlogical-not-parentheses" issue in the
+https://bugzilla.kernel.org/show_bug.cgi?id=84061 bug.
 
-If others have done similar work (hopefully closer to time zero), please
-share to complement Mustafa's good work.
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
 
---mancha
-
-====
-
-[1] https://github.com/musalbas/heartbleed-masstest
-
------------------
-PGP: 0x25168EB24F0B22AC
-[56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC]
-
+iQEcBAEBAgAGBQJUpDIAAAoJEKllVAevmvmsr3gH/2Zb6ldpFr002kIs5vtIUkaj
+vEAtgEutH6TLh6wSqxsgg7X2/6u+l+RMbLuHiBmEQPJF34ytvkbdVwkfZoDOoHT+
+yaiLoY2hgzr+NR7/cST4YP4OKmlrU7I6pI8IWrjVnOeWN9Ovc4uDbXC7lygeldpO
+lt43skEZG+PHClFcmsPfC5KyocOwNyq+v4kZnpG8x6weAiRkDR+6epxlCy7Rs/Ic
+Y7oRqDd17YlJbnmWnTRsKEqTWWy9vGnaYKpouOUh81SpHHbVc4aLdX8p891BXp84
+9dpSEd7NPmzJEx86TmWzTy3l/+hV8LCDG9FmcIBiJ/dIq5XPFP/qpdSS6XYPqWo=
+=tR0g
+-----END PGP SIGNATURE-----
