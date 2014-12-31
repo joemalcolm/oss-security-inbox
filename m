@@ -1,26 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/04/6
-Message-ID: <20141104070610.GA17145@suse.de>
-Date: Tue, 4 Nov 2014 08:06:10 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE Request: polarssl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/3
+Message-ID: <3549034.71e7.14a9ef6857e.Coremail.xiaoqixue_1@163.com>
+Date: Wed, 31 Dec 2014 14:09:23 +0800 (CST)
+From: xiaoqixue_1 <xiaoqixue_1@....com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request, Use after free vulnerability in Dwarfdump
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-https://polarssl.org/tech-updates/releases/polarssl-1.2.12-released
 
-and
+Hi, 
 
-https://polarssl.org/tech-updates/releases/polarssl-1.3.9-released
+we report a vulnerability in DwarfDump which is shipped
+with every release of the SGI MIPS/IRIX C compiler.
+we have reported the issue to vendor and linux Bugzilla:
 
-have some security issues worth CVEs.
+https://bugzilla.redhat.com/show_bug.cgi?id=1177758
 
-"On the security front this release fixes a mistake in the negotiation
-introduced in PolarSSL 1.3.8. The mistake resulted in servers
-negotiating a weaker signature algorithm than available. In addition
-two remotely-triggerable memory leaks were found by the Codenomicon
-Defensics tool and fixed in this release."
 
-Ciao, Marcus
+
+the details as follows:  
+
+Advisory: Use after free vulnerability in Dwarfdump. 
+Advisory ID: -
+Author : Qixue Xiao , Tao He
+Affected Sofware:  dwarf-20130126 -- dwarf-20140805 (tested)
+Vendor URL: http://www.prevanders.net/dwarf.html
+Vendor Status:  reported
+CVE-ID : -
+
+================================
+Vulnerability Description:
+================================
+
+There is a UAF(used after free) in  dwarf-20130126 and dwarf-20140805, and we have tested the two version, so we guess the versions which are between them will be affected too. 
+when an odd elf file passed to dwarfdump, it would use an object which have be freed before.
+
+=========================================
+Details: 
+==========================================
+
+
+if an elf file is passed to dwarfdump, 'dwarf_elf_init' will be called and the 'Dwarf_Debug' object will be free in 'dwarf_elf_object_access_finish',  if the elf file is not in correct format.
+
+--------------------------------
+res = dwarf_object_init(binary_interface, errhand, errarg,
+        ret_dbg, error);
+    if (res != DW_DLV_OK){
+        dwarf_elf_object_access_finish(binary_interface);
+    }
+--------------------------------
+
+And the object will be refered again in 'print_error' :
+
+--------------------------
+    if (obj->object) {
+        dwarf_elf_object_access_internals_t *internals =
+            (dwarf_elf_object_access_internals_t *)obj->object;
+--------------------------
+
+
+when debugging it with gdb, the error information as follows:
+
+--------------------------------
+/home/xqx/test/dwarf_test/dwarf-20140805/dwarfdump/dwarfdump ERROR:  dwarf_elf_init:  DW_DLE_ELF_STRPTR_ERROR 30 a 
+call to elf_strptr() failed trying to get a section name (30)
+
+CU Name = 
+CU Producer = 
+DIE OFF = 0x00000000 GOFF = 0x00000000, Low PC = 0x00000000, High PC = 0x00000000
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000436305 in dwarf_finish (dbg=0x1, error=0x7fffffffe030) at dwarf_original_elf_init.c:193
+193         dwarf_elf_object_access_finish(dbg->de_obj_file);
+-----------------------------------------------
+
+====================
+Status:
+=====================
+
+We have sent email to libdwarf-list@...thlink.net to report it.
+
+
+==================
+references:
+==================
+
+http://www.prevanders.net/dwarf.html
+
+
