@@ -1,48 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/10/17/6
-Message-ID: <20141017103006.GC27687@kludge.henri.nerv.fi>
-Date: Fri, 17 Oct 2014 13:30:06 +0300
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: TYPO3 Security Team <security@...o3.org>
-Subject: CVE request: TYPO3-EXT-SA-2014-013
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/5
+Message-ID: <20141231161415.GA32565@eldamar.local>
+Date: Wed, 31 Dec 2014 17:14:15 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: Linux: Remote crash via batman-adv module
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-Can I get one 2014 CVE for following TYPO3 extension issue, thank you.
+It was reported on the netdev mailing list[1] and in the Debian
+bugtracker[2] that linux could crash when using the batman-adv module,
+see also [3]. The bug was introduced in [4], in 3.13-rc1, and a fix
+recently merged in [5] (sheduled for 3.19).
 
-It has been discovered that the extension "Calendar Base" (cal) is susceptible
-to Denial of Service.
+Could you please assign a CVE for this issue?
 
-Release Date: October 17, 2014
-Affected Versions: all versions of 0.x.x, 1.0.x, 1.1.x, 1.2.x, 1.3.x, 1.4.x;
-1.5.8 and below of 1.5.x; 1.6.0
+References:
 
-Vulnerability Type: Denial of Service
-Severity: Medium
-Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:N/I:N/A:C/E:POC/RL:OF/RC:C
+ [1] http://thread.gmane.org/gmane.linux.network/343494
+ [2] https://bugs.debian.org/774155
+ [3] https://lists.open-mesh.org/pipermail/b.a.t.m.a.n/2014-November/012561.html
+ [4] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=610bfc6bc99bc83680d190ebc69359a05fc7f605 (v3.13-rc1)
+ [5] https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=5b6698b0e4a37053de35cc24ee695b98a7eb712b
 
-Problem Description: User input is passed to PHP's PCRE library without
-validating it beforehand. Depending on user input this may consume a tremendous
-amount of system resources.
-
-Solution: Updated versions 1.5.9 (for TYPO3 CMS 4.5.5 - 6.0.99) and 1.6.1 (for
-TYPO3 CMS 6.1.0 - 6.2.99) are available from the TYPO3 extension manager and at
-http://typo3.org/extensions/repository/download/cal/1.6.1/t3x/ and
-http://typo3.org/extensions/repository/download/cal/1.5.9/t3x/. Users of the
-extension are advised to update the extension as soon as possible.
-
-Credits: Credits go to Daniel Hahler and Bernd Schuhmacher who discovered and
-reported the issue.
-
-- ---
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iEYEARECAAYFAlRA764ACgkQXf6hBi6kbk8GfwCeKDJx4lm7rAXgrtnC8wHV4H7G
-qSwAoMa4zQF02P3BBT0t7GqlN5ZYJjJS
-=6CEb
------END PGP SIGNATURE-----
+Regards,
+Salvatore
