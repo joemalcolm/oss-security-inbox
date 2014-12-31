@@ -1,60 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/08/03/5
-Message-ID: <etPan.53de6125.66334873.d5d9@Thor.local>
-Date: Sun, 3 Aug 2014 12:19:49 -0400
-From: Donald Stufft <donald@...fft.io>
-To: gremlin@...mlin.ru, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Enforce use of HTTPS for MathJax in IPython
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/2
+Message-ID: <54A36BCE.4000602@redhat.com>
+Date: Tue, 30 Dec 2014 20:21:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: CVE for net-mail/dbmail-3.2.2: CRAM-MD5 authentication bypass
 Content-Type: text/plain; charset=utf-8
 
+https://bugs.gentoo.org/show_bug.cgi?id=534020
 
-On August 3, 2014 at 3:57:58 AM, gremlin@...mlin.ru (gremlin@...mlin.ru) wrote:
-> On 02-Aug-2014 20:07:23 -0600, Kurt Seifried wrote:
->  
-> >>> Enforcing HTTPS for the whole site is even more stupid: normally
-> >>> only user-specific data (login procedure, personal settings for
-> >>> registered users, etc) should be forced to go through HTTPS;
-> >>> everything else should normally be left up to the users' wish.
-> >> This is incredibly wrong. First off if only your login procedures,
-> >> personal
-> > +1. If you commit to encrypting the entire site then you can do
-> > things like [...]
->  
-> Simple question: who do you trust more - your ISP or site owner?
-> Or should I ask whether you trush either of them?
->  
-> Hint: ISPs may be subjected to SORM-2 (been there, seen that, no
-> t-shirt this time), Jindun Gongcheng, or other pretty things. Site
-> owners may be interested in tracking their users' activity (that's
-> why I prefer browsing online shops anonymously, without logging in).
-> Other people may try to eavesdrop (or even intercept) connections
-> from users to servers.
+link to git repo:
+http://git.dbmail.eu/paul/dbmail/log/?h=dbmail_3_2&id=v3.2.2
 
-This is a nonsensical point too. I have to trust the site owners
-to some degree. To what degree broadly depends on what the site
-itself does however at the very least they’ll be able to see what
-account I’m attempting to use.
+The bug seems to be around for the 3.2 series only (so current stable is
+fine - but old).
 
-With enforced HTTPS and HSTS I don’t have to trust my ISP.
+http://blog.gmane.org/gmane.mail.imap.dbmail/day=20141219 <- mailinglist
+post of author about the vulnerability
 
->  
-> > It's not about the users wish. It's about the site's wish. The
-> > site is providing the service, the site provides the TOS/AUP/etc.
-> > The site may choose optionally to leave it up to the user, but
-> > this is a VERY bad idea.
->  
-> When people want to make their systems secure, they use client-side
-> certificates. When people want to make their systems public, they
-> normally don't care of who access them and don't track their users.
->  
-> When a site allows anonymous access, that may be performed via HTTP.
-> Authenticated (over HTTPS) users may (and normally should) work via
-> HTTPS, but forcing all users to use HTTPS is "a VERY bad idea"
-> // (q) Kurt Seifried, 2014-08-03
->  
+a copy of the relevant mail here in case:
+===========================================
+ Paul J Stevens | 19 Dec 22:55 2014
+Security alert: disable CRAM-MD5 if you don't use it
 
-What is the downside to forcing HTTPS.
 
---  
-Donald Stufft
-PGP: 0x6E3CBCE93372DCFA // 7C6B 7C5D 5E2B 6356 A926 F04F 6E3C BCE9 3372 DCFA
+Hi all,
+
+It was brought to my attention that dbmail currently authenticates any
+user with any password if the client issues an CRAM-MD5 authentication
+exchange, while the user - which does need to exist - has it's password
+stored in an encrypted format.
+
+This affects all versions supporting cram-md5, so 3.0.0 and later.
+
+Installations using authldap are *not* affected.
+
+You should disable CRAM-MD5 in dbmail.conf if you store password encrypted.
+
+A patch was already pushed to git both on dbmail.eu and github.
+
+I'll release a patched version asap.
+===========================================
+
+Couldn'T get a hold of someone from security on IRC earlier so reporting
+a Bug.
+
+In case of an unstable version being the only affected one what would be
+the best course of action? - I intend to package.mask 3.2.0 later when I
+am on my dev box again (I never added 3.2.1) and also I'D like to
+stable-req 3.1.17, since I just added 3.2.2 -- or would this warrant
+going for a faster STABLE-REQ of current 3.2.2 with the security fix?
+
+Please let me know what would be the preferred course of action from
+your point of view.
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
