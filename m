@@ -1,38 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/11/16/6
-Message-ID: <CAP145pif89wuDOcLS9DUzyyTcwT+XEtEoxv_bxUYqO64nArvfA@mail.gmail.com>
-Date: Mon, 17 Nov 2014 00:10:47 +0100
-From: Robert Święcki <robert@...ecki.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzing findings (and maybe CVE requests) - Image/GraphicsMagick, elfutils, GIMP, gdk-pixbuf, file, ndisasm, less
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/1
+Message-ID: <54A36AAE.5080702@redhat.com>
+Date: Tue, 30 Dec 2014 20:17:02 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: CVE request for emacs possibly
 Content-Type: text/plain; charset=utf-8
 
-2014-11-16 21:43 GMT+01:00 Michal Zalewski <lcamtuf@...edump.cx>:
->> However, even if tools like file/ndisasm/gimp/readelf can be used by
->> many (w/o strong system isolation boundaries) to analyze untrusted
->> inputs (for reverse engineering, malware analysis and similar
->> purposes) - I'd simply put a blame on those users
->
-> Well, it's always the easy option, but keep in mind that there are
-> countless tutorials that tell people to use 'file' or 'strings' to
-> examine sketchy file, or use tools such as objdump to do hobby
-> forensics.
->
-> We can blame the authors of the tutorials - but it goes back to a
-> fairly fundamental problem: the use cases aren't completely crazy
-> (nothing *fundamentally* wrong in using 'strings' on a file you don't
-> trust, right?), and their unsafe design is a fairly counterintuitive
-> property to laypeople and many experts alike [*].
->
-> So, for high-profile tools used in ways that are sort of plausible and
-> probably common, we may just need to try & make them robust.
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774090
 
-Agreed.
+From: Vincent Lefevre <vincent@...c17.net>
+To: 774090@...s.debian.org
+Subject: Re: emacs24: a left-click in Emacs sometimes modifies the
+PRIMARY selection
+Date: Mon, 29 Dec 2014 18:58:55 +0100
+Control: tags -1 security
 
-> (But of
-> course, I'd be pragmatic in drawing the line: the Mayhem fuzzing thing
-> went completely overboard.)
+On 2014-12-28 16:29:12 +0100, Vincent Lefevre wrote:
+> Note: This bug occurs very often and is very annoying, as one needs
+> to reselect what was selected (sometimes hardly possible). Moreover
+> the wrongly pasted text is similar to the correct text[*], meaning
+> that if one doesn't pay attention, one gets a file with permanently
+> incorrect data!
 
+Grrr... That's also a security problem. Due to this bug, a paste with
+a middle click in a web browser can end up in pasting private data!
+And Javascript can provide the pasted text to the web site immediately
+(Facebook does that), before the user can notice the problem.
 
 -- 
-Robert Święcki
+Vincent Lefèvre <vincent@...c17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / AriC project (LIP, ENS-Lyon)
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
