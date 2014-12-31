@@ -1,31 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/03/26/1
-Message-ID: <CAJjO9M=wm1vHR+vEyn_V9qdwQg-jTa3cwGXSRC9U0qCPG7wk6Q@mail.gmail.com>
-Date: Tue, 25 Mar 2014 18:47:59 -0700
-From: Fyodor <fyodor@...p.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OT] FD mailing list died. Time for new one
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/4
+Message-ID: <20141231113237.GA9204@eldamar.local>
+Date: Wed, 31 Dec 2014 12:32:37 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>, Stanislav Malyshev <stas@....net>
+Subject: CVE Request: PHP: out of bounds read crashes php-cgi
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 19, 2014 at 6:31 AM, Solar Designer <solar@...nwall.com> wrote:
+Hi
 
->
-> So I think someone else should setup the new FD, somewhere.
+Could you please assign a CVE to the following issue (in case it was
+not requested to MITRE via seprate channel, thus also Cc'ing
+StanislavStanislav Malyshev). 
 
+https://bugs.php.net/bug.php?id=68618 (out of bounds read crashes
+php-cgi).
 
-I agree, and I've been missing the list more and more myself.  Since I
-already deal with FD legal threats (from running Seclists.org), and since I
-already have mail servers and Mailman set up (from running my other lists),
-it isn't too much trouble for me.  I've rebooted the list!  But folks need
-to resubscribe as detailed here:
+PHP upstream has commited a fix for it to the VCS:
 
-http://insecure.org/news/fulldisclosure/
+http://git.php.net/?p=php-src.git;a=commit;h=f9ad3086693fce680fbe246e4a45aa92edd2ac35
 
-But this needs to be a community project, so I'll try to recruit a team of
-moderators from active listmembers.  And any help you guys can give in
-spreading the world helps!  We'll need a decent number of subscriptions to
-get back the momentum which was so abruptly lost.
+Thanks in advance.
 
-Cheers,
-Fyodor
-
+Regards,
+Salvatore
