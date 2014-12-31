@@ -1,44 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/09/04/10
-Message-Id: <20140904145155.8E11833200D@smtpvbsrv1.mitre.org>
-Date: Thu,  4 Sep 2014 10:51:55 -0400 (EDT)
-From: cve-assign@...re.org
-To: thoger@...hat.com, vdanen@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: V8 Memory Corruption and Stack Overflow - Node.js
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/11
+Message-ID: <CANTw=MN5m-Loy21JNrtcwz6rQNqnAYdi7U=zyb44q8J6WwXtpQ@mail.gmail.com>
+Date: Wed, 31 Dec 2014 16:44:42 -0500
+From: Michael Gilbert <mgilbert@...ian.org>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: cve request: miniunzip directory traversal
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Jakub Wilk discovered a directory traversal issue in the miniunzip
+tool [0], which is part of minizip [1].  Attached is a proposed
+solution.
 
-http://blog.nodejs.org/2014/07/31/v8-memory-corruption-stack-overflow/
-is CVE-2014-5256. This CVE ID has been in public use for about two
-weeks (examples are the http://xforce.iss.net/xforce/xfdb/95057 and
-http://www-01.ibm.com/support/docview.wss?uid=swg21682094 references)
-but unfortunately the CVE ID isn't mentioned in any obvious place on
-the nodejs.org web site, possibly because we only thought it was
-likely that upstream would do that, and we didn't directly ask.
+Please assign a CVE id.
 
-Also, the specific wording "A memory corruption vulnerability, which
-results in a denial-of-service, was identified in the versions of V8"
-was discussed with upstream. The information that we have is that the
-issue actually should not be considered a vulnerability in V8, and
-instead should be considered a vulnerability in Node.js. It is not a
-case where a CVE assignment by Google would have been expected.
+Best wishes,
+Mike
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+[0] http://bugs.debian.org/774321
+[1] http://www.winimage.com/zLibDll/minizip.html
 
-iQEcBAEBAgAGBQJUCHvMAAoJEKllVAevmvmsKWwIAMicXsaWhOBpfBNzyU/g8GBl
-zHUahsVdrvIit5+IfLASl+BjWbaGP2MhhF9c10Lvh6bDtPhogbVTntYWbbWAXsCT
-9niu+SrPRlXFzjbfS0wZJrVq12ySfbLoHAABDW+OSSpzkgXR9SaZ8WVVcEW85SHI
-2ORtPAjxwDIG5KXCUtHRT5kztFZ7SeTOOzZ6of8XYGGC1HsWB0aU6/bIgPKp2uvq
-2UPGmDtKTMDB8U17yK0ikSvlmL8yJGQUq7af1Y6eh+msgjnJgR+uHLzWoJAB2cu6
-nYEjTHn9aOoEFXbj2ikyTE2MzbY9Nm5d5qM168lDNchR17q0nsbDz2QweW1DXkc=
-=kw2P
------END PGP SIGNATURE-----
+View attachment "traversal.patch" of type "text/x-patch" (473 bytes)
