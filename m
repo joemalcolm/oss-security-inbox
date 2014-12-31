@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/17/3
-Message-ID: <20141217170009.GD23294@suse.de>
-Date: Wed, 17 Dec 2014 18:00:09 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: What is the "Grinch" polkit/wheel group issue?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/10
+Message-ID: <54A46096.4000104@internot.info>
+Date: Thu, 01 Jan 2015 07:46:14 +1100
+From: Joshua Rogers <honey@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: libsndfile buffer overread
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 25/12/14 21:02, Joshua Rogers wrote:
+> Hi,
+>
+> A buffer overread was found in libsndfile by me, in the latest version.
+> Fix commit here:
+> https://github.com/erikd/libsndfile/commit/dbe14f00030af5d3577f4cabbf9861db59e9c378
+>
+> Could I get a CVE-ID for it?
+>
+>
+> Thanks,
+Any updates?
 
-This probably needs a CVE too, or does it have one?
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
 
-https://www.alertlogic.com/blog/dont-let-grinch-steal-christmas/
-http://www.pcworld.com/article/2860032/this-linux-grinch-could-put-a-hole-in-your-security-stocking.html
 
-Although it seems that the user is in the "wheel" group for this to be exploitable
-and is hard to specify what actions should be safed by another query or which should not.
-
-Ciao, Marcus
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
