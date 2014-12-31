@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/07/07/5
-Message-ID: <20140707120556.GB7007@suse.de>
-Date: Mon, 7 Jul 2014 14:05:56 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2014/12/31/9
+Message-ID: <54A46080.9070009@internot.info>
+Date: Thu, 01 Jan 2015 07:45:52 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: default cipher suites in curl
+Subject: Re: CVE Request(s): GnuPG 2/GPG2
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 07, 2014 at 12:46:42PM +1000, Michael Samuel wrote:
+On 30/12/14 06:57, Joshua Rogers wrote:
 > Hi,
-> 
-> On 2 July 2014 01:44, Marcus Meissner <meissner@...e.de> wrote:
-> > Clients using the library could however set ciphers via
-> > an option, but as it would work without, they might not have.
-> 
-> This will only happen when the server either doesn't support stronger
-> ciphers or when the server requests it's cipher order be honoured and
-> chooses export ciphers first.   An attacker can't trigger this with SSLv3
-> or TLS.
+>
+> I found multiple vulnerabilities in GPG2.
+> Could some CVE-ID(s) be assigned please.
+> Patches were provided by multiple people.
+>
+> --
+> Double free in scd/command.c:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773471
+>
+> Double free in sm/minip12.c:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773472
+>
+>
+> These two seem related in code:
+> Return after free in sm/gpgsm.c:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773473
+> Return after free in dirmngr/ldapserver.c:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773523
+> --
+>
+> Thanks,
+Any updates?
 
-I was more thinking of a man in the middle attack during the connection
-setup.
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
 
-> > Should it get a CVE?
-> 
-> If a weak cipher was negotiated, it's because the server preferred this and
-> the client didn't care.  There's no trust boundary crossed.
 
-" ... and the client did not care" is I think the point here.
-
-curl in that form would accept all weak ciphers.
-
-> An argument could be made that the clients would rather not establish a
-> connection at all than negotiate a weak cipher.  Not sure if that counts for
-> CVE or just hardening?
-
-Thats my question here :)
-
-> Either way, this is a workaround for an OpenSSL bug.
-
-Ciao, Marcus
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
