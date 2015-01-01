@@ -1,57 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/3
-Message-ID: <20150109065244.GD6810@suse.de>
-Date: Fri, 9 Jan 2015 07:52:44 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Cc: CVE Assignments MITRE <cve-assign@...re.org>, Albert Astals Cid <aacid@....org>
-Subject: Re: CVE Request: kwallet: incorrect CBC encryption handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/01/4
+Message-ID: <54A51BC1.6080705@mccme.ru>
+Date: Thu, 01 Jan 2015 13:04:49 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: cve request: miniunzip directory traversal
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 09, 2015 at 07:02:38AM +0100, Salvatore Bonaccorso wrote:
-> Hi
-> 
-> The following KDE Project Security Advisory was issued at
-> https://www.kde.org/info/security/advisory-20150109-1.txt .
-> 
-> > Title:          Fix kwalletd CBC encryption handling
-> > Risk Rating:    Low
-> > Platforms:      All
-> > Versions:       kwalletd < Applications 14.12.1, KF5::KWallet < 5.6.0
-> > Author:         Valentin Rusu <kde@...u.info>
-> > Date:           9 January 2015
-> > 
-> > Overview
-> > ========
-> > 
-> > Until KDE Applications 14.12.0, kwalletd incorrectly handled CBC encryption blocks when
-> > encrypting secrets in kwl files. The secrets were still encrypted, but the
-> > result binary data corresponded to an ECB encrypted block instead of CBC.
-> > 
-> > Impact
-> > ======
-> > 
-> > The ECB encryption algorithm, even if it'll scramble user data, it'll produce
-> > same encrypted byte sequence for the same input text. As a result, attackers
-> > may eventually find-out the encrypted text.
-> > 
-> > Solution
-> > ========
-> > 
-> > For kde-runtime KWallet upgrade to KDE Applications 14.12.1 or apply the following patch:
-> >   http://quickgit.kde.org/?p=kde-runtime.git&a=commit&h=14a8232d0b5b1bc5e0ad922292c6b5a1c501165c
-> > 
-> > For KDE Frameworks 5 KWallet upgrade to 5.6.0 or apply the following patch:
-> >   http://quickgit.kde.org/?p=kwallet.git&a=commit&h=6e588d795e6631c3c9d84d85fd3884a159b45849
-> > 
-> > Credits
-> > =======
-> > 
-> > Thanks to Itay Duvdevani for finding the issue and for letting us know.
-> > Thanks to Valentin Rusu for implementing the fix.
-> 
-> Could you please assing a CVE for this issue?
+On 2015-01-01 00:44, Michael Gilbert wrote:
+> Jakub Wilk discovered a directory traversal issue in the miniunzip
+> tool [0], which is part of minizip [1].  Attached is a proposed
+> solution.
 
-This is already CVE-2013-7252 I think.
+Attached patch seems to deal with absolute paths only. What about 
+relative ones?
 
-Ciao, Marcus
+$ touch ../file
+
+$ zip test.zip ../file
+   adding: ../file (stored 0%)
+
+$ rm ../file
+
+$ miniunzip test.zip
+MiniUnz 1.01b, demo of zLib + Unz package written by Gilles Vollant
+more info at http://www.winimage.com/zLibDll/unzip.html
+
+test.zip opened
+  extracting: ../file
+
+$ ls ../file
+../file
+
+-- 
+Alexander Cherepanov
