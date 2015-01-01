@@ -1,84 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/5
-Message-ID: <54E9BF65.7040001@treenet.co.nz>
-Date: Mon, 23 Feb 2015 00:37:09 +1300
-From: Amos Jeffries <squid3@...enet.co.nz>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2015-0881
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/01/3
+Message-ID: <20150101075131.GA12426@eldamar.local>
+Date: Thu, 1 Jan 2015 08:51:31 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: xdg-utils: xdg-open: command injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-On 22/02/2015 7:17 p.m., Kurt Seifried wrote:
-> I'm trying to track down information on CVE-2015-0881.
-> 
-> I can't find a squid security contact (security@...id-cache.org 
-> bounced), there's no security report, and no link to a source code
-> patch for this.
+>From the references it is not clear, if a CVE was already requested in
+past, but I have not found a reference here. xdg-open has a command
+injection vulnerability, which was reported on [1] and [2]. The
+Freedesktop.org Bug entry contains also a patch[3]. The issue was
+hilighted again on the fulldisclosure list in [4].
 
-- From the "Contact Us page"
-(<http://www.squid-cache.org/Support/contact.html>)
+In case it is not yet assigned, could you please assign a CVE for this
+RCE for xdg-open in xdg-utils?
 
-  squid-bugs @ lists.squid-cache.org
+References:
 
-... which goes to me and some other trusted developers. I dont mind
-direct contacts for this type of thing, but the main contact address
-guarantees someone sees it within a few hrs.
+ [1] https://bugs.gentoo.org/show_bug.cgi?id=472888
+ [2] https://bugs.freedesktop.org/show_bug.cgi?id=66670
+ [3] https://bugs.freedesktop.org/attachment.cgi?id=109536
+ [4] http://seclists.org/fulldisclosure/2014/Nov/36
+ [5] https://bugs.debian.org/773085
 
-
-Regarding the CVE:
-
-1) This is the first I've heard about this particular CVE number
-assignment.
-
-2) I did have some discusions with JPCERT about _a_ response splitting
-vulnerability around those years. But the messages from them were IIRC
-about replicating response splitting in a 2.x versions which were
-incompletely fixed by:
-<http://www.squid-cache.org/Versions/v2/2.5/bugs/#squid-2.5.STABLE7-header_parsing>
-(did not get a CVE AFAIK).
-
-3) I have not been able to replicate the #2 issue in the Squid-3
-series and several iterations of changes to the parsers there have
-been careful to take the above issue into account. So I'm not sure
-where the 3.1.10 comes from. Assuming it is the same vulnerability.
-
-
-> 
-> This is regarding 3.1.9 and earlier, 3.1.10 was released on 22 Dec
-> 2010, so 4+ years ago.
-> 
-> Needless to say I am more than a bit confused. A link to a specific
-> code patch/vuln/file would be helpful. Also if anyone knows how to
-> contact Squid re security issues properly I'd love to know.
-> 
-
-I'm not sure 3.1.10 is the right version for attribution on any
-response splitting fix. There certainly were no patches solving
-anything related to respinse splitting in that version. Some
-borderline memory leak vulnerabilities perhapse, but not response
-splitting.
-
-
-NP: Just to confuse things there was a major replacement of the HTTP
-request-line parser on the 2015-02-10 which does explicitly fix all
-lot of known HTTP request-line parse issues, including a few response
-splitting vectors using downgrade to HTTP/0.9 handling. That will only
-be in the 3.6 series though.
-
-
-Amos Jeffries
-Squid Software Foundation
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-
-iQEcBAEBAgAGBQJU6b9lAAoJELJo5wb/XPRj96YH/AxZFBWFpVoGPVMeNFz+X/NV
-C7Z/HgUpYDH04x0wqWJMZH9ew/WiIu+AE7VzI8D83TDv0K9hyY7jctxXHm0Y3yUH
-tX4T/oScKuvr7P6i91CB3MQO3TRJvKRHc/SS0V0wRMFZNajf/sS6uaFUjkQzH9Gu
-4GVVc8bm1rJtoskeCOrT/EH06Ntb9PNl0CE3DbaEO+3F4e1hpmTGgeqXI6FStXHe
-Ftq65qUJ4SbyONpeiXfs66UsBMUMYitBy+5pbv8U5tk0jc8vXlVOIO6Bh7S2uLog
-g45mi/jpyLOpjoCD4zktXDOQR6ma+Smo8GEngpjf5SNTfppKucxS1v+H0XDujX8=
-=x6x4
------END PGP SIGNATURE-----
+Regards,
+Salvatore
