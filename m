@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/16
-Message-ID: <CALoOobObksh63Oi2Xf-Ny13WXsmNB=xGQ2YeVwpk6d77pxVx0Q@mail.gmail.com>
-Date: Thu, 29 Jan 2015 08:00:48 -0800
-From: Paul Pluzhnikov <ppluzhnikov@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/01/5
+Message-ID: <20150101131256.GA9109@eldamar.local>
+Date: Thu, 1 Jan 2015 14:12:56 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: CVE Request: libmspack: frame_end overflow which could cause infinite loop
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 29, 2015 at 4:09 AM, Hanno Böck <hanno@...eck.de> wrote:
+Hi,
 
-> And yes: I'd like people to cry alarm every time they see a buffer
-> overflow in glibc or any other core lib.
+Jakub Wilk originally reported to the Debian BTS a problem with
+cabextract on a specially crafted cab file, causing cabextract to hang
+forever. The problem is actually in the embedded copy of libmspack, see
+[1]. Libmspack, a library to provide compression and decompression of
+some file formats used by Microsoft, is used in many project (or
+embedded there like also Clamav). This issue can cause a remotely
+exploitable denial-of-service condition due to clamav thread hanging
+forever while scanning the file. A patch is available at [2] for
+libmspack.
 
-What is the appropriate forum to cry alarm on?
+Could you please assign a CVE for this issue in libmspack?
 
-We are not a distro, and (AFAICT) are not on any of the closed lists.
-But maybe we should be.
+References:
 
-Thanks,
--- 
-Paul Pluzhnikov
+ [1] https://bugs.debian.org/773041
+ [2] http://anonscm.debian.org/cgit/collab-maint/libmspack.git/tree/debian/patches/qtmd-fix-frame_end-overflow.patch
+
+Regards,
+Salvatore
