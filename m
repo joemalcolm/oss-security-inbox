@@ -1,61 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/17
-Message-ID: <CALoOobM3759qX7xmsi9oDOkAZRXALUTPB00_sA_564TLwmGs7w@mail.gmail.com>
-Date: Fri, 20 Feb 2015 09:04:48 -0800
-From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
-To: Rich Felker <dalias@...c.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fixing the glibc runtime linker
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/01/6
+Message-ID: <CAE2SPAZD3KFjGh85mY5MixXrS=O6h8v_0JK=XvZ4R1iJ1ZNvCw@mail.gmail.com>
+Date: Thu, 1 Jan 2015 15:41:50 +0100
+From: Bastien ROUCARIES <roucaries.bastien@...il.com>
+To: Gynvael Coldwind <gynvael@...dwind.pl>
+Cc: oss-security@...ts.openwall.com, jodie.cunningham+osssecurity@...il.com
+Subject: Re: Imagemagick fuzzing bug
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 20, 2015 at 8:50 AM, Rich Felker <dalias@...c.org> wrote:
-
-> On Fri, Feb 20, 2015 at 12:14:47AM -0800, Paul Pluzhnikov wrote:
-
->> If VAR is unset, or set to relative path, resulting binary will be "bad".
+On Wed, Dec 24, 2014 at 10:32 PM, Gynvael Coldwind <gynvael@...dwind.pl> wrote:
+> Hey,
 >
-> If the rpath is needed for the binary to work, this should result in
-> immediate failure when you try to run it, which would be detected and
-> corrected before it becomes an issue.
+> Original reporter from google side here.
+>
+>>
+>> You are aware that there is graphicsmagick which shares lots of code
+>> with im (it's an early fork)? It'd be nice to also report these issues
+>> to them if they apply. (I also reported a couple of issues in both
+>> im/gm lately and devs were always quick to fix things)
+>
+>
+> Do you know if either im or gm backport fixes from each other?
+> I fuzzed only im, so I've reported to im. I don't mind reporting to both in
+> the future, but if they DO backport fixes, that would lead into collisions
+> (i.e. two different fixes for one bug, makes merging harder).
 
-Right. Except the picture may be slightly more complicated, e.g. the binary
-has optional dependencies on libfoo.so and libbar.so, and the build uses
+Usually I ask fordebian graphickmagick to check the code condition.
+But to my best knowledge they do not backport, except if you ask. So
+you should try your image on graphicmagick and check if it crash
 
-  ${CC} -Wl,-rpath=${LIBFOO_INSTALL}:${LIBBAR_INSTALL} ...
+BTW one patch was not correct please found updated patch queue here:
+http://anonscm.debian.org/cgit/collab-maint/imagemagick.git/log/?h=debian-patches/6.8.9.9-5
 
-and one or both of _INSTALL paths may be empty in a given build.
+I have backported to 6.7.7.10 here
+http://anonscm.debian.org/cgit/collab-maint/imagemagick.git/log/?h=debian/6.7.7.10-5%2bdeb7u4
+(not yet fully tested)
 
-The bad RPATH may also not be immediately discovered because e.g. the
-developer has LD_LIBRARY_PATH set (which is common because developers often
-use debug version of the library installed separately from release one).
+And i plan to backport to 6.6.0.4
 
-All of this is to say that that is a relatively easy mistake to make.
+Bastien
 
-I fully agree with you that a competent vendor will not make this mistake,
-but there appears to be sufficient evidence that incompetent vendors
-exist :-)
-
-> If it's not needed for the binary to work, this is a huge incompetence
-> or policy failure issue that's not going to be fixed by restricting
-> RPATH. And it would probably be better solved by having ld produce
-> warnings for relative or blank RPATH (or even refusing to generate
-> such without an additional override option) rather than by potentially
-> breaking existing binaries.
-
-Interesting notion. I am not sure how open binutils developers will be to it:
-after all you explicitly asked for empty RPATH with command line argument.
-
-Should GCC also refuse to compile 'execve(argv[1]);' unless a
--fyes-i-know-what-i-am-doing flag is given?
-
-> Aside from that, I'm not fundamentally opposed to restricting relative
-> RPATH in suid binaries (or rather AT_SECURE), but it should not be
-> restricted in other cases. If it is restricted in the suid case, I
-> believe the correct way is refusing to run the binary at all. Just
-> ignoring the RPATH will possibly result in the wrong libraries being
-> loaded, which could itself lead to vulnerabilities.
-
-Sounds good to me.
-
--- 
-Paul Pluzhnikov
+> Cheers,
+> Gynvael
