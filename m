@@ -1,37 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/1
-Message-ID: <Pine.LNX.4.64.1501102103260.31425@beijing.mitre.org>
-Date: Sat, 10 Jan 2015 21:05:12 -0500 (EST)
-From: cve-assign@...re.org
-To: Yury German <yurylie@...yweb.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org, fk@...iankeil.de
-Subject: Re: CVE Request for Privoxy Version: 3.0.22
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/02/1
+Message-ID: <20150102194358.GA31666@kludge.henri.nerv.fi>
+Date: Fri, 2 Jan 2015 21:43:58 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org, abuse@...crete5.org, security@...crete5.org, Simo Ben youssef <simo@...xploit.com>
+Subject: CVE request: Concrete5 XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-On Wed, 7 Jan 2015, Yury German wrote:
+Can you assign CVE identifier for following vulnerability in Concrete5, thanks.
 
-> Privoxy Version 3.0.22 has two vulnerabilities that were fixed in the 
-> version of Privoxy 3.0.22. Can we please assign CVE(s) to this.
->
-> Fixed a memory leak when rejecting client connections due to
-> the socket limit being reached (CID 66382). This affected
-> Privoxy 3.0.21 when compiled with IPv6 support (on most
-> platforms this is the default).
+http://seclists.org/bugtraq/2014/Dec/53
+http://osvdb.org/115633
+http://osvdb.org/115634
 
-Use CVE-2015-1030.
+ps. there is something wrong with http://www.openwall.com/lists/oss-security/ it
+says "an error occurred while processing this directive"
 
-> Fixed an immediate-use-after-free bug (CID 66394) and two
-> additional unconfirmed use-after-free complaints made by
-> Coverity scan (CID 66391, CID 66376).
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-Use CVE-2015-1031.
-
-> URL to the Page: http://www.privoxy.org/announce.txt 
-> <http://www.privoxy.org/announce.txt>
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+iEYEARECAAYFAlSm9P4ACgkQXf6hBi6kbk+bfQCgjF/EWeO4Wfs0SUSsq96LwNpE
+AWAAn1yKEw9eDAlJ6cQczjzHZ7VGdXUp
+=0mVH
+-----END PGP SIGNATURE-----
