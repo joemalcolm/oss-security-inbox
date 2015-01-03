@@ -1,29 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/1
-Message-ID: <54D40611.6010303@openwall.com>
-Date: Fri, 06 Feb 2015 03:08:49 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: cpio -- directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/12
+Message-ID: <Pine.LNX.4.64.1501031730070.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 17:30:44 -0500 (EST)
+From: cve-assign@...re.org
+To: Moritz Muehlenhoff <jmm@...ian.org>
+cc: Vasyl Kaigorodov <vkaigoro@...hat.com>, cve-assign@...re.org, oss-security@...ts.openwall.com, 772008@...s.debian.org
+Subject: Re: CVE request:  mpfr: buffer overflow in mpfr_strtofr
 Content-Type: text/plain; charset=utf-8
 
-On 2015-02-02 20:48, Vitezslav Cizek wrote:
-> * Dne Friday 16. January 2015, 03:44:25 [CET] Alexander Cherepanov napsal:
->> cpio is susceptible to a directory traversal vulnerability via symlinks.
->
-> Here's a patch we use in SUSE for some time.
 
-Thanks for sharing!
+On Tue, 30 Dec 2014, Moritz Muehlenhoff wrote:
 
-> It forbids to write over symlinks, similar to bsdtar.
+> On Mon, Dec 08, 2014 at 01:45:12PM +0100, Vasyl Kaigorodov wrote:
+>> Hello,
+>>
+>> A buffer overflow was reported [1] in mpfr.
+>> This is due to incorrect GMP documentation for mpn_set_str about the
+>> size of a buffer (discussion is at [1]; first fix in the GMP
+>> documentation is at [2]). This bug is present in the MPFR versions
+>> from 2.1.0 (adding mpfr_strtofr) to this one, and can be detected by
+>> running "make check" in a 32-bit ABI under GNU/Linux with alloca
+>> disabled (this is currently possible by using the --with-gmp-build
+>> configure option where alloca has been disabled in the GMP build). It
+>> is fixed by the strtofr patch [3].
+>> Corresponding changeset in the 3.1 branch: 9110 [4].
+>>
+>> [1]: https://gmplib.org/list-archives/gmp-bugs/2013-December/003267.html
+>> [2]: https://gmplib.org/repo/gmp-5.1/raw-rev/d19172622a74
+>> [3]: http://www.mpfr.org/mpfr-3.1.2/patch11
+>> [4]: https://gforge.inria.fr/scm/viewvc.php?view=rev&root=mpfr&revision=9110
+>>
+>> References:
+>> - https://bugzilla.redhat.com/show_bug.cgi?id=1171701
+>> - https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772008
+>>
+>> Can a CVE be assigned to this please?
 
-Nice, this is a simple and easy approach. But I wonder if it's widely 
-acceptable. GNU tar follows symlinks which are not extracted from the 
-archive and, in http://www.openwall.com/lists/oss-security/2015/01/08/4, 
-Florian Weimer said: "If [the current directory] already contains 
-symbolic links, some users expect that those links are followed because 
-they have used symlinks to move part of the file system tree to 
-somewhere else (perhaps a large file system)."
+Use CVE-2014-9474.
 
--- 
-Alexander Cherepanov
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
