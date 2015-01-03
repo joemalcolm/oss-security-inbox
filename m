@@ -1,37 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/25/2
-Message-Id: <20150225105941.5B38A1BE11E@smtpvbsrv1.mitre.org>
-Date: Wed, 25 Feb 2015 05:59:41 -0500 (EST)
-From: cve-assign@...re.org
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: CVE-2015-2080 - Jetty remote unauthenticated credential exposure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/1
+Message-ID: <54A73280.2010909@redhat.com>
+Date: Fri, 02 Jan 2015 17:06:24 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Possible "new" CVE for Zoo directory traversal
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774453
 
-CVE-2015-2080 has been assigned to this issue in which Jetty sends an
-HTTP response to one client containing HTTP request data from a
-different client:
+Package: zoo
+Version: 2.10-27+b1
+Tags: security
 
-  http://dev.eclipse.org/mhonarc/lists/jetty-announce/msg00074.html
-  https://github.com/eclipse/jetty.project/blob/master/advisories/2015-02-24-httpparser-error-buffer-bleed.md
-  http://blog.gdssecurity.com/labs/2015/2/25/jetleak-vulnerability-remote-leakage-of-shared-buffers-in-je.html
+Either the fix for CVE-2005-2349 (bug #309594) wasn't complete, or it
+bit-rotted, because Zoo is still susceptible to directory traversal:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+$ pwd
+/home/jwilk
 
-iQEcBAEBAgAGBQJU7ap3AAoJEKllVAevmvmsDnEH/ikj6IU/6p1JtEu4Z7gQfsyq
-0ZVsgz1qLbskRENzifL8XVemf+yjKryUJXGfFDFGPFc/2WsaqeaBoedsoAsfvDfg
-ZjfueEQJU6ZHkXaLGodZrp7s/GAZOEbHxQ6Tw+dsdO8pVS8j83xQXGTrBlKOBs+x
-nw8CwPS2dOwFkU58G4ja5O9xzpM2/Ry0l+/z6W72JywK9FAZQzR3OpUdx3LhJRRz
-KtqDu6pDNUAetjyM0uVhKWjdBqzMbR+ZWDs20oeXrs4KTwHvItWcxz5frFErJeCw
-MgAKS1j0lujlSbGyQiC+lnrze5QbVY2zWusV78XjJKgreUHxLlqv5QVQ4A+GylI=
-=2yu/
------END PGP SIGNATURE-----
+$ zoo x traversal.zoo
+Zoo:  /tmp/moo       -- extracted
+
+$ ls -l /tmp/moo
+-rw-r--r-- 1 jwilk users 4 Jan  5  2015 /tmp/moo
+
+
+The script I used to create the test case is available at:
+https://bitbucket.org/jwilk/path-traversal-samples
+
+-- System Information:
+Debian Release: 8.0
+ APT prefers unstable
+ APT policy: (990, 'unstable'), (500, 'experimental')
+Architecture: i386 (x86_64)
+Foreign Architectures: amd64
+
+Kernel: Linux 3.2.0-4-amd64 (SMP w/2 CPU cores)
+Locale: LANG=C, LC_CTYPE=pl_PL.UTF-8 (charmap=UTF-8)
+Shell: /bin/sh linked to /bin/dash
+Init: sysvinit (via /sbin/init)
+
+Versions of packages zoo depends on:
+ii  libc6  2.19-13
+
+-- 
+Jakub Wilk
+
+
+https://security-tracker.debian.org/tracker/CVE-2005-2349
+
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
