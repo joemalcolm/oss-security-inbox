@@ -1,34 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/1
-Message-ID: <Pine.LNX.4.64.1501031900440.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 19:01:27 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/22
+Message-ID: <Pine.LNX.4.64.1501031857580.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 18:59:18 -0500 (EST)
 From: cve-assign@...re.org
-To: Grant Murphy <grant.murphy@...com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: [grant.murphy@...com: CVE request for vulnerability in OpenStack Glance]
+To: Vincent Danen <vdanen@...hat.com>
+cc: oss-security <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: Re: CVE request: denial of service flaw in firebird
 Content-Type: text/plain; charset=utf-8
 
 
->> A vulnerability was discovered in OpenStack (see below). In order to 
->> ensure full traceability, we need a CVE number assigned that we can 
->> attach to further notifications. This issue is already public, although 
->> an advisory was not sent yet.
->>
->> Title: Glance v2 API unrestricted path traversal
->> Reporter: Masahito Muroi (NTT)
->> Products: Glance
->> Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
->>
->> Description: Masahito Muroi from NTT reported a vulnerability in 
->> Glance. By setting a malicious image location an authenticated user can 
->> download or delete any file on the Glance server for which the Glance 
->> process user has access to. Only setups using the Glance V2 API are 
->> affected by this flaw.
->>
->> References:
->> https://launchpad.net/bugs/1400966
+> I've not seen a CVE for this; could one be assigned?  Thanks.
+>
+> It was found that an unauthenticated remote attacker could send a malformed 
+> network packet to a firebird server, which would cause the server to crash.
+>
+> http://www.firebirdsql.org/en/news/security-updates-for-v2-1-and-v2-5-series-66011/
+> http://tracker.firebirdsql.org/browse/CORE-4630
+> http://sourceforge.net/p/firebird/code/60331/
+> https://bugs.mageia.org/show_bug.cgi?id=14726
+> https://bugzilla.redhat.com/show_bug.cgi?id=1172445
 
-Use CVE-2014-9493.
+Use CVE-2014-9492.
 
 ---
 
