@@ -1,48 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/18/5
-Message-ID: <CAOp4FwRmbE3vuPtfO_s_C2X+79SZG5khmThEEQ=XDsNEKbxuRg@mail.gmail.com>
-Date: Wed, 18 Feb 2015 15:19:54 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: CVE-Request: Linux ASLR mmap weakness: Reducing entropy by half
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/19
+Message-ID: <Pine.LNX.4.64.1501031853270.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 18:54:05 -0500 (EST)
+From: cve-assign@...re.org
+To: Dawa Ometto <d.l.a.ometto@...nl>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Re: CVE request: remote code execution vulnerability in gollum < 3.1.1
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 18, 2015 at 3:01 PM, Hector Marco <hecmargi@....es> wrote:
-> Hi,
->
-> A bug in Linux ASLR implementation for versions prior to 3.19 has been
-> found. The issue is that the mmap area for processes is not properly
-> randomized on some architectures.
->
-> Affected systems have reduced the mmap base area entropy of the processes by
-> half.
->
->
-> Details at:
-> http://hmarco.org/bugs/linux-ASLR-reducing-mmap-by-half.html
 
-Hi Hector,
+On Thu, 18 Dec 2014, Dawa Ometto wrote:
 
-The timeline is not rendered properly on Google chrome browser or
-mozilla firefox.
+> Resubmitting this (while fixing version number typo in the subject-line)
+> since it never did receive a CVE.
+>
+> On 04/12/14 22:08, Dawa Ometto wrote:
+>> Hi,
+>>
+>> I just released a fix for a remote code execution vulnerability in
+>> gollum [1]. The vulnerable code was in the gollum-grit_adapter [2] ruby
+>> gem dependency as of gollum v3.1.0, but the exploitable code was also
+>> present before that version, in the gollum-lib [3] gem dependency (code
+>> was abstracted from gollum-lib to the new dependency).
+>>
+>> Type of vulnerability: remote code execution
+>> Attack outcome: run arbitrary commands, shell access
+>> Vulnerable versions: gollum < 3.1.1, gollum-lib < 4.0.1,
+>> gollum-grit_adapter < 0.1.1
+>> Fix: `gem update gollum` will update the dependencies.
+>> Link to vulnerability/fix diff:
+>> https://github.com/gollum/grit_adapter/commit/4520d973c81fecfebbeacd2ef2f1849d763951c7
+>> Link to project issue: https://github.com/gollum/gollum/issues/913
+>>
+>> Description: The bug exploits the fact that gollum uses the grit gem for
+>> git repository access, which makes command-line calls to `git grep` to
+>> search files. `git grep` has an `-O` or `--open-files-in-pager` option
+>> which can spawn an arbitrary process (to act as pager). In vulnerable
+>> versions of gollum, searching for the string `-O<arbitrary command>` or
+>> `--open-files-in-pager <arbritary command>` in the wiki's search field
+>> will execute an arbitrary shell command. However, this will only work if
+>> the string "master" (or more precisely, the name of the git branch that
+>> gollum is using) is found in one of the wiki's files: "master" is then
+>> interpreted as the search query, `-O<arbitary code>` as a command line
+>> option to `git grep`.
+>>
+>> The fix in the `gollum-grit_adapter` gem v.0.1.1 shell-escapes the
+>> user's query and removes any -O or --open-file-in-pager option from it.
+>>
+>> [1] https://github.com/gollum/gollum, https://rubygems.org/gems/gollum
+>> [2] https://github.com/gollum/grit_adapter
+>> [3] https://github.com/gollum/gollum-lib
 
+Use CVE-2014-9489.
 
->
->
->
-> Could you please assign a CVE-ID for this?
->
->
->
-> Hector Marco.
-> http://hmarco.org
->
-> Cyber-security researcher at
-> http://cybersecurity.upv.es/
+---
 
-
-
--- 
-This message is strictly personal and the opinions expressed do not
-represent those of my employers, either past or present.
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
