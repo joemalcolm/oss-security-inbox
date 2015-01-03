@@ -1,40 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/01/4
-Message-Id: <20150201123920.696C4332051@smtpvbsrv1.mitre.org>
-Date: Sun,  1 Feb 2015 07:39:20 -0500 (EST)
-From: cve-assign@...re.org
-To: steffen.roesemann1986@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Zerocms <= v. 1.3.3 -- SQL injection vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/6
+Message-ID: <CALH-=7wR5r4z=NCJpPaUWmHhHzeik_oM2xrd22WJxSVStuFXEw@mail.gmail.com>
+Date: Sat, 3 Jan 2015 10:02:21 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- Contenido 4.9.x - 4.9.5 -- Reflecting XSS vulnerability in exception handler with deactivated AMR function
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello Josh, Steve, vendors, list.
 
-> article_id parameter used in zero_view_article.php
+I found a reflecting XSS vulnerability in the exception handler function of
+CMS Contenido, which affects all versions from 4.9.x to 4.9.5 when using
+having disabled advanced mod rewrite (AMR) function, which is used for
+generating SEO-friendly URLs.
 
-This seems to be a duplicate report; please see:
+The vulnerability can be triggered by submitting arbitrary HTML- and/or
+JavaScriptcode in parameters "idcat", "idart" and "lang" to the PHP file
+front_content.php.
 
-  http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-4034
+Can you assign a CVE ID for it please?
 
+Greetings and Happy New Year,
 
-> user_id parameter used in a POST request in zero_transact_user.php
+Steffen Rösemann
 
-Use CVE-2015-1442.
+References:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+[1] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-03.html
+[2]
+http://sroesemann.blogspot.de/2014/12/report-for-advisory-sroeadv-2014-03.html
+[3] http://www.contenido.org/de/cms/CONTENIDO/News/index-c-2044-3.html
+[4] http://seclists.org/fulldisclosure/2014/Dec/111
 
-iQEcBAEBAgAGBQJUzh4BAAoJEKllVAevmvmsSHcIAKCYb0CAnhJYgTux5fSGQyiK
-XNeJhfTWsAlsThIi4PTXcX2s67zRbQRtzlAlczPxDbCWNlpl5SCl7rnOlv1lPUT1
-xJUZleKRhkI0U5GQC3xPzMCuS729ccbktET+s1QfWS+7iZ1QXWNExyATEQasLM3r
-X0V1wi455h2u4cYlzYd4MLYLOwCrHxq8UDbgHrW1VDU9avODSwvQrzEyKOj3Gjw5
-zQWCvqager/1BJP/vtQfocLzCeJ9g+leJ0VoLRdXtgubkGclk1to3biyXBUNfHfV
-wm6geuzGccgHM6SnLBLfubsA5xo2ccBwLQkrTxOYAHXi+WhR/knVeIyrRZdnYDY=
-=WRkR
------END PGP SIGNATURE-----
