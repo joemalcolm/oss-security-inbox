@@ -1,37 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/13/2
-Message-ID: <54DDB5EC.8060708@debian.org>
-Date: Fri, 13 Feb 2015 08:29:32 +0000
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: sudo TZ issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/11
+Message-ID: <Pine.LNX.4.64.1501031717560.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 17:19:16 -0500 (EST)
+From: cve-assign@...re.org
+To: Moritz Mühlenhoff <jmm@...til.org>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org, Fiedler Roman <Roman.Fiedler@....ac.at>, security@...ntu.com
+Subject: Re: parse_datetime() bug in coreutils
 Content-Type: text/plain; charset=utf-8
 
-On 13/02/15 07:05, Rich Felker wrote:
-> On Wed, Feb 11, 2015 at 10:20:03AM -0700, Todd C. Miller wrote:
->> However, there is no real way for the application to tell that it
->> is being run by an unpriviliged user and that operations that would
->> otherwise be safe (opening a user-specified time zone file) may be
->> dangerous.
-> 
-> Why does sudo run the target program with both effective and real ids
-> set to root? Why not run with only the effective uid set to root?
 
-Firstly, as far as I'm aware, sudo's design is "su, but better" and
-setting the real uid matches how su works.
+On Mon, 29 Dec 2014, Moritz Mühlenhoff wrote:
 
-Secondly, becoming root is not the only reason why you might want to use
-sudo or su; they can also be used to drop privileges from root to
-non-root, or switch from one non-root user to another. Under the current
-design, the target program can't switch back; if the real uid was still
-that of the original user, it could.
+> On Mon, Nov 24, 2014 at 06:47:24PM -0800, Seth Arnold wrote:
+>> Hello,
+>>
+>> Fiedler Roman discovered that coreutils' parse_datetime() function
+>> has some flaws that may be exploitable if the date(1), touch(1),
+>> or potentially other programs, accept untrusted input for certain
+>> parameters. While researching this issue, he discovered that it
+>> was independantly discovered by Bertrand Jacquin and reported at
+>> http://debbugs.gnu.org/cgi/bugreport.cgi?bug=16872
+>>
+>> $ touch '--date=TZ="123"345" @1'
+>> Segmentation fault (core dumped)
+>> $ date '--date=TZ="123"345" @1'
+>> *** Error in `date': double free or corruption (out): 0x00007fffc9866c20 ***
+>> Aborted (core dumped)
+>> $
+>>
+>> The GNU bugtracker has this patch to fix the problem:
+>> http://debbugs.gnu.org/cgi/bugreport.cgi?msg=11;filename=date-tz-crash.patch;att=1;bug=16872
+>> and this patch to include the fix in coreutils and a small test case:
+>> http://debbugs.gnu.org/cgi/bugreport.cgi?msg=19;filename=coreutils-date-crash.patch;att=1;bug=16872
+>>
+>> Can a CVE please be assigned for this issue.
 
-Thirdly, if every program and every library is expected to be aware of
-Unix arcana like "if euid != uid, then the results of getenv() are
-untrustworthy", then that would effectively put every program invoked
-via sudo, and every library that they link, into the trusted set. AIUI,
-part of the point of sudo is that it does the checks and acts as the
-trust boundary, so that the target program doesn't have to.
+Use CVE-2014-9471.
 
-    S
+---
 
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
