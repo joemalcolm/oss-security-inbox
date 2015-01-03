@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/21
-Message-ID: <21735.36246.610034.583654@neoshoggoth.uraeus.com>
-Date: Fri, 20 Feb 2015 19:40:06 +0000
-From: Joe Malcolm <jmalcolm@...eus.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: jabberd remote information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/16
+Message-ID: <Pine.LNX.4.64.1501031743570.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 17:44:54 -0500 (EST)
+From: cve-assign@...re.org
+To: Michael Gilbert <mgilbert@...ian.org>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: cve request: miniunzip directory traversal
 Content-Type: text/plain; charset=utf-8
 
-Was a CVE assigned for this?
 
-Joe
+On Wed, 31 Dec 2014, Michael Gilbert wrote:
 
-Thijs Alkemade writes:
->Hello,
+> Jakub Wilk discovered a directory traversal issue in the miniunzip
+> tool [0], which is part of minizip [1].  Attached is a proposed
+> solution.
 >
->A buffer overflow was found in the XMPP server jabberd2 when normalizing
->strings that can lead to remote information disclosure [1]. When parsing a
->JID, jabberd2 version 2.3.2 and below truncate the data but do not verify
->whether the result is valid UTF8 before passing it to libidn. If the data ends
->with an unterminated multi-byte UTF8 sequence then libidn may copy data past
->the buffer into the result. This can be exploited by remote clients or remote
->servers.
+> Please assign a CVE id.
 >
->Could you please assign a CVE for this issue?
+> Best wishes,
+> Mike
 >
->[1] = https://github.com/jabberd2/jabberd2/issues/85
->
->Best regards,
->Thijs Alkemade
+> [0] http://bugs.debian.org/774321
+> [1] http://www.winimage.com/zLibDll/minizip.html
+
+Use CVE-2014-9485.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
