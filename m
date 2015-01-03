@@ -1,46 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/17
-Message-Id: <20150313232420.0AEDB6C0020@smtpvmsrv1.mitre.org>
-Date: Fri, 13 Mar 2015 19:24:20 -0400 (EDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/15
+Message-ID: <Pine.LNX.4.64.1501031741330.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 17:42:11 -0500 (EST)
 From: cve-assign@...re.org
-To: ppandit@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: Linux kernel: tty: kobject reference leakage in tty_open
+To: Kurt Seifried <kseifried@...hat.com>
+cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: Re: CVE request for emacs possibly
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> Linux kernel built with the virtual console support(CONFIG_VT) is vulnerable
-> to a NULL pointer dereference issue. It could occur while accessing pseudo
-> terminal device(/dev/pts/*) files.
-> 
-> An unprivileged user could use this flaw to crash the system kernel resulting
-> in DoS.
-> 
-> https://git.kernel.org/linus/c290f8358acaeffd8e0c551ddcc24d1206143376
+On Tue, 30 Dec 2014, Kurt Seifried wrote:
 
-> TTY: drop driver reference in tty_open fail path
-> 
-> When tty_driver_lookup_tty fails in tty_open, we forget to drop a reference to the tty driver.
-> 
-> Fix that by adding tty_driver_kref_put to the fail path. 
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774090
+>
+> From: Vincent Lefevre <vincent@...c17.net>
+> To: 774090@...s.debian.org
+> Subject: Re: emacs24: a left-click in Emacs sometimes modifies the
+> PRIMARY selection
+> Date: Mon, 29 Dec 2014 18:58:55 +0100
+> Control: tags -1 security
+>
+> On 2014-12-28 16:29:12 +0100, Vincent Lefevre wrote:
+>> Note: This bug occurs very often and is very annoying, as one needs
+>> to reselect what was selected (sometimes hardly possible). Moreover
+>> the wrongly pasted text is similar to the correct text[*], meaning
+>> that if one doesn't pay attention, one gets a file with permanently
+>> incorrect data!
+>
+> Grrr... That's also a security problem. Due to this bug, a paste with
+> a middle click in a web browser can end up in pasting private data!
+> And Javascript can provide the pasted text to the web site immediately
+> (Facebook does that), before the user can notice the problem.
 
-Use CVE-2011-5321.
+Use CVE-2014-9483.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVA3DXAAoJEKllVAevmvmsFMIH/1Qme8WOCcx7UQK/pwkVuJum
-Fz040QuNKK+TWi6yWNpXNXsMYRlJVdtGqfQ5MtfyrpxtYs8YNVYVMpce/HTtVByR
-neYXaOLe1APB/xftf1ohGnzl5J3pYd6b9Rv3dSMLa/Ox/1b+xaUdq+l4r751hX0x
-NGETRMX/ZGjKn77MAKauSSf1ZnS7Mm19NSfLGXc/Of5VAFTwGJ/1HM7t+p0l2grA
-kQYTzUqlVs3bC2ff2ACCL9TnT5JmeiUwMYZPa1ahdAvL2c7kShKHo/44ctzgpQQI
-An3oD26zoSRQe4tqv8URe3bDCVdAyH89R23bsQDC3o8lj/v9Wep4jbTZwP50RJ4=
-=w+iT
------END PGP SIGNATURE-----
