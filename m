@@ -1,44 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/12/2
-Message-ID: <CALH-=7zT6WUZD6Y0znWEvUSwHRrgf=ZpJfEXCpVkkCYiJq17Kw@mail.gmail.com>
-Date: Mon, 12 Jan 2015 15:48:12 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/17
+Message-ID: <20150103224836.GA3233@steve.org.uk>
+Date: Sat, 3 Jan 2015 22:48:36 +0000
+From: Steve Kemp <steve@...ve.org.uk>
 To: oss-security@...ts.openwall.com
-Subject: CVE-Request -- CMS Croogo v.2.2.0 -- Reflecting XSS in filemanager in the administrative backend
+Cc: cve-assign@...re.org
+Subject: cve request: insecure temporary file usage - xbindkeys-config
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors, list.
 
-I found a reflecting XSS vulnerability in the filemanager of the CMS Croogo
-v. 2.2.0.
+  I realize I didn't request and ID for the insecure use of
+ temporary files in xbindkeys-config, as reported (by myself)
+ here:
 
-The filemanager is located here in a common Croogo installation:
+    https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772473
 
-http://
-{TARGET}/admin/file_manager/file_manager/editfile?path=%2FApplications%2FXAMPP%2Fxamppfiles%2Fhtdocs%2Fcroogo-2.2.0%2Fpackage.json
-
-By appending arbitrary HTML- and/or JavaScriptcode to names of existing
-files, the XSS gets executed. However it does not work by appending the
-code to names of directories.
-
-Example:
-
-http://{TARGET}/admin/file_manager/file_manager/editfile?path=%2FApplications%2FXAMPP%2Fxamppfiles%2Fhtdocs%2Fcroogo-2.2.0%2Fpackage.json<script>alert("XSS
-in filemanager functionality of CMS Croogo 2.2.0")</script><!--
-
-Could you please assign a CVE-ID for that issue?
-
-Thank you!
-
-Greetings
-
-Steffen Rösemann
-
-References:
-
-[1] https://croogo.org/
-[2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-02.html
-[3] https://github.com/croogo/croogo/issues/599
-[4]
-http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-02.html
-
+Steve
+--
