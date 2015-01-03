@@ -1,45 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/4
-Message-ID: <Pine.LNX.4.64.1501181459220.14308@beijing.mitre.org>
-Date: Sun, 18 Jan 2015 15:00:32 -0500 (EST)
-From: cve-assign@...re.org
-To: Tristan Cacqueray <tristan.cacqueray@...vance.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request for vulnerability in OpenStack Glance
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/5
+Message-ID: <20150103064426.GA31730@eldamar.local>
+Date: Sat, 3 Jan 2015 07:44:26 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>, Jakub Wilk <jwilk@...ian.org>
+Subject: CVE Request: arj: symlink directory traversal and directory traversal via //multiple/leading/slash
 Content-Type: text/plain; charset=utf-8
 
+Hi
 
-> A vulnerability was discovered in OpenStack (see below). In order to
-> ensure full traceability, we need a CVE number assigned that we can
-> attach to further notifications. This issue is already public, although an
-> advisory was not sent yet.
->
-> Title: Glance user storage quota bypass
-> Reporter: Tushar Patil (NTT)
-> Products: Glance
-> Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
->
-> Description:
-> Tushar Patil from NTT reported a vulnerability in Glance. By deleting images
-> that are being uploaded, a malicious user can overcome the storage quota and
-> thus may overrun the backend. Images in deleted state are not taken into
-> account by quota and won't be effectively deleted until the upload is
-> completed. Only Glance setups configured with user_storage_quota are
-> affected.
->
-> References:
-> https://launchpad.net/bugs/1398830
->
-> Thanks in advance,
->
-> -- 
-> Tristan Cacqueray
-> OpenStack Vulnerability Management Team
+Jakub Wilk reported two directory traversal issues with arj, an
+archiver for .arj files. There are two issues reported as separate
+bugs to the Debian BTS:
 
-Use CVE-2014-9623.
+arj: symlink directory traversal:
+ - https://bugs.debian.org/774434
 
----
+arj: directory traversal via //multiple/leading/slash:
+ - https://bugs.debian.org/774435
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Reproducers for both issues are also attached bot the corresponding
+bugs.
+
+Could you assign CVE(s) for these isues? (Are two ore one appropriate?
+It is the same reporter and similar kind of issue).
+
+Regards,
+Salvatore
