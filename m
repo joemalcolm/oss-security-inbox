@@ -1,61 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/8
-Message-ID: <20150121134139.GU12661@dhcp-25-225.brq.redhat.com>
-Date: Wed, 21 Jan 2015 14:41:40 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: "Mehaffey, John" <John_Mehaffey@...tor.com>
-Subject: Re: CVE Request: Linux kernel information leak in event device handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/18
+Message-ID: <Pine.LNX.4.64.1501031831560.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 18:32:26 -0500 (EST)
+From: cve-assign@...re.org
+To: Chris Cormack <chris@...ballofwax.co.nz>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request: XSS issues in Koha
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jan 21, 2015 at 02:03:17PM +0100, Pavel Machek wrote:
-> On Wed 2015-01-21 13:49:45, Petr Matousek wrote:
-> > On Tue, Jan 20, 2015 at 03:23:19PM +0000, Mehaffey, John wrote:
-> > > > From: Marcus Meissner [meissner@...e.de]
-> > > > Sent: Tuesday, January 20, 2015 6:43 AM
-> > > > To: OSS Security List
-> > > > Subject: [oss-security] CVE Request: Linux kernel information leak in event device handling
-> > > >
-> > > > Hi,
-> > > >
-> > > > This needs a CVE, information leak out of the kernel.
-> > > >
-> > > > This probably was introduced by commit 483180281f0ac60d1138710eb21f4b9961901294
-> > > > in Linux 3.9.
-> > > >
-> > > > Ciao, Marcus
-> > > >
-> > > > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7c4f56070fde2367766fa1fb04852599b5e1ad35
-> > > > https://bugzilla.suse.com/show_bug.cgi?id=904899
-> > > >
-> > > > Input: evdev - fix EVIOCG{type} ioctl
-> > > >
-> > > > The 'max' size passed into the function is measured in number of bits
-> > > > (KEY_MAX, LED_MAX, etc) so we need to convert it accordingly before
-> > > > trying to copy the data out, otherwise we will try copying too much
-> > > > and end up with up with a page fault.
-> > > >
-> > > > Reported-by: Pavel Machek <pavel@....cz>
-> > > > Reviewed-by: Pavel Machek <pavel@....cz>
-> > > > Reviewed-by: David Herrmann <dh.herrmann@...il.com>
-> > > > Signed-off-by: Dmitry Torokhov <dmitry.torokhov@...il.com>
-> > > 
-> > > I don't see how this could leak information to the user.
-> > > 
-> > > Without the patch, too much memory is allocated internally in the driver, and too much data is copied into that buffer (potentially causing a page fault) but the same, correct amount of data is copied out to the user both before and after this patch.
-> > 
-> > @Pavel -- did you encounter the page fault? Looking at the code, even
-> > the oversized copy from dev->sw looks to be satisfied by the remaining
-> > fields in input_dev structure.
-> 
-> Yes. I guess you could search the original report somewhere...
 
-Ah, I see it now. It's the KEY_MAX ...
+On Sat, 27 Dec 2014, Chris Cormack wrote:
 
-For the record, the original report is at
-http://www.gossamer-threads.com/lists/linux/kernel/2021715 .
+> As a current release maintainer for Koha I would like to request a CVE
+> number for an XSS vulnerability that has been address by Koha releases
+> 3.16.6 and 3.18.2
+>
+> The bug fixed is
+> http://bugs.koha-community.org/bugzilla3/show_bug.cgi?id=13425
+> There is an xss vulnerability in 3.16, 3.18 and master in the opac and
+> intranet facets
 
-Thanks,
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+Use CVE-2014-9446.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
