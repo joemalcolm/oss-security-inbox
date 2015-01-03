@@ -1,146 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/11
-Message-Id: <20150120205822.5B999B2E07B@smtpvbsrv1.mitre.org>
-Date: Tue, 20 Jan 2015 15:58:22 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/13
+Message-ID: <Pine.LNX.4.64.1501031731400.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 17:37:48 -0500 (EST)
 From: cve-assign@...re.org
-To: fabian.yamaguchi@...uni-goettingen.de
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: Vulnerabilities in VLC 2.1.5
+To: Salvatore Bonaccorso <carnil@...ian.org>
+cc: oss-security@...ts.openwall.com, CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: Mediawiki security releases 1.24.1, 1.23.8, 1.22.15 and 1.19.23
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> * Buffer overflow in updater:
-> 
-> https://github.com/videolan/vlc/commit/fbe2837bc80f155c001781041a54c58b5524fc14
+On Tue, 30 Dec 2014, Salvatore Bonaccorso wrote:
 
-Use CVE-2014-9625 for this integer truncation caused by a cast to
-size_t (with resultant buffer overflow).
+> Hi,
+>
+> On Sun, Dec 21, 2014 at 01:39:50PM +0100, Salvatore Bonaccorso wrote:
+>> Hi
+>>
+>> New security releases for Mediawiki (1.24.1, 1.23.8, 1.22.15 and 1.19.23) were
+>> announced:
+>>
+>> https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-December/000173.html
+>>
+>>> == Security fixes in 1.24.1, 1.23.8, 1.22.15 and 1.19.23 ==
+>>> * (bug T76686) [SECURITY] thumb.php outputs wikitext message as raw HTML,
+>>>   which could lead to xss. Permission to edit MediaWiki namespace is required
+>>>   to exploit this.
+>>> * (bug T77028) [SECURITY] Malicious site can bypass CORS restrictions in
+>>>   $wgCrossSiteAJAXdomains in API calls if it only included an allowed domain as
+>>>   part of its name.
+>>
+>> Could CVE's be assigned for these two issues?
 
+CVE-2014-9475 - bug T76686
 
-> * Buffer overflow in mp4 demuxer:
-> 
-> https://github.com/videolan/vlc/commit/2e7c7091a61aa5d07e7997b393d821e91f593c39
+CVE-2014-9476 - bug T77028
 
-In 2e7c7091a61aa5d07e7997b393d821e91f593c39, the vendor discusses
-"avoid an integer underflow" and "make sure no truncation occurs."
-These are closely related to the original "If set to 7, the argument
-passed to malloc at (1) is 0" report, but the vendor has explicitly
-mentioned other attacks that were not directly covered in your
-"Original Bug Reports" section.
+The same advisory also lists multiple issues in extensions:
 
-Use CVE-2014-9626 for the integer underflow.
+CVE-2014-9477 - bug T77624 / Extension:Listings
 
-Use CVE-2014-9627 for the integer truncation on 32-bit platforms.
+CVE-2014-9478 - bug T73111 / Extension:ExpandTemplates
 
-Use CVE-2014-9628 for the attacker-triggered zero-size malloc with
-resultant buffer overflow.
+CVE-2014-9479 - bug T76195 / Extension:TemplateSandbox
 
+CVE-2014-9480 - bug T69180 / Extension:Hovercards
 
-> * Potential buffer overflow in Schroedinger Encoder
-> 
-> https://github.com/videolan/vlc/commit/9bb0353a5c63a7f8c6fc853faa3df4b4df1f5eb5
+CVE-2014-9481 - bug T73167 / Extension:Scribunto
 
-Use CVE-2014-9629 for this integer overflow with resultant buffer
-overflow.
+CVE-2014-9487 [sic] - bug T71209 / Extension:TimedMediaHandler
 
-> The function Encode in modules/codec/dirac.c
-> 
-> The same code can be found in function Encode in
-> modules/codec/schroedinger.c.
-> 
-> * The potential buffer overflow in the Dirac Encoder was not fixed as
->   the Dirac encoder no longer exists in the master branch.
+---
 
-The dirac.c and schroedinger.c issues have the same CVE ID because it
-is exactly the same problem in an identical block of code. (In other
-words, the code was copied from one to the other; there were not two
-separate implementation errors.)
-
-
-> * Invalid memory access in rtp code:
-> 
-> https://github.com/videolan/vlc/commit/204291467724867b79735c0ee3aeb0dbc2200f97
-
-Use CVE-2014-9630 for this stack allocation with an
-attacker-controlled size.
-
-
-> modules/services_discovery/sap.c:
-> static sdp_t *ParseSDP
-> 
-> char line[linelen + 1];
-
-Use CVE-2015-1202 for this stack allocation with an
-attacker-controlled size (we did not confirm this, but it appears that
-the attacker would send an SAP multicast).
-
-(
-> The potential invalid writes in modules/services_discovery/sap.c and
-> modules/access/ftp.c were not fixed
-
-This is in contrast to the fixed rtp issue, in which an upcoming VLC
-version would not be affected.
-
-https://github.com/videolan/vlc/blob/master/modules/services_discovery/sap.c
-suggests that this code is from 2004, which would mean that it affects
-fewer old versions than -- for example -- ftp.c, which is a few years
-older.
-)
-
-
-> modules/access/ftp.c:
-> static int ftp_SendCommand
-> 
-> char fmtbuf[fmtlen + 3];
-
-Use CVE-2015-1203 for this stack allocation with an
-attacker-controlled size (we did not confirm this, but it appears that
-the attacker would operate an FTP server that includes long filenames
-in an NLST response, and the victim would choose one of those files).
-
-
-> We also found the following minor issues that we believe can at most
-> result in a null-pointer dereference and thus, a crash. For the sake
-> of completeness, we report them as well.
-> 
-> The allocations at (1)-(6) in the function TrackCreateES in
-> /modules/demux/mp4/mp4.c are not checked, possibly resulting in
-> subsequent null-pointer dereferences when calling memcpy in the
-> respective next line.
-> 
-> In function EncoderSetAudioType in modules/codec/dmo/dmo.c, the
-> allocation at (1) is not checked, possibly resulting a null-pointer
-> dereference in the subsequent call to memcpy.
-> 
-> * Null-pointer dereference in dmo codec:
-> 
-> https://github.com/videolan/vlc/commit/229c385a79d48e41687fae8b4dfeaeef9c8c3eb7
-
-There are currently no CVE IDs for these NULL pointer dereference
-issues. Our understanding is that the common VLC use cases don't have
-multiple sessions where the user is potentially working with valid
-input and malicious input at exactly the same time. Accordingly, a
-user can avoid the main impact by not accessing the malicious input
-again. (Admittedly, there might be minor "data loss" if an unsaved
-playlist is lost when VLC crashes, but we're not sure that a common
-use case is to work with an unsaved playlist that is very difficult to
-regenerate.)
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUvsDRAAoJEKllVAevmvmsypcH+gLsqMd+mr3+CJ9uE2olSTFa
-dcr3lj37Yc9bq0tmBeKueraC5vhtIck1efQQGoKVQoyUY8e+PuASYEUVSFmt3GTl
-U0bSOWYaONRaLto0tlwNBsQpcFwdDWR4vq1CvTu4xrVTK4O9TjegPRUX83Mkwgfa
-6upoPwgjRnKbw9SEmJid7JYrTUqgDu7qBrVeogCSw+8mDR164tN7D1p8A2SAXZHI
-cjhlfrcTLN9wNHOiC4xsZU6cm7Fsjj09nEe9lAJAQ+2iAugnNRwU/+b49Ru7urPy
-hMKz9oSrPsuiZFWktVFfFQHSvJRLbJhwFQuY7T139mSmxLxZdD3igwEbsPtSfiM=
-=uUG2
------END PGP SIGNATURE-----
