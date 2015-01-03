@@ -1,33 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/19/2
-Message-ID: <CAB8XdGCr3Xw6OiED02pqWwaowUrc2a2PbvYkRMnfhO71=OnU3g@mail.gmail.com>
-Date: Mon, 19 Jan 2015 15:50:44 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: users@...tuario.apache.org,  "dev@...tuario.apache.org" <dev@...tuario.apache.org>
-Cc: Jaime pallares <jprel@...mail.com>, Apache Security Response Team <security@...che.org>,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: New Apache Santuario security advisory CVE-2014-8152
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/20
+Message-ID: <Pine.LNX.4.64.1501031854570.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 18:55:53 -0500 (EST)
+From: cve-assign@...re.org
+To: David Cramer <david@...sentry.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory for Apache Santuario has been issued -
-CVE-2014-8152 - "Streaming XML Signature verification failure". It is a
-critical advisory for anyone using the streaming XML Signature support
-introduced in the 2.0.0 release. The DOM implementation is not affected.
 
-This issue is fixed in the recently released version 2.0.3.
+On Mon, 8 Dec 2014, David Cramer wrote:
 
-The security advisory is linked on the security advisories page of Apache
-Santuario and also attached to this mail:
-http://santuario.apache.org/secadv.html
+> Software name and optionally vendor name
+> raven-ruby (part of Sentry)
+>
+> Type of vulnerability
+> DoS
+>
+> Link to vulnerable source code or fix
+> https://www.google.com/url?q=https%3A%2F%2Fgithub.com%2Fgetsentry%2Fraven-ruby%2Fcommit%2F477ee93a3f735be33bc1e726820654cdf6e22d8f&sa=D&sntz=1&usg=AFQjCNHdtqW_RuP8AZJu6fsevXS354EhrQ
+>
+> Link to security advisory
+> https://groups.google.com/forum/#!topic/getsentry/Cz5bih0ZY1U
+>
+> Affected version(s)
+> 0.6.0 and newer. Likely this translates to every single version anyone uses.
+>
+> Software version(s) fixed (if available)
+> 0.12.2
 
-Colm.
+Use CVE-2014-9490.
 
+---
 
--- 
-Colm O hEigeartaigh
-
-Talend Community Coder
-http://coders.talend.com
-
-Content of type "text/html" skipped
-
-View attachment "CVE-2014-8152.txt.asc" of type "text/plain" (1728 bytes)
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
