@@ -1,171 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/16/1
-Message-ID: <CAB_jSYzmrTmu4Yy__R-UgizuSKx2DN2KhA8A0zCpDncZAPYZnw@mail.gmail.com>
-Date: Mon, 16 Mar 2015 11:33:24 +0800
-From: Marina Glancy <marina@...dle.com>
-To: oss-security@...ts.openwall.com
-Subject: Moodle security issues made public
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/10
+Message-ID: <Pine.LNX.4.64.1501031711300.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 17:12:22 -0500 (EST)
+From: cve-assign@...re.org
+To: Robert Scheck <robert@...oraproject.org>
+cc: Open Source Security Mailing List <oss-security@...ts.openwall.com>, Red Hat Security Response Team <secalert@...hat.com>, cve-assign@...re.org
+Subject: Re: CVE request: Unauthenticated remote disk space exhaustion in Zarafa WebAccess and WebApp
 Content-Type: text/plain; charset=utf-8
 
-The following security notifications have now been made public. Thanks
-to OSS members for their cooperation.
 
-Marina Glancy
-Development Process Manager
+On Sun, 7 Dec 2014, Robert Scheck wrote:
 
-marina@...dle.com
-+61894674167 | moodle.com
-The world's open source learning platform
+> I discovered a flaw in Zarafa WebAccess >= 7.0.0 and Zarafa WebApp (any
+> version) that could allow a remote unauthenticated attacker to exhaust the
+> disk space of /tmp. Depending on the setup /tmp might be on / (e.g. RHEL).
+> Zarafa WebApp is a fork and the successor of the Zarafa WebAccess.
+>
+> The affected files are /usr/share/zarafa-webaccess/senddocument.php as well
+> as /usr/share/zarafa-webapp/senddocument.php. The default upload size is 30
+> MB (via /etc/httpd/conf.d/zarafa-webaccess.conf / zarafa-webapp.conf).
 
+Use CVE-2014-9465.
 
-==============================================================================
-MSA-15-0010: Personal contacts and number of unread messages can be revealed
+---
 
-Description:       By modifying URL a logged in user can view the list of
-                   another user's contacts, number of unread messages and list
-                   of their courses.
-Issue summary:     Personal contacts and number of unread messages can be
-                   revealed
-Severity/Risk:     Minor
-Versions affected: 2.8 to 2.8.3, 2.7 to 2.7.5, 2.6 to 2.6.8 and earlier
-                   unsupported versions
-Versions fixed:    2.8.4, 2.7.6 and 2.6.9
-Reported by:       Barry Oosthuizen
-Issue no.:         MDL-49204
-Workaround:        Disable messaging on site
-CVE identifier:    CVE-2015-2266
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-49204
-
-==============================================================================
-MSA-15-0011: Authentication in mdeploy can be bypassed
-
-Description:       Theoretically possible to extract files anywhere on the
-                   system where the web server has write access. Although it
-                   is quite difficult to exploit since attacking user must
-                   know details about the system and already have significant
-                   permissions on the site.
-Issue summary:     Authentication in mdeploy can be bypassed
-Severity/Risk:     Serious
-Versions affected: 2.8 to 2.8.3, 2.7 to 2.7.5, 2.6 to 2.6.8 and earlier
-                   unsupported versions
-Versions fixed:    2.8.4, 2.7.6 and 2.6.9
-Reported by:       Frédéric Massart
-Issue no.:         MDL-49087
-Workaround:        Delete the file mdeploy.php or prevent access to it in the
-                   web server config
-CVE identifier:    CVE-2015-2267
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-49087
-
-==============================================================================
-MSA-15-0012: ReDoS Possible with Convert links to URLs filter
-
-Description:       Not optimal regular expression in the filter could be
-                   exploited to create extra server load or make particular
-                   page unavailable
-Issue summary:     ReDoS Possible with Convert links to URLs filter
-Severity/Risk:     Serious
-Versions affected: 2.8 to 2.8.3, 2.7 to 2.7.5, 2.6 to 2.6.8 and earlier
-                   unsupported versions
-Versions fixed:    2.8.4, 2.7.6 and 2.6.9
-Reported by:       Rob
-Issue no.:         MDL-38466
-Workaround:        Disable links to URLs filter
-CVE identifier:    CVE-2015-2268
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-38466
-
-==============================================================================
-MSA-15-0013: Block title not properly escaped and may cause HTML injection
-
-Description:       It is possible to create HTML injection through blocks with
-                   configurable titles, however this could only be exploited
-                   by users who are already marked as XSS-trusted
-Issue summary:     Block title not properly escaped and may cause HTML
-                   injection
-Severity/Risk:     Minor
-Versions affected: 2.8 to 2.8.3, 2.7 to 2.7.5, 2.6 to 2.6.8 and earlier
-                   unsupported versions
-Versions fixed:    2.8.4, 2.7.6 and 2.6.9
-Reported by:       Gjoko Krstic
-Issue no.:         MDL-49144
-CVE identifier:    CVE-2015-2269
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-49144
-
-==============================================================================
-MSA-15-0014: Potential information disclosure for the inaccessible courses
-
-Description:       For the custom themes that use blocks regions in the base
-                   layout the blocks for inaccessible courses could be
-                   displayed together with sensible course-related
-                   information. Majority of the themes, including all standard
-                   Moodle themes, are not affected.
-Issue summary:     Guest user can see course information they should not be
-                   able to via require_login
-Severity/Risk:     Minor
-Versions affected: 2.8 to 2.8.3, 2.7 to 2.7.5, 2.6 to 2.6.8 and earlier
-                   unsupported versions
-Versions fixed:    2.8.4, 2.7.6 and 2.6.9
-Reported by:       Sam Hemelryk
-Issue no.:         MDL-48804
-CVE identifier:    CVE-2015-2270
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48804
-
-==============================================================================
-MSA-15-0015: User without proper permission is able to mark the tag as
-inappropriate
-
-Description:       Very minor case of not respecting capability, it does not
-                   affect majority of sites since this capability is given to
-                   authenticated users by default
-Issue summary:     Capability moodle/tag:flag not observed
-Severity/Risk:     Minor
-Versions affected: 2.8 to 2.8.3, 2.7 to 2.7.5, 2.6 to 2.6.8 and earlier
-                   unsupported versions
-Versions fixed:    2.8.4, 2.7.6 and 2.6.9
-Reported by:       Frédéric Massart
-Issue no.:         MDL-49084
-CVE identifier:    CVE-2015-2271
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-49084
-
-==============================================================================
-MSA-15-0016: Web services token can be created for user with temporary
-password
-
-Description:       Even when user's password is forced to be changed on login,
-                   user could still use it for authentication in order to
-                   create the web service token and therefore extend the life
-                   of the temporary password via web services.
-Issue summary:     login/token.php does not check if auth_forcepasswordchange
-                   is on for the user
-Severity/Risk:     Serious
-Versions affected: 2.8 to 2.8.3, 2.7 to 2.7.5, 2.6 to 2.6.8 and earlier
-                   unsupported versions
-Versions fixed:    2.8.4, 2.7.6 and 2.6.9
-Reported by:       Juan Leyva
-Issue no.:         MDL-48691
-CVE identifier:    CVE-2015-2272
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48691
-
-==============================================================================
-MSA-15-0017: XSS in quiz statistics report
-
-Description:       Quiz statistics report did not properly escape student
-                   responses and could be used for XSS attack
-Issue summary:     XSS in quiz statistics report
-Severity/Risk:     Minor
-Versions affected: 2.8 to 2.8.3, 2.7 to 2.7.5, 2.6 to 2.6.8 and earlier
-                   unsupported versions
-Versions fixed:    2.8.4, 2.7.6 and 2.6.9
-Reported by:       Tim Hunt
-Issue no.:         MDL-49364
-CVE identifier:    CVE-2015-2273
-Changes (master):
-http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-49364
-
-==============================================================================
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
