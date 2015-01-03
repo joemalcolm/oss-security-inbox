@@ -1,56 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/13
-Message-ID: <Pine.LNX.4.64.1501031731400.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 17:37:48 -0500 (EST)
-From: cve-assign@...re.org
-To: Salvatore Bonaccorso <carnil@...ian.org>
-cc: oss-security@...ts.openwall.com, CVE Assignments MITRE <cve-assign@...re.org>
-Subject: Re: CVE Request: Mediawiki security releases 1.24.1, 1.23.8, 1.22.15 and 1.19.23
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/8
+Message-ID: <54A84802.3090808@mccme.ru>
+Date: Sat, 03 Jan 2015 22:50:26 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org
+Subject: Re: CVE request: file(1) DoS
 Content-Type: text/plain; charset=utf-8
 
+On 2014-12-17 03:44, Alexander Cherepanov wrote:
+> There are two more DoSes fixed in ELF parser of file(1), similar to the
+> recent CVE-2014-8116.
 
-On Tue, 30 Dec 2014, Salvatore Bonaccorso wrote:
+These fixes were included in 5.22 release:
 
-> Hi,
+http://mx.gw.com/pipermail/file/2015/001660.html
+
+> 1. Limit the number of ELF notes processed
+> Report: http://mx.gw.com/pipermail/file/2014/001653.html
+> Fix: https://github.com/file/file/commit/ce90e05774dd77d86cfc8dfa6da57b32816841c4
+
+This issue seems to be introduced here:
+
+https://github.com/file/file/commit/956a45ab1c54b11304b367056f41905e72a02380#diff-bc5c24ef9f39a5f4963ca28ecbc645b3L423
+
+which ended up in 5.08 release. Hence releases 5.08--5.21 are vulnerable.
+
+> 2. Limit string printing to 100 chars
+> Report: http://mx.gw.com/pipermail/file/2014/001654.html
+> Fix: https://github.com/file/file/commit/65437cee25199dbd385fb35901bc0011e164276c
+
+This issue was introduced in the following commit:
+
+https://github.com/file/file/commit/c8451af8ab0c2e2a93ce93b9c68257d31576cc85
+
+which ended up in 5.16 release. Hence releases 5.16--5.21 are vulnerable.
+
+> Both problems amplified by the fact that the same section in ELF file
+> can be referenced and processed by file(1) multiple times. This is also
+> fixed in the first commit linked above.
 >
-> On Sun, Dec 21, 2014 at 01:39:50PM +0100, Salvatore Bonaccorso wrote:
->> Hi
->>
->> New security releases for Mediawiki (1.24.1, 1.23.8, 1.22.15 and 1.19.23) were
->> announced:
->>
->> https://lists.wikimedia.org/pipermail/mediawiki-announce/2014-December/000173.html
->>
->>> == Security fixes in 1.24.1, 1.23.8, 1.22.15 and 1.19.23 ==
->>> * (bug T76686) [SECURITY] thumb.php outputs wikitext message as raw HTML,
->>>   which could lead to xss. Permission to edit MediaWiki namespace is required
->>>   to exploit this.
->>> * (bug T77028) [SECURITY] Malicious site can bypass CORS restrictions in
->>>   $wgCrossSiteAJAXdomains in API calls if it only included an allowed domain as
->>>   part of its name.
->>
->> Could CVE's be assigned for these two issues?
+> Could CVE(s) please be assigned?
 
-CVE-2014-9475 - bug T76686
-
-CVE-2014-9476 - bug T77028
-
-The same advisory also lists multiple issues in extensions:
-
-CVE-2014-9477 - bug T77624 / Extension:Listings
-
-CVE-2014-9478 - bug T73111 / Extension:ExpandTemplates
-
-CVE-2014-9479 - bug T76195 / Extension:TemplateSandbox
-
-CVE-2014-9480 - bug T69180 / Extension:Hovercards
-
-CVE-2014-9481 - bug T73167 / Extension:Scribunto
-
-CVE-2014-9487 [sic] - bug T71209 / Extension:TimedMediaHandler
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-- 
+Alexander Cherepanov
