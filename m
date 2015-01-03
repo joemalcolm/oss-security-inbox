@@ -1,51 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/14/2
-Message-ID: <me11dj$suh$1@ger.gmane.org>
-Date: Sat, 14 Mar 2015 11:09:55 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: XSS issue in MantisBT permalink_page.php
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/9
+Message-ID: <Pine.LNX.4.64.1501031709320.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 17:10:31 -0500 (EST)
+From: cve-assign@...re.org
+To: Alexander Cherepanov <cherepan@...me.ru>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request: dir traversal in elfutils
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
 
-Please assign a CVE ID for the following issue
+On Mon, 29 Dec 2014, Alexander Cherepanov wrote:
 
-Description:
+> Hi!
+>
+> A dir traversal vuln is fixed in elfutils:
+>
+> Initial (terse) report:
+> https://lists.fedorahosted.org/pipermail/elfutils-devel/2014-December/004499.html
+>
+> Fix (with analysis in commit message):
+> https://git.fedorahosted.org/cgit/elfutils.git/commit/?id=147018e729e7c22eeabf15b82d26e4bf68a0d18e
+>
+> At least versions 0.152 and 0.161 are affected.
+>
+> Could CVE please be assigned?
+>
 
-MantisBT's permalink_page.php builds a permanent link to a configured 
-filter. Using a crafted URL, an attacker can make this link execute 
-arbitrary javascript code in the user's browser.
+Use CVE-2014-9486.
 
-Affected versions:
-- >= 1.1.0a4
-- 1.3.0-beta.1
+---
 
-Fixed in versions:
-- 1.2.19 (released 2015-01-25)
-- 1.3.0-beta.2 (not yet released)
-
-Patch:
-See Github [1]
-
-Credit:
-This vulnerability was originally discovered by Paul Richards in May 
-2014, with the first public report in [2] and also mentioned in [3], 
-although a CVE was never requested for it.
-It was recently reported a second time by Robert Foggia in [4], leading 
-to the present CVE request.
-The issue was fixed by Damien Regad (MantisBT Developer), as a 
-side-effect of addressing CVE-2015-1042, see [5].
-
-References:
-Further details will be available in our issue tracker [2] once this 
-goes public.
-
-[1] https://github.com/mantisbt/mantisbt/commit/d95f070d (1.2.x)
-     https://github.com/mantisbt/mantisbt/commit/e7e2b550 (1.3.x)
-[2] https://www.mantisbt.org/bugs/view.php?id=17362#c40613
-[3] http://article.gmane.org/gmane.comp.security.oss.general/15022
-[4] https://www.mantisbt.org/bugs/view.php?id=19493
-[5] https://www.mantisbt.org/bugs/view.php?id=17997
-
-
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
