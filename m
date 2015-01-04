@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/09/5
-Message-ID: <20150309142942.78f2bc28@freyja>
-Date: Mon, 9 Mar 2015 14:29:42 -0300
-From: Fabio Olive Leite <fleite@...hat.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Please assign a CVE to this recent cups-filters vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/3
+Message-ID: <Pine.LNX.4.64.1501031904390.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 19:05:23 -0500 (EST)
+From: cve-assign@...re.org
+To: endeavor <endeavor@...nbowsandpwnies.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request: libpng 1.6.15 Heap Overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-CVE-2014-2707 had an incomplete fix, which prompted the new upstream
-fix below. Can Mitre please assign a CVE to it?
+> I am requesting a CVE for a heap-overflow in libpng 1.6.15. It's my
+> understanding that versions 1.6.9-1.6.15 are vulnerable, and according to
+> patch notes it looks like some revisions in the 1.5 branch may have been
+> affected as well. However, I've only tested 1.6.15 and can only speak for
+> it.
+>
+> Link to announcement of new version:
+> http://sourceforge.net/p/png-mng/mailman/message/33173461/
+>
+> Link to a description of the vulnerability:
+> http://tfpwn.com/files/libpng_heap_overflow_1.6.15.txt
+>
+> Please let me know!
 
-https://bugs.linuxfoundation.org/show_bug.cgi?id=1265
+Use CVE-2014-9495.
 
-Thank you.
+---
 
--- 
-Fábio Olivé Leite -- Red Hat Product Security Team
-F1C1 1876 3922 1906 6631  0C31 92A5 9276 250D 8380
-
-Content of type "application/pgp-signature" skipped
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
