@@ -1,21 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/4
-Message-ID: <54D9E7EE.3090607@redhat.com>
-Date: Tue, 10 Feb 2015 12:13:50 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: libmnl: incorrect validation of netlink message origin allows attackers to spoof netlink messages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/12
+Message-ID: <20150104043206.GA18630@eldamar.local>
+Date: Sun, 4 Jan 2015 05:32:06 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: Vincent Danen <vdanen@...hat.com>, cve-assign@...re.org
+Subject: Re: CVE request: denial of service flaw in firebird
 Content-Type: text/plain; charset=utf-8
 
-On 02/07/2015 12:40 AM, Kurt Seifried wrote:
-> https://bugzilla.redhat.com/show_bug.cgi?id=848949
+Hi,
+
+On Sat, Jan 03, 2015 at 06:59:18PM -0500, cve-assign@...re.org wrote:
 > 
-> this may warrant a cve
+> >I've not seen a CVE for this; could one be assigned?  Thanks.
+> >
+> >It was found that an unauthenticated remote attacker could send a
+> >malformed network packet to a firebird server, which would cause the
+> >server to crash.
+> >
+> >http://www.firebirdsql.org/en/news/security-updates-for-v2-1-and-v2-5-series-66011/
+> >http://tracker.firebirdsql.org/browse/CORE-4630
+> >http://sourceforge.net/p/firebird/code/60331/
+> >https://bugs.mageia.org/show_bug.cgi?id=14726
+> >https://bugzilla.redhat.com/show_bug.cgi?id=1172445
+> 
+> Use CVE-2014-9492.
 
-It was blamed on the kernel and fixed there:
+I have a question back on this assignment. Initially CORE-4630 did not
+had a CVE reference in the title at leat afair, but some time ago the
+reference to CVE-2014-9323 appeared.
 
-  <http://marc.info/?l=linux-netdev&m=134582981424588>
+We used then this reference in Debian to track the issue, but also
+others have it:
 
+https://bugzilla.suse.com/show_bug.cgi?id=910653
+https://bugzilla.redhat.com/show_bug.cgi?id=1172445
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-9323
+https://security-tracker.debian.org/tracker/CVE-2014-9323
 
--- 
-Florian Weimer / Red Hat Product Security
+Should CVE-2014-9492 be rejected and CVE-2014-9323 to be still
+continued to be used?
+
+Regards,
+Salvatore
