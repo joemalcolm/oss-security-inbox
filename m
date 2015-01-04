@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/7
-Message-ID: <54C28FF3.2050200@canonical.com>
-Date: Fri, 23 Jan 2015 13:16:19 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/14
+Message-ID: <54A97E16.2070606@oracle.com>
+Date: Sun, 04 Jan 2015 09:53:26 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: Linux kernel crypto api unprivileged arbitrary module load
+CC: gremlin@...mlin.ru
+Subject: Re: CVE Request for illumos distributions
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 01/ 3/15 10:26 PM, gremlin@...mlin.ru wrote:
+> On 2015-01-04 15:06:51 +1100, Dave Horsfall wrote:
+>
+>   >> | Use CVE-2014-9491.
+>   >> Shouldn't we be using CVE-2015-XXXX by now?
+>   > I'd rather see CVE-2015-XXXXX - look how close we came...
+>   > Is there a CVE for that?
+>
+> First CVE ID in 2015 is CVE-2015-0001; once we get to CVE-2015-9999,
+> the next ID will be CVE-2015-10000.
 
-The Crypto API in the Linux kernel before 3.19 allowed unprivileged users to
-load arbitrary kernel modules.
+Except that https://cve.mitre.org/cve/identifiers/syntaxchange.html
+says they won't wait that long, and will issue a 5 digit CVE ID in
+the next couple of weeks.
 
-Info:
-https://lkml.org/lkml/2013/3/4/70
-https://plus.google.com/+MathiasKrause/posts/PqFCo4bfrWu
-
-Fixed by:
-https://git.kernel.org/linus/5d26a105b5a7
-https://git.kernel.org/linus/4943ba16bbc2
-https://git.kernel.org/linus/3e14dcf7cb80
-
-Could a CVE please be assigned to this issue?
-
-Thanks,
-
-Marc.
+(Even without that, CVE ID's aren't strictly issued in order, as blocks
+  of id's go out to each numbering authority for them to assign as needed.)
 
 -- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - http://blogs.oracle.com/alanc
