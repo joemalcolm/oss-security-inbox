@@ -1,45 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/10
-Message-ID: <54F8A23D.5050405@redhat.com>
-Date: Thu, 05 Mar 2015 11:36:45 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/4
+Message-ID: <Pine.LNX.4.64.1501031906160.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 19:07:28 -0500 (EST)
+From: cve-assign@...re.org
+To: Joshua Rogers <honey@...ernot.info>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Re: CVE Request: libsndfile buffer overread
 Content-Type: text/plain; charset=utf-8
 
 
+>> A buffer overread was found in libsndfile by me, in the latest version.=
+>
+>> Fix commit here:
+>> https://github.com/erikd/libsndfile/commit/dbe14f00030af5d3577f4cabbf98=
+> 61db59e9c378
+>>
+>> Could I get a CVE-ID for it?
 
-On 05/03/15 10:06 AM, John Haxby wrote:
-> PEP 476 cites 11 CVEs that resulted from python not properly validating
-> certificates.   This would be number 12.
-> 
-> Shouldn't python versions prior to 2.7.9 and 3.4.3 have a CVE each for
-> the lack of verification? If internal corporate software stops working
-> because of invalid certificates, wasn't it broken anyway?
+Use CVE-2014-9496.
 
-So if something is advertised as having a security feature and does not
-or it is broken then it gets a CVE. In this case Python, and basically
-every other SSL/TLS implementation on the planet, by default, did not
-check hostnames in certs, but they did provide that capability should
-you choose to use it. So no CVE since it wasn't "meant to be secure" as
-I understand it.
+---
 
-Now for my personal opinion: Doing SSL/TLS with server certs and not
-checking the hostname in a server cert is completely insane and utterly
-defeats the purpose. However there are cases where a certificate may not
-have a hostname field, or need a valid hostname field, e.g. a client
-certificate where you mostly care about the fact that the client has it
-at all. So I can see why they made hostname checks optional, but again,
-I think it was a very bad decision long term as evidenced by:
-
-http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=certificate+hostname+check
-
-> jch
-> 
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
