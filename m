@@ -1,34 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/3
-Message-ID: <Pine.LNX.4.64.1501110937120.26662@beijing.mitre.org>
-Date: Sun, 11 Jan 2015 09:38:25 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/6
+Message-ID: <Pine.LNX.4.64.1501031909160.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 19:11:10 -0500 (EST)
 From: cve-assign@...re.org
-To: Vasyl Kaigorodov <vkaigoro@...hat.com>
+To: Pere Orga <gotrunks@...il.com>
 cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: roundcubemail: possible CSRF attacks to some address book operations as well as to the ACL and Managesieve plugins
+Subject: Re: CVE requests: Drupal contributed modules
 Content-Type: text/plain; charset=utf-8
 
 
-> Hello,
+> Please could some CVEs be assigned to the following announcements, if
+> they have not been already?
 >
-> Version 1.0.4 of Roundcube [1] contains a security fix:
-> ...
-> Security: Fix possible CSRF attacks to some address book operations as
-> well as to the ACL and Managesieve plugins.
-> ...
->
-> Upstream commit:
-> https://github.com/roundcube/roundcubemail/commit/376cbfd4f2dfcf455717409b70d9d056cbeb08b1
->
-> [1]: http://roundcube.net/news/2014/12/18/update-1.0.4-released/
->
-> Can a CVE be assigned to this please?
->
-> References:
-> https://bugs.gentoo.org/show_bug.cgi?id=534766
-> https://bugzilla.redhat.com/show_bug.cgi?id=1179780
+> https://www.drupal.org/node/2386387
 
-Use CVE-2014-9587.
+CVE-2014-9498 - SA-CONTRIB-2014-116 - Webform Invitation XSS
+
+> https://www.drupal.org/node/2390839
+
+CVE-2014-9499 - SA-CONTRIB-2014-121 - Godwin's Law XSS
+
+> https://www.drupal.org/node/2390849
+
+CVE-2014-9500 - SA-CONTRIB-2014-122 - MoIP XSS
+
+> https://www.drupal.org/node/2390897
+
+CVE-2014-9501 - SA-CONTRIB-2014-124 - Poll Chart XSS
+
+> https://www.drupal.org/node/2394979
+
+CVE-2014-9502 - SA-CONTRIB-2014-126 - Open Atrium - CSRF
+CVE-2014-9503 - SA-CONTRIB-2014-126 - Open Atrium - Access Bypass
+CVE-2014-9504 - SA-CONTRIB-2014-126 - Open Atrium - OG Subgroups Access Bypass
+
+> https://www.drupal.org/node/2395015
+
+CVE-2014-9505 - SA-CONTRIB-2014-127 - School Administration XSS
 
 ---
 
