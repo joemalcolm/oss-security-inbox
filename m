@@ -1,44 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/6
-Message-Id: <201502200633.32599.tmb@65535.com>
-Date: Fri, 20 Feb 2015 06:33:31 +0000
-From: Tim Brown <tmb@...35.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/16
+Message-ID: <20150104190659.GA8083@suse.de>
+Date: Sun, 4 Jan 2015 20:06:59 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Stuart Gathman <stuart@...hman.org>
-Subject: Re: Fixing the glibc runtime linker
+Cc: gremlin@...mlin.ru
+Subject: Re: CVE Request for illumos distributions
 Content-Type: text/plain; charset=utf-8
 
-On Thursday 19 February 2015 23:33:26 Stuart Gathman wrote:
-> On 02/19/2015 05:19 PM, Tim Brown wrote:
-> > What's the fix?
-> > 
-> > More often than not, the underlying issue is an empty element within the
-> > DT_RPATH header or equivalent. Sometimes it's not, but even in those
-> > cases, it is largely that one or more elements isn't qualifed (i.e. it
-> > doesn't start with /). The attached patch fixes this, by ignoring any
-> > elements of DT_RPATH, LD_LIBRARY_PATH that do not start with a /, and/or
-> > junking any use of dlopen where the filename is likewise unqualified.
-> > 
-> > Won't this break stuff?
-> > 
-> > Maybe (certainly it is means a change to glibc behaviour), but more often
-> > than not, the fact that a given binary currently works in an unsafe way
-> > is a bug - and an exploitable one at that. Moreoever, Solaris has had a
-> > similar sanitity check (in their case only for privileged setuid
-> > binaries) for a good number of years without serious incident. I believe
-> > we should be fixing software that exhibits the behaviour I've described,
-> > but this patch will (I think) kill the bug class irrespective of that.
+On Sun, Jan 04, 2015 at 09:53:26AM -0800, Alan Coopersmith wrote:
+> On 01/ 3/15 10:26 PM, gremlin@...mlin.ru wrote:
+> >On 2015-01-04 15:06:51 +1100, Dave Horsfall wrote:
+> >
+> >  >> | Use CVE-2014-9491.
+> >  >> Shouldn't we be using CVE-2015-XXXX by now?
+> >  > I'd rather see CVE-2015-XXXXX - look how close we came...
+> >  > Is there a CVE for that?
+> >
+> >First CVE ID in 2015 is CVE-2015-0001; once we get to CVE-2015-9999,
+> >the next ID will be CVE-2015-10000.
 > 
-> There needs to be a way to log the paths being ignored - so at least
-> some people will have a clue as to why their program doesn't work. I'm
-> not sure what that way is.
+> Except that https://cve.mitre.org/cve/identifiers/syntaxchange.html
+> says they won't wait that long, and will issue a 5 digit CVE ID in
+> the next couple of weeks.
+> 
+> (Even without that, CVE ID's aren't strictly issued in order, as blocks
+>  of id's go out to each numbering authority for them to assign as needed.)
 
-Probably something to take up with the glibc folk directly, but I could 
-envisage using the LD_DEBUG infrastructure.
+main part of this page:
+ IMPORTANT: The variable length arbitrary digits will begin at four (4)
+ fixed digits and expand with arbitrary digits only when needed in a
+ calendar year, for example, CVE-YYYY-NNNN and if needed CVE-YYYY-NNNNN,
+ CVE-YYYY-NNNNNNN, and so on. This also means there will be no changes
+ needed to previously assigned CVE-IDs, which all include 4 digits.
 
-Tim
--- 
-Tim Brown
-<mailto:tmb@...35.com>
+The rule is:
 
-Download attachment "signature.asc " of type "application/pgp-signature" (820 bytes)
+- 4 digits until 9999
+- 5 digits until 99999
+- 6 digits until 999999
+- 7 digits starting with 1000000
+
+2014 CVEs can still get assigned by the rules, so they will slowly creep
+up a bit still. But in general new issues will now get 2015 CVEs.
+
+Ciao, Marcus
