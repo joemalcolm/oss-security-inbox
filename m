@@ -1,28 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/16
-Message-Id: <E51BB432-BC69-469C-98B4-F755B09C4515@oracle.com>
-Date: Tue, 10 Mar 2015 20:42:50 +0000
-From: John Haxby <john.haxby@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/18
+Message-ID: <Pine.LNX.4.64.1501041736390.3184@beijing.mitre.org>
+Date: Sun, 4 Jan 2015 17:44:30 -0500 (EST)
+From: "Steven M. Christey" <coley@...re.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+cc: Dan McDonald <danmcd@...iti.com>, cve-assign@...re.org
+Subject: Re: CVE Request for illumos distributions
 Content-Type: text/plain; charset=utf-8
 
 
-> On 10 Mar 2015, at 15:56, Kurt Seifried <kseifried@...hat.com <mailto:kseifried@...hat.com>> wrote:
-> 
->>> So prove to us you want to work with us (e.g. by opening up the
->>> MySQL security bugs/test cases) and we can definitely look at
->>> future cooperation.
->> 
->> I would really like to be able to do that, but this is a political
->> problem outside my control.
-> 
-> What you're saying simply is "what you asked me is to hard, so I won't
-> do it, heck I won't even try it". This is not the Open Source way.
+On Sat, 3 Jan 2015, Christos Zoulas wrote:
 
+> On Jan 3,  6:57pm, cve-assign@...re.org (cve-assign@...re.org) wrote:
+> -- Subject: Re: [oss-security] CVE Request for illumos distributions
+>
+> | > Illumos bug #5421 - http://illumos.org/issues/5421 which is now fixed in
+> | > the upstream illumos-gate, is an innocuous fix to a serious problem that
+> | > allows an arbitrary user in the global zone (non-global zones are not
+> | > able to panic the machine) to panic the machine.
+> |
+> | Use CVE-2014-9491.
+>
+> Shouldn't we be using CVE-2015-XXXX by now?
 
-It’s not hard, it’s impossible.   You seem to imagine that I can get the board to change its mind; you have as much influence as I do.
+This ID (and others) used a 2014 date because the bug report was 
+technically public in 2014.  The year portion of a CVE ID typically 
+reflects when the CVE was requested for non-public issues; or for 
+already-public issues, the year portion typically reflects the year of 
+disclosure.  The disclosure date itself can be a subject of 
+interpretation, such as when an issue is disclosed at a 
+publicly-accessible URL but only likely to be noticed by a limited 
+audience ("technically public") versus when the issue becomes "widely 
+public" to the infosec industry.
 
-Please do not harp on about this.
+Especially in the transition from the end of one year to the beginning of 
+the next year, there can be a mixture of dates.  Also, CVE (and every 
+other vulnerability "database" or repository) frequently add entries for 
+earlier years.  Accordingly, there is still a chance that CVE-2014-xxxx 
+IDs will reach 5 digits, either in 2015 or later, as we continue to cover 
+older issues that we discover or did not prioritize in earlier years.
 
-jch
+- Steve
