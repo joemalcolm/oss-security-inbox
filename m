@@ -1,23 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/3
-Message-ID: <20150124102102.GA10281@eldamar.local>
-Date: Sat, 24 Jan 2015 11:21:02 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: patch: CVE needed for incomplete fix for CVE-2015-1196?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/5
+Message-ID: <Pine.LNX.4.64.1501031908140.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 19:08:52 -0500 (EST)
+From: cve-assign@...re.org
+To: Yury German <yury@...hnologysecure.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: mpg123 CVE Assignment?
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-It was reported that the fix for CVE-2015-1196 was incomplete. It was
-reported to the Debian BTS as #775901[1] and as well mentioned in Red
-Hat's Bugzilla at [2].
+> Did a CVE ever get assigned to mpg123 (Version 1.18.0) 
+> (http://mpg123.org/cgi-bin/news.cgi 
+> <http://mpg123.org/cgi-bin/news.cgi>). I have searched but can not find 
+> any, it is a regression bug, but I could not find any assigned to the 
+> original bug as well.
+>
+> http://sourceforge.net/p/mpg123/bugs/201/
+>
+> If none are assigned can we get one assigned?
+>
+> === Text from Site ===
+> 2014-01-31 Thomas: mpg123 1.18.0 fixing regressions from 1.14.x
+> Regression fix: Ensure decoder reinitialization on combination of seek and resync (buffer overflow bug 201, introduced in 1.14.1).
 
-Does this need a separate CVE?
+Use CVE-2014-9497.
 
- [1] https://bugs.debian.org/775901
- [2] https://bugzilla.redhat.com/show_bug.cgi?id=1182154#c10
+---
 
-Regards,
-Salvatore
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
