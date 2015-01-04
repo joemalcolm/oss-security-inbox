@@ -1,46 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/3
-Message-ID: <371E240E6FC1D44DA5E51EE9DCDCB7840105CB22F2@NA-MBX-01.mgc.mentorg.com>
-Date: Tue, 20 Jan 2015 15:23:19 +0000
-From: "Mehaffey, John" <John_Mehaffey@...tor.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: CVE Request: Linux kernel information leak in event device handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/19
+Message-ID: <Pine.LNX.4.64.1501041748460.3184@beijing.mitre.org>
+Date: Sun, 4 Jan 2015 18:04:19 -0500 (EST)
+From: "Steven M. Christey" <coley@...re.org>
+To: oss-security@...ts.openwall.com
+cc: alan.coopersmith@...cle.com, gremlin@...mlin.ru, cve@...re.org
+Subject: Assignment of CVE IDs with 5 or more digits by January 13, 2015
 Content-Type: text/plain; charset=utf-8
 
-> From: Marcus Meissner [meissner@...e.de]
-> Sent: Tuesday, January 20, 2015 6:43 AM
-> To: OSS Security List
-> Subject: [oss-security] CVE Request: Linux kernel information leak in event device handling
->
-> Hi,
->
-> This needs a CVE, information leak out of the kernel.
->
-> This probably was introduced by commit 483180281f0ac60d1138710eb21f4b9961901294
-> in Linux 3.9.
->
-> Ciao, Marcus
->
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7c4f56070fde2367766fa1fb04852599b5e1ad35
-> https://bugzilla.suse.com/show_bug.cgi?id=904899
->
-> Input: evdev - fix EVIOCG{type} ioctl
->
-> The 'max' size passed into the function is measured in number of bits
-> (KEY_MAX, LED_MAX, etc) so we need to convert it accordingly before
-> trying to copy the data out, otherwise we will try copying too much
-> and end up with up with a page fault.
->
-> Reported-by: Pavel Machek <pavel@....cz>
-> Reviewed-by: Pavel Machek <pavel@....cz>
-> Reviewed-by: David Herrmann <dh.herrmann@...il.com>
-> Signed-off-by: Dmitry Torokhov <dmitry.torokhov@...il.com>
 
-I don't see how this could leak information to the user.
+Based on recent discussion on oss-security and general interest, I thought 
+it was important to clarify what is currently planned for issuing 5-digit 
+CVE IDs by the dealine of January 13, 2015.
 
-Without the patch, too much memory is allocated internally in the driver, and too much data is copied into that buffer (potentially causing a page fault) but the same, correct amount of data is copied out to the user both before and after this patch.
+Currently, CVE-2014-9509 is our last allocated ID from 2014.  During 2015, 
+we will continue to issue CVE-2014-xxxx IDs for other issues that were 
+disclosed in 2014, but it is highly unlikely that we will cross the 
+5-digit threshold by January 13.
 
-Sincerely,
-John Mehaffey
-Linux System Architect
-Mentor Graphics
+We will still issue at least one valid 5-digit CVE-2014-xxxxx ID, and 
+probably more, on January 13.  This is a one-time exception to our usual 
+sequential allocation process.  We are doing this as a final "test" to 
+ensure that CVE-using implementations can handle the syntax change.
+
+We might also issue CVE IDs with more than 5 digits, since it is highly 
+likely that some implementations will make a 5-digit assumption, even 
+though an arbitrary number of digits is allowed by the syntax change, 
+which went into effect more than a year ago.
+
+
+Steve Christey Coley
+CVE Editor
