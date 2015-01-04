@@ -1,64 +1,179 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/30
-Message-ID: <CAEu1J=_GjTOUhdV7-v89NG2K0eMoCGqJYSUa=5a480cgX-tQ3g@mail.gmail.com>
-Date: Tue, 27 Jan 2015 14:03:10 -0800
-From: endrazine <endrazine@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/10
+Message-ID: <CAPcZBq7ocrmyvAawf-zcr9Uk2BGOxSi--tSvmzNiiWMGsPCREA@mail.gmail.com>
+Date: Sun, 4 Jan 2015 10:56:32 +0800
+From: 罗大龙 <luodalongde@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Subject: 【Vulnerability Report 】 - from QIHU 360 China
 Content-Type: text/plain; charset=utf-8
 
-Dear list,
+HI there,
 
-In case you were trying to work based on the public information :
-There is an obvious stack overflow in Qualys' GHOST.c poc : the name buffer
-is 10 bytes long and 900+ bytes of data are copied to it. This is
-independant of the gethostbyname() overflow and isn't glibc's fault...
-Totally epic PR quality information ;(
 
-Best regards,
 
-j-
+Greeting! This is Qinghao Tang from QIHU 360  company, China. I am a
+security researcher there.
 
-On Tue, Jan 27, 2015 at 9:45 AM, Solar Designer <solar@...nwall.com> wrote:
+I'm writing to apply for a CVE ID, for a 0day vulnerability in ffmpeg.
+Please refer to below report.
 
-> On Tue, Jan 27, 2015 at 09:21:32AM -0800, Michal Zalewski wrote:
-> > I find it... profoundly disappointing... that we get to learn about
-> > 0-days via PR agency leaks (or that external PR agencies get to know
-> > about 0-days before the rest of the world - hey, sounds like a juicy
-> > target).
-> >
-> > That said, the advisory makes up for it...
->
-> I agree.  I am more concerned that PR agencies appear to have had early
-> access to this information than that the information leaked to the
-> public a few hours early.  When it did become public, everyone could
-> proceed with their advisories, updates, etc.  But before it did, who
-> knows what bad bugs with access to a PR agency's database or e-mail
-> could have been doing and for how long (I hope also just another few
-> hours, but I really don't know).
->
-> We use PGP on the linux-distros list (the issue was first brought to
-> there on January 18), but I doubt that communication between Qualys and
-> their PR agency, nor within the PR agency, was similarly encrypted.
-> Perhaps they were using some Word "documents" and stuff.  And even if it
-> were encrypted, notifying a PR agency early goes beyond need-to-know
-> from everyone else's security perspective.
->
-> Unfortunately, that's how PR agencies work, they want some "warm up"
-> time.  I think the only solution for companies like Qualys is to not try
-> to reap the usual PR benefits from this type of findings.  Have their
-> technical folks disclose to the proper technical channels instead, and
-> do not issue a formal press release - well, or do it a few days later,
-> referring not so much to the actual findings, but to how well the
-> company worked with the infosec community.  This would be better PR,
-> too, at least within the smaller but highly relevant infosec community.
->
-> Of course, personally I would not care about some company's PR, but I
-> realize that many companies do care and this affects the resources they
-> put into analyzing vulnerabilities (as you say, "the advisory makes up
-> for it").  Hence my thinking of a workaround above.
->
-> Alexander
->
+
+
+[requester info]
+
+         name: Qinghao Tang
+
+         company: QIHU 360  company, China
+
+         email:luodalongde@...il.com
+
+
+
+[vendor info]
+
+         name: ffmpeg
+
+         email: ffmpeg-security@...peg.org
+
+         website: http://www.ffmpeg.org/
+
+
+
+[vulnerable ffmpeg version]
+
+    2.1.x
+
+
+
+[vulnerability Description]
+
+    The seg_write_packet () function in ffmpeg-2.1.4/libavformat/segment.c
+exists a UAF (use after free) vulnerability , which allows remote attachers
+to cause a denial of service(invalid memory handler) or possibly  execute
+arbitrary code  by use a crafted  video file.
+
+
+
+
+
+[vulnerability resaon]
+
+static int seg_write_packet(AVFormatContext *s, AVPacket *pkt)
+
+{
+
+    SegmentContext *seg = s->priv_data;
+
+    AVFormatContext *oc = seg->avf;
+
+    ....
+
+    //segment_start() -> segment_mux_init()：s->priv_data->avf  =
+avformat_alloc_context()
+
+    //i.e. reset：s->priv_data->avf
+
+    if ((ret = segment_start(s, seg->individual_header_trailer)) < 0)
+
+        goto fail;
+
+    ....
+
+fail:
+
+    if (pkt->stream_index == seg->reference_stream_index)
+
+        seg->frame_count++;
+
+
+
+    if (ret < 0) {
+
+        if (seg->list)
+
+            avio_close(seg->list_pb);
+
+              //oc has been freed before.
+
+        avformat_free_context(oc);
+
+    }
+
+
+
+         return ret;
+
+}
+
+
+
+
+
+
+
+
+
+[crash info from /var/log/messages]
+
+Dec 24 15:41:26 w-r351 kernel: ffmpeg[8927]: segfault at 7fffffff0 ip
+000000000057599e sp 00007fff0beacfc0 error 4 in ffmpeg[400000+a7b000]
+
+Dec 23 02:45:58 localhost kernel: ffmpeg[11883]: segfault at 8000 ip
+0000000000ba45c2 sp 00007fff740292d0 error 4 in ffmpeg[400000+a7b000]
+
+Dec 17 01:18:31 w-r359 kernel: ffmpeg[17119]: segfault at 100000028ip
+00000000005758de sp 00007fff4b1847a0 error 4 in ffmpeg[400000+a7b000]
+
+Dec 17 09:13:59 w-r351 kernel: ffmpeg[4451]: segfault at 1c8 ip
+0000000000575949 sp 00007fff23065010 error 4 in ffmpeg[400000+a7b000]
+
+
+
+[patch]
+
+ffmpeg-2.1.6/libavformat/segment.c
+
+
+
+--- segment.c    2014-11-29 03:34:20.000000000 +0800
+
++++ segment.c.new    2014-12-25 10:21:24.257001354 +0800
+
+@@ -713,7 +713,7 @@
+
+    if (ret < 0) {
+
+        if (seg->list)
+
+            avio_close(seg->list_pb);
+
+-        avformat_free_context(oc);
+
++        avformat_free_context(seg->avf);
+
+    }
+
+
+
+    return ret;
+
+
+
+[vulnerability sample]
+
+The sample is a porn video.
+
+Download url:http://www.datafilehost.com/d/b384ec71
+
+
+
+
+
+Thanks
+
+
+
+
+
+Merry Christmas and a happy new year!
 
