@@ -1,45 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/12
-Message-ID: <Pine.LNX.4.64.1501031730070.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 17:30:44 -0500 (EST)
-From: cve-assign@...re.org
-To: Moritz Muehlenhoff <jmm@...ian.org>
-cc: Vasyl Kaigorodov <vkaigoro@...hat.com>, cve-assign@...re.org, oss-security@...ts.openwall.com, 772008@...s.debian.org
-Subject: Re: CVE request:  mpfr: buffer overflow in mpfr_strtofr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/9
+Message-ID: <54A89FFE.2060404@internot.info>
+Date: Sun, 04 Jan 2015 13:05:50 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request for illumos distributions
 Content-Type: text/plain; charset=utf-8
 
+On 04/01/15 13:02, Christos Zoulas wrote:
+> | Use CVE-2014-9491.
+>
+> Shouldn't we be using CVE-2015-XXXX by now?
+>
+> Happy New Year,
+>
+> christos
+It's probably 2014-[..] since the issue was first raised on 2014-12-09.
+-- 
+-- Joshua Rogers <https://internot.info/>
 
-On Tue, 30 Dec 2014, Moritz Muehlenhoff wrote:
 
-> On Mon, Dec 08, 2014 at 01:45:12PM +0100, Vasyl Kaigorodov wrote:
->> Hello,
->>
->> A buffer overflow was reported [1] in mpfr.
->> This is due to incorrect GMP documentation for mpn_set_str about the
->> size of a buffer (discussion is at [1]; first fix in the GMP
->> documentation is at [2]). This bug is present in the MPFR versions
->> from 2.1.0 (adding mpfr_strtofr) to this one, and can be detected by
->> running "make check" in a 32-bit ABI under GNU/Linux with alloca
->> disabled (this is currently possible by using the --with-gmp-build
->> configure option where alloca has been disabled in the GMP build). It
->> is fixed by the strtofr patch [3].
->> Corresponding changeset in the 3.1 branch: 9110 [4].
->>
->> [1]: https://gmplib.org/list-archives/gmp-bugs/2013-December/003267.html
->> [2]: https://gmplib.org/repo/gmp-5.1/raw-rev/d19172622a74
->> [3]: http://www.mpfr.org/mpfr-3.1.2/patch11
->> [4]: https://gforge.inria.fr/scm/viewvc.php?view=rev&root=mpfr&revision=9110
->>
->> References:
->> - https://bugzilla.redhat.com/show_bug.cgi?id=1171701
->> - https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772008
->>
->> Can a CVE be assigned to this please?
-
-Use CVE-2014-9474.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
