@@ -1,37 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/12
-Message-ID: <20150223093424.GA20329@videolan.org>
-Date: Mon, 23 Feb 2015 10:34:24 +0100
-From: Jean-Baptiste Kempf <jb@...eolan.org>
-To: Florian Weimer <fweimer@...hat.com>
-Cc: oss-security@...ts.openwall.com, Assign a CVE Identifier <cve-assign@...re.org>, VideoLAN Security Team <security@...eolan.org>
-Subject: Re: CVE request: BD-J implementation in libbluray
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/8
+Message-Id: <20150104020254.043C717FDA7@rebar.astron.com>
+Date: Sat, 3 Jan 2015 21:02:54 -0500
+From: christos@...las.com (Christos Zoulas)
+To: oss-security@...ts.openwall.com, Dan McDonald <danmcd@...iti.com>
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request for illumos distributions
 Content-Type: text/plain; charset=utf-8
 
-On 23 Feb, Florian Weimer wrote :
-> > As for https://bugzilla.redhat.com/show_bug.cgi?id=959434
-> > 
-> > "Fixing it would not change anything. Xlet (that requests the mount, or is
-> > being executed from the mount) could as well uncompress the files by self
-> > where it wants, even download other files from internet."
-> > 
-> > So, maybe you want to have a full Xlet sandboxing? Or is it something
-> > else?
-> 
-> Yes, I do think full sandboxing is required because content publishers
-> have attacked end user system integrity in the past, so I don't think
-> they can be trusted.
+On Jan 3,  6:57pm, cve-assign@...re.org (cve-assign@...re.org) wrote:
+-- Subject: Re: [oss-security] CVE Request for illumos distributions
 
-BD-J code comes from Blu-Rays. Downloading non-official blurays and
-executing it is like taking random binaries from internet and running
-them.
+| > Illumos bug #5421 - http://illumos.org/issues/5421 which is now fixed in 
+| > the upstream illumos-gate, is an innocuous fix to a serious problem that 
+| > allows an arbitrary user in the global zone (non-global zones are not 
+| > able to panic the machine) to panic the machine.
+| 
+| Use CVE-2014-9491.
 
-Patches are welcome, though...
+Shouldn't we be using CVE-2015-XXXX by now?
 
+Happy New Year,
 
-With my kindest regards,
-
--- 
-Jean-Baptiste Kempf
-http://www.jbkempf.com/ - +33 672 704 734
-Sent from my Electronic Device
+christos
