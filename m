@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/11
-Message-ID: <Pine.LNX.4.64.1501171757340.17900@beijing.mitre.org>
-Date: Sat, 17 Jan 2015 17:58:46 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/1
+Message-ID: <Pine.LNX.4.64.1501031900440.1923@beijing.mitre.org>
+Date: Sat, 3 Jan 2015 19:01:27 -0500 (EST)
 From: cve-assign@...re.org
-To: Adam Baldwin <baldwin@...yet.net>
-cc: Kurt Seifried <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, "report@...esecurity.io" <report@...esecurity.io>
-Subject: Re: Node.js "serve-static" module Open Redirect
+To: Grant Murphy <grant.murphy@...com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: [grant.murphy@...com: CVE request for vulnerability in OpenStack Glance]
 Content-Type: text/plain; charset=utf-8
 
 
-On Wed, 14 Jan 2015, Adam Baldwin wrote:
+>> A vulnerability was discovered in OpenStack (see below). In order to 
+>> ensure full traceability, we need a CVE number assigned that we can 
+>> attach to further notifications. This issue is already public, although 
+>> an advisory was not sent yet.
+>>
+>> Title: Glance v2 API unrestricted path traversal
+>> Reporter: Masahito Muroi (NTT)
+>> Products: Glance
+>> Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
+>>
+>> Description: Masahito Muroi from NTT reported a vulnerability in 
+>> Glance. By setting a malicious image location an authenticated user can 
+>> download or delete any file on the Glance server for which the Glance 
+>> process user has access to. Only setups using the Glance V2 API are 
+>> affected by this flaw.
+>>
+>> References:
+>> https://launchpad.net/bugs/1400966
 
-> Yes we post to mitre for CVE. We're short staffed so slow. We can try 
-> and cross post to oss-security too in the future.
->
-> Adam Baldwin
->
->> On Jan 13, 2015, at 8:56 PM, Kurt Seifried <kseifried@...hat.com> wrote:
->>
->> https://nodesecurity.io/advisories/serve-static-open-redirect
->>
->> Says CVE pending, no idea where/whom they asked, I assume Mitre?
->>
->> Also if nodesecurity.io could post these advisories to oss-security that
->> would be helpful, thanks!
->>
->> --
->> Kurt Seifried -- Red Hat -- Product Security -- Cloud
->> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-Use CVE-2015-1164.
+Use CVE-2014-9493.
 
 ---
 
