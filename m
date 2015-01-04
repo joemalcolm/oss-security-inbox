@@ -1,64 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/26
-Message-ID: <20150129214125.5ee653dd@redhat.com>
-Date: Thu, 29 Jan 2015 21:41:25 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request - ICU
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/7
+Message-ID: <54A88529.5090607@internot.info>
+Date: Sun, 04 Jan 2015 11:11:21 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: Re: CVE Request Question
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 29 Jan 2015 09:18:32 -0500 (EST) cve-assign@...re.org wrote:
+I'm forwarding this to oss-security just for the interest of documentation.
 
-> > https://code.google.com/p/chromium/issues/detail?id=432209
-> > https://chromium.googlesource.com/chromium/deps/icu/+/dd727641e190d60e4593bcb3a35c7f51eb4925c5
-> > http://bugs.icu-project.org/trac/changeset/36801
-> 
-> Do you believe there's enough information available to determine how
-> many CVEs should exist that are specific to Chromium bug 432209?
 
-...
+Thanks,
 
-> The utypes.h change mentions:
-> 
->   U_REGEX_PATTERN_TOO_BIG,              /**< Pattern exceeds limits on size or complexity.   @draft ICU 55   */
-> 
-> In some cases in various products, a length fix is motivated by an
-> overflow or overflows, which would have one CVE, and a complexity fix
-> is motivated by a desire to restrict a resource-consumption attack,
-> which might have its own CVE (but, in any case, would not be the same
-> as the overflow CVE).
 
-I do not have access to either of the private upstream bugs to know if
-any resource consumption attacks are mentioned there.  My understanding
-is that the fix aims to ensure that lengths / operands / indexes do not
-exceed 2^24.
+-------- Forwarded Message --------
+Subject:     Re: CVE Request Question
+Date:     Mon, 29 Dec 2014 11:38:17 -0500 (EST)
+From:     cve-assign@...re.org
+To:     bugreports@...ernot.info
+CC:     cve-assign@...re.org
 
-I'm guessing, but complexity may refer to exceeding the limit with
-short patterns as well.  This issue was fixed in the same Chrome update
-(CVE-2014-7923 or CVE-2014-7926), short patterns cause generation of
-invalid opcodes because of operands exceeding 2^24:
 
-http://bugs.icu-project.org/trac/changeset/36724
-https://chromium.googlesource.com/chromium/deps/icu/+/3af4ce5982311035e5f36803d547c0befa576c8c
 
-> This leads to a possibility of these two observations:
-> 
->   A. the entire known vulnerability is that the unpatched code
->      calculates certain values without ensuring that they can be
->      represented in a 24-bit field
-> 
->   B. the vendor has not stated whether there is a vulnerability
->      related solely to the concept of complexity. Possibly part of
->      36801 addresses complexity as a security-hardening measure, not a
->      vulnerability fix. Or, possibly nothing in 36801 is exclusively
->      about complexity.
-> 
-> Should there be one CVE ID now, for observation A alone?
+> https://bugs.php.net/bug.php?id=68665
 
-That's what can be done based on the information public at the moment.
-This may not be perfect, but still significant improvement from having
-this grouped with 30+ other, likely unrelated, issues under single CVE.
+As far as we can tell, Bug #68665 has two completely unrelated bugs
+and you are perhaps asking about CVE IDs for both of them.
 
--- 
-Tomas Hoger / Red Hat Product Security
+First, there is an apprentice.c bug:
+
+> I found an invalid free that will cause a crash/memory corruption in the
+> master repo(git) of PHP:
+
+>
+http://git.php.net/?p=php-src.git;a=commit;h=a72cd07f2983dc43a6bb35209dc4687852e53c09
+
+[ and in PHP 5.6
+
+http://git.php.net/?p=php-src.git;a=commit;h=ef89ab2f99fbd9b7b714556d4f1f50644eb54191
+]
+
+Use CVE-2014-9426.
+
+
+Then, there is a zend_language_scanner.c bug:
+
+> I found an invalid free that will cause a crash/memory corruption in the
+> master repo(git) of PHP:
+>
+>
+http://git.php.net/?p=php-src.git;a=commit;h=68dd8e8bd7c994dd7a127535d6b4cd22e8c1fc28
+>
+> and a test case:
+>
+>
+http://git.php.net/?p=php-src.git;a=commit;h=67c47e7861a612634bc56525163b6c781aada8db
+>
+> But from a PHP dev, regarding whether a CVE-ID should be assigned:
+> > Hmm, I'd say no. The language scanner one is master only, so
+shouldn't have been used in any production.
+>
+> I'm just wondering if even though it's only in master, it falls within
+> scope of CVE-ID's?
+
+There is currently no CVE ID for this. The practice that we follow is
+not the same for every piece of software. For example, in the past we
+have assigned CVE IDs for vulnerabilities in FFmpeg that did not
+affect any FFmpeg release. The rationale for this is that Google was
+incorporating unreleased FFmpeg code into Chrome. In the case of PHP,
+we do not know of (for example) current cases in which a Linux
+distribution ships packages based on using the PHP master tree at an
+arbitrary point in time. Also, we have not seen PHP maintainers
+advertise that end users should individually use master. Accordingly,
+for PHP, master seems to not directly correspond to a "product," and
+at least some of the bugs are a reflection of the code being in an
+indeterminate development state.
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
