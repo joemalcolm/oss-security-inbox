@@ -1,80 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/10
-Message-ID: <CAMnK33VmjfmdiZz14MyJEaCFYd8ty26pigmDO_wF2i1W8Yg+zw@mail.gmail.com>
-Date: Tue, 3 Feb 2015 07:29:15 -0800
-From: Chris Evans <scarybeasts@...il.com>
-To: Moritz Muehlenhoff <jmm@...ian.org>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: vsftpd problem in deny_hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/17
+Message-ID: <Pine.LNX.4.64.1501041734580.3184@beijing.mitre.org>
+Date: Sun, 4 Jan 2015 17:36:13 -0500 (EST)
+From: "Steven M. Christey" <coley@...re.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request for illumos distributions
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 3, 2015 at 6:56 AM, Moritz Muehlenhoff <jmm@...ian.org> wrote:
 
-> On Tue, Feb 03, 2015 at 12:45:24PM +0300, Solar Designer wrote:
-> > On Tue, Feb 03, 2015 at 09:28:36AM +0100, Marcus Meissner wrote:
-> > > IBM reported to us a problem in vsftpd deny_hosts problem.
-> > >
-> > > CVE-2015-1419
-> > >
-> > > https://bugzilla.novell.com/show_bug.cgi?id=915522
-> > >
-> > > Description;
-> > >  Set the option "deny_file" in /etc/vsftpd.conf on a top-directory
-> (for example "deny_file=/home/*")
-> > >  Then log in with ftp and try to cd to "/home/" first, which will
-> fail, then try to cd to "/./home/" which will succeed!
-> > >  The latter case shouldn't be possible as well!
-> >
-> > What does upstream say about this?  (CC'ing.)
+On Sun, 4 Jan 2015, gremlin@...mlin.ru wrote:
+
+> On 2015-01-04 15:06:51 +1100, Dave Horsfall wrote:
 >
-> At least the man page states the deny_file is not a full-blown security
-> measure:
+> >> | Use CVE-2014-9491.
+> >> Shouldn't we be using CVE-2015-XXXX by now?
+> > I'd rather see CVE-2015-XXXXX - look how close we came...
+> > Is there a CVE for that?
 >
-> | This option is very simple, and should not be used for serious
-> | access control - the filesystem's permissions should be used in
-> preference.
+> First CVE ID in 2015 is CVE-2015-0001; once we get to CVE-2015-9999,
+> the next ID will be CVE-2015-10000.
 >
+> Consider it as "CVE-%u-%04u".
 
-Yeah, this option is very half-assed. I should probably have known better
-than to implement it.
+People who consider the ID format as "CVE-%u-%04u" might not comply with 
+all the example IDs provided in CVE test data, as made available to the 
+public for almost a year at 
+http://cve.mitre.org/cve/identifiers/syntaxchange.html#guidance
 
-Other quotes from the man page:
----
-In
-              particular aware that if a filename is accessible by  a
- variety
-              of  names  (perhaps  due  to symbolic links or hard links),
-then
-              care must be taken to deny access to all the names.
----
-Because  of  this,  you will need to
-              carefully and exhaustively test any application of this
- option.
-              And  you  are  recommended to use filesystem permissions for
-any
-              important security policies due to  their  greater
- reliability.
----
-
-The "variety of names" clause above is for situations like /home vs.
-/./home/ vs. /../home vs. /.././../home etc.
-
-This option is just a regex-like match against the raw FTP argument. So,
-I'm not sure it's possible to use deny_file=/home/*. Even if that were
-tweaked to deny_file=*/home/*, it would only work if the initial directory
-were set _outside_ /home -- if it wasn't, RETR some/relative/path would
-work because /home/ does not appear in the string.
-
-Perhaps the wording in the man page is not strong enough, or not detailed
-enough about implications, or I should just remove it? Suggestions welcome.
-
-
-Cheers
-Chris
-
-
->
-> Cheers,
->         Moritz
->
-
+- Steve
