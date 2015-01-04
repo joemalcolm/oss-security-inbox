@@ -1,60 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/10
-Message-ID: <54C7C31B.1070306@reactos.org>
-Date: Tue, 27 Jan 2015 17:55:55 +0100
-From: Pierre Schweitzer <pierre@...ctos.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/11
+Message-ID: <alpine.BSF.2.11.1501041505420.58880@aneurin.horsfall.org>
+Date: Sun, 4 Jan 2015 15:06:51 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
 To: oss-security@...ts.openwall.com
-CC: Qualys Security Advisory <qsa@...lys.com>
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Subject: Re: CVE Request for illumos distributions
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sat, 3 Jan 2015, Christos Zoulas wrote:
 
-Hi,
-
-The person behind this anticipated disclosure admitted failing at time
-management a few messages later.
-Basically, this was not a volunteered anticipated disclosure.
-As reference: http://frsag.org/pipermail/frsag/2015-January/005727.html
-"I'll keep you informed in the next hours. I've sent the bulletin too
-early.
-Big fail from me. Stay tuned."
-
-With my best regards,
-
-On 01/27/2015 05:11 PM, Solar Designer wrote:
-> On Tue, Jan 27, 2015 at 05:04:58PM +0100, Hanno B??ck wrote:
->> Origin seems to be a report from qualys.
+> | Use CVE-2014-9491.
 > 
-> They're about to send the full advisory in here.  This was
-> coordinated disclosure, but unfortunately there are discrepancies
-> of a few hours. The public disclosure time-of-day was coordinated
-> too, but clearly was not literally followed by everyone.
-> 
-> Alexander
-> 
+> Shouldn't we be using CVE-2015-XXXX by now?
 
+I'd rather see CVE-2015-XXXXX - look how close we came...
 
-- -- 
-Pierre Schweitzer <pierre@...ctos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Is there a CVE for that?
 
-iQIcBAEBAgAGBQJUx8MbAAoJEHVFVWw9WFsLaZsQAI00bb6ye2I6QsbsMrfM9zw7
-vWs2RVvC31hJb6kfOdancvzbi3j0Th13Be22cJZxNcdxaRTH1hf/njHRXCJDDldV
-dq19mRrZcU/sJtLqrq66A3QsuD+l9305PU0kzyv9utyZlDA7MlH3+fN0/lsgfQQS
-r6EJ3VB4t7XzvIyYu6A5vKjEwWDjVEnT283tBbSt/BQ0QLuKeNRDBF/Vag7ipo9v
-qGBbMUByx3LCfDf8fyldgNWof7jrwq4ov9Yia24ZTcgV8XCMTbMGHavRZRwAVnJj
-7Rtn89Z+Wp4rQtiyPDpG+0Lvku+VwxL3qpqhnvNt9ljY8NFr/kfD/TfypsDqcX+j
-fLlOLkIeBgDRpIBRTW83yzDct5faw+1JCo+3loW+KeVzcaH4MPUbgJR4P21rl6W5
-c3P6mLz3uSYUgD5tYmxvLg1gBLbdfs1XqaBsVCk5BS3cqUI/jkYOyh8vXgNFpADS
-PUgigS4BxLVSeHuQ93rEaSbPmv8nH47IcjlJDjxpc0yXcrparcB9Ltq1Zte2Ko3A
-GEIuqZPzqIIH+sBXixqHYB1avDD+Eec3myrYQ9JEnkGXD3Tg8G2O4bAe+6m+i+Ez
-GmFU3Bmz5X3jJn3xP3lcYyh7Ty3lWeNaUn80AelcYSsiF/VmLsPvhoU0I4DBGM3y
-EinId55H7QqMyQjt79JF
-=7jhK
------END PGP SIGNATURE-----
+-- 
+Dave Horsfall DTM (VK2KFU)  "Bliss is a MacBook with a FreeBSD server."
+http://www.horsfall.org/spam.html (and check the home page whilst you're there)
