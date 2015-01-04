@@ -1,29 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/13
-Message-ID: <20150204204930.682ac950@pc>
-Date: Wed, 4 Feb 2015 20:49:30 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/13
+Message-ID: <20150104062638.GA16143@gremlin.ru>
+Date: Sun, 4 Jan 2015 09:26:38 +0300
+From: gremlin@...mlin.ru
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PHP/file: out-of-bounds memory access in softmagic
+Subject: Re: CVE Request for illumos distributions
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 4 Feb 2015 19:53:36 +0100
-Moritz Muehlenhoff <jmm@...ian.org> wrote:
+On 2015-01-04 15:06:51 +1100, Dave Horsfall wrote:
 
-> Originally reported in file:
-> Bug report: http://bugs.gw.com/view.php?id=398
-> Fix:
-> https://github.com/file/file/commit/59e63838913eee47f5c120a6c53d4565af638158
+ >> | Use CVE-2014-9491.
+ >> Shouldn't we be using CVE-2015-XXXX by now?
+ > I'd rather see CVE-2015-XXXXX - look how close we came...
+ > Is there a CVE for that?
 
-There are more such issues, I haven't tested them in php:
-http://bugs.gw.com/view.php?id=409
-http://mx.gw.com/pipermail/file/2014/001649.html
+First CVE ID in 2015 is CVE-2015-0001; once we get to CVE-2015-9999,
+the next ID will be CVE-2015-10000.
+
+Consider it as "CVE-%u-%04u".
+
 
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Alexey V. Vissarionov aka Gremlin from Kremlin <gremlin ПРИ gremlin ТЧК ru>
+GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8 @ hkp://keys.gnupg.net
