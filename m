@@ -1,66 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/2
-Message-ID: <20150305014533.GA30991@blough.us>
-Date: Wed, 4 Mar 2015 20:45:33 -0500
-From: Bill Blough <devel@...ugh.us>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2014-6440: Heap Overflow in VLC Transcode Module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/4
+Message-ID: <54AAA8BD.8090603@collabora.co.uk>
+Date: Mon, 05 Jan 2015 15:07:41 +0000
+From: Simon McVittie <simon.mcvittie@...labora.co.uk>
+To: oss-security@...ts.openwall.com, dev@...ts.midgard-project.org,  user@...ts.midgard-project.org
+Subject: CVE-2014-8148: midgard-core configures D-Bus system bus to be insecure
 Content-Type: text/plain; charset=utf-8
 
+[Re-posting with upstream list addresses spelled correctly. People on
+oss-security: sorry for the noise, and please send any replies to this
+one, not to the previous attempt.]
 
-Executive Summary
------------------
+Type of vulnerability: CWE-284 Improper Access Control
+Exploitable by: local users
+Impact: could allow arbitrary code execution as root (dependent on
+installed D-Bus system services)
+Reporter: Simon McVittie, Collabora Ltd.
+Upstream notified: 2014-12-19
 
-VLC versions before 2.1.5 contain a vulnerability in the transcode module that
-may allow a corrupted stream to overflow buffers on the heap. With a
-non-malicious input, this could lead to heap corruption and a crash.  However,
-under the right circumstances, a malicious attacker could potentially use this
-vulnerability to hijack program execution, and on some platforms, execute
-arbitrary code.
+Midgard2 is an open source content repository for data-intensive web and
+desktop applications.
 
+While checking Debian for incorrect/dangerous D-Bus security policy
+files (found in /etc/dbus-1/system.d/*.conf) I found this access control
+rule in midgard2-common/10.05.7.1-2, part of the upstream project
+midgard-core:
 
-Remediation
------------
+<policy context="default">               <==== "applies to everyone"
+  <allow own="org.midgardproject" />     <==== probably undesired
+  <allow send_type="method_call"/>       <==== definitely bad
+  <allow send_type="signal" />           <==== not good either
+</policy>
 
-Prior to being notified of this issue, the VLC team had already made changes to
-the 2.2 development branch [0][1][2] that corrects this issue by reinitilizing
-the filters when a format change is detected. However, the fixes had not yet
-been backported to the 2.1 maintenance branch.
-                                                                               
-Once notified, the VLC team quickly resolved the issue by backporting the
-relevant patches to the maintenance branch [3][4][5]. They also added an
-additional check on both the development[6] and maintenance[7] branches for
-good measure.
+This is analogous to an overly permissive "chmod": it allows any process
+on the system bus to send any method call or signal to any other process
+on the system bus, including those that are normally forbidden either
+explicitly or via the system bus' documented default-deny policy. Some
+D-Bus system services perform additional authorization checks, either
+via Polkit/PolicyKit or internally, but many services rely on the system
+bus to apply their intended security model.
 
-CVE-2014-6440 [8] was assigned to this issue.
+For instance, depending on installed software, this vulnerability could
+allow unprivileged local users to:
 
-Timeline
---------
+* invoke Avahi's SetHostName() method
+* communicate with bluetooth devices using BlueZ
+* install printer drivers using system-config-printer
+* run NetworkManager "dispatcher" scripts
+* ...
 
- 2014-04-18: VLC team notified of issue
+It seems likely that at least one of these services can be used for
+arbitrary code execution as root, making this a severe vulnerability.
 
- 2014-04-19: Fixed in VLC repository
-
- 2014-07-06: VLC 2.1.5 maintenance release
-
-
-A more detailed writeup can be found on my blog [9].
-
-Please note, I am not subscribed to the list, so please CC me if you reply.
-
-Bill
-
-
-[0]: http://git.videolan.org/?p=vlc.git;a=commit;h=a3a150b91f09620dc0d81c22db591a20faf4b2a5
-[1]: http://git.videolan.org/?p=vlc.git;a=commit;h=39a99d25872f64dacd470fda86ba2193a55cda52
-[2]: http://git.videolan.org/?p=vlc.git;a=commit;h=26989ea2d98380eef28843ffa8ca490e8f9d6dae
-[3]: http://git.videolan.org/?p=vlc/vlc-2.1.git;a=commit;h=28bd6670a26bf88c2523b7302e2c22f8ca210bb7
-[4]: http://git.videolan.org/?p=vlc/vlc-2.1.git;a=commit;h=feca6658b4b84b4bc8b7a08431e811813277d31b
-[5]: http://git.videolan.org/?p=vlc/vlc-2.1.git;a=commit;h=e40a4a1a54be2b69e4e001451f0dd91f3857a976
-[6]: http://git.videolan.org/?p=vlc.git;a=commit;h=a113b849e428b71813a569021bd10d6974f6621f
-[7]: http://git.videolan.org/?p=vlc/vlc-2.1.git;a=commit;h=a5bee4c5cf0c8fca0d1ddaf570aeebc78e824b15
-[8]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-6440              
-[9]: http://billblough.net/blog/2015-03-04-cve-2014-6440-heap-overflow-in-vlc-transcode-module
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (967 bytes)
+Regards,
+    S
