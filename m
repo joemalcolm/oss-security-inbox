@@ -1,56 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/17
-Message-ID: <20150105182555.GB12585@hp.com>
-Date: Mon, 5 Jan 2015 10:25:55 -0800
-From: Grant Murphy <grant.murphy@...com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/16
+Message-ID: <20150105181324.GA22004@inutil.org>
+Date: Mon, 5 Jan 2015 19:13:24 +0100
+From: Moritz Muehlenhoff <jmm@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2014-041.1] Glance v2 API unrestricted path traversal (CVE-2014-9493) ERRATA 1
+Cc: cve-assign@...re.org
+Subject: Re: Re: CVE Request(s): GnuPG 2/GPG2
 Content-Type: text/plain; charset=utf-8
 
-OpenStack Security Advisory: 2014-041 (ERRATA 1)
-CVE: CVE-2014-9493
-Date: January 5, 2015
-Title: Glance v2 API unrestricted path traversal
-Reporter: Masahito Muroi (NTT)
-Products: Glance
-Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
+On Thu, Jan 01, 2015 at 07:45:52AM +1100, Joshua Rogers wrote:
+> On 30/12/14 06:57, Joshua Rogers wrote:
+> > Hi,
+> >
+> > I found multiple vulnerabilities in GPG2.
+> > Could some CVE-ID(s) be assigned please.
+> > Patches were provided by multiple people.
+> >
+> > --
+> > Double free in scd/command.c:
+> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773471
+> >
+> > Double free in sm/minip12.c:
+> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773472
+> >
+> >
+> > These two seem related in code:
+> > Return after free in sm/gpgsm.c:
+> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773473
+> > Return after free in dirmngr/ldapserver.c:
+> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773523
+> > --
+> >
+> > Thanks,
+> Any updates?
 
-Description:
-Masahito Muroi from NTT reported a vulnerability in Glance. By setting 
-a malicious image location an authenticated user can download or delete
-any file on the Glance server for which the Glance process user has 
-access to. Only setups using the Glance V2 API are affected by this flaw.
+Explicitly adding cve-assign to CC.
 
-Errata:
-When the original advisory was published a CVE number was not assigned. 
-CVE-2014-9493 can now be used to track this vulnerability.
-
-Kilo (development branch) fix:
-https://review.openstack.org/141706
-
-Juno fix:
-https://review.openstack.org/142373
-
-Icehouse fix:
-https://review.openstack.org/142788
-
-Notes:
- * This fix was included in the kilo-1 development milestone and will be included
-   in future 2014.2.2 (juno) and 2014.1.4 (icehouse) releases.
-
- * The OpenStack VMT recommends revoking all credentials stored in files
-   accessible by Glance as a precautionary measure. 
-
-References:
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-9493
-https://launchpad.net/bugs/1400966
-
-OSSA History:
-    2015-01-05 - Errata 1
-    2014-12-23 - Original Version
-
--- 
-Grant Murphy
-OpenStack Vulnerability Management Team
-
-Content of type "application/pgp-signature" skipped
+Cheers,
+        Moritz
