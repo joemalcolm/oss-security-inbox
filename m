@@ -1,19 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/8
-Message-ID: <54D64BBB.6020204@redhat.com>
-Date: Sat, 07 Feb 2015 10:30:35 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: Assign a CVE Identifier <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE REJECT CVE-2009-1193
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/12
+Message-ID: <Pine.LNX.4.64.1501051232350.8826@beijing.mitre.org>
+Date: Mon, 5 Jan 2015 12:33:48 -0500 (EST)
+From: cve-assign@...re.org
+To: Steffen Rösemann <steffen.roesemann1986@...il.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request -- CMS Absolut Engine v. 1.73 -- Multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-https://bugzilla.redhat.com/show_bug.cgi?id=497196
 
-Please reject, notabug
+On Sat, 3 Jan 2015, Steffen Rösemann wrote:
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> I found multiple vulnerabilities in CMS Absolut Engine v.1.73 including SQL
+> injections and a reflecting XSS vulnerability residing in its
+> administrative backend.
+>
+> Can you assign a CVE ID for it?
+>
+> Greetings, Steffen
+>
+> References:
+>
+> [1] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-08.html
+> [2]
+> http://sroesemann.blogspot.de/2014/12/report-for-advisory-sroeadv-2014-08.html
+> [3] http://seclists.org/fulldisclosure/2014/Dec/131
+> [4] http://www.absolutengine.com/
 
+CVE-2014-9435 - SQL injection
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+CVE-2014-9434 - XSS
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
