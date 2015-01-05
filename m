@@ -1,52 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/15
-Message-ID: <CALoOobPJ=yfx6=Z6FQjHywJCoU7htTx2WLK0rg4RQ_RE+nMKLQ@mail.gmail.com>
-Date: Fri, 20 Feb 2015 08:44:28 -0800
-From: Paul Pluzhnikov <ppluzhnikov@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fixing the glibc runtime linker
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/7
+Message-ID: <Pine.LNX.4.64.1501051126410.8826@beijing.mitre.org>
+Date: Mon, 5 Jan 2015 11:27:51 -0500 (EST)
+From: cve-assign@...re.org
+To: Salvatore Bonaccorso <carnil@...ian.org>
+cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: gcab: directory traversal
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 20, 2015 at 1:22 AM,  <Casper.Dik@...cle.com> wrote:
+
+> Jakub Wilk reported a directory traversal vulnerability due to cab not
+> filtering leading slashes from paths in CAB files.
 >
->>FWIW, relative RPATHs are quite fundamental to our test execution
->>environment, and any patch that unconditionally ignores them would
->>have to be reverted in our tree.
+> Debian bug: https://bugs.debian.org/774580
+> Upstream bugreport: https://bugzilla.gnome.org/show_bug.cgi?id=742331
+>
+> Could you assign as CVE for this issue?
+>
+> Regards,
+> Salvatore
 
-It turns out I was mistaken: we don't use relative RPATHs after all.
+Use CVE-2015-0552.
 
-> But wouldn't that make the libraries and executables less reliable?
+---
 
-Our testing infrastructure is described in some detail here:
-http://google-engtools.blogspot.com/2011/06/testing-at-speed-and-scale-of-google.html
-
-The essential problem is that the paths to all the libraries in the cloud
-are effectively unpredictable. They are however predictable relative to
-$ORIGIN, which is what we actually use [1].
-
-> They can pick up random libraries or cause some delays when one of the
-> relative paths points to a NFS mounted directory.
-
-We only build tests that way, not final binaries. Random libraries and
-NFS are not a concern for us, because the 'in the cloud' environment is
-tightly controlled -- we know exactly what files the test will see at
-runtime (relative to $ORIGIN).
-
-> Any reason you can't change to using LD_LIBRARY_PATH for testing?
-
-We used to use LD_LIBRARY_PATH, but it has several problems. Consider a
-Python or Java program that needs to load some C++ shared library, and
-also wants to fork off a separate C++ executable. Consider further that
-the python may be built for ix86, while the C++ executable may be built
-for x86_64.
-
-What should the LD_LIBRARY_PATH look like? Should it leak from python into
-C++ executable? It's complicated :-)
-
-
-
-[1] This isn't strictly true either, for complicated reasons irrelevant
-to current discussion.
-
--- 
-Paul Pluzhnikov
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
