@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/7
-Message-ID: <CAAuWqpY2OBmDoDRj0K5hoj3=oAdhLdfy9qFREnqarxSH9RNDvQ@mail.gmail.com>
-Date: Tue, 27 Jan 2015 17:23:20 +0100
-From: Paolo Perego <paolo@...oredcode.com>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Cc: Dylan Kuhn <cyberhobo@...erhobo.net>
-Subject: CVE request: XSS in search functionality for Geo Mashup Wordpress plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/11
+Message-ID: <Pine.LNX.4.64.1501051231060.8826@beijing.mitre.org>
+Date: Mon, 5 Jan 2015 12:31:47 -0500 (EST)
+From: cve-assign@...re.org
+To: Steffen Rösemann <steffen.roesemann1986@...il.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request -- Contenido 4.9.x - 4.9.5 -- Reflecting XSS vulnerability in exception handler with deactivated AMR function
 Content-Type: text/plain; charset=utf-8
 
-Citing the description, Geo Mashup is a plugin for Wordpress designed
-to let you
-save location information with posts, pages, and other WordPress objects.
-These information can then be presented on interactive maps in many ways.
 
-Plugin versions before 1.8.3 suffer from a cross site scripting
-vulnerability when displaying search results. The search key was not
-properly sanitized so an attacker can eventually inject arbitrary
-javascript code.
+On Sat, 3 Jan 2015, Steffen Rösemann wrote:
 
-Plugin author was contacted on December 16, and by January 11 the
-vulnerability was fixed and plugin version 1.8.3 was released (
-https://wordpress.org/plugins/geo-mashup/changelog/).
+> Hello Josh, Steve, vendors, list.
+>
+> I found a reflecting XSS vulnerability in the exception handler function of
+> CMS Contenido, which affects all versions from 4.9.x to 4.9.5 when using
+> having disabled advanced mod rewrite (AMR) function, which is used for
+> generating SEO-friendly URLs.
+>
+> The vulnerability can be triggered by submitting arbitrary HTML- and/or
+> JavaScriptcode in parameters "idcat", "idart" and "lang" to the PHP file
+> front_content.php.
+>
+> Can you assign a CVE ID for it please?
+>
+> [1] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-03.html
+> [2]
+> http://sroesemann.blogspot.de/2014/12/report-for-advisory-sroeadv-2014-03.html
+> [3] http://www.contenido.org/de/cms/CONTENIDO/News/index-c-2044-3.html
+> [4] http://seclists.org/fulldisclosure/2014/Dec/111
 
+Use CVE-2014-9433.
 
-Paolo
--- 
-$ cd /pub
-$ more beer
+---
 
-Il primo blog di application security italiano morbido fuori e croccante
-dentro: https://codiceinsicuro.it
-
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
