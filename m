@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/22/3
-Message-ID: <Pine.LNX.4.64.1501220917090.18848@beijing.mitre.org>
-Date: Thu, 22 Jan 2015 09:23:05 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/6
+Message-ID: <Pine.LNX.4.64.1501051052470.8826@beijing.mitre.org>
+Date: Mon, 5 Jan 2015 10:54:11 -0500 (EST)
 From: cve-assign@...re.org
-To: Kurt Seifried <kseifried@...hat.com>
-cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: ping on CVE Request for jenkins-tomcat: Secure and HttpOnly flags are not, set for cookies with Jenkins on Tomcat
+To: Vincent Danen <vdanen@...hat.com>
+cc: Salvatore Bonaccorso <carnil@...ian.org>, oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request: denial of service flaw in firebird
 Content-Type: text/plain; charset=utf-8
 
 
-> Has there been any movement on
+>> Should CVE-2014-9492 be rejected and CVE-2014-9323 to be still
+>> continued to be used?
 >
-> http://www.openwall.com/lists/oss-security/2015/01/14/1
->
-> or is it CVE rejected?
+> Thanks for this, Salvatore.  I hadn't noticed that the CVE was assigned.  I 
+> think 9492 should be rejected; I don't know where 9323 came from but we have 
+> already released errata with that CVE name for Fedora and it looks like many 
+> others (as you noted) are also using 9323.
 
-CVE-2014-9634 - Secure flag not set
-CVE-2014-9635 - HttpOnly flag not set
+To confirm, we will REJECT CVE-2014-9492 and preserve CVE-2014-9323.
 
 ---
 
