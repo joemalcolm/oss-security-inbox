@@ -1,31 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/8
-Message-ID: <54BE93E2.90603@internot.info>
-Date: Wed, 21 Jan 2015 04:44:02 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: PHP int overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/3
+Message-ID: <54AAA7E5.8040107@collabora.co.uk>
+Date: Mon, 05 Jan 2015 15:04:05 +0000
+From: Simon McVittie <simon.mcvittie@...labora.co.uk>
+To: "dbus@...ts.freedesktop.org" <dbus@...ts.freedesktop.org>,  ftp-release <ftp-release@...ts.freedesktop.org>
+CC: oss-security@...ts.openwall.com
+Subject: Announcing D-Bus 1.8.14
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+The “40lb of roofing nails” release.
 
-I found an integer overflow in PHP, in the conversation of dates to
-"Julian Day Count" function.
+This is a bugfix release for the current stable branch, 1.8.x, adding
+security hardening to mitigate faulty third-party security policy files
+such as CVE-2014-8148. Please upgrade unless you have a reason to keep
+using an older branch.
 
-The commit, with a PoC can be found here:
-https://github.com/MegaManSec/php-src/commit/a538d2f5605798422f2746636ecdc300f8ebcaa1
+http://dbus.freedesktop.org/releases/dbus/dbus-1.8.14.tar.gz
+http://dbus.freedesktop.org/releases/dbus/dbus-1.8.14.tar.gz.asc
+git tag: dbus-1.8.14
+git branch: dbus-1.8
 
-It seems to affect every version of PHP compiled with the calendar
-extension.
-The vulnerable code was commited in
-3bc8debefe30aec801ee75878eba3ab6be00f301, at
- Sat Apr 15 20:35:09 2000 +0000
+Security hardening:
 
-Could I get a CVE-ID for this?
+• Do not allow calls to UpdateActivationEnvironment from uids other than
+  the uid of the dbus-daemon. If a system service installs unsafe
+  security policy rules that allow arbitrary method calls
+  (such as CVE-2014-8148) then this prevents memory consumption and
+  possible privilege escalation via UpdateActivationEnvironment.
 
-Thanks,
+  We believe that in practice, privilege escalation here is avoided
+  by dbus-daemon-launch-helper sanitizing its environment; but
+  it seems better to be safe.
+
+• Do not allow calls to UpdateActivationEnvironment or the Stats
+  interface on object paths other than /org/freedesktop/DBus. Some
+  system services install unsafe security policy rules that allow
+  arbitrary method calls to any destination, method and interface with
+  a specified object path; while less bad than allowing arbitrary
+  method calls, these security policies are still harmful, since
+  dbus-daemon normally offers the same API on all object paths and
+  other system services might behave similarly.
+
+Other fixes:
+
+• Add missing initialization so GetExtendedTcpTable doesn't crash on
+  Windows Vista SP0 (fd.o #77008, Илья А. Ткаченко)
+
 -- 
--- Joshua Rogers <https://internot.info/>
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Simon McVittie, Collabora Ltd. / Debian
