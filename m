@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/11
-Message-ID: <20150211174006.GA1234@sentinelchicken.org>
-Date: Wed, 11 Feb 2015 09:40:06 -0800
-From: Tim <tim-security@...tinelchicken.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: wordexp(3)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/2
+Message-ID: <CAHQavwte5KFaBE4y9V+FPkhRaHEZ39o=H9aYidUTvUVAM8P9ig@mail.gmail.com>
+Date: Mon, 5 Jan 2015 09:56:24 -0800
+From: Korvin Szanto <Korvin@...tlandlabs.com>
+To: Henri Salo <henri@...v.fi>
+Cc: oss-security@...ts.openwall.com, cve-assign@...re.org, abuse@...crete5.org,  security@...crete5.org, Simo Ben youssef <simo@...xploit.com>
+Subject: Re: CVE request: Concrete5 XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-> > It might be of interest to know that we've only got patches in 2 ports
-> > as a result of this: celestia and filezilla (we're using globs instead
-> > of wordexp for these; I'm not aware of any negative feedback relating
-> > to these patches).
-> 
-> There is software out there which automatically uses a shell-based
-> implementation if the system does not provide wordexp.  With this in
-> mind, it makes sense to provide the interface even if you dislike it
-> (same thing with strlcpy).
+This has been fixed in 5.7.3 for some time
+https://github.com/concrete5/concrete5-5.7.0/commit/e3d47d2af88ddef36deaf754ef22f1f39b9b623b
 
+We have a security disclosure program for this so any disclosure
+outside of our program is very irresponsible and unprofessional. You
+end up with outdated information and leave us unable to fix the issue
+in a secure way since we cannot see it until it's brought to our
+attention through our disclosure program.
 
-I disagree.
-
-Providing a badly designed interface, even if it is "standard", simply
-invites more depedence on it.  If people have to exert extra effort to
-code around the lack of a dangerous interface, then they are less
-likely to rely on dangerous approaches, such as generating shell
-syntax from within C.  Yes, they could just use system() or popen(),
-but these interfaces should be deprecated as well.  We have to take a
-stand some time.
-
-Most programmers like to think that other programmers should just
-"know what they are doing" and use these interfaces with care.  The
-reality is, there will always be a significant percentage of
-developers who don't "know what they are doing".  If we want to avoid
-vulnerabilities in software, we need to start thinking about how to 
-provide APIs that discourage (but don't prevent) unsafe practices, so
-that those who are naive will find that the path of least resistance
-is to write secure code to begin with.
-
-tim
+On Fri, Jan 2, 2015 at 11:43 AM, Henri Salo <henri@...v.fi> wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> Can you assign CVE identifier for following vulnerability in Concrete5, thanks.
+>
+> http://seclists.org/bugtraq/2014/Dec/53
+> http://osvdb.org/115633
+> http://osvdb.org/115634
+>
+> ps. there is something wrong with http://www.openwall.com/lists/oss-security/ it
+> says "an error occurred while processing this directive"
+>
+> - --
+> Henri Salo
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+>
+> iEYEARECAAYFAlSm9P4ACgkQXf6hBi6kbk+bfQCgjF/EWeO4Wfs0SUSsq96LwNpE
+> AWAAn1yKEw9eDAlJ6cQczjzHZ7VGdXUp
+> =0mVH
+> -----END PGP SIGNATURE-----
