@@ -1,33 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/14
-Message-ID: <20150130102502.GA15118@openwall.com>
-Date: Fri, 30 Jan 2015 13:25:02 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/9
+Message-ID: <Pine.LNX.4.64.1501051203540.8826@beijing.mitre.org>
+Date: Mon, 5 Jan 2015 12:08:39 -0500 (EST)
+From: "Steven M. Christey" <coley@...re.org>
+To: Salvatore Bonaccorso <carnil@...ian.org>
+cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>, Jakub Wilk <jwilk@...ian.org>
+Subject: Re: CVE Request: arj: symlink directory traversal and directory traversal via //multiple/leading/slash
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 30, 2015 at 11:09:01AM +0100, linkbc02 wrote:
-> Sorry Alexander, I quoted the wrong one.
-> I can confirm, Dovecot, at least, got crashed, I asked also Timo S. that is
-> digging about it.
-> Screenshot
-> http://goo.gl/JwhWIf
 
-The screenshot shows you entering lots of 0's when talking the IMAP
-protocol.  It does not necessarily indicate any relevance to GHOST.
+On Sat, 3 Jan 2015, Salvatore Bonaccorso wrote:
 
-If you try upgrading glibc and the issue goes away, _that_ would be a
-reason to suspect relevance.  OTOH, if the issue persists even with
-GHOST-patched glibc, that would be a reason to think it's an unrelated
-issue (which most likely it is).  Can you perform this test maybe?
-Don't forget to restart Dovecot after the glibc upgrade.
+> arj: symlink directory traversal:
+> - https://bugs.debian.org/774434
 
-As to use of the mailing list, I'd prefer no screenshots, pastebins,
-etc. in here.  Instead, post the information in plain text form right in
-here.  And here are some guidelines on better quoting:
+Use CVE-2015-0556.
 
-http://www.complang.tuwien.ac.at/anton/mail-news-errors.html
-http://www.netmeister.org/news/learn2quote.html
+> arj: directory traversal via //multiple/leading/slash:
+> - https://bugs.debian.org/774435
 
-Alexander
+Use CVE-2015-0557.
+
+> Reproducers for both issues are also attached bot the corresponding
+> bugs.
+>
+> Could you assign CVE(s) for these isues? (Are two ore one appropriate?
+> It is the same reporter and similar kind of issue).
+
+Two CVEs are used here.
+
+While the bugs have the same technical impact - accessing files outside of 
+an intended directory - the root causes and vulnerability types are 
+different.  774434 does not handle when symlink destinations point outside 
+the directory.  774435 is a protection mechanism failure in which an 
+attempt is made to protect against directory traversal by removing a 
+leading slash, but not considering that there can be multiple leading 
+slashes.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
