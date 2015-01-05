@@ -1,33 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/12/11
-Message-ID: <Pine.LNX.4.64.1502121133220.24585@beijing.mitre.org>
-Date: Thu, 12 Feb 2015 11:34:44 -0500 (EST)
-From: cve-assign@...re.org
-To: Francisco Alonso <rs@...skills.cz>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: Reflected XSS / Content Spoofing in FlexPaper
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/14
+Message-ID: <54AAD32D.7070704@redhat.com>
+Date: Mon, 05 Jan 2015 11:08:45 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: oss-security@...ts.openwall.com, dev@...ts.migard-project.org, user@...ts.migard-project.org
+Subject: Re: CVE-2014-8148: midgard-core configures D-Bus system bus to be insecure
 Content-Type: text/plain; charset=utf-8
 
+Just a note, this was assigned CVE-2014-8148 midgard-core dbus policy
+local priv escalation on vendor sec previously.
 
-> Can a CVE please be assigned to the following issue:
->
-> FlexPaper Flash viewer Reflected XSS and Content Spoofing via Swfile
-> parameter in FlexPaperViewer.swf file.
->
-> Fixed via FlexPaper 2.3.1 Release.
->
-> References:
-> http://blog.flexpaper.org/post/105984224083/flexpaper-2-3-1-release-notes
-> https://code.google.com/p/flexpaper/
-> http://www.theregister.co.uk/2014/12/23/wikileaks_pdf_viewer_vuln/
-> http://www.pcworld.com/article/2862812/flaw-in-opensource-pdf-viewer-could-put-wikileaks-users-others-at-risk.html
 
-CVE-2014-9677 - XSS
+On 05/01/15 08:03 AM, Simon McVittie wrote:
+> Type of vulnerability: CWE-284 Improper Access Control
+> Exploitable by: local users
+> Impact: could allow arbitrary code execution as root (dependent on
+> installed D-Bus system services)
+> Reporter: Simon McVittie, Collabora Ltd.
+> Upstream notified: 2014-12-19
+> 
+> Midgard2 is an open source content repository for data-intensive web and
+> desktop applications.
+> 
+> While checking Debian for incorrect/dangerous D-Bus security policy
+> files (found in /etc/dbus-1/system.d/*.conf) I found this access control
+> rule in midgard2-common/10.05.7.1-2, part of the upstream project
+> midgard-core:
+> 
+> <policy context="default">               <==== "applies to everyone"
+>   <allow own="org.midgardproject" />     <==== probably undesired
+>   <allow send_type="method_call"/>       <==== definitely bad
+>   <allow send_type="signal" />           <==== not good either
+> </policy>
+> 
+> This is analogous to an overly permissive "chmod": it allows any process
+> on the system bus to send any method call or signal to any other process
+> on the system bus, including those that are normally forbidden either
+> explicitly or via the system bus' documented default-deny policy. Some
+> D-Bus system services perform additional authorization checks, either
+> via Polkit/PolicyKit or internally, but many services rely on the system
+> bus to apply their intended security model.
+> 
+> For instance, depending on installed software, this vulnerability could
+> allow unprivileged local users to:
+> 
+> * invoke Avahi's SetHostName() method
+> * communicate with bluetooth devices using BlueZ
+> * install printer drivers using system-config-printer
+> * run NetworkManager "dispatcher" scripts
+> * ...
+> 
+> It seems likely that at least one of these services can be used for
+> arbitrary code execution as root, making this a severe vulnerability.
+> 
+> Regards,
+>     S
+> 
 
-CVE-2014-9678 - content spoofing
+-- 
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
----
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
