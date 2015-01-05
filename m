@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/27/3
-Message-ID: <20150227114445.4bcc1289@pc>
-Date: Fri, 27 Feb 2015 11:44:45 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE request: Joomla Google Maps Plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/8
+Message-ID: <Pine.LNX.4.64.1501051150280.8826@beijing.mitre.org>
+Date: Mon, 5 Jan 2015 11:51:05 -0500 (EST)
+From: "Steven M. Christey" <coley@...re.org>
+To: Steve Kemp <steve@...ve.org.uk>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: cve request: insecure temporary file usage - xbindkeys-config
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 26 Feb 2015 14:43:19 -0500 (EST)
-cve-assign@...re.org wrote:
 
-> Finally, the researcher disclosed one new finding in 2014 in the
-> http://seclists.org/fulldisclosure/2014/Feb/53 post. This new finding
-> is a variant of CVE-2013-7428, but applies specifically to the case
-> where the attacker controls a subdomain of the victim's domain name.
-> Use CVE-2014-9686. The researcher gives an apparently realistic
-> example in which the attacker controls site.wordpress.com and the
-> attack target is the wordpress.com web site.
+On Sat, 3 Jan 2015, Steve Kemp wrote:
 
-Now this is interesting because these issues seem to be unfixed.
+>  I realize I didn't request and ID for the insecure use of
+> temporary files in xbindkeys-config, as reported (by myself)
+> here:
+>
+>    https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772473
 
-Anyone knows anything? I'll try to get in contact with the upstream
-developer about this.
+Use CVE-2014-9513.
 
--- 
-Hanno Böck
-http://hboeck.de/
+---
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
