@@ -1,18 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/08/8
-Message-ID: <54D7EAF1.8060306@redhat.com>
-Date: Sun, 08 Feb 2015 16:02:09 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: please REJECT CVE-2013-4186
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/18
+Message-ID: <CAHQavwsdjv3Z-m-isPdLVhHyjZ7weWYU0R3MrgsXpKZn3bHBNA@mail.gmail.com>
+Date: Mon, 5 Jan 2015 12:20:03 -0800
+From: Korvin Szanto <Korvin@...tlandlabs.com>
+To: Simo Ben youssef <simo@...xploit.com>
+Cc: Henri Salo <henri@...v.fi>, oss-security@...ts.openwall.com, cve-assign@...re.org,  abuse@...crete5.org, security@...crete5.org
+Subject: Re: CVE request: Concrete5 XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
-CVE-2013-4186 was used to label an issue that is not a vulnerability, so
-please REJECT this CVE. Thanks.
+That report unfortunately fell through the cracks, as you can see on
+my reply. Our disclosure program is currently community driven, and
+I've taken steps to prevent this from happening to other reports. That
+is unfortunate and is completely our fault. Now disclosure for assumed
+active bugs outside of our program is still for sure the wrong thing
+to do always especially when not accompanied by an email to our
+security@...crete5.org address. This would've been resolved quickly
+had it been sent to our security@...crete5.org email, so I'd suggest
+falling back to that in the future.
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+On Mon, Jan 5, 2015 at 12:12 PM, Simo Ben youssef <simo@...xploit.com> wrote:
+> Korvin,
+>
+> You need to get your facts right before pointing fingers.
+> First of all and as we stated in our advisory on the 9th of December 2014,
+> the vulnerabilities were discovered on the 2nd of November 2014 to affect
+> 5.7.2 (and 5.7.2.1 later on December) which was the the latest version at
+> that time (As downloaded from concrete5.org).
+> The fix on your github was pushed on the 10th of December 2014, a day after
+> we published our advisory on FD and Bugtraq.
+> You accuse us of being irresponsible and unprofessional for not disclosing
+> the vulnerabilities to you first and it's not true since we contacted you
+> twice through your security program at HackerOne (Report #33848) which
+> hasn't been even "triaged" yet.
+>
+> I think what's really unprofessional is your inability to monitor your own
+> security programs while putting the blame on people who reach out to you to
+> help you fix your flaws.
+>
+>
+> On Mon, Jan 5, 2015 at 11:56 AM, Korvin Szanto <Korvin@...tlandlabs.com>
+> wrote:
+>>
+>> This has been fixed in 5.7.3 for some time
+>>
+>> https://github.com/concrete5/concrete5-5.7.0/commit/e3d47d2af88ddef36deaf754ef22f1f39b9b623b
+>>
+>> We have a security disclosure program for this so any disclosure
+>> outside of our program is very irresponsible and unprofessional. You
+>> end up with outdated information and leave us unable to fix the issue
+>> in a secure way since we cannot see it until it's brought to our
+>> attention through our disclosure program.
+>>
+>> On Fri, Jan 2, 2015 at 11:43 AM, Henri Salo <henri@...v.fi> wrote:
+>> > -----BEGIN PGP SIGNED MESSAGE-----
+>> > Hash: SHA1
+>> >
+>> > Can you assign CVE identifier for following vulnerability in Concrete5,
+>> > thanks.
+>> >
+>> > http://seclists.org/bugtraq/2014/Dec/53
+>> > http://osvdb.org/115633
+>> > http://osvdb.org/115634
+>> >
+>> > ps. there is something wrong with
+>> > http://www.openwall.com/lists/oss-security/ it
+>> > says "an error occurred while processing this directive"
+>> >
+>> > - --
+>> > Henri Salo
+>> > -----BEGIN PGP SIGNATURE-----
+>> > Version: GnuPG v1.4.12 (GNU/Linux)
+>> >
+>> > iEYEARECAAYFAlSm9P4ACgkQXf6hBi6kbk+bfQCgjF/EWeO4Wfs0SUSsq96LwNpE
+>> > AWAAn1yKEw9eDAlJ6cQczjzHZ7VGdXUp
+>> > =0mVH
+>> > -----END PGP SIGNATURE-----
+>
+>
+>
+>
+> --
+> Simo Ben youssef
+> Vulnerability Research Engineer
+> O: (708) 629-6922 M: (312) 725-8043
+> MorXploit Research
+> www.morxploit.com
