@@ -1,78 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/11/2
-Message-Id: <20150211055916.4B62342E0D3@smtpvbsrv1.mitre.org>
-Date: Wed, 11 Feb 2015 00:59:16 -0500 (EST)
-From: cve-assign@...re.org
-To: Todd.Miller@...rtesan.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: sudo TZ issue
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/15
+Message-ID: <20150105181329.GA15234@kludge.henri.nerv.fi>
+Date: Mon, 5 Jan 2015 20:13:29 +0200
+From: Henri Salo <henri@...v.fi>
+To: Korvin Szanto <Korvin@...tlandlabs.com>
+Cc: oss-security@...ts.openwall.com, Simo Ben youssef <simo@...xploit.com>
+Subject: Re: CVE request: Concrete5 XSS vulnerability
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> http://www.sudo.ws/alerts/tz.html
+On Mon, Jan 05, 2015 at 09:56:24AM -0800, Korvin Szanto wrote:
+> This has been fixed in 5.7.3 for some time
+> https://github.com/concrete5/concrete5-5.7.0/commit/e3d47d2af88ddef36deaf754ef22f1f39b9b623b
+> 
+> We have a security disclosure program for this so any disclosure
+> outside of our program is very irresponsible and unprofessional. You
+> end up with outdated information and leave us unable to fix the issue
+> in a secure way since we cannot see it until it's brought to our
+> attention through our disclosure program.
 
-We are not sure why this is being interpreted as a vulnerability in
-sudo that should have a CVE assignment in which sudo is the
-responsible product. It appears that you are adding a new security
-feature in which sudo chooses to help prevent exploitation of bugs in
-a system library such as libc. Adding security features is often not
-within the scope of CVE. We're not disputing that it's worthwhile for
-you to change the sudo code and publish an alert explaining why you
-did that. It's just that some types of worthwhile changes can have CVE
-IDs whereas others can't.
+Original advisory in http://seclists.org/bugtraq/2014/Dec/53 says following:
 
-For example, see:
+"""
+Disclosure time-line
+02 November 2014: Discovery.
+03 November 2014: Initial report sent.
+11 November 2014: Second contact.
+No response.
+09 December 2014: Public disclosure.
+"""
 
-  http://www.openwall.com/lists/oss-security/2014/10/16/2
+I do not know how author of that advisory tried to contact Concrete5. For
+future cases: https://www.concrete5.org/developers/security/
 
-Also:
+I only requested CVE for coordination purposes. In this case CVE is used to
+notify end-users to actually update their software so that they are not affected
+by this vulnerability. If you want more details please contact me off-list.
 
-> As such, a program run via sudo will inherit the (possibly malicious)
-> value of TZ.
+Would it be possible for Concrete5 to request CVEs in the future as part of your
+security disclosure program?
 
-Depending on how other code is written, a TZ value could still be
-malicious even if it doesn't satisfy the definition of "unsafe" that
-you included. Should there be other CVEs for sudo if any such code is
-identified?
-
-To be clear, you can have a CVE assignment if, as the "vendor" of
-sudo, you believe that absense of the new "unsafe" checking was an
-implementation mistake in sudo. However, in that case, can you clarify
-whether it is one mistake or multiple mistakes? For example, is there
-a documented or implied security policy for sudo that addresses the
-current situation? A policy might be something like:
-
- - for every environment variable passed through by default, there is
-   supposed to be a proactive review of all common use cases of that
-   environment variable, and sudo is supposed to have input validation
-   that ensures that the environment variable's value is normal and
-   properly handled within that use case
-
-or, for multiple policies:
-
-  - sudo is supposed to prevent traversal attacks with environment
-    variables
-  
-  - sudo is supposed to block syntactically invalid values of
-    environment variables
-
-  - sudo is supposed to block long values of environment variables
+https://people.redhat.com/kseifrie/CVE-OpenSource-Request-HOWTO.html
 
 - -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJU2u8mAAoJEKllVAevmvmswp8H/0HzL1216WeNJxPvb3E5SSOf
-nZv/2M5BxOdC4OTWmVPzxmUVkwKlTMlf7iKLOZqb2scsrRGHi8EshsSvLZ2iFKIy
-Y+axIv8YqS8IkvAC3rgDegY8DYrN4+phffHfzAa9ekrndgIjFEjk9AFo4u7p0xUs
-rBtohfkufg0wWpajUctfkeV8MnoA4RSpZDu1MymNdfdx4c66Wyu28LFY8/scqscO
-UO1/RcpwRXp1rJS5SBsa+HsW+TohROzMHMhWTphStHWb3fNMhm9+X6hYQydbeFWh
-EjK0TlhwXT3Vm6eoPQBaPdheKDU8F+YvhUDtxKeQzmhrjuVpy56YDV/uXQWHtBU=
-=I0i/
+iEYEARECAAYFAlSq1EkACgkQXf6hBi6kbk9o4ACeLhGKVeF1+JIMjrUVJMzIgDf4
+CTMAn3QMFpwXw7ZBzUFS6Luv9euuIX6z
+=GYNG
 -----END PGP SIGNATURE-----
