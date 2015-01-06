@@ -1,21 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/22
-Message-ID: <20150129183310.GE1926@netmeister.org>
-Date: Thu, 29 Jan 2015 13:33:10 -0500
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/6
+Message-ID: <20150106093932.GB9193@mail.corp.redhat.com>
+Date: Tue, 6 Jan 2015 10:39:33 +0100
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Subject: Re: CVE request: dir traversal in elfutils
 Content-Type: text/plain; charset=utf-8
 
-Paul Pluzhnikov <ppluzhnikov@...il.com> wrote:
- 
-> If I was supposed to cry alarm, I would have to cry alarm every time
-> there is a buffer overflow in glibc, which doesn't seem very useful.
+Hello everyone,
 
-How about a general guideline along the lines of "if the commit message
-says it fixes a vulnerability, reference the CVE; if no CVE can be
-found, request one"?
+> >Initial (terse) report:
+> >https://lists.fedorahosted.org/pipermail/elfutils-devel/2014-December/004499.html
+> >
+> >Fix (with analysis in commit message):
+> >https://git.fedorahosted.org/cgit/elfutils.git/commit/?id=147018e729e7c22eeabf15b82d26e4bf68a0d18e
+>
+> Use CVE-2014-9486.
 
--Jan
+Something is not quite correct here, wasn't CVE-2014-9447 assigned to
+this already?
+
+http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2014-9447
+
+Thanks.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
+On Sat, 03 Jan 2015, cve-assign@...re.org wrote:
+
+> 
+> On Mon, 29 Dec 2014, Alexander Cherepanov wrote:
+> 
+> >Hi!
+> >
+> >A dir traversal vuln is fixed in elfutils:
+> >
+> >Initial (terse) report:
+> >https://lists.fedorahosted.org/pipermail/elfutils-devel/2014-December/004499.html
+> >
+> >Fix (with analysis in commit message):
+> >https://git.fedorahosted.org/cgit/elfutils.git/commit/?id=147018e729e7c22eeabf15b82d26e4bf68a0d18e
+> >
+> >At least versions 0.152 and 0.161 are affected.
+> >
+> >Could CVE please be assigned?
+> >
+> 
+> Use CVE-2014-9486.
+> 
+> ---
+> 
+> CVE assignment team, MITRE CVE Numbering Authority M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 
 Content of type "application/pgp-signature" skipped
