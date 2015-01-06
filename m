@@ -1,53 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/5
-Message-Id: <20150124145903.177CA3AE060@smtpvbsrv1.mitre.org>
-Date: Sat, 24 Jan 2015 09:59:03 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/10
+Message-Id: <20150106175917.BC25C6C00E5@smtpvmsrv1.mitre.org>
+Date: Tue,  6 Jan 2015 12:59:17 -0500 (EST)
 From: cve-assign@...re.org
-To: wmealing@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel - Denial of service in notify_change for xattrs.
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE-2014-9529 - Linux kernel security/keys/gc.c race condition
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> [wmealing]$ chown root:root /usr/bin/ping
-> chown: changing ownership of '/usr/bin/ping': Operation not permitted
-> 
-> [wmealing]$ ping www.google.com
-> ping: icmp open socket: Operation not permitted
-> 
-> This can cause a denial of service for applications which use the
-> capabilities subsystem such as pirahnah (arping), netconsole (arping),
-> some kdump implementations, etc.
+CVE-2014-9529 has been assigned to this issue in security/keys/gc.c
+that can lead to memory corruption or a panic:
 
->> Currently we call security_inode_killpriv() in notify_change(),
->> but in case of a chown() this is too early - we have not called
->> inode_change_ok() or made any filesystem-specific permission/sanity
->> checks.
+  http://marc.info/?l=linux-kernel&m=141986398232547&w=2
+  http://marc.info/?l=linux-kernel&m=142047362307894&w=2
 
->> + * setattr_killpriv - remove extended privilege attributes from a file
->> + * @dentry: Directory entry passed to the setattr operation
->> + * @iattr: New attributes pased to the setattr operation
->> + *
->> + * All filesystems that can carry extended privilege attributes
->> + * should call this from their setattr operation *after* validating
->> + * the attribute changes.
-
-This is a somewhat unusual situation in which there is arguably a
-single underlying discovery: if any filesystem supports extended
-privilege attributes, its setattr operation has a requirement for
-certain code that supports the functionality of removing extended
-privilege attributes. Previously, there was no such requirement in the
-sense that notify_change was (wrongly) expected to support that
-functionality. Thus, it seems best to model this as a single security
-problem (with a single CVE ID) in which the set of requirements for
-setattr operations was incomplete. It does not seem worthwhile to
-model this as a series of related security problems (with multiple CVE
-IDs) in which individual filesystems had their own independent
-implementation errors.
-
-Use CVE-2015-1350.
+(not yet available at
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/security/keys/gc.c)
 
 - -- 
 CVE assignment team, MITRE CVE Numbering Authority
@@ -57,11 +28,11 @@ M/S M300
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUw7LsAAoJEKllVAevmvmsxFwIAI8+WBXMKoJ7r+rWI7eeXoSn
-mGcb3gMBNS4siHYk12q22wcSHL/MbPqeUwWYT6b28xgf79GHkuLFyEksunhVoLzB
-TFrg1co3TjhzOtxAMV+VjjPRmfiS0Odc3KVsFyHX3FkNbPRLqy7d/yHMstScOTXM
-NzqpxrVRrL0Xs4LiOXWfWsAl1pkHpoDZSEC6FNxB2O87LowQF1qn/UlT88QczYoN
-4R66bDM3grd8iqohrpRk9ILiD97ZDShpwL8AIT27yxWttC2QiltSWTqCLvTGOZ4V
-ovk5gI1kAcGvGE32ILLYPrqDERLM4O3LqZtsd+793yj2yuqDs9D4cNj9XAdij5M=
-=WP6T
+iQEcBAEBAgAGBQJUrCFRAAoJEKllVAevmvmsyA4IAIh+kbncaMb8/okcoRBwCGuc
+3u9QyifANmAxp3AErN/JzrEi1mWfQ/1dI+XMucINM5+4ddOpLoPsr2B1Vt7EYiAN
+O47FfVodTvEsKYRqkbXXidfVjl8lU8WiQa6PA5mdzf8eSv88wIJqHXqwQUx9YCVS
+K7/FJEjhC4c0lkDG4oTlrPuTOjNgdXSM5qlgkwp5F6im1GWN9t3ckfYq5OXL11a4
+dZ52i5v5N0SHwy0skfhVndql6Q/Y5tTfYfY6+QIALZ/58vUGqyt6k47RpNsilLSE
+grkjJjSwI4ySj7HO1R4K8lpCiUWPLK8qMMS1D42Fb5fQ7aVjeb9xhWO1r3iMLbI=
+=PoZ+
 -----END PGP SIGNATURE-----
