@@ -1,36 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/10/30/7
-Message-ID: <20151030193422.GH8645@oevtugenva.nrevsny.pk>
-Date: Fri, 30 Oct 2015 15:34:22 -0400
-From: Rich Felker <dalias@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/13
+Message-ID: <CABuU+O3HJ6F8pz3MaULjYz1yeBBPsGn0QV7tcZU3goLmuqpUuA@mail.gmail.com>
+Date: Tue, 6 Jan 2015 21:45:13 +0100
+From: Francisco Alonso <rs@...skills.cz>
 To: oss-security@...ts.openwall.com
-Cc: gustavo.grieco@...il.com, cve-assign@...re.org
-Subject: Re: Re: Pointer misuse unziping files with busybox
+Subject: CVE request: Reflected XSS / Content Spoofing in FlexPaper
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 29, 2015 at 02:04:51AM -0400, cve-assign@...re.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> > http://git.busybox.net/busybox/commit/?id=1de25a6e87e0e627aa34298105a3d17c60a1f44e
-> 
-> > Unziping a specially crafted zip file results in a computation of an invalid
-> > pointer and a crash reading an invalid address.
-> 
-> Could you please comment directly about the likelihood of
-> exploitability for code execution? See the
-> http://www.openwall.com/lists/oss-security/2015/10/11/5 post. We
-> currently feel that a CVE assignment for a non-exploitable unzip crash
-> on BusyBox may be unlikely, because BusyBox wouldn't realistically be
-> used for deployment of a program that remains running to offer an
-> unzipping service to multiple clients.
+Hello,
 
-There are several distributions including Alpine Linux, widely used in
-container environments, which by default use busybox to provide the
-unzip utility. Unzipping of any files downloaded by the user, possibly
-from untrusted sources, may be affected. I believe CVE is appropriate
-for user-facing programs commonly used to open untrusted files even
-without an automated process accepting and processing
-potentially-malicious files from a client.
+Can a CVE please be assigned to the following issue:
 
-Rich
+FlexPaper Flash viewer Reflected XSS and Content Spoofing via Swfile
+parameter in FlexPaperViewer.swf file.
+
+Fixed via FlexPaper 2.3.1 Release.
+
+References:
+http://blog.flexpaper.org/post/105984224083/flexpaper-2-3-1-release-notes
+https://code.google.com/p/flexpaper/
+http://www.theregister.co.uk/2014/12/23/wikileaks_pdf_viewer_vuln/
+http://www.pcworld.com/article/2862812/flaw-in-opensource-pdf-viewer-could-put-wikileaks-users-others-at-risk.html
+
+Thanks,
+
