@@ -1,27 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/7
-Message-ID: <CALH-=7zjuF6xARQEkGKBRvxKuzynwG4bXNbTSUXneacBYvozTg@mail.gmail.com>
-Date: Sat, 3 Jan 2015 10:37:15 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/7
+Message-ID: <54ABBA71.8080303@internot.info>
+Date: Tue, 06 Jan 2015 21:35:29 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- CMS Absolut Engine v. 1.73 -- Multiple vulnerabilities
+Subject: Re: CVE Request(s): GnuPG 2/GPG2
 Content-Type: text/plain; charset=utf-8
 
-Hello Josh, Steve, vendors, list.
+On 06/01/15 04:42, cve-assign@...re.org wrote:
+>
+> What is the attack scenario for these double frees?  It is not
+> immediately clear whether there is a role for an attacker who is not
+> the GnuPG user.
+Here is the response from Werner:
 
-I found multiple vulnerabilities in CMS Absolut Engine v.1.73 including SQL
-injections and a reflecting XSS vulnerability residing in its
-administrative backend.
+---
 
-Can you assign a CVE ID for it?
+>> Double free in scd/command.c:
+>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773471
 
-Greetings, Steffen
+Could be triggered due to an out of memory condition or a wrong use of a
+functions.  Hard to exploit I guess.
 
-References:
+>> Double free in sm/minip12.c:
+>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773472
 
-[1] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-08.html
-[2]
-http://sroesemann.blogspot.de/2014/12/report-for-advisory-sroeadv-2014-08.html
-[3] http://seclists.org/fulldisclosure/2014/Dec/131
-[4] http://www.absolutengine.com/
+That may happen if iconv_open fails.  Memory error or utf-8 not
+available.  Note that the buffer is allocated in out secure memory and
+thus the gcry_free() zeroes the memory.  I can't see how this can be
+exploted but I am not an expert for this.
+--- 
 
+
+Hopefully that answers the question,
+
+
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
