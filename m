@@ -1,52 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/4
-Message-ID: <20150121124945.GS12661@dhcp-25-225.brq.redhat.com>
-Date: Wed, 21 Jan 2015 13:49:45 +0100
-From: Petr Matousek <pmatouse@...hat.com>
-To: pavel@....cz
-Cc: "Mehaffey, John" <John_Mehaffey@...tor.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: Linux kernel information leak in event device handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/4
+Message-ID: <CAD3Cane9b_czm7TdVPdfCZTVbMhZ5+qppb4YQHpC+ZtucF0W-Q@mail.gmail.com>
+Date: Tue, 6 Jan 2015 21:42:20 +1300
+From: Matthew Daley <mattd@...fuzz.com>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request / advisory: Apache Traffic Server 5.0.0 - 5.1.1
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 20, 2015 at 03:23:19PM +0000, Mehaffey, John wrote:
-> > From: Marcus Meissner [meissner@...e.de]
-> > Sent: Tuesday, January 20, 2015 6:43 AM
-> > To: OSS Security List
-> > Subject: [oss-security] CVE Request: Linux kernel information leak in event device handling
-> >
-> > Hi,
-> >
-> > This needs a CVE, information leak out of the kernel.
-> >
-> > This probably was introduced by commit 483180281f0ac60d1138710eb21f4b9961901294
-> > in Linux 3.9.
-> >
-> > Ciao, Marcus
-> >
-> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7c4f56070fde2367766fa1fb04852599b5e1ad35
-> > https://bugzilla.suse.com/show_bug.cgi?id=904899
-> >
-> > Input: evdev - fix EVIOCG{type} ioctl
-> >
-> > The 'max' size passed into the function is measured in number of bits
-> > (KEY_MAX, LED_MAX, etc) so we need to convert it accordingly before
-> > trying to copy the data out, otherwise we will try copying too much
-> > and end up with up with a page fault.
-> >
-> > Reported-by: Pavel Machek <pavel@....cz>
-> > Reviewed-by: Pavel Machek <pavel@....cz>
-> > Reviewed-by: David Herrmann <dh.herrmann@...il.com>
-> > Signed-off-by: Dmitry Torokhov <dmitry.torokhov@...il.com>
-> 
-> I don't see how this could leak information to the user.
-> 
-> Without the patch, too much memory is allocated internally in the driver, and too much data is copied into that buffer (potentially causing a page fault) but the same, correct amount of data is copied out to the user both before and after this patch.
+Hi,
 
-@Pavel -- did you encounter the page fault? Looking at the code, even
-the oversized copy from dev->sw looks to be satisfied by the remaining
-fields in input_dev structure.
+I'd like to request a CVE ID for this issue. It was found in Apache
+Traffic Server (http://trafficserver.apache.org/), an open-source
+caching proxy webserver.
+
+This is the first such request but the issue has been semi-public for
+a few weeks now; this message serves as an advisory as well. (Note
+this probably needs a CVE-2014-* ID)
+
+Affected software: Apache Traffic Server
+Description: Receiving a HTTP TRACE request containing a
+"Max-Forwards" header with a value of "0" will cause the
+traffic_server process to crash with an assertion failure, even in
+release builds.
+
+The parent process, traffic_manager, will restart the traffic_server
+process when it sees that it has crashed. However, it takes several
+seconds before the new process is ready to handle requests, during
+which the server appears unresponsive to the outside world. Also,
+traffic_manager will queue incoming requests until the new process is
+ready to handle them. These queued requests might consist of more of
+the same request that caused the traffic_server process to crash in
+the first place. This allows a remote attacker to perform an effective
+DoS of the server with very little resources by simply sending the
+crashing request repeatedly.
+
+Affected versions: 5.0.0 - 5.1.1 (5.x.x series before 5.1.2)
+Fixed version: 5.1.2
+Bug entry: https://issues.apache.org/jira/browse/TS-3223
+Fix: https://git-wip-us.apache.org/repos/asf?p=trafficserver.git;a=commit;h=8b5f0345dade6b2822d9b52c8ad12e63011a5c12
+Release notes: https://issues.apache.org/jira/secure/ReleaseNote.jspa?version=12327089&styleName=Html&projectId=12310963
+Reported by: Matthew Daley
+
+Please let me know if you need any further information.
 
 Thanks,
--- 
-Petr Matousek / Red Hat Product Security
-PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
+
+- Matthew Daley
