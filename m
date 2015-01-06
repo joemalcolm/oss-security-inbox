@@ -1,36 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/6
-Message-ID: <87vbjp9ee5.fsf@alice.fifthhorseman.net>
-Date: Thu, 29 Jan 2015 21:43:46 -0500
-From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
-To: Hanno Böck <hanno@...eck.de>, oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/14
+Message-ID: <CALH-=7zPVz0iu117wBJwQuiGdN17hfeAbH-dZWbSkS6Hz2apHQ@mail.gmail.com>
+Date: Tue, 6 Jan 2015 22:48:02 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- CMS Sefrengo v.1.6.0 -- SQL injection and XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Thu 2015-01-29 19:00:35 -0500, Hanno Böck wrote:
-> As promised, I wrote down my lengthy thoughts in a blog post:
-> https://blog.hboeck.de/archives/864-What-the-GHOST-tells-us-about-free-software-vulnerability-management.html
+Hello Josh, Steve, vendors, list.
 
-thanks for this writeup, Hanno.  you wrote:
+I found two SQL injection vulnerabilities and a reflecting XSS
+vulnerability in the content management system Sefrengo v. 1.6.0.
 
->> It would be an interesting (and time consuming) project to take a
->> package like PHP and check for all the security vulnerabilities whether
->> they are fixed in the latest packages in Debian Squeeze/Wheezy, all Red
->> Hat Enterprise versions and other long term support systems.
+They all reside in the administrative backend of the CMS in the following
+paths of a common installation:
 
-I don't know about RHEL, but Debian's security tracker does actually try
-to do this, and to coordinate it with the CVEs.  For example:
+SQL injection vulnerabilities:
 
-  https://security-tracker.debian.org/tracker/source-package/php5
+http://{TARGET}/backend/main.php?area=con_configcat&idcat=1&idtplconf=0
+http://{TARGET}/backend/main.php?area=plug&idclient=1
 
-It ain't pretty, but it's there.  If you (or anyone) is interested in
-working on this sort of tracker, or integrating between this and other
-trackers, please talk to the debian security team:
+XSS vulnerability:
 
-  https://wiki.debian.org/Teams/Security
+http://
+{TARGET}/backend/main.php?area=user&idgroup=0&order=&ascdesc=ASC&searchterm=&page=1
 
-Regards,
+The SQL injection vulnerabilities can be exploited via the parameters
+"idcat" and "idclient". The XSS vulnerability can be exploited via the
+parameter "searchterm".
 
-      --dkg
+Could you please assign a CVE-ID / CVE-IDs for it?
 
-Download attachment "signature.asc" of type "application/pgp-signature" (949 bytes)
+Thank you!
+
+Greetings
+
+Steffen Rösemann
+
+References:
+
+[1] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-06.html
+[2]
+http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2014-06.html
+[3] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-04.html
+[4]
+http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-04.html
+[5] http://forum.sefrengo.org/index.php?showtopic=3360
+[6]
+https://github.com/sefrengo-cms/sefrengo-1.x/commit/ed3ad864b8d36499402e981301d95074e583ac04
+[7] http://seclists.org/fulldisclosure/2015/Jan/9
+[8] http://seclists.org/fulldisclosure/2015/Jan/10
+
