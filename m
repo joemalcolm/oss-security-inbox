@@ -1,58 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/7
-Message-Id: <20150302143715.ED7996C0041@smtpvmsrv1.mitre.org>
-Date: Mon,  2 Mar 2015 09:37:15 -0500 (EST)
-From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, tseaver@...ladion.com, matt@...thewwilkes.name, nathan@...gheem.us
-Subject: Re: XSS In Zope
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/8
+Message-Id: <E1Y8TRA-0002IN-Up@xenbits.xen.org>
+Date: Tue, 06 Jan 2015 12:40:41 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 116 (CVE-2015-0361) - xen crash due to use after free on hvm guest teardown
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-> https://bugs.launchpad.net/zope2/+bug/490514
-> https://github.com/zopefoundation/Zope/commit/2abdf14620f146857dc8e3ffd2b6a754884c331d
+            Xen Security Advisory CVE-2015-0361 / XSA-116
+                              version 3
 
-> There is an XSS vulnerability in ZMI pages that use the
-> manage_tabs_message querystring variable.
+        xen crash due to use after free on hvm guest teardown
 
-> This bug is not actually present in the default ZMI, where the
-> views are all implemented as DTMLFiles. Rather, it shows up in
-> add-on product code (such as GenericSetup) which use
-> PageTemplateFiles for the ZMI, but call into the existing DTML
-> header and footer templates so::
-> 
->   <h1 tal:replace="structure here/manage_page_header">HEADER</h1>
->   <h1 tal:replace="structure here/manage_tabs">TABS</h1>
->   ...
->   <h1 tal:replace="structure here/manage_page_footer">FOOTER</h1>
-> 
-> In this case, the code in the call_with_ns function (in
-> Products.PageTemplates.ZRPythonExpr) fails to ensure that "tainting"
-> is preserved.
+UPDATES IN VERSION 3
+====================
 
-> preserve tainting when calling into DTML from ZPT.
+Public release.
 
-> src/Products/PageTemplates/ZRPythonExpr.py
-> +   if hasattr(request, 'taintWrapper'):
-> +       request = request.taintWrapper()
+ISSUE DESCRIPTION
+=================
 
-Use CVE-2009-5145.
+Certain data accessible (via hypercalls) by the domain controlling the
+execution of a HVM domain is being freed prematurely, leading to the
+respective memory regions to possibly be read from and written to in
+ways unexpected by their new owner(s).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+IMPACT
+======
+
+Malicious or buggy stub domain kernels or tool stacks otherwise living
+outside of Domain0 can mount a denial of service attack which, if
+successful, can affect the whole system.
+
+Only domains controlling HVM guests can exploit this vulnerability.
+(This includes domains providing hardware emulation services to HVM
+guests.)
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions from 4.2 onwards are vulnerable on x86 systems.
+ARM systems are not vulnerable.
+
+This vulnerability is only applicable to Xen systems using stub domains
+or other forms of disaggregation of control domains for HVM guests.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this issue.
+
+(The security of a Xen system using stub domains is still better than
+with a qemu-dm running as an unrestricted dom0 process.  Therefore
+users with these configurations should not switch to an unrestricted
+dom0 qemu-dm.)
+
+CREDITS
+=======
+
+The issue was discovered by Mihai Donțu from Bitdefender who also
+supplied the fix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa116.patch          xen-unstable, Xen 4.4.x
+xsa116-4.3-4.2.patch  Xen 4.3.x, Xen 4.2.x
+
+$ sha256sum xsa116*.patch
+84b5a7bb2386e3d95d9d836a4a2504870723694ddaf537f1b59db75b7c63e9bd  xsa116.patch
+3aed6d157f62343a806347ea7c37bb8cdf50ee68002449bded9c7c1712810201  xsa116-4.3-4.2.patch
+$
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQEcBAEBAgAGBQJU9HUHAAoJEKllVAevmvmsen4H/j/LhKRNPKej5EjMgaIEgQHu
-VRfuIRy21r1xBJLMtN+JHofRdknvjHFbVBlzI2rRyGUd8YwOiA0HM2sz1/sR4F6z
-gwm97+XDhi6YHIJHHlMhGOM1rrlx7nu0HHgWxwNFL+7LxbuyaZUYsskvUopyTD/J
-Y60vg4lkkXf0jIphw1Qj8Yhzk0OIvKxjUL1V+Fd8aiLiHoXDA6fovkVI9be0deWB
-OCeHpXE2DHpvW9IZLio+QsBaajHxfiKc2ib2k4ilBwxE6B4c7OpsBbgC6A6YHMhm
-WtqK8h8pRxX+IwISSZS1Ar+OSlw9lKuSox09s3tZyoLpmYjhPeEisDm0YdbxPwE=
-=ankS
+iQEcBAEBAgAGBQJUq9eeAAoJEIP+FMlX6CvZZx8H/0jivCICcJ7SLhIJsAZAVwA4
+gLpVaWk9qFMSUeYaccLG3naEHk/S5X8154J+VTb7cXDRFWI7lFAodUOhd0MRKzKc
+ZrauMNZDuUnjyJxQZEjreGQW/pfUO6IIsR/MOAPRoiyKOmOmSDoRTo7UJucZUgfr
+HtA5A58Fwiaw5t7LVXzxMI3EAR+ZL4M/e8Vv/F9sKfMSsGSfxPuTHVVoA1k9iUOF
+6yq8pEX+BAZfZSVd2GokD0DipZwvULSlJNMlTBBhK7RGiUgzn6HaxLHvGxEg7JhC
+0n97mVCJ8WIAwoqpEBU0E9xhN5Xxv4gTH5Dqhruw94X8gMhLe/BueYMXfYWIC18=
+=Z+TF
 -----END PGP SIGNATURE-----
+
+Download attachment "xsa116.patch" of type "application/octet-stream" (1012 bytes)
+
+Download attachment "xsa116-4.3-4.2.patch" of type "application/octet-stream" (913 bytes)
