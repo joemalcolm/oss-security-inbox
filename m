@@ -1,66 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/04/3
-Message-Id: <20150304031520.82D73B2E0DF@smtpvbsrv1.mitre.org>
-Date: Tue,  3 Mar 2015 22:15:20 -0500 (EST)
-From: cve-assign@...re.org
-To: gmc@...library.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - Evergreen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/18
+Message-ID: <3278C1E1-9415-4E68-9F46-410D28ACB947@redhat.com>
+Date: Tue, 06 Jan 2015 16:32:16 -0700
+From: "Vincent Danen" <vdanen@...hat.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: unsubscribe mmcallis@...hat.com
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 01/06/2015, at 16:28 PM, Vincent Danen wrote:
 
-Thanks for the clarification. Reorganizing and rewording gives these
-three CVE IDs:
+> unsubscribe
 
-CVE-2013-7435
-http://evergreen-ils.org/security-releases-evergreen-2-7-4-2-6-7-and-2-5-9/
-http://evergreen-ils.org/downloads/ChangeLog-2.7.3-2.7.4
-https://bugs.launchpad.net/evergreen/+bug/1206589
-http://git.evergreen-ils.org/?p=Evergreen.git;a=commit;h=ac588e879cf73ff1b65617e0bd273361d3529063
-
-scope =
- - in version 2.7.3, there is a major vulnerability in which a
-   setting's history can be viewed by an unauthenticated
-   attacker
+Sigh.  Sorry about the noise... forgot about ezmlm's special addresses.
 
 
-
-CVE-2015-2203
-http://evergreen-ils.org/security-releases-evergreen-2-7-4-2-6-7-and-2-5-9/
-http://evergreen-ils.org/downloads/ChangeLog-2.7.3-2.7.4
-https://bugs.launchpad.net/evergreen/+bug/1206589
-http://git.evergreen-ils.org/?p=Evergreen.git;a=commit;h=ac588e879cf73ff1b65617e0bd273361d3529063
-
-scope =
- - in version 2.7.4, there is a minor vulnerability in which a
-   setting's history can be viewed by all persons with the staff role,
-   which would include unauthorized staff in many realistic
-   deployments. This might be fixed in a future release by forcing all
-   access to use cstore, or by some other undetermined change.
-
-
-
-CVE-2015-2204
-http://evergreen-ils.org/security-releases-evergreen-2-7-4-2-6-7-and-2-5-9/
-http://evergreen-ils.org/downloads/ChangeLog-2.7.3-2.7.4
-https://bugs.launchpad.net/evergreen/+bug/1424755
-http://git.evergreen-ils.org/?p=Evergreen.git;a=commit;h=3a0f1cc7b2efa517ee4cd4c6a682237554fed307
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU9nhRAAoJEKllVAevmvmspb0H/0a0gf5sm39980V0DRgH9op6
-vrrrqEdcfoFSyG2vNst5Atnv+rQZEs9LoRSP8j/RbsbMCXdxz1Cyg7J67xIKhWKq
-Dy5kuEzfoX1n96WOv/+MA5+35JmbX6/WZtojukeS/y6ubv12JBMleqFF8sZht/Ri
-UZdMt/Uro+oMpm6POd/wuQt6YQ/z4Z6wjYLbamDhJqrW67bZYsA+dh5lbkzrjXXD
-8QFWNSLnur/wcKtqTTw0kSoWdZAjj70u8RnFY3kHrmPtWR7MlVlaTU0PFLGnJoUC
-5zk7+k5ULwWM3Fre8dPYIMaAU4ZRnP3OdpqN/7RTic+9op+0RxpoF7W+02VhQfM=
-=ynfk
------END PGP SIGNATURE-----
+-- 
+Vincent Danen / Red Hat Product Security
