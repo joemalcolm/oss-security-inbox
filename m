@@ -1,19 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/12
-Message-ID: <54EF7AD9.5010703@gmail.com>
-Date: Thu, 26 Feb 2015 14:58:17 -0500
-From: Daniel Micay <danielmicay@...il.com>
-To: oss-security@...ts.openwall.com
-CC: sstewartgallus00@...angara.bc.ca, ryao@...too.org
-Subject: Re: CVE request: Linux kernel silently ignores MS_RDONLY for bind mounts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/11
+Message-ID: <alpine.LFD.2.10.1501070031290.8245@javelin.pnq.redhat.com>
+Date: Wed, 7 Jan 2015 00:42:51 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE request Linux kernel: isofs: unchecked printing of ER records
 Content-Type: text/plain; charset=utf-8
 
-The commit adding this in 2.6.26 did actually document the weird
-behaviour, so I guess it's just "by design". Users of the API like LXC,
-Docker and systemd would likely have to iterate over /proc/self/mounts
-and remount everything due to the way MS_REC works. Anyway, there's
-clearly something wrong here when containers are claiming to have a
-read-only mount feature but writes to the directory tree aren't prevented...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+     Hello,
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Linux kernel built with the iso9660 file system(CONFIG_ISO9660_FS) support is 
+vulnerable to an information leakage flaw. This could occur while accessing 
+data on an iso9660 image with RockRidge extension reference(ER) records.
+
+An unprivileged user/process could use this flaw to leak (=~255)kernel memory 
+bytes.
+
+Upstream fix:
+- -------------
+   -> https://git.kernel.org/linus/4e2024624e678f0ebb916e6192bd23c1f9fdf696
+
+Thank you.
+- --
+Prasad J Pandit / Red Hat Product Security Team
+47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBAgAGBQJUrDOzAAoJEN0TPTL+WwQf2PcQALxIhn9tVXU6kvjlVA+joBmn
+7gNDMY/ij02bhf0pNxkoCYSi17Jif7VhUf5ODVGWsi2CzTVIiKh8lSv8ajWbIUV4
+X1Pzz5DSXROPunB2ZV+rjdbiIgFthEqsgegSL0OjHtS1lSsJMHnPWkRQYVibCLdd
+WdcvbFqqmFmN8yItLDBr+gfgZ1ZNA8guMamiQwZIgVt8NIIGtFss7ggIVRyyWbmb
+nwk26DITdd1jX/2nwlHdzqN07GZhaaiwDkHuLiIW1py9fnJ6WiCgL/EEOX113K0O
+ArzguZkbIsdiKQdyOcjJvU6wIcavZpWXi0ZEuM4jIpcu5ZxtV0c1/PbZAoSCqXR3
+qO4X8H0hifWCFq9Vo5eDs/UCV1EWv9jj3b4q4CDtshyPmsWONMAbiZ0oDbnghF6r
+a6N8fw4cv+CYKocsavqVqzM+njkLUM0bKT/heAc3Cu94/pRkh3zTEEslm0YI0uh3
+rFjJvB+VCu+Y/exDfEI4tV8A/ics5lBbwfmh1Q5UU+S29G5iWnxx6KZ+o2NJnPlZ
+Agf7+07fNuCuhgE4VCqJOWeF83rEZTZgJRmUYFVGqyAai+GHbmuK3XPF9Q0fy3M4
+IdJ85P7JC4gOQFvvpnLAnZ4jxW5UBGg7T25Ft6H4Yqss6pqmLjejjJIL9Um46Xnc
+ySRJm0OG1qiy6c/+EyTk
+=N9Pd
+-----END PGP SIGNATURE-----
