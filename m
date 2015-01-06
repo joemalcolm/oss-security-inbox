@@ -1,44 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/8
-Message-ID: <54CB4C7A.2070009@redhat.com>
-Date: Fri, 30 Jan 2015 10:18:50 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/15
+Message-ID: <CALH-=7wthaiV_0=dxzP4_3c04pqvOTE8F6MrD4b-H-UYtEKeqw@mail.gmail.com>
+Date: Tue, 6 Jan 2015 22:57:13 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Subject: CVE Request -- CMS Kajona v. 4.6 -- Reflecting XSS in administrative backend
 Content-Type: text/plain; charset=utf-8
 
-On 01/29/2015 05:00 PM, Paul Pluzhnikov wrote:
-> On Thu, Jan 29, 2015 at 4:09 AM, Hanno Böck <hanno@...eck.de> wrote:
-> 
->> And yes: I'd like people to cry alarm every time they see a buffer
->> overflow in glibc or any other core lib.
-> 
-> What is the appropriate forum to cry alarm on?
+Hi Josh, Steve, vendors, list.
 
-It depends on whether you want to do it publicly.  For the public case,
-you can post either on libc-alpha or here, with an appropriate subject,
-and people will pick it up.
+I found a reflecting XSS vulnerability in the administrative backend of CMS
+Kajona v. 4.6.
 
-As described here,
+It is possible for an attacker to append aribtrary HTML and/or
+JavaScript-Code to the "action" parameter used in index.php.
 
-  <https://sourceware.org/glibc/wiki/Security%20Process>
+Exploit-Example:
 
-glibc relies on downstreams for confidential security bug handling, so
-that's another option.
+http://
+{TARGET}/index.php?admin=1&module=right&action=change%3Cscript%3Ealert%28document.cookie%29%3C/script%3E%3C!--&changemodule=dashboard
 
-The eventual goal is to flag all security bugs as security+ in the glibc
-Bugzilla, but we are not quite there yet.  Both historic bugs still
-await analysis, and there are some remaining tough calls.  The next step
-after that work is complete will be to track down already-assigned CVEs
-and deal with the remaining missing ones.  To my knowledge, there are no
-major issues among those, but it is always difficult to predict what
-applications do with such a low-level library.
+Could you assign a CVE-ID for it?
 
-Apparently, we also have historic security-relevant commits without
-corresponding Bugzilla bugs.  This dates back to the time before glibc
-switched to a more collaborative/consensus-based development model.  The
-current policy is that all user-visible changes need Bugzilla bugs.  I
-don't know what to do about those stealth commits.
+Thank you!
 
--- 
-Florian Weimer / Red Hat Product Security
+Greetings
+
+Steffen Rösemann
+
+References:
+
+[1] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-01.html
+[2]
+http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-01.html
+[3]
+https://www.kajona.de/de/News/newsdetails.Security-update-to-module-system.newsDetail.22ac42054aa88a07826c.html
+[4] ttps://
+github.com/kajona/kajonacms/commit/563d39c327606232e480602f7b36ea6cb31bc6f7
+[5] http://seclists.org/fulldisclosure/2015/Jan/11
+
