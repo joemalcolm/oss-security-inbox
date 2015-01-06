@@ -1,68 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/10/2
-Message-ID: <2495017.L49tqg2Hub@xps>
-Date: Sat, 10 Jan 2015 17:23:05 +0100
-From: Albert Astals Cid <aacid@....org>
-To: Marcus Meissner <meissner@...e.de>
-Cc: oss-security@...ts.openwall.com, CVE Assignments MITRE <cve-assign@...re.org>, security@....org
-Subject: Re: CVE Request: kwallet: incorrect CBC encryption handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/06/5
+Message-ID: <20150106092438.GA354@lorien.valinor.li>
+Date: Tue, 6 Jan 2015 10:24:38 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Dublicate CVE assignment for directory traversal in elfutils? (CVE-2014-9486 and CVE-2014-9447)
 Content-Type: text/plain; charset=utf-8
 
-El Divendres, 9 de gener de 2015, a les 07:52:44, Marcus Meissner va escriure:
-> On Fri, Jan 09, 2015 at 07:02:38AM +0100, Salvatore Bonaccorso wrote:
-> > Hi
-> > 
-> > The following KDE Project Security Advisory was issued at
-> > https://www.kde.org/info/security/advisory-20150109-1.txt .
-> > 
-> > > Title:          Fix kwalletd CBC encryption handling
-> > > Risk Rating:    Low
-> > > Platforms:      All
-> > > Versions:       kwalletd < Applications 14.12.1, KF5::KWallet < 5.6.0
-> > > Author:         Valentin Rusu <kde@...u.info>
-> > > Date:           9 January 2015
-> > > 
-> > > Overview
-> > > ========
-> > > 
-> > > Until KDE Applications 14.12.0, kwalletd incorrectly handled CBC
-> > > encryption blocks when encrypting secrets in kwl files. The secrets
-> > > were still encrypted, but the result binary data corresponded to an ECB
-> > > encrypted block instead of CBC.
-> > > 
-> > > Impact
-> > > ======
-> > > 
-> > > The ECB encryption algorithm, even if it'll scramble user data, it'll
-> > > produce same encrypted byte sequence for the same input text. As a
-> > > result, attackers may eventually find-out the encrypted text.
-> > > 
-> > > Solution
-> > > ========
-> > > 
-> > > For kde-runtime KWallet upgrade to KDE Applications 14.12.1 or apply the 
-following patch:
-> > >   http://quickgit.kde.org/?p=kde-runtime.git&a=commit&h=14a8232d0b5b1bc5
-> > >   e0ad922292c6b5a1c501165c> > 
-> > > For KDE Frameworks 5 KWallet upgrade to 5.6.0 or apply the following 
-patch:
-> > >   http://quickgit.kde.org/?p=kwallet.git&a=commit&h=6e588d795e6631c3c9d8
-> > >   4d85fd3884a159b45849> > 
-> > > Credits
-> > > =======
-> > > 
-> > > Thanks to Itay Duvdevani for finding the issue and for letting us know.
-> > > Thanks to Valentin Rusu for implementing the fix.
-> > 
-> > Could you please assing a CVE for this issue?
-> 
-> This is already CVE-2013-7252 I think.
+Hi
 
-Looks like it is. Thanks for the help guys.
+while updating our tracker information at Debian i noticed that there
+might be a dublicate CVE assignment for elfutils:
 
-Best Regards,
-  Albert
+In
 
-> 
-> Ciao, Marcus
+https://marc.info/?l=oss-security&m=142032305709528&w=2
 
+CVE-2014-9486 was assigned for elfutils, with fixing commit identified
+with
+
+https://git.fedorahosted.org/cgit/elfutils.git/commit/?id=147018e729e7c22eeabf15b82d26e4bf68a0d18e
+
+In https://bugzilla.redhat.com/show_bug.cgi?id=1178888 though the same
+commit is referenced, but the bug aliased to CVE-2014-9447.
+
+Should one of those actually be rejected?
+
+Regards,
+Salvatore
