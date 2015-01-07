@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/9
-Message-ID: <CALH-=7wqJS3X4G+bkAy0sQCFUK6wQRVitcxnnoGbmVt9U5AmfQ@mail.gmail.com>
-Date: Fri, 9 Jan 2015 18:48:12 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/07/1
+Message-ID: <20150107094719.GB4268@lorien.valinor.li>
+Date: Wed, 7 Jan 2015 10:47:19 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request -- CMS e107 v.1.0.4 -- Reflecting XSS vulnerability in filemanager functionality
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: libmspack: frame_end overflow which could cause infinite loop
 Content-Type: text/plain; charset=utf-8
 
-Hi Josh, Steve, vendors, list.
+Hi,
 
-I found a reflecting XSS vulnerability in the filemanager functionality in
-the administrative backend of CMS e107 v.1.0.4.
+On Thu, Jan 01, 2015 at 02:12:56PM +0100, Salvatore Bonaccorso wrote:
+> Libmspack, a library to provide compression and decompression of
+> some file formats used by Microsoft, is used in many project (or
+> embedded there like also Clamav). This issue can cause a remotely
+> exploitable denial-of-service condition due to clamav thread hanging
+> forever while scanning the file. A patch is available at [2] for
+> libmspack.
 
-It can be exploited by an attacker like in the following example:
+I have to clarify this last part of my CVE request for libmspack. I
+mentioned clamav embedding libmspack. Upstream Clamav tarball embeds
+an older version of libmspack, which does not seem to be affected by
+this problem. The problem itself for libmspack can be reproduced with
+https://bugs.debian.org/773041#13 .
 
-http://{TARGET}/e107_admin/filemanager.php?e107_files/%3C%73%63%72%69%70%74%3Ealert(String.fromCharCode(34,
-88, 83, 83,
-34))%3C%2F%73%63%72%69%70%74%3E%3C!--%3C%2F%73%63%72%69%70%74%3E%3C!--
-
-Could you please assign a CVE-ID for it?
-
-Thank you!
-
-Greetings.
-
-Steffen Rösemann
-
-References:
-
-[1] http://e107.org/
-[2] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-05.html
-[3] https://github.com/e107inc/e107v1/issues/2
-[4]
-http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2014-05.html
-[5] http://seclists.org/fulldisclosure/2015/Jan/18
-
+Regards,
+Salvatore
