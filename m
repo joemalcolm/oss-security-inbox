@@ -1,56 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/7
-Message-ID: <20150214174056.GK5587@outflux.net>
-Date: Sat, 14 Feb 2015 09:40:56 -0800
-From: Kees Cook <keescook@...omium.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/07/5
+Message-ID: <54ADC49F.1000800@mccme.ru>
+Date: Thu, 08 Jan 2015 02:43:27 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Cc: Hector Marco-Gisbert <hecmargi@....es>
-Subject: Re: CVE-Request -- Linux ASLR integer overflow
+Subject: Directory traversals in cpio and friends?
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 13, 2015 at 02:56:55PM +0100, Hector Marco wrote:
-> Hi,
-> 
-> It worth metion that the patch was already sent:
-> 
-> https://lkml.org/lkml/2015/1/7/811
+Hi!
 
-I've sent this patch again, after cleaning it up further:
-https://lkml.org/lkml/2015/2/14/61
+I've taken a look at how dir traversals are dealt with in several 
+implementations of tar and cpio. The picture is kinda strange.
 
-Thanks for working on this!
+First of all, I believe it's usually agreed that archivers must not 
+touch files outside the current directory by default. Is there an 
+authoritative link for this?
 
--Kees
+Then, it seems there are 3 main ways to exploit dir traversals in 
+through archives:
 
-> 
-> 
-> Hector Marco.
-> http://hmarco.org
-> 
-> 
-> El 13/02/15 a las 13:26, Hector Marco escribió:
-> >Hi,
-> >
-> >A bug in Linux ASLR implementation for versions prior to 3.19-rc3 has
-> >been found. The issue is that the stack for processes is not properly
-> >randomized on some 64 bit architectures due to an integer overflow.
-> >
-> >Affected systems have reduced the stack entropy of the processes by four.
-> >
-> >
-> >Details at:
-> >http://hmarco.org/bugs/linux-ASLR-integer-overflow.html
-> >
-> >
-> >
-> >Could you please assign a CVE-ID for this?
-> >
-> >
-> >
-> >Hector Marco.
-> >http://hmarco.org
-> >
-> >Cyber-security researcher at
-> >http://cybersecurity.upv.es/
+1) via absolute paths, the column 'abs' below;
+
+2) via relative paths with '..', the column 'rel' below;
+
+3) via symlinks to directories, the column 'link' below.
+
+Software:
+
+1) GNU tar and cpio, called 'tar' and 'cpio' below, tested versions from 
+Debian jessie and git head;
+
+2) BSD tar and cpio (based on libarchive), called 'bsdtar' and 'bsdcpio' 
+below, tested versions from Debian jessie and git head;
+
+3) OpenBSD-derived(?) pax, with tools called 'paxtar', 'paxcpio' and 
+'pax' below, tested versions from Debian jessie and FreeBSD 
+10.0-RELEASE-p12.
+
+The results of tests of tar and cpio archives against various commands 
+follow. '=' means that the corresponding file is not extracted, 'x' 
+means that it is extracted. IMHO secure configuration should list three 
+'=', insecure configuration should list three 'x', everything else is 
+inconsistent. The list created by the attached scripts.
+
+=== tar ===
+abs     rel     link    cmd
+=       =       =       tar -x
+x       x       x       tar -x -P
+=       =       =       bsdtar -x
+x       x       x       bsdtar -x -P
+=       x       x       paxtar -x
+x       x       x       paxtar -x -P
+x       x       x       pax -r
+
+=== cpio ===
+abs     rel     link    cmd
+x       x       x       cpio -i
+=       =       x       cpio -i --no-absolute-filenames
+x       =       =       bsdcpio -i
+x       x       x       bsdcpio -i --insecure
+x       x       x       paxcpio -i
+
+tar and bsdtar are ok. Good. But not much.
+
+Question 1. Perhaps there are some reasons why all cpio variants (unlike 
+tar) extract files with absolute paths by default?
+
+Question 2. BSD folks which are behind pax* tools don't consider 
+directory traversal a vulnerability, do they?
+
+The only 'x' in the line for `cpio -i --no-absolute-filenames` seems to 
+be a clear vuln. Reported here: https://bugs.debian.org/774669 and now 
+sent to upstream ml.
+
 -- 
-Kees Cook
+Alexander Cherepanov
+
+View attachment "test-tar-1.sh.txt" of type "text/plain" (713 bytes)
+
+View attachment "test-tar-all.sh.txt" of type "text/plain" (428 bytes)
