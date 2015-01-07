@@ -1,70 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/2
-Message-ID: <54D2C85E.2070606@redhat.com>
-Date: Wed, 04 Feb 2015 18:33:18 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: CVE request for Zero-day in the Fancybox-for-WordPress Plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/07/4
+Message-ID: <20150107145459.GB21575@mail.corp.redhat.com>
+Date: Wed, 7 Jan 2015 15:54:59 +0100
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: roundcubemail: possible CSRF attacks to some address book operations as well as to the ACL and Managesieve plugins
 Content-Type: text/plain; charset=utf-8
 
-http://blog.sucuri.net/2015/02/zero-day-in-the-fancybox-for-wordpress-plugin.html
+Hello,
 
-Zero-day in the Fancybox-for-WordPress Plugin
-By Daniel Cid on February 4, 2015 . 6 Comments
-Our research team was alerted to a possible malware outbreak affecting
-many WordPress websites. All the infections had a similar malicious
-iframe from “203koko” injected into the website. We were also directed
-to a forum thread where users were sharing their concerns and describing
-similar issues they were experiencing.
+Version 1.0.4 of Roundcube [1] contains a security fix:
+...
+Security: Fix possible CSRF attacks to some address book operations as
+well as to the ACL and Managesieve plugins.
+...
 
-In analyzing the infected websites, we found that all the websites were
-using the fancybox-for-wordpress plugin.
+Upstream commit:
+https://github.com/roundcube/roundcubemail/commit/376cbfd4f2dfcf455717409b70d9d056cbeb08b1
 
-Zero day in fancybox-for-wordpress
+[1]: http://roundcube.net/news/2014/12/18/update-1.0.4-released/
 
-The fancybox-for-wordpress plugin is a popular WordPress plugin with
-more than 550,000 downloads. There doesn’t appear to be any public
-vulnerabilities being reported, which piqued our interest. To understand
-how it was connected, we decided to do our own code / vulnerability review.
+Can a CVE be assigned to this please?
 
-After some analysis, we can confirm that this plugin has a serious
-vulnerability that allows for malware (or any random script/content) to
-be added to the vulnerable site. Because it is currently unpatched, we
-will not disclose more information.
+References:
+https://bugs.gentoo.org/show_bug.cgi?id=534766
+https://bugzilla.redhat.com/show_bug.cgi?id=1179780
 
-What makes things worse, is that it’s being actively exploited in the
-wild, leading to many compromised websites.
-
-We could confirm via our Website Firewall logs by seeing many exploit
-attempts blocked.
-
-This is what the attacks looks like:
-
-46.4.76.174 – – [04/Feb/2015:00:25:09 -0500] “POST
-/wp-admin/admin-post.php?page=fancybox-for-wordpress HTTP/1.1″ 403 4207
-INPUTBODY:action=update&mfbfw%5Bext.. malware payload hidden
-
-Remove this plugin Immediately!
-
-The plugin was just removed by the WordPress.org team from their
-repository and you need to remove it from your site as well! If you
-require it for specific features you really need to look at deploying
-alternative security solutions to help protect your website and block
-exploit attempts.
-
-Users of our Website Firewall are already protected, but if you do not
-employ a similar service and leverage this plugin consider yourself
-highly vulnerable and high risk of compromise.
-
-We will post more details about this vulnerability once we have given
-time for everyone to patch (when it becomes available).
-
-Special thanks to Konstantin Kovshenin and Gennady Kovshenin for
-notifying and working with us on this issue.
-
+Thanks.
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Content of type "application/pgp-signature" skipped
