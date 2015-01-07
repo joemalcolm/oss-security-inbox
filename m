@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/4
-Message-ID: <20150130012223.5c193004@pc>
-Date: Fri, 30 Jan 2015 01:22:23 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/07/2
+Message-ID: <Pine.LNX.4.64.1501070751540.9814@beijing.mitre.org>
+Date: Wed, 7 Jan 2015 07:52:53 -0500 (EST)
+From: cve-assign@...re.org
+To: Salvatore Bonaccorso <carnil@...ian.org>
+cc: oss-security@...ts.openwall.com, CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: libmspack: frame_end overflow which could cause infinite loop
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 30 Jan 2015 03:14:10 +0300
-Solar Designer <solar@...nwall.com> wrote:
 
-> > because I felt waiting for them stops me from reporting more issues.
-> 
-> Huh?!  IMO, no one should ever wait for a CVE before reporting an
-> issue!
+On Wed, 7 Jan 2015, Salvatore Bonaccorso wrote:
 
-Okay, maybe this was prone to misinterpretation.
+> On Thu, Jan 01, 2015 at 02:12:56PM +0100, Salvatore Bonaccorso wrote:
+>> Libmspack, a library to provide compression and decompression of
+>> some file formats used by Microsoft, is used in many project (or
+>> embedded there like also Clamav). This issue can cause a remotely
+>> exploitable denial-of-service condition due to clamav thread hanging
+>> forever while scanning the file. A patch is available at [2] for
+>> libmspack.
+>
+> I have to clarify this last part of my CVE request for libmspack. I
+> mentioned clamav embedding libmspack. Upstream Clamav tarball embeds
+> an older version of libmspack, which does not seem to be affected by
+> this problem. The problem itself for libmspack can be reproduced with
+> https://bugs.debian.org/773041#13 .
+>
+> Regards,
+> Salvatore
 
-I thought it more like "If I try to track all the issues where I have
-requested CVEs and check whether I really got them or whether I should
-ask again I'd loose time I could better use to fuzz the next library."
-I don't remember actively delaying reporting or publication of a vuln
-due to lack of CVEs.
+Use CVE-2014-9556.
 
--- 
-Hanno Böck
-http://hboeck.de/
+---
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
