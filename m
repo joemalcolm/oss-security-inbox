@@ -1,21 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/05/11
-Message-ID: <20150305213836.02295978@redhat.com>
-Date: Thu, 5 Mar 2015 21:38:36 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/07/3
+Message-ID: <Pine.LNX.4.64.1501070835210.9814@beijing.mitre.org>
+Date: Wed, 7 Jan 2015 08:43:36 -0500 (EST)
+From: cve-assign@...re.org
+To: Salvatore Bonaccorso <carnil@...ian.org>
+cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: Dublicate CVE assignment for directory traversal in elfutils? (CVE-2014-9486 and CVE-2014-9447)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 05 Mar 2015 17:06:38 +0000 John Haxby wrote:
 
-> PEP 476 cites 11 CVEs that resulted from python not properly
-> validating certificates.   This would be number 12.
-> 
-> Shouldn't python versions prior to 2.7.9 and 3.4.3 have a CVE each for
-> the lack of verification?
+On Tue, 6 Jan 2015, Salvatore Bonaccorso wrote:
 
-http://seclists.org/oss-sec/2014/q4/1028
+> while updating our tracker information at Debian i noticed that there
+> might be a dublicate CVE assignment for elfutils:
+>
+> In
+>
+> https://marc.info/?l=oss-security&m=142032305709528&w=2
+>
+> CVE-2014-9486 was assigned for elfutils, with fixing commit identified
+> with
+>
+> https://git.fedorahosted.org/cgit/elfutils.git/commit/?id=147018e729e7c22eeabf15b82d26e4bf68a0d18e
+>
+> In https://bugzilla.redhat.com/show_bug.cgi?id=1178888 though the same
+> commit is referenced, but the bug aliased to CVE-2014-9447.
+>
+> Should one of those actually be rejected?
 
--- 
-Tomas Hoger / Red Hat Product Security
+Thank you.  CVE-2014-9486 will be REJECTed.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
