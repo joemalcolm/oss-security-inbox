@@ -1,18 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/5
-Message-ID: <20150313124453.GA19584@pc.thejh.net>
-Date: Fri, 13 Mar 2015 13:44:53 +0100
-From: Jann Horn <jann@...jh.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/3
+Message-ID: <CAFYC4_2OAQ-7sZdF17xRuxDS6Ry_04msy9zwyw73BFgLUReu4g@mail.gmail.com>
+Date: Thu, 08 Jan 2015 13:57:43 +0000
+From: Daniel Strøm <ds@...4web.dk>
 To: oss-security@...ts.openwall.com
-Subject: Re: Disabling reading of kernel log buffer reading for user
+Subject: CVE request
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 13, 2015 at 09:56:58AM +0000, halfdog wrote:
-> * What would be the side effects of making /dev/kmesg only root accessible? Maybe syslog not able to write kmessages to log?
-> * Would it be safe to disable the syslog syscall for action SYSLOG_ACTION_READ_* and all users except root and syslog? Does someone have tested selinux config for that?
+Hi
 
-/proc/sys/kernel/dmesg_restrict can be used to restrict access to the log buffer.
-It looks like at least rsyslogd uses /proc/kmsg to read messages from the log
-buffer, and that file is only accessible for root anyway.
+I'd like a CVE for the following security issue:
+https://github.com/ZF-Commons/ZfcUser/issues/550
 
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+And in text:
+Security advisory: XSS vulnerability in login redirect param
+
+ZfcUser version 1.2.2 has been released and includes a security for this
+vulnerability. Fix has been applied in @baf0e46
+<https://github.com/ZF-Commons/ZfcUser/commit/baf0e460>
+Affected versions
+
+All versions below 1.2.2 are affected. dev-master is fixed starting from @
+2cc167a <https://github.com/ZF-Commons/ZfcUser/commit/2cc167a>
+Exploits
+
+Because of missing escaping of the URL param redirect a XSS attack is
+possible.
+For example: Setting the redirect param to "><a%20href="http://github.com
+">GitHub.com</a><inpu%20type="hidden"%20" would result in a link added to
+the login page.
+Resolution
+
+If you are using any version of ZfcUser below 1.2.2 please upgrade
+immediately by running composer update.
+Credits
+
+The vulnerability was discovered and fixed by @GyunerZeki
+<https://github.com/GyunerZeki>
+
+
+Thank you,
+
+Daniel Strøm
+
