@@ -1,54 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/9
-Message-ID: <20150120180834.GA8624@zoho.com>
-Date: Tue, 20 Jan 2015 18:08:34 +0000
-From: mancha <mancha1@...o.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/4
+Message-ID: <54AE9052.7060302@redhat.com>
+Date: Thu, 08 Jan 2015 15:12:34 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request: Info-ZIP unzip 6.0
+Subject: Re: Directory traversals in cpio and friends?
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Dec 22, 2014 at 06:14:58PM +0000, mancha wrote:
-> Hello.
-> 
-> OOB access (both read and write) issues exist in test_compr_eb
-> (extract.c) that can result in application crash or other unspecified
-> impact.
-> 
-> This vulnerability can be triggered via crafted zip archives with extra
-> fields that advertise STORED method compression (i.e. no compression)
-> and have uncompressed field sizes smaller than the corresponding
-> compressed field sizes.
-> 
-> This issue is different from CVE-2014-8140 [1].
-> 
-> Please allocate a CVE identifier for this vulnerability.
-> 
-> --mancha
-> 
-> 
-> Timeline:
-> 
-> 2014-10-24: Crasher bundled in afl
-> 2014-11-02: Existence of crasher shared on OSS-SEC [2]
-> 2014-11-03: Crasher analyzed and fix developed [3]
-> 2014-11-03: Maintainer contacted [4]
-> 2014-12-22: CVE requested
-> 
-> ----
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-8140
-> [2] http://seclists.org/oss-sec/2014/q4/489
-> [3] http://seclists.org/oss-sec/2014/q4/507
-> [4] http://www.info-zip.org/phpBB3/viewtopic.php?f=7&t=450
+On 01/08/2015 12:43 AM, Alexander Cherepanov wrote:
+> Hi!
+>
+> I've taken a look at how dir traversals are dealt with in several
+> implementations of tar and cpio. The picture is kinda strange.
+>
+> First of all, I believe it's usually agreed that archivers must not
+> touch files outside the current directory by default. Is there an
+> authoritative link for this?
 
+Only if the current directory (or, more generally, the target directory 
+for the extraction operation) is initially empty.
 
-Hello MITRE.
+If it already contains symbolic links, some users expect that those 
+links are followed because they have used symlinks to move part of the 
+file system tree to somewhere else (perhaps a large file system).
 
-This request seems to have fallen through the cracks. Please advise on
-its status.
+> The only 'x' in the line for `cpio -i --no-absolute-filenames` seems to
+> be a clear vuln. Reported here: https://bugs.debian.org/774669 and now
+> sent to upstream ml.
 
-Many thanks.
+Yes, that's inconsistent and looks like a bug worth fixing.
 
---mancha
-
-Content of type "application/pgp-signature" skipped
+-- 
+Florian Weimer / Red Hat Product Security
