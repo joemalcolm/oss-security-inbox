@@ -1,51 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/11
-Message-ID: <54B90F0C.9080005@canonical.com>
-Date: Fri, 16 Jan 2015 08:15:56 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: CVE request: file(1) DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/1
+Message-Id: <6A5EBF40-21D7-44B6-A3DD-C559B771BDC0@technologysecure.com>
+Date: Wed, 7 Jan 2015 19:40:12 -0500
+From: Yury German <yurylie@...yweb.com>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Cc: fk@...iankeil.de
+Subject: CVE Request for Privoxy Version: 3.0.22
 Content-Type: text/plain; charset=utf-8
 
-On 2015-01-03 02:50 PM, Alexander Cherepanov wrote:
-> On 2014-12-17 03:44, Alexander Cherepanov wrote:
->> There are two more DoSes fixed in ELF parser of file(1), similar to the
->> recent CVE-2014-8116.
-> 
-> These fixes were included in 5.22 release:
-> 
-> http://mx.gw.com/pipermail/file/2015/001660.html
-> 
->> 1. Limit the number of ELF notes processed
->> Report: http://mx.gw.com/pipermail/file/2014/001653.html
->> Fix: https://github.com/file/file/commit/ce90e05774dd77d86cfc8dfa6da57b32816841c4
-> 
-> This issue seems to be introduced here:
-> 
-> https://github.com/file/file/commit/956a45ab1c54b11304b367056f41905e72a02380#diff-bc5c24ef9f39a5f4963ca28ecbc645b3L423
-> 
-> 
-> which ended up in 5.08 release. Hence releases 5.08--5.21 are vulnerable.
-> 
->> 2. Limit string printing to 100 chars
->> Report: http://mx.gw.com/pipermail/file/2014/001654.html
->> Fix: https://github.com/file/file/commit/65437cee25199dbd385fb35901bc0011e164276c
-> 
-> This issue was introduced in the following commit:
-> 
-> https://github.com/file/file/commit/c8451af8ab0c2e2a93ce93b9c68257d31576cc85
-> 
-> which ended up in 5.16 release. Hence releases 5.16--5.21 are vulnerable.
-> 
->> Both problems amplified by the fact that the same section in ELF file
->> can be referenced and processed by file(1) multiple times. This is also
->> fixed in the first commit linked above.
->>
->> Could CVE(s) please be assigned?
-> 
+Privoxy Version 3.0.22 has two vulnerabilities that were fixed in the version of Privoxy 3.0.22. Can we please assign CVE(s) to this.
 
-Did these ever get CVEs?
+Fixed a memory leak when rejecting client connections due to
+the socket limit being reached (CID 66382). This affected
+Privoxy 3.0.21 when compiled with IPv6 support (on most
+platforms this is the default).
 
-Marc.
 
+Fixed an immediate-use-after-free bug (CID 66394) and two
+additional unconfirmed use-after-free complaints made by
+Coverity scan (CID 66391, CID 66376).
+
+URL to the Page: http://www.privoxy.org/announce.txt <http://www.privoxy.org/announce.txt>
+
+
+Thank you,
+Yury German
+E-Mail: BlueKnight@...hnologysecure.com
+
+PGP/GPG Key ID: 35001B8C
+
+
+
+
+
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (843 bytes)
