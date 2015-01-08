@@ -1,52 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/6
-Message-ID: <20150223085222.GA16620@videolan.org>
-Date: Mon, 23 Feb 2015 09:52:22 +0100
-From: Jean-Baptiste Kempf <jb@...eolan.org>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com, videolan@...eolan.org, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: [videolan] older issues in libbluray
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/5
+Message-ID: <54AEB831.9080002@internot.info>
+Date: Fri, 09 Jan 2015 04:02:41 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: PHP
 Content-Type: text/plain; charset=utf-8
 
-We never were contacted.
-This is not really cool.
+On 08/01/15 22:11, Joshua Rogers wrote:
 
-On 22 Feb, Kurt Seifried wrote :
-> With apologies, I tracked down the original report and added it to our
-> BZs. I was also under the impression VideoLan had been contacted but
-> just to ensure this is the case adding them to the CC.
-> 
-> On 22/02/15 11:43 AM, Moritz Mühlenhoff wrote:
-> > On Fri, Feb 06, 2015 at 04:21:20PM -0700, Kurt Seifried wrote:
-> >> https://bugzilla.redhat.com/show_bug.cgi?id=959434
-> >> https://bugzilla.redhat.com/show_bug.cgi?id=959433
-> >>
-> >> these may warrant a cve
-> > 
-> > Have these been reported to libbluray upstream? The
-> > Bugzilla entries are rather scarce on details.
-> > 
-> > Cheers,
-> >         Moritz
-> > 
-> 
-> -- 
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> 
+> CVE Request 2:
+>
+> Uninitalized Pointer Read in PHP core('fopen()')
+> Bug report: https://bugs.php.net/bug.php?id=68692&edit=2
+> Commit fix:
+> http://git.php.net/?p=php-src.git;a=commit;h=7ebdc8d70d7617f2c3353b027663ef54a24a2248
+Not a valid security risk. In all cases of the 'vulnerable' function
+being used, a specific case is not true, which means that it cannot be
+exploited.
+>>                 if (!(stream = php_stream_open_wrapper(p + 10, mode,
+>> options, opened_path))) {
+>>                         efree(pathdup);
+>>                         return NULL;
+>>                 }
+'stream' must be false when php_stream_apply_filter_list is called,
+which for all cases in the PHP code, cannot be.
+
+> CVE Request 3:
+> Uninitalized Pointer Read in PHP core
+> Bug report: https://bugs.php.net/bug.php?id=68694&edit=2
+> Commit fix:
+> http://git.php.net/?p=php-src.git;a=commit;h=f3ea1b0b6a42a08093bf9191ad76fb4b5e0a653b
+This is invalid too.
+It requires, like the request #2, for 'stream' to be NULL.
+
+>         for (key = php_strtok_r(tmp, ",", &lasts);
+In this case, 'tmp' must be NULL for it to crash/be exploited.
+But tmp is defined:
+>         tmp = estrndup(new_value->val, new_value->len);
+estrndup uses "emalloc", which like the other one from a few days ago
+that I revoked, doesn't return NULL, but just crashes the program with
+out-of-memory exit.
 
 
-
-> _______________________________________________
-> videolan mailing list
-> videolan@...eolan.org
-> https://mailman.videolan.org/listinfo/videolan
-
-
+Thanks,
 -- 
-With my kindest regards,
+-- Joshua Rogers <https://internot.info/>
 
--- 
-Jean-Baptiste Kempf
-http://www.jbkempf.com/ - +33 672 704 734
-Sent from my Electronic Device
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
