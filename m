@@ -1,35 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/02/3
-Message-id: <fae0de0ca6ac.54f3ef00@langara.bc.ca>
-Date: Mon, 02 Mar 2015 05:02:56 +0000 (GMT)
-From: Steven Stewart-Gallus <sstewartgallus00@...angara.bc.ca>
-To: Rich Felker <dalias@...c.org>
-Cc: oss-security@...ts.openwall.com, ryao@...too.org
-Subject: Re: CVE request: Linux kernel silently ignores MS_RDONLY for bind mounts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/2
+Message-ID: <54AE65CD.6090000@internot.info>
+Date: Thu, 08 Jan 2015 22:11:09 +1100
+From: Joshua Rogers <oss@...ernot.info>
+To: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: CVE Request: PHP
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-I suppose it's time I gave my opinion on this matter.  Personally, I
-am ambivalent about whether this really deserves a CVE (or if the CVE
-should be with the Linux kernel or with the applications that misuse
-this API) as I feel it is the responsibility of API users like LXC and
-systemd to make sure that they aren't misusing these interfaces but I
-would still like this feature to be implemented and I will explain
-why. For my own needs (with my own project at
-https://gitorious.org/linted/linted) I sandbox processes without
-raising privileges by means such as setuid applications and so can
-only map uids and gids to the current user.  However, I still need to
-prevent certain processes from writing to the user's home directory
-and as such need to mount the /home hierarchy read only and
-recursively.  Mostly though this is not a big problem for me because I
-only need to mount the user's home directory when developing (because
-I need to run binaries that are built inside the user's home
-directory).  Also, there is the possibility of bind mounting special
-hierarchies such as /dev, /proc and /sys read only (these are not just
-one filesystem but need to be bound recursively) but I don't consider
-this a strong use case.
+I'm requesting multiple CVE-ID's for multiple vulnerabilities in PHP
+that I found:
 
-Thank you,
-Steven Stewart-Gallus
+--
 
+CVE Request 1:
+
+Use after free in 'opcache' component of PHP
+Bug report: https://bugs.php.net/bug.php?id=68677&edit=2
+Commit fix:
+http://git.php.net/?p=php-src.git;a=commit;h=777c39f4042327eac4b63c7ee87dc1c7a09a3115
+
+
+CVE Request 2:
+
+Uninitalized Pointer Read in PHP core('fopen()')
+Bug report: https://bugs.php.net/bug.php?id=68692&edit=2
+Commit fix:
+http://git.php.net/?p=php-src.git;a=commit;h=7ebdc8d70d7617f2c3353b027663ef54a24a2248
+
+CVE Request 3:
+Uninitalized Pointer Read in PHP core
+Bug report: https://bugs.php.net/bug.php?id=68694&edit=2
+Commit fix:
+http://git.php.net/?p=php-src.git;a=commit;h=f3ea1b0b6a42a08093bf9191ad76fb4b5e0a653b
+
+
+CVE Request 4:
+Null Pointer Deference in pgsql
+Bug report: https://bugs.php.net/bug.php?id=68741&edit=2
+Commit fix:
+http://git.php.net/?p=php-src.git;a=commit;h=124fb22a13fafa3648e4e15b4f207c7096d8155e
+
+CVE Request 5:
+Null Pointer Deference in ereg(regex)
+Bug report: https://bugs.php.net/bug.php?id=68740&edit=2
+Commit fix:
+http://git.php.net/?p=php-src.git;a=commit;h=124fb22a13fafa3648e4e15b4f207c7096d8155e
+
+
+
+
+
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
