@@ -1,49 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/4
-Message-ID: <54E1CB6E.9080808@upv.es>
-Date: Mon, 16 Feb 2015 11:50:22 +0100
-From: Hector Marco <hecmargi@....es>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/7
+Message-ID: <CALH-=7zfourEk9ZfT9Go5Fsd2Mwh7i1B8yi1_cX3SyRROzDhfA@mail.gmail.com>
+Date: Thu, 8 Jan 2015 21:37:18 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request -- CMS BEdita v. 3.4.0 -- Multiple stored XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+Hi Josh, Steve, vendors, list.
 
-El 15/02/15 a las 20:35, cve-assign@...re.org escribió:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> Can you resolve the version discrepancy in
->
->    http://hmarco.org/bugs/google_email_app_4.2.2_denial_of_service.html
->
-> ? This begins by stating "A bug in the stock Google email application
-> version 4.4.2.0200" but then says "We have found the bug in email
-> version 4.2.2.0200."
->
-> Was any version number starting with "4.4" actually tested?
+I found multiple stored XSS vulnerabilities in the administrative backend
+of CMS BEdita v.3.4.0 (release-date: 9th-May-2014).
 
+The vulnerabilities can be found in the following paths of a common BEdita
+installation:
 
-It was tested against a newer version, the 4.4.4-36 and it is not 
-vulnerable. I corrected the number, thank you.
+http://{TARGET}/index.php/home/profile (in form with id „editProfile“  via
+input field with id „lrealname")
 
+http://{TARGET}/index.php/ (in form with id „addQuickItem“ via input field
+with name "data[title]" and name "data[description]")
 
+http://{TARGET}/index.php/areas (in form with id „saveNote“ via input field
+with id „note text")
 
->
-> - --
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
->
-> iQEcBAEBAgAGBQJU4PSMAAoJEKllVAevmvmsLaQIAJslZCuKNCHKqzwnlKw4X710
-> 4CwpWTW73dU7o3SIHa4U3EI//wEUW9nBNK8dk1YyP8NfMLRtuK2lnKO/OI2Fs26J
-> NmAQ5RUrQsbXBsIAaLS08N+B32j0MLUVfIh5lNjA3FJSbt21fQHM3XTIJp2vrceV
-> Qle2CuOQk5qKVFU0azhWx8s3qx4xRfdBDga6RqdmX5+7a+eZHXQJUlXRsRVuRYkM
-> 4aRjEvCpiY2e4rEUz9EHg97RB7DMi2w14PKOFBgM6kCWspVvVWMqwIihjjArE+gM
-> tTCFC/BUNHlMapReb6HsVap2jloSBgTCMIqzYDPi3pOsUGT4acurldlW68cm0YU=
-> =FbOW
-> -----END PGP SIGNATURE-----
->
+http://{TARGET}/index.php/documents/view (in form with id „updateForm“ via
+input field with id „titleBEObject“ and input field with id „tagsArea“)
+
+The vulnerabilities can be exploited by using arbitray HTML- and/or
+JavaScriptcode, e.g. <script>alert(document.cookie)</script>.
+
+Could you please assign a CVE-ID for it?
+
+Thank you. Greetings.
+
+Steffen Rösemann
+
+References:
+
+[1] http://www.bedita.com
+[2] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-10.html
+[3] https://github.com/bedita/bedita/issues/566
+[4] http://seclists.org/fulldisclosure/2015/Jan/16
+
