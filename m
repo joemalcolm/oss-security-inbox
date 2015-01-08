@@ -1,55 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/3
-Message-Id: <20150207123959.DA9B442E024@smtpvbsrv1.mitre.org>
-Date: Sat,  7 Feb 2015 07:39:59 -0500 (EST)
-From: cve-assign@...re.org
-To: ryan@...dis.ca
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, pkg-openldap-devel@...ts.alioth.debian.org, security@...ian.org
-Subject: Re: CVE request: two OpenLDAP DoS issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/08/6
+Message-ID: <54AEC437.9010607@enovance.com>
+Date: Thu, 08 Jan 2015 12:53:59 -0500
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2015-001] L3 agent denial of service with radvd 2.0+ (CVE-2014-8153)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+=========================================================
+OSSA-2015-001: L3 agent denial of service with radvd 2.0+
+=========================================================
 
-> OpenLDAP slapd has two bugs that allow a remote unauthenticated client
-> to crash the LDAP server.
->
-> The deref overlay in slapd 2.4.13 through 2.4.40 dereferences a NULL
-> pointer when a search request includes the Deref control with an empty
-> list of attributes to return (missing input validation).
->
-> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=c32e74763f77675b9e144126e375977ed6dc562c
->
-> http://www.openldap.org/its/?findid=8027
-> http://bugs.debian.org/776988
-
-Use CVE-2015-1545.
+:Date: January 08, 2015
+:CVE: CVE-2014-8153
 
 
-> Certain search queries including the Matched Values control can trigger
-> a double free in slapd 2.4.40 when freeing operation controls. This is a
-> regression in 2.4.40, no earlier releases are affected.
->
-> http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=commit;h=2f1a2dd329b91afe561cd06b872d09630d4edb6a
->
-> http://www.openldap.org/its/?findid=8046
-> http://bugs.debian.org/776991
+Affects
+~~~~~~~
+- Neutron: 2014.2 version up to 2014.2.1
 
-Use CVE-2015-1546.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Description
+~~~~~~~~~~~
+Ihar Hrachyshka from Red Hat reported a vulnerability in Neutron. By
+creating 8 routers and assigning each of them a non-provider ipv6
+subnet, a malicious user may block router update processing for all
+tenants, potentially resulting in a Denial of Service. Only Neutron
+setups running with radvd 2.0+ are affected.
 
-iQEcBAEBAgAGBQJU1gclAAoJEKllVAevmvms8AMIAIG/qdU+6kjgw2l8oZCHUYJo
-2UGU/fZ0qAJK9w3pVfxdllmgc+ZtWmQz1Yz7Hb24+EShFakbFrHbyjFaGlPF3O7F
-FcCyAv05C4Um4bM5Qs1joXdaZ2E/ZgCDmLoF5+13Y6f3ZfXTZFgPgrCZKbctjXaq
-TnnNYV5OuU+m0AzWlcT/IMy2FmvzbS6atBhQupJdCr3X5jBTDsfRiJflA+l2HAB5
-PTh23/YhN+g/HLWzJ10jSgIAoi9hC5h+0pu/u0dzLSFWRr7HNVLfOIOsjpUsi+mR
-ulm3fU6fJj3TzqMGnNhdLGSjDbegpTkKwg2Izzx6VdGAmLLndaUbLmAQeUuG47I=
-=enpu
------END PGP SIGNATURE-----
+
+Patches
+~~~~~~~
+- https://review.openstack.org/141575 (Juno)
+- https://review.openstack.org/138688 (Kilo)
+
+
+Credits
+~~~~~~~
+- Ihar Hrachyshka from Red Hat (CVE-2014-8153)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1399172
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8153
+
+
+Notes
+~~~~~
+- This fix will be included in a future 2014.2.2 release.
+- The OSSA announce format for the 2015 advisories has been changed to
+  RST.
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
