@@ -1,31 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/14
-Message-ID: <20150207213939.GA23823@nef.pbox.org>
-Date: Sat, 7 Feb 2015 22:39:39 +0100
-From: Alistair Crooks <agc@...src.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Spencer regexp heap overflow?
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/6
+Message-ID: <54AFC3DF.6060503@riseup.net>
+Date: Fri, 09 Jan 2015 12:04:47 +0000
+From: Hacker Fantastic <hackerfantastic@...eup.net>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: local privilege escalation flaws in Red Star OS 3.0 & 2.0 desktop
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi All,
+        Red Star OS 3.0 desktop & 2.0 desktop ship with local privilege
+escalation vulnerabilities due to insecure files permissions
+on configuration and script files executed with root privileges.
 
-We were contacted in retrospect by a researcher about this blog entry
-he'd written and published:
+Red Star 3.0 desktop ships with a world-writeable udev rules
+"/etc/udev/rules.d/85-hplj10xx.rules" which can be
+modified to include "RUN+=" arguments executing commands as root by
+udev.d. An example of exploitation
+of this vulnerability can be seen here
+https://github.com/HackerFantastic/Public/blob/master/exploits/redstar3.0-localroot.png
 
-	https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
+Red Star 2.0 desktop ships with a world-writeable "/etc/rc.d/rc.sysinit"
+which can be abused to execute commands on
+boot. An example exploitation of this vulnerability is shown here
+https://github.com/HackerFantastic/Public/blob/master/exploits/redstar2.0-localroot.png
 
-and I haven't seen anything flying across this list, so I thought I'd
-bring it to people's attention here.
+A local attacker can leverage these vulnerabilities to elevate
+privileges to root and compromise Red Star platforms.
 
-There's a fix in NetBSD HEAD for this, and it will flow out to the
-release branches in due course.
-
-I have to admit we're having a hard time trying to think of a service
-that exposes regcomp(3) over the internet - there's a reason that
-Google did re2 for Google code, after all - but I may well be missing
-something...
+Please can CVE numbers be assigned for these flaws.
 
 Regards,
-Alistair
+Matthew
 
-NetBSD/pkgsrc security
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
