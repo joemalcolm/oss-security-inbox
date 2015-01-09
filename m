@@ -1,46 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/5
-Message-Id: <20150131134153.84C7072E067@smtpvbsrv1.mitre.org>
-Date: Sat, 31 Jan 2015 08:41:53 -0500 (EST)
-From: cve-assign@...re.org
-To: henri@...v.fi
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request: phpbb3 CSRF and CSS injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/2
+Message-ID: <20150109060238.GA7291@elende.valinor.li>
+Date: Fri, 9 Jan 2015 07:02:38 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>, Albert Astals Cid <aacid@....org>
+Subject: CVE Request: kwallet: incorrect CBC encryption handling
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi
 
-> https://wiki.phpbb.com/Release_Highlights/3.0.13
+The following KDE Project Security Advisory was issued at
+https://www.kde.org/info/security/advisory-20150109-1.txt .
 
-> https://tracker.phpbb.com/browse/PHPBB3-13531
-> https://github.com/phpbb/phpbb/pull/3316
-> "CSS Injection via Relative Path Overwrite. Thanks to James Kettle for bringing
-> this to our attention"
+> Title:          Fix kwalletd CBC encryption handling
+> Risk Rating:    Low
+> Platforms:      All
+> Versions:       kwalletd < Applications 14.12.1, KF5::KWallet < 5.6.0
+> Author:         Valentin Rusu <kde@...u.info>
+> Date:           9 January 2015
+> 
+> Overview
+> ========
+> 
+> Until KDE Applications 14.12.0, kwalletd incorrectly handled CBC encryption blocks when
+> encrypting secrets in kwl files. The secrets were still encrypted, but the
+> result binary data corresponded to an ECB encrypted block instead of CBC.
+> 
+> Impact
+> ======
+> 
+> The ECB encryption algorithm, even if it'll scramble user data, it'll produce
+> same encrypted byte sequence for the same input text. As a result, attackers
+> may eventually find-out the encrypted text.
+> 
+> Solution
+> ========
+> 
+> For kde-runtime KWallet upgrade to KDE Applications 14.12.1 or apply the following patch:
+>   http://quickgit.kde.org/?p=kde-runtime.git&a=commit&h=14a8232d0b5b1bc5e0ad922292c6b5a1c501165c
+> 
+> For KDE Frameworks 5 KWallet upgrade to 5.6.0 or apply the following patch:
+>   http://quickgit.kde.org/?p=kwallet.git&a=commit&h=6e588d795e6631c3c9d84d85fd3884a159b45849
+> 
+> Credits
+> =======
+> 
+> Thanks to Itay Duvdevani for finding the issue and for letting us know.
+> Thanks to Valentin Rusu for implementing the fix.
 
-Use CVE-2015-1431.
+Could you please assing a CVE for this issue?
 
-
-> https://tracker.phpbb.com/browse/PHPBB3-13526
-> https://github.com/phpbb/phpbb/pull/3311
-> "The ucp_pm_options form key is now properly validated. Thanks to FBNeal and
-> lampsys who reported this independently."
-
-Use CVE-2015-1432.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJUzNs2AAoJEKllVAevmvmsNr8IAL8lCP4ttRCxvmCV/83hKvwY
-Tb+Flg8mrnl70GI4u7QWrzPjAfBaZNwSOc1/MfSsa0j91Zy4MjE+jkp/yPlfpT4t
-7j811JhVGG2BOF0sCWhFis/O/EfzmVMAlZrYm56+zlQZ5HVarWpBu5SjwVVLO51y
-DLQK+9tshTBDSaYaKAC1ksJQMlafU1ADbHH61e88Pu4hbAVSJZ68OM8+rwSNZY+e
-gE3b5DonuEwSUCP+hW8R2jaf/0U+imv2FLCPWkqlg2NXQUW+wNbL+GeT9JM/hqrL
-Jxb4Nx7I7jaJuiuXzIQ3xrwagYVS7/avtsXoANumANlc0qIwl+Ib0uz1ttCxHR8=
-=VJhc
------END PGP SIGNATURE-----
+Regards,
+Salvatore
