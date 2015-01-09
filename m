@@ -1,18 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/12
-Message-ID: <CALx_OUBvSjVFY06HYtuRHH-y0R=FD=mBiqTg-EH5uL-ALeWQiw@mail.gmail.com>
-Date: Tue, 27 Jan 2015 09:20:21 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Qualys Security Advisory CVE-2015-0235 - GHOST: glibc gethostbyname buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/7
+Message-ID: <20150109155306.GA9779@eldamar.local>
+Date: Fri, 9 Jan 2015 16:53:06 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: CVE Assignments MITRE <cve-assign@...re.org>, Albert Astals Cid <aacid@....org>
+Subject: Re: CVE Request: kwallet: incorrect CBC encryption handling
 Content-Type: text/plain; charset=utf-8
 
-Nice work - thanks for the thoroughly investigated and detailed advisory.
+Hi,
 
-Given the constraints, I'm assuming that Exim was the only obviously
-remotely exploitable case that you were able to identify? I'd imagine
-that you investigated OpenSSH, Apache, other SMTP agents, etc? Would
-you be willing to publish the list of the reviewed implementations to
-reduce the amount of repeated work?
+On Fri, Jan 09, 2015 at 07:52:44AM +0100, Marcus Meissner wrote:
+> On Fri, Jan 09, 2015 at 07:02:38AM +0100, Salvatore Bonaccorso wrote:
+> > The following KDE Project Security Advisory was issued at
+> > https://www.kde.org/info/security/advisory-20150109-1.txt .
+[...]
+> > 
+> > Could you please assing a CVE for this issue?
+> 
+> This is already CVE-2013-7252 I think.
 
-/mz
+Thank you, I have missed that.
+
+Regards,
+Salvatore
