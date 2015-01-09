@@ -1,35 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/2
-Message-ID: <Pine.LNX.4.64.1501271039361.11165@beijing.mitre.org>
-Date: Tue, 27 Jan 2015 10:40:03 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/8
+Message-Id: <20150109161853.C7AD872E4F6@smtpvbsrv1.mitre.org>
+Date: Fri,  9 Jan 2015 11:18:53 -0500 (EST)
 From: cve-assign@...re.org
-To: Kurt Seifried <kseifried@...hat.com>
-cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, report@...esecurity.io
-Subject: Re: CVE requests for nodejs marked VBScript Content Injection and sequelize SQL Injection in Order
+To: renorobert@...il.com
+Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
+Subject: Re: PIE bypass using VDSO ASLR weakness - Linux kernel
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> Can I get a CVE for:
->
-> https://nodesecurity.io/advisories/marked_vbscript_injection
+>> Given that ASLR is not effective in VDSO and comes down to 11 quality bits
+>> as per pax test making return-to-vdso feasible even for PIE binary, whether
+>> this should be considered as a bug and CVE be assigned?
 
-Use CVE-2015-1370.
+> Yes, we can proceed to CVE assignment. The more recent discussion
+> hasn't been on oss-security with, for example:
+> 
+>    https://git.kernel.org/cgit/linux/kernel/git/luto/linux.git/commit/?h=x86/vdso&id=bc3b94c31d65e761ddfe150d02932c65971b74e2
+>    http://marc.info/?l=linux-kernel&m=141911002822659&w=2
 
-> and for:
->
-> https://nodesecurity.io/advisories/sequelize-sql-injection-order
+> This apparently mentions both the original discovery:
+> 
+>    The current algorithm is buggy: the vdso has about a 50%
+>    probability of being at the very end of a PMD.
 
-Use CVE-2015-1369.
+Use CVE-2014-9585 for this vulnerability, which corresponds to a
+portion of the above bc3b94c31d65e761ddfe150d02932c65971b74e2 patch.
 
-> Thanks
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+(not yet available at
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/arch/x86/vdso/vma.c)
+ 
+> and a second discovery that was made separately:
+> 
+>    The current algorithm also has a decent chance of failing outright
+>    due to incorrect handling of the case where the top of the stack is
+>    near the top of its PMD.
+> 
+> Here, our question, for anyone, is: is there a security impact from
+> the "failing outright" outcome? Or is there only a performance impact
+> (e.g., any correctly written application will continue to work, but
+> will not benefit from any vDSO functionality)?
 
+We haven't seen any responses. There is currently no CVE ID for this
+"incorrect handling of the case where the top of the stack is near the
+top of its PMD" issue. This incorrect-handling issue is not within the
+scope of CVE-2014-9585.
 
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
+- -- 
+CVE assignment team, MITRE CVE Numbering Authority
+M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (SunOS)
+
+iQEcBAEBAgAGBQJUr/73AAoJEKllVAevmvmssroIALsU2TwXIFvU4tJsoeUUeIos
+8FR8zKml9mta0lYjp3gC6fFH0JCB7wNz8D/euFjci2u5pTvCM68YYYgAWKySfg5I
+SvvZz6NtAhA642odtQEB25QQN47RizdP2uduze4q5BUTGQu65v8m4pL5GWOFfeMj
+MrvK4Zqu7KFrZgkfBU+utNplhFeYE0hCVmPdY5EvIRs0vEB7vlW2JoDe62OGjySA
+r6AGxWFzL2cgjhGJn/crOBcb1eOq4Xl0YY/UENIroOXQTxdNvuUUkQyw+6O+wCzM
+vUmyGpOq5c+l6EbDF5I+pfPgyjnyDaSMTdmtJkW9nFauP/95QzCKVMiUWR8paU4=
+=EWmq
+-----END PGP SIGNATURE-----
