@@ -1,49 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/2
-Message-ID: <000a01d049cf$3899b600$a9cd2200$@mantisforge.org>
-Date: Mon, 16 Feb 2015 09:59:13 -0000
-From: "P Richards" <paul@...tisforge.org>
-To: <oss-security@...ts.openwall.com>
-Cc: <cve-assign@...re.org>
-Subject: RE: Re: CVE request: XSS in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/3
+Message-ID: <20150109065244.GD6810@suse.de>
+Date: Fri, 9 Jan 2015 07:52:44 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: oss-security@...ts.openwall.com
+Cc: CVE Assignments MITRE <cve-assign@...re.org>, Albert Astals Cid <aacid@....org>
+Subject: Re: CVE Request: kwallet: incorrect CBC encryption handling
 Content-Type: text/plain; charset=utf-8
 
-As the initial discoverer of CVE-2014-8986, I can confirm that the commit in
-e326b73a does not fix the issue reported in CVE-2014-8986.
-
-The commit
-https://github.com/mantisbt/mantisbt/commit/cabacdc291c251bfde0dc2a2c945c02c
-ef41bf40 does fix CVE-2014-8986.
-
-@mitre: The description @
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8986 is incorrect -
-"MantisBT 1.2.13 through 1.2.17". The issue described in CVE-2014-8986 was
-not fixed in either 1.2.18 or .1.2.19. How does one get the status of this
-issue updated?
-
-Thanks
-Paul
-
------Original Message-----
-From: Damien Regad [mailto:dregad@...tisbt.org] 
-Sent: 16 February 2015 09:53
-To: oss-security@...ts.openwall.com
-Subject: [oss-security] Re: CVE request: XSS in MantisBT
-
-P Richards <paul@...> writes:
-
+On Fri, Jan 09, 2015 at 07:02:38AM +0100, Salvatore Bonaccorso wrote:
+> Hi
 > 
-> According to github
-> https://github.com/mantisbt/mantisbt/commit/cabacdc2
-> the fix referenced for CVE-2014-8986 has never been tagged to a 1.2.x 
-> release.
+> The following KDE Project Security Advisory was issued at
+> https://www.kde.org/info/security/advisory-20150109-1.txt .
+> 
+> > Title:          Fix kwalletd CBC encryption handling
+> > Risk Rating:    Low
+> > Platforms:      All
+> > Versions:       kwalletd < Applications 14.12.1, KF5::KWallet < 5.6.0
+> > Author:         Valentin Rusu <kde@...u.info>
+> > Date:           9 January 2015
+> > 
+> > Overview
+> > ========
+> > 
+> > Until KDE Applications 14.12.0, kwalletd incorrectly handled CBC encryption blocks when
+> > encrypting secrets in kwl files. The secrets were still encrypted, but the
+> > result binary data corresponded to an ECB encrypted block instead of CBC.
+> > 
+> > Impact
+> > ======
+> > 
+> > The ECB encryption algorithm, even if it'll scramble user data, it'll produce
+> > same encrypted byte sequence for the same input text. As a result, attackers
+> > may eventually find-out the encrypted text.
+> > 
+> > Solution
+> > ========
+> > 
+> > For kde-runtime KWallet upgrade to KDE Applications 14.12.1 or apply the following patch:
+> >   http://quickgit.kde.org/?p=kde-runtime.git&a=commit&h=14a8232d0b5b1bc5e0ad922292c6b5a1c501165c
+> > 
+> > For KDE Frameworks 5 KWallet upgrade to 5.6.0 or apply the following patch:
+> >   http://quickgit.kde.org/?p=kwallet.git&a=commit&h=6e588d795e6631c3c9d84d85fd3884a159b45849
+> > 
+> > Credits
+> > =======
+> > 
+> > Thanks to Itay Duvdevani for finding the issue and for letting us know.
+> > Thanks to Valentin Rusu for implementing the fix.
+> 
+> Could you please assing a CVE for this issue?
 
-It would help if you looked at the 1.2.x commit...
+This is already CVE-2013-7252 I think.
 
-http://github.com/mantisbt/mantisbt/commit/e326b73a
-
-$ git describe --contains e326b73a
-release-1.2.18~27
-
-
-
+Ciao, Marcus
