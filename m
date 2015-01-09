@@ -1,116 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/23/16
-Message-ID: <54EB32C0.9010808@openwall.com>
-Date: Mon, 23 Feb 2015 17:01:36 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/9
+Message-ID: <CALH-=7wqJS3X4G+bkAy0sQCFUK6wQRVitcxnnoGbmVt9U5AmfQ@mail.gmail.com>
+Date: Fri, 9 Jan 2015 18:48:12 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: Re: CVE Request: cabextract -- directory traversal
+Subject: CVE Request -- CMS e107 v.1.0.4 -- Reflecting XSS vulnerability in filemanager functionality
 Content-Type: text/plain; charset=utf-8
 
-On 2015-02-23 10:38, cve-assign@...re.org wrote:
->> it removes leading slashes from filenames but does it before possibly
->> decoding UTF-8 and doesn't check for invalid UTF-8
->
->> The issue was reported to Stuart Caie today and fixed in less than 4h:
->
->> http://sourceforge.net/p/libmspack/code/217/
->
-> Your report seems to be about the need for the "/* remove leading
-> slashes */" code to occur after (not before) the "/* get next UTF-8
-> character */" code.
+Hi Josh, Steve, vendors, list.
 
-That's right (more or less, see below).
+I found a reflecting XSS vulnerability in the filemanager functionality in
+the administrative backend of CMS e107 v.1.0.4.
 
-> Is this the only vulnerability being reported, or
+It can be exploited by an attacker like in the following example:
 
-Yes.
+http://{TARGET}/e107_admin/filemanager.php?e107_files/%3C%73%63%72%69%70%74%3Ealert(String.fromCharCode(34,
+88, 83, 83,
+34))%3C%2F%73%63%72%69%70%74%3E%3C!--%3C%2F%73%63%72%69%70%74%3E%3C!--
 
-> is the stated behavior of "This doesn't reject bad UTF-8 with overlong
-> encodings, but does re-encode it as valid UTF-8" an independent
-> vulnerability?
+Could you please assign a CVE-ID for it?
 
-Not that I know of.
+Thank you!
 
-More precisely, I see two ways to fix the problem with overlong encoding 
-of leading slashes:
-- by checking for slashes after decoding;
-- by checking for ordinary slashes before decoding and prohibiting 
-overlong encodings.
+Greetings.
 
-My report didn't imply any particular fix. The first way seems to be 
-easier and it was chosen by Stuart. I don't readily see any other 
-problem with overlong encodings.
+Steffen Rösemann
 
->> /* special case if there's only one file - just take the first slash */
->
->> if (c == '\\') return 0; /* backslash = MS-DOS */
+References:
 
-The code quoted above is from the unix_path_seperators function which 
-determines the type of slashes used in the archive.
+[1] http://e107.org/
+[2] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-05.html
+[3] https://github.com/e107inc/e107v1/issues/2
+[4]
+http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2014-05.html
+[5] http://seclists.org/fulldisclosure/2015/Jan/18
 
->> isunix = unix_path_seperators(cab->files);
->
->> sep   = (isunix) ? '/'  : '\\'; /* the path-seperator */
-
-This line is from the create_output_name function. The next line:
-
-   slash = (isunix) ? '\\' : '/';  /* the other slash */
-
->>   while (*fname == sep) fname++;
-
-This is from non-utf8 code path. It skips leading "sep"s, then all 
-"sep"s are converted to '/' and all "slash"es are converted to '\\':
-
-     do {
-       c = *fname++;
-       if      (c == sep)   c = '/';
-       else if (c == slash) c = '\\';
-       else if (lower)      c = (unsigned char) tolower((int) c);
-     } while ((*p++ = c));
-
-The utf8 code path is similar.
-
-> What happens if the .cab archive contains only one file, and \/tmp/abs
-> is the filename?
-
-In this case, the unix_path_seperators function will determine that 
-MS-DOS path separators are used. Hence sep == '\\' && slash == '/' in 
-the create_output_name function. Then the leading '\' is skipped and all 
-'/' are converted to '\\'.
-
-Indeed:
-
-$ touch xxxxxxxxx
-$ lcab xxxxxxxxx test.cab > /dev/null
-$ sed -i 's|xxxxxxxxx|\\/tmp/abs|g' test.cab
-$ rm xxxxxxxxx
-
-$ ls *abs
-ls: cannot access *abs: No such file or directory
-
-$ ./cabextract test.cab
-Extracting cabinet: test.cab
-   extracting \tmp\abs
-
-All done, no errors.
-
-$ ls *abs
-\tmp\abs
-
-
-It's important that all checks of input filename are against "sep" and 
-"slash" and all checks of output filename (e.g. for "../") are against 
-explicit '/' and '\\' but the code seems to be accurate in this regard.
-
-Another thing which gives me uneasy feeling is the use of tolower:
-- if there is a locale where you can get '/' with tolower from another 
-character this will lead to a dir traversal;
-- passing an arbitrary unicode value to tolower (in utf8 code path) is 
-at least an undefined behavior.
-The former doesn't seem probable. The latter, I'll send it now to 
-Stuart. If someone can see security implications of this it would be 
-nice to hear it.
-
--- 
-Alexander Cherepanov
