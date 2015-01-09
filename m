@@ -1,137 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/17
-Message-ID: <20150210233257.79df254f@ileemo>
-Date: Tue, 10 Feb 2015 23:32:57 +0100
-From: Andrew Shadura <andrew@...dura.me>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/1
+Message-ID: <CAO33bZX7RP0fZOns1Rn-AE7Da8Hxmo3YP5MAa1TMmO2AUM1Vrg@mail.gmail.com>
+Date: Thu, 8 Jan 2015 20:10:18 -0800
+From: David Jorm <david.jorm@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2015-0260: Kallithea: API key of repository's creator exposed by get_repo API method
+Subject: CVE request: local privilege escalation flaw in Red Star OS 3.0
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi All
 
-We have recently discovered a security issue in Kallithea [0].
-API key of repository's creator is exposed by get_repo API method.
+Red Star OS 3.0 (붉은별) ships with the root account disabled. A flaw has been
+identified that allows a local user to jailbreak the environment and gain
+root access. As noted here:
+http://richardg867.wordpress.com/2015/01/01/notes-on-red-star-os-3-0/
 
-Synopsis
-========
+"The root user is disabled on Red Star, and it doesn’t look like there is a
+way to enable it. Fortunately, they left a big security hole: the Software
+Manager (swmng.app), which runs as root through sudo and will install any
+RPM package, even if unsigned."
 
-A vulnerability has been found in Kallithea, allowing remote attacker to gain
-access to the repositories with privileges of another existing user.
+Please assign a CVE ID to this issue.
 
-Description
-===========
+Thanks
 
-The get_repo API method doesn't check the identity of the caller and exposes
-all details about the repository "followers" regardless of whether they have
-access to such data or not.
+David
 
-The structures returned by this method contain such sensitive information as
-last login timestamp, IP addresses, authentication method details and private
-API access keys:
-
-    "followers": [
-        {
-            "active": true,
-            "admin": true,
-            "api_key": "f5****9c",
-            "api_keys": [
-                "f5*****9c"
-            ],
-            "email": "user.name@...pany.com",
-            "emails": [
-                "user.name@...pany.com"
-            ],
-            "extern_name": "username",
-            "extern_type": "pam",
-            "firstname": "User",
-            "ip_addresses": [],
-            "last_login": "2015-02-08T18:17:39",
-            "lastname": "Name",
-            "user_id": 3,
-            "username": "username"
-        }
-
-Impact
-======
-
-The exposed information allows attacker to track users and gain access to the
-repositories using their API keys. In the case the user also has administrator
-rights, it is possible for the attacker to gain full administrator access to
-the Kallithea instance.
-
-Workaround
-==========
-
-Users are advised to remove the API controller to prevent potential attackers
-from accessing the API. This can be achieved by deleting or commenting out
-lines 458-460 in kallithea/config/routing.py. An alternative to that may be
-blocking or limiting access to /_admin/api URLs in the configuration of the
-webserver or a front-end reverse proxy.
-
-A patch to remove API controller may look like this:
-
-    diff --git a/kallithea/config/routing.py b/kallithea/config/routing.py
-    --- a/kallithea/config/routing.py
-    +++ b/kallithea/config/routing.py
-    @@ -455,9 +455,6 @@ def make_map(config):
-         #==========================================================================
-         # API V2
-         #==========================================================================
-    -    with rmap.submapper(path_prefix=ADMIN_PREFIX,
-    -                        controller='api/api') as m:
-    -        m.connect('api', '/api')
-     
-         #USER JOURNAL
-         rmap.connect('journal', '%s/journal' % ADMIN_PREFIX,
-
-Resolution
-==========
-
-Kallithea project has released a patch fixing this issue by removing the
-sensitive information from API calls. It is strongly recommended that users
-apply this patch. The patch applies to both 0.1 release and the latest
-Mercurial tip.
-
-Unfortunately, this patch disables some API functionality where the information
-exposure occured. We will continue seeking a solution which prevents unauthorised
-access and at the time doesn't break existing API functionality. As soon
-as such solution is developed, we'll notify our users.
-
-Users are also advised to re-set or remove all existing API keys from the
-database. For the users having SQLite or PostgreSQL as the database backend
-a possible way to do so is to run the following SQL statements:
-
-    update users set api_key='disabled-'||random();
-    update user_api_keys set api_key='disabled-'||random();
-
-Affected versions
-=================
-
-The issue is currenly present in all available Kallithea versions. Also,
-the issue affects publicly available versions of RhodeCode that support
-JSON-RPC API interface.
-
-References
-==========
-
-[0] Kallithea Project
-    <https://kallithea-scm.org/>
-
-[1] CVE-2015-0260
-    <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-0260>
-
-[2] Kallithea: Security Notice CVE-2015-0260
-    <https://kallithea-scm.org/security/cve-2015-0260.html>
-
-[2] Patch for the issue
-    <https://kallithea-scm.org/security/cve-2015-0260.patch>
-
-[3] Mercurial changeset fixing the issue
-    <https://kallithea-scm.org/repos/kallithea/changeset/5923d74742879b812965568475e21c3496d722a9>
-
--- 
-Cheers,
-  Andrew Shadura
-  on behalf of Kallithea Security Team
-
-Content of type "application/pgp-signature" skipped
