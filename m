@@ -1,64 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/06/1
-Message-ID: <54F8FC9C.8010901@redhat.com>
-Date: Thu, 05 Mar 2015 18:02:20 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/10/2
+Message-ID: <2495017.L49tqg2Hub@xps>
+Date: Sat, 10 Jan 2015 17:23:05 +0100
+From: Albert Astals Cid <aacid@....org>
+To: Marcus Meissner <meissner@...e.de>
+Cc: oss-security@...ts.openwall.com, CVE Assignments MITRE <cve-assign@...re.org>, security@....org
+Subject: Re: CVE Request: kwallet: incorrect CBC encryption handling
 Content-Type: text/plain; charset=utf-8
 
-Please contact your TAM/GSS with this request, it carries a lot more
-impact if customers want something that we also want.
-
-On 05/03/15 04:09 PM, Michael Samuel wrote:
-> Could RedHat ship a new package that replaced python's default SSL
-> library with the one that validates TLS by default and release a RHEA?
+El Divendres, 9 de gener de 2015, a les 07:52:44, Marcus Meissner va escriure:
+> On Fri, Jan 09, 2015 at 07:02:38AM +0100, Salvatore Bonaccorso wrote:
+> > Hi
+> > 
+> > The following KDE Project Security Advisory was issued at
+> > https://www.kde.org/info/security/advisory-20150109-1.txt .
+> > 
+> > > Title:          Fix kwalletd CBC encryption handling
+> > > Risk Rating:    Low
+> > > Platforms:      All
+> > > Versions:       kwalletd < Applications 14.12.1, KF5::KWallet < 5.6.0
+> > > Author:         Valentin Rusu <kde@...u.info>
+> > > Date:           9 January 2015
+> > > 
+> > > Overview
+> > > ========
+> > > 
+> > > Until KDE Applications 14.12.0, kwalletd incorrectly handled CBC
+> > > encryption blocks when encrypting secrets in kwl files. The secrets
+> > > were still encrypted, but the result binary data corresponded to an ECB
+> > > encrypted block instead of CBC.
+> > > 
+> > > Impact
+> > > ======
+> > > 
+> > > The ECB encryption algorithm, even if it'll scramble user data, it'll
+> > > produce same encrypted byte sequence for the same input text. As a
+> > > result, attackers may eventually find-out the encrypted text.
+> > > 
+> > > Solution
+> > > ========
+> > > 
+> > > For kde-runtime KWallet upgrade to KDE Applications 14.12.1 or apply the 
+following patch:
+> > >   http://quickgit.kde.org/?p=kde-runtime.git&a=commit&h=14a8232d0b5b1bc5
+> > >   e0ad922292c6b5a1c501165c> > 
+> > > For KDE Frameworks 5 KWallet upgrade to 5.6.0 or apply the following 
+patch:
+> > >   http://quickgit.kde.org/?p=kwallet.git&a=commit&h=6e588d795e6631c3c9d8
+> > >   4d85fd3884a159b45849> > 
+> > > Credits
+> > > =======
+> > > 
+> > > Thanks to Itay Duvdevani for finding the issue and for letting us know.
+> > > Thanks to Valentin Rusu for implementing the fix.
+> > 
+> > Could you please assing a CVE for this issue?
 > 
-> That way customers (like me) who never want broken TLS on their
-> network can just install a package and it's fixed.
+> This is already CVE-2013-7252 I think.
+
+Looks like it is. Thanks for the help guys.
+
+Best Regards,
+  Albert
+
 > 
-> Regards,
->   Michael
-> 
-> On 6 March 2015 at 05:36, Kurt Seifried <kseifried@...hat.com> wrote:
->>
->>
->> On 05/03/15 10:06 AM, John Haxby wrote:
->>> PEP 476 cites 11 CVEs that resulted from python not properly validating
->>> certificates.   This would be number 12.
->>>
->>> Shouldn't python versions prior to 2.7.9 and 3.4.3 have a CVE each for
->>> the lack of verification? If internal corporate software stops working
->>> because of invalid certificates, wasn't it broken anyway?
->>
->> So if something is advertised as having a security feature and does not
->> or it is broken then it gets a CVE. In this case Python, and basically
->> every other SSL/TLS implementation on the planet, by default, did not
->> check hostnames in certs, but they did provide that capability should
->> you choose to use it. So no CVE since it wasn't "meant to be secure" as
->> I understand it.
->>
->> Now for my personal opinion: Doing SSL/TLS with server certs and not
->> checking the hostname in a server cert is completely insane and utterly
->> defeats the purpose. However there are cases where a certificate may not
->> have a hostname field, or need a valid hostname field, e.g. a client
->> certificate where you mostly care about the fact that the client has it
->> at all. So I can see why they made hostname checks optional, but again,
->> I think it was a very bad decision long term as evidenced by:
->>
->> http://www.cve.mitre.org/cgi-bin/cvekey.cgi?keyword=certificate+hostname+check
->>
->>> jch
->>>
->>
->> --
->> Kurt Seifried -- Red Hat -- Product Security -- Cloud
->> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->>
+> Ciao, Marcus
 
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
