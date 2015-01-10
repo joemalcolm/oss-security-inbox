@@ -1,50 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/14
-Message-ID: <20150310201236.74af14e9@pc1.fritz.box>
-Date: Tue, 10 Mar 2015 20:12:36 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/10/4
+Message-ID: <54B18F3E.60504@mccme.ru>
+Date: Sat, 10 Jan 2015 23:44:46 +0300
+From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-Subject: less invalid memory access fixed (CVE-2014-9488)
+Subject: Re: Directory traversals in cpio and friends?
 Content-Type: text/plain; charset=utf-8
 
-I stumbled over an invalid memory access in less a while ago:
-https://blog.fuzzing-project.org/3-less-out-of-bounds-read-access-TFPA-0022014.html
+On 2015-01-08 17:12, Florian Weimer wrote:
+> On 01/08/2015 12:43 AM, Alexander Cherepanov wrote:
+>> I've taken a look at how dir traversals are dealt with in several
+>> implementations of tar and cpio. The picture is kinda strange.
+>>
+>> First of all, I believe it's usually agreed that archivers must not
+>> touch files outside the current directory by default. Is there an
+>> authoritative link for this?
+>
+> Only if the current directory (or, more generally, the target directory
+> for the extraction operation) is initially empty.
 
-While I never got a reply from the less developers it seems with
-version 475 they finally fixed it. They don't have any release
-announcements or public repositories, but there is a mentioning in the
-file version.c probably related:
-+v475  3/2/15    Fix possible buffer overrun with invalid UTF-8; 
-+                fix bug when compiled with no regex; fix non-match
-  search.
+Thank you for bringing this up. I thought about it but didn't come to 
+any conclusion myself.
 
-This is likely the change that fixes this bug (but I haven't verified
-that, there are multiple things changed between 474 and 475):
+> If it already contains symbolic links, some users expect that those
+> links are followed because they have used symlinks to move part of the
+> file system tree to somewhere else (perhaps a large file system).
 
---- less-474/line.c	2015-01-31 00:20:29.000000000 +0100
-+++ less-475/line.c	2015-03-05 20:07:08.000000000 +0100
-@@ -807,7 +807,7 @@
- 			mbc_buf[mbc_buf_index++] = c;
- 			if (mbc_buf_index < mbc_buf_len)
- 				return (0);
--			if (is_utf8_well_formed(mbc_buf))
-+			if (is_utf8_well_formed(mbc_buf,
-mbc_buf_index)) r = do_append(get_wchar(mbc_buf), mbc_buf, mbc_pos);
- 			else
- 				/* Complete, but not shortest form,
- 				sequence. */
+It's not clear to me that this expectation should trump the expectation 
+to be able to safely extract several archives in the same directory. tar 
+and bsdtar handle it differently. And links to previous discussions?
 
+>> The only 'x' in the line for `cpio -i --no-absolute-filenames` seems to
+>> be a clear vuln. Reported here: https://bugs.debian.org/774669 and now
+>> sent to upstream ml.
 
-If mitre and osvdb maintainers read this: please update the entries in
-your databases accordingly.
+It's here:
 
-I'll also update the blog post / advisory.
+http://lists.gnu.org/archive/html/bug-cpio/2015-01/msg00000.html
+
+> Yes, that's inconsistent and looks like a bug worth fixing.
+
+The only 'x' in the line for `bsdcpio -i` turned out to be a bug too:
+
+https://groups.google.com/d/msg/libarchive-discuss/dN9y1VvE1Qk/8VMP28AIf2EJ
 
 -- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Alexander Cherepanov
