@@ -1,75 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/16
-Message-Id: <20150222210103.F200342E070@smtpvbsrv1.mitre.org>
-Date: Sun, 22 Feb 2015 16:01:03 -0500 (EST)
-From: cve-assign@...re.org
-To: steffen.roesemann1986@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- phpBugTracker v. 1.6.0 -- Multiple SQLi, stored/reflecting XSS- and CSRF-vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/10/5
+Message-ID: <m8sag6$om1$1@ger.gmane.org>
+Date: Sat, 10 Jan 2015 23:52:54 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2014-6316: URL redirection issue in MantisBT
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+During follow-up tests he performed on the fix for CVE-2014-6316 (which 
+was released in MantisBT 1.2.18), Alejo Popovici noticed [1] that the 
+earlier fix was only partial.
 
-> I found multiple SQLI-, stored/reflecting XSS- and CSRF-vulnerabilities in
-> Issuetracker phpBugTracker v. 1.6.0.
+With certain browsers (FF 34, Chrome 39 but not IE11) it is still 
+possible to effect a cross-domain redirection using a redirect address 
+having a single slash, e.g.
 
-Can you clarify how the example attack URLs interact with this
-product's approach to access control? As far as we can tell,
-https://github.com/a-v-k/phpBugTracker/commit/df720d21fcd01fe0273b7db120feb4977ff065d9
-established a model for access control in which there is both a
-superadmin role and an admin role. We think the situation is:
+- http://example.com/mantis/login_page.php?return=https:/google.com or
+- https://example.com/mantis/login_page.php?return=http:/google.com
 
-1. You mean that all of your http://{TARGET}/admin/ example URLs are
-accessed within the context of a session with the correct/expected
-authentication. In some cases, $perm->check('Admin') must succeed, and
-in other cases (e.g., project.php), the $perm->check('Admin') test is
-not used. In other words, you are not reporting any discoveries in
-which an attacker is directly bypassing access control.
+This is essentially the same vulnerability that was described in 
+CVE-2014-6316, but due to a different root cause (for which a patch will 
+be issued soon).
 
-2. In some cases, stored XSS is relevant only in the context of a CSRF
-attack, because otherwise a superadmin would need to enter the XSS
-string intentionally. In other cases, stored XSS is independently
-relevant because it could be used for privilege escalation from admin
-to superadmin.
+I would like to know if I should be using the same CVE ID, or if a new 
+one needs to be issued.
 
-3. A SQL injection attack could be relevant even if CSRF is not used.
-In other words, someone with admin (or even superadmin) privileges
-does not necessarily have the inherent ability to execute arbitrary
-SQL statements.
+Thanks in advance.
 
-4. Some of the vendor's commits have fixed attack vectors that you did
-not report (in addition to attack vectors that you did report). For
-example:
+Damien Regad
+MantisBT Developer
 
-https://github.com/a-v-k/phpBugTracker/commit/5eff13de038838b1d15108ca6e73c7a85731b85f
-  + case 'del' :
-  +     if (check_action_key_die()) {
-  +         del_group(get_get_int('group_id'));
 
-5. Most of the issues were fixed in 1.7.0; however, there were
-additional XSS fixes in 1.7.2.
+[1] https://www.mantisbt.org/bugs/view.php?id=17997
 
-If so, then there would probably be seven CVE IDs in total (six for
-the 1.7.0 fixes: for multiple CSRF discovered by you, multiple CSRF
-discovered by the vendor, multiple XSS discovered by you, multiple XSS
-discovered by the vendor, multiple SQL injection discovered by you,
-and multiple SQL injection discovered by the vendor; and one for the
-1.7.2 fixes).
+On 2014-12-04 00:13, Damien Regad wrote:
+> Greetings,
+>
+> Please update CVE-2014-6316 with the information below
+>
+>
+> Description:
+>
+> A bug in the URL sanitization routine allows an attacker to craft an URL
+> that can redirect outside of the MantisBT instance's domain when the
+> software is installed at the web server's root.
+>
+> e.g. http://example.com/login_page.php?return=http://google.com will
+> redirect to Google.
+>
+> Affected versions:
+> => 1.2.0a3, <= 1.2.17
+>
+> Fixed in versions:
+> 1.2.18 (not yet released)
+>
+> Patch:
+> See Github [1]
+>
+> Credit:
+>
+> Redirection in login_page.php was first reported [3] by Mathias Karlsson
+> (http://mathiaskarlsson.me) as part of Offensive Security's bug bounty
+> program [4]; issue was also independently discovered and reported by
+> Ryan Giobbi who made the original CVE request [2], Shahee Mirza [5] and
+> Alejo Popovici [6].
+>
+> Paul Richards also found another redirection issue in
+> permalink_page.php, which turned out to have the same root cause.
+>
+> The issue was fixed by Damien Regad (MantisBT Developer).
+>
+> References:
+> Further details available in our issue tracker [2]
+>
+>
+> [1] http://github.com/mantisbt/mantisbt/commit/e66ecc9f
+> [2] https://www.mantisbt.org/bugs/view.php?id=17648
+> [3] https://www.mantisbt.org/bugs/view.php?id=17362
+> [4] http://www.offensive-security.com/bug-bounty-program/
+> [5] https://www.mantisbt.org/bugs/view.php?id=17698
+> [6] https://www.mantisbt.org/bugs/view.php?id=17811
+>
+>
+>
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJU6kL3AAoJEKllVAevmvmsSiIIAMM+ogKLVBV+97oQ7FI4REXd
-jVoHOczDBZ1oGhDDRv9C5WXF9YqErgMYb7rGVHbcdBbYO44tyvgH4icufwXIGUSz
-dpZNFg2L7fLkrJWPfIXL29HsuQc48pBKxr3m4nC8MNc6SWIGvxc4HLeBsojw4wz0
-P3QEr2klfc6nUACtDqPJeLoQjBSAKaEKZMGsCQWYR1G82faVnnQm9Jwnmps/h2MB
-49LNGTNkke71BemNS2F39vVfAZEBAaxECFJBVplPjihh5W264eoUrDkLxynjDy7c
-Rg7x07bqG4BdiDvOYjdRpG3ChSMtj3PZsIWHNj17MC92TB0WfQ9RHOe17PyiEpU=
-=c4/m
------END PGP SIGNATURE-----
