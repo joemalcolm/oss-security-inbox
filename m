@@ -1,36 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/07/9
-Message-ID: <20150207183347.75d03966@pc>
-Date: Sat, 7 Feb 2015 18:33:47 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: Assign a CVE Identifier <cve-assign@...re.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: ghostscript double free and invalid read caused by embedded jbig2 data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/10/1
+Message-ID: <54B07848.9030301@rainbowsandpwnies.com>
+Date: Fri, 09 Jan 2015 18:54:32 -0600
+From: endeavor <endeavor@...nbowsandpwnies.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org
+Subject: Re: CVE Request: libpng 1.6.15 Heap Overflow
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 07 Feb 2015 10:27:29 -0700
-Kurt Seifried <kseifried@...hat.com> wrote:
+I thought it might be helpful to add some additional clarity to this bug.
+There were two bugs patched in the latest updates to libpng. The first 
+bug is an overflow in png_read_IDAT_data, and is triggerable due to 
+checks on image width that were removed a while ago in libpng branches 
+1.6.x and 1.5.x. This is the bug against which the following write up 
+applies: http://tfpwn.com/files/libpng_heap_overflow_1.6.15.txt .
+While fixing this bug, John Bowler found a second, unrelated overflow in 
+png_combine_row. His mailing list post on that bug is found here: 
+http://sourceforge.net/p/png-mng/mailman/message/33172831/ . It looks 
+like CVE-2014-9495 was assigned against this bug, but attributed to me 
+by accident.
+As the fixes to either bug don't fix the other, there are actually two 
+overflows that need to be tracked for libpng. People backporting changes 
+should ensure they fix both bugs.
+Both of these bugs are evidence of a larger issue in libpng 1.6.x and 
+1.5.x. Those branches allow abnormally large width and height values. On 
+64-bit platforms, widths and heights of 0x7fffffff are still allowed. 
+Somewhat smaller, but abnormally large widths, and still very large 
+heights, are available on 32-bit platforms. The 1.2.x branch only allows 
+for the safer values.
+Safe limits can be enabled in these libpng branches with 
+-DPNG_SAFE_LIMITS_SUPPORTED. These limits are not enabled by default.
+http://sourceforge.net/p/libpng/code/ci/libpng-1.6.16-signed/tree/pngpriv.h#l300
+I very strongly recommend individuals building libpng 1.5.x and 1.6.x 
+use PNG_SAFE_LIMITS_SUPPORTED.
+- Alex Eubanks
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=570425
-> 
-> I'm pretty sure this issue is different than CVE-2009-0196
+On 1/3/2015 6:05 PM, cve-assign@...re.org wrote:
+>
+>> I am requesting a CVE for a heap-overflow in libpng 1.6.15. It's my
+>> understanding that versions 1.6.9-1.6.15 are vulnerable, and 
+>> according to
+>> patch notes it looks like some revisions in the 1.5 branch may have been
+>> affected as well. However, I've only tested 1.6.15 and can only speak 
+>> for
+>> it.
+>>
+>> Link to announcement of new version:
+>> http://sourceforge.net/p/png-mng/mailman/message/33173461/
+>>
+>> Link to a description of the vulnerability:
+>> http://tfpwn.com/files/libpng_heap_overflow_1.6.15.txt
+>>
+>> Please let me know!
+>
+> Use CVE-2014-9495.
+>
+> ---
+>
+> CVE assignment team, MITRE CVE Numbering Authority M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 
-Ghostscript right now has ~180 open unfixed bugs from fuzzing:
-http://bugs.ghostscript.com/buglist.cgi?component=fuzzing&query_format=advanced&resolution=---
-
-I believe most of them are related to this fuzzing effort from 2013:
-http://gynvael.coldwind.pl/?id=493
-(I think Gynvael is on this list, maybe he can comment on the state)
-
-gs already does invalid memory reads without any fuzzing at all. Just
-compile it with asan and try to use the pdfwrite device.
-
-
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
