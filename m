@@ -1,42 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/15
-Message-Id: <20150203225417.2EBB66DC00D@smtpvmsrv1.mitre.org>
-Date: Tue,  3 Feb 2015 17:54:17 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/6
+Message-ID: <Pine.LNX.4.64.1501110946540.26662@beijing.mitre.org>
+Date: Sun, 11 Jan 2015 09:47:55 -0500 (EST)
 From: cve-assign@...re.org
-To: steffen.roesemann1986@...il.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Pragyan CMS v.3.0 -- SQL injection vulnerability
+To: Steffen Rösemann <steffen.roesemann1986@...il.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request -- CMS e107 v.1.0.4 -- Reflecting XSS vulnerability in filemanager functionality
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> Attackers can exploit that vulnerability by appending arbitrary SQL queries
-> to a registered users profile id without being authenticated.
-> 
-> /user:1%27+and+1=2+union+select+database%28%29,version%28%29,3+--+
-> 
-> http://sroesemann.blogspot.de/2015/01/sroeadv-2015-11.html
-> https://github.com/delta/pragyan/issues/206
-> http://pastebin.com/ip2gGYuS
-> http://sroesemann.blogspot.de/2015/02/advisory-for-sroeadv-2015-11.html
-> http://seclists.org/fulldisclosure/2015/Feb/18
+> Hi Josh, Steve, vendors, list.
+>
+> I found a reflecting XSS vulnerability in the filemanager functionality in
+> the administrative backend of CMS e107 v.1.0.4.
+>
+> It can be exploited by an attacker like in the following example:
+>
+> http://{TARGET}/e107_admin/filemanager.php?e107_files/%3C%73%63%72%69%70%74%3Ealert(String.fromCharCode(34,
+> 88, 83, 83,
+> 34))%3C%2F%73%63%72%69%70%74%3E%3C!--%3C%2F%73%63%72%69%70%74%3E%3C!--
+>
+> Could you please assign a CVE-ID for it?
+>
+> Thank you!
+>
+> Greetings.
+>
+> Steffen Rösemann
+>
+> References:
+>
+> [1] http://e107.org/
+> [2] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-05.html
+> [3] https://github.com/e107inc/e107v1/issues/2
+> [4]
+> http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2014-05.html
+> [5] http://seclists.org/fulldisclosure/2015/Jan/18
 
-Use CVE-2015-1471.
+Use CVE-2015-1041.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU0VCfAAoJEKllVAevmvmsI60H/ilF12jFosK4ISdLVWrF13Uq
-kh0bzif+CUb7sog+InOQvVKM6V0Ci+39BjIzEkU5EQRWZQyVedMQaRYp7zMkPyUO
-aNLOM8DvMGFXrzRE8/ofTUa1Bq1K4vlA46YOfsm2VAbwxvGDkFEHW39sGpJyw1SL
-Qn3hrBhGfCdevFXrh8ZKvMmo/rVi4/kAazfZezYNOos4qlTTxLGFljl9rzJVsI8d
-v+MhkzD/+0sf/27pUczwLdd8XRfd0qWbTCVq8z1T/s9qKj7sq54uJZQlDsnhpKcC
-RLGlsX2EgqzjFOBWEnIlNZw74VYySOkR7ztuyWDRKtz0khhBviFA7ZpDxMqYEE4=
-=DrF7
------END PGP SIGNATURE-----
