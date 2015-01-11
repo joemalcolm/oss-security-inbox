@@ -1,39 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/3
-Message-ID: <20150128014517.GA23108@localhost.localdomain>
-Date: Tue, 27 Jan 2015 17:45:17 -0800
-From: Qualys Security Advisory <qsa@...lys.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/2
+Message-ID: <Pine.LNX.4.64.1501110933430.26662@beijing.mitre.org>
+Date: Sun, 11 Jan 2015 09:35:45 -0500 (EST)
+From: cve-assign@...re.org
+To: Vincent Danen <vdanen@...hat.com>
+cc: oss-security <oss-security@...ts.openwall.com>, cve-assign@...re.org
+Subject: Re: CVE request for directory traversal flaw in p7zip
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 27, 2015 at 08:45:12PM +0300, Solar Designer wrote:
-> He found out that apparently the ghost image appeared on the Qualys
-> website on October 2.
 
-What?!  No idea where this image came from, who created it, or why, or
-when.  What is absolutely certain is that October 2 has nothing to do
-with this bug, simply because the first time someone here had the idea
-of calling it "GHOST" was on Friday evening!  Yes, Friday, January 23,
-2015!
 
-> The GHOST name was not yet in the (almost final) advisory draft sent to
-> the linux-distros list on January 18, nor was there any other name for
-> this vulnerability in there.
+> There is a directory traversal flaw in p7zip as noted here:
+>
+> http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774660
+> https://bugzilla.redhat.com/show_bug.cgi?id=1179505
+>
+> Could a CVE be assigned to this please?  Thanks.
 
-Exactly, thank you!  And if some of you conspiracy theorists need more
-proof, even SuSE's Bugzilla entry is still referencing the original name
-of our proof-of-concept (charged-ghbn.c), which appeared in the advisory
-draft we sent to the linux-distros mailing-list last week:
+Use CVE-2015-1038.
 
-https://bugzilla.suse.com/show_bug.cgi?id=913646
+---
 
-In the end, some information was leaked before the Coordinated Release
-Date (which was January 27, 2015 at 18:00 UTC), but it was just a few
-hours early.  And again, we sincerely apologize.
-
-Please please please, less pointless bickering, more code auditing.
-Thank you.
-
--- 
-the "technical folks"
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
