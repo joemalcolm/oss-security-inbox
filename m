@@ -1,50 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/3
-Message-ID: <54AAA7E5.8040107@collabora.co.uk>
-Date: Mon, 05 Jan 2015 15:04:05 +0000
-From: Simon McVittie <simon.mcvittie@...labora.co.uk>
-To: "dbus@...ts.freedesktop.org" <dbus@...ts.freedesktop.org>,  ftp-release <ftp-release@...ts.freedesktop.org>
-CC: oss-security@...ts.openwall.com
-Subject: Announcing D-Bus 1.8.14
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/5
+Message-ID: <Pine.LNX.4.64.1501110945530.26662@beijing.mitre.org>
+Date: Sun, 11 Jan 2015 09:46:43 -0500 (EST)
+From: cve-assign@...re.org
+To: Steffen Rösemann <steffen.roesemann1986@...il.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request -- CMS BEdita v. 3.4.0 -- Multiple stored XSS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-The “40lb of roofing nails” release.
 
-This is a bugfix release for the current stable branch, 1.8.x, adding
-security hardening to mitigate faulty third-party security policy files
-such as CVE-2014-8148. Please upgrade unless you have a reason to keep
-using an older branch.
+> I found multiple stored XSS vulnerabilities in the administrative backend
+> of CMS BEdita v.3.4.0 (release-date: 9th-May-2014).
+>
+> The vulnerabilities can be found in the following paths of a common BEdita
+> installation:
+>
+> http://{TARGET}/index.php/home/profile (in form with id „editProfile“  via
+> input field with id „lrealname")
+>
+> http://{TARGET}/index.php/ (in form with id „addQuickItem“ via input field
+> with name "data[title]" and name "data[description]")
+>
+> http://{TARGET}/index.php/areas (in form with id „saveNote“ via input field
+> with id „note text")
+>
+> http://{TARGET}/index.php/documents/view (in form with id „updateForm“ via
+> input field with id „titleBEObject“ and input field with id „tagsArea“)
+>
+> The vulnerabilities can be exploited by using arbitray HTML- and/or
+> JavaScriptcode, e.g. <script>alert(document.cookie)</script>.
+>
+> Could you please assign a CVE-ID for it?
+>
+> Thank you. Greetings.
+>
+> Steffen Rösemann
+>
+> References:
+>
+> [1] http://www.bedita.com
+> [2] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-10.html
+> [3] https://github.com/bedita/bedita/issues/566
+> [4] http://seclists.org/fulldisclosure/2015/Jan/16
 
-http://dbus.freedesktop.org/releases/dbus/dbus-1.8.14.tar.gz
-http://dbus.freedesktop.org/releases/dbus/dbus-1.8.14.tar.gz.asc
-git tag: dbus-1.8.14
-git branch: dbus-1.8
+Use CVE-2015-1040.
 
-Security hardening:
+---
 
-• Do not allow calls to UpdateActivationEnvironment from uids other than
-  the uid of the dbus-daemon. If a system service installs unsafe
-  security policy rules that allow arbitrary method calls
-  (such as CVE-2014-8148) then this prevents memory consumption and
-  possible privilege escalation via UpdateActivationEnvironment.
-
-  We believe that in practice, privilege escalation here is avoided
-  by dbus-daemon-launch-helper sanitizing its environment; but
-  it seems better to be safe.
-
-• Do not allow calls to UpdateActivationEnvironment or the Stats
-  interface on object paths other than /org/freedesktop/DBus. Some
-  system services install unsafe security policy rules that allow
-  arbitrary method calls to any destination, method and interface with
-  a specified object path; while less bad than allowing arbitrary
-  method calls, these security policies are still harmful, since
-  dbus-daemon normally offers the same API on all object paths and
-  other system services might behave similarly.
-
-Other fixes:
-
-• Add missing initialization so GetExtendedTcpTable doesn't crash on
-  Windows Vista SP0 (fd.o #77008, Илья А. Ткаченко)
-
--- 
-Simon McVittie, Collabora Ltd. / Debian
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
