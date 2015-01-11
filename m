@@ -1,34 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/10/2
-Message-ID: <CACYkhxhMeGxu-F_drzY_Jst+q+f48u-ok-C34g6_eB8DJWxjLQ@mail.gmail.com>
-Date: Tue, 10 Mar 2015 21:59:13 +1100
-From: Michael Samuel <mik@...net.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/9
+Message-ID: <CAFYC4_2sUmk28j8fFD3T_O-z=PFbsMSs9WZpJNRRbdk5Yr2rog@mail.gmail.com>
+Date: Sun, 11 Jan 2015 22:09:30 +0000
+From: Daniel Strøm <ds@...4web.dk>
+To: cve-assign@...re.org, Daniel Strøm <ds@...4web.dk>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE request
 Content-Type: text/plain; charset=utf-8
 
-On 10 March 2015 at 20:41, John Haxby <john.haxby@...cle.com> wrote:
-> None of this, however, has anything to do with the matter at hand.  If
-> no one from Red Hat is unwilling to cooperate in getting a single
-> backward-compatible resolution to incorporating PEP-466 into the
-> distro python versions then perhaps someone else is.
+Thank you very much :)
+
+
+On Sun Jan 11 2015 at 3:41:04 PM <cve-assign@...re.org> wrote:
+
 >
-> If there's interest, I'll gladly work with anyone who wants to find a
-> way to do this.   This is just me trying, as usual, to do the best by
-> everyone.  I don't speak for Oracle, I'm not paid enough for that, I'm
-> just trying to make sure that we don't wind up with a backported fix
-> that makes the overall situation worse.
+> > I'd like a CVE for the following security issue:
+> > https://github.com/ZF-Commons/ZfcUser/issues/550
+> >
+> > And in text:
+> > Security advisory: XSS vulnerability in login redirect param
+> >
+> > ZfcUser version 1.2.2 has been released and includes a security for this
+> > vulnerability. Fix has been applied in @baf0e46
+> > <https://github.com/ZF-Commons/ZfcUser/commit/baf0e460>
+> > Affected versions
+> >
+> > All versions below 1.2.2 are affected. dev-master is fixed starting from
+> @
+> > 2cc167a <https://github.com/ZF-Commons/ZfcUser/commit/2cc167a>
+> > Exploits
+> >
+> > Because of missing escaping of the URL param redirect a XSS attack is
+> > possible.
+> > For example: Setting the redirect param to "><a%20href="
+> http://github.com
+> > ">GitHub.com</a><inpu%20type="hidden"%20" would result in a link added
+> to
+> > the login page.
+> > Resolution
+> >
+> > If you are using any version of ZfcUser below 1.2.2 please upgrade
+> > immediately by running composer update.
+> > Credits
+> >
+> > The vulnerability was discovered and fixed by @GyunerZeki
+> > <https://github.com/GyunerZeki>
+>
+> Use CVE-2015-1039.
+>
+> ---
+>
+> CVE assignment team, MITRE CVE Numbering Authority M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+>
 
-I'm happy to help work on this.
-
-The two ways to attack this seem to be:
-
-1) Use alternatives for the ssl module, and a new package has a
-higher priority version of the module.
-
-2) Include both versions of the module under different names, and
-have a script that symlinks the correct one in place.  This may work
-better in chroot environments, etc.
-
-Regards,
-  Michael
