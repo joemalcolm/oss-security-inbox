@@ -1,90 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/14/2
-Message-Id: <A15E727D-B513-4DFE-A0BD-387B7C7949B0@gmail.com>
-Date: Sat, 14 Feb 2015 07:09:54 +0100
-From: Steffen Rösemann <steffen.roesemann1986@...il.com>
-To: cve-assign@...re.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Landsknecht Adminsystems v.4.0.1 (DEV, beta version) -- Reflecting XSS, unrestricted file-upload and underlaying CSRF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/7
+Message-ID: <20150111150752.GB6185@kludge.henri.nerv.fi>
+Date: Sun, 11 Jan 2015 17:07:52 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Cc: cve-assign@...re.org
+Subject: CVE request: TYPO3-EXT-SA-2015-001, TYPO3-EXT-SA-2015-002, TYPO3-EXT-SA-2015-003
 Content-Type: text/plain; charset=utf-8
 
-> We think this means anyone can execute a file regardless of who
-> uploaded it. Do you mean that a file uploaded by a user can ONLY be
-> executed by an administrator or different user, whereas a file
-> uploaded by an administrator can ONLY be executed by a user?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Hi,
+
+Can I get CVE IDs for following vulnerabilities, thank you.
+
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2015-001/
+
+It has been discovered that the extension "LDAP / SSO Authentication"
+(ig_ldap_sso_auth) is susceptible to Improper Authentication.
+
+Release Date: January 8, 2015
+
+Bulletin Update: January 8, 2015 (Affected Versions, Severity)
+
+Component Type: Third party extension. This extension is not a part of the TYPO3
+default installation.
+
+Affected Versions: 2.0.0
+
+Vulnerability Type: Improper Authentication
+
+Severity: Critical
+
+Suggested CVSS v2.0: AV:N/AC:L/Au:N/C:P/I:P/A:N/E:F/RL:OF/RC:C
+
+Problem Description: The extension insufficiently authenticates an user against
+LDAP/AD.
+
+Solution: Updated version 2.0.1 is available from the TYPO3 extension manager
+and at
+http://typo3.org/extensions/repository/download/ig_ldap_sso_auth/2.0.1/t3x/.
+
+Credits: Credits go to Stefan Kaifer who discovered the vulnerability.
 
 
-I mean that anyone can execute files, regardless of who uploaded it.
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2015-002/
 
-> So, we think one CVE for the two XSS issues, and one CVE for file
-> upload, is the correct number. Do you have another interpretation?
+It has been discovered that the extension "Content Rating" (content_rating) is
+susceptible to Cross-Site Scripting and SQL Injection.
 
-No, I follow your interpretation. Thank you very much.
+Release Date: January 9, 2015
 
-Greetings.
+Component Type: Third party extension. This extension is not a part of the TYPO3
+default installation.
 
-> Am 14.02.2015 um 01:21 schrieb cve-assign@...re.org:
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
->> As there seems not be an existing permission-model, users can read/execute
->> files  an administrator/user uploaded and vice versa.
-> 
-> We think this means anyone can execute a file regardless of who
-> uploaded it. Do you mean that a file uploaded by a user can ONLY be
-> executed by an administrator or different user, whereas a file
-> uploaded by an administrator can ONLY be executed by a user?
-> 
->> This issue includes an underlaying CSRF-vulnerability, as a user is able to
->> upload a malicious file and trick another user or the administrator into
->> visiting the link to the file.
-> 
-> We're not sure whether you mean the CSRF concept is relevant in a way
-> that is unusual for an "upload arbitrary files" issue.
-> 
-> If the attacker can upload a file, with the upload location and/or
-> file extension allowing execute access, then the typical outcome is
-> that exactly that file is executed. It is not typically the case that
-> a product modifies uploaded files to insert a CSRF protection
-> mechanism. Also, it is not typically the case that a pathname such as
-> /upload/files/{UPLOADED_FILE} would actually execute a wrapper program
-> (containing a CSRF protection mechanism) before executing
-> UPLOADED_FILE itself.
-> 
-> For these reasons, the ability to upload executable files to
-> /upload/files/{UPLOADED_FILE} would normally be considered a single
-> vulnerability, and would not lead to a conclusion that the product has
-> an independent CSRF problem.
-> 
-> Also, the primary threat model for "upload arbitrary files" issues is
-> that the file uploading and the file execution are done by the same
-> person. Certainly, it could be interesting to upload JavaScript code
-> and trick an administrator into executing it. However, if the attacker
-> can upload and execute PHP code without any tricking, ability to
-> upload JavaScript is usually not considered an independently relevant
-> problem. In common (but not all) cases, given an attacker's "upload
-> arbitrary files" ability, the entire class of scenarios in which the
-> file is later executed by a different person isn't independently
-> relevant.
-> 
-> So, we think one CVE for the two XSS issues, and one CVE for file
-> upload, is the correct number. Do you have another interpretation?
-> 
-> - -- 
-> CVE assignment team, MITRE CVE Numbering Authority
-> M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.14 (SunOS)
-> 
-> iQEcBAEBAgAGBQJU3pRRAAoJEKllVAevmvmszRgIAKTqAfCFqlHNnWIZtADfF6Gk
-> jMwCV5kugJjpzO0yzOkZ/luN0tKJBEKwAZbRfFr9KRnHldfJAE2DSf1TmSBEtKL8
-> m6RyGtRSleNiwH1Ed/w9oGGMjdO2ascnLYr+extIMhuy8H4l/VEhghi3et+Ud1X8
-> dUeHFB84zRdVqcmLi8xJIXtXLNQDpGI+FQY8jjBvQ2UqPp55Kk+cJdgQQUV8p4vg
-> 5/vDZVfdpKCoJvfK5lMOTopZDzjix+z+ldKWHvuhg+IWX0H57UHzDIUlsnagzS7e
-> a1/eRUjZtjjtKmTBF7SHjVDDBaNVQwtZLPyyc/g5VxA+NelfCqORCeBJIqLUVss=
-> =Iqmo
-> -----END PGP SIGNATURE-----
+Affected Versions: 1.0.3 and all versions below
 
+Vulnerability Type: Cross-Site Scripting, SQL Injection
+
+Severity: High
+
+Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:P/I:P/A:N/E:POC/RL:U/RC:C
+
+Problem Description: The extension fails to properly escape user input in HTML
+and SQL context.
+
+Solution: Versions of this extension that are known to be vulnerable will no
+longer be available for download from the TYPO3 Extension Repository. The
+extension author failed in providing a security fix for the reported
+vulnerability in a decent amount of time. Please uninstall and delete the
+extension folder from your installation.
+
+Credits: Credits go to Steffen Müller who discovered and reported the
+vulnerabilities. 
+
+
+http://typo3.org/teams/security/security-bulletins/typo3-extensions/typo3-ext-sa-2015-003/
+
+It has been discovered that the extension "Content Rating Extbase"
+(content_rating_extbase) is susceptible to Cross-Site Scripting and SQL
+Injection.
+
+Release Date: January 9, 2015
+
+Component Type: Third party extension. This extension is not a part of the TYPO3
+default installation.
+
+Affected Versions: 2.0.3 and all versions below
+
+Vulnerability Type: Cross-Site Scripting, SQL Injection
+
+Severity: High
+
+Suggested CVSS v2.0: AV:N/AC:M/Au:N/C:P/I:P/A:N/E:POC/RL:U/RC:C
+
+Problem Description: The extension fails to properly escape user input in HTML
+and SQL context.
+
+Solution: Versions of this extension that are known to be vulnerable will no
+longer be available for download from the TYPO3 Extension Repository. The
+extension author failed in providing a security fix for the reported
+vulnerability in a decent amount of time. Please uninstall and delete the
+extension folder from your installation.
+
+Credits: Credits go to Steffen Müller who discovered and reported the
+vulnerabilities.
+
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iEYEARECAAYFAlSykcgACgkQXf6hBi6kbk87SgCfRGA6v9XYxy4G1n9AIov1hnXG
+gvYAoLm1tyheuIUe00K2f4c8eC259d9m
+=JFAw
+-----END PGP SIGNATURE-----
