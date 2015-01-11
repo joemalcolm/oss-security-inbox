@@ -1,25 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/3
-Message-ID: <20150203094524.GA18507@openwall.com>
-Date: Tue, 3 Feb 2015 12:45:24 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: scarybeasts@...il.com
-Subject: Re: vsftpd problem in deny_hosts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/4
+Message-ID: <Pine.LNX.4.64.1501110939210.26662@beijing.mitre.org>
+Date: Sun, 11 Jan 2015 09:41:00 -0500 (EST)
+From: cve-assign@...re.org
+To: Daniel Strøm <ds@...4web.dk>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Feb 03, 2015 at 09:28:36AM +0100, Marcus Meissner wrote:
-> IBM reported to us a problem in vsftpd deny_hosts problem.
-> 
-> CVE-2015-1419
-> 
-> https://bugzilla.novell.com/show_bug.cgi?id=915522
-> 
-> Description;
->  Set the option "deny_file" in /etc/vsftpd.conf on a top-directory (for example "deny_file=/home/*")
->  Then log in with ftp and try to cd to "/home/" first, which will fail, then try to cd to "/./home/" which will succeed!
->  The latter case shouldn't be possible as well!
 
-What does upstream say about this?  (CC'ing.)
+> I'd like a CVE for the following security issue:
+> https://github.com/ZF-Commons/ZfcUser/issues/550
+>
+> And in text:
+> Security advisory: XSS vulnerability in login redirect param
+>
+> ZfcUser version 1.2.2 has been released and includes a security for this
+> vulnerability. Fix has been applied in @baf0e46
+> <https://github.com/ZF-Commons/ZfcUser/commit/baf0e460>
+> Affected versions
+>
+> All versions below 1.2.2 are affected. dev-master is fixed starting from @
+> 2cc167a <https://github.com/ZF-Commons/ZfcUser/commit/2cc167a>
+> Exploits
+>
+> Because of missing escaping of the URL param redirect a XSS attack is
+> possible.
+> For example: Setting the redirect param to "><a%20href="http://github.com
+> ">GitHub.com</a><inpu%20type="hidden"%20" would result in a link added to
+> the login page.
+> Resolution
+>
+> If you are using any version of ZfcUser below 1.2.2 please upgrade
+> immediately by running composer update.
+> Credits
+>
+> The vulnerability was discovered and fixed by @GyunerZeki
+> <https://github.com/GyunerZeki>
 
-Alexander
+Use CVE-2015-1039.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
