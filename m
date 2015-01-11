@@ -1,58 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/21/6
-Message-ID: <20150221152142.GY23507@oevtugenva.nrevsny.pk>
-Date: Sat, 21 Feb 2015 10:21:42 -0500
-From: Rich Felker <dalias@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fixing the glibc runtime linker
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/8
+Message-ID: <Pine.LNX.4.64.1501111148060.1737@beijing.mitre.org>
+Date: Sun, 11 Jan 2015 12:00:55 -0500 (EST)
+From: cve-assign@...re.org
+To: Damien Regad <dregad@...tisbt.org>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: Re: CVE-2014-6316: URL redirection issue in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Feb 20, 2015 at 08:44:28AM -0800, Paul Pluzhnikov wrote:
-> On Fri, Feb 20, 2015 at 1:22 AM,  <Casper.Dik@...cle.com> wrote:
-> >
-> >>FWIW, relative RPATHs are quite fundamental to our test execution
-> >>environment, and any patch that unconditionally ignores them would
-> >>have to be reverted in our tree.
-> 
-> It turns out I was mistaken: we don't use relative RPATHs after all.
-> 
-> > But wouldn't that make the libraries and executables less reliable?
-> 
-> Our testing infrastructure is described in some detail here:
-> http://google-engtools.blogspot.com/2011/06/testing-at-speed-and-scale-of-google.html
-> 
-> The essential problem is that the paths to all the libraries in the cloud
-> are effectively unpredictable. They are however predictable relative to
-> $ORIGIN, which is what we actually use [1].
 
-${ORIGIN}-based RPATH is not subject to the same security issues as
-cwd-relative RPATH. There are some issues to consider with suids
-(malicious hardlinks, for example) but I believe these can all be
-mitigated by having the whole device non-writable except by root or
-enabling hardlink restrictions in the kernel.
+> During follow-up tests he performed on the fix for CVE-2014-6316 (which was 
+> released in MantisBT 1.2.18), Alejo Popovici noticed [1] that the earlier fix 
+> was only partial.
+>
+> With certain browsers (FF 34, Chrome 39 but not IE11) it is still possible to 
+> effect a cross-domain redirection using a redirect address having a single 
+> slash, e.g.
+>
+> - http://example.com/mantis/login_page.php?return=https:/google.com or
+> - https://example.com/mantis/login_page.php?return=http:/google.com
+>
+> This is essentially the same vulnerability that was described in 
+> CVE-2014-6316, but due to a different root cause (for which a patch will be 
+> issued soon).
+>
+> I would like to know if I should be using the same CVE ID, or if a new one 
+> needs to be issued.
+>
+> Thanks in advance.
+>
+> Damien Regad
+> MantisBT Developer
+>
+>
+> [1] https://www.mantisbt.org/bugs/view.php?id=17997
 
-> > They can pick up random libraries or cause some delays when one of the
-> > relative paths points to a NFS mounted directory.
-> 
-> We only build tests that way, not final binaries. Random libraries and
-> NFS are not a concern for us, because the 'in the cloud' environment is
-> tightly controlled -- we know exactly what files the test will see at
-> runtime (relative to $ORIGIN).
-> 
-> > Any reason you can't change to using LD_LIBRARY_PATH for testing?
-> 
-> We used to use LD_LIBRARY_PATH, but it has several problems. Consider a
-> Python or Java program that needs to load some C++ shared library, and
-> also wants to fork off a separate C++ executable. Consider further that
-> the python may be built for ix86, while the C++ executable may be built
-> for x86_64.
-> 
-> What should the LD_LIBRARY_PATH look like? Should it leak from python into
-> C++ executable? It's complicated :-)
+CVE creates separate identifiers if two bugs do not affect the same 
+versions.  This can occur with incomplete fixes.  Since bug 17997 affects 
+1.2.18 but CVE-2014-6316 does not, a separate CVE ID is used.
 
-For exactly this reason -- that it's inherited -- LD_LIBRARY_PATH
-really should not be used, or at least its use should be limited to
-building and testing, not actual deployment. RPATH is a much more
-appropriate tool.
+Use CVE-2015-1042.
 
-Rich
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
