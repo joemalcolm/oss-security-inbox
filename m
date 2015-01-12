@@ -1,32 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/04/15
-Message-ID: <54D29AC7.4050601@redhat.com>
-Date: Wed, 04 Feb 2015 15:18:47 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, security@...dle.com
-Subject: CVE request for Moodlee MDL-48980 Security: Always clean the result from min_get_slash_argument
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/12/3
+Message-ID: <871tn0rlsa.fsf@twoticketsplease.de>
+Date: Mon, 12 Jan 2015 17:44:37 +0100
+From: Moritz Heidkamp <moritz.heidkamp@...uta.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE request for buffer overrun in CHICKEN Scheme's substring-index[-ci] procedures
 Content-Type: text/plain; charset=utf-8
 
-I don't think this has a CVE yet
+Hello,
 
-http://git.moodle.org/gw?p=moodle.git;a=commit;h=af9a7937cc085f96bdbc4724cadec6eeae0242fc
+I would like to request a CVE for a buffer overrun vulnerability in
+CHICKEN Scheme's substring-index[-ci] procedures. This overrun is only
+triggered when an integer greater than zero is passed as the optional
+START argument. As a work-around users are advised to switch to the
+equivalent string-contains procedure from SRFI 13 which is also shipped
+with CHICKEN.
 
-MDL-48980 Security: Always clean the result from min_get_slash_argument
+All releases of CHICKEN up until 4.9.0.1 are affected.
 
-The result from this function is used in send_file calls and if unclean
-(windows dir separators, or .. path components) it could expose
-sensitive files (e.g. .php files). Now we always clean the result from
-this function even if it means double cleaning.
+The issue is fixed by the patch at
+http://lists.nongnu.org/archive/html/chicken-hackers/2014-12/txt2UqAS9CtvH.txt. This
+fix will be included in the upcoming release versions 4.9.0.2, 4.9.1,
+4.10.0, and 5.0.
 
-I also fixed the unit test for this function and added a new test for
-this cleaning.
+The patch on the discussion list is
+http://lists.nongnu.org/archive/html/chicken-hackers/2014-12/msg00000.html
+and it got applied as
+http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=25db851b902606741b1a520bd7e4a3fbd12c9b2a
+and
+http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=63d0445ed379a43343cfcea7032a284cf7deca2b
 
-I also updated the comments to point to get_file_argument as the full
-version of min_get_slash_argument.
+For the official announcement, see
+http://lists.nongnu.org/archive/html/chicken-users/2015-01/msg00048.html
 
+Regards
+Moritz
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+bevuta IT GmbH - professional IT solutions
+Marktstrasse 10 | http://www.bevuta.com/ | HRB 62476 AG Cologne
+D-50968 Cologne | Tel.: +49 221 282678-0 | CEO: Pablo Beyen
 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (473 bytes)
