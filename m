@@ -1,45 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/10
-Message-ID: <mbb99v$lqr$1@ger.gmane.org>
-Date: Mon, 09 Feb 2015 22:37:02 +0100
-From: Damien Regad <dregad@...tisbt.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/12/2
+Message-ID: <CALH-=7zT6WUZD6Y0znWEvUSwHRrgf=ZpJfEXCpVkkCYiJq17Kw@mail.gmail.com>
+Date: Mon, 12 Jan 2015 15:48:12 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: XSS in MantisBT
+Subject: CVE-Request -- CMS Croogo v.2.2.0 -- Reflecting XSS in filemanager in the administrative backend
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+Hi Josh, Steve, vendors, list.
 
-Please assign a CVE ID for the following issue
+I found a reflecting XSS vulnerability in the filemanager of the CMS Croogo
+v. 2.2.0.
 
-Description:
+The filemanager is located here in a common Croogo installation:
 
-The MantisBT Configuration Report (adm_config_report.php) did not 
-properly sanitize the form variables used when saving a filter, allowing 
-an attacker to embed JavaScript code which would be executed in the 
-client's browser when displaying the page.
+http://
+{TARGET}/admin/file_manager/file_manager/editfile?path=%2FApplications%2FXAMPP%2Fxamppfiles%2Fhtdocs%2Fcroogo-2.2.0%2Fpackage.json
 
-Affected versions:
-- >= 1.2.13
-- 1.3.0-beta.1
+By appending arbitrary HTML- and/or JavaScriptcode to names of existing
+files, the XSS gets executed. However it does not work by appending the
+code to names of directories.
 
-Fixed in versions:
-- 1.2.20 (not yet released)
-- 1.3.0-beta.2 (not yet released)
+Example:
 
-Patch:
-See Github [1]
+http://{TARGET}/admin/file_manager/file_manager/editfile?path=%2FApplications%2FXAMPP%2Fxamppfiles%2Fhtdocs%2Fcroogo-2.2.0%2Fpackage.json<script>alert("XSS
+in filemanager functionality of CMS Croogo 2.2.0")</script><!--
 
-Credit:
-This vulnerability was discovered by Fortinet's FortiGuard Labs 
-(reference FG-VD-15-008 [2])
-The issue was fixed by Damien Regad (MantisBT Developer).
+Could you please assign a CVE-ID for that issue?
+
+Thank you!
+
+Greetings
+
+Steffen Rösemann
 
 References:
-Further details will be available in our issue tracker [2] once this 
-goes public.
 
-[1] https://github.com/mantisbt/mantisbt/commit/6defeed5 (1.2.x)
-     https://github.com/mantisbt/mantisbt/commit/3c6f6e56 (1.3.x)
-[2] http://www.fortiguard.com/advisory/UpcomingAdvisories.html
-[3] https://www.mantisbt.org/bugs/view.php?id=19301
+[1] https://croogo.org/
+[2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-02.html
+[3] https://github.com/croogo/croogo/issues/599
+[4]
+http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-02.html
 
