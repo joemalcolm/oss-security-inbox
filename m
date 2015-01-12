@@ -1,43 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/12/3
-Message-ID: <871tn0rlsa.fsf@twoticketsplease.de>
-Date: Mon, 12 Jan 2015 17:44:37 +0100
-From: Moritz Heidkamp <moritz.heidkamp@...uta.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: CVE request for buffer overrun in CHICKEN Scheme's substring-index[-ci] procedures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/12/4
+Message-Id: <201501121936.37902.thijs@debian.org>
+Date: Mon, 12 Jan 2015 19:36:37 +0100
+From: Thijs Kinkhorst <thijs@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: pigz, kgb, pax: directory traversal
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-I would like to request a CVE for a buffer overrun vulnerability in
-CHICKEN Scheme's substring-index[-ci] procedures. This overrun is only
-triggered when an integer greater than zero is passed as the optional
-START argument. As a work-around users are advised to switch to the
-equivalent string-contains procedure from SRFI 13 which is also shipped
-with CHICKEN.
+Three additional cases of directory traversal in archiving utilities have been 
+reported to Debian. Please assign a CVE id to each.
 
-All releases of CHICKEN up until 4.9.0.1 are affected.
+- pigz
+  Report: https://bugs.debian.org/774978
+  Fix: 
+https://github.com/madler/pigz/commit/fdad1406b3ec809f4954ff7cdf9e99eb18c2458f
 
-The issue is fixed by the patch at
-http://lists.nongnu.org/archive/html/chicken-hackers/2014-12/txt2UqAS9CtvH.txt. This
-fix will be included in the upcoming release versions 4.9.0.2, 4.9.1,
-4.10.0, and 5.0.
+- kgb
+  Report: https://bugs.debian.org/774989
 
-The patch on the discussion list is
-http://lists.nongnu.org/archive/html/chicken-hackers/2014-12/msg00000.html
-and it got applied as
-http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=25db851b902606741b1a520bd7e4a3fbd12c9b2a
-and
-http://code.call-cc.org/cgi-bin/gitweb.cgi?p=chicken-core.git;a=commit;h=63d0445ed379a43343cfcea7032a284cf7deca2b
+- pax
+  Report: https://bugs.debian.org/774716 and
+      http://www.openwall.com/lists/oss-security/2015/01/07/5
 
-For the official announcement, see
-http://lists.nongnu.org/archive/html/chicken-users/2015-01/msg00048.html
 
-Regards
-Moritz
--- 
-bevuta IT GmbH - professional IT solutions
-Marktstrasse 10 | http://www.bevuta.com/ | HRB 62476 AG Cologne
-D-50968 Cologne | Tel.: +49 221 282678-0 | CEO: Pablo Beyen
+Thanks,
 
-Download attachment "signature.asc" of type "application/pgp-signature" (473 bytes)
+Thijs Kinkhorst
+Debian security team
