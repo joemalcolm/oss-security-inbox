@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/24/7
-Message-ID: <20150224221147.GA20304@pisco.westfalen.local>
-Date: Tue, 24 Feb 2015 23:11:47 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/12/1
+Message-ID: <CALH-=7yEwd2M_TN39H=9SvgkaCtESuHGdb1fQ8OubJdW9YHnZA@mail.gmail.com>
+Date: Mon, 12 Jan 2015 15:42:58 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request: Linux kernel information leak in event device handling
+Subject: CVE-Request -- CMS PHPKit WCMS v.1.6.6 -- Reflecting XSS vulnerability in administrative backend (poll archive)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 20, 2015 at 03:43:00PM +0100, Marcus Meissner wrote:
-> Hi,
-> 
-> This needs a CVE, information leak out of the kernel.
-> 
-> This probably was introduced by commit 483180281f0ac60d1138710eb21f4b9961901294
-> in Linux 3.9.
-> 
-> Ciao, Marcus
-> 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7c4f56070fde2367766fa1fb04852599b5e1ad35
-> https://bugzilla.suse.com/show_bug.cgi?id=904899
-> 
-> Input: evdev - fix EVIOCG{type} ioctl
-> 
-> The 'max' size passed into the function is measured in number of bits
-> (KEY_MAX, LED_MAX, etc) so we need to convert it accordingly before
-> trying to copy the data out, otherwise we will try copying too much
-> and end up with up with a page fault.
-> 
-> Reported-by: Pavel Machek <pavel@....cz>
-> Reviewed-by: Pavel Machek <pavel@....cz>
-> Reviewed-by: David Herrmann <dh.herrmann@...il.com>
-> Signed-off-by: Dmitry Torokhov <dmitry.torokhov@...il.com>
+Hi Josh, Steve, vendors, list.
 
-This seems to have fallen through the cracks, explicitly adding
-cve-assign to CC.
+I found a reflecting XSS vulnerability in the poll archive of the
+administrative backend of CMS PHPKit WCMS v.1.6.6 [Build: 1660014].
 
-Cheers,
-        Moritz
+It is located here on a common PHPKit WCMS installation:
+
+http://{TARGET}/upload_files/pk/include.php?path=pollarchive&result=1
+
+The parameter "result" is vulnerable by appending arbitrary HTML- and/or
+JavaScriptcode to it.
+
+Example:
+
+http://
+{TARGET}/upload_files/pk/include.php?path=pollarchive&result=1%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E%3C!--
+
+
+Could you please assign a CVE-ID for it?
+
+Thank you!
+
+Steffen Rösemann
+
+References:
+
+[1] http://www.phpkit.com/de/
+[2] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-07.html
+[3]
+http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2014-07.html
+
