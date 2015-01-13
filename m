@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/06/4
-Message-ID: <20150206111131.GD8364@genius.invalid>
-Date: Fri, 6 Feb 2015 12:11:31 +0100
-From: Till Maas <opensource@...l.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/13/1
+Message-ID: <20150113155504.GA23819@mail.corp.redhat.com>
+Date: Tue, 13 Jan 2015 16:55:04 +0100
+From: Vasyl Kaigorodov <vkaigoro@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE request for denial-of-service vulnerability in fcgi
+Subject: CVE request: httpd: IP address spoofing in mod_remoteip
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+It was reported [1] that mod_remoteip does not properly filter the IP addresses supplied in HTTP headers, which can allow a remote attacker to hide his real IP address, or bypass IP based restrictions.
+This issue is fixed upstream:
+https://svn.apache.org/viewvc?view=revision&revision=1564052
 
-there appears to be at least a denial-of-service vulnerability in fcgi:
-https://bugzilla.redhat.com/show_bug.cgi?id=1189958
+Additional information can be found at the below bugreports:
+- https://issues.apache.org/bugzilla/show_bug.cgi?id=54651
+- https://bugzilla.redhat.com/show_bug.cgi?id=1179306
 
-Can someone pleas assign a CVE id to this, to make sure that other
-distributions notice this problem as well.
+[1]: http://mail-archives.apache.org/mod_mbox/httpd-users/201210.mbox/%3cCAHa2qaJSW7Hvk68grWMbbiFSA=zAxQ1nr_-A-K-pDWbAB0Gd1Q@mail.gmail.com%3e
 
-Unfortunately it looks like fastcgi upstream now died, as their mailing
-list is not reachable anymore:
-http://mailman.fastcgi.com/mailman/listinfo/fastcgi-developers
+Can a CVE be assigned to this please?
 
-So if someone knows how to contact them, please forward them this
-information.
+Thanks.
+-- 
+Vasyl Kaigorodov | Red Hat Product Security
+PGP:  0xABB6E828 A7E0 87FF 5AB5 48EB 47D0 2868 217B F9FC ABB6 E828
 
-Regards
-Till Maas
+Content of type "application/pgp-signature" skipped
