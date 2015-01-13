@@ -1,75 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/2
-Message-ID: <54BE6C0D.1080404@enovance.com>
-Date: Tue, 20 Jan 2015 09:54:05 -0500
-From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/13/2
+Message-ID: <CALH-=7xLvS+1dBd=gpF+80cjUosZukJEUX0K52mh8LZuivf=rg@mail.gmail.com>
+Date: Tue, 13 Jan 2015 19:02:53 +0100
+From: Steffen Rösemann <steffen.roesemann1986@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA 2015-002.1] Glance v2 API unrestricted path traversal through filesystem:// scheme (CVE-2015-1195) ERRATA 1
+Subject: CVE-Request -- CMS b2evolution v.5.2.0 -- Reflecting XSS vulnerability in filemanager functionality
 Content-Type: text/plain; charset=utf-8
 
-=======================================================================================
-OSSA-2015-002.1: Glance v2 API unrestricted path traversal through filesystem:// scheme
-=======================================================================================
+Hi Josh, Steve, vendors, list.
 
-:Date: January 20, 2015
-:CVE: CVE-2015-1195
+I found a reflecting XSS vulnerability in CMS b2evolution v.5.2.0
+(release-date: 30th Dec 2014). It is located in its filemanager
+functionality, which can be accessed in the administrative backend by the
+following URL (assuming a common b2evolution installation):
 
+http://
+{TARGET}/blogs/admin.php?fm_filter=&actionArray[filter]=Apply&ctrl=files&locale=&blog=1&mode=&ajax_request=0&root=collection_1&path=&fm_mode=&linkctrl=&linkdata=&iframe_name=&fm_hide_dirtree=0&fm_flatmode=&fm_order=&fm_orderasc=
 
-Affects
-~~~~~~~
-- Glance: up to 2014.1.3 and 2014.2 versions up to 2014.2.1
+The "fm_filter" parameter is vulnerable to XSS attacks and can be exploited
+by an attacker like in the following example:
 
+http://
+{TARGET}/blogs/admin.php?fm_filter=%22%3E%3Cscript%3Ealert%28document.cookie%29%3C/script%3E&actionArray[filter]=Apply&ctrl=files&locale=&blog=1&mode=&ajax_request=0&root=collection_1&path=&fm_mode=&linkctrl=&linkdata=&iframe_name=&fm_hide_dirtree=0&fm_flatmode=&fm_order=&fm_orderasc=
 
-Description
-~~~~~~~~~~~
-Jin Liu from EMC reported that path traversal vulnerabilities in
-Glance were not fully patched in OSSA 2014-041. By setting a malicious
-image location to a filesystem:// scheme an authenticated user can
-still download or delete any file on the Glance server for which the
-Glance process user has access to. Only setups using the Glance V2 API
-are affected by this flaw.
+Could you please assign a CVE-ID for it?
 
+Thank you very much!
 
-Errata
-~~~~~~
-When the original advisory was published a CVE number was not
-assigned. CVE-2015-1195 can now be used to track this vulnerability.
+Greetings.
 
+Steffen Rösemann
 
-Patches
-~~~~~~~
-- https://review.openstack.org/145974 (Icehouse)
-- https://review.openstack.org/145916 (Juno)
-- https://review.openstack.org/145640 (Kilo)
+References:
 
+[1] http://b2evolution.net/
+[2] http://sroesemann.blogspot.de/2014/12/sroeadv-2014-09.html
+[3]
+http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2014-09.html
 
-Credits
-~~~~~~~
-- Jin Liu from EMC (CVE-2015-1195)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1408663
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1195
-
-
-Notes
-~~~~~
-- This fix was included in the kilo-1 development milestone and will be
-  included in future 2014.2.2 (juno) and 2014.1.4 (icehouse) releases.
-- The OpenStack VMT recommends revoking all credentials stored in files
-  accessible by Glance as a precautionary measure.
-
-
-OSSA History
-~~~~~~~~~~~~
-- 2015-01-20 - Errata 1
-- 2015-01-15 - Original Version
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
