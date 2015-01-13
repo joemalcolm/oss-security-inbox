@@ -1,46 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/8
-Message-ID: <54A84802.3090808@mccme.ru>
-Date: Sat, 03 Jan 2015 22:50:26 +0300
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/13/3
+Message-ID: <54B57580.7080404@mccme.ru>
+Date: Tue, 13 Jan 2015 22:44:00 +0300
 From: Alexander Cherepanov <cherepan@...me.ru>
 To: oss-security@...ts.openwall.com
-CC: cve-assign@...re.org
-Subject: Re: CVE request: file(1) DoS
+Subject: CVE request: lhasa: directory traversals
 Content-Type: text/plain; charset=utf-8
 
-On 2014-12-17 03:44, Alexander Cherepanov wrote:
-> There are two more DoSes fixed in ELF parser of file(1), similar to the
-> recent CVE-2014-8116.
+Hi!
 
-These fixes were included in 5.22 release:
+Directory traversals were fixed in lhasa a couple of years ago.
 
-http://mx.gw.com/pipermail/file/2015/001660.html
+They were not found by me. I've just rediscovered one of them and 
+wondered why it worked on Debian wheezy but not on Debian jessie.
 
-> 1. Limit the number of ELF notes processed
-> Report: http://mx.gw.com/pipermail/file/2014/001653.html
-> Fix: https://github.com/file/file/commit/ce90e05774dd77d86cfc8dfa6da57b32816841c4
+1.
+Sanitize directory paths and do not allow '..'
+https://github.com/fragglet/lhasa/commit/64b96b5c1d08293b6c373f616b206d951ee358f7
 
-This issue seems to be introduced here:
+2.
+Add deferred creation for dangerous symlinks.
+https://github.com/fragglet/lhasa/commit/3bab39fd492a8924bdd25615ef40ca68c0c7ad0f
 
-https://github.com/file/file/commit/956a45ab1c54b11304b367056f41905e72a02380#diff-bc5c24ef9f39a5f4963ca28ecbc645b3L423
+which should probably be accompanied by
 
-which ended up in 5.08 release. Hence releases 5.08--5.21 are vulnerable.
+Fix some corner cases with symlink handling.
+https://github.com/fragglet/lhasa/commit/adcd9912803e69ebeb000cc4c341fbc64820ed1f
 
-> 2. Limit string printing to 100 chars
-> Report: http://mx.gw.com/pipermail/file/2014/001654.html
-> Fix: https://github.com/file/file/commit/65437cee25199dbd385fb35901bc0011e164276c
+Only show symlink extraction message once.
+https://github.com/fragglet/lhasa/commit/c26557dd1b2e640e9785686355c5a2945483460b
 
-This issue was introduced in the following commit:
+but I haven't looked inside.
 
-https://github.com/file/file/commit/c8451af8ab0c2e2a93ce93b9c68257d31576cc85
-
-which ended up in 5.16 release. Hence releases 5.16--5.21 are vulnerable.
-
-> Both problems amplified by the fact that the same section in ELF file
-> can be referenced and processed by file(1) multiple times. This is also
-> fixed in the first commit linked above.
->
-> Could CVE(s) please be assigned?
+Could CVE please be assigned?
 
 -- 
 Alexander Cherepanov
