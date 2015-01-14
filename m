@@ -1,96 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/13
-Message-ID: <CAFJ0LnH_tVeePx=TKO4kWFu0ym5L6XA9jMY5HYzuDrMWQ-HdYw@mail.gmail.com>
-Date: Fri, 13 Mar 2015 12:43:45 -0700
-From: Nick Kralevich <nnk@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/14/3
+Message-ID: <1086352637.8641918.1421214799267.JavaMail.zimbra@redhat.com>
+Date: Wed, 14 Jan 2015 00:53:19 -0500 (EST)
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vendor adoption of PIE INFO#934476 oss-security
+Cc: cve-assign@...re.org, Florian Weimer <fweimer@...hat.com>, Daniel Borkmann <dborkman@...hat.com>
+Subject: CVE-2014-8160 Linux Kernel: SCTP firewalling fails until SCTP module is loaded
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 13, 2015 at 10:19 AM, Daniel Micay <danielmicay@...il.com> wrote:
-> On 13/03/15 11:05 AM, Solar Designer wrote:
->> On Thu, Mar 12, 2015 at 08:31:42PM -0700, Nick Kralevich wrote:
->>> I wanted to provide a followup on this year-old thread.
->>
->> Thank you!
->>
->>> With the release of Android 5.0, Android has removed support for
->>> non-PIE binaries [1] [2]. Attempting to run a non-PIE binary will
->>> generate an error on Android. In this way, we ensure that all binaries
->>> take full advantage of Android's ASLR implementation.
->>>
->>> This is just one of the many security enhancements added in Android
->>> 5.*, and one that I hope other Linux distributions will pick up.
->>>
->>> [1] https://source.android.com/devices/tech/security/enhancements/enhancements50.html
->>> [2] https://android.googlesource.com/platform/bionic/+/76e289c026f11126fc88841b3019fd5bb419bb67
->
-> Sadly, PIE is much less useful on Android right now. Every app and many
-> services are spawned from an initial zygote process without an exec, so
-> nearly everything has the same ASLR bases. It is great to see progress
-> in this space though. I hope to see the zygote process go away now that
-> ART and modern hardware makes it much less necessary - especially if a
-> process (or a pool) is pre-spawned during idle time.
->
-> AFAIK, the change forbidding non-PIE binaries was backed out for the
-> official 5.0 release
-> (https://android.googlesource.com/platform/bionic/+/d81b3b275dff99561cbe5905ca63a1c72fa54a17).
-> I guess that was fixed in 5.1? I haven't looked into it yet.
+CVE-2014-8160 has been assigned to this issue in net/netfilter/nf_conntrack_proto_generic.c
+that can allow protocols that do not have a protocol handler kernel module loaded
+through the iptables firewall even if explicitly denied by rule.
 
-You are getting the dates of your patches out of order. There were
-three patches submitted in the following order:
+For more detail see:
 
-2014-05-08: Remove support for non-PIE executables
-https://android.googlesource.com/platform/bionic/+/2aebf5429bb1241a3298b5b642d38f73124c2026
+http://www.spinics.net/lists/netfilter-devel/msg33430.html
 
-2014-06-19: Reenable support for non-PIE executables
-https://android.googlesource.com/platform/bionic/+/d81b3b275dff99561cbe5905ca63a1c72fa54a17
-
-2014-07-03: Revert "Reenable support for non-PIE executables"
-https://android.googlesource.com/platform/bionic/+/76e289c026f11126fc88841b3019fd5bb419bb67
-
-The last patch is definitely in Android 5.0, and was never backed out.
-
-  ~/aosp/bionic/linker$ git tag --contains
-76e289c026f11126fc88841b3019fd5bb419bb67
-  android-5.0.0_r1
-  android-5.0.0_r2
-  android-5.0.0_r3
-  android-5.0.0_r4
-  android-5.0.0_r5
-  android-5.0.0_r5.1
-  android-5.0.0_r6
-  android-5.0.0_r7
-  android-5.0.1_r1
-  android-5.0.2_r1
-  android-5.1.0_r1
-  android-l-preview_r2
-  android-wear-5.0.0_r1
-
-
->
->> I brought this to Twitter, and here's a comment by Rich Felker:
->>
->> <solardiz> Android 5.0 "has removed support for non-PIE binaries. Attempting to run a non-PIE binary will generate an error" http://www.openwall.com/lists/oss-security/2015/03/13/1
->> <@RichFelker> @solardiz Guess that means no emacs on Android...
->> <@solardiz> @RichFelker Why, can't one build Emacs as PIE?
->> <@RichFelker> @solardiz The whole dumper issue. The final emacs binary is a dump of an emacs with a lisp heap full of pointers and no relocation data.
->
-> FWIW, I think various distributions are going to enable it once the PIE
-> by default patches land:
->
-> https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg105030.html
->
-> There has been no luck getting someone to review them, so they missed
-> the GCC 5 freeze deadline despite being ready before then.
->
-> I proposed that we enable it by default on Arch via wrapper scripts, but
-> it was rejected in favour of waiting for this patch to land. An OpenSUSE
-> developer also voiced interest in the patches on the GCC mailing list.
-> It just needs a committer who feels like reviewing it.
->
-
-
-
--- 
-Nick Kralevich | Android Security | nnk@...gle.com | 650.214.4037
+Wade Mealing -- Red Hat -- Product Security
