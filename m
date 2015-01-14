@@ -1,35 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/19
-Message-ID: <Pine.LNX.4.64.1501281305450.9171@beijing.mitre.org>
-Date: Wed, 28 Jan 2015 13:07:15 -0500 (EST)
-From: cve-assign@...re.org
-To: Moritz Muehlenhoff <jmm@...ian.org>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request for buffer overrun in CHICKEN Scheme's substring-index[-ci] procedures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/14/5
+Message-Id: <B4504CAD-32FD-41F1-86EC-E14CCB880E02@andyet.net>
+Date: Wed, 14 Jan 2015 08:33:10 -0800
+From: Adam Baldwin <baldwin@...yet.net>
+To: Kurt Seifried <kseifried@...hat.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, "report@...esecurity.io" <report@...esecurity.io>
+Subject: Re: Node.js "serve-static" module Open Redirect
 Content-Type: text/plain; charset=utf-8
 
+Yes we post to mitre for CVE. We're short staffed so slow. We can try and cross post to oss-security too in the future. 
 
-On Wed, 28 Jan 2015, Moritz Muehlenhoff wrote:
+Adam Baldwin
 
-> On Wed, Jan 28, 2015 at 09:08:06AM +0100, Peter Bex wrote:
->> On Mon, Jan 12, 2015 at 05:44:37PM +0100, Moritz Heidkamp wrote:
->>> Hello,
->>>
->>> I would like to request a CVE for a buffer overrun vulnerability in
->>> CHICKEN Scheme's substring-index[-ci] procedures.
->>
->> What's the status on this?  The CVE request was made over 2 weeks ago
->> yet there hasn't been an ID assigned.
->
-> I'm adding cve-assign to CC, that usually helps.
->
-> Cheers,
->        Moritz
+> On Jan 13, 2015, at 8:56 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+> 
+> https://nodesecurity.io/advisories/serve-static-open-redirect
+> 
+> Says CVE pending, no idea where/whom they asked, I assume Mitre?
+> 
+> Also if nodesecurity.io could post these advisories to oss-security that
+> would be helpful, thanks!
+> 
+> -- 
+> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+> 
 
-Use CVE-2014-9651.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
