@@ -1,64 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/13/15
-Message-ID: <371E240E6FC1D44DA5E51EE9DCDCB784012B9E42ED@NA-MBX-01.mgc.mentorg.com>
-Date: Fri, 13 Mar 2015 20:17:21 +0000
-From: "Mehaffey, John" <John_Mehaffey@...tor.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: CVE request: Linux kernel: tty: kobject reference leakage in tty_open
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/14/6
+Message-ID: <20150114173354.GB18830@kludge.henri.nerv.fi>
+Date: Wed, 14 Jan 2015 19:33:54 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: lhasa: directory traversals
 Content-Type: text/plain; charset=utf-8
-
-Hi Greg,
-To me, it is more of an issue of tracking products which were designed and sold in the vulnerable timeframe, and may still embed these flaws.
-
-Most of the embedded market may not be vulnerable to this attack for other reasons, but a CVE would help to track it for the exceptions.  A GENIVI head unit that uses logins to implement the IVI user concept comes to mind.
-
-Sincerely,
-John Mehaffey
-Linux System Architect
-Mentor Graphics
-
-________________________________________
-From: P J P [ppandit@...hat.com]
-Sent: Friday, March 13, 2015 11:00 AM
-To: oss security list
-Subject: [oss-security] CVE request: Linux kernel: tty: kobject reference leakage in tty_open
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-   Hello,
+On Tue, Jan 13, 2015 at 10:44:00PM +0300, Alexander Cherepanov wrote:
+> https://github.com/fragglet/lhasa/commit/64b96b5c1d08293b6c373f616b206d951ee358f7
+> https://github.com/fragglet/lhasa/commit/3bab39fd492a8924bdd25615ef40ca68c0c7ad0f
+> https://github.com/fragglet/lhasa/commit/adcd9912803e69ebeb000cc4c341fbc64820ed1f
+> https://github.com/fragglet/lhasa/commit/c26557dd1b2e640e9785686355c5a2945483460b
 
-Linux kernel built with the virtual console support(CONFIG_VT) is vulnerable
-to a NULL pointer dereference issue. It could occur while accessing pseudo
-terminal device(/dev/pts/*) files.
+All of these commits are only in versions 0.1.0 and 0.2.0 so no need for
+"incomplete fix for" CVE(s). Use cases would have be nice.
 
-An unprivileged user could use this flaw to crash the system kernel resulting
-in DoS.
-
-Upstream fix:
-- -------------
-   -> https://git.kernel.org/linus/c290f8358acaeffd8e0c551ddcc24d1206143376
-
-
-Thank you.
 - --
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
-
+Henri Salo
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Version: GnuPG v1.4.12 (GNU/Linux)
 
-iQIcBAEBAgAGBQJVAyW3AAoJEN0TPTL+WwQfOCAP/3z7CRPQj4glHgVFdkxuzk1/
-xlXwJJTRYlVDWe2F/lCbeP+jzQne37MzVl8Qma4OA2iAuySsRUQvjkc/6mMB6j+6
-9LVg0XV6hlZl0oFmxcWbQlNQLuhJsHOPja863aNvKoDZbh6mVIGi98BOaBjeMQUd
-Y81pGh5+BFYVk6hhcWPA2Zxok/MW+HN/JjvDqQReILsL5ApqRAxw0EBmZ3YpWBYL
-oxdRUT2FoRTKB5FFEgm6KAQdTSc9iqnH/QUTE4/s5wMCy20lb6j9bIk7pKkE6VmA
-XLwtioC/ttNR/Npe2kPXHm3KG4MH8Uftjd3IYdtJeJ7vjjgmPY3jAZZm/dBECWRZ
-Q9waGh9k8t6pEhaCz4jql21m1uoHLritnrLuAz56dOfh3R6TS46QEKqf7IgaqZ41
-psgQQKmX3gy9lyWoWdcWYgCvg5QJaW2lVotTTbCbSs/qfNmqJo2nMzTVL5UxTYic
-Adj0Y3KvrkIbAjEdyaNmwOMqH2pq8LUb87wDlD4DD7pRzZDFV6vzXA7wL5Za7VOr
-S8t3VvFfsMPUW+Y2zTdahWiGkgiQXxmFhaOC9KeSWFmgpxDQjJSPtdFdlRdu6gtX
-9ZXd7JSkwcFPujAFJ4SHI67ilo1rnqh3n6HZqOtaKTQCn6L7Mnn3ht/vumkxQpbF
-qjvQJOX+4OcFRe025MOM
-=ZQtV
+iEYEARECAAYFAlS2qIIACgkQXf6hBi6kbk9QGQCgrU3/Ifc9L0uVyi59pYcM8/Hk
+D/4AniTOUbuCSckMwj9bWPT1TuBl9OUR
+=ZU0I
 -----END PGP SIGNATURE-----
