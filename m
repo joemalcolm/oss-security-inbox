@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/2
-Message-ID: <20150131123102.GA29958@kludge.henri.nerv.fi>
-Date: Sat, 31 Jan 2015 14:31:02 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: phpbb3 CSRF and CSS injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/14/2
+Message-ID: <54B5F712.60407@redhat.com>
+Date: Tue, 13 Jan 2015 21:56:50 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, report@...esecurity.io
+Subject: Node.js "serve-static" module Open Redirect
 Content-Type: text/plain; charset=utf-8
 
-Can I get 2 2015 CVEs for phpBB3 vulnerabilities fixed in 3.0.13, thanks.
+https://nodesecurity.io/advisories/serve-static-open-redirect
 
-https://wiki.phpbb.com/Release_Highlights/3.0.13
+Says CVE pending, no idea where/whom they asked, I assume Mitre?
 
-https://tracker.phpbb.com/browse/PHPBB3-13531
-https://github.com/phpbb/phpbb/pull/3316
-"CSS Injection via Relative Path Overwrite. Thanks to James Kettle for bringing
-this to our attention"
-
-https://tracker.phpbb.com/browse/PHPBB3-13526
-https://github.com/phpbb/phpbb/pull/3311
-"The ucp_pm_options form key is now properly validated. Thanks to FBNeal and
-lampsys who reported this independently."
+Also if nodesecurity.io could post these advisories to oss-security that
+would be helpful, thanks!
 
 -- 
-Henri Salo
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
