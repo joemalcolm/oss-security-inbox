@@ -1,48 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/21
-Message-ID: <54C7D8F3.3020503@gmail.com>
-Date: Tue, 27 Jan 2015 19:29:07 +0100
-From: Sven Kieske <svenkieske@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/15/5
+Message-ID: <20150116000650.6b0f3a05@pc>
+Date: Fri, 16 Jan 2015 00:06:50 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Qualys Security Advisory CVE-2015-0235 - GHOST: glibc gethostbyname buffer overflow
+Subject: Re: CVE-Request -- CMS b2evolution v.5.2.0 -- Reflecting XSS vulnerability in filemanager functionality
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, 15 Jan 2015 16:44:39 -0500
+Daniel Kahn Gillmor <dkg@...thhorseman.net> wrote:
 
-On 27.01.2015 19:20, Qualys Security Advisory wrote:
-> Here is a list of potential targets that we investigated (they all
-> call gethostbyname, one way or another), but to the best of our
-> knowledge, the buffer overflow cannot be triggered in any of them:
-> 
-> apache, cups, dovecot, gnupg, isc-dhcp, lighttpd, mariadb/mysql, 
-> nfs-utils, nginx, nodejs, openldap, openssh, postfix, proftpd, 
-> pure-ftpd, rsyslog, samba, sendmail, sysklogd, syslog-ng,
-> tcp_wrappers, vsftpd, xinetd.
-> 
-> That being said, we believe it would be interesting if other
-> people could have a look, just in case we missed something.
+> Is a bit troubling, because it seems to rely on the Subject: line for
+> necessary context in interpreting the signed message.
 
-Here is a potential list from openhub.net code search:
+There's probably no better evidence for the severe usability issues
+pgp-based mail has than people on a mailing list of IT security
+specialists explaining each other how to properly use it :-)
 
-https://code.openhub.net/search?p=0&s=gethostbyname&p=0
+Having said that: I have a rough kind-of-proposal to fix exactly that
+problem. I think pgp not encrypting/signing the subject is one of its
+major usability fails.
+I'll send my ideas to the gpg dev list soon, will post a link here when
+done. Let's see if we can at least fix that.
 
-might be worth investigating
+-- 
+Hanno Böck
+http://hboeck.de/
 
-kind regards
+mail/jabber: hanno@...eck.de
+GPG: BBB51E42
 
-Sven
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQGcBAEBAgAGBQJUx9jyAAoJEAq0kGAWDrqlzsIL/i3OzGxxgE8p0pf+wi34wmne
-Nq5yhNk42DHCExP1YfabDy41OobwXO9IdgT6zYqPQBM55N9dgyON+ph3lggw8psG
-UDGgA+o+plc2gBbFS/aLFLHM2ALqyn7oqTIgqD/Sw1gbiiYvgHp40PMwBYYcW56/
-oPRletR9q4npOGkVxByskNS8+b0VaFbmwVg6CQMYiR8UyWLRoTILtMV0DWXlhkxU
-m6Qfo8kDNkR3lLi3n5tIkfTJsLF2NWWHiS4PDjc32JJahUjlIjyfBaHWs8T8KN6h
-clUHB3BV7rp3ZBw4STgPwz0OVHPsGGnsj9x4m3dX4kEk39SHewFfYrXAqO1o3vot
-Kfq3RTh/pesL6Ze/talnXS0KCYep7Jxi3lxIuNHoAI2VxKVbdTgEDBZlBuNLuz3H
-ABT627Gh6fAxtrtsdjU7AlsjDiEXRXt8YvgQUJJy5S89sdM3ewbhsl91sqOJTkYl
-W+nnngzcvOImxfxWn/A4xnGcstle3rsZ2gaeQBQkgA==
-=h6GH
------END PGP SIGNATURE-----
+Content of type "application/pgp-signature" skipped
