@@ -1,65 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/6
-Message-ID: <54D8D09B.9000504@collabora.co.uk>
-Date: Mon, 09 Feb 2015 15:22:03 +0000
-From: Simon McVittie <simon.mcvittie@...labora.co.uk>
-To: oss-security@...ts.openwall.com
-CC: "dbus@...ts.freedesktop.org" <dbus@...ts.freedesktop.org>
-Subject: CVE-2015-0245: denial of service in dbus >= 1.4 systemd activation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/15/4
+Message-ID: <87y4p31zy0.fsf@alice.fifthhorseman.net>
+Date: Thu, 15 Jan 2015 16:44:39 -0500
+From: Daniel Kahn Gillmor <dkg@...thhorseman.net>
+To: Henri Salo <henri@...v.fi>, oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- CMS b2evolution v.5.2.0 -- Reflecting XSS vulnerability in filemanager functionality
 Content-Type: text/plain; charset=utf-8
 
-Bug tracked as: CVE-2015-0245
-Bug tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=88811
-Versions affected: dbus >= 1.4.0
-Versions fixed: >= 1.9.10, 1.8.x >= 1.8.16, 1.6.x >= 1.6.30
-Type of vulnerability: CWE-285 Improper Authorization
-Exploitable by: local users
-Impact: denial of service
-Reporter: Simon McVittie, Collabora Ltd.
+Hi Henri--
 
-D-Bus <http://www.freedesktop.org/wiki/Software/dbus/> is an
-asynchronous inter-process communication system, commonly used
-for system services or within a desktop session on Linux and other
-operating systems.
+Your recent message:
 
-dbus-daemon can "activate" (auto-start) D-Bus services on-demand when it
-receives a message addressed to them. In versions >= 1.4.0 of dbus, it
-can do this by using a D-Bus signal to ask systemd to carry out the
-actual service start.
+On Thu 2015-01-15 01:56:41 -0500, Henri Salo wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+>
+> Fixed in 5.2.1 version.
+>
+> - -- 
+> Henri Salo
+> -----BEGIN PGP SIGNATURE-----
+> Version: GnuPG v1.4.12 (GNU/Linux)
+>
+> iEYEARECAAYFAlS3ZKkACgkQXf6hBi6kbk/EXACgobA8v+eNpA8mbR85uzP1rSH/
+> YfEAoMqRuWAaDysP7GYpQJ+zLAkKze+A
+> =XgEo
+> -----END PGP SIGNATURE-----
 
-systemd sends back an ActivationFailure D-Bus signal if the activation
-fails. However, when it receives these signals, dbus-daemon does not
-verify that the signal actually came from systemd. A malicious local
-user could send repeated ActivationFailure signals in the hope that it
-would "win the race" with the genuine signal, causing D-Bus to send back
-an error to the client that requested activation.
+Is a bit troubling, because it seems to rely on the Subject: line for
+necessary context in interpreting the signed message.
 
-Mitigation: the system service is not actually prevented from starting
-or claiming its well-known bus name, and after it has done so,
-subsequent clients can communicate with it as usual.
+An attacker could take this signed message, and replay it "From" you
+with a changed subject line to try to indicate that you think some other
+bug was fixed in some other piece of software, version 5.2.1.
 
-The recommended fix for stable distributions is to alter system.conf
-similar to the attached patch (commit link below), or upgrade to version
-1.8.16 or 1.6.30. This restricts the attack to uid 0, making it a
-non-issue in practice.
-
-http://cgit.freedesktop.org/dbus/dbus/commit/?id=6dbd09fedc396c53b25ea73c6c8a278beca349c7
-
-The full solution involves additional code changes and has only been
-made in the 1.9 development branch so far, but is easy to backport to
-1.8 if required (e.g. for environments where uid 0 is not all-powerful
-due to use of LSMs). It requires two additional commits:
-
-http://cgit.freedesktop.org/dbus/dbus/commit/?id=aaea59916398d1c590490edb0471a01bcf20e6d7
-http://cgit.freedesktop.org/dbus/dbus/commit/?id=03c5e161752fe1ff4925955800ca9c78d09a6e0c
+You can avoid this kind of problem by ensuring that the messages you
+sign are context-independent (e.g. including the information currently
+in this message's subject line in your message body directly as well).
 
 Regards,
-    S
 
--- 
-Simon McVittie, Collabora Ltd.
-on behalf of the D-Bus maintainers
+   --dkg
 
-View attachment "0001-CVE-2015-0245-prevent-forged-ActivationFailure-from-.patch" of type "text/x-patch" (1550 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (794 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (949 bytes)
