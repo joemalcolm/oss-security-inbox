@@ -1,44 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/09/2
-Message-ID: <20150309090333.GA7745@suse.de>
-Date: Mon, 9 Mar 2015 10:03:33 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/15/2
+Message-ID: <54B7E5B7.8090909@enovance.com>
+Date: Thu, 15 Jan 2015 11:07:19 -0500
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request: libarchive -- directory traversal in bsdcpio
+Subject: [OSSA 2015-002] Glance v2 API unrestricted path traversal through filesystem:// scheme
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+=====================================================================================
+OSSA-2015-002: Glance v2 API unrestricted path traversal through filesystem:// scheme
+=====================================================================================
 
-can someone else beside Mitre assign a CVE?
+:Date: January 15, 2015
+:CVE: Requested
 
-Ciao, Marcus
-On Thu, Mar 05, 2015 at 10:00:01PM +0100, Moritz Mühlenhoff wrote:
-> On Sun, Feb 22, 2015 at 08:01:10PM +0100, Moritz Muehlenhoff wrote:
-> > On Fri, Jan 16, 2015 at 06:19:21AM +0300, Alexander Cherepanov wrote:
-> > > Hi!
-> > > 
-> > > bsdcpio tool from libarchive bundle is susceptible to a directory traversal
-> > > vulnerability via absolute paths.
-> > > 
-> > > Initial discussion:
-> > > http://www.openwall.com/lists/oss-security/2015/01/07/5
-> > > 
-> > > Upstream report:
-> > > https://groups.google.com/d/msg/libarchive-discuss/dN9y1VvE1Qk/Z9uerigjQn0J
-> > > 
-> > > My proposed (minimal) fix (non-Windows):
-> > > https://groups.google.com/group/libarchive-discuss/attach/a78932ecb50340ae/0001-Quick-n-dirty-fix-for-bsdcpio-directory-traversal-vu.patch?part=0.1
-> > > 
-> > > Discussion is ongoing.
-> > > 
-> > > Could CVE(s) please be assigned?
-> > 
-> > This seems to have fallen through the cracks, explicitly adding cve-assign
-> > to CC.
-> 
-> Now released as DSA 3180.
-> 
-> Cheers,
->         Moritz
-> 
+
+Affects
+~~~~~~~
+- Glance: up to 2014.1.3 and 2014.2 versions up to 2014.2.1
+
+
+Description
+~~~~~~~~~~~
+Jin Liu from EMC reported that path traversal vulnerabilities in
+Glance were not fully patched in OSSA 2014-041. By setting a malicious
+image location to a filesystem:// scheme an authenticated user can
+still download or delete any file on the Glance server for which the
+Glance process user has access to. Only setups using the Glance V2 API
+are affected by this flaw.
+
+
+Patches
+~~~~~~~
+- https://review.openstack.org/145974 (Icehouse)
+- https://review.openstack.org/145916 (Juno)
+- https://review.openstack.org/145640 (Kilo)
+
+
+Credits
+~~~~~~~
+- Jin Liu from EMC
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1408663
+
+
+Notes
+~~~~~
+- This fix was included in the kilo-1 development milestone and will be
+  included in future 2014.2.2 (juno) and 2014.1.4 (icehouse) releases.
+- The OpenStack VMT recommends revoking all credentials stored in files
+  accessible by Glance as a precautionary measure.
+- A CVE has been requested for this issue, the OpenStack VMT will issue an
+  errata with the correct CVE number assigned once this information is
+  available.
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
