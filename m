@@ -1,45 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/05/15
-Message-Id: <20150205202051.EFD8B42E02A@smtpvbsrv1.mitre.org>
-Date: Thu,  5 Feb 2015 15:20:51 -0500 (EST)
-From: cve-assign@...re.org
-To: thoger@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE request - ICU
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/6
+Message-Id: <714474C6-483A-4E8E-A328-50CF01C11195@orthanc.ca>
+Date: Thu, 15 Jan 2015 19:09:47 -0800
+From: Lyndon Nerenberg <lyndon@...hanc.ca>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE Request: cpio -- directory traversal
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
->> https://code.google.com/p/chromium/issues/detail?id=432209
->> https://chromium.googlesource.com/chromium/deps/icu/+/dd727641e190d60e4593bcb3a35c7f51eb4925c5
->> http://bugs.icu-project.org/trac/changeset/36801
+On Jan 15, 2015, at 6:44 PM, Alexander Cherepanov <ch3root@...nwall.com> wrote:
 
->>   A. the entire known vulnerability is that the unpatched code
->>      calculates certain values without ensuring that they can be
->>      represented in a 24-bit field
+> cpio is susceptible to a directory traversal vulnerability via symlinks.
 
->> Should there be one CVE ID now, for observation A alone?
+This is not a bug.  It's doing exactly what you asked of it.
 
-> That's what can be done based on the information public at the moment.
-
-There doesn't appear to be any additional information or another
-expressed viewpoint, so we'll proceed with assigning CVE-2014-9654 for
-observation A.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU09BLAAoJEKllVAevmvmsztkH/RpBrRIk+v5Rm6hjbIO9w5Lx
-Mo48AqnpwWthNobKgYKY1cQLRwuVTwwe4opZJUEOPRpjff1OiHS0m1Nhbd/E6CCh
-P/yw6nZgxeXDMDjnBbzblSkbLkgXe/V3QbU+wYAuhw+/16C4jX5wx09MFnQpWKRV
-y41nfyp6Xzdgl+/6R6o8t3sBXoi5kD9lZx0sndUs1ipcqzboij6k1KJvPXr5rvif
-xPJfFPBxjxETBFri4Lsv+27F9q5Pjucootd2fidE47KirIDOktDxdBQOGEnjtii/
-E9tsNNgoieNkb0MCMdkJmf7yGOqq3PxPB54UtSydtaiHxrwMoaCq9u+gh01p/o0=
-=brIj
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (802 bytes)
