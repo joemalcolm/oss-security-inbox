@@ -1,41 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/7
-Message-ID: <54D90576.8040308@upv.es>
-Date: Mon, 09 Feb 2015 20:07:34 +0100
-From: Hector Marco <hecmargi@....es>
-To: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: CVE-Request -- Google Email App 4.2.2 remote denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/1
+Message-ID: <54B9A5EA.2050008@mantisbt.org>
+Date: Sat, 17 Jan 2015 00:59:38 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Cc: advisory@...ridge.ch
+Subject: CVE-2014-9571: XSS in install.php
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Greetings,
 
-A bug in the stock Google email application version 4.4.2.0200 has been 
-found. An attacker can remotely perform an Denial Of Service attack by 
-sending a specially crafted email. No interaction form the user is 
-needed to produce the crash just receive the malicious email.
-
-When the victim receives the malicious email, the application crashes 
-while trying to download the email.The email application can not be used 
-until the offending email is removed.
-
-The email version 4.2.2.0200 running on a Samsung Galaxy 4 mini fully 
-updated (19 Jan 2015) is vulnerable. Newer versions 4.2.2.0400 are not 
-affected.
+Please update CVE-2014-9571 with the information below
 
 
-Proof of concept exploit remote crasher and more details:
+Description:
 
-http://hmarco.org/bugs/google_email_app_4.2.2_denial_of_service.html
+Vulnerabilities described in this section can be used by attackers to 
+steal cookies of application’s administrator and other website users. 
+Attackers can also perform spear phishing attacks against web site 
+visitors by replacing original content of the web site with arbitrary 
+HTML and script code, perform drive-by-download attacks by injecting 
+malware into web pages, and bypass existing CSRF protection mechanism.
 
+The vulnerability exists due to insufficient filtration of input data 
+passed via the "admin_username" and "admin_password" HTTP GET parameters 
+to "/[admin]/install.php" script. A remote attacker can trick a 
+logged-in user to open a specially crafted link and execute arbitrary 
+HTML and script code in browser in context of the vulnerable website.
 
-Could you please assign a CVE-ID for this?
+Below are two exploitation examples that use the "alert()" JavaScript 
+function to display "immuniweb" word:
 
+http://mantis/[admin]/install.php?install=1&admin_username=1%27%22%3E%3Cscript%3Ealert%28%27immuniweb%27%29;%3C/script%3E
+http://mantis/[admin]/install.php?install=1&admin_password=1%27%22%3E%3Cscript%3Ealert%28%27immuniweb%27%29;%3C/script%3E
 
+Note, that "[admin]" in the URL is changed by default during MantisBT 
+installation. Therefore, the attacker must know the location of the 
+administrative interface in order to perform the attack. However, admin 
+panel URL can be bruteforced or predicted in many cases.
 
-Hector Marco.
-http://hmarco.org
+Affected versions:
+- <= 1.2.19
+- <= 1.3.0-beta.1
 
-Cyber-security researcher at
-http://cybersecurity.upv.es/
+Fixed in versions:
+- 1.2.19 (not yet released)
+- 1.3.0-beta.2 (not yet released)
+
+Patch:
+See Github [1]
+
+Credit:
+This vulnerability was reported [2] by High-Tech Bridge Security 
+Research Lab (https://www.htbridge.com/), via advisory ID HTB23243 [3].
+The issue was fixed by Damien Regad (MantisBT Developer).
+
+References:
+Further details available in our issue tracker [4]
+
+[1] http://github.com/mantisbt/mantisbt/commit/6d47c047 (1.2.x)
+     http://github.com/mantisbt/mantisbt/commit/132cd6d0 (1.3.x)
+[2] https://www.mantisbt.org/bugs/view.php?id=17937
+[3] https://www.htbridge.com/advisory/HTB23243
+[4] https://www.mantisbt.org/bugs/view.php?id=17938
+
 
 
