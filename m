@@ -1,45 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/26/4
-Message-ID: <20150226122840.56ca6cbf@pc>
-Date: Thu, 26 Feb 2015 12:28:40 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/13
+Message-ID: <20150116182209.GA13165@eldamar.local>
+Date: Fri, 16 Jan 2015 19:22:09 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: Joomla Google Maps Plugin
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: xdg-utils: xdg-open: command injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-Akamai is currently warning of old versions of a joomla google maps
-plugin. Akamai advisory:
-http://www.stateoftheinternet.com/resources-web-security-threat-advisories-2015-joomla-reflection-attack-ddos-for-hire.html
+On Thu, Jan 01, 2015 at 08:51:31AM +0100, Salvatore Bonaccorso wrote:
+> From the references it is not clear, if a CVE was already requested in
+> past, but I have not found a reference here. xdg-open has a command
+> injection vulnerability, which was reported on [1] and [2]. The
+> Freedesktop.org Bug entry contains also a patch[3]. The issue was
+> hilighted again on the fulldisclosure list in [4].
+> 
+> In case it is not yet assigned, could you please assign a CVE for this
+> RCE for xdg-open in xdg-utils?
+> 
+> References:
+> 
+>  [1] https://bugs.gentoo.org/show_bug.cgi?id=472888
+>  [2] https://bugs.freedesktop.org/show_bug.cgi?id=66670
+>  [3] https://bugs.freedesktop.org/attachment.cgi?id=109536
+>  [4] http://seclists.org/fulldisclosure/2014/Nov/36
+>  [5] https://bugs.debian.org/773085
 
-These vulns have not seen CVEs as far as I can see. They have been fixed
-in 3.1. This is the developers announcement:
-http://tech.reumer.net/Google-Maps/Documentation-of-plugin-Googlemap/security-release-3-1-of-plugin-googlemaps.html
+Just wanted to ask back, can a CVE be assigned for this xdg-open
+issue? Is anything required missing? Important: Note that the
+referenced upstream approach is still beeing worked on. In Debian the
+following patch was applied:
 
-And here are some more details:
-http://cxsecurity.com/issue/WLB-2014020215
+http://sources.debian.net/src/xdg-utils/1.1.0~rc1%2Bgit20111210-7.3/debian/patches/xdg-open-safe.diff/
 
-1 Denial of Service / reflection issue (this seems the one akamai is
-most concerned about)
-1 XML injection
-2 XSS
-1 path disclosure
-1 anti automation (not sure this counts as a vulnerability)
-
-I've added detection to freewvs [1] (which is btw a tool you might find
-interesting, although its functionality overlaps with a similar tool
-called pyfiscan and there are some preliminary plans to maybe merge the
-development work of the two in the future).
-
-[1] https://source.schokokeks.org/freewvs/
-
-cu,
--- 
-Hanno Böck
-http://hboeck.de/
-
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
-
-Content of type "application/pgp-signature" skipped
+Regards,
+Salvatore
