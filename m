@@ -1,26 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/05/8
-Message-ID: <Pine.LNX.4.64.1501051150280.8826@beijing.mitre.org>
-Date: Mon, 5 Jan 2015 11:51:05 -0500 (EST)
-From: "Steven M. Christey" <coley@...re.org>
-To: Steve Kemp <steve@...ve.org.uk>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: cve request: insecure temporary file usage - xbindkeys-config
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/17
+Message-ID: <m9c7o8$mgd$1@ger.gmane.org>
+Date: Sat, 17 Jan 2015 00:44:08 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2015-1042: URL redirection issue in MantisBT
 Content-Type: text/plain; charset=utf-8
 
+Greetings,
 
-On Sat, 3 Jan 2015, Steve Kemp wrote:
+Please update CVE-2015-1042 with the information below
 
->  I realize I didn't request and ID for the insecure use of
-> temporary files in xbindkeys-config, as reported (by myself)
-> here:
->
->    https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772473
 
-Use CVE-2014-9513.
+Description:
 
----
+A bug in the URL sanitization routine allows an attacker to craft an URL 
+that can redirect outside of the MantisBT instance's domain.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+This is related to CVE-2014-6316 [1], and the same API function is 
+affected by the same vulnerability, but the root cause is different.
+
+Both examples below will redirect to Google:
+- On a server with http connection:
+http://www.example.com/mantis-directory/login_page.php?return=https:/www.google.com
+- On a server with https connection:
+https://www.example.com/mantis-directory/login_page.php?return=http:/www.google.com
+
+
+Affected versions:
+- >= 1.2.0a3, <= 1.2.18
+- 1.3.0-beta.1
+
+Fixed in versions:
+- 1.2.19 (not yet released)
+- 1.3.0-beta.2 (not yet released)
+
+Patch:
+See Github [2]
+
+Credit:
+The issue was discovered by Alejo Popovici [3] and fixed by Damien Regad 
+(MantisBT Developer).
+
+References:
+Further details available in our issue tracker [3]
+
+
+[1] http://article.gmane.org/gmane.comp.security.oss.general/15384
+[2] http://github.com/mantisbt/mantisbt/commit/d95f070d (1.2.x)
+     http://github.com/mantisbt/mantisbt/commit/e7e2b550 (1.3.x)
+[3] https://www.mantisbt.org/bugs/view.php?id=17997
+
+
+
