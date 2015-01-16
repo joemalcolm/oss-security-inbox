@@ -1,23 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/23/6
-Message-ID: <20150123110732.GB25462@kludge.henri.nerv.fi>
-Date: Fri, 23 Jan 2015 13:07:32 +0200
-From: Henri Salo <henri@...v.fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/14
+Message-ID: <20150116183531.GA6237@pisco.westfalen.local>
+Date: Fri, 16 Jan 2015 19:35:32 +0100
+From: jmm@...ian.org
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- ferretCMS v.1.0.4-alpha -- Multiple reflecting/stored XSS- and SQLi-vulnerabilities, unrestricted file upload
+Cc: cve-assign@...re.org
+Subject: Re: CVE request: file(1) DoS
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 23, 2015 at 07:14:56AM +0100, Steffen Rösemann wrote:
-> I found multiple reflecting/stored XSS- and SQLi-vulnerabilities as well as
-> an unrestricted file upload in the CMS ferretCMS v.1.0.4 which is currently
-> in the alpha development stage.
+On Fri, Jan 16, 2015 at 08:15:56AM -0500, Marc Deslauriers wrote:
+> On 2015-01-03 02:50 PM, Alexander Cherepanov wrote:
+> > On 2014-12-17 03:44, Alexander Cherepanov wrote:
+> >> There are two more DoSes fixed in ELF parser of file(1), similar to the
+> >> recent CVE-2014-8116.
+> > 
+> > These fixes were included in 5.22 release:
+> > 
+> > http://mx.gw.com/pipermail/file/2015/001660.html
+> > 
+> >> 1. Limit the number of ELF notes processed
+> >> Report: http://mx.gw.com/pipermail/file/2014/001653.html
+> >> Fix: https://github.com/file/file/commit/ce90e05774dd77d86cfc8dfa6da57b32816841c4
+> > 
+> > This issue seems to be introduced here:
+> > 
+> > https://github.com/file/file/commit/956a45ab1c54b11304b367056f41905e72a02380#diff-bc5c24ef9f39a5f4963ca28ecbc645b3L423
+> > 
+> > 
+> > which ended up in 5.08 release. Hence releases 5.08--5.21 are vulnerable.
+> > 
+> >> 2. Limit string printing to 100 chars
+> >> Report: http://mx.gw.com/pipermail/file/2014/001654.html
+> >> Fix: https://github.com/file/file/commit/65437cee25199dbd385fb35901bc0011e164276c
+> > 
+> > This issue was introduced in the following commit:
+> > 
+> > https://github.com/file/file/commit/c8451af8ab0c2e2a93ce93b9c68257d31576cc85
+> > 
+> > which ended up in 5.16 release. Hence releases 5.16--5.21 are vulnerable.
+> > 
+> >> Both problems amplified by the fact that the same section in ELF file
+> >> can be referenced and processed by file(1) multiple times. This is also
+> >> fixed in the first commit linked above.
+> >>
+> >> Could CVE(s) please be assigned?
+> > 
+> 
+> Did these ever get CVEs?
 
->From https://github.com/JRogaishio/ferretCMS/issues/63
+They haven't, but should receive assignments. We fixed these in Debian in
+DSA-3121-1: https://lists.debian.org/debian-security-announce/2015/msg00003.html
 
-"""
-However, please know that ferretCMS is in the 'alpha' development stage and as
-such is NOT recommended to be used on live websites.
-"""
+Cheers,
+        Moritz
 
--- 
-Henri Salo
