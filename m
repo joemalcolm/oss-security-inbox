@@ -1,54 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/8
-Message-ID: <20150210141159.22729e84@redhat.com>
-Date: Tue, 10 Feb 2015 14:11:59 +0100
-From: Tomas Hoger <thoger@...hat.com>
-To: mancha <mancha1@...o.com>
-Cc: oss-security@...ts.openwall.com, sms@...inode.info, cve-assign@...re.org
-Subject: Re: CVE Request: Info-ZIP unzip 6.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/5
+Message-ID: <54B88118.2000503@openwall.com>
+Date: Fri, 16 Jan 2015 06:10:16 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: pxz -- race condition in setting permissions
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 22 Dec 2014 18:14:58 +0000 mancha wrote:
+Hi!
 
-> OOB access (both read and write) issues exist in test_compr_eb
-> (extract.c) that can result in application crash or other unspecified
-> impact.
-> 
-> This vulnerability can be triggered via crafted zip archives with
-> extra fields that advertise STORED method compression (i.e. no
-> compression) and have uncompressed field sizes smaller than the
-> corresponding compressed field sizes.
-> 
-> This issue is different from CVE-2014-8140 [1].
+pxz suffers from a race condition in setting permissions on output file.
 
-FWIW, those issues are not entirely different, as the oCERT-2014-011
-reproducer triggered the same issue your patch addresses - memcpy()
-buffer overflow when using STORED compression and the uncompressed size
-field value smaller than the rest of the data in the extra field block.
-In case of the oCERT-2014-011 report, the size was special - 0.  Your
-check, however, would prevent overflow on the test case.
+Initial report:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775306
 
-The check to reject uncompressed size of 0 is still needed to avoid
-bypassing check if extra field block still has enough data for the
-compression header.  That makes it possible to bypass your check and
-trigger integer underflow in memextract() when EB_CMPRHEADLEN (2 + 4)
-is subtracted from srcsize, which leads to memcpy() with size close to
-SIZE_MAX.
-
-Your patch, unzip-6.0_overflow2.diff, which is what got applied
-upstream, seems to perform an incorrect check.  It ensures that
-eb_ucsize is equal to eb_size - compr_offset.  The latter value
-includes compression header length (EB_CMPRHEADLEN), which is not
-included in eb_ucsize AFAICT (based on what I could find in
-extrafld.txt or os2/os2zip.c in Zip 3.0 sources).  It seems the check
-should be:
-
-  (eb_size - compr_offset - EB_CMPRHEADLEN != eb_ucsize)
-
-Can you or upstream confirm?
-
-This problem would not be a security problem, but a bug that could
-cause well-formed extra fields to be rejected as invalid.
+Could CVE(s) please be assigned?
 
 -- 
-Tomas Hoger / Red Hat Product Security
+Alexander Cherepanov
