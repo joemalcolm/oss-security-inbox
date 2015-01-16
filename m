@@ -1,40 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/9
-Message-ID: <54D91D01.7060602@oracle.com>
-Date: Mon, 09 Feb 2015 12:48:01 -0800
-From: Ritwik Ghoshal <ritwik.ghoshal@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/8
+Message-ID: <54B8941D.5040101@openwall.com>
+Date: Fri, 16 Jan 2015 07:31:25 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
 To: oss-security@...ts.openwall.com
-CC: Oracle Security Alerts <secalert_us@...cle.com>
-Subject: Re: CVE-2013-4578 OpenJDK: jarsigner does not detect unsigned bytecode injected into signed jars
+Subject: Re: CVE Request: cpio -- directory traversal
 Content-Type: text/plain; charset=utf-8
 
-Hi Kurt,
+On 2015-01-16 06:09, Lyndon Nerenberg wrote:
+> On Jan 15, 2015, at 6:44 PM, Alexander Cherepanov wrote:
+>> cpio is susceptible to a directory traversal vulnerability via symlinks.
+>
+> This is not a bug.  It's doing exactly what you asked of it.
 
-This issue was addressed in Java 7U51 as a security-in-depth fix because
-of CVSS 0 score. Oracle doesn't assign CVEs to CVSS 0 issues.
+Could you please elaborate? Citing my email to upstream: 
+"--no-absolute-filenames option seems to be intended to limit extracting 
+contents of an archive to be strictly inside a current directory (it 
+guards against both absolute paths and relative paths with .. in them). 
+However it can be bypassed with symlinks [extracted from the archive]."
 
-Please note: the correct email address to contact Oracle Security Alert
-team is secalert_us@...cle.com.
-
-Thanks,
--Ritwik
-
-
-On 2/8/2015 2:37 PM, Kurt Seifried wrote:
-> CVE-2013-4578 OpenJDK: jarsigner does not detect unsigned bytecode
-> injected into signed jars
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1031471
->
-> Fixed upstream in OpenJDK:
->
-> http://hg.openjdk.java.net/jdk7u/jdk7u/jdk/rev/d5f36e1c927e
->
-> Also reportedly fixed in Oracle Java in CPU Jan 2014
->
-> http://www.oracle.com/technetwork/topics/security/cpujan2014-1972949.html
->
-> But I don't see the CVE. Oracle can you confirm if this was fixed, and
-> which CVE it was given? Thanks.
->
-
+-- 
+Alexander Cherepanov
