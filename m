@@ -1,42 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/2
-Message-ID: <487521909.11041800.1425374376302.JavaMail.root@his.com>
-Date: Tue, 3 Mar 2015 04:19:36 -0500 (EST)
-From: Thomas Dickey <dickey@....com>
-To: Kurt Seifried <kseifried@...hat.com>
-Cc: oss-security@...ts.openwall.com,  Assign a CVE Identifier <cve-assign@...re.org>, security@...ian.org,  dickey@...isible-island.net
-Subject: Re: Debian / xterm #779397
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/10
+Message-ID: <20150116080552.GA8782@kludge.henri.nerv.fi>
+Date: Fri, 16 Jan 2015 10:05:52 +0200
+From: Henri Salo <henri@...v.fi>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-Request -- CMS b2evolution v.5.2.0 -- Reflecting XSS vulnerability in filemanager functionality
 Content-Type: text/plain; charset=utf-8
 
------ Original Message -----
-| From: "Kurt Seifried" <kseifried@...hat.com>
-| To: oss-security@...ts.openwall.com, "Assign a CVE Identifier" <cve-assign@...re.org>, security@...ian.org,
-| dickey@...isible-island.net
-| Sent: Tuesday, March 3, 2015 2:23:55 AM
-| Subject: Debian / xterm #779397
-| 
-| https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=779397#23
-| 
-| Package: xterm
-| Version: 312-1
-| Severity: important
-| Tags: security
-| 
-| $ xterm -S/dev/pts/20
-| *** buffer overflow detected ***: /usr/bin/xterm terminated
-| 
-| =======
-| 
-| This was fixed in #314, two months ago.
-| 
-| --
-| Thomas E. Dickey <dickey@...isible-island.net>
-| 
-| Did this get a CVE? I don't see a DSA for xterm.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-no - someone mentioned the problem in an email - nothing more was said
+On Thu, Jan 15, 2015 at 04:44:39PM -0500, Daniel Kahn Gillmor wrote:
+> An attacker could take this signed message, and replay it "From" you
+> with a changed subject line to try to indicate that you think some other
+> bug was fixed in some other piece of software, version 5.2.1.
 
--- 
-Thomas E. Dickey <dickey@...isible-island.net>
-http://invisible-island.net
-ftp://invisible-island.net
+I'll be more careful in the future with automatic PGP signing. :)
+
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iEYEARECAAYFAlS4xmAACgkQXf6hBi6kbk9D0gCfeWLTaJkV5FB+Px9hWQBTbf4l
+Q0IAn31Gg1Tve0qNoA7cut3HhGIkf8L+
+=v7tU
+-----END PGP SIGNATURE-----
