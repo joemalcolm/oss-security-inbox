@@ -1,34 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/13
-Message-ID: <20150222190110.GB11056@pisco.westfalen.local>
-Date: Sun, 22 Feb 2015 20:01:10 +0100
-From: Moritz Muehlenhoff <jmm@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request: libarchive -- directory traversal in bsdcpio
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/15
+Message-ID: <1555347.0pyNi20yRt@xps>
+Date: Fri, 16 Jan 2015 22:47:08 +0100
+From: Albert Astals Cid <aacid@....org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>, security@....org
+Subject: KDE Plasma vulnerabilities: need CVE
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 16, 2015 at 06:19:21AM +0300, Alexander Cherepanov wrote:
-> Hi!
-> 
-> bsdcpio tool from libarchive bundle is susceptible to a directory traversal
-> vulnerability via absolute paths.
-> 
-> Initial discussion:
-> http://www.openwall.com/lists/oss-security/2015/01/07/5
-> 
-> Upstream report:
-> https://groups.google.com/d/msg/libarchive-discuss/dN9y1VvE1Qk/Z9uerigjQn0J
-> 
-> My proposed (minimal) fix (non-Windows):
-> https://groups.google.com/group/libarchive-discuss/attach/a78932ecb50340ae/0001-Quick-n-dirty-fix-for-bsdcpio-directory-traversal-vu.patch?part=0.1
-> 
-> Discussion is ongoing.
-> 
-> Could CVE(s) please be assigned?
+Hi, can we get two CVEs assigned for the attached vulnerabilities?
 
-This seems to have fallen through the cracks, explicitly adding cve-assign
-to CC.
+Thanks,
+  Albert
+View attachment "screenlocker-network.txt" of type "text/plain" (1345 bytes)
 
-Cheers,
-        Moritz
+View attachment "screenlocker-input.txt" of type "text/plain" (1599 bytes)
