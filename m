@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/12
-Message-ID: <20150222185821.GA11056@pisco.westfalen.local>
-Date: Sun, 22 Feb 2015 19:58:22 +0100
-From: jmm@...ian.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/16
+Message-ID: <54B98976.8090108@enovance.com>
+Date: Fri, 16 Jan 2015 16:58:14 -0500
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
 To: oss-security@...ts.openwall.com
-Cc: cve-assign@...re.org
-Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
+Subject: CVE request for vulnerability in OpenStack Glance
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 29, 2015 at 11:52:08AM -0700, Vincent Danen wrote:
-> As reported [1]:
-> 
-> XChat did not verify that the server hostname matched the domain name in the
-> subject's Common Name (CN) or subjectAltName field in X.509 certificates.
-> This could allow a man-in-the-middle attacker to spoof an SSL server if they
-> had a certificate that was valid for any domain name.
-> 
-> The same code is used in hexchat.
-> 
-> This was initially reported to hexchat in 2013 [2] and fixed last November
-> [3].  I'm not sure if it should receive a 2013 or a 2014 CVE.  Can one be
-> assigned to this?
-> 
-> Thanks.
-> 
-> [1] https://bugzilla.redhat.com/show_bug.cgi?id=1081839
-> [2] https://github.com/hexchat/hexchat/issues/524
-> [3] https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a4910a7e02d
+A vulnerability was discovered in OpenStack (see below). In order to
+ensure full traceability, we need a CVE number assigned that we can
+attach to further notifications. This issue is already public, although an
+advisory was not sent yet.
 
-This seems to have fallen through the cracks, explicitly
-adding cve-assign to CC.
+Title: Glance user storage quota bypass
+Reporter: Tushar Patil (NTT)
+Products: Glance
+Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
 
-Cheers,
-        Moritz
+Description:
+Tushar Patil from NTT reported a vulnerability in Glance. By deleting images
+that are being uploaded, a malicious user can overcome the storage quota and
+thus may overrun the backend. Images in deleted state are not taken into
+account by quota and won't be effectively deleted until the upload is
+completed. Only Glance setups configured with user_storage_quota are
+affected.
+
+References:
+https://launchpad.net/bugs/1398830
+
+Thanks in advance,
+
+-- 
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
