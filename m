@@ -1,32 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/15
-Message-ID: <87a914yu83.fsf@mid.deneb.enyo.de>
-Date: Tue, 27 Jan 2015 19:05:48 +0100
-From: Florian Weimer <fw@...eb.enyo.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/12
+Message-ID: <54B93058.4000000@openwall.com>
+Date: Fri, 16 Jan 2015 18:38:00 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+CC: cve-assign@...re.org
+Subject: Re: CVE request: file(1) DoS
 Content-Type: text/plain; charset=utf-8
 
-* Marek Kroemeke:
+On 16.01.2015 16:15, Marc Deslauriers wrote:
+> On 2015-01-03 02:50 PM, Alexander Cherepanov wrote:
+>> On 2014-12-17 03:44, Alexander Cherepanov wrote:
+>>> There are two more DoSes fixed in ELF parser of file(1), similar to the
+>>> recent CVE-2014-8116.
+>>
+>> These fixes were included in 5.22 release:
+>>
+>> http://mx.gw.com/pipermail/file/2015/001660.html
+>>
+>>> 1. Limit the number of ELF notes processed
+>>> Report: http://mx.gw.com/pipermail/file/2014/001653.html
+>>> Fix: https://github.com/file/file/commit/ce90e05774dd77d86cfc8dfa6da57b32816841c4
+>>
+>> This issue seems to be introduced here:
+>>
+>> https://github.com/file/file/commit/956a45ab1c54b11304b367056f41905e72a02380#diff-bc5c24ef9f39a5f4963ca28ecbc645b3L423
+>>
+>>
+>> which ended up in 5.08 release. Hence releases 5.08--5.21 are vulnerable.
+>>
+>>> 2. Limit string printing to 100 chars
+>>> Report: http://mx.gw.com/pipermail/file/2014/001654.html
+>>> Fix: https://github.com/file/file/commit/65437cee25199dbd385fb35901bc0011e164276c
+>>
+>> This issue was introduced in the following commit:
+>>
+>> https://github.com/file/file/commit/c8451af8ab0c2e2a93ce93b9c68257d31576cc85
+>>
+>> which ended up in 5.16 release. Hence releases 5.16--5.21 are vulnerable.
+>>
+>>> Both problems amplified by the fact that the same section in ELF file
+>>> can be referenced and processed by file(1) multiple times. This is also
+>>> fixed in the first commit linked above.
+>>>
+>>> Could CVE(s) please be assigned?
+>>
+>
+> Did these ever get CVEs?
 
-> We just noticed CVE-2015-0235 , and we thought we will drop this one
-> in - apologies for low quality , we didn't really have time yet to
-> analyse it, but it seems to be related, so it makes sense to patch
-> things once right ?
+Not that I know of.
 
-It's not related, and we cannot patch it at the same time because
-packages for the gethostbyname issue are already ready, they just have
-to be released.  (When we change critical system components, we also
-need to be extra-careful with testing, which takes time.)
-
-Andreas Schwab fixed this in 2011:
-
-  <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
-
-If I'm not mistaken, this commit when into glibc 2.15.
-
-I have not yet found the corresponding glibc bug (if it exists).
-
-The bug only materializes if the getaddrinfo functions is called with
-the AI_IDN flag, and if glibc has been compiled with libidn support
-(but I haven't checked if you can switch that off these days).
+-- 
+Alexander Cherepanov
