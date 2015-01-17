@@ -1,37 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/31/4
-Message-Id: <20150131133745.5ACC433E02A@smtpvbsrv1.mitre.org>
-Date: Sat, 31 Jan 2015 08:37:45 -0500 (EST)
-From: cve-assign@...re.org
-To: jmm@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, abe@...ian.org
-Subject: Re: CVE request: Xymon
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/5
+Message-ID: <m9ccqr$1vq$1@ger.gmane.org>
+Date: Sat, 17 Jan 2015 02:10:51 +0100
+From: Damien Regad <dregad@...tisbt.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE request: CAPTCHA bypass in MantisBT
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> please assign a CVE ID for this buffer overflow in the Xymon
-> network monitoring system:
-> 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=776007
-> http://sourceforge.net/p/xymon/code/7483/
+Greetings,
 
-Use CVE-2015-1430.
+Please assign a CVE ID for the following issue
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJUzNpEAAoJEKllVAevmvmsV/kH/1/MRA65sXmwHxGqK0OPo6Zc
-RsEtv2L+rjZV04EmKlaBJ5i511StlPeT981Klnmf0K4PkLPqOo9PNUq6uy3bXpgw
-3AmhO70mxfyp859g9LZV0dCYAnTe0geNEXxS3p+pF71fl1l5vrpsuU1BvjOc87sV
-9oJqHI5rsgZTwbNXxySREh6X0zszH94rsBpmzDieU5D6WvMMn7cyBvzCCTW78p12
-lBozDDfhwNothdKtxNKwaEjftU2InCim/+1TG4INgQSXBUG08Tgno1qxNbf7t9jQ
-rHwiA86+II47afnM+tbDq8iFWL7KkbuQsAfjaToUomDVzu2x/iPpDRHTTaKwEvU=
-=ALQL
------END PGP SIGNATURE-----
+Description:
+
+An attacker can get an unlimited amount of CAPTCHA "samples" with 
+different perturbations for the same challenge, which makes the whole 
+captcha utterly useless and very easy to bypass.
+
+
+Affected versions:
+<= 1.2.19
+
+Fixed in versions:
+1.2.19 (not yet released)
+
+Patch:
+See Github [1]
+
+Credit:
+This vulnerability was reported [2] by Florent Daigniere from Matta 
+Consulting.
+The issue was fixed by Damien Regad (MantisBT Developer).
+
+References:
+Further details available in our issue tracker [2]
+
+[1] https://github.com/mantisbt/mantisbt/commit/39a92726
+[2] https://www.mantisbt.org/bugs/view.php?id=17984
+
+
