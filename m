@@ -1,21 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/3
-Message-ID: <54B88039.9040107@openwall.com>
-Date: Fri, 16 Jan 2015 06:06:33 +0300
-From: Alexander Cherepanov <ch3root@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/4
+Message-ID: <m9c95v$bo3$1@ger.gmane.org>
+Date: Sat, 17 Jan 2015 01:08:31 +0100
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: ha -- directory traversals
+Subject: CVE-2014-9571, -9572 and -9573 affect MantisBT
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+I just realized that I forgot to reference "MantisBT" in the subject of 
+my last 3 messages, apologies for any confusion this may have caused.
 
-ha is susceptible to directory traversal vulnerabilities via absolute 
-and relative paths.
+Damien
 
-Initial report:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774954
-
-Could CVE(s) please be assigned?
-
--- 
-Alexander Cherepanov
