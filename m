@@ -1,28 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/30/3
-Message-ID: <20150130001410.GA10438@openwall.com>
-Date: Fri, 30 Jan 2015 03:14:10 +0300
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/9
+Message-ID: <Pine.LNX.4.64.1501171747180.17900@beijing.mitre.org>
+Date: Sat, 17 Jan 2015 17:50:04 -0500 (EST)
+From: cve-assign@...re.org
+To: Alexander Cherepanov <ch3root@...nwall.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request: file(1) DoS
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 30, 2015 at 01:00:35AM +0100, Hanno B??ck wrote:
-> At some point I stopped caring too much about CVEs
 
-FWIW, I never cared about them much.  But I do care about the confusion
-and its possible negative impact:
+On Fri, 16 Jan 2015, Alexander Cherepanov wrote:
 
-> because I felt waiting for them stops me from reporting more issues.
+> On 16.01.2015 16:15, Marc Deslauriers wrote:
+>> On 2015-01-03 02:50 PM, Alexander Cherepanov wrote:
+>>> On 2014-12-17 03:44, Alexander Cherepanov wrote:
+>>>> There are two more DoSes fixed in ELF parser of file(1), similar to the
+>>>> recent CVE-2014-8116.
+>>> 
+>>> These fixes were included in 5.22 release:
+>>> 
+>>> http://mx.gw.com/pipermail/file/2015/001660.html
+>>> 
+>>>> 1. Limit the number of ELF notes processed
+>>>> Report: http://mx.gw.com/pipermail/file/2014/001653.html
+>>>> Fix: 
+>>>> https://github.com/file/file/commit/ce90e05774dd77d86cfc8dfa6da57b32816841c4
+>>> 
+>>> This issue seems to be introduced here:
+>>> 
+>>> https://github.com/file/file/commit/956a45ab1c54b11304b367056f41905e72a02380#diff-bc5c24ef9f39a5f4963ca28ecbc645b3L423
+>>> 
+>>> 
+>>> which ended up in 5.08 release. Hence releases 5.08--5.21 are vulnerable.
 
-Huh?!  IMO, no one should ever wait for a CVE before reporting an issue!
+Use CVE-2014-9620.
 
-If it is possible to get a CVE assigned during an embargo period that
-would exist anyway, and without disclosing the vulnerability detail to
-any extra party, great!  (e.g. this happens for issues handled via the
-distros list, where CVEs are currently getting assigned from Red Hat's
-pool without having to inform any extra party.)  If this is not
-possible, then do without CVE (and one may be assigned when the issue is
-already public in here).
 
-Alexander
+
+>>>> 2. Limit string printing to 100 chars
+>>>> Report: http://mx.gw.com/pipermail/file/2014/001654.html
+>>>> Fix: 
+>>>> https://github.com/file/file/commit/65437cee25199dbd385fb35901bc0011e164276c
+>>> 
+>>> This issue was introduced in the following commit:
+>>> 
+>>> https://github.com/file/file/commit/c8451af8ab0c2e2a93ce93b9c68257d31576cc85
+>>> 
+>>> which ended up in 5.16 release. Hence releases 5.16--5.21 are vulnerable.
+>>> 
+>>>> Both problems amplified by the fact that the same section in ELF file
+>>>> can be referenced and processed by file(1) multiple times. This is also
+>>>> fixed in the first commit linked above.
+>>>> 
+>>>> Could CVE(s) please be assigned?
+
+
+Use CVE-2014-9621.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
