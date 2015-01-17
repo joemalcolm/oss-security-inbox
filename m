@@ -1,25 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/8
-Message-Id: <20150104020254.043C717FDA7@rebar.astron.com>
-Date: Sat, 3 Jan 2015 21:02:54 -0500
-From: christos@...las.com (Christos Zoulas)
-To: oss-security@...ts.openwall.com, Dan McDonald <danmcd@...iti.com>
-Cc: cve-assign@...re.org
-Subject: Re: CVE Request for illumos distributions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/6
+Message-ID: <CABuU+O33Yn0bgYfXWBL20JiXFh9uA1VJCnc0mJOAza8MRSmDmg@mail.gmail.com>
+Date: Sat, 17 Jan 2015 12:15:41 +0100
+From: Francisco Alonso <rs@...skills.cz>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: Reflected XSS / Content Spoofing in FlexPaper
 Content-Type: text/plain; charset=utf-8
 
-On Jan 3,  6:57pm, cve-assign@...re.org (cve-assign@...re.org) wrote:
--- Subject: Re: [oss-security] CVE Request for illumos distributions
+Hi,
 
-| > Illumos bug #5421 - http://illumos.org/issues/5421 which is now fixed in 
-| > the upstream illumos-gate, is an innocuous fix to a serious problem that 
-| > allows an arbitrary user in the global zone (non-global zones are not 
-| > able to panic the machine) to panic the machine.
-| 
-| Use CVE-2014-9491.
+Any update about this?
 
-Shouldn't we be using CVE-2015-XXXX by now?
+On Tue, Jan 6, 2015 at 9:45 PM, Francisco Alonso <rs@...skills.cz> wrote:
 
-Happy New Year,
+> Hello,
+>
+> Can a CVE please be assigned to the following issue:
+>
+> FlexPaper Flash viewer Reflected XSS and Content Spoofing via Swfile
+> parameter in FlexPaperViewer.swf file.
+>
+> Fixed via FlexPaper 2.3.1 Release.
+>
+> References:
+> http://blog.flexpaper.org/post/105984224083/flexpaper-2-3-1-release-notes
+> https://code.google.com/p/flexpaper/
+> http://www.theregister.co.uk/2014/12/23/wikileaks_pdf_viewer_vuln/
+>
+> http://www.pcworld.com/article/2862812/flaw-in-opensource-pdf-viewer-could-put-wikileaks-users-others-at-risk.html
+>
+> Thanks,
+>
 
-christos
+
+
+-- 
+
+Francisco Alonso.
+http://twitter.com/revskills
+PGP: 0xE2E64DCA
+--
+
