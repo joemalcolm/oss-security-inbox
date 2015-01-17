@@ -1,37 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/09/6
-Message-ID: <54AFC3DF.6060503@riseup.net>
-Date: Fri, 09 Jan 2015 12:04:47 +0000
-From: Hacker Fantastic <hackerfantastic@...eup.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/3
+Message-ID: <54B9A673.7040705@mantisbt.org>
+Date: Sat, 17 Jan 2015 01:01:55 +0100
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE request: local privilege escalation flaws in Red Star OS 3.0 & 2.0 desktop
+Cc: advisory@...ridge.ch
+Subject: CVE-2014-9572: Improper Access Control in install.php
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
-        Red Star OS 3.0 desktop & 2.0 desktop ship with local privilege
-escalation vulnerabilities due to insecure files permissions
-on configuration and script files executed with root privileges.
+Greetings,
 
-Red Star 3.0 desktop ships with a world-writeable udev rules
-"/etc/udev/rules.d/85-hplj10xx.rules" which can be
-modified to include "RUN+=" arguments executing commands as root by
-udev.d. An example of exploitation
-of this vulnerability can be seen here
-https://github.com/HackerFantastic/Public/blob/master/exploits/redstar3.0-localroot.png
-
-Red Star 2.0 desktop ships with a world-writeable "/etc/rc.d/rc.sysinit"
-which can be abused to execute commands on
-boot. An example exploitation of this vulnerability is shown here
-https://github.com/HackerFantastic/Public/blob/master/exploits/redstar2.0-localroot.png
-
-A local attacker can leverage these vulnerabilities to elevate
-privileges to root and compromise Red Star platforms.
-
-Please can CVE numbers be assigned for these flaws.
-
-Regards,
-Matthew
+Please update CVE-2014-9572 with the information below
 
 
+Description:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+The vulnerability exists due to insufficient access restrictions to the 
+installation script "/[admin]/install.php" when HTTP GET "install" 
+parameter is set to "4". A remote unauthenticated attacker can access 
+the installation script and obtain database access credentials, which 
+are stored in plain text in hidden form fields.
+
+An attacker can use the following URL to access the page and obtain 
+database credentials (login and password) in plaintext:
+
+http://mantis/[admin]/install.php?install=4 [^]
+
+Note, that "[admin]" in the URL is changed by default during 
+installation. Therefore, the attacker must know the location of the 
+administrative interface in order to perform the attack. However, admin 
+panel URL can be bruteforced or predicted in many cases.
+
+
+Affected versions:
+- <= 1.2.19
+- <= 1.3.0-beta.1
+
+Fixed in versions:
+- 1.2.19 (not yet released)
+- 1.3.0-beta.2 (not yet released)
+
+Patch:
+See Github [1]
+
+Credit:
+This vulnerability was reported [2] by High-Tech Bridge Security 
+Research Lab (https://www.htbridge.com/), via advisory ID HTB23243 [3].
+The issue was fixed by Damien Regad (MantisBT Developer).
+
+References:
+Further details available in our issue tracker [4]
+
+[1] http://github.com/mantisbt/mantisbt/commit/5571bcf9 (1.2.x)
+     http://github.com/mantisbt/mantisbt/commit/5e5e5750 (1.3.x)
+[2] https://www.mantisbt.org/bugs/view.php?id=17937
+[3] https://www.htbridge.com/advisory/HTB23243
+[4] https://www.mantisbt.org/bugs/view.php?id=17939
+
+
