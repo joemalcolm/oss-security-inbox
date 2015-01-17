@@ -1,68 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/28
-Message-ID: <CALPTtNW_=992qjV3aem8Z=h9f_nYLAE3nzbpgt-2qvM8PmJp4w@mail.gmail.com>
-Date: Thu, 29 Jan 2015 15:04:52 -0800
-From: Reed Loden <reed@...dloden.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/7
+Message-ID: <5807406.e1kI3bJFPT@eee>
+Date: Sat, 17 Jan 2015 12:55:41 +0100
+From: Raphael Geissert <geissert@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: xchat/hexchat don't properly verify SSL certificates
+Cc: christoph.dalitz@...niederrhein.de
+Subject: CVE-2005-2096 and gamera
 Content-Type: text/plain; charset=utf-8
 
-You're welcome to check the "Accept invalid SSL certificates" box in that
-case, but the default should be that SSL/TLS certificates are correctly
-validated. :)
+Hi,
 
-~reed
+While lurking around the Debian archive and codesearch[0], I noticed that 
+gamera[1] embeds a copy of zlib that is vulnerable to CVE-2005-2096.
 
-On Thu, Jan 29, 2015 at 11:24 AM, Sam Dodrill <shadow.h511@...il.com> wrote:
+Oh joy.
 
-> A lot of the time IRC networks will not pay for a verified SSL cert due to
-> the fact that the kind of SSL cert they would need (a wildcard one) is
-> financially prohibitive. I don't think this is a security bug with hexchat
-> more a symptom of the fact that SSL combines encryption and identity
-> verification where sometimes people only want the former.
->
-> On Thu Jan 29 2015 at 10:58:51 AM Marc Deslauriers <
-> marc.deslauriers@...onical.com> wrote:
->
-> > On 2015-01-29 01:52 PM, Vincent Danen wrote:
-> > > As reported [1]:
-> > >
-> > > XChat did not verify that the server hostname matched the domain name
-> in
-> > the
-> > > subject's Common Name (CN) or subjectAltName field in X.509
-> > certificates. This
-> > > could allow a man-in-the-middle attacker to spoof an SSL server if they
-> > had a
-> > > certificate that was valid for any domain name.
-> > >
-> > > The same code is used in hexchat.
-> > >
-> > > This was initially reported to hexchat in 2013 [2] and fixed last
-> > November [3].
-> > > I'm not sure if it should receive a 2013 or a 2014 CVE.  Can one be
-> > assigned to
-> > > this?
-> > >
-> > > Thanks.
-> > >
-> > > [1] https://bugzilla.redhat.com/show_bug.cgi?id=1081839
-> > > [2] https://github.com/hexchat/hexchat/issues/524
-> > > [3]
-> > >
-> https://github.com/hexchat/hexchat/commit/c9b63f7f9be01692b03fa15275135a
-> > 4910a7e02d
-> > >
-> >
-> > Looks like XChat-GNOME is vulnerable also.
-> >
-> > Marc.
-> >
-> >
-> > --
-> > Marc Deslauriers
-> > Ubuntu Security Engineer     | http://www.ubuntu.com/
-> > Canonical Ltd.               | http://www.canonical.com/
-> >
->
+(Debian's package doesn't seem to be affected, as it does an rm -r on the 
+embedded copy)
 
+[0]http://codesearch.debian.net/
+[1]http://gamera.sourceforge.net/
+
+Cheers,
+-- 
+Raphael Geissert - Debian Developer
+www.debian.org - get.debian.net
