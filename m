@@ -1,47 +1,716 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/11
-Message-Id: <20150209214033.F2B0F3AE124@smtpvbsrv1.mitre.org>
-Date: Mon,  9 Feb 2015 16:40:33 -0500 (EST)
-From: cve-assign@...re.org
-To: hecmargi@....es
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-Request -- Google Email App 4.2.2 remote denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/12
+Message-ID: <1421537206.31046.74.camel@decadent.org.uk>
+Date: Sat, 17 Jan 2015 23:26:46 +0000
+From: Ben Hutchings <ben@...adent.org.uk>
+To: Alexander Viro <viro@...iv.linux.org.uk>
+Cc: linux-fsdevel@...r.kernel.org, linux-security-module@...r.kernel.org, LKML <linux-kernel@...r.kernel.org>, 770492@...s.debian.org, Ben Harris <bjh21@....ac.uk>, oss-security@...ts.openwall.com
+Subject: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+chown() and write() should clear all privilege attributes on
+a file - setuid, setgid, setcap and any other extended
+privilege attributes.
 
-> A bug in the stock Google email application
+However, any attributes beyond setuid and setgid are managed by the
+LSM and not directly by the filesystem, so they cannot be set along
+with the other attributes.
 
-Is the source code and fix in 4.2.2.0400 the same as in:
+Currently we call security_inode_killpriv() in notify_change(),
+but in case of a chown() this is too early - we have not called
+inode_change_ok() or made any filesystem-specific permission/sanity
+checks.
 
-  https://src.chromium.org/viewvc/blink?revision=152293&view=revision
+Add a new function setattr_killpriv() which calls
+security_inode_killpriv() if necessary, and change the setattr()
+implementation to call this in each filesystem that supports xattrs.
+This assumes that extended privilege attributes are always stored in
+xattrs.
 
-? If so, then it is an open-source vulnerability, and can have one
-CVE-2013-#### ID assigned here, even if the relevant HTTPParsers.cpp code
-is also bundled in one or more closed-source products.
+Compile-tested only.
 
-If it is independent source code that happens to have the same
-attack vector (the attack vector in
-http://hmarco.org/bugs/google_email_app_4.2.2_denial_of_service.html
-appears to be identical to the attack vector in the
-https://src.chromium.org/viewvc/blink/trunk/LayoutTests/http/tests/misc/resources/nearly-empty-content-disposition.php
-test), then revision 152293 could probably have a separate new
-CVE-2013-#### ID.
+XXX This is a silent change to the VFS API, but we should probably
+change something so OOT filesystems fail to compile if they aren't
+updated to call setattr_killpriv().
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Reported-by: Ben Harris <bjh21@....ac.uk>
+References: https://bugs.debian.org/770492
+---
+ drivers/staging/lustre/lustre/llite/llite_lib.c |  4 ++++
+ fs/9p/vfs_inode.c                               |  4 ++++
+ fs/9p/vfs_inode_dotl.c                          |  4 ++++
+ fs/attr.c                                       | 32 +++++++++++++++++++++----
+ fs/btrfs/inode.c                                |  4 ++++
+ fs/ceph/inode.c                                 |  4 ++++
+ fs/cifs/inode.c                                 | 11 ++++++++-
+ fs/ext2/inode.c                                 |  4 ++++
+ fs/ext3/inode.c                                 |  4 ++++
+ fs/ext4/inode.c                                 |  4 ++++
+ fs/f2fs/file.c                                  |  4 ++++
+ fs/fuse/dir.c                                   | 15 +++++++-----
+ fs/fuse/file.c                                  |  3 ++-
+ fs/fuse/fuse_i.h                                |  2 +-
+ fs/gfs2/inode.c                                 |  3 +++
+ fs/hfs/inode.c                                  |  4 ++++
+ fs/hfsplus/inode.c                              |  4 ++++
+ fs/jffs2/fs.c                                   |  4 ++++
+ fs/jfs/file.c                                   |  4 ++++
+ fs/kernfs/inode.c                               | 17 +++++++++++++
+ fs/libfs.c                                      |  3 +++
+ fs/nfs/inode.c                                  | 11 +++++++--
+ fs/ocfs2/file.c                                 |  6 ++++-
+ fs/reiserfs/inode.c                             |  4 ++++
+ fs/ubifs/file.c                                 |  4 ++++
+ fs/xfs/xfs_acl.c                                |  3 ++-
+ fs/xfs/xfs_file.c                               |  2 +-
+ fs/xfs/xfs_ioctl.c                              |  2 +-
+ fs/xfs/xfs_iops.c                               | 16 ++++++++++---
+ fs/xfs/xfs_iops.h                               | 10 ++++++--
+ include/linux/fs.h                              |  1 +
+ mm/shmem.c                                      |  4 ++++
+ 32 files changed, 176 insertions(+), 25 deletions(-)
 
-iQEcBAEBAgAGBQJU2SjYAAoJEKllVAevmvms7XgH/160UM97gBilVzyom9QDvbMs
-qxDlphiOqH2J5+ShSPmKLmUcaT9snIylAQnBadTolsZxFeNsOjdIH0zJhnoafvUR
-BjhUO1Z8ABrUifyLJuk0aezXErEoS2COVqaWu0IYYpJ3OPIExnGJw9cIQP4YHfDQ
-aryvVRmsyasA42H72Ao+lF3W/om4fb8j32o78/Zp5Lp9yAn9Iq0XOtn/HjrhFCU9
-TN6gil7OOb0nyKedRFmK60+Ek7ME+hIMCFrEftOJgZ6RTNc9V3fDJL2AD61jS8Wr
-LF3FJSKoTRyA8QeRsL+zU9uCw3KHmx2l65rbxvjgURXMJgGykFIGVc22itJm8tM=
-=xXk6
------END PGP SIGNATURE-----
+diff --git a/drivers/staging/lustre/lustre/llite/llite_lib.c b/drivers/staging/lustre/lustre/llite/llite_lib.c
+index a8bcc51..2a714b2 100644
+--- a/drivers/staging/lustre/lustre/llite/llite_lib.c
++++ b/drivers/staging/lustre/lustre/llite/llite_lib.c
+@@ -1434,6 +1434,10 @@ int ll_setattr_raw(struct dentry *dentry, struct iattr *attr, bool hsm_import)
+ 		spin_unlock(&lli->lli_lock);
+ 	}
+ 
++	rc = setattr_killpriv(dentry, attr);
++	if (rc)
++		return rc;
++
+ 	/* We always do an MDS RPC, even if we're only changing the size;
+ 	 * only the MDS knows whether truncate() should fail with -ETXTBUSY */
+ 
+diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
+index 296482f..735cbf84 100644
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -1130,6 +1130,10 @@ static int v9fs_vfs_setattr(struct dentry *dentry, struct iattr *iattr)
+ 	if (S_ISREG(dentry->d_inode->i_mode))
+ 		filemap_write_and_wait(dentry->d_inode->i_mapping);
+ 
++	retval = setattr_killpriv(dentry, iattr);
++	if (retval)
++		return retval;
++
+ 	retval = p9_client_wstat(fid, &wstat);
+ 	if (retval < 0)
+ 		return retval;
+diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
+index 02b64f4..f3ca76d 100644
+--- a/fs/9p/vfs_inode_dotl.c
++++ b/fs/9p/vfs_inode_dotl.c
+@@ -583,6 +583,10 @@ int v9fs_vfs_setattr_dotl(struct dentry *dentry, struct iattr *iattr)
+ 	if (S_ISREG(inode->i_mode))
+ 		filemap_write_and_wait(inode->i_mapping);
+ 
++	retval = setattr_killpriv(dentry, iattr);
++	if (retval)
++		return retval;
++
+ 	retval = p9_client_setattr(fid, &p9attr);
+ 	if (retval < 0)
+ 		return retval;
+diff --git a/fs/attr.c b/fs/attr.c
+index 6530ced..184f3bf 100644
+--- a/fs/attr.c
++++ b/fs/attr.c
+@@ -168,6 +168,28 @@ void setattr_copy(struct inode *inode, const struct iattr *attr)
+ EXPORT_SYMBOL(setattr_copy);
+ 
+ /**
++ * setattr_killpriv - remove extended privilege attributes from a file
++ * @dentry: Directory entry passed to the setattr operation
++ * @iattr: New attributes pased to the setattr operation
++ *
++ * All filesystems that can carry extended privilege attributes
++ * should call this from their setattr operation *after* validating
++ * the attribute changes.
++ *
++ * It does nothing if !(iattr->ia_valid & ATTR_KILL_PRIV), so
++ * it is not necessary to call it in that case.
++ */
++int setattr_killpriv(struct dentry *dentry, struct iattr *iattr)
++{
++	if (!(iattr->ia_valid & ATTR_KILL_PRIV))
++		return 0;
++
++	iattr->ia_valid &= ~ATTR_KILL_PRIV;
++	return security_inode_killpriv(dentry);
++}
++EXPORT_SYMBOL(setattr_killpriv);
++
++/**
+  * notify_change - modify attributes of a filesytem object
+  * @dentry:	object affected
+  * @iattr:	new attributes
+@@ -217,13 +239,13 @@ int notify_change(struct dentry * dentry, struct iattr * attr, struct inode **de
+ 	if (!(ia_valid & ATTR_MTIME_SET))
+ 		attr->ia_mtime = now;
+ 	if (ia_valid & ATTR_KILL_PRIV) {
+-		attr->ia_valid &= ~ATTR_KILL_PRIV;
+-		ia_valid &= ~ATTR_KILL_PRIV;
+ 		error = security_inode_need_killpriv(dentry);
+-		if (error > 0)
+-			error = security_inode_killpriv(dentry);
+-		if (error)
++		if (error < 0)
+ 			return error;
++		if (error == 0) {
++			attr->ia_valid &= ~ATTR_KILL_PRIV;
++			ia_valid &= ~ATTR_KILL_PRIV;
++		}
+ 	}
+ 
+ 	/*
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index d23362f..71e3fb8 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -4697,6 +4697,10 @@ static int btrfs_setattr(struct dentry *dentry, struct iattr *attr)
+ 	if (err)
+ 		return err;
+ 
++	err = setattr_killpriv(dentry, attr);
++	if (err)
++		return err;
++
+ 	if (S_ISREG(inode->i_mode) && (attr->ia_valid & ATTR_SIZE)) {
+ 		err = btrfs_setsize(inode, attr);
+ 		if (err)
+diff --git a/fs/ceph/inode.c b/fs/ceph/inode.c
+index 7b61390..9ba5556 100644
+--- a/fs/ceph/inode.c
++++ b/fs/ceph/inode.c
+@@ -1712,6 +1712,10 @@ int ceph_setattr(struct dentry *dentry, struct iattr *attr)
+ 	if (err != 0)
+ 		return err;
+ 
++	err = setattr_killpriv(dentry, attr);
++	if (err != 0)
++		return err;
++
+ 	req = ceph_mdsc_create_request(mdsc, CEPH_MDS_OP_SETATTR,
+ 				       USE_AUTH_MDS);
+ 	if (IS_ERR(req))
+diff --git a/fs/cifs/inode.c b/fs/cifs/inode.c
+index 197cb50..0e971f9 100644
+--- a/fs/cifs/inode.c
++++ b/fs/cifs/inode.c
+@@ -2149,7 +2149,10 @@ cifs_setattr_unix(struct dentry *direntry, struct iattr *attrs)
+ 	 */
+ 	rc = filemap_write_and_wait(inode->i_mapping);
+ 	mapping_set_error(inode->i_mapping, rc);
+-	rc = 0;
++
++	rc = setattr_killpriv(direntry, attrs);
++	if (rc)
++		goto out;
+ 
+ 	if (attrs->ia_valid & ATTR_SIZE) {
+ 		rc = cifs_set_file_size(inode, attrs, xid, full_path);
+@@ -2273,6 +2276,12 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
+ 		return rc;
+ 	}
+ 
++	rc = setattr_killpriv(direntry, attrs);
++	if (rc) {
++		free_xid(xid);
++		return rc;
++	}
++
+ 	full_path = build_path_from_dentry(direntry);
+ 	if (full_path == NULL) {
+ 		rc = -ENOMEM;
+diff --git a/fs/ext2/inode.c b/fs/ext2/inode.c
+index 36d35c3..9e245af 100644
+--- a/fs/ext2/inode.c
++++ b/fs/ext2/inode.c
+@@ -1551,6 +1551,10 @@ int ext2_setattr(struct dentry *dentry, struct iattr *iattr)
+ 	if (error)
+ 		return error;
+ 
++	error = setattr_killpriv(dentry, iattr);
++	if (error)
++		return error;
++
+ 	if (is_quota_modification(inode, iattr))
+ 		dquot_initialize(inode);
+ 	if ((iattr->ia_valid & ATTR_UID && !uid_eq(iattr->ia_uid, inode->i_uid)) ||
+diff --git a/fs/ext3/inode.c b/fs/ext3/inode.c
+index 2c6ccc4..ec4dffa 100644
+--- a/fs/ext3/inode.c
++++ b/fs/ext3/inode.c
+@@ -3248,6 +3248,10 @@ int ext3_setattr(struct dentry *dentry, struct iattr *attr)
+ 	if (error)
+ 		return error;
+ 
++	error = setattr_killpriv(dentry, attr);
++	if (error)
++		return error;
++
+ 	if (is_quota_modification(inode, attr))
+ 		dquot_initialize(inode);
+ 	if ((ia_valid & ATTR_UID && !uid_eq(attr->ia_uid, inode->i_uid)) ||
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 3356ab5..80877a48 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4455,6 +4455,10 @@ int ext4_setattr(struct dentry *dentry, struct iattr *attr)
+ 	if (error)
+ 		return error;
+ 
++	error = setattr_killpriv(dentry, attr);
++	if (error)
++		return error;
++
+ 	if (is_quota_modification(inode, attr))
+ 		dquot_initialize(inode);
+ 	if ((ia_valid & ATTR_UID && !uid_eq(attr->ia_uid, inode->i_uid)) ||
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 8e68bb6..c9371d2 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -560,6 +560,10 @@ int f2fs_setattr(struct dentry *dentry, struct iattr *attr)
+ 	if (err)
+ 		return err;
+ 
++	err = setattr_killpriv(dentry, attr);
++	if (err)
++		return err;
++
+ 	if (attr->ia_valid & ATTR_SIZE) {
+ 		err = f2fs_convert_inline_data(inode, attr->ia_size, NULL);
+ 		if (err)
+diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
+index dbab798..f750848 100644
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -1693,9 +1693,10 @@ int fuse_flush_times(struct inode *inode, struct fuse_file *ff)
+  * vmtruncate() doesn't allow for this case, so do the rlimit checking
+  * and the actual truncation by hand.
+  */
+-int fuse_do_setattr(struct inode *inode, struct iattr *attr,
++int fuse_do_setattr(struct dentry *entry, struct iattr *attr,
+ 		    struct file *file)
+ {
++	struct inode *inode = entry->d_inode;
+ 	struct fuse_conn *fc = get_fuse_conn(inode);
+ 	struct fuse_inode *fi = get_fuse_inode(inode);
+ 	struct fuse_req *req;
+@@ -1714,6 +1715,10 @@ int fuse_do_setattr(struct inode *inode, struct iattr *attr,
+ 	if (err)
+ 		return err;
+ 
++	err = setattr_killpriv(entry, attr);
++	if (err)
++		return err;
++
+ 	if (attr->ia_valid & ATTR_OPEN) {
+ 		if (fc->atomic_o_trunc)
+ 			return 0;
+@@ -1809,15 +1814,13 @@ error:
+ 
+ static int fuse_setattr(struct dentry *entry, struct iattr *attr)
+ {
+-	struct inode *inode = entry->d_inode;
+-
+-	if (!fuse_allow_current_process(get_fuse_conn(inode)))
++	if (!fuse_allow_current_process(get_fuse_conn(entry->d_inode)))
+ 		return -EACCES;
+ 
+ 	if (attr->ia_valid & ATTR_FILE)
+-		return fuse_do_setattr(inode, attr, attr->ia_file);
++		return fuse_do_setattr(entry, attr, attr->ia_file);
+ 	else
+-		return fuse_do_setattr(inode, attr, NULL);
++		return fuse_do_setattr(entry, attr, NULL);
+ }
+ 
+ static int fuse_getattr(struct vfsmount *mnt, struct dentry *entry,
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index caa8d95..ffdc363 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -2855,7 +2855,8 @@ static void fuse_do_truncate(struct file *file)
+ 	attr.ia_file = file;
+ 	attr.ia_valid |= ATTR_FILE;
+ 
+-	fuse_do_setattr(inode, &attr, file);
++	/* XXX Is file->f_dentry->d_inode always the same as inode? */
++	fuse_do_setattr(file->f_dentry, &attr, file);
+ }
+ 
+ static inline loff_t fuse_round_up(loff_t off)
+diff --git a/fs/fuse/fuse_i.h b/fs/fuse/fuse_i.h
+index e8e47a6..163de1f 100644
+--- a/fs/fuse/fuse_i.h
++++ b/fs/fuse/fuse_i.h
+@@ -894,7 +894,7 @@ bool fuse_write_update_size(struct inode *inode, loff_t pos);
+ int fuse_flush_times(struct inode *inode, struct fuse_file *ff);
+ int fuse_write_inode(struct inode *inode, struct writeback_control *wbc);
+ 
+-int fuse_do_setattr(struct inode *inode, struct iattr *attr,
++int fuse_do_setattr(struct dentry *entry, struct iattr *attr,
+ 		    struct file *file);
+ 
+ #endif /* _FS_FUSE_I_H */
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index c4ed823..b39d81a 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -1786,6 +1786,9 @@ static int gfs2_setattr(struct dentry *dentry, struct iattr *attr)
+ 	if (error)
+ 		goto out;
+ 
++	error = setattr_killpriv(dentry, attr);
++	if (error)
++		goto out;
+ 	if (attr->ia_valid & ATTR_SIZE)
+ 		error = gfs2_setattr_size(inode, attr->ia_size);
+ 	else if (attr->ia_valid & (ATTR_UID | ATTR_GID))
+diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
+index d0929bc..817f7a5 100644
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -620,6 +620,10 @@ int hfs_inode_setattr(struct dentry *dentry, struct iattr * attr)
+ 		return hsb->s_quiet ? 0 : error;
+ 	}
+ 
++	error = setattr_killpriv(dentry, attr);
++	if (error)
++		return error;
++
+ 	if (attr->ia_valid & ATTR_MODE) {
+ 		/* Only the 'w' bits can ever change and only all together. */
+ 		if (attr->ia_mode & S_IWUSR)
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index 0cf786f..12549bc 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -251,6 +251,10 @@ static int hfsplus_setattr(struct dentry *dentry, struct iattr *attr)
+ 	if (error)
+ 		return error;
+ 
++	error = setattr_killpriv(dentry, attr);
++	if (error)
++		return error;
++
+ 	if ((attr->ia_valid & ATTR_SIZE) &&
+ 	    attr->ia_size != i_size_read(inode)) {
+ 		inode_dio_wait(inode);
+diff --git a/fs/jffs2/fs.c b/fs/jffs2/fs.c
+index 601afd1..b260789 100644
+--- a/fs/jffs2/fs.c
++++ b/fs/jffs2/fs.c
+@@ -197,6 +197,10 @@ int jffs2_setattr(struct dentry *dentry, struct iattr *iattr)
+ 	if (rc)
+ 		return rc;
+ 
++	rc = setattr_killpriv(dentry, iattr);
++	if (rc)
++		return rc;
++
+ 	rc = jffs2_do_setattr(inode, iattr);
+ 	if (!rc && (iattr->ia_valid & ATTR_MODE))
+ 		rc = posix_acl_chmod(inode, inode->i_mode);
+diff --git a/fs/jfs/file.c b/fs/jfs/file.c
+index 33aa0cc..4008313 100644
+--- a/fs/jfs/file.c
++++ b/fs/jfs/file.c
+@@ -107,6 +107,10 @@ int jfs_setattr(struct dentry *dentry, struct iattr *iattr)
+ 	if (rc)
+ 		return rc;
+ 
++	rc = setattr_killpriv(dentry, iattr);
++	if (rc)
++		return rc;
++
+ 	if (is_quota_modification(inode, iattr))
+ 		dquot_initialize(inode);
+ 	if ((iattr->ia_valid & ATTR_UID && !uid_eq(iattr->ia_uid, inode->i_uid)) ||
+diff --git a/fs/kernfs/inode.c b/fs/kernfs/inode.c
+index 9852176..6a70fc5 100644
+--- a/fs/kernfs/inode.c
++++ b/fs/kernfs/inode.c
+@@ -135,6 +135,23 @@ int kernfs_iop_setattr(struct dentry *dentry, struct iattr *iattr)
+ 	if (error)
+ 		goto out;
+ 
++	/*
++	 * If we need to remove privileges, drop the mutex to do that
++	 * first and then re-validate the remaining changes.
++	 */
++	if (iattr->ia_valid & ATTR_KILL_PRIV) {
++		mutex_unlock(&kernfs_mutex);
++
++		error = setattr_killpriv(dentry, iattr);
++		if (error)
++			return error;
++
++		mutex_lock(&kernfs_mutex);
++		error = inode_change_ok(inode, iattr);
++		if (error)
++			goto out;
++	}
++
+ 	error = __kernfs_setattr(kn, iattr);
+ 	if (error)
+ 		goto out;
+diff --git a/fs/libfs.c b/fs/libfs.c
+index 171d284..9a00049 100644
+--- a/fs/libfs.c
++++ b/fs/libfs.c
+@@ -375,6 +375,9 @@ int simple_setattr(struct dentry *dentry, struct iattr *iattr)
+ 	if (error)
+ 		return error;
+ 
++	error = setattr_killpriv(dentry, iattr);
++	if (error)
++		return error;
+ 	if (iattr->ia_valid & ATTR_SIZE)
+ 		truncate_setsize(inode, iattr->ia_size);
+ 	setattr_copy(inode, iattr);
+diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
+index 00689a8..94dd6ac 100644
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -496,7 +496,7 @@ nfs_setattr(struct dentry *dentry, struct iattr *attr)
+ {
+ 	struct inode *inode = dentry->d_inode;
+ 	struct nfs_fattr *fattr;
+-	int error = -ENOMEM;
++	int error;
+ 
+ 	nfs_inc_stats(inode, NFSIOS_VFSSETATTR);
+ 
+@@ -524,9 +524,16 @@ nfs_setattr(struct dentry *dentry, struct iattr *attr)
+ 		nfs_wb_all(inode);
+ 	}
+ 
++	/* XXX Can we assume the server's permission checks are sufficient? */
++	error = setattr_killpriv(dentry, attr);
++	if (error)
++		goto out;
++
+ 	fattr = nfs_alloc_fattr();
+-	if (fattr == NULL)
++	if (fattr == NULL) {
++		error = -ENOMEM;
+ 		goto out;
++	}
+ 	/*
+ 	 * Return any delegations if we're going to change ACLs
+ 	 */
+diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
+index 324dc93..ed93d74 100644
+--- a/fs/ocfs2/file.c
++++ b/fs/ocfs2/file.c
+@@ -1139,7 +1139,7 @@ int ocfs2_setattr(struct dentry *dentry, struct iattr *attr)
+ 		attr->ia_valid &= ~ATTR_SIZE;
+ 
+ #define OCFS2_VALID_ATTRS (ATTR_ATIME | ATTR_MTIME | ATTR_CTIME | ATTR_SIZE \
+-			   | ATTR_GID | ATTR_UID | ATTR_MODE)
++			   | ATTR_GID | ATTR_UID | ATTR_MODE | ATTR_KILL_PRIV)
+ 	if (!(attr->ia_valid & OCFS2_VALID_ATTRS))
+ 		return 0;
+ 
+@@ -1147,6 +1147,10 @@ int ocfs2_setattr(struct dentry *dentry, struct iattr *attr)
+ 	if (status)
+ 		return status;
+ 
++	status = setattr_killpriv(dentry, attr);
++	if (status)
++		return status;
++
+ 	if (is_quota_modification(inode, attr))
+ 		dquot_initialize(inode);
+ 	size_change = S_ISREG(inode->i_mode) && attr->ia_valid & ATTR_SIZE;
+diff --git a/fs/reiserfs/inode.c b/fs/reiserfs/inode.c
+index a7eec98..a458c12 100644
+--- a/fs/reiserfs/inode.c
++++ b/fs/reiserfs/inode.c
+@@ -3316,6 +3316,10 @@ int reiserfs_setattr(struct dentry *dentry, struct iattr *attr)
+ 	if (error)
+ 		return error;
+ 
++	error = setattr_killpriv(dentry, attr);
++	if (error)
++		return error;
++
+ 	/* must be turned off for recursive notify_change calls */
+ 	ia_valid = attr->ia_valid &= ~(ATTR_KILL_SUID|ATTR_KILL_SGID);
+ 
+diff --git a/fs/ubifs/file.c b/fs/ubifs/file.c
+index b5b593c..73d2e87 100644
+--- a/fs/ubifs/file.c
++++ b/fs/ubifs/file.c
+@@ -1269,6 +1269,10 @@ int ubifs_setattr(struct dentry *dentry, struct iattr *attr)
+ 	if (err)
+ 		return err;
+ 
++	err = setattr_killpriv(dentry, attr);
++	if (err)
++		return err;
++
+ 	if ((attr->ia_valid & ATTR_SIZE) && attr->ia_size < inode->i_size)
+ 		/* Truncation to a smaller size */
+ 		err = do_truncation(c, inode, attr);
+diff --git a/fs/xfs/xfs_acl.c b/fs/xfs/xfs_acl.c
+index a65fa5d..22b7482 100644
+--- a/fs/xfs/xfs_acl.c
++++ b/fs/xfs/xfs_acl.c
+@@ -244,7 +244,8 @@ xfs_set_mode(struct inode *inode, umode_t mode)
+ 		iattr.ia_mode = mode;
+ 		iattr.ia_ctime = current_fs_time(inode->i_sb);
+ 
+-		error = xfs_setattr_nonsize(XFS_I(inode), &iattr, XFS_ATTR_NOACL);
++		error = xfs_setattr_nonsize(NULL, XFS_I(inode), &iattr,
++					    XFS_ATTR_NOACL);
+ 	}
+ 
+ 	return error;
+diff --git a/fs/xfs/xfs_file.c b/fs/xfs/xfs_file.c
+index eb596b4..c9b9019 100644
+--- a/fs/xfs/xfs_file.c
++++ b/fs/xfs/xfs_file.c
+@@ -873,7 +873,7 @@ xfs_file_fallocate(
+ 
+ 		iattr.ia_valid = ATTR_SIZE;
+ 		iattr.ia_size = new_size;
+-		error = xfs_setattr_size(ip, &iattr);
++		error = xfs_setattr_size(NULL, ip, &iattr);
+ 	}
+ 
+ out_unlock:
+diff --git a/fs/xfs/xfs_ioctl.c b/fs/xfs/xfs_ioctl.c
+index 24c926b6..3e0dc56 100644
+--- a/fs/xfs/xfs_ioctl.c
++++ b/fs/xfs/xfs_ioctl.c
+@@ -714,7 +714,7 @@ xfs_ioc_space(
+ 		iattr.ia_valid = ATTR_SIZE;
+ 		iattr.ia_size = bf->l_start;
+ 
+-		error = xfs_setattr_size(ip, &iattr);
++		error = xfs_setattr_size(NULL, ip, &iattr);
+ 		if (!error)
+ 			clrprealloc = true;
+ 		break;
+diff --git a/fs/xfs/xfs_iops.c b/fs/xfs/xfs_iops.c
+index ec6dcdc..669150b 100644
+--- a/fs/xfs/xfs_iops.c
++++ b/fs/xfs/xfs_iops.c
+@@ -527,6 +527,7 @@ xfs_setattr_time(
+ 
+ int
+ xfs_setattr_nonsize(
++	struct dentry		*dentry,
+ 	struct xfs_inode	*ip,
+ 	struct iattr		*iattr,
+ 	int			flags)
+@@ -554,6 +555,10 @@ xfs_setattr_nonsize(
+ 		error = inode_change_ok(inode, iattr);
+ 		if (error)
+ 			return error;
++
++		error = setattr_killpriv(dentry, iattr);
++		if (error)
++			return error;
+ 	}
+ 
+ 	ASSERT((mask & ATTR_SIZE) == 0);
+@@ -734,6 +739,7 @@ out_dqrele:
+  */
+ int
+ xfs_setattr_size(
++	struct dentry		*dentry,
+ 	struct xfs_inode	*ip,
+ 	struct iattr		*iattr)
+ {
+@@ -776,9 +782,13 @@ xfs_setattr_size(
+ 		 * Use the regular setattr path to update the timestamps.
+ 		 */
+ 		iattr->ia_valid &= ~ATTR_SIZE;
+-		return xfs_setattr_nonsize(ip, iattr, 0);
++		return xfs_setattr_nonsize(dentry, ip, iattr, 0);
+ 	}
+ 
++	error = setattr_killpriv(dentry, iattr);
++	if (error)
++		return error;
++
+ 	/*
+ 	 * Make sure that the dquots are attached to the inode.
+ 	 */
+@@ -974,10 +984,10 @@ xfs_vn_setattr(
+ 
+ 	if (iattr->ia_valid & ATTR_SIZE) {
+ 		xfs_ilock(ip, XFS_IOLOCK_EXCL);
+-		error = xfs_setattr_size(ip, iattr);
++		error = xfs_setattr_size(dentry, ip, iattr);
+ 		xfs_iunlock(ip, XFS_IOLOCK_EXCL);
+ 	} else {
+-		error = xfs_setattr_nonsize(ip, iattr, 0);
++		error = xfs_setattr_nonsize(dentry, ip, iattr, 0);
+ 	}
+ 
+ 	return error;
+diff --git a/fs/xfs/xfs_iops.h b/fs/xfs/xfs_iops.h
+index 1c34e43..6994d3e 100644
+--- a/fs/xfs/xfs_iops.h
++++ b/fs/xfs/xfs_iops.h
+@@ -32,8 +32,14 @@ extern void xfs_setup_inode(struct xfs_inode *);
+  */
+ #define XFS_ATTR_NOACL		0x01	/* Don't call posix_acl_chmod */
+ 
+-extern int xfs_setattr_nonsize(struct xfs_inode *ip, struct iattr *vap,
++/*
++ * XXX Several callers have to pass dentry = NULL and this should
++ * work but it's really ugly.
++ */
++extern int xfs_setattr_nonsize(struct dentry *dentry,
++			       struct xfs_inode *ip, struct iattr *vap,
+ 			       int flags);
+-extern int xfs_setattr_size(struct xfs_inode *ip, struct iattr *vap);
++extern int xfs_setattr_size(struct dentry *dentry,
++			    struct xfs_inode *ip, struct iattr *vap);
+ 
+ #endif /* __XFS_IOPS_H__ */
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 9ab779e..7cad5d1 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -2663,6 +2663,7 @@ extern int buffer_migrate_page(struct address_space *,
+ extern int inode_change_ok(const struct inode *, struct iattr *);
+ extern int inode_newsize_ok(const struct inode *, loff_t offset);
+ extern void setattr_copy(struct inode *inode, const struct iattr *attr);
++extern int setattr_killpriv(struct dentry *dentry, struct iattr *attr);
+ 
+ extern int file_update_time(struct file *file);
+ 
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 185836b..d1d4b9b 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -557,6 +557,10 @@ static int shmem_setattr(struct dentry *dentry, struct iattr *attr)
+ 	if (error)
+ 		return error;
+ 
++	error = setattr_killpriv(dentry, attr);
++	if (error)
++		return error;
++
+ 	if (S_ISREG(inode->i_mode) && (attr->ia_valid & ATTR_SIZE)) {
+ 		loff_t oldsize = inode->i_size;
+ 		loff_t newsize = attr->ia_size;
+
+
+-- 
+Ben Hutchings
+The first rule of tautology club is the first rule of tautology club.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
