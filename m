@@ -1,48 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/5
-Message-ID: <20150128021842.GA25488@openwall.com>
-Date: Wed, 28 Jan 2015 05:18:42 +0300
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/2
+Message-ID: <54B9A71D.7090800@mantisbt.org>
+Date: Sat, 17 Jan 2015 01:04:45 +0100
+From: Damien Regad <dregad@...tisbt.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Cc: advisory@...ridge.ch
+Subject: CVE-2014-9573: SQL Injection in manage_user_page.php
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 27, 2015 at 05:45:17PM -0800, Qualys Security Advisory wrote:
-> On Tue, Jan 27, 2015 at 08:45:12PM +0300, Solar Designer wrote:
-> > He found out that apparently the ghost image appeared on the Qualys
-> > website on October 2.
-> 
-> What?!  No idea where this image came from, who created it, or why, or
-> when.  What is absolutely certain is that October 2 has nothing to do
-> with this bug, simply because the first time someone here had the idea
-> of calling it "GHOST" was on Friday evening!  Yes, Friday, January 23,
-> 2015!
+Greetings,
 
-Great.
+Please update CVE-2014-9573 with the information below
 
-Then I suppose this was a pre-existing stock image with that date, and
-someone found and re-used it later for this purpose preserving its older
-(unrelated) timestamp.  Sounds like a plausible guess.
 
-> Please please please, less pointless bickering, more code auditing.
+Description:
 
-I agree, but I think this is not bickering, but rather reflections on
-modern vulnerability handling processes.  This is not about blame, at
-least not for me.  Vulnerabilities with names and logos are a fairly
-recent trend, although use of vulnerabilities for PR isn't new (many if
-not most of us are doing it to a varying extent, often with the noble
-goal of being able to do more work like this; that's OK).  We're trying
-to figure out whether this has drawbacks, which ones, how bad (or not)
-they are, and how we can do better (or motivate others to do better).
-By demonstrating that your company did not sit on this for too long
-you'd provide a good example to others.  And by discussing these aspects
-we demonstrate that we care about disclosure timelines.
+The vulnerability can be used to manipulate existing SQL queries. An 
+attacker can obtain potentially sensitive data and use it to elevate 
+privileges within the application. It is also possible for certain 
+configurations to upload a backdoor and gain complete access to the 
+webserver or website.
 
-And, one thing I regret I did not suggest to you to add to the advisory
-is a timeline.  I have no idea what it looked like prior to the point
-when you contacted me earlier this month.
+The vulnerability exists due to insufficient filtration of the 
+"MANTIS_MANAGE_USERS_COOKIE" HTTP COOKIE in "/manage_user_page.php" 
+script. A remote user with administrative privileges can inject and 
+execute arbitrary SQL code within the application’s database.
 
-Finally, let me state that I find the quality and extent of your
-analysis impressive, and that it really helps.  Thank you!
+The exploit code below modifies the SQL query and injects malicious 
+"INTO OUTFILE" statement. As a result,current MySQL user login will be 
+written into the "/var/www/file.txt" file:
 
-Alexander
+GET /manage_user_page.php?hideinactive=0 HTTP/1.1
+Host: mantis
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Cookie: 
+MANTIS_MANAGE_USERS_COOKIE=0%3Ausername%20INTO%20OUTFILE%20%27/var/www/file.txt%27%20--%20%3A1%3A0
+Connection: keep-alive
+
+Successful exploitation requires that the MySQL account has FILE 
+privileges within the database.
+
+To exploit this vulnerability an attacker must create a specially 
+crafted cookie for the application administrator. This can be achieved 
+using XSS vulnerabilities
+
+
+Affected versions:
+- <= 1.2.19
+- <= 1.3.0-beta.1
+
+Fixed in versions:
+- 1.2.19 (not yet released)
+- 1.3.0-beta.2 (not yet released)
+
+Patch:
+See Github [1]
+
+Credit:
+This vulnerability was reported [2] by High-Tech Bridge Security 
+Research Lab (https://www.htbridge.com/), via advisory ID HTB23243 [3].
+The issue was fixed by Damien Regad (MantisBT Developer).
+
+References:
+Further details available in our issue tracker [4]
+
+[1] http://github.com/mantisbt/mantisbt/commit/69c2d28d (1.2.x)
+     http://github.com/mantisbt/mantisbt/commit/7cc4539f (1.3.x)
+[2] https://www.mantisbt.org/bugs/view.php?id=17937
+[3] https://www.htbridge.com/advisory/HTB23243
+[4] https://www.mantisbt.org/bugs/view.php?id=17940
+
+
