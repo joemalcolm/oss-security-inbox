@@ -1,52 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/19/3
-Message-Id: <20150219040341.7295FB2E162@smtpvbsrv1.mitre.org>
-Date: Wed, 18 Feb 2015 23:03:41 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/11
+Message-ID: <Pine.LNX.4.64.1501171757340.17900@beijing.mitre.org>
+Date: Sat, 17 Jan 2015 17:58:46 -0500 (EST)
 From: cve-assign@...re.org
-To: kseifried@...hat.com
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com, security@...ebsd.org
-Subject: Re: FreeBSD: URGENT: RNG broken for last 4 months
+To: Adam Baldwin <baldwin@...yet.net>
+cc: Kurt Seifried <kseifried@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, "report@...esecurity.io" <report@...esecurity.io>
+Subject: Re: Node.js "serve-static" module Open Redirect
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-> If you are running a current kernel r273872 or later, please upgrade
+On Wed, 14 Jan 2015, Adam Baldwin wrote:
 
-Our perspective at this point is that FreeBSD-CURRENT is not a
-"software product" and typically should not have CVE assignments. If
-anyone on the FreeBSD Security Officer Team believes that this, for
-whatever reason, is a case where FreeBSD-CURRENT should have a CVE, we
-are willing to go with their preference.
+> Yes we post to mitre for CVE. We're short staffed so slow. We can try 
+> and cross post to oss-security too in the future.
+>
+> Adam Baldwin
+>
+>> On Jan 13, 2015, at 8:56 PM, Kurt Seifried <kseifried@...hat.com> wrote:
+>>
+>> https://nodesecurity.io/advisories/serve-static-open-redirect
+>>
+>> Says CVE pending, no idea where/whom they asked, I assume Mitre?
+>>
+>> Also if nodesecurity.io could post these advisories to oss-security that
+>> would be helpful, thanks!
+>>
+>> --
+>> Kurt Seifried -- Red Hat -- Product Security -- Cloud
+>> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-> quite a few people run -current (and it's a 4 month affected window),
-> so if we're assigning CVE's to stuff hosted in github, then it seems
-> fair
+Use CVE-2015-1164.
 
-A project on github can be a software product if the developers choose
-to use github that way. FreeBSD-CURRENT is, for example, advertised as
-"any given commit is just as likely to introduce new bugs as to fix
-existing ones"
-(https://www.freebsd.org/doc/en/books/handbook/current-stable.html).
-The defined use cases for FreeBSD-CURRENT don't suggest that it has
-any expected behavior, security-wise or otherwise: it is just a point
-in the development process. Also, we don't happen to know of
-situations where third parties repackage and support FreeBSD-CURRENT
-code (e.g., as the embedded OS of an appliance).
+---
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
 202 Burlington Road, Bedford, MA 01730 USA
 [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJU5V/UAAoJEKllVAevmvmswX0IAJvlnDzjyPxNgRbkZbMkqBlP
-jWu4RE4wKDIdNbMWKkPofiS0CjxT1JUvdjWJccUuEFvGMusGQcPahbIlkWUMvnRw
-fzJz+y8ge2Va7VrFoy+MzP083d3X1/oUeSf/MF4UjruoUhu1LFrTKRvHZhjuVJDn
-/VXmbtScI3V8zNPkmOcepdhau6AWzXi1kZ0jvTcAPtobkXc/MUCOkr2hca5iACDL
-zLr/H3rzRxBMqGLXW4YqvWWRTBZc5+l3w6RGuiY5oJWkigs8UTNyKurovsw/zGZ9
-lpflDjdBbSKaFvycWNOJLj9A0bTD7jo1M/6EUdzvIzBGlVnbSrlCiFfES5jpmXI=
-=6XgW
------END PGP SIGNATURE-----
