@@ -1,35 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/16/7
-Message-ID: <loom.20150216T174342-443@post.gmane.org>
-Date: Mon, 16 Feb 2015 17:03:39 +0000 (UTC)
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request: XSS in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/17/10
+Message-ID: <Pine.LNX.4.64.1501171752520.17900@beijing.mitre.org>
+Date: Sat, 17 Jan 2015 17:54:16 -0500 (EST)
+From: cve-assign@...re.org
+To: Salvatore Bonaccorso <carnil@...ian.org>
+cc: OSS Security Mailinglist <oss-security@...ts.openwall.com>, CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Re: CVE Request: xdg-utils: xdg-open: command injection vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Paul,
 
-OK, fine, so your original commit fixed the problem and my subsequent fix
-reintroduced part of the issue. Sorry about that, but shit happens. It have
-been nice however, if you had tested the code back then (i.e. before 1.2.18
-was released) instead of today, but anyway what's done is done.
+>> From the references it is not clear, if a CVE was already requested in
+> past, but I have not found a reference here. xdg-open has a command
+> injection vulnerability, which was reported on [1] and [2]. The
+> Freedesktop.org Bug entry contains also a patch[3]. The issue was
+> hilighted again on the fulldisclosure list in [4].
+>
+> In case it is not yet assigned, could you please assign a CVE for this
+> RCE for xdg-open in xdg-utils?
+>
+> References:
+>
+> [1] https://bugs.gentoo.org/show_bug.cgi?id=472888
+> [2] https://bugs.freedesktop.org/show_bug.cgi?id=66670
+> [3] https://bugs.freedesktop.org/attachment.cgi?id=109536
+> [4] http://seclists.org/fulldisclosure/2014/Nov/36
+> [5] https://bugs.debian.org/773085
+>
+> Regards,
+> Salvatore
 
-Now, the facts:
-- we don't have any single release with just cabacdc2 (or a port of it) in
-it so it's pointless arguing that it actually fixed the issue.
-- In 1.3, cabacdc2 + 3d0625d8 together form at least a *partial* fix for
-CVE-2014-8986 (released in 1.3.0-beta.1)
-- In 1.2, e326b73a is a combination of the above 2 (released in 1.2.18)
+Use CVE-2014-9622.
 
-Can you please test the commits attached to [1] and confirm that they do
-indeed fully address the original issue.
+---
 
-@Mitre, please let us know whether this warrants a new CVE (following the
-same logic as in [2]) or if I should refer to the existing CVE-2014-8986 for
-this.
-
-[1] https://www.mantisbt.org/bugs/view.php?id=19301
-[2] http://thread.gmane.org/gmane.comp.security.oss.general/14977/focus=15392
-
-
-
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
