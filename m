@@ -1,46 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/11
-Message-ID: <54C8A1A6.6030003@redhat.com>
-Date: Wed, 28 Jan 2015 14:15:26 +0530
-From: Huzaifa Sidhpurwala <huzaifas@...hat.com>
-To: oss-security@...ts.openwall.com, Mitre CVE assign department <cve-assign@...re.org>
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/2
+Message-ID: <54BC0B0E.2000409@amacapital.net>
+Date: Sun, 18 Jan 2015 11:35:42 -0800
+From: Andy Lutomirski <luto@...capital.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: PIE bypass using VDSO ASLR weakness - Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-On 01/27/2015 11:35 PM, Florian Weimer wrote:
-> * Marek Kroemeke:
+On 01/09/2015 08:18 AM,
+cve-assign-AZamIotjMK3YtjvyW6yDsg@...lic.gmane.org wrote:
+>>> Given that ASLR is not effective in VDSO and comes down to 11 quality bits
+>>> as per pax test making return-to-vdso feasible even for PIE binary, whether
+>>> this should be considered as a bug and CVE be assigned?
 > 
->> We just noticed CVE-2015-0235 , and we thought we will drop this one
->> in - apologies for low quality , we didn't really have time yet to
->> analyse it, but it seems to be related, so it makes sense to patch
->> things once right ?
+>> Yes, we can proceed to CVE assignment. The more recent discussion
+>> hasn't been on oss-security with, for example:
 > 
-> It's not related, and we cannot patch it at the same time because
-> packages for the gethostbyname issue are already ready, they just have
-> to be released.  (When we change critical system components, we also
-> need to be extra-careful with testing, which takes time.)
+>>    https://git.kernel.org/cgit/linux/kernel/git/luto/linux.git/commit/?h=x86/vdso&id=bc3b94c31d65e761ddfe150d02932c65971b74e2
+>>    http://marc.info/?l=linux-kernel&m=141911002822659&w=2
 > 
-> Andreas Schwab fixed this in 2011:
+>> This apparently mentions both the original discovery:
 > 
->   <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
+>>    The current algorithm is buggy: the vdso has about a 50%
+>>    probability of being at the very end of a PMD.
 > 
-> If I'm not mistaken, this commit when into glibc 2.15.
+> Use CVE-2014-9585 for this vulnerability, which corresponds to a
+> portion of the above bc3b94c31d65e761ddfe150d02932c65971b74e2 patch.
 > 
-> I have not yet found the corresponding glibc bug (if it exists).
+> (not yet available at
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/arch/x86/vdso/vma.c)
 > 
-> The bug only materializes if the getaddrinfo functions is called with
-> the AI_IDN flag, and if glibc has been compiled with libidn support
-> (but I haven't checked if you can switch that off these days).
+>> and a second discovery that was made separately:
 > 
+>>    The current algorithm also has a decent chance of failing outright
+>>    due to incorrect handling of the case where the top of the stack is
+>>    near the top of its PMD.
+> 
+>> Here, our question, for anyone, is: is there a security impact from
+>> the "failing outright" outcome? Or is there only a performance impact
+>> (e.g., any correctly written application will continue to work, but
+>> will not benefit from any vDSO functionality)?
+> 
+> We haven't seen any responses. There is currently no CVE ID for this
+> "incorrect handling of the case where the top of the stack is near the
+> top of its PMD" issue. This incorrect-handling issue is not within the
+> scope of CVE-2014-9585.
 
-MITRE,
+The "failing outright" case causes the vdso randomization process to
+fail, resulting in the vdso being mapped at the top of mmap space.
+Given that the mmap space is itself usually randomized, this seems
+unlikely to be a security issue.
 
-This is a new flaw, can you please assign a CVE id to this?
-
-https://bugzilla.redhat.com/show_bug.cgi?id=797096
-
-Thanks!
-
-
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+--Andy
