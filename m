@@ -1,41 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/14
-Message-ID: <1421873387.31046.202.camel@decadent.org.uk>
-Date: Wed, 21 Jan 2015 20:49:47 +0000
-From: Ben Hutchings <ben@...adent.org.uk>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/3
+Message-ID: <Pine.LNX.4.64.1501181448040.14308@beijing.mitre.org>
+Date: Sun, 18 Jan 2015 14:55:31 -0500 (EST)
+From: cve-assign@...re.org
+To: Thijs Kinkhorst <thijs@...ian.org>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request: pigz, kgb, pax: directory traversal
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2015-01-21 at 13:54 +0300, Solar Designer wrote:
-> Ben, all -
-> 
-> On Sat, Jan 17, 2015 at 11:26:46PM +0000, Ben Hutchings wrote:
-> > chown() and write() should clear all privilege attributes on
-> > a file - setuid, setgid, setcap and any other extended
-> > privilege attributes.
-> > 
-> > However, any attributes beyond setuid and setgid are managed by the
-> > LSM and not directly by the filesystem, so they cannot be set along
-> > with the other attributes.
-> [...]
-> 
-> First of all, thank you for your work on the Linux kernel!
-> 
-> Going forward, I think it may be better to CC this sort of messages to
-> the kernel-hardening list (like it's been done on some occasions before,
-> see below) rather than to oss-security - and only post summary messages
-> to oss-security, separately (not CC'ed to anywhere else).
-[...]
 
-Sorry, I'd forgotten about that one.  I'll try to pick the right list in
-future.
+On Mon, 12 Jan 2015, Thijs Kinkhorst wrote:
 
-Ben.
+> Three additional cases of directory traversal in archiving utilities 
+> have been reported to Debian. Please assign a CVE id to each.
+>
+> - pigz
+>  Report: https://bugs.debian.org/774978
+>  Fix:
+> https://github.com/madler/pigz/commit/fdad1406b3ec809f4954ff7cdf9e99eb18c2458f
 
--- 
-Ben Hutchings
-Larkinson's Law: All laws are basically false.
+Use CVE-2015-1191.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (812 bytes)
+> - kgb
+>  Report: https://bugs.debian.org/774989
+
+Use CVE-2015-1192.
+
+> - pax
+>  Report: https://bugs.debian.org/774716 and
+>      http://www.openwall.com/lists/oss-security/2015/01/07/5
+
+Use CVE-2015-1193 for the .. path traversal (CWE-22).
+
+Use CVE-2015-1194 for the symlink following, which can allow access 
+outside of the current directory.
+
+CVE distinguishes symlink following from path traversal as different 
+vulnerability types.  The fix for one issue is not necessarily guaranteed 
+to fix the other.  Also, since symlink following attacks can often be used 
+against protected files within a directory that is already accessible to 
+the attacker, it might cause confusion to use the "directory traversal" 
+term to describe them.
+
+---
+
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
