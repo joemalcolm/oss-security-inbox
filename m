@@ -1,22 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/14/2
-Message-ID: <54B5F712.60407@redhat.com>
-Date: Tue, 13 Jan 2015 21:56:50 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, report@...esecurity.io
-Subject: Node.js "serve-static" module Open Redirect
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/1
+Message-ID: <54BBDC6B.80109@openwall.com>
+Date: Sun, 18 Jan 2015 19:16:43 +0300
+From: Alexander Cherepanov <ch3root@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE request: lhasa: directory traversals
 Content-Type: text/plain; charset=utf-8
 
-https://nodesecurity.io/advisories/serve-static-open-redirect
+On 2015-01-14 20:33, Henri Salo wrote:
+> On Tue, Jan 13, 2015 at 10:44:00PM +0300, Alexander Cherepanov wrote:
+>> https://github.com/fragglet/lhasa/commit/64b96b5c1d08293b6c373f616b206d951ee358f7
+>> https://github.com/fragglet/lhasa/commit/3bab39fd492a8924bdd25615ef40ca68c0c7ad0f
+>> https://github.com/fragglet/lhasa/commit/adcd9912803e69ebeb000cc4c341fbc64820ed1f
+>> https://github.com/fragglet/lhasa/commit/c26557dd1b2e640e9785686355c5a2945483460b
+>
+> All of these commits are only in versions 0.1.0 and 0.2.0 so no need for
+> "incomplete fix for" CVE(s).
 
-Says CVE pending, no idea where/whom they asked, I assume Mitre?
+Yeah, all of them are between 0.0.7 and 0.1.0. But '..' and symlinks are 
+usually seen as different issues.
 
-Also if nodesecurity.io could post these advisories to oss-security that
-would be helpful, thanks!
+> Use cases would have be nice.
+
+An example for '..' is easy:
+
+$ touch ../rel
+$ jlha a test.lzh ../rel
+$ rm ../rel
+$ lhasa x test.lzh
+
+But jlha front-end doesn't handle symlinks so you have to use non-free 
+lha to archive symlinks. There are some examples in the lhasa repo though:
+
+https://github.com/fragglet/lhasa/tree/master/test/archives/lha_unix114i
 
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Alexander Cherepanov
