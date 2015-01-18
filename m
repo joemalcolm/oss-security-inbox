@@ -1,63 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/03/5
-Message-ID: <CAE7jHC9kVTbck_rM71mNSv=H-djJ=a7j0m1rDwXksrppU6-wQg@mail.gmail.com>
-Date: Tue, 3 Feb 2015 13:15:17 +0200
-From: Constantine Shulyupin <const@...elinux.com>
-To: Florian Weimer <fweimer@...hat.com>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: workaround for GHOST glibc vulnerability CVE-2015-0235
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/4
+Message-ID: <Pine.LNX.4.64.1501181459220.14308@beijing.mitre.org>
+Date: Sun, 18 Jan 2015 15:00:32 -0500 (EST)
+From: cve-assign@...re.org
+To: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request for vulnerability in OpenStack Glance
 Content-Type: text/plain; charset=utf-8
 
-Added static, thank.
 
-You are right, gethostbyname is vulnerable too, but less.
-gethostbyname is implemented in
-http://osxr.org/glibc/source/nss/getXXbyYY.c?v=glibc-2.17#0101
-It allocates buffer from heap, not stack, which is less danger.
-
-Actually the bug is in __nss_hostname_digits_dots @
-http://osxr.org/glibc/source/nss/digits_dots.c?v=glibc-2.17#0036.
-Is it much more complex and dangerous to overload
-__nss_hostname_digits_dots. Better upgrade to newer glibc.
-
-Thanks
-
-On Tue, Feb 3, 2015 at 12:30 PM, Florian Weimer <fweimer@...hat.com> wrote:
-
-> On 02/02/2015 03:52 PM, Constantine Shulyupin wrote:
-> > CVE-2015-0235-workaround is a shared library wrapper with additional
-> checks
-> > for the vulnerable functions gethostbyname2_r and gethostbyname_r .
-> >
-> > The proper solution for CVE-2015-0235 is to upgrade glibc to at least
-> > glibc-2.18.
-> >
-> > In some cases, an immediate glibc upgrade is not possible, for example in
-> > custom production embedded systems, because such an upgrade requires a
-> > validation of the whole system.
-> >
-> > In such cases, this workaround provides a hot fix solution, which is
-> easier
-> > to validate.
-> >
-> > Source code: https://github.com/makelinux/CVE-2015-0235-workaround
+> A vulnerability was discovered in OpenStack (see below). In order to
+> ensure full traceability, we need a CVE number assigned that we can
+> attach to further notifications. This issue is already public, although an
+> advisory was not sent yet.
 >
-> You should make all symbols static.  With the current code, you risk
-> symbol collisions.
+> Title: Glance user storage quota bypass
+> Reporter: Tushar Patil (NTT)
+> Products: Glance
+> Versions: up to 2014.1.3 and 2014.2 version up to 2014.2.1
 >
-> Why don't you hook gethostbyname?  I'm not sure if gethosybyname is
-> implement in terms of gethostbyname_r.  (The call stacks I have suggest
-> it isn't.)
+> Description:
+> Tushar Patil from NTT reported a vulnerability in Glance. By deleting images
+> that are being uploaded, a malicious user can overcome the storage quota and
+> thus may overrun the backend. Images in deleted state are not taken into
+> account by quota and won't be effectively deleted until the upload is
+> completed. Only Glance setups configured with user_storage_quota are
+> affected.
 >
-> --
-> Florian Weimer / Red Hat Product Security
+> References:
+> https://launchpad.net/bugs/1398830
 >
+> Thanks in advance,
+>
+> -- 
+> Tristan Cacqueray
+> OpenStack Vulnerability Management Team
 
+Use CVE-2014-9623.
 
+---
 
--- 
-Constantine Shulyupin
-http://www.MakeLinux.com/
-Embedded Linux Systems
-and Device Drivers
-
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
