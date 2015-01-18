@@ -1,87 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/10/5
-Message-ID: <m8sag6$om1$1@ger.gmane.org>
-Date: Sat, 10 Jan 2015 23:52:54 +0100
-From: Damien Regad <dregad@...tisbt.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2014-6316: URL redirection issue in MantisBT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/8
+Message-ID: <Pine.LNX.4.64.1501181527130.14308@beijing.mitre.org>
+Date: Sun, 18 Jan 2015 15:27:53 -0500 (EST)
+From: cve-assign@...re.org
+To: Alexander Cherepanov <ch3root@...nwall.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request: ha -- directory traversals
 Content-Type: text/plain; charset=utf-8
 
-During follow-up tests he performed on the fix for CVE-2014-6316 (which 
-was released in MantisBT 1.2.18), Alejo Popovici noticed [1] that the 
-earlier fix was only partial.
 
-With certain browsers (FF 34, Chrome 39 but not IE11) it is still 
-possible to effect a cross-domain redirection using a redirect address 
-having a single slash, e.g.
+On Fri, 16 Jan 2015, Alexander Cherepanov wrote:
 
-- http://example.com/mantis/login_page.php?return=https:/google.com or
-- https://example.com/mantis/login_page.php?return=http:/google.com
+> Hi!
+>
+> ha is susceptible to directory traversal vulnerabilities via absolute and 
+> relative paths.
+>
+> Initial report:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774954
+>
+> Could CVE(s) please be assigned?
+>
+> -- 
+> Alexander Cherepanov
 
-This is essentially the same vulnerability that was described in 
-CVE-2014-6316, but due to a different root cause (for which a patch will 
-be issued soon).
+Use CVE-2015-1198.
 
-I would like to know if I should be using the same CVE ID, or if a new 
-one needs to be issued.
+---
 
-Thanks in advance.
-
-Damien Regad
-MantisBT Developer
-
-
-[1] https://www.mantisbt.org/bugs/view.php?id=17997
-
-On 2014-12-04 00:13, Damien Regad wrote:
-> Greetings,
->
-> Please update CVE-2014-6316 with the information below
->
->
-> Description:
->
-> A bug in the URL sanitization routine allows an attacker to craft an URL
-> that can redirect outside of the MantisBT instance's domain when the
-> software is installed at the web server's root.
->
-> e.g. http://example.com/login_page.php?return=http://google.com will
-> redirect to Google.
->
-> Affected versions:
-> => 1.2.0a3, <= 1.2.17
->
-> Fixed in versions:
-> 1.2.18 (not yet released)
->
-> Patch:
-> See Github [1]
->
-> Credit:
->
-> Redirection in login_page.php was first reported [3] by Mathias Karlsson
-> (http://mathiaskarlsson.me) as part of Offensive Security's bug bounty
-> program [4]; issue was also independently discovered and reported by
-> Ryan Giobbi who made the original CVE request [2], Shahee Mirza [5] and
-> Alejo Popovici [6].
->
-> Paul Richards also found another redirection issue in
-> permalink_page.php, which turned out to have the same root cause.
->
-> The issue was fixed by Damien Regad (MantisBT Developer).
->
-> References:
-> Further details available in our issue tracker [2]
->
->
-> [1] http://github.com/mantisbt/mantisbt/commit/e66ecc9f
-> [2] https://www.mantisbt.org/bugs/view.php?id=17648
-> [3] https://www.mantisbt.org/bugs/view.php?id=17362
-> [4] http://www.offensive-security.com/bug-bounty-program/
-> [5] https://www.mantisbt.org/bugs/view.php?id=17698
-> [6] https://www.mantisbt.org/bugs/view.php?id=17811
->
->
->
-
-
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
