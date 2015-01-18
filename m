@@ -1,34 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/03/1
-Message-ID: <54F5618B.4000605@redhat.com>
-Date: Tue, 03 Mar 2015 00:23:55 -0700
-From: Kurt Seifried <kseifried@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>, security@...ian.org, dickey@...isible-island.net
-Subject: Debian / xterm #779397
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/11
+Message-ID: <Pine.LNX.4.64.1501181540090.14308@beijing.mitre.org>
+Date: Sun, 18 Jan 2015 15:44:02 -0500 (EST)
+From: cve-assign@...re.org
+To: Damien Regad <dregad@...tisbt.org>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE request: CAPTCHA bypass in MantisBT
 Content-Type: text/plain; charset=utf-8
 
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=779397#23
 
-Package: xterm
-Version: 312-1
-Severity: important
-Tags: security
+On Sat, 17 Jan 2015, Damien Regad wrote:
 
-$ xterm -S/dev/pts/20
-*** buffer overflow detected ***: /usr/bin/xterm terminated
+> Greetings,
+>
+> Please assign a CVE ID for the following issue
+>
+>
+> Description:
+>
+> An attacker can get an unlimited amount of CAPTCHA "samples" with different 
+> perturbations for the same challenge, which makes the whole captcha utterly 
+> useless and very easy to bypass.
+>
+>
+> Affected versions:
+> <= 1.2.19
+>
+> Fixed in versions:
+> 1.2.19 (not yet released)
+>
+> Patch:
+> See Github [1]
+>
+> Credit:
+> This vulnerability was reported [2] by Florent Daigniere from Matta 
+> Consulting.
+> The issue was fixed by Damien Regad (MantisBT Developer).
+>
+> References:
+> Further details available in our issue tracker [2]
+>
+> [1] https://github.com/mantisbt/mantisbt/commit/39a92726
+> [2] https://www.mantisbt.org/bugs/view.php?id=17984
 
-=======
+Use CVE-2014-9624.  (Although 17984 apparently was not publicly accessible 
+until 2015, the 39a92726 commit appears to have been uploaded to GitHub on 
+December 29, 2014, and it clearly describes a security issue.  Therefore a 
+2014 ID is used.)
 
-This was fixed in #314, two months ago.
+---
 
--- 
-Thomas E. Dickey <dickey@...isible-island.net>
-
-Did this get a CVE? I don't see a DSA for xterm.
-
--- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
