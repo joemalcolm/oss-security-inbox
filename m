@@ -1,27 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/20/13
-Message-Id: <201502200922.t1K9Mrdj017109@acsinet22.oracle.com>
-Date: Fri, 20 Feb 2015 10:22:53 +0100
-From: Casper.Dik@...cle.com
-To: oss-security@...ts.openwall.com
-Subject: Re: Fixing the glibc runtime linker 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/5
+Message-ID: <Pine.LNX.4.64.1501181501490.14308@beijing.mitre.org>
+Date: Sun, 18 Jan 2015 15:02:42 -0500 (EST)
+From: cve-assign@...re.org
+To: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: [OSSA 2015-002] Glance v2 API unrestricted path traversal through filesystem:// scheme
 Content-Type: text/plain; charset=utf-8
 
 
->FWIW, relative RPATHs are quite fundamental to our test execution
->environment, and any patch that unconditionally ignores them would
->have to be reverted in our tree.
+On Thu, 15 Jan 2015, Tristan Cacqueray wrote:
 
+> =====================================================================================
+> OSSA-2015-002: Glance v2 API unrestricted path traversal through filesystem:// scheme
+> =====================================================================================
+>
+> :Date: January 15, 2015
+> :CVE: Requested
+>
+>
+> Affects
+> ~~~~~~~
+> - Glance: up to 2014.1.3 and 2014.2 versions up to 2014.2.1
+>
+>
+> Description
+> ~~~~~~~~~~~
+> Jin Liu from EMC reported that path traversal vulnerabilities in
+> Glance were not fully patched in OSSA 2014-041. By setting a malicious
+> image location to a filesystem:// scheme an authenticated user can
+> still download or delete any file on the Glance server for which the
+> Glance process user has access to. Only setups using the Glance V2 API
+> are affected by this flaw.
+>
+>
+> Patches
+> ~~~~~~~
+> - https://review.openstack.org/145974 (Icehouse)
+> - https://review.openstack.org/145916 (Juno)
+> - https://review.openstack.org/145640 (Kilo)
+>
+>
+> Credits
+> ~~~~~~~
+> - Jin Liu from EMC
+>
+>
+> References
+> ~~~~~~~~~~
+> - https://launchpad.net/bugs/1408663
+>
+>
+> Notes
+> ~~~~~
+> - This fix was included in the kilo-1 development milestone and will be
+>  included in future 2014.2.2 (juno) and 2014.1.4 (icehouse) releases.
+> - The OpenStack VMT recommends revoking all credentials stored in files
+>  accessible by Glance as a precautionary measure.
+> - A CVE has been requested for this issue, the OpenStack VMT will issue an
+>  errata with the correct CVE number assigned once this information is
+>  available.
+>
+> --
+> Tristan Cacqueray
+> OpenStack Vulnerability Management Team
 
-But wouldn't that make the libraries and executables less reliable?
+Use CVE-2015-1195.
 
-They can pick up random libraries or cause some delays when one of the 
-relative paths points to a NFS mounted directory.
+---
 
-Any reason you can't change to using LD_LIBRARY_PATH for testing?
-
-I've run into relative directories and even /net/xxx/ search paths but I 
-believe these should never be used as part of a binary distribution.
-
-Casper
-
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
