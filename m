@@ -1,40 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/28/7
-Message-ID: <20150128023626.GA23553@localhost.localdomain>
-Date: Tue, 27 Jan 2015 18:36:26 -0800
-From: Qualys Security Advisory <qsa@...lys.com>
-To: endrazine <endrazine@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/7
+Message-ID: <Pine.LNX.4.64.1501181515270.14308@beijing.mitre.org>
+Date: Sun, 18 Jan 2015 15:25:14 -0500 (EST)
+From: cve-assign@...re.org
+To: Alexander Cherepanov <ch3root@...nwall.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request: cpio -- directory traversal
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 27, 2015 at 05:47:47PM -0800, endrazine wrote:
-> From GHOST.c :
-> ...
->   char name[10];
->   memset(name, '0', len);
->   name[len] = '\0';
-> ...
 
-Interesting!  But where did you possibly get that code?  Every copy of
-our advisory includes the original proof-of-concept, which is quite
-different from what you are showing here:
+On Fri, 16 Jan 2015, Alexander Cherepanov wrote:
 
-...
-  char name[sizeof(temp.buffer)];
-...
+> Hi!
+>
+> cpio is susceptible to a directory traversal vulnerability via symlinks.
+>
+> Initial report:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774669
+>
+> Upstream report:
+> https://lists.gnu.org/archive/html/bug-cpio/2015-01/msg00000.html
+>
+> Some discussion:
+> http://www.openwall.com/lists/oss-security/2015/01/07/5
+> http://www.openwall.com/lists/oss-security/2015/01/08/4
+>
+> Could CVE(s) please be assigned?
+>
+> -- 
+> Alexander Cherepanov
 
-References:
+Use CVE-2015-1197.
 
-http://www.openwall.com/lists/oss-security/2015/01/27/9
-https://www.qualys.com/research/security-advisories/GHOST-CVE-2015-0235.txt
+---
 
-And just in case:
-
-$ md5sum GHOST.c
-aa8dbce88e54027dbd4723ccd142f717  GHOST.c
-
-With best regards,
-
--- 
-the Qualys Security Advisory team
+CVE assignment team, MITRE CVE Numbering Authority M/S M300
+202 Burlington Road, Bedford, MA 01730 USA
+[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
