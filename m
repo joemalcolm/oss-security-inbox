@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/03/15
-Message-ID: <Pine.LNX.4.64.1501031741330.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 17:42:11 -0500 (EST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/10
+Message-ID: <Pine.LNX.4.64.1501181534440.14308@beijing.mitre.org>
+Date: Sun, 18 Jan 2015 15:35:23 -0500 (EST)
 From: cve-assign@...re.org
-To: Kurt Seifried <kseifried@...hat.com>
-cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
-Subject: Re: CVE request for emacs possibly
+To: Alexander Cherepanov <ch3root@...nwall.com>
+cc: oss-security@...ts.openwall.com, cve-assign@...re.org
+Subject: Re: CVE Request: pxz -- race condition in setting permissions
 Content-Type: text/plain; charset=utf-8
 
 
-On Tue, 30 Dec 2014, Kurt Seifried wrote:
+On Fri, 16 Jan 2015, Alexander Cherepanov wrote:
 
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=774090
+> Hi!
 >
-> From: Vincent Lefevre <vincent@...c17.net>
-> To: 774090@...s.debian.org
-> Subject: Re: emacs24: a left-click in Emacs sometimes modifies the
-> PRIMARY selection
-> Date: Mon, 29 Dec 2014 18:58:55 +0100
-> Control: tags -1 security
+> pxz suffers from a race condition in setting permissions on output file.
 >
-> On 2014-12-28 16:29:12 +0100, Vincent Lefevre wrote:
->> Note: This bug occurs very often and is very annoying, as one needs
->> to reselect what was selected (sometimes hardly possible). Moreover
->> the wrongly pasted text is similar to the correct text[*], meaning
->> that if one doesn't pay attention, one gets a file with permanently
->> incorrect data!
+> Initial report:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775306
 >
-> Grrr... That's also a security problem. Due to this bug, a paste with
-> a middle click in a web browser can end up in pasting private data!
-> And Javascript can provide the pasted text to the web site immediately
-> (Facebook does that), before the user can notice the problem.
+> Could CVE(s) please be assigned?
+>
+> -- 
+> Alexander Cherepanov
 
-Use CVE-2014-9483.
+Use CVE-2015-1200.
 
 ---
 
