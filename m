@@ -1,57 +1,164 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/12
-Message-ID: <54BFD090.4000907@schaufler-ca.com>
-Date: Wed, 21 Jan 2015 08:15:12 -0800
-From: Casey Schaufler <casey@...aufler-ca.com>
-To: Stephen Smalley <sds@...ho.nsa.gov>, James Morris <jmorris@...ei.org>, Ben Hutchings <ben@...adent.org.uk>
-CC: Alexander Viro <viro@...iv.linux.org.uk>, linux-fsdevel@...r.kernel.org, linux-security-module@...r.kernel.org, LKML <linux-kernel@...r.kernel.org>, 770492@...s.debian.org, Ben Harris <bjh21@....ac.uk>, oss-security@...ts.openwall.com, John Johansen <john.johansen@...onical.com>, Paul Moore <paul@...l-moore.com>, Casey Schaufler <casey@...aufler-ca.com>
-Subject: Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/19/1
+Message-ID: <CAG_z0FT9avE_wZOO8D4xzh35z4V0aQ_kpSDxJ2UNked8pzR3vA@mail.gmail.com>
+Date: Mon, 19 Jan 2015 10:09:06 +0800
+From: Marina Glancy <marina@...dle.com>
+To: oss-security@...ts.openwall.com
+Subject: Moodle security issues are now public
 Content-Type: text/plain; charset=utf-8
 
-On 1/21/2015 6:03 AM, Stephen Smalley wrote:
-> On 01/20/2015 06:17 PM, James Morris wrote:
->> On Sat, 17 Jan 2015, Ben Hutchings wrote:
->>
->>> chown() and write() should clear all privilege attributes on
->>> a file - setuid, setgid, setcap and any other extended
->>> privilege attributes.
->>>
->>> However, any attributes beyond setuid and setgid are managed by the
->>> LSM and not directly by the filesystem, so they cannot be set along
->>> with the other attributes.
->>>
->>> Currently we call security_inode_killpriv() in notify_change(),
->>> but in case of a chown() this is too early - we have not called
->>> inode_change_ok() or made any filesystem-specific permission/sanity
->>> checks.
->>>
->>> Add a new function setattr_killpriv() which calls
->>> security_inode_killpriv() if necessary, and change the setattr()
->>> implementation to call this in each filesystem that supports xattrs.
->>> This assumes that extended privilege attributes are always stored in
->>> xattrs.
->> It'd be useful to get some input from LSM module maintainers on this. 
->>
->> e.g. doesn't SELinux already handle this via policy directives?
-> There have been a couple postings of a similar patch set [1] by Jan
-> Kara, although I don't believe that series addressed chown().
->
-> If I am reading the patches correctly, they (correctly) don't affect
-> SELinux or Smack labels; they are just calling the existing
-> security_inode_killpriv() hook, which is only implemented for the
-> capability module to remove the security.capability xattr.
+The following security notifications have now been made public. Thanks
+to OSS members for their cooperation.
 
-The description of the change should say that. I can easily
-imagine an enthusiastic test developer reading the existing
-description and filing bugs because SELinux, Smack and whatever
-other xattr based systems might be around don't clear their
-attributes. If the intent wasn't clear to the first person to
-use xattrs for security purposes, I shouldn't expect the new
-and inexperienced to see it.
+Sincerely,
+Marina Glancy
+Development Process Manager
+Moodle HQ
 
-My position softens. Document it correctly, and I'm fine with it.
 
->
-> [1] http://marc.info/?l=linux-security-module&m=141890696325054&w=2
->
 
+==============================================================================
+MSA-15-0001: Insufficient access check in LTI module
+
+Description:       Absence of capability check in AJAX backend script could
+                   allow any enrolled user to search the list of registered
+                   tools
+Issue summary:     mod/lti/ajax.php security problems
+Severity/Risk:     Minor
+Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
+                   unsupported versions
+Versions fixed:    2.8.2, 2.7.4 and 2.6.7
+Reported by:       Petr Skoda
+Issue no.:         MDL-47920
+CVE identifier:    CVE-2015-0211
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47920
+
+==============================================================================
+MSA-15-0002: XSS vulnerability in course request pending approval page
+
+Description:       Course summary on course request pending approval page was
+                   displayed to the manager unescaped and could be used for
+                   XSS attack
+Issue summary:     XSS in course request pending approval page (Privilege
+                   Escalation?)
+Severity/Risk:     Serious
+Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
+                   unsupported versions
+Versions fixed:    2.8.2, 2.7.4 and 2.6.7
+Reported by:       Skylar Kelty
+Issue no.:         MDL-48368
+Workaround:        Grant permission moodle/course:request only to trusted
+                   users
+CVE identifier:    CVE-2015-0212
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48368
+
+==============================================================================
+MSA-15-0003: CSRF possible in Glossary module
+
+Description:       Two files in the Glossary module lacked a session key check
+                   potentially allowing cross-site request forgery
+Issue summary:     Multiple CSRF in mod glossary
+Severity/Risk:     Serious
+Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
+                   unsupported versions
+Versions fixed:    2.8.2, 2.7.4 and 2.6.7
+Reported by:       Ankit Agarwal
+Issue no.:         MDL-48106
+CVE identifier:    CVE-2015-0213
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48106
+
+==============================================================================
+MSA-15-0004: Information leak through messaging functions in web-services
+
+Description:       Through web-services it was possible to access
+                   messaging-related functions such as people search even if
+                   messaging is disabled on the site
+Issue summary:     Messages external functions doesn't check if messaging is
+                   enabled
+Severity/Risk:     Minor
+Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
+                   unsupported versions
+Versions fixed:    2.8.2, 2.7.4 and 2.6.7
+Reported by:       Juan Leyva
+Issue no.:         MDL-48329
+Workaround:        Disable web services or disable individual message-related
+                   functions
+CVE identifier:    CVE-2015-0214
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48329
+
+==============================================================================
+MSA-15-0005: Insufficient access check in calendar functions in web-services
+
+Description:       Through web-services it was possible to get information
+                   about calendar events which user did not have enough
+                   permissions to see
+Issue summary:     calendar/externallib.php lacks
+                   self::validate_context($context);
+Severity/Risk:     Minor
+Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
+                   unsupported versions
+Versions fixed:    2.8.2, 2.7.4 and 2.6.7
+Reported by:       Petr Skoda
+Issue no.:         MDL-48017
+CVE identifier:    CVE-2015-0215
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48017
+
+==============================================================================
+MSA-15-0006: Capability to grade Lesson module is missing XSS bitmask
+
+Description:       Users with capability to grade in Lesson module were not
+                   reported as users with XSS risk but their feedback was
+                   displayed without cleaning
+Issue summary:     mod/lesson:grade capability missing RISK_XSS but essay
+                   feedback is displayed with noclean=true
+Severity/Risk:     Minor
+Versions affected: 2.8 to 2.8.1
+Versions fixed:    2.8.2
+Reported by:       Damyon Wiese
+Issue no.:         MDL-48034
+CVE identifier:    CVE-2015-0216
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48034
+
+==============================================================================
+MSA-15-0007: ReDoS possible in the multimedia filter
+
+Description:       Not optimal regular expression in the filter could be
+                   exploited to create extra server load or make particular
+                   page unavailable
+Issue summary:     ReDOS in the multimedia filter
+Severity/Risk:     Serious
+Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
+                   unsupported versions
+Versions fixed:    2.8.2, 2.7.4 and 2.6.7
+Reported by:       Nicolas Martignoni
+Issue no.:         MDL-48546
+Workaround:        Disable multimedia filter
+CVE identifier:    CVE-2015-0217
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-48546
+
+==============================================================================
+MSA-15-0008: Forced logout through Shibboleth authentication plugin
+
+Description:       It was possible to forge a request to logout users even
+                   when not authenticated through Shibboleth
+Issue summary:     Forced logout via auth/shibboleth/logout.php
+Severity/Risk:     Serious
+Versions affected: 2.8 to 2.8.1, 2.7 to 2.7.3, 2.6 to 2.6.6 and earlier
+                   unsupported versions
+Versions fixed:    2.8.2, 2.7.4 and 2.6.7
+Reported by:       Petr Skoda
+Issue no.:         MDL-47964
+Workaround:        Deny access to file auth/shibboleth/logout.php in webserver
+                   configuration
+CVE identifier:    CVE-2015-0218
+Changes (master):
+http://git.moodle.org/gw?p=moodle.git&a=search&h=HEAD&st=commit&s=MDL-47964
+
+==============================================================================
