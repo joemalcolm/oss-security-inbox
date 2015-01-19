@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/22/8
-Message-Id: <20150222182628.A84C46C0001@smtpvmsrv1.mitre.org>
-Date: Sun, 22 Feb 2015 13:26:28 -0500 (EST)
-From: cve-assign@...re.org
-To: carnil@...ian.org
-Cc: cve-assign@...re.org, oss-security@...ts.openwall.com
-Subject: Re: CVE Request: TYPO3-CORE-SA-2015-001: Authentication Bypass in TYPO3 CMS 4.5
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/19/2
+Message-ID: <CAB8XdGCr3Xw6OiED02pqWwaowUrc2a2PbvYkRMnfhO71=OnU3g@mail.gmail.com>
+Date: Mon, 19 Jan 2015 15:50:44 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: users@...tuario.apache.org,  "dev@...tuario.apache.org" <dev@...tuario.apache.org>
+Cc: Jaime pallares <jprel@...mail.com>, Apache Security Response Team <security@...che.org>,  oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: New Apache Santuario security advisory CVE-2014-8152
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+A new security advisory for Apache Santuario has been issued -
+CVE-2014-8152 - "Streaming XML Signature verification failure". It is a
+critical advisory for anyone using the streaming XML Signature support
+introduced in the 2.0.0 release. The DOM implementation is not affected.
 
-> Could you please assign a CVE for the authentication bypass
-> vulnerability in typo3, as repleased per TYPO3-CORE-SA-2015-001?
-> 
-> https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2015-001
-> https://review.typo3.org/#/c/37013/
+This issue is fixed in the recently released version 2.0.3.
 
-Use CVE-2015-2047.
+The security advisory is linked on the security advisories page of Apache
+Santuario and also attached to this mail:
+http://santuario.apache.org/secadv.html
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Colm.
 
-iQEcBAEBAgAGBQJU6h7pAAoJEKllVAevmvms8K8IALDOteuYRBpdsIWJ/7UgsmB1
-ssSg0ASfw8G2onMi3aAKxeuRppMSzvGZ+vIJBzyA6ULmNN6nRZbgSqqTSI4UmuQV
-dC5hxFIqVNcbIRwBCoUt3OI1Q5W1IAkYjAMs0lX8k+sPvopGq/huo39AuwcO2Apq
-dEysbH/vgVQA2XQgsMVC9IyKEbP52mwiFmAotpIqnnWktbXzq2KdPMuU+ykP6TvM
-KBJnTYV0Z39SiaB/HHW1KsnK5sGqS7tmpst2AXHjer4QsKrZhyvy1vvW9kD4ffw3
-NXJRXfYS/3OxhS7Kg8w1s2g78PvYiCdDE2qzdFFkrYO1o3to1e5ZvJ1ibtaUz7c=
-=RFQW
------END PGP SIGNATURE-----
+
+-- 
+Colm O hEigeartaigh
+
+Talend Community Coder
+http://coders.talend.com
+
+Content of type "text/html" skipped
+
+View attachment "CVE-2014-8152.txt.asc" of type "text/plain" (1728 bytes)
