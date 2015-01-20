@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/2
-Message-ID: <Pine.LNX.4.64.1501031902270.1923@beijing.mitre.org>
-Date: Sat, 3 Jan 2015 19:03:12 -0500 (EST)
-From: cve-assign@...re.org
-To: Martin Prpic <mprpic@...hat.com>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: insufficient 'X-Forwarded-For' header validation in rabbitmq-server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/1
+Message-ID: <alpine.LRH.2.11.1501211014580.15885@namei.org>
+Date: Wed, 21 Jan 2015 10:17:29 +1100 (AEDT)
+From: James Morris <jmorris@...ei.org>
+To: Ben Hutchings <ben@...adent.org.uk>
+cc: Alexander Viro <viro@...iv.linux.org.uk>, linux-fsdevel@...r.kernel.org, linux-security-module@...r.kernel.org, LKML <linux-kernel@...r.kernel.org>, 770492@...s.debian.org, Ben Harris <bjh21@....ac.uk>, oss-security@...ts.openwall.com, John Johansen <john.johansen@...onical.com>, Paul Moore <paul@...l-moore.com>, Stephen Smalley <sds@...ho.nsa.gov>, Casey Schaufler <casey@...aufler-ca.com>
+Subject: Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks
 Content-Type: text/plain; charset=utf-8
 
+On Sat, 17 Jan 2015, Ben Hutchings wrote:
+
+> chown() and write() should clear all privilege attributes on
+> a file - setuid, setgid, setcap and any other extended
+> privilege attributes.
+> 
+> However, any attributes beyond setuid and setgid are managed by the
+> LSM and not directly by the filesystem, so they cannot be set along
+> with the other attributes.
+> 
+> Currently we call security_inode_killpriv() in notify_change(),
+> but in case of a chown() this is too early - we have not called
+> inode_change_ok() or made any filesystem-specific permission/sanity
+> checks.
+> 
+> Add a new function setattr_killpriv() which calls
+> security_inode_killpriv() if necessary, and change the setattr()
+> implementation to call this in each filesystem that supports xattrs.
+> This assumes that extended privilege attributes are always stored in
+> xattrs.
+
+It'd be useful to get some input from LSM module maintainers on this. 
+
+e.g. doesn't SELinux already handle this via policy directives?
 
 
-> """
-> RabbitMQ 3.3.0 introduced a mechanism (the 'loopback_users'
-> configuration item) allowing access for some users to be restricted to
-> only connect via localhost. By default the "guest" user is restricted in
-> this way.
->
-> Unfortunately, the HTTP framework used by the management plugin trusts
-> the easily-forged "X-Forwarded-For" header when determining the remote
-> address. It is therefore possible to subvert this access control
-> mechanism for the HTTP API. Attackers would still need to know or guess
-> the username and password.
-> """
->
-> Upstream patches:
->
-> http://hg.rabbitmq.com/rabbitmq-management/rev/c3c41177a11a
-> http://hg.rabbitmq.com/rabbitmq-management/rev/35e916df027d
->
-> References:
->
-> https://groups.google.com/forum/#!topic/rabbitmq-users/DMkypbSvIyM
-> http://www.rabbitmq.com/release-notes/README-3.4.0.txt
-> https://bugzilla.redhat.com/show_bug.cgi?id=1174872
->
+-- 
+James Morris
+<jmorris@...ei.org>
 
-Use CVE-2014-9494.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
