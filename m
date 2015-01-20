@@ -1,27 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/09/13
-Message-Id: <5EAC8776-84E0-4502-AFFA-7DC61DF0812E@thijsalkema.de>
-Date: Mon, 9 Feb 2015 22:55:11 +0100
-From: Thijs Alkemade <me@...jsalkema.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE Request: jabberd remote information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/1
+Message-ID: <20150120144300.GH15501@suse.de>
+Date: Tue, 20 Jan 2015 15:43:00 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE Request: Linux kernel information leak in event device handling
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-A buffer overflow was found in the XMPP server jabberd2 when normalizing
-strings that can lead to remote information disclosure [1]. When parsing a
-JID, jabberd2 version 2.3.2 and below truncate the data but do not verify
-whether the result is valid UTF8 before passing it to libidn. If the data ends
-with an unterminated multi-byte UTF8 sequence then libidn may copy data past
-the buffer into the result. This can be exploited by remote clients or remote
-servers.
+This needs a CVE, information leak out of the kernel.
 
-Could you please assign a CVE for this issue?
+This probably was introduced by commit 483180281f0ac60d1138710eb21f4b9961901294
+in Linux 3.9.
 
-[1] = https://github.com/jabberd2/jabberd2/issues/85
+Ciao, Marcus
 
-Best regards,
-Thijs Alkemade
+http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7c4f56070fde2367766fa1fb04852599b5e1ad35
+https://bugzilla.suse.com/show_bug.cgi?id=904899
 
-Download attachment "signature.asc" of type "application/pgp-signature" (842 bytes)
+Input: evdev - fix EVIOCG{type} ioctl
+
+The 'max' size passed into the function is measured in number of bits
+(KEY_MAX, LED_MAX, etc) so we need to convert it accordingly before
+trying to copy the data out, otherwise we will try copying too much
+and end up with up with a page fault.
+
+Reported-by: Pavel Machek <pavel@....cz>
+Reviewed-by: Pavel Machek <pavel@....cz>
+Reviewed-by: David Herrmann <dh.herrmann@...il.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@...il.com>
+
+
