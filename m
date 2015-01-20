@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/5
-Message-ID: <87k30gxpp5.fsf@redhat.com>
-Date: Wed, 21 Jan 2015 13:50:46 +0100
-From: Martin Prpic <mprpic@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE request: two issues in vorbis-tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/4
+Message-ID: <20150120154555.GA10176@eldamar.local>
+Date: Tue, 20 Jan 2015 16:45:55 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
+Cc: CVE Assignments MITRE <cve-assign@...re.org>
+Subject: Possible CVE request: sympa: vulnerability in the web interface
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-Two issues were reported in vorbis-tools on Full Disclosure:
+I would like to ask if a CVE could be assigned for the following issue
+(it is not clear if upstream has already requested one):
+https://www.sympa.org/security_advisories#security_breaches_in_newsletter_posting
 
-http://seclists.org/fulldisclosure/2015/Jan/78
+The advisory reads:
 
-Issues in question:
+> A vulnerability have been discovered in Sympa web interface that
+> allows access to files on the server filesystem.
+> 
+> This breach allows to send to a list or a user any file readable by
+> the Sympa user, located on the server filesystem, using the Sympa web
+> interface newsletter posting area.
 
-https://trac.xiph.org/ticket/2137
--- a divide-by-zero issue leading to a crash
+Upstream patch: https://sourcesup.renater.fr/scm/viewvc.php/branches/sympa-6.1-branch/wwsympa/wwsympa.fcgi.in?root=sympa&r1=11562&r2=11778&view=patch
 
-https://trac.xiph.org/ticket/2136
--- an integer overflow leading to an out-of-bounds memory read
+Thanks in advance,
 
-Thank you!
-
--- 
-Martin Prpič / Red Hat Product Security
+Regards,
+Salvatore
