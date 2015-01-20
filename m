@@ -1,60 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/27/23
-Message-ID: <CAN10O-ZaBV4Rw+60qa0ERtq0Eqdbhk7BwP=86qD23UDMZL3Qfw@mail.gmail.com>
-Date: Tue, 27 Jan 2015 20:04:35 +0000
-From: Filip Palian <s3810@...stk.edu.pl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/8
+Message-ID: <54BE93E2.90603@internot.info>
+Date: Wed, 21 Jan 2015 04:44:02 +1100
+From: Joshua Rogers <oss@...ernot.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+Subject: CVE Request: PHP int overflow
 Content-Type: text/plain; charset=utf-8
 
-2015-01-27 18:05 GMT+00:00 Florian Weimer <fw@...eb.enyo.de>:
->
-> * Marek Kroemeke:
->
-> > We just noticed CVE-2015-0235 , and we thought we will drop this one
-> > in - apologies for low quality , we didn't really have time yet to
-> > analyse it, but it seems to be related, so it makes sense to patch
-> > things once right ?
->
-> It's not related, and we cannot patch it at the same time because
-> packages for the gethostbyname issue are already ready, they just have
-> to be released.  (When we change critical system components, we also
-> need to be extra-careful with testing, which takes time.)
+Hi,
 
-We have no access to vendor list, thus we had no prior knowledge if
-the fixes are ready or not.
+I found an integer overflow in PHP, in the conversation of dates to
+"Julian Day Count" function.
 
-In our opinion it is related to CVE-2015-0235 for couple of reasons.
-It would be rather pointless to name them all here as someone else
-still would have a different opinion, understood.
+The commit, with a PoC can be found here:
+https://github.com/MegaManSec/php-src/commit/a538d2f5605798422f2746636ecdc300f8ebcaa1
 
-Dunno about the glibc 2.15 but the bug can be triggered with
-"libc6:i386 2.13-38+deb7u7".  So again, the patches exist but the most
-recent packages are affected.
+It seems to affect every version of PHP compiled with the calendar
+extension.
+The vulnerable code was commited in
+3bc8debefe30aec801ee75878eba3ab6be00f301, at
+ Sat Apr 15 20:35:09 2000 +0000
 
-Many smart and more experienced members of this list may be interested
-in analyzing this bug. Maybe it's only a regular bug, which can be
-considered DoS at most in some circumstances or maybe there's more
-than meets the eye. Hard to tell without in-depth analysis a la Qualys
-one (by the report one can see how much effort it requires to reach
-that level of honesty).
+Could I get a CVE-ID for this?
 
-Thanks Florian for an initial skim through the code.
+Thanks,
+-- 
+-- Joshua Rogers <https://internot.info/>
 
 
-F
-
-
-
->
-> Andreas Schwab fixed this in 2011:
->
->   <https://sourceware.org/git/gitweb.cgi?p=glibc.git;a=commitdiff;h=2e96f1c7>
->
-> If I'm not mistaken, this commit when into glibc 2.15.
->
-> I have not yet found the corresponding glibc bug (if it exists).
->
-> The bug only materializes if the getaddrinfo functions is called with
-> the AI_IDN flag, and if glibc has been compiled with libidn support
-> (but I haven't checked if you can switch that off these days).
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
