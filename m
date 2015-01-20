@@ -1,37 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/29/17
-Message-ID: <20150129171621.4d0d7034@pc>
-Date: Thu, 29 Jan 2015 17:16:21 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: GHOST gethostbyname() heap overflow in glibc (CVE-2015-0235)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/6
+Message-ID: <54BE8740.30603@redhat.com>
+Date: Tue, 20 Jan 2015 09:50:08 -0700
+From: Kurt Seifried <kseifried@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, Assign a CVE Identifier <cve-assign@...re.org>
+Subject: ping on CVE Request for jenkins-tomcat: Secure and HttpOnly flags are not, set for cookies with Jenkins on Tomcat
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 29 Jan 2015 08:00:48 -0800
-Paul Pluzhnikov <ppluzhnikov@...il.com> wrote:
+Has there been any movement on
 
-> What is the appropriate forum to cry alarm on?
-> 
-> We are not a distro, and (AFAICT) are not on any of the closed lists.
-> But maybe we should be.
+http://www.openwall.com/lists/oss-security/2015/01/14/1
 
-I'm not on any closed list either, but I agree chrome os people
-probably should be on the distros list :-)
-I think Solar Designer is the responsible person that manages this.
-
-On the alarm crying it depends. In this case it already was pretty much
-public, so forwarding the info here would be appropriate I think. I
-assume that's also true for all too-minor-to-worry-too-much-issues.
-If these become too much we can always think about another public "post
-minor maybe-security-issues-here"-mailing-list. But a lot of minor
-issues get posted here already and I think people are fine with it
-right now.
+or is it CVE rejected?
 
 -- 
-Hanno Böck
-http://hboeck.de/
+Kurt Seifried -- Red Hat -- Product Security -- Cloud
+PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
 
-mail/jabber: hanno@...eck.de
-GPG: BBB51E42
 
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
