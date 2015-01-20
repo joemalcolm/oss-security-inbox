@@ -1,61 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/17/4
-Message-ID: <20150217182950.GP29052@zorglub.office.conostix.com>
-Date: Tue, 17 Feb 2015 19:29:51 +0100
-From: William Robinet <william.robinet@...ostix.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2015-1315 - Info-ZIP UnZip - Out-of-bounds Write
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/10
+Message-Id: <E1YDdJy-00044x-Dz@xenbits.xen.org>
+Date: Tue, 20 Jan 2015 18:14:34 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security@....org>
+Subject: Xen Security Advisory 109 (CVE-2014-8594) - Insufficient restrictions on certain MMU update hypercalls
 Content-Type: text/plain; charset=utf-8
 
-Dear oss-security list,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Here is an advisory [0] about a heap-based buffer overflow vulnerability
-found in Info-Zip "UnZip" [1].
-This was discovered on Ubuntu 14.04.1 LTS (amd64) with package unzip
-version 6.0-9ubuntu1.2 with the help of afl [2].
-This vulnerability could possibly lead to arbitrary code execution.
+             Xen Security Advisory CVE-2014-8594 / XSA-109
+                               version 4
 
-The problem lies in the "unix/unix.c:charset_to_intern()" function which
-is part of the 06-unzip60-alt-iconv-utf8 patch (Ubuntu reference [3]).
-It can be triggered during string conversion from CP866 to UTF-8 for
-which the destination buffer is not large enough.
+        Insufficient restrictions on certain MMU update hypercalls
 
-The problematic code is present in:
-- Info-ZIP beta/development release version 6.10b
-- Ubuntu unzip package (see version numbers in advisory [0])
-- FreeBSD archivers/unzip port (depending on the port configuration)
+UPDATES IN VERSION 4
+====================
 
-Timeline:
-20150210 - Ubuntu contacted, CVE assigned, disclosure date defined
-20150211 - FreeBSD & Upstream contacted
-20150212 - Openwall distros mailing list notified
-20150217 - Public disclosure
+Impact on applicable affected systems is a privilege escalation, not
+just a denial of service.  (Because a PV guest can map something at 0,
+and its address space is visible while Xen is running, so a NULL
+pointer dereference can be made to do more than just crash.)
 
-An updated iconv patch (received from Ubuntu) is available at [4].
+Also add a caveat to the comments in Mitigation about restricted
+service domain images in radically disaggregated systems.
 
-William
-(Please note I'm not a member of the list)
+ISSUE DESCRIPTION
+=================
 
+MMU update operations targeting page tables are intended to be used on
+PV guests only. The lack of a respective check made it possible for
+such operations to access certain function pointers which remain NULL
+when the target guest is using Hardware Assisted Paging (HAP).
 
-[0]
-  http://www.conostix.com/pub/adv/CVE-2015-1315-Info-ZIP-unzip-Out-of-bounds_Write.txt
-[1]
-  http://www.info-zip.org/UnZip.html
-[2]
-  american fuzzy lop - http://lcamtuf.coredump.cx/afl/
-[3]
-  Ubuntu iconv patch:
-  http://archive.ubuntu.com/ubuntu/pool/main/u/unzip/unzip_6.0-9ubuntu1.2.debian.tar.gz
-    file debian/patches/06-unzip60-alt-iconv-utf8
-[4]
-  http://www.conostix.com/pub/adv/06-unzip60-alt-iconv-utf8_CVE-2015-1315.patch
+IMPACT
+======
 
--- 
-GPG Key ID/Fingerprint:
-    74C7A949/B509 4137 1353 A3FC 6A87  AA06 003F A3DF 74C7 A949
+Malicious or buggy stub domain kernels or tool stacks otherwise living
+outside of Domain0 can mount a denial of service or privilege
+escalation attack which, if successful, can affect the whole system.
 
-Conostix S.A.
-4, Rue d'Arlon
-L-8399 Windhof (Koerich)
-T. +352 26 10 30 61
-F. +352 26 10 30 62
+Only PV domains with privilege over other guests can exploit this
+vulnerability; and only when those other guests are HVM using HAP, or
+PVH.  The vulnerability is therefore exposed to PV domains providing
+hardware emulation services to HVM guests.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen 4.0 and onward are vulnerable.
+
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
+
+The vulnerability is only exposed to PV service domains for HVM or
+PVH guests which have privilege over the guest.  In a usual
+configuration that means only device model emulators (qemu-dm).
+
+In the case of HVM guests whose device model is running in an
+unrestricted dom0 process, qemu-dm already has the ability to cause
+problems for the whole system.  So in that case the vulnerability is
+not applicable.
+
+The situation is more subtle for an HVM guest with a stub qemu-dm.
+That is, where the device model runs in a separate domain (in the case
+of xl, as requested by "device_model_stubdomain_override=1" in the xl
+domain configuration file).  The same applies with a qemu-dm in a dom0
+process subjected to some kind kernel-based process privilege
+limitation (eg the chroot technique as found in some versions of
+XCP/XenServer).
+
+In those latter situations this issue means that the extra isolation
+does not provide as good a defence as intended.  That is the essence
+of this vulnerability.
+
+However, the security is still better than with a qemu-dm running as
+an unrestricted dom0 process.  Therefore users with these
+configurations should not switch to an unrestricted dom0 qemu-dm.
+
+Finally, in a radically disaggregated system: where the HVM or PVH
+service domain software (probably, the device model domain image in the
+HVM case) is not always supplied by the host administrator, a malicious
+service domain administrator can exercise this vulnerability.
+
+MITIGATION
+==========
+
+Running only PV guests or HVM guests with shadow paging enabled will
+avoid this issue.
+
+In a radically disaggregated system, restricting HVM service domains
+to software images approved by the host administrator will avoid the
+vulnerability (so long as there isn't also a vulnerability in the
+service domain).
+
+CREDITS
+=======
+
+This issue was discovered by Roger Pau Monné of Citrix and Jan Beulich
+of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa109.patch        xen-unstable, Xen 4.4.x, Xen 4.3.x
+xsa109-4.2.patch    Xen 4.2.x
+
+$ sha256sum xsa109*.patch
+759d1b8cb8c17e53d17ad045ab89c5aaf52cb85fd93eef07e7acbe230365c56d  xsa109-4.2.patch
+729b87c2b9979fbda47c96e934db6fcfaeb10e07b4cfd66bb1e9f746a908576b  xsa109.patch
+$
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQEcBAEBAgAGBQJUvpr0AAoJEIP+FMlX6CvZt4EIAMcSuRwP8++fs8QxhZ+pPqPk
+MDyFmZ0NmFu7j7qiPVWeRr66VoXU6oQzWXVKv0Gx3uxJLgmWNK13DKYdJc2xeBuF
+zUMZJimnCmpf7WTZjS6WHjNB5ei3+u5TGKhcLjH2E3iIsEmzLR6ckFVYeYopGHqu
+mWLi6nGVO6VkJ1OMGz4WvPCOYXHpZANIc00JhZot8VpULe6VktgnU0Uh/EgkayN/
+1rTAybiNB/b9vboVOWxsDbhbQgXhG9HuD/FFLTZ61zDIaIRAHf2xM/bfH05t1kk7
+9r4JHw70dKo37QH1LeRbla0xrCojaUiKWOglIsslmqGAD+qkUOJZ6D+KcEo8Fp0=
+=F4yJ
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa109-4.2.patch" of type "application/octet-stream" (786 bytes)
+
+Download attachment "xsa109.patch" of type "application/octet-stream" (790 bytes)
