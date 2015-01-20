@@ -1,45 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/26/4
-Message-ID: <395a6cca.5f9ca0d6@fabiankeil.de>
-Date: Mon, 26 Jan 2015 11:58:26 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Subject: CVE request for Privoxy
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/2
+Message-ID: <54BEE5A5.5050807@schaufler-ca.com>
+Date: Tue, 20 Jan 2015 15:32:53 -0800
+From: Casey Schaufler <casey@...aufler-ca.com>
+To: James Morris <jmorris@...ei.org>, Ben Hutchings <ben@...adent.org.uk>
+CC: Alexander Viro <viro@...iv.linux.org.uk>, linux-fsdevel@...r.kernel.org, linux-security-module@...r.kernel.org, LKML <linux-kernel@...r.kernel.org>, 770492@...s.debian.org, Ben Harris <bjh21@....ac.uk>, oss-security@...ts.openwall.com, John Johansen <john.johansen@...onical.com>, Paul Moore <paul@...l-moore.com>, Stephen Smalley <sds@...ho.nsa.gov>, Casey Schaufler <casey@...aufler-ca.com>
+Subject: Re: [RFC PATCH RESEND] vfs: Move security_inode_killpriv() after permission checks
 Content-Type: text/plain; charset=utf-8
 
-Privoxy is a non-caching web proxy with advanced filtering capabilities
-for enhancing privacy, modifying web page data and HTTP headers, controlling
-access, and removing ads and other obnoxious Internet junk. For details see:
-http://www.privoxy.org/
+On 1/20/2015 3:17 PM, James Morris wrote:
+> On Sat, 17 Jan 2015, Ben Hutchings wrote:
+>
+>> chown() and write() should clear all privilege attributes on
+>> a file - setuid, setgid, setcap and any other extended
+>> privilege attributes.
+>>
+>> However, any attributes beyond setuid and setgid are managed by the
+>> LSM and not directly by the filesystem, so they cannot be set along
+>> with the other attributes.
+>>
+>> Currently we call security_inode_killpriv() in notify_change(),
+>> but in case of a chown() this is too early - we have not called
+>> inode_change_ok() or made any filesystem-specific permission/sanity
+>> checks.
+>>
+>> Add a new function setattr_killpriv() which calls
+>> security_inode_killpriv() if necessary, and change the setattr()
+>> implementation to call this in each filesystem that supports xattrs.
+>> This assumes that extended privilege attributes are always stored in
+>> xattrs.
+> It'd be useful to get some input from LSM module maintainers on this.
 
-Privoxy 3.0.23 contains fixes for the following security issues:
+I've already chimed in.
 
-- Fixed a DoS issue in case of client requests with incorrect
-  chunk-encoded body. When compiled with assertions enabled
-  (the default) they could previously cause Privoxy to abort().
-  Reported by Matthew Daley.
-  http://ijbswa.cvs.sourceforge.net/viewvc/ijbswa/current/jcc.c?r1=1.433&r2=1.434
+Clearing the Smack label on a file because someone writes to it
+makes no sense whatsoever. The same with chown. The Smack label is
+attached to the object, which is a container of data, not the data
+itself. Smack labels are Mandatory Access Control labels, not Information
+labels. If that doesn't mean anything to the reader, check out the
+P1003.1e/2c (withdrawn) DRAFT.
 
-- Fixed multiple segmentation faults and memory leaks in the
-  pcrs code. This fix also increases the chances that an invalid
-  pcrs command is rejected as such. Previously some invalid commands
-  would be loaded without error. Note that Privoxy's pcrs sources
-  (action and filter files) are considered trustworthy input and
-  should not be writable by untrusted third-parties.
-  http://ijbswa.cvs.sourceforge.net/viewvc/ijbswa/current/pcrs.c?r1=1.46&r2=1.47
+The proposed implementation does not correctly handle either
+Mandatory Access Control labels or Information labels. The MAC
+label is *very different* from the setuid bit.
 
-- Fixed an 'invalid read' bug which could at least theoretically
-  cause Privoxy to crash.
-  http://ijbswa.cvs.sourceforge.net/viewvc/ijbswa/current/parsers.c?r1=1.297&r2=1.298
+>
+> e.g. doesn't SELinux already handle this via policy directives?
+>
+>
 
-Please assign CVEs for them.
-
-The second issue could potentially affect other programs that use pcrs.c,
-but I'm not aware of any that do. Privoxy imported the file from the upstream
-project pcrs (not to be confused with pcre) which is no longer maintained.
-
-The last two issues were partially discovered with afl-fuzz.
-
-Fabian
-
-Content of type "application/pgp-signature" skipped
