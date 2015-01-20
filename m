@@ -1,57 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/12
-Message-ID: <54C403D9.8090100@internot.info>
-Date: Sun, 25 Jan 2015 07:43:05 +1100
-From: Joshua Rogers <oss@...ernot.info>
-To: cve-assign@...re.org
-CC: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: PHP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/12
+Message-ID: <54BEC2A1.7040704@cs.uni-goettingen.de>
+Date: Tue, 20 Jan 2015 22:03:29 +0100
+From: Fabian Yamaguchi <fabian.yamaguchi@...uni-goettingen.de>
+To: <cve-assign@...re.org>
+CC: <oss-security@...ts.openwall.com>
+Subject: Re: Vulnerabilities in VLC 2.1.5
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-On 25/01/15 06:28, cve-assign@...re.org wrote:
-> MITRE doesn't have a full code analysis and isn't confident about
-> whether the "explicit null dereference" exists or not. All we can
-> offer is that the "wouldn't change g->setbits to a non-NULL value"
-> seems somewhat implausible because it means that significant intended
-> functionality of the code wouldn't have worked at all.
-The code branch is where this:
-157        if (cflags&REG_EXTENDED)
+Thank you!
 
-is true. will lead to the null pointer deference
-
-so this gets executed:
-158                p_ere(p, OUT);
+On 01/20/2015 09:58 PM, cve-assign@...re.org wrote:
+>> * Buffer overflow in updater:
+> 
+>> https://github.com/videolan/vlc/commit/fbe2837bc80f155c001781041a54c58b5524fc14
+> 
+> Use CVE-2014-9625 for this integer truncation caused by a cast to
+> size_t (with resultant buffer overflow).
+> 
+> 
+...
 
 
-rather than the p_str(as stated):
-159        else if (cflags&REG_NOSPEC)
-160                p_str(p);
-
-
-ereg is deprecated as of 5.3.0
-(http://php.net/manual/en/function.ereg.php), and there doesn't seem to
-be that much documentation on it, so it's hard to make a reproducer.
-
-
-However,
-
-79 = #define      REG_EXTENDED    0001
-
-this gives a clue as to why it probably hasn't been caught before.
-
-"REG_EXTENDED", according to the regex(3) manual, is for "POSIX Extended
-Regular Expression syntax"
-
-which probably isn't that common.
-
-
-But, I do welcome an independent review.
-
-
-Thanks,
--- 
--- Joshua Rogers <https://internot.info/>
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (820 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
