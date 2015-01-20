@@ -1,25 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/02/10/10
-Message-ID: <CAOkUe-DJ1XTF5keJSn7Fm8wv=TYkhMbCJc788ptUR+yuCE6y-w@mail.gmail.com>
-Date: Tue, 10 Feb 2015 15:07:24 +0100
-From: Sylvain Pelissier <sylvain.pelissier@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/9
+Message-ID: <20150120180834.GA8624@zoho.com>
+Date: Tue, 20 Jan 2015 18:08:34 +0000
+From: mancha <mancha1@...o.com>
 To: oss-security@...ts.openwall.com
-Subject: eCryptfs key wrapping help to crack user password
+Cc: cve-assign@...re.org
+Subject: Re: CVE Request: Info-ZIP unzip 6.0
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Dec 22, 2014 at 06:14:58PM +0000, mancha wrote:
+> Hello.
+> 
+> OOB access (both read and write) issues exist in test_compr_eb
+> (extract.c) that can result in application crash or other unspecified
+> impact.
+> 
+> This vulnerability can be triggered via crafted zip archives with extra
+> fields that advertise STORED method compression (i.e. no compression)
+> and have uncompressed field sizes smaller than the corresponding
+> compressed field sizes.
+> 
+> This issue is different from CVE-2014-8140 [1].
+> 
+> Please allocate a CVE identifier for this vulnerability.
+> 
+> --mancha
+> 
+> 
+> Timeline:
+> 
+> 2014-10-24: Crasher bundled in afl
+> 2014-11-02: Existence of crasher shared on OSS-SEC [2]
+> 2014-11-03: Crasher analyzed and fix developed [3]
+> 2014-11-03: Maintainer contacted [4]
+> 2014-12-22: CVE requested
+> 
+> ----
+> [1] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2014-8140
+> [2] http://seclists.org/oss-sec/2014/q4/489
+> [3] http://seclists.org/oss-sec/2014/q4/507
+> [4] http://www.info-zip.org/phpBB3/viewtopic.php?f=7&t=450
 
-I have noticed that ecryptfs-utils is the default program used by the
-Ubuntu distributions for home folder encryption since version 10.04.
-In this case, a wrapping key is generated from the user password
-using the hash function SHA-512 applied 65536 times. By default, the
-wrapping key is hashed with the default fixed salt
-(0x0011223344556677) and stored in the a file.
-This was already noticed in bug :
-https://bugs.launchpad.net/ecryptfs/+bug/906550
-For  Ubuntu installations time-memory trade-off (rainbow tables, etc.)
-can apply, as well as bulk dictionary attacks to crack user passwords
-of Ubuntu installations when the home folder encryption is activated.
-I am currently working to correct this weakness.
 
-Sylvain Pelissier
+Hello MITRE.
+
+This request seems to have fallen through the cracks. Please advise on
+its status.
+
+Many thanks.
+
+--mancha
+
+Content of type "application/pgp-signature" skipped
