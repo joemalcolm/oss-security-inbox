@@ -1,56 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/16/14
-Message-ID: <20150116183531.GA6237@pisco.westfalen.local>
-Date: Fri, 16 Jan 2015 19:35:32 +0100
-From: jmm@...ian.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/7
+Message-ID: <87wq4hxvoa.fsf@redhat.com>
+Date: Tue, 20 Jan 2015 17:29:25 +0100
+From: Martin Prpic <mprpic@...hat.com>
 To: oss-security@...ts.openwall.com
 Cc: cve-assign@...re.org
-Subject: Re: CVE request: file(1) DoS
+Subject: Re: CVE request: directory traversal flaw in patch
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 16, 2015 at 08:15:56AM -0500, Marc Deslauriers wrote:
-> On 2015-01-03 02:50 PM, Alexander Cherepanov wrote:
-> > On 2014-12-17 03:44, Alexander Cherepanov wrote:
-> >> There are two more DoSes fixed in ELF parser of file(1), similar to the
-> >> recent CVE-2014-8116.
-> > 
-> > These fixes were included in 5.22 release:
-> > 
-> > http://mx.gw.com/pipermail/file/2015/001660.html
-> > 
-> >> 1. Limit the number of ELF notes processed
-> >> Report: http://mx.gw.com/pipermail/file/2014/001653.html
-> >> Fix: https://github.com/file/file/commit/ce90e05774dd77d86cfc8dfa6da57b32816841c4
-> > 
-> > This issue seems to be introduced here:
-> > 
-> > https://github.com/file/file/commit/956a45ab1c54b11304b367056f41905e72a02380#diff-bc5c24ef9f39a5f4963ca28ecbc645b3L423
-> > 
-> > 
-> > which ended up in 5.08 release. Hence releases 5.08--5.21 are vulnerable.
-> > 
-> >> 2. Limit string printing to 100 chars
-> >> Report: http://mx.gw.com/pipermail/file/2014/001654.html
-> >> Fix: https://github.com/file/file/commit/65437cee25199dbd385fb35901bc0011e164276c
-> > 
-> > This issue was introduced in the following commit:
-> > 
-> > https://github.com/file/file/commit/c8451af8ab0c2e2a93ce93b9c68257d31576cc85
-> > 
-> > which ended up in 5.16 release. Hence releases 5.16--5.21 are vulnerable.
-> > 
-> >> Both problems amplified by the fact that the same section in ELF file
-> >> can be referenced and processed by file(1) multiple times. This is also
-> >> fixed in the first commit linked above.
-> >>
-> >> Could CVE(s) please be assigned?
-> > 
-> 
-> Did these ever get CVEs?
+cve-assign@...re.org writes:
 
-They haven't, but should receive assignments. We fixed these in Debian in
-DSA-3121-1: https://lists.debian.org/debian-security-announce/2015/msg00003.html
+> On Wed, 14 Jan 2015, Martin Prpic wrote:
+>
+>> Hi,
+>>
+>> A directory traversal flaw was reported in patch:
+>>
+>> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=775227
+>> https://bugzilla.redhat.com/show_bug.cgi?id=1182154
+>>
+>> Could a CVE please be assigned to this issue? Thank you.
+>>
+>> --
+>> Martin Prpič / Red Hat Product Security
+>
+> Use CVE-2015-1196.
+>
+> ---
+>
+> CVE assignment team, MITRE CVE Numbering Authority M/S M300
+> 202 Burlington Road, Bedford, MA 01730 USA
+> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 
-Cheers,
-        Moritz
+Hi!
 
+I think these issues in patch also deserve CVEs:
+
+https://savannah.gnu.org/bugs/?44051
+"With a specific file, patch goes to infinite loop and eats all CPU time."
+
+https://savannah.gnu.org/bugs/?44051
+"Got an other issue which output this before segfault: patching file util.h
+
+Ran out of memory using Plan A -- trying again...
+
+patching file util.h
+Segmentation fault"
+
+http://git.savannah.gnu.org/cgit/patch.git/commit/?id=44a987e02f04b9d81a0db4a611145cad1093a2d3
+"Add line number overflow checking. Based on Robert C. Seacord's INT32-C document for integer overflow checking and Tobias Stoeckmann's "integer overflows and oob memory access" patch for FreeBSD."
+
+Thank you!
+
+-- 
+Martin Prpič / Red Hat Product Security
