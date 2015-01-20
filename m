@@ -1,59 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/24/16
-Message-ID: <CALx_OUDtr80X9k=xZcJZkCLuBoCdOmwh46Pn2HwJpAepa-uP6A@mail.gmail.com>
-Date: Sat, 24 Jan 2015 14:55:32 -0800
-From: Michal Zalewski <lcamtuf@...edump.cx>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: Multiple vulnerabilities in LibTIFF and associated tools
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/2
+Message-ID: <54BE6C0D.1080404@enovance.com>
+Date: Tue, 20 Jan 2015 09:54:05 -0500
+From: Tristan Cacqueray <tristan.cacqueray@...vance.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA 2015-002.1] Glance v2 API unrestricted path traversal through filesystem:// scheme (CVE-2015-1195) ERRATA 1
 Content-Type: text/plain; charset=utf-8
 
-Oh well... if the cat is out the bag anyway, here's what I reported to
-them. These affect the library itself and would also impact uses
-within ImageMagick, etc.
+=======================================================================================
+OSSA-2015-002.1: Glance v2 API unrestricted path traversal through filesystem:// scheme
+=======================================================================================
 
-http://lcamtuf.coredump.cx/afl/vulns/libtiff-mem2.tif
+:Date: January 20, 2015
+:CVE: CVE-2015-1195
 
-  - uninitialized memory in putcontig8bitCIELab / TIFFCIELabToXYZ
-    I'm guesisng this is a dupe of CVE-2014-8127
 
-http://lcamtuf.coredump.cx/afl/vulns/libtiff-cvs-1.tif
+Affects
+~~~~~~~
+- Glance: up to 2014.1.3 and 2014.2 versions up to 2014.2.1
 
-  - uninitialized memory in putcontig8bitYCbCr21tile
-    Fixed in:
 
-      2014-12-29  Even Rouault  <even.rouault@...tialys.com>
+Description
+~~~~~~~~~~~
+Jin Liu from EMC reported that path traversal vulnerabilities in
+Glance were not fully patched in OSSA 2014-041. By setting a malicious
+image location to a filesystem:// scheme an authenticated user can
+still download or delete any file on the Glance server for which the
+Glance process user has access to. Only setups using the Glance V2 API
+are affected by this flaw.
 
-      * libtiff/tif_getimage.c: in OJPEG case, fix checks on strile width/height
-        in the putcontig8bitYCbCr42tile, putcontig8bitYCbCr41tile and
-        putcontig8bitYCbCr21tile cases.
 
-    I don't think this had a CVE number assigned yet.
+Errata
+~~~~~~
+When the original advisory was published a CVE number was not
+assigned. CVE-2015-1195 can now be used to track this vulnerability.
 
-http://lcamtuf.coredump.cx/afl/vulns/libtiff-cvs-2.tif
 
-  - uninitialized memory in NeXTDecode
-    Fixed in:
+Patches
+~~~~~~~
+- https://review.openstack.org/145974 (Icehouse)
+- https://review.openstack.org/145916 (Juno)
+- https://review.openstack.org/145640 (Kilo)
 
-      2014-12-29  Even Rouault  <even.rouault@...tialys.com>
 
-      * libtiff/tif_next.c: add new tests to check that we don't read outside of
-      the compressed input stream buffer.
+Credits
+~~~~~~~
+- Jin Liu from EMC (CVE-2015-1195)
 
-    I don't think this had a CVE number assigned yet.
 
-http://lcamtuf.coredump.cx/afl/vulns/libtiff5.tif
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1408663
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-1195
 
-  - another use of uninitialized memory in NeXTDecode after fixing the
-previous case.
-    I don't think this had a CVE number assigned yet.
 
-The communications with upstream have been spotty, which is probably
-in part because many people are submitting crash reports at once. I
-don't know when they plan the next release, and the commits often
-aren't flagged as security-relevant or credited to any particular
-report or reporter.
+Notes
+~~~~~
+- This fix was included in the kilo-1 development milestone and will be
+  included in future 2014.2.2 (juno) and 2014.1.4 (icehouse) releases.
+- The OpenStack VMT recommends revoking all credentials stored in files
+  accessible by Glance as a precautionary measure.
 
-Anyway, the bottom line is that for now, using the last stable version
-of libtiff on anything attacker-controlled is probably a bad idea.
 
-/mz
+OSSA History
+~~~~~~~~~~~~
+- 2015-01-20 - Errata 1
+- 2015-01-15 - Original Version
+
+--
+Tristan Cacqueray
+OpenStack Vulnerability Management Team
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (474 bytes)
