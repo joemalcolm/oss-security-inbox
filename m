@@ -1,49 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/18/3
-Message-ID: <Pine.LNX.4.64.1501181448040.14308@beijing.mitre.org>
-Date: Sun, 18 Jan 2015 14:55:31 -0500 (EST)
-From: cve-assign@...re.org
-To: Thijs Kinkhorst <thijs@...ian.org>
-cc: oss-security@...ts.openwall.com, cve-assign@...re.org
-Subject: Re: CVE request: pigz, kgb, pax: directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/20/3
+Message-ID: <371E240E6FC1D44DA5E51EE9DCDCB7840105CB22F2@NA-MBX-01.mgc.mentorg.com>
+Date: Tue, 20 Jan 2015 15:23:19 +0000
+From: "Mehaffey, John" <John_Mehaffey@...tor.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: CVE Request: Linux kernel information leak in event device handling
 Content-Type: text/plain; charset=utf-8
 
-
-On Mon, 12 Jan 2015, Thijs Kinkhorst wrote:
-
-> Three additional cases of directory traversal in archiving utilities 
-> have been reported to Debian. Please assign a CVE id to each.
+> From: Marcus Meissner [meissner@...e.de]
+> Sent: Tuesday, January 20, 2015 6:43 AM
+> To: OSS Security List
+> Subject: [oss-security] CVE Request: Linux kernel information leak in event device handling
 >
-> - pigz
->  Report: https://bugs.debian.org/774978
->  Fix:
-> https://github.com/madler/pigz/commit/fdad1406b3ec809f4954ff7cdf9e99eb18c2458f
+> Hi,
+>
+> This needs a CVE, information leak out of the kernel.
+>
+> This probably was introduced by commit 483180281f0ac60d1138710eb21f4b9961901294
+> in Linux 3.9.
+>
+> Ciao, Marcus
+>
+> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7c4f56070fde2367766fa1fb04852599b5e1ad35
+> https://bugzilla.suse.com/show_bug.cgi?id=904899
+>
+> Input: evdev - fix EVIOCG{type} ioctl
+>
+> The 'max' size passed into the function is measured in number of bits
+> (KEY_MAX, LED_MAX, etc) so we need to convert it accordingly before
+> trying to copy the data out, otherwise we will try copying too much
+> and end up with up with a page fault.
+>
+> Reported-by: Pavel Machek <pavel@....cz>
+> Reviewed-by: Pavel Machek <pavel@....cz>
+> Reviewed-by: David Herrmann <dh.herrmann@...il.com>
+> Signed-off-by: Dmitry Torokhov <dmitry.torokhov@...il.com>
 
-Use CVE-2015-1191.
+I don't see how this could leak information to the user.
 
-> - kgb
->  Report: https://bugs.debian.org/774989
+Without the patch, too much memory is allocated internally in the driver, and too much data is copied into that buffer (potentially causing a page fault) but the same, correct amount of data is copied out to the user both before and after this patch.
 
-Use CVE-2015-1192.
-
-> - pax
->  Report: https://bugs.debian.org/774716 and
->      http://www.openwall.com/lists/oss-security/2015/01/07/5
-
-Use CVE-2015-1193 for the .. path traversal (CWE-22).
-
-Use CVE-2015-1194 for the symlink following, which can allow access 
-outside of the current directory.
-
-CVE distinguishes symlink following from path traversal as different 
-vulnerability types.  The fix for one issue is not necessarily guaranteed 
-to fix the other.  Also, since symlink following attacks can often be used 
-against protected files within a directory that is already accessible to 
-the attacker, it might cause confusion to use the "directory traversal" 
-term to describe them.
-
----
-
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Sincerely,
+John Mehaffey
+Linux System Architect
+Mentor Graphics
