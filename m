@@ -1,22 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/04/15
-Message-ID: <20150104190637.GA17075@eldamar.local>
-Date: Sun, 4 Jan 2015 20:06:37 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: OSS Security Mailinglist <oss-security@...ts.openwall.com>
-Cc: CVE Assignments MITRE <cve-assign@...re.org>
-Subject: CVE Request: gcab: directory traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/15
+Message-ID: <54C014E8.9050703@pipping.org>
+Date: Wed, 21 Jan 2015 22:06:48 +0100
+From: Sebastian Pipping <sebastian@...ping.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE or not: 2x grml-debootstrap
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Hi!
 
-Jakub Wilk reported a directory traversal vulnerability due to cab not
-filtering leading slashes from paths in CAB files.
 
-Debian bug: https://bugs.debian.org/774580
-Upstream bugreport: https://bugzilla.gnome.org/show_bug.cgi?id=742331
+TLDR:
+* One or two CVE candidates
+* Review of proposed fixes wanted
+* Ideas on realistic attack scenarios welcome
 
-Could you assign as CVE for this issue?
 
-Regards,
-Salvatore
+grml-debootstrap [1] is a wrapper around debootstrap written in Bash.
+
+
+I recently ran into two bugs in grml-debootstrap, documented in detail
+at the following GitHub issues.
+
+
+1) For the first
+
+  Issues with sourcing cmdlineopts.clp from current working directory
+  https://github.com/grml/grml-debootstrap/issues/59
+
+I am rather clear about exploitability.
+Please review the proposed approach for a fix.
+
+
+2) For the second
+
+  Lack of user input escaping / use of $!`"\ in passwords
+  https://github.com/grml/grml-debootstrap/issues/58
+
+I still wonder about realistic exploitation scenarios.  Since the tool
+is usually executed by root or using sudo, input from a non-root user
+would need to make its way into the command line, unfiltered or filtered
+insufficiently.  It could either be a service like
+
+  live-build
+  http://cgi.build.live-systems.org/cgi-bin/live-build
+
+(they don't call grml-debootstrap, if the code is [2])
+or a sudoers config like
+
+  user23 ALL=(ALL) NOPASSWD: /usr/sbin/grml-debootstrap \
+    --password * .....
+
+though I am note sure how much of a likely setup that is.
+
+Other ideas on scenarios?
+Also, please review my proposal on escaping.
+
+Thanks and best,
+
+
+
+Sebastian
+
+
+[1] https://github.com/grml/grml-debootstrap
+[2] https://packages.debian.org/de/wheezy/live-build
