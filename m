@@ -1,68 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/03/12/4
-Message-ID: <5501198C.8060405@redhat.com>
-Date: Wed, 11 Mar 2015 22:43:56 -0600
-From: Kurt Seifried <kseifried@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Another Python app (rhn-setup: rhnreg_ks) not checking hostnames in certs properly CVE-2015-1777
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/21/4
+Message-ID: <20150121124945.GS12661@dhcp-25-225.brq.redhat.com>
+Date: Wed, 21 Jan 2015 13:49:45 +0100
+From: Petr Matousek <pmatouse@...hat.com>
+To: pavel@....cz
+Cc: "Mehaffey, John" <John_Mehaffey@...tor.com>, oss-security@...ts.openwall.com
+Subject: Re: CVE Request: Linux kernel information leak in event device handling
 Content-Type: text/plain; charset=utf-8
 
-On 03/11/2015 09:03 PM, Michael Samuel wrote:
-> Hi,
+On Tue, Jan 20, 2015 at 03:23:19PM +0000, Mehaffey, John wrote:
+> > From: Marcus Meissner [meissner@...e.de]
+> > Sent: Tuesday, January 20, 2015 6:43 AM
+> > To: OSS Security List
+> > Subject: [oss-security] CVE Request: Linux kernel information leak in event device handling
+> >
+> > Hi,
+> >
+> > This needs a CVE, information leak out of the kernel.
+> >
+> > This probably was introduced by commit 483180281f0ac60d1138710eb21f4b9961901294
+> > in Linux 3.9.
+> >
+> > Ciao, Marcus
+> >
+> > http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=7c4f56070fde2367766fa1fb04852599b5e1ad35
+> > https://bugzilla.suse.com/show_bug.cgi?id=904899
+> >
+> > Input: evdev - fix EVIOCG{type} ioctl
+> >
+> > The 'max' size passed into the function is measured in number of bits
+> > (KEY_MAX, LED_MAX, etc) so we need to convert it accordingly before
+> > trying to copy the data out, otherwise we will try copying too much
+> > and end up with up with a page fault.
+> >
+> > Reported-by: Pavel Machek <pavel@....cz>
+> > Reviewed-by: Pavel Machek <pavel@....cz>
+> > Reviewed-by: David Herrmann <dh.herrmann@...il.com>
+> > Signed-off-by: Dmitry Torokhov <dmitry.torokhov@...il.com>
 > 
-> On 12 March 2015 at 11:07, Kurt Seifried <kseifried@...hat.com> wrote:
->>> You can test for the common bugs extremely easily - you need two types of
->>
->> If only it were so simple. Seriously, life would be awesome.
->>
->> What about expired certificates?
->> What about certificates that are properly signed but not yet valid?
+> I don't see how this could leak information to the user.
 > 
-> Sure, you could test these too, but I'd argue these are policy issues,
-> not security bugs.
+> Without the patch, too much memory is allocated internally in the driver, and too much data is copied into that buffer (potentially causing a page fault) but the same, correct amount of data is copied out to the user both before and after this patch.
 
-If your SSL/TLS implementation accepts expired certs as being ok, then
-you have a problem.
+@Pavel -- did you encounter the page fault? Looking at the code, even
+the oversized copy from dev->sw looks to be satisfied by the remaining
+fields in input_dev structure.
 
-> Where is an attacker going to get the private key for an expired cert,
-> but be unable to
-> find the current one?
-
-By stealing it? Certificate revocation doesn't work. Otherwise we
-wouldn't have vendors shipping browser updates to invalidate known to be
-compromised certificates, we'd be relying on CRL/OCSP and not hacks like
-OCSP stapling.
-
->> What about a certificate signed for the correct hostname by a system
->> trusted CA? (some apps are supposed to only trust a specific CA).
-> 
-> That's a policy bug too, not an easily exploitable security bug
-> (unless one of your
-> system CAs is compromised).  Does RedHat actually ship anything that
-> does pinning?
-
-That's a real world bug. Logic error "trust properly signed cert" vs.
-"trust specific CA signed cert".
-
->> These are all very common issues.
-> 
-> Not nearly as common or exploitable as not checking the certificate at
-> all, of which I've
-> reported plenty of to RedHat and others over the past couple of years.
-
-Uhm. Did you not look at any of the cve.mitre.org links I sent? These
-are incredibly common failures. Hint: if some class of bug has a bunch
-of CVE's you can multiply it by 100 or more for the number of affected
-real world cases (and that's in English software alone).
-
->   Michael
-
-Anyways I think we're sufficiently off topic now.
-
-
+Thanks,
 -- 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
